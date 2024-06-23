@@ -7,9 +7,13 @@ Tools.Scintilla.TypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.IntTypeReference guid: (Core.GUID fromString: '{3bdd5bc5-0bb0-48e2-879d-d6d1375961e0}')!
+
 Tools.Scintilla.IntTypeReference comment: ''!
+
 !Tools.Scintilla.IntTypeReference categoriesForClass!Development! !
+
 !Tools.Scintilla.IntTypeReference methodsFor!
 
 defaultValue
@@ -20,6 +24,7 @@ name
 
 objectClass
 	^Integer! !
+
 !Tools.Scintilla.IntTypeReference categoriesForMethods!
 defaultValue!accessing!public! !
 name!accessing!public! !

@@ -33,7 +33,9 @@ Graphics.GraphicsTool
 			'ILD_SELECTED' -> 16r4.
 			'ILD_TRANSPARENT' -> 16r1
 		}!
+
 Graphics.ImageList guid: (Core.GUID fromString: '{87b4c639-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.ImageList comment: 'WinImageList encapsulates a Windows "image list", which itself can be characterised as a strip of images addressable by integer index.
 
 Instance Variables:
@@ -43,7 +45,9 @@ Instance Variables:
 	createFlags		<integer>. Variious flagss specified when the list was created.
 
 '!
+
 !Graphics.ImageList categoriesForClass!Graphics-Tools! !
+
 !Graphics.ImageList methodsFor!
 
 addBitmap: aBitmap
@@ -293,6 +297,7 @@ setExtent: aPoint depth: bppInteger initialSize: sizeInteger growBy: growByInteg
 	createFlags := (aBoolean
 				ifTrue: [##(ILC_HIGHQUALITYSCALE | ILC_MASK)]
 				ifFalse: [ILC_HIGHQUALITYSCALE]) bitOr: bppInteger! !
+
 !Graphics.ImageList categoriesForMethods!
 addBitmap:!adding!public! !
 addBitmap:mask:!adding!public! !
@@ -401,6 +406,7 @@ newExtent: aPoint masked: aBoolean
 		newExtent: aPoint
 		initialSize: self defaultInitialSize
 		masked: aBoolean! !
+
 !Graphics.ImageList class categoriesForMethods!
 defaultColorDepth!constants!public! !
 defaultGrowthGranularity!constants!public! !

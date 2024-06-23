@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ExceptionTest guid: (Core.GUID fromString: '{fffc7252-5c16-49bb-a941-086859b823dc}')!
+
 Core.Tests.ExceptionTest comment: ''!
+
 !Core.Tests.ExceptionTest methodsFor!
 
 testMatching
@@ -27,6 +30,7 @@ testMatching
 			[self error: 'Bar'.
 			self error: 'Foo']
 		raise: selector! !
+
 !Core.Tests.ExceptionTest categoriesForMethods!
 testMatching!public! !
 !

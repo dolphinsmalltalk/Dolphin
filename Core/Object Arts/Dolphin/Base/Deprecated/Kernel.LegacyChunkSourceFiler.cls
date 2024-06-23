@@ -7,12 +7,15 @@ Kernel.AbstractChunkSourceFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.LegacyChunkSourceFiler guid: (Core.GUID fromString: '{b8df6074-f92e-4dfc-9bed-bc94bc5c3d2d}')!
+
 Kernel.LegacyChunkSourceFiler comment: '`LegacyChunkSourceFiler` is a `SourceFiler` that files out packages in Dolphin 7 compatible format , where possible, so that these are loadable in Dolphin 7.1. An instance of this filer will be used for saving any package (or component of a package) with paxVersion < 2.1.
 
 It is not possible to file out packages that contain namespaced program objects that are not bindable by unqualified name from Smalltalk. In other words the program objects in the package must be defined in Smalltalk, or one of the namespaces imported into Smalltalk (directly or indirectly). If an attempt is made to file out a package (or packaged class) that is not compatible, then a `SourceFormatNotSupportedError` detailing the first offending program object detected.  To workaround this for namespaced classes an alias variable can be added to the Smalltalk namespace. By convention such alias variables are packaged into a sidecar package with the same name as the original package with the suffix ''(Old Names)''.
 
 Bear in mind that filing out a package/class in D7 format does not guarantee that it will actually be loadable in Dolphin 7.1, as it may have dependencies on new Dolphin 8 objects that are not present in Dolphin 7.1. There may also be behavioural changes that cause it to function differently, and of course the way to detect this is by defining a good set of unit tests.'!
+
 !Kernel.LegacyChunkSourceFiler methodsFor!
 
 collateClass: aClass1 against: aClass2
@@ -317,10 +320,13 @@ fileOutClass: aClass ofPackage: aPackage
 fileOutPackageMethods: aPackage
 	"Private - File out the loose methods owned by the specified package to the receiver's stream."
 
+	| methods |
+	methods := aPackage methods.
+	methods isEmpty ifTrue: [^self].
 	self
 		emitComment: 'Loose Methods';
 		cr.
-	self fileOutMethods: aPackage methods!
+	self fileOutMethods: methods!
 
 fileOutPackageSourceVariables: aPackage
 	"Private - File out the text representation of the specified packages 'source' object variables onto the receiver's stream. This is used in the single-file .PAC format."
@@ -351,10 +357,11 @@ fileOutPackageVariableAliases: aPackage
 	"Private - File out the text representation of the specified package's alias variables onto the receiver's stream."
 
 	| names |
+	names := aPackage aliasVariableNames.
+	names isEmpty ifTrue: [^self].
 	self
 		emitComment: 'Global Aliases';
 		cr.
-	names := aPackage aliasVariableNames.
 	names asSortedArray do: 
 			[:var |
 			| name target |
@@ -497,6 +504,7 @@ shortNameForClass: aClass
 
 specialBehaviorAttributesOfClass: aClass
 	^aClass specialBehaviorAttributes copyReplacing: #isNonInstantiable withObject: #isAbstract! !
+
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
 collateClass:against:!private!source filing! !
 emitBinaryVariableDefinition:!public!source filing-file out! !
@@ -544,6 +552,7 @@ fileOutExtensionForClass: aClass
 
 stlFilerClass
 	^STLOutFiler4! !
+
 !Kernel.LegacyChunkSourceFiler class categoriesForMethods!
 fileOutExtensionForClass:!enquiries!public! !
 stlFilerClass!constants!public! !

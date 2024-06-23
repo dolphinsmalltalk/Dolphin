@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.BrowserEnvironmentTest guid: (Core.GUID fromString: '{d900c35c-e907-4c85-a762-35dd60264a6c}')!
+
 Refactory.Browser.Tests.BrowserEnvironmentTest comment: ''!
+
 !Refactory.Browser.Tests.BrowserEnvironmentTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.BrowserEnvironmentTest methodsFor!
 
 categoriesFor: anEnvironment
@@ -351,6 +355,7 @@ universalTestFor: aBrowserEnvironment
 	self categoriesFor: aBrowserEnvironment.
 	self classesFor: aBrowserEnvironment.
 	self assert: aBrowserEnvironment problemCount = 0 equals: aBrowserEnvironment isEmpty! !
+
 !Refactory.Browser.Tests.BrowserEnvironmentTest categoriesForMethods!
 categoriesFor:!private!universal tests! !
 classesFor:!private!universal tests! !

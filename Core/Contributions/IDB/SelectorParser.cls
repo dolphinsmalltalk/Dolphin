@@ -5,7 +5,9 @@ Object subclass: #SelectorParser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectorParser guid: (GUID fromString: '{bcef9177-1432-4eb4-80d9-6197b30bc4ab}')!
+
 SelectorParser comment: 'Parse a method definition string to obtain the method''s selector.
 
 Usage:
@@ -18,7 +20,9 @@ Advantages over using the compiler to obtain the selector...
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !SelectorParser categoriesForClass!IDB Goodies! !
+
 !SelectorParser methodsFor!
 
 isKeyword: aString
@@ -85,6 +89,7 @@ scanKeywordOrUnaryToken
 	(ch == $: or: [ch isNil]) ifFalse: [stream position: (stop := stop - 1)].
 	"We know the stream is a ReadStream over the original source string, so access the collection directly for speed"
 	^stream collection copyFrom: start to: stop! !
+
 !SelectorParser categoriesForMethods!
 isKeyword:!public!testing! !
 parse:!operations!public! !
@@ -100,6 +105,7 @@ parse: aString
 	"Shortcut to create the receiver and perform the parsing "
 
 	^self new parse: aString! !
+
 !SelectorParser class categoriesForMethods!
 parse:!instance creation!public! !
 !

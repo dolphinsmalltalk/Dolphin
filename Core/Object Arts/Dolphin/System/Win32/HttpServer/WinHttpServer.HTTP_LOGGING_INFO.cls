@@ -22,7 +22,9 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 			'_OffsetOf_SoftwareName' -> 16r8.
 			'_OffsetOf_SoftwareNameLength' -> 16rC
 		}!
+
 WinHttpServer.HTTP_LOGGING_INFO guid: (Core.GUID fromString: '{41c67887-c529-4196-9c0f-5bb698324d32}')!
+
 WinHttpServer.HTTP_LOGGING_INFO comment: '`HTTP_LOGGING_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_LOGGING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -51,7 +53,9 @@ struct tagHTTP_LOGGING_INFO {
 } HTTP_LOGGING_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_LOGGING_INFO categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_LOGGING_INFO methodsFor!
 
 DirectoryName
@@ -157,6 +161,7 @@ SoftwareNameLength: anInteger
 	"Set the receiver's 'SoftwareNameLength' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_SoftwareNameLength put: anInteger! !
+
 !WinHttpServer.HTTP_LOGGING_INFO categoriesForMethods!
 DirectoryName!**compiled accessors**!public! !
 DirectoryName:!**compiled accessors**!public! !
@@ -231,6 +236,7 @@ getFieldNames
 
 propertyId
 	^HttpServerLoggingProperty! !
+
 !WinHttpServer.HTTP_LOGGING_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

@@ -7,8 +7,11 @@ WinHttpServer.HttpServerStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_Present' -> 16r0 }!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS guid: (Core.GUID fromString: '{6ba76c16-b60f-4235-9179-145a93b3f5cb}')!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS isNonInstantiable: true!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS comment: '`HTTP_PROPERTY_FLAGS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_PROPERTY_FLAGS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -24,7 +27,9 @@ struct tagHTTP_PROPERTY_FLAGS {
 } HTTP_PROPERTY_FLAGS;
 ```
 '!
+
 !WinHttpServer.HTTP_PROPERTY_FLAGS categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_PROPERTY_FLAGS methodsFor!
 
 Present
@@ -59,6 +64,7 @@ printFields: aCollection on: aStream
 
 propertyId
 	^self class propertyId! !
+
 !WinHttpServer.HTTP_PROPERTY_FLAGS categoriesForMethods!
 Present!**compiled accessors**!private! !
 Present:!**compiled accessors**!private! !
@@ -85,6 +91,7 @@ defineFields
 
 propertyId
 	^self subclassResponsibility! !
+
 !WinHttpServer.HTTP_PROPERTY_FLAGS class categoriesForMethods!
 defineFields!**auto generated**!private!template definition! !
 propertyId!constants!public! !

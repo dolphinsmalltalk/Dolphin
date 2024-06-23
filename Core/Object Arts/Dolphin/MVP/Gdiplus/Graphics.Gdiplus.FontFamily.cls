@@ -7,10 +7,13 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamily guid: (Core.GUID fromString: '{c09d8c08-5f28-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.FontFamily comment: 'GdiplusFontFamily represents a set of fonts that make up a font family. A font family is a group of fonts that have the same typeface but different styles.
 
 '!
+
 !Graphics.Gdiplus.FontFamily methodsFor!
 
 cellAscent
@@ -102,6 +105,7 @@ name
 	"Answer the String name of the receiver (e.g., 'Arial')."
 
 	^self getName: Locale userDefault languageId! !
+
 !Graphics.Gdiplus.FontFamily categoriesForMethods!
 cellAscent!accessing!public! !
 cellAscent:!accessing!public! !
@@ -140,6 +144,7 @@ name: aString
 
 name: aString fontCollection: aFontCollection
 	^self fromInitializer: (FontFamilyInitializer name: aString fontCollection: aFontCollection)! !
+
 !Graphics.Gdiplus.FontFamily class categoriesForMethods!
 genericMonospace!instance creation!public! !
 genericSansSerif!instance creation!public! !

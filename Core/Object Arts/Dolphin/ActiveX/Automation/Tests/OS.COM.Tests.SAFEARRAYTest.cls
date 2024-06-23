@@ -7,8 +7,11 @@ External.Tests.GenericExternalArrayTest
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.SAFEARRAYTest guid: (Core.GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
+
 OS.COM.Tests.SAFEARRAYTest comment: ''!
+
 !OS.COM.Tests.SAFEARRAYTest methodsFor!
 
 arrayClass
@@ -181,6 +184,7 @@ threePoints: recordClass
 				x: each;
 				y: each].
 	^sa! !
+
 !OS.COM.Tests.SAFEARRAYTest categoriesForMethods!
 arrayClass!constants!private! !
 elementClassNames!constants!private! !

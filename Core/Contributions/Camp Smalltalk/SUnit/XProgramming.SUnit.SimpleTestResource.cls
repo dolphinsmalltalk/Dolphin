@@ -7,8 +7,11 @@ XProgramming.SUnit.TestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.SimpleTestResource guid: (Core.GUID fromString: '{8276a29a-e3aa-40ab-83f8-c49d4189cb1e}')!
+
 XProgramming.SUnit.SimpleTestResource comment: ''!
+
 !XProgramming.SUnit.SimpleTestResource methodsFor!
 
 hasRun
@@ -56,6 +59,7 @@ stoppedStateSymbol
 tearDown
 
 	self runningState: self stoppedStateSymbol! !
+
 !XProgramming.SUnit.SimpleTestResource categoriesForMethods!
 hasRun!Accessing!public! !
 hasSetup!Accessing!public! !
@@ -76,6 +80,7 @@ tearDown!public!Running! !
 isAvailable
 
 	^super isAvailable and: [self current isStarted]! !
+
 !XProgramming.SUnit.SimpleTestResource class categoriesForMethods!
 isAvailable!public! !
 !

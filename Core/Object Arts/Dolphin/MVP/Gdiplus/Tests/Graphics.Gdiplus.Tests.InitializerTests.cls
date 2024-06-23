@@ -7,9 +7,13 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests guid: (Core.GUID fromString: '{6547b0a9-3786-40b7-bacc-48ed66bf651d}')!
+
 Graphics.Gdiplus.Tests.InitializerTests isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.InitializerTests comment: ''!
+
 !Graphics.Gdiplus.Tests.InitializerTests methodsFor!
 
 createHandle
@@ -44,6 +48,7 @@ unmockGdip
 	messages := binding value messages.
 	binding setValue: GdiplusLibrary default.
 	^messages! !
+
 !Graphics.Gdiplus.Tests.InitializerTests categoriesForMethods!
 createHandle!private!unit tests! !
 mockGdip!private!running! !

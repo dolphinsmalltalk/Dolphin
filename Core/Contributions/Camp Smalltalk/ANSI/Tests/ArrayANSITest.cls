@@ -5,9 +5,13 @@ SequencedReadableCollectionTest subclass: #ArrayANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayANSITest guid: (GUID fromString: '{d7a8afc6-0aa0-45b6-8cc9-e4cd2ab49bc4}')!
+
 ArrayANSITest comment: ''!
+
 !ArrayANSITest categoriesForClass!Unclassified! !
+
 !ArrayANSITest methodsFor!
 
 canonicalElement
@@ -23,6 +27,7 @@ emptyCollection
 
 protocol
 	^#Array! !
+
 !ArrayANSITest categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -36,6 +41,7 @@ helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper! !
+
 !ArrayANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

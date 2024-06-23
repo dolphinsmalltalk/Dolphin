@@ -7,13 +7,17 @@ Graphics.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Metafile guid: (Core.GUID fromString: '{9afeffe3-f782-4d07-ad88-4aab4659091e}')!
+
 Graphics.Metafile comment: 'Metafile is the class of <Image>s that represent [Windows GDI Metafiles](https://docs.microsoft.com/en-us/windows/win32/gdi/metafiles)
 
 Instance Variables:
 	header	<ENHMETAHEADER>. Header data for the metafile.
 '!
+
 !Graphics.Metafile categoriesForClass!Graphics-Tools! !
+
 !Graphics.Metafile methodsFor!
 
 addToImageList: anImageList mask: aColorOrNil
@@ -157,6 +161,7 @@ saveAsFile: pathString
 	overwritten."
 
 	Gdi32 copyEnhMetaFile: self asParameter lpszFile: pathString! !
+
 !Graphics.Metafile categoriesForMethods!
 addToImageList:mask:!public!testing! !
 clearCached!private!realizing/unrealizing! !
@@ -197,6 +202,7 @@ playRecord: anENHMETARECORD on: aCanvas handleTable: aHandleArray
 
 resourceInitializerClass
 	^Error notYetImplemented! !
+
 !Graphics.Metafile class categoriesForMethods!
 filesType!constants!private! !
 freeHandle:!private!realizing/unrealizing! !

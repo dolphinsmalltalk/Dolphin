@@ -13,13 +13,17 @@ External.Structure
 			'SmalltalkEpoch' -> 16r150560D76A70000.
 			'UnixEpoch' -> 16r19DB1DED53E8000
 		}!
+
 OS.FILETIME guid: (Core.GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
 
 A FILETIME is a 64-bit integer count of the number of 100 nanosecond intervals since 01:00:00, 01 January 1601 UTC (i.e. not local time).
 
 FILETIMEs are typically used to mark file creation/modification/access times with very high accurracy in a time zone independent manner.'!
+
 !OS.FILETIME categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.FILETIME methodsFor!
 
 asDateAndTime
@@ -105,6 +109,7 @@ offsetSeconds
 	"Answer the <number> of seconds this <FILETIME> is offset from UTC."
 
 	^0! !
+
 !OS.FILETIME categoriesForMethods!
 asDateAndTime!converting!public! !
 asFILETIME!converting!public! !
@@ -201,6 +206,7 @@ now
 	"Note that avoiding GetSystemTimePreciseAsFileTime is deliberate, as the less precise value from GetSystemTimeAsFileTime is that used to update file write times, etc."
 	Kernel32 getSystemTimeAsFileTime: answer.
 	^answer! !
+
 !OS.FILETIME class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

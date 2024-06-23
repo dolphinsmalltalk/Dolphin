@@ -27,9 +27,13 @@ External.Structure
 			'_OffsetOf_flags' -> 16r10.
 			'_OffsetOf_value' -> 16r0
 		}!
+
 OS._FPIEEE_VALUE guid: (Core.GUID fromString: '{836cb53c-b7d3-492c-ad33-8574c49bed82}')!
+
 OS._FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_VALUE is used in the reporting of IEEE compliant floating point exceptions. It is essentially a discriminated union that can hold the various types of operand that can be used in floating point operations.'!
+
 !OS._FPIEEE_VALUE categoriesForClass!External-Data-Structured! !
+
 !OS._FPIEEE_VALUE methodsFor!
 
 flags
@@ -73,6 +77,7 @@ value
 			#uint32AtOffset: "string?")
 				at: (self format + 1))
 		with: 0]! !
+
 !OS._FPIEEE_VALUE categoriesForMethods!
 flags!**compiled accessors**!public! !
 format!accessing!public! !
@@ -99,6 +104,7 @@ defineFields
 
 getFieldNames
 	^#(#flags)! !
+
 !OS._FPIEEE_VALUE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

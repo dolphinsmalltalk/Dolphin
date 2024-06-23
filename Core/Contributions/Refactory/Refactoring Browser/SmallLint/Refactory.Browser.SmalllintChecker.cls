@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.SmalllintChecker guid: (Core.GUID fromString: '{b66e8888-4615-4250-b1d6-66ec532f9df1}')!
+
 Refactory.Browser.SmalllintChecker comment: ''!
+
 !Refactory.Browser.SmalllintChecker categoriesForClass!Refactory-Lint! !
+
 !Refactory.Browser.SmalllintChecker methodsFor!
 
 checkClass: aClass 
@@ -51,6 +55,7 @@ run
 			[:aClass | 
 			self checkClass: aClass.
 			self checkMethodsForClass: aClass]! !
+
 !Refactory.Browser.SmalllintChecker categoriesForMethods!
 checkClass:!private! !
 checkMethodsForClass:!private! !
@@ -81,6 +86,7 @@ runRule: aLintRule onEnvironment: aBrowserEnvironment
 		environment: aBrowserEnvironment;
 		run.
 	^aLintRule! !
+
 !Refactory.Browser.SmalllintChecker class categoriesForMethods!
 new!instance creation!public! !
 newWithContext!instance creation!public! !

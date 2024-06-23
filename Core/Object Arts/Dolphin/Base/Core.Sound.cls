@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.Win32Constants} #{OS.MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Sound guid: (Core.GUID fromString: '{87b4c4bc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Sound comment: 'Sound is the class of objects that represent wave audio resources (.wav files).
 
 Instance Variables:
@@ -20,7 +22,9 @@ Class Variables:
 	Registry		<IdentityDictionary>. Registry of standard named sounds.
 
 "test"'!
+
 !Core.Sound categoriesForClass!Multimedia! !
+
 !Core.Sound methodsFor!
 
 fileLocator: aFileLocator	
@@ -70,6 +74,7 @@ woofAndWait
 	| flags |
 	flags := (type bitAnd: ##(SND_ASYNC bitInvert)) bitOr: SND_SYNC.
 	self play: flags! !
+
 !Core.Sound categoriesForMethods!
 fileLocator:!accessing!private! !
 location:!accessing!private! !
@@ -207,6 +212,7 @@ woofFor: aSymbol ifAbsent: exceptionBlock
 	| sound |
 	sound := Registry lookup: aSymbol.
 	sound notNil ifTrue: [sound woof] ifFalse: [exceptionBlock value]! !
+
 !Core.Sound class categoriesForMethods!
 beep!parping!public! !
 beep:!not an aspect!parping!public! !

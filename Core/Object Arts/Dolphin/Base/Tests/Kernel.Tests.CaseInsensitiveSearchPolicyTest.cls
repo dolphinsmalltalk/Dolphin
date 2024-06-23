@@ -7,8 +7,11 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.CaseInsensitiveSearchPolicyTest guid: (Core.GUID fromString: '{9f0abf77-47aa-49cb-8b9b-96343696cb2e}')!
+
 Kernel.Tests.CaseInsensitiveSearchPolicyTest comment: ''!
+
 !Kernel.Tests.CaseInsensitiveSearchPolicyTest methodsFor!
 
 policyClass
@@ -38,6 +41,7 @@ testHash
 	self assert: (policy hash: 'ß') equals: (policy hash: 'ss').
 	"Also ligatures, e.g. U+FB03 - Latin Small Ligature Ffi should have same hash as individual letters"
 	self assert: (policy hash: $ﬃ asString) equals: (policy hash: 'ffi')! !
+
 !Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesForMethods!
 policyClass!private!unit tests! !
 testCompareWith!public!unit tests! !

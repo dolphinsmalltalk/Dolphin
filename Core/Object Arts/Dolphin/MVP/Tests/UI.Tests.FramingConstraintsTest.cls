@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.FramingConstraintsTest guid: (Core.GUID fromString: '{d3e4e78b-d2c4-48f8-9806-8ea0e96dfd32}')!
+
 UI.Tests.FramingConstraintsTest comment: ''!
+
 !UI.Tests.FramingConstraintsTest methodsFor!
 
 testStbConversionFromVersion0
@@ -42,6 +45,7 @@ testStbConversionFromVersion1
 	self assert: constraint topOffset equals: 40/161.
 	self assert: constraint bottomFraming equals: #fixedViewTop.
 	self assert: constraint bottomOffset equals: 40! !
+
 !UI.Tests.FramingConstraintsTest categoriesForMethods!
 testStbConversionFromVersion0!public! !
 testStbConversionFromVersion1!public! !

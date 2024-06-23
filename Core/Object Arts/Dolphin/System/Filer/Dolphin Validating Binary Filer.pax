@@ -31,6 +31,7 @@ Kernel.ClassLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ClassLocator
 	subclass: #'Kernel.ValidatingClassLocator'
 	instanceVariableNames: 'validationBlock'
@@ -38,6 +39,7 @@ Kernel.ClassLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxInFilerWrapper
 	subclass: #'Kernel.STBValidatingInFiler'
 	instanceVariableNames: 'version classLocator context'

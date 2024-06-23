@@ -7,7 +7,9 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'PATHCCH_MAX_CCH' -> 16r8000 }!
+
 OS.PathCchLibrary guid: (Core.GUID fromString: '{fef67ac9-c054-4034-859d-92ec9eae8407}')!
+
 OS.PathCchLibrary comment: 'PathCchLibrary is the `DynamicLinkLibrary` class to represent the dynamic link library, ''api-ms-win-core-path-l1-1-0.dll''. It was generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -15,7 +17,9 @@ The type library contains the following helpstring for this module
 
 ** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 '!
+
 !OS.PathCchLibrary categoriesForClass!Win32-Modules! !
+
 !OS.PathCchLibrary methodsFor!
 
 pathAllocCanonicalize: pszPathIn dwFlags: dwFlags ppszPathOut: ppszPathOut
@@ -250,6 +254,7 @@ pathIsUNCEx: pszPath ppszServer: ppszServer
 
 	<stdcall: bool PathIsUNCEx lpwstr lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !OS.PathCchLibrary categoriesForMethods!
 pathAllocCanonicalize:dwFlags:ppszPathOut:!**auto generated**!private!win32 functions-path! !
 pathAllocCombine:pszMore:dwFlags:ppszPathOut:!**auto generated**!private!win32 functions-path! !
@@ -282,6 +287,7 @@ fileName
 
 sharedVariableName
 	^#{OS.PathCch}! !
+
 !OS.PathCchLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

@@ -7,9 +7,13 @@ Kernel.StSemanticScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StClassScope guid: (Core.GUID fromString: '{b221d07f-4ae8-400c-b48e-28b90fca0050}')!
+
 Kernel.StClassScope comment: ''!
+
 !Kernel.StClassScope categoriesForClass!Kernel-Objects! !
+
 !Kernel.StClassScope methodsFor!
 
 classScope
@@ -87,6 +91,7 @@ visibleVariablesDo: aMonadicValuable visited: aSet
 		do: [:each | (aSet addNewElement: each name) ifTrue: [aMonadicValuable value: each]].
 	aMonadicValuable value: self selfVariable.
 	aMonadicValuable value: self superVariable! !
+
 !Kernel.StClassScope categoriesForMethods!
 classScope!accessing!public! !
 clearVariableCache!initializing!public! !
@@ -112,6 +117,7 @@ methodClass: aClassDescription
 methodClass: aClassDescription environment: aNamespace
 	^self new
 		methodClass: aClassDescription environment: aNamespace! !
+
 !Kernel.StClassScope class categoriesForMethods!
 methodClass:!instance creation!public! !
 methodClass:environment:!instance creation!public! !

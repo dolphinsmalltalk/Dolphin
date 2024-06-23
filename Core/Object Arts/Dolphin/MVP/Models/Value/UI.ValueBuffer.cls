@@ -7,7 +7,9 @@ UI.ValueHolder
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueBuffer guid: (Core.GUID fromString: '{87b4c67d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ValueBuffer comment: 'A ValueBuffer can be used to buffer changes to a subject <valueModel>. It presents the same <value> protocol as its subject but, when the value is changed, the change is not immediately passed to the subject. This only happens when the ValueBuffer receives an #apply message to indicate that any changes should be flushed.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Instance Variables:
 
 
 '!
+
 !UI.ValueBuffer categoriesForClass!MVP-Models! !
+
 !UI.ValueBuffer methodsFor!
 
 apply
@@ -98,6 +102,7 @@ value
 	value otherwise answer that of the subject"
 
 	^modified ifTrue: [value] ifFalse: [subject value]! !
+
 !UI.ValueBuffer categoriesForMethods!
 apply!accessing!commands!public! !
 gate!accessing!public! !
@@ -131,6 +136,7 @@ subject: aSubjectValueModel
 	"Answer an instance of the receiver that buffers the value of aSubjectValueModel."
 
 	^super new subject: aSubjectValueModel! !
+
 !UI.ValueBuffer class categoriesForMethods!
 icon!constants!public! !
 new!instance creation!private! !

@@ -177,6 +177,10 @@ Kernel.SharedPool
 			'VIEW_SORTTYPE' -> 16r7.
 			'VIEW_VIEWMENU' -> 16rC
 		}!
+
 OS.ToolbarConstants guid: (Core.GUID fromString: '{b3db8126-a20b-4003-9446-48a9f5b8c3af}')!
+
 OS.ToolbarConstants isNonInstantiable: true!
+
 OS.ToolbarConstants comment: ''!
+

@@ -5,13 +5,17 @@ Object subclass: #ProfilerSample
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerSample guid: (GUID fromString: '{425d0eb0-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerSample comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerSample categoriesForClass!IDB Goodies! !
+
 !ProfilerSample methodsFor!
 
 classInformation
@@ -58,6 +62,7 @@ setRoot: rootNode leaf: leafNode elapsedTime: anInteger
 	leaf := leafNode.
 	elapsedTime := anInteger.
 	^self! !
+
 !ProfilerSample categoriesForMethods!
 classInformation!accessing!public! !
 duration!accessing!public! !
@@ -82,6 +87,7 @@ root: rootNode leaf: leafNode elapsedTime: anInteger
 		setRoot: rootNode
 		leaf: leafNode
 		elapsedTime: anInteger! !
+
 !ProfilerSample class categoriesForMethods!
 icon!constants!public! !
 root:leaf:elapsedTime:!instance creation!public! !

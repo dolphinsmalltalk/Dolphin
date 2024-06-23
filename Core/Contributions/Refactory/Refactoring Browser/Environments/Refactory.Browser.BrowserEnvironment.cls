@@ -7,13 +7,17 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironment guid: (Core.GUID fromString: '{5a20d17b-a65d-4816-8b27-d25d2773698c}')!
+
 Refactory.Browser.BrowserEnvironment comment: 'BrowserEnvironments represent a selection of the classes/methods in the system. Not only is BrowserEnvironment itself class the superclass of all environments, it also represents the complete image contents (i.e. the selection that includes all classes and methods).
 
 Instance Variables:
 	label	<String>	a description of what we''re looking at
 	searchStrings	<Collection of: String>	strings to look for whenever we select a method'!
+
 !Refactory.Browser.BrowserEnvironment categoriesForClass!Refactory-Environments! !
+
 !Refactory.Browser.BrowserEnvironment methodsFor!
 
 & anEnvironment
@@ -410,6 +414,7 @@ whichProtocolsInclude: aSelector in: aClass
 	^(aClass compiledMethodAt: aSelector ifAbsent: nil)
 		ifNil: [#()]
 		ifNotNil: [:method | method realCategories collect: [:each | each name asSymbol]]! !
+
 !Refactory.Browser.BrowserEnvironment categoriesForMethods!
 &!environments!public! !
 |!environments!public! !
@@ -491,6 +496,7 @@ new
 	^(super new)
 		initialize;
 		yourself! !
+
 !Refactory.Browser.BrowserEnvironment class categoriesForMethods!
 new!instance creation!public! !
 !

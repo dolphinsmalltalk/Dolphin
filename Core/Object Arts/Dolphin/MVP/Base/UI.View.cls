@@ -18,7 +18,9 @@ Core.Object
 			'UIValidMask' -> 16r10.
 			'UsePreferredExtentMask' -> 16r100
 		}!
+
 UI.View guid: (Core.GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.View comment: 'View is an abstract class which is the root of the view hierarchy of classes. Instances of view or its subclasses are used to display Model data in windows. View is part of the Model-View-Presenter or MVP framework:
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.
@@ -56,7 +58,9 @@ Class Variables:
 	WndClassAtom		<integer>
 
 '!
+
 !UI.View categoriesForClass!MVP-Resources-Misc!MVP-Views! !
+
 !UI.View methodsFor!
 
 actualBackcolor
@@ -4551,6 +4555,7 @@ zOrderTop
 
 	User32 bringWindowToTop: handle.
 	self parentView onZOrderChanged! !
+
 !UI.View categoriesForMethods!
 actualBackcolor!accessing!private! !
 actualFont!accessing!font!private! !
@@ -5727,6 +5732,7 @@ wndClassName
 	defaults."
 
 	^##('DolphinWindow' asUtf16String)! !
+
 !UI.View class categoriesForMethods!
 active!accessing!public! !
 activeHandle!accessing!private! !

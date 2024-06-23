@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs guid: (OS.COM.IID fromString: '{07d1a6c3-7175-4ba1-9306-e593ca07e46c}')!
+
 WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs comment: '`ICoreWebView2LaunchingExternalUriSchemeEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -44,7 +47,9 @@ interface ICoreWebView2LaunchingExternalUriSchemeEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs methodsFor!
 
 cancel
@@ -153,6 +158,7 @@ uri
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs categoriesForMethods!
 cancel!properties!public! !
 cancel:!**auto generated**!properties!public! !
@@ -189,6 +195,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
+
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

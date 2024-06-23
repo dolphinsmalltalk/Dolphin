@@ -7,9 +7,13 @@ OS.COM.BIND_OPTS2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_BIND_OPTS3_Size' -> 16r24. '_OffsetOf_hwnd' -> 16r20 }!
+
 OS.COM.BIND_OPTS3 guid: (Core.GUID fromString: '{4ff80f9b-48b3-4cb4-af46-8c77a6173a31}')!
+
 OS.COM.BIND_OPTS3 comment: 'BIND_OPTS3 is an <ExternalStructure> class to represent the OLE Persistence and Data Transfer structure of the same name.'!
+
 !OS.COM.BIND_OPTS3 categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.BIND_OPTS3 methodsFor!
 
 hwnd
@@ -21,6 +25,7 @@ hwnd: aHandle
 	"Set the receiver's 'hwnd' field to the value of the argument, aHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_hwnd put: aHandle! !
+
 !OS.COM.BIND_OPTS3 categoriesForMethods!
 hwnd!**compiled accessors**!public! !
 hwnd:!**compiled accessors**!public! !
@@ -54,6 +59,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline #dwTrackFlags #dwClassContext #locale #pServerInfo #hwnd)! !
+
 !OS.COM.BIND_OPTS3 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

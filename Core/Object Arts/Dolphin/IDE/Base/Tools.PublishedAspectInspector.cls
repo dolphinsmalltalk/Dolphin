@@ -7,7 +7,9 @@ Tools.AbstractPublishedAspectInspector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PublishedAspectInspector guid: (Core.GUID fromString: '{9506570e-d634-421f-a07c-d937f05ad6b6}')!
+
 Tools.PublishedAspectInspector comment: 'PublishedAspectInspector is a <compositePresenter> that displays, and allows the modification of, a hierarchy of the published <Aspect>s for its model. 
 
 In order that the PublishedAspectInspector can display the aspects of a particular object, they must first be published by the object''s class. This is generally done by implementing the class side method, #publishedAspectsOfInstances, to add each of the <Aspect>s that need to be published to a <Set>. In certain specialised cases it may also be necessary to override the instance side method, #publishedAspects, in order to adjust this set by adding or removing aspects that are not discernible on the class side alone. If no aspects are explicitly published by the above means then any
@@ -25,7 +27,9 @@ Instance Variables:
 	aspectPresenter	<presenter> used to display the selected aspect in its recommended format.
 	workspacePresenter	<presenter> used to display the selected aspect in a <ValueWorkspace>
 '!
+
 !Tools.PublishedAspectInspector categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !Tools.PublishedAspectInspector methodsFor!
 
 addToCommandRoute: route 
@@ -110,6 +114,7 @@ selectAspect: anAspectAccessor
 								signal: ('Error inspecting <1s>: <2p>' expandMacrosWith: aspectValueHolder value basicPrintString
 										with: ex description)]]].
 	displayPresenter view invalidate! !
+
 !Tools.PublishedAspectInspector categoriesForMethods!
 addToCommandRoute:!private! !
 createComponents!private! !
@@ -141,6 +146,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.Dictionary} 50 2 518 #{Core.Association} 18 #{UI.ListTreeView} 50 59 nil 32 50 2 8 1140953421 1 224 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 13 2886 4 #{UI.Menu} nil true 50 12 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #inspectIt 8 '&Inspect' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'BasicInspector.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 466 1 498 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 466 1 498 #browseIt 8 '&Browse It' 1 1 546 nil true 578 8 'ClassBrowserShell.ico' 640 65541 nil nil nil 722 4097 466 1 498 #copyAspect 8 '&Copy' 1 1 nil nil nil 466 1 498 #pasteAspect 8 '&Paste <d>' 1 17 nil nil nil 722 4097 466 1 498 #editAspect 8 '&Edit' 1 1 nil nil nil 466 1 498 #resetAspect 8 '&Set to <1?Nil:Default>' 1 17 nil nil nil 722 4097 466 1 498 #refresh 8 'Re&fresh' 1 1 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 224 nil nil 518 #{Core.Message} #valueText 8 #() nil 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 322 3 3142 5 #{UI.ListViewColumn} 8 'Published Aspect' 191 #left 1154 #valueNameOnly 8 #() 1154 #<= 8 #() nil nil 224 1154 #typeImage 8 #() 3 1154 #valueNameInfo 1312 nil 1250 8 'Value' 189 #left 1154 #valueTextOnly 1312 1154 #<= 1344 nil nil 224 1154 #valueImage 8 #() 3 nil nil 1250 8 '' 41 #center 1154 #displayString 8 #() 1154 #<= 1552 nil nil 224 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 3 1 1584 8 'doIt' 8 '[:x | Tools.PropertyInspector editButtonImageIndexFor: x]' 8 #[31 105 45 17 177 106] 1094 2 #{Kernel.VariableBinding} #PropertyInspector #{Tools.PropertyInspector} #{Tools} 1 #editButtonImageIndexFor: 1600 7 257 nil 1 nil nil #report 8 #() nil 131431 518 #{Graphics.Point} 129 129 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil false 1862 3 #{UI.VirtualTreeModel} nil 368 322 0 nil nil 1586 0 nil 1318 #{Kernel.CompiledMethod} 2 3 1776 #defaultHasChildrenBlock 508791331 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 1792 1586 0 nil 1842 1 83886083 1776 #defaultFilterBlock 508773827 8 #[29 105 17 157 106] 1888 7 257 nil nil 550 #{Core.PluggableSet} 0 294 #{Core.IdentitySet} 0 13 1 nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 1746 1 1 1746 427 341 224 2050 #text: 50 1 8 'Published Aspect' 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 213 0 0 0 170 0 0 0] 8 #() 1746 193 193 nil 2029 5 194 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 2272 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 2272 nil 1 #left nil nil nil 1746 1 1 1746 9 9 nil 2368 nil 2002 50 1 2050 #createAt:extent: 50 2 1746 427 1 1746 11 341 2272 2178 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 213 0 0 0 0 0 0 0 218 0 0 0 170 0 0 0] 8 #() 2240 nil 27 1 false 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 4 224 8 'aspects' 18 #{UI.CardContainer} 50 16 nil 32 50 2 8 1140850688 131073 2608 nil nil nil 5 nil nil nil 2608 1350 1 #{UI.CardLayout} 322 0 nil nil nil nil 550 #{Core.IdentityDictionary} 0 nil 18 #{UI.TabViewXP} 50 28 nil 2608 50 2 8 1140916866 1 2752 290 322 0 nil 368 nil nil 1 nil nil nil 2752 nil nil 1586 0 nil 1618 1 83886081 #{Core.UndefinedObject} 8 'doIt' 8 '[:x | nil]' 8 #[29 105 60 106] 2848 7 257 nil 1154 #iconImageIndex 8 #() 1216 nil nil nil nil nil #smallIcons nil nil nil nil nil 2002 50 2 2050 #createAt:extent: 50 2 1746 1 1 1746 215 341 2752 2050 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 2752 2178 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 107 0 0 0 170 0 0 0] 8 #() 2240 nil 27 2002 50 1 2050 #createAt:extent: 50 2 1746 437 1 1746 215 341 2608 2178 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 218 0 0 0 0 0 0 0 69 1 0 0 170 0 0 0] 50 1 2752 2240 nil 27 8 'display' nil 2002 50 1 2050 #createAt:extent: 50 2 1746 6143 21 1746 651 341 32 2178 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 68 13 0 0 180 0 0 0] 50 3 224 2272 2608 2240 nil 27)! !
+
 !Tools.PublishedAspectInspector class categoriesForMethods!
 initialize!initializing!private! !
 resource_Default_view!public!resources-views! !

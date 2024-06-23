@@ -7,7 +7,9 @@ UI.CommandDescription
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ClosedCommandDescription guid: (Core.GUID fromString: '{26e7b7a8-fc97-462c-8edf-c6e4467046ff}')!
+
 UI.ClosedCommandDescription comment: 'ClosedCommandDescription is the class of <CommandDescription>s that have a pluggable implementation of #queryCommand: such that they can be completely self contained, both describing the command to be performed, where to send it, and also managing enablement/disablement.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	receiver		<Object> to which the command will be sent. Can be nil, in which case queryBlock determines receiver. 
 	
 '!
+
 !UI.ClosedCommandDescription categoriesForClass!MVP-Commands! !
+
 !UI.ClosedCommandDescription methodsFor!
 
 queryBlock: aMonadicValuable
@@ -51,6 +55,7 @@ receiver
 
 receiver: anObject
 	receiver := anObject! !
+
 !UI.ClosedCommandDescription categoriesForMethods!
 queryBlock:!accessing!public! !
 queryCommand:!commands!public! !
@@ -88,6 +93,7 @@ command: commandMessage description: aString receiver: anObject
 	always be sent to anObject."
 
 	^self command: commandMessage description: aString queryBlock: nil receiver: anObject! !
+
 !UI.ClosedCommandDescription class categoriesForMethods!
 command:description:queryBlock:!instance creation!public! !
 command:description:queryBlock:receiver:!instance creation!public! !

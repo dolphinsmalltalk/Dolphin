@@ -7,9 +7,13 @@ Core.Tests.StringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.UtfEncodedStringTest guid: (Core.GUID fromString: '{f3d4f4a7-05b6-445f-8380-d0b838804877}')!
+
 Core.Tests.UtfEncodedStringTest isNonInstantiable: true!
+
 Core.Tests.UtfEncodedStringTest comment: ''!
+
 !Core.Tests.UtfEncodedStringTest methodsFor!
 
 afterTestCases
@@ -1016,6 +1020,7 @@ withAllTestCases
 				{'a 🐬 è' asUtf8String}.
 				#('Приве́т नमस्ते שָׁלוֹם').
 				#('áèȋöû')}! !
+
 !Core.Tests.UtfEncodedStringTest categoriesForMethods!
 afterTestCases!constants!private! !
 beforeTestCases!constants!private! !

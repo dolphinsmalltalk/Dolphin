@@ -15,7 +15,9 @@ UI.MessageBoxAbstract
 			'TDF_Mask' -> 16r1FFFFFF.
 			'TopMostMask' -> 16r40000000
 		}!
+
 UI.MessageBox guid: (Core.GUID fromString: '{87b4c49f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.MessageBox comment: '`MessageBox` provides a convenient dialog abstraction for posing short questions, and reporting notifications, warnings, or errors.
 
 `MessageBox` is implemented using the [Windows TaskDialog](https://docs.microsoft.com/en-us/windows/win32/controls/task-dialogs) control. TaskDialog offers significantly more functionality and greater flexibility than the traditional Windows MessageBox:
@@ -93,7 +95,9 @@ Defaultable message boxes also write a registry value to preserve the choice on 
   `TopMostMask`			`<integer>`. Masks in/out the top-most flag from the `flags` instance variable.
   `TDF_Mask`				`<integer>`. Masks for the TDF_XXX flags in the `flags` instance variable.
 '!
+
 !UI.MessageBox categoriesForClass!MVP-Views-Support! !
+
 !UI.MessageBox methodsFor!
 
 areLinksParsed
@@ -1085,6 +1089,7 @@ updateProgressRange
 		msg: TDM_SET_PROGRESS_BAR_RANGE
 		wParam: 0
 		lpParam: ((range stop bitShift: 16) bitOr: range start)! !
+
 !UI.MessageBox categoriesForMethods!
 areLinksParsed!accessing-styles!public! !
 areLinksParsed:!accessing-styles!public! !
@@ -1264,6 +1269,7 @@ initialize
 				yourself).
 	self addClassConstant: 'NotificationCallbackDescriptor'
 		value: (FunctionDescriptor returnType: 'hresult' argumentTypes: 'handle uint32 uintptr intptr intptr')! !
+
 !UI.MessageBox class categoriesForMethods!
 confirm:!instance creation!public! !
 confirm:caption:!instance creation!public! !

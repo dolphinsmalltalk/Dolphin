@@ -7,11 +7,15 @@ Core.MessageSendAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.EventMessageSend guid: (Core.GUID fromString: '{87b4c663-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.EventMessageSend comment: 'An EventMessageSend is a fully closed <Message>, including receiver object, the message selector, and an array of sufficient arguments, however the receiver is referenced weakly.
 
 When evaluate with extra arguments, an EventMessageSend merges its own argument with those supplied at evaluation time with the latter taking precedence from the left. For example if the message requires two arguments, and one is supplied at evaluation time, then the first argument sent will be that one, and the second the second of the arguments stored in the EventMessageSend itself.'!
+
 !Kernel.EventMessageSend categoriesForClass!System-Support! !
+
 !Kernel.EventMessageSend methodsFor!
 
 asMessageSend
@@ -79,6 +83,7 @@ value
 		ifFalse: 
 			[self receiver perform: selector
 				withArguments: (expectedArgCount == args size ifTrue: [args] ifFalse: [self mergeArguments: #()])]! !
+
 !Kernel.EventMessageSend categoriesForMethods!
 asMessageSend!public! !
 forwardTo:withArguments:!evaluating!private! !
@@ -94,6 +99,7 @@ value!evaluating!public! !
 
 new
 	^(self new: 1) beWeak; yourself! !
+
 !Kernel.EventMessageSend class categoriesForMethods!
 new!instance creation!public! !
 !

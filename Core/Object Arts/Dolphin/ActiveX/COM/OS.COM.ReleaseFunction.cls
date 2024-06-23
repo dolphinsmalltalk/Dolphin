@@ -7,11 +7,15 @@ OS.COM.AbstractInterfaceFunction
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ReleaseFunction guid: (Core.GUID fromString: '{8f012e18-24bd-4bc1-85eb-d0dd5497c142}')!
+
 OS.COM.ReleaseFunction comment: 'COMReleaseFunction is a specialized class of <COMFunction> intended to represent the IUnknown::Release() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMReleaseFunction sends a #Release message to the relevant stub.'!
+
 !OS.COM.ReleaseFunction categoriesForClass!COM-Implementations! !
+
 !OS.COM.ReleaseFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: pArgs
@@ -33,6 +37,7 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#Release! !
+
 !OS.COM.ReleaseFunction categoriesForMethods!
 callback:interface:withArgumentsAt:!evaluating!private! !
 descriptor!accessing!private! !
@@ -55,6 +60,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
+
 !OS.COM.ReleaseFunction class categoriesForMethods!
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

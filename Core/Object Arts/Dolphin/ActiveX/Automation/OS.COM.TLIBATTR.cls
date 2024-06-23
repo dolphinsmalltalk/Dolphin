@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_wMinorVerNum' -> 16r1A.
 			'_TLIBATTR_Size' -> 16r20
 		}!
+
 OS.COM.TLIBATTR guid: (Core.GUID fromString: '{c06f3b71-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.TLIBATTR comment: 'TLIBATTR is an ExternalStructure class to represent the OLE Automation TLIBATTR structure.
 
 TLIBATTR is a simple structure containing basic descriptive details about a type library, namely:
@@ -26,7 +28,9 @@ TLIBATTR is a simple structure containing basic descriptive details about a type
 	and some flags	(#wLibFlags)
 
 TLIBATTR is probably only of interest for the purposes of browsing type libraries and is of no obvious use in applications.'!
+
 !OS.COM.TLIBATTR categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.TLIBATTR methodsFor!
 
 comparisonSize
@@ -91,6 +95,7 @@ wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
 	^bytes uint16AtOffset: _OffsetOf_wMinorVerNum! !
+
 !OS.COM.TLIBATTR categoriesForMethods!
 comparisonSize!accessing!private! !
 guid!**compiled accessors**!public! !
@@ -150,6 +155,7 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !
+
 !OS.COM.TLIBATTR class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

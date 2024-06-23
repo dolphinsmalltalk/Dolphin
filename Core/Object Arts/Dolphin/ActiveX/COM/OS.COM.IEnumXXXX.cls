@@ -7,10 +7,15 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumXXXX guid: (OS.COM.IID fromString: '{87b4c59f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.IEnumXXXX isNonInstantiable: true!
+
 OS.COM.IEnumXXXX comment: ''!
+
 !OS.COM.IEnumXXXX categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IEnumXXXX methodsFor!
 
 batchSize
@@ -220,6 +225,7 @@ upToEndDo: operation
 	elems do: [:e | operation value: e].
 	elems size < count] 
 			whileFalse! !
+
 !OS.COM.IEnumXXXX categoriesForMethods!
 batchSize!constants!public! !
 Clone:!COM Interfaces-IEnumXXXX!primitives!private! !
@@ -272,6 +278,7 @@ elementClass
 
 	^self subclassResponsibility
 ! !
+
 !OS.COM.IEnumXXXX class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 elementClass!constants!private! !

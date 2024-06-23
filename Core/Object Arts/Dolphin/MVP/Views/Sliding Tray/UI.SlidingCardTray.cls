@@ -7,7 +7,9 @@ UI.CardContainer
 	imports: #(#{OS.TabViewConstants} #{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.SlidingCardTray guid: (Core.GUID fromString: '{c8908738-f06b-4eac-89ba-67add22cec3b}')!
+
 UI.SlidingCardTray comment: 'A `SlidingCardTray` is a specialised `CardContainer` for use in conjunction with a `SlideyInneyOuteyView` to implement a tabbed view which slides out the contained cards when the user hovers over the tabs, and slides them back in again when the user leaves the window for a short while. 
 
 ## Instance Variables:
@@ -22,7 +24,9 @@ UI.SlidingCardTray comment: 'A `SlidingCardTray` is a specialised `CardContainer
   `PinImageList`		`UndefinedObject`
 
 '!
+
 !UI.SlidingCardTray categoriesForClass!MVP-Views! !
+
 !UI.SlidingCardTray methodsFor!
 
 calcClientRectangleFromRectangle: aRectangle 
@@ -360,6 +364,7 @@ wmPrint: message wParam: wParam lParam: lParam
 				lParam: lParam.
 	(lParam allMask: PRF_NONCLIENT) ifTrue: [self paintEdgesOn: (Canvas withNonOwnedDC: wParam)].
 	^result! !
+
 !UI.SlidingCardTray categoriesForMethods!
 calcClientRectangleFromRectangle:!event handling-win32!private! !
 calculateExtent:!geometry!private! !
@@ -412,6 +417,7 @@ initialize
 
 themePartName
 	^'EXPLORERBAR'! !
+
 !UI.SlidingCardTray class categoriesForMethods!
 initialize!initializing!private! !
 themePartName!constants!public!theming! !

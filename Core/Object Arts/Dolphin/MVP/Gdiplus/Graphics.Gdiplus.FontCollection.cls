@@ -7,11 +7,15 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontCollection guid: (Core.GUID fromString: '{c09d8c02-5f28-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.FontCollection isNonInstantiable: true!
+
 Graphics.Gdiplus.FontCollection comment: 'GdiplusFontCollection is an abstract class that contains methods for enumerating the font families in a collection of fonts.
 
 '!
+
 !Graphics.Gdiplus.FontCollection methodsFor!
 
 families
@@ -52,6 +56,7 @@ familyCount
 	count := UInt32Bytes new.
 	Gdip gdipGetFontCollectionFamilyCount: self asParameter numFound: count.
 	^count asSignedInteger! !
+
 !Graphics.Gdiplus.FontCollection categoriesForMethods!
 families!accessing!public! !
 families:!accessing!public! !
@@ -71,6 +76,7 @@ installed
 
 installedFamilies
 	^self installed familiesByName! !
+
 !Graphics.Gdiplus.FontCollection class categoriesForMethods!
 icon!constants!development!public! !
 installed!instance creation!public! !

@@ -14,7 +14,9 @@ External.Structure
 			'_OffsetOf_bfSize' -> 16r2.
 			'_OffsetOf_bfType' -> 16r0
 		}!
+
 OS.BITMAPFILEHEADER guid: (Core.GUID fromString: '{48f23680-5426-11d3-998b-bca753d3b065}')!
+
 OS.BITMAPFILEHEADER comment: '`BITMAPFILEHEADER` is an `External.Structure` class to wrap the struct ''Win32.BITMAPFILEHEADER'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -33,7 +35,9 @@ struct tagBITMAPFILEHEADER {
 } BITMAPFILEHEADER;
 ```
 '!
+
 !OS.BITMAPFILEHEADER categoriesForClass!Win32-Structs! !
+
 !OS.BITMAPFILEHEADER methodsFor!
 
 bfOffBits
@@ -65,6 +69,7 @@ bfType: anInteger
 	"Set the receiver's 'bfType' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_bfType put: anInteger! !
+
 !OS.BITMAPFILEHEADER categoriesForMethods!
 bfOffBits!**compiled accessors**!public! !
 bfOffBits:!**compiled accessors**!public! !
@@ -111,6 +116,7 @@ packing
 	2-byte boundaries - probably a 16-bit inheritance."
 
 	^2! !
+
 !OS.BITMAPFILEHEADER class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -5,10 +5,15 @@ TestCase subclass: #TestCaseProtocol
 	classVariableNames: 'IsStrict'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCaseProtocol guid: (GUID fromString: '{403355e6-9806-435f-8bba-139199ccd171}')!
+
 TestCaseProtocol isAbstract: true!
+
 TestCaseProtocol comment: ''!
+
 !TestCaseProtocol categoriesForClass!Unclassified! !
+
 !TestCaseProtocol methodsFor!
 
 asANSITestArray: arrays
@@ -180,6 +185,7 @@ value: aBlockContext shouldRaise: anException
 	#'ACSUEnh'. 
 	ok := [ aBlockContext value. false ] on: anException do: [:ex | ex return: true ].
 	self assert: ok! !
+
 !TestCaseProtocol categoriesForMethods!
 asANSITestArray:!public! !
 assertSend:!public! !
@@ -211,6 +217,7 @@ initialize
 
 testMethods
 ^self selectors select: [:each | 'test*' match: each].! !
+
 !TestCaseProtocol class categoriesForMethods!
 initialize!public! !
 testMethods!public! !

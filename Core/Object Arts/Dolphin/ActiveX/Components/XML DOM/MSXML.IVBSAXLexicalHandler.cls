@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IVBSAXLexicalHandler guid: (OS.COM.IID fromString: '{032aac35-8c0e-4d9d-979f-e3b702935576}')!
+
 MSXML.IVBSAXLexicalHandler comment: '<IVBSAXLexicalHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXLexicalHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -48,7 +50,9 @@ interface IVBSAXLexicalHandler : IDispatch
 		[in, out]BSTR* strChars);
 };
 '!
+
 !MSXML.IVBSAXLexicalHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IVBSAXLexicalHandler methodsFor!
 
 comment: strChars
@@ -159,6 +163,7 @@ StartEntity: strName
 
 	<virtual stdcall: hresult 10 bstr*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IVBSAXLexicalHandler categoriesForMethods!
 comment:!**auto generated**!methods!public! !
 Comment:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
@@ -194,6 +199,7 @@ defineFunctions
 		defineFunction: #Comment:
 			argumentTypes: 'bstr*'
 ! !
+
 !MSXML.IVBSAXLexicalHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

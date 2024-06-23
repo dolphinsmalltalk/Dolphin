@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: { 'EdgePointResolution' -> 16rA }!
+
 Tools.ObjectInside guid: (Core.GUID fromString: '{c019a761-9b1c-4f55-8dd3-66b8e8b2864f}')!
+
 Tools.ObjectInside comment: ''!
+
 !Tools.ObjectInside categoriesForClass!Kernel-Objects! !
+
 !Tools.ObjectInside methodsFor!
 
 alpha
@@ -182,6 +186,7 @@ y
 
 y: aNumber
 	self position: self position x @ aNumber! !
+
 !Tools.ObjectInside categoriesForMethods!
 alpha!accessing!public! !
 alpha:!accessing!public! !
@@ -236,6 +241,7 @@ fromImage: aGdiplusImage scaledBy: aFloatScale
 	aFloatScale = 1 ifTrue: [^self fromImage: aGdiplusImage].
 	scaledBitmap := Gdiplus.Bitmap fromImage: aGdiplusImage scaledBy: aFloatScale.
 	^self fromImage: scaledBitmap! !
+
 !Tools.ObjectInside class categoriesForMethods!
 chooseFile!public! !
 fromBytes:!public! !

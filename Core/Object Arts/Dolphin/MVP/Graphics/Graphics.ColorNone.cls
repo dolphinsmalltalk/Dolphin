@@ -7,12 +7,15 @@ Graphics.ColorRef
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ColorNone guid: (Core.GUID fromString: '{21257bc4-33c5-4684-b606-e387fcfbede6}')!
+
 Graphics.ColorNone comment: '`ColorNone` is the special `ColorRef` which represents a completely transparent colour. It is used to specify that something should be drawn transparently, or that the background should not be filled.
 
 `ColorNone`s singleton instance is accessed using the expression `Color transparent`.
 
 The superclass `code` instance variable has the value `Win32Constants.CLR_NONE`.'!
+
 !Graphics.ColorNone methodsFor!
 
 alpha
@@ -72,6 +75,7 @@ shallowCopy
 	"The receiver has a singleton instance."
 
 	^self! !
+
 !Graphics.ColorNone categoriesForMethods!
 alpha!accessing!public! !
 alpha:!accessing!public! !

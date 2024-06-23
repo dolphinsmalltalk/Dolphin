@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPictureDisp guid: (OS.COM.IID fromString: '{7bf80981-bf32-101a-8bbb-00aa00300cab}')!
+
 OS.COM.IPictureDisp comment: '`IPictureDisp` is a wrapper class generated for the dispatch interface ''stdole.Picture'' from type information in the ''OLE Automation'' library. It contains methods to get and set the properties and invoke the methods exposed by that interface.
 
 The type library contains no documentation for this dispinterface
@@ -62,7 +64,9 @@ OLE_HANDLE hPal;
 };
 ```
 '!
+
 !OS.COM.IPictureDisp categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IPictureDisp methodsFor!
 
 handle
@@ -117,6 +121,7 @@ width
 		OLE_XSIZE_HIMETRIC Width"
 
 	^self getPropertyId: 4! !
+
 !OS.COM.IPictureDisp categoriesForMethods!
 handle!**auto generated**!properties!public! !
 height!**auto generated**!properties!public! !
@@ -135,6 +140,7 @@ clsid
 	"Private - Answer the CLSID of the coclass (StdPicture) for which the receiver is the default interface."
 
 	^CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}'! !
+
 !OS.COM.IPictureDisp class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 !

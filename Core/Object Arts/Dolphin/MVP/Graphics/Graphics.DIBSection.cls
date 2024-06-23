@@ -7,9 +7,13 @@ Graphics.Bitmap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.DIBSection guid: (Core.GUID fromString: '{f44c914a-2b3f-11d3-8368-7a8b5a000000}')!
+
 Graphics.DIBSection comment: ''!
+
 !Graphics.DIBSection categoriesForClass!Graphics-Tools! !
+
 !Graphics.DIBSection methodsFor!
 
 bitmapInfoStructClass
@@ -124,6 +128,7 @@ setColorTable: anRGBQUADArray
 				cEntries: size
 				pColors: anRGBQUADArray.
 	size == newSize ifFalse: [^Win32Error signal]! !
+
 !Graphics.DIBSection categoriesForMethods!
 bitmapInfoStructClass!constants!private! !
 cacheInfo!helpers!private! !
@@ -189,6 +194,7 @@ width: widthInteger height: heightInteger
 	"Answers a true-colour DIBSection bitmap of dimensions width*height*24 bits/pixel."
 
 	^self extent: widthInteger @ heightInteger! !
+
 !Graphics.DIBSection class categoriesForMethods!
 blankInitializerClass!constants!private! !
 defaultLoadFlags!constants!private! !

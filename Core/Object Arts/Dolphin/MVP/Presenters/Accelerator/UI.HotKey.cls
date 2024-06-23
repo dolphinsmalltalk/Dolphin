@@ -7,7 +7,9 @@ UI.ValueConvertingControlView
 	imports: #(#{OS.HotKeyConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.HotKey guid: (Core.GUID fromString: '{87b4c736-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.HotKey comment: 'HotKey is a <valueView> implementing the Windows "msctls_hotkey32" common control. The <valueModel> associated with a HotKey must always yield an <integer> hot-key value when mapped through the installed type converter. Typically, a HotKey view is configured with an AccelToHotKey <typeConverter> and used to display/edit accelerator key definitions. A HotKey will normally be used in conjunction with a <NumberPresenter>.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 
 
 '!
+
 !UI.HotKey categoriesForClass!MVP-Views! !
+
 !UI.HotKey methodsFor!
 
 currentModifiers
@@ -153,6 +157,7 @@ wmSysKeyUp: message wParam: wParam lParam: lParam
 
 	self updateModel.
 	^false! !
+
 !UI.HotKey categoriesForMethods!
 currentModifiers!accessing!private! !
 defaultExtent!accessing!constants!private! !
@@ -192,6 +197,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_hotkey32'! !
+
 !UI.HotKey class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

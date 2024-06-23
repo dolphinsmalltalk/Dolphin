@@ -7,10 +7,15 @@ Core.Object
 	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MenuPainter guid: (Core.GUID fromString: '{50ca5bf4-97c5-4fba-a59f-fb43f0a962f9}')!
+
 Tools.MenuPainter isNonInstantiable: true!
+
 Tools.MenuPainter comment: ''!
+
 !Tools.MenuPainter categoriesForClass!Kernel-Objects! !
+
 !Tools.MenuPainter methodsFor!
 
 borderInset
@@ -410,6 +415,7 @@ widthOfItemText: aMenuItem using: aCanvas
 				flags: self drawTextFlags]
 					ensure: [aCanvas font: oldFont].
 	^size x! !
+
 !Tools.MenuPainter categoriesForMethods!
 borderInset!constants!private! !
 calculateGeometry:!public!updating! !
@@ -464,6 +470,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Menu icon! !
+
 !Tools.MenuPainter class categoriesForMethods!
 forMenu:!public! !
 icon!constants!public! !

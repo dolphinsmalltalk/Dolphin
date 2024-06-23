@@ -5,9 +5,13 @@ TestCaseHelper subclass: #SequencedReadableCollectionHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequencedReadableCollectionHelper guid: (GUID fromString: '{739ae9ac-703e-451d-8fda-64b1e591215d}')!
+
 SequencedReadableCollectionHelper comment: ''!
+
 !SequencedReadableCollectionHelper categoriesForClass!Unclassified! !
+
 !SequencedReadableCollectionHelper methodsFor!
 
 canonicalObject
@@ -378,6 +382,7 @@ testXwithXdoX
 	    should: [:r | col = #(false false false) asOrderedCollection]
 		conformTo: #sequencedReadableCollection
 		selector: #with:do:.! !
+
 !SequencedReadableCollectionHelper categoriesForMethods!
 canonicalObject!public! !
 canonicalObjects!public! !

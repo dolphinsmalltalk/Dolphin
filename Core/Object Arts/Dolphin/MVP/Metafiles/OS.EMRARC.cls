@@ -12,7 +12,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_ptlStart' -> 16r18.
 			'_OffsetOf_rclBox' -> 16r8
 		}!
+
 OS.EMRARC guid: (Core.GUID fromString: '{a4d8acff-7c86-450e-ab37-011f1b1a9754}')!
+
 OS.EMRARC comment: '<EMRARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +31,9 @@ struct tagEMRARC {
 	POINTL ptlEnd;
 } EMRARC;
 '!
+
 !OS.EMRARC categoriesForClass!Win32-Structs! !
+
 !OS.EMRARC methodsFor!
 
 ptlEnd
@@ -73,6 +77,7 @@ rclBox: aRECTL
 		from: ##(_OffsetOf_rclBox + 1)
 		to: ##(_OffsetOf_rclBox + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.EMRARC categoriesForMethods!
 ptlEnd!**compiled accessors**!public! !
 ptlEnd:!**compiled accessors**!public! !
@@ -121,6 +126,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ARC. EMR_ARCTO. EMR_CHORD. EMR_PIE}! !
+
 !OS.EMRARC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

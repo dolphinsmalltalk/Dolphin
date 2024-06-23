@@ -7,7 +7,9 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.PersonalAccount guid: (Core.GUID fromString: '{87b4c668-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Examples.PersonalAccount comment: 'A PersonalAccount holds all details pertaining to a single account in the PersonalMoney system. 
 
 Instance Variables
@@ -19,7 +21,9 @@ Instance Variables
 
 
 '!
+
 !UI.Examples.PersonalAccount categoriesForClass!MVP-Models!Samples! !
+
 !UI.Examples.PersonalAccount methodsFor!
 
 accountNumber
@@ -122,6 +126,7 @@ transactions
 	"Answer the transactions collection"
 
 	^transactions! !
+
 !UI.Examples.PersonalAccount categoriesForMethods!
 accountNumber!accessing!public! !
 accountNumber:!accessing!public! !
@@ -150,6 +155,7 @@ publishedEventsOfInstances
 		add: #currentBalanceChanged;
 		yourself.
 ! !
+
 !UI.Examples.PersonalAccount class categoriesForMethods!
 publishedEventsOfInstances!development!events!public! !
 !

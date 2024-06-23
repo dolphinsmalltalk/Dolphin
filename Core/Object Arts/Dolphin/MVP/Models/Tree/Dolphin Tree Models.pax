@@ -36,6 +36,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Model
 	subclass: #'UI.TreeModelAbstract'
 	instanceVariableNames: 'searchPolicy'
@@ -43,6 +44,7 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TreeModelAbstract
 	subclass: #'UI.TreeModel'
 	instanceVariableNames: 'anchorNode objectNodeMap'
@@ -50,6 +52,7 @@ UI.TreeModelAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TreeModelAbstract
 	subclass: #'UI.VirtualTreeModel'
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'
@@ -57,6 +60,7 @@ UI.TreeModelAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TreeModel
 	subclass: #'UI.ExpandingTreeModel'
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'

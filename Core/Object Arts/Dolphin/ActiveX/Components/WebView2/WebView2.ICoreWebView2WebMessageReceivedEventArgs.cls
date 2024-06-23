@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2WebMessageReceivedEventArgs guid: (OS.COM.IID fromString: '{0f99a40c-e962-4207-9e92-e3d542eff849}')!
+
 WebView2.ICoreWebView2WebMessageReceivedEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2WebMessageReceivedEventArgs comment: '`ICoreWebView2WebMessageReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebMessageReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +38,9 @@ interface ICoreWebView2WebMessageReceivedEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs methodsFor!
 
 additionalObjects
@@ -110,6 +115,7 @@ webMessageAsJson
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs categoriesForMethods!
 additionalObjects!properties!public! !
 get_AdditionalObjects:!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs2!private! !
@@ -138,6 +144,7 @@ defineFunctions
 
 latestDerivation
 	^##(super latestDerivation)! !
+
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 latestDerivation!enquiries!public! !

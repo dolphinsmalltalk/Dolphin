@@ -7,8 +7,11 @@ Tools.Tests.STxDebuggerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.STLDebuggerTest guid: (Core.GUID fromString: '{ff809f44-4ea6-461b-a9e7-77597a99be16}')!
+
 Tools.Tests.STLDebuggerTest comment: ''!
+
 !Tools.Tests.STLDebuggerTest methodsFor!
 
 expectedDump3
@@ -395,6 +398,7 @@ testNonExistentClass
 	self should: [self dump: dessicated withOffsets: false] raise: NotFoundError.
 	self should: [self dump: dessicatedInstance withOffsets: false] raise: NotFoundError]
 			ensure: [#{STBTest_TestClass} ifDefined: [:c | c removeFromSystem]]! !
+
 !Tools.Tests.STLDebuggerTest categoriesForMethods!
 expectedDump3!constants!private!unit tests! !
 expectedDump4!constants!private! !

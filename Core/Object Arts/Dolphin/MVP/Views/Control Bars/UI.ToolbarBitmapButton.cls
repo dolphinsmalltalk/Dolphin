@@ -7,7 +7,9 @@ UI.ToolbarButton
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ToolbarBitmapButton guid: (Core.GUID fromString: '{87b4c700-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ToolbarBitmapButton comment: '`ToolbarBitmapButton` represents a user defined button for a `Toolbar` where the image for the button is sourced from a `Bitmap`, typically containing a strip of tool images. The image within the bitmap strip to be used for the button is identified by an index within the supplied `Bitmap`.
 
 ## Instance Variables:
@@ -17,7 +19,9 @@ UI.ToolbarBitmapButton comment: '`ToolbarBitmapButton` represents a user defined
 
 
 '!
+
 !UI.ToolbarBitmapButton categoriesForClass!MVP-Views-Support! !
+
 !UI.ToolbarBitmapButton methodsFor!
 
 bitmap
@@ -57,6 +61,7 @@ imageIndexIn: aToolbar
 
 	^aToolbar addBitmap: self bitmap index: self bitmapIndex
 ! !
+
 !UI.ToolbarBitmapButton categoriesForMethods!
 bitmap!accessing!public! !
 bitmap:!accessing!public! !
@@ -82,6 +87,7 @@ new
 	"Answer a new default ToolbarButton"
 
 	^self dolphinImage: 35 command: #noCommand description: 'No command'! !
+
 !UI.ToolbarBitmapButton class categoriesForMethods!
 bitmap:index:commandDescription:!instance creation!public! !
 new!instance creation!public! !

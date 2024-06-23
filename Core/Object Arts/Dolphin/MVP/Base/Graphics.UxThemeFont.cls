@@ -17,8 +17,11 @@ Graphics.SystemFont
 								16r326 -> #iconTitle
 							})
 		}!
+
 Graphics.UxThemeFont guid: (Core.GUID fromString: '{d0d280e2-2bf1-4921-b969-8efb0270983f}')!
+
 Graphics.UxThemeFont comment: ''!
+
 !Graphics.UxThemeFont methodsFor!
 
 getLogFont
@@ -56,6 +59,7 @@ printOn: aStream
 setId: anInteger themedObject: anObjectWithTheme
 	id := anInteger.
 	themedObject := anObjectWithTheme! !
+
 !Graphics.UxThemeFont categoriesForMethods!
 getLogFont!initializing!private! !
 printOn:!development!printing!public! !
@@ -92,6 +96,7 @@ smallCaption
 
 status
 	^self fromId: TMT_STATUSFONT! !
+
 !Graphics.UxThemeFont class categoriesForMethods!
 caption!instance creation!public! !
 fromId:!instance creation!public! !

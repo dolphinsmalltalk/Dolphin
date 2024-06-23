@@ -47,6 +47,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.CURRENCYTest'
 	instanceVariableNames: ''
@@ -54,6 +55,7 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.DECIMALTest'
 	instanceVariableNames: ''
@@ -61,6 +63,7 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.IDispatchTest'
 	instanceVariableNames: ''
@@ -68,6 +71,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.TypeLibraryAnalyzerTest'
 	instanceVariableNames: 'analyzer'
@@ -75,6 +79,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.VARIANTTest'
 	instanceVariableNames: ''
@@ -82,6 +87,7 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'OS.COM.Tests.BSTRArrayTest'
 	instanceVariableNames: ''
@@ -89,6 +95,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.GenericExternalArrayTest
 	subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
@@ -96,6 +103,7 @@ External.Tests.GenericExternalArrayTest
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestResource
 	subclass: #'OS.COM.Tests.TestTypelib'
 	instanceVariableNames: 'analyzer'
@@ -115,6 +123,7 @@ testBSTRFromAddress
 	empty := OS.COM.BSTR new.
 	self assert: (OS.COM.BSTR fromAddress: nil) equals: empty.
 	self assert: (OS.COM.BSTR fromAddress: 0) equals: empty! !
+
 !External.Tests.AddressTest categoriesForMethods!
 testBSTRFromAddress!public!unit tests! !
 !
@@ -130,6 +139,7 @@ testComPtrs
 		parseStructArg: COM.IDispatch
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR! !
+
 !External.Tests.FunctionDescriptorTest categoriesForMethods!
 testComPtrs!public!unit tests! !
 !
@@ -151,6 +161,7 @@ testExtendedErrorInfo
 	self assertIsNil: error errorInfo.
 	self assert: error hresult
 		equals: (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidPointer)! !
+
 !External.Tests.StructureTest categoriesForMethods!
 testExtendedErrorInfo!public!unit tests! !
 !
@@ -177,6 +188,7 @@ testExtCallArgBstr
 	beers := Utf8String fromByteArray: #[16rF0 16r9F 16r8D 16rBB].
 	self assert: (OS.COM.OleAut32 sysStringLen: beers) equals: 2.
 	self assert: (OS.COM.OleAut32 sysStringLen: beers asUtf16String) equals: 2! !
+
 !Kernel.Tests.VMTest categoriesForMethods!
 testExtCallArgBstr!public!unit tests! !
 !

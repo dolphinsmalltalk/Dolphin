@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.MessageTest guid: (Core.GUID fromString: '{aaa1f3a5-03cb-48f2-b067-a1ec0392ad2b}')!
+
 Core.Tests.MessageTest comment: ''!
+
 !Core.Tests.MessageTest methodsFor!
 
 testPrintString
@@ -34,6 +37,7 @@ testSelectorArguments
 	"Invoke the method directly so we don't need to install it."
 	msg2 := testMethod value: Message withArguments: #(#x:y: #(123 456)).
 	self assert: msg2 equals: msg1! !
+
 !Core.Tests.MessageTest categoriesForMethods!
 testPrintString!public!unit tests! !
 testSelectorArguments!public!unit tests! !

@@ -7,9 +7,13 @@ UI.Examples.RegularPolygon
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.Triangle guid: (Core.GUID fromString: '{87b4c683-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Examples.Triangle comment: 'A Triangle is a particular type of <PlayShape> that may be added to a <Playground>. It is part of the Playground sample package used as a Smalltalk learning aid. See this package''s comment for more details.'!
+
 !UI.Examples.Triangle categoriesForClass!Samples! !
+
 !UI.Examples.Triangle methodsFor!
 
 defaultColor
@@ -28,6 +32,7 @@ defaultSides
 	Triangles have 3 sides"
 
 	^3! !
+
 !UI.Examples.Triangle categoriesForMethods!
 defaultColor!constants!public! !
 defaultPosition!constants!public! !

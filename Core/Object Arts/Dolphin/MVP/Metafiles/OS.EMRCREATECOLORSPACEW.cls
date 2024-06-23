@@ -14,7 +14,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihCS' -> 16r8.
 			'_OffsetOf_lcs' -> 16rC
 		}!
+
 OS.EMRCREATECOLORSPACEW guid: (Core.GUID fromString: '{27b16b33-1f59-4046-ae08-0652f9c089f1}')!
+
 OS.EMRCREATECOLORSPACEW comment: '<EMRCREATECOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -33,7 +35,9 @@ struct tagEMRCREATECOLORSPACEW {
 	[helpstring("Array size is cbData")] BYTE* Data;
 } EMRCREATECOLORSPACEW;
 '!
+
 !OS.EMRCREATECOLORSPACEW categoriesForClass!Win32-Structs! !
+
 !OS.EMRCREATECOLORSPACEW methodsFor!
 
 cbData
@@ -96,6 +100,7 @@ lcs: aLOGCOLORSPACEW
 		from: ##(_OffsetOf_lcs + 1)
 		to: ##(_OffsetOf_lcs + LOGCOLORSPACEW._LOGCOLORSPACEW_Size)
 		startingAt: 1! !
+
 !OS.EMRCREATECOLORSPACEW categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -155,6 +160,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATECOLORSPACEW}! !
+
 !OS.EMRCREATECOLORSPACEW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

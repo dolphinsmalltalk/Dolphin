@@ -5,7 +5,9 @@ Win32Structure subclass: #ICONDIR
 	classVariableNames: '_ICONDIR_Size _OffsetOf_idCount _OffsetOf_idEntries _OffsetOf_idReserved _OffsetOf_idType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICONDIR guid: (GUID fromString: '{b5be1f5b-e245-4cdf-b274-b6609ab85b23}')!
+
 ICONDIR addClassConstant: '_ICONDIR_Size' value: 16r16!
 ICONDIR addClassConstant: '_OffsetOf_idCount' value: 16r4!
 ICONDIR addClassConstant: '_OffsetOf_idEntries' value: 16r6!
@@ -16,7 +18,9 @@ ICONDIR comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ICONDIR categoriesForClass!IDB Goodies! !
+
 !ICONDIR methodsFor!
 
 idCount
@@ -63,6 +67,7 @@ idType: anInteger
 	"Set the receiver's 'idType' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_idType put: anInteger! !
+
 !ICONDIR categoriesForMethods!
 idCount!**compiled accessors**!public! !
 idCount:!**compiled accessors**!public! !
@@ -98,6 +103,7 @@ getFieldNames
 
 packing
 	^1! !
+
 !ICONDIR class categoriesForMethods!
 defineFields!initializing!public! !
 for:!instance creation!public! !

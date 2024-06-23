@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AddMethodRefactoringTest guid: (Core.GUID fromString: '{6d550761-f858-4c04-be63-5475fe34219a}')!
+
 Refactory.Browser.Tests.AddMethodRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.AddMethodRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.AddMethodRefactoringTest methodsFor!
 
 setUp
@@ -69,6 +73,7 @@ testModelInheritedSelector
 				toClass: (model classNamed: #Bar)
 				inProtocols: #(#accessing).
 	self shouldFail: refactoring withMessage: 'Bar understands #printString'! !
+
 !Refactory.Browser.Tests.AddMethodRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAddMethod!public!tests! !

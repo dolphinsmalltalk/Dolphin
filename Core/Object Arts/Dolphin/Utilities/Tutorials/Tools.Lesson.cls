@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Lesson guid: (Core.GUID fromString: '{430b4d82-364a-44fc-9c2b-5b546c048ef9}')!
+
 Tools.Lesson comment: ''!
+
 !Tools.Lesson methodsFor!
 
 contents
@@ -26,6 +29,7 @@ title
 title: aString
 	title := aString
 ! !
+
 !Tools.Lesson categoriesForMethods!
 contents!accessing!public! !
 contents:!accessing!public! !
@@ -43,6 +47,7 @@ title: aTitle contents: someContents
 		title: aTitle;
 		contents: someContents
 ! !
+
 !Tools.Lesson class categoriesForMethods!
 icon!constants!public! !
 title:contents:!instance creation!public! !

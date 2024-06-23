@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Package guid: (Core.GUID fromString: '{87b4c4a6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.Package comment: ''!
+
 !Kernel.Package categoriesForClass!Development! !
+
 !Kernel.Package methodsFor!
 
 about
@@ -1916,6 +1920,7 @@ warnChangingDefaultNamespaceFrom: currentNamespace to: newNamespace
 					expandMacrosWith: self
 					with: currentNamespace
 					with: newNamespace)! !
+
 !Kernel.Package categoriesForMethods!
 about!commands!public! !
 aboutBlock!accessing!public! !
@@ -2306,6 +2311,7 @@ unsaveableSignal
 	a package with uncommitted or cyclic pre-requisites."
 
 	^UnsaveableSignal! !
+
 !Kernel.Package class categoriesForMethods!
 binaryPackageLoader!loading!private! !
 clashSignal!constants!private! !

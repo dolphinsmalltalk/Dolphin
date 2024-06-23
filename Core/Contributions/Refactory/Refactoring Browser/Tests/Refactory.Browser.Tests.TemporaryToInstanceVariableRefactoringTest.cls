@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest guid: (Core.GUID fromString: '{92c5ee4b-e4af-4af1-92ed-1a24ab0830bc}')!
+
 Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest methodsFor!
 
 setUp
@@ -79,6 +83,7 @@ testTemporaryToInstanceVariable
 								nameStream nextPut: $).
 								^nameStream contents').
 	self assert: (class directlyDefinesInstanceVariable: 'nameStream')! !
+
 !Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testNonExistantName!failure tests!public! !

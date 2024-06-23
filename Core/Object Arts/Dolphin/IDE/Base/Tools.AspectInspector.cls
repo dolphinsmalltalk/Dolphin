@@ -7,10 +7,15 @@ Tools.InspectorAbstract
 	imports: #()
 	classInstanceVariableNames: 'treeUpdateMode treeHasGridLines'
 	classConstants: {}!
+
 Tools.AspectInspector guid: (Core.GUID fromString: '{3a705749-14d8-4cd1-9b4e-ccf02a0218de}')!
+
 Tools.AspectInspector isNonInstantiable: true!
+
 Tools.AspectInspector comment: ''!
+
 !Tools.AspectInspector categoriesForClass!MVP-Presenters! !
+
 !Tools.AspectInspector methodsFor!
 
 aspectAccessor
@@ -226,6 +231,7 @@ setAspectValue: anObject
 	instance variable name to anObject."
 
 	^self subclassResponsibility! !
+
 !Tools.AspectInspector categoriesForMethods!
 aspectAccessor!accessing!private! !
 aspectAccessor:!public! !
@@ -288,6 +294,7 @@ treeUpdateMode
 
 treeUpdateMode: aSymbol
 	treeUpdateMode := aSymbol! !
+
 !Tools.AspectInspector class categoriesForMethods!
 publishedAspects!public! !
 registerAsToolWith:!operations!public! !

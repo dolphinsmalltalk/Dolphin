@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.GUIDTest guid: (Core.GUID fromString: '{e1371d2f-b622-4825-b412-b44260477b09}')!
+
 Core.Tests.GUIDTest comment: ''!
+
 !Core.Tests.GUIDTest categoriesForClass!Tests-Network-UUID! !
+
 !Core.Tests.GUIDTest methodsFor!
 
 assertNull: guid
@@ -136,6 +140,7 @@ testUniqueness
 	generated := Set new: size.
 	size timesRepeat: [generated add: self subjectClass newUnique].
 	self assert: generated size equals: size! !
+
 !Core.Tests.GUIDTest categoriesForMethods!
 assertNull:!helpers!private! !
 subjectClass!constants!private! !

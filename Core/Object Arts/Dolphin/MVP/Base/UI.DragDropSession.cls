@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DragDropSession guid: (Core.GUID fromString: '{87b4c481-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.DragDropSession isNonInstantiable: true!
+
 UI.DragDropSession comment: 'DragDropSessions are used to manage the modal process of dragging and dropping an object or objects from one window to another. 
 
 Instance Variables:
@@ -31,7 +34,9 @@ Class Variables:
 	DefaultImages			<IdentityDictionary> mapping the <Symbol> names of the standard drag images to default <Image>s.
 
 '!
+
 !UI.DragDropSession categoriesForClass!MVP-DragDrop! !
+
 !UI.DragDropSession methodsFor!
 
 addDragee: anObject
@@ -403,6 +408,7 @@ supportedOperations: ops
 	drop target."
 
 	operationsSupportedByDropTarget := ops! !
+
 !UI.DragDropSession categoriesForMethods!
 addDragee:!adding!public! !
 addDragObject:!adding!public! !
@@ -534,6 +540,7 @@ uninitialize
 
 	Current := nil.
 	DefaultImages := nil! !
+
 !UI.DragDropSession class categoriesForMethods!
 current!accessing!public! !
 defaultDragImages!accessing!public! !

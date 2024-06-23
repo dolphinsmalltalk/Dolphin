@@ -7,8 +7,11 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.EqualitySearchPolicyTest guid: (Core.GUID fromString: '{753e6e11-d8ca-4aa8-a751-8b5031838d22}')!
+
 Kernel.Tests.EqualitySearchPolicyTest comment: ''!
+
 !Kernel.Tests.EqualitySearchPolicyTest methodsFor!
 
 policyClass
@@ -33,6 +36,7 @@ testCompareWith
 	self deny: (policy compare: #hash with: #identityHash).
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b) not! !
+
 !Kernel.Tests.EqualitySearchPolicyTest categoriesForMethods!
 policyClass!public!unit tests! !
 testCompareWith!public!unit tests! !

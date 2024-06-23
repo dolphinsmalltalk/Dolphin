@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.BehaviorTest guid: (Core.GUID fromString: '{157f8981-4d21-430b-bbec-c8b53e6a6f56}')!
+
 Core.Tests.BehaviorTest comment: ''!
+
 !Core.Tests.BehaviorTest methodsFor!
 
 testHasAbstractMethods
@@ -111,6 +114,7 @@ testWithAllSuperclasses
 				Behavior.
 				Object
 			}! !
+
 !Core.Tests.BehaviorTest categoriesForMethods!
 testHasAbstractMethods!public! !
 testIncludesBehavior!public! !
@@ -126,6 +130,7 @@ testWithAllSuperclasses!public! !
 
 resources
 	^{BehaviorTestClasses}! !
+
 !Core.Tests.BehaviorTest class categoriesForMethods!
 resources!Accessing!public! !
 !

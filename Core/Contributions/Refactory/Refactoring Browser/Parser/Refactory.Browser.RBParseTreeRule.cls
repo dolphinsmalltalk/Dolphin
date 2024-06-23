@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBParseTreeRule guid: (Core.GUID fromString: '{1a6390df-c5e5-4c38-a2fa-300ea0cddbff}')!
+
 Refactory.Browser.RBParseTreeRule comment: ''!
+
 !Refactory.Browser.RBParseTreeRule categoriesForClass!Refactory-ParseTree Matching! !
+
 !Refactory.Browser.RBParseTreeRule methodsFor!
 
 canMatch: aProgramNode 
@@ -45,6 +49,7 @@ searchTree
 
 sentMessages
 	^searchTree sentMessages! !
+
 !Refactory.Browser.RBParseTreeRule categoriesForMethods!
 canMatch:!matching!public! !
 context!accessing!private! !
@@ -73,6 +78,7 @@ search: aString
 	^(self new)
 		searchString: aString;
 		yourself! !
+
 !Refactory.Browser.RBParseTreeRule class categoriesForMethods!
 methodSearch:!instance creation!public! !
 new!instance creation!public! !

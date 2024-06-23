@@ -5,9 +5,13 @@ MainTestCase subclass: #ScaledDecimalANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScaledDecimalANSITest guid: (GUID fromString: '{5200c2d1-95c6-4600-9409-435dcb726b43}')!
+
 ScaledDecimalANSITest comment: ''!
+
 !ScaledDecimalANSITest categoriesForClass!Unclassified! !
+
 !ScaledDecimalANSITest methodsFor!
 
 canonicalObject
@@ -940,6 +944,7 @@ testXtruncated
 		conformTo: #'number' selector: #'truncated'.
 	self value: [0.0s3 truncated] should: [:r | r = 0]
 		conformTo: #'number' selector: #'truncated'.! !
+
 !ScaledDecimalANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

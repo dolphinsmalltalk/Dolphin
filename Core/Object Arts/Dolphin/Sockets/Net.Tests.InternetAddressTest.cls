@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.Tests.InternetAddressTest guid: (Core.GUID fromString: '{3d606958-5c0e-4788-a978-70bf30cf372d}')!
+
 Net.Tests.InternetAddressTest comment: ''!
+
 !Net.Tests.InternetAddressTest methodsFor!
 
 testAllForHost
@@ -54,6 +57,7 @@ testLocalHost
 	self assert: local host asLowercase equals: computerName.
 	self assert: ((InternetAddress ipAddress: local ipAddress) host subStrings: $.) first asLowercase
 		equals: computerName! !
+
 !Net.Tests.InternetAddressTest categoriesForMethods!
 testAllForHost!public!unit tests! !
 testHost!public!unit tests! !

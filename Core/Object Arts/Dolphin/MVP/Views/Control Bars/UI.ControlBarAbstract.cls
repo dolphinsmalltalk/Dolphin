@@ -7,15 +7,20 @@ UI.ControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ControlBarAbstract guid: (Core.GUID fromString: '{87b4c726-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ControlBarAbstract isNonInstantiable: true!
+
 UI.ControlBarAbstract comment: '`ControlBarAbstract` is an abstract `<compositeView>` whose subclasses implement the standard Windows status bar and toolbar controls. It is necessary for control bars to support `<compositeView>` so that they are able to host additional sub-views under the management of a layout manager.
 
 ## Instance Variables:
   `names`		`IdentityDictionary` mapping sub-views to their names.
   `_tipText`	`Utf16String` or `nil`, tool tip text last shown.
 '!
+
 !UI.ControlBarAbstract categoriesForClass!MVP-Resources-Tool/Status bars!MVP-Views! !
+
 !UI.ControlBarAbstract methodsFor!
 
 actualInsets: aLayoutContext 
@@ -330,6 +335,7 @@ wmNotify: message wParam: wParam lParam: lParam
 		wmNotify: message
 		wParam: wParam
 		lParam: lParam! !
+
 !UI.ControlBarAbstract categoriesForMethods!
 actualInsets:!accessing!private! !
 actualPreferredExtent:!private! !
@@ -423,6 +429,7 @@ stbVersion
 
 uninitialize
 	#{UI.Slider} isDefined ifFalse: [CommCtrlLibrary removeInitFlag: ICC_BAR_CLASSES]! !
+
 !UI.ControlBarAbstract class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

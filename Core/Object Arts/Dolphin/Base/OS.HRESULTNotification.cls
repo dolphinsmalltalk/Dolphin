@@ -7,9 +7,13 @@ Core.Notification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.HRESULTNotification guid: (Core.GUID fromString: '{87b4c56e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.HRESULTNotification comment: ''!
+
 !OS.HRESULTNotification categoriesForClass!System-Exception Handling! !
+
 !OS.HRESULTNotification methodsFor!
 
 _descriptionArguments
@@ -28,6 +32,7 @@ hresult
 	"Answer the HRESULT error code associated with the receiver."
 
 	^self tag! !
+
 !OS.HRESULTNotification categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !

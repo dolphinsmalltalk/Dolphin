@@ -7,8 +7,11 @@ MSXML.ISchemaParticle
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaElement guid: (OS.COM.IID fromString: '{50ea08b7-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 MSXML.ISchemaElement isEgressOnly: true!
+
 MSXML.ISchemaElement comment: '<ISchemaElement> is a wrapper class for the COM interface ''MSXML2.ISchemaElement'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -62,7 +65,9 @@ interface ISchemaElement : ISchemaParticle
 		[out, retval]VARIANT_BOOL* reference);
 };
 '!
+
 !MSXML.ISchemaElement categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISchemaElement methodsFor!
 
 defaultValue
@@ -251,6 +256,7 @@ type
 	answer := ISchemaType newPointer.
 	self get_type: answer.
 	^answer asObject! !
+
 !MSXML.ISchemaElement categoriesForMethods!
 defaultValue!**auto generated**!properties!public! !
 disallowedSubstitutions!**auto generated**!properties!public! !
@@ -306,6 +312,7 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
+
 !MSXML.ISchemaElement class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

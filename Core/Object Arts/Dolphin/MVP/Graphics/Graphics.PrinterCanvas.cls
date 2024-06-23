@@ -7,9 +7,13 @@ Graphics.Canvas
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.PrinterCanvas guid: (Core.GUID fromString: '{87b4c4ff-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.PrinterCanvas comment: ''!
+
 !Graphics.PrinterCanvas categoriesForClass!Graphics-Drawing! !
+
 !Graphics.PrinterCanvas methodsFor!
 
 basicFree
@@ -43,6 +47,7 @@ startPage
 	"Signal the start of a new page."
 
 	Gdi32 startPage: self asParameter! !
+
 !Graphics.PrinterCanvas categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 endDoc!operations!public! !
@@ -56,6 +61,7 @@ startPage!operations!public! !
 
 icon
 	^##(self) defaultIcon! !
+
 !Graphics.PrinterCanvas class categoriesForMethods!
 icon!constants!development!public! !
 !

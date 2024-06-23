@@ -7,9 +7,13 @@ Kernel.StToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StAssignmentToken guid: (Core.GUID fromString: '{6aeed410-71e0-440f-a815-2307b61f7693}')!
+
 Kernel.StAssignmentToken comment: ''!
+
 !Kernel.StAssignmentToken categoriesForClass!System-Compiler! !
+
 !Kernel.StAssignmentToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -20,6 +24,7 @@ isAssignment
 
 length
 	^2! !
+
 !Kernel.StAssignmentToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isAssignment!public!testing! !

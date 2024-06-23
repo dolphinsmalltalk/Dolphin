@@ -7,9 +7,13 @@ Graphics.Gdiplus.Brush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.TransformableBrush guid: (Core.GUID fromString: '{802654fb-8e86-4cca-a186-b7ef93ecc056}')!
+
 Graphics.Gdiplus.TransformableBrush isNonInstantiable: true!
+
 Graphics.Gdiplus.TransformableBrush comment: ''!
+
 !Graphics.Gdiplus.TransformableBrush methodsFor!
 
 bounds
@@ -121,6 +125,7 @@ wrapMode: aWrapModeConstant
 	"Set if and how painting is done outside the receiver's boundary path."
 
 	initializer wrapMode: self handle set: aWrapModeConstant! !
+
 !Graphics.Gdiplus.TransformableBrush categoriesForMethods!
 bounds!accessing!public! !
 clone!copying!public! !

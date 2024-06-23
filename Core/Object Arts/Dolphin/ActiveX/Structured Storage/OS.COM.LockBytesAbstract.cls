@@ -7,11 +7,16 @@ OS.COM.InterfaceImplementation
 	imports: #(#{OS.COM.StorageConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.LockBytesAbstract guid: (Core.GUID fromString: '{043e5260-ad92-11d3-b376-080046056106}')!
+
 OS.COM.LockBytesAbstract isNonInstantiable: true!
+
 OS.COM.LockBytesAbstract comment: 'OLELockBytesAbstract is an abstract superclass which provides common behaviour for implementations of the OLE Structured Storage <ILockBytes> interface. <ILockBytes> is the abstraction used by OLE to represent an array of bytes.
 '!
+
 !OS.COM.LockBytesAbstract categoriesForClass!COM-Implementations! !
+
 !OS.COM.LockBytesAbstract methodsFor!
 
 contents
@@ -123,6 +128,7 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
+
 !OS.COM.LockBytesAbstract categoriesForMethods!
 contents!accessing!public! !
 copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !

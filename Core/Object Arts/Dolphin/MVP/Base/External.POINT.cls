@@ -7,10 +7,15 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.POINT guid: (Core.GUID fromString: '{5a0c3f56-8db8-4509-8563-3affe77805b2}')!
+
 External.POINT isNonInstantiable: true!
+
 External.POINT comment: '`POINT` is the abstract class of structures representing positions in a 2-dimensional space. There are concrete subclasses for different types of co-ordinate value.'!
+
 !External.POINT categoriesForClass!External-Data-Structured! !
+
 !External.POINT methodsFor!
 
 - anArithmeticValue
@@ -583,6 +588,7 @@ y
 
 y: anObject
 	self subclassResponsibility! !
+
 !External.POINT categoriesForMethods!
 -!arithmetic!public! !
 %!arithmetic!public! !
@@ -716,6 +722,7 @@ x: x y: y
 		x: x;
 		y: y;
 		yourself! !
+
 !External.POINT class categoriesForMethods!
 fromPoint:!instance creation!public! !
 getFieldNames!constants!private! !

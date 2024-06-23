@@ -7,7 +7,9 @@ Tools.VirtualMethodCategory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ReferencesCategory guid: (Core.GUID fromString: '{87b4c507-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.ReferencesCategory comment: 'ReferencesCategory is the class of virtual method categories which dynamically determines their membership to include only those methods which reference a particular object from their literal frame.
 
 ReferencesCategory has (sub)instances such as the ''*-subclass responsibility'' category, but you can create your own references categories by following the examples in the class #initialize method.
@@ -17,7 +19,9 @@ Instance Variables:
 
 Class Variables:
 	None'!
+
 !Tools.ReferencesCategory categoriesForClass!System-Support! !
+
 !Tools.ReferencesCategory methodsFor!
 
 includesMethod: aCompiledMethod 
@@ -31,6 +35,7 @@ literal: anObject
 	"Set the literal, references to which define membership of this category."
 
 	literal := anObject! !
+
 !Tools.ReferencesCategory categoriesForMethods!
 includesMethod:!public!testing! !
 literal:!accessing!public! !
@@ -79,6 +84,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self referenceSymbols do: [:each | self removePseud: self pseudPrefix , each asPhrase asLowercase]! !
+
 !Tools.ReferencesCategory class categoriesForMethods!
 createDefaultInstances!initializing!private! !
 initialize!initializing!private! !

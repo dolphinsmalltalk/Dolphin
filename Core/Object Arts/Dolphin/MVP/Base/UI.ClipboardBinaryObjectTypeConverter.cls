@@ -7,8 +7,11 @@ UI.TypeConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ClipboardBinaryObjectTypeConverter guid: (Core.GUID fromString: '{62288e60-a337-4d21-b14d-615407c58023}')!
+
 UI.ClipboardBinaryObjectTypeConverter comment: ''!
+
 !UI.ClipboardBinaryObjectTypeConverter methodsFor!
 
 beUnrestricted
@@ -55,6 +58,7 @@ rightToLeft: aHandle
 
 	^(STBValidatingInFiler on: (ByteArray fromGlobalHandle: aHandle) readStream
 		classLocator: classLocator) next! !
+
 !UI.ClipboardBinaryObjectTypeConverter categoriesForMethods!
 beUnrestricted!modes!public! !
 classLocator!accessing!public! !
@@ -78,6 +82,7 @@ onPreStripImage
 
 onStartup
 	self current register! !
+
 !UI.ClipboardBinaryObjectTypeConverter class categoriesForMethods!
 current!public! !
 onPreStripImage!class hierarchy-removing!private! !

@@ -34,6 +34,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.RegKeyTest'
 	instanceVariableNames: 'testKey'

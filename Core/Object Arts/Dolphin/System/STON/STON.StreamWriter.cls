@@ -7,10 +7,14 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.StreamWriter guid: (Core.GUID fromString: '{6bdb0b54-8382-4d5b-b901-b52c3b1fdb07}')!
+
 STON.StreamWriter comment: 'STONStreamWriter helps in streaming writing STON representations.
 This is an abstract class.'!
+
 !STON.StreamWriter categoriesForClass!STON-Core-Writer! !
+
 !STON.StreamWriter methodsFor!
 
 initialize
@@ -19,6 +23,7 @@ initialize
 
 on: stonWriter
 	writer := stonWriter! !
+
 !STON.StreamWriter categoriesForMethods!
 initialize!initialization!public! !
 on:!initialization!public! !
@@ -38,6 +43,7 @@ on: stonWriter
 	^ self new
 		on: stonWriter;
 		yourself! !
+
 !STON.StreamWriter class categoriesForMethods!
 icon!constants!public! !
 new!public! !

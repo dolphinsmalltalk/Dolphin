@@ -15,9 +15,13 @@ OS.SizedStructure
 			'_OffsetOf_nTrackPos' -> 16r18.
 			'_SCROLLINFO_Size' -> 16r1C
 		}!
+
 OS.SCROLLINFO guid: (Core.GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.SCROLLINFO comment: ''!
+
 !OS.SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.SCROLLINFO methodsFor!
 
 fMask
@@ -117,6 +121,7 @@ range: anInterval
 		nMin: anInterval start;
 		nMax: anInterval stop;
 		maskIn: SIF_RANGE! !
+
 !OS.SCROLLINFO categoriesForMethods!
 fMask!**compiled accessors**!public! !
 fMask:!**compiled accessors**!public! !
@@ -170,6 +175,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
+
 !OS.SCROLLINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

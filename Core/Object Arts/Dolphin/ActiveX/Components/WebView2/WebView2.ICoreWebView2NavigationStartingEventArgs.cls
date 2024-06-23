@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2NavigationStartingEventArgs guid: (OS.COM.IID fromString: '{5b495469-e119-438a-9b18-7604f25f2e49}')!
+
 WebView2.ICoreWebView2NavigationStartingEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2NavigationStartingEventArgs comment: '`ICoreWebView2NavigationStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -47,7 +50,9 @@ interface ICoreWebView2NavigationStartingEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2NavigationStartingEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2NavigationStartingEventArgs methodsFor!
 
 additionalAllowedFrameAncestors
@@ -215,6 +220,7 @@ uri
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !WebView2.ICoreWebView2NavigationStartingEventArgs categoriesForMethods!
 additionalAllowedFrameAncestors!properties!public! !
 additionalAllowedFrameAncestors:!properties!public! !
@@ -264,6 +270,7 @@ defineFunctions
 
 latestDerivation
 	^##(super latestDerivation)! !
+
 !WebView2.ICoreWebView2NavigationStartingEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 latestDerivation!enquiries!public! !

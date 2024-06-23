@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SortAlgorithmTest guid: (Core.GUID fromString: '{50fde7dc-5db4-4eda-9ee2-61882b8ee3e5}')!
+
 Core.Tests.SortAlgorithmTest isNonInstantiable: true!
+
 Core.Tests.SortAlgorithmTest comment: ''!
+
 !Core.Tests.SortAlgorithmTest methodsFor!
 
 add: aCollection sortBlock: aDyadicValuable
@@ -255,6 +259,7 @@ testSortIntegers
 	self sortMagnitudes: collection.
 	collection := 1 to: self integerSortSize.
 	self sortMagnitudes: collection! !
+
 !Core.Tests.SortAlgorithmTest categoriesForMethods!
 add:sortBlock:!helpers!private! !
 algorithmToTest!private!unit tests! !

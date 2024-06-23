@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.WindowsEventTest guid: (Core.GUID fromString: '{08ec4909-75d4-4bef-bbb8-0f443b78f834}')!
+
 UI.Tests.WindowsEventTest comment: ''!
+
 !UI.Tests.WindowsEventTest methodsFor!
 
 newEvent: anInteger
@@ -38,6 +41,7 @@ testPrintString
 	instance := self newEvent: 999.
 	self assert: instance printString
 		equals: ('a WindowsEvent(<1p> 16r3E7 3 4)' expandMacrosWith: instance window)! !
+
 !UI.Tests.WindowsEventTest categoriesForMethods!
 newEvent:!private!unit tests! !
 testInstanceCreation!public!unit tests! !

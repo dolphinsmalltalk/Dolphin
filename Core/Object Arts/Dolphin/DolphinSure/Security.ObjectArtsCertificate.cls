@@ -7,9 +7,13 @@ Security.DolphinSureCertificate
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.ObjectArtsCertificate guid: (Core.GUID fromString: '{a543c6d9-2907-46b9-b22e-4c066703c2ee}')!
+
 Security.ObjectArtsCertificate comment: ''!
+
 !Security.ObjectArtsCertificate categoriesForClass!Cryptography-Certificates! !
+
 !Security.ObjectArtsCertificate class methodsFor!
 
 certificateBytes
@@ -57,6 +61,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
+
 !Security.ObjectArtsCertificate class categoriesForMethods!
 certificateBytes!constants!public! !
 generate!instance creation!private! !

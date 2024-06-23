@@ -7,8 +7,11 @@ Kernel.ClassLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RestrictedClassLocator guid: (Core.GUID fromString: '{2f0278c8-37bc-45b7-9a23-84a21a6895ed}')!
+
 Kernel.RestrictedClassLocator comment: ''!
+
 !Kernel.RestrictedClassLocator methodsFor!
 
 classes: aCollection
@@ -59,6 +62,7 @@ includesClass: aClass
 	"Answer whether the <Class> argument is within the allowed set."
 
 	^classMap includesKey: aClass fullName! !
+
 !Kernel.RestrictedClassLocator categoriesForMethods!
 classes:!initializing!private! !
 classMap:!accessing!private! !
@@ -79,6 +83,7 @@ new
 	"Answer a new instance of the receiver that is secure by default (disallows everything)."
 
 	^self forClasses: #()! !
+
 !Kernel.RestrictedClassLocator class categoriesForMethods!
 forClasses:!public! !
 new!public! !

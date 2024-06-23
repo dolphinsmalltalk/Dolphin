@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ExtractToTemporaryRefactoring guid: (Core.GUID fromString: '{78588408-02af-46be-9f03-34d63854d1f1}')!
+
 Refactory.Browser.ExtractToTemporaryRefactoring comment: ''!
+
 !Refactory.Browser.ExtractToTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.ExtractToTemporaryRefactoring methodsFor!
 
 checkVariableName
@@ -105,6 +109,7 @@ verifySelectedInterval
 				onError: [:message :position | self refactoringError: 'Invalid selection'].
 	selectedParseTree isSequence 
 		ifTrue: [self refactoringError: 'Cannot assign temp from multiple statements']! !
+
 !Refactory.Browser.ExtractToTemporaryRefactoring categoriesForMethods!
 checkVariableName!preconditions!public! !
 compileNewMethod!public!transforming! !
@@ -137,6 +142,7 @@ model: aRBModel extract: anInterval to: aString from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
+
 !Refactory.Browser.ExtractToTemporaryRefactoring class categoriesForMethods!
 extract:to:from:in:!instance creation!public! !
 model:extract:to:from:in:!instance creation!public! !

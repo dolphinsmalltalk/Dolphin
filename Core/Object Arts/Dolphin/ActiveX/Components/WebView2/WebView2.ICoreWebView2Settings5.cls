@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Settings4
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Settings5 guid: (OS.COM.IID fromString: '{183e7052-1d03-43a0-ab99-98e043b66b39}')!
+
 WebView2.ICoreWebView2Settings5 isEgressOnly: true!
+
 WebView2.ICoreWebView2Settings5 comment: '`ICoreWebView2Settings5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2Settings5 : ICoreWebView2Settings4
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Settings5 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Settings5 methodsFor!
 
 get_IsPinchZoomEnabled: enabled
@@ -53,6 +58,7 @@ put_IsPinchZoomEnabled: enabled
 
 	<virtual stdcall: hresult 31 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Settings5 categoriesForMethods!
 get_IsPinchZoomEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings5!private! !
 put_IsPinchZoomEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings5!private! !
@@ -70,6 +76,7 @@ defineFunctions
 		defineFunction: #put_IsPinchZoomEnabled:
 			argumentTypes: 'sdword'
 ! !
+
 !WebView2.ICoreWebView2Settings5 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -14,13 +14,17 @@ External.Structure
 			'_OffsetOf_ptd' -> 16r4.
 			'_OffsetOf_tymed' -> 16r10
 		}!
+
 OS.COM.FORMATETC guid: (Core.GUID fromString: '{93cc6a56-76b0-48ed-9d91-a4b4b891ef2e}')!
+
 OS.COM.FORMATETC comment: '<FORMATETC> is an <ExternalStructure> class to wrap the struct ''OCIDL.FORMATETC'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.FORMATETC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.FORMATETC methodsFor!
 
 cfFormat
@@ -72,6 +76,7 @@ tymed: anInteger
 	"Set the receiver's 'tymed' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_tymed put: anInteger! !
+
 !OS.COM.FORMATETC categoriesForMethods!
 cfFormat!**compiled accessors**!public! !
 cfFormat:!**compiled accessors**!public! !
@@ -112,6 +117,7 @@ defineFields
 
 getFieldNames
 	^#(#cfFormat #ptd #dwAspect #lindex #tymed)! !
+
 !OS.COM.FORMATETC class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

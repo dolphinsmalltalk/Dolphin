@@ -7,7 +7,9 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_PROTECTION_LEVEL_INFO_Size' -> 16r8. '_OffsetOf_Level' -> 16r4 }!
+
 WinHttpServer.HTTP_PROTECTION_LEVEL_INFO guid: (Core.GUID fromString: '{e1881388-d03e-4ea0-8e39-8f1439753299}')!
+
 WinHttpServer.HTTP_PROTECTION_LEVEL_INFO comment: '`HTTP_PROTECTION_LEVEL_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -24,7 +26,9 @@ struct tagHTTP_PROTECTION_LEVEL_INFO {
 } HTTP_PROTECTION_LEVEL_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_PROTECTION_LEVEL_INFO categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_PROTECTION_LEVEL_INFO methodsFor!
 
 Level
@@ -36,6 +40,7 @@ Level: anInteger
 	"Set the receiver's 'Level' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_Level put: anInteger! !
+
 !WinHttpServer.HTTP_PROTECTION_LEVEL_INFO categoriesForMethods!
 Level!**compiled accessors**!public! !
 Level:!**compiled accessors**!public! !
@@ -68,6 +73,7 @@ getFieldNames
 
 propertyId
 	^HttpServerProtectionLevelProperty! !
+
 !WinHttpServer.HTTP_PROTECTION_LEVEL_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

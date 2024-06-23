@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.InlineTemporaryRefactoringTest guid: (Core.GUID fromString: '{241fc5f5-5254-43d6-a840-dcd08c4e6b21}')!
+
 Refactory.Browser.Tests.InlineTemporaryRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.InlineTemporaryRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.InlineTemporaryRefactoringTest methodsFor!
 
 testInlineTemporary
@@ -47,6 +51,7 @@ testInlineTemporaryReadBeforeWritten
 				from: #inlineTemporary
 				in: RefactoryTestDataApp)
 		withMessage: 'The variable is possibly read before it is assigned'! !
+
 !Refactory.Browser.Tests.InlineTemporaryRefactoringTest categoriesForMethods!
 testInlineTemporary!public!tests! !
 testInlineTemporaryBadInterval!public!tests! !

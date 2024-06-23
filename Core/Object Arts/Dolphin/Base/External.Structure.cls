@@ -13,10 +13,15 @@ Core.Object
 			'TemplateFlagsMask' -> 16r3.
 			'UncompiledFieldsMask' -> 16r2
 		}!
+
 External.Structure guid: (Core.GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Structure isNonInstantiable: true!
+
 External.Structure comment: ''!
+
 !External.Structure categoriesForClass!External-Data-Structured! !
+
 !External.Structure methodsFor!
 
 _deepenShallowCopy: clone trail: copiesDictionary
@@ -417,6 +422,7 @@ yourAddress
 	"Answer the address of the receiver's contents"
 
 	^bytes yourAddress! !
+
 !External.Structure categoriesForMethods!
 _deepenShallowCopy:trail:!copying!private! !
 =!comparing!public! !
@@ -994,6 +1000,7 @@ withBytes: aByteObject
 		bytes: aByteObject;
 		initialize;
 		yourself! !
+
 !External.Structure class categoriesForMethods!
 alignment!constants!public! !
 atAddress:!instance creation!public! !

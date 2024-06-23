@@ -18,9 +18,13 @@ OS.SizedStructure
 			'_OffsetOf_pszText' -> 16r18.
 			'_TBBUTTONINFOW_Size' -> 16r20
 		}!
+
 OS.TBBUTTONINFOW guid: (Core.GUID fromString: '{7fe067e4-441c-11d3-97ac-0080c8d59432}')!
+
 OS.TBBUTTONINFOW comment: ''!
+
 !OS.TBBUTTONINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.TBBUTTONINFOW methodsFor!
 
 cx
@@ -82,6 +86,7 @@ iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_iImage put: anInteger! !
+
 !OS.TBBUTTONINFOW categoriesForMethods!
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
@@ -133,6 +138,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !
+
 !OS.TBBUTTONINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -12,15 +12,20 @@ External.Structure
 			'_OffsetOf_dwError' -> 16r4.
 			'_OffsetOf_pfnCallback' -> 16r8
 		}!
+
 OS.EDITSTREAM guid: (Core.GUID fromString: '{87b4c5ef-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.EDITSTREAM comment: ''!
+
 !OS.EDITSTREAM categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.EDITSTREAM methodsFor!
 
 pfnCallback: anExternalAddress
 	"Set the receiver's 'pfnCallback' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_pfnCallback put: anExternalAddress! !
+
 !OS.EDITSTREAM categoriesForMethods!
 pfnCallback:!**compiled accessors**!public! !
 !
@@ -48,6 +53,7 @@ defineFields
 
 getFieldNames
 	^#(#pfnCallback)! !
+
 !OS.EDITSTREAM class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,9 +7,13 @@ Tools.KeyedAspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.InstVarAspect guid: (Core.GUID fromString: '{c92cbde8-f3b1-4799-9a70-0f2b15a024fc}')!
+
 Tools.InstVarAspect comment: ''!
+
 !Tools.InstVarAspect categoriesForClass!Attribute-Definition! !
+
 !Tools.InstVarAspect methodsFor!
 
 batchSize
@@ -67,6 +71,7 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject instVarAt: self key put: valueObject! !
+
 !Tools.InstVarAspect categoriesForMethods!
 batchSize!constants!public! !
 canWriteInto:!private!testing! !

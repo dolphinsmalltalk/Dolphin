@@ -7,8 +7,11 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMSchemaCollection guid: (OS.COM.IID fromString: '{373984c8-b845-449b-91e7-45ac83036ade}')!
+
 MSXML.IXMLDOMSchemaCollection isEgressOnly: true!
+
 MSXML.IXMLDOMSchemaCollection comment: '<IXMLDOMSchemaCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -53,7 +56,9 @@ interface IXMLDOMSchemaCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
+
 !MSXML.IXMLDOMSchemaCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXMLDOMSchemaCollection methodsFor!
 
 _newEnum
@@ -176,6 +181,7 @@ Remove: namespaceURI
 
 	<virtual stdcall: hresult 10 bstr>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IXMLDOMSchemaCollection categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 add:var:!**auto generated**!methods!public! !
@@ -215,6 +221,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
+
 !MSXML.IXMLDOMSchemaCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

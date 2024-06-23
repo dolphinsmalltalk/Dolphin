@@ -7,7 +7,9 @@ UI.TypeConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PluggableTypeConverter guid: (Core.GUID fromString: '{54bed5f3-b28b-4731-9baa-db8de92bef40}')!
+
 UI.PluggableTypeConverter comment: '<PluggableTypeConverter> is a generic <TypeConverter> that supports configurable conversions.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	rightToLeftBlock		<monadicValuable> which, when evaluated against right value, yields left value
 
 '!
+
 !UI.PluggableTypeConverter categoriesForClass!MVP-Type Converters-General! !
+
 !UI.PluggableTypeConverter methodsFor!
 
 leftToRight: anObject
@@ -47,6 +51,7 @@ setLeftToRightBlock: leftMonadicValuable rightToLeftBlock: rightMonadicValuable
 	noop := [:obj | obj].
 	leftToRightBlock := leftMonadicValuable ?? noop.
 	rightToLeftBlock := rightMonadicValuable ?? noop! !
+
 !UI.PluggableTypeConverter categoriesForMethods!
 leftToRight:!operations!private! !
 leftToRightBlock!accessing!public! !
@@ -76,6 +81,7 @@ leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable
 
 new
 	^self leftToRight: [:left | left] rightToLeft: [:right | right]! !
+
 !UI.PluggableTypeConverter class categoriesForMethods!
 leftToRight:!instance creation!public! !
 leftToRight:rightToLeft:!instance creation!public! !

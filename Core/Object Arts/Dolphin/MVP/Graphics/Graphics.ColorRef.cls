@@ -7,14 +7,18 @@ Graphics.AbstractRGB
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ColorRef guid: (Core.GUID fromString: '{ed5fcdeb-52e8-4a5c-9eb7-38bf3a3aa575}')!
+
 Graphics.ColorRef isNonInstantiable: true!
+
 Graphics.ColorRef comment: '`ColorRef` is the abstract class of palette independent (absolute) color values used with most Win32 GDI APIs that have a specific integer encoding described in the Windows documentation as a COLORREF.
 
 ## Instance Variables:
   `code`		`<integer>`; a Windows `COLORREF` value. e.g. an `RGB` value.
 
 '!
+
 !Graphics.ColorRef methodsFor!
 
 asColorRef
@@ -33,6 +37,7 @@ errorNotARealColor
 	value, and cannot therefore be converted to another type of <Color>."
 
 	^self error: 'Cannot convert to an RGB'! !
+
 !Graphics.ColorRef categoriesForMethods!
 asColorRef!converting!public! !
 asCOLORREF!accessing!public! !
@@ -67,6 +72,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	answer := self fromCOLORREF: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
+
 !Graphics.ColorRef class categoriesForMethods!
 defaultColorRepresentation!constants!private! !
 fromCOLORREF:!instance creation!private! !

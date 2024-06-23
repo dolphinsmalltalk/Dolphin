@@ -7,7 +7,9 @@ OS.FileSystemChangeReader
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.FileSystemChangeStream guid: (Core.GUID fromString: '{49dd0dec-28ae-4954-ac32-94524feb054c}')!
+
 OS.FileSystemChangeStream comment: 'FileSystemChangeStream is a FileSystemChangeReader that publishes the file-system changes as entries on a <SharedQueue>. This allows the changes to be read by arbitrary background processes as if reading from an infinite stream of such changes. Note that it is possible to experience a Win32Error when reading from the queue in exceptional circumstances due to some underlying error reported by the ReadDirectoryChanges API. Should such an error be detected and handled, then it should be assumed that the FileSystemChangeStream will have to be recreated. 
 
 A FileSystemChangeStream can be set up as follows:
@@ -25,6 +27,7 @@ To read changes one simply sends the #next message to the FileSystemChangeStream
 The changes are described by instances of <FileSystemChange>. This has attributes that represent the symbolic name of the change, the names of the files changed, and also the time that the change was first recorded. Note that this not necessarily the time that the change actually occurred, as there is some latency before Windows notifies changes.
 
 '!
+
 !OS.FileSystemChangeStream methodsFor!
 
 handleError: anInteger 
@@ -44,6 +47,7 @@ next
 	next := queue next.
 	next isInteger ifTrue: [^Win32Error signalWith: next].
 	^next! !
+
 !OS.FileSystemChangeStream categoriesForMethods!
 handleError:!helpers!private! !
 handleNotifications:!private! !

@@ -7,15 +7,20 @@ UI.ValueConvertingControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticView guid: (Core.GUID fromString: '{87b4c739-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.StaticView isNonInstantiable: true!
+
 UI.StaticView comment: '`StaticView` is an abstract `<valueView>` class for implementing read-only (aka static) visual controls. The subclasses are intended to display model data but they do not allow it to be edited by the user.
 
 ##Instance Variables:
   unused	`<UndefinedObject>`. Reserved for future use.
 
 '!
+
 !UI.StaticView categoriesForClass!MVP-Views! !
+
 !UI.StaticView methodsFor!
 
 defaultBackcolor
@@ -59,6 +64,7 @@ onPositionChanged: aPositionEvent
 updateModel
 	"Flush changes in the view back to the associated model.
 	Static views don't allow such changes"! !
+
 !UI.StaticView categoriesForMethods!
 defaultBackcolor!colors!constants!private! !
 defaultExtent!constants!private! !
@@ -76,6 +82,7 @@ stbConvertFromVersion12: anArray
 
 	"Leave as is for static views - these should typically inherit the backcolor anyway"
 	^anArray! !
+
 !UI.StaticView class categoriesForMethods!
 stbConvertFromVersion12:!binary filing!private! !
 !

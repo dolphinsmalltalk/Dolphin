@@ -10,9 +10,13 @@ Kernel.InstructionInterpreter
 			'SendInstructions'
 				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #incrementStackTop #decrementStackTop nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #isZero nil #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: nil nil nil nil nil nil nil nil nil nil nil nil nil #send: #supersend: #specialSend: nil nil nil nil nil nil nil #sendTempZeroArgs: nil nil nil nil #sendSelfZeroArgs: nil nil nil nil nil nil nil #longSend:with: #longSupersend:with: nil nil nil nil nil nil nil #incTemp:temp: #incPushTemp:temp: #decTemp:temp: #decPushTemp:temp: nil #exLongSend:with:with: #exLongSupersend:with:with: nil)
 		}!
+
 Kernel.MessageSendInterpreter guid: (Core.GUID fromString: '{e9ff00d3-cfbe-4ed1-aa6e-747d701c9b85}')!
+
 Kernel.MessageSendInterpreter isNonInstantiable: true!
+
 Kernel.MessageSendInterpreter comment: ''!
+
 !Kernel.MessageSendInterpreter methodsFor!
 
 decPushTemp: arg1 temp: offset
@@ -88,6 +92,7 @@ supersend: literalIndex args: argumentCount
 	"Private - Interpret a Supersend [N] with M args instruction."
 
 	self subclassResponsibility! !
+
 !Kernel.MessageSendInterpreter categoriesForMethods!
 decPushTemp:temp:!instructions-stack ops!public! !
 decrementStackTop!instructions-miscellaneous!public! !
@@ -123,6 +128,7 @@ initialize
 	self addClassConstant: 'SendInstructions'
 		value: (ByteCodeDispatcher instructions
 				collect: [:each | (#('*send*' 'inc*' 'dec*' 'isZero') anySatisfy: [:pattern | pattern match: each]) ifTrue: [each]])! !
+
 !Kernel.MessageSendInterpreter class categoriesForMethods!
 dispatcher:!instance creation!public! !
 initialize!class initialization!development!public! !

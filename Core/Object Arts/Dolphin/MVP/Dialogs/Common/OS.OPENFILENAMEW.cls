@@ -30,7 +30,9 @@ OS.ComDlgStructure
 			'_OffsetOf_pvReserved' -> 16r4C.
 			'_OPENFILENAMEW_Size' -> 16r58
 		}!
+
 OS.OPENFILENAMEW guid: (Core.GUID fromString: '{87b4c603-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represents the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
 
 The following instance variables hold <String> objects whose addresses have been stored into the structure. This is necessary to prevent premature garbage collection of these objects occurring during an external API call.
@@ -42,7 +44,9 @@ Instance Variables:
 	defExt 		<String>
 	fileTitle		<String>
 	initialDir		<String>'!
+
 !OS.OPENFILENAMEW categoriesForClass!Win32-Structs! !
+
 !OS.OPENFILENAMEW methodsFor!
 
 defaultExtension
@@ -177,6 +181,7 @@ title: aString
 
 	title := aString asUtf16String.
 	self lpstrTitle: title! !
+
 !OS.OPENFILENAMEW categoriesForMethods!
 defaultExtension!accessing!public! !
 defaultExtension:!accessing!public! !
@@ -269,6 +274,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !
+
 !OS.OPENFILENAMEW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

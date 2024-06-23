@@ -7,9 +7,13 @@ Tools.MethodSearch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MethodSourceSearch guid: (Core.GUID fromString: '{6f058c96-c1bf-4fb5-a2c3-b82976045e6a}')!
+
 Tools.MethodSourceSearch comment: ''!
+
 !Tools.MethodSourceSearch categoriesForClass!Kernel-Objects! !
+
 !Tools.MethodSourceSearch methodsFor!
 
 methodFilter: aMonadicValuable 
@@ -56,6 +60,7 @@ wildcardReferenceFilter
 	match := self wildcardMatchPattern.
 	ignoreCase := findDetails isCaseSensitive not.
 	^[:text | match match: text ignoreCase: ignoreCase]! !
+
 !Tools.MethodSourceSearch categoriesForMethods!
 methodFilter:!helpers!private! !
 referenceFilter!accessing!private! !

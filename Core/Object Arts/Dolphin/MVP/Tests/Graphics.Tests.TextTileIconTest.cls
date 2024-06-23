@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.TextTileIconTest guid: (Core.GUID fromString: '{b3bf170a-bb92-47b7-959c-b6a7e8bc694a}')!
+
 Graphics.Tests.TextTileIconTest comment: ''!
+
 !Graphics.Tests.TextTileIconTest methodsFor!
 
 testStbConvertFromVersion1
@@ -25,6 +28,7 @@ testStbConvertFromVersion1
 	self assert: subject fontName equals: 'Georgia'.
 	self assert: subject fontStyle equals: #bold.
 	self assert: subject text equals: $🎓! !
+
 !Graphics.Tests.TextTileIconTest categoriesForMethods!
 testStbConvertFromVersion1!public!unit tests! !
 !

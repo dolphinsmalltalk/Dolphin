@@ -14,9 +14,13 @@ OS.TVITEMW
 			'_OffsetOf_uStateEx' -> 16r2C.
 			'_TVITEMEXW_Size' -> 16r3C
 		}!
+
 OS.TVITEMEXW guid: (Core.GUID fromString: '{f1c35f1c-58a2-4d7f-9fd9-3184f8aa1c31}')!
+
 OS.TVITEMEXW comment: ''!
+
 !OS.TVITEMEXW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.TVITEMEXW methodsFor!
 
 iExpandedImage
@@ -41,6 +45,7 @@ uStateEx: anInteger
 	"Set the receiver's 'uStateEx' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_uStateEx put: anInteger! !
+
 !OS.TVITEMEXW categoriesForMethods!
 iExpandedImage!**compiled accessors**!public! !
 iExpandedImage:!**compiled accessors**!public! !
@@ -73,6 +78,7 @@ getFieldNames
 
 initialize
 	self initializeCallbackPrototype! !
+
 !OS.TVITEMEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CommandLineOption guid: (Core.GUID fromString: '{24fed4fa-6d57-4f07-b973-b1cd9591567a}')!
+
 Kernel.CommandLineOption comment: 'This class is used internally by instances of CommandLine to encapsulate option rules.'!
+
 !Kernel.CommandLineOption categoriesForClass!Kernel-Objects! !
+
 !Kernel.CommandLineOption methodsFor!
 
 initializeFromStream: aStream
@@ -87,6 +91,7 @@ value: anObject
 		ifTrue: [block value: anObject]
 		ifFalse: [block value].
 ! !
+
 !Kernel.CommandLineOption categoriesForMethods!
 initializeFromStream:!private! !
 initializeOption:!private! !
@@ -142,6 +147,7 @@ requiringArgument: aString block: aBlock
 	^(self new)
 		initializeOptionRequiringArgument: aString block: aBlock;
 		yourself! !
+
 !Kernel.CommandLineOption class categoriesForMethods!
 allowingArgument:!public! !
 allowingArgument:block:!public! !

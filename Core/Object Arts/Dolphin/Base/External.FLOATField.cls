@@ -7,9 +7,13 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.FLOATField guid: (Core.GUID fromString: '{87b4c4ea-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.FLOATField comment: '<FLOATField> is a <ScalarField> class to represent <ExternalStructure> fields that are 32-bit IEEE single precision floating point numbers.'!
+
 !External.FLOATField categoriesForClass!External-Data-Types! !
+
 !External.FLOATField methodsFor!
 
 accessorMessage
@@ -31,6 +35,7 @@ writeInto: anExternalStructure value: aFloat
 	aFloat, into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes floatAtOffset: offset put: aFloat! !
+
 !External.FLOATField categoriesForMethods!
 accessorMessage!initializing!private! !
 readFrom:!indirect accessing!private! !
@@ -44,6 +49,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^VMConstants.FloatSize! !
+
 !External.FLOATField class categoriesForMethods!
 byteSize!constants!private! !
 !

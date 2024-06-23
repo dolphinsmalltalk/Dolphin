@@ -7,12 +7,16 @@ Refactory.Browser.ParseTreeSearcher
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ParseTreeRewriter guid: (Core.GUID fromString: '{e902bffe-805d-4946-b0ea-0e7501c75c73}')!
+
 Refactory.Browser.ParseTreeRewriter comment: 'ParseTreeRewriter walks over and transforms its BRProgramNode (tree). If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
 
 Instance Variables:
 	tree	<BRProgramNode>	the parse tree we''re transforming'!
+
 !Refactory.Browser.ParseTreeRewriter categoriesForClass!Refactory-ParseTree Matching! !
+
 !Refactory.Browser.ParseTreeRewriter methodsFor!
 
 executeTree: aParseTree
@@ -192,6 +196,7 @@ visitSequenceNode: aSequenceNode
 	aSequenceNode temporaries: (self visitArgumentNodes: aSequenceNode temporaries).
 	aSequenceNode statements: (aSequenceNode statements collect: [:each | self visitNode: each]).
 	^aSequenceNode! !
+
 !Refactory.Browser.ParseTreeRewriter categoriesForMethods!
 executeTree:!accessing!public! !
 foundMatch!helpers!private! !
@@ -337,6 +342,7 @@ replaceStatements: code with: newCode in: aParseTree onInterval: anInterval
 		with: replaceStmt
 		in: aParseTree
 		onInterval: anInterval! !
+
 !Refactory.Browser.ParseTreeRewriter class categoriesForMethods!
 removeTemporaryNamed:!instance creation!public! !
 rename:to:!instance creation!public! !

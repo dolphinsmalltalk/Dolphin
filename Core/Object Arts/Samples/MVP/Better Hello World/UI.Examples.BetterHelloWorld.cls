@@ -7,8 +7,11 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.BetterHelloWorld guid: (Core.GUID fromString: '{00e258da-1b1a-42c4-89c3-e3ed1983a682}')!
+
 UI.Examples.BetterHelloWorld comment: 'This is the presenter for the Better Hello World example package. The full sample shows an MVP "triad" of elements consisting of a ValueModel, a composite ShellView (drawn with the ViewComposer) and this presenter class that ties all the pieces together. See the package comment for more details and links to tutorial videos that explain how this example was put together.'!
+
 !UI.Examples.BetterHelloWorld methodsFor!
 
 createComponents
@@ -22,6 +25,7 @@ editMe
 model: aModel
 	super model: aModel.
 	textToDisplayPresenter model: aModel! !
+
 !UI.Examples.BetterHelloWorld categoriesForMethods!
 createComponents!public! !
 editMe!public! !
@@ -59,6 +63,7 @@ resource_Editable_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 18 #{UI.TextEdit} 50 20 nil 32 50 2 8 1140916353 1 176 nil nil nil 5 nil 1030 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[224 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 0 86 0 101 0 114 0 100 0 97 0 110 0 97 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 518 #{Graphics.Point} 193 193 nil 176 98 #coral nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 322 191 151 322 801 151 176 450 #setMarginWidths: 50 1 8 #(10 10) 176 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 75 0 0 0 239 1 0 0 150 0 0 0] 8 #() 322 193 193 nil 45 8 'textToDisplay' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 402 50 1 450 #createAt:extent: 50 2 322 6143 21 322 1201 801 32 578 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 87 14 0 0 154 1 0 0] 50 1 176 640 nil 27)! !
+
 !UI.Examples.BetterHelloWorld class categoriesForMethods!
 defaultModel!public! !
 icon!constants!public! !

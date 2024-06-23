@@ -7,13 +7,17 @@ External.PermanentLibrary
 	imports: #(#{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.UserLibrary guid: (Core.GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
+
 OS.UserLibrary comment: 'UserLibrary is the <ExternalLibrary> class to represent the Windows system DLL, User32.DLL.
 
 The default instance of this class provides access to most of the Win32 window management API. New functions may be added as required, but the external function naming convention should be followed.
 
 All functions in this library use the stdcall calling convention.'!
+
 !OS.UserLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.UserLibrary methodsFor!
 
 blockInput: aBoolean
@@ -632,6 +636,7 @@ vkKeyScan: aChar
 
 	<stdcall: int16 VkKeyScanW char>
 	^self invalidCall: _failureCode! !
+
 !OS.UserLibrary categoriesForMethods!
 blockInput:!public!win32 functions-window! !
 createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
@@ -704,6 +709,7 @@ fileName
 
 sharedVariableName
 	^#{User32}! !
+
 !OS.UserLibrary class categoriesForMethods!
 clear!initializing!private! !
 fileName!constants!public! !

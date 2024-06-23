@@ -7,12 +7,17 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMParseError guid: (OS.COM.IID fromString: '{3efaa426-272f-11d2-836f-0000f87a7782}')!
+
 MSXML.IXMLDOMParseError isEgressOnly: true!
+
 MSXML.IXMLDOMParseError comment: '<IXMLDOMParseError> is a wrapper class for the COM interface ''MSXML.IXMLDOMParseError'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The underlying COM object which exposes this interface is effectively a simple data object that encapsulates detailed information about parse errors detected by the XML parser.'!
+
 !MSXML.IXMLDOMParseError categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !MSXML.IXMLDOMParseError methodsFor!
 
 displayOn: aPuttableStream
@@ -171,6 +176,7 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self errorCode! !
+
 !MSXML.IXMLDOMParseError categoriesForMethods!
 displayOn:!printing!public! !
 errorCode!**auto generated**!properties!public! !
@@ -217,6 +223,7 @@ defineFunctions
 
 icon
 	^Error icon! !
+
 !MSXML.IXMLDOMParseError class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 icon!public! !

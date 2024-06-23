@@ -7,7 +7,9 @@ Tools.STxDebugger
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.STLDebugger guid: (Core.GUID fromString: '{2594ee50-2952-4436-bb8b-a33cafe7790e}')!
+
 Tools.STLDebugger comment: ' `STLDebugger` is an `STLInFiler` decorator that prints an indented trace of the contents of the STL file it is reading as it proceeds. `STLDebugger` can be useful for debugging issues with serialized objects, such as tracking down the cause of excessive size of a view resource.
 
 For example to view the contents of a view resource, one can proceed as follows:
@@ -16,7 +18,9 @@ For example to view the contents of a view resource, one can proceed as follows:
 	(STLDebugger dump: rid resource readStream) "Display-it"
 ''
 '!
+
 !Tools.STLDebugger categoriesForClass!System-Binary storage! !
+
 !Tools.STLDebugger methodsFor!
 
 basicNext
@@ -112,6 +116,7 @@ basicNext
 
 inFilerClass
 	^STLInFiler! !
+
 !Tools.STLDebugger categoriesForMethods!
 basicNext!accessing!private! !
 inFilerClass!constants!private! !

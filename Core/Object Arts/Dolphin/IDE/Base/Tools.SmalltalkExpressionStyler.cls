@@ -7,9 +7,13 @@ Tools.SmalltalkStyler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkExpressionStyler guid: (Core.GUID fromString: '{a79e3e47-8adc-4b02-b7a5-4b473ad6c632}')!
+
 Tools.SmalltalkExpressionStyler comment: '`SmalltalkExpressionStyler` is a `SmalltalkStyler` specialised for colouring Smalltalk expressions (as opposed to methods) in workspaces.'!
+
 !Tools.SmalltalkExpressionStyler categoriesForClass!Kernel-Objects! !
+
 !Tools.SmalltalkExpressionStyler methodsFor!
 
 initialBinaryStyle: aStBinarySelectorToken
@@ -26,6 +30,7 @@ initialKeywordStyle
 
 initialUnaryStyle
 	^#identifier! !
+
 !Tools.SmalltalkExpressionStyler categoriesForMethods!
 initialBinaryStyle:!constants!private! !
 initialKeywordStyle!constants!private! !

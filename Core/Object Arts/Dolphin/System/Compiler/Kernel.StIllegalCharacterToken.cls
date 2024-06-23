@@ -7,9 +7,13 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StIllegalCharacterToken guid: (Core.GUID fromString: '{3aa6518c-788d-479b-b7c3-2988a870dde6}')!
+
 Kernel.StIllegalCharacterToken comment: ''!
+
 !Kernel.StIllegalCharacterToken categoriesForClass!System-Compiler! !
+
 !Kernel.StIllegalCharacterToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -23,6 +27,7 @@ stop
 
 stop: anInteger
 	stopPosition := anInteger! !
+
 !Kernel.StIllegalCharacterToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 length!accessing!private! !
@@ -41,6 +46,7 @@ start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger
 		stop: stopInteger;
 		yourself
 ! !
+
 !Kernel.StIllegalCharacterToken class categoriesForMethods!
 start:comments:value:stop:!instance creation!public! !
 !

@@ -10,7 +10,9 @@ Core.Object
 			'ValidStbClasses'
 				-> #(#{Core.Date} #{Core.AnsiString} #{Core.Utf8String} #{Core.LargeInteger} #{Core.SmallInteger} #{Security.DolphinSureCertificateInfo})
 		}!
+
 Security.DolphinSureCertificateInfo guid: (Core.GUID fromString: '{92dfd157-de8b-4c95-8ed4-fcc86403ef31}')!
+
 Security.DolphinSureCertificateInfo comment: 'A DolphinSureCertificateInfo instance holds the unencoded data for a DolphinSureCertificate.
 
 Instance Variables:
@@ -22,7 +24,9 @@ Instance Variables:
 	publicKeyCipher	<publicKeyCipher> of the certificate''s issuing authority.
 
 '!
+
 !Security.DolphinSureCertificateInfo categoriesForClass!Cryptography-Certificates! !
+
 !Security.DolphinSureCertificateInfo methodsFor!
 
 details
@@ -108,6 +112,7 @@ validityString
 				stream nextPutAll: ' (EXPIRED)' ]]
 		ifFalse: [ stream display: 'indefinitely'].
 	^stream contents! !
+
 !Security.DolphinSureCertificateInfo categoriesForMethods!
 details!accessing!public! !
 details:!accessing!public! !
@@ -143,6 +148,7 @@ serial: aStringSerialNo owner: aStringOwner publicKey: pkey
 	and a public key of pkey"
 
 	^super new serial: aStringSerialNo owner: aStringOwner publicKey: pkey! !
+
 !Security.DolphinSureCertificateInfo class categoriesForMethods!
 binaryReadFrom:context:!binary filing!public! !
 new!instance creation!private! !

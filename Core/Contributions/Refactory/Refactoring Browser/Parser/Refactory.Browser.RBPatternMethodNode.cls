@@ -7,14 +7,18 @@ Kernel.StMethodNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBPatternMethodNode guid: (Core.GUID fromString: '{6846df75-8a6c-48dc-944d-453103430651}')!
+
 Refactory.Browser.RBPatternMethodNode comment: 'RBPatternMethodNode is an RBMethodNode that will match other method nodes without their selectors being equal. 
 
 Instance Variables:
 	isList	<Boolean>	are we matching each keyword or matching all keywords together (e.g., `keyword1: would match a one argument method whereas `@keywords: would match 0 or more arguments)
 
 '!
+
 !Refactory.Browser.RBPatternMethodNode categoriesForClass!Refactory-Parser! !
+
 !Refactory.Browser.RBPatternMethodNode methodsFor!
 
 copyInContext: aDictionary
@@ -89,6 +93,7 @@ matchSelectorAgainst: aNode inContext: aDictionary
 selectorParts: tokenCollection arguments: variableNodes 
 	super selectorParts: tokenCollection arguments: variableNodes.
 	isList := (tokenCollection first value at: 2) == RBPatternScanner.ListCharacter! !
+
 !Refactory.Browser.RBPatternMethodNode categoriesForMethods!
 copyInContext:!matching!public! !
 isPatternNode!public!testing/matching! !
@@ -107,6 +112,7 @@ selectorParts: tokenCollection arguments: variableNodes
 		ifTrue: [super selectorParts: tokenCollection arguments: variableNodes]
 		ifFalse: 
 			[StMethodNode selectorParts: tokenCollection arguments: variableNodes]! !
+
 !Refactory.Browser.RBPatternMethodNode class categoriesForMethods!
 selectorParts:arguments:!instance creation!public! !
 !

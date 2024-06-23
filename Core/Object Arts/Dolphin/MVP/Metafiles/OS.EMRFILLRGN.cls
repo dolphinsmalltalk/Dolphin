@@ -13,7 +13,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_rclBounds' -> 16r8.
 			'_OffsetOf_RGNDATA' -> 16r20
 		}!
+
 OS.EMRFILLRGN guid: (Core.GUID fromString: '{5840d53d-c10c-442c-be9f-cfada623813e}')!
+
 OS.EMRFILLRGN comment: '<EMRFILLRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagEMRFILLRGN {
 	BYTE* RGNDATA;
 } EMRFILLRGN;
 '!
+
 !OS.EMRFILLRGN categoriesForClass!Win32-Structs! !
+
 !OS.EMRFILLRGN methodsFor!
 
 cbRgnData
@@ -84,6 +88,7 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
+
 !OS.EMRFILLRGN categoriesForMethods!
 cbRgnData!**compiled accessors**!public! !
 cbRgnData:!**compiled accessors**!public! !
@@ -137,6 +142,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_FILLRGN}! !
+
 !OS.EMRFILLRGN class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

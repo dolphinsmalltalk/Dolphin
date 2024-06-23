@@ -7,9 +7,13 @@ UI.VirtualTreeModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.RegTreeModel guid: (Core.GUID fromString: '{87b4c674-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Examples.RegTreeModel comment: 'RegTreeModel implements a <treeModel> representing the hierarchy of <RegKey>s in the Windows system registry. For an example of its use, see the RegEdit sample application.'!
+
 !UI.Examples.RegTreeModel categoriesForClass!MVP-Models! !
+
 !UI.Examples.RegTreeModel methodsFor!
 
 approxSize
@@ -36,6 +40,7 @@ defaultGetParentBlock
 
 defaultHasChildrenBlock
 	^[:aRegKey | aRegKey notEmpty]! !
+
 !UI.Examples.RegTreeModel categoriesForMethods!
 approxSize!accessing!private! !
 defaultGetChildrenBlock!initializing!private! !
@@ -54,6 +59,7 @@ defaultSearchPolicy
 	identical."
 
 	^SearchPolicy equality! !
+
 !UI.Examples.RegTreeModel class categoriesForMethods!
 defaultSearchPolicy!accessing!public! !
 !

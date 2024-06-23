@@ -78,9 +78,13 @@ Core.Object
 								$\x2029 -> $¶
 							})
 		}!
+
 UI.Scintilla.CharacterRepresentation guid: (Core.GUID fromString: '{8dada09d-fef9-4496-99af-3b3493157558}')!
+
 UI.Scintilla.CharacterRepresentation comment: ''!
+
 !UI.Scintilla.CharacterRepresentation categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.CharacterRepresentation methodsFor!
 
 applyToView: aScintillaView
@@ -139,6 +143,7 @@ representation
 
 representation: aString
 	representation := aString ifNotNil: [aString asUtf8String]! !
+
 !UI.Scintilla.CharacterRepresentation categoriesForMethods!
 applyToView:!private!updating! !
 character!accessing!public! !
@@ -189,6 +194,7 @@ initialize
 
 new
 	^self basicNew initialize! !
+
 !UI.Scintilla.CharacterRepresentation class categoriesForMethods!
 forCharacter:!instance creation!public! !
 forLineEnding!instance creation!public! !

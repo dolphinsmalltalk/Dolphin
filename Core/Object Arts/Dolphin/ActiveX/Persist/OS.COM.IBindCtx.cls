@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IBindCtx guid: (OS.COM.IID fromString: '{0000000e-0000-0000-c000-000000000046}')!
+
 OS.COM.IBindCtx comment: '<IBindCtx> is a wrapper class for the custom interface ''OBJIDL.IBindCtx'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 No function table has been generated for IBindCtx because this interface is implemented by the system and it is not expected that there will be any reason to implement it in Dolphin.'!
+
 !OS.COM.IBindCtx categoriesForClass!OBJIDL-Interfaces! !
+
 !OS.COM.IBindCtx methodsFor!
 
 enumObjectParam
@@ -138,6 +142,7 @@ SetBindOptions: pbindopts
 
 	<virtual stdcall: hresult 7 BIND_OPTS2*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IBindCtx categoriesForMethods!
 enumObjectParam!**auto generated**!methods!public! !
 EnumObjectParam:!**auto generated**!COM Interfaces-IBindCtx!private! !
@@ -190,6 +195,7 @@ new
 	answer := self newPointer.
 	Ole32 createBindCtx: 0 ppbc: answer.
 	^answer! !
+
 !OS.COM.IBindCtx class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 new!instance creation!public! !

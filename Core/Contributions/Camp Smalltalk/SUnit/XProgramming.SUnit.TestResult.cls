@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestResult guid: (Core.GUID fromString: '{5e96793b-0810-11d4-a876-0050da643bf9}')!
+
 XProgramming.SUnit.TestResult comment: ''!
+
 !XProgramming.SUnit.TestResult categoriesForClass!SUnit! !
+
 !XProgramming.SUnit.TestResult methodsFor!
 
 addError: aTestCase signal: anException after: aDuration
@@ -192,6 +196,7 @@ tests
 		addAll: self errors;
 		addAll: self defects;
 		yourself! !
+
 !XProgramming.SUnit.TestResult categoriesForMethods!
 addError:signal:after:!adding!private! !
 addFailure:signal:after:!adding!private! !
@@ -254,6 +259,7 @@ signalFailureWith: aString
 
 skip
 	^TestSkip! !
+
 !XProgramming.SUnit.TestResult class categoriesForMethods!
 error!Exceptions!public! !
 exError!Exceptions!public! !

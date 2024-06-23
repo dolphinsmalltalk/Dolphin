@@ -7,7 +7,9 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ODBCLibrary guid: (Core.GUID fromString: '{87b4c580-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.ODBCLibrary comment: 'This is the ExternalLibrary class to represent the Win32 System DLL, ODBC32.DLL. 
 This library contains functions pertaining to the use of Open Database Connectivity 3.0.
 
@@ -20,7 +22,9 @@ Type mapping:
 	SQLDOUBLE	->	double	(64-bit float)
 	
 Note that SQLRETURN is an alias for SQLSMALLINT'!
+
 !OS.ODBCLibrary categoriesForClass!External-Libraries-ODBC! !
+
 !OS.ODBCLibrary methodsFor!
 
 sqlAllocHandle: anInteger inputHandle: parentExternalHandle outputHandlePtr: newExternalHandle
@@ -443,6 +447,7 @@ sqlTables: anExternalHandleSTMT szTableQualifier: aStringParmQual cbTableQualifi
 
 	<stdcall: int16 SQLTablesW handle lpwstr int16 lpwstr int16 lpwstr int16 lpwstr int16>
 	^self invalidCall: _failureCode! !
+
 !OS.ODBCLibrary categoriesForMethods!
 sqlAllocHandle:inputHandle:outputHandlePtr:!public!win32 functions-odbc library! !
 sqlBindCol:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrInd:!public!win32 functions-odbc library! !
@@ -501,6 +506,7 @@ onStartup2
 
 sharedVariableName
 	^#{Odbc32}! !
+
 !OS.ODBCLibrary class categoriesForMethods!
 fileName!constants!public! !
 onStartup2!event handling!private! !

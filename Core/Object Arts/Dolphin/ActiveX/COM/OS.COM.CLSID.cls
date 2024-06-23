@@ -7,11 +7,15 @@ Core.GUID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_CLSID_Size' -> 16r10 }!
+
 OS.COM.CLSID guid: (Core.GUID fromString: '{87b4c643-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.CLSID comment: '`OS.COM.CLSID` is the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify coclasses (components) in COM.
 
 The CLSIDs of all coclasses registered on your machine can be found under the HKCR\CLSID key in your registry. Each correctly formed entry will have a human (are VB programmers human?) readable form (a ProgID) directly under HKCR.'!
+
 !OS.COM.CLSID categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.CLSID methodsFor!
 
 displayOn: aPuttableStream
@@ -30,6 +34,7 @@ progID
 	answer := String fromUtf16String: pProgId.
 	Ole32 coTaskMemFree: pProgId.
 	^answer! !
+
 !OS.COM.CLSID categoriesForMethods!
 displayOn:!displaying!public! !
 progID!displaying!public! !
@@ -59,6 +64,7 @@ initialize
 	"
 
 	self extraInstanceSpec: _GUID_Size! !
+
 !OS.COM.CLSID class categoriesForMethods!
 fromProgID:!instance creation!public! !
 fromString:!instance creation!public! !

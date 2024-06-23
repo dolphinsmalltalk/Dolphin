@@ -62,6 +62,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.Examples.VideoRecording'
 	instanceVariableNames: 'title date time length'
@@ -69,6 +70,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.Examples.VideoTape'
 	instanceVariableNames: 'name length recordings'
@@ -76,6 +78,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Shell
 	subclass: #'UI.Examples.VideoLibraryShell'
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
@@ -83,6 +86,7 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Dialog
 	subclass: #'UI.Examples.VideoRecordingDialog'
 	instanceVariableNames: 'titlePresenter datePresenter timePresenter lengthPresenter'
@@ -90,6 +94,7 @@ UI.Dialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueDialog
 	subclass: #'UI.Examples.NewVideoTapeDialog'
 	instanceVariableNames: 'namePresenter lengthPresenter'

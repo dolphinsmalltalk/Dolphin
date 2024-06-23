@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.ColorMatrixTest guid: (Core.GUID fromString: '{00610fdc-d988-4d65-a319-78a2dd28b367}')!
+
 Graphics.Gdiplus.Tests.ColorMatrixTest comment: ''!
+
 !Graphics.Gdiplus.Tests.ColorMatrixTest methodsFor!
 
 assertIsIdentity
@@ -50,6 +53,7 @@ testWithAll
 	matrix2 := ColorMatrix withAll: elements.
 	self assert: (matrix2 closeTo: elements).
 	self should: [ColorMatrix withAll: (1 to: 26)] raise: InvalidArgumentError! !
+
 !Graphics.Gdiplus.Tests.ColorMatrixTest categoriesForMethods!
 assertIsIdentity!helpers!private! !
 createCanonicalSubject!helpers!private! !

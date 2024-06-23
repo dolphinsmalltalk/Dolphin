@@ -51,6 +51,10 @@ Kernel.SharedPool
 			'SQL_WLONGVARCHAR' -> -16rA.
 			'SQL_WVARCHAR' -> -16r9
 		}!
+
 OS.ODBCTypes guid: (Core.GUID fromString: '{91b1ee0d-f895-4316-aa43-befde6df9df0}')!
+
 OS.ODBCTypes isNonInstantiable: true!
+
 OS.ODBCTypes comment: ''!
+

@@ -13,7 +13,9 @@ External.Structure
 			'_OffsetOf_BlendOp' -> 16r0.
 			'_OffsetOf_SourceConstantAlpha' -> 16r2
 		}!
+
 OS.BLENDFUNCTION guid: (Core.GUID fromString: '{18e4db2f-bc13-4088-8c0d-df249d0bb979}')!
+
 OS.BLENDFUNCTION comment: '<BLENDFUNCTION> is an <ExternalStructure> class to wrap the struct ''Win32.BLENDFUNCTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 IDL definition follows:
@@ -26,7 +28,9 @@ struct tagBLENDFUNCTION {
 	BYTE AlphaFormat;
 } BLENDFUNCTION;
 '!
+
 !OS.BLENDFUNCTION categoriesForClass!Win32-Structs! !
+
 !OS.BLENDFUNCTION methodsFor!
 
 AlphaFormat
@@ -89,6 +93,7 @@ usePerPixelAlpha: aBoolean
 	blend. If not then only the constant alpha is used."
 
 	self AlphaFormat: (aBoolean ifTrue: [OS.Win32Constants.AC_SRC_ALPHA] ifFalse: [0])! !
+
 !OS.BLENDFUNCTION categoriesForMethods!
 AlphaFormat!**compiled accessors**!public! !
 AlphaFormat:!**compiled accessors**!public! !
@@ -139,6 +144,7 @@ defineFields
 
 getFieldNames
 	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
+
 !OS.BLENDFUNCTION class categoriesForMethods!
 blend:!instance creation!public! !
 byteSize!**compiled accessors**!constants!public! !

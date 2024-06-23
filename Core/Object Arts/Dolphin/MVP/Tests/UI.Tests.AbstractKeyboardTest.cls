@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.AbstractKeyboardTest guid: (Core.GUID fromString: '{973884cb-33cb-45e6-a489-48d76699c608}')!
+
 UI.Tests.AbstractKeyboardTest isNonInstantiable: true!
+
 UI.Tests.AbstractKeyboardTest comment: ''!
+
 !UI.Tests.AbstractKeyboardTest methodsFor!
 
 setCurrentKeyboardLayout: aString
@@ -29,6 +33,7 @@ setUsKeyboard
 tearDown
 	savedLayout ifNotNil: [Keyboard layoutName: savedLayout].
 	super tearDown! !
+
 !UI.Tests.AbstractKeyboardTest categoriesForMethods!
 setCurrentKeyboardLayout:!helpers!private! !
 setUkKeyboard!initializing!private! !

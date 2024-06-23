@@ -7,9 +7,13 @@ UI.PrintingDialog
 	imports: #(#{OS.PrintDialogConstants} #{OS.Win32Errors private})
 	classInstanceVariableNames: ''
 	classConstants: { 'UnifiedPrintDialogMask' -> 16r1 }!
+
 UI.PrintDialog guid: (Core.GUID fromString: '{87b4c6b4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.PrintDialog comment: 'PrintDialog is a <valueDialogPresenter> implementing the Windows PrintDlg common dialog. The associated <valueModel> contains an <integer> representing the device context handle (HDC) for the chosen printer.'!
+
 !UI.PrintDialog categoriesForClass!MVP-Presenters! !
+
 !UI.PrintDialog methodsFor!
 
 basicShowModal
@@ -201,6 +205,7 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^PRINTDLGEXW! !
+
 !UI.PrintDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 clsid!accessing!public! !
@@ -247,6 +252,7 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
+
 !UI.PrintDialog class categoriesForMethods!
 initialize!development!initializing!private! !
 !

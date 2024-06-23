@@ -7,11 +7,15 @@ Core.Notification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBWarning guid: (Core.GUID fromString: '{87b4c574-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Database.DBWarning comment: 'Instances of DBWarning hold exception information for Database Connection non-fatal warnings (essentially those resulting from SQLSuccessWithInfo return codes).
 
 '!
+
 !Database.DBWarning categoriesForClass!ODBC Interface! !
+
 !Database.DBWarning methodsFor!
 
 _descriptionFormat
@@ -24,6 +28,7 @@ signal
 
 	self tag buildErrorInfo.
 	super signal! !
+
 !Database.DBWarning categoriesForMethods!
 _descriptionFormat!displaying!public! !
 signal!public!signalling! !

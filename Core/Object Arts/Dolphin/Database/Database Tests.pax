@@ -37,6 +37,7 @@ Database
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Database.Tests.DBTest'
 	instanceVariableNames: 'connection'
@@ -44,6 +45,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.DBTest
 	subclass: #'Database.Tests.DBConnectionTest'
 	instanceVariableNames: ''
@@ -51,6 +53,7 @@ Database.Tests.DBTest
 	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.DBConnectionTest
 	subclass: #'Database.Tests.AccessDBTest'
 	instanceVariableNames: ''
@@ -58,6 +61,7 @@ Database.Tests.DBConnectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.DBConnectionTest
 	subclass: #'Database.Tests.SQLServerDBTest'
 	instanceVariableNames: ''
@@ -65,6 +69,7 @@ Database.Tests.DBConnectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestResource
 	subclass: #'Database.Tests.DBConnectionTestResource'
 	instanceVariableNames: 'connection isAvailable'
@@ -72,6 +77,7 @@ XProgramming.SUnit.TestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.DBConnectionTestResource
 	subclass: #'Database.Tests.AccessNorthwindDB'
 	instanceVariableNames: 'filename'
@@ -79,6 +85,7 @@ Database.Tests.DBConnectionTestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.DBConnectionTestResource
 	subclass: #'Database.Tests.SQLServerNorthwindDB'
 	instanceVariableNames: ''

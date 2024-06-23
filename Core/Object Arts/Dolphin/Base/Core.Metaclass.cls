@@ -7,7 +7,9 @@ Core.ClassDescription
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Metaclass guid: (Core.GUID fromString: '{87b4c4fc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Metaclass comment: 'Metaclass is the class of objects which represent the classes of the Classes of the system.
 In other words, every class in the system (e.g. Integer) is the sole instance of an instance of Metaclass
 (e.g. Integer class), they are not instances of Class (which, in fact, has no instances). A class object''s 
@@ -25,7 +27,9 @@ Please see the Blue Book for further explanation.
 
 Metaclass has the following instance variables:
 	instanceClass	- the single instance of the Metaclass which is a Class object'!
+
 !Core.Metaclass categoriesForClass!Kernel-Classes! !
+
 !Core.Metaclass methodsFor!
 
 absoluteReference
@@ -213,6 +217,7 @@ unqualifiedName
 	"Answer a <readableString> that is the name of the receiver in it's environment."
 
 	^instanceClass unqualifiedName , ' class'! !
+
 !Core.Metaclass categoriesForMethods!
 absoluteReference!public! !
 basicEnvironment!accessing!public! !

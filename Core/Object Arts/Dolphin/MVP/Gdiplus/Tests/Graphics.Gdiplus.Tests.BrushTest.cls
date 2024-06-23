@@ -7,9 +7,13 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.BrushTest guid: (Core.GUID fromString: '{a44bef50-db22-468d-bcf1-815158731a8b}')!
+
 Graphics.Gdiplus.Tests.BrushTest isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.BrushTest comment: ''!
+
 !Graphics.Gdiplus.Tests.BrushTest methodsFor!
 
 brushType
@@ -26,6 +30,7 @@ testLumninance
 testType
 	self newCanonicalModel.
 	self assert: model type equals: self brushType! !
+
 !Graphics.Gdiplus.Tests.BrushTest categoriesForMethods!
 brushType!constants!private! !
 testIsNone!public!unit tests! !

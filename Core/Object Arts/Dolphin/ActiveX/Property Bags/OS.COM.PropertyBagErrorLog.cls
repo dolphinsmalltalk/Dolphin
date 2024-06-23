@@ -7,7 +7,9 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.PropertyBagErrorLog guid: (Core.GUID fromString: '{9c956c62-af27-11d3-b376-080046056106}')!
+
 OS.COM.PropertyBagErrorLog comment: '`OS.COM.PropertyBagErrrorLog` is a simple implementation of the interface `IErrorLog`. It is used, for example, to record errors occurring during a call to IPersistPropertyBag::Load().
 
 Instance Variables:
@@ -16,6 +18,7 @@ Instance Variables:
 	guid		<GUID> of the object being loaded (e.g. CLSID).
 
 '!
+
 !OS.COM.PropertyBagErrorLog methodsFor!
 
 AddError: pszPropName pExcepInfo: pExcepInfo 
@@ -79,6 +82,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^{IErrorLog. IEnumErrorInfo}! !
+
 !OS.COM.PropertyBagErrorLog categoriesForMethods!
 AddError:pExcepInfo:!COM Interfaces-IErrorLog!public! !
 guid!accessing!private! !

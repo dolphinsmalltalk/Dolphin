@@ -7,7 +7,9 @@ WinHttpServer.HttpServerStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_SERVICE_BINDING_BASE_Size' -> 16r4. '_OffsetOf_Type' -> 16r0 }!
+
 WinHttpServer.HTTP_SERVICE_BINDING_BASE guid: (Core.GUID fromString: '{80f84f87-9667-42d4-ace4-1004dfe14475}')!
+
 WinHttpServer.HTTP_SERVICE_BINDING_BASE comment: '`HTTP_SERVICE_BINDING_BASE` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_BASE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +25,9 @@ struct tagHTTP_SERVICE_BINDING_BASE {
 } HTTP_SERVICE_BINDING_BASE;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_BINDING_BASE methodsFor!
 
 Type
@@ -35,6 +39,7 @@ Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_Type put: anInteger! !
+
 !WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesForMethods!
 Type!**compiled accessors**!public! !
 Type:!**compiled accessors**!public! !
@@ -69,6 +74,7 @@ fromAddress: anAddress
 
 getFieldNames
 	^#(#Type)! !
+
 !WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

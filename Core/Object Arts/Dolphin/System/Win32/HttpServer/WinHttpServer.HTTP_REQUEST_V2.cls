@@ -11,7 +11,9 @@ WinHttpServer.HTTP_REQUEST_V1
 			'_OffsetOf_pRequestInfo' -> 16r1D4.
 			'_OffsetOf_RequestInfoCount' -> 16r1D0
 		}!
+
 WinHttpServer.HTTP_REQUEST_V2 guid: (Core.GUID fromString: '{5f3f936f-b824-47af-a69e-62dc4730010c}')!
+
 WinHttpServer.HTTP_REQUEST_V2 comment: '`HTTP_REQUEST_V2` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V2'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +31,9 @@ struct tagHTTP_REQUEST_V2 {
 } HTTP_REQUEST_V2;
 ```
 '!
+
 !WinHttpServer.HTTP_REQUEST_V2 categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_REQUEST_V2 methodsFor!
 
 pRequestInfo
@@ -61,6 +65,7 @@ RequestInfoCount: anInteger
 	"Set the receiver's 'RequestInfoCount' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_RequestInfoCount put: anInteger! !
+
 !WinHttpServer.HTTP_REQUEST_V2 categoriesForMethods!
 pRequestInfo!**compiled accessors**!public! !
 pRequestInfo:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo #RequestInfoCount #pRequestInfo)! !
+
 !WinHttpServer.HTTP_REQUEST_V2 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

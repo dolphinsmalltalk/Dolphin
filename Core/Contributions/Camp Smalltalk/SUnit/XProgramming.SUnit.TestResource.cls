@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: 'current'
 	classConstants: {}!
+
 XProgramming.SUnit.TestResource guid: (Core.GUID fromString: '{69aeb725-622f-43db-a9c7-095932055892}')!
+
 XProgramming.SUnit.TestResource isNonInstantiable: true!
+
 XProgramming.SUnit.TestResource comment: ''!
+
 !XProgramming.SUnit.TestResource methodsFor!
 
 description
@@ -50,6 +54,7 @@ setUp
 tearDown
 	"Does nothing. Subclasses should override this
 	to tear down their resource"! !
+
 !XProgramming.SUnit.TestResource categoriesForMethods!
 description!Accessing!public! !
 description:!Accessing!public! !
@@ -93,6 +98,7 @@ resources
 
 signalInitializationError
 	^TestResult signalErrorWith: 'Resource ' , self name , ' could not be initialized'! !
+
 !XProgramming.SUnit.TestResource class categoriesForMethods!
 current!Accessing!public! !
 current:!Accessing!public! !

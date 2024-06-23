@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SearchPolicy guid: (Core.GUID fromString: '{123a1501-7cb8-11d3-93ca-00a024ca708a}')!
+
 Core.SearchPolicy isNonInstantiable: true!
+
 Core.SearchPolicy comment: '`SearchPolicy` is for configuring pluggable collections and models to use different searching policies, e.g. equality vs. identity.
 
 `SearchPolicy` is the canonical implementation of the `<searchPolicy>` and `<comparisonPolicy>` protocols (the latter is really a subset of the former).
@@ -25,7 +28,9 @@ Class Variables:
 	CaseInsensitive	`CaseInsensitiveSearchPolicy`. Singelton instance for comparing strings regardless of case (ordinal case-insensitive)
 
 '!
+
 !Core.SearchPolicy categoriesForClass!Collections-Support! !
+
 !Core.SearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -106,6 +111,7 @@ printOn: aPuttableStream
 				print: SearchPolicy;
 				space;
 				display: name]! !
+
 !Core.SearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 hash:!comparing!public! !
@@ -167,6 +173,7 @@ ordinalCaseInsensitive
 	"Answer the singleton sub-instance of the receiver which supports a search policy	based on ordinal (i.e. binary, non-linguistic) case-insensitive string comparisons."
 
 	^OrdinalCaseInsensitiveSearchPolicy current! !
+
 !Core.SearchPolicy class categoriesForMethods!
 always!instance creation!public! !
 caseInsensitive!instance creation!public! !

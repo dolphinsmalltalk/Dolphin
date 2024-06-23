@@ -16,10 +16,15 @@ Core.Object
 			'ReadableMask' -> 16r1.
 			'WriteableMask' -> 16r2
 		}!
+
 Kernel.AttributeDescriptor guid: (Core.GUID fromString: '{87b4c455-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.AttributeDescriptor isNonInstantiable: true!
+
 Kernel.AttributeDescriptor comment: 'AttributeDescriptor is an abstract class of meta-objects that be used to describe the shape of other objects. It has a subclass, Aspect, instances of which describe how to access object''s published ''aspects'' (e.g. instance variables) through getter and setter methods, and a subclass, ExternalField, instances of which describe the fields of C style structures. Note that these objects are all descriptors, and need to be combined with a subject object in order to become "closed".'!
+
 !Kernel.AttributeDescriptor categoriesForClass!Attribute-Definition! !
+
 !Kernel.AttributeDescriptor methodsFor!
 
 beCompiled
@@ -187,6 +192,7 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^self subclassResponsibility! !
+
 !Kernel.AttributeDescriptor categoriesForMethods!
 beCompiled!modes!public! !
 beImmutable!modes!public! !
@@ -251,6 +257,7 @@ writeOnly
 	which cannot be read, only written."
 
 	^self new beWriteOnly! !
+
 !Kernel.AttributeDescriptor class categoriesForMethods!
 inaccessible!instance creation!private! !
 new!instance creation!public! !

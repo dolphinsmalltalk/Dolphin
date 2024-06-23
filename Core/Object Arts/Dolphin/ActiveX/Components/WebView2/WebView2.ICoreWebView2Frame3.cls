@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Frame2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Frame3 guid: (OS.COM.IID fromString: '{b50d82cc-cc28-481d-9614-cb048895e6a0}')!
+
 WebView2.ICoreWebView2Frame3 isEgressOnly: true!
+
 WebView2.ICoreWebView2Frame3 comment: '`ICoreWebView2Frame3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +36,9 @@ interface ICoreWebView2Frame3 : ICoreWebView2Frame2
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Frame3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Frame3 methodsFor!
 
 Add_PermissionRequested: handler token: token
@@ -54,6 +59,7 @@ Remove_PermissionRequested: token
 
 	<virtual stdcall: hresult 26 int64>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Frame3 categoriesForMethods!
 Add_PermissionRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame3!private! !
 Remove_PermissionRequested:!**auto generated**!COM Interfaces-ICoreWebView2Frame3!private! !
@@ -71,6 +77,7 @@ defineFunctions
 		defineFunction: #Remove_PermissionRequested:
 			argumentTypes: 'sqword'
 ! !
+
 !WebView2.ICoreWebView2Frame3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -25,8 +25,11 @@ Core.Object
 			'PrefixSmallIntegerMask' -> 16r1.
 			'PrefixVariableMask' -> 16r20
 		}!
+
 Kernel.STxFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STxFiler isNonInstantiable: true!
+
 Kernel.STxFiler comment: '`STxFiler` is the abstract class of object serializers and deserializers for writing and reading in STB and STL formats. There are concrete classes for both reading and writing of each version from the original STB v0 up to the current version.
 
 Note that whilst the writing of the historic formats is supported, the format of the classes themselves in the image may have changed, so forwards compatibility is limited. Backwards compatibility (i.e. reading old formats) should be complete by virtue of this hierarchy of classes and the class specific conversions as implemented by each class'' `stbConvertFrom:` method.
@@ -36,7 +39,9 @@ Note that whilst the writing of the historic formats is supported, the format of
   `predefinedClassOffset`		`<integer>`. Offset of first predefined class in the object map.
 
 '!
+
 !Kernel.STxFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STxFiler methodsFor!
 
 atEnd
@@ -146,6 +151,7 @@ version
 	"Answer the format version of the STB stream."
 
 	^self class version! !
+
 !Kernel.STxFiler categoriesForMethods!
 atEnd!public!testing! !
 defaultFlags!constants!private! !
@@ -189,6 +195,7 @@ version
 
 versions
 	^self subclassResponsibility! !
+
 !Kernel.STxFiler class categoriesForMethods!
 classForVersion:!enquiries!private! !
 on:!instance creation!public! !

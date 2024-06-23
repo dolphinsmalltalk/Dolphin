@@ -10,8 +10,11 @@ Core.Utf8String
 			'CharClassifications'
 				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)
 		}!
+
 Core.Symbol guid: (Core.GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Symbol isNullTerminated: true!
+
 Core.Symbol comment: '`Symbol` is a class of interned `String`s that are guaranteed to be unique throughout the system.
 
 `Symbol`s can contain any Unicode code points as they have the same representation as `Utf8String`s.
@@ -23,7 +26,9 @@ Symbol complies with the following ANSI protocols:
   <sequencedReadableCollection>
   <readableString>
   <symbol>'!
+
 !Core.Symbol categoriesForClass!Collections-Text! !
+
 !Core.Symbol methodsFor!
 
 argumentCount
@@ -203,6 +208,7 @@ species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types. Symbols are equal to Strings in Dolphin, but we don't want them to be considered interchangeable as Symbols have a distinctly different purpose."
 
 	^self class! !
+
 !Core.Symbol categoriesForMethods!
 argumentCount!accessing!public! !
 asString!converting!public! !
@@ -430,6 +436,7 @@ with: aCharacter
 
 withAll: anArrayOfCharacter
 	^self intern: (String withAll: anArrayOfCharacter)! !
+
 !Core.Symbol class categoriesForMethods!
 addUnique:!accessing!private! !
 allInstancesDo:!enumerating!public! !

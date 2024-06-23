@@ -5,9 +5,13 @@ MainTestCase subclass: #DateAndTimeANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DateAndTimeANSITest guid: (GUID fromString: '{f6ad86cf-3057-4561-b434-61d09e62c2d4}')!
+
 DateAndTimeANSITest comment: ''!
+
 !DateAndTimeANSITest categoriesForClass!Unclassified! !
+
 !DateAndTimeANSITest methodsFor!
 
 canonicalObject
@@ -379,6 +383,7 @@ testXyear
 	#'Date and Time'.
 	self value: [d19970426t8 year] should: [:r | r = 1997]
 		conformTo: #'DateAndTime' selector: #'year'.! !
+
 !DateAndTimeANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

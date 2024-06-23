@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MoveVariableDefinitionRefactoring guid: (Core.GUID fromString: '{fe31ff59-c938-404b-92bb-579e93af7fe9}')!
+
 Refactory.Browser.MoveVariableDefinitionRefactoring comment: ''!
+
 !Refactory.Browser.MoveVariableDefinitionRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.MoveVariableDefinitionRefactoring methodsFor!
 
 checkNodes: sequenceNodes
@@ -100,6 +104,7 @@ usesDirectly: aParseTree
 		matches: '[:`@args | | `@temps | `@.Statements]' do: [:aNode :answer | answer];
 		matches: name do: [:aNode :answer | true].
 	^searcher executeTree: aParseTree initialAnswer: false! !
+
 !Refactory.Browser.MoveVariableDefinitionRefactoring categoriesForMethods!
 checkNodes:!public!transforming! !
 checkParseTree!public!transforming! !
@@ -126,6 +131,7 @@ model: aRBModel bindTight: anInterval in: aClass selector: aSelector
 			selector: aSelector
 			interval: anInterval;
 		yourself! !
+
 !Refactory.Browser.MoveVariableDefinitionRefactoring class categoriesForMethods!
 bindTight:in:selector:!instance creation!public! !
 model:bindTight:in:selector:!instance creation!public! !

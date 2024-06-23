@@ -7,9 +7,13 @@ Kernel.StTagNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StAnnotationNode guid: (Core.GUID fromString: '{e65cb014-8373-4447-9994-f337d37f7544}')!
+
 Kernel.StAnnotationNode comment: ''!
+
 !Kernel.StAnnotationNode categoriesForClass!System-Compiler! !
+
 !Kernel.StAnnotationNode methodsFor!
 
 = anObject
@@ -54,6 +58,7 @@ setSelector: aSymbol arguments: anArray
 	selector := aSymbol asSymbol.
 	self arguments: anArray.
 	^self! !
+
 !Kernel.StAnnotationNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -73,6 +78,7 @@ setSelector:arguments:!initializing!private! !
 
 selector: aSymbol arguments: anArrayOfStLiteralValueNode
 	^self new setSelector: aSymbol arguments: anArrayOfStLiteralValueNode! !
+
 !Kernel.StAnnotationNode class categoriesForMethods!
 selector:arguments:!instance creation!public! !
 !

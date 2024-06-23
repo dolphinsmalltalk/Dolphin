@@ -43,6 +43,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.MoenTreeNode'
 	instanceVariableNames: 'object contour offset position parent child sibling clip extent flags'
@@ -50,6 +51,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ExpandedMask' -> 16r1. 'HasExpandedMask' -> 16r2 }!
+
 Core.Link
 	subclass: #'UI.MoenLink'
 	instanceVariableNames: 'x y'
@@ -57,6 +59,7 @@ Core.Link
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.View
 	subclass: #'UI.MoenTreeView'
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
@@ -92,6 +95,7 @@ resource_Moen_tree
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.MoenTreeView} 38 #{Core.Array} 30 nil nil 50 2 8 1409286144 1 32 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 517 nil nil nil 32 2566 #{UI.MoenTreeNode} nil 1030 #{UI.MoenContour} nil nil nil nil 518 #{Graphics.Point} 1 1 352 nil nil nil nil nil 7 518 #{Core.Message} #displayString 8 #() #{UI.MoenTreeView} 268435457 338 5 3 1350 1 #{Graphics.IconImageManager} 338 1 1 41 nil 774 #{Graphics.Pen} nil true 262 #{OS.LOGPEN} 8 #[0 0 0 0 1 0 0 0 0 0 0 0 192 192 192 0] 338 33 33 338 19999 19999 114721 464 338 35 1 nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 338 6143 21 338 271 251 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 134 12 0 0 135 0 0 0] 8 #() 338 193 193 nil 27)! !
+
 !UI.TreePresenter class categoriesForMethods!
 resource_Moen_tree!public!resources-views! !
 !

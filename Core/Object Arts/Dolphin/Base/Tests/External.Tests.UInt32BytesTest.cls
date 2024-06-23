@@ -7,8 +7,11 @@ External.Tests.IntegerBytesTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.UInt32BytesTest guid: (Core.GUID fromString: '{df15ebf5-f6c2-4cd6-8d5a-59836c85f726}')!
+
 External.Tests.UInt32BytesTest comment: ''!
+
 !External.Tests.UInt32BytesTest methodsFor!
 
 canonicalValue
@@ -22,6 +25,7 @@ stlVersion6
 
 subjectClass
 	^UInt32Bytes! !
+
 !External.Tests.UInt32BytesTest categoriesForMethods!
 canonicalValue!constants!private! !
 stlVersion4!constants!private! !

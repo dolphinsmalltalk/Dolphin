@@ -11,7 +11,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r80
 		}!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET guid: (Core.GUID fromString: '{078985f7-29b2-4403-8acf-074217e6e9f4}')!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET comment: '`HTTP_SERVICE_CONFIG_SSL_CCS_SET` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +30,9 @@ struct tagHTTP_SERVICE_CONFIG_SSL_CCS_SET {
 } HTTP_SERVICE_CONFIG_SSL_CCS_SET;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET methodsFor!
 
 KeyDesc
@@ -58,6 +62,7 @@ ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 		from: ##(_OffsetOf_ParamDesc + 1)
 		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM._HTTP_SERVICE_CONFIG_SSL_PARAM_Size)
 		startingAt: 1! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET categoriesForMethods!
 KeyDesc!**compiled accessors**!public! !
 KeyDesc:!**compiled accessors**!public! !
@@ -89,6 +94,7 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

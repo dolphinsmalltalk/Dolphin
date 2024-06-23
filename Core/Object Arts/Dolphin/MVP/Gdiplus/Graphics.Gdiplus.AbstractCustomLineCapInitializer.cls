@@ -7,9 +7,13 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractCustomLineCapInitializer guid: (Core.GUID fromString: '{155c3088-8cb5-4093-85dc-877ccbc9de0e}')!
+
 Graphics.Gdiplus.AbstractCustomLineCapInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.AbstractCustomLineCapInitializer comment: ''!
+
 !Graphics.Gdiplus.AbstractCustomLineCapInitializer methodsFor!
 
 = anObject
@@ -85,6 +89,7 @@ widthScaleOf: aCustomLineCap set: aNumber
 	widthScale := aNumber.
 	aCustomLineCap basicHandle
 		ifNotNil: [:handle | Gdip gdipSetCustomLineCapWidthScale: handle widthScale: aNumber asFloat]! !
+
 !Graphics.Gdiplus.AbstractCustomLineCapInitializer categoriesForMethods!
 =!comparing!public! !
 applyAdditionalAttributes:!attributes!private!realizing/unrealizing! !
@@ -109,6 +114,7 @@ cloneHandle: aHandle
 
 freeHandle: aHandle
 	Gdip gdipDeleteCustomLineCap: aHandle! !
+
 !Graphics.Gdiplus.AbstractCustomLineCapInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

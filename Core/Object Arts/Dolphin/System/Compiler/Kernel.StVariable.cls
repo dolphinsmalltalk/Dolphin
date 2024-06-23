@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StVariable guid: (Core.GUID fromString: '{c0f71430-b170-427f-a259-f06ca5fc44d7}')!
+
 Kernel.StVariable isNonInstantiable: true!
+
 Kernel.StVariable comment: '<StVariable> is an abstract metadata type used by the Smalltalk compiler''s semantic analyzer to describe variable definitions. There are subtypes to describe instance variables, arguments, temporaries, static variables (i.e. class, pool, and global variables), and the special (aka pseudo) variables ''self'', ''super'' and ''thisContext''.
 
 Instance Variables:
@@ -17,7 +20,9 @@ Instance Variables:
 	writes		<OrderedCollection> of <StVariableNode>, being writes to the variable that assign a value.
 
 '!
+
 !Kernel.StVariable categoriesForClass!Kernel-Objects! !
+
 !Kernel.StVariable methodsFor!
 
 addAssignment: aStVariableNode fromScope: aStSemanticScope
@@ -112,6 +117,7 @@ writes
 	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe writes into the variable described by the receiver."
 
 	^#()! !
+
 !Kernel.StVariable categoriesForMethods!
 addAssignment:fromScope:!public! !
 addRead:fromScope:!public! !

@@ -7,8 +7,11 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ICULibrary guid: (Core.GUID fromString: '{cf17a85e-24da-4549-a6bf-03591cd93858}')!
+
 OS.ICULibrary comment: ''!
+
 !OS.ICULibrary methodsFor!
 
 u_charAge: aCharacter
@@ -620,6 +623,7 @@ u_versionToString(const UVersionInfo versionArray, char *versionString);"
 
 	<cdecl: void u_versionToString uint32* char8*>
 	^self invalidCall: _failureCode! !
+
 !OS.ICULibrary categoriesForMethods!
 u_charAge:!character properties!public!version information! !
 u_charAge:versionArray:!character properties!public!version information! !
@@ -663,6 +667,7 @@ fileName
 
 sharedVariableName
 	^#{OS.ICU}! !
+
 !OS.ICULibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

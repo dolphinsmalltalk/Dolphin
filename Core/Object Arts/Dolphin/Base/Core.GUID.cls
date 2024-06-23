@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_GUID_Size' -> 16r10. 'StringSize' -> 16r26 }!
+
 Core.GUID guid: (Core.GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.GUID comment: 'GUID is the class of 128-bit Globally Unique Identifiers (guids) which are used wherever a unique identifier is required in COM, for example to identify specific coclasses and interfaces.
 
 You can easily allocate a new GUID by sending #newUnique to this class. Note that this process is very fast, so there is no particular reason not to use GUIDs for other purposes requiring unique identifiers such as records in a database.
@@ -19,7 +21,9 @@ Instance Variables:
 
 Class Variables:
 	Null	- The null <GUID>.'!
+
 !Core.GUID categoriesForClass!External-Data-Structured-COM! !
+
 !Core.GUID methodsFor!
 
 <==> aGUID
@@ -197,6 +201,7 @@ value: guidBytes
 		from: 1
 		to: _GUID_Size
 		startingAt: 1! !
+
 !Core.GUID categoriesForMethods!
 <==>!comparing!public! !
 <=>!comparing!public! !
@@ -381,6 +386,7 @@ uninitialize
 	VM registryAt: self name put: nil.
 	"Allow the RPCLibrary to be removed as it is probably no longer required"
 	OS.RPCLibrary closeDefault! !
+
 !Core.GUID class categoriesForMethods!
 alignment!constants!private! !
 atAddress:!instance creation!public! !

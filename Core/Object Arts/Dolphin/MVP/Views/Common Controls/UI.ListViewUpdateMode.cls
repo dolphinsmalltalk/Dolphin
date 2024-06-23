@@ -7,9 +7,13 @@ UI.IconicListUpdateMode
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ListViewUpdateMode guid: (Core.GUID fromString: '{d20ce47f-827a-479f-82bf-d2501d66aa71}')!
+
 UI.ListViewUpdateMode isNonInstantiable: true!
+
 UI.ListViewUpdateMode comment: ''!
+
 !UI.ListViewUpdateMode methodsFor!
 
 applyCallbackMask
@@ -32,6 +36,7 @@ updateStateImageOf: anObject at: anInteger
 
 updateStateImages
 	self subclassResponsibility! !
+
 !UI.ListViewUpdateMode categoriesForMethods!
 applyCallbackMask!operations!public! !
 insertItem:atIndex:!event handling!public! !
@@ -48,6 +53,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^ListView icon! !
+
 !UI.ListViewUpdateMode class categoriesForMethods!
 icon!constants!public! !
 !

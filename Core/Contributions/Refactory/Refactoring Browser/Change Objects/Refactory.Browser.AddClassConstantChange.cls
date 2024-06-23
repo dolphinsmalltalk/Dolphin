@@ -7,9 +7,13 @@ Refactory.Browser.RefactoryVariableChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AddClassConstantChange guid: (Core.GUID fromString: '{1971f618-b2fa-4d5a-bf1d-36b364eb34cc}')!
+
 Refactory.Browser.AddClassConstantChange comment: ''!
+
 !Refactory.Browser.AddClassConstantChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.AddClassConstantChange methodsFor!
 
 asUndoOperation
@@ -31,6 +35,7 @@ mutateClassDetails: aClassDetails
 
 primitiveExecute
 	self changeClass addClassConstant: variable! !
+
 !Refactory.Browser.AddClassConstantChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !

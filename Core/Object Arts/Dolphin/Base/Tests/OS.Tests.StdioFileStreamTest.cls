@@ -7,8 +7,11 @@ Core.Tests.AbstractFileStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.StdioFileStreamTest guid: (Core.GUID fromString: '{d3e882fd-385f-45ec-b975-c31f9e777b4b}')!
+
 OS.Tests.StdioFileStreamTest comment: ''!
+
 !OS.Tests.StdioFileStreamTest methodsFor!
 
 bufferSize
@@ -190,6 +193,7 @@ testStdOutWriteable
 	| stdout |
 	stdout := SessionManager current stdout.
 	self assert: stdout isWriteable! !
+
 !OS.Tests.StdioFileStreamTest categoriesForMethods!
 bufferSize!constants!private! !
 maxPosition!constants!private! !
@@ -217,6 +221,7 @@ allTestSelectors
 	| roCategory |
 	roCategory := 'strict utf8' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
+
 !OS.Tests.StdioFileStreamTest class categoriesForMethods!
 allTestSelectors!Accessing!public! !
 !

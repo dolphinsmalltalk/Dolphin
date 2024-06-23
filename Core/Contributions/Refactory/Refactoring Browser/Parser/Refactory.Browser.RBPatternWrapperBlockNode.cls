@@ -7,9 +7,13 @@ Refactory.Browser.RBPatternBlockNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBPatternWrapperBlockNode guid: (Core.GUID fromString: '{9c1e1f14-cb93-4be7-a1dd-a621ba57b12e}')!
+
 Refactory.Browser.RBPatternWrapperBlockNode comment: ''!
+
 !Refactory.Browser.RBPatternWrapperBlockNode categoriesForClass!Refactory-Parser! !
+
 !Refactory.Browser.RBPatternWrapperBlockNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -38,6 +42,7 @@ wrappedNode
 wrappedNode: aRBProgramNode 
 	wrappedNode := aRBProgramNode.
 	aRBProgramNode parent: self! !
+
 !Refactory.Browser.RBPatternWrapperBlockNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 copyInContext:!matching!public! !

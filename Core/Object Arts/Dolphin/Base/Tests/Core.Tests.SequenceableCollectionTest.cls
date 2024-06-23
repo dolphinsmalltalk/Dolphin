@@ -7,9 +7,13 @@ Core.Tests.CollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SequenceableCollectionTest guid: (Core.GUID fromString: '{4c32dbcc-4044-442b-95d9-d6e8ad2396cf}')!
+
 Core.Tests.SequenceableCollectionTest isNonInstantiable: true!
+
 Core.Tests.SequenceableCollectionTest comment: ''!
+
 !Core.Tests.SequenceableCollectionTest methodsFor!
 
 assimilateResultElement: anObject
@@ -880,6 +884,7 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) equals: foundInteger.
 	self assert: (searchee indexOfAnyOf: searchFor asArray startingAt: startInteger)
 		equals: foundInteger! !
+
 !Core.Tests.SequenceableCollectionTest categoriesForMethods!
 assimilateResultElement:!helpers!private! !
 byteArrayForSequence:!helpers!private! !

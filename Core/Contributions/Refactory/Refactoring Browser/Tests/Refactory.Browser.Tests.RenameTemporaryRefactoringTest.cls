@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RenameTemporaryRefactoringTest guid: (Core.GUID fromString: '{04723e90-17c0-4d20-b025-d17029763fab}')!
+
 Refactory.Browser.Tests.RenameTemporaryRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RenameTemporaryRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RenameTemporaryRefactoringTest methodsFor!
 
 testBadInterval
@@ -128,6 +132,7 @@ testRenameTemporary
 								asdf isEmpty ifTrue: [^self].
 								asdf size == 1 ifTrue: [^asdf first viewResults].
 								self result openEditor')! !
+
 !Refactory.Browser.Tests.RenameTemporaryRefactoringTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testClassBindingClash!failure tests!public! !

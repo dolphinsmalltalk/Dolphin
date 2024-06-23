@@ -7,9 +7,13 @@ Core.Tests.LocaleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.AbstractInvariantLocaleTest guid: (Core.GUID fromString: '{022d0490-a455-4948-b241-fc88c0121134}')!
+
 OS.Tests.AbstractInvariantLocaleTest isNonInstantiable: true!
+
 OS.Tests.AbstractInvariantLocaleTest comment: ''!
+
 !OS.Tests.AbstractInvariantLocaleTest methodsFor!
 
 subjectName
@@ -68,6 +72,7 @@ testStbRoundTripUserDefault
 
 testStlConvertFromVersion0
 	self subclassResponsibility! !
+
 !OS.Tests.AbstractInvariantLocaleTest categoriesForMethods!
 subjectName!constants!private! !
 testDayOfWeek!public!unit tests! !

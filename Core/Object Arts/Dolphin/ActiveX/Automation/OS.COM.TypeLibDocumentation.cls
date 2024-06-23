@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TypeLibDocumentation guid: (Core.GUID fromString: '{c06f3b78-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.TypeLibDocumentation comment: 'AXTypeLibDocumentation is a simple class to hold documentary information from a type library - either from an ITypeLib or an ITypeInfo.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	helpstring 	<String>. Short help text (a one-liner) describing the element.
 	helpcontext 	<DWORD>. Help file cross-reference.
 	helpfile		<String>. Path of help file (only valid on documentation for the library).'!
+
 !OS.COM.TypeLibDocumentation categoriesForClass!ActiveX Automation! !
+
 !OS.COM.TypeLibDocumentation methodsFor!
 
 helpcontext
@@ -47,6 +51,7 @@ printOn: aStream
 		nextPut: $(;
 		print: self name;
 		nextPut: $)! !
+
 !OS.COM.TypeLibDocumentation categoriesForMethods!
 helpcontext!accessing!public! !
 helpfile!accessing!public! !

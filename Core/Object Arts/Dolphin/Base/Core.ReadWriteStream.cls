@@ -7,10 +7,14 @@ Core.WriteStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ReadWriteStream guid: (Core.GUID fromString: '{87b4c6fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.ReadWriteStream comment: 'Class ReadWriteStream is a subclass of WriteStream that represents an accessor that can both read and write elements into its collection. It supports all the protocol of both ReadStream and WriteStream.
 '!
+
 !Core.ReadWriteStream categoriesForClass!Collections-Streams! !
+
 !Core.ReadWriteStream methodsFor!
 
 basicNext
@@ -85,6 +89,7 @@ nextAvailable
 
 readStream
 	^self! !
+
 !Core.ReadWriteStream categoriesForMethods!
 basicNext!accessing!public! !
 basicNext:into:startingAt:!accessing!public! !

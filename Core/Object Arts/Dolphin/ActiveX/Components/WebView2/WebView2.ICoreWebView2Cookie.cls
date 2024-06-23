@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Cookie guid: (OS.COM.IID fromString: '{ad26d6be-1486-43e6-bf87-a2034006ca21}')!
+
 WebView2.ICoreWebView2Cookie isEgressOnly: true!
+
 WebView2.ICoreWebView2Cookie comment: '`ICoreWebView2Cookie` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Cookie'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -68,7 +71,9 @@ interface ICoreWebView2Cookie : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Cookie categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Cookie methodsFor!
 
 domain
@@ -316,6 +321,7 @@ value: value
 	"Set the 'value' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_value: value asUtf16String! !
+
 !WebView2.ICoreWebView2Cookie categoriesForMethods!
 domain!properties!public! !
 expires!properties!public! !
@@ -384,6 +390,7 @@ defineFunctions
 		defineFunction: #get_IsSession:
 			argumentTypes: 'sdword*'
 ! !
+
 !WebView2.ICoreWebView2Cookie class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

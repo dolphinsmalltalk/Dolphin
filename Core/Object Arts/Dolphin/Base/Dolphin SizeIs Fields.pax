@@ -34,6 +34,7 @@ External.ArrayFieldLength
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ParseNodeVisitor
 	subclass: #'Kernel.ArithmeticExpressionVisitor'
 	instanceVariableNames: ''
@@ -41,6 +42,7 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ArithmeticExpressionVisitor
 	subclass: #'External.SizeIsExpressionFormatter'
 	instanceVariableNames: 'codeStream structClass variable'
@@ -123,6 +125,7 @@ solveFor: aString
 					variable: term;
 					value: op argument;
 					solveFor: aString]! !
+
 !Kernel.StAssignmentNode categoriesForMethods!
 solveFor:!operations!private! !
 !
@@ -141,6 +144,7 @@ inverseArithmeticOperator
 		at: #* put: #/;
 		at: #// put: #*;
 		shrink) at: self selector! !
+
 !Kernel.StMessageNode categoriesForMethods!
 inverseArithmeticOperator!accessing!public! !
 !

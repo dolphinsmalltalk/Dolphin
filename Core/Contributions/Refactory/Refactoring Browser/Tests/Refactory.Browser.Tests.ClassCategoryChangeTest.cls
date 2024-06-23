@@ -7,9 +7,13 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ClassCategoryChangeTest guid: (Core.GUID fromString: '{8933849e-9a86-4196-b80a-e7eaec8546a5}')!
+
 Refactory.Browser.Tests.ClassCategoryChangeTest comment: ''!
+
 !Refactory.Browser.Tests.ClassCategoryChangeTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ClassCategoryChangeTest methodsFor!
 
 subjectClass
@@ -28,11 +32,12 @@ testPrinting
 	| subject printString |
 	subject := self subjectClass categorize: Object
 				as: {ClassCategory name: 'Kernel-Objects'. ClassCategory name: 'Refactoring-Model'}.
-	self assert: subject beforeText equals: '!!Core.Object categoriesForClass!!Kernel-Objects!! !!'.
+	self assert: subject beforeText trimBlanks equals: '!!Core.Object categoriesForClass!!Kernel-Objects!! !!'.
 	printString := '!!Core.Object categoriesForClass!!Kernel-Objects!!Refactoring-Model!! !!'.
-	self assert: subject afterText equals: printString.
+	self assert: subject afterText trimBlanks equals: printString.
 	self assert: subject changeString equals: 'Categorize Core.Object'.
-	self assert: subject printString equals: printString! !
+	self assert: subject printString trimBlanks equals: printString! !
+
 !Refactory.Browser.Tests.ClassCategoryChangeTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsUndo!public!unit tests! !

@@ -7,9 +7,13 @@ Tools.KeyedAspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.StackFrameSlot guid: (Core.GUID fromString: '{3c431618-bcf4-4123-b9e8-6f18344e5764}')!
+
 Tools.StackFrameSlot comment: ''!
+
 !Tools.StackFrameSlot categoriesForClass!Attribute-Definition! !
+
 !Tools.StackFrameSlot methodsFor!
 
 index
@@ -27,6 +31,7 @@ writeInto: subjectObject value: valueObject
 
 	self isWriteable ifFalse: [self error: 'Attempt to modify read-only aspect ', self printString].
 	^subjectObject at: index put: valueObject! !
+
 !Tools.StackFrameSlot categoriesForMethods!
 index!accessing!public! !
 index:!accessing!private! !
@@ -40,6 +45,7 @@ local: aString index: anInteger
 	^(self key: aString)
 		index: anInteger;
 		yourself! !
+
 !Tools.StackFrameSlot class categoriesForMethods!
 local:index:!public! !
 !

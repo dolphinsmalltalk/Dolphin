@@ -12,9 +12,13 @@ OS.SizedStructure
 			'_OffsetOf_pBlendFunction' -> 16rC.
 			'_OffsetOf_prcExclude' -> 16r8
 		}!
+
 OS.BP_PAINTPARAMS guid: (Core.GUID fromString: '{caca75ff-b81a-424e-9ffe-ae0e691932d5}')!
+
 OS.BP_PAINTPARAMS comment: ''!
+
 !OS.BP_PAINTPARAMS categoriesForClass!Win32-Structs! !
+
 !OS.BP_PAINTPARAMS methodsFor!
 
 blendFunction
@@ -53,6 +57,7 @@ prcExclude: aRECTL
 	"Set the receiver's 'prcExclude' field to the value of the argument, aRECTL"
 
 	bytes uintPtrAtOffset: _OffsetOf_prcExclude put: aRECTL yourAddress! !
+
 !OS.BP_PAINTPARAMS categoriesForMethods!
 blendFunction!accessing!public! !
 blendFunction:!accessing!public! !
@@ -91,6 +96,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #prcExclude #pBlendFunction)! !
+
 !OS.BP_PAINTPARAMS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

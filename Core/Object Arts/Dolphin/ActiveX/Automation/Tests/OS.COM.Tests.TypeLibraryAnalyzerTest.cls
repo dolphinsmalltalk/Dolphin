@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.TypeLibraryAnalyzerTest guid: (Core.GUID fromString: '{64fc0f8b-7d1a-4a7f-9a9c-3fdbf7bfdae5}')!
+
 OS.COM.Tests.TypeLibraryAnalyzerTest comment: 'If these tests fail make sure you have registered TestTypelib by running regsvr32 on Tests\TLATest\Debug\TLATest.dll'!
+
 !OS.COM.Tests.TypeLibraryAnalyzerTest methodsFor!
 
 tearDown
@@ -99,6 +102,7 @@ tlaTestTypelib
 	analyzer := Tests.TestTypelib current analyzer.
 	analyzer isNil ifTrue: [self skip].
 	^analyzer! !
+
 !OS.COM.Tests.TypeLibraryAnalyzerTest categoriesForMethods!
 tearDown!public!unit tests! !
 testDefaultArgs!public!unit tests! !
@@ -112,6 +116,7 @@ tlaTestTypelib!accessing!private! !
 
 resources
 	^{TestTypelib}! !
+
 !OS.COM.Tests.TypeLibraryAnalyzerTest class categoriesForMethods!
 resources!public!unit tests! !
 !

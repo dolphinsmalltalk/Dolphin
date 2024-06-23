@@ -7,9 +7,13 @@ UI.ControlView
 	imports: #(#{OS.TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tooltip guid: (Core.GUID fromString: '{ba32bd21-5167-4bd1-949c-ab76875cdeb7}')!
+
 UI.Tooltip comment: 'Tooltip is a <ControlView> class which wraps the Windows Tool Tip control.'!
+
 !UI.Tooltip categoriesForClass!MVP-Views! !
+
 !UI.Tooltip methodsFor!
 
 add: aTOOLINFOA tool: aView 
@@ -319,6 +323,7 @@ ttnShow: anNMHDR
 	"Private - Handler for the TTN_SHOW message, which is forwarded to the presenter."
 
 	^self presenter onShow! !
+
 !UI.Tooltip categoriesForMethods!
 add:tool:!operations!private! !
 alwaysTip!public!testing! !
@@ -383,6 +388,7 @@ winClassName
 
 	^'tooltips_class32'
 ! !
+
 !UI.Tooltip class categoriesForMethods!
 icon!constants!public! !
 themePartName!constants!private! !

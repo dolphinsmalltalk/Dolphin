@@ -7,9 +7,13 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PointEvent guid: (Core.GUID fromString: '{87b4c551-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.PointEvent comment: ''!
+
 !UI.PointEvent categoriesForClass!Events!MVP-Views-Events! !
+
 !UI.PointEvent methodsFor!
 
 position
@@ -37,6 +41,7 @@ y
 	"Answer the y-position of the pointer."
 
 	^self lParamY! !
+
 !UI.PointEvent categoriesForMethods!
 position!accessing!public! !
 printLParamOn:!printing!private! !

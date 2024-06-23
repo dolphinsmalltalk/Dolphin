@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ScriptDialogOpeningEventArgs guid: (OS.COM.IID fromString: '{7390bb70-abe0-4843-9529-f143b31b03d6}')!
+
 WebView2.ICoreWebView2ScriptDialogOpeningEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2ScriptDialogOpeningEventArgs comment: '`ICoreWebView2ScriptDialogOpeningEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -49,7 +52,9 @@ interface ICoreWebView2ScriptDialogOpeningEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ScriptDialogOpeningEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ScriptDialogOpeningEventArgs methodsFor!
 
 accept
@@ -181,6 +186,7 @@ uri
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !WebView2.ICoreWebView2ScriptDialogOpeningEventArgs categoriesForMethods!
 accept!**auto generated**!methods!public! !
 Accept!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
@@ -222,6 +228,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
+
 !WebView2.ICoreWebView2ScriptDialogOpeningEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IConnectionPoint guid: (OS.COM.IID fromString: '{b196b286-bab4-101a-b69c-00aa00341d07}')!
+
 OS.COM.IConnectionPoint comment: '<IConnectionPoint> is a wrapper class for the custom interface ''OBJIDL.IConnectionPoint'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.IConnectionPoint categoriesForClass!No category! !
+
 !OS.COM.IConnectionPoint methodsFor!
 
 advise: client
@@ -133,6 +137,7 @@ Unadvise: dwCookie
 
 	<virtual stdcall: int32 7 uint32>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IConnectionPoint categoriesForMethods!
 advise:!adding!public! !
 Advise:pdwCookie:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
@@ -168,6 +173,7 @@ defineFunctions
 		defineFunction: #EnumConnections:
 			argumentTypes: 'void**'
 ! !
+
 !OS.COM.IConnectionPoint class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.PushDownClassVariableRefactoringTest guid: (Core.GUID fromString: '{a5398930-2959-4aa2-a55c-3bce05b7412a}')!
+
 Refactory.Browser.Tests.PushDownClassVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.PushDownClassVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.PushDownClassVariableRefactoringTest methodsFor!
 
 testModelNonExistantName
@@ -134,6 +138,7 @@ testPushDownClassVariable
 		equals: (self
 				parseMethod: 'refToExternalClassVar ^{ #(#{_.BasicLintRuleTestData.Foo1}). BasicLintRuleTestData.Foo1. #{_.BasicLintRuleTestData.Foo1}. #{Refactory.Browser.TestData.BasicLintRuleTestData.Foo1}. BasicLintRuleTestData.Foo1 }'
 				in: targetClass)! !
+
 !Refactory.Browser.Tests.PushDownClassVariableRefactoringTest categoriesForMethods!
 testModelNonExistantName!failure tests!public! !
 testModelPushDownToMultipleSubclassesFailure!failure tests!public! !

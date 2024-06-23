@@ -7,10 +7,14 @@ UI.ImageViewAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ImageListView guid: (Core.GUID fromString: '{3089fd81-d572-4492-a0ac-037b8ad4125e}')!
+
 Tools.ImageListView comment: '`ImageListView` is debugging aid for displaying the entire content of an image list, e.g. in an inspector open on an image list.
 '!
+
 !Tools.ImageListView categoriesForClass!MVP-Views! !
+
 !Tools.ImageListView methodsFor!
 
 invalidateOnResize
@@ -39,6 +43,7 @@ paintImageOn: aCanvas
 				on: aCanvas
 				at: origin + ((i \\ perRow * cx) @ (i // perRow * cy))].
 	^displayRect origin: origin extent: (perRow * cx) @ ((count / perRow) ceiling * cy)! !
+
 !Tools.ImageListView categoriesForMethods!
 invalidateOnResize!private!testing! !
 paintImageOn:!drawing!event handling!private! !
@@ -52,6 +57,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		removeAllKeys: #(#viewMode #isWholeBackgroundErased #isDoubleBuffered #imageBorder);
 		yourself! !
+
 !Tools.ImageListView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !

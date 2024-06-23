@@ -7,7 +7,9 @@ Core.ArrayedCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ByteArray guid: (Core.GUID fromString: '{87b4c511-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.ByteArray comment: 'ByteArray is the class of <ArrayedCollection>s whose elements are bytes (i.e. <integer>s in the range 0..255).
 
 ByteArray complies with the ANSI protocols:
@@ -16,7 +18,9 @@ ByteArray complies with the ANSI protocols:
 	sequencedReadableCollection
 	sequencedCollection
 	ByteArray'!
+
 !Core.ByteArray categoriesForClass!Collections-Arrayed! !
+
 !Core.ByteArray methodsFor!
 
 _sameAsString: aString
@@ -708,6 +712,7 @@ validOffset: anInteger failureCode: failureCode
 	failureCode == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: anInteger].
 	failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
 	^nil! !
+
 !Core.ByteArray categoriesForMethods!
 _sameAsString:!comparing!private! !
 =!comparing!public! !
@@ -827,6 +832,7 @@ fromHexString: aString
 				put: (digits at: (aString basicAt: (j := i + i) - 1) - ##($0 codePoint - 1)) * 16
 						+ (digits at: (aString basicAt: j) - ##($0 codePoint - 1))].
 	^answer! !
+
 !Core.ByteArray class categoriesForMethods!
 elementSize!constants!private! !
 empty!instance creation!public! !

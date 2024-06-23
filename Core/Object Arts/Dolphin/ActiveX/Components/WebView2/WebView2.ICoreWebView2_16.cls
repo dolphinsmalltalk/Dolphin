@@ -7,8 +7,11 @@ WebView2.ICoreWebView2_15
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2_16 guid: (OS.COM.IID fromString: '{0eb34dc9-9f91-41e1-8639-95cd5943906b}')!
+
 WebView2.ICoreWebView2_16 isEgressOnly: true!
+
 WebView2.ICoreWebView2_16 comment: '`ICoreWebView2_16` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_16'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -37,7 +40,9 @@ interface ICoreWebView2_16 : ICoreWebView2_15
 };
 ```
 '!
+
 !WebView2.ICoreWebView2_16 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2_16 methodsFor!
 
 Print: printSettings handler: handler
@@ -68,6 +73,7 @@ ShowPrintUI: printDialogKind
 
 	<virtual stdcall: hresult 115 sdword>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2_16 categoriesForMethods!
 Print:handler:!**auto generated**!COM Interfaces-ICoreWebView2_16!public! !
 PrintToPdfStream:handler:!**auto generated**!COM Interfaces-ICoreWebView2_16!public! !
@@ -88,6 +94,7 @@ defineFunctions
 		defineFunction: #PrintToPdfStream:handler:
 			argumentTypes: 'ICoreWebView2PrintSettings* ICoreWebView2PrintToPdfStreamCompletedHandler*'
 ! !
+
 !WebView2.ICoreWebView2_16 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

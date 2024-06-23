@@ -12,8 +12,11 @@ Kernel.SemanticAnalyser
 			'SpecialSelectors' -> (IdentitySet
 						withAll: #(#- #* #/ #// #?? #\\ #~~ #~= #+ #< #<= #= #== #> #>= #at: #at:put: #basicAt: #basicAt:put: #basicClass #basicNew: #basicSize #bitAnd: #bitOr: #bitShift: #class #isNil #new #new: #not #notNil #size #value #value: #value:value:))
 		}!
+
 Kernel.StSemanticAnalyser guid: (Core.GUID fromString: '{3922cac3-8a81-45a8-adb3-2795a6e7bc2f}')!
+
 Kernel.StSemanticAnalyser comment: '`Kernel.StSemanticAnalyser` is a `SemanticAnalyser` that performs full semantic analysis of a Smalltalk parse tree for the compiler. In addition to detecting and reporting semantic errors, it performs a full analysis of the scopes and temp variable usage in a method. This analysis can be used to determine the type of blocks required (clean, copying, or full). The analyser also collects the literal frame contents, and other information required to generate a method.'!
+
 !Kernel.StSemanticAnalyser methodsFor!
 
 accessStaticVariable: aStVariableNode
@@ -628,6 +631,7 @@ visitVariableNode: aVariableNode
 					(var writes isEmpty and: [(self isReceiverOfNilTest: aVariableNode) not])
 						ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aVariableNode]]
 				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aVariableNode]]]! !
+
 !Kernel.StSemanticAnalyser categoriesForMethods!
 accessStaticVariable:!helpers!private! !
 addLiteral:value:!helpers!private! !
@@ -726,6 +730,7 @@ initialize
 	optimizedMessages do: [:each | restrictedSelectors addAll: each].
 	self addClassConstant: 'RestrictedSelectors' value: restrictedSelectors.
 	self addClassConstant: 'SpecialSelectors' value: VM specialSelectors! !
+
 !Kernel.StSemanticAnalyser class categoriesForMethods!
 analyseParseTree:pools:!operations!public! !
 analyseParseTree:pools:onError:!operations!public! !

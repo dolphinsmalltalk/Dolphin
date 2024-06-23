@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Sequence
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ContextMenuItemCollection guid: (OS.COM.IID fromString: '{f562a2f5-c415-45cf-b909-d4b7c1e276d3}')!
+
 WebView2.ICoreWebView2ContextMenuItemCollection isEgressOnly: true!
+
 WebView2.ICoreWebView2ContextMenuItemCollection comment: '`ICoreWebView2ContextMenuItemCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuItemCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -40,7 +43,9 @@ interface ICoreWebView2ContextMenuItemCollection : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ContextMenuItemCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ContextMenuItemCollection methodsFor!
 
 add: anICoreWebView2ContextMenuItem beforeIndex: anInteger
@@ -87,6 +92,7 @@ RemoveValueAtIndex: index
 
 	<virtual stdcall: hresult 6 uint32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2ContextMenuItemCollection categoriesForMethods!
 add:beforeIndex:!**auto generated**!methods!public! !
 elementClass!constants!private! !
@@ -112,6 +118,7 @@ defineFunctions
 		defineFunction: #InsertValueAtIndex:value:
 			argumentTypes: 'dword ICoreWebView2ContextMenuItem*'
 ! !
+
 !WebView2.ICoreWebView2ContextMenuItemCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

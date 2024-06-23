@@ -719,6 +719,7 @@ emitPackageDescription: aPackage
 fileOutClass: aClass ofPackage: package
 	self
 		fileOutDefinitionOfClass: aClass;
+		cr;
 		fileOutPackage: package methodsOfClass: aClass;
 		fileOutPackage: package methodsOfClass: aClass class!
 

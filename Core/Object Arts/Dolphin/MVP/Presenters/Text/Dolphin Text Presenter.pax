@@ -136,6 +136,7 @@ Kernel.SharedPool
 			'ES_UPPERCASE' -> 16r8.
 			'ES_WANTRETURN' -> 16r1000
 		}!
+
 UI.AbstractDocumentShell
 	subclass: #'UI.TextDocument'
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
@@ -143,6 +144,7 @@ UI.AbstractDocumentShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValuePresenter
 	subclass: #'UI.TextPresenter'
 	instanceVariableNames: 'findDetails'
@@ -150,6 +152,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.AbstractCHARRANGE'
 	instanceVariableNames: ''
@@ -157,6 +160,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.AbstractFORMATRANGE'
 	instanceVariableNames: ''
@@ -169,6 +173,7 @@ External.Structure
 			'_OffsetOf_rc' -> 16r8.
 			'_OffsetOf_rcPage' -> 16r18
 		}!
+
 External.Structure
 	subclass: #'OS.AbstractTEXTRANGE'
 	instanceVariableNames: 'text'
@@ -176,6 +181,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.AbstractCHARRANGE
 	subclass: #'OS.CHARRANGE'
 	instanceVariableNames: ''
@@ -183,6 +189,7 @@ OS.AbstractCHARRANGE
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_CHARRANGE_Size' -> 16r8. '_OffsetOf_cpMax' -> 16r4. '_OffsetOf_cpMin' -> 16r0 }!
+
 OS.AbstractTEXTRANGE
 	subclass: #'OS.TEXTRANGE'
 	instanceVariableNames: ''
@@ -194,6 +201,7 @@ OS.AbstractTEXTRANGE
 			'_OffsetOf_lpstrText' -> 16r8.
 			'_TEXTRANGE_Size' -> 16rC
 		}!
+
 OS.TEXTRANGE
 	subclass: #'OS.FINDTEXTEX'
 	instanceVariableNames: ''
@@ -201,6 +209,7 @@ OS.TEXTRANGE
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_FINDTEXTEX_Size' -> 16r14. '_OffsetOf_chrgText' -> 16rC }!
+
 UI.ValueConvertingControlView
 	subclass: #'UI.TextEdit'
 	instanceVariableNames: 'teFlags updateMode _reserved18 _reserved19 _reserved20'
@@ -218,6 +227,7 @@ UI.ValueConvertingControlView
 			'StaticMask' -> 16r10.
 			'WantTabMask' -> 16r4
 		}!
+
 UI.TextEdit
 	subclass: #'UI.MultilineTextEdit'
 	instanceVariableNames: ''
@@ -225,6 +235,7 @@ UI.TextEdit
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.MultilineTextEdit
 	subclass: #'UI.MultilineTextEditWithImage'
 	instanceVariableNames: 'backBitmap backMode backBrush'
@@ -248,6 +259,7 @@ replaceSelectionIn: aTextEdit
 	and #selectionRtf: methods."
 
 	aTextEdit selectionPlainText: self! !
+
 !Core.String categoriesForMethods!
 replaceSelectionIn:!double dispatch!public! !
 !

@@ -14,7 +14,9 @@ OS.SizedStructure
 			'_OffsetOf_szDevice' -> 16r28.
 			'MONITORINFOF_PRIMARY' -> 16r1
 		}!
+
 OS.MONITORINFOEXW guid: (Core.GUID fromString: '{b51d5aa0-7d88-48dc-8c48-36240b05b9ad}')!
+
 OS.MONITORINFOEXW comment: '`MONITORINFOEXW` is an `External.Structure` class to wrap the struct ''Win32.MONITORINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -33,7 +35,9 @@ struct tagMONITORINFOEXW {
 } MONITORINFOEXW;
 ```
 '!
+
 !OS.MONITORINFOEXW categoriesForClass!Win32-Structs! !
+
 !OS.MONITORINFOEXW methodsFor!
 
 dwFlags
@@ -60,6 +64,7 @@ szDevice
 	"Answer the <Utf16String> value of the receiver's 'szDevice' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDevice! !
+
 !OS.MONITORINFOEXW categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 isPrimary!public!testing! !
@@ -98,6 +103,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags #szDevice)! !
+
 !OS.MONITORINFOEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,10 +7,15 @@ Kernel.STLInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLLegacyInFiler guid: (Core.GUID fromString: '{361093d2-9470-42cc-89e2-e5f378440a57}')!
+
 Kernel.STLLegacyInFiler isNonInstantiable: true!
+
 Kernel.STLLegacyInFiler comment: '`STBLegacyInFiler` is the abstract class of  `STLInFiler`s for previous STL versions.'!
+
 !Kernel.STLLegacyInFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STLLegacyInFiler methodsFor!
 
 lastPredefined
@@ -27,6 +32,7 @@ readLookupTable: aClass format: anSTBClassConversion size: anInteger
 	"Should not be received as this version emits STBIdentityDictionaryProxy for LookupTables"
 
 	^self shouldNotImplement! !
+
 !Kernel.STLLegacyInFiler categoriesForMethods!
 lastPredefined!constants!private! !
 readExtensibleCollection:format:size:!operations!public! !

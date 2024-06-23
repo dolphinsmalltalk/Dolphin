@@ -27,7 +27,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Verb' -> 16r24.
 			'_OffsetOf_Version' -> 16r20
 		}!
+
 WinHttpServer.HTTP_REQUEST_V1 guid: (Core.GUID fromString: '{7927a79c-8c4e-423a-bf24-f1b36b4df5c4}')!
+
 WinHttpServer.HTTP_REQUEST_V1 comment: '`HTTP_REQUEST_V1` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -60,7 +62,9 @@ struct tagHTTP_REQUEST_V1 {
 } HTTP_REQUEST_V1;
 ```
 '!
+
 !WinHttpServer.HTTP_REQUEST_V1 categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_REQUEST_V1 methodsFor!
 
 Address
@@ -317,6 +321,7 @@ Version: aHTTP_VERSION
 		from: ##(_OffsetOf_Version + 1)
 		to: ##(_OffsetOf_Version + HTTP_VERSION._HTTP_VERSION_Size)
 		startingAt: 1! !
+
 !WinHttpServer.HTTP_REQUEST_V1 categoriesForMethods!
 Address!**compiled accessors**!public! !
 Address:!**compiled accessors**!public! !
@@ -417,6 +422,7 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo)! !
+
 !WinHttpServer.HTTP_REQUEST_V1 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

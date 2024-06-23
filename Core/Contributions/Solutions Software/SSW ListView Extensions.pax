@@ -58,19 +58,18 @@ Object subclass: #ColumnHeader
 	classVariableNames: ''
 	poolDictionaries: 'HeaderViewConstants'
 	classInstanceVariableNames: ''!
+
 CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
 	classVariableNames: '_HDITEMW_Size _OffsetOf_cchTextMax _OffsetOf_cxy _OffsetOf_fmt _OffsetOf_hbm _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_pvFilter _OffsetOf_state _OffsetOf_type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #HeaderView
 	instanceVariableNames: 'columnHeaders'
 	classVariableNames: 'HdnMap'
 	poolDictionaries: 'HeaderViewConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -182,6 +181,7 @@ vertScrollPos
 vertScrollPos: anInteger
 
 	self vertScrollBy: (anInteger - self vertScrollPos)! !
+
 !ListView categoriesForMethods!
 fullItemFromPoint:!accessing!private! !
 getHeaderControl!accessing!private! !
@@ -206,6 +206,7 @@ vertScrollPos:!enquiries!public! !
 columnHeader
 
 	^self parent headerControl columnHeader: self index! !
+
 !ListViewColumn categoriesForMethods!
 columnHeader!accessing!public! !
 !

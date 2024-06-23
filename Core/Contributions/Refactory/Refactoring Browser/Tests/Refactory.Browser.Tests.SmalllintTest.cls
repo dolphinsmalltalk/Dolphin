@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.SmalllintTest guid: (Core.GUID fromString: '{1c8afe99-7a10-4ecd-a108-0f8f9bb5bdba}')!
+
 Refactory.Browser.Tests.SmalllintTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !Refactory.Browser.Tests.SmalllintTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.SmalllintTest methodsFor!
 
 blockRuleFor: aSelector 
@@ -234,6 +238,7 @@ testWhileTrue
 
 testYourselfNotUsed
 	self parseTreeRuleFor: self currentSelector! !
+
 !Refactory.Browser.Tests.SmalllintTest categoriesForMethods!
 blockRuleFor:!public!set up! !
 blockRuleFor:plusSelectors:!public!set up! !

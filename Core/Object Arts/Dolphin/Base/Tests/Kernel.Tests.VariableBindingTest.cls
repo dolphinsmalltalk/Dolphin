@@ -7,8 +7,11 @@ Core.Tests.AssociationTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'TestClassConst' -> 16r1 }!
+
 Kernel.Tests.VariableBindingTest guid: (Core.GUID fromString: '{dcc8c223-2afb-4398-8a76-d777493f6b70}')!
+
 Kernel.Tests.VariableBindingTest comment: ''!
+
 !Kernel.Tests.VariableBindingTest methodsFor!
 
 testAbsoluteName
@@ -209,6 +212,7 @@ testStbConvertFromVersion2_SharedPool
 	self assert: var key equals: 'self'.
 	self assert: var value identicalTo: pool.
 	self deny: var isClassVariable! !
+
 !Kernel.Tests.VariableBindingTest categoriesForMethods!
 testAbsoluteName!public!unit tests! !
 testFullName!public! !

@@ -7,7 +7,9 @@ External.UInt8
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Int8_Size' -> 16r1 }!
+
 External.Int8 guid: (Core.GUID fromString: '{8f5bcc94-0245-4d91-a473-acc6bdb8f294}')!
+
 External.Int8 comment: '<SBYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 SBYTE is used to represent signed 8-bit integers in conjunction with Win32 APIs. 
@@ -15,7 +17,9 @@ SBYTE is used to represent signed 8-bit integers in conjunction with Win32 APIs.
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	(-2**7) to: (2**7)-1	(i.e. -128 to: 127)
 '!
+
 !External.Int8 categoriesForClass!External-Data-Structured! !
+
 !External.Int8 methodsFor!
 
 isSigned
@@ -32,6 +36,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes int8AtOffset: _OffsetOf_value put: anInteger! !
+
 !External.Int8 categoriesForMethods!
 isSigned!public!testing! !
 value!**compiled accessors**!public! !
@@ -60,6 +65,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
+
 !External.Int8 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

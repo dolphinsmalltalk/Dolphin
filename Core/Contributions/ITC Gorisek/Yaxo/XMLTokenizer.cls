@@ -5,7 +5,9 @@ Object subclass: #XMLTokenizer
 	classVariableNames: 'CharEscapes NameChars NameDelimiters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLTokenizer guid: (GUID fromString: '{3504f679-282f-4ded-a387-6493f6c85f67}')!
+
 XMLTokenizer comment: 'XMLTokenizer
 
 bolot@cc.gatech.edu
@@ -18,7 +20,9 @@ Dolphin port notes (Steve Waring)
 -Methods that have been changed or added are marked with #swYAXO
 -Added instance variables: buffer, contentBuffer for buffering.
 -Added class variable: NameChars for wellformedness check.'!
+
 !XMLTokenizer categoriesForClass!XML-Parser! !
+
 !XMLTokenizer methodsFor!
 
 atEnd
@@ -811,6 +815,7 @@ validating
 
 validating: aBoolean
 	validating := aBoolean! !
+
 !XMLTokenizer categoriesForMethods!
 atEnd!public!streaming! !
 checkAndExpandReference:!public!tokenizing! !
@@ -1032,6 +1037,7 @@ new
 
 on: aStream
 	^self new parseStream: aStream! !
+
 !XMLTokenizer class categoriesForMethods!
 addressBookXML!examples!public! !
 addressBookXMLWithDTD!examples!public! !

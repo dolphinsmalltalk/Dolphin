@@ -7,9 +7,13 @@ Kernel.LiteralPrinter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.LegacySTLPrinter guid: (Core.GUID fromString: '{e3eaf1b8-b401-429a-afdb-c99fd9f34d8e}')!
+
 Kernel.LegacySTLPrinter comment: ''!
+
 !Kernel.LegacySTLPrinter categoriesForClass!Kernel-Objects! !
+
 !Kernel.LegacySTLPrinter methodsFor!
 
 getShortName: aProgramObject
@@ -69,6 +73,7 @@ printString: aString
 	"In STL4 strings with embedded nulls were just trimmed so they would not serialize correctly. Not great, but that is what it did."
 
 	aString trimNulls printOn: stream! !
+
 !Kernel.LegacySTLPrinter categoriesForMethods!
 getShortName:!helpers!private! !
 nameForClass:!helpers!printing!private! !

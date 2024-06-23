@@ -22,12 +22,16 @@ OS.ComDlgStructure
 			'_OffsetOf_nSizeMin' -> 16r34.
 			'_OffsetOf_rgbColors' -> 16r18
 		}!
+
 OS.CHOOSEFONTW guid: (Core.GUID fromString: '{87b4c5d2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.CHOOSEFONTW comment: 'CHOOSEFONT is the class of <ExternalStructure> which represent the Windows Common Dialog structure of the same name.
 
 CHOOSEFONT is used in conjunction with <FontDialog> to pop a common file dialog to select a font.
 '!
+
 !OS.CHOOSEFONTW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.CHOOSEFONTW methodsFor!
 
 color
@@ -90,6 +94,7 @@ rgbColors: anInteger
 	"Set the receiver's 'rgbColors' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_rgbColors put: anInteger! !
+
 !OS.CHOOSEFONTW categoriesForMethods!
 color!public! !
 color:!public! !
@@ -153,6 +158,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !
+
 !OS.CHOOSEFONTW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

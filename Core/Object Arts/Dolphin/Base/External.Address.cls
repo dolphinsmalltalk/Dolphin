@@ -7,10 +7,15 @@ External.UIntPtrBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Address guid: (Core.GUID fromString: '{87b4c517-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Address isIndirection: true!
+
 External.Address comment: ''!
+
 !External.Address categoriesForClass!External-Data-Unstructured! !
+
 !External.Address methodsFor!
 
 approxSize
@@ -325,6 +330,7 @@ yourAddress
 	the receiver's bytes"
 
 	^self basicUIntPtrAtOffset: 0! !
+
 !External.Address categoriesForMethods!
 approxSize!accessing!private! !
 asExternalAddress!converting!public! !
@@ -384,6 +390,7 @@ fromInteger: anInteger
 	primitive coercion trick."
 
 	^VM addressFromInteger: anInteger! !
+
 !External.Address class categoriesForMethods!
 alignment!constants!public! !
 fromAddress:!instance creation!public! !

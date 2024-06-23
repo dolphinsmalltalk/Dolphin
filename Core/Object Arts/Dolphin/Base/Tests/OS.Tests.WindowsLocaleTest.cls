@@ -7,8 +7,11 @@ Core.Tests.LocaleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.WindowsLocaleTest guid: (Core.GUID fromString: '{1cc6ee0d-11ce-44fd-940d-7126f73516ba}')!
+
 OS.Tests.WindowsLocaleTest comment: ''!
+
 !OS.Tests.WindowsLocaleTest methodsFor!
 
 defaultSubject
@@ -395,6 +398,7 @@ testStlConvertFromVersion0
 	self assert: subject lcid equals: 2057.
 	self assertIsNil: (subject instVarNamed: 'numberFormat').
 	self assert: (subject instVarNamed: 'info') isEmpty! !
+
 !OS.Tests.WindowsLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 testComparing!public!unit tests! !

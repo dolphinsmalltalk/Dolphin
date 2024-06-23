@@ -7,10 +7,15 @@ Core.Object
 	imports: #(#{Kernel})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring guid: (Core.GUID fromString: '{fa372b47-a5ce-4ce3-b6dc-f4a2e26195b5}')!
+
 Refactory.Browser.Refactoring isNonInstantiable: true!
+
 Refactory.Browser.Refactoring comment: ''!
+
 !Refactory.Browser.Refactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.Refactoring methodsFor!
 
 associationForClassVariable: aName in: aClass ifAbsent: aBlock
@@ -498,6 +503,7 @@ whichVariableNode: aParseTree inInterval: anInterval name: aName
 		matches: aName do: block;
 		matchesArgument: aName do: block.
 	^matcher executeTree: aParseTree initialAnswer: nil! !
+
 !Refactory.Browser.Refactoring categoriesForMethods!
 associationForClassVariable:in:ifAbsent:!public!utilities! !
 baseEnvironment!constants!private! !
@@ -675,6 +681,7 @@ setDefaultOption: aSymbol to: aBlock
 uninitialize
 	#rbFix. "Assist uninstallation of Dolphin package."
 	RefactoringOptions := nil! !
+
 !Refactory.Browser.Refactoring class categoriesForMethods!
 abortSignal!constants!public! !
 errorSignal!constants!public! !

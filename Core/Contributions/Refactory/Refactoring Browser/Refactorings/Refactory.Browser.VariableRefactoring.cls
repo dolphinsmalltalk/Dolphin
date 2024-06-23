@@ -7,10 +7,15 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring guid: (Core.GUID fromString: '{0ef75a5c-d99d-489e-b05f-2cf5a57d0f2c}')!
+
 Refactory.Browser.VariableRefactoring isNonInstantiable: true!
+
 Refactory.Browser.VariableRefactoring comment: ''!
+
 !Refactory.Browser.VariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.VariableRefactoring methodsFor!
 
 replaceReferencesToVariable: sourceVariableBinding in: aCollectionOfMethods with: targetVariableBinding
@@ -52,6 +57,7 @@ variable: aVarName class: aClass
 	variableName := aVarName.
 	class := self classObjectFor: aClass.
 ! !
+
 !Refactory.Browser.VariableRefactoring categoriesForMethods!
 replaceReferencesToVariable:in:with:!private!transforming! !
 storeOn:!printing!public! !
@@ -68,6 +74,7 @@ model: aRBModel variable: aVarName class: aClass
 
 variable: aVarName class: aClass
 	^self new variable: aVarName class: aClass! !
+
 !Refactory.Browser.VariableRefactoring class categoriesForMethods!
 model:variable:class:!instance creation!public! !
 variable:class:!instance creation!public! !

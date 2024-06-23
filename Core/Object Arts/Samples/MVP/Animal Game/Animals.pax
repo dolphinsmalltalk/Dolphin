@@ -41,6 +41,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.Examples.Question'
 	instanceVariableNames: 'text yes no'

@@ -17,7 +17,9 @@ UI.ValueConvertingControlView
 			'StaticMask' -> 16r10.
 			'WantTabMask' -> 16r4
 		}!
+
 UI.TextEdit guid: (Core.GUID fromString: '{87b4c73a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.TextEdit comment: 'TextEdit is a <valueView> class that implements the Windows "EDIT" control for the displaying and editing of single line text. The <valueModel> associated with a TextEdit must always yield a <readableString> value when mapped through the installed type converter. A TextEdit will normally be used in conjunction with a <TextPresenter>. 
 
 The alignment of the text can be specified using the alignment aspect which can assume one of the following values: (#left, #center, #right). The #updatePerChar aspect, if set to true, will ensure that the editor''s associated model will be kept up to date with the view as each character is typed. If false, the update only takes place when the view loses focus.
@@ -33,7 +35,9 @@ Class Variables:
 	AlignmentMap	<LookupTable> mapping alignment <Symbol>s to Windows styles.
 	UpdatePerCharMask	<integer> mask for the update-per-char mode flag.
 '!
+
 !UI.TextEdit categoriesForClass!MVP-Views! !
+
 !UI.TextEdit methodsFor!
 
 alignment
@@ -1307,6 +1311,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	Handled by #enSetFocus notification."
 
 	^nil! !
+
 !UI.TextEdit categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -1651,6 +1656,7 @@ winClassName
 
 	^'EDIT'
 ! !
+
 !UI.TextEdit class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

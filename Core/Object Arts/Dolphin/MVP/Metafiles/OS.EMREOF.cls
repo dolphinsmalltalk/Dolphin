@@ -12,7 +12,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_nSizeLast' -> 16r10.
 			'_OffsetOf_offPalEntries' -> 16rC
 		}!
+
 OS.EMREOF guid: (Core.GUID fromString: '{52606b1b-28c5-4ffa-b16d-13bcf0dd77b0}')!
+
 OS.EMREOF comment: '<EMREOF> is an <ExternalStructure> class to wrap the struct ''Win32.EMREOF'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +31,9 @@ struct tagEMREOF {
 	[helpstring("Same as nSize and must be the last DWORD of the record.  The palette entries, if exist, precede this field.")] DWORD nSizeLast;
 } EMREOF;
 '!
+
 !OS.EMREOF categoriesForClass!Win32-Structs! !
+
 !OS.EMREOF methodsFor!
 
 nPalEntries
@@ -61,6 +65,7 @@ offPalEntries: anInteger
 	"Set the receiver's 'offPalEntries' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_offPalEntries put: anInteger! !
+
 !OS.EMREOF categoriesForMethods!
 nPalEntries!**compiled accessors**!public! !
 nPalEntries:!**compiled accessors**!public! !
@@ -109,6 +114,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EOF}! !
+
 !OS.EMREOF class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

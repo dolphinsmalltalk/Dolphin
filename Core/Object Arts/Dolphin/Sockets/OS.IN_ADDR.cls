@@ -16,7 +16,9 @@ OS.AbstractIN_ADDR
 			'_OffsetOf_s_w1' -> 16r0.
 			'_OffsetOf_s_w2' -> 16r2
 		}!
+
 OS.IN_ADDR guid: (Core.GUID fromString: '{87b4c5f6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.IN_ADDR comment: '`OS.IN_ADDR` is an `External.Structure` class to wrap the struct ''Win32.IN_ADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -43,7 +45,9 @@ struct tagIN_ADDR {
 	};
 } IN_ADDR;
 '!
+
 !OS.IN_ADDR categoriesForClass!Win32-Structs! !
+
 !OS.IN_ADDR methodsFor!
 
 address
@@ -65,6 +69,7 @@ s_addr: anInteger
 	"Set the receiver's 's_addr' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_s_addr put: anInteger! !
+
 !OS.IN_ADDR categoriesForMethods!
 address!accessing!public! !
 address:!accessing!public! !
@@ -120,6 +125,7 @@ defineFields
 
 getFieldNames
 	^#(#s_addr)! !
+
 !OS.IN_ADDR class categoriesForMethods!
 address:!instance creation!public! !
 addressFamily!constants!public! !

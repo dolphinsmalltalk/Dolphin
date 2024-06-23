@@ -11,7 +11,9 @@ External.Structure
 			'_OffsetOf_pszButtonText' -> 16r4.
 			'_TASKDIALOG_BUTTON_Size' -> 16r8
 		}!
+
 OS.TASKDIALOG_BUTTON guid: (Core.GUID fromString: '{19c44fa3-bf97-499c-a411-0252c8b78b31}')!
+
 OS.TASKDIALOG_BUTTON comment: '`TASKDIALOG_BUTTON` is an `External.Structure` class to wrap the struct ''Win32.TASKDIALOG_BUTTON'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagTASKDIALOG_BUTTON {
 } TASKDIALOG_BUTTON;
 ```
 '!
+
 !OS.TASKDIALOG_BUTTON categoriesForClass!Win32-Structs! !
+
 !OS.TASKDIALOG_BUTTON methodsFor!
 
 nButtonID
@@ -49,6 +53,7 @@ pszButtonText: anUtf16String
 	"Set the receiver's 'pszButtonText' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pszButtonText put: anUtf16String yourAddress! !
+
 !OS.TASKDIALOG_BUTTON categoriesForMethods!
 nButtonID!**compiled accessors**!public! !
 nButtonID:!**compiled accessors**!public! !
@@ -80,6 +85,7 @@ defineFields
 
 getFieldNames
 	^#(#nButtonID #pszButtonText)! !
+
 !OS.TASKDIALOG_BUTTON class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

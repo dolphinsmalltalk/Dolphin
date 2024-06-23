@@ -16,6 +16,10 @@ Kernel.SharedPool
 			'REGCLS_MULTI_SEPARATE' -> 16r2.
 			'REGCLS_MULTIPLEUSE' -> 16r1
 		}!
+
 OS.COM.OLEConstants guid: (Core.GUID fromString: '{b8d7a4c0-475a-4a59-abad-fd589aef1b2f}')!
+
 OS.COM.OLEConstants isNonInstantiable: true!
+
 OS.COM.OLEConstants comment: ''!
+

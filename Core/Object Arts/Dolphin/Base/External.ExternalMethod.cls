@@ -13,12 +13,16 @@ Kernel.CompiledMethod
 			'ReturnParmIndex' -> 16r7.
 			'ReturnTypeIndex' -> 16r8
 		}!
+
 External.ExternalMethod guid: (Core.GUID fromString: '{87b4c546-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.ExternalMethod comment: 'ExternalMethod is the class of primitive <CompiledMethod>s which represent native, or external, function calls, such as those in the Win32 API. ExternalMethods mediate between the dynamically typed Smalltalk world of objects and the static value based world of C prevailing elsewhere.
 
 The first literal of each ExternalMethod holds a <ByteArray> which contains a descriptor for the function call. The byte array format is understood by the <FunctionDescriptor> class, but essentially there are details of the return and argument types, the name of function, and space to cache the procedure address.
 '!
+
 !External.ExternalMethod categoriesForClass!Kernel-Methods! !
+
 !External.ExternalMethod methodsFor!
 
 argsLen
@@ -119,6 +123,7 @@ returnType
 	"Private - Answer the return type for the receiver."
 
 	^self descriptor returnType! !
+
 !External.ExternalMethod categoriesForMethods!
 argsLen!accessing!private! !
 argumentTypes!accessing!private! !
@@ -162,6 +167,7 @@ initialize
 	self addClassConstant: 'ReturnTypeIndex' -> 8.
 	self addClassConstant: 'ReturnParmIndex' -> 7.
 	self addClassConstant: 'ArgumentStartIndex' -> 9! !
+
 !External.ExternalMethod class categoriesForMethods!
 initialize!development!initializing!private! !
 !

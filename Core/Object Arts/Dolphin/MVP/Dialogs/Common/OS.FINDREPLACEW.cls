@@ -18,10 +18,14 @@ OS.ComDlgStructure
 			'_OffsetOf_wFindWhatLen' -> 16r18.
 			'_OffsetOf_wReplaceWithLen' -> 16r1A
 		}!
+
 OS.FINDREPLACEW guid: (Core.GUID fromString: '{87b4c5f2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents the Windows common dialog structure of the same name. It is used in conjunction with the FindText() and ReplaceText() APIs to to contain information about a search or replace operation.
 '!
+
 !OS.FINDREPLACEW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+
 !OS.FINDREPLACEW methodsFor!
 
 findDetails
@@ -123,6 +127,7 @@ wReplaceWithLen: anInteger
 	"Set the receiver's 'wReplaceWithLen' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_wReplaceWithLen put: anInteger! !
+
 !OS.FINDREPLACEW categoriesForMethods!
 findDetails!event handling!public! !
 findWhat!accessing!public! !
@@ -183,6 +188,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #flags #lpstrFindWhat #lpstrReplaceWith #wFindWhatLen #wReplaceWithLen #lpfnHook)! !
+
 !OS.FINDREPLACEW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

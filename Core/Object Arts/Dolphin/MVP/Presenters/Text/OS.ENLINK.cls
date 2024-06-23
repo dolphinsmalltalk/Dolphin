@@ -13,7 +13,9 @@ OS.NMHDR
 			'_OffsetOf_msg' -> 16rC.
 			'_OffsetOf_wParam' -> 16r10
 		}!
+
 OS.ENLINK guid: (Core.GUID fromString: '{af755b00-4b08-4d23-991b-a340afd83bc2}')!
+
 OS.ENLINK comment: '<ENLINK> is an <ExternalStructure> class to wrap the struct ''Win32.ENLINK'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagENLINK {
 	CHARRANGE chrg;
 } ENLINK;
 '!
+
 !OS.ENLINK categoriesForClass!Win32-Structs! !
+
 !OS.ENLINK methodsFor!
 
 chrg
@@ -53,6 +57,7 @@ wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
 
 	^bytes uintPtrAtOffset: _OffsetOf_wParam! !
+
 !OS.ENLINK categoriesForMethods!
 chrg!**compiled accessors**!public! !
 lParam!**compiled accessors**!public! !
@@ -89,6 +94,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #msg #wParam #lParam #chrg)! !
+
 !OS.ENLINK class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

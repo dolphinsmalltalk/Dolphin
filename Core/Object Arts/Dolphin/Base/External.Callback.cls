@@ -7,10 +7,15 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'ArgSizeOffset' -> 16rE. 'MaxThunks' -> 16r100. 'ThunkSize' -> 16r10 }!
+
 External.Callback guid: (Core.GUID fromString: '{87b4c486-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Callback isNonInstantiable: true!
+
 External.Callback comment: ''!
+
 !External.Callback categoriesForClass!System-Support! !
+
 !External.Callback methodsFor!
 
 argumentCount
@@ -99,6 +104,7 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^self subclassResponsibility! !
+
 !External.Callback categoriesForMethods!
 argumentCount!accessing!private! !
 argumentsSize!accessing!private! !
@@ -279,6 +285,7 @@ uninitializeBeforeRemove
 
 unitializeSubclass: anExternalCallbackClass
 	! !
+
 !External.Callback class categoriesForMethods!
 allocateThunks!helpers!private! !
 block:argumentTypes:!instance creation!public! !

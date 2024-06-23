@@ -7,8 +7,11 @@ Security.ProductProtector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.PC1ProductProtector guid: (Core.GUID fromString: '{5cdc0f05-2865-415a-b78e-f13223e1192f}')!
+
 Security.PC1ProductProtector comment: 'One of these uses the PC1 cypher to encode/decode the bytecodes of all the methods that are to be protected.  Each method is encoded with a different instance of PC1Cipher which has been given a separate key derived from our secret key joined to the method''s name.'!
+
 !Security.PC1ProductProtector methodsFor!
 
 cipherClass: aClass 
@@ -77,6 +80,7 @@ hashKeyWith: aString
 
 methodsOf: aClass do: aBlockClosure 
 	aClass methodsDo: [:each | each whileMutableDo: [aBlockClosure value: each]]! !
+
 !Security.PC1ProductProtector categoriesForMethods!
 cipherClass:!operations!private! !
 cipherForMethod:!helpers!private! !

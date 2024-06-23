@@ -7,9 +7,13 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.WebView2CompletionHandler guid: (Core.GUID fromString: '{bc802953-baa6-43ff-94e2-d9e70d14522b}')!
+
 WebView2.WebView2CompletionHandler comment: ''!
+
 !WebView2.WebView2CompletionHandler categoriesForClass!COM-Implementations! !
+
 !WebView2.WebView2CompletionHandler methodsFor!
 
 completionBlock: aValuable
@@ -36,6 +40,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^ICoreWebView2CompletedHandler allSubclasses! !
+
 !WebView2.WebView2CompletionHandler categoriesForMethods!
 completionBlock:!initializing!private! !
 Invoke:!COM Interfaces-ICoreWebView2CompletedHandler!public! !
@@ -53,6 +58,7 @@ completionBlock: aPresenter
 
 icon
 	^ICoreWebView2 icon! !
+
 !WebView2.WebView2CompletionHandler class categoriesForMethods!
 completionBlock:!public! !
 icon!constants!development!public! !

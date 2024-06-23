@@ -7,7 +7,9 @@ Graphics.GraphicsTool
 	imports: #(#{OS.MENUITEMINFOW private} #{OS.MENUINFO private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Menu guid: (Core.GUID fromString: '{87b4c636-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Menu comment: 'Menu is the class of objects use to represent popup menu''s in windows. A menu holds a list of items that may be commands, sub-menus, or dividers.
 
 Instance Variables:
@@ -21,7 +23,9 @@ Instance Variables:
 	_reserved1		<UndefinedObject>. Reserved for future use.
 	_reserved2		<UndefinedObject>. Reserved for future use.
 '!
+
 !UI.Menu categoriesForClass!Graphics-Tools! !
+
 !UI.Menu methodsFor!
 
 acceleratorKey
@@ -701,6 +705,7 @@ typeFlags
 	Win32 SDK docs for fType field)."
 
 	^0! !
+
 !UI.Menu categoriesForMethods!
 acceleratorKey!accessing!public! !
 addCommand:description:!adding!public! !
@@ -907,6 +912,7 @@ uninitialize
 	menuMessages := {WM_CONTEXTMENU. WM_INITMENU. WM_INITMENUPOPUP}.
 	#{ControlView} isDefined ifFalse: [menuMessages := menuMessages , {WM_DRAWITEM. WM_MEASUREITEM}].
 	View unregisterMessageMappings: menuMessages! !
+
 !UI.Menu class categoriesForMethods!
 description:!instance creation!public! !
 description:image:!instance creation!public! !

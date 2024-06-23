@@ -7,9 +7,13 @@ Kernel.AbstractChunkSourceFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ChunkSourceFiler guid: (Core.GUID fromString: '{f6955c37-fa6c-4624-8c16-caaa6ce9e039}')!
+
 Kernel.ChunkSourceFiler comment: '`ChunkSourceFiler` is the standard chunk-format `SourceFiler` that stores packages and classes in Dolphin 8 (paxVersion 2.1) format.'!
+
 !Kernel.ChunkSourceFiler categoriesForClass!Development! !
+
 !Kernel.ChunkSourceFiler methodsFor!
 
 emitClassName: aClass on: aPuttableStream
@@ -35,6 +39,7 @@ sourceFileIndex: anInteger
 	"Private - Set the <integer> source file index associated with the receiver."
 
 	sourceFileIndex := anInteger! !
+
 !Kernel.ChunkSourceFiler categoriesForMethods!
 emitClassName:on:!private!source filing-file out! !
 environment!accessing!public! !
@@ -46,6 +51,7 @@ sourceFileIndex:!accessing!private! !
 
 fileOutExtensionForClass: aClass
 	^'cls'! !
+
 !Kernel.ChunkSourceFiler class categoriesForMethods!
 fileOutExtensionForClass:!enquiries!public! !
 !

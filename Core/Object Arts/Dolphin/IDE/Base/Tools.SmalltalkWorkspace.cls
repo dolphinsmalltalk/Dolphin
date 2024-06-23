@@ -19,7 +19,9 @@ UI.Presenter
 			'VariableTipsMask' -> 16r2.
 			'WordWrapMask' -> 16r4
 		}!
+
 Tools.SmalltalkWorkspace guid: (Core.GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.SmalltalkWorkspace comment: '`SmalltalkWorkspace` is a `<presenter>` for displaying a workspace area within a `ScintillaView`. Note that, for efficiency purposes, a SmalltakWorkspace does not have a model. The textual data is held only within the associated view. since there seems little point in duplicating this text and holding it within the image as, say, a `<readableString>`.
 
 In Dolphin 5.1 and earlier `SmalltalkWorkspace` could work with an `TextEdit` view, however as of Dolphin 6 it is specialised to support only `ScintillaView` as this allows it to take advantage of the advanced features of that control.
@@ -60,7 +62,9 @@ In Dolphin 5.1 and earlier `SmalltalkWorkspace` could work with an `TextEdit` vi
   `additionalKeyBindings`		`<sequencedReadableCollection>` of `CommandDescription`. Additional key bindings, e.g. for extension commands
   `commandQueryHandlers`		`<sequencedReadableCollection>` of `Symbol`. Selectors of extension command query methods.
 '!
+
 !Tools.SmalltalkWorkspace categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !Tools.SmalltalkWorkspace methodsFor!
 
 addAllStaticIdentifiersStartingWith: aString to: aSet limit: anInteger
@@ -1997,6 +2001,7 @@ wrapLinesInRange: anInterval indent: anInteger
 				indent: anInteger
 				tabWidth: scintilla tabWidth.
 	scintilla replaceTarget: justified"Private - Answer the development system model."! !
+
 !Tools.SmalltalkWorkspace categoriesForMethods!
 addAllStaticIdentifiersStartingWith:to:limit:!autocompletion!private! !
 addStatic:toCompletionList:limit:!autocompletion!private! !
@@ -2930,6 +2935,7 @@ wrapIndentMode: aSymbol
 	self isLoadingOptions ifTrue: [^self].
 	self primAllSubinstances do: [:each | each view wrapIndentMode: aSymbol].
 	self persistOptions! !
+
 !Tools.SmalltalkWorkspace class categoriesForMethods!
 actualFont!accessing!options!public! !
 annotationMode!accessing!options!public! !

@@ -7,13 +7,18 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBAbstractCondition guid: (Core.GUID fromString: '{f74a2f07-4669-4626-8d47-0122b7ce23ff}')!
+
 Refactory.Browser.RBAbstractCondition isNonInstantiable: true!
+
 Refactory.Browser.RBAbstractCondition comment: 'AbstractCondition is an abstract class. It represents a precondition that is used whenever a Refactoring is performed. All preconditions must evaluate successfully in order for the Refactoring to be performed.
 
 Instance Variables:
 	errorMacro	<String>	the error string that is used when the condition fails'!
+
 !Refactory.Browser.RBAbstractCondition categoriesForClass!Refactory-Conditions! !
+
 !Refactory.Browser.RBAbstractCondition methodsFor!
 
 & aCondition
@@ -47,6 +52,7 @@ errorStringFor: aBoolean
 
 not
 	^RBNegationCondition on: self! !
+
 !Refactory.Browser.RBAbstractCondition categoriesForMethods!
 &!logical operations!public! !
 |!logical operations!public! !

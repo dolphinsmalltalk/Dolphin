@@ -7,11 +7,15 @@ Kernel.STBOutFiler1
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler2 guid: (Core.GUID fromString: '{f95ce4b8-e5eb-4936-b698-e8d21497e119}')!
+
 Kernel.STBOutFiler2 comment: '`STBOutFiler2` is an `STBOutFiler` for writing the STB 2 binary object serialization format.
 
 The key difference from STB 1 was that loading of objects was delegated to the object class. This remove the requirement to use proxies in many cases, although the pre-existing proxies largely remained. Only `STBSymbolProxy` became obsolete, with `Symbol`s being stored directly.'!
+
 !Kernel.STBOutFiler2 categoriesForClass!System-Binary storage! !
+
 !Kernel.STBOutFiler2 methodsFor!
 
 inFilerClass
@@ -29,6 +33,7 @@ saveSymbol: aSymbol
 	size := string basicSize.
 	stream nextInt32Put: size.
 	1 to: size do: [:i | stream nextPut: (string basicAt: i)]! !
+
 !Kernel.STBOutFiler2 categoriesForMethods!
 inFilerClass!constants!private! !
 saveSymbol:!public!serializing! !
@@ -48,6 +53,7 @@ uninitialize
 
 version
 	^2! !
+
 !Kernel.STBOutFiler2 class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !

@@ -7,9 +7,13 @@ OS.COM.InterfaceImplementation
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.AbstractDispatchImplementation guid: (Core.GUID fromString: '{10dee4fb-246c-4582-9a3b-2ca93e0636c2}')!
+
 OS.COM.AbstractDispatchImplementation isNonInstantiable: true!
+
 OS.COM.AbstractDispatchImplementation comment: ''!
+
 !OS.COM.AbstractDispatchImplementation methodsFor!
 
 decodeArgs: aDISPPARAMS
@@ -152,6 +156,7 @@ typeInfoCount
 	"Answer 1 if type information is available, else 0."
 
 	^0! !
+
 !OS.COM.AbstractDispatchImplementation categoriesForMethods!
 decodeArgs:!helpers!private! !
 errorDispatching:exception:excepInfo:!operations!private! !

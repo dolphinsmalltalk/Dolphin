@@ -7,10 +7,14 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.ReaderError guid: (Core.GUID fromString: '{c96113a2-1225-4af4-8f71-53e0ac1932a3}')!
+
 STON.ReaderError comment: 'STONReaderError is the error/exception signalled by STONReader when illegal/incorrect input is seen. 
 '!
+
 !STON.ReaderError categoriesForClass!STON-Core-Exceptions! !
+
 !STON.ReaderError methodsFor!
 
 _descriptionArguments
@@ -29,6 +33,7 @@ streamPosition
 
 streamPosition: aNumber
 	streamPosition := aNumber! !
+
 !STON.ReaderError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -43,6 +48,7 @@ signal: aString streamPosition: streamPosition
 		streamPosition: streamPosition;
 		signal: aString;
 		yourself! !
+
 !STON.ReaderError class categoriesForMethods!
 signal:streamPosition:!instance creation!public! !
 !

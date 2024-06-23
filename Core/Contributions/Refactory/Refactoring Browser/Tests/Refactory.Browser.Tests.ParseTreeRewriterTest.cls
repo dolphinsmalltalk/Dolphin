@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ParseTreeRewriterTest guid: (Core.GUID fromString: '{ca6a12ce-5a10-46f6-8c49-6361db872eb6}')!
+
 Refactory.Browser.Tests.ParseTreeRewriterTest comment: ''!
+
 !Refactory.Browser.Tests.ParseTreeRewriterTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ParseTreeRewriterTest methodsFor!
 
 compare: aParseTree to: anotherParseTree
@@ -341,6 +345,7 @@ verifyTree: copiedNode sharesNoNodesWith: originalNode
 	copiedNodes := copiedNode allSubNodes.
 	shared := copiedNodes select: [:each | originalNodes includes: each].
 	self assert: shared asArray equals: #()! !
+
 !Refactory.Browser.Tests.ParseTreeRewriterTest categoriesForMethods!
 compare:to:!helpers!private! !
 parseRewriteExpression:!helpers!private! !

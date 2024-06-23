@@ -7,8 +7,11 @@ Kernel.BindingReferenceWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBBindingReference guid: (Core.GUID fromString: '{6087e072-0c5e-458a-8084-877b910c0553}')!
+
 Refactory.Browser.RBBindingReference comment: ''!
+
 !Refactory.Browser.RBBindingReference methodsFor!
 
 = anObject
@@ -51,6 +54,7 @@ species
 
 valueOfBinding: aVariableBinding
 	^reference isMeta ifTrue: [aVariableBinding value metaclass] ifFalse: [aVariableBinding value]! !
+
 !Refactory.Browser.RBBindingReference categoriesForMethods!
 =!comparing!public! !
 bindingOrNil!accessing!public! !
@@ -77,6 +81,7 @@ pathString: aString scope: aBindingScope flags: anInteger
 				pathString: aString
 				scope: aBindingScope
 				flags: anInteger)! !
+
 !Refactory.Browser.RBBindingReference class categoriesForMethods!
 model:reference:!public! !
 pathString:scope:flags:!instance creation!private! !

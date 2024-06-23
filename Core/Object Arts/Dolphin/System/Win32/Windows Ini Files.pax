@@ -40,6 +40,7 @@ Core.Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.IniFileAbstract
 	subclass: #'OS.IniFile'
 	instanceVariableNames: ''
@@ -47,6 +48,7 @@ OS.IniFileAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.IniFileAbstract
 	subclass: #'OS.IniFileSection'
 	instanceVariableNames: 'name'
@@ -164,6 +166,7 @@ writePrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSize
 
 	<stdcall: bool WritePrivateProfileStructW lpwstr lpwstr void* dword lpwstr>
 	^self invalidCall: _failureCode! !
+
 !OS.KernelLibrary categoriesForMethods!
 getPrivateProfileInt:lpKeyName:nDefault:lpFileName:!**auto generated**!public!win32 functions-ini files! !
 getPrivateProfileSection:lpReturnedString:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !

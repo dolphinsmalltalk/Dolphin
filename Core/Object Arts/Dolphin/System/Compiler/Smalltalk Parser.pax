@@ -102,6 +102,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.Parser'
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source environment'
@@ -109,6 +110,7 @@ Core.Object
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.Scanner'
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType comments line errorHandler environment'
@@ -121,6 +123,7 @@ Core.Object
 			'EscapeChars' -> (IdentityDictionary
 						withAll: { $0 -> $\0. $a -> $\a. $b -> $\b. $f -> $\f. $n -> $\n. $r -> $\r. $t -> $\t. $v -> $\v })
 		}!
+
 Core.Object
 	subclass: #'Kernel.StProgramNode'
 	instanceVariableNames: 'parent comments scope'
@@ -133,6 +136,7 @@ Core.Object
 			'OptimizedSelectors'
 				-> #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself)
 		}!
+
 Core.Object
 	subclass: #'Kernel.StToken'
 	instanceVariableNames: 'start comments'
@@ -140,6 +144,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StProgramNode
 	subclass: #'Kernel.StExternalArgTypeNode'
 	instanceVariableNames: 'typeOrdinal structClass indirections start stop'
@@ -147,6 +152,7 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StProgramNode
 	subclass: #'Kernel.StMethodNode'
 	instanceVariableNames: 'selector selectorParts body source arguments tags replacements nodeReplacements methodClass environment flags irMethod'
@@ -154,6 +160,7 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'HasErrorsMask' -> 16r2. 'IsExpressionMask' -> 16r1 }!
+
 Kernel.StProgramNode
 	subclass: #'Kernel.StReturnNode'
 	instanceVariableNames: 'return value'
@@ -161,6 +168,7 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StProgramNode
 	subclass: #'Kernel.StSequenceNode'
 	instanceVariableNames: 'leftBar rightBar statements periods temporaries'
@@ -168,6 +176,7 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StProgramNode
 	subclass: #'Kernel.StTagNode'
 	instanceVariableNames: 'start stop'
@@ -175,6 +184,7 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StProgramNode
 	subclass: #'Kernel.StValueNode'
 	instanceVariableNames: 'parentheses'
@@ -182,6 +192,7 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StTagNode
 	subclass: #'Kernel.AbstractPrimitiveCallNode'
 	instanceVariableNames: 'errorTemp'
@@ -189,6 +200,7 @@ Kernel.StTagNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StTagNode
 	subclass: #'Kernel.StAnnotationNode'
 	instanceVariableNames: 'selector arguments'
@@ -196,6 +208,7 @@ Kernel.StTagNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AbstractPrimitiveCallNode
 	subclass: #'Kernel.StExternalCallNode'
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
@@ -203,6 +216,7 @@ Kernel.AbstractPrimitiveCallNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'OverlappedMask' -> 16r1. 'VirtualMask' -> 16r2 }!
+
 Kernel.AbstractPrimitiveCallNode
 	subclass: #'Kernel.StPrimitiveNode'
 	instanceVariableNames: 'primitiveIndex'
@@ -210,6 +224,7 @@ Kernel.AbstractPrimitiveCallNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueNode
 	subclass: #'Kernel.StAssignmentNode'
 	instanceVariableNames: 'variable assignment value'
@@ -217,6 +232,7 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueNode
 	subclass: #'Kernel.StBlockNode'
 	instanceVariableNames: 'left right body arguments bar'
@@ -224,6 +240,7 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueNode
 	subclass: #'Kernel.StBraceArrayNode'
 	instanceVariableNames: 'left statements periods right'
@@ -231,6 +248,7 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueNode
 	subclass: #'Kernel.StCascadeNode'
 	instanceVariableNames: 'messages semicolons'
@@ -238,6 +256,7 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueNode
 	subclass: #'Kernel.StLiteralNode'
 	instanceVariableNames: ''
@@ -245,6 +264,7 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueNode
 	subclass: #'Kernel.StMessageNode'
 	instanceVariableNames: 'receiver selector selectorParts arguments'
@@ -252,6 +272,7 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueNode
 	subclass: #'Kernel.StOptimizedNode'
 	instanceVariableNames: 'left right body value methodClass source'
@@ -259,6 +280,7 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueNode
 	subclass: #'Kernel.StVariableNode'
 	instanceVariableNames: 'start variable'
@@ -266,6 +288,7 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralNode
 	subclass: #'Kernel.AbstractLiteralArrayNode'
 	instanceVariableNames: 'stop contents start'
@@ -273,6 +296,7 @@ Kernel.StLiteralNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralNode
 	subclass: #'Kernel.StLiteralValueNode'
 	instanceVariableNames: 'token'
@@ -280,6 +304,7 @@ Kernel.StLiteralNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralNode
 	subclass: #'Kernel.StQualifiedReferenceNode'
 	instanceVariableNames: 'pathString flags start stop binding'
@@ -287,6 +312,7 @@ Kernel.StLiteralNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AbstractLiteralArrayNode
 	subclass: #'Kernel.StLiteralArrayNode'
 	instanceVariableNames: ''
@@ -294,6 +320,7 @@ Kernel.AbstractLiteralArrayNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AbstractLiteralArrayNode
 	subclass: #'Kernel.StLiteralByteArrayNode'
 	instanceVariableNames: ''
@@ -301,6 +328,7 @@ Kernel.AbstractLiteralArrayNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StVariableNode
 	subclass: #'Kernel.StRealVariableNode'
 	instanceVariableNames: 'name'
@@ -308,6 +336,7 @@ Kernel.StVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StVariableNode
 	subclass: #'Kernel.StSpecialVariableNode'
 	instanceVariableNames: ''
@@ -315,6 +344,7 @@ Kernel.StVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StRealVariableNode
 	subclass: #'Kernel.StBasicVariableNode'
 	instanceVariableNames: ''
@@ -322,6 +352,7 @@ Kernel.StRealVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StRealVariableNode
 	subclass: #'Kernel.StParameterNode'
 	instanceVariableNames: ''
@@ -329,6 +360,7 @@ Kernel.StRealVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StRealVariableNode
 	subclass: #'Kernel.StTempDeclNode'
 	instanceVariableNames: ''
@@ -336,6 +368,7 @@ Kernel.StRealVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSpecialVariableNode
 	subclass: #'Kernel.StSelfVariableNode'
 	instanceVariableNames: ''
@@ -343,6 +376,7 @@ Kernel.StSpecialVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSpecialVariableNode
 	subclass: #'Kernel.StSuperVariableNode'
 	instanceVariableNames: ''
@@ -350,6 +384,7 @@ Kernel.StSpecialVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSpecialVariableNode
 	subclass: #'Kernel.StThisContextVariableNode'
 	instanceVariableNames: ''
@@ -357,6 +392,7 @@ Kernel.StSpecialVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StToken
 	subclass: #'Kernel.StAssignmentToken'
 	instanceVariableNames: ''
@@ -364,6 +400,7 @@ Kernel.StToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StToken
 	subclass: #'Kernel.StEofToken'
 	instanceVariableNames: ''
@@ -371,6 +408,7 @@ Kernel.StToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StToken
 	subclass: #'Kernel.StOptimizedToken'
 	instanceVariableNames: 'stopPosition'
@@ -378,6 +416,7 @@ Kernel.StToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StToken
 	subclass: #'Kernel.StQualifiedReferenceToken'
 	instanceVariableNames: ''
@@ -385,6 +424,7 @@ Kernel.StToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StToken
 	subclass: #'Kernel.StValueToken'
 	instanceVariableNames: 'value'
@@ -392,6 +432,7 @@ Kernel.StToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Kernel.StBinarySelectorToken'
 	instanceVariableNames: ''
@@ -399,6 +440,7 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Kernel.StIdentifierToken'
 	instanceVariableNames: ''
@@ -406,6 +448,7 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Kernel.StIllegalCharacterToken'
 	instanceVariableNames: 'stopPosition'
@@ -413,6 +456,7 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Kernel.StKeywordToken'
 	instanceVariableNames: ''
@@ -420,6 +464,7 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Kernel.StLiteralArrayToken'
 	instanceVariableNames: ''
@@ -427,6 +472,7 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Kernel.StLiteralByteArrayToken'
 	instanceVariableNames: ''
@@ -434,6 +480,7 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Kernel.StLiteralToken'
 	instanceVariableNames: 'stopPosition'
@@ -441,6 +488,7 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Kernel.StSpecialCharacterToken'
 	instanceVariableNames: ''
@@ -448,6 +496,7 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralToken
 	subclass: #'Kernel.StLiteralSymbolToken'
 	instanceVariableNames: ''
@@ -455,6 +504,7 @@ Kernel.StLiteralToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralToken
 	subclass: #'Kernel.StLiteralTokenWithSource'
 	instanceVariableNames: 'source'
@@ -462,6 +512,7 @@ Kernel.StLiteralToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralToken
 	subclass: #'Kernel.StMultiKeywordLiteralToken'
 	instanceVariableNames: ''
@@ -469,6 +520,7 @@ Kernel.StLiteralToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralTokenWithSource
 	subclass: #'Kernel.StLiteralCharacterToken'
 	instanceVariableNames: ''
@@ -476,6 +528,7 @@ Kernel.StLiteralTokenWithSource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralTokenWithSource
 	subclass: #'Kernel.StNumberLiteralToken'
 	instanceVariableNames: ''
@@ -496,6 +549,7 @@ parseTreeFor: aSymbol
 		in: self
 		environment: method customEnvironment
 		onError: [:aString :pos | ^nil]! !
+
 !Core.Behavior categoriesForMethods!
 parseTreeFor:!public!RefactoringBrowser! !
 !
@@ -510,6 +564,7 @@ parseTreeNoError
 
 parseTreeOnError: aBlock 
 	^self subclassResponsibility! !
+
 !Kernel.CompiledCode categoriesForMethods!
 parseTree!parsing!public! !
 parseTreeNoError!parsing!public! !
@@ -524,6 +579,7 @@ parseTreeOnError: aBlock
 		in: self methodClass
 		environment: self environment
 		onError: aBlock! !
+
 !Kernel.CompiledExpression categoriesForMethods!
 parseTreeOnError:!parsing!public! !
 !
@@ -536,6 +592,7 @@ parseTreeOnError: aBlock
 		in: self methodClass
 		environment: self environment
 		onError: aBlock! !
+
 !Kernel.CompiledMethod categoriesForMethods!
 parseTreeOnError:!parsing!public! !
 !
@@ -547,6 +604,7 @@ accessesInstVar: aString at: anInteger
 	is the instance variable of its method class with the specified <integer> index."
 
 	^self refersToVariable: aString! !
+
 !Kernel.CompileFailedMethod categoriesForMethods!
 accessesInstVar:at:!development!public!testing! !
 !

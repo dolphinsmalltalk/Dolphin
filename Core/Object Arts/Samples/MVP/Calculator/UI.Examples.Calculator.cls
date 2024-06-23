@@ -7,9 +7,13 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.Calculator guid: (Core.GUID fromString: '{816da2f6-de4a-41df-bea6-0a549e3a715e}')!
+
 UI.Examples.Calculator comment: 'Calculator is a <topShell> sample application which illustrates the use of the Dolphin Compiler class in a runtime application. See the package comment for more details.'!
+
 !UI.Examples.Calculator categoriesForClass!Samples! !
+
 !UI.Examples.Calculator methodsFor!
 
 clearTape
@@ -61,6 +65,7 @@ print: aString
 
 printNewline
 	self print: String lineDelimiter! !
+
 !UI.Examples.Calculator categoriesForMethods!
 clearTape!commands!public! !
 createComponents!initializing!private! !
@@ -106,6 +111,7 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
+
 !UI.Examples.Calculator class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!examples!public! !

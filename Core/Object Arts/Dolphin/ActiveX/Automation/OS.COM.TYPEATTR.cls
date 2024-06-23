@@ -27,7 +27,9 @@ OS.COM.TypeInfoStructure
 			'_OffsetOf_wTypeFlags' -> 16r36.
 			'_TYPEATTR_Size' -> 16r4C
 		}!
+
 OS.COM.TYPEATTR guid: (Core.GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.TYPEATTR comment: 'TYPEATTR is an <ExternalStructure> class to represent the Active-X Automation TYPEATTR structure.
 
 TYPEATTR contains a number of attributes describing a particular type info. element of a type library. Unfortunately it is overloaded (like its originator ITypeInfo) with the job of describing all of the different types of object for which type information may be present in the library (i.e. interfaces, typedefs, enums, coclasses, dispinterfaces, unions, structs, and modules). This means that some of the members may not be relevant to the programming element described. In general we access the members of this structure through the relevant subclass of AXTypeInfoAnalyzer, thus benefitting from the correct factoring of that hierarchy.
@@ -52,7 +54,9 @@ Fields:
 	tdescAlias		<TYPEDESC> for which this is an alias (typedef).
 	idldescType	<IDLDESC> providing information about the originating IDL.
 '!
+
 !OS.COM.TYPEATTR categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.TYPEATTR methodsFor!
 
 basicFree
@@ -219,6 +223,7 @@ wTypeFlags
 	"Answer the <Integer> value of the receiver's 'wTypeFlags' field."
 
 	^bytes uint16AtOffset: _OffsetOf_wTypeFlags! !
+
 !OS.COM.TYPEATTR categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 cbAlignment!**compiled accessors**!public! !
@@ -307,6 +312,7 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
+
 !OS.COM.TYPEATTR class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

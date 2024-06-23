@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})
 	classInstanceVariableNames: 'default'
 	classConstants: {}!
+
 External.DynamicLinkLibrary guid: (Core.GUID fromString: '{87b4c488-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.DynamicLinkLibrary comment: '`DynamicLinkLibrary` is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of <External.ExternalMethod>) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an InvalidExternalCall exception being raised (assuming the #invalidCall method has not been overridden).
 
 Dynamic-link library classes are typically singletons, with the instances representing an "open" (usable) instance of the DLL. The singleton instances are accessible through the class #default method. The libraries are loaded lazily, on demand (but see <External.PermanentLibrary>).
@@ -117,7 +119,9 @@ The argument/return types (and coercions) supported are:
 		externally stored value as its first instance variable.
 	
 Note that in general, the UndefinedObject, nil, is interchangeable with 0, or NULL, when interfacing with external library functions. Nullness can be tested with the #isNull message, with the UndefinedObject and SmallInteger zero answering true.'!
+
 !External.DynamicLinkLibrary categoriesForClass!External-Libraries! !
+
 !External.DynamicLinkLibrary methodsFor!
 
 = anObject
@@ -332,6 +336,7 @@ versionString
 	(typically N.N Build N, but see #versionFormatString)."
 
 	^self versionInfo formatVersionString: self versionFormatString! !
+
 !External.DynamicLinkLibrary categoriesForMethods!
 =!comparing!public! !
 asParameter!converting!public! !
@@ -534,6 +539,7 @@ versionInfo
 	"Answer a <VersionInfo> containing the version details from the receiver."
 
 	^VersionInfo forPath: self fileName! !
+
 !External.DynamicLinkLibrary class categoriesForMethods!
 clear!initializing!private! !
 clearProcAddresses!helpers!private! !

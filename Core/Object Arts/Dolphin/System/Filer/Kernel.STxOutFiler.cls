@@ -7,8 +7,11 @@ Kernel.STxFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'StableMask' -> 16r1 }!
+
 Kernel.STxOutFiler guid: (Core.GUID fromString: '{1a85a928-daab-4ce8-a1d9-cd785d6a90df}')!
+
 Kernel.STxOutFiler isNonInstantiable: true!
+
 Kernel.STxOutFiler comment: '`STxOutFiler` is the abstract class of object serializers for writing in STB and STL formats. There are concrete classes for writing of each version from the original STB v0 up to the current version.
 
 Note that whilst the writing of the historic formats is supported, the format of the classes themselves in the image may have changed, so forwards compatibility is limited. The corresponding STxInFiler class for each concrete STxOutFiler will be able to deserialize the object stream written, but it may not actually be readable in the down-level Dolphin version that natively supported the STx version, because the instance variable layout may have changed, and in some cases the classes may not be present or not be locatable.
@@ -17,7 +20,9 @@ Note that whilst the writing of the historic formats is supported, the format of
   `writeMap`		`IdentityDictionary`. Map of `Object`s to their `SmallInteger` reference index in the binary output stream.
   `proxyOverrides`	`IdentityDictionary`. Map of `Object`s to the `STBProxy`s (or special values) output in their place.
   `refOffset`		`<integer>`. Offset of object references to allow for pre-registered objects and classes'!
+
 !Kernel.STxOutFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STxOutFiler methodsFor!
 
 beStable
@@ -337,6 +342,7 @@ writeSetElements: aCollection
 
 writeSignatureAndVersion
 	self subclassResponsibility! !
+
 !Kernel.STxOutFiler categoriesForMethods!
 beStable!accessing!public! !
 contents!accessing!public! !
@@ -412,6 +418,7 @@ on: aStream version: anInteger
 
 version: anInteger 
 	^self on: self newStream version: anInteger! !
+
 !Kernel.STxOutFiler class categoriesForMethods!
 new!instance creation!public! !
 newStream!helpers!private! !

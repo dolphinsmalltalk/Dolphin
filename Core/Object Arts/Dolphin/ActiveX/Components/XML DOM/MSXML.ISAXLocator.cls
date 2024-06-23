@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISAXLocator guid: (OS.COM.IID fromString: '{9b7e472a-0de4-4640-bff3-84d38a051c31}')!
+
 MSXML.ISAXLocator comment: '<ISAXLocator> is a wrapper class for the COM interface ''MSXML2.ISAXLocator'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -39,7 +41,9 @@ interface ISAXLocator : IUnknown
 		[out, retval]unsigned short** ppwchSystemId);
 };
 '!
+
 !MSXML.ISAXLocator categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISAXLocator methodsFor!
 
 getColumnNumber
@@ -109,6 +113,7 @@ GetSystemId: ppwchSystemId
 
 	<virtual stdcall: hresult 7 uint16**>
 	^self invalidCall: _failureCode! !
+
 !MSXML.ISAXLocator categoriesForMethods!
 getColumnNumber!**auto generated**!methods!public! !
 GetColumnNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
@@ -136,6 +141,7 @@ defineFunctions
 		defineFunction: #GetSystemId:
 			argumentTypes: 'word**'
 ! !
+
 !MSXML.ISAXLocator class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

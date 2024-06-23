@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.CommandDescriptionTest guid: (Core.GUID fromString: '{f36e555c-9741-49d2-89aa-fa4db14bc62f}')!
+
 UI.Tests.CommandDescriptionTest comment: ''!
+
 !UI.Tests.CommandDescriptionTest categoriesForClass!SUnit! !
+
 !UI.Tests.CommandDescriptionTest methodsFor!
 
 setCurrentKeyboardLayout: aString
@@ -46,6 +50,7 @@ testAcceleratorKeyString
 testRegistry
 	self assert: CommandDescription.CommandDescriptionRegistry hasWeakKeys.
 	self deny: CommandDescription.CommandDescriptionRegistry hasWeakValues! !
+
 !UI.Tests.CommandDescriptionTest categoriesForMethods!
 setCurrentKeyboardLayout:!helpers!private! !
 setUsKeyboard!initializing!private! !

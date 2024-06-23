@@ -5,13 +5,17 @@ Object subclass: #ILImport
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImport guid: (GUID fromString: '{a28ab780-b157-41bd-84fa-a8869ac8beac}')!
+
 ILImport comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILImport categoriesForClass!IDB Goodies! !
+
 !ILImport methodsFor!
 
 color1atColumn: columnInteger startingFrom: offsetInteger in: anILImportProxy
@@ -95,6 +99,7 @@ getBitmapFrom: aByteArray
 
 images
 	^OrderedCollection new! !
+
 !ILImport categoriesForMethods!
 color1atColumn:startingFrom:in:!operations!public! !
 color24atColumn:startingFrom:in:!operations!public! !
@@ -125,6 +130,7 @@ importableClasses
 
 importFrom: aStream
 	^(self new initializeFrom: aStream) images! !
+
 !ILImport class categoriesForMethods!
 identifyImportFileClass:!helpers!public! !
 importableClasses!helpers!public! !

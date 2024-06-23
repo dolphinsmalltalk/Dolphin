@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.CustomLineCapTest guid: (Core.GUID fromString: '{11ce56c0-847e-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.Tests.CustomLineCapTest comment: ''!
+
 !Graphics.Gdiplus.Tests.CustomLineCapTest methodsFor!
 
 createCanonicalSubject
@@ -153,6 +156,7 @@ verifyEqualToModel: aGdiplusObject
 	self assert: aGdiplusObject startCap equals: model startCap.
 	self assert: aGdiplusObject strokeCaps equals: model strokeCaps.
 	self assert: aGdiplusObject strokePath equals: model strokePath! !
+
 !Graphics.Gdiplus.Tests.CustomLineCapTest categoriesForMethods!
 createCanonicalSubject!private!running! !
 createFullSubject!helpers!private! !

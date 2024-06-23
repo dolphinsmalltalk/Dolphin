@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.FontFamilyTest guid: (Core.GUID fromString: '{9858b020-07a1-4aad-9b28-35376d1d4f62}')!
+
 Graphics.Gdiplus.Tests.FontFamilyTest comment: ''!
+
 !Graphics.Gdiplus.Tests.FontFamilyTest methodsFor!
 
 createCanonicalSubject
@@ -79,6 +82,7 @@ verifyGenericSerif: aFontFamily
 	self assert: aFontFamily lineSpacing equals: 2355.
 	self assert: aFontFamily cellAscent equals: 1825.
 	self assert: aFontFamily cellDescent equals: 443! !
+
 !Graphics.Gdiplus.Tests.FontFamilyTest categoriesForMethods!
 createCanonicalSubject!helpers!private! !
 subjectClass!constants!private! !

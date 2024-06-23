@@ -31,6 +31,7 @@ Kernel.STLInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLLegacyInFiler
 	subclass: #'Kernel.STLInFiler3'
 	instanceVariableNames: ''
@@ -38,6 +39,7 @@ Kernel.STLLegacyInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLLegacyInFiler
 	subclass: #'Kernel.STLInFiler4'
 	instanceVariableNames: ''
@@ -45,6 +47,7 @@ Kernel.STLLegacyInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLLegacyInFiler
 	subclass: #'Kernel.STLInFiler5'
 	instanceVariableNames: ''

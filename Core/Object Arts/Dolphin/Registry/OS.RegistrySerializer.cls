@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.WinRegConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.RegistrySerializer guid: (Core.GUID fromString: '{da611471-9e5f-4743-a322-503ebcf1ed71}')!
+
 OS.RegistrySerializer comment: '`OS.RegistrySerializer` is a simple object serialiser for storing object graphs in the Windows Registry. The graphs can be reconstructed from the registry using `OS.RegistryDeserializer`.
 
 The general format for pointer objects is that they are written under a registry key (known as the _class key_) where the default value of that key is a `REG_MULTI_SZ` value containing at least the short name of the class as the first string, and any additional metadata as subsequent strings. The additional metadata depends on the class of object, but for indexable objects it will typically include additional parameter that is the number of indexed fields. The named instance variables are written as sub-keys **or** sub-values* using the same serialization format, where the sub-keys are named after the instance variables. The indexable fields of pointer objects are serialized to integer numbered sub-keys/sub-values. The numbering starts from one. In order to enumerate all the named or numbered instasnce variables it is necessary to enumerate all the sub-keys and all the sub-values.
@@ -40,7 +42,9 @@ If saving/restoring settings from the user hive of the registry, you do need to 
 
 
 	'!
+
 !OS.RegistrySerializer categoriesForClass!Kernel-Objects! !
+
 !OS.RegistrySerializer methodsFor!
 
 basicObjectAt: aString put: anObject
@@ -260,6 +264,7 @@ writeReference: pathString key: nameString
 		basicAt: nameString
 		put: ##($@ asUtf16String) , relPath trimNulls
 		type: OS.WinRegConstants.REG_MULTI_SZ! !
+
 !OS.RegistrySerializer categoriesForMethods!
 basicObjectAt:put:!accessing!public! !
 basicWriteCollection:key:!helpers!private! !
@@ -307,6 +312,7 @@ write: anObject to: aRegKey
 
 write: anObject to: aRegKey name: aString
 	(self regKey: aRegKey) write: anObject name: aString! !
+
 !OS.RegistrySerializer class categoriesForMethods!
 icon!constants!public! !
 regKey:!public! !

@@ -7,9 +7,13 @@ Database.DBSchemaStatement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBProceduresStatement guid: (Core.GUID fromString: '{3dee7e8f-6c0c-403c-923a-7677f5e7c810}')!
+
 Database.DBProceduresStatement comment: 'DBProceduresStatement is a specialized <DBSchemaStatement> for querying about the stored procedures in a database.'!
+
 !Database.DBProceduresStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBProceduresStatement methodsFor!
 
 executeStatement
@@ -30,6 +34,7 @@ procedureName
 
 procedureName: aString
 	procedureName := aString! !
+
 !Database.DBProceduresStatement categoriesForMethods!
 executeStatement!operations!private! !
 procedureName!accessing!public! !

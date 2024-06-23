@@ -7,9 +7,13 @@ UI.AbstractNonReferenceDelegatingView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ToolButton guid: (Core.GUID fromString: '{075420d9-dc3b-4222-b99e-abd8769d41b8}')!
+
 UI.ToolButton comment: ''!
+
 !UI.ToolButton categoriesForClass!MVP-Resources-Buttons!MVP-Resources-Misc! !
+
 !UI.ToolButton methodsFor!
 
 applyFont
@@ -203,6 +207,7 @@ toolTipText
 	"Answer a String suitable for displaying in a Tool tip control."
 
 	^self commandDescription toolTipText! !
+
 !UI.ToolButton categoriesForMethods!
 applyFont!font!private!updating! !
 backcolor:!accessing!public! !
@@ -260,6 +265,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ToolButton} 38 #{Core.Array} 14 nil nil 50 2 8 1140850688 131073 32 nil nil nil 5 nil nil nil 32 nil 18 #{UI.Toolbar} 50 28 nil 32 50 2 8 1140853580 131137 112 nil nil nil 1 nil nil nil 112 nil nil nil nil nil nil nil 50 1 1094 1 #{UI.ToolbarIconButton} 112 1 1350 4 #{UI.CommandDescription} #noCommand 8 'No command' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'Object.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil nil 3 nil 518 #{Graphics.Point} 49 49 402 183 87 nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 402 1 1 402 193 97 112 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 96 0 0 0 48 0 0 0] 8 #() 402 193 193 nil 29 450 50 1 498 #createAt:extent: 50 2 402 6143 21 402 193 97 32 578 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 95 12 0 0 58 0 0 0] 50 1 112 640 nil 27)! !
+
 !UI.ToolButton class categoriesForMethods!
 icon!public! !
 resource_Default_view!public!resources-views! !

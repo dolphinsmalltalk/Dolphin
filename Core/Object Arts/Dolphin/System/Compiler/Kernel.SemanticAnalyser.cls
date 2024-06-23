@@ -7,11 +7,15 @@ Kernel.ParseNodeVisitor
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SemanticAnalyser guid: (Core.GUID fromString: '{8290173a-f40a-473c-bb63-44928d0bda4f}')!
+
 Kernel.SemanticAnalyser comment: '`Kernel.SemanticAnalyser` is the class of `<parseNodeVisitor>`s that performs semantic analysis of an AST.
 
 At this basic level the analyser builds the lexical scope hierarchy and attempts to bind all variables. It detects very few errors and does not report even those, not even undeclared variables, nor perform any other tasks required in a compiler for code generation such as collecting the literals or analyzing block variable usage. The subclass `Kernel.StSemanticAnalyser` performs these tasks for the Smalltalk compiler back-end.'!
+
 !Kernel.SemanticAnalyser categoriesForClass!Refactory-ParseTree Matching! !
+
 !Kernel.SemanticAnalyser methodsFor!
 
 analyseParseTree: aStMethodNode pools: anArray
@@ -162,6 +166,7 @@ visitTempDeclNode: aStTempDeclNode
 
 visitVariableNode: aVariableNode
 	^self bindVariable: aVariableNode! !
+
 !Kernel.SemanticAnalyser categoriesForMethods!
 analyseParseTree:pools:!operations!public! !
 bindVariable:!helpers!private! !
@@ -200,6 +205,7 @@ analyseParseTree: aParseTree pools: anArray
 	^self new
 		analyseParseTree: aParseTree methodNode pools: anArray;
 		yourself! !
+
 !Kernel.SemanticAnalyser class categoriesForMethods!
 analyseParseTree:!operations!public! !
 analyseParseTree:pools:!operations!public! !

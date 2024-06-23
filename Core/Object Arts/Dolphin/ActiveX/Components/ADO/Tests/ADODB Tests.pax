@@ -28,6 +28,7 @@ ADODB
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.DBTest
 	subclass: #'ADODB.Tests.ADODBTest'
 	instanceVariableNames: ''

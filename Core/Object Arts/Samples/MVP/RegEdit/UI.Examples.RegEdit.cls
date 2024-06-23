@@ -7,7 +7,9 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.RegEdit guid: (Core.GUID fromString: '{87b4c69e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Examples.RegEdit comment: 'RegEdit is a <topShell> sample application which implements most of the functionality of the Windows utility, RegEdit. It does not implement the full functionality of the standard tool because it is primarily intended as a demonstration of the use of registry access classes, and the tree and enhanced list views. It supports in-place registry key name editing.
 
 Example:
@@ -28,7 +30,9 @@ Class Variables:
 
 
 '!
+
 !UI.Examples.RegEdit categoriesForClass!MVP-Presenters!Samples! !
+
 !UI.Examples.RegEdit methodsFor!
 
 aboutRegistryEditor
@@ -401,6 +405,7 @@ toggleStatusBar
 	statusBar := self statusBar.
 	statusBar isWindowVisible ifTrue: [statusBar hide] ifFalse: [statusBar show].
 	self view invalidateLayout! !
+
 !UI.Examples.RegEdit categoriesForMethods!
 aboutRegistryEditor!commands-actions!private! !
 chooseFont!commands-actions!private! !
@@ -546,6 +551,7 @@ stringIcon
 	"Answers an Icon that can be used to string values."
 
 	^RegKeyValues icon! !
+
 !UI.Examples.RegEdit class categoriesForMethods!
 about!enquiries!private! !
 binaryIcon!constants!public! !

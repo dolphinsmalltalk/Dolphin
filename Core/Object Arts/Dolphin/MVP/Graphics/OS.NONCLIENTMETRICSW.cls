@@ -24,11 +24,15 @@ OS.SizedStructure
 			'_OffsetOf_lfSmCaptionFont' -> 16r7C.
 			'_OffsetOf_lfStatusFont' -> 16r13C
 		}!
+
 OS.NONCLIENTMETRICSW guid: (Core.GUID fromString: '{87b4c602-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.NONCLIENTMETRICSW comment: '<NONCLIENTMETRICSW> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associated with the nonclient area of a nonminimized window. This structure is used by the SPI_GETNONCLIENTMETRICS and SPI_SETNONCLIENTMETRICS actions of SystemParametersInfo."'!
+
 !OS.NONCLIENTMETRICSW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NONCLIENTMETRICSW methodsFor!
 
 iCaptionHeight
@@ -65,6 +69,7 @@ lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
 	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont! !
+
 !OS.NONCLIENTMETRICSW categoriesForMethods!
 iCaptionHeight!**compiled accessors**!public! !
 iMenuHeight!**compiled accessors**!public! !
@@ -124,6 +129,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
+
 !OS.NONCLIENTMETRICSW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

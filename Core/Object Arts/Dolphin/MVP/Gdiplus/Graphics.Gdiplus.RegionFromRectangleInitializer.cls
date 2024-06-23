@@ -7,8 +7,11 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionFromRectangleInitializer guid: (Core.GUID fromString: '{4b87dc0a-0ca6-4f47-93af-ea525ced5f99}')!
+
 Graphics.Gdiplus.RegionFromRectangleInitializer comment: ''!
+
 !Graphics.Gdiplus.RegionFromRectangleInitializer methodsFor!
 
 basicCreateHandle
@@ -27,6 +30,7 @@ rectangle
 
 rectangle: aRectangle
 	rectangle := aRectangle! !
+
 !Graphics.Gdiplus.RegionFromRectangleInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 printAttributesOn:!attributes!printing!private! !
@@ -38,6 +42,7 @@ rectangle:!initializing!private! !
 
 fromRectangle: aRectangle
 	^self new rectangle: aRectangle! !
+
 !Graphics.Gdiplus.RegionFromRectangleInitializer class categoriesForMethods!
 fromRectangle:!instance creation!public! !
 !

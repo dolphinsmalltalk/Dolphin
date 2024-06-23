@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DateTest guid: (Core.GUID fromString: '{b7ce73f6-9c8d-428d-8aae-86653eb3cf12}')!
+
 Core.Tests.DateTest comment: ''!
+
 !Core.Tests.DateTest methodsFor!
 
 testFromDays
@@ -81,6 +84,7 @@ testYyyymmdd
 				month: 2
 				day: 28.
 	self assert: subject yyyymmdd equals: '-0005-02-28'! !
+
 !Core.Tests.DateTest categoriesForMethods!
 testFromDays!public!unit tests! !
 testFromSeconds!public!unit tests! !

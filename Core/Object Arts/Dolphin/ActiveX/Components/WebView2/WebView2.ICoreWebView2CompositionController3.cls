@@ -7,8 +7,11 @@ WebView2.ICoreWebView2CompositionController2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2CompositionController3 guid: (OS.COM.IID fromString: '{9570570e-4d76-4361-9ee1-f04d0dbdfb1e}')!
+
 WebView2.ICoreWebView2CompositionController3 isEgressOnly: true!
+
 WebView2.ICoreWebView2CompositionController3 comment: '`ICoreWebView2CompositionController3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -45,7 +48,9 @@ interface ICoreWebView2CompositionController3 : ICoreWebView2CompositionControll
 };
 ```
 '!
+
 !WebView2.ICoreWebView2CompositionController3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2CompositionController3 methodsFor!
 
 dragEnter: dataObject keyState: keyState point: point
@@ -130,6 +135,7 @@ Drop: dataObject keyState: keyState point: point effect: effect
 
 	<virtual stdcall: hresult 16 IDataObject* uint32 POINTL uint32*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2CompositionController3 categoriesForMethods!
 dragEnter:keyState:point:!**auto generated**!methods!public! !
 DragEnter:keyState:point:effect:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController3!private! !
@@ -156,6 +162,7 @@ defineFunctions
 		defineFunction: #Drop:keyState:point:effect:
 			argumentTypes: 'IDataObject* dword POINTL dword*'
 ! !
+
 !WebView2.ICoreWebView2CompositionController3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

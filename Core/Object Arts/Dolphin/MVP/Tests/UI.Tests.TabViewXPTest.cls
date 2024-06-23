@@ -7,8 +7,11 @@ UI.Tests.AbstractTabViewTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.TabViewXPTest guid: (Core.GUID fromString: '{f55d0ba3-f595-4d2c-bfc2-65de737b4fcb}')!
+
 UI.Tests.TabViewXPTest comment: ''!
+
 !UI.Tests.TabViewXPTest methodsFor!
 
 classToTest
@@ -63,6 +66,7 @@ view
 		ifFalse: 
 			["CardContainer"
 			view subViews first]! !
+
 !UI.Tests.TabViewXPTest categoriesForMethods!
 classToTest!helpers!private! !
 testLabelWithAmpersand!public!unit tests! !
@@ -91,6 +95,7 @@ resource_Tab_view_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TabViewXP) 34 28 nil nil 34 2 8 1409352192 1 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #face3d nil 5 nil nil nil 416 nil 8 1904010400 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 818 701 61 416 770 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 40 0 0 0] 8 #() 818 193 193 nil 27)! !
+
 !UI.Tests.TabViewXPTest class categoriesForMethods!
 resource_Card_container_D6!public!resources-views! !
 resource_Tab_view_D7!public!resources-views! !

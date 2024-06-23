@@ -177,6 +177,7 @@ package!
 
 icon
 	^##((TextTileIcon text: $\x22B6 fontName: 'Segoe UI') yourself)! !
+
 !Graphics.Gdiplus.AbstractCustomLineCap class categoriesForMethods!
 icon!constants!public! !
 !
@@ -224,6 +225,7 @@ exampleGdipAACArrowCap
 
 icon
 	^##((TextTileIcon text: $\x27A4 fontName: 'Segoe UI') yourself)! !
+
 !Graphics.Gdiplus.AdjustableArrowCap class categoriesForMethods!
 exampleGdipAACArrowCap!examples!public!unit tests! !
 icon!constants!public! !
@@ -333,6 +335,7 @@ exampleGdipBResize3
 	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.png'.
 	resizedImage saveToFile: toFile.
 	^self fromFile: toFile! !
+
 !Graphics.Gdiplus.Bitmap class categoriesForMethods!
 exampleGdipBFromBitmap!examples!public!sunit! !
 exampleGdipBFromByteArray!examples!public!sunit! !
@@ -349,6 +352,7 @@ icon
 	^##((TextTileIcon text: $\x1F58C fontName: 'Segoe UI Emoji')
 		textcolor: Color navy;
 		yourself)! !
+
 !Graphics.Gdiplus.Brush class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -388,6 +392,7 @@ exampleGdipCBPerformance
 	strm display: '#drawCachedBitmap: '.
 	time displayOn: strm.
 	^strm contents! !
+
 !Graphics.Gdiplus.CachedBitmap class categoriesForMethods!
 exampleGdipCBPerformance!examples!public!sunit! !
 !
@@ -415,6 +420,7 @@ exampleGdipCLCStrokeCaps
 		drawLine: rect pen: pen;
 		drawRectangle: rect pen: Pen black.
 	^bitmap! !
+
 !Graphics.Gdiplus.CustomLineCap class categoriesForMethods!
 exampleGdipCLCStrokeCaps!examples!public!unit tests! !
 !
@@ -449,6 +455,7 @@ icon
 	^##((TextTileIcon text: 'ᵀT' fontName: 'Segoe UI Symbol')
 		textcolor: Color navy;
 		yourself)! !
+
 !Graphics.Gdiplus.Font class categoriesForMethods!
 exampleGdipFontHeight!examples!public!sunit! !
 icon!constants!public! !
@@ -539,6 +546,7 @@ exampleGdipFFMetrics
 		nextPutAll: ' pixels.';
 		cr.
 	^info contents! !
+
 !Graphics.Gdiplus.FontFamily class categoriesForMethods!
 exampleGdipFFClone!examples!public!sunit! !
 exampleGdipFFMetrics!examples!public!sunit! !
@@ -575,6 +583,7 @@ showExample: anImage viewMode: aSymbol
 	presenter topShell extent: anImage extent + presenter topShell rectangle extent
 				- presenter topShell clientRectangle extent.
 	^presenter! !
+
 !Graphics.Gdiplus.GdiplusBase class categoriesForMethods!
 fileResource!examples!public! !
 icon!constants!public! !
@@ -1139,6 +1148,7 @@ exampleGdipState
 	graphics drawLine: (0 @ 30 corner: 150 @ 160) pen: pen.
 	graphics drawLine: (40 @ 20 corner: 190 @ 150) pen: pen.
 	bitmap showExample! !
+
 !Graphics.Gdiplus.GdiplusGraphics class categoriesForMethods!
 exampleGdipGAlphaBlending!examples!public!sunit! !
 exampleGdipGCropAndScale!examples!public!sunit! !
@@ -1171,6 +1181,7 @@ icon
 				mode: LinearGradientModeForwardDiagonal))
 		textcolor: Color white;
 		yourself)! !
+
 !Graphics.Gdiplus.GradientBrush class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1381,6 +1392,7 @@ icon
 	^##((TextTileIcon text: $\x2307 fontName: 'Segoe UI')
 		textcolor: Color navy;
 		yourself)! !
+
 !Graphics.Gdiplus.GraphicsPath class categoriesForMethods!
 exampleAddString!examples!public!sunit! !
 exampleGdipGPCreatingFigures!examples!public!sunit! !
@@ -1475,6 +1487,7 @@ icon
 				forecolor: Color dialog
 				backcolor: Color darkSeaGreen))
 			yourself)! !
+
 !Graphics.Gdiplus.HatchBrush class categoriesForMethods!
 exampleGdipHBFillAShape!examples!public!sunit! !
 exampleGdipHBFillAString!examples!public!sunit! !
@@ -2274,6 +2287,7 @@ prompt
 	^((UI.FileOpenDialog new fileTypes: self fileTypes)
 		defaultExtension: 'png';
 		showModal) ifNotNil: [:file | self fromFile: file]! !
+
 !Graphics.Gdiplus.Image class categoriesForMethods!
 createMultiframeImage!examples!private! !
 exampleGdipIDecoderFileExtensions!examples!public!sunit! !
@@ -2682,6 +2696,7 @@ exampleRemapInput
 		fillRectangle: (80 @ 70 corner: 140 @ 100) brush: (Brush green);
 		fillEllipse: (80 @ 20 corner: 140 @ 50) brush: (Brush color: Color magenta).
 	^bitmap! !
+
 !Graphics.Gdiplus.ImageAttributes class categoriesForMethods!
 exampleColorBars1!examples!private! !
 exampleColorBars2!examples!private! !
@@ -2725,6 +2740,7 @@ exampleGdipIFCEnumerating
 		drawString: stream contents layoutRect: rect;
 		drawRectangle: rect.
 	^bitmap! !
+
 !Graphics.Gdiplus.InstalledFontCollection class categoriesForMethods!
 exampleGdipIFCEnumerating!examples!public!sunit! !
 !
@@ -2893,6 +2909,7 @@ exampleGdipLGTiling
 					fillRectangle: (point extent: 300 @ 200) brush: brush;
 					drawString: (Gdiplus.LinearGradientModeNames at: mode + 1) at: point].
 	^bitmap! !
+
 !Graphics.Gdiplus.LinearGradientBrush class categoriesForMethods!
 exampleGdipLGChangingColors!examples!public!sunit! !
 exampleGdipLGCustom!examples!public!sunit! !
@@ -2998,6 +3015,7 @@ icon
 	^##((TextTileIcon text: $\x1F522 fontName: 'Segoe UI Emoji')
 		textcolor: Color navy;
 		yourself)! !
+
 !Graphics.Gdiplus.Matrix class categoriesForMethods!
 exampleGdipMShadows!examples!public!sunit! !
 exampleGdipMShear!examples!public!sunit! !
@@ -3437,6 +3455,7 @@ icon
 				blendTriangularShape: 0.1 scale: 0.7;
 				yourself))
 			yourself)! !
+
 !Graphics.Gdiplus.PathGradientBrush class categoriesForMethods!
 exampleGdipPGBlendColors!examples!public!sunit! !
 exampleGdipPGBlendFactors!examples!public!sunit! !
@@ -3756,6 +3775,7 @@ icon
 	^##((TextTileIcon text: $\x1F58A fontName: 'Segoe UI Emoji')
 		textcolor: Color navy;
 		yourself)! !
+
 !Graphics.Gdiplus.Pen class categoriesForMethods!
 exampleGdipPAttributes!examples!public!sunit! !
 exampleGdipPCompoundArray!examples!public!sunit! !
@@ -3857,6 +3877,7 @@ exampleGdipRHitTesting
 		when: #leftButtonPressed:
 		send: #value:
 		to: onLeftButtonPressed! !
+
 !Graphics.Gdiplus.Region class categoriesForMethods!
 exampleClippingSimple!examples!public! !
 exampleGdipRClipWithRegion!examples!public!sunit! !
@@ -3911,6 +3932,7 @@ icon
 		text: $\x1F58C
 		fontName: 'Segoe UI Emoji'
 		color: Color darkSeaGreen)! !
+
 !Graphics.Gdiplus.SolidBrush class categoriesForMethods!
 exampleGdipDropShadow!examples!public!sunit! !
 exampleGdipSBFillAShape!examples!public!sunit! !
@@ -4138,6 +4160,7 @@ icon
 		textcolor: Color navy;
 		fontStyle: #italic;
 		yourself)! !
+
 !Graphics.Gdiplus.StringFormat class categoriesForMethods!
 exampleGdipSFFormatText!examples!public!sunit! !
 exampleGdipSFGenerics!examples!public!sunit! !
@@ -4211,6 +4234,7 @@ icon
 		fontName: 'Segoe UI Emoji'
 		color: (self
 				image: (Image fromFile: 'Resources/Beach Ball.png' usingLocator: FileLocator installRelative)))! !
+
 !Graphics.Gdiplus.TextureBrush class categoriesForMethods!
 exampleGdipTBFillAShape!examples!public!sunit! !
 exampleGdipTBTilingAShape!examples!public!sunit! !
@@ -4226,6 +4250,7 @@ icon
 		color: Color darkSeaGreen)
 		textcolor: Color navy;
 		yourself)! !
+
 !Graphics.Gdiplus.TransformableBrush class categoriesForMethods!
 icon!constants!public! !
 !

@@ -7,9 +7,13 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractBitmapFromBlankInitializer guid: (Core.GUID fromString: '{aaa7476f-f764-4f83-91b9-cb518458e508}')!
+
 Graphics.AbstractBitmapFromBlankInitializer isNonInstantiable: true!
+
 Graphics.AbstractBitmapFromBlankInitializer comment: ''!
+
 !Graphics.AbstractBitmapFromBlankInitializer methodsFor!
 
 depth: anInteger
@@ -35,6 +39,7 @@ printImage: aBitmap on: aWriteStream
 		print: extent;
 		nextPutAll: ' depth: ';
 		print: depth! !
+
 !Graphics.AbstractBitmapFromBlankInitializer categoriesForMethods!
 depth:!initializing!private! !
 extent!accessing!public! !
@@ -47,6 +52,7 @@ printImage:on:!printing!private! !
 
 extent: aPoint depth: anInteger
 	^self subclassResponsibility! !
+
 !Graphics.AbstractBitmapFromBlankInitializer class categoriesForMethods!
 extent:depth:!instance creation!public! !
 !

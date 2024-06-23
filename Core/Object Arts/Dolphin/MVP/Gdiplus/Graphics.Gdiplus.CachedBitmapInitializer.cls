@@ -7,8 +7,11 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.CachedBitmapInitializer guid: (Core.GUID fromString: '{615de21c-61b0-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.CachedBitmapInitializer comment: ''!
+
 !Graphics.Gdiplus.CachedBitmapInitializer methodsFor!
 
 = anObject
@@ -49,6 +52,7 @@ printAttributesOn: aStream
 		print: bitmap;
 		nextPutAll: ' graphics: ';
 		print: graphics! !
+
 !Graphics.Gdiplus.CachedBitmapInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -72,6 +76,7 @@ cloneHandle: aHandle
 
 freeHandle: aHandle
 	Gdip gdipDisposeImage: aHandle! !
+
 !Graphics.Gdiplus.CachedBitmapInitializer class categoriesForMethods!
 bitmap:graphics:!instance creation!public! !
 cloneHandle:!private!realizing/unrealizing! !

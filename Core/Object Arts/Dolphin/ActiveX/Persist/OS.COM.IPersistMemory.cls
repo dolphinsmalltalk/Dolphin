@@ -7,13 +7,17 @@ OS.COM.IPersist
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPersistMemory guid: (OS.COM.IID fromString: '{bd1ae5e0-a6ae-11ce-bd37-504200c10000}')!
+
 OS.COM.IPersistMemory comment: '<IPersistMemory> is a wrapper class for the COM interface ''OCIDL.IPersistMemory'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !OS.COM.IPersistMemory categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
+
 !OS.COM.IPersistMemory methodsFor!
 
 getSizeMax
@@ -110,6 +114,7 @@ Save: pMem fClearDirty: fClearDirty cbSize: cbSize
 
 	<virtual stdcall: hresult 7 uint8* int32 uint32>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IPersistMemory categoriesForMethods!
 getSizeMax!**auto generated**!methods!public! !
 GetSizeMax:!**auto generated**!COM Interfaces-IPersistMemory!private! !
@@ -142,6 +147,7 @@ defineFunctions
 			argumentTypes: 'uint32*';
 		defineFunction: #InitNew
 ! !
+
 !OS.COM.IPersistMemory class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

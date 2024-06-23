@@ -7,14 +7,18 @@ UI.ValueModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueHolder guid: (Core.GUID fromString: '{87b4c678-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ValueHolder comment: 'A ValueHolder wraps an object and notifies its dependants when that object is replaced. Since ValueHolders are commonly used, there is a short cut available for creating them. Sending #asValue to any object will answer that object wrapped inside a ValueHolder. 
 
 Instance Variables:
 	value	<Object> which is the value held by the receiver.
 
 '!
+
 !UI.ValueHolder categoriesForClass!MVP-Models! !
+
 !UI.ValueHolder methodsFor!
 
 setValue: anObject
@@ -27,6 +31,7 @@ value
 	"Answers the value of the receiver"
 	
 	^value! !
+
 !UI.ValueHolder categoriesForMethods!
 setValue:!accessing!private! !
 value!accessing!public! !
@@ -43,6 +48,7 @@ with: anObject
 	"Answers an instance of the receiver holding anObject as its value"
 
 	^(self new) setValue: anObject; yourself! !
+
 !UI.ValueHolder class categoriesForMethods!
 icon!constants!public! !
 with:!instance creation!public! !

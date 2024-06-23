@@ -7,8 +7,11 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest guid: (Core.GUID fromString: '{9f0abf77-47aa-49cb-8b9b-96343696cb2e}')!
+
 Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest comment: ''!
+
 !Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest methodsFor!
 
 policyClass
@@ -33,6 +36,7 @@ testHash
 	self assert: (policy hash: 'i') equals: (policy hash: 'I').
 	"Ordinal, not a linguistic comparison"
 	self deny: (policy hash: ('i' asUppercase: (Locale named: 'tr-Tr'))) equals: (policy hash: 'I')! !
+
 !Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest categoriesForMethods!
 policyClass!private!unit tests! !
 testCompareWith!public!unit tests! !

@@ -7,8 +7,11 @@ Core.Tests.AbstractDictionaryTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LookupTableTest guid: (Core.GUID fromString: '{5c366850-2830-493e-a387-2a621f4bc8b2}')!
+
 Core.Tests.LookupTableTest comment: ''!
+
 !Core.Tests.LookupTableTest methodsFor!
 
 assertIs: copyDictionary deepCopyOf: sourceDictionary
@@ -43,6 +46,7 @@ testImmutability
 	self assert: (subject at: #key2) equals: 2.
 	subject at: #key put: (self assimilate: 1.2).
 	self assert: (subject at: #key) equals: 1.2! !
+
 !Core.Tests.LookupTableTest categoriesForMethods!
 assertIs:deepCopyOf:!private!unit tests! !
 collectionClass!helpers!private! !

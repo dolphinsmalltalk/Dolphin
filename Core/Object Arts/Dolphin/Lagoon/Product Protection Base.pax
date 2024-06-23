@@ -32,6 +32,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Security.ProtectedProductSerialNumber'
 	instanceVariableNames: 'value stringValue'
@@ -39,6 +40,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Security.SerialNumberProtector'
 	instanceVariableNames: 'key'
@@ -46,6 +48,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.ProductProtector
 	subclass: #'Security.PC1ProductProtector'
 	instanceVariableNames: ''
@@ -53,6 +56,7 @@ Security.ProductProtector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.SerialNumberProtector
 	subclass: #'Security.ElgamalSerialNumberProtector'
 	instanceVariableNames: ''
@@ -60,6 +64,7 @@ Security.SerialNumberProtector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.SerialNumberProtector
 	subclass: #'Security.PC1SerialNumberProtector'
 	instanceVariableNames: ''

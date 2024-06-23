@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_Pointer' -> 16r8.
 			'_OVERLAPPED_Size' -> 16r14
 		}!
+
 OS.OVERLAPPED guid: (Core.GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
+
 OS.OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -39,7 +41,9 @@ struct tagOVERLAPPED {
 	[helpstring("A handle to the event that will be set to a signaled state by the system when the operation has completed.")] HANDLE hEvent;
 } OVERLAPPED;
 '!
+
 !OS.OVERLAPPED categoriesForClass!Win32-Structs! !
+
 !OS.OVERLAPPED methodsFor!
 
 hEvent
@@ -81,6 +85,7 @@ OffsetHigh: anInteger
 	"Set the receiver's 'OffsetHigh' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_OffsetHigh put: anInteger! !
+
 !OS.OVERLAPPED categoriesForMethods!
 hEvent!**compiled accessors**!public! !
 hEvent:!**compiled accessors**!public! !
@@ -140,6 +145,7 @@ defineFields
 
 getFieldNames
 	^#(#Internal #InternalHigh #Offset #OffsetHigh #hEvent)! !
+
 !OS.OVERLAPPED class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

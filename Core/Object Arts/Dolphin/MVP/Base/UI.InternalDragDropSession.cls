@@ -7,7 +7,9 @@ UI.DragDropSession
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.InternalDragDropSession guid: (Core.GUID fromString: '{87b4c54b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.InternalDragDropSession comment: '
 Instance Variables:
 	lastImageKey			<Symbol> name of the last displayed drag cursor image (e.g. #move or #copyScroll)
@@ -17,7 +19,9 @@ Instance Variables:
 	operationDescriptions	<abstractDictionary> mapping d&d symbols to the descriptions to be used on the right drag popup menu
 
 '!
+
 !UI.InternalDragDropSession categoriesForClass!MVP-DragDrop! !
+
 !UI.InternalDragDropSession methodsFor!
 
 beginDragImage
@@ -248,6 +252,7 @@ startTrackingAt: aPoint
 	self beginDragImage.
 	self giveFeedback.
 	^self dragPoint! !
+
 !UI.InternalDragDropSession categoriesForMethods!
 beginDragImage!public!tracking! !
 buildDragImageList!private!tracking! !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.EXCEPINFOTest guid: (Core.GUID fromString: '{00685cc4-a260-4b8f-9721-b0bb8a4cfaef}')!
+
 OS.COM.Tests.EXCEPINFOTest comment: ''!
+
 !OS.COM.Tests.EXCEPINFOTest methodsFor!
 
 testDescription
@@ -37,6 +40,7 @@ testDescription
 	self assert: actual equals: expected value.
 	subject free.
 	self assertIsNil: subject bytes! !
+
 !OS.COM.Tests.EXCEPINFOTest categoriesForMethods!
 testDescription!public! !
 !

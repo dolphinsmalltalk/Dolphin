@@ -7,11 +7,15 @@ Kernel.RandomLinearCongruential
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RandomParkMiller guid: (Core.GUID fromString: '{a3ea36ec-2371-4039-bc76-4dc1fe8e69c6}')!
+
 Kernel.RandomParkMiller comment: '<RandomParkMiller> is a specialized <RandomLinearCongruential> stream that provides an optimised implementation of Park and Miller''s ''Minimum Standard''  linear congruential pseudo-random number generator (see ''Numerical Recipes in C'', 2nd Edition; Press, Flannery, Teukolsky and Vetterling; Cambridge University Press, 1992).
 
 RandomParkMiller differs from a generic RandomLinearCongruential generator initialised with the same constants in that it is implemented using floating point arithmetic. This makes it about twice as fast as the RandomLinearCongruential equivalent, because the latter uses large-integer arithmetic when initialised with the Park-Miller constants.'!
+
 !Kernel.RandomParkMiller categoriesForClass!Collections-Streams! !
+
 !Kernel.RandomParkMiller methodsFor!
 
 lcg
@@ -34,6 +38,7 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	seed := 1.0.
 	quo := (modulus quo: multiplier) asFloat.
 	rem := (modulus \\ multiplier) asFloat! !
+
 !Kernel.RandomParkMiller categoriesForMethods!
 lcg!helpers!private! !
 seed:!accessing!public! !
@@ -52,6 +57,7 @@ newModulus: mInteger multiplier: aInteger increment: cInteger
 	"This generator only supports a fixed set of constants."
 
 	^self shouldNotImplement! !
+
 !Kernel.RandomParkMiller class categoriesForMethods!
 new!instance creation!public! !
 newModulus:multiplier:increment:!instance creation!public! !

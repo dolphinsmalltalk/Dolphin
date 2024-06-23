@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihPen' -> 16r8.
 			'_OffsetOf_lopn' -> 16rC
 		}!
+
 OS.EMRCREATEPEN guid: (Core.GUID fromString: '{f7e241d3-4c87-4409-a235-94cd95523c94}')!
+
 OS.EMRCREATEPEN comment: '<EMRCREATEPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMRCREATEPEN {
 	LOGPEN lopn;
 } EMRCREATEPEN;
 '!
+
 !OS.EMRCREATEPEN categoriesForClass!Win32-Structs! !
+
 !OS.EMRCREATEPEN methodsFor!
 
 ihPen
@@ -53,6 +57,7 @@ lopn: aLOGPEN
 		from: ##(_OffsetOf_lopn + 1)
 		to: ##(_OffsetOf_lopn + LOGPEN._LOGPEN_Size)
 		startingAt: 1! !
+
 !OS.EMRCREATEPEN categoriesForMethods!
 ihPen!**compiled accessors**!public! !
 ihPen:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEPEN}! !
+
 !OS.EMRCREATEPEN class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

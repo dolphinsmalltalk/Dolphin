@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RefactoryChange guid: (Core.GUID fromString: '{2e46050f-612f-4e62-a0cf-281408d71404}')!
+
 Refactory.Browser.RefactoryChange isNonInstantiable: true!
+
 Refactory.Browser.RefactoryChange comment: 'RefactoryChange is an abstract class that represent some change to a class or method. They are used in combination with RefactoryBuilders to give transaction-like behavior.
 
 Subclasses must implement the following messages:
@@ -17,7 +20,9 @@ Subclasses must implement the following messages:
 
 Instance Variables:
 	class	<Behavior>	the class that is to be changed'!
+
 !Refactory.Browser.RefactoryChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RefactoryChange methodsFor!
 
 afterText
@@ -84,6 +89,7 @@ selector
 	"Answer the selector of the affected method, or nil if none."
 
 	^nil! !
+
 !Refactory.Browser.RefactoryChange categoriesForMethods!
 afterText!printing!public! !
 beforeText!printing!public! !
@@ -110,6 +116,7 @@ selector!accessing!public! !
 
 new
 	^super new initialize! !
+
 !Refactory.Browser.RefactoryChange class categoriesForMethods!
 new!instance creation!public! !
 !

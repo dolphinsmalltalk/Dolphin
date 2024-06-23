@@ -15,7 +15,9 @@ External.GenericExternalArray
 			'_OffsetOf_rgsabound' -> 16r10.
 			'_SAFEARRAY_Size' -> 16r18
 		}!
+
 OS.COM.SAFEARRAY guid: (Core.GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.SAFEARRAY comment: '`SAFEARRAY` is an `ExternalArray` class to represent the COM Automation arrays.
 
 `SAFEARRAY`s are a flexible representation of potentially multiple dimensioned arrays of almost any of the Variant (Visual Basic) types.
@@ -28,7 +30,9 @@ Note that the reported length of a `SAFEARRAY` is actually the length of the rig
   `data`		`ExternalAddress`. Pointer to data of array, when locked.
   `start`		`integer`. Lower bound of rightmost (least significant) dimension.
 '!
+
 !OS.COM.SAFEARRAY categoriesForClass!External-Data-Structured! !
+
 !OS.COM.SAFEARRAY methodsFor!
 
 _deepenShallowCopy: clone trail: copiesDictionary
@@ -406,6 +410,7 @@ with: otherCollection do: operation
 		operation
 			value: elem
 			value: (otherCollection at: i)]! !
+
 !OS.COM.SAFEARRAY categoriesForMethods!
 _deepenShallowCopy:trail:!copying!private! !
 accessData!helpers!private! !
@@ -665,6 +670,7 @@ vt
 	depend on the element type, but it will always include this array modifier."
 
 	^VT_ARRAY! !
+
 !OS.COM.SAFEARRAY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !

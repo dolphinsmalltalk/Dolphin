@@ -53,6 +53,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironment
 	subclass: #'Refactory.Browser.BrowserEnvironmentWrapper'
 	instanceVariableNames: 'environment progressBlock'
@@ -60,6 +61,7 @@ Refactory.Browser.BrowserEnvironment
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.AndEnvironment'
 	instanceVariableNames: 'andedEnvironment'
@@ -67,6 +69,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.CategoryEnvironment'
 	instanceVariableNames: 'categories'
@@ -74,6 +77,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.ClassEnvironment'
 	instanceVariableNames: 'classes'
@@ -81,6 +85,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.NotEnvironment'
 	instanceVariableNames: ''
@@ -88,6 +93,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.OrEnvironment'
 	instanceVariableNames: 'oredEnvironment'
@@ -95,6 +101,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.ProtocolEnvironment'
 	instanceVariableNames: 'class protocols'
@@ -102,6 +109,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.SelectorEnvironment'
 	instanceVariableNames: 'classSelectors metaClassSelectors'
@@ -109,6 +117,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.VariableEnvironment'
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
@@ -123,6 +132,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 
 binding
 	^self! !
+
 !Core.Association categoriesForMethods!
 binding!public!testing! !
 !
@@ -139,6 +149,7 @@ selectorsAndMethodsDo: aDyadicValuable
 	the receiver's method dictionary."
 
 	^methodDictionary ifNotNil: [methodDictionary keysAndValuesDo: aDyadicValuable]! !
+
 !Core.Behavior categoriesForMethods!
 numberSelectors!enumerating!public! !
 selectorsAndMethodsDo:!enumerating!public! !
@@ -150,6 +161,7 @@ subBehaviors
 	"Answer a <collection> containing the receiver's immediate subclasses."
 
 	^Smalltalk allRoots collect: [:each | each class]! !
+
 !Core.Class class categoriesForMethods!
 subBehaviors!class hierarchy-accessing!public! !
 !
@@ -181,6 +193,7 @@ withAllSubBehaviorsDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubBehaviorsDo: aMonadicValuable! !
+
 !Core.ClassDescription categoriesForMethods!
 allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
 allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
@@ -196,6 +209,7 @@ soleInstance
 	#rbFix. "Dolphin normally uses #instanceClass"
 	^instanceClass
 ! !
+
 !Core.Metaclass categoriesForMethods!
 soleInstance!accessing!public! !
 !
@@ -207,6 +221,7 @@ isVariableBinding
 	to #key and #value methods."
 
 	^false! !
+
 !Core.Object categoriesForMethods!
 isVariableBinding!public!testing! !
 !
@@ -218,6 +233,7 @@ allLiterals
 
 	#rbFix. "Dolphin uses #literals"
 	^self literals! !
+
 !Kernel.CompiledCode categoriesForMethods!
 allLiterals!accessing!private! !
 !
@@ -234,6 +250,7 @@ isVariableBinding
 	to #key and #value methods."
 
 	^true! !
+
 !Kernel.VariableBinding categoriesForMethods!
 isUnbound!public!testing! !
 isVariableBinding!public!testing! !

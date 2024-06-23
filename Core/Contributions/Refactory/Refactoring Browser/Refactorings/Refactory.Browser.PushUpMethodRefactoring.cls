@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.PushUpMethodRefactoring guid: (Core.GUID fromString: '{9124b878-03e9-4e01-abb4-34cf953777f4}')!
+
 Refactory.Browser.PushUpMethodRefactoring comment: ''!
+
 !Refactory.Browser.PushUpMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.PushUpMethodRefactoring methodsFor!
 
 checkBackReferencesTo: aSelector
@@ -246,6 +250,7 @@ transform
 		pushUpMethods;
 		removePushedUpMethods;
 		removeDuplicateMethods! !
+
 !Refactory.Browser.PushUpMethodRefactoring categoriesForMethods!
 checkBackReferencesTo:!preconditions!public! !
 checkClassVars!preconditions!public! !
@@ -282,6 +287,7 @@ model: aRBModel pushUp: selectorCollection from: aClass
 
 pushUp: selectorCollection from: aClass 
 	^self new pushUp: selectorCollection from: aClass! !
+
 !Refactory.Browser.PushUpMethodRefactoring class categoriesForMethods!
 model:pushUp:from:!instance creation!public! !
 pushUp:from:!instance creation!public! !

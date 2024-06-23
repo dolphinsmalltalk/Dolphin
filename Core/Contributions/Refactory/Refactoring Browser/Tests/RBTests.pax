@@ -169,6 +169,7 @@ XProgramming.SUnit.TestCase
 	imports: #(#{Refactory.Browser.TestData private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.BrowserEnvironmentTest'
 	instanceVariableNames: 'universalEnvironment totalSelectors selectorCount'
@@ -176,6 +177,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.ChangeObjectTest'
 	instanceVariableNames: ''
@@ -183,6 +185,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.ClassDetailsTest'
 	instanceVariableNames: ''
@@ -190,6 +193,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.ParseTreeRewriterTest'
 	instanceVariableNames: ''
@@ -197,6 +201,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.ParseTreeSearcherTest'
 	instanceVariableNames: ''
@@ -204,6 +209,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RBClassTest'
 	instanceVariableNames: 'model objectClass newClass messageNodeClass'
@@ -211,6 +217,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RBMethodTest'
 	instanceVariableNames: ''
@@ -218,6 +225,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RBModelTest'
 	instanceVariableNames: ''
@@ -225,6 +233,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RBSourceFormatterTest'
 	instanceVariableNames: 'settings'
@@ -232,6 +241,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RBVariableAnalyserTest'
 	instanceVariableNames: ''
@@ -239,6 +249,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RefactoringManagerTest'
 	instanceVariableNames: ''
@@ -246,6 +257,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RefactoringTest'
 	instanceVariableNames: 'manager model'
@@ -253,6 +265,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.ReferenceFinderTest'
 	instanceVariableNames: ''
@@ -260,6 +273,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.SmalllintTest'
 	instanceVariableNames: ''
@@ -267,6 +281,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.VariableTypeTest'
 	instanceVariableNames: ''
@@ -274,6 +289,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.BrowserEnvironmentTest
 	subclass: #'Refactory.Browser.Tests.PluggableEnvironmentTest'
 	instanceVariableNames: ''
@@ -281,6 +297,7 @@ Refactory.Browser.Tests.BrowserEnvironmentTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.BrowserEnvironmentTest
 	subclass: #'Refactory.Browser.Tests.VariableEnvironmentTest'
 	instanceVariableNames: ''
@@ -288,6 +305,7 @@ Refactory.Browser.Tests.BrowserEnvironmentTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.AddClassChangeTest'
 	instanceVariableNames: ''
@@ -295,6 +313,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.AddClassConstantChangeTest'
 	instanceVariableNames: ''
@@ -302,6 +321,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.AddClassVariableChangeTest'
 	instanceVariableNames: ''
@@ -309,6 +329,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.AddInstanceVariableChangeTest'
 	instanceVariableNames: ''
@@ -316,6 +337,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
 	instanceVariableNames: ''
@@ -323,6 +345,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.BasicRenameClassChangeTest'
 	instanceVariableNames: ''
@@ -330,6 +353,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.ClassCategoryChangeTest'
 	instanceVariableNames: ''
@@ -337,6 +361,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.ClassCommentChangeTest'
 	instanceVariableNames: ''
@@ -344,6 +369,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.ClassGuidChangeTest'
 	instanceVariableNames: ''
@@ -351,6 +377,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.ClassImportsChangeTest'
 	instanceVariableNames: ''
@@ -358,6 +385,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.RemoveClassChangeTest'
 	instanceVariableNames: ''
@@ -365,6 +393,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.RemoveClassConstantChangeTest'
 	instanceVariableNames: ''
@@ -372,6 +401,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.RemoveClassVariableChangeTest'
 	instanceVariableNames: ''
@@ -379,6 +409,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChangeObjectTest
 	subclass: #'Refactory.Browser.Tests.RemoveInstanceVariableChangeTest'
 	instanceVariableNames: ''
@@ -386,6 +417,7 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.AbstractClassVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -393,6 +425,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.AbstractInstanceVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -400,6 +433,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.AddClassRefactoringTest'
 	instanceVariableNames: ''
@@ -407,6 +441,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.AddClassVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -414,6 +449,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.AddImportRefactoringTest'
 	instanceVariableNames: ''
@@ -421,6 +457,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.AddInstanceVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -428,6 +465,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.AddMethodRefactoringTest'
 	instanceVariableNames: ''
@@ -435,6 +473,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.AddParameterRefactoringTest'
 	instanceVariableNames: ''
@@ -442,6 +481,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest'
 	instanceVariableNames: ''
@@ -449,6 +489,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest'
 	instanceVariableNames: ''
@@ -456,6 +497,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -463,6 +505,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.ExpandImportsRefactoringTest'
 	instanceVariableNames: ''
@@ -470,6 +513,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.ExtractMethodRefactoringTest'
 	instanceVariableNames: ''
@@ -477,6 +521,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.ExtractMethodToComponentRefactoringTest'
 	instanceVariableNames: ''
@@ -484,6 +529,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.ExtractToTemporaryRefactoringTest'
 	instanceVariableNames: ''
@@ -491,6 +537,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.InlineAllSendersRefactoringTest'
 	instanceVariableNames: ''
@@ -498,6 +545,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest'
 	instanceVariableNames: ''
@@ -505,6 +553,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.InlineMethodRefactoringTest'
 	instanceVariableNames: ''
@@ -512,6 +561,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.InlineParameterRefactoringTest'
 	instanceVariableNames: ''
@@ -519,6 +569,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.InlineTemporaryRefactoringTest'
 	instanceVariableNames: ''
@@ -526,6 +577,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.MoveMethodRefactoringTest'
 	instanceVariableNames: ''
@@ -533,6 +585,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.MoveVariableDefinitionRefactoringTest'
 	instanceVariableNames: ''
@@ -540,6 +593,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.ProtectInstanceVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -547,6 +601,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.PullUpClassVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -554,6 +609,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.PushDownClassVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -561,6 +617,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.PushDownInstanceVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -568,6 +625,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.PushDownMethodRefactoringTest'
 	instanceVariableNames: ''
@@ -575,6 +633,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.PushUpInstanceVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -582,6 +641,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.PushUpMethodRefactoringTest'
 	instanceVariableNames: ''
@@ -589,6 +649,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.QualifyStaticVariablesRefactoringTest'
 	instanceVariableNames: ''
@@ -596,6 +657,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RBConditionTest'
 	instanceVariableNames: ''
@@ -603,6 +665,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RemoveClassRefactoringTest'
 	instanceVariableNames: ''
@@ -610,6 +673,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RemoveClassVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -617,6 +681,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RemoveImportRefactoringTest'
 	instanceVariableNames: ''
@@ -624,6 +689,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RemoveInstanceVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -631,6 +697,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RemoveMethodRefactoringTest'
 	instanceVariableNames: ''
@@ -638,6 +705,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RemoveParameterRefactoringTest'
 	instanceVariableNames: ''
@@ -645,6 +713,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RenameClassRefactoringTest'
 	instanceVariableNames: ''
@@ -652,6 +721,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RenameClassVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -659,6 +729,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RenameInstanceVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -666,6 +737,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RenameMethodRefactoringTest'
 	instanceVariableNames: ''
@@ -673,6 +745,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RenameTemporaryRefactoringTest'
 	instanceVariableNames: ''
@@ -680,6 +753,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest'
 	instanceVariableNames: ''
@@ -687,6 +761,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest'
 	instanceVariableNames: ''
@@ -709,6 +784,7 @@ withCRs
 	stream := self class writeStream: self size.
 	self do: [:each | each = $\ ifTrue: [stream nextPutAll: self class lineDelimiter] ifFalse: [stream nextPut: each]].
 	^stream contents! !
+
 !Core.String categoriesForMethods!
 withCRs!converting!public! !
 !
@@ -1173,6 +1249,7 @@ testSmallDictionary
 	dictionary removeKey: 2.
 	dictionary copy associationsDo: [:each | dictionary remove: each].
 	self assert: dictionary size equals: 0! !
+
 !Kernel.Tests.ParserTest categoriesForMethods!
 addArgumentSearchWith:selectors:inClass:to:!accessing!public! !
 addMethodSearchWith:selectors:inClass:to:!accessing!public! !
@@ -1221,6 +1298,7 @@ testMethod1
 	<namespace: Tools>
 	^self testMethod1 
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))! !
+
 !Refactory.Browser.TestData.RefactoryTestDataApp categoriesForMethods!
 inlineParameterMethod:!public!test! !
 sendInlineParameterMethod!public!test! !
@@ -1233,6 +1311,7 @@ unqualifiedRefToClassInCustomNamespace
 	<namespace: Tools>
 	^PackageEnvironment onEnvironment: Refactory.Browser.BrowserEnvironment new
 		packages: { PluggableEnvironment owningPackage }! !
+
 !Refactory.Browser.TestData.TransformationRuleTestData categoriesForMethods!
 unqualifiedRefToClassInCustomNamespace!private! !
 !
@@ -1243,6 +1322,7 @@ testFailure
 	"Can be resolved by unqualified name through the import into the receiver's namespace"
 
 	^TestFailure! !
+
 !Refactory.Browser.Tests.ClassToRename categoriesForMethods!
 testFailure!performing!public! !
 !

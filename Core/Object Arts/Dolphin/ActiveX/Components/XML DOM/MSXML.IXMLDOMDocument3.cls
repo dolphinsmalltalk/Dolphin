@@ -7,8 +7,11 @@ MSXML.IXMLDOMDocument2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMDocument3 guid: (OS.COM.IID fromString: '{2933bf96-7b36-11d2-b20e-00c04f983e60}')!
+
 MSXML.IXMLDOMDocument3 isEgressOnly: true!
+
 MSXML.IXMLDOMDocument3 comment: '<IXMLDOMDocument3> is a wrapper class for the COM interface ''MSXML2.IXMLDOMDocument3'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -36,7 +39,9 @@ interface IXMLDOMDocument3 : IXMLDOMDocument2
 		[out, retval]IXMLDOMNode** clone);
 };
 '!
+
 !MSXML.IXMLDOMDocument3 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXMLDOMDocument3 methodsFor!
 
 importNode: node deep: deep
@@ -82,6 +87,7 @@ ValidateNode: node errorObj: errorObj
 
 	<virtual stdcall: hresult 83 IXMLDOMNode* IXMLDOMParseError**>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IXMLDOMDocument3 categoriesForMethods!
 importNode:deep:!**auto generated**!methods!public! !
 ImportNode:deep:clone:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
@@ -113,6 +119,7 @@ newFreeThreadedDOMDocument60
 
 	^self onCLSID: (CLSID fromString: '{88d96a06-f192-11d4-a65f-0040963251e5}')
 ! !
+
 !MSXML.IXMLDOMDocument3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 newDOMDocument60!**auto generated**!instance creation!private! !

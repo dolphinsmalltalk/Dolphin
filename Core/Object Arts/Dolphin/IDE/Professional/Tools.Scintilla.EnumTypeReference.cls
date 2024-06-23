@@ -7,9 +7,13 @@ Tools.Scintilla.IntTypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.EnumTypeReference guid: (Core.GUID fromString: '{c17866ae-91b7-4037-9b4a-edab9627dbe9}')!
+
 Tools.Scintilla.EnumTypeReference comment: ''!
+
 !Tools.Scintilla.EnumTypeReference categoriesForClass!Development! !
+
 !Tools.Scintilla.EnumTypeReference methodsFor!
 
 addConst: aString value: anInteger
@@ -33,6 +37,7 @@ prefix
 
 prefix: anObject
 	prefix := anObject! !
+
 !Tools.Scintilla.EnumTypeReference categoriesForMethods!
 addConst:value:!accessing!public! !
 defaultValue!accessing!public! !
@@ -50,6 +55,7 @@ name: aString prefix: prefixString
 		name: aString;
 		prefix: prefixString;
 		yourself! !
+
 !Tools.Scintilla.EnumTypeReference class categoriesForMethods!
 name:prefix:!public! !
 !

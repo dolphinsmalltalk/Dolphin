@@ -11,7 +11,9 @@ UI.BasicListAbstract
 			'SelectionModes'
 				-> (IdentityDictionary withAll: { #multi -> 16r800. #single -> 16r0. #toggle -> 16r8 })
 		}!
+
 UI.ListBox guid: (Core.GUID fromString: '{87b4c72c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ListBox comment: 'ListBox is the <listView> implementing the standard Windows LISTBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol  for use with any <listModel>.
 
 Instance Variables:
@@ -20,7 +22,9 @@ Instance Variables:
 Class Variables:
 	LbnMap	<IdentityDictionary> mapping Windows notification messages to <selector>s.
 '!
+
 !UI.ListBox categoriesForClass!MVP-Views! !
+
 !UI.ListBox methodsFor!
 
 anchorIndex
@@ -626,6 +630,7 @@ state
 					selector: #horizontalExtent:
 					argument: self horizontalExtent);
 		yourself! !
+
 !UI.ListBox categoriesForMethods!
 anchorIndex!public!selection! !
 anchorIndex:!public!selection! !
@@ -724,6 +729,7 @@ winClassName
 
 	^'LISTBOX'
 ! !
+
 !UI.ListBox class categoriesForMethods!
 initialize!development!initializing!private! !
 listboxMessageMappings!constants!must not strip!private! !

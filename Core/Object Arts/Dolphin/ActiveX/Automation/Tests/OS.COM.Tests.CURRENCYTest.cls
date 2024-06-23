@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.CURRENCYTest guid: (Core.GUID fromString: '{f436bdf8-12ff-47e4-ad1a-c96795760912}')!
+
 OS.COM.Tests.CURRENCYTest comment: ''!
+
 !OS.COM.Tests.CURRENCYTest methodsFor!
 
 testAsVariant
@@ -104,6 +107,7 @@ testValue
 	subject value: 123.45674s.
 	value := subject value.
 	self assert: value equals: 123.4567s! !
+
 !OS.COM.Tests.CURRENCYTest categoriesForMethods!
 testAsVariant!public!unit tests! !
 testDisplayString!public!unit tests! !

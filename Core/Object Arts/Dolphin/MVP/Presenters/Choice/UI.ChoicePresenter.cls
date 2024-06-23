@@ -7,7 +7,9 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ChoicePresenter guid: (Core.GUID fromString: '{87b4c6cc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ChoicePresenter comment: 'ChoicePresenter is a <valuePresenter> which allows a value to be chosen from a list of alternatives. The range of choices may be supplied as any <sequencedCollection> by using the #choices: method once the ChoicePresenter has been instantiated. The initial selection in the visible list will match the initial value in the ChoicePresenter''s <valueModel>. As different selections are made in list they are transferred directly into the associated model.
 
 By default, a ChoicePresenter allows single selection choices to be made. It is also possible, however, to allow multiple selections by attaching an appropriate <listView> supporting the <multipleSelectableItems> protocol. In this case, the value held by the model will be an <Array> of the chosen items.
@@ -31,7 +33,9 @@ Instance Variables:
 	nilChoice		<Object> specifying the object in list that can be used to represent a nil. value.
 
 '!
+
 !UI.ChoicePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Lists! !
+
 !UI.ChoicePresenter methodsFor!
 
 choices: aSequenceableCollection 
@@ -145,6 +149,7 @@ viewModel
 	connected to the receiver's choicesModel - not the receiver's value model"
 
 	^choicesModel! !
+
 !UI.ChoicePresenter categoriesForMethods!
 choices:!accessing!public! !
 createSchematicWiring!initializing!public! !
@@ -205,6 +210,7 @@ resource_Enhanced_list_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ListView} 38 #{Core.Array} 45 nil nil 50 2 8 1409355853 1025 32 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{Core.Message} #displayString 8 #() 242 #iconImageIndex 8 #() 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 146 1 3142 5 #{UI.ListViewColumn} 8 'Column 1' 201 #left 242 #displayString 272 242 #<= 8 #() nil nil 32 nil 1 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 578 491 311 32 530 #text: 50 1 8 'Column 1' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 244 12 0 0 165 0 0 0] 8 #() 578 193 193 nil 35)! !
+
 !UI.ChoicePresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

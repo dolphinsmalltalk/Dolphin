@@ -7,9 +7,13 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ClassRemovalError guid: (Core.GUID fromString: '{4ed2ccc0-5e2b-42a1-8bef-a537219efec2}')!
+
 Kernel.ClassRemovalError comment: ''!
+
 !Kernel.ClassRemovalError categoriesForClass!System-Support! !
+
 !Kernel.ClassRemovalError methodsFor!
 
 isResumable
@@ -29,6 +33,7 @@ originalError: anError
 	in the receiver's tag field."
 
 	originalError := anError! !
+
 !Kernel.ClassRemovalError categoriesForMethods!
 isResumable!public!testing! !
 originalError!accessing!public! !

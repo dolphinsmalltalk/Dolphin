@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETMAPPERFLAGS_Size' -> 16rC. '_OffsetOf_dwFlags' -> 16r8 }!
+
 OS.EMRSETMAPPERFLAGS guid: (Core.GUID fromString: '{161d7d16-953a-489a-a7f8-b02ce12b0021}')!
+
 OS.EMRSETMAPPERFLAGS comment: '<EMRSETMAPPERFLAGS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMAPPERFLAGS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRSETMAPPERFLAGS {
 	DWORD dwFlags;
 } EMRSETMAPPERFLAGS;
 '!
+
 !OS.EMRSETMAPPERFLAGS categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETMAPPERFLAGS methodsFor!
 
 dwFlags
@@ -34,6 +38,7 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger! !
+
 !OS.EMRSETMAPPERFLAGS categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
@@ -70,6 +75,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETMAPPERFLAGS}! !
+
 !OS.EMRSETMAPPERFLAGS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

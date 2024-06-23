@@ -7,9 +7,13 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.WriteReadTest guid: (Core.GUID fromString: '{8084b7c8-9c64-46ad-a994-4ca3445bcee8}')!
+
 STON.Tests.WriteReadTest comment: 'STONWriteReadTests test serialization followed by materialization.'!
+
 !STON.Tests.WriteReadTest categoriesForClass!STON-Tests-Writer! !
+
 !STON.Tests.WriteReadTest methodsFor!
 
 serializeAndMaterialize: object
@@ -347,6 +351,7 @@ testUUIDs
 	| uuids |
 	uuids := STON listClass withAll: {UUID new. UUID new. UUID nilUUID}.
 	self serializeAndMaterialize: uuids! !
+
 !STON.Tests.WriteReadTest categoriesForMethods!
 serializeAndMaterialize:!private! !
 serializeAndMaterializeJsonMode:!private! !

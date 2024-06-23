@@ -7,8 +7,11 @@ Core.Tests.SequencedGrowableCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.OrderedCollectionTest guid: (Core.GUID fromString: '{c951706f-236d-4671-b849-626652dda25e}')!
+
 Core.Tests.OrderedCollectionTest comment: ''!
+
 !Core.Tests.OrderedCollectionTest methodsFor!
 
 collectionClass
@@ -341,6 +344,7 @@ testStrongTalkTests
 				addLast: 1;
 				addLast: 3;
 				yourself)! !
+
 !Core.Tests.OrderedCollectionTest categoriesForMethods!
 collectionClass!constants!private! !
 newCollection:!helpers!private! !

@@ -7,7 +7,9 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.OrdinalCaseInsensitiveSearchPolicy guid: (Core.GUID fromString: '{9a377dae-be71-4f53-a2c3-98513799332c}')!
+
 Kernel.OrdinalCaseInsensitiveSearchPolicy comment: '`OrdinalCaseInsensitiveSearchPolicy` is for configuring pluggable collections and models of strings to use ordinal case-insensitive equality based search and comparisons, i.e. using `String>>#compareOrdinals:ignoringCase:` and `String>>#hashOrdinalsIgnoringCase`. Note that these comparisons are not linguistic (but see also `CaseInsensitiveSearchPolicy`), which makes this policy suitable for use with OS file names/paths, and other named OS objects, but it may not be suitable for cases where language rules mean that two strings should be considered equal but they are not under ordinal case-insensitive comparison rules. For example under this policy the German double-s (eszett) is never considered equivalent to ''ss''.
 
 ```
@@ -18,6 +20,7 @@ Kernel.OrdinalCaseInsensitiveSearchPolicy comment: '`OrdinalCaseInsensitiveSearc
 N.B. Unlike most other SearchPolicy classes, instances of this class are only appropriate for comparing and searching collections of strings, or objects which can be represented as strings (i.e. implementors of `#asString`).
 
 '!
+
 !Kernel.OrdinalCaseInsensitiveSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -49,6 +52,7 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^'ordinalCaseInsensitive'! !
+
 !Kernel.OrdinalCaseInsensitiveSearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 hash:!comparing!public! !

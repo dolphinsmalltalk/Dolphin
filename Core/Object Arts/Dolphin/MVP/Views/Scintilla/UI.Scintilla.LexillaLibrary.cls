@@ -7,7 +7,9 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.LexillaLibrary guid: (Core.GUID fromString: '{a34fd000-7092-4296-a98e-01bfd5d23b65}')!
+
 UI.Scintilla.LexillaLibrary comment: '
 ```
 lexilla := LexillaLibrary default.
@@ -16,7 +18,9 @@ ScintillaView lexerLanguages difference: languages.
 languages difference: ScintillaView lexerLanguages.
 
 ```'!
+
 !UI.Scintilla.LexillaLibrary categoriesForClass!External-Libraries! !
+
 !UI.Scintilla.LexillaLibrary methodsFor!
 
 createLexer: aString
@@ -43,6 +47,7 @@ getLexerNames
 				name: buf
 				buflength: bufsize.
 			buf trimNulls]! !
+
 !UI.Scintilla.LexillaLibrary categoriesForMethods!
 createLexer:!operations!public! !
 getLexerCount!operations!public! !
@@ -56,6 +61,7 @@ fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
 	^'Lexilla'! !
+
 !UI.Scintilla.LexillaLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

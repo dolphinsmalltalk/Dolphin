@@ -12,7 +12,9 @@ External.Structure
 			'_OffsetOf_ciexyzY' -> 16r4.
 			'_OffsetOf_ciexyzZ' -> 16r8
 		}!
+
 OS.CIEXYZ guid: (Core.GUID fromString: '{bf6d67a4-8fbc-4f17-825f-465254239f8b}')!
+
 OS.CIEXYZ comment: '<CIEXYZ> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZ'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +30,9 @@ struct tagCIEXYZ {
 	long ciexyzZ;
 } CIEXYZ;
 '!
+
 !OS.CIEXYZ categoriesForClass!Win32-Structs! !
+
 !OS.CIEXYZ methodsFor!
 
 ciexyzX
@@ -60,6 +64,7 @@ ciexyzZ: anInteger
 	"Set the receiver's 'ciexyzZ' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_ciexyzZ put: anInteger! !
+
 !OS.CIEXYZ categoriesForMethods!
 ciexyzX!**compiled accessors**!public! !
 ciexyzX:!**compiled accessors**!public! !
@@ -101,6 +106,7 @@ defineFields
 
 getFieldNames
 	^#(#ciexyzX #ciexyzY #ciexyzZ)! !
+
 !OS.CIEXYZ class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

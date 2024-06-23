@@ -7,9 +7,13 @@ Core.Tests.SequenceableCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ArrayedCollectionTest guid: (Core.GUID fromString: '{48d15c8e-983b-48d0-8c62-51b644ba6bdb}')!
+
 Core.Tests.ArrayedCollectionTest isNonInstantiable: true!
+
 Core.Tests.ArrayedCollectionTest comment: ''!
+
 !Core.Tests.ArrayedCollectionTest methodsFor!
 
 testNewWithAll
@@ -43,6 +47,7 @@ testSortColon
 	subject sort: [:a :b | a >= b].
 	self assert: subject equals: (self newCollection: #(4 3 2 1)).
 ! !
+
 !Core.Tests.ArrayedCollectionTest categoriesForMethods!
 testNewWithAll!public! !
 testReplaceIdentityWith!public!unit tests! !

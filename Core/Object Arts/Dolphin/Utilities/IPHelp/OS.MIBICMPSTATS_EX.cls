@@ -12,7 +12,9 @@ External.Structure
 			'_OffsetOf_dwMsgs' -> 16r0.
 			'_OffsetOf_rgdwTypeCount' -> 16r8
 		}!
+
 OS.MIBICMPSTATS_EX guid: (Core.GUID fromString: '{82731d6f-0e73-4221-9881-7172ae7d82cd}')!
+
 OS.MIBICMPSTATS_EX comment: '<MIBICMPSTATS_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +30,9 @@ struct tagMIBICMPSTATS_EX {
 	unsigned long rgdwTypeCount[256];
 } MIBICMPSTATS_EX;
 '!
+
 !OS.MIBICMPSTATS_EX categoriesForClass!Win32-Structs! !
+
 !OS.MIBICMPSTATS_EX methodsFor!
 
 dwErrors
@@ -45,6 +49,7 @@ rgdwTypeCount
 	"Answer the <UInt32Array> value of the receiver's 'rgdwTypeCount' field."
 
 	^UInt32Array fromAddress: bytes yourAddress + _OffsetOf_rgdwTypeCount length: 256! !
+
 !OS.MIBICMPSTATS_EX categoriesForMethods!
 dwErrors!**compiled accessors**!public! !
 dwMsgs!**compiled accessors**!public! !
@@ -84,6 +89,7 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #rgdwTypeCount)! !
+
 !OS.MIBICMPSTATS_EX class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

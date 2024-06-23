@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.MemoryManagerTest guid: (Core.GUID fromString: '{088afee2-2321-4479-b639-9f5fdc0e4418}')!
+
 Kernel.Tests.MemoryManagerTest comment: ''!
+
 !Kernel.Tests.MemoryManagerTest methodsFor!
 
 testBytesUsedByObject
@@ -54,6 +57,7 @@ testOtOverflow
 	subject compact.
 	1 to: max do: [:i | objects at: i put: Object new].
 	self assert: events notEmpty! !
+
 !Kernel.Tests.MemoryManagerTest categoriesForMethods!
 testBytesUsedByObject!public!unit tests! !
 testOtOverflow!public!unit tests! !

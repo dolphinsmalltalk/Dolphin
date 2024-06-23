@@ -12,9 +12,13 @@ External.Structure
 			'_OffsetOf_month' -> 16r2.
 			'_OffsetOf_year' -> 16r0
 		}!
+
 OS.ODBCDATE guid: (Core.GUID fromString: '{87b4c597-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.ODBCDATE comment: 'ODBCDATE is a representation of the same named Win32 ODBC structure.'!
+
 !OS.ODBCDATE categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+
 !OS.ODBCDATE methodsFor!
 
 asDate
@@ -64,6 +68,7 @@ year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
 	bytes int16AtOffset: _OffsetOf_year put: anInteger! !
+
 !OS.ODBCDATE categoriesForMethods!
 asDate!converting!public! !
 date:!accessing!public! !
@@ -103,6 +108,7 @@ fromDate: aDate
 
 getFieldNames
 	^#(#year #month #day)! !
+
 !OS.ODBCDATE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

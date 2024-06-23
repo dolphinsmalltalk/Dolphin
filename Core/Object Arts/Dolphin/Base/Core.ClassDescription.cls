@@ -7,15 +7,20 @@ Core.Behavior
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ClassDescription guid: (Core.GUID fromString: '{87b4c4fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.ClassDescription isNonInstantiable: true!
+
 Core.ClassDescription comment: 'ClassDescription is an abstract class which adds descriptive information such as instance variable names and method categories to Behavior. This additional state and behaviour is generally not required or used by the VM, but is important for the development environment, the compiler in particular.
 
 Instance Variables:
 	instanceVariables		<String>. A space separated list of instance variable names.
 	methodsCatalogue		<IdentityDictionary> mapping <MethodCategory>s to <Array>s of <Symbol>
 	protocols			<Set> of <MethodProtocol>s implemented by (sub-)instances.'!
+
 !Core.ClassDescription categoriesForClass!Kernel-Classes! !
+
 !Core.ClassDescription methodsFor!
 
 <= aClassDescription
@@ -1042,6 +1047,7 @@ withAllSubclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubclassesDo: aMonadicValuable! !
+
 !Core.ClassDescription categoriesForMethods!
 <=!comparing!public! !
 <==>!comparing!public! !

@@ -40,6 +40,7 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ValidationTimerId' -> 16r101 }!
+
 UI.Dialog
 	subclass: #'UI.ValueDialog'
 	instanceVariableNames: ''
@@ -47,6 +48,7 @@ UI.Dialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ShellView
 	subclass: #'UI.DialogView'
 	instanceVariableNames: 'endModal isModal oldWndProc'
@@ -93,6 +95,7 @@ setDlgItemInt: hDlg nIDDlgItem: anIntegerId uValue: uValue bSigned: bSigned
 
 	<stdcall: bool SetDlgItemInt handle int32 uint32 bool>
 	^self invalidCall: _failureCode! !
+
 !OS.UserLibrary categoriesForMethods!
 endDialog:nResult:!public!win32 functions-dialog box! !
 sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !

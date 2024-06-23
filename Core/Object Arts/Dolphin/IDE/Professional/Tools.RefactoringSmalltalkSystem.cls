@@ -7,10 +7,14 @@ Tools.ProfessionalSmalltalkSystem
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.RefactoringSmalltalkSystem guid: (Core.GUID fromString: '{e3e901a0-a7d5-401c-8230-885e9236d3b4}')!
+
 Tools.RefactoringSmalltalkSystem comment: 'RefactoringSmalltalkSystem extends SmalltalkSystem to support the refactorings available in the Refactoring Browser''s refactoring engine.
 '!
+
 !Tools.RefactoringSmalltalkSystem categoriesForClass!MVP-Models!System-Support! !
+
 !Tools.RefactoringSmalltalkSystem methodsFor!
 
 abortSignal
@@ -1564,6 +1568,7 @@ validateRenameTemp: aStVariableNode to: aString in: aClass
 						and: [(definingNode allDefinedVariables includes: aString) not]]
 				errorString: ['<1p> is already defined' expandMacrosWith: aString]))
 			validate! !
+
 !Tools.RefactoringSmalltalkSystem categoriesForMethods!
 abortSignal!constants!private! !
 abstractClassVariable:in:within:!public!refactoring! !
@@ -1690,6 +1695,7 @@ uninitialize
 
 	MethodCategory removeCategory: '*-RB fixes'.
 	self uninstallCurrent! !
+
 !Tools.RefactoringSmalltalkSystem class categoriesForMethods!
 initialize!class hierarchy-removing!private! !
 uninitialize!class hierarchy-removing!private! !

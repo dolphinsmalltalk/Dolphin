@@ -7,14 +7,19 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StToken guid: (Core.GUID fromString: '{91b3208a-a4b2-4319-952d-c260cd7ab80f}')!
+
 Kernel.StToken isNonInstantiable: true!
+
 Kernel.StToken comment: 'StToken is the abstract superclass of <SmalltalkScanner> tokens.
 
 Instance Variables:
 	sourcePointer	<Integer>	The starting position in the original source code of this token.
 '!
+
 !Kernel.StToken categoriesForClass!System-Compiler! !
+
 !Kernel.StToken methodsFor!
 
 acceptVisitor: aTokenVisitor 
@@ -111,6 +116,7 @@ start: anInteger
 
 stop
 	^self start + self length - 1! !
+
 !Kernel.StToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 comments!accessing!public! !
@@ -155,6 +161,7 @@ start: anInteger comments: aCollectionOrNil
 		start: anInteger;
 		comments: aCollectionOrNil;
 		yourself! !
+
 !Kernel.StToken class categoriesForMethods!
 start:!instance creation!public! !
 start:comments:!instance creation!public! !

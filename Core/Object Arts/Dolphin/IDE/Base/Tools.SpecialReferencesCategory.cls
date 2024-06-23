@@ -7,9 +7,13 @@ Tools.ReferencesCategory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SpecialReferencesCategory guid: (Core.GUID fromString: '{e9a4ed98-09ed-452e-9fe6-e59ae77dcfde}')!
+
 Tools.SpecialReferencesCategory comment: ''!
+
 !Tools.SpecialReferencesCategory categoriesForClass!System-Support! !
+
 !Tools.SpecialReferencesCategory methodsFor!
 
 includesMethod: aCompiledMethod 
@@ -23,6 +27,7 @@ index: anInteger
 	"Private - Set the special selector index."
 
 	index := anInteger! !
+
 !Tools.SpecialReferencesCategory categoriesForMethods!
 includesMethod:!public!testing! !
 index:!accessing!private! !

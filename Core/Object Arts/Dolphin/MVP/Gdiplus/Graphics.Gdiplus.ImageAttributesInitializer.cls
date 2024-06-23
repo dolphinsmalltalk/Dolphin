@@ -7,8 +7,11 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.ImageAttributesInitializer guid: (Core.GUID fromString: '{88f79e30-7465-481e-afda-b77fcd6e29bd}')!
+
 Graphics.Gdiplus.ImageAttributesInitializer comment: ''!
+
 !Graphics.Gdiplus.ImageAttributesInitializer methodsFor!
 
 basicCreateHandle
@@ -33,6 +36,7 @@ isPersistent
 
 printAttributesOn: aWriteStream 
 	"No attributes are persisted"! !
+
 !Graphics.Gdiplus.ImageAttributesInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 isPersistent!public!testing! !
@@ -61,6 +65,7 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
+
 !Graphics.Gdiplus.ImageAttributesInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 default!instance creation!private! !

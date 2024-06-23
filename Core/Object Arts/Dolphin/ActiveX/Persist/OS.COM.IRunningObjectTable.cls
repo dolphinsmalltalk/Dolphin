@@ -7,14 +7,19 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IRunningObjectTable guid: (OS.COM.IID fromString: '{00000010-0000-0000-c000-000000000046}')!
+
 OS.COM.IRunningObjectTable isEgressOnly: true!
+
 OS.COM.IRunningObjectTable comment: '<IRunningObjectTable> is a wrapper class for the custom interface ''OBJIDL.IRunningObjectTable'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 No function table has been generated for IRunningObjectTable because this interface is implemented by the system and it is not expected that there will be any reason to implement it in Dolphin.'!
+
 !OS.COM.IRunningObjectTable categoriesForClass!OBJIDL-Interfaces! !
+
 !OS.COM.IRunningObjectTable methodsFor!
 
 enumRunning
@@ -131,6 +136,7 @@ running
 	answer := enum contents.
 	enum free.
 	^answer! !
+
 !OS.COM.IRunningObjectTable categoriesForMethods!
 enumRunning!**auto generated**!methods!public! !
 EnumRunning:!**auto generated**!COM Interfaces-IRunningObjectTable!private! !
@@ -176,6 +182,7 @@ new
 	answer := self newPointer.
 	Ole32 getRunningObjectTable: 0 pprot: answer.
 	^answer! !
+
 !OS.COM.IRunningObjectTable class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 new!instance creation!public! !

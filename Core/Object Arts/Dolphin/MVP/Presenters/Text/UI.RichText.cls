@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RichText guid: (Core.GUID fromString: '{87b4c4b2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.RichText comment: ''!
+
 !UI.RichText categoriesForClass!System-Support! !
+
 !UI.RichText methodsFor!
 
 = anObject
@@ -105,6 +109,7 @@ setTextInto: aView
 	message back to aView."
 	
 	aView richText: self! !
+
 !UI.RichText categoriesForMethods!
 =!comparing!public! !
 asParameter!converting!public! !
@@ -187,6 +192,7 @@ uninitialize
 	Converter isNil ifTrue: [^self].
 	Converter destroy.
 	Converter := nil! !
+
 !UI.RichText class categoriesForMethods!
 fromRtf:!instance creation!public! !
 fromString:!instance creation!public! !

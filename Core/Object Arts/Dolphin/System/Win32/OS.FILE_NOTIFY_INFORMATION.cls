@@ -13,7 +13,9 @@ External.Structure
 			'_OffsetOf_FileNameLength' -> 16r8.
 			'_OffsetOf_NextEntryOffset' -> 16r0
 		}!
+
 OS.FILE_NOTIFY_INFORMATION guid: (Core.GUID fromString: '{59c5b86e-902b-4194-ab8b-ef10d1cf539d}')!
+
 OS.FILE_NOTIFY_INFORMATION comment: '<FILE_NOTIFY_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.FILE_NOTIFY_INFORMATION'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +33,9 @@ struct tagFILE_NOTIFY_INFORMATION {
 	[readonly, size_is("FileNameLength>>1"), string] unsigned short FileName[1];
 } FILE_NOTIFY_INFORMATION;
 '!
+
 !OS.FILE_NOTIFY_INFORMATION categoriesForClass!Win32-Structs! !
+
 !OS.FILE_NOTIFY_INFORMATION methodsFor!
 
 Action
@@ -53,6 +57,7 @@ NextEntryOffset
 	"Answer the <Integer> value of the receiver's 'NextEntryOffset' field."
 
 	^bytes uint32AtOffset: _OffsetOf_NextEntryOffset! !
+
 !OS.FILE_NOTIFY_INFORMATION categoriesForMethods!
 Action!**compiled accessors**!public! !
 FileName!**compiled accessors**!public! !
@@ -100,6 +105,7 @@ getFieldNames
 
 new
 	^self new: ##(_OffsetOf_FileName + ((CRTConstants._MAX_PATH + 1) * 2))! !
+
 !OS.FILE_NOTIFY_INFORMATION class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -7,14 +7,18 @@ UI.AbstractToTextConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.BooleanToText guid: (Core.GUID fromString: '{87b4c707-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.BooleanToText comment: 'BooleanToString is a <textTypeConverter> that transforms a Boolean subject value to/from a String. If the subject value is nil it is converted to an empty String and vice versa. A format array (e.g. #(''no'' ''yes''), see Boolean) can be specified to dictate the way the subject value is formatted when converted to text. If no explicit format is provided the default is used.
 
 Instance Variables:
 	format	<Array> of <readableString> or nil, indicating the text to use for <boolean> values.
 
 '!
+
 !UI.BooleanToText categoriesForClass!MVP-Type Converters-Text! !
+
 !UI.BooleanToText methodsFor!
 
 actualFormat
@@ -54,6 +58,7 @@ rightToLeft: aString
 
 	"Raise an error for no match"
 	^self errorInvalidFormat! !
+
 !UI.BooleanToText categoriesForMethods!
 actualFormat!accessing!private! !
 errorInvalidFormat!exceptions!private! !

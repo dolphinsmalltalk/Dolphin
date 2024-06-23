@@ -14,7 +14,9 @@ UI.Scintilla.QueryableAttribute
 			'IndicatorStyleNames'
 				-> #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #straightBox #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter #gradient #gradientCentre #pointTop)
 		}!
+
 UI.Scintilla.IndicatorDefinition guid: (Core.GUID fromString: '{2de64fd7-5b9f-4ac7-81c6-912b56b41a4f}')!
+
 UI.Scintilla.IndicatorDefinition comment: '`Scintilla.IndicatorDefinition` instances represent the indicator configuration for a particular `ScintillaView`.
 
 Indicators are orthogonal to visual styles, and can be used to highlight areas of text regardless of styling. A common example usage would be highlight erroneous text by underlining it with a squiggly line.
@@ -89,7 +91,9 @@ A fixed set of named styles is supported, although this tends to get added to ov
   `StyleNames`			`<Object>`
 
 '!
+
 !UI.Scintilla.IndicatorDefinition categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.IndicatorDefinition methodsFor!
 
 = anObject
@@ -286,6 +290,7 @@ validateAlpha: anInteger
 	^(anInteger isNil or: [anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE])
 		ifTrue: [anInteger]
 		ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]! !
+
 !UI.Scintilla.IndicatorDefinition categoriesForMethods!
 =!comparing!public! !
 alpha!accessing!public! !
@@ -471,6 +476,7 @@ stbVersion
 		5: style is always non-nil (an integer from the INDIC_XXXX enumeration)"
 
 	^5! !
+
 !UI.Scintilla.IndicatorDefinition class categoriesForMethods!
 buildPropertyDescriptors!constants!must not strip!private! !
 initialize!development!initializing!public! !

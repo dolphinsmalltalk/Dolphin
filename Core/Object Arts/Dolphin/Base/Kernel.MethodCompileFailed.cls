@@ -7,9 +7,13 @@ Core.Notification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.MethodCompileFailed guid: (Core.GUID fromString: '{87b4c56f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.MethodCompileFailed comment: 'A MethodCompileFailed notification is signalled when a method compilation fails. Handlers can trap this if they wish to replace the original failed compilation with a stub method. This is useful so that the failed method source can be seen in the browsers or to retain category information. To install a stub method the handler should call #resumeWithStubMethod.'!
+
 !Kernel.MethodCompileFailed categoriesForClass!System-Compiler! !
+
 !Kernel.MethodCompileFailed methodsFor!
 
 defaultAction
@@ -44,6 +48,7 @@ resumeWithStubMethod
 
 	"Resume with this stub"
 	self resume: result! !
+
 !Kernel.MethodCompileFailed categoriesForMethods!
 defaultAction!handling!public! !
 environment!accessing!public! !
@@ -64,6 +69,7 @@ new
 	"Private - Use #error:environment:"
 
 	self shouldNotImplement! !
+
 !Kernel.MethodCompileFailed class categoriesForMethods!
 error:environment:!instance creation!public! !
 new!instance creation!private! !

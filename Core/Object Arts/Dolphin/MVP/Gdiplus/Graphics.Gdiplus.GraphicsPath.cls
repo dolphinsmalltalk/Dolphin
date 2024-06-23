@@ -7,10 +7,13 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GraphicsPath guid: (Core.GUID fromString: '{1a1a5ea0-6151-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.GraphicsPath comment: 'GdiplusGraphicsPath stores a sequence of lines, curves, and shapes.  The entire sequence can be drawn by calling the drawPath method of a GdiplusGraphics object.  You can partition the sequence of lines, curves, and shapes into figures, and with the help of a GdiplusGraphicsPathIterator object, selected figures can be drawn.  Selected portions of the path can also be drawn by placing markers in the sequence.
 
 '!
+
 !Graphics.Gdiplus.GraphicsPath methodsFor!
 
 _clipGpGraphics: aGpGraphics mode: anInteger
@@ -358,6 +361,7 @@ widen: aMatrix pen: aPen flatness: aNumber
 		matrix: aMatrix asParameter
 		flatness: aNumber.
 	initializer := nil! !
+
 !Graphics.Gdiplus.GraphicsPath categoriesForMethods!
 _clipGpGraphics:mode:!double dispatch!private! !
 _combineGpRegion:mode:!double dispatch!private! !
@@ -478,6 +482,7 @@ polygon: anArrayOfPoints
 				at: 1 put: PathPointTypeStart;
 				at: count put: ##(PathPointTypeLine | PathPointTypeCloseSubpath);
 				yourself)! !
+
 !Graphics.Gdiplus.GraphicsPath class categoriesForMethods!
 ellipse:!instance creation!public! !
 fillMode:!instance creation!public! !

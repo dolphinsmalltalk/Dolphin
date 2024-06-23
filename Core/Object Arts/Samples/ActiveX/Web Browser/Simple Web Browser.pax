@@ -94,6 +94,7 @@ UI.Shell
 			'ImagesBlockedMask' -> 16r2.
 			'LogEventsMask' -> 16r1
 		}!
+
 UI.RuntimeSessionManager
 	subclass: #'OS.COM.Examples.WebBrowserSessionManager'
 	instanceVariableNames: ''

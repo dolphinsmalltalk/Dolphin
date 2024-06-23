@@ -47,16 +47,12 @@ Shell subclass: #EditableListViewDemo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

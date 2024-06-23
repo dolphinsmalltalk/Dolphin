@@ -7,8 +7,11 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ITypeLib guid: (OS.COM.IID fromString: '{00020402-0000-0000-c000-000000000046}')!
+
 OS.COM.ITypeLib isEgressOnly: true!
+
 OS.COM.ITypeLib comment: 'ITypeLib is a <COMInterface> class which wraps an COM Automation ITypeLib interface pointer.
 
 The purpose of ITypeLib is to serve as the top-level entry point to a COM type library, which is a repository of meta-information about COM objects and interfaces. An ITypeLib is typically acquired either by loading a type library explicitly from the resources of a COM server or a .TLB file, or directly from a COM object via an interface such as IProvideClassInfo.
@@ -18,7 +21,9 @@ The member functions of ITypeLib permit one to enquire about general attributes 
 ITypeLib is a complex and very powerful interface so we have chosen to separate most of Dolphin''s higher level wrapping into a separate class, namely AXTypeLibraryAnalyzer. Therefore the only methods implemented here are the virtual call outs and a few simple wrappers for those.
 
 ITypeLib is primarily of use in the construction of programming tools (it is fundamental to Dolphin''s support for auto-generation of COM object wrappers), but it is unlikely to be of much relevance to most applications.'!
+
 !OS.COM.ITypeLib categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
+
 !OS.COM.ITypeLib methodsFor!
 
 allCustData
@@ -246,6 +251,7 @@ typekindAt: anInteger
 	answer := Int32 new.
 	self GetTypeInfoType: anInteger-1 pTKind: answer.
 	^answer value! !
+
 !OS.COM.ITypeLib categoriesForMethods!
 allCustData!public! !
 FindName:lHashVal:ppTInfo:rgMemId:pcFound:!COM Interfaces-ITypeLib!primitives!public! !
@@ -372,6 +378,7 @@ queryPath: libid major: major minor: minor locale: locale ifNone: exceptionHandl
 		ifTrue: 
 			[hr = TYPE_E_LIBNOTREGISTERED ifTrue: [exceptionHandler value] ifFalse: [HRESULTError signalWith: hr]]
 		ifFalse: [answer asString trimNulls]! !
+
 !OS.COM.ITypeLib class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 fromAttributes:!instance creation!public! !

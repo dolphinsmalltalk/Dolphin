@@ -31,16 +31,12 @@ TestCase subclass: #IconWithExtentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #TextAndImageButtonTest
 	instanceVariableNames: 'button canvas anon'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

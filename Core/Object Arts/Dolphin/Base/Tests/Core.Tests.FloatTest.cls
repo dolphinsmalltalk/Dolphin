@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.FloatTest guid: (Core.GUID fromString: '{b2b95b67-e8f3-4991-a4b4-94edc5e83f28}')!
+
 Core.Tests.FloatTest comment: ''!
+
 !Core.Tests.FloatTest methodsFor!
 
 assertFloat: result equals: aFloat
@@ -1500,6 +1503,7 @@ testUnderflow
 
 zeroes
 	^#(-0.0 0.0)! !
+
 !Core.Tests.FloatTest categoriesForMethods!
 assertFloat:equals:!helpers!private! !
 assertNegativeZero:!helpers!private! !
@@ -1624,6 +1628,7 @@ ulp: aFloat
 	^exponent < Float emin
 		ifTrue: [Float fminDenormalized]
 		ifFalse: [Float epsilon timesTwoPower: exponent]! !
+
 !Core.Tests.FloatTest class categoriesForMethods!
 predecessor:!helpers!private! !
 successor:!helpers!private! !

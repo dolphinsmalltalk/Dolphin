@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCaseResult guid: (Core.GUID fromString: '{a233feef-eabb-4fa9-9cf3-09531d206233}')!
+
 XProgramming.SUnit.TestCaseResult comment: 'Represents the results of executing an individual <TestCase>'!
+
 !XProgramming.SUnit.TestCaseResult categoriesForClass!SUnit! !
+
 !XProgramming.SUnit.TestCaseResult methodsFor!
 
 captureDiagnostics: anException
@@ -116,6 +120,7 @@ stacktrace
 	"Answer the stacktrace capture when the test failed/errored, or nil if the test passed."
 
 	^stacktrace! !
+
 !XProgramming.SUnit.TestCaseResult categoriesForMethods!
 captureDiagnostics:!initializing!private! !
 case!accessing!public! !
@@ -155,6 +160,7 @@ case: aTestCase skipped: aTestSkip
 		outcome: #skipped
 		signal: aTestSkip
 		after: 0 seconds! !
+
 !XProgramming.SUnit.TestCaseResult class categoriesForMethods!
 case:duration:!instance creation!public! !
 case:error:after:!instance creation!public! !

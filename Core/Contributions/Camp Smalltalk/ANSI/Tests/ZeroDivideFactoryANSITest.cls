@@ -5,9 +5,13 @@ MainTestCase subclass: #ZeroDivideFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ZeroDivideFactoryANSITest guid: (GUID fromString: '{3e4c31cd-6705-42d7-a54d-d85824942cf4}')!
+
 ZeroDivideFactoryANSITest comment: ''!
+
 !ZeroDivideFactoryANSITest categoriesForClass!Unclassified! !
+
 !ZeroDivideFactoryANSITest methodsFor!
 
 canonicalObject
@@ -52,6 +56,7 @@ testXsignal
 testXsignalX
 	" <exceptionSignaler>#signal: "
 	#'Exception'.! !
+
 !ZeroDivideFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

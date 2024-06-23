@@ -7,8 +7,11 @@ UI.Tests.ListViewTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.MultiSelectListViewTest guid: (Core.GUID fromString: '{67f073df-d832-4f4f-a5c1-57d8730e3515}')!
+
 UI.Tests.MultiSelectListViewTest comment: ''!
+
 !UI.Tests.MultiSelectListViewTest methodsFor!
 
 initializePresenter
@@ -161,6 +164,7 @@ testNewSelectionsShiftClickWithSelectionMark
 			self verifySelectionsFromMouseDown: event equals: #(3 4 5)].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
 	self verifySelectionsFromMouseDown: event equals: #(3)! !
+
 !UI.Tests.MultiSelectListViewTest categoriesForMethods!
 initializePresenter!public!Running! !
 marqueeSelectionEventsToItem:!helpers!private! !

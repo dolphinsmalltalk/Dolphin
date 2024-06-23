@@ -7,9 +7,13 @@ UI.Tests.PresenterTest
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SelectableItemsTest guid: (Core.GUID fromString: '{eb11681e-441a-44d4-af4c-de1ea399a79e}')!
+
 UI.Tests.SelectableItemsTest isNonInstantiable: true!
+
 UI.Tests.SelectableItemsTest comment: ''!
+
 !UI.Tests.SelectableItemsTest methodsFor!
 
 assertContains: anObject
@@ -160,6 +164,7 @@ setupClickTimeout
 		send: #onTimerTick:
 		to: self.
 	timedout := false! !
+
 !UI.Tests.SelectableItemsTest categoriesForMethods!
 assertContains:!helpers!private! !
 defaultSelectionChangedAction!helpers!private! !

@@ -7,7 +7,9 @@ WinHttpServer.HTTP_HEADERS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_RESPONSE_HEADERS_Size' -> 16r100. '_OffsetOf_KnownHeaders' -> 16r10 }!
+
 WinHttpServer.HTTP_RESPONSE_HEADERS guid: (Core.GUID fromString: '{487fd2e3-1549-4dcf-8703-d45a2cbbcd85}')!
+
 WinHttpServer.HTTP_RESPONSE_HEADERS comment: '`HTTP_RESPONSE_HEADERS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -24,7 +26,9 @@ struct tagHTTP_RESPONSE_HEADERS {
 } HTTP_RESPONSE_HEADERS;
 ```
 '!
+
 !WinHttpServer.HTTP_RESPONSE_HEADERS categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_RESPONSE_HEADERS methodsFor!
 
 KnownHeaders
@@ -46,6 +50,7 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 		from: ##(_OffsetOf_KnownHeaders + 1)
 		to: _OffsetOf_KnownHeaders + size
 		startingAt: 1! !
+
 !WinHttpServer.HTTP_RESPONSE_HEADERS categoriesForMethods!
 KnownHeaders!**compiled accessors**!public! !
 KnownHeaders:!**compiled accessors**!public! !
@@ -89,6 +94,7 @@ indexToHeaderMap
 		at: HttpHeaderVary put: 'Vary';
 		at: HttpHeaderWwwAuthenticate put: 'WWW-Authenticate';
 		yourself)! !
+
 !WinHttpServer.HTTP_RESPONSE_HEADERS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

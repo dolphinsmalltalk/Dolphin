@@ -7,8 +7,11 @@ OS.COM.InterfaceImplementation
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.PropertyBag guid: (Core.GUID fromString: '{9c956c61-af27-11d3-b376-080046056106}')!
+
 OS.COM.PropertyBag comment: ''!
+
 !OS.COM.PropertyBag methodsFor!
 
 asVariant
@@ -214,6 +217,7 @@ Write: pszPropName pVar: pVar
 				ifTrue: [self class new save: pVar value clearDirty: clearDirty saveAll: saveAll]
 				ifFalse: [pVar value]).
 	^hr! !
+
 !OS.COM.PropertyBag categoriesForMethods!
 asVariant!converting!public! !
 inStream:!accessing!public! !

@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2TrySuspendCompletedHandler guid: (OS.COM.IID fromString: '{00f206a7-9d17-4605-91f6-4e8e4de192e3}')!
+
 WebView2.ICoreWebView2TrySuspendCompletedHandler comment: '`ICoreWebView2TrySuspendCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2TrySuspendCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2TrySuspendCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2TrySuspendCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2TrySuspendCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2TrySuspendCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2TrySuspendCompletedHandler!public! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult sdword'! !
+
 !WebView2.ICoreWebView2TrySuspendCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

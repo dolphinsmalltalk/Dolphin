@@ -7,13 +7,17 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSScriptControl.IScriptModule guid: (OS.COM.IID fromString: '{70841c70-067d-11d0-95d8-00a02463ab28}')!
+
 MSScriptControl.IScriptModule comment: '<IScriptModule> is a wrapper class for the COM interface ''MSScriptControl.IScriptModule'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Context in which functions can be defined and expressions can be evaluated"
 '!
+
 !MSScriptControl.IScriptModule categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+
 !MSScriptControl.IScriptModule methodsFor!
 
 addCode: code
@@ -161,6 +165,7 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self name! !
+
 !MSScriptControl.IScriptModule categoriesForMethods!
 addCode:!**auto generated**!methods!public! !
 AddCode:!**auto generated**!COM Interfaces-IScriptModule!private! !
@@ -215,6 +220,7 @@ initializeTypeLib
 		IScriptModule initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
+
 !MSScriptControl.IScriptModule class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

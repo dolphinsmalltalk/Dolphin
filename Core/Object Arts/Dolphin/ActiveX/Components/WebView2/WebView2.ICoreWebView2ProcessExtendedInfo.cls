@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ProcessExtendedInfo guid: (OS.COM.IID fromString: '{af4c4c2e-45db-11ee-be56-0242ac120002}')!
+
 WebView2.ICoreWebView2ProcessExtendedInfo isEgressOnly: true!
+
 WebView2.ICoreWebView2ProcessExtendedInfo comment: '`ICoreWebView2ProcessExtendedInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessExtendedInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2ProcessExtendedInfo : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ProcessExtendedInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ProcessExtendedInfo methodsFor!
 
 associatedFrameInfos
@@ -74,6 +79,7 @@ processInfo
 	answer := ICoreWebView2ProcessInfo newPointer.
 	self get_processInfo: answer.
 	^answer asObject! !
+
 !WebView2.ICoreWebView2ProcessExtendedInfo categoriesForMethods!
 associatedFrameInfos!**auto generated**!properties!public! !
 get_AssociatedFrameInfos:!**auto generated**!COM Interfaces-ICoreWebView2ProcessExtendedInfo!private! !
@@ -94,6 +100,7 @@ defineFunctions
 		defineFunction: #get_AssociatedFrameInfos:
 			argumentTypes: 'ICoreWebView2FrameInfoCollection**'
 ! !
+
 !WebView2.ICoreWebView2ProcessExtendedInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

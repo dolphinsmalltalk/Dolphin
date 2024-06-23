@@ -7,9 +7,13 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RemoveInstanceVariableRefactoring guid: (Core.GUID fromString: '{d2991219-2de3-407c-b2e8-dff3b51b51db}')!
+
 Refactory.Browser.RemoveInstanceVariableRefactoring comment: ''!
+
 !Refactory.Browser.RemoveInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RemoveInstanceVariableRefactoring methodsFor!
 
 preconditions
@@ -27,6 +31,7 @@ preconditions
 
 transform
 	class removeInstanceVariable: variableName! !
+
 !Refactory.Browser.RemoveInstanceVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 transform!public!transforming! !

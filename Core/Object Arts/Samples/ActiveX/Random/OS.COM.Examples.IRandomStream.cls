@@ -7,14 +7,18 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Examples.IRandomStream guid: (OS.COM.IID fromString: '{0e2cea3b-e6c4-11d2-833b-0020afab8efe}')!
+
 OS.COM.Examples.IRandomStream comment: '<IRandomStream> is a wrapper class for the COM interface ''RANDOMLib.IRandomStream'' generated from type information in the ''Random 1.0 Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"IRandomStream Interface"
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.Examples.IRandomStream categoriesForClass!COM-Interfaces! !
+
 !OS.COM.Examples.IRandomStream methodsFor!
 
 get_LowerBound: pVal
@@ -154,6 +158,7 @@ upperBound: pVal
 
 	self put_UpperBound: pVal
 ! !
+
 !OS.COM.Examples.IRandomStream categoriesForMethods!
 get_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
 get_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
@@ -207,6 +212,7 @@ initializeTypeLib
 		IRandomStream initializeTypeLib"
 
 	typeLib := RANDOMLib! !
+
 !OS.COM.Examples.IRandomStream class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !

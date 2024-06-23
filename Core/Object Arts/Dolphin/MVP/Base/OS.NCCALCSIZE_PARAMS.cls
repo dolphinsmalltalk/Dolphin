@@ -11,7 +11,9 @@ External.Structure
 			'_OffsetOf_lppos' -> 16r30.
 			'_OffsetOf_rgrc' -> 16r0
 		}!
+
 OS.NCCALCSIZE_PARAMS guid: (Core.GUID fromString: '{dbc3695f-4c20-411c-8110-539ce4be4b4a}')!
+
 OS.NCCALCSIZE_PARAMS comment: '<NCCALCSIZE_PARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.NCCALCSIZE_PARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +28,9 @@ struct tagNCCALCSIZE_PARAMS {
 	WINDOWPOS* lppos;
 } NCCALCSIZE_PARAMS;
 '!
+
 !OS.NCCALCSIZE_PARAMS categoriesForClass!Win32-Structs! !
+
 !OS.NCCALCSIZE_PARAMS methodsFor!
 
 lppos
@@ -57,6 +61,7 @@ rgrc: aStructureArrayOfRECTL
 		from: ##(_OffsetOf_rgrc + 1)
 		to: size
 		startingAt: 1! !
+
 !OS.NCCALCSIZE_PARAMS categoriesForMethods!
 lppos!**compiled accessors**!public! !
 lppos:!**compiled accessors**!public! !
@@ -87,6 +92,7 @@ defineFields
 
 getFieldNames
 	^#(#rgrc #lppos)! !
+
 !OS.NCCALCSIZE_PARAMS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -22,13 +22,17 @@ External.Structure
 			'_OffsetOf_dwStrucVersion' -> 16r4.
 			'_VS_FIXEDFILEINFO_Size' -> 16r34
 		}!
+
 OS.VS_FIXEDFILEINFO guid: (Core.GUID fromString: '{87b4c619-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.VS_FIXEDFILEINFO comment: 'VS_FIXEDFILEINFO is an ExternalStructure class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the Windows version information library (Version.DLL) to access standard version information such as the product major and minor version numbers from the resources of exes and dlls.
 
 See also the VersionInfo and VersionLibrary classes.'!
+
 !OS.VS_FIXEDFILEINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.VS_FIXEDFILEINFO methodsFor!
 
 dwFileVersionLS
@@ -96,6 +100,7 @@ versionAtOffset: anInteger put: anArray
 			(self bytes)
 				uint16AtOffset: offset put: (anArray at: i + 1);
 				uint16AtOffset: offset + 2 put: (anArray at: i)]! !
+
 !OS.VS_FIXEDFILEINFO categoriesForMethods!
 dwFileVersionLS!**compiled accessors**!public! !
 dwFileVersionMS!**compiled accessors**!public! !
@@ -154,6 +159,7 @@ defineFields
 
 getFieldNames
 	^#(#dwStrucVersion #dwFileVersionMS #dwFileVersionLS #dwProductVersionMS #dwProductVersionLS #dwFileFlagsMask #dwFileFlags #dwFileOS #dwFileType #dwFileSubtype #dwFileDateMS #dwFileDateLS)! !
+
 !OS.VS_FIXEDFILEINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

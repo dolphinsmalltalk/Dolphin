@@ -7,9 +7,13 @@ OS.Win32Fault
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.GPFault guid: (Core.GUID fromString: '{87b4c567-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.GPFault comment: ''!
+
 !OS.GPFault categoriesForClass!System-Exception Handling! !
+
 !OS.GPFault methodsFor!
 
 _descriptionArguments
@@ -32,6 +36,7 @@ isReading
 	"Answer whether the fault occurred attempting to read from memory (as opposed to writing)."
 
 	^(exceptionRecord information at: 1) == 0! !
+
 !OS.GPFault categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !

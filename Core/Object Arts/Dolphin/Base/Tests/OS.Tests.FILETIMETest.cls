@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.FILETIMETest guid: (Core.GUID fromString: '{60160261-ed86-485b-834c-ef305dad3be9}')!
+
 OS.Tests.FILETIMETest comment: ''!
+
 !OS.Tests.FILETIMETest methodsFor!
 
 assertFromIntegerInvertible: anInteger
@@ -81,6 +84,7 @@ testPrintString
 	now := DateAndTime now.
 	self assert: (FILETIME fromDateAndTime: now) printString equals: 'a FILETIME(<1p>)' << now asUTC.
 	self assert: (LocalFILETIME fromDateAndTime: now) printString equals: 'a LocalFILETIME(<1p>)' << now! !
+
 !OS.Tests.FILETIMETest categoriesForMethods!
 assertFromIntegerInvertible:!helpers!private! !
 testAsDateAndTime!public!unit tests! !

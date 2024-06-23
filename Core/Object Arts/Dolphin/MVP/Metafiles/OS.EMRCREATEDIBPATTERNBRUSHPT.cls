@@ -15,7 +15,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_offBits' -> 16r18.
 			'_OffsetOf_offBmi' -> 16r10
 		}!
+
 OS.EMRCREATEDIBPATTERNBRUSHPT guid: (Core.GUID fromString: '{ae1203b9-a6b7-4cca-8fc6-408d43a80c8c}')!
+
 OS.EMRCREATEDIBPATTERNBRUSHPT comment: '<EMRCREATEDIBPATTERNBRUSHPT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEDIBPATTERNBRUSHPT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -35,7 +37,9 @@ struct tagEMRCREATEDIBPATTERNBRUSHPT {
 	[helpstring("Size of the bitmap bits")] DWORD cbBits;
 } EMRCREATEDIBPATTERNBRUSHPT;
 '!
+
 !OS.EMRCREATEDIBPATTERNBRUSHPT categoriesForClass!Win32-Structs! !
+
 !OS.EMRCREATEDIBPATTERNBRUSHPT methodsFor!
 
 cbBits
@@ -97,6 +101,7 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_offBmi put: anInteger! !
+
 !OS.EMRCREATEDIBPATTERNBRUSHPT categoriesForMethods!
 cbBits!**compiled accessors**!public! !
 cbBits:!**compiled accessors**!public! !
@@ -163,6 +168,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEDIBPATTERNBRUSHPT}! !
+
 !OS.EMRCREATEDIBPATTERNBRUSHPT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -7,9 +7,13 @@ Core.Exception
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error guid: (Core.GUID fromString: '{0324fe53-ad83-11d2-86eb-0020afab8efe}')!
+
 Core.Error comment: ''!
+
 !Core.Error categoriesForClass!Kernel-Exception Handling! !
+
 !Core.Error methodsFor!
 
 asWarning
@@ -49,6 +53,7 @@ warningClass
 	"Private - Answer the class of Warning to which the receiver is converted by #asWarning."
 
 	^Warning! !
+
 !Core.Error categoriesForMethods!
 asWarning!converting!private! !
 defaultAction!handling!public! !
@@ -107,6 +112,7 @@ subclassResponsibility: selector
 	"Private - Raise an error that some message was sent to an abstract class."
 
 	^SubclassResponsibilityError signal: selector printString , ' is the responsibility of the subclass'! !
+
 !Core.Error class categoriesForMethods!
 iconStyle!constants!public! !
 mbIconId!parping!public! !

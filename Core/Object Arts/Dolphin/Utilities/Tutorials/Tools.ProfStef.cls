@@ -7,7 +7,9 @@ Tools.TutorialPlayer
 	imports: #()
 	classInstanceVariableNames: 'default'
 	classConstants: {}!
+
 Tools.ProfStef guid: (Core.GUID fromString: '{60f1ec8a-daba-4ccb-bbe6-a35d8192215a}')!
+
 Tools.ProfStef comment: 'A ProfStef is the Smalltalk teacher. To start the tutorial, evaluate:
 ProfStef go.
 
@@ -19,11 +21,13 @@ ProfStef goOn: MyOwnTutorial
 
 To see a table of contents with all defined tutorials:
 ProfStef contents'!
+
 !Tools.ProfStef methodsFor!
 
 onViewDestroyed
 	super onViewDestroyed.
 	self class reset! !
+
 !Tools.ProfStef categoriesForMethods!
 onViewDestroyed!event handling!private! !
 !
@@ -77,6 +81,7 @@ show
 	profStef := self default.
 	profStef view beActive.
 	^profStef! !
+
 !Tools.ProfStef class categoriesForMethods!
 default!initialize!public! !
 defaultModel!public! !

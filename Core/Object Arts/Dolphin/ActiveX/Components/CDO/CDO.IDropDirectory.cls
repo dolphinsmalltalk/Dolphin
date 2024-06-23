@@ -7,14 +7,18 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 CDO.IDropDirectory guid: (OS.COM.IID fromString: '{cd000024-8b95-11d1-82db-00c04fb1625d}')!
+
 CDO.IDropDirectory comment: '<CDO.IDropDirectory> is a wrapper class for the COM interface ''CDO.IDropDirectory'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage a collection of messages on the file system"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDO.IDropDirectory categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDO.IDropDirectory methodsFor!
 
 getMessages
@@ -52,6 +56,7 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
+
 !CDO.IDropDirectory categoriesForMethods!
 getMessages!**auto generated**!methods!public! !
 getMessages:!**auto generated**!methods!public! !
@@ -76,6 +81,7 @@ defineFunctions
 		defineFunction: #GetMessages:Msgs:
 			argumentTypes: 'bstr IMessages**'
 ! !
+
 !CDO.IDropDirectory class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

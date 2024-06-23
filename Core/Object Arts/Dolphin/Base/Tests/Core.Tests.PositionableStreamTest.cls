@@ -7,9 +7,13 @@ Core.Tests.StreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.PositionableStreamTest guid: (Core.GUID fromString: '{3abcc3a3-be2b-417d-bdb7-cf6a64cc2c6b}')!
+
 Core.Tests.PositionableStreamTest isNonInstantiable: true!
+
 Core.Tests.PositionableStreamTest comment: ''!
+
 !Core.Tests.PositionableStreamTest methodsFor!
 
 arrayedCollections
@@ -930,6 +934,7 @@ writeOperationNotImplemented: aBlock
 		should: aBlock
 		raise: Error
 		matching: [:ex | ex description = 'The stream is not writeable']! !
+
 !Core.Tests.PositionableStreamTest categoriesForMethods!
 arrayedCollections!private!unit tests! !
 arrays!private!unit tests! !

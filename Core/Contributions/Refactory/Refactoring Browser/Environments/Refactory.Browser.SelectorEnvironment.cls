@@ -7,14 +7,18 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.SelectorEnvironment guid: (Core.GUID fromString: '{d6de9b1c-4652-474b-97cd-87838c6d2f62}')!
+
 Refactory.Browser.SelectorEnvironment comment: 'SelectorEnvironment represents a predetermined collection of methods to be browsed.
 
 Instance Variables:
 	classSelectors		<Dictionary key: Symbol value: (Collection of: Symbol)>	selectors for the class side
 	metaClassSelectors	<Dictionary key: Symbol value: (Collection of: Symbol)>	selectors for the metaclass side
 '!
+
 !Refactory.Browser.SelectorEnvironment categoriesForClass!Refactory-Environments! !
+
 !Refactory.Browser.SelectorEnvironment methodsFor!
 
 addClass: aClass
@@ -196,6 +200,7 @@ storeOn: aStream
 	aStream nextPutAll: ') metaClasses: #('.
 	metaClassSelectors keysAndValuesDo: classBlock.
 	aStream nextPutAll: '))'! !
+
 !Refactory.Browser.SelectorEnvironment categoriesForMethods!
 addClass:!adding!public! !
 addClass:selector:!adding!public! !
@@ -302,6 +307,7 @@ referencesTo: aLiteral in: aBrowserEnvironment
 		label: (aBrowserEnvironment subEnvironmentLabel: #references for: aLiteral);
 		searchStrings: {aLiteral printString};
 		yourself! !
+
 !Refactory.Browser.SelectorEnvironment class categoriesForMethods!
 implementorsMatching:in:!instance creation!public! !
 implementorsOf:in:!instance creation!public! !

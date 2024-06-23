@@ -5,9 +5,13 @@ DolphinSureCertificate subclass: #MyOwnCertificate
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MyOwnCertificate guid: (GUID fromString: '{a2592b78-b801-4788-885c-e1c32f062980}')!
+
 MyOwnCertificate comment: ''!
+
 !MyOwnCertificate categoriesForClass!Cryptography-Certificates! !
+
 !MyOwnCertificate methodsFor!
 
 backgroundImageFile
@@ -36,6 +40,7 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
+
 !MyOwnCertificate categoriesForMethods!
 backgroundImageFile!constants!private! !
 imageAttributes!drawing!helpers!private! !
@@ -132,6 +137,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
+
 !MyOwnCertificate class categoriesForMethods!
 info:!instance creation!public! !
 info:authority:authorityPrivateKey:!instance creation!public! !

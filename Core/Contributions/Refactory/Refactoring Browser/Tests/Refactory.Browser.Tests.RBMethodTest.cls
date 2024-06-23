@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RBMethodTest guid: (Core.GUID fromString: '{dcaa75d7-68c0-41bd-9701-dbecb814444c}')!
+
 Refactory.Browser.Tests.RBMethodTest comment: ''!
+
 !Refactory.Browser.Tests.RBMethodTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RBMethodTest methodsFor!
 
 testExistingMethodPackageAndEnvironment
@@ -158,6 +162,7 @@ testRefersToSymbol
 	self assert: (method refersToSymbol: #abc).
 	method := class methodFor: #literalArrayStringsAndSymbols.
 	self assert: (method refersToSymbol: #def)! !
+
 !Refactory.Browser.Tests.RBMethodTest categoriesForMethods!
 testExistingMethodPackageAndEnvironment!public! !
 testExistingMethodPackageAndEnvironmentLoose!public! !

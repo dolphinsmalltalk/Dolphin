@@ -7,8 +7,11 @@ Core.Tests.AbstractFileStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.FileStreamTest guid: (Core.GUID fromString: '{773617be-f790-4ae5-9ed9-f1ea47cbf664}')!
+
 Core.Tests.FileStreamTest comment: ''!
+
 !Core.Tests.FileStreamTest methodsFor!
 
 assertBufferEmptyOrDirty: fs 
@@ -275,6 +278,7 @@ testWritePastEnd
 	actual := filestream upToEnd.
 	expected := expected contents.
 	self assert: actual equals: expected! !
+
 !Core.Tests.FileStreamTest categoriesForMethods!
 assertBufferEmptyOrDirty:!private!unit tests! !
 assertBufferEmptyOrDirty:size:!helpers!private! !

@@ -26,9 +26,13 @@ UI.ValueConvertingControlView
 			'DisableZoomControlMask' -> 16r200.
 			'EnableInPrivateModeMask' -> 16r10000
 		}!
+
 UI.WebView2View guid: (Core.GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
+
 UI.WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
+
 !UI.WebView2View categoriesForClass!MVP-Views! !
+
 !UI.WebView2View methodsFor!
 
 allowContextMenu
@@ -629,6 +633,7 @@ zoomFactor: aNumber
 	self webviewController zoomFactor = aNumber ifTrue: [^self].
 	self webviewController zoomFactor: aNumber.
 	self presenter trigger: #zoomFactorChanged! !
+
 !UI.WebView2View categoriesForMethods!
 allowContextMenu!public!settings! !
 allowContextMenu:!public!settings! !
@@ -803,6 +808,7 @@ winClassName
 	to instances of the receiver."
 
 	^self wndClassName! !
+
 !UI.WebView2View class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

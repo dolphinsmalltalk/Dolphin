@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.RPCLibrary guid: (Core.GUID fromString: '{87b4c584-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.RPCLibrary comment: ''!
+
 !OS.RPCLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.RPCLibrary methodsFor!
 
 invalidCall: anInteger
@@ -70,6 +74,7 @@ uuidToString: uuid stringUuid: lppstr
 
 	<stdcall: errno UuidToStringA void* char**>
 	^self invalidCall: _failureCode! !
+
 !OS.RPCLibrary categoriesForMethods!
 invalidCall:!exceptions!private! !
 rpcStringFree:!primitives!public!win32 functions-rpc! !
@@ -88,6 +93,7 @@ fileName
 
 sharedVariableName
 	^#{OS.Rpcrt4}! !
+
 !OS.RPCLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

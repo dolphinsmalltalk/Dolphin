@@ -7,8 +7,11 @@ Graphics.Gdiplus.TransformableBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.TextureBrushInitializer guid: (Core.GUID fromString: '{1a1a5ea3-6151-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.TextureBrushInitializer comment: ''!
+
 !Graphics.Gdiplus.TextureBrushInitializer methodsFor!
 
 = anObject
@@ -124,6 +127,7 @@ printAttributesOn: aStream
 
 rectangle
 	^rectangle ?? image bounds! !
+
 !Graphics.Gdiplus.TextureBrushInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -162,6 +166,7 @@ stbConvertFrom: anSTBClassFormat
 				wrapMode: (data at: 3)
 				rectangle: (data at: 4)]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !Graphics.Gdiplus.TextureBrushInitializer class categoriesForMethods!
 image:wrapMode:rectangle:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

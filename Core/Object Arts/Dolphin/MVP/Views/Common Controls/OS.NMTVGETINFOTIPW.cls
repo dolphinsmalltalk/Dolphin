@@ -13,9 +13,13 @@ OS.NMGETINFOTIP
 			'_OffsetOf_lParam' -> 16r18.
 			'_OffsetOf_pszText' -> 16rC
 		}!
+
 OS.NMTVGETINFOTIPW guid: (Core.GUID fromString: '{092d2532-2e9c-415e-9373-cf213741fa81}')!
+
 OS.NMTVGETINFOTIPW comment: ''!
+
 !OS.NMTVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMTVGETINFOTIPW methodsFor!
 
 cchTextMax
@@ -57,6 +61,7 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
+
 !OS.NMTVGETINFOTIPW categoriesForMethods!
 cchTextMax!**compiled accessors**!public! !
 cchTextMax:!**compiled accessors**!public! !
@@ -87,6 +92,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #pszText #cchTextMax #hItem #lParam)! !
+
 !OS.NMTVGETINFOTIPW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

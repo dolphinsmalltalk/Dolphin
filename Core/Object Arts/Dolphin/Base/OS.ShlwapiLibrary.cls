@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ShlwapiLibrary guid: (Core.GUID fromString: '{64674074-3a82-101b-8181-00aa003743d3}')!
+
 OS.ShlwapiLibrary comment: 'ShlwapiLibrary is the <ExternalLibrary> class to represent the Win32 "Shell Lightweight API Library", SHLWAPI.DLL.'!
+
 !OS.ShlwapiLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.ShlwapiLibrary methodsFor!
 
 pathCommonPrefix: pszFile1 pszFile2: pszFile2 achPath: achPath
@@ -60,6 +64,7 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 
 	<stdcall: bool PathRelativePathToW lpwstr lpwstr uint32 lpwstr uint32>
 	^self invalidCall: _failureCode! !
+
 !OS.ShlwapiLibrary categoriesForMethods!
 pathCommonPrefix:pszFile2:achPath:!public!win32 functions-path! !
 pathCompactPathEx:pszSrc:cchMax:dwFlags:!public!win32 functions-path! !
@@ -76,6 +81,7 @@ fileName
 
 sharedVariableName
 	^#{OS.Shlwapi}! !
+
 !OS.ShlwapiLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

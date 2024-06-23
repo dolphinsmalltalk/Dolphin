@@ -12,11 +12,15 @@ External.Structure
 			'_OffsetOf_lcid' -> 16r10.
 			'_OffsetOf_szDescription' -> 16r14
 		}!
+
 OS.COM.CATEGORYINFO guid: (Core.GUID fromString: '{a8eebb01-0149-481c-8b90-1eeba6516286}')!
+
 OS.COM.CATEGORYINFO comment: '<CATEGORYINFO> is an <ExternalStructure> class to wrap the struct ''COMCAT.CATEGORYINFO'' from type information in the ''OLE Component Categories Library'' library.
 
 CATEGORYINFO is used in conjunction with ICatInformation>>EnumCategories() to enumerate details of the categories registered on the host machine.'!
+
 !OS.COM.CATEGORYINFO categoriesForClass!COM Category Manager! !
+
 !OS.COM.CATEGORYINFO methodsFor!
 
 catid
@@ -76,6 +80,7 @@ szDescription: anUtf16String
 		to: _OffsetOf_szDescription + size
 		startingAt: 1.
 	bytes uint16AtOffset: _OffsetOf_szDescription + size put: 0! !
+
 !OS.COM.CATEGORYINFO categoriesForMethods!
 catid!**compiled accessors**!public! !
 catid:!**compiled accessors**!public! !
@@ -115,6 +120,7 @@ defineFields
 
 getFieldNames
 	^#(#catid #lcid #szDescription)! !
+
 !OS.COM.CATEGORYINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

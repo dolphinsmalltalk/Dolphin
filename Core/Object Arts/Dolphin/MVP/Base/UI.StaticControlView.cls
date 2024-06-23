@@ -7,9 +7,13 @@ UI.StaticView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticControlView guid: (Core.GUID fromString: '{bb272e98-57bb-428c-a745-4377f02d2ba2}')!
+
 UI.StaticControlView isNonInstantiable: true!
+
 UI.StaticControlView comment: ''!
+
 !UI.StaticControlView methodsFor!
 
 defaultWindowStyle
@@ -41,6 +45,7 @@ isSunken: aBoolean
 		baseStyleMask: SS_SUNKEN
 		set: aBoolean
 		recreateIfChanged: true	"Recreate required for this change to take effect"! !
+
 !UI.StaticControlView categoriesForMethods!
 defaultWindowStyle!constants!private! !
 invalidateRect:erase:!drawing!public! !
@@ -55,6 +60,7 @@ winClassName
 
 	^'STATIC'
 ! !
+
 !UI.StaticControlView class categoriesForMethods!
 winClassName!constants!private! !
 !

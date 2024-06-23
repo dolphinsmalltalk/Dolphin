@@ -12,7 +12,9 @@ External.Structure
 			'_OffsetOf_p_proto' -> 16r8.
 			'_PROTOENT_Size' -> 16rC
 		}!
+
 OS.PROTOENT guid: (Core.GUID fromString: '{87b4c60a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.PROTOENT comment: '<PROTOENT> is an <ExternalStructure> class to wrap the struct ''Win32.PROTOENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +31,9 @@ struct tagPROTOENT {
 	[readonly, helpstring("Protocol number, in host byte order.")] short p_proto;
 } PROTOENT;
 '!
+
 !OS.PROTOENT categoriesForClass!Win32-Structs! !
+
 !OS.PROTOENT methodsFor!
 
 aliases
@@ -68,6 +72,7 @@ protocol
 	| bigEndian |
 	bigEndian := self p_proto.
 	^(bigEndian << 8 bitOr: bigEndian >> 8) bitAnd: 16rFFFF! !
+
 !OS.PROTOENT categoriesForMethods!
 aliases!public! !
 p_name!**compiled accessors**!public! !
@@ -120,6 +125,7 @@ fromString: aString
 
 getFieldNames
 	^#(#p_name #p_proto)! !
+
 !OS.PROTOENT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

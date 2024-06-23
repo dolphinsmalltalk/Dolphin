@@ -34,6 +34,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Tools.PackageEnvironment'
 	instanceVariableNames: 'packages'
@@ -41,6 +42,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Tools.PluggableEnvironment'
 	instanceVariableNames: ''
@@ -63,6 +65,7 @@ filterMethods: aMonadicValuable
 
 forPackages: aCollection
 	^PackageEnvironment onEnvironment: self packages: aCollection! !
+
 !Refactory.Browser.BrowserEnvironment categoriesForMethods!
 filterMethods:!enquiries!public! !
 forPackages:!environments!public! !

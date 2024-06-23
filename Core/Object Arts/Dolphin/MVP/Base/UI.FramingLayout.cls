@@ -7,7 +7,9 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FramingLayout guid: (Core.GUID fromString: '{87b4c649-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.FramingLayout comment: 'FramingLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. This is the most complex of the layout managers provided with the base Dolphin image but also the most flexible. Each of the managed views is given a series of constraints which indicate how it should be laid out within the parent. These constraints are instances of <FramingConstraints> and are specified by setting the #arrangement aspects of the various views. See the class comment for FramingConstraints for more details.
 
 Some examples of the use of FramingLayout managers can be seen in the default views for ChoicePrompter and for AXTypeLibraryPrompter. Try evaluating the following and resizing the dialogs to see the effect.
@@ -18,7 +20,9 @@ AXTypeLibraryPrompter showModal.
 Instance Variables:
 	framings	<LookupTable> mapping the managed views to their FramingConstraints
 '!
+
 !UI.FramingLayout categoriesForClass!MVP-Layout Managers-General! !
+
 !UI.FramingLayout methodsFor!
 
 arrangementOf: aView 
@@ -119,6 +123,7 @@ stbSaveOn: anSTxOutFiler
 				with: (STBIdentityDictionaryProxy class: framings class
 						associations: (framings associations asSortedArray: [:a :b | a key position <=> b key position <= 0]))].
 	^super stbSaveOn: anSTxOutFiler! !
+
 !UI.FramingLayout categoriesForMethods!
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !

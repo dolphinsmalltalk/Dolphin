@@ -7,8 +7,11 @@ WebView2.ICoreWebView2_7
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2_8 guid: (OS.COM.IID fromString: '{e9632730-6e1e-43ab-b7b8-7b2c9e62e094}')!
+
 WebView2.ICoreWebView2_8 isEgressOnly: true!
+
 WebView2.ICoreWebView2_8 comment: '`ICoreWebView2_8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -49,7 +52,9 @@ interface ICoreWebView2_8 : ICoreWebView2_7
 };
 ```
 '!
+
 !WebView2.ICoreWebView2_8 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2_8 methodsFor!
 
 Add_IsDocumentPlayingAudioChanged: eventHandler token: token
@@ -117,6 +122,7 @@ Remove_IsMutedChanged: token
 
 	<virtual stdcall: hresult 83 int64>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2_8 categoriesForMethods!
 Add_IsDocumentPlayingAudioChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_8!private! !
 Add_IsMutedChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_8!private! !
@@ -149,6 +155,7 @@ defineFunctions
 		defineFunction: #get_IsDocumentPlayingAudio:
 			argumentTypes: 'sdword*'
 ! !
+
 !WebView2.ICoreWebView2_8 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

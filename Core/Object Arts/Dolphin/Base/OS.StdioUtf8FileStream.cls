@@ -7,9 +7,13 @@ OS.StdioUnicodeFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioUtf8FileStream guid: (Core.GUID fromString: '{c1c28046-101f-4bf6-92f9-e30cea1e8d82}')!
+
 OS.StdioUtf8FileStream comment: '`OS.StdioUtf16FileStream` is the concrete class of `StdioFileStream` for streaming over UTF-8 encoded data.'!
+
 !OS.StdioUtf8FileStream categoriesForClass!Collections-Streams! !
+
 !OS.StdioUtf8FileStream methodsFor!
 
 basicNext: anInteger
@@ -56,6 +60,7 @@ upToEnd
 	the current position to the end)."
 
 	^super upToEnd asUtf8String! !
+
 !OS.StdioUtf8FileStream categoriesForMethods!
 basicNext:!accessing!private! !
 contentsSpecies!constants!private! !
@@ -73,6 +78,7 @@ encodingType
 
 translationMode
 	^CRTConstants._O_U8TEXT! !
+
 !OS.StdioUtf8FileStream class categoriesForMethods!
 encodingType!constants!public! !
 translationMode!constants!private! !

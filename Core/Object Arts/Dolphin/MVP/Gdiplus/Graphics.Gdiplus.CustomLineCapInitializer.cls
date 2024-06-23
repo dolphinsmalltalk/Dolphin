@@ -7,8 +7,11 @@ Graphics.Gdiplus.AbstractCustomLineCapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.CustomLineCapInitializer guid: (Core.GUID fromString: '{ea986b36-8426-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.CustomLineCapInitializer comment: ''!
+
 !Graphics.Gdiplus.CustomLineCapInitializer methodsFor!
 
 = anObject
@@ -157,6 +160,7 @@ strokeCapsOf: aCustomLineCap setStart: startLineCapConstant end: endLineCapConst
 
 strokePath
 	^strokePath! !
+
 !Graphics.Gdiplus.CustomLineCapInitializer categoriesForMethods!
 =!comparing!public! !
 applyAdditionalAttributes:!attributes!private!realizing/unrealizing! !
@@ -201,6 +205,7 @@ stbConvertFrom: anSTBClassFormat
 				baseCap: (data at: 4)
 				baseInset: (data at: 5)]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !Graphics.Gdiplus.CustomLineCapInitializer class categoriesForMethods!
 fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

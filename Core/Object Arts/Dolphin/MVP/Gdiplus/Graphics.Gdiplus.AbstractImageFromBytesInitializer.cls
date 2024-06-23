@@ -7,9 +7,13 @@ Graphics.Gdiplus.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromBytesInitializer guid: (Core.GUID fromString: '{3156f9e7-c46c-48e7-9cca-e6405bf8a085}')!
+
 Graphics.Gdiplus.AbstractImageFromBytesInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.AbstractImageFromBytesInitializer comment: ''!
+
 !Graphics.Gdiplus.AbstractImageFromBytesInitializer methodsFor!
 
 = anObject
@@ -37,6 +41,7 @@ printImage: aGdiplusImage on: aWriteStream
 setBytes: aByteArray
 	bytes := aByteArray.
 	^self! !
+
 !Graphics.Gdiplus.AbstractImageFromBytesInitializer categoriesForMethods!
 =!comparing!public! !
 bytes!accessing!private! !
@@ -50,6 +55,7 @@ setBytes:!initializing!private! !
 
 bytes: aByteArray 
 	^self new setBytes: aByteArray! !
+
 !Graphics.Gdiplus.AbstractImageFromBytesInitializer class categoriesForMethods!
 bytes:!instance creation!public! !
 !

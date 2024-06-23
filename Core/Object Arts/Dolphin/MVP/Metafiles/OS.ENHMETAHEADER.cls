@@ -26,7 +26,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_szlMicrometers' -> 16r64.
 			'_OffsetOf_szlMillimeters' -> 16r50
 		}!
+
 OS.ENHMETAHEADER guid: (Core.GUID fromString: '{11d9bf3d-7ee0-4ace-8c78-d192e7518fdf}')!
+
 OS.ENHMETAHEADER comment: '<ENHMETAHEADER> is an <ExternalStructure> class to wrap the struct ''Win32.ENHMETAHEADER''.
 
 The type library contains no documentation for this struct
@@ -58,7 +60,9 @@ IDL definition follows:
 			[helpstring(''Size of the reference device in micrometers'')] SIZEL szlMicrometers;
 		} ENHMETAHEADER;
 '!
+
 !OS.ENHMETAHEADER categoriesForClass!Win32-Structs! !
+
 !OS.ENHMETAHEADER methodsFor!
 
 bOpenGL
@@ -240,6 +244,7 @@ szlMillimeters: aSIZEL
 		from: ##(_OffsetOf_szlMillimeters + 1)
 		to: ##(_OffsetOf_szlMillimeters + SIZEL._SIZEL_Size)
 		startingAt: 1! !
+
 !OS.ENHMETAHEADER categoriesForMethods!
 bOpenGL!**compiled accessors**!public! !
 bOpenGL:!**compiled accessors**!public! !
@@ -371,6 +376,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_HEADER}! !
+
 !OS.ENHMETAHEADER class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

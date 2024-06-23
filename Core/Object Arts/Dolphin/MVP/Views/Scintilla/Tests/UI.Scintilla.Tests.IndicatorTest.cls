@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.Tests.IndicatorTest guid: (Core.GUID fromString: '{f9336218-5504-41d4-bf04-d9bbe66ecfbe}')!
+
 UI.Scintilla.Tests.IndicatorTest comment: ''!
+
 !UI.Scintilla.Tests.IndicatorTest methodsFor!
 
 testTypeNameRangeTag
@@ -31,6 +34,7 @@ testTypeNameRangeTag
 	self assert: indicator2 typeName identicalTo: #normal.
 	self assert: indicator2 range equals: (1 to: 10).
 	self assert: indicator2 tag identicalTo: tag! !
+
 !UI.Scintilla.Tests.IndicatorTest categoriesForMethods!
 testTypeNameRangeTag!public!unit tests! !
 !

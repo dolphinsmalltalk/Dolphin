@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.FolderTest guid: (Core.GUID fromString: '{8b810291-5941-433e-a94c-b16bc3505368}')!
+
 UI.Tests.FolderTest comment: ''!
+
 !UI.Tests.FolderTest methodsFor!
 
 folderClass
@@ -54,6 +57,7 @@ testParent
 testParentOfDriveRoot
 	self assertIsNil: c parent.
 	self assertIsNil: windows parent parent! !
+
 !UI.Tests.FolderTest categoriesForMethods!
 folderClass!constants!private! !
 rootFolder!public!unit tests! !

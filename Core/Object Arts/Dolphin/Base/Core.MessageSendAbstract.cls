@@ -7,12 +7,17 @@ Core.Message
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MessageSendAbstract guid: (Core.GUID fromString: '{16bfd17c-2ce8-4b61-b09a-9d012256d971}')!
+
 Core.MessageSendAbstract isNonInstantiable: true!
+
 Core.MessageSendAbstract comment: 'A MessageSendAbstract is the abstract base class of fully closed <Message>s, that include a receiver object, a message selector, and an array of sufficient arguments. As a fully closed valuable, Message Sends can be evaluated by sending them the #value message, and they can frequently be employed where a <BlockClosure> might otherwise be used.
 
 Athough Message Sends are complete in themselves, they also respond to the valuable messages which take arguments. The general principle is that the supplied arguments supplant those stored in the Message Send according to some algorithm determined by the particular subclass.'!
+
 !Core.MessageSendAbstract categoriesForClass!Kernel-Methods! !
+
 !Core.MessageSendAbstract methodsFor!
 
 = aMessageSend
@@ -151,6 +156,7 @@ valueWithArguments: triggerArguments
 	than that required, then the subclass determines which take precedence."
 
 	^self forwardTo: self receiver withArguments: triggerArguments! !
+
 !Core.MessageSendAbstract categoriesForMethods!
 =!comparing!public! !
 cull:!evaluating!public! !
@@ -210,6 +216,7 @@ selector: aSymbol arguments: anArray
 		receiver: nil
 		selector: aSymbol
 		arguments: anArray! !
+
 !Core.MessageSendAbstract class categoriesForMethods!
 receiver:selector:!instance creation!public! !
 receiver:selector:argument:!instance creation!public! !

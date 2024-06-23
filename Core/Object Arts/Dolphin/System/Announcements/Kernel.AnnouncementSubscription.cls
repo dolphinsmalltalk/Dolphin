@@ -7,12 +7,16 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AnnouncementSubscription guid: (Core.GUID fromString: '{4a8f9aba-3fcf-4905-9d19-124f99040d7a}')!
+
 Kernel.AnnouncementSubscription comment: 'The subscription is a single entry in a SubscriptionRegistry.
 Several subscriptions by the same object is possible.
 
 I know how to make myself weak or strong, only use this capability if it can''t be determined at subscribe time though, as it uses become: (for thread-safety), which is quite slow.'!
+
 !Kernel.AnnouncementSubscription categoriesForClass!Announcements-Core! !
+
 !Kernel.AnnouncementSubscription methodsFor!
 
 action
@@ -68,6 +72,7 @@ valuable: aValuable
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
 	self subscriber: aValuable announcementSubscriber.! !
+
 !Kernel.AnnouncementSubscription categoriesForMethods!
 action!accessing!public! !
 action:!accessing!public! !

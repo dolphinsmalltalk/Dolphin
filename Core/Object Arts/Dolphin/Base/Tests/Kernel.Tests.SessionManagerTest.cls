@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.SessionManagerTest guid: (Core.GUID fromString: '{06f1fe94-5aa1-43f9-9d5c-1d4de4f5b519}')!
+
 Kernel.Tests.SessionManagerTest comment: ''!
+
 !Kernel.Tests.SessionManagerTest methodsFor!
 
 testComputerName
@@ -33,6 +36,7 @@ testUsername
 	| actual |
 	actual := SessionManager current getenv: 'USERNAME'.
 	self assert: (actual sameAs: SessionManager current userName)! !
+
 !Kernel.Tests.SessionManagerTest categoriesForMethods!
 testComputerName!public!unit tests! !
 testDocumentsDirectory!public!unit tests! !

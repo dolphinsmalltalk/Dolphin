@@ -16,7 +16,9 @@ UI.IconicListAbstract
 								#static -> TreeViewStaticUpdateMode
 							})
 		}!
+
 UI.TreeView guid: (Core.GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 
 A TreeView is capable of displaying its items in one of three modes (#smallIcons, #largeIcons, #noIcons) which can be set using the #viewMode aspect. 
@@ -40,7 +42,9 @@ Class Variables:
 
 
 '!
+
 !UI.TreeView categoriesForClass!MVP-Views! !
+
 !UI.TreeView methodsFor!
 
 addRoot: anObject
@@ -1213,6 +1217,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 				wmKeyDown: message
 				wParam: wParam
 				lParam: lParam].! !
+
 !UI.TreeView categoriesForMethods!
 addRoot:!adding!private! !
 applyExtendedStyles!private!updating! !
@@ -1410,6 +1415,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysTreeView32'! !
+
 !UI.TreeView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

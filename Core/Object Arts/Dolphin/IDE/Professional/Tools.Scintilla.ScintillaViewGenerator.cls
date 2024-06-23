@@ -7,13 +7,17 @@ Core.Object
 	imports: #(#{UI.Scintilla})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.ScintillaViewGenerator guid: (Core.GUID fromString: '{babb8e5d-5ee9-43b2-a88b-0959484c008e}')!
+
 Tools.Scintilla.ScintillaViewGenerator comment: 'This class reads the Scintilla.iface definition and autogenerates wrapper methods into the ScintillaView class, and defines constants in the Scintilla namespace.
 
 The parsing is not sophisticated, but adequate for purpose.
 
 self new parseFile'!
+
 !Tools.Scintilla.ScintillaViewGenerator categoriesForClass!Development! !
+
 !Tools.Scintilla.ScintillaViewGenerator methodsFor!
 
 applyChanges
@@ -1800,6 +1804,7 @@ updateLibVersion
 		selector: #versionString
 		in: ScintillaLibrary class
 		categories: (self autoGenMethodCategories copyWith: 'constants')! !
+
 !Tools.Scintilla.ScintillaViewGenerator categoriesForMethods!
 applyChanges!helpers!private! !
 autoGenCategoryName!constants!private! !
@@ -2484,6 +2489,7 @@ renamedFunctions
 	renamedMessages
 		shrink;
 		yourself)! !
+
 !Tools.Scintilla.ScintillaViewGenerator class categoriesForMethods!
 deprecatedConstants!constants!private! !
 icon!constants!development!public! !

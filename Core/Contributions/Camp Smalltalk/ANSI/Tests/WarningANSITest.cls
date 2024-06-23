@@ -5,9 +5,13 @@ MainTestCase subclass: #WarningANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WarningANSITest guid: (GUID fromString: '{62a40256-0d91-4368-a959-aff805526b40}')!
+
 WarningANSITest comment: ''!
+
 !WarningANSITest categoriesForClass!Unclassified! !
+
 !WarningANSITest methodsFor!
 
 canonicalObject
@@ -96,6 +100,7 @@ testXsignalX
 testXtag
 	" <exceptionDescription>#tag "
 	#'Exception'.! !
+
 !WarningANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

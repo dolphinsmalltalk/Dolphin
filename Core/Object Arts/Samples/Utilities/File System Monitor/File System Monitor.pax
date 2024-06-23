@@ -74,6 +74,7 @@ UI.Shell
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RuntimeSessionManager
 	subclass: #'OS.Examples.FileSystemMonitorSessionManager'
 	instanceVariableNames: ''
@@ -88,6 +89,7 @@ UI.RuntimeSessionManager
 
 icon
 	^OS.Examples.FileSystemMonitor icon! !
+
 !OS.FileSystemChangeReader class categoriesForMethods!
 icon!initializing!public! !
 !

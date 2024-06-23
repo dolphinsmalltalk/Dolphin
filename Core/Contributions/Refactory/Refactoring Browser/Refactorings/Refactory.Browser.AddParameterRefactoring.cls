@@ -7,9 +7,13 @@ Refactory.Browser.ChangeMethodNameRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AddParameterRefactoring guid: (Core.GUID fromString: '{afeead23-befe-4021-bb3b-1d7b14e487ba}')!
+
 Refactory.Browser.AddParameterRefactoring comment: ''!
+
 !Refactory.Browser.AddParameterRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.AddParameterRefactoring methodsFor!
 
 addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init 
@@ -141,6 +145,7 @@ verifyInitializationExpression
 		ifFalse: 
 			[self refactoringError: 'The initialization code cannot be a return node or a list of statements'].
 	self checkVariableReferencesIn: tree! !
+
 !Refactory.Browser.AddParameterRefactoring categoriesForMethods!
 addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
 checkSendersAccessTo:!preconditions!public! !
@@ -174,6 +179,7 @@ model: aRBModel addParameterToMethod: aSelector in: aClass newSelector: newSelec
 			newSelector: newSelector
 			initializer: init;
 		yourself! !
+
 !Refactory.Browser.AddParameterRefactoring class categoriesForMethods!
 addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
 model:addParameterToMethod:in:newSelector:initializer:!instance creation!public! !

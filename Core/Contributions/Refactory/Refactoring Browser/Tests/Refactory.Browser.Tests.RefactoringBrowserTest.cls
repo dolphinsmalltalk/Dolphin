@@ -7,10 +7,15 @@ XProgramming.SUnit.TestCase
 	imports: #(#{Refactory.Browser.TestData private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringBrowserTest guid: (Core.GUID fromString: '{89b8c31b-39f7-49c7-bd85-3b0c202ccf98}')!
+
 Refactory.Browser.Tests.RefactoringBrowserTest isNonInstantiable: true!
+
 Refactory.Browser.Tests.RefactoringBrowserTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !Refactory.Browser.Tests.RefactoringBrowserTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RefactoringBrowserTest methodsFor!
 
 convertInterval: anInterval for: aString
@@ -51,6 +56,7 @@ parseMethod: aString in: aRBClass
 	^Parser
 		parseMethod: aString
 		in: aRBClass! !
+
 !Refactory.Browser.Tests.RefactoringBrowserTest categoriesForMethods!
 convertInterval:for:!private! !
 executeRefactoring:!private! !
@@ -66,6 +72,7 @@ shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
+
 !Refactory.Browser.Tests.RefactoringBrowserTest class categoriesForMethods!
 shouldInheritSelectors!public!Testing! !
 !

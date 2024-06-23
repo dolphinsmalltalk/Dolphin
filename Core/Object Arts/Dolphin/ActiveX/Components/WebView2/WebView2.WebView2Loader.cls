@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.WebView2Loader guid: (Core.GUID fromString: '{b4b18867-230d-4b18-8048-0f12821bf5e0}')!
+
 WebView2.WebView2Loader comment: ''!
+
 !WebView2.WebView2Loader categoriesForClass!External-Libraries! !
+
 !WebView2.WebView2Loader methodsFor!
 
 compareBrowserVersions: version1 version2: version2 result: result
@@ -39,6 +43,7 @@ getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder
 getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInfo: versionInfo
 	<stdcall: hresult GetAvailableCoreWebView2BrowserVersionString lpwstr lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.WebView2Loader categoriesForMethods!
 compareBrowserVersions:version2:result:!public! !
 createCoreWebView2Environment:!public! !
@@ -54,6 +59,7 @@ fileName
 
 	^'WebView2Loader'
 ! !
+
 !WebView2.WebView2Loader class categoriesForMethods!
 fileName!constants!public! !
 !

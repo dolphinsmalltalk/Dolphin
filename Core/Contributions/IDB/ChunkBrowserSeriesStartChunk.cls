@@ -5,14 +5,19 @@ ChunkBrowserChunk subclass: #ChunkBrowserSeriesStartChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSeriesStartChunk guid: (GUID fromString: '{24f42e2c-7a1f-4252-bdfe-4584ed820429}')!
+
 ChunkBrowserSeriesStartChunk isAbstract: true!
+
 ChunkBrowserSeriesStartChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserSeriesStartChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserSeriesStartChunk methodsFor!
 
 addChunksFrom: aChunkSourceFiler to: anOrderedCollection
@@ -38,6 +43,7 @@ restore
 
 seriesClass
 	self subclassResponsibility! !
+
 !ChunkBrowserSeriesStartChunk categoriesForMethods!
 addChunksFrom:to:!operations!public! !
 browseTarget!operations!public! !
@@ -51,6 +57,7 @@ seriesClass!constants!public! !
 
 chunkType
 	self shouldNotImplement! !
+
 !ChunkBrowserSeriesStartChunk class categoriesForMethods!
 chunkType!constants!public! !
 !

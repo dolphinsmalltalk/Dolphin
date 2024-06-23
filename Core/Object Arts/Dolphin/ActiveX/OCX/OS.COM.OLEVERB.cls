@@ -13,7 +13,9 @@ External.Structure
 			'_OffsetOf_lVerb' -> 16r0.
 			'_OLEVERB_Size' -> 16r10
 		}!
+
 OS.COM.OLEVERB guid: (Core.GUID fromString: '{33eb8491-3919-4df6-8dbe-d88c4be8d413}')!
+
 OS.COM.OLEVERB comment: '<OLEVERB> is an <ExternalStructure> class to wrap the struct ''Win32.OLEVERB'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,7 +32,9 @@ struct tagOLEVERB {
 	DWORD grfAttribs;
 } OLEVERB;
 '!
+
 !OS.COM.OLEVERB categoriesForClass!Win32-Structs! !
+
 !OS.COM.OLEVERB methodsFor!
 
 fuFlags
@@ -83,6 +87,7 @@ printOn: aStream
 		nextPutAll: ': ';
 		print: self lpszVerbName;
 		nextPut: $)! !
+
 !OS.COM.OLEVERB categoriesForMethods!
 fuFlags!**compiled accessors**!public! !
 fuFlags:!**compiled accessors**!public! !
@@ -122,6 +127,7 @@ defineFields
 
 getFieldNames
 	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !
+
 !OS.COM.OLEVERB class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

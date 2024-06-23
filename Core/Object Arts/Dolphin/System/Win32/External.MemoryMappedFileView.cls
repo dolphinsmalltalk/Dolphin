@@ -7,10 +7,15 @@ External.Address
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.MemoryMappedFileView guid: (Core.GUID fromString: '{ff57d052-5958-43e6-ab68-add0ac6bcb64}')!
+
 External.MemoryMappedFileView isIndirection: true!
+
 External.MemoryMappedFileView comment: 'MemoryMappedFileView is an <ExternalAddress> that represents a view onto a block of bytes from a memory-mapped file. It can be treated much like a normal pointer.'!
+
 !External.MemoryMappedFileView categoriesForClass!External-Data-Unstructured! !
+
 !External.MemoryMappedFileView methodsFor!
 
 basicFree
@@ -35,6 +40,7 @@ free
 		self beUnfinalizable.
 		self basicFree.
 		self clear]! !
+
 !External.MemoryMappedFileView categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 flush!operations!public! !
@@ -47,6 +53,7 @@ fromInteger: anInteger
 	^self new
 		basicUIntPtrAtOffset: 0 put: anInteger;
 		yourself! !
+
 !External.MemoryMappedFileView class categoriesForMethods!
 fromInteger:!public! !
 !

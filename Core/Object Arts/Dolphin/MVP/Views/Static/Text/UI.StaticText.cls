@@ -10,13 +10,17 @@ UI.StaticControlView
 			'AlignmentMap' -> (IdentityDictionary
 						withAll: { #center -> 16r1. #left -> 16r0. #leftNoWrap -> 16rC. #right -> 16r2. #simple -> 16rB })
 		}!
+
 UI.StaticText guid: (Core.GUID fromString: '{87b4c740-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.StaticText comment: '`StaticText` is a `<valueView>` class for a Window STATIC control for displaying text in one of a number of text styles. The `<valueModel>` associated with a `StaticText` must always yield a `<readableString>` value when mapped through the installed type converter. A `StaticText` will normally be used in conjunction with a `TextPresenter`. The alignment of the text (and therefore the style of the underlying Windows control) can be specified using the alignment aspect which can assume of of the following values: (`#left`, `#center`, `#right`, `#leftNoWrap`, `#simple`).
 
 ## Class Constants:
   AlignmentMap	`LookupTable` of `Symbol` alignment specifiers to Windows styles.
 '!
+
 !UI.StaticText categoriesForClass!MVP-Views! !
+
 !UI.StaticText methodsFor!
 
 alignment
@@ -158,6 +162,7 @@ value: anObject
 	receiver's window directly via #displayValue:."
 
 	self displayValue: (self typeconverter convertFromLeftToRight: anObject)! !
+
 !UI.StaticText categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -198,6 +203,7 @@ initialize
 						#leftNoWrap -> SS_LEFTNOWORDWRAP.
 						#simple -> SS_SIMPLE
 					})! !
+
 !UI.StaticText class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

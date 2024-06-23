@@ -7,7 +7,9 @@ Refactory.Browser.RBSourceFormatter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBConfigurableFormatter guid: (Core.GUID fromString: '{70ffaafa-37c2-4408-bfa3-e5417f61cd58}')!
+
 Refactory.Browser.RBConfigurableFormatter comment: 'RBConfigurableFormatter formats the Refactoring Browser''s parse trees. It has many more formatting options than the RBFormatter.  For some refactorings the RB must reformat the code after the change, so it is good to have a formatter configured to your tastes.
 
 To switch to this formatter, execute "StProgramNode formatterClass: RBConfigurableFormatter", or look for the #formatterClass option under ''Development System'' in User Preferences.
@@ -18,7 +20,9 @@ Instance Variables:
 	originalSource	<String>	the original source before we started formatting. This is used to extract the comments from the original source.
 
 '!
+
 !Refactory.Browser.RBConfigurableFormatter categoriesForClass!System-Compiler-Formatters! !
+
 !Refactory.Browser.RBConfigurableFormatter methodsFor!
 
 addNewLinesBeforeStatementStartingAt: anInteger 
@@ -409,6 +413,7 @@ writeString: aString
 	index := aString lastIndexOf: Character cr ifAbsent: [0].
 	codeStream nextPutAll: aString.
 	index > 0 ifTrue: [lineStart := codeStream position - (aString size - index)]! !
+
 !Refactory.Browser.RBConfigurableFormatter categoriesForMethods!
 addNewLinesBeforeStatementStartingAt:!helpers!private! !
 format:!operations!public! !
@@ -608,6 +613,7 @@ useTraditionalBinaryPrecedenceForParentheses
 
 useTraditionalBinaryPrecedenceForParentheses: aBoolean 
 	UseTraditionalBinaryPrecedenceForParentheses := aBoolean! !
+
 !Refactory.Browser.RBConfigurableFormatter class categoriesForMethods!
 formatCommentWithStatements!public!settings! !
 formatCommentWithStatements:!public!settings! !

@@ -7,8 +7,11 @@ Graphics.Gdiplus.GradientBlend
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientCustomBlend guid: (Core.GUID fromString: '{4dc11c0d-abd4-4e11-bc41-6c52a302311f}')!
+
 Graphics.Gdiplus.GradientCustomBlend comment: ''!
+
 !Graphics.Gdiplus.GradientCustomBlend methodsFor!
 
 = aGpAttribute
@@ -58,6 +61,7 @@ printOn: aStream
 		nextPutAll: ' positions: #';
 		display: positions;
 		nextPut: $)! !
+
 !Graphics.Gdiplus.GradientCustomBlend categoriesForMethods!
 =!comparing!public! !
 applyToGpObject:initializer:!operations!private! !
@@ -75,6 +79,7 @@ factors: aSequenceOfFactors positions: aSequenceOfPositions
 	^self new
 		factors: aSequenceOfFactors;
 		positions: aSequenceOfPositions! !
+
 !Graphics.Gdiplus.GradientCustomBlend class categoriesForMethods!
 factors:positions:!instance creation!public! !
 !

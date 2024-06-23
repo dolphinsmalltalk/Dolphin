@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SysLinkViewTest guid: (Core.GUID fromString: '{2af000e8-54bd-40b6-8dc6-d0014babc42c}')!
+
 UI.Tests.SysLinkViewTest comment: ''!
+
 !UI.Tests.SysLinkViewTest methodsFor!
 
 classToTest
@@ -31,6 +34,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	view := self view.
 	self assertIsNil: view backcolor.
 	self assert: view text equals: '<A HREF="http://www.object-arts.com">Object Arts Home</A>'! !
+
 !UI.Tests.SysLinkViewTest categoriesForMethods!
 classToTest!helpers!private! !
 testItemFromPoint!public! !
@@ -58,6 +62,7 @@ resource_Link_text_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.SysLinkView) 34 16 nil nil 34 2 8 1409286400 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 5 nil nil nil 416 nil 8 1915775360 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 706 181 31 416 658 #text: 34 1 8 '<A HREF="http://www.object-arts.com">Object Arts Home</A>' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 209 5 0 0 25 0 0 0] 8 #() 706 193 193 nil 27 )! !
+
 !UI.Tests.SysLinkViewTest class categoriesForMethods!
 resource_Link_text_D6!public!resources-views! !
 resource_Link_text_D7!public!resources-views! !

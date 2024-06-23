@@ -7,10 +7,15 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArithmeticValue guid: (Core.GUID fromString: '{87b4c64f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.ArithmeticValue isNonInstantiable: true!
+
 Core.ArithmeticValue comment: ''!
+
 !Core.ArithmeticValue categoriesForClass!Magnitude-General! !
+
 !Core.ArithmeticValue methodsFor!
 
 - anArithmeticValue
@@ -431,6 +436,7 @@ understandsArithmetic
 	"Answer whether the receiver understands basic arithmetic (+, -, etc). All Numbers do."
 
 	^true! !
+
 !Core.ArithmeticValue categoriesForMethods!
 -!arithmetic!public! !
 %!arithmetic!public! !
@@ -513,6 +519,7 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^self subclassResponsibility! !
+
 !Core.ArithmeticValue class categoriesForMethods!
 one!instance creation!public! !
 zero!instance creation!public! !

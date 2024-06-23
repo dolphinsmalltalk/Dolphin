@@ -7,9 +7,13 @@ Core.Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.IniFileAbstract guid: (Core.GUID fromString: '{581771ef-b10d-40c8-a590-a926f4a57f5c}')!
+
 OS.IniFileAbstract isNonInstantiable: true!
+
 OS.IniFileAbstract comment: ''!
+
 !OS.IniFileAbstract methodsFor!
 
 = comparand
@@ -252,6 +256,7 @@ values
 	values := Array writeStream.
 	self do: [:each | values nextPut: each].
 	^values contents! !
+
 !OS.IniFileAbstract categoriesForMethods!
 =!comparing!public! !
 add:!adding!public! !
@@ -301,6 +306,7 @@ open: aString
 
 	^self new 
 		filename: aString! !
+
 !OS.IniFileAbstract class categoriesForMethods!
 open:!instance creation!public! !
 !

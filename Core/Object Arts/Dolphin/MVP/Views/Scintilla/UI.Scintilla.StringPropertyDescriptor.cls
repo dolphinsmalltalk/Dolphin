@@ -7,8 +7,11 @@ UI.Scintilla.PropertyDescriptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.StringPropertyDescriptor guid: (Core.GUID fromString: '{fc6310e8-42ec-4f53-a598-b166926411df}')!
+
 UI.Scintilla.StringPropertyDescriptor comment: '`StringPropertyDescriptor`s are `PropertyDescriptor`s for `ScintillaView` properties defined as being of `string` type in the scintilla.iface definition file.'!
+
 !UI.Scintilla.StringPropertyDescriptor methodsFor!
 
 getAttribute: aScintillaAttribute ofView: aScintillaView
@@ -31,6 +34,7 @@ getValueOfAttribute: aScintillaAttribute
 	| value |
 	value := aScintillaAttribute perform: getSelector.
 	^value ifNotNil: [value asUtf8String]! !
+
 !UI.Scintilla.StringPropertyDescriptor categoriesForMethods!
 getAttribute:ofView:!operations!private! !
 getValueOfAttribute:!private! !

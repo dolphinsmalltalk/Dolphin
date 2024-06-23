@@ -7,12 +7,16 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.CategoryEnvironment guid: (Core.GUID fromString: '{01ea18f1-d09f-4a63-b569-62a1d8d6c1cd}')!
+
 Refactory.Browser.CategoryEnvironment comment: 'CategoryEnvironment represents a collection of classes (and all the methods they own) that belong to at least one of a particular set of class categories. 
 
 Instance Variables:
 	categories	<Collection of: Symbol>	the category names to browse'!
+
 !Refactory.Browser.CategoryEnvironment categoriesForClass!Refactory-Environments! !
+
 !Refactory.Browser.CategoryEnvironment methodsFor!
 
 categories
@@ -61,6 +65,7 @@ storeOn: aStream
 	aStream nextPutAll: ' categories: '.
 	categories asArray storeOn: aStream.
 	aStream nextPut: $)! !
+
 !Refactory.Browser.CategoryEnvironment categoriesForMethods!
 categories!accessing!public! !
 categories:!initialize/release!public! !
@@ -80,6 +85,7 @@ storeOn:!printing!public! !
 onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
 		categories: aCollection; yourself! !
+
 !Refactory.Browser.CategoryEnvironment class categoriesForMethods!
 onEnvironment:categories:!instance creation!public! !
 !

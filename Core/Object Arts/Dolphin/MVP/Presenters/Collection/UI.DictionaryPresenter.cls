@@ -7,9 +7,13 @@ UI.HashedCollectionPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DictionaryPresenter guid: (Core.GUID fromString: '{8337cb38-a2d9-47dc-95f6-b262e86adca6}')!
+
 UI.DictionaryPresenter comment: ''!
+
 !UI.DictionaryPresenter categoriesForClass!MVP-Presenters! !
+
 !UI.DictionaryPresenter methodsFor!
 
 elements
@@ -20,6 +24,7 @@ removeElement: anAssociation
 	self value: ((self value)
 				removeKey: anAssociation key;
 				yourself)! !
+
 !UI.DictionaryPresenter categoriesForMethods!
 elements!accessing!public! !
 removeElement:!private!removing! !
@@ -32,6 +37,7 @@ defaultModel
 	is initialized."
 
 	^Dictionary new asValue! !
+
 !UI.DictionaryPresenter class categoriesForMethods!
 defaultModel!models!public! !
 !

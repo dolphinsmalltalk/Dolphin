@@ -20,8 +20,11 @@ Core.SequencedStream
 			'TranslationModeMask' -> 16r7C000.
 			'WritingMask' -> 16r1000000
 		}!
+
 OS.StdioFileStream guid: (Core.GUID fromString: '{7b8405b3-0819-421f-8110-ca2763bcb59a}')!
+
 OS.StdioFileStream isNonInstantiable: true!
+
 OS.StdioFileStream comment: '`OS.StdioFileStream` is the abstract class of `<FileStream>`s implemented over C runtime library stdio streams. 
 
 The `OS.StdioFileStream` hierarchy is intended for cases where a C stdio stream is required (e.g. for stdin, stdout, stderr). `Core.FileStream` itself should be used by preference in most cases as it behaves more predictably and with considerably better performance.
@@ -41,7 +44,9 @@ The `OS.StdioFileStream` hierarchy is intended for cases where a C stdio stream 
   `ReadingMask`		`<integer>` flags mask set when the stream is in Reading state (see [Stream States](https://learn.microsoft.com/en-us/cpp/c-runtime-library/stream-states?view=msvc-170))
   `ReadOnlyMask`		`<integer>` flags mask set for streams opened in read-only mode.
   `WritingMask`		`<integer>` flags mask set when the stream is in Writing state'!
+
 !OS.StdioFileStream categoriesForClass!Collections-Streams! !
+
 !OS.StdioFileStream methodsFor!
 
 accessMode
@@ -500,6 +505,7 @@ upTo: anObject
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
 	^self bufferPrototype decodeFrom: self upTo: anObject! !
+
 !OS.StdioFileStream categoriesForMethods!
 accessMode!public!testing! !
 asParameter!converting!public! !
@@ -890,6 +896,7 @@ write: aString type: aSymbol
 		mode: #truncate
 		check: false
 		type: aSymbol! !
+
 !OS.StdioFileStream class categoriesForMethods!
 attach:toFd:mode:!instance creation!public! !
 attach:toFd:mode:type:!instance creation!public! !

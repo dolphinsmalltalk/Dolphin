@@ -13,7 +13,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_Data' -> 16r14.
 			'_OffsetOf_dwFlags' -> 16r8
 		}!
+
 OS.EMRSETICMPROFILE guid: (Core.GUID fromString: '{f0dd9705-d88e-4c84-a38c-d8afd0882dc4}')!
+
 OS.EMRSETICMPROFILE comment: '<EMRSETICMPROFILE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETICMPROFILE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagEMRSETICMPROFILE {
 	[helpstring("Array size is cbName + cbData")] BYTE Data[1];
 } EMRSETICMPROFILE;
 '!
+
 !OS.EMRSETICMPROFILE categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETICMPROFILE methodsFor!
 
 cbData
@@ -82,6 +86,7 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger! !
+
 !OS.EMRSETICMPROFILE categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -137,6 +142,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETICMPROFILEA. EMR_SETICMPROFILEW}! !
+
 !OS.EMRSETICMPROFILE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

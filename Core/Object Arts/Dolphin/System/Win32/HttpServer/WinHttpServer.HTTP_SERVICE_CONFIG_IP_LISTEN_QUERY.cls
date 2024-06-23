@@ -11,7 +11,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_AddrCount' -> 16r0.
 			'_OffsetOf_AddrList' -> 16r8
 		}!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY guid: (Core.GUID fromString: '{3eebcb9d-9dc3-4701-a044-c16df022085b}')!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY comment: '`HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +30,9 @@ struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_QUERY {
 } HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY methodsFor!
 
 AddrCount
@@ -60,6 +64,7 @@ AddrList: aStructureArrayOfSOCKADDR_STORAGE
 		to: _OffsetOf_AddrList + size
 		startingAt: 1.
 	self AddrCount: aStructureArrayOfSOCKADDR_STORAGE size! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesForMethods!
 AddrCount!**compiled accessors**!private! !
 AddrCount:!**compiled accessors**!private! !
@@ -91,6 +96,7 @@ defineFields
 
 getFieldNames
 	^#(#AddrCount #AddrList)! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

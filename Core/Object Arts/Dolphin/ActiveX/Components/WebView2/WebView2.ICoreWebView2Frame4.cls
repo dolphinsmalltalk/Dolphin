@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Frame3
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Frame4 guid: (OS.COM.IID fromString: '{188782dc-92aa-4732-ab3c-fcc59f6f68b9}')!
+
 WebView2.ICoreWebView2Frame4 isEgressOnly: true!
+
 WebView2.ICoreWebView2Frame4 comment: '`ICoreWebView2Frame4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -31,7 +34,9 @@ interface ICoreWebView2Frame4 : ICoreWebView2Frame3
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Frame4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Frame4 methodsFor!
 
 PostSharedBufferToScript: sharedBuffer access: access additionalDataAsJson: additionalDataAsJson
@@ -44,6 +49,7 @@ PostSharedBufferToScript: sharedBuffer access: access additionalDataAsJson: addi
 
 	<virtual stdcall: hresult 27 ICoreWebView2SharedBuffer* int32 lpwstr>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Frame4 categoriesForMethods!
 PostSharedBufferToScript:access:additionalDataAsJson:!**auto generated**!COM Interfaces-ICoreWebView2Frame4!public! !
 !
@@ -58,6 +64,7 @@ defineFunctions
 		defineFunction: #PostSharedBufferToScript:access:additionalDataAsJson:
 			argumentTypes: 'ICoreWebView2SharedBuffer* int32 lpwstr'
 ! !
+
 !WebView2.ICoreWebView2Frame4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

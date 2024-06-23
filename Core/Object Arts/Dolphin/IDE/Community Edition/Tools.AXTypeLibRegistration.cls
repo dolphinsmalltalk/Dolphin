@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AXTypeLibRegistration guid: (Core.GUID fromString: '{187aaa33-6992-4cfc-bac1-e8a4cb9ea0f9}')!
+
 Tools.AXTypeLibRegistration comment: 'AXTypeLibRegistration is a simple class to hold registration information for a type library which might not yet be loaded.
 
 Instance Variables:
@@ -16,6 +18,7 @@ Instance Variables:
 	versionString	<String>
 
 '!
+
 !Tools.AXTypeLibRegistration methodsFor!
 
 < operand
@@ -89,6 +92,7 @@ versionString
 
 	major ifNil: [self parseRegistryVersion].
 	^versionString! !
+
 !Tools.AXTypeLibRegistration categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !
@@ -116,6 +120,7 @@ icon
 	"Answers an <Icon> that can be used to represent this class"
 
 	^TypeLibraryAnalyzer icon! !
+
 !Tools.AXTypeLibRegistration class categoriesForMethods!
 description:guidString:versionString:!instance creation!public! !
 icon!constants!public! !

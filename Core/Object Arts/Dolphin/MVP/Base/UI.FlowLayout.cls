@@ -27,7 +27,9 @@ UI.LayoutManager
 			'AlignTop' -> 16r0.
 			'AlignVCenter' -> 16r4
 		}!
+
 UI.FlowLayout guid: (Core.GUID fromString: '{87b4c648-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.FlowLayout comment: 'FlowLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The views are arranged in a similar manner to words on a page; from left to right and top to bottom. The FlowLayout fits as many visible views as possible into a single row before moving onto the next row. Any invisible views are ignored, and are allocated no space in the layout. You can specify the overall alignment of the rows to be #left, #centre or #right. The separation between adjacent components can be specified with the #horizontalGap and #verticalGap aspects. 
 
 Note that a FlowLayout takes no notice of the #arrangement aspects of the views that it manages.
@@ -39,7 +41,9 @@ Instance Variables:
 	verticalGap 		<integer> vertical gap between adjacent views
 	alignment		<Symbol> either #left, #center or #right
 '!
+
 !UI.FlowLayout categoriesForClass!MVP-Layout Managers-General! !
+
 !UI.FlowLayout methodsFor!
 
 alignment
@@ -194,6 +198,7 @@ verticalGap: anInteger
 	"Set the vertical gap between items laid out by the receiver to be the <integer> argument."
 
 	verticalGap := anInteger! !
+
 !UI.FlowLayout categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -250,6 +255,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !UI.FlowLayout class categoriesForMethods!
 initialize!development!helpers!public! !
 stbConvertFrom:!binary filing!public! !

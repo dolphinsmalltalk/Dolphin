@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SplitterTest guid: (Core.GUID fromString: '{beb204cd-8c17-44a4-8305-c23345382e1e}')!
+
 UI.Tests.SplitterTest comment: ''!
+
 !UI.Tests.SplitterTest methodsFor!
 
 classToTest
@@ -21,6 +24,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view interactor isKindOf: DraggableViewInteractor.
 	self assert: view hasFlatAppearance! !
+
 !UI.Tests.SplitterTest categoriesForMethods!
 classToTest!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -47,6 +51,7 @@ resource_Horizontalvertical_splitter_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Splitter) 34 12 nil nil 34 2 8 1140850688 1 416 nil 327686 ##(Smalltalk.Color) #default nil 519 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 416 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 546 9 9 nil 560 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 546 3839 21 546 951 11 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 90 9 0 0 15 0 0 0] 8 #() 546 193 193 nil 27)! !
+
 !UI.Tests.SplitterTest class categoriesForMethods!
 resource_Horizontalvertical_splitter_D6!public!resources-views! !
 resource_Horizontalvertical_splitter_D7!public!resources-views! !

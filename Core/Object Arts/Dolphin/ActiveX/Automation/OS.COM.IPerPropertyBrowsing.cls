@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPerPropertyBrowsing guid: (OS.COM.IID fromString: '{376bd3aa-3845-101b-84ed-08002b2ec713}')!
+
 OS.COM.IPerPropertyBrowsing comment: '`IPerPropertyBrowsing` is a wrapper class for the COM interface ''Win32.IPerPropertyBrowsing'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -43,7 +45,9 @@ interface IPerPropertyBrowsing : IUnknown
 };
 ```
 '!
+
 !OS.COM.IPerPropertyBrowsing categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IPerPropertyBrowsing methodsFor!
 
 getDisplayString: dispID
@@ -161,6 +165,7 @@ stringsToValues: dispid
 
 	^Dictionary withAll: (self getStringsAndValues: dispid)
 ! !
+
 !OS.COM.IPerPropertyBrowsing categoriesForMethods!
 getDisplayString:!**auto generated**!methods!public! !
 GetDisplayString:pbstr:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
@@ -194,6 +199,7 @@ defineFunctions
 		defineFunction: #GetPredefinedValue:dwCookie:pVarOut:
 			argumentTypes: 'int32 uint32 VARIANT*'
 ! !
+
 !OS.COM.IPerPropertyBrowsing class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

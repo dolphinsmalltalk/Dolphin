@@ -7,8 +7,11 @@ Graphics.Gdiplus.BrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.SolidBrushFromColorInitializer guid: (Core.GUID fromString: '{02b80350-515e-40c3-8ec4-b328a7a4bcbb}')!
+
 Graphics.Gdiplus.SolidBrushFromColorInitializer comment: ''!
+
 !Graphics.Gdiplus.SolidBrushFromColorInitializer methodsFor!
 
 = anObject
@@ -63,6 +66,7 @@ printAttributesOn: aStream
 		nextPutAll: #color:;
 		space;
 		print: color! !
+
 !Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -79,6 +83,7 @@ printAttributesOn:!printing!private! !
 
 color: aColor
 	^self new color: aColor! !
+
 !Graphics.Gdiplus.SolidBrushFromColorInitializer class categoriesForMethods!
 color:!instance creation!public! !
 !

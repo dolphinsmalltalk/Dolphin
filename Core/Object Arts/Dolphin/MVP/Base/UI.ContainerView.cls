@@ -7,7 +7,9 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ContainerView guid: (Core.GUID fromString: '{87b4c70c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ContainerView comment: 'ContainerView is an abstract class which implements the <compositeView> protocol for its subclasses. This protocol allows for <compositeView>s to contain sub-views which may be managed by the container.
 
 Instance Variables:
@@ -18,7 +20,9 @@ Instance Variables:
 
 
 '!
+
 !UI.ContainerView categoriesForClass!MVP-Resources-Containers!MVP-Views! !
+
 !UI.ContainerView methodsFor!
 
 actualInsets: aLayoutContext 
@@ -292,6 +296,7 @@ viewNamed: aString ifNone: aNiladicValuable
 		ifNil: 
 			[(self subViewsFind: [:each | each isManaged ifTrue: [each viewNamed: aString ifNone: nil]])
 				ifNil: [aNiladicValuable value]]! !
+
 !UI.ContainerView categoriesForMethods!
 actualInsets:!accessing!private! !
 actualPreferredExtent:!geometry!private! !
@@ -346,6 +351,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1140850688 131073 32 nil nil nil 5 nil nil nil 32 nil 550 #{Core.IdentityDictionary} 0 nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 242 701 501 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 242 193 193 nil 27)! !
+
 !UI.ContainerView class categoriesForMethods!
 icon!constants!public! !
 resource_Default_view!public!resources-views! !

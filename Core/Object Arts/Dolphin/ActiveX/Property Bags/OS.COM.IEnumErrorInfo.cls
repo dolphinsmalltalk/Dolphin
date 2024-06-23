@@ -7,8 +7,11 @@ OS.COM.IEnumUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumErrorInfo guid: (OS.COM.IID fromString: '{502052c4-0fe9-4a5f-9a7d-2335d7584ded}')!
+
 OS.COM.IEnumErrorInfo comment: ''!
+
 !OS.COM.IEnumErrorInfo class methodsFor!
 
 defineFunctions
@@ -22,6 +25,7 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IErrorInfo! !
+
 !OS.COM.IEnumErrorInfo class categoriesForMethods!
 defineFunctions!initializing!public! !
 elementClass!constants!public! !

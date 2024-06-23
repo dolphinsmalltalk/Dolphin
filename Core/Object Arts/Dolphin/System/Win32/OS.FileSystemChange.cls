@@ -9,9 +9,13 @@ Core.Object
 	classConstants: {
 			'ActionMap' -> #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 16r5)
 		}!
+
 OS.FileSystemChange guid: (Core.GUID fromString: '{ad5f4ada-4f26-46de-a418-b5a0e0c6b937}')!
+
 OS.FileSystemChange comment: ''!
+
 !OS.FileSystemChange categoriesForClass!Kernel-Objects! !
+
 !OS.FileSystemChange methodsFor!
 
 = aFileSystemChange 
@@ -45,6 +49,7 @@ setCode: anInteger fileName: aString
 	time := FILETIME now.
 	code := anInteger.
 	fileNames := {aString}! !
+
 !OS.FileSystemChange categoriesForMethods!
 =!comparing!public! !
 action!public! !
@@ -61,6 +66,7 @@ code: anInteger fileName: aString
 	^(self new)
 		setCode: anInteger fileName: aString;
 		yourself! !
+
 !OS.FileSystemChange class categoriesForMethods!
 code:fileName:!instance creation!public! !
 !

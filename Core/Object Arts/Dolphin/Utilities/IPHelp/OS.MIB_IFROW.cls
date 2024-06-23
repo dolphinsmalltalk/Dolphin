@@ -33,7 +33,9 @@ External.Structure
 			'_OffsetOf_dwType' -> 16r204.
 			'_OffsetOf_wszName' -> 16r0
 		}!
+
 OS.MIB_IFROW guid: (Core.GUID fromString: '{6ead7710-bab6-4715-a112-b56e9b66d9ee}')!
+
 OS.MIB_IFROW comment: '<MIB_IFROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -70,7 +72,9 @@ struct tagMIB_IFROW {
 	BYTE bDescr[256];
 } MIB_IFROW;
 '!
+
 !OS.MIB_IFROW categoriesForClass!Win32-Structs! !
+
 !OS.MIB_IFROW methodsFor!
 
 bDescr
@@ -192,6 +196,7 @@ wszName
 	"Answer the <Utf16String> value of the receiver's 'wszName' field."
 
 	^Utf16String fromAddress: bytes yourAddress! !
+
 !OS.MIB_IFROW categoriesForMethods!
 bDescr!**compiled accessors**!public! !
 bPhysAddr!**compiled accessors**!public! !
@@ -340,6 +345,7 @@ defineFields
 
 getFieldNames
 	^#(#wszName #dwIndex #dwType #dwMtu #dwSpeed #dwPhysAddrLen #bPhysAddr #dwAdminStatus #dwOperStatus #dwLastChange #dwInOctets #dwInUcastPkts #dwInNUcastPkts #dwInDiscards #dwInErrors #dwInUnknownProtos #dwOutOctets #dwOutUcastPkts #dwOutNUcastPkts #dwOutDiscards #dwOutErrors #dwOutQLen #dwDescrLen #bDescr)! !
+
 !OS.MIB_IFROW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

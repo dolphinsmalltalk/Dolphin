@@ -7,7 +7,9 @@ ADODB._DynaCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.Parameters guid: (OS.COM.IID fromString: '{0000150d-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.Parameters comment: '`Parameters` is a wrapper class for the COM interface ''ADODB.Parameters'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +34,9 @@ interface Parameters : _DynaCollection
 };
 ```
 '!
+
 !ADODB.Parameters categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.Parameters methodsFor!
 
 get_Item: index ppvObject: ppvObject
@@ -52,6 +56,7 @@ item: index
 	answer := _Parameter newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
+
 !ADODB.Parameters categoriesForMethods!
 get_Item:ppvObject:!**auto generated**!COM Interfaces-Parameters!private! !
 item:!**auto generated**!properties!public! !
@@ -67,6 +72,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant _Parameter**'
 ! !
+
 !ADODB.Parameters class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

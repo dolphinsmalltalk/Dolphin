@@ -7,10 +7,15 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: 'notUsed'
 	classConstants: { 'ClassConst1' -> 16r1 }!
+
 Refactory.Browser.Tests.ClassToRename guid: (Core.GUID fromString: '{83c27f52-b80f-487b-bd8c-b4035ca0cf2e}')!
+
 Refactory.Browser.Tests.ClassToRename isNonInstantiable: true!
+
 Refactory.Browser.Tests.ClassToRename comment: 'Class used to excercise RenameClassRefactory by RenameClassTest'!
+
 !Refactory.Browser.Tests.ClassToRename categoriesForClass!Refactory-Test data! !
+
 !Refactory.Browser.Tests.ClassToRename methodsFor!
 
 method1
@@ -41,6 +46,7 @@ refersToOwnClassVariableFullyQualified
 
 selfReference
 	^ClassToRename new! !
+
 !Refactory.Browser.Tests.ClassToRename categoriesForMethods!
 method1!performing!public! !
 method2!performing!public! !
@@ -70,6 +76,7 @@ testSkip
 	"Can be resolved by unqualified name through the import into the receiver's namespace"
 
 	^TestSkip! !
+
 !Refactory.Browser.Tests.ClassToRename class categoriesForMethods!
 byteSize!accessing!private! !
 initialize!public! !

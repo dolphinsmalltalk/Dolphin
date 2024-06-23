@@ -7,7 +7,9 @@ nil
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object guid: (Core.GUID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Object comment: '`Core.Object` is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
 
 ## Instance Variables:
@@ -35,7 +37,9 @@ The following messages defined in Object have optimized implementations inlined 
 In addition any selector in Object with a ''basic'' prefix may be subject to inlining in future releases, so these should not be overridden.
 
 '!
+
 !Core.Object categoriesForClass!Kernel-Objects! !
+
 !Core.Object methodsFor!
 
 ?? anObject
@@ -1488,6 +1492,7 @@ yourself
 
 	^self
 ! !
+
 !Core.Object categoriesForMethods!
 ??!converting!public! !
 _deepCopy:!copying!private! !
@@ -1704,6 +1709,7 @@ resourcesLocator
 	environment it is assumed that all resources will be in a Resources subdirectory relative to the installation directory"
 
 	^SessionManager current resourcesLocatorForClass: self! !
+
 !Core.Object class categoriesForMethods!
 initialize!development!initializing!public! !
 initializeDependencyMechanism!initializing!private! !

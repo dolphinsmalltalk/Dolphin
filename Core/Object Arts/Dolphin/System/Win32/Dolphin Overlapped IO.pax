@@ -112,6 +112,7 @@ postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberO
 
 	<stdcall: int32 PostQueuedCompletionStatus int32 uint32 uint32 OVERLAPPED*>
 	^self invalidCall: _failureCode! !
+
 !OS.KernelLibrary categoriesForMethods!
 cancelIo:!**auto generated**!public! !
 createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:!**auto generated**!public! !

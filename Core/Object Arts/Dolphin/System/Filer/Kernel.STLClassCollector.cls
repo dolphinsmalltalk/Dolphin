@@ -7,9 +7,13 @@ Kernel.STxInFilerWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLClassCollector guid: (Core.GUID fromString: '{bf23d8df-102a-469c-90f6-0698b66b6fa6}')!
+
 Kernel.STLClassCollector comment: '`STLClassCollector` is a `STLInFiler` decorator that captures the class of all objects in an STL stream. This is useful for tracking dependencies between classes resulting from STL resources that might otherwise not be visible. This helps, for example, to build a complete picture of package prerequisites, and also when stripping an image for application deployment to retain classes that resources may depend on.'!
+
 !Kernel.STLClassCollector categoriesForClass!System-Binary storage! !
+
 !Kernel.STLClassCollector methodsFor!
 
 basicNext
@@ -116,6 +120,7 @@ stream: aStream
 		add: decorated class
 
 	! !
+
 !Kernel.STLClassCollector categoriesForMethods!
 basicNext!accessing!private! !
 characterValue:!helpers!public! !
@@ -141,6 +146,7 @@ classesIn: aLiteralArray
 	"Answer a new instance attached to the binary stream aStream."
 
 	^(self on: aLiteralArray readStream) contents! !
+
 !Kernel.STLClassCollector class categoriesForMethods!
 classesIn:!instance creation!public! !
 !

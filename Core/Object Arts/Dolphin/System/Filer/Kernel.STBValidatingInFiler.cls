@@ -7,11 +7,15 @@ Kernel.STxInFilerWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBValidatingInFiler guid: (Core.GUID fromString: '{5f22eb11-9eed-40df-b02f-fe697b4cbe7e}')!
+
 Kernel.STBValidatingInFiler comment: '`STBValidatingInFiler` is a `STBInFiler` decorator that is capable of validating the classes of objects appearing in a STB input stream before the objects are actually allowed to be loaded.  This is important since STB is generally considered to be an insecure storage mechanism as it allows arbitrary classes and blocks of code to be imported. Hence `STBValidatingInFiler`s are useful in situations where it is important to guarantee that only "safe" objects can be loaded (e.g. DolphinSure certificates need to be secure and yet are often stored using STB streams).
 
 After instantiating an instance of `STBValidatingInFiler`, it can be configured to include or exclude classes (by default not even the basic predefined classes are included), or with a validation block (using `#validationBlock:`) that takes a symbolic class name as a single parameter.  The block can be used to indicate whether instances of this class should be considered to be safe in the context of the input stream.  If the block evaluates to true the object load will be allowed whereas if it evaluates to false the load will be denied by signalling a `STBError`.'!
+
 !Kernel.STBValidatingInFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STBValidatingInFiler methodsFor!
 
 classLocator
@@ -63,6 +67,7 @@ validClasses: aCollection
 
 version
 	^version ifNil: [version := self inFilerClass readSignatureAndVersion: stream]! !
+
 !Kernel.STBValidatingInFiler categoriesForMethods!
 classLocator!public! !
 classLocator:!public! !
@@ -97,6 +102,7 @@ on: aStream validClasses: aCollection
 	"Answer a new instance attached to the binary stream aStream."
 
 	^self new stream: aStream classLocator: (RestrictedClassLocator forClasses: aCollection)! !
+
 !Kernel.STBValidatingInFiler class categoriesForMethods!
 defaultClassLocatorClass!constants!private! !
 on:!instance creation!public! !

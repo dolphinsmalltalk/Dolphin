@@ -5,9 +5,13 @@ MainTestCase subclass: #NiladicBlockANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NiladicBlockANSITest guid: (GUID fromString: '{5addab96-83a8-41f0-9d14-cfe47f372b9c}')!
+
 NiladicBlockANSITest comment: ''!
+
 !NiladicBlockANSITest categoriesForClass!Unclassified! !
+
 !NiladicBlockANSITest methodsFor!
 
 canonicalObject
@@ -150,6 +154,7 @@ testXwhileTrueX
 	self value: [ [sum < 0 ] whileTrue: [sum := sum + 1] ]
 		should: [:r | sum = 0]
 		conformTo: #'niladicValuable' selector: #'whileTrue:'.! !
+
 !NiladicBlockANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

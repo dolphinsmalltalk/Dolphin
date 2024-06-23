@@ -11,8 +11,11 @@ Graphics.Gdiplus.Initializer
 			'DashStyleNames'
 				-> #('DashStyleSolid' 'DashStyleDash' 'DashStyleDot' 'DashStyleDashDot' 'DashStyleDashDotDot' 'DashStyleCustom')
 		}!
+
 Graphics.Gdiplus.PenInitializer guid: (Core.GUID fromString: '{b5a5d186-b0ef-421c-befb-c5628a17fee9}')!
+
 Graphics.Gdiplus.PenInitializer comment: ''!
+
 !Graphics.Gdiplus.PenInitializer methodsFor!
 
 = anObject
@@ -364,6 +367,7 @@ width
 widthOf: aGdiplusPen set: aNumber
 	width := aNumber ?? 1.
 	aGdiplusPen basicHandle ifNotNil: [:handle | Gdip gdipSetPenWidth: handle width: width asFloat]! !
+
 !Graphics.Gdiplus.PenInitializer categoriesForMethods!
 =!comparing!public! !
 alignment!accessing!public! !
@@ -435,6 +439,7 @@ stbConvertFrom: anSTBClassFormat
 	anSTBClassFormat version == 0
 		ifTrue: [^[:data | PenInitializer ink: (data at: 2) width: (data at: 3)]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !Graphics.Gdiplus.PenInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

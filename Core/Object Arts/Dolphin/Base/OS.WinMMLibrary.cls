@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.WinMMLibrary guid: (Core.GUID fromString: '{6467404e-3a82-101b-8181-00aa003743d3}')!
+
 OS.WinMMLibrary comment: ''!
+
 !OS.WinMMLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.WinMMLibrary methodsFor!
 
 mciGetErrorString: code lpszErrorText: returnString cchErrorText: retsize
@@ -45,6 +49,7 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 
 	<stdcall: bool PlaySoundW lpvoid handle uint32>
 	^self invalidCall: _failureCode! !
+
 !OS.WinMMLibrary categoriesForMethods!
 mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
 mciSendString:!public!win32 functions-MCI! !
@@ -58,6 +63,7 @@ fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WinMM'! !
+
 !OS.WinMMLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

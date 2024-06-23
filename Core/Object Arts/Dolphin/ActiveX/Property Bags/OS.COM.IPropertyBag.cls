@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPropertyBag guid: (OS.COM.IID fromString: '{55272a00-42cb-11ce-8135-00aa004bb851}')!
+
 OS.COM.IPropertyBag comment: '`OS.COM.IPropertyBag` is a wrapper class for the COM interface ''Win32.IPropertyBag'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -36,7 +38,9 @@ interface IPropertyBag : IUnknown
 };
 ```
 '!
+
 !OS.COM.IPropertyBag categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IPropertyBag methodsFor!
 
 read: pszPropName pErrorLog: pErrorLog
@@ -75,6 +79,7 @@ Write: pszPropName pVar: pVar
 
 	<virtual stdcall: hresult 5 lpwstr variant*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IPropertyBag categoriesForMethods!
 read:pErrorLog:!**auto generated**!methods!public! !
 Read:pVar:pErrorLog:!**auto generated**!COM Interfaces-IPropertyBag!private! !
@@ -97,6 +102,7 @@ defineFunctions
 		defineFunction: #Write:pVar:
 			argumentTypes: 'lpwstr VARIANT*'
 ! !
+
 !OS.COM.IPropertyBag class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

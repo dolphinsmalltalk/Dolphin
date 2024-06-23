@@ -7,10 +7,14 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.PC1Cipher guid: (Core.GUID fromString: '{611b2a17-3b8e-4bd9-94e2-38ce0d22736c}')!
+
 Security.PC1Cipher comment: 'This class provides a stream encoder/decoder using the PC1 algorithm.
 Portions ©1997 by Stefan Matthias Aust'!
+
 !Security.PC1Cipher categoriesForClass!Cryptography-Support! !
+
 !Security.PC1Cipher methodsFor!
 
 advance
@@ -98,6 +102,7 @@ reset
 			j := (key at: x \\ n + 1) + (box at: x + 1) + j bitAnd: 255.
 			box swap: x + 1 with: j + 1].
 	i := j := 0! !
+
 !Security.PC1Cipher categoriesForMethods!
 advance!ciphering!public! !
 advance:!ciphering!public! !
@@ -207,6 +212,7 @@ withStrength: bits
 	"Answer an instance of the receiver with <Integer> bits strength"
 
 	^self withKeyInteger: (self generateRandomWithBits: bits)! !
+
 !Security.PC1Cipher class categoriesForMethods!
 byteArrayFromInteger:!helpers!private! !
 churnRandPool!helpers!private! !

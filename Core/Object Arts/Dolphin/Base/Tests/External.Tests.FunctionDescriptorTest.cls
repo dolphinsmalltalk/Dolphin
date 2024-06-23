@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.FunctionDescriptorTest guid: (Core.GUID fromString: '{d809ef14-78cf-4e10-8dc1-0249d46b4b5f}')!
+
 External.Tests.FunctionDescriptorTest comment: ''!
+
 !External.Tests.FunctionDescriptorTest methodsFor!
 
 externalTypes
@@ -159,6 +162,7 @@ testStructs
 		parseStructArg: _FPIEEE_VALUE
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgLP! !
+
 !External.Tests.FunctionDescriptorTest categoriesForMethods!
 externalTypes!accessing!private! !
 parseStructArg:valueType:refType:!private!unit tests! !

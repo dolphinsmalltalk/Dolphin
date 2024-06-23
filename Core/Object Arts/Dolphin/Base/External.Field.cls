@@ -7,8 +7,11 @@ Kernel.AttributeDescriptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Field guid: (Core.GUID fromString: '{87b4c4d8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Field isNonInstantiable: true!
+
 External.Field comment: 'ExternalField is the abstract class of metadata objects that describe the fields of <ExternalStructure>s, including such attributes as the byte offset of the field, the type of the field, and potentially the size of the field.
 
 Instance Variables:
@@ -16,7 +19,9 @@ Instance Variables:
 	structClass	<ExternalStructure class> of which the instance is describing a field.
 
 '!
+
 !External.Field categoriesForClass!External-Data-Types! !
+
 !External.Field methodsFor!
 
 alignment
@@ -81,6 +86,7 @@ valueType
 	"Private - Answer the class of Smalltalk object to be used to represent the values stored in the field described by the receiver."
 
 	^Object! !
+
 !External.Field categoriesForMethods!
 alignment!constants!public! !
 beFiller!modes!public! !
@@ -102,6 +108,7 @@ filler
 	(it cannot be read or written)."
 
 	^self new beFiller! !
+
 !External.Field class categoriesForMethods!
 filler!instance creation!public! !
 !

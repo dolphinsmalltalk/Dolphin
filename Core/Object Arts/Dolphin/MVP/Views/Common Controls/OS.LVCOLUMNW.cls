@@ -22,14 +22,18 @@ External.Structure
 			'AlignmentMap'
 				-> (IdentityDictionary withAll: { #center -> 16r2. #left -> 16r0. #right -> 16r1 })
 		}!
+
 OS.LVCOLUMNW guid: (Core.GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.LVCOLUMNW comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
 
 LVCOLUMN is used in conjunction with the ListView to specify the details of individual columns when in report mode.
 
 Instance Variables:
 	text	<String> column header text whose address is stored in the structure.'!
+
 !OS.LVCOLUMNW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+
 !OS.LVCOLUMNW methodsFor!
 
 alignment: alignmentSymbol
@@ -201,6 +205,7 @@ width: pixelWidth
 	"Set the width of the column to pixelWidth."
 
 	self cx: pixelWidth; maskIn: LVCF_WIDTH! !
+
 !OS.LVCOLUMNW categoriesForMethods!
 alignment:!accessing!public! !
 cchTextMax:!**compiled accessors**!public! !
@@ -285,6 +290,7 @@ fromColumn: aListViewColumn
 
 getFieldNames
 	^#(#mask #fmt #cx #pszText #cchTextMax #iSubItem #iImage #iOrder #cxMin #cxDefault #cxIdeal)! !
+
 !OS.LVCOLUMNW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

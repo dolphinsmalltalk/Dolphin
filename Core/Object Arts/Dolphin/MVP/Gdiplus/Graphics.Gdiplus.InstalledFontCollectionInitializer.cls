@@ -7,8 +7,11 @@ Graphics.Gdiplus.FontCollectionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.InstalledFontCollectionInitializer guid: (Core.GUID fromString: '{c09d8c04-5f28-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.InstalledFontCollectionInitializer comment: ''!
+
 !Graphics.Gdiplus.InstalledFontCollectionInitializer methodsFor!
 
 = anObject
@@ -22,6 +25,7 @@ basicCreateHandle
 
 hash
 	^self species hash! !
+
 !Graphics.Gdiplus.InstalledFontCollectionInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -41,6 +45,7 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
+
 !Graphics.Gdiplus.InstalledFontCollectionInitializer class categoriesForMethods!
 default!instance creation!private! !
 new!development!instance creation!public! !

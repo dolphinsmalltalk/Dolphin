@@ -7,14 +7,19 @@ Kernel.Namespace
 	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External} #{Tools private})
 	classInstanceVariableNames: 'events allRoots allClasses classesByGuid oldNames'
 	classConstants: {}!
+
 Smalltalk guid: (Core.GUID fromString: '{4c8d0eb7-6d0e-4467-aea6-e6f1107faf7d}')!
+
 Smalltalk isNonInstantiable: true!
+
 Smalltalk comment: '`Smalltalk` represents the distinguished namespace of the same name. Historically Smalltalk was a global variable holding an instance of the `SystemDictionary` class, although the `SystemDictionary` class no longer exists in Dolphin from 8.x and Smalltalk is now a `Namespace` class.
 
 The primary purpose of the Smalltalk namespace is to support loading of old packages that pre-date namespace support. It can also continue to be used as the namespace for application code if that is your preference. It imports all the namespaces that contain parts of the original Dolphin image, and aliases some specific classes, so the effect is that almost all the classes are globally bindable.  This means that older packages can be loaded and should continue to function, however loose methods added to classes that have been moved to other namespaces may fail to compile due to former global names no longer being in scope. Such compilation failures can be easily corrected by qualifying global names as necessary in the loose methods.
 
 Smalltalk has special implementations of some of the `Dictionary` protocol such as `at:[put:]`, `includesKey:`, etc, that will accept qualified names. This is to assist with the migration of legacy code to namespaces and allows dynamic lookups such as `Smalltalk at: #MyClass` to continue to function after renaming into namespaces, e.g., `Smalltalk at: #''MyNamespace.MyClass`. The Rename Class refactoring will translate symbolic references to classes that were in Smalltalk into fully-qualified references when a class is renamed into a namespace. This is necessary because the old unqualified name will no longer be found directly in `Smalltalk`, although it is really only intended as a temporary solution while porting code into namespaces. The illusion of a single flat namespace is far from complete.'!
+
 !Smalltalk categoriesForClass!Kernel-Objects! !
+
 !Smalltalk class methodsFor!
 
 allClasses
@@ -136,6 +141,7 @@ staticVariableRemoved: aVariableBinding
 	self
 		clearCachedClasses;
 		trigger: #variableRemoved: with: aVariableBinding! !
+
 !Smalltalk class categoriesForMethods!
 allClasses!accessing!public! !
 allClassesDo:!binding!public! !

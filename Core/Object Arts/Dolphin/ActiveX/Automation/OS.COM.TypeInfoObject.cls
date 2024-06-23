@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TypeInfoObject guid: (Core.GUID fromString: '{27440177-dfab-46d4-bf61-a8fada69a263}')!
+
 OS.COM.TypeInfoObject isNonInstantiable: true!
+
 OS.COM.TypeInfoObject comment: '
 	
 Instance Variables:
@@ -20,7 +23,9 @@ Class Variables:
 	SuperclassClash		<WarningSignal>
 
 '!
+
 !OS.COM.TypeInfoObject categoriesForClass!Kernel-Objects! !
+
 !OS.COM.TypeInfoObject methodsFor!
 
 asParameter
@@ -146,6 +151,7 @@ variableName
 	changed)."
 
 	^self binding key! !
+
 !OS.COM.TypeInfoObject categoriesForMethods!
 asParameter!converting!public! !
 attributes!accessing!public! !

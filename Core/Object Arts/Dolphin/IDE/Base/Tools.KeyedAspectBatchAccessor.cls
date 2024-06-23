@@ -7,9 +7,13 @@ Tools.BatchAspectAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.KeyedAspectBatchAccessor guid: (Core.GUID fromString: '{1be03af7-5614-4c9c-832d-a3c368804e02}')!
+
 Tools.KeyedAspectBatchAccessor comment: 'Part of the PublishedAspectorInspector framework. KeyedAspectBatchAccessors are used to give access to a group of <KeyedAspectAccessors> for elements of a keyed collection. Batching the accessors up in this way allows the PAI to only display a certain number of elements at a time. This can substantially improve performance when displaying large (or slow to access) collections.'!
+
 !Tools.KeyedAspectBatchAccessor categoriesForClass!MVP-Models! !
+
 !Tools.KeyedAspectBatchAccessor methodsFor!
 
 aspectClass
@@ -47,6 +51,7 @@ publishedAspects
 	for this node (without this one gets a + and can expand it)."
 
 	^LookupTable new! !
+
 !Tools.KeyedAspectBatchAccessor categoriesForMethods!
 aspectClass!public! !
 getBatchAccessors!accessing!public! !
@@ -64,6 +69,7 @@ subject: anObject batchSize: sizeInteger
 		keys: anObject keys
 		startingAt: 1
 		batchSize: sizeInteger! !
+
 !Tools.KeyedAspectBatchAccessor class categoriesForMethods!
 subject:batchSize:!instance creation!public! !
 !

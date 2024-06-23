@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETVIEWPORTEXTEX_Size' -> 16r10. '_OffsetOf_szlExtent' -> 16r8 }!
+
 OS.EMRSETVIEWPORTEXTEX guid: (Core.GUID fromString: '{4f4dcf23-8e3c-4b18-8546-b833b55d3305}')!
+
 OS.EMRSETVIEWPORTEXTEX comment: '<EMRSETVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRSETVIEWPORTEXTEX {
 	SIZEL szlExtent;
 } EMRSETVIEWPORTEXTEX;
 '!
+
 !OS.EMRSETVIEWPORTEXTEX categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETVIEWPORTEXTEX methodsFor!
 
 szlExtent
@@ -38,6 +42,7 @@ szlExtent: aSIZEL
 		from: ##(_OffsetOf_szlExtent + 1)
 		to: ##(_OffsetOf_szlExtent + SIZEL._SIZEL_Size)
 		startingAt: 1! !
+
 !OS.EMRSETVIEWPORTEXTEX categoriesForMethods!
 szlExtent!**compiled accessors**!public! !
 szlExtent:!**compiled accessors**!public! !
@@ -74,6 +79,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETVIEWPORTEXTEX. EMR_SETWINDOWEXTEX}! !
+
 !OS.EMRSETVIEWPORTEXTEX class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

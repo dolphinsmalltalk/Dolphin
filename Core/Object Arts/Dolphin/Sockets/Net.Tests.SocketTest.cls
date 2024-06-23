@@ -7,8 +7,11 @@ AbstractSocketTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.Tests.SocketTest guid: (Core.GUID fromString: '{25407553-d303-4d50-ad3d-b05b28a27c47}')!
+
 Net.Tests.SocketTest comment: ''!
+
 !Net.Tests.SocketTest methodsFor!
 
 clientSocketClass
@@ -129,6 +132,7 @@ testSTBMessages
 	ready wait.
 	messages := messages asArray.
 	self assert: messages equals: sent! !
+
 !Net.Tests.SocketTest categoriesForMethods!
 clientSocketClass!constants!private! !
 serverSocketClass!constants!private!unit tests! !

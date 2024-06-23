@@ -7,7 +7,9 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ClassFactory guid: (Core.GUID fromString: '{87b4c540-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.ClassFactory comment: 'COMClassFactory is Dolphin''s standard implementation of IClassFactory. It can serve up instances of a particular coclass (possibly also a subclass of COMInterfaceImp), and having been registered once for any paricular coclass it will re-register the availability of that coclass with COM each time that Dolphin is started.
 
 Subclasses can provide specialized services to support coclasses with particular instantiation requirements, and they can even implement alternative class factory interfaces (contrary to common believe IClassFactory is not mandatory).
@@ -22,7 +24,9 @@ Class Variables:
 	Instances		- a <WeakSet> containing all outstanding instances of all registered coclasses. Used to control server lifetime.
 	LockCount	- <integer> lock count reflecting calls to LockServer().
 '!
+
 !OS.COM.ClassFactory categoriesForClass!COM-Implementations! !
+
 !OS.COM.ClassFactory methodsFor!
 
 basicFree
@@ -176,6 +180,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^{IClassFactory}! !
+
 !OS.COM.ClassFactory categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 clear!initializing!private! !
@@ -329,6 +334,7 @@ unregister: serverClass
 	| f |
 	f := Factories removeKey: serverClass ifAbsent: [^self].
 	f revoke! !
+
 !OS.COM.ClassFactory class categoriesForMethods!
 basicOn:clsid:!instance creation!private! !
 canUnloadNow!private!testing! !

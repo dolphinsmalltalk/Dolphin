@@ -40,6 +40,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.PropertyBag'
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
@@ -47,6 +48,7 @@ OS.COM.InterfaceImplementation
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.PropertyBagErrorLog'
 	instanceVariableNames: 'errors guid'
@@ -54,6 +56,7 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.COM.PROPBAG2'
 	instanceVariableNames: ''
@@ -69,6 +72,7 @@ External.Structure
 			'_OffsetOf_vt' -> 16r4.
 			'_PROPBAG2_Size' -> 16r20
 		}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IErrorLog'
 	instanceVariableNames: ''
@@ -76,6 +80,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IPropertyBag'
 	instanceVariableNames: ''
@@ -83,6 +88,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IPropertyBag2'
 	instanceVariableNames: ''
@@ -90,6 +96,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumUnknown
 	subclass: #'OS.COM.IEnumErrorInfo'
 	instanceVariableNames: ''
@@ -97,6 +104,7 @@ OS.COM.IEnumUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPersist
 	subclass: #'OS.COM.IPersistPropertyBag'
 	instanceVariableNames: ''
@@ -104,6 +112,7 @@ OS.COM.IPersist
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPersistPropertyBag
 	subclass: #'OS.COM.IPersistPropertyBag2'
 	instanceVariableNames: ''

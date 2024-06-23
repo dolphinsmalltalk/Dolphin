@@ -7,8 +7,11 @@ External.POINTArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.POINTFArray guid: (Core.GUID fromString: '{db21ef86-a19c-470e-93c7-fd0c4546148c}')!
+
 External.POINTFArray comment: ''!
+
 !External.POINTFArray methodsFor!
 
 printElement: aPoint on: aStream
@@ -33,6 +36,7 @@ uncheckedAt: anInteger put: aPoint
 	| offset |
 	offset := anInteger - 1 bitShift: 3.
 	^(bytes floatAtOffset: offset put: aPoint x) @ (bytes floatAtOffset: offset + 4 put: aPoint y)! !
+
 !External.POINTFArray categoriesForMethods!
 printElement:on:!printing!private! !
 uncheckedAt:!accessing!private! !
@@ -45,6 +49,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^POINTF! !
+
 !External.POINTFArray class categoriesForMethods!
 elementClass!constants!public! !
 !

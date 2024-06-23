@@ -7,7 +7,9 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StAssignmentNode guid: (Core.GUID fromString: '{3a82c1ca-7ed8-4a69-9e9e-b58b738abc85}')!
+
 Kernel.StAssignmentNode comment: 'StAssignmentNode is a parse tree node for assignment statements
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	variable	<StVariableNode>	the variable being assigned
 
 '!
+
 !Kernel.StAssignmentNode categoriesForClass!System-Compiler! !
+
 !Kernel.StAssignmentNode methodsFor!
 
 = anObject
@@ -99,6 +103,7 @@ variable: aVariableNode value: aValueNode position: anInteger
 	self variable: aVariableNode.
 	self value: aValueNode.
 	assignment := anInteger! !
+
 !Kernel.StAssignmentNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -136,6 +141,7 @@ variable: aVariableNode value: aValueNode position: anInteger
 			value: aValueNode
 			position: anInteger;
 		yourself! !
+
 !Kernel.StAssignmentNode class categoriesForMethods!
 variable:value:!instance creation!public! !
 variable:value:position:!instance creation!public! !

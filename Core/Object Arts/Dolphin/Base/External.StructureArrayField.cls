@@ -7,10 +7,14 @@ External.ArrayField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.StructureArrayField guid: (Core.GUID fromString: '{87b4c4e1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.StructureArrayField comment: 'StructureArrayField is an <ExternalField> type that can be used to described embedded arrays of structures in <ExternalStructures>.
 '!
+
 !External.StructureArrayField categoriesForClass!External-Data-Types! !
+
 !External.StructureArrayField methodsFor!
 
 alignment
@@ -51,6 +55,7 @@ valueParameterName
 
 valueType
 	^self arrayClass! !
+
 !External.StructureArrayField categoriesForMethods!
 alignment!constants!public! !
 arrayClass!constants!private! !

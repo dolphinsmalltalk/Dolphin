@@ -12,7 +12,9 @@ External.Structure
 			'_OffsetOf_palPalEntry' -> 16r4.
 			'_OffsetOf_palVersion' -> 16r0
 		}!
+
 OS.LOGPALETTE guid: (Core.GUID fromString: '{87b4c5fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.LOGPALETTE comment: '<LOGPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPALETTE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +31,9 @@ struct tagLOGPALETTE {
 	[readonly, helpstring("Specifies an array of PALETTEENTRY structures that define the color and usage of each entry in the logical palette."), size_is("palNumEntries")] PALETTEENTRY palPalEntry[256];
 } LOGPALETTE;
 '!
+
 !OS.LOGPALETTE categoriesForClass!Win32-Structs! !
+
 !OS.LOGPALETTE methodsFor!
 
 palNumEntries
@@ -59,6 +63,7 @@ palVersion: anInteger
 	"Set the receiver's 'palVersion' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_palVersion put: anInteger! !
+
 !OS.LOGPALETTE categoriesForMethods!
 palNumEntries!**compiled accessors**!public! !
 palNumEntries:!**compiled accessors**!public! !
@@ -107,6 +112,7 @@ new
 	^(super new)
 		palNumEntries: 256;
 		yourself! !
+
 !OS.LOGPALETTE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

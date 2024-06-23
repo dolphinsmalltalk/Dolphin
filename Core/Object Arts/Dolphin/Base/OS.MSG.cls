@@ -16,11 +16,15 @@ External.Structure
 			'_OffsetOf_x' -> 16r14.
 			'_OffsetOf_y' -> 16r18
 		}!
+
 OS.MSG guid: (Core.GUID fromString: '{87b4c5ff-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.MSG comment: 'MSG is an <ExternalStructure> to wrap the Win32 structure of the same name.
 
 MSG is an represents the state associated with a Windows message retrieved via GetMessage().'!
+
 !OS.MSG categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.MSG methodsFor!
 
 hwnd
@@ -88,6 +92,7 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes int32AtOffset: _OffsetOf_y! !
+
 !OS.MSG categoriesForMethods!
 hwnd!**compiled accessors**!public! !
 isInput!public!testing! !
@@ -135,6 +140,7 @@ defineFields
 
 getFieldNames
 	^#(#hwnd #message #wParam #lParam #time #x #y)! !
+
 !OS.MSG class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

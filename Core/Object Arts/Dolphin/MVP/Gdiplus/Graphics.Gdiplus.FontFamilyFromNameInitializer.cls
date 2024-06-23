@@ -7,8 +7,11 @@ Graphics.Gdiplus.FontFamilyInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamilyFromNameInitializer guid: (Core.GUID fromString: '{2688e140-b9b7-4e51-9b2d-f8bba5c90e2b}')!
+
 Graphics.Gdiplus.FontFamilyFromNameInitializer comment: ''!
+
 !Graphics.Gdiplus.FontFamilyFromNameInitializer methodsFor!
 
 = anObject
@@ -68,6 +71,7 @@ printAttributesOn: aStream
 			[aStream
 				nextPutAll: ' fontCollection: ';
 				print: fontCollection]! !
+
 !Graphics.Gdiplus.FontFamilyFromNameInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !

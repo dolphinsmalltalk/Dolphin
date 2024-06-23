@@ -7,11 +7,15 @@ UI.GUISessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AXDllGUISessionManager guid: (Core.GUID fromString: '{93d9b74c-09d3-40ca-ba82-1a819bfce625}')!
+
 UI.AXDllGUISessionManager comment: 'AXDllSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed Active-X/COM component DLL with GUI elements.
 
 Use this class of SessionManager when deploying your Active-X DLL if it opens any windows.'!
+
 !UI.AXDllGUISessionManager categoriesForClass!System-Support! !
+
 !UI.AXDllGUISessionManager methodsFor!
 
 keepAlive
@@ -25,6 +29,7 @@ openConsoleStreams
 	"Do nothing - when running as a DLL we cannot assume we have access to the console"
 
 	! !
+
 !UI.AXDllGUISessionManager categoriesForMethods!
 keepAlive!idling!public! !
 openConsoleStreams!operations!private! !
@@ -52,6 +57,7 @@ isRuntime
 	(as opposed to development, or abstract)."
 
 	^true! !
+
 !UI.AXDllGUISessionManager class categoriesForMethods!
 icon!constants!development!must strip!public! !
 imageExtension!constants!public! !

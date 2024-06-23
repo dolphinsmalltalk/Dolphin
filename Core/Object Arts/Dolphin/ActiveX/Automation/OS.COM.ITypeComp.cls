@@ -7,9 +7,13 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ITypeComp guid: (OS.COM.IID fromString: '{00020403-0000-0000-c000-000000000046}')!
+
 OS.COM.ITypeComp comment: ''!
+
 !OS.COM.ITypeComp categoriesForClass!COM-Interfaces! !
+
 !OS.COM.ITypeComp methodsFor!
 
 Bind: bind lHashVal: lHashVal wFlags: wFlags ppTInfo: ppTInfo pDescKind: pDescKind pBindPtr: pBindPtr
@@ -27,6 +31,7 @@ BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
 
 	<virtual stdcall: hresult 5 lpwstr uint32 lppvoid lppvoid>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.ITypeComp categoriesForMethods!
 Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
 BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
@@ -61,6 +66,7 @@ defineFunctions
 			 argumentTypes: 'lpwstr dword word ITypeInfo** Int32* lppvoid'; "'DESCKIND* BINDPTR*';"
 		defineFunction: #BindType:lHashVal:ppTInfo:ppTComp:        
 			 argumentTypes: 'lpwstr dword ITypeInfo** ITypeComp**'! !
+
 !OS.COM.ITypeComp class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

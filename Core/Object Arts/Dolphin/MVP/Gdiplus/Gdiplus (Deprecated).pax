@@ -55,6 +55,7 @@ fromName: aString
 fromName: aString fontCollection: aFontCollection
 	#deprecated.
 	^self name: aString fontCollection: aFontCollection! !
+
 !Graphics.Gdiplus.FontFamily class categoriesForMethods!
 fromName:!instance creation!public! !
 fromName:fontCollection:!instance creation!public! !
@@ -67,6 +68,7 @@ blendFactors
 	#deprecated.
 	customBlend := initializer customBlendGet: self handle.
 	^{customBlend factors. customBlend positions}! !
+
 !Graphics.Gdiplus.GradientBrush categoriesForMethods!
 blendFactors!accessing!public! !
 !
@@ -104,6 +106,7 @@ translateTransform: aPoint
 translateTransform: aPoint order: aMatrixOrderConstant
 	#deprecated.
 	self translate: aPoint order: aMatrixOrderConstant! !
+
 !Graphics.Gdiplus.Matrix categoriesForMethods!
 rotateTransform:!operations!public!transformations! !
 rotateTransform:order:!operations!public!transformations! !
@@ -126,6 +129,7 @@ m11: aNumber11 m12: aNumber12 m21: aNumber21 m22: aNumber22 m31: dxNumber m32: d
 		m22: aNumber22
 		dx: dxNumber
 		dy: dyNumber! !
+
 !Graphics.Gdiplus.Matrix class categoriesForMethods!
 m11:m12:m21:m22:m31:m32:!instance creation!public! !
 !
@@ -137,6 +141,7 @@ blendColors
 	#deprecated.	"Confusingly named - doesn't just return the Colors, and should return a specific custom object rather than an Array tuple. See #blend."
 	blend := self blend.
 	^blend isCustom ifTrue: [#(#() #())] ifFalse: [{blend colors. blend positions}]! !
+
 !Graphics.Gdiplus.PathGradientBrush categoriesForMethods!
 blendColors!accessing!public! !
 !
@@ -176,6 +181,7 @@ xorRegion: aRegion
 
 	#deprecated.
 	self combineRegion: aRegion mode: CombineModeXor! !
+
 !Graphics.Gdiplus.Region categoriesForMethods!
 complementPath:!combining!public! !
 complementRegion:!combining!public! !
@@ -220,6 +226,7 @@ translateTransform: aPoint
 translateTransform: aPoint order: aMatrixOrderConstant
 	#deprecated.
 	self translate: aPoint order: aMatrixOrderConstant! !
+
 !Graphics.Gdiplus.TransformableBrush categoriesForMethods!
 multiplyTransform:!public!transformations! !
 multiplyTransform:order:!public!transformations! !
@@ -238,6 +245,7 @@ asGdiplusRectangle
 
 	#deprecated. "Not used"
 	^self position extent: self extent - 1 asPoint! !
+
 !Graphics.Rectangle categoriesForMethods!
 asGdiplusRectangle!converting!public! !
 !

@@ -24,7 +24,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r24
 		}!
+
 OS.EMRSTRETCHDIBITS guid: (Core.GUID fromString: '{bfcc8077-e3d1-4f40-81c8-b36128972f7a}')!
+
 OS.EMRSTRETCHDIBITS comment: '<EMRSTRETCHDIBITS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHDIBITS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -53,7 +55,9 @@ struct tagEMRSTRETCHDIBITS {
 	long cyDest;
 } EMRSTRETCHDIBITS;
 '!
+
 !OS.EMRSTRETCHDIBITS categoriesForClass!Win32-Structs! !
+
 !OS.EMRSTRETCHDIBITS methodsFor!
 
 cbBitsSrc
@@ -209,6 +213,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !OS.EMRSTRETCHDIBITS categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -329,6 +334,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_STRETCHDIBITS}! !
+
 !OS.EMRSTRETCHDIBITS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

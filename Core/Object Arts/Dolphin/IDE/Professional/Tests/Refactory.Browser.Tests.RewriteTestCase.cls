@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RewriteTestCase guid: (Core.GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
+
 Refactory.Browser.Tests.RewriteTestCase comment: ''!
+
 !Refactory.Browser.Tests.RewriteTestCase categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RewriteTestCase methodsFor!
 
 setUp
@@ -45,6 +49,7 @@ testTransformationRule
 				name: 'Transform'.
 	SmalllintChecker runRule: rule onEnvironment: env.
 	self deny: rule changes changes isEmpty! !
+
 !Refactory.Browser.Tests.RewriteTestCase categoriesForMethods!
 setUp!public!unit tests! !
 testEnvironment!public!unit tests! !

@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ResourceBrowserTest guid: (Core.GUID fromString: '{8d888ba2-f5b7-402c-9bff-e88b2cde2fab}')!
+
 Tools.Tests.ResourceBrowserTest comment: ''!
+
 !Tools.Tests.ResourceBrowserTest methodsFor!
 
 classToTest
@@ -64,6 +67,7 @@ testClass
 				classVariableNames: ''
 				poolDictionaries: ''
 				classInstanceVariableNames: '']! !
+
 !Tools.Tests.ResourceBrowserTest categoriesForMethods!
 classToTest!private!unit tests! !
 getShellResource!private!unit tests! !

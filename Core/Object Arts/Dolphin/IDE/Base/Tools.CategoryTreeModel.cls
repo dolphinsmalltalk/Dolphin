@@ -7,14 +7,18 @@ UI.TreeModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.CategoryTreeModel guid: (Core.GUID fromString: '{87b4c671-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.CategoryTreeModel comment: 'CategoryTreeModel represents a <treeModel> holding <Category> objects.
 
 Instance Variables:
 	title	<IntermediateCategory> the root of the tree.
 
 '!
+
 !Tools.CategoryTreeModel categoriesForClass!MVP-Models! !
+
 !Tools.CategoryTreeModel methodsFor!
 
 addCategory: aCategory
@@ -54,6 +58,7 @@ title: category
 	"Set the topmost node of the tree to be the specified <Category>"
 
 	title := category! !
+
 !Tools.CategoryTreeModel categoriesForMethods!
 addCategory:!adding!private! !
 list:!accessing!public! !
@@ -65,6 +70,7 @@ title:!accessing!public! !
 
 defaultSearchPolicy
 	^SearchPolicy equality! !
+
 !Tools.CategoryTreeModel class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 !

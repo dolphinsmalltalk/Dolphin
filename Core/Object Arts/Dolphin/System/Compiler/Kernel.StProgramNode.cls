@@ -12,8 +12,11 @@ Core.Object
 			'OptimizedSelectors'
 				-> #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself)
 		}!
+
 Kernel.StProgramNode guid: (Core.GUID fromString: '{3e45084e-5de8-40c0-b448-c53339a17b52}')!
+
 Kernel.StProgramNode isNonInstantiable: true!
+
 Kernel.StProgramNode comment: 'StProgramNode is an abstract class that represents a parse tree node in a Smalltalk program.
 
 Subclasses must implement the following messages:
@@ -36,7 +39,9 @@ Instance Variables:
 	parent	<StProgramNode>	the node we''re contained in
 
 '!
+
 !Kernel.StProgramNode categoriesForClass!System-Compiler! !
+
 !Kernel.StProgramNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -451,6 +456,7 @@ whoDefines: aName
 	^(self defines: aName) 
 		ifTrue: [self]
 		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]! !
+
 !Kernel.StProgramNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 addComments:!accessing!public! !
@@ -576,6 +582,7 @@ inlinedBlockSelectors
 
 optimizedSelectors
 	^OptimizedSelectors! !
+
 !Kernel.StProgramNode class categoriesForMethods!
 defaultFormatterClass!constants!public! !
 formatterClass!accessing!public! !

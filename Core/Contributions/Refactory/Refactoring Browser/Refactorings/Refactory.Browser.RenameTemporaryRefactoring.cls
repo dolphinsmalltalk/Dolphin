@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameTemporaryRefactoring guid: (Core.GUID fromString: '{605981c4-3d80-4ce9-b0ac-9691e8a47ded}')!
+
 Refactory.Browser.RenameTemporaryRefactoring comment: ''!
+
 !Refactory.Browser.RenameTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RenameTemporaryRefactoring methodsFor!
 
 class: aClass selector: aSelector interval: anInterval newName: aString 
@@ -81,6 +85,7 @@ transform
 	"The ParseTreeRewriter actually updates in place, otherwise we'd have to update the body of the defining node at this point."
 	self renameNode: definingNode.
 	model compileTree: parseTree forMethod: method! !
+
 !Refactory.Browser.RenameTemporaryRefactoring categoriesForMethods!
 class:selector:interval:newName:!initialize/release!public! !
 oldName:!accessing!private! !
@@ -107,6 +112,7 @@ renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector
 		selector: aSelector
 		interval: anInterval
 		newName: newName! !
+
 !Refactory.Browser.RenameTemporaryRefactoring class categoriesForMethods!
 model:renameTemporaryFrom:to:in:selector:!instance creation!public! !
 renameTemporaryFrom:to:in:selector:!instance creation!public! !

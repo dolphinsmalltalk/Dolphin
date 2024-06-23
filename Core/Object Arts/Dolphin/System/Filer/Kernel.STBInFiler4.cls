@@ -7,10 +7,13 @@ Kernel.STBInFiler3
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler4 guid: (Core.GUID fromString: '{ac8e1276-e734-4f62-856f-c6bc1d34dfc4}')!
+
 Kernel.STBInFiler4 comment: '`STBInFiler4` is an `STBInFiler` for reading the STB 4 binary object serialization format.
 
 STB 4 was introduced in Dolphin 7.1, primarily to support UTF-encoded strings.'!
+
 !Kernel.STBInFiler4 methodsFor!
 
 characterValue: anInteger
@@ -48,6 +51,7 @@ readSymbol: aSTxClassConversion
 	symbol := Symbol intern: (self readBytes: size into: (Utf8String new: size)).
 	decorator register: symbol.
 	^symbol! !
+
 !Kernel.STBInFiler4 categoriesForMethods!
 characterValue:!helpers!public! !
 locatorKeyFor:!helpers!public! !
@@ -91,6 +95,7 @@ uninitialize
 
 version
 	^4! !
+
 !Kernel.STBInFiler4 class categoriesForMethods!
 initialize!class initialization!public! !
 predefinedClasses!constants!public! !

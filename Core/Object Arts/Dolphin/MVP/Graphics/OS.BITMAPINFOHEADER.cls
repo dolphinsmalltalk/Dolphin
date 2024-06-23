@@ -19,11 +19,15 @@ OS.SizedStructure
 			'_OffsetOf_biXPelsPerMeter' -> 16r18.
 			'_OffsetOf_biYPelsPerMeter' -> 16r1C
 		}!
+
 OS.BITMAPINFOHEADER guid: (Core.GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.BITMAPINFOHEADER comment: 'BITMAPINFOHEADER is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAPINFOHEADER structure is used for header information describing device-independent bitmaps.'!
+
 !OS.BITMAPINFOHEADER categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.BITMAPINFOHEADER methodsFor!
 
 biBitCount
@@ -151,6 +155,7 @@ numQuads
 				ifTrue: [0]
 				ifFalse: [3]]
 ! !
+
 !OS.BITMAPINFOHEADER categoriesForMethods!
 biBitCount!**compiled accessors**!public! !
 biBitCount:!**compiled accessors**!public! !
@@ -202,6 +207,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #biWidth #biHeight #biPlanes #biBitCount #biCompression #biSizeImage #biXPelsPerMeter #biYPelsPerMeter #biClrUsed #biClrImportant)! !
+
 !OS.BITMAPINFOHEADER class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

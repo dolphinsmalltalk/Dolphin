@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ScaledDecimalTest guid: (Core.GUID fromString: '{dfe00781-39f5-4b43-ba15-861976d2ff7c}')!
+
 Core.Tests.ScaledDecimalTest comment: ''!
+
 !Core.Tests.ScaledDecimalTest methodsFor!
 
 floatTestValues
@@ -724,6 +727,7 @@ testZeroRaisedToInteger
 	self assert: (0.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 2) equals: 0.
 	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1! !
+
 !Core.Tests.ScaledDecimalTest categoriesForMethods!
 floatTestValues!constants!private! !
 fractionTestValues!constants!private! !

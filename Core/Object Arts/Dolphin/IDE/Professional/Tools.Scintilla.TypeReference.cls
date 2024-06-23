@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.TypeReference guid: (Core.GUID fromString: '{b22f3a15-8ccd-4dc0-b245-110e116464f3}')!
+
 Tools.Scintilla.TypeReference isNonInstantiable: true!
+
 Tools.Scintilla.TypeReference comment: ''!
+
 !Tools.Scintilla.TypeReference categoriesForClass!Development! !
+
 !Tools.Scintilla.TypeReference methodsFor!
 
 byRef
@@ -43,6 +48,7 @@ printOn: aStream
 
 printParameter: aString on: aWriteStream
 	aWriteStream nextPutAll: aString! !
+
 !Tools.Scintilla.TypeReference categoriesForMethods!
 byRef!accessing!public! !
 defaultValue!constants!public! !
@@ -104,6 +110,7 @@ resetTypeMap
 				at: 'formatrangefull'
 					put: (PointerTypeReference name: 'formatrange' objectClass: UI.Scintilla.RangeToFormatFull);
 				yourself! !
+
 !Tools.Scintilla.TypeReference class categoriesForMethods!
 declareEnum:prefix:!constants!public! !
 enumForConst:!constants!public! !

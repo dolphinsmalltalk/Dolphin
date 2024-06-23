@@ -15,9 +15,13 @@ External.Structure
 			'_OffsetOf_xOffsetPercent' -> 16r10.
 			'_OffsetOf_yOffsetPercent' -> 16r14
 		}!
+
 OS.LVBKIMAGEW guid: (Core.GUID fromString: '{33fccb1a-f5ba-4ae8-93ad-63d00b9aa869}')!
+
 OS.LVBKIMAGEW comment: ''!
+
 !OS.LVBKIMAGEW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.LVBKIMAGEW methodsFor!
 
 bitmap: aBitmapOrNil 
@@ -133,6 +137,7 @@ yOffsetPercent: anInteger
 	"Set the receiver's 'yOffsetPercent' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_yOffsetPercent put: anInteger! !
+
 !OS.LVBKIMAGEW categoriesForMethods!
 bitmap:!accessing!public! !
 cchImageMax:!**compiled accessors**!public! !
@@ -177,6 +182,7 @@ defineFields
 
 getFieldNames
 	^#(#ulFlags #hbm #pszImage #cchImageMax #xOffsetPercent #yOffsetPercent)! !
+
 !OS.LVBKIMAGEW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

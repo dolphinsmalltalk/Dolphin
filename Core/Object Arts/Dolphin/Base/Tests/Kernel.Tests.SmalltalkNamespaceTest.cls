@@ -7,8 +7,11 @@ Kernel.Tests.SystemNamespaceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.SmalltalkNamespaceTest guid: (Core.GUID fromString: '{2aa58b1b-4203-4bcd-bd4b-b7497c69d4df}')!
+
 Kernel.Tests.SmalltalkNamespaceTest comment: ''!
+
 !Kernel.Tests.SmalltalkNamespaceTest methodsFor!
 
 subject
@@ -68,6 +71,7 @@ testWellFormed
 			self assert: each isKindOf: VariableBinding.
 			self assert: each environment identicalTo: Smalltalk.
 			self deny: each isClassVariable]! !
+
 !Kernel.Tests.SmalltalkNamespaceTest categoriesForMethods!
 subject!constants!private! !
 testAbsoluteName!public!unit tests! !

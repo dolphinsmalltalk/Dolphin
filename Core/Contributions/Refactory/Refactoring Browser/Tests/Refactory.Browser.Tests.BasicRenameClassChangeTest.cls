@@ -7,9 +7,13 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.BasicRenameClassChangeTest guid: (Core.GUID fromString: '{daca5a98-79b1-4c67-af7c-454061a1b5f4}')!
+
 Refactory.Browser.Tests.BasicRenameClassChangeTest comment: ''!
+
 !Refactory.Browser.Tests.BasicRenameClassChangeTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.BasicRenameClassChangeTest methodsFor!
 
 subjectClass
@@ -32,6 +36,7 @@ testPrinting
 		equals: (Object definition copyReplaceAll: 'Core.Object' with: 'Core.Foo').
 	self assert: subject changeString equals: 'Rename Core.Object to Core.Foo'.
 	self assert: subject printString equals: 'ClassBuilder renameClass: Core.Object to: ''Core.Foo''!!'! !
+
 !Refactory.Browser.Tests.BasicRenameClassChangeTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsUndo!public!unit tests! !

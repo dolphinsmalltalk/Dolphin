@@ -7,8 +7,11 @@ UI.Tests.StaticViewTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.StaticTextTest guid: (Core.GUID fromString: '{92e427a0-a55c-4346-a3a1-68b30ee8a1a9}')!
+
 UI.Tests.StaticTextTest comment: ''!
+
 !UI.Tests.StaticTextTest methodsFor!
 
 classToTest
@@ -83,6 +86,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	"Backcolor of StaticViews left as nil in v12 to inherit from parent"
 	self assertIsNil: view backcolor.
 	self assert: view interactor identicalTo: view! !
+
 !UI.Tests.StaticTextTest categoriesForMethods!
 classToTest!helpers!private! !
 testCalculateExtentMultiline!public!unit tests! !
@@ -111,6 +115,7 @@ resource_Static_text_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticText) 34 16 nil nil 34 2 8 1140850944 65 416 nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3359 21 642 241 39 416 594 #text: 34 1 8 'Static Text' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 7 7 0 0 29 0 0 0] 8 #() 642 193 193 nil 27 )! !
+
 !UI.Tests.StaticTextTest class categoriesForMethods!
 resource_Static_text_D6!public!resources-views! !
 resource_Static_text_D7!public!resources-views! !

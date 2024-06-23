@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WinHttp.IWinHttpRequest guid: (OS.COM.IID fromString: '{016fe2ec-b2c8-45f8-b23b-39e53a75396b}')!
+
 WinHttp.IWinHttpRequest comment: '`IWinHttpRequest` is a wrapper class for the COM interface ''WinHttp.IWinHttpRequest'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -99,7 +101,9 @@ interface IWinHttpRequest : IDispatch
 };
 ```
 '!
+
 !WinHttp.IWinHttpRequest categoriesForClass!COM-Interfaces!WinHttp-Interfaces! !
+
 !WinHttp.IWinHttpRequest methodsFor!
 
 abort
@@ -499,6 +503,7 @@ WaitForResponse: timeout succeeded: succeeded
 
 	<virtual stdcall: hresult 22 variant varbool*>
 	^self invalidCall: _failureCode! !
+
 !WinHttp.IWinHttpRequest categoriesForMethods!
 abort!**auto generated**!methods!public! !
 Abort!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
@@ -598,6 +603,7 @@ defineFunctions
 		defineFunction: #SetAutoLogonPolicy:
 			argumentTypes: 'sdword'
 ! !
+
 !WinHttp.IWinHttpRequest class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

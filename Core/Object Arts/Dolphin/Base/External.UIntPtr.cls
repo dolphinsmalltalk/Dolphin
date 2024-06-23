@@ -7,9 +7,13 @@ External.INTEGER
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_UIntPtr_Size' -> 16r4 }!
+
 External.UIntPtr guid: (Core.GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
+
 External.UIntPtr comment: ''!
+
 !External.UIntPtr categoriesForClass!External-Data-Structured-Win32! !
+
 !External.UIntPtr methodsFor!
 
 asSignedInteger
@@ -66,6 +70,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_value put: anInteger! !
+
 !External.UIntPtr categoriesForMethods!
 asSignedInteger!converting!public! !
 asUnsignedInteger!converting!public! !
@@ -89,6 +94,7 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: UIntPtrField new beOverride! !
+
 !External.UIntPtr class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

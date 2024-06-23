@@ -16,7 +16,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyExchangeType' -> 16r14.
 			'_OffsetOf_Protocol' -> 16r0
 		}!
+
 WinHttpServer.HTTP_SSL_PROTOCOL_INFO guid: (Core.GUID fromString: '{73784afd-f4e5-464e-b716-46ebb0c8c6d1}')!
+
 WinHttpServer.HTTP_SSL_PROTOCOL_INFO comment: '`HTTP_SSL_PROTOCOL_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -38,7 +40,9 @@ struct tagHTTP_SSL_PROTOCOL_INFO {
 } HTTP_SSL_PROTOCOL_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SSL_PROTOCOL_INFO methodsFor!
 
 CipherStrength
@@ -75,6 +79,7 @@ Protocol
 	"Answer the <Integer> value of the receiver's 'Protocol' field."
 
 	^bytes uint32AtOffset: _OffsetOf_Protocol! !
+
 !WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesForMethods!
 CipherStrength!**compiled accessors**!public! !
 CipherType!**compiled accessors**!public! !
@@ -119,6 +124,7 @@ defineFields
 
 getFieldNames
 	^#(#Protocol #CipherType #CipherStrength #HashType #HashStrength #KeyExchangeType #KeyExchangeStrength)! !
+
 !WinHttpServer.HTTP_SSL_PROTOCOL_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

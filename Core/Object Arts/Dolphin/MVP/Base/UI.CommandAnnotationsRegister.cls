@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.CommandAnnotationsRegister guid: (Core.GUID fromString: '{e5ddba4d-9de4-4c48-8dea-3931a5af109a}')!
+
 UI.CommandAnnotationsRegister comment: ''!
+
 !UI.CommandAnnotationsRegister methodsFor!
 
 addAnnotationsFor: aClass
@@ -61,6 +64,7 @@ onMethodUpdated: aCompilationResult
 				[:annotations |
 				"Any method update, whether annotated or not, may have an impact on the command annotations. For example annotations may be removed."
 				annotations onMethodUpdated: aCompilationResult]! !
+
 !UI.CommandAnnotationsRegister categoriesForMethods!
 addAnnotationsFor:!helpers!private! !
 annotationsFor:!public! !
@@ -80,6 +84,7 @@ initialize
 
 uninitialize
 	Smalltalk removeEventsTriggeredFor: Current! !
+
 !UI.CommandAnnotationsRegister class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !

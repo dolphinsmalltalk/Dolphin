@@ -7,9 +7,13 @@ XProgramming.SUnit.TestRunLogger
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestRunConsoleLogger guid: (Core.GUID fromString: '{c279d11f-90f1-4fe3-bfa6-09a2d85a208e}')!
+
 XProgramming.SUnit.TestRunConsoleLogger comment: ''!
+
 !XProgramming.SUnit.TestRunConsoleLogger categoriesForClass!Kernel-Objects! !
+
 !XProgramming.SUnit.TestRunConsoleLogger methodsFor!
 
 emitTimestamp
@@ -149,6 +153,7 @@ summarizeTimings: aTestResult threshold: aDuration
 				tab;
 				print: each case;
 				cr]! !
+
 !XProgramming.SUnit.TestRunConsoleLogger categoriesForMethods!
 emitTimestamp!logging!private! !
 finishedCase:!logging!public! !
@@ -171,6 +176,7 @@ on: aPuttableStream
 	^(self new)
 		stream: aPuttableStream;
 		yourself! !
+
 !XProgramming.SUnit.TestRunConsoleLogger class categoriesForMethods!
 on:!public! !
 !

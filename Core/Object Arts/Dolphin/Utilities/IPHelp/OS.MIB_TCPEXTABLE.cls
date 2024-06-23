@@ -7,7 +7,9 @@ OS.MIB_TCPTABLE
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_MIB_TCPEXTABLE_Size' -> 16r1C }!
+
 OS.MIB_TCPEXTABLE guid: (Core.GUID fromString: '{3582e317-1c8d-46de-b0aa-21ada27c614f}')!
+
 OS.MIB_TCPEXTABLE comment: '<MIB_TCPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagMIB_TCPEXTABLE {
 	MIB_TCPEXROW table[1];
 } MIB_TCPEXTABLE;
 '!
+
 !OS.MIB_TCPEXTABLE categoriesForClass!Win32-Structs! !
+
 !OS.MIB_TCPEXTABLE methodsFor!
 
 table
@@ -32,6 +36,7 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_TCPEXROW! !
+
 !OS.MIB_TCPEXTABLE categoriesForMethods!
 table!**compiled accessors**!public! !
 !
@@ -63,6 +68,7 @@ defineFields
 					yourself)
 			offset: 4.
 	self byteSize: 28! !
+
 !OS.MIB_TCPEXTABLE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

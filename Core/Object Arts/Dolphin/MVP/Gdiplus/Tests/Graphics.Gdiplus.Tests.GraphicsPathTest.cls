@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GraphicsPathTest guid: (Core.GUID fromString: '{fcef1a10-834c-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.Tests.GraphicsPathTest comment: ''!
+
 !Graphics.Gdiplus.Tests.GraphicsPathTest methodsFor!
 
 createFullSubject
@@ -501,6 +504,7 @@ verifyFromRectangle: aRectangle
 	self assert: model equals: model2.
 	model2 free.
 	self assertClonedValid free! !
+
 !Graphics.Gdiplus.Tests.GraphicsPathTest categoriesForMethods!
 createFullSubject!private!running! !
 setSample3Points!initializing!private! !

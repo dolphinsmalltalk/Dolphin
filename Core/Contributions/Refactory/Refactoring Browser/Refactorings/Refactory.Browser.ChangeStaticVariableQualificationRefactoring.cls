@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ChangeStaticVariableQualificationRefactoring guid: (Core.GUID fromString: '{232e50b2-a446-425a-bfa1-64c54cd6ea29}')!
+
 Refactory.Browser.ChangeStaticVariableQualificationRefactoring isNonInstantiable: true!
+
 Refactory.Browser.ChangeStaticVariableQualificationRefactoring comment: ''!
+
 !Refactory.Browser.ChangeStaticVariableQualificationRefactoring methodsFor!
 
 buildRewriter
@@ -49,6 +53,7 @@ transform
 	(rewriter executeTree: node) ifFalse: [^self].
 	node = sourceTree ifFalse: [node replaceWith: rewriter tree].
 	self compileMethod! !
+
 !Refactory.Browser.ChangeStaticVariableQualificationRefactoring categoriesForMethods!
 buildRewriter!private!transforming! !
 compileMethod!private!transforming! !
@@ -88,6 +93,7 @@ rewriteMethod: aSelector forClass: aClass
 		rewrite:  nil
 		inMethod: aSelector
 		forClass: aClass! !
+
 !Refactory.Browser.ChangeStaticVariableQualificationRefactoring class categoriesForMethods!
 model:rewrite:inMethod:forClass:!instance creation!public! !
 model:rewriteMethod:forClass:!instance creation!public! !

@@ -5,9 +5,13 @@ MainTestCase subclass: #ByteArrayFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ByteArrayFactoryANSITest guid: (GUID fromString: '{bfe6e818-b700-4a86-bb33-e16ec01afd7f}')!
+
 ByteArrayFactoryANSITest comment: ''!
+
 !ByteArrayFactoryANSITest categoriesForClass!Unclassified! !
+
 !ByteArrayFactoryANSITest methodsFor!
 
 canonicalObject
@@ -43,6 +47,7 @@ testXwithXwithXwithX
 testXwithXwithXwithXwithX
 	" <ByteArray factory>#with:with:with:with: "
 	#'Collection'.! !
+
 !ByteArrayFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

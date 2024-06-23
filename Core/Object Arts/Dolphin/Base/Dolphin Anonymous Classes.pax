@@ -37,6 +37,7 @@ Kernel.ClassBuilder
 
 newAnonymousSubclass
 	^(ClassBuilder forAnonymousSubclassOf: self) createNewClass! !
+
 !Core.Class categoriesForMethods!
 newAnonymousSubclass!class hierarchy-adding!public! !
 !
@@ -47,6 +48,7 @@ forAnonymousSubclassOf: aClass
 	^AnonymousClassBuilder new
 		superclass: aClass;
 		yourself! !
+
 !Kernel.ClassBuilder class categoriesForMethods!
 forAnonymousSubclassOf:!instance creation!public! !
 !

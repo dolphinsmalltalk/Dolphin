@@ -7,8 +7,11 @@ Core.Tests.ArrayedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.RunArrayTest guid: (Core.GUID fromString: '{656416ed-47db-44fd-a18d-124febcc1ddf}')!
+
 Core.Tests.RunArrayTest comment: ''!
+
 !Core.Tests.RunArrayTest methodsFor!
 
 collectionClass
@@ -30,6 +33,7 @@ testSortColon
 		should: [subject sort]
 		raise: Error
 		matching: [:ex | ex messageText = 'RunArray should not implement #sortUsing:']! !
+
 !Core.Tests.RunArrayTest categoriesForMethods!
 collectionClass!helpers!private! !
 testReplaceFromToWithStartingAt!public! !

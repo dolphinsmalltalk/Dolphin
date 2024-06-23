@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: { 'EmbeddingMask' -> 16r1. 'SettingsChangeTimerId' -> 16r2 }!
+
 Core.SessionManager guid: (Core.GUID fromString: '{87b4c4b7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.SessionManager isNonInstantiable: true!
+
 Core.SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 
 
 SessionManager itself is abstract, with two further abstract subclasses that divide applications into two groups: <ConsoleSessionManager> whose subclasses implement Console (that is, command line, DOS style) applications, and <GUISessionManager> whose subclasses implement GUI (that is, Windows) applications.
@@ -36,7 +39,9 @@ Class Variables:
 	Current		<SessionManager>. Singleton instance, being the current session manager.
 
 '!
+
 !Core.SessionManager categoriesForClass!System-Support! !
+
 !Core.SessionManager methodsFor!
 
 allocConsole
@@ -1116,6 +1121,7 @@ windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session."
 
 	^File windowsDirectory! !
+
 !Core.SessionManager categoriesForMethods!
 allocConsole!operations!private! !
 allowDuplicate!operations-startup!public! !
@@ -1343,6 +1349,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current class==self ifTrue: [Current := nil]! !
+
 !Core.SessionManager class categoriesForMethods!
 asSessionManagerClass!converting!public! !
 current!accessing!public! !

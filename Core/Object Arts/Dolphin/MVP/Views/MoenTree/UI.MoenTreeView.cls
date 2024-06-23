@@ -21,7 +21,9 @@ UI.View
 								#tileIcons -> (16r30 @ 16r30)
 							})
 		}!
+
 UI.MoenTreeView guid: (Core.GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
+
 UI.MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It supports the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
 
 For more information on the underlying algorithms see:
@@ -56,7 +58,9 @@ Class Variables:
 	MultilineMask		<integer>. DrawText() flags combination for multiline text node labels.
 	SingleLineMask		<integer>. DrawText() flags combination for singleline text node labels.
 '!
+
 !UI.MoenTreeView categoriesForClass!MVP-Views! !
+
 !UI.MoenTreeView methodsFor!
 
 addTreeFor: anObject parentNode: aMoenTreeNode
@@ -1810,6 +1814,7 @@ zip: aMoenTreeNode
 		ifTrue: [self attachParent: aMoenTreeNode height: (self join: aMoenTreeNode)]
 		ifFalse: [self layoutLeaf: aMoenTreeNode].
 	self zip: aMoenTreeNode parent! !
+
 !UI.MoenTreeView categoriesForMethods!
 addTreeFor:parentNode:!adding!private! !
 anchorNode!accessing!private! !
@@ -2078,6 +2083,7 @@ value: anObject
 
 viewModes
 	^ViewModes! !
+
 !UI.MoenTreeView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

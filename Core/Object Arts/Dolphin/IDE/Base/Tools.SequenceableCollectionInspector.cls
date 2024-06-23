@@ -7,9 +7,13 @@ Tools.BasicInspector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SequenceableCollectionInspector guid: (Core.GUID fromString: '{87b4c696-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.SequenceableCollectionInspector comment: 'SequenceableCollectionInspector is a <compositePresenter> that implements a specialised inspect facility onto a <SequenceableCollection>. This allows the collection to be inspected via its integer indices.'!
+
 !Tools.SequenceableCollectionInspector categoriesForClass!MVP-Presenters! !
+
 !Tools.SequenceableCollectionInspector methodsFor!
 
 getField: anInteger
@@ -39,6 +43,7 @@ setField: anInteger to: anObject
 	anInteger > instSize 
 		ifTrue: [self selfField at: anInteger - instSize put: anObject]
 		ifFalse: [self selfField instVarAt: anInteger put: anObject]! !
+
 !Tools.SequenceableCollectionInspector categoriesForMethods!
 getField:!accessing!private! !
 getFieldList!accessing!private! !

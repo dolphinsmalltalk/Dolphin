@@ -5,9 +5,13 @@ MainTestCase subclass: #ReadStreamFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReadStreamFactoryANSITest guid: (GUID fromString: '{87304b11-3a5a-4886-afc4-36204464919d}')!
+
 ReadStreamFactoryANSITest comment: ''!
+
 !ReadStreamFactoryANSITest categoriesForClass!Unclassified! !
+
 !ReadStreamFactoryANSITest methodsFor!
 
 canonicalObject
@@ -22,6 +26,7 @@ testXonX
 		should: [:r | r position = 0 & (r contents = 'this is a string')]
 		conformTo: self protocol
 		selector: #on:! !
+
 !ReadStreamFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

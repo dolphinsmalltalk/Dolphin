@@ -11,7 +11,9 @@ External.Structure
 			'_OffsetOf_dwLocalAddr' -> 16r0.
 			'_OffsetOf_dwLocalPort' -> 16r4
 		}!
+
 OS.MIB_UDPROW guid: (Core.GUID fromString: '{3247a36f-48e5-4e25-ae9a-2e76f029e521}')!
+
 OS.MIB_UDPROW comment: '<MIB_UDPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +28,9 @@ struct tagMIB_UDPROW {
 	unsigned long dwLocalPort;
 } MIB_UDPROW;
 '!
+
 !OS.MIB_UDPROW categoriesForClass!Win32-Structs! !
+
 !OS.MIB_UDPROW methodsFor!
 
 dwLocalAddr
@@ -38,6 +42,7 @@ dwLocalPort
 	"Answer the <Integer> value of the receiver's 'dwLocalPort' field."
 
 	^bytes uint32AtOffset: _OffsetOf_dwLocalPort! !
+
 !OS.MIB_UDPROW categoriesForMethods!
 dwLocalAddr!**compiled accessors**!public! !
 dwLocalPort!**compiled accessors**!public! !
@@ -70,6 +75,7 @@ defineFields
 
 getFieldNames
 	^#(#dwLocalAddr #dwLocalPort)! !
+
 !OS.MIB_UDPROW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

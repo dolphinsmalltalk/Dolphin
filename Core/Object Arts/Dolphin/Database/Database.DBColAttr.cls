@@ -12,7 +12,9 @@ Core.Object
 			'SQLToCTypes'
 				-> #(-16rB -16r8 -16r8 -16r8 -16r7 -16r6 -16r19 -16r2 -16r2 -16r2 16r1 16r63 16r1 16r1 16r1 16r4 16r5 16r8 16r7 16r8 nil nil nil 16r1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r5B 16r5C 16r5D)
 		}!
+
 Database.DBColAttr guid: (Core.GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Database.DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
 
 Instance Variables:
@@ -28,7 +30,9 @@ Class Variables:
 	ODBCBaseTypes	<IdentityDictionary>
 
 '!
+
 !Database.DBColAttr categoriesForClass!ODBC Interface! !
+
 !Database.DBColAttr methodsFor!
 
 columnNumber
@@ -257,6 +261,7 @@ updateRuleMask: anInteger
 		self specialFlagAt:
 			(1 bitShift: (anInteger+8)) 
 			put: true ]! !
+
 !Database.DBColAttr categoriesForMethods!
 columnNumber!accessing!public! !
 columnNumber:!accessing!private! !
@@ -346,6 +351,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
+
 !Database.DBColAttr class categoriesForMethods!
 initialize!initializing!private! !
 new!instance creation!public! !

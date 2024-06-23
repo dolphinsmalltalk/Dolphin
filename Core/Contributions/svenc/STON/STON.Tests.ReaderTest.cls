@@ -7,10 +7,14 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.ReaderTest guid: (Core.GUID fromString: '{6a0fdc02-84d9-4344-8b1e-55e345843ec9}')!
+
 STON.Tests.ReaderTest comment: 'STONReaderTests test materialization.
 '!
+
 !STON.Tests.ReaderTest categoriesForClass!STON-Tests-Reader! !
+
 !STON.Tests.ReaderTest methodsFor!
 
 testAssociation
@@ -449,6 +453,7 @@ testWhitespace
 testWideSymbol
 	self assert: (self materialize: '#''яблоко''') equals: #'яблоко'.
 	self assert: (self materialize: '#яблоко') equals: #'яблоко'! !
+
 !STON.Tests.ReaderTest categoriesForMethods!
 testAssociation!public!tests! !
 testBag!public!tests! !

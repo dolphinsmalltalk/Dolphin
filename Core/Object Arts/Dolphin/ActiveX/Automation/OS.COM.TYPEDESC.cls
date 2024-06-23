@@ -15,7 +15,9 @@ External.Structure
 			'VTIndirections'
 				-> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 		}!
+
 OS.COM.TYPEDESC guid: (Core.GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
 
 The TYPEDESC structure describes the type of a variable, function parameter, or return value, and is one of the key structures in the type library model.
@@ -32,7 +34,9 @@ Note that this structure is only 6-bytes long, and requires packing when embedde
 Instance Variables:
 	owner		<ExternalStructure>. Backpointer to original structure to keep it alive, and also to locate ITypeInfo.
 '!
+
 !OS.COM.TYPEDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.TYPEDESC methodsFor!
 
 arrayDesc
@@ -205,6 +209,7 @@ vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
 
 	^VARIANT nameOfVT: self vartype! !
+
 !OS.COM.TYPEDESC categoriesForMethods!
 arrayDesc!development!private! !
 buildClassDesc!helpers!private! !
@@ -280,6 +285,7 @@ initialize
 				at: VT_UNKNOWN + 1 put: 1;
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
+
 !OS.COM.TYPEDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

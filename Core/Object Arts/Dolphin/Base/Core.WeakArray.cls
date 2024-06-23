@@ -7,9 +7,13 @@ Core.ArrayedCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WeakArray guid: (Core.GUID fromString: '{87b4c515-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.WeakArray comment: ''!
+
 !Core.WeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
+
 !Core.WeakArray methodsFor!
 
 add: newElement
@@ -116,6 +120,7 @@ species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail)."
 
 	^Array! !
+
 !Core.WeakArray categoriesForMethods!
 add:!adding!public! !
 addAnsweringIndex:!adding!public! !
@@ -140,6 +145,7 @@ new: anInteger withAll: anObject
 	"Answer a new instance of the receiver with <integer>, anInteger, elements, each of which is initialized to the <Object>, anObject."
 
 	^(super new: anInteger withAll: anObject) initialize! !
+
 !Core.WeakArray class categoriesForMethods!
 new:!instance creation!public! !
 new:withAll:!instance creation!public! !

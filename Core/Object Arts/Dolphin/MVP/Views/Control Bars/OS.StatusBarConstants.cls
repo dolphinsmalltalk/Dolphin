@@ -30,6 +30,10 @@ Kernel.SharedPool
 			'SBT_POPOUT' -> 16r200.
 			'SBT_RTLREADING' -> 16r400
 		}!
+
 OS.StatusBarConstants guid: (Core.GUID fromString: '{5eb59648-a696-4acd-8357-fd9eaae3010f}')!
+
 OS.StatusBarConstants isNonInstantiable: true!
+
 OS.StatusBarConstants comment: ''!
+

@@ -7,9 +7,13 @@ Kernel.ClassBuilder
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AnonymousClassBuilder guid: (Core.GUID fromString: '{cd7cc2b6-31a1-41e9-ad2d-50f3f9b109ab}')!
+
 Kernel.AnonymousClassBuilder comment: ''!
+
 !Kernel.AnonymousClassBuilder categoriesForClass!System-Support! !
+
 !Kernel.AnonymousClassBuilder methodsFor!
 
 installInSuperclass: aClass
@@ -30,6 +34,7 @@ validateClassName
 
 validateSuperclassChainForCreate
 	"The superclass just validates that no superclass has the same name, which is not relevant for the unnamed."! !
+
 !Kernel.AnonymousClassBuilder categoriesForMethods!
 installInSuperclass:!helpers!private! !
 installNewClass!environment!private! !

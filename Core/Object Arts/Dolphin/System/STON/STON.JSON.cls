@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.JSON guid: (Core.GUID fromString: '{5d40ba2f-84f1-44cf-970b-5ff22fd8fc7c}')!
+
 STON.JSON comment: 'I am STONJSON, a class side facade to use STON as a simple JSON parser/writer.
 
 STON is more or less a superset of JSON and is backwards compatible with JSON while parsing, and can be compatible with it while writing. The important differences (and the whole reason why STON exists in the first place) are 
@@ -40,7 +42,9 @@ E x a m p l e s
   STONJSON fromString: ''{"foo":1,"bar":2,"sub":{"a":true,"b":false},"flags":[1,8,32]}''.
  
 For a much more sophisticated JSON parser/writer implementation, have a look at NeoJSON.'!
+
 !STON.JSON categoriesForClass!STON-Core-Base! !
+
 !STON.JSON class methodsFor!
 
 fromStream: stream
@@ -65,6 +69,7 @@ toString: object
 
 toStringPretty: object
 	^STON toJsonStringPretty: object! !
+
 !STON.JSON class categoriesForMethods!
 fromStream:!convenience!public! !
 fromString:!convenience!public! !

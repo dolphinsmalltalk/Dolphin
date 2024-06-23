@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Message guid: (Core.GUID fromString: '{87b4c49e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Message comment: ''!
+
 !Core.Message categoriesForClass!Kernel-Methods! !
+
 !Core.Message methodsFor!
 
 = aMessage
@@ -163,6 +167,7 @@ valueWithArguments: argArray
 	"Evaluate the receiver with an <Array> of arguments in argArray"
 
 	^self forwardTo: argArray first withArguments: (argArray copyFrom: 2)! !
+
 !Core.Message categoriesForMethods!
 =!comparing!public! !
 argument!accessing!public! !
@@ -211,6 +216,7 @@ selector: aSymbol arguments: anArray
 
 	<primitive: 157>
 	^self new selector: aSymbol arguments: anArray! !
+
 !Core.Message class categoriesForMethods!
 selector:!instance creation!public! !
 selector:argument:!instance creation!public! !

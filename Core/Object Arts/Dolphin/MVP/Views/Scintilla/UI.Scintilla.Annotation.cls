@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.Annotation guid: (Core.GUID fromString: '{2d20c021-0cef-46f7-ba44-4c4191189df9}')!
+
 UI.Scintilla.Annotation comment: ''!
+
 !UI.Scintilla.Annotation categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.Annotation methodsFor!
 
 = comparand 
@@ -44,6 +48,7 @@ text
 	"Answer the text  of the annotation."
 
 	^text! !
+
 !UI.Scintilla.Annotation categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !
@@ -71,6 +76,7 @@ line: anInteger text: aString styles: aSequencedReadableCollectionOfSymbol
 			text: aString
 			styles: aSequencedReadableCollectionOfSymbol;
 		yourself! !
+
 !UI.Scintilla.Annotation class categoriesForMethods!
 icon!constants!development!public! !
 line:text:style:!public! !

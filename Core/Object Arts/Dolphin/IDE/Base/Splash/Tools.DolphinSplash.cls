@@ -7,13 +7,17 @@ UI.Splash
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinSplash guid: (Core.GUID fromString: '{87b4c724-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.DolphinSplash comment: 'DolphinSplash is the Dolphin development system''s spash screen. It extends <Splash> to use a titleless dialog frame and to overlap the Dolphin version information and legal copyright notice onto the splash screen graphic.
 
 To display the splash screen, evaluate:
 
 self new show'!
+
 !Tools.DolphinSplash categoriesForClass!MVP-Views! !
+
 !Tools.DolphinSplash methodsFor!
 
 animationDuration
@@ -69,6 +73,7 @@ showWindow
 	self class canDisplay 
 		ifTrue: [super showWindow]
 		ifFalse: [Canvas forDesktop colorDepth < 16 ifTrue: [self give256ColorDisplayWarning]]! !
+
 !Tools.DolphinSplash categoriesForMethods!
 animationDuration!constants!private! !
 defaultExtent!accessing!public! !
@@ -105,6 +110,7 @@ splashPlayTheGame
 
 splashPlayTheGame: aBoolean
 	SeeingTheObjectsInside splashPlayTheGame: aBoolean! !
+
 !Tools.DolphinSplash class categoriesForMethods!
 canDisplay!accessing!public! !
 publishedAspects!public! !

@@ -552,6 +552,7 @@ fileOutClass: aClass
 
 	self
 		fileOutDefinitionOfClass: aClass;
+		cr;
 		fileOutAllMethodsOfBehavior: aClass;
 		fileOutAllMethodsOfBehavior: aClass class!
 
@@ -560,8 +561,7 @@ fileOutDefinitionOfClass: aClass
 
 	self
 		fileOutBasicDefinitionOfClass: aClass;
-		fileOutAttributesOfClass: aClass;
-		cr!
+		fileOutAttributesOfClass: aClass!
 
 fileOutExpression: aString
 	"Append an immediate expression evaluation to the source stream."

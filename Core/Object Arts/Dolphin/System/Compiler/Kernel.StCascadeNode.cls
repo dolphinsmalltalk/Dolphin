@@ -7,7 +7,9 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StCascadeNode guid: (Core.GUID fromString: '{b29f06cb-e796-47d8-baf3-b24f873b0474}')!
+
 Kernel.StCascadeNode comment: 'StCascadeNode is a parse tree node for cascaded messages (e.g., "self print1 ; print2").
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	semicolons	<SequenceableCollection> of <Integer> positions of the ; between messages
 
 '!
+
 !Kernel.StCascadeNode categoriesForClass!System-Compiler! !
+
 !Kernel.StCascadeNode methodsFor!
 
 = anObject 
@@ -105,6 +109,7 @@ whichNodeIsContainedBy: anInterval
 	selectedChildren := (messages collect: [:each | each whichNodeIsContainedBy: anInterval])
 				reject: [:each | each isNil].
 	^selectedChildren detect: [:each | true] ifNone: nil! !
+
 !Kernel.StCascadeNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -136,6 +141,7 @@ messages: messageNodes
 
 messages: messageNodes semicolons: integerCollection 
 	^self new messages: messageNodes semicolons: integerCollection! !
+
 !Kernel.StCascadeNode class categoriesForMethods!
 messages:!instance creation!public! !
 messages:semicolons:!instance creation!public! !

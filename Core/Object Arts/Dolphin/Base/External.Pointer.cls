@@ -7,9 +7,13 @@ External.LPVOID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Pointer guid: (Core.GUID fromString: '{87b4c5b0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Pointer comment: 'ExternalPointer is a class to represent pointers to arbitrary blocks of externally allocated memory where the size of the block is known and can be associated with the pointer.'!
+
 !External.Pointer categoriesForClass!External-Data-Unstructured! !
+
 !External.Pointer methodsFor!
 
 byteSize
@@ -35,6 +39,7 @@ size
 
 	^byteSize
 	! !
+
 !External.Pointer categoriesForMethods!
 byteSize!accessing!public! !
 byteSize:!accessing!public! !

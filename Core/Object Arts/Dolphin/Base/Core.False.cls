@@ -7,13 +7,17 @@ Core.Boolean
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.False guid: (Core.GUID fromString: '{87b4c4fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.False comment: 'The False class implements the behaviour of the false (logical false) object.
 
 False is a singleton whose sole instance is the object represented by the reserved word, false. (i.e. any reference to false will always answer true when compared with any other using the #== message).
 
 False implement the ANSI protocols <Object> and <boolean>.'!
+
 !Core.False categoriesForClass!Kernel-Objects! !
+
 !Core.False methodsFor!
 
 and: operand 
@@ -105,6 +109,7 @@ xor: operand
 	Since the receiver is false, the answer depends entirely on the argument."
 
 	^operand! !
+
 !Core.False categoriesForMethods!
 and:!control flow!public! !
 asInteger!converting!public! !

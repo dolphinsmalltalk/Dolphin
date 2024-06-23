@@ -7,11 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'IndependentMask' -> 16r4. 'ProportionalMask' -> 16r2. 'VerticalMask' -> 16r1 }!
+
 UI.FramingCalculation guid: (Core.GUID fromString: '{d8059738-a2e8-4291-8e24-e31cf4bee13a}')!
+
 UI.FramingCalculation comment: 'FramingCalculation instances are used to represent the individual edge constraints in a <FramingConstraints> instance. See that class'' comment for further details.
 
 You can add a new framing calculation by following the pattern of the existing instance creation methods (e.g. #fixedPreviousLeft). Essentially you must extend this class by adding a new class side instance creation method as a loose method in your package. In order to allow for efficient sharing of FramingCalculation instances, and yet not interfere with the stripping process, the instances are created lazily and are normally held in a dictionary and looked up by name. During the deployment process, however, the dictionary is deliberately nilled to allow FramingCalculations to be stripped entirely should it turn out not to be used (i.e. you don''t make any use of <FramingLayout>s in your application), and so that unused calculations are removed too. This mechanism is implemented by #lookupCalc:framingBlock:offsetBlock:flags: method, which you must also call for your own framing calculations.'!
+
 !UI.FramingCalculation categoriesForClass!MVP-Layout Managers-Support! !
+
 !UI.FramingCalculation methodsFor!
 
 calculateEdge: anInteger context: aFramingContext 
@@ -67,6 +71,7 @@ stbSaveOn: anSTBOutFiler
 		saveSingleton: self
 		class: self basicClass
 		name: self name! !
+
 !UI.FramingCalculation categoriesForMethods!
 calculateEdge:context:!calculations!public! !
 calculateOffset:context:!calculations!public! !
@@ -306,6 +311,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	answer := self perform: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
+
 !UI.FramingCalculation class categoriesForMethods!
 centerRelativeParentHeight!instance creation!public! !
 centerRelativeParentWidth!instance creation!public! !

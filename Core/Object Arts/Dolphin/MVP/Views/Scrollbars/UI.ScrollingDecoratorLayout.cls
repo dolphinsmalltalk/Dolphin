@@ -7,14 +7,18 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ScrollingDecoratorLayout guid: (Core.GUID fromString: '{87b4c64c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ScrollingDecoratorLayout comment: 'ScrollingDecoratorLayout implements a specialised <layoutManager> to layout a single <view> object contained within a <scrollingDecoratorView>. The ScrollingDecoratorLayout does not attempt to resize the managed view (although see the #shouldStretchToFit aspect) but, instead, it repositions it according to scroll information that it receives from the view''s parent. Scrollbars will become available in the parent <scrollingDecoratorView> when its extent goes below the preferred extent recommended by the ScrollingDecoratorLayout.
 
 
 
 
 '!
+
 !UI.ScrollingDecoratorLayout categoriesForClass!MVP-Layout Managers-Specialized! !
+
 !UI.ScrollingDecoratorLayout methodsFor!
 
 initialize
@@ -76,6 +80,7 @@ shouldStretchToFit
 
 shouldStretchToFit: aBoolean 
 	stretchToFit := aBoolean! !
+
 !UI.ScrollingDecoratorLayout categoriesForMethods!
 initialize!initializing!public! !
 layoutContainer:context:!geometry!private! !
@@ -99,6 +104,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !UI.ScrollingDecoratorLayout class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!constants!public! !

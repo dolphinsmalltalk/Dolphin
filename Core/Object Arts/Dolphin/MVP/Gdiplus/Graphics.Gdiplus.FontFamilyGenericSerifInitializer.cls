@@ -7,8 +7,11 @@ Graphics.Gdiplus.FontFamilyGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamilyGenericSerifInitializer guid: (Core.GUID fromString: '{57c9fb99-3104-48e2-b5e7-d4f2041b5a3e}')!
+
 Graphics.Gdiplus.FontFamilyGenericSerifInitializer comment: ''!
+
 !Graphics.Gdiplus.FontFamilyGenericSerifInitializer methodsFor!
 
 basicCreateHandle
@@ -19,6 +22,7 @@ basicCreateHandle
 
 printAttributesOn: aStream
 	aStream nextPutAll: #genericSerif! !
+
 !Graphics.Gdiplus.FontFamilyGenericSerifInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 printAttributesOn:!printing!private! !
@@ -28,6 +32,7 @@ printAttributesOn:!printing!private! !
 
 uninitialize
 	GenericSerif := nil! !
+
 !Graphics.Gdiplus.FontFamilyGenericSerifInitializer class categoriesForMethods!
 uninitialize!class hierarchy-removing!private! !
 !

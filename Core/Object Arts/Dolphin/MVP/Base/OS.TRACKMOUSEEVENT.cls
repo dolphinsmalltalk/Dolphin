@@ -12,7 +12,9 @@ OS.SizedStructure
 			'_OffsetOf_hwndTrack' -> 16r8.
 			'_TRACKMOUSEEVENT_Size' -> 16r10
 		}!
+
 OS.TRACKMOUSEEVENT guid: (Core.GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!
+
 OS.TRACKMOUSEEVENT comment: '<TRACKMOUSEEVENT> is an <ExternalStructure> class to wrap the struct ''Win32.TRACKMOUSEEVENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +30,9 @@ struct tagTRACKMOUSEEVENT {
 	[helpstring("Specifies the hover time-out (if TME_HOVER was specified in dwFlags), in milliseconds.")] DWORD dwHoverTime;
 } TRACKMOUSEEVENT;
 '!
+
 !OS.TRACKMOUSEEVENT categoriesForClass!Win32-Structs! !
+
 !OS.TRACKMOUSEEVENT methodsFor!
 
 dwFlags
@@ -60,6 +64,7 @@ hwndTrack: aHandle
 	"Set the receiver's 'hwndTrack' field to the value of the argument, aHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_hwndTrack put: aHandle! !
+
 !OS.TRACKMOUSEEVENT categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #hwndTrack #dwHoverTime)! !
+
 !OS.TRACKMOUSEEVENT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,7 +7,9 @@ Core.SequencedGrowableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.LinkedList guid: (Core.GUID fromString: '{87b4c521-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.LinkedList comment: 'LinkedList is a class of <SequencedGrowableCollection> which is sequenced, ordered, contractible, expandable, readable and  writeable. The implementation is as an intrusively, singly, linked list (i.e. the elements hold the pointer to the next element), and requires that the elements of a LinkedList must be a kind of <Link> (or support the same protocol).
 
 N.B. LinkedList is primarily present as an implementation artifact. The fact that it expects its elements to hold the makes it of limited use, since, unlike other SequenceableCollections, it cannot hold any type of object, and each element can only every exist in one linked list.
@@ -15,7 +17,9 @@ N.B. LinkedList is primarily present as an implementation artifact. The fact tha
 Instance Variables:
 	firstLink		<Link>. Head of the list.
 	lastList		<Link>. Tail of the list.'!
+
 !Core.LinkedList categoriesForClass!Collections-Sequenceable! !
+
 !Core.LinkedList methodsFor!
 
 addFirst: aLink
@@ -181,6 +185,7 @@ removeLastIfAbsent: exceptionHandler
 			temp nextLink: nil.
 			lastLink := temp].
 	^aLink! !
+
 !Core.LinkedList categoriesForMethods!
 addFirst:!adding!public! !
 addLast:!adding!public! !

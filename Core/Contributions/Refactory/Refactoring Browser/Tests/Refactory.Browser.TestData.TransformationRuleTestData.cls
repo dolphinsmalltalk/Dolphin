@@ -7,9 +7,13 @@ Refactory.Browser.TestData.FooLintRuleTestData
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'Bar' -> 16r7B }!
+
 Refactory.Browser.TestData.TransformationRuleTestData guid: (Core.GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
+
 Refactory.Browser.TestData.TransformationRuleTestData comment: ''!
+
 !Refactory.Browser.TestData.TransformationRuleTestData categoriesForClass!Refactory-Test data! !
+
 !Refactory.Browser.TestData.TransformationRuleTestData methodsFor!
 
 checkMethod: aSmalllintContext 
@@ -57,6 +61,7 @@ viewResults
 
 	builder inspect.
 	self resetResult! !
+
 !Refactory.Browser.TestData.TransformationRuleTestData categoriesForMethods!
 checkMethod:!accessing!public! !
 hasConflicts!public!testing! !
@@ -295,6 +300,7 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] valueOnUnwindDo: ``@block'))
 		methods: false
 		name: 'Move assignment out of valueNowOrUnwindDo: blocks'! !
+
 !Refactory.Browser.TestData.TransformationRuleTestData class categoriesForMethods!
 assignmentInIfTrue!public!transformations! !
 atIfAbsent!public!transformations! !

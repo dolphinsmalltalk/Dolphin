@@ -7,9 +7,13 @@ Refactory.Browser.RBReplaceRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBStringReplaceRule guid: (Core.GUID fromString: '{bbdb2681-b086-4cdc-9efd-14d33492c0aa}')!
+
 Refactory.Browser.RBStringReplaceRule comment: ''!
+
 !Refactory.Browser.RBStringReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
+
 !Refactory.Browser.RBStringReplaceRule methodsFor!
 
 foundMatchFor: aProgramNode 
@@ -56,6 +60,7 @@ searchForTree: aBRProgramNode replaceWith: replaceNode
 searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock 
 	self searchForTree: aBRProgramNode replaceWith: replaceString.
 	verificationBlock := aBlock! !
+
 !Refactory.Browser.RBStringReplaceRule categoriesForMethods!
 foundMatchFor:!matching!public! !
 methodReplaceString:!initialize/release!public! !
@@ -99,6 +104,7 @@ searchForTree: aRBProgramNode replaceWith: replaceString when: aBlock
 		searchForTree: aRBProgramNode
 		replaceWith: replaceString
 		when: aBlock! !
+
 !Refactory.Browser.RBStringReplaceRule class categoriesForMethods!
 searchFor:replaceWith:!instance creation!public! !
 searchFor:replaceWith:when:!instance creation!public! !

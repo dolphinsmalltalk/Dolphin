@@ -7,13 +7,17 @@ UI.AbstractToTextConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DurationToText guid: (Core.GUID fromString: '{b7c9ede3-d5d2-494f-8569-58ec71e88b89}')!
+
 UI.DurationToText comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !UI.DurationToText categoriesForClass!IDB Goodies!MVP-Type Converters-Text! !
+
 !UI.DurationToText methodsFor!
 
 actualFormat
@@ -54,6 +58,7 @@ rightToLeft: aString
 		hours: (values at: 3) truncated
 		minutes: (values at: 2) truncated
 		seconds: (values at: 1)! !
+
 !UI.DurationToText categoriesForMethods!
 actualFormat!accessing!private! !
 format!accessing!public! !

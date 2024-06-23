@@ -32,6 +32,7 @@ Refactory.Browser.CreateAccessorsForVariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameClassVariableRefactoring
 	subclass: #'Refactory.Browser.RenameClassVariableAndAccessorsRefactoring'
 	instanceVariableNames: 'accessorsRefactoring'
@@ -39,6 +40,7 @@ Refactory.Browser.RenameClassVariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameInstanceVariableRefactoring
 	subclass: #'Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring'
 	instanceVariableNames: 'accessorsRefactoring'

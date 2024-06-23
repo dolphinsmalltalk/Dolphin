@@ -7,9 +7,13 @@ Refactory.Browser.TestData.LintRuleTestData
 	imports: #(#{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
 	classConstants: { 'ERROR_FILE_EXISTS' -> 'Shadow' }!
+
 Refactory.Browser.TestData.BasicLintRuleTestData guid: (Core.GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
+
 Refactory.Browser.TestData.BasicLintRuleTestData comment: ''!
+
 !Refactory.Browser.TestData.BasicLintRuleTestData categoriesForClass!Refactory-Test data! !
+
 !Refactory.Browser.TestData.BasicLintRuleTestData methodsFor!
 
 checkClass: aSmalllintContext 
@@ -63,6 +67,7 @@ sharedVarRefs
 
 viewResults
 	result openEditor! !
+
 !Refactory.Browser.TestData.BasicLintRuleTestData categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -1160,6 +1165,7 @@ yourselfNotUsed
 			(addSearcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector! !
+
 !Refactory.Browser.TestData.BasicLintRuleTestData class categoriesForMethods!
 abstractClass!possible bugs!public! !
 addRemoveDependents!possible bugs!public! !

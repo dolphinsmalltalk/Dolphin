@@ -7,12 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IErrorInfo guid: (OS.COM.IID fromString: '{1cf2b120-547d-101b-8e65-08002b2bd119}')!
+
 OS.COM.IErrorInfo isEgressOnly: true!
+
 OS.COM.IErrorInfo comment: '`OS.COM.IErrorInfo` is a wrapper class for the standard OLE Automation interface IErrorInfo.
 
 IErrorInfo is the interface used to make available extended error information to a client when an exception occurs and an HRESULT failure code is returned.'!
+
 !OS.COM.IErrorInfo categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IErrorInfo methodsFor!
 
 description
@@ -147,6 +152,7 @@ sourceInterface
 	answer := IID new.
 	self GetGUID: answer.
 	^answer! !
+
 !OS.COM.IErrorInfo categoriesForMethods!
 description!accessing!public! !
 excepInfo!accessing!public! !
@@ -182,6 +188,7 @@ defineFunctions
 		defineFunction: #GetHelpContext:
 			argumentTypes: 'dword*'
 ! !
+
 !OS.COM.IErrorInfo class categoriesForMethods!
 defineFunctions!**auto generated**!public!template definition! !
 !

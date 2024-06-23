@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2DownloadStartingEventHandler guid: (OS.COM.IID fromString: '{efedc989-c396-41ca-83f7-07f845a55724}')!
+
 WebView2.ICoreWebView2DownloadStartingEventHandler comment: '`ICoreWebView2DownloadStartingEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadStartingEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2DownloadStartingEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2DownloadStartingEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2DownloadStartingEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2DownloadStartingEventArgs*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2DownloadStartingEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#downloadStarting:! !
+
 !WebView2.ICoreWebView2DownloadStartingEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

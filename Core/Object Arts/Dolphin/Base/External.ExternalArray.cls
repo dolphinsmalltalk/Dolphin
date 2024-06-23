@@ -7,7 +7,9 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray guid: (Core.GUID fromString: '{87b4c593-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.ExternalArray comment: 'ExternalArray is a specialized class of <ExternalStructure> to represent contiguous heterogeneous arrays of external types, be they scalar of structured. ExternalArray itself can be used to represent arrays of unsigned 8-bit integers (i.e. bytes). It and its various subclasses can be used for external interfacing tasks, such as where C arrays are expected.
 
 StructureArray is the most general of the subclasses in that it supports arbitrary element types (represented by other ExternalStructures), and can in fact perform the task of the other subclasses such as DWORDArray. The more specialized subclasses do, however, offer much greater efficiency where they are applicable.
@@ -18,7 +20,9 @@ Instance Variables:
 	length		<integer>. Number of elements in the instance.
 
 '!
+
 !External.ExternalArray categoriesForClass!External-Data-Structured! !
+
 !External.ExternalArray methodsFor!
 
 = comparand
@@ -457,6 +461,7 @@ with: aCollection do: aDyadicValuable
 
 	self length = aCollection size ifFalse: [^self error: 'collections are of different sizes'].
 	self keysAndValuesDo: [:i :elem | aDyadicValuable value: elem value: (aCollection at: i)]! !
+
 !External.ExternalArray categoriesForMethods!
 =!comparing!public! !
 allSatisfy:!public! !
@@ -601,6 +606,7 @@ withAll: newElements
 			answer uncheckedAt: i put: elem.
 			i + 1].
 	^answer! !
+
 !External.ExternalArray class categoriesForMethods!
 alignment!constants!public! !
 elementClass!constants!public! !

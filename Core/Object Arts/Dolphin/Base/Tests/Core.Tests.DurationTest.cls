@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DurationTest guid: (Core.GUID fromString: '{3cf86074-481f-4b92-b7ed-6c9cbbe394df}')!
+
 Core.Tests.DurationTest comment: ''!
+
 !Core.Tests.DurationTest methodsFor!
 
 testAbs
@@ -378,6 +381,7 @@ testSubtract
 	self assert: subject - subject equals: 0 seconds.
 	subject := 1.5 hours.
 	self assert: subject - -1800 seconds  equals: 2 hours! !
+
 !Core.Tests.DurationTest categoriesForMethods!
 testAbs!public!unit tests! !
 testAdd!public!unit tests! !

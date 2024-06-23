@@ -7,10 +7,15 @@ Refactory.Browser.RefactoryChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RefactoryClassChange guid: (Core.GUID fromString: '{5955dfd7-6b22-491c-b86d-3e6a0061c426}')!
+
 Refactory.Browser.RefactoryClassChange isNonInstantiable: true!
+
 Refactory.Browser.RefactoryClassChange comment: ''!
+
 !Refactory.Browser.RefactoryClassChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RefactoryClassChange methodsFor!
 
 = aRefactoryClassChange 
@@ -98,6 +103,7 @@ renameChangesForClass: aClassName to: newClassName
 
 sourceFilerClass
 	^self getClassDetails sourceFilerClass! !
+
 !Refactory.Browser.RefactoryClassChange categoriesForMethods!
 =!comparing!public! !
 afterText!printing!public! !

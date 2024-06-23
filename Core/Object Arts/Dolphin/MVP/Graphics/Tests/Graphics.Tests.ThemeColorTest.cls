@@ -7,8 +7,11 @@ Graphics.Tests.VirtualColorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.ThemeColorTest guid: (Core.GUID fromString: '{9ed13d02-48b3-41cc-a5be-b5b070af8b53}')!
+
 Graphics.Tests.ThemeColorTest comment: ''!
+
 !Graphics.Tests.ThemeColorTest methodsFor!
 
 testNameActualColor
@@ -23,6 +26,7 @@ testNameActualColor
 	"Invoke the method directly so we don't need to install it."
 	tc2 := testMethod value: ThemeColor withArguments: {#dialog. Color face3d}.
 	self assert: tc2 equals: tc! !
+
 !Graphics.Tests.ThemeColorTest categoriesForMethods!
 testNameActualColor!public!unit tests! !
 !

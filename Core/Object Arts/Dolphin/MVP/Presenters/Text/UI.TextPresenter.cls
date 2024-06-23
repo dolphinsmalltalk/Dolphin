@@ -7,9 +7,13 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TextPresenter guid: (Core.GUID fromString: '{87b4c6d2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.TextPresenter comment: 'TextPresenter is a <valuePresenter> that displays a <valueModel> onto a <readableString> value. A TextPresenter can be connected to any <valueView> capable of displaying <readableString> values. Often, this will be a <TextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
+
 !UI.TextPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Text fields! !
+
 !UI.TextPresenter methodsFor!
 
 clear
@@ -99,6 +103,7 @@ selectionRange: anInterval
 	
 	^self view selectionRange: anInterval
 ! !
+
 !UI.TextPresenter categoriesForMethods!
 clear!operations!public! !
 dragOver:!drag & drop!public! !
@@ -170,6 +175,7 @@ resource_Static_text
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticText} 38 #{Core.Array} 16 nil nil 50 2 8 1140850944 65 32 nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 242 241 39 32 194 #text: 50 1 8 'Static Text' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 242 193 193 nil 27)! !
+
 !UI.TextPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

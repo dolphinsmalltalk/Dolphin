@@ -7,9 +7,13 @@ STON.Tests.WriteReadTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.WriteReadCommentsTest guid: (Core.GUID fromString: '{bf56364e-5655-4f45-abbe-c24e5e081d0c}')!
+
 STON.Tests.WriteReadCommentsTest comment: 'Unit test writing and reading of comments'!
+
 !STON.Tests.WriteReadCommentsTest categoriesForClass!STON-Tests-Writer! !
+
 !STON.Tests.WriteReadCommentsTest methodsFor!
 
 materialize: string
@@ -26,6 +30,7 @@ serialize: anObject
 				on: stream;
 				nextPut: anObject.
 			stream << '/* final comment */']! !
+
 !STON.Tests.WriteReadCommentsTest categoriesForMethods!
 materialize:!private! !
 serialize:!private! !

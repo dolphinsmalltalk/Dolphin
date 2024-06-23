@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Rectangle guid: (Core.GUID fromString: '{87b4c4ad-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Rectangle comment: 'Instances of Rectangle represent a rectangular areas in a two dimensional Cartesian coordinate system. A Rectangle contains two Points; origin, which specifies the top left corner, and corner, which indicates the bottom right corner of the region described. 
 
 A Rectangle is typically created by sending the method #corner: to an instance of Point, although a number of other instance creation class methods are also provided:
@@ -17,7 +19,9 @@ A Rectangle is typically created by sending the method #corner: to an instance o
 Rectangles inhabit the same Smalltalk standard "left-handed" coordinate system as do Points; i.e. with the y axis increasing downwards. Because of this, in a non-empty Rectangle, the origin is always expected to be above and to the left of the corner. Rectangles that are not in this normalised state can be sent the message #normalize to answer a copy that is. Many of the operation messages on Rectangles will assume that the receiver is normalised.
 
 (150@150 corner: 100@100) normalize'!
+
 !Graphics.Rectangle categoriesForClass!Graphics-Geometry! !
+
 !Graphics.Rectangle methodsFor!
 
 _expandRectangle: aRectangle 
@@ -547,6 +551,7 @@ width: aNumber
 	negative, the result is undefined)"
 
 	corner := (origin x + aNumber) @ corner y! !
+
 !Graphics.Rectangle categoriesForMethods!
 _expandRectangle:!double dispatch!private! !
 _insetRectangle:!double dispatch!private! !
@@ -690,6 +695,7 @@ vertex: aPoint1 vertex: aPoint2
 	vertices."
 
 	^self origin: (aPoint1 min: aPoint2) corner: (aPoint1 max: aPoint2)! !
+
 !Graphics.Rectangle class categoriesForMethods!
 center:extent:!instance creation!public! !
 extent:!instance creation!public! !

@@ -7,8 +7,11 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest guid: (Core.GUID fromString: '{68a6ac55-73c9-4f71-97b2-d5a2a093d2e7}')!
+
 Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest methodsFor!
 
 refersToPoolConstantBindingFullyQualified
@@ -229,6 +232,7 @@ testRefersToOwnClassVariable
 				forClass: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
 	self assert: model changes isEmpty! !
+
 !Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest categoriesForMethods!
 refersToPoolConstantBindingFullyQualified!public! !
 testRefersToClassBindingNotFound!public! !

@@ -159,6 +159,10 @@ Kernel.SharedPool
 			'UCHAR_XID_CONTINUE' -> 16r20.
 			'UCHAR_XID_START' -> 16r21
 		}!
+
 OS.ICUConstants guid: (Core.GUID fromString: '{7a0547e2-147f-4c75-a2f1-a595a5cd5517}')!
+
 OS.ICUConstants isNonInstantiable: true!
+
 OS.ICUConstants comment: ''!
+

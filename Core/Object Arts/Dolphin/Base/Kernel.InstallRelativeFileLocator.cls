@@ -7,11 +7,15 @@ Kernel.RelativeFileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.InstallRelativeFileLocator guid: (Core.GUID fromString: '{2543c5ae-b739-4aae-9aee-fe5537083fb7}')!
+
 Kernel.InstallRelativeFileLocator comment: 'An ImageRelativeFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files relative to the image directory, unless the file is outside the local directory hierarchy below the install directory, in which case an absolute path is used.
 '!
+
 !Kernel.InstallRelativeFileLocator categoriesForClass!System-Support! !
+
 !Kernel.InstallRelativeFileLocator methodsFor!
 
 basePath
@@ -28,6 +32,7 @@ printOn: aStream
 	aStream
 		print: self class;
 		nextPutAll: ' current'! !
+
 !Kernel.InstallRelativeFileLocator categoriesForMethods!
 basePath!accessing!public! !
 isSelfEvaluating!public!testing! !
@@ -52,6 +57,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
+
 !Kernel.InstallRelativeFileLocator class categoriesForMethods!
 current!accessing!public! !
 onPreStripImage!class hierarchy-removing!private! !

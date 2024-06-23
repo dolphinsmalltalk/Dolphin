@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ClipboardTest guid: (Core.GUID fromString: '{ea86f353-088f-4e28-b4db-bdb8b09e5e82}')!
+
 UI.Tests.ClipboardTest comment: ''!
+
 !UI.Tests.ClipboardTest methodsFor!
 
 isUnattendedSession
@@ -135,6 +138,7 @@ testUtf8String
 	actual := Clipboard current getText.
 	self assert: actual encoding equals: #utf16le.
 	self assert: actual equals: utf8! !
+
 !UI.Tests.ClipboardTest categoriesForMethods!
 isUnattendedSession!private!testing! !
 sampleAnsiString!constants!private! !

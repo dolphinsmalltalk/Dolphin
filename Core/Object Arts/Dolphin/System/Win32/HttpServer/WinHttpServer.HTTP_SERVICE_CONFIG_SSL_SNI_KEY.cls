@@ -11,7 +11,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Host' -> 16r80.
 			'_OffsetOf_IpPort' -> 16r0
 		}!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY guid: (Core.GUID fromString: '{32358de8-2f95-48e9-8b5e-72900a0e6f36}')!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY comment: '`HTTP_SERVICE_CONFIG_SSL_SNI_KEY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SNI_KEY {
 } HTTP_SERVICE_CONFIG_SSL_SNI_KEY;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY methodsFor!
 
 Host
@@ -53,6 +57,7 @@ IpPort: aSOCKADDR_STORAGE
 		from: ##(_OffsetOf_IpPort + 1)
 		to: ##(_OffsetOf_IpPort + SOCKADDR_STORAGE._SOCKADDR_STORAGE_Size)
 		startingAt: 1! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesForMethods!
 Host!**compiled accessors**!public! !
 Host:!**compiled accessors**!public! !
@@ -84,6 +89,7 @@ defineFields
 
 getFieldNames
 	^#(#IpPort #Host)! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

@@ -7,6 +7,10 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.FontCollectionTest guid: (Core.GUID fromString: '{13593c2c-dd16-4e98-aa6c-f353d7b010f6}')!
+
 Graphics.Gdiplus.Tests.FontCollectionTest isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.FontCollectionTest comment: ''!
+

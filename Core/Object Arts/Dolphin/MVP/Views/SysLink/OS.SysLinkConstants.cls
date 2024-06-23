@@ -29,6 +29,10 @@ Kernel.SharedPool
 			'LWS_USEVISUALSTYLE' -> 16r8.
 			'MAX_LINKID_TEXT' -> 16r30
 		}!
+
 OS.SysLinkConstants guid: (Core.GUID fromString: '{54002e75-84c6-4186-99a4-0b0b1c9a909d}')!
+
 OS.SysLinkConstants isNonInstantiable: true!
+
 OS.SysLinkConstants comment: ''!
+

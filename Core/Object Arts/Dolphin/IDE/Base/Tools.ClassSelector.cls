@@ -7,8 +7,11 @@ UI.SelectableItemsPresenter
 	imports: #(#{Refactory.Browser private} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: { 'ClassModeMask' -> 16r1. 'ShowFullNamesMask' -> 16r2 }!
+
 Tools.ClassSelector guid: (Core.GUID fromString: '{cb9d5680-134d-4c0b-9052-ad4536946a49}')!
+
 Tools.ClassSelector isNonInstantiable: true!
+
 Tools.ClassSelector comment: 'A ClassSelector is an abstract class used to implement the common behaviour for selecting a class from the Smalltalk class hierarchy. It also provides the ability to source and sink drag and drop operations. Dropping a class object onto another class in the tree will change the superclass of the dropped class. A drop of a <CompiledMethod> will copy or move the method to the class under the drop, maintaining its existing method categories. Class objects may also be dragged from a ClassHierarchySelector in a variety of formats: as <Class> objects, as <String> definitions, or as a chunk format definitions.
 
 Note that a ClassSelector maintains whether it is in ''''class'''' (actually metaclass) or ''''instance'''' mode. A number of commands and operations supported by the receiver can be applied to either <Metaclass> or <Class> objects, and which is operated on is determined by the selection and the mode. See #actualClass and its references.
@@ -18,7 +21,9 @@ Instance Variables:
 
 Class Variables:
 	ClassModeMask	<integer>. Masks flags inst. var. to determine if in class mode.'!
+
 !Tools.ClassSelector categoriesForClass!MVP-Presenters! !
+
 !Tools.ClassSelector methodsFor!
 
 actualClass
@@ -984,6 +989,7 @@ viewsShowMenu
 	<commandQuery: #queryViewsShowMenu:>
 	<menuPopulator: #populateViewsShowMenu:>
 	! !
+
 !Tools.ClassSelector categoriesForMethods!
 actualClass!accessing!public! !
 actualClass:!accessing!public! !

@@ -7,12 +7,15 @@ UI.TextDocument
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.WordPad guid: (Core.GUID fromString: '{daf98e5f-3a01-477d-b822-6b0e9bc79d14}')!
+
 UI.Examples.WordPad comment: 'Wordpad is a <topShell> sample application which implements a limited set of the functionality of the familiar Windows utility. Most of the implementation of the application is actually inherited from Dolphin''s TextDocument framework class or provided by RichTextPresenter and RichTextEdit.
 
 Example:
 	Wordpad show
 '!
+
 !UI.Examples.WordPad methodsFor!
 
 about
@@ -65,6 +68,7 @@ setDocumentData: aString
 	super setDocumentData: ((aString beginsWith: '{\rtf') 
 				ifTrue: [RichText fromRtf: aString]
 				ifFalse: [RichText fromString: aString])! !
+
 !UI.Examples.WordPad categoriesForMethods!
 about!commands!public! !
 documentPresenterClass!constants!public! !
@@ -124,6 +128,7 @@ resource_Default_view
 \viewkind4\uc1\pard\cf1\lang1033\f0\fs16\par
 }
 ' 1824 1138 #textLimit: 8 #(1073741823) 1824 1138 #resetCharFormat 368 1824 1218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 112 2 0 0 143 1 0 0] 8 #() 1280 nil 45 338 #{Core.IdentityDictionary} 50 6 1824 8 'document' 1296 8 'statusbar' 160 8 'toolbar' nil 2886 4 #{UI.MenuBar} nil true 50 6 2002 nil true 50 11 2050 1 434 #fileNew 8 '&New' 9373 1 nil nil nil 2050 1 434 #fileOpen 8 '&Open…' 9375 1 nil nil nil 2050 1 434 #fileSave 8 '&Save' 8359 1 nil nil nil 2050 1 434 #fileSaveAs 8 'Save &As…' 1 1 nil nil nil 2210 4097 2050 1 434 #filePrint 8 '&Print…' 9377 1 nil nil nil 2050 1 434 #filePageSetup 8 'Page Set&up…' 1 1 nil nil nil 2210 4097 2050 1 434 #sendDocument 8 'Sen&d…' 1 1 nil nil nil 2210 4097 2050 1 434 #exit 8 'E&xit' 1025 1 nil nil nil 8 '&File' nil 1 nil nil nil nil nil 2002 nil true 50 16 2050 1 434 #undo 8 '&Undo' 9397 1 nil nil nil 2210 4097 2050 1 434 #cutSelection 8 'Cu&t' 9393 1 nil nil nil 2050 1 434 #copySelection 8 '&Copy' 9351 1 nil nil nil 2050 1 434 #pasteClipboard 8 '&Paste' 9389 1 nil nil nil 2050 1 434 #pasteSpecial 8 'Paste &Special…' 1 1 nil nil nil 2050 1 434 #clearSelection 8 'Cle&ar' 1629 1 nil nil nil 2050 1 434 #selectAll 8 'Select All' 9347 1 nil nil nil 2210 4097 2050 1 434 #find 8 '&Find…' 9357 1 nil nil nil 2050 1 434 #findNext 8 'Find &Next' 1253 1 nil nil nil 2050 1 434 #findReplace 8 'R&eplace…' 9361 1 nil nil nil 2210 4097 2050 1 434 #links 8 'Lin&ks…' 1 1 nil nil nil 2050 1 434 #objectProperties 8 'Object P&roperties…' 1025 1 nil nil nil 2050 1 434 #editObject 8 '&Object' 1 1 nil nil nil 8 '&Edit' nil 1 nil nil nil nil nil 2002 nil true 50 6 2050 1025 434 #toggleToolbar 8 '&Toolbar' 1025 1 nil nil nil 2050 1025 434 #viewFormatBar 8 '&Format Bar' 1025 1 nil nil nil 2050 1025 434 #viewRuler 8 '&Ruler' 1025 1 nil nil nil 2050 1025 434 #toggleStatusBar 8 '&Status Bar' 1025 1 nil nil nil 2210 4097 2050 1 434 #viewOptions 8 '&Options…' 1 1 nil nil nil 8 '&View' nil 1 nil nil nil nil nil 2002 nil true 50 2 2050 1 434 #insertDateAndTime 8 '&Date and Time…' 1 1 nil nil nil 2050 1 434 #insertObject 8 '&Object…' 1 1 nil nil nil 8 '&Insert' nil 1 nil nil nil nil nil 2002 nil true 50 4 2050 1 434 #formatFont 8 '&Font…' 1 1 nil nil nil 2050 1 434 #toggleBulletStyle 8 '&Bullet Style' 1 1 nil nil nil 2050 1 434 #formatParagraph 8 '&Paragraph…' 1 1 nil nil nil 2050 1 434 #formatTabs 8 '&Tabs…' 1 1 nil nil nil 8 'F&ormat' nil 1 nil nil nil nil nil 2002 nil true 50 3 2050 1 434 #help 8 '&Help Topics' 1025 1 nil nil nil 2210 4097 2050 1 434 #about 8 '&About Dolphin WordPad' 1 1 nil nil nil 8 '&Help' nil 1 nil nil nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1090 50 2 1138 #createAt:extent: 50 2 306 6143 21 306 1281 961 32 1138 #text: 50 1 8 'Dolphin WordPad' 32 1218 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 127 14 0 0 234 1 0 0] 50 3 160 1824 1296 1280 nil 27)! !
+
 !UI.Examples.WordPad class categoriesForMethods!
 about!enquiries!private! !
 displayOn:!displaying!public! !

@@ -7,9 +7,13 @@ Kernel.StAnnotationNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBPatternAnnotationNode guid: (Core.GUID fromString: '{6e4d495f-83bf-4e5b-938e-a20577e08f94}')!
+
 Refactory.Browser.RBPatternAnnotationNode comment: ''!
+
 !Refactory.Browser.RBPatternAnnotationNode categoriesForClass!System-Compiler! !
+
 !Refactory.Browser.RBPatternAnnotationNode methodsFor!
 
 copyInContext: aDictionary
@@ -68,6 +72,7 @@ matchSelectorAgainst: aNode inContext: aDictionary
 setSelector: aSymbol arguments: anArray
 	super setSelector: aSymbol arguments: anArray.
 	isList := aSymbol includes: RBPatternScanner.ListCharacter! !
+
 !Refactory.Browser.RBPatternAnnotationNode categoriesForMethods!
 copyInContext:!matching!public! !
 isPatternNode!public!testing/matching! !

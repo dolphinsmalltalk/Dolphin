@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.IDispatchTest guid: (Core.GUID fromString: '{5f6be15f-132a-4eef-b9cb-960a4d8cab7c}')!
+
 OS.COM.Tests.IDispatchTest comment: ''!
+
 !OS.COM.Tests.IDispatchTest methodsFor!
 
 testDisplayOn
@@ -88,6 +91,7 @@ testReadOnlyAspects
 	self assert: prop isNullable.
 	self assert: prop isWriteable.
 	obj free! !
+
 !OS.COM.Tests.IDispatchTest categoriesForMethods!
 testDisplayOn!public!unit tests! !
 testDNU!public!unit tests! !

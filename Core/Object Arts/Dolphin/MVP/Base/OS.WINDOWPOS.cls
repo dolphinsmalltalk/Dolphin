@@ -16,9 +16,13 @@ External.Structure
 			'_OffsetOf_y' -> 16rC.
 			'_WINDOWPOS_Size' -> 16r1C
 		}!
+
 OS.WINDOWPOS guid: (Core.GUID fromString: '{cd69a071-3606-11d3-93bd-00a024ca708a}')!
+
 OS.WINDOWPOS comment: ''!
+
 !OS.WINDOWPOS categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.WINDOWPOS methodsFor!
 
 cx
@@ -72,6 +76,7 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes int32AtOffset: _OffsetOf_y! !
+
 !OS.WINDOWPOS categoriesForMethods!
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
@@ -118,6 +123,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
+
 !OS.WINDOWPOS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

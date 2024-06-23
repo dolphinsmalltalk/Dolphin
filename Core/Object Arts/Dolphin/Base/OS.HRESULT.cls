@@ -7,9 +7,13 @@ External.INTEGER
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
 	classConstants: { '_HRESULT_Size' -> 16r4. 'FACILITY_NT_BIT' -> 16r10000000 }!
+
 OS.HRESULT guid: (Core.GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.HRESULT comment: ''!
+
 !OS.HRESULT categoriesForClass!External-Data-Unstructured! !
+
 !OS.HRESULT methodsFor!
 
 asSignedInteger
@@ -150,6 +154,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_value put: anInteger! !
+
 !OS.HRESULT categoriesForMethods!
 asSignedInteger!converting!public! !
 asUnsignedInteger!converting!public! !
@@ -256,6 +261,7 @@ win32Error: anInteger
 		severity: SEVERITY_ERROR
 		facility: FACILITY_WIN32
 		code: anInteger! !
+
 !OS.HRESULT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 decodePrimitiveFailureCode:!private!utilities! !

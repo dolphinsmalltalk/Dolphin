@@ -7,8 +7,11 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaAttributeGroup guid: (OS.COM.IID fromString: '{50ea08ba-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 MSXML.ISchemaAttributeGroup isEgressOnly: true!
+
 MSXML.ISchemaAttributeGroup comment: '<ISchemaAttributeGroup> is a wrapper class for the COM interface ''MSXML2.ISchemaAttributeGroup'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -35,7 +38,9 @@ interface ISchemaAttributeGroup : ISchemaItem
 		[out, retval]ISchemaItemCollection** attributes);
 };
 '!
+
 !MSXML.ISchemaAttributeGroup categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISchemaAttributeGroup methodsFor!
 
 anyAttribute
@@ -71,6 +76,7 @@ get_attributes: attributes
 
 	<virtual stdcall: hresult 16 ISchemaItemCollection**>
 	^self invalidCall: _failureCode! !
+
 !MSXML.ISchemaAttributeGroup categoriesForMethods!
 anyAttribute!**auto generated**!properties!public! !
 attributes!**auto generated**!properties!public! !
@@ -90,6 +96,7 @@ defineFunctions
 		defineFunction: #get_attributes:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
+
 !MSXML.ISchemaAttributeGroup class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

@@ -7,8 +7,11 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaIdentityConstraint guid: (OS.COM.IID fromString: '{50ea08bd-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 MSXML.ISchemaIdentityConstraint isEgressOnly: true!
+
 MSXML.ISchemaIdentityConstraint comment: '<ISchemaIdentityConstraint> is a wrapper class for the COM interface ''MSXML2.ISchemaIdentityConstraint'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -38,7 +41,9 @@ interface ISchemaIdentityConstraint : ISchemaItem
 		[out, retval]ISchemaIdentityConstraint** key);
 };
 '!
+
 !MSXML.ISchemaIdentityConstraint categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISchemaIdentityConstraint methodsFor!
 
 fields
@@ -91,6 +96,7 @@ selector
 	answer := BSTR new.
 	self get_selector: answer.
 	^answer asObject! !
+
 !MSXML.ISchemaIdentityConstraint categoriesForMethods!
 fields!**auto generated**!properties!public! !
 get_fields:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
@@ -114,6 +120,7 @@ defineFunctions
 		defineFunction: #get_referencedKey:
 			argumentTypes: 'ISchemaIdentityConstraint**'
 ! !
+
 !MSXML.ISchemaIdentityConstraint class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

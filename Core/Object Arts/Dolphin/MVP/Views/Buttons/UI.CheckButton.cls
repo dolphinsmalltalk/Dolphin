@@ -20,8 +20,11 @@ UI.ValueConvertingControlView
 								#topRight -> 16r600
 							})
 		}!
+
 UI.CheckButton guid: (Core.GUID fromString: '{e7a5424e-24cd-4389-a849-591db02a92d0}')!
+
 UI.CheckButton isNonInstantiable: true!
+
 UI.CheckButton comment: 'CheckButton is the abstract subclass of <valueView>s implementing the Windows "BUTTON" class in checkbox and radio button styles. The <valueModel> associated with a CheckButton must always yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a <CheckBox> in 3-state mode. A CheckButton will normally be used in conjunction with either a <BooleanPresenter>, or in a group connected to a <RadioButtonSetPresenter>.
 
 The text in a button control can be aligned in various ways (this may also affect the alignment of any image displayed in the button):
@@ -41,7 +44,9 @@ Instance Variables:
 Class Variables:
 	AlignmentMap	<LookupTable> mapping the alignment modes listed above to the corresponding integer flags.
 '!
+
 !UI.CheckButton categoriesForClass!MVP-Views! !
+
 !UI.CheckButton methodsFor!
 
 alignment
@@ -178,6 +183,7 @@ onViewCreated
 plainText: aString
 	super plainText: aString.
 	self invalidateCalculatedExtent! !
+
 !UI.CheckButton categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -229,6 +235,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realising the receiver."
 
 	^'BUTTON'! !
+
 !UI.CheckButton class categoriesForMethods!
 defaultModel!models!public! !
 initialize!development!initializing!private! !

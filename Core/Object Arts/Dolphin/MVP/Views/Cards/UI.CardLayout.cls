@@ -7,7 +7,9 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.CardLayout guid: (Core.GUID fromString: '{87b4c647-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.CardLayout comment: '`CardLayout` implements a specialised `<layoutManager>` to layout `<view>` objects within a `<cardView>`. It arranges the contained views so that they stack on top of one another in z-order sequence. Only one of the views, the so-called current card, is allowed to be visible at any one time.
 
 The arrangement aspects of the managed views are used as a descriptive names for the cards (generally instances of `CardLabel`). The containing `<cardView>` may make use of these names as it sees fit. For example, a `CardContainer` uses these as the names for the tabs that it displays.
@@ -20,7 +22,9 @@ The arrangement aspects of the managed views are used as a descriptive names for
 
 
 '!
+
 !UI.CardLayout categoriesForClass!MVP-Layout Managers-Specialized! !
+
 !UI.CardLayout methodsFor!
 
 arrangementOf: aView
@@ -238,6 +242,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
+
 !UI.CardLayout categoriesForMethods!
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
@@ -279,6 +284,7 @@ stbConvertFromVersion0: anArray
 
 stbVersion
 	^1! !
+
 !UI.CardLayout class categoriesForMethods!
 stbConvertFrom:!binary filing!private! !
 stbConvertFromVersion0:!binary filing!private! !

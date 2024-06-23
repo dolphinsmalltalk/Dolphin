@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_cEntries' -> 16rC.
 			'_OffsetOf_ihPal' -> 16r8
 		}!
+
 OS.EMRRESIZEPALETTE guid: (Core.GUID fromString: '{7a0359ce-039f-4128-a1ed-09dc1fb5e2e5}')!
+
 OS.EMRRESIZEPALETTE comment: '<EMRRESIZEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESIZEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMRRESIZEPALETTE {
 	DWORD cEntries;
 } EMRRESIZEPALETTE;
 '!
+
 !OS.EMRRESIZEPALETTE categoriesForClass!Win32-Structs! !
+
 !OS.EMRRESIZEPALETTE methodsFor!
 
 cEntries
@@ -49,6 +53,7 @@ ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_ihPal put: anInteger! !
+
 !OS.EMRRESIZEPALETTE categoriesForMethods!
 cEntries!**compiled accessors**!public! !
 cEntries:!**compiled accessors**!public! !
@@ -91,6 +96,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_RESIZEPALETTE}! !
+
 !OS.EMRRESIZEPALETTE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

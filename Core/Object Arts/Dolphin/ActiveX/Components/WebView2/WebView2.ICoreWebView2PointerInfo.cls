@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2PointerInfo guid: (OS.COM.IID fromString: '{e6995887-d10d-4f5d-9359-4ce46e4f96b9}')!
+
 WebView2.ICoreWebView2PointerInfo isEgressOnly: true!
+
 WebView2.ICoreWebView2PointerInfo comment: '`ICoreWebView2PointerInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PointerInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -194,7 +197,9 @@ interface ICoreWebView2PointerInfo : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2PointerInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2PointerInfo methodsFor!
 
 buttonChangeKind
@@ -1098,6 +1103,7 @@ touchPressure: touchPressure
 	"Set the 'TouchPressure' property of the receiver to the <dword> value of the argument."
 
 	self put_TouchPressure: touchPressure! !
+
 !WebView2.ICoreWebView2PointerInfo categoriesForMethods!
 buttonChangeKind!**auto generated**!properties!public! !
 buttonChangeKind:!**auto generated**!properties!public! !
@@ -1335,6 +1341,7 @@ defineFunctions
 		defineFunction: #put_TouchPressure:
 			argumentTypes: 'dword'
 ! !
+
 !WebView2.ICoreWebView2PointerInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

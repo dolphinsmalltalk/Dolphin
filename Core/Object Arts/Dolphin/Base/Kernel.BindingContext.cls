@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.BindingContext guid: (Core.GUID fromString: '{4d343a64-a62f-4214-bca5-ac205fc9ab21}')!
+
 Kernel.BindingContext comment: ''!
+
 !Kernel.BindingContext categoriesForClass!Kernel-Objects! !
+
 !Kernel.BindingContext methodsFor!
 
 environment
@@ -51,6 +55,7 @@ visitImport: aBindingReference from: aNamespace
 								add: methodClass;
 								yourself])
 					addNewElement: namespace) ifTrue: [namespace]]! !
+
 !Kernel.BindingContext categoriesForMethods!
 environment!accessing!public! !
 identifier!accessing!public! !
@@ -70,6 +75,7 @@ methodClass: aClass environment: aNamespace identifier: aString
 			environment: aNamespace
 			identifier: aString;
 		yourself! !
+
 !Kernel.BindingContext class categoriesForMethods!
 methodClass:environment:identifier:!instance creation!public! !
 !

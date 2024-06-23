@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.CompilerTest guid: (Core.GUID fromString: '{5aff22bd-5d99-4b24-9b1d-c8d1ede77213}')!
+
 Kernel.Tests.CompilerTest comment: ''!
+
 !Kernel.Tests.CompilerTest methodsFor!
 
 assertBlocksOptimized: compiled
@@ -2159,6 +2162,7 @@ verifyTextMapsOf: aCompiledMethod
 					self assert: (textMap at: i) key equals: initialIp.
 					debugInitialIp := (debugTextMap at: i) key.
 					self assert: (debugBytes at: (debugDispatcher prevIP: debugInitialIp)) equals: OpcodePool.BlockCopy]]! !
+
 !Kernel.Tests.CompilerTest categoriesForMethods!
 assertBlocksOptimized:!helpers!private! !
 checkCompileError:range:code:line:source:!helpers!private! !
@@ -2318,6 +2322,7 @@ initialize
 
 resources
 	^{CompilerTestClasses}! !
+
 !Kernel.Tests.CompilerTest class categoriesForMethods!
 buildSuiteFromSelectors!Building Suites!public! !
 initialize!class initialization!public! !

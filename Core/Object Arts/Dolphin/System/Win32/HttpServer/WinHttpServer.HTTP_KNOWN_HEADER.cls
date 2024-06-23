@@ -11,7 +11,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pRawValue' -> 16r4.
 			'_OffsetOf_RawValueLength' -> 16r0
 		}!
+
 WinHttpServer.HTTP_KNOWN_HEADER guid: (Core.GUID fromString: '{787c501e-95b2-4a23-9f7c-2dd856b8d51d}')!
+
 WinHttpServer.HTTP_KNOWN_HEADER comment: '`HTTP_KNOWN_HEADER` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_KNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +30,9 @@ struct tagHTTP_KNOWN_HEADER {
 } HTTP_KNOWN_HEADER;
 ```
 '!
+
 !WinHttpServer.HTTP_KNOWN_HEADER categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_KNOWN_HEADER methodsFor!
 
 pRawValue
@@ -51,6 +55,7 @@ RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_RawValueLength put: anInteger! !
+
 !WinHttpServer.HTTP_KNOWN_HEADER categoriesForMethods!
 pRawValue!**compiled accessors**!public! !
 pRawValue:!**compiled accessors**!public! !
@@ -82,6 +87,7 @@ defineFields
 
 getFieldNames
 	^#(#RawValueLength #pRawValue)! !
+
 !WinHttpServer.HTTP_KNOWN_HEADER class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

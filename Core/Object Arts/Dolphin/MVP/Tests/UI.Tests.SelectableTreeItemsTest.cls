@@ -7,9 +7,13 @@ UI.Tests.SelectableItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SelectableTreeItemsTest guid: (Core.GUID fromString: '{cccec658-6b6a-4d9f-a9ac-2701da23a46e}')!
+
 UI.Tests.SelectableTreeItemsTest isNonInstantiable: true!
+
 UI.Tests.SelectableTreeItemsTest comment: ''!
+
 !UI.Tests.SelectableTreeItemsTest methodsFor!
 
 addAllObjects: objects 
@@ -407,6 +411,7 @@ testSetTextBlockDoesNotAffectSelection
 
 treeModel
 	^presenter model! !
+
 !UI.Tests.SelectableTreeItemsTest categoriesForMethods!
 addAllObjects:!private!unit tests! !
 addAllTestObjects!private!unit tests! !

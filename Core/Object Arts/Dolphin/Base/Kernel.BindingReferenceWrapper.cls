@@ -7,10 +7,15 @@ Kernel.BindingReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.BindingReferenceWrapper guid: (Core.GUID fromString: '{87488d7c-57f8-4328-91f8-f2f6dd0e66fd}')!
+
 Kernel.BindingReferenceWrapper isNonInstantiable: true!
+
 Kernel.BindingReferenceWrapper comment: ''!
+
 !Kernel.BindingReferenceWrapper categoriesForClass!System-Namespaces! !
+
 !Kernel.BindingReferenceWrapper methodsFor!
 
 = anObject
@@ -144,6 +149,7 @@ setScope: anObject
 
 unqualifiedPathLiteralPrefix
 	^reference unqualifiedPathLiteralPrefix! !
+
 !Kernel.BindingReferenceWrapper categoriesForMethods!
 =!comparing!public! !
 asFullyQualifiedReference!converting!public! !
@@ -181,6 +187,7 @@ wrapping: aBindingReference
 	^self basicNew
 		reference: aBindingReference;
 		yourself! !
+
 !Kernel.BindingReferenceWrapper class categoriesForMethods!
 wrapping:!instance creation!public! !
 !

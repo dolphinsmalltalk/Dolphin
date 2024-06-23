@@ -87,6 +87,7 @@ Tools
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ParseNodeVisitor
 	subclass: #'Tools.Tests.StStyler'
 	instanceVariableNames: 'view arrayDepth'
@@ -94,6 +95,7 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.CreateSubclassDialogTest'
 	instanceVariableNames: 'subject'
@@ -101,6 +103,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.KeyedAspectTest'
 	instanceVariableNames: ''
@@ -108,6 +111,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.MenuPainterTest'
 	instanceVariableNames: ''
@@ -115,6 +119,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.MethodSearchTest'
 	instanceVariableNames: ''
@@ -122,6 +127,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.ParseContextTest'
 	instanceVariableNames: ''
@@ -129,6 +135,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.ProductReleaseTest'
 	instanceVariableNames: ''
@@ -136,6 +143,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.SmalltalkSystemTest'
 	instanceVariableNames: 'devsys'
@@ -143,6 +151,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.STxDebuggerTest'
 	instanceVariableNames: ''
@@ -150,6 +159,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.VersionResourceTest'
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
@@ -157,6 +167,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.SmalltalkWorkspaceTest'
 	instanceVariableNames: ''
@@ -164,6 +175,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.SourceBrowserTest'
 	instanceVariableNames: ''
@@ -171,6 +183,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ImageViewAbstractTest
 	subclass: #'Tools.Tests.ImageListViewTest'
 	instanceVariableNames: ''
@@ -178,6 +191,7 @@ UI.Tests.ImageViewAbstractTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.STxDebuggerTest
 	subclass: #'Tools.Tests.STBDebuggerTest'
 	instanceVariableNames: ''
@@ -185,6 +199,7 @@ Tools.Tests.STxDebuggerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.STxDebuggerTest
 	subclass: #'Tools.Tests.STLDebuggerTest'
 	instanceVariableNames: ''
@@ -192,6 +207,7 @@ Tools.Tests.STxDebuggerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.BrowserEnvironmentTest
 	subclass: #'Tools.Tests.MethodCategoryEnvironmentTest'
 	instanceVariableNames: ''
@@ -199,6 +215,7 @@ Refactory.Browser.Tests.BrowserEnvironmentTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.BrowserEnvironmentTest
 	subclass: #'Tools.Tests.PackageEnvironmentTest'
 	instanceVariableNames: ''
@@ -225,6 +242,7 @@ testPrintOnUnsigned
 	| subject |
 	subject := UInt32 fromInteger: 123.
 	self assert: subject printString equals: 'an UInt32(16r7B)'! !
+
 !External.Tests.INTEGERTest categoriesForMethods!
 testPrintOnNull!public!unit tests! !
 testPrintOnSigned!public!unit tests! !
@@ -341,6 +359,7 @@ testWarnUnimplementedAbstractMethod
 					start := source indexOfSubCollection: msg.
 					start to: start + msg size - 1]
 				code: CWarnUnimplementedAbstractMethod]! !
+
 !Kernel.Tests.ParserErrorTest categoriesForMethods!
 testInfoHardBreakpoint!public!unit tests! !
 testInfoSupersendsOther!public!unit tests! !
@@ -366,6 +385,7 @@ testStyleRunsFromTo
 			expected := (Scanner on: presenter text readStream) upToEnd
 						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
 			self assert: tokens equals: expected]! !
+
 !UI.Scintilla.Tests.ScintillaViewTest categoriesForMethods!
 testStyleRunsFromTo!public!unit tests! !
 !
@@ -390,6 +410,7 @@ testResourceBrowserPreview
 	resources := resourceView viewNamed: 'resources'.
 	self assert: (resources viewNamed: 'resources') extent x equals: resources extent x.
 	resourceView destroy! !
+
 !UI.Tests.BorderLayoutTest categoriesForMethods!
 testResourceBrowserPreview!public!unit tests! !
 !

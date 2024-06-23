@@ -7,7 +7,9 @@ UI.Examples.PlayShape
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.RegularPolygon guid: (Core.GUID fromString: '{87b4c680-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Examples.RegularPolygon comment: 'A RegularPolygon describes a particular type of <PlayShape> that may be added to a <Playground>. It is part of the Playground sample package used as a Smalltalk learning aid. See this package''s comment for more details.
 
 A RegularPolygon has a number of sides and is drawn within a bounding circle of a given radius and centre position. The polygon, when drawn, is filled with a particular background color. This information is held in the instance variables of a RegularPolygon instance.
@@ -20,7 +22,9 @@ Instance Variables:
 	radius		<number> of pixels radius to the boundary of the polygon.
 
 '!
+
 !UI.Examples.RegularPolygon categoriesForClass!Samples! !
+
 !UI.Examples.RegularPolygon methodsFor!
 
 chooseColor
@@ -198,6 +202,7 @@ sides: anInteger
 	sides := anInteger.
 	self redraw.
 ! !
+
 !UI.Examples.RegularPolygon categoriesForMethods!
 chooseColor!operations!public! !
 color!accessing!public! !
@@ -233,6 +238,7 @@ new
 	"Create an instance of the receiver with a default number of sides"
 	
 	^super new initialize! !
+
 !UI.Examples.RegularPolygon class categoriesForMethods!
 new!instance creation!public! !
 !

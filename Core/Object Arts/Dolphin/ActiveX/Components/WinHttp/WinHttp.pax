@@ -82,6 +82,7 @@ Kernel.Namespace
 			'WinHttpRequestOption_UrlEscapeDisableQuery' -> 16r8.
 			'WinHttpRequestOption_UserAgentString' -> 16r0
 		}!
+
 OS.COM.IUnknown
 	subclass: #'WinHttp.IWinHttpRequestEvents'
 	instanceVariableNames: ''
@@ -89,6 +90,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'WinHttp.IWinHttpRequest'
 	instanceVariableNames: ''

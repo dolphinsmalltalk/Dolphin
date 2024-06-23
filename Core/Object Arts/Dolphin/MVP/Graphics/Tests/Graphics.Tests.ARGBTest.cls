@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.ARGBTest guid: (Core.GUID fromString: '{b9d1b1c9-fb62-46e9-a7d5-6807f64e5314}')!
+
 Graphics.Tests.ARGBTest comment: ''!
+
 !Graphics.Tests.ARGBTest methodsFor!
 
 assertComponents: anArray isCode: anInteger
@@ -129,6 +132,7 @@ testStbRoundTrip
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated class identicalTo: ARGB.
 	self assert: rehydrated equals: subject! !
+
 !Graphics.Tests.ARGBTest categoriesForMethods!
 assertComponents:isCode:!asserting!private! !
 testConstructionValues!public!unit tests! !

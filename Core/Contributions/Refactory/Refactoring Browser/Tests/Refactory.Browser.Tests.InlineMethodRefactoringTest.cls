@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.InlineMethodRefactoringTest guid: (Core.GUID fromString: '{f70132aa-f38c-4f5d-ad58-1801c2c8f8b1}')!
+
 Refactory.Browser.Tests.InlineMethodRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.InlineMethodRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.InlineMethodRefactoringTest methodsFor!
 
 expected
@@ -357,6 +361,7 @@ testReturn
 				inMethod: #utilityMethods
 				forClass: BasicLintRuleTestData class)
 		withMessage: 'The selection doesn''t appear to be a message send'! !
+
 !Refactory.Browser.Tests.InlineMethodRefactoringTest categoriesForMethods!
 expected!public!tests! !
 testBadInterval!failure tests!public! !

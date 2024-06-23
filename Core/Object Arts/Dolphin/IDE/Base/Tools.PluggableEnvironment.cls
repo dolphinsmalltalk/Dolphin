@@ -7,13 +7,17 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PluggableEnvironment guid: (Core.GUID fromString: '{09ce2832-6e4a-40f8-83c8-b7685a4f6b62}')!
+
 Tools.PluggableEnvironment comment: '`PluggableEnvironment` is a Dolphin specific `BrowserEnvironment` that includes only those methods (and the classes of those methods) that pass a configurable `<monadicValuable>` filter. This is very useful for maintaining the contents of dynamically updating method browsers.
 
 Instance Variables:
 	filter		`<monadicValuable>` evaluated against each candidate method
 '!
+
 !Tools.PluggableEnvironment categoriesForClass!Refactory-Environments! !
+
 !Tools.PluggableEnvironment methodsFor!
 
 addMethods: methodCollection 
@@ -61,6 +65,7 @@ snapshot
 
 storeOn: aStream 
 	self snapshot storeOn: aStream! !
+
 !Tools.PluggableEnvironment categoriesForMethods!
 addMethods:!adding!public! !
 classesAndSelectorsDo:!accessing!public! !
@@ -79,6 +84,7 @@ onEnvironment: anEnvironment select: aMonadicValuable
 	^(self onEnvironment: anEnvironment)
 		filter: aMonadicValuable;
 		yourself! !
+
 !Tools.PluggableEnvironment class categoriesForMethods!
 onEnvironment:select:!instance creation!public! !
 !

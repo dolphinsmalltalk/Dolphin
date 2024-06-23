@@ -65,6 +65,7 @@ getObjectIfNone: exceptionHandler
 	answers the result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #Object ifNone: exceptionHandler! !
+
 !UI.Clipboard categoriesForMethods!
 getObject!accessing!public! !
 getObjectClass!accessing!public! !

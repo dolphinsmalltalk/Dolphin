@@ -7,9 +7,13 @@ UI.RuntimeSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Examples.FileSystemMonitorSessionManager guid: (Core.GUID fromString: '{a00427fb-6695-464a-8e1f-251a892444a6}')!
+
 OS.Examples.FileSystemMonitorSessionManager comment: ''!
+
 !OS.Examples.FileSystemMonitorSessionManager categoriesForClass!System-Support! !
+
 !OS.Examples.FileSystemMonitorSessionManager methodsFor!
 
 main
@@ -20,6 +24,7 @@ main
 			[| path |
 			path := self argv at: 2.
 			(File isDirectory: path) ifTrue: [fsm directory: path]]! !
+
 !OS.Examples.FileSystemMonitorSessionManager categoriesForMethods!
 main!operations!public! !
 !
@@ -30,6 +35,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^FileSystemMonitor! !
+
 !OS.Examples.FileSystemMonitorSessionManager class categoriesForMethods!
 mainShellClass!constants!public! !
 !

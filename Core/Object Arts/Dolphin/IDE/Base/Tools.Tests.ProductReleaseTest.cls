@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ProductReleaseTest guid: (Core.GUID fromString: '{685d25f7-ba9b-419b-af63-61526013895c}')!
+
 Tools.Tests.ProductReleaseTest comment: ''!
+
 !Tools.Tests.ProductReleaseTest methodsFor!
 
 checkNoClass: aSymbol
@@ -91,6 +94,7 @@ testUnpackagedVariables
 	"Verify that there are no unpackaged static/namespace variables in the image"
 
 	self assert: Package manager unpackagedVariables equals: Set new! !
+
 !Tools.Tests.ProductReleaseTest categoriesForMethods!
 checkNoClass:!public!unit tests! !
 isReleased!private!unit tests! !

@@ -7,7 +7,9 @@ ADODB._ADO
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.Connection15 guid: (OS.COM.IID fromString: '{00001515-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.Connection15 comment: '`Connection15` is a wrapper class for the COM interface ''ADODB.Connection15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -118,7 +120,9 @@ interface Connection15 : _ADO
 };
 ```
 '!
+
 !ADODB.Connection15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.Connection15 methodsFor!
 
 attributes
@@ -623,6 +627,7 @@ version
 	answer := BSTR new.
 	self get_Version: answer.
 	^answer asObject! !
+
 !ADODB.Connection15 categoriesForMethods!
 attributes!**auto generated**!properties!public! !
 attributes:!**auto generated**!properties!public! !
@@ -748,6 +753,7 @@ defineFunctions
 		defineFunction: #OpenSchema:Restrictions:SchemaID:pprset:
 			argumentTypes: 'sdword variant variant _Recordset**'
 ! !
+
 !ADODB.Connection15 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

@@ -7,9 +7,13 @@ External.Callback
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.MessageCallback guid: (Core.GUID fromString: '{87b4c578-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.MessageCallback comment: ''!
+
 !External.MessageCallback categoriesForClass!System-Support! !
+
 !External.MessageCallback methodsFor!
 
 closure
@@ -52,6 +56,7 @@ valueWithArgumentsAt: anAddress
 	"Private - Evaluate the receiver with arguments instantiated from the raw data at anAddress."
 
 	^receiver perform: selector withArgumentsAt: anAddress descriptor: descriptor! !
+
 !External.MessageCallback categoriesForMethods!
 closure!accessing!public! !
 closure:!accessing!public! !

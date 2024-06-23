@@ -19,7 +19,9 @@ Core.Object
 			'Whitespace' -> 16r0.
 			'Word' -> 16r2
 		}!
+
 UI.Scintilla.CharacterClassifications guid: (Core.GUID fromString: '{6f39df2d-fc41-4975-ba69-85282d6d74e8}')!
+
 UI.Scintilla.CharacterClassifications comment: '`UI.Scintilla.CharacterClassifications` describes the character classifications for a Scintilla control. The classifications are used to identify word boundaries, which are used for word-oriented selection and cursor movements as well as for finding whole words.
 
 Scintilla has separate API calls for set the word, punctuation and whitespace characters. This is rather awkward and creates ambiguity since the character groups should be mutually exclusive but may not be when specified individually. The APIs also have some inconsistency in the setting of defaults. Setting the word characters through the [SCI_SETWORDCHARS](https://www.scintilla.org/ScintillaDoc.html#SCI_SETWORDCHARS) API also resets the punctuation and whitespace to "defaults", but not the same ones as the initialization defaults from [SCI_SETCHARSDEFAULT](https://www.scintilla.org/ScintillaDoc.html#SCI_SETCHARSDEFAULT). The latter initialization sets all byte characters > 127 to be classified as word characters, but after `SCI_SETWORDCHARS` all characters > 127 are instead classified as punctuation. A more sensible abstraction that avoids inconsistencies and the inherent ambiguity of storing the classifications in multiple settings is to represent the character classifications with a single setting so that overlap is impossible, which is the purpose of this class.
@@ -29,6 +31,7 @@ Note that in addition to the word, punctuation and whitespace classification gro
 A design flaw of greater consequence is that the classifications are only really available for ASCII characters (0..127). Internally the implementation stores classifications for all byte characters, but the effect of setting classifications for characters in the range (128..255) is not documented, other than the general statement associated with [SCI_GETWORDCHARS](https://www.scintilla.org/ScintillaDoc.html#SCI_GETWORDCHARS): ''For multi-byte encodings, this API will not return meaningful values for 0x80 and above.'' We always use the control in CP_UTF8 mode, and of course UTF-8 is a multi-byte encoding. It isn''t documented nor immediately obvious what behaviour is expected for code points greater 127. From examination of the Scintilla code, the default setting for (128..255) is to treat as punctuation, and empirically it appears to be the case that characters such as © (U+00A9) are treated as word delimiters by default. Of course in UTF-8 any 128.255 code point is actually two code units with the lead surrogate being either 194 or 195. It isn''t clear whether allowing the 128.255 classifications to be changed would work individually, or whether the effect would be that all would be classified per the settings for 194/195. This could be determined by examining the code or empirically, but as undocumented behaviour we would not want to rely on the results remaining stable anyway, especially as the behaviour is not even stable currently given the inconsistency of behaviour between `SCI_SETCHARSDEFAULT` and `SCI_SETWORDCHARS` noted above. At present `CharacterClassifications` does not allow the classification for 128..255 to be changed, but rather ensures that they always remain classified as punctuation, at least eliminating the inconsistency.
 
 We store the classifications as a `ByteArray` of `SmallInteger` values from an enumeration equivalent to the underlying enumeration in the Scintilla code. Should the Scintilla API ever be rationalised down to a single setting, then a reasonable choice would that it expected to be passed a ByteArray of these values, in which case we would not need to change the representation here. That said if the API were ever changed, then the most likely motivation for that would be expand the classification mechanism to support any Unicode code point, in which case some other approach would be necessary.'!
+
 !UI.Scintilla.CharacterClassifications methodsFor!
 
 = anObject
@@ -182,6 +185,7 @@ wordChars: aStringOrNil
 			classifications at: each codeUnit + 1
 				put: ((DefaultWhitespaces includes: each) ifTrue: [Whitespace] ifFalse: [Punctuation])].
 	self setFixedClassifications! !
+
 !UI.Scintilla.CharacterClassifications categoriesForMethods!
 =!comparing!public! !
 applyToView:!operations!private! !
@@ -223,6 +227,7 @@ new
 
 whitespaces: spacesString punctuation: punctuationString
 	^self basicNew whitespaces: spacesString punctuation: punctuationString! !
+
 !UI.Scintilla.CharacterClassifications class categoriesForMethods!
 icon!constants!development!public! !
 initialize!class initialization!public! !

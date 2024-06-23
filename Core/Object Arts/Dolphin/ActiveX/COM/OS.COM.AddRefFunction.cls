@@ -7,11 +7,15 @@ OS.COM.AbstractInterfaceFunction
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.AddRefFunction guid: (Core.GUID fromString: '{19c5e908-2db4-4e67-8984-b11c9cf2e982}')!
+
 OS.COM.AddRefFunction comment: 'COMAddRefFunction is a specialized class of <COMFunction> intended to represent the IUnknown::AddRef() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMAddRefFunction sends a #AddRef message to the relevant stub.'!
+
 !OS.COM.AddRefFunction categoriesForClass!COM-Implementations! !
+
 !OS.COM.AddRefFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: pArgs
@@ -33,6 +37,7 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#AddRef! !
+
 !OS.COM.AddRefFunction categoriesForMethods!
 callback:interface:withArgumentsAt:!evaluating!private! !
 descriptor!accessing!private! !
@@ -55,6 +60,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
+
 !OS.COM.AddRefFunction class categoriesForMethods!
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

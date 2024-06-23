@@ -7,8 +7,11 @@ UI.Tests.AbstractContainerViewTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.StyledContainerTest guid: (Core.GUID fromString: '{c2d30af9-3ddd-440f-add5-535cd0e410a9}')!
+
 UI.Tests.StyledContainerTest comment: ''!
+
 !UI.Tests.StyledContainerTest methodsFor!
 
 classToTest
@@ -82,6 +85,7 @@ test1PixDottedBorderPrint
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: bitmap
 		color: self backgroundColor! !
+
 !UI.Tests.StyledContainerTest categoriesForMethods!
 classToTest!helpers!private! !
 parentBackcolor!private! !

@@ -35,6 +35,7 @@ UI.CapturingInteractor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ButtonStateMask' -> 16r3. 'PressedMask' -> 16r2 }!
+
 UI.ContainerView
 	subclass: #'UI.SlideyInneyOuteyThing'
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
@@ -52,6 +53,7 @@ UI.ContainerView
 			'ResizableMask' -> 16r4.
 			'SlideInDelay' -> 16r1F4
 		}!
+
 UI.CardContainer
 	subclass: #'UI.SlidingCardTray'
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'

@@ -35,6 +35,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticControlView
 	subclass: #'UI.ColorView'
 	instanceVariableNames: ''

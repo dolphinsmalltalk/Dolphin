@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler guid: (OS.COM.IID fromString: '{28f0d425-93fe-4e63-9f8d-2aeec6d3ba1e}')!
+
 WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler comment: '`ICoreWebView2EstimatedEndTimeChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2EstimatedEndTimeChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2DownloadOperation* IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -68,6 +73,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#estimatedEndTimeChanged! !
+
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !

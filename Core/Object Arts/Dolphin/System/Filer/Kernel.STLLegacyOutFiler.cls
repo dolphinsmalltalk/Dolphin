@@ -7,13 +7,18 @@ Kernel.STLOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLLegacyOutFiler guid: (Core.GUID fromString: '{fdca489e-4b8f-4f76-ac69-5b66f7d59fe6}')!
+
 Kernel.STLLegacyOutFiler isNonInstantiable: true!
+
 Kernel.STLLegacyOutFiler comment: '`STBLegacyOutFiler` is the abstract class of  `STLOutFiler`s for writing object graphs in previous STL formats.
 
 Note that although the old formats can be written with complete fidelity, this does not guarantee that the data will be deserializable in an older version of Dolphin because it may contain classes that are not present in the older image, or which have a different layout. It is generally better to avoid resaving old object streams that you might want to load in a downlevel version of Dolphin.
 '!
+
 !Kernel.STLLegacyOutFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STLLegacyOutFiler methodsFor!
 
 lastPredefined
@@ -53,6 +58,7 @@ saveStatic: aBindingReference for: anObject
 			[anObject == #{Transcript} value
 				ifTrue: [self saveObject: anObject as: (STBSingletonProxy forClass: #{UI.TranscriptShell} value)]
 				ifFalse: [self errorStaticVarRefsNotSupported]]! !
+
 !Kernel.STLLegacyOutFiler categoriesForMethods!
 lastPredefined!constants!private! !
 saveCollection:!operations!public! !

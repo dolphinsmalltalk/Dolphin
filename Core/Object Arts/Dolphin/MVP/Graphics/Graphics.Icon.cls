@@ -7,7 +7,9 @@ Graphics.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ExtraLargeExtent' -> (16r100 @ 16r100). 'TileExtent' -> (16r30 @ 16r30) }!
+
 Graphics.Icon guid: (Core.GUID fromString: '{87b4c63e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Icon comment: 'Icon is the class of <Image>s that represent Windows'' icons (essentially a pair of bitmaps, one of which is a mask used to draw the other bitmap transparently).
 
 Class Variables:
@@ -20,7 +22,9 @@ Class Variables:
 	Warning			<Icon>. Standard system warning icon, as used in warning message boxes.
 
 '!
+
 !Graphics.Icon categoriesForClass!Graphics-Tools! !
+
 !Graphics.Icon methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
@@ -296,6 +300,7 @@ withExtent: aPoint
 	^initializer extent = aPoint
 		ifTrue: [self]
 		ifFalse: [self class initializer: (initializer copy extent: aPoint)]! !
+
 !Graphics.Icon categoriesForMethods!
 addToImageList:mask:!double dispatch!private! !
 asAlphaBitmap:!converting!public! !
@@ -525,6 +530,7 @@ window
 
 	WinLogo isNil ifTrue: [WinLogo := self fromSystemId: IDI_WINLOGO].
 	^WinLogo! !
+
 !Graphics.Icon class categoriesForMethods!
 asterisk!instance creation!public! !
 blank!instance creation!public! !

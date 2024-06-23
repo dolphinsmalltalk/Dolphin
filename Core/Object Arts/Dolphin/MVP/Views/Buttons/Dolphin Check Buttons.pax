@@ -51,6 +51,7 @@ UI.ValueConvertingControlView
 								#topRight -> 16r600
 							})
 		}!
+
 UI.CheckButton
 	subclass: #'UI.CheckBox'
 	instanceVariableNames: ''
@@ -72,6 +73,7 @@ resource_Push_and_check
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.CheckBox} 38 #{Core.Array} 16 nil nil 50 2 8 1409363971 1 32 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 338 231 61 32 290 #text: 50 1 8 'Push and Check' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 114 12 0 0 40 0 0 0] 8 #() 338 193 193 nil 27)! !
+
 !UI.PushButton class categoriesForMethods!
 resource_Push_and_check!public!resources-views! !
 !

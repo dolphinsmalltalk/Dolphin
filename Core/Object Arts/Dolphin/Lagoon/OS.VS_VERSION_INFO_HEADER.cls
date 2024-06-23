@@ -12,11 +12,15 @@ External.Structure
 			'_OffsetOf_wValueLength' -> 16r2.
 			'_VS_VERSION_INFO_HEADER_Size' -> 16r6
 		}!
+
 OS.VS_VERSION_INFO_HEADER guid: (Core.GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
+
 OS.VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
 
 See the VersionResource class.'!
+
 !OS.VS_VERSION_INFO_HEADER categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.VS_VERSION_INFO_HEADER methodsFor!
 
 childrenOffset
@@ -81,6 +85,7 @@ wValueLength
 	"Answer the <Integer> value of the receiver's 'wValueLength' field."
 
 	^bytes uint16AtOffset: _OffsetOf_wValueLength! !
+
 !OS.VS_VERSION_INFO_HEADER categoriesForMethods!
 childrenOffset!accessing!public! !
 key!accessing!public! !
@@ -113,6 +118,7 @@ defineFields
 
 getFieldNames
 	^#(#wLength #wValueLength #wType)! !
+
 !OS.VS_VERSION_INFO_HEADER class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!private!template definition! !

@@ -7,9 +7,13 @@ External.IntegerBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UInt32Bytes guid: (Core.GUID fromString: '{87b4c516-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.UInt32Bytes comment: ''!
+
 !External.UInt32Bytes categoriesForClass!External-Data-Unstructured! !
+
 !External.UInt32Bytes methodsFor!
 
 asBoolean
@@ -55,6 +59,7 @@ value: anObject
 	"Set the 32-bit unsigned <integer> value stored in the receiver."
 
 	self uint32AtOffset: 0 put: anObject! !
+
 !External.UInt32Bytes categoriesForMethods!
 asBoolean!converting!public! !
 asInteger!converting!public! !
@@ -77,6 +82,7 @@ elementSize
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uint32AtOffset: 0! !
+
 !External.UInt32Bytes class categoriesForMethods!
 elementSize!constants!private! !
 valueAtAddress:!helpers!private! !

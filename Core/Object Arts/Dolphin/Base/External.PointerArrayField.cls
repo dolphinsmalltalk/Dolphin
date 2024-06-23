@@ -7,9 +7,13 @@ External.StructureArrayField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PointerArrayField guid: (Core.GUID fromString: '{23c14350-68ab-4481-a095-5c4f9654d211}')!
+
 External.PointerArrayField comment: 'PointerArrayField is the class of <ExternalField>s used to describe fields that are fixed-size arrays of pointers to structures.'!
+
 !External.PointerArrayField categoriesForClass!External-Data-Types! !
+
 !External.PointerArrayField methodsFor!
 
 alignment
@@ -29,6 +33,7 @@ elementSize
 	All pointers are 32-bits."
 
 	^VMConstants.IntPtrSize! !
+
 !External.PointerArrayField categoriesForMethods!
 alignment!constants!public! !
 arrayClass!constants!private! !

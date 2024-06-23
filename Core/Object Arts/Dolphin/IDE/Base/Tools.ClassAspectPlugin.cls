@@ -7,10 +7,15 @@ Tools.ClassBrowserPlugin
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ClassAspectPlugin guid: (Core.GUID fromString: '{310dd22a-ce36-4a0a-ba51-44a6014bd35b}')!
+
 Tools.ClassAspectPlugin isNonInstantiable: true!
+
 Tools.ClassAspectPlugin comment: '`ClassAspectPlugin` is an abstract class of `<classBrowserPlugin>`s that allow editing of a textual aspect of a class in a workspace. '!
+
 !Tools.ClassAspectPlugin categoriesForClass!Browser-Plugins! !
+
 !Tools.ClassAspectPlugin methodsFor!
 
 accept
@@ -172,6 +177,7 @@ systemUpdateEvent
 
 textPresenterClass
 	^SmalltalkSystem current workspaceClass! !
+
 !Tools.ClassAspectPlugin categoriesForMethods!
 accept!commands-actions!public! !
 applyOptions!options!private! !

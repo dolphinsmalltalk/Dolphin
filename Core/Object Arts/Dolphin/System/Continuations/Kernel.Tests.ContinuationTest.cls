@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ContinuationTest guid: (Core.GUID fromString: '{5f9fdcb7-fd2f-4ec2-a1dd-68f43f8a41a6}')!
+
 Kernel.Tests.ContinuationTest comment: ''!
+
 !Kernel.Tests.ContinuationTest categoriesForClass!Seaside-Continuations! !
+
 !Kernel.Tests.ContinuationTest methodsFor!
 
 runCase
@@ -78,6 +82,7 @@ testSimplestCallCC
 	| x |
 	x := [:cc | cc value: true] callCC.
 	self assert: x! !
+
 !Kernel.Tests.ContinuationTest categoriesForMethods!
 runCase!public!Running! !
 testBlockTemps!public!unit tests! !

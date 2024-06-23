@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ObjectRegistry guid: (Core.GUID fromString: '{87b4c4a5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.ObjectRegistry isNonInstantiable: true!
+
 Kernel.ObjectRegistry comment: 'ObjectRegistry is part of Dolphin''s external interfacing support, its purpose being to provide a unique <integer> identifier for a specific object, and, depending on the subclass, to maintain a reference to that object to prevent it from being garbage collected. This can be useful, for example, where one needs some unique identifier for an object to be passed to some external entity. 
 
 Note: The Oop (address) of an object is not a suitable candidate for uniquely identifying an object, because it may change over time as the garbage collector moves objects in memory. The identity hash of an object, although time invariant, is not suitable either because it is of limited range (16-bits), and therefore not guaranteed to be unique.
@@ -17,7 +20,9 @@ ObjectRegistry itself is abstract: Subclasses implement both permanent registrie
 
 Instance Variables:
 	registry		<sequencedCollection>. The collection of registered objects.'!
+
 !Kernel.ObjectRegistry categoriesForClass!System-Support! !
+
 !Kernel.ObjectRegistry methodsFor!
 
 addAnsweringIndex: anObject
@@ -70,6 +75,7 @@ removeAtIndex: anInteger
 	Raise an error if there is no element indexed by anInteger."
 
 	^self subclassResponsibility! !
+
 !Kernel.ObjectRegistry categoriesForMethods!
 addAnsweringIndex:!adding!public! !
 at:!accessing!debugger-step through!public! !
@@ -98,6 +104,7 @@ new: anInteger
 	for anInteger elements."
 
 	^self basicNew initialize: anInteger! !
+
 !Kernel.ObjectRegistry class categoriesForMethods!
 defaultCapacity!constants!private! !
 new!instance creation!public! !

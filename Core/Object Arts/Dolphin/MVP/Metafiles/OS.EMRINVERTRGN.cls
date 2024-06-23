@@ -12,7 +12,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_rclBounds' -> 16r8.
 			'_OffsetOf_RGNDATA' -> 16r1C
 		}!
+
 OS.EMRINVERTRGN guid: (Core.GUID fromString: '{a68394ef-a64a-4b77-b81a-36b71800d05f}')!
+
 OS.EMRINVERTRGN comment: '<EMRINVERTRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRINVERTRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +31,9 @@ struct tagEMRINVERTRGN {
 	BYTE* RGNDATA;
 } EMRINVERTRGN;
 '!
+
 !OS.EMRINVERTRGN categoriesForClass!Win32-Structs! !
+
 !OS.EMRINVERTRGN methodsFor!
 
 cbRgnData
@@ -72,6 +76,7 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
+
 !OS.EMRINVERTRGN categoriesForMethods!
 cbRgnData!**compiled accessors**!public! !
 cbRgnData:!**compiled accessors**!public! !
@@ -119,6 +124,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_INVERTRGN. EMR_PAINTRGN}! !
+
 !OS.EMRINVERTRGN class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

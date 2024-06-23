@@ -7,14 +7,18 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 CDO.ISMTPOnArrival guid: (OS.COM.IID fromString: '{cd000026-8b95-11d1-82db-00c04fb1625d}')!
+
 CDO.ISMTPOnArrival comment: '<CDO.ISMTPOnArrival> is a wrapper class for the COM interface ''CDO.ISMTPOnArrival'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"The interface to implement when creating SMTP OnArrival event sinks"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDO.ISMTPOnArrival categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDO.ISMTPOnArrival methodsFor!
 
 isExtensible
@@ -37,6 +41,7 @@ OnArrival: msg EventStatus: eventStatus
 
 	<virtual stdcall: hresult 8 IMessage* int32*>
 	^self invalidCall: _failureCode! !
+
 !CDO.ISMTPOnArrival categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -53,6 +58,7 @@ defineFunctions
 		defineFunction: #OnArrival:EventStatus:
 			argumentTypes: 'IMessage* sdword*'
 ! !
+
 !CDO.ISMTPOnArrival class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

@@ -7,10 +7,15 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.RECT guid: (Core.GUID fromString: '{e552b3f7-8653-46d4-b764-1e59cf1c15f7}')!
+
 External.RECT isNonInstantiable: true!
+
 External.RECT comment: '`RECT` is the abstract class of structures representing rectangular geometries. There are concrete subclasses for different types of position and extent values.'!
+
 !External.RECT categoriesForClass!Win32-Structs! !
+
 !External.RECT methodsFor!
 
 = anObject
@@ -187,6 +192,7 @@ width: aNumber
 	"Change the receiver's width to aNumber. (The origin remains the same. If aNumber is negative, the result is undefined)"
 
 	self right: self left + aNumber! !
+
 !External.RECT categoriesForMethods!
 =!comparing!public! !
 area!accessing!public! !
@@ -287,6 +293,7 @@ origin: originPoint extent: extentPoint
 		top: originPoint y
 		width: extentPoint x
 		height: extentPoint y! !
+
 !External.RECT class categoriesForMethods!
 extent:!instance creation!public! !
 fromRectangle:!instance creation!public! !

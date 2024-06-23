@@ -7,7 +7,9 @@ UI.ShellView
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'InProcLoopMask' -> 16r100000 }!
+
 UI.DialogView guid: (Core.GUID fromString: '{87b4c71e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.DialogView comment: 'DialogView is a specialisation of <topView> that provides the ability to be displayed modally and to return a value.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	oldWndProc	<ExternalAddress> holding the original Windows dlgProc.
 
 '!
+
 !UI.DialogView categoriesForClass!MVP-Views! !
+
 !UI.DialogView methodsFor!
 
 answer
@@ -420,6 +424,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 	self defaultButtonId isNil ifTrue: [self setDefId: 0].
 
 	^self onInitDialog! !
+
 !UI.DialogView categoriesForMethods!
 answer!accessing!public! !
 answer:!accessing!not an aspect!public! !
@@ -490,6 +495,7 @@ on: aSubjectModel
 
 uninitialize
 	View unregisterMessageMappings: {WM_INITDIALOG}! !
+
 !UI.DialogView class categoriesForMethods!
 icon!constants!public! !
 initialize!initializing!private! !

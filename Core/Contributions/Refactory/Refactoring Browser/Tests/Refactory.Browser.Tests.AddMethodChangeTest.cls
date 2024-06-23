@@ -7,8 +7,11 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AddMethodChangeTest guid: (Core.GUID fromString: '{08457a65-10d4-409d-93df-440bce0fac93}')!
+
 Refactory.Browser.Tests.AddMethodChangeTest comment: ''!
+
 !Refactory.Browser.Tests.AddMethodChangeTest methodsFor!
 
 subjectClass
@@ -80,6 +83,7 @@ isAbstract ^false!! !!
 	self assert: subject printString equals: '!!Foo.Bar class methodsFor!!
 
 isAbstract ^false!! !!'! !
+
 !Refactory.Browser.Tests.AddMethodChangeTest categoriesForMethods!
 subjectClass!public!unit tests! !
 testEnvironmentAndPackageMaintained!public!unit tests! !

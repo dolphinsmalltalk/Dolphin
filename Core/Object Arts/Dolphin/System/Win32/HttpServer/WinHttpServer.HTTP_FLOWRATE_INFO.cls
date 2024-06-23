@@ -12,7 +12,9 @@ WinHttpServer.HttpQosSetting
 			'_OffsetOf_MaxBandwidth' -> 16r4.
 			'_OffsetOf_MaxPeakBandwidth' -> 16r8
 		}!
+
 WinHttpServer.HTTP_FLOWRATE_INFO guid: (Core.GUID fromString: '{c2fad8f6-f179-4bbb-a5f2-073c416f6704}')!
+
 WinHttpServer.HTTP_FLOWRATE_INFO comment: '`HTTP_FLOWRATE_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_FLOWRATE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +33,9 @@ struct tagHTTP_FLOWRATE_INFO {
 } HTTP_FLOWRATE_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_FLOWRATE_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_FLOWRATE_INFO methodsFor!
 
 BurstSize
@@ -63,6 +67,7 @@ MaxPeakBandwidth: anInteger
 	"Set the receiver's 'MaxPeakBandwidth' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_MaxPeakBandwidth put: anInteger! !
+
 !WinHttpServer.HTTP_FLOWRATE_INFO categoriesForMethods!
 BurstSize!**compiled accessors**!public! !
 BurstSize:!**compiled accessors**!public! !
@@ -111,6 +116,7 @@ maxBandwidth: maxInteger maxPeakBandwidth: peakInteger burstSize: burstInteger
 
 qosType
 	^HttpQosSettingTypeFlowRate! !
+
 !WinHttpServer.HTTP_FLOWRATE_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

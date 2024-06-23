@@ -7,9 +7,13 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.AbstractCustomLineCapTest guid: (Core.GUID fromString: '{7469b42b-9046-4226-a093-df3a8adda033}')!
+
 Graphics.Gdiplus.Tests.AbstractCustomLineCapTest isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.AbstractCustomLineCapTest comment: ''!
+
 !Graphics.Gdiplus.Tests.AbstractCustomLineCapTest methodsFor!
 
 testStrokeJoin
@@ -36,6 +40,7 @@ verifyEqualToModel: aGdiplusObject
 	super verifyEqualToModel: aGdiplusObject.
 	self assert: aGdiplusObject strokeJoin equals: model strokeJoin.
 	self assert: aGdiplusObject widthScale equals: model widthScale! !
+
 !Graphics.Gdiplus.Tests.AbstractCustomLineCapTest categoriesForMethods!
 testStrokeJoin!public!unit tests! !
 testWidthScale!public!unit tests! !

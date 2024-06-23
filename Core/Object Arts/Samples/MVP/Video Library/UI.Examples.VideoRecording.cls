@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.VideoRecording guid: (Core.GUID fromString: '{62802c23-5ba3-4772-bfbe-a848ea29c27c}')!
+
 UI.Examples.VideoRecording comment: 'VideoRecording is represents a programme recorded on a VideoTape. This class is part of the Video Library sample package. Please see the package comment for more details.'!
+
 !UI.Examples.VideoRecording categoriesForClass!Samples! !
+
 !UI.Examples.VideoRecording methodsFor!
 
 date
@@ -132,6 +136,7 @@ title: titleString
 	Accessor Method"
 
 	title := titleString! !
+
 !UI.Examples.VideoRecording categoriesForMethods!
 date!accessing!public! !
 date:!accessing!public! !
@@ -163,6 +168,7 @@ new
 	"
 
 	^super new initialize! !
+
 !UI.Examples.VideoRecording class categoriesForMethods!
 icon!constants!public! !
 new!instance creation!public! !

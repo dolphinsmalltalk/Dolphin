@@ -5,9 +5,13 @@ MainTestCase subclass: #ErrorClassANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ErrorClassANSITest guid: (GUID fromString: '{9146d8ba-8fce-4db0-94e7-771cf4e7dac9}')!
+
 ErrorClassANSITest comment: ''!
+
 !ErrorClassANSITest categoriesForClass!Unclassified! !
+
 !ErrorClassANSITest methodsFor!
 
 canonicalObject
@@ -57,6 +61,7 @@ testXsubclasses
 testXsuperclass
 	" <classDescription>#superclass "
 	#'Exception'.! !
+
 !ErrorClassANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

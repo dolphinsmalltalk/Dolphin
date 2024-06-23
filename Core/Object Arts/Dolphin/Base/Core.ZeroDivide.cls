@@ -7,7 +7,9 @@ Core.ArithmeticError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ZeroDivide guid: (Core.GUID fromString: '{87b4c563-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.ZeroDivide comment: '`ZeroDivide` is the class of `ArithmeticError` for representing attempts at division by zero.
 
 `ZeroDivide` is resumable when triggered by floating point division by zero (i.e. either operand is a floating point number). When resumed the result should be a continuation value (generally ∞ or -∞, but may also be NaN if a NaN was being divided by zero). Integer division by zero (i.e. both operands are integers) is not resumable, because there is no suitable continuation value (i.e., no representation of infinity).
@@ -20,7 +22,9 @@ Evaluate the following to cause `ZeroDivide` exceptions to be raised.
 	1.23 / 0.0.
 	[1.2 / -0.0] on: ZeroDivide do: [:e | e resume]. 	"=> Float.NegativeInfinity"
 ```'!
+
 !Core.ZeroDivide categoriesForClass!Kernel-Exception Handling! !
+
 !Core.ZeroDivide methodsFor!
 
 _descriptionFormat
@@ -39,6 +43,7 @@ isResumable
 		- Integer division by zero is not continuable, so resumption is disallowed."
 
 	^self dividend isInteger not! !
+
 !Core.ZeroDivide categoriesForMethods!
 _descriptionFormat!displaying!public! !
 dividend!accessing!public! !
@@ -53,6 +58,7 @@ dividend: argument
 	"Signal the occurrence of an integer division by zero."
 
 	^self signalWith: argument! !
+
 !Core.ZeroDivide class categoriesForMethods!
 dividend:!instance creation!public! !
 !

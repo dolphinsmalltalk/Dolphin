@@ -7,7 +7,9 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.BorderLayout guid: (Core.GUID fromString: '{87b4c646-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.BorderLayout comment: 'BorderLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. It arranges views that have been added to their parent container with the #arrangement aspects #north, #south, #east, #west and #center. These identified views are "docked" along the appropriate edges and in the centre of the container. A BorderLayout attempts to keep the radial dimension of the edge components fixed at either their current size or (if specified) the preferred size, and then resizes the #center view to fill the remaining space.
 
 BorderLayout is a very useful layout manager, and is commonly employed in conjunction with a shell to position a <Toolbar> to the north, a <Statusbar> to the south, and a composite view in the centre that contains the applicaiton views.
@@ -21,7 +23,9 @@ Instance Variables:
 	west			<view> that will be positioned at the left of the container
 	center			<view> that will be positioned at the centre of the container
 '!
+
 !UI.BorderLayout categoriesForClass!MVP-Layout Managers-General! !
+
 !UI.BorderLayout methodsFor!
 
 arrangementOf: aView 
@@ -281,6 +285,7 @@ widthForEdge: aView ofHeight: anInteger inContext: aLayoutContext
 	rect height: anInteger.
 	aLayoutContext setView: aView rectangle: rect.
 	^(aView layoutExtent: aLayoutContext) x! !
+
 !UI.BorderLayout categoriesForMethods!
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
@@ -319,6 +324,7 @@ horizontalGap: horizontal verticalGap: vertical
 		horizontalGap: horizontal;
 		verticalGap: vertical;
 		yourself! !
+
 !UI.BorderLayout class categoriesForMethods!
 horizontalGap:verticalGap:!instance creation!public! !
 !

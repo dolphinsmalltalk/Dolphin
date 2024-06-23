@@ -18,11 +18,15 @@ External.FinalizableStructure
 			'_OffsetOf_wCode' -> 16r0.
 			'_OffsetOf_wReserved' -> 16r2
 		}!
+
 OS.COM.EXCEPINFO guid: (Core.GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.EXCEPINFO comment: '`OS.COM.EXCEPINFO` is the class of `External.Structure`s representing the OLE Automation EXCEPINFO structure. 
 
 EXCEPINFO is used to return exception details from IDispatch::Invoke().'!
+
 !OS.COM.EXCEPINFO categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.EXCEPINFO methodsFor!
 
 _deepCopy: copiesDictionary 
@@ -209,6 +213,7 @@ wstrSource
 	"Answer the receiver's bstrSource field as a <Utf16String>."
 
 	^Utf16String fromAddress: self pwszSource! !
+
 !OS.COM.EXCEPINFO categoriesForMethods!
 _deepCopy:!copying!private! !
 bstrDescription!accessing!public! !
@@ -289,6 +294,7 @@ defineFields
 
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
+
 !OS.COM.EXCEPINFO class categoriesForMethods!
 bstrFieldOffsets!constants!private! !
 byteSize!**compiled accessors**!constants!public! !

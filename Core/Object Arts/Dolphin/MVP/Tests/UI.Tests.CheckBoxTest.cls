@@ -7,8 +7,11 @@ UI.Tests.CheckButtonTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.CheckBoxTest guid: (Core.GUID fromString: '{ecae6a15-f793-4253-9052-e9c562fe2e48}')!
+
 UI.Tests.CheckBoxTest comment: ''!
+
 !UI.Tests.CheckBoxTest methodsFor!
 
 classToTest
@@ -25,6 +28,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 		ifTrue: 
 			["ComparisonPolicy should have been replaced"
 			self assert: presenter model comparisonPolicy class equals: NeverSearchPolicy]! !
+
 !UI.Tests.CheckBoxTest categoriesForMethods!
 classToTest!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -51,6 +55,7 @@ resource_CheckBox_view_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.CheckBox) 34 16 nil nil 34 2 8 1409363203 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) false nil nil 5 nil nil nil 416 nil 8 1915188384 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 706 227 43 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 232 5 0 0 31 0 0 0] 8 #() 706 193 193 nil 27 )! !
+
 !UI.Tests.CheckBoxTest class categoriesForMethods!
 resource_CheckBox_view_D6!public!resources-views! !
 resource_CheckBox_view_D7!public!resources-views! !

@@ -10,8 +10,11 @@ OS.COM.TypeInfoObject
 			'VTtoIDLTypeMap'
 				-> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
 		}!
+
 OS.COM.TypeInfoAnalyzer guid: (Core.GUID fromString: '{c06f3b64-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.TypeInfoAnalyzer isNonInstantiable: true!
+
 OS.COM.TypeInfoAnalyzer comment: 'AXTypeInfoAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer and adds higher level behaviours for analyzing the type information available through that interface.
 
 ITypeInfo itself contains a large number of member functions which allow one to enquire about the structure and attributes of each of the individual elements of a Type Library. Unfortunately it is rather poorly factored in that a single interface is used to describe widely differing objects. We have therefore applied the "Conditional Elimination" refactoring pattern and created a pseudo hierarchy as follows:
@@ -33,7 +36,9 @@ Instance Variables:
 	guid			<GUID>. Unique id of type.
 	index			<integer> index of the type in the typelib.
 	basicName		<readableString> name of the type from the typelib.'!
+
 !OS.COM.TypeInfoAnalyzer categoriesForClass!ActiveX Automation! !
+
 !OS.COM.TypeInfoAnalyzer methodsFor!
 
 = comparand
@@ -467,6 +472,7 @@ vt
 	the receiver."
 
 	^VT_USERDEFINED! !
+
 !OS.COM.TypeInfoAnalyzer categoriesForMethods!
 =!comparing!public! !
 asImplType!converting!public! !
@@ -658,6 +664,7 @@ vtToIDLTypeMap
 		at: VT_VARIANT put: 'VARIANT';
 		at: VT_VOID put: 'void';
 		yourself! !
+
 !OS.COM.TypeInfoAnalyzer class categoriesForMethods!
 initialize!initializing!private! !
 onTypeInfo:!instance creation!public! !

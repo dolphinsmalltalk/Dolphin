@@ -7,9 +7,13 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBCollectionProxy guid: (Core.GUID fromString: '{87b4c6eb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STBCollectionProxy comment: ''!
+
 !Kernel.STBCollectionProxy categoriesForClass!System-Binary storage! !
+
 !Kernel.STBCollectionProxy methodsFor!
 
 array
@@ -35,6 +39,7 @@ value
 	"Answer a new collection of class class and elements array."
 
 	^class fromStbProxy: self! !
+
 !Kernel.STBCollectionProxy categoriesForMethods!
 array!accessing!public! !
 array:!accessing!private! !
@@ -58,6 +63,7 @@ forCollection: aCollection
 	"Answer a new instance representing aCollection."
 
 	^self class: aCollection basicClass array: aCollection asArray! !
+
 !Kernel.STBCollectionProxy class categoriesForMethods!
 class:array:!instance creation!public! !
 forCollection:!instance creation!public! !

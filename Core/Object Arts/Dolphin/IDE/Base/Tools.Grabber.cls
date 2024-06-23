@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Grabber guid: (Core.GUID fromString: '{7024e3c5-a46a-47fb-a7c0-e17bcf414e66}')!
+
 Tools.Grabber comment: ''!
+
 !Tools.Grabber methodsFor!
 
 alignWithView
@@ -214,6 +217,7 @@ view: aView aspect: anAspectSymbol composer: aViewComposer
 	aspect := anAspectSymbol.
 	composer := aViewComposer.
 	self alignWithView! !
+
 !Tools.Grabber categoriesForMethods!
 alignWithView!operations!public! !
 arena!accessing!public! !
@@ -315,6 +319,7 @@ view: aView aspect: anAspectSymbol composer: aViewComposer
 			aspect: anAspectSymbol
 			composer: aViewComposer;
 		yourself! !
+
 !Tools.Grabber class categoriesForMethods!
 cursors!accessing!private! !
 defaultExtent!constants!private! !

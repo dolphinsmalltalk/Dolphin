@@ -7,9 +7,13 @@ Kernel.StLocalVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StGeneratedTempVariable guid: (Core.GUID fromString: '{4231a299-1e20-45b5-8dc9-4ac9a57f70d6}')!
+
 Kernel.StGeneratedTempVariable comment: '<StGeneratedTempVariable> is a specialised class of <StLocalVariable> to describe compiler generated temporary variables such as the `_failureCode` variable of primitive methods which the primitive uses to pass a failure reason to the Smalltalk backup code.'!
+
 !Kernel.StGeneratedTempVariable categoriesForClass!Kernel-Objects! !
+
 !Kernel.StGeneratedTempVariable methodsFor!
 
 addAssignment: aStVariableNode fromScope: aStSemanticScope
@@ -20,6 +24,7 @@ isConstant
 	Arguments cannot be assigned to in Smalltalk."
 
 	^true! !
+
 !Kernel.StGeneratedTempVariable categoriesForMethods!
 addAssignment:fromScope:!public! !
 isConstant!public!testing! !

@@ -7,8 +7,11 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaStringCollection guid: (OS.COM.IID fromString: '{50ea08b1-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 MSXML.ISchemaStringCollection isEgressOnly: true!
+
 MSXML.ISchemaStringCollection comment: '<ISchemaStringCollection> is a wrapper class for the COM interface ''MSXML2.ISchemaStringCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -39,7 +42,9 @@ interface ISchemaStringCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
+
 !MSXML.ISchemaStringCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISchemaStringCollection methodsFor!
 
 _newEnum
@@ -103,6 +108,7 @@ length
 	answer := Int32 new.
 	self get_length: answer.
 	^answer asObject! !
+
 !MSXML.ISchemaStringCollection categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 get__newEnum:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
@@ -128,6 +134,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
+
 !MSXML.ISchemaStringCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

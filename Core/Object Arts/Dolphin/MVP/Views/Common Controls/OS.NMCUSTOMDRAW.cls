@@ -15,7 +15,9 @@ OS.NMHDR
 			'_OffsetOf_rc' -> 16r14.
 			'_OffsetOf_uItemState' -> 16r28
 		}!
+
 OS.NMCUSTOMDRAW guid: (Core.GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
+
 OS.NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMCUSTOMDRAW` structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the `ListView` and `TreeView` to request custom draw information for individual items (and optionally sub-items).
@@ -23,7 +25,9 @@ OS.NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to repr
 Some item states, such as whether items are considered selected, or hot, can be altered. Whether this has any effect depends on the control, and there is little consistency of interpretation. Specialized sub-structures for particular common controls provide fields which can be written to in order to pass custom draw settings back to that control (for example the foreground and background text colours). The DC associated with this structure can also be updated by changing the font, and so forth.
 
 '!
+
 !OS.NMCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMCUSTOMDRAW methodsFor!
 
 applyFont
@@ -256,6 +260,7 @@ view
 view: anIconListAbstract
 	"Private -"
 	view := anIconListAbstract! !
+
 !OS.NMCUSTOMDRAW categoriesForMethods!
 applyFont!operations!private! !
 backcolor!accessing!public! !
@@ -323,6 +328,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !
+
 !OS.NMCUSTOMDRAW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

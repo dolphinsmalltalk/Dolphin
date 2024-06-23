@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2NewWindowRequestedEventHandler guid: (OS.COM.IID fromString: '{d4c185fe-c81c-4989-97af-2d3fa7ab5651}')!
+
 WebView2.ICoreWebView2NewWindowRequestedEventHandler comment: '`ICoreWebView2NewWindowRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2NewWindowRequestedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2NewWindowRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2NewWindowRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2NewWindowRequestedEventArgs*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2NewWindowRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#newWindowRequested:! !
+
 !WebView2.ICoreWebView2NewWindowRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

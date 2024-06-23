@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBStringReplacement guid: (Core.GUID fromString: '{f2893320-1a6f-47e8-9052-eb2682fdb92c}')!
+
 Refactory.Browser.RBStringReplacement comment: 'Private class used to represent a text replacement in the Refactoring Browser.'!
+
 !Refactory.Browser.RBStringReplacement categoriesForClass!Kernel-Objects! !
+
 !Refactory.Browser.RBStringReplacement methodsFor!
 
 startPosition
@@ -29,6 +33,7 @@ string
 
 string: aString 
 	string := aString! !
+
 !Refactory.Browser.RBStringReplacement categoriesForMethods!
 startPosition!accessing!public! !
 startPosition:!accessing!private! !
@@ -46,6 +51,7 @@ replaceFrom: startInteger to: stopInteger with: aString
 		stopPosition: stopInteger;
 		string: aString;
 		yourself! !
+
 !Refactory.Browser.RBStringReplacement class categoriesForMethods!
 replaceFrom:to:with:!instance creation!public! !
 !

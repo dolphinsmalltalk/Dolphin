@@ -7,8 +7,11 @@ WebView2.ICoreWebView2WebMessageReceivedEventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2WebMessageReceivedEventArgs2 guid: (OS.COM.IID fromString: '{06fc7ab7-c90c-4297-9389-33ca01cf6d5e}')!
+
 WebView2.ICoreWebView2WebMessageReceivedEventArgs2 isEgressOnly: true!
+
 WebView2.ICoreWebView2WebMessageReceivedEventArgs2 comment: '`ICoreWebView2WebMessageReceivedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebMessageReceivedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +32,9 @@ interface ICoreWebView2WebMessageReceivedEventArgs2 : ICoreWebView2WebMessageRec
 };
 ```
 '!
+
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs2 methodsFor!
 
 get_AdditionalObjects: value
@@ -40,6 +45,7 @@ get_AdditionalObjects: value
 
 	<virtual stdcall: hresult 7 ICoreWebView2ObjectCollectionView**>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs2 categoriesForMethods!
 get_AdditionalObjects:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs2!private! !
 !
@@ -54,6 +60,7 @@ defineFunctions
 		defineFunction: #get_AdditionalObjects:
 			argumentTypes: 'ICoreWebView2ObjectCollectionView**'
 ! !
+
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

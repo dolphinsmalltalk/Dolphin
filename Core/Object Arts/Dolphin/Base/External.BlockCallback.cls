@@ -7,9 +7,13 @@ External.Callback
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.BlockCallback guid: (Core.GUID fromString: '{87b4c577-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.BlockCallback comment: ''!
+
 !External.BlockCallback categoriesForClass!System-Support! !
+
 !External.BlockCallback methodsFor!
 
 block: aBlockClosure
@@ -40,6 +44,7 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^block valueWithArgumentsAt: anAddress descriptor: descriptor! !
+
 !External.BlockCallback categoriesForMethods!
 block:!accessing!private! !
 printOn:!development!printing!public! !

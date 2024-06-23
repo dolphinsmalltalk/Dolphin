@@ -13,7 +13,9 @@ UI.Scintilla.QueryableAttribute
 			'MarginTypes'
 				-> #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color)
 		}!
+
 UI.Scintilla.Margin guid: (Core.GUID fromString: '{fd6f73fe-70d8-4e4a-8332-ec147e5ba899}')!
+
 UI.Scintilla.Margin comment: '`Scintilla.Margin` instances represent the ''margin'' attributes of a `ScintillaView`.
 
 There may be multiple margins to the left of the text display, plus a gap either side of the text. Each margin can be set to display either "marker" symbols, line numbers or text, as specified by the `#style` aspect. The markers that can be displayed in each margin are set with `#mask` aspect. Any markers not associated with a visible margin will be displayed as changes in background colour in the text. A width in pixels can be set for each margin using the `#width` aspect. Margins with a zero width are ignored completely. The `#isSensitive` aspect controls whether a mouse click in a margin triggers a `#marginClicked` event or selects the corresponding line of text.
@@ -55,7 +57,9 @@ The margin `#style` can be one of the following:
 
 
 '!
+
 !UI.Scintilla.Margin categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.Margin methodsFor!
 
 backcolor
@@ -202,6 +206,7 @@ width: anInteger
 
 	self basicWidth: (anInteger ifNotNil: [anInteger]).
 	self updateViewProperty: WidthProperty! !
+
 !UI.Scintilla.Margin categoriesForMethods!
 backcolor!accessing!public! !
 backcolor:!accessing!public! !
@@ -326,6 +331,7 @@ stbVersion
 		3: Store colors as Colors, not integers (ec9ba7ecc)"
 
 	^3! !
+
 !UI.Scintilla.Margin class categoriesForMethods!
 buildPropertyDescriptors!constants!must not strip!private! !
 initialize!development!initializing!public! !

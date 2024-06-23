@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Context guid: (Core.GUID fromString: '{4fb74aa3-f021-4955-a690-e1a29440af80}')!
+
 Kernel.Context comment: ''!
+
 !Kernel.Context categoriesForClass!Kernel-Processes! !
+
 !Kernel.Context methodsFor!
 
 block
@@ -39,6 +43,7 @@ printOn: aStream
 				basicPrint: self;
 				nextPutAll: ' for ';
 				print: block]! !
+
 !Kernel.Context categoriesForMethods!
 block!accessing!private! !
 frameClass!constants!public! !

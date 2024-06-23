@@ -12,8 +12,11 @@ UI.Shell
 			'ReuseIfOpenMask' -> 16r4.
 			'ShowOptionLoadingTimes' -> false
 		}!
+
 Tools.SmalltalkToolShell guid: (Core.GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.SmalltalkToolShell isNonInstantiable: true!
+
 Tools.SmalltalkToolShell comment: 'SmalltalkToolShell is an abstract <topPresenter> providing umbrella functionality for most of the Dolphin development tools. 
 
 All of the tools have the singleton instance of SmalltalkSystem as their model. This makes sense because the SmalltalkSystem is effectively a Facade onto the Smalltalk development image; all user interface modifications to the image should go through this central point. In this way, a tool is effectively acting as a view onto the development image. It is also convenient since all <model>s are also <commandTarget>s. This means that some user interface commands can be directly picked up and acted upon by the SmalltalkSystem without any intervention being required from the tool itself.
@@ -27,7 +30,9 @@ Class Instance Variables:
 	defaultExtent		<Point> specifying the default size of new views, nil if none set.
 	additionalAccelerators	<Array> of 2-element <Array>s, being command <Symbol> accelerator key <String> pairs
 '!
+
 !Tools.SmalltalkToolShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !Tools.SmalltalkToolShell methodsFor!
 
 accept
@@ -570,6 +575,7 @@ undoChange
 
 workspaceClass
 	^SmalltalkSystem current workspaceClass! !
+
 !Tools.SmalltalkToolShell categoriesForMethods!
 accept!commands-actions!public! !
 acceptItCommand!commands-mappings!private! !
@@ -1055,6 +1061,7 @@ userSettingsKeyName
 
 userSettingsRootKey
 	^OS.RegKey userRoot createKey: SessionManager.Current productRegistryKey! !
+
 !Tools.SmalltalkToolShell class categoriesForMethods!
 activeIdeaSpace!public! !
 applyOptions!accessing!options!private! !

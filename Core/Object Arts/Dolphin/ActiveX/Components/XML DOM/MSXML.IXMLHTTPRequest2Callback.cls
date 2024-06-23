@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLHTTPRequest2Callback guid: (OS.COM.IID fromString: '{a44a9299-e321-40de-8866-341b41669162}')!
+
 MSXML.IXMLHTTPRequest2Callback comment: '`IXMLHTTPRequest2Callback` is a wrapper class for the COM interface ''MSXML2.IXMLHTTPRequest2Callback'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -48,7 +50,9 @@ interface IXMLHTTPRequest2Callback : IUnknown
 };
 ```
 '!
+
 !MSXML.IXMLHTTPRequest2Callback categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXMLHTTPRequest2Callback methodsFor!
 
 Ondataavailable: pXHR pResponseStream: pResponseStream
@@ -101,6 +105,7 @@ OnResponseReceived: pXHR pResponseStream: pResponseStream
 
 	<virtual stdcall: hresult 7 IXMLHTTPRequest2* ISequentialStream*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IXMLHTTPRequest2Callback categoriesForMethods!
 Ondataavailable:pResponseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
 OnError:hrError:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
@@ -127,6 +132,7 @@ defineFunctions
 		defineFunction: #OnError:hrError:
 			argumentTypes: 'IXMLHTTPRequest2* hresult'
 ! !
+
 !MSXML.IXMLHTTPRequest2Callback class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

@@ -43,6 +43,7 @@ Graphics.Image
 	imports: #(#{Graphics})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IPicture'
 	instanceVariableNames: ''
@@ -57,6 +58,7 @@ OS.COM.IUnknown
 			'PICTYPE_NONE' -> 16r0.
 			'PICTYPE_UNINITIALIZED' -> -16r1
 		}!
+
 OS.COM.IDispatch
 	subclass: #'OS.COM.IPictureDisp'
 	instanceVariableNames: ''
@@ -64,6 +66,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.SizedStructure
 	subclass: #'OS.COM.PICTDESC'
 	instanceVariableNames: ''
@@ -129,6 +132,7 @@ oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr
 
 	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* uint32 int32 guid* void**>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.OLEAutLibrary categoriesForMethods!
 oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !
 oleLoadPicture:lSize:fRunmode:riid:ppvObj:!OLE Functions-OLE!public! !

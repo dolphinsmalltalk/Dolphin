@@ -7,11 +7,15 @@ Kernel.STBOutFiler3
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler4 guid: (Core.GUID fromString: '{3565474c-060a-4697-8e40-5e4837551d69}')!
+
 Kernel.STBOutFiler4 comment: '`STBOutFiler4` is an `STBOutFiler` for writing the STB 4 binary object serialization format.
 
 STB 4 was introduced in Dolphin 7.1, primarily to support UTF-encoded strings.'!
+
 !Kernel.STBOutFiler4 categoriesForClass!System-Binary storage! !
+
 !Kernel.STBOutFiler4 methodsFor!
 
 inFilerClass
@@ -54,6 +58,7 @@ saveSymbol: aSymbol
 
 variableBindingClass
 	^VariableBinding! !
+
 !Kernel.STBOutFiler4 categoriesForMethods!
 inFilerClass!constants!private! !
 locatorKeyFor:!helpers!public! !
@@ -77,6 +82,7 @@ uninitialize
 
 version
 	^4! !
+
 !Kernel.STBOutFiler4 class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !

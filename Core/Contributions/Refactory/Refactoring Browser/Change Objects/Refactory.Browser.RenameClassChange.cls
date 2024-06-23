@@ -7,9 +7,13 @@ Refactory.Browser.CompositeRefactoryChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameClassChange guid: (Core.GUID fromString: '{a88eaba4-304f-4675-8b55-d3301bc1166d}')!
+
 Refactory.Browser.RenameClassChange comment: ''!
+
 !Refactory.Browser.RenameClassChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RenameClassChange methodsFor!
 
 = aRenameClassChange 
@@ -56,6 +60,7 @@ renameChangesForClass: aClassName to: newClassName
 	oldName asSymbol == aClassName 
 		ifTrue: [change rename: newClassName to: newName].
 	^change! !
+
 !Refactory.Browser.RenameClassChange categoriesForMethods!
 =!comparing!public! !
 changeClass!accessing!public! !
@@ -74,6 +79,7 @@ rename: oldString to: newString
 	^(self new)
 		rename: oldString to: newString;
 		yourself! !
+
 !Refactory.Browser.RenameClassChange class categoriesForMethods!
 rename:to:!instance creation!public! !
 !

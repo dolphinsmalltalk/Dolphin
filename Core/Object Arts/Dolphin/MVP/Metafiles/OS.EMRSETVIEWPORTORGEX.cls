@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETVIEWPORTORGEX_Size' -> 16r10. '_OffsetOf_ptlOrigin' -> 16r8 }!
+
 OS.EMRSETVIEWPORTORGEX guid: (Core.GUID fromString: '{69136774-602e-4324-aff6-a261d792e0ff}')!
+
 OS.EMRSETVIEWPORTORGEX comment: '<EMRSETVIEWPORTORGEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTORGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRSETVIEWPORTORGEX {
 	POINTL ptlOrigin;
 } EMRSETVIEWPORTORGEX;
 '!
+
 !OS.EMRSETVIEWPORTORGEX categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETVIEWPORTORGEX methodsFor!
 
 ptlOrigin
@@ -38,6 +42,7 @@ ptlOrigin: aPOINTL
 		from: ##(_OffsetOf_ptlOrigin + 1)
 		to: ##(_OffsetOf_ptlOrigin + POINTL._POINTL_Size)
 		startingAt: 1! !
+
 !OS.EMRSETVIEWPORTORGEX categoriesForMethods!
 ptlOrigin!**compiled accessors**!public! !
 ptlOrigin:!**compiled accessors**!public! !
@@ -74,6 +79,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETVIEWPORTORGEX. EMR_SETWINDOWORGEX. EMR_SETBRUSHORGEX}! !
+
 !OS.EMRSETVIEWPORTORGEX class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

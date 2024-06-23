@@ -7,9 +7,13 @@ OS.COM.DualInterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Examples.RandomStream guid: (Core.GUID fromString: '{f560cd26-00a1-4a4f-9833-03ae165a2e11}')!
+
 OS.COM.Examples.RandomStream comment: 'OS.COM.Examples.RandomStream is part of the COM Random Stream sample. See the "RandomStream sample" package for further details.'!
+
 !OS.COM.Examples.RandomStream categoriesForClass!COM-Implementations! !
+
 !OS.COM.Examples.RandomStream methodsFor!
 
 get_LowerBound: plLowerBound
@@ -74,6 +78,7 @@ put_UpperBound: value
 
 	upperBound := value.
 	^S_OK! !
+
 !OS.COM.Examples.RandomStream categoriesForMethods!
 get_LowerBound:!COM Interfaces-IRandomStream!private! !
 get_Seed:!COM Interfaces-IRandomStream!private! !
@@ -98,6 +103,7 @@ progID
 	create instances of the receiver, e.g. 'Dolphin.Object.1'"
 
 	^'Dolphin.RandomStream.1'! !
+
 !OS.COM.Examples.RandomStream class categoriesForMethods!
 clsid!constants!private! !
 progID!constants!public! !

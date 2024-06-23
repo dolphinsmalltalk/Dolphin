@@ -7,9 +7,13 @@ STON.Writer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.PrettyPrinter guid: (Core.GUID fromString: '{80975c9b-d51d-43ef-833f-a673161ea9dd}')!
+
 STON.PrettyPrinter comment: ''!
+
 !STON.PrettyPrinter categoriesForClass!STON-Core-Writer! !
+
 !STON.PrettyPrinter methodsFor!
 
 encodeList: elements
@@ -73,6 +77,7 @@ newlineIndent
 
 prettyPrintSpace
 	writeStream space! !
+
 !STON.PrettyPrinter categoriesForMethods!
 encodeList:!public!writing! !
 encodeMap:!public!writing! !

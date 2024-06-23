@@ -7,7 +7,9 @@ Core.FileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AbsoluteFileLocator guid: (Core.GUID fromString: '{0c174885-6aa9-43e4-98c3-a59915f5b3d7}')!
+
 Kernel.AbsoluteFileLocator comment: 'An AbsoluteFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files by their full absolute path.
 
@@ -15,7 +17,9 @@ Try the following examples:
 
 relativePath := FileLocator absolute relativePathTo: SessionManager current imageFileName. "Display It"
 FileLocator absolute localFileSpecFor: relativePath. "Display It"'!
+
 !Kernel.AbsoluteFileLocator categoriesForClass!System-Support! !
+
 !Kernel.AbsoluteFileLocator methodsFor!
 
 isSelfEvaluating
@@ -43,6 +47,7 @@ relativePathTo: aFilename
 	path via its #localFileSpecFor: method. In this case we need an absolute path."
 
 	^File fullPathOf: aFilename! !
+
 !Kernel.AbsoluteFileLocator categoriesForMethods!
 isSelfEvaluating!public!testing! !
 localFileSpecFor:!accessing!public! !
@@ -68,6 +73,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
+
 !Kernel.AbsoluteFileLocator class categoriesForMethods!
 current!accessing!public! !
 onPreStripImage!class hierarchy-removing!private! !

@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.ScintillaLibrary guid: (Core.GUID fromString: '{846bc1f2-ad71-411e-8c63-c99780a5a626}')!
+
 UI.Scintilla.ScintillaLibrary comment: '`External.DynamcLinkLibrary` class to wrap the Scintilla DLL (SciLexer.dll).'!
+
 !UI.Scintilla.ScintillaLibrary categoriesForClass!External-Libraries! !
+
 !UI.Scintilla.ScintillaLibrary methodsFor!
 
 directBooleanFunction: sciThis msg: msg wParam: wParam lParam: lParam
@@ -43,6 +47,7 @@ versionFormatString
 	"
 
 	^'%2!!d!!.%3!!d!!.%4!!d!!'! !
+
 !UI.Scintilla.ScintillaLibrary categoriesForMethods!
 directBooleanFunction:msg:wParam:lParam:!operations!private! !
 directFunction:msg:wParam:lParam:!operations!private! !
@@ -67,6 +72,7 @@ versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
 	^'5.5.0'! !
+
 !UI.Scintilla.ScintillaLibrary class categoriesForMethods!
 closeDefault!private!realizing/unrealizing! !
 fileName!constants!public! !

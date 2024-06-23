@@ -7,9 +7,13 @@ UI.VirtualTreeModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AbstractClassHierarchyModel guid: (Core.GUID fromString: '{2e07298b-d593-406d-b0d2-fb1248ebb196}')!
+
 Tools.AbstractClassHierarchyModel comment: ''!
+
 !Tools.AbstractClassHierarchyModel categoriesForClass!MVP-Models! !
+
 !Tools.AbstractClassHierarchyModel methodsFor!
 
 approxSize
@@ -46,6 +50,7 @@ setRoots: aCollection
 
 	super setRoots: aCollection.
 	self observeEnvironment! !
+
 !Tools.AbstractClassHierarchyModel categoriesForMethods!
 approxSize!accessing!private! !
 observeEnvironment!initializing!private! !

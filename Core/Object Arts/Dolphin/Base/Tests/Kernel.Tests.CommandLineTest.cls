@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.CommandLineTest guid: (Core.GUID fromString: '{3a8a3bc5-3ef6-46c1-933b-754c6b06457e}')!
+
 Kernel.Tests.CommandLineTest comment: ''!
+
 !Kernel.Tests.CommandLineTest categoriesForClass!SUnit! !
+
 !Kernel.Tests.CommandLineTest methodsFor!
 
 dolphinLauncherExe
@@ -474,6 +478,7 @@ testUnrecognizedOption
 				options: 'abc:';
 				yourself.
 	self expectError: 'Unrecognized option: d' parsing: commandLine! !
+
 !Kernel.Tests.CommandLineTest categoriesForMethods!
 dolphinLauncherExe!private! !
 dproImageName!private! !

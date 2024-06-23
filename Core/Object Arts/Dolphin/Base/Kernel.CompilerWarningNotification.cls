@@ -7,9 +7,13 @@ Kernel.CompilerNotification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompilerWarningNotification guid: (Core.GUID fromString: '{87b4c573-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.CompilerWarningNotification comment: 'CompilerWarningNotification is a resumable exception used to represent semantic warnings detected by the Dolphin <Compiler>, <SmalltalkParser>, and (mainly) <StSemanticChecker>'!
+
 !Kernel.CompilerWarningNotification categoriesForClass!System-Compiler! !
+
 !Kernel.CompilerWarningNotification class methodsFor!
 
 severity
@@ -22,6 +26,7 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Warning! !
+
 !Kernel.CompilerWarningNotification class categoriesForMethods!
 severity!constants!operations!public! !
 severityClass!constants!public! !

@@ -46,6 +46,7 @@ Kernel.STxInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'Signature' -> #[33 83 84 66 32] }!
+
 Kernel.STxOutFiler
 	subclass: #'Kernel.STBOutFiler'
 	instanceVariableNames: ''
@@ -62,6 +63,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler."
 
 	anSTxOutFiler saveByteArray: self! !
+
 !Core.ByteArray categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -72,6 +74,7 @@ stbReadFrom: anSTxInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the <STxInfiler> first argument. Note that we can ignore the format argument, since ByteArray is a pre-registered class that cannot be versioned. "
 
 	^anSTxInFiler readByteObject: self size: anInteger! !
+
 !Core.ByteArray class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -82,6 +85,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialized representation of the receiver to STxOutFiler argument."
 
 	anSTxOutFiler saveClass: self! !
+
 !Core.Class categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -92,6 +96,7 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler saveMetaclass: self! !
+
 !Core.Metaclass categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -112,6 +117,7 @@ binaryStoreOn: aStream
 	that do not need to isolate themselves from their surroundings. Sub-classes should override #binaryStoreOn:with: to perform such isolation when required."
 
 	self binaryStoreUsing: (STBOutFiler on: aStream)! !
+
 !Core.Object categoriesForMethods!
 binaryStoreBytes!binary filing!public! !
 binaryStoreOn:!binary filing!public! !
@@ -156,6 +162,7 @@ fromBinaryStoreBytes: aByteArray context: anObject
 
 
 ! !
+
 !Core.Object class categoriesForMethods!
 binaryReadFrom:!binary filing!public! !
 binaryReadFrom:context:!binary filing!public! !
@@ -171,6 +178,7 @@ binaryStore: anObject
 
 	anObject binaryStoreOn: self
 ! !
+
 !Core.Stream categoriesForMethods!
 binaryStore:!binary filing!public!storing! !
 !
@@ -179,6 +187,7 @@ binaryStore:!binary filing!public!storing! !
 
 stbSaveOn: anSTBOutFiler
 	anSTBOutFiler saveSymbol: self! !
+
 !Core.Symbol categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -189,6 +198,7 @@ stbReadFrom: anSTBInFiler format: anSTxClassConversion
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	^anSTBInFiler readSymbol: anSTxClassConversion! !
+
 !Core.Symbol class categoriesForMethods!
 stbReadFrom:format:!binary filing!public! !
 !
@@ -199,6 +209,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler."
 
 	anSTxOutFiler saveByteObject: self! !
+
 !External.IntegerBytes categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !

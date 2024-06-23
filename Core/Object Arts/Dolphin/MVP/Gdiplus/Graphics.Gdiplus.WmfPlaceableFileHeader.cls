@@ -15,7 +15,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Reserved' -> 16r10.
 			'_WmfPlaceableFileHeader_Size' -> 16r18
 		}!
+
 Graphics.Gdiplus.WmfPlaceableFileHeader guid: (Core.GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
+
 Graphics.Gdiplus.WmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -34,6 +36,7 @@ struct tagGpWmfPlaceableFileHeader {
 	short Checksum;
 } GpWmfPlaceableFileHeader;
 '!
+
 !Graphics.Gdiplus.WmfPlaceableFileHeader methodsFor!
 
 BoundingBox
@@ -99,6 +102,7 @@ Reserved: anInteger
 	"Set the receiver's 'Reserved' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_Reserved put: anInteger! !
+
 !Graphics.Gdiplus.WmfPlaceableFileHeader categoriesForMethods!
 BoundingBox!**compiled accessors**!public! !
 BoundingBox:!**compiled accessors**!public! !
@@ -157,6 +161,7 @@ defineFields
 
 getFieldNames
 	^#(#Key #Hmf #BoundingBox #Inch #Reserved #Checksum)! !
+
 !Graphics.Gdiplus.WmfPlaceableFileHeader class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

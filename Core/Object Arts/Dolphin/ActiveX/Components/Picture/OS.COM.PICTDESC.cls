@@ -13,8 +13,11 @@ OS.SizedStructure
 			'_OffsetOf_picType' -> 16r4.
 			'_PICTDESC_Size' -> 16r14
 		}!
+
 OS.COM.PICTDESC guid: (Core.GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
+
 OS.COM.PICTDESC comment: ''!
+
 !OS.COM.PICTDESC methodsFor!
 
 dw1
@@ -56,6 +59,7 @@ picType: anInteger
 	"Set the receiver's 'picType' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_picType put: anInteger! !
+
 !OS.COM.PICTDESC categoriesForMethods!
 dw1!**compiled accessors**!public! !
 dw1:!**compiled accessors**!public! !
@@ -134,6 +138,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Picture icon! !
+
 !OS.COM.PICTDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

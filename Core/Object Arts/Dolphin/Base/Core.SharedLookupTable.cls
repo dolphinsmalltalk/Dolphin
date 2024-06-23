@@ -7,7 +7,9 @@ Core.LookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedLookupTable guid: (Core.GUID fromString: '{87b4c52f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.SharedLookupTable comment: 'SharedLookupTable is the class of <LookupTable>s which permits only a single process to access its contents at any one time (it uses a <Mutex> object for this purpose). 
 
 Instance Variables:
@@ -87,7 +89,9 @@ Certain methods are not overridden for the following reasons:
 	uncheckedAt:put:		Private, used only within critical sections
 	values			Implemented in terms of #do:
 	valuesClass	`	Answers constant'!
+
 !Core.SharedLookupTable categoriesForClass!Collections-Unordered! !
+
 !Core.SharedLookupTable methodsFor!
 
 allKeysAndValuesSatisfy: aDyadicValuable
@@ -305,6 +309,7 @@ shrink
 	as #rehash, but doesn't resize if already correct size."
 
 	mutex critical: [super shrink]! !
+
 !Core.SharedLookupTable categoriesForMethods!
 allKeysAndValuesSatisfy:!enumerating!public! !
 anyKeysAndValuesSatisfy:!enumerating!public! !

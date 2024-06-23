@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RenameMethodRefactoringTest guid: (Core.GUID fromString: '{56462b45-7329-483d-afc5-f1c199753156}')!
+
 Refactory.Browser.Tests.RenameMethodRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RenameMethodRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RenameMethodRefactoringTest methodsFor!
 
 setUp
@@ -147,6 +151,7 @@ testRenameTestMethod1
 	change := refactoring model changes changes first.
 	self assert: change package identicalTo: self class owningPackage.
 	self assert: change environment identicalTo: Tools! !
+
 !Refactory.Browser.Tests.RenameMethodRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testExistingSelector!failure tests!public! !

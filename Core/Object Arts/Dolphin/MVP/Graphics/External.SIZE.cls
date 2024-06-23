@@ -7,10 +7,15 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.SIZE guid: (Core.GUID fromString: '{6dbb8332-abe3-4ac8-9388-e209e560e8a3}')!
+
 External.SIZE isNonInstantiable: true!
+
 External.SIZE comment: '`SizeStructure` is the abstract class of structures representing a 2-dimensional extent. There are concrete subclasses for different types of width and height values used by different APIs.'!
+
 !External.SIZE categoriesForClass!Win32-Structs! !
+
 !External.SIZE methodsFor!
 
 asGenericPoint
@@ -47,6 +52,7 @@ x
 
 y
 	^self height! !
+
 !External.SIZE categoriesForMethods!
 asGenericPoint!converting!public! !
 asObject!converting!public! !
@@ -76,6 +82,7 @@ width: cx height: cy
 		width: cx;
 		height: cy;
 		yourself! !
+
 !External.SIZE class categoriesForMethods!
 fromPoint:!instance creation!public! !
 icon!constants!public! !

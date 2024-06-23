@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.TypeConverterTest guid: (Core.GUID fromString: '{a68a6616-456e-4a7f-85e0-50d168d1a828}')!
+
 UI.Tests.TypeConverterTest isNonInstantiable: true!
+
 UI.Tests.TypeConverterTest comment: ''!
+
 !UI.Tests.TypeConverterTest methodsFor!
 
 setUp
@@ -26,6 +30,7 @@ testInvalidFormat
 
 testStbConvertFromVersion0
 	self subclassResponsibility! !
+
 !UI.Tests.TypeConverterTest categoriesForMethods!
 setUp!public!unit tests! !
 tearDown!public!unit tests! !

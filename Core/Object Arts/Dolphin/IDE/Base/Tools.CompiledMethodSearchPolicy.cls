@@ -7,9 +7,13 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.CompiledMethodSearchPolicy guid: (Core.GUID fromString: '{8cb67a35-e7cc-4c00-a9e0-72dcede9d3cf}')!
+
 Tools.CompiledMethodSearchPolicy comment: 'CompiledMethodSearchPolicy is a specialised <searchPolicy> to be used in conjunction with collections of <CompiledMethod>s where one wishes to compare by class and selector only. This is used in the development system for most method lists.'!
+
 !Tools.CompiledMethodSearchPolicy categoriesForClass!Collections-Support! !
+
 !Tools.CompiledMethodSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -25,6 +29,7 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^'method'! !
+
 !Tools.CompiledMethodSearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 name!accessing!public! !

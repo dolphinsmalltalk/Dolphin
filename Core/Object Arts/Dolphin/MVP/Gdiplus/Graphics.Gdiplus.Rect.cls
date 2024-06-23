@@ -13,7 +13,9 @@ Graphics.Gdiplus.AbstractRect
 			'_OffsetOf_y' -> 16r4.
 			'_Rect_Size' -> 16r10
 		}!
+
 Graphics.Gdiplus.Rect guid: (Core.GUID fromString: '{6971c1a9-6a91-4a18-a526-2beac92d4746}')!
+
 Graphics.Gdiplus.Rect comment: '`Rect` is an `External.Structure` class to wrap the struct ''Gdiplus.Rect'' from type information in the ''GDI+ Library 1.10'' library, and represents a rectangle in a 2D coordinate system (integer coordinates).
 
 Note that rectangles in GDI+ follow the convention of specifying an origin and extent, not origin and corner.
@@ -27,6 +29,7 @@ struct tagRectF {
 	long width;
 	long height;
 } RectF;'!
+
 !Graphics.Gdiplus.Rect methodsFor!
 
 height
@@ -68,6 +71,7 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_y put: anInteger! !
+
 !Graphics.Gdiplus.Rect categoriesForMethods!
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
@@ -104,6 +108,7 @@ left: left top: top width: width height: height
 				int32AtOffset: _OffsetOf_width put: width;
 				int32AtOffset: _OffsetOf_height put: height;
 				yourself)! !
+
 !Graphics.Gdiplus.Rect class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

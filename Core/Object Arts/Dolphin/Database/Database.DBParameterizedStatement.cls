@@ -7,7 +7,9 @@ Database.DBStatement
 	imports: #(#{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBParameterizedStatement guid: (Core.GUID fromString: '{87b4c549-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Database.DBParameterizedStatement comment: 'A DBParameterizedStatement is used to represent a parameterized (prepared) SQL statement to be executed by a <DBConnection>.
 
 In general one does not create DBParameterizedStatements directly but rather by the use of DBConnection>>prepare:. The statement can later be parameterized with the appropriate column attributes using #paramCols: and the parameter values using #values:. The statement must then executed using #exec to perform the actual database query. If any results are expected then a <DBResultSet> can be retrieved by sending it a #results message.
@@ -18,7 +20,9 @@ Instance Variables:
 	paramCols		<Array> of DBColAttr>. Metadata about the parameters.
 	isPrepared		<Boolean>. Flag to indicate whether the statement has been prepared.
 '!
+
 !Database.DBParameterizedStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBParameterizedStatement methodsFor!
 
 bindParams
@@ -131,6 +135,7 @@ values: anArrayOfValues
 
 	self close.
 	values := anArrayOfValues! !
+
 !Database.DBParameterizedStatement categoriesForMethods!
 bindParams!operations!private! !
 exec!operations!public! !

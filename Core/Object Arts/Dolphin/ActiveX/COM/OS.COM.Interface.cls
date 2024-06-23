@@ -14,10 +14,15 @@ External.Structure
 			'_OffsetOf_vtbl' -> 16r0.
 			'EgressOnlyMask' -> 16r10000
 		}!
+
 OS.COM.Interface guid: (OS.COM.IID fromString: '{87b4c591-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.Interface isNonInstantiable: true!
+
 OS.COM.Interface comment: ''!
+
 !OS.COM.Interface categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.Interface methodsFor!
 
 _addRef 
@@ -332,6 +337,7 @@ vtbl: anAddress
 	"Set the receiver's 'vtbl' field to the value of the argument, anAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_vtbl put: anAddress! !
+
 !OS.COM.Interface categoriesForMethods!
 _addRef!methods!private! !
 =!comparing!public! !
@@ -1102,6 +1108,7 @@ virtualFunctions
 	"Private - Answer the array of functions definitions."
 
 	^functions! !
+
 !OS.COM.Interface class categoriesForMethods!
 addFunction:selector:descriptor:!automatic generation!public! !
 argSizes!initializing!private! !

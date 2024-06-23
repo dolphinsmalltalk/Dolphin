@@ -32,6 +32,7 @@ Core.Object
 			'DigitMask' -> 16rF.
 			'IdentifierMask' -> 16r1F
 		}!
+
 Core.Magnitude
 	subclass: #'Core.SemVer'
 	instanceVariableNames: 'major minor patch prerelease buildmetadata'

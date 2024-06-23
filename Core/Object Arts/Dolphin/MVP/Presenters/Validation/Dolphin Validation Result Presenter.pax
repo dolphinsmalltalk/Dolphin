@@ -35,6 +35,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValidationResultPresenter
 	subclass: #'UI.ValidationStatusPresenter'
 	instanceVariableNames: ''
@@ -49,6 +50,7 @@ UI.ValidationResultPresenter
 
 icon
 	^hint ifNil: [Icon null] ifNotNil: [hint icon]! !
+
 !UI.ValidationResult categoriesForMethods!
 icon!accessing!public! !
 !

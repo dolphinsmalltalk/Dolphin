@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AddClassRefactoringTest guid: (Core.GUID fromString: '{2113113d-2508-4856-9ae0-868f9af9ac5c}')!
+
 Refactory.Browser.Tests.AddClassRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.AddClassRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.AddClassRefactoringTest methodsFor!
 
 setUp
@@ -428,6 +432,7 @@ testUnsubclassable
 				subclasses: #()
 				categories: #('Refactory-Testing'))
 		withMessage: ClassBuilder.ErrorUnsubclassable << SmallInteger! !
+
 !Refactory.Browser.Tests.AddClassRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAddClass!public!tests! !

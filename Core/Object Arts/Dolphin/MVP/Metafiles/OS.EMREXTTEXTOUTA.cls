@@ -7,7 +7,9 @@ OS.EMREXTTEXTOUT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMREXTTEXTOUTA_Size' -> 16r50. '_OffsetOf_text' -> 16r4C }!
+
 OS.EMREXTTEXTOUTA guid: (Core.GUID fromString: '{897dbf3a-44ad-4594-ae7e-957cb1e28374}')!
+
 OS.EMREXTTEXTOUTA comment: '<EMREXTTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +28,9 @@ struct tagEMREXTTEXTOUTA {
 	[helpstring("This is followed by the string and spacing array")] EMRTEXT EMRTEXT;
 } EMREXTTEXTOUTA;
 '!
+
 !OS.EMREXTTEXTOUTA categoriesForClass!Win32-Structs! !
+
 !OS.EMREXTTEXTOUTA methodsFor!
 
 text
@@ -45,6 +49,7 @@ text: anObject
 		to: _OffsetOf_text + size
 		startingAt: 1.
 	bytes uint8AtOffset: _OffsetOf_text + size put: 0! !
+
 !OS.EMREXTTEXTOUTA categoriesForMethods!
 text!accessing!public! !
 text:!accessing!public! !
@@ -71,6 +76,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTTEXTOUTA}! !
+
 !OS.EMREXTTEXTOUTA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

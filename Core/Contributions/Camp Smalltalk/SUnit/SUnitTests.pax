@@ -38,6 +38,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'XProgramming.SUnit.ResumableTestFailureTestCase'
 	instanceVariableNames: ''
@@ -45,6 +46,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'XProgramming.SUnit.SimpleTestResourceTestCase'
 	instanceVariableNames: 'resource'
@@ -52,6 +54,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'XProgramming.SUnit.SUnitTest'
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
@@ -59,6 +62,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestResource
 	subclass: #'XProgramming.SUnit.SimpleTestResource'
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'

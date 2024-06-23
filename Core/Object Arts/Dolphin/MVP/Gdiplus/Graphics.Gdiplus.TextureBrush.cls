@@ -7,8 +7,11 @@ Graphics.Gdiplus.TransformableBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.TextureBrush guid: (Core.GUID fromString: '{1a1a5ea2-6151-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.TextureBrush comment: 'A texture brush paints an image. The image or texture is either a portion of a specified image or a scaled version of a specified image. The type of image (metafile or nonmetafile) determines whether the texture is a portion of the image or a scaled version of the image. '!
+
 !Graphics.Gdiplus.TextureBrush methodsFor!
 
 bounds
@@ -21,6 +24,7 @@ image
 
 initializerClass
 	^TextureBrushInitializer! !
+
 !Graphics.Gdiplus.TextureBrush categoriesForMethods!
 bounds!accessing!public! !
 image!attributes!public! !
@@ -51,6 +55,7 @@ image: anImage wrapMode: aWrapModeConstant rectangle: aRectangle
 				image: anImage
 				wrapMode: aWrapModeConstant
 				rectangle: aRectangle)! !
+
 !Graphics.Gdiplus.TextureBrush class categoriesForMethods!
 image:!instance creation!public! !
 image:rectangle:!instance creation!public! !

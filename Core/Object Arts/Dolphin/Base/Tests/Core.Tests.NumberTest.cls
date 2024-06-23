@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.NumberTest guid: (Core.GUID fromString: '{12458306-5b30-4c48-8c24-aed051baabd0}')!
+
 Core.Tests.NumberTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !Core.Tests.NumberTest methodsFor!
 
 scan: aString value: anInteger class: aClass
@@ -268,6 +271,7 @@ testRoundUpTo
 	self assert: (21.5 roundUpTo: 9) equals: 27.
 	self assert: (21.5 roundUpTo: 10) equals: 30.
 	self assert: (1.4 @ 2.6 roundUpTo: 1 @ 2) equals: 2 @ 4! !
+
 !Core.Tests.NumberTest categoriesForMethods!
 scan:value:class:!helpers!private! !
 scanNoSeparator:value:next:!private!unit tests! !

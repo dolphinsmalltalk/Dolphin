@@ -7,7 +7,9 @@ UI.Dialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'AllowCancelMask' -> 16r1. 'IsReusableMask' -> 16r2 }!
+
 UI.ProgressDialog guid: (Core.GUID fromString: '{87b4c6ab-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ProgressDialog comment: 'ProgressDialog is a <valueDialogPresenter> that can be used to indicate the progress of a background operation. The <valueModel> is used to hold a <number> that describes the current amount of progress through the operation. Typically, with the standard views, this will be an <integer> between 0 and 100%.
 
 The various [instance creation] methods accept a <monadicValuable> operation which is evaluated in a background process. The parameter passed to the operation is the <valueModel> of the ProgressDialog. It is then the responsibility of the operation, as it progresses, to periodically update this with the state of progress.
@@ -33,7 +35,9 @@ Class Variables:
 
 
 '!
+
 !UI.ProgressDialog categoriesForClass!MVP-Presenters! !
+
 !UI.ProgressDialog methodsFor!
 
 allowCancel
@@ -200,6 +204,7 @@ value: progressValue
 	progressValue."
 
 	progressPresenter value: progressValue! !
+
 !UI.ProgressDialog categoriesForMethods!
 allowCancel!accessing!public! !
 allowCancel:!accessing!public! !
@@ -372,6 +377,7 @@ showModalWhile: operation
 	runs to completion, then the answer is result of the evaluation."
 
 	^self showModal: self defaultView while: operation! !
+
 !UI.ProgressDialog class categoriesForMethods!
 create:operation:!instance creation!public! !
 defaultModel!models!public! !

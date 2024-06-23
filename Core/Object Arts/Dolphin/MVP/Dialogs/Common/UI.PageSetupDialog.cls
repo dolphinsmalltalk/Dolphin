@@ -7,8 +7,11 @@ UI.PrintingDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PageSetupDialog guid: (Core.GUID fromString: '{e5275a3e-c87b-40b6-b33e-d8348055f22b}')!
+
 UI.PageSetupDialog comment: ''!
+
 !UI.PageSetupDialog methodsFor!
 
 basicShowModal
@@ -36,6 +39,7 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^PAGESETUPDLGW! !
+
 !UI.PageSetupDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 extractResult:!helpers!private! !

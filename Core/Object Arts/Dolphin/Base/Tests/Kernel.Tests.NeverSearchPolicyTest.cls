@@ -7,8 +7,11 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.NeverSearchPolicyTest guid: (Core.GUID fromString: '{64679112-614d-4f64-b585-6f9ef68a703d}')!
+
 Kernel.Tests.NeverSearchPolicyTest comment: ''!
+
 !Kernel.Tests.NeverSearchPolicyTest methodsFor!
 
 policyClass
@@ -31,6 +34,7 @@ testCompareWith
 	self assert: (policy compare: #hash with: #identityHash) not.
 	self assert: (policy compare: $a with: $a) not.
 	self assert: (policy compare: $a with: $b) not! !
+
 !Kernel.Tests.NeverSearchPolicyTest categoriesForMethods!
 policyClass!private!unit tests! !
 testCompareWith!public!unit tests! !

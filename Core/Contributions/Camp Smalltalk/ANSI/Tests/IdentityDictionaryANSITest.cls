@@ -5,9 +5,13 @@ MainTestCase subclass: #IdentityDictionaryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdentityDictionaryANSITest guid: (GUID fromString: '{b497af9a-b6af-4e23-ab74-d84e8e429b83}')!
+
 IdentityDictionaryANSITest comment: ''!
+
 !IdentityDictionaryANSITest categoriesForClass!Unclassified! !
+
 !IdentityDictionaryANSITest methodsFor!
 
 canonicalObject
@@ -126,6 +130,7 @@ testXrehash
 testXsize
 	" <collection>#size "
 	#'Collection'.! !
+
 !IdentityDictionaryANSITest categoriesForMethods!
 canonicalObject!public! !
 emptyCanonicalObject!public! !

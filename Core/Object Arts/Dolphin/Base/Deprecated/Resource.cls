@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Resource guid: (Core.GUID fromString: '{87b4c4af-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Resource isNonInstantiable: true!
+
 Resource comment: ''!
+
 !Resource categoriesForClass!MVP-Resources! !
+
 !Resource methodsFor!
 
 accessor
@@ -130,6 +135,7 @@ save: anObject
 
 	accessor save: anObject as: self class.
 	self icon: anObject icon.! !
+
 !Resource categoriesForMethods!
 accessor!accessing!private! !
 accessor:!accessing!private! !
@@ -268,6 +274,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !Resource class categoriesForMethods!
 copyAllToClipboard:!copying!public! !
 copyToClipboard:!binary filing!public! !

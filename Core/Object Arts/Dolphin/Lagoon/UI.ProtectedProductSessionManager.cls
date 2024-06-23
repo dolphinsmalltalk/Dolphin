@@ -7,9 +7,13 @@ UI.RuntimeSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ProtectedProductSessionManager guid: (Core.GUID fromString: '{a90c2f6f-8f92-4493-995a-1ec18066d054}')!
+
 UI.ProtectedProductSessionManager isNonInstantiable: true!
+
 UI.ProtectedProductSessionManager comment: ''!
+
 !UI.ProtectedProductSessionManager methodsFor!
 
 encryptedClasses
@@ -135,6 +139,7 @@ unlock
 		unlockClasses: self encryptedClasses
 		using: sn.
 ! !
+
 !UI.ProtectedProductSessionManager categoriesForMethods!
 encryptedClasses!accessing!public! !
 encryptedClasses:!accessing!private! !
@@ -158,6 +163,7 @@ isSafeToEncryptWithProductProtection
 	the deployment of a Protected Product application."
 
 	^ false.! !
+
 !UI.ProtectedProductSessionManager class categoriesForMethods!
 isSafeToEncryptWithProductProtection!constants!public!testing! !
 !

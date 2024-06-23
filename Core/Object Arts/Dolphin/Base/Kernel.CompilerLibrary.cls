@@ -7,11 +7,15 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompilerLibrary guid: (Core.GUID fromString: '{87b4c58a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.CompilerLibrary comment: 'CompilerLibrary is the <ExternalLibrary> to represent the Dolphin Smalltalk compiler.
 
 In versin 3.0 the compiler is actually implemented as a COM object, but to avoid the necessity of making the OLE COM package part of the base image, the VM exposes some simple wrapper functions which have the same signature as the 2.x compiler API.'!
+
 !Kernel.CompilerLibrary categoriesForClass!External-Libraries! !
+
 !Kernel.CompilerLibrary methodsFor!
 
 compile: aCompiler source: aString length: lengthInteger in: aClass environment: aNamespaceOrNil flags: anInteger notifying: notifier
@@ -27,6 +31,7 @@ compileForEvaluation: aCompiler source: aString length: lengthInteger in: aClass
 
 	<stdcall: oop CompileForEval oop lpvoid uint32 ote ote ote int32 oop>
 	^self invalidCall: _failureCode! !
+
 !Kernel.CompilerLibrary categoriesForMethods!
 compile:source:length:in:environment:flags:notifying:!compiling!private! !
 compileForEvaluation:source:length:in:environment:evaluationPools:flags:notifying:!compiling!private! !
@@ -147,6 +152,7 @@ uninitialize
 	#(#notificationCallback: #allInstanceVariableNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor:environment: #asNumber #understandsArithmetic #negative #pathString:scope:flags: #namespace: #setScope:)
 		, { BindingReference. Smalltalk } do: [:each | VM unregisterObject: each].
 	super uninitialize! !
+
 !Kernel.CompilerLibrary class categoriesForMethods!
 compileForEvaluation:in:environment:evaluationPools:flags:!compiling!private! !
 compileForMethod:in:environment:flags:!compiling!private! !

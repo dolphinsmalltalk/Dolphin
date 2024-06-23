@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.IconFromBitmapInitializer guid: (Core.GUID fromString: '{cbd63799-b451-40d7-bd4e-a64a38e1860c}')!
+
 Graphics.IconFromBitmapInitializer comment: ''!
+
 !Graphics.IconFromBitmapInitializer methodsFor!
 
 = anObject
@@ -83,6 +86,7 @@ transparentColor
 
 transparentColor: aColor
 	transparentColor := aColor! !
+
 !Graphics.IconFromBitmapInitializer categoriesForMethods!
 =!comparing!public! !
 bitmap!accessing!public! !
@@ -103,6 +107,7 @@ bitmap: aBitmap
 	^self new
 		bitmap: aBitmap;
 		yourself! !
+
 !Graphics.IconFromBitmapInitializer class categoriesForMethods!
 bitmap:!instance creation!public! !
 !

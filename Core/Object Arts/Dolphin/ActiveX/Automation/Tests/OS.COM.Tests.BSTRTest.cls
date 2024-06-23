@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.BSTRTest guid: (Core.GUID fromString: '{d5abc1df-26e1-4722-bcb6-51e4b5c406f6}')!
+
 OS.COM.Tests.BSTRTest comment: ''!
+
 !OS.COM.Tests.BSTRTest methodsFor!
 
 stringConversionCases
@@ -35,6 +38,7 @@ testAsUtf8String
 			ptr := LPBSTR fromAddress: subject basicYourAddress.
 			self assert: ptr asUtf8String isKindOf: Utf8String.
 			self assert: ptr asUtf8String equals: each]! !
+
 !OS.COM.Tests.BSTRTest categoriesForMethods!
 stringConversionCases!constants!private! !
 testAsString!public!unit tests! !

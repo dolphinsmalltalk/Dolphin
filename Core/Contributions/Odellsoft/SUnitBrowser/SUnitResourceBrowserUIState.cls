@@ -5,9 +5,13 @@ SUnitBrowserAbsUIState subclass: #SUnitResourceBrowserUIState
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitResourceBrowserUIState guid: (GUID fromString: '{987711fe-782c-4a38-a20f-f1042f01b6d8}')!
+
 SUnitResourceBrowserUIState comment: ''!
+
 !SUnitResourceBrowserUIState categoriesForClass!Unclassified! !
+
 !SUnitResourceBrowserUIState methodsFor!
 
 colorSymbolFor: aResource
@@ -49,6 +53,7 @@ resultStateColorSymbol
 	^self model unavailableResources isEmpty
 		ifTrue: [#commonGreen]
 		ifFalse: [#red]! !
+
 !SUnitResourceBrowserUIState categoriesForMethods!
 colorSymbolFor:!color!public! !
 detailState!public!strings! !

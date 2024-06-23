@@ -7,7 +7,9 @@ Core.SequencedStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.PositionableStream guid: (Core.GUID fromString: '{87b4c6f8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.PositionableStream comment: 'PositionableStream is the abstract class of <SequencedStream>s for which stream over sequence values from a Smalltalk sequenceable collection. Sub-instances of PositionableStream conform to the ANSI <collectionStream> protocol.
 
 Note that some inconsistencies arise when streaming over multi-byte string encodings, such as UTF-8. The position reported by the stream, and that to which it can be set, is always expressed as a code unit position. This has a number of consequences to be aware of:
@@ -17,7 +19,9 @@ Note that some inconsistencies arise when streaming over multi-byte string encod
 Instance Variables
 	position		<Integer> 0 based offset of the current code unit position in the stream
 	readLimit		<Integer> Either the maximum read position in the stream, or the position up to which the stream has previously been read (depends on subclass).'!
+
 !Core.PositionableStream categoriesForClass!Collections-Streams! !
+
 !Core.PositionableStream methodsFor!
 
 advancePosition
@@ -261,6 +265,7 @@ upToEnd
 	 particular streams, and which counts by raw elements regardless of encoding."
 
 	^self basicNext: self lastPosition - self position! !
+
 !Core.PositionableStream categoriesForMethods!
 advancePosition!positioning!private! !
 atEnd!public!testing! !
@@ -317,6 +322,7 @@ on: aCollection from: firstIndex to: lastIndex
 
 	^self on: (aCollection copyFrom: firstIndex to: lastIndex)
 ! !
+
 !Core.PositionableStream class categoriesForMethods!
 on:!instance creation!public! !
 on:from:to:!instance creation!public! !

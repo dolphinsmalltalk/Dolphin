@@ -14,8 +14,11 @@ Core.UtfEncodedString
 			'SurrogateMask' -> 16rC0.
 			'TrailByteMask' -> 16r80
 		}!
+
 Core.Utf8String guid: (Core.GUID fromString: '{c5ab1b05-241f-4955-8b44-0c80b93bafbb}')!
+
 Core.Utf8String isNullTerminated: true!
+
 Core.Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin (i.e. `String new` yields a new, empty, `Utf8String`).
 
 When considering a `Utf8String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-8 code units, not Unicode code points. These code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point. UTF-8 surrogate characters can be inserted into other Utf8Strings (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf16String`s. To enumerate a `Utf8String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
@@ -27,7 +30,9 @@ It should also be noted that the `size` of a `Utf8String` is a count of the numb
 ''🐬'' size "=> 4"
 ```
 To better understand the full implications of the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy it is recommended to read the cautionary notes in the abstract superclass `UtfEncodedString`.'!
+
 !Core.Utf8String categoriesForClass!Collections-Text! !
+
 !Core.Utf8String methodsFor!
 
 _beginsString: aString
@@ -711,6 +716,7 @@ urlEncoded
 						base: 16
 						nDigits: 2]].
 	^encodedStream grabContents! !
+
 !Core.Utf8String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _endsString:!comparing!double dispatch!private! !
@@ -761,6 +767,7 @@ with: aCharacter
 	^(WriteStream on: (self new: 2))
 		nextPut: aCharacter;
 		grabContents! !
+
 !Core.Utf8String class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 codePage!instance creation!public! !

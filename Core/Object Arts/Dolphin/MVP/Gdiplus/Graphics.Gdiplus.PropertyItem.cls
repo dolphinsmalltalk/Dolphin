@@ -13,7 +13,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Value' -> 16rC.
 			'_PropertyItem_Size' -> 16r10
 		}!
+
 Graphics.Gdiplus.PropertyItem guid: (Core.GUID fromString: '{dad9cd42-c61c-4040-bcd2-2f2e8d725fca}')!
+
 Graphics.Gdiplus.PropertyItem comment: '<GpPropertyItem> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPropertyItem'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -30,6 +32,7 @@ struct tagGpPropertyItem {
 	void* Value;
 } GpPropertyItem;
 '!
+
 !Graphics.Gdiplus.PropertyItem methodsFor!
 
 id
@@ -106,6 +109,7 @@ valueArray
 	"Next line won't work with an array value, i.e., if length > 8."
 	type == PropertyTagTypeSRational ifTrue: [^(address int32AtOffset: 0) / (address int32AtOffset: 4)].
 	self error: 'unrecognised type'! !
+
 !Graphics.Gdiplus.PropertyItem categoriesForMethods!
 id!**compiled accessors**!public! !
 id:!**compiled accessors**!public! !
@@ -155,6 +159,7 @@ defineFields
 
 getFieldNames
 	^#(#id #length #Type #Value)! !
+
 !Graphics.Gdiplus.PropertyItem class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

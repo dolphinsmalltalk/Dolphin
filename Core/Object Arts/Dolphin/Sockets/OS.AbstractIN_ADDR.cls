@@ -7,10 +7,15 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.AbstractIN_ADDR guid: (Core.GUID fromString: '{92297cf1-48a8-4480-aa8b-8c04d20683c3}')!
+
 OS.AbstractIN_ADDR isNonInstantiable: true!
+
 OS.AbstractIN_ADDR comment: '`OS.AbstractIN_ADDR` is an abstract `External.Structure` class providing common behavior for the `OS.IN_ADDR` and `OS.IN6_ADDR` structures, that provide binary representations of IPv4 and IPv6 addresses, respectively.'!
+
 !OS.AbstractIN_ADDR categoriesForClass!Win32-Structs! !
+
 !OS.AbstractIN_ADDR methodsFor!
 
 displayOn: aPuttableStream
@@ -30,6 +35,7 @@ displayOn: aPuttableStream
 
 printFieldsOn: aStream
 	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self displayOn: aStream]! !
+
 !OS.AbstractIN_ADDR categoriesForMethods!
 displayOn:!displaying!public! !
 printFieldsOn:!development!printing!private! !
@@ -53,6 +59,7 @@ fromString: aString
 				ifTrue: [InvalidFormat signalWith: self]
 				ifFalse: [Net.SocketError signalWith: Ws2_32 wsaGetLastError]].
 	^answer! !
+
 !OS.AbstractIN_ADDR class categoriesForMethods!
 addressFamily!constants!public! !
 fromString:!public! !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassDetails guid: (Core.GUID fromString: '{d1d894c3-0b6c-4f3b-b537-27deba6d9813}')!
+
 Refactory.Browser.ClassDetails comment: ''!
+
 !Refactory.Browser.ClassDetails categoriesForClass!Kernel-Objects! !
+
 !Refactory.Browser.ClassDetails methodsFor!
 
 baseEnvironment
@@ -365,6 +369,7 @@ superclassReference
 
 unqualifiedName
 	^classReference path last asSymbol! !
+
 !Refactory.Browser.ClassDetails categoriesForMethods!
 baseEnvironment!accessing!public! !
 categories!accessing!public! !
@@ -455,6 +460,7 @@ fromClass: aClassDescription
 
 new	
 	^super new initialize! !
+
 !Refactory.Browser.ClassDetails class categoriesForMethods!
 className:superclass:categories:!instance creation!public! !
 fromClass:!public! !

@@ -7,9 +7,13 @@ Refactory.Browser.ChangeMethodNameRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameMethodRefactoring guid: (Core.GUID fromString: '{fca8f1a0-da69-4108-82f9-2b61aa651e4b}')!
+
 Refactory.Browser.RenameMethodRefactoring comment: ''!
+
 !Refactory.Browser.RenameMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RenameMethodRefactoring methodsFor!
 
 hasPermutedArguments
@@ -63,6 +67,7 @@ storeOn: aStream
 		nextPutAll: ' permuation: '.
 	permutation storeOn: aStream.
 	aStream nextPut: $)! !
+
 !Refactory.Browser.RenameMethodRefactoring categoriesForMethods!
 hasPermutedArguments!public!testing! !
 implementorsCanBePrimitives!public!testing! !
@@ -89,6 +94,7 @@ renameMethod: aSelector in: aClass to: newSelector permutation: aMap
 		in: aClass
 		to: newSelector
 		permutation: aMap! !
+
 !Refactory.Browser.RenameMethodRefactoring class categoriesForMethods!
 model:renameMethod:in:to:permutation:!instance creation!public! !
 renameMethod:in:to:permutation:!instance creation!public! !

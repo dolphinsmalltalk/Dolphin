@@ -233,6 +233,7 @@ txnIsolationOptions
 uniqueIndexOf: aString 
 	#deprecated.
 	^self uniqueIndicesOf: aString! !
+
 !Database.DBConnection categoriesForMethods!
 accessibleTables!enquiries!public!testing! !
 autoCommit!enquiries!public!testing! !
@@ -282,6 +283,7 @@ interpretTxnIsolationMask: mask
 	#deprecated.
 	^#('SQL_TXN_READ_UNCOMMITTED' 'SQL_TXN_READ_COMMITTED' 'SQL_TXN_REPEATABLE_READ' 'SQL_TXN_SERIALIZABLE' 'SQL_TXN_VERSIONING') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]! !
+
 !Database.DBConnection class categoriesForMethods!
 interpretTxnIsolationMask:!operations!private! !
 !
@@ -295,6 +297,7 @@ invalidate
 prev
 	#deprecated.	"use #previous"
 	^self previous! !
+
 !Database.DBResultSet categoriesForMethods!
 invalidate!operations!public! !
 prev!accessing!public! !
@@ -305,6 +308,7 @@ prev!accessing!public! !
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
+
 !OS.ODBCTIMESTAMP categoriesForMethods!
 asTimeStamp!converting!public! !
 !
@@ -314,6 +318,7 @@ asTimeStamp!converting!public! !
 fromTimeStamp: aTimeStamp
 	Notification deprecated.
 	^self fromTimeStamp: aTimeStamp asDateAndTime! !
+
 !OS.ODBCTIMESTAMP class categoriesForMethods!
 fromTimeStamp:!instance creation!public! !
 !

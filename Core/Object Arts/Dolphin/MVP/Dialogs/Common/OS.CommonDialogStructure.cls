@@ -7,10 +7,15 @@ External.Structure
 	imports: #(#{OS.CommonDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.CommonDialogStructure guid: (Core.GUID fromString: '{2ddae63c-f325-47b3-abc3-4b9f8bd84ee9}')!
+
 OS.CommonDialogStructure isNonInstantiable: true!
+
 OS.CommonDialogStructure comment: ''!
+
 !OS.CommonDialogStructure categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.CommonDialogStructure methodsFor!
 
 flags
@@ -44,6 +49,7 @@ ownerView: aView
 	"Set the parent window for the dialog to aView."
 
 	bytes uintPtrAtOffset: self hwndOwnerOffset put: aView asParameter ?? 0! !
+
 !OS.CommonDialogStructure categoriesForMethods!
 flags!accessing!public! !
 flags:!accessing!public! !

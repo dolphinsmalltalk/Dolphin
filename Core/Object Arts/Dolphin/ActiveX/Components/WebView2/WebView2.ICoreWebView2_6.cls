@@ -7,8 +7,11 @@ WebView2.ICoreWebView2_5
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2_6 guid: (OS.COM.IID fromString: '{499aadac-d92c-4589-8a75-111bfc167795}')!
+
 WebView2.ICoreWebView2_6 isEgressOnly: true!
+
 WebView2.ICoreWebView2_6 comment: '`ICoreWebView2_6` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_6'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -28,7 +31,9 @@ interface ICoreWebView2_6 : ICoreWebView2_5
 };
 ```
 '!
+
 !WebView2.ICoreWebView2_6 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2_6 methodsFor!
 
 OpenTaskManagerWindow
@@ -38,6 +43,7 @@ OpenTaskManagerWindow
 
 	<virtual stdcall: hresult 80>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2_6 categoriesForMethods!
 OpenTaskManagerWindow!**auto generated**!COM Interfaces-ICoreWebView2_6!private! !
 !
@@ -51,6 +57,7 @@ defineFunctions
 	self
 		defineFunction: #OpenTaskManagerWindow
 ! !
+
 !WebView2.ICoreWebView2_6 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

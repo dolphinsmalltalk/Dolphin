@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2GetCookiesCompletedHandler guid: (OS.COM.IID fromString: '{5a4f5069-5c15-47c3-8646-f4de1c116670}')!
+
 WebView2.ICoreWebView2GetCookiesCompletedHandler comment: '`ICoreWebView2GetCookiesCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2GetCookiesCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2GetCookiesCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2GetCookiesCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2GetCookiesCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult WebView2.ICoreWebView2CookieList*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2GetCookiesCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2GetCookiesCompletedHandler!public! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2CookieList*'! !
+
 !WebView2.ICoreWebView2GetCookiesCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

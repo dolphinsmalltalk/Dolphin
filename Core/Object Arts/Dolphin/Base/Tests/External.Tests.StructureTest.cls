@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.StructureTest guid: (Core.GUID fromString: '{a9244232-e68c-4a65-bbf2-c8392aee459b}')!
+
 External.Tests.StructureTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !External.Tests.StructureTest methodsFor!
 
 allNonInterfaceStructs
@@ -194,6 +197,7 @@ testUnderstoodSelectors
 	self assert: _FPIEEE_RECORD understoodSelectors asSortedArray
 		equals: #(#cause #causeCode #causeDescription #causeName #causeNames #enabled #exceptionFlags:do: #flags #isDivide #isOverflow #isUnderflow #isZeroDivide #operand1 #operand2 #operation #operationName #precision #precisionName #printFieldsOn: #printFlags:on: #roundingMode #roundingModeName #status).
 	self assert: _FPIEEE_VALUE understoodSelectors equals: _FPIEEE_VALUE selectors! !
+
 !External.Tests.StructureTest categoriesForMethods!
 allNonInterfaceStructs!helpers!private! !
 testCanUnderstand!public!unit tests! !

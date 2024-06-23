@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.NlsConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.CharacterTest guid: (Core.GUID fromString: '{b5b1b518-3a55-4441-9aa3-32c87f1aedba}')!
+
 Core.Tests.CharacterTest comment: ''!
+
 !Core.Tests.CharacterTest categoriesForClass!Tests-Magnitude-General! !
+
 !Core.Tests.CharacterTest methodsFor!
 
 nonCharacters
@@ -906,6 +910,7 @@ testUnicodeName
 	OS.ICU u_getUnicodeVersion first >= 11
 		ifTrue: [self assert: $𖹚 unicodeName equals: 'MEDEFAIDRIN CAPITAL LETTER OE'].
 	self assert: $\x10FFFF unicodeName equals: '<noncharacter-10FFFF>'! !
+
 !Core.Tests.CharacterTest categoriesForMethods!
 nonCharacters!constants!private! !
 testAnsiValue!public!unit tests! !

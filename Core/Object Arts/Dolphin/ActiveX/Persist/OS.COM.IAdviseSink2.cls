@@ -7,9 +7,13 @@ OS.COM.IAdviseSink
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IAdviseSink2 guid: (OS.COM.IID fromString: '{3d3f4f89-8502-4d89-bfd6-024365e274fc}')!
+
 OS.COM.IAdviseSink2 comment: ''!
+
 !OS.COM.IAdviseSink2 categoriesForClass!OBJIDL-Interfaces! !
+
 !OS.COM.IAdviseSink2 methodsFor!
 
 OnLinkSrcChange: onLinkSrcChange
@@ -19,6 +23,7 @@ OnLinkSrcChange: onLinkSrcChange
 
 	<virtual stdcall: void 9 IMoniker*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IAdviseSink2 categoriesForMethods!
 OnLinkSrcChange:!COM Interfaces-IAdviseSink2!public! !
 !
@@ -33,6 +38,7 @@ defineFunctions
 
 	self
 		defineFunction: #OnLinkSrcChange: returnType: 'void' argumentTypes: 'IMoniker*'! !
+
 !OS.COM.IAdviseSink2 class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

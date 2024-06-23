@@ -7,9 +7,13 @@ Graphics.Gdiplus.BrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.TransformableBrushInitializer guid: (Core.GUID fromString: '{5df7c966-9a06-4596-9a55-a2a6371b1ae2}')!
+
 Graphics.Gdiplus.TransformableBrushInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.TransformableBrushInitializer comment: ''!
+
 !Graphics.Gdiplus.TransformableBrushInitializer methodsFor!
 
 = anObject
@@ -133,6 +137,7 @@ wrapMode
 wrapMode: aHandle set: aWrapModeConstant
 	self gdipSetWrap: aHandle mode: aWrapModeConstant.
 	wrapMode := aWrapModeConstant! !
+
 !Graphics.Gdiplus.TransformableBrushInitializer categoriesForMethods!
 =!comparing!public! !
 applyAdditionalAttributes:!private!realizing/unrealizing! !

@@ -7,10 +7,14 @@ UI.FolderHierarchyModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PackageHierarchyModel guid: (Core.GUID fromString: '{26dea10b-1bc7-477f-a6b8-ca9452ce3d3e}')!
+
 Tools.PackageHierarchyModel comment: 'PackageHierarchyModel is a <FolderHierarchyModel> specialized to represent the hierarchy of folders of installed packages.
 '!
+
 !Tools.PackageHierarchyModel categoriesForClass!MVP-Models! !
+
 !Tools.PackageHierarchyModel methodsFor!
 
 addPackage: aPackage 
@@ -41,6 +45,7 @@ refresh
 
 	self reset.
 	self buildTree! !
+
 !Tools.PackageHierarchyModel categoriesForMethods!
 addPackage:!adding!private! !
 buildTree!private!updating! !

@@ -16,11 +16,15 @@ External.Structure
 			'_OffsetOf_User' -> 16r0.
 			'_OffsetOf_UserLength' -> 16r4
 		}!
+
 OS.COM.COAUTHIDENTITY guid: (Core.GUID fromString: '{31387a96-bdf6-40b2-abee-6ef6a2384b67}')!
+
 OS.COM.COAUTHIDENTITY comment: '`OS.COM.COAUTHIDENTITY` is an `External.Structure` class to wrap the struct ''OBJIDL.COAUTHIDENTITY'' from type information in the ''ObjIDL Library'' library.
 
 The COAUTHIDENTITY structure represents a user name and password.'!
+
 !OS.COM.COAUTHIDENTITY categoriesForClass!OBJIDL-Structs! !
+
 !OS.COM.COAUTHIDENTITY methodsFor!
 
 Domain
@@ -92,6 +96,7 @@ UserLength: anInteger
 	"Set the receiver's 'UserLength' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_UserLength put: anInteger! !
+
 !OS.COM.COAUTHIDENTITY categoriesForMethods!
 Domain!**compiled accessors**!public! !
 Domain:!**compiled accessors**!public! !
@@ -141,6 +146,7 @@ defineFields
 
 getFieldNames
 	^#(#User #UserLength #Domain #DomainLength #Password #PasswordLength #Flags)! !
+
 !OS.COM.COAUTHIDENTITY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

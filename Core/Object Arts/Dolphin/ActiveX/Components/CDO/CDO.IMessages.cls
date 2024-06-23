@@ -7,14 +7,18 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 CDO.IMessages guid: (OS.COM.IID fromString: '{cd000025-8b95-11d1-82db-00c04fb1625d}')!
+
 CDO.IMessages comment: '<CDO.IMessages> is a wrapper class for the COM interface ''CDO.IMessages'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage a collection of Message objects on the file system. Returned by IDropDirectory.GetMessages"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDO.IMessages categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDO.IMessages methodsFor!
 
 _newEnum
@@ -118,6 +122,7 @@ item: index
 	answer := IMessage newPointer.
 	self get_Item: index ppMessage: answer.
 	^answer asObject! !
+
 !CDO.IMessages categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 count!**auto generated**!properties!public! !
@@ -152,6 +157,7 @@ defineFunctions
 		defineFunction: #get_FileName:FileName:
 			argumentTypes: 'variant bstr*'
 ! !
+
 !CDO.IMessages class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

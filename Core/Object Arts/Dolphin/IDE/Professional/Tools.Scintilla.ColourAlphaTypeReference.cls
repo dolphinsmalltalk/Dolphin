@@ -7,9 +7,13 @@ Tools.Scintilla.ColourTypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.ColourAlphaTypeReference guid: (Core.GUID fromString: '{a69a2d0b-2d7f-498d-b2dc-715cb304b176}')!
+
 Tools.Scintilla.ColourAlphaTypeReference comment: ''!
+
 !Tools.Scintilla.ColourAlphaTypeReference categoriesForClass!Development! !
+
 !Tools.Scintilla.ColourAlphaTypeReference methodsFor!
 
 defaultValue
@@ -26,6 +30,7 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: #rgbaCode! !
+
 !Tools.Scintilla.ColourAlphaTypeReference categoriesForMethods!
 defaultValue!constants!public! !
 fromMessage!generating!private! !

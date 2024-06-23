@@ -13,7 +13,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Realm' -> 16rC.
 			'_OffsetOf_RealmLength' -> 16r8
 		}!
+
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (Core.GUID fromString: '{eed513f2-c404-408c-9ddb-f5d39020d426}')!
+
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '`HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
 } HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS methodsFor!
 
 DomainName
@@ -73,6 +77,7 @@ RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_RealmLength put: anInteger! !
+
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForMethods!
 DomainName!**compiled accessors**!public! !
 DomainName:!**compiled accessors**!public! !
@@ -112,6 +117,7 @@ defineFields
 
 getFieldNames
 	^#(#DomainNameLength #DomainName #RealmLength #Realm)! !
+
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

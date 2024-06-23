@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LinkTest guid: (Core.GUID fromString: '{761927ef-cc81-4a3e-b25a-0eef922c3370}')!
+
 Core.Tests.LinkTest comment: ''!
+
 !Core.Tests.LinkTest methodsFor!
 
 testClassNextLink
@@ -24,6 +27,7 @@ testClassNextLink
 	"Invoke the method directly so we don't need to install it."
 	link1 := testMethod value: Link withArguments: {link2}.
 	self assert: link1 nextLink identicalTo: link2! !
+
 !Core.Tests.LinkTest categoriesForMethods!
 testClassNextLink!public!unit tests! !
 !

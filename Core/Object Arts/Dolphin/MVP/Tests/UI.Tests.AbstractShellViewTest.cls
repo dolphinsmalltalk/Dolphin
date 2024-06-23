@@ -7,9 +7,13 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.AbstractShellViewTest guid: (Core.GUID fromString: '{be6c197d-5333-4ba6-aef4-6b93d2970718}')!
+
 UI.Tests.AbstractShellViewTest isNonInstantiable: true!
+
 UI.Tests.AbstractShellViewTest comment: ''!
+
 !UI.Tests.AbstractShellViewTest methodsFor!
 
 createShell: aRectangle text: aString
@@ -54,6 +58,7 @@ tearDown
 
 workAreaNearest: aPoint
 	^(DisplayMonitor nearestPoint: aPoint) workArea! !
+
 !UI.Tests.AbstractShellViewTest categoriesForMethods!
 createShell:text:!helpers!private! !
 getSecondaryMonitorIfAvailable!helpers!private! !

@@ -7,13 +7,17 @@ OS.COM.IClassFactory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IClassFactory2 guid: (OS.COM.IID fromString: '{b196b28f-bab4-101a-b69c-00aa00341d07}')!
+
 OS.COM.IClassFactory2 comment: '`OS.COM.IClassFactory2` is a wrapper class for the custom interface ''OCIDL.IClassFactory2'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.IClassFactory2 categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IClassFactory2 methodsFor!
 
 CreateInstanceLic: punkOuter pUnkReserved: pUnkReserved riid: riid bstrKey: bstrKey ppvObject: ppvObj
@@ -67,6 +71,7 @@ RequestLicKey: dwReserved pBstrKey: pBstrKey
 
 	<virtual stdcall: hresult 7 uint32 bstr*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IClassFactory2 categoriesForMethods!
 CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !
 getLicenseInfo!accessing!public! !
@@ -89,6 +94,7 @@ defineFunctions
 			argumentTypes: 'dword bstr*';
 		defineFunction: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:
 						argumentTypes: 'IUnknown* IUnknown* GUID* bstr IUnknown**'! !
+
 !OS.COM.IClassFactory2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

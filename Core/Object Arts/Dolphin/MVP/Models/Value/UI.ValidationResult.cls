@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValidationResult guid: (Core.GUID fromString: '{c25bcb63-2b8b-4a6b-a96d-58e1b2297a22}')!
+
 UI.ValidationResult comment: ''!
+
 !UI.ValidationResult categoriesForClass!Kernel-Objects! !
+
 !UI.ValidationResult methodsFor!
 
 caption
@@ -68,6 +72,7 @@ warningMessage: aString
 
 	self value: true.
 	self hint: (Warning messageText: aString)! !
+
 !UI.ValidationResult categoriesForMethods!
 caption!accessing!public! !
 caption:!accessing!public! !
@@ -100,6 +105,7 @@ value: aBoolean
 	^self basicNew
 		value: aBoolean;
 		yourself! !
+
 !UI.ValidationResult class categoriesForMethods!
 errorMessage:!public! !
 failed!public! !

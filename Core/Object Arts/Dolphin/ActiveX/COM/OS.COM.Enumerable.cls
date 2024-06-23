@@ -7,13 +7,17 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Enumerable guid: (Core.GUID fromString: '{87b4c50e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.Enumerable comment: 'OS.COM.Enumerable is a <sequencedReadableCollection> that wraps an OLE enumeration interface (IEnumXXXX). It provides an efficient way to treat an enumeration supplied by a COM object as a full-blown Smalltalk collection.
 
 Enumerables are really much closer to positionable stream''s than sequenceable collections, so this design is a mistake in hindsight, but remains in place for now.
 
 '!
+
 !OS.COM.Enumerable categoriesForClass!Collections-Sequenceable! !
+
 !OS.COM.Enumerable methodsFor!
 
 add: newElement
@@ -131,6 +135,7 @@ species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^Array! !
+
 !OS.COM.Enumerable categoriesForMethods!
 add:!adding!public! !
 approxSize!accessing!private! !
@@ -159,6 +164,7 @@ onIEnum: anIEnum
 		interface: anIEnum
 
 	! !
+
 !OS.COM.Enumerable class categoriesForMethods!
 onIEnum:!instance creation!public! !
 !

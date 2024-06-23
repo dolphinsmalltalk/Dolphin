@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Sequence
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2PermissionSettingCollectionView guid: (OS.COM.IID fromString: '{f5596f62-3de5-47b1-91e8-a4104b596b96}')!
+
 WebView2.ICoreWebView2PermissionSettingCollectionView isEgressOnly: true!
+
 WebView2.ICoreWebView2PermissionSettingCollectionView comment: '`ICoreWebView2PermissionSettingCollectionView` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionSettingCollectionView'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +36,9 @@ interface ICoreWebView2PermissionSettingCollectionView : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2PermissionSettingCollectionView categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2PermissionSettingCollectionView methodsFor!
 
 elementClass
@@ -57,6 +62,7 @@ GetValueAtIndex: index value: permissionSetting
 
 	<virtual stdcall: hresult 4 uint32 ICoreWebView2PermissionSetting**>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2PermissionSettingCollectionView categoriesForMethods!
 elementClass!constants!private! !
 get_Count:!**auto generated**!COM Interfaces-ICoreWebView2PermissionSettingCollectionView!private! !
@@ -75,6 +81,7 @@ defineFunctions
 		defineFunction: #get_Count:
 			argumentTypes: 'uint32*'
 ! !
+
 !WebView2.ICoreWebView2PermissionSettingCollectionView class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

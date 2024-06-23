@@ -7,9 +7,13 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.SplitClassRefactoring guid: (Core.GUID fromString: '{22a704e1-3527-4416-ad61-b066186fc300}')!
+
 Refactory.Browser.SplitClassRefactoring comment: ''!
+
 !Refactory.Browser.SplitClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.SplitClassRefactoring methodsFor!
 
 abstractReferenceToInstanceVariable: aString
@@ -95,6 +99,7 @@ transform
 		createNewClass;
 		createReference;
 		abstractVariableReferences! !
+
 !Refactory.Browser.SplitClassRefactoring categoriesForMethods!
 abstractReferenceToInstanceVariable:!private!transforming! !
 abstractVariableReferences!public!transforming! !
@@ -126,6 +131,7 @@ model: aRBModel class: class instanceVariables: instVars newClassName: className
 			newClassName: className
 			referenceVariableName: newVariable;
 		yourself! !
+
 !Refactory.Browser.SplitClassRefactoring class categoriesForMethods!
 class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
 model:class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !

@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest guid: (Core.GUID fromString: '{356dac42-9b9c-4970-87d2-bfd4846fafa4}')!
+
 External.Tests.ExternalArrayTest isNonInstantiable: true!
+
 External.Tests.ExternalArrayTest comment: ''!
+
 !External.Tests.ExternalArrayTest methodsFor!
 
 arrayClass
@@ -337,6 +341,7 @@ testWithDo
 				matching: [:ex | ex description = 'collections are of different sizes']].
 	subject := self newNumericArray: 0.
 	subject with: (1 to: 0) do: [:a :b | self assert: false]! !
+
 !External.Tests.ExternalArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 arrayValueString:!private!unit tests! !

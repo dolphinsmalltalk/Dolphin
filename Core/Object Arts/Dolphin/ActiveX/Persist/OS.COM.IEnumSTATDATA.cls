@@ -7,7 +7,9 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumSTATDATA guid: (OS.COM.IID fromString: '{00000105-0000-0000-c000-000000000046}')!
+
 OS.COM.IEnumSTATDATA comment: '`IEnumSTATDATA` is a wrapper class for the COM interface ''WebView2.IEnumSTATDATA'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -38,7 +40,9 @@ interface IEnumSTATDATA : IUnknown
 };
 ```
 '!
+
 !OS.COM.IEnumSTATDATA categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !OS.COM.IEnumSTATDATA class methodsFor!
 
 elementClass
@@ -46,6 +50,7 @@ elementClass
 
 	^STATDATA
 ! !
+
 !OS.COM.IEnumSTATDATA class categoriesForMethods!
 elementClass!constants!private! !
 !

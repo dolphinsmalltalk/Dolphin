@@ -7,9 +7,13 @@ Kernel.VariableBinding
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBVariableBinding guid: (Core.GUID fromString: '{b10f55e8-e21f-4755-aedd-e3bb1ac9850a}')!
+
 Refactory.Browser.RBVariableBinding comment: ''!
+
 !Refactory.Browser.RBVariableBinding categoriesForClass!Collections-Support! !
+
 !Refactory.Browser.RBVariableBinding methodsFor!
 
 isClassBinding
@@ -35,6 +39,7 @@ realBinding: aVariableBinding environment: aRBClass
 	flags := (realBinding := aVariableBinding) flags.
 	self isImmutable: aVariableBinding isImmutable.
 	^self! !
+
 !Refactory.Browser.RBVariableBinding categoriesForMethods!
 isClassBinding!public!testing! !
 model!accessing!public! !
@@ -47,6 +52,7 @@ realBinding:environment:!initializing!private! !
 
 name: aString environment: aRBClass
 	^self new name: aString environment: aRBClass! !
+
 !Refactory.Browser.RBVariableBinding class categoriesForMethods!
 name:environment:!instance creation!public! !
 !

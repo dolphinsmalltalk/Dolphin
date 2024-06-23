@@ -7,9 +7,13 @@ Graphics.AbstractPen
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.StockPen guid: (Core.GUID fromString: '{87b4c642-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.StockPen comment: ''!
+
 !Graphics.StockPen categoriesForClass!Graphics-Tools! !
+
 !Graphics.StockPen methodsFor!
 
 createHandle
@@ -49,6 +53,7 @@ printOn: aPuttableStream
 
 styleName
 	^#solid! !
+
 !Graphics.StockPen categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 id!public! !
@@ -68,6 +73,7 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
+
 !Graphics.StockPen class categoriesForMethods!
 fromId:!instance creation!public! !
 !

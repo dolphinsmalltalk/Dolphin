@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.SERVENTTest guid: (Core.GUID fromString: '{9d6b8651-1dc9-4274-97cc-44e053e36b8a}')!
+
 OS.Tests.SERVENTTest comment: ''!
+
 !OS.Tests.SERVENTTest methodsFor!
 
 testFromInteger
@@ -32,6 +35,7 @@ testFromStringInvalid
 		should: [SERVENT fromString: GUID newUnique asString]
 		raise: Net.SocketError
 		matching: [:ex | ex statusCode = WinSocketErrors.WSANO_DATA]! !
+
 !OS.Tests.SERVENTTest categoriesForMethods!
 testFromInteger!public! !
 testFromIntegerInvalid!public! !

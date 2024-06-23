@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.InlineAllSendersRefactoring guid: (Core.GUID fromString: '{09ac0050-928c-41f2-8a20-8d0490a9c4fb}')!
+
 Refactory.Browser.InlineAllSendersRefactoring comment: ''!
+
 !Refactory.Browser.InlineAllSendersRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.InlineAllSendersRefactoring methodsFor!
 
 checkInlinedMethods
@@ -101,6 +105,7 @@ transform
 		inlineSelfSends;
 		removeMethod;
 		checkInlinedMethods! !
+
 !Refactory.Browser.InlineAllSendersRefactoring categoriesForMethods!
 checkInlinedMethods!public!transforming! !
 inlineMessagesInClass:andSelector:!public!transforming! !
@@ -126,6 +131,7 @@ model: aRBModel sendersOf: aSelector in: aClass
 
 sendersOf: aSelector in: aClass 
 	^self new sendersOf: aSelector in: aClass! !
+
 !Refactory.Browser.InlineAllSendersRefactoring class categoriesForMethods!
 model:sendersOf:in:!instance creation!public! !
 sendersOf:in:!instance creation!public! !

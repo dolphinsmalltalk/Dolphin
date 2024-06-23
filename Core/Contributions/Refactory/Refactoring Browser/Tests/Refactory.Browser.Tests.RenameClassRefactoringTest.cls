@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RenameClassRefactoringTest guid: (Core.GUID fromString: '{1c8b1cc4-4d25-46fc-9e56-b959e7a8e2f1}')!
+
 Refactory.Browser.Tests.RenameClassRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RenameClassRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RenameClassRefactoringTest methodsFor!
 
 compile: aString in: class
@@ -751,6 +755,7 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: p
 	self assert: ast equals: (self parseMethod: expectedSource).
 	"Check that the name does bind"
 	self shouldnt: [RBVariableAnalyser analyseParseTree: ast] raise: Parser notificationClass! !
+
 !Refactory.Browser.Tests.RenameClassRefactoringTest categoriesForMethods!
 compile:in:!helpers!private! !
 defineClass:!helpers!private! !

@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'DebugMask' -> 16r1 }!
+
 XProgramming.SUnit.TestCase guid: (Core.GUID fromString: '{5e96793a-0810-11d4-a876-0050da643bf9}')!
+
 XProgramming.SUnit.TestCase isNonInstantiable: true!
+
 XProgramming.SUnit.TestCase comment: ''!
+
 !XProgramming.SUnit.TestCase categoriesForClass!SUnit! !
+
 !XProgramming.SUnit.TestCase methodsFor!
 
 addDependentToHierachy: anObject 
@@ -243,6 +248,7 @@ skip: aComment
 	TestSkip signal: aComment!
 
 tearDown! !
+
 !XProgramming.SUnit.TestCase categoriesForMethods!
 addDependentToHierachy:!dependencies!public! !
 assert:!asserting!public! !
@@ -356,6 +362,7 @@ testSelectors
 
 version
 	^'3.1'! !
+
 !XProgramming.SUnit.TestCase class categoriesForMethods!
 allTestSelectors!Accessing!public! !
 buildSuite!Building Suites!public! !

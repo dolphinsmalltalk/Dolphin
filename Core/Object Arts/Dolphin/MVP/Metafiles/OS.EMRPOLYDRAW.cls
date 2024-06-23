@@ -13,7 +13,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_cptl' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.EMRPOLYDRAW guid: (Core.GUID fromString: '{5be172c2-6045-4143-8550-377acd60fd3f}')!
+
 OS.EMRPOLYDRAW comment: '<EMRPOLYDRAW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagEMRPOLYDRAW {
 	[helpstring("Array of point types")] BYTE* abTypes;
 } EMRPOLYDRAW;
 '!
+
 !OS.EMRPOLYDRAW categoriesForClass!Win32-Structs! !
+
 !OS.EMRPOLYDRAW methodsFor!
 
 abTypes
@@ -97,6 +101,7 @@ rclBounds: aRECTL
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.EMRPOLYDRAW categoriesForMethods!
 abTypes!public! !
 abTypes:!public! !
@@ -149,6 +154,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYDRAW}! !
+
 !OS.EMRPOLYDRAW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

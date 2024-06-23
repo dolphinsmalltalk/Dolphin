@@ -17,7 +17,9 @@ OS.SizedStructure
 			'_OffsetOf_uId' -> 16rC.
 			'_TOOLINFOW_Size' -> 16r30
 		}!
+
 OS.TOOLINFOW guid: (Core.GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.TOOLINFOW comment: 'TOOLINFOW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the tooltips.
@@ -26,7 +28,9 @@ Instance Variables:
 	text	<String>. Used to maintain a reference to the tip text string to prevent its premature GC.
 
 '!
+
 !OS.TOOLINFOW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+
 !OS.TOOLINFOW methodsFor!
 
 hinst
@@ -127,6 +131,7 @@ uId: anInteger
 	"Set the receiver's 'uId' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_uId put: anInteger! !
+
 !OS.TOOLINFOW categoriesForMethods!
 hinst!**compiled accessors**!public! !
 hwnd!**compiled accessors**!public! !
@@ -179,6 +184,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
+
 !OS.TOOLINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

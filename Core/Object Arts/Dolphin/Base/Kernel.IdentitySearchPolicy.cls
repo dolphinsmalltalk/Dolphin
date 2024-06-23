@@ -7,9 +7,13 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.IdentitySearchPolicy guid: (Core.GUID fromString: '{123a1503-7cb8-11d3-93ca-00a024ca708a}')!
+
 Kernel.IdentitySearchPolicy comment: 'IdentitySearchPolicy is for configuring pluggable collections and models to use identity based search and comparisons, i.e. using #== and #identityHash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as an <IdentitySet>.'!
+
 !Kernel.IdentitySearchPolicy categoriesForClass!Collections-Support! !
+
 !Kernel.IdentitySearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -65,6 +69,7 @@ nextIndexOf: anElement in: collection from: start to: stop
 	answer 0."
 
 	^collection nextIdentityIndexOf: anElement from: start to: stop! !
+
 !Kernel.IdentitySearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 hash:!comparing!public! !

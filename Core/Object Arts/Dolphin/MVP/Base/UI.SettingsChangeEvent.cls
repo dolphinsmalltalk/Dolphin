@@ -7,9 +7,13 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.SettingsChangeEvent guid: (Core.GUID fromString: '{8d98098a-b8d5-4e20-97c1-7410fb47c17f}')!
+
 UI.SettingsChangeEvent comment: ''!
+
 !UI.SettingsChangeEvent categoriesForClass!MVP-Views-Events! !
+
 !UI.SettingsChangeEvent methodsFor!
 
 area
@@ -26,6 +30,7 @@ printLParamOn: aStream
 
 uiAction
 	^wParam! !
+
 !UI.SettingsChangeEvent categoriesForMethods!
 area!accessing!public! !
 isColorSetChange!public!testing! !

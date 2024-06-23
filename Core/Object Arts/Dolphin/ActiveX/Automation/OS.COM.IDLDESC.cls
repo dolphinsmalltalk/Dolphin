@@ -11,7 +11,9 @@ External.Structure
 			'_OffsetOf_dwReserved' -> 16r0.
 			'_OffsetOf_wIDLFlags' -> 16r4
 		}!
+
 OS.COM.IDLDESC guid: (Core.GUID fromString: '{c06f3b80-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.IDLDESC comment: 'IDLDESC is an <ExternalStructure> class to represent the AX Automation structure, IDLDESC.
 
 IDLDESC contains basic marshalling information for a function argument, basically consisting of flags which relate to attributes such as ''in'', ''out'' and ''retval'', which are defined in the IDL for the argument.
@@ -21,7 +23,9 @@ Member variables:
 	wIDLFlags	<WORD> Flags from the IDLFLAGS enumeration.
 
 Note that this structure is only 6-bytes long, and may require packing when embedded in other structures.'!
+
 !OS.COM.IDLDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.IDLDESC methodsFor!
 
 isIn
@@ -43,6 +47,7 @@ wIDLFlags
 	"Answer the <Integer> value of the receiver's 'wIDLFlags' field."
 
 	^bytes uint16AtOffset: _OffsetOf_wIDLFlags! !
+
 !OS.COM.IDLDESC categoriesForMethods!
 isIn!public!testing! !
 isOut!public!testing! !
@@ -74,6 +79,7 @@ defineFields
 
 getFieldNames
 	^#(#wIDLFlags)! !
+
 !OS.COM.IDLDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

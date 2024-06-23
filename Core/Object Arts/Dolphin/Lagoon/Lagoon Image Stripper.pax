@@ -45,6 +45,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #DeploymentContext
 	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences comInterfaceSelectors'
@@ -52,6 +53,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
@@ -64,6 +66,7 @@ Core.Object
 			'ProgressId' -> 16r3F7.
 			'StatusId' -> 16r3F8
 		}!
+
 Core.Object
 	subclass: #'OS.VersionResource'
 	instanceVariableNames: 'fixedInfo stringTables translations'
@@ -71,6 +74,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 BasicImageStripper
 	subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource exePath stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
@@ -111,6 +115,7 @@ BasicImageStripper
 			'UnattendedMask' -> 16r1000000.
 			'WriteLogMask' -> 16r400
 		}!
+
 Kernel.InstructionInterpreter
 	subclass: #LiteralReferenceCollector
 	instanceVariableNames: 'referenceCounts lastReferenced'
@@ -118,6 +123,7 @@ Kernel.InstructionInterpreter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.VS_VERSION_INFO_HEADER'
 	instanceVariableNames: 'key valueOffset'
@@ -140,6 +146,7 @@ onPreStripImage
 
 	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
 	classPool removeKey: '_PropertyRegister'! !
+
 !Core.Object class categoriesForMethods!
 onPreStripImage!class hierarchy-removing!private! !
 !
@@ -157,6 +164,7 @@ fullyCompileDefinition
 
 removeTemplate
 	template := nil! !
+
 !External.Structure class categoriesForMethods!
 fullyCompileDefinition!compiling!public! !
 removeTemplate!private!template definition! !
@@ -167,6 +175,7 @@ removeTemplate!private!template definition! !
 messageBox: hWnd lpText: lpText lpCaption: lpCaption uType: uType
 	<stdcall: int32 MessageBoxW handle lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode! !
+
 !OS.UserLibrary categoriesForMethods!
 messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
 !

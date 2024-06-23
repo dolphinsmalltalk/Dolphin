@@ -7,10 +7,13 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormat guid: (Core.GUID fromString: '{f4b7aa81-5fd1-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.StringFormat comment: 'GdiplusStringFormat contains text layout information (such as alignment, orientation, tab stops, and clipping) and display manipulations (such as trimming, font substitution for characters that are not supported by the requested font, and digit substitution for languages that do not use Western European digits). A GdiplusStringFormat instance can be passed to the GdiplusGraphics>>drawString methods to format a string.
 
 '!
+
 !Graphics.Gdiplus.StringFormat methodsFor!
 
 alignment
@@ -141,6 +144,7 @@ trimming: aStringTrimmingConstant
 
 	self trimming == aStringTrimmingConstant ifTrue: [^self].
 	self initializer trimmingOf: self set: aStringTrimmingConstant! !
+
 !Graphics.Gdiplus.StringFormat categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -207,6 +211,7 @@ new
 	"Answer an instance of the receiver with no format flags set and which uses the user's default language."
 
 	^self flags: 0 language: OS.NlsConstants.LANG_NEUTRAL! !
+
 !Graphics.Gdiplus.StringFormat class categoriesForMethods!
 centered!instance creation!public! !
 far!instance creation!public! !

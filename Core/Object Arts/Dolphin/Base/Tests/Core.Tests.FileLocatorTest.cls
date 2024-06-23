@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.FileLocatorTest guid: (Core.GUID fromString: '{635f7234-ba5a-4a72-97b1-40d81990cad7}')!
+
 Core.Tests.FileLocatorTest comment: ''!
+
 !Core.Tests.FileLocatorTest methodsFor!
 
 testAbsoluteFileLocator
@@ -108,6 +111,7 @@ testInstallRelativeFileLocator
 	relative := locator relativePathTo: fullpath.
 	self assert: relative equals: fullpath.
 	self assert: (locator localFileSpecFor: relative) equals: fullpath! !
+
 !Core.Tests.FileLocatorTest categoriesForMethods!
 testAbsoluteFileLocator!public!unit tests! !
 testImageRelativeFileLocator!public!unit tests! !

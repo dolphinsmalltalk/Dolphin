@@ -7,10 +7,15 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring guid: (Core.GUID fromString: '{f93954e7-217f-4070-b44d-b7d1f1bc74d3}')!
+
 Refactory.Browser.MethodRefactoring isNonInstantiable: true!
+
 Refactory.Browser.MethodRefactoring comment: ''!
+
 !Refactory.Browser.MethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.MethodRefactoring methodsFor!
 
 buildSelectorString: aSelector
@@ -54,6 +59,7 @@ shouldOverride: aSymbol in: aClass
 		cull: self
 		cull: aClass
 		cull: aSymbol! !
+
 !Refactory.Browser.MethodRefactoring categoriesForMethods!
 buildSelectorString:!helpers!private! !
 buildSelectorString:withPermuteMap:!helpers!private! !

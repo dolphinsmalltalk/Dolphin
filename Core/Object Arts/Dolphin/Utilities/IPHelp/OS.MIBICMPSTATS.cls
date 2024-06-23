@@ -22,7 +22,9 @@ External.Structure
 			'_OffsetOf_dwTimestampReps' -> 16r28.
 			'_OffsetOf_dwTimestamps' -> 16r24
 		}!
+
 OS.MIBICMPSTATS guid: (Core.GUID fromString: '{2dac7cde-bfec-4391-a2e5-1ddf10a3c471}')!
+
 OS.MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -48,7 +50,9 @@ struct tagMIBICMPSTATS {
 	unsigned long dwAddrMaskReps;
 } MIBICMPSTATS;
 '!
+
 !OS.MIBICMPSTATS categoriesForClass!Win32-Structs! !
+
 !OS.MIBICMPSTATS methodsFor!
 
 dwAddrMaskReps
@@ -115,6 +119,7 @@ dwTimestamps
 	"Answer the <Integer> value of the receiver's 'dwTimestamps' field."
 
 	^bytes uint32AtOffset: _OffsetOf_dwTimestamps! !
+
 !OS.MIBICMPSTATS categoriesForMethods!
 dwAddrMaskReps!**compiled accessors**!public! !
 dwAddrMasks!**compiled accessors**!public! !
@@ -202,6 +207,7 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #dwDestUnreachs #dwTimeExcds #dwParmProbs #dwSrcQuenchs #dwRedirects #dwEchos #dwEchoReps #dwTimestamps #dwTimestampReps #dwAddrMasks #dwAddrMaskReps)! !
+
 !OS.MIBICMPSTATS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

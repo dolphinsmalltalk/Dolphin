@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler guid: (OS.COM.IID fromString: '{b99369f3-9b11-47b5-bc6f-8e7895fcea17}')!
+
 WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler comment: '`ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler : IUn
 };
 ```
 '!
+
 !WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult lpwstr>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler!public! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !
+
 !WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

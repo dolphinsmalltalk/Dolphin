@@ -7,8 +7,11 @@ Database.Tests.DBConnectionTestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.AccessNorthwindDB guid: (Core.GUID fromString: '{65bcf4a5-dc5c-461b-a4df-2f29574d34c3}')!
+
 Database.Tests.AccessNorthwindDB comment: ''!
+
 !Database.Tests.AccessNorthwindDB methodsFor!
 
 connectString
@@ -27,6 +30,7 @@ createDatabase
 dropDatabase
 	super dropDatabase.
 	(File exists: filename) ifTrue: [File delete: filename]! !
+
 !Database.Tests.AccessNorthwindDB categoriesForMethods!
 connectString!private! !
 createDatabase!private! !

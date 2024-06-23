@@ -7,11 +7,15 @@ Net.SocketAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.ServerSocket guid: (Core.GUID fromString: '{13ab65d3-5229-4982-9d9c-fb0a6fea8376}')!
+
 Net.ServerSocket comment: 'This class is used by a server to listen for a connection request from a socket client. 
 
 `A Net.ServerSocket` is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the `Net.ServerSocket` to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient `#accept` calls have not been issued then additional client connections are rejected. The `#accept` call blocks the calling `Process` until an incoming connection request is available, and so should ideally be performed from a background process dedicated to the job.'!
+
 !Net.ServerSocket categoriesForClass!Windows Sockets! !
+
 !Net.ServerSocket methodsFor!
 
 accept
@@ -80,6 +84,7 @@ preBindPort: anInteger
 	"Private - Same as #bindPort, but dont call bind."
 
 	self createOnPort: anInteger! !
+
 !Net.ServerSocket categoriesForMethods!
 accept!operations!public! !
 bind!operations!private! !
@@ -122,6 +127,7 @@ port: anIntegerPort backlog: anIntegerBacklog
 		bind;
 		listen: anIntegerBacklog;
 		yourself! !
+
 !Net.ServerSocket class categoriesForMethods!
 defaultMaxPendingConnects!constants access!public! !
 new!instance creation!public! !

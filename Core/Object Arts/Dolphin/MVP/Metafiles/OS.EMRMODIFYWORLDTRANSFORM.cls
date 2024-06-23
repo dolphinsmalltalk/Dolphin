@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_iMode' -> 16r20.
 			'_OffsetOf_XFORM' -> 16r8
 		}!
+
 OS.EMRMODIFYWORLDTRANSFORM guid: (Core.GUID fromString: '{2144962d-5610-4388-bb45-8b820efac2e7}')!
+
 OS.EMRMODIFYWORLDTRANSFORM comment: '<EMRMODIFYWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMODIFYWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMRMODIFYWORLDTRANSFORM {
 	DWORD iMode;
 } EMRMODIFYWORLDTRANSFORM;
 '!
+
 !OS.EMRMODIFYWORLDTRANSFORM categoriesForClass!Win32-Structs! !
+
 !OS.EMRMODIFYWORLDTRANSFORM methodsFor!
 
 iMode
@@ -53,6 +57,7 @@ XFORM: aXFORM
 		from: ##(_OffsetOf_XFORM + 1)
 		to: ##(_OffsetOf_XFORM + XFORM._XFORM_Size)
 		startingAt: 1! !
+
 !OS.EMRMODIFYWORLDTRANSFORM categoriesForMethods!
 iMode!**compiled accessors**!public! !
 iMode:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_MODIFYWORLDTRANSFORM}! !
+
 !OS.EMRMODIFYWORLDTRANSFORM class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

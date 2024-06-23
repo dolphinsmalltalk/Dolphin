@@ -17,7 +17,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pQueryString' -> 16r14.
 			'_OffsetOf_QueryStringLength' -> 16r6
 		}!
+
 WinHttpServer.HTTP_COOKED_URL guid: (Core.GUID fromString: '{24928162-1798-46a3-b2c1-3c6ee66c08be}')!
+
 WinHttpServer.HTTP_COOKED_URL comment: '`HTTP_COOKED_URL` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_COOKED_URL'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -40,7 +42,9 @@ struct tagHTTP_COOKED_URL {
 } HTTP_COOKED_URL;
 ```
 '!
+
 !WinHttpServer.HTTP_COOKED_URL categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_COOKED_URL methodsFor!
 
 AbsPathLength
@@ -83,6 +87,7 @@ QueryStringLength
 	"Private - Answer the <Integer> value of the receiver's 'QueryStringLength' field."
 
 	^bytes uint16AtOffset: _OffsetOf_QueryStringLength! !
+
 !WinHttpServer.HTTP_COOKED_URL categoriesForMethods!
 AbsPathLength!**compiled accessors**!private! !
 FullUrlLength!**compiled accessors**!private! !
@@ -130,6 +135,7 @@ defineFields
 
 getFieldNames
 	^#(#FullUrlLength #HostLength #AbsPathLength #QueryStringLength #pFullUrl #pHost #pAbsPath #pQueryString)! !
+
 !WinHttpServer.HTTP_COOKED_URL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

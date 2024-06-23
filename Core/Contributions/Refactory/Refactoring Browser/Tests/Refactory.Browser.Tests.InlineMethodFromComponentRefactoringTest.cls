@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest guid: (Core.GUID fromString: '{1acdc4a3-ec00-4058-80d6-04c846e6c6a9}')!
+
 Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest methodsFor!
 
 setUpToInlineMethodReadingPrivateClassVariable: aBoolean
@@ -353,6 +357,7 @@ testModelInlineUnbindableReferenceInArray
 	self assert: (object parseTreeFor: #foo)
 		equals: (self
 				parseMethod: 'foo ^#(#{_.Tests.DolphinTest} #{Refactory.Browser.Tests.ClassToRename} #{ClassToRename} #{Foo.ClassToRename} ) collect: [:each | each valueOrNil]')! !
+
 !Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest categoriesForMethods!
 setUpToInlineMethodReadingPrivateClassVariable:!helpers!private! !
 testInlineComponentIntoCascadedMessage!public!tests! !

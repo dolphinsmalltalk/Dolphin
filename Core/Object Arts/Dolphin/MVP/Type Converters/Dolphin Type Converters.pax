@@ -32,6 +32,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TypeConverter
 	subclass: #'UI.AbstractToTextConverter'
 	instanceVariableNames: 'locale'
@@ -39,6 +40,7 @@ UI.TypeConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TypeConverter
 	subclass: #'UI.InvertingConverter'
 	instanceVariableNames: 'wrappedConverter'
@@ -46,6 +48,7 @@ UI.TypeConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TypeConverter
 	subclass: #'UI.MappingConverter'
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
@@ -53,6 +56,7 @@ UI.TypeConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TypeConverter
 	subclass: #'UI.NullConverter'
 	instanceVariableNames: ''
@@ -60,6 +64,7 @@ UI.TypeConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TypeConverter
 	subclass: #'UI.PluggableTypeConverter'
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ResourceIdentifierTest guid: (Core.GUID fromString: '{1e647bf5-1b62-4e30-af83-80b9bfbe65ad}')!
+
 UI.Tests.ResourceIdentifierTest comment: ''!
+
 !UI.Tests.ResourceIdentifierTest methodsFor!
 
 createResourceNamed: aString for: aView on: aPresenterClass
@@ -110,6 +113,7 @@ testStoreOn
 		equals: '(UI.ResourceIdentifier class: ' , self class fullName , ' name: ''Default view'')'.
 	restored := Compiler evaluate: storeString.
 	self assert: restored equals: rid! !
+
 !UI.Tests.ResourceIdentifierTest categoriesForMethods!
 createResourceNamed:for:on:!helpers!private! !
 setUp!private!unit tests! !

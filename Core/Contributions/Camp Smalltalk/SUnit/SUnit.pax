@@ -30,6 +30,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'DebugMask' -> 16r1 }!
+
 Core.Object
 	subclass: #'XProgramming.SUnit.TestCaseResult'
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
@@ -37,6 +38,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'XProgramming.SUnit.TestResource'
 	instanceVariableNames: 'name description'
@@ -44,6 +46,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: 'current'
 	classConstants: {}!
+
 Core.Object
 	subclass: #'XProgramming.SUnit.TestResult'
 	instanceVariableNames: 'results failures errors passed skipped duration'
@@ -51,6 +54,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'XProgramming.SUnit.TestSuite'
 	instanceVariableNames: 'tests resources name dependents'
@@ -58,6 +62,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Notification
 	subclass: #'XProgramming.SUnit.TestSkip'
 	instanceVariableNames: ''

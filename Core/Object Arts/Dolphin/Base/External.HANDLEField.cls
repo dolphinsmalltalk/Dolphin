@@ -7,9 +7,13 @@ External.UIntPtrField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.HANDLEField guid: (Core.GUID fromString: '{92844ae1-5120-4fc8-822f-111a92ac0485}')!
+
 External.HANDLEField comment: '<HANDLEField> is a <ScalarField> type to represent <ExternalStructure> fields that are opaque pointers, or "handles".'!
+
 !External.HANDLEField categoriesForClass!External-Data-Types! !
+
 !External.HANDLEField methodsFor!
 
 readFrom: anExternalStructure
@@ -20,6 +24,7 @@ readFrom: anExternalStructure
 
 valueType
 	^Handle! !
+
 !External.HANDLEField categoriesForMethods!
 readFrom:!indirect accessing!private! !
 valueType!automatic generation!constants!development!private! !

@@ -7,9 +7,13 @@ Core.SharedIdentityDictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.EventsCollection guid: (Core.GUID fromString: '{87b4c533-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.EventsCollection comment: ''!
+
 !Kernel.EventsCollection categoriesForClass!Collections-Unordered!System-Support! !
+
 !Kernel.EventsCollection methodsFor!
 
 addEvent: aSymbol action: aValuable
@@ -86,6 +90,7 @@ triggerEvent: aSymbol withArguments: anArray
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
 	^(self lookup: aSymbol) ifNotNil: [:msgs | msgs valueWithArguments: anArray]! !
+
 !Kernel.EventsCollection categoriesForMethods!
 addEvent:action:!adding!private! !
 asMinimumRepresentation!converting!private! !

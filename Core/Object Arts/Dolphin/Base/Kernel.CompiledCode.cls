@@ -19,8 +19,11 @@ Core.Object
 			'ReturnTrue' -> 16r2.
 			'SetInstanceVariable' -> 16r7
 		}!
+
 Kernel.CompiledCode guid: (Core.GUID fromString: '{87b4c46f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.CompiledCode isNonInstantiable: true!
+
 Kernel.CompiledCode comment: 'CompiledCode is the class of executable objects containing an array of instructions (bytecodes) and an array of literals (the literal frame).
 
 The method header of the receiver is a SmallInteger containing a set of flags containing information such as the number of arguments, the number of temporaries, etc, is layed out as follows (subject to change):
@@ -45,7 +48,9 @@ Primitive indices 0 thru 8 describe the method type as follows:
 	8	Reserved for future use.
 
 Note: These are implementation details, and should not be relied upon as they may be changed in future versions.'!
+
 !Kernel.CompiledCode categoriesForClass!Kernel-Methods! !
+
 !Kernel.CompiledCode methodsFor!
 
 = aMethod
@@ -717,6 +722,7 @@ writesInstVar: aString at: anInteger
 	extra := self extraIndex.
 	^(extra == Normal or: [extra == SetInstanceVariable or: [extra > ReturnLiteralStatic0]])
 		and: [self byteCodeDispatcher writesInstVarAt: anInteger]! !
+
 !Kernel.CompiledCode categoriesForMethods!
 =!comparing!public! !
 accessesInstVar:!development!public!testing! !
@@ -893,6 +899,7 @@ packByteCodes: anArray
 					bitShift: -1.
 	codes isImmediate ifFalse: [self error: 'Cannot pack byte codes <1p> into a SmallInteger' << bytes].
 	^codes! !
+
 !Kernel.CompiledCode class categoriesForMethods!
 elementsExpired:of:!development!finalizing!private! !
 findIp:inTextMap:!private! !

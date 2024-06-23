@@ -5,9 +5,13 @@ Object subclass: #SAXHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SAXHandler guid: (GUID fromString: '{5f6867fa-780a-49f2-972e-9f8c0676ddd0}')!
+
 SAXHandler comment: ''!
+
 !SAXHandler categoriesForClass!XML-Parser! !
+
 !SAXHandler methodsFor!
 
 characters: aString
@@ -116,6 +120,7 @@ startEntity: entityName
 startPrefixMapping: prefix uri: uri
 	"This call corresonds to the Java SAX call
 	startPrefixMapping(java.lang.String prefix, java.lang.String uri)."! !
+
 !SAXHandler categoriesForMethods!
 characters:!content!public! !
 checkEOD!content!public! !
@@ -204,6 +209,7 @@ parseDTDFrom: aStream
 	parser startDocument.
 	parser parseDocument.
 	^parser! !
+
 !SAXHandler class categoriesForMethods!
 convertWideStream:!helpers!public! !
 new!instance creation!public! !

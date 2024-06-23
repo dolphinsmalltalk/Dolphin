@@ -7,9 +7,13 @@ Refactory.Browser.ChangeStaticVariableQualificationRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.UnqualifyStaticVariablesRefactoring guid: (Core.GUID fromString: '{61fc70ec-acbe-4a00-a55f-49a38145a061}')!
+
 Refactory.Browser.UnqualifyStaticVariablesRefactoring comment: ''!
+
 !Refactory.Browser.UnqualifyStaticVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.UnqualifyStaticVariablesRefactoring methodsFor!
 
 buildRewriter
@@ -35,6 +39,7 @@ buildRewriter
 							refNode pathString ~= binding unqualifiedName
 								and: [(self shortestNameToBind: binding from: refNode) ~= refNode pathString]]]].
 	^rewriter! !
+
 !Refactory.Browser.UnqualifyStaticVariablesRefactoring categoriesForMethods!
 buildRewriter!private!transforming! !
 !

@@ -64,14 +64,12 @@ Object subclass: #ExternalPipe
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #ExternalPipeExecuteError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -85,6 +83,7 @@ convertWinStdHandle: stdHandle toCRTFileMode: modeString
 	fd2 < 0 ifTrue: [CRTError signal].
 	hFile := CRTLibrary default _fdopen: fd2 mode: modeString.
 	^hFile! !
+
 !CRTLibrary categoriesForMethods!
 convertWinStdHandle:toCRTFileMode:!private! !
 !
@@ -147,6 +146,7 @@ stdoutStream
 
 waitForInputIdle: milliseconds 
 	^UserLibrary default waitForInputIdle: pi hProcess milliseconds: milliseconds! !
+
 !ExternalProcess categoriesForMethods!
 showWindow!public! !
 showWindow:!public! !
@@ -167,6 +167,7 @@ waitForInputIdle:!public! !
 
 handle: aHandle
 handle := aHandle! !
+
 !InheritableFile categoriesForMethods!
 handle:!public! !
 !
@@ -176,6 +177,7 @@ handle:!public! !
 createPipe: hReadPipe hWritePipe: hWritePipe lpPipeAttributes: lpPipeAttributes nSize: nSize
 	<stdcall: bool CreatePipe handle* handle* lpvoid dword>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 createPipe:hWritePipe:lpPipeAttributes:nSize:!public! !
 !
@@ -192,6 +194,7 @@ waitForInputIdle: hProcess milliseconds: dwMilliseconds
 
 	<stdcall: dword WaitForInputIdle handle dword>
 	^self invalidCall: _failureCode! !
+
 !UserLibrary categoriesForMethods!
 waitForInputIdle:milliseconds:!public! !
 !

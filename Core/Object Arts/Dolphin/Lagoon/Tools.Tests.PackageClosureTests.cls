@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.PackageClosureTests guid: (Core.GUID fromString: '{d6f6b8a7-9e40-4fa0-a52c-d92bcafeeebf}')!
+
 Tools.Tests.PackageClosureTests comment: ''!
+
 !Tools.Tests.PackageClosureTests methodsFor!
 
 consoleAppUnimplemented
@@ -107,6 +110,7 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 	"To debug this, open an env browser on the deployment scope as follows:
 		EnvironmentBrowserShell onEnvironment: aBrowserEnvironment.
 	The call graph to unimplemented messages can then be investigated starting with the Method/Browse other/All unimplemented command"! !
+
 !Tools.Tests.PackageClosureTests categoriesForMethods!
 consoleAppUnimplemented!constants!private! !
 simpleGuiAppUnimplementedMessages!constants!private! !

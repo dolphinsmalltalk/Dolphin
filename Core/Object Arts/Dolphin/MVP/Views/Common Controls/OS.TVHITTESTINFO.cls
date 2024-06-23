@@ -11,13 +11,17 @@ OS.CCHITTESTINFO
 			'_OffsetOf_hItem' -> 16rC.
 			'_TVHITTESTINFO_Size' -> 16r10
 		}!
+
 OS.TVHITTESTINFO guid: (Core.GUID fromString: '{87b4c61f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.TVHITTESTINFO comment: 'TVHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 
 TVHISTTESTINFO is used for hit-testing with Tree View controls.
 
 This Supercedes the TV_HITTESTINFO class present in release 2.1 and earlier.'!
+
 !OS.TVHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.TVHITTESTINFO methodsFor!
 
 flags
@@ -40,6 +44,7 @@ item
 	"Answer the 'item' which has been hit (in this case the handle of node)."
 
 	^self hItem! !
+
 !OS.TVHITTESTINFO categoriesForMethods!
 flags!**compiled accessors**!public! !
 handle!accessing!private! !
@@ -72,6 +77,7 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags #hItem)! !
+
 !OS.TVHITTESTINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

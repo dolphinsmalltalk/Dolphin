@@ -7,8 +7,11 @@ UI.ToolbarItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ToolbarButton guid: (Core.GUID fromString: '{5a6ae0df-57b0-4ba0-be4a-c1cd1ccc6def}')!
+
 UI.ToolbarButton isNonInstantiable: true!
+
 UI.ToolbarButton comment: '`ToolbarButton` is the abstract class of `Toolbar` buttons.  The button is a `<commandSource>` capable of storing `CommandDescription` to be fired when the button is pressed. Each button has an image, the provision of which is implemented by subclasses. The dimensions of the images within the bitmap are held by the containing `Toolbar` in its `#bitmapExtent` aspect.
 
 ## Instance Variables:
@@ -16,7 +19,9 @@ UI.ToolbarButton comment: '`ToolbarButton` is the abstract class of `Toolbar` bu
   `commandDescription`	`CommandDescription` or `nil`; the item''s command.  
   `commandId`			`<integer>`  ID of the item''s command (or zero if none).
 '!
+
 !UI.ToolbarButton categoriesForClass!MVP-Views-Support! !
+
 !UI.ToolbarButton methodsFor!
 
 checked
@@ -248,6 +253,7 @@ validateUserInterface: route
 	mask := query isEnabled ifTrue: [TBSTATE_ENABLED] ifFalse: [0].
 	query isChecked ifTrue: [mask := mask bitOr: ##(TBSTATE_CHECKED|TBSTATE_PRESSED)].
 	self stateMask: mask! !
+
 !UI.ToolbarButton categoriesForMethods!
 checked!public!testing! !
 checked:!public!state! !
@@ -628,6 +634,7 @@ undo
 		image: STD_UNDO
 		command: #undo
 		description: 'Undo'! !
+
 !UI.ToolbarButton class categoriesForMethods!
 bitmapButtonClass!constants!instance creation!public! !
 clearSelection!instance creation-system buttons!public! !

@@ -39,6 +39,7 @@ Core.Object
 			'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
 			'RotationMask' -> 16r3
 		}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.IconFromTextTileIconInitializer'
 	instanceVariableNames: 'extent textTile'
@@ -56,6 +57,7 @@ fromTextTile: aTextTileIcon
 
 fromTextTile: aTextTileIcon extent: aPoint
 	^self initializer: (IconFromTextTileIconInitializer extent: aPoint textTile: aTextTileIcon)! !
+
 !Graphics.Icon class categoriesForMethods!
 fromTextTile:!converting!public! !
 fromTextTile:extent:!converting!public! !

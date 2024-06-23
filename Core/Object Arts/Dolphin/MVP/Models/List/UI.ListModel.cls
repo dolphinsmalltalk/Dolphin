@@ -7,7 +7,9 @@ Core.SequencedGrowableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ListModel guid: (Core.GUID fromString: '{87b4c522-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ListModel comment: 'ListModel implements the <listModel> protocol for identity based <sequencedCollecion>s. All of the manipulations that modify the list will trigger notification events such that Observers will be informed of the changes. The <listModel> protocol defines the following events:
 
 #listChanged
@@ -25,7 +27,9 @@ Instance Variables:
 
 
 '!
+
 !UI.ListModel categoriesForClass!Collections-Sequenceable!MVP-Models! !
+
 !UI.ListModel methodsFor!
 
 add: newElement
@@ -330,6 +334,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
+
 !UI.ListModel categoriesForMethods!
 add:!adding!public! !
 add:afterIndex:!adding!public! !
@@ -439,6 +444,7 @@ stbConvertFromVersions0and1: data
 
 stbVersion
 	^2! !
+
 !UI.ListModel class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 new!instance creation!public! !

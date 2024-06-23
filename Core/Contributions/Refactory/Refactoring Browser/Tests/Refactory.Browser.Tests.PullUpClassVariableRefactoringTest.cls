@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.PullUpClassVariableRefactoringTest guid: (Core.GUID fromString: '{714d19ba-e40b-447b-b1d3-72e8d1f543ea}')!
+
 Refactory.Browser.Tests.PullUpClassVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.PullUpClassVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.PullUpClassVariableRefactoringTest methodsFor!
 
 testMetaClassFailure
@@ -62,6 +66,7 @@ testPullUpClassVariable
 		equals: (self parseMethod: 'refToExternalClassVar ^LintRuleTestData.RecursiveSelfRule'
 				in: targetClass).
 	false ifTrue: [model browseChanges]! !
+
 !Refactory.Browser.Tests.PullUpClassVariableRefactoringTest categoriesForMethods!
 testMetaClassFailure!failure tests!public! !
 testNonExistantName!failure tests!public! !

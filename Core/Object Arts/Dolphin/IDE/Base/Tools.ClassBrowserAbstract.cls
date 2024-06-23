@@ -7,8 +7,11 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: 'plugins'
 	classConstants: { 'FilterObjectMethodsMask' -> 16r200. 'ShowInheritedMethodsMask' -> 16r100 }!
+
 Tools.ClassBrowserAbstract guid: (Core.GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.ClassBrowserAbstract isNonInstantiable: true!
+
 Tools.ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.
 
 Instance Variables:
@@ -40,7 +43,9 @@ Class Instance Variables:
 	DefaultShowInheritedMethods	<boolean>
 	DefaultFilterObjectMethods		<boolean>
 '!
+
 !Tools.ClassBrowserAbstract categoriesForClass!MVP-Presenters! !
+
 !Tools.ClassBrowserAbstract methodsFor!
 
 acceptItCommand
@@ -2504,6 +2509,7 @@ variablesMethodFilter
 	| indices |
 	indices := self variablesIndices.
 	^[:m | (self isMethodVisible: m) and: [m byteCodeDispatcher accessesInstVarAtAnyOf: indices]]! !
+
 !Tools.ClassBrowserAbstract categoriesForMethods!
 acceptItCommand!helpers!private! !
 actualClass!accessing!public! !
@@ -2916,6 +2922,7 @@ wordWrapSource: aBoolean
 	self wordWrapSource == aBoolean ifTrue: [^self].
 	MethodBrowser wordWrap: aBoolean.
 	self persistOptions! !
+
 !Tools.ClassBrowserAbstract class categoriesForMethods!
 addPlugin:!initializing!private! !
 availablePluginClasses!helpers!private! !

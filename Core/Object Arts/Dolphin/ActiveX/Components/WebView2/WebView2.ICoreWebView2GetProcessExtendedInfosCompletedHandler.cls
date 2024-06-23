@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler guid: (OS.COM.IID fromString: '{f45e55aa-3bc2-11ee-be56-0242ac120002}')!
+
 WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler comment: '`ICoreWebView2GetProcessExtendedInfosCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2GetProcessExtendedInfosCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler methodsFor!
 
 Invoke: errorCode arg: value
@@ -41,6 +45,7 @@ Invoke: errorCode arg: value
 
 	<virtual stdcall: hresult 4 hresult ICoreWebView2ProcessExtendedInfoCollection*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2GetProcessExtendedInfosCompletedHandler!public! !
 !
@@ -55,6 +60,7 @@ defineFunctions
 		defineFunction: #Invoke:arg:
 			argumentTypes: 'hresult ICoreWebView2ProcessExtendedInfoCollection*'
 ! !
+
 !WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

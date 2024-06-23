@@ -7,7 +7,9 @@ Core.ArithmeticError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.FloatingPointException guid: (Core.GUID fromString: '{87b4c562-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.FloatingPointException comment: '`FloatingPointException` is the class of `ArithmeticError` raised when a floating point operation in a primitive or external library call encounters an unmasked error condition. Each such exception carries information as to the operands involved, the operation that faulted, and the error cause(s). The possible error causes are:
 	`#Inexact`			- the operation resulted in a loss of precision (quite likely with FP arithmetic)
 	`#Underflow` 			- the operation underflowed the normal representable range (i.e. the absolute value was less than `Float fminNormalized`)
@@ -41,7 +43,9 @@ We still provide notification through alteration of control flow (i.e. the raisi
 	[-1.0 sqrt] on: FloatingPointException do: [:ex | ex resume]	"=> Float.NaN"
 ```
 '!
+
 !Core.FloatingPointException categoriesForClass!Kernel-Exception Handling! !
+
 !Core.FloatingPointException methodsFor!
 
 _descriptionArguments
@@ -73,6 +77,7 @@ isUnderflow
 
 	^self tag isUnderflow
 ! !
+
 !Core.FloatingPointException categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !

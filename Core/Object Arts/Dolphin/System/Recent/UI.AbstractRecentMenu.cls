@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractRecentMenu guid: (Core.GUID fromString: '{ab893c67-84d1-4718-9d83-44266284c927}')!
+
 UI.AbstractRecentMenu isNonInstantiable: true!
+
 UI.AbstractRecentMenu comment: ''!
+
 !UI.AbstractRecentMenu categoriesForClass!Kernel-Objects! !
+
 !UI.AbstractRecentMenu methodsFor!
 
 addToRecentList: aRecentString
@@ -84,6 +89,7 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 	"Private - Save anOrderedCollectionOfFilenameStrings as the list of recently opened files."
 
 	self subclassResponsibility! !
+
 !UI.AbstractRecentMenu categoriesForMethods!
 addToRecentList:!public! !
 clearRecentList!public! !
@@ -104,6 +110,7 @@ setRecentList:!helpers!private! !
 
 new
 	^super new initialize! !
+
 !UI.AbstractRecentMenu class categoriesForMethods!
 new!instance creation!public! !
 !

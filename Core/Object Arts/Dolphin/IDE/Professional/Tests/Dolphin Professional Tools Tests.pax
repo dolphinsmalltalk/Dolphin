@@ -43,6 +43,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.DisassemblerTest'
 	instanceVariableNames: ''
@@ -50,6 +51,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.CopyClassRefactoringTest'
 	instanceVariableNames: ''
@@ -57,6 +59,7 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RenameMethodReferencesTransformationTest'
 	instanceVariableNames: ''
@@ -88,6 +91,7 @@ testIsVisiblyAbstract
 	self assert: boolean metaclass isVisiblyAbstract.
 	self deny: newClass isVisiblyAbstract.
 	self deny: newClass metaclass isVisiblyAbstract! !
+
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 testIsDeprecated!public!unit tests! !
 testIsVisiblyAbstract!public!unit tests! !

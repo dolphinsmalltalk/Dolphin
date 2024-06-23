@@ -7,7 +7,9 @@ UI.CapturingInteractor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'HorizontalOnly' -> 16r1. 'TrackingMask' -> 16r400. 'VerticalOnly' -> 16r2 }!
+
 UI.MouseTracker guid: (Core.GUID fromString: '{87b4c711-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.MouseTracker comment: '`MouseTracker` is an `<Interactor`> that is used to manage the visual dragging of objects using the mouse. An instance should be created as the result of a mouse down event and once started using `#startTracking:` it captures the mouse and relays the drag messages that are part of the `<mouseTrackerTarget>` protocol to the target that is assigned to it. Once the drag has completed, and the originating button has been released, the mouse capture is also dropped. Tracking will also be cancelled if the user Alt+Tab''s to another application, or presses the ESC (escape) key (assuming the originating view still has focus).
 
 ## Instance Variables:
@@ -26,7 +28,9 @@ UI.MouseTracker comment: '`MouseTracker` is an `<Interactor`> that is used to ma
 
 
 '!
+
 !UI.MouseTracker categoriesForClass!MVP-Interactors! !
+
 !UI.MouseTracker methodsFor!
 
 beHorizontalOnly
@@ -276,6 +280,7 @@ trackPositionDelta: aPointDelta
 	a delta value from the origin"
 
 	trackPosition := self origin + aPointDelta! !
+
 !UI.MouseTracker categoriesForMethods!
 beHorizontalOnly!modes!public! !
 beVerticalOnly!modes!public! !
@@ -335,6 +340,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !UI.MouseTracker class categoriesForMethods!
 defaultHysteresis!constants!public! !
 forPresenter:startingAt:!instance creation!public! !

@@ -7,9 +7,13 @@ Tools.AbstractTutorial
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkSyntaxTutorial guid: (Core.GUID fromString: '{3692cc24-6c4c-4441-a0f0-ea8235ac2d25}')!
+
 Tools.SmalltalkSyntaxTutorial comment: 'The default ProfStef tutorial to learn Smalltalk syntax'!
+
 !Tools.SmalltalkSyntaxTutorial categoriesForClass!Kernel-Objects! !
+
 !Tools.SmalltalkSyntaxTutorial methodsFor!
 
 basicTypesArray
@@ -560,6 +564,7 @@ You must want me to help you learn Smalltalk.
 So let''s go to the first lesson.  Select the text below and click on the ''EvaluateIt'' button"
 
 ProfStef next.'! !
+
 !Tools.SmalltalkSyntaxTutorial categoriesForMethods!
 basicTypesArray!pages!public! !
 basicTypesCharacters!pages!public! !

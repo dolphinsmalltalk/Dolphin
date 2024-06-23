@@ -7,9 +7,13 @@ Graphics.Tests.AbstractRectangleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.RECTTest guid: (Core.GUID fromString: '{5b388dce-77ef-4247-b882-b3918e272295}')!
+
 External.Tests.RECTTest isNonInstantiable: true!
+
 External.Tests.RECTTest comment: ''!
+
 !External.Tests.RECTTest methodsFor!
 
 testAsRectangle
@@ -48,6 +52,7 @@ testScaleBy
 	self assert: rect right equals: 0.
 	self assert: rect top equals: 0.
 	self assert: rect bottom equals: 0! !
+
 !External.Tests.RECTTest categoriesForMethods!
 testAsRectangle!public! !
 testMarshal!public! !

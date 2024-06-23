@@ -7,9 +7,13 @@ Graphics.Gdiplus.TransformableBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBrushInitializer guid: (Core.GUID fromString: '{2dfa061f-d6ec-4e72-8107-e321f348e352}')!
+
 Graphics.Gdiplus.GradientBrushInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.GradientBrushInitializer comment: ''!
+
 !Graphics.Gdiplus.GradientBrushInitializer methodsFor!
 
 = anObject
@@ -132,6 +136,7 @@ presetBlendGet: aHandle count: count
 		blend: colors
 		positions: positions.
 	^GradientPresetBlend colors: colors positions: positions! !
+
 !Graphics.Gdiplus.GradientBrushInitializer categoriesForMethods!
 =!comparing!public! !
 applyAdditionalAttributes:!private!realizing/unrealizing! !

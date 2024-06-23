@@ -13,7 +13,9 @@ OS.BITMAP
 			'_OffsetOf_dshSection' -> 16r4C.
 			'_OffsetOf_dsOffset' -> 16r50
 		}!
+
 OS.DIBSECTION guid: (Core.GUID fromString: '{87b4c5e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.DIBSECTION comment: '<DIBSECTION> is an <ExternalStructure> class to wrap the struct ''Win.DIBSECTION'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagDIBSECTION {
 	long dsOffset;
 } DIBSECTION;
 '!
+
 !OS.DIBSECTION categoriesForClass!Win32-Structs! !
+
 !OS.DIBSECTION methodsFor!
 
 biSizeImage
@@ -77,6 +81,7 @@ dsOffset: anInteger
 	"Set the receiver's 'dsOffset' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dsOffset put: anInteger! !
+
 !OS.DIBSECTION categoriesForMethods!
 biSizeImage!accessing!public! !
 dsBitfields!**compiled accessors**!public! !
@@ -116,6 +121,7 @@ defineFields
 
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits #dsBmih #dsBitfields #dshSection #dsOffset)! !
+
 !OS.DIBSECTION class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

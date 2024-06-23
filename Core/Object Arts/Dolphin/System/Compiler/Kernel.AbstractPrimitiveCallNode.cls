@@ -7,9 +7,13 @@ Kernel.StTagNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AbstractPrimitiveCallNode guid: (Core.GUID fromString: '{cda70e7a-3497-4e79-a795-0e299811460e}')!
+
 Kernel.AbstractPrimitiveCallNode isNonInstantiable: true!
+
 Kernel.AbstractPrimitiveCallNode comment: ''!
+
 !Kernel.AbstractPrimitiveCallNode methodsFor!
 
 = anObject 
@@ -43,6 +47,7 @@ primitiveIndex
 
 setDefaultErrorTemp
 	self errorTemp: (StTempDeclNode named: '_failureCode')! !
+
 !Kernel.AbstractPrimitiveCallNode categoriesForMethods!
 =!comparing!public! !
 childrenDo:!accessing!public! !

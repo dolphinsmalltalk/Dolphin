@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.VideoTape guid: (Core.GUID fromString: '{fd390a77-8643-49ee-be26-397fbec58430}')!
+
 UI.Examples.VideoTape comment: 'A VideoTape represents a collection of VideoRecordings recorded on a named video cassette. This class is part of the Video Library sample package. Please see the package comment for more details.'!
+
 !UI.Examples.VideoTape categoriesForClass!Samples! !
+
 !UI.Examples.VideoTape methodsFor!
 
 displayOn: aPuttableStream
@@ -69,6 +73,7 @@ recordings
 	"
 
 	^recordings! !
+
 !UI.Examples.VideoTape categoriesForMethods!
 displayOn:!printing!public! !
 length!accessing!public! !
@@ -115,6 +120,7 @@ name: tapeName length: tapeLength
 
 	^self new name: tapeName length: tapeLength
 ! !
+
 !UI.Examples.VideoTape class categoriesForMethods!
 defaultTapeLength!constants!private! !
 icon!constants!public! !

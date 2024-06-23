@@ -7,8 +7,11 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLHTTPRequest2 guid: (OS.COM.IID fromString: '{e5d37dc0-552a-4d52-9cc0-a14d546fbd04}')!
+
 MSXML.IXMLHTTPRequest2 isEgressOnly: true!
+
 MSXML.IXMLHTTPRequest2 comment: '`IXMLHTTPRequest2` is a wrapper class for the COM interface ''MSXML2.IXMLHTTPRequest2'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -72,7 +75,9 @@ interface IXMLHTTPRequest2 : IUnknown
 };
 ```
 '!
+
 !MSXML.IXMLHTTPRequest2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXMLHTTPRequest2 methodsFor!
 
 Abort
@@ -215,6 +220,7 @@ SetRequestHeader: pwszHeader pwszValue: pwszValue
 
 	<virtual stdcall: hresult 10 lpwstr lpwstr>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IXMLHTTPRequest2 categoriesForMethods!
 Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
 getAllResponseHeaders!**auto generated**!methods!public! !
@@ -265,6 +271,7 @@ defineFunctions
 		defineFunction: #GetResponseHeader:ppwszValue:
 			argumentTypes: 'lpwstr lpwstr*'
 ! !
+
 !MSXML.IXMLHTTPRequest2 class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

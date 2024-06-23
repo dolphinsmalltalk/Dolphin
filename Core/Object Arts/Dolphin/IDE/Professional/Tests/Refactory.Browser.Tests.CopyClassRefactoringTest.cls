@@ -7,8 +7,11 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.CopyClassRefactoringTest guid: (Core.GUID fromString: '{20137dd7-fe4e-4c82-91c5-d4c2946c6465}')!
+
 Refactory.Browser.Tests.CopyClassRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.CopyClassRefactoringTest methodsFor!
 
 testAlreadyExistingInstanceVar
@@ -190,6 +193,7 @@ verifySameMethods: newClass as: sourceClass
 	newClass methodsDo: 
 			[:each |
 			self assert: each parseTree equals: (sourceClass compiledMethodAt: each selector) parseTree]! !
+
 !Refactory.Browser.Tests.CopyClassRefactoringTest categoriesForMethods!
 testAlreadyExistingInstanceVar!failure tests!public! !
 testBadName!failure tests!public! !

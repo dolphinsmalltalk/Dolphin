@@ -7,9 +7,13 @@ UI.CollectionPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.HashedCollectionPresenter guid: (Core.GUID fromString: '{1a16cca4-5c91-49d9-9a87-4b4a340299d9}')!
+
 UI.HashedCollectionPresenter comment: ''!
+
 !UI.HashedCollectionPresenter categoriesForClass!MVP-Presenters! !
+
 !UI.HashedCollectionPresenter methodsFor!
 
 addElement: anObject
@@ -58,6 +62,7 @@ removeItem
 	item := listPresenter selection.
 	self removeElement: item.
 	self onValueChanged! !
+
 !UI.HashedCollectionPresenter categoriesForMethods!
 addElement:!adding!private! !
 addItem:!operations!public! !

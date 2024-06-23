@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AXMethodName guid: (Core.GUID fromString: '{fdfdeb82-6021-4e02-9882-cc75d3a22b22}')!
+
 Tools.AXMethodName comment: ''!
+
 !Tools.AXMethodName categoriesForClass!Kernel-Objects! !
+
 !Tools.AXMethodName methodsFor!
 
 argumentCount
@@ -69,6 +73,7 @@ setKeywords: keywordsCollection argumentNames: argsCollection indices: indexColl
 	argumentNames := argsCollection.
 	indices := indexCollection.
 	^self! !
+
 !Tools.AXMethodName categoriesForMethods!
 argumentCount!accessing!public! !
 argumentNames!accessing!public! !
@@ -94,6 +99,7 @@ keywords: keywordsCollection argumentNames: argumentsCollection indices: indexCo
 		setKeywords: keywordsCollection
 		argumentNames: argumentsCollection
 		indices: indexCollection! !
+
 !Tools.AXMethodName class categoriesForMethods!
 icon!constants!public! !
 keywords:argumentNames:indices:!instance creation!public! !

@@ -5,9 +5,13 @@ Object subclass: #SUnitBrowserAbsUIState
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserAbsUIState guid: (GUID fromString: '{fe7a51b0-7675-4dfb-a250-eb2049abff16}')!
+
 SUnitBrowserAbsUIState comment: ''!
+
 !SUnitBrowserAbsUIState categoriesForClass!Unclassified! !
+
 !SUnitBrowserAbsUIState methodsFor!
 
 configuration
@@ -33,6 +37,7 @@ model: aModel
 redBallIconSymbol
 
 	^#redBallIcon! !
+
 !SUnitBrowserAbsUIState categoriesForMethods!
 configuration!accessing!private! !
 greenBallIconSymbol!constants!private! !
@@ -49,6 +54,7 @@ newOn: aModel
 	^self new
 		initializeModel: aModel;
 		yourself! !
+
 !SUnitBrowserAbsUIState class categoriesForMethods!
 newOn:!instantiating!public! !
 !

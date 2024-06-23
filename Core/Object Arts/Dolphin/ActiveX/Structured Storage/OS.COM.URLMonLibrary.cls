@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.URLMonLibrary guid: (Core.GUID fromString: '{08630ee6-54c6-11d3-bdd1-004005a6900b}')!
+
 OS.COM.URLMonLibrary comment: ''!
+
 !OS.COM.URLMonLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.COM.URLMonLibrary methodsFor!
 
 overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength: dwBufLegth dwReserved: dwReserved pBSC: pBsc
@@ -139,6 +143,7 @@ urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserve
 
 	<stdcall: hresult URLOpenPullStreamW IUnknown* lpwstr IStream** uint32 lpvoid>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.URLMonLibrary categoriesForMethods!
 overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
 overlappedURLDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
@@ -156,6 +161,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^'URLMON'! !
+
 !OS.COM.URLMonLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

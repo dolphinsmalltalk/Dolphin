@@ -7,9 +7,13 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.NamespacesShell guid: (Core.GUID fromString: '{558cac4a-ac5c-43bf-8f8e-247bb36208f5}')!
+
 Tools.NamespacesShell comment: ''!
+
 !Tools.NamespacesShell categoriesForClass!MVP-Presenters! !
+
 !Tools.NamespacesShell methodsFor!
 
 addVariable
@@ -157,6 +161,7 @@ toggleConstant
 			var isImmutable
 				ifTrue: [var environment addClassVariable: var key value: var value]
 				ifFalse: [var environment addClassConstant: var key value: var value]]! !
+
 !Tools.NamespacesShell categoriesForMethods!
 addVariable!public! !
 browseEntryReferences!commands-actions!public! !
@@ -227,6 +232,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10550! !
+
 !Tools.NamespacesShell class categoriesForMethods!
 defaultModel!public! !
 defaultOptionFlags!constants!options!private! !

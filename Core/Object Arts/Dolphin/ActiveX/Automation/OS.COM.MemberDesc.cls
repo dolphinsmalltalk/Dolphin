@@ -7,10 +7,15 @@ OS.COM.TypeInfoStructure
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_memid' -> 16r0 }!
+
 OS.COM.MemberDesc guid: (Core.GUID fromString: '{ac5eb94d-60c1-4c16-ae6d-31acf5123eb6}')!
+
 OS.COM.MemberDesc isNonInstantiable: true!
+
 OS.COM.MemberDesc comment: ''!
+
 !OS.COM.MemberDesc categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.MemberDesc methodsFor!
 
 = comperand
@@ -218,6 +223,7 @@ tdesc
 	retval argument, the return type of the function (usually HRESULT)."
 
 	^self elemDesc tdesc! !
+
 !OS.COM.MemberDesc categoriesForMethods!
 =!comparing!public! !
 argumentCount!accessing!public! !
@@ -262,6 +268,7 @@ defineFields
 	"
 
 	self defineField: #memid type: Int32Field readOnly! !
+
 !OS.COM.MemberDesc class categoriesForMethods!
 defineFields!public!template definition! !
 !

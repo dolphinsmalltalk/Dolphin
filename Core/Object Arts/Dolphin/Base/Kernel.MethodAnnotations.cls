@@ -7,9 +7,13 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.MethodAnnotations guid: (Core.GUID fromString: '{0796b2f8-83f3-4c8e-a8b8-3002ef3189f1}')!
+
 Kernel.MethodAnnotations comment: ''!
+
 !Kernel.MethodAnnotations categoriesForClass!Kernel-Objects! !
+
 !Kernel.MethodAnnotations methodsFor!
 
 = anObject
@@ -170,6 +174,7 @@ withSelector: aSymbol do: aMonadicValuable
 		ifFalse: [aMonadicValuable value: (self basicAt: i + 1)].
 	i == 0]
 			whileFalse! !
+
 !Kernel.MethodAnnotations categoriesForMethods!
 =!comparing!public! !
 add:!adding!public! !
@@ -222,6 +227,7 @@ uninitialize
 	VM
 		registryAt: self name put: nil;
 		registryAtIndex: 152 put: nil! !
+
 !Kernel.MethodAnnotations class categoriesForMethods!
 fromPairs:!instance creation!public! !
 initialize!development!initializing!private! !

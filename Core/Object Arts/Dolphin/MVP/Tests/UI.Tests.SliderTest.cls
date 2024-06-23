@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SliderTest guid: (Core.GUID fromString: '{7befb3d7-8dc5-4dbb-92c2-7edaab76f305}')!
+
 UI.Tests.SliderTest comment: ''!
+
 !UI.Tests.SliderTest methodsFor!
 
 classToTest
@@ -68,6 +71,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 			[self assertIsNil: view backcolor.
 			self assert: view hasAutoTicks.
 			self assert: view range equals: (0 to: 100 by: 10)]! !
+
 !UI.Tests.SliderTest categoriesForMethods!
 classToTest!helpers!private! !
 testHasTicks!public!unit tests! !

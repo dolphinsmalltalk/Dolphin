@@ -13,7 +13,9 @@ OS.TEXTMETRICW
 			'_OffsetOf_ntmFlags' -> 16r3C.
 			'_OffsetOf_ntmSizeEM' -> 16r40
 		}!
+
 OS.NEWTEXTMETRICW guid: (Core.GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
+
 OS.NEWTEXTMETRICW comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API'' library.
 
 IDL definition follows:
@@ -27,7 +29,9 @@ struct tagNEWTEXTMETRIC {
 	UINT ntmAvgWidth;
 } NEWTEXTMETRIC;
 '!
+
 !OS.NEWTEXTMETRICW categoriesForClass!Win-Structs! !
+
 !OS.NEWTEXTMETRICW methodsFor!
 
 ntmAvgWidth
@@ -49,6 +53,7 @@ ntmSizeEM
 	"Answer the <Integer> value of the receiver's 'ntmSizeEM' field."
 
 	^bytes uint32AtOffset: _OffsetOf_ntmSizeEM! !
+
 !OS.NEWTEXTMETRICW categoriesForMethods!
 ntmAvgWidth!**compiled accessors**!public! !
 ntmCellHeight!**compiled accessors**!public! !
@@ -84,6 +89,7 @@ defineFields
 
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
+
 !OS.NEWTEXTMETRICW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

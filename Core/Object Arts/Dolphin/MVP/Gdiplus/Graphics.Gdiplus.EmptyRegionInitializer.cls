@@ -7,8 +7,11 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.EmptyRegionInitializer guid: (Core.GUID fromString: '{a6a4384f-d90d-43bf-8b9a-6b7e40023754}')!
+
 Graphics.Gdiplus.EmptyRegionInitializer comment: ''!
+
 !Graphics.Gdiplus.EmptyRegionInitializer methodsFor!
 
 basicCreateHandle
@@ -27,6 +30,7 @@ isEmptyRegion: aGdiplusRegion onGraphics: aGdiplusGraphics
 
 isInfiniteRegion: aGdiplusRegion onGraphics: aGdiplusGraphics
 	^false! !
+
 !Graphics.Gdiplus.EmptyRegionInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 hashGet:!attributes!private! !

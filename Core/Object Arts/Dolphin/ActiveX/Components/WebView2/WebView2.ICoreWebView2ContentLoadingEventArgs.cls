@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ContentLoadingEventArgs guid: (OS.COM.IID fromString: '{0c8a1275-9b6b-4901-87ad-70df25bafa6e}')!
+
 WebView2.ICoreWebView2ContentLoadingEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2ContentLoadingEventArgs comment: '`ICoreWebView2ContentLoadingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContentLoadingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2ContentLoadingEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ContentLoadingEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ContentLoadingEventArgs methodsFor!
 
 get_IsErrorPage: isErrorPage
@@ -71,6 +76,7 @@ navigationId
 
 printableProperties
 	^#(#navigationId #isErrorPage)! !
+
 !WebView2.ICoreWebView2ContentLoadingEventArgs categoriesForMethods!
 get_IsErrorPage:!**auto generated**!COM Interfaces-ICoreWebView2ContentLoadingEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2ContentLoadingEventArgs!private! !
@@ -91,6 +97,7 @@ defineFunctions
 		defineFunction: #get_NavigationId:
 			argumentTypes: 'qword*'
 ! !
+
 !WebView2.ICoreWebView2ContentLoadingEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

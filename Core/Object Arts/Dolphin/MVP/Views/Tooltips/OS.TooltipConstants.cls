@@ -70,6 +70,10 @@ Kernel.SharedPool
 			'TTS_NOPREFIX' -> 16r2.
 			'TTS_USEVISUALSTYLE' -> 16r100
 		}!
+
 OS.TooltipConstants guid: (Core.GUID fromString: '{19693950-d658-4428-a5e8-644838de7d68}')!
+
 OS.TooltipConstants isNonInstantiable: true!
+
 OS.TooltipConstants comment: ''!
+

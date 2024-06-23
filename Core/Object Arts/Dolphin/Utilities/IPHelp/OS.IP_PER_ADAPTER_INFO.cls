@@ -13,7 +13,9 @@ External.Structure
 			'_OffsetOf_CurrentDnsServer' -> 16r8.
 			'_OffsetOf_DnsServerList' -> 16rC
 		}!
+
 OS.IP_PER_ADAPTER_INFO guid: (Core.GUID fromString: '{e2022105-d714-4780-a2dc-5db76307f035}')!
+
 OS.IP_PER_ADAPTER_INFO comment: '<IP_PER_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_PER_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,7 +32,9 @@ struct tagIP_PER_ADAPTER_INFO {
 	IP_ADDR_STRING DnsServerList;
 } IP_PER_ADAPTER_INFO;
 '!
+
 !OS.IP_PER_ADAPTER_INFO categoriesForClass!Win32-Structs! !
+
 !OS.IP_PER_ADAPTER_INFO methodsFor!
 
 AutoconfigActive
@@ -52,6 +56,7 @@ DnsServerList
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'DnsServerList' field."
 
 	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_DnsServerList! !
+
 !OS.IP_PER_ADAPTER_INFO categoriesForMethods!
 AutoconfigActive!**compiled accessors**!public! !
 AutoconfigEnabled!**compiled accessors**!public! !
@@ -98,6 +103,7 @@ defineFields
 
 getFieldNames
 	^#(#AutoconfigEnabled #AutoconfigActive #CurrentDnsServer #DnsServerList)! !
+
 !OS.IP_PER_ADAPTER_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

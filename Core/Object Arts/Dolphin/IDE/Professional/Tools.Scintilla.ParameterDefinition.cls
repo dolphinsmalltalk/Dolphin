@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.ParameterDefinition guid: (Core.GUID fromString: '{c2e4de9a-2733-4744-a2e1-c18af7a172d1}')!
+
 Tools.Scintilla.ParameterDefinition comment: ''!
+
 !Tools.Scintilla.ParameterDefinition categoriesForClass!Kernel-Objects! !
+
 !Tools.Scintilla.ParameterDefinition methodsFor!
 
 displayOn: aStream
@@ -50,6 +54,7 @@ type
 
 typeName
 	^typeName! !
+
 !Tools.Scintilla.ParameterDefinition categoriesForMethods!
 displayOn:!displaying!public! !
 emitOutParam:on:!generating!private! !
@@ -69,6 +74,7 @@ icon
 newName: nameString typeName: typeString
 	^self new
 		setName: nameString typeName: typeString! !
+
 !Tools.Scintilla.ParameterDefinition class categoriesForMethods!
 icon!constants!development!public! !
 newName:typeName:!instance creation!public! !

@@ -15,10 +15,14 @@ External.Structure
 			'_OffsetOf_vt' -> 16r4.
 			'_PROPBAG2_Size' -> 16r20
 		}!
+
 OS.COM.PROPBAG2 guid: (Core.GUID fromString: '{b5ebe54f-d5b4-4606-9447-90b11844193f}')!
+
 OS.COM.PROPBAG2 comment: '`OS.COM.PROPBAG2` is an `External.Structure` class to wrap the struct ''OCIDL.PROPBAG2'' from type information in the ''OCIDL Library'' library.
 '!
+
 !OS.COM.PROPBAG2 categoriesForClass!OCIDL-Structs! !
+
 !OS.COM.PROPBAG2 methodsFor!
 
 cfType
@@ -84,6 +88,7 @@ vt: anInteger
 	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_vt put: anInteger! !
+
 !OS.COM.PROPBAG2 categoriesForMethods!
 cfType!**compiled accessors**!public! !
 cfType:!**compiled accessors**!public! !
@@ -129,6 +134,7 @@ defineFields
 
 getFieldNames
 	^#(#dwType #vt #cfType #dwHint #pstrName #clsid)! !
+
 !OS.COM.PROPBAG2 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

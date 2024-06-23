@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.FontCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.PrivateFontCollectionTest guid: (Core.GUID fromString: '{10aa387a-cbce-4795-9c99-556a0ec7548e}')!
+
 Graphics.Gdiplus.Tests.PrivateFontCollectionTest comment: ''!
+
 !Graphics.Gdiplus.Tests.PrivateFontCollectionTest methodsFor!
 
 subjectClass
@@ -30,6 +33,7 @@ testFamilies
 testIsPersistent
 	self newCanonicalModel.
 	self deny: model isPersistent! !
+
 !Graphics.Gdiplus.Tests.PrivateFontCollectionTest categoriesForMethods!
 subjectClass!constants!private! !
 testClone!public! !

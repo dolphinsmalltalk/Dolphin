@@ -5,9 +5,13 @@ DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MyOwnCertificationAuthorityCertificate guid: (GUID fromString: '{3a6b1632-077d-49f5-81be-ed0688e9c2b0}')!
+
 MyOwnCertificationAuthorityCertificate comment: ''!
+
 !MyOwnCertificationAuthorityCertificate categoriesForClass!Cryptography-Certificates! !
+
 !MyOwnCertificationAuthorityCertificate methodsFor!
 
 publicKey
@@ -19,6 +23,7 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
+
 !MyOwnCertificationAuthorityCertificate categoriesForMethods!
 publicKey!accessing!public! !
 publisherPublicKey!accessing!private! !
@@ -77,6 +82,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
+
 !MyOwnCertificationAuthorityCertificate class categoriesForMethods!
 generate!instance creation!private! !
 new!instance creation!public! !

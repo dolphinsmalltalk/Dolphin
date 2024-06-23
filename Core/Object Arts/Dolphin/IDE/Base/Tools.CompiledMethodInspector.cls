@@ -10,9 +10,13 @@ Tools.BasicInspector
 			'MethodTypes'
 				-> #('Normal' 'Return nil' 'Return true' 'Return false' 'Return literal constant 0' 'Return self' 'Return instance variable' 'Set instance variable')
 		}!
+
 Tools.CompiledMethodInspector guid: (Core.GUID fromString: '{87b4c691-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.CompiledMethodInspector comment: 'CompiledMethodInspector is a <compositePresenter> that implements a specialised inspect facility onto a <CompiledMethod>. This provides additional functionality to view the source, and the decompiled bytecodes.'!
+
 !Tools.CompiledMethodInspector categoriesForClass!MVP-Presenters! !
+
 !Tools.CompiledMethodInspector methodsFor!
 
 disassemblyText
@@ -39,6 +43,7 @@ text
 	^(index between: 2 and: self headerSize)
 		ifTrue: [ field ]
 		ifFalse: [ field printString ]! !
+
 !Tools.CompiledMethodInspector categoriesForMethods!
 disassemblyText!accessing!private! !
 source!accessing!public! !
@@ -56,6 +61,7 @@ headerList
 			(OrderedCollection
 					with: ' - source' -> #sourceText
 					with: ' - disassembly' -> #disassemblyText))! !
+
 !Tools.CompiledMethodInspector class categoriesForMethods!
 headerList!constants!public! !
 !

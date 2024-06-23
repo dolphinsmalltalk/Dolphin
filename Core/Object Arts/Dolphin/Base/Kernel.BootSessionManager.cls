@@ -7,9 +7,13 @@ Core.SessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.BootSessionManager guid: (Core.GUID fromString: '{9dbc5fa6-dace-4809-88b9-83242b7f7d72}')!
+
 Kernel.BootSessionManager comment: 'BootSessionManager is the class of <SessionManager>s installed when the Dolphin image is booting from sources.'!
+
 !Kernel.BootSessionManager categoriesForClass!Development! !
+
 !Kernel.BootSessionManager methodsFor!
 
 allocConsole
@@ -327,6 +331,7 @@ updateBootImage
 	"The only thing done currently is to reload the BCL."
 
 	self reloadBootPackages! !
+
 !Kernel.BootSessionManager categoriesForMethods!
 allocConsole!operations!private! !
 basicTertiaryStartup!operations-startup!public! !
@@ -367,6 +372,7 @@ imageExtension
 	"Answer the suffix for an executable image file"
 
 	^'img8'.! !
+
 !Kernel.BootSessionManager class categoriesForMethods!
 imageExtension!constants!public! !
 !

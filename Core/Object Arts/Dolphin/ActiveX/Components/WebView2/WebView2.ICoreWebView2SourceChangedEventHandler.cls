@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2SourceChangedEventHandler guid: (OS.COM.IID fromString: '{3c067f9f-5388-4772-8b48-79f7ef1ab37c}')!
+
 WebView2.ICoreWebView2SourceChangedEventHandler comment: '`ICoreWebView2SourceChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2SourceChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2SourceChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2SourceChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2SourceChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2SourceChangedEventArgs*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2SourceChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#sourceChanged:! !
+
 !WebView2.ICoreWebView2SourceChangedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

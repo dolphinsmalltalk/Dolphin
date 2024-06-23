@@ -29,7 +29,9 @@ External.Structure
 			'_OffsetOf_tmWeight' -> 16r1C.
 			'_TEXTMETRICW_Size' -> 16r3C
 		}!
+
 OS.TEXTMETRICW guid: (Core.GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
+
 OS.TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -62,7 +64,9 @@ struct tagTEXTMETRIC {
 	BYTE tmCharSet;
 } TEXTMETRIC;
 '!
+
 !OS.TEXTMETRICW categoriesForClass!Win32-Structs! !
+
 !OS.TEXTMETRICW methodsFor!
 
 tmAscent
@@ -164,6 +168,7 @@ tmWeight
 	"Answer the <Integer> value of the receiver's 'tmWeight' field."
 
 	^bytes int32AtOffset: _OffsetOf_tmWeight! !
+
 !OS.TEXTMETRICW categoriesForMethods!
 tmAscent!**compiled accessors**!public! !
 tmAveCharWidth!**compiled accessors**!public! !
@@ -250,6 +255,7 @@ packing
 	"Uses non-standard packing"
 
 	^4! !
+
 !OS.TEXTMETRICW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

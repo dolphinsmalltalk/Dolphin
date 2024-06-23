@@ -7,8 +7,11 @@ External.Tests.GenericExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.StructureArrayTest guid: (Core.GUID fromString: '{1ab5e35e-9c82-4aa7-9c28-f51cb3baa646}')!
+
 External.Tests.StructureArrayTest comment: ''!
+
 !External.Tests.StructureArrayTest methodsFor!
 
 arrayClass
@@ -32,6 +35,7 @@ testStbConvertFromVersion0
 	self assert: array isKindOf: StructureArray.
 	self assert: array elementClass equals: UInt32.
 	self assert: array asArray equals: ((1 to: 3) collect: [:i | i * i])! !
+
 !External.Tests.StructureArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 newArrayOfIntegers:!helpers!private! !

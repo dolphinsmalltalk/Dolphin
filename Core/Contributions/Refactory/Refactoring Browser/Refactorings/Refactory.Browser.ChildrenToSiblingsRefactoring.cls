@@ -7,9 +7,13 @@ Refactory.Browser.ClassRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ChildrenToSiblingsRefactoring guid: (Core.GUID fromString: '{23f61ab3-e5ef-433b-821d-21c019236bef}')!
+
 Refactory.Browser.ChildrenToSiblingsRefactoring comment: ''!
+
 !Refactory.Browser.ChildrenToSiblingsRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.ChildrenToSiblingsRefactoring methodsFor!
 
 abstractSuperclass
@@ -206,6 +210,7 @@ transform
 		pushUpMethods;
 		changeIsKindOfReferences;
 		reparentSubclasses! !
+
 !Refactory.Browser.ChildrenToSiblingsRefactoring categoriesForMethods!
 abstractSuperclass!accessing!private! !
 addSuperclass!public!transforming! !
@@ -248,6 +253,7 @@ name: aClassName class: aClass subclasses: subclassCollection
 			class: aClass
 			subclasses: subclassCollection;
 		yourself! !
+
 !Refactory.Browser.ChildrenToSiblingsRefactoring class categoriesForMethods!
 model:name:class:subclasses:!instance creation!public! !
 name:class:subclasses:!instance creation!public! !

@@ -12,7 +12,9 @@ Core.Object
 			'ProgressId' -> 16r3F7.
 			'StatusId' -> 16r3F8
 		}!
+
 ImageStripperProgress guid: (Core.GUID fromString: '{3645214b-fff1-40c6-91d4-32740d2f6a66}')!
+
 ImageStripperProgress comment: 'ImageStripperProgress is a <topPresenter> used by the <ImageStripper> to display the progress of an image stripping operation.
 
 Instance Variables:
@@ -23,6 +25,7 @@ Instance Variables:
 	monitorProgressPeriod	<Integer> number of milliseconds between progress monitoring periods
 
 '!
+
 !ImageStripperProgress methodsFor!
 
 _notify: aString
@@ -364,6 +367,7 @@ wmSetCursor: message wParam: wParam lParam: lParam
 
 	User32 setCursor: cursor.
 	^0! !
+
 !ImageStripperProgress categoriesForMethods!
 _notify:!accessing!public! !
 addToCommandRoute:!commands!public! !
@@ -440,6 +444,7 @@ onPreStripImage
 
 show
 	^self new show! !
+
 !ImageStripperProgress class categoriesForMethods!
 initialize!initializing!must not strip!public! !
 onPreStripImage!private! !

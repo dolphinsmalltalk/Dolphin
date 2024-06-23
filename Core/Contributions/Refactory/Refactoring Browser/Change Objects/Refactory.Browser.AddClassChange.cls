@@ -7,9 +7,13 @@ Refactory.Browser.RefactoryClassChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AddClassChange guid: (Core.GUID fromString: '{441f8dc3-4a20-4e6d-9311-c190ceb74f11}')!
+
 Refactory.Browser.AddClassChange comment: ''!
+
 !Refactory.Browser.AddClassChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.AddClassChange methodsFor!
 
 = anAddClassChange 
@@ -153,6 +157,7 @@ printOn: aStream
 
 sourceFilerClass
 	^Object sourceFilerClass! !
+
 !Refactory.Browser.AddClassChange categoriesForMethods!
 =!comparing!public! !
 areSubclassCreationMessageArgumentsValid:!private!testing! !
@@ -186,6 +191,7 @@ definition: aString
 
 details: aClassDetails
 	^self new details: aClassDetails! !
+
 !Refactory.Browser.AddClassChange class categoriesForMethods!
 definition:!instance creation!public! !
 details:!instance creation!public! !

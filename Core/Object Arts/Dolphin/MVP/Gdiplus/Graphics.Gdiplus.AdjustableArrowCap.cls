@@ -7,8 +7,11 @@ Graphics.Gdiplus.AbstractCustomLineCap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AdjustableArrowCap guid: (Core.GUID fromString: '{c1fcc800-8763-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.AdjustableArrowCap comment: 'GdiplusAdjustableArrowCap creates a line cap that looks like an arrow.'!
+
 !Graphics.Gdiplus.AdjustableArrowCap methodsFor!
 
 height
@@ -55,6 +58,7 @@ width: aNumber
 	"Set the width of the receiver's arrow cap."
 
 	initializer widthOf: self set: aNumber! !
+
 !Graphics.Gdiplus.AdjustableArrowCap categoriesForMethods!
 height!accessing!public! !
 height:!accessing!public! !
@@ -77,6 +81,7 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 
 new
 	^self height: 10 width: 5 isFilled: false! !
+
 !Graphics.Gdiplus.AdjustableArrowCap class categoriesForMethods!
 height:width:isFilled:!instance creation!public! !
 new!instance creation!public! !

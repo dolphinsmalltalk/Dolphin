@@ -7,7 +7,9 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_BINDING_INFO_Size' -> 16r8. '_OffsetOf_RequestQueueHandle' -> 16r4 }!
+
 WinHttpServer.HTTP_BINDING_INFO guid: (Core.GUID fromString: '{b253697c-f239-4fb6-b474-b35db2c4848f}')!
+
 WinHttpServer.HTTP_BINDING_INFO comment: '`HTTP_BINDING_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -24,7 +26,9 @@ struct tagHTTP_BINDING_INFO {
 } HTTP_BINDING_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_BINDING_INFO categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_BINDING_INFO methodsFor!
 
 requestQueueHandle
@@ -50,6 +54,7 @@ RequestQueueHandle: aHandle
 	"Set the receiver's 'RequestQueueHandle' field to the value of the argument, aHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_RequestQueueHandle put: aHandle! !
+
 !WinHttpServer.HTTP_BINDING_INFO categoriesForMethods!
 requestQueueHandle!accessing!public! !
 RequestQueueHandle!**compiled accessors**!public! !
@@ -84,6 +89,7 @@ getFieldNames
 
 propertyId
 	^HttpServerBindingProperty! !
+
 !WinHttpServer.HTTP_BINDING_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

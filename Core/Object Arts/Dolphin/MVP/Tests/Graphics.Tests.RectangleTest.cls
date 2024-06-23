@@ -7,8 +7,11 @@ Graphics.Tests.AbstractRectangleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.RectangleTest guid: (Core.GUID fromString: '{aceafc61-24f9-482c-a8e7-0aff0e7fcc85}')!
+
 Graphics.Tests.RectangleTest comment: ''!
+
 !Graphics.Tests.RectangleTest methodsFor!
 
 subjectClass
@@ -47,6 +50,7 @@ testInsetBy
 
 testVertices
 	self assert: oddDesktop vertices equals: {-1 @ 2. 1279 @ 2. 1279 @ 1023. -1 @ 1023}! !
+
 !Graphics.Tests.RectangleTest categoriesForMethods!
 subjectClass!constants!private! !
 testAreasOutside!public!unit tests! !

@@ -7,10 +7,15 @@ Core.Locale
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.AbstractWindowsLocale guid: (Core.GUID fromString: '{f4f1e93b-efe9-4ae4-a610-a5f9fcb791f0}')!
+
 OS.AbstractWindowsLocale isNonInstantiable: true!
+
 OS.AbstractWindowsLocale comment: ''!
+
 !OS.AbstractWindowsLocale categoriesForClass!System-Localization! !
+
 !OS.AbstractWindowsLocale methodsFor!
 
 amDesignator
@@ -434,6 +439,7 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self getStringInfo: LOCALE_SYEARMONTH! !
+
 !OS.AbstractWindowsLocale categoriesForMethods!
 amDesignator!constants!public! !
 asParameter!converting!public! !
@@ -536,6 +542,7 @@ systemLocales: anInteger
 
 	^(Kernel32 enumSystemLocales: anInteger)
 		collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
+
 !OS.AbstractWindowsLocale class categoriesForMethods!
 installedUILanguages:!enquiries!private! !
 lcid:!instance creation!public! !

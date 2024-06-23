@@ -7,7 +7,9 @@ Core.Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBSmallDictionary guid: (Core.GUID fromString: '{65ef5a3f-ece9-4966-8d14-b90bf121a5d6}')!
+
 Refactory.Browser.RBSmallDictionary comment: 'RBSmallDictionary is an <abstractDictionary> optimized for small collections. It is part of the Refactoring Browser.
 Note that the implementation is similar to <LookupTable> in that RBSmallDictionarys do not store <Association>s.
 
@@ -16,7 +18,9 @@ Instance Variables:
 	values		<Array> of <Object>. The values.
 	size		<SmallInteger>. The number of elements.
 '!
+
 !Refactory.Browser.RBSmallDictionary categoriesForClass!Refactory-ParseTree Matching! !
+
 !Refactory.Browser.RBSmallDictionary methodsFor!
 
 add: anAssociation 
@@ -148,6 +152,7 @@ removeKey: key ifAbsent: aBlock
 
 size
 	^size! !
+
 !Refactory.Browser.RBSmallDictionary categoriesForMethods!
 add:!adding!public! !
 associationsDo:!enumerating!public! !
@@ -183,6 +188,7 @@ new: aSize
 	"Ignore the size"
 
 	^self basicNew initialize! !
+
 !Refactory.Browser.RBSmallDictionary class categoriesForMethods!
 new!instance creation!public! !
 new:!instance creation!public! !

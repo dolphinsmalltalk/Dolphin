@@ -7,12 +7,16 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RadioButtonSetPresenter guid: (Core.GUID fromString: '{40498d60-542d-11d3-998b-d5ca2c3c1d61}')!
+
 UI.RadioButtonSetPresenter comment: 'RadioButtonSetPresenter is a <valuePresenter> that displays a <valueModel> onto a <Symbol>, where the symbol is the name of the selected <RadioButton> in the set. A RadioButtonSetPresenter expects to be connected to a container view, the child views of which are <RadioButton>s. 
 Only a single <RadioButton> in the set can be selected at any time. When the radio button selection in the set changes (e.g. as a result of user selection), the associated <valueModel> is updated and hence generates a #valueChanged event.
 
 RadioButtonSetPresenter is based on a contribution from Ian Bartholomew.'!
+
 !UI.RadioButtonSetPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Containers! !
+
 !UI.RadioButtonSetPresenter methodsFor!
 
 createSchematicWiring
@@ -90,6 +94,7 @@ radioButtons
 			it can go into an infinite loop."
 			ownedRadioButtons keysAndValuesDo: [:i :each | each isGroupStop: i == 1]].
 	^ownedRadioButtons! !
+
 !UI.RadioButtonSetPresenter categoriesForMethods!
 createSchematicWiring!initializing!public! !
 disable:!public!states-changing! !
@@ -115,6 +120,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 1030 #{UI.GridLayout} 1 3 1 1 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 6 18 #{UI.RadioButton} 50 16 nil 32 50 2 8 1141055497 1 224 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 354 #hash 8 #() false 128 nil 517 nil nil nil 224 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 562 181 65 224 514 #text: 50 1 8 'Option 1' 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 90 0 0 0 32 0 0 0] 8 #() 562 193 193 nil 27 8 'option1' 18 #{UI.RadioButton} 50 16 nil 32 50 2 8 1140924425 1 752 290 nil nil 322 354 #= 8 #() 354 #hash 8 #() false 128 nil 517 nil nil nil 752 nil nil 434 nil nil nil 466 50 2 514 #createAt:extent: 50 2 562 1 65 562 181 63 752 514 #text: 50 1 8 'Option 2' 752 658 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 32 0 0 0 90 0 0 0 63 0 0 0] 8 #() 720 nil 27 8 'option2' 18 #{UI.RadioButton} 50 16 nil 32 50 2 8 1140924425 1 1136 290 nil nil 322 354 #= 8 #() 354 #hash 8 #() false 128 nil 517 nil nil nil 1136 nil nil 434 nil nil nil 466 50 2 514 #createAt:extent: 50 2 562 1 127 562 181 65 1136 514 #text: 50 1 8 'Option 3' 1136 658 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 63 0 0 0 90 0 0 0 95 0 0 0] 8 #() 720 nil 27 8 'option3' nil 466 50 1 514 #createAt:extent: 50 2 562 6143 21 562 181 191 32 658 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 89 12 0 0 105 0 0 0] 50 3 224 752 1136 720 nil 27)! !
+
 !UI.RadioButtonSetPresenter class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 !

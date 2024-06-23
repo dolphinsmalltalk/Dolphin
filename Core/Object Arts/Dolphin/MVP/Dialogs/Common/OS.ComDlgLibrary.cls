@@ -7,11 +7,15 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ComDlgLibrary guid: (Core.GUID fromString: '{6467405a-3a82-101b-8181-00aa003743d3}')!
+
 OS.ComDlgLibrary comment: 'ComDlgLibrary is the <ExternalLibrary> class to represent the Win32 system DLL, COMDLG32.DLL.
 
 This DLL implements Windows'' standard "common" dialogs, such as the File Open/Save, Find, Find/Replace, Font, Color and Print dialogs. See subclasses of <CommonDialog>, which wrap these behind a Smalltalk API in Dolphin.'!
+
 !OS.ComDlgLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.ComDlgLibrary methodsFor!
 
 commDlgExtendedError
@@ -70,6 +74,7 @@ systemError
 	"Generate an error based on the last recorded host system error."
 
 	^self systemError: self commDlgExtendedError! !
+
 !OS.ComDlgLibrary categoriesForMethods!
 commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
 findText:!primitives!private!win32 functions-common dialog box! !
@@ -88,6 +93,7 @@ fileName
 
 sharedVariableName
 	^#{ComDlg32}! !
+
 !OS.ComDlgLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

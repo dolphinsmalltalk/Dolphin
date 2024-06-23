@@ -7,9 +7,13 @@ Core.Tests.CollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractDictionaryTest guid: (Core.GUID fromString: '{5d8b76ad-dcc1-44ff-8a2a-cf5e50c4b434}')!
+
 Core.Tests.AbstractDictionaryTest isNonInstantiable: true!
+
 Core.Tests.AbstractDictionaryTest comment: ''!
+
 !Core.Tests.AbstractDictionaryTest methodsFor!
 
 assertCommutativelyEqual: aDictionary other: anotherDictionary
@@ -404,6 +408,7 @@ testStrongTalkTests
 	self assert: new]
 			on: UI.ConfirmationRequiredWarning
 			do: [:ex | ex refuse]! !
+
 !Core.Tests.AbstractDictionaryTest categoriesForMethods!
 assertCommutativelyEqual:other:!helpers!private! !
 checkValidity:!benchmarking!private! !

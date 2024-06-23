@@ -7,12 +7,17 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMDocumentType guid: (OS.COM.IID fromString: '{2933bf8b-7b36-11d2-b20e-00c04f983e60}')!
+
 MSXML.IXMLDOMDocumentType isEgressOnly: true!
+
 MSXML.IXMLDOMDocumentType comment: '<IXMLDOMDocumentType> is a wrapper class for the COM interface ''MSXML.IXMLDOMDocumentType'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent document type declarations.'!
+
 !MSXML.IXMLDOMDocumentType categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !MSXML.IXMLDOMDocumentType methodsFor!
 
 entities
@@ -72,6 +77,7 @@ notations
 	answer := IXMLDOMNamedNodeMap newPointer.
 	self get_notations: answer.
 	^DOMNotationsMap onInterface: answer parentNode: self! !
+
 !MSXML.IXMLDOMDocumentType categoriesForMethods!
 entities!properties!public! !
 get_entities:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
@@ -95,6 +101,7 @@ defineFunctions
 		defineFunction: #get_notations:
 			argumentTypes: 'IXMLDOMNamedNodeMap**'
 ! !
+
 !MSXML.IXMLDOMDocumentType class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

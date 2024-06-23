@@ -88,9 +88,13 @@ Core.Locale
 								'september' -> 16r9
 							})
 		}!
+
 Kernel.SmalltalkLocale guid: (Core.GUID fromString: '{06088e6e-01bc-4518-a4a5-73088615fdd8}')!
+
 Kernel.SmalltalkLocale comment: ''!
+
 !Kernel.SmalltalkLocale categoriesForClass!System-Localization! !
+
 !Kernel.SmalltalkLocale methodsFor!
 
 amDesignator
@@ -463,6 +467,7 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^'MMMM yyyy'! !
+
 !Kernel.SmalltalkLocale categoriesForMethods!
 amDesignator!constants!public! !
 basicLcid!constants!private! !
@@ -591,6 +596,7 @@ initialize
 
 reset
 	Current ifNotNil: [:current | current numberFormat: nil]! !
+
 !Kernel.SmalltalkLocale class categoriesForMethods!
 current!instance creation!public! !
 initialize!class initialization!public! !

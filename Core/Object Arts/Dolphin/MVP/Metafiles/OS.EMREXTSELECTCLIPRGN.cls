@@ -12,7 +12,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_iMode' -> 16rC.
 			'_OffsetOf_RGNDATA' -> 16r10
 		}!
+
 OS.EMREXTSELECTCLIPRGN guid: (Core.GUID fromString: '{c49e357c-2207-4eea-b22f-1b9d456c35f8}')!
+
 OS.EMREXTSELECTCLIPRGN comment: '<EMREXTSELECTCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTSELECTCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +31,9 @@ struct tagEMREXTSELECTCLIPRGN {
 	BYTE* RGNDATA;
 } EMREXTSELECTCLIPRGN;
 '!
+
 !OS.EMREXTSELECTCLIPRGN categoriesForClass!Win32-Structs! !
+
 !OS.EMREXTSELECTCLIPRGN methodsFor!
 
 cbRgnData
@@ -68,6 +72,7 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
+
 !OS.EMREXTSELECTCLIPRGN categoriesForMethods!
 cbRgnData!**compiled accessors**!public! !
 cbRgnData:!**compiled accessors**!public! !
@@ -115,6 +120,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTSELECTCLIPRGN}! !
+
 !OS.EMREXTSELECTCLIPRGN class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

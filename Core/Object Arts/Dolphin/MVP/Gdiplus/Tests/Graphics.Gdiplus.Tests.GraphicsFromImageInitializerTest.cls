@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest guid: (Core.GUID fromString: '{de9caa66-14ef-49f9-8e8b-dbda54c36c53}')!
+
 Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest comment: ''!
+
 !Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest methodsFor!
 
 subjectClass
@@ -31,6 +34,7 @@ testIsPersistent
 	"Cant persist an <IStream>"
 
 	self deny: model isPersistent! !
+
 !Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest categoriesForMethods!
 subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !

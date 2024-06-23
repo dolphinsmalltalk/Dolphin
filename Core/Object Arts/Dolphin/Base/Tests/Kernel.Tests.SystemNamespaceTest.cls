@@ -7,9 +7,13 @@ Kernel.Tests.AbstractNamespaceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.SystemNamespaceTest guid: (Core.GUID fromString: '{5a72a2ef-84cc-4954-a159-3ae6bc041f25}')!
+
 Kernel.Tests.SystemNamespaceTest isNonInstantiable: true!
+
 Kernel.Tests.SystemNamespaceTest comment: ''!
+
 !Kernel.Tests.SystemNamespaceTest methodsFor!
 
 canonicalSubject
@@ -52,6 +56,7 @@ testShortName
 	"Root and Smalltalk's short names do not need qualification"
 
 	self assert: self subject shortName equals: self subject name! !
+
 !Kernel.Tests.SystemNamespaceTest categoriesForMethods!
 canonicalSubject!private! !
 subject!constants!private! !

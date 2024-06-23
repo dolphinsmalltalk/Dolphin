@@ -13,7 +13,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihPal' -> 16r8.
 			'_OffsetOf_iStart' -> 16rC
 		}!
+
 OS.EMRSETPALETTEENTRIES guid: (Core.GUID fromString: '{e7bfc219-37e0-4690-bf26-61e47ef6ccfb}')!
+
 OS.EMRSETPALETTEENTRIES comment: '<EMRSETPALETTEENTRIES> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPALETTEENTRIES'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagEMRSETPALETTEENTRIES {
 	PALETTEENTRY* aPalEntries;
 } EMRSETPALETTEENTRIES;
 '!
+
 !OS.EMRSETPALETTEENTRIES categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETPALETTEENTRIES methodsFor!
 
 aPalEntries
@@ -83,6 +87,7 @@ iStart: anInteger
 	"Set the receiver's 'iStart' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_iStart put: anInteger! !
+
 !OS.EMRSETPALETTEENTRIES categoriesForMethods!
 aPalEntries!**compiled accessors**!public! !
 aPalEntries:!**compiled accessors**!public! !
@@ -136,6 +141,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETPALETTEENTRIES}! !
+
 !OS.EMRSETPALETTEENTRIES class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

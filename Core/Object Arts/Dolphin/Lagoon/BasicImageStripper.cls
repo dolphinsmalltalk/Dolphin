@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 BasicImageStripper guid: (Core.GUID fromString: '{51ce4971-61e8-431f-9823-437cf7293e8a}')!
+
 BasicImageStripper isNonInstantiable: true!
+
 BasicImageStripper comment: 'Base image stripping methods. These can safely be encrypted during release.'!
+
 !BasicImageStripper categoriesForClass!MVP-Models! !
+
 !BasicImageStripper methodsFor!
 
 _actualRequiredPackages
@@ -853,6 +858,7 @@ stripRedundantResources
 	deployed application."
 
 	^false! !
+
 !BasicImageStripper categoriesForMethods!
 _actualRequiredPackages!private! !
 _allMethodsInClasses:do:!helpers!private! !
@@ -947,6 +953,7 @@ BasicImageStripper methodProtocol: #model attributes: #(#readOnly) selectors: #(
 
 new
 	^super new initialize! !
+
 !BasicImageStripper class categoriesForMethods!
 new!development!instance creation!public! !
 !

@@ -33,21 +33,18 @@ PresenterTest subclass: #MultipleSelectionListControlTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MultipleSelectionListControlTest subclass: #MultipleSelectionListBoxTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MultipleSelectionListControlTest subclass: #MultipleSelectionListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

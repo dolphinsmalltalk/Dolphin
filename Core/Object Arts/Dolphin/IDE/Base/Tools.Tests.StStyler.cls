@@ -7,9 +7,13 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.StStyler guid: (Core.GUID fromString: '{c4f1cf3f-646a-4233-9f38-c110bf4f4dfb}')!
+
 Tools.Tests.StStyler comment: 'StStyler is a <StParseNodeVisitor>s that generates visual style runs for Smalltalk source code from a parse tree. It is intended solely for testing the syntax colouring in DX6.'!
+
 !Tools.Tests.StStyler categoriesForClass!Refactory-ParseTree Matching! !
+
 !Tools.Tests.StStyler methodsFor!
 
 colorComments: aCollection 
@@ -253,6 +257,7 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	view applyStyle: #identifier toNext: aVariableNode name size! !
+
 !Tools.Tests.StStyler categoriesForMethods!
 colorComments:!helpers!private! !
 colourBefore:!helpers!private! !

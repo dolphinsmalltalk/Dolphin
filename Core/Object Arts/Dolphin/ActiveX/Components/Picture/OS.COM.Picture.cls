@@ -7,7 +7,9 @@ Graphics.Image
 	imports: #(#{Graphics})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Picture guid: (OS.COM.CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}')!
+
 OS.COM.Picture comment: '`OS.COM.Picture` is an `Image` class which wraps the standard OLE picture object.
 
 `Picture` is capable of representing a wide range of image types, including icons, bitmaps, metafiles, and also JPEGs and GIFs. It won''t load PNG''s, however.
@@ -18,7 +20,9 @@ Example:
 	pic := OS.COM.Picture fromFile: ''Resources/DolphinSureCert.jpg'' usingLocator: FileLocator installRelative.
 	UI.ImagePresenter showOn: pic.
 ```'!
+
 !OS.COM.Picture categoriesForClass!Graphics-Tools! !
+
 !OS.COM.Picture methodsFor!
 
 addToImageList: anImageList mask: aColorOrNil
@@ -155,6 +159,7 @@ saveAsFile: pathString
 	self picture saveAsFile: istream fSaveMemCopy: true.
 	istream free.
 ! !
+
 !OS.COM.Picture categoriesForMethods!
 addToImageList:mask:!double dispatch!private! !
 asBitmap!public! !
@@ -186,6 +191,7 @@ fromIPicture: anIPicture
 imageType
 	^self shouldNotImplement
 ! !
+
 !OS.COM.Picture class categoriesForMethods!
 fileTypes!instance creation!private! !
 fromIPicture:!public! !

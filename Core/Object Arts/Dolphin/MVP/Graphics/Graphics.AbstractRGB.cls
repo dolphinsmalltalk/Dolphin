@@ -7,12 +7,17 @@ Graphics.Color
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractRGB guid: (Core.GUID fromString: '{3f709950-6d41-46a2-bf1f-f6092de13e68}')!
+
 Graphics.AbstractRGB isNonInstantiable: true!
+
 Graphics.AbstractRGB comment: '`AbstractColor` is the abstract class of colours specified by individual colour components.
 
  Concrete subclasses `RGB` represent colours composed of arbitrary proportions of red, green, and blue, and `ARGB` the same but with alpha (translucency).'!
+
 !Graphics.AbstractRGB categoriesForClass!Drawing! !
+
 !Graphics.AbstractRGB methodsFor!
 
 asInteger
@@ -34,6 +39,7 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that encoded integer value passed to API calls to represent the color)."
 
 	code := anInteger! !
+
 !Graphics.AbstractRGB categoriesForMethods!
 asInteger!converting!public! !
 asParameter!converting!public! !

@@ -7,8 +7,11 @@ Graphics.Gdiplus.AbstractImageFromFileInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapFromFileInitializer guid: (Core.GUID fromString: '{22318a95-8a19-46a9-8774-f3e8c2d5db86}')!
+
 Graphics.Gdiplus.BitmapFromFileInitializer comment: ''!
+
 !Graphics.Gdiplus.BitmapFromFileInitializer methodsFor!
 
 basicCreateHandle
@@ -28,6 +31,7 @@ basicCreateHandle
 	gpHandle := Handle new.
 	Gdip gdipCreateBitmapFromFile: self absoluteFilename bitmap: gpHandle.
 	^gpHandle! !
+
 !Graphics.Gdiplus.BitmapFromFileInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 !

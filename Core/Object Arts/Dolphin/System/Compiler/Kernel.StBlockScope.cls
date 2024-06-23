@@ -7,9 +7,13 @@ Kernel.StLexicalScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'EmptyBlockMask' -> 16r200. 'NeedsOuterMask' -> 16r100 }!
+
 Kernel.StBlockScope guid: (Core.GUID fromString: '{ee914772-f4ae-4569-87aa-95cdd445d7ef}')!
+
 Kernel.StBlockScope comment: ''!
+
 !Kernel.StBlockScope categoriesForClass!Kernel-Objects! !
+
 !Kernel.StBlockScope methodsFor!
 
 isEmptyBlock
@@ -32,6 +36,7 @@ needsOuter
 	to escape from the method context active when the block was created."
 
 	^flags anyMask: NeedsOuterMask! !
+
 !Kernel.StBlockScope categoriesForMethods!
 isEmptyBlock!public!testing! !
 markEmpty!accessing!public! !
@@ -44,6 +49,7 @@ forScopeNode: aStBlockNode outer: aStLexicalScope
 	^(aStBlockNode isInlined ifTrue: [StOptimizedBlockScope] ifFalse: [self]) new
 		node: aStBlockNode outer: aStLexicalScope;
 		yourself! !
+
 !Kernel.StBlockScope class categoriesForMethods!
 forScopeNode:outer:!instance creation!public! !
 !

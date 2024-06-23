@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'AppConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
+
 Refactory.Browser.TestData.RefactoryTestDataApp guid: (Core.GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
+
 Refactory.Browser.TestData.RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
+
 !Refactory.Browser.TestData.RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
+
 !Refactory.Browser.TestData.RefactoryTestDataApp methodsFor!
 
 == comparand 
@@ -595,6 +599,7 @@ yourselfNotUsed
 		printString;
 		printString;
 		yourself! !
+
 !Refactory.Browser.TestData.RefactoryTestDataApp categoriesForMethods!
 ==!comparing!public! !
 annotationReference!public!test! !
@@ -755,6 +760,7 @@ initialize
 
 refersToClassPartiallyQualified1
 	^Tests.ClassToRename! !
+
 !Refactory.Browser.TestData.RefactoryTestDataApp class categoriesForMethods!
 classSideClassVarRefs!class initialization!public! !
 classSideGlobalRef!class initialization!public! !

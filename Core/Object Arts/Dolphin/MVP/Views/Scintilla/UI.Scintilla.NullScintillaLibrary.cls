@@ -7,9 +7,13 @@ UI.Scintilla.ScintillaLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.NullScintillaLibrary guid: (Core.GUID fromString: '{1e501b54-23a3-4cda-82ad-c28e1c9800db}')!
+
 UI.Scintilla.NullScintillaLibrary comment: ''!
+
 !UI.Scintilla.NullScintillaLibrary categoriesForClass!External-Libraries! !
+
 !UI.Scintilla.NullScintillaLibrary methodsFor!
 
 directBooleanFunction: sciThis msg: msg wParam: wParam lParam: lParam
@@ -388,6 +392,7 @@ returnValues
 			})
 		beImmutableObject;
 		yourself)! !
+
 !UI.Scintilla.NullScintillaLibrary categoriesForMethods!
 directBooleanFunction:msg:wParam:lParam:!operations!private! !
 directFunction:msg:wParam:lParam:!operations!private! !

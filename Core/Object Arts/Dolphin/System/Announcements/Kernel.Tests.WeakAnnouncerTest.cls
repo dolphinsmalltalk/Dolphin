@@ -7,9 +7,13 @@ Kernel.Tests.AnnouncerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.WeakAnnouncerTest guid: (Core.GUID fromString: '{26a69917-162e-4a6f-8383-df020cbf176f}')!
+
 Kernel.Tests.WeakAnnouncerTest comment: 'SUnit tests for weak announcements'!
+
 !Kernel.Tests.WeakAnnouncerTest categoriesForClass!Announcements-Tests-Core-Tests! !
+
 !Kernel.Tests.WeakAnnouncerTest methodsFor!
 
 testNoWeakBlock
@@ -56,6 +60,7 @@ testWeakSubscription
 				send: #value
 				to: obj) makeWeak.
 	self assert: obj identicalTo: subscription subscriber! !
+
 !Kernel.Tests.WeakAnnouncerTest categoriesForMethods!
 testNoWeakBlock!public!testing! !
 testWeakObject!public!testing! !

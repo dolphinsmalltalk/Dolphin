@@ -7,7 +7,9 @@ Kernel.STxInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'Signature' -> #'!!STL' }!
+
 Kernel.STLInFiler guid: (Core.GUID fromString: '{0eb5f19a-a120-4002-83d9-c520f502de6d}')!
+
 Kernel.STLInFiler comment: '`STLInFiler` is the class of object deserializers for reading streams of objects serialized by a corresponding `STLOutFiler`. 
 
 `STLInFiler` itself currently supports reading the STL 6 literal serialization format.
@@ -19,7 +21,9 @@ STL 6 differs from the (interim in Dolphin 8) STL 5 format in the following ways
 There are subclasses for reading each of the earlier versions from the original STL 3 up to previous version. The correct class of deserializer is instantiated automatically by reading the version from the header, or a specific subclass can be used.
 
 Backwards compatibility (i.e. reading old formats) should be complete by virtue of this hierarchy of classes and the class specific conversions as implemented by each class'' `stbConvertFrom:` method. Any failure to read an old stream should be considered a bug.'!
+
 !Kernel.STLInFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STLInFiler methodsFor!
 
 basicNext
@@ -147,6 +151,7 @@ registerPredefinedObjects
 	"Private - We may pre-register a few special objects that must never be recreated, depending on the version policy and format."
 
 	"In STL 4 and later there are no pre-registered objects, although STL 4 still has predefined classes"! !
+
 !Kernel.STLInFiler categoriesForMethods!
 basicNext!accessing!private! !
 characterValue:!helpers!public! !
@@ -218,6 +223,7 @@ unregister
 
 versions
 	^Versions! !
+
 !Kernel.STLInFiler class categoriesForMethods!
 initialize!class initialization!public! !
 peekForSignatureIn:!public!testing! !

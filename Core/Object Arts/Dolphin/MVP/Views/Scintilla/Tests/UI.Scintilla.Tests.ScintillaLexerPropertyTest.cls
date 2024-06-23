@@ -7,8 +7,11 @@ UI.Scintilla.Tests.ScintillaLexerMetadataTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.Tests.ScintillaLexerPropertyTest guid: (Core.GUID fromString: '{1b677d4d-c0bc-462a-8bc4-8a83f2b32b67}')!
+
 UI.Scintilla.Tests.ScintillaLexerPropertyTest comment: ''!
+
 !UI.Scintilla.Tests.ScintillaLexerPropertyTest methodsFor!
 
 testViewId
@@ -26,6 +29,7 @@ testViewId
 	prop2 := testMethod value: LexerProperty withArguments: {view. 1}.
 	self assert: prop2 view identicalTo: view.
 	self assert: prop2 id equals: 1! !
+
 !UI.Scintilla.Tests.ScintillaLexerPropertyTest categoriesForMethods!
 testViewId!public!unit tests! !
 !

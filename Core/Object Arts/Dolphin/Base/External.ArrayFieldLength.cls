@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ArrayFieldLength guid: (Core.GUID fromString: '{aaa1c03f-5efe-4d73-8a05-b9ea12144883}')!
+
 External.ArrayFieldLength isNonInstantiable: true!
+
 External.ArrayFieldLength comment: ''!
+
 !External.ArrayFieldLength categoriesForClass!Kernel-Objects! !
+
 !External.ArrayFieldLength methodsFor!
 
 allocationLength
@@ -39,6 +44,7 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	^self subclassResponsibility! !
+
 !External.ArrayFieldLength categoriesForMethods!
 allocationLength!accessing!private! !
 getElementCountOf:in:!indirect accessing!private! !

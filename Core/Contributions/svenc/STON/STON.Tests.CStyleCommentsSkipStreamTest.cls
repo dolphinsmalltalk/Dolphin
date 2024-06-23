@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.CStyleCommentsSkipStreamTest guid: (Core.GUID fromString: '{a5305b0e-412c-473c-8718-a2fe44c28b38}')!
+
 STON.Tests.CStyleCommentsSkipStreamTest comment: ''!
+
 !STON.Tests.CStyleCommentsSkipStreamTest categoriesForClass!STON-Tests-Reader! !
+
 !STON.Tests.CStyleCommentsSkipStreamTest methodsFor!
 
 testBlockReading
@@ -83,6 +87,7 @@ testSTON
 		equals: 'abcd'.
 	self assert: (STON fromStream: (CStyleCommentsSkipStream on: '123//456' readStream)) equals: 123.
 	self should: [STON fromStream: (CStyleCommentsSkipStream on: '//456' readStream)] raise: ReaderError! !
+
 !STON.Tests.CStyleCommentsSkipStreamTest categoriesForMethods!
 testBlockReading!public!testing! !
 testCommentInString!public!testing! !

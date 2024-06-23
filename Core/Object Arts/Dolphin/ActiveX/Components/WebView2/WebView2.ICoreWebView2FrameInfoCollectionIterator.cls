@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2FrameInfoCollectionIterator guid: (OS.COM.IID fromString: '{1bf89e2d-1b2b-4629-b28f-05099b41bb03}')!
+
 WebView2.ICoreWebView2FrameInfoCollectionIterator isEgressOnly: true!
+
 WebView2.ICoreWebView2FrameInfoCollectionIterator comment: '`ICoreWebView2FrameInfoCollectionIterator` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollectionIterator'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +38,9 @@ interface ICoreWebView2FrameInfoCollectionIterator : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2FrameInfoCollectionIterator categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2FrameInfoCollectionIterator methodsFor!
 
 do: aMonadicValuable
@@ -91,6 +96,7 @@ MoveNext: hasNext
 
 	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2FrameInfoCollectionIterator categoriesForMethods!
 do:!enumerating!public! !
 get_hasCurrent:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollectionIterator!private! !
@@ -114,6 +120,7 @@ defineFunctions
 		defineFunction: #MoveNext:
 			argumentTypes: 'sdword*'
 ! !
+
 !WebView2.ICoreWebView2FrameInfoCollectionIterator class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs guid: (OS.COM.IID fromString: '{9f760f8a-fb79-42be-9990-7b56900fa9c7}')!
+
 WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs comment: '`ICoreWebView2AcceleratorKeyPressedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -44,7 +47,9 @@ interface ICoreWebView2AcceleratorKeyPressedEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs methodsFor!
 
 get_Handled: handled
@@ -160,6 +165,7 @@ virtualKey
 
 windowsKeyEvent
 	^#('WM_KEYDOWN' 'WM_KEYUP' 'WM_SYSKEYDOWN' 'WM_SYSKEYUP') at: self keyEventKind + 1! !
+
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_KeyEventKind:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
@@ -201,6 +207,7 @@ defineFunctions
 
 latestDerivation
 	^##(super latestDerivation)! !
+
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 latestDerivation!enquiries!public! !

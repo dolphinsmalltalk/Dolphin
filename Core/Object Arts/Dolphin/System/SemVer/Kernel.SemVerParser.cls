@@ -13,7 +13,9 @@ Core.Object
 			'DigitMask' -> 16rF.
 			'IdentifierMask' -> 16r1F
 		}!
+
 Kernel.SemVerParser guid: (Core.GUID fromString: '{10ccbfc5-65d9-401c-beac-6c8fd3ac6913}')!
+
 Kernel.SemVerParser comment: 'Simple parser for SemVer 2.0 specification version strings. 
 
 Attempts to parse a `SemVer` from a `<sequencedStream>`, stopping at the end of any valid SemVer 2.0 version string sequence, or as soon as an invalid sequence is detected.
@@ -25,7 +27,9 @@ Attempts to parse a `SemVer` from a `<sequencedStream>`, stopping at the end of 
   `classification`	`<integer>` classification of the character in the SemVer lexicon
 
 '!
+
 !Kernel.SemVerParser categoriesForClass!Kernel-Objects! !
+
 !Kernel.SemVerParser methodsFor!
 
 parse
@@ -116,6 +120,7 @@ step
 					[last := stream position.
 					$\x1A].
 	classification := ClassificationTable lookup: next code! !
+
 !Kernel.SemVerParser categoriesForMethods!
 parse!parsing!public! !
 parseMetadataIdentifier:!parsing!private! !
@@ -140,6 +145,7 @@ on: aReadStream
 	^self new
 		setStream: aReadStream;
 		yourself! !
+
 !Kernel.SemVerParser class categoriesForMethods!
 initializeClassificationTable!public! !
 on:!public! !

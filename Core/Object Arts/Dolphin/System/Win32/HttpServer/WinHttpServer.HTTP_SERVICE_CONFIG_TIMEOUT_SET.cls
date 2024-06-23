@@ -11,7 +11,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r4
 		}!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET guid: (Core.GUID fromString: '{6f4abcfc-2a59-4996-a958-5de93dc64213}')!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET comment: '`HTTP_SERVICE_CONFIG_TIMEOUT_SET` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +30,9 @@ struct tagHTTP_SERVICE_CONFIG_TIMEOUT_SET {
 } HTTP_SERVICE_CONFIG_TIMEOUT_SET;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET methodsFor!
 
 KeyDesc
@@ -50,6 +54,7 @@ ParamDesc: anInteger
 	"Set the receiver's 'ParamDesc' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_ParamDesc put: anInteger! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesForMethods!
 KeyDesc!**compiled accessors**!public! !
 KeyDesc:!**compiled accessors**!public! !
@@ -81,6 +86,7 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

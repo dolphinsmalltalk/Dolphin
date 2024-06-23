@@ -25,9 +25,6 @@ package setPrerequisites: #(
 
 package!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !DevelopmentSessionManager methodsFor!
@@ -37,6 +34,7 @@ whatsThis: object
 	#deprecated.	"The Windows Help program is no longer supported on Windows 10 and later."
 	helpId := object helpId.
 	View active winHelpPopup: self popupHelpFile topic: helpId! !
+
 !DevelopmentSessionManager categoriesForMethods!
 whatsThis:!commands!public! !
 !
@@ -54,6 +52,7 @@ classesReferencingPoolNamed: aSymbol
 
 	Notification deprecated.
 	^Smalltalk allClasses select: [:each | each sharedPoolNames includes: aSymbol]! !
+
 !SmalltalkSystem categoriesForMethods!
 classesReferencingPool:!enquiries!public! !
 classesReferencingPoolNamed:!enquiries!public! !

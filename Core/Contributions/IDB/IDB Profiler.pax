@@ -83,89 +83,102 @@ Object subclass: #Profiler
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ProfilerFrame
 	instanceVariableNames: 'compiledCode receiverClass ip isBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ProfilerListItem
 	instanceVariableNames: 'object tallyAll tallyActive timeAll timeActive'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ProfilerSample
 	instanceVariableNames: 'root leaf elapsedTime'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ProfilerSampleSet
 	instanceVariableNames: 'name root isActive samples samplingCount samplingTimeStamp samplesElapsedTime samplesClasses samplesSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ProfilerSampleSetManager
 	instanceVariableNames: 'sampleSets'
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #ProfilerPresenter
 	instanceVariableNames: 'percentageFilter dolphinFilter selectorFilter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #ProfilerSamplesPresenter
 	instanceVariableNames: 'selectorFilter filterTarget index frame'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerPresenter subclass: #ProfilerListsPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerPresenter subclass: #ProfilerTreesPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerListsPresenter subclass: #ProfilerClassListPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerListsPresenter subclass: #ProfilerSelectorListPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerTreesPresenter subclass: #ProfilerTallyTreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerTreesPresenter subclass: #ProfilerTimeTreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #ProfilerSetupDialog
 	instanceVariableNames: 'sourcePresenter setPresenter intervalPresenter'
 	classVariableNames: 'IsCollect IsOn ProfiledBlock ProfiledText ProfilingInterval SampleSetName SamplingInterval'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdbToolShell subclass: #ProfileBrowser
 	instanceVariableNames: 'filterPercentSymbol filterDolphin filterSelector'
 	classVariableNames: 'ShowCounts'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreeNode subclass: #ProfilerTreeNode
 	instanceVariableNames: 'tally time classes selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -176,6 +189,7 @@ profilerIconIndex
 
 	#idbAdded.
 	^self icon imageIndex! !
+
 !ClassDescription categoriesForMethods!
 profilerIconIndex!accessing!idb goodies!public! !
 !
@@ -187,6 +201,7 @@ profilerIconIndex
 
 	#idbAdded.
 	^self methodClass icon imageIndex! !
+
 !CompiledMethod categoriesForMethods!
 profilerIconIndex!accessing!idb goodies!public! !
 !
@@ -198,6 +213,7 @@ asPercentageOf: aNumber
 
 	#idbAdded.
 	^(self / aNumber * 100.0) rounded! !
+
 !Number categoriesForMethods!
 asPercentageOf:!converting!idb goodies!public! !
 !
@@ -216,6 +232,7 @@ stackDepthFrom: aStackFrame
 			i := sender == 0 ifFalse: [self indexOfSP: sender].
 			count := count + 1].
 	^count! !
+
 !Process categoriesForMethods!
 stackDepthFrom:!accessing!idb goodies!public! !
 !

@@ -5,9 +5,13 @@ TextEdit subclass: #FormattedTextEdit
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FormattedTextEdit guid: (GUID fromString: '{da7e43da-5d5c-4332-a6d6-756996f820ee}')!
+
 FormattedTextEdit comment: ''!
+
 !FormattedTextEdit categoriesForClass!Unclassified! !
+
 !FormattedTextEdit methodsFor!
 
 applyFormat
@@ -250,6 +254,7 @@ wmPaint: message wParam: wParam lParam: lParam
 		ifTrue: [self defaultWindowProcessing: message wParam: wParam lParam: lParam]
 		ifFalse: [self basicPaint: message wParam: wParam lParam: lParam]
 ! !
+
 !FormattedTextEdit categoriesForMethods!
 applyFormat!helpers!private! !
 clearMessageBubble!helpers!private! !
@@ -293,6 +298,7 @@ stbConvertFrom: anSTBClassFormat
 		newInstance]].
 
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !FormattedTextEdit class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !

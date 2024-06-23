@@ -7,8 +7,11 @@ MSXML.IXMLDOMNodeList
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMSelection guid: (OS.COM.IID fromString: '{aa634fc7-5888-44a7-a257-3a47150d3a0e}')!
+
 MSXML.IXMLDOMSelection isEgressOnly: true!
+
 MSXML.IXMLDOMSelection comment: '<IXMLDOMSelection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSelection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -62,7 +65,9 @@ interface IXMLDOMSelection : IXMLDOMNodeList
 		[in]VARIANT value);
 };
 '!
+
 !MSXML.IXMLDOMSelection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXMLDOMSelection methodsFor!
 
 clone
@@ -255,6 +260,7 @@ setProperty_: name value: value
 	Helpstring: set the value of the named property"
 
 	^self SetProperty: name value: value asVariant! !
+
 !MSXML.IXMLDOMSelection categoriesForMethods!
 clone!**auto generated**!methods!public! !
 Clone:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
@@ -308,6 +314,7 @@ defineFunctions
 		defineFunction: #SetProperty:value:
 			argumentTypes: 'bstr variant'
 ! !
+
 !MSXML.IXMLDOMSelection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

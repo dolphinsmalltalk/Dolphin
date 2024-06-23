@@ -7,14 +7,19 @@ UI.Scintilla.Attribute
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.QueryableAttribute guid: (Core.GUID fromString: '{dd653349-5f8c-41b5-a302-fcc645247163}')!
+
 UI.Scintilla.QueryableAttribute isNonInstantiable: true!
+
 UI.Scintilla.QueryableAttribute comment: '`QueryableScintillaAttribute` is the abstract class of `ScintillaAtttribute`s that can be retrieved from the underlying control. It provides the basic mechanism for populating the attribute from the view settings.
 
 ##Instance Variables:
   `view`		`ScintillaView` with which this attribute is associated.
 '!
+
 !UI.Scintilla.QueryableAttribute categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.QueryableAttribute methodsFor!
 
 populateFromView: aScintillaView at: anInteger
@@ -32,6 +37,7 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
+
 !UI.Scintilla.QueryableAttribute categoriesForMethods!
 populateFromView:at:!initializing!private! !
 postCopy!copying!public! !
@@ -45,6 +51,7 @@ view: aScintillaView index: anInteger
 	^(self new)
 		populateFromView: aScintillaView at: anInteger;
 		yourself! !
+
 !UI.Scintilla.QueryableAttribute class categoriesForMethods!
 view:index:!instance creation!public! !
 !

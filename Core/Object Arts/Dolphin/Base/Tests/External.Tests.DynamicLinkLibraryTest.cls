@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.DynamicLinkLibraryTest guid: (Core.GUID fromString: '{52518745-7c3c-4567-8599-3090af0e6567}')!
+
 External.Tests.DynamicLinkLibraryTest comment: ''!
+
 !External.Tests.DynamicLinkLibraryTest methodsFor!
 
 makeTestMethodFrom: anExternalMethod overlapped: aBoolean 
@@ -92,6 +95,7 @@ verifyInvalidCallArguments: aBoolean
 		should: [apiCall value: gdiLibrary default withArguments: #(nil 0 0 0 0 0 0 0 0 nil nil 0 's')]
 		raise: HRESULTError
 		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter)]! !
+
 !External.Tests.DynamicLinkLibraryTest categoriesForMethods!
 makeTestMethodFrom:overlapped:!helpers!private! !
 testClosedBaseInstance!public!unit tests! !

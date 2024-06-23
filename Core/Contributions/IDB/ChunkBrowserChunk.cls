@@ -5,14 +5,18 @@ Object subclass: #ChunkBrowserChunk
 	classVariableNames: 'ChunkClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserChunk guid: (GUID fromString: '{81a73b99-1ef4-4578-b810-1fdb663e27f2}')!
+
 ChunkBrowserChunk addClassConstant: 'ChunkClasses' value: {Smalltalk.ChunkBrowserMethodCategorySeriesStartChunk. Smalltalk.ChunkBrowserMethodDefineSeriesStartChunk. Smalltalk.ChunkBrowserMethodsCategoriesSeriesStartChunk. Smalltalk.ChunkBrowserClassDefineChunk. Smalltalk.ChunkBrowserClassDeleteChunk. Smalltalk.ChunkBrowserMethodDeleteChunk. Smalltalk.ChunkBrowserClassCommentChunk. Smalltalk.ChunkBrowserClassGUIDChunk. Smalltalk.ChunkBrowserClassProtocolChunk. Smalltalk.ChunkBrowserClassCategorySeriesStartChunk. Smalltalk.ChunkBrowserSystemChunk}!
 ChunkBrowserChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserChunk methodsFor!
 
 <= aChunkBrowserChunk
@@ -153,6 +157,7 @@ restore
 
 showIn: aTextPresenter
 	aTextPresenter text: rawText! !
+
 !ChunkBrowserChunk categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -266,6 +271,7 @@ newFor: aString tokens: anArray
 	"Answer an initialized instance of the receiving chunk class"
 
 	^self new initialize: aString tokens: anArray! !
+
 !ChunkBrowserChunk class categoriesForMethods!
 chunksFromStream:!helpers!public! !
 chunksFromText:!helpers!public! !

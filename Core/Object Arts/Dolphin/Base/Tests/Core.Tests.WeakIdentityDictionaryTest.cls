@@ -7,8 +7,11 @@ Core.Tests.LookupTableTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.WeakIdentityDictionaryTest guid: (Core.GUID fromString: '{744bc1f2-18d8-4618-8db4-376fcdc25f6d}')!
+
 Core.Tests.WeakIdentityDictionaryTest comment: ''!
+
 !Core.Tests.WeakIdentityDictionaryTest methodsFor!
 
 collectionClass
@@ -23,6 +26,7 @@ testIsMourner
 	self assert: subject basicValues isWeak
 
 ! !
+
 !Core.Tests.WeakIdentityDictionaryTest categoriesForMethods!
 collectionClass!helpers!private! !
 testIsMourner!public! !

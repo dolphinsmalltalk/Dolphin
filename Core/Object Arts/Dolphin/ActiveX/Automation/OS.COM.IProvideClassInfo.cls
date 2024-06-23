@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IProvideClassInfo guid: (OS.COM.IID fromString: '{b196b283-bab4-101a-b69c-00aa00341d07}')!
+
 OS.COM.IProvideClassInfo comment: '<IProvideClassInfo> is a wrapper class for the COM interface ''OCIDL.IProvideClassInfo'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 IProvideClassInfo contains a single method, #getClassInfo, to enquire the type information (ITypeInfo) for the coclass of the COM object.'!
+
 !OS.COM.IProvideClassInfo categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IProvideClassInfo methodsFor!
 
 getClassInfo
@@ -33,6 +37,7 @@ GetClassInfo: ppTI
 
 	<virtual stdcall: hresult 4 ITypeInfo**>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IProvideClassInfo categoriesForMethods!
 getClassInfo!**auto generated**!public! !
 GetClassInfo:!COM Interfaces-OCIDL.IProvideClassInfo!private! !
@@ -51,6 +56,7 @@ defineFunctions
 		defineFunction: #GetClassInfo:
 			argumentTypes: 'ITypeInfo**'
 ! !
+
 !OS.COM.IProvideClassInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -10,8 +10,11 @@ WebView2.ICoreWebView2Interface
 			'KindNames'
 				-> #('BROWSER' 'RENDERER' 'UTILITY' 'SANDBOX_HELPER' 'GPU' 'PPAPI_PLUGIN' 'PPAPI_BROKER')
 		}!
+
 WebView2.ICoreWebView2ProcessInfo guid: (OS.COM.IID fromString: '{84fa7612-3f3d-4fbf-889d-fad000492d72}')!
+
 WebView2.ICoreWebView2ProcessInfo isEgressOnly: true!
+
 WebView2.ICoreWebView2ProcessInfo comment: '`ICoreWebView2ProcessInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +38,9 @@ interface ICoreWebView2ProcessInfo : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ProcessInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ProcessInfo methodsFor!
 
 ClearBrowsingData: dataKinds handler: handler
@@ -108,6 +113,7 @@ processId
 	answer := Int32 new.
 	self get_ProcessId: answer.
 	^answer asObject! !
+
 !WebView2.ICoreWebView2ProcessInfo categoriesForMethods!
 ClearBrowsingData:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
 ClearBrowsingDataAll:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
@@ -132,6 +138,7 @@ defineFunctions
 		defineFunction: #get_Kind:
 			argumentTypes: 'sdword*'
 ! !
+
 !WebView2.ICoreWebView2ProcessInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

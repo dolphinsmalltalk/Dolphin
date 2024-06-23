@@ -5,10 +5,15 @@ PresenterTest subclass: #MultipleSelectionListControlTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MultipleSelectionListControlTest guid: (GUID fromString: '{bef7231e-b333-4717-a462-cbf88117dba1}')!
+
 MultipleSelectionListControlTest isAbstract: true!
+
 MultipleSelectionListControlTest comment: ''!
+
 !MultipleSelectionListControlTest categoriesForClass!Unclassified! !
+
 !MultipleSelectionListControlTest methodsFor!
 
 assertAllSelectionAre: anArray
@@ -210,6 +215,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	view := self view.
 	"The multi-select view will have been converted to a ListView with the isMultiSelect flag set"
 	self assert: view isMultiSelect! !
+
 !MultipleSelectionListControlTest categoriesForMethods!
 assertAllSelectionAre:!helpers!private! !
 testSelection!public!unit tests! !

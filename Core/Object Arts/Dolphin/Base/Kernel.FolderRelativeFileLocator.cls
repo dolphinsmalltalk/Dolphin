@@ -7,7 +7,9 @@ Kernel.RelativeFileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.FolderRelativeFileLocator guid: (Core.GUID fromString: '{e16e8b7e-eac8-41ed-95f3-742c2fc7264a}')!
+
 Kernel.FolderRelativeFileLocator comment: 'FolderRelativeFileLocator is the class of <FileLocator>s that can be used to map between an absolute path and a path relative to a configurable base directory.
 FolderRelativeFileLocators use absolute paths for files outside the local directory hierarchy below the base directory, and relative paths within their local directory hierarchy.
 
@@ -15,7 +17,9 @@ Instance Variables:
 	basePath		<String>. Base folder path.
 
 '!
+
 !Kernel.FolderRelativeFileLocator categoriesForClass!System-Support! !
+
 !Kernel.FolderRelativeFileLocator methodsFor!
 
 basePath
@@ -34,6 +38,7 @@ printOn: aStream
 		nextPutAll: #basePath:;
 		space;
 		print: self basePath! !
+
 !Kernel.FolderRelativeFileLocator categoriesForMethods!
 basePath!accessing!public! !
 basePath:!accessing!public! !
@@ -48,6 +53,7 @@ basePath: aString
 	^(self new)
 		basePath: aString;
 		yourself! !
+
 !Kernel.FolderRelativeFileLocator class categoriesForMethods!
 basePath:!accessing!public! !
 !

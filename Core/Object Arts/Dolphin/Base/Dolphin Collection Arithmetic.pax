@@ -27,6 +27,7 @@ sum
 	| sample |
 	sample :=self anyOne.
 	^(self inject: sample into: [:sum :each | sum + each]) - sample! !
+
 !Core.Collection categoriesForMethods!
 max!arithmetic!public! !
 sum!arithmetic!public! !

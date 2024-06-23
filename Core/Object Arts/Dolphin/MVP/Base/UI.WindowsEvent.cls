@@ -7,9 +7,13 @@ UI.Event
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent guid: (Core.GUID fromString: '{87b4c482-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.WindowsEvent comment: ''!
+
 !UI.WindowsEvent categoriesForClass!MVP-Views-Events! !
+
 !UI.WindowsEvent methodsFor!
 
 defaultWindowProcessing
@@ -106,6 +110,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 
 wParam
 	^wParam! !
+
 !UI.WindowsEvent categoriesForMethods!
 defaultWindowProcessing!event handling!public! !
 isHandled!public!testing! !
@@ -139,6 +144,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
+
 !UI.WindowsEvent class categoriesForMethods!
 window:message:wParam:lParam:!instance creation!public! !
 !

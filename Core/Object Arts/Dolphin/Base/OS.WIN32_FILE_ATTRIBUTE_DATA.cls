@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_nFileSizeLow' -> 16r20.
 			'_WIN32_FILE_ATTRIBUTE_DATA_Size' -> 16r24
 		}!
+
 OS.WIN32_FILE_ATTRIBUTE_DATA guid: (Core.GUID fromString: '{93f205f7-0707-40b3-813b-cad835330f3e}')!
+
 OS.WIN32_FILE_ATTRIBUTE_DATA comment: '`WIN32_FILE_ATTRIBUTE_DATA` is an `ExternalStructure` class to wrap the struct ''Win32.WIN32_FILE_ATTRIBUTE_DATA'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -36,7 +38,9 @@ struct tagWIN32_FILE_ATTRIBUTE_DATA {
 } WIN32_FILE_ATTRIBUTE_DATA;
 ```
 '!
+
 !OS.WIN32_FILE_ATTRIBUTE_DATA categoriesForClass!Win32-Structs! !
+
 !OS.WIN32_FILE_ATTRIBUTE_DATA methodsFor!
 
 dwFileAttributes
@@ -85,6 +89,7 @@ nFileSizeLow
 	"Answer the <Integer> value of the receiver's 'nFileSizeLow' field."
 
 	^bytes uint32AtOffset: _OffsetOf_nFileSizeLow! !
+
 !OS.WIN32_FILE_ATTRIBUTE_DATA categoriesForMethods!
 dwFileAttributes!**compiled accessors**!public! !
 fileSize!accessing!public! !
@@ -126,6 +131,7 @@ defineFields
 
 getFieldNames
 	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow)! !
+
 !OS.WIN32_FILE_ATTRIBUTE_DATA class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

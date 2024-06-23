@@ -7,8 +7,11 @@ Kernel.Tests.ScopedBindingReferenceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.FullBindingReferenceTest guid: (Core.GUID fromString: '{bc0780da-05e7-464d-af4f-48755f8f8d52}')!
+
 Kernel.Tests.FullBindingReferenceTest comment: ''!
+
 !Kernel.Tests.FullBindingReferenceTest methodsFor!
 
 subjectClass
@@ -230,6 +233,7 @@ testStlConvertRelativeFromVersion1
 	self deny: subject isPrivate.
 	self assert: subject scope identicalTo: Core.
 	self assert: subject value identicalTo: Object! !
+
 !Kernel.Tests.FullBindingReferenceTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsQualifiedReference!public!unit tests! !

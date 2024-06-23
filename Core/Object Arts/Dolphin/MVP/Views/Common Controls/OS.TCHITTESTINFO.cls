@@ -7,12 +7,16 @@ OS.CCHITTESTINFO
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_flags' -> 16r8. '_TCHITTESTINFO_Size' -> 16rC }!
+
 OS.TCHITTESTINFO guid: (Core.GUID fromString: '{a369fa40-e397-4c16-b3f5-b254fd07aebe}')!
+
 OS.TCHITTESTINFO comment: 'TCHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 
 TCHISTTESTINFO is used for hit-testing with Tab View controls.
 '!
+
 !OS.TCHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.TCHITTESTINFO methodsFor!
 
 flags
@@ -28,6 +32,7 @@ handle
 
 iItem: anInteger 
 	iItem := anInteger! !
+
 !OS.TCHITTESTINFO categoriesForMethods!
 flags!**compiled accessors**!public! !
 handle!accessing!private! !
@@ -56,6 +61,7 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags)! !
+
 !OS.TCHITTESTINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!development!public!template definition! !

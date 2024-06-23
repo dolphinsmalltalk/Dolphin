@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Profile guid: (OS.COM.IID fromString: '{79110ad3-cd5d-4373-8bc3-c60658f17a5f}')!
+
 WebView2.ICoreWebView2Profile isEgressOnly: true!
+
 WebView2.ICoreWebView2Profile comment: '`ICoreWebView2Profile` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -47,7 +50,9 @@ interface ICoreWebView2Profile : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Profile categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Profile methodsFor!
 
 Add_Deleted: eventHandler token: token
@@ -464,6 +469,7 @@ setPermissionState: permissionKindInteger origin: originString state: stateInteg
 		state: stateInteger
 		completedHandler: handler.
 	handler free! !
+
 !WebView2.ICoreWebView2Profile categoriesForMethods!
 Add_Deleted:token:!COM Interfaces-ICoreWebView2Profile8!private! !
 AddBrowserExtension:handler:!COM Interfaces-ICoreWebView2Profile7!public! !
@@ -542,6 +548,7 @@ defineFunctions
 
 latestDerivation
 	^##(super latestDerivation)! !
+
 !WebView2.ICoreWebView2Profile class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 latestDerivation!enquiries!public! !

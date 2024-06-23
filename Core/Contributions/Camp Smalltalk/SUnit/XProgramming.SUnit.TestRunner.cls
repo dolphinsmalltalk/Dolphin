@@ -7,9 +7,13 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestRunner guid: (Core.GUID fromString: '{5e967948-0810-11d4-a876-0050da643bf9}')!
+
 XProgramming.SUnit.TestRunner comment: 'A TestRunner is a simple graphical user interface to run test cases. A window can be opened via "TestRunner show". '!
+
 !XProgramming.SUnit.TestRunner categoriesForClass!SUnit! !
+
 !XProgramming.SUnit.TestRunner methodsFor!
 
 allTestSuite
@@ -157,6 +161,7 @@ updateWindow
 		ifTrue: [self displayPass]
 		ifFalse: [self displayFail].
 	self updateDefects! !
+
 !XProgramming.SUnit.TestRunner categoriesForMethods!
 allTestSuite!helpers!public! !
 createSchematicWiring!helpers!private! !
@@ -232,6 +237,7 @@ toolDescription
 
 toolsFolderHelpId
 	^10632! !
+
 !XProgramming.SUnit.TestRunner class categoriesForMethods!
 defaultView!public!views! !
 icon!constants!public! !

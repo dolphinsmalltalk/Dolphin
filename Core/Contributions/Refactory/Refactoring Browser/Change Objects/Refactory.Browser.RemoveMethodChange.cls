@@ -7,9 +7,13 @@ Refactory.Browser.RefactoryMethodChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RemoveMethodChange guid: (Core.GUID fromString: '{4789e594-4494-4fee-920c-514289353e57}')!
+
 Refactory.Browser.RemoveMethodChange comment: ''!
+
 !Refactory.Browser.RemoveMethodChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RemoveMethodChange methodsFor!
 
 = aRemoveMethodChange 
@@ -42,6 +46,7 @@ source
 
 	#rbFix. "For common interface with AddMethodChange"
 	^''! !
+
 !Refactory.Browser.RemoveMethodChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
@@ -59,6 +64,7 @@ remove: aSymbol from: aClass
 		changeClass: aClass;
 		selector: aSymbol;
 		yourself! !
+
 !Refactory.Browser.RemoveMethodChange class categoriesForMethods!
 remove:from:!instance creation!public! !
 !

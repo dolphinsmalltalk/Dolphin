@@ -7,7 +7,9 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ParseTreeSearcher guid: (Core.GUID fromString: '{88f9b089-e658-4426-8d0a-f18303952cad}')!
+
 Refactory.Browser.ParseTreeSearcher comment: 'ParseTreeSearcher walks over a normal source code parse tree using the visitor pattern, and then matches these nodes against the meta-nodes using the match:inContext: methods defined for the meta-nodes.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	argumentSearches	<Collection of: (Association key: BRProgramNode value: BlockClosure)>	argument searches (search for the BRProgramNode and perform the BlockClosure when its found)
 	context	<BRSmallDictionary>	a dictionary that contains what each meta-node matches against. This could be a normal Dictionary that is created for each search, but is created once and reused (efficiency).
 	searches	<Collection of: (Association key: BRProgramNode value: BlockClosure)>	non-argument searches (search for the BRProgramNode and perform the BlockClosure when its found)'!
+
 !Refactory.Browser.ParseTreeSearcher categoriesForClass!Refactory-ParseTree Matching! !
+
 !Refactory.Browser.ParseTreeSearcher methodsFor!
 
 addArgumentRule: aParseTreeRule
@@ -168,6 +172,7 @@ visitNode: aNode
 		ifNil: 
 			[aNode acceptVisitor: self.
 			aNode]! !
+
 !Refactory.Browser.ParseTreeSearcher categoriesForMethods!
 addArgumentRule:!accessing!public! !
 addArgumentRules:!accessing!public! !
@@ -273,6 +278,7 @@ treeMatchingStatements: aString in: aParseTree
 	notifier matchesTree: tree do: [:aNode :answer | ^Parser parseExpression: aString].
 	notifier executeTree: aParseTree.
 	^nil! !
+
 !Refactory.Browser.ParseTreeSearcher class categoriesForMethods!
 buildSelectorString:!helpers!private! !
 buildSelectorTree:!helpers!private! !

@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Frame
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Frame2 guid: (OS.COM.IID fromString: '{7a6a5834-d185-4dbf-b63f-4a9bc43107d4}')!
+
 WebView2.ICoreWebView2Frame2 isEgressOnly: true!
+
 WebView2.ICoreWebView2Frame2 comment: '`ICoreWebView2Frame2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -71,7 +74,9 @@ interface ICoreWebView2Frame2 : ICoreWebView2Frame
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Frame2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Frame2 methodsFor!
 
 Add_ContentLoading: eventHandler token: token
@@ -196,6 +201,7 @@ Remove_WebMessageReceived: token
 
 	<virtual stdcall: hresult 24 int64>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Frame2 categoriesForMethods!
 Add_ContentLoading:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_DOMContentLoaded:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame2!events!private! !
@@ -246,6 +252,7 @@ defineFunctions
 		defineFunction: #Remove_WebMessageReceived:
 			argumentTypes: 'sqword'
 ! !
+
 !WebView2.ICoreWebView2Frame2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Keyboard guid: (Core.GUID fromString: '{87b4c496-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Keyboard comment: '`Keyboard` is an abstraction over the system keyboard, and provides services to enquire and set the state of keys, and to map between key codes and the names of keys in the particular keyboard layout that the instance represents.
 
 ## Instance Variables:
@@ -20,7 +22,9 @@ UI.Keyboard comment: '`Keyboard` is an abstraction over the system keyboard, and
   `DefaultInstance`		`Keyboard` instance representing the current input language
   `InvariantInstance`		`Keyboard` instance represent the Dolphin invariant input language (UK English).
 '!
+
 !UI.Keyboard categoriesForClass!System-Support! !
+
 !UI.Keyboard methodsFor!
 
 asyncKeyState: virtualKeyCodeInteger
@@ -208,6 +212,7 @@ vKeyToScanCode: anInteger
 	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if there isn't one."
 
 	^User32 mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
+
 !UI.Keyboard categoriesForMethods!
 asyncKeyState:!helpers!private! !
 buildVKeyMaps!helpers!private! !
@@ -415,6 +420,7 @@ virtualKey: aString
 	"Answer the <integer> virtual key code corresponding to the key with invariant (UK English) name, aString."
 
 	^self invariant virtualKeyFromString: aString! !
+
 !UI.Keyboard class categoriesForMethods!
 default!accessing!public! !
 default:!accessing!public! !

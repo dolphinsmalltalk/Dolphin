@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Sequence
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ProcessExtendedInfoCollection guid: (OS.COM.IID fromString: '{32efa696-407a-11ee-be56-0242ac120002}')!
+
 WebView2.ICoreWebView2ProcessExtendedInfoCollection isEgressOnly: true!
+
 WebView2.ICoreWebView2ProcessExtendedInfoCollection comment: '`ICoreWebView2ProcessExtendedInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessExtendedInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +36,9 @@ interface ICoreWebView2ProcessExtendedInfoCollection : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ProcessExtendedInfoCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ProcessExtendedInfoCollection methodsFor!
 
 elementClass
@@ -48,6 +53,7 @@ GetValueAtIndex: index value: processInfo
 
 	<virtual stdcall: hresult 5 uint32 ICoreWebView2ProcessExtendedInfo**>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2ProcessExtendedInfoCollection categoriesForMethods!
 elementClass!constants!public! !
 GetValueAtIndex:value:!COM Interfaces-ICoreWebView2ProcessExtendedInfoCollection!private! !
@@ -65,6 +71,7 @@ defineFunctions
 		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'uint32 ICoreWebView2ProcessExtendedInfo**'
 ! !
+
 !WebView2.ICoreWebView2ProcessExtendedInfoCollection class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

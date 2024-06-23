@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.IMonikerTest guid: (Core.GUID fromString: '{12c38016-378e-4ac7-9a33-8e88d5f9f709}')!
+
 OS.COM.Tests.IMonikerTest comment: ''!
+
 !OS.COM.Tests.IMonikerTest methodsFor!
 
 getMonikerRegisteredClass: anIMoniker
@@ -223,6 +226,7 @@ testTimeOfLastChange
 	"3) Pointer moniker, not implemented:"
 	subject := IMoniker forPointer: IMalloc task.
 	self shouldRaiseNotImplemented: [subject timeOfLastChange]! !
+
 !OS.COM.Tests.IMonikerTest categoriesForMethods!
 getMonikerRegisteredClass:!helpers!private! !
 should:raiseHRESULT:!helpers!private! !

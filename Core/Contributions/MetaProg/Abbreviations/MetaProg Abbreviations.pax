@@ -52,9 +52,6 @@ package setPrerequisites: #(
 
 package!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !SmalltalkWorkspace methodsFor!
@@ -103,6 +100,7 @@ snatchAbbreviation
 				[(key occurrencesOf: $:) > 0 
 					ifTrue: [^MessageBox warning: 'Do not enter an abbreviation containing a colon.'].
 				self class abbreviations at: key put: text]! !
+
 !SmalltalkWorkspace categoriesForMethods!
 expandAbbreviation!commands-actions!private! !
 findSeparatorLeftAndKey:!helpers!private! !
@@ -157,6 +155,7 @@ defaultAbbreviations
 		at: 'abb' put: 'SmalltalkWorkspace abbreviations inspect';
 		shrink;
 		yourself! !
+
 !SmalltalkWorkspace class categoriesForMethods!
 abbreviations!constants!development!public! !
 defaultAbbreviations!constants!development!private! !

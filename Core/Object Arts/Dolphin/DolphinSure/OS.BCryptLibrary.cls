@@ -7,10 +7,14 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.BCryptConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.BCryptLibrary guid: (Core.GUID fromString: '{84b3c6ee-a194-413c-8071-95953a50412e}')!
+
 OS.BCryptLibrary comment: '"Windows BCrypt (Cryptography Next Generation, CNG) library.
   Replacement for DolphinSureCryptoLibrary class and DLL."'!
+
 !OS.BCryptLibrary categoriesForClass!External-Libraries! !
+
 !OS.BCryptLibrary methodsFor!
 
 closeAlgorithmProvider: aAlgorithmHandle flags: aFlags
@@ -153,6 +157,7 @@ shaHashBuffer: aHashHandle buffer: buffer
 		input: buffer
 		inputSize: buffer size
 		flags: 0! !
+
 !OS.BCryptLibrary categoriesForMethods!
 closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
 createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
@@ -177,6 +182,7 @@ fileName
 
 sharedVariableName
 	^#{BCrypt}! !
+
 !OS.BCryptLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

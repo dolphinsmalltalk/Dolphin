@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.Base64CodecTest guid: (Core.GUID fromString: '{29f3cfca-13c2-49dd-bcac-20c64297a7f0}')!
+
 Kernel.Tests.Base64CodecTest comment: ''!
+
 !Kernel.Tests.Base64CodecTest methodsFor!
 
 roundTrip: bytes
@@ -98,6 +101,7 @@ testVM
 	decoded := ByteArray writeStream.
 	Base64Codec decodeFrom: encoded contents readStream onto: decoded.
 	self assert: decoded contents equals: f contents! !
+
 !Kernel.Tests.Base64CodecTest categoriesForMethods!
 roundTrip:!helpers!private! !
 testLineLength!public!unit tests! !

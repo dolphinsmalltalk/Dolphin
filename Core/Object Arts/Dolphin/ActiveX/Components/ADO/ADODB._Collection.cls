@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB._Collection guid: (OS.COM.IID fromString: '{00000512-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB._Collection comment: '`_Collection` is a wrapper class for the COM interface ''ADODB._Collection'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +37,9 @@ interface _Collection : IDispatch
 };
 ```
 '!
+
 !ADODB._Collection categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB._Collection methodsFor!
 
 _newEnum
@@ -96,6 +100,7 @@ removeAtIndex: index
 	Raise a <BoundsError> if there is no element with that index."
 
 	^self shouldNotImplement! !
+
 !ADODB._Collection categoriesForMethods!
 _newEnum!**auto generated**!methods!public! !
 _NewEnum:!**auto generated**!COM Interfaces-_Collection!private! !
@@ -120,6 +125,7 @@ defineFunctions
 			argumentTypes: 'IUnknown**';
 		defineFunction: #Refresh
 ! !
+
 !ADODB._Collection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

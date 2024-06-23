@@ -7,8 +7,11 @@ WebView2.ICoreWebView2FrameInfo
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2FrameInfo2 guid: (OS.COM.IID fromString: '{56f85cfa-72c4-11ee-b962-0242ac120002}')!
+
 WebView2.ICoreWebView2FrameInfo2 isEgressOnly: true!
+
 WebView2.ICoreWebView2FrameInfo2 comment: '`ICoreWebView2FrameInfo2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfo2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +38,9 @@ interface ICoreWebView2FrameInfo2 : ICoreWebView2FrameInfo
 };
 ```
 '!
+
 !WebView2.ICoreWebView2FrameInfo2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2FrameInfo2 methodsFor!
 
 get_FrameId: id
@@ -67,6 +72,7 @@ get_ParentFrameInfo: frameInfo
 
 printableProperties
 	^#(#frameId #name #kindName #source)! !
+
 !WebView2.ICoreWebView2FrameInfo2 categoriesForMethods!
 get_FrameId:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfo2!private! !
 get_FrameKind:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfo2!private! !
@@ -88,6 +94,7 @@ defineFunctions
 		defineFunction: #get_FrameKind:
 			argumentTypes: 'int32*'
 ! !
+
 !WebView2.ICoreWebView2FrameInfo2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

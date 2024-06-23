@@ -10,9 +10,13 @@ Core.Object
 			'AnchorCapNames'
 				-> #('LineCapNoAnchor' 'LineCapSquareAnchor' 'LineCapRoundAnchor' 'LineCapDiamondAnchor' 'LineCapArrowAnchor')
 		}!
+
 Graphics.Gdiplus.Initializer guid: (Core.GUID fromString: '{4687fd64-6607-4be7-b45b-f533ef511bc5}')!
+
 Graphics.Gdiplus.Initializer isNonInstantiable: true!
+
 Graphics.Gdiplus.Initializer comment: 'An instance of GdiplusInitializer serves as a proxy for a GdiplusBase factory.  Instances of subclasses contain enough information to create and recreate a corresponding GdiplusBase subclass instance. '!
+
 !Graphics.Gdiplus.Initializer methodsFor!
 
 applyAdditionalAttributes: aHandle
@@ -86,6 +90,7 @@ printOn: aStream
 			aStream nextPut: $(].
 	self printAttributesOn: aStream.
 	aStream nextPut: $)! !
+
 !Graphics.Gdiplus.Initializer categoriesForMethods!
 applyAdditionalAttributes:!private!realizing/unrealizing! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -125,6 +130,7 @@ stbVersion
 	"1: As a general change, the library instance variable has been removed. There are additional changes in some subclasses."
 
 	^1! !
+
 !Graphics.Gdiplus.Initializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

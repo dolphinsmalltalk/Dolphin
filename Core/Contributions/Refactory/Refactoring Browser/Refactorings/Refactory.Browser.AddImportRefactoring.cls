@@ -7,9 +7,13 @@ Refactory.Browser.ClassImportsRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AddImportRefactoring guid: (Core.GUID fromString: '{cb2e95e5-b56c-42ab-8b49-9d6c81248d43}')!
+
 Refactory.Browser.AddImportRefactoring comment: ''!
+
 !Refactory.Browser.AddImportRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.AddImportRefactoring methodsFor!
 
 import: aNamespace into: aClass
@@ -31,6 +35,7 @@ storeOn: aStream
 		nextPutAll: ' to: '.
 	class storeOn: aStream.
 	aStream nextPut: $)! !
+
 !Refactory.Browser.AddImportRefactoring categoriesForMethods!
 import:into:!initializing!private! !
 importsPrecondition!private! !
@@ -44,6 +49,7 @@ model: aRBModel addImport: aBindingReference to: aClass
 	^self new
 		model: aRBModel;
 		import: aBindingReference class: aClass! !
+
 !Refactory.Browser.AddImportRefactoring class categoriesForMethods!
 model:addImport:to:!public! !
 !

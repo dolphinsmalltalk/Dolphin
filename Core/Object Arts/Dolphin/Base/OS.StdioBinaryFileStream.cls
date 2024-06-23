@@ -7,10 +7,14 @@ OS.StdioFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioBinaryFileStream guid: (Core.GUID fromString: '{70295d5a-b304-43e4-aa04-c800a93858d4}')!
+
 OS.StdioBinaryFileStream comment: '`OS.StdioBinaryFileStream` is the concrete class of `StdioFileStream` for streaming over binary data.
 '!
+
 !OS.StdioBinaryFileStream categoriesForClass!Collections-Streams! !
+
 !OS.StdioBinaryFileStream methodsFor!
 
 contentsSpecies
@@ -86,6 +90,7 @@ upToEnd
 	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block."
 
 	^self basicNext: self size - self position! !
+
 !OS.StdioBinaryFileStream categoriesForMethods!
 contentsSpecies!constants!private! !
 externalType!accessing!public! !
@@ -111,6 +116,7 @@ encodingType
 
 translationMode
 	^CRTConstants._O_BINARY! !
+
 !OS.StdioBinaryFileStream class categoriesForMethods!
 encodingMode!constants!private! !
 encodingType!constants!public! !

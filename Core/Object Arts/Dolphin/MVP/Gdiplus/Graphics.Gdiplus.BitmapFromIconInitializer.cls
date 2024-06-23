@@ -7,8 +7,11 @@ Graphics.Gdiplus.BitmapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapFromIconInitializer guid: (Core.GUID fromString: '{c320278a-5152-4eda-8a58-6911de50cc40}')!
+
 Graphics.Gdiplus.BitmapFromIconInitializer comment: ''!
+
 !Graphics.Gdiplus.BitmapFromIconInitializer methodsFor!
 
 = anObject
@@ -44,6 +47,7 @@ printImage: aGdiplusBitmap on: aWriteStream
 		nextPutAll: ' fromIcon: ';
 		print: icon;
 		nextPut: $)! !
+
 !Graphics.Gdiplus.BitmapFromIconInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -59,6 +63,7 @@ icon: anIcon
 	"Creates a Bitmap object based on an icon."
 
 	^self new icon: anIcon! !
+
 !Graphics.Gdiplus.BitmapFromIconInitializer class categoriesForMethods!
 icon:!instance creation!public! !
 !

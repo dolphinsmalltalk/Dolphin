@@ -7,8 +7,11 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBSourceFormatter guid: (Core.GUID fromString: '{9fd4de67-3c87-4496-87b9-7c3cf9655f65}')!
+
 Refactory.Browser.RBSourceFormatter isNonInstantiable: true!
+
 Refactory.Browser.RBSourceFormatter comment: 'RBSourceFormatter is the abstract class of <StParseNodeVisitor>s that pretty print Smalltalk source code.
 
 Instance Variables:
@@ -16,7 +19,9 @@ Instance Variables:
 	lineStart		<Integer>	the position of the character that started the current line. This is used for calculating the line length.
 	indent		<Integer>	how many times are we indenting a new line -- indents are normally tabs but could be any whitespace string
 '!
+
 !Refactory.Browser.RBSourceFormatter categoriesForClass!Refactory-ParseTree Matching! !
+
 !Refactory.Browser.RBSourceFormatter methodsFor!
 
 currentLineLength
@@ -153,6 +158,7 @@ visitQualifiedReferenceNode: aQualifiedReferenceNode
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name.
 	^aVariableNode! !
+
 !Refactory.Browser.RBSourceFormatter categoriesForMethods!
 currentLineLength!accessing!private! !
 format:!operations!public! !
@@ -212,6 +218,7 @@ periodsAtEndOfMethod
 
 periodsAtEndOfMethod: aBoolean 
 	PeriodsAtEndOfMethod := aBoolean! !
+
 !Refactory.Browser.RBSourceFormatter class categoriesForMethods!
 format:!public!public interface! !
 format:withIndents:!public!public interface! !

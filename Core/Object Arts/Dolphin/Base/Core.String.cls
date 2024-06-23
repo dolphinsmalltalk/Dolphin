@@ -15,9 +15,13 @@ Core.ArrayedCollection
 			'LineDelimiter' -> '
 '
 		}!
+
 Core.String guid: (Core.GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.String isNullTerminated: true!
+
 Core.String isNonInstantiable: true!
+
 Core.String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s (although note that the Character''s represent code units when accessed by index, and may not constitute a full Unicode code point). 
 
 String has subclasses for strings in the most common encodings, e.g. Ansi (`AnsiString`), UTF-8 (`Utf8String`), and UTF-16LE (`Utf16String`). 
@@ -34,7 +38,9 @@ N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space fo
  sequencedCollection
  readableString
  String'!
+
 !Core.String categoriesForClass!Collections-Text! !
+
 !Core.String methodsFor!
 
 , aSequencedReadableCollection
@@ -1240,6 +1246,7 @@ withNormalizedLineDelimiters
 							target nextPutAll: eol]
 						ifFalse: [target nextPut: each]]].
 	^target contents! !
+
 !Core.String categoriesForMethods!
 ,!copying!public! !
 _sameAsString:!comparing!private! !
@@ -1735,6 +1742,7 @@ withAll: aCollectionOfCharacters
 	stream := self writeStream: aCollectionOfCharacters size.
 	aCollectionOfCharacters do: [:each | stream nextPut: each].
 	^stream grabContents! !
+
 !Core.String class categoriesForMethods!
 basicEncoding!accessing!public! !
 characterForCodeUnit:!enquiries!public! !

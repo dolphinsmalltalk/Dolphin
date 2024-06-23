@@ -10,8 +10,11 @@ Core.Error
 			'ErrorDescriptions'
 				-> #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')
 		}!
+
 Graphics.Gdiplus.GdiplusError guid: (Core.GUID fromString: '{2fdb3661-122f-4b12-b60d-ce33dbab46f6}')!
+
 Graphics.Gdiplus.GdiplusError comment: ''!
+
 !Graphics.Gdiplus.GdiplusError methodsFor!
 
 _descriptionArguments
@@ -46,6 +49,7 @@ win32ErrorDescription
 	error messages of the form: 'The error is: the operation was successful;"
 
 	^win32Error statusCode = 0 ifTrue: [''] ifFalse: [win32Error description]! !
+
 !Graphics.Gdiplus.GdiplusError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -68,6 +72,7 @@ initialize
 		failure."
 
 	self addClassConstant: 'ErrorDescriptions' value: #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')! !
+
 !Graphics.Gdiplus.GdiplusError class categoriesForMethods!
 initialize!development!initializing!public! !
 !

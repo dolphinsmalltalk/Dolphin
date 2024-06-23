@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedQueue guid: (Core.GUID fromString: '{87b4c4b8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.SharedQueue comment: ''!
+
 !Core.SharedQueue categoriesForClass!Kernel-Objects! !
+
 !Core.SharedQueue methodsFor!
 
 errorOutOfSync
@@ -87,6 +91,7 @@ size
 	"Answer the number of objects currently in the queue"
 
 	^accessProtect critical: [contents size]! !
+
 !Core.SharedQueue categoriesForMethods!
 errorOutOfSync!exceptions!private! !
 initialize:!initializing!private! !
@@ -119,6 +124,7 @@ new: anInteger
 	^(self basicNew)
 		initialize: anInteger;
 		yourself! !
+
 !Core.SharedQueue class categoriesForMethods!
 initialize!development!initializing!private! !
 new!instance creation!public! !

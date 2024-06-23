@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IConnectionPointContainer guid: (OS.COM.IID fromString: '{b196b284-bab4-101a-b69c-00aa00341d07}')!
+
 OS.COM.IConnectionPointContainer comment: '<IConnectionPointContainer> is a wrapper class for the custom interface ''OBJIDL.IConnectionPointContainer'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.IConnectionPointContainer categoriesForClass!No category! !
+
 !OS.COM.IConnectionPointContainer methodsFor!
 
 connectionIIDs
@@ -66,6 +70,7 @@ FindConnectionPoint: riid ppCP: ppCP
 
 	<virtual stdcall: hresult 5 guid* IConnectionPoint**>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IConnectionPointContainer categoriesForMethods!
 connectionIIDs!enumerating!public! !
 connectionPoints!enumerating!public! !
@@ -88,6 +93,7 @@ defineFunctions
 		defineFunction: #FindConnectionPoint:ppCP:
 			argumentTypes: 'GUID* IConnectionPoint**'
 ! !
+
 !OS.COM.IConnectionPointContainer class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

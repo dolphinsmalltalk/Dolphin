@@ -12,7 +12,9 @@ OS.SizedStructure
 			'_OffsetOf_dwFlags' -> 16r4.
 			'_OffsetOf_style' -> 16r8
 		}!
+
 OS.BP_ANIMATIONPARAMS guid: (Core.GUID fromString: '{74d57e87-6087-4e82-ac07-680d0a3db4e6}')!
+
 OS.BP_ANIMATIONPARAMS comment: '<BP_ANIMATIONPARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.BP_ANIMATIONPARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +31,9 @@ struct tagBP_ANIMATIONPARAMS {
 	unsigned long dwDuration;
 } BP_ANIMATIONPARAMS;
 '!
+
 !OS.BP_ANIMATIONPARAMS categoriesForClass!Win32-Structs! !
+
 !OS.BP_ANIMATIONPARAMS methodsFor!
 
 dwDuration
@@ -61,6 +65,7 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_style put: anInteger! !
+
 !OS.BP_ANIMATIONPARAMS categoriesForMethods!
 dwDuration!**compiled accessors**!public! !
 dwDuration:!**compiled accessors**!public! !
@@ -97,6 +102,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !
+
 !OS.BP_ANIMATIONPARAMS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

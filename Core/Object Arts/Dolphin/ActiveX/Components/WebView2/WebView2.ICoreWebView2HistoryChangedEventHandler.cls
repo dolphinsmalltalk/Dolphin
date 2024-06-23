@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2HistoryChangedEventHandler guid: (OS.COM.IID fromString: '{c79a420c-efd9-4058-9295-3e8b4bcab645}')!
+
 WebView2.ICoreWebView2HistoryChangedEventHandler comment: '`ICoreWebView2HistoryChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HistoryChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2HistoryChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2HistoryChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2HistoryChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2* IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2HistoryChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -68,6 +73,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#historyChanged! !
+
 !WebView2.ICoreWebView2HistoryChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !

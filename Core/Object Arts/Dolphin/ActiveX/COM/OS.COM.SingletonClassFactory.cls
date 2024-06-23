@@ -7,7 +7,9 @@ OS.COM.ClassFactory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.SingletonClassFactory guid: (Core.GUID fromString: '{87b4c542-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.SingletonClassFactory comment: 'COMSingletonClassFactory is simple specialization of COMClassFactory which always serves up the same instance of its registered coclass.
 
 Note that although this is a useful concept (it is supported by the ATL for example), it is not strictly supported by COM which expects every call to CoCreateInstance() to answer a brand new instance of the coclass. This can break the apartment threading model when sharing an object since COM assumes that the object is created in the apartment of the caller, and where multiple apartments exist this can result in one apartment erroneously holding an unmarshalled interface pointer to an object in another apartment.
@@ -20,7 +22,9 @@ Instance Variables:
 Class Variables:
 	None
 '!
+
 !OS.COM.SingletonClassFactory categoriesForClass!COM-Implementations! !
+
 !OS.COM.SingletonClassFactory methodsFor!
 
 createInstance: pUnkOuter
@@ -29,6 +33,7 @@ createInstance: pUnkOuter
 	current isNil ifTrue: [
 		current := super createInstance: pUnkOuter].
 	^current! !
+
 !OS.COM.SingletonClassFactory categoriesForMethods!
 createInstance:!instance creation!private! !
 !

@@ -7,11 +7,16 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxInFilerWrapper guid: (Core.GUID fromString: '{1c2e68ec-f7bd-48a9-90f2-ab4118aa3a94}')!
+
 Kernel.STxInFilerWrapper isNonInstantiable: true!
+
 Kernel.STxInFilerWrapper comment: '`STBInFilerWrapper` is an abstract class of `STxInFiler` decorators.
 '!
+
 !Kernel.STxInFilerWrapper categoriesForClass!System-Binary storage! !
+
 !Kernel.STxInFilerWrapper methodsFor!
 
 atEnd
@@ -145,6 +150,7 @@ version
 	"Answer the format version of the STB/STL stream."
 
 	^decorated version! !
+
 !Kernel.STxInFilerWrapper categoriesForMethods!
 atEnd!public!testing! !
 basicNext!deserializing!public! !
@@ -190,6 +196,7 @@ on: aStream
 	"Answer a new instance attached to the binary stream aStream."
 
 	^self new stream: aStream! !
+
 !Kernel.STxInFilerWrapper class categoriesForMethods!
 icon!constants!public! !
 on:!instance creation!public! !

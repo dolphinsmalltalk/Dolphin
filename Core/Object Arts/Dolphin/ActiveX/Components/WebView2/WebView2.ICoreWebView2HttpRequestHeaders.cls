@@ -7,8 +7,11 @@ WebView2.ICoreWebView2HttpHeadersCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2HttpRequestHeaders guid: (OS.COM.IID fromString: '{e86cac0e-5523-465c-b536-8fb9fc8c8c60}')!
+
 WebView2.ICoreWebView2HttpRequestHeaders isEgressOnly: true!
+
 WebView2.ICoreWebView2HttpRequestHeaders comment: '`ICoreWebView2HttpRequestHeaders` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpRequestHeaders'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -48,7 +51,9 @@ interface ICoreWebView2HttpRequestHeaders : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2HttpRequestHeaders categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2HttpRequestHeaders methodsFor!
 
 at: nameString put: headerString
@@ -114,6 +119,7 @@ SetHeader: name value: value
 
 	<virtual stdcall: hresult 7 lpwstr lpwstr>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2HttpRequestHeaders categoriesForMethods!
 at:put:!accessing!public! !
 Contains:contains:!**auto generated**!COM Interfaces-ICoreWebView2HttpRequestHeaders!private! !
@@ -144,6 +150,7 @@ defineFunctions
 		defineFunction: #GetIterator:
 			argumentTypes: 'ICoreWebView2HttpHeadersCollectionIterator**'
 ! !
+
 !WebView2.ICoreWebView2HttpRequestHeaders class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -25,6 +25,10 @@ Kernel.SharedPool
 			'PBST_NORMAL' -> 16r1.
 			'PBST_PAUSED' -> 16r3
 		}!
+
 OS.ProgressBarConstants guid: (Core.GUID fromString: '{dd75854c-9e8c-4afe-b86a-d99b4dbaa1b1}')!
+
 OS.ProgressBarConstants isNonInstantiable: true!
+
 OS.ProgressBarConstants comment: ''!
+

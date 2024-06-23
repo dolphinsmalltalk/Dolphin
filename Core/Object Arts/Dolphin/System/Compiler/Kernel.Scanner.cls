@@ -12,7 +12,9 @@ Core.Object
 			'EscapeChars' -> (IdentityDictionary
 						withAll: { $0 -> $\0. $a -> $\a. $b -> $\b. $f -> $\f. $n -> $\n. $r -> $\r. $t -> $\t. $v -> $\v })
 		}!
+
 Kernel.Scanner guid: (Core.GUID fromString: '{f76f2335-9125-488e-a570-5a759a6e67b7}')!
+
 Kernel.Scanner comment: '`Kernel.Scanner` is the Smalltalk lexical analyzer. It converts source text to a stream of `StToken`''s.
 
 Note that `Kernel.Scanner` is based on the `RBScanner` class written by John Brant and Don Roberts for their Refactoring Browser. It has been extended for Dolphin to incorporate additional error recovery and reporting capabilities, and the ability to parse Dolphin''s FFI call syntax.
@@ -34,7 +36,9 @@ Note that `Kernel.Scanner` is based on the `RBScanner` class written by John Bra
   EscapeChars			`IdentityDictionary`.
 
 '!
+
 !Kernel.Scanner categoriesForClass!System-Compiler! !
+
 !Kernel.Scanner methodsFor!
 
 addComment: anInterval
@@ -742,6 +746,7 @@ upToEnd
 	contentsStream := WriteStream on: (Array new: 50).
 	[(token := self next) isEof] whileFalse: [contentsStream nextPut: token].
 	^contentsStream contents! !
+
 !Kernel.Scanner categoriesForMethods!
 addComment:!private!scanning! !
 atEnd!public!testing! !
@@ -889,6 +894,7 @@ on: aStream errorHandler: parseErrorHandler
 		step;
 		stripSeparators;
 		yourself! !
+
 !Kernel.Scanner class categoriesForMethods!
 classify:!public!scanning! !
 initialize!development!initializing!public! !

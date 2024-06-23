@@ -5,9 +5,13 @@ MainTestCase subclass: #FloatCharacterizationANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FloatCharacterizationANSITest guid: (GUID fromString: '{662708f9-6fbf-4b7d-bda5-33b4385e7222}')!
+
 FloatCharacterizationANSITest comment: ''!
+
 !FloatCharacterizationANSITest categoriesForClass!Unclassified! !
+
 !FloatCharacterizationANSITest methodsFor!
 
 canonicalObject
@@ -63,6 +67,7 @@ testXprecision
 testXradix
 	" <floatCharacterization>#radix "
 	#'Numeric'.! !
+
 !FloatCharacterizationANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

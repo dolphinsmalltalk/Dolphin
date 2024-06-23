@@ -7,7 +7,9 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2EnvironmentOptions4 guid: (OS.COM.IID fromString: '{ac52d13f-0d38-475a-9dca-876580d6793e}')!
+
 WebView2.ICoreWebView2EnvironmentOptions4 comment: '`ICoreWebView2EnvironmentOptions4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +35,9 @@ interface ICoreWebView2EnvironmentOptions4 : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2EnvironmentOptions4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2EnvironmentOptions4 methodsFor!
 
 getCustomSchemeRegistrations
@@ -79,6 +83,7 @@ SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 
 	<virtual stdcall: hresult 5 dword ICoreWebView2CustomSchemeRegistration**>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2EnvironmentOptions4 categoriesForMethods!
 getCustomSchemeRegistrations!COM Interfaces-ICoreWebView2EnvironmentOptions4!public! !
 GetCustomSchemeRegistrations:schemeRegistrations:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
@@ -100,6 +105,7 @@ defineFunctions
 		defineFunction: #SetCustomSchemeRegistrations:schemeRegistrations:
 			argumentTypes: 'dword ICoreWebView2CustomSchemeRegistration**'
 ! !
+
 !WebView2.ICoreWebView2EnvironmentOptions4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

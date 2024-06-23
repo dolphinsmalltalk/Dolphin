@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AbstractInstanceVariableRefactoringTest guid: (Core.GUID fromString: '{c64428af-5374-4e12-8c73-d6b9ec653c13}')!
+
 Refactory.Browser.Tests.AbstractInstanceVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.AbstractInstanceVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.AbstractInstanceVariableRefactoringTest methodsFor!
 
 setUp
@@ -127,6 +131,7 @@ testMetaclassInstanceVariables
 testNonExistantName
 	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTestData)
 		withMessage: 'BasicLintRuleTestData does not directly define instance variable ''foo'''! !
+
 !Refactory.Browser.Tests.AbstractInstanceVariableRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractInstanceVariable!public!tests! !

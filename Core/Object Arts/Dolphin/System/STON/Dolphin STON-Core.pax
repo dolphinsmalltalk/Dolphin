@@ -169,6 +169,7 @@ Kernel.Namespace
 	imports: #(#{Core private} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'STON.CStyleCommentsSkipStream'
 	instanceVariableNames: 'stream peekedCharacter delimiter escape'
@@ -176,6 +177,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'STON.Reader'
 	instanceVariableNames: 'readStream objects classes stringStream acceptUnknownClasses newLine convertNewLines classInstVarMaps currentCharacter objectProperties renamedClasses'
@@ -200,6 +202,7 @@ Core.Object
 			'HexDigitValues'
 				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r0 16r1 16r2 16r3 16r4 16r5 16r6 16r7 16r8 16r9 nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF)
 		}!
+
 Core.Object
 	subclass: #'STON.Reference'
 	instanceVariableNames: 'index refCount'
@@ -207,6 +210,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'STON.StreamWriter'
 	instanceVariableNames: 'writer first'
@@ -214,6 +218,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'STON.Writer'
 	instanceVariableNames: 'writeStream stonCharacters newLine asciiOnly keepNewLines referencePolicy objects classInstVarMaps'
@@ -226,6 +231,7 @@ Core.Object
 			'STONSimpleSymbolCharacters'
 				-> #[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
 		}!
+
 Core.Error
 	subclass: #'STON.ReaderError'
 	instanceVariableNames: 'streamPosition'
@@ -233,6 +239,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'STON.WriterError'
 	instanceVariableNames: ''
@@ -240,6 +247,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.StreamWriter
 	subclass: #'STON.ListWriter'
 	instanceVariableNames: ''
@@ -247,6 +255,7 @@ STON.StreamWriter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.StreamWriter
 	subclass: #'STON.MapWriter'
 	instanceVariableNames: ''
@@ -254,6 +263,7 @@ STON.StreamWriter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.ListWriter
 	subclass: #'STON.ShortListWriter'
 	instanceVariableNames: ''
@@ -261,6 +271,7 @@ STON.ListWriter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Writer
 	subclass: #'STON.PrettyPrinter'
 	instanceVariableNames: 'level'
@@ -277,6 +288,7 @@ stonOn: stonWriter
 	self class == STON associationClass
 		ifTrue: [stonWriter writeAssociation: self]
 		ifFalse: [super stonOn: stonWriter]! !
+
 !Core.Association categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -287,6 +299,7 @@ stonOn: stonWriter
 	"Use a map with element-occurrences pairs as representation"
 
 	stonWriter writeObject: self do: [stonWriter encodeMap: contents]! !
+
 !Core.Bag categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -301,6 +314,7 @@ fromSton: stonReader
 	stonReader parseMapDo: [ :key :value |
 		bag add: key withOccurrences: value ].
 	^ bag! !
+
 !Core.Bag class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -312,6 +326,7 @@ stonContainSubObjects
 
 stonOn: stonWriter
 	stonWriter writeBoolean: self! !
+
 !Core.Boolean categoriesForMethods!
 stonContainSubObjects!public!ston! !
 stonOn:!public!ston! !
@@ -331,6 +346,7 @@ stonOn: stonWriter
 	"Use a hex representation"
 	
 	stonWriter writeObject: self listSingleton: self hex! !
+
 !Core.ByteArray categoriesForMethods!
 hex!public! !
 stonContainSubObjects!public!ston! !
@@ -346,6 +362,7 @@ fromSton: stonReader
 
 readHexFrom: aString
 	^self fromHexString: aString! !
+
 !Core.ByteArray class categoriesForMethods!
 fromSton:!public!ston! !
 readHexFrom:!public!ston! !
@@ -355,6 +372,7 @@ readHexFrom:!public!ston! !
 
 stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: self asString! !
+
 !Core.Character categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -366,6 +384,7 @@ fromSton: stonReader
 	To get the full Character we need to read from a stream."
 
 	^ stonReader parseListSingleton readStream next! !
+
 !Core.Character class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -375,6 +394,7 @@ fromSton:!public!ston! !
 stonOn: stonWriter
 	name ifNil: [self error: 'Anonymous classes are not serializable'].
 	stonWriter writeObject: self listSingleton: self unaliasedName asSymbol! !
+
 !Core.Class categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -386,6 +406,7 @@ fromSton: stonReader
 	theClassName := stonReader parseListSingleton.
 	theClass := theClassName asQualifiedReference value.
 	^theClass! !
+
 !Core.Class class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -394,6 +415,7 @@ fromSton:!public!ston! !
 
 stonContainSubObjects
 	^ false! !
+
 !Core.ClassDescription categoriesForMethods!
 stonContainSubObjects!public!ston! !
 !
@@ -406,6 +428,7 @@ stonOn: stonWriter
 	so some will revert to standard object behavior or chose another solution"
 
 	stonWriter writeObject: self do: [stonWriter encodeList: self]! !
+
 !Core.Collection categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -422,6 +445,7 @@ fromSton: stonReader
 	stonReader parseListDo: [ :each |
 		collection add: each ].
 	^ collection! !
+
 !Core.Collection class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -444,6 +468,7 @@ stonOn: stonWriter
 	offset := Locale timeZoneInformation offsetSeconds.
 	offset = 0 ifTrue: [stream nextPut: $Z] ifFalse: [offset seconds printOn: stream format: '+hh:mm'].
 	stonWriter writeObject: self listSingleton: stream grabContents! !
+
 !Core.Date categoriesForMethods!
 stonContainSubObjects!accessing!public!ston! !
 stonOn:!public!ston! !
@@ -471,6 +496,7 @@ fromSton: stonReader
 						offset: offset.
 			date := dt asLocal asDate].
 	^date! !
+
 !Core.Date class categoriesForMethods!
 fromSton:!instance creation!public! !
 !
@@ -485,6 +511,7 @@ stonOn: stonWriter
 
 	stonWriter writeObject: self
 		listSingleton: (String streamContents: [:stream | self printOn: stream withLeadingSpace: false])! !
+
 !Core.DateAndTime categoriesForMethods!
 stonContainSubObjects!public!ston! !
 stonOn:!public!ston! !
@@ -494,6 +521,7 @@ stonOn:!public!ston! !
 
 fromSton: stonReader
 	^ self readFrom: stonReader parseListSingleton readStream! !
+
 !Core.DateAndTime class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -507,6 +535,7 @@ stonOn: stonWriter
 	self class == STON mapClass
 		ifTrue: [stonWriter writeMap: self]
 		ifFalse: [stonWriter writeObject: self do: [stonWriter encodeMap: self]]! !
+
 !Core.Dictionary categoriesForMethods!
 stonOn:!public! !
 !
@@ -522,6 +551,7 @@ fromSton: stonReader
 	stonReader parseMapDo: [ :key :value |
 		dictionary at: key put: value ].
 	^ dictionary! !
+
 !Core.Dictionary class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -539,6 +569,7 @@ fromSton: stonReader
 				#negativeInfinity -> Float.NegativeInfinity
 			})
 		lookup: argument) ifNil: [stonReader error: 'special Float not recognized']! !
+
 !Core.Float class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -547,6 +578,7 @@ fromSton:!public!ston! !
 
 stonOn: stonWriter
 	stonWriter writeFraction: self! !
+
 !Core.Fraction categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -557,6 +589,7 @@ stonOn: stonWriter
 	"Use a hex representation"
 	
 	stonWriter writeObject: self listSingleton: self idlString! !
+
 !Core.GUID categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -565,6 +598,7 @@ stonOn:!public!ston! !
 
 fromSton: stonReader
 	^ self fromIdlString: stonReader parseListSingleton! !
+
 !Core.GUID class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -573,6 +607,7 @@ fromSton:!public!ston! !
 
 stonOn: stonWriter
 	stonWriter writeInteger: self! !
+
 !Core.Integer categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -588,6 +623,7 @@ stonOn: stonWriter
 	"Overwritten to get back the standard object behavior"
 
 	stonWriter writeObject: self! !
+
 !Core.Interval categoriesForMethods!
 fromSton:!public!ston! !
 stonOn:!public!ston! !
@@ -601,6 +637,7 @@ fromSton: stonReader
 	^ self basicNew
 		fromSton: stonReader;
 		yourself! !
+
 !Core.Interval class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -609,6 +646,7 @@ fromSton:!public!ston! !
 
 stonOn: stonWriter
 	stonWriter writeObject: self do: [stonWriter encodeList: messages]! !
+
 !Core.MessageSequence categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -622,6 +660,7 @@ fromSton: stonReader
 	collection := self new.
 	stonReader parseListDo: [:each | collection add: each].
 	^collection! !
+
 !Core.MessageSequence class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -640,6 +679,7 @@ stonOn: stonWriter
 	stonWriter
 		writeObject: self 
 		listSingleton: self instanceSide name asSymbol! !
+
 !Core.Metaclass categoriesForMethods!
 instanceSide!accessing!private! !
 stonName!public!ston! !
@@ -654,6 +694,7 @@ fromSton: stonReader
 	theClass := theClassName asQualifiedReference value.
 	theMetaclass := theClass class.
 	^ theMetaclass! !
+
 !Core.Metaclass class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -664,6 +705,7 @@ stonAllInstVarNames
 	"Override to exclude the events instance variable as we never want to serialize these."
 
 	^superclass == Object ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instanceVariableNames]! !
+
 !Core.Model class categoriesForMethods!
 stonAllInstVarNames!public!ston! !
 !
@@ -675,6 +717,7 @@ stonContainSubObjects
 
 stonOn: stonWriter
 	stonWriter writeFloat: self asFloat! !
+
 !Core.Number categoriesForMethods!
 stonContainSubObjects!public!ston! !
 stonOn:!public!ston! !
@@ -717,6 +760,7 @@ stonShouldWriteNilInstVars
 	false otherwise. Overwrite when necessary. By default, return false."
 	
 	^ false! !
+
 !Core.Object categoriesForMethods!
 fromSton:!public!ston! !
 isStonReference!public!ston! !
@@ -750,6 +794,7 @@ stonName
 	Use symbols as class name/tag."
 
 	^self unaliasedName! !
+
 !Core.Object class categoriesForMethods!
 fromSton:!public!ston! !
 stonAllInstVarNames!public!ston! !
@@ -767,6 +812,7 @@ stonOn: stonWriter
 	"Overwritten to get back the standard object behavior"
 	
 	stonWriter writeObject: self! !
+
 !Core.RunArray categoriesForMethods!
 fromSton:!public!ston! !
 stonOn:!public!ston! !
@@ -778,6 +824,7 @@ fromSton: stonReader
 	^ self new
 		fromSton: stonReader;
 		yourself! !
+
 !Core.RunArray class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -786,6 +833,7 @@ fromSton:!public!ston! !
 
 stonOn: stonWriter
 	stonWriter writeScaledDecimal: self! !
+
 !Core.ScaledDecimal categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -796,6 +844,7 @@ fromSton: stonReader
 	^stonReader isList
 		ifTrue: [self perform: stonReader parseListSingleton]
 		ifFalse: [super fromSton: stonReader]! !
+
 !Core.SearchPolicy class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -809,6 +858,7 @@ stonOn: stonWriter
 	self class == STON listClass
 		ifTrue: [stonWriter writeList: self]
 		ifFalse: [super stonOn: stonWriter]! !
+
 !Core.SequenceableCollection categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -821,6 +871,7 @@ fromSton: stonReader
 	^ self streamContents: [ :stream |
 		stonReader parseListDo: [ :each |
 			stream nextPut: each ] ]! !
+
 !Core.SequenceableCollection class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -832,6 +883,7 @@ stonPostReferenceResolution
 	Check if I am still healthy and rehash me if not."
 	
 	self isHealthy ifFalse: [ self rehash ]! !
+
 !Core.Set categoriesForMethods!
 stonPostReferenceResolution!public!ston! !
 !
@@ -859,6 +911,7 @@ stonOn: stonWriter
 	"Overridden to ensure the sort block, etc, is preserved"
 
 	stonWriter writeObject: self extra: {#array -> self asArray}! !
+
 !Core.SortedCollection categoriesForMethods!
 fromSton:!public!ston! !
 stonOn:!public!ston! !
@@ -877,6 +930,7 @@ stonAllInstVarNames
 	"Override to encode my instances using a custom set of instance variables or to define their order."
 	
 	^#('algorithm')! !
+
 !Core.SortedCollection class categoriesForMethods!
 fromSton:!public!ston! !
 stonAllInstVarNames!public!ston! !
@@ -889,6 +943,7 @@ stonContainSubObjects
 
 stonOn: stonWriter
 	stonWriter writeString: self! !
+
 !Core.String categoriesForMethods!
 stonContainSubObjects!public!ston! !
 stonOn:!public!ston! !
@@ -898,6 +953,7 @@ stonOn:!public!ston! !
 
 findFirstInString: aSymbol inSet: aByteArray startingAt: anInteger
 	^Error notYetImplemented! !
+
 !Core.String class categoriesForMethods!
 findFirstInString:inSet:startingAt:!public! !
 !
@@ -906,6 +962,7 @@ findFirstInString:inSet:startingAt:!public! !
 
 stonOn: stonWriter
 	stonWriter writeSymbol: self! !
+
 !Core.Symbol categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -925,6 +982,7 @@ stonOn: stonWriter
 						print24: true
 						showSeconds: true
 						on: stream])! !
+
 !Core.Time categoriesForMethods!
 stonContainSubObjects!public!ston! !
 stonOn:!public!ston! !
@@ -934,6 +992,7 @@ stonOn:!public!ston! !
 
 fromSton: stonReader
 	^ self readFrom: stonReader parseListSingleton readStream! !
+
 !Core.Time class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -945,6 +1004,7 @@ stonContainSubObjects
 
 stonOn: stonWriter
 	stonWriter writeNull! !
+
 !Core.UndefinedObject categoriesForMethods!
 stonContainSubObjects!public!ston! !
 stonOn:!public!ston! !
@@ -954,6 +1014,7 @@ stonOn:!public!ston! !
 
 stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: #default! !
+
 !External.DynamicLinkLibrary categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -964,6 +1025,7 @@ fromSton: stonReader
 	stonReader parseListSingleton.
 	^self default
 ! !
+
 !External.DynamicLinkLibrary class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -980,6 +1042,7 @@ stonOn: stonWriter
 			self isPrivate ifTrue: [pathString nextPutAll: ' private'].
 			dictionary at: #pathString put: pathString contents.
 			self scope ifNotNil: [:scope | dictionary at: #scope put: scope]]! !
+
 !Kernel.BindingReference categoriesForMethods!
 stonOn:!public!ston/core! !
 !
@@ -994,6 +1057,7 @@ fromSton: stonReader
 
 stonName
 	^#BindingReference! !
+
 !Kernel.BindingReference class categoriesForMethods!
 fromSton:!public!ston! !
 stonName!public!ston! !
@@ -1026,6 +1090,7 @@ stonOn: stonWriter
 			BlockClosure instanceVariableNames
 				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
 			dictionary at: #copiedValues put: self copiedValues]! !
+
 !Kernel.BlockClosure categoriesForMethods!
 fromSton:!public! !
 stonOn:!public!ston! !
@@ -1059,6 +1124,7 @@ stonOn: stonWriter
 				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
 			"Store the indexable fields as a literals list"
 			dictionary at: #literals put: self literals]! !
+
 !Kernel.CompiledCode categoriesForMethods!
 fromSton:!public! !
 stonOn:!public!ston! !
@@ -1070,6 +1136,7 @@ stonOn: aSTONWriter
 	aSTONWriter 
 		writeObject: self 
 		do: []! !
+
 !Kernel.ProcessorScheduler categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -1078,6 +1145,7 @@ stonOn:!public!ston! !
 
 fromSton: stonReader
 	^Processor! !
+
 !Kernel.ProcessorScheduler class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -1088,6 +1156,7 @@ stonOn: stonWriter
 	self name
 		ifNil: [stonWriter writeObject: self]
 		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name asSymbol]! !
+
 !Kernel.SingletonSearchPolicy categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -1096,6 +1165,7 @@ stonOn:!public!ston! !
 
 stonName
 	^#SearchPolicy! !
+
 !Kernel.SingletonSearchPolicy class categoriesForMethods!
 stonName!public!ston! !
 !

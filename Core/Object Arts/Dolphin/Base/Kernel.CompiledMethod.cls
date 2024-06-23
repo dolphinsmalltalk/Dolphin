@@ -7,11 +7,15 @@ Kernel.CompiledCode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompiledMethod guid: (Core.GUID fromString: '{87b4c544-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.CompiledMethod comment: 'CompiledMethod is the class of CompiledCode objects representing actual methods of objects, as opposed to unbound expressions (see CompiledExpression).
 
 '!
+
 !Kernel.CompiledMethod categoriesForClass!Kernel-Methods! !
+
 !Kernel.CompiledMethod methodsFor!
 
 <= aCompiledMethod
@@ -202,6 +206,7 @@ storeSourceString: aString
 
 suppressionId
 	^self! !
+
 !Kernel.CompiledMethod categoriesForMethods!
 <=!comparing!public! !
 categories!categories-accessing!development!public! !
@@ -245,6 +250,7 @@ defaultSortBlock
 	^[:x :y | (x methodClass==y methodClass)
 		ifTrue: [x selector <= y selector]
 		ifFalse: [x methodClass <= y methodClass]] ! !
+
 !Kernel.CompiledMethod class categoriesForMethods!
 defaultSortBlock!private!sorting! !
 !

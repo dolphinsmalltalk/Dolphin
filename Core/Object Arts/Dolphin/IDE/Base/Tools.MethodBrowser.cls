@@ -7,7 +7,9 @@ UI.ListPresenter
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MethodBrowser guid: (Core.GUID fromString: '{87b4c68d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.MethodBrowser comment: 'MethodBrowser is a <compositePresenter> used to display a <collection> of <CompiledMethod>s. The browser can be instantiated and then filled with methods using #methods: aspect, the value of which must be a <BrowserEnvironment>. The methods defined in the environment are enumerated and displayed in the browser list.
 
 Example:
@@ -29,7 +31,9 @@ Class Variables:
 	InfoTips				<boolean> indicating whether method info tips (showing category information) should be displayed. If nil then configured by view.
 
 '!
+
 !Tools.MethodBrowser categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !Tools.MethodBrowser methodsFor!
 
 addCategoryMenu
@@ -1075,6 +1079,7 @@ togglePrivate
 
 updateMethodNamespace
 	namespaceModel value: (self parseContext ifNotNil: [:context | context environment])! !
+
 !Tools.MethodBrowser categoriesForMethods!
 addCategoryMenu!commands-menus!public! !
 addMethods:toCategory:!operations!private! !
@@ -1318,6 +1323,7 @@ wordWrap: aBoolean
 	"Sets the word wrapping state for instances of the receiver to aBoolean."
 
 	WordWrap := aBoolean! !
+
 !Tools.MethodBrowser class categoriesForMethods!
 autoFormat!accessing!public! !
 autoFormat:!accessing!public! !

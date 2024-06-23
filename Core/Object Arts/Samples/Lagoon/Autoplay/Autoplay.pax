@@ -80,6 +80,7 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RuntimeSessionManager
 	subclass: #'UI.Examples.AutoplaySessionManager'
 	instanceVariableNames: ''

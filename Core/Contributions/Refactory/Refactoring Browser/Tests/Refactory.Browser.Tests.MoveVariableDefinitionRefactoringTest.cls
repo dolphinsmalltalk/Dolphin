@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.MoveVariableDefinitionRefactoringTest guid: (Core.GUID fromString: '{dc2344f4-f0f3-4fc5-af74-d852d5d036ae}')!
+
 Refactory.Browser.Tests.MoveVariableDefinitionRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.MoveVariableDefinitionRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.MoveVariableDefinitionRefactoringTest methodsFor!
 
 testMoveDefinition
@@ -84,6 +88,7 @@ testNonExistantName
 				in: LintRuleTestData
 				selector: #displayName.
 	self should: [self executeRefactoring: aRefactoring] raise: Refactoring abortSignal! !
+
 !Refactory.Browser.Tests.MoveVariableDefinitionRefactoringTest categoriesForMethods!
 testMoveDefinition!public!tests! !
 testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !

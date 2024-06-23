@@ -7,9 +7,13 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBStaticVariableProxy guid: (Core.GUID fromString: '{b2c4348c-fb81-4102-bc55-4d4e668749ec}')!
+
 Kernel.STBStaticVariableProxy comment: ''!
+
 !Kernel.STBStaticVariableProxy categoriesForClass!System-Binary storage! !
+
 !Kernel.STBStaticVariableProxy methodsFor!
 
 reference: aBindingReference
@@ -27,6 +31,7 @@ stbFixup: aSTxInFiler at: anInteger
 
 value
 	^reference value! !
+
 !Kernel.STBStaticVariableProxy categoriesForMethods!
 reference:!public! !
 stbFixup:at:!converting!public! !
@@ -37,6 +42,7 @@ value!public! !
 
 reference: aBindingReference
 	^self basicNew reference: aBindingReference! !
+
 !Kernel.STBStaticVariableProxy class categoriesForMethods!
 reference:!public! !
 !

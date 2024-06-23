@@ -7,9 +7,13 @@ Database.DBSchemaStatement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBSpecialColumnsStatement guid: (Core.GUID fromString: '{11e39b07-10d8-43b0-8a5c-43c2eecf5eb9}')!
+
 Database.DBSpecialColumnsStatement comment: ''!
+
 !Database.DBSpecialColumnsStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBSpecialColumnsStatement methodsFor!
 
 columnType
@@ -45,6 +49,7 @@ scope
 
 scope: anInteger
 	scope := anInteger! !
+
 !Database.DBSpecialColumnsStatement categoriesForMethods!
 columnType!accessing!public! !
 columnType:!accessing!public! !

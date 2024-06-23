@@ -7,8 +7,11 @@ UI.ValueConvertingControlView
 	imports: #(#{OS.DateTimeCommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DateTimeCommonControl guid: (Core.GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
+
 UI.DateTimeCommonControl isNonInstantiable: true!
+
 UI.DateTimeCommonControl comment: '`DateTimeCommonControl` is the abstract class of `<valueView>`s implementing the Windows date/time common controls. 
 
 The `<valueModel>` associated with a `DateTimeCommonControl` must always yield a value that can be converted to a `SYSTEMTIME` using `#asParameter` after mapping through the installed type converter (e.g. a `DateAndTime`). A DateTimeCommonControl will normally be used in conjunction with a <DatePresenter>, or in some cases a <TimePresenter>.
@@ -16,7 +19,9 @@ The `<valueModel>` associated with a `DateTimeCommonControl` must always yield a
 
 
 '!
+
 !UI.DateTimeCommonControl categoriesForClass!MVP-Views! !
+
 !UI.DateTimeCommonControl methodsFor!
 
 displayValue
@@ -141,6 +146,7 @@ state
 					selector: #range:
 					argument: self range);
 		yourself! !
+
 !UI.DateTimeCommonControl categoriesForMethods!
 displayValue!private!updating! !
 displayValue:!private!updating! !
@@ -177,6 +183,7 @@ initialize
 
 uninitialize
 	CommCtrlLibrary removeInitFlag: ICC_DATE_CLASSES! !
+
 !UI.DateTimeCommonControl class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

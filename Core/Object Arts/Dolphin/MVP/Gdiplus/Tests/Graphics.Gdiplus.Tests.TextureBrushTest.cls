@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.TransformableBrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.TextureBrushTest guid: (Core.GUID fromString: '{22d063de-5e81-404d-83b0-0731f325a82f}')!
+
 Graphics.Gdiplus.Tests.TextureBrushTest comment: ''!
+
 !Graphics.Gdiplus.Tests.TextureBrushTest methodsFor!
 
 brushType
@@ -56,6 +59,7 @@ verifyEqualToModel: aGdiplusObject
 	super verifyEqualToModel: aGdiplusObject.
 	self assert: aGdiplusObject image equals: model image.
 	self assert: aGdiplusObject bounds equals: model bounds! !
+
 !Graphics.Gdiplus.Tests.TextureBrushTest categoriesForMethods!
 brushType!constants!private! !
 createCanonicalSubject!initializing!private! !

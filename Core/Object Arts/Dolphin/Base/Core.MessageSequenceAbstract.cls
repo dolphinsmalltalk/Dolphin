@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MessageSequenceAbstract guid: (Core.GUID fromString: '{87b4c4a0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.MessageSequenceAbstract isNonInstantiable: true!
+
 Core.MessageSequenceAbstract comment: ''!
+
 !Core.MessageSequenceAbstract categoriesForClass!Kernel-Objects! !
+
 !Core.MessageSequenceAbstract methodsFor!
 
 add: anEventMessageSend
@@ -89,6 +94,7 @@ valueWithArguments: anArray
 	"Evaluate the receiver with the specified <Array> of arguments."
 
 	^self subclassResponsibility! !
+
 !Core.MessageSequenceAbstract categoriesForMethods!
 add:!adding!public! !
 argumentCount!accessing!public! !
@@ -114,6 +120,7 @@ new
 	"Answer an instance of the receiver; instance require initialization"
 
 	^super new initialize! !
+
 !Core.MessageSequenceAbstract class categoriesForMethods!
 new!instance creation!public! !
 !

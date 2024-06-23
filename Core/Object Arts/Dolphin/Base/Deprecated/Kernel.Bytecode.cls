@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Bytecode guid: (Core.GUID fromString: '{189ed4bc-e69b-44e3-8815-7b6d0bdf24b6}')!
+
 Kernel.Bytecode comment: 'BytecodeRewrite is a private system utility class that supports the <BytecodeRewriter>.'!
+
 !Kernel.Bytecode categoriesForClass!Kernel-Objects! !
+
 !Kernel.Bytecode methodsFor!
 
 args
@@ -50,6 +54,7 @@ setInstruction: aSymbol arguments: anArray ip: aSmallInteger
 	args := anArray.
 	ip := aSmallInteger.
 ! !
+
 !Kernel.Bytecode categoriesForMethods!
 args!accessing!public! !
 instruction!accessing!public! !
@@ -69,6 +74,7 @@ instruction: bytecodeInteger arguments: anArray ip: aSmallInteger
 		setInstruction: bytecodeInteger
 		arguments: anArray
 		ip: aSmallInteger! !
+
 !Kernel.Bytecode class categoriesForMethods!
 instruction:arguments:ip:!instance creation!public! !
 !

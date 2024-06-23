@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StLiteralValueNodeTest guid: (Core.GUID fromString: '{f8a26c7d-e798-4b63-bfa2-411d30509b7e}')!
+
 Kernel.Tests.StLiteralValueNodeTest comment: ''!
+
 !Kernel.Tests.StLiteralValueNodeTest methodsFor!
 
 testEqualValuesOfDifferentTypes
@@ -22,6 +25,7 @@ testEqualValuesOfDifferentTypes
 			bNode := StLiteralValueNode value: b.
 			self deny: aNode equals: bNode.
 			self deny: bNode equals: aNode]! !
+
 !Kernel.Tests.StLiteralValueNodeTest categoriesForMethods!
 testEqualValuesOfDifferentTypes!public! !
 !

@@ -7,9 +7,13 @@ Core.ArrayedCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.RunArray guid: (Core.GUID fromString: '{87b4c513-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.RunArray comment: ''!
+
 !Core.RunArray categoriesForClass!Collections-Arrayed! !
+
 !Core.RunArray methodsFor!
 
 allSatisfy: discriminator
@@ -156,6 +160,7 @@ storeOn: aWriteStream
 	aWriteStream nextPutAll: ' values: '.
 	values storeOn: aWriteStream.
 	aWriteStream nextPut: $)! !
+
 !Core.RunArray categoriesForMethods!
 allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
@@ -243,6 +248,7 @@ withAll: aCollection
 			[runs nextPut: runLength.
 			values nextPut: current].
 	^self runs: runs contents values: values contents! !
+
 !Core.RunArray class categoriesForMethods!
 new!instance creation!public! !
 new:!instance creation!public! !

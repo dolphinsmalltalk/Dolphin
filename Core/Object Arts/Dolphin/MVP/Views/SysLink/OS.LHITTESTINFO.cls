@@ -7,9 +7,13 @@ OS.CCHITTESTINFO
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_LHITTESTINFO_Size' -> 16r10C0. '_OffsetOf_item' -> 16r8 }!
+
 OS.LHITTESTINFO guid: (Core.GUID fromString: '{1498d0d0-6502-4ce2-8cf9-caa0625685ef}')!
+
 OS.LHITTESTINFO comment: ''!
+
 !OS.LHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.LHITTESTINFO methodsFor!
 
 handle
@@ -21,6 +25,7 @@ item
 	"Answer the <LITEM> value of the receiver's 'item' field."
 
 	^LITEM fromAddress: bytes yourAddress + _OffsetOf_item! !
+
 !OS.LHITTESTINFO categoriesForMethods!
 handle!accessing!private! !
 item!**compiled accessors**!public! !
@@ -42,6 +47,7 @@ defineFields
 
 getFieldNames
 	^#(#pt #item)! !
+
 !OS.LHITTESTINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

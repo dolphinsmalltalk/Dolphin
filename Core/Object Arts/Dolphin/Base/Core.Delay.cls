@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'DefaultResolution' -> 16r3D09 }!
+
 Core.Delay guid: (Core.GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Delay comment: '`Delay`s are used to introduce timed pauses in the execution of a `Process`.  `Delay`s can be constructed that specify a duration using the instance creation messages `#forMicroseconds:`, `#forMilliseconds:`, and `#forSeconds:`, or an absolute time based on the millisecond clock value, `#untilMilliseconds:`. Once constructed a `Delay` responds to the `#wait` message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 
 `Delay`s constructed to wait for an absolute time are "one-shot", in that once they have expired further attempts to `#wait` on them will return immediately. Conversely, `Delay`s scheduled to wait for a time interval can be waited on again to delay for the same interval.
@@ -37,7 +39,9 @@ Example usage:
   `Resolution`		`<integer>`; current clock resolution, in microseconds.
 
 '!
+
 !Core.Delay categoriesForClass!Kernel-Processes! !
+
 !Core.Delay methodsFor!
 
 <= anotherDelay
@@ -217,6 +221,7 @@ wakeup
 
 	duration ifNotNil: [resumptionTime := nil].
 	waitSemaphore signal! !
+
 !Core.Delay categoriesForMethods!
 <=!comparing!public! !
 basicCancel!private!process synchronisation! !
@@ -503,6 +508,7 @@ withTimerResolution: aDuration do: aMonadicValuable
 	| resolution |
 	resolution := self timerResolution: aDuration set: true.
 	[aMonadicValuable cull: resolution] ensure: [self timerResolution: aDuration set: false]! !
+
 !Core.Delay class categoriesForMethods!
 aboutToIdle!event handling!private! !
 cancelTimer!operations!private! !

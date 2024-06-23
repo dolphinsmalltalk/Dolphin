@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.ExamplesTest guid: (Core.GUID fromString: '{a138a00e-d195-4a62-8029-e372575e15ea}')!
+
 Graphics.Gdiplus.Tests.ExamplesTest comment: ''!
+
 !Graphics.Gdiplus.Tests.ExamplesTest methodsFor!
 
 subjectClass
@@ -493,6 +496,7 @@ testExampleGdipTBTilingAShape
 	"This method was auto-generated"
 
 	TextureBrush exampleGdipTBTilingAShape! !
+
 !Graphics.Gdiplus.Tests.ExamplesTest categoriesForMethods!
 subjectClass!constants!private! !
 testExampleGdipBFromBitmap!**auto generated**!public! !
@@ -636,6 +640,7 @@ buildTestCase
 							space;
 							display: each selector.
 						self compile: stream contents categories: {autoCategory}]]! !
+
 !Graphics.Gdiplus.Tests.ExamplesTest class categoriesForMethods!
 buildTestCase!helpers!public! !
 !

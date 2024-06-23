@@ -7,8 +7,11 @@ Kernel.StLiteralNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralValueNode guid: (Core.GUID fromString: '{93764089-2da7-47ec-8bee-95e969f27b94}')!
+
 Kernel.StLiteralValueNode comment: ''!
+
 !Kernel.StLiteralValueNode methodsFor!
 
 = anObject
@@ -40,6 +43,7 @@ value
 
 valueClass
 	^token value class! !
+
 !Kernel.StLiteralValueNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -68,6 +72,7 @@ value: anObject start: startInteger stop: stopInteger
 				comments: nil
 				value: anObject
 				stop: stopInteger)! !
+
 !Kernel.StLiteralValueNode class categoriesForMethods!
 literalToken:!instance creation!public! !
 value:!instance creation!public! !

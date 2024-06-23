@@ -7,9 +7,13 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.CRTError guid: (Core.GUID fromString: '{259ae719-09c3-4401-a9be-6f089698b6f7}')!
+
 OS.CRTError comment: 'Exception to represent C-runtime library errors.'!
+
 !OS.CRTError categoriesForClass!System-Exception Handling! !
+
 !OS.CRTError methodsFor!
 
 _descriptionArguments
@@ -51,6 +55,7 @@ strerror
 		errnum: self errno) == 0
 		ifTrue: [buf trimNulls]
 		ifFalse: [self errno printString]! !
+
 !OS.CRTError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !

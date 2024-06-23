@@ -7,8 +7,11 @@ Core.Tests.UtfEncodedStringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.Utf8StringTest guid: (Core.GUID fromString: '{cc364a8d-e3ae-493e-8856-3f10c847c10d}')!
+
 Core.Tests.Utf8StringTest comment: ''!
+
 !Core.Tests.Utf8StringTest methodsFor!
 
 assertAsUtf16String: aUtf8String equals: aUtf16String
@@ -801,6 +804,7 @@ testUnicodeBestPracticeDecodingExamplesWellFormed
 			self assert: utf8 single equals: char.
 			"Conversion to UTF-16 should follow the same decoding algorithm, although non-chars will be converted as these are valid encodings. These will be replaced with U+FFFDs when streamed out of the Utf16String though."
 			self assert: utf8 asUtf16String single equals: char]! !
+
 !Core.Tests.Utf8StringTest categoriesForMethods!
 assertAsUtf16String:equals:!helpers!private! !
 assertInvalidSequence:length:!helpers!private! !

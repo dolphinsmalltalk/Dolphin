@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBMethodName guid: (Core.GUID fromString: '{93e47b87-9470-40bd-8893-a811fd4bee6b}')!
+
 Refactory.Browser.RBMethodName comment: ''!
+
 !Refactory.Browser.RBMethodName categoriesForClass!Refactory-Support! !
+
 !Refactory.Browser.RBMethodName methodsFor!
 
 argumentCount
@@ -78,6 +82,7 @@ setSelector: aSymbol arguments: anArray
 
 validate
 	^self conditions validate! !
+
 !Refactory.Browser.RBMethodName categoriesForMethods!
 argumentCount!accessing!public! !
 arguments!accessing!public! !
@@ -105,6 +110,7 @@ selector: aSymbol arguments: stringCollection
 	^(self basicNew)
 		setSelector: aSymbol arguments: stringCollection;
 		yourself! !
+
 !Refactory.Browser.RBMethodName class categoriesForMethods!
 new!instance creation!public! !
 selector:arguments:!instance creation!public! !

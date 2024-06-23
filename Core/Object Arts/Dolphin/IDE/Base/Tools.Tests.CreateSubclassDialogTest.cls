@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.CreateSubclassDialogTest guid: (Core.GUID fromString: '{9c6a31f7-b898-43c0-a175-305e0521267d}')!
+
 Tools.Tests.CreateSubclassDialogTest comment: ''!
+
 !Tools.Tests.CreateSubclassDialogTest methodsFor!
 
 tearDown
@@ -162,6 +165,7 @@ testSuperclassValidation
 	self assert: validationResult hint messageText
 		equals: ClassBuilder.ErrorUnsubclassable << SmallInteger.
 	self assert: validationResult presenter view identicalTo: superclassView! !
+
 !Tools.Tests.CreateSubclassDialogTest categoriesForMethods!
 tearDown!private!running! !
 testNameValidation!public! !

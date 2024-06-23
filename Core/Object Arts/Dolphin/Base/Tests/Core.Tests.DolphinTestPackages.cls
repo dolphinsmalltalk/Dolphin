@@ -7,8 +7,11 @@ Core.Tests.DolphinTestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestPackages guid: (Core.GUID fromString: '{b3de54cd-bdd2-4043-9a29-0b80a02adcc1}')!
+
 Core.Tests.DolphinTestPackages comment: ''!
+
 !Core.Tests.DolphinTestPackages methodsFor!
 
 a
@@ -49,6 +52,7 @@ tearDown
 	Package manager removePackages: toRemove.
 	a := b := c := nil.
 	super tearDown! !
+
 !Core.Tests.DolphinTestPackages categoriesForMethods!
 a!accessing!public! !
 b!accessing!public! !

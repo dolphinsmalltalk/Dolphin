@@ -7,8 +7,11 @@ Core.Tests.AbstractSetTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SetTest guid: (Core.GUID fromString: '{2108692a-0ee3-46ea-a9d6-46b3227871c6}')!
+
 Core.Tests.SetTest comment: ''!
+
 !Core.Tests.SetTest methodsFor!
 
 collectionClass
@@ -42,6 +45,7 @@ testEquals
 	set := self newSet: #(1).
 	setb := self newSet: #(1.0).
 	self assertCommutativelyEqual: set other: setb! !
+
 !Core.Tests.SetTest categoriesForMethods!
 collectionClass!helpers!private! !
 testAddIfAbsent!public! !

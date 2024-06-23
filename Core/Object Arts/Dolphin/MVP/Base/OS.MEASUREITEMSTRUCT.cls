@@ -12,11 +12,15 @@ OS.OwnerDrawStruct
 			'_OffsetOf_itemHeight' -> 16r10.
 			'_OffsetOf_itemWidth' -> 16rC
 		}!
+
 OS.MEASUREITEMSTRUCT guid: (Core.GUID fromString: '{0b195eeb-b134-493b-87f4-a70c213ac690}')!
+
 OS.MEASUREITEMSTRUCT comment: '<MEASUREITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.MEASUREITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The MEASUREITEMSTRUCT structure informs the system of the dimensions of an owner-drawn control or menu item. This allows the system to process user interaction with the control correctly."'!
+
 !OS.MEASUREITEMSTRUCT categoriesForClass!Win-Structs! !
+
 !OS.MEASUREITEMSTRUCT methodsFor!
 
 itemHeight
@@ -38,6 +42,7 @@ itemWidth: anInteger
 	"Set the receiver's 'itemWidth' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_itemWidth put: anInteger! !
+
 !OS.MEASUREITEMSTRUCT categoriesForMethods!
 itemHeight!**compiled accessors**!public! !
 itemHeight:!**compiled accessors**!public! !
@@ -73,6 +78,7 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemWidth #itemHeight)! !
+
 !OS.MEASUREITEMSTRUCT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

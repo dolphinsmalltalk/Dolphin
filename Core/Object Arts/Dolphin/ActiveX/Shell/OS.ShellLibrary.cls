@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ShellLibrary guid: (Core.GUID fromString: '{64674052-3a82-101b-8181-00aa003743d3}')!
+
 OS.ShellLibrary comment: 'ShellLibrary is the <ExternalLibrary> class to represent the Win32 system library, Shell32.DLL'!
+
 !OS.ShellLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.ShellLibrary methodsFor!
 
 dragAcceptFiles: hwnd fAccept: fAccept
@@ -198,6 +202,7 @@ shGetStockIconInfo: siid uFlags: uFlags psii: psii
 
 	<stdcall: hresult SHGetStockIconInfo int32 uint32 SHSTOCKICONINFO*>
 	^self invalidCall: _failureCode! !
+
 !OS.ShellLibrary categoriesForMethods!
 dragAcceptFiles:fAccept:!**auto generated**!public!win32 functions-shell library! !
 dragFinish:!**auto generated**!public!win32 functions-shell library! !
@@ -228,6 +233,7 @@ fileName
 
 sharedVariableName
 	^#{Shell32}! !
+
 !OS.ShellLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

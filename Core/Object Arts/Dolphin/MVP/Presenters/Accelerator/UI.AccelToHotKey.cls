@@ -7,7 +7,9 @@ UI.TypeConverter
 	imports: #(#{OS.HotKeyConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'ModifierMap' -> #(16r1 16r4 16r2 16r8 16r4 16r10) }!
+
 UI.AccelToHotKey guid: (Core.GUID fromString: '{87b4c704-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.AccelToHotKey comment: 'AccelToHotKey is the class of <typeConverter> for use with the <HotKey> control to convert from a hot key code to the usual display representation of such key combinations, e.g. CTRL+C.
 
 Class Variables:
@@ -15,7 +17,9 @@ Class Variables:
 
 
 '!
+
 !UI.AccelToHotKey categoriesForClass!MVP-Type Converters-General! !
+
 !UI.AccelToHotKey methodsFor!
 
 leftToRight: accelKeyCode
@@ -44,6 +48,7 @@ rightToLeft: anInteger
 	"Preserve the HOTKEYF_EXT flag by combining KF_EXTENDED with the VK_"
 	(hotKeyModifiers allMask: HOTKEYF_EXT) ifTrue: [vKey := vKey bitOr: KF_EXTENDED].
 	^AcceleratorTable keyCode: vKey modifiers: (self class hotKeyToAccelModifiers: hotKeyModifiers)! !
+
 !UI.AccelToHotKey categoriesForMethods!
 leftToRight:!operations!private! !
 rightToLeft:!operations!private! !
@@ -85,6 +90,7 @@ initialize
 
 	self addClassConstant: 'ModifierMap'
 		value: {HOTKEYF_SHIFT. FSHIFT. HOTKEYF_CONTROL. FCONTROL. HOTKEYF_ALT. FALT}! !
+
 !UI.AccelToHotKey class categoriesForMethods!
 accelToHotKeyModifiers:!initializing!private! !
 hotKeyToAccelModifiers:!initializing!private! !

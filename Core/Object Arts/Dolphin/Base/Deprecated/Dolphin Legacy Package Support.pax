@@ -70,6 +70,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.LegacyBinaryPackageLoader'
 	instanceVariableNames: 'package stream binaryFiler'
@@ -77,6 +78,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
@@ -84,6 +86,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PoolDictionary
 	variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
@@ -91,6 +94,7 @@ Kernel.PoolDictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AbstractChunkSourceFiler
 	subclass: #'Kernel.LegacyChunkSourceFiler'
 	instanceVariableNames: ''
@@ -164,6 +168,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 				imports: (self importsFromPoolsString: poolDictString).
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
+
 !Core.Class categoriesForMethods!
 sharedPoolNames!pool variables!public! !
 subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
@@ -177,6 +182,7 @@ variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:class
 
 sharedVariableString
 	^$\x20 join: self sharedPoolNames asSortedArray! !
+
 !Core.ClassDescription categoriesForMethods!
 sharedVariableString!accessing!public! !
 !
@@ -201,6 +207,7 @@ beText
 				from: 1
 				to: PageSize
 				startingAt: 1! !
+
 !Core.FileStream categoriesForMethods!
 beBinary!modes!public! !
 beText!modes!public! !
@@ -230,6 +237,7 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 				poolDictionaries: poolDictString.
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
+
 !Core.UndefinedObject categoriesForMethods!
 subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
@@ -285,6 +293,7 @@ script: scriptSymbol
 script: scriptSymbol put: aString 
 	#deprecated.	"In 4.0, but needed to load some old format packages"
 	self scriptAt: scriptSymbol put: aString! !
+
 !Kernel.Package categoriesForMethods!
 aboutBlockBytes:!accessing!private! !
 allResourceNames:!private!source filing! !
@@ -472,6 +481,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^8! !
+
 !Kernel.Package class categoriesForMethods!
 name:comment:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

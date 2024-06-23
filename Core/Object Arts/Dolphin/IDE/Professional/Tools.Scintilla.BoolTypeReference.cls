@@ -7,9 +7,13 @@ Tools.Scintilla.TypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.BoolTypeReference guid: (Core.GUID fromString: '{47f1adac-b9a0-4b2b-8fca-15b2a308ad85}')!
+
 Tools.Scintilla.BoolTypeReference comment: ''!
+
 !Tools.Scintilla.BoolTypeReference categoriesForClass!Development! !
+
 !Tools.Scintilla.BoolTypeReference methodsFor!
 
 defaultValue
@@ -29,6 +33,7 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: #asParameter! !
+
 !Tools.Scintilla.BoolTypeReference categoriesForMethods!
 defaultValue!accessing!public! !
 directFunctionKeyword!constants!generating!public! !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.VersionResource guid: (Core.GUID fromString: '{b76ab5bc-4ba7-40d2-88fe-6a76d28fc30b}')!
+
 OS.VersionResource comment: ''!
+
 !OS.VersionResource categoriesForClass!System-Support! !
+
 !OS.VersionResource methodsFor!
 
 bumpProductVersion
@@ -376,6 +380,7 @@ writeVersionInfoTo: aWriteStream
 	self stringTables notEmpty ifTrue: [self writeStringFileInfoTo: aWriteStream].
 	self translations notEmpty ifTrue: [self writeVarFileInfoTo: aWriteStream].
 	self writeBlockSizeTo: aWriteStream at: blockStart! !
+
 !OS.VersionResource categoriesForMethods!
 bumpProductVersion!operations!public! !
 decodeVersionString:!helpers!private! !
@@ -453,6 +458,7 @@ getVersionResourceOfModule: anExternalResourceLibrary
 
 new
 	^super new initialize! !
+
 !OS.VersionResource class categoriesForMethods!
 forModule:!instance creation!public! !
 forPath:!instance creation!public! !

@@ -7,9 +7,13 @@ Database.DBSchemaStatement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBStatisticsStatement guid: (Core.GUID fromString: '{f9a75139-7d9a-4fba-8c1a-249cc03ff080}')!
+
 Database.DBStatisticsStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about the indices of tables in a database.'!
+
 !Database.DBStatisticsStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBStatisticsStatement methodsFor!
 
 accurate
@@ -49,6 +53,7 @@ type: statisticsTypeInteger
 
 unique: aBoolean 
 	self type: (aBoolean ifTrue: [SQL_INDEX_UNIQUE] ifFalse: [SQL_INDEX_ALL])! !
+
 !Database.DBStatisticsStatement categoriesForMethods!
 accurate!accessing!public! !
 accurate:!accessing!public! !

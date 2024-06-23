@@ -19,7 +19,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pSslHash' -> 16r4.
 			'_OffsetOf_SslHashLength' -> 16r0
 		}!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM guid: (Core.GUID fromString: '{7fe46aef-bb33-40ac-a388-846c53efde1d}')!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM comment: '`HTTP_SERVICE_CONFIG_SSL_PARAM` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -44,7 +46,9 @@ struct tagHTTP_SERVICE_CONFIG_SSL_PARAM {
 } HTTP_SERVICE_CONFIG_SSL_PARAM;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM methodsFor!
 
 AppId
@@ -151,6 +155,7 @@ SslHashLength: anInteger
 	"Set the receiver's 'SslHashLength' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_SslHashLength put: anInteger! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM categoriesForMethods!
 AppId!**compiled accessors**!public! !
 AppId:!**compiled accessors**!public! !
@@ -214,6 +219,7 @@ defineFields
 
 getFieldNames
 	^#(#SslHashLength #pSslHash #AppId #pSslCertStoreName #DefaultCertCheckMode #DefaultRevocationFreshnessTime #DefaultRevocationUrlRetrievalTimeout #pDefaultSslCtlIdentifier #pDefaultSslCtlStoreName #DefaultFlags)! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

@@ -5,9 +5,13 @@ MainTestCase subclass: #FloatANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FloatANSITest guid: (GUID fromString: '{4d838c1d-796f-4138-9bb2-0776679222ae}')!
+
 FloatANSITest comment: ''!
+
 !FloatANSITest categoriesForClass!Unclassified! !
+
 !FloatANSITest methodsFor!
 
 canonicalObject
@@ -1172,6 +1176,7 @@ testXtruncated
 		conformTo: #'number' selector: #'truncated'.
 	self value: [0.0 truncated] should: [:r | r = 0]
 		conformTo: #'number' selector: #'truncated'.! !
+
 !FloatANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

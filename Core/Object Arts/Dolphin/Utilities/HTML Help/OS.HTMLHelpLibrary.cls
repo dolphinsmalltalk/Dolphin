@@ -7,8 +7,11 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.HTMLHelpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.HTMLHelpLibrary guid: (Core.GUID fromString: '{9e0d2430-3877-11d3-93bd-00a024ca708a}')!
+
 OS.HTMLHelpLibrary comment: ''!
+
 !OS.HTMLHelpLibrary methodsFor!
 
 close
@@ -85,6 +88,7 @@ htmlHelpUrl: url style: styleOrNil
 		pszFile: (styleOrNil isNil ifTrue: [url] ifFalse: [url , '>' , styleOrNil])
 		uCommand: HH_DISPLAY_TOPIC
 		dwData: 0! !
+
 !OS.HTMLHelpLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
 handle:!accessing!private! !
@@ -110,6 +114,7 @@ htmlHelpCloseAll
 
 	(default notNil and: [default isOpen]) ifTrue: [
 		default htmlHelpCloseAll]! !
+
 !OS.HTMLHelpLibrary class categoriesForMethods!
 fileName!constants!public! !
 htmlHelpCloseAll!operations!public! !

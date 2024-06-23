@@ -7,9 +7,13 @@ Kernel.AbstractPrimitiveCallNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StPrimitiveNode guid: (Core.GUID fromString: '{d70c8417-c320-465f-ac62-6b81d9e844c9}')!
+
 Kernel.StPrimitiveNode comment: ''!
+
 !Kernel.StPrimitiveNode categoriesForClass!System-Compiler! !
+
 !Kernel.StPrimitiveNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -32,6 +36,7 @@ selector
 
 specialErrorTemp
 	^self hasDefaultErrorTemp ifFalse: [errorTemp name]! !
+
 !Kernel.StPrimitiveNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 hasDefaultErrorTemp!accessing!public! !
@@ -48,6 +53,7 @@ primitiveIndex: anInteger
 	^self new
 		primitiveIndex: anInteger;
 		yourself! !
+
 !Kernel.StPrimitiveNode class categoriesForMethods!
 primitiveIndex:!instance creation!public! !
 !

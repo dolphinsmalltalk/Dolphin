@@ -34,6 +34,7 @@ UI.CommonDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ComDlgStructure
 	subclass: #'OS.CHOOSECOLORW'
 	instanceVariableNames: ''
@@ -59,6 +60,7 @@ choose
 	"Answer a new instance of the receiver chosen from the common color dialog."
 
 	^UI.ColorDialog showModal! !
+
 !Graphics.Color class categoriesForMethods!
 choose!instance creation!public! !
 !
@@ -74,6 +76,7 @@ chooseColor: aWinCHOOSECOLOR
 
 	<stdcall: bool ChooseColorW CHOOSECOLORW*>
 	^self invalidCall: _failureCode! !
+
 !OS.ComDlgLibrary categoriesForMethods!
 chooseColor:!primitives!private!win32 functions-common dialog box! !
 !

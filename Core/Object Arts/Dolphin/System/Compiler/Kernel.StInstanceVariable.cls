@@ -7,7 +7,9 @@ Kernel.StVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StInstanceVariable guid: (Core.GUID fromString: '{9e27c3fe-9793-4a23-9fcd-4f2cb4c86f2b}')!
+
 Kernel.StInstanceVariable comment: '<StInstanceVariable> is a concrete class of <StVariable> to describe instance variables.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	name		<String> identifier of the instance variable.
 
 '!
+
 !Kernel.StInstanceVariable categoriesForClass!Kernel-Objects! !
+
 !Kernel.StInstanceVariable methodsFor!
 
 index
@@ -38,6 +42,7 @@ setScope: aStLexicalScope index: anInteger name: aString
 	scope := aStLexicalScope.
 	index := anInteger.
 	name := aString! !
+
 !Kernel.StInstanceVariable categoriesForMethods!
 index!accessing!public! !
 isInstanceVariable!public!testing! !
@@ -53,6 +58,7 @@ scope: aStClassScope index: anInteger name: aString
 		setScope: aStClassScope
 		index: anInteger
 		name: aString! !
+
 !Kernel.StInstanceVariable class categoriesForMethods!
 scope:index:name:!public! !
 !

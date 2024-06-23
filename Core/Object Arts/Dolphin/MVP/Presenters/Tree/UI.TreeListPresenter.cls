@@ -7,7 +7,9 @@ UI.TreePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TreeListPresenter guid: (Core.GUID fromString: '{2e6f856c-a8b4-4d90-8e8f-adf2452e4bbf}')!
+
 UI.TreeListPresenter comment: 'TreeListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <treeView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list. The hierarchical presentation is controlled by a tree model (set separately using #treeModel:) but the actual visible nodes are determined by the contents of the list. Only those nodes that are actually in the list or are parents of those in the list will be displayed.
 
 Note the <treeModel> must be a VirtualTreeModel, and it is assumed that the list represents a view onto the full set (i.e. a subset) of items in the tree. Furthermore it is assumed that when a new item is added to the list, it is already in the underlying tree, therefore items added to the list are not automatically added into the tree model.
@@ -23,7 +25,9 @@ Class Variables:
 
 
 '!
+
 !UI.TreeListPresenter categoriesForClass!MVP-Presenters! !
+
 !UI.TreeListPresenter methodsFor!
 
 addNewNode: anObject 
@@ -284,6 +288,7 @@ viewModel
 	connected to the receiver's tree model - not the receiver's list model"
 
 	^self treeModel! !
+
 !UI.TreeListPresenter categoriesForMethods!
 addNewNode:!helpers!private! !
 addNode:!helpers!private! !
@@ -333,6 +338,7 @@ resource_Default_view
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.TreeView} 38 #{Core.Array} 27 nil nil 50 2 8 1409352231 1025 32 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 13 nil nil nil 32 nil nil 518 #{Core.Message} #displayString 8 #() 274 #iconImageIndex 8 #() 1350 1 #{Graphics.IconImageManager} nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 9 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
 (ctx view presenter list includes: ctx item) 
 	ifFalse: [ctx forecolor: ctx forecolor faded]]' 8 #[37 105 17 158 159 160 17 161 180 220 6 233 0 163 164 183 106 60 106] #view #presenter #list #item #includes: #forecolor #faded #forecolor: 400 7 257 nil nil nil 550 #{Core.LookupTable} 0 33 #noIcons 1 210 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 642 701 501 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 642 193 193 nil 27)! !
+
 !UI.TreeListPresenter class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !

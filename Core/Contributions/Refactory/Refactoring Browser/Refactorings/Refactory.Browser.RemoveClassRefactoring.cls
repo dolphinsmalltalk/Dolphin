@@ -7,9 +7,13 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RemoveClassRefactoring guid: (Core.GUID fromString: '{80687cb5-257c-4125-9d59-58ebcea2ebcb}')!
+
 Refactory.Browser.RemoveClassRefactoring comment: ''!
+
 !Refactory.Browser.RemoveClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RemoveClassRefactoring methodsFor!
 
 checkReferencesTo: aRBClass
@@ -77,6 +81,7 @@ transform
 	self
 		reparentSubclasses;
 		removeClasses! !
+
 !Refactory.Browser.RemoveClassRefactoring categoriesForMethods!
 checkReferencesTo:!preconditions!private! !
 classNames:!initialize/release!public! !
@@ -100,6 +105,7 @@ model: aRBModel classNames: aClassNameCollection
 		model: aRBModel;
 		classNames: aClassNameCollection;
 		yourself! !
+
 !Refactory.Browser.RemoveClassRefactoring class categoriesForMethods!
 classNames:!instance creation!public! !
 model:classNames:!instance creation!public! !

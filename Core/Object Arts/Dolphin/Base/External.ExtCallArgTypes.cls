@@ -50,7 +50,12 @@ Kernel.SharedPool
 			'ExtCallArgVARIANT' -> 16r16.
 			'ExtCallArgVOID' -> 16r0
 		}!
+
 External.ExtCallArgTypes guid: (Core.GUID fromString: '{653fdbfe-ab01-4733-82d1-8791949ad833}')!
+
 External.ExtCallArgTypes isNonInstantiable: true!
+
 External.ExtCallArgTypes comment: ''!
+
 !External.ExtCallArgTypes categoriesForClass!External-Libraries! !
+

@@ -7,7 +7,9 @@ Refactory.Browser.RBAbstractCondition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBCondition guid: (Core.GUID fromString: '{af1642b9-45bf-427d-a24f-812c3271820d}')!
+
 Refactory.Browser.RBCondition comment: 'Condition represents a condition that must be true for a refactoring to be performed.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Instance Variables:
 						with its parameters. Right now this is pretty useless, other than for printing,
 						but in the future, we hope to be able to use this to assert postconditions of
 						refactorings.'!
+
 !Refactory.Browser.RBCondition categoriesForClass!Refactory-Conditions! !
+
 !Refactory.Browser.RBCondition methodsFor!
 
 check
@@ -40,6 +44,7 @@ type: aSymbol block: aBlock errorString: aStringOrValuable
 withBlock: aBlock 
 	block := aBlock.
 	type := #(#generic)! !
+
 !Refactory.Browser.RBCondition categoriesForMethods!
 check!checking!public! !
 errorBlock:!initialize/release!public! !
@@ -397,6 +402,7 @@ withBlock: aBlock errorString: aStringOrValuable
 	^self new type: #unknown
 		block: aBlock
 		errorString: aStringOrValuable! !
+
 !Refactory.Browser.RBCondition class categoriesForMethods!
 canUnderstand:in:!instance creation!public! !
 checkClassVarName:!private!utilities! !

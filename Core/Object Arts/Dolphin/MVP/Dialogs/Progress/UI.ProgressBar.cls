@@ -7,14 +7,18 @@ UI.ValueConvertingControlView
 	imports: #(#{OS.ProgressBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ProgressBar guid: (Core.GUID fromString: '{87b4c737-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ProgressBar comment: 'ProgressBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ProgressBar must always yield an <integer> value when mapped through the installed type converter. A ProgressBar will normally be used in conjunction with a <NumberPresenter>.
 
 Class Variables:
 	ValidRange	<Interval> describing the range of displayable <integer> values.
 
 '!
+
 !UI.ProgressBar categoriesForClass!MVP-Views! !
+
 !UI.ProgressBar methodsFor!
 
 backcolorChanged
@@ -147,6 +151,7 @@ state
 
 stopMarquee
 	self sendMessage: PBM_SETMARQUEE wParam: 0! !
+
 !UI.ProgressBar categoriesForMethods!
 backcolorChanged!helpers!private! !
 barPosition!accessing!private! !
@@ -198,6 +203,7 @@ winClassName
 
 	^'msctls_progress32'
 ! !
+
 !UI.ProgressBar class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

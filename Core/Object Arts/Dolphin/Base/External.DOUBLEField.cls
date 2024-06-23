@@ -7,9 +7,13 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DOUBLEField guid: (Core.GUID fromString: '{87b4c4e8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.DOUBLEField comment: '<DOUBLEField> is a <ScalarField> class to represent <ExternalStructure> fields that are 64-bit IEEE double precision floating point numbers.'!
+
 !External.DOUBLEField categoriesForClass!External-Data-Types! !
+
 !External.DOUBLEField methodsFor!
 
 accessorMessage
@@ -31,6 +35,7 @@ writeInto: anExternalStructure value: aFloat
 	into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes doubleAtOffset: offset put: aFloat! !
+
 !External.DOUBLEField categoriesForMethods!
 accessorMessage!initializing!private! !
 readFrom:!indirect accessing!private! !
@@ -44,6 +49,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^VMConstants.DoubleSize! !
+
 !External.DOUBLEField class categoriesForMethods!
 byteSize!constants!private! !
 !

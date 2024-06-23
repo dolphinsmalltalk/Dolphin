@@ -7,7 +7,9 @@ Core.FileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ClassLocator guid: (Core.GUID fromString: '{87b4c462-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.ClassLocator comment: 'A ClassLocator is used to find a class for an object being read from an external serialized stream (such as STB). The locator first tries to match an exsiting class already in the image and, if this fails, it is then used to indicate the location of an external binary class that may be loaded into the image. To do this, the locator holds the code base where the external BinaryPackage file resides and a key (usually the class name) that can be used to identify a particular class within the package.  The standard ClassLocator is used when the binary package file can be found on a UNC file system.  If the class is part of an applet and is to be located by a URL then a URLClassLocator should be used instead.
 
 Instance Variables:
@@ -22,7 +24,9 @@ Class Variables:
 	Aliases			<WeakLookupTable> mapping old class names to existing class.
 
 '!
+
 !Kernel.ClassLocator categoriesForClass!System-Binary class loading! !
+
 !Kernel.ClassLocator methodsFor!
 
 bindingReference
@@ -179,6 +183,7 @@ printOn: aStream
 		nextPutAll: ', ';
 		print: key;
 		nextPut: $)! !
+
 !Kernel.ClassLocator categoriesForMethods!
 bindingReference!accessing!private! !
 codeBase!accessing!public! !
@@ -296,6 +301,7 @@ uninitialize
 
 	ImportedClasses := ImportedClassesMutex := Aliases := nil.
 	SessionManager current removeEventsTriggeredFor: self! !
+
 !Kernel.ClassLocator class categoriesForMethods!
 addAlias:forClass:!accessing!public! !
 binaryPackageExtension!constants!public! !

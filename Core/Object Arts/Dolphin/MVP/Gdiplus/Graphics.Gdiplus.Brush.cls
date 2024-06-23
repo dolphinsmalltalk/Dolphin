@@ -7,11 +7,15 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Brush guid: (Core.GUID fromString: '{9a229a16-873b-4102-946a-b33879a9b261}')!
+
 Graphics.Gdiplus.Brush isNonInstantiable: true!
+
 Graphics.Gdiplus.Brush comment: 'GdiplusBrush is an abstract class that defines an object used to paint the interior of graphics shapes, such as rectangles, ellipses, pies, polygons, strings, regions and paths.
 
 '!
+
 !Graphics.Gdiplus.Brush methodsFor!
 
 actualColor
@@ -50,6 +54,7 @@ type
 	buf := UInt32Bytes new.
 	Gdip gdipGetBrushType: self handle type: buf.
 	^buf asInteger! !
+
 !Graphics.Gdiplus.Brush categoriesForMethods!
 actualColor!accessing!public! !
 createGpPen:!operations!private! !
@@ -77,6 +82,7 @@ green
 
 red
 	^self color: Color red! !
+
 !Graphics.Gdiplus.Brush class categoriesForMethods!
 black!instance creation!public! !
 blue!instance creation!public! !

@@ -7,7 +7,9 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DesktopView guid: (Core.GUID fromString: '{87b4c70e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.DesktopView comment: 'DesktopView is a <compositeView> representing the Windows desktop. 
 
 Instance Variables:
@@ -17,7 +19,9 @@ Class Variables:
 	Current	<DesktopView> singleton instance of the desktop.
 
 '!
+
 !UI.DesktopView categoriesForClass!MVP-Views! !
+
 !UI.DesktopView methodsFor!
 
 actualFont
@@ -329,6 +333,7 @@ workArea
 	occupied by the tool bar."
 
 	^(SystemMetrics current getSysParamStruct: SPI_GETWORKAREA type: RECTL) asRectangle! !
+
 !UI.DesktopView categoriesForMethods!
 actualFont!accessing!private! !
 addCommandHistory:!accessing!private! !
@@ -437,6 +442,7 @@ uninitialize
 		winFinalize;
 		handle: nil.
 	Current := nil! !
+
 !UI.DesktopView class categoriesForMethods!
 current!accessing!public! !
 current:!accessing!public! !

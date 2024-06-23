@@ -7,15 +7,20 @@ Core.SortAlgorithm
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PluggableSortAlgorithm guid: (Core.GUID fromString: '{725a8310-4a25-47fa-ba80-9dcef64b53e2}')!
+
 Kernel.PluggableSortAlgorithm isNonInstantiable: true!
+
 Kernel.PluggableSortAlgorithm comment: 'PluggableSortAlgorithm is the class of <SortAlgorithm>s that allow the sort order relationship between elements to be configured by means of a pluggable sort block.
 
 Instance Variables:
 	sortBlock		<dyadicValuable> defines the sort-order relationship.
 
 '!
+
 !Kernel.PluggableSortAlgorithm categoriesForClass!Kernel-Objects! !
+
 !Kernel.PluggableSortAlgorithm methodsFor!
 
 compare: operand1 with: operand2 
@@ -75,6 +80,7 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^sortBlock! !
+
 !Kernel.PluggableSortAlgorithm categoriesForMethods!
 compare:with:!comparing!public! !
 insertionSort:from:to:!operations!private! !
@@ -98,6 +104,7 @@ newSortBlock: aDyadicValuable
 	^(self basicNew)
 		setSortBlock: aDyadicValuable;
 		yourself! !
+
 !Kernel.PluggableSortAlgorithm class categoriesForMethods!
 new!public! !
 newSortBlock:!instance creation!public! !

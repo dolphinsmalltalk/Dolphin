@@ -7,7 +7,9 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.GridLayout guid: (Core.GUID fromString: '{87b4c64a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.GridLayout comment: 'GridLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged in a rectangular grid with either the number of rows or the number of columns specified by positive <integer> values of the #rows and #columns aspects, as follows:
 	
 	(rows,columns)	
@@ -26,7 +28,9 @@ Instance Variables:
 	horizontalGap	<integer>
 	verticalGap		<integer>
 '!
+
 !UI.GridLayout categoriesForClass!MVP-Layout Managers-General! !
+
 !UI.GridLayout methodsFor!
 
 columns
@@ -151,6 +155,7 @@ verticalGap: anInteger
 	"Set the vertical gap between items laid out by the receiver to be the <integer> argument."
 
 	verticalGap := anInteger! !
+
 !UI.GridLayout categoriesForMethods!
 columns!accessing!public! !
 columns:!accessing!public! !

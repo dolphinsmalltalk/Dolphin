@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.SmalltalkStylerTest guid: (Core.GUID fromString: '{a4d5d58a-e2a3-4f2b-8877-0c480d6f3b01}')!
+
 Tools.Tests.SmalltalkStylerTest comment: ''!
+
 !Tools.Tests.SmalltalkStylerTest methodsFor!
 
 restyleFromEachPosition: anObject resumeable: aBoolean
@@ -686,6 +689,7 @@ testUnaryMessageToString
 		in: mock.
 	tokens := mock tokens asArray.
 	self assert: tokens equals: {{1 to: 3. #literalString. '''s'''}. {4 to: 4. #unaryMessage. 'x'}}! !
+
 !Tools.Tests.SmalltalkStylerTest categoriesForMethods!
 restyleFromEachPosition:resumeable:!private!unit tests! !
 scannerClass!private!unit tests! !

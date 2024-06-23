@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RefactoryChangeManager guid: (Core.GUID fromString: '{5bc74f5c-1bcd-4890-ad8b-bf8a58b6df7f}')!
+
 Refactory.Browser.RefactoryChangeManager comment: ''!
+
 !Refactory.Browser.RefactoryChangeManager categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RefactoryChangeManager methodsFor!
 
 addUndo: aRefactoringChange
@@ -63,6 +67,7 @@ undoOperation
 			[| change |
 			change := undo removeLast.
 			redo add: change execute]! !
+
 !Refactory.Browser.RefactoryChangeManager categoriesForMethods!
 addUndo:!public!public access! !
 clearUndoRedoList!private! !
@@ -111,6 +116,7 @@ undoSize: anInteger
 
 uninitialize
 	self nuke! !
+
 !Refactory.Browser.RefactoryChangeManager class categoriesForMethods!
 initialize!class initialization!public! !
 instance!instance creation!public! !

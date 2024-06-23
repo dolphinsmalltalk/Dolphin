@@ -7,9 +7,13 @@ Kernel.LiteralPrinter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLPrinter guid: (Core.GUID fromString: '{c6563849-af3f-422b-b15f-1aba064e1b99}')!
+
 Kernel.STLPrinter comment: ''!
+
 !Kernel.STLPrinter categoriesForClass!Kernel-Objects! !
+
 !Kernel.STLPrinter methodsFor!
 
 printClass: aClass
@@ -17,6 +21,7 @@ printClass: aClass
 
 printProcessor: aProcessor
 	stream nextPutAll: '#{Core.Processor}'! !
+
 !Kernel.STLPrinter categoriesForMethods!
 printClass:!printing!public! !
 printProcessor:!printing!public! !
@@ -33,6 +38,7 @@ printLiteralStoreArray: aLiteralStoreArray
 printLiteralStoreArray: aLiteralStoreArray on: aPuttableStream
 	((STLOutFiler classForVersion: (aLiteralStoreArray at: 2)) literalPrinterClass on: aPuttableStream)
 		printLiteralStoreArray: aLiteralStoreArray! !
+
 !Kernel.STLPrinter class categoriesForMethods!
 printLiteralStoreArray:!instance creation!public! !
 printLiteralStoreArray:on:!instance creation!public! !

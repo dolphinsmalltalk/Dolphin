@@ -13,7 +13,9 @@ External.Structure
 			'_OffsetOf_s_proto' -> 16rC.
 			'_SERVENT_Size' -> 16r10
 		}!
+
 OS.SERVENT guid: (Core.GUID fromString: '{87b4c610-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.SERVENT comment: '<SERVENT> is an <ExternalStructure> class to wrap the struct ''Win32.SERVENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +33,9 @@ struct tagSERVENT {
 	[readonly, helpstring("The name of the protocol to use when contacting the service.")] LPCSTR s_proto;
 } SERVENT;
 '!
+
 !OS.SERVENT categoriesForClass!Win32-Structs! !
+
 !OS.SERVENT methodsFor!
 
 aliases
@@ -73,6 +77,7 @@ s_proto
 	"Answer the <AnsiString> value of the receiver's 's_proto' field."
 
 	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_s_proto)! !
+
 !OS.SERVENT categoriesForMethods!
 aliases!public! !
 port!accessing!public! !
@@ -129,6 +134,7 @@ fromString: aString
 
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !
+
 !OS.SERVENT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

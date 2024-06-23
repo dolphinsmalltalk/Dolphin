@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.TimeTest guid: (Core.GUID fromString: '{5eb1cd02-030d-4b2f-b1df-b06465e5bb19}')!
+
 Core.Tests.TimeTest comment: ''!
+
 !Core.Tests.TimeTest methodsFor!
 
 comparePrintStreamFor: time hr24: hr24 showSeconds: showSeconds expected: expected
@@ -288,6 +291,7 @@ testStoreOn
 						seconds: 58).
 	stored := collection storeString.
 	self assert: (Compiler evaluate: stored) equals: collection! !
+
 !Core.Tests.TimeTest categoriesForMethods!
 comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
 hoursShould:for:!comparing!private! !

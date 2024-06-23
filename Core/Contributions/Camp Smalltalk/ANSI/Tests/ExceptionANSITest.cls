@@ -5,9 +5,13 @@ MainTestCase subclass: #ExceptionANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExceptionANSITest guid: (GUID fromString: '{ebfa6b6b-b8ac-4a72-9b8e-99832ad8e276}')!
+
 ExceptionANSITest comment: ''!
+
 !ExceptionANSITest categoriesForClass!Unclassified! !
+
 !ExceptionANSITest methodsFor!
 
 canonicalObject
@@ -316,6 +320,7 @@ testXtag
 	self should: [exception tag = messageText].
 	exception tag: 1.
 	self should: [exception tag = 1].! !
+
 !ExceptionANSITest categoriesForMethods!
 canonicalObject!public! !
 exceptionClass!private! !

@@ -7,8 +7,11 @@ Core.Tests.ArrayedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ArrayTest guid: (Core.GUID fromString: '{e642efa8-51b6-4f91-a4a0-e83c824052d6}')!
+
 Core.Tests.ArrayTest comment: ''!
+
 !Core.Tests.ArrayTest methodsFor!
 
 collectionClass
@@ -197,6 +200,7 @@ testWithWithWithWithWith
 	"Invoke the method directly so we don't need to install it."
 	array2 := testMethod value: Array withArguments: #(1 2 3 4 5).
 	self assert: array2 equals: array! !
+
 !Core.Tests.ArrayTest categoriesForMethods!
 collectionClass!helpers!private! !
 testCyclicRefPrinting!public! !

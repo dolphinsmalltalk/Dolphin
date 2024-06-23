@@ -28,6 +28,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractRecentMenu
 	subclass: #'UI.RegistryRecentMenu'
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'

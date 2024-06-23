@@ -15,7 +15,9 @@ OS.NMHDR
 			'_OffsetOf_lParam' -> 16r14.
 			'_OffsetOf_pszText' -> 16r1C
 		}!
+
 OS.NMTBDISPINFOW guid: (Core.GUID fromString: '{9b3478db-36e6-431d-8f12-66016b6b5ef8}')!
+
 OS.NMTBDISPINFOW comment: '<NMTBDISPINFOW> is an <ExternalStructure> class to wrap the struct ''Win32.NMTBDISPINFOW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -35,7 +37,9 @@ struct tagNMTBDISPINFOW {
 	int cchText;
 } NMTBDISPINFOW;
 '!
+
 !OS.NMTBDISPINFOW categoriesForClass!Win32-Structs! !
+
 !OS.NMTBDISPINFOW methodsFor!
 
 cchText
@@ -111,6 +115,7 @@ text: aString
 	text := aString displayString asUtf16String.
 	self pszText: text.
 	^text! !
+
 !OS.NMTBDISPINFOW categoriesForMethods!
 cchText!**compiled accessors**!public! !
 cchText:!**compiled accessors**!public! !
@@ -162,6 +167,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwMask #idCommand #lParam #iImage #pszText #cchText)! !
+
 !OS.NMTBDISPINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

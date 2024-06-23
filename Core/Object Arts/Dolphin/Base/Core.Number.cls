@@ -7,12 +7,17 @@ Core.ArithmeticValue
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'MaxLiteralIntegerExponent' -> 16r7D0 }!
+
 Core.Number guid: (Core.GUID fromString: '{87b4c657-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Number isNonInstantiable: true!
+
 Core.Number comment: 'Number is the abstract class which defines the common protocol of all numeric objects.
 
 Its messages support standard arithmetic operations and comparisons, which are mostly implemented by subclasses.'!
+
 !Core.Number categoriesForClass!Magnitude-Numbers! !
+
 !Core.Number methodsFor!
 
 arcCos
@@ -294,6 +299,7 @@ to: stop do: operation
 	the compiler, so this implementation is used only when #perform:'ed."
 
 	(self to: stop) do: operation! !
+
 !Core.Number categoriesForMethods!
 arcCos!mathematical!public! !
 arcSin!mathematical!public! !
@@ -619,6 +625,7 @@ zero
 	is the SmallInteger 0"
 
 	^0! !
+
 !Core.Number class categoriesForMethods!
 errorExponentTooLarge:!parsing!private! !
 errorInvalidFormat!exceptions!private! !

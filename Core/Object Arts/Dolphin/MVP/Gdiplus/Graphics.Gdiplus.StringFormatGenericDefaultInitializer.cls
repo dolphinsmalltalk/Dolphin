@@ -7,8 +7,11 @@ Graphics.Gdiplus.StringFormatGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormatGenericDefaultInitializer guid: (Core.GUID fromString: '{c8f38621-766b-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.StringFormatGenericDefaultInitializer comment: ''!
+
 !Graphics.Gdiplus.StringFormatGenericDefaultInitializer methodsFor!
 
 basicCreateHandle
@@ -22,6 +25,7 @@ isGenericDefault
 
 printAttributesOn: aStream
 	aStream nextPutAll: #genericDefault! !
+
 !Graphics.Gdiplus.StringFormatGenericDefaultInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 isGenericDefault!public!testing! !
@@ -36,6 +40,7 @@ stbConvertFrom: anSTBClassFormat
 
 uninitialize
 	GenericDefault := nil! !
+
 !Graphics.Gdiplus.StringFormatGenericDefaultInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !

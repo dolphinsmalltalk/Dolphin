@@ -7,9 +7,13 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UInt32Array guid: (Core.GUID fromString: '{87b4c5a2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.UInt32Array comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 32-bit unsigned integers.'!
+
 !External.UInt32Array categoriesForClass!External-Data-Structured! !
+
 !External.UInt32Array methodsFor!
 
 uncheckedAt: anInteger 
@@ -20,6 +24,7 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes uint32AtOffset: (indexInteger - 1) * 4 put: valueInteger! !
+
 !External.UInt32Array categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
@@ -31,6 +36,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^UInt32! !
+
 !External.UInt32Array class categoriesForMethods!
 elementClass!constants!public! !
 !

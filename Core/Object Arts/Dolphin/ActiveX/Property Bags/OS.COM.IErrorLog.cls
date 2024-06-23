@@ -7,11 +7,15 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IErrorLog guid: (OS.COM.IID fromString: '{3127ca40-446e-11ce-8135-00aa004bb851}')!
+
 OS.COM.IErrorLog comment: '`OS.COM.IErrorLog` is a wrapper class for the COM interface ''OCIDL.IErrorLog'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The IErrorLog interface is an abstraction for an error log that is used to communicate detailed error information between a client and an object, and example being the error log associated with an IPersistPropertyBag::Load() operation.'!
+
 !OS.COM.IErrorLog categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IErrorLog methodsFor!
 
 addError: pszPropName pExcepInfo: pExcepInfo
@@ -29,6 +33,7 @@ AddError: pszPropName pExcepInfo: pExcepInfo
 
 	<virtual stdcall: hresult 4 lpwstr EXCEPINFO*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IErrorLog categoriesForMethods!
 addError:pExcepInfo:!**auto generated**!methods!public! !
 AddError:pExcepInfo:!**auto generated**!COM Interfaces-IErrorLog!private! !
@@ -47,6 +52,7 @@ defineFunctions
 		defineFunction: #AddError:pExcepInfo:
 			argumentTypes: 'lpwstr EXCEPINFO*'
 ! !
+
 !OS.COM.IErrorLog class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

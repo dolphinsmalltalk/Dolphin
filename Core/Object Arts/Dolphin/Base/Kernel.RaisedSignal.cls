@@ -7,9 +7,13 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RaisedSignal guid: (Core.GUID fromString: '{87b4c55f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.RaisedSignal comment: ''!
+
 !Kernel.RaisedSignal categoriesForClass!Kernel-Exception Handling! !
+
 !Kernel.RaisedSignal methodsFor!
 
 _descriptionFormat
@@ -43,6 +47,7 @@ signalType: aSignal
 	a raise event."
 
 	signalType := aSignal! !
+
 !Kernel.RaisedSignal categoriesForMethods!
 _descriptionFormat!displaying!public! !
 defaultAction!handling!public! !

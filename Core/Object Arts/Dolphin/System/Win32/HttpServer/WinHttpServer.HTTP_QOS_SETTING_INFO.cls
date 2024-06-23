@@ -11,7 +11,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_QosSetting' -> 16r4.
 			'_OffsetOf_QosType' -> 16r0
 		}!
+
 WinHttpServer.HTTP_QOS_SETTING_INFO guid: (Core.GUID fromString: '{a0bcefe3-d299-4e8a-9c7a-6e753a441ad6}')!
+
 WinHttpServer.HTTP_QOS_SETTING_INFO comment: '`HTTP_QOS_SETTING_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_QOS_SETTING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +30,9 @@ struct tagHTTP_QOS_SETTING_INFO {
 } HTTP_QOS_SETTING_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_QOS_SETTING_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_QOS_SETTING_INFO methodsFor!
 
 printFields: aCollection on: aStream
@@ -68,6 +72,7 @@ value: aHttpQosPropertyInfo
 	self
 		QosType: aHttpQosPropertyInfo qosType;
 		QosSetting: aHttpQosPropertyInfo yourAddress! !
+
 !WinHttpServer.HTTP_QOS_SETTING_INFO categoriesForMethods!
 printFields:on:!development!printing!private! !
 propertyId!constants!public! !
@@ -117,6 +122,7 @@ qosSetting: anHttpQosSetting
 	^(self new)
 		value: anHttpQosSetting;
 		yourself! !
+
 !WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

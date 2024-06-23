@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBMethod guid: (Core.GUID fromString: '{4f76178d-295e-4b31-9cda-d786b96c5ed7}')!
+
 Refactory.Browser.RBMethod comment: 'RBMethod represents a method in an RBAbstractClass.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	compiledMethod	<CompiledCode | nil>	the CompiledMethod object (if we have been compiled)
 	selector	<Symbol>	our name
 	source	<String>	our source'!
+
 !Refactory.Browser.RBMethod categoriesForClass!Refactory-Model! !
+
 !Refactory.Browser.RBMethod methodsFor!
 
 = anObject
@@ -177,6 +181,7 @@ source: aString
 	source := aString.
 	"We must clear the cached parse tree"
 	parseTree := nil! !
+
 !Refactory.Browser.RBMethod categoriesForMethods!
 =!comparing!public! !
 boundParseTree!accessing!public! !
@@ -222,6 +227,7 @@ for: aRBClass source: aString selector: aSelector
 		modelClass: aRBClass
 		selector: aSelector
 		source: aString! !
+
 !Refactory.Browser.RBMethod class categoriesForMethods!
 for:change:!instance creation!public! !
 for:fromMethod:!instance creation!public! !

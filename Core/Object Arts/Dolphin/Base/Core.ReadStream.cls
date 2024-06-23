@@ -7,10 +7,14 @@ Core.PositionableStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ReadStream guid: (Core.GUID fromString: '{87b4c6fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.ReadStream comment: 'Class ReadStream is a concrete subclass of PositionableStream that represents
 an accessor that can only read elements from a collection.'!
+
 !Core.ReadStream categoriesForClass!Collections-Streams! !
+
 !Core.ReadStream methodsFor!
 
 basicNext
@@ -97,6 +101,7 @@ nextAvailable
 
 readStream
 	^self! !
+
 !Core.ReadStream categoriesForMethods!
 basicNext!accessing!public! !
 basicNext:into:startingAt:!accessing!public! !

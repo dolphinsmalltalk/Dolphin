@@ -33,6 +33,7 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBSourceFormatter
 	subclass: #'Refactory.Browser.RBConfigurableFormatter'
 	instanceVariableNames: 'lookaheadCode originalSource'
@@ -40,6 +41,7 @@ Refactory.Browser.RBSourceFormatter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBSourceFormatter
 	subclass: #'Refactory.Browser.RBFormatter'
 	instanceVariableNames: 'firstLineLength'

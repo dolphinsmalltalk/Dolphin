@@ -12,7 +12,9 @@ Kernel.AttributeDescriptor
 			'ReadOnlyPresenterBlockMask' -> 16r10000.
 			'ValueWorkspaceEditorMask' -> 16r20000
 		}!
+
 Tools.Aspect guid: (Core.GUID fromString: '{87b4c4d7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.Aspect comment: 'Part of the PublishedAspectorInspector framework.
 
 <Aspect>s are used to describe the published aspects of various objects. An Aspect descriptor can be combined with a particular object to create an <AspectAccessor> that can be used to access the subject object with the value/value> protocol. The <AspectAccessor> uses the aspect name to construct accessor messages (e.g. #myAspect and #myAspect:) for getting and setting the value. An Aspect instance also holds a presenter block (a <dyadicValuable>) which, when evaluated, will create a presenter suitable for editing the aspect as its model.
@@ -24,7 +26,9 @@ Instance Variables:
 	presenterBlock	<dyadicValuable> to be evaluated to bring up a presenter on the aspect
 	editBlock		<monadicValue> to be evaluated to edit the aspect
 	isMutable		<Boolean> specifying whether the aspect can be modified in-place'!
+
 !Tools.Aspect categoriesForClass!Attribute-Definition! !
+
 !Tools.Aspect methodsFor!
 
 <= anAspect
@@ -293,6 +297,7 @@ writeInto: subjectObject value: valueObject
 	putBlock
 		ifNil: [subjectObject perform: self putSelector with: valueObject]
 		ifNotNil: [putBlock value: subjectObject value: valueObject]! !
+
 !Tools.Aspect categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -1049,6 +1054,7 @@ time: aSymbol
 	^(self name: aSymbol presenterBlock: [:p :m | TimePresenter createIn: p on: m])
 		type: Time;
 		yourself! !
+
 !Tools.Aspect class categoriesForMethods!
 autostring:!instance creation!public! !
 bitmap:!instance creation!public! !

@@ -7,11 +7,15 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STBGlobalObjectProxy guid: (Core.GUID fromString: '{87b4c6ed-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBGlobalObjectProxy comment: '`STBGlobalObjectProxy` is part of a mechanism used in the original binary format Dolphin packages that was used to save/restore ''global'' variables (i.e. static variables in the Smalltalk namespace). It was not used in the source format packages introduced in Dolphin 5. 
 
 The mechanism is now retained only to enable loading of old STB files. It was designed rather specifically for code packages, as in other cases having the side effect of creating a global variable when deserialising an object graph from STB is rather undesirable. The mechanism is no longer supported by the latest version of the STx filers in Dolphin 8 and should be considered deprecated.'!
+
 !STBGlobalObjectProxy categoriesForClass!System-Binary storage! !
+
 !STBGlobalObjectProxy methodsFor!
 
 object: anObject
@@ -50,6 +54,7 @@ value
 	"Install object as a global in the Smalltalk System Dictionary and answer it."
 
 	^Smalltalk at: symbol put: object! !
+
 !STBGlobalObjectProxy categoriesForMethods!
 object:!accessing!private! !
 stbFixup:at:!accessing!public! !
@@ -68,6 +73,7 @@ for: anObject name: aSymbol
 		symbol: aSymbol;
 		object: anObject;
 		yourself! !
+
 !STBGlobalObjectProxy class categoriesForMethods!
 for:name:!instance creation!public! !
 !

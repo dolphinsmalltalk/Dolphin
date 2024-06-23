@@ -14,8 +14,11 @@ Core.UtfEncodedString
 			'SurrogateOffset' -> 16r35FDC00.
 			'TrailSurrogateMask' -> 16rDC00
 		}!
+
 Core.Utf16String guid: (Core.GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Utf16String isNullTerminated: true!
+
 Core.Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. However, it is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.
 
 When considering a `Utf16String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-16 code units, *not* Unicode code points. Most common code points for mainstream languages are represented by a single UTF-16 code unit, but it is unwise to ignore the code-point/code-unit distinction. Code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point for those characters outside the Unicode basic plane. UTF-16 surrogate characters can be inserted into other `Utf16String`s (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf8String`s. To enumerate a `Utf16String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
@@ -29,7 +32,9 @@ It should also be noted that the `size` of a `Utf16String` is a count of the num
 ''🐬'' asUtf16String size	"=> 2"
 ```
 To better understand the full implications of the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy it is recommended to read the cautionary notes in the abstract superclass `UtfEncodedString`.'!
+
 !Core.Utf16String categoriesForClass!Collections-Text! !
+
 !Core.Utf16String methodsFor!
 
 _beginsString: aString
@@ -325,6 +330,7 @@ uint16AtOffset: anInteger put: anObject
 
 	<primitive: 125>
 	^self primitiveFailed: _failureCode! !
+
 !Core.Utf16String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _endsString:!comparing!double dispatch!private! !
@@ -434,6 +440,7 @@ with: aCharacter
 			[(self new: 2)
 				encodedAt: 1 put: aCharacter;
 				yourself]! !
+
 !Core.Utf16String class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 codePage!constants!public! !

@@ -7,8 +7,11 @@ OS.COM.InterfaceFunction
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.DispatchFunction guid: (Core.GUID fromString: '{4596042f-9e7a-4481-8f6c-d71e47fc990c}')!
+
 OS.COM.DispatchFunction comment: ''!
+
 !OS.COM.DispatchFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress 
@@ -32,6 +35,7 @@ callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 				withArgumentsAt: anAddress
 				descriptor: descriptor]
 		ifNil: [E_NOTIMPL]! !
+
 !OS.COM.DispatchFunction categoriesForMethods!
 callback:interface:withArgumentsAt:!evaluating!private! !
 !

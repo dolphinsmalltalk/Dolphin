@@ -103,7 +103,9 @@ Core.Object
 								'WORD' -> 16r5
 							})
 		}!
+
 External.FunctionDescriptor guid: (Core.GUID fromString: '{87b4c487-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.FunctionDescriptor comment: '`FunctionDescriptor` instances describe the return type, parameter types, and calling convention of native function calls for external interfacing purposes. They can be used to describe both outbound and inbound calls, represented by `ExternalMethod` and `External.Callback` instances respectively.
 
 The argument/return types supported by the primitive DLL call function are:
@@ -137,7 +139,9 @@ The argument/return types supported by the primitive DLL call function are:
   - `variant`	`VARIANT`
 	
 Note that in general, the `UndefinedObject`, `nil`, is interchangeable with 0, or `NULL`, when interfacing with external library functions. Nullness can be tested with the `#isNull` message, with the `UndefinedObject` and `SmallInteger` zero answering true.'!
+
 !External.FunctionDescriptor categoriesForClass!System-Support! !
+
 !External.FunctionDescriptor methodsFor!
 
 argumentCount
@@ -287,6 +291,7 @@ returnType
 	type := self retType.
 	class := (self class typeHasArgument: type) ifTrue: [self at: (descriptor at: RetClassIndex) + 1].
 	^self class nameOf: type type: class! !
+
 !External.FunctionDescriptor categoriesForMethods!
 argumentCount!accessing!private! !
 argumentIndexFromOffset:!helpers!private! !
@@ -757,6 +762,7 @@ typeHasArgument: ordinalType
 	accompanying it."
 
 	^ordinalType >= ExtCallArgSTRUCT! !
+
 !External.FunctionDescriptor class categoriesForMethods!
 argumentTypes:!instance creation!public! !
 callingConvention:returnType:argumentTypes:!instance creation!public! !

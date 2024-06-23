@@ -7,9 +7,13 @@ Refactory.Browser.ClassRefactoring
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassNameToBindingReferenceRefactoring guid: (Core.GUID fromString: '{889a55db-e170-4af7-999d-97369a4f1832}')!
+
 Refactory.Browser.ClassNameToBindingReferenceRefactoring comment: 'Component refactoring to replace old-style symbolic references to classes, e.g. `Smalltalk at: #DiffBrowser` with literal binding references as part of renaming a class in Smalltalk into another namespace.'!
+
 !Refactory.Browser.ClassNameToBindingReferenceRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.ClassNameToBindingReferenceRefactoring methodsFor!
 
 className: aString
@@ -53,6 +57,7 @@ unqualifiedName
 
 unqualifiedName: aSymbol
 	unqualifiedName := aSymbol! !
+
 !Refactory.Browser.ClassNameToBindingReferenceRefactoring categoriesForMethods!
 className:!accessing!public! !
 preconditions!preconditions!public! !
@@ -70,6 +75,7 @@ model: aRBModel replaceSymbolicReferencesTo: aClass
 		model: aRBModel;
 		className: aClass fullName;
 		yourself! !
+
 !Refactory.Browser.ClassNameToBindingReferenceRefactoring class categoriesForMethods!
 model:replaceSymbolicReferencesTo:!instance creation!public! !
 !

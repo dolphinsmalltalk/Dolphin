@@ -7,14 +7,19 @@ Core.String
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.AnsiString guid: (Core.GUID fromString: '{5b59aa2a-fc01-4424-95aa-9ffb62e6af03}')!
+
 Core.AnsiString isNullTerminated: true!
+
 Core.AnsiString comment: '`AnsiString` is the class of `Strings`s that use a single-byte encoding based on the current ANSI code page (e.g. Windows 1252). "ANSI" is a bit of a misnomer, but is used because it is common parlance in the Windows API documentation for APIs that expect strings encoded with the "ANSI" code page. 
 
 Note that Ansi code pages that require multiple bytes to represent each character are not supported properly in Dolphin.
 
 In all but limited circumstances `Utf8String`s should be used in preference as these can contain any Unicode character and are independent of code page. Consequently the default string type in Dolphin as of 7.1 is `Utf8String` rather than `AnsiString`.'!
+
 !Core.AnsiString categoriesForClass!Collections-Text! !
+
 !Core.AnsiString methodsFor!
 
 _beginsString: aString
@@ -119,6 +124,7 @@ urlDecoded
 									^self].
 							unescaped nextPut: ch]]].
 	^unescaped contents! !
+
 !Core.AnsiString categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _endsString:!comparing!double dispatch!private! !
@@ -191,6 +197,7 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 		at: 4 put: fourthCharacter;
 		at: 5 put: fifthCharacter;
 		yourself! !
+
 !Core.AnsiString class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 coerceString:!instance creation!public! !

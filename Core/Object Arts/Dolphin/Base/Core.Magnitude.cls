@@ -7,14 +7,19 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Magnitude guid: (Core.GUID fromString: '{87b4c49b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Magnitude isNonInstantiable: true!
+
 Core.Magnitude comment: 'Magnitude is an abstract class which provides the protocol objects which can be compared
 along a linear dimension, e.g. Numbers, Dates, Times.
 
 Subclasses of Magnitude must implement the following comparing protocol (at the very least):
 #<, #=, #hash'!
+
 !Core.Magnitude categoriesForClass!Magnitude-General! !
+
 !Core.Magnitude methodsFor!
 
 < aMagnitude
@@ -103,6 +108,7 @@ printString
 	stream := String smalltalkWriteStream: 32.
 	self printOn: stream.
 	^stream contents! !
+
 !Core.Magnitude categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !

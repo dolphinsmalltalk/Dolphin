@@ -7,9 +7,13 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AbstractClassVariableRefactoring guid: (Core.GUID fromString: '{4f0f7ebc-00ab-4a37-8aa9-f879d6b34c5a}')!
+
 Refactory.Browser.AbstractClassVariableRefactoring comment: ''!
+
 !Refactory.Browser.AbstractClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.AbstractClassVariableRefactoring methodsFor!
 
 abstractClassReferences
@@ -82,6 +86,7 @@ transform
 		abstractInstanceReferences;
 		abstractClassReferences;
 		abstractExternalReferences! !
+
 !Refactory.Browser.AbstractClassVariableRefactoring categoriesForMethods!
 abstractClassReferences!private!transforming! !
 abstractExternalReferences!private!transforming! !

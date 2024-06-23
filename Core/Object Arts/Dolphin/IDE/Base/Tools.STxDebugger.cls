@@ -7,10 +7,15 @@ Kernel.STxInFilerWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.STxDebugger guid: (Core.GUID fromString: '{8a787f20-7f70-4b61-993a-a324bc0645a5}')!
+
 Tools.STxDebugger isNonInstantiable: true!
+
 Tools.STxDebugger comment: '`STxDebugger` is an abstract class of `STxInFiler` decorators that can create a textual dump of the content of an STx object stream for diagnostic purposes. There are concrete subclasses specific to STB and STL.'!
+
 !Tools.STxDebugger categoriesForClass!System-Binary storage! !
+
 !Tools.STxDebugger methodsFor!
 
 basicNext
@@ -87,6 +92,7 @@ traceStream
 
 traceStream: aPuttableStream 
 	traceStream := aPuttableStream! !
+
 !Tools.STxDebugger categoriesForMethods!
 basicNext!private! !
 dump!operations!public! !
@@ -113,6 +119,7 @@ dumpToTranscript: aReadStream
 		traceStream: Transcript;
 		dump.
 	Transcript cr! !
+
 !Tools.STxDebugger class categoriesForMethods!
 dump:!public! !
 dumpToTranscript:!public! !

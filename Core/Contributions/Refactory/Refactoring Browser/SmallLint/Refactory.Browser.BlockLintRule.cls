@@ -7,9 +7,13 @@ Refactory.Browser.BasicLintRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BlockLintRule guid: (Core.GUID fromString: '{7468dd67-0d2d-4f26-8882-01746170e78a}')!
+
 Refactory.Browser.BlockLintRule comment: ''!
+
 !Refactory.Browser.BlockLintRule categoriesForClass!Refactory-Lint! !
+
 !Refactory.Browser.BlockLintRule methodsFor!
 
 checkClass: aSmalllintContext 
@@ -34,6 +38,7 @@ undeclaredVariables
 
 	#rbFix.	"Dolphin does not support forward refs. to undeclared variables"
 	^Dictionary new! !
+
 !Refactory.Browser.BlockLintRule categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -722,6 +727,7 @@ vernacularSelector
 
 vernacularSelectors
 	^#(#arse #fart)! !
+
 !Refactory.Browser.BlockLintRule class categoriesForMethods!
 abstractClass!possible bugs!public! !
 addRemoveDependents!possible bugs!public! !

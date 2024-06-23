@@ -7,10 +7,15 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.FinalizableStructure guid: (Core.GUID fromString: '{87b4c5b9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.FinalizableStructure isNonInstantiable: true!
+
 External.FinalizableStructure comment: ''!
+
 !External.FinalizableStructure categoriesForClass!External-Data-Structured-COM! !
+
 !External.FinalizableStructure methodsFor!
 
 initialize
@@ -37,6 +42,7 @@ onStartup
 	self beUnfinalizable.
 	self isPointer ifTrue: [
 		bytes := nil]! !
+
 !External.FinalizableStructure categoriesForMethods!
 initialize!initializing!private! !
 needsFree!private!realizing/unrealizing! !
@@ -69,6 +75,7 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
+
 !External.FinalizableStructure class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 initialize!development!initializing!private! !

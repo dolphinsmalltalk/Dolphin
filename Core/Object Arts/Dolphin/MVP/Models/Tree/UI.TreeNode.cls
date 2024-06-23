@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TreeNode guid: (Core.GUID fromString: '{87b4c4c7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.TreeNode comment: 'TreeNode represents a node of a tree in a <TreeModel> hierarchy.
 
 Instance Variables:
@@ -18,7 +20,9 @@ Instance Variables:
 
 
 '!
+
 !UI.TreeNode categoriesForClass!MVP-Models-Support! !
+
 !UI.TreeNode methodsFor!
 
 addChildNode: aTreeNode
@@ -115,6 +119,7 @@ removeChildNode: aTreeNode ifAbsent: exceptionHandler
 
 
 ! !
+
 !UI.TreeNode categoriesForMethods!
 addChildNode:!adding!public! !
 beChildless!modes!public! !
@@ -137,6 +142,7 @@ for: anObject
 	"Answer an instance of the receiver that is to represent anObject"
 
 	^self new object: anObject! !
+
 !UI.TreeNode class categoriesForMethods!
 for:!instance creation!public! !
 !

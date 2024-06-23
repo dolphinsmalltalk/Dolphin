@@ -7,9 +7,13 @@ Refactory.Browser.ClassAttributeChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassSpecialBehaviorChange guid: (Core.GUID fromString: '{f2364206-9c2f-4a40-bef1-5d27cbd5dee5}')!
+
 Refactory.Browser.ClassSpecialBehaviorChange comment: ''!
+
 !Refactory.Browser.ClassSpecialBehaviorChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.ClassSpecialBehaviorChange methodsFor!
 
 asUndoOperation
@@ -39,6 +43,7 @@ primitiveExecute
 	class := self changeClass.
 	class instanceSpec: ((class instanceSpec bitAnd: Behavior._FundamentalShapeMask)
 				bitOr: (instanceSpec maskClear: Behavior._FundamentalShapeMask))! !
+
 !Refactory.Browser.ClassSpecialBehaviorChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !
@@ -62,6 +67,7 @@ uniquelyIdentify: aClass with: aGUID
 		changeClass: aClass;
 		instanceSpec: aGUID;
 		yourself! !
+
 !Refactory.Browser.ClassSpecialBehaviorChange class categoriesForMethods!
 setSpecialBehavior:of:!instance creation!public! !
 uniquelyIdentify:with:!instance creation!public! !

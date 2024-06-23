@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.Win32Errors} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceImplementation guid: (Core.GUID fromString: '{87b4c467-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.InterfaceImplementation isNonInstantiable: true!
+
 OS.COM.InterfaceImplementation comment: '`OS.COM.InterfaceImplementation` is an abstract class which provides the basic implementation for a COM object such as interface querying (i.e. implements #queryInterface:ifNone: sent by the framework when a previously unencountered interface is requested of the COM object), factory registration, CLSID access, and aggregation.
 
 Note that, although it is convenient, it is not necessary for a COM server object to be a subclass of this class: any Dolphin object can be a COM object. The COM framework provides a wrapper class, `OS.COM.ObjectStub`, which takes care of the boilerplate implementation details, and hence the responsibilities here are few and simple. The only message sent by framework to a COM server object is #queryInterface:ifNone:, and even that is optional. If your class sits more happily elsewhere in the hierarchy then this class is a suitable reference for implementing COM support directly in your class.
@@ -24,7 +27,9 @@ Subclasses may implement:
 Having added your subclass (and implemented #clsid), you can expose your object to external clients by sending the class the #registerClassFactory method. This need only be done once and a class factory will then be registered with COM each time the image is started. #revokeClassFactories permanently undoes the registration.
 
 Should you wish to aggregate another object in your subclass then see the comment in the #aggregatee instance method for further instructions.'!
+
 !OS.COM.InterfaceImplementation categoriesForClass!COM-Implementations! !
+
 !OS.COM.InterfaceImplementation methodsFor!
 
 aggregatee
@@ -101,6 +106,7 @@ supportedInterfaces
 	as necessary."
 
 	^self subclassResponsibility! !
+
 !OS.COM.InterfaceImplementation categoriesForMethods!
 aggregatee!accessing!public! !
 clsid!accessing!public! !
@@ -294,6 +300,7 @@ versionIndependentProgID
 	| pid |
 	pid := self progID.
 	^pid copyFrom: 1 to: (pid lastIndexOf: $.)-1! !
+
 !OS.COM.InterfaceImplementation class categoriesForMethods!
 clsid!constants!public! !
 inprocSurrogate:!constants!public! !

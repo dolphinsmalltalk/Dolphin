@@ -7,9 +7,13 @@ Tools.SmalltalkToolShell
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.IdeaSpaceShell guid: (Core.GUID fromString: '{402cf4f5-0b2e-4533-9664-c99fe1bf84fa}')!
+
 Tools.IdeaSpaceShell comment: ''!
+
 !Tools.IdeaSpaceShell categoriesForClass!MVP-Presenters! !
+
 !Tools.IdeaSpaceShell methodsFor!
 
 absorbCard: card
@@ -511,6 +515,7 @@ watermarkBitmap
 		ifNil: 
 			[Watermark := (self icon asAlphaBitmap: 256 @ 256) createWatermarkAlphaPercent: 60
 						backcolor: backgroundPresenter view backcolor]! !
+
 !Tools.IdeaSpaceShell categoriesForMethods!
 absorbCard:!private! !
 addIdeaCardTools:!helpers!private! !
@@ -664,6 +669,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10599! !
+
 !Tools.IdeaSpaceShell class categoriesForMethods!
 defaultAdditionalAccelerators!constants!private! !
 defaultFileExtension!constants!public! !

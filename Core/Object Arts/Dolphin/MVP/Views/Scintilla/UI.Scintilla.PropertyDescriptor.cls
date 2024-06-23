@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'AlwaysPrintMask' -> 16r1. 'NonBrowsableMask' -> 16r4. 'NullableMask' -> 16r2 }!
+
 UI.Scintilla.PropertyDescriptor guid: (Core.GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
+
 UI.Scintilla.PropertyDescriptor isNonInstantiable: true!
+
 UI.Scintilla.PropertyDescriptor comment: 'Scintilla `PropertyDescriptor`s provide metadata for individually settable scalar properties of a `ScintillaView`, e.g. the background colour of a marker.
 
 ## Instance Variables:
@@ -27,7 +30,9 @@ UI.Scintilla.PropertyDescriptor comment: 'Scintilla `PropertyDescriptor`s provid
 
 
 '!
+
 !UI.Scintilla.PropertyDescriptor categoriesForClass!Kernel-Objects! !
+
 !UI.Scintilla.PropertyDescriptor methodsFor!
 
 alwaysPrint
@@ -166,6 +171,7 @@ shouldPrint: aScintillaAttribute
 
 valueFromLResult: anObject 
 	^anObject! !
+
 !UI.Scintilla.PropertyDescriptor categoriesForMethods!
 alwaysPrint!public!testing! !
 alwaysPrint:!accessing!public! !
@@ -207,6 +213,7 @@ key: aSymbol defaultValue: anObject setMessage: anInteger
 		key: aSymbol
 		defaultValue: anObject
 		setMessage: anInteger! !
+
 !UI.Scintilla.PropertyDescriptor class categoriesForMethods!
 icon!constants!development!public! !
 key:defaultValue:setMessage:!instance creation!public! !

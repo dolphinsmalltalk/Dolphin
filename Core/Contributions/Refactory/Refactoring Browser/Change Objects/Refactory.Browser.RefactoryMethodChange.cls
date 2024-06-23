@@ -7,10 +7,15 @@ Refactory.Browser.ClassModificationChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RefactoryMethodChange guid: (Core.GUID fromString: '{3bcbcd05-88cc-4f31-ac20-084fb202cbc6}')!
+
 Refactory.Browser.RefactoryMethodChange isNonInstantiable: true!
+
 Refactory.Browser.RefactoryMethodChange comment: ''!
+
 !Refactory.Browser.RefactoryMethodChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RefactoryMethodChange methodsFor!
 
 afterText
@@ -31,6 +36,7 @@ selector: aSymbol
 
 source
 	^self subclassResponsibility! !
+
 !Refactory.Browser.RefactoryMethodChange categoriesForMethods!
 afterText!printing!public! !
 beforeText!printing!public! !

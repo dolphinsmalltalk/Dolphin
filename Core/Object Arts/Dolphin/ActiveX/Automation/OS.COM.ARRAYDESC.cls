@@ -11,7 +11,9 @@ OS.COM.AbstractELEMDESC
 			'_OffsetOf_cDims' -> 16r8.
 			'_OffsetOf_rgbounds' -> 16rC
 		}!
+
 OS.COM.ARRAYDESC guid: (Core.GUID fromString: '{c06f3b6c-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.ARRAYDESC comment: '`OS.COM.ARRAYDESC` is an ExternalStructure class to represent the COM Automation ARRAYDESC structure.
 
 ARRAYDESC describes an Automation safe array, specifically the type of the elements, the number of dimensions, and the bounds for each dimension.
@@ -20,7 +22,9 @@ Member variables:
 	tdescElem	`TYPEDESC` Type of the elements of the array
 	cDims		`WORD` Number of dimensions
 	rgbounds	`SAFEARRAYBOUND[]` Variable length array containing array dimension bounds'!
+
 !OS.COM.ARRAYDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.ARRAYDESC methodsFor!
 
 cDims
@@ -41,6 +45,7 @@ rgbounds
 		fromAddress: bytes yourAddress + _OffsetOf_rgbounds
 		length: self cDims
 		elementClass: SAFEARRAYBOUND! !
+
 !OS.COM.ARRAYDESC categoriesForMethods!
 cDims!**compiled accessors**!private! !
 elementCount!accessing!private! !
@@ -76,6 +81,7 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #cDims #rgbounds)! !
+
 !OS.COM.ARRAYDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

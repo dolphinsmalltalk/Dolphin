@@ -24,6 +24,10 @@ Kernel.SharedPool
 			'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
 			'WCODE_HRESULT_LAST' -> -16r7FFB0001
 		}!
+
 OS.COM.AutomationErrors guid: (Core.GUID fromString: '{25804201-a9c9-4774-9e53-bbdb9aabf7db}')!
+
 OS.COM.AutomationErrors isNonInstantiable: true!
+
 OS.COM.AutomationErrors comment: ''!
+

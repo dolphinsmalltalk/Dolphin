@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_eM22' -> 16rC.
 			'_XFORM_Size' -> 16r18
 		}!
+
 OS.XFORM guid: (Core.GUID fromString: '{94b29afb-539e-4f6e-81d0-ed7aeb51f4ff}')!
+
 OS.XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -34,7 +36,9 @@ struct tagXFORM {
 	float eDy;
 } XFORM;
 '!
+
 !OS.XFORM categoriesForClass!Win32-Structs! !
+
 !OS.XFORM methodsFor!
 
 eDx
@@ -96,6 +100,7 @@ eM22: aFloat
 	"Set the receiver's 'eM22' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_eM22 put: aFloat! !
+
 !OS.XFORM categoriesForMethods!
 eDx!**compiled accessors**!public! !
 eDx:!**compiled accessors**!public! !
@@ -142,6 +147,7 @@ defineFields
 
 getFieldNames
 	^#(#eM11 #eM12 #eM21 #eM22 #eDx #eDy)! !
+
 !OS.XFORM class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

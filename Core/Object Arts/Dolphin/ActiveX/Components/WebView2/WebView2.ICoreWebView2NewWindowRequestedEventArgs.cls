@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2NewWindowRequestedEventArgs guid: (OS.COM.IID fromString: '{34acb11c-fc37-4418-9132-f9c21d1eafb9}')!
+
 WebView2.ICoreWebView2NewWindowRequestedEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2NewWindowRequestedEventArgs comment: '`ICoreWebView2NewWindowRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -50,7 +53,9 @@ interface ICoreWebView2NewWindowRequestedEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs methodsFor!
 
 get_Handled: handled
@@ -211,6 +216,7 @@ windowFeatures
 	answer := ICoreWebView2WindowFeatures newPointer.
 	self get_WindowFeatures: answer.
 	^answer asObject! !
+
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
@@ -261,6 +267,7 @@ defineFunctions
 
 latestDerivation
 	^##(super latestDerivation)! !
+
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 latestDerivation!enquiries!public! !

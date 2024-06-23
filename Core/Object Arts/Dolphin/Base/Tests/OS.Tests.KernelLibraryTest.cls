@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.KernelLibraryTest guid: (Core.GUID fromString: '{7b0f6540-a426-45fa-b5c3-5bb94cdcfa07}')!
+
 OS.Tests.KernelLibraryTest comment: ''!
+
 !OS.Tests.KernelLibraryTest methodsFor!
 
 maxPathComponentLength: aString
@@ -161,6 +164,7 @@ testSetEnvironmentVariable
 	self assert: (Kernel32 setEnvironmentVariable: unique lpValue: nil).
 	self assertIsNil: (Kernel32 getEnvironmentVariable: unique)]
 			ensure: [Kernel32 setEnvironmentVariable: unique lpValue: nil]! !
+
 !OS.Tests.KernelLibraryTest categoriesForMethods!
 maxPathComponentLength:!helpers!private! !
 testCreateDirectory!public!unit tests! !

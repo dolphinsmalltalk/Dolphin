@@ -32,6 +32,7 @@ Security.ProtectedProductSerialNumber
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ProtectedProductSessionManager
 	subclass: #'Security.Examples.ProtectedNotepadSessionManager'
 	instanceVariableNames: ''

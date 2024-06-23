@@ -7,8 +7,11 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequencedGrowableCollection guid: (Core.GUID fromString: '{87b4c50f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.SequencedGrowableCollection isNonInstantiable: true!
+
 Core.SequencedGrowableCollection comment: 'SequencedGrowableCollection is the abstract class of sequenceable, contractible, and extensible collections.
 
 SequencedGrowableCollections comply with the ANSI protocols:
@@ -19,7 +22,9 @@ SequencedGrowableCollections comply with the ANSI protocols:
 	sequencedContractibleCollection
 	sequencedCollection
 	sequencedExtensibleCollection'!
+
 !Core.SequencedGrowableCollection categoriesForClass!Collections-Sequenceable! !
+
 !Core.SequencedGrowableCollection methodsFor!
 
 add: newElement
@@ -171,6 +176,7 @@ removeLastIfAbsent: exceptionHandler
 
 	self isEmpty ifTrue: [^exceptionHandler value].
 	^self removeAtIndex: self size! !
+
 !Core.SequencedGrowableCollection categoriesForMethods!
 add:!adding!public! !
 add:after:!adding!public! !

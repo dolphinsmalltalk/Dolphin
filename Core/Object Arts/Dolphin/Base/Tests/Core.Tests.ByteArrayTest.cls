@@ -7,8 +7,11 @@ Core.Tests.ArrayedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ByteArrayTest guid: (Core.GUID fromString: '{f83d3bb0-c4b4-4f92-9d89-fd89e6e25da1}')!
+
 Core.Tests.ByteArrayTest comment: ''!
+
 !Core.Tests.ByteArrayTest methodsFor!
 
 assimilate: anObject 
@@ -185,6 +188,7 @@ uint16Values
 
 uint32Values
 	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16r7FFFFFFF 16r80000000 16rFFFFFFFE 16rFFFFFFFF)! !
+
 !Core.Tests.ByteArrayTest categoriesForMethods!
 assimilate:!public!unit tests! !
 collectionClass!helpers!private! !

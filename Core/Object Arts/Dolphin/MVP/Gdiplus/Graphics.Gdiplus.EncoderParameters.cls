@@ -11,7 +11,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Count' -> 16r0.
 			'_OffsetOf_Parameter' -> 16r4
 		}!
+
 Graphics.Gdiplus.EncoderParameters guid: (Core.GUID fromString: '{7aa7c3a4-85d9-4298-ad05-11c85d76c885}')!
+
 Graphics.Gdiplus.EncoderParameters comment: '<GpEncoderParameters> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameters'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -26,6 +28,7 @@ struct tagGpEncoderParameters {
 	GpEncoderParameter Parameter[1];
 } GpEncoderParameters;
 '!
+
 !Graphics.Gdiplus.EncoderParameters methodsFor!
 
 byteSize
@@ -65,6 +68,7 @@ Parameter: aStructureArrayOfGpEncoderParameter
 
 valueBuffer: aByteArray
 	valueBuffer := aByteArray! !
+
 !Graphics.Gdiplus.EncoderParameters categoriesForMethods!
 byteSize!accessing!public! !
 Count!**compiled accessors**!public! !
@@ -111,6 +115,7 @@ length: anInteger
 	^(self new: _EncoderParameters_Size + ((anInteger - 1) * EncoderParameter._EncoderParameter_Size))
 		Count: anInteger;
 		yourself! !
+
 !Graphics.Gdiplus.EncoderParameters class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

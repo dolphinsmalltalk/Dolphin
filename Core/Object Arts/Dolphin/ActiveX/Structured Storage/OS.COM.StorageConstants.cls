@@ -52,6 +52,10 @@ Kernel.SharedPool
 			'STREAM_SEEK_END' -> 16r2.
 			'STREAM_SEEK_SET' -> 16r0
 		}!
+
 OS.COM.StorageConstants guid: (Core.GUID fromString: '{3ed0417a-f038-403d-abb9-4bf66a49a04d}')!
+
 OS.COM.StorageConstants isNonInstantiable: true!
+
 OS.COM.StorageConstants comment: ''!
+

@@ -64,24 +64,24 @@ Object subclass: #FileBrowserAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileBrowserAbstract subclass: #FileBrowserFile
 	instanceVariableNames: 'size type timeStamp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileBrowserAbstract subclass: #FileBrowserFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdbToolShell subclass: #FileBrowser
 	instanceVariableNames: 'folders files text hex image html hexEnabled removeCr currentRootFolder showImageAs'
 	classVariableNames: 'HexEnabled HexFont RemoveCr RootFolder TextFont Warnings'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -114,6 +114,7 @@ asHexText
 								ifFalse: [stream nextPut: $.]]].
 			stream cr].
 	^stream contents! !
+
 !String categoriesForMethods!
 asHexText!converting!idb goodies!public! !
 !

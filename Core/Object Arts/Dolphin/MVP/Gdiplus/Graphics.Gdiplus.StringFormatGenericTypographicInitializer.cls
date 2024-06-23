@@ -7,8 +7,11 @@ Graphics.Gdiplus.StringFormatGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormatGenericTypographicInitializer guid: (Core.GUID fromString: '{cbe1bbee-b46a-4c95-90e4-d4bec63775e9}')!
+
 Graphics.Gdiplus.StringFormatGenericTypographicInitializer comment: ''!
+
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer methodsFor!
 
 basicCreateHandle
@@ -28,6 +31,7 @@ printAttributesOn: aStream
 
 trimming
 	^StringTrimmingNone! !
+
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 flags!attributes!public! !
@@ -44,6 +48,7 @@ stbConvertFrom: anSTBClassFormat
 
 uninitialize
 	GenericTypographic := nil! !
+
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !

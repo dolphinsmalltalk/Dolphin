@@ -47,6 +47,7 @@ UI.FindDetails
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Dialog
 	subclass: #'UI.AdvancedFindDialog'
 	instanceVariableNames: 'patternPresenter wholeWordPresenter matchCasePresenter modePresenter directionPresenter actionButton closeButton flags validationBlock wrapPresenter'

@@ -7,9 +7,13 @@ ScribbleDocument
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.EtchASketchDocument guid: (Core.GUID fromString: '{2971e17d-6207-4ede-b010-6a4262f924e5}')!
+
 UI.Examples.EtchASketchDocument comment: ''!
+
 !UI.Examples.EtchASketchDocument categoriesForClass!MVP-Presenters! !
+
 !UI.Examples.EtchASketchDocument class methodsFor!
 
 fileType
@@ -27,6 +31,7 @@ resource_Default_view
 
 scribblePresenterClass
 	^EtchASketch! !
+
 !UI.Examples.EtchASketchDocument class categoriesForMethods!
 fileType!constants!public! !
 resource_Default_view!public!resources-views! !

@@ -7,9 +7,13 @@ Graphics.AbstractFont
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.SystemFont guid: (Core.GUID fromString: '{76463278-a324-4576-b9df-2537f18debbd}')!
+
 Graphics.SystemFont isNonInstantiable: true!
+
 Graphics.SystemFont comment: ''!
+
 !Graphics.SystemFont methodsFor!
 
 = aFont
@@ -54,6 +58,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: logfont with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
+
 !Graphics.SystemFont categoriesForMethods!
 =!comparing!public! !
 actualFont!public! !

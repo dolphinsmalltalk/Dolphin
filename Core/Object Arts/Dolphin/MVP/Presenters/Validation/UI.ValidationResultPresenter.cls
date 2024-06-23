@@ -7,9 +7,13 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValidationResultPresenter guid: (Core.GUID fromString: '{9356a328-de22-4088-8350-dfcb12e76fa1}')!
+
 UI.ValidationResultPresenter isNonInstantiable: true!
+
 UI.ValidationResultPresenter comment: '`ValidationResultPresenter` is the abstract class of `ValuePresenter`s for displaying `ValidationResult`s.'!
+
 !UI.ValidationResultPresenter methodsFor!
 
 dwell
@@ -31,6 +35,7 @@ hintFont
 
 hintFont: aFont
 	! !
+
 !UI.ValidationResultPresenter categoriesForMethods!
 dwell!accessing!public! !
 dwell:!accessing!public! !
@@ -46,6 +51,7 @@ defaultModel
 
 	^ValidationResult new asValue
 ! !
+
 !UI.ValidationResultPresenter class categoriesForMethods!
 defaultModel!models!public! !
 !

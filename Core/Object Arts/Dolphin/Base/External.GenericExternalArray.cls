@@ -7,15 +7,20 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.GenericExternalArray guid: (Core.GUID fromString: '{a784c4d3-dd39-4844-b096-400529d9295c}')!
+
 External.GenericExternalArray isNonInstantiable: true!
+
 External.GenericExternalArray comment: '`GenericExternalArray` is an abstract class of  `ExternalArray`s that can be used to represent single-dimensioned arrays of more than one type.
 
 ## Instance Variables:
   `elementClass`	`Class` of element, typically an `External.Structure`.
   `owner`			`Object` responsible for freeing the underlying array. Typically `nil`, in which case the receiver is responsible.
 '!
+
 !External.GenericExternalArray categoriesForClass!External-Data-Structured! !
+
 !External.GenericExternalArray methodsFor!
 
 asArray
@@ -98,6 +103,7 @@ with: aCollection do: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument with each of the receiver's element structures along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
 
 	self subclassResponsibility! !
+
 !External.GenericExternalArray categoriesForMethods!
 asArray!converting!public! !
 base!accessing!private! !
@@ -134,6 +140,7 @@ withAll: aCollection elementClass: structClass
 			answer at: i put: elem.
 			i + 1].
 	^answer! !
+
 !External.GenericExternalArray class categoriesForMethods!
 length:elementClass:!instance creation!public! !
 withAll:elementClass:!instance creation!public! !

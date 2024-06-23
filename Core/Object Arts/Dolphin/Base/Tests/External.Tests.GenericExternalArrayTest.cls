@@ -7,9 +7,13 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.GenericExternalArrayTest guid: (Core.GUID fromString: '{69952948-3aa8-44c5-956f-8731aa221d5f}')!
+
 External.Tests.GenericExternalArrayTest isNonInstantiable: true!
+
 External.Tests.GenericExternalArrayTest comment: ''!
+
 !External.Tests.GenericExternalArrayTest methodsFor!
 
 arrayValueString: eachValue
@@ -82,6 +86,7 @@ testWithDo
 				matching: [:ex | ex description = 'collections are of different sizes']].
 	subject := self newNumericArray: 0.
 	subject with: (1 to: 0) do: [:a :b | self assert: false]! !
+
 !External.Tests.GenericExternalArrayTest categoriesForMethods!
 arrayValueString:!private!unit tests! !
 elementClassNames!constants!private! !

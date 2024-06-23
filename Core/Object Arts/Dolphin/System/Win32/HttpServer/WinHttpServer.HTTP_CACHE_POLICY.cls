@@ -11,7 +11,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Policy' -> 16r0.
 			'_OffsetOf_SecondsToLive' -> 16r4
 		}!
+
 WinHttpServer.HTTP_CACHE_POLICY guid: (Core.GUID fromString: '{02064551-c601-4e48-85ac-6d19fe34f58b}')!
+
 WinHttpServer.HTTP_CACHE_POLICY comment: '`HTTP_CACHE_POLICY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_CACHE_POLICY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +30,9 @@ struct tagHTTP_CACHE_POLICY {
 } HTTP_CACHE_POLICY;
 ```
 '!
+
 !WinHttpServer.HTTP_CACHE_POLICY categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_CACHE_POLICY methodsFor!
 
 policy
@@ -63,6 +67,7 @@ SecondsToLive: anInteger
 	"Set the receiver's 'SecondsToLive' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_SecondsToLive put: anInteger! !
+
 !WinHttpServer.HTTP_CACHE_POLICY categoriesForMethods!
 policy!accessing!public! !
 Policy!**compiled accessors**!public! !
@@ -119,6 +124,7 @@ timeToLive: anInteger
 
 userInvalidates
 	^UserInvalidates! !
+
 !WinHttpServer.HTTP_CACHE_POLICY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

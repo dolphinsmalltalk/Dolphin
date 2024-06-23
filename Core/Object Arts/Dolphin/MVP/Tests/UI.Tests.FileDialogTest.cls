@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.FileDialogTest guid: (Core.GUID fromString: '{c406269b-ec41-4f17-bc9a-0e8bc2ba4c92}')!
+
 UI.Tests.FileDialogTest comment: ''!
+
 !UI.Tests.FileDialogTest methodsFor!
 
 testExtractPathnames
@@ -43,6 +46,7 @@ testPrepareStructWithUtf8String
 	lpstrFile := subject winStruct lpstrFile.
 	self assert: lpstrFile isKindOf: Utf16String.
 	self assert: lpstrFile equals: utf8String! !
+
 !UI.Tests.FileDialogTest categoriesForMethods!
 testExtractPathnames!public!unit tests! !
 testPrepareStructWithNil!public!unit tests! !

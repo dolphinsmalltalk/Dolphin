@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.IniFileTest guid: (Core.GUID fromString: '{5fc93855-8e32-4463-9906-50705ecb9acc}')!
+
 OS.Tests.IniFileTest comment: ''!
+
 !OS.Tests.IniFileTest methodsFor!
 
 fileResource
@@ -234,6 +237,7 @@ testValues
 	self assert: sections fourth values equals: #('NoSectionNoKeyValue').
 	subject := self makeEmptyIniFile.
 	self assert: subject values isEmpty! !
+
 !OS.Tests.IniFileTest categoriesForMethods!
 fileResource!accessing!private! !
 makeEmptyIniFile!helpers!private! !
@@ -261,6 +265,7 @@ testValues!public!unit tests! !
 
 resources
 	^{IniFileTestResource}! !
+
 !OS.Tests.IniFileTest class categoriesForMethods!
 resources!accessing!public! !
 !

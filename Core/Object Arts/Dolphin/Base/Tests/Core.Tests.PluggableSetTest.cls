@@ -7,8 +7,11 @@ Core.Tests.AbstractSetTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.PluggableSetTest guid: (Core.GUID fromString: '{d17cbd2e-3c2c-4508-af21-db2755f8fdc7}')!
+
 Core.Tests.PluggableSetTest comment: ''!
+
 !Core.Tests.PluggableSetTest methodsFor!
 
 assertIs: copySet deepCopyOf: sourceSet
@@ -30,6 +33,7 @@ testAddIfAbsent
 	self assert: (subject addIfAbsent: element2) identicalTo: element1.
 	self assert: (subject includes: element2).
 	self assert: subject asArray equals: {element1}! !
+
 !Core.Tests.PluggableSetTest categoriesForMethods!
 assertIs:deepCopyOf:!private!unit tests! !
 collectionClass!helpers!private! !

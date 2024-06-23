@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Environment8
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Environment9 guid: (OS.COM.IID fromString: '{f06f41bf-4b5a-49d8-b9f6-fa16cd29f274}')!
+
 WebView2.ICoreWebView2Environment9 isEgressOnly: true!
+
 WebView2.ICoreWebView2Environment9 comment: '`ICoreWebView2Environment9` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment9'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2Environment9 : ICoreWebView2Environment8
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Environment9 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Environment9 methodsFor!
 
 CreateContextMenuItem: label iconStream: iconStream kind: kind item: item
@@ -46,6 +51,7 @@ CreateContextMenuItem: label iconStream: iconStream kind: kind item: item
 
 	<virtual stdcall: hresult 20 lpwstr IStream* int32 ICoreWebView2ContextMenuItem**>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Environment9 categoriesForMethods!
 CreateContextMenuItem:iconStream:kind:item:!**auto generated**!COM Interfaces-ICoreWebView2Environment9!private! !
 !
@@ -60,6 +66,7 @@ defineFunctions
 		defineFunction: #CreateContextMenuItem:iconStream:kind:item:
 			argumentTypes: 'lpwstr IStream* sdword ICoreWebView2ContextMenuItem**'
 ! !
+
 !WebView2.ICoreWebView2Environment9 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

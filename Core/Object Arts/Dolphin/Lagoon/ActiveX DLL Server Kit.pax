@@ -50,6 +50,7 @@ ImageStripper
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceImplementation
 	subclass: #'Kernel.IPDolphin'
 	instanceVariableNames: 'plugHole coclasses'
@@ -57,6 +58,7 @@ OS.COM.InterfaceImplementation
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SessionManager
 	subclass: #'Kernel.AXDllSessionManager'
 	instanceVariableNames: ''
@@ -64,6 +66,7 @@ Core.SessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.GUISessionManager
 	subclass: #'UI.AXDllGUISessionManager'
 	instanceVariableNames: ''
@@ -71,6 +74,7 @@ UI.GUISessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'Kernel.IIPDolphin'
 	instanceVariableNames: ''
@@ -78,6 +82,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'Kernel.IIPPlugHole'
 	instanceVariableNames: ''

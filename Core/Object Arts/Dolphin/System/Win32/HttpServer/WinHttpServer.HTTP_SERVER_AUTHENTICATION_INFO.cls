@@ -16,7 +16,9 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 			'_OffsetOf_ReceiveContextHandle' -> 16r9.
 			'_OffsetOf_ReceiveMutualAuth' -> 16r8
 		}!
+
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO guid: (Core.GUID fromString: '{7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207}')!
+
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO comment: '`HTTP_SERVER_AUTHENTICATION_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -38,7 +40,9 @@ struct tagHTTP_SERVER_AUTHENTICATION_INFO {
 } HTTP_SERVER_AUTHENTICATION_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO methodsFor!
 
 AuthSchemes
@@ -120,6 +124,7 @@ ReceiveMutualAuth: aBoolean
 	"Set the receiver's 'ReceiveMutualAuth' field to the value of the argument, aBoolean"
 
 	bytes uint8AtOffset: _OffsetOf_ReceiveMutualAuth put: aBoolean asParameter! !
+
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesForMethods!
 AuthSchemes!**compiled accessors**!public! !
 AuthSchemes:!**compiled accessors**!public! !
@@ -176,6 +181,7 @@ getFieldNames
 
 propertyId
 	^HttpServerAuthenticationProperty! !
+
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

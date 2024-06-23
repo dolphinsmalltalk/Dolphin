@@ -7,8 +7,11 @@ XProgramming.SUnit.TestResource
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.TestTypelib guid: (Core.GUID fromString: '{bda93d8c-df4b-4461-8950-9db6e8797384}')!
+
 OS.COM.Tests.TestTypelib comment: ''!
+
 !OS.COM.Tests.TestTypelib methodsFor!
 
 analyzer
@@ -35,6 +38,7 @@ tearDown
 			analyzer free.
 			analyzer := nil].
 	super tearDown! !
+
 !OS.COM.Tests.TestTypelib categoriesForMethods!
 analyzer!private!unit tests! !
 libid!Init / Release!public! !

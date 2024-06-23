@@ -7,11 +7,15 @@ OS.COM.IPersist
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPersistPropertyBag guid: (OS.COM.IID fromString: '{37d84f60-42cb-11ce-8135-00aa004bb851}')!
+
 OS.COM.IPersistPropertyBag comment: '`OS.COM.IPersistPropertyBag` is a wrapper class for the COM interface ''OCIDL.IPersistPropertyBag'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IPersistPropertyBag provides persistence storage onto an OLE property bag object (IPropertyBag). A property bag is a text based storage mechanism using name value pairs. See <IPropertyBag> for further details.'!
+
 !OS.COM.IPersistPropertyBag categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IPersistPropertyBag methodsFor!
 
 initNew  
@@ -64,6 +68,7 @@ Save: pPropBag fClearDirty: fClearDirty fSaveAllProperties: fSaveAllProperties
 
 	<virtual stdcall: hresult 7 IPropertyBag* bool bool>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IPersistPropertyBag categoriesForMethods!
 initNew!methods!public! !
 InitNew!**auto generated**!COM Interfaces-IPersistPropertyBag!private! !
@@ -89,6 +94,7 @@ defineFunctions
 		defineFunction: #Save:fClearDirty:fSaveAllProperties:
 			argumentTypes: 'IPropertyBag* bool bool'
 ! !
+
 !OS.COM.IPersistPropertyBag class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

@@ -14,9 +14,13 @@ OS.SizedStructure
 			'_OffsetOf_showCmd' -> 16r8.
 			'_WINDOWPLACEMENT_Size' -> 16r2C
 		}!
+
 OS.WINDOWPLACEMENT guid: (Core.GUID fromString: '{87b4c61b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.WINDOWPLACEMENT comment: ''!
+
 !OS.WINDOWPLACEMENT categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.WINDOWPLACEMENT methodsFor!
 
 rcNormalPosition
@@ -42,6 +46,7 @@ showCmd: anInteger
 	"Set the receiver's 'showCmd' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_showCmd put: anInteger! !
+
 !OS.WINDOWPLACEMENT categoriesForMethods!
 rcNormalPosition!**compiled accessors**!public! !
 rcNormalPosition:!**compiled accessors**!public! !
@@ -80,6 +85,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #showCmd #rcNormalPosition)! !
+
 !OS.WINDOWPLACEMENT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

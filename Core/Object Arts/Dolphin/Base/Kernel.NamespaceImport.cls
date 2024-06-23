@@ -7,10 +7,13 @@ Kernel.FullBindingReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'InvalidImportPath' -> 'NamespaceImports must describe a full path from Root' }!
+
 Kernel.NamespaceImport guid: (Core.GUID fromString: '{fa5ba0c4-b5dc-4eb0-95be-564ca7df61e8}')!
+
 Kernel.NamespaceImport comment: '`NamespaceImport` is a specialised form of `FullBindingReference` that binds only to locally defined variables of each namespace along the binding path. It does not find variables defined in superclasses, environments, or (most importantly) via imports. It is intended for the purpose of representing namespace imports into classes, and so defines a more restricted binding search that avoids infinite recursion if an import into the binding root (Smalltalk) is not found.
 
 The binding root of `NamespaceImports` is `Root`, so imports of namespaces defined in Smalltallk must be of the form #{Smalltalk.Xxx}. The `ClassBuilder` will canonicalize any imports provided to the class definition messages, including converting them into `NamespaceImports`.'!
+
 !Kernel.NamespaceImport methodsFor!
 
 asNamespaceImport
@@ -28,6 +31,7 @@ resolveIn: aBindingScope
 
 species
 	^FullBindingReference! !
+
 !Kernel.NamespaceImport categoriesForMethods!
 asNamespaceImport!converting!public! !
 bindingScope!accessing!public! !
@@ -48,6 +52,7 @@ newFullPath: anArrayOfString private: aBoolean
 		pathString: nil
 		path: anArrayOfString
 		private: aBoolean! !
+
 !Kernel.NamespaceImport class categoriesForMethods!
 newFull:private:!instance creation!private! !
 newFullPath:private:!instance creation!private! !

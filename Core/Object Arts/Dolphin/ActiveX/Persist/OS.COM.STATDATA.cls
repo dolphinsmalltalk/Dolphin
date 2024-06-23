@@ -13,13 +13,17 @@ External.Structure
 			'_OffsetOf_pAdvSink' -> 16r18.
 			'_STATDATA_Size' -> 16r20
 		}!
+
 OS.COM.STATDATA guid: (Core.GUID fromString: '{25f9c177-b0f1-4161-87a4-188c3de0b3e4}')!
+
 OS.COM.STATDATA comment: '<STATDATA> is an <ExternalStructure> class to wrap the struct ''OCIDL.STATDATA'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.STATDATA categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.STATDATA methodsFor!
 
 advf
@@ -65,6 +69,7 @@ pAdvSink: anIAdviseSink
 	"Set the receiver's 'pAdvSink' field to the value of the argument, anIAdviseSink"
 
 	bytes uintPtrAtOffset: _OffsetOf_pAdvSink put: anIAdviseSink yourAddress! !
+
 !OS.COM.STATDATA categoriesForMethods!
 advf!**compiled accessors**!public! !
 advf:!**compiled accessors**!public! !
@@ -99,6 +104,7 @@ defineFields
 
 getFieldNames
 	^#(#formatetc #advf #pAdvSink #dwConnection)! !
+
 !OS.COM.STATDATA class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

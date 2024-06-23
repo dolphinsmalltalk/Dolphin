@@ -16,7 +16,12 @@ Kernel.Namespace
 			'PATHCCH_FORCE_ENABLE_LONG_NAME_PROCESS' -> 16r2.
 			'PATHCCH_NONE' -> 16r0
 		}!
+
 OS guid: (Core.GUID fromString: '{36a4395f-dcf9-496f-96b7-d6dbd9d6115f}')!
+
 OS isNonInstantiable: true!
+
 OS comment: ''!
+
 !OS categoriesForClass!Kernel-Objects! !
+

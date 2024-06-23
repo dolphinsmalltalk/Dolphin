@@ -7,9 +7,13 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralToken guid: (Core.GUID fromString: '{85fe993e-366b-4f11-9b9c-e5ac73674129}')!
+
 Kernel.StLiteralToken comment: ''!
+
 !Kernel.StLiteralToken categoriesForClass!System-Compiler! !
+
 !Kernel.StLiteralToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -44,6 +48,7 @@ stop: anInteger
 
 valueClass
 	^self value basicClass! !
+
 !Kernel.StLiteralToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 formatOn:source:!printing!public! !
@@ -79,6 +84,7 @@ value: anObject
 		comments: nil
 		value: literal
 		stop: nil! !
+
 !Kernel.StLiteralToken class categoriesForMethods!
 start:comments:value:stop:!instance creation!public! !
 value:!instance creation!public! !

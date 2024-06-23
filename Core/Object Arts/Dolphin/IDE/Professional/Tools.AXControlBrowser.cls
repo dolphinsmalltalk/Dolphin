@@ -7,7 +7,9 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'TraceMask' -> 16r1 }!
+
 Tools.AXControlBrowser guid: (Core.GUID fromString: '{e2e33600-aa60-11d3-b376-080046056106}')!
+
 Tools.AXControlBrowser comment: 'AXControlBrowser is a simple Active-X control (OCX) browser and test environment.
 
 AXControlBrowser show
@@ -19,7 +21,9 @@ Instance Variables:
 	eventsPresenter	<ListPresenter>. List of events in the control''s default source interface.
 
 '!
+
 !Tools.AXControlBrowser categoriesForClass!MVP-Presenters! !
+
 !Tools.AXControlBrowser methodsFor!
 
 about
@@ -344,6 +348,7 @@ updateControlInfo
 				list: (funcs collect: [:f | f selector -> f printIDL]);
 				view enable]
 		ifFalse: [eventsPresenter clear; view disable]! !
+
 !Tools.AXControlBrowser categoriesForMethods!
 about!commands-actions!public! !
 browseIDL!commands-actions!public! !
@@ -426,6 +431,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10603! !
+
 !Tools.AXControlBrowser class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !

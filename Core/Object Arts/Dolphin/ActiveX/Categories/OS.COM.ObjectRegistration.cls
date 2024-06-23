@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ObjectRegistration guid: (Core.GUID fromString: '{e3aace46-398d-4cb8-8d6e-d9bf407b92fa}')!
+
 OS.COM.ObjectRegistration comment: '<COMObjectRegistration> is a simple class to aggregate the registration information for a COM object such as its CLSID and description. It is used in conjunction with the COM Category Manager interface, <ICatInformation>.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	toolboxBmp	<Image>. Iconic representation for the coclass.
 
 '!
+
 !OS.COM.ObjectRegistration categoriesForClass!COM Category Manager! !
+
 !OS.COM.ObjectRegistration methodsFor!
 
 = comparand
@@ -120,6 +124,7 @@ toolboxImage
 								bmp handle isNull ifFalse: [^toolboxImage := bmp asIcon]]].
 			toolboxImage := self defaultToolboxImage].
 	^toolboxImage! !
+
 !OS.COM.ObjectRegistration categoriesForMethods!
 =!comparing!public! !
 clsid!accessing!public! !
@@ -140,6 +145,7 @@ clsid: aCLSID
 	"Answer a new instance of the receiver for the specified class id."
 
 	^self new clsid: aCLSID; yourself! !
+
 !OS.COM.ObjectRegistration class categoriesForMethods!
 clsid:!instance creation!public! !
 !

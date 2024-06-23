@@ -7,7 +7,9 @@ Tools.SmalltalkToolShell
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AXComponentWizard guid: (Core.GUID fromString: '{164b0031-3910-11d3-9fe6-00a0cc3e4a32}')!
+
 Tools.AXComponentWizard comment: 'AXComponentWizard is a <SmalltalkToolShell> that manages the creation of interface classes for ActiveX components. To bring up an AXComponentWizard, open the appropriate icon in System Folder/Additional Tools/ActiveX Wizards or evaluate:
 
 	AXComponentWizard show
@@ -45,7 +47,9 @@ Instance Variables:
 	defineProtocols 	<BooleanPresenter>. Whether to generate Dolphin method protocols for COM interfaces.
 	defineFunctionTables	<BooleanPresenter>. Whether to generate #defineFunctions methods to enable Dolphin COM servers
 '!
+
 !Tools.AXComponentWizard categoriesForClass!MVP-Presenters! !
+
 !Tools.AXComponentWizard methodsFor!
 
 apply
@@ -451,6 +455,7 @@ updateTypesList: typelib
 		nextPutAll: typelib namedUnions;
 		nextPutAll: (self generatableEnumsInTlb: typelib).
 	types list: (list contents asSortedCollection: [:a :b | a name <= b name])! !
+
 !Tools.AXComponentWizard categoriesForMethods!
 apply!operations!private! !
 browseIDL!commands-actions!public! !
@@ -592,6 +597,7 @@ on two lines if necessary.' 3792 898 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 25
 
 toolsFolderHelpId
 	^10604! !
+
 !Tools.AXComponentWizard class categoriesForMethods!
 defaultAdditionalAccelerators!constants!private! !
 displayOn:!displaying!public! !

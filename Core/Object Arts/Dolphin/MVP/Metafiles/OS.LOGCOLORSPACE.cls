@@ -19,7 +19,9 @@ External.Structure
 			'_OffsetOf_lcsSize' -> 16r8.
 			'_OffsetOf_lcsVersion' -> 16r4
 		}!
+
 OS.LOGCOLORSPACE guid: (Core.GUID fromString: '{2b6b91b8-caef-4fdf-ac3d-f032417ca840}')!
+
 OS.LOGCOLORSPACE comment: '<LOGCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -42,7 +44,9 @@ struct tagLOGCOLORSPACE {
 	BYTE lcsFilename[260];
 } LOGCOLORSPACE;
 '!
+
 !OS.LOGCOLORSPACE categoriesForClass!Win32-Structs! !
+
 !OS.LOGCOLORSPACE methodsFor!
 
 lcsCSType
@@ -154,6 +158,7 @@ lcsVersion: anInteger
 	"Set the receiver's 'lcsVersion' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_lcsVersion put: anInteger! !
+
 !OS.LOGCOLORSPACE categoriesForMethods!
 lcsCSType!**compiled accessors**!public! !
 lcsCSType:!**compiled accessors**!public! !
@@ -237,6 +242,7 @@ defineFields
 
 getFieldNames
 	^#(#lcsSignature #lcsVersion #lcsSize #lcsCSType #lcsIntent #lcsEndpoints #lcsGammaRed #lcsGammaGreen #lcsGammaBlue #lcsFilename)! !
+
 !OS.LOGCOLORSPACE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

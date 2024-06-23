@@ -40,9 +40,13 @@ OS.SizedStructure
 			'_OffsetOf_otmusMinimumPPEM' -> 16r94.
 			'_OUTLINETEXTMETRICW_Size' -> 16rD8
 		}!
+
 OS.OUTLINETEXTMETRICW guid: (Core.GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
+
 OS.OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
+
 !OS.OUTLINETEXTMETRICW categoriesForClass!Win-Structs! !
+
 !OS.OUTLINETEXTMETRICW methodsFor!
 
 faceName
@@ -216,6 +220,7 @@ styleName
 	e.g. regular, bold, italic, etc"
 
 	^Utf16String fromAddress: bytes yourAddress + self otmpStyleName! !
+
 !OS.OUTLINETEXTMETRICW categoriesForMethods!
 faceName!accessing!public! !
 familyName!accessing!public! !
@@ -336,6 +341,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #otmTextMetrics #otmPanoseNumber #otmfsSelection #otmfsType #otmsCharSlopeRise #otmsCharSlopeRun #otmItalicAngle #otmEMSquare #otmAscent #otmDescent #otmLineGap #otmsCapEmHeight #otmsXHeight #otmrcFontBox #otmMacAscent #otmMacDescent #otmMacLineGap #otmusMinimumPPEM #otmptSubscriptSize #otmptSubscriptOffset #otmptSuperscriptSize #otmptSuperscriptOffset #otmsStrikeoutSize #otmsStrikeoutPosition #otmsUnderscoreSize #otmsUnderscorePosition #otmpFamilyName #otmpFaceName #otmpStyleName #otmpFullName)! !
+
 !OS.OUTLINETEXTMETRICW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

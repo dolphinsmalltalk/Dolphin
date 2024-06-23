@@ -31,6 +31,7 @@ Security
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Security.Tests.DolphinSureTrustedDataTest'
 	instanceVariableNames: ''
@@ -38,6 +39,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Security.Tests.SecureHashAlgorithmTest'
 	instanceVariableNames: 'hash'

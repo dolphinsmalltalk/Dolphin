@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Certificate
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ClientCertificate guid: (OS.COM.IID fromString: '{e7188076-bcc3-11eb-8529-0242ac130003}')!
+
 WebView2.ICoreWebView2ClientCertificate isEgressOnly: true!
+
 WebView2.ICoreWebView2ClientCertificate comment: '`ICoreWebView2ClientCertificate` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificate'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -53,7 +56,9 @@ interface ICoreWebView2ClientCertificate : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ClientCertificate categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ClientCertificate methodsFor!
 
 get_Kind: value
@@ -72,6 +77,7 @@ kind
 	answer := Int32 new.
 	self get_Kind: answer.
 	^answer asObject! !
+
 !WebView2.ICoreWebView2ClientCertificate categoriesForMethods!
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
 kind!**auto generated**!properties!public! !
@@ -84,6 +90,7 @@ defineFunctions
 		ICoreWebView2ClientCertificate defineTemplate"
 
 	self defineFunction: #get_Kind: argumentTypes: 'sdword*'! !
+
 !WebView2.ICoreWebView2ClientCertificate class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

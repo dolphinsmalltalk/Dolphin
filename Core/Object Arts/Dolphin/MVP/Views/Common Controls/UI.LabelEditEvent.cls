@@ -7,10 +7,15 @@ UI.Event
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LabelEditEvent guid: (Core.GUID fromString: '{97ba6e5b-5864-48d7-be5f-2ef33eaf09cb}')!
+
 UI.LabelEditEvent isNonInstantiable: true!
+
 UI.LabelEditEvent comment: ''!
+
 !UI.LabelEditEvent categoriesForClass!Kernel-Objects! !
+
 !UI.LabelEditEvent methodsFor!
 
 cancel
@@ -42,6 +47,7 @@ text
 
 text: aString
 	text := aString! !
+
 !UI.LabelEditEvent categoriesForMethods!
 cancel!accessing!public! !
 cancel:!public! !

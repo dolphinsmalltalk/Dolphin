@@ -7,14 +7,19 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractDelegatingView guid: (Core.GUID fromString: '{93fdcca7-1448-41db-abf2-5aa02abef751}')!
+
 UI.AbstractDelegatingView isNonInstantiable: true!
+
 UI.AbstractDelegatingView comment: 'AbstractDelegatingView is an abstract class for views that contain another view internally and delegate their interface to it. An example is ToolBotton, which presents the interace of a toolbar button but actually contains an instance of class Toolbar internally and uses it to do all the work.
 
 Instance Variables:
 	resourceIdentifier	<ResourceIdentifier> only used by ReferenceView sublass. Here for compatibility with previous instances of ReferenceView.
 	referee			<view> which is the delegated view.'!
+
 !UI.AbstractDelegatingView categoriesForClass!MVP-Resources-Misc! !
+
 !UI.AbstractDelegatingView methodsFor!
 
 applyFont
@@ -178,6 +183,7 @@ viewNamed: aString ifNone: aNiladicValuable
 	"Forward this on to our referee."
 
 	^self referee viewNamed: aString ifNone: aNiladicValuable! !
+
 !UI.AbstractDelegatingView categoriesForMethods!
 applyFont!font!private!updating! !
 backcolor:!accessing!public! !

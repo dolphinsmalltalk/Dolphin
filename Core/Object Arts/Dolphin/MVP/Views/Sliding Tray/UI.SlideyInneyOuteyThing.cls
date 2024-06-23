@@ -17,7 +17,9 @@ UI.ContainerView
 			'ResizableMask' -> 16r4.
 			'SlideInDelay' -> 16r1F4
 		}!
+
 UI.SlideyInneyOuteyThing guid: (Core.GUID fromString: '{b9cf8580-efea-4336-84cd-3108804dd202}')!
+
 UI.SlideyInneyOuteyThing comment: '`SlideyInneyOuteyThing` is a decorator for a `CardContainer` which behaves like one of those slidey-inney-outey-things one sees in Visual Studio, i.e: It displays a thin tab strip most of the time, but slides cards smoothly out (as if they were on a sliding "tray") when one hovers over them. The tray slides out over the top of any sibling views of the `SlideyInneyOuteyThing`, and so it does not cause any re-layout within the parent. The tray can then be pinned into place if desired, in which case the parent is re-layed out to accommodate the full extent of the `SlideyInneyOuteyThing`. When pinned a `SlideyInneyOuteyThing` behaves visually like a normal `CardContainer`. When unpinned, the tray will slide back when the user moves outside the tray/tabs for a short period. This is useful for panes which are used only occasionally since they need consume only a little space (for the tabs) when they are not being used.
 
 A `SlideyInneyOuteyThing` must be used in conjunction with a `SlidingCardTray` as its actual `CardContainer`, and can host only one such card container. The cards themselves must be added to the `SlidingCardTray`,  *not* to the `SlideyInneyOuteyThing` which, as mentioned, is a decorator rather than a card container itself.
@@ -33,7 +35,9 @@ A `SlideyInneyOuteyThing` must be used in conjunction with a `SlidingCardTray` a
   `_siotReserved2`		Reserved for future use.
 
 '!
+
 !UI.SlideyInneyOuteyThing categoriesForClass!MVP-Resources-Card Containers!MVP-Views! !
+
 !UI.SlideyInneyOuteyThing methodsFor!
 
 actualPreferredExtent: aLayoutContext 
@@ -530,6 +534,7 @@ wmPrint: message wParam: wParam lParam: lParam
 		lParam: lParam.
 	canvas windowOrigin: prev.
 	^result! !
+
 !UI.SlideyInneyOuteyThing categoriesForMethods!
 actualPreferredExtent:!geometry!private! !
 addSubView:!hierarchy!public!sub views! !
@@ -617,6 +622,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.SlideyInneyOuteyThing} 38 #{Core.Array} 23 nil nil 50 2 8 1409286144 131073 32 nil 6 #{Graphics.Color} #default nil 517 nil nil nil 32 1350 1 #{UI.CardLayout} 550 #{Core.OrderedCollection} 0 nil nil nil nil 550 #{Core.IdentityDictionary} 0 nil 18 #{UI.TabViewXP} 50 28 nil 32 50 2 8 1140916864 1 240 838 2 #{UI.ListModel} 178 0 nil 6 #{Kernel.IdentitySearchPolicy} 128 nil 1 nil nil nil 240 nil nil 518 #{Core.Message} #displayString 8 #() 386 #iconImageIndex 416 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil #noIcons nil nil nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 578 701 501 240 530 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 240 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 578 193 193 nil 27 18 #{UI.SlidingCardTray} 50 22 nil 32 50 2 8 1140850688 131073 736 nil 128 nil 5 nil nil nil 736 160 210 0 nil 240 nil 32 578 33 33 1606 1 #{UI.ButtonInteractor} 736 nil 1 518 #{Graphics.Rectangle} 578 649 3 578 681 35 nil 1350 4 #{UI.CommandDescription} #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 482 50 1 530 #createAt:extent: 50 2 578 9 9 578 685 485 736 658 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 4 0 0 0 90 1 0 0 246 0 0 0] 8 #() 720 nil 27 578 201 201 401 nil 31 nil nil 482 50 1 530 #createAt:extent: 50 2 578 6143 21 578 701 501 32 658 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 50 2 736 240 720 nil 27)! !
+
 !UI.SlideyInneyOuteyThing class categoriesForMethods!
 icon!constants!public! !
 initialize!class initialization!development!private! !

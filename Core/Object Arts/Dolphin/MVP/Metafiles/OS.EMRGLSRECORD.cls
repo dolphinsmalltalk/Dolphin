@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_cbData' -> 16r8.
 			'_OffsetOf_Data' -> 16rC
 		}!
+
 OS.EMRGLSRECORD guid: (Core.GUID fromString: '{d78026c9-e670-487f-ac4b-de420ffcc257}')!
+
 OS.EMRGLSRECORD comment: '<EMRGLSRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMRGLSRECORD {
 	BYTE* Data;
 } EMRGLSRECORD;
 '!
+
 !OS.EMRGLSRECORD categoriesForClass!Win32-Structs! !
+
 !OS.EMRGLSRECORD methodsFor!
 
 cbData
@@ -56,6 +60,7 @@ Data: anExternalArray
 		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size! !
+
 !OS.EMRGLSRECORD categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -98,6 +103,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GLSRECORD}! !
+
 !OS.EMRGLSRECORD class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

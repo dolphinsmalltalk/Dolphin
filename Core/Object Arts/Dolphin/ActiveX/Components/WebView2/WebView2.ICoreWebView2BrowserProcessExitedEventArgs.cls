@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2BrowserProcessExitedEventArgs guid: (OS.COM.IID fromString: '{1f00663f-af8c-4782-9cdd-dd01c52e34cb}')!
+
 WebView2.ICoreWebView2BrowserProcessExitedEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2BrowserProcessExitedEventArgs comment: '`ICoreWebView2BrowserProcessExitedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BrowserProcessExitedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2BrowserProcessExitedEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2BrowserProcessExitedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2BrowserProcessExitedEventArgs methodsFor!
 
 browserProcessExitKind
@@ -74,6 +79,7 @@ isNormalExit
 
 printableProperties
 	^#(#browserProcessExitKind #browserProcessId)! !
+
 !WebView2.ICoreWebView2BrowserProcessExitedEventArgs categoriesForMethods!
 browserProcessExitKind!properties!public! !
 browserProcessId!properties!public! !
@@ -95,6 +101,7 @@ defineFunctions
 		defineFunction: #get_BrowserProcessId:
 			argumentTypes: 'dword*'
 ! !
+
 !WebView2.ICoreWebView2BrowserProcessExitedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

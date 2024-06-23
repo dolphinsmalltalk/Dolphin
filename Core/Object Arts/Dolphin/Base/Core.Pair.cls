@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Pair guid: (Core.GUID fromString: '{d4c8987c-438d-404d-9af0-ebfb791b8fe0}')!
+
 Core.Pair comment: '<Core.Pair> is a simple 2-element tuple.'!
+
 !Core.Pair categoriesForClass!Kernel-Objects! !
+
 !Core.Pair methodsFor!
 
 = anObject
@@ -57,6 +61,7 @@ second: anObject
 	"Set the 2nd element of the pair."
 
 	second := anObject! !
+
 !Core.Pair categoriesForMethods!
 =!comparing!public! !
 first!accessing!public! !
@@ -76,6 +81,7 @@ first: firstObject second: secondObject
 		first: firstObject;
 		second: secondObject;
 		yourself! !
+
 !Core.Pair class categoriesForMethods!
 first:second:!instance creation!public! !
 !

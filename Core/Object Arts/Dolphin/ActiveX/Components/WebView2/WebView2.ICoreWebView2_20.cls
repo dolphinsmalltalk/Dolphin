@@ -7,8 +7,11 @@ WebView2.ICoreWebView2_19
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2_20 guid: (OS.COM.IID fromString: '{b4bc1926-7305-11ee-b962-0242ac120002}')!
+
 WebView2.ICoreWebView2_20 isEgressOnly: true!
+
 WebView2.ICoreWebView2_20 comment: '`ICoreWebView2_20` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_20'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +32,9 @@ interface ICoreWebView2_20 : ICoreWebView2_19
 };
 ```
 '!
+
 !WebView2.ICoreWebView2_20 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2_20 methodsFor!
 
 get_FrameId: id
@@ -40,6 +45,7 @@ get_FrameId: id
 
 	<virtual stdcall: hresult 122 uint32*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2_20 categoriesForMethods!
 get_FrameId:!**auto generated**!COM Interfaces-ICoreWebView2_20!private! !
 !
@@ -54,6 +60,7 @@ defineFunctions
 		defineFunction: #get_FrameId:
 			argumentTypes: 'uint32*'
 ! !
+
 !WebView2.ICoreWebView2_20 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

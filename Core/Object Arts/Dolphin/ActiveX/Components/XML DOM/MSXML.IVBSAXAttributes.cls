@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IVBSAXAttributes guid: (OS.COM.IID fromString: '{10dc0586-132b-4cac-8bb3-db00ac8b7ee0}')!
+
 MSXML.IVBSAXAttributes comment: '<IVBSAXAttributes> is a wrapper class for the COM interface ''MSXML2.IVBSAXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -78,7 +80,9 @@ interface IVBSAXAttributes : IDispatch
 		[out, retval]BSTR* strValue);
 };
 '!
+
 !MSXML.IVBSAXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IVBSAXAttributes methodsFor!
 
 get_length: nLength
@@ -340,6 +344,7 @@ length
 	answer := Int32 new.
 	self get_length: answer.
 	^answer asObject! !
+
 !MSXML.IVBSAXAttributes categoriesForMethods!
 get_length:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
 getIndexFromName:strLocalName:!**auto generated**!methods!public! !
@@ -401,6 +406,7 @@ defineFunctions
 		defineFunction: #GetValueFromQName:strValue:
 			argumentTypes: 'bstr bstr*'
 ! !
+
 !MSXML.IVBSAXAttributes class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.LiteralPrinter guid: (Core.GUID fromString: '{dc229cbf-5d44-4ec5-be15-cce8b14f1855}')!
+
 Kernel.LiteralPrinter comment: ''!
+
 !Kernel.LiteralPrinter categoriesForClass!Kernel-Objects! !
+
 !Kernel.LiteralPrinter methodsFor!
 
 nameForClass: aClass
@@ -61,6 +65,7 @@ stream
 
 stream: aPuttableStream
 	stream := aPuttableStream! !
+
 !Kernel.LiteralPrinter categoriesForMethods!
 nameForClass:!printing!private! !
 nextPut:!public!streaming! !
@@ -91,6 +96,7 @@ print: aLiteralObject
 	stream := String writeStream.
 	aLiteralObject literalPrintOn: (self on: stream).
 	^stream contents! !
+
 !Kernel.LiteralPrinter class categoriesForMethods!
 on:!instance creation!public! !
 print:!public!utilities! !

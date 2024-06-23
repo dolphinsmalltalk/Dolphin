@@ -57,7 +57,9 @@ UI.Scintilla.Attribute
 			'ReadOnlyMask' -> 16r300.
 			'UnderlinedMask' -> 16r30
 		}!
+
 UI.Scintilla.TextStyle guid: (Core.GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
+
 UI.Scintilla.TextStyle comment: '`Scintilla.TextStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
 
 There are a number of predefined styles:
@@ -100,7 +102,9 @@ Note that Scintilla style information is now queryable from the control, but thi
 	`ReadOnlyMask`		`<integer>` bitmask used to specify whether the text should be read-only.
 	`UnderlinedMask`		`<integer>` bitmask used to specify an underlined font in `flags` inst. var.
 '!
+
 !UI.Scintilla.TextStyle categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.TextStyle methodsFor!
 
 = anObject
@@ -407,6 +411,7 @@ weight
 
 weight: anInteger 
 	weight := anInteger! !
+
 !UI.Scintilla.TextStyle categoriesForMethods!
 =!comparing!public! !
 backcolor!accessing!public! !
@@ -644,6 +649,7 @@ stbVersion
 	"
 
 	^1! !
+
 !UI.Scintilla.TextStyle class categoriesForMethods!
 buildPropertyDescriptors!constants!must not strip!private! !
 caseNames!constants!public! !

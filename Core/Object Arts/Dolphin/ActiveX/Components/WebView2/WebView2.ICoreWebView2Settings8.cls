@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Settings7
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Settings8 guid: (OS.COM.IID fromString: '{9e6b0e8f-86ad-4e81-8147-a9b5edb68650}')!
+
 WebView2.ICoreWebView2Settings8 isEgressOnly: true!
+
 WebView2.ICoreWebView2Settings8 comment: '`ICoreWebView2Settings8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2Settings8 : ICoreWebView2Settings7
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Settings8 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Settings8 methodsFor!
 
 get_IsReputationCheckingRequired: value
@@ -53,6 +58,7 @@ put_IsReputationCheckingRequired: value
 
 	<virtual stdcall: hresult 37 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Settings8 categoriesForMethods!
 get_IsReputationCheckingRequired:!**auto generated**!COM Interfaces-ICoreWebView2Settings8!private! !
 put_IsReputationCheckingRequired:!**auto generated**!COM Interfaces-ICoreWebView2Settings8!private! !
@@ -70,6 +76,7 @@ defineFunctions
 		defineFunction: #put_IsReputationCheckingRequired:
 			argumentTypes: 'int32'
 ! !
+
 !WebView2.ICoreWebView2Settings8 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

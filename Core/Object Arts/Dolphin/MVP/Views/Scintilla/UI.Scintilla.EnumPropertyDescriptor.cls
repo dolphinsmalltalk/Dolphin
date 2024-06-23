@@ -7,12 +7,16 @@ UI.Scintilla.PropertyDescriptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.EnumPropertyDescriptor guid: (Core.GUID fromString: '{d51520de-b9de-4bb2-9de8-fdeb0d9572b0}')!
+
 UI.Scintilla.EnumPropertyDescriptor comment: '`EnumPropertyDescriptor`s are `PropertyDescriptor`s for `ScintillaView` properties defined as being of an enumerated type in the scintilla.iface definition file.
 
 Enumerated values are mapped to `Symbol`s in Dolphin''s abstraction of the Scintilla API.
 '!
+
 !UI.Scintilla.EnumPropertyDescriptor categoriesForClass!Kernel-Objects! !
+
 !UI.Scintilla.EnumPropertyDescriptor methodsFor!
 
 initialize
@@ -35,6 +39,7 @@ values
 
 values: anObject
 	values := anObject! !
+
 !UI.Scintilla.EnumPropertyDescriptor categoriesForMethods!
 initialize!initializing!private! !
 nilChoice!accessing!public! !

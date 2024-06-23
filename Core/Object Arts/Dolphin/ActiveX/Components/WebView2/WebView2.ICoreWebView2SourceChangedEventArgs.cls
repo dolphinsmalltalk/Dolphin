@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2SourceChangedEventArgs guid: (OS.COM.IID fromString: '{31e0e545-1dba-4266-8914-f63848a1f7d7}')!
+
 WebView2.ICoreWebView2SourceChangedEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2SourceChangedEventArgs comment: '`ICoreWebView2SourceChangedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2SourceChangedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +32,9 @@ interface ICoreWebView2SourceChangedEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2SourceChangedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2SourceChangedEventArgs methodsFor!
 
 get_IsNewDocument: isNewDocument
@@ -51,6 +56,7 @@ isNewDocument
 
 printableProperties
 	^#(#isNewDocument)! !
+
 !WebView2.ICoreWebView2SourceChangedEventArgs categoriesForMethods!
 get_IsNewDocument:!**auto generated**!COM Interfaces-ICoreWebView2SourceChangedEventArgs!private! !
 isNewDocument!properties!public! !
@@ -67,6 +73,7 @@ defineFunctions
 		defineFunction: #get_IsNewDocument:
 			argumentTypes: 'sdword*'
 ! !
+
 !WebView2.ICoreWebView2SourceChangedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

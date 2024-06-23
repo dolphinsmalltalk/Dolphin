@@ -88,6 +88,7 @@ withPositionsOf: aCollection inInterval: anInterval
 	anInterval 
 		do: [:index | (d at: (aCollection at: index) ifAbsentPutClean: [OrderedCollection new]) add: index].
 	^d! !
+
 !Core.Dictionary class categoriesForMethods!
 withPositionsOf:inInterval:!equivalence classes!public! !
 !
@@ -162,6 +163,7 @@ longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollectio
 			link nextLink notNil]
 					whileTrue: [link := link nextLink]].
 	^matchVector! !
+
 !Core.SequenceableCollection categoriesForMethods!
 inverseMatchVector:!computing differences!public! !
 longestCommonSubsequenceInInterval:withCollection:inInterval:!computing differences!public! !
@@ -188,6 +190,7 @@ replaceNextLargerWith: aValue
 	(self basicAt: index) = aValue ifTrue: [^nil].
 	self basicAt: index put: aValue.
 	^index - firstIndex + 1! !
+
 !Core.SortedCollection categoriesForMethods!
 replaceNextLargerWith:!adding!public! !
 !

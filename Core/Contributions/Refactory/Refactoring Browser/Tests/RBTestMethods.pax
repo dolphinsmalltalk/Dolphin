@@ -51,6 +51,7 @@ Refactory.Browser
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Refactory.Browser.TestData.LintRuleTestData'
 	instanceVariableNames: 'name foo1'
@@ -58,6 +59,7 @@ Core.Object
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'FACILITY_WIN32' -> 'Shadow' }!
+
 Core.Object
 	subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
@@ -65,6 +67,7 @@ Core.Object
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'AppConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
+
 Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'
@@ -72,6 +75,7 @@ Refactory.Browser.TestData.LintRuleTestData
 	imports: #(#{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
 	classConstants: { 'ERROR_FILE_EXISTS' -> 'Shadow' }!
+
 Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.CompositeLintRuleTestData'
 	instanceVariableNames: 'rules'
@@ -79,6 +83,7 @@ Refactory.Browser.TestData.LintRuleTestData
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.FooLintRuleTestData'
 	instanceVariableNames: ''
@@ -86,6 +91,7 @@ Refactory.Browser.TestData.LintRuleTestData
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.TestData.FooLintRuleTestData
 	subclass: #'Refactory.Browser.TestData.TransformationRuleTestData'
 	instanceVariableNames: 'rewriteRule builder class'
@@ -93,6 +99,7 @@ Refactory.Browser.TestData.FooLintRuleTestData
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'Bar' -> 16r7B }!
+
 Core.Model
 	subclass: #'Refactory.Browser.Tests.ClassToRename'
 	instanceVariableNames: 'rewriteRule builder class'
@@ -100,6 +107,7 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: 'notUsed'
 	classConstants: { 'ClassConst1' -> 16r1 }!
+
 Refactory.Browser.Tests.ClassToRename
 	subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'

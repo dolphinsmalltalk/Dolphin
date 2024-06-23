@@ -7,8 +7,11 @@ UI.Tests.AbstractContainerViewTest
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ContainerViewTest guid: (Core.GUID fromString: '{4e892cf1-595a-44ad-9a6d-0c319b32d174}')!
+
 UI.Tests.ContainerViewTest comment: ''!
+
 !UI.Tests.ContainerViewTest methodsFor!
 
 classToTest
@@ -95,6 +98,7 @@ testBordersPrintAndPaintIdentical
 	printPixelsBordered := (self bitmapOfPrintView: containerView) pixelData.
 	self assert: paintPixelsBordered = printPixelsBordered.
 	self deny: paintPixels = paintPixelsBordered! !
+
 !UI.Tests.ContainerViewTest categoriesForMethods!
 classToTest!helpers!private! !
 test1PixBorderPaint!public!unit tests! !
@@ -123,6 +127,7 @@ resource_Default_view_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 626 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 626 193 193 nil 27 )! !
+
 !UI.Tests.ContainerViewTest class categoriesForMethods!
 resource_Default_view_D6!public!resources-views! !
 resource_Default_view_D7!public!resources-views! !

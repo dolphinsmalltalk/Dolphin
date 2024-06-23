@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ExtractToTemporaryRefactoringTest guid: (Core.GUID fromString: '{1e11f73f-781c-4123-b98b-51d3251e5ae5}')!
+
 Refactory.Browser.Tests.ExtractToTemporaryRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.ExtractToTemporaryRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ExtractToTemporaryRefactoringTest methodsFor!
 
 testBadInterval
@@ -84,6 +88,7 @@ testNonExistantSelector
 				from: #checkClass1:
 				in: RefactoryTestDataApp)
 		withMessage: 'RefactoryTestDataApp does not define #checkClass1:'! !
+
 !Refactory.Browser.Tests.ExtractToTemporaryRefactoringTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testBadName!failure tests!public! !

@@ -7,8 +7,11 @@ UI.DoubleBufferedView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.BouncingBallView guid: (Core.GUID fromString: '{247666e7-6b23-4e88-86d1-76d228924535}')!
+
 UI.Examples.BouncingBallView comment: ''!
+
 !UI.Examples.BouncingBallView methodsFor!
 
 ballExtent
@@ -97,6 +100,7 @@ step
 
 stepProcess
 	^stepProcess! !
+
 !UI.Examples.BouncingBallView categoriesForMethods!
 ballExtent!constants!private! !
 balls!accessing!private! !
@@ -141,6 +145,7 @@ show
 	"Answer and show an instance of the receiver"
 
 	^super show topShell text: self displayString; yourself! !
+
 !UI.Examples.BouncingBallView class categoriesForMethods!
 defaultModel!models!public! !
 displayOn:!displaying!public! !

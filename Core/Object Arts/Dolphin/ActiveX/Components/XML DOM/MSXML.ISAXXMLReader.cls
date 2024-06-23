@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISAXXMLReader guid: (OS.COM.IID fromString: '{a4f96ed0-f829-476e-81c0-cdc7bd2a0802}')!
+
 MSXML.ISAXXMLReader comment: '<ISAXXMLReader> is a wrapper class for the COM interface ''MSXML2.ISAXXMLReader'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -85,7 +87,9 @@ interface ISAXXMLReader : IUnknown
 		[in]unsigned short* pwchUrl);
 };
 '!
+
 !MSXML.ISAXXMLReader categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISAXXMLReader methodsFor!
 
 getBaseURL
@@ -333,6 +337,7 @@ PutSecureBaseURL: pwchSecureBaseUrl
 
 	<virtual stdcall: hresult 19 uint16*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.ISAXXMLReader categoriesForMethods!
 getBaseURL!**auto generated**!methods!public! !
 GetBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
@@ -409,6 +414,7 @@ defineFunctions
 		defineFunction: #ParseURL:
 			argumentTypes: 'word*'
 ! !
+
 !MSXML.ISAXXMLReader class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

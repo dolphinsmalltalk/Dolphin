@@ -22,7 +22,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pPackageName' -> 16r30.
 			'_OffsetOf_SecStatus' -> 16r4
 		}!
+
 WinHttpServer.HTTP_REQUEST_AUTH_INFO guid: (Core.GUID fromString: '{e0696c2e-1353-45e2-bdcc-a52b6142b827}')!
+
 WinHttpServer.HTTP_REQUEST_AUTH_INFO comment: '`HTTP_REQUEST_AUTH_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -50,7 +52,9 @@ struct tagHTTP_REQUEST_AUTH_INFO {
 } HTTP_REQUEST_AUTH_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_REQUEST_AUTH_INFO methodsFor!
 
 AccessToken
@@ -188,6 +192,7 @@ SecStatus: anInteger
 	"Set the receiver's 'SecStatus' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_SecStatus put: anInteger! !
+
 !WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesForMethods!
 AccessToken!**compiled accessors**!public! !
 AccessToken:!**compiled accessors**!public! !
@@ -263,6 +268,7 @@ defineFields
 
 getFieldNames
 	^#(#AuthStatus #SecStatus #Flags #AuthType #AccessToken #ContextAttributes #PackedContextLength #PackedContextType #PackedContext #MutualAuthDataLength #pMutualAuthData #PackageNameLength #pPackageName)! !
+
 !WinHttpServer.HTTP_REQUEST_AUTH_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

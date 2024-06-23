@@ -15,7 +15,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_offBits' -> 16r18.
 			'_OffsetOf_offBmi' -> 16r10
 		}!
+
 OS.EMRCREATEMONOBRUSH guid: (Core.GUID fromString: '{93fa5260-561a-45ad-93b2-64f1c310bc26}')!
+
 OS.EMRCREATEMONOBRUSH comment: '<EMRCREATEMONOBRUSH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEMONOBRUSH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -35,7 +37,9 @@ struct tagEMRCREATEMONOBRUSH {
 	[helpstring("Size of the bitmap bits")] DWORD cbBits;
 } EMRCREATEMONOBRUSH;
 '!
+
 !OS.EMRCREATEMONOBRUSH categoriesForClass!Win32-Structs! !
+
 !OS.EMRCREATEMONOBRUSH methodsFor!
 
 cbBits
@@ -97,6 +101,7 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_offBmi put: anInteger! !
+
 !OS.EMRCREATEMONOBRUSH categoriesForMethods!
 cbBits!**compiled accessors**!public! !
 cbBits:!**compiled accessors**!public! !
@@ -163,6 +168,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEMONOBRUSH}! !
+
 !OS.EMRCREATEMONOBRUSH class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

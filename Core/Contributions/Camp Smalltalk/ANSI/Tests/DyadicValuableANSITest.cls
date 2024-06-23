@@ -5,9 +5,13 @@ MainTestCase subclass: #DyadicValuableANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DyadicValuableANSITest guid: (GUID fromString: '{8642c804-43a8-499e-86f1-1dc596623319}')!
+
 DyadicValuableANSITest comment: ''!
+
 !DyadicValuableANSITest categoriesForClass!Unclassified! !
+
 !DyadicValuableANSITest methodsFor!
 
 canonicalObject
@@ -38,6 +42,7 @@ testXvalueXvalueX
 	#'Valuable'.
 	self value: [blk2args value: 1 value: 2] should: [:r | r = #(1 2)]
 		conformTo: #'dyadicValuable' selector: #'value:value:'.! !
+
 !DyadicValuableANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

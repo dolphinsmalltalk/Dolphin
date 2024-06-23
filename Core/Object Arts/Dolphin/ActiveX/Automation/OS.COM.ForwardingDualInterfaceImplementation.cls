@@ -7,8 +7,11 @@ OS.COM.DualInterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ForwardingDualInterfaceImplementation guid: (Core.GUID fromString: '{609232b8-a27b-4709-941c-128cd9948bda}')!
+
 OS.COM.ForwardingDualInterfaceImplementation comment: ''!
+
 !OS.COM.ForwardingDualInterfaceImplementation methodsFor!
 
 interfaceClass
@@ -36,6 +39,7 @@ server: anObject
 	the server is set before the interface is queried."
 
 	server := anObject! !
+
 !OS.COM.ForwardingDualInterfaceImplementation categoriesForMethods!
 interfaceClass!accessing!public! !
 interfaceClass:!accessing!public! !

@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.UndefinedObject guid: (Core.GUID fromString: '{87b4c4c9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.UndefinedObject comment: 'UndefinedObject is the singleton class of the distinguished object, <nil>.
 
 <nil> is the initial value of all new variables (instance or otherwise), and hence a  primary purpose of UndefinedObject is to provide a means of detecting errors, especially those resulting from the failure to correctly initialize variables.
@@ -19,7 +21,9 @@ When interfacing to external functions, etc, <nil> is treated as the null pointe
 UndefinedObject implements the following ANSI protocols:
 	<Object>
 	<nil>'!
+
 !Core.UndefinedObject categoriesForClass!Kernel-Objects! !
+
 !Core.UndefinedObject methodsFor!
 
 ?? anObject
@@ -202,6 +206,7 @@ yourAddress
 	Nil is treated like a NULL pointer."
 
 	^0! !
+
 !Core.UndefinedObject categoriesForMethods!
 ??!converting!public! !
 _deepCopy:!copying!private! !
@@ -241,6 +246,7 @@ new
 	There can be only one!!"
 
 	^nil! !
+
 !Core.UndefinedObject class categoriesForMethods!
 new!instance creation!public! !
 !

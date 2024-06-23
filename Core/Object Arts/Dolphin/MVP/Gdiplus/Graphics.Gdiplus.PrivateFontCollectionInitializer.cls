@@ -7,8 +7,11 @@ Graphics.Gdiplus.FontCollectionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.PrivateFontCollectionInitializer guid: (Core.GUID fromString: '{c09d8c07-5f28-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.PrivateFontCollectionInitializer comment: ''!
+
 !Graphics.Gdiplus.PrivateFontCollectionInitializer methodsFor!
 
 basicCreateHandle
@@ -24,6 +27,7 @@ isPersistent
 	"Answer true if the receiver holds sufficient information such that it can recreate the Gdiplus native object it describes exactly as it was across Smalltalk image save/restore. This is generally true."
 
 	^false! !
+
 !Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !
@@ -43,6 +47,7 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
+
 !Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesForMethods!
 default!instance creation!private! !
 new!development!instance creation!public! !

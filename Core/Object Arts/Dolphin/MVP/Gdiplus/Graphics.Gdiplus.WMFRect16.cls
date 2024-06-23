@@ -13,7 +13,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_top' -> 16r2.
 			'_WMFRect16_Size' -> 16r8
 		}!
+
 Graphics.Gdiplus.WMFRect16 guid: (Core.GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
+
 Graphics.Gdiplus.WMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -30,6 +32,7 @@ struct tagGpWMFRect16 {
 	short bottom;
 } GpWMFRect16;
 '!
+
 !Graphics.Gdiplus.WMFRect16 methodsFor!
 
 bottom
@@ -71,6 +74,7 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes int16AtOffset: _OffsetOf_top put: anInteger! !
+
 !Graphics.Gdiplus.WMFRect16 categoriesForMethods!
 bottom!**compiled accessors**!public! !
 bottom:!**compiled accessors**!public! !
@@ -117,6 +121,7 @@ defineFields
 
 getFieldNames
 	^#(#left #top #right #bottom)! !
+
 !Graphics.Gdiplus.WMFRect16 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

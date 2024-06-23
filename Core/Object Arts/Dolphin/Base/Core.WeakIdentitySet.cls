@@ -7,10 +7,15 @@ Core.WeakSet
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WeakIdentitySet guid: (Core.GUID fromString: '{87b4c539-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.WeakIdentitySet isMourner: true!
+
 Core.WeakIdentitySet comment: ''!
+
 !Core.WeakIdentitySet categoriesForClass!Collections-Unordered!Collections-Weak! !
+
 !Core.WeakIdentitySet methodsFor!
 
 copyingClass
@@ -39,6 +44,7 @@ species
 	Weak types are generally considered as of the same species as their equivalent strong type."
 
 	^IdentitySet! !
+
 !Core.WeakIdentitySet categoriesForMethods!
 copyingClass!copying!private! !
 findElementOrNil:!private!searching! !

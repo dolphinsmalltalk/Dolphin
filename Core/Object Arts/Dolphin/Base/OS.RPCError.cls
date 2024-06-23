@@ -7,6 +7,10 @@ OS.Win32Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.RPCError guid: (Core.GUID fromString: '{87b4c569-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.RPCError comment: 'Exception class for errors associated with the RPCLibrary'!
+
 !OS.RPCError categoriesForClass!System-Exception Handling! !
+

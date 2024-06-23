@@ -7,9 +7,13 @@ STON.Tests.WriteReadTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.LargeWriteReadTest guid: (Core.GUID fromString: '{29be0ac3-431b-4a04-95c4-c3c398ed2ca4}')!
+
 STON.Tests.LargeWriteReadTest comment: 'STONLargeWriteReadTests test the optimalizations for large structures.'!
+
 !STON.Tests.LargeWriteReadTest categoriesForClass!STON-Tests-Writer! !
+
 !STON.Tests.LargeWriteReadTest methodsFor!
 
 materialize: string
@@ -33,6 +37,7 @@ serializeJson: anObject
 				on: stream;
 				optimizeForLargeStructures;
 				nextPut: anObject]! !
+
 !STON.Tests.LargeWriteReadTest categoriesForMethods!
 materialize:!private! !
 serialize:!private! !

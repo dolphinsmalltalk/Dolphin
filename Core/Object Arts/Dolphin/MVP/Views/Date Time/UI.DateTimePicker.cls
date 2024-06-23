@@ -7,7 +7,9 @@ UI.DateTimeCommonControl
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DateTimePicker guid: (Core.GUID fromString: '{87b4c735-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.DateTimePicker comment: '`DateTimePicker` is a `<valueView>` implementing the Windows "SysDateTimePick32" common control, referred to as the "Date and Time Picker Control" in the MSDN documentation. 
 
 The `<valueModel>` associated with a `DateTimePicker` must always yield a value that can be converted to a `SYSTEMTIME` by sending it `#asParameter` after mapping through the installed type converter (e.g. a `DateAndTime`). A `DateTimePicker` will normally be used in conjunction with a `DatePresenter` or a `TimePresenter`, and indeed when the class'' package is installed a `DateTimePicker` is used as the default views for both presenters.
@@ -30,7 +32,9 @@ Or:
   `displayFormat`		`String` or nil
 
 '!
+
 !UI.DateTimePicker categoriesForClass!MVP-Views! !
+
 !UI.DateTimePicker methodsFor!
 
 canShowNone
@@ -189,6 +193,7 @@ setSystemTime: aSYSTEMTIMEOrNil
 
 stateText
 	^''! !
+
 !UI.DateTimePicker categoriesForMethods!
 canShowNone!accessing-styles!public! !
 canShowNone:!accessing-styles!public! !
@@ -231,6 +236,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysDateTimePick32'! !
+
 !UI.DateTimePicker class categoriesForMethods!
 defaultModel!models!public! !
 themePartName!constants!private!theming! !

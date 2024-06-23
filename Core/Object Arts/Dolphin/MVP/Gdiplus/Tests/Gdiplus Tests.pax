@@ -104,6 +104,7 @@ Graphics.Gdiplus
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusLibrary
 	subclass: #'Graphics.Gdiplus.Tests.MockGdiplusLibrary'
 	instanceVariableNames: 'process messages'
@@ -111,6 +112,7 @@ Graphics.Gdiplus.GdiplusLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'Graphics.Gdiplus.Tests.GdiplusTest'
 	instanceVariableNames: 'model'
@@ -118,6 +120,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.POINTTest
 	subclass: #'External.Tests.POINTFTest'
 	instanceVariableNames: ''
@@ -125,6 +128,7 @@ External.Tests.POINTTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.RECTTest
 	subclass: #'Graphics.Gdiplus.Tests.GpRectTest'
 	instanceVariableNames: ''
@@ -132,6 +136,7 @@ External.Tests.RECTTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.RECTTest
 	subclass: #'Graphics.Gdiplus.Tests.RECTFTest'
 	instanceVariableNames: ''
@@ -139,6 +144,7 @@ External.Tests.RECTTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'Graphics.Gdiplus.Tests.ARGBArrayTest'
 	instanceVariableNames: ''
@@ -146,6 +152,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.POINTFArrayTest'
 	instanceVariableNames: ''
@@ -153,6 +160,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusTest
 	subclass: #'Graphics.Gdiplus.Tests.ColorMatrixTest'
 	instanceVariableNames: ''
@@ -160,6 +168,7 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusTest
 	subclass: #'Graphics.Gdiplus.Tests.ExamplesTest'
 	instanceVariableNames: ''
@@ -167,6 +176,7 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusTest
 	subclass: #'Graphics.Gdiplus.Tests.GdiplusObjectTest'
 	instanceVariableNames: ''
@@ -174,6 +184,7 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusTest
 	subclass: #'Graphics.Gdiplus.Tests.GradientBlendTest'
 	instanceVariableNames: ''
@@ -181,6 +192,7 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusTest
 	subclass: #'Graphics.Gdiplus.Tests.InitializerTests'
 	instanceVariableNames: ''
@@ -188,6 +200,7 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.AbstractCustomLineCapTest'
 	instanceVariableNames: ''
@@ -195,6 +208,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.BrushTest'
 	instanceVariableNames: ''
@@ -202,6 +216,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.FontCollectionTest'
 	instanceVariableNames: ''
@@ -209,6 +224,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.FontFamilyTest'
 	instanceVariableNames: ''
@@ -216,6 +232,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.FontTest'
 	instanceVariableNames: ''
@@ -223,6 +240,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.GdiplusGraphicsTest'
 	instanceVariableNames: 'bitmap'
@@ -230,6 +248,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.GraphicsPathTest'
 	instanceVariableNames: ''
@@ -237,6 +256,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.ImageAttributesTest'
 	instanceVariableNames: ''
@@ -244,6 +264,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.ImageTests'
 	instanceVariableNames: ''
@@ -251,6 +272,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.MatrixTest'
 	instanceVariableNames: ''
@@ -258,6 +280,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.PenTest'
 	instanceVariableNames: ''
@@ -265,6 +288,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.RegionTest'
 	instanceVariableNames: ''
@@ -272,6 +296,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest
 	subclass: #'Graphics.Gdiplus.Tests.StringFormatTest'
 	instanceVariableNames: ''
@@ -279,6 +304,7 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
 	subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
 	instanceVariableNames: ''
@@ -286,6 +312,7 @@ Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
 	subclass: #'Graphics.Gdiplus.Tests.CustomLineCapTest'
 	instanceVariableNames: ''
@@ -293,6 +320,7 @@ Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.BrushTest
 	subclass: #'Graphics.Gdiplus.Tests.HatchBrushTest'
 	instanceVariableNames: ''
@@ -300,6 +328,7 @@ Graphics.Gdiplus.Tests.BrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.BrushTest
 	subclass: #'Graphics.Gdiplus.Tests.SolidBrushTest'
 	instanceVariableNames: ''
@@ -307,6 +336,7 @@ Graphics.Gdiplus.Tests.BrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.BrushTest
 	subclass: #'Graphics.Gdiplus.Tests.TransformableBrushTest'
 	instanceVariableNames: ''
@@ -314,6 +344,7 @@ Graphics.Gdiplus.Tests.BrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.TransformableBrushTest
 	subclass: #'Graphics.Gdiplus.Tests.GradientBrushTest'
 	instanceVariableNames: ''
@@ -321,6 +352,7 @@ Graphics.Gdiplus.Tests.TransformableBrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.TransformableBrushTest
 	subclass: #'Graphics.Gdiplus.Tests.TextureBrushTest'
 	instanceVariableNames: ''
@@ -328,6 +360,7 @@ Graphics.Gdiplus.Tests.TransformableBrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GradientBrushTest
 	subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
 	instanceVariableNames: ''
@@ -335,6 +368,7 @@ Graphics.Gdiplus.Tests.GradientBrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GradientBrushTest
 	subclass: #'Graphics.Gdiplus.Tests.PathGradientBrushTest'
 	instanceVariableNames: ''
@@ -342,6 +376,7 @@ Graphics.Gdiplus.Tests.GradientBrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.FontCollectionTest
 	subclass: #'Graphics.Gdiplus.Tests.InstalledFontCollectionTest'
 	instanceVariableNames: ''
@@ -349,6 +384,7 @@ Graphics.Gdiplus.Tests.FontCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.FontCollectionTest
 	subclass: #'Graphics.Gdiplus.Tests.PrivateFontCollectionTest'
 	instanceVariableNames: ''
@@ -356,6 +392,7 @@ Graphics.Gdiplus.Tests.FontCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.ImageTests
 	subclass: #'Graphics.Gdiplus.Tests.BitmapTest'
 	instanceVariableNames: ''
@@ -363,6 +400,7 @@ Graphics.Gdiplus.Tests.ImageTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.ImageTests
 	subclass: #'Graphics.Gdiplus.Tests.ImageTest'
 	instanceVariableNames: ''
@@ -370,6 +408,7 @@ Graphics.Gdiplus.Tests.ImageTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GradientBlendTest
 	subclass: #'Graphics.Gdiplus.Tests.GradientCustomBlendTest'
 	instanceVariableNames: ''
@@ -377,6 +416,7 @@ Graphics.Gdiplus.Tests.GradientBlendTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GradientBlendTest
 	subclass: #'Graphics.Gdiplus.Tests.GradientPresetBlendTest'
 	instanceVariableNames: ''
@@ -384,6 +424,7 @@ Graphics.Gdiplus.Tests.GradientBlendTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest'
 	instanceVariableNames: ''
@@ -391,6 +432,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.BitmapFromFileInitializerTest'
 	instanceVariableNames: ''
@@ -398,6 +440,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest'
 	instanceVariableNames: ''
@@ -405,6 +448,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest'
 	instanceVariableNames: ''
@@ -412,6 +456,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest'
 	instanceVariableNames: ''
@@ -419,6 +464,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest'
 	instanceVariableNames: ''
@@ -426,6 +472,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest'
 	instanceVariableNames: ''
@@ -433,6 +480,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.ImageAttributesInitializerTest'
 	instanceVariableNames: ''
@@ -440,6 +488,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.ImageFromFileInitializerTest'
 	instanceVariableNames: ''
@@ -447,6 +496,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest'
 	instanceVariableNames: ''
@@ -454,6 +504,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest'
 	instanceVariableNames: ''
@@ -461,6 +512,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest'
 	instanceVariableNames: ''
@@ -468,6 +520,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.PenInitializerTest'
 	instanceVariableNames: ''
@@ -475,6 +528,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.SolidBrushFromColorInitializerTest'
 	instanceVariableNames: ''
@@ -482,6 +536,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InitializerTests
 	subclass: #'Graphics.Gdiplus.Tests.TextureBrushInitializerTest'
 	instanceVariableNames: 'image'
@@ -489,6 +544,7 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestResource
 	subclass: #'Graphics.Gdiplus.Tests.FileResource'
 	instanceVariableNames: 'tempDir tempFileLocator'
@@ -505,6 +561,7 @@ basicHdc
 	"Private - Unit test helper"
 
 	^hdc! !
+
 !Graphics.Bitmap categoriesForMethods!
 basicHdc!private!test accessing! !
 !
@@ -534,6 +591,7 @@ gdipCopyOfImageIndex: anIndex extent: extent backcolor: aColor
 		flags: 0.
 	bmp freeDC.
 	^bmp! !
+
 !Graphics.Bitmap class categoriesForMethods!
 gdipCopyOfIcon:extent:backcolor:!instance creation!public! !
 gdipCopyOfImageIndex:extent:backcolor:!instance creation!public! !
@@ -550,6 +608,7 @@ testComparePOINTF
 	self assert: subject hash equals: point hash.
 	self assert: subject equals: point.
 	self assert: point equals: subject! !
+
 !Graphics.Tests.AbstractPointTest categoriesForMethods!
 testComparePOINTF!public!unit tests! !
 !
@@ -568,6 +627,7 @@ testAsColorKeyedBitmap
 	canvas erase.
 	colorKeyed drawOn: canvas.
 	self assert: (canvas pixelAt: Point zero) equals: Color black! !
+
 !Graphics.Tests.BitmapTest categoriesForMethods!
 testAsColorKeyedBitmap!public!unit tests! !
 !

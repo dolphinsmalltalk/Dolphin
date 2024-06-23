@@ -7,12 +7,15 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.DOMNodeList guid: (Core.GUID fromString: '{e1531d8f-7795-472d-83f8-24c7cd6c0947}')!
+
 MSXML.DOMNodeList comment: 'DOMNodeList is a <sequencedReadableCollection> wrapper around the MSXML <IXMLDOMNodeList> interface. Its purpose is to make all the power of Smalltalk sequenceable collections available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like an array). 
 All DOM interface methods that return an IXMLDOMNamedNodeMap have been modified to return a subinstance of this class.
 
 Instance Variables:
 	interface		<IXMLDOMNodeList>'!
+
 !MSXML.DOMNodeList methodsFor!
 
 add: newElement 
@@ -99,6 +102,7 @@ xml
 	stream := String writeStream: 64.
 	self do: [:each | stream nextPutAll: each xml].
 	^stream contents! !
+
 !MSXML.DOMNodeList categoriesForMethods!
 add:!adding!public! !
 at:!accessing!public! !
@@ -127,6 +131,7 @@ on: anIXMLDOMNodeList
 		interface: anIXMLDOMNodeList
 
 	! !
+
 !MSXML.DOMNodeList class categoriesForMethods!
 on:!instance creation!public! !
 !

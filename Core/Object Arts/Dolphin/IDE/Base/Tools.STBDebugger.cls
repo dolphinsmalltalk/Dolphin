@@ -7,7 +7,9 @@ Tools.STxDebugger
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.STBDebugger guid: (Core.GUID fromString: '{87b4c6e9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.STBDebugger comment: '`STBDebugger` is an `STBInFiler` decorator that prints an indented trace of the contents of the STB file it is reading as it proceeds. `STBDebugger`s can be useful for debugging issues with serialized objects.
 
 For example:
@@ -16,7 +18,9 @@ For example:
 	(STBDebugger dump: bytes readStream)."Display-it"
 ```
 '!
+
 !Tools.STBDebugger categoriesForClass!System-Binary storage! !
+
 !Tools.STBDebugger methodsFor!
 
 basicNext
@@ -105,6 +109,7 @@ readSizeOf: aClass
 				print: size;
 				nextPut: $]].
 	^size! !
+
 !Tools.STBDebugger categoriesForMethods!
 basicNext!accessing!private! !
 inFilerClass!constants!private! !

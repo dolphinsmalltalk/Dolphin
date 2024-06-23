@@ -115,6 +115,7 @@ External.Structure
 			'_OffsetOf_lVerb' -> 16r0.
 			'_OLEVERB_Size' -> 16r10
 		}!
+
 OS.COM.IUnknown
 	subclass: #'UI.IDolphinAxHost'
 	instanceVariableNames: ''
@@ -122,6 +123,7 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IOleClientSite'
 	instanceVariableNames: ''
@@ -129,6 +131,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IOleObject'
 	instanceVariableNames: ''
@@ -136,6 +139,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IPropertyNotifySink'
 	instanceVariableNames: ''
@@ -143,6 +147,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'UI.IAxWinAmbientDispatch'
 	instanceVariableNames: ''
@@ -150,6 +155,7 @@ OS.COM.IDispatch
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'UI.IDocHostUIHandlerDispatch'
 	instanceVariableNames: ''
@@ -157,6 +163,7 @@ OS.COM.IDispatch
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'UI.IMSControl'
 	instanceVariableNames: ''
@@ -164,6 +171,7 @@ OS.COM.IDispatch
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.IAxWinAmbientDispatch
 	subclass: #'UI.IAxWinAmbientDispatchEx'
 	instanceVariableNames: ''
@@ -171,6 +179,7 @@ UI.IAxWinAmbientDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ControlView
 	subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
@@ -240,6 +249,7 @@ UI.ControlView
 			'UserModeMask' -> 16r40.
 			'WM_FORWARDMSG' -> 16r37F
 		}!
+
 UI.AXControlSite
 	subclass: #'UI.AXValueConvertingControlSite'
 	instanceVariableNames: 'typeconverter'
@@ -262,6 +272,7 @@ axWinInit
 
 	<stdcall: bool AtlAxWinInit>
 	^self invalidCall: _failureCode! !
+
 !Kernel.VMLibrary categoriesForMethods!
 axWinInit!initializing!public! !
 !

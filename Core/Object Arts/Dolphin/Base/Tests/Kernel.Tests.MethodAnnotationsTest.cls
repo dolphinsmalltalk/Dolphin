@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.MethodAnnotationsTest guid: (Core.GUID fromString: '{7c7e34ae-c64b-4a95-8ee7-28f444305c8e}')!
+
 Kernel.Tests.MethodAnnotationsTest comment: ''!
+
 !Kernel.Tests.MethodAnnotationsTest methodsFor!
 
 canonicalSubject
@@ -193,6 +196,7 @@ testWithSelector
 		equals: {Message selector: #notSelector: argument: #selector:}.
 	"Shouldn't find the args that happen to be the same - this is not possible with the current representation since the args are always held in an Array, but a possible (space) optimisation would be to eschew the Array if there is only one arg, and just store the single argument in its place."
 	self assert: (subject withSelector: #notSelector) isEmpty! !
+
 !Kernel.Tests.MethodAnnotationsTest categoriesForMethods!
 canonicalSubject!constants!private! !
 emptySubject!constants!private! !

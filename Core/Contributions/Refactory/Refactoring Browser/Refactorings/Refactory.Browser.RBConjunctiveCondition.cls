@@ -7,14 +7,18 @@ Refactory.Browser.RBAbstractCondition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBConjunctiveCondition guid: (Core.GUID fromString: '{a39b3587-7d58-4929-b47c-00c804e537be}')!
+
 Refactory.Browser.RBConjunctiveCondition comment: 'ConjunctiveCondition represents and-ing two AbstractConditions together.
 
 Instance Variables:
 	failed	<Symbol>	which condition failed (#leftFailed, #rightFailed, or #unknownFailed)
 	left	<AbstractCondition>	the condition on the left side of the and
 	right	<AbstractCondition>	the condition on the right side of the and'!
+
 !Refactory.Browser.RBConjunctiveCondition categoriesForClass!Refactory-Conditions! !
+
 !Refactory.Browser.RBConjunctiveCondition methodsFor!
 
 check
@@ -68,6 +72,7 @@ rightFailed
 
 unknownFailed
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)! !
+
 !Refactory.Browser.RBConjunctiveCondition categoriesForMethods!
 check!checking!public! !
 errorBlockFor:!private! !

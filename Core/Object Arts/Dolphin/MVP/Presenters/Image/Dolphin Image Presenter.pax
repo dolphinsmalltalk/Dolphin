@@ -40,6 +40,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticView
 	subclass: #'UI.ImageViewAbstract'
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
@@ -52,6 +53,7 @@ UI.StaticView
 						withAll: { #bump -> 16r9. #etched -> 16r6. #none -> 16r0. #raised -> 16r5. #sunken -> 16rA }).
 			'EraseWholeMask' -> 16r1
 		}!
+
 UI.ImageViewAbstract
 	subclass: #'UI.ImageView'
 	instanceVariableNames: ''
@@ -59,6 +61,7 @@ UI.ImageViewAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticControlView
 	subclass: #'UI.StaticImage'
 	instanceVariableNames: 'image'
@@ -66,6 +69,7 @@ UI.StaticControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticImage
 	subclass: #'UI.StaticBitmap'
 	instanceVariableNames: ''
@@ -73,6 +77,7 @@ UI.StaticImage
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticImage
 	subclass: #'UI.StaticIcon'
 	instanceVariableNames: ''
@@ -80,6 +85,7 @@ UI.StaticImage
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DoubleBufferedView
 	subclass: #'UI.AnimatedImageView'
 	instanceVariableNames: ''

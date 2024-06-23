@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ClassDescriptionTest guid: (Core.GUID fromString: '{2e47ba8b-6e05-41a9-87ce-ccfeabd45cb7}')!
+
 Core.Tests.ClassDescriptionTest isNonInstantiable: true!
+
 Core.Tests.ClassDescriptionTest comment: ''!
+
 !Core.Tests.ClassDescriptionTest methodsFor!
 
 allClassHierarchyInstancesDo: aMonadicValuable
@@ -66,6 +70,7 @@ testSubclasses
 testWhichClassDefinesClassVar
 	self assert: (self canonicalInstance whichClassDefinesClassVar: '_AssertionFailureSignal')
 		identicalTo: Object! !
+
 !Core.Tests.ClassDescriptionTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
 canonicalInstance!constants!public! !

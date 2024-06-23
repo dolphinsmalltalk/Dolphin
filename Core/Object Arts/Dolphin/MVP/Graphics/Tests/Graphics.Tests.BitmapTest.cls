@@ -7,8 +7,11 @@ Graphics.Tests.AbstractBitmapTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.BitmapTest guid: (Core.GUID fromString: '{e775dfbb-e3db-47cd-aec2-8b0ebe5b7498}')!
+
 Graphics.Tests.BitmapTest comment: ''!
+
 !Graphics.Tests.BitmapTest methodsFor!
 
 stlVersion3_file
@@ -62,6 +65,7 @@ testStlConvertFromVersion3_file
 	self deny: rehydrated initializer isLoadShared.
 	self deny: rehydrated handle equals: comparand handle.
 	self assert: rehydrated extent equals: comparand extent! !
+
 !Graphics.Tests.BitmapTest categoriesForMethods!
 stlVersion3_file!constants!private! !
 stlVersion3_resource!constants!private! !

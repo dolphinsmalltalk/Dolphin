@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.IconicListUpdateMode guid: (Core.GUID fromString: '{81176ed9-fdb6-4fc4-94f7-373d8ecd059c}')!
+
 UI.IconicListUpdateMode isNonInstantiable: true!
+
 UI.IconicListUpdateMode comment: ''!
+
 !UI.IconicListUpdateMode methodsFor!
 
 isVirtual
@@ -47,6 +51,7 @@ viewStoresItemData
 	"Answer whether the view stores text and icon data in this update mode."
 
 	^self isVirtual not! !
+
 !UI.IconicListUpdateMode categoriesForMethods!
 isVirtual!public!testing! !
 name!accessing!public! !
@@ -68,6 +73,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^IconicListAbstract icon! !
+
 !UI.IconicListUpdateMode class categoriesForMethods!
 forIconicList:!instance creation!public! !
 icon!constants!public! !

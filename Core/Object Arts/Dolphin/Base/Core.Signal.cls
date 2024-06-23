@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Signal guid: (Core.GUID fromString: '{87b4c4b9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Signal comment: ''!
+
 !Core.Signal categoriesForClass!Kernel-Exception Handling! !
+
 !Core.Signal methodsFor!
 
 , arg
@@ -136,6 +140,7 @@ signalWith: signalerTag
 	This method will not normally return to its sender."
 	
 	^self newException signalWith: signalerTag! !
+
 !Core.Signal categoriesForMethods!
 ,!filtering!public! !
 defaultAction:!handling!private! !
@@ -179,6 +184,7 @@ resumableDescription: anObject
 	^self new 
 		description: anObject;
 		makeResumable! !
+
 !Core.Signal class categoriesForMethods!
 description:!instance creation!public! !
 new!instance creation!public! !

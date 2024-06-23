@@ -7,9 +7,13 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.AbstractTextEditTest guid: (Core.GUID fromString: '{3f7e7558-eb69-4b84-a91f-de5dba0c2d10}')!
+
 UI.Tests.AbstractTextEditTest isNonInstantiable: true!
+
 UI.Tests.AbstractTextEditTest comment: ''!
+
 !UI.Tests.AbstractTextEditTest methodsFor!
 
 initializePresenter
@@ -95,6 +99,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assertIsNil: view getEvents.
 	self assert: view interactor identicalTo: view.
 	self assertIsNil: view forecolor! !
+
 !UI.Tests.AbstractTextEditTest categoriesForMethods!
 initializePresenter!public!Running! !
 margins!constants!private! !

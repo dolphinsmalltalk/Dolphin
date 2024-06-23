@@ -7,8 +7,11 @@ MSXML.ISchemaParticle
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaAny guid: (OS.COM.IID fromString: '{50ea08bc-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 MSXML.ISchemaAny isEgressOnly: true!
+
 MSXML.ISchemaAny comment: '<ISchemaAny> is a wrapper class for the COM interface ''MSXML2.ISchemaAny'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -35,7 +38,9 @@ interface ISchemaAny : ISchemaParticle
 		[out, retval]SCHEMAPROCESSCONTENTS* processContents);
 };
 '!
+
 !MSXML.ISchemaAny categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISchemaAny methodsFor!
 
 get_namespaces: namespaces
@@ -71,6 +76,7 @@ processContents
 	answer := Int32 new.
 	self get_processContents: answer.
 	^answer asObject! !
+
 !MSXML.ISchemaAny categoriesForMethods!
 get_namespaces:!**auto generated**!COM Interfaces-ISchemaAny!private! !
 get_processContents:!**auto generated**!COM Interfaces-ISchemaAny!private! !
@@ -90,6 +96,7 @@ defineFunctions
 		defineFunction: #get_processContents:
 			argumentTypes: 'sdword*'
 ! !
+
 !MSXML.ISchemaAny class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

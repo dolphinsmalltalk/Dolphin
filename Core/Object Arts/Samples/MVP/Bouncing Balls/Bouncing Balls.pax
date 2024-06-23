@@ -41,6 +41,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RuntimeSessionManager
 	subclass: #'UI.Examples.BouncingBallSessionManager'
 	instanceVariableNames: ''
@@ -48,6 +49,7 @@ UI.RuntimeSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DoubleBufferedView
 	subclass: #'UI.Examples.BouncingBallView'
 	instanceVariableNames: 'balls stepProcess'

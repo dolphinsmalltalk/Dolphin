@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2PrintToPdfCompletedHandler guid: (OS.COM.IID fromString: '{ccf1ef04-fd8e-4d5f-b2de-0983e41b8c36}')!
+
 WebView2.ICoreWebView2PrintToPdfCompletedHandler comment: '`ICoreWebView2PrintToPdfCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintToPdfCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2PrintToPdfCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2PrintToPdfCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2PrintToPdfCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult bool>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2PrintToPdfCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2PrintToPdfCompletedHandler!public! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult bool'! !
+
 !WebView2.ICoreWebView2PrintToPdfCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

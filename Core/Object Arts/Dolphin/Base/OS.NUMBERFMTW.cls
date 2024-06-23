@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_negativeOrder' -> 16r14.
 			'_OffsetOf_NumDigits' -> 16r0
 		}!
+
 OS.NUMBERFMTW guid: (Core.GUID fromString: '{0a4bf3f8-997a-4704-98b0-05a904564613}')!
+
 OS.NUMBERFMTW comment: '`NUMBERFMTW` is an `ExternalStructure` class to wrap the struct NUMBERFMTW from type information in the ''Win32 API'' library.
 
 NUMBERFMTW is used in conjunction with the GetNumberFormat API to produce localised representations of printed decimal numbers.
@@ -32,7 +34,9 @@ struct tagNUMBERFMTW {
 	[helpstring("negative number ordering")] unsigned int NegativeOrder;
 } NUMBERFMTW;
 ```'!
+
 !OS.NUMBERFMTW categoriesForClass!Win32-Structs! !
+
 !OS.NUMBERFMTW methodsFor!
 
 decimalPlaces
@@ -112,6 +116,7 @@ numberGrouping: aString
 					| group |
 					group := Ucrt atoi: each.
 					grouping * 10 + group])! !
+
 !OS.NUMBERFMTW categoriesForMethods!
 decimalPlaces!accessing!public! !
 decimalPlaces:!accessing!public! !
@@ -161,6 +166,7 @@ defineFields
 
 getFieldNames
 	^#(#grouping #negativeOrder)! !
+
 !OS.NUMBERFMTW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

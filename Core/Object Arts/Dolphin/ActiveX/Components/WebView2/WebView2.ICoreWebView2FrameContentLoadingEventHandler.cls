@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2FrameContentLoadingEventHandler guid: (OS.COM.IID fromString: '{0d6156f2-d332-49a7-9e03-7d8f2feeee54}')!
+
 WebView2.ICoreWebView2FrameContentLoadingEventHandler comment: '`ICoreWebView2FrameContentLoadingEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameContentLoadingEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2FrameContentLoadingEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2FrameContentLoadingEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2FrameContentLoadingEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2Frame* ICoreWebView2ContentLoadingEventArgs*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2FrameContentLoadingEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#frameContentLoading:! !
+
 !WebView2.ICoreWebView2FrameContentLoadingEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

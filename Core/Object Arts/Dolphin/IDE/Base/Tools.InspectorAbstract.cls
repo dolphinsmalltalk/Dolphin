@@ -7,10 +7,15 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.InspectorAbstract guid: (Core.GUID fromString: '{a5e858b2-45f7-4ae8-8f14-c11aad5f3ba4}')!
+
 Tools.InspectorAbstract isNonInstantiable: true!
+
 Tools.InspectorAbstract comment: ''!
+
 !Tools.InspectorAbstract categoriesForClass!MVP-Presenters! !
+
 !Tools.InspectorAbstract methodsFor!
 
 browseClass
@@ -69,6 +74,7 @@ object: anObject
 
 systemModel
 	^self developmentSystem! !
+
 !Tools.InspectorAbstract categoriesForMethods!
 browseClass!commands-actions!public! !
 browseHierarchy!commands-actions!public! !
@@ -89,6 +95,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^BasicInspector icon! !
+
 !Tools.InspectorAbstract class categoriesForMethods!
 icon!constants!public! !
 !

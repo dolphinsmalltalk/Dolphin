@@ -7,8 +7,11 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.MatrixInitializer guid: (Core.GUID fromString: '{1a1a5ea6-6151-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.MatrixInitializer comment: ''!
+
 !Graphics.Gdiplus.MatrixInitializer methodsFor!
 
 = anObject
@@ -83,6 +86,7 @@ printGdiplusObject: aGdiplusObject on: aStream
 				space;
 				nextPutAll: #identity]
 		ifFalse: [super printGdiplusObject: aGdiplusObject on: aStream]! !
+
 !Graphics.Gdiplus.MatrixInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -115,6 +119,7 @@ identity
 
 m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 dx: aReal31 dy: aReal32
 	^self fromArray: {aReal11. aReal12. aReal21. aReal22. aReal31. aReal32}! !
+
 !Graphics.Gdiplus.MatrixInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.ShellLibraryTest guid: (Core.GUID fromString: '{5f8b77c2-670d-4c13-830f-ed10f6dbdb3d}')!
+
 OS.Tests.ShellLibraryTest comment: ''!
+
 !OS.Tests.ShellLibraryTest methodsFor!
 
 testGetKnownFolderLocation
@@ -25,6 +28,7 @@ testGetKnownFolderLocation
 		should: [Shell32 getKnownFolderLocation: GUID newUnique]
 		raise: Win32Error
 		matching: [:ex | ex statusCode = 2]! !
+
 !OS.Tests.ShellLibraryTest categoriesForMethods!
 testGetKnownFolderLocation!public! !
 !

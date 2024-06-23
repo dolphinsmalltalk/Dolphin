@@ -7,9 +7,13 @@ Core.Tests.ArrayedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.StringTest guid: (Core.GUID fromString: '{262b323f-d574-423e-8571-63b1fab0d021}')!
+
 Core.Tests.StringTest isNonInstantiable: true!
+
 Core.Tests.StringTest comment: ''!
+
 !Core.Tests.StringTest methodsFor!
 
 afterTestCases
@@ -1377,6 +1381,7 @@ verifyPattern: patternString mismatch: matchString
 
 withAllTestCases
 	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
+
 !Core.Tests.StringTest categoriesForMethods!
 afterTestCases!constants!private! !
 assimilate:!helpers!private! !

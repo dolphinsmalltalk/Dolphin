@@ -11,7 +11,9 @@ WinHttpServer.HTTP_RESPONSE_V1
 			'_OffsetOf_pResponseInfo' -> 16r11C.
 			'_OffsetOf_ResponseInfoCount' -> 16r118
 		}!
+
 WinHttpServer.HTTP_RESPONSE_V2 guid: (Core.GUID fromString: '{5e3a97da-7345-49a7-a5a9-1ddea2366eb2}')!
+
 WinHttpServer.HTTP_RESPONSE_V2 comment: '`HTTP_RESPONSE_V2` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V2'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +31,9 @@ struct tagHTTP_RESPONSE_V2 {
 } HTTP_RESPONSE_V2;
 ```
 '!
+
 !WinHttpServer.HTTP_RESPONSE_V2 categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_RESPONSE_V2 methodsFor!
 
 pResponseInfo
@@ -55,6 +59,7 @@ ResponseInfoCount: anInteger
 	"Set the receiver's 'ResponseInfoCount' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_ResponseInfoCount put: anInteger! !
+
 !WinHttpServer.HTTP_RESPONSE_V2 categoriesForMethods!
 pResponseInfo!**compiled accessors**!public! !
 pResponseInfo:!**compiled accessors**!public! !
@@ -88,6 +93,7 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks #ResponseInfoCount #pResponseInfo)! !
+
 !WinHttpServer.HTTP_RESPONSE_V2 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

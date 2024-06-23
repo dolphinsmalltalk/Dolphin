@@ -27,7 +27,9 @@ External.Structure
 			'_OffsetOf_SecondaryWinsServer' -> 16r250.
 			'_OffsetOf_type' -> 16r1A0
 		}!
+
 OS.IP_ADAPTER_INFO guid: (Core.GUID fromString: '{30f77c44-1f24-4b31-9311-dc3a730c4d4e}')!
+
 OS.IP_ADAPTER_INFO comment: '<IP_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -58,7 +60,9 @@ struct tagIP_ADAPTER_INFO {
 	long LeaseExpires;
 } IP_ADAPTER_INFO;
 '!
+
 !OS.IP_ADAPTER_INFO categoriesForClass!Win32-Structs! !
+
 !OS.IP_ADAPTER_INFO methodsFor!
 
 AdapterName
@@ -150,6 +154,7 @@ type
 	"Answer the <Integer> value of the receiver's 'type' field."
 
 	^bytes uint32AtOffset: _OffsetOf_type! !
+
 !OS.IP_ADAPTER_INFO categoriesForMethods!
 AdapterName!**compiled accessors**!public! !
 Address!**compiled accessors**!public! !
@@ -282,6 +287,7 @@ defineFields
 
 getFieldNames
 	^#(#Next #ComboIndex #AdapterName #Description #AddressLength #Address #index #type #DhcpEnabled #CurrentIpAddress #IpAddressList #GatewayList #DhcpServer #HaveWins #PrimaryWinsServer #SecondaryWinsServer #LeaseObtained #LeaseExpires)! !
+
 !OS.IP_ADAPTER_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

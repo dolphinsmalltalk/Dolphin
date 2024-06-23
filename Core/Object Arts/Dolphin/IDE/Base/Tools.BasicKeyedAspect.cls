@@ -7,9 +7,13 @@ Tools.AnonymousKeyedAspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.BasicKeyedAspect guid: (Core.GUID fromString: '{493bbe17-de57-4c11-8d61-e0494b76a1f6}')!
+
 Tools.BasicKeyedAspect comment: 'Part of the PublishedAspectorInspector framework. BasicKeyedAspect instances are used to describe the published aspects of an object that can be accessed via #basicAt: and #basicAt:put: messages as governed by the BasicKeyedAspectAccessor class'!
+
 !Tools.BasicKeyedAspect categoriesForClass!Attribute-Definition! !
+
 !Tools.BasicKeyedAspect methodsFor!
 
 getSelector
@@ -29,6 +33,7 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject basicAt: self key put: valueObject! !
+
 !Tools.BasicKeyedAspect categoriesForMethods!
 getSelector!accessing!private! !
 putSelector!accessing!private! !

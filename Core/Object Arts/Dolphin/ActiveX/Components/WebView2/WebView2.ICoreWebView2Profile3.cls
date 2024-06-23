@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Profile2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Profile3 guid: (OS.COM.IID fromString: '{b188e659-5685-4e05-bdba-fc640e0f1992}')!
+
 WebView2.ICoreWebView2Profile3 isEgressOnly: true!
+
 WebView2.ICoreWebView2Profile3 comment: '`ICoreWebView2Profile3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2Profile3 : ICoreWebView2Profile2
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Profile3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Profile3 methodsFor!
 
 get_PreferredTrackingPreventionLevel: value
@@ -53,6 +58,7 @@ put_PreferredTrackingPreventionLevel: value
 
 	<virtual stdcall: hresult 15 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Profile3 categoriesForMethods!
 get_PreferredTrackingPreventionLevel:!**auto generated**!COM Interfaces-ICoreWebView2Profile3!private! !
 put_PreferredTrackingPreventionLevel:!**auto generated**!COM Interfaces-ICoreWebView2Profile3!private! !
@@ -70,6 +76,7 @@ defineFunctions
 		defineFunction: #put_PreferredTrackingPreventionLevel:
 			argumentTypes: 'int32'
 ! !
+
 !WebView2.ICoreWebView2Profile3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

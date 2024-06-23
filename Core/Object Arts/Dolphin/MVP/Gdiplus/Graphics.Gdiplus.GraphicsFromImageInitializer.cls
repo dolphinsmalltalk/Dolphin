@@ -7,8 +7,11 @@ Graphics.Gdiplus.GraphicsInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GraphicsFromImageInitializer guid: (Core.GUID fromString: '{2b0e6f89-db02-4889-b235-64d9b48047f7}')!
+
 Graphics.Gdiplus.GraphicsFromImageInitializer comment: ''!
+
 !Graphics.Gdiplus.GraphicsFromImageInitializer methodsFor!
 
 basicCreateHandle
@@ -26,6 +29,7 @@ basicCreateHandle
 	gpHandle := Handle new.
 	Gdip gdipGetImageGraphicsContext: surface asParameter graphics: gpHandle.
 	^gpHandle! !
+
 !Graphics.Gdiplus.GraphicsFromImageInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 !

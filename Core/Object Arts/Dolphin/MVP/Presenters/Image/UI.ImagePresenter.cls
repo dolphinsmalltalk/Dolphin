@@ -7,9 +7,13 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ImagePresenter guid: (Core.GUID fromString: '{87b4c6d0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ImagePresenter comment: 'ImagePresenter is a <valuePresenter> that displays a <valueModel> onto an <image> value. A ImagePresenter can be connected to any <valueView> capable of displaying <image> values. Normally, this will be an <ImageView> or <StaticImage>, although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
+
 !UI.ImagePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Images! !
+
 !UI.ImagePresenter class methodsFor!
 
 icon
@@ -56,6 +60,7 @@ resource_Static_icon
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticIcon} 38 #{Core.Array} 17 nil nil 50 2 8 1149239555 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #== 8 #() 178 #hash 8 #() nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil false nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 386 241 221 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 120 0 0 0] 8 #() 386 193 193 nil 27)! !
+
 !UI.ImagePresenter class categoriesForMethods!
 icon!constants!public! !
 resource_Animated_view!public!resources-views! !

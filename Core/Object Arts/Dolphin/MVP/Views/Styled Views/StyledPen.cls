@@ -5,9 +5,13 @@ Object subclass: #StyledPen
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 StyledPen guid: (GUID fromString: '{981954b0-d34d-400f-8e8c-01faa46311ab}')!
+
 StyledPen comment: 'A StyledPen holds persistent details for a GdiplusPen.'!
+
 !StyledPen categoriesForClass!Kernel-Objects! !
+
 !StyledPen methodsFor!
 
 asGdiplusPen
@@ -46,6 +50,7 @@ width
 
 width: anInteger 
 	width := anInteger! !
+
 !StyledPen categoriesForMethods!
 asGdiplusPen!public! !
 color!accessing!public! !
@@ -112,6 +117,7 @@ styles
 		at: #dashDot put: #(4 4 1 4);
 		at: #dashDotDot put: #(4 4 1 2 1 2);
 		yourself)! !
+
 !StyledPen class categoriesForMethods!
 color:width:dashPattern:!public! !
 color:width:style:!public! !

@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Profile3
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Profile4 guid: (OS.COM.IID fromString: '{8f4ae680-192e-4ec8-833a-21cfadaef628}')!
+
 WebView2.ICoreWebView2Profile4 isEgressOnly: true!
+
 WebView2.ICoreWebView2Profile4 comment: '`ICoreWebView2Profile4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +38,9 @@ interface ICoreWebView2Profile4 : ICoreWebView2Profile3
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Profile4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Profile4 methodsFor!
 
 GetNonDefaultPermissionSettings: completedHandler
@@ -58,6 +63,7 @@ SetPermissionState: permissionKind origin: origin state: state completedHandler:
 
 	<virtual stdcall: hresult 16 int32 lpwstr int32 ICoreWebView2SetPermissionStateCompletedHandler*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Profile4 categoriesForMethods!
 GetNonDefaultPermissionSettings:!**auto generated**!COM Interfaces-ICoreWebView2Profile4!public! !
 SetPermissionState:origin:state:completedHandler:!**auto generated**!COM Interfaces-ICoreWebView2Profile4!public! !
@@ -75,6 +81,7 @@ defineFunctions
 		defineFunction: #GetNonDefaultPermissionSettings:
 			argumentTypes: 'ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler*'
 ! !
+
 !WebView2.ICoreWebView2Profile4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -7,8 +7,11 @@ Kernel.Tests.AbstractParserErrorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.CompilerErrorTest guid: (Core.GUID fromString: '{46595911-e729-41d5-92f4-57241cf25eac}')!
+
 Kernel.Tests.CompilerErrorTest comment: ''!
+
 !Kernel.Tests.CompilerErrorTest methodsFor!
 
 defaultCompileFlags
@@ -188,6 +191,7 @@ writtenNotReadRange: aString
 	| start |
 	start := aString indexOf: $_.
 	^start to: start + 3! !
+
 !Kernel.Tests.CompilerErrorTest categoriesForMethods!
 defaultCompileFlags!constants!private! !
 parseExpression:in:!helpers!private! !

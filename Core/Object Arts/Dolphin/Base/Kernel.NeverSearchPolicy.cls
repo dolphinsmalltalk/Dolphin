@@ -7,9 +7,13 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.NeverSearchPolicy guid: (Core.GUID fromString: '{f9b07491-78b3-4ef8-a7af-af9c2a556b1a}')!
+
 Kernel.NeverSearchPolicy comment: ''!
+
 !Kernel.NeverSearchPolicy categoriesForClass!Collections-Support! !
+
 !Kernel.NeverSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -22,6 +26,7 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^'never'! !
+
 !Kernel.NeverSearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 name!accessing!public! !

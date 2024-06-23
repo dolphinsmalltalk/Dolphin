@@ -7,9 +7,13 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.WebView2EventSink guid: (Core.GUID fromString: '{91d2998a-6d4d-4c2a-93b6-fda07f00d325}')!
+
 WebView2.WebView2EventSink comment: ''!
+
 !WebView2.WebView2EventSink categoriesForClass!COM-Implementations! !
+
 !WebView2.WebView2EventSink methodsFor!
 
 destroy
@@ -78,6 +82,7 @@ unregister
 		unregister;
 		free.
 	interface := nil! !
+
 !WebView2.WebView2EventSink categoriesForMethods!
 destroy!private!realizing/unrealizing! !
 free!public!realizing/unrealizing! !
@@ -104,6 +109,7 @@ source: anICoreWebView2EventSource interfaceClass: anICoreWebView2EventHandlerCl
 		source: anICoreWebView2EventSource
 		interfaceClass: anICoreWebView2EventHandlerClass
 		handler: aPresenter! !
+
 !WebView2.WebView2EventSink class categoriesForMethods!
 icon!constants!development!public! !
 source:interfaceClass:handler:!instance creation!public! !

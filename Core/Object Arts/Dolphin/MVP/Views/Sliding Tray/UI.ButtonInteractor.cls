@@ -7,7 +7,9 @@ UI.CapturingInteractor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ButtonStateMask' -> 16r3. 'PressedMask' -> 16r2 }!
+
 UI.ButtonInteractor guid: (Core.GUID fromString: '{28d6227f-7753-4595-b98a-7b363d34e90f}')!
+
 UI.ButtonInteractor comment: '`ButtonInteractor` is a `CapturingInteractor` for use with button "gadgets" (i.e. buttons that are drawn in the owner''s client area, rather than being windows in their own right). It is not for use with `PushButton` themselves, but simulates the interactive behaviour of buttons. It requires that the owner inform it of the button rectangle (in the parent''s client co-ordinates), and that the parent initiates interaction when it detects that the user has moved the mouse into that rectangle (i.e. the owner must do initial hit-testing) by sending a `#startCaptureOn:` message with the relevant `MouseEvent` as the argument.  Following initiation the `ButtonInteractor` captures the mouse and sets the hot/pressed states as appropriate. As the button state changes the interactor invalidates the button rectangle, allowing the owner to redraw the button in the appropriate state. The owner can query the button state using the `#isHot` and `#isPressed` messages. While the user remains within the button rectangle, `#isHot` is true. While the user holds down the left mouse button `#isPressed` is true. When the user moves out of the button rectangle, if the left button is not down then the mouse capture is released. If the left button is down when the user moves out of the rectangle then the capture is not released, `#isPressed` remains true, but `#isHot` is false. The user can then either release the mouse, in which case the capture is released and `#isPressed` becomes false, or move back into the button rectangle in which case `#isHot` becomes true again. Should the user press and release the left mouse button within the button rectangle (not necessarily in one click action - the cursor can be moved out and back into the button rectangle as long as the button is held down), then the command installed in the `ButtonInteractor` is routed from the parent. This is essentially the same as the interaction behaviour of native windows button controls (and the toolbar buttons), and is natural and intuitive in use.
 
 An example use of a `ButtonInteractor` is with the `SlidingCardTray` pin.
@@ -21,6 +23,7 @@ An example use of a `ButtonInteractor` is with the `SlidingCardTray` pin.
   `ButtonStateMask`	`<integer>` flags mask for all button state flags.
 
 '!
+
 !UI.ButtonInteractor methodsFor!
 
 buttonRectangle
@@ -111,6 +114,7 @@ startCaptureOn: aMouseEvent
 		ifTrue: [self onMouseMoved: aMouseEvent]
 		ifFalse: [self onLeftButtonPressed: aMouseEvent].
 	self captureMouse! !
+
 !UI.ButtonInteractor categoriesForMethods!
 buttonRectangle!accessing!public! !
 buttonRectangle:!accessing!public! !
@@ -149,6 +153,7 @@ stbConvertFromVersion0: anArray
 			with: anArray
 			startingAt: 5;
 		yourself! !
+
 !UI.ButtonInteractor class categoriesForMethods!
 stbConvertFromVersion0:!binary filing!private! !
 !

@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.InplaceTextEditorTest guid: (Core.GUID fromString: '{f5c0a24d-9521-4497-9801-efc620bbaf9a}')!
+
 UI.Tests.InplaceTextEditorTest comment: ''!
+
 !UI.Tests.InplaceTextEditorTest methodsFor!
 
 classToTest
@@ -40,6 +43,7 @@ testPaste
 	self assert: result equals: expected.
 	presenter ok.
 	self assert: presenter value equals: expected! !
+
 !UI.Tests.InplaceTextEditorTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!private!Running! !

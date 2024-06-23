@@ -7,8 +7,11 @@ UI.Tests.ListBoxTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SingleSelectListBoxTest guid: (Core.GUID fromString: '{8e5a59a5-f500-4d07-9ea2-b1019c9302b2}')!
+
 UI.Tests.SingleSelectListBoxTest comment: ''!
+
 !UI.Tests.SingleSelectListBoxTest methodsFor!
 
 testSelectionModeChange
@@ -54,6 +57,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	view := self view.
 	self assert: view isMultiSelect
 		equals: aResourceIdentifier selector == #resource_Multiselection_list_box! !
+
 !UI.Tests.SingleSelectListBoxTest categoriesForMethods!
 testSelectionModeChange!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -83,6 +87,7 @@ resource_Default_view_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListBox) 34 17 nil nil 34 2 8 1412497665 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903732064 459270 ##(Smalltalk.Message) #displayString 8 #() 528 false 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 351 416 738 #horizontalExtent: 8 #(0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 185 0 0 0] 8 #() 786 193 193 nil 27 )! !
+
 !UI.Tests.SingleSelectListBoxTest class categoriesForMethods!
 classToTest!helpers!private! !
 resource_Default_view_D6!public!resources-views! !

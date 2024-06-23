@@ -7,9 +7,13 @@ Core.Category
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.IntermediateCategory guid: (Core.GUID fromString: '{87b4c501-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.IntermediateCategory comment: ''!
+
 !Tools.IntermediateCategory categoriesForClass!System-Support! !
+
 !Tools.IntermediateCategory methodsFor!
 
 acceptsAdditions
@@ -69,6 +73,7 @@ removeClass: class
 	"Remove the <ClassDescription>, class, from the classes 'held' by the receiver."
 
 	^self shouldNotImplement! !
+
 !Tools.IntermediateCategory categoriesForMethods!
 acceptsAdditions!public!testing! !
 addClass:!adding!public! !
@@ -90,6 +95,7 @@ name: categoryName
 	<readableString> name, categoryName."
 
 	^self newNamed: categoryName! !
+
 !Tools.IntermediateCategory class categoriesForMethods!
 name:!instance creation!public! !
 !

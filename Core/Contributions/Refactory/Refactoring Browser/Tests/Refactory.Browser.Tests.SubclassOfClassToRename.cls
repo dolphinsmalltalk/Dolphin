@@ -7,9 +7,13 @@ Refactory.Browser.Tests.ClassToRename
 	imports: #(#{Refactory.Browser.Tests.ClassToRename private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.SubclassOfClassToRename guid: (Core.GUID fromString: '{b07793cb-e421-4358-b250-e15c44d940e5}')!
+
 Refactory.Browser.Tests.SubclassOfClassToRename comment: ''!
+
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesForClass!Refactory-Test data! !
+
 !Refactory.Browser.Tests.SubclassOfClassToRename methodsFor!
 
 calls
@@ -114,6 +118,7 @@ unqualifiedBindingReference
 	"This is a relative reference"
 
 	^#{ClassToRename}! !
+
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesForMethods!
 calls!accessing!public! !
 calls1!accessing!public! !

@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.MethodWorkspaceTest guid: (Core.GUID fromString: '{e5dadb09-1b76-4a90-a763-95cc11d735d8}')!
+
 Tools.Tests.MethodWorkspaceTest comment: ''!
+
 !Tools.Tests.MethodWorkspaceTest methodsFor!
 
 classToTest
@@ -38,6 +41,7 @@ testSelectedOrNearestNode
 	workspace selectionRange: (221 to: 220).
 	node := workspace selectedNode.
 	self assert: node isVariable! !
+
 !Tools.Tests.MethodWorkspaceTest categoriesForMethods!
 classToTest!helpers!private! !
 testSelectedOrNearestNode!public! !

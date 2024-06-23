@@ -7,9 +7,13 @@ Core.ReadStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.SocketReadStream guid: (Core.GUID fromString: '{87b4c6fc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Net.SocketReadStream comment: 'This class represents a buffered read stream for receiving data across a Socket connection. The #next call will receive the next element from the stream and will block until there is data available. In order to avoid blocking (when executing on the user interface thread, for example) the #hasInput method may be used to check for the presence of available input before calling #next.'!
+
 !Net.SocketReadStream categoriesForClass!Collections-Streams!Windows Sockets! !
+
 !Net.SocketReadStream methodsFor!
 
 atEnd
@@ -154,6 +158,7 @@ upToEnd
 	remainder := self contentsSpecies writeStream: 128.
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
+
 !Net.SocketReadStream categoriesForMethods!
 atEnd!public!testing! !
 basicNext:into:startingAt:!accessing!public! !
@@ -196,6 +201,7 @@ on: aSocket text: aBoolean
 		socket: aSocket;
 		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
+
 !Net.SocketReadStream class categoriesForMethods!
 bufferSize!constants!private! !
 on:!instance creation!public! !

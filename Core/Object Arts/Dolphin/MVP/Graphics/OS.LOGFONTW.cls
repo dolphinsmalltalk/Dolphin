@@ -23,7 +23,9 @@ External.Structure
 			'_OffsetOf_lfWeight' -> 16r10.
 			'_OffsetOf_lfWidth' -> 16r4
 		}!
+
 OS.LOGFONTW guid: (Core.GUID fromString: '{37140088-772d-4f72-aac2-27311f7805d8}')!
+
 OS.LOGFONTW comment: '<LOGFONTW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGFONTW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -51,7 +53,9 @@ struct tagLOGFONTW {
 	unsigned short lfFaceName[32];
 } LOGFONTW;
 '!
+
 !OS.LOGFONTW categoriesForClass!Win32-Structs! !
+
 !OS.LOGFONTW methodsFor!
 
 faceName
@@ -183,6 +187,7 @@ lfWidth: anInteger
 	"Set the receiver's 'lfWidth' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_lfWidth put: anInteger! !
+
 !OS.LOGFONTW categoriesForMethods!
 faceName!accessing!public! !
 faceName:!accessing!public! !
@@ -239,6 +244,7 @@ defineFields
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !
+
 !OS.LOGFONTW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

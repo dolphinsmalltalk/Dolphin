@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBErrorDetails guid: (Core.GUID fromString: '{87b4c473-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Database.DBErrorDetails comment: 'DBErrorDetails instances hold information about a particular ODBC sub-error.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	sqlState		<String>. ODBC error code.
 	origin		<String>. Layer from which the error originated.
 '!
+
 !Database.DBErrorDetails categoriesForClass!ODBC Interface! !
+
 !Database.DBErrorDetails methodsFor!
 
 messageText
@@ -56,6 +60,7 @@ sqlState: aString
 	"Private - Set the sqlState instance variable to aString."
 
 	sqlState := aString! !
+
 !Database.DBErrorDetails categoriesForMethods!
 messageText!accessing!public! !
 msg!accessing!public! !
@@ -78,6 +83,7 @@ fromSQLError: errorString
 		msg: errorString;
 		origin: (errorString copyFrom: 1 to: lastBrkt);
 		yourself! !
+
 !Database.DBErrorDetails class categoriesForMethods!
 fromSQLError:!instance creation!public! !
 !

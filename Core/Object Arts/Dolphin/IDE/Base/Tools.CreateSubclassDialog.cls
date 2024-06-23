@@ -7,7 +7,9 @@ UI.Dialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.CreateSubclassDialog guid: (Core.GUID fromString: '{97279c55-7e9a-41d4-ac28-bf3c10201966}')!
+
 Tools.CreateSubclassDialog comment: 'CreateSubclassDialog implements a dialog for gather the information necessary to create classes in the IDE. 
 
 Instance Variables:
@@ -19,7 +21,9 @@ Instance Variables:
 	superclassPresenter		<TextPresenter> used to display the superclass of the new class.
 
 '!
+
 !Tools.CreateSubclassDialog categoriesForClass!MVP-Presenters! !
+
 !Tools.CreateSubclassDialog methodsFor!
 
 canChangeAttributes
@@ -315,6 +319,7 @@ validateSuperclass: aClassDetails
 
 validationResultPresenterClass
 	^ValidationHintPresenter! !
+
 !Tools.CreateSubclassDialog categoriesForMethods!
 canChangeAttributes!public!testing! !
 chooseNamespace!commands!private! !
@@ -403,6 +408,7 @@ subclassOf: aClassOrNil inPackage: aPackage
 	^dialog
 		showModal;
 		yourself! !
+
 !Tools.CreateSubclassDialog class categoriesForMethods!
 icon!accessing!constants!public! !
 newSubclassOf:inPackage:!instance creation!public! !

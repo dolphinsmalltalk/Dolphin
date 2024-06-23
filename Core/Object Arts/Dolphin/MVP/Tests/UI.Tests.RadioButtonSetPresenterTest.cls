@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.RadioButtonSetPresenterTest guid: (Core.GUID fromString: '{0b5f0660-ff27-42a8-a388-e35b1b76b3e4}')!
+
 UI.Tests.RadioButtonSetPresenterTest comment: ''!
+
 !UI.Tests.RadioButtonSetPresenterTest methodsFor!
 
 classToTest
@@ -75,6 +78,7 @@ testValueSelection
 	presenter value: nil.
 	self assertIsNil: presenter value.
 	self assertIsNil: self selectedButton! !
+
 !UI.Tests.RadioButtonSetPresenterTest categoriesForMethods!
 classToTest!constants!private! !
 initializePresenter!public!running! !

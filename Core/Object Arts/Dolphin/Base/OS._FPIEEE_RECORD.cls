@@ -146,9 +146,13 @@ External.Structure
 			'Underflow' -> 16r2.
 			'ZeroDivide' -> 16r8
 		}!
+
 OS._FPIEEE_RECORD guid: (Core.GUID fromString: '{87b4c590-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS._FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_RECORD is used in the reporting of IEEE compliant floating point exceptions.'!
+
 !OS._FPIEEE_RECORD categoriesForClass!External-Data-Structured! !
+
 !OS._FPIEEE_RECORD methodsFor!
 
 cause
@@ -280,6 +284,7 @@ roundingModeName
 	"Answer the symbolic name of the rounding mode configured at the time of the exception."
 
 	^_FPIEEE_ROUNDING_MODE at: self roundingMode + 1 ifAbsent: 'Unknown'! !
+
 !OS._FPIEEE_RECORD categoriesForMethods!
 cause!**compiled accessors**!public! !
 causeDescription!accessing!public! !
@@ -329,6 +334,7 @@ getFieldNames
 initialize
 	self addClassConstant: 'ExceptionFlagsMask'
 		value: Inexact | Underflow | Overflow | ZeroDivide | InvalidOperation! !
+
 !OS._FPIEEE_RECORD class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

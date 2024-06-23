@@ -7,8 +7,11 @@ UI.Scintilla.Styler
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkStyler guid: (Core.GUID fromString: '{eb307480-e6d7-4715-934e-59caf9618538}')!
+
 Tools.SmalltalkStyler isNonInstantiable: true!
+
 Tools.SmalltalkStyler comment: '`SmalltalkStyler` is a Scintilla `Styler` that is capable of colouring Smalltalk source text according to the established Dolphin syntax colouring convention; in fact it is somewhat more sophisticated than the earlier compiler based colouring, and can differentiate a larger set of syntactic elements. The text styles emitted are:
 
   `#argDecl`			Formal parameter name in method signature
@@ -55,7 +58,9 @@ Pure lexical analysis has the drawback that it isn''t able to distinguish betwee
 
 
 '!
+
 !Tools.SmalltalkStyler categoriesForClass!Kernel-Objects! !
+
 !Tools.SmalltalkStyler methodsFor!
 
 applyStyle: aSymbol toNext: anInteger 
@@ -408,6 +413,7 @@ visitSpecialCharacterToken: aStSpecialCharacterToken
 			^#specialCharacter].
 	(char == $] and: [self lastIsLiteralByte]) ifTrue: [^#literalBytes].
 	^#specialCharacter! !
+
 !Tools.SmalltalkStyler categoriesForMethods!
 applyStyle:toNext:!helpers!private! !
 atStart!private!testing! !
@@ -458,6 +464,7 @@ Tools.SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) s
 
 language
 	^'Smalltalk'! !
+
 !Tools.SmalltalkStyler class categoriesForMethods!
 language!constants!public! !
 !

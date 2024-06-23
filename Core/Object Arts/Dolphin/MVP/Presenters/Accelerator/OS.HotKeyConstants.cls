@@ -23,6 +23,10 @@ Kernel.SharedPool
 			'HOTKEYF_EXT' -> 16r8.
 			'HOTKEYF_SHIFT' -> 16r1
 		}!
+
 OS.HotKeyConstants guid: (Core.GUID fromString: '{33caba91-add2-4495-bcd1-83759b95cf34}')!
+
 OS.HotKeyConstants isNonInstantiable: true!
+
 OS.HotKeyConstants comment: ''!
+

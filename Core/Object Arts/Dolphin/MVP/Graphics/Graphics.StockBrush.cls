@@ -7,7 +7,9 @@ Graphics.Brush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.StockBrush guid: (Core.GUID fromString: '{87b4c63a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.StockBrush comment: '`StockBrush` is type of `Brush` that wraps one of the standard (aka ''stock'') Windows GDI Brush objects, for example black and white brushes.
 
 StockBrushes are normally instantiated using one of the relevant instance creation methods of the superclass, `Brush`. For example:
@@ -18,7 +20,9 @@ StockBrushes are normally instantiated using one of the relevant instance creati
   `id`		`<integer>` code identifying the brush pattern and colour
 
 '!
+
 !Graphics.StockBrush categoriesForClass!Graphics-Tools! !
+
 !Graphics.StockBrush methodsFor!
 
 createHandle
@@ -52,6 +56,7 @@ printOn: aPuttableStream
 		print: Brush;
 		space;
 		display: self name! !
+
 !Graphics.StockBrush categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 id:!private!realizing/unrealizing! !
@@ -73,6 +78,7 @@ new
 	"StockBrushes should only be instantiated with #fromID:"
 
 	^self shouldNotImplement! !
+
 !Graphics.StockBrush class categoriesForMethods!
 fromId:!instance creation!public! !
 new!instance creation!public! !

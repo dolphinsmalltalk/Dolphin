@@ -15,7 +15,9 @@ OS.COM.MemberDesc
 			'_OffsetOf_wVarFlags' -> 16r1C.
 			'_VARDESC_Size' -> 16r24
 		}!
+
 OS.COM.VARDESC guid: (Core.GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
 
 The VARDESC structure describes a variable constant or data member.
@@ -31,7 +33,9 @@ Member variables:
 	varkind		<SDWORD> from the VARKIND enumeration.
 
 Please see the MS Automation help for further information.'!
+
 !OS.COM.VARDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.VARDESC methodsFor!
 
 arguments
@@ -159,6 +163,7 @@ wVarFlags
 	"Answer the <Integer> value of the receiver's 'wVarFlags' field."
 
 	^bytes uint16AtOffset: _OffsetOf_wVarFlags! !
+
 !OS.COM.VARDESC categoriesForMethods!
 arguments!accessing!public! !
 basicFree!private!realizing/unrealizing! !
@@ -229,6 +234,7 @@ defineFields
 
 getFieldNames
 	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
+
 !OS.COM.VARDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -39,7 +39,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_UserNameLength' -> 16r4.
 			'_OffsetOf_Win32Status' -> 16r50
 		}!
+
 WinHttpServer.HTTP_LOG_FIELDS_DATA guid: (Core.GUID fromString: '{35c62b99-abf3-46f3-b967-7b54dc2641cc}')!
+
 WinHttpServer.HTTP_LOG_FIELDS_DATA comment: '`HTTP_LOG_FIELDS_DATA` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_LOG_FIELDS_DATA'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -84,7 +86,9 @@ struct tagHTTP_LOG_FIELDS_DATA {
 } HTTP_LOG_FIELDS_DATA;
 ```
 '!
+
 !WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_LOG_FIELDS_DATA methodsFor!
 
 ClientIp
@@ -399,6 +403,7 @@ Win32Status: anInteger
 	"Set the receiver's 'Win32Status' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_Win32Status put: anInteger! !
+
 !WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesForMethods!
 ClientIp!**compiled accessors**!public! !
 ClientIp:!**compiled accessors**!public! !
@@ -542,6 +547,7 @@ defineFields
 
 getFieldNames
 	^#(#Type #UserNameLength #UriStemLength #ClientIpLength #ServerNameLength #ServiceNameLength #ServerIpLength #MethodLength #UriQueryLength #HostLength #UserAgentLength #CookieLength #ReferrerLength #UserName #UriStem #ClientIp #ServerName #ServiceName #ServerIp #Method #UriQuery #Host #UserAgent #Cookie #Referrer #ServerPort #ProtocolStatus #Win32Status #MethodNum #SubStatus)! !
+
 !WinHttpServer.HTTP_LOG_FIELDS_DATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

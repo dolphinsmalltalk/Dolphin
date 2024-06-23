@@ -7,14 +7,18 @@ UI.View
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MenuComposerView guid: (Core.GUID fromString: '{87b4c710-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.MenuComposerView comment: 'MenuComposerView is an abstract superclass for a <valueView> used to emulate a <Menu> in the <MenuComposer>.
 
 Instance Variables:
 	selectionIndex		<integer> holding the index of the currently selected menu item.
 	painter			<menuPainter> responsible for rendering the emulated menu being composed.
 '!
+
 !Tools.MenuComposerView categoriesForClass!MVP-Views! !
+
 !Tools.MenuComposerView methodsFor!
 
 arena
@@ -164,6 +168,7 @@ wmSysChar: message wParam: wParam lParam: lParam
 		ifFalse: 
 			[self arena onItemIn: self selectedAtIndex: selected.
 			0]! !
+
 !Tools.MenuComposerView categoriesForMethods!
 arena!accessing!private! !
 conflictingAccelerators:!accessing!public! !
@@ -204,6 +209,7 @@ publishedEventsOfInstances
 		add: #actionPerformed;
 		yourself.
 ! !
+
 !Tools.MenuComposerView class categoriesForMethods!
 icon!constants!public! !
 publishedEventsOfInstances!events!public! !

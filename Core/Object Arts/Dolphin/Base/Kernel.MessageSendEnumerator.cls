@@ -7,7 +7,9 @@ Kernel.MessageSendInterpreter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.MessageSendEnumerator guid: (Core.GUID fromString: '{5228f2f4-3ec1-4fdb-a520-c6e478fcd8ad}')!
+
 Kernel.MessageSendEnumerator comment: '`MessageSendCollector` is an `InstructionInterpreter` that evaluates user supplied blocks against all the message send instructions it is dispatched.
 
 ## Instance Variables:
@@ -15,7 +17,9 @@ Kernel.MessageSendEnumerator comment: '`MessageSendCollector` is an `Instruction
   `superMessageBlock`	`<monadicValuable>`
 
 '!
+
 !Kernel.MessageSendEnumerator categoriesForClass!Kernel-Objects! !
+
 !Kernel.MessageSendEnumerator methodsFor!
 
 initialize
@@ -46,6 +50,7 @@ supersend: literalIndex args: argumentCount
 	"Private - Interpret a Supersend [N] with M args instruction."
 
 	superMessageBlock value: (method basicAt: literalIndex + 1)! !
+
 !Kernel.MessageSendEnumerator categoriesForMethods!
 initialize!initializing!private! !
 messagesDo:!enumerating!public! !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DateAndTimeTest guid: (Core.GUID fromString: '{833a97bb-3e1a-4dcb-a1db-181457c09c0f}')!
+
 Core.Tests.DateAndTimeTest comment: ''!
+
 !Core.Tests.DateAndTimeTest methodsFor!
 
 canonicalInstance
@@ -810,6 +813,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 	"However they are really different time points."
 	self deny: subject1 equals: subject2.
 	self deny: subject1 asSeconds equals: subject2 asSeconds! !
+
 !Core.Tests.DateAndTimeTest categoriesForMethods!
 canonicalInstance!constants!private! !
 julianEpoch!constants!private! !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'SelectorPrefix' -> 'resource_' }!
+
 UI.ResourceIdentifier guid: (Core.GUID fromString: '{6235654d-3f88-48c0-80d9-90230e9ede77}')!
+
 UI.ResourceIdentifier comment: ''!
+
 !UI.ResourceIdentifier categoriesForClass!MVP-Resources! !
+
 !UI.ResourceIdentifier methodsFor!
 
 <= aResourceIdentifier
@@ -136,6 +140,7 @@ storeOn: aStream
 		nextPutAll: ' name: ';
 		print: self name;
 		nextPut: $)! !
+
 !UI.ResourceIdentifier categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -259,6 +264,7 @@ value: a value: b
 
 viewResourceCategoryName
 	^'resources-views'! !
+
 !UI.ResourceIdentifier class categoriesForMethods!
 allResourceIdentifiers!accessing!public! !
 allResourceIdentifiersDo:!accessing!enumerating!public! !

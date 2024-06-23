@@ -13,10 +13,15 @@ OS.ENHMETARECORD
 			'_OffsetOf_iGraphicsMode' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.EMREXTTEXTOUT guid: (Core.GUID fromString: '{2fee36e2-d281-4200-9f3f-7aa01d54e452}')!
+
 OS.EMREXTTEXTOUT isNonInstantiable: true!
+
 OS.EMREXTTEXTOUT comment: ''!
+
 !OS.EMREXTTEXTOUT categoriesForClass!Win32-Structs! !
+
 !OS.EMREXTTEXTOUT methodsFor!
 
 EMRTEXT
@@ -76,6 +81,7 @@ rclBounds: aRECTL
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.EMREXTTEXTOUT categoriesForMethods!
 EMRTEXT!**compiled accessors**!public! !
 EMRTEXT:!**compiled accessors**!public! !
@@ -130,6 +136,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^#()! !
+
 !OS.EMREXTTEXTOUT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 iTypes!constants!public! !

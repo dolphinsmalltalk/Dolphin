@@ -14,13 +14,17 @@ External.Structure
 			'_OffsetOf_wOutputOffset' -> 16r4.
 			'DN_DEFAULTPRN' -> 16r1
 		}!
+
 OS.DEVNAMESW guid: (Core.GUID fromString: '{776a9e91-190a-4ea6-969c-92bc7b280ad9}')!
+
 OS.DEVNAMESW comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !OS.DEVNAMESW categoriesForClass!IDB Goodies! !
+
 !OS.DEVNAMESW methodsFor!
 
 byteSize
@@ -88,6 +92,7 @@ wOutputOffset: anInteger
 	"Set the receiver's 'wOutputOffset' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_wOutputOffset put: anInteger! !
+
 !OS.DEVNAMESW categoriesForMethods!
 byteSize!public! !
 deviceName!accessing!public! !
@@ -131,6 +136,7 @@ defineFields
 
 getFieldNames
 	^#(#wDriverOffset #wDeviceOffset #wOutputOffset #wDefault)! !
+
 !OS.DEVNAMESW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public!template definition! !

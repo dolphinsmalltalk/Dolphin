@@ -7,9 +7,13 @@ Refactory.Browser.ClassAttributeChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassGuidChange guid: (Core.GUID fromString: '{46edd368-f36c-4ce2-867d-b4b4048ec5e6}')!
+
 Refactory.Browser.ClassGuidChange comment: ''!
+
 !Refactory.Browser.ClassGuidChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.ClassGuidChange methodsFor!
 
 asUndoOperation
@@ -36,6 +40,7 @@ mutateClassDetails: aClassDetails
 
 primitiveExecute
 	self changeClass guid: self guid! !
+
 !Refactory.Browser.ClassGuidChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !
@@ -53,6 +58,7 @@ uniquelyIdentify: aClass with: aGUID
 		changeClass: aClass;
 		guid: aGUID;
 		yourself! !
+
 !Refactory.Browser.ClassGuidChange class categoriesForMethods!
 uniquelyIdentify:with:!instance creation!public! !
 !

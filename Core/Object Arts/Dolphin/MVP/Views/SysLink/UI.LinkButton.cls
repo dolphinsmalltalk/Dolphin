@@ -7,7 +7,9 @@ UI.CommandButton
 	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LinkButton guid: (Core.GUID fromString: '{d8fcab7f-b566-42da-b183-d925eaa9dc99}')!
+
 UI.LinkButton comment: 'LinkButton is a <CommandButton> implemented using the Windows "SysLink" control. It has the appearance of a hyperlink, but acts as a <commandSource>.
 
 A LinkButton can contain a single link in its text, delimited by HTML link tags, e.g. ''<a>Press Me</a>''. The button can contain additional text that is not part of the hyperlink, but if the button text is set to a <String> that does not contain a hyperlink, then the text is automatically wrapped with link tags (i.e. the whole of the text is treated as the link). If the link is clicked (or the Enter key is pressed when the LinkButton has focus), then the command associated with the button is fired as if initiated from the button''s parent. Any URL associated with the link with an href attribute is ignored (but see also SysLinkView).
@@ -23,7 +25,9 @@ Class Variables:
 	IsDefaultMask		<integer> masks to determine whether a button is a default.
 
 '!
+
 !UI.LinkButton categoriesForClass!MVP-Views! !
+
 !UI.LinkButton methodsFor!
 
 calculateExtent: aLayoutContext 
@@ -98,6 +102,7 @@ text: aString
 	text := ('*<a*>*</a>*' match: aString) ifTrue: [aString] ifFalse: ['<a>' , aString , '</a>'].
 	super text: text.
 	commandDescription description: (self stripTags: text)! !
+
 !UI.LinkButton categoriesForMethods!
 calculateExtent:!geometry!private! !
 getWindowText!accessing!private! !
@@ -125,6 +130,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
+
 !UI.LinkButton class categoriesForMethods!
 resource_Link_button!public!resources-views! !
 winClassName!constants!private! !

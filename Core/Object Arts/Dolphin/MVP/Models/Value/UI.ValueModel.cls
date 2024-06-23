@@ -7,8 +7,11 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueModel guid: (Core.GUID fromString: '{87b4c66e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ValueModel isNonInstantiable: true!
+
 UI.ValueModel comment: 'ValueModel is an abstract class whose subclasses provide the capability to adapt the protocol of a subject object to a simple <value> protocol. The intention is to allow general purpose objects, such as <views>, to interact with more specific objects, by providing an adapted layer between them. A client of a <valueModel> can set the value of the subject using a #value: message and similarly the value can be retrieved by sending #value:. 
 
 An additional benefit is that <valueModel>s trigger a #value change notification whenever  the value is modified. This allows <valueModel>s to share data with several observers following the standard Observer pattern.  All <valueModel>s hold a <ComparisonPolicy> which determines when to trigger an update notification that the value has changed. By default, a change is notified when an attempt is made to set the value to a new one which is not equal to the existing value. 
@@ -18,7 +21,9 @@ The most commonly used subclass of ValueModel is ValueHolder whose instances wra
 Instance Variables:
 	comparisonPolicy	<ComparisonPolicy> for determining whether a new value is different from the existing value
 '!
+
 !UI.ValueModel categoriesForClass!MVP-Models! !
+
 !UI.ValueModel methodsFor!
 
 aspectAdaptorClass
@@ -102,6 +107,7 @@ value: anObject
 	[settingValue := true.
 	self setValue: anObject] ensure: [settingValue := false].
 	self notifyChanged! !
+
 !UI.ValueModel categoriesForMethods!
 aspectAdaptorClass!constants!private! !
 asValue!converting!public! !
@@ -175,6 +181,7 @@ stbVersion
 	"
 
 	^2! !
+
 !UI.ValueModel class categoriesForMethods!
 comparisonPolicy:!instance creation!public! !
 icon!constants!public! !

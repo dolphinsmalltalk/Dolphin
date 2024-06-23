@@ -7,7 +7,9 @@ UI.ValueDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'NoHintBubble' -> 16r1. 'NoHintWhenEmpty' -> 16r2 }!
+
 UI.Prompter guid: (Core.GUID fromString: '{87b4c6ac-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Prompter comment: '`Prompter` is a `<valueDialogPresenter>` that can be used to prompt a user to enter a `<readableString>` response to a question. The `<valueModel>` initially holds the default response and, if the dialog is confirmed, will hold the actual response from the user.
 
 The user input to a `Prompter` can be validated by supplying a validater block. This is passed the current input text as edited, and can follow the original simple pattern of answering true/false for valid/invalid (set through #validationBlock:), or for more flexibility can answer a `ValidationResult`. The returned result includes a valid/invalid boolean value, but also a validation hint represented as an `Exception` subinstance, which need not be an `Error`, but but could also be a `Warning` or even `Notification`. When a hint is provided, the 
@@ -23,7 +25,9 @@ The user input to a `Prompter` can be validated by supplying a validater block. 
   `flags`				`<integer>` holding various boolean flags
   `hintFont`			`Font` to be used for the hint bubble text (not caption)
 '!
+
 !UI.Prompter categoriesForClass!MVP-Presenters! !
+
 !UI.Prompter methodsFor!
 
 createComponents
@@ -111,6 +115,7 @@ validationDwell: aDuration
 
 validationResultPresenterClass
 	^ValidationHintPresenter! !
+
 !UI.Prompter categoriesForMethods!
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -220,6 +225,7 @@ resource_Mini_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 30 nil nil 8 #(524288 196608) 32 nil 6 #{Graphics.Color} #lightYellow nil 133 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil nil nil nil 18 #{UI.TextEdit} 50 20 nil 32 50 2 8 1140916352 1 160 nil nil nil 5 nil nil nil 160 nil nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 11 11 354 117 65 160 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 63 0 0 0 37 0 0 0] 8 #() 354 193 193 nil 45 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 160 8 'reply' 518 #{Graphics.Rectangle} 354 11 11 354 1 1 nil nil nil nil 1 nil nil nil nil 1 nil nil 774 #{Core.Semaphore} nil nil 1 nil nil 258 50 1 306 #createAt:extent: 50 2 354 6143 21 354 131 79 32 402 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 64 12 0 0 49 0 0 0] 50 2 160 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 784 nil nil nil 5 nil nil nil 784 582 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_OK_Cancel_button_block nil 258 50 1 306 #createAt:extent: 50 2 354 161 71 354 201 201 784 402 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 80 0 0 0 35 0 0 0 180 0 0 0 135 0 0 0] 8 #() 464 nil 27 464 nil 27)! !
+
 !UI.Prompter class categoriesForMethods!
 create:on:prompt:caption:!instance creation!public! !
 createOn:prompt:caption:!instance creation!public! !

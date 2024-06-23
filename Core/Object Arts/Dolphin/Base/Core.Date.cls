@@ -7,7 +7,9 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Date guid: (Core.GUID fromString: '{87b4c652-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Date comment: '`Date` is a class whose instances represent days of the year. The base date (day 0) is 1st January 1901.
 
 Instance Variables:
@@ -20,7 +22,9 @@ Class Variables:
 	DaysInMonth		`Array` with elements representing the number of days in the month with the corresponding index.
 
 '!
+
 !Core.Date categoriesForClass!Magnitude-General! !
+
 !Core.Date methodsFor!
 
 < aDate 
@@ -347,6 +351,7 @@ yyyymmdd
 	stream locale: Locale invariant.
 	self printOn: stream format: 'yyyy-MM-dd'.
 	^stream grabContents! !
+
 !Core.Date categoriesForMethods!
 <!comparing!public! !
 =!comparing!public! !
@@ -706,6 +711,7 @@ yearPivot: anInteger
 
 yesterday
 	^self today subtractDays: 1! !
+
 !Core.Date class categoriesForMethods!
 dateOrderFromFormat:!helpers!private! !
 day:inYear:!enquiries!private! !

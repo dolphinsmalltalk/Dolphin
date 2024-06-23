@@ -7,8 +7,11 @@ Graphics.Gdiplus.Brush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.SolidBrush guid: (Core.GUID fromString: '{7f8ddb06-89ba-471a-a00c-73f32cbb0af7}')!
+
 Graphics.Gdiplus.SolidBrush comment: 'A solid brush paints a single, constant color that can be opaque or transparent.'!
+
 !Graphics.Gdiplus.SolidBrush methodsFor!
 
 actualColor
@@ -42,6 +45,7 @@ luminance
 	"Answer a <Number> in the range [0,1] representing the luminance of the receiver, a brightness value weighted by the human eye's color sensitivity. For a SolidBrush this is accurate."
 
 	^self color luminance! !
+
 !Graphics.Gdiplus.SolidBrush categoriesForMethods!
 actualColor!accessing!public! !
 asColor!converting!public! !
@@ -62,6 +66,7 @@ color: aColor
 
 new
 	^self black! !
+
 !Graphics.Gdiplus.SolidBrush class categoriesForMethods!
 color:!instance creation!public! !
 new!instance creation!public! !

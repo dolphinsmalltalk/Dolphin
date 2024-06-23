@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.DisassemblerTest guid: (Core.GUID fromString: '{0e5ffada-8287-4392-9b23-1146198af056}')!
+
 Tools.Tests.DisassemblerTest comment: ''!
+
 !Tools.Tests.DisassemblerTest methodsFor!
 
 testExLongPushImmediate
@@ -25,6 +28,7 @@ testExLongPushImmediate
 	22	Push 4
 	24	Send[1]: #newFromStack: with 1 args
 	25	Return'! !
+
 !Tools.Tests.DisassemblerTest categoriesForMethods!
 testExLongPushImmediate!public! !
 !

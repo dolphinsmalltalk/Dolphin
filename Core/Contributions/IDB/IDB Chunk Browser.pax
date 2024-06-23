@@ -87,119 +87,138 @@ Object subclass: #ChunkBrowserChunk
 	classVariableNames: 'ChunkClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserChunk subclass: #ChunkBrowserExpressionChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserChunk subclass: #ChunkBrowserSeriesChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserChunk subclass: #ChunkBrowserSeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassCommentChunk
 	instanceVariableNames: 'comment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDefineChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDeleteChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassGUIDChunk
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassProtocolChunk
 	instanceVariableNames: 'attributes selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserMethodDeleteChunk
 	instanceVariableNames: 'selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserOtherChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserOtherChunk subclass: #ChunkBrowserSystemChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSeriesChunk subclass: #ChunkBrowserCategoryChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSeriesChunk subclass: #ChunkBrowserMethodDefineChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserCategoryChunk subclass: #ChunkBrowserClassCategoryChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserCategoryChunk subclass: #ChunkBrowserMethodCategoryChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserClassCategorySeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodCategorySeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodDefineSeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodsCategoriesSeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model subclass: #ChunkBrowserFilter
 	instanceVariableNames: 'selectedChunkTypes selectedComparisonTypes restrictionRange restrictionClass restrictingMostRecent restrictingPicked'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model subclass: #ChunkBrowserModel
 	instanceVariableNames: 'chunks'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdbToolShell subclass: #ChunkBrowser
 	instanceVariableNames: 'chunkList chunkText pathname filter'
 	classVariableNames: 'ChunkTypeSelection CompareMethodsUsingParser'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -224,6 +243,7 @@ resource_Chunk_Browser_Tools
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Smalltalk.Color) #default 8 1932375312 170 192 8 #() 170 192 34 8 27231 1311814 1 ##(Smalltalk.ToolbarIconButton) 416 1 1377606 4 ##(Smalltalk.CommandDescription) #showDifferences 8 'Open Differences Browser' 1 1 853318 3 ##(Smalltalk.Icon) nil true 2031622 ##(Smalltalk.ImageRelativeFileLocator) 47 983302 ##(Smalltalk.ShellLibrary) 27231 27229 594 416 1 626 #copyText 8 'Copy Text' 1 1 674 nil true 720 8 'EditCopy.ico' 2490894 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 27229 27227 594 416 1 626 #fileOpen 8 'Open' 1 1 674 nil true 720 8 'FileOpen.ico' 864 27227 27233 594 416 1 626 #restoreSelection 8 'Restore Selected Chunk' 1 1 1378630 2 ##(Smalltalk.TextTileIcon) $\x1F501 nil nil 482 #commonGreen nil nil 1 nil nil 27233 34 6 896 1245766 1 ##(Smalltalk.ToolbarSeparator) 416 1 768 608 976 1090 416 1 nil nil 1 nil nil nil nil 852806 1 ##(Smalltalk.FlowLayout) 1 1 1 1310982 ##(Smalltalk.MessageSequence) 138 144 34 1 1049350 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 918022 ##(Smalltalk.Point) 6143 21 1282 211 51 416 1179910 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 104 12 0 0 35 0 0 0] 8 #() 1282 193 193 nil 27 )! !
+
 !Toolbar class categoriesForMethods!
 resource_Chunk_Browser_Chunk_tools!public!resources-views! !
 resource_Chunk_Browser_Tools!public!resources-views! !

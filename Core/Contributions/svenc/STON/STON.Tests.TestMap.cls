@@ -7,8 +7,11 @@ Core.Dictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.TestMap guid: (Core.GUID fromString: '{588069da-7c8c-4590-b393-27c089007c6a}')!
+
 STON.Tests.TestMap comment: ''!
+
 !STON.Tests.TestMap methodsFor!
 
 printElementsOn: stream
@@ -17,6 +20,7 @@ printElementsOn: stream
 		nextPut: $#;
 		print: self size;
 		nextPut: $)! !
+
 !STON.Tests.TestMap categoriesForMethods!
 printElementsOn:!public! !
 !
@@ -82,6 +86,7 @@ sizeFor: anInteger
 
 stonName
 	^ #TestMap! !
+
 !STON.Tests.TestMap class categoriesForMethods!
 classTree!public!ston/core! !
 classTree:!public!ston/core! !

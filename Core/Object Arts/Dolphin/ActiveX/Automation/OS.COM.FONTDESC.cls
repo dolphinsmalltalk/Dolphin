@@ -16,11 +16,15 @@ OS.SizedStructure
 			'_OffsetOf_sCharset' -> 16r12.
 			'_OffsetOf_sWeight' -> 16r10
 		}!
+
 OS.COM.FONTDESC guid: (Core.GUID fromString: '{73f5f101-a4da-11d3-b376-080046056106}')!
+
 OS.COM.FONTDESC comment: 'FONTDESC is an <ExternalStructure> class to represent the OLE structure of the same name.
 
 FONTDESC is similar to a LOGFONT in that it represents a logical description of a Font, although in this case an OLE Font object (see IFont and IFontDisp). FONTDESC is simpler than LOGFONT, however.'!
+
 !OS.COM.FONTDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.FONTDESC methodsFor!
 
 cySize
@@ -113,6 +117,7 @@ sWeight: anInteger
 	"Set the receiver's 'sWeight' field to the value of the argument, anInteger"
 
 	bytes int16AtOffset: _OffsetOf_sWeight put: anInteger! !
+
 !OS.COM.FONTDESC categoriesForMethods!
 cySize!**compiled accessors**!public! !
 cySize:!**compiled accessors**!public! !
@@ -185,6 +190,7 @@ fromFont: font
 
 getFieldNames
 	^#(#dwSize #lpstrName #cySize #sWeight #sCharset #fItalic #fUnderline #fStrikethrough)! !
+
 !OS.COM.FONTDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

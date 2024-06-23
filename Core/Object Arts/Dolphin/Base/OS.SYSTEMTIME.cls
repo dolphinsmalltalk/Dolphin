@@ -17,9 +17,13 @@ External.Structure
 			'_OffsetOf_wYear' -> 16r0.
 			'_SYSTEMTIME_Size' -> 16r10
 		}!
+
 OS.SYSTEMTIME guid: (Core.GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.SYSTEMTIME comment: ''!
+
 !OS.SYSTEMTIME categoriesForClass!Win32-Structs! !
+
 !OS.SYSTEMTIME methodsFor!
 
 asDateAndTime
@@ -148,6 +152,7 @@ wYear: anInteger
 
 year
 	^self wYear! !
+
 !OS.SYSTEMTIME categoriesForMethods!
 asDateAndTime!converting!public! !
 asFILETIME!converting!public! !
@@ -232,6 +237,7 @@ nowUTC
 	answer := self new.
 	Kernel32 getSystemTime: answer.
 	^answer! !
+
 !OS.SYSTEMTIME class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 day:month:year:!instance creation!private! !

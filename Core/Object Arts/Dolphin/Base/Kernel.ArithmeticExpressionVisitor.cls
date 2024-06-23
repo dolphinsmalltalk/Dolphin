@@ -7,10 +7,15 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ArithmeticExpressionVisitor guid: (Core.GUID fromString: '{aef2d77a-820d-495f-9347-bffdde83a15d}')!
+
 Kernel.ArithmeticExpressionVisitor isNonInstantiable: true!
+
 Kernel.ArithmeticExpressionVisitor comment: ''!
+
 !Kernel.ArithmeticExpressionVisitor categoriesForClass!Refactory-ParseTree Matching! !
+
 !Kernel.ArithmeticExpressionVisitor methodsFor!
 
 errorInvalidArithmeticExpression: aStProgramNode
@@ -57,6 +62,7 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	^self subclassResponsibility! !
+
 !Kernel.ArithmeticExpressionVisitor categoriesForMethods!
 errorInvalidArithmeticExpression:!exceptions!private! !
 visitArgumentNode:!public!visiting! !

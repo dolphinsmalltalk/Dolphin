@@ -13,11 +13,15 @@ OS.WIN32_FILE_ATTRIBUTE_DATA
 			'_OffsetOf_dwReserved1' -> 16r28.
 			'_WIN32_FIND_DATAW_Size' -> 16r250
 		}!
+
 OS.WIN32_FIND_DATAW guid: (Core.GUID fromString: '{87b4c61a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.WIN32_FIND_DATAW comment: 'WIN32_FIND_DATA is an <ExternalStructure> to wrap the Win32 structure of the same name. WIN32_FIND_DATA is used in conjunction with the kernel library API functions FindFirstFile() and FindNextFile().
 
 See File class for example usage.'!
+
 !OS.WIN32_FIND_DATAW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.WIN32_FIND_DATAW methodsFor!
 
 cAlternateFileName
@@ -59,6 +63,7 @@ stem
 	"Answer the stem (name sans extension) of the file described by the receiver."
 
 	^File splitStemFrom: self fileName! !
+
 !OS.WIN32_FIND_DATAW categoriesForMethods!
 cAlternateFileName!**compiled accessors**!public! !
 cFileName!**compiled accessors**!public! !
@@ -102,6 +107,7 @@ defineFields
 
 getFieldNames
 	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow #cFileName #cAlternateFileName)! !
+
 !OS.WIN32_FIND_DATAW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

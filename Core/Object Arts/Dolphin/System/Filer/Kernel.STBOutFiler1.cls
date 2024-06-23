@@ -7,11 +7,15 @@ Kernel.STBOutFiler0
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler1 guid: (Core.GUID fromString: '{0157af13-aed1-4241-a85a-0fdfb8b3e8a7}')!
+
 Kernel.STBOutFiler1 comment: '`STBOutFiler1` is an `STBOutFiler` for writing STB 1 binary object serialization format.
 
 STB 1 was introduced in Dolphin 5. It differed little from STB 0, but included pre-registration of some classes to fix a chicken-before-egg problem but also to reduce the size of the STB streams.'!
+
 !Kernel.STBOutFiler1 categoriesForClass!System-Binary storage! !
+
 !Kernel.STBOutFiler1 methodsFor!
 
 inFilerClass
@@ -53,6 +57,7 @@ writeUnicodeStringClassReference
 				nextInt32Put: (##(PrefixClassMask | PrefixBytesMask) bitOr: ##(13 bitShift: PrefixLocatorLenShift));
 				nextPutAll: ##('UnicodeString' asByteArray).
 			self register: Utf16String]! !
+
 !Kernel.STBOutFiler1 categoriesForMethods!
 inFilerClass!constants!private! !
 lastPredefined!constants!private! !
@@ -74,6 +79,7 @@ uninitialize
 
 version
 	^1! !
+
 !Kernel.STBOutFiler1 class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !

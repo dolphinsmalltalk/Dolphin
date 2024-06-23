@@ -7,8 +7,11 @@ Refactory.Browser.Tests.BrowserEnvironmentTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.PluggableEnvironmentTest guid: (Core.GUID fromString: '{42174aca-9bf1-402a-843a-d752822b7893}')!
+
 Refactory.Browser.Tests.PluggableEnvironmentTest comment: ''!
+
 !Refactory.Browser.Tests.PluggableEnvironmentTest methodsFor!
 
 testReferencesTo
@@ -25,6 +28,7 @@ testReferencesTo
 	self universalTestFor: printString.
 	self assert: printString numberSelectors equals: (env referencesTo: #printString) numberSelectors.
 	self assert: printString numberClasses equals: (env referencesTo: #printString) numberClasses! !
+
 !Refactory.Browser.Tests.PluggableEnvironmentTest categoriesForMethods!
 testReferencesTo!public!unit tests! !
 !

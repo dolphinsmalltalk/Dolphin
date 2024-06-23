@@ -7,9 +7,13 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.EqualitySearchPolicy guid: (Core.GUID fromString: '{1086b60a-da69-4d8d-82df-be610ba9d062}')!
+
 Kernel.EqualitySearchPolicy comment: 'EqualitySearchPolicy is for configuring pluggable collections and models to use equality based search and comparisons, i.e. using #= and #hash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as a <Set>.'!
+
 !Kernel.EqualitySearchPolicy categoriesForClass!Collections-Support! !
+
 !Kernel.EqualitySearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -62,6 +66,7 @@ nextIndexOf: anElement in: collection from: start to: stop
 	answer 0."
 
 	^collection nextIndexOf: anElement from: start to: stop! !
+
 !Kernel.EqualitySearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 hash:max:!comparing!public! !

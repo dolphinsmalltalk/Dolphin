@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Environment
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Environment2 guid: (OS.COM.IID fromString: '{41f3632b-5ef4-404f-ad82-2d606c5a9a21}')!
+
 WebView2.ICoreWebView2Environment2 isEgressOnly: true!
+
 WebView2.ICoreWebView2Environment2 comment: '`ICoreWebView2Environment2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +36,9 @@ interface ICoreWebView2Environment2 : ICoreWebView2Environment
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Environment2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Environment2 methodsFor!
 
 CreateWebResourceRequest: uri method: method postData: postData headers: headers request: request
@@ -48,6 +53,7 @@ CreateWebResourceRequest: uri method: method postData: postData headers: headers
 
 	<virtual stdcall: hresult 9 lpwstr lpwstr IStream* lpwstr ICoreWebView2WebResourceRequest**>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Environment2 categoriesForMethods!
 CreateWebResourceRequest:method:postData:headers:request:!**auto generated**!COM Interfaces-ICoreWebView2Environment2!private! !
 !
@@ -62,6 +68,7 @@ defineFunctions
 		defineFunction: #CreateWebResourceRequest:method:postData:headers:request:
 			argumentTypes: 'lpwstr lpwstr IStream* lpwstr ICoreWebView2WebResourceRequest**'
 ! !
+
 !WebView2.ICoreWebView2Environment2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -7,9 +7,13 @@ OS.COM.IPersistStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPersistStreamInit guid: (OS.COM.IID fromString: '{7fd52380-4e07-101b-ae2d-08002b2ec713}')!
+
 OS.COM.IPersistStreamInit comment: ''!
+
 !OS.COM.IPersistStreamInit categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IPersistStreamInit methodsFor!
 
 initNew
@@ -35,6 +39,7 @@ InitNew
 
 	<virtual stdcall: int32 9>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IPersistStreamInit categoriesForMethods!
 initNew!initializing!public! !
 InitNew!COM Interfaces-IPersistStreamInit!public! !
@@ -51,6 +56,7 @@ defineFunctions
 
 	self
 		defineFunction: #InitNew returnType: 'int32'! !
+
 !OS.COM.IPersistStreamInit class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

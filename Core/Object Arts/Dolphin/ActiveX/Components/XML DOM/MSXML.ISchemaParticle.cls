@@ -7,8 +7,11 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaParticle guid: (OS.COM.IID fromString: '{50ea08b5-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 MSXML.ISchemaParticle isEgressOnly: true!
+
 MSXML.ISchemaParticle comment: '<ISchemaParticle> is a wrapper class for the COM interface ''MSXML2.ISchemaParticle'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -35,7 +38,9 @@ interface ISchemaParticle : ISchemaItem
 		[out, retval]VARIANT* maxOccurs);
 };
 '!
+
 !MSXML.ISchemaParticle categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISchemaParticle methodsFor!
 
 get_maxOccurs: maxOccurs
@@ -71,6 +76,7 @@ minOccurs
 	answer := VARIANT new.
 	self get_minOccurs: answer.
 	^answer asObject! !
+
 !MSXML.ISchemaParticle categoriesForMethods!
 get_maxOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
 get_minOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
@@ -90,6 +96,7 @@ defineFunctions
 		defineFunction: #get_maxOccurs:
 			argumentTypes: 'variant*'
 ! !
+
 !MSXML.ISchemaParticle class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

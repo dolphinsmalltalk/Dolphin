@@ -13,9 +13,13 @@ Kernel.STxProxy
 			'FlagsIndex' -> 16r8.
 			'HandleIndex' -> 16r1
 		}!
+
 UI.STBViewProxy guid: (Core.GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.STBViewProxy comment: '`STBViewProxy` is the class of `STXProxy` objects used to represent `View` instances in STB/STL object streams.'!
+
 !UI.STBViewProxy categoriesForClass!System-Binary storage! !
+
 !UI.STBViewProxy methodsFor!
 
 beTopView
@@ -222,6 +226,7 @@ viewClass: aClass
 
 	viewClass := aClass.
 	version := aClass stbVersion! !
+
 !UI.STBViewProxy categoriesForMethods!
 beTopView!accessing!public! !
 clearSubViews!accessing!public! !
@@ -319,6 +324,7 @@ stbVersion
 	"STBViewProxy should no longer need to be changed to upgrade view classes, so if you are changing this number, THINK AGAIN."
 
 	^10! !
+
 !UI.STBViewProxy class categoriesForMethods!
 forView:!instance creation!public! !
 initialize!development!initializing!public! !

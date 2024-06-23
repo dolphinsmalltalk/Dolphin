@@ -429,6 +429,7 @@ Kernel.Namespace
 			'CdoXUnsent' -> 'urn:schemas:mailheader:x-unsent'.
 			'CdoYakutsk' -> 16r46
 		}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.IBodyPart'
 	instanceVariableNames: ''
@@ -436,6 +437,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.IBodyParts'
 	instanceVariableNames: ''
@@ -443,6 +445,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.IConfiguration'
 	instanceVariableNames: ''
@@ -450,6 +453,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.IDataSource'
 	instanceVariableNames: ''
@@ -457,6 +461,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.IDropDirectory'
 	instanceVariableNames: ''
@@ -464,6 +469,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.IMessage'
 	instanceVariableNames: ''
@@ -471,6 +477,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.IMessages'
 	instanceVariableNames: ''
@@ -478,6 +485,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.INNTPEarlyScriptConnector'
 	instanceVariableNames: ''
@@ -485,6 +493,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.INNTPFinalScriptConnector'
 	instanceVariableNames: ''
@@ -492,6 +501,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.INNTPOnPost'
 	instanceVariableNames: ''
@@ -499,6 +509,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.INNTPOnPostEarly'
 	instanceVariableNames: ''
@@ -506,6 +517,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.INNTPOnPostFinal'
 	instanceVariableNames: ''
@@ -513,6 +525,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.INNTPPostScriptConnector'
 	instanceVariableNames: ''
@@ -520,6 +533,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.ISMTPOnArrival'
 	instanceVariableNames: ''
@@ -527,6 +541,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'CDO.ISMTPScriptConnector'
 	instanceVariableNames: ''

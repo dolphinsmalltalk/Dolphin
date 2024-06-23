@@ -7,9 +7,13 @@ OS.EMREXTTEXTOUT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMREXTTEXTOUTW_Size' -> 16r50. '_OffsetOf_text' -> 16r4C }!
+
 OS.EMREXTTEXTOUTW guid: (Core.GUID fromString: '{984a2e2c-3699-4a16-9ed7-8f174e2ca081}')!
+
 OS.EMREXTTEXTOUTW comment: ''!
+
 !OS.EMREXTTEXTOUTW categoriesForClass!Win32-Structs! !
+
 !OS.EMREXTTEXTOUTW methodsFor!
 
 text
@@ -28,6 +32,7 @@ text: anObject
 		to: _OffsetOf_text + size
 		startingAt: 1.
 	bytes uint16AtOffset: _OffsetOf_text + size put: 0! !
+
 !OS.EMREXTTEXTOUTW categoriesForMethods!
 text!public! !
 text:!public! !
@@ -54,6 +59,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTTEXTOUTW}! !
+
 !OS.EMREXTTEXTOUTW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

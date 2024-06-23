@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SemVerTest guid: (Core.GUID fromString: '{a407e9c9-f1a9-48c2-bfdb-ce30877bede0}')!
+
 Core.Tests.SemVerTest comment: ''!
+
 !Core.Tests.SemVerTest methodsFor!
 
 comparisonCases
@@ -134,6 +137,7 @@ testValidVersions
 			self assert: subject buildmetadata equals: each sixth.
 			self assert: subject displayString equals: string.
 			self assert: subject printString equals: 'a SemVer(<p>)' << string]! !
+
 !Core.Tests.SemVerTest categoriesForMethods!
 comparisonCases!constants!private! !
 testComparing!public!unit tests! !

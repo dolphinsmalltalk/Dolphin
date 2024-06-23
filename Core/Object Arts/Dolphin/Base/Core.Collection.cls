@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Collection guid: (Core.GUID fromString: '{87b4c464-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Collection isNonInstantiable: true!
+
 Core.Collection comment: ''!
+
 !Core.Collection categoriesForClass!Collections-Abstract! !
+
 !Core.Collection methodsFor!
 
 _beginsString: aString
@@ -580,6 +585,7 @@ union: comperand
 	^(Set withAll: self)
 		addAll: comperand;
 		yourself! !
+
 !Core.Collection categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _endsString:!comparing!double dispatch!private! !
@@ -730,6 +736,7 @@ withAll: newElements
 	^(self new: newElements size)
 		addAll: newElements;
 		yourself! !
+
 !Core.Collection class categoriesForMethods!
 defaultSortAlgorithm!instance creation!public! !
 defaultSortAlgorithmClass!instance creation!public! !

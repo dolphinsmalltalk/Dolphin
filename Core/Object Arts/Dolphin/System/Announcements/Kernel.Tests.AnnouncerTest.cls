@@ -7,7 +7,9 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AnnouncerTest guid: (Core.GUID fromString: '{4fe1d4e3-9cb9-4d37-bb20-d8441f9eeb1e}')!
+
 Kernel.Tests.AnnouncerTest comment: 'An AnnouncerTest is a test class used to test Announcer.
 
 Instance Variables
@@ -16,7 +18,9 @@ Instance Variables
 announcer
 	- the announcer that is tested
 '!
+
 !Kernel.Tests.AnnouncerTest categoriesForClass!Announcements-Tests-Core-Tests! !
+
 !Kernel.Tests.AnnouncerTest methodsFor!
 
 newAnnouncer
@@ -164,6 +168,7 @@ testUnsubscribeSet
 	announcement := nil.
 	announcer announce: AnnouncementMockB new.
 	self assertIsNil: announcement! !
+
 !Kernel.Tests.AnnouncerTest categoriesForMethods!
 newAnnouncer!private! !
 setUp!private!running! !
@@ -186,6 +191,7 @@ testUnsubscribeSet!public!testing! !
 
 shouldInheritSelectors
 	^ true! !
+
 !Kernel.Tests.AnnouncerTest class categoriesForMethods!
 shouldInheritSelectors!public!testing! !
 !

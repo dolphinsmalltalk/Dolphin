@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.ExampleSetTest guid: (Core.GUID fromString: '{5e96793d-0810-11d4-a876-0050da643bf9}')!
+
 XProgramming.SUnit.ExampleSetTest comment: ''!
+
 !XProgramming.SUnit.ExampleSetTest categoriesForClass!SUnitTests! !
+
 !XProgramming.SUnit.ExampleSetTest methodsFor!
 
 setUp
@@ -42,6 +46,7 @@ testRemove
 	full remove: 5.
 	self assert: (full includes: #abc).
 	self deny: (full includes: 5)! !
+
 !XProgramming.SUnit.ExampleSetTest categoriesForMethods!
 setUp!public!Running! !
 testAdd!public!Testing! !

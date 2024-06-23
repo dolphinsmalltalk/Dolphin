@@ -15,7 +15,9 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 			'_OffsetOf_MinSendRate' -> 16r10.
 			'_OffsetOf_RequestQueue' -> 16r8
 		}!
+
 WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO guid: (Core.GUID fromString: '{7dae0007-41d0-4925-b425-a14d837d56d0}')!
+
 WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO comment: '`HTTP_TIMEOUT_LIMIT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -37,7 +39,9 @@ struct tagHTTP_TIMEOUT_LIMIT_INFO {
 } HTTP_TIMEOUT_LIMIT_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO methodsFor!
 
 DrainEntityBody
@@ -99,6 +103,7 @@ RequestQueue: anInteger
 	"Set the receiver's 'RequestQueue' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_RequestQueue put: anInteger! !
+
 !WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesForMethods!
 DrainEntityBody!**compiled accessors**!public! !
 DrainEntityBody:!**compiled accessors**!public! !
@@ -151,6 +156,7 @@ getFieldNames
 
 propertyId
 	^HttpServerTimeoutsProperty! !
+
 !WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

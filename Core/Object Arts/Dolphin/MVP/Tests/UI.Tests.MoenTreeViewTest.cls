@@ -7,8 +7,11 @@ UI.Tests.SelectableTreeItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.MoenTreeViewTest guid: (Core.GUID fromString: '{547f1350-3d63-4e8c-9ea3-e13001609555}')!
+
 UI.Tests.MoenTreeViewTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !UI.Tests.MoenTreeViewTest methodsFor!
 
 assertChildNode: node
@@ -1258,6 +1261,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view margin isKindOf: Point.
 	self assert: view maxTextExtent equals: 9999 @ 9999.
 	self assert: view linePen isKindOf: Pen! !
+
 !UI.Tests.MoenTreeViewTest categoriesForMethods!
 assertChildNode:!helpers!private! !
 assertCollapsedChild:!helpers!private! !
@@ -1336,6 +1340,7 @@ resource_Moen_tree_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.MoenTreeView) 34 30 nil nil 34 2 8 1409286144 1 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 327686 ##(Smalltalk.Color) #default nil 517 nil nil nil 416 788998 ##(Smalltalk.MoenTreeNode) nil 721926 ##(Smalltalk.MoenContour) nil nil nil nil 328198 ##(Smalltalk.Point) 1 1 720 nil nil nil nil nil 7 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.MoenTreeView) 268435457 706 5 3 1049926 1 ##(Smalltalk.IconImageManager) 706 1 1 41 nil 197382 ##(Smalltalk.Pen) nil true 393478 ##(Smalltalk.LOGPEN) 8 #[0 0 0 0 1 0 0 0 0 0 0 0 192 192 192 0] 706 33 33 706 19999 19999 114721 832 706 35 1 nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 706 3839 21 706 271 251 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 6 8 0 0 135 0 0 0] 8 #() 706 193 193 nil 27 )! !
+
 !UI.Tests.MoenTreeViewTest class categoriesForMethods!
 resource_Moen_tree_D6!public!resources-views! !
 resource_Moen_tree_D7!public!resources-views! !

@@ -7,9 +7,13 @@ External.IntegerBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UIntPtrBytes guid: (Core.GUID fromString: '{c9f5efed-9b23-441a-b6e4-9a0d3c7282ab}')!
+
 External.UIntPtrBytes comment: ''!
+
 !External.UIntPtrBytes categoriesForClass!External-Data-Unstructured! !
+
 !External.UIntPtrBytes methodsFor!
 
 asInteger
@@ -66,6 +70,7 @@ value: anObject
 	"Set the unsigned <integer> value stored in the receiver."
 
 	self uintPtrAtOffset: 0 put: anObject! !
+
 !External.UIntPtrBytes categoriesForMethods!
 asInteger!converting!public! !
 asSignedInteger!converting!public! !
@@ -91,6 +96,7 @@ new
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uintPtrAtOffset: 0! !
+
 !External.UIntPtrBytes class categoriesForMethods!
 elementSize!constants!private! !
 new!public! !

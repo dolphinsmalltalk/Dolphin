@@ -7,9 +7,13 @@ Tools.Aspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.KeyedAspect guid: (Core.GUID fromString: '{87b4c4d9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.KeyedAspect comment: 'Part of the PublishedAspectorInspector framework. KeyedAspect instances are used to describe the published aspects of a keyed collection. Typically these are accessed via #at: and #at:put: messages as governed by the KeyedAspectAccessor class.'!
+
 !Tools.KeyedAspect categoriesForClass!Attribute-Definition! !
+
 !Tools.KeyedAspect methodsFor!
 
 = comperand
@@ -51,6 +55,7 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject at: self key put: valueObject! !
+
 !Tools.KeyedAspect categoriesForMethods!
 =!comparing!public! !
 displayAspectNameOf:on:!displaying!private! !
@@ -69,6 +74,7 @@ key: aKey
 	"Answer an instance of the receiver created with aKey"
 
 	^self name: aKey! !
+
 !Tools.KeyedAspect class categoriesForMethods!
 key:!instance creation!public! !
 !

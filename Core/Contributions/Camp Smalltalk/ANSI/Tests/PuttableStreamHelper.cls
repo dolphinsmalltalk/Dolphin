@@ -5,9 +5,13 @@ TestCaseHelper subclass: #PuttableStreamHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PuttableStreamHelper guid: (GUID fromString: '{0b17278e-6bd2-4297-a410-303ae984bd14}')!
+
 PuttableStreamHelper comment: ''!
+
 !PuttableStreamHelper categoriesForClass!Unclassified! !
+
 !PuttableStreamHelper methodsFor!
 
 object: anObject!
@@ -74,6 +78,7 @@ testXtab
 5.9.4.6 The effect is the same as sending the message #nextPut: to the receiver with an argument that is the object that is the value returned when the message #tab is sent to the standard global Character.
 "
 	self assertSend: #tab! !
+
 !PuttableStreamHelper categoriesForMethods!
 object:!public! !
 protocol!public! !
@@ -90,6 +95,7 @@ testXtab!public! !
 initialize
 	"PuttableStreamHelper  initialize"
 	super initialize! !
+
 !PuttableStreamHelper class categoriesForMethods!
 initialize!public! !
 !

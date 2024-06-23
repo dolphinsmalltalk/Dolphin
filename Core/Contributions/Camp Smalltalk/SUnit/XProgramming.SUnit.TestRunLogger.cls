@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestRunLogger guid: (Core.GUID fromString: '{00fd980b-da74-44be-888f-6735ffb8e96b}')!
+
 XProgramming.SUnit.TestRunLogger isNonInstantiable: true!
+
 XProgramming.SUnit.TestRunLogger comment: ''!
+
 !XProgramming.SUnit.TestRunLogger categoriesForClass!Kernel-Objects! !
+
 !XProgramming.SUnit.TestRunLogger methodsFor!
 
 finishedCase: aSymbol
@@ -38,6 +43,7 @@ startingCase: aTestCase
 
 startingRun: aTestSuite
 ! !
+
 !XProgramming.SUnit.TestRunLogger categoriesForMethods!
 finishedCase:!logging!public! !
 finishedRun:!helpers!logging!public! !

@@ -15,9 +15,13 @@ External.Structure
 			'_OffsetOf_iString' -> 16r10.
 			'_TBBUTTON_Size' -> 16r14
 		}!
+
 OS.TBBUTTON guid: (Core.GUID fromString: '{87b4c614-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.TBBUTTON comment: ''!
+
 !OS.TBBUTTON categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+
 !OS.TBBUTTON methodsFor!
 
 dwData
@@ -79,6 +83,7 @@ iString: anInteger
 	"Set the receiver's 'iString' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_iString put: anInteger! !
+
 !OS.TBBUTTON categoriesForMethods!
 dwData!**compiled accessors**!public! !
 dwData:!**compiled accessors**!public! !
@@ -125,6 +130,7 @@ defineFields
 
 getFieldNames
 	^#(#iBitmap #idCommand #fsState #fsStyle #dwData #iString)! !
+
 !OS.TBBUTTON class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

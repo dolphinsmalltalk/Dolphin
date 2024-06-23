@@ -7,7 +7,9 @@ UI.BasicListAbstract
 	imports: #(#{OS.ComboBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'Modes' -> #(#simple #dropDown #dropDownList) }!
+
 UI.ComboBox guid: (Core.GUID fromString: '{87b4c72b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ComboBox comment: 'ComboBox is the <listView> implementing the standard Windows COMBOBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Class Variables:
 	CbnMap	<IdentityDictionary> mapping Windows notification messages to <selector>s.
 	Modes		<Array> of <Symbol>s decribing the COMBOBOX styles.
 '!
+
 !UI.ComboBox categoriesForClass!MVP-Views! !
+
 !UI.ComboBox methodsFor!
 
 actualHeight
@@ -340,6 +344,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	response to the combo-box notifications."
 
 	^nil! !
+
 !UI.ComboBox categoriesForMethods!
 actualHeight!accessing!geometry!private! !
 adjustRectangle:!geometry!public! !
@@ -393,6 +398,7 @@ winClassName
 
 	^'COMBOBOX'
 ! !
+
 !UI.ComboBox class categoriesForMethods!
 icon!constants!public! !
 themePartName!constants!private! !

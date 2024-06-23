@@ -7,8 +7,11 @@ Kernel.Tests.StableSortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.MergesortAlgorithmTest guid: (Core.GUID fromString: '{0b95c1d0-7833-43d1-9d22-fa3129287940}')!
+
 Kernel.Tests.MergesortAlgorithmTest comment: ''!
+
 !Kernel.Tests.MergesortAlgorithmTest methodsFor!
 
 algorithmToTest
@@ -25,6 +28,7 @@ testTempArrayLargeEnough
 	60 timesRepeat: [sorted removeFirst].
 	sorted addAll: (130 to: 200).
 	self assertSorted: sorted! !
+
 !Kernel.Tests.MergesortAlgorithmTest categoriesForMethods!
 algorithmToTest!private!unit tests! !
 testBigStringSort!public! !

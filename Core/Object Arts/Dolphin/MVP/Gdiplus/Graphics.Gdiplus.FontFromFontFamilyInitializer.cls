@@ -7,8 +7,11 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFromFontFamilyInitializer guid: (Core.GUID fromString: '{f4b7aa80-5fd1-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.FontFromFontFamilyInitializer comment: ''!
+
 !Graphics.Gdiplus.FontFromFontFamilyInitializer methodsFor!
 
 = anObject
@@ -96,6 +99,7 @@ style
 
 unit
 	^unit! !
+
 !Graphics.Gdiplus.FontFromFontFamilyInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -128,6 +132,7 @@ fontFamily: fontFamily emSize: emSize style: style unit: unit
 
 freeHandle: aHandle
 	Gdip gdipDeleteFont: aHandle! !
+
 !Graphics.Gdiplus.FontFromFontFamilyInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 fontFamily:emSize:style:unit:!instance creation!public! !

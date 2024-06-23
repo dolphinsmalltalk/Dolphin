@@ -7,9 +7,13 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StExternalArgTypeNode guid: (Core.GUID fromString: '{49763c2e-001b-471d-9f27-1acec000b58d}')!
+
 Kernel.StExternalArgTypeNode comment: ''!
+
 !Kernel.StExternalArgTypeNode categoriesForClass!System-Compiler! !
+
 !Kernel.StExternalArgTypeNode methodsFor!
 
 = anObject
@@ -66,6 +70,7 @@ typeOrdinal
 
 typeOrdinal: anInteger 
 	typeOrdinal := anInteger! !
+
 !Kernel.StExternalArgTypeNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !

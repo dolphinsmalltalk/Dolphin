@@ -7,11 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.SerialNumberProtector guid: (Core.GUID fromString: '{2748fb4f-8d36-4f21-b51a-669a27545e43}')!
+
 Security.SerialNumberProtector isNonInstantiable: true!
+
 Security.SerialNumberProtector comment: 'One of these handles the actual cryptography for a (subclass of) ProtectedProductSerialNumber.  The idea of factoring this code out is to allow cryptography (which is really a policy decision) to vary independently of the choice of what data is encoded in a serial number.
 
 Note that instances only look after the cryptography for serial numbers, they are not responsible for the encryption used to protect the bytecodes of methods (which have different cryptographic requirements), see ProductProtector for that.'!
+
 !Security.SerialNumberProtector methodsFor!
 
 dataFromString: aString
@@ -57,6 +61,7 @@ stringFromData: anObject
 	"Private - Answer a human-readable String representing the given raw encrypted data."
 	
 	^ self subclassResponsibility.! !
+
 !Security.SerialNumberProtector categoriesForMethods!
 dataFromString:!helpers!private! !
 decrypt:!operations!public! !
@@ -136,6 +141,7 @@ withKey: anInteger
 	^ (self new)
 		key: anInteger;
 		yourself.! !
+
 !Security.SerialNumberProtector class categoriesForMethods!
 integerFromReadableString:!helpers!private! !
 isSafeToEncryptWithProductProtection!constants!public!testing! !

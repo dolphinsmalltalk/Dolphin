@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.FontTest guid: (Core.GUID fromString: '{9858b020-07a1-4aad-9b28-35376d1d4f62}')!
+
 Graphics.Gdiplus.Tests.FontTest comment: ''!
+
 !Graphics.Gdiplus.Tests.FontTest methodsFor!
 
 createCanonicalSubject
@@ -79,6 +82,7 @@ verifyGenericSerif: aFont
 	self assert: aFont style equals: FontStyleRegular.
 	self assert: aFont name equals: 'Times New Roman'.
 	self assert: aFont family equals: FontFamily genericSerif! !
+
 !Graphics.Gdiplus.Tests.FontTest categoriesForMethods!
 createCanonicalSubject!helpers!private! !
 subjectClass!constants!private! !

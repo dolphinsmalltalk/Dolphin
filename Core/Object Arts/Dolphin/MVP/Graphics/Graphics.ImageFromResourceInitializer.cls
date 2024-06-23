@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageFromResourceInitializer guid: (Core.GUID fromString: '{b0d7fbd0-9ebb-4121-b7d6-bec55f0f6525}')!
+
 Graphics.ImageFromResourceInitializer comment: ''!
+
 !Graphics.ImageFromResourceInitializer methodsFor!
 
 = anObject
@@ -80,6 +83,7 @@ printImage: anImage on: aWriteStream
 
 tryLoadFromFile: anImage extent: aPoint
 	^nil! !
+
 !Graphics.ImageFromResourceInitializer categoriesForMethods!
 =!comparing!public! !
 createImage:extent:!private!realizing/unrealizing! !
@@ -115,6 +119,7 @@ identifier: identifierObject module: moduleObject flags: anInteger extent: aPoin
 		flags: anInteger;
 		extent: aPoint;
 		yourself! !
+
 !Graphics.ImageFromResourceInitializer class categoriesForMethods!
 identifier:module:flags:!public! !
 identifier:module:flags:extent:!instance creation!public! !

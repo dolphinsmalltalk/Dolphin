@@ -7,12 +7,16 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSScriptControl.IScriptControl guid: (OS.COM.IID fromString: '{0e59f1d3-1fbe-11d0-8ff2-00a0d10038bc}')!
+
 MSScriptControl.IScriptControl comment: '<IScriptControl> is a wrapper class for the COM interface ''MSScriptControl.IScriptControl'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Control to host scripting engines that understand the ActiveX Scripting interface"'!
+
 !MSScriptControl.IScriptControl categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+
 !MSScriptControl.IScriptControl methodsFor!
 
 _aboutBox
@@ -434,6 +438,7 @@ useSafeSubset: pfUseSafeSubset
 	Helpstring: Force script to execute in safe mode and disallow potentially harmful actions"
 
 	self put_UseSafeSubset: pfUseSafeSubset! !
+
 !MSScriptControl.IScriptControl categoriesForMethods!
 _aboutBox!**auto generated**!methods!public! !
 _AboutBox!**auto generated**!COM Interfaces-IScriptControl!private! !
@@ -550,6 +555,7 @@ initializeTypeLib
 		IScriptControl initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
+
 !MSScriptControl.IScriptControl class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

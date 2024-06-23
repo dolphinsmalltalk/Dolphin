@@ -7,7 +7,9 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_LISTEN_ENDPOINT_INFO_Size' -> 16r8. '_OffsetOf_EnableSharing' -> 16r4 }!
+
 WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO guid: (Core.GUID fromString: '{c96f66fd-b678-4046-9100-ed4b4bc7c9fe}')!
+
 WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO comment: '`HTTP_LISTEN_ENDPOINT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -24,7 +26,9 @@ struct tagHTTP_LISTEN_ENDPOINT_INFO {
 } HTTP_LISTEN_ENDPOINT_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO methodsFor!
 
 EnableSharing
@@ -36,6 +40,7 @@ EnableSharing: aBoolean
 	"Set the receiver's 'EnableSharing' field to the value of the argument, aBoolean"
 
 	bytes uint8AtOffset: _OffsetOf_EnableSharing put: aBoolean asParameter! !
+
 !WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO categoriesForMethods!
 EnableSharing!**compiled accessors**!public! !
 EnableSharing:!**compiled accessors**!public! !
@@ -68,6 +73,7 @@ getFieldNames
 
 propertyId
 	^HttpServerListenEndpointProperty! !
+
 !WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

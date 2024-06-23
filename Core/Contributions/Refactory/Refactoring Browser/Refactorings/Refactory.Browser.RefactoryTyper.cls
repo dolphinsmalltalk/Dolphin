@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RefactoryTyper guid: (Core.GUID fromString: '{df340d5b-5ca0-48cb-8e8c-5153a7bc6a4c}')!
+
 Refactory.Browser.RefactoryTyper comment: ''!
+
 !Refactory.Browser.RefactoryTyper categoriesForClass!Refactory-Support! !
+
 !Refactory.Browser.RefactoryTyper methodsFor!
 
 collectionNameFor: aString 
@@ -305,6 +309,7 @@ typesFor: anInstVarName
 typesFor: anInstVarName in: aClass
 	class = aClass ifFalse: [self runOn: aClass].
 	^variableTypes at: anInstVarName ifAbsent: [Set new]! !
+
 !Refactory.Browser.RefactoryTyper categoriesForMethods!
 collectionNameFor:!printing!public! !
 computeEquivalenceClassesForMethodsAndVars!equivalence classes!public! !
@@ -362,6 +367,7 @@ typesFor: variableName in: aParseTree model: aRBModel
 	^self new
 		model: aRBModel;
 		findTypeFor: messages! !
+
 !Refactory.Browser.RefactoryTyper class categoriesForMethods!
 new!instance creation!public! !
 newFor:!instance creation!public! !

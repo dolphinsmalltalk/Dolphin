@@ -7,9 +7,13 @@ Kernel.STBCollectionProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBIdentityDictionaryProxy guid: (Core.GUID fromString: '{87b4c6f6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STBIdentityDictionaryProxy comment: ''!
+
 !Kernel.STBIdentityDictionaryProxy categoriesForClass!System-Binary storage! !
+
 !Kernel.STBIdentityDictionaryProxy methodsFor!
 
 value
@@ -22,6 +26,7 @@ value
 		by: 2
 		do: [:i | inst at: (array at: i) put: (array at: i + 1)].
 	^inst! !
+
 !Kernel.STBIdentityDictionaryProxy categoriesForMethods!
 value!converting!public! !
 !
@@ -52,6 +57,7 @@ forCollection: aLookupTable
 				nextPut: key;
 				nextPut: value].
 	^self class: aLookupTable class array: tempStream grabContents! !
+
 !Kernel.STBIdentityDictionaryProxy class categoriesForMethods!
 class:associations:!instance creation!public! !
 forCollection:!instance creation!public! !

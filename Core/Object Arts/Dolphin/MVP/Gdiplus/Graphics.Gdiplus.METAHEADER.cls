@@ -16,7 +16,9 @@ External.Structure
 			'_OffsetOf_mtType' -> 16r0.
 			'_OffsetOf_mtVersion' -> 16r4
 		}!
+
 Graphics.Gdiplus.METAHEADER guid: (Core.GUID fromString: '{0252c31a-1d28-4418-90fa-3243aff6de01}')!
+
 Graphics.Gdiplus.METAHEADER comment: '<METAHEADER> is an <ExternalStructure> class to wrap the struct ''Gdiplus.METAHEADER'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -36,6 +38,7 @@ struct tagMETAHEADER {
 	unsigned short mtNoParameters;
 } METAHEADER;
 '!
+
 !Graphics.Gdiplus.METAHEADER methodsFor!
 
 mtHeaderSize
@@ -107,6 +110,7 @@ mtVersion: anInteger
 	"Set the receiver's 'mtVersion' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_mtVersion put: anInteger! !
+
 !Graphics.Gdiplus.METAHEADER categoriesForMethods!
 mtHeaderSize!**compiled accessors**!public! !
 mtHeaderSize:!**compiled accessors**!public! !
@@ -171,6 +175,7 @@ defineFields
 
 getFieldNames
 	^#(#mtType #mtHeaderSize #mtVersion #mtSize #mtNoObjects #mtMaxRecord #mtNoParameters)! !
+
 !Graphics.Gdiplus.METAHEADER class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

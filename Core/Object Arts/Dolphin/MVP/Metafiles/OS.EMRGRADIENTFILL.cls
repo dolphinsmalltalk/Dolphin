@@ -14,7 +14,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_ulMode' -> 16r20.
 			'_OffsetOf_Ver' -> 16r24
 		}!
+
 OS.EMRGRADIENTFILL guid: (Core.GUID fromString: '{1302823f-242e-4301-b5eb-ee7a20a4b787}')!
+
 OS.EMRGRADIENTFILL comment: '<EMRGRADIENTFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGRADIENTFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -33,7 +35,9 @@ struct tagEMRGRADIENTFILL {
 	TRIVERTEX Ver[1];
 } EMRGRADIENTFILL;
 '!
+
 !OS.EMRGRADIENTFILL categoriesForClass!Win32-Structs! !
+
 !OS.EMRGRADIENTFILL methodsFor!
 
 nTri
@@ -99,6 +103,7 @@ Ver: aStructureArrayOfTRIVERTEX
 		to: _OffsetOf_Ver + size
 		startingAt: 1.
 	self nVer: aStructureArrayOfTRIVERTEX size! !
+
 !OS.EMRGRADIENTFILL categoriesForMethods!
 nTri!**compiled accessors**!public! !
 nTri:!**compiled accessors**!public! !
@@ -158,6 +163,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GRADIENTFILL}! !
+
 !OS.EMRGRADIENTFILL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

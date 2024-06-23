@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinProduct guid: (Core.GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
+
 Tools.DolphinProduct isNonInstantiable: true!
+
 Tools.DolphinProduct comment: ''!
+
 !Tools.DolphinProduct categoriesForClass!System-Support! !
+
 !Tools.DolphinProduct methodsFor!
 
 allPackages
@@ -421,6 +426,7 @@ version: aSemVer
 
 warnOfUnlistedContent
 ! !
+
 !Tools.DolphinProduct categoriesForMethods!
 allPackages!accessing!public! !
 basicLoad!operations!private! !
@@ -581,6 +587,7 @@ version: aSemVer
 	^self basicNew
 		version: aSemVer;
 		yourself! !
+
 !Tools.DolphinProduct class categoriesForMethods!
 boot!operations!public! !
 current!accessing!public! !

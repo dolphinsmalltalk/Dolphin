@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ScrollingDecoratorTest guid: (Core.GUID fromString: '{67f9d5dd-3f9b-4f9f-9d72-207bdf40d661}')!
+
 UI.Tests.ScrollingDecoratorTest comment: ''!
+
 !UI.Tests.ScrollingDecoratorTest methodsFor!
 
 classToTest
@@ -58,6 +61,7 @@ testSubViewResizeSmallerThanParent
 	presenter subViews first extent: 50 @ 50.
 	presenter layout.
 	self assert: presenter subViews first extent equals: 50 @ 50! !
+
 !UI.Tests.ScrollingDecoratorTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !
@@ -90,6 +94,7 @@ resource_Scrolling_container_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollingDecorator) 34 18 nil nil 34 2 8 1143996416 131073 416 nil nil nil 5 nil nil nil 416 1573190 1 ##(Smalltalk.ScrollingDecoratorLayout) true 170 192 8 #() nil 328198 ##(Smalltalk.Point) 1 1 true 546 17 17 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 546 11 11 546 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 8 #() 546 193 193 nil 27)! !
+
 !UI.Tests.ScrollingDecoratorTest class categoriesForMethods!
 resource_Scrolling_container_D6!public!resources-views! !
 resource_Scrolling_container_D7!public!resources-views! !

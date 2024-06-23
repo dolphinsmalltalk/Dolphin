@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageFromHandleInitializer guid: (Core.GUID fromString: '{d019573c-ce12-419d-ab3d-f8bafb3540b0}')!
+
 Graphics.ImageFromHandleInitializer comment: ''!
+
 !Graphics.ImageFromHandleInitializer methodsFor!
 
 createImage: anImage extent: aPoint
@@ -35,6 +38,7 @@ printImage: anImage on: aWriteStream
 		nextPut: $(;
 		print: handle;
 		nextPut: $)! !
+
 !Graphics.ImageFromHandleInitializer categoriesForMethods!
 createImage:extent:!private!realizing/unrealizing! !
 extent:!accessing!public! !
@@ -51,6 +55,7 @@ handle: anExternalhandle
 	^self new
 		handle: anExternalhandle;
 		yourself! !
+
 !Graphics.ImageFromHandleInitializer class categoriesForMethods!
 handle:!public! !
 !

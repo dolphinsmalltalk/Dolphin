@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.SUnitTest guid: (Core.GUID fromString: '{5e96793e-0810-11d4-a876-0050da643bf9}')!
+
 XProgramming.SUnit.SUnitTest comment: ''!
+
 !XProgramming.SUnit.SUnitTest categoriesForClass!SUnitTests! !
+
 !XProgramming.SUnit.SUnitTest methodsFor!
 
 assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount skipped: anInteger
@@ -222,6 +226,7 @@ testSuite
 		failed: 1
 		errors: 1
 		skipped: 0! !
+
 !XProgramming.SUnit.SUnitTest categoriesForMethods!
 assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!private! !
 error!private!test methods! !
@@ -260,6 +265,7 @@ shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
+
 !XProgramming.SUnit.SUnitTest class categoriesForMethods!
 shouldInheritSelectors!public!Testing! !
 !

@@ -12,8 +12,11 @@ UI.StaticView
 						withAll: { #bump -> 16r9. #etched -> 16r6. #none -> 16r0. #raised -> 16r5. #sunken -> 16rA }).
 			'EraseWholeMask' -> 16r1
 		}!
+
 UI.ImageViewAbstract guid: (Core.GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
+
 UI.ImageViewAbstract isNonInstantiable: true!
+
 UI.ImageViewAbstract comment: '`ImageViewAbstract` is an abstract class of `<valueView>`s for displaying static `<image>`s. The `<valueModel>` associated with an image view must always yield an `<image>` value when mapped through the installed type converter. An `ImageViewAbstract` will normally be used in conjunction with a `<ImagePresenter>`. The position and size in which the image is displayed can be controlled using the `#viewMode` aspect which can be set to one of the following: `#normal`, `#centered`, `#scale`, `#scaleToFit`, or `#scaleBestFit`. 
 
 ##Instance Variables:
@@ -22,7 +25,9 @@ UI.ImageViewAbstract comment: '`ImageViewAbstract` is an abstract class of `<val
   ivFlags		`<integer>` flags controlling styles/modes, etc.
   insets 		`Rectangle` specifying insets of the image from its border on each edge.
   imageBorder	`Symbol` identifying style of the border (if any) drawn around the image'!
+
 !UI.ImageViewAbstract categoriesForClass!MVP-Views! !
+
 !UI.ImageViewAbstract methodsFor!
 
 calcRectangle: displayRect
@@ -310,6 +315,7 @@ wmPrintClient: message wParam: wParam lParam: lParam
 	self ensureLayoutValid.
 	self paintOn: (Canvas withNonOwnedDC: wParam).
 	^0! !
+
 !UI.ImageViewAbstract categoriesForMethods!
 calcRectangle:!geometry!private! !
 calculateExtent:!geometry!private! !
@@ -381,6 +387,7 @@ winClassName
 	to instances of the receiver."
 
 	^self wndClassName! !
+
 !UI.ImageViewAbstract class categoriesForMethods!
 edgeStyles!constants!public! !
 edgeStyleTable!constants!public! !

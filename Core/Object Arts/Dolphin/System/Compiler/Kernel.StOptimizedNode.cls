@@ -7,7 +7,9 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StOptimizedNode guid: (Core.GUID fromString: '{d6ca95fa-6dec-4ced-8780-c36c6450314f}')!
+
 Kernel.StOptimizedNode comment: 'StOptimizedNode is an parse tree node that represents ##(...) expressions. These expressions are evaluated at compile time and directly inserted into the method.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	right	<Integer>	position of )
 
 '!
+
 !Kernel.StOptimizedNode categoriesForClass!System-Compiler! !
+
 !Kernel.StOptimizedNode methodsFor!
 
 = anObject 
@@ -115,6 +119,7 @@ value
 
 value: anObject
 	value := anObject! !
+
 !Kernel.StOptimizedNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -163,6 +168,7 @@ left: leftInteger body: aSequenceNode right: rightInteger
 
 new
 	^super new initialize! !
+
 !Kernel.StOptimizedNode class categoriesForMethods!
 body:!instance creation!public! !
 initialize!class initialization!public! !

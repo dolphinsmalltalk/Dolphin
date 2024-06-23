@@ -7,9 +7,13 @@ UI.Scintilla.LexerMetadata
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.LexerProperty guid: (Core.GUID fromString: '{edef3c1e-b9c0-4eed-8b80-7ecdaeef15d7}')!
+
 UI.Scintilla.LexerProperty comment: ''!
+
 !UI.Scintilla.LexerProperty categoriesForClass!Kernel-Objects! !
+
 !UI.Scintilla.LexerProperty methodsFor!
 
 getDescription
@@ -34,6 +38,7 @@ value: anObject
 		value: (self type < SC_TYPE_STRING
 				ifTrue: [anObject asParameter printString]
 				ifFalse: [anObject])! !
+
 !UI.Scintilla.LexerProperty categoriesForMethods!
 getDescription!accessing!private! !
 name!accessing!public! !

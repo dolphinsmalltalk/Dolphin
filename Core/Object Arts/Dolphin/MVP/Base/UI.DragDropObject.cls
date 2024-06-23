@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DragDropObject guid: (Core.GUID fromString: '{87b4c480-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.DragDropObject isNonInstantiable: true!
+
 UI.DragDropObject comment: ''!
+
 !UI.DragDropObject categoriesForClass!MVP-DragDrop! !
+
 !UI.DragDropObject methodsFor!
 
 availableFormats
@@ -75,6 +80,7 @@ printOn: aStream
 		nextPut: $(;
 		print: self object;
 		nextPut: $)! !
+
 !UI.DragDropObject categoriesForMethods!
 availableFormats!accessing!public! !
 format:!accessing!public! !
@@ -102,6 +108,7 @@ object: anObject
 	^self new
 		object: anObject;
 		yourself! !
+
 !UI.DragDropObject class categoriesForMethods!
 new!instance creation!public! !
 object:!instance creation!public! !

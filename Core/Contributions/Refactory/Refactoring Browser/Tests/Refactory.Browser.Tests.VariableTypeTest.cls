@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.VariableTypeTest guid: (Core.GUID fromString: '{886b4afa-23a6-4006-86bc-7f424cafad38}')!
+
 Refactory.Browser.Tests.VariableTypeTest comment: ''!
+
 !Refactory.Browser.Tests.VariableTypeTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.VariableTypeTest methodsFor!
 
 testBasicLintRuleTypes
@@ -56,6 +60,7 @@ testParseTreeTypes
 				model: model.
 	self assert: types size equals: 1.
 	self assert: (types includes: (model classFor: self class))! !
+
 !Refactory.Browser.Tests.VariableTypeTest categoriesForMethods!
 testBasicLintRuleTypes!public!unit tests! !
 testCompositeLintRuleTypes!public!tests! !

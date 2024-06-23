@@ -19,7 +19,9 @@ OS.SizedStructure
 			'DISPLAY_DEVICE_PRIMARY_DEVICE' -> 16r4.
 			'DISPLAY_DEVICE_VGA_COMPATIBLE' -> 16r10
 		}!
+
 OS.DISPLAY_DEVICEW guid: (Core.GUID fromString: '{b21c0d9e-8924-4788-ad73-e7751f9f1c6b}')!
+
 OS.DISPLAY_DEVICEW comment: '`DISPLAY_DEVICEW` is an `External.Structure` class to wrap the struct ''Win32.DISPLAY_DEVICEW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -39,7 +41,9 @@ struct tagDISPLAY_DEVICEW {
 } DISPLAY_DEVICEW;
 ```
 '!
+
 !OS.DISPLAY_DEVICEW categoriesForClass!Win32-Structs! !
+
 !OS.DISPLAY_DEVICEW methodsFor!
 
 DeviceID
@@ -69,6 +73,7 @@ StateFlags
 	"Answer the <Integer> value of the receiver's 'StateFlags' field."
 
 	^bytes uint32AtOffset: _OffsetOf_StateFlags! !
+
 !OS.DISPLAY_DEVICEW categoriesForMethods!
 DeviceID!**compiled accessors**!public! !
 DeviceName!**compiled accessors**!public! !
@@ -110,6 +115,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #DeviceName #DeviceString #StateFlags #DeviceID)! !
+
 !OS.DISPLAY_DEVICEW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

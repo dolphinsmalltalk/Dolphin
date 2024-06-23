@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.MethodName guid: (Core.GUID fromString: '{22638432-c25d-413a-9087-34a3b4ad2b08}')!
+
 Kernel.MethodName comment: ''!
+
 !Kernel.MethodName categoriesForClass!Kernel-Objects! !
+
 !Kernel.MethodName methodsFor!
 
 = aMethodName
@@ -53,6 +57,7 @@ value
 
 valueOrNil
 	^className valueOrNil ifNotNil: [:class | class compiledMethodAt: selector ifAbsent: nil]! !
+
 !Kernel.MethodName categoriesForMethods!
 =!comparing!public! !
 className!accessing!public! !
@@ -81,6 +86,7 @@ className: aBindingReference selector: aSymbol
 
 method: aCompiledMethod
 	^self className: aCompiledMethod methodClass fullyQualifiedReference selector: aCompiledMethod selector! !
+
 !Kernel.MethodName class categoriesForMethods!
 class:selector:!public! !
 className:selector:!public! !

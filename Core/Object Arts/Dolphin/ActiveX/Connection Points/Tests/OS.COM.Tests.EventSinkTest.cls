@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.EventSinkTest guid: (Core.GUID fromString: '{cdbe5d5c-f0bc-4943-b0d4-2d5e7e6419ca}')!
+
 OS.COM.Tests.EventSinkTest comment: ''!
+
 !OS.COM.Tests.EventSinkTest methodsFor!
 
 onAxEvent: aSymbol withArguments: anArray 
@@ -60,6 +63,7 @@ testOneArgs
 					[:each | 
 					each key == #OneVariant: 
 						and: [each value size = 1 and: [each value first asObject = #[0 1 2 3 4 5 6 7 8 9]]]])! !
+
 !OS.COM.Tests.EventSinkTest categoriesForMethods!
 onAxEvent:withArguments:!private!unit tests! !
 setUp!public!unit tests! !
@@ -72,6 +76,7 @@ testOneArgs!public!unit tests! !
 
 resources
 	^{TestTypelib}! !
+
 !OS.COM.Tests.EventSinkTest class categoriesForMethods!
 resources!public!unit tests! !
 !

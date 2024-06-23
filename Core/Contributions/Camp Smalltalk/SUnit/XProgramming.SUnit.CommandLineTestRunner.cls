@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.CommandLineTestRunner guid: (Core.GUID fromString: '{69cae7cc-de76-4748-bc30-e39048ddbb3c}')!
+
 XProgramming.SUnit.CommandLineTestRunner comment: ''!
+
 !XProgramming.SUnit.CommandLineTestRunner categoriesForClass!Kernel-Objects! !
+
 !XProgramming.SUnit.CommandLineTestRunner methodsFor!
 
 addLogger: aTestRunLogger
@@ -94,6 +98,7 @@ update: anObject with: argument from: originator
 
 verbose: aBoolean
 	verbose := aBoolean! !
+
 !XProgramming.SUnit.CommandLineTestRunner categoriesForMethods!
 addLogger:!initializing!private! !
 finishRun:!operations!private! !
@@ -116,6 +121,7 @@ verbose:!accessing!public! !
 
 new
 	^super new initialize! !
+
 !XProgramming.SUnit.CommandLineTestRunner class categoriesForMethods!
 new!instance creation!public! !
 !

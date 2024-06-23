@@ -41,6 +41,7 @@ UI.RuntimeSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DoubleBufferedView
 	subclass: #'UI.Examples.SlidingBallDemo'
 	instanceVariableNames: 'start end circle stepProcess'

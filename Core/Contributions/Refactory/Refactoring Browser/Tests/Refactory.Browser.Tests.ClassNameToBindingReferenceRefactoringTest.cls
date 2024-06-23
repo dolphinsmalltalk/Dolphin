@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest guid: (Core.GUID fromString: '{2a06fd11-d52a-4bd1-98eb-fad2671fad7e}')!
+
 Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest methodsFor!
 
 testConvertAlias
@@ -72,6 +76,7 @@ testConvertSymbolsToBindingReferences
 		verifyMethod: #smalltalkAtPut
 		of: testClass
 		equals: 'smalltalkAtPut ^#{Smalltalk.PoolConstantsDictionary} declare: nil'! !
+
 !Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest categoriesForMethods!
 testConvertAlias!public! !
 testConvertSymbolsToBindingReferences!public! !

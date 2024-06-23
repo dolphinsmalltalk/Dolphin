@@ -15,7 +15,9 @@ Core.Object
 			'ReturnOffset' -> 16r2.
 			'SPOffset' -> 16r4
 		}!
+
 Kernel.StackFrame guid: (Core.GUID fromString: '{87b4c4be-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.StackFrame comment: 'StackFrame encapsulates behaviour of an activation record for use by the development tools (especially the debugger) and other reflective activities. A StackFrame is only valid as a snapshot of <Process> state (e.g. when the process is suspended, as it is when being debugged).
 
 Dolphin''s activation records are not objects, in fact they are just range of slots in the Process stack, so this class is employed to stand in and wrap those records.
@@ -36,7 +38,9 @@ If the activation is for a block then any copied values it contains are pushed o
 Note that there is no difference between method and block activations (with one special case, see below). Either may have stack based arguments and temps which are always stored on the stack before the frame. Either may define shared temps that require an "environment" object. This will be an instance of Context, which is not a context in the Smalltalk-80 sense, but a rather simpler object that consists of a vector of the shared temps and a pointer to any outer Context. The outer context chain is used to locate shared temps that a nested block may reference from its enclosing scopes. It is also used to locate the home context when a block performs a ^-return.
 
 When a block does not itself require a context to hold shared temps (the common case in fact), the environment slot is initialised with a reference to the block itself. This is useful for the debugger and other reflective facilities in the image, as otherwise it would not be possible to locate the closure associated with the frame. It is also used by the VM when it needs to create a nested block that requires an outer pointer; the outer pointer of the new block is set to be the same as the outer pointer of the enclosing, contextless, block. i.e. the outer pointer of a block may *not* point to the context of its immediately enclosing block, but to the context of some wider scope such as the method.'!
+
 !Kernel.StackFrame categoriesForClass!Kernel-Methods! !
+
 !Kernel.StackFrame methodsFor!
 
 = anObject
@@ -449,6 +453,7 @@ textMap
 	"Private - Answer the map between source text and ip values for the receiver's method."
 
 	^self basicMethod textMap! !
+
 !Kernel.StackFrame categoriesForMethods!
 =!comparing!public! !
 argAt:!accessing!private! !
@@ -536,6 +541,7 @@ process: aProcess index: anInteger
 
 	^(self frameClassFor: aProcess at: anInteger)
 		ifNotNil: [:frameClass | frameClass onProcess: aProcess index: anInteger]! !
+
 !Kernel.StackFrame class categoriesForMethods!
 frameClassFor:at:!instance creation!private! !
 onProcess:index:!instance creation!private! !

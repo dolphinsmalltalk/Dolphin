@@ -7,8 +7,11 @@ Tools.KeyedAspectBatchAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.CharacterClassificationBatchAccessor guid: (Core.GUID fromString: '{ba8f42e2-7fa3-41ad-8599-8c3ca04d1198}')!
+
 Tools.Scintilla.CharacterClassificationBatchAccessor comment: ''!
+
 !Tools.Scintilla.CharacterClassificationBatchAccessor methodsFor!
 
 aspectClass
@@ -29,6 +32,7 @@ getBatchAccessors
 			accessors at: each codeUnit + 1
 				put: ((CharacterClassificationAspect character: each classification: #newline) accessorFor: subj)].
 	^accessors! !
+
 !Tools.Scintilla.CharacterClassificationBatchAccessor categoriesForMethods!
 aspectClass!public! !
 getBatchAccessors!public! !

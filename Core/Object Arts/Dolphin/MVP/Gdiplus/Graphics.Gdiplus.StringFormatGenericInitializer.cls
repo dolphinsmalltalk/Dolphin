@@ -7,9 +7,13 @@ Graphics.Gdiplus.StringFormatInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormatGenericInitializer guid: (Core.GUID fromString: '{acf75353-2f30-4d26-95da-4e507476c2f7}')!
+
 Graphics.Gdiplus.StringFormatGenericInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.StringFormatGenericInitializer comment: ''!
+
 !Graphics.Gdiplus.StringFormatGenericInitializer methodsFor!
 
 alignmentOf: aStringFormat set: aStringAlignmentConstant
@@ -51,6 +55,7 @@ tabOffsetsOf: aGdiplusStringFormat set: aFLOATArray
 
 trimmingOf: aStringFormat set: aStringTrimmingConstant
 	(self copyGenericInstance: aStringFormat) trimmingOf: aStringFormat set: aStringTrimmingConstant! !
+
 !Graphics.Gdiplus.StringFormatGenericInitializer categoriesForMethods!
 alignmentOf:set:!attributes!public! !
 copyGenericInstance:!helpers!private! !

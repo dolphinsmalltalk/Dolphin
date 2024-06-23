@@ -7,7 +7,9 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StMessageNode guid: (Core.GUID fromString: '{3a681160-291e-495f-a7ce-71b4a751f5d4}')!
+
 Kernel.StMessageNode comment: 'StMessageNode is a parse tree node that represents a message send.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Instance Variables:
 	selectorParts	<SequenceableCollection of: StValueToken>	the tokens for each keyword
 
 '!
+
 !Kernel.StMessageNode categoriesForClass!System-Compiler! !
+
 !Kernel.StMessageNode methodsFor!
 
 = anObject
@@ -206,6 +210,7 @@ stopWithoutParentheses
 
 value
 	^self selector! !
+
 !Kernel.StMessageNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -266,6 +271,7 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 			selectorParts: keywordTokens
 			arguments: valueNodes;
 		yourself! !
+
 !Kernel.StMessageNode class categoriesForMethods!
 receiver:selector:!instance creation!public! !
 receiver:selector:arguments:!instance creation!public! !

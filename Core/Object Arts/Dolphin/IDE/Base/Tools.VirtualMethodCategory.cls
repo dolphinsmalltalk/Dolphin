@@ -7,8 +7,11 @@ Core.MethodCategory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.VirtualMethodCategory guid: (Core.GUID fromString: '{87b4c504-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.VirtualMethodCategory isNonInstantiable: true!
+
 Tools.VirtualMethodCategory comment: 'VirtualMethodCategory is the class of method categories whose membership is calculated on demand rather than looked up in the method catalogue of the method''s class. As virtual categories usually have no static record in the image, they typically carry no space overhead. This is a significant benefit for the privacy categories ''private'' and ''public'' (membership of which is determined by a bit flag in the method header), as every method in the system is in one or the other. The downside is that querying the membership of the category takes more time, although this is not likely to be noticeable in normal operation.
 
 VirtualMethodCategory itself is abstract, but provides much of the implementation for simple virtual categories, which typically need implement only #includesMethod:
@@ -20,7 +23,9 @@ Instance Variables:
 
 Class Variables:
 	None'!
+
 !Tools.VirtualMethodCategory categoriesForClass!System-Support! !
+
 !Tools.VirtualMethodCategory methodsFor!
 
 addMethodSilently: aCompiledMethod 
@@ -85,6 +90,7 @@ selectorsInBehavior: aBehavior
 	selectors := WriteStream on: (Array new: 8).
 	self methodsInBehavior: aBehavior do: [:each | selectors nextPut: each selector].
 	^selectors contents! !
+
 !Tools.VirtualMethodCategory categoriesForMethods!
 addMethodSilently:!adding!private! !
 behaviorsDo:!enumerating!public! !

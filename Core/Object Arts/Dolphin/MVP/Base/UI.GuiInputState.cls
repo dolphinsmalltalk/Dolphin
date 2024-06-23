@@ -7,9 +7,13 @@ Kernel.InputState
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.GuiInputState guid: (Core.GUID fromString: '{63335fe2-2ac2-43b5-9747-3c264e8b7fdf}')!
+
 UI.GuiInputState comment: ''!
+
 !UI.GuiInputState categoriesForClass!Kernel-Support! !
+
 !UI.GuiInputState methodsFor!
 
 aboutToForkUI
@@ -157,6 +161,7 @@ windowCreated: hWnd param: anInteger
 			thread newWindow: nil.
 			window subclassWindow: hWnd].
 	^0! !
+
 !UI.GuiInputState categoriesForMethods!
 aboutToForkUI!idling!private! !
 allTopLevelWindowHandlesDo:!enumerating!private! !
@@ -178,6 +183,7 @@ windowCreated:param:!private!vm entry points! !
 initialize
 	EnumHandlesDescriptor := External.FunctionDescriptor returnType: 'bool'
 				argumentTypes: 'handle uintptr'! !
+
 !UI.GuiInputState class categoriesForMethods!
 initialize!development!initializing!public! !
 !

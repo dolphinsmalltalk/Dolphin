@@ -11,8 +11,11 @@ OS.AbstractFORMATRANGE
 			'_OffsetOf_cpMin' -> 16r28.
 			'_RangeToFormatFull_Size' -> 16r30
 		}!
+
 UI.Scintilla.RangeToFormatFull guid: (Core.GUID fromString: '{a15c1878-0be0-46bf-9a95-1432da170cdc}')!
+
 UI.Scintilla.RangeToFormatFull comment: ''!
+
 !UI.Scintilla.RangeToFormatFull methodsFor!
 
 cpMax
@@ -34,6 +37,7 @@ cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_cpMin put: anInteger! !
+
 !UI.Scintilla.RangeToFormatFull categoriesForMethods!
 cpMax!**compiled accessors**!public! !
 cpMax:!**compiled accessors**!public! !
@@ -60,6 +64,7 @@ defineFields
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !
+
 !UI.Scintilla.RangeToFormatFull class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.BindingReferenceTest guid: (Core.GUID fromString: '{aca86665-9b25-4f35-bdb8-0c0e434df4e6}')!
+
 Kernel.Tests.BindingReferenceTest isNonInstantiable: true!
+
 Kernel.Tests.BindingReferenceTest comment: ''!
+
 !Kernel.Tests.BindingReferenceTest methodsFor!
 
 bindingTestCases
@@ -425,6 +429,7 @@ testValueOrNil
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value! !
+
 !Kernel.Tests.BindingReferenceTest categoriesForMethods!
 bindingTestCases!constants!private! !
 nameSuffix!constants!private! !

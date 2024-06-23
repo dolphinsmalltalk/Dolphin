@@ -7,11 +7,15 @@ Core.Object
 	imports: #(#{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.RegistryDeserializer guid: (Core.GUID fromString: '{708a38d5-e001-4ad8-bdfb-331745b41cfb}')!
+
 OS.RegistryDeserializer comment: '`OS.RegistryDeserializer` is the deserializer for reading object graphs serialized to the Windows Registry using `OS.RegistrySerializer`.
 
 See the class comment of `OS.RegistrySerializer` for a description of the serialization format and other details.'!
+
 !OS.RegistryDeserializer categoriesForClass!Kernel-Objects! !
+
 !OS.RegistryDeserializer methodsFor!
 
 addSafeClass: aClass
@@ -245,6 +249,7 @@ substitute: anObject
 
 valueAt: aString 
 	^currentKey valueAt: aString! !
+
 !OS.RegistryDeserializer categoriesForMethods!
 addSafeClass:!initializing!public! !
 allowUnknownClasses!initializing!public! !
@@ -280,6 +285,7 @@ regKey: aRegKey
 	^self new
 		setRegKey: aRegKey;
 		yourself! !
+
 !OS.RegistryDeserializer class categoriesForMethods!
 icon!constants!public! !
 readFrom:!instance creation!public! !

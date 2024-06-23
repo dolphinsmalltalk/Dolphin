@@ -7,9 +7,13 @@ External.ArrayFieldLength
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.SizeIsArrayFieldLength guid: (Core.GUID fromString: '{3f017262-aded-499e-9c07-da6937249262}')!
+
 External.SizeIsArrayFieldLength comment: ''!
+
 !External.SizeIsArrayFieldLength categoriesForClass!Kernel-Objects! !
+
 !External.SizeIsArrayFieldLength methodsFor!
 
 buildLengthReader: anExternalField
@@ -121,6 +125,7 @@ sizeIs: aString
 
 sizeIsExpression
 	^Parser parseExpression: sizeIs! !
+
 !External.SizeIsArrayFieldLength categoriesForMethods!
 buildLengthReader:!accessing!private! !
 buildLengthWriter:!accessing!private! !
@@ -143,6 +148,7 @@ sizeIs: aString
 	a field."
 
 	^self new sizeIs: aString! !
+
 !External.SizeIsArrayFieldLength class categoriesForMethods!
 sizeIs:!instance creation!public! !
 !

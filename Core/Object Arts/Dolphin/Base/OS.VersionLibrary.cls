@@ -7,12 +7,16 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.VersionLibrary guid: (Core.GUID fromString: '{64674068-3a82-101b-8181-00aa003743d3}')!
+
 OS.VersionLibrary comment: 'VersionLibrary is the <ExternalLibrary> class to represent the Win32 version library, VERSION.DLL.
 
 The version libraries API is somewhat esoteric and best accessed via the services of the VersionInfo class.
 '!
+
 !OS.VersionLibrary categoriesForClass!External-Libraries! !
+
 !OS.VersionLibrary methodsFor!
 
 getFileVersionInfo: lpstrFilename
@@ -64,6 +68,7 @@ verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: pu
 
 	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid uint32*>
 	^self invalidCall: _failureCode! !
+
 !OS.VersionLibrary categoriesForMethods!
 getFileVersionInfo:!helpers!private! !
 getFileVersionInfo:dwHandle:dwLen:lpData:!private!win32 functions-file installation! !
@@ -78,6 +83,7 @@ fileName
 
 	^'Version'
 ! !
+
 !OS.VersionLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

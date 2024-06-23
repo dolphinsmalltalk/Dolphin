@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.EventMessageSequenceTest guid: (Core.GUID fromString: '{da236161-671a-45ed-95d6-c4c21c41e462}')!
+
 Kernel.Tests.EventMessageSequenceTest comment: ''!
+
 !Kernel.Tests.EventMessageSequenceTest methodsFor!
 
 testForwardTo
@@ -224,6 +227,7 @@ testValueWithArguments
 				Message selector: #foo:bar: arguments: #('subst1' 'subst2')
 			}.
 	self assert: result equals: messages last arguments! !
+
 !Kernel.Tests.EventMessageSequenceTest categoriesForMethods!
 testForwardTo!public!unit tests! !
 testIncludes!public! !

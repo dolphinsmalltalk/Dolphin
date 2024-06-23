@@ -219,7 +219,12 @@ Kernel.SharedPool
 			'SUBLANG_DEFAULT' -> 16r1.
 			'SUBLANG_NEUTRAL' -> 16r0
 		}!
+
 OS.NlsConstants guid: (Core.GUID fromString: '{6d273e59-fb86-438c-9db3-004a0114bb19}')!
+
 OS.NlsConstants isNonInstantiable: true!
+
 OS.NlsConstants comment: ''!
+
 !OS.NlsConstants categoriesForClass!Kernel-Objects! !
+

@@ -7,10 +7,15 @@ Tools.ClassBrowserPlugin
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalllintPlugin guid: (Core.GUID fromString: '{321fcbfb-84d2-40ae-bf8f-f4b816723a1b}')!
+
 Tools.SmalllintPlugin isNonInstantiable: true!
+
 Tools.SmalllintPlugin comment: ''!
+
 !Tools.SmalllintPlugin categoriesForClass!MVP-Presenters! !
+
 !Tools.SmalllintPlugin methodsFor!
 
 browserEnvironment
@@ -64,6 +69,7 @@ runTransformation: aTransformationRule
 
 status: text 
 	^self browser statusText: text! !
+
 !Tools.SmalllintPlugin categoriesForMethods!
 browserEnvironment!operations!private! !
 checkerForRule:environment:!helpers!private! !

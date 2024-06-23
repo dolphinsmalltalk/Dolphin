@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.XmlDomVisitor guid: (Core.GUID fromString: '{92cf165d-8533-4f76-9f0a-ff1c520339f4}')!
+
 MSXML.XmlDomVisitor isNonInstantiable: true!
+
 MSXML.XmlDomVisitor comment: 'Abstract visitor for IXMLDOMDocument node tree.'!
+
 !MSXML.XmlDomVisitor categoriesForClass!Kernel-Objects! !
+
 !MSXML.XmlDomVisitor methodsFor!
 
 visitAttribute: anIXMLDOMAttribute
@@ -62,6 +67,7 @@ visitProcessingInstruction: anIXMLDOMProcessingInstruction
 
 visitText: anIXMLDOMText
 	self visitCharacterData: anIXMLDOMText! !
+
 !MSXML.XmlDomVisitor categoriesForMethods!
 visitAttribute:!public!visiting! !
 visitCDATA:!public! !

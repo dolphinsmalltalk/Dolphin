@@ -7,7 +7,9 @@ ADODB._ADO
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB._Parameter guid: (OS.COM.IID fromString: '{0000150c-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB._Parameter comment: '`_Parameter` is a wrapper class for the COM interface ''ADODB._Parameter'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -80,7 +82,9 @@ interface _Parameter : _ADO
 };
 ```
 '!
+
 !ADODB._Parameter categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB._Parameter methodsFor!
 
 appendChunk: val
@@ -352,6 +356,7 @@ value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pvar asVariant! !
+
 !ADODB._Parameter categoriesForMethods!
 appendChunk:!**auto generated**!methods!public! !
 AppendChunk:!**auto generated**!COM Interfaces-_Parameter!private! !
@@ -437,6 +442,7 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
+
 !ADODB._Parameter class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

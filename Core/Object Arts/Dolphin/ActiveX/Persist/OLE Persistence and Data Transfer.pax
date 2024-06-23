@@ -80,6 +80,7 @@ Kernel.SharedPool
 			'TYMED_MFPICT' -> 16r20.
 			'TYMED_NULL' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.COM.DVTARGETDEVICE'
 	instanceVariableNames: ''
@@ -94,6 +95,7 @@ External.Structure
 			'_OffsetOf_tdPortNameOffset' -> 16r8.
 			'_OffsetOf_tdSize' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.COM.FORMATETC'
 	instanceVariableNames: ''
@@ -108,6 +110,7 @@ External.Structure
 			'_OffsetOf_ptd' -> 16r4.
 			'_OffsetOf_tymed' -> 16r10
 		}!
+
 External.Structure
 	subclass: #'OS.COM.STATDATA'
 	instanceVariableNames: ''
@@ -121,6 +124,7 @@ External.Structure
 			'_OffsetOf_pAdvSink' -> 16r18.
 			'_STATDATA_Size' -> 16r20
 		}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.STGMEDIUM'
 	instanceVariableNames: 'value'
@@ -136,6 +140,7 @@ External.FinalizableStructure
 			'_OffsetOf_tymed' -> 16r0.
 			'_STGMEDIUM_Size' -> 16rC
 		}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IAdviseSink'
 	instanceVariableNames: ''
@@ -143,6 +148,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IBindCtx'
 	instanceVariableNames: ''
@@ -150,6 +156,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IDataObject'
 	instanceVariableNames: ''
@@ -157,6 +164,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IRunningObjectTable'
 	instanceVariableNames: ''
@@ -164,6 +172,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IAdviseSink
 	subclass: #'OS.COM.IAdviseSink2'
 	instanceVariableNames: ''
@@ -171,6 +180,7 @@ OS.COM.IAdviseSink
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IAdviseSink
 	subclass: #'OS.COM.IAdviseSinkEx'
 	instanceVariableNames: ''
@@ -178,6 +188,7 @@ OS.COM.IAdviseSink
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumXXXX
 	subclass: #'OS.COM.IEnumFORMATETC'
 	instanceVariableNames: ''
@@ -185,6 +196,7 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumXXXX
 	subclass: #'OS.COM.IEnumSTATDATA'
 	instanceVariableNames: ''
@@ -192,6 +204,7 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumUnknown
 	subclass: #'OS.COM.IEnumMoniker'
 	instanceVariableNames: ''
@@ -199,6 +212,7 @@ OS.COM.IEnumUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPersistStream
 	subclass: #'OS.COM.IMoniker'
 	instanceVariableNames: ''
@@ -206,6 +220,7 @@ OS.COM.IPersistStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.SizedStructure
 	subclass: #'OS.COM.BIND_OPTS'
 	instanceVariableNames: ''
@@ -218,6 +233,7 @@ OS.SizedStructure
 			'_OffsetOf_grfFlags' -> 16r4.
 			'_OffsetOf_grfMode' -> 16r8
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.COM.BINDINFO'
 	instanceVariableNames: ''
@@ -233,6 +249,7 @@ OS.SizedStructure
 			'_OffsetOf_szCustomVerb' -> 16r1C.
 			'_OffsetOf_szExtraInfo' -> 16r4
 		}!
+
 OS.COM.BIND_OPTS
 	subclass: #'OS.COM.BIND_OPTS2'
 	instanceVariableNames: ''
@@ -246,6 +263,7 @@ OS.COM.BIND_OPTS
 			'_OffsetOf_locale' -> 16r18.
 			'_OffsetOf_pServerInfo' -> 16r1C
 		}!
+
 OS.COM.BIND_OPTS2
 	subclass: #'OS.COM.BIND_OPTS3'
 	instanceVariableNames: ''
@@ -326,6 +344,7 @@ releaseStgMedium: aSTGMEDIUM
 
 	<stdcall: void ReleaseStgMedium COM.STGMEDIUM*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.OLELibrary categoriesForMethods!
 createBindCtx:ppbc:!OLE Functions-Persistent Objects!private! !
 createClassMoniker:ppmk:!**auto generated**!public! !

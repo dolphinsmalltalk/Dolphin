@@ -7,8 +7,11 @@ Graphics.AbstractRGB
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ARGB guid: (Core.GUID fromString: '{5adf6d2a-72cb-4706-b355-516359e43521}')!
+
 Graphics.ARGB comment: '`ARGB` is the class of colour values specified as individual 8-bit red, green, blue and alpha levels encoded as a 32-bit <integer> value with the components in A,R,G,B order. This encoding is used with all of the more modern Windows graphics APIs such as Gdiplus, DirectDraw, Direct3D, etc.'!
+
 !Graphics.ARGB methodsFor!
 
 alpha
@@ -76,6 +79,7 @@ rgbCode
 
 	^((code bitShift: -16) bitAnd: 16rFF)
 		bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16))! !
+
 !Graphics.ARGB categoriesForMethods!
 alpha!accessing!public! !
 alpha:!accessing!public! !
@@ -157,6 +161,7 @@ red: redValue green: greenValue blue: blueValue
 
 transparent
 	^self none! !
+
 !Graphics.ARGB class categoriesForMethods!
 a:r:g:b:!instance creation!public! !
 alpha:red:green:blue:!instance creation!public! !

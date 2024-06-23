@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_crColor' -> 16r10.
 			'_OffsetOf_ptlPixel' -> 16r8
 		}!
+
 OS.EMRSETPIXELV guid: (Core.GUID fromString: '{a1dc1f6e-41ae-4ffa-90d8-778106a60b0b}')!
+
 OS.EMRSETPIXELV comment: '<EMRSETPIXELV> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPIXELV'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMRSETPIXELV {
 	COLORREF crColor;
 } EMRSETPIXELV;
 '!
+
 !OS.EMRSETPIXELV categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETPIXELV methodsFor!
 
 crColor
@@ -53,6 +57,7 @@ ptlPixel: aPOINTL
 		from: ##(_OffsetOf_ptlPixel + 1)
 		to: ##(_OffsetOf_ptlPixel + POINTL._POINTL_Size)
 		startingAt: 1! !
+
 !OS.EMRSETPIXELV categoriesForMethods!
 crColor!**compiled accessors**!public! !
 crColor:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETPIXELV}! !
+
 !OS.EMRSETPIXELV class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

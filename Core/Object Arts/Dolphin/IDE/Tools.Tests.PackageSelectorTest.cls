@@ -7,8 +7,11 @@ UI.Tests.SelectableItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.PackageSelectorTest guid: (Core.GUID fromString: '{eb6a3732-7f1e-4c12-b050-6446fcbde374}')!
+
 Tools.Tests.PackageSelectorTest comment: ''!
+
 !Tools.Tests.PackageSelectorTest methodsFor!
 
 classToTest
@@ -104,6 +107,7 @@ testSetDefaultPackage
 	presenter setAsDefaultPackage.
 	"This used to error if the old default package was not in view"
 	self assert: Package manager defaultPackage identicalTo: Object owningPackage! !
+
 !Tools.Tests.PackageSelectorTest categoriesForMethods!
 classToTest!helpers!private! !
 createPackage:!helpers!private! !

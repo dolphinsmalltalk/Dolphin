@@ -62,6 +62,7 @@ printBase64On: aStream
 	"Append a base64 string representation of the receiver to the <puttableStream> argument."
 
 	Base64Codec encodeFrom: self readStream onto: aStream! !
+
 !Core.ByteArray categoriesForMethods!
 base64StoreOn:!printing!public! !
 printBase64On:!printing!public! !
@@ -74,6 +75,7 @@ fromBase64String: aString
 	stream := self writeStream: (aString size * 3 bitShift: -2).
 	Base64Codec decodeFrom: aString readStream onto: stream.
 	^stream grabContents! !
+
 !Core.ByteArray class categoriesForMethods!
 fromBase64String:!instance creation!public! !
 !

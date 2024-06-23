@@ -7,7 +7,9 @@ UI.Dialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'RegExpMask' -> 16r2. 'WildCardMask' -> 16r1 }!
+
 UI.AdvancedFindDialog guid: (Core.GUID fromString: '{480e6494-8305-46d4-9ab9-8d3c9dafe358}')!
+
 UI.AdvancedFindDialog comment: 'AdvancedFindDialog is a <valueDialogPresenter> replacement for the standard Windows FindText common dialog (as wrapped by the FindDialog class). AdvancedFindDialog has additional setttings over and above those in the standard FindDialog. The dialog must be associated with an owner view capable of responding to the <textFinder> protocol. It will then remain on-screen until dismissed and will forward <FindEvent>s to the owner via its #onFind: event handler.
 
 Instance Variables:
@@ -27,7 +29,9 @@ Class Variables:
 	RegExpMask			<Integer>
 
 '!
+
 !UI.AdvancedFindDialog categoriesForClass!MVP-Presenters! !
+
 !UI.AdvancedFindDialog methodsFor!
 
 createComponents
@@ -155,6 +159,7 @@ validationBlock: aBlock
 	it is valid. The OK button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
+
 !UI.AdvancedFindDialog categoriesForMethods!
 createComponents!initializing!public! !
 findNext!commands-actions!public! !
@@ -231,6 +236,7 @@ showModeless: aView on: aFindDetails
 	(self createOn: aFindDetails)
 		ownerView: aView;
 		show! !
+
 !UI.AdvancedFindDialog class categoriesForMethods!
 createOn:prompt:caption:!instance creation!public! !
 defaultModel!models!public! !

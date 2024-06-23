@@ -192,6 +192,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Refactory.Browser.RBStringReplacement'
 	instanceVariableNames: 'startPosition stopPosition string'
@@ -199,6 +200,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.BindingReferenceWrapper
 	subclass: #'Refactory.Browser.RBBindingReference'
 	instanceVariableNames: 'model'
@@ -206,6 +208,7 @@ Kernel.BindingReferenceWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Collection
 	subclass: #'Refactory.Browser.RBSmallDictionary'
 	instanceVariableNames: 'keys values size'
@@ -213,6 +216,7 @@ Core.Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ParseNodeVisitor
 	subclass: #'Refactory.Browser.ParseTreeSearcher'
 	instanceVariableNames: 'searches answer argumentSearches context messages'
@@ -220,6 +224,7 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ParseTreeSearcher
 	subclass: #'Refactory.Browser.ParseTreeRewriter'
 	instanceVariableNames: 'tree'
@@ -227,6 +232,7 @@ Refactory.Browser.ParseTreeSearcher
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Parser
 	subclass: #'Refactory.Browser.RBParser'
 	instanceVariableNames: ''
@@ -234,6 +240,7 @@ Kernel.Parser
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Parser
 	subclass: #'Refactory.Browser.RBPatternParser'
 	instanceVariableNames: ''
@@ -241,6 +248,7 @@ Kernel.Parser
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBParseTreeRule
 	subclass: #'Refactory.Browser.RBReplaceRule'
 	instanceVariableNames: 'verificationBlock'
@@ -248,6 +256,7 @@ Refactory.Browser.RBParseTreeRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBParseTreeRule
 	subclass: #'Refactory.Browser.RBSearchRule'
 	instanceVariableNames: 'answerBlock'
@@ -255,6 +264,7 @@ Refactory.Browser.RBParseTreeRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBReplaceRule
 	subclass: #'Refactory.Browser.RBBlockReplaceRule'
 	instanceVariableNames: 'replaceBlock'
@@ -262,6 +272,7 @@ Refactory.Browser.RBReplaceRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBReplaceRule
 	subclass: #'Refactory.Browser.RBStringReplaceRule'
 	instanceVariableNames: 'replaceTree'
@@ -269,6 +280,7 @@ Refactory.Browser.RBReplaceRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Scanner
 	subclass: #'Refactory.Browser.RBPatternScanner'
 	instanceVariableNames: ''
@@ -276,6 +288,7 @@ Kernel.Scanner
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'CascadeCharacter' -> $;. 'ListCharacter' -> $@. 'VariableCharacter' -> $` }!
+
 Kernel.StMethodNode
 	subclass: #'Refactory.Browser.RBPatternMethodNode'
 	instanceVariableNames: 'isList'
@@ -283,6 +296,7 @@ Kernel.StMethodNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StAnnotationNode
 	subclass: #'Refactory.Browser.RBPatternAnnotationNode'
 	instanceVariableNames: 'isList'
@@ -290,6 +304,7 @@ Kernel.StAnnotationNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StBlockNode
 	subclass: #'Refactory.Browser.RBPatternBlockNode'
 	instanceVariableNames: 'valueBlock'
@@ -297,6 +312,7 @@ Kernel.StBlockNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBPatternBlockNode
 	subclass: #'Refactory.Browser.RBPatternWrapperBlockNode'
 	instanceVariableNames: 'wrappedNode'
@@ -304,6 +320,7 @@ Refactory.Browser.RBPatternBlockNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StQualifiedReferenceNode
 	subclass: #'Refactory.Browser.RBQualifiedReferenceNode'
 	instanceVariableNames: ''
@@ -311,6 +328,7 @@ Kernel.StQualifiedReferenceNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StMessageNode
 	subclass: #'Refactory.Browser.RBPatternMessageNode'
 	instanceVariableNames: 'isList isCascadeList'
@@ -318,6 +336,7 @@ Kernel.StMessageNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StRealVariableNode
 	subclass: #'Refactory.Browser.RBPatternVariableNode'
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
@@ -325,6 +344,7 @@ Kernel.StRealVariableNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken
 	subclass: #'Refactory.Browser.PatternBlockToken'
 	instanceVariableNames: ''
@@ -347,6 +367,7 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	self contents: (contents 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !Kernel.AbstractLiteralArrayNode categoriesForMethods!
 match:inContext:!matching!public! !
 replaceNode:withNode:!public!replacing! !
@@ -356,6 +377,7 @@ replaceNode:withNode:!public!replacing! !
 
 replaceNode: aNode withNode: anotherNode
 	errorTemp == aNode ifTrue: [self errorTemp: anotherNode]! !
+
 !Kernel.AbstractPrimitiveCallNode categoriesForMethods!
 replaceNode:withNode:!public!replacing! !
 !
@@ -376,6 +398,7 @@ refersToVariable: aString
 						[((node defines: aString) or: [node body defines: aString]) not
 							and: [searcher executeTree: node body initialAnswer: false]]].
 	^searcher executeTree: self parseTree initialAnswer: false! !
+
 !Kernel.CompileFailedMethod categoriesForMethods!
 refersToVariable:!development!private!testing! !
 !
@@ -392,6 +415,7 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
 	self visitNode: aRBPatternWrapperBlockNode body.
 	^aRBPatternWrapperBlockNode! !
+
 !Kernel.ParseNodeVisitor categoriesForMethods!
 visitPatternBlockNode:!public!visiting! !
 visitPatternWrapperBlockNode:!public!visiting! !
@@ -414,6 +438,7 @@ scanPatternVariable
 			buffer nextPut: currentCharacter.
 			self step].
 	^self scanIdentifierOrKeyword! !
+
 !Kernel.Scanner categoriesForMethods!
 scanPatternVariable!private!scanning! !
 !
@@ -449,6 +474,7 @@ matchArgumentsAgainst: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode
 	self arguments: (arguments collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !Kernel.StAnnotationNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!public! !
@@ -501,6 +527,7 @@ replaceSourceWith: aNode
 				replaceFrom: self variable start
 				to: self assignmentPosition + 1
 				with: aNode receiver name , ' ' , aNode selector)! !
+
 !Kernel.StAssignmentNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -545,6 +572,7 @@ replaceNode: aNode withNode: anotherNode
 	body == aNode ifTrue: [self body: anotherNode].
 	self arguments: (arguments 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !Kernel.StBlockNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -628,6 +656,7 @@ references: aVariableName
 
 replaceNode: aNode withNode: anotherNode
 	self statements: (statements collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !Kernel.StBraceArrayNode categoriesForMethods!
 addNode:!adding nodes!public! !
 addNode:before:!adding nodes!public! !
@@ -670,6 +699,7 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	self messages: (messages 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !Kernel.StCascadeNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -695,6 +725,7 @@ replaceNode: aNode withNode: anotherNode
 			^self].
 	self
 		argumentTypes: (argumentTypes collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !Kernel.StExternalCallNode categoriesForMethods!
 copyInContext:!matching!public! !
 replaceNode:withNode:!public!replacing! !
@@ -704,6 +735,7 @@ replaceNode:withNode:!public!replacing! !
 
 isPatternVariable
 	^(value at: 1) == RBPatternScanner.VariableCharacter! !
+
 !Kernel.StIdentifierToken categoriesForMethods!
 isPatternVariable!public!testing! !
 !
@@ -712,6 +744,7 @@ isPatternVariable!public!testing! !
 
 isPatternVariable
 	^(value at: 1) == RBPatternScanner.VariableCharacter! !
+
 !Kernel.StKeywordToken categoriesForMethods!
 isPatternVariable!public!testing! !
 !
@@ -729,6 +762,7 @@ replaceSourceWith: aNode
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
+
 !Kernel.StLiteralNode categoriesForMethods!
 replaceSourceFrom:!private!replacing! !
 replaceSourceWith:!private!replacing! !
@@ -738,6 +772,7 @@ replaceSourceWith:!private!replacing! !
 
 copyInContext: aDictionary
 	^self class literalToken: token removePositions! !
+
 !Kernel.StLiteralValueNode categoriesForMethods!
 copyInContext:!matching!public! !
 !
@@ -841,6 +876,7 @@ replaceSourceWithMessageNode: aNode
 								with: ((isBinaryToKeyword and: [(self source at: old start - 1) isSeparator not])
 										ifTrue: [' ' , new value]
 										ifFalse: [new value]))]]! !
+
 !Kernel.StMessageNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -991,6 +1027,7 @@ replaceNode: aNode withNode: anotherNode
 			[self body: anotherNode.
 			^self].
 	self arguments: (arguments collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !Kernel.StMethodNode categoriesForMethods!
 addNode:!accessing!public! !
 addReplacement:!public!replacing! !
@@ -1026,6 +1063,7 @@ match: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode 
 	body == aNode ifTrue: [self body: anotherNode]! !
+
 !Kernel.StOptimizedNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -1045,6 +1083,7 @@ equalTo: anObject withMapping: aDictionary
 	self class == anObject class ifFalse: [^false].
 	primitiveIndex == anObject primitiveIndex ifFalse: [^false].
 	^errorTemp equalTo: anObject errorTemp withMapping: aDictionary! !
+
 !Kernel.StPrimitiveNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!public! !
@@ -1203,6 +1242,7 @@ superMessages
 						add: aNode selector;
 						yourself]).
 	^searcher executeTree: self initialAnswer: Set new! !
+
 !Kernel.StProgramNode categoriesForMethods!
 addReplacement:!public!replacing! !
 asReturn!accessing!public! !
@@ -1232,6 +1272,7 @@ clearPositions
 	start := 0.
 	stop := -1.
 	parentheses := nil! !
+
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 clearPositions!public!replacing! !
 !
@@ -1253,6 +1294,7 @@ match: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode 
 	value == aNode ifTrue: [self value: anotherNode]! !
+
 !Kernel.StReturnNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -1405,6 +1447,7 @@ replaceNode: aNode withNodes: aCollection
 		do: [:i | newStatements add: (statements at: i)].
 	aCollection do: [:each | each parent: self].
 	statements := newStatements! !
+
 !Kernel.StSequenceNode categoriesForMethods!
 addNode:!adding nodes!public! !
 addNode:before:!adding nodes!public! !
@@ -1432,6 +1475,7 @@ replaceNode:withNodes:!public!replacing! !
 
 copyInContext: aDictionary
 	^self class start: start! !
+
 !Kernel.StSpecialVariableNode categoriesForMethods!
 copyInContext:!matching!public! !
 !
@@ -1440,6 +1484,7 @@ copyInContext:!matching!public! !
 
 isPatternVariable
 	^false! !
+
 !Kernel.StToken categoriesForMethods!
 isPatternVariable!public!testing! !
 !
@@ -1448,6 +1493,7 @@ isPatternVariable!public!testing! !
 
 clearPositions
 	parentheses := nil! !
+
 !Kernel.StValueNode categoriesForMethods!
 clearPositions!public!replacing! !
 !
@@ -1478,6 +1524,7 @@ replaceSourceWith: aNode
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
+
 !Kernel.StVariableNode categoriesForMethods!
 clearPositions!public!replacing! !
 copyInContext:!matching!public! !
@@ -1492,6 +1539,7 @@ replaceSourceWith:!public!replacing! !
 visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	self visitPatternBlockNode: aRBPatternWrapperBlockNode! !
+
 !Refactory.Browser.RBConfigurableFormatter categoriesForMethods!
 visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
 !
@@ -1502,6 +1550,7 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	self acceptBlockNode: aRBPatternWrapperBlockNode startBlockString: '`{'.
 	codeStream nextPut: $}! !
+
 !Refactory.Browser.RBFormatter categoriesForMethods!
 visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
 !

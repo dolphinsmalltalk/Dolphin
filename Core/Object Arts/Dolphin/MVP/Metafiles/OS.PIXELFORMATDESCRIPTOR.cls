@@ -35,7 +35,9 @@ External.Structure
 			'_OffsetOf_nVersion' -> 16r2.
 			'_PIXELFORMATDESCRIPTOR_Size' -> 16r28
 		}!
+
 OS.PIXELFORMATDESCRIPTOR guid: (Core.GUID fromString: '{9b1f091d-48dd-4f2d-98c3-6e6348abdb67}')!
+
 OS.PIXELFORMATDESCRIPTOR comment: '<PIXELFORMATDESCRIPTOR> is an <ExternalStructure> class to wrap the struct ''Win32.PIXELFORMATDESCRIPTOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -74,7 +76,9 @@ struct tagPIXELFORMATDESCRIPTOR {
 	unsigned long dwDamageMask;
 } PIXELFORMATDESCRIPTOR;
 '!
+
 !OS.PIXELFORMATDESCRIPTOR categoriesForClass!Win32-Structs! !
+
 !OS.PIXELFORMATDESCRIPTOR methodsFor!
 
 bReserved
@@ -336,6 +340,7 @@ nVersion: anInteger
 	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_nVersion put: anInteger! !
+
 !OS.PIXELFORMATDESCRIPTOR categoriesForMethods!
 bReserved!**compiled accessors**!public! !
 bReserved:!**compiled accessors**!public! !
@@ -515,6 +520,7 @@ defineFields
 
 getFieldNames
 	^#(#nSize #nVersion #dwFlags #iPixelType #cColorBits #cRedBits #cRedShift #cGreenBits #cGreenShift #cBlueBits #cBlueShift #cAlphaBits #cAlphaShift #cAccumBits #cAccumRedBits #cAccumGreenBits #cAccumBlueBits #cAccumAlphaBits #cDepthBits #cStencilBits #cAuxBuffers #iLayerType #bReserved #dwLayerMask #dwVisibleMask #dwDamageMask)! !
+
 !OS.PIXELFORMATDESCRIPTOR class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.SmalltalkSearchPresenterTest guid: (Core.GUID fromString: '{a2c7b693-05c5-4fc9-9f02-2bdf94afb765}')!
+
 Tools.Tests.SmalltalkSearchPresenterTest comment: ''!
+
 !Tools.Tests.SmalltalkSearchPresenterTest methodsFor!
 
 classToTest
@@ -115,6 +118,7 @@ testSelectors
 	self assert: item object identicalTo: #==.
 	self assert: item text equals: '=='.
 	self assert: item icon equals: #== icon! !
+
 !Tools.Tests.SmalltalkSearchPresenterTest categoriesForMethods!
 classToTest!constants!private! !
 testAmbiguousClass!public! !

@@ -7,7 +7,9 @@ Kernel.StLiteralNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StQualifiedReferenceNode guid: (Core.GUID fromString: '{48916d12-a942-4b84-b786-71ba3d982f2e}')!
+
 Kernel.StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind of `StLiteralNode` to represent qualified reference literals.
 
 ## Instance Variables:
@@ -16,7 +18,9 @@ Kernel.StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind o
   `stop`		`<integer>` position of the closing token
 
 '!
+
 !Kernel.StQualifiedReferenceNode categoriesForClass!System-Compiler! !
+
 !Kernel.StQualifiedReferenceNode methodsFor!
 
 = anObject
@@ -89,6 +93,7 @@ value
 
 valueClass
 	^BindingReference! !
+
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -116,6 +121,7 @@ valueClass!accessing!public! !
 
 pathString: aString start: startInteger flags: flagsInteger
 	^self new pathString: aString start: startInteger flags: flagsInteger! !
+
 !Kernel.StQualifiedReferenceNode class categoriesForMethods!
 pathString:start:flags:!instance creation!public! !
 !

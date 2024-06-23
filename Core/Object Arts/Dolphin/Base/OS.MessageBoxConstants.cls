@@ -36,7 +36,12 @@ Kernel.SharedPool
 			'MB_YESNO' -> 16r4.
 			'MB_YESNOCANCEL' -> 16r3
 		}!
+
 OS.MessageBoxConstants guid: (Core.GUID fromString: '{ae2717d5-7d5d-4625-aed8-d9b721d4e019}')!
+
 OS.MessageBoxConstants isNonInstantiable: true!
+
 OS.MessageBoxConstants comment: ''!
+
 !OS.MessageBoxConstants categoriesForClass!External-Data-Constants! !
+

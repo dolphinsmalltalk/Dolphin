@@ -7,11 +7,15 @@ UI.RuntimeSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.AutoplaySessionManager guid: (Core.GUID fromString: '{4926b46c-437f-4688-a5ff-a86350c68924}')!
+
 UI.Examples.AutoplaySessionManager comment: 'AutoplaySessionManager is the <RuntimeSessionManager> for the Autoplay sample. 
 
 AutoplaySessionManager illustrates starting and parameterizing an applications main shell, simple command-line argument processing, and how to prevent multiple instances of a Dolphin application being started.'!
+
 !UI.Examples.AutoplaySessionManager categoriesForClass!Samples! !
+
 !UI.Examples.AutoplaySessionManager methodsFor!
 
 allowDuplicate
@@ -37,6 +41,7 @@ main
 			y := Number readFrom: stream.
 			autoplay pageExtent: x@y]].
 	autoplay show! !
+
 !UI.Examples.AutoplaySessionManager categoriesForMethods!
 allowDuplicate!operations-startup!public! !
 main!operations!public! !
@@ -48,6 +53,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Autoplay! !
+
 !UI.Examples.AutoplaySessionManager class categoriesForMethods!
 mainShellClass!constants!public! !
 !

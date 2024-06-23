@@ -7,8 +7,11 @@ Core.Tests.DolphinTestClassResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.BehaviorTestClasses guid: (Core.GUID fromString: '{bc98a827-49e3-4ce3-902e-fa6452944374}')!
+
 Core.Tests.BehaviorTestClasses comment: ''!
+
 !Core.Tests.BehaviorTestClasses methodsFor!
 
 classWithAbstractMethod1
@@ -46,6 +49,7 @@ isAvailable
 tearDown
 	super tearDown.
 	classWithAbstractMethod1 := classWithAbstractMethod2 := nil! !
+
 !Core.Tests.BehaviorTestClasses categoriesForMethods!
 classWithAbstractMethod1!accessing!public! !
 classWithAbstractMethod2!accessing!public! !

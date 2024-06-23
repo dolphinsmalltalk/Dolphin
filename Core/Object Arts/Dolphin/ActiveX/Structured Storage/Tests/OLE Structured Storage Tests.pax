@@ -123,6 +123,7 @@ verifyIStreamStat
 	stat free.
 	istream free.
 	subject close! !
+
 !Core.Tests.AbstractFileStreamTest categoriesForMethods!
 testIStream!public!unit tests! !
 testIStreamStat!public!unit tests! !

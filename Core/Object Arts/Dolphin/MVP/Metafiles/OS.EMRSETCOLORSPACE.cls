@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETCOLORSPACE_Size' -> 16rC. '_OffsetOf_ihCS' -> 16r8 }!
+
 OS.EMRSETCOLORSPACE guid: (Core.GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
+
 OS.EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRSETCOLORSPACE {
 	[helpstring("ColorSpace handle index")] DWORD ihCS;
 } EMRSETCOLORSPACE;
 '!
+
 !OS.EMRSETCOLORSPACE categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETCOLORSPACE methodsFor!
 
 ihCS
@@ -34,6 +38,7 @@ ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_ihCS put: anInteger! !
+
 !OS.EMRSETCOLORSPACE categoriesForMethods!
 ihCS!**compiled accessors**!public! !
 ihCS:!**compiled accessors**!public! !
@@ -70,6 +75,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETCOLORSPACE. EMR_DELETECOLORSPACE}! !
+
 !OS.EMRSETCOLORSPACE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

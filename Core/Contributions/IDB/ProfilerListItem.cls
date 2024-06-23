@@ -5,13 +5,17 @@ Object subclass: #ProfilerListItem
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerListItem guid: (GUID fromString: '{425d0eaf-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerListItem comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerListItem categoriesForClass!IDB Goodies! !
+
 !ProfilerListItem methodsFor!
 
 browse
@@ -117,6 +121,7 @@ timeAll
 	This method was automatically generated, but may be modified."
 
 	^timeAll! !
+
 !ProfilerListItem categoriesForMethods!
 browse!commands-actions!public! !
 browseableObject!accessing!public! !
@@ -148,6 +153,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Profiler icon! !
+
 !ProfilerListItem class categoriesForMethods!
 for:!instance creation!public! !
 icon!constants!public! !

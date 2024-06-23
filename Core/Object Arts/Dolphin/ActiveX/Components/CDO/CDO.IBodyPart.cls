@@ -7,14 +7,18 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 CDO.IBodyPart guid: (OS.COM.IID fromString: '{cd000021-8b95-11d1-82db-00c04fb1625d}')!
+
 CDO.IBodyPart comment: '<CDO.IBodyPart> is a wrapper class for the COM interface ''CDO.IBodyPart'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage a message body part"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDO.IBodyPart categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDO.IBodyPart methodsFor!
 
 addBodyPart
@@ -426,6 +430,7 @@ SaveToFile: fileName
 
 	<virtual stdcall: hresult 24 bstr>
 	^self invalidCall: _failureCode! !
+
 !CDO.IBodyPart categoriesForMethods!
 addBodyPart!**auto generated**!methods!public! !
 addBodyPart:!**auto generated**!methods!public! !
@@ -527,6 +532,7 @@ defineFunctions
 		defineFunction: #GetInterface:ppUnknown:
 			argumentTypes: 'bstr IDispatch**'
 ! !
+
 !CDO.IBodyPart class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

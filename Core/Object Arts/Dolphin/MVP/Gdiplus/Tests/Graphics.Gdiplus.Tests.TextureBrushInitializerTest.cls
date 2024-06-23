@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.TextureBrushInitializerTest guid: (Core.GUID fromString: '{b30c98b3-eb64-42b3-a608-c748d44095d9}')!
+
 Graphics.Gdiplus.Tests.TextureBrushInitializerTest comment: ''!
+
 !Graphics.Gdiplus.Tests.TextureBrushInitializerTest methodsFor!
 
 setUp
@@ -60,6 +63,7 @@ testCreateHandleWithBounds
 	self assert: constructor arguments fifth identicalTo: 10.
 	self assert: constructor arguments sixth identicalTo: 20.
 	self assert: constructor arguments last isKindOf: Handle! !
+
 !Graphics.Gdiplus.Tests.TextureBrushInitializerTest categoriesForMethods!
 setUp!public!running! !
 subjectClass!constants!private! !

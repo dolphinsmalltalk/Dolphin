@@ -7,9 +7,13 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Int16Array guid: (Core.GUID fromString: '{87b4c5a8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Int16Array comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 16-bit signed integers.'!
+
 !External.Int16Array categoriesForClass!External-Data-Structured! !
+
 !External.Int16Array methodsFor!
 
 uncheckedAt: anInteger 
@@ -23,6 +27,7 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes int16AtOffset: indexInteger + indexInteger - 2 put: valueInteger! !
+
 !External.Int16Array categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
@@ -34,6 +39,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^Int16! !
+
 !External.Int16Array class categoriesForMethods!
 elementClass!constants!public! !
 !

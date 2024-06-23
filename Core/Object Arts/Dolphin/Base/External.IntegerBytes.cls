@@ -7,10 +7,15 @@ Core.ByteArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.IntegerBytes guid: (Core.GUID fromString: '{f5016870-059b-445b-a045-9e17ef13beec}')!
+
 External.IntegerBytes isNonInstantiable: true!
+
 External.IntegerBytes comment: ''!
+
 !External.IntegerBytes categoriesForClass!External-Data-Unstructured! !
+
 !External.IntegerBytes methodsFor!
 
 = anObject
@@ -94,6 +99,7 @@ value
 
 value: anObject 
 	^self subclassResponsibility! !
+
 !External.IntegerBytes categoriesForMethods!
 =!comparing!public! !
 asInteger!converting!public! !
@@ -149,6 +155,7 @@ pointerFieldType
 
 valueAtAddress: anAddress 
 	^self subclassResponsibility! !
+
 !External.IntegerBytes class categoriesForMethods!
 atAddress:!instance creation!public! !
 fromAddress:!instance creation!public! !

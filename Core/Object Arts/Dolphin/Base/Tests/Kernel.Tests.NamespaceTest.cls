@@ -7,8 +7,11 @@ Kernel.Tests.AbstractNamespaceTest
 	imports: #(#{Kernel.VariableBinding})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.NamespaceTest guid: (Core.GUID fromString: '{1528fd18-37cc-469b-bd8e-ea26ea522759}')!
+
 Kernel.Tests.NamespaceTest comment: ''!
+
 !Kernel.Tests.NamespaceTest methodsFor!
 
 canonicalSubject
@@ -270,6 +273,7 @@ testSimpleName
 testUnqualifiedName
 	self nameCases
 		do: [:each | self assert: each value unqualifiedName identicalTo: each unqualifiedName asSymbol]! !
+
 !Kernel.Tests.NamespaceTest categoriesForMethods!
 canonicalSubject!private! !
 nameCases!constants!private! !

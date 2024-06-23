@@ -12,7 +12,9 @@ UI.DialogView
 				-> (LookupTable withAll: { 16r1 -> #debug. 16r2 -> #terminate. 16r3 -> #resume. 16r4 -> #copy }).
 			'IconId' -> 16r3F1
 		}!
+
 Tools.WalkbackDialog guid: (Core.GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.WalkbackDialog comment: '
 Instance Variables:
 	callStack		<readableString> containing the walkback trace.
@@ -28,7 +30,9 @@ Class Variables:
 	KillId		<integer> ID of the "kill" button.
 
 '!
+
 !Tools.WalkbackDialog categoriesForClass!MVP-Views! !
+
 !Tools.WalkbackDialog methodsFor!
 
 actualBackcolor
@@ -146,6 +150,7 @@ wmSize: message wParam: wParam lParam: lParam
 	#todo "Resize the controls".
 	^nil
 ! !
+
 !Tools.WalkbackDialog categoriesForMethods!
 actualBackcolor!accessing!private! !
 callStack:!accessing!public! !
@@ -171,6 +176,7 @@ initialize
 
 	self addClassConstant: 'Commands'
 		value: (LookupTable withAll: { IDCANCEL -> #terminate. IDOK -> #debug. 3 -> #resume. 4 -> #copy })! !
+
 !Tools.WalkbackDialog class categoriesForMethods!
 initialize!initializing!private! !
 !

@@ -75,6 +75,7 @@ stbSaveOn: anSTxOutFiler
 	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Some Arrays can be stored as literals in STL, although only if all the elements are atomic."
 
 	anSTxOutFiler saveArray: self! !
+
 !Core.Array categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -83,6 +84,7 @@ stbSaveOn:!binary filing!public! !
 
 stbSaveOn: aSTxOutFiler 
 	^aSTxOutFiler saveBoolean: self! !
+
 !Core.Boolean categoriesForMethods!
 stbSaveOn:!public! !
 !
@@ -93,6 +95,7 @@ stbSaveOn: anSTxOutFiler
 	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Characters can be stored as literals in STL."
 
 	anSTxOutFiler saveCharacter: self! !
+
 !Core.Character categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -104,6 +107,7 @@ stbSaveOn: anSTxOutFiler
 	In older STB representations <Dictionary>s were proxied by <STCollectionProxy>s that held the associations in an array. As of STx version 6 collection proxies are no longer used, and the associations are written directly to the stream after the class."
 
 	anSTxOutFiler saveSet: self elements: self associations! !
+
 !Core.Dictionary categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -114,6 +118,7 @@ stbSaveOn: anSTxOutFiler
 	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Floats can be stored as literals in STL."
 
 	anSTxOutFiler saveFloat: self! !
+
 !Core.Float categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -124,6 +129,7 @@ stbSaveOn: anSTxOutFiler
 	"Save a serialised representation of the receiver to the <STxOutFiler> argument. LargeIntegers can be stored as literals in STL."
 
 	anSTxOutFiler saveLargeInteger: self! !
+
 !Core.LargeInteger categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -143,6 +149,7 @@ stbSaveOn: anSTxOutFiler
 		saveSingleton: self
 		class: Locale
 		name: id! !
+
 !Core.Locale categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -154,6 +161,7 @@ stbSaveOn: anSTxOutFiler
 	In older STB representations <LookupTable>s were proxied by <STBIdentityDictionaryProxy>s that held the key:value pairs as successive pairs of elements in a single array. As of STx version 6 collection proxies are no longer used, and the pairs are written directly to the stream after the class."
 
 	anSTxOutFiler saveLookupTable: self! !
+
 !Core.LookupTable categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -165,6 +173,7 @@ stbSaveOn: anSTxOutFiler
 
 	anSTxOutFiler override: events with: nil.
 	super stbSaveOn: anSTxOutFiler.! !
+
 !Core.Model categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -200,6 +209,7 @@ stbSaveOn: anSTxOutFiler
 	By default, objects are happy to be saved and loaded just as they are (option 1)."
 
 	anSTxOutFiler saveObject: self! !
+
 !Core.Object categoriesForMethods!
 binaryStoreOn:with:!binary filing!public! !
 binaryStoreUsing:!binary filing!public! !
@@ -213,6 +223,7 @@ stbSaveOn: anSTxOutFiler
 	In older STB representations <OrderedCollection>s were proxied by <STCollectionProxy>s that held the elements in an array. As of STx version 6 collection proxies are no longer used, and the elements are written directly to the stream after the class."
 
 	anSTxOutFiler saveCollection: self! !
+
 !Core.OrderedCollection categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -225,6 +236,7 @@ stbSaveOn: anSTxOutFiler
 	nil by default"
 
 	anSTxOutFiler saveObject: self as: nil.! !
+
 !Core.Process categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -235,6 +247,7 @@ stbSaveOn: anSTxOutFiler
 	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Some ScaledDecimals can be stored as literals in STL."
 
 	anSTxOutFiler saveScaledDecimal: self! !
+
 !Core.ScaledDecimal categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -246,6 +259,7 @@ stbSaveOn: anSTxOutFiler
 	In older STB representations <Set's>s were proxied by <STCollectionProxy>s that held the elements in an array. As of STx version 6 collection proxies are no longer used, and the elements are written directly to the stream after the class."
 
 	anSTxOutFiler saveSet: self elements: self! !
+
 !Core.Set categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -254,6 +268,7 @@ stbSaveOn:!binary filing!public! !
 
 stbSaveOn: anSTxOutFiler
 	mutex critical: [super stbSaveOn: anSTxOutFiler]! !
+
 !Core.SharedLookupTable categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -262,6 +277,7 @@ stbSaveOn:!binary filing!public! !
 
 stbSaveOn: anSTxOutFiler
 	mutex critical: [super stbSaveOn: anSTxOutFiler]! !
+
 !Core.SharedSet categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -272,6 +288,7 @@ stbSaveOn: anSTxOutFiler
 	"Save a serialised representation of the receiver to the <STxOutFiler> argument. SmallIntegers have a special representation in STB and STL for efficiency."
 
 	anSTxOutFiler saveSmallInteger: self! !
+
 !Core.SmallInteger categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -282,6 +299,7 @@ stbSaveOn: anSTxOutFiler
 	algorithm ~~ self class defaultSortAlgorithm
 		ifTrue: [^anSTxOutFiler saveObject: self as: (STBSortedCollectionProxy forCollection: self)].
 	super stbSaveOn: anSTxOutFiler! !
+
 !Core.SortedCollection categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -292,6 +310,7 @@ stbSaveOn: anSTxOutFiler
 	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Strings are now always stored with UTF-8 encoding, and most can be stored as literals in STL."
 
 	anSTxOutFiler saveString: self! !
+
 !Core.String categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -303,6 +322,7 @@ stbSaveOn: anSTxOutFiler
 	Output nil in place of the receiver as the future validity of an external address is uncertain."
 
 	anSTxOutFiler saveObject: self as: nil! !
+
 !External.Address categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -311,6 +331,7 @@ stbSaveOn:!binary filing!public! !
 
 stbSaveOn: anSTxOutFiler
 	anSTxOutFiler saveSingleton: self! !
+
 !External.DynamicLinkLibrary categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -327,6 +348,7 @@ stbSaveOn: anSTxOutFiler
 				uintPtrAtOffset: 0 put: 0;
 				yourself).
 	super stbSaveOn: anSTxOutFiler! !
+
 !External.ExternalMethod categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -338,6 +360,7 @@ stbSaveOn: anSTxOutFiler
 	Output nil in place of the receiver as the future validity of an external handle is uncertain."
 
 	anSTxOutFiler saveObject: self as: nil! !
+
 !External.Handle categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -348,6 +371,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler."
 
 	anSTxOutFiler saveResourceLibrary: self! !
+
 !External.ResourceLibrary categoriesForMethods!
 stbSaveOn:!binary filing!instance creation!public! !
 !
@@ -358,6 +382,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton, so can be described by its class alone."
 
 	anSTxOutFiler saveSingleton: self! !
+
 !Kernel.AbsoluteFileLocator categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -366,6 +391,7 @@ stbSaveOn:!binary filing!public! !
 
 stbSaveOn: anSTxOutFiler
 	anSTxOutFiler saveBindingReference: self! !
+
 !Kernel.BindingReference categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -379,6 +405,7 @@ stbSaveOn: anSTxOutFiler
 		setBinding: nil;
 		setGeneration: nil.
 	^super stbSaveOn: anSTxOutFiler! !
+
 !Kernel.FullBindingReference categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -389,6 +416,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton, so just store the class."
 
 	anSTxOutFiler saveSingleton: self! !
+
 !Kernel.ImageRelativeFileLocator categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -399,6 +427,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton so just store the class"
 
 	anSTxOutFiler saveSingleton: self! !
+
 !Kernel.InstallRelativeFileLocator categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -410,6 +439,7 @@ stbSaveOn: anSTxOutFiler
 
 	anSTxOutFiler override: events with: nil.
 	super stbSaveOn: anSTxOutFiler.! !
+
 !Kernel.Package categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -420,6 +450,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton global, so save as a static reference."
 
 	anSTxOutFiler saveStatic: #{Core.Processor} for: self! !
+
 !Kernel.ProcessorScheduler categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -430,6 +461,7 @@ stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler. As a singleton, we need only the class."
 
 	anSTxOutFiler saveSingleton: self! !
+
 !Kernel.SingletonSearchPolicy categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -441,6 +473,7 @@ stbSaveOn: anSTxOutFiler
 		saveSingleton: self
 		class: Locale
 		name: #smalltalk! !
+
 !Kernel.SmalltalkLocale categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -452,6 +485,7 @@ stbSaveOn: anSTxOutFiler
 		saveSingleton: self
 		class: Locale
 		name: #invariant! !
+
 !OS.InvariantLocale categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !

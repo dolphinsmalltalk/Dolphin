@@ -7,11 +7,15 @@ Core.GUID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_IID_Size' -> 16r10 }!
+
 OS.COM.IID guid: (Core.GUID fromString: '{87b4c644-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.IID comment: '`OS.COM.IID` is the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify interfaces in COM.
 
 Many interfaces are not recorded in the registry, but if they have marshalling support (a proxy/stub DLL) then they will be registered under HKCR\Interfaces. Registered IIDs will display with their registered name, otherwise the string representation of their GUID is printed.'!
+
 !OS.COM.IID categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.IID methodsFor!
 
 displayOn: aPuttableStream
@@ -32,6 +36,7 @@ interfaceName
 		regGetString: WinRegConstants.HKEY_CLASSES_ROOT
 		key: 'Interface\' , self asString
 		value: nil! !
+
 !OS.COM.IID categoriesForMethods!
 displayOn:!displaying!public! !
 interfaceName!accessing!public! !
@@ -45,6 +50,7 @@ initialize
 	"
 
 	self extraInstanceSpec: _GUID_Size! !
+
 !OS.COM.IID class categoriesForMethods!
 initialize!development!initializing!private! !
 !

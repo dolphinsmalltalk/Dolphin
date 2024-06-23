@@ -7,7 +7,9 @@ OS.COM.Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown guid: (OS.COM.IID fromString: '{00000000-0000-0000-c000-000000000046}')!
+
 OS.COM.IUnknown comment: '`OS.COM.IUnknown` is a wrapper class for the COM interface ''stdole.IUnknown'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +37,9 @@ interface IUnknown
 	unsigned long __stdcall Release();
 };
 ```'!
+
 !OS.COM.IUnknown categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IUnknown methodsFor!
 
 addRef 
@@ -84,6 +88,7 @@ Release
 
 	<virtual stdcall: uint32 3>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IUnknown categoriesForMethods!
 addRef!methods!public! !
 AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
@@ -126,6 +131,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
+
 !OS.COM.IUnknown class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 on:outerUnknown:!instance creation!private! !

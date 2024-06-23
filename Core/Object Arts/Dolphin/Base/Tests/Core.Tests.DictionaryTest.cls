@@ -7,8 +7,11 @@ Core.Tests.AbstractDictionaryTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DictionaryTest guid: (Core.GUID fromString: '{733b8918-1913-46df-995e-67541bd596aa}')!
+
 Core.Tests.DictionaryTest comment: ''!
+
 !Core.Tests.DictionaryTest methodsFor!
 
 collectionClass
@@ -60,6 +63,7 @@ testAtIfAbsentPutValue
 	self assert: dictionary size identicalTo: initialSize + 1.
 	self assert: (dictionary at: f ifAbsentPutValue: 2) identicalTo: f.
 	self assert: dictionary size identicalTo: initialSize + 1! !
+
 !Core.Tests.DictionaryTest categoriesForMethods!
 collectionClass!helpers!private! !
 testAdd!public!unit tests! !

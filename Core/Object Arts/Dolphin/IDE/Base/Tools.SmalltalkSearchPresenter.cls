@@ -7,9 +7,13 @@ UI.Presenter
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: { 'LoadingOptionsMask' -> 16r1 }!
+
 Tools.SmalltalkSearchPresenter guid: (Core.GUID fromString: '{a8c5bf80-8660-45e4-865c-f489ca9ca4e8}')!
+
 Tools.SmalltalkSearchPresenter comment: ''!
+
 !Tools.SmalltalkSearchPresenter categoriesForClass!MVP-Resources-IDE Tools! !
+
 !Tools.SmalltalkSearchPresenter methodsFor!
 
 addMethodsOfClass: aClass startingWith: aString toSearchCandidates: aSet max: anInteger
@@ -326,6 +330,7 @@ styleRunStartAt: anInteger
 
 unambiguousCompletionFor: aString class: aClass
 	^'<1d> (<2d>)' << { aString. aClass environment fullName }! !
+
 !Tools.SmalltalkSearchPresenter categoriesForMethods!
 addMethodsOfClass:startingWith:toSearchCandidates:max:!autocompletion!helpers!private! !
 applyOptions!operations!options!private! !
@@ -470,6 +475,7 @@ resource_Default_view
 
 startLoadingOptions
 	OptionFlags := OptionFlags ?? 0 bitOr: LoadingOptionsMask! !
+
 !Tools.SmalltalkSearchPresenter class categoriesForMethods!
 autoCompleteDwell!autocompletion!options!public! !
 autoCompleteDwell:!autocompletion!options!public! !

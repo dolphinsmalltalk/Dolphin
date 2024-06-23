@@ -65,6 +65,7 @@ stonOn: stonWriter
 						at: #blue put: (self normalizedBlue roundTo: 0.001);
 						at: #alpha put: (self normalizedAlpha roundTo: 0.001)]]
 		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
+
 !Graphics.Color categoriesForMethods!
 stonContainSubObjects!public!ston! !
 stonOn:!public!ston! !
@@ -97,6 +98,7 @@ fromSton: stonReader
 
 stonName
 	^#Color! !
+
 !Graphics.Color class categoriesForMethods!
 fromSton:!public!ston! !
 stonName!public!ston! !
@@ -108,6 +110,7 @@ stonAllInstVarNames
 	"Override to exclude the handle and ownsHandle instance variable as we never want to serialize these."
 
 	^self == ##(self) ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instanceVariableNames]! !
+
 !Graphics.GraphicsTool class categoriesForMethods!
 stonAllInstVarNames!public!ston! !
 !
@@ -118,6 +121,7 @@ stonOn: stonWriter
 	stonWriter 
 		writeObject: self 
 		do: []! !
+
 !Graphics.IconImageManager categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -126,6 +130,7 @@ stonOn:!public!ston! !
 
 fromSton: stonReader
 	^self current! !
+
 !Graphics.IconImageManager class categoriesForMethods!
 fromSton:!public! !
 !
@@ -135,6 +140,7 @@ fromSton:!public! !
 stonOn: stonWriter
 	stonWriter writeObject: self streamShortList: [ :array |
 		array add: x; add: y ]! !
+
 !Graphics.Point categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -151,6 +157,7 @@ fromSton: stonReader
 			index == 1 ifTrue: [answer x: each].
 			index == 2 ifTrue: [answer y: each]].
 	^answer! !
+
 !Graphics.Point class categoriesForMethods!
 fromSton:!public! !
 !
@@ -161,6 +168,7 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^#('pathString' 'path' 'private')! !
+
 !Kernel.FullBindingReference class categoriesForMethods!
 stonAllInstVarNames!public! !
 !
@@ -171,6 +179,7 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWith: 'scope'! !
+
 !Kernel.RelativeBindingReference class categoriesForMethods!
 stonAllInstVarNames!public! !
 !
@@ -182,6 +191,7 @@ stonAllInstVarNames
 
 	^superclass stonAllInstVarNames
 		, ##(self instanceVariableNames reject: [:each | each = 'events' or: [each beginsWith: '_unused']])! !
+
 !UI.CardLayout class categoriesForMethods!
 stonAllInstVarNames!public! !
 !
@@ -192,6 +202,7 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithout: 'oldWndProc'! !
+
 !UI.ControlView class categoriesForMethods!
 stonAllInstVarNames!public!ston! !
 !
@@ -200,6 +211,7 @@ stonAllInstVarNames!public!ston! !
 
 stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: name! !
+
 !UI.FramingCalculation categoriesForMethods!
 stonOn:!public!ston! !
 !
@@ -209,6 +221,7 @@ stonOn:!public!ston! !
 fromSton: stonReader
 	#todo. "Perform is a security risk - provide a lookup table."
 	^self perform: stonReader parseListSingleton! !
+
 !UI.FramingCalculation class categoriesForMethods!
 fromSton:!public!ston! !
 !
@@ -217,6 +230,7 @@ fromSton:!public!ston! !
 
 stonExtras
 	^{#state -> self state freeze}! !
+
 !UI.ReferenceView categoriesForMethods!
 stonExtras!public!ston! !
 !
@@ -227,6 +241,7 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithout: 'referee'! !
+
 !UI.ReferenceView class categoriesForMethods!
 stonAllInstVarNames!public! !
 !
@@ -238,6 +253,7 @@ stonAllInstVarNames
 
 	^##(super stonAllInstVarNames
 		difference: #('this' 'styleIdMap' 'library'))! !
+
 !UI.Scintilla.ScintillaView class categoriesForMethods!
 stonAllInstVarNames!public! !
 !
@@ -248,6 +264,7 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithoutAll: #('idMap' 'bitmapsStart')! !
+
 !UI.Toolbar class categoriesForMethods!
 stonAllInstVarNames!public! !
 !
@@ -268,6 +285,7 @@ stonOn: stonWriter
 	"
 
 	stonWriter writeObject: self extra: self stonExtras! !
+
 !UI.View categoriesForMethods!
 stonExtras!public!ston! !
 stonOn:!public!ston! !
@@ -282,6 +300,7 @@ stonAllInstVarNames
 		ifTrue: 
 			[#('creationStyle' 'model' 'backcolor' 'preferredExtent' 'flags' 'contextMenu' 'font' 'interactor')	"'presenter'"]
 		ifFalse: [superclass stonAllInstVarNames , self instanceVariableNames]! !
+
 !UI.View class categoriesForMethods!
 stonAllInstVarNames!public!ston! !
 !

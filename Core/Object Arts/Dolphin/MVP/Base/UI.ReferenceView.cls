@@ -7,7 +7,9 @@ UI.AbstractDelegatingView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ReferenceView guid: (Core.GUID fromString: '{87b4c713-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ReferenceView comment: 'ReferenceView represents a dummy <view> that is capable of loading another view to take its place. This "referee" view is  identified by its resource identifier. The reference view then steps aside and forwards all pertinent messages to the referee. In general, from this point on, the reference view can be assumed to take a minimal part in the view hierarchy.
 
 Typically, ReferenceViews are used to allow existing views held by the ResourceManager to be loaded, as is, into other views. In this way, if the referee view definition is changed then, when the referer is re-loaded, it will automatically get the latest referee definition.
@@ -17,7 +19,9 @@ Instance Variables (inherited)
 	referee			<view> which is the delegated view.
 
 '!
+
 !UI.ReferenceView categoriesForClass!MVP-Views! !
+
 !UI.ReferenceView methodsFor!
 
 configureReferee
@@ -135,6 +139,7 @@ validateUserInterface
 	when the UI has been flagged as being invalid"
 
 	self referee presenter validateUserInterface! !
+
 !UI.ReferenceView categoriesForMethods!
 configureReferee!helpers!private! !
 createDelegate!event handling!private! !
@@ -190,6 +195,7 @@ stbConvertFromVersion9: anArray
 	rid := array at: 13.
 	rid owningClass == #{Toolbar} valueOrNil ifTrue: [array at: 6 put: Color.Face3d].
 	^array! !
+
 !UI.ReferenceView class categoriesForMethods!
 icon!constants!public! !
 new!development!instance creation!public! !

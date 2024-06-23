@@ -7,13 +7,17 @@ UI.TabView
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TabViewXP guid: (Core.GUID fromString: '{160cce99-d70d-49cc-9308-00476ce82b28}')!
+
 UI.TabViewXP comment: 'TabViewXP is a custom <TabView> that replaces the control''s default painting with its own implementation using the XP theme engine if running in a themed app on XP/2k3. In an unthemed app (or in Windows 2000) it degrades back to use the control''s own ''classic'' drawing.
 
 TabViewXP is needed because the themed control implementation provided by Microsoft only works correctly when the tab orientation is ''top'' (i.e. the tab strip is along the top). The ''bottom'' tab orientation is useable in the standard control with themes enabled (e.g. see Outlook Express'' e-mail editor window), but is aesthetically unpleasing because the bottom tabs are painted using the same bitmaps used to paint the top tabs, and the selection and hot highlighting are thus in the wrong place. The two vertical orientations (left and right) are completely unusable with themes enabled, so when using the standard control one has to turn off theming for vertical (address book) tabs, but the classic appearance looks poor alongside other themed controls because it has a heavy old-fashioned 3-d edge and no hot/selection hightlight. TabViewXP makes use of the XP theme engine to draw the correct themed appearance for the control when in ''top'' orientation, and our interpretation of what the appearance should have been like for the other orientations if MS had bothered to implement it correctly. Note that we don''t even use the control''s standard painting for the ''top'' orientation, as this allows us to support a configurable background colour.
 
 '!
+
 !UI.TabViewXP categoriesForClass!MVP-Views! !
+
 !UI.TabViewXP methodsFor!
 
 calcClientRectangleFromRectangle: aRectangle 
@@ -404,6 +408,7 @@ wmPrintClient: message wParam: wParam lParam: lParam
 						wParam: 0
 						hdc: wParam
 						paintStruct: nil)]! !
+
 !UI.TabViewXP categoriesForMethods!
 calcClientRectangleFromRectangle:!geometry!private! !
 createVerticalFont!event handling!private! !
@@ -433,6 +438,7 @@ wmPrintClient:wParam:lParam:!event handling-win32!private! !
 
 themePartName
 	^'TAB'! !
+
 !UI.TabViewXP class categoriesForMethods!
 themePartName!public! !
 !

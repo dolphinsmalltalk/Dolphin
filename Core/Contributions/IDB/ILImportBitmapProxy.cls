@@ -5,13 +5,17 @@ Object subclass: #ILImportBitmapProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportBitmapProxy guid: (GUID fromString: '{e7a42970-a8ac-4d70-81a2-7bcf6935cde4}')!
+
 ILImportBitmapProxy comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILImportBitmapProxy categoriesForClass!IDB Goodies! !
+
 !ILImportBitmapProxy methodsFor!
 
 colorDepth
@@ -36,6 +40,7 @@ setBitmapInfoHeader: aBITMAPINFOHEADER colorTable: aStructureArray imageBytes: a
 
 width
 	^bitmapInfoHeader biWidth! !
+
 !ILImportBitmapProxy categoriesForMethods!
 colorDepth!accessing!public! !
 colorTable!accessing!public! !
@@ -53,6 +58,7 @@ bitmapInfoHeader: aBITMAPINFOHEADER colorTable: aStructureArray imageBytes: aByt
 		setBitmapInfoHeader: aBITMAPINFOHEADER
 		colorTable: aStructureArray
 		imageBytes: aByteArray! !
+
 !ILImportBitmapProxy class categoriesForMethods!
 bitmapInfoHeader:colorTable:imageBytes:!instance creation!public! !
 !

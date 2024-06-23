@@ -24,7 +24,9 @@ External.Structure
 			'_OffsetOf_dwRtoMax' -> 16r8.
 			'_OffsetOf_dwRtoMin' -> 16r4
 		}!
+
 OS.MIB_TCPSTATS guid: (Core.GUID fromString: '{99d7d43b-06c6-4c23-813c-06ca8119f081}')!
+
 OS.MIB_TCPSTATS comment: '<MIB_TCPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -52,7 +54,9 @@ struct tagMIB_TCPSTATS {
 	unsigned long dwNumConns;
 } MIB_TCPSTATS;
 '!
+
 !OS.MIB_TCPSTATS categoriesForClass!Win32-Structs! !
+
 !OS.MIB_TCPSTATS methodsFor!
 
 dwActiveOpens
@@ -129,6 +133,7 @@ dwRtoMin
 	"Answer the <Integer> value of the receiver's 'dwRtoMin' field."
 
 	^bytes uint32AtOffset: _OffsetOf_dwRtoMin! !
+
 !OS.MIB_TCPSTATS categoriesForMethods!
 dwActiveOpens!**compiled accessors**!public! !
 dwAttemptFails!**compiled accessors**!public! !
@@ -226,6 +231,7 @@ defineFields
 
 getFieldNames
 	^#(#dwRtoAlgorithm #dwRtoMin #dwRtoMax #dwMaxConn #dwActiveOpens #dwPassiveOpens #dwAttemptFails #dwEstabResets #dwCurrEstab #dwInSegs #dwOutSegs #dwRetransSegs #dwInErrs #dwOutRsts #dwNumConns)! !
+
 !OS.MIB_TCPSTATS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

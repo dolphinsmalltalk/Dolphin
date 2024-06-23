@@ -7,9 +7,13 @@ Kernel.StToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StValueToken guid: (Core.GUID fromString: '{c37072cc-edda-4bac-aa9f-a73b3f4255d5}')!
+
 Kernel.StValueToken comment: ''!
+
 !Kernel.StValueToken categoriesForClass!System-Compiler! !
+
 !Kernel.StValueToken methodsFor!
 
 length
@@ -27,6 +31,7 @@ value
 
 value: anObject
 	value := anObject! !
+
 !Kernel.StValueToken categoriesForMethods!
 length!accessing!private! !
 printOn:!printing!public! !
@@ -43,6 +48,7 @@ start: anInteger comments: aCollectionOrNil value: aString
 		comments: aCollectionOrNil;
 		value: aString;
 		yourself! !
+
 !Kernel.StValueToken class categoriesForMethods!
 start:comments:value:!instance creation!public! !
 !

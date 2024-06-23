@@ -7,13 +7,17 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSScriptControl.IScriptProcedureCollection guid: (OS.COM.IID fromString: '{70841c71-067d-11d0-95d8-00a02463ab28}')!
+
 MSScriptControl.IScriptProcedureCollection comment: '<IScriptProcedureCollection> is a wrapper class for the COM interface ''MSScriptControl.IScriptProcedureCollection'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Collection of procedures"
 '!
+
 !MSScriptControl.IScriptProcedureCollection categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+
 !MSScriptControl.IScriptProcedureCollection methodsFor!
 
 _newEnum
@@ -79,6 +83,7 @@ item: index
 	answer := IScriptProcedure newPointer.
 	self get_Item: index asVariant ppdispProcedure: answer.
 	^answer asObject! !
+
 !MSScriptControl.IScriptProcedureCollection categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 count!**auto generated**!properties!public! !
@@ -116,6 +121,7 @@ initializeTypeLib
 		IScriptProcedureCollection initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
+
 !MSScriptControl.IScriptProcedureCollection class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

@@ -7,9 +7,13 @@ Refactory.Browser.RBAbstractCondition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBEmptyCondition guid: (Core.GUID fromString: '{2bf72058-23f5-41b2-864e-7e0b03ac54f0}')!
+
 Refactory.Browser.RBEmptyCondition comment: ''!
+
 !Refactory.Browser.RBEmptyCondition categoriesForClass!Refactory-Conditions! !
+
 !Refactory.Browser.RBEmptyCondition methodsFor!
 
 check
@@ -20,6 +24,7 @@ errorMacro
 
 printOn: aStream 
 	#empty printOn: aStream! !
+
 !Refactory.Browser.RBEmptyCondition categoriesForMethods!
 check!checking!public! !
 errorMacro!private! !
@@ -35,6 +40,7 @@ initialize
 	Current := self new
 				beImmutableObject;
 				yourself! !
+
 !Refactory.Browser.RBEmptyCondition class categoriesForMethods!
 current!public! !
 initialize!public! !

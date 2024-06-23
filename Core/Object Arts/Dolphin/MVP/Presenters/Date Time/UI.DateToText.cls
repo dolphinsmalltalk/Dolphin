@@ -7,7 +7,9 @@ UI.AbstractToTextConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DateToText guid: (Core.GUID fromString: '{87b4c708-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.DateToText comment: 'DateToText is a <textTypeConverter> dedicated to transformations between <Date>s and text.
 
 Instance Variables:
@@ -19,7 +21,9 @@ Class Variables:
 
 
 '!
+
 !UI.DateToText categoriesForClass!MVP-Type Converters-Text! !
+
 !UI.DateToText methodsFor!
 
 actualFormat
@@ -55,6 +59,7 @@ rightToLeft: aString
 	"Answers the result of converting aString to a Date"
 
 	^Date fromString: aString format: self actualFormat! !
+
 !UI.DateToText categoriesForMethods!
 actualFormat!accessing!private! !
 format!accessing!public! !
@@ -77,6 +82,7 @@ yearPivot: anInteger
 	Years less than the pivot will be assumed to be in the next century"
 
 	Date yearPivot: anInteger! !
+
 !UI.DateToText class categoriesForMethods!
 yearPivot!accessing!public! !
 yearPivot:!accessing!public! !

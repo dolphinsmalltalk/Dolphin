@@ -7,9 +7,13 @@ Core.Exception
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Notification guid: (Core.GUID fromString: '{87b4c556-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Notification comment: 'Notification is the class of exceptional conditions which are not considered errors.'!
+
 !Core.Notification categoriesForClass!Kernel-Exception Handling! !
+
 !Core.Notification methodsFor!
 
 defaultAction
@@ -42,6 +46,7 @@ isSuppressible
 
 isSuppressible: aBoolean
 	isSuppressible := aBoolean! !
+
 !Core.Notification categoriesForMethods!
 defaultAction!handling!public! !
 hresult!accessing!public! !
@@ -74,6 +79,7 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Notification! !
+
 !Core.Notification class categoriesForMethods!
 deprecated!instance creation!public! !
 iconStyle!constants!public! !

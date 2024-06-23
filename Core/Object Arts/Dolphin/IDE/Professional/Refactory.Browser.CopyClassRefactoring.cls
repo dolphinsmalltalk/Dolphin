@@ -7,9 +7,13 @@ Refactory.Browser.ClassRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.CopyClassRefactoring guid: (Core.GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
+
 Refactory.Browser.CopyClassRefactoring comment: ''!
+
 !Refactory.Browser.CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.CopyClassRefactoring methodsFor!
 
 buildClassDetails: superClass
@@ -119,6 +123,7 @@ transform
 	source := self progenitor.
 	self copyMethodsFrom: source to: clone.
 	self copyMethodsFrom: source metaclass to: clone metaclass! !
+
 !Refactory.Browser.CopyClassRefactoring categoriesForMethods!
 buildClassDetails:!initializing!private! !
 className:newName:superclass:!initializing!private! !
@@ -144,6 +149,7 @@ model: aRBModel clone: aClass as: aNewName superclass: superClass
 		className: aClass fullName
 			newName: aNewName
 			superclass: superClass! !
+
 !Refactory.Browser.CopyClassRefactoring class categoriesForMethods!
 clone:as:superclass:!instance creation!public! !
 model:clone:as:superclass:!instance creation!public! !

@@ -84,6 +84,7 @@ Kernel.SharedPool
 			'STREAM_SEEK_END' -> 16r2.
 			'STREAM_SEEK_SET' -> 16r0
 		}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.STATSTG'
 	instanceVariableNames: ''
@@ -104,6 +105,7 @@ External.FinalizableStructure
 			'_OffsetOf_type' -> 16r4.
 			'_STATSTG_Size' -> 16r48
 		}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ISequentialStream'
 	instanceVariableNames: ''
@@ -111,6 +113,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ISequentialStream
 	subclass: #'OS.COM.IStream'
 	instanceVariableNames: 'name mode'
@@ -172,6 +175,7 @@ writeClassStm: pstm rclsid: rclsid
 
 	<stdcall: hresult WriteClassStm IStream* guid*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.OLELibrary categoriesForMethods!
 createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
 getHGlobalFromStream:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
@@ -206,6 +210,7 @@ shCreateStreamOnFileEx: pszFile grfMode: grfMode dwAttributes: dwAttributes fCre
 
 	<stdcall: hresult SHCreateStreamOnFileEx lpwstr uint32 uint32 bool IStream* IStream**>
 	^self invalidCall: _failureCode! !
+
 !OS.ShlwapiLibrary categoriesForMethods!
 shCreateMemStream:cbInit:!**auto generated**!public! !
 shCreateStreamOnFileEx:grfMode:dwAttributes:fCreate:pstmTemplate:ppstm:!public! !

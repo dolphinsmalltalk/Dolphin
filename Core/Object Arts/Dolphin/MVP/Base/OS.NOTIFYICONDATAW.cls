@@ -15,9 +15,13 @@ OS.SizedStructure
 			'_OffsetOf_uFlags' -> 16rC.
 			'_OffsetOf_uID' -> 16r8
 		}!
+
 OS.NOTIFYICONDATAW guid: (Core.GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
+
 OS.NOTIFYICONDATAW comment: ''!
+
 !OS.NOTIFYICONDATAW categoriesForClass!No category! !
+
 !OS.NOTIFYICONDATAW methodsFor!
 
 hIcon: aHandle
@@ -85,6 +89,7 @@ uID: anInteger
 	"Set the receiver's 'uID' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_uID put: anInteger! !
+
 !OS.NOTIFYICONDATAW categoriesForMethods!
 hIcon:!**compiled accessors**!public! !
 hWnd:!**compiled accessors**!public! !
@@ -130,6 +135,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
+
 !OS.NOTIFYICONDATAW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

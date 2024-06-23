@@ -7,9 +7,13 @@ UI.ValueDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PackagePrompter guid: (Core.GUID fromString: '{ed9a3d68-797c-4678-adf9-520204c0023f}')!
+
 Tools.PackagePrompter comment: 'self show'!
+
 !Tools.PackagePrompter categoriesForClass!MVP-Presenters! !
+
 !Tools.PackagePrompter methodsFor!
 
 createComponents
@@ -71,6 +75,7 @@ toggleSetPackage
 
 validationResultPresenterClass
 	^ValidationHintPresenter! !
+
 !Tools.PackagePrompter categoriesForMethods!
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -109,6 +114,7 @@ showModalOn: aModel caption: aString default: aPackage
 		defaultPackage: aPackage;
 		caption: aString;
 		showModal! !
+
 !Tools.PackagePrompter class categoriesForMethods!
 icon!accessing!constants!public! !
 resource_Default_view!public!resources-views! !

@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ISequentialStream guid: (OS.COM.IID fromString: '{0c733a30-2a1c-11ce-ade5-00aa0044773d}')!
+
 OS.COM.ISequentialStream comment: 'ISequentialStream is a COMInterface class to wrap the standard COM interface of the same name.
 
 ISequentialStream is an abstraction of a simple byte-oriented stream for reading, writing blocks of bytes, with the notion of a current position, although ISequentialStream itself defines no functions to access that position. ISequentialStream is somewhat similar to, though more limited than, <ReadWriteStream> and therefore we implement some of the protocol of that class here on top of the raw ISequentialStream member functions.
 
 ISequentialStream is rather abstract, and starts to get more interesting in the subclass, IStream.'!
+
 !OS.COM.ISequentialStream categoriesForClass!COM-Interfaces! !
+
 !OS.COM.ISequentialStream methodsFor!
 
 close
@@ -202,6 +206,7 @@ write: buffer count: anInteger
 		cb: anInteger
 		pcbWritten: written.
 	^written uint32AtOffset: 0! !
+
 !OS.COM.ISequentialStream categoriesForMethods!
 close!operations!public! !
 contentsSpecies!accessing!private! !
@@ -237,6 +242,7 @@ defineFunctions
 	self
 		defineFunction: #Read:cb:pcbRead: argumentTypes: 'sbyte* dword dword*';
 		defineFunction: #Write:cb:pcbWritten: argumentTypes: 'sbyte* dword dword*'! !
+
 !OS.COM.ISequentialStream class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

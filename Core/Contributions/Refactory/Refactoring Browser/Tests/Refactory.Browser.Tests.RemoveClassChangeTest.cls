@@ -7,9 +7,13 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RemoveClassChangeTest guid: (Core.GUID fromString: '{3f03db7b-ccd3-427a-b17a-0355b2075f9e}')!
+
 Refactory.Browser.Tests.RemoveClassChangeTest comment: ''!
+
 !Refactory.Browser.Tests.RemoveClassChangeTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RemoveClassChangeTest methodsFor!
 
 subjectClass
@@ -55,6 +59,7 @@ testPrinting
 
 undoClass
 	^CompositeRefactoryChange! !
+
 !Refactory.Browser.Tests.RemoveClassChangeTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsUndo!public!unit tests! !

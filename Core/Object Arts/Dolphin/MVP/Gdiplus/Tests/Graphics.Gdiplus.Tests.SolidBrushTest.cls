@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.BrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.SolidBrushTest guid: (Core.GUID fromString: '{1443093f-5a7a-47f8-8686-2e8414d7ad51}')!
+
 Graphics.Gdiplus.Tests.SolidBrushTest comment: ''!
+
 !Graphics.Gdiplus.Tests.SolidBrushTest methodsFor!
 
 brushType
@@ -73,6 +76,7 @@ testPrintString
 verifyEqualToModel: aGdiplusObject
 	super verifyEqualToModel: aGdiplusObject.
 	self assert: aGdiplusObject color equals: model color! !
+
 !Graphics.Gdiplus.Tests.SolidBrushTest categoriesForMethods!
 brushType!constants!private! !
 subjectClass!constants!private! !

@@ -7,9 +7,13 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StBinarySelectorToken guid: (Core.GUID fromString: '{d3aa3980-63d1-4ea8-9654-f8fb9cba525d}')!
+
 Kernel.StBinarySelectorToken comment: ''!
+
 !Kernel.StBinarySelectorToken categoriesForClass!System-Compiler! !
+
 !Kernel.StBinarySelectorToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -35,6 +39,7 @@ trimFirst
 
 	value := (value copyFrom: 2) asSymbol.
 	start := start + 1! !
+
 !Kernel.StBinarySelectorToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isBinary!public!testing! !

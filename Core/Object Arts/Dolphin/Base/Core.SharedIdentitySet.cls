@@ -7,9 +7,13 @@ Core.SharedSet
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedIdentitySet guid: (Core.GUID fromString: '{87b4c537-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.SharedIdentitySet comment: ''!
+
 !Core.SharedIdentitySet categoriesForClass!Collections-Unordered! !
+
 !Core.SharedIdentitySet methodsFor!
 
 findElementOrNil: anObject
@@ -25,6 +29,7 @@ findElementOrNil: anObject
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1! !
+
 !Core.SharedIdentitySet categoriesForMethods!
 findElementOrNil:!private!searching! !
 hash:max:!private!searching! !

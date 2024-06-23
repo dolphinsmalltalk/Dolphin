@@ -50,6 +50,7 @@ External.Memory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.CommonDialog
 	subclass: #'UI.BrowseFolderDialog'
 	instanceVariableNames: 'style bfFlags'
@@ -57,6 +58,7 @@ UI.CommonDialog
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'InitializedMask' -> 16r1 }!
+
 External.Structure
 	subclass: #'OS.ITEMIDLIST'
 	instanceVariableNames: 'back'
@@ -64,6 +66,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_ITEMIDLIST_Size' -> 16r4 }!
+
 External.Structure
 	subclass: #'OS.SHITEMID'
 	instanceVariableNames: ''
@@ -71,6 +74,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_abID' -> 16r2. '_OffsetOf_cb' -> 16r0. '_SHITEMID_Size' -> 16r4 }!
+
 OS.CommonDialogStructure
 	subclass: #'OS.BROWSEINFOW'
 	instanceVariableNames: 'title displayName'
@@ -88,6 +92,7 @@ OS.CommonDialogStructure
 			'_OffsetOf_pidlRoot' -> 16r4.
 			'_OffsetOf_pszDisplayName' -> 16r8
 		}!
+
 OS.COM.IUnknown
 	subclass: #'OS.IShellFolder'
 	instanceVariableNames: ''
@@ -142,6 +147,7 @@ SHGetMalloc: ppMalloc
 SHGetPathFromIDList: pidl pszPath: pszPath
 	<stdcall: bool SHGetPathFromIDListW handle lpwstr>
 	^self invalidCall: _failureCode! !
+
 !OS.ShellLibrary categoriesForMethods!
 allocator!accessing!public! !
 getDesktopFolder!accessing!public! !

@@ -7,16 +7,21 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Announcement guid: (Core.GUID fromString: '{12525b20-16ef-4684-b01e-956b227a429d}')!
+
 Kernel.Announcement comment: 'This class is the superclass for events that someone might want to announce, such as a button click or an attribute change. Typically you create subclasses for your own events you want to announce.
 
  
 '!
+
 !Kernel.Announcement categoriesForClass!Announcements-Core! !
+
 !Kernel.Announcement methodsFor!
 
 asAnnouncement
 	^ self! !
+
 !Kernel.Announcement categoriesForMethods!
 asAnnouncement!converting!public! !
 !
@@ -34,6 +39,7 @@ handlesAnnouncement: anAnnouncement
 
 
 	^ anAnnouncement class == self or: [ anAnnouncement class inheritsFrom: self ]! !
+
 !Kernel.Announcement class categoriesForMethods!
 ,!public! !
 asAnnouncement!converting!public! !

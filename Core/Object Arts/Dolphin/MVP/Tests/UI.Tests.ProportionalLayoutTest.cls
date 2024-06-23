@@ -7,8 +7,11 @@ UI.Tests.LayoutManagerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ProportionalLayoutTest guid: (Core.GUID fromString: '{f4808f47-d710-405a-85b3-374be13718e9}')!
+
 UI.Tests.ProportionalLayoutTest comment: ''!
+
 !UI.Tests.ProportionalLayoutTest methodsFor!
 
 layoutManagerClass
@@ -77,6 +80,7 @@ testSplitterVisibility
 	self deny: s3 isWindowVisible.
 	self deny: s4 isWindowVisible.
 	self assert: s5 isWindowVisible! !
+
 !UI.Tests.ProportionalLayoutTest categoriesForMethods!
 layoutManagerClass!private!unit tests! !
 testSplitterVisibility!public!unit tests! !

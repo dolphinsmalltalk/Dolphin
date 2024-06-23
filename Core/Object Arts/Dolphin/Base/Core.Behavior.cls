@@ -24,7 +24,9 @@ Core.Object
 			'_SizeMask' -> 16rFF.
 			'_VariableMask' -> 16r1000
 		}!
+
 Core.Behavior guid: (Core.GUID fromString: '{87b4c459-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Behavior comment: 'Class `Behavior` is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
 
 Instance Variables:
@@ -63,7 +65,9 @@ Behavior defines a number of bit masks which are used to describe objects. These
 						instance variables.
 
 Behavior implements the ANSI protocols `<Object>`, `<classDescription>`, `<instantiator>`, and `<Object class>`.'!
+
 !Core.Behavior categoriesForClass!Kernel-Classes! !
+
 !Core.Behavior methodsFor!
 
 addSelector: aSymbol withMethod: aCompiledMethod
@@ -1006,6 +1010,7 @@ withAllSuperclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSuperclassesDo: aMonadicValuable! !
+
 !Core.Behavior categoriesForMethods!
 addSelector:withMethod:!methods-accessing!private! !
 addToSuper!class hierarchy-adding!private! !
@@ -1129,6 +1134,7 @@ Core.Behavior methodProtocol: #instantiator attributes: #(#ansi #readOnly) selec
 
 initialize
 	self addClassConstant: '_NullMethodDictionary' value: MethodDictionary new! !
+
 !Core.Behavior class categoriesForMethods!
 initialize!development!initializing!public! !
 !

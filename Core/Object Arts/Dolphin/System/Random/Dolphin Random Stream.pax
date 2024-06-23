@@ -26,6 +26,7 @@ Core.Stream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Random
 	subclass: #'Kernel.RandomLinearCongruential'
 	instanceVariableNames: 'multiplier increment modulus'
@@ -33,6 +34,7 @@ Core.Random
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RandomLinearCongruential
 	subclass: #'Kernel.RandomParkMiller'
 	instanceVariableNames: 'quo rem'

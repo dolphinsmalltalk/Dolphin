@@ -13,7 +13,9 @@ Core.Magnitude
 			'SmalltalkEpochRD' -> 16rA96C9.
 			'UnixEpochSeconds' -> 16r81C94B00
 		}!
+
 Core.DateAndTime guid: (Core.GUID fromString: '{87b4c653-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk protocols `<DateAndTime>` (instance side) and `<DateAndTime factory>` (class side).
 
 *Derived from original work copyright © 2005 Ian Bartholomew, with additions by Richard Harmon, however the internal representation has been changed.*
@@ -34,7 +36,9 @@ Core.DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smallt
 ## Class Variables
 
   `SmalltalkEpochRD`	`<integer>` Rata Die of the traditional Smalltalk epoch (1st Jan 1901)'!
+
 !Core.DateAndTime categoriesForClass!IDB Goodies!Magnitude-General! !
+
 !Core.DateAndTime methodsFor!
 
 - operand 
@@ -411,6 +415,7 @@ year
 	"Answer an <integer> representing the year of the local time which includes the receiver."
 
 	^self dayMonthYearDo: [:d :m :y | y]! !
+
 !Core.DateAndTime categoriesForMethods!
 -!arithmetic!public! !
 +!arithmetic!public! !
@@ -911,6 +916,7 @@ yesterday
 	"Answer a new <DateAndTime> representing midnight local time on the previous day."
 
 	^self today - 1 days! !
+
 !Core.DateAndTime class categoriesForMethods!
 clockPrecision!constants!public! !
 daysInMonth:forYear:!enquiries!public! !

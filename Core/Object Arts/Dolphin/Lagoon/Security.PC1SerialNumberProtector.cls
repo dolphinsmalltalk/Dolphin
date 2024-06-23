@@ -7,7 +7,9 @@ Security.SerialNumberProtector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.PC1SerialNumberProtector guid: (Core.GUID fromString: '{5c339df7-5279-436b-87d2-09b67f105263}')!
+
 Security.PC1SerialNumberProtector comment: 'A simple PC1-based implementation of encryption for Protected Product serial numbers.
 
 It should be noted that, although PC1 is a fine cypher if used correctly, it is not really suitable for these purposes, and so -- although this is the default implementation -- it is not as strong as it could be.  This implementation mitigates the weakness to some extent by including a checksum with the encrypted data (as described below); however that is still vulnerable to a feasible, but difficult, brute-force attack.
@@ -37,6 +39,7 @@ That has implications for use in Product Protection, which is why the checksum i
 The actual implementation is stronger than that because it incldues a checksum (actually a SHA1 hash reduced to 40 bits by default) of the data.  That gives significant extra protection, but is not perfect because a brute-force search over 2**40 possible checksums is feasible on modern computers.
 
 If you need protection against more than ingenuity and determination, then it would be advisable not to use the extra fields. A better solution would be to create a different subclass of SerialNumberProtector  encrypts the serial number in a way that scrambles all the bits together, so that changing any one will change the entire message, and so the attacker cannot change any part of the serial number without (almost certainly) invalidating it.  The ElgamalSerialNumberProtector illustrates how to develop and plug in a replacement encryption policy.'!
+
 !Security.PC1SerialNumberProtector methodsFor!
 
 checksumBits
@@ -131,6 +134,7 @@ stringFromData: anInteger
 	"Private - Answer a human-readable String representing the given raw encrypted data."
 	
 	^ self class readableStringFromInteger: anInteger.! !
+
 !Security.PC1SerialNumberProtector categoriesForMethods!
 checksumBits!constants!public! !
 checksumFor:!helpers!private! !

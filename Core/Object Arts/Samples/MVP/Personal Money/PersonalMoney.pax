@@ -78,6 +78,7 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Model
 	subclass: #'UI.Examples.PersonalAccountTransaction'
 	instanceVariableNames: 'date description amount isDebit'
@@ -85,6 +86,7 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Model
 	subclass: #'UI.Examples.PersonalMoney'
 	instanceVariableNames: 'owner accounts'
@@ -92,6 +94,7 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Shell
 	subclass: #'UI.Examples.PersonalAccountShell'
 	instanceVariableNames: 'namePresenter accountNumberPresenter initialBalancePresenter transactionsPresenter currentBalancePresenter'
@@ -99,6 +102,7 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractDocumentShell
 	subclass: #'UI.Examples.PersonalMoneyShell'
 	instanceVariableNames: 'ownerPresenter accountsPresenter'
@@ -106,6 +110,7 @@ UI.AbstractDocumentShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Dialog
 	subclass: #'UI.Examples.PersonalAccountTransactionDialog'
 	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'

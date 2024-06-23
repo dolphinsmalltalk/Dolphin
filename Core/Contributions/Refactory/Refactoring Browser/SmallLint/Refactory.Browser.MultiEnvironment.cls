@@ -7,12 +7,16 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MultiEnvironment guid: (Core.GUID fromString: '{402838a2-3847-41d1-bfba-ef695abb9d9d}')!
+
 Refactory.Browser.MultiEnvironment comment: 'MultiEnvironment is a special environment for the "Method defined in all subclasses, but not in superclass" lint rule. It''s basically a hack to get a browser to display the results.
 
 Instance Variables:
 	environmentDictionaries	<Dictionary key: String value: BrowserEnvironment>	the individual results from each failure. Each value stores the methods that are defined in the subclasses'!
+
 !Refactory.Browser.MultiEnvironment categoriesForClass!Refactory-Environments! !
+
 !Refactory.Browser.MultiEnvironment methodsFor!
 
 addClass: aClass into: aValue
@@ -60,6 +64,7 @@ removeClass: aClass selector: aSelector into: aValue
 
 selectEnvironment: aValue
 	environment := environmentDictionaries at: aValue ifAbsent: [SelectorEnvironment new]! !
+
 !Refactory.Browser.MultiEnvironment categoriesForMethods!
 addClass:into:!adding!public! !
 addClass:selector:into:!adding!public! !

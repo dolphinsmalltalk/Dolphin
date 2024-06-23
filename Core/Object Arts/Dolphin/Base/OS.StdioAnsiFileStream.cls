@@ -7,9 +7,13 @@ OS.StdioTextFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioAnsiFileStream guid: (Core.GUID fromString: '{37ed07fd-6fc6-41d9-aa82-7147a1af19fd}')!
+
 OS.StdioAnsiFileStream comment: '`OS.StdioAnsiFileStream` is the concrete class of `StdioFileStream` for streaming over ANSI string data.'!
+
 !OS.StdioAnsiFileStream categoriesForClass!Collections-Streams! !
+
 !OS.StdioAnsiFileStream methodsFor!
 
 contentsSpecies
@@ -58,6 +62,7 @@ peekFor: anObject
 		and: [ch == anObject ansiValue or: 
 					[crtlib ungetc: ch stream: stream.
 					false]]! !
+
 !OS.StdioAnsiFileStream categoriesForMethods!
 contentsSpecies!accessing!private! !
 getString:!accessing!private! !
@@ -72,6 +77,7 @@ peekFor:!accessing!public! !
 
 translationMode
 	^CRTConstants._O_TEXT! !
+
 !OS.StdioAnsiFileStream class categoriesForMethods!
 translationMode!constants!private! !
 !

@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.IRecFields guid: (OS.COM.IID fromString: '{00000563-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.IRecFields comment: '<ADODBIRecFields> is a wrapper class for the COM interface ''ADODB.IRecFields'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !ADODB.IRecFields categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.IRecFields methodsFor!
 
 ADOCheck
@@ -23,6 +27,7 @@ ADOCheck
 
 	<virtual stdcall: hresult 4>
 	^self invalidCall: _failureCode! !
+
 !ADODB.IRecFields categoriesForMethods!
 ADOCheck!**auto generated**!COM Interfaces-IRecFields!public! !
 !
@@ -36,6 +41,7 @@ defineFunctions
 	self
 		defineFunction: #ADOCheck
 ! !
+
 !ADODB.IRecFields class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

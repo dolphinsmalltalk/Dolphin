@@ -7,14 +7,18 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.CardLabel guid: (Core.GUID fromString: '{50770bcc-1797-4efb-be30-f06da60566cf}')!
+
 UI.CardLabel comment: '<CardLabel>s are used to ''label'' (that is specify the text and image) the tabs in a <CardContainer>. This is achieved by setting the #arrangement of the view for each tab (typically a <ContainerView> or <ReferenceView>) to be an appropriately configured CardLabel instance.
 
 Instance Variables:
 	text			<String> to be displayed as the tab label.
 	iconBlock	<niladicValuable> that evaluates to the <Icon> to be displayed on the tab.
 '!
+
 !UI.CardLabel categoriesForClass!Kernel-Objects! !
+
 !UI.CardLabel methodsFor!
 
 displayOn: aPuttableStream
@@ -56,6 +60,7 @@ text
 
 text: aString 
 	text := aString! !
+
 !UI.CardLabel categoriesForMethods!
 displayOn:!displaying!public! !
 helpId!public! !
@@ -94,6 +99,7 @@ text: aString iconBlock: aNiladicValuable
 		text: aString;
 		iconBlock: aNiladicValuable;
 		yourself! !
+
 !UI.CardLabel class categoriesForMethods!
 new!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

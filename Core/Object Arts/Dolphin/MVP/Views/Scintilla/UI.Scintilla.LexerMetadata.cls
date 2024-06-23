@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.LexerMetadata guid: (Core.GUID fromString: '{46328983-b7d1-40ad-a5aa-68899e36af2e}')!
+
 UI.Scintilla.LexerMetadata isNonInstantiable: true!
+
 UI.Scintilla.LexerMetadata comment: ''!
+
 !UI.Scintilla.LexerMetadata categoriesForClass!Kernel-Objects! !
+
 !UI.Scintilla.LexerMetadata methodsFor!
 
 description
@@ -45,6 +50,7 @@ view
 view: aScintillaView id: anObject
 	view := aScintillaView.
 	id := anObject! !
+
 !UI.Scintilla.LexerMetadata categoriesForMethods!
 description!accessing!public! !
 displayOn:!printing!public! !
@@ -64,6 +70,7 @@ icon
 view: aScintillaView id: anObject
 	<primitive: 157>
 	^self new view: aScintillaView id: anObject! !
+
 !UI.Scintilla.LexerMetadata class categoriesForMethods!
 icon!constants!development!public! !
 view:id:!instance creation!public! !

@@ -7,7 +7,9 @@ UI.Presenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.EtchASketch guid: (Core.GUID fromString: '{87b4c68a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Examples.EtchASketch comment: 'EtchASketch is a <compositePresenter> component that emulates the popular Etch-a-Sketch toy. It allows "ink" to be drawn onto a sketch pad by means of two "knobs"; one for horizontal movement and one for vertical movement. In the basic view the knobs are represented by scroll bars. EtchASketch makes use of the Scribble component for its sketch area.
 
 There are a couple of limitations that make this example not ideal:
@@ -33,7 +35,9 @@ Instance Variables:
 
 
 '!
+
 !UI.Examples.EtchASketch categoriesForClass!MVP-Presenters!Samples! !
+
 !UI.Examples.EtchASketch methodsFor!
 
 createComponents
@@ -84,6 +88,7 @@ onKnobChanged
 
 	"Remember the current location as the last"
 	lastLocation := newLocation! !
+
 !UI.Examples.EtchASketch categoriesForMethods!
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -131,6 +136,7 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Etch-a-Sketch'! !
+
 !UI.Examples.EtchASketch class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

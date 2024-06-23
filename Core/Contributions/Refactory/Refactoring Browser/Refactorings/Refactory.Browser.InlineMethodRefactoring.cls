@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.InlineMethodRefactoring guid: (Core.GUID fromString: '{a2564755-9eb0-4805-9bf7-edbb2fcf1995}')!
+
 Refactory.Browser.InlineMethodRefactoring comment: ''!
+
 !Refactory.Browser.InlineMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.InlineMethodRefactoring methodsFor!
 
 addSelfReturn
@@ -430,6 +434,7 @@ writeGuardClauses
 		replaceMethod: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]. `@.s2'
 			with: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifTrue: [`@.s2. ^self] ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]'.
 	[rewriter executeTree: inlineParseTree] whileTrue: [inlineParseTree := rewriter tree]! !
+
 !Refactory.Browser.InlineMethodRefactoring categoriesForMethods!
 addSelfReturn!public!transforming! !
 addTemporary:assignedTo:!public!transforming! !
@@ -490,6 +495,7 @@ model: aRBModel inline: anInterval inMethod: aSelector forClass: aClass
 			inMethod: aSelector
 			forClass: aClass;
 		yourself! !
+
 !Refactory.Browser.InlineMethodRefactoring class categoriesForMethods!
 inline:inMethod:forClass:!instance creation!public! !
 model:inline:inMethod:forClass:!instance creation!public! !

@@ -7,9 +7,13 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.ImageTests guid: (Core.GUID fromString: '{f51a7675-4fec-411d-a3a4-3a11dd7d104a}')!
+
 Graphics.Gdiplus.Tests.ImageTests isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.ImageTests comment: ''!
+
 !Graphics.Gdiplus.Tests.ImageTests methodsFor!
 
 assertClonedValid
@@ -62,6 +66,7 @@ testSaveToFileJpeg
 	bytes := File readAllBytes: filename.
 	self assert: bytes equals: (model asByteArray: 'image/jpeg').
 	File delete: filename! !
+
 !Graphics.Gdiplus.Tests.ImageTests categoriesForMethods!
 assertClonedValid!asserting!private! !
 createCanonicalSubject!private!running! !

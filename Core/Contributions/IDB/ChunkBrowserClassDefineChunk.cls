@@ -5,13 +5,17 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDefineChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserClassDefineChunk guid: (GUID fromString: '{9a18662b-ed08-4733-bf8b-c22ede8994e8}')!
+
 ChunkBrowserClassDefineChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserClassDefineChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserClassDefineChunk methodsFor!
 
 canShowDifferences
@@ -34,6 +38,7 @@ restore
 
 sourceFromImage
 	^self identity1AsClass instanceClass definition! !
+
 !ChunkBrowserClassDefineChunk categoriesForMethods!
 canShowDifferences!public!testing! !
 initialize:tokens:!initializing!private! !
@@ -62,6 +67,7 @@ isChunkClassFor: aString tokens: anArrayOfStToken
 	((self isTokenClassIdentifier: token) or: [token isLiteralToken and: [token value isNil]])
 		ifFalse: [^false].
 	^anArrayOfStToken third isLiteralSymbolToken! !
+
 !ChunkBrowserClassDefineChunk class categoriesForMethods!
 chunkType!constants!public! !
 isChunkClassFor:tokens:!public!testing! !

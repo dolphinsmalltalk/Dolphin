@@ -37,6 +37,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractToTextConverter
 	subclass: #'UI.BooleanToText'
 	instanceVariableNames: 'format'

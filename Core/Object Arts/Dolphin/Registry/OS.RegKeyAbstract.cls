@@ -26,8 +26,11 @@ Core.Dictionary
 								#stringArray -> 16r7
 							})
 		}!
+
 OS.RegKeyAbstract guid: (Core.GUID fromString: '{87b4c52b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.RegKeyAbstract isNonInstantiable: true!
+
 OS.RegKeyAbstract comment: '`RegKeyAbstract` is the abstract class of objects with concrete subclasses to represent keys in the Windows Registration Database. The keys may have sub-keys which are represented by instances of `RegKey`. A `RegKey` is also a dictionary of registry values represented in Dolphin by instances of `RegKeyValues`.
 
 `RegKeyAbstract` implements the `<abstractDictionary>` protocol as operations against either the sub-keys (in the case of `RegKey`) or sub-values (in the case of `RegKeyValues`).
@@ -37,7 +40,9 @@ The handles for registry keys are Windows kernel handles and as such are a limit
 Note that the `RegKey` instances returned by `RegKey>>#at:ifAbsent:` and `RegKey>>#createKey:` will be in a realised state. The instances passed through collection enumerations such as `#do:`, `#keysAndValuesDo:`, etc, will not be in a realised state.
 
 It is not necessary to explicitly free instances in Dolphin 8 and later, because they are now finalizable. Explicit free''ing is a best practice, however, if it helps avoid the accumulation of finalizable garbage. It also avoids the problem of building up a large backlog of instances awaiting finalization when the system is busy enough that there are no free cycles for the finalizer to run.'!
+
 !OS.RegKeyAbstract categoriesForClass!System-Support! !
+
 !OS.RegKeyAbstract methodsFor!
 
 = anObject
@@ -757,6 +762,7 @@ valueAt: aString put: anObject type: aSymbol
 
 writeCollection: aCollection at: aString
 	self requiresSerializer! !
+
 !OS.RegKeyAbstract categoriesForMethods!
 =!comparing!public! !
 add:!adding!public! !
@@ -1029,6 +1035,7 @@ usersRoot: aSymbol
 		hive: 'HKEY_USERS'
 		handle: HKEY_USERS
 		mode: aSymbol! !
+
 !OS.RegKeyAbstract class categoriesForMethods!
 classesRoot!instance creation!public! !
 classesRoot:!instance creation!public! !

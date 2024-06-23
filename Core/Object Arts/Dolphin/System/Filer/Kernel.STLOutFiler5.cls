@@ -7,9 +7,13 @@ Kernel.STLLegacyOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLOutFiler5 guid: (Core.GUID fromString: '{d957aa21-9a85-4b10-b385-aae6060f6245}')!
+
 Kernel.STLOutFiler5 comment: '`STLOutFiler5` is a `STLOutFiler` for writing object graphs in the STL 5 format. This was an interim format supporting namespaces that was used in some pre-production versions of Dolphin 8.'!
+
 !Kernel.STLOutFiler5 categoriesForClass!System-Binary storage! !
+
 !Kernel.STLOutFiler5 methodsFor!
 
 inFilerClass
@@ -28,6 +32,7 @@ saveFloat: aFloat
 	"In STL 5 Floats are stored in literal form if finite, and as raw bytes if not."
 
 	aFloat isFinite ifTrue: [self writeLiteral: aFloat] ifFalse: [self saveObject: aFloat]! !
+
 !Kernel.STLOutFiler5 categoriesForMethods!
 inFilerClass!constants!private! !
 saveCharacter:!operations!public! !
@@ -50,6 +55,7 @@ version
 	"Answer the version number of the format produced by the receiver."
 
 	^5! !
+
 !Kernel.STLOutFiler5 class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !

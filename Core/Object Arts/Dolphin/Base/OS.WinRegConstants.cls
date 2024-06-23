@@ -55,7 +55,12 @@ Kernel.SharedPool
 			'RRF_WOW64_MASK' -> 16r30000.
 			'RRF_ZEROONFAILURE' -> 16r20000000
 		}!
+
 OS.WinRegConstants guid: (Core.GUID fromString: '{f3002953-4006-4fa4-a61b-fab719cf4784}')!
+
 OS.WinRegConstants isNonInstantiable: true!
+
 OS.WinRegConstants comment: ''!
+
 !OS.WinRegConstants categoriesForClass!System-Support! !
+

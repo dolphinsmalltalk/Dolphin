@@ -31,10 +31,5 @@ TestCase subclass: #EditableListViewTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
-"Loose Methods"!
-
 "End of package definition"!
 

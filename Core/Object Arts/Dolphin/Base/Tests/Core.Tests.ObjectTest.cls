@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ObjectTest guid: (Core.GUID fromString: '{0699f873-06b5-439d-adcb-6642d40c7360}')!
+
 Core.Tests.ObjectTest comment: ''!
+
 !Core.Tests.ObjectTest methodsFor!
 
 newEventSource
@@ -337,6 +340,7 @@ verifyWeakRegistry: aWeakIdentitDictionary
 	self assert: aWeakIdentitDictionary countElements equals: aWeakIdentitDictionary size.
 	self assert: aWeakIdentitDictionary hasWeakKeys.
 	self deny: aWeakIdentitDictionary hasWeakValues! !
+
 !Core.Tests.ObjectTest categoriesForMethods!
 newEventSource!helpers!private! !
 testAssert!public!testing / error handling! !

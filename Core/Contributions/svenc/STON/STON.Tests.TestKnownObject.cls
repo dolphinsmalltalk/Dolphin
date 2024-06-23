@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.TestKnownObject guid: (Core.GUID fromString: '{2b317ef3-5cd3-432a-bad1-866b9801ab51}')!
+
 STON.Tests.TestKnownObject comment: ''!
+
 !STON.Tests.TestKnownObject methodsFor!
 
 = object
@@ -44,6 +47,7 @@ stonOn: stonWriter
 	"We only write out our id"
 	
 	stonWriter writeObject: self listSingleton: self id asString! !
+
 !STON.Tests.TestKnownObject categoriesForMethods!
 =!comparing!public! !
 description!public! !
@@ -78,6 +82,7 @@ knownObjects
 
 resetKnownObjects
 	KnownObjects ifNotNil: [ :collection | collection removeAll ]! !
+
 !STON.Tests.TestKnownObject class categoriesForMethods!
 addKnownObject:!accessing!public! !
 fromId:!instance creation!public! !

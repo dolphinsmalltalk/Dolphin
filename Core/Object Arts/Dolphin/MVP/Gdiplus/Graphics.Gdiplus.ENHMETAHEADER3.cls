@@ -24,7 +24,9 @@ External.Structure
 			'_OffsetOf_szlDevice' -> 16r48.
 			'_OffsetOf_szlMillimeters' -> 16r50
 		}!
+
 Graphics.Gdiplus.ENHMETAHEADER3 guid: (Core.GUID fromString: '{1b5c3dcf-8ea0-47df-b752-442dd272a353}')!
+
 Graphics.Gdiplus.ENHMETAHEADER3 comment: '<ENHMETAHEADER3> is an <ExternalStructure> class to wrap the struct ''Gdiplus.ENHMETAHEADER3'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -52,6 +54,7 @@ struct tagENHMETAHEADER3 {
 	SIZEL szlMillimeters;
 } ENHMETAHEADER3;
 '!
+
 !Graphics.Gdiplus.ENHMETAHEADER3 methodsFor!
 
 dSignature
@@ -219,6 +222,7 @@ szlMillimeters: aSIZEL
 		from: ##(_OffsetOf_szlMillimeters + 1)
 		to: ##(_OffsetOf_szlMillimeters + SIZEL._SIZEL_Size)
 		startingAt: 1! !
+
 !Graphics.Gdiplus.ENHMETAHEADER3 categoriesForMethods!
 dSignature!**compiled accessors**!public! !
 dSignature:!**compiled accessors**!public! !
@@ -331,6 +335,7 @@ defineFields
 
 getFieldNames
 	^#(#iType #nSize #rclBounds #rclFrame #dSignature #nVersion #nBytes #nRecords #nHandles #sReserved #nDescription #offDescription #nPalEntries #szlDevice #szlMillimeters)! !
+
 !Graphics.Gdiplus.ENHMETAHEADER3 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

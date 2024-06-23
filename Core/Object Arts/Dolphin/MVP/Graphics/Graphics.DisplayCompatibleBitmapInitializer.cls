@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.DisplayCompatibleBitmapInitializer guid: (Core.GUID fromString: '{e8abc724-cdba-4047-a3d4-d44430d1a05f}')!
+
 Graphics.DisplayCompatibleBitmapInitializer comment: ''!
+
 !Graphics.DisplayCompatibleBitmapInitializer methodsFor!
 
 createImage: anImage extent: aPoint
@@ -40,6 +43,7 @@ printImage: aBitmap on: aWriteStream
 		print: aBitmap class;
 		nextPutAll: ' displayCompatibleWithExtent: ';
 		print: extent! !
+
 !Graphics.DisplayCompatibleBitmapInitializer categoriesForMethods!
 createImage:extent:!private!realizing/unrealizing! !
 extent!accessing!public! !
@@ -55,6 +59,7 @@ extent: aPoint
 	^self new
 		extent: aPoint;
 		yourself! !
+
 !Graphics.DisplayCompatibleBitmapInitializer class categoriesForMethods!
 extent:!instance creation!public! !
 !

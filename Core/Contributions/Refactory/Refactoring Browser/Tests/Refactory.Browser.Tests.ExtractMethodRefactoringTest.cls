@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ExtractMethodRefactoringTest guid: (Core.GUID fromString: '{e6d6d232-8068-4ed9-97f4-59b812529daf}')!
+
 Refactory.Browser.Tests.ExtractMethodRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.ExtractMethodRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ExtractMethodRefactoringTest methodsFor!
 
 testBadInterval
@@ -254,6 +258,7 @@ testNonExistantSelector
 				from: #checkClass1:
 				in: BasicLintRuleTestData)
 		withMessage: 'BasicLintRuleTestData does not define #checkClass1:'! !
+
 !Refactory.Browser.Tests.ExtractMethodRefactoringTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testExtractBindingReference!failure tests!public! !

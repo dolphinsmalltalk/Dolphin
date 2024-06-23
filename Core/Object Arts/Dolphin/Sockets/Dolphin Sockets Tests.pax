@@ -40,6 +40,7 @@ Net
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.AbstractIN_ADDRTest'
 	instanceVariableNames: ''
@@ -47,6 +48,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #AbstractSocketTest
 	instanceVariableNames: 'sockets'
@@ -54,6 +56,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Net.Tests.InternetAddressTest'
 	instanceVariableNames: ''
@@ -61,6 +64,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Net.Tests.PROTOENTTest'
 	instanceVariableNames: ''
@@ -68,6 +72,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.SERVENTTest'
 	instanceVariableNames: ''
@@ -75,6 +80,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.SOCKADDRTest'
 	instanceVariableNames: ''
@@ -82,6 +88,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #SocketErrorTest
 	instanceVariableNames: ''
@@ -89,6 +96,7 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.WinSocketErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.AbstractIN_ADDRTest
 	subclass: #'OS.Tests.IN_ADDRTest'
 	instanceVariableNames: ''
@@ -96,6 +104,7 @@ OS.Tests.AbstractIN_ADDRTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.AbstractIN_ADDRTest
 	subclass: #'OS.Tests.IN6_ADDRTest'
 	instanceVariableNames: ''
@@ -103,6 +112,7 @@ OS.Tests.AbstractIN_ADDRTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 AbstractSocketTest
 	subclass: #'Net.Tests.SocketTest'
 	instanceVariableNames: ''

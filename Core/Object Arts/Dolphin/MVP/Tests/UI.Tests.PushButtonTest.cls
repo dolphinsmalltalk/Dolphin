@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PushButtonTest guid: (Core.GUID fromString: '{e927fec8-865b-4be1-928d-fd9eb29c16c4}')!
+
 UI.Tests.PushButtonTest comment: ''!
+
 !UI.Tests.PushButtonTest methodsFor!
 
 assertButton: aPushButton isDefault: aBoolean
@@ -140,6 +143,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: command isAbortable.
 	self deny: command isModalCommand.
 	self assertIsNil: command image! !
+
 !UI.Tests.PushButtonTest categoriesForMethods!
 assertButton:isDefault:!helpers!private! !
 classToTest!helpers!private! !
@@ -175,6 +179,7 @@ resource_OK_button_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #ok 8 '&OK' 1 1 nil nil true nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&OK' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 29 )! !
+
 !UI.Tests.PushButtonTest class categoriesForMethods!
 resource_OK_button_D6!public!resources-views! !
 resource_OK_button_D7!public!resources-views! !

@@ -7,10 +7,14 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Association guid: (Core.GUID fromString: '{87b4c650-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Association comment: 'Association is a simple class to encapsulate the relationship between
 a key and a value. It is used for the elements of Dictionaries.'!
+
 !Core.Association categoriesForClass!Collections-Support! !
+
 !Core.Association methodsFor!
 
 < anAssociation 
@@ -121,6 +125,7 @@ value: aValue
 
 	value := aValue
 ! !
+
 !Core.Association categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !
@@ -151,6 +156,7 @@ key: aKey value: aValue
 	value is aValue."
 
 	^self new key: aKey value: aValue! !
+
 !Core.Association class categoriesForMethods!
 key:value:!instance creation!public! !
 !

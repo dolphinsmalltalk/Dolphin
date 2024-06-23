@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2File guid: (OS.COM.IID fromString: '{f2c19559-6bc1-4583-a757-90021be9afec}')!
+
 WebView2.ICoreWebView2File isEgressOnly: true!
+
 WebView2.ICoreWebView2File comment: '`ICoreWebView2File` is a wrapper class for the COM interface ''WebView2.ICoreWebView2File'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +32,9 @@ interface ICoreWebView2File : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2File categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2File methodsFor!
 
 get_Path: path
@@ -53,6 +58,7 @@ path
 
 printableProperties
 	^#(#path)! !
+
 !WebView2.ICoreWebView2File categoriesForMethods!
 get_Path:!**auto generated**!COM Interfaces-ICoreWebView2File!private! !
 path!properties!public! !
@@ -69,6 +75,7 @@ defineFunctions
 		defineFunction: #get_Path:
 			argumentTypes: 'lpwstr*'
 ! !
+
 !WebView2.ICoreWebView2File class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -52,6 +52,7 @@ Kernel.PluggableSortAlgorithm
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PluggableSortAlgorithm
 	subclass: #'Kernel.InsertionSortAlgorithm'
 	instanceVariableNames: ''
@@ -59,6 +60,7 @@ Kernel.PluggableSortAlgorithm
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PluggableSortAlgorithm
 	subclass: #'Kernel.MergesortAlgorithm'
 	instanceVariableNames: ''
@@ -66,6 +68,7 @@ Kernel.PluggableSortAlgorithm
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PluggableSortAlgorithm
 	subclass: #'Kernel.QuicksortAlgorithm'
 	instanceVariableNames: ''
@@ -73,6 +76,7 @@ Kernel.PluggableSortAlgorithm
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PluggableSortAlgorithm
 	subclass: #'Kernel.ShellsortAlgorithm'
 	instanceVariableNames: ''
@@ -99,6 +103,7 @@ quickSort: aDyadicValuable
 
 shellSort: aDyadicValuable
 	^ShellsortAlgorithm newSortBlock: aDyadicValuable! !
+
 !Core.SortAlgorithm class categoriesForMethods!
 heapSort:!instance creation!public! !
 insertionSort:!instance creation!public! !

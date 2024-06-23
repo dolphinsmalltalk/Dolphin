@@ -7,9 +7,13 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PaintEvent guid: (Core.GUID fromString: '{87b4c550-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.PaintEvent comment: ''!
+
 !UI.PaintEvent categoriesForClass!Events!MVP-Views-Events! !
+
 !UI.PaintEvent methodsFor!
 
 canvas
@@ -44,6 +48,7 @@ window: aView wParam: anInteger hdc: dcExternalHandle paintStruct: aPAINTSTRUCT
 	lParam := 0.
 	hdc := dcExternalHandle.
 	paintStruct := aPAINTSTRUCT! !
+
 !UI.PaintEvent categoriesForMethods!
 canvas!accessing!public! !
 hdc!accessing!public! !
@@ -62,6 +67,7 @@ window: aView wParam: wParam hdc: hdc paintStruct: ps
 		wParam: wParam
 		hdc: hdc
 		paintStruct: ps! !
+
 !UI.PaintEvent class categoriesForMethods!
 window:wParam:hdc:paintStruct:!instance creation!public! !
 !

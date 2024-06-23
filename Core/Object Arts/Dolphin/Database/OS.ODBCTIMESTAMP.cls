@@ -16,11 +16,15 @@ External.Structure
 			'_OffsetOf_second' -> 16rA.
 			'_OffsetOf_year' -> 16r0
 		}!
+
 OS.ODBCTIMESTAMP guid: (Core.GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.ODBCTIMESTAMP comment: 'ODBCTIMESTAMP is a representation of the same named Win32 ODBC structure.
 
 The fraction field is the number of billionths of a second, i.e. a value of 1,000,000 is one millisecond.'!
+
 !OS.ODBCTIMESTAMP categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+
 !OS.ODBCTIMESTAMP methodsFor!
 
 asDateAndTime
@@ -117,6 +121,7 @@ year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
 	bytes int16AtOffset: _OffsetOf_year put: anInteger! !
+
 !OS.ODBCTIMESTAMP categoriesForMethods!
 asDateAndTime!converting!public! !
 dateAndTime:!accessing!public! !
@@ -175,6 +180,7 @@ fromDateAndTime: aDateAndTime
 
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction)! !
+
 !OS.ODBCTIMESTAMP class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2WebResourceResponse guid: (OS.COM.IID fromString: '{aafcc94f-fa27-48fd-97df-830ef75aaec9}')!
+
 WebView2.ICoreWebView2WebResourceResponse isEgressOnly: true!
+
 WebView2.ICoreWebView2WebResourceResponse comment: '`ICoreWebView2WebResourceResponse` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponse'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -47,7 +50,9 @@ interface ICoreWebView2WebResourceResponse : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2WebResourceResponse categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2WebResourceResponse methodsFor!
 
 content
@@ -167,6 +172,7 @@ statusCode: statusCode
 	"Set the 'StatusCode' property of the receiver to the <sdword> value of the argument."
 
 	self put_StatusCode: statusCode! !
+
 !WebView2.ICoreWebView2WebResourceResponse categoriesForMethods!
 content!**auto generated**!properties!public! !
 content:!**auto generated**!properties!public! !
@@ -207,6 +213,7 @@ defineFunctions
 		defineFunction: #put_ReasonPhrase:
 			argumentTypes: 'lpwstr'
 ! !
+
 !WebView2.ICoreWebView2WebResourceResponse class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

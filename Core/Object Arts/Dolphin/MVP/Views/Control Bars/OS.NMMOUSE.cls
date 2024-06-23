@@ -13,12 +13,16 @@ OS.NMHDR
 			'_OffsetOf_dwItemSpec' -> 16rC.
 			'_OffsetOf_pt' -> 16r14
 		}!
+
 OS.NMMOUSE guid: (Core.GUID fromString: '{e2a1ec3f-20b2-49cc-b90f-80f002a28204}')!
+
 OS.NMMOUSE comment: 'NMMOUSE is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMMOUSE accompanies certain notifications that are sent by a control bars (e.g. toolbars, statusbars) when a mouse action occurs such as a click.
 '!
+
 !OS.NMMOUSE categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMMOUSE methodsFor!
 
 dwHitInfo
@@ -48,6 +52,7 @@ pt
 	"Answer the <POINTL> value of the receiver's 'pt' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_pt! !
+
 !OS.NMMOUSE categoriesForMethods!
 dwHitInfo!**compiled accessors**!public! !
 dwItemData!**compiled accessors**!public! !
@@ -76,6 +81,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwItemSpec #dwItemData #pt #dwHitInfo)! !
+
 !OS.NMMOUSE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

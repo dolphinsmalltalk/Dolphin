@@ -7,9 +7,13 @@ OS.AbstractWindowsLocale
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.WindowsLocale guid: (Core.GUID fromString: '{72672414-3e98-4af9-a1af-684456e4529d}')!
+
 OS.WindowsLocale comment: ''!
+
 !OS.WindowsLocale categoriesForClass!System-Localization! !
+
 !OS.WindowsLocale methodsFor!
 
 = anObject
@@ -63,6 +67,7 @@ tag
 	"Answer the RFC4646 language name, aka 'tag', for this locale."
 
 	^tag ifNil: [tag := self getLocaleInfoString: LOCALE_SNAME]! !
+
 !OS.WindowsLocale categoriesForMethods!
 =!comparing!public! !
 basicLcid!accessing!private! !

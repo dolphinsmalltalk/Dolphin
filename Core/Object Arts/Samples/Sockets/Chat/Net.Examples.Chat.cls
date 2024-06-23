@@ -7,7 +7,9 @@ UI.Presenter
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.Examples.Chat guid: (Core.GUID fromString: '{87b4c699-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Net.Examples.Chat comment: 'Chat is a <compositePresenter> implementing a simple "chat" service for the purpose of demonstrating the use of the new blocking Dolphin Sockets API. It has a multi-threaded design that would be appropriate for more complex socket client/server applications too. Finally Chat illustrates the use of STB-based messaging, which provides for a simple and efficient way to transmit and receive objects over a socket connection. An instance can be opened on any machine running TCP/IP using:
 
 ```
@@ -40,7 +42,9 @@ Instance Variables:
 	acceptSocket		<ServerSocket2> used to wait for a connection.
 	sendQueue			<SharedQueue> in which outgoing messages are queued for the sender thread.
 '!
+
 !Net.Examples.Chat categoriesForClass!MVP-Presenters!Samples! !
+
 !Net.Examples.Chat methodsFor!
 
 acceptCalls
@@ -409,6 +413,7 @@ validateUserInterface
 	super validateUserInterface.
 	calleeAddress view isEnabled: self isIdle.
 	outgoingMessage view isEnabled: self isConnected! !
+
 !Net.Examples.Chat categoriesForMethods!
 acceptCalls!operations!private! !
 appendMessage:!operations!private! !
@@ -501,6 +506,7 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Sockets Chat'! !
+
 !Net.Examples.Chat class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

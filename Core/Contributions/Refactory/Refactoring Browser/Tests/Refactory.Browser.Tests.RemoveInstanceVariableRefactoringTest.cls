@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RemoveInstanceVariableRefactoringTest guid: (Core.GUID fromString: '{62348167-8106-437b-98fe-52a63f3b89ae}')!
+
 Refactory.Browser.Tests.RemoveInstanceVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RemoveInstanceVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RemoveInstanceVariableRefactoringTest methodsFor!
 
 testModelRemoveInstanceVariable
@@ -41,6 +45,7 @@ testRemoveInstVar
 	self assert: (class definesInstanceVariable: 'foo1').
 	self executeRefactoring: refactoring.
 	self deny: (class definesInstanceVariable: 'foo1')! !
+
 !Refactory.Browser.Tests.RemoveInstanceVariableRefactoringTest categoriesForMethods!
 testModelRemoveInstanceVariable!public!tests! !
 testNonExistantName!failure tests!public! !

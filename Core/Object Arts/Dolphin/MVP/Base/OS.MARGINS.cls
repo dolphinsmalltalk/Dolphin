@@ -13,7 +13,9 @@ External.Structure
 			'_OffsetOf_cyBottomHeight' -> 16rC.
 			'_OffsetOf_cyTopHeight' -> 16r8
 		}!
+
 OS.MARGINS guid: (Core.GUID fromString: '{d92a9b7d-a1dc-4ef4-97e5-869e7a720a83}')!
+
 OS.MARGINS comment: '<MARGINS> is an <ExternalStructure> class to wrap the struct ''Win32.MARGINS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +33,9 @@ struct tagMARGINS {
 	[helpstring("Height of bottom border that retains its size")] int cyBottomHeight;
 } MARGINS;
 '!
+
 !OS.MARGINS categoriesForClass!Win32-Structs! !
+
 !OS.MARGINS methodsFor!
 
 cxLeftWidth
@@ -73,6 +77,7 @@ cyTopHeight: anInteger
 	"Set the receiver's 'cyTopHeight' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_cyTopHeight put: anInteger! !
+
 !OS.MARGINS categoriesForMethods!
 cxLeftWidth!**compiled accessors**!public! !
 cxLeftWidth:!**compiled accessors**!public! !
@@ -110,6 +115,7 @@ defineFields
 
 getFieldNames
 	^#(#cxLeftWidth #cxRightWidth #cyTopHeight #cyBottomHeight)! !
+
 !OS.MARGINS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -7,7 +7,9 @@ UI.CommonDialog
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'InitializedMask' -> 16r1 }!
+
 UI.BrowseFolderDialog guid: (Core.GUID fromString: '{87b4c6af-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.BrowseFolderDialog comment: 'BrowserFolderDialog is a <valueDialogPresenter> implementing the Windows SHBrowseForFolder common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen folder.
 
 Instance Variables:
@@ -24,7 +26,9 @@ Example Usage:
 		root: ''c:\windows'';			"Root of tree"
 		value: ''c:\windows\system'';		"Initial selection"
 		showModal'!
+
 !UI.BrowseFolderDialog categoriesForClass!MVP-Presenters! !
+
 !UI.BrowseFolderDialog methodsFor!
 
 basicShowModal
@@ -154,6 +158,7 @@ wmInitDialog: msgInteger wParam: wParam lParam: lParam
 				szParam: path].
 	bfFlags := bfFlags mask: InitializedMask set: true.
 	^0! !
+
 !UI.BrowseFolderDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 caption:!accessing!public! !
@@ -197,6 +202,7 @@ initialize
 		at: BFFM_VALIDATEFAILEDA put: #validateFailed:wParam:lParam:;
 		at: 4 put: nil;
 		at: BFFM_IUNKNOWN put: #iunknown:wParam:lParam:! !
+
 !UI.BrowseFolderDialog class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

@@ -7,7 +7,9 @@ Graphics.VirtualColor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ThemeColor guid: (Core.GUID fromString: '{5016060e-ec13-4e73-be45-ed636d352614}')!
+
 Graphics.ThemeColor comment: '`ThemeColor` is a class of `VirtualColor`s that provide a named indirection to a real `Color`. They are useful for simple theming purposes, allowing view resources to be created that refer to named `ThemeColor`s which can then be changed to configure the desired actual colour later.
 
 ## Instance Variables:
@@ -18,7 +20,9 @@ Graphics.ThemeColor comment: '`ThemeColor` is a class of `VirtualColor`s that pr
 
 
 '!
+
 !Graphics.ThemeColor categoriesForClass!Drawing! !
+
 !Graphics.ThemeColor methodsFor!
 
 actualColor
@@ -73,6 +77,7 @@ stbSaveOn: anSTBOutFiler
 		saveSingleton: self
 		class: self basicClass
 		name: self name! !
+
 !Graphics.ThemeColor categoriesForMethods!
 actualColor!accessing!public! !
 actualColor:!accessing!public! !
@@ -116,6 +121,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 uninitialize
 	NamedColors
 		removeAllKeys: ((NamedColors select: [:each | each isKindOf: self]) collect: [:each | each name])! !
+
 !Graphics.ThemeColor class categoriesForMethods!
 addNamed:color:!instance creation!named colors!public! !
 initialize!class initialization!development!public! !

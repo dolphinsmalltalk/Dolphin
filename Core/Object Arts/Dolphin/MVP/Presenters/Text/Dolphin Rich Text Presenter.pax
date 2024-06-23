@@ -329,6 +329,7 @@ Kernel.SharedPool
 			'WCH_EMBEDDING' -> 16rFFFC.
 			'YHeightCharPtsMost' -> 16r666
 		}!
+
 Core.Object
 	subclass: #'UI.RichText'
 	instanceVariableNames: 'rtf'
@@ -336,6 +337,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TextPresenter
 	subclass: #'UI.RichTextPresenter'
 	instanceVariableNames: ''
@@ -343,6 +345,7 @@ UI.TextPresenter
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.EDITSTREAM'
 	instanceVariableNames: ''
@@ -355,6 +358,7 @@ External.Structure
 			'_OffsetOf_dwError' -> 16r4.
 			'_OffsetOf_pfnCallback' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS.GETTEXTEX'
 	instanceVariableNames: ''
@@ -369,6 +373,7 @@ External.Structure
 			'_OffsetOf_lpDefaultChar' -> 16rC.
 			'_OffsetOf_lpUsedDefChar' -> 16r10
 		}!
+
 OS.AbstractFORMATRANGE
 	subclass: #'OS.FORMATRANGE'
 	instanceVariableNames: ''
@@ -380,6 +385,7 @@ OS.AbstractFORMATRANGE
 			'_OffsetOf_cpMax' -> 16r2C.
 			'_OffsetOf_cpMin' -> 16r28
 		}!
+
 OS.NMHDR
 	subclass: #'OS.ENLINK'
 	instanceVariableNames: ''
@@ -393,6 +399,7 @@ OS.NMHDR
 			'_OffsetOf_msg' -> 16rC.
 			'_OffsetOf_wParam' -> 16r10
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.CHARFORMAT2W'
 	instanceVariableNames: ''
@@ -421,6 +428,7 @@ OS.SizedStructure
 			'_OffsetOf_yHeight' -> 16rC.
 			'_OffsetOf_yOffset' -> 16r10
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.PARAFORMAT'
 	instanceVariableNames: ''
@@ -439,6 +447,7 @@ OS.SizedStructure
 			'_OffsetOf_wNumbering' -> 16r8.
 			'_PARAFORMAT_Size' -> 16r9C
 		}!
+
 UI.MultilineTextEdit
 	subclass: #'UI.RichTextEdit'
 	instanceVariableNames: 'streamIn winStruct'
@@ -459,6 +468,7 @@ asRichText
 	"Answer the receiver converted to a RichText instance"
 
 	^UI.RichText fromString: self! !
+
 !Core.String categoriesForMethods!
 asRichText!converting!public! !
 !
@@ -478,6 +488,7 @@ getRichTextIfNone: exceptionHandler
 	result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #RichText ifNone: exceptionHandler! !
+
 !UI.Clipboard categoriesForMethods!
 getRichText!accessing!public! !
 getRichTextIfNone:!accessing!public! !
@@ -513,6 +524,7 @@ selectionRtf: aString
 	RichText/Strings."
 
 	! !
+
 !UI.TextEdit categoriesForMethods!
 richText!accessing!public! !
 richTextClass!accessing!private! !
@@ -527,6 +539,7 @@ richText
 	May be overridden by subclasses which actually contain rich text."
 
 	^self plainText asRichText! !
+
 !UI.View categoriesForMethods!
 richText!accessing!public! !
 !

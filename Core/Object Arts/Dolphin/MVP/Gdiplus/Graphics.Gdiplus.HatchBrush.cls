@@ -10,8 +10,11 @@ Graphics.Gdiplus.Brush
 			'ForegroundPercentages'
 				-> #[12 12 18 18 23 32 3 6 12 25 37 47 50 62 75 87 94 97 25 25 50 50 37 37 25 25 50 50 50 50 12 12 12 12 12 37 25 22 19 34 30 50 9 11 9 20 75 59 44 50 50 22 39]
 		}!
+
 Graphics.Gdiplus.HatchBrush guid: (Core.GUID fromString: '{1a1a5ea4-6151-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.HatchBrush comment: 'A hatch brush paints a background and paints, over that background, a foreground that consists of a pattern of lines, dots, dashes, squares, crosshatch, or some variation of these. The hatch brush consists of two colors: one for the background and one for the foreground.'!
+
 !Graphics.Gdiplus.HatchBrush methodsFor!
 
 backcolor
@@ -43,6 +46,7 @@ luminance
 	percentage := ForegroundPercentages at: self hatchStyle + 1.
 	^self backcolor luminance * ((100 - percentage) / 100.0)
 		+ (self forecolor luminance * percentage / 100.0)! !
+
 !Graphics.Gdiplus.HatchBrush categoriesForMethods!
 backcolor!accessing!public! !
 forecolor!accessing!public! !
@@ -123,6 +127,7 @@ style: aNumber forecolor: foreARGB backcolor: backARGB
 				style: aNumber
 				forecolor: foreARGB
 				backcolor: backARGB)! !
+
 !Graphics.Gdiplus.HatchBrush class categoriesForMethods!
 initialize!class initialization!public! !
 style:forecolor:backcolor:!instance creation!public! !

@@ -7,10 +7,15 @@ Kernel.StSemanticScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'FarReturnMask' -> 16r2. 'NeedsSelfMask' -> 16r1 }!
+
 Kernel.StLexicalScope guid: (Core.GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
+
 Kernel.StLexicalScope isNonInstantiable: true!
+
 Kernel.StLexicalScope comment: ''!
+
 !Kernel.StLexicalScope categoriesForClass!Kernel-Objects! !
+
 !Kernel.StLexicalScope methodsFor!
 
 argumentCount
@@ -137,6 +142,7 @@ unreferencedArguments
 visibleVariablesDo: aMonadicValuable visited: aSet
 	locals do: [:each | (aSet addNewElement: each name) ifTrue: [aMonadicValuable value: each]].
 	outer visibleVariablesDo: aMonadicValuable visited: aSet! !
+
 !Kernel.StLexicalScope categoriesForMethods!
 argumentCount!accessing!public! !
 declareArgument:!helpers!private! !

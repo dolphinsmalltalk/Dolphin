@@ -267,6 +267,7 @@ Kernel.Namespace
 			'IdleConnectionTimeout' -> 16r0.
 			'MaxCacheResponseSize' -> 16r0
 		}!
+
 External.DynamicLinkLibrary
 	subclass: #'WinHttpServer.HttpApiLibrary'
 	instanceVariableNames: ''
@@ -353,6 +354,7 @@ External.DynamicLinkLibrary
 			'HTTP_SERVICE_CONFIG_SSL_FLAG_USE_DS_MAPPER' -> 16r1.
 			'HTTP_URL_FLAG_REMOVE_ALL' -> 16r1
 		}!
+
 External.Structure
 	subclass: #'WinHttpServer.HttpServerStructure'
 	instanceVariableNames: ''
@@ -360,6 +362,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_BYTE_RANGE'
 	instanceVariableNames: ''
@@ -371,6 +374,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Length' -> 16r8.
 			'_OffsetOf_StartingOffset' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_CACHE_POLICY'
 	instanceVariableNames: ''
@@ -382,6 +386,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Policy' -> 16r0.
 			'_OffsetOf_SecondsToLive' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_CHANNEL_BIND_INFO'
 	instanceVariableNames: ''
@@ -395,6 +400,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_NumberOfServiceNames' -> 16rC.
 			'_OffsetOf_ServiceNames' -> 16r8
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_COOKED_URL'
 	instanceVariableNames: ''
@@ -412,6 +418,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pQueryString' -> 16r14.
 			'_OffsetOf_QueryStringLength' -> 16r6
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_DATA_CHUNK'
 	instanceVariableNames: 'data'
@@ -430,6 +437,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_FromMemory_BufferLength' -> 16rC.
 			'_OffsetOf_FromMemory_pBuffer' -> 16r8
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_HEADERS'
 	instanceVariableNames: ''
@@ -442,6 +450,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_TrailerCount' -> 16r8.
 			'_OffsetOf_UnknownHeaderCount' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_KNOWN_HEADER'
 	instanceVariableNames: ''
@@ -453,6 +462,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pRawValue' -> 16r4.
 			'_OffsetOf_RawValueLength' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_LOG_FIELDS_DATA'
 	instanceVariableNames: ''
@@ -492,6 +502,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_UserNameLength' -> 16r4.
 			'_OffsetOf_Win32Status' -> 16r50
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'
 	instanceVariableNames: ''
@@ -505,6 +516,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KnownHeaderCount' -> 16r8.
 			'_OffsetOf_KnownHeaders' -> 16rC
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_PROPERTY_FLAGS'
 	instanceVariableNames: ''
@@ -512,6 +524,7 @@ WinHttpServer.HttpServerStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_Present' -> 16r0 }!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_QOS_SETTING_INFO'
 	instanceVariableNames: 'setting'
@@ -523,6 +536,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_QosSetting' -> 16r4.
 			'_OffsetOf_QosType' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_REQUEST_AUTH_INFO'
 	instanceVariableNames: ''
@@ -545,6 +559,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pPackageName' -> 16r30.
 			'_OffsetOf_SecStatus' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'
 	instanceVariableNames: ''
@@ -558,6 +573,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Flags' -> 16rC.
 			'_OffsetOf_ServiceName' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_REQUEST_INFO'
 	instanceVariableNames: ''
@@ -570,6 +586,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_InfoType' -> 16r0.
 			'_OffsetOf_pInfo' -> 16r8
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'
 	instanceVariableNames: ''
@@ -584,6 +601,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_TokenBinding' -> 16r0.
 			'_OffsetOf_TokenBindingSize' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_REQUEST_V1'
 	instanceVariableNames: ''
@@ -611,6 +629,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Verb' -> 16r24.
 			'_OffsetOf_Version' -> 16r20
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_RESPONSE_INFO'
 	instanceVariableNames: ''
@@ -623,6 +642,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pInfo' -> 16r8.
 			'_OffsetOf_Type' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_RESPONSE_V1'
 	instanceVariableNames: 'contentType content'
@@ -640,6 +660,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_StatusCode' -> 16r8.
 			'_OffsetOf_Version' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS'
 	instanceVariableNames: ''
@@ -651,6 +672,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Realm' -> 16r4.
 			'_OffsetOf_RealmLength' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'
 	instanceVariableNames: ''
@@ -664,6 +686,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Realm' -> 16rC.
 			'_OffsetOf_RealmLength' -> 16r8
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_BASE'
 	instanceVariableNames: ''
@@ -671,6 +694,7 @@ WinHttpServer.HttpServerStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_SERVICE_BINDING_BASE_Size' -> 16r4. '_OffsetOf_Type' -> 16r0 }!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET'
 	instanceVariableNames: ''
@@ -682,6 +706,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'
 	instanceVariableNames: 'address'
@@ -693,6 +718,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_AddrLength' -> 16r0.
 			'_OffsetOf_pAddress' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'
 	instanceVariableNames: ''
@@ -704,6 +730,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_AddrCount' -> 16r0.
 			'_OffsetOf_AddrList' -> 16r8
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET'
 	instanceVariableNames: ''
@@ -715,6 +742,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r80
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'
 	instanceVariableNames: ''
@@ -734,6 +762,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pSslHash' -> 16r4.
 			'_OffsetOf_SslHashLength' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET'
 	instanceVariableNames: ''
@@ -745,6 +774,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'
 	instanceVariableNames: ''
@@ -756,6 +786,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Host' -> 16r80.
 			'_OffsetOf_IpPort' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'
 	instanceVariableNames: ''
@@ -767,6 +798,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r88
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'
 	instanceVariableNames: ''
@@ -778,6 +810,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'
 	instanceVariableNames: ''
@@ -789,6 +822,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r4
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'
 	instanceVariableNames: ''
@@ -803,6 +837,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pCertEncoded' -> 16r8.
 			'_OffsetOf_Token' -> 16rC
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SSL_INFO'
 	instanceVariableNames: ''
@@ -820,6 +855,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_ServerCertSubjectSize' -> 16r8.
 			'_OffsetOf_SslClientCertNegotiated' -> 16r18
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_SSL_PROTOCOL_INFO'
 	instanceVariableNames: ''
@@ -836,6 +872,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyExchangeType' -> 16r14.
 			'_OffsetOf_Protocol' -> 16r0
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_UNKNOWN_HEADER'
 	instanceVariableNames: ''
@@ -849,6 +886,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pRawValue' -> 16r8.
 			'_OffsetOf_RawValueLength' -> 16r2
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HTTP_VERSION'
 	instanceVariableNames: ''
@@ -860,6 +898,7 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_MajorVersion' -> 16r0.
 			'_OffsetOf_MinorVersion' -> 16r2
 		}!
+
 WinHttpServer.HttpServerStructure
 	subclass: #'WinHttpServer.HttpServiceConfigQuery'
 	instanceVariableNames: ''
@@ -867,6 +906,7 @@ WinHttpServer.HttpServerStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HttpServiceConfigQuery_Size' -> 16r4. '_OffsetOf_QueryDesc' -> 16r0 }!
+
 WinHttpServer.HTTP_HEADERS
 	subclass: #'WinHttpServer.HTTP_REQUEST_HEADERS'
 	instanceVariableNames: ''
@@ -874,6 +914,7 @@ WinHttpServer.HTTP_HEADERS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_REQUEST_HEADERS_Size' -> 16r158. '_OffsetOf_KnownHeaders' -> 16r10 }!
+
 WinHttpServer.HTTP_HEADERS
 	subclass: #'WinHttpServer.HTTP_RESPONSE_HEADERS'
 	instanceVariableNames: ''
@@ -881,6 +922,7 @@ WinHttpServer.HTTP_HEADERS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_RESPONSE_HEADERS_Size' -> 16r100. '_OffsetOf_KnownHeaders' -> 16r10 }!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS
 	subclass: #'WinHttpServer.HTTP_BINDING_INFO'
 	instanceVariableNames: ''
@@ -888,6 +930,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_BINDING_INFO_Size' -> 16r8. '_OffsetOf_RequestQueueHandle' -> 16r4 }!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS
 	subclass: #'WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'
 	instanceVariableNames: ''
@@ -895,6 +938,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_LISTEN_ENDPOINT_INFO_Size' -> 16r8. '_OffsetOf_EnableSharing' -> 16r4 }!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS
 	subclass: #'WinHttpServer.HTTP_LOGGING_INFO'
 	instanceVariableNames: 'directoryName softwareName'
@@ -917,6 +961,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 			'_OffsetOf_SoftwareName' -> 16r8.
 			'_OffsetOf_SoftwareNameLength' -> 16rC
 		}!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS
 	subclass: #'WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'
 	instanceVariableNames: ''
@@ -924,6 +969,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_PROTECTION_LEVEL_INFO_Size' -> 16r8. '_OffsetOf_Level' -> 16r4 }!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS
 	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'
 	instanceVariableNames: ''
@@ -940,6 +986,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 			'_OffsetOf_ReceiveContextHandle' -> 16r9.
 			'_OffsetOf_ReceiveMutualAuth' -> 16r8
 		}!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS
 	subclass: #'WinHttpServer.HTTP_STATE_INFO'
 	instanceVariableNames: ''
@@ -947,6 +994,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_STATE_INFO_Size' -> 16r8. '_OffsetOf_State' -> 16r4 }!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS
 	subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'
 	instanceVariableNames: ''
@@ -962,6 +1010,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 			'_OffsetOf_MinSendRate' -> 16r10.
 			'_OffsetOf_RequestQueue' -> 16r8
 		}!
+
 WinHttpServer.HTTP_PROPERTY_FLAGS
 	subclass: #'WinHttpServer.HttpQosSetting'
 	instanceVariableNames: ''
@@ -969,6 +1018,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WinHttpServer.HttpQosSetting
 	subclass: #'WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'
 	instanceVariableNames: ''
@@ -976,6 +1026,7 @@ WinHttpServer.HttpQosSetting
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_BANDWIDTH_LIMIT_INFO_Size' -> 16r8. '_OffsetOf_MaxBandwidth' -> 16r4 }!
+
 WinHttpServer.HttpQosSetting
 	subclass: #'WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'
 	instanceVariableNames: ''
@@ -983,6 +1034,7 @@ WinHttpServer.HttpQosSetting
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_CONNECTION_LIMIT_INFO_Size' -> 16r8. '_OffsetOf_MaxConnections' -> 16r4 }!
+
 WinHttpServer.HttpQosSetting
 	subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
 	instanceVariableNames: ''
@@ -995,6 +1047,7 @@ WinHttpServer.HttpQosSetting
 			'_OffsetOf_MaxBandwidth' -> 16r4.
 			'_OffsetOf_MaxPeakBandwidth' -> 16r8
 		}!
+
 WinHttpServer.HTTP_REQUEST_V1
 	subclass: #'WinHttpServer.HTTP_REQUEST_V2'
 	instanceVariableNames: ''
@@ -1006,6 +1059,7 @@ WinHttpServer.HTTP_REQUEST_V1
 			'_OffsetOf_pRequestInfo' -> 16r1D4.
 			'_OffsetOf_RequestInfoCount' -> 16r1D0
 		}!
+
 WinHttpServer.HTTP_RESPONSE_V1
 	subclass: #'WinHttpServer.HTTP_RESPONSE_V2'
 	instanceVariableNames: ''
@@ -1017,6 +1071,7 @@ WinHttpServer.HTTP_RESPONSE_V1
 			'_OffsetOf_pResponseInfo' -> 16r11C.
 			'_OffsetOf_ResponseInfoCount' -> 16r118
 		}!
+
 WinHttpServer.HTTP_SERVICE_BINDING_BASE
 	subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_A'
 	instanceVariableNames: ''
@@ -1028,6 +1083,7 @@ WinHttpServer.HTTP_SERVICE_BINDING_BASE
 			'_OffsetOf_Buffer' -> 16r4.
 			'_OffsetOf_BufferSize' -> 16r8
 		}!
+
 WinHttpServer.HTTP_SERVICE_BINDING_BASE
 	subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_W'
 	instanceVariableNames: ''
@@ -1039,6 +1095,7 @@ WinHttpServer.HTTP_SERVICE_BINDING_BASE
 			'_OffsetOf_Buffer' -> 16r4.
 			'_OffsetOf_BufferSize' -> 16r8
 		}!
+
 WinHttpServer.HttpServiceConfigQuery
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_QUERY'
 	instanceVariableNames: ''
@@ -1050,6 +1107,7 @@ WinHttpServer.HttpServiceConfigQuery
 			'_OffsetOf_dwToken' -> 16r88.
 			'_OffsetOf_KeyDesc' -> 16r8
 		}!
+
 WinHttpServer.HttpServiceConfigQuery
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY'
 	instanceVariableNames: ''
@@ -1061,6 +1119,7 @@ WinHttpServer.HttpServiceConfigQuery
 			'_OffsetOf_dwToken' -> 16r8.
 			'_OffsetOf_KeyDesc' -> 16r4
 		}!
+
 WinHttpServer.HttpServiceConfigQuery
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY'
 	instanceVariableNames: ''
@@ -1072,6 +1131,7 @@ WinHttpServer.HttpServiceConfigQuery
 			'_OffsetOf_dwToken' -> 16r90.
 			'_OffsetOf_KeyDesc' -> 16r8
 		}!
+
 WinHttpServer.HttpServiceConfigQuery
 	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY'
 	instanceVariableNames: ''

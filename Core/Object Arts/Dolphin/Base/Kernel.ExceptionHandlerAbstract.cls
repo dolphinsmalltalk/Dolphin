@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ExceptionHandlerAbstract guid: (Core.GUID fromString: '{87b4c484-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.ExceptionHandlerAbstract isNonInstantiable: true!
+
 Kernel.ExceptionHandlerAbstract comment: ''!
+
 !Kernel.ExceptionHandlerAbstract categoriesForClass!Kernel-Exception Handling! !
+
 !Kernel.ExceptionHandlerAbstract methodsFor!
 
 actionFor: exception
@@ -85,6 +90,7 @@ try: niladicBlock
 			ensure: [process exceptionEnvironment: old].
 	returnContinuation := nil.
 	^answer! !
+
 !Kernel.ExceptionHandlerAbstract categoriesForMethods!
 actionFor:!helpers!private! !
 markAndTry!debugger-step through!evaluating!private! !
@@ -102,6 +108,7 @@ initialize
 	"Initialize the receiver's class instance variable."
 
 	RetryCookie := Object new! !
+
 !Kernel.ExceptionHandlerAbstract class categoriesForMethods!
 initialize!development!initializing!public! !
 !

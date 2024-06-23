@@ -37,6 +37,7 @@ Kernel.SharedPool
 			'HH_TP_HELP_WM_HELP' -> 16r11.
 			'HH_UNINITIALIZE' -> 16r1D
 		}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.HTMLHelpLibrary'
 	instanceVariableNames: 'cookie'

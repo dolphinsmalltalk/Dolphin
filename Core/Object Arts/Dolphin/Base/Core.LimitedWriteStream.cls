@@ -7,9 +7,13 @@ Core.SequencedStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.LimitedWriteStream guid: (Core.GUID fromString: '{559e9343-8db5-45dd-bf26-68644d392dcb}')!
+
 Core.LimitedWriteStream comment: ''!
+
 !Core.LimitedWriteStream categoriesForClass!Collections-Streams! !
+
 !Core.LimitedWriteStream methodsFor!
 
 alreadyVisited: aCompositeObject
@@ -158,6 +162,7 @@ visitedBlock
 
 visitedBlock: anObject
 	visitedBlock := anObject! !
+
 !Core.LimitedWriteStream categoriesForMethods!
 alreadyVisited:!private! !
 atEnd!public!testing! !
@@ -264,6 +269,7 @@ with: aCollection from: firstIndex to: lastIndex
 	^(self on: aCollection from: firstIndex to: lastIndex)
 		moveToEnd;
 		yourself! !
+
 !Core.LimitedWriteStream class categoriesForMethods!
 defaultLimit!constants!private! !
 defaultLimitBlock!constants!private! !

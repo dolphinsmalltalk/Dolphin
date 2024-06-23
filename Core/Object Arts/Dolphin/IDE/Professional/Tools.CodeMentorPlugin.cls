@@ -7,7 +7,9 @@ Tools.SmalllintPlugin
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.CodeMentorPlugin guid: (Core.GUID fromString: '{b1e97c3c-3c35-43e0-99aa-97d69135e2ea}')!
+
 Tools.CodeMentorPlugin comment: 'CodeMentorPlugin is a <classBrowserPlugin> that tests the quality of code currently seen by a browser using Refactory Inc''s SmallLint package.  Since the time taken to perform the SmallLint analysis can be lengthy, the evaluation is performed in a background thread.
 
 Instance Variables:
@@ -27,7 +29,9 @@ Class Variables:
 	DefaultRefreshMode	<Symbol>. The name of the default refresh/update mode.
 
 '!
+
 !Tools.CodeMentorPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
+
 !Tools.CodeMentorPlugin methodsFor!
 
 addFailedRule: aLintRule
@@ -651,6 +655,7 @@ stopCheckerProcess
 	self isBusy ifFalse: [^self].
 	checkerProcess terminate.
 	checkerProcess := nil! !
+
 !Tools.CodeMentorPlugin categoriesForMethods!
 addFailedRule:!helpers!private! !
 allRules!operations!private! !
@@ -891,6 +896,7 @@ resource_Default_view
 
 sleepIcon
 	^Icon fromId: 'LintSleep.ico'! !
+
 !Tools.CodeMentorPlugin class categoriesForMethods!
 busyIcon!constants!private! !
 defaultFilterFilename!accessing!private! !

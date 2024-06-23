@@ -55,6 +55,7 @@ Kernel.Namespace
 	imports: #(#{OS.COM private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'VBScript.IMatch'
 	instanceVariableNames: ''
@@ -62,6 +63,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'VBScript.IMatchCollection'
 	instanceVariableNames: ''
@@ -69,6 +71,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'VBScript.IRegExpAbstract'
 	instanceVariableNames: ''
@@ -76,6 +79,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'VBScript.ISubMatches'
 	instanceVariableNames: ''
@@ -83,6 +87,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 VBScript.IMatch
 	subclass: #'VBScript.IMatch2'
 	instanceVariableNames: ''
@@ -90,6 +95,7 @@ VBScript.IMatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 VBScript.IMatchCollection
 	subclass: #'VBScript.IMatchCollection2'
 	instanceVariableNames: ''
@@ -97,6 +103,7 @@ VBScript.IMatchCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 VBScript.IRegExpAbstract
 	subclass: #'VBScript.IRegExp'
 	instanceVariableNames: ''
@@ -104,6 +111,7 @@ VBScript.IRegExpAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 VBScript.IRegExpAbstract
 	subclass: #'VBScript.IRegExp2'
 	instanceVariableNames: ''

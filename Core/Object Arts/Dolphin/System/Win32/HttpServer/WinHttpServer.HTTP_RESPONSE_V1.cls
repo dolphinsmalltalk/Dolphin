@@ -17,7 +17,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_StatusCode' -> 16r8.
 			'_OffsetOf_Version' -> 16r4
 		}!
+
 WinHttpServer.HTTP_RESPONSE_V1 guid: (Core.GUID fromString: '{c23ac8a9-b97f-4aec-8096-91648573c429}')!
+
 WinHttpServer.HTTP_RESPONSE_V1 comment: '`HTTP_RESPONSE_V1` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -40,7 +42,9 @@ struct tagHTTP_RESPONSE_V1 {
 } HTTP_RESPONSE_V1;
 ```
 '!
+
 !WinHttpServer.HTTP_RESPONSE_V1 categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_RESPONSE_V1 methodsFor!
 
 content: aByteObject
@@ -147,6 +151,7 @@ Version: aHTTP_VERSION
 		from: ##(_OffsetOf_Version + 1)
 		to: ##(_OffsetOf_Version + HTTP_VERSION._HTTP_VERSION_Size)
 		startingAt: 1! !
+
 !WinHttpServer.HTTP_RESPONSE_V1 categoriesForMethods!
 content:!accessing!public! !
 contentType:!accessing!public! !
@@ -205,6 +210,7 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks)! !
+
 !WinHttpServer.HTTP_RESPONSE_V1 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

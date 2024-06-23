@@ -7,9 +7,13 @@ UI.Tests.ListControlTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ListBoxTest guid: (Core.GUID fromString: '{0cceab03-640d-4bd6-8e8c-1da96bf288d2}')!
+
 UI.Tests.ListBoxTest isNonInstantiable: true!
+
 UI.Tests.ListBoxTest comment: ''!
+
 !UI.Tests.ListBoxTest methodsFor!
 
 classToTest
@@ -55,6 +59,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view lastSelIndices equals: #()! !
+
 !UI.Tests.ListBoxTest categoriesForMethods!
 classToTest!helpers!private! !
 newSelectionAfterLeftClickOutsideList:!helpers!private! !

@@ -5,13 +5,17 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassCommentChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserClassCommentChunk guid: (GUID fromString: '{58b6be85-0cf0-46ab-954b-b01e2d5b1c24}')!
+
 ChunkBrowserClassCommentChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserClassCommentChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserClassCommentChunk methodsFor!
 
 initialize: aString tokens: anArray
@@ -23,6 +27,7 @@ initialize: aString tokens: anArray
 
 isMatch
 	^self identity1AsClass ifNotNil: [:arg | arg instanceClass comment = comment]! !
+
 !ChunkBrowserClassCommentChunk categoriesForMethods!
 initialize:tokens:!initializing!private! !
 isMatch!public!testing! !
@@ -40,6 +45,7 @@ isChunkClassFor: aString tokens: anArray
 			[(self isToken: anArray second keyword: 'comment:') and: 
 					[(self isTokenString: anArray third)
 						and: [self isTokenClassIdentifier: anArray first]]]! !
+
 !ChunkBrowserClassCommentChunk class categoriesForMethods!
 chunkType!constants!public! !
 isChunkClassFor:tokens:!public!testing! !

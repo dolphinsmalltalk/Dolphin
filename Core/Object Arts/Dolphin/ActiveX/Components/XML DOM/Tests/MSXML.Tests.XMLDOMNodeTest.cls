@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.Tests.XMLDOMNodeTest guid: (Core.GUID fromString: '{956b7839-a2fb-47f1-9c74-2aacae4bdffb}')!
+
 MSXML.Tests.XMLDOMNodeTest comment: ''!
+
 !MSXML.Tests.XMLDOMNodeTest methodsFor!
 
 testDisplayOn
@@ -43,6 +46,7 @@ testSetNodeTypeAndValue
 	elem setNodeTypeAndValue: false.
 	self assert: elem dataType equals: 'boolean'.
 	self assert: elem nodeTypedValue not! !
+
 !MSXML.Tests.XMLDOMNodeTest categoriesForMethods!
 testDisplayOn!public!unit tests! !
 testDownCast!public!unit tests! !

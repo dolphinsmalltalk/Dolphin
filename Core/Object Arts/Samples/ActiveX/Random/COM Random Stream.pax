@@ -60,6 +60,7 @@ OS.COM.DualInterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RuntimeSessionManager
 	subclass: #'OS.COM.Examples.RandomStreamSessionManager'
 	instanceVariableNames: ''
@@ -67,6 +68,7 @@ UI.RuntimeSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'OS.COM.Examples.IRandomStream'
 	instanceVariableNames: ''

@@ -7,9 +7,13 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ProtectInstanceVariableRefactoring guid: (Core.GUID fromString: '{5175a912-5f59-47e5-ab30-66893c7043e5}')!
+
 Refactory.Browser.ProtectInstanceVariableRefactoring comment: ''!
+
 !Refactory.Browser.ProtectInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.ProtectInstanceVariableRefactoring methodsFor!
 
 getterSetterMethods
@@ -53,6 +57,7 @@ preconditions
 transform
 	self setOption: #inlineExpression toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]! !
+
 !Refactory.Browser.ProtectInstanceVariableRefactoring categoriesForMethods!
 getterSetterMethods!accessing!private! !
 inline:!public!transforming! !

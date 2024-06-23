@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.Marker guid: (Core.GUID fromString: '{2aad3a52-111c-4781-b79b-22f044e4a6f7}')!
+
 UI.Scintilla.Marker comment: 'ScintillaMarkers represent the visible ''markers'' displayed in the margins of <ScintillaView>s.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Instance Variables:
 	handle		<integer>. Handle allocated by Scintilla to uniquely identify the marker.
 
 '!
+
 !UI.Scintilla.Marker categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.Marker methodsFor!
 
 addToView: aScintillaView 
@@ -85,6 +89,7 @@ view
 
 view: anObject
 	view := anObject! !
+
 !UI.Scintilla.Marker categoriesForMethods!
 addToView:!helpers!public! !
 cacheCurrentLine!accessing!public! !
@@ -111,6 +116,7 @@ definition: aScintillaMarkerDefinition line: anInteger
 
 icon
 	^ScintillaView icon! !
+
 !UI.Scintilla.Marker class categoriesForMethods!
 definition:line:!instance creation!public! !
 icon!constants!development!public! !

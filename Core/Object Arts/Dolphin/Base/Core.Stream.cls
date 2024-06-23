@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Stream guid: (Core.GUID fromString: '{87b4c4c4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Stream isNonInstantiable: true!
+
 Core.Stream comment: 'Stream represents a class of objects which can be used for streaming I/O. Stream itself is abstract.
 
 InstanceVariables
@@ -16,7 +19,9 @@ InstanceVariables
 
 Class Variables:
 	EndOfStreamSignal	<exceptionSignaler/exeptionSelector>. Exception to mark attempts to read off the end of the stream.'!
+
 !Core.Stream categoriesForClass!Collections-Streams! !
+
 !Core.Stream methodsFor!
 
 << anObject
@@ -376,6 +381,7 @@ upToEnd
 
 visit: anObject do: aNiladicValue
 	aNiladicValue value! !
+
 !Core.Stream categoriesForMethods!
 <<!accessing!public! !
 atEnd!public!testing! !
@@ -454,6 +460,7 @@ new
 	"Streams must be instantiated onto something."
 
 	^self shouldNotImplement! !
+
 !Core.Stream class categoriesForMethods!
 endOfStreamSignal!constants!public! !
 initialize!development!initializing!private! !

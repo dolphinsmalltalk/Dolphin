@@ -7,8 +7,11 @@ Graphics.Tests.ImageTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.IconTest guid: (Core.GUID fromString: '{96d9e7d9-8086-4706-b958-791a85a4e86c}')!
+
 Graphics.Tests.IconTest comment: ''!
+
 !Graphics.Tests.IconTest methodsFor!
 
 imageFile
@@ -186,6 +189,7 @@ verifyImage: anIcon1 sameAs: anIcon2
 	"Private - Assumes icons were loaded with LR_SHARED."
 
 	self assert: anIcon1 handle equals: anIcon2 handle! !
+
 !Graphics.Tests.IconTest categoriesForMethods!
 imageFile!public! !
 subjectClass!constants!private! !

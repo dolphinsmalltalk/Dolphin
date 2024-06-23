@@ -7,8 +7,11 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Region guid: (Core.GUID fromString: '{148916f7-d5f7-4aea-a739-3e4ba82692ac}')!
+
 Graphics.Gdiplus.Region comment: 'An instance of GdiplusRegion describes an area of the display surface. The area can be any shape, i.e., the boundary of the area can be a combination of curved and straight lines. Regions can also be created from the interiors of rectangles, paths, or a combination of these. Regions are used in clipping and hit-testing operations.'!
+
 !Graphics.Gdiplus.Region methodsFor!
 
 _clipGpGraphics: aGpGraphics mode: anInteger
@@ -168,6 +171,7 @@ xor: aGdiplusRegionOrRectangleOrGraphicsPath
 	"Answers a new <Region> representing the area of the receiver which is covered by the receiver or the argument but not both."
 
 	^aGdiplusRegionOrRectangleOrGraphicsPath _combineGpRegion: self clone mode: CombineModeXor! !
+
 !Graphics.Gdiplus.Region categoriesForMethods!
 _clipGpGraphics:mode:!double dispatch!private! !
 _combineGpRegion:mode:!combining!double dispatch!private! !
@@ -215,6 +219,7 @@ new
 	"Answer an instance of the receiver that is infinite."
 
 	^self fromInitializer: RegionInitializer infinite! !
+
 !Graphics.Gdiplus.Region class categoriesForMethods!
 empty!instance creation!public! !
 fromPath:!instance creation!public! !

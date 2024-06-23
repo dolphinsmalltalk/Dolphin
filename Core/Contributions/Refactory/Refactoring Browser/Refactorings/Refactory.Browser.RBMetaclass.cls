@@ -7,10 +7,14 @@ Refactory.Browser.RBAbstractClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBMetaclass guid: (Core.GUID fromString: '{cf1618c4-6ee9-418d-9fd0-21e81860e79b}')!
+
 Refactory.Browser.RBMetaclass comment: 'RBMetaclass represents a Metaclass.
 '!
+
 !Refactory.Browser.RBMetaclass categoriesForClass!Refactory-Model! !
+
 !Refactory.Browser.RBMetaclass methodsFor!
 
 allClassVariableNames
@@ -110,6 +114,7 @@ unqualifiedName
 	"Answer the unqualified name of the class."
 
 	^instanceClass unqualifiedName , ' class'! !
+
 !Refactory.Browser.RBMetaclass categoriesForMethods!
 allClassVariableNames!accessing!public! !
 baseEnvironment!constants!private! !

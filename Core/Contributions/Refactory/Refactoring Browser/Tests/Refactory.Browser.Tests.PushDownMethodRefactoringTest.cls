@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.PushDownMethodRefactoringTest guid: (Core.GUID fromString: '{0795b490-f7d0-4814-9b01-1f2f86ac9c20}')!
+
 Refactory.Browser.Tests.PushDownMethodRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.PushDownMethodRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.PushDownMethodRefactoringTest methodsFor!
 
 testPushDownMethod
@@ -53,6 +57,7 @@ testPushDownNonExistantMenu
 				from: LintRuleTestData.
 	self shouldFail: refactoring
 		withMessage: 'LintRuleTestData does not define #someMethodThatDoesNotExist'! !
+
 !Refactory.Browser.Tests.PushDownMethodRefactoringTest categoriesForMethods!
 testPushDownMethod!public!tests! !
 testPushDownMethodOnNonAbstractClass!failure tests!public! !
