@@ -9,6 +9,7 @@ Kernel.Namespace
 	imports: #(#{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Namespace
 	subclass: #External
 	instanceVariableNames: ''
@@ -16,6 +17,7 @@ Kernel.Namespace
 	imports: #(#{Core} #{Kernel private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Namespace
 	subclass: #Graphics
 	instanceVariableNames: ''
@@ -23,6 +25,7 @@ Kernel.Namespace
 	imports: #(#{Core private} #{OS private} #{External private} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Namespace
 	subclass: #Kernel
 	instanceVariableNames: ''
@@ -30,6 +33,7 @@ Kernel.Namespace
 	imports: #(#{Core} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Namespace
 	subclass: #OS
 	instanceVariableNames: ''
@@ -46,6 +50,7 @@ Kernel.Namespace
 			'PATHCCH_FORCE_ENABLE_LONG_NAME_PROCESS' -> 16r2.
 			'PATHCCH_NONE' -> 16r0
 		}!
+
 Kernel.Namespace
 	subclass: #Root
 	instanceVariableNames: ''
@@ -53,6 +58,7 @@ Kernel.Namespace
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Namespace
 	subclass: #'Kernel.SharedPool'
 	instanceVariableNames: ''
@@ -60,6 +66,7 @@ Kernel.Namespace
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Namespace
 	subclass: #Smalltalk
 	instanceVariableNames: ''
@@ -67,6 +74,7 @@ Kernel.Namespace
 	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External} #{Tools private})
 	classInstanceVariableNames: 'events allRoots allClasses classesByGuid oldNames'
 	classConstants: {}!
+
 Kernel.Namespace
 	subclass: #Tools
 	instanceVariableNames: ''
@@ -74,6 +82,7 @@ Kernel.Namespace
 	imports: #(#{Core} #{UI private} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Namespace
 	subclass: #UI
 	instanceVariableNames: ''
@@ -81,6 +90,7 @@ Kernel.Namespace
 	imports: #(#{Core} #{Graphics} #{OS private} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SharedPool
 	subclass: #'Kernel._PrimitiveFailureCode'
 	instanceVariableNames: ''
@@ -132,6 +142,7 @@ Kernel.SharedPool
 			'Unsuccessful' -> -16r17FFFFFF.
 			'WrongNumberOfArgs' -> -16r3FFD735F
 		}!
+
 Kernel.SharedPool
 	subclass: #'Kernel.CompilerFlags'
 	instanceVariableNames: ''
@@ -149,6 +160,7 @@ Kernel.SharedPool
 			'TempsMap' -> 16r20.
 			'TextMap' -> 16r10
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.CRTConstants'
 	instanceVariableNames: ''
@@ -240,6 +252,7 @@ Kernel.SharedPool
 			'SEEK_SET' -> 16r0.
 			'STRUNCATE' -> 16r50
 		}!
+
 Kernel.SharedPool
 	subclass: #'External.ExtCallArgTypes'
 	instanceVariableNames: ''
@@ -290,6 +303,7 @@ Kernel.SharedPool
 			'ExtCallArgVARIANT' -> 16r16.
 			'ExtCallArgVOID' -> 16r0
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.FacilityCodes'
 	instanceVariableNames: ''
@@ -309,6 +323,7 @@ Kernel.SharedPool
 			'FACILITY_WIN32' -> 16r7.
 			'FACILITY_WINDOWS' -> 16r8
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.ICUConstants'
 	instanceVariableNames: ''
@@ -468,6 +483,7 @@ Kernel.SharedPool
 			'UCHAR_XID_CONTINUE' -> 16r20.
 			'UCHAR_XID_START' -> 16r21
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.MessageBoxConstants'
 	instanceVariableNames: ''
@@ -504,6 +520,7 @@ Kernel.SharedPool
 			'MB_YESNO' -> 16r4.
 			'MB_YESNOCANCEL' -> 16r3
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.NlsConstants'
 	instanceVariableNames: ''
@@ -723,6 +740,7 @@ Kernel.SharedPool
 			'SUBLANG_DEFAULT' -> 16r1.
 			'SUBLANG_NEUTRAL' -> 16r0
 		}!
+
 Kernel.SharedPool
 	subclass: #'Kernel.OpcodePool'
 	instanceVariableNames: ''
@@ -834,6 +852,7 @@ Kernel.SharedPool
 			'StoreTemp' -> 16rD1.
 			'Supersend' -> 16rD9
 		}!
+
 Kernel.SharedPool
 	subclass: #'Kernel.ParseErrorCodes'
 	instanceVariableNames: ''
@@ -939,6 +958,7 @@ Kernel.SharedPool
 			'LErrLast' -> 16rA.
 			'LErrStringNotClosed' -> 16r3
 		}!
+
 Kernel.SharedPool
 	subclass: #'Kernel.VMConstants'
 	instanceVariableNames: ''
@@ -971,6 +991,7 @@ Kernel.SharedPool
 			'UIntMax' -> 16rFFFFFFFF.
 			'UIntPtrMax' -> 16rFFFFFFFF
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.Win32Constants'
 	instanceVariableNames: ''
@@ -2151,6 +2172,7 @@ Kernel.SharedPool
 			'WVR_VALIDRECTS' -> 16r400.
 			'WVR_VREDRAW' -> 16r200
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.Win32Errors'
 	instanceVariableNames: ''
@@ -2206,6 +2228,7 @@ Kernel.SharedPool
 			'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
 			'WCODE_HRESULT_LAST' -> -16r7FFB0001
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.WinRegConstants'
 	instanceVariableNames: ''
@@ -2261,6 +2284,7 @@ Kernel.SharedPool
 			'RRF_WOW64_MASK' -> 16r30000.
 			'RRF_ZEROONFAILURE' -> 16r20000000
 		}!
+
 nil
 	subclass: #'Core.Object'
 	instanceVariableNames: ''
@@ -2268,6 +2292,7 @@ nil
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 nil
 	subclass: #'Kernel.ProtoObject'
 	instanceVariableNames: ''
@@ -2275,6 +2300,7 @@ nil
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'External.ArrayFieldLength'
 	instanceVariableNames: ''
@@ -2282,6 +2308,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.AttributeDescriptor'
 	instanceVariableNames: 'flags'
@@ -2298,6 +2325,7 @@ Core.Object
 			'ReadableMask' -> 16r1.
 			'WriteableMask' -> 16r2
 		}!
+
 Core.Object
 	subclass: #'Core.Behavior'
 	instanceVariableNames: 'superclass methodDictionary instanceSpec'
@@ -2322,6 +2350,7 @@ Core.Object
 			'_SizeMask' -> 16rFF.
 			'_VariableMask' -> 16r1000
 		}!
+
 Core.Object
 	subclass: #'Kernel.BindingContext'
 	instanceVariableNames: 'methodClass environment identifier visited'
@@ -2329,6 +2358,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.BindingReference'
 	instanceVariableNames: ''
@@ -2344,6 +2374,7 @@ Core.Object
 			'RelativePathPrefix' -> '_'.
 			'RelativePathStringPrefix' -> '_.'
 		}!
+
 Core.Object
 	variableSubclass: #'Kernel.BlockClosure'
 	instanceVariableNames: 'outer method initialIP info receiver'
@@ -2351,6 +2382,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Boolean'
 	instanceVariableNames: ''
@@ -2358,6 +2390,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.ByteCodeDispatcher'
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'
@@ -2373,6 +2406,7 @@ Core.Object
 			'RunStarts'
 				-> #[0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 17 17 17 17 17 17 17 17 25 25 27 27 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 45 45 45 45 45 45 45 45 45 45 45 45 57 58 58 58 61 61 61 61 65 65 65 65 69 69 69 69 73 73 75 76 77 77 79 79 81 81 81 81 81 81 81 81 89 89 89 89 89 89 89 89 97 98 99 100 101 102 102 102 105 106 107 108 109 110 110 110 110 110 110 110 110 118 118 118 118 118 118 118 118 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 158 158 158 158 158 158 158 158 158 158 158 158 158 171 171 171 171 171 176 176 176 176 176 176 176 176 176 176 176 176 176 176 190 190 190 190 190 190 190 190 198 199 200 200 200 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 224 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255]
 		}!
+
 Core.Object
 	subclass: #'External.Callback'
 	instanceVariableNames: 'thunk cookie descriptor'
@@ -2380,6 +2414,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'ArgSizeOffset' -> 16rE. 'MaxThunks' -> 16r100. 'ThunkSize' -> 16r10 }!
+
 Core.Object
 	subclass: #'Core.Category'
 	instanceVariableNames: 'name'
@@ -2387,6 +2422,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'Separator' -> $- }!
+
 Core.Object
 	subclass: #'Kernel.ChunkReader'
 	instanceVariableNames: 'chunkBlock endAction context'
@@ -2394,6 +2430,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.ClassBuilder'
 	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables imports comment flags categories classConstants environment'
@@ -2464,6 +2501,7 @@ Core.Object
 			'RecompileMask' -> 16r1.
 			'Unsubclassable' -> (Set withAll: #(#{Core.Character} #{Core.SmallInteger}))
 		}!
+
 Core.Object
 	subclass: #'Core.Collection'
 	instanceVariableNames: ''
@@ -2471,6 +2509,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.CompilationResult'
 	instanceVariableNames: 'method rawTextMap rawTempsMap flags textMap tempsMap oldMethod package'
@@ -2478,6 +2517,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	variableSubclass: #'Kernel.CompiledCode'
 	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes'
@@ -2497,6 +2537,7 @@ Core.Object
 			'ReturnTrue' -> 16r2.
 			'SetInstanceVariable' -> 16r7
 		}!
+
 Core.Object
 	subclass: #'Kernel.Compiler'
 	instanceVariableNames: ''
@@ -2504,6 +2545,7 @@ Core.Object
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	variableSubclass: #'Kernel.Context'
 	instanceVariableNames: 'outer block'
@@ -2511,6 +2553,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.DeadObject'
 	instanceVariableNames: ''
@@ -2518,6 +2561,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.DeafObject'
 	instanceVariableNames: ''
@@ -2525,6 +2569,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.DeferredValue'
 	instanceVariableNames: 'valueAvailable value exception'
@@ -2532,6 +2577,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Delay'
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
@@ -2539,6 +2585,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'DefaultResolution' -> 16r3D09 }!
+
 Core.Object
 	subclass: #'External.DynamicLinkLibrary'
 	instanceVariableNames: 'handle'
@@ -2546,6 +2593,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})
 	classInstanceVariableNames: 'default'
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Exception'
 	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
@@ -2553,6 +2601,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.ExceptionFilter'
 	instanceVariableNames: 'outer discriminator'
@@ -2560,6 +2609,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.ExceptionHandlerAbstract'
 	instanceVariableNames: 'outer protectedBlock returnContinuation'
@@ -2567,6 +2617,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.ExceptionSet'
 	instanceVariableNames: 'selectors'
@@ -2574,6 +2625,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.File'
 	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
@@ -2604,6 +2656,7 @@ Core.Object
 						withAll: { #exclusive -> 16r0. #read -> 16r1. #readWrite -> 16r3. #write -> 16r2 }).
 			'SniffSize' -> 16r1000
 		}!
+
 Core.Object
 	subclass: #'Core.FileLocator'
 	instanceVariableNames: ''
@@ -2611,6 +2664,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	variableSubclass: #'External.FunctionDescriptor'
 	instanceVariableNames: 'descriptor'
@@ -2714,6 +2768,7 @@ Core.Object
 								'WORD' -> 16r5
 							})
 		}!
+
 Core.Object
 	variableByteSubclass: #'Core.GUID'
 	instanceVariableNames: ''
@@ -2721,6 +2776,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_GUID_Size' -> 16r10. 'StringSize' -> 16r26 }!
+
 Core.Object
 	subclass: #'Kernel.InputState'
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
@@ -2728,6 +2784,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.InstructionInterpreter'
 	instanceVariableNames: 'dispatcher'
@@ -2735,6 +2792,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Link'
 	instanceVariableNames: 'nextLink'
@@ -2742,6 +2800,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Locale'
 	instanceVariableNames: 'numberFormat'
@@ -2749,6 +2808,7 @@ Core.Object
 	imports: #(#{OS.NlsConstants} #{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'NoUserOverrideMask' -> 16r1000000 }!
+
 Core.Object
 	subclass: #'Core.Magnitude'
 	instanceVariableNames: ''
@@ -2756,6 +2816,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.MemoryManager'
 	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration _unused13 events'
@@ -2763,6 +2824,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Message'
 	instanceVariableNames: 'selector args'
@@ -2770,6 +2832,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.MessageSequenceAbstract'
 	instanceVariableNames: ''
@@ -2777,6 +2840,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.MethodName'
 	instanceVariableNames: 'className selector'
@@ -2784,6 +2848,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.MethodProtocol'
 	instanceVariableNames: 'name comment selectors flags'
@@ -2791,6 +2856,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ANSIMask' -> 16r2. 'ReadOnlyMask' -> 16r1 }!
+
 Core.Object
 	subclass: #'Kernel.ModalMsgLoop'
 	instanceVariableNames: 'loop'
@@ -2798,6 +2864,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Model'
 	instanceVariableNames: 'events'
@@ -2805,6 +2872,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Mutex'
 	instanceVariableNames: 'owner semaphore'
@@ -2812,6 +2880,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.Namespace'
 	instanceVariableNames: ''
@@ -2819,6 +2888,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.NullEventsCollection'
 	instanceVariableNames: ''
@@ -2826,6 +2896,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.ObjectRegistry'
 	instanceVariableNames: 'registry'
@@ -2833,6 +2904,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.Package'
 	instanceVariableNames: 'name packagePathname comment classNames methodNames variableNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedVariables changeIndex properties preDeclareClassesOnLoad'
@@ -2840,6 +2912,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.PackageManager'
 	instanceVariableNames: 'packages processEvents packagedVariables looseMethods events defaultPackage basePackages'
@@ -2847,6 +2920,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Pair'
 	instanceVariableNames: 'first second'
@@ -2854,6 +2928,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.PostedActionWindow'
 	instanceVariableNames: 'handle actions'
@@ -2861,6 +2936,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.ProcessorScheduler'
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
@@ -2868,6 +2944,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.PropertyManager'
 	instanceVariableNames: 'register'
@@ -2875,6 +2952,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.ResourceIdentifier'
 	instanceVariableNames: 'owningClass selector'
@@ -2882,6 +2960,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'SelectorPrefix' -> 'resource_' }!
+
 Core.Object
 	subclass: #'Core.SearchPolicy'
 	instanceVariableNames: ''
@@ -2889,6 +2968,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.SessionManager'
 	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole settingsChanged events'
@@ -2896,6 +2976,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: { 'EmbeddingMask' -> 16r1. 'SettingsChangeTimerId' -> 16r2 }!
+
 Core.Object
 	subclass: #'Core.SharedQueue'
 	instanceVariableNames: 'accessProtect valueAvailable contents'
@@ -2903,6 +2984,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Signal'
 	instanceVariableNames: 'description resumable'
@@ -2910,6 +2992,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.SortAlgorithm'
 	instanceVariableNames: ''
@@ -2917,6 +3000,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Sound'
 	instanceVariableNames: 'name location type fileLocator'
@@ -2924,6 +3008,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants} #{OS.MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.SourceFiler'
 	instanceVariableNames: 'stream evaluationContext flags'
@@ -2931,6 +3016,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'SourceOnlyMask' -> 16r1 }!
+
 Core.Object
 	subclass: #'Kernel.SourceManager'
 	instanceVariableNames: 'mutex'
@@ -2938,6 +3024,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ChangesIndex' -> 16r2. 'SourcesIndex' -> 16r1 }!
+
 Core.Object
 	subclass: #'Kernel.StackFrame'
 	instanceVariableNames: 'process index'
@@ -2953,6 +3040,7 @@ Core.Object
 			'ReturnOffset' -> 16r2.
 			'SPOffset' -> 16r4
 		}!
+
 Core.Object
 	subclass: #'Core.Stream'
 	instanceVariableNames: ''
@@ -2960,6 +3048,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'External.Structure'
 	instanceVariableNames: 'bytes'
@@ -2973,6 +3062,7 @@ Core.Object
 			'TemplateFlagsMask' -> 16r3.
 			'UncompiledFieldsMask' -> 16r2
 		}!
+
 Core.Object
 	subclass: #'Kernel.UndeclaredVariable'
 	instanceVariableNames: ''
@@ -2980,6 +3070,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.UndefinedObject'
 	instanceVariableNames: ''
@@ -2987,6 +3078,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'OS.VersionInfo'
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
@@ -2994,6 +3086,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ArrayFieldLength
 	subclass: #'External.FixedArrayFieldLength'
 	instanceVariableNames: 'elementCount'
@@ -3001,6 +3094,7 @@ External.ArrayFieldLength
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AttributeDescriptor
 	subclass: #'External.Field'
 	instanceVariableNames: 'offset structClass'
@@ -3008,6 +3102,7 @@ Kernel.AttributeDescriptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Field
 	subclass: #'External.EmbeddedField'
 	instanceVariableNames: 'fieldClass'
@@ -3015,6 +3110,7 @@ External.Field
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Field
 	subclass: #'External.FillerField'
 	instanceVariableNames: 'byteSize'
@@ -3022,6 +3118,7 @@ External.Field
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Field
 	subclass: #'External.PointerField'
 	instanceVariableNames: 'pointerClass'
@@ -3029,6 +3126,7 @@ External.Field
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Field
 	subclass: #'External.ScalarField'
 	instanceVariableNames: ''
@@ -3036,6 +3134,7 @@ External.Field
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.EmbeddedField
 	subclass: #'External.ArrayField'
 	instanceVariableNames: 'arrayLength'
@@ -3043,6 +3142,7 @@ External.EmbeddedField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.EmbeddedField
 	subclass: #'External.StructureField'
 	instanceVariableNames: ''
@@ -3050,6 +3150,7 @@ External.EmbeddedField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ArrayField
 	subclass: #'External.StringField'
 	instanceVariableNames: ''
@@ -3057,6 +3158,7 @@ External.ArrayField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ArrayField
 	subclass: #'External.StructureArrayField'
 	instanceVariableNames: ''
@@ -3064,6 +3166,7 @@ External.ArrayField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.StructureArrayField
 	subclass: #'External.PointerArrayField'
 	instanceVariableNames: ''
@@ -3071,6 +3174,7 @@ External.StructureArrayField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PointerField
 	subclass: #'External.ArrayPointerField'
 	instanceVariableNames: 'arrayLength'
@@ -3078,6 +3182,7 @@ External.PointerField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ArrayPointerField
 	subclass: #'External.StructureArrayPointerField'
 	instanceVariableNames: ''
@@ -3085,6 +3190,7 @@ External.ArrayPointerField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.StructureArrayPointerField
 	subclass: #'External.PointerArrayPointerField'
 	instanceVariableNames: ''
@@ -3092,6 +3198,7 @@ External.StructureArrayPointerField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.AbstractCHARField'
 	instanceVariableNames: ''
@@ -3099,6 +3206,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.BOOLField'
 	instanceVariableNames: ''
@@ -3106,6 +3214,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.DOUBLEField'
 	instanceVariableNames: ''
@@ -3113,6 +3222,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.FLOATField'
 	instanceVariableNames: ''
@@ -3120,6 +3230,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.Int16Field'
 	instanceVariableNames: ''
@@ -3127,6 +3238,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.Int32Field'
 	instanceVariableNames: ''
@@ -3134,6 +3246,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.Int64Field'
 	instanceVariableNames: ''
@@ -3141,6 +3254,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.Int8Field'
 	instanceVariableNames: ''
@@ -3148,6 +3262,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.IntPtrField'
 	instanceVariableNames: ''
@@ -3155,6 +3270,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.UInt16Field'
 	instanceVariableNames: ''
@@ -3162,6 +3278,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.UInt32Field'
 	instanceVariableNames: ''
@@ -3169,6 +3286,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.UInt64Field'
 	instanceVariableNames: ''
@@ -3176,6 +3294,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.UInt8Field'
 	instanceVariableNames: ''
@@ -3183,6 +3302,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField
 	subclass: #'External.UIntPtrField'
 	instanceVariableNames: ''
@@ -3190,6 +3310,7 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.AbstractCHARField
 	subclass: #'External.CHARField'
 	instanceVariableNames: ''
@@ -3197,6 +3318,7 @@ External.AbstractCHARField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.AbstractCHARField
 	subclass: #'External.WCHARField'
 	instanceVariableNames: ''
@@ -3204,6 +3326,7 @@ External.AbstractCHARField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.BOOLField
 	subclass: #'External.BOOLEANField'
 	instanceVariableNames: ''
@@ -3211,6 +3334,7 @@ External.BOOLField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UIntPtrField
 	subclass: #'External.HANDLEField'
 	instanceVariableNames: ''
@@ -3218,6 +3342,7 @@ External.UIntPtrField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UIntPtrField
 	subclass: #'External.LPVOIDField'
 	instanceVariableNames: ''
@@ -3225,6 +3350,7 @@ External.UIntPtrField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Behavior
 	subclass: #'Core.ClassDescription'
 	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
@@ -3232,6 +3358,7 @@ Core.Behavior
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ClassDescription
 	subclass: #'Core.Class'
 	instanceVariableNames: 'subclasses name fullName classPool imports environment comment classCategories _guid'
@@ -3239,6 +3366,7 @@ Core.ClassDescription
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ClassDescription
 	subclass: #'Core.Metaclass'
 	instanceVariableNames: 'instanceClass'
@@ -3246,6 +3374,7 @@ Core.ClassDescription
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.BindingReference
 	subclass: #'Kernel.BindingReferenceWrapper'
 	instanceVariableNames: 'reference'
@@ -3253,6 +3382,7 @@ Kernel.BindingReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.BindingReference
 	subclass: #'Kernel.FullBindingReference'
 	instanceVariableNames: 'pathString path private binding generation'
@@ -3260,6 +3390,7 @@ Kernel.BindingReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.BindingReferenceWrapper
 	subclass: #'Kernel.MetaBindingReference'
 	instanceVariableNames: ''
@@ -3267,6 +3398,7 @@ Kernel.BindingReferenceWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.FullBindingReference
 	subclass: #'Kernel.NamespaceImport'
 	instanceVariableNames: ''
@@ -3274,6 +3406,7 @@ Kernel.FullBindingReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'InvalidImportPath' -> 'NamespaceImports must describe a full path from Root' }!
+
 Kernel.FullBindingReference
 	subclass: #'Kernel.RelativeBindingReference'
 	instanceVariableNames: 'scope'
@@ -3281,6 +3414,7 @@ Kernel.FullBindingReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Boolean
 	subclass: #'Core.False'
 	instanceVariableNames: ''
@@ -3288,6 +3422,7 @@ Core.Boolean
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Boolean
 	subclass: #'Core.True'
 	instanceVariableNames: ''
@@ -3295,6 +3430,7 @@ Core.Boolean
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Callback
 	subclass: #'External.BlockCallback'
 	instanceVariableNames: 'block'
@@ -3302,6 +3438,7 @@ External.Callback
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Callback
 	subclass: #'External.MessageCallback'
 	instanceVariableNames: 'receiver selector closure'
@@ -3309,6 +3446,7 @@ External.Callback
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Category
 	subclass: #'Core.ClassCategory'
 	instanceVariableNames: ''
@@ -3316,6 +3454,7 @@ Core.Category
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'UnclassifiedName' -> 'Unclassified' }!
+
 Core.Category
 	subclass: #'Core.MethodCategory'
 	instanceVariableNames: ''
@@ -3323,6 +3462,7 @@ Core.Category
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'UnclassifiedName' -> '*-unclassified' }!
+
 Core.Collection
 	subclass: #'Core.Bag'
 	instanceVariableNames: 'contents'
@@ -3330,6 +3470,7 @@ Core.Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Collection
 	subclass: #'Core.SequenceableCollection'
 	instanceVariableNames: ''
@@ -3337,6 +3478,7 @@ Core.Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Collection
 	variableSubclass: #'Core.Set'
 	instanceVariableNames: 'tally'
@@ -3350,6 +3492,7 @@ Core.Collection
 			'SmallPrimeOffsets'
 				-> #[0 0 0 8 6 4 2 0 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 4 2 0 4 2 0 0 4 2 0 2 0 0 4 2 0 8 6 4 2 0 6 4 2 0 2 0 0 2 0 0 2 0 12 10 8 6 4 2 0 2 0 4 2 0 0 8 6 4 2 0 0 4 2 0 4 2 0 2 0 4 2 0 4 2 0 0 8 6 4 2 0 0 2 0 0 10 8 6 4 2 0 10 8 6 4 2 0 2 0 0 2 0 4 2 0 0 8 6 4 2 0 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 52 50 48 46 44 42 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 16 14 12 10 8 6 4 2 0 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 52 50 48 46 44 42 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 10 8 6 4 2 0 10 8 6 4 2 0 10 8 6 4 2 0 4 2 0 12 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 22 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 10 8 6 4 2 0 2 0 6 4 2 0 4 2 0 2 0 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 0 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 12 10 8 6 4 2 0 4 2 0 2 0 18 16 14 12 10 8 6 4 2 0 2 0 16 14 12 10 8 6 4 2 0 6 4 2 0 2 0 4 2 0 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 4 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 8 6 4 2 0 0 14 12 10 8 6 4 2 0 0 8 6 4 2 0 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 2 0 18 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 20 18 16 14 12 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 4 2 0 4 2 0 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 18 16 14 12 10 8 6 4 2 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 10 8 6 4 2 0 6 4 2 0 44 42 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 18 16 14 12 10 8 6 4 2 0 2 0 12 10 8 6 4 2 0 2 0 0 16 14 12 10 8 6 4 2 0 8 6 4 2 0 0 2 0 4 2 0 16 14 12 10 8 6 4 2 0 18 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 8 6 4 2 0 4 2 0 6 4 2 0 2 0 6 4 2 0 2 0 16 14 12 10 8 6 4 2 0 4 2 0 10 8 6 4 2 0 0 4 2 0 8 6 4 2 0 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 0 8 6 4 2 0 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 4 2 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 12 10 8 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 6 4 2 0 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 16 14 12 10 8 6 4 2 0 4 2 0 18 16 14 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 2 0 6 4 2 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0]
 		}!
+
 Core.SequenceableCollection
 	subclass: #'Core.ArrayedCollection'
 	instanceVariableNames: ''
@@ -3357,6 +3500,7 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequenceableCollection
 	subclass: #'Core.Interval'
 	instanceVariableNames: 'start stop step'
@@ -3364,6 +3508,7 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequenceableCollection
 	variableSubclass: #'Kernel.MethodAnnotations'
 	instanceVariableNames: ''
@@ -3371,6 +3516,7 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequenceableCollection
 	subclass: #'Core.SequencedGrowableCollection'
 	instanceVariableNames: ''
@@ -3378,6 +3524,7 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArrayedCollection
 	variableSubclass: #'Core.Array'
 	instanceVariableNames: ''
@@ -3385,6 +3532,7 @@ Core.ArrayedCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArrayedCollection
 	variableByteSubclass: #'Core.ByteArray'
 	instanceVariableNames: ''
@@ -3392,6 +3540,7 @@ Core.ArrayedCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArrayedCollection
 	subclass: #'Core.RunArray'
 	instanceVariableNames: 'values runs'
@@ -3399,6 +3548,7 @@ Core.ArrayedCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArrayedCollection
 	variableByteSubclass: #'Core.String'
 	instanceVariableNames: ''
@@ -3414,6 +3564,7 @@ Core.ArrayedCollection
 			'LineDelimiter' -> '
 '
 		}!
+
 Core.ArrayedCollection
 	variableSubclass: #'Core.WeakArray'
 	instanceVariableNames: ''
@@ -3421,6 +3572,7 @@ Core.ArrayedCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ByteArray
 	variableByteSubclass: #'External.IntegerBytes'
 	instanceVariableNames: ''
@@ -3428,6 +3580,7 @@ Core.ByteArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.IntegerBytes
 	variableByteSubclass: #'External.UInt32Bytes'
 	instanceVariableNames: ''
@@ -3435,6 +3588,7 @@ External.IntegerBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.IntegerBytes
 	variableByteSubclass: #'External.UInt64Bytes'
 	instanceVariableNames: ''
@@ -3442,6 +3596,7 @@ External.IntegerBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.IntegerBytes
 	variableByteSubclass: #'External.UIntPtrBytes'
 	instanceVariableNames: ''
@@ -3449,6 +3604,7 @@ External.IntegerBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UIntPtrBytes
 	variableByteSubclass: #'External.Address'
 	instanceVariableNames: ''
@@ -3456,6 +3612,7 @@ External.UIntPtrBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UIntPtrBytes
 	variableByteSubclass: #'External.Handle'
 	instanceVariableNames: ''
@@ -3463,6 +3620,7 @@ External.UIntPtrBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Address
 	variableByteSubclass: #'External.Memory'
 	instanceVariableNames: ''
@@ -3470,6 +3628,7 @@ External.Address
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Address
 	variableByteSubclass: #'External.REFGUID'
 	instanceVariableNames: ''
@@ -3477,6 +3636,7 @@ External.Address
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.String
 	variableByteSubclass: #'Core.AnsiString'
 	instanceVariableNames: ''
@@ -3484,6 +3644,7 @@ Core.String
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.String
 	variableByteSubclass: #'Core.UtfEncodedString'
 	instanceVariableNames: ''
@@ -3491,6 +3652,7 @@ Core.String
 	imports: #(#{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.UtfEncodedString
 	variableByteSubclass: #'Core.Utf16String'
 	instanceVariableNames: ''
@@ -3505,6 +3667,7 @@ Core.UtfEncodedString
 			'SurrogateOffset' -> 16r35FDC00.
 			'TrailSurrogateMask' -> 16rDC00
 		}!
+
 Core.UtfEncodedString
 	variableByteSubclass: #'Core.Utf8String'
 	instanceVariableNames: ''
@@ -3519,6 +3682,7 @@ Core.UtfEncodedString
 			'SurrogateMask' -> 16rC0.
 			'TrailByteMask' -> 16r80
 		}!
+
 Core.Utf8String
 	variableByteSubclass: #'Core.Symbol'
 	instanceVariableNames: ''
@@ -3529,6 +3693,7 @@ Core.Utf8String
 			'CharClassifications'
 				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)
 		}!
+
 Core.WeakArray
 	variableSubclass: #'Core.MourningWeakArray'
 	instanceVariableNames: 'pathologist'
@@ -3536,6 +3701,7 @@ Core.WeakArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequencedGrowableCollection
 	subclass: #'Core.LinkedList'
 	instanceVariableNames: 'firstLink lastLink'
@@ -3543,6 +3709,7 @@ Core.SequencedGrowableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequencedGrowableCollection
 	variableSubclass: #'Core.OrderedCollection'
 	instanceVariableNames: 'firstIndex lastIndex'
@@ -3550,6 +3717,7 @@ Core.SequencedGrowableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.LinkedList
 	subclass: #'Core.Semaphore'
 	instanceVariableNames: 'signals'
@@ -3557,6 +3725,7 @@ Core.LinkedList
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.OrderedCollection
 	variableSubclass: #'Core.SortedCollection'
 	instanceVariableNames: 'algorithm'
@@ -3564,6 +3733,7 @@ Core.OrderedCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Set
 	variableSubclass: #'Core.Dictionary'
 	instanceVariableNames: ''
@@ -3571,6 +3741,7 @@ Core.Set
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Set
 	variableSubclass: #'Core.IdentitySet'
 	instanceVariableNames: ''
@@ -3578,6 +3749,7 @@ Core.Set
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Set
 	variableSubclass: #'Core.PluggableSet'
 	instanceVariableNames: 'searchPolicy'
@@ -3585,6 +3757,7 @@ Core.Set
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Set
 	variableSubclass: #'Core.SharedSet'
 	instanceVariableNames: 'mutex'
@@ -3592,6 +3765,7 @@ Core.Set
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Dictionary
 	variableSubclass: #'Core.LookupTable'
 	instanceVariableNames: 'values'
@@ -3599,6 +3773,7 @@ Core.Dictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Dictionary
 	variableSubclass: #'Kernel.PoolDictionary'
 	instanceVariableNames: ''
@@ -3606,6 +3781,7 @@ Core.Dictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.LookupTable
 	variableSubclass: #'Core.IdentityDictionary'
 	instanceVariableNames: ''
@@ -3613,6 +3789,7 @@ Core.LookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.LookupTable
 	variableSubclass: #'Core.PluggableLookupTable'
 	instanceVariableNames: 'searchPolicy'
@@ -3620,6 +3797,7 @@ Core.LookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.LookupTable
 	variableSubclass: #'Core.SharedLookupTable'
 	instanceVariableNames: 'mutex'
@@ -3627,6 +3805,7 @@ Core.LookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.IdentityDictionary
 	variableSubclass: #'Kernel.MethodDictionary'
 	instanceVariableNames: ''
@@ -3634,6 +3813,7 @@ Core.IdentityDictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedLookupTable
 	variableSubclass: #'Core.DeferredValueTable'
 	instanceVariableNames: 'priority'
@@ -3641,6 +3821,7 @@ Core.SharedLookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedLookupTable
 	variableSubclass: #'Core.SharedIdentityDictionary'
 	instanceVariableNames: ''
@@ -3648,6 +3829,7 @@ Core.SharedLookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedLookupTable
 	variableSubclass: #'Core.WeakLookupTable'
 	instanceVariableNames: ''
@@ -3655,6 +3837,7 @@ Core.SharedLookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedIdentityDictionary
 	variableSubclass: #'Kernel.EventsCollection'
 	instanceVariableNames: ''
@@ -3662,6 +3845,7 @@ Core.SharedIdentityDictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WeakLookupTable
 	variableSubclass: #'Core.WeakIdentityDictionary'
 	instanceVariableNames: ''
@@ -3669,6 +3853,7 @@ Core.WeakLookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedSet
 	variableSubclass: #'Core.SharedIdentitySet'
 	instanceVariableNames: ''
@@ -3676,6 +3861,7 @@ Core.SharedSet
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedSet
 	variableSubclass: #'Core.WeakSet'
 	instanceVariableNames: ''
@@ -3683,6 +3869,7 @@ Core.SharedSet
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WeakSet
 	variableSubclass: #'Core.WeakIdentitySet'
 	instanceVariableNames: ''
@@ -3690,6 +3877,7 @@ Core.WeakSet
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompiledCode
 	variableSubclass: #'Kernel.CompiledExpression'
 	instanceVariableNames: ''
@@ -3697,6 +3885,7 @@ Kernel.CompiledCode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompiledCode
 	variableSubclass: #'Kernel.CompiledMethod'
 	instanceVariableNames: ''
@@ -3704,6 +3893,7 @@ Kernel.CompiledCode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompiledMethod
 	variableSubclass: #'Kernel.CompileFailedMethod'
 	instanceVariableNames: ''
@@ -3711,6 +3901,7 @@ Kernel.CompiledMethod
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompiledMethod
 	variableSubclass: #'External.ExternalMethod'
 	instanceVariableNames: ''
@@ -3724,6 +3915,7 @@ Kernel.CompiledMethod
 			'ReturnParmIndex' -> 16r7.
 			'ReturnTypeIndex' -> 16r8
 		}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.AdvApiLibrary'
 	instanceVariableNames: ''
@@ -3731,6 +3923,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'Kernel.CompilerLibrary'
 	instanceVariableNames: ''
@@ -3738,6 +3931,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.ICULibrary'
 	instanceVariableNames: ''
@@ -3745,6 +3939,7 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.PathCchLibrary'
 	instanceVariableNames: ''
@@ -3752,6 +3947,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'PATHCCH_MAX_CCH' -> 16r8000 }!
+
 External.DynamicLinkLibrary
 	subclass: #'External.PermanentLibrary'
 	instanceVariableNames: ''
@@ -3759,6 +3955,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'External.ResourceLibrary'
 	instanceVariableNames: 'fileName loadFlags'
@@ -3766,6 +3963,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.RPCLibrary'
 	instanceVariableNames: ''
@@ -3773,6 +3971,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.ShlwapiLibrary'
 	instanceVariableNames: ''
@@ -3780,6 +3979,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.VersionLibrary'
 	instanceVariableNames: ''
@@ -3787,6 +3987,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.WinMMLibrary'
 	instanceVariableNames: ''
@@ -3794,6 +3995,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PermanentLibrary
 	subclass: #'OS.CRTLibrary'
 	instanceVariableNames: ''
@@ -3801,6 +4003,7 @@ External.PermanentLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PermanentLibrary
 	subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
@@ -3808,6 +4011,7 @@ External.PermanentLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'LongPathPrefix' -> '\\?\' }!
+
 External.PermanentLibrary
 	subclass: #'OS.NTLibrary'
 	instanceVariableNames: 'isWine'
@@ -3815,6 +4019,7 @@ External.PermanentLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PermanentLibrary
 	subclass: #'OS.UserLibrary'
 	instanceVariableNames: ''
@@ -3822,6 +4027,7 @@ External.PermanentLibrary
 	imports: #(#{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PermanentLibrary
 	subclass: #'Kernel.VMLibrary'
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
@@ -3829,6 +4035,7 @@ External.PermanentLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.CRTLibrary
 	subclass: #'OS.CRTLibraryNonBlocking'
 	instanceVariableNames: ''
@@ -3836,6 +4043,7 @@ OS.CRTLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Exception
 	subclass: #'Core.Error'
 	instanceVariableNames: ''
@@ -3843,6 +4051,7 @@ Core.Exception
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Exception
 	subclass: #'Core.Notification'
 	instanceVariableNames: 'isSuppressible'
@@ -3850,6 +4059,7 @@ Core.Exception
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Exception
 	subclass: #'Kernel.ProcessTermination'
 	instanceVariableNames: ''
@@ -3857,6 +4067,7 @@ Core.Exception
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Exception
 	subclass: #'Kernel.StackOverflow'
 	instanceVariableNames: ''
@@ -3864,6 +4075,7 @@ Core.Exception
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Core.ArithmeticError'
 	instanceVariableNames: ''
@@ -3871,6 +4083,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Core.BoundsError'
 	instanceVariableNames: 'receiver'
@@ -3878,6 +4091,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Kernel.CannotReturnError'
 	instanceVariableNames: ''
@@ -3885,6 +4099,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Kernel.ClassRemovalError'
 	instanceVariableNames: 'originalError'
@@ -3892,6 +4107,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'OS.CRTError'
 	instanceVariableNames: ''
@@ -3899,6 +4115,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'OS.HRESULTError'
 	instanceVariableNames: 'errorInfo osErrorMessage'
@@ -3906,6 +4123,7 @@ Core.Error
 	imports: #(#{OS.FacilityCodes private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Core.InvalidArgumentError'
 	instanceVariableNames: ''
@@ -3913,6 +4131,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'External.InvalidExternalCall'
 	instanceVariableNames: 'argument type'
@@ -3920,6 +4139,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Core.InvalidFormat'
 	instanceVariableNames: ''
@@ -3927,6 +4147,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Core.MessageNotUnderstood'
 	instanceVariableNames: 'receiver'
@@ -3934,6 +4155,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Core.NotFoundError'
 	instanceVariableNames: 'receiver'
@@ -3941,6 +4163,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Core.OperationAborted'
 	instanceVariableNames: ''
@@ -3948,6 +4171,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Kernel.RaisedSignal'
 	instanceVariableNames: 'signalType'
@@ -3955,6 +4179,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Kernel.SubclassResponsibilityError'
 	instanceVariableNames: ''
@@ -3962,6 +4187,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArithmeticError
 	subclass: #'Core.FloatingPointException'
 	instanceVariableNames: ''
@@ -3969,6 +4195,7 @@ Core.ArithmeticError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArithmeticError
 	subclass: #'Core.ZeroDivide'
 	instanceVariableNames: ''
@@ -3976,6 +4203,7 @@ Core.ArithmeticError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.HRESULTError
 	subclass: #'OS.Win32Error'
 	instanceVariableNames: ''
@@ -3983,6 +4211,7 @@ OS.HRESULTError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Win32Error
 	subclass: #'Core.FileException'
 	instanceVariableNames: 'file resumable'
@@ -3990,6 +4219,7 @@ OS.Win32Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Win32Error
 	subclass: #'Kernel.OutOfMemoryError'
 	instanceVariableNames: ''
@@ -3997,6 +4227,7 @@ OS.Win32Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Win32Error
 	subclass: #'OS.RPCError'
 	instanceVariableNames: ''
@@ -4004,6 +4235,7 @@ OS.Win32Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Win32Error
 	subclass: #'OS.Win32Fault'
 	instanceVariableNames: 'exceptionRecord'
@@ -4011,6 +4243,7 @@ OS.Win32Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Win32Fault
 	subclass: #'OS.GPFault'
 	instanceVariableNames: ''
@@ -4018,6 +4251,7 @@ OS.Win32Fault
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Notification
 	subclass: #'Kernel.CompilerNotification'
 	instanceVariableNames: 'position ranges line extras methodClass source selector offset'
@@ -4118,6 +4352,7 @@ Core.Notification
 								16r7D2 -> 'contains hardcoded breakpoint'
 							})
 		}!
+
 Core.Notification
 	subclass: #'OS.HRESULTNotification'
 	instanceVariableNames: ''
@@ -4125,6 +4360,7 @@ Core.Notification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Notification
 	subclass: #'Kernel.MethodCompileFailed'
 	instanceVariableNames: 'compilerErrorNotification environment'
@@ -4132,6 +4368,7 @@ Core.Notification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Notification
 	subclass: #'Kernel.RaisedNotificationSignal'
 	instanceVariableNames: 'signalType'
@@ -4139,6 +4376,7 @@ Core.Notification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Notification
 	subclass: #'Core.Warning'
 	instanceVariableNames: ''
@@ -4146,6 +4384,7 @@ Core.Notification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompilerNotification
 	subclass: #'Kernel.CompilerErrorNotification'
 	instanceVariableNames: ''
@@ -4153,6 +4392,7 @@ Kernel.CompilerNotification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompilerNotification
 	subclass: #'Kernel.CompilerInfoNotification'
 	instanceVariableNames: ''
@@ -4160,6 +4400,7 @@ Kernel.CompilerNotification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompilerNotification
 	subclass: #'Kernel.CompilerWarningNotification'
 	instanceVariableNames: ''
@@ -4167,6 +4408,7 @@ Kernel.CompilerNotification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ExceptionHandlerAbstract
 	subclass: #'Kernel.ExceptionHandler'
 	instanceVariableNames: 'selector handler'
@@ -4174,6 +4416,7 @@ Kernel.ExceptionHandlerAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ExceptionHandlerAbstract
 	subclass: #'Kernel.ExceptionHandlerSet'
 	instanceVariableNames: 'handlers'
@@ -4181,6 +4424,7 @@ Kernel.ExceptionHandlerAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.FileLocator
 	subclass: #'Kernel.AbsoluteFileLocator'
 	instanceVariableNames: ''
@@ -4188,6 +4432,7 @@ Core.FileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.FileLocator
 	subclass: #'Kernel.ClassLocator'
 	instanceVariableNames: 'packageName codeBase key'
@@ -4195,6 +4440,7 @@ Core.FileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.FileLocator
 	subclass: #'Kernel.RelativeFileLocator'
 	instanceVariableNames: ''
@@ -4202,6 +4448,7 @@ Core.FileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RelativeFileLocator
 	subclass: #'Kernel.FolderRelativeFileLocator'
 	instanceVariableNames: 'basePath'
@@ -4209,6 +4456,7 @@ Kernel.RelativeFileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RelativeFileLocator
 	subclass: #'Kernel.ImageRelativeFileLocator'
 	instanceVariableNames: ''
@@ -4216,6 +4464,7 @@ Kernel.RelativeFileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RelativeFileLocator
 	subclass: #'Kernel.InstallRelativeFileLocator'
 	instanceVariableNames: ''
@@ -4223,6 +4472,7 @@ Kernel.RelativeFileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RelativeFileLocator
 	subclass: #'Kernel.PackageRelativeFileLocator'
 	instanceVariableNames: 'packageName'
@@ -4230,6 +4480,7 @@ Kernel.RelativeFileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.InstructionInterpreter
 	subclass: #'Kernel.MessageSendInterpreter'
 	instanceVariableNames: 'method'
@@ -4240,6 +4491,7 @@ Kernel.InstructionInterpreter
 			'SendInstructions'
 				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #incrementStackTop #decrementStackTop nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #isZero nil #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: nil nil nil nil nil nil nil nil nil nil nil nil nil #send: #supersend: #specialSend: nil nil nil nil nil nil nil #sendTempZeroArgs: nil nil nil nil #sendSelfZeroArgs: nil nil nil nil nil nil nil #longSend:with: #longSupersend:with: nil nil nil nil nil nil nil #incTemp:temp: #incPushTemp:temp: #decTemp:temp: #decPushTemp:temp: nil #exLongSend:with:with: #exLongSupersend:with:with: nil)
 		}!
+
 Kernel.MessageSendInterpreter
 	subclass: #'Kernel.MessageSendCollector'
 	instanceVariableNames: 'messages'
@@ -4247,6 +4499,7 @@ Kernel.MessageSendInterpreter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.MessageSendInterpreter
 	subclass: #'Kernel.MessageSendEnumerator'
 	instanceVariableNames: 'messageBlock superMessageBlock'
@@ -4254,6 +4507,7 @@ Kernel.MessageSendInterpreter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Link
 	variableSubclass: #'Core.Process'
 	instanceVariableNames: 'suspendedFrame priority myList callbackDepth tls _unused7 fpControl threadSync thread exceptionEnvironment _unused12 newWindow debugger name debugStream'
@@ -4261,6 +4515,7 @@ Core.Link
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'DefaultFpControl' -> 16r80007. 'DefaultStack' -> 16r1 }!
+
 Core.Locale
 	subclass: #'OS.AbstractWindowsLocale'
 	instanceVariableNames: 'info'
@@ -4268,6 +4523,7 @@ Core.Locale
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Locale
 	subclass: #'Kernel.SmalltalkLocale'
 	instanceVariableNames: 'integerBase'
@@ -4356,6 +4612,7 @@ Core.Locale
 								'september' -> 16r9
 							})
 		}!
+
 OS.AbstractWindowsLocale
 	subclass: #'OS.InvariantLocale'
 	instanceVariableNames: ''
@@ -4363,6 +4620,7 @@ OS.AbstractWindowsLocale
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.AbstractWindowsLocale
 	subclass: #'OS.WindowsLocale'
 	instanceVariableNames: 'lcid tag'
@@ -4370,6 +4628,7 @@ OS.AbstractWindowsLocale
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Magnitude
 	subclass: #'Core.ArithmeticValue'
 	instanceVariableNames: ''
@@ -4377,6 +4636,7 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Magnitude
 	subclass: #'Core.Association'
 	instanceVariableNames: 'key value'
@@ -4384,6 +4644,7 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
@@ -4398,6 +4659,7 @@ Core.Magnitude
 			'Utf32Mask' -> 16r3000000.
 			'Utf8Mask' -> 16r1000000
 		}!
+
 Core.Magnitude
 	subclass: #'Core.DateAndTime'
 	instanceVariableNames: 'rataDie seconds offset'
@@ -4411,6 +4673,7 @@ Core.Magnitude
 			'SmalltalkEpochRD' -> 16rA96C9.
 			'UnixEpochSeconds' -> 16r81C94B00
 		}!
+
 Core.Magnitude
 	subclass: #'Core.Duration'
 	instanceVariableNames: 'seconds'
@@ -4418,6 +4681,7 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'SecondsPerDay' -> 16r15180. 'SecondsPerHour' -> 16rE10 }!
+
 Core.ArithmeticValue
 	subclass: #'Core.Number'
 	instanceVariableNames: ''
@@ -4425,6 +4689,7 @@ Core.ArithmeticValue
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'MaxLiteralIntegerExponent' -> 16r7D0 }!
+
 Core.Number
 	variableByteSubclass: #'Core.Float'
 	instanceVariableNames: ''
@@ -4452,6 +4717,7 @@ Core.Number
 			'Precision' -> 16r35.
 			'SignificantDifference' -> 1.0e-9
 		}!
+
 Core.Number
 	subclass: #'Core.Fraction'
 	instanceVariableNames: 'numerator denominator'
@@ -4459,6 +4725,7 @@ Core.Number
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Number
 	subclass: #'Core.Integer'
 	instanceVariableNames: ''
@@ -4466,6 +4733,7 @@ Core.Number
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Number
 	subclass: #'Core.ScaledDecimal'
 	instanceVariableNames: 'fraction scale'
@@ -4473,6 +4741,7 @@ Core.Number
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Integer
 	variableByteSubclass: #'Core.LargeInteger'
 	instanceVariableNames: ''
@@ -4480,6 +4749,7 @@ Core.Integer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Integer
 	subclass: #'Core.SmallInteger'
 	instanceVariableNames: ''
@@ -4487,6 +4757,7 @@ Core.Integer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Association
 	subclass: #'Kernel.VariableBinding'
 	instanceVariableNames: 'environment flags'
@@ -4494,6 +4765,7 @@ Core.Association
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ClassMask' -> 16r2. 'DeprecatedMask' -> 16r100. 'PrivateMask' -> 16r1 }!
+
 Core.Message
 	subclass: #'Core.MessageSendAbstract'
 	instanceVariableNames: ''
@@ -4501,6 +4773,7 @@ Core.Message
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MessageSendAbstract
 	variableSubclass: #'Kernel.EventMessageSend'
 	instanceVariableNames: 'expectedArgCount'
@@ -4508,6 +4781,7 @@ Core.MessageSendAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MessageSendAbstract
 	subclass: #'Core.MessageSend'
 	instanceVariableNames: 'receiver'
@@ -4515,6 +4789,7 @@ Core.MessageSendAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MessageSequenceAbstract
 	subclass: #'Kernel.EventMessageSequence'
 	instanceVariableNames: 'receivers messages tally'
@@ -4522,6 +4797,7 @@ Core.MessageSequenceAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MessageSequenceAbstract
 	subclass: #'Core.MessageSequence'
 	instanceVariableNames: 'messages'
@@ -4529,6 +4805,7 @@ Core.MessageSequenceAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ObjectRegistry
 	subclass: #'Kernel.PermanentRegistry'
 	instanceVariableNames: 'freeHead'
@@ -4536,6 +4813,7 @@ Kernel.ObjectRegistry
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ObjectRegistry
 	subclass: #'Kernel.WeakRegistry'
 	instanceVariableNames: ''
@@ -4543,6 +4821,7 @@ Kernel.ObjectRegistry
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SearchPolicy
 	subclass: #'Kernel.PluggableSearchPolicy'
 	instanceVariableNames: 'compareBlock hashBlock'
@@ -4550,6 +4829,7 @@ Core.SearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SearchPolicy
 	subclass: #'Kernel.SingletonSearchPolicy'
 	instanceVariableNames: ''
@@ -4557,6 +4837,7 @@ Core.SearchPolicy
 	imports: #()
 	classInstanceVariableNames: 'current'
 	classConstants: {}!
+
 Kernel.SingletonSearchPolicy
 	subclass: #'Kernel.AlwaysSearchPolicy'
 	instanceVariableNames: ''
@@ -4564,6 +4845,7 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SingletonSearchPolicy
 	subclass: #'Kernel.CaseInsensitiveSearchPolicy'
 	instanceVariableNames: ''
@@ -4571,6 +4853,7 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SingletonSearchPolicy
 	subclass: #'Kernel.EqualitySearchPolicy'
 	instanceVariableNames: ''
@@ -4578,6 +4861,7 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SingletonSearchPolicy
 	subclass: #'Kernel.IdentitySearchPolicy'
 	instanceVariableNames: ''
@@ -4585,6 +4869,7 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SingletonSearchPolicy
 	subclass: #'Kernel.NeverSearchPolicy'
 	instanceVariableNames: ''
@@ -4592,6 +4877,7 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SingletonSearchPolicy
 	subclass: #'Kernel.OrdinalCaseInsensitiveSearchPolicy'
 	instanceVariableNames: ''
@@ -4599,6 +4885,7 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SessionManager
 	subclass: #'Kernel.BootSessionManager'
 	instanceVariableNames: 'productDetails startTime'
@@ -4606,6 +4893,7 @@ Core.SessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Signal
 	subclass: #'Core.NotificationSignal'
 	instanceVariableNames: ''
@@ -4613,6 +4901,7 @@ Core.Signal
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.NotificationSignal
 	subclass: #'Core.WarningSignal'
 	instanceVariableNames: ''
@@ -4620,6 +4909,7 @@ Core.NotificationSignal
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SortAlgorithm
 	subclass: #'Kernel.PluggableSortAlgorithm'
 	instanceVariableNames: 'sortBlock'
@@ -4627,6 +4917,7 @@ Core.SortAlgorithm
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PluggableSortAlgorithm
 	subclass: #'Kernel.IntrosortAlgorithm'
 	instanceVariableNames: ''
@@ -4634,6 +4925,7 @@ Kernel.PluggableSortAlgorithm
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SourceFiler
 	subclass: #'Kernel.AbstractChunkSourceFiler'
 	instanceVariableNames: ''
@@ -4641,6 +4933,7 @@ Kernel.SourceFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'NormalizeEolsMask' -> 16r2 }!
+
 Kernel.AbstractChunkSourceFiler
 	subclass: #'Kernel.ChunkSourceFiler'
 	instanceVariableNames: 'sourceFileIndex environment'
@@ -4648,6 +4941,7 @@ Kernel.AbstractChunkSourceFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StackFrame
 	subclass: #'Kernel.BlockFrame'
 	instanceVariableNames: ''
@@ -4655,6 +4949,7 @@ Kernel.StackFrame
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Stream
 	subclass: #'Core.SequencedStream'
 	instanceVariableNames: ''
@@ -4662,6 +4957,7 @@ Core.Stream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequencedStream
 	subclass: #'Core.LimitedWriteStream'
 	instanceVariableNames: 'stream limit limitBlock start visited visitedBlock'
@@ -4669,6 +4965,7 @@ Core.SequencedStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequencedStream
 	subclass: #'Core.PositionableStream'
 	instanceVariableNames: 'collection position readLimit locale'
@@ -4676,6 +4973,7 @@ Core.SequencedStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequencedStream
 	subclass: #'OS.StdioFileStream'
 	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
@@ -4696,6 +4994,7 @@ Core.SequencedStream
 			'TranslationModeMask' -> 16r7C000.
 			'WritingMask' -> 16r1000000
 		}!
+
 Core.PositionableStream
 	subclass: #'Core.ReadStream'
 	instanceVariableNames: ''
@@ -4703,6 +5002,7 @@ Core.PositionableStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.PositionableStream
 	subclass: #'Core.WriteStream'
 	instanceVariableNames: 'writeLimit'
@@ -4710,6 +5010,7 @@ Core.PositionableStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WriteStream
 	subclass: #'Core.ReadWriteStream'
 	instanceVariableNames: ''
@@ -4717,6 +5018,7 @@ Core.WriteStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ReadWriteStream
 	subclass: #'Core.FileStream'
 	instanceVariableNames: 'file flags pageBase logicalFileSize offset'
@@ -4732,6 +5034,7 @@ Core.ReadWriteStream
 			'OwnsFileMask' -> 16r100.
 			'PageSize' -> 16r2000
 		}!
+
 OS.StdioFileStream
 	subclass: #'OS.StdioBinaryFileStream'
 	instanceVariableNames: ''
@@ -4739,6 +5042,7 @@ OS.StdioFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioFileStream
 	subclass: #'OS.StdioTextFileStream'
 	instanceVariableNames: ''
@@ -4746,6 +5050,7 @@ OS.StdioFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioTextFileStream
 	subclass: #'OS.StdioAnsiFileStream'
 	instanceVariableNames: ''
@@ -4753,6 +5058,7 @@ OS.StdioTextFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioTextFileStream
 	subclass: #'OS.StdioUnicodeFileStream'
 	instanceVariableNames: 'offset'
@@ -4760,6 +5066,7 @@ OS.StdioTextFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioUnicodeFileStream
 	subclass: #'OS.StdioUtf16FileStream'
 	instanceVariableNames: ''
@@ -4767,6 +5074,7 @@ OS.StdioUnicodeFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioUnicodeFileStream
 	subclass: #'OS.StdioUtf8FileStream'
 	instanceVariableNames: ''
@@ -4774,6 +5082,7 @@ OS.StdioUnicodeFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS._FPIEEE_RECORD'
 	instanceVariableNames: ''
@@ -4920,6 +5229,7 @@ External.Structure
 			'Underflow' -> 16r2.
 			'ZeroDivide' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS._FPIEEE_VALUE'
 	instanceVariableNames: ''
@@ -4947,6 +5257,7 @@ External.Structure
 			'_OffsetOf_flags' -> 16r10.
 			'_OffsetOf_value' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.CPINFOEXW'
 	instanceVariableNames: ''
@@ -4962,6 +5273,7 @@ External.Structure
 			'_OffsetOf_MaxCharSize' -> 16r0.
 			'_OffsetOf_UnicodeDefaultChar' -> 16r12
 		}!
+
 External.Structure
 	subclass: #'OS.EXCEPTION_RECORD'
 	instanceVariableNames: 'info'
@@ -4977,6 +5289,7 @@ External.Structure
 			'_OffsetOf_ExceptionRecord' -> 16r8.
 			'_OffsetOf_NumberParameters' -> 16r10
 		}!
+
 External.Structure
 	subclass: #'External.ExternalArray'
 	instanceVariableNames: 'length'
@@ -4984,6 +5297,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.FILETIME'
 	instanceVariableNames: ''
@@ -4997,6 +5311,7 @@ External.Structure
 			'SmalltalkEpoch' -> 16r150560D76A70000.
 			'UnixEpoch' -> 16r19DB1DED53E8000
 		}!
+
 External.Structure
 	subclass: #'External.FinalizableStructure'
 	instanceVariableNames: ''
@@ -5004,6 +5319,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.MSG'
 	instanceVariableNames: ''
@@ -5020,6 +5336,7 @@ External.Structure
 			'_OffsetOf_x' -> 16r14.
 			'_OffsetOf_y' -> 16r18
 		}!
+
 External.Structure
 	subclass: #'OS.NUMBERFMTW'
 	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
@@ -5035,6 +5352,7 @@ External.Structure
 			'_OffsetOf_negativeOrder' -> 16r14.
 			'_OffsetOf_NumDigits' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'External.SCALAR'
 	instanceVariableNames: ''
@@ -5042,6 +5360,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_value' -> 16r0 }!
+
 External.Structure
 	subclass: #'OS.SizedStructure'
 	instanceVariableNames: ''
@@ -5049,6 +5368,7 @@ External.Structure
 	imports: #(#{OS.Win32Constants private})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_dwSize' -> 16r0 }!
+
 External.Structure
 	subclass: #'External.StructurePointer'
 	instanceVariableNames: 'elementClass'
@@ -5056,6 +5376,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.SYSTEMTIME'
 	instanceVariableNames: ''
@@ -5073,6 +5394,7 @@ External.Structure
 			'_OffsetOf_wYear' -> 16r0.
 			'_SYSTEMTIME_Size' -> 16r10
 		}!
+
 External.Structure
 	subclass: #'OS.TIME_ZONE_INFORMATION'
 	instanceVariableNames: 'zoneId offset'
@@ -5092,6 +5414,7 @@ External.Structure
 			'TIME_ZONE_ID_STANDARD' -> 16r1.
 			'TIME_ZONE_ID_UNKNOWN' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'External.VOID'
 	instanceVariableNames: ''
@@ -5099,6 +5422,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.VS_FIXEDFILEINFO'
 	instanceVariableNames: ''
@@ -5121,6 +5445,7 @@ External.Structure
 			'_OffsetOf_dwStrucVersion' -> 16r4.
 			'_VS_FIXEDFILEINFO_Size' -> 16r34
 		}!
+
 External.Structure
 	subclass: #'OS.WIN32_FILE_ATTRIBUTE_DATA'
 	instanceVariableNames: ''
@@ -5136,6 +5461,7 @@ External.Structure
 			'_OffsetOf_nFileSizeLow' -> 16r20.
 			'_WIN32_FILE_ATTRIBUTE_DATA_Size' -> 16r24
 		}!
+
 External.ExternalArray
 	subclass: #'External.DOUBLEArray'
 	instanceVariableNames: ''
@@ -5143,6 +5469,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.FLOATArray'
 	instanceVariableNames: ''
@@ -5150,6 +5477,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.GenericExternalArray'
 	instanceVariableNames: 'elementClass owner'
@@ -5157,6 +5485,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.Int16Array'
 	instanceVariableNames: ''
@@ -5164,6 +5493,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.Int32Array'
 	instanceVariableNames: ''
@@ -5171,6 +5501,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.Int8Array'
 	instanceVariableNames: ''
@@ -5178,6 +5509,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.IntPtrArray'
 	instanceVariableNames: ''
@@ -5185,6 +5517,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.UInt16Array'
 	instanceVariableNames: ''
@@ -5192,6 +5525,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.UInt32Array'
 	instanceVariableNames: ''
@@ -5199,6 +5533,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.UIntPtrArray'
 	instanceVariableNames: ''
@@ -5206,6 +5541,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.GenericExternalArray
 	subclass: #'External.StructureArray'
 	instanceVariableNames: 'elementSpacing'
@@ -5213,6 +5549,7 @@ External.GenericExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UIntPtrArray
 	subclass: #'External.HandleArray'
 	instanceVariableNames: ''
@@ -5220,6 +5557,7 @@ External.UIntPtrArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UIntPtrArray
 	subclass: #'External.PointerArray'
 	instanceVariableNames: 'elementClass'
@@ -5227,6 +5565,7 @@ External.UIntPtrArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.FILETIME
 	subclass: #'OS.LocalFILETIME'
 	instanceVariableNames: ''
@@ -5234,6 +5573,7 @@ OS.FILETIME
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.SCALAR
 	subclass: #'External.DOUBLE'
 	instanceVariableNames: ''
@@ -5241,6 +5581,7 @@ External.SCALAR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_DOUBLE_Size' -> 16r8 }!
+
 External.SCALAR
 	subclass: #'External.FLOAT'
 	instanceVariableNames: ''
@@ -5248,6 +5589,7 @@ External.SCALAR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_FLOAT_Size' -> 16r4 }!
+
 External.SCALAR
 	subclass: #'External.INTEGER'
 	instanceVariableNames: ''
@@ -5255,6 +5597,7 @@ External.SCALAR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.SCALAR
 	subclass: #'External.LPVOID'
 	instanceVariableNames: ''
@@ -5262,6 +5605,7 @@ External.SCALAR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_LPVOID_Size' -> 16r4 }!
+
 External.INTEGER
 	subclass: #'OS.HRESULT'
 	instanceVariableNames: ''
@@ -5269,6 +5613,7 @@ External.INTEGER
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
 	classConstants: { '_HRESULT_Size' -> 16r4. 'FACILITY_NT_BIT' -> 16r10000000 }!
+
 External.INTEGER
 	subclass: #'External.UInt16'
 	instanceVariableNames: ''
@@ -5276,6 +5621,7 @@ External.INTEGER
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_UInt16_Size' -> 16r2 }!
+
 External.INTEGER
 	subclass: #'External.UInt32'
 	instanceVariableNames: ''
@@ -5283,6 +5629,7 @@ External.INTEGER
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_UInt32_Size' -> 16r4 }!
+
 External.INTEGER
 	subclass: #'External.UInt64'
 	instanceVariableNames: ''
@@ -5290,6 +5637,7 @@ External.INTEGER
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_highPart' -> 16r4. '_OffsetOf_lowPart' -> 16r0. '_UInt64_Size' -> 16r8 }!
+
 External.INTEGER
 	subclass: #'External.UInt8'
 	instanceVariableNames: ''
@@ -5297,6 +5645,7 @@ External.INTEGER
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_UInt8_Size' -> 16r1 }!
+
 External.INTEGER
 	subclass: #'External.UIntPtr'
 	instanceVariableNames: ''
@@ -5304,6 +5653,7 @@ External.INTEGER
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_UIntPtr_Size' -> 16r4 }!
+
 External.UInt16
 	subclass: #'External.Int16'
 	instanceVariableNames: ''
@@ -5311,6 +5661,7 @@ External.UInt16
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Int16_Size' -> 16r2 }!
+
 External.UInt32
 	subclass: #'External.Int32'
 	instanceVariableNames: ''
@@ -5318,6 +5669,7 @@ External.UInt32
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Int32_Size' -> 16r4 }!
+
 External.Int32
 	subclass: #'External.BOOL'
 	instanceVariableNames: ''
@@ -5325,6 +5677,7 @@ External.Int32
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_BOOL_Size' -> 16r4 }!
+
 External.UInt64
 	subclass: #'External.Int64'
 	instanceVariableNames: ''
@@ -5332,6 +5685,7 @@ External.UInt64
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Int64_Size' -> 16r8 }!
+
 External.UInt8
 	subclass: #'External.BOOLEAN'
 	instanceVariableNames: ''
@@ -5339,6 +5693,7 @@ External.UInt8
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_BOOLEAN_Size' -> 16r1 }!
+
 External.UInt8
 	subclass: #'External.Int8'
 	instanceVariableNames: ''
@@ -5346,6 +5701,7 @@ External.UInt8
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Int8_Size' -> 16r1 }!
+
 External.UIntPtr
 	subclass: #'External.IntPtr'
 	instanceVariableNames: ''
@@ -5353,6 +5709,7 @@ External.UIntPtr
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_IntPtr_Size' -> 16r4 }!
+
 External.LPVOID
 	subclass: #'External.LPSTR'
 	instanceVariableNames: ''
@@ -5360,6 +5717,7 @@ External.LPVOID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.LPVOID
 	subclass: #'External.LPWSTR'
 	instanceVariableNames: ''
@@ -5367,6 +5725,7 @@ External.LPVOID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.LPVOID
 	subclass: #'External.Pointer'
 	instanceVariableNames: 'byteSize'
@@ -5374,6 +5733,7 @@ External.LPVOID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.SizedStructure
 	subclass: #'OS.MSGBOXPARAMSW'
 	instanceVariableNames: 'text caption'
@@ -5392,6 +5752,7 @@ OS.SizedStructure
 			'_OffsetOf_lpszIcon' -> 16r18.
 			'_OffsetOf_lpszText' -> 16rC
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.OSVERSIONINFOEXW'
 	instanceVariableNames: ''
@@ -5411,6 +5772,7 @@ OS.SizedStructure
 			'_OffsetOf_wSuiteMask' -> 16r118.
 			'_OSVERSIONINFOEXW_Size' -> 16r11C
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.SECURITY_ATTRIBUTES'
 	instanceVariableNames: ''
@@ -5422,6 +5784,7 @@ OS.SizedStructure
 			'_OffsetOf_lpSecurityDescriptor' -> 16r4.
 			'_SECURITY_ATTRIBUTES_Size' -> 16rC
 		}!
+
 OS.WIN32_FILE_ATTRIBUTE_DATA
 	subclass: #'OS.WIN32_FIND_DATAW'
 	instanceVariableNames: 'directory'
@@ -5435,6 +5798,7 @@ OS.WIN32_FILE_ATTRIBUTE_DATA
 			'_OffsetOf_dwReserved1' -> 16r28.
 			'_WIN32_FIND_DATAW_Size' -> 16r250
 		}!
+
 Kernel.ProtoObject
 	subclass: #'External.DynamicLinkLibraryStub'
 	instanceVariableNames: 'libraryClass'

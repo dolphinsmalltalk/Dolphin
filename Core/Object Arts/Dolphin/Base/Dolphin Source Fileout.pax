@@ -125,6 +125,7 @@ storeClassCategories
 	The job is simply delegated to the receiver's source manager (if available)."
 
 	self sourceManager storeCategoriesForClass: self! !
+
 !Core.Class categoriesForMethods!
 definitionChunk!public!source filing-class definition! !
 fileOutOn:!public!source filing! !
@@ -139,6 +140,7 @@ storeClassCategories
 	The job is simply delegated to the receiver's source manager (if available)."
 
 	instanceClass storeClassCategories! !
+
 !Core.Metaclass categoriesForMethods!
 storeClassCategories!private!source filing-methods! !
 !
@@ -181,7 +183,9 @@ emitCategoriesForMethods: aSequencableCollection of: aClass
 	Note that it is assumed that all the methods are of the same class."
 
 	aSequencableCollection isEmpty ifTrue: [^self].
-	stream nextPut: $!!.
+	stream
+		cr;
+		nextPut: $!!.
 	self emitClassName: aClass on: stream.
 	stream
 		space;
@@ -208,7 +212,7 @@ emitCategoriesOfClass: aClass
 		nextPutAll: #categoriesForClass;
 		nextPut: $!!.
 	aClass categories asSortedArray do: [:aCategory | self nextChunkPut: aCategory asString].
-	stream nextPutAll: ' !!'!
+	self endChunk!
 
 emitCategoriesOfMethod: aCompiledMethod
 	"Private - Append a chunk to the receiver's stream	to reclassify the <CompiledMethod>, aCompiledMethod, in all its current method categories."
@@ -239,7 +243,8 @@ emitCommentOfClass: aClass
 		space;
 		display: #comment:;
 		space.
-	self nextChunkPut: aClass comment fullPrintString!
+	self nextChunkPut: aClass comment fullPrintString.
+	stream cr!
 
 emitFileOutHeader
 	self
@@ -261,7 +266,8 @@ emitSpecialBehaviorAttributesOfClass: aClass
 			stream
 				space;
 				nextPutAll: each;
-				nextPutAll: ': true!!']!
+				nextPutAll: ': true!!';
+				cr]!
 
 fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
@@ -377,6 +383,7 @@ storeSource: aString for: aSourceObject
 	"Private - Store the <readableString>, aString, as the source text for the <sourceObject>, aSourceObject. If the receiver is associated with a source file then update aSourceObject's source descriptor so that in future it retrieves the source text from the receiver's source stream."
 
 	self nextChunkPut: aString! !
+
 !Kernel.AbstractChunkSourceFiler categoriesForMethods!
 emitBinaryVariableDefinition:!public!source filing-file out! !
 emitCategories:for:in:!private!source filing-pax! !
@@ -442,6 +449,7 @@ saveImageTo: aString
 					openSources]
 						on: Error
 						do: [:anError | anError resignalAsWarning]]! !
+
 !Kernel.BootSessionManager categoriesForMethods!
 saveImageTo:!operations-saving!private! !
 !
@@ -460,6 +468,7 @@ storeSource: aString for: aSourceObject
 	sourceFileIndex notNil 
 		ifTrue: 
 			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]! !
+
 !Kernel.ChunkSourceFiler categoriesForMethods!
 storeSource:for:!private!source filing-file out! !
 !
@@ -471,6 +480,7 @@ storeCategories
 	The job is simply delegated to the receiver's source manager."
 
 	self class sourceManager storeCategoriesForMethod: self.! !
+
 !Kernel.CompiledMethod categoriesForMethods!
 storeCategories!private!source filing-methods! !
 !
@@ -602,6 +612,7 @@ storeCommentString: aString forClass: aClass
 	index into the class' source descriptor so that the comment may be retrieved later."
 
 	^self subclassResponsibility! !
+
 !Kernel.SourceFiler categoriesForMethods!
 collateClass:against:!private!source filing! !
 emitCategoriesOfClass:!private!source filing-file out! !
@@ -871,6 +882,7 @@ storeCategoriesForMethod: aCompiledMethod
 						emitCategoriesOfMethod: aCompiledMethod;
 						cr;
 						flush]]! !
+
 !Kernel.SourceManager categoriesForMethods!
 basicCompressSources:!operations-source files!private! !
 compressChangedMethodsOf:onto:!operations-source files!private! !

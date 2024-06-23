@@ -7,10 +7,15 @@ Kernel.SourceFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'NormalizeEolsMask' -> 16r2 }!
+
 Kernel.AbstractChunkSourceFiler guid: (Core.GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
+
 Kernel.AbstractChunkSourceFiler isNonInstantiable: true!
+
 Kernel.AbstractChunkSourceFiler comment: ''!
+
 !Kernel.AbstractChunkSourceFiler categoriesForClass!Development!System-Support! !
+
 !Kernel.AbstractChunkSourceFiler methodsFor!
 
 emitChunk: aString
@@ -43,7 +48,8 @@ emitGUIDOfClass: aClass
 		nextPutAll: #fromString:;
 		space;
 		print: guid asString;
-		nextPutAll: ')!!'!
+		nextPutAll: ')!!';
+		cr!
 
 emitHeaderForMethodsOf: aClass
 	"Private - Emits a category header for the class, aClass, to the source stream."
@@ -133,7 +139,9 @@ fileOutBasicDefinitionOfClass: aClass
 	"Print a definition of the <Class>, aClass, onto the receiver's stream."
 
 	self printBasicDefinitionOfClass: aClass.
-	stream nextPut: $!!!
+	stream
+		nextPut: $!!;
+		cr!
 
 fileOutExpression: aString
 	"Append an immediate expression evaluation to the source stream."
@@ -269,6 +277,7 @@ storeSourceString: aString forMethod: aCompiledMethod
 		emitFooterForMethodsOf: methodClass;
 		flush
 ! !
+
 !Kernel.AbstractChunkSourceFiler categoriesForMethods!
 emitChunk:!private!source filing-file out! !
 emitFooterForMethodsOf:!private!source filing-file out! !
@@ -305,6 +314,7 @@ on: aWriteStream sourceFileIndex: anInteger
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
 		yourself! !
+
 !Kernel.AbstractChunkSourceFiler class categoriesForMethods!
 on:sourceFileIndex:!public! !
 !

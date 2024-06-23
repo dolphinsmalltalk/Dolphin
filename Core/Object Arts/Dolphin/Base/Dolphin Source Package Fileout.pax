@@ -112,6 +112,7 @@ fileOut
 	package directory."
 
 	self sourceManager fileOutPackagedClass: self! !
+
 !Core.Class categoriesForMethods!
 canFileOut!public!source filing! !
 fileOut!public!source filing! !
@@ -260,6 +261,7 @@ methodNameSortBlock: aPackage
 	a className = b className
 		ifTrue: [a selector <==> b selector <= 0]
 		ifFalse: [a className <= b className]]! !
+
 !Kernel.AbstractChunkSourceFiler categoriesForMethods!
 emitPackageAboutBlock:!private!source filing-pax! !
 emitPackageClassNames:!accessing!private! !
@@ -370,6 +372,7 @@ emitPaxAttributes: aPackage
 				space;
 				print: namespace fullyQualifiedReference].
 	super emitPaxAttributes: aPackage! !
+
 !Kernel.ChunkSourceFiler categoriesForMethods!
 emitPackageAboutBlock:!private!source filing-pax! !
 emitPackageBinaryVariables:!private!source filing! !
@@ -671,6 +674,7 @@ updateTimestamp
 	"Private - Synchronise the receiver's timestamp with its source file."
 
 	timestamp := self fileModificationTime! !
+
 !Kernel.Package categoriesForMethods!
 allFileOutNames!accessing!private!source filing! !
 beNotUsingPAX!modes!public! !
@@ -768,33 +772,31 @@ fileOutPackage: aPackage methodsOfClass: aClass
 fileOutPackageClassDefinitions: aPackage
 	| classes |
 	classes := self packageClassesInFileoutOrder: aPackage.
-	classes isEmpty
-		ifFalse: 
-			[self
-				emitComment: 'Class Definitions';
-				cr.	"The namespaces should be defined first as these may be referenced by other class definitions, then SharedPools, then all other classes."
-			classes do: 
-					[:each |
-					((each inheritsFrom: Namespace) and: [(each inheritsFrom: SharedPool) not])
-						ifTrue: 
-							[self
-								fileOutBasicDefinitionOfClass: each;
-								cr]].
-			classes do: 
-					[:each |
-					(each inheritsFrom: SharedPool)
-						ifTrue: 
-							[self
-								fileOutBasicDefinitionOfClass: each;
-								cr]].
-			classes do: 
-					[:each |
-					(each inheritsFrom: Namespace)
-						ifFalse: 
-							[self
-								fileOutBasicDefinitionOfClass: each;
-								cr]].
-			self cr]!
+	classes isEmpty ifTrue: [^self].
+	self
+		emitComment: 'Class Definitions';
+		cr.	"The namespaces should be defined first as these may be referenced by other class definitions, then SharedPools, then all other classes."
+	classes do: 
+			[:each |
+			((each inheritsFrom: Namespace) and: [(each inheritsFrom: SharedPool) not])
+				ifTrue: 
+					[self
+						fileOutBasicDefinitionOfClass: each;
+						cr]].
+	classes do: 
+			[:each |
+			(each inheritsFrom: SharedPool)
+				ifTrue: 
+					[self
+						fileOutBasicDefinitionOfClass: each;
+						cr]].
+	classes do: 
+			[:each |
+			(each inheritsFrom: Namespace)
+				ifFalse: 
+					[self
+						fileOutBasicDefinitionOfClass: each;
+						cr]]!
 
 fileOutPackageClasses: aPackage
 	| classes |
@@ -814,12 +816,11 @@ fileOutPackageMethods: aPackage
 
 	| loose |
 	loose := aPackage methods.
-	loose isEmpty
-		ifFalse: 
-			[self
-				emitComment: 'Loose Methods';
-				cr.
-			self fileOutMethods: loose]!
+	loose isEmpty ifTrue: [^self].
+	self
+		emitComment: 'Loose Methods';
+		cr.
+	self fileOutMethods: loose!
 
 fileOutPackageSourceVariables: aPackage
 	"Private - File out the text representation of the specified packages 'source' object variables onto the receiver's stream. This is used in the single-file .PAC format."
@@ -840,13 +841,12 @@ fileOutPackageVariableAliases: aPackage
 
 	| names |
 	names := aPackage aliasVariableNames.
-	names isEmpty
-		ifFalse: 
-			[self
-				emitComment: 'Variable Aliases';
-				cr.
-			names asSortedArray do: [:var | self fileOutExpression: var asString , ' := ' , var value fullName].
-			self cr]!
+	names isEmpty ifTrue: [^self].
+	self
+		emitComment: 'Variable Aliases';
+		cr.
+	names asSortedArray do: [:var | self fileOutExpression: var asString , ' := ' , var value fullName].
+	self cr!
 
 packageClassesInFileoutOrder: aPackage
 	^aPackage classesInHierarchyOrder!
@@ -857,6 +857,7 @@ storeCommentString: aString forPackage: aPackage
 	descriptor so that the comment may be retrieved later."
 
 	^self subclassResponsibility! !
+
 !Kernel.SourceFiler categoriesForMethods!
 emitPackageBinaryVariables:!private!source filing! !
 emitPackageDescription:!private!source filing-pax! !
@@ -904,6 +905,7 @@ fileOutPackagedClass: aClass to: aFileName
 
 	"Flag the class as being saved, i.e. no longer changed"
 	aClass isChanged: false! !
+
 !Kernel.SourceManager categoriesForMethods!
 fileOutPackagedClass:!public!source filing! !
 fileOutPackagedClass:to:!public!source filing! !
