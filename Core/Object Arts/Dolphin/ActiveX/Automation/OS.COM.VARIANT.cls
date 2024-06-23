@@ -63,7 +63,9 @@ External.FinalizableStructure
 			'VTNames'
 				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 		}!
+
 OS.COM.VARIANT guid: (Core.GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.VARIANT comment: 'VARIANT is an <ExternalStructure> to represent the OLE Automation VARIANT and VARIANTARG types.
 
 A VARIANT is basically a discriminated union which can represent all the parameter types which can be passed to and returned from member functions of Automation compatible (oleautomation) interfaces by Automation controllers and servers. These types are constrained by those which VB can handle, and hence there are no unsigned integers. A VARIANT''s type tag is stored as a 16-bit <integer> at the start of the structure, and is accessing with the #vt/vt: methods. Note that not all of the VT_XXX types are actually supported by the various variant manipulation functions provided by the Automation library, e.g. VT_LPSTR, as some are intended for type description and other purposes.
@@ -75,7 +77,9 @@ It is worth noting that with the default Win32 packing (Zp8), VARIANT aligns on 
 Class Variables:
 	Accessors		<LookupTable> mapping variant type codes to accessor methods for extracting an object of that type.
 '!
+
 !OS.COM.VARIANT categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.VARIANT methodsFor!
 
 _deepCopy: copiesDictionary
@@ -748,6 +752,7 @@ vt: anInteger
 	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_vt put: anInteger! !
+
 !OS.COM.VARIANT categoriesForMethods!
 _deepCopy:!copying!private! !
 <!comparing!public! !
@@ -1233,6 +1238,7 @@ vtNames
 		at: VT_INT_PTR+1			put: #intptr;			"signed machine register size width - TYPEDESC only"
 		at: VT_UINT_PTR+1			put: #uintptr;			"unsigned machine register size width - TYPEDESC only"
 		yourself! !
+
 !OS.COM.VARIANT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 classForVT:!enquiries!public! !

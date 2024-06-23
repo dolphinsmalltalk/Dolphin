@@ -7,7 +7,9 @@ UI.ListPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ListTreePresenter guid: (Core.GUID fromString: '{b4f22156-df92-493f-81c9-6e74fd4fdcce}')!
+
 UI.ListTreePresenter comment: 'Copyright © Chris Uppal, 2002, 2003.
 chris.uppal@metagnostic.org
 
@@ -20,7 +22,9 @@ Here''s an example:
 See the class comment of ListTreeView for more information.
 
 	-- chris'!
+
 !UI.ListTreePresenter categoriesForClass!MVP-Presenters! !
+
 !UI.ListTreePresenter methodsFor!
 
 beNotSorted
@@ -105,6 +109,7 @@ up
 	sels := self view selectionsAsSet.
 	sels := sels collect: [:each | self view parentOf: each].
 	self view selections: sels asOrderedCollection.! !
+
 !UI.ListTreePresenter categoriesForMethods!
 beNotSorted!accessing!public!sorting! !
 beSorted!accessing!public!sorting! !
@@ -139,6 +144,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ListTreeView} 38 #{Core.Array} 59 nil nil 50 2 8 1140920397 1025 32 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{Core.Message} #displayString 8 #() 242 #iconImageIndex 272 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 146 1 3142 5 #{UI.ListViewColumn} 8 'Column 1' 391 #left 256 242 #<= 8 #() nil nil 32 nil 3 nil nil #report 8 #() nil 133217 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil true 1862 3 #{UI.VirtualTreeModel} nil 192 146 0 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledMethod} 2 3 448 #defaultGetChildrenBlock 42440101 8 #[30 105 226 0 106] #children 512 7 257 nil 498 0 nil 530 2 3 448 #defaultGetParentBlock 42415045 8 #[30 105 226 0 106] #parent 576 7 257 nil 498 0 nil 530 2 3 448 #defaultHasChildrenBlock 42500293 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 464 498 0 nil 530 1 83886083 448 #defaultFilterBlock 42430373 8 #[29 105 17 157 106] 672 7 257 nil nil 550 #{Core.PluggableSet} 0 294 #{Core.IdentitySet} 0 37 1 nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 882 399 701 32 834 #text: 50 1 8 'Column 1' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 198 12 0 0 104 1 0 0] 8 #() 882 193 193 nil 2029)! !
+
 !UI.ListTreePresenter class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !

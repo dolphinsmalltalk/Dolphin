@@ -7,9 +7,13 @@ Core.Random
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.RandomCRT guid: (Core.GUID fromString: '{f895d18e-e50f-4651-8a7d-9d04137dd05e}')!
+
 OS.RandomCRT comment: ''!
+
 !OS.RandomCRT categoriesForClass!Collections-Streams! !
+
 !OS.RandomCRT methodsFor!
 
 next
@@ -39,6 +43,7 @@ seed: anInteger
 
 	Ucrt srand: anInteger.
 	super seed: anInteger! !
+
 !OS.RandomCRT categoriesForMethods!
 next!accessing!public! !
 peek!accessing!public! !

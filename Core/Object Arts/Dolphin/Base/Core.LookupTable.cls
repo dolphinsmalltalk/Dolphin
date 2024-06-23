@@ -7,7 +7,9 @@ Core.Dictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.LookupTable guid: (Core.GUID fromString: '{87b4c529-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.LookupTable comment: 'A LookupTable is a form of <Dictionary> that does not actually store <Assocation>s, but instead maintains parallel vectors of keys and values. This has the advantage of consuming less space and generally offering higher performance. 
 
 Dictionary behaviour involving <Assocation>s (e.g. #associationsDo:, #associationAt:) is implemented by dynamically generating associations as required. This may adversely affect performance where such behaviour is used extensively, and the transient nature of the associations may not always be appropriate. In these (rare) cases a standard Dictionary should be used.
@@ -16,7 +18,9 @@ LookupTable itself uses equality-based hashing and comparisons. The subclass Ide
 
 Instance Variables:
 	values	<Array> of values associated with the same numbered keys in the indexable instance variables of the LookupTable.'!
+
 !Core.LookupTable categoriesForClass!Collections-Unordered! !
+
 !Core.LookupTable methodsFor!
 
 add: anAssociation
@@ -332,6 +336,7 @@ valuesClass
 	the receiver)."
 
 	^Array! !
+
 !Core.LookupTable categoriesForMethods!
 add:!adding!public! !
 allKeysAndValuesSatisfy:!enumerating!public! !

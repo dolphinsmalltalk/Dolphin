@@ -5,9 +5,13 @@ MainTestCase subclass: #IntegerANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IntegerANSITest guid: (GUID fromString: '{306c76ad-1873-4623-81fb-f94d3d80f1bd}')!
+
 IntegerANSITest comment: ''!
+
 !IntegerANSITest categoriesForClass!Unclassified! !
+
 !IntegerANSITest methodsFor!
 
 canonicalObject
@@ -1540,6 +1544,7 @@ testXtruncateToX
 	].
 
 	self should: [(0 truncateTo: smallInt2) = 0].! !
+
 !IntegerANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

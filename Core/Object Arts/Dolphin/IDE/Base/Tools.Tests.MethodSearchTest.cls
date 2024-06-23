@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.MethodSearchTest guid: (Core.GUID fromString: '{36cbd988-e85b-4005-8a80-f05c62b5b953}')!
+
 Tools.Tests.MethodSearchTest comment: ''!
+
 !Tools.Tests.MethodSearchTest methodsFor!
 
 testNewSelector
@@ -20,6 +23,7 @@ testNewSelector
 	filter := subject definitionFilter.
 	self assert: (filter value: self class >> self selector).
 	self deny: (filter value: Object >> #size)! !
+
 !Tools.Tests.MethodSearchTest categoriesForMethods!
 testNewSelector!public! !
 !

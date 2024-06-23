@@ -7,7 +7,9 @@ OS.COM.InterfaceImplementation
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.IPDolphin guid: (Core.GUID fromString: '{b115d2d8-5a00-4a5e-8615-109a3332690f}')!
+
 Kernel.IPDolphin comment: 'IPDolphin is the singleton class whose instance hosts the main inbound COM interface, <IIPPlugHole> from the Dolphin in-process COM DLL stub. It is responsible for initialization and shutdown of the image, and ultimately for implementing the DllGetClassObject, DllCanUnloadNow, DllRegisterServer and DllUnregisterServer functions that are exported by the stub.
 
 Once a Dolphin in-proc COM DLL has been loaded, inbound calls to the DllXXX functions in the stub are forwarded here.
@@ -20,6 +22,7 @@ Class Variables:
 	Current		<IPDolphin>. Singleton instance.
 
 '!
+
 !Kernel.IPDolphin methodsFor!
 
 canUnloadNow
@@ -181,6 +184,7 @@ UnregisterServer
 
 	^hr
 ! !
+
 !Kernel.IPDolphin categoriesForMethods!
 canUnloadNow!COM Interfaces-IInProcDolphin!public! !
 CanUnloadNow!COM Interfaces-IInProcDolphin!private! !
@@ -229,6 +233,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset.! !
+
 !Kernel.IPDolphin class categoriesForMethods!
 current!instance creation!public! !
 initialize!initializing!private! !

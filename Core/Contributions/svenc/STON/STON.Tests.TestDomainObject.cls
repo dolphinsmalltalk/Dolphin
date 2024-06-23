@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.TestDomainObject guid: (Core.GUID fromString: '{ef1278a4-658e-4799-870c-89c6de6b7c53}')!
+
 STON.Tests.TestDomainObject comment: 'STONTestDomainObject is used to support unit tests.
 
 Instance Variables
@@ -20,7 +22,9 @@ Instance Variables
 	integer:		<Integer>
 	modified:	<DateAndTime>
 	tags:			<Array of: Symbol>'!
+
 !STON.Tests.TestDomainObject categoriesForClass!STON-Tests-Base! !
+
 !STON.Tests.TestDomainObject methodsFor!
 
 = anObject
@@ -116,6 +120,7 @@ tags
 
 tags: anObject
 	tags := anObject! !
+
 !STON.Tests.TestDomainObject categoriesForMethods!
 =!comparing!public! !
 boolean!accessing!public! !
@@ -158,6 +163,7 @@ dummy
 
 stonName
 	^ #TestDomainObject! !
+
 !STON.Tests.TestDomainObject class categoriesForMethods!
 dummy!instance creation!public! !
 stonName!public!ston/core! !

@@ -38,6 +38,7 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Magnitude
 	subclass: #'Core.Time'
 	instanceVariableNames: 'seconds'
@@ -45,6 +46,7 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Magnitude
 	subclass: #'Core.TimeStamp'
 	instanceVariableNames: 'date time'
@@ -79,6 +81,7 @@ asTimeStamp
 		- if a UTC date/time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTimeStamp`)."
 
 	^TimeStamp date: self asDate time: self asTime! !
+
 !Core.DateAndTime categoriesForMethods!
 asDate!converting!public! !
 asTime!converting!public! !
@@ -91,6 +94,7 @@ millisecondsToRepeat: anInteger
 	"Answer the time taken to execute the receiver anInteger times"
 
 	^Time millisecondsToRun: [anInteger timesRepeat: [self value]]! !
+
 !Kernel.BlockClosure categoriesForMethods!
 millisecondsToRepeat:!development!public! !
 !
@@ -106,6 +110,7 @@ asTimeStamp
 	"Answer a <TimeStamp> corresponding to the receiver's point in time."
 
 	^self asDateAndTime asTimeStamp! !
+
 !OS.SYSTEMTIME categoriesForMethods!
 asDate!converting!public! !
 asTimeStamp!converting!public! !

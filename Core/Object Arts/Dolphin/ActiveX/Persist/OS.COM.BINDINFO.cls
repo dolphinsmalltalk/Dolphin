@@ -15,10 +15,14 @@ OS.SizedStructure
 			'_OffsetOf_szCustomVerb' -> 16r1C.
 			'_OffsetOf_szExtraInfo' -> 16r4
 		}!
+
 OS.COM.BINDINFO guid: (Core.GUID fromString: '{464f7fac-9ba3-4055-8492-dc95aba83383}')!
+
 OS.COM.BINDINFO comment: '<BINDINFO> is an <ExternalStructure> class to wrap the struct ''UrlMon.tagBINDINFO'' from type information in the ''UrlMon Library'' library.
 '!
+
 !OS.COM.BINDINFO categoriesForClass!OCIDL-Structs! !
+
 !OS.COM.BINDINFO methodsFor!
 
 cbstgmedData
@@ -84,6 +88,7 @@ szExtraInfo: anUtf16String
 	"Set the receiver's 'szExtraInfo' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_szExtraInfo put: anUtf16String yourAddress! !
+
 !OS.COM.BINDINFO categoriesForMethods!
 cbstgmedData!**compiled accessors**!public! !
 cbstgmedData:!**compiled accessors**!public! !
@@ -131,6 +136,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #szExtraInfo #stgmedData #grfBindInfoF #dwBindVerb #szCustomVerb #cbstgmedData)! !
+
 !OS.COM.BINDINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

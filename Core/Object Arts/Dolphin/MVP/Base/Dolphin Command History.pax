@@ -100,6 +100,7 @@ undo
 		not require the command history to be cleared even though it has no
 		explicit undo action"
 	Command current beBenign! !
+
 !UI.Shell categoriesForMethods!
 queryRedo:!commands-queries!private! !
 queryUndo:!commands-queries!private! !

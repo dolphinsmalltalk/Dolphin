@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_MaxCharSize' -> 16r0.
 			'_OffsetOf_UnicodeDefaultChar' -> 16r12
 		}!
+
 OS.CPINFOEXW guid: (Core.GUID fromString: '{daee0d37-37b6-4a47-a208-c12409c7f158}')!
+
 OS.CPINFOEXW comment: '<CPINFOEXW> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -35,7 +37,9 @@ struct tagCPINFOEXW {
 	[readonly, helpstring("code page name (Unicode)"), string] unsigned short CodePageName[260];
 } CPINFOEXW;
 '!
+
 !OS.CPINFOEXW categoriesForClass!Win32-Structs! !
+
 !OS.CPINFOEXW methodsFor!
 
 codepage
@@ -87,6 +91,7 @@ UnicodeDefaultChar
 	"Answer the <Integer> value of the receiver's 'UnicodeDefaultChar' field."
 
 	^bytes uint16AtOffset: _OffsetOf_UnicodeDefaultChar! !
+
 !OS.CPINFOEXW categoriesForMethods!
 codepage!**compiled accessors**!public! !
 CodePageName!**compiled accessors**!public! !
@@ -151,6 +156,7 @@ defineFields
 
 getFieldNames
 	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
+
 !OS.CPINFOEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 codePage:!instance creation!public! !

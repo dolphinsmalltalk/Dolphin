@@ -7,8 +7,11 @@ WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2 guid: (OS.COM.IID fromString: '{03b2c8c8-7799-4e34-bd66-ed26aa85f2bf}')!
+
 WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2 isEgressOnly: true!
+
 WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2 comment: '`ICoreWebView2AcceleratorKeyPressedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2AcceleratorKeyPressedEventArgs2 : ICoreWebView2Accelerato
 };
 ```
 '!
+
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2 methodsFor!
 
 get_IsBrowserAcceleratorKeyEnabled: value
@@ -73,6 +78,7 @@ put_IsBrowserAcceleratorKeyEnabled: value
 
 	<virtual stdcall: hresult 11 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2 categoriesForMethods!
 get_IsBrowserAcceleratorKeyEnabled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs2!private! !
 isBrowserAcceleratorKeyEnabled!properties!public! !
@@ -93,6 +99,7 @@ defineFunctions
 		defineFunction: #put_IsBrowserAcceleratorKeyEnabled:
 			argumentTypes: 'int32'
 ! !
+
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

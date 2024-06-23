@@ -7,8 +7,11 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.POINTLArrayTest guid: (Core.GUID fromString: '{2bbffd72-c82d-4cc5-9067-010c5e683b96}')!
+
 External.Tests.POINTLArrayTest comment: ''!
+
 !External.Tests.POINTLArrayTest methodsFor!
 
 arrayClass
@@ -35,6 +38,7 @@ testSelfEvaluating
 	self assert: subject printString
 		equals: '(<1p> withAll: {<2p>. <3p>. <4p>})'
 				<< ({self arrayClass} , ((1 to: 3) collect: [:i | self elementFromValue: i]))! !
+
 !External.Tests.POINTLArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 canonicalizeValue:!private!unit tests! !

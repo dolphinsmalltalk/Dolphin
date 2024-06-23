@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.WinRegConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.RegKeyTest guid: (Core.GUID fromString: '{a67b125d-54b1-4bf8-9634-222b74e70c77}')!
+
 OS.Tests.RegKeyTest comment: ''!
+
 !OS.Tests.RegKeyTest methodsFor!
 
 keyPath
@@ -252,6 +255,7 @@ testValueAtPut
 	"Nil'ing the default value is a special case - see RegKeyAbstract>>valueAt:put:type:"
 	testKey value: nil.
 	self assertIsNil: testKey value! !
+
 !OS.Tests.RegKeyTest categoriesForMethods!
 keyPath!constants!private! !
 setUp!private!running! !

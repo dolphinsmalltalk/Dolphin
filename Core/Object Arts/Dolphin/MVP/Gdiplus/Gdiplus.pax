@@ -1197,6 +1197,7 @@ Graphics
 			'WrapModeTileFlipY' -> 16r2.
 			'WrongState' -> 16r8
 		}!
+
 Kernel.SharedPool
 	subclass: #'Graphics.Gdiplus.GdiplusGUIDs'
 	instanceVariableNames: ''
@@ -1222,6 +1223,7 @@ Kernel.SharedPool
 				-> (GUID fromString: '{84236f7b-3bd3-428f-8dab-4ea1439ca315}').
 			'FrameDimensionTime' -> (GUID fromString: '{6aedbd6d-3fb5-418a-83a6-7f45229dc872}')
 		}!
+
 Core.Object
 	subclass: #'Graphics.Gdiplus.Attribute'
 	instanceVariableNames: ''
@@ -1229,6 +1231,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Graphics.Gdiplus.Initializer'
 	instanceVariableNames: ''
@@ -1239,6 +1242,7 @@ Core.Object
 			'AnchorCapNames'
 				-> #('LineCapNoAnchor' 'LineCapSquareAnchor' 'LineCapRoundAnchor' 'LineCapDiamondAnchor' 'LineCapArrowAnchor')
 		}!
+
 Graphics.Gdiplus.Attribute
 	subclass: #'Graphics.Gdiplus.GradientBlend'
 	instanceVariableNames: 'positions'
@@ -1246,6 +1250,7 @@ Graphics.Gdiplus.Attribute
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBlend
 	subclass: #'Graphics.Gdiplus.GradientCustomBlend'
 	instanceVariableNames: 'factors'
@@ -1253,6 +1258,7 @@ Graphics.Gdiplus.GradientBlend
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBlend
 	subclass: #'Graphics.Gdiplus.GradientPresetBlend'
 	instanceVariableNames: 'colors'
@@ -1260,6 +1266,7 @@ Graphics.Gdiplus.GradientBlend
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UInt32Bytes
 	variableByteSubclass: #'Graphics.Gdiplus.ARGBBytes'
 	instanceVariableNames: ''
@@ -1267,6 +1274,7 @@ External.UInt32Bytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	instanceVariableNames: 'token'
@@ -1278,6 +1286,7 @@ External.DynamicLinkLibrary
 			'PixelFormatMax' -> 16rF.
 			'PixelFormatUndefined' -> 16r0
 		}!
+
 Core.Error
 	subclass: #'Graphics.Gdiplus.GdiplusError'
 	instanceVariableNames: 'win32Error'
@@ -1288,6 +1297,7 @@ Core.Error
 			'ErrorDescriptions'
 				-> #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')
 		}!
+
 Graphics.GraphicsTool
 	subclass: #'Graphics.Gdiplus.GdiplusBase'
 	instanceVariableNames: 'initializer'
@@ -1295,6 +1305,7 @@ Graphics.GraphicsTool
 	imports: #(#{Graphics.Gdiplus.GdiplusGUIDs})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.AbstractCustomLineCap'
 	instanceVariableNames: ''
@@ -1302,6 +1313,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.Brush'
 	instanceVariableNames: ''
@@ -1309,6 +1321,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.CachedBitmap'
 	instanceVariableNames: ''
@@ -1316,6 +1329,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.Font'
 	instanceVariableNames: ''
@@ -1323,6 +1337,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.FontCollection'
 	instanceVariableNames: ''
@@ -1330,6 +1345,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.FontFamily'
 	instanceVariableNames: ''
@@ -1337,6 +1353,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.GdiplusGraphics'
 	instanceVariableNames: ''
@@ -1347,6 +1364,7 @@ Graphics.Gdiplus.GdiplusBase
 			'UnitNames'
 				-> #('UnitWorld' 'UnitDisplay' 'UnitPixel' 'UnitPoint' 'UnitInch' 'UnitDocument' 'UnitMillimeter')
 		}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.GraphicsPath'
 	instanceVariableNames: ''
@@ -1354,6 +1372,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.Image'
 	instanceVariableNames: ''
@@ -1361,6 +1380,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.ImageAttributes'
 	instanceVariableNames: ''
@@ -1368,6 +1388,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.Matrix'
 	instanceVariableNames: ''
@@ -1375,6 +1396,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.Pen'
 	instanceVariableNames: ''
@@ -1382,6 +1404,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.Region'
 	instanceVariableNames: ''
@@ -1389,6 +1412,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.StringFormat'
 	instanceVariableNames: ''
@@ -1396,6 +1420,7 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractCustomLineCap
 	subclass: #'Graphics.Gdiplus.AdjustableArrowCap'
 	instanceVariableNames: ''
@@ -1403,6 +1428,7 @@ Graphics.Gdiplus.AbstractCustomLineCap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractCustomLineCap
 	subclass: #'Graphics.Gdiplus.CustomLineCap'
 	instanceVariableNames: ''
@@ -1410,6 +1436,7 @@ Graphics.Gdiplus.AbstractCustomLineCap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Brush
 	subclass: #'Graphics.Gdiplus.HatchBrush'
 	instanceVariableNames: ''
@@ -1420,6 +1447,7 @@ Graphics.Gdiplus.Brush
 			'ForegroundPercentages'
 				-> #[12 12 18 18 23 32 3 6 12 25 37 47 50 62 75 87 94 97 25 25 50 50 37 37 25 25 50 50 50 50 12 12 12 12 12 37 25 22 19 34 30 50 9 11 9 20 75 59 44 50 50 22 39]
 		}!
+
 Graphics.Gdiplus.Brush
 	subclass: #'Graphics.Gdiplus.SolidBrush'
 	instanceVariableNames: ''
@@ -1427,6 +1455,7 @@ Graphics.Gdiplus.Brush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Brush
 	subclass: #'Graphics.Gdiplus.TransformableBrush'
 	instanceVariableNames: ''
@@ -1434,6 +1463,7 @@ Graphics.Gdiplus.Brush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.TransformableBrush
 	subclass: #'Graphics.Gdiplus.GradientBrush'
 	instanceVariableNames: ''
@@ -1441,6 +1471,7 @@ Graphics.Gdiplus.TransformableBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.TransformableBrush
 	subclass: #'Graphics.Gdiplus.TextureBrush'
 	instanceVariableNames: ''
@@ -1448,6 +1479,7 @@ Graphics.Gdiplus.TransformableBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBrush
 	subclass: #'Graphics.Gdiplus.LinearGradientBrush'
 	instanceVariableNames: ''
@@ -1455,6 +1487,7 @@ Graphics.Gdiplus.GradientBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBrush
 	subclass: #'Graphics.Gdiplus.PathGradientBrush'
 	instanceVariableNames: ''
@@ -1462,6 +1495,7 @@ Graphics.Gdiplus.GradientBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontCollection
 	subclass: #'Graphics.Gdiplus.InstalledFontCollection'
 	instanceVariableNames: ''
@@ -1469,6 +1503,7 @@ Graphics.Gdiplus.FontCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontCollection
 	subclass: #'Graphics.Gdiplus.PrivateFontCollection'
 	instanceVariableNames: ''
@@ -1476,6 +1511,7 @@ Graphics.Gdiplus.FontCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Image
 	subclass: #'Graphics.Gdiplus.Bitmap'
 	instanceVariableNames: ''
@@ -1483,6 +1519,7 @@ Graphics.Gdiplus.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.AbstractCustomLineCapInitializer'
 	instanceVariableNames: 'strokeJoin widthScale'
@@ -1490,6 +1527,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.BrushInitializer'
 	instanceVariableNames: ''
@@ -1497,6 +1535,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.CachedBitmapInitializer'
 	instanceVariableNames: 'bitmap graphics'
@@ -1504,6 +1543,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.FontCollectionInitializer'
 	instanceVariableNames: ''
@@ -1511,6 +1551,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.FontFamilyInitializer'
 	instanceVariableNames: ''
@@ -1518,6 +1559,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.FontFromFontFamilyInitializer'
 	instanceVariableNames: 'fontFamily emSize style unit'
@@ -1525,6 +1567,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.GraphicsInitializer'
 	instanceVariableNames: 'surface'
@@ -1532,6 +1575,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.GraphicsPathInitializer'
 	instanceVariableNames: 'pathPoints pathTypes fillMode'
@@ -1543,6 +1587,7 @@ Graphics.Gdiplus.Initializer
 			'PathPointTypeNames'
 				-> #('PathPointTypeStart' 'PathPointTypeLine' 16r2 'PathPointTypeBezier' 16r4 16r5 16r6)
 		}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.ImageAttributesInitializer'
 	instanceVariableNames: ''
@@ -1550,6 +1595,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.ImageInitializer'
 	instanceVariableNames: ''
@@ -1557,6 +1603,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.MatrixInitializer'
 	instanceVariableNames: 'elements'
@@ -1564,6 +1611,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.PenInitializer'
 	instanceVariableNames: 'ink width alignment lineJoin endCap startCap dashCap dashStyle dashPattern transform compoundArray'
@@ -1575,6 +1623,7 @@ Graphics.Gdiplus.Initializer
 			'DashStyleNames'
 				-> #('DashStyleSolid' 'DashStyleDash' 'DashStyleDot' 'DashStyleDashDot' 'DashStyleDashDotDot' 'DashStyleCustom')
 		}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.RegionInitializer'
 	instanceVariableNames: ''
@@ -1582,6 +1631,7 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Initializer
 	subclass: #'Graphics.Gdiplus.StringFormatInitializer'
 	instanceVariableNames: ''
@@ -1603,6 +1653,7 @@ Graphics.Gdiplus.Initializer
 								16r4000 -> 'StringFormatFlagsNoClip'
 							})
 		}!
+
 Graphics.Gdiplus.AbstractCustomLineCapInitializer
 	subclass: #'Graphics.Gdiplus.AdjustableArrowCapInitializer'
 	instanceVariableNames: 'height width isFilled middleInset'
@@ -1610,6 +1661,7 @@ Graphics.Gdiplus.AbstractCustomLineCapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractCustomLineCapInitializer
 	subclass: #'Graphics.Gdiplus.CustomLineCapInitializer'
 	instanceVariableNames: 'fillPath strokePath baseCap baseInset strokeCaps'
@@ -1617,6 +1669,7 @@ Graphics.Gdiplus.AbstractCustomLineCapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BrushInitializer
 	subclass: #'Graphics.Gdiplus.HatchBrushInitializer'
 	instanceVariableNames: 'hatchStyle forecolor backcolor'
@@ -1627,6 +1680,7 @@ Graphics.Gdiplus.BrushInitializer
 			'HatchStyleNames'
 				-> #('HatchStyleHorizontal' 'HatchStyleVertical' 'HatchStyleForwardDiagonal' 'HatchStyleBackwardDiagonal' 'HatchStyleCross' 'HatchStyleDiagonalCross' 'HatchStyle05Percent' 'HatchStyle10Percent' 'HatchStyle20Percent' 'HatchStyle25Percent' 'HatchStyle30Percent' 'HatchStyle40Percent' 'HatchStyle50Percent' 'HatchStyle60Percent' 'HatchStyle70Percent' 'HatchStyle75Percent' 'HatchStyle80Percent' 'HatchStyle90Percent' 'HatchStyleLightDownwardDiagonal' 'HatchStyleLightUpwardDiagonal' 'HatchStyleDarkDownwardDiagonal' 'HatchStyleDarkUpwardDiagonal' 'HatchStyleWideDownwardDiagonal' 'HatchStyleWideUpwardDiagonal' 'HatchStyleLightVertical' 'HatchStyleLightHorizontal' 'HatchStyleNarrowVertical' 'HatchStyleNarrowHorizontal' 'HatchStyleDarkVertical' 'HatchStyleDarkHorizontal' 'HatchStyleDashedDownwardDiagonal' 'HatchStyleDashedUpwardDiagonal' 'HatchStyleDashedHorizontal' 'HatchStyleDashedVertical' 'HatchStyleSmallConfetti' 'HatchStyleLargeConfetti' 'HatchStyleZigZag' 'HatchStyleWave' 'HatchStyleDiagonalBrick' 'HatchStyleHorizontalBrick' 'HatchStyleWeave' 'HatchStylePlaid' 'HatchStyleDivot' 'HatchStyleDottedGrid' 'HatchStyleDottedDiamond' 'HatchStyleShingle' 'HatchStyleTrellis' 'HatchStyleSphere' 'HatchStyleSmallGrid' 'HatchStyleSmallCheckerBoard' 'HatchStyleLargeCheckerBoard' 'HatchStyleOutlinedDiamond' 'HatchStyleSolidDiamond')
 		}!
+
 Graphics.Gdiplus.BrushInitializer
 	subclass: #'Graphics.Gdiplus.SolidBrushFromColorInitializer'
 	instanceVariableNames: 'color'
@@ -1634,6 +1688,7 @@ Graphics.Gdiplus.BrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BrushInitializer
 	subclass: #'Graphics.Gdiplus.TransformableBrushInitializer'
 	instanceVariableNames: 'transform wrapMode'
@@ -1641,6 +1696,7 @@ Graphics.Gdiplus.BrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.TransformableBrushInitializer
 	subclass: #'Graphics.Gdiplus.GradientBrushInitializer'
 	instanceVariableNames: 'isGammaCorrected blend'
@@ -1648,6 +1704,7 @@ Graphics.Gdiplus.TransformableBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.TransformableBrushInitializer
 	subclass: #'Graphics.Gdiplus.TextureBrushInitializer'
 	instanceVariableNames: 'image rectangle'
@@ -1655,6 +1712,7 @@ Graphics.Gdiplus.TransformableBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBrushInitializer
 	subclass: #'Graphics.Gdiplus.LinearGradientBrushInitializer'
 	instanceVariableNames: 'color1 color2'
@@ -1662,6 +1720,7 @@ Graphics.Gdiplus.GradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBrushInitializer
 	subclass: #'Graphics.Gdiplus.PathGradientBrushInitializer'
 	instanceVariableNames: 'centerColor centerPoint surroundColors focusScales'
@@ -1669,6 +1728,7 @@ Graphics.Gdiplus.GradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.LinearGradientBrushInitializer
 	subclass: #'Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer'
 	instanceVariableNames: 'point1 point2'
@@ -1676,6 +1736,7 @@ Graphics.Gdiplus.LinearGradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.LinearGradientBrushInitializer
 	subclass: #'Graphics.Gdiplus.LinearGradientBrushFromRectInitializer'
 	instanceVariableNames: 'rect mode'
@@ -1686,6 +1747,7 @@ Graphics.Gdiplus.LinearGradientBrushInitializer
 			'LinearGradientModeNames'
 				-> #('LinearGradientModeHorizontal' 'LinearGradientModeVertical' 'LinearGradientModeForwardDiagonal' 'LinearGradientModeBackwardDiagonal')
 		}!
+
 Graphics.Gdiplus.PathGradientBrushInitializer
 	subclass: #'Graphics.Gdiplus.PathGradientFromPathInitializer'
 	instanceVariableNames: 'path'
@@ -1693,6 +1755,7 @@ Graphics.Gdiplus.PathGradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.PathGradientBrushInitializer
 	subclass: #'Graphics.Gdiplus.PathGradientFromPointsInitializer'
 	instanceVariableNames: 'points'
@@ -1700,6 +1763,7 @@ Graphics.Gdiplus.PathGradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontCollectionInitializer
 	subclass: #'Graphics.Gdiplus.InstalledFontCollectionInitializer'
 	instanceVariableNames: ''
@@ -1707,6 +1771,7 @@ Graphics.Gdiplus.FontCollectionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontCollectionInitializer
 	subclass: #'Graphics.Gdiplus.PrivateFontCollectionInitializer'
 	instanceVariableNames: ''
@@ -1714,6 +1779,7 @@ Graphics.Gdiplus.FontCollectionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamilyInitializer
 	subclass: #'Graphics.Gdiplus.FontFamilyFromNameInitializer'
 	instanceVariableNames: 'name fontCollection'
@@ -1721,6 +1787,7 @@ Graphics.Gdiplus.FontFamilyInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamilyInitializer
 	subclass: #'Graphics.Gdiplus.FontFamilyGenericInitializer'
 	instanceVariableNames: ''
@@ -1728,6 +1795,7 @@ Graphics.Gdiplus.FontFamilyInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamilyGenericInitializer
 	subclass: #'Graphics.Gdiplus.FontFamilyGenericMonospaceInitializer'
 	instanceVariableNames: ''
@@ -1735,6 +1803,7 @@ Graphics.Gdiplus.FontFamilyGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamilyGenericInitializer
 	subclass: #'Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer'
 	instanceVariableNames: ''
@@ -1742,6 +1811,7 @@ Graphics.Gdiplus.FontFamilyGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamilyGenericInitializer
 	subclass: #'Graphics.Gdiplus.FontFamilyGenericSerifInitializer'
 	instanceVariableNames: ''
@@ -1749,6 +1819,7 @@ Graphics.Gdiplus.FontFamilyGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GraphicsInitializer
 	subclass: #'Graphics.Gdiplus.GraphicsFromHDCInitializer'
 	instanceVariableNames: ''
@@ -1756,6 +1827,7 @@ Graphics.Gdiplus.GraphicsInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GraphicsInitializer
 	subclass: #'Graphics.Gdiplus.GraphicsFromHWNDInitializer'
 	instanceVariableNames: ''
@@ -1763,6 +1835,7 @@ Graphics.Gdiplus.GraphicsInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GraphicsInitializer
 	subclass: #'Graphics.Gdiplus.GraphicsFromImageInitializer'
 	instanceVariableNames: ''
@@ -1770,6 +1843,7 @@ Graphics.Gdiplus.GraphicsInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.ImageInitializer
 	subclass: #'Graphics.Gdiplus.AbstractImageFromBytesInitializer'
 	instanceVariableNames: 'bytes'
@@ -1777,6 +1851,7 @@ Graphics.Gdiplus.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.ImageInitializer
 	subclass: #'Graphics.Gdiplus.AbstractImageFromFileInitializer'
 	instanceVariableNames: 'filename fileLocator'
@@ -1784,6 +1859,7 @@ Graphics.Gdiplus.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.ImageInitializer
 	subclass: #'Graphics.Gdiplus.AbstractImageFromIStreamInitializer'
 	instanceVariableNames: 'iStream'
@@ -1791,6 +1867,7 @@ Graphics.Gdiplus.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.ImageInitializer
 	subclass: #'Graphics.Gdiplus.BitmapInitializer'
 	instanceVariableNames: ''
@@ -1824,6 +1901,7 @@ Graphics.Gdiplus.ImageInitializer
 								16r34400D -> 'PixelFormat64bppARGB'
 							})
 		}!
+
 Graphics.Gdiplus.ImageInitializer
 	subclass: #'Graphics.Gdiplus.ImageThumbnailInitializer'
 	instanceVariableNames: 'image extent'
@@ -1831,6 +1909,7 @@ Graphics.Gdiplus.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromBytesInitializer
 	subclass: #'Graphics.Gdiplus.BitmapFromBytesInitializer'
 	instanceVariableNames: ''
@@ -1838,6 +1917,7 @@ Graphics.Gdiplus.AbstractImageFromBytesInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromBytesInitializer
 	subclass: #'Graphics.Gdiplus.ImageFromBytesInitializer'
 	instanceVariableNames: ''
@@ -1845,6 +1925,7 @@ Graphics.Gdiplus.AbstractImageFromBytesInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromFileInitializer
 	subclass: #'Graphics.Gdiplus.BitmapFromFileInitializer'
 	instanceVariableNames: ''
@@ -1852,6 +1933,7 @@ Graphics.Gdiplus.AbstractImageFromFileInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromFileInitializer
 	subclass: #'Graphics.Gdiplus.ImageFromFileInitializer'
 	instanceVariableNames: ''
@@ -1859,6 +1941,7 @@ Graphics.Gdiplus.AbstractImageFromFileInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromIStreamInitializer
 	subclass: #'Graphics.Gdiplus.BitmapFromIStreamInitializer'
 	instanceVariableNames: ''
@@ -1866,6 +1949,7 @@ Graphics.Gdiplus.AbstractImageFromIStreamInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromIStreamInitializer
 	subclass: #'Graphics.Gdiplus.ImageFromIStreamInitializer'
 	instanceVariableNames: 'iStream2'
@@ -1873,6 +1957,7 @@ Graphics.Gdiplus.AbstractImageFromIStreamInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapInitializer
 	subclass: #'Graphics.Gdiplus.BitmapFromBitmapAreaInitializer'
 	instanceVariableNames: 'bitmap rectangle format'
@@ -1880,6 +1965,7 @@ Graphics.Gdiplus.BitmapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapInitializer
 	subclass: #'Graphics.Gdiplus.BitmapFromBlankInitializer'
 	instanceVariableNames: 'width height format'
@@ -1887,6 +1973,7 @@ Graphics.Gdiplus.BitmapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapInitializer
 	subclass: #'Graphics.Gdiplus.BitmapFromGdiBitmapInitializer'
 	instanceVariableNames: 'bitmap'
@@ -1894,6 +1981,7 @@ Graphics.Gdiplus.BitmapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapInitializer
 	subclass: #'Graphics.Gdiplus.BitmapFromIconInitializer'
 	instanceVariableNames: 'icon'
@@ -1901,6 +1989,7 @@ Graphics.Gdiplus.BitmapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionInitializer
 	subclass: #'Graphics.Gdiplus.EmptyRegionInitializer'
 	instanceVariableNames: ''
@@ -1908,6 +1997,7 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionInitializer
 	subclass: #'Graphics.Gdiplus.InfiniteRegionInitializer'
 	instanceVariableNames: ''
@@ -1915,6 +2005,7 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionInitializer
 	subclass: #'Graphics.Gdiplus.RegionFromDataInitializer'
 	instanceVariableNames: 'data'
@@ -1922,6 +2013,7 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionInitializer
 	subclass: #'Graphics.Gdiplus.RegionFromPathInitializer'
 	instanceVariableNames: 'path'
@@ -1929,6 +2021,7 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionInitializer
 	subclass: #'Graphics.Gdiplus.RegionFromRectangleInitializer'
 	instanceVariableNames: 'rectangle'
@@ -1936,6 +2029,7 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormatInitializer
 	subclass: #'Graphics.Gdiplus.StringFormatFromFlagsInitializer'
 	instanceVariableNames: 'flags language alignment lineAlignment trimming digitSubstitution hotkeyPrefix tabOffsets characterRanges'
@@ -1943,6 +2037,7 @@ Graphics.Gdiplus.StringFormatInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormatInitializer
 	subclass: #'Graphics.Gdiplus.StringFormatGenericInitializer'
 	instanceVariableNames: ''
@@ -1950,6 +2045,7 @@ Graphics.Gdiplus.StringFormatInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormatGenericInitializer
 	subclass: #'Graphics.Gdiplus.StringFormatGenericDefaultInitializer'
 	instanceVariableNames: ''
@@ -1957,6 +2053,7 @@ Graphics.Gdiplus.StringFormatGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormatGenericInitializer
 	subclass: #'Graphics.Gdiplus.StringFormatGenericTypographicInitializer'
 	instanceVariableNames: ''
@@ -1964,6 +2061,7 @@ Graphics.Gdiplus.StringFormatGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'
 	instanceVariableNames: ''
@@ -1988,6 +2086,7 @@ External.Structure
 			'_OffsetOf_szlDevice' -> 16r48.
 			'_OffsetOf_szlMillimeters' -> 16r50
 		}!
+
 External.Structure
 	subclass: #'Graphics.Gdiplus.GpStructure'
 	instanceVariableNames: ''
@@ -1995,6 +2094,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'Graphics.Gdiplus.METAHEADER'
 	instanceVariableNames: ''
@@ -2011,6 +2111,7 @@ External.Structure
 			'_OffsetOf_mtType' -> 16r0.
 			'_OffsetOf_mtVersion' -> 16r4
 		}!
+
 External.ExternalArray
 	subclass: #'Graphics.Gdiplus.ARGBArray'
 	instanceVariableNames: ''
@@ -2018,6 +2119,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.POINTArray
 	subclass: #'External.POINTFArray'
 	instanceVariableNames: ''
@@ -2025,6 +2127,7 @@ External.POINTArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.BitmapData'
 	instanceVariableNames: ''
@@ -2040,6 +2143,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Stride' -> 16r8.
 			'_OffsetOf_Width' -> 16r0
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.CharacterRange'
 	instanceVariableNames: ''
@@ -2051,6 +2155,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_First' -> 16r0.
 			'_OffsetOf_length' -> 16r4
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.ColorMap'
 	instanceVariableNames: ''
@@ -2062,6 +2167,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_newColor' -> 16r4.
 			'_OffsetOf_oldColor' -> 16r0
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.ColorMatrix'
 	instanceVariableNames: ''
@@ -2069,6 +2175,7 @@ Graphics.Gdiplus.GpStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_ColorMatrix_Size' -> 16r64. '_OffsetOf_m' -> 16r0 }!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.ColorPalette'
 	instanceVariableNames: ''
@@ -2081,6 +2188,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Entries' -> 16r8.
 			'_OffsetOf_Flags' -> 16r0
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.EncoderParameter'
 	instanceVariableNames: ''
@@ -2094,6 +2202,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Type' -> 16r14.
 			'_OffsetOf_Value' -> 16r18
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.EncoderParameters'
 	instanceVariableNames: 'valueBuffer'
@@ -2105,6 +2214,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Count' -> 16r0.
 			'_OffsetOf_Parameter' -> 16r4
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
 	instanceVariableNames: ''
@@ -2118,6 +2228,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_SuppressBackgroundThread' -> 16r8.
 			'_OffsetOf_SuppressExternalCodecs' -> 16rC
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
 	instanceVariableNames: ''
@@ -2129,6 +2240,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_NotificationHook' -> 16r0.
 			'_OffsetOf_NotificationUnhook' -> 16r4
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.ImageCodecInfo'
 	instanceVariableNames: ''
@@ -2151,6 +2263,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_SigSize' -> 16r40.
 			'_OffsetOf_Version' -> 16r38
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.ImageItemData'
 	instanceVariableNames: ''
@@ -2158,6 +2271,7 @@ Graphics.Gdiplus.GpStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.MetafileHeader'
 	instanceVariableNames: ''
@@ -2182,6 +2296,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_x' -> 16r18.
 			'_OffsetOf_y' -> 16r1C
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.PathData'
 	instanceVariableNames: ''
@@ -2194,6 +2309,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Types' -> 16r8.
 			'_PathData_Size' -> 16rC
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.PropertyItem'
 	instanceVariableNames: ''
@@ -2207,6 +2323,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Value' -> 16rC.
 			'_PropertyItem_Size' -> 16r10
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.WmfPlaceableFileHeader'
 	instanceVariableNames: ''
@@ -2222,6 +2339,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Reserved' -> 16r10.
 			'_WmfPlaceableFileHeader_Size' -> 16r18
 		}!
+
 Graphics.Gdiplus.GpStructure
 	subclass: #'Graphics.Gdiplus.WMFRect16'
 	instanceVariableNames: ''
@@ -2235,6 +2353,7 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_top' -> 16r2.
 			'_WMFRect16_Size' -> 16r8
 		}!
+
 Graphics.Gdiplus.GdiplusStartupInput
 	subclass: #'Graphics.Gdiplus.GdiplusStartupInputEx'
 	instanceVariableNames: ''
@@ -2242,6 +2361,7 @@ Graphics.Gdiplus.GdiplusStartupInput
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_GdiplusStartupInputEx_Size' -> 16r14. '_OffsetOf_StartupParameters' -> 16r10 }!
+
 External.POINT
 	subclass: #'External.POINTF'
 	instanceVariableNames: ''
@@ -2249,6 +2369,7 @@ External.POINT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_x' -> 16r0. '_OffsetOf_y' -> 16r4. '_POINTF_Size' -> 16r8 }!
+
 External.RECT
 	subclass: #'Graphics.Gdiplus.AbstractRect'
 	instanceVariableNames: ''
@@ -2256,6 +2377,7 @@ External.RECT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractRect
 	subclass: #'Graphics.Gdiplus.Rect'
 	instanceVariableNames: ''
@@ -2269,6 +2391,7 @@ Graphics.Gdiplus.AbstractRect
 			'_OffsetOf_y' -> 16r4.
 			'_Rect_Size' -> 16r10
 		}!
+
 Graphics.Gdiplus.AbstractRect
 	subclass: #'Graphics.Gdiplus.RectF'
 	instanceVariableNames: ''
@@ -2282,6 +2405,7 @@ Graphics.Gdiplus.AbstractRect
 			'_OffsetOf_y' -> 16r4.
 			'_RectF_Size' -> 16r10
 		}!
+
 UI.View
 	subclass: #'Graphics.Gdiplus.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender graphics'
@@ -2299,6 +2423,7 @@ _clipGpGraphics: aGpGraphics mode: anInteger
 
 _combineGpRegion: aGdiplusRegion mode: aCombineModeConstant
 	^aGdiplusRegion combineRectangle: self mode: aCombineModeConstant! !
+
 !External.RECT categoriesForMethods!
 _clipGpGraphics:mode:!double dispatch!private! !
 _combineGpRegion:mode:!double dispatch!private! !
@@ -2327,6 +2452,7 @@ asColorKeyedBitmap: aKeyColor
 	bitmap free.
 	keyedBitmap freeDC.
 	^keyedBitmap! !
+
 !Graphics.Bitmap categoriesForMethods!
 asColorKeyedBitmap!converting!public! !
 asColorKeyedBitmap:!converting!public! !
@@ -2359,6 +2485,7 @@ isPersistent
 	"Private - Answer true if the receiver holds sufficient information such that it can recreate itself when the image is saved and restored."
 
 	^true! !
+
 !Graphics.Color categoriesForMethods!
 createGpPen:!operations!private! !
 gdiplusBrush:!converting!public! !
@@ -2387,6 +2514,7 @@ scaledTo: aPoint
 	scale := aPoint x / self x.
 	scale * self y > aPoint y ifTrue: [scale := aPoint y / self y].
 	^scale * self! !
+
 !Graphics.Point categoriesForMethods!
 scaledOver:!public! !
 scaledTo:!operations!public! !
@@ -2399,6 +2527,7 @@ _clipGpGraphics: aGpGraphics mode: anInteger
 
 _combineGpRegion: aGdiplusRegion mode: aCombineModeConstant
 	^aGdiplusRegion combineRectangle: self mode: aCombineModeConstant! !
+
 !Graphics.Rectangle categoriesForMethods!
 _clipGpGraphics:mode:!double dispatch!private! !
 _combineGpRegion:mode:!double dispatch!private! !
@@ -2447,6 +2576,7 @@ graphics
 	"Answer a <GdiplusGraphics> for this View"
 
 	^Gdiplus.GdiplusGraphics fromView: self! !
+
 !UI.View categoriesForMethods!
 addToImageList:mask:!double dispatch!public! !
 createThumbnailExtent:mask:!private! !

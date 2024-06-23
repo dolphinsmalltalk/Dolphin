@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ChangesIndex' -> 16r2. 'SourcesIndex' -> 16r1 }!
+
 Kernel.SourceManager guid: (Core.GUID fromString: '{87b4c4bd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.SourceManager comment: ''!
+
 !Kernel.SourceManager categoriesForClass!Development!System-Support! !
+
 !Kernel.SourceManager methodsFor!
 
 basicOpenSources: filePath
@@ -463,6 +467,7 @@ truncateChanges
 			self closeChangesFile.
 			(FileStream write: chgFile) close.	"truncate it"
 			self openChangesFile: chgFile]! !
+
 !Kernel.SourceManager categoriesForMethods!
 basicOpenSources:!operations-source files!private! !
 changePositionFromDescriptor:!private!source filing! !
@@ -561,6 +566,7 @@ uninitialize
 
 	self reset.
 	Kernel removeBindingFor: #SourceFiles! !
+
 !Kernel.SourceManager class categoriesForMethods!
 default!accessing!public! !
 default:!accessing!public! !

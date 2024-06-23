@@ -105,6 +105,10 @@ Kernel.SharedPool
 			'OFN_SHAREWARN' -> 16r0.
 			'OFN_SHOWHELP' -> 16r10
 		}!
+
 OS.CommonDialogConstants guid: (Core.GUID fromString: '{ed2934fa-9bfe-4b32-a7c2-12deba52b3a6}')!
+
 OS.CommonDialogConstants isNonInstantiable: true!
+
 OS.CommonDialogConstants comment: ''!
+

@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2WindowFeatures guid: (OS.COM.IID fromString: '{5eaf559f-b46e-4397-8860-e422f287ff1e}')!
+
 WebView2.ICoreWebView2WindowFeatures isEgressOnly: true!
+
 WebView2.ICoreWebView2WindowFeatures comment: '`ICoreWebView2WindowFeatures` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WindowFeatures'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -56,7 +59,9 @@ interface ICoreWebView2WindowFeatures : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2WindowFeatures categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2WindowFeatures methodsFor!
 
 extent
@@ -243,6 +248,7 @@ width
 	answer := UInt32 new.
 	self get_Width: answer.
 	^answer asObject! !
+
 !WebView2.ICoreWebView2WindowFeatures categoriesForMethods!
 extent!properties!public! !
 get_HasPosition:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
@@ -297,6 +303,7 @@ defineFunctions
 		defineFunction: #get_ShouldDisplayScrollBars:
 			argumentTypes: 'sdword*'
 ! !
+
 !WebView2.ICoreWebView2WindowFeatures class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

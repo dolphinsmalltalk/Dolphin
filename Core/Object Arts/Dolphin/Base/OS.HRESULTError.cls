@@ -7,9 +7,13 @@ Core.Error
 	imports: #(#{OS.FacilityCodes private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.HRESULTError guid: (Core.GUID fromString: '{87b4c55a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.HRESULTError comment: ''!
+
 !OS.HRESULTError categoriesForClass!System-Exception Handling! !
+
 !OS.HRESULTError methodsFor!
 
 _descriptionArguments
@@ -75,6 +79,7 @@ statusCode
 	"Answer the error status code from the receiver's details."
 
 	^self hresult statusCode! !
+
 !OS.HRESULTError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -149,6 +154,7 @@ unregisterFacilityClass: anExceptionClass
 
 	FacilityClasses removeKey: (FacilityClasses keyAtValue: anExceptionClass ifAbsent: [^self])
 ! !
+
 !OS.HRESULTError class categoriesForMethods!
 fromHRESULT:!instance creation!public! !
 fromInteger:!instance creation!public! !

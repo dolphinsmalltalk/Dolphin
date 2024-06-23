@@ -7,9 +7,13 @@ Kernel.StBlockNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBPatternBlockNode guid: (Core.GUID fromString: '{63f4ab8a-d94e-4a65-bdae-742311429c7c}')!
+
 Refactory.Browser.RBPatternBlockNode comment: ''!
+
 !Refactory.Browser.RBPatternBlockNode categoriesForClass!Refactory-Parser! !
+
 !Refactory.Browser.RBPatternBlockNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -100,6 +104,7 @@ replacingBlock
 
 sentMessages
 	^OrderedCollection new! !
+
 !Refactory.Browser.RBPatternBlockNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 addArgumentWithNameBasedOn:to:!matching!public! !

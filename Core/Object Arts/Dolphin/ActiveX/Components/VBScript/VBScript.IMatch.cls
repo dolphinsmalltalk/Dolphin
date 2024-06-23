@@ -7,8 +7,11 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 VBScript.IMatch guid: (OS.COM.IID fromString: '{3f4daca1-160d-11d2-a8e9-00104b365c9f}')!
+
 VBScript.IMatch isEgressOnly: true!
+
 VBScript.IMatch comment: '`IMatch` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -37,7 +40,9 @@ interface IMatch : IDispatch
 		[out, retval]long* pLength);
 };
 ```'!
+
 !VBScript.IMatch categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
+
 !VBScript.IMatch methodsFor!
 
 firstIndex
@@ -109,6 +114,7 @@ value
 	answer := bstr asUtf16String.
 	bstr free.
 	^answer! !
+
 !VBScript.IMatch categoriesForMethods!
 firstIndex!**auto generated**!properties!public! !
 get_FirstIndex:!**auto generated**!COM Interfaces-IMatch!private! !
@@ -139,6 +145,7 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #get_Length:
 			argumentTypes: 'sdword*'! !
+
 !VBScript.IMatch class categoriesForMethods!
 clsid!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !

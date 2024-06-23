@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPropertyNotifySink guid: (OS.COM.IID fromString: '{9bfbbc02-eff1-101a-84ed-00aa00341d07}')!
+
 OS.COM.IPropertyNotifySink comment: '<IPropertyNotifySink> is a wrapper class for the COM interface ''ActiveXHost.IPropertyNotifySink'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IPropertyNotifySink is a connection point (event) interface implemented on a container to receiver notifications from a COM object when its properties are either changed, or about to be changed. The particular property in question is identified by <integer> DISPID.
@@ -29,7 +31,9 @@ interface IPropertyNotifySink : IUnknown {
 		[in] long dispID);
 };
 '!
+
 !OS.COM.IPropertyNotifySink categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IPropertyNotifySink class methodsFor!
 
 defineFunctions
@@ -42,6 +46,7 @@ defineFunctions
 		defineFunction: #OnRequestEdit:
 			argumentTypes: 'int32'
 ! !
+
 !OS.COM.IPropertyNotifySink class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

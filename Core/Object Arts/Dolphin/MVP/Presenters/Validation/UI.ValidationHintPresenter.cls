@@ -7,8 +7,11 @@ UI.ValidationResultPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValidationHintPresenter guid: (Core.GUID fromString: '{b7b6f02e-372e-4291-b168-a240397d658f}')!
+
 UI.ValidationHintPresenter comment: '`ValidationHintPresenter` is a `ValidationResultPresenter` that displays a `ValidationResult` using a `MessageBubble` (a form of tool-tip that looks like a speech bubble).'!
+
 !UI.ValidationHintPresenter methodsFor!
 
 closeHintBubble
@@ -106,6 +109,7 @@ showHintBubble: aValidationResult
 		exceptionDescription: aValidationResult hint;
 		isSilent: true;
 		open! !
+
 !UI.ValidationHintPresenter categoriesForMethods!
 closeHintBubble!helpers!private! !
 createSchematicWiring!initializing!private! !

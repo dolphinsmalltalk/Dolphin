@@ -7,9 +7,13 @@ Core.MessageSequenceAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.EventMessageSequence guid: (Core.GUID fromString: '{87b4c664-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.EventMessageSequence comment: ''!
+
 !Kernel.EventMessageSequence categoriesForClass!System-Support! !
+
 !Kernel.EventMessageSequence methodsFor!
 
 add: aMessageSend
@@ -141,6 +145,7 @@ valueWithArguments: anArray
 			receiver == DeadObject.Current
 				ifFalse: [(messages at: index) ifNotNil: [:msg | last := msg valueWithArguments: anArray]]].
 	^last! !
+
 !Kernel.EventMessageSequence categoriesForMethods!
 add:!adding!public! !
 elementsExpired:of:!finalizing!private! !

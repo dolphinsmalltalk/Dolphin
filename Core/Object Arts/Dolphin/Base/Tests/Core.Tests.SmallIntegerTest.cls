@@ -7,8 +7,11 @@ Core.Tests.IntegerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SmallIntegerTest guid: (Core.GUID fromString: '{3fc98bda-cdeb-45ea-a355-2968f5fd5e3a}')!
+
 Core.Tests.SmallIntegerTest comment: ''!
+
 !Core.Tests.SmallIntegerTest methodsFor!
 
 canonicalInstance
@@ -498,6 +501,7 @@ testSubtract
 	"Coercion to float"
 
 	self assert: (5 - 2.125 equals: 2.875)! !
+
 !Core.Tests.SmallIntegerTest categoriesForMethods!
 canonicalInstance!public!unit tests! !
 test1234!public! !
@@ -700,6 +704,7 @@ quoTestCases
 				{-16r40000000. Float pi negated. 341782637}.
 				{16r3FFFFFFF. Float pi. 341782637}.
 				{16r3FFFFFFF. Float pi negated. -341782637}}! !
+
 !Core.Tests.SmallIntegerTest class categoriesForMethods!
 bitShiftTestCases!constants!public! !
 integerDivideTestCases!constants!public! !

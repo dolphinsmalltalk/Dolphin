@@ -7,9 +7,13 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ClassGuidChangeTest guid: (Core.GUID fromString: '{5032e332-18e7-4e74-8aa5-4846586fafda}')!
+
 Refactory.Browser.Tests.ClassGuidChangeTest comment: ''!
+
 !Refactory.Browser.Tests.ClassGuidChangeTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ClassGuidChangeTest methodsFor!
 
 subjectClass
@@ -34,6 +38,7 @@ testPrinting
 	self assert: subject afterText equals: printString.
 	self assert: subject changeString equals: 'Set guid of Core.Object'.
 	self assert: subject printString equals: printString! !
+
 !Refactory.Browser.Tests.ClassGuidChangeTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsUndo!public!unit tests! !

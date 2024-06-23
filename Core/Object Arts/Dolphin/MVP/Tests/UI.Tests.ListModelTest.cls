@@ -7,8 +7,11 @@ Core.Tests.SequencedGrowableCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ListModelTest guid: (Core.GUID fromString: '{7c1aa951-808d-4acf-a642-6e54fea10c32}')!
+
 UI.Tests.ListModelTest comment: ''!
+
 !UI.Tests.ListModelTest methodsFor!
 
 collectionClass
@@ -42,6 +45,7 @@ testStbConvertFromVersion2
 	self assert: subject equals: (ListModel withAll: #(1 '2' 3.0)).
 	self assertIsNil: subject getEvents.
 	self assert: subject searchPolicy identicalTo: SearchPolicy identity! !
+
 !UI.Tests.ListModelTest categoriesForMethods!
 collectionClass!constants!private! !
 testStbConvertFromVersion0!public! !

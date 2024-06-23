@@ -7,9 +7,13 @@ Refactory.Browser.ClassModificationChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassImportsChange guid: (Core.GUID fromString: '{0de17edc-6eb7-4c7f-a0f9-85cd5c482bb2}')!
+
 Refactory.Browser.ClassImportsChange comment: ''!
+
 !Refactory.Browser.ClassImportsChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.ClassImportsChange methodsFor!
 
 = anObject
@@ -45,6 +49,7 @@ printOn: aStream
 		nextPutAll: ' imports: ';
 		print: imports;
 		nextPutAll: '!!'! !
+
 !Refactory.Browser.ClassImportsChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
@@ -64,6 +69,7 @@ import: anArrayOfBindingReferences into: aClass
 		changeClass: aClass;
 		imports: anArrayOfBindingReferences;
 		yourself! !
+
 !Refactory.Browser.ClassImportsChange class categoriesForMethods!
 import:into:!instance creation!public! !
 !

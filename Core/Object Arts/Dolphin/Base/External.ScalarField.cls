@@ -7,10 +7,15 @@ External.Field
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ScalarField guid: (Core.GUID fromString: '{87b4c4dd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.ScalarField isNonInstantiable: true!
+
 External.ScalarField comment: '<ScalarField> is the abstract class of <ExternalField>s to describe <ExternalStructure> fields of simple scalar types, e.g. ints, boolean, etc.'!
+
 !External.ScalarField categoriesForClass!External-Data-Types! !
+
 !External.ScalarField methodsFor!
 
 accessorMessage
@@ -27,6 +32,7 @@ byteSize
 
 valueType
 	^Integer! !
+
 !External.ScalarField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 byteSize!constants!private! !
@@ -40,6 +46,7 @@ byteSize
 	A large number of fields are the same size as an integer."
 
 	^VMConstants.IntSize! !
+
 !External.ScalarField class categoriesForMethods!
 byteSize!constants!private! !
 !

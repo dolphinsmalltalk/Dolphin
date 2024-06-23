@@ -35,6 +35,10 @@ Kernel.SharedPool
 			'ND_ROUTER_ADVERT' -> 16r86.
 			'ND_ROUTER_SOLICIT' -> 16r85
 		}!
+
 OS.IPHlpApiConstants guid: (Core.GUID fromString: '{cf21fda9-e7be-4a8d-b79d-e49173e5c3cc}')!
+
 OS.IPHlpApiConstants isNonInstantiable: true!
+
 OS.IPHlpApiConstants comment: ''!
+

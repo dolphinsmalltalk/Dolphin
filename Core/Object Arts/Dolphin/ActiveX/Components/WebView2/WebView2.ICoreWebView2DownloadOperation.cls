@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2DownloadOperation guid: (OS.COM.IID fromString: '{3d6b6cf2-afe1-44c7-a995-c65117714336}')!
+
 WebView2.ICoreWebView2DownloadOperation isEgressOnly: true!
+
 WebView2.ICoreWebView2DownloadOperation comment: '`ICoreWebView2DownloadOperation` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadOperation'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -83,7 +86,9 @@ interface ICoreWebView2DownloadOperation : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2DownloadOperation categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2DownloadOperation methodsFor!
 
 Add_BytesReceivedChanged: eventHandler token: token
@@ -361,6 +366,7 @@ uri
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !WebView2.ICoreWebView2DownloadOperation categoriesForMethods!
 Add_BytesReceivedChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 Add_EstimatedEndTimeChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
@@ -439,6 +445,7 @@ defineFunctions
 		defineFunction: #get_CanResume:
 			argumentTypes: 'sdword*'
 ! !
+
 !WebView2.ICoreWebView2DownloadOperation class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

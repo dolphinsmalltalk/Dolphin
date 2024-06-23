@@ -45,8 +45,11 @@ Tools.KeyedAspect
 								$\x7F -> 'DEL'
 							})
 		}!
+
 Tools.Scintilla.CharacterClassificationAspect guid: (Core.GUID fromString: '{d1b88e5a-fcd4-4920-9ddf-86ae73d810b9}')!
+
 Tools.Scintilla.CharacterClassificationAspect comment: ''!
+
 !Tools.Scintilla.CharacterClassificationAspect methodsFor!
 
 displayAspectNameOf: anObject on: aStream
@@ -59,6 +62,7 @@ displayAspectNameOf: anObject on: aStream
 			aStream
 				space;
 				nextPutAll: desc]! !
+
 !Tools.Scintilla.CharacterClassificationAspect categoriesForMethods!
 displayAspectNameOf:on:!displaying!private! !
 !
@@ -79,6 +83,7 @@ character: aCharacter classification: aSymbol
 
 icon
 	^UI.Scintilla.ScintillaView icon! !
+
 !Tools.Scintilla.CharacterClassificationAspect class categoriesForMethods!
 character:!instance creation!public! !
 character:classification:!instance creation!public! !

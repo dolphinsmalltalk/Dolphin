@@ -11,9 +11,13 @@ OS.NMHDR
 			'_OffsetOf_stSelEnd' -> 16r1C.
 			'_OffsetOf_stSelStart' -> 16rC
 		}!
+
 OS.NMSELCHANGE guid: (Core.GUID fromString: '{7ee1558c-5390-4f86-ada9-ae1300922720}')!
+
 OS.NMSELCHANGE comment: ''!
+
 !OS.NMSELCHANGE categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMSELCHANGE methodsFor!
 
 stSelEnd
@@ -25,6 +29,7 @@ stSelStart
 	"Answer the <SYSTEMTIME> value of the receiver's 'stSelStart' field."
 
 	^SYSTEMTIME fromAddress: bytes yourAddress + _OffsetOf_stSelStart! !
+
 !OS.NMSELCHANGE categoriesForMethods!
 stSelEnd!**compiled accessors**!public! !
 stSelStart!**compiled accessors**!public! !
@@ -47,6 +52,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #stSelStart #stSelEnd)! !
+
 !OS.NMSELCHANGE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

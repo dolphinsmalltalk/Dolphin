@@ -5,7 +5,9 @@ CCITEM subclass: #HDITEMW
 	classVariableNames: '_HDITEMW_Size _OffsetOf_cchTextMax _OffsetOf_cxy _OffsetOf_fmt _OffsetOf_hbm _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_pvFilter _OffsetOf_state _OffsetOf_type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HDITEMW guid: (GUID fromString: '{cff5da39-bb38-4499-9527-66449b212b87}')!
+
 HDITEMW addClassConstant: '_HDITEMW_Size' value: 16r30!
 HDITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
 HDITEMW addClassConstant: '_OffsetOf_cxy' value: 16r4!
@@ -19,7 +21,9 @@ HDITEMW addClassConstant: '_OffsetOf_pvFilter' value: 16r28!
 HDITEMW addClassConstant: '_OffsetOf_state' value: 16r2C!
 HDITEMW addClassConstant: '_OffsetOf_type' value: 16r24!
 HDITEMW comment: ''!
+
 !HDITEMW categoriesForClass!Unclassified! !
+
 !HDITEMW methodsFor!
 
 cchTextMax
@@ -179,6 +183,7 @@ type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_type put: anInteger! !
+
 !HDITEMW categoriesForMethods!
 cchTextMax!**compiled accessors**!public! !
 cchTextMax:!**compiled accessors**!public! !
@@ -259,6 +264,7 @@ defineFields
 
 getFieldNames
 	^#(#mask #cxy #pszText #hbm #cchTextMax #fmt #lParam #iImage #iOrder #type #pvFilter #state)! !
+
 !HDITEMW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public!template definition! !

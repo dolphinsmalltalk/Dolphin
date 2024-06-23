@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBAbstractClass guid: (Core.GUID fromString: '{99469076-f20a-4a7f-91f1-c2d06d948a14}')!
+
 Refactory.Browser.RBAbstractClass isNonInstantiable: true!
+
 Refactory.Browser.RBAbstractClass comment: 'RBAbstractClass is an abstract class. It represents classes in the system. Refactorings operate on these objects, producing change objects. These change objects are then performed on the real code.
 
 Subclasses must implement the following messages:
@@ -35,7 +38,9 @@ Class Variables:
 	LookupSuperclass	<Object>	a special object denoting that our superclass hasn''t been assigned yet
 
 '!
+
 !Refactory.Browser.RBAbstractClass categoriesForClass!Refactory-Model! !
+
 !Refactory.Browser.RBAbstractClass methodsFor!
 
 = aRBClass
@@ -848,6 +853,7 @@ withAllSuperclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSuperclassesDo: aMonadicValuable! !
+
 !Refactory.Browser.RBAbstractClass categoriesForMethods!
 =!comparing!public! !
 >>!accessing!public! !
@@ -995,6 +1001,7 @@ Refactory.Browser.RBAbstractClass methodProtocol: #classDescription attributes: 
 
 initialize
 	LookupSuperclass := Object new! !
+
 !Refactory.Browser.RBAbstractClass class categoriesForMethods!
 initialize!class initialization!public! !
 !

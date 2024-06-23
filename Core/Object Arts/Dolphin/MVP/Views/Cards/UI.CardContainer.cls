@@ -7,7 +7,9 @@ UI.AbstractCardContainer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.CardContainer guid: (Core.GUID fromString: '{87b4c71c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.CardContainer comment: 'A CardContainer is a <cardView> that allows each of its cards (sub-views) to appear with named tabs. The tab names are specified by the #arrangement aspects of the sub-views and appear in the z-order maintained by the container. The CardContainer uses a TabView to provide the name tabs.
 
 Typically a CardContainer will be used for tab-style property pages within a dialog. For another example, the Categories/Protocols/Variables pane in the Class Hierarchy Browser is implemented using a CardContainer.
@@ -16,7 +18,9 @@ Instance Variables:
 	tabs	<TabView> holding the name tabs.
 
 '!
+
 !UI.CardContainer categoriesForClass!MVP-Views! !
+
 !UI.CardContainer methodsFor!
 
 arrangementOf: aView put: anObject 
@@ -367,6 +371,7 @@ wmPrint: message wParam: wParam lParam: lParam
 		lParam: lParam.
 	canvas windowOrigin: prev.
 	^result! !
+
 !UI.CardContainer categoriesForMethods!
 arrangementOf:put:!accessing!public! !
 backcolor:!accessing!public! !
@@ -428,6 +433,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.CardContainer} 38 #{Core.Array} 16 nil nil 50 2 8 1409286144 131073 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 1350 1 #{UI.CardLayout} 550 #{Core.OrderedCollection} 0 nil nil nil nil 550 #{Core.IdentityDictionary} 0 nil 18 #{UI.TabViewXP} 50 28 nil 32 50 2 8 1140916736 1 240 838 2 #{UI.ListModel} 178 0 nil 6 #{Kernel.IdentitySearchPolicy} nil nil 1 nil nil nil 240 nil nil 518 #{Core.Message} #displayString 8 #() 386 #iconImageIndex 416 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil #noIcons nil nil nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 578 701 501 240 530 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 240 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 578 193 193 nil 27 482 50 1 530 #createAt:extent: 50 2 578 6143 21 578 701 501 32 658 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 50 1 240 720 nil 27)! !
+
 !UI.CardContainer class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 !

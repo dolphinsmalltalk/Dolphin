@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.MoenContour guid: (Core.GUID fromString: '{68f4ac01-2f95-11d3-93ba-00a024ca708a}')!
+
 UI.MoenContour comment: 'MoenContour is a private helper class which is part of the implementation of the <MoenTreeView>
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	upperHead	<MoenLink>
 	upperTail		<MoenLink>
 '!
+
 !UI.MoenContour categoriesForClass!MVP-Views-Support! !
+
 !UI.MoenContour methodsFor!
 
 lowerHead
@@ -58,6 +62,7 @@ upperTail
 
 upperTail: aMoenLink
 	upperTail := aMoenLink! !
+
 !UI.MoenContour categoriesForMethods!
 lowerHead!accessing!private! !
 lowerHead:!accessing!private! !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.CanvasTest guid: (Core.GUID fromString: '{f582d7b1-304e-45af-a9fd-315ee37dd609}')!
+
 Graphics.Tests.CanvasTest comment: ''!
+
 !Graphics.Tests.CanvasTest methodsFor!
 
 testFont
@@ -61,6 +64,7 @@ testOutlineTextMetrics
 			self assert: otm fullName equals: 'Microsoft Comic Sans'].
 	self assert: otm faceName equals: font name.
 	self assert: otm familyName equals: font name! !
+
 !Graphics.Tests.CanvasTest categoriesForMethods!
 testFont!public!unit tests! !
 testFontNames!public!unit tests! !

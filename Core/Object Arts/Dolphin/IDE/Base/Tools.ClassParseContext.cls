@@ -7,9 +7,13 @@ Tools.ParseContext
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ClassParseContext guid: (Core.GUID fromString: '{baace1bc-c211-4bc6-97f4-f9a962cf169c}')!
+
 Tools.ClassParseContext comment: ''!
+
 !Tools.ClassParseContext categoriesForClass!Kernel-Objects! !
+
 !Tools.ClassParseContext methodsFor!
 
 environment
@@ -37,6 +41,7 @@ printOn: aStream
 
 scope
 	^classScope! !
+
 !Tools.ClassParseContext categoriesForMethods!
 environment!accessing!public! !
 methodClass!accessing!public! !
@@ -52,6 +57,7 @@ methodClass: aClass
 
 methodClass: aClass environment: aNamespace
 	^self new methodClass: aClass environment: aNamespace! !
+
 !Tools.ClassParseContext class categoriesForMethods!
 methodClass:!instance creation!public! !
 methodClass:environment:!instance creation!public! !

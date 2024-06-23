@@ -7,8 +7,11 @@ WebView2.ICoreWebView2ControllerOptions
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ControllerOptions2 guid: (OS.COM.IID fromString: '{06c991d8-9e7e-11ed-a8fc-0242ac120002}')!
+
 WebView2.ICoreWebView2ControllerOptions2 isEgressOnly: true!
+
 WebView2.ICoreWebView2ControllerOptions2 comment: '`ICoreWebView2ControllerOptions2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ControllerOptions2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2ControllerOptions2 : ICoreWebView2ControllerOptions
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ControllerOptions2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ControllerOptions2 methodsFor!
 
 get_ScriptLocale: locale
@@ -53,6 +58,7 @@ put_ScriptLocale: locale
 
 	<virtual stdcall: hresult 9 lpwstr>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2ControllerOptions2 categoriesForMethods!
 get_ScriptLocale:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions2!private! !
 put_ScriptLocale:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions2!private! !
@@ -70,6 +76,7 @@ defineFunctions
 		defineFunction: #put_ScriptLocale:
 			argumentTypes: 'lpwstr'
 ! !
+
 !WebView2.ICoreWebView2ControllerOptions2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

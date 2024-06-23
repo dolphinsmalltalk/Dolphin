@@ -175,6 +175,7 @@ Kernel.SharedPool
 			'EMR_TRANSPARENTBLT' -> 16r74.
 			'EMR_WIDENPATH' -> 16r42
 		}!
+
 Graphics.Image
 	subclass: #'Graphics.Metafile'
 	instanceVariableNames: 'header'
@@ -182,6 +183,7 @@ Graphics.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.ENHMETARECORD'
 	instanceVariableNames: ''
@@ -193,6 +195,7 @@ External.Structure
 			'_OffsetOf_iType' -> 16r0.
 			'_OffsetOf_nSize' -> 16r4
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.ENHMETAHEADER'
 	instanceVariableNames: ''
@@ -375,6 +378,7 @@ setEnhMetaFileBits: cbBuffer lpData: lpData
 
 	<stdcall: handle SetEnhMetaFileBits dword byte*>
 	^self invalidCall: _failureCode! !
+
 !OS.GDILibrary categoriesForMethods!
 closeEnhMetaFile:!public!win32 functions-metafile! !
 copyEnhMetaFile:lpszFile:!public!win32 functions-metafile! !
@@ -408,6 +412,7 @@ getMetafileIfNone: exceptionHandler
 			[| hemf |
 			hemf := User32 getClipboardData: CF_ENHMETAFILE.
 			hemf isNull ifTrue: [exceptionHandler value] ifFalse: [(Metafile fromHandle: hemf) copy]]! !
+
 !UI.Clipboard categoriesForMethods!
 getMetafile!accessing!public! !
 getMetafileIfNone:!accessing!public! !

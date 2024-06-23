@@ -7,8 +7,11 @@ Database.Tests.DBConnectionTestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.SQLServerNorthwindDB guid: (Core.GUID fromString: '{2575aff5-9fad-4133-bf64-34ff8442f774}')!
+
 Database.Tests.SQLServerNorthwindDB comment: ''!
+
 !Database.Tests.SQLServerNorthwindDB methodsFor!
 
 connectString
@@ -66,6 +69,7 @@ serverName
 
 uid
 	^'sa'! !
+
 !Database.Tests.SQLServerNorthwindDB categoriesForMethods!
 connectString!private! !
 createDatabase!private! !

@@ -7,12 +7,16 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ICatRegister guid: (OS.COM.IID fromString: '{0002e012-0000-0000-c000-000000000046}')!
+
 OS.COM.ICatRegister comment: '<ICatRegister> is a wrapper class for the COM interface ''COMCAT.ICatRegister'' generated from type information in the ''OLE Component Categories Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 ICatRegister provides methods for registering and unregistering component category information in the Registry. This includes both the human-readable names of categories and the categories implemented/required by a given component or class.
 '!
+
 !OS.COM.ICatRegister categoriesForClass!COM Category Manager!COM-Interfaces! !
+
 !OS.COM.ICatRegister methodsFor!
 
 buildCatIdArray: catids
@@ -210,6 +214,7 @@ UnRegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 
 	<virtual stdcall: hresult 9 guid* uint32 guid*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.ICatRegister categoriesForMethods!
 buildCatIdArray:!helpers!private! !
 registerCategories:!operations!public! !
@@ -282,6 +287,7 @@ new
 	"The receiver is a singleton."
 
 	^self shouldNotImplement! !
+
 !OS.COM.ICatRegister class categoriesForMethods!
 current!instance creation!public! !
 defineFunctions!**auto generated**!initializing!public! !

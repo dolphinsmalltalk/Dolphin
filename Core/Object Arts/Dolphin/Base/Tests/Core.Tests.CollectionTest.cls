@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.CollectionTest guid: (Core.GUID fromString: '{c0608062-bc41-43cf-aefc-c89e6b500e6d}')!
+
 Core.Tests.CollectionTest isNonInstantiable: true!
+
 Core.Tests.CollectionTest comment: ''!
+
 !Core.Tests.CollectionTest methodsFor!
 
 assimilate: anObject
@@ -272,6 +276,7 @@ testStoreOn
 			storeString := subject storeString.
 			rehydrated := Compiler evaluate: storeString.
 			self assert: rehydrated equals: subject]! !
+
 !Core.Tests.CollectionTest categoriesForMethods!
 assimilate:!private!unit tests! !
 assimilateElements:!helpers!private! !

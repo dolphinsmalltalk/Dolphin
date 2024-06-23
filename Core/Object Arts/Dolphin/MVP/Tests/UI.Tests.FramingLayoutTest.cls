@@ -7,8 +7,11 @@ UI.Tests.LayoutManagerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.FramingLayoutTest guid: (Core.GUID fromString: '{fa16fdd5-bd9e-4198-bc61-f33e43c14edc}')!
+
 UI.Tests.FramingLayoutTest comment: ''!
+
 !UI.Tests.FramingLayoutTest methodsFor!
 
 layoutManagerClass
@@ -93,6 +96,7 @@ testResizeParentRelative
 				+ 5.
 	shell extent: (shell calcExtentFromClientExtent: marginExtents).
 	self assert: button rectangle extent equals: 5 @ 5! !
+
 !UI.Tests.FramingLayoutTest categoriesForMethods!
 layoutManagerClass!private!unit tests! !
 testCircularEdgeConstraint!public!unit tests! !

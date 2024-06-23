@@ -5,13 +5,17 @@ ILImport subclass: #ILImportIcon
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportIcon guid: (GUID fromString: '{254d6ad6-c12b-4add-be8b-d2f0dc0682cc}')!
+
 ILImportIcon comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILImportIcon categoriesForClass!IDB Goodies! !
+
 !ILImportIcon methodsFor!
 
 hotSpotFor: anInteger
@@ -59,6 +63,7 @@ initializeFrom: aStream
 
 proxyClass
 	^ILImportIconProxy! !
+
 !ILImportIcon categoriesForMethods!
 hotSpotFor:!accessing!public! !
 images!operations!public! !
@@ -70,6 +75,7 @@ proxyClass!constants!public! !
 
 isResponsibleFor: aStream
 	^(aStream next: 3) = #[0 0 1]! !
+
 !ILImportIcon class categoriesForMethods!
 isResponsibleFor:!public!testing! !
 !

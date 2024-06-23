@@ -24,7 +24,9 @@ Core.Object
 			'HexDigitValues'
 				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r0 16r1 16r2 16r3 16r4 16r5 16r6 16r7 16r8 16r9 nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF)
 		}!
+
 STON.Reader guid: (Core.GUID fromString: '{d393ea51-a9cb-4a9f-bdc2-477e3bb22712}')!
+
 STON.Reader comment: 'STON.Reader materializes objects using the Smalltalk Object Notation format.
 
 This parser is backwards compatible with standard JSON.
@@ -43,7 +45,9 @@ Customization options are:
 h2. Dolphin Specifics
 
 We dispense with the naïve approach of patching up forward references encountered during the deserialization process by walking the objects as this quickly heads off into bits of the Object graph that were referenced from the STON serialisation, but not included in it. The `stonContainsSubObjects` mechanism is too simplistic and error prone to prevent this in all but very constrained object graphs with a known set of classes. It''s also rather slow. Neither of these things are suitable characteristics for a general purpose object serialization mechanism. To top it all, it isn''t actually necessary as the graph can only contain backwards references, never forwards references, as a function of the way it is built by visiting objects recursively. The numbered cross references in a STON stream are most often referencing a previously seen object that is known and recorded in the objects list and so which can be resolved immediately on encountering the reference. The corner case is where the object is not known because it is still being parsed and the reference is internal (only `parseObject` can encounter these cases). The design of the `fromSton:` API means that the materialised object instance is created without the reader''s immediate knowledge, so any internal refs will not be resolvable until after the `fromSton:` for the object being parsed has returned. In that case we can patch them up with `become:` if we can be very certain that the object is new and unshared. There is potential danger in using a swapping `become:` for classes that use the normal STON object representation, but which create some sort of external reference while the object itself is being instantiated (e.g. a registry for sharing), and which may have internal references. For these we have added a specific mechanism for the class side `fromSton:` to call back to the reader and replace the reference created by parseObject (see `STON.Reader>>#registerNewObject:`). This is not necessary for any of the standard `fromSton:` implementations, or any of the custom implementations to date.'!
+
 !STON.Reader categoriesForClass!STON-Core-Reader! !
+
 !STON.Reader methodsFor!
 
 acceptUnknownClasses: aBoolean
@@ -533,6 +537,7 @@ setReference: reference to: object
 storeReference: object
 	objects addLast: object.
 	^objects size! !
+
 !STON.Reader categoriesForMethods!
 acceptUnknownClasses:!initialization!private! !
 atEnd!private!testing! !
@@ -630,6 +635,7 @@ on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
+
 !STON.Reader class categoriesForMethods!
 icon!constants!public! !
 initialize!private! !

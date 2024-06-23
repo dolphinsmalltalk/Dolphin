@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler guid: (OS.COM.IID fromString: '{fce16a1c-f107-4601-8b75-fc4940ae25d0}')!
+
 WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler comment: '`ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler methodsFor!
 
 Invoke: errorCode arg: extensionList
@@ -41,6 +45,7 @@ Invoke: errorCode arg: extensionList
 
 	<virtual stdcall: hresult 4 hresult ICoreWebView2BrowserExtensionList*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler!public! !
 !
@@ -55,6 +60,7 @@ defineFunctions
 		defineFunction: #Invoke:arg:
 			argumentTypes: 'hresult ICoreWebView2BrowserExtensionList*'
 ! !
+
 !WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

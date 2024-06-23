@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LayoutPosition guid: (Core.GUID fromString: '{20f9e2d1-c328-4f0b-9dbf-8b973e199865}')!
+
 UI.LayoutPosition comment: ''!
+
 !UI.LayoutPosition methodsFor!
 
 applyRectangle
@@ -68,6 +71,7 @@ show: aBoolean
 view: aView
 	view := aView.
 	^self! !
+
 !UI.LayoutPosition categoriesForMethods!
 applyRectangle!private!testing! !
 deferWindowPos:!operations!private! !
@@ -86,6 +90,7 @@ view: aView
 	^self new
 		view: aView;
 		yourself! !
+
 !UI.LayoutPosition class categoriesForMethods!
 view:!public! !
 !

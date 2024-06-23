@@ -7,7 +7,9 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SemVer guid: (Core.GUID fromString: '{4ec303dc-a331-4b39-8270-93794e0bf42c}')!
+
 Core.SemVer comment: '`SemVer` implements the [SemVer 2.0](https://semver.org/) specification.
 
 ## Instance Variables:
@@ -21,7 +23,9 @@ Core.SemVer comment: '`SemVer` implements the [SemVer 2.0](https://semver.org/) 
   `RegEx`		`IRegExp2`
 
 '!
+
 !Core.SemVer categoriesForClass!Kernel-Objects! !
+
 !Core.SemVer methodsFor!
 
 < aSemVer
@@ -217,6 +221,7 @@ readIntegerPrerelPart: aString
 			stream := aString readStream.
 			int := Integer readFrom: stream.
 			stream atEnd ifTrue: [int]]! !
+
 !Core.SemVer categoriesForMethods!
 <!comparing!public! !
 <=>!comparing!public! !
@@ -298,6 +303,7 @@ major: majorInteger minor: minorInteger patch: patchInteger prerelease: prerelSt
 
 readFrom: aReadStream
 	^(SemVerParser on: aReadStream) parse! !
+
 !Core.SemVer class categoriesForMethods!
 fromGitDescription:!instance creation!public! !
 fromString:!instance creation!public! !

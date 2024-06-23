@@ -7,13 +7,17 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSScriptControl.IScriptProcedure guid: (OS.COM.IID fromString: '{70841c73-067d-11d0-95d8-00a02463ab28}')!
+
 MSScriptControl.IScriptProcedure comment: '<IScriptProcedure> is a wrapper class for the COM interface ''MSScriptControl.IScriptProcedure'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Describes a procedure"
 '!
+
 !MSScriptControl.IScriptProcedure categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+
 !MSScriptControl.IScriptProcedure methodsFor!
 
 get_HasReturnValue: pfHasReturnValue
@@ -85,6 +89,7 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self name! !
+
 !MSScriptControl.IScriptProcedure categoriesForMethods!
 get_HasReturnValue:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
 get_Name:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
@@ -123,6 +128,7 @@ initializeTypeLib
 		IScriptProcedure initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
+
 !MSScriptControl.IScriptProcedure class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

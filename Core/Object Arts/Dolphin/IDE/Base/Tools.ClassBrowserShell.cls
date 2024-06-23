@@ -7,7 +7,9 @@ Tools.ClassBrowserAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'LocalHierarchyMask' -> 16r10 }!
+
 Tools.ClassBrowserShell guid: (Core.GUID fromString: '{5655079d-fa03-4ca0-85c5-73cd64654603}')!
+
 Tools.ClassBrowserShell comment: 'ClassBrowserShell is a <SmalltalkToolShell> implementing the Class Hierarchy Browser development tool.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 Class Variables:
 	LocalHierarchyMask		<integer> mask flag for the local hierarchy mode.
 '!
+
 !Tools.ClassBrowserShell categoriesForClass!MVP-Presenters! !
+
 !Tools.ClassBrowserShell methodsFor!
 
 canShowLocalHierarchy
@@ -49,6 +53,7 @@ resetFor: aClass
 	(self isLocalHierarchyMode 
 		and: [(classesPresenter model filter value: aClass instanceClass) not]) 
 			ifTrue: [self displayLocalHierarchyOf: aClass]! !
+
 !Tools.ClassBrowserShell categoriesForMethods!
 canShowLocalHierarchy!private!testing! !
 createComponents!initializing!public! !
@@ -96,6 +101,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10520! !
+
 !Tools.ClassBrowserShell class categoriesForMethods!
 defaultDefaultSlideyPinsMap!initializing!private! !
 displayOn:!displaying!public! !

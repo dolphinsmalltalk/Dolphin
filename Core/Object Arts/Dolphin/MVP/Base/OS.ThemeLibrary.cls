@@ -7,7 +7,9 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ThemeLibrary guid: (Core.GUID fromString: '{fb91df3f-4cb4-48a2-adee-a75b9a4d30a2}')!
+
 OS.ThemeLibrary comment: 'ThemeLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''UXTHEME.DLL''. It was generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -351,7 +353,9 @@ module Theme
 		[in]DTBGOPTS* pOptions);
 };
 '!
+
 !OS.ThemeLibrary categoriesForClass!Win32-Modules! !
+
 !OS.ThemeLibrary methodsFor!
 
 beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams pAnimationParams: pAnimationParams phdcFrom: phdcFrom phdcTo: phdcTo
@@ -1160,6 +1164,7 @@ shouldAppsUseDarkMode
 "
 UxTheme shouldAppsUseDarkMode
 "! !
+
 !OS.ThemeLibrary categoriesForMethods!
 beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
 beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
@@ -1242,6 +1247,7 @@ new
 
 sharedVariableName
 	^#{UxTheme}! !
+
 !OS.ThemeLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !
 new!instance creation!public! !

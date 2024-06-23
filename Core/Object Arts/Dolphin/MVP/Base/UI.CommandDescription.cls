@@ -14,7 +14,9 @@ Core.Object
 			'StartingId' -> 16rFA0.
 			'TextSubstitutionsMask' -> 16r8
 		}!
+
 UI.CommandDescription guid: (Core.GUID fromString: '{87b4c469-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.CommandDescription comment: 'A CommandDescription acts as the fundamental source for all MVP user interface commands. An instance of this class holds the command itself, a textual description of the command''s function and, optionally, an accelerator key that may trigger the command action when used within a menu. The command can be a <Message>, <Symbol> or, indeed, any object that responds to the <commandMessage> protocol. For most commands, symbols are prevalent but messages can sometimes be more convenient, especially if the command is to carry parameters, such as in dynamically constructed menus (e.g. the browser history list).
 
 The MVP command framework operates as follows. There exist a number of potential command sources which each carry a CommandDescription that dictates the command that they wish to transmit. Possible command sources are Menus (drop-down and context), PushButtons and ToolbarButtons. When each source is actioned, the framework determines an appropriate view that can be considered as the origin for the command. Usually this is the view with focus but, in the case of context menus, it is the view beneath the context mouse click. 
@@ -38,7 +40,9 @@ Instance Variables:
 	unused		Reserved for future use.
 	
 '!
+
 !UI.CommandDescription categoriesForClass!MVP-Commands! !
+
 !UI.CommandDescription methodsFor!
 
 acceleratorKey
@@ -244,6 +248,7 @@ toolTipText
 	"Answer a <readableString> suitable for displaying in a Tool-tip control."
 
 	^self hasTextSubstitutions ifTrue: [self description expandMacros] ifFalse: [self description]! !
+
 !UI.CommandDescription categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!public! !
@@ -408,6 +413,7 @@ withId: anInteger ifAbsent: absentBlock
 	then the value of absentBlock."
 
 	^CommandDescriptionRegistry keyAtValue: anInteger ifAbsent: absentBlock! !
+
 !UI.CommandDescription class categoriesForMethods!
 command:!instance creation!public! !
 command:description:!instance creation!public! !

@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest guid: (Core.GUID fromString: '{ca54e227-44a3-41c9-aab6-bd11a852bf74}')!
+
 Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest methodsFor!
 
 testBadName
@@ -140,6 +144,7 @@ testModelChildrenToSibling
 	self assert: (class metaclass parseTreeFor: #bar)
 		equals: (self parseMethod: 'bar
 							^self printString')! !
+
 !Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest categoriesForMethods!
 testBadName!failure tests!public! !
 testChildToSibling!public!tests! !

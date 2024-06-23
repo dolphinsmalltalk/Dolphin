@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.DiskVolumeInformationTest guid: (Core.GUID fromString: '{b920c262-99c0-49b9-8710-57611ad81543}')!
+
 OS.Tests.DiskVolumeInformationTest comment: ''!
+
 !OS.Tests.DiskVolumeInformationTest methodsFor!
 
 testDiskSpaceCalcs
@@ -24,6 +27,7 @@ testFileSystemFlags
 	self deny: subject fileSystemFlags equals: 0.
 	self skipUnless: [subject fileSystemName = 'NTFS'].
 	self assert: subject isSparseFileCapable! !
+
 !OS.Tests.DiskVolumeInformationTest categoriesForMethods!
 testDiskSpaceCalcs!public! !
 testFileSystemFlags!public! !

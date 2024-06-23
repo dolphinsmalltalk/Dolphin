@@ -7,7 +7,9 @@ UI.Presenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.PlimbolePresenter guid: (Core.GUID fromString: '{37200744-dd59-4671-9c52-bec43269016c}')!
+
 UI.Examples.PlimbolePresenter comment: 'This is the Presenter class for the Plimbole Generative Music Sequencer. It receives user input (mouse clicks and commands) and translates these into effects on the Plimbole model that it holds. Together with the PlimboleView class this forms the user interface part of the MVP triad. Normaly one would create the complete Plimbole user interface usering a PlimboleShell since this adds the UI buttons and provides for a fully functioning application. However, it is possible to instantiate a basic Plimbole-PlimboleView-PlimbolePresenter MVP triad as a demonstration:
 
 presenter := PlimbolePresenter show.
@@ -17,7 +19,9 @@ presenter topShell exit.
 
 
 '!
+
 !UI.Examples.PlimbolePresenter categoriesForClass!MVP-Presenters! !
+
 !UI.Examples.PlimbolePresenter methodsFor!
 
 availableGridExtents
@@ -248,6 +252,7 @@ slowerTempo
 
 	self plimbole tempo: self plimbole tempo // 1.05.
 	self showHintBubble: 'Tempo ' , self plimbole tempo displayString! !
+
 !UI.Examples.PlimbolePresenter categoriesForMethods!
 availableGridExtents!constants!public! !
 beChromaticScale!constants!public! !
@@ -305,6 +310,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Examples.PlimboleView} 38 #{Core.Array} 12 nil nil 50 2 8 1140850688 1 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 242 201 201 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 99 12 0 0 110 0 0 0] 8 #() 242 193 193 nil 27)! !
+
 !UI.Examples.PlimbolePresenter class categoriesForMethods!
 defaultModel!public! !
 defaultPalette!constants!private! !

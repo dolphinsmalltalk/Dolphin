@@ -7,11 +7,15 @@ External.SCALAR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_FLOAT_Size' -> 16r4 }!
+
 External.FLOAT guid: (Core.GUID fromString: '{87b4c595-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.FLOAT comment: 'FLOAT is an <ExternalStructure> class to represent single precision (32-bit) floating point numbers in native format.
 
 Single precision floats can be used to represent numbers with magnitudes between 1.17549e-038 and 3.40282e+038, but only with about 6 digits of precision.'!
+
 !External.FLOAT categoriesForClass!External-Data-Structured! !
+
 !External.FLOAT methodsFor!
 
 asFloat
@@ -28,6 +32,7 @@ value: aFloat
 	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_value put: aFloat! !
+
 !External.FLOAT categoriesForMethods!
 asFloat!converting!public! !
 value!**compiled accessors**!public! !
@@ -65,6 +70,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
+
 !External.FLOAT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

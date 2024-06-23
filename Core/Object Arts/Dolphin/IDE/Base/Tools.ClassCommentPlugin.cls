@@ -7,13 +7,17 @@ Tools.ClassAspectPlugin
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ClassCommentPlugin guid: (Core.GUID fromString: '{9bbb729c-f516-492e-b991-7ad0c238a37f}')!
+
 Tools.ClassCommentPlugin comment: '`ClassCommentPlugin` is a `<classBrowserPlugin>` for displaying/editing class comments.
 
 The default view uses Scintilla with its built in markdown lexer. This provides some limited assistance for editing comments in markdown, but there is no renderer currently.
 
 '!
+
 !Tools.ClassCommentPlugin categoriesForClass!Browser-Plugins! !
+
 !Tools.ClassCommentPlugin methodsFor!
 
 applyOptions
@@ -57,6 +61,7 @@ setWordWrap
 
 systemUpdateEvent
 	^#classCommented:! !
+
 !Tools.ClassCommentPlugin categoriesForMethods!
 applyOptions!options!private! !
 aspect!constants!private! !
@@ -134,6 +139,7 @@ wordWrap: aBoolean
 	WordWrap == aBoolean ifTrue: [^self].
 	WordWrap := aBoolean.
 	self primAllSubinstances do: [:each | each setWordWrap]! !
+
 !Tools.ClassCommentPlugin class categoriesForMethods!
 defaultBackcolor!accessing!public! !
 defaultBackcolor:!accessing!public! !

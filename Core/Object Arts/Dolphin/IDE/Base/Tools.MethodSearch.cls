@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'IgnoreCaseMask' -> 16r1 }!
+
 Tools.MethodSearch guid: (Core.GUID fromString: '{702ae94a-b32c-4d97-b2a5-8080cf67e3b4}')!
+
 Tools.MethodSearch comment: 'SelectorSearch represents the information and behaviour necessary to filter the methods of the system according to whether they define or reference a message selector matching specified criteria. This can include regular expression matching when the ''VBScript Regular Expressions'' package is loaded.
 
 Instance Variables:
@@ -18,7 +20,9 @@ Class Variables:
 	IgnoreCaseMask		<integer>
 
 '!
+
 !Tools.MethodSearch categoriesForClass!Kernel-Objects! !
+
 !Tools.MethodSearch methodsFor!
 
 definitionFilter
@@ -188,6 +192,7 @@ wildcardReferenceFilter
 	match := self wildcardMatchPattern.
 	ignoreCase := findDetails isCaseSensitive not.
 	^self literalSymbolsFilter: [:each | match match: each ignoreCase: ignoreCase]! !
+
 !Tools.MethodSearch categoriesForMethods!
 definitionFilter!accessing!public! !
 definitionsIn:!enquiries!public! !
@@ -236,6 +241,7 @@ newPattern: aString
 
 newSelector: aSymbol 
 	^self newLiteral: aSymbol asSymbol! !
+
 !Tools.MethodSearch class categoriesForMethods!
 new!instance creation!public! !
 newFindDetails:!instance creation!public! !

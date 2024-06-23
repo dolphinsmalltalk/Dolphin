@@ -91,6 +91,7 @@ UI.Dialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'Tools.Tests.ClosedCommandDescriptionTest'
 	instanceVariableNames: 'dialog'
@@ -98,6 +99,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.CodeMentorTest'
 	instanceVariableNames: ''
@@ -105,6 +107,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.DebuggerTest'
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
@@ -112,6 +115,7 @@ Core.Tests.DolphinTest
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.PublishedAspectInspectorTest'
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
@@ -119,6 +123,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.SmalltalkStylerTest'
 	instanceVariableNames: 'mock scintilla'
@@ -126,6 +131,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.ViewComposerTest'
 	instanceVariableNames: 'vc sampleClass'
@@ -133,6 +139,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.FolderTest
 	subclass: #'Tools.Tests.PackageFolderTest'
 	instanceVariableNames: ''
@@ -140,6 +147,7 @@ UI.Tests.FolderTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.ClassBrowserAbstractTest'
 	instanceVariableNames: 'methodsPresenter packageA plugins'
@@ -147,6 +155,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.IdeaSpaceShellTest'
 	instanceVariableNames: 'browserPlugins'
@@ -154,6 +163,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.MethodWorkspaceTest'
 	instanceVariableNames: ''
@@ -161,6 +171,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.PackageBrowserShellTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
@@ -168,6 +179,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.ResourceBrowserTest'
 	instanceVariableNames: 'testClass'
@@ -175,6 +187,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.SmalltalkSearchPresenterTest'
 	instanceVariableNames: ''
@@ -182,6 +195,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.SmalltalkSystemShellTest'
 	instanceVariableNames: ''
@@ -189,6 +203,7 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ClassBrowserAbstractTest
 	subclass: #'Tools.Tests.ClassBrowserTest'
 	instanceVariableNames: ''
@@ -196,6 +211,7 @@ Tools.Tests.ClassBrowserAbstractTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ClassBrowserAbstractTest
 	subclass: #'Tools.Tests.SystemBrowserTest'
 	instanceVariableNames: ''
@@ -203,6 +219,7 @@ Tools.Tests.ClassBrowserAbstractTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SelectableItemsTest
 	subclass: #'Tools.Tests.ClassSelectorTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
@@ -210,6 +227,7 @@ UI.Tests.SelectableItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SelectableItemsTest
 	subclass: #'Tools.Tests.PackageSelectorTest'
 	instanceVariableNames: 'packageA defaultPackage'
@@ -217,6 +235,7 @@ UI.Tests.SelectableItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ClassSelectorTest
 	subclass: #'Tools.Tests.ClassHierarchySelectorTest'
 	instanceVariableNames: ''
@@ -224,6 +243,7 @@ Tools.Tests.ClassSelectorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ClassSelectorTest
 	subclass: #'Tools.Tests.ClassListSelectorTest'
 	instanceVariableNames: ''
@@ -231,6 +251,7 @@ Tools.Tests.ClassSelectorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ClassSelectorTest
 	subclass: #'Tools.Tests.PackagedClassSelectorTest'
 	instanceVariableNames: ''
@@ -245,6 +266,7 @@ Tools.Tests.ClassSelectorTest
 
 categoriesPresenter
 	^categoriesPresenter! !
+
 !Tools.ClassBrowserAbstract categoriesForMethods!
 categoriesPresenter!accessing!private! !
 !
@@ -253,6 +275,7 @@ categoriesPresenter!accessing!private! !
 
 correspondingTestCase
 	^Tests.ClassBrowserTest! !
+
 !Tools.ClassBrowserShell class categoriesForMethods!
 correspondingTestCase!public! !
 !

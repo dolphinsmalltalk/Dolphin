@@ -7,9 +7,13 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.JSONTest guid: (Core.GUID fromString: '{437baf49-fca6-405c-9fb7-18b0c8f89f50}')!
+
 STON.Tests.JSONTest comment: 'STONJSONTests contains unit tests for the JSON functionality available in STON.'!
+
 !STON.Tests.JSONTest categoriesForClass!STON-Tests-Facade! !
+
 !STON.Tests.JSONTest methodsFor!
 
 testBooleans
@@ -117,6 +121,7 @@ testUnknown
 
 	self should: [JSON toString: 1 @ 2] raise: WriterError.
 	self should: [JSON toString: #(1 2 3) asOrderedCollection] raise: WriterError! !
+
 !STON.Tests.JSONTest categoriesForMethods!
 testBooleans!public!tests! !
 testCircular!public!tests! !

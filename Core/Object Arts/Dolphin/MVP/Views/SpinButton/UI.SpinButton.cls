@@ -11,7 +11,9 @@ UI.ValueConvertingControlView
 				-> (IdentityDictionary withAll: { #left -> 16r8. #right -> 16r4. #unattached -> 16r0 }).
 			'AlignmentMask' -> 16rC
 		}!
+
 UI.SpinButton guid: (Core.GUID fromString: '{425d0eac-542e-11d3-998b-d5ca2c3c1d61}')!
+
 UI.SpinButton comment: 'SpinButton is a <valueView> wrapping the Windows Up-Down common control. The <valueModel> associated with a SpinButton must always yield an <integer> value when mapped through the installed type converter.
 
 Note that comctl32.dll version 5.80 or later is required, mandating at least Internet Explorer 5 on the target machine. This is to support the 32-bit integer range, 16-bit seeming hardly worthwhile.
@@ -32,7 +34,9 @@ Class Variables:
 	UdnMap		<Array> of <Symbol>. Notification message selectors.
 
 '!
+
 !UI.SpinButton categoriesForClass!MVP-Views! !
+
 !UI.SpinButton methodsFor!
 
 alignment
@@ -327,6 +331,7 @@ wantArrowKeys: aBoolean
 		baseStyleMask: UDS_ARROWKEYS
 		set: aBoolean
 		recreateIfChanged: false! !
+
 !UI.SpinButton categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -400,6 +405,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_updown32'! !
+
 !UI.SpinButton class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

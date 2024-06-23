@@ -7,9 +7,13 @@ External.ArrayPointerField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.StructureArrayPointerField guid: (Core.GUID fromString: '{87b4c4e4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.StructureArrayPointerField comment: 'StructureArrayPointerField is an <ExternalField> type to represent <ExternalStructure> members which are pointers to arrays of structures.'!
+
 !External.StructureArrayPointerField categoriesForClass!External-Data-Types! !
+
 !External.StructureArrayPointerField methodsFor!
 
 elementClass
@@ -31,6 +35,7 @@ readFrom: aStructure
 		fromAddress: (aStructure bytes int32AtOffset: offset)
 		length: (arrayLength getElementCountOf: self in: aStructure)
 		elementClass: self elementClass! !
+
 !External.StructureArrayPointerField categoriesForMethods!
 elementClass!accessing!private! !
 pointerClass!accessing!private! !

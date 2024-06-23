@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTestUser guid: (Core.GUID fromString: '{dc73b82c-2449-48f5-82a0-c000b743f362}')!
+
 STON.Tests.STONTestUser comment: 'STONTestUser is used to support unit tests.
 
 Instance Variables
@@ -15,7 +17,9 @@ Instance Variables
 	password:	<String>
 	username:	<String>
 '!
+
 !STON.Tests.STONTestUser categoriesForClass!STON-Tests-Base! !
+
 !STON.Tests.STONTestUser methodsFor!
 
 = anObject
@@ -53,6 +57,7 @@ username
 
 username: anObject
 	username := anObject! !
+
 !STON.Tests.STONTestUser categoriesForMethods!
 =!comparing!public! !
 enabled!accessing!public! !
@@ -94,6 +99,7 @@ new
 
 stonName
 	^ #TestUser! !
+
 !STON.Tests.STONTestUser class categoriesForMethods!
 dummy!instance creation!public! !
 new!public! !

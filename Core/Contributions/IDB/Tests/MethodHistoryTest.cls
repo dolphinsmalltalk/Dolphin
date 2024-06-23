@@ -5,9 +5,13 @@ TestCase subclass: #MethodHistoryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodHistoryTest guid: (GUID fromString: '{0b7bcb0c-b98c-45d0-9e5e-f995bd90e04d}')!
+
 MethodHistoryTest comment: ''!
+
 !MethodHistoryTest categoriesForClass!SUnit! !
+
 !MethodHistoryTest methodsFor!
 
 changes
@@ -240,6 +244,7 @@ testMethodVersionStartStradlingReadBufferBoundary
 
 	self assert: methodVersions size equals: 8.
 	self assert: (methodVersions select: [ :each | each selector = #installedVersionHistoryTestMethod]) third getSource last equals: $3! !
+
 !MethodHistoryTest categoriesForMethods!
 changes!constants!private! !
 chunkHeader!constants!private! !

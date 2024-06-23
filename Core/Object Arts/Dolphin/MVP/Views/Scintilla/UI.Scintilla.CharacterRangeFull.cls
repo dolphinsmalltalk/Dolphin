@@ -11,8 +11,11 @@ OS.AbstractCHARRANGE
 			'_OffsetOf_cpMax' -> 16r4.
 			'_OffsetOf_cpMin' -> 16r0
 		}!
+
 UI.Scintilla.CharacterRangeFull guid: (Core.GUID fromString: '{70f3e4b8-de34-4813-8084-760a0998595d}')!
+
 UI.Scintilla.CharacterRangeFull comment: ''!
+
 !UI.Scintilla.CharacterRangeFull methodsFor!
 
 cpMax
@@ -34,6 +37,7 @@ cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_cpMin put: anInteger! !
+
 !UI.Scintilla.CharacterRangeFull categoriesForMethods!
 cpMax!**compiled accessors**!public! !
 cpMax:!**compiled accessors**!public! !
@@ -60,6 +64,7 @@ defineFields
 	self
 		defineField: #cpMin type: IntPtrField new;
 		defineField: #cpMax type: IntPtrField new! !
+
 !UI.Scintilla.CharacterRangeFull class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

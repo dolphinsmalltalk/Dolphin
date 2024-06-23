@@ -60,6 +60,10 @@ Kernel.SharedPool
 			'S_OK' -> 16r0.
 			'START_PAGE_GENERAL' -> -16r1
 		}!
+
 OS.PrintDialogConstants guid: (Core.GUID fromString: '{79306617-0b72-4010-83fd-e228cde8f379}')!
+
 OS.PrintDialogConstants isNonInstantiable: true!
+
 OS.PrintDialogConstants comment: ''!
+

@@ -7,14 +7,18 @@ UI.Scintilla.TextRangeFull
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_chrgText' -> 16rC. '_TextToFindFull_Size' -> 16r14 }!
+
 UI.Scintilla.TextToFindFull guid: (Core.GUID fromString: '{3841939b-c533-4fff-a6e2-744631df1de9}')!
+
 UI.Scintilla.TextToFindFull comment: ''!
+
 !UI.Scintilla.TextToFindFull methodsFor!
 
 chrgText
 	"Answer the <CharacterRangeFull> value of the receiver's 'chrgText' field."
 
 	^CharacterRangeFull fromAddress: bytes yourAddress + _OffsetOf_chrgText! !
+
 !UI.Scintilla.TextToFindFull categoriesForMethods!
 chrgText!**compiled accessors**!public! !
 !
@@ -40,6 +44,7 @@ defineFields
 
 getFieldNames
 	^#(#chrg #lpstrText #chrgText)! !
+
 !UI.Scintilla.TextToFindFull class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -12,7 +12,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_iMode' -> 16r14.
 			'_OffsetOf_ptlStart' -> 16r8
 		}!
+
 OS.EMREXTFLOODFILL guid: (Core.GUID fromString: '{bd14ca2b-d9cd-4146-ad72-d15f18031a50}')!
+
 OS.EMREXTFLOODFILL comment: '<EMREXTFLOODFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTFLOODFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +31,9 @@ struct tagEMREXTFLOODFILL {
 	DWORD iMode;
 } EMREXTFLOODFILL;
 '!
+
 !OS.EMREXTFLOODFILL categoriesForClass!Win32-Structs! !
+
 !OS.EMREXTFLOODFILL methodsFor!
 
 crColor
@@ -65,6 +69,7 @@ ptlStart: aPOINTL
 		from: ##(_OffsetOf_ptlStart + 1)
 		to: ##(_OffsetOf_ptlStart + POINTL._POINTL_Size)
 		startingAt: 1! !
+
 !OS.EMREXTFLOODFILL categoriesForMethods!
 crColor!**compiled accessors**!public! !
 crColor:!**compiled accessors**!public! !
@@ -113,6 +118,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTFLOODFILL}! !
+
 !OS.EMREXTFLOODFILL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

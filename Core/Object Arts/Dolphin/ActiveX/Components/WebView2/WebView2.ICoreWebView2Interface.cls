@@ -7,11 +7,16 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Interface guid: (OS.COM.IID fromString: '{9732fb2d-8abb-46fb-8acd-65e3cadfeecf}')!
+
 WebView2.ICoreWebView2Interface isNonInstantiable: true!
+
 WebView2.ICoreWebView2Interface comment: '`ICoreWebView2Interface` is not defined in the WebView2 IDL, but is defined here to group all the WebView2 interfaces in an attempt to make the large API easier to navigate and understand, and to contain some common diagnostic functionality. In other words, there is no real is-a relationship, rather this is just a convenient grouping.
 '!
+
 !WebView2.ICoreWebView2Interface categoriesForClass!COM-Interfaces! !
+
 !WebView2.ICoreWebView2Interface methodsFor!
 
 printableProperties
@@ -35,6 +40,7 @@ printPropertiesOn: aStream
 				nextPutAll: ': ';
 				print: (self perform: each)]
 		separatedBy: [aStream nextPutAll: ', ']! !
+
 !WebView2.ICoreWebView2Interface categoriesForMethods!
 printableProperties!printing!private! !
 printOn:!printing!public! !
@@ -63,6 +69,7 @@ resourceLib
 					splits := $, split: appIcon.
 					ResourceLib := ResourceLibrary open: splits first]].
 	^ResourceLib! !
+
 !WebView2.ICoreWebView2Interface class categoriesForMethods!
 icon!constants!public! !
 resourceLib!constants!public! !

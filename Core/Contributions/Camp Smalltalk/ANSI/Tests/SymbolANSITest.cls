@@ -5,9 +5,13 @@ SequencedReadableCollectionTest subclass: #SymbolANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SymbolANSITest guid: (GUID fromString: '{df4dc58e-5825-423b-a9bd-af325267aa8f}')!
+
 SymbolANSITest comment: ''!
+
 !SymbolANSITest categoriesForClass!Unclassified! !
+
 !SymbolANSITest methodsFor!
 
 canonicalElement
@@ -238,6 +242,7 @@ testXsameAsX
 testXsubStringsX
 	" <readableString>#subStrings: "
 	#'Collection'.! !
+
 !SymbolANSITest categoriesForMethods!
 canonicalElement!constants!public! !
 canonicalObject!constants!public! !
@@ -277,6 +282,7 @@ testXsubStringsX!public!unit tests! !
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedReadableCollectionHelper! !
+
 !SymbolANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

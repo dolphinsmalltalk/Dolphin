@@ -7,7 +7,9 @@ Kernel.FullBindingReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.RelativeBindingReference guid: (Core.GUID fromString: '{48e74cb4-00b3-4999-b434-cfea5b961756}')!
+
 Kernel.RelativeBindingReference comment: '`RelativeBindingReference`s represent partially-qualified `BindingReferences`.
 
   # Instance Variables:
@@ -15,7 +17,9 @@ Kernel.RelativeBindingReference comment: '`RelativeBindingReference`s represent 
 
 
 '!
+
 !Kernel.RelativeBindingReference categoriesForClass!System-Namespaces! !
+
 !Kernel.RelativeBindingReference methodsFor!
 
 = anObject
@@ -138,6 +142,7 @@ setScope: anObject
 
 unqualifiedPathLiteralPrefix
 	^RelativePathStringPrefix! !
+
 !Kernel.RelativeBindingReference categoriesForMethods!
 =!comparing!public! !
 asFullyQualifiedReference!converting!public! !
@@ -174,6 +179,7 @@ stbConvertFromVersion1: anArray
 	newInstance := self basicNew.
 	1 to: anArray size do: [:i | newInstance instVarAt: i put: (anArray at: i)].
 	^newInstance! !
+
 !Kernel.RelativeBindingReference class categoriesForMethods!
 pathString:path:private:scope:!instance creation!private! !
 stbConvertFromVersion1:!binary filing!private! !

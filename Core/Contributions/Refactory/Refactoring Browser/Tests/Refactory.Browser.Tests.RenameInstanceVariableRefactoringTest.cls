@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RenameInstanceVariableRefactoringTest guid: (Core.GUID fromString: '{1ce9a0d9-f614-43b2-bcf9-c02a3681f34f}')!
+
 Refactory.Browser.Tests.RenameInstanceVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RenameInstanceVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RenameInstanceVariableRefactoringTest methodsFor!
 
 testAlreadyExistingName
@@ -50,6 +54,7 @@ testRenameInstVar
 								asdf := [:context :aResult | ].
 								methodBlock := [:context :aResult | ].
 								self resultClass: SelectorEnvironment.')! !
+
 !Refactory.Browser.Tests.RenameInstanceVariableRefactoringTest categoriesForMethods!
 testAlreadyExistingName!failure tests!public! !
 testNonExistantName!failure tests!public! !

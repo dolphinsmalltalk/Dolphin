@@ -7,12 +7,16 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PackageEnvironment guid: (Core.GUID fromString: '{1e100fa3-4c91-4f2c-8415-03d6fbca4185}')!
+
 Tools.PackageEnvironment comment: '`PackageEnvironment` is a Dolphin specific `BrowserEnvironment` that represents the contents of one or more packages.
 
 Instance Variables:
 	packages		`<collection>` of `Kernel.Package`'!
+
 !Tools.PackageEnvironment categoriesForClass!Refactoring-Environment! !
+
 !Tools.PackageEnvironment methodsFor!
 
 classesDo: aBlock
@@ -140,6 +144,7 @@ storeOn: aStream
 	aStream nextPutAll: ' packageNames: '.
 	self packageNames storeOn: aStream.
 	aStream nextPutAll: ';yourself)'! !
+
 !Tools.PackageEnvironment categoriesForMethods!
 classesDo:!accessing/classes!public! !
 defaultLabel!constants!private! !
@@ -168,6 +173,7 @@ onEnvironment: anEnvironment packages: aPackage
 	^(self onEnvironment: anEnvironment)
 		packages: aPackage;
 		yourself! !
+
 !Tools.PackageEnvironment class categoriesForMethods!
 onEnvironment:packageNames:!instance creation!public! !
 onEnvironment:packages:!instance creation!public! !

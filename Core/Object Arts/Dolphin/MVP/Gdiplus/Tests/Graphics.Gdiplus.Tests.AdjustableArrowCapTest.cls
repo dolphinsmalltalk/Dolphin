@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.AdjustableArrowCapTest guid: (Core.GUID fromString: '{c1fcc802-8763-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.Tests.AdjustableArrowCapTest comment: ''!
+
 !Graphics.Gdiplus.Tests.AdjustableArrowCapTest methodsFor!
 
 createCanonicalSubject
@@ -120,6 +123,7 @@ verifyEqualToModel: aGdiplusObject
 	self assert: aGdiplusObject isFilled equals: model isFilled.
 	self assert: aGdiplusObject middleInset equals: model middleInset.
 	self assert: aGdiplusObject width equals: model width! !
+
 !Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesForMethods!
 createCanonicalSubject!helpers!private! !
 createFullSubject!helpers!private! !

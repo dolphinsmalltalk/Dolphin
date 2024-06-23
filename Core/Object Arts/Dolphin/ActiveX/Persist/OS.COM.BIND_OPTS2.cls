@@ -13,11 +13,15 @@ OS.COM.BIND_OPTS
 			'_OffsetOf_locale' -> 16r18.
 			'_OffsetOf_pServerInfo' -> 16r1C
 		}!
+
 OS.COM.BIND_OPTS2 guid: (Core.GUID fromString: '{87b4c5bf-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.BIND_OPTS2 comment: 'BIND_OPTS2 is an <ExternalStructure> class to represent the COM structure of the same name.
 
 BIND_OPTS2 is a DCOM extentsion of BIND_OPTS which adds a COSERVERINFO field to enable a remote machine to be specified as the bind destination.'!
+
 !OS.COM.BIND_OPTS2 categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.BIND_OPTS2 methodsFor!
 
 dwClassContext
@@ -59,6 +63,7 @@ pServerInfo: aCOSERVERINFO
 	"Set the receiver's 'pServerInfo' field to the value of the argument, aCOSERVERINFO"
 
 	bytes uintPtrAtOffset: _OffsetOf_pServerInfo put: aCOSERVERINFO yourAddress! !
+
 !OS.COM.BIND_OPTS2 categoriesForMethods!
 dwClassContext!**compiled accessors**!public! !
 dwClassContext:!**compiled accessors**!public! !
@@ -102,6 +107,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline #dwTrackFlags #dwClassContext #locale #pServerInfo)! !
+
 !OS.COM.BIND_OPTS2 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

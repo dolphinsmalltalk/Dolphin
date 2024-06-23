@@ -756,7 +756,12 @@ Kernel.SharedPool
 			'WP_VERTSCROLL' -> 16r1B.
 			'WP_VERTTHUMB' -> 16r1C
 		}!
+
 OS.ThemeConstants guid: (Core.GUID fromString: '{f601ab70-6b9a-47cf-81f7-79e3c79b803a}')!
+
 OS.ThemeConstants isNonInstantiable: true!
+
 OS.ThemeConstants comment: ''!
+
 !OS.ThemeConstants categoriesForClass!External-Data-Constants! !
+

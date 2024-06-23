@@ -13,7 +13,9 @@ External.Structure
 			'_OffsetOf_peRed' -> 16r0.
 			'_PALETTEENTRY_Size' -> 16r4
 		}!
+
 OS.PALETTEENTRY guid: (Core.GUID fromString: '{87b4c606-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.PALETTEENTRY comment: '<PALETTEENTRY> is an <ExternalStructure> class to wrap the struct ''Win32.PALETTEENTRY'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +33,9 @@ struct tagPALETTEENTRY {
 	[helpstring("Flags from the PC_ enumeration indicating how the palette entry should be used.")] BYTE peFlags;
 } PALETTEENTRY;
 '!
+
 !OS.PALETTEENTRY categoriesForClass!Win32-Structs! !
+
 !OS.PALETTEENTRY methodsFor!
 
 asColor
@@ -100,6 +104,7 @@ rgbCode
 	"Answer the receiver's <integer> color value in 24-bit RGB encoding with 8-bits per component in COLORREF order (red as low-order byte, green 2nd byte, and blue 3rd byte)."
 
 	^(bytes uint32AtOffset: 0) bitAnd: 16rFFFFFF! !
+
 !OS.PALETTEENTRY categoriesForMethods!
 asColor!converting!public! !
 blue!accessing!public! !
@@ -177,6 +182,7 @@ threeThreeTwo
 					pe peGreen: ((i bitShift: -2) bitAnd: 2r111) * 255 // 7.
 					pe peBlue: (i bitAnd: 2r11) * 255 // 3].
 	^palette! !
+
 !OS.PALETTEENTRY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

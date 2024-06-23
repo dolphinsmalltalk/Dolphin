@@ -7,7 +7,9 @@ Core.Number
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ScaledDecimal guid: (Core.GUID fromString: '{f44c914b-2b3f-11d3-8368-7a8b5a000000}')!
+
 Core.ScaledDecimal comment: 'ScaledDecimal is a Number class to represent fixed point decimal numbers. It supports unbounded precision, with no practical limit to the number of digits before and after the decimal point.
 
 ScaledDecimal conforms to the following ANSI protocols:
@@ -22,7 +24,9 @@ A ScaledDecimal represents a value as a Fraction and the number of digits after 
 
 We are grateful to Richard A. Harmon for contributing his ANSI compliant ScaledDecimal implementation from which this class was derived.
 '!
+
 !Core.ScaledDecimal categoriesForClass!Magnitude-Numbers! !
+
 !Core.ScaledDecimal methodsFor!
 
 - operand
@@ -311,6 +315,7 @@ truncated
 
 	^fraction truncated
 ! !
+
 !Core.ScaledDecimal categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -397,6 +402,7 @@ zero
 		newFromNumber: 0
 		scale: 0
 ! !
+
 !Core.ScaledDecimal class categoriesForMethods!
 basicNewFromFraction:scale:!instance creation!private! !
 maxPrecision!accessing!private! !

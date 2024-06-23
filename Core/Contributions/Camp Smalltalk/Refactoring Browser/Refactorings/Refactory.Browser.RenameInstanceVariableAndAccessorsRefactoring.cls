@@ -7,8 +7,11 @@ Refactory.Browser.RenameInstanceVariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring guid: (Core.GUID fromString: '{9d161ae8-1686-4173-b598-1114660c578b}')!
+
 Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring comment: ''!
+
 !Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring methodsFor!
 
 initializeAccessorsRefactoring
@@ -36,6 +39,7 @@ transform
 	super transform.
 	self performComponentRefactoring: accessorsRefactoring.
 			! !
+
 !Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring categoriesForMethods!
 initializeAccessorsRefactoring!initialize-release!public! !
 rename:to:in:!initialize/release!public! !

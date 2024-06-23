@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.SOCKADDRTest guid: (Core.GUID fromString: '{e3541b46-6070-429b-bd37-d5f2a40b8cc5}')!
+
 OS.Tests.SOCKADDRTest comment: ''!
+
 !OS.Tests.SOCKADDRTest methodsFor!
 
 testDisplayOnInvalid
@@ -26,6 +29,7 @@ testFromString
 			| subject |
 			subject := SOCKADDR fromString: each.
 			self assert: subject displayString equals: each]! !
+
 !OS.Tests.SOCKADDRTest categoriesForMethods!
 testDisplayOnInvalid!public!unit tests! !
 testFromString!public!unit tests! !

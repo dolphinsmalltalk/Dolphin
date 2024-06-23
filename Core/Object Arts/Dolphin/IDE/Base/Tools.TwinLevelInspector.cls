@@ -7,9 +7,13 @@ UI.Presenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.TwinLevelInspector guid: (Core.GUID fromString: '{dc9a61d9-617e-42a8-bb8a-a84102ae8002}')!
+
 Tools.TwinLevelInspector comment: ''!
+
 !Tools.TwinLevelInspector categoriesForClass!MVP-Presenters! !
+
 !Tools.TwinLevelInspector methodsFor!
 
 aspectAccessor
@@ -50,6 +54,7 @@ selectionOrNil
 
 selectionOrNil: anObject
 	^contentsPresenter selectionOrNil: anObject! !
+
 !Tools.TwinLevelInspector categoriesForMethods!
 aspectAccessor!public! !
 createComponents!private! !
@@ -94,6 +99,7 @@ shellOn: aListModelOfObjects caption: caption
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
+
 !Tools.TwinLevelInspector class categoriesForMethods!
 defaultModel!public! !
 icon!constants!public! !

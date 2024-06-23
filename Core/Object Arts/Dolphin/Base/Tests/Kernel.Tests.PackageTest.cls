@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.PackageTest guid: (Core.GUID fromString: '{0bcde90d-a936-43ee-9e4a-2bdec39abf2a}')!
+
 Kernel.Tests.PackageTest comment: ''!
+
 !Kernel.Tests.PackageTest methodsFor!
 
 checkNoTestPackageContents
@@ -762,6 +765,7 @@ verifyTestPackageResources: scribbleTestPackage
 	self assert: (resourceIds includes: scribbleTestViewId).
 	self assert: scribbleTestViewId owningPackage equals: scribbleTestPackage.
 	self assertNotNil: scribbleTestViewId resource! !
+
 !Kernel.Tests.PackageTest categoriesForMethods!
 checkNoTestPackageContents!helpers!private! !
 checkTestPackageContents!helpers!private! !

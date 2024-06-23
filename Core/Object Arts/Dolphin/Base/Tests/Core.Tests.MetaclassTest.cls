@@ -7,8 +7,11 @@ Core.Tests.ClassDescriptionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.MetaclassTest guid: (Core.GUID fromString: '{0643eed4-cf1f-4bfa-84f5-4af3a05fe655}')!
+
 Core.Tests.MetaclassTest comment: ''!
+
 !Core.Tests.MetaclassTest methodsFor!
 
 allClassHierarchyInstancesDo: aMonadicValuable
@@ -88,6 +91,7 @@ testName
 			[:root |
 			root class
 				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]! !
+
 !Core.Tests.MetaclassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
 canonicalInstance!constants!private! !

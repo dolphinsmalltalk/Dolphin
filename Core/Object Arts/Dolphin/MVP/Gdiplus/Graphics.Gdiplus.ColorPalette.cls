@@ -12,7 +12,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Entries' -> 16r8.
 			'_OffsetOf_Flags' -> 16r0
 		}!
+
 Graphics.Gdiplus.ColorPalette guid: (Core.GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
+
 Graphics.Gdiplus.ColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -28,6 +30,7 @@ struct tagGpColorPalette {
 	unsigned long Entries[1];
 } GpColorPalette;
 '!
+
 !Graphics.Gdiplus.ColorPalette methodsFor!
 
 asArray
@@ -74,6 +77,7 @@ Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger! !
+
 !Graphics.Gdiplus.ColorPalette categoriesForMethods!
 asArray!converting!public! !
 byteSize!accessing!public! !
@@ -111,6 +115,7 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Count #Entries)! !
+
 !Graphics.Gdiplus.ColorPalette class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

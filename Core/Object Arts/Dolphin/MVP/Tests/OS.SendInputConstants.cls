@@ -29,6 +29,10 @@ Kernel.SharedPool
 			'MOUSEEVENTF_XDOWN' -> 16r80.
 			'MOUSEEVENTF_XUP' -> 16r100
 		}!
+
 OS.SendInputConstants guid: (Core.GUID fromString: '{80daae4b-467b-4183-95c3-a96262629e28}')!
+
 OS.SendInputConstants isNonInstantiable: true!
+
 OS.SendInputConstants comment: ''!
+

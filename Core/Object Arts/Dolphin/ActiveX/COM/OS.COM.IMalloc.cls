@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IMalloc guid: (OS.COM.IID fromString: '{00000002-0000-0000-c000-000000000046}')!
+
 OS.COM.IMalloc comment: '`OS.COM.IMalloc` is a wrapper class for the custom interface ''OBJIDL.IMalloc'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.IMalloc categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IMalloc methodsFor!
 
 Alloc: cb
@@ -80,6 +84,7 @@ Realloc: pv cb: cb
 
 	<virtual stdcall: void* 5 void* uint32>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IMalloc categoriesForMethods!
 Alloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
 DidAlloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
@@ -158,6 +163,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self clear! !
+
 !OS.COM.IMalloc class categoriesForMethods!
 clear!initializing!private! !
 default!accessing!public! !

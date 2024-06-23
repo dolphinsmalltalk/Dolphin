@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2SetPermissionStateCompletedHandler guid: (OS.COM.IID fromString: '{fc77fb30-9c9e-4076-b8c7-7644a703ca1b}')!
+
 WebView2.ICoreWebView2SetPermissionStateCompletedHandler comment: '`ICoreWebView2SetPermissionStateCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2SetPermissionStateCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -28,7 +30,9 @@ interface ICoreWebView2SetPermissionStateCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2SetPermissionStateCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2SetPermissionStateCompletedHandler methodsFor!
 
 Invoke: errorCode
@@ -39,6 +43,7 @@ Invoke: errorCode
 
 	<virtual stdcall: hresult 4 hresult>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2SetPermissionStateCompletedHandler categoriesForMethods!
 Invoke:!**auto generated**!COM Interfaces-ICoreWebView2SetPermissionStateCompletedHandler!public! !
 !
@@ -53,6 +58,7 @@ defineFunctions
 		defineFunction: #Invoke:
 			argumentTypes: 'hresult'
 ! !
+
 !WebView2.ICoreWebView2SetPermissionStateCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompilationResult guid: (Core.GUID fromString: '{87b4c46e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.CompilationResult comment: ''!
+
 !Kernel.CompilationResult categoriesForClass!System-Support! !
+
 !Kernel.CompilationResult methodsFor!
 
 affectsAnnotation: aSymbol
@@ -121,6 +125,7 @@ textMap
 	"Answer the map of ip's to source code ranges if such was requested (if not, then nil)."
 
 	^textMap ifNil: [self buildTextMap]! !
+
 !Kernel.CompilationResult categoriesForMethods!
 affectsAnnotation:!enquiries!public! !
 buildTempsMap!development!private! !
@@ -153,6 +158,7 @@ method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray flags: anI
 		rawTextMap: textArray
 		rawTempsMap: tempsArray
 		flags: anInteger! !
+
 !Kernel.CompilationResult class categoriesForMethods!
 method:rawTextMap:rawTempsMap:flags:!instance creation!public! !
 !

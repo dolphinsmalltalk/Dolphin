@@ -102,7 +102,12 @@ Kernel.SharedPool
 			'SIID_WORLD' -> 16rD.
 			'SIID_ZIPFILE' -> 16r69
 		}!
+
 OS.SHSTOCKICONID guid: (Core.GUID fromString: '{873ca74c-267b-4e58-8447-df4bfba329f9}')!
+
 OS.SHSTOCKICONID isNonInstantiable: true!
+
 OS.SHSTOCKICONID comment: ''!
+
 !OS.SHSTOCKICONID categoriesForClass!Kernel-Objects! !
+

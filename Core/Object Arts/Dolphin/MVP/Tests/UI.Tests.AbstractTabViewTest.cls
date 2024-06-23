@@ -7,9 +7,13 @@ UI.Tests.SelectableListItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.AbstractTabViewTest guid: (Core.GUID fromString: '{484556c3-594e-4a29-853a-d890370527bc}')!
+
 UI.Tests.AbstractTabViewTest isNonInstantiable: true!
+
 UI.Tests.AbstractTabViewTest comment: ''!
+
 !UI.Tests.AbstractTabViewTest methodsFor!
 
 addTestTabs
@@ -70,6 +74,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assertIsNil: view customDrawBlock.
 	self assert: view largeIconExtent equals: Icon largeExtent.
 	self assert: view viewMode identicalTo: #noIcons! !
+
 !UI.Tests.AbstractTabViewTest categoriesForMethods!
 addTestTabs!helpers!private! !
 autoSelectsFirst!private!testing! !

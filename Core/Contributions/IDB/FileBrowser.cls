@@ -5,13 +5,17 @@ IdbToolShell subclass: #FileBrowser
 	classVariableNames: 'HexEnabled HexFont RemoveCr RootFolder TextFont Warnings'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileBrowser guid: (GUID fromString: '{782ed51c-5423-11d3-998b-bca753d3b065}')!
+
 FileBrowser comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !FileBrowser categoriesForClass!IDB Goodies! !
+
 !FileBrowser methodsFor!
 
 about
@@ -324,6 +328,7 @@ updateFilesKeepingSelection
 	self onFolderSelectionChanged.
 	selection notNil 
 		ifTrue: [files selectionOrNil: (files list detect: [:each | each name = selection] ifNone: [])]! !
+
 !FileBrowser categoriesForMethods!
 about!commands!public! !
 askAboutHex:!helpers!public! !
@@ -477,6 +482,7 @@ warnings: aBoolean
 	self warnings = aBoolean ifTrue: [^self].
 	Warnings := aBoolean.
 	self persistOptions! !
+
 !FileBrowser class categoriesForMethods!
 defaultFolder!accessing!public! !
 displayOn:!operations!public! !

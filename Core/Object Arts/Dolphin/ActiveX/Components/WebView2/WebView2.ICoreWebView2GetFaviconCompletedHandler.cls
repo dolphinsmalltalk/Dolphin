@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2GetFaviconCompletedHandler guid: (OS.COM.IID fromString: '{a2508329-7da8-49d7-8c05-fa125e4aee8d}')!
+
 WebView2.ICoreWebView2GetFaviconCompletedHandler comment: '`ICoreWebView2GetFaviconCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2GetFaviconCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2GetFaviconCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2GetFaviconCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2GetFaviconCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult OS.COM.IStream*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2GetFaviconCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2GetFaviconCompletedHandler!public! !
 !
@@ -54,6 +59,7 @@ defineFunctions
 		defineFunction: #Invoke:arg:
 			argumentTypes: 'hresult IStream*'
 ! !
+
 !WebView2.ICoreWebView2GetFaviconCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

@@ -7,9 +7,13 @@ Graphics.Gdiplus.Tests.BrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.TransformableBrushTest guid: (Core.GUID fromString: '{31dfa4ce-3d7e-424e-acd1-cb639abcfa0e}')!
+
 Graphics.Gdiplus.Tests.TransformableBrushTest isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.TransformableBrushTest comment: ''!
+
 !Graphics.Gdiplus.Tests.TransformableBrushTest methodsFor!
 
 getTransform: aGdiplusTransformableBrush
@@ -66,6 +70,7 @@ verifyEqualToModel: aGdiplusObject
 	super verifyEqualToModel: aGdiplusObject.
 	self assert: aGdiplusObject wrapMode equals: model wrapMode.
 	self assert: aGdiplusObject transform equals: model transform! !
+
 !Graphics.Gdiplus.Tests.TransformableBrushTest categoriesForMethods!
 getTransform:!helpers!private! !
 testMultiplyTransform!public!unit tests! !

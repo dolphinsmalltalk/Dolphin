@@ -5,9 +5,13 @@ SAXHandler subclass: #XMLDOMParser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLDOMParser guid: (GUID fromString: '{9aa6df2d-d670-4da4-afc3-d47d0003e980}')!
+
 XMLDOMParser comment: ''!
+
 !XMLDOMParser categoriesForClass!XML-Parser! !
+
 !XMLDOMParser methodsFor!
 
 characters: aString
@@ -108,6 +112,7 @@ top
 	^self stack isEmpty
 		ifTrue: [nil]
 		ifFalse: [self stack last]! !
+
 !XMLDOMParser categoriesForMethods!
 characters:!content!public! !
 documentAttributes:!content!public! !
@@ -136,6 +141,7 @@ addressBookXMLWithDTD
 parseDocumentFrom: aStream
 	#swYAXO.	"Note that unlike the super class method, this method answers a XMLDocument"
 	^(super parseDocumentFrom: aStream) document! !
+
 !XMLDOMParser class categoriesForMethods!
 addressBookXMLWithDTD!examples!public! !
 parseDocumentFrom:!instance creation!public! !

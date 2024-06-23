@@ -7,9 +7,13 @@ STON.JsonWriter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.JsonPrettyPrinter guid: (Core.GUID fromString: '{27fb8c25-44b6-4a59-8c62-0d761139087c}')!
+
 STON.JsonPrettyPrinter comment: ''!
+
 !STON.JsonPrettyPrinter categoriesForClass!STON-Core-Writer! !
+
 !STON.JsonPrettyPrinter methodsFor!
 
 encodeList: elements
@@ -71,6 +75,7 @@ newlineIndent
 
 prettyPrintSpace
 	writeStream space! !
+
 !STON.JsonPrettyPrinter categoriesForMethods!
 encodeList:!public!writing! !
 encodeMap:!public!writing! !

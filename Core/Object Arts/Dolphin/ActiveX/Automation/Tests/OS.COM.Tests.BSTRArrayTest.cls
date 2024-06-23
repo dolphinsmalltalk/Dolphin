@@ -7,8 +7,11 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.BSTRArrayTest guid: (Core.GUID fromString: '{e90f2fcf-c993-418f-bb52-ee22925cf849}')!
+
 OS.COM.Tests.BSTRArrayTest comment: ''!
+
 !OS.COM.Tests.BSTRArrayTest methodsFor!
 
 arrayClass
@@ -33,6 +36,7 @@ testFinalizable
 	self assert: pbstrs asArray equals: #('foo' 'bar').
 	self deny: pbstrs isFinalizable.
 	bstrs free! !
+
 !OS.COM.Tests.BSTRArrayTest categoriesForMethods!
 arrayClass!private! !
 elementFromValue:!public!unit tests! !

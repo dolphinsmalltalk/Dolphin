@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_NamedAddress_Address' -> 16r4.
 			'_OffsetOf_NamedAddress_Port' -> 16r204
 		}!
+
 OS.NET_ADDRESS_INFO guid: (Core.GUID fromString: '{0451c625-7a0f-4b75-ad7c-ea167ec0f47c}')!
+
 OS.NET_ADDRESS_INFO comment: '<NET_ADDRESS_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.NET_ADDRESS_INFO'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -39,7 +41,9 @@ struct tagNET_ADDRESS_INFO {
 	};
 } NET_ADDRESS_INFO;
 '!
+
 !OS.NET_ADDRESS_INFO categoriesForClass!Win32-Structs! !
+
 !OS.NET_ADDRESS_INFO methodsFor!
 
 Format
@@ -129,6 +133,7 @@ NamedAddress_Port: anUInt16Array
 		from: ##(_OffsetOf_NamedAddress_Port + 1)
 		to: _OffsetOf_NamedAddress_Port + size
 		startingAt: 1! !
+
 !OS.NET_ADDRESS_INFO categoriesForMethods!
 Format!**compiled accessors**!public! !
 Format:!**compiled accessors**!public! !
@@ -181,6 +186,7 @@ defineFields
 
 getFieldNames
 	^#(#Format)! !
+
 !OS.NET_ADDRESS_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

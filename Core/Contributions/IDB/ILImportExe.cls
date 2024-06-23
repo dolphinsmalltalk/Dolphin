@@ -5,13 +5,17 @@ ILImportIcon subclass: #ILImportExe
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportExe guid: (GUID fromString: '{460509a0-67d1-48c8-81e9-4356077f5e96}')!
+
 ILImportExe comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILImportExe categoriesForClass!IDB Goodies! !
+
 !ILImportExe methodsFor!
 
 initializeFrom: aStream
@@ -25,6 +29,7 @@ initializeFrom: aStream
 								next: size)).
 			offset := offset + size].
 	self assert: [aStream position = self class iconsEndAddress]! !
+
 !ILImportExe categoriesForMethods!
 initializeFrom:!initializing!public! !
 !
@@ -71,6 +76,7 @@ iconsStartAddress
 isResponsibleFor: aStream
 	^(aStream next: 2) = 'MZ' asByteArray 
 		and: [aStream size > self iconsEndAddress and: [self iconsCheck: aStream]]! !
+
 !ILImportExe class categoriesForMethods!
 iconsCheck:!constants!public! !
 iconsEndAddress!constants!public! !

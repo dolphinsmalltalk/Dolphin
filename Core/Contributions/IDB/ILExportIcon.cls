@@ -5,13 +5,17 @@ ILExport subclass: #ILExportIcon
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILExportIcon guid: (GUID fromString: '{bf2bc3ca-d2ed-4656-8742-c4437f7398fb}')!
+
 ILExportIcon comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILExportIcon categoriesForClass!IDB Goodies! !
+
 !ILExportIcon methodsFor!
 
 createColorBitmapFor: anImage force256: aBoolean
@@ -103,6 +107,7 @@ hotSpotFor: anImage
 
 icondirType
 	^1! !
+
 !ILExportIcon categoriesForMethods!
 createColorBitmapFor:force256:!operations!public! !
 createICONDIR!operations!public! !

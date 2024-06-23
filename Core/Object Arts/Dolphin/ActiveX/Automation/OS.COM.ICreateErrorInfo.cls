@@ -7,13 +7,18 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ICreateErrorInfo guid: (OS.COM.IID fromString: '{22f03340-547d-101b-8e65-08002b2bd119}')!
+
 OS.COM.ICreateErrorInfo isEgressOnly: true!
+
 OS.COM.ICreateErrorInfo comment: '`OS.COM.ICreateErrorInfo` is a wrapper class for the custom interface ''OAIDL.ICreateErrorInfo'' from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 '!
+
 !OS.COM.ICreateErrorInfo categoriesForClass!COM-Interfaces! !
+
 !OS.COM.ICreateErrorInfo methodsFor!
 
 errorInfo
@@ -75,6 +80,7 @@ SetSource: szSource
 
 	<virtual stdcall: hresult 5 lpwstr>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.ICreateErrorInfo categoriesForMethods!
 errorInfo!accessing-interfaces!public! !
 SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
@@ -125,6 +131,7 @@ new
 	answer := self newPointer.
 	OleAut32 createErrorInfo: answer.
 	^answer! !
+
 !OS.COM.ICreateErrorInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 fromEXCEPINFO:guid:!instance creation!public! !

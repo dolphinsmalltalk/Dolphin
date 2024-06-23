@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.AbstractPointTest guid: (Core.GUID fromString: '{a0f6e2b2-8bd1-44bc-b0ad-3343d7aa2c0f}')!
+
 Graphics.Tests.AbstractPointTest isNonInstantiable: true!
+
 Graphics.Tests.AbstractPointTest comment: ''!
+
 !Graphics.Tests.AbstractPointTest methodsFor!
 
 subjectClass
@@ -383,6 +387,7 @@ testSubtract
 	self assert: subject2 - (10 @ 20) equals: -5 @ -10.
 	self assert: 10 @ 20 @ 30 - subject2 equals: 5 @ 10 @ 30.
 	self assert: subject2 - (10 @ 20 @ 30) equals: -5 @ -10 @ -30! !
+
 !Graphics.Tests.AbstractPointTest categoriesForMethods!
 subjectClass!constants!private! !
 subjectSupportNonIntegralValues!private!testing! !

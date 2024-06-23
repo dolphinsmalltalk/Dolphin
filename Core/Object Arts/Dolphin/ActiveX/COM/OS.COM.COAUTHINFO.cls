@@ -16,11 +16,15 @@ External.Structure
 			'_OffsetOf_pAuthIdentityData' -> 16r14.
 			'_OffsetOf_pwszServerPrincName' -> 16r8
 		}!
+
 OS.COM.COAUTHINFO guid: (Core.GUID fromString: '{27d02683-c29f-450c-a25f-3186b62d47f2}')!
+
 OS.COM.COAUTHINFO comment: '`OS.COM.COAUTHINFO` is an <External.Structure> class to wrap the struct ''OBJIDL.COAUTHINFO'' from type information in the ''ObjIDL Library'' library.
 
 The COAUTHINFO structure specifies the authentication settings used while making a remote activation request from a client machine to a server machine.'!
+
 !OS.COM.COAUTHINFO categoriesForClass!OBJIDL-Structs! !
+
 !OS.COM.COAUTHINFO methodsFor!
 
 dwAuthnLevel
@@ -92,6 +96,7 @@ pwszServerPrincName: anUtf16String
 	"Set the receiver's 'pwszServerPrincName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszServerPrincName put: anUtf16String yourAddress! !
+
 !OS.COM.COAUTHINFO categoriesForMethods!
 dwAuthnLevel!**compiled accessors**!public! !
 dwAuthnLevel:!**compiled accessors**!public! !
@@ -141,6 +146,7 @@ defineFields
 
 getFieldNames
 	^#(#dwAuthnSvc #dwAuthzSvc #pwszServerPrincName #dwAuthnLevel #dwImpersonationLevel #pAuthIdentityData #dwCapabilities)! !
+
 !OS.COM.COAUTHINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -44,6 +44,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Model
 	subclass: #'UI.AspectBuffer'
 	instanceVariableNames: 'subject subjectCopy aspects gate validater'
@@ -51,6 +52,7 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Model
 	subclass: #'UI.ValueModel'
 	instanceVariableNames: 'settingValue comparisonPolicy'
@@ -58,6 +60,7 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueModel
 	subclass: #'UI.ValueAdaptor'
 	instanceVariableNames: 'subject'
@@ -65,6 +68,7 @@ UI.ValueModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueModel
 	subclass: #'UI.ValueConverter'
 	instanceVariableNames: 'subject typeConverter'
@@ -72,6 +76,7 @@ UI.ValueModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueModel
 	subclass: #'UI.ValueHolder'
 	instanceVariableNames: 'value'
@@ -79,6 +84,7 @@ UI.ValueModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueAdaptor
 	subclass: #'UI.CompositeValueAdaptor'
 	instanceVariableNames: ''
@@ -86,6 +92,7 @@ UI.ValueAdaptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueAdaptor
 	subclass: #'UI.ValueAspectAdaptor'
 	instanceVariableNames: 'aspect putSelector getSelector'
@@ -93,6 +100,7 @@ UI.ValueAdaptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueAdaptor
 	subclass: #'UI.ValueKeyedAdaptor'
 	instanceVariableNames: 'key putSelector getSelector'
@@ -100,6 +108,7 @@ UI.ValueAdaptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueAspectAdaptor
 	subclass: #'UI.ValueModelAspectAdaptor'
 	instanceVariableNames: ''
@@ -107,6 +116,7 @@ UI.ValueAspectAdaptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueHolder
 	subclass: #'UI.ValueBuffer'
 	instanceVariableNames: 'subject modified gate validater'
@@ -140,6 +150,7 @@ asValue
 	In the general case create an answer a ValueHolder onto the receiver"
 
 	^UI.ValueHolder with: self! !
+
 !Core.Object categoriesForMethods!
 aspectAdaptorClass!constants!private! !
 aspectValue:!converting!public! !

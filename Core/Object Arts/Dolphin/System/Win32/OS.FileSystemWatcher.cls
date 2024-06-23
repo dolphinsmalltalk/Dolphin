@@ -7,7 +7,9 @@ OS.FileSystemChangeReader
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.FileSystemWatcher guid: (Core.GUID fromString: '{eb4cdf52-701c-4505-9872-8bfce6c37830}')!
+
 OS.FileSystemWatcher comment: 'FileSystemWatcher is a FileSystemChangeReader that publishes the file-system changes it detects as Smalltalk events on the main UI thread.
 
 Clients of the FileSystemWatcher can register to receive the following events:
@@ -24,7 +26,9 @@ Note that the #fileRemoved: event is received when a file is deleted, or when it
 From observation it seems that saving a file typically results in two consecutive file modification events. This might be due to the way applications save files, but it is the case with commonly used editors such as Notepad. The FileSystemWatcher makes no attempt to filter these (apparently) duplication notifications - it is the applications responsibility to apply whatever filtering is appropriate. File Save (As) operations may result in the creation of temporary files too. Creating a new folder in Windows Explorer results in an initial {#fileAdded:, ''New Folder''} event, and subsequently a rename event (assuming one renames the folder away from the default name).
 
 See the superclass comment for details of how to set up a FileSystemWatcher.'!
+
 !OS.FileSystemWatcher categoriesForClass!Kernel-Objects! !
+
 !OS.FileSystemWatcher methodsFor!
 
 getEvents
@@ -68,6 +72,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
+
 !OS.FileSystemWatcher categoriesForMethods!
 getEvents!events!private! !
 handleError:!helpers!private! !
@@ -89,6 +94,7 @@ initialize
 
 	FileIOCompletionRoutineDescriptor := External.FunctionDescriptor
 				argumentTypes: 'uint32 uint32 <1p>*' << OVERLAPPED! !
+
 !OS.FileSystemWatcher class categoriesForMethods!
 initialize!initializing!public! !
 !

@@ -7,9 +7,13 @@ Graphics.Gdiplus.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromIStreamInitializer guid: (Core.GUID fromString: '{44709983-5631-4104-a8cb-0cfd854cf85a}')!
+
 Graphics.Gdiplus.AbstractImageFromIStreamInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.AbstractImageFromIStreamInitializer comment: ''!
+
 !Graphics.Gdiplus.AbstractImageFromIStreamInitializer methodsFor!
 
 = anObject
@@ -31,6 +35,7 @@ iStream
 iStream: pStream
 	iStream := pStream.
 	^self! !
+
 !Graphics.Gdiplus.AbstractImageFromIStreamInitializer categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !
@@ -43,6 +48,7 @@ iStream:!initializing!private! !
 
 iStream: pStream
 	^self new iStream: pStream! !
+
 !Graphics.Gdiplus.AbstractImageFromIStreamInitializer class categoriesForMethods!
 iStream:!instance creation!public! !
 !

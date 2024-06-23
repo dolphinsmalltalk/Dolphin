@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler guid: (OS.COM.IID fromString: '{e45d98b1-afef-45be-8baf-6c7728867f73}')!
+
 WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler comment: '`ICoreWebView2ContainsFullScreenElementChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2ContainsFullScreenElementChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2* IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -68,6 +73,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#containsFullScreenElementChanged! !
+
 !WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !

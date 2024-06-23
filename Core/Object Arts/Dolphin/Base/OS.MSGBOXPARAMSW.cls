@@ -18,7 +18,9 @@ OS.SizedStructure
 			'_OffsetOf_lpszIcon' -> 16r18.
 			'_OffsetOf_lpszText' -> 16rC
 		}!
+
 OS.MSGBOXPARAMSW guid: (Core.GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.MSGBOXPARAMSW comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
 
 MSGBOXPARAMS is used to contain configuration details for Message Boxes.
@@ -28,7 +30,9 @@ Instance Variables:
 	text	<String> Text to be display in box (address stored in struct, so need to prevent premature GC)
 	caption 	<String> Caption of box (ditto)
 	owner	<ExternalHandle>. Handle of owner view'!
+
 !OS.MSGBOXPARAMSW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.MSGBOXPARAMSW methodsFor!
 
 caption: aString
@@ -78,6 +82,7 @@ text: aString
 
 	text := aString asUtf16String.
 	self lpszText: text! !
+
 !OS.MSGBOXPARAMSW categoriesForMethods!
 caption:!accessing!public! !
 dwStyle:!**compiled accessors**!public! !
@@ -129,6 +134,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #lpszText #lpszCaption #dwStyle #lpszIcon #dwLanguageId)! !
+
 !OS.MSGBOXPARAMSW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

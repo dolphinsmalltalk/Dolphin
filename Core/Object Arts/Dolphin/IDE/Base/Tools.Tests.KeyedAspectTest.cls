@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.KeyedAspectTest guid: (Core.GUID fromString: '{d76395c9-f61a-49dc-b5b1-87a2adf2020f}')!
+
 Tools.Tests.KeyedAspectTest comment: ''!
+
 !Tools.Tests.KeyedAspectTest methodsFor!
 
 collectionKeyedAspectsTest: subject
@@ -71,6 +74,7 @@ testOrderedCollectionPublishedKeyedAspects
 
 testUInt32ArrayPublishedKeyedAspects
 	self sequenceableCollectionKeyedAspectsTest: External.UInt32Array! !
+
 !Tools.Tests.KeyedAspectTest categoriesForMethods!
 collectionKeyedAspectsTest:!helpers!private! !
 dictionaryKeyedAspectsTest:!helpers!private! !

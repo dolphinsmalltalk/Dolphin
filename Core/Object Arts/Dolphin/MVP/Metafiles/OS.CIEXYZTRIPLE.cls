@@ -12,7 +12,9 @@ External.Structure
 			'_OffsetOf_ciexyzGreen' -> 16rC.
 			'_OffsetOf_ciexyzRed' -> 16r0
 		}!
+
 OS.CIEXYZTRIPLE guid: (Core.GUID fromString: '{2fd9d553-f2b2-4bfb-9dca-4c245bbff3d2}')!
+
 OS.CIEXYZTRIPLE comment: '<CIEXYZTRIPLE> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZTRIPLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +30,9 @@ struct tagCIEXYZTRIPLE {
 	CIEXYZ ciexyzBlue;
 } CIEXYZTRIPLE;
 '!
+
 !OS.CIEXYZTRIPLE categoriesForClass!Win32-Structs! !
+
 !OS.CIEXYZTRIPLE methodsFor!
 
 ciexyzBlue
@@ -72,6 +76,7 @@ ciexyzRed: aCIEXYZ
 		from: ##(_OffsetOf_ciexyzRed + 1)
 		to: ##(_OffsetOf_ciexyzRed + CIEXYZ._CIEXYZ_Size)
 		startingAt: 1! !
+
 !OS.CIEXYZTRIPLE categoriesForMethods!
 ciexyzBlue!**compiled accessors**!public! !
 ciexyzBlue:!**compiled accessors**!public! !
@@ -113,6 +118,7 @@ defineFields
 
 getFieldNames
 	^#(#ciexyzRed #ciexyzGreen #ciexyzBlue)! !
+
 !OS.CIEXYZTRIPLE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

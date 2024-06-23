@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.PushDownMethodRefactoring guid: (Core.GUID fromString: '{3a03ada6-57cd-40af-b730-0fca36de9319}')!
+
 Refactory.Browser.PushDownMethodRefactoring comment: ''!
+
 !Refactory.Browser.PushDownMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.PushDownMethodRefactoring methodsFor!
 
 preconditions
@@ -65,6 +69,7 @@ storeOn: aStream
 transform
 	selectors do: [:each | self pushDown: each].
 	selectors do: [:each | class removeSelector: each]! !
+
 !Refactory.Browser.PushDownMethodRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 pushDown:!private!transforming! !
@@ -83,6 +88,7 @@ model: aRBModel pushDown: selectorCollection from: aClass
 
 pushDown: selectorCollection from: aClass 
 	^self new pushDown: selectorCollection from: aClass! !
+
 !Refactory.Browser.PushDownMethodRefactoring class categoriesForMethods!
 model:pushDown:from:!instance creation!public! !
 pushDown:from:!instance creation!public! !

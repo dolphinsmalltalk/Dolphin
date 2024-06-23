@@ -7,7 +7,9 @@ Core.ClassDescription
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Class guid: (Core.GUID fromString: '{87b4c4fb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Class comment: '"Instances" of `Class` describe the representation and behavior of objects. `Class` adds more comprehensive programming support facilities to the basic ones provided in the abstract superclass `Behavior` and more descriptive facilities to the ones provided in the abstract superclass `ClassDescription`. In particular `Class` adds the representation for class variable names and shared (pool) variables.
 
 In reality, `Class` has no instances. All classes in the system are actually instances of a parallel hierarchy of `Metaclass` instances, but they do have the same shape as `Class` and are logically, if not physically, instances of it.
@@ -23,7 +25,9 @@ In reality, `Class` has no instances. All classes in the system are actually ins
  `classCategories`	`Array` of `ClassCategory`. The categories of the class, if any.
  `_guid`			`GUID`. Unique identifier for the class.
 '!
+
 !Core.Class categoriesForClass!Kernel-Classes! !
+
 !Core.Class methodsFor!
 
 _rename: aString in: aNamespace
@@ -1114,6 +1118,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 				modifyOrCreate.
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
+
 !Core.Class categoriesForMethods!
 _rename:in:!class hierarchy-mutating!private! !
 absoluteName!accessing!namespaces!public! !
@@ -1363,6 +1368,7 @@ foldLiterals
 		at: #strings put: {totalStrings. literalStrings size};
 		at: #annotations put: {totalAnnotations. annotations size};
 		yourself! !
+
 !Core.Class class categoriesForMethods!
 allBehaviors!class hierarchy-accessing!private! !
 allBehaviorsDo:!enumerating!private! !

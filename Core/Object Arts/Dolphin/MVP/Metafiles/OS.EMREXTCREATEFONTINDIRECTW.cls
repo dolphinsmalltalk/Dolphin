@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_elfw' -> 16rC.
 			'_OffsetOf_ihFont' -> 16r8
 		}!
+
 OS.EMREXTCREATEFONTINDIRECTW guid: (Core.GUID fromString: '{29743add-8da1-4573-9b6b-8a3d2c5ac799}')!
+
 OS.EMREXTCREATEFONTINDIRECTW comment: '<EMREXTCREATEFONTINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEFONTINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMREXTCREATEFONTINDIRECT {
 	EXTLOGFONT elfw;
 } EMREXTCREATEFONTINDIRECT;
 '!
+
 !OS.EMREXTCREATEFONTINDIRECTW categoriesForClass!Win32-Structs! !
+
 !OS.EMREXTCREATEFONTINDIRECTW methodsFor!
 
 elfw
@@ -53,6 +57,7 @@ ihFont: anInteger
 	"Set the receiver's 'ihFont' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_ihFont put: anInteger! !
+
 !OS.EMREXTCREATEFONTINDIRECTW categoriesForMethods!
 elfw!**compiled accessors**!public! !
 elfw:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTCREATEFONTINDIRECTW}! !
+
 !OS.EMREXTCREATEFONTINDIRECTW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,10 +7,13 @@ Kernel.STBInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler5 guid: (Core.GUID fromString: '{1858465b-b0c0-4a5c-9eca-884d83dbeb49}')!
+
 Kernel.STBInFiler5 comment: '`STBInFiler5` is an `STBInFiler` for deserializing STB object streams created by a version 5 `STBOutFiler`. 
 
 STB 5 was an interim format used in early versions of Dolphin 8. It introduced support for classes located by fully-qualified names (i.e. for namespaces). Classes are expected to implement `#stbReadFrom:format:size:`, rather than `#stbReadFrom:format:`.'!
+
 !Kernel.STBInFiler5 methodsFor!
 
 readExtensibleCollection: aClass format: anSTBClassConversion size: anInteger
@@ -22,6 +25,7 @@ readLookupTable: aClass format: anSTBClassConversion size: anInteger
 	"Should not be received as this version emits STBIdentityDictionaryProxy for LookupTables"
 
 	^self shouldNotImplement! !
+
 !Kernel.STBInFiler5 categoriesForMethods!
 readExtensibleCollection:format:size:!operations!public! !
 readLookupTable:format:size:!operations!public! !
@@ -46,6 +50,7 @@ uninitialize
 
 version
 	^5! !
+
 !Kernel.STBInFiler5 class categoriesForMethods!
 initialize!class initialization!public! !
 predefinedClasses!constants!public! !

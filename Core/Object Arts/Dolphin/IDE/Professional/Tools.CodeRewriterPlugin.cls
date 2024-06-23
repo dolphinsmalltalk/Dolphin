@@ -7,9 +7,13 @@ Tools.SmalllintPlugin
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.CodeRewriterPlugin guid: (Core.GUID fromString: '{622a0d86-ee77-4d68-abc4-24f3e47ece4b}')!
+
 Tools.CodeRewriterPlugin comment: ''!
+
 !Tools.CodeRewriterPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
+
 !Tools.CodeRewriterPlugin methodsFor!
 
 browseRuleResults: aLintRule 
@@ -133,6 +137,7 @@ transform
 				asSortedCollection: [:a :b | a displayString < b displayString].
 	(ChoicePrompter choices: rules caption: 'Choose Transformation…')
 		ifNotNil: [:rule | self runTransformation: rule]! !
+
 !Tools.CodeRewriterPlugin categoriesForMethods!
 browseRuleResults:!helpers!private! !
 buildReplaceRule!helpers!private! !
@@ -173,6 +178,7 @@ resource_Default_view
 # = literal
 ; = cascade list
 { = use a block' 1072 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 95 0 0 0 112 0 0 0] 8 #() 1056 nil 27 178 0 518 #{Graphics.Rectangle} 306 11 11 306 11 11 210 50 1 258 #createAt:extent: 50 2 306 771 1 306 201 295 512 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 129 1 0 0 0 0 0 0 229 1 0 0 147 0 0 0] 50 2 1072 688 1056 nil 27 nil 18 #{UI.ReferenceView} 50 14 nil 416 50 2 8 1140916224 131073 1584 nil nil nil 5 nil nil nil 1584 582 1 #{UI.ResourceIdentifier} #{Tools.ValueWorkspace} #resource_Default_view nil 210 50 1 258 #createAt:extent: 50 2 306 1 1 306 771 295 1584 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 129 1 0 0 147 0 0 0] 8 #() 1056 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} 176 50 2 1584 8 'searchText' nil 210 50 1 258 #createAt:extent: 50 2 306 1 1 306 971 295 416 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 147 0 0 0] 50 2 1584 512 1056 nil 27 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 2032 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 2032 nil 1 #left nil nil nil 306 1 1 306 9 9 nil 2128 nil 210 50 1 258 #createAt:extent: 50 2 306 1 295 306 971 11 2032 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 147 0 0 0 229 1 0 0 152 0 0 0] 8 #() 1056 nil 27 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131137 2304 nil nil nil 5 nil nil nil 2304 482 1 1 nil nil 18 #{UI.ContainerView} 50 15 nil 2304 50 2 8 1140850688 131073 2384 nil nil nil 5 nil 578 nil true 610 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 656 nil 2384 838 1 #{UI.FlowLayout} 1 11 1 1826 176 50 2 18 #{UI.CheckBox} 50 16 nil 2384 50 2 8 1140924419 1 2560 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 5 nil nil nil 2560 nil nil 1138 nil nil nil 210 50 2 258 #createAt:extent: 50 2 306 11 1 306 171 71 2560 258 #text: 50 1 8 'Match whole method?' 2560 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 0 0 0 0 90 0 0 0 35 0 0 0] 8 #() 1056 nil 27 8 'isMethod' 1378 306 11 1 306 1 1 210 50 1 258 #createAt:extent: 50 2 306 771 1 306 201 297 2384 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 129 1 0 0 0 0 0 0 229 1 0 0 148 0 0 0] 50 4 2560 18 #{UI.PushButton} 50 20 nil 2384 50 2 8 1140924416 1 3104 nil 768 nil 5 nil nil nil 3104 nil nil 786 #replace 8 '&Replace…' 1 1 nil nil false nil nil nil 210 50 3 258 #createAt:extent: 50 2 306 11 81 306 181 51 3104 258 #isEnabled: 8 #(false) 3104 258 #text: 50 1 8 '&Replace…' 3104 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 40 0 0 0 95 0 0 0 65 0 0 0] 8 #() 1056 nil 29 18 #{UI.PushButton} 50 20 nil 2384 50 2 8 1140924416 1 3424 nil 768 nil 5 nil nil nil 3424 nil nil 786 #transform 8 '&Transform…' 1 1 nil nil false nil nil nil 210 50 3 258 #createAt:extent: 50 2 306 11 141 306 181 51 3424 258 #isEnabled: 8 #(false) 3424 258 #text: 50 1 8 '&Transform…' 3424 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 70 0 0 0 95 0 0 0 95 0 0 0] 8 #() 1056 nil 29 18 #{UI.PushButton} 50 20 nil 2384 50 2 8 1140924416 1 3744 nil 768 nil 5 nil nil nil 3744 nil nil 786 #renameMethodArgument 8 '&Rename Arg…' 1 1 nil nil false nil nil nil 210 50 3 258 #createAt:extent: 50 2 306 11 201 306 181 51 3744 258 #isEnabled: 8 #(false) 3744 258 #text: 50 1 8 '&Rename Arg…' 3744 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 100 0 0 0 95 0 0 0 125 0 0 0] 8 #() 1056 nil 29 1056 nil 27 nil 18 #{UI.ReferenceView} 50 14 nil 2304 50 2 8 1140916224 131073 4064 nil 768 nil 5 nil nil nil 4064 1650 #{Tools.ValueWorkspace} #resource_Default_view nil 210 50 1 258 #createAt:extent: 50 2 306 1 1 306 771 297 4064 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 129 1 0 0 148 0 0 0] 1808 1056 nil 27 1826 176 50 2 4064 8 'replaceText' nil 210 50 1 258 #createAt:extent: 50 2 306 1 305 306 971 297 2304 354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 152 0 0 0 229 1 0 0 44 1 0 0] 50 2 4064 2384 1056 nil 27 1056 nil 27)! !
+
 !Tools.CodeRewriterPlugin class categoriesForMethods!
 icon!constants!public! !
 resource_Default_view!public!resources-views! !

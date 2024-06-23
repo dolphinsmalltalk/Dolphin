@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SemaphoreTest guid: (Core.GUID fromString: '{b3d4af7f-c066-4ac2-8421-722762fe6ec9}')!
+
 Core.Tests.SemaphoreTest comment: ''!
+
 !Core.Tests.SemaphoreTest methodsFor!
 
 testCriticalEarlyTermination
@@ -25,6 +28,7 @@ testCriticalEarlyTermination
 	Processor sleep: 10 milliseconds.
 	"The Semaphore should have been released."
 	self assert: s excessSignals identicalTo: 1! !
+
 !Core.Tests.SemaphoreTest categoriesForMethods!
 testCriticalEarlyTermination!public!unit tests! !
 !

@@ -7,8 +7,11 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.WCHARFieldTest guid: (Core.GUID fromString: '{5fae7240-e0b0-4632-b957-750ef821559c}')!
+
 External.Tests.WCHARFieldTest comment: ''!
+
 !External.Tests.WCHARFieldTest methodsFor!
 
 testReadFrom
@@ -41,6 +44,7 @@ testWriteInto
 	subject writeInto: struct value: (dolphinString at: 2).
 	actual := Utf16String fromByteArray: struct bytes.
 	self assert: actual equals: dolphinString! !
+
 !External.Tests.WCHARFieldTest categoriesForMethods!
 testReadFrom!public! !
 testWriteInto!public! !

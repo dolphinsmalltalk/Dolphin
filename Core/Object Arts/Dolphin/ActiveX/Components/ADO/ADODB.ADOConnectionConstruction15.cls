@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.ADOConnectionConstruction15 guid: (OS.COM.IID fromString: '{00000516-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.ADOConnectionConstruction15 comment: '<ADODBADOConnectionConstruction15> is a wrapper class for the COM interface ''ADODB.ADOConnectionConstruction15'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !ADODB.ADOConnectionConstruction15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.ADOConnectionConstruction15 methodsFor!
 
 dso
@@ -59,6 +63,7 @@ WrapDSOandSession: pDSO pSession: pSession
 
 	<virtual stdcall: hresult 6 IUnknown* IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !ADODB.ADOConnectionConstruction15 categoriesForMethods!
 dso!**auto generated**!properties!public! !
 get_DSO:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!private! !
@@ -81,6 +86,7 @@ defineFunctions
 		defineFunction: #WrapDSOandSession:pSession:
 			argumentTypes: 'IUnknown* IUnknown*'
 ! !
+
 !ADODB.ADOConnectionConstruction15 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

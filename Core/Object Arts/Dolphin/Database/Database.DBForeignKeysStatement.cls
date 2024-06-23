@@ -7,9 +7,13 @@ Database.DBSchemaStatement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBForeignKeysStatement guid: (Core.GUID fromString: '{b6f9e2f2-9df3-4719-ae44-5f079843683f}')!
+
 Database.DBForeignKeysStatement comment: ''!
+
 !Database.DBForeignKeysStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBForeignKeysStatement methodsFor!
 
 executeStatement
@@ -48,6 +52,7 @@ foreignTableName
 
 foreignTableName: aString
 	foreignTableName := aString! !
+
 !Database.DBForeignKeysStatement categoriesForMethods!
 executeStatement!operations!private! !
 foreignCatalogName!accessing!public! !

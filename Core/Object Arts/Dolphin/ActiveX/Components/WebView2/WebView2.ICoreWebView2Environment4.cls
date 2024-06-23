@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Environment3
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Environment4 guid: (OS.COM.IID fromString: '{20944379-6dcf-41d6-a0a0-abc0fc50de0d}')!
+
 WebView2.ICoreWebView2Environment4 isEgressOnly: true!
+
 WebView2.ICoreWebView2Environment4 comment: '`ICoreWebView2Environment4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +33,9 @@ interface ICoreWebView2Environment4 : ICoreWebView2Environment3
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Environment4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Environment4 methodsFor!
 
 GetProviderForHwnd: hwnd provider: provider
@@ -42,6 +47,7 @@ GetProviderForHwnd: hwnd provider: provider
 
 	<virtual stdcall: hresult 12 handle IUnknown**>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Environment4 categoriesForMethods!
 GetProviderForHwnd:provider:!**auto generated**!COM Interfaces-ICoreWebView2Environment4!private! !
 !
@@ -56,6 +62,7 @@ defineFunctions
 		defineFunction: #GetProviderForHwnd:provider:
 			argumentTypes: 'handle IUnknown**'
 ! !
+
 !WebView2.ICoreWebView2Environment4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

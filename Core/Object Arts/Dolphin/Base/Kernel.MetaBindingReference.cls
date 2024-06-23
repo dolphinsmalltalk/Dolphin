@@ -7,12 +7,16 @@ Kernel.BindingReferenceWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.MetaBindingReference guid: (Core.GUID fromString: '{c54304a7-5aa9-404b-a969-27501f25f612}')!
+
 Kernel.MetaBindingReference comment: '`MetaBindingReference` are `BindingReference`s that resolve to the class of the referenced binding''s value, for example `#{Object class}` is a static literal reference that evaluates to the same object as the expression `#{Object} value class`, i.e. the metaclass of the class `Object`.
 
 `MetaBindingReference` instances are useful for cases such as constructing `MethodName`s that refer to class-side methods. They are used as part of the file out format for packages and allow the list of loose methods to be represented efficiently as literal arrays.
 '!
+
 !Kernel.MetaBindingReference categoriesForClass!System-Namespaces! !
+
 !Kernel.MetaBindingReference methodsFor!
 
 asString
@@ -60,6 +64,7 @@ unqualifiedName
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
+
 !Kernel.MetaBindingReference categoriesForMethods!
 asString!converting!public! !
 displayOn:!displaying!public! !
@@ -96,6 +101,7 @@ pathString: aString scope: anObject
 	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
 
 	^self instance: (super pathString: aString scope: anObject)! !
+
 !Kernel.MetaBindingReference class categoriesForMethods!
 instance:!instance creation!public! !
 newPath:private:scope:!instance creation!private! !

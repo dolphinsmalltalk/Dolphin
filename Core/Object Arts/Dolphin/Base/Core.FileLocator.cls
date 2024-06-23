@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.FileLocator guid: (Core.GUID fromString: '{391014f8-ebb8-4dd3-bd5d-fb6f303de483}')!
+
 Core.FileLocator isNonInstantiable: true!
+
 Core.FileLocator comment: '`FileLocator` is an abstract root for a hierarchy of subclasses that implement the <fileLocator> protocol. 
 A <fileLocator> is used map between an external resource pathname and an internal name. First an external name is mapped to an internal form using #relativePathTo:. The latter can be held in the image and later mapped back to it''s is full external name using #localFileSpecFor:.
 
@@ -40,7 +43,9 @@ icon := Icon fromFile: ''Resources\myIcon.ico''
 ```
 Sometimes, especially in the case of development tools, you might want a resource to be referenced relative to the Dolphin installation directory. In this case `FileLocator installRelative` would be moe appropriate. Take a look at `DolphinSureCertificate>>#image`, for example. Note that, at runtime, the image location and installation location are treated as the same by a standard `RuntimeSessionManager`.
 '!
+
 !Core.FileLocator categoriesForClass!System-Support! !
+
 !Core.FileLocator methodsFor!
 
 basePath
@@ -77,6 +82,7 @@ relativePathTo: aString
 
 relativeToBase: aFilename
 	^File relativePathOf: aFilename to: self basePath! !
+
 !Core.FileLocator categoriesForMethods!
 basePath!accessing!public! !
 findOrImportForeignClass:!operations!private! !
@@ -127,6 +133,7 @@ installRelative
 installRelative: aFilenameString
 	^self installRelative localFileSpecFor: aFilenameString
 ! !
+
 !Core.FileLocator class categoriesForMethods!
 absolute!accessing!public! !
 default!accessing!public! !

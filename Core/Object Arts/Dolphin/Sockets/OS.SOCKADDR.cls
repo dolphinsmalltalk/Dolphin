@@ -11,7 +11,9 @@ External.Structure
 			'_OffsetOf_sa_family' -> 16r0.
 			'_SOCKADDR_Size' -> 16r10
 		}!
+
 OS.SOCKADDR guid: (Core.GUID fromString: '{0299d3de-9695-4177-9ce6-42ad495c8e57}')!
+
 OS.SOCKADDR comment: '<SOCKADDR> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,7 +29,9 @@ struct tagSOCKADDR {
 	[hidden, helpstring("Up to 14 bytes of direct address (note in network order, not host order)")] char sa_data[14];
 } SOCKADDR;
 '!
+
 !OS.SOCKADDR categoriesForClass!Win32-Structs! !
+
 !OS.SOCKADDR methodsFor!
 
 displayOn: aPuttableStream
@@ -64,6 +68,7 @@ sa_family: anInteger
 	"Set the receiver's 'sa_family' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_sa_family put: anInteger! !
+
 !OS.SOCKADDR categoriesForMethods!
 displayOn:!displaying!public! !
 initialize!initializing!private! !
@@ -136,6 +141,7 @@ fromString: aString
 
 getFieldNames
 	^#(#sa_family)! !
+
 !OS.SOCKADDR class categoriesForMethods!
 addressFamily!constants!public! !
 byteSize!**compiled accessors**!constants!public! !

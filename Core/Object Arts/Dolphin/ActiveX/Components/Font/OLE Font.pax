@@ -39,6 +39,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'OS.COM.IFontDisp'
 	instanceVariableNames: ''
@@ -56,6 +57,7 @@ fromOleFont: pFont
 	<IFont>|<IFontDisp> argument, anIFont, is an interface."
 
 	^self fromLogFont: (LOGFONTW fromOleFont: pFont)! !
+
 !Graphics.AbstractFont class categoriesForMethods!
 fromOleFont:!instance creation!public! !
 !
@@ -84,6 +86,7 @@ fromOleFont: pFont
 		lfQuality:
 		lfPitchAndFamily:
 "! !
+
 !OS.LOGFONTW class categoriesForMethods!
 fromOleFont:!instance creation!public! !
 !

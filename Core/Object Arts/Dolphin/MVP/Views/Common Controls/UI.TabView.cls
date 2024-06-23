@@ -22,7 +22,9 @@ UI.IconicListAbstract
 								#tileIcons -> (16r30 @ 16r30)
 							})
 		}!
+
 UI.TabView guid: (Core.GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
 
 The most typical use of a <TabView> is as part of a <CardContainer> where each of the cards is identified by a separate tab.
@@ -34,7 +36,9 @@ Class Variables:
 	TcnMap		<IdentityDictionary> mapping Windows notification messages to <selectors>.
 
 '!
+
 !UI.TabView categoriesForClass!MVP-Views! !
+
 !UI.TabView methodsFor!
 
 applyFont
@@ -619,6 +623,7 @@ viewMode
 viewModeChanged
 	super viewModeChanged.
 	self invalidateLayout! !
+
 !UI.TabView categoriesForMethods!
 applyFont!font!private!updating! !
 applyImageLists!image management!private! !
@@ -742,6 +747,7 @@ winClassName
 
 	^'SysTabControl32'
 ! !
+
 !UI.TabView class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

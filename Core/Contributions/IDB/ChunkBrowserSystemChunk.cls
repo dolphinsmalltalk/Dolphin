@@ -5,13 +5,17 @@ ChunkBrowserOtherChunk subclass: #ChunkBrowserSystemChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSystemChunk guid: (GUID fromString: '{e2344df7-4685-46a5-a350-969184292b80}')!
+
 ChunkBrowserSystemChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserSystemChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserSystemChunk methodsFor!
 
 initializeIdentity
@@ -46,6 +50,7 @@ packageName
 				nextIndexOf: $'
 				from: quoteIndex
 				to: rawText size) - 1! !
+
 !ChunkBrowserSystemChunk categoriesForMethods!
 initializeIdentity!initializing!public! !
 isImageSave!public!testing! !
@@ -97,6 +102,7 @@ isChunkClassFor: aString tokens: anArray
 
 	^anArray isEmpty
 		and: [(aString includes: $：) and: [(self hasTime: aString) and: [self hasText: aString]]]! !
+
 !ChunkBrowserSystemChunk class categoriesForMethods!
 chunkType!constants!public! !
 hasText:!public!testing! !

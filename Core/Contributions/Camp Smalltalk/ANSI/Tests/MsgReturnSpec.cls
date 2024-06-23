@@ -5,9 +5,13 @@ Object subclass: #MsgReturnSpec
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MsgReturnSpec guid: (GUID fromString: '{a23f1e93-ec7b-47d3-ae61-3f992842c38e}')!
+
 MsgReturnSpec comment: ''!
+
 !MsgReturnSpec categoriesForClass!Unclassified! !
+
 !MsgReturnSpec methodsFor!
 
 isConformingReturnClass: returnClass 
@@ -65,6 +69,7 @@ can be rebuilt but NOT reinstantiated via evaluate."
         aStream := WriteStream on: (String new: 50).
         self storeSIFOn: aStream.
         ^ aStream contents! !
+
 !MsgReturnSpec categoriesForMethods!
 isConformingReturnClass:!public! !
 printOn:!public! !
@@ -147,6 +152,7 @@ returnValueAliasingAttributeUnspecified
 	"Answer a protocol message return value unspecified aliasing attribute constant."
 
 	^ #'unspecified'! !
+
 !MsgReturnSpec class categoriesForMethods!
 aliasingAttributes!public! !
 new!public! !

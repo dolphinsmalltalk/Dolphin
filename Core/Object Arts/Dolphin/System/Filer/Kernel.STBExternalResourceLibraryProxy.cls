@@ -7,9 +7,13 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBExternalResourceLibraryProxy guid: (Core.GUID fromString: '{87b4c6ec-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STBExternalResourceLibraryProxy comment: '`STBExternalResourceLibraryProxy` is the class of `STxProxy`s used in legacy STB/STL versions to save the state necessary to re-open an `External.ResourceLibrary` from an STB stream. The proxy instance resolve to a common `ResourceLibrary` instance for any given library path, so that each resource library need only be opened once.'!
+
 !Kernel.STBExternalResourceLibraryProxy categoriesForClass!System-Binary storage! !
+
 !Kernel.STBExternalResourceLibraryProxy methodsFor!
 
 fileName: path
@@ -35,6 +39,7 @@ value
 	file path name."
 
 	^External.ResourceLibrary open: fileName! !
+
 !Kernel.STBExternalResourceLibraryProxy categoriesForMethods!
 fileName:!accessing!private! !
 stbFixup:at:!converting!public! !
@@ -49,6 +54,7 @@ forLibrary: lib
 	^self basicNew
 		fileName: lib fileName;
 		yourself! !
+
 !Kernel.STBExternalResourceLibraryProxy class categoriesForMethods!
 forLibrary:!instance creation!public! !
 !

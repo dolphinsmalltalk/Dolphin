@@ -7,8 +7,11 @@ Core.SessionManager
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ConsoleSessionManager guid: (Core.GUID fromString: '{b41feb01-21e0-4ad4-998e-ac8529155bee}')!
+
 Kernel.ConsoleSessionManager isNonInstantiable: true!
+
 Kernel.ConsoleSessionManager comment: 'ConsoleSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed console, or command-line, application.
 
 The main entry point hook is the #main method. The program logic can be implemented entirely in #main in the case of simple applications, but it is recommended that a separate application class be constructed, with additional support classes as required. A console application normally exits when the #main method returns.
@@ -19,7 +22,9 @@ A simple example of a console application is the command line version of the Hel
 
 	CommandLineHelloWorld run    "Watch out for the appearance of the console, and press ENTER to continue"
 '!
+
 !Kernel.ConsoleSessionManager categoriesForClass!System-Support! !
+
 !Kernel.ConsoleSessionManager methodsFor!
 
 allocConsole
@@ -130,6 +135,7 @@ unhandledException: anException
 	anException isUserResumable ifFalse: [
 		self quit: -1].
 	^anException! !
+
 !Kernel.ConsoleSessionManager categoriesForMethods!
 allocConsole!operations!private! !
 attachFd:stream:!helpers!private! !
@@ -175,6 +181,7 @@ run
 	consoleAlreadyOpen := self current openConsole.
 	self new main.
 	consoleAlreadyOpen ifFalse: [self current closeConsole]! !
+
 !Kernel.ConsoleSessionManager class categoriesForMethods!
 isRuntime!public!testing! !
 new!development!instance creation!public! !

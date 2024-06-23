@@ -7,14 +7,18 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MethodCategoryEnvironment guid: (Core.GUID fromString: '{d9a3e87e-16b6-4a73-8469-e08822dcb6dd}')!
+
 Tools.MethodCategoryEnvironment comment: '`MethodCategoryEnvironment` is a Dolphin specific `BrowserEnvironment` that represents the contents of one or more Dolphin method categories. This can be very powerful when used in conjunction with Dolphin''s `Tools.VirtualMethodCategory`s, as the latter have an arbitrary filtering capability.
 
 Instance Variables:
 	categories		`<collection>` of `Kernel.MethodCategory`
 
 '!
+
 !Tools.MethodCategoryEnvironment categoriesForClass!Refactory-Environments! !
+
 !Tools.MethodCategoryEnvironment methodsFor!
 
 categories: aCollection
@@ -93,6 +97,7 @@ storeOn: aStream
 		space.
 	(categories asArray collect: [:each | each name]) storeOn: aStream.
 	aStream nextPut: $)! !
+
 !Tools.MethodCategoryEnvironment categoriesForMethods!
 categories:!accessing!private! !
 categoryNames:!accessing!private! !
@@ -112,6 +117,7 @@ onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
 		categoryNames: aCollection;
 		yourself! !
+
 !Tools.MethodCategoryEnvironment class categoriesForMethods!
 onEnvironment:categories:!instance creation!public! !
 !

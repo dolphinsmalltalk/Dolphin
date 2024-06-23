@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AddImportRefactoringTest guid: (Core.GUID fromString: '{22a8d5c2-2eb1-4d2a-a7e5-6987f758d87e}')!
+
 Refactory.Browser.Tests.AddImportRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.AddImportRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.AddImportRefactoringTest methodsFor!
 
 testAddImport
@@ -112,6 +116,7 @@ testUndefinedImport
 				addImport: #{Core.Blah}
 				to: self class)
 		withMessage: '#{Core.Blah} does not refer to a defined class binding'! !
+
 !Refactory.Browser.Tests.AddImportRefactoringTest categoriesForMethods!
 testAddImport!public! !
 testExistingImport!public! !

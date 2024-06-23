@@ -7,8 +7,11 @@ UI.Tests.AbstractShellViewTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ShellViewTest guid: (Core.GUID fromString: '{7f45346b-99e0-4c3f-bcf8-19cde00771e0}')!
+
 UI.Tests.ShellViewTest comment: ''!
+
 !UI.Tests.ShellViewTest methodsFor!
 
 classToTest
@@ -56,6 +59,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assertIsNil: view maxExtent.
 	self assertIsNil: view minExtent.
 	self assert: view defaultButtonId equals: 0! !
+
 !UI.Tests.ShellViewTest categoriesForMethods!
 classToTest!helpers!private! !
 createShell:centered:!helpers!private! !
@@ -93,6 +97,7 @@ resource_Default_view_D8_STL5
 	"
 
 	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ShellView} 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 #{Graphics.Color} #default nil 551 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 626 1201 801 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 87 26 0 0 154 1 0 0] 8 #() 626 193 193 nil 27)! !
+
 !UI.Tests.ShellViewTest class categoriesForMethods!
 resource_Default_view_D6!public!resources-views! !
 resource_Default_view_D7!public!resources-views! !

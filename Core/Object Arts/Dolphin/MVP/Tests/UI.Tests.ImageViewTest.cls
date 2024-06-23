@@ -7,8 +7,11 @@ UI.Tests.ImageViewAbstractTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ImageViewTest guid: (Core.GUID fromString: '{5bcfc9d0-64df-43d8-93aa-787955bf0611}')!
+
 UI.Tests.ImageViewTest comment: ''!
+
 !UI.Tests.ImageViewTest methodsFor!
 
 classToTest
@@ -28,6 +31,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view backcolor equals: Color default.
 	self assert: view interactor identicalTo: view.
 	self assert: view viewMode identicalTo: #scaleToFit! !
+
 !UI.Tests.ImageViewTest categoriesForMethods!
 classToTest!helpers!private! !
 image!private!Running! !
@@ -55,6 +59,7 @@ resource_Basic_image_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ImageView) 34 21 nil nil 34 2 8 1140850944 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 4294903431 852486 ##(Smalltalk.NullConverter) nil nil nil nil #scaleToFit 1 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 818 225 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 239 7 0 0 110 0 0 0] 8 #() 818 193 193 nil 27)! !
+
 !UI.Tests.ImageViewTest class categoriesForMethods!
 resource_Basic_image_D6!public!resources-views! !
 resource_Basic_image_D7!public!resources-views! !

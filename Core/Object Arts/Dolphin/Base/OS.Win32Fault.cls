@@ -7,9 +7,13 @@ OS.Win32Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Win32Fault guid: (Core.GUID fromString: '{3b2fccea-10b3-4da2-9932-179927f451a2}')!
+
 OS.Win32Fault comment: ''!
+
 !OS.Win32Fault categoriesForClass!System-Exception Handling! !
+
 !OS.Win32Fault methodsFor!
 
 _descriptionArguments
@@ -64,6 +68,7 @@ tagFromExceptionCode: anInteger
 	code, anInteger."
 
 	^HRESULT ntStatusCode: anInteger! !
+
 !OS.Win32Fault categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -106,6 +111,7 @@ signal: messageText with: anEXCEPTION_RECORD
 	^self new 
 		exceptionRecord: anEXCEPTION_RECORD;
 		signal! !
+
 !OS.Win32Fault class categoriesForMethods!
 initialize!development!initializing!private! !
 signal:with:!instance creation!public! !

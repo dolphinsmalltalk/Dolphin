@@ -7,9 +7,13 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MessageNotUnderstood guid: (Core.GUID fromString: '{87b4c55d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.MessageNotUnderstood comment: ''!
+
 !Core.MessageNotUnderstood categoriesForClass!Kernel-Exception Handling! !
+
 !Core.MessageNotUnderstood methodsFor!
 
 _descriptionArguments
@@ -51,6 +55,7 @@ selector
 	<failedMessage>."
 
 	^self message selector! !
+
 !Core.MessageNotUnderstood categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -72,6 +77,7 @@ receiver: anObject message: aMessage
 	^super new
 		receiver: anObject message: aMessage;
 		signal! !
+
 !Core.MessageNotUnderstood class categoriesForMethods!
 receiver:message:!instance creation!public! !
 !

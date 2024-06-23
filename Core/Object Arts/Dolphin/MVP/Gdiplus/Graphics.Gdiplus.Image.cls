@@ -7,8 +7,11 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Image guid: (Core.GUID fromString: '{00b83139-f011-4475-99dd-34afd09c2e06}')!
+
 Graphics.Gdiplus.Image comment: 'GdiplusImage provides methods for loading and saving raster images (bitmaps) and vector images (metafiles).  Various methods are available to manipulate and display an image.  Different file types can be read from and saved to - see #encoderMimeTypes and #decoderMimeTypes.'!
+
 !Graphics.Gdiplus.Image methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
@@ -745,6 +748,7 @@ width
 	buf := UInt32Bytes new.
 	Gdip gdipGetImageWidth: self asParameter width: buf.
 	^buf asInteger! !
+
 !Graphics.Gdiplus.Image categoriesForMethods!
 addToImageList:mask:!double dispatch!public! !
 asBitmap!converting!public! !
@@ -1043,6 +1047,7 @@ onStartup2
 	"Private - Perform system startup processing for all subclasses."
 
 	DecodersByExtension := DecodersByMimeType := EncodersByExtension := EncodersByMimeType := nil! !
+
 !Graphics.Gdiplus.Image class categoriesForMethods!
 cacheDecoderClsids!helpers!private! !
 cacheEncoderClsids!helpers!private! !

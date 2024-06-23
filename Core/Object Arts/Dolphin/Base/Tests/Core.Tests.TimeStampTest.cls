@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.TimeStampTest guid: (Core.GUID fromString: '{152f98a5-e614-445f-bb23-7db28a4d01b8}')!
+
 Core.Tests.TimeStampTest comment: ''!
+
 !Core.Tests.TimeStampTest methodsFor!
 
 currentTimeStamp
@@ -94,6 +97,7 @@ testFromSYSTEMTIME
 	self assert: ts time second truncated equals: sysTime wSecond.
 	self assert: ts time millisecond equals: sysTime wMilliseconds.
 	self assert: sysTime asTimeStamp equals: ts! !
+
 !Core.Tests.TimeStampTest categoriesForMethods!
 currentTimeStamp!helpers!private! !
 testAddSeconds!public! !

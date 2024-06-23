@@ -42,6 +42,7 @@ rand
 srand: anInteger
 	<cdecl: void srand dword>
 	^self invalidCall: _failureCode! !
+
 !OS.CRTLibrary categoriesForMethods!
 rand!CRT functions-floating point support!public! !
 srand:!CRT functions-floating point support!public! !

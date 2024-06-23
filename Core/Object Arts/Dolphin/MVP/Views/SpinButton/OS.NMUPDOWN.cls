@@ -7,7 +7,9 @@ OS.NMHDR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_NMUPDOWN_Size' -> 16r14. '_OffsetOf_iDelta' -> 16r10. '_OffsetOf_iPos' -> 16rC }!
+
 OS.NMUPDOWN guid: (Core.GUID fromString: '{425d0ea7-542e-11d3-998b-d5ca2c3c1d61}')!
+
 OS.NMUPDOWN comment: '<NMUPDOWN> is an <ExternalStructure> class to wrap the struct ''UpDownLib.NMUPDOWN'' from type information in the ''Microsoft Windows Up-Down Control'' library.
 
 NMUPDOWN accompanies the UDN_DELTAPOS notifications that are sent by an up-down control to its parent when it has been nudged and is about to change its value. The notification is forwarded as a #nudge: event off the <SpinButton> view''s presenter.
@@ -20,7 +22,9 @@ typedef struct tagNMUPDOWN {
 	int iDelta;
 } NMUPDOWN;
 '!
+
 !OS.NMUPDOWN categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMUPDOWN methodsFor!
 
 allow
@@ -48,6 +52,7 @@ newPosition
 	receiver be accepted."
 
 	^self iPos + self iDelta! !
+
 !OS.NMUPDOWN categoriesForMethods!
 allow!accessing!public! !
 allow:!accessing!public! !
@@ -79,6 +84,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iPos #iDelta)! !
+
 !OS.NMUPDOWN class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

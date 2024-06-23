@@ -7,8 +7,11 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IMXAttributes guid: (OS.COM.IID fromString: '{f10d27cc-3ec0-415c-8ed8-77ab1c5e7262}')!
+
 MSXML.IMXAttributes isEgressOnly: true!
+
 MSXML.IMXAttributes comment: '<IMXAttributes> is a wrapper class for the COM interface ''MSXML2.IMXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -76,7 +79,9 @@ interface IMXAttributes : IDispatch
 		[in]BSTR strValue);
 };
 '!
+
 !MSXML.IMXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IMXAttributes methodsFor!
 
 AddAttribute: strURI strLocalName: strLocalName strQName: strQName strType: strType strValue: strValue
@@ -224,6 +229,7 @@ SetValue: nIndex strValue: strValue
 
 	<virtual stdcall: hresult 18 int32 bstr>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IMXAttributes categoriesForMethods!
 AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
 addAttributeFromIndex:nIndex:!**auto generated**!methods!public! !
@@ -277,6 +283,7 @@ defineFunctions
 		defineFunction: #SetValue:strValue:
 			argumentTypes: 'sdword bstr'
 ! !
+
 !MSXML.IMXAttributes class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 AbstractSocketTest guid: (Core.GUID fromString: '{4b35f00d-f9e0-442d-84fd-4721213f82fd}')!
+
 AbstractSocketTest isNonInstantiable: true!
+
 AbstractSocketTest comment: ''!
+
 !AbstractSocketTest methodsFor!
 
 serverSocketClass
@@ -30,6 +34,7 @@ testQueryPort
 	s := self serverSocketClass port: 1000.
 	sockets add: s.
 	self assert: s queryPort = 1000! !
+
 !AbstractSocketTest categoriesForMethods!
 serverSocketClass!constants!private! !
 setUp!private!running! !

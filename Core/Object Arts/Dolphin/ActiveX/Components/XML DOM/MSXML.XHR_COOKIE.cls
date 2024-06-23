@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_pwszValue' -> 16r8.
 			'_XHR_COOKIE_Size' -> 16r1C
 		}!
+
 MSXML.XHR_COOKIE guid: (Core.GUID fromString: '{55d440a1-79a9-4f7b-9828-7efa635f6579}')!
+
 MSXML.XHR_COOKIE comment: '`XHR_COOKIE` is an `ExternalStructure` class to wrap the struct ''MSXML2.XHR_COOKIE'' from type information in the ''Microsoft XML, v6.0'' library.
 
 The type library contains no documentation for this struct
@@ -35,7 +37,9 @@ struct tagXHR_COOKIE {
 } XHR_COOKIE;
 ```
 '!
+
 !MSXML.XHR_COOKIE categoriesForClass!MSXML2-Structs! !
+
 !MSXML.XHR_COOKIE methodsFor!
 
 dwFlags
@@ -101,6 +105,7 @@ pwszValue: anUtf16String
 	"Set the receiver's 'pwszValue' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszValue put: anUtf16String yourAddress! !
+
 !MSXML.XHR_COOKIE categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
@@ -148,6 +153,7 @@ defineFields
 
 getFieldNames
 	^#(#pwszUrl #pwszName #pwszValue #pwszP3PPolicy #ftExpires #dwFlags)! !
+
 !MSXML.XHR_COOKIE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

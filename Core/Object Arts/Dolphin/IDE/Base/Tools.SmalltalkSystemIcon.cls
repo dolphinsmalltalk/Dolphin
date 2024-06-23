@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkSystemIcon guid: (Core.GUID fromString: '{87b4c4ba-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.SmalltalkSystemIcon comment: ''!
+
 !Tools.SmalltalkSystemIcon categoriesForClass!MVP-Models! !
+
 !Tools.SmalltalkSystemIcon methodsFor!
 
 = aSmalltalkSystemIcon
@@ -83,6 +87,7 @@ tool: aToolClass icon: anIcon description: aString openBlock: aMonadicValuable h
 
 whatsThis
 	SessionManager current whatsThis: self! !
+
 !Tools.SmalltalkSystemIcon categoriesForMethods!
 =!comparing!public! !
 description!accessing!public! !
@@ -177,6 +182,7 @@ tool: aToolClass icon: anIcon description: aStringDescription openBlock: aDyadic
 		description: aStringDescription
 		openBlock: aDyadicValuable
 		helpId: anIntegerOrNil! !
+
 !Tools.SmalltalkSystemIcon class categoriesForMethods!
 icon!constants!public! !
 icon:description:openBlock:!instance creation!public! !

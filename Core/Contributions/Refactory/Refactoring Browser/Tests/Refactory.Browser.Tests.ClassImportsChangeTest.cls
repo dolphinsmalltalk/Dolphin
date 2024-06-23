@@ -7,9 +7,13 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ClassImportsChangeTest guid: (Core.GUID fromString: '{f3ffdc7d-109c-4770-96c3-9b6cf396fa3a}')!
+
 Refactory.Browser.Tests.ClassImportsChangeTest comment: ''!
+
 !Refactory.Browser.Tests.ClassImportsChangeTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ClassImportsChangeTest methodsFor!
 
 subjectClass
@@ -42,6 +46,7 @@ testPrinting
 	self assert: subject changeString equals: 'Change imports into UI'.
 	self assert: subject printString
 		equals: 'UI imports: #(#{Core} #{Graphics.Gdiplus private} #{OS private} #{Kernel private})!!'! !
+
 !Refactory.Browser.Tests.ClassImportsChangeTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsUndo!public!unit tests! !

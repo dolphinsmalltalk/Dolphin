@@ -46,6 +46,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.COM.CATEGORYINFO'
 	instanceVariableNames: ''
@@ -58,6 +59,7 @@ External.Structure
 			'_OffsetOf_lcid' -> 16r10.
 			'_OffsetOf_szDescription' -> 16r14
 		}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ICatInformation'
 	instanceVariableNames: ''
@@ -65,6 +67,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ICatRegister'
 	instanceVariableNames: ''
@@ -89,6 +92,7 @@ oleRegGetUserType: clsid dwFormOfType: dwFormOfType pszUserType: pszUserType
 
 	<stdcall: int32 OleRegGetUserType guid* uint32 lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.OLELibrary categoriesForMethods!
 oleRegGetUserType:dwFormOfType:pszUserType:!OLE Functions-OLE!public! !
 !

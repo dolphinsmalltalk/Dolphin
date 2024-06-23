@@ -5,9 +5,13 @@ MainTestCase subclass: #ReadWriteStreamANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReadWriteStreamANSITest guid: (GUID fromString: '{0042fbf7-ada3-4a20-afc9-df870ffaedc1}')!
+
 ReadWriteStreamANSITest comment: ''!
+
 !ReadWriteStreamANSITest categoriesForClass!Unclassified! !
+
 !ReadWriteStreamANSITest methodsFor!
 
 canonicalObject
@@ -19,6 +23,7 @@ protocol
 setUp
 	super setUp.
 	readWriteStream := ReadWriteStream with: 'this is a string'! !
+
 !ReadWriteStreamANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !
@@ -31,6 +36,7 @@ helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: ReadStreamHelper.
 	aBlock value: WriteStreamHelper! !
+
 !ReadWriteStreamANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

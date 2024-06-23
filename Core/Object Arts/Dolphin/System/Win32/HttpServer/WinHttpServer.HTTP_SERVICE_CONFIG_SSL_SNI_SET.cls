@@ -11,7 +11,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_KeyDesc' -> 16r0.
 			'_OffsetOf_ParamDesc' -> 16r88
 		}!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET guid: (Core.GUID fromString: '{4c2fb659-18f1-4258-beb7-2283ed27e94b}')!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET comment: '`HTTP_SERVICE_CONFIG_SSL_SNI_SET` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +30,9 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SNI_SET {
 } HTTP_SERVICE_CONFIG_SSL_SNI_SET;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET methodsFor!
 
 KeyDesc
@@ -58,6 +62,7 @@ ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 		from: ##(_OffsetOf_ParamDesc + 1)
 		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM._HTTP_SERVICE_CONFIG_SSL_PARAM_Size)
 		startingAt: 1! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesForMethods!
 KeyDesc!**compiled accessors**!public! !
 KeyDesc:!**compiled accessors**!public! !
@@ -89,6 +94,7 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

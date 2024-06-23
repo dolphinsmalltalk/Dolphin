@@ -5,9 +5,13 @@ ListView subclass: #EditableListView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EditableListView guid: (GUID fromString: '{e2b66e41-55e0-4105-a492-b9defd40cd23}')!
+
 EditableListView comment: ''!
+
 !EditableListView categoriesForClass!Unclassified! !
+
 !EditableListView methodsFor!
 
 activateEditorAt: aPoint cause: aSymbol tabbed: aBoolean
@@ -921,6 +925,7 @@ wmVScroll: message wParam: wParam lParam: lParam
 	self hideActiveEditor.
 
 	^super wmVScroll: message wParam: wParam lParam: lParam ! !
+
 !EditableListView categoriesForMethods!
 activateEditorAt:cause:tabbed:!operations!private! !
 activateEditorForColumn:!operations!public! !
@@ -1101,6 +1106,7 @@ stbVersion
 	16 - renamed/reused inst vars"
 
 	^16! !
+
 !EditableListView class categoriesForMethods!
 columnClass!constants!private! !
 stbConvert:fromVersion:!binary filing!public! !

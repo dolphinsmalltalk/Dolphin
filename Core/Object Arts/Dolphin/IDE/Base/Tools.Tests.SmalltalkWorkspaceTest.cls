@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.SmalltalkWorkspaceTest guid: (Core.GUID fromString: '{6bb24dc3-1c9a-49ac-a5e2-143892b9350c}')!
+
 Tools.Tests.SmalltalkWorkspaceTest comment: ''!
+
 !Tools.Tests.SmalltalkWorkspaceTest methodsFor!
 
 classToTest
@@ -84,6 +87,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 				at: aResourceIdentifier selector.
 	self assert: view isKindOf: expectedViewClass.
 	self assert: view isOpen! !
+
 !Tools.Tests.SmalltalkWorkspaceTest categoriesForMethods!
 classToTest!helpers!private! !
 doReformatSource!helpers!private! !

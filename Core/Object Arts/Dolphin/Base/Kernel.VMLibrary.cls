@@ -7,7 +7,9 @@ External.PermanentLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.VMLibrary guid: (Core.GUID fromString: '{87b4c58f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.VMLibrary comment: 'VMLibrary is an <ExternalLibrary> to represent the Dolphin Smalltalk Virtual Machine (VM). 
 
 The VM contains, for example, a number of exports to implement pseudo-primitive operations, in particular to simplify the interface to other external library functions, and external call methods to access these exported functions are implemented here.
@@ -22,7 +24,9 @@ Class Variables:
 	Registry		- <Array> of <Object>s shared between the VM and the image. 	N.B. It is not possible to modify this object directly, as it is read-only.
 	RegistryKeys	- <LookupTable> mapping symbolic names to the <Integer> indices of objects in the VM registry.
 '!
+
 !Kernel.VMLibrary categoriesForClass!External-Libraries! !
+
 !Kernel.VMLibrary methodsFor!
 
 _snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format with: arg
@@ -449,6 +453,7 @@ versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
 	^'%2!!d!!.%3!!d!!.%4!!d!!.%5!!d!!'! !
+
 !Kernel.VMLibrary categoriesForMethods!
 _snprintf_s:bufferSize:count:format:with:!helpers!private! !
 _snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
@@ -627,6 +632,7 @@ registryKeys
 
 sharedVariableName
 	^#{VM}! !
+
 !Kernel.VMLibrary class categoriesForMethods!
 fileName!constants!public! !
 hasBytecodeRepresentation:!helpers!private! !

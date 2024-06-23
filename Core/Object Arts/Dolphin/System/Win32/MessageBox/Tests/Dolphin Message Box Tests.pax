@@ -60,6 +60,7 @@ clickVerification: aBoolean
 		msg: TDM_CLICK_VERIFICATION
 		wParam: aBoolean asParameter
 		lParam: 0! !
+
 !UI.MessageBox categoriesForMethods!
 clickButton:!buttons!public! !
 clickRadioButton:!buttons!public! !

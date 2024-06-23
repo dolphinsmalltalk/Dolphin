@@ -7,9 +7,13 @@ External.RECT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractRect guid: (Core.GUID fromString: '{bca1fb68-f510-4822-a575-403073367635}')!
+
 Graphics.Gdiplus.AbstractRect isNonInstantiable: true!
+
 Graphics.Gdiplus.AbstractRect comment: ''!
+
 !Graphics.Gdiplus.AbstractRect methodsFor!
 
 asRectangle
@@ -52,6 +56,7 @@ y
 
 y: aFloat
 	self subclassResponsibility! !
+
 !Graphics.Gdiplus.AbstractRect categoriesForMethods!
 asRectangle!converting!public! !
 bottom!accessing!public! !
@@ -89,6 +94,7 @@ marshal: aRect
 
 newBuffer
 	^self basicNew bytes: (ByteArray newFixed: self byteSize)! !
+
 !Graphics.Gdiplus.AbstractRect class categoriesForMethods!
 left:top:right:bottom:!instance creation!public! !
 marshal:!instance creation!public! !

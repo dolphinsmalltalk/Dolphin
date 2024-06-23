@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.StockFontTest guid: (Core.GUID fromString: '{8ade05f3-900f-4abf-8af5-897d4843196b}')!
+
 Graphics.Tests.StockFontTest comment: ''!
+
 !Graphics.Tests.StockFontTest methodsFor!
 
 testCopy
@@ -32,6 +35,7 @@ testSystem
 	self deny: subject isItalic.
 	self deny: subject isUnderlined.
 	subject free! !
+
 !Graphics.Tests.StockFontTest categoriesForMethods!
 testCopy!public! !
 testSystem!public! !

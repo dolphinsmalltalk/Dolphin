@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MethodCategorizationPolicy guid: (Core.GUID fromString: '{87b4c4a1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.MethodCategorizationPolicy comment: ''!
+
 !Tools.MethodCategorizationPolicy categoriesForClass!System-Support! !
+
 !Tools.MethodCategorizationPolicy methodsFor!
 
 allCategoriesOfSelector: selector
@@ -142,6 +146,7 @@ superCategoriesOf: method
 					m := each compiledMethodAt: selector.
 					suggestions addAll: m categories]].
 	^suggestions! !
+
 !Tools.MethodCategorizationPolicy categoriesForMethods!
 allCategoriesOfSelector:!enquiries!private! !
 bestSuggestionFor:!enquiries!public! !
@@ -174,6 +179,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Default := nil.! !
+
 !Tools.MethodCategorizationPolicy class categoriesForMethods!
 default!instance creation!public! !
 initialize!initializing!private! !

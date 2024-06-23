@@ -7,8 +7,11 @@ Core.Dictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.DOMNamedNodeMap guid: (Core.GUID fromString: '{20534a81-bce6-43d4-bb64-1ad3b4aa39d9}')!
+
 MSXML.DOMNamedNodeMap isNonInstantiable: true!
+
 MSXML.DOMNamedNodeMap comment: 'DOMNamedNodeMap is a hashed collection wrapper class for the MSXML <IXMLDOMNamedNodeMap> interface. Its purpose is to make all the power of Smalltalk dictionaries available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like a dictionary). DOMNamedNodeMap itself is abstract, and has a number of subclasses employed to specialize it to particular types of named node. The most important of these is probably <DOMAttributeMap>, which implements dictionary behaviour for manipulating the XML attributes of a node.
 
 All DOM interface methods that return an IXMLDOMNamedNodeMap have been modified to return a subinstance of this class.
@@ -18,7 +21,9 @@ Instance Variables:
 	parentNode	<IXMLDOMNode> subinstance.
 
 '!
+
 !MSXML.DOMNamedNodeMap categoriesForClass!Collections-Unordered! !
+
 !MSXML.DOMNamedNodeMap methodsFor!
 
 add: namedNode
@@ -222,6 +227,7 @@ uncheckedAdd: newObject
 	"Private - Should not be sent to the receiver."
 
 	^self shouldNotImplement! !
+
 !MSXML.DOMNamedNodeMap categoriesForMethods!
 add:!adding!public! !
 associationAt:ifAbsent:!accessing!public! !
@@ -266,6 +272,7 @@ onInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 		setInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 
 	! !
+
 !MSXML.DOMNamedNodeMap class categoriesForMethods!
 onInterface:parentNode:!instance creation!public! !
 !

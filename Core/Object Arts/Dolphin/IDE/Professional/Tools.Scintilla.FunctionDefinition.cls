@@ -7,9 +7,13 @@ Tools.Scintilla.InterfaceDefinition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.FunctionDefinition guid: (Core.GUID fromString: '{1c19ff8a-f7a5-4f32-ad24-5ddb1990984f}')!
+
 Tools.Scintilla.FunctionDefinition comment: ''!
+
 !Tools.Scintilla.FunctionDefinition categoriesForClass!Development! !
+
 !Tools.Scintilla.FunctionDefinition methodsFor!
 
 constPrefix
@@ -287,6 +291,7 @@ selector
 
 wParam: anArray
 	wParam := self makeParam: anArray! !
+
 !Tools.Scintilla.FunctionDefinition categoriesForMethods!
 constPrefix!initializing!private! !
 defaultReturnValue!accessing!private! !
@@ -333,6 +338,7 @@ tokens: anArray
 	func wParam: (anArray at: 4).
 	func lParam: (anArray at: 5).
 	^func! !
+
 !Tools.Scintilla.FunctionDefinition class categoriesForMethods!
 tokens:!instance creation!public! !
 !

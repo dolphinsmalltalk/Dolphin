@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ResourceLibraryTest guid: (Core.GUID fromString: '{53144b4f-aa74-4ab2-a1c5-7b9c8f0fffec}')!
+
 External.Tests.ResourceLibraryTest comment: ''!
+
 !External.Tests.ResourceLibraryTest methodsFor!
 
 testComparing
@@ -55,6 +58,7 @@ testStbConvertFromVersion1
 	subject := Object fromBinaryStoreBytes: bytes.
 	self assert: subject isKindOf: ResourceLibrary.
 	self assert: subject equals: SessionManager current defaultResourceLibrary! !
+
 !External.Tests.ResourceLibraryTest categoriesForMethods!
 testComparing!public!unit tests! !
 testComparingImage!public!unit tests! !

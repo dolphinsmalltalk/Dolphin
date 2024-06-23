@@ -7,8 +7,11 @@ Kernel.Tests.StLiteralTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StNumberLiteralTokenTest guid: (Core.GUID fromString: '{0b7f81b0-219f-40ce-9090-d116cb09e568}')!
+
 Kernel.Tests.StNumberLiteralTokenTest comment: ''!
+
 !Kernel.Tests.StNumberLiteralTokenTest methodsFor!
 
 exampleSource
@@ -47,6 +50,7 @@ testInstanceCreation
 	self assert: token2 stop equals: 27.
 	self assertIsNil: token2 comments.
 	self assert: token2 value equals: 0.125! !
+
 !Kernel.Tests.StNumberLiteralTokenTest categoriesForMethods!
 exampleSource!public!unit tests! !
 exampleValue!public!unit tests! !

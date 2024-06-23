@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Environment guid: (OS.COM.IID fromString: '{b96d755e-0319-4e92-a296-23436f46a1fc}')!
+
 WebView2.ICoreWebView2Environment isEgressOnly: true!
+
 WebView2.ICoreWebView2Environment comment: '`ICoreWebView2Environment` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -47,7 +50,9 @@ interface ICoreWebView2Environment : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Environment categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Environment methodsFor!
 
 Add_BrowserProcessExited: eventHandler token: token
@@ -425,6 +430,7 @@ userDataFolder
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !WebView2.ICoreWebView2Environment categoriesForMethods!
 Add_BrowserProcessExited:token:!COM Interfaces-ICoreWebView2Environment5!events!private! !
 Add_NewBrowserVersionAvailable:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment!events!private! !
@@ -490,6 +496,7 @@ defineFunctions
 
 latestDerivation
 	^##(super latestDerivation)! !
+
 !WebView2.ICoreWebView2Environment class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 latestDerivation!enquiries!public! !

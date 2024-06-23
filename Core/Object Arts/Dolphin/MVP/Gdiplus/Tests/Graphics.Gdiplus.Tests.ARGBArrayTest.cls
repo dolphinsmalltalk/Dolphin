@@ -7,8 +7,11 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.ARGBArrayTest guid: (Core.GUID fromString: '{524a430f-bb14-407d-92ff-0d6baa28deda}')!
+
 Graphics.Gdiplus.Tests.ARGBArrayTest comment: ''!
+
 !Graphics.Gdiplus.Tests.ARGBArrayTest methodsFor!
 
 arrayClass
@@ -28,6 +31,7 @@ numericElementClass
 	^ARGBBytes
 
 ! !
+
 !Graphics.Gdiplus.Tests.ARGBArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 elementFromValue:!public!unit tests! !

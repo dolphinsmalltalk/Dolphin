@@ -7,14 +7,18 @@ Refactory.Browser.RBAbstractClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBClass guid: (Core.GUID fromString: '{e6a15c71-6c8c-437d-856c-42cd447df930}')!
+
 Refactory.Browser.RBClass comment: 'RBClass represents a Class.
 
 Instance Variables:
 	category	<Symbol>	name of the category that the class should be compiled in
 	classVariableNames	<SequenceableCollection of: Symbol>	class variables defined by the class
 	poolDictionaryNames	<Collection of: Symbol>	pool variables included by the class'!
+
 !Refactory.Browser.RBClass categoriesForClass!Refactory-Model! !
+
 !Refactory.Browser.RBClass methodsFor!
 
 <= aRBClass
@@ -540,6 +544,7 @@ unqualifiedName
 
 	^unqualifiedName
 		ifNil: [unqualifiedName := (BindingReference.PathSeparator split: name) last asSymbol]! !
+
 !Refactory.Browser.RBClass categoriesForMethods!
 <=!comparing!public! !
 addBinding:!bindings!public! !
@@ -642,6 +647,7 @@ initialize
 
 model: aRBModel named: aSymbol
 	^self basicNew model: aRBModel named: aSymbol! !
+
 !Refactory.Browser.RBClass class categoriesForMethods!
 initialize!class initialization!public! !
 model:named:!instance creation!public! !

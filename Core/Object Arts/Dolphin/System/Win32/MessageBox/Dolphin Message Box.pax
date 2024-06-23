@@ -99,6 +99,7 @@ Kernel.SharedPool
 			'TDN_TIMER' -> 16r4.
 			'TDN_VERIFICATION_CLICKED' -> 16r8
 		}!
+
 Core.Object
 	subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
@@ -116,6 +117,7 @@ Core.Object
 								#warning -> 16r30
 							})
 		}!
+
 Core.Warning
 	subclass: #'UI.ConfirmationRequiredWarning'
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
@@ -123,6 +125,7 @@ Core.Warning
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.MessageBoxAbstract
 	subclass: #'UI.MessageBox'
 	instanceVariableNames: 'handle events flags uniqueId modality iconStyle icon headline detailsText expandLabel collapseLabel checkboxText footerIcon footerText buttonStyle defaultButton customButtons buttonNames buttonIds radioButtons defaultRadioButton progressRange verified button radioButtonId'
@@ -138,6 +141,7 @@ UI.MessageBoxAbstract
 			'TDF_Mask' -> 16r1FFFFFF.
 			'TopMostMask' -> 16r40000000
 		}!
+
 External.Structure
 	subclass: #'OS.TASKDIALOG_BUTTON'
 	instanceVariableNames: ''
@@ -149,6 +153,7 @@ External.Structure
 			'_OffsetOf_pszButtonText' -> 16r4.
 			'_TASKDIALOG_BUTTON_Size' -> 16r8
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.TASKDIALOGCONFIG'
 	instanceVariableNames: 'windowTitle mainInstruction content footer verificationText expandedInformation collapsedControlText expandedControlText buttons buttonLabels radioButtons radioButtonLabels'
@@ -198,6 +203,7 @@ showMessage: aString style: anInteger
 				isSuppressible: true].
 	mb setStyle: anInteger maskedBy: MB_TYPEMASK.
 	^mb warning: aString! !
+
 !Core.Notification categoriesForMethods!
 showMessage:style:!helpers!private! !
 !
@@ -229,6 +235,7 @@ taskDialogIndirect: pTaskConfig pnButton: pnButton pnRadioButton: pnRadioButton 
 
 	<stdcall: hresult TaskDialogIndirect TASKDIALOGCONFIG* int32* int32* bool*>
 	^self invalidCall: _failureCode! !
+
 !OS.CommCtrlLibrary categoriesForMethods!
 overlappedTaskDialogIndirect:pnButton:pnRadioButton:pfVerificationFlagChecked:!**auto generated**!public! !
 taskDialogIndirect:pnButton:pnRadioButton:pfVerificationFlagChecked:!**auto generated**!public! !

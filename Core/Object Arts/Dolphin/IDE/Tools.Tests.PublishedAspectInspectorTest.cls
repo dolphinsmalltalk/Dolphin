@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.PublishedAspectInspectorTest guid: (Core.GUID fromString: '{26c95677-a861-4030-8d8e-b6bed0a6c3ef}')!
+
 Tools.Tests.PublishedAspectInspectorTest comment: ''!
+
 !Tools.Tests.PublishedAspectInspectorTest methodsFor!
 
 aspectAccessorNamed: aSymbol
@@ -669,6 +672,7 @@ testSetToNil
 	inspector setAspectValue: nil.
 	self assert: treePresenter view itemCount identicalTo: 2.
 	self repaint! !
+
 !Tools.Tests.PublishedAspectInspectorTest categoriesForMethods!
 aspectAccessorNamed:!helpers!private! !
 aspectPresenter!accessing!private! !

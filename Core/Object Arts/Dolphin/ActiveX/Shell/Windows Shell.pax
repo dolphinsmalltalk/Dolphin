@@ -140,6 +140,7 @@ Kernel.SharedPool
 			'SHGFP_TYPE_CURRENT' -> 16r0.
 			'SHGFP_TYPE_DEFAULT' -> 16r1
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.SHSTOCKICONID'
 	instanceVariableNames: ''
@@ -242,6 +243,7 @@ Kernel.SharedPool
 			'SIID_WORLD' -> 16rD.
 			'SIID_ZIPFILE' -> 16r69
 		}!
+
 Core.SequenceableCollection
 	subclass: #'UI.DroppedFilesList'
 	instanceVariableNames: 'handle size'
@@ -249,6 +251,7 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.ShellLibrary'
 	instanceVariableNames: ''
@@ -256,6 +259,7 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.IconFromSystemInitializer
 	subclass: #'Graphics.IconFromShellStockInitializer'
 	instanceVariableNames: ''
@@ -263,6 +267,7 @@ Graphics.IconFromSystemInitializer
 	imports: #(#{OS.ShellConstants private} #{OS.SHSTOCKICONINFO private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.SizedStructure
 	subclass: #'OS.SHSTOCKICONINFO'
 	instanceVariableNames: ''
@@ -294,6 +299,7 @@ downloadsDirectory
 	"Answer the path of the user's downloads directory."
 
 	^Shell32 getKnownFolderLocation: ShellConstants.FOLDERID_Downloads! !
+
 !Core.SessionManager categoriesForMethods!
 documentsDirectory!accessing!public! !
 downloadsDirectory!public!win32 functions-shell library! !
@@ -310,6 +316,7 @@ shellStock: anInteger extent: aPointOrNil
 	"Answer a new instance of receiver representing the shell stock icon with the specified SHSTOCKICONID and extent."
 
 	^self initializer: (IconFromShellStockInitializer extent: aPointOrNil identifier: anInteger)! !
+
 !Graphics.Icon class categoriesForMethods!
 shellStock:!instance creation!public! !
 shellStock:extent:!instance creation!public! !
@@ -324,6 +331,7 @@ wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger
 	| files |
 	files := DroppedFilesList fromHandle: wParamInteger asExternalHandle.
 	self presenter trigger: #dropFiles: with: files! !
+
 !UI.View categoriesForMethods!
 acceptDroppedFiles:!public! !
 wmDropFiles:wParam:lParam:!public! !
@@ -339,6 +347,7 @@ shellMessageMappings
 
 unregisterShellMessages
 	self unregisterMessageMappings: {WM_DROPFILES}! !
+
 !UI.View class categoriesForMethods!
 registerShellMessages!development!initializing!public! !
 shellMessageMappings!constants!must not strip!private! !

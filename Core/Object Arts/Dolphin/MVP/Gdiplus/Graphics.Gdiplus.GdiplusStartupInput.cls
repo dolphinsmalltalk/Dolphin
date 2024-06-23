@@ -13,7 +13,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_SuppressBackgroundThread' -> 16r8.
 			'_OffsetOf_SuppressExternalCodecs' -> 16rC
 		}!
+
 Graphics.Gdiplus.GdiplusStartupInput guid: (Core.GUID fromString: '{0cb202b5-b002-428d-8a31-f44d2919cb02}')!
+
 Graphics.Gdiplus.GdiplusStartupInput comment: '<GdiplusStartupInput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupInput'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -30,12 +32,14 @@ struct tagGdiplusStartupInput {
 	long SuppressExternalCodecs;
 } GdiplusStartupInput;
 '!
+
 !Graphics.Gdiplus.GdiplusStartupInput methodsFor!
 
 GdiplusVersion: anInteger
 	"Set the receiver's 'GdiplusVersion' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_GdiplusVersion put: anInteger! !
+
 !Graphics.Gdiplus.GdiplusStartupInput categoriesForMethods!
 GdiplusVersion:!**compiled accessors**!public! !
 !
@@ -75,6 +79,7 @@ defineFields
 
 getFieldNames
 	^#(#GdiplusVersion)! !
+
 !Graphics.Gdiplus.GdiplusStartupInput class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

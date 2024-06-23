@@ -241,6 +241,7 @@ Core
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External
 	subclass: #'External.Tests'
 	instanceVariableNames: ''
@@ -248,6 +249,7 @@ External
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics
 	subclass: #'Graphics.Tests'
 	instanceVariableNames: ''
@@ -255,6 +257,7 @@ Graphics
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel
 	subclass: #'Kernel.Tests'
 	instanceVariableNames: ''
@@ -262,6 +265,7 @@ Kernel
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS
 	subclass: #'OS.Tests'
 	instanceVariableNames: ''
@@ -269,6 +273,7 @@ OS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Core.Tests.CollectionCombinator'
 	instanceVariableNames: 'resultProcessingBlock collectionOfArrays buffer'
@@ -276,6 +281,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'Kernel.Tests.CommandLineTest'
 	instanceVariableNames: ''
@@ -283,6 +289,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'Core.Tests.DolphinTest'
 	instanceVariableNames: ''
@@ -290,6 +297,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.AbstractNamespaceTest'
 	instanceVariableNames: 'removedVariables'
@@ -297,6 +305,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.AddressTest'
 	instanceVariableNames: ''
@@ -304,6 +313,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.AssociationTest'
 	instanceVariableNames: ''
@@ -311,6 +321,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.BehaviorTest'
 	instanceVariableNames: ''
@@ -318,6 +329,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.BindingReferenceTest'
 	instanceVariableNames: ''
@@ -325,6 +337,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.BlockClosureTest'
 	instanceVariableNames: 'x'
@@ -332,6 +345,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.BooleanTest'
 	instanceVariableNames: ''
@@ -339,6 +353,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.CharacterTest'
 	instanceVariableNames: ''
@@ -346,6 +361,7 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.NlsConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.ChunkSourceFilerTest'
 	instanceVariableNames: ''
@@ -353,6 +369,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.ClassBuilderTest'
 	instanceVariableNames: 'wasOAD dirtiedClasses'
@@ -360,6 +377,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.ClassDescriptionTest'
 	instanceVariableNames: ''
@@ -367,6 +385,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.CollectionTest'
 	instanceVariableNames: ''
@@ -374,6 +393,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.CompiledExpressionTest'
 	instanceVariableNames: ''
@@ -381,6 +401,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.CompiledMethodTest'
 	instanceVariableNames: ''
@@ -388,6 +409,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.CRTErrorTest'
 	instanceVariableNames: ''
@@ -395,6 +417,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.CRTLibraryTest'
 	instanceVariableNames: ''
@@ -402,6 +425,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.DateAndTimeTest'
 	instanceVariableNames: ''
@@ -409,6 +433,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.DateTest'
 	instanceVariableNames: ''
@@ -416,6 +441,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.DelayTest'
 	instanceVariableNames: 'delay startTime timerResolution'
@@ -423,6 +449,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.DiskVolumeInformationTest'
 	instanceVariableNames: ''
@@ -430,6 +457,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.DurationTest'
 	instanceVariableNames: ''
@@ -437,6 +465,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.DynamicLinkLibraryTest'
 	instanceVariableNames: ''
@@ -444,6 +473,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.EventMessageSendTest'
 	instanceVariableNames: ''
@@ -451,6 +481,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.EventMessageSequenceTest'
 	instanceVariableNames: ''
@@ -458,6 +489,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.ExceptionTest'
 	instanceVariableNames: ''
@@ -465,6 +497,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.ExternalArrayTest'
 	instanceVariableNames: ''
@@ -472,6 +505,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.ExternalFieldTest'
 	instanceVariableNames: ''
@@ -479,6 +513,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FileLocatorTest'
 	instanceVariableNames: ''
@@ -486,6 +521,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FileTest'
 	instanceVariableNames: 'tempFile'
@@ -493,6 +529,7 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.FILETIMETest'
 	instanceVariableNames: ''
@@ -500,6 +537,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FloatTest'
 	instanceVariableNames: 'fpeMask'
@@ -507,6 +545,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FractionTest'
 	instanceVariableNames: ''
@@ -514,6 +553,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.FunctionDescriptorTest'
 	instanceVariableNames: ''
@@ -521,6 +561,7 @@ Core.Tests.DolphinTest
 	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.GUIDTest'
 	instanceVariableNames: ''
@@ -528,6 +569,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.HRESULTTest'
 	instanceVariableNames: ''
@@ -535,6 +577,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.IntegerBytesTest'
 	instanceVariableNames: ''
@@ -542,6 +585,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.IntegerTest'
 	instanceVariableNames: ''
@@ -549,6 +593,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.INTEGERTest'
 	instanceVariableNames: ''
@@ -556,6 +601,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.KernelLibraryTest'
 	instanceVariableNames: ''
@@ -563,6 +609,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.LinkTest'
 	instanceVariableNames: ''
@@ -570,6 +617,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.LocaleTest'
 	instanceVariableNames: 'savedLocale'
@@ -577,6 +625,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.MemoryManagerTest'
 	instanceVariableNames: ''
@@ -584,6 +633,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.MessageNotUnderstoodTest'
 	instanceVariableNames: ''
@@ -591,6 +641,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.MessageTest'
 	instanceVariableNames: ''
@@ -598,6 +649,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.MethodAnnotationsTest'
 	instanceVariableNames: ''
@@ -605,6 +657,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.MethodCategoryTest'
 	instanceVariableNames: ''
@@ -612,6 +665,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.NumberTest'
 	instanceVariableNames: ''
@@ -619,6 +673,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.ObjectTest'
 	instanceVariableNames: ''
@@ -626,6 +681,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.PackageManagerTest'
 	instanceVariableNames: ''
@@ -633,6 +689,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.PackageTest'
 	instanceVariableNames: 'loadedPackages checkTimestamps'
@@ -640,6 +697,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.PairTest'
 	instanceVariableNames: ''
@@ -647,6 +705,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.PoolConstantsDictionaryTest'
 	instanceVariableNames: ''
@@ -654,6 +713,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.ProcessTest'
 	instanceVariableNames: ''
@@ -661,6 +721,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.PropertyManagerTest'
 	instanceVariableNames: ''
@@ -668,6 +729,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.ResourceLibraryTest'
 	instanceVariableNames: ''
@@ -675,6 +737,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.ScaledDecimalTest'
 	instanceVariableNames: ''
@@ -682,6 +745,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.SearchPolicyTest'
 	instanceVariableNames: 'policy'
@@ -689,6 +753,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.SemaphoreTest'
 	instanceVariableNames: ''
@@ -696,6 +761,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.SessionManagerTest'
 	instanceVariableNames: ''
@@ -703,6 +769,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.ShlwapiLibraryTest'
 	instanceVariableNames: ''
@@ -710,6 +777,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.SignalTest'
 	instanceVariableNames: ''
@@ -717,6 +785,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.SortAlgorithmTest'
 	instanceVariableNames: ''
@@ -724,6 +793,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.StackFrameTest'
 	instanceVariableNames: ''
@@ -731,6 +801,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.StreamTest'
 	instanceVariableNames: ''
@@ -738,6 +809,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.StructureTest'
 	instanceVariableNames: ''
@@ -745,6 +817,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.TimeStampTest'
 	instanceVariableNames: ''
@@ -752,6 +825,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.TimeTest'
 	instanceVariableNames: 'savedLocale'
@@ -759,6 +833,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.UndefinedObjectTest'
 	instanceVariableNames: ''
@@ -766,6 +841,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.VMTest'
 	instanceVariableNames: 'expiryHandler'
@@ -773,6 +849,7 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AbstractNamespaceTest
 	subclass: #'Kernel.Tests.NamespaceTest'
 	instanceVariableNames: ''
@@ -780,6 +857,7 @@ Kernel.Tests.AbstractNamespaceTest
 	imports: #(#{Kernel.VariableBinding})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AbstractNamespaceTest
 	subclass: #'Kernel.Tests.SystemNamespaceTest'
 	instanceVariableNames: ''
@@ -787,6 +865,7 @@ Kernel.Tests.AbstractNamespaceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.SystemNamespaceTest
 	subclass: #'Kernel.Tests.RootNamespaceTest'
 	instanceVariableNames: ''
@@ -794,6 +873,7 @@ Kernel.Tests.SystemNamespaceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.SystemNamespaceTest
 	subclass: #'Kernel.Tests.SmalltalkNamespaceTest'
 	instanceVariableNames: ''
@@ -801,6 +881,7 @@ Kernel.Tests.SystemNamespaceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AssociationTest
 	subclass: #'Kernel.Tests.VariableBindingTest'
 	instanceVariableNames: ''
@@ -808,6 +889,7 @@ Core.Tests.AssociationTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'TestClassConst' -> 16r1 }!
+
 Kernel.Tests.BindingReferenceTest
 	subclass: #'Kernel.Tests.NamespaceImportTest'
 	instanceVariableNames: ''
@@ -815,6 +897,7 @@ Kernel.Tests.BindingReferenceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.BindingReferenceTest
 	subclass: #'Kernel.Tests.ScopedBindingReferenceTest'
 	instanceVariableNames: ''
@@ -822,6 +905,7 @@ Kernel.Tests.BindingReferenceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ScopedBindingReferenceTest
 	subclass: #'Kernel.Tests.FullBindingReferenceTest'
 	instanceVariableNames: ''
@@ -829,6 +913,7 @@ Kernel.Tests.ScopedBindingReferenceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ScopedBindingReferenceTest
 	subclass: #'Kernel.Tests.MetaBindingReferenceTest'
 	instanceVariableNames: ''
@@ -836,6 +921,7 @@ Kernel.Tests.ScopedBindingReferenceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.BooleanTest
 	subclass: #'Core.Tests.FalseTest'
 	instanceVariableNames: ''
@@ -843,6 +929,7 @@ Core.Tests.BooleanTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.BooleanTest
 	subclass: #'Core.Tests.TrueTest'
 	instanceVariableNames: ''
@@ -850,6 +937,7 @@ Core.Tests.BooleanTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ClassDescriptionTest
 	subclass: #'Core.Tests.ClassTest'
 	instanceVariableNames: ''
@@ -857,6 +945,7 @@ Core.Tests.ClassDescriptionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ClassDescriptionTest
 	subclass: #'Core.Tests.MetaclassTest'
 	instanceVariableNames: ''
@@ -864,6 +953,7 @@ Core.Tests.ClassDescriptionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.CollectionTest
 	subclass: #'Core.Tests.AbstractDictionaryTest'
 	instanceVariableNames: ''
@@ -871,6 +961,7 @@ Core.Tests.CollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.CollectionTest
 	subclass: #'Core.Tests.AbstractSetTest'
 	instanceVariableNames: ''
@@ -878,6 +969,7 @@ Core.Tests.CollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.CollectionTest
 	subclass: #'Core.Tests.BagTest'
 	instanceVariableNames: ''
@@ -885,6 +977,7 @@ Core.Tests.CollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.CollectionTest
 	subclass: #'Core.Tests.SequenceableCollectionTest'
 	instanceVariableNames: ''
@@ -892,6 +985,7 @@ Core.Tests.CollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractDictionaryTest
 	subclass: #'Core.Tests.DictionaryTest'
 	instanceVariableNames: ''
@@ -899,6 +993,7 @@ Core.Tests.AbstractDictionaryTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractDictionaryTest
 	subclass: #'Core.Tests.LookupTableTest'
 	instanceVariableNames: ''
@@ -906,6 +1001,7 @@ Core.Tests.AbstractDictionaryTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractDictionaryTest
 	subclass: #'Kernel.Tests.MethodDictionaryTest'
 	instanceVariableNames: ''
@@ -913,6 +1009,7 @@ Core.Tests.AbstractDictionaryTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LookupTableTest
 	subclass: #'Core.Tests.DeferredValueTableTest'
 	instanceVariableNames: ''
@@ -920,6 +1017,7 @@ Core.Tests.LookupTableTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LookupTableTest
 	subclass: #'Core.Tests.IdentityDictionaryTest'
 	instanceVariableNames: ''
@@ -927,6 +1025,7 @@ Core.Tests.LookupTableTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LookupTableTest
 	subclass: #'Core.Tests.WeakIdentityDictionaryTest'
 	instanceVariableNames: ''
@@ -934,6 +1033,7 @@ Core.Tests.LookupTableTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractSetTest
 	subclass: #'Core.Tests.IdentitySetTest'
 	instanceVariableNames: ''
@@ -941,6 +1041,7 @@ Core.Tests.AbstractSetTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractSetTest
 	subclass: #'Core.Tests.PluggableSetTest'
 	instanceVariableNames: ''
@@ -948,6 +1049,7 @@ Core.Tests.AbstractSetTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractSetTest
 	subclass: #'Core.Tests.SetTest'
 	instanceVariableNames: ''
@@ -955,6 +1057,7 @@ Core.Tests.AbstractSetTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SequenceableCollectionTest
 	subclass: #'Core.Tests.ArrayedCollectionTest'
 	instanceVariableNames: ''
@@ -962,6 +1065,7 @@ Core.Tests.SequenceableCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SequenceableCollectionTest
 	subclass: #'Core.Tests.IntervalTest'
 	instanceVariableNames: ''
@@ -969,6 +1073,7 @@ Core.Tests.SequenceableCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SequenceableCollectionTest
 	subclass: #'Core.Tests.SequencedGrowableCollectionTest'
 	instanceVariableNames: ''
@@ -976,6 +1081,7 @@ Core.Tests.SequenceableCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ArrayedCollectionTest
 	subclass: #'Core.Tests.ArrayTest'
 	instanceVariableNames: ''
@@ -983,6 +1089,7 @@ Core.Tests.ArrayedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ArrayedCollectionTest
 	subclass: #'Core.Tests.ByteArrayTest'
 	instanceVariableNames: ''
@@ -990,6 +1097,7 @@ Core.Tests.ArrayedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ArrayedCollectionTest
 	subclass: #'Core.Tests.RunArrayTest'
 	instanceVariableNames: ''
@@ -997,6 +1105,7 @@ Core.Tests.ArrayedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ArrayedCollectionTest
 	subclass: #'Core.Tests.StringTest'
 	instanceVariableNames: ''
@@ -1004,6 +1113,7 @@ Core.Tests.ArrayedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.StringTest
 	subclass: #'Core.Tests.AnsiStringTest'
 	instanceVariableNames: ''
@@ -1011,6 +1121,7 @@ Core.Tests.StringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.StringTest
 	subclass: #'Core.Tests.UtfEncodedStringTest'
 	instanceVariableNames: ''
@@ -1018,6 +1129,7 @@ Core.Tests.StringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.UtfEncodedStringTest
 	subclass: #'Core.Tests.Utf16StringTest'
 	instanceVariableNames: ''
@@ -1025,6 +1137,7 @@ Core.Tests.UtfEncodedStringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.UtfEncodedStringTest
 	subclass: #'Core.Tests.Utf8StringTest'
 	instanceVariableNames: ''
@@ -1032,6 +1145,7 @@ Core.Tests.UtfEncodedStringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.Utf8StringTest
 	subclass: #'Core.Tests.SymbolTest'
 	instanceVariableNames: ''
@@ -1039,6 +1153,7 @@ Core.Tests.Utf8StringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SequencedGrowableCollectionTest
 	subclass: #'Core.Tests.OrderedCollectionTest'
 	instanceVariableNames: ''
@@ -1046,6 +1161,7 @@ Core.Tests.SequencedGrowableCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.OrderedCollectionTest
 	subclass: #'Core.Tests.SortedCollectionTest'
 	instanceVariableNames: ''
@@ -1053,6 +1169,7 @@ Core.Tests.OrderedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.DOUBLEArrayTest'
 	instanceVariableNames: ''
@@ -1060,6 +1177,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.FLOATArrayTest'
 	instanceVariableNames: ''
@@ -1067,6 +1185,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.GenericExternalArrayTest'
 	instanceVariableNames: ''
@@ -1074,6 +1193,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.Int16ArrayTest'
 	instanceVariableNames: ''
@@ -1081,6 +1201,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.Int32ArrayTest'
 	instanceVariableNames: ''
@@ -1088,6 +1209,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.Int8ArrayTest'
 	instanceVariableNames: ''
@@ -1095,6 +1217,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.UInt16ArrayTest'
 	instanceVariableNames: ''
@@ -1102,6 +1225,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.UInt32ArrayTest'
 	instanceVariableNames: ''
@@ -1109,6 +1233,7 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.GenericExternalArrayTest
 	subclass: #'External.Tests.StructureArrayTest'
 	instanceVariableNames: ''
@@ -1116,6 +1241,7 @@ External.Tests.GenericExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalFieldTest
 	subclass: #'External.Tests.ArrayFieldTest'
 	instanceVariableNames: ''
@@ -1123,6 +1249,7 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalFieldTest
 	subclass: #'External.Tests.ArrayPointerFieldTest'
 	instanceVariableNames: ''
@@ -1130,6 +1257,7 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalFieldTest
 	subclass: #'External.Tests.StructureArrayFieldTest'
 	instanceVariableNames: ''
@@ -1137,6 +1265,7 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalFieldTest
 	subclass: #'External.Tests.StructureArrayPointerFieldTest'
 	instanceVariableNames: ''
@@ -1144,6 +1273,7 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ExternalFieldTest
 	subclass: #'External.Tests.WCHARFieldTest'
 	instanceVariableNames: ''
@@ -1151,6 +1281,7 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.IntegerBytesTest
 	subclass: #'External.Tests.UInt32BytesTest'
 	instanceVariableNames: ''
@@ -1158,6 +1289,7 @@ External.Tests.IntegerBytesTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.IntegerBytesTest
 	subclass: #'External.Tests.UInt64BytesTest'
 	instanceVariableNames: ''
@@ -1165,6 +1297,7 @@ External.Tests.IntegerBytesTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.IntegerTest
 	subclass: #'Core.Tests.LargeIntegerTest'
 	instanceVariableNames: ''
@@ -1172,6 +1305,7 @@ Core.Tests.IntegerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.IntegerTest
 	subclass: #'Core.Tests.SmallIntegerTest'
 	instanceVariableNames: ''
@@ -1179,6 +1313,7 @@ Core.Tests.IntegerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LocaleTest
 	subclass: #'OS.Tests.AbstractInvariantLocaleTest'
 	instanceVariableNames: ''
@@ -1186,6 +1321,7 @@ Core.Tests.LocaleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LocaleTest
 	subclass: #'OS.Tests.WindowsLocaleTest'
 	instanceVariableNames: ''
@@ -1193,6 +1329,7 @@ Core.Tests.LocaleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.AbstractInvariantLocaleTest
 	subclass: #'OS.Tests.InvariantLocaleTest'
 	instanceVariableNames: ''
@@ -1200,6 +1337,7 @@ OS.Tests.AbstractInvariantLocaleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.AbstractInvariantLocaleTest
 	subclass: #'Kernel.Tests.SmalltalkLocaleTest'
 	instanceVariableNames: ''
@@ -1207,6 +1345,7 @@ OS.Tests.AbstractInvariantLocaleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SearchPolicyTest
 	subclass: #'Kernel.Tests.AlwaysSearchPolicyTest'
 	instanceVariableNames: ''
@@ -1214,6 +1353,7 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SearchPolicyTest
 	subclass: #'Kernel.Tests.CaseInsensitiveSearchPolicyTest'
 	instanceVariableNames: ''
@@ -1221,6 +1361,7 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SearchPolicyTest
 	subclass: #'Kernel.Tests.EqualitySearchPolicyTest'
 	instanceVariableNames: ''
@@ -1228,6 +1369,7 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SearchPolicyTest
 	subclass: #'Kernel.Tests.IdentitySearchPolicyTest'
 	instanceVariableNames: ''
@@ -1235,6 +1377,7 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SearchPolicyTest
 	subclass: #'Kernel.Tests.NeverSearchPolicyTest'
 	instanceVariableNames: ''
@@ -1242,6 +1385,7 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SearchPolicyTest
 	subclass: #'Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest'
 	instanceVariableNames: ''
@@ -1249,6 +1393,7 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SortAlgorithmTest
 	subclass: #'Kernel.Tests.DefaultSortAlgorithmTest'
 	instanceVariableNames: ''
@@ -1256,6 +1401,7 @@ Core.Tests.SortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SortAlgorithmTest
 	subclass: #'Kernel.Tests.HeapsortAlgorithmTest'
 	instanceVariableNames: ''
@@ -1263,6 +1409,7 @@ Core.Tests.SortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SortAlgorithmTest
 	subclass: #'Kernel.Tests.IntrosortAlgorithmTest'
 	instanceVariableNames: ''
@@ -1270,6 +1417,7 @@ Core.Tests.SortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SortAlgorithmTest
 	subclass: #'Kernel.Tests.QuicksortAlgorithmTest'
 	instanceVariableNames: ''
@@ -1277,6 +1425,7 @@ Core.Tests.SortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SortAlgorithmTest
 	subclass: #'Kernel.Tests.ShellsortAlgorithmTest'
 	instanceVariableNames: ''
@@ -1284,6 +1433,7 @@ Core.Tests.SortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SortAlgorithmTest
 	subclass: #'Kernel.Tests.StableSortAlgorithmTest'
 	instanceVariableNames: ''
@@ -1291,6 +1441,7 @@ Core.Tests.SortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StableSortAlgorithmTest
 	subclass: #'Kernel.Tests.InsertionSortAlgorithmTest'
 	instanceVariableNames: ''
@@ -1298,6 +1449,7 @@ Kernel.Tests.StableSortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StableSortAlgorithmTest
 	subclass: #'Kernel.Tests.MergesortAlgorithmTest'
 	instanceVariableNames: ''
@@ -1305,6 +1457,7 @@ Kernel.Tests.StableSortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.StreamTest
 	subclass: #'Core.Tests.PositionableStreamTest'
 	instanceVariableNames: ''
@@ -1312,6 +1465,7 @@ Core.Tests.StreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.PositionableStreamTest
 	subclass: #'Core.Tests.ReadStreamTest'
 	instanceVariableNames: ''
@@ -1319,6 +1473,7 @@ Core.Tests.PositionableStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.PositionableStreamTest
 	subclass: #'Core.Tests.ReadWriteStreamTest'
 	instanceVariableNames: ''
@@ -1326,6 +1481,7 @@ Core.Tests.PositionableStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.PositionableStreamTest
 	subclass: #'Core.Tests.WriteStreamTest'
 	instanceVariableNames: ''
@@ -1333,6 +1489,7 @@ Core.Tests.PositionableStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ReadWriteStreamTest
 	subclass: #'Core.Tests.AbstractFileStreamTest'
 	instanceVariableNames: 'tempFileName filestream'
@@ -1340,6 +1497,7 @@ Core.Tests.ReadWriteStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractFileStreamTest
 	subclass: #'Core.Tests.FileStreamTest'
 	instanceVariableNames: ''
@@ -1347,6 +1505,7 @@ Core.Tests.AbstractFileStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractFileStreamTest
 	subclass: #'OS.Tests.StdioFileStreamTest'
 	instanceVariableNames: ''
@@ -1354,6 +1513,7 @@ Core.Tests.AbstractFileStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.WriteStreamTest
 	subclass: #'Core.Tests.LimitedWriteStreamTest'
 	instanceVariableNames: ''
@@ -1361,6 +1521,7 @@ Core.Tests.WriteStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestResource
 	subclass: #'Core.Tests.DolphinTestResource'
 	instanceVariableNames: ''
@@ -1368,6 +1529,7 @@ XProgramming.SUnit.TestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestResource
 	subclass: #'Core.Tests.DolphinTestClassResource'
 	instanceVariableNames: 'package'
@@ -1375,6 +1537,7 @@ Core.Tests.DolphinTestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestResource
 	subclass: #'Core.Tests.DolphinTestPackages'
 	instanceVariableNames: 'a b c'
@@ -1382,6 +1545,7 @@ Core.Tests.DolphinTestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestClassResource
 	subclass: #'Core.Tests.BehaviorTestClasses'
 	instanceVariableNames: 'classWithAbstractMethod1 classWithAbstractMethod2'
@@ -1389,6 +1553,7 @@ Core.Tests.DolphinTestClassResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestClassResource
 	subclass: #'Kernel.Tests.ClassBuilderTestClasses'
 	instanceVariableNames: 'testClass testSubclass1 testSubclass2 testPool1 testPool2 testPool3 classesDirtied'
@@ -1396,6 +1561,7 @@ Core.Tests.DolphinTestClassResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestClassResource
 	subclass: #'Core.Tests.ExceptionTesterClasses'
 	instanceVariableNames: 'testNotificationClass resumableErrorClass testErrorClass'
@@ -1403,6 +1569,7 @@ Core.Tests.DolphinTestClassResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestClassResource
 	subclass: #'Core.Tests.MustBeBooleanTestClasses'
 	instanceVariableNames: 'trueClass falseClass'
@@ -1430,6 +1597,7 @@ strcat_s: destString bufferSize: anInteger strSource: sourceString
 
 	<cdecl: errno strcat_s lpstr intptr lpstr>
 	^self invalidCall: _failureCode! !
+
 !OS.CRTLibrary categoriesForMethods!
 _chmod:pmode:!CRT functions-file handling!public! !
 strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
@@ -1441,6 +1609,7 @@ _chmod: aFilenameString pmode: aModeInteger
 	<overlap cdecl: sdword _chmod lpstr sdword>
 	#deprecated. "Kept only for testing"
 	^self invalidCall: _failureCode! !
+
 !OS.CRTLibraryNonBlocking categoriesForMethods!
 _chmod:pmode:!CRT functions-file handling!public! !
 !
@@ -1609,6 +1778,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 				stem: suiteName
 				extension: 'xml').
 	doc free! !
+
 !Tools.SmalltalkSystem categoriesForMethods!
 regressionTestsLogFilename!public!tests! !
 regressionTestSuite!private!tests! !

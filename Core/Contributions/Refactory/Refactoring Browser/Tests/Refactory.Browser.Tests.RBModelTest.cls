@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RBModelTest guid: (Core.GUID fromString: '{79170e4b-f3f8-4b46-8093-dac62f866cba}')!
+
 Refactory.Browser.Tests.RBModelTest comment: ''!
+
 !Refactory.Browser.Tests.RBModelTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RBModelTest methodsFor!
 
 testAllBehaviorsDo
@@ -315,6 +319,7 @@ verifyMethodRefersToNamespaceHierarchy: aCompiledMethod in: aRBModel
 			whileFalse.
 	self assert: (path collect: [:each | each name]) asArray
 		equals: #('RBModel' 'Browser' 'Refactory' 'Root')! !
+
 !Refactory.Browser.Tests.RBModelTest categoriesForMethods!
 testAllBehaviorsDo!public!unit tests! !
 testAllBehaviorsDoOnSelectorEnvironment!public!unit tests! !

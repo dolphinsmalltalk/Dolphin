@@ -7,10 +7,15 @@ External.Memory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TaskMemory guid: (Core.GUID fromString: '{87b4c51b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.TaskMemory isIndirection: true!
+
 OS.COM.TaskMemory comment: ''!
+
 !OS.COM.TaskMemory categoriesForClass!External-Data-Unstructured! !
+
 !OS.COM.TaskMemory class methodsFor!
 
 allocator
@@ -26,6 +31,7 @@ initialize
 	"
 
 	self extraInstanceSpec: VMConstants.IntPtrSize! !
+
 !OS.COM.TaskMemory class categoriesForMethods!
 allocator!accessing!private! !
 initialize!development!initializing!private! !

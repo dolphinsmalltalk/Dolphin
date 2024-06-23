@@ -7,9 +7,13 @@ MSXML.DOMNamedNodeMap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.DOMAttributeMap guid: (Core.GUID fromString: '{a514645c-f053-4be4-87c8-99381ec1c930}')!
+
 MSXML.DOMAttributeMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMAttribute>s. This is used to represent the dictionary of attributes associated with a DOM node. The keys and values are strings.'!
+
 !MSXML.DOMAttributeMap categoriesForClass!Collections-Unordered! !
+
 !MSXML.DOMAttributeMap methodsFor!
 
 associationClass
@@ -22,6 +26,7 @@ createNamedNode: key
 	"Private - Instantiate and answer a new named node of the type contained in the receiver."
 
 	^parentNode ownerDocument createAttribute: key! !
+
 !MSXML.DOMAttributeMap categoriesForMethods!
 associationClass!constants!private! !
 createNamedNode:!helpers!private! !

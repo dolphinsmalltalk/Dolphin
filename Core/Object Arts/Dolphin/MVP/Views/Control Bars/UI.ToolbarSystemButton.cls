@@ -52,7 +52,9 @@ UI.ToolbarButton
 								#viewMenu -> 16rC
 							})
 		}!
+
 UI.ToolbarSystemButton guid: (Core.GUID fromString: '{87b4c702-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ToolbarSystemButton comment: '`ToolbarSystemButton` represents a system defined button for a `Toolbar`. The button image is identified by an index into one of a number of system supplied bitmaps. Unfortunately these are not very useful any more, as Microsoft has not updated some of the bitmaps for decades.
 
 For example (evaluated one expression at a time):
@@ -63,7 +65,9 @@ tb := Toolbar new hasFlatAppearance: true; isTransparent: true; show; extent: 30
 	each selector argumentCount = 0 ifTrue: [tb addItem: (ToolbarButton perform: each selector)]].
 tb destroy.
 ```'!
+
 !UI.ToolbarSystemButton categoriesForClass!MVP-Views-Support! !
+
 !UI.ToolbarSystemButton methodsFor!
 
 bitmapId
@@ -100,6 +104,7 @@ imageIndexIn: aToolbar
 	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
 	^aToolbar addSystemBitmap: self bitmapId index: self bitmapIndex! !
+
 !UI.ToolbarSystemButton categoriesForMethods!
 bitmapId!accessing!public! !
 bitmapId:!accessing!public! !
@@ -194,6 +199,7 @@ stbConvertFrom: anSTBClassFormat
 	anSTBClassFormat version == 0
 		ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !UI.ToolbarSystemButton class categoriesForMethods!
 bitmapId:index:commandDescription:!instance creation!public! !
 initialize!development!initializing!public! !

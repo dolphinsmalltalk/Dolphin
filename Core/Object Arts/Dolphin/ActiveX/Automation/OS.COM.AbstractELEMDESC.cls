@@ -7,10 +7,15 @@ External.Structure
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_tdescElem' -> 16r0 }!
+
 OS.COM.AbstractELEMDESC guid: (Core.GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
+
 OS.COM.AbstractELEMDESC isNonInstantiable: true!
+
 OS.COM.AbstractELEMDESC comment: ''!
+
 !OS.COM.AbstractELEMDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.AbstractELEMDESC methodsFor!
 
 analyzer
@@ -73,6 +78,7 @@ typeName
 	"Answer the Dolphin external type name for the type described by the receiver."
 
 	^self tdesc typeName! !
+
 !OS.COM.AbstractELEMDESC categoriesForMethods!
 analyzer!accessing!private! !
 classDesc!accessing!private! !
@@ -94,6 +100,7 @@ defineFields
 	"
 
 	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly beNonBrowsable! !
+
 !OS.COM.AbstractELEMDESC class categoriesForMethods!
 defineFields!public!template definition! !
 !

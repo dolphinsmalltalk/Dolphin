@@ -50,6 +50,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Tools.Scintilla.ParameterDefinition'
 	instanceVariableNames: 'name typeName typeRef'
@@ -57,6 +58,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Tools.Scintilla.ScintillaViewGenerator'
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated model constantsPool generatedSelectors aliases functions defaultReturnValues'
@@ -64,6 +66,7 @@ Core.Object
 	imports: #(#{UI.Scintilla})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Tools.Scintilla.TypeReference'
 	instanceVariableNames: ''
@@ -71,6 +74,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.InterfaceDefinition
 	subclass: #'Tools.Scintilla.EventDefinition'
 	instanceVariableNames: 'args'
@@ -78,6 +82,7 @@ Tools.Scintilla.InterfaceDefinition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.InterfaceDefinition
 	subclass: #'Tools.Scintilla.FunctionDefinition'
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
@@ -85,6 +90,7 @@ Tools.Scintilla.InterfaceDefinition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.TypeReference
 	subclass: #'Tools.Scintilla.BoolTypeReference'
 	instanceVariableNames: ''
@@ -92,6 +98,7 @@ Tools.Scintilla.TypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.TypeReference
 	subclass: #'Tools.Scintilla.ColourTypeReference'
 	instanceVariableNames: ''
@@ -99,6 +106,7 @@ Tools.Scintilla.TypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.TypeReference
 	subclass: #'Tools.Scintilla.IntTypeReference'
 	instanceVariableNames: ''
@@ -106,6 +114,7 @@ Tools.Scintilla.TypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.TypeReference
 	subclass: #'Tools.Scintilla.PointerTypeReference'
 	instanceVariableNames: 'name objectClass'
@@ -113,6 +122,7 @@ Tools.Scintilla.TypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.TypeReference
 	subclass: #'Tools.Scintilla.VoidTypeReference'
 	instanceVariableNames: ''
@@ -120,6 +130,7 @@ Tools.Scintilla.TypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.ColourTypeReference
 	subclass: #'Tools.Scintilla.ColourAlphaTypeReference'
 	instanceVariableNames: ''
@@ -127,6 +138,7 @@ Tools.Scintilla.ColourTypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.IntTypeReference
 	subclass: #'Tools.Scintilla.EnumTypeReference'
 	instanceVariableNames: 'name prefix values defaultValueName'
@@ -134,6 +146,7 @@ Tools.Scintilla.IntTypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.IntTypeReference
 	subclass: #'Tools.Scintilla.KeyModTypeReference'
 	instanceVariableNames: ''
@@ -141,6 +154,7 @@ Tools.Scintilla.IntTypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.IntTypeReference
 	subclass: #'Tools.Scintilla.PositionTypeReference'
 	instanceVariableNames: ''
@@ -148,6 +162,7 @@ Tools.Scintilla.IntTypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.PositionTypeReference
 	subclass: #'Tools.Scintilla.LineTypeReference'
 	instanceVariableNames: ''

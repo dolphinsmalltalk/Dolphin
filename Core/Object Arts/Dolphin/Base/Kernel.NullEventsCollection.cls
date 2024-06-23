@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.NullEventsCollection guid: (Core.GUID fromString: '{9d0ad247-c847-4473-9195-be26bea0567b}')!
+
 Kernel.NullEventsCollection comment: 'Kernel.NullEventsCollection is a special <eventsCollection> used when a receiver has no event subscriptions. Its purpose is to increase performance for this common case.'!
+
 !Kernel.NullEventsCollection categoriesForClass!Kernel-Objects! !
+
 !Kernel.NullEventsCollection methodsFor!
 
 addEvent: aSymbol action: aValuable
@@ -67,6 +71,7 @@ triggerEvent: aSymbol withArguments: anArray
 	Answer the result of the last evaluation, or nil if none."
 
 	^nil! !
+
 !Kernel.NullEventsCollection categoriesForMethods!
 addEvent:action:!public! !
 asMinimumRepresentation!converting!public! !
@@ -89,6 +94,7 @@ current
 
 initialize
 	Current := self new! !
+
 !Kernel.NullEventsCollection class categoriesForMethods!
 current!accessing!public! !
 initialize!initializing!public! !

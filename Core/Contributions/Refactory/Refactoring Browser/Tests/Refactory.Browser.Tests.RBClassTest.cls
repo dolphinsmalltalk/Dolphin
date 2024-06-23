@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RBClassTest guid: (Core.GUID fromString: '{5220987d-f53e-4675-8166-5035964aa131}')!
+
 Refactory.Browser.Tests.RBClassTest comment: ''!
+
 !Refactory.Browser.Tests.RBClassTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RBClassTest methodsFor!
 
 setUp
@@ -433,6 +437,7 @@ testWithAllSubclasses
 	Smalltalk allClasses do: [:each | all remove: (model classFor: each) metaclass].
 	"We should only be left with the model-only defined class"
 	self assert: all asArray equals: {newClass metaclass}! !
+
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!private!set up! !
 tearDown!public!running! !

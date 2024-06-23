@@ -7,7 +7,9 @@ UI.ToolbarButton
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ToolbarIconButton guid: (Core.GUID fromString: '{eb590073-1214-495b-94ba-9bd4ca08bd32}')!
+
 UI.ToolbarIconButton comment: '`ToolbarIconButton` represents a user defined button for a `Toolbar` where the button image is dynamically generated from the `Image` (typically an `Icon`) held by the associated `CommandDescription`. In general, `ToolbarIconButton`s are much easier to use than `ToolbarBitmapButton`s since they don''t require the creation of a separate image strip bitmap for each of the sizes of toolbar button that may be required.  If you change the `#bitmapSize` aspect of the parent toolbar, the contained `ToolbarIconButton`s will automatically re-render themselves at the new size, making use of the services of the `IconImageManager` to generate appropriate bitmap images for the revised extent.
 
 e.g. 
@@ -22,7 +24,9 @@ tb bitmapSize: 48@48.
 tb destroy.
 ```
 '!
+
 !UI.ToolbarIconButton categoriesForClass!MVP-Views-Support! !
+
 !UI.ToolbarIconButton methodsFor!
 
 imageIndexIn: aToolbar
@@ -42,6 +46,7 @@ setCommandDescription: aCommandDescription
 	self initialize.
 	commandDescription := aCommandDescription.
 	^self! !
+
 !UI.ToolbarIconButton categoriesForMethods!
 imageIndexIn:!operations!private! !
 renderBitmap!private! !
@@ -111,6 +116,7 @@ stbConvertFromVersion0: anArray
 	"
 
 	^{ anArray at: 3. anArray at: 4. anArray at: 5. anArray at: 1 }! !
+
 !UI.ToolbarIconButton class categoriesForMethods!
 command:description:image:!instance creation!public! !
 commandDescription:!instance creation!public! !

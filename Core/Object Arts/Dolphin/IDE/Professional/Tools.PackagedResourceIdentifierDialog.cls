@@ -7,14 +7,19 @@ Tools.ResourceIdentifierDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PackagedResourceIdentifierDialog guid: (Core.GUID fromString: '{17c3843c-c032-4108-a7ef-7e784dea4647}')!
+
 Tools.PackagedResourceIdentifierDialog comment: 'PackagedResourceIdentifierDialog is a specialised <ResourceIdentifierDialog> that uses the <PackagedClassSelector> for class selection, rather than the standard <ClassHierarchySslector>. 
 '!
+
 !Tools.PackagedResourceIdentifierDialog categoriesForClass!MVP-Presenters!MVP-Resources-Dialogs! !
+
 !Tools.PackagedResourceIdentifierDialog methodsFor!
 
 classesPresenterClass
 	^PackagedClassSelector! !
+
 !Tools.PackagedResourceIdentifierDialog categoriesForMethods!
 classesPresenterClass!constants!private! !
 !
@@ -37,6 +42,7 @@ uninitialize
 			[:devsys |
 			devsys packagedResourceIdentifierDialogClass == self
 				ifTrue: [devsys packagedResourceIdentifierDialogClass: nil]]! !
+
 !Tools.PackagedResourceIdentifierDialog class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 uninitialize!class hierarchy-removing!public! !

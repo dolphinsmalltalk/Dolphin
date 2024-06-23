@@ -69,7 +69,9 @@ UI.ControlView
 			'UserModeMask' -> 16r40.
 			'WM_FORWARDMSG' -> 16r37F
 		}!
+
 UI.AXControlSite guid: (Core.GUID fromString: '{804d8c3f-38c6-4928-bd58-574c2b24a053}')!
+
 UI.AXControlSite comment: 'AXControlSite is a <ControlView> which is able to host almost any Active-X control - also referred to as OLE controls, or OCXs. This includes both non-visual controls that require in-place activation (see example1), or to host true visual controls (see AXControlSite class>>example2) including the Microsoft Web Browser control. Events from the control can be enabled, and are triggered off the AXControlSite''s presenter (usually itself).
 
 The best way to experiment with AXControlSite is to try it out in the simple Active-X control browser, <AXTestContainer>.
@@ -100,7 +102,9 @@ Class Variables:
 	WM_FORWARDMSG	<integer>. Id of Windows message sent to control for pre-translating MSGs. Used by ATL to forward a message to another window for processing WPARAM - DWORD dwUserData - defined by user, LPARAM - LPMSG pMsg - a pointer to the MSG structure, return value - 0 if the message was not processed, nonzero if it was
 	WM_ATLGETHOST	<integer>. Id of Windows message sent to control host to request IAxWinHostWindow.
 '!
+
 !UI.AXControlSite categoriesForClass!MVP-Views! !
+
 !UI.AXControlSite methodsFor!
 
 aboutControl
@@ -896,6 +900,7 @@ usesAmbientColors
 	properties. If it doesn't then there is no point attempting to set them."
 
 	^true! !
+
 !UI.AXControlSite categoriesForMethods!
 aboutControl!operations!public! !
 allowContextMenu!ambient properties!public!testing! !
@@ -1245,6 +1250,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'AtlAxWin71'! !
+
 !UI.AXControlSite class categoriesForMethods!
 chooseControl:!helpers!public! !
 example1!examples!public! !

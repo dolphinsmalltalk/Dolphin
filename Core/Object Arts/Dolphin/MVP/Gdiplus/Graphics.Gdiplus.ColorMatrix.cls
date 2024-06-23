@@ -7,7 +7,9 @@ Graphics.Gdiplus.GpStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_ColorMatrix_Size' -> 16r64. '_OffsetOf_m' -> 16r0 }!
+
 Graphics.Gdiplus.ColorMatrix guid: (Core.GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
+
 Graphics.Gdiplus.ColorMatrix comment: '<GpColorMatrix> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMatrix'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +23,9 @@ struct tagGpColorMatrix {
 	single m[5][5];
 } GpColorMatrix;
 '!
+
 !Graphics.Gdiplus.ColorMatrix categoriesForClass!Gdiplus-Structs! !
+
 !Graphics.Gdiplus.ColorMatrix methodsFor!
 
 asArray
@@ -60,6 +64,7 @@ row: rowInteger col: colInteger
 
 row: rowInteger col: colInteger put: aNumber
 	bytes floatAtOffset: ((rowInteger - 1) * 5 + colInteger - 1) * 4 put: aNumber! !
+
 !Graphics.Gdiplus.ColorMatrix categoriesForMethods!
 asArray!converting!public! !
 atPoint:!accessing!public! !
@@ -119,6 +124,7 @@ withAll: anArray
 			[self basicNew
 				bytes: floats bytes;
 				yourself]! !
+
 !Graphics.Gdiplus.ColorMatrix class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

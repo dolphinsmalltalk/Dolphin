@@ -7,7 +7,9 @@ Tools.ClassBrowserPlugin
 	imports: #(#{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.UnitTestPlugin guid: (Core.GUID fromString: '{e8b10dcb-9855-41f7-95d2-a91639377d01}')!
+
 Tools.UnitTestPlugin comment: '`UnitTestPlugin` is a `<classBrowserPlugin>` that provides SUnit test running facilities within a browser. The aim is to allow tests directly relevant to the current class being worked on in the browser to be run quickly and easily using a single hotkey or menu command. Failing tests can be isolated and run within the debugger. The `UnitTestPlugin` does not provide facilities to run large suites of tests comprising of more than one `TestCase`; this functionaility is left to the `SUnitBrowser` and `TestRunner` tools.
 
 When a class is selected in the browser, the `UnitTestPlugin` determines if there is a `TestCase` subclass that can be associated with it. By default, `ClassDescription>>correspondingTestCase` is used to do this by simply appending ''Test'' to the name of the class. If the mapping between a class under test and its `TestCase` is not so straightforward it is alway possible to implement `#correspondingTestCase` as a class method that directly answers the correct `TestCase` subclass. Typically, if used, this class method would be installed as a loose method in the package containing the tests. 
@@ -34,7 +36,9 @@ When tests fail, a list of the defects is retained by the plugin. Using the drop
   `RunningColor`		`<color>` to be used as the background colour when tests are running
   `NoTestsColor`		`<color>` to be used as the background colour when no tests are available for the browser selection
 '!
+
 !Tools.UnitTestPlugin categoriesForClass!Browser-Plugins! !
+
 !Tools.UnitTestPlugin methodsFor!
 
 addToCommandRouteInactive: aCommandPolicy
@@ -410,6 +414,7 @@ updateWindow
 		ifTrue: [self displayErrors]
 		ifFalse: [result hasFailures ifTrue: [self displayFail] ifFalse: [self displayPass]].
 	self updateDefects! !
+
 !Tools.UnitTestPlugin categoriesForMethods!
 addToCommandRouteInactive:!commands-routing!public! !
 allContextMenus!helpers!private! !
@@ -578,6 +583,7 @@ runningColor
 
 runningColor: aColor 
 	RunningColor := aColor = Color default ifTrue: [self defaultRunningColor] ifFalse: [aColor]! !
+
 !Tools.UnitTestPlugin class categoriesForMethods!
 autoSwitchDelay!accessing!public! !
 autoSwitchDelay:!accessing!public! !

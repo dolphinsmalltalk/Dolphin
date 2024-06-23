@@ -139,7 +139,12 @@ Kernel.SharedPool
 			'TTN_GETDISPINFOW' -> -16r212.
 			'TVM_GETEDITCONTROL' -> 16r110F
 		}!
+
 OS.CommCtrlConstants guid: (Core.GUID fromString: '{13fdce7c-6ba4-4b0a-8ec8-90af54a7fbb1}')!
+
 OS.CommCtrlConstants isNonInstantiable: true!
+
 OS.CommCtrlConstants comment: ''!
+
 !OS.CommCtrlConstants categoriesForClass!External-Data-Constants! !
+

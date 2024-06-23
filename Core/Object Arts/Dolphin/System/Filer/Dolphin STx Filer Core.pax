@@ -92,6 +92,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.STxFiler'
 	instanceVariableNames: 'stream predefinedClassOffset flags'
@@ -117,6 +118,7 @@ Core.Object
 			'PrefixSmallIntegerMask' -> 16r1.
 			'PrefixVariableMask' -> 16r20
 		}!
+
 Core.Object
 	subclass: #'Kernel.STxInFilerWrapper'
 	instanceVariableNames: 'stream decorated'
@@ -124,6 +126,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.STxProxy'
 	instanceVariableNames: ''
@@ -131,6 +134,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Kernel.STBError'
 	instanceVariableNames: ''
@@ -138,6 +142,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxFiler
 	subclass: #'Kernel.STxInFiler'
 	instanceVariableNames: 'decorator readMap converters deferredActions classLocator context'
@@ -145,6 +150,7 @@ Kernel.STxFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'UpgradingMask' -> 16r1 }!
+
 Kernel.STxProxy
 	subclass: #'Kernel.STBClassProxy'
 	instanceVariableNames: 'packageName locatorKey'
@@ -152,6 +158,7 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxProxy
 	subclass: #'Kernel.STBCollectionProxy'
 	instanceVariableNames: 'class array'
@@ -159,6 +166,7 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxProxy
 	subclass: #'Kernel.STBSingletonProxy'
 	instanceVariableNames: 'class selector'
@@ -166,6 +174,7 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxProxy
 	subclass: #'Kernel.STBSortedCollectionProxy'
 	instanceVariableNames: 'class array sortAlgorithm'
@@ -173,6 +182,7 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxProxy
 	subclass: #'Kernel.STBStaticVariableProxy'
 	instanceVariableNames: 'reference'
@@ -180,6 +190,7 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBClassProxy
 	subclass: #'Kernel.STBMetaclassProxy'
 	instanceVariableNames: ''
@@ -187,6 +198,7 @@ Kernel.STBClassProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBCollectionProxy
 	subclass: #'Kernel.STBIdentityDictionaryProxy'
 	instanceVariableNames: ''
@@ -204,6 +216,7 @@ addToPoolDictionary: aPoolDictionary
 	var := aPoolDictionary newAssociation: key value: value.
 	aPoolDictionary uncheckedAdd: var.
 	^var! !
+
 !Core.Association categoriesForMethods!
 addToPoolDictionary:!private! !
 !
@@ -232,6 +245,7 @@ stbVersion
 	provide or amend the class method #stbConvertFrom:."
 
 	^0! !
+
 !Core.Class categoriesForMethods!
 stbConvertFrom:!binary filing!private! !
 stbVersion!binary filing!public! !
@@ -255,6 +269,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 		readObjectOfClass: self
 		format: anSTBClassConversion
 		size: anInteger! !
+
 !Core.ClassDescription categoriesForMethods!
 stbReadFrom:format:!binary filing!public! !
 stbReadFrom:format:size:!binary filing!public! !
@@ -264,6 +279,7 @@ stbReadFrom:format:size:!binary filing!public! !
 
 fromStbProxy: anSTBCollectionProxy
 	^self withAll: anSTBCollectionProxy array! !
+
 !Core.Collection class categoriesForMethods!
 fromStbProxy:!binary filing!instance creation!public! !
 !
@@ -299,6 +315,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !Core.DateAndTime class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!development!public! !
@@ -332,6 +349,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 
 stbVersion
 	^1! !
+
 !Core.Locale class categoriesForMethods!
 stbConvertFrom:!public! !
 stbReadFrom:format:size:!public! !
@@ -345,6 +363,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 		readLookupTable: self
 		format: anSTBClassConversion
 		size: anInteger! !
+
 !Core.LookupTable class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -367,6 +386,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !Core.Model class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
@@ -380,6 +400,7 @@ stbFixup: anSTBInFiler at: newObjectIndex
 	may also override this method to effectively 'one way become' the receiver to some other object"
 
 	^self! !
+
 !Core.Object categoriesForMethods!
 stbFixup:at:!binary filing!public! !
 !
@@ -391,6 +412,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 		readExtensibleCollection: self
 		format: anSTBClassConversion
 		size: anInteger! !
+
 !Core.OrderedCollection class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -402,6 +424,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 		readExtensibleCollection: self
 		format: anSTBClassConversion
 		size: anInteger! !
+
 !Core.Set class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -420,6 +443,7 @@ stbReadFrom: anSTxInFiler format: anSTxClassConversion
 
 stbVersion
 	^1! !
+
 !Core.String class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbReadFrom:format:!constants!public! !
@@ -432,6 +456,7 @@ stbConvertFrom: aSTBClassConversion
 	"version 0 would have been a UnicodeString instance, which will translate directly to a Utf16String."
 
 	^[:data | self fromByteArray: data]! !
+
 !Core.Utf16String class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !
@@ -445,6 +470,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	singleton := self default.
 	anSTBInFiler register: singleton.
 	^singleton! !
+
 !External.DynamicLinkLibrary class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -475,6 +501,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !External.ResourceLibrary class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbReadFrom:format:size:!binary filing!public! !
@@ -489,6 +516,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 		readObjectOfClass: self
 		format: anSTBClassConversion
 		size: anInteger! !
+
 !External.Structure class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -516,6 +544,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !External.StructureArray class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
@@ -530,6 +559,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	singleton := self current.
 	anSTBInFiler register: singleton.
 	^singleton! !
+
 !Kernel.AbsoluteFileLocator class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -547,6 +577,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^2! !
+
 !Kernel.BindingReference class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
@@ -562,6 +593,7 @@ stbVersion
 	"
 
 	^3! !
+
 !Kernel.BlockClosure class categoriesForMethods!
 stbVersion!binary filing!public! !
 !
@@ -583,6 +615,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !Kernel.ClassLocator class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
@@ -597,6 +630,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	singleton := self current.
 	anSTBInFiler register: singleton.
 	^singleton! !
+
 !Kernel.ImageRelativeFileLocator class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -610,6 +644,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	singleton := self current.
 	anSTBInFiler register: singleton.
 	^singleton! !
+
 !Kernel.InstallRelativeFileLocator class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -622,6 +657,7 @@ stbConvertFrom: anSTBClassFormat
 	Version 2: No change"
 
 	^[:data | self instance: (data at: 1)]! !
+
 !Kernel.MetaBindingReference class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !
@@ -637,6 +673,7 @@ fromStbProxy: anSTBCollectionProxy
 			"The environment of the bindings must be set to the proxy, because later the proxy will switch itself with the collection it proxied using #become:"
 			(each addToPoolDictionary: instance) environment: anSTBCollectionProxy].
 	^instance! !
+
 !Kernel.PoolDictionary class categoriesForMethods!
 fromStbProxy:!binary filing!instance creation!public! !
 !
@@ -650,6 +687,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	singleton := self current.
 	anSTBInFiler register: singleton.
 	^singleton! !
+
 !Kernel.SingletonSearchPolicy class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -665,6 +703,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 			anSTBClassConversion instSize timesRepeat: [anSTBInFiler basicNext].
 			Current]
 		ifNil: [self error: 'Unexpected SmalltalkLocale instance in STB stream']! !
+
 !Kernel.SmalltalkLocale class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -692,6 +731,7 @@ stbFixup: anSTBInFiler at: newObjectIndex
 
 stbSaveOn: anSTxOutFiler
 	anSTxOutFiler saveVariableBinding: self! !
+
 !Kernel.VariableBinding categoriesForMethods!
 addToPoolDictionary:!private! !
 stbFixup:at:!binary filing!public! !
@@ -772,6 +812,7 @@ stbConvertFromVersion1: data
 
 stbVersion
 	^2! !
+
 !Kernel.VariableBinding class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbConvertFromVersion0:!binary filing!private! !
@@ -785,6 +826,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	^self error: 'Unexpected InvariantLocale instance in STB stream'! !
+
 !OS.InvariantLocale class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -810,6 +852,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 			anSTBInFiler fixup: ref to: locale.
 			locale]
 		ifNil: [self error: 'Unexpected WindowsLocale instance in STB stream']! !
+
 !OS.WindowsLocale class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
@@ -833,6 +876,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !UI.ResourceIdentifier class categoriesForMethods!
 stbConvertFrom:!binary filing!private! !
 stbVersion!binary filing!public! !

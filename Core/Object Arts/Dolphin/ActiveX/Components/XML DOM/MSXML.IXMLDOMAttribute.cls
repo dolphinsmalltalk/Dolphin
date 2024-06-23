@@ -7,12 +7,17 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMAttribute guid: (OS.COM.IID fromString: '{2933bf85-7b36-11d2-b20e-00c04f983e60}')!
+
 MSXML.IXMLDOMAttribute isEgressOnly: true!
+
 MSXML.IXMLDOMAttribute comment: '<IXMLDOMAttribute> is a wrapper class for the COM interface ''MSXML.IXMLDOMAttribute'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized node type to represent DOM attributes.'!
+
 !MSXML.IXMLDOMAttribute categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !MSXML.IXMLDOMAttribute methodsFor!
 
 <= comperand 
@@ -101,6 +106,7 @@ value: attributeValue
 	Helpstring: string value of the attribute"
 
 	self put_value: attributeValue asVariant! !
+
 !MSXML.IXMLDOMAttribute categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -131,6 +137,7 @@ defineFunctions
 		defineFunction: #put_value:
 			argumentTypes: 'variant'
 ! !
+
 !MSXML.IXMLDOMAttribute class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

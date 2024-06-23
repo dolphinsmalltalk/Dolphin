@@ -14,9 +14,13 @@ External.FinalizableStructure
 			'_OffsetOf_xHotspot' -> 16r4.
 			'_OffsetOf_yHotspot' -> 16r8
 		}!
+
 OS.ICONINFO guid: (Core.GUID fromString: '{87b4c5f5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.ICONINFO comment: ''!
+
 !OS.ICONINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.ICONINFO methodsFor!
 
 extent
@@ -97,6 +101,7 @@ yHotspot: anInteger
 	"Set the receiver's 'yHotspot' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_yHotspot put: anInteger! !
+
 !OS.ICONINFO categoriesForMethods!
 extent!accessing!public! !
 fIcon!**compiled accessors**!public! !
@@ -148,6 +153,7 @@ defineFields
 
 getFieldNames
 	^#(#fIcon #xHotspot #yHotspot #hbmMask #hbmColor)! !
+
 !OS.ICONINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !

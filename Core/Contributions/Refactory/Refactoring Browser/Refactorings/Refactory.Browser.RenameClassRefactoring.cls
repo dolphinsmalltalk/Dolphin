@@ -7,7 +7,9 @@ Refactory.Browser.ClassRefactoring
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameClassRefactoring guid: (Core.GUID fromString: '{b0780f17-9017-4316-92eb-789b160450c5}')!
+
 Refactory.Browser.RenameClassRefactoring comment: '`RenameClassRefactoring` is based on the original Refactory implementation, but is is Namespace aware.
 
 Renaming classes with namespaces and qualified names is considerably more complicated than renames in traditional Smalltalk with a single global namespace, because binding resolution is much more than just a single dictionary lookup. There are multiple ways to refer to the same class using unqualified, partially-qualified and fully-qualified names. The same unqualified and partially-qualified names may bind to different variables in different contexts. Ambiguous references are possible for partially-qualified and unqualified names, so whether a particular identifier needs to be renamed depends on its binding context, i.e. whether it actually would have bound to the class being renamed prior to the rename. Given the need to consider binding context, setting up specific static searches in advance is not terribly useful, as we''ll still need to check the actual binding resolution for each candidate match to see if it really is a match. This means we need to perform a much broader match against variable references in methods that are referencing the renamed class, and then decide individually whether to rename them. We also need to consider the binding context when deciding how to rename them. Although we could always rename to a fully qualified name, this will make the code more verbose than it may need to be (a bit like using someone''s full name every time one refers to them). Therefore the refactoring attempts to use the least qualified variant of the new name that will still bind to the same (renamed) class. _Maybe minimising previously fully-qualified names should be an option, TBD_.
@@ -20,7 +22,9 @@ Renaming a class in Dolphin can change any of the components (and any number of 
 
 Renaming a class in such a way as to change its `Namespace` can result in ambiguous references that cannot be resolved. This is regarded as a refactoring error that will fail the refactoring abandoning any changes.
 '!
+
 !Refactory.Browser.RenameClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RenameClassRefactoring methodsFor!
 
 className: oldString newName: newString
@@ -128,6 +132,7 @@ upgradePackageIfRequired
 	(package isNil or: [package isLegacySourceFormat not]) ifTrue: [^self].
 	(self shouldUpgradeLegacyPackages: package) ifFalse: [self refactoringAborted].
 	self model upgradePackage: package! !
+
 !Refactory.Browser.RenameClassRefactoring categoriesForMethods!
 className:newName:!initializing!private! !
 displayOn:!displaying!public! !
@@ -152,6 +157,7 @@ model: aRBModel rename: aClass to: aNewName
 
 rename: aClass to: aNewName
 	^self new className: aClass fullName newName: aNewName! !
+
 !Refactory.Browser.RenameClassRefactoring class categoriesForMethods!
 model:rename:to:!instance creation!public! !
 rename:to:!instance creation!public! !

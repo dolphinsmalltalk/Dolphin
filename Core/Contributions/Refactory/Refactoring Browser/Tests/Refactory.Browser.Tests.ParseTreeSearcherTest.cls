@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ParseTreeSearcherTest guid: (Core.GUID fromString: '{5f577bcc-c4c0-4d78-9e71-bea473079bfe}')!
+
 Refactory.Browser.Tests.ParseTreeSearcherTest comment: ''!
+
 !Refactory.Browser.Tests.ParseTreeSearcherTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ParseTreeSearcherTest methodsFor!
 
 assertCodeForSymbolAt: aSymbol in: myContextDictionary equals: expectedCode
@@ -683,6 +687,7 @@ testWithoutAListDoesNotMatchComposedMessages
 		do: [:aNode :answer | self fail: 'Unexpected match'].
 	searcher executeTree: (self
 				parseExpression: 'self assert: reader storedSettings first realValue equals: true.')! !
+
 !Refactory.Browser.Tests.ParseTreeSearcherTest categoriesForMethods!
 assertCodeForSymbolAt:in:equals:!helpers!private! !
 assertCodeForVariableNodeNamed:in:equals:!helpers!private! !

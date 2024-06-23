@@ -7,9 +7,13 @@ Refactory.Browser.ChangeMethodNameRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RemoveParameterRefactoring guid: (Core.GUID fromString: '{275c77ed-2071-4c69-8d2f-063d31a8d03b}')!
+
 Refactory.Browser.RemoveParameterRefactoring comment: ''!
+
 !Refactory.Browser.RemoveParameterRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RemoveParameterRefactoring methodsFor!
 
 computeNewSelector
@@ -71,6 +75,7 @@ storeOn: aStream
 		nextPutAll: ' selector: ';
 		print: oldSelector.
 	aStream nextPut: $)! !
+
 !Refactory.Browser.RemoveParameterRefactoring categoriesForMethods!
 computeNewSelector!private! !
 getNewSelector!public!transforming! !
@@ -92,6 +97,7 @@ model: aRBModel removeParameter: aString in: aClass selector: aSelector
 
 removeParameter: aString in: aClass selector: aSelector
 	^self new removeParameter: aString in: aClass selector: aSelector! !
+
 !Refactory.Browser.RemoveParameterRefactoring class categoriesForMethods!
 model:removeParameter:in:selector:!instance creation!public! !
 removeParameter:in:selector:!instance creation!public! !

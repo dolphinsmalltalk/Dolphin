@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RemoveClassVariableRefactoringTest guid: (Core.GUID fromString: '{0c64e4ad-979f-4e25-9c48-f1adeebc74b6}')!
+
 Refactory.Browser.Tests.RemoveClassVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RemoveClassVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RemoveClassVariableRefactoringTest methodsFor!
 
 setRemoveReferencedVariableOption: refactoring toAnswer: aBoolean
@@ -83,6 +87,7 @@ testRemoveClassVar
 			true].
 	self executeRefactoring: refactoring.
 	self deny: (class definesClassVariable: 'Foo1')! !
+
 !Refactory.Browser.Tests.RemoveClassVariableRefactoringTest categoriesForMethods!
 setRemoveReferencedVariableOption:toAnswer:!helpers!private! !
 testAttemptToRemoveClass!public!tests! !

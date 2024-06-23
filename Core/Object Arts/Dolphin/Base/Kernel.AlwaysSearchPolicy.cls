@@ -7,9 +7,13 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AlwaysSearchPolicy guid: (Core.GUID fromString: '{2e18d23b-3270-41b5-8abe-acaaf5d21a3c}')!
+
 Kernel.AlwaysSearchPolicy comment: ''!
+
 !Kernel.AlwaysSearchPolicy categoriesForClass!Collections-Support! !
+
 !Kernel.AlwaysSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -29,6 +33,7 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^'always'! !
+
 !Kernel.AlwaysSearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 hash:!comparing!public! !

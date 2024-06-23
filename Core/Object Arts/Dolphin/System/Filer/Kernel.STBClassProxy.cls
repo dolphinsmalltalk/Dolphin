@@ -7,11 +7,15 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBClassProxy guid: (Core.GUID fromString: '{87b4c6ea-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STBClassProxy comment: '`STBClassProxy` is an STB proxy class for wrapping reference to class objects in the serialised object stream. The proxy captures the class and package names. Historically the package name was used for loading binary class definitions in Dolphin Web Applets, although this use is obsolete.
 
 The newer literal filer, STL, does not use `STBClassProxy` or `STBMetaclassProxy`, as it uses literal references to the class.'!
+
 !Kernel.STBClassProxy categoriesForClass!System-Binary storage! !
+
 !Kernel.STBClassProxy methodsFor!
 
 locatorKey
@@ -66,6 +70,7 @@ withClassLocator: aClassLocator
 						key: locatorKey;
 						packageName: packageName;
 						yourself)]! !
+
 !Kernel.STBClassProxy categoriesForMethods!
 locatorKey!accessing!private! !
 locatorKey:!accessing!private! !
@@ -99,6 +104,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !Kernel.STBClassProxy class categoriesForMethods!
 locatorKey:package:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

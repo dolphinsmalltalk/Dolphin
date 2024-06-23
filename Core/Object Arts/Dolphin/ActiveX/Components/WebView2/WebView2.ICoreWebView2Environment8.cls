@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Environment7
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Environment8 guid: (OS.COM.IID fromString: '{d6eb91dd-c3d2-45e5-bd29-6dc2bc4de9cf}')!
+
 WebView2.ICoreWebView2Environment8 isEgressOnly: true!
+
 WebView2.ICoreWebView2Environment8 comment: '`ICoreWebView2Environment8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -36,7 +39,9 @@ interface ICoreWebView2Environment8 : ICoreWebView2Environment7
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Environment8 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Environment8 methodsFor!
 
 Add_ProcessInfosChanged: eventHandler token: token
@@ -66,6 +71,7 @@ Remove_ProcessInfosChanged: token
 
 	<virtual stdcall: hresult 18 int64>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Environment8 categoriesForMethods!
 Add_ProcessInfosChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment8!private! !
 GetProcessInfos:!**auto generated**!COM Interfaces-ICoreWebView2Environment8!private! !
@@ -86,6 +92,7 @@ defineFunctions
 		defineFunction: #GetProcessInfos:
 			argumentTypes: 'ICoreWebView2ProcessInfoCollection**'
 ! !
+
 !WebView2.ICoreWebView2Environment8 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

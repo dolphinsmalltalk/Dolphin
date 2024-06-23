@@ -7,9 +7,13 @@ ResourceAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceGeneratorAccessor guid: (Core.GUID fromString: '{87b4c6d8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ResourceGeneratorAccessor comment: ''!
+
 !ResourceGeneratorAccessor categoriesForClass!MVP-Resources! !
+
 !ResourceGeneratorAccessor methodsFor!
 
 canSave
@@ -33,6 +37,7 @@ save: anObject as: aResource
 	"Save out anObject in the format dictated by aResourceClass."
 
 	^self shouldNotImplement! !
+
 !ResourceGeneratorAccessor categoriesForMethods!
 canSave!public!testing! !
 class:selector:!instance creation!public! !
@@ -53,6 +58,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !ResourceGeneratorAccessor class categoriesForMethods!
 class:selector:!instance creation!public! !
 stbVersion!instance creation!public! !

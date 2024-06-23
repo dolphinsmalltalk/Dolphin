@@ -7,10 +7,15 @@ Core.Stream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequencedStream guid: (Core.GUID fromString: '{9b6a5665-c80e-457c-b384-f716399f271d}')!
+
 Core.SequencedStream isNonInstantiable: true!
+
 Core.SequencedStream comment: 'SequencedStream is an class of <Stream>s that stream over a finite number of past and future sequence values, maintaining a current position among those sequence values and allowing that position to be altered. Sub-instances of <SequencedStream> conform to the ANSI <sequencedStream> protocol.'!
+
 !Core.SequencedStream categoriesForClass!Collections-Streams! !
+
 !Core.SequencedStream methodsFor!
 
 contents
@@ -235,6 +240,7 @@ upToAll: aCollection
 		ifFalse: 
 			[self position: start.
 			self upToEnd]! !
+
 !Core.SequencedStream categoriesForMethods!
 contents!accessing!public! !
 copyFrom:to:!copying!public! !

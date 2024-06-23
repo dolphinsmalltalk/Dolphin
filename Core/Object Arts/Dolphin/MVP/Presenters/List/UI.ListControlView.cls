@@ -7,15 +7,20 @@ UI.ControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ListControlView guid: (Core.GUID fromString: '{8db728e5-721c-4e56-b449-5fd43d00e1ba}')!
+
 UI.ListControlView isNonInstantiable: true!
+
 UI.ListControlView comment: 'ListControlView is the abstract class of <ControlView>s that display a list of items, for example the standard Windows Listbox, Listview and Treeview controls, each of which has a concrete subclass to represent it.
 
 Instance Variables:
 	getTextBlock		<monadicValuable> evaluated to get the text to be displayed for an entry in the list.
 
 '!
+
 !UI.ListControlView categoriesForClass!MVP-Views! !
+
 !UI.ListControlView methodsFor!
 
 addSelections: aCollection 
@@ -589,6 +594,7 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	! !
+
 !UI.ListControlView categoriesForMethods!
 addSelections:!public!selection! !
 addSelections:ifAbsent:!public!selection! !
@@ -691,6 +697,7 @@ onStartup
 	the fact."
 
 	RevertSelMessage := self registerMessage: 'RevertSelection'! !
+
 !UI.ListControlView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

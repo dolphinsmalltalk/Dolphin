@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.BitmapFromIconInitializer guid: (Core.GUID fromString: '{cbd63799-b451-40d7-bd4e-a64a38e1860c}')!
+
 Graphics.BitmapFromIconInitializer comment: ''!
+
 !Graphics.BitmapFromIconInitializer methodsFor!
 
 = anObject
@@ -61,6 +64,7 @@ printImage: aBitmap on: aWriteStream
 		nextPut: $);
 		nextPutAll: ' asAlphaBitmap: ';
 		print: extent! !
+
 !Graphics.BitmapFromIconInitializer categoriesForMethods!
 =!comparing!public! !
 createImage:extent:!private!realizing/unrealizing! !
@@ -79,6 +83,7 @@ extent: aPoint icon: anIcon
 	^self new
 		extent: aPoint icon: anIcon;
 		yourself! !
+
 !Graphics.BitmapFromIconInitializer class categoriesForMethods!
 extent:icon:!instance creation!public! !
 !

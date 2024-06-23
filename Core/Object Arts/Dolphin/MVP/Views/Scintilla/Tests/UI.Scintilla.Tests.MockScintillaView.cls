@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.Tests.MockScintillaView guid: (Core.GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
+
 UI.Scintilla.Tests.MockScintillaView comment: 'To set up:
 
 	mock := MockScintillaView new.
@@ -24,7 +26,9 @@ Then to style:
 		in: mock.
 	"Now can access the ''tokens''"
 	mock tokens'!
+
 !UI.Scintilla.Tests.MockScintillaView categoriesForClass!Kernel-Objects! !
+
 !UI.Scintilla.Tests.MockScintillaView methodsFor!
 
 applyStyle: aSymbol toNext: anInteger 
@@ -134,6 +138,7 @@ tokens
 					[lastStyle := style.
 					answer addLast: {each first. style. self plainTextRange: each first}]].
 	^answer! !
+
 !UI.Scintilla.Tests.MockScintillaView categoriesForMethods!
 applyStyle:toNext:!public!styling! !
 characterAt:!public!unit tests! !
@@ -160,6 +165,7 @@ tokens!public!unit tests! !
 
 icon
 	^ScintillaView icon! !
+
 !UI.Scintilla.Tests.MockScintillaView class categoriesForMethods!
 icon!constants!public! !
 !

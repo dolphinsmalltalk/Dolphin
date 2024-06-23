@@ -7,10 +7,15 @@ OS.NMHDR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.NMGETINFOTIP guid: (Core.GUID fromString: '{c10cd176-4f7d-4640-b3ce-5368bfcbfbbc}')!
+
 OS.NMGETINFOTIP isNonInstantiable: true!
+
 OS.NMGETINFOTIP comment: ''!
+
 !OS.NMGETINFOTIP categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMGETINFOTIP methodsFor!
 
 cchTextMax
@@ -47,6 +52,7 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^self subclassResponsibility! !
+
 !OS.NMGETINFOTIP categoriesForMethods!
 cchTextMax!accessing!public! !
 pszText!accessing!public! !

@@ -12,9 +12,13 @@ External.Structure
 			'_OffsetOf_rc' -> 16r8.
 			'_OffsetOf_rcPage' -> 16r18
 		}!
+
 OS.AbstractFORMATRANGE guid: (Core.GUID fromString: '{d3259bb1-8876-4dde-b997-5e49c79e4368}')!
+
 OS.AbstractFORMATRANGE isNonInstantiable: true!
+
 OS.AbstractFORMATRANGE comment: ''!
+
 !OS.AbstractFORMATRANGE methodsFor!
 
 cpMax: anInteger
@@ -60,6 +64,7 @@ rcPage: aRECTL
 		from: ##(_OffsetOf_rcPage + 1)
 		to: ##(_OffsetOf_rcPage + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.AbstractFORMATRANGE categoriesForMethods!
 cpMax:!public! !
 cpMin:!public! !
@@ -84,6 +89,7 @@ defineFields
 		defineField: #hdcTarget type: HANDLEField writeOnly;
 		defineField: #rc type: (StructureField type: RECTL);
 		defineField: #rcPage type: (StructureField type: RECTL)! !
+
 !OS.AbstractFORMATRANGE class categoriesForMethods!
 defineFields!public!template definition! !
 !

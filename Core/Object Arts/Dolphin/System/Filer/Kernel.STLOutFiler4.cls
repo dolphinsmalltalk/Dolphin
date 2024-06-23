@@ -7,11 +7,15 @@ Kernel.STLOutFiler3
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLOutFiler4 guid: (Core.GUID fromString: '{c8aba593-004c-40d3-80be-31312461a642}')!
+
 Kernel.STLOutFiler4 comment: '`STBOutFiler4` is an `STLOutFiler` for writing object graphs in the the STL 4 serialization format introduced in Dolphin 7.1.
 
 STL 4 primarily differed from STL 3 in storing all strings as UTF-8 encoded literal strings. At some point in its history nil''s started being written in literal form rather than as a zero prefix code, but although this should have resulted in a version increment, that did not happen.'!
+
 !Kernel.STLOutFiler4 categoriesForClass!System-Binary storage! !
+
 !Kernel.STLOutFiler4 methodsFor!
 
 inFilerClass
@@ -68,6 +72,7 @@ variableBindingClass
 
 writeReference: anInteger
 	stream nextPut: (anInteger == 0 ifFalse: [anInteger bitShift: PrefixRefShift])! !
+
 !Kernel.STLOutFiler4 categoriesForMethods!
 inFilerClass!constants!private! !
 registerPredefinedObjects!initializing!private! !
@@ -96,6 +101,7 @@ version
 	"Answer the version number of the format produced by the receiver."
 
 	^4! !
+
 !Kernel.STLOutFiler4 class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !

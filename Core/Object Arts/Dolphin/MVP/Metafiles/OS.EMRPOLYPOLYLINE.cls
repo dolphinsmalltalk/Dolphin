@@ -14,7 +14,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_nPolys' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.EMRPOLYPOLYLINE guid: (Core.GUID fromString: '{b8dbb77d-883a-49cc-ba50-d75d9d773cdb}')!
+
 OS.EMRPOLYPOLYLINE comment: '<EMRPOLYPOLYLINE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYPOLYLINE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -33,7 +35,9 @@ struct tagEMRPOLYPOLYLINE {
 	[helpstring("Array of points")] POINTL* aptl;
 } EMRPOLYPOLYLINE;
 '!
+
 !OS.EMRPOLYPOLYLINE categoriesForClass!Win32-Structs! !
+
 !OS.EMRPOLYPOLYLINE methodsFor!
 
 aPolyCounts
@@ -113,6 +117,7 @@ rclBounds: aRECTL
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.EMRPOLYPOLYLINE categoriesForMethods!
 aPolyCounts!**compiled accessors**!public! !
 aPolyCounts:!**compiled accessors**!public! !
@@ -172,6 +177,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYPOLYLINE. EMR_POLYPOLYGON}! !
+
 !OS.EMRPOLYPOLYLINE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

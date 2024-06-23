@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2NavigationCompletedEventHandler guid: (OS.COM.IID fromString: '{d33a35bf-1c49-4f98-93ab-006e0533fe1c}')!
+
 WebView2.ICoreWebView2NavigationCompletedEventHandler comment: '`ICoreWebView2NavigationCompletedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2NavigationCompletedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2NavigationCompletedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2NavigationCompletedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2NavigationCompletedEventArgs*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2NavigationCompletedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#navigationCompleted:! !
+
 !WebView2.ICoreWebView2NavigationCompletedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

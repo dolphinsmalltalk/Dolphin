@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.PackageManagerTest guid: (Core.GUID fromString: '{f161630b-6480-4f0c-b958-a57ec75b9cbd}')!
+
 Kernel.Tests.PackageManagerTest comment: ''!
+
 !Kernel.Tests.PackageManagerTest methodsFor!
 
 testAllClassesPackaged
@@ -37,6 +40,7 @@ testLooseMethodCacheUpToDate
 					[:eachSelector :eachPackage |
 					self assert: (allLooseMethods at: eachClass >> eachSelector) identicalTo: eachPackage]].
 	self assert: count equals: allLooseMethods size! !
+
 !Kernel.Tests.PackageManagerTest categoriesForMethods!
 testAllClassesPackaged!public!unit tests! !
 testLooseMethodCacheUpToDate!public!unit tests! !

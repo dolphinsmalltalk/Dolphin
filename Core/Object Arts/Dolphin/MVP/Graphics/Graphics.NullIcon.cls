@@ -7,9 +7,13 @@ Graphics.Icon
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.NullIcon guid: (Core.GUID fromString: '{126acbb6-e8df-45a9-80c0-8caf5f16875e}')!
+
 Graphics.NullIcon comment: ''!
+
 !Graphics.NullIcon categoriesForClass!Graphics-Tools! !
+
 !Graphics.NullIcon methodsFor!
 
 imageIndex
@@ -27,6 +31,7 @@ printOn: aStream
 	aStream
 		print: Icon;
 		nextPutAll: ' null'! !
+
 !Graphics.NullIcon categoriesForMethods!
 imageIndex!accessing!public! !
 isSelfEvaluating!printing!public! !
@@ -45,6 +50,7 @@ icon
 
 initialize
 	Current := self fromHandle: 0! !
+
 !Graphics.NullIcon class categoriesForMethods!
 current!instance creation!public! !
 icon!constants!public! !

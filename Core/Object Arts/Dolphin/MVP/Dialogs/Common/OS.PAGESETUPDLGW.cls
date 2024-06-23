@@ -19,13 +19,17 @@ OS.PrintDialogStructure
 			'_OffsetOf_rtMinMargin' -> 16r1C.
 			'_PAGESETUPDLGW_Size' -> 16r54
 		}!
+
 OS.PAGESETUPDLGW guid: (Core.GUID fromString: '{c96162d4-5dd4-43d1-a305-e90d67357d91}')!
+
 OS.PAGESETUPDLGW comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !OS.PAGESETUPDLGW categoriesForClass!IDB Goodies! !
+
 !OS.PAGESETUPDLGW methodsFor!
 
 flags
@@ -118,6 +122,7 @@ rtMinMargin: aRECTL
 		from: ##(_OffsetOf_rtMinMargin + 1)
 		to: ##(_OffsetOf_rtMinMargin + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.PAGESETUPDLGW categoriesForMethods!
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
@@ -200,6 +205,7 @@ packing
 	PRINTDLG is an old Win16 structure with byte packing."
 
 	^1! !
+
 !OS.PAGESETUPDLGW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !

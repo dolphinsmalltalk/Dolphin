@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2PermissionRequestedEventArgs guid: (OS.COM.IID fromString: '{973ae2ef-ff18-4894-8fb2-3c758f046810}')!
+
 WebView2.ICoreWebView2PermissionRequestedEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2PermissionRequestedEventArgs comment: '`ICoreWebView2PermissionRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -44,7 +47,9 @@ interface ICoreWebView2PermissionRequestedEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2PermissionRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2PermissionRequestedEventArgs methodsFor!
 
 get_Handled: handled
@@ -210,6 +215,7 @@ uri
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !WebView2.ICoreWebView2PermissionRequestedEventArgs categoriesForMethods!
 get_Handled:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
@@ -257,6 +263,7 @@ defineFunctions
 
 latestDerivation
 	^##(super latestDerivation)! !
+
 !WebView2.ICoreWebView2PermissionRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 latestDerivation!enquiries!public! !

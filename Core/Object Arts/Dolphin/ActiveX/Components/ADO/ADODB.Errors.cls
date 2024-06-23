@@ -7,7 +7,9 @@ ADODB._Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.Errors guid: (OS.COM.IID fromString: '{00000501-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.Errors comment: '`Errors` is a wrapper class for the COM interface ''ADODB.Errors'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -34,7 +36,9 @@ interface Errors : _Collection
 };
 ```
 '!
+
 !ADODB.Errors categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.Errors methodsFor!
 
 Clear
@@ -62,6 +66,7 @@ item: index
 	answer := Error newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
+
 !ADODB.Errors categoriesForMethods!
 Clear!**auto generated**!COM Interfaces-Errors!public! !
 get_Item:ppvObject:!**auto generated**!COM Interfaces-Errors!private! !
@@ -79,6 +84,7 @@ defineFunctions
 			argumentTypes: 'variant Error**';
 		defineFunction: #Clear
 ! !
+
 !ADODB.Errors class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

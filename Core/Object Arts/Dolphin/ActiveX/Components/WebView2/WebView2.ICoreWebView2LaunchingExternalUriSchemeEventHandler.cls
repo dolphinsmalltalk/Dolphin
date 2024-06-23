@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler guid: (OS.COM.IID fromString: '{74f712e0-8165-43a9-a13f-0cce597e75df}')!
+
 WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler comment: '`ICoreWebView2LaunchingExternalUriSchemeEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2LaunchingExternalUriSchemeEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2LaunchingExternalUriSchemeEventArgs*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#launchingExternalUriScheme:! !
+
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

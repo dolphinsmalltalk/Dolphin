@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RemoveParameterRefactoringTest guid: (Core.GUID fromString: '{e5ff0a30-1644-4902-8240-701881d750fe}')!
+
 Refactory.Browser.Tests.RemoveParameterRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RemoveParameterRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RemoveParameterRefactoringTest methodsFor!
 
 testNonExistantName
@@ -51,6 +55,7 @@ testRemoveParameter
 		equals: (self parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)! !
+
 !Refactory.Browser.Tests.RemoveParameterRefactoringTest categoriesForMethods!
 testNonExistantName!failure tests!public! !
 testPrimitiveMethods!failure tests!public! !

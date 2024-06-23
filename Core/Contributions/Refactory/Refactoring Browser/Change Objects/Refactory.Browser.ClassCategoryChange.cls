@@ -7,9 +7,13 @@ Refactory.Browser.ClassAttributeChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassCategoryChange guid: (Core.GUID fromString: '{cd00dfac-537f-4360-838d-2ed615575cb4}')!
+
 Refactory.Browser.ClassCategoryChange comment: ''!
+
 !Refactory.Browser.ClassCategoryChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.ClassCategoryChange methodsFor!
 
 asUndoOperation
@@ -36,6 +40,7 @@ mutateClassDetails: aClassDetails
 
 primitiveExecute
 	self changeClass categories: self categories! !
+
 !Refactory.Browser.ClassCategoryChange categoriesForMethods!
 asUndoOperation!converting!public! !
 categories!accessing!public! !
@@ -53,6 +58,7 @@ categorize: aClass as: aCollectionOfClassCategories
 		changeClass: aClass;
 		categories: aCollectionOfClassCategories ;
 		yourself! !
+
 !Refactory.Browser.ClassCategoryChange class categoriesForMethods!
 categorize:as:!instance creation!public! !
 !

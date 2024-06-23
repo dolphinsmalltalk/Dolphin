@@ -7,9 +7,13 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.BoundsError guid: (Core.GUID fromString: '{87b4c558-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.BoundsError comment: ''!
+
 !Core.BoundsError categoriesForClass!Kernel-Exception Handling! !
+
 !Core.BoundsError methodsFor!
 
 _descriptionFormat
@@ -25,6 +29,7 @@ receiver
 receiver: anObject index: anInteger
 	receiver := anObject.
 	tag := anInteger! !
+
 !Core.BoundsError categoriesForMethods!
 _descriptionFormat!displaying!public! !
 receiver!accessing!public! !
@@ -39,6 +44,7 @@ receiver: anObject index: anInteger
 	^self basicNew
 		receiver: anObject index: anInteger;
 		signal! !
+
 !Core.BoundsError class categoriesForMethods!
 receiver:index:!instance creation!public! !
 !

@@ -7,12 +7,16 @@ Core.PositionableStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WriteStream guid: (Core.GUID fromString: '{87b4c6fb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.WriteStream comment: 'Class WriteStream is a concrete subclass of PositionableStream representing accessors for writing elements into a collecition. None of the next, next:, nor do: messages can be successfully sent to a WriteStream.
 
 Instance Variables:
 	writeLimit		<Integer>. Current maximum position up to which the stream may be positioned for writing.'!
+
 !Core.WriteStream categoriesForClass!Collections-Streams! !
+
 !Core.WriteStream methodsFor!
 
 basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
@@ -186,6 +190,7 @@ setToEnd
 	updating the readLimit if necessary."
 
 	position := self size! !
+
 !Core.WriteStream categoriesForMethods!
 basicNext:putAll:startingAt:!accessing!private! !
 basicNextPut:!accessing!private! !
@@ -232,6 +237,7 @@ with: aCollection from: firstIndex to: lastIndex
 	^(self on: aCollection from: firstIndex to: lastIndex)
 		moveToEnd;
 		yourself! !
+
 !Core.WriteStream class categoriesForMethods!
 with:!instance creation!public! !
 with:from:to:!instance creation!public! !

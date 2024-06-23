@@ -11,10 +11,15 @@ External.Structure
 			'_OffsetOf_CtlType' -> 16r0.
 			'_OffsetOf_itemID' -> 16r8
 		}!
+
 OS.OwnerDrawStruct guid: (Core.GUID fromString: '{7208da36-0f29-40ae-b974-07c3a81db8f5}')!
+
 OS.OwnerDrawStruct isNonInstantiable: true!
+
 OS.OwnerDrawStruct comment: ''!
+
 !OS.OwnerDrawStruct categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.OwnerDrawStruct methodsFor!
 
 CtlID
@@ -31,6 +36,7 @@ itemID
 	"Answer the <Integer> value of the receiver's 'itemID' field."
 
 	^bytes uint32AtOffset: _OffsetOf_itemID! !
+
 !OS.OwnerDrawStruct categoriesForMethods!
 CtlID!**compiled accessors**!public! !
 CtlType!**compiled accessors**!public! !
@@ -48,6 +54,7 @@ defineFields
 		defineField: #CtlType type: UInt32Field readOnly;
 		defineField: #CtlID type: UInt32Field readOnly;
 		defineField: #itemID type: UInt32Field readOnly! !
+
 !OS.OwnerDrawStruct class categoriesForMethods!
 defineFields!public!template definition! !
 !

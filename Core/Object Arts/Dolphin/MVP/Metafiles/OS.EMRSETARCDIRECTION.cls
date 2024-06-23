@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETARCDIRECTION_Size' -> 16rC. '_OffsetOf_iArcDirection' -> 16r8 }!
+
 OS.EMRSETARCDIRECTION guid: (Core.GUID fromString: '{41d545c1-ed58-46f1-9b90-34ef56bd4213}')!
+
 OS.EMRSETARCDIRECTION comment: '<EMRSETARCDIRECTION> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETARCDIRECTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRSETARCDIRECTION {
 	[helpstring("Specifies the arc direction in the advanced graphics mode.")] DWORD iArcDirection;
 } EMRSETARCDIRECTION;
 '!
+
 !OS.EMRSETARCDIRECTION categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETARCDIRECTION methodsFor!
 
 iArcDirection
@@ -34,6 +38,7 @@ iArcDirection: anInteger
 	"Set the receiver's 'iArcDirection' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_iArcDirection put: anInteger! !
+
 !OS.EMRSETARCDIRECTION categoriesForMethods!
 iArcDirection!**compiled accessors**!public! !
 iArcDirection:!**compiled accessors**!public! !
@@ -70,6 +75,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETARCDIRECTION}! !
+
 !OS.EMRSETARCDIRECTION class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

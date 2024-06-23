@@ -118,6 +118,10 @@ Kernel.SharedPool
 			'TVSIL_NORMAL' -> 16r0.
 			'TVSIL_STATE' -> 16r2
 		}!
+
 OS.TreeViewConstants guid: (Core.GUID fromString: '{3c01401d-cb80-4bc6-93aa-f109bd5160d3}')!
+
 OS.TreeViewConstants isNonInstantiable: true!
+
 OS.TreeViewConstants comment: ''!
+

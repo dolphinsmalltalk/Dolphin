@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.Point3DTest guid: (Core.GUID fromString: '{e1ecedad-639e-42fc-b8a0-04911e61fcb5}')!
+
 Graphics.Tests.Point3DTest comment: 'Test the Point3D class'!
+
 !Graphics.Tests.Point3DTest methodsFor!
 
 testAsPoint
@@ -36,6 +39,7 @@ testNew
 	self assert: new y identicalTo: 0.
 	self assert: new z identicalTo: 0.
 	self assert: new equals: Point3D zero! !
+
 !Graphics.Tests.Point3DTest categoriesForMethods!
 testAsPoint!public!unit tests! !
 testEquals!public!unit tests! !

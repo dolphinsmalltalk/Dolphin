@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestSuite guid: (Core.GUID fromString: '{5e96793c-0810-11d4-a876-0050da643bf9}')!
+
 XProgramming.SUnit.TestSuite comment: ''!
+
 !XProgramming.SUnit.TestSuite categoriesForClass!SUnit! !
+
 !XProgramming.SUnit.TestSuite methodsFor!
 
 addDependentToHierachy: anObject
@@ -72,6 +76,7 @@ setDependents: aDependentsCollectionOrNil
 tests
 	tests isNil ifTrue: [tests := OrderedCollection new].
 	^tests! !
+
 !XProgramming.SUnit.TestSuite categoriesForMethods!
 addDependentToHierachy:!Dependencies!public! !
 addTest:!Accessing!public! !
@@ -96,6 +101,7 @@ named: aString
 	^self new
 		name: aString;
 		yourself! !
+
 !XProgramming.SUnit.TestSuite class categoriesForMethods!
 named:!Creation!public! !
 !

@@ -7,9 +7,13 @@ UI.Tests.PresenterTest
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.AbstractContainerViewTest guid: (Core.GUID fromString: '{79c3a28a-ce43-49e3-a030-adb99de3efea}')!
+
 UI.Tests.AbstractContainerViewTest isNonInstantiable: true!
+
 UI.Tests.AbstractContainerViewTest comment: ''!
+
 !UI.Tests.AbstractContainerViewTest methodsFor!
 
 backgroundColor
@@ -183,6 +187,7 @@ waitForScreenUpdate
 	"5 timesRepeat: 
 			[SessionManager current inputState pumpMessages.
 			Processor sleep: 100]"! !
+
 !UI.Tests.AbstractContainerViewTest categoriesForMethods!
 backgroundColor!constants!private! !
 bitmapOfPaintView:!helpers!public! !

@@ -5,9 +5,13 @@ TestCaseHelper subclass: #ExtensibleCollectionHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExtensibleCollectionHelper guid: (GUID fromString: '{4277b0f5-244b-4767-abde-76dd79922d8e}')!
+
 ExtensibleCollectionHelper comment: ''!
+
 !ExtensibleCollectionHelper categoriesForClass!Unclassified! !
+
 !ExtensibleCollectionHelper methodsFor!
 
 object
@@ -84,6 +88,7 @@ testXremoveXifAbsentX
 		should: [:result | result = #foo ]
 		conformTo: #extensibleCollection
 		selector: #remove:ifAbsent:! !
+
 !ExtensibleCollectionHelper categoriesForMethods!
 object!public! !
 object:!public! !

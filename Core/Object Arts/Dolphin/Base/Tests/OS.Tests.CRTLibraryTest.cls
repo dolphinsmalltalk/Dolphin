@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.CRTLibraryTest guid: (Core.GUID fromString: '{46ac94c8-b775-44c8-9cc9-bf70297081ff}')!
+
 OS.Tests.CRTLibraryTest comment: ''!
+
 !OS.Tests.CRTLibraryTest methodsFor!
 
 testSplitPathInvalidCall
@@ -63,6 +66,7 @@ testStrCpyTruncation
 				strSource: 'abc'
 				count: OS.CRTConstants._TRUNCATE)
 		equals: OS.CRTConstants.STRUNCATE! !
+
 !OS.Tests.CRTLibraryTest categoriesForMethods!
 testSplitPathInvalidCall!public! !
 testStrCatInvalidCall!public! !

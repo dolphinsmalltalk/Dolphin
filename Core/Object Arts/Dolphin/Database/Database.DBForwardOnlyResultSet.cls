@@ -7,7 +7,9 @@ Database.DBResultSet
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBForwardOnlyResultSet guid: (Core.GUID fromString: '{bdeb3bcd-b383-4bbb-a02a-e63b31338641}')!
+
 Database.DBForwardOnlyResultSet comment: 'DBForwardOnlyResultSet is the class of <DBResultSet>s specialised to represent forward-only cursors. Forward-only cursors offer much higher performance, especially against large result sets and/or when operating remotely. Backwards navigation and random access are supported, but may be extrememly slow since the query must be re-run and then the result set stepped through once more to the requested position. Since backwards navigation requires a re-query, the result set will not be "static" and will be affected by any updates, insertions or deletions that have been performed since the initial query.
 
 Note that forward-only cursors typically tie up the entire connection against which they were executed until they are closed. This may make it necessary to open multiple connections when using forward-only cursors.
@@ -15,7 +17,9 @@ Note that forward-only cursors typically tie up the entire connection against wh
 Instance Variables:
 	<position>	<integer> position in the result set, one being the first row.
 '!
+
 !Database.DBForwardOnlyResultSet categoriesForClass!ODBC Interface! !
+
 !Database.DBForwardOnlyResultSet methodsFor!
 
 bind: anArrayOfColNums
@@ -101,6 +105,7 @@ reverseDo: operation
 	it only moves forward through the result set)."
 
 	^self asOrderedCollection reverseDo: operation! !
+
 !Database.DBForwardOnlyResultSet categoriesForMethods!
 bind:!binding!private! !
 close!public!realizing/unrealizing! !

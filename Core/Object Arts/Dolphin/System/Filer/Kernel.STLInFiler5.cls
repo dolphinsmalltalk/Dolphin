@@ -7,11 +7,15 @@ Kernel.STLLegacyInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLInFiler5 guid: (Core.GUID fromString: '{c9a0f94d-4ac4-47c4-8f2c-6516e4cf2ba8}')!
+
 Kernel.STLInFiler5 comment: '`STBInFiler5` is an `STBInFiler` for reading the STL 5 literal object serialization format introduced in Dolphin 8 but has been superceded by STL 6.
 
 STL 5 primarily differed from STL 4 in supporting namespaced classes. Classes are stored in the literal array as `BindingReference`s rather than requiring ##() expressions.'!
+
 !Kernel.STLInFiler5 categoriesForClass!System-Binary storage! !
+
 !Kernel.STLInFiler5 class methodsFor!
 
 initialize
@@ -50,6 +54,7 @@ version
 	"Private - Answer the version number of the format read by the receiver."
 
 	^5! !
+
 !Kernel.STLInFiler5 class categoriesForMethods!
 initialize!class initialization!public! !
 predefinedClasses!constants!public! !

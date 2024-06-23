@@ -11,7 +11,9 @@ External.Structure
 			'_OffsetOf_wParamFlags' -> 16r4.
 			'_PARAMDESC_Size' -> 16r8
 		}!
+
 OS.COM.PARAMDESC guid: (Core.GUID fromString: '{c06f3b73-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.PARAMDESC comment: 'PARAMDESC is an <ExternalStructure> to represent the AX Automation structure of the same name.
 
 The PARAMDESC structure is used, one per argument, to describe the parameters to a function belonging to either an [disp]interface or a module in a type library. The information includes certain (but not all) IDL flags, as well as the argument
@@ -20,7 +22,9 @@ type and default value, if any.
 Fields:
 	pparamdescex	<PARAMDESCEX*> pointer to a struct with default value for the parameter, if any.
 	wParamFlags	<WORD> various flags describing the parameter, such as whether it is [in] or [out].'!
+
 !OS.COM.PARAMDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.PARAMDESC methodsFor!
 
 defaultValue
@@ -72,6 +76,7 @@ wParamFlags
 	"Answer the <Integer> value of the receiver's 'wParamFlags' field."
 
 	^bytes uint16AtOffset: _OffsetOf_wParamFlags! !
+
 !OS.COM.PARAMDESC categoriesForMethods!
 defaultValue!accessing!public! !
 directionFlags!public!testing! !
@@ -107,6 +112,7 @@ defineFields
 
 getFieldNames
 	^#(#pparamdescex #wParamFlags)! !
+
 !OS.COM.PARAMDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

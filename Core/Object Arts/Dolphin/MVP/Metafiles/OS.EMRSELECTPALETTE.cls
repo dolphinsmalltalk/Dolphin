@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSELECTPALETTE_Size' -> 16rC. '_OffsetOf_ihPal' -> 16r8 }!
+
 OS.EMRSELECTPALETTE guid: (Core.GUID fromString: '{2bd77a04-2b0c-4d93-b7b6-a55fbb1003ab}')!
+
 OS.EMRSELECTPALETTE comment: '<EMRSELECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRSELECTPALETTE {
 	[helpstring("Palette handle index, background mode only")] DWORD ihPal;
 } EMRSELECTPALETTE;
 '!
+
 !OS.EMRSELECTPALETTE categoriesForClass!Win32-Structs! !
+
 !OS.EMRSELECTPALETTE methodsFor!
 
 ihPal
@@ -34,6 +38,7 @@ ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_ihPal put: anInteger! !
+
 !OS.EMRSELECTPALETTE categoriesForMethods!
 ihPal!**compiled accessors**!public! !
 ihPal:!**compiled accessors**!public! !
@@ -70,6 +75,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SELECTPALETTE}! !
+
 !OS.EMRSELECTPALETTE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

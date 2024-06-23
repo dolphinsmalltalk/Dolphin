@@ -5,9 +5,13 @@ MainTestCase subclass: #FailedMessageANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FailedMessageANSITest guid: (GUID fromString: '{5ff43c19-14d8-4626-8169-a70eb12eb4ef}')!
+
 FailedMessageANSITest comment: ''!
+
 !FailedMessageANSITest categoriesForClass!Unclassified! !
+
 !FailedMessageANSITest methodsFor!
 
 canonicalObject
@@ -71,6 +75,7 @@ testXselector
 		conformTo: #'failedMessage' selector: #'selector'.
 
 ???"! !
+
 !FailedMessageANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

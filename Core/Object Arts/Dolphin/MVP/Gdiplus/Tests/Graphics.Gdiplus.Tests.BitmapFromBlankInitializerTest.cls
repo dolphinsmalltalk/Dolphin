@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest guid: (Core.GUID fromString: '{1c9cb1c1-e014-4fcc-aa39-81767a17af85}')!
+
 Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest comment: ''!
+
 !Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest methodsFor!
 
 subjectClass
@@ -29,6 +32,7 @@ testCreateHandle
 	self assert: constructor arguments third equals: 0.
 	"self assert: constructorArgs fourth = PixelFormat32bppARGB."
 	self assert: constructor arguments last isKindOf: Handle! !
+
 !Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest categoriesForMethods!
 subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !

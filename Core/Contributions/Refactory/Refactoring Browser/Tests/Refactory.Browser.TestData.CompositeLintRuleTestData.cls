@@ -7,9 +7,13 @@ Refactory.Browser.TestData.LintRuleTestData
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.TestData.CompositeLintRuleTestData guid: (Core.GUID fromString: '{e17dd387-d4f7-4713-878e-41a7c57e54dd}')!
+
 Refactory.Browser.TestData.CompositeLintRuleTestData comment: ''!
+
 !Refactory.Browser.TestData.CompositeLintRuleTestData categoriesForClass!Refactory-Test data! !
+
 !Refactory.Browser.TestData.CompositeLintRuleTestData methodsFor!
 
 checkClass: aSmalllintContext 
@@ -50,6 +54,7 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
+
 !Refactory.Browser.TestData.CompositeLintRuleTestData categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -92,6 +97,7 @@ rules: aCollection name: aString
 
 transformations
 	^self ruleFor: TransformationRuleTestData protocol: 'transformations'! !
+
 !Refactory.Browser.TestData.CompositeLintRuleTestData class categoriesForMethods!
 allRules!instance creation!public! !
 lintChecks!all checks!public! !

@@ -10,7 +10,9 @@ Core.Object
 			'DrawTextAlignments'
 				-> (IdentityDictionary withAll: { #center -> 16r1. #left -> 16r0. #right -> 16r2 })
 		}!
+
 Graphics.Canvas guid: (Core.GUID fromString: '{87b4c45e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Canvas comment: 'Canvas is the class that represents device contexts for drawing graphical output such as lines, shapes, bitmaps and text. As a context, Canvas instances maintain not only the current drawing position, but also the current pen, brush, font, foreground and background colors, text drawing mode, etc.
 
 Instance Variables:
@@ -30,7 +32,9 @@ Class Variables:
 
 
 '!
+
 !Graphics.Canvas categoriesForClass!Graphics-Drawing! !
+
 !Graphics.Canvas methodsFor!
 
 alphaBlend: aCanvas rectangle: aRectangle to: dstOrigin extent: dstExtent blend: blendFunction
@@ -997,6 +1001,7 @@ windowScaling
 	"Answers a Point that is the ratio of window units to device units for the receiver"
 
 	^self windowExtent / self viewportExtent! !
+
 !Graphics.Canvas categoriesForMethods!
 alphaBlend:rectangle:to:extent:blend:!drawing!public! !
 alphaBlendBitmap:at:extent:from:extent:blend:!colors!private! !
@@ -1218,6 +1223,7 @@ withOwnedDC: hDC
 	finalized (or explicitly freed) with a call to DeleteDC()."
 
 	^self withDC: hDC ownedBy: self! !
+
 !Graphics.Canvas class categoriesForMethods!
 desktopResolution!initializing!public! !
 forDesktop!instance creation!public! !

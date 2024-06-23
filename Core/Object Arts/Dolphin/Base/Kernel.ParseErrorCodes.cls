@@ -105,7 +105,12 @@ Kernel.SharedPool
 			'LErrLast' -> 16rA.
 			'LErrStringNotClosed' -> 16r3
 		}!
+
 Kernel.ParseErrorCodes guid: (Core.GUID fromString: '{92e9d5ba-56ff-4b1b-b75c-85b983481e11}')!
+
 Kernel.ParseErrorCodes isNonInstantiable: true!
+
 Kernel.ParseErrorCodes comment: ''!
+
 !Kernel.ParseErrorCodes categoriesForClass!System-Compiler! !
+

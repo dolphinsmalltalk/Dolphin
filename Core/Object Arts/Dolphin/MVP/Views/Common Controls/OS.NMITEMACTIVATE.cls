@@ -17,9 +17,13 @@ OS.NMHDR
 			'_OffsetOf_uNewState' -> 16r14.
 			'_OffsetOf_uOldState' -> 16r18
 		}!
+
 OS.NMITEMACTIVATE guid: (Core.GUID fromString: '{78091823-3756-4d5a-816a-a5981291ae81}')!
+
 OS.NMITEMACTIVATE comment: ''!
+
 !OS.NMITEMACTIVATE categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMITEMACTIVATE methodsFor!
 
 iItem
@@ -59,6 +63,7 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes uint32AtOffset: _OffsetOf_uOldState! !
+
 !OS.NMITEMACTIVATE categoriesForMethods!
 iItem!**compiled accessors**!public! !
 iSubItem!**compiled accessors**!public! !
@@ -104,6 +109,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !
+
 !OS.NMITEMACTIVATE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

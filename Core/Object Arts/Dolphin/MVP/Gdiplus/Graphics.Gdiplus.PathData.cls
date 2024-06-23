@@ -12,7 +12,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_Types' -> 16r8.
 			'_PathData_Size' -> 16rC
 		}!
+
 Graphics.Gdiplus.PathData guid: (Core.GUID fromString: '{411a9cb7-6abc-4f55-aa9a-82c7e0d44142}')!
+
 Graphics.Gdiplus.PathData comment: '<GpPathData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPathData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +30,9 @@ struct tagGpPathData {
 	BYTE* types;
 } GpPathData;
 '!
+
 !Graphics.Gdiplus.PathData categoriesForClass!Gdiplus-Structs! !
+
 !Graphics.Gdiplus.PathData methodsFor!
 
 Count
@@ -62,6 +66,7 @@ Types: anExternalArray
 
 	bytes uintPtrAtOffset: _OffsetOf_Types put: anExternalArray yourAddress.
 	self Count: anExternalArray size! !
+
 !Graphics.Gdiplus.PathData categoriesForMethods!
 Count!**compiled accessors**!public! !
 Count:!**compiled accessors**!public! !
@@ -97,6 +102,7 @@ defineFields
 
 getFieldNames
 	^#(#Count #Points #Types)! !
+
 !Graphics.Gdiplus.PathData class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

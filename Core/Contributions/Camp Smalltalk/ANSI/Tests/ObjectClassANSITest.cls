@@ -5,9 +5,13 @@ MainTestCase subclass: #ObjectClassANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ObjectClassANSITest guid: (GUID fromString: '{940ea47e-d8e2-451c-ae00-4af396683bbb}')!
+
 ObjectClassANSITest comment: ''!
+
 !ObjectClassANSITest categoriesForClass!Unclassified! !
+
 !ObjectClassANSITest methodsFor!
 
 canonicalObject
@@ -115,6 +119,7 @@ testXsuperclass
 				ifFalse: [r class conformsToAnsiProtocolNamed: #classDescription]]
 		conformTo: #classDescription
 		selector: #superclass! !
+
 !ObjectClassANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

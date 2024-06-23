@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.ResumableTestFailureTestCase guid: (Core.GUID fromString: '{e9e5d84b-1ac0-46b4-ae21-c00825895f1f}')!
+
 XProgramming.SUnit.ResumableTestFailureTestCase comment: ''!
+
 !XProgramming.SUnit.ResumableTestFailureTestCase categoriesForClass!SUnit! !
+
 !XProgramming.SUnit.ResumableTestFailureTestCase methodsFor!
 
 errorTest
@@ -41,6 +45,7 @@ testResumable
 				yourself.
 	result := suite run.
 	self assert: result failures size equals: 2! !
+
 !XProgramming.SUnit.ResumableTestFailureTestCase categoriesForMethods!
 errorTest!public!Running! !
 isLogging!public!Running! !

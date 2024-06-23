@@ -1260,16 +1260,22 @@ UI
 			'VISIBLE_SLOP' -> 16r1.
 			'VISIBLE_STRICT' -> 16r4
 		}!
+
 UI.Scintilla guid: (Core.GUID fromString: '{c0575b77-f355-425e-863f-b942011e4cf3}')!
+
 UI.Scintilla isNonInstantiable: true!
+
 UI.Scintilla comment: ''!
+
 !UI.Scintilla categoriesForClass!Kernel-Objects! !
+
 !UI.Scintilla class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^ScintillaView icon! !
+
 !UI.Scintilla class categoriesForMethods!
 icon!constants!public! !
 !

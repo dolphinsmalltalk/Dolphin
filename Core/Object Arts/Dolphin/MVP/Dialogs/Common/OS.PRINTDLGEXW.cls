@@ -26,7 +26,9 @@ OS.PrintDialogStructure
 			'_OffsetOf_nStartPage' -> 16r4C.
 			'_PRINTDLGEXW_Size' -> 16r54
 		}!
+
 OS.PRINTDLGEXW guid: (Core.GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
+
 OS.PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -60,7 +62,9 @@ struct tagPRINTDLGEX {
 	DWORD dwResultAction;
 } PRINTDLGEX;
 '!
+
 !OS.PRINTDLGEXW categoriesForClass!Win32-Structs! !
+
 !OS.PRINTDLGEXW methodsFor!
 
 basicFree
@@ -262,6 +266,7 @@ returnDefaultFlag
 
 shouldPrintSelectionOnly
 	^self flags allMask: PD_SELECTION! !
+
 !OS.PRINTDLGEXW categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 disablePrintSelectionOnly!modes!public! !
@@ -362,6 +367,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nStartPage #dwResultAction)! !
+
 !OS.PRINTDLGEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

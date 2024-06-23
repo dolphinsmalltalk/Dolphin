@@ -7,10 +7,15 @@ Refactory.Browser.RBParseTreeRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBReplaceRule guid: (Core.GUID fromString: '{206caebb-9f38-4bdf-85a6-50261f48360e}')!
+
 Refactory.Browser.RBReplaceRule isNonInstantiable: true!
+
 Refactory.Browser.RBReplaceRule comment: ''!
+
 !Refactory.Browser.RBReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
+
 !Refactory.Browser.RBReplaceRule methodsFor!
 
 canMatch: aProgramNode 
@@ -25,6 +30,7 @@ initialize
 
 replace: aProgramNode with: newNode 
 	aProgramNode replaceMethodSource: newNode! !
+
 !Refactory.Browser.RBReplaceRule categoriesForMethods!
 canMatch:!matching!public! !
 foundMatchFor:!matching!public! !

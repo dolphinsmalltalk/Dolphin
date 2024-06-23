@@ -7,8 +7,11 @@ UI.Tests.ListBoxTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.MultiSelectListBoxTest guid: (Core.GUID fromString: '{fb3d047d-54ac-4e72-8544-a555167d6af9}')!
+
 UI.Tests.MultiSelectListBoxTest comment: 'Test a ListBox in multi-select mode. Inherited tests will exercise the single-selection protocols. As of D6 these should behave for a multi-select list in teh same way as they do for a single-select list.'!
+
 !UI.Tests.MultiSelectListBoxTest methodsFor!
 
 initializePresenter
@@ -92,6 +95,7 @@ testNewSelectionsToggleMode
 	"Modifiers disable right clicks"
 	#(#(#control #right) #(#shift #right) #(#control #shift #right))
 		do: [:each | self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 7 buttons: each) equals: #(1 3 5)]! !
+
 !UI.Tests.MultiSelectListBoxTest categoriesForMethods!
 initializePresenter!private!Running! !
 testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !

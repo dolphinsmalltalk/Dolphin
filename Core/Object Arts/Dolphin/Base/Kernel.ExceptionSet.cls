@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ExceptionSet guid: (Core.GUID fromString: '{87b4c485-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.ExceptionSet comment: 'ExceptionSet is a system class forming part of the Dolphin exception handling system''s implementation. It is used to collect together multiple <exceptionSelector>s specified in a comma separated list as the first argument to a #on:do: message to a <niladicBlock>.'!
+
 !Kernel.ExceptionSet categoriesForClass!Kernel-Exception Handling! !
+
 !Kernel.ExceptionSet methodsFor!
 
 , anotherException
@@ -43,6 +47,7 @@ selectors: anObject
 	This method was automatically generated, but may be modified."
 
 	selectors := anObject! !
+
 !Kernel.ExceptionSet categoriesForMethods!
 ,!adding!public! !
 handles:!accessing!public! !
@@ -68,6 +73,7 @@ selectors: anArray
 	^self basicNew
 		selectors: anArray;
 		yourself! !
+
 !Kernel.ExceptionSet class categoriesForMethods!
 new!instance creation!public! !
 selectors:!instance creation!private! !

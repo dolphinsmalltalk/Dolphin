@@ -7,9 +7,13 @@ OS.ComDlgStructure
 	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_hDevMode' -> 16r8. '_OffsetOf_hDevNames' -> 16rC }!
+
 OS.PrintDialogStructure guid: (Core.GUID fromString: '{06b8f99c-539a-4568-8d6e-f72cb3c037b1}')!
+
 OS.PrintDialogStructure isNonInstantiable: true!
+
 OS.PrintDialogStructure comment: ''!
+
 !OS.PrintDialogStructure methodsFor!
 
 deviceName
@@ -93,6 +97,7 @@ returnDefaultFlag
 
 returnDefaults
 	self maskIn: self returnDefaultFlag! !
+
 !OS.PrintDialogStructure categoriesForMethods!
 deviceName!accessing!public! !
 devMode!operations!public! !
@@ -134,6 +139,7 @@ defineFields
 	self
 		defineField: #hDevMode type: HANDLEField new;
 		defineField: #hDevNames type: HANDLEField new! !
+
 !OS.PrintDialogStructure class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !

@@ -7,10 +7,15 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RefactoringTest guid: (Core.GUID fromString: '{bab50ae8-d54a-4645-9a41-ea07018cedf6}')!
+
 Refactory.Browser.Tests.RefactoringTest isNonInstantiable: true!
+
 Refactory.Browser.Tests.RefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RefactoringTest methodsFor!
 
 abstractVariableTestData
@@ -394,6 +399,7 @@ verifyMethod: aSymbol of: aClass equals: aString
 	self assertNotNil: method.
 	parseTree := method boundParseTree.
 	self assert: parseTree equals: (self parseMethod: aString in: modelClass)! !
+
 !Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
 abstractVariableTestData!constants!private! !
 childrenToSiblingTestData!constants!private! !

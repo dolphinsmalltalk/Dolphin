@@ -7,8 +7,11 @@ UI.Tests.TypeConverterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.BooleanToTextTest guid: (Core.GUID fromString: '{ebc0e5f2-04f1-4c58-b28b-96ed8da630ce}')!
+
 UI.Tests.BooleanToTextTest comment: ''!
+
 !UI.Tests.BooleanToTextTest methodsFor!
 
 testInvalidFormat
@@ -32,6 +35,7 @@ testStbConvertFromVersion0
 	self assert: subject rightNullValue equals: ''.
 	self assert: subject locale identicalTo: Locale default.
 	self assert: subject format equals: #('No' 'Yes')! !
+
 !UI.Tests.BooleanToTextTest categoriesForMethods!
 testInvalidFormat!public!unit tests! !
 testStbConvertFromVersion0!public! !

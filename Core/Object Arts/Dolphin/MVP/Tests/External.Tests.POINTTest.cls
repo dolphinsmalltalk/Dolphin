@@ -7,9 +7,13 @@ Graphics.Tests.AbstractPointTest
 	imports: #(#{Graphics private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.POINTTest guid: (Core.GUID fromString: '{9f425d20-35a5-4ddb-892b-1be3b6997ee3}')!
+
 External.Tests.POINTTest isNonInstantiable: true!
+
 External.Tests.POINTTest comment: ''!
+
 !External.Tests.POINTTest methodsFor!
 
 testAsObject
@@ -37,6 +41,7 @@ testValue
 	self assert: point class equals: Point.
 	self assert: point x equals: 101.
 	self assert: point y equals: 202! !
+
 !External.Tests.POINTTest categoriesForMethods!
 testAsObject!public!unit tests! !
 testMarshal!public!unit tests! !

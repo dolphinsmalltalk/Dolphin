@@ -7,11 +7,15 @@ Kernel.STLLegacyOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLOutFiler3 guid: (Core.GUID fromString: '{819044fa-ab3f-453d-9601-3d7a45ddcc55}')!
+
 Kernel.STLOutFiler3 comment: '`STLOutFiler3` is a `STLOutFiler` that writes object graphs in the STL v3 format.
 
 STL 3 was the original STL format introduced in Dolphin 6. There were no versions prior to 3 as the version number was synchronised with the STB version current at the time. This was partly because there was a lot of shared implementation and the object prefix encoding was the same. Not all literals were necessarily written as literals into the STL; nil appeared as the special prefix code zero (as in STB), and likewise Characters were encoded in the prefix. The same predefined objects and classes were also used, so some classes were not directly visible in the literal array source, but were hidden in the encoding (e.g. Array).'!
+
 !Kernel.STLOutFiler3 categoriesForClass!System-Binary storage! !
+
 !Kernel.STLOutFiler3 methodsFor!
 
 inFilerClass
@@ -225,6 +229,7 @@ writeReference: anInteger
 	"nil was not written as a literal, but as its STB reference, 0"
 
 	stream nextPut: (anInteger bitShift: PrefixRefShift)! !
+
 !Kernel.STLOutFiler3 categoriesForMethods!
 inFilerClass!constants!private! !
 locatorKeyFor:!helpers!public! !
@@ -271,6 +276,7 @@ version
 	"Answer the version number of the format produced by the receiver."
 
 	^3! !
+
 !Kernel.STLOutFiler3 class categoriesForMethods!
 initialize!class initialization!public! !
 literalPrinterClass!constants!public! !

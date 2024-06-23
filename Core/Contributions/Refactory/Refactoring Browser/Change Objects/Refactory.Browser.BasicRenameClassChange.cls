@@ -7,9 +7,13 @@ Refactory.Browser.ClassModificationChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BasicRenameClassChange guid: (Core.GUID fromString: '{dc85835a-3411-4e24-8431-aaf6173e1350}')!
+
 Refactory.Browser.BasicRenameClassChange comment: ''!
+
 !Refactory.Browser.BasicRenameClassChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.BasicRenameClassChange methodsFor!
 
 asUndoOperation
@@ -46,6 +50,7 @@ printOn: aStream
 rename: oldString to: newString
 	classReference := oldString asQualifiedReference.
 	newName := newString! !
+
 !Refactory.Browser.BasicRenameClassChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeClass!accessing!public! !
@@ -64,6 +69,7 @@ rename: oldString to: newString
 	^self new
 		rename: oldString to: newString;
 		yourself! !
+
 !Refactory.Browser.BasicRenameClassChange class categoriesForMethods!
 rename:to:!instance creation!public! !
 !

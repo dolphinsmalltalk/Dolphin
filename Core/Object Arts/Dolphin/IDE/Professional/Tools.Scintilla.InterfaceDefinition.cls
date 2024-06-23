@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.InterfaceDefinition guid: (Core.GUID fromString: '{5d1763e5-2a8b-42e5-9a1c-c1973b7e2d8b}')!
+
 Tools.Scintilla.InterfaceDefinition isNonInstantiable: true!
+
 Tools.Scintilla.InterfaceDefinition comment: ''!
+
 !Tools.Scintilla.InterfaceDefinition categoriesForClass!Development! !
+
 !Tools.Scintilla.InterfaceDefinition methodsFor!
 
 comment
@@ -47,6 +52,7 @@ retType: aString
 
 selector
 	^selector! !
+
 !Tools.Scintilla.InterfaceDefinition categoriesForMethods!
 comment!accessing!public! !
 comment:!accessing!private! !
@@ -76,6 +82,7 @@ tokens: anArray
 		id: (anArray at: 3)
 		name: (anArray at: 2)
 		retType: (anArray at: 1)! !
+
 !Tools.Scintilla.InterfaceDefinition class categoriesForMethods!
 icon!constants!development!public! !
 id:name:retType:!initializing!public! !

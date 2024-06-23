@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.IconFromSystemInitializer guid: (Core.GUID fromString: '{b837eb81-e528-4a29-8c00-af531894b3ab}')!
+
 Graphics.IconFromSystemInitializer comment: ''!
+
 !Graphics.IconFromSystemInitializer methodsFor!
 
 = anObject
@@ -59,6 +62,7 @@ printImage: anIcon on: aWriteStream
 				space;
 				print: identifier]
 		ifNotNil: [:name | aWriteStream nextPutAll: name]! !
+
 !Graphics.IconFromSystemInitializer categoriesForMethods!
 =!comparing!public! !
 createImage:extent:!private!realizing/unrealizing! !
@@ -85,6 +89,7 @@ identifier: anInteger
 	^self new
 		identifier: anInteger;
 		yourself! !
+
 !Graphics.IconFromSystemInitializer class categoriesForMethods!
 extent:identifier:!instance creation!public! !
 identifier:!instance creation!public! !

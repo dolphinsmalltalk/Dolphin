@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ValueBufferTest guid: (Core.GUID fromString: '{599f6879-a7ea-4110-bc74-2bae85fbf825}')!
+
 UI.Tests.ValueBufferTest comment: ''!
+
 !UI.Tests.ValueBufferTest methodsFor!
 
 testStbConvertFromVersion0
@@ -50,6 +53,7 @@ testStbConvertFromVersion1
 	subject gate value: true.
 	self assert: subject subject value equals: 456.
 	self deny: subject isModified! !
+
 !UI.Tests.ValueBufferTest categoriesForMethods!
 testStbConvertFromVersion0!public! !
 testStbConvertFromVersion1!public! !

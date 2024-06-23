@@ -5,9 +5,13 @@ VideoRecording subclass: #PVRRecording
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PVRRecording guid: (GUID fromString: '{afe83110-1d7c-46c1-811c-bc5a22c18ecb}')!
+
 PVRRecording comment: ''!
+
 !PVRRecording categoriesForClass!Samples! !
+
 !PVRRecording methodsFor!
 
 channel
@@ -47,6 +51,7 @@ rating: anObject
 titleAndEpisode
 
 	^'Title: <1s><N>Episode: <2s>'expandMacrosWith: (self title ifNil: ['-']) with: (self episodeTitle ifNil: ['-'])! !
+
 !PVRRecording categoriesForMethods!
 channel!accessing!private! !
 channel:!accessing!private! !

@@ -5,9 +5,13 @@ ListViewColumn subclass: #EditableListViewColumn
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 EditableListViewColumn guid: (GUID fromString: '{787a1ff5-1809-4381-ab64-22f338ecaa37}')!
+
 EditableListViewColumn comment: ''!
+
 !EditableListViewColumn categoriesForClass!Unclassified! !
+
 !EditableListViewColumn methodsFor!
 
 _imageFromRow: anObject
@@ -519,6 +523,7 @@ updateValue: aValue in: anObject
 updateValueIn: anObject
 
 	self updateValue: self editor embeddedValue in: anObject! !
+
 !EditableListViewColumn categoriesForMethods!
 _imageFromRow:!drawing!private! !
 activate!operations!public! !
@@ -596,6 +601,7 @@ stbVersion
 	15: Added isValidContentsBlock"
 
 	^15! !
+
 !EditableListViewColumn class categoriesForMethods!
 stbVersion!binary filing!public! !
 !

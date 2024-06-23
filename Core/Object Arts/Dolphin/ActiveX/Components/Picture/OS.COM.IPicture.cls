@@ -14,8 +14,11 @@ OS.COM.IUnknown
 			'PICTYPE_NONE' -> 16r0.
 			'PICTYPE_UNINITIALIZED' -> -16r1
 		}!
+
 OS.COM.IPicture guid: (OS.COM.IID fromString: '{7bf80980-bf32-101a-8bbb-00aa00300cab}')!
+
 OS.COM.IPicture isEgressOnly: true!
+
 OS.COM.IPicture comment: '`IPicture` is a wrapper class for the COM interface ''stdole.IPicture'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -93,7 +96,9 @@ interface IPicture : IUnknown
 };
 ```
 '!
+
 !OS.COM.IPicture categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IPicture methodsFor!
 
 attributes
@@ -388,6 +393,7 @@ width
 	answer := Int32 new.
 	self get_Width: answer.
 	^answer asObject! !
+
 !OS.COM.IPicture categoriesForMethods!
 attributes!**auto generated**!properties!public! !
 curDC!properties!public! !
@@ -549,6 +555,7 @@ readFromIStream: anIStream
 		riid: self iid
 		ppvObj: answer.
 	^answer! !
+
 !OS.COM.IPicture class categoriesForMethods!
 clsid!constants!private! !
 createPicture:type:owns:!instance creation!private! !

@@ -7,8 +7,11 @@ Core.Tests.CollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.BagTest guid: (Core.GUID fromString: '{31d1ecfc-cd30-4437-906f-69585c9e9c94}')!
+
 Core.Tests.BagTest comment: ''!
+
 !Core.Tests.BagTest methodsFor!
 
 collectionClass
@@ -47,6 +50,7 @@ testSortedCounts
 	subject := self collectionClass withAll: #('a' 'b' 'c' 'a' 'b' 'b').
 	self assert: subject sortedCounts equals: {3 -> 'b'. 2 -> 'a'. 1 -> 'c'}.
 	self assert: self collectionClass new sortedCounts equals: #()! !
+
 !Core.Tests.BagTest categoriesForMethods!
 collectionClass!constants!private! !
 testDeepCopy!public! !

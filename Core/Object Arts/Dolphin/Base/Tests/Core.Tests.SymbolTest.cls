@@ -7,11 +7,14 @@ Core.Tests.Utf8StringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SymbolTest guid: (Core.GUID fromString: '{da460501-580d-4216-8409-405ab77a12aa}')!
+
 Core.Tests.SymbolTest comment: 'This is the unit test for the class Symbol. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category'!
+
 !Core.Tests.SymbolTest methodsFor!
 
 assimilateString: aString
@@ -168,6 +171,7 @@ testSpecies
 
 testSymbolTable
 	Symbol.Table do: [:each | self assert: (each isNil or: [each isWeak])]! !
+
 !Core.Tests.SymbolTest categoriesForMethods!
 assimilateString:!helpers!private! !
 collectionClass!constants!private! !

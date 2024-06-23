@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2FrameNavigationStartingEventHandler guid: (OS.COM.IID fromString: '{e79908bf-2d5d-4968-83db-263fea2c1da3}')!
+
 WebView2.ICoreWebView2FrameNavigationStartingEventHandler comment: '`ICoreWebView2FrameNavigationStartingEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameNavigationStartingEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2FrameNavigationStartingEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2FrameNavigationStartingEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2FrameNavigationStartingEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2Frame* ICoreWebView2NavigationStartingEventArgs*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2FrameNavigationStartingEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#frameNavigationStarting:! !
+
 !WebView2.ICoreWebView2FrameNavigationStartingEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

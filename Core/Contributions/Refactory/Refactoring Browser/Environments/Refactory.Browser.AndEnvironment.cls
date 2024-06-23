@@ -7,9 +7,13 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AndEnvironment guid: (Core.GUID fromString: '{43ed7adb-6481-4a93-8ebe-b0861fc1ac52}')!
+
 Refactory.Browser.AndEnvironment comment: ''!
+
 !Refactory.Browser.AndEnvironment categoriesForClass!Refactory-Environments! !
+
 !Refactory.Browser.AndEnvironment methodsFor!
 
 andedEnvironment
@@ -74,6 +78,7 @@ storeOn: aStream
 	aStream nextPutAll: ' & '.
 	andedEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
+
 !Refactory.Browser.AndEnvironment categoriesForMethods!
 andedEnvironment!accessing!private! !
 andedEnvironment:!initialize/release!public! !
@@ -95,6 +100,7 @@ onEnvironment: anEnvironment and: anotherEnvironment
 	^(self onEnvironment: anEnvironment)
 		andedEnvironment: anotherEnvironment;
 		yourself! !
+
 !Refactory.Browser.AndEnvironment class categoriesForMethods!
 onEnvironment:and:!instance creation!public! !
 !

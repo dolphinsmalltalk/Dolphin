@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2DevToolsProtocolEventReceiver guid: (OS.COM.IID fromString: '{b32ca51a-8371-45e9-9317-af021d080367}')!
+
 WebView2.ICoreWebView2DevToolsProtocolEventReceiver isEgressOnly: true!
+
 WebView2.ICoreWebView2DevToolsProtocolEventReceiver comment: '`ICoreWebView2DevToolsProtocolEventReceiver` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceiver'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +36,9 @@ interface ICoreWebView2DevToolsProtocolEventReceiver : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2DevToolsProtocolEventReceiver categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2DevToolsProtocolEventReceiver methodsFor!
 
 Add_DevToolsProtocolEventReceived: handler token: token
@@ -54,6 +59,7 @@ Remove_DevToolsProtocolEventReceived: token
 
 	<virtual stdcall: hresult 5 int64>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2DevToolsProtocolEventReceiver categoriesForMethods!
 Add_DevToolsProtocolEventReceived:token:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceiver!private! !
 Remove_DevToolsProtocolEventReceived:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceiver!private! !
@@ -71,6 +77,7 @@ defineFunctions
 		defineFunction: #Remove_DevToolsProtocolEventReceived:
 			argumentTypes: 'sqword'
 ! !
+
 !WebView2.ICoreWebView2DevToolsProtocolEventReceiver class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

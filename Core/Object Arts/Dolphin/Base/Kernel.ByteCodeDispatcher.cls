@@ -15,7 +15,9 @@ Core.Object
 			'RunStarts'
 				-> #[0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 17 17 17 17 17 17 17 17 25 25 27 27 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 45 45 45 45 45 45 45 45 45 45 45 45 57 58 58 58 61 61 61 61 65 65 65 65 69 69 69 69 73 73 75 76 77 77 79 79 81 81 81 81 81 81 81 81 89 89 89 89 89 89 89 89 97 98 99 100 101 102 102 102 105 106 107 108 109 110 110 110 110 110 110 110 110 118 118 118 118 118 118 118 118 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 158 158 158 158 158 158 158 158 158 158 158 158 158 171 171 171 171 171 176 176 176 176 176 176 176 176 176 176 176 176 176 176 190 190 190 190 190 190 190 190 198 199 200 200 200 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 224 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255]
 		}!
+
 Kernel.ByteCodeDispatcher guid: (Core.GUID fromString: '{87b4c45d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.ByteCodeDispatcher comment: 'ByteCodeDispatchers decode bytecodes in <CompiledMethod>s and dispatches them to a plug-in <bytecodeInterpreter> client.
 
 Instance Variables:
@@ -31,7 +33,9 @@ Class Variables:
 	RunStarts			<IdentityDictionary>
 
 '!
+
 !Kernel.ByteCodeDispatcher categoriesForClass!Kernel-Objects! !
+
 !Kernel.ByteCodeDispatcher methodsFor!
 
 accessesInstVarAt: anInteger 
@@ -390,6 +394,7 @@ writesStatic: anAssociation
 					((#(#popStatic: #storeStatic:) identityIncludes: selector) and: [args first == offset]) or: 
 							[(#(#longPopStoreStatic:with: #longStoreStatic:with:) identityIncludes: selector)
 								and: [offset == (args first + (args last * 256))]]]]! !
+
 !Kernel.ByteCodeDispatcher categoriesForMethods!
 accessesInstVarAt:!public!testing! !
 accessesInstVarAtAnyOf:!public!testing! !
@@ -498,6 +503,7 @@ on: aCompiledCode for: anInstructionInterpreter
 	^(self on: aCompiledCode)
 		interpreter: anInstructionInterpreter;
 		yourself! !
+
 !Kernel.ByteCodeDispatcher class categoriesForMethods!
 bytecodeRuns!constants!must not strip!private! !
 decodeLongJump:byte2:!helpers!public! !

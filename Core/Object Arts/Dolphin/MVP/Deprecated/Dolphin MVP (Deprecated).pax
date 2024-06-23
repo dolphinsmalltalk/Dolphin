@@ -183,31 +183,37 @@ Object subclass: #ComparisonPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #LOGFONT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandPolicy subclass: #LegacyCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #DEVMODE
 	instanceVariableNames: ''
 	classVariableNames: '_DEVMODE_Size _OffsetOf_dmBitsPerPel _OffsetOf_dmCollate _OffsetOf_dmColor _OffsetOf_dmCopies _OffsetOf_dmDefaultSource _OffsetOf_dmDeviceName _OffsetOf_dmDisplayFlags _OffsetOf_dmDisplayFrequency _OffsetOf_dmDitherType _OffsetOf_dmDriverExtra _OffsetOf_dmDriverVersion _OffsetOf_dmDuplex _OffsetOf_dmFields _OffsetOf_dmFormName _OffsetOf_dmICMIntent _OffsetOf_dmICMMethod _OffsetOf_dmLogPixels _OffsetOf_dmMediaType _OffsetOf_dmOrientation _OffsetOf_dmPaperLength _OffsetOf_dmPaperSize _OffsetOf_dmPaperWidth _OffsetOf_dmPelsHeight _OffsetOf_dmPelsWidth _OffsetOf_dmPrintQuality _OffsetOf_dmReserved1 _OffsetOf_dmReserved2 _OffsetOf_dmScale _OffsetOf_dmSize _OffsetOf_dmSpecVersion _OffsetOf_dmTTOption _OffsetOf_dmYResolution'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListBox subclass: #MultipleSelectionListBox
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListView subclass: #MultipleSelectionListView
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -243,6 +249,7 @@ addKey: vKeyCode commandDescription: aCommandDescription
 	#deprecated.
 	aCommandDescription acceleratorKey: vKeyCode.
 	self addCommand: aCommandDescription! !
+
 !AcceleratorTable categoriesForMethods!
 accelerators!accessing!public! !
 addKey:commandDescription:!adding!public! !
@@ -253,6 +260,7 @@ addKey:commandDescription:!adding!public! !
 basicSelectionByIndex: anInteger 
 	#deprecated.	"Present for loading of old view resources"
 	self setSingleSelection: anInteger! !
+
 !BasicListAbstract categoriesForMethods!
 basicSelectionByIndex:!private!selection! !
 !
@@ -266,6 +274,7 @@ beAlpha
 beNotAlpha
 	#deprecated.
 	self usePerPixelAlpha: false! !
+
 !BLENDFUNCTION categoriesForMethods!
 beAlpha!accessing!public! !
 beNotAlpha!accessing!public! !
@@ -297,6 +306,7 @@ hasWest
 	"Answer whether a view has been arranged to the right edge."
 
 	^self west notNil! !
+
 !BorderLayout categoriesForMethods!
 hasCenter!accessing!public! !
 hasEast!accessing!public! !
@@ -326,6 +336,7 @@ ltGray
 
 	Notification deprecated.
 	^self silver! !
+
 !Brush class categoriesForMethods!
 dkGray!instance creation!public! !
 hatchedDiagonal!instance creation!public! !
@@ -376,6 +387,7 @@ setBkMode: mode
 setTextColor: colour
 	Notification deprecated.	"6.0 (reprise)"
 	^self forecolor: colour! !
+
 !Canvas categoriesForMethods!
 fonts:do:!enumerating!public! !
 origin:!operations!public! !
@@ -394,6 +406,7 @@ resource_Multiselection_list_box
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(MultipleSelectionListBox) 34 17 nil nil 34 2 8 1412499713 1025 416 787270 2 ##(ListModel) 138 144 8 #() nil 1638406 ##(IdentitySearchPolicy) 917510 ##(Color) #default nil 5 nil nil nil 416 nil 8 1920482304 786950 ##(Message) #displayString 8 #() 8 #() false 1310982 ##(MessageSequence) 138 144 34 3 1049350 ##(MessageSend) #createAt:extent: 34 2 655878 ##(Point) 6143 21 802 251 351 416 754 #caretIndex: 8 #(1) 416 754 #horizontalExtent: 8 #(0) 416 1179910 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 185 0 0 0] 8 #() 802 193 193 nil 27)! !
+
 !ChoicePresenter class categoriesForMethods!
 resource_Multiselection_list_box!public!resources-views! !
 !
@@ -418,6 +431,7 @@ getObjectBinaryStoreBytesIfNone: exceptionHandler
 setText: text format: formatName
 	Notification deprecated.	"Just use setData:format:"
 	self setRegisteredFormat: formatName data: text! !
+
 !Clipboard categoriesForMethods!
 getObjectBinaryStoreBytes!accessing!public! !
 getObjectBinaryStoreBytesIfNone:!accessing!public! !
@@ -443,6 +457,7 @@ saturation
 
 	Notification deprecated.
 	^self hls at: 3! !
+
 !Color categoriesForMethods!
 asDword!converting!public! !
 asIndexedColor!converting!public! !
@@ -454,6 +469,7 @@ saturation!accessing!public! !
 buttonFace
 	Notification deprecated.
 	^Face3d! !
+
 !Color class categoriesForMethods!
 buttonFace!instance creation!public! !
 !
@@ -472,6 +488,7 @@ asIndexedColorUsingPalette: hPalette
 	"Answer the receiver as the nearest <IndexedColour> using hPalette"
 
 	^self asRGB asIndexedColorUsingPalette: hPalette! !
+
 !ColorRef categoriesForMethods!
 asIndexedColor!converting!public! !
 asIndexedColorUsingPalette:!converting!public! !
@@ -493,6 +510,7 @@ enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInt
 	<stdcall: sdword EnumFontsW handle lpwstr lpvoid uintptr>
 	#deprecated.
 	^self invalidCall: _failureCode! !
+
 !GDILibrary categoriesForMethods!
 enumFonts:lpFaceName:lpFontFunc:lParam:!public!win32 functions-font and text! !
 !
@@ -506,6 +524,7 @@ fileLocator: aClassLocator
 identifier: id
 	Notification deprecated.
 	initializer identifier: id! !
+
 !Image categoriesForMethods!
 fileLocator:!accessing!public! !
 identifier:!accessing!public! !
@@ -523,6 +542,7 @@ width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInt
 		initialSize: sizeInteger
 		growBy: growthInteger
 		masked: false! !
+
 !ImageList class categoriesForMethods!
 width:height:flags:size:growthGranularity:!instance creation!public! !
 !
@@ -536,6 +556,7 @@ asIndexedColor
 
 	#deprecated.
 	^self! !
+
 !IndexedColor categoriesForMethods!
 asIndexedColor!converting!public! !
 !
@@ -545,6 +566,7 @@ asIndexedColor!converting!public! !
 validationBlock
 	#deprecated.
 	^[:response | (self validater value: response) value]! !
+
 !InplaceTextEditor categoriesForMethods!
 validationBlock!accessing!public! !
 !
@@ -554,6 +576,7 @@ validationBlock!accessing!public! !
 basicSelectionByIndex: sel
 	#deprecated.	"Presenter for old view resources"
 	self basicSelectionsByIndex: sel! !
+
 !ListBox categoriesForMethods!
 basicSelectionByIndex:!private!selection! !
 !
@@ -578,6 +601,7 @@ updateItem: anObject
 updateItem: anObject ifAbsent: exceptionHandler
 	#deprecated.	"Use #refresh:ifAbsent:"
 	^self refresh: anObject ifAbsent: exceptionHandler! !
+
 !ListModel categoriesForMethods!
 updateAtIndex:!public!updating! !
 updateItem:!private!updating! !
@@ -605,6 +629,7 @@ resource_Multiselection_list_box
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(STBViewProxy) 8 ##(MultipleSelectionListBox) 98 17 0 0 98 2 8 1144064257 1025 416 590662 2 ##(ListModel) 202 208 98 0 0 1114638 ##(STBSingletonProxy) 8 ##(SearchPolicy) 8 #identity 524550 ##(ColorRef) 8 4278190080 0 7 0 0 0 416 0 8 4294903705 459270 ##(Message) 8 #displayString 98 0 544 32 983302 ##(MessageSequence) 202 208 98 2 721670 ##(MessageSend) 8 #createAt:extent: 98 2 328198 ##(Point) 11 11 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 180 0 0 0] 98 0 882 193 193 0 27)! !
+
 !ListPresenter class categoriesForMethods!
 resource_Multiselection_enhanced_list_view!public!resources-views! !
 resource_Multiselection_list_box!public!resources-views! !
@@ -634,6 +659,7 @@ lvmSetExtendedListViewStyle: anInteger dwExStyle: aBoolean
 
 	#deprecated.
 	self listViewStyleMask: anInteger set: aBoolean! !
+
 !ListView categoriesForMethods!
 columns!columns!public! !
 lvmSetExtendedListViewStyle:!accessing!private! !
@@ -649,6 +675,7 @@ style
 style: anInteger 
 	Notification deprecated.
 	self lbStyle: anInteger! !
+
 !LOGBRUSH categoriesForMethods!
 style!accessing!public! !
 style:!accessing!public! !
@@ -663,6 +690,7 @@ style
 style: anInteger 
 	Notification deprecated.
 	self lopnStyle: anInteger! !
+
 !LOGPEN categoriesForMethods!
 style!accessing!public! !
 style:!accessing!public! !
@@ -675,6 +703,7 @@ offset: aPoint
 	self
 		xOffsetPercent: aPoint x;
 		yOffsetPercent: aPoint y! !
+
 !LVBKIMAGEW categoriesForMethods!
 offset:!public! !
 !
@@ -717,6 +746,7 @@ replace: aString with: aMenu
 	Notification deprecated.	"Searching a menu by display string is a poor practice."
 	index := items indexOf: (self find: aString).
 	self itemAt: index put: aMenu! !
+
 !Menu categoriesForMethods!
 find:!public!searching! !
 find:ifAbsent:!public!searching! !
@@ -733,6 +763,7 @@ updateItem: element andChildren: andChildren imagesOnly: aBoolean
 		invalidateItem: element
 		andChildren: andChildren
 		imagesOnly: aBoolean! !
+
 !MoenTreeView categoriesForMethods!
 updateItem:andChildren:imagesOnly:!painting!public! !
 !
@@ -746,6 +777,7 @@ handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
 		wParam: wParam
 		hdc: hdc
 		paintStruct: ps! !
+
 !PaintEvent class categoriesForMethods!
 handle:wParam:hdc:paintStruct:!instance creation!public! !
 !
@@ -755,6 +787,7 @@ handle:wParam:hdc:paintStruct:!instance creation!public! !
 asDword
 	#deprecated.
 	^self asUInt32! !
+
 !Point categoriesForMethods!
 asDword!converting!public! !
 !
@@ -764,6 +797,7 @@ asDword!converting!public! !
 asDword
 	#deprecated.
 	^self asUInt32! !
+
 !POINT categoriesForMethods!
 asDword!converting!public! !
 !
@@ -783,6 +817,7 @@ removeCommandQueryHandler: aSymbol
 
 	Notification deprecated.	"see #addCommandQueryHandler:"
 	legacyQueryCommandHandlers := legacyQueryCommandHandlers copyWithout: aSymbol! !
+
 !Presenter class categoriesForMethods!
 addCommandQueryHandler:!accessing!public! !
 removeCommandQueryHandler:!accessing!public! !
@@ -793,6 +828,7 @@ removeCommandQueryHandler:!accessing!public! !
 validationBlock
 	#deprecated.
 	^[:response | (self validater value: response) value]! !
+
 !Prompter categoriesForMethods!
 validationBlock!accessing!public! !
 !
@@ -808,6 +844,7 @@ asIndexedColorUsingPalette: hPalette
 	^index < 0
 		ifTrue: [GDILibrary default systemError]
 		ifFalse: [IndexedColor withIndex: (index bitOr: 16r1000000)]! !
+
 !RGB categoriesForMethods!
 asIndexedColorUsingPalette:!converting!public! !
 !
@@ -817,6 +854,7 @@ asIndexedColorUsingPalette:!converting!public! !
 stdColor: aSymbol
 	Notification deprecated.
 	^self named: aSymbol! !
+
 !RGB class categoriesForMethods!
 stdColor:!instance creation!public! !
 !
@@ -830,6 +868,7 @@ continuousTracking
 continuousTracking: aBoolean 
 	#deprecated.
 	self isTrackingContinuous: aBoolean! !
+
 !ScrollingDecorator categoriesForMethods!
 continuousTracking!modes!public! !
 continuousTracking:!modes!public! !
@@ -842,6 +881,7 @@ hasCommandHistory: aBoolean
 
 	Notification deprecated.
 	commandHistory := aBoolean ifTrue: [HistoryList new]! !
+
 !Shell categoriesForMethods!
 hasCommandHistory:!accessing!public! !
 !
@@ -855,6 +895,7 @@ hasThickFrame
 hasThickFrame: aBoolean 
 	#deprecated. "6.0: #1375"
 	self isResizable: aBoolean! !
+
 !ShellView categoriesForMethods!
 hasThickFrame!accessing-styles!public! !
 hasThickFrame:!accessing-styles!public! !
@@ -885,6 +926,7 @@ selection
 selection: anIntervalOrNil
 	Notification deprecated.
 	self selectionRange: anIntervalOrNil! !
+
 !Slider categoriesForMethods!
 hasTicksBoth!accessing-styles!public!updating! !
 hasTicksBoth:!accessing-styles!public!updating! !
@@ -899,6 +941,7 @@ selection:!accessing!public! !
 beFullWidth
 	Notification deprecated.
 	self isAutoResize: true! !
+
 !StatusBarItemAbstract categoriesForMethods!
 beFullWidth!accessing!public! !
 !
@@ -908,6 +951,7 @@ beFullWidth!accessing!public! !
 fromId: anInteger
 	Notification deprecated.
 	^self withIndex: anInteger! !
+
 !SystemColor class categoriesForMethods!
 fromId:!instance creation!public! !
 !
@@ -963,6 +1007,7 @@ supportsAlphaBlending
 
 	#deprecated. "We no longer support OSs earlier than Vista, so this is always true."
 	^true! !
+
 !SystemMetrics categoriesForMethods!
 hasButtonNotes!capability enquiries!public! !
 hasDesktopComposition!capability enquiries!public! !
@@ -1028,6 +1073,7 @@ updatePerChar: aBoolean
 
 	Notification deprecated.
 	self updateMode: (aBoolean ifTrue: [#perChar] ifFalse: [#focusLost])! !
+
 !TextEdit categoriesForMethods!
 findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
 isLowercase!public!testing! !
@@ -1050,6 +1096,7 @@ text: labelString font: fontString color: aColor
 		text: labelString
 		fontName: fontString
 		color: aColor! !
+
 !TextTileIcon class categoriesForMethods!
 text:font:color:!instance creation!public! !
 !
@@ -1059,6 +1106,7 @@ text:font:color:!instance creation!public! !
 isAppThemed
 	Notification deprecated.
 	^self default isAppThemed! !
+
 !ThemeLibrary class categoriesForMethods!
 isAppThemed!private!testing! !
 !
@@ -1072,6 +1120,7 @@ disableExpandAll
 disableExpandAll: aBoolean 
 	#deprecated.
 	self isExpandAllEnabled: aBoolean not! !
+
 !TreeView categoriesForMethods!
 disableExpandAll!accessing!public! !
 disableExpandAll:!accessing!public! !
@@ -1094,6 +1143,7 @@ rightExceptionalValue
 rightExceptionalValue: anObject
 	#deprecated.
 	^self rightNullValue: anObject! !
+
 !TypeConverter categoriesForMethods!
 leftExceptionalValue!accessing!public! !
 leftExceptionalValue:!accessing!public! !
@@ -1115,6 +1165,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 
 	<stdcall: bool WinHelpA handle lpstr dword uintptr>
 	^self invalidCall: _failureCode! !
+
 !UserLibrary categoriesForMethods!
 winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
 !
@@ -1146,6 +1197,7 @@ winHelpPopup: helpFileString topic: topicId at: aPointOrNil
 		lpszHelp: helpFileString
 		uCommand: HELP_CONTEXTPOPUP
 		dwData: topicId! !
+
 !View categoriesForMethods!
 defaultWindowProcessing:!dispatching!public! !
 winHelpPopup:topic:!public! !
@@ -1161,6 +1213,7 @@ message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
+
 !WindowsEvent class categoriesForMethods!
 message:handle:wParam:lParam:!public! !
 !

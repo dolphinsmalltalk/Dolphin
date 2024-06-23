@@ -57,11 +57,15 @@ OS.SizedStructure
 			'MIIM_SUBMENU' -> 16r4.
 			'MIIM_TYPE' -> 16r10
 		}!
+
 OS.MENUITEMINFOW guid: (Core.GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
+
 OS.MENUITEMINFOW comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 See the Win32 SDK documentation for further information.'!
+
 !OS.MENUITEMINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.MENUITEMINFOW methodsFor!
 
 basicText: aString
@@ -212,6 +216,7 @@ wID: anInteger
 	"Set the receiver's 'wID' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_wID put: anInteger! !
+
 !OS.MENUITEMINFOW categoriesForMethods!
 basicText:!accessing!private! !
 cch:!**compiled accessors**!public! !
@@ -277,6 +282,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #fType #fState #wID #hSubMenu #hbmpChecked #hbmpUnchecked #dwItemData #dwTypeData #cch #hbmpItem)! !
+
 !OS.MENUITEMINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

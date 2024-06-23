@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.PushDownInstanceVariableRefactoringTest guid: (Core.GUID fromString: '{69faf87f-a963-4715-ba17-dc564b648dde}')!
+
 Refactory.Browser.Tests.PushDownInstanceVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.PushDownInstanceVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.PushDownInstanceVariableRefactoringTest methodsFor!
 
 testModelPushDownToMetaclass
@@ -65,6 +69,7 @@ testPushDownInstanceVariable
 	self executeRefactoring: refactoring.
 	(refactoring model classFor: LintRuleTestData) withAllSubclasses
 		do: [:each | self deny: (each directlyDefinesInstanceVariable: 'foo1')]! !
+
 !Refactory.Browser.Tests.PushDownInstanceVariableRefactoringTest categoriesForMethods!
 testModelPushDownToMetaclass!public!tests! !
 testModelPushDownToMultipleSubclasses!public!tests! !

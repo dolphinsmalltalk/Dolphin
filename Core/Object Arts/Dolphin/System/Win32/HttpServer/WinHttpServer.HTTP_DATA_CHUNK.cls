@@ -18,7 +18,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_FromMemory_BufferLength' -> 16rC.
 			'_OffsetOf_FromMemory_pBuffer' -> 16r8
 		}!
+
 WinHttpServer.HTTP_DATA_CHUNK guid: (Core.GUID fromString: '{831e8135-6bb5-45e2-b278-10b1c489883a}')!
+
 WinHttpServer.HTTP_DATA_CHUNK comment: '`HTTP_DATA_CHUNK` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_DATA_CHUNK'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -52,7 +54,9 @@ struct tagHTTP_DATA_CHUNK {
 } HTTP_DATA_CHUNK;
 ```
 '!
+
 !WinHttpServer.HTTP_DATA_CHUNK categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_DATA_CHUNK methodsFor!
 
 data: aByteObject
@@ -163,6 +167,7 @@ FromMemory_pBuffer: anAddress
 printableFields
 	^{#(#FromMemory_pBuffer #FromFileHandle_FileHandle #FromFragmentCache_pFragmentName #FromFragmentCacheEx_pFragmentName)
 			at: self DataChunkType + 1}! !
+
 !WinHttpServer.HTTP_DATA_CHUNK categoriesForMethods!
 data:!accessing!public! !
 DataChunkType!**compiled accessors**!public! !
@@ -239,6 +244,7 @@ defineFields
 
 getFieldNames
 	^#(#DataChunkType #FromFileHandle_ByteRange #FromFragmentCache_FragmentNameLength #FromFragmentCacheEx_ByteRange #FromMemory_pBuffer #FromFragmentCache_pFragmentName #FromMemory_BufferLength #FromFileHandle_FileHandle #FromFragmentCacheEx_pFragmentName)! !
+
 !WinHttpServer.HTTP_DATA_CHUNK class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 data:!instance creation!public! !

@@ -5,9 +5,13 @@ SUnitAbsWrapper subclass: #SUnitStatusTextWrapper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitStatusTextWrapper guid: (GUID fromString: '{a7174fb3-d519-4e52-9a7c-d777937cad5f}')!
+
 SUnitStatusTextWrapper comment: ''!
+
 !SUnitStatusTextWrapper categoriesForClass!Unclassified! !
+
 !SUnitStatusTextWrapper methodsFor!
 
 icon
@@ -34,6 +38,7 @@ text: anObject
 	"Private - Set the value of the receiver's ''text'' instance variable to the argument, anObject."
 
 	self subject: anObject! !
+
 !SUnitStatusTextWrapper categoriesForMethods!
 icon!accessing!public! !
 text!accessing!public! !
@@ -47,6 +52,7 @@ newOn: aString model: anSUnitBrowserModel
 	^(self newOn: anSUnitBrowserModel)
 		text: aString;
 		yourself! !
+
 !SUnitStatusTextWrapper class categoriesForMethods!
 newOn:model:!instantiating!public! !
 !

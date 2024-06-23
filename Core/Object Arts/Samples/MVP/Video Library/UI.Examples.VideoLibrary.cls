@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.VideoLibrary guid: (Core.GUID fromString: '{e07e20a9-89d7-4f84-941a-7c3365cf6112}')!
+
 UI.Examples.VideoLibrary comment: 'VideoLibrary is represents a collection of VideoTapes that belong to a particular owner. This class is part of the Video Library sample package. Please see the package comment for more details.'!
+
 !UI.Examples.VideoLibrary categoriesForClass!Samples! !
+
 !UI.Examples.VideoLibrary methodsFor!
 
 defaultOwner	
@@ -77,6 +81,7 @@ tapes
 	"
 
 	^tapes! !
+
 !UI.Examples.VideoLibrary categoriesForMethods!
 defaultOwner!constants!private! !
 displayOn:!printing!public! !
@@ -117,6 +122,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	DefaultInstance := nil! !
+
 !UI.Examples.VideoLibrary class categoriesForMethods!
 default!accessing!public! !
 icon!constants!public! !

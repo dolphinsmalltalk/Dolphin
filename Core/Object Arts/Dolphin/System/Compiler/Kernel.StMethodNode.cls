@@ -7,7 +7,9 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'HasErrorsMask' -> 16r2. 'IsExpressionMask' -> 16r1 }!
+
 Kernel.StMethodNode guid: (Core.GUID fromString: '{a10b25e1-f065-457c-90d9-2571ebf23f51}')!
+
 Kernel.StMethodNode comment: 'StMethodNode is the parse tree node type that represents a Smalltalk method.
 
 Instance Variables:
@@ -19,7 +21,9 @@ Instance Variables:
 	tag	<Interval | nil>	the source location of any resource/primitive tags
 
 '!
+
 !Kernel.StMethodNode categoriesForClass!System-Compiler! !
+
 !Kernel.StMethodNode methodsFor!
 
 = anObject
@@ -263,6 +267,7 @@ tags: aSequencedReadableCollection
 
 uses: aNode 
 	^body == aNode and: [aNode lastIsReturn]! !
+
 !Kernel.StMethodNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -347,6 +352,7 @@ selectorParts: tokenCollection arguments: variableNodes
 	^(self new)
 		selectorParts: tokenCollection arguments: variableNodes;
 		yourself! !
+
 !Kernel.StMethodNode class categoriesForMethods!
 new!instance creation!public! !
 selector:arguments:body:!instance creation!public! !

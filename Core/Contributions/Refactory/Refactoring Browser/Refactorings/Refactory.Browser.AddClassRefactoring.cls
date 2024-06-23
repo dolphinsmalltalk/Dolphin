@@ -7,9 +7,13 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AddClassRefactoring guid: (Core.GUID fromString: '{3623578c-f5f8-44a8-bafa-679532fa3a9a}')!
+
 Refactory.Browser.AddClassRefactoring comment: ''!
+
 !Refactory.Browser.AddClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.AddClassRefactoring methodsFor!
 
 className
@@ -122,6 +126,7 @@ transform
 	self model
 		defineClassWithDetails: details;
 		reparentClasses: subclasses to: (model instanceClassNamed: self className)! !
+
 !Refactory.Browser.AddClassRefactoring categoriesForMethods!
 className!accessing!public! !
 definitionMessage!public!transforming! !
@@ -163,6 +168,7 @@ model: aRBModel details: aClassDetails subclasses: anArray
 		model: aRBModel;
 		details: aClassDetails subclasses: anArray;
 		yourself! !
+
 !Refactory.Browser.AddClassRefactoring class categoriesForMethods!
 addClass:superclass:subclasses:categories:!instance creation!public! !
 details:subclasses:!instance creation!public! !

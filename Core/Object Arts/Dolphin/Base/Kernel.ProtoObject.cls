@@ -7,9 +7,13 @@ nil
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ProtoObject guid: (Core.GUID fromString: '{30771b7b-8bf6-4c81-8d54-7ed3b247a81d}')!
+
 Kernel.ProtoObject comment: 'ProtoObject is an abstract class that can be used as a basis for creating a variety of "stub" subclasses.  It supplies the minimum protocol that might be useful for any such stub in order that inspection and debugging may successfully take place.'!
+
 !Kernel.ProtoObject categoriesForClass!System-Support! !
+
 !Kernel.ProtoObject methodsFor!
 
 ~~ comparand
@@ -157,6 +161,7 @@ primitiveFailed: anInteger
 	"Generate an error to the effect that a primitive has failed, including the failure code specified by the primitive."
 
 	^HRESULTError signal: 'Primitive failed' withFailureCode: anInteger! !
+
 !Kernel.ProtoObject categoriesForMethods!
 ~~!comparing!public! !
 ==!comparing!public! !

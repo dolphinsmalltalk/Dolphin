@@ -16,11 +16,15 @@ External.Structure
 			'_OffsetOf_bmWidth' -> 16r4.
 			'_OffsetOf_bmWidthBytes' -> 16rC
 		}!
+
 OS.BITMAP guid: (Core.GUID fromString: '{f44c9143-2b3f-11d3-8368-7a8b5a000000}')!
+
 OS.BITMAP comment: 'BITMAP is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAP structure is used to describe bitmaps, containing attributes such as the width, height, and color format, and a pointer to the bitmap''s bits.'!
+
 !OS.BITMAP categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.BITMAP methodsFor!
 
 bmBits
@@ -68,6 +72,7 @@ extent
 
 	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_bmWidth)
 		y: (bytes int32AtOffset: _OffsetOf_bmHeight)! !
+
 !OS.BITMAP categoriesForMethods!
 bmBits!**compiled accessors**!public! !
 bmBitsPixel!**compiled accessors**!public! !
@@ -110,6 +115,7 @@ defineFields
 
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits)! !
+
 !OS.BITMAP class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

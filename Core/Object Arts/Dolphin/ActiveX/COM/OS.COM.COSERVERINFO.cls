@@ -13,13 +13,17 @@ External.Structure
 			'_OffsetOf_pAuthInfo' -> 16r8.
 			'_OffsetOf_pwszName' -> 16r4
 		}!
+
 OS.COM.COSERVERINFO guid: (Core.GUID fromString: '{87b4c5b4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.COSERVERINFO comment: '`OS.COM.COSERVERINFO` is an External.Structure class to represent the DCOM COSERVERINFO structure.
 
 COSERVERINFO is used to explicitly identify a remote machine when instantiating COM objects (i.e. it is used in conjunction with CoCreateInstanceEx)..
 
 The only relevant member at present is #pwszName, which would usually be a UNC or DNS name, or a numeric IP address.'!
+
 !OS.COM.COSERVERINFO categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.COSERVERINFO methodsFor!
 
 hostName
@@ -54,6 +58,7 @@ pwszName: anUtf16String
 	"Set the receiver's 'pwszName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszName put: anUtf16String yourAddress! !
+
 !OS.COM.COSERVERINFO categoriesForMethods!
 hostName!accessing!public! !
 hostName:!accessing!public! !
@@ -89,6 +94,7 @@ defineFields
 
 getFieldNames
 	^#(#pwszName #pAuthInfo)! !
+
 !OS.COM.COSERVERINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

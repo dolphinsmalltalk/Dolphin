@@ -5,9 +5,13 @@ Object subclass: #SUnitAbsModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'defaultConfiguration'!
+
 SUnitAbsModel guid: (GUID fromString: '{c2a17045-af69-4225-bd7d-54001f456f8f}')!
+
 SUnitAbsModel comment: ''!
+
 !SUnitAbsModel categoriesForClass!Unclassified! !
+
 !SUnitAbsModel methodsFor!
 
 basicSelectedItems
@@ -254,6 +258,7 @@ useDisplayNames
 useDisplayNames: aBoolean
 
 	self configuration useDisplayNames: aBoolean! !
+
 !SUnitAbsModel categoriesForMethods!
 basicSelectedItems!accessing!private! !
 browser!accessing!private! !
@@ -393,6 +398,7 @@ useDisplayNames
 useDisplayNames: aBoolean
 
 	self defaultConfiguration useDisplayNames: aBoolean! !
+
 !SUnitAbsModel class categoriesForMethods!
 basicDefaultConfiguration!configuring!public! !
 configurationClass!constants!public! !

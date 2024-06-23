@@ -14,13 +14,17 @@ External.Structure
 			'_OffsetOf_tdPortNameOffset' -> 16r8.
 			'_OffsetOf_tdSize' -> 16r0
 		}!
+
 OS.COM.DVTARGETDEVICE guid: (Core.GUID fromString: '{48447b1a-95e7-4ede-be68-a34481486812}')!
+
 OS.COM.DVTARGETDEVICE comment: '<DVTARGETDEVICE> is an <ExternalStructure> class to wrap the struct ''OCIDL.DVTARGETDEVICE'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.DVTARGETDEVICE categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.DVTARGETDEVICE methodsFor!
 
 tdData
@@ -90,6 +94,7 @@ tdSize: anInteger
 	"Set the receiver's 'tdSize' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_tdSize put: anInteger! !
+
 !OS.COM.DVTARGETDEVICE categoriesForMethods!
 tdData!accessing!public! !
 tdData:!accessing!public! !
@@ -142,6 +147,7 @@ defineFields
 
 getFieldNames
 	^#(#tdSize #tdDriverNameOffset #tdDeviceNameOffset #tdPortNameOffset #tdExtDevmodeOffset)! !
+
 !OS.COM.DVTARGETDEVICE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

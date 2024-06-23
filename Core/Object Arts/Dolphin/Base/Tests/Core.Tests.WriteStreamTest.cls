@@ -7,8 +7,11 @@ Core.Tests.PositionableStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.WriteStreamTest guid: (Core.GUID fromString: '{9d14176b-5486-40dc-bc22-694add104427}')!
+
 Core.Tests.WriteStreamTest comment: ''!
+
 !Core.Tests.WriteStreamTest methodsFor!
 
 streamClass
@@ -147,6 +150,7 @@ testUpToUtf
 	| stream |
 	stream := self streamOn: '1£/🐬'.
 	self readOperationNotImplemented: [stream upTo: Character dolphin]! !
+
 !Core.Tests.WriteStreamTest categoriesForMethods!
 streamClass!helpers!private! !
 streamOn:!helpers!private! !
@@ -177,6 +181,7 @@ allTestSelectors
 	| roCategory |
 	roCategory := 'gettableStream only' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
+
 !Core.Tests.WriteStreamTest class categoriesForMethods!
 allTestSelectors!Accessing!public! !
 !

@@ -7,13 +7,17 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassEnvironment guid: (Core.GUID fromString: '{6ced2bfc-a2ca-479f-9eef-d74b2baa9d59}')!
+
 Refactory.Browser.ClassEnvironment comment: 'A ClassEnvironment defines a slice of the system that includes all the classes, methods, resources, etc in a particular set of classes.
 
 Instance Variables:
 	classes	<Collection of: Symbol>		the class names (not metaclasses)
 	metaClasses	<Collection of: Symbol>	the class names for the metaclasses that are selected'!
+
 !Refactory.Browser.ClassEnvironment categoriesForClass!Refactory-Environments! !
+
 !Refactory.Browser.ClassEnvironment methodsFor!
 
 addClass: aClass
@@ -104,6 +108,7 @@ storeOn: aStream
 	aStream nextPutAll: ' classReferences: '.
 	classes asArray storeOn: aStream.
 	aStream nextPut: $)! !
+
 !Refactory.Browser.ClassEnvironment categoriesForMethods!
 addClass:!adding!public! !
 approximateNumberOfClasses!accessing!private! !
@@ -132,6 +137,7 @@ storeOn:!printing!public! !
 onEnvironment: anEnvironment classes: aCollection
 	^(self onEnvironment: anEnvironment)
 		classes: aCollection; yourself! !
+
 !Refactory.Browser.ClassEnvironment class categoriesForMethods!
 onEnvironment:classes:!instance creation!public! !
 !

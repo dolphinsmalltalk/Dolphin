@@ -7,13 +7,17 @@ UI.TextDocument
 	imports: #(#{MSXML private})
 	classInstanceVariableNames: ''
 	classConstants: { 'RememberPlacementMask' -> 16r1 }!
+
 UI.Examples.XmlPad guid: (Core.GUID fromString: '{0b798c7b-c80f-46ab-9dd4-d8832b78d33c}')!
+
 UI.Examples.XmlPad comment: '`XmlPad` is a simple XML text editor. It is intended to demonstrate the `DocumentShell` hierarchy of Dolphin''s application framework, the `ScintillaView` editor component, and the use of the MSXML. XmlPad also demonstrates how to use the registry to save and restore user preferences. 
 
 ```
 XmlPad show
 ```'!
+
 !UI.Examples.XmlPad categoriesForClass!MVP-Presenters! !
+
 !UI.Examples.XmlPad methodsFor!
 
 about
@@ -339,6 +343,7 @@ validateXml
 		value: (
 			[self basicValidateXml.
 			nil] on: DOMParseError do: [:ex | ex tag])! !
+
 !UI.Examples.XmlPad categoriesForMethods!
 about!commands-actions!public! !
 basicValidateXml!helpers!private! !
@@ -468,6 +473,7 @@ toolName
 
 userSettingsRootKey
 	^RegKey userRoot createKey: self installKeyName! !
+
 !UI.Examples.XmlPad class categoriesForMethods!
 about!enquiries!private! !
 defaultFileExtension!constants!public! !

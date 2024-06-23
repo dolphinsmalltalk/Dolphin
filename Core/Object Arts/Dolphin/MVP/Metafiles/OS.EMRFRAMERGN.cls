@@ -14,7 +14,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_RGNDATA' -> 16r28.
 			'_OffsetOf_szlStroke' -> 16r20
 		}!
+
 OS.EMRFRAMERGN guid: (Core.GUID fromString: '{490fda83-42a6-4848-8a5e-d866c05155e5}')!
+
 OS.EMRFRAMERGN comment: '<EMRFRAMERGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFRAMERGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -33,7 +35,9 @@ struct tagEMRFRAMERGN {
 	BYTE* RGNDATA;
 } EMRFRAMERGN;
 '!
+
 !OS.EMRFRAMERGN categoriesForClass!Win32-Structs! !
+
 !OS.EMRFRAMERGN methodsFor!
 
 cbRgnData
@@ -100,6 +104,7 @@ szlStroke: aSIZEL
 		from: ##(_OffsetOf_szlStroke + 1)
 		to: ##(_OffsetOf_szlStroke + SIZEL._SIZEL_Size)
 		startingAt: 1! !
+
 !OS.EMRFRAMERGN categoriesForMethods!
 cbRgnData!**compiled accessors**!public! !
 cbRgnData:!**compiled accessors**!public! !
@@ -159,6 +164,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_FRAMERGN}! !
+
 !OS.EMRFRAMERGN class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

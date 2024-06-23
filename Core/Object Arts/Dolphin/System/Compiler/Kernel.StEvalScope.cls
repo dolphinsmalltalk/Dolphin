@@ -7,9 +7,13 @@ Kernel.StSemanticScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StEvalScope guid: (Core.GUID fromString: '{c90dad3d-8211-445e-aa23-907eee35e6b8}')!
+
 Kernel.StEvalScope comment: ''!
+
 !Kernel.StEvalScope categoriesForClass!Kernel-Objects! !
+
 !Kernel.StEvalScope methodsFor!
 
 outer
@@ -31,6 +35,7 @@ resolveIdentifier: aString
 
 visibleVariablesDo: aMonadicValuable visited: aSet
 	outer visibleVariablesDo: aMonadicValuable visited: aSet! !
+
 !Kernel.StEvalScope categoriesForMethods!
 outer!accessing!public! !
 outer:!initializing!private! !
@@ -47,6 +52,7 @@ pools: pools outer: aStSemanticScope
 		pools: pools;
 		outer: aStSemanticScope;
 		yourself! !
+
 !Kernel.StEvalScope class categoriesForMethods!
 pools:outer:!instance creation!public! !
 !

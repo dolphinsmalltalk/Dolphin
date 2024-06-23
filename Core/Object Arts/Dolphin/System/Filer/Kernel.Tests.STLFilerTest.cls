@@ -7,8 +7,11 @@ Kernel.Tests.STxFilerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.STLFilerTest guid: (Core.GUID fromString: '{5f151d4d-927e-4254-aed9-c51056aef954}')!
+
 Kernel.Tests.STLFilerTest comment: ''!
+
 !Kernel.Tests.STLFilerTest methodsFor!
 
 checkSimpleReadWriteOf: anObject
@@ -712,6 +715,7 @@ verifySymbolReadWriteAtVersion: anInteger
 	"Check that muliple references are identical"
 	self assert: deserialized first identicalTo: testSymbol.
 	self assert: deserialized first identicalTo: deserialized second! !
+
 !Kernel.Tests.STLFilerTest categoriesForMethods!
 checkSimpleReadWriteOf:!helpers!private! !
 checkSimpleReadWriteOf:version:!helpers!private! !

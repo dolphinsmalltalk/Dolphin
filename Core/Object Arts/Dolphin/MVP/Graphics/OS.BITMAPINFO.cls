@@ -11,11 +11,15 @@ External.Structure
 			'_OffsetOf_bmiColors' -> 16r28.
 			'_OffsetOf_bmiHeader' -> 16r0
 		}!
+
 OS.BITMAPINFO guid: (Core.GUID fromString: '{87b4c5ca-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.BITMAPINFO comment: 'BITMAPINFO is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAPINFO structure is used to describe device-independent bitmaps. See MSDN for further information.'!
+
 !OS.BITMAPINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.BITMAPINFO methodsFor!
 
 bmiColors
@@ -73,6 +77,7 @@ numQuads
 	"Private - Answer the number of <RGBQUAD>s in the receiver's colour table."
 
 	^self bmiHeader numQuads! !
+
 !OS.BITMAPINFO categoriesForMethods!
 bmiColors!**compiled accessors**!public! !
 bmiColors:!**compiled accessors**!public! !
@@ -115,6 +120,7 @@ defineFields
 
 getFieldNames
 	^#(#bmiHeader #bmiColors)! !
+
 !OS.BITMAPINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 colorDepth:!instance creation!public! !

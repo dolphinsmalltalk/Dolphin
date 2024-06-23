@@ -5,7 +5,9 @@ ControlView subclass: #HeaderView
 	classVariableNames: 'HdnMap'
 	poolDictionaries: 'HeaderViewConstants'
 	classInstanceVariableNames: ''!
+
 HeaderView guid: (GUID fromString: '{7a6b97fa-0fd4-424d-99de-515000f88886}')!
+
 HeaderView comment: '#define HDI_WIDTH               0x0001
 #define HDI_HEIGHT              HDI_WIDTH
 #define HDI_TEXT                0x0002
@@ -39,7 +41,9 @@ HeaderView comment: '#define HDI_WIDTH               0x0001
 #define HDF_SORTUP              0x0400
 #define HDF_SORTDOWN            0x0200
 #endif'!
+
 !HeaderView categoriesForClass!Unclassified! !
+
 !HeaderView methodsFor!
 
 columnHeader: anInteger
@@ -153,6 +157,7 @@ nmNotify: pNMHDR
 rectangleForColumnIndex: anInteger
 
 	^(self hdmGetItemRect: anInteger - 1) asRectangle! !
+
 !HeaderView categoriesForMethods!
 columnHeader:!accessing!public! !
 columnHeaderFrom:!helpers!private! !
@@ -200,6 +205,7 @@ initializeNotificationMap
 
 winClassName
 	^'BUTTON'! !
+
 !HeaderView class categoriesForMethods!
 initialize!initializing!must not strip!private! !
 initializeNotificationMap!initializing!must not strip!private! !

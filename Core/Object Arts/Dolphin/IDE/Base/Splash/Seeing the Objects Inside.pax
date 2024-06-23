@@ -39,6 +39,7 @@ Core.Object
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: { 'EdgePointResolution' -> 16rA }!
+
 UI.Splash
 	subclass: #'Tools.DolphinSplash'
 	instanceVariableNames: 'objectsInside'
@@ -46,6 +47,7 @@ UI.Splash
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.DoubleBufferedView
 	subclass: #'Tools.SeeingTheObjectsInside'
 	instanceVariableNames: 'background points sun stepProcess random insideObjectsScale dolphinIntensity objects dolphins dolphinInside hintBubble startTime info baseScale cachedBackground cachedOutline'

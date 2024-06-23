@@ -7,10 +7,15 @@ Core.WeakArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MourningWeakArray guid: (Core.GUID fromString: '{87b4c520-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.MourningWeakArray isMourner: true!
+
 Core.MourningWeakArray comment: ''!
+
 !Core.MourningWeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
+
 !Core.MourningWeakArray methodsFor!
 
 elementsExpired: anInteger
@@ -47,6 +52,7 @@ pathologist: anObject
 	"Set the receiver's 'pathologist' to anObject. See #pathologist."
 
 	pathologist := anObject isNil ifTrue: [self class] ifFalse: [anObject]! !
+
 !Core.MourningWeakArray categoriesForMethods!
 elementsExpired:!finalizing!public! !
 initialize!initializing!private! !
@@ -64,6 +70,7 @@ elementsExpired: anInteger of: aWeakArray
 	is to avoid creating a circular references in all MourningWeakArrays."
 
 	aWeakArray trigger: #elementsExpired: with: anInteger! !
+
 !Core.MourningWeakArray class categoriesForMethods!
 elementsExpired:of:!finalizing!private! !
 !

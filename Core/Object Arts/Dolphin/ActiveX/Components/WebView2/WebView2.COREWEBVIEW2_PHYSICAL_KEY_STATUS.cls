@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_ScanCode' -> 16r4.
 			'_OffsetOf_WasKeyDown' -> 16r10
 		}!
+
 WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS guid: (Core.GUID fromString: '{192b5d12-5eb1-4a47-8648-a87c55e672a2}')!
+
 WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS comment: '`COREWEBVIEW2_PHYSICAL_KEY_STATUS` is an `ExternalStructure` class to wrap the struct ''WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'' from type information in the '''' library.
 
 The type library contains no documentation for this struct
@@ -35,7 +37,9 @@ struct tagCOREWEBVIEW2_PHYSICAL_KEY_STATUS {
 } COREWEBVIEW2_PHYSICAL_KEY_STATUS;
 ```
 '!
+
 !WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS categoriesForClass!WebView2-Structs! !
+
 !WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS methodsFor!
 
 IsExtendedKey
@@ -97,6 +101,7 @@ WasKeyDown: aBoolean
 	"Set the receiver's 'WasKeyDown' field to the value of the argument, aBoolean"
 
 	bytes uint32AtOffset: _OffsetOf_WasKeyDown put: aBoolean asParameter! !
+
 !WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS categoriesForMethods!
 IsExtendedKey!**compiled accessors**!public! !
 IsExtendedKey:!**compiled accessors**!public! !
@@ -144,6 +149,7 @@ defineFields
 
 getFieldNames
 	^#(#RepeatCount #ScanCode #IsExtendedKey #IsMenuKeyDown #WasKeyDown #IsKeyReleased)! !
+
 !WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

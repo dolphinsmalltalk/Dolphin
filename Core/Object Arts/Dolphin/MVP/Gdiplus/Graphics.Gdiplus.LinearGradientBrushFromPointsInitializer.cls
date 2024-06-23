@@ -7,8 +7,11 @@ Graphics.Gdiplus.LinearGradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer guid: (Core.GUID fromString: '{e82f4257-44c1-45f0-8130-6e92d59ab946}')!
+
 Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer comment: ''!
+
 !Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer methodsFor!
 
 = anObject
@@ -87,6 +90,7 @@ printAttributesOn: aStream
 		nextPutAll: ' color2: ';
 		print: color2.
 	super printAttributesOn: aStream! !
+
 !Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -111,6 +115,7 @@ stbConvertFrom: anSTBClassFormat
 				color1: (data at: 4)
 				color2: (data at: 5)]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !

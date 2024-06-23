@@ -7,8 +7,11 @@ Graphics.Gdiplus.BitmapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapFromBitmapAreaInitializer guid: (Core.GUID fromString: '{d4a3b5dd-4eab-4917-842c-95bf34ac5067}')!
+
 Graphics.Gdiplus.BitmapFromBitmapAreaInitializer comment: ''!
+
 !Graphics.Gdiplus.BitmapFromBitmapAreaInitializer methodsFor!
 
 = anObject
@@ -67,6 +70,7 @@ printImage: aGdiplusBitmap on: aWriteStream
 
 rectangle
 	^rectangle! !
+
 !Graphics.Gdiplus.BitmapFromBitmapAreaInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -86,6 +90,7 @@ bitmap: aGdiplusBitmap rectangle: aRectangle format: aPixelFormat
 		bitmap: aGdiplusBitmap
 		rectangle: aRectangle
 		format: aPixelFormat! !
+
 !Graphics.Gdiplus.BitmapFromBitmapAreaInitializer class categoriesForMethods!
 bitmap:rectangle:format:!instance creation!public! !
 !

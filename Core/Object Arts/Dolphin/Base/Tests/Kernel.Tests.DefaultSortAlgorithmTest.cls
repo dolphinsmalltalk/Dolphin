@@ -7,8 +7,11 @@ Core.Tests.SortAlgorithmTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.DefaultSortAlgorithmTest guid: (Core.GUID fromString: '{71c746e5-ead8-4695-8835-1778d1ca56fd}')!
+
 Kernel.Tests.DefaultSortAlgorithmTest comment: ''!
+
 !Kernel.Tests.DefaultSortAlgorithmTest methodsFor!
 
 add: aCollection sortBlock: block
@@ -59,6 +62,7 @@ sort: aCollection sortBlock: aDyadicValuable
 testBigStringSort
 	self sort: Symbol primAllSubinstances sortBlock: SortedCollection defaultSortBlock
 	"No point inverting the default sort, as that won't use DefaultSortAlgorithm"! !
+
 !Kernel.Tests.DefaultSortAlgorithmTest categoriesForMethods!
 add:sortBlock:!helpers!private! !
 algorithmToTest!private!unit tests! !

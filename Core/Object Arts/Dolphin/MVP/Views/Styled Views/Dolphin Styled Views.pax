@@ -35,26 +35,24 @@ Object subclass: #StyledGradientBrush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #StyledPen
 	instanceVariableNames: 'color width dashPattern'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #StyledShadow
 	instanceVariableNames: 'color density offset'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 ContainerView subclass: #StyledContainer
 	instanceVariableNames: 'edges styledPen styledBrush cornerRadii isAntialiased styledShadow _spare4'
 	classVariableNames: 'Nest'
 	poolDictionaries: 'GdiplusConstants ThemeConstants Win32Constants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

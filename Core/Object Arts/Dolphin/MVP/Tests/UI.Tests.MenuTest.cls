@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.MenuTest guid: (Core.GUID fromString: '{7e39f8d9-1ee0-471d-8e3f-76c307707b10}')!
+
 UI.Tests.MenuTest comment: ''!
+
 !UI.Tests.MenuTest methodsFor!
 
 assertEqualToExampleMenu: menu
@@ -54,6 +57,7 @@ testStbConvertFromVersion0
 	self assert: menu isKindOf: MenuBar.
 	self assert: menu toStrings printString caseFolded
 		equals: '#(#(''&file'' ''&new/ctrl+n/filenew'' ''|'' ''&open.../ctrl+o/fileopen'' ''-'' ''e&xit//fileexit'') ''||'' ''f&ire!!//fire'' ''|'' #(''&tools'' ''&workspace.../ctrl+n/filenew'' ''-'' #(''&options'' ''default font...//choosedefaultfont'')))'! !
+
 !UI.Tests.MenuTest categoriesForMethods!
 assertEqualToExampleMenu:!helpers!private! !
 exampleMenu!helpers!private! !

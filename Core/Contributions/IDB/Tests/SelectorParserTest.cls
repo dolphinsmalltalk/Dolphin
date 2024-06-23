@@ -5,9 +5,13 @@ TestCase subclass: #SelectorParserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectorParserTest guid: (GUID fromString: '{fafb8169-77bc-4dba-bd7c-033cf0230468}')!
+
 SelectorParserTest comment: ''!
+
 !SelectorParserTest categoriesForClass!Unclassified! !
+
 !SelectorParserTest methodsFor!
 
 testBinarySelector
@@ -44,6 +48,7 @@ testUnarySelector
 		do: [:each | self assert: (SelectorParser parse: each) equals: 'a'].
 	#('aBC' 'aBC ' 'aBC"foo"' 'aBC^b' '"foo" "bar"  aBC"foo"')
 		do: [:each | self assert: (SelectorParser parse: each) equals: 'aBC']! !
+
 !SelectorParserTest categoriesForMethods!
 testBinarySelector!public! !
 testEmpty!public! !

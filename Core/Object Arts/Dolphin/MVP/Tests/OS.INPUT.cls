@@ -24,7 +24,9 @@ External.Structure
 			'_OffsetOf_wScan' -> 16r6.
 			'_OffsetOf_wVk' -> 16r4
 		}!
+
 OS.INPUT guid: (Core.GUID fromString: '{6a520d8f-1dcb-456c-9933-95ee79174bd6}')!
+
 OS.INPUT comment: '`INPUT` is an `External.Structure` class to wrap the struct ''Win32.INPUT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -45,7 +47,9 @@ struct tagINPUT {
 } INPUT;
 ```
 '!
+
 !OS.INPUT categoriesForClass!Win32-Structs! !
+
 !OS.INPUT methodsFor!
 
 dwExtraInfo
@@ -259,6 +263,7 @@ wVk: anInteger
 	"Set the receiver's 'wVk' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_wVk put: anInteger! !
+
 !OS.INPUT categoriesForMethods!
 dwExtraInfo!accessing!public! !
 dwExtraInfo:!accessing!public! !
@@ -380,6 +385,7 @@ defineFields
 
 getFieldNames
 	^#(#type #dx #uMsg #wVk #wScan #dy #ki_dwFlags #wParamL #wParamH #ki_time #mouseData #ki_dwExtraInfo #mi_dwFlags #mi_time #mi_dwExtraInfo)! !
+
 !OS.INPUT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

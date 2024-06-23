@@ -7,7 +7,9 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.Autoplay guid: (Core.GUID fromString: '{6d08642b-1e71-49fe-9c29-c044a21d63d0}')!
+
 UI.Examples.Autoplay comment: '`Autoplay` is a `<topShell>` sample application which hosts the Microsoft Web Browser Control in order to implement an HTML based setup menu for CD-ROM auto-play. The sample demonstrates how to intercept clicks on the links and use them to invoke external programs (in this case using ShellExecute()).
 
 Evaluate the following to try out Autoplay:
@@ -19,7 +21,9 @@ Evaluate the following to see the Autoplay package for further details.
 ```
 	(Package manager packageNamed: ''Autoplay'') browse
 ```'!
+
 !UI.Examples.Autoplay categoriesForClass!MVP-Presenters!Samples! !
+
 !UI.Examples.Autoplay methodsFor!
 
 browser
@@ -128,6 +132,7 @@ show
 		areBrowserAcceleratorKeysEnabled: false.
 	self openUrl: self homePage.
 	super show! !
+
 !UI.Examples.Autoplay categoriesForMethods!
 browser!accessing!public! !
 createComponents!initializing!public! !
@@ -162,6 +167,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13107200 65536) 416 nil 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 971 1009 549 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.WebView2View) 34 21 nil 416 34 2 8 1140850688 1 560 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 7 nil nil nil 560 nil nil 852486 ##(Smalltalk.NullConverter) nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 1 1 498 939 931 560 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 213 1 0 0 209 1 0 0] 8 #() 498 193 193 nil 27 170 192 34 2 560 8 'browser' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 722 138 144 34 2 786 #createAt:extent: 34 2 498 12287 21 498 971 1009 416 786 #text: 34 1 8 'This caption will be set to the title the loaded HTML page' 416 866 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 228 25 0 0 2 2 0 0] 34 1 560 928 nil 27 )! !
+
 !UI.Examples.Autoplay class categoriesForMethods!
 icon!constants!public! !
 resource_Default_view!public!resources-views! !

@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Model guid: (Core.GUID fromString: '{87b4c4a3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Model isNonInstantiable: true!
+
 Core.Model comment: 'Model is an abstract class whose subclasses implement the <model> protocol and represent domain level data that is likely to be observed by other objects. The Model hierarchy is part of the MVP framework although <model> classes may well be used outside of this framework. 
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.
@@ -23,7 +26,9 @@ Instance Variables:
 
 
 '!
+
 !Core.Model categoriesForClass!MVP-Models! !
+
 !Core.Model methodsFor!
 
 getEvents
@@ -49,6 +54,7 @@ setEvents: anEventsCollectionOrNil
 	Answer the receiver."
 
 	events := anEventsCollectionOrNil! !
+
 !Core.Model categoriesForMethods!
 getEvents!events!private! !
 isValid!public!testing! !
@@ -98,6 +104,7 @@ stbConvertFromVersion2: anArray
 	No change at this level."
 
 	^anArray! !
+
 !Core.Model class categoriesForMethods!
 new!instance creation!public! !
 stbConvert:fromVersion:!binary filing!private! !

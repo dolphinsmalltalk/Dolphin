@@ -7,8 +7,11 @@ Graphics.Gdiplus.PathGradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.PathGradientFromPointsInitializer guid: (Core.GUID fromString: '{8f2007e1-7d6c-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.PathGradientFromPointsInitializer comment: ''!
+
 !Graphics.Gdiplus.PathGradientFromPointsInitializer methodsFor!
 
 = anObject
@@ -55,6 +58,7 @@ printAttributesOn: aStream
 		space;
 		print: points asArray.
 	super printAttributesOn: aStream! !
+
 !Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -71,6 +75,7 @@ printAttributesOn:!printing!private! !
 stbConvertFrom: anSTBClassFormat
 	anSTBClassFormat version == 0 ifTrue: [^[:data | self points: (data at: 2) wrapMode: (data at: 3)]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !Graphics.Gdiplus.PathGradientFromPointsInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !

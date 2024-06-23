@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.PushUpInstanceVariableRefactoringTest guid: (Core.GUID fromString: '{08db86cb-6161-486b-82f5-70846a431aa1}')!
+
 Refactory.Browser.Tests.PushUpInstanceVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.PushUpInstanceVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.PushUpInstanceVariableRefactoringTest methodsFor!
 
 testPullUpInstVar
@@ -30,6 +34,7 @@ testPullUpVariableNotDefined
 	self
 		shouldFail: (PullUpInstanceVariableRefactoring variable: 'notDefinedVariable' class: LintRuleTestData)
 		withMessage: 'No subclass defines notDefinedVariable'! !
+
 !Refactory.Browser.Tests.PushUpInstanceVariableRefactoringTest categoriesForMethods!
 testPullUpInstVar!public!tests! !
 testPullUpVariableNotDefined!failure tests!public! !

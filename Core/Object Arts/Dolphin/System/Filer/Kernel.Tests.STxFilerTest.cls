@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.STxFilerTest guid: (Core.GUID fromString: '{5927e3bd-eb27-4032-a460-08beb17878b3}')!
+
 Kernel.Tests.STxFilerTest isNonInstantiable: true!
+
 Kernel.Tests.STxFilerTest comment: ''!
+
 !Kernel.Tests.STxFilerTest methodsFor!
 
 deserialize: aString version: anInteger
@@ -526,6 +530,7 @@ verifyVariableBindingsAtVersion: ver
 		ifTrue: 
 			[self verifyRoundTripSingleton: #{Core.String.LineDelimiter} binding
 				version: ver]! !
+
 !Kernel.Tests.STxFilerTest categoriesForMethods!
 deserialize:version:!helpers!private! !
 dumpToTranscript:!helpers!private! !

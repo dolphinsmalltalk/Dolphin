@@ -7,9 +7,13 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AbstractVariablesRefactoring guid: (Core.GUID fromString: '{4693691a-7a7d-4b15-a3e9-c4c5554aa27e}')!
+
 Refactory.Browser.AbstractVariablesRefactoring comment: ''!
+
 !Refactory.Browser.AbstractVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.AbstractVariablesRefactoring methodsFor!
 
 abstractClassVariable: aVariableBinding
@@ -153,6 +157,7 @@ transform
 		ifTrue: [self shouldAbstractVariables ifFalse: [self refactoringAborted]].
 	self abstractInstanceVariables.
 	self abstractClassVariables! !
+
 !Refactory.Browser.AbstractVariablesRefactoring categoriesForMethods!
 abstractClassVariable:!public!transforming! !
 abstractClassVariables!public!transforming! !
@@ -193,6 +198,7 @@ model: aRBModel abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: be
 			toAll: behaviorCollection
 			ignoring: aVariableName;
 		yourself! !
+
 !Refactory.Browser.AbstractVariablesRefactoring class categoriesForMethods!
 model:abstractVariablesIn:from:toAll:!instance creation!public! !
 model:abstractVariablesIn:from:toAll:ignoring:!instance creation!public! !

@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler guid: (OS.COM.IID fromString: '{5c4889f0-5ef6-4c5a-952c-d8f1b92d0574}')!
+
 WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler comment: '`ICoreWebView2CallDevToolsProtocolMethodCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2CallDevToolsProtocolMethodCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult lpwstr>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2CallDevToolsProtocolMethodCompletedHandler!public! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !
+
 !WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

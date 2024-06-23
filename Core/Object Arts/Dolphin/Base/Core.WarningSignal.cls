@@ -7,9 +7,13 @@ Core.NotificationSignal
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WarningSignal guid: (Core.GUID fromString: '{9b47c071-b28d-4461-a804-607f147269bc}')!
+
 Core.WarningSignal comment: ''!
+
 !Core.WarningSignal categoriesForClass!Kernel-Exception Handling! !
+
 !Core.WarningSignal methodsFor!
 
 defaultAction: exception
@@ -18,6 +22,7 @@ defaultAction: exception
 	Implementation Note: forward to the SessionManager for application specific handling."
 
 	^SessionManager current onUnhandledWarning: exception! !
+
 !Core.WarningSignal categoriesForMethods!
 defaultAction:!handling!private! !
 !

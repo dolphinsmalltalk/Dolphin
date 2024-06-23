@@ -15,7 +15,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_iGraphicsMode' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.EMRPOLYTEXTOUTA guid: (Core.GUID fromString: '{7c11c025-67e0-44de-87ab-e4f1377a4314}')!
+
 OS.EMRPOLYTEXTOUTA comment: '<EMRPOLYTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -35,7 +37,9 @@ struct tagEMRPOLYTEXTOUTA {
 	[helpstring("Array of EMRTEXT structures.  This is followed by the strings and spacing arrays.")] EMRTEXT* aemrtext;
 } EMRPOLYTEXTOUTA;
 '!
+
 !OS.EMRPOLYTEXTOUTA categoriesForClass!Win32-Structs! !
+
 !OS.EMRPOLYTEXTOUTA methodsFor!
 
 aemrtext
@@ -111,6 +115,7 @@ rclBounds: aRECTL
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.EMRPOLYTEXTOUTA categoriesForMethods!
 aemrtext!**compiled accessors**!public! !
 aemrtext:!**compiled accessors**!public! !
@@ -176,6 +181,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYTEXTOUTA. EMR_POLYTEXTOUTW}! !
+
 !OS.EMRPOLYTEXTOUTA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ProcessTest guid: (Core.GUID fromString: '{3601a8c6-de0f-4218-a7df-40838259fc47}')!
+
 Core.Tests.ProcessTest comment: ''!
+
 !Core.Tests.ProcessTest methodsFor!
 
 assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sourceProcess2 visited: anIdentitySet
@@ -606,6 +609,7 @@ testUnwindFromForeignProcess
 	be handled here (it's truncated already)"
 	self shouldnt: [process terminate] raise: Error.
 	self assert: sema excessSignals > 0! !
+
 !Core.Tests.ProcessTest categoriesForMethods!
 assertBlock:in:isCopyOf:in:visited:!helpers!private! !
 assertBlockFrame:isCopyOf:visited:!helpers!private! !

@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.IdeaSpaceShellTest guid: (Core.GUID fromString: '{2e6de900-c47f-4134-b038-b70cd1679c1c}')!
+
 Tools.Tests.IdeaSpaceShellTest comment: ''!
+
 !Tools.Tests.IdeaSpaceShellTest methodsFor!
 
 classToTest
@@ -343,6 +346,7 @@ testSaveRestoreErrors
 
 viewClass
 	^ShellView! !
+
 !Tools.Tests.IdeaSpaceShellTest categoriesForMethods!
 classToTest!constants!private! !
 create:subclassOf:!helpers!private! !

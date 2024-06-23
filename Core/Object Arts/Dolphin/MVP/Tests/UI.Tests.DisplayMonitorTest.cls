@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.DisplayMonitorTest guid: (Core.GUID fromString: '{a26059de-9a66-4eea-892a-2cc388096fb2}')!
+
 UI.Tests.DisplayMonitorTest comment: ''!
+
 !UI.Tests.DisplayMonitorTest methodsFor!
 
 testActive
@@ -144,6 +147,7 @@ testPrintString
 			[| secondary |
 			secondary := all detect: [:each | each isPrimary not].
 			self assert: secondary printString equals: 'a DisplayMonitor(<1p>)' << secondary deviceName]! !
+
 !UI.Tests.DisplayMonitorTest categoriesForMethods!
 testActive!public!unit tests! !
 testAllIntersecting!public!unit tests! !

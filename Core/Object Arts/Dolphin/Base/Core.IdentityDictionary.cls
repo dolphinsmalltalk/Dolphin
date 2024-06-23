@@ -7,7 +7,9 @@ Core.LookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.IdentityDictionary guid: (Core.GUID fromString: '{87b4c52d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.IdentityDictionary comment: 'IdentityDictionaries are <LookupTable>s which use identity (#== and #identityHash) for key comparison.
 
 IdentityDictionary conforms to the following ANSI protocols:
@@ -15,7 +17,9 @@ IdentityDictionary conforms to the following ANSI protocols:
 	collection
 	abstractDictionary
 	IdentityDictionary'!
+
 !Core.IdentityDictionary categoriesForClass!Collections-Unordered! !
+
 !Core.IdentityDictionary methodsFor!
 
 findKeyOrNil: anObject
@@ -46,6 +50,7 @@ species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class. Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^IdentityDictionary! !
+
 !Core.IdentityDictionary categoriesForMethods!
 findKeyOrNil:!private!searching! !
 hash:max:!private!searching! !

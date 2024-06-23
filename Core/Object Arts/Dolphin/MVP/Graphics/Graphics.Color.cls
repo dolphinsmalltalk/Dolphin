@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Color guid: (Core.GUID fromString: '{87b4c465-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Color isNonInstantiable: true!
+
 Graphics.Color comment: '`Color` is the abstract class of colours. 
 
 Concrete subclasses represent the different types of colour object: `SystemColor` for the logical system colours that vary depending on the Windows theme; `IndexedColor` for a limited range of palletized colours; `RGB` for general purpose representation of colours composed of arbitrary proportions of red, green, and blue, and `ARGB` the same but with alpha (translucency).
@@ -16,7 +19,9 @@ Concrete subclasses represent the different types of colour object: `SystemColor
 The special singleton subclasses `ColorDefault` and `ColorNone` represent the default colour of some Window or control in a specific context, and full transparency.
 
 There are also the virtual colours, `ThemeColor` and `PluggableColor`, to represent symbolic (i.e. named, logical) and dynamic/calculated colours respectively. These can be resolved to an absolute colour from the list of concrete colour types when required.'!
+
 !Graphics.Color categoriesForClass!Drawing! !
+
 !Graphics.Color methodsFor!
 
 = aColor
@@ -504,6 +509,7 @@ stbSaveOn: anSTBOutFiler
 				saveSingleton: self
 				class: Color
 				name: symbol]! !
+
 !Graphics.Color categoriesForMethods!
 =!comparing!public! !
 actualColor!accessing!public! !
@@ -1564,6 +1570,7 @@ yellow
 
 yellowGreen
 	^self named: #yellowGreen! !
+
 !Graphics.Color class categoriesForMethods!
 a:r:g:b:!instance creation!public! !
 addNamed:color:!named colors!public! !

@@ -7,9 +7,13 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.PullUpClassVariableRefactoring guid: (Core.GUID fromString: '{78a67e45-73e9-4f56-b6f1-38e6886593bf}')!
+
 Refactory.Browser.PullUpClassVariableRefactoring comment: ''!
+
 !Refactory.Browser.PullUpClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.PullUpClassVariableRefactoring methodsFor!
 
 preconditions
@@ -44,6 +48,7 @@ transform
 		replaceReferencesToVariable: binding
 		in: references
 		with: (class localBindingFor: variableName)! !
+
 !Refactory.Browser.PullUpClassVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 subclassDefiningVariable!accessing!private! !

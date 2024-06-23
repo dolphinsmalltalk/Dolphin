@@ -46,6 +46,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.LiteralPrinter
 	subclass: #'Kernel.STLPrinter'
 	instanceVariableNames: ''
@@ -53,6 +54,7 @@ Kernel.LiteralPrinter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxOutFiler
 	subclass: #'Kernel.STLOutFiler'
 	instanceVariableNames: ''
@@ -67,6 +69,7 @@ Kernel.STxOutFiler
 
 literalPrintOn: aLiteralPrinter
 	aLiteralPrinter printArray: self! !
+
 !Core.Array categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -75,6 +78,7 @@ literalPrintOn:!public! !
 
 literalPrintOn: aLiteralPrinter
 	aLiteralPrinter printCharacter: self! !
+
 !Core.Character categoriesForMethods!
 literalPrintOn:!literal filing!public! !
 !
@@ -83,6 +87,7 @@ literalPrintOn:!literal filing!public! !
 
 literalPrintOn: aLiteralPrinter
 	aLiteralPrinter printClass: self! !
+
 !Core.Class categoriesForMethods!
 literalPrintOn:!printing!public! !
 !
@@ -91,6 +96,7 @@ literalPrintOn:!printing!public! !
 
 literalPrintOn: aLiteralPrinter
 	aLiteralPrinter printMetaclass: self! !
+
 !Core.Metaclass categoriesForMethods!
 literalPrintOn:!printing!public! !
 !
@@ -138,6 +144,7 @@ literalStoreOn: aStream
 	"Stores the receiver in a literal form on aStream that can be reconstituted using Object class>>literalReadFrom:. Uses the latest version of the STLOutFiler to achieve this. This implementation is sufficient for all objects that do not need to isolate themselves from their surroundings. Sub-classes should generally override #binaryStoreOn:with: to perform such isolation when required."
 
 	self binaryStoreUsing: (STLOutFiler on: aStream)! !
+
 !Core.Object categoriesForMethods!
 literalPrintOn:!literal filing!public! !
 literalStoreArray!literal filing!public! !
@@ -150,6 +157,7 @@ literalStoreOn:!literal filing!public! !
 
 literalPrintOn: aLiteralPrinter
 	aLiteralPrinter printString: self! !
+
 !Core.String categoriesForMethods!
 literalPrintOn:!literal filing!public! !
 !
@@ -164,6 +172,7 @@ literalPrintOn: aLiteralPrinter
 	self displayOn: stream.
 	self isPrivate ifTrue: [stream nextPutAll: ' private'].
 	stream nextPut: $}! !
+
 !Kernel.BindingReference categoriesForMethods!
 literalPrintOn:!displaying!public! !
 !
@@ -172,6 +181,7 @@ literalPrintOn:!displaying!public! !
 
 literalPrintOn: aLiteralPrinter
 	aLiteralPrinter printProcessor: self! !
+
 !Kernel.ProcessorScheduler categoriesForMethods!
 literalPrintOn:!public! !
 !

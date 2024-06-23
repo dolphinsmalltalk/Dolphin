@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2BytesReceivedChangedEventHandler guid: (OS.COM.IID fromString: '{828e8ab6-d94c-4264-9cef-5217170d6251}')!
+
 WebView2.ICoreWebView2BytesReceivedChangedEventHandler comment: '`ICoreWebView2BytesReceivedChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BytesReceivedChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2BytesReceivedChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2BytesReceivedChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2BytesReceivedChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2DownloadOperation* IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2BytesReceivedChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#bytesReceivedChanged! !
+
 !WebView2.ICoreWebView2BytesReceivedChangedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

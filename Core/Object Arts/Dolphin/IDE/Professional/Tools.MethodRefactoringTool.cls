@@ -7,11 +7,14 @@ Tools.RefactoringTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MethodRefactoringTool guid: (Core.GUID fromString: '{10c7f39b-1ac8-431a-bdc8-4ed608d35a1c}')!
+
 Tools.MethodRefactoringTool comment: 'MethodRefactoringTool implements method refactorings for a browser.
 
 There are a number of browser (or browser like tools) that display lists of methods and which support method level refactorings, for example the class & method browsers, the debugger (where the list of methods is those on the stack), and the package browser. This class encapsulates method-level refactoring behaviour so that it does not need to be duplicated in all those places.
 '!
+
 !Tools.MethodRefactoringTool methodsFor!
 
 addParameter
@@ -216,6 +219,7 @@ renameTempMenu
 	<commandQuery: #queryRefactorTemp:>
 	<menuPopulator: #buildRenameTempMenu:>
 	! !
+
 !Tools.MethodRefactoringTool categoriesForMethods!
 addParameter!commands-actions!public!refactoring! !
 allMethodTemps!event handling!menus!public! !

@@ -5,9 +5,13 @@ MainTestCase subclass: #DurationFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DurationFactoryANSITest guid: (GUID fromString: '{7398a166-b100-4def-b4bb-25a2cde30eec}')!
+
 DurationFactoryANSITest comment: ''!
+
 !DurationFactoryANSITest categoriesForClass!Unclassified! !
+
 !DurationFactoryANSITest methodsFor!
 
 canonicalObject
@@ -39,6 +43,7 @@ testXzero
 	#'Date and Time'.
 	self value: [Duration zero] should: [:r | r asSeconds = 0]
 		conformTo: #'Duration factory' selector: #'seconds:'.! !
+
 !DurationFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

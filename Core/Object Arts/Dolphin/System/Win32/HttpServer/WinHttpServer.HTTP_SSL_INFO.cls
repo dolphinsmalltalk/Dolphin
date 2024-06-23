@@ -17,7 +17,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_ServerCertSubjectSize' -> 16r8.
 			'_OffsetOf_SslClientCertNegotiated' -> 16r18
 		}!
+
 WinHttpServer.HTTP_SSL_INFO guid: (Core.GUID fromString: '{fd0d6f69-8afe-4748-a88b-9fb70593dfc8}')!
+
 WinHttpServer.HTTP_SSL_INFO comment: '`HTTP_SSL_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -40,7 +42,9 @@ struct tagHTTP_SSL_INFO {
 } HTTP_SSL_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_SSL_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SSL_INFO methodsFor!
 
 ConnectionKeySize
@@ -126,6 +130,7 @@ SslClientCertNegotiated: anInteger
 	"Set the receiver's 'SslClientCertNegotiated' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_SslClientCertNegotiated put: anInteger! !
+
 !WinHttpServer.HTTP_SSL_INFO categoriesForMethods!
 ConnectionKeySize!**compiled accessors**!public! !
 ConnectionKeySize:!**compiled accessors**!public! !
@@ -181,6 +186,7 @@ defineFields
 
 getFieldNames
 	^#(#ServerCertKeySize #ConnectionKeySize #ServerCertIssuerSize #ServerCertSubjectSize #pServerCertIssuer #pServerCertSubject #pClientCertInfo #SslClientCertNegotiated)! !
+
 !WinHttpServer.HTTP_SSL_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

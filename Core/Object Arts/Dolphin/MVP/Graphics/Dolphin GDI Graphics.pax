@@ -171,6 +171,7 @@ Core.Object
 			'DrawTextAlignments'
 				-> (IdentityDictionary withAll: { #center -> 16r1. #left -> 16r0. #right -> 16r2 })
 		}!
+
 Core.Object
 	subclass: #'Graphics.Color'
 	instanceVariableNames: ''
@@ -178,6 +179,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Graphics.GraphicsTool'
 	instanceVariableNames: 'handle ownsHandle'
@@ -185,6 +187,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Graphics.ImageInitializer'
 	instanceVariableNames: ''
@@ -192,6 +195,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Graphics.ImageManager'
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
@@ -199,6 +203,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'OS.SystemMetrics'
 	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists defaultColorDepth isNotWine menuImageExtent'
@@ -206,6 +211,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Canvas
 	subclass: #'Graphics.PrinterCanvas'
 	instanceVariableNames: ''
@@ -213,6 +219,7 @@ Graphics.Canvas
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Color
 	subclass: #'Graphics.AbstractRGB'
 	instanceVariableNames: 'code'
@@ -220,6 +227,7 @@ Graphics.Color
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Color
 	subclass: #'Graphics.IndexedColor'
 	instanceVariableNames: 'index'
@@ -266,6 +274,7 @@ Graphics.Color
 								16r1000013 -> #white
 							})
 		}!
+
 Graphics.Color
 	subclass: #'Graphics.SystemColor'
 	instanceVariableNames: 'id'
@@ -308,6 +317,7 @@ Graphics.Color
 								16r1E -> #menuBar
 							})
 		}!
+
 Graphics.Color
 	subclass: #'Graphics.VirtualColor'
 	instanceVariableNames: ''
@@ -315,6 +325,7 @@ Graphics.Color
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractRGB
 	subclass: #'Graphics.ARGB'
 	instanceVariableNames: ''
@@ -322,6 +333,7 @@ Graphics.AbstractRGB
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractRGB
 	subclass: #'Graphics.ColorRef'
 	instanceVariableNames: ''
@@ -329,6 +341,7 @@ Graphics.AbstractRGB
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ColorRef
 	subclass: #'Graphics.ColorDefault'
 	instanceVariableNames: ''
@@ -336,6 +349,7 @@ Graphics.ColorRef
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ColorRef
 	subclass: #'Graphics.ColorNone'
 	instanceVariableNames: ''
@@ -343,6 +357,7 @@ Graphics.ColorRef
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ColorRef
 	subclass: #'Graphics.RGB'
 	instanceVariableNames: ''
@@ -350,6 +365,7 @@ Graphics.ColorRef
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.VirtualColor
 	subclass: #'Graphics.ColorAlpha'
 	instanceVariableNames: 'color alpha'
@@ -357,6 +373,7 @@ Graphics.VirtualColor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.VirtualColor
 	subclass: #'Graphics.PluggableColor'
 	instanceVariableNames: 'valuable'
@@ -364,6 +381,7 @@ Graphics.VirtualColor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.VirtualColor
 	subclass: #'Graphics.ThemeColor'
 	instanceVariableNames: 'name actualColor'
@@ -371,6 +389,7 @@ Graphics.VirtualColor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PermanentLibrary
 	subclass: #'OS.GDILibrary'
 	instanceVariableNames: ''
@@ -378,6 +397,7 @@ External.PermanentLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
 	instanceVariableNames: 'logfont resolution'
@@ -385,6 +405,7 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractPen'
 	instanceVariableNames: 'logPen'
@@ -395,6 +416,7 @@ Graphics.GraphicsTool
 			'LineJoinNames'
 				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
 		}!
+
 Graphics.GraphicsTool
 	subclass: #'Graphics.Brush'
 	instanceVariableNames: 'logBrush'
@@ -402,6 +424,7 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.GraphicsTool
 	subclass: #'Graphics.Image'
 	instanceVariableNames: 'initializer'
@@ -409,6 +432,7 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.GraphicsTool
 	subclass: #'Graphics.ImageList'
 	instanceVariableNames: 'extent initialSize growBy createFlags'
@@ -442,6 +466,7 @@ Graphics.GraphicsTool
 			'ILD_SELECTED' -> 16r4.
 			'ILD_TRANSPARENT' -> 16r1
 		}!
+
 Graphics.GraphicsTool
 	subclass: #'Graphics.Region'
 	instanceVariableNames: ''
@@ -449,6 +474,7 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractFont
 	subclass: #'Graphics.Font'
 	instanceVariableNames: ''
@@ -456,6 +482,7 @@ Graphics.AbstractFont
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractFont
 	subclass: #'Graphics.SystemFont'
 	instanceVariableNames: 'id'
@@ -463,6 +490,7 @@ Graphics.AbstractFont
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.SystemFont
 	subclass: #'Graphics.StockFont'
 	instanceVariableNames: ''
@@ -472,6 +500,7 @@ Graphics.SystemFont
 	classConstants: {
 			'StockNames' -> (IdentityDictionary withAll: { 16rD -> #system. 16r11 -> #default })
 		}!
+
 Graphics.AbstractPen
 	subclass: #'Graphics.Pen'
 	instanceVariableNames: ''
@@ -479,6 +508,7 @@ Graphics.AbstractPen
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractPen
 	subclass: #'Graphics.StockPen'
 	instanceVariableNames: 'id'
@@ -486,6 +516,7 @@ Graphics.AbstractPen
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Brush
 	subclass: #'Graphics.HatchBrush'
 	instanceVariableNames: 'id color'
@@ -493,6 +524,7 @@ Graphics.Brush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Brush
 	subclass: #'Graphics.StockBrush'
 	instanceVariableNames: 'id'
@@ -500,6 +532,7 @@ Graphics.Brush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.StockBrush
 	subclass: #'Graphics.SysColorBrush'
 	instanceVariableNames: ''
@@ -507,6 +540,7 @@ Graphics.StockBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Image
 	subclass: #'Graphics.Bitmap'
 	instanceVariableNames: 'hdc flags extent'
@@ -514,6 +548,7 @@ Graphics.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Map3DColorsMask_Obsolete' -> 16r1. 'IsSharedMask' -> 16r2 }!
+
 Graphics.Image
 	subclass: #'Graphics.Icon'
 	instanceVariableNames: ''
@@ -521,6 +556,7 @@ Graphics.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ExtraLargeExtent' -> (16r100 @ 16r100). 'TileExtent' -> (16r30 @ 16r30) }!
+
 Graphics.Bitmap
 	subclass: #'Graphics.DIBSection'
 	instanceVariableNames: 'depth imageBits'
@@ -528,6 +564,7 @@ Graphics.Bitmap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Icon
 	subclass: #'Graphics.Cursor'
 	instanceVariableNames: ''
@@ -535,6 +572,7 @@ Graphics.Icon
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Icon
 	subclass: #'Graphics.NullIcon'
 	instanceVariableNames: ''
@@ -542,6 +580,7 @@ Graphics.Icon
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.AbstractBitmapFromBlankInitializer'
 	instanceVariableNames: 'extent depth'
@@ -549,6 +588,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.BitmapFromIconInitializer'
 	instanceVariableNames: 'extent icon'
@@ -556,6 +596,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.DisplayCompatibleBitmapInitializer'
 	instanceVariableNames: 'extent'
@@ -563,6 +604,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.IconFromBitmapInitializer'
 	instanceVariableNames: 'bitmap transparentColor'
@@ -570,6 +612,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.IconFromSystemInitializer'
 	instanceVariableNames: 'extent identifier'
@@ -577,6 +620,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.ImageFromFileInitializer'
 	instanceVariableNames: 'filename fileLocator flags extent'
@@ -584,6 +628,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.ImageFromHandleInitializer'
 	instanceVariableNames: 'handle'
@@ -591,6 +636,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.ImageFromResourceInitializer'
 	instanceVariableNames: 'identifier module flags extent'
@@ -598,6 +644,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer
 	subclass: #'Graphics.WatermarkBitmapInitializer'
 	instanceVariableNames: 'image alphaPercent backcolor'
@@ -605,6 +652,7 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractBitmapFromBlankInitializer
 	subclass: #'Graphics.BitmapFromBlankInitializer'
 	instanceVariableNames: 'planes'
@@ -612,6 +660,7 @@ Graphics.AbstractBitmapFromBlankInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractBitmapFromBlankInitializer
 	subclass: #'Graphics.DIBSectionFromBlankInitializer'
 	instanceVariableNames: ''
@@ -619,6 +668,7 @@ Graphics.AbstractBitmapFromBlankInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.BitmapFromBlankInitializer
 	subclass: #'Graphics.BitmapFromBytesInitializer'
 	instanceVariableNames: 'bytes'
@@ -626,6 +676,7 @@ Graphics.BitmapFromBlankInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageFromResourceInitializer
 	subclass: #'Graphics.ImageFromStringResourceInitializer'
 	instanceVariableNames: ''
@@ -633,6 +684,7 @@ Graphics.ImageFromResourceInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageManager
 	subclass: #'Graphics.IconImageManager'
 	instanceVariableNames: 'bitmaps'
@@ -640,6 +692,7 @@ Graphics.ImageManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.BITMAP'
 	instanceVariableNames: ''
@@ -656,6 +709,7 @@ External.Structure
 			'_OffsetOf_bmWidth' -> 16r4.
 			'_OffsetOf_bmWidthBytes' -> 16rC
 		}!
+
 External.Structure
 	subclass: #'OS.BITMAPFILEHEADER'
 	instanceVariableNames: ''
@@ -670,6 +724,7 @@ External.Structure
 			'_OffsetOf_bfSize' -> 16r2.
 			'_OffsetOf_bfType' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.BITMAPINFO'
 	instanceVariableNames: ''
@@ -681,6 +736,7 @@ External.Structure
 			'_OffsetOf_bmiColors' -> 16r28.
 			'_OffsetOf_bmiHeader' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.BLENDFUNCTION'
 	instanceVariableNames: ''
@@ -694,6 +750,7 @@ External.Structure
 			'_OffsetOf_BlendOp' -> 16r0.
 			'_OffsetOf_SourceConstantAlpha' -> 16r2
 		}!
+
 External.Structure
 	subclass: #'OS.DEVMODEW'
 	instanceVariableNames: ''
@@ -762,6 +819,7 @@ External.Structure
 			'DM_TTOPTION' -> 16r4000.
 			'DM_YRESOLUTION' -> 16r2000
 		}!
+
 External.Structure
 	subclass: #'OS.DEVNAMESW'
 	instanceVariableNames: ''
@@ -776,6 +834,7 @@ External.Structure
 			'_OffsetOf_wOutputOffset' -> 16r4.
 			'DN_DEFAULTPRN' -> 16r1
 		}!
+
 External.Structure
 	subclass: #'OS.GRADIENT_RECT'
 	instanceVariableNames: ''
@@ -787,6 +846,7 @@ External.Structure
 			'_OffsetOf_lowerRight' -> 16r4.
 			'_OffsetOf_upperLeft' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.GRADIENT_TRIANGLE'
 	instanceVariableNames: ''
@@ -799,6 +859,7 @@ External.Structure
 			'_OffsetOf_Vertex2' -> 16r4.
 			'_OffsetOf_Vertex3' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS.LOGBRUSH'
 	instanceVariableNames: 'hatch'
@@ -811,6 +872,7 @@ External.Structure
 			'_OffsetOf_lbHatch' -> 16r8.
 			'_OffsetOf_lbStyle' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.LOGFONTW'
 	instanceVariableNames: ''
@@ -834,6 +896,7 @@ External.Structure
 			'_OffsetOf_lfWeight' -> 16r10.
 			'_OffsetOf_lfWidth' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.LOGPALETTE'
 	instanceVariableNames: ''
@@ -846,6 +909,7 @@ External.Structure
 			'_OffsetOf_palPalEntry' -> 16r4.
 			'_OffsetOf_palVersion' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.LOGPEN'
 	instanceVariableNames: ''
@@ -858,6 +922,7 @@ External.Structure
 			'_OffsetOf_lopnStyle' -> 16r0.
 			'_OffsetOf_lopnWidth' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.PALETTEENTRY'
 	instanceVariableNames: ''
@@ -871,6 +936,7 @@ External.Structure
 			'_OffsetOf_peRed' -> 16r0.
 			'_PALETTEENTRY_Size' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.PANOSE'
 	instanceVariableNames: ''
@@ -890,6 +956,7 @@ External.Structure
 			'_OffsetOf_bXHeight' -> 16r9.
 			'_PANOSE_Size' -> 16rA
 		}!
+
 External.Structure
 	subclass: #'OS.RGBQUAD'
 	instanceVariableNames: ''
@@ -903,6 +970,7 @@ External.Structure
 			'_OffsetOf_rgbReserved' -> 16r3.
 			'_RGBQUAD_Size' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'External.SIZE'
 	instanceVariableNames: ''
@@ -910,6 +978,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.TEXTMETRICW'
 	instanceVariableNames: ''
@@ -939,6 +1008,7 @@ External.Structure
 			'_OffsetOf_tmWeight' -> 16r1C.
 			'_TEXTMETRICW_Size' -> 16r3C
 		}!
+
 External.Structure
 	subclass: #'OS.TRIVERTEX'
 	instanceVariableNames: ''
@@ -954,6 +1024,7 @@ External.Structure
 			'_OffsetOf_y' -> 16r4.
 			'_TRIVERTEX_Size' -> 16r10
 		}!
+
 OS.BITMAP
 	subclass: #'OS.DIBSECTION'
 	instanceVariableNames: ''
@@ -967,6 +1038,7 @@ OS.BITMAP
 			'_OffsetOf_dshSection' -> 16r4C.
 			'_OffsetOf_dsOffset' -> 16r50
 		}!
+
 External.FinalizableStructure
 	subclass: #'OS.ICONINFO'
 	instanceVariableNames: ''
@@ -981,6 +1053,7 @@ External.FinalizableStructure
 			'_OffsetOf_xHotspot' -> 16r4.
 			'_OffsetOf_yHotspot' -> 16r8
 		}!
+
 OS.LOGFONTW
 	subclass: #'OS.ENUMLOGFONTW'
 	instanceVariableNames: ''
@@ -992,6 +1065,7 @@ OS.LOGFONTW
 			'_OffsetOf_elfFullName' -> 16r5C.
 			'_OffsetOf_elfStyle' -> 16rDC
 		}!
+
 External.SIZE
 	subclass: #'OS.SIZEL'
 	instanceVariableNames: ''
@@ -999,6 +1073,7 @@ External.SIZE
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_cx' -> 16r0. '_OffsetOf_cy' -> 16r4. '_SIZEL_Size' -> 16r8 }!
+
 OS.SizedStructure
 	subclass: #'OS.BITMAPINFOHEADER'
 	instanceVariableNames: ''
@@ -1018,6 +1093,7 @@ OS.SizedStructure
 			'_OffsetOf_biXPelsPerMeter' -> 16r18.
 			'_OffsetOf_biYPelsPerMeter' -> 16r1C
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.DOCINFOW'
 	instanceVariableNames: 'docName'
@@ -1031,6 +1107,7 @@ OS.SizedStructure
 			'_OffsetOf_lpszDocName' -> 16r4.
 			'_OffsetOf_lpszOutput' -> 16r8
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.NONCLIENTMETRICSW'
 	instanceVariableNames: ''
@@ -1055,6 +1132,7 @@ OS.SizedStructure
 			'_OffsetOf_lfSmCaptionFont' -> 16r7C.
 			'_OffsetOf_lfStatusFont' -> 16r13C
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.OUTLINETEXTMETRICW'
 	instanceVariableNames: ''
@@ -1095,6 +1173,7 @@ OS.SizedStructure
 			'_OffsetOf_otmusMinimumPPEM' -> 16r94.
 			'_OUTLINETEXTMETRICW_Size' -> 16rD8
 		}!
+
 OS.TEXTMETRICW
 	subclass: #'OS.NEWTEXTMETRICW'
 	instanceVariableNames: ''
@@ -1135,6 +1214,7 @@ defaultResourceIconName
 	"Answer a filename to use for an icon of this class loaded from the class resources location."
 
 	^self instanceClass resourcesLocator localFileSpecFor: self defaultIconName! !
+
 !Core.ClassDescription categoriesForMethods!
 defaultIcon!constants!public! !
 defaultIconName!constants!public! !
@@ -1153,6 +1233,7 @@ asImageKey
 	"Answer the form of the receiver to use as an image key in an ImageManager. Normally this is just the receiver, but in some cases there may be a need to snapshot certain attributes used in rendering the image so that subsequent attempts to use the image from the image manager do not match an old rendering of the image that should have changed, e.g. because ThemeColors are used in displaying the image, and the theme has been updated."
 
 	^self! !
+
 !Core.Object categoriesForMethods!
 addToImageList:mask:!public! !
 asImageKey!converting!public! !
@@ -1414,6 +1495,7 @@ loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 
 	<stdcall: int32 LoadIconWithScaleDown handle lpvoid int32 int32 handle*>
 	^self invalidCall: _failureCode! !
+
 !OS.CommCtrlLibrary categoriesForMethods!
 imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
 imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
@@ -1704,6 +1786,7 @@ showCursor: aBoolean
 
 	<stdcall: int32 ShowCursor bool>
 	^self invalidCall: _failureCode! !
+
 !OS.UserLibrary categoriesForMethods!
 copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
 createIconIndirect:!**auto generated**!public! !

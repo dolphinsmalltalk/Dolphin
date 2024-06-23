@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2FocusChangedEventHandler guid: (OS.COM.IID fromString: '{05ea24bd-6452-4926-9014-4b82b498135d}')!
+
 WebView2.ICoreWebView2FocusChangedEventHandler isNonInstantiable: true!
+
 WebView2.ICoreWebView2FocusChangedEventHandler comment: '`ICoreWebView2FocusChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FocusChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +33,9 @@ interface ICoreWebView2FocusChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2FocusChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2FocusChangedEventHandler methodsFor!
 
 Invoke: sender args: args
@@ -42,6 +47,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2Controller* IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2FocusChangedEventHandler categoriesForMethods!
 Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2FocusChangedEventHandler!public! !
 !
@@ -59,6 +65,7 @@ defineFunctions
 
 iid
 	^##(self) guid! !
+
 !WebView2.ICoreWebView2FocusChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 iid!constants!public! !

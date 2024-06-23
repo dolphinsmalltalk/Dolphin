@@ -13,7 +13,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDenom' -> 16r14.
 			'_OffsetOf_yNum' -> 16r10
 		}!
+
 OS.EMRSCALEVIEWPORTEXTEX guid: (Core.GUID fromString: '{cb3c696e-59b6-4d1f-9413-f0a1fd89aaeb}')!
+
 OS.EMRSCALEVIEWPORTEXTEX comment: '<EMRSCALEVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSCALEVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagEMRSCALEVIEWPORTEXTEX {
 	long yDenom;
 } EMRSCALEVIEWPORTEXTEX;
 '!
+
 !OS.EMRSCALEVIEWPORTEXTEX categoriesForClass!Win32-Structs! !
+
 !OS.EMRSCALEVIEWPORTEXTEX methodsFor!
 
 xDenom
@@ -73,6 +77,7 @@ yNum: anInteger
 	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_yNum put: anInteger! !
+
 !OS.EMRSCALEVIEWPORTEXTEX categoriesForMethods!
 xDenom!**compiled accessors**!public! !
 xDenom:!**compiled accessors**!public! !
@@ -127,6 +132,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SCALEVIEWPORTEXTEX. EMR_SCALEWINDOWEXTEX}! !
+
 !OS.EMRSCALEVIEWPORTEXTEX class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

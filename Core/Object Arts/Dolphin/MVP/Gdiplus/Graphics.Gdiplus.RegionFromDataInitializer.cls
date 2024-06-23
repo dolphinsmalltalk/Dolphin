@@ -7,8 +7,11 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionFromDataInitializer guid: (Core.GUID fromString: '{15e866fe-f623-407c-8fe1-4c4d184e9a4e}')!
+
 Graphics.Gdiplus.RegionFromDataInitializer comment: ''!
+
 !Graphics.Gdiplus.RegionFromDataInitializer methodsFor!
 
 basicCreateHandle
@@ -35,6 +38,7 @@ printAttributesOn: aStream
 	aStream
 		nextPutAll: 'fromBytes: ';
 		print: data! !
+
 !Graphics.Gdiplus.RegionFromDataInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 data!accessing!public! !
@@ -47,6 +51,7 @@ printAttributesOn:!attributes!printing!private! !
 
 fromBytes: aByteArray
 	^self new data: aByteArray! !
+
 !Graphics.Gdiplus.RegionFromDataInitializer class categoriesForMethods!
 fromBytes:!instance creation!public! !
 !

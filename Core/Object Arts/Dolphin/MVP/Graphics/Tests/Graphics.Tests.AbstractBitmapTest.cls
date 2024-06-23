@@ -7,9 +7,13 @@ Graphics.Tests.ImageTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.AbstractBitmapTest guid: (Core.GUID fromString: '{298209a8-ba31-4a36-8c59-550f0222918b}')!
+
 Graphics.Tests.AbstractBitmapTest isNonInstantiable: true!
+
 Graphics.Tests.AbstractBitmapTest comment: ''!
+
 !Graphics.Tests.AbstractBitmapTest methodsFor!
 
 canonicalInstance
@@ -78,6 +82,7 @@ testStlConvertFromVersion3_resource
 
 verifyImage: bitmap1 sameAs: bitmap2
 	self assert: bitmap1 asByteArray equals: bitmap2 asByteArray! !
+
 !Graphics.Tests.AbstractBitmapTest categoriesForMethods!
 canonicalInstance!constants!private! !
 expectedImageExtent!constants!private! !

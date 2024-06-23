@@ -48,6 +48,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'Const' -> 16r1 }!
+
 Kernel.Tests.DolphinCompilerTestMethods
 	subclass: #'Kernel.Tests.DolphinCompilerTestMethodsSubclass'
 	instanceVariableNames: ''
@@ -55,6 +56,7 @@ Kernel.Tests.DolphinCompilerTestMethods
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.AbstractParserErrorTest'
 	instanceVariableNames: 'errors'
@@ -62,6 +64,7 @@ Core.Tests.DolphinTest
 	imports: #(#{Kernel.ParseErrorCodes} #{External})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.CompilerTest'
 	instanceVariableNames: 'defaultCompileFlags'
@@ -69,6 +72,7 @@ Core.Tests.DolphinTest
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: 'allowEmptyStatements'
@@ -76,6 +80,7 @@ Core.Tests.DolphinTest
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.ScannerTest'
 	instanceVariableNames: ''
@@ -83,6 +88,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.StLiteralValueNodeTest'
 	instanceVariableNames: ''
@@ -90,6 +96,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.StTokenTest'
 	instanceVariableNames: ''
@@ -97,6 +104,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AbstractParserErrorTest
 	subclass: #'Kernel.Tests.CompilerErrorTest'
 	instanceVariableNames: ''
@@ -104,6 +112,7 @@ Kernel.Tests.AbstractParserErrorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AbstractParserErrorTest
 	subclass: #'Kernel.Tests.ParserErrorTest'
 	instanceVariableNames: 'semanticAnalyserClass'
@@ -111,6 +120,7 @@ Kernel.Tests.AbstractParserErrorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StTokenTest
 	subclass: #'Kernel.Tests.StOptimizedTokenTest'
 	instanceVariableNames: ''
@@ -118,6 +128,7 @@ Kernel.Tests.StTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StTokenTest
 	subclass: #'Kernel.Tests.StValueTokenTest'
 	instanceVariableNames: ''
@@ -125,6 +136,7 @@ Kernel.Tests.StTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StValueTokenTest
 	subclass: #'Kernel.Tests.StIdentifierTokenTest'
 	instanceVariableNames: ''
@@ -132,6 +144,7 @@ Kernel.Tests.StValueTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StValueTokenTest
 	subclass: #'Kernel.Tests.StLiteralArrayTokenTest'
 	instanceVariableNames: ''
@@ -139,6 +152,7 @@ Kernel.Tests.StValueTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StValueTokenTest
 	subclass: #'Kernel.Tests.StLiteralTokenTest'
 	instanceVariableNames: ''
@@ -146,6 +160,7 @@ Kernel.Tests.StValueTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StValueTokenTest
 	subclass: #'Kernel.Tests.StSpecialCharacterTokenTest'
 	instanceVariableNames: ''
@@ -153,6 +168,7 @@ Kernel.Tests.StValueTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StLiteralTokenTest
 	subclass: #'Kernel.Tests.StNumberLiteralTokenTest'
 	instanceVariableNames: ''
@@ -160,6 +176,7 @@ Kernel.Tests.StLiteralTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestClassResource
 	subclass: #'Kernel.Tests.CompilerTestClasses'
 	instanceVariableNames: 'testClass'

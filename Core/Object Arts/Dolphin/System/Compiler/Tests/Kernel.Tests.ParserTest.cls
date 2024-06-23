@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ParserTest guid: (Core.GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
+
 Kernel.Tests.ParserTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !Kernel.Tests.ParserTest categoriesForClass!Refactory-Testing! !
+
 !Kernel.Tests.ParserTest methodsFor!
 
 assertTree: anObject equals: anotherObject
@@ -1508,6 +1512,7 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 			[:originalChild :copiedChild |
 			self assert: copiedChild parent identicalTo: copiedNode.
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
+
 !Kernel.Tests.ParserTest categoriesForMethods!
 assertTree:equals:!helpers!private! !
 compare:to:!helpers!private! !

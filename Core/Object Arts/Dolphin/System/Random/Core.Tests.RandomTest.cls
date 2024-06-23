@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.RandomTest guid: (Core.GUID fromString: '{e7d2feed-3b86-4c49-a1ef-784f24c9007b}')!
+
 Core.Tests.RandomTest comment: ''!
+
 !Core.Tests.RandomTest methodsFor!
 
 assert: rng generates: anArray epsilon: aFloat 
@@ -72,6 +75,7 @@ testParkMiller
 				yourself)
 		generates: #(0.1492432697 0.3316330217 0.7561964480 0.3937015400 0.9417831814 0.5499291939 0.6599625962 0.9913545591 0.6960744326 0.9229878997)
 		epsilon: 1.0e-9! !
+
 !Core.Tests.RandomTest categoriesForMethods!
 assert:generates:epsilon:!helpers!private! !
 setUp!public!setup! !

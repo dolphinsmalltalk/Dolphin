@@ -7,9 +7,13 @@ Tools.DolphinBaseProduct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinProfessional guid: (Core.GUID fromString: '{48eec5bd-f329-471a-99d8-41ffd76f7f98}')!
+
 Tools.DolphinProfessional comment: ''!
+
 !Tools.DolphinProfessional categoriesForClass!System-Support! !
+
 !Tools.DolphinProfessional methodsFor!
 
 contents
@@ -94,6 +98,7 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Professional'! !
+
 !Tools.DolphinProfessional categoriesForMethods!
 contents!accessing!public! !
 defaultSystemFolderExtent!private! !
@@ -129,6 +134,7 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DPRO'! !
+
 !Tools.DolphinProfessional class categoriesForMethods!
 developmentClasses!public! !
 productName!accessing!public! !

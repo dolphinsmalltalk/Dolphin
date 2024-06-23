@@ -7,7 +7,9 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.BasicInspector guid: (Core.GUID fromString: '{87b4c68b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.BasicInspector comment: 'BasicInspector is a <compositePresenter> that implements a generic inspect facility onto any <Object>.
 
 Example:
@@ -19,7 +21,9 @@ Instance Variables:
 
 
 '!
+
 !Tools.BasicInspector categoriesForClass!MVP-Presenters! !
+
 !Tools.BasicInspector methodsFor!
 
 accept
@@ -359,6 +363,7 @@ variableNamesList
 	inspected objects variables."
 
 	^variableNamesPresenter list! !
+
 !Tools.BasicInspector categoriesForMethods!
 accept!commands-actions!public! !
 browseClass!commands-actions!private! !
@@ -449,6 +454,7 @@ shellOn: anObject
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
+
 !Tools.BasicInspector class categoriesForMethods!
 headerList!constants!public! !
 icon!constants!public! !

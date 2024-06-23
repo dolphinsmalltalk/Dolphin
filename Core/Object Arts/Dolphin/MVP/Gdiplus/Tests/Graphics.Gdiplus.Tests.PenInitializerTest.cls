@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.PenInitializerTest guid: (Core.GUID fromString: '{af606711-5d59-44e2-b217-d6db5d89ffc4}')!
+
 Graphics.Gdiplus.Tests.PenInitializerTest comment: ''!
+
 !Graphics.Gdiplus.Tests.PenInitializerTest methodsFor!
 
 createCanonicalSubject
@@ -76,6 +79,7 @@ testCreateHandleFromSolidBrush
 	self assert: constructor arguments second isKindOf: Float.
 	self assert: constructor arguments second equals: 0.5.
 	self assert: constructor arguments last isKindOf: Handle! !
+
 !Graphics.Gdiplus.Tests.PenInitializerTest categoriesForMethods!
 createCanonicalSubject!private!running! !
 subjectClass!constants!private! !

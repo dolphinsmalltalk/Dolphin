@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ExtractMethodToComponentRefactoring guid: (Core.GUID fromString: '{944c6f77-b242-48b5-bdee-ae64884630f6}')!
+
 Refactory.Browser.ExtractMethodToComponentRefactoring comment: ''!
+
 !Refactory.Browser.ExtractMethodToComponentRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.ExtractMethodToComponentRefactoring methodsFor!
 
 extract: anInterval from: aSelector in: aClass 
@@ -77,6 +81,7 @@ transform
 		extractMethod;
 		moveMethod;
 		inlineForwarder! !
+
 !Refactory.Browser.ExtractMethodToComponentRefactoring categoriesForMethods!
 extract:from:in:!initialize/release!public! !
 extractMethod!public!transforming! !
@@ -102,6 +107,7 @@ model: aRBModel extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
+
 !Refactory.Browser.ExtractMethodToComponentRefactoring class categoriesForMethods!
 extract:from:in:!instance creation!public! !
 model:extract:from:in:!instance creation!public! !

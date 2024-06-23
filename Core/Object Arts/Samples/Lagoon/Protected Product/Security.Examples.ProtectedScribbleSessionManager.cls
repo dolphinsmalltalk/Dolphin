@@ -7,10 +7,13 @@ UI.ProtectedProductSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.Examples.ProtectedScribbleSessionManager guid: (Core.GUID fromString: '{e5617c49-6f9a-4691-9d14-9d880bd4779c}')!
+
 Security.Examples.ProtectedScribbleSessionManager comment: 'This is a version of the standard Scribble application that is protect by serial number. Try deploying this application and then entering the following serial number on startup:
 
 	CWDH-UA9B-VS9Q-TAVQ-FP0C-YBSY-NZ5G-DB'!
+
 !Security.Examples.ProtectedScribbleSessionManager methodsFor!
 
 encryptedPackageNames
@@ -27,6 +30,7 @@ serialNumberClass
 	"Answer the class of the <ProtectedProductSerialNumber> used to encrypt the receiver"
 
 	^MyCompanySerialNumber! !
+
 !Security.Examples.ProtectedScribbleSessionManager categoriesForMethods!
 encryptedPackageNames!constants!public! !
 productRegistrationKey!constants!public! !
@@ -39,6 +43,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Smalltalk.Scribble! !
+
 !Security.Examples.ProtectedScribbleSessionManager class categoriesForMethods!
 mainShellClass!constants!public! !
 !

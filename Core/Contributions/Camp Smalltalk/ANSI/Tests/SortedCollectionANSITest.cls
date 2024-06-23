@@ -5,9 +5,13 @@ SequencedReadableCollectionTest subclass: #SortedCollectionANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SortedCollectionANSITest guid: (GUID fromString: '{3ea31051-f64e-43f6-b7f3-71c10e7e803c}')!
+
 SortedCollectionANSITest comment: ''!
+
 !SortedCollectionANSITest categoriesForClass!Unclassified! !
+
 !SortedCollectionANSITest methodsFor!
 
 canonicalElement
@@ -107,6 +111,7 @@ testXsortBlockX
 		should: [:r | co first = 4]
 		conformTo: #SortedCollection
 		selector: #sortBlock:! !
+
 !SortedCollectionANSITest categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -134,6 +139,7 @@ helperClassesDo: aBlock
 	aBlock value: ExtensibleCollectionHelper.
 	aBlock value: SequencedContractibleCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper.! !
+
 !SortedCollectionANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

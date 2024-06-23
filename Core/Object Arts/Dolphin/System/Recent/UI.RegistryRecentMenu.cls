@@ -7,9 +7,13 @@ UI.AbstractRecentMenu
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RegistryRecentMenu guid: (Core.GUID fromString: '{24a5959d-a131-48d9-a17d-b8038aea48b2}')!
+
 UI.RegistryRecentMenu comment: ''!
+
 !UI.RegistryRecentMenu categoriesForClass!Kernel-Objects! !
+
 !UI.RegistryRecentMenu methodsFor!
 
 getRecentList
@@ -58,6 +62,7 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 				nextPutAll: each;
 				cr].
 	self productRegistryAt: self recentRegistryKey put: stream contents! !
+
 !UI.RegistryRecentMenu categoriesForMethods!
 getRecentList!helpers!private! !
 initialize!initializing!private! !
@@ -76,6 +81,7 @@ withProductKey: aKeyString
 	^(super new)
 		setProductRegistryKey: aKeyString;
 		yourself! !
+
 !UI.RegistryRecentMenu class categoriesForMethods!
 withProductKey:!instance creation!public! !
 !

@@ -7,9 +7,13 @@ Core.Signal
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.NotificationSignal guid: (Core.GUID fromString: '{87b4c6de-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.NotificationSignal comment: ''!
+
 !Core.NotificationSignal categoriesForClass!Kernel-Exception Handling! !
+
 !Core.NotificationSignal methodsFor!
 
 defaultAction: exception
@@ -29,6 +33,7 @@ exceptionClass
 	is signalled."
 
 	^RaisedNotificationSignal! !
+
 !Core.NotificationSignal categoriesForMethods!
 defaultAction:!handling!private! !
 defaultResumption!constants!private! !

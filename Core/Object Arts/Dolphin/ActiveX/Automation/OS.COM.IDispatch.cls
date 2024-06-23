@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch guid: (OS.COM.IID fromString: '{00020400-0000-0000-c000-000000000046}')!
+
 OS.COM.IDispatch comment: '`IDispatch` is a wrapper class for the standard AX automation dynamic dispatch interface of the same name. It was generated from type information in the ''OLE Automation'' library, stdole2.tlb. It contains methods to invoke the member functions exposed by that interface.
 
 IDL definition follows:
@@ -46,7 +48,9 @@ interface IDispatch : IUnknown
 		[out]unsigned int* puArgErr);
 };
 ```'!
+
 !OS.COM.IDispatch categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IDispatch methodsFor!
 
 _newEnum
@@ -705,6 +709,7 @@ value: value
 	Raise an HRESULTError if the receiver does not have  a default value property."
 
 	self setPropertyId: DISPID_VALUE value: value! !
+
 !OS.COM.IDispatch categoriesForMethods!
 _newEnum!enumerating!private! !
 asImplType!converting!public! !
@@ -814,6 +819,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DISPATCH! !
+
 !OS.COM.IDispatch class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 uninitialize!class hierarchy-removing!private! !

@@ -11,8 +11,11 @@ OS.AbstractTEXTRANGE
 			'_OffsetOf_lpstrText' -> 16r8.
 			'_TextRangeFull_Size' -> 16rC
 		}!
+
 UI.Scintilla.TextRangeFull guid: (Core.GUID fromString: '{80bf6d59-182f-4d0c-97b2-4cd275856536}')!
+
 UI.Scintilla.TextRangeFull comment: ''!
+
 !UI.Scintilla.TextRangeFull methodsFor!
 
 cpMax
@@ -35,6 +38,7 @@ lpstrText: anUtf8String
 	"Set the receiver's 'lpstrText' field to the value of the argument, anUtf8String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpstrText put: anUtf8String yourAddress! !
+
 !UI.Scintilla.TextRangeFull categoriesForMethods!
 cpMax!accessing!public! !
 cpMax:!accessing!public! !
@@ -63,6 +67,7 @@ defineFields
 	self
 		defineField: #chrg type: (StructureField type: CharacterRangeFull) beUncompiled;
 		defineField: #lpstrText type: (PointerField type: Utf8String) beWriteOnly! !
+
 !UI.Scintilla.TextRangeFull class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

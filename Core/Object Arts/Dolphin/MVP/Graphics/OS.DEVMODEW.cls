@@ -68,7 +68,9 @@ External.Structure
 			'DM_TTOPTION' -> 16r4000.
 			'DM_YRESOLUTION' -> 16r2000
 		}!
+
 OS.DEVMODEW guid: (Core.GUID fromString: '{0a67c0c4-d07a-4460-bffb-82c3c700dbd1}')!
+
 OS.DEVMODEW comment: '`DEVMODEW` is an `External.Structure` class to wrap the struct ''Win32.DEVMODEW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -120,7 +122,9 @@ struct tagDEVMODEW {
 } DEVMODEW;
 ```
 '!
+
 !OS.DEVMODEW categoriesForClass!Win32-Structs! !
+
 !OS.DEVMODEW methodsFor!
 
 byteSize
@@ -457,6 +461,7 @@ getValidFields
 					live := dmFields allMask: mask.
 					mask := mask bitShift: 1.
 					live])! !
+
 !OS.DEVMODEW categoriesForMethods!
 byteSize!accessing!public! !
 dmBitsPerPel!**compiled accessors**!public! !
@@ -610,6 +615,7 @@ defineFields
 
 getFieldNames
 	^#(#dmDeviceName #dmSpecVersion #dmDriverVersion #dmSize #dmDriverExtra #dmFields #dmOrientation #dmPosition #dmPaperSize #dmPaperLength #dmPaperWidth #dmDisplayOrientation #dmScale #dmCopies #dmDefaultSource #dmDisplayFixedOutput #dmPrintQuality #dmColor #dmDuplex #dmYResolution #dmTTOption #dmCollate #dmFormName #dmLogPixels #dmBitsPerPel #dmPelsWidth #dmPelsHeight #dmDisplayFlags #dmNup #dmDisplayFrequency)! !
+
 !OS.DEVMODEW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

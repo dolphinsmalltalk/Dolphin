@@ -7,8 +7,11 @@ UI.Dialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MenuItemDialog guid: (Core.GUID fromString: '{ec0e406d-75f7-437d-8d69-34cfd92846b7}')!
+
 Tools.MenuItemDialog isNonInstantiable: true!
+
 Tools.MenuItemDialog comment: 'MenuItemDialog is the abstract class of <dialogPresenter>s used to edit menu entries.
 
 Instance Variables:
@@ -18,6 +21,7 @@ Instance Variables:
 	imageModel			<ValueAspectAdaptor>
 	iconIdPresenter		<TextPresenter>
 '!
+
 !Tools.MenuItemDialog methodsFor!
 
 chooseIcon
@@ -77,6 +81,7 @@ onViewOpened
 		when: #currentCardChangedFrom:to:
 		send: #onCardChangedFrom:to:
 		to: self! !
+
 !Tools.MenuItemDialog categoriesForMethods!
 chooseIcon!commands-actions!private! !
 clearIcon!commands-actions!private! !
@@ -96,6 +101,7 @@ icon
 
 	^Menu icon
 ! !
+
 !Tools.MenuItemDialog class categoriesForMethods!
 icon!constants!public! !
 !

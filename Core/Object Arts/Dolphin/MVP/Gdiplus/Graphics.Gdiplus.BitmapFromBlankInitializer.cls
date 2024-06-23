@@ -7,8 +7,11 @@ Graphics.Gdiplus.BitmapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapFromBlankInitializer guid: (Core.GUID fromString: '{0a5beb4b-18f8-4ebe-bb4e-68ce5d088f33}')!
+
 Graphics.Gdiplus.BitmapFromBlankInitializer comment: ''!
+
 !Graphics.Gdiplus.BitmapFromBlankInitializer methodsFor!
 
 = anObject
@@ -76,6 +79,7 @@ width: widthInteger height: heightInteger format: aPixelFormat
 	height := heightInteger.
 	format := aPixelFormat.
 	^self! !
+
 !Graphics.Gdiplus.BitmapFromBlankInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -95,6 +99,7 @@ width: width height: height format: aPixelFormat
 		width: width
 		height: height
 		format: aPixelFormat! !
+
 !Graphics.Gdiplus.BitmapFromBlankInitializer class categoriesForMethods!
 width:height:format:!instance creation!public! !
 !

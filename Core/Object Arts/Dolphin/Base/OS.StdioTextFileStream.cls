@@ -7,10 +7,15 @@ OS.StdioFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioTextFileStream guid: (Core.GUID fromString: '{8a9acce8-979d-4821-aa11-a5b4157634af}')!
+
 OS.StdioTextFileStream isNonInstantiable: true!
+
 OS.StdioTextFileStream comment: '`OS.StdioTextFileStream` is the abstract class of `StdioFileStream`s for streaming over textual data.'!
+
 !OS.StdioTextFileStream categoriesForClass!Collections-Streams! !
+
 !OS.StdioTextFileStream methodsFor!
 
 cr
@@ -116,6 +121,7 @@ upToEnd
 	fewer than the remaining size of the file."
 
 	^self basicNextAvailable: self size - self position + 1! !
+
 !OS.StdioTextFileStream categoriesForMethods!
 cr!accessing!public! !
 externalType!accessing!public! !
@@ -136,6 +142,7 @@ OS.StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #rea
 
 encodingMode
 	^$t! !
+
 !OS.StdioTextFileStream class categoriesForMethods!
 encodingMode!constants!private! !
 !

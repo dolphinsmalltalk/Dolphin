@@ -86,29 +86,30 @@ Icon subclass: #IconWithExtent
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushButton subclass: #OwnerDrawnButton
 	instanceVariableNames: 'displayState transitionDurations shouldShowKeyboardCues animationEndTime setFocusTime'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
+
 OwnerDrawnButton subclass: #TextAndImageButton
 	instanceVariableNames: 'imageExtent imageManager imageIndex dropDownMenu isMenuOpen'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TextAndImageButton subclass: #EmulatedPushButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TextEdit subclass: #FormattedTextEdit
 	instanceVariableNames: 'isFormatting messageBubble format separatorChars placeholderChar'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -144,6 +145,7 @@ stateText: aString at: aPoint flags: anInteger
 		x: aPoint x y: aPoint y
 		cx: 0 cy: 0
 		fuFlags: anInteger! !
+
 !Canvas categoriesForMethods!
 clipTo:during:!drawing!public! !
 erase:!drawing!public! !
@@ -156,6 +158,7 @@ stateText:at:flags:!drawing!public! !
 buttonShadow
 	#deprecated.
 	^self shadow3d! !
+
 !Color class categoriesForMethods!
 buttonShadow!constants!public! !
 !
@@ -180,6 +183,7 @@ hasCueBanner
 		wParam: buf yourAddress
 		lParam: buf size + 1) ~~ 0
 		and: [buf first ~~ $\0]! !
+
 !ComboBox categoriesForMethods!
 droppedWidth!hierarchy!public!sub views! !
 droppedWidth:!hierarchy!public!sub views! !
@@ -197,6 +201,7 @@ shortString
 	self printOn: stream longPicture: false.
 
 	^stream contents! !
+
 !Date categoriesForMethods!
 shortString!printing!public! !
 !
@@ -214,6 +219,7 @@ getClipRgn: hdc hrgn: hRegion
 
 	<stdcall: sdword GetClipRgn handle handle>
 	^self invalidCall: _failureCode! !
+
 !GDILibrary categoriesForMethods!
 getClipRgn:hrgn:!public!win32 functions-clipping! !
 !
@@ -236,6 +242,7 @@ draw: imageIndexInteger on: aCanvas at: aPoint extent: exPoint backcolor: backCo
 		rgbBk: (backColor isNil ifTrue: [CLR_NONE] ifFalse: [backColor asCOLORREF])
 		rgbFg: (foreColor isNil ifTrue: [CLR_DEFAULT] ifFalse: [foreColor asCOLORREF])
 		fStyle: flagsInteger! !
+
 !WinImageList categoriesForMethods!
 draw:on:at:extent:backcolor:forecolor:flags:!drawing-bitmaps!public! !
 !
@@ -250,6 +257,7 @@ resendTo: aView
 		sendMessage: message 
 		wParam: wParam 
 		lParam: lParam! !
+
 !KeyEvent categoriesForMethods!
 resendTo:!public!testing! !
 !
@@ -267,6 +275,7 @@ showIn: aView position: aPos rightAlign: aBoolean
 		nReserved: 0
 		hWnd: aView asParameter
 		prcRect: nil! !
+
 !Menu categoriesForMethods!
 showIn:position:rightAlign:!drawing!public! !
 !
@@ -276,6 +285,7 @@ showIn:position:rightAlign:!drawing!public! !
 isNullConverter
 
 	^true! !
+
 !NullConverter categoriesForMethods!
 isNullConverter!public!testing! !
 !
@@ -298,6 +308,7 @@ resendTo: aView
 		sendMessage: message 
 		wParam: wParam 
 		lParam: newLParam asInteger! !
+
 !PointEvent categoriesForMethods!
 resendTo:!accessing!private! !
 !
@@ -373,6 +384,7 @@ wmNotify: message wParam: wParam lParam: lParam
 	code := pnmhdr sdwordAtOffset: 8.
 	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOA]) ifTrue: [^self nmNotify: pnmhdr].
 	^super wmNotify: message wParam: wParam lParam: lParam! !
+
 !PushButton categoriesForMethods!
 alignment!accessing-styles!public! !
 alignment:!accessing-styles!public! !
@@ -395,6 +407,7 @@ hasListViewHotTracking
 	"Does the host support hot tracking in list views?"
 
 	^true! !
+
 !SystemMetrics categoriesForMethods!
 hasListViewAlphaBlendedHighlights!capability enquiries!public! !
 hasListViewHotTracking!capability enquiries!public! !
@@ -412,6 +425,7 @@ hasCueBanner
 		wParam: buf yourAddress
 		lParam: buf size + 1) ~~ 0
 		and: [buf first ~~ $\0]! !
+
 !TextEdit categoriesForMethods!
 hasCueBanner!public!testing! !
 !
@@ -442,6 +456,7 @@ getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom i
 
 	<stdcall: hresult GetThemeTransitionDuration handle sdword sdword sdword sdword sdword*>
 	^self invalidCall: _failureCode! !
+
 !ThemeLibrary categoriesForMethods!
 endBufferedAnimation:fUpdateTarget:!public! !
 getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:!public! !
@@ -486,6 +501,7 @@ itemWithCommand: aSymbol
 itemWithCommand: aSymbol ifNone: aBlock
 
 	^items detect: [ :each | each command ifNil: [false] ifNotNil: [ :cmd | cmd asSymbol = aSymbol]] ifNone: aBlock! !
+
 !Toolbar categoriesForMethods!
 addItem:after:!adding!public! !
 addItem:before:!adding!public! !
@@ -503,6 +519,7 @@ isAutoSize: aBoolean
 	"Sets the receiver to automatically size itself to accomodate its contents according to aBoolean"
 
 	self style: (self style mask: BTNS_AUTOSIZE set: aBoolean)! !
+
 !ToolbarButton categoriesForMethods!
 isAutoSize!public!style! !
 isAutoSize:!public!style! !
@@ -513,6 +530,7 @@ isAutoSize:!public!style! !
 isNullConverter
 
 	^false! !
+
 !TypeConverter categoriesForMethods!
 isNullConverter!public!testing! !
 !
@@ -577,6 +595,7 @@ tabPrevious
 		previous := parent tabNextSiblingFrom: self forward: false.
 		parent := parent parentView].
 	previous isNil ifFalse: [previous tabFocus]! !
+
 !View categoriesForMethods!
 addToolTipWithHandle:!operations!public! !
 getUICuesState!accessing!private! !

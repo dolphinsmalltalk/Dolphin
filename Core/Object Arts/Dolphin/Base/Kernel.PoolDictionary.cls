@@ -7,9 +7,13 @@ Core.Dictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PoolDictionary guid: (Core.GUID fromString: '{87b4c52a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.PoolDictionary comment: ''!
+
 !Kernel.PoolDictionary categoriesForClass!Collections-Unordered!System-Support! !
+
 !Kernel.PoolDictionary methodsFor!
 
 anonymousName
@@ -110,6 +114,7 @@ shortNameFor: aString
 
 unqualifiedName
 	^self anonymousName! !
+
 !Kernel.PoolDictionary categoriesForMethods!
 anonymousName!constants!private! !
 asQualifiedReference!converting!private! !
@@ -146,6 +151,7 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
+
 !Kernel.PoolDictionary class categoriesForMethods!
 forClass:!instance creation!public! !
 named:!instance creation!public! !

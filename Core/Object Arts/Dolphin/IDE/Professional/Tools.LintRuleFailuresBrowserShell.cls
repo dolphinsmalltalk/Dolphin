@@ -7,9 +7,13 @@ Tools.MethodBrowserShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.LintRuleFailuresBrowserShell guid: (Core.GUID fromString: '{1f17dd01-e9d4-4f6b-a722-e0f62aed9b74}')!
+
 Tools.LintRuleFailuresBrowserShell comment: ''!
+
 !Tools.LintRuleFailuresBrowserShell categoriesForClass!MVP-Presenters! !
+
 !Tools.LintRuleFailuresBrowserShell methodsFor!
 
 addToCommandRoute: route
@@ -61,6 +65,7 @@ onViewOpened
 
 	super onViewOpened.
 	self extendMenus! !
+
 !Tools.LintRuleFailuresBrowserShell categoriesForMethods!
 addToCommandRoute:!commands!public! !
 extendMenus!browsing!private! !
@@ -75,6 +80,7 @@ onViewOpened!event handling!public! !
 
 initialize
 	self canUseIdeaSpace: true! !
+
 !Tools.LintRuleFailuresBrowserShell class categoriesForMethods!
 initialize!initializing!private! !
 !

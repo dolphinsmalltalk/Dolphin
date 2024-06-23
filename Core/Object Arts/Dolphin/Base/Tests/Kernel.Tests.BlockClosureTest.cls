@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.BlockClosureTest guid: (Core.GUID fromString: '{346b84aa-d94e-4ee6-9461-5195ef00255b}')!
+
 Kernel.Tests.BlockClosureTest comment: ''!
+
 !Kernel.Tests.BlockClosureTest methodsFor!
 
 blockWithCopiedValue: anObject
@@ -367,6 +370,7 @@ testValueWithArguments
 		should: [[:i | 3 + 4] valueWithArguments: #(1 2)]
 		raise: Error
 		matching: [:err | err description = 'Block expects 1 argument(s), 2 given']! !
+
 !Kernel.Tests.BlockClosureTest categoriesForMethods!
 blockWithCopiedValue:!helpers!private! !
 nestedReturn!helpers!private! !

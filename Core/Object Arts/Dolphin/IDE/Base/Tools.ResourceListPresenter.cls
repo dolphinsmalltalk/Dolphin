@@ -7,7 +7,9 @@ UI.ListPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ResourceListPresenter guid: (Core.GUID fromString: '{87b4c6c8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.ResourceListPresenter comment: 'ResourceListPresenter implements a <listPresenter> used to display a list of <ResourceIdentifier>s. It adds the ability to source drag and drop operations for resources, and various commands to operate on resources such as showing them, editing them, browsing their owning class, etc.
 
 Instance Variables:
@@ -18,7 +20,9 @@ Instance Variables:
 
 
 '!
+
 !Tools.ResourceListPresenter categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools!MVP-Resources-Misc! !
+
 !Tools.ResourceListPresenter methodsFor!
 
 browseClass
@@ -286,6 +290,7 @@ showResourcesReferencingView: aResourceIdentifier
 					[:each | 
 					(each isKindOf: STBViewProxy) 
 						and: [each viewClass == ReferenceView and: [(each instVars at: idIndex) = aResourceIdentifier]]]]! !
+
 !Tools.ResourceListPresenter categoriesForMethods!
 browseClass!commands-actions!public! !
 browseHierarchy!commands-actions!public! !
@@ -363,6 +368,7 @@ showResourcesReferencingView: aResourceIdentifier
 	browser showResourcesReferencingView: aResourceIdentifier.
 	browser topShell caption: ('Resources referencing <1p>' expandMacrosWith: aResourceIdentifier).
 	^browser! !
+
 !Tools.ResourceListPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

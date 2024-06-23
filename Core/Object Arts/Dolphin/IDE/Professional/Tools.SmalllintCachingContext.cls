@@ -7,9 +7,13 @@ Refactory.Browser.SmalllintContext
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalllintCachingContext guid: (Core.GUID fromString: '{8dc28c1a-eaf8-479b-9393-8e00da03fc44}')!
+
 Tools.SmalllintCachingContext comment: ''!
+
 !Tools.SmalllintCachingContext categoriesForClass!Refactory-Lint! !
+
 !Tools.SmalllintCachingContext methodsFor!
 
 computeLiterals
@@ -38,6 +42,7 @@ selectors
 	selectors isNil ifTrue: [self computeLiterals].
 	^selectors
 ! !
+
 !Tools.SmalllintCachingContext categoriesForMethods!
 computeLiterals!helpers!private! !
 initialize!initialize/release!public! !
@@ -87,6 +92,7 @@ isSafeToEncryptWithProductProtection
 uninitialize
 	self clearCache.
 	self developmentSystem removeEventsTriggeredFor: self! !
+
 !Tools.SmalllintCachingContext class categoriesForMethods!
 clearCache!operations!private! !
 developmentSystem!accessing!private! !

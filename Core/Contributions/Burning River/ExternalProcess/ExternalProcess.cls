@@ -5,7 +5,9 @@ Object subclass: #ExternalProcess
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ExternalProcess guid: (GUID fromString: '{4c6ce2da-1739-4610-834e-53a21e4fcba9}')!
+
 ExternalProcess comment: 'This class represents a native Win32 process.  Methods are available to allow processes to be executed synchronously (where the Dolphin image blocks until the external process completes - use the #executeSync message) or asynchronously (where the Dolphin image continues on its merry way after the external process has been started - use the #executeAsync message).  If you are running an ExternalProcess asynchronously you can use the #isAlive and #isTerminated methods to determine if the Win32 process has completed
 its work or is still running.
 
@@ -27,7 +29,9 @@ The first of these is given, of course. The others are specified, if required, a
 3. The ''stdoutFilename'' parameter specifies (d), either absolutely or relative to (a) (and similarly for stdin and stderr).
 4. Any files referenced by the External Process which are passed as command line arguments are specified either absolutely or relative to (c).
 '!
+
 !ExternalProcess categoriesForClass!Unclassified! !
+
 !ExternalProcess methodsFor!
 
 close
@@ -269,6 +273,7 @@ waitForCompletion
 		ifTrue: [ self kill;
 			  	  close.
 			  ^ExternalProcessWaitTimeout signal: 'Process execution timed out' with: self ]! !
+
 !ExternalProcess categoriesForMethods!
 close!execution control!public! !
 closeFiles!operations!private! !
@@ -313,6 +318,7 @@ new
 referencesToOtherPackages
 	"Private - Force references to other packages."
 	KernelLibraryExtension		"Global defined in the KernelLibraryExtension package"! !
+
 !ExternalProcess class categoriesForMethods!
 infiniteTimeoutDelay!public! !
 new!object creation!public! !

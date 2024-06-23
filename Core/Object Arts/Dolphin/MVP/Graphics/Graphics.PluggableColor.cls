@@ -7,14 +7,18 @@ Graphics.VirtualColor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.PluggableColor guid: (Core.GUID fromString: '{74b2076a-a07a-4203-aa78-b3fc0ad65e7c}')!
+
 Graphics.PluggableColor comment: '`PluggableColor` is the class of `Color`s that dynamically determine their actual `Color` value by evaluating a `<niladicValuable>`.
 
 ## Instance Variables:
   `valuable`		`<niladicValuable>` evaluated to determine the actual colour to use each time it is required.
 
 '!
+
 !Graphics.PluggableColor categoriesForClass!Drawing! !
+
 !Graphics.PluggableColor methodsFor!
 
 actualColor
@@ -35,6 +39,7 @@ stbSaveOn: anSTBOutFiler
 	"Override back to default implementation"
 
 	anSTBOutFiler saveObject: self! !
+
 !Graphics.PluggableColor categoriesForMethods!
 actualColor!accessing!public! !
 printOn:!printing!public! !
@@ -47,6 +52,7 @@ stbSaveOn:!binary filing!public! !
 with: aNiladicValuable 
 	<primitive: 157>
 	^self basicNew setValuable: aNiladicValuable! !
+
 !Graphics.PluggableColor class categoriesForMethods!
 with:!instance creation!public! !
 !

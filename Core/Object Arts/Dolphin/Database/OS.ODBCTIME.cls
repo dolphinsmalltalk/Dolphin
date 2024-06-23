@@ -12,9 +12,13 @@ External.Structure
 			'_OffsetOf_minute' -> 16r2.
 			'_OffsetOf_second' -> 16r4
 		}!
+
 OS.ODBCTIME guid: (Core.GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.ODBCTIME comment: 'ODBCTIME is a representation of the same named Win32 ODBC structure.'!
+
 !OS.ODBCTIME categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+
 !OS.ODBCTIME methodsFor!
 
 asTime
@@ -59,6 +63,7 @@ time: aTime
 		hour: aTime hour;
 		minute: aTime minute;
 		second: aTime second truncated "ODBCTIME doesn't support fractional seconds"! !
+
 !OS.ODBCTIME categoriesForMethods!
 asTime!converting!public! !
 hour!**compiled accessors**!public! !
@@ -98,6 +103,7 @@ fromTime: aTime
 
 getFieldNames
 	^#(#hour #minute #second)! !
+
 !OS.ODBCTIME class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.CompiledExpressionTest guid: (Core.GUID fromString: '{1fa499df-b290-49ea-9f78-1babcc5a62fd}')!
+
 Kernel.Tests.CompiledExpressionTest comment: ''!
+
 !Kernel.Tests.CompiledExpressionTest methodsFor!
 
 testAsDebugMethodNoCustomEnvironment
@@ -52,6 +55,7 @@ testGetDebugInfoWithCustomEnvironment
 	self deny: debugInfo method identicalTo: expr.
 	self assert: debugInfo method environment identicalTo: self class environment.
 	self assert: (debugInfo method value: Object name) identicalTo: self class! !
+
 !Kernel.Tests.CompiledExpressionTest categoriesForMethods!
 testAsDebugMethodNoCustomEnvironment!public! !
 testAsDebugMethodWithCustomEnvironment!public! !

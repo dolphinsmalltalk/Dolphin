@@ -7,8 +7,11 @@ Core.Tests.WriteStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LimitedWriteStreamTest guid: (Core.GUID fromString: '{9744cad5-27af-421d-a0ce-d2c7d68cf05d}')!
+
 Core.Tests.LimitedWriteStreamTest comment: ''!
+
 !Core.Tests.LimitedWriteStreamTest methodsFor!
 
 streamClass
@@ -254,6 +257,7 @@ testWithFromTo
 				assert: stream position equals: self stringSize * 2;
 				assert: stream contents equals: self string , self string;
 				assert: overLimit]! !
+
 !Core.Tests.LimitedWriteStreamTest categoriesForMethods!
 streamClass!helpers!private! !
 testLimit!public!unit tests! !

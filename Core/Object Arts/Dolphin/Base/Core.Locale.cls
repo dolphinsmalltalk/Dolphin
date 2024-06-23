@@ -7,10 +7,15 @@ Core.Object
 	imports: #(#{OS.NlsConstants} #{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'NoUserOverrideMask' -> 16r1000000 }!
+
 Core.Locale guid: (Core.GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Locale isNonInstantiable: true!
+
 Core.Locale comment: ''!
+
 !Core.Locale categoriesForClass!System-Localization! !
+
 !Core.Locale methodsFor!
 
 = anObject
@@ -755,6 +760,7 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self subclassResponsibility! !
+
 !Core.Locale categoriesForMethods!
 =!comparing!public! !
 amDesignator!constants!public! !
@@ -994,6 +1000,7 @@ userDefault: aLocale
 	oldDefault := UserDefault.
 	UserDefault := aLocale ifNil: [self uiDefault].
 	^oldDefault! !
+
 !Core.Locale class categoriesForMethods!
 default!accessing!public! !
 getTimeZoneInfo!enquiries!public! !

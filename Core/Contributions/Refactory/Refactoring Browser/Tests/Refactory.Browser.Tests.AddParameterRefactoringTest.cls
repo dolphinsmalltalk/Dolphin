@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AddParameterRefactoringTest guid: (Core.GUID fromString: '{b520d120-f80f-4ce2-b6be-e01706dc902b}')!
+
 Refactory.Browser.Tests.AddParameterRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.AddParameterRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.AddParameterRefactoringTest methodsFor!
 
 setUp
@@ -192,6 +196,7 @@ testPrimitiveMethods
 			classes do: [:each | self assertNotNil: (each parseTreeFor: sel)].
 			true].
 	self shouldFail: refactoring withMessage: '*''s implementation of #at: is a primitive'! !
+
 !Refactory.Browser.Tests.AddParameterRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAddParameterForTwoArgumentMessage!public!tests! !

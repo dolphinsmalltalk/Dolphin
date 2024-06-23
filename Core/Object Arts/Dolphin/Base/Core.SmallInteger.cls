@@ -7,11 +7,15 @@ Core.Integer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SmallInteger guid: (Core.GUID fromString: '{87b4c65f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.SmallInteger comment: 'Class SmallInteger is an optimized representation of 31-bit 2''s complement integers.
 
 Wherever an Integer may be represented as a SmallInteger, then its only truly valid representation is as a SmallInteger. (i.e their "normalized" representation is as a SmallInteger). The range is such that the majority of integers used for counting and indexing, and even arithmetical tasks, will be SmallIntegers.'!
+
 !Core.SmallInteger categoriesForClass!Magnitude-Numbers! !
+
 !Core.SmallInteger methodsFor!
 
 - anArithmeticValue
@@ -541,6 +545,7 @@ species
 	will fail for immediate classes, so we must override here."
 
 	^SmallInteger! !
+
 !Core.SmallInteger categoriesForMethods!
 -!arithmetic!public! !
 &!bit manipulation!public! !
@@ -633,6 +638,7 @@ minimum
 	represented as a SmallInteger"
 
 	^VMConstants.SmallIntegerMin! !
+
 !Core.SmallInteger class categoriesForMethods!
 basicNew!instance creation!public! !
 hasImmediateInstances!public!testing! !

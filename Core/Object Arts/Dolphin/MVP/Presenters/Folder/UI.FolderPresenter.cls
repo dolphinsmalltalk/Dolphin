@@ -7,7 +7,9 @@ UI.ListPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FolderPresenter guid: (Core.GUID fromString: '{87b4c6c7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.FolderPresenter comment: 'FolderPresenter is a <treePresenter> component that can be used to display the contents of a <treeModel> within a <listView>. The list is used to display the contents of individual parent nodes within the tree. This is similar to the way a folder view (hence the name) is used to display a directory''s contents in the Windows Shell. For presentation of a tree but viewing it as a complete hierarchy see the TreePresenter class.
 
 A FolderPresenter can navigate the tree hierarchy using the #expand:, #collapse: and #up <treePresenter> methods. 
@@ -19,7 +21,9 @@ Instance Variables:
 	openBlock		<dyadicValuable> specifying how an object should be opened.
 
 '!
+
 !UI.FolderPresenter categoriesForClass!MVP-Presenters! !
+
 !UI.FolderPresenter methodsFor!
 
 beNotSorted
@@ -222,6 +226,7 @@ viewModel
 	connected to the receiver's contentsModel - not the receiver's tree model"
 
 	^self contents! !
+
 !UI.FolderPresenter categoriesForMethods!
 beNotSorted!accessing!public!sorting! !
 collapse:!operations!public! !
@@ -276,6 +281,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ListView} 38 #{Core.Array} 45 nil nil 50 2 8 1409372236 1025 32 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{Core.Message} #displayString 8 #() 242 #iconImageIndex 272 1350 1 #{Graphics.IconImageManager} nil nil nil 518 #{Graphics.Point} 65 65 nil nil 146 1 3142 5 #{UI.ListViewColumn} 8 'Column 1' 201 #left 256 242 #<= 8 #() nil nil 32 nil 1 nil nil #largeIcons 8 #() nil 131169 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 338 6143 21 338 491 311 32 530 #text: 50 1 8 'Column 1' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 244 12 0 0 165 0 0 0] 8 #() 338 193 193 nil 35)! !
+
 !UI.FolderPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

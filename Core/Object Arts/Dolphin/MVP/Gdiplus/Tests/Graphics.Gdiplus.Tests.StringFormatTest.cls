@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.StringFormatTest guid: (Core.GUID fromString: '{fe02342a-86ba-4d11-91fa-53be23c8605e}')!
+
 Graphics.Gdiplus.Tests.StringFormatTest comment: ''!
+
 !Graphics.Gdiplus.Tests.StringFormatTest methodsFor!
 
 subjectClass
@@ -265,6 +268,7 @@ verifyGenericTypographicAttributes: aStringFormat
 	self assert: aStringFormat trimming equals: StringTrimmingNone.
 	"No measurable character ranges set"
 	self assert: aStringFormat measurableCharacterRanges equals: #()! !
+
 !Graphics.Gdiplus.Tests.StringFormatTest categoriesForMethods!
 subjectClass!constants!private! !
 tabOffsetsOf:!helpers!private! !

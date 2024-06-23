@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RBVariableAnalyserTest guid: (Core.GUID fromString: '{07c92c36-1991-47fc-985b-c10d3a2ad06f}')!
+
 Refactory.Browser.Tests.RBVariableAnalyserTest comment: ''!
+
 !Refactory.Browser.Tests.RBVariableAnalyserTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RBVariableAnalyserTest methodsFor!
 
 testNamespaceAnnotation
@@ -53,6 +57,7 @@ testNamespaceAnnotationInModel
 	self assert: browserEnv variable binding
 		identicalTo: (model classFor: Refactory.Browser.BrowserEnvironment) binding.
 	self assert: rbModelRef binding identicalTo: (model classFor: Refactory.Browser.RBModel) binding! !
+
 !Refactory.Browser.Tests.RBVariableAnalyserTest categoriesForMethods!
 testNamespaceAnnotation!public! !
 testNamespaceAnnotationInModel!public! !

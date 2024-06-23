@@ -31,11 +31,15 @@ OS.NMHDR
 			'_OffsetOf_y' -> 16r4C.
 			'_SCNotification_Size' -> 16r64
 		}!
+
 UI.Scintilla.SCNotification guid: (Core.GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
+
 UI.Scintilla.SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
 
 Note that the ''text'' field is not null terminated (the number of characters is specified by the ''length'' field), and is only valid for SCN_MODIFIED notifications where the SC_MOD_DELETETEXT or SC_MOD_INSERTTEXT ''modificationType'' is specified.'!
+
 !UI.Scintilla.SCNotification categoriesForClass!ScintillaLib-Structs! !
+
 !UI.Scintilla.SCNotification methodsFor!
 
 annotationLinesAdded
@@ -275,6 +279,7 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes int32AtOffset: _OffsetOf_y! !
+
 !UI.Scintilla.SCNotification categoriesForMethods!
 annotationLinesAdded!**compiled accessors**!public! !
 ch!**compiled accessors**!public! !
@@ -347,6 +352,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod #characterSource)! !
+
 !UI.Scintilla.SCNotification class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,14 +7,18 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AbstractTutorial guid: (Core.GUID fromString: '{8351f1af-403d-4300-b06d-942ca7abe1db}')!
+
 Tools.AbstractTutorial comment: 'Parent class of all ProfStef tutorials.
 
 To create your own tutorial:
 - subclass AbstractTutorial
 - implement a few methods which returns a Lesson instance
 - implement tutorial which returns a Collection of selectors to the methods you''ve created.'!
+
 !Tools.AbstractTutorial categoriesForClass!Kernel-Objects! !
+
 !Tools.AbstractTutorial methodsFor!
 
 indexOfLesson: aSelector
@@ -51,6 +55,7 @@ theEnd
 
 welcome
 	^Lesson title: 'Welcome' contents: '"Hi, this is a test tutorial."'! !
+
 !Tools.AbstractTutorial categoriesForMethods!
 indexOfLesson:!accessing!public! !
 lessonAt:!accessing!public! !
@@ -71,6 +76,7 @@ icon
 		color: Color orchid)
 		textcolor: Color white;
 		yourself)! !
+
 !Tools.AbstractTutorial class categoriesForMethods!
 icon!constants!public! !
 !

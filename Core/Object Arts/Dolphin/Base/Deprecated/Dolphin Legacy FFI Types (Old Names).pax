@@ -164,6 +164,7 @@ Smalltalk.WORDField := External.UInt16Field!
 asDword
 	#deprecated.
 	^self asUInt32! !
+
 !Core.Boolean categoriesForMethods!
 asDword!converting!public! !
 !
@@ -249,6 +250,7 @@ wordAtOffset: anInteger put: anObject
 	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. WORD."
 
 	^self uint16AtOffset: anInteger put: anObject! !
+
 !Core.ByteArray categoriesForMethods!
 basicDwordAtOffset:!accessing!public! !
 basicDwordAtOffset:put:!accessing!public! !
@@ -282,6 +284,7 @@ isSDWORD
 	"Soft deprecated - retained in applications that still reference the old external integer type names"
 
 	^self isInt32! !
+
 !Core.Integer categoriesForMethods!
 asDword!converting!public! !
 asSDword!converting!public! !
@@ -305,6 +308,7 @@ nextSWORD
 nextWORD
 	#deprecated.
 	^self nextUInt16! !
+
 !Core.PositionableStream categoriesForMethods!
 nextDWORD!binary filing!public! !
 nextSDWORD!binary filing!public! !
@@ -321,6 +325,7 @@ nextDWORDPut: anInteger
 nextSDWORDPut: anInteger
 	#deprecated.
 	self nextInt32Put: anInteger! !
+
 !Core.Stream categoriesForMethods!
 nextDWORDPut:!binary filing!public! !
 nextSDWORDPut:!binary filing!public! !
@@ -331,6 +336,7 @@ nextSDWORDPut:!binary filing!public! !
 asDword
 	#deprecated.
 	^self asUInt32! !
+
 !External.UInt32Bytes categoriesForMethods!
 asDword!converting!public! !
 !

@@ -7,7 +7,9 @@ Kernel.BindingReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.FullBindingReference guid: (Core.GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
+
 Kernel.FullBindingReference comment: '`FullBindingReference`s represent fully-qualified `BindingReferences`.
 
 ## Instance Variables:
@@ -18,7 +20,9 @@ Kernel.FullBindingReference comment: '`FullBindingReference`s represent fully-qu
   `generation`		`<integer>`. Value of `BindingReference.Generation` when `binding` was resolved. Used to check if the cache is stale.
 
 '!
+
 !Kernel.FullBindingReference categoriesForClass!System-Namespaces! !
+
 !Kernel.FullBindingReference methodsFor!
 
 = anObject
@@ -221,6 +225,7 @@ valueOrNil
 	"Implementation Note: Overridden as a micro-optimisation as this is perf critical."
 
 	^self bindingOrNil value! !
+
 !Kernel.FullBindingReference categoriesForMethods!
 =!comparing!public! !
 asNamespaceImport!converting!public! !
@@ -284,6 +289,7 @@ uninitialize
 		registryAt: self name put: nil;
 		registryAtIndex: 65 put: nil;
 		registryAtIndex: 69 put: nil! !
+
 !Kernel.FullBindingReference class categoriesForMethods!
 newPathString:path:private:!instance creation!private! !
 path:private:!instance creation!public! !

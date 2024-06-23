@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Compiler guid: (Core.GUID fromString: '{87b4c470-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.Compiler comment: 'The Compiler class is responsible for compiling new methods and evaluating expressions.'!
+
 !Kernel.Compiler categoriesForClass!System-Compiler! !
+
 !Kernel.Compiler class methodsFor!
 
 compile: aString in: aClass
@@ -312,6 +316,7 @@ reservedWords
 
 warningClass
 	^CompilerWarningNotification! !
+
 !Kernel.Compiler class categoriesForMethods!
 compile:in:!compiling!public! !
 compile:in:environment:!compiling!public! !

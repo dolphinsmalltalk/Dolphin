@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.CodeGenerationContext guid: (Core.GUID fromString: '{6fc5d4b7-7323-48a5-80fa-a0a8b7488433}')!
+
 Tools.CodeGenerationContext comment: ''!
+
 !Tools.CodeGenerationContext categoriesForClass!Kernel-Objects! !
+
 !Tools.CodeGenerationContext methodsFor!
 
 contents
@@ -39,6 +43,7 @@ targetClass
 
 writeStream
 	^writeStream! !
+
 !Tools.CodeGenerationContext categoriesForMethods!
 contents!private! !
 environment!accessing!public! !
@@ -53,6 +58,7 @@ writeStream!accessing!public! !
 
 targetClass: aClass
 	^self new setTargetClass: aClass! !
+
 !Tools.CodeGenerationContext class categoriesForMethods!
 targetClass:!instance creation!public! !
 !

@@ -7,7 +7,9 @@ UI.Presenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Shell guid: (Core.GUID fromString: '{87b4c68f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Shell comment: 'Shell implements the <topPresenter> protocol for presenters that are to appear in <topView>s; i.e. in top-level windows on the desktop.A Shell provides methods for supplying a caption for the associated <topView> and for maintaining a <HistoryList> of commands that have recently been performed within it. By default, a Shell will not maintain a command history unless it is explicitly told to do so using its #hasCommandHistory aspect. The purpose of maintaining a command history is to support the potential for #undo and #redo operations. For these to work successfully, each <Command> must be provided with an appropriate undo action after it has been performed. For more details see the comment for Command.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	commandHistory	<HistoryList> or nil, holding a history of <Command>s that the presenter has recently performed.
 
 '!
+
 !UI.Shell categoriesForClass!MVP-Presenters!MVP-Resources-Shells! !
+
 !UI.Shell methodsFor!
 
 addCommandHistory: aCommand 
@@ -220,6 +224,7 @@ view: aShellView
 	super view: aShellView.
 	self onViewOpened; setInitialFocus
 ! !
+
 !UI.Shell categoriesForMethods!
 addCommandHistory:!accessing!private! !
 allAdditionalKeyBindings!constants!private! !
@@ -309,6 +314,7 @@ shutdownOnExit
 	does mean most applications will need to override for their main shell window."
 
 	^false! !
+
 !UI.Shell class categoriesForMethods!
 asSessionManagerClass!converting!public!VM and session managerment! !
 create:!instance creation!public! !

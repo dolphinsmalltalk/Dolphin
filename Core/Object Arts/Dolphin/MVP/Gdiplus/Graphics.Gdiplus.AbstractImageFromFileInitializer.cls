@@ -7,9 +7,13 @@ Graphics.Gdiplus.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractImageFromFileInitializer guid: (Core.GUID fromString: '{9bcb004e-83e4-4d47-9adf-ec7927a69088}')!
+
 Graphics.Gdiplus.AbstractImageFromFileInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.AbstractImageFromFileInitializer comment: ''!
+
 !Graphics.Gdiplus.AbstractImageFromFileInitializer methodsFor!
 
 = anObject
@@ -53,6 +57,7 @@ printImage: aGdiplusImage on: aWriteStream
 				nextPutAll: ' usingLocator: ';
 				print: fileLocator].
 	aWriteStream nextPut: $)! !
+
 !Graphics.Gdiplus.AbstractImageFromFileInitializer categoriesForMethods!
 =!comparing!public! !
 absoluteFilename!enquiries!public! !
@@ -68,6 +73,7 @@ printImage:on:!printing!private! !
 
 filename: aFilename fileLocator: aFileLocator
 	^self new filename: aFilename fileLocator: aFileLocator! !
+
 !Graphics.Gdiplus.AbstractImageFromFileInitializer class categoriesForMethods!
 filename:fileLocator:!instance creation!public! !
 !

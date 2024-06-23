@@ -7,9 +7,13 @@ Tools.CommunityEditionSmalltalkSystem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ProfessionalSmalltalkSystem guid: (Core.GUID fromString: '{ff97cec8-db85-4932-b9c0-163380844b27}')!
+
 Tools.ProfessionalSmalltalkSystem comment: ''!
+
 !Tools.ProfessionalSmalltalkSystem categoriesForClass!MVP-Models! !
+
 !Tools.ProfessionalSmalltalkSystem methodsFor!
 
 browseDeployedPackage: aPackage
@@ -142,6 +146,7 @@ systemBrowserClass: toolClass
 
 systemModelFromDeploymentLog: aString
 	^self browserEnvFromDom: (self openDeploymentLog: aString)! !
+
 !Tools.ProfessionalSmalltalkSystem categoriesForMethods!
 browseDeployedPackage:!helpers!public! !
 browseDeploymentLog:!helpers!public! !
@@ -202,6 +207,7 @@ uninstallCurrent
 			[(self superclass basicNew)
 				initializeFrom: Current;
 				become: Current]! !
+
 !Tools.ProfessionalSmalltalkSystem class categoriesForMethods!
 initialize!initializing!private! !
 installCurrent!initializing!private! !

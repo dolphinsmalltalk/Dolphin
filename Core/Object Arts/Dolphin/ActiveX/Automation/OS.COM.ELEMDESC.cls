@@ -7,7 +7,9 @@ OS.COM.AbstractELEMDESC
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_ELEMDESC_Size' -> 16r10. '_OffsetOf_paramdesc' -> 16r8 }!
+
 OS.COM.ELEMDESC guid: (Core.GUID fromString: '{c06f3b77-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.ELEMDESC comment: 'ELEMDESC is an <ExternalStructure> class to represent the AX Automation structure of the same name.
 
 ELEMDESC contains type and marshalling information for a variable, a function, or a function parameter.
@@ -21,7 +23,9 @@ Instance Variables:
 	param		<PARAMDESC>. Cached paramdesc structure.
 	tdesc		<TYPEDESC>. Cached tdesc structure
 '!
+
 !OS.COM.ELEMDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.ELEMDESC methodsFor!
 
 customAttributes
@@ -82,6 +86,7 @@ paramdesc
 	"Answer the <PARAMDESC> value of the receiver's 'paramdesc' field."
 
 	^PARAMDESC fromAddress: bytes yourAddress + _OffsetOf_paramdesc! !
+
 !OS.COM.ELEMDESC categoriesForMethods!
 customAttributes!accessing!public! !
 defaultValue!accessing!public! !
@@ -119,6 +124,7 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #paramdesc)! !
+
 !OS.COM.ELEMDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

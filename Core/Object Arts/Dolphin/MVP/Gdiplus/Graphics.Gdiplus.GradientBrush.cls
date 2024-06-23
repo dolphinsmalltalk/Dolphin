@@ -7,9 +7,13 @@ Graphics.Gdiplus.TransformableBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBrush guid: (Core.GUID fromString: '{c78eff10-fc9d-4e62-958e-26094c5f4d38}')!
+
 Graphics.Gdiplus.GradientBrush isNonInstantiable: true!
+
 Graphics.Gdiplus.GradientBrush comment: ''!
+
 !Graphics.Gdiplus.GradientBrush methodsFor!
 
 blend
@@ -75,6 +79,7 @@ isGammaCorrected: aBoolean
 	"Set whether gamma correction is applied to the receiver when rendering."
 
 	initializer gammaCorrection: self handle set: aBoolean! !
+
 !Graphics.Gdiplus.GradientBrush categoriesForMethods!
 blend!attributes!public! !
 blend:!attributes!public! !

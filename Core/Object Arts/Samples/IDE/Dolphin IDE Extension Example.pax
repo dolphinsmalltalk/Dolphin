@@ -62,6 +62,7 @@ emitClassLayoutDescription
 		on: Error
 		do: [:ex | MessageBox errorMsg: ex description].
 	desc isNil ifFalse: [textPresenter replaceSelection: desc]! !
+
 !Tools.ClassCommentPlugin categoriesForMethods!
 emitClassLayoutDescription!commands-actions!public! !
 !
@@ -70,6 +71,7 @@ emitClassLayoutDescription!commands-actions!public! !
 
 browseKeyBindings
 	OAIDEExtensions current browseKeyBindingsOfShell: self view! !
+
 !Tools.SmalltalkToolShell categoriesForMethods!
 browseKeyBindings!commands-actions!private! !
 !
@@ -78,6 +80,7 @@ browseKeyBindings!commands-actions!private! !
 
 browseKeyBindings
 	OAIDEExtensions current browseKeyBindingsOfShell: self view! !
+
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
 browseKeyBindings!commands-actions!private! !
 !

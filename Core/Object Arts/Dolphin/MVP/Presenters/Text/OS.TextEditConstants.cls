@@ -88,6 +88,10 @@ Kernel.SharedPool
 			'ES_UPPERCASE' -> 16r8.
 			'ES_WANTRETURN' -> 16r1000
 		}!
+
 OS.TextEditConstants guid: (Core.GUID fromString: '{a42eeb15-779c-49f7-9a50-ebe150e4d0b2}')!
+
 OS.TextEditConstants isNonInstantiable: true!
+
 OS.TextEditConstants comment: ''!
+

@@ -7,11 +7,15 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.CommCtrlLibrary guid: (Core.GUID fromString: '{64674056-3a82-101b-8181-00aa003743d3}')!
+
 OS.CommCtrlLibrary comment: 'CommCtrlLibrary is an <ExternalLibrary> to represent the Windows Common Controls Library, COMCTL32.DLL. This library implements the "newer" (post-Windows 95) controls such as the ListView and TreeView, with recent additions (known collectively as the IE4 controls) such as the DateTimePicker. A notable exception is the RichEdit control, which is implemented in its own library.
 
 Dolphin requires at least version 4.70 of this library (previous versions were supported by some older versions of Dolphin, but you must now upgrade to the latest DLL, which is available as a free download from Microsoft).'!
+
 !OS.CommCtrlLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.CommCtrlLibrary methodsFor!
 
 initCommonControlsEx: anINITCOMMONCONTROLSEX
@@ -29,6 +33,7 @@ initialize
 		uint32AtOffset: 0 put: 8;
 		uint32AtOffset: 4 put: self class initFlags.
 	self initCommonControlsEx: struct! !
+
 !OS.CommCtrlLibrary categoriesForMethods!
 initCommonControlsEx:!initializing!primitives!public! !
 initialize!initializing!private! !
@@ -61,6 +66,7 @@ initFlags: anInteger
 
 removeInitFlag: anInteger
 	self initFlags: (self initFlags maskClear: anInteger)! !
+
 !OS.CommCtrlLibrary class categoriesForMethods!
 addInitFlag:!development!initializing!public! !
 closeDefault!private!realizing/unrealizing! !

@@ -5,7 +5,9 @@ HistoryBrowser subclass: #MethodHistoryBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodHistoryBrowser guid: (GUID fromString: '{58d8a262-ac1f-455c-ad71-5ebab63f34e3}')!
+
 MethodHistoryBrowser comment: 'Searches the sources and changes files to provide a change history for a method and opens a browser on the results.
 
 Usage:
@@ -27,7 +29,9 @@ If the IDB IDE Printer package is installed then the current version can be prin
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !MethodHistoryBrowser categoriesForClass!IDB Goodies! !
+
 !MethodHistoryBrowser methodsFor!
 
 about
@@ -255,6 +259,7 @@ updateSelection
 	self 
 		setCaption;
 		setLoadedMarker! !
+
 !MethodHistoryBrowser categoriesForMethods!
 about!commands-actions!public! !
 canMoveToFirst!commands-queries!private! !
@@ -317,6 +322,7 @@ showOnClass: aClass selector: aSymbol debugger: aDebuggerOrNil
 	^self create
 		setClass: aClass selector: aSymbol debugger: aDebuggerOrNil;
 		show! !
+
 !MethodHistoryBrowser class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 showOnClass:selector:!instance creation!public! !

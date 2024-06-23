@@ -7,9 +7,13 @@ ResourceSTBAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceSTBByteArrayAccessor guid: (Core.GUID fromString: '{87b4c6d9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ResourceSTBByteArrayAccessor comment: ''!
+
 !ResourceSTBByteArrayAccessor categoriesForClass!MVP-Resources! !
+
 !ResourceSTBByteArrayAccessor methodsFor!
 
 byteArray
@@ -66,6 +70,7 @@ stbSaveOn: anSTBOutFiler
 	class references within a resource."
 
 	anSTBOutFiler saveObject: self as: (STBResourceSTBByteArrayAccessorProxy forAccessor: self)! !
+
 !ResourceSTBByteArrayAccessor categoriesForMethods!
 byteArray!accessing!private! !
 byteArray:!accessing!private! !
@@ -102,6 +107,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
+
 !ResourceSTBByteArrayAccessor class categoriesForMethods!
 onByteArray:!instance creation!public! !
 stbConvertFromVersion1:!binary filing!private! !

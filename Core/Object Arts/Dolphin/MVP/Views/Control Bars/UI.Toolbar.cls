@@ -7,7 +7,9 @@ UI.ControlBarAbstract
 	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'LabelsMask' -> 16r1 }!
+
 UI.Toolbar guid: (Core.GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Toolbar comment: '`Toolbar` is a `<compositeView>` implementing the Windows _ToolbarWindow32_ common control.
 
 Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the control. Items may be added and deleted once the view has been created.  It also allows a name to be associated with each item. 
@@ -29,7 +31,9 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
 
 
 '!
+
 !UI.Toolbar categoriesForClass!MVP-Views! !
+
 !UI.Toolbar methodsFor!
 
 actualBitmapSize
@@ -1000,6 +1004,7 @@ wmInitMenuPopup: message wParam: wParam lParam: lParam
 			subMenu queryAllFromView: self.
 			"Handled"
 			0]! !
+
 !UI.Toolbar categoriesForMethods!
 actualBitmapSize!geometry!public! !
 addBitmap:index:!helpers!private! !
@@ -1209,6 +1214,7 @@ winClassName
 
 	^'ToolbarWindow32'
 ! !
+
 !UI.Toolbar class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 resource_Edit_tools!public!resources-views! !

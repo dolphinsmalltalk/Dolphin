@@ -543,6 +543,7 @@ Kernel.SharedPool
 			'VT_VECTOR' -> 16r1000.
 			'VT_VOID' -> 16r18
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.COM.AutomationErrors'
 	instanceVariableNames: ''
@@ -567,6 +568,7 @@ Kernel.SharedPool
 			'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
 			'WCODE_HRESULT_LAST' -> -16r7FFB0001
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.COM.TypeGenerationFlags'
 	instanceVariableNames: ''
@@ -590,6 +592,7 @@ Kernel.SharedPool
 			'Verbose' -> 16r800.
 			'WrapperStyleMask' -> 16r90
 		}!
+
 Core.Object
 	subclass: #'OS.COM.TypeInfoObject'
 	instanceVariableNames: 'tlbInterface generationFlags binding'
@@ -597,6 +600,7 @@ Core.Object
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'OS.COM.TypeLibDocumentation'
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
@@ -604,6 +608,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceFunction
 	subclass: #'OS.COM.DispatchFunction'
 	instanceVariableNames: ''
@@ -611,6 +616,7 @@ OS.COM.InterfaceFunction
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.AbstractDispatchImplementation'
 	instanceVariableNames: ''
@@ -618,6 +624,7 @@ OS.COM.InterfaceImplementation
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.AbstractDispatchImplementation
 	subclass: #'OS.COM.DualInterfaceImplementation'
 	instanceVariableNames: 'interface piTypeInfo locale'
@@ -625,6 +632,7 @@ OS.COM.AbstractDispatchImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.DualInterfaceImplementation
 	subclass: #'OS.COM.ForwardingDualInterfaceImplementation'
 	instanceVariableNames: 'interfaceClass server'
@@ -632,6 +640,7 @@ OS.COM.DualInterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Enumerator
 	subclass: #'OS.COM.VariantEnumerator'
 	instanceVariableNames: ''
@@ -639,6 +648,7 @@ OS.COM.Enumerator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.COM.AbstractELEMDESC'
 	instanceVariableNames: 'owner tdesc'
@@ -646,6 +656,7 @@ External.Structure
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_tdescElem' -> 16r0 }!
+
 External.Structure
 	subclass: #'OS.COM.CURRENCY'
 	instanceVariableNames: ''
@@ -658,6 +669,7 @@ External.Structure
 			'MaxValue' -> 922337203685477.5807s.
 			'MinValue' -> -922337203685477.5808s
 		}!
+
 External.Structure
 	subclass: #'OS.COM.CUSTDATAITEM'
 	instanceVariableNames: 'key value'
@@ -669,6 +681,7 @@ External.Structure
 			'_OffsetOf_guid' -> 16r0.
 			'_OffsetOf_varValue' -> 16r10
 		}!
+
 External.Structure
 	subclass: #'OS.COM.DECIMAL'
 	instanceVariableNames: ''
@@ -686,6 +699,7 @@ External.Structure
 			'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
 			'SmallestValue' -> 0.0000000000000000000000000001s
 		}!
+
 External.Structure
 	subclass: #'OS.COM.DISPPARAMS'
 	instanceVariableNames: 'args vargs dispids'
@@ -699,6 +713,7 @@ External.Structure
 			'_OffsetOf_rgdispidNamedArgs' -> 16r4.
 			'_OffsetOf_rgvarg' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.COM.IDLDESC'
 	instanceVariableNames: ''
@@ -710,6 +725,7 @@ External.Structure
 			'_OffsetOf_dwReserved' -> 16r0.
 			'_OffsetOf_wIDLFlags' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.COM.PARAMDESC'
 	instanceVariableNames: ''
@@ -721,6 +737,7 @@ External.Structure
 			'_OffsetOf_wParamFlags' -> 16r4.
 			'_PARAMDESC_Size' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS.COM.PARAMDESCEX'
 	instanceVariableNames: ''
@@ -732,6 +749,7 @@ External.Structure
 			'_OffsetOf_varDefaultValue' -> 16r8.
 			'_PARAMDESCEX_Size' -> 16r18
 		}!
+
 External.Structure
 	subclass: #'OS.COM.SAFEARRAYBOUND'
 	instanceVariableNames: ''
@@ -743,6 +761,7 @@ External.Structure
 			'_OffsetOf_lLbound' -> 16r4.
 			'_SAFEARRAYBOUND_Size' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS.COM.TLIBATTR'
 	instanceVariableNames: ''
@@ -758,6 +777,7 @@ External.Structure
 			'_OffsetOf_wMinorVerNum' -> 16r1A.
 			'_TLIBATTR_Size' -> 16r20
 		}!
+
 External.Structure
 	subclass: #'OS.COM.TYPEDESC'
 	instanceVariableNames: 'owner classDesc typeInfo'
@@ -773,6 +793,7 @@ External.Structure
 			'VTIndirections'
 				-> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 		}!
+
 OS.COM.AbstractELEMDESC
 	subclass: #'OS.COM.ARRAYDESC'
 	instanceVariableNames: ''
@@ -784,6 +805,7 @@ OS.COM.AbstractELEMDESC
 			'_OffsetOf_cDims' -> 16r8.
 			'_OffsetOf_rgbounds' -> 16rC
 		}!
+
 OS.COM.AbstractELEMDESC
 	subclass: #'OS.COM.ELEMDESC'
 	instanceVariableNames: 'param index custData'
@@ -791,6 +813,7 @@ OS.COM.AbstractELEMDESC
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_ELEMDESC_Size' -> 16r10. '_OffsetOf_paramdesc' -> 16r8 }!
+
 External.ExternalArray
 	subclass: #'OS.COM.BSTRArray'
 	instanceVariableNames: ''
@@ -798,6 +821,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.GenericExternalArray
 	subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
@@ -813,6 +837,7 @@ External.GenericExternalArray
 			'_OffsetOf_rgsabound' -> 16r10.
 			'_SAFEARRAY_Size' -> 16r18
 		}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.CUSTDATA'
 	instanceVariableNames: 'associations table'
@@ -824,6 +849,7 @@ External.FinalizableStructure
 			'_OffsetOf_cCustData' -> 16r0.
 			'_OffsetOf_prgCustData' -> 16r4
 		}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.Record'
 	instanceVariableNames: 'recordInfo owner'
@@ -831,6 +857,7 @@ External.FinalizableStructure
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.TypeInfoStructure'
 	instanceVariableNames: 'analyzer'
@@ -838,6 +865,7 @@ External.FinalizableStructure
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.VARIANT'
 	instanceVariableNames: 'data'
@@ -901,6 +929,7 @@ External.FinalizableStructure
 			'VTNames'
 				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 		}!
+
 OS.COM.TypeInfoStructure
 	subclass: #'OS.COM.MemberDesc'
 	instanceVariableNames: 'index custData documentation'
@@ -908,6 +937,7 @@ OS.COM.TypeInfoStructure
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_memid' -> 16r0 }!
+
 OS.COM.TypeInfoStructure
 	subclass: #'OS.COM.TYPEATTR'
 	instanceVariableNames: 'piTypeInfo'
@@ -935,6 +965,7 @@ OS.COM.TypeInfoStructure
 			'_OffsetOf_wTypeFlags' -> 16r36.
 			'_TYPEATTR_Size' -> 16r4C
 		}!
+
 OS.COM.MemberDesc
 	subclass: #'OS.COM.FUNCDESC'
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
@@ -955,6 +986,7 @@ OS.COM.MemberDesc
 			'_OffsetOf_oVft' -> 16r1C.
 			'_OffsetOf_wFuncFlags' -> 16r30
 		}!
+
 OS.COM.MemberDesc
 	subclass: #'OS.COM.VARDESC'
 	instanceVariableNames: ''
@@ -970,6 +1002,7 @@ OS.COM.MemberDesc
 			'_OffsetOf_wVarFlags' -> 16r1C.
 			'_VARDESC_Size' -> 16r24
 		}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ICreateErrorInfo'
 	instanceVariableNames: ''
@@ -977,6 +1010,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
@@ -984,6 +1018,7 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IPerPropertyBrowsing'
 	instanceVariableNames: ''
@@ -991,6 +1026,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IProvideClassInfo'
 	instanceVariableNames: ''
@@ -998,6 +1034,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IRecordInfo'
 	instanceVariableNames: ''
@@ -1005,6 +1042,7 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ITypeComp'
 	instanceVariableNames: ''
@@ -1012,6 +1050,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ITypeInfo'
 	instanceVariableNames: 'attributes allCustData'
@@ -1019,6 +1058,7 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ITypeLib'
 	instanceVariableNames: ''
@@ -1026,6 +1066,7 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumXXXX
 	subclass: #'OS.COM.IEnumVARIANT'
 	instanceVariableNames: ''
@@ -1033,6 +1074,7 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IProvideClassInfo
 	subclass: #'OS.COM.IProvideClassInfo2'
 	instanceVariableNames: ''
@@ -1040,6 +1082,7 @@ OS.COM.IProvideClassInfo
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ITypeInfo
 	subclass: #'OS.COM.ITypeInfo2'
 	instanceVariableNames: ''
@@ -1047,6 +1090,7 @@ OS.COM.ITypeInfo
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ITypeLib
 	subclass: #'OS.COM.ITypeLib2'
 	instanceVariableNames: ''
@@ -1054,6 +1098,7 @@ OS.COM.ITypeLib
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DOUBLE
 	subclass: #'OS.COM.DATE'
 	instanceVariableNames: ''
@@ -1061,6 +1106,7 @@ External.DOUBLE
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Int16
 	subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''
@@ -1068,6 +1114,7 @@ External.Int16
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.LPVOID
 	subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
@@ -1075,6 +1122,7 @@ External.LPVOID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.SizedStructure
 	subclass: #'OS.COM.FONTDESC'
 	instanceVariableNames: 'name'
@@ -1091,6 +1139,7 @@ OS.SizedStructure
 			'_OffsetOf_sCharset' -> 16r12.
 			'_OffsetOf_sWeight' -> 16r10
 		}!
+
 OS.COM.TypeInfoObject
 	subclass: #'OS.COM.TypeInfoAnalyzer'
 	instanceVariableNames: 'typeLib guid index documentation'
@@ -1101,6 +1150,7 @@ OS.COM.TypeInfoObject
 			'VTtoIDLTypeMap'
 				-> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
 		}!
+
 OS.COM.TypeInfoObject
 	subclass: #'OS.COM.TypeLibraryAnalyzer'
 	instanceVariableNames: 'attributes namespaceName packageName _unused7 constantsPoolName aliasMap typeAnalyzers'
@@ -1108,6 +1158,7 @@ OS.COM.TypeInfoObject
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TypeInfoAnalyzer
 	subclass: #'OS.COM.APIInfoAnalyzer'
 	instanceVariableNames: ''
@@ -1115,6 +1166,7 @@ OS.COM.TypeInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TypeInfoAnalyzer
 	subclass: #'OS.COM.StructureTypeAnalyzer'
 	instanceVariableNames: ''
@@ -1122,6 +1174,7 @@ OS.COM.TypeInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TypeInfoAnalyzer
 	subclass: #'OS.COM.TKindAliasAnalyzer'
 	instanceVariableNames: ''
@@ -1129,6 +1182,7 @@ OS.COM.TypeInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TypeInfoAnalyzer
 	subclass: #'OS.COM.TKindCoclassAnalyzer'
 	instanceVariableNames: ''
@@ -1136,6 +1190,7 @@ OS.COM.TypeInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TypeInfoAnalyzer
 	subclass: #'OS.COM.TKindEnumAnalyzer'
 	instanceVariableNames: ''
@@ -1143,6 +1198,7 @@ OS.COM.TypeInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.APIInfoAnalyzer
 	subclass: #'OS.COM.InterfaceTypeAnalyzer'
 	instanceVariableNames: 'protocol isSource'
@@ -1150,6 +1206,7 @@ OS.COM.APIInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.APIInfoAnalyzer
 	subclass: #'OS.COM.TKindModuleAnalyzer'
 	instanceVariableNames: ''
@@ -1157,6 +1214,7 @@ OS.COM.APIInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceTypeAnalyzer
 	subclass: #'OS.COM.TKindDispatchAnalyzer'
 	instanceVariableNames: ''
@@ -1164,6 +1222,7 @@ OS.COM.InterfaceTypeAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceTypeAnalyzer
 	subclass: #'OS.COM.TKindInterfaceAnalyzer'
 	instanceVariableNames: ''
@@ -1171,6 +1230,7 @@ OS.COM.InterfaceTypeAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.StructureTypeAnalyzer
 	subclass: #'OS.COM.TKindRecordAnalyzer'
 	instanceVariableNames: ''
@@ -1178,6 +1238,7 @@ OS.COM.StructureTypeAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.StructureTypeAnalyzer
 	subclass: #'OS.COM.TKindUnionAnalyzer'
 	instanceVariableNames: ''
@@ -1194,6 +1255,7 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver."
 
 	^OS.COM.VARIANT fromBoolean: self! !
+
 !Core.Boolean categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1206,6 +1268,7 @@ asSAFEARRAY
 	of the receiver's elements, assuming that such a representation is possible."
 
 	^OS.COM.SAFEARRAY withAll: self elementClass: External.UInt8! !
+
 !Core.ByteArray categoriesForMethods!
 asSAFEARRAY!converting!public! !
 !
@@ -1216,6 +1279,7 @@ typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
 	^self fullName! !
+
 !Core.ByteArray class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -1228,6 +1292,7 @@ asVariant
 	^OS.COM.VARIANT new
 		int16: self codePoint;
 		yourself! !
+
 !Core.Character categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1245,6 +1310,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a SAFEARRAY of VARIANT)."
 
 	^OS.COM.VARIANT fromCollection: self! !
+
 !Core.Collection categoriesForMethods!
 asSAFEARRAY!converting!public! !
 asVariant!converting!public! !
@@ -1261,6 +1327,7 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
 
 	^self asSYSTEMTIME asVariant! !
+
 !Core.DateAndTime categoriesForMethods!
 asFloat!converting!public! !
 asVariant!converting!public! !
@@ -1272,6 +1339,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_R8)."
 
 	^OS.COM.VARIANT fromFloat: self! !
+
 !Core.Float categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1283,6 +1351,7 @@ asVariant
 	Note that precision may be lost."
 
 	^self asFloat asVariant! !
+
 !Core.Fraction categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1299,6 +1368,7 @@ typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
 	^self fullName! !
+
 !Core.GUID class categoriesForMethods!
 arrayType:!constants!private! !
 typeName!constants!private! !
@@ -1311,6 +1381,7 @@ asVariant
 	It is an error if the receiver is too large to be represented in 64-bits."
 
 	^OS.COM.VARIANT fromLargeInteger: self! !
+
 !Core.LargeInteger categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1329,6 +1400,7 @@ displayDECIMAL: aDECIMAL on: aWriteStream
 
 variantBool: aBoolean
 	^self subclassResponsibility! !
+
 !Core.Locale categoriesForMethods!
 displayCURRENCY:on:!displaying!public! !
 displayDECIMAL:on:!displaying!public! !
@@ -1341,6 +1413,7 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver."
 
 	^self subclassResponsibility! !
+
 !Core.Number categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1356,6 +1429,7 @@ asVariant
 	^OS.COM.VARIANT new
 		decimal: self;
 		yourself! !
+
 !Core.ScaledDecimal categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1367,6 +1441,7 @@ asVariant
 	bitness of the host machine)."
 
 	^OS.COM.VARIANT fromSmallInteger: self! !
+
 !Core.SmallInteger categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1378,6 +1453,7 @@ asVariant
 	This will also work fine for Utf16String."
 
 	^OS.COM.VARIANT fromString: self! !
+
 !Core.String categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1412,6 +1488,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^OS.COM.AutomationConstants.VT_LPSTR! !
+
 !Core.String class categoriesForMethods!
 arrayType!constants!private! !
 arrayType:!constants!private! !
@@ -1429,6 +1506,7 @@ asVariant
 	appear more appropriate at first glance."
 
 	^OS.COM.VARIANT new! !
+
 !Core.UndefinedObject categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1445,6 +1523,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^OS.COM.AutomationConstants.VT_EMPTY! !
+
 !Core.UndefinedObject class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -1469,6 +1548,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^OS.COM.AutomationConstants.VT_LPWSTR! !
+
 !Core.Utf16String class categoriesForMethods!
 pointerType!constants!private! !
 typeName!constants!private! !
@@ -1488,6 +1568,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_PTR! !
+
 !External.Address class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -1500,6 +1581,7 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#bool! !
+
 !External.BOOL class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -1511,6 +1593,7 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#bool! !
+
 !External.BOOLEAN class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -1534,6 +1617,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_R8! !
+
 !External.DOUBLE class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -1551,6 +1635,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_ARRAY|VT_XX)."
 
 	^COM.VARIANT fromCollection: self! !
+
 !External.ExternalArray categoriesForMethods!
 asSAFEARRAY!converting!public! !
 asVariant!converting!public! !
@@ -1566,6 +1651,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_CARRAY! !
+
 !External.ExternalArray class categoriesForMethods!
 arrayType!constants!private! !
 vt!constants!public! !
@@ -1590,6 +1676,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_R4! !
+
 !External.FLOAT class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -1609,6 +1696,7 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#handle! !
+
 !External.Handle class categoriesForMethods!
 arrayType:!constants!private! !
 typeName!constants!private! !
@@ -1633,6 +1721,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_I2! !
+
 !External.Int16 class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -1658,6 +1747,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_I4! !
+
 !External.Int32 class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -1677,6 +1767,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_I8! !
+
 !External.Int64 class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -1701,6 +1792,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_I1! !
+
 !External.Int8 class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -1719,6 +1811,7 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^self subclassResponsibility! !
+
 !External.INTEGER class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!private! !
@@ -1745,6 +1838,7 @@ vt
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_I8] ifFalse: [COM.AutomationConstants.VT_I4]! !
+
 !External.IntPtr class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -1766,6 +1860,7 @@ vt
 
 	#todo "Is this right?".
 	^COM.AutomationConstants.VT_VOID! !
+
 !External.LPVOID class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -1779,6 +1874,7 @@ asVariant
 	^(COM.VARIANT new)
 		vt: (self vt bitOr: COM.AutomationConstants.VT_BYREF);
 		reference: self! !
+
 !External.SCALAR categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1802,6 +1898,7 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^self class vt! !
+
 !External.Structure categoriesForMethods!
 asVariant!converting!public! !
 recordInfo!accessing!public! !
@@ -2220,6 +2317,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_RECORD! !
+
 !External.Structure class categoriesForMethods!
 arrayType!constants!private! !
 arrayType:!constants!private! !
@@ -2278,6 +2376,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_UI2! !
+
 !External.UInt16 class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -2303,6 +2402,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_UI4! !
+
 !External.UInt32 class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -2322,6 +2422,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_UI8! !
+
 !External.UInt64 class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -2346,6 +2447,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_UI1! !
+
 !External.UInt8 class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -2373,6 +2475,7 @@ vt
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_UI8] ifFalse: [COM.AutomationConstants.VT_UI4]! !
+
 !External.UIntPtr class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -2401,6 +2504,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_VOID! !
+
 !External.VOID class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
@@ -2421,6 +2525,7 @@ displayDECIMAL: aDECIMAL on: aWriteStream
 
 variantBool: aBoolean
 	^aBoolean class name! !
+
 !Kernel.SmalltalkLocale categoriesForMethods!
 displayCURRENCY:on:!displaying!public! !
 displayDECIMAL:on:!displaying!public! !
@@ -2480,6 +2585,7 @@ variantBool: aBoolean
 			[self getVariantBoolString: (aBoolean
 						ifTrue: [COM.AutomationConstants.VARIANT_TRUE]
 						ifFalse: [COM.AutomationConstants.VARIANT_FALSE])]! !
+
 !OS.AbstractWindowsLocale categoriesForMethods!
 boolFormat!constants!public! !
 displayCURRENCY:on:!displaying!public! !
@@ -2502,6 +2608,7 @@ asVariant
 	This will also work fine for Utf16String."
 
 	^VARIANT fromString: self! !
+
 !OS.COM.BSTR categoriesForMethods!
 asSAFEARRAY!converting!public! !
 asVariant!converting!public! !
@@ -2532,6 +2639,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_BSTR! !
+
 !OS.COM.BSTR class categoriesForMethods!
 fromObject:!instance creation!public! !
 newSAFEARRAY:!double dispatch!public! !
@@ -2556,6 +2664,7 @@ vt
 
 	^AutomationConstants.VT_CLSID
 ! !
+
 !OS.COM.CLSID class categoriesForMethods!
 newSAFEARRAY:!double dispatch!public! !
 vt!constants!public! !
@@ -2582,6 +2691,7 @@ source: sourceString description: descriptionString helpContext: anInteger helpF
 	ice SetHelpFile: helpFilePath.
 	ice SetGuid: aGUID.
 	^ice errorInfo! !
+
 !OS.COM.IErrorInfo class categoriesForMethods!
 fromEXCEPINFO:guid:!instance creation!public! !
 source:description:helpContext:helpFile:guid:!instance creation!public! !
@@ -2615,6 +2725,7 @@ typeInfoIfNone: exceptionHandler
 	Not all custom interfaces have an associated type library, but many do."
 
 	^(self coclassTypeInfoIfNone: [^exceptionHandler value]) defaultInterface! !
+
 !OS.COM.Interface categoriesForMethods!
 coclassTypeInfo!accessing!public! !
 coclassTypeInfoIfNone:!accessing!public! !
@@ -2675,6 +2786,7 @@ typeLib
 	or nil if the receiver does not have a type library."
 
 	^typeLib! !
+
 !OS.COM.Interface class categoriesForMethods!
 coclassTypeInfo!accessing!public! !
 coclassTypeInfoIfNone:!accessing!public! !
@@ -2692,6 +2804,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver."
 
 	^VARIANT fromUnknown: self! !
+
 !OS.COM.IUnknown categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -2703,6 +2816,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AutomationConstants.VT_UNKNOWN! !
+
 !OS.COM.IUnknown class categoriesForMethods!
 vt!constants!public! !
 !
@@ -3156,6 +3270,7 @@ variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 
 	<stdcall: bool VariantTimeToSystemTime double SYSTEMTIME*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.OLEAutLibrary categoriesForMethods!
 clearCustData:!Automation Functions-Error Handling API!public! !
 createErrorInfo:!Automation Functions-Error Handling API!public! !
@@ -3209,6 +3324,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_FILETIME! !
+
 !OS.FILETIME class categoriesForMethods!
 vt!constants!public! !
 !
@@ -3225,6 +3341,7 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^COM.AutomationConstants.VT_ERROR! !
+
 !OS.HRESULT class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!private! !
@@ -3244,6 +3361,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)"
 
 	^COM.VARIANT fromDATE: self asFloat! !
+
 !OS.SYSTEMTIME categoriesForMethods!
 asFloat!converting!public! !
 asVariant!converting!public! !
@@ -3256,6 +3374,7 @@ fromDATE: aFloat
 	systime := self new.
 	COM.OleAut32 variantTimeToSystemTime: aFloat lpSystemTime: systime.
 	^systime! !
+
 !OS.SYSTEMTIME class categoriesForMethods!
 fromDATE:!public! !
 !

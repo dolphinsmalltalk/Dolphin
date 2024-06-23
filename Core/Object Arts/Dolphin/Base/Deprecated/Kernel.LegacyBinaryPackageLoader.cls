@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.LegacyBinaryPackageLoader guid: (Core.GUID fromString: '{3a7aef4b-b094-46e9-b52e-fcdd2a8ddb40}')!
+
 Kernel.LegacyBinaryPackageLoader comment: ''!
+
 !Kernel.LegacyBinaryPackageLoader methodsFor!
 
 declareClasses
@@ -189,6 +192,7 @@ It will probably load, but it may not operate correctly.
 If you experience subsequent problems please contact the package supplier for an updated version.'
 				expandMacrosWith: package name
 				with: versionString)! !
+
 !Kernel.LegacyBinaryPackageLoader categoriesForMethods!
 declareClasses!helpers!private! !
 errorFileCorrupt!exceptions!private! !
@@ -224,6 +228,7 @@ readFrom: aReadStream
 	| package |
 	package := (STBInFiler on: aReadStream) next.
 	^(package isKindOf: Package) ifTrue: [package]! !
+
 !Kernel.LegacyBinaryPackageLoader class categoriesForMethods!
 icon!constants!public! !
 loadPackage:!operations!public! !

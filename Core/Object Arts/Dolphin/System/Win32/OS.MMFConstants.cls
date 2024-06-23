@@ -27,6 +27,10 @@ Kernel.SharedPool
 			'SEC_NOCACHE' -> 16r10000000.
 			'SEC_RESERVE' -> 16r4000000
 		}!
+
 OS.MMFConstants guid: (Core.GUID fromString: '{f837fc43-e1a2-43b0-9726-37c308613aa0}')!
+
 OS.MMFConstants isNonInstantiable: true!
+
 OS.MMFConstants comment: ''!
+

@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSScriptControl.ActiveXScriptlet guid: (Core.GUID fromString: '{9271a3a3-d270-11d3-93da-00a024ca708a}')!
+
 MSScriptControl.ActiveXScriptlet comment: 'ActiveXScriplet represents an executable piece of script code, e.g. in VBScript. 
 
 It consists of a set of the name of the script language, the text of a set of procedures (may be empty), and an expression to be evaluated.
@@ -17,6 +19,7 @@ Instance Variables:
 	expression		<String>. Expression evaluated to get the value of the scriptlet.
 	procedures	<String>. Optional procedures to support the expression.
 '!
+
 !MSScriptControl.ActiveXScriptlet methodsFor!
 
 = comparand
@@ -118,6 +121,7 @@ value
 	result := engine eval: self expression.
 	engine free.
 	^result! !
+
 !MSScriptControl.ActiveXScriptlet categoriesForMethods!
 =!comparing!public! !
 addGlobalBinding:!accessing!public! !
@@ -166,6 +170,7 @@ new
 	which can be both read from and written to."
 
 	^super new initialize! !
+
 !MSScriptControl.ActiveXScriptlet class categoriesForMethods!
 language:expression:procedures:!instance creation!public! !
 language:expression:procedures:description:!instance creation!public! !

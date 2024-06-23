@@ -7,7 +7,9 @@ UI.Presenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DifferencesPresenter guid: (Core.GUID fromString: '{772ec3bd-72dc-4bae-9e30-92d686ea4e3b}')!
+
 UI.DifferencesPresenter comment: 'DifferencesPresenter is a component that can be used to compare two pieces of text, highlighting the differences. 
 
 Two pieces of text are compared using the #compare:with: message. The text can be plain or rich text. If rich text is compared, then the styling will be preserved in the resulting display, except of course that the highlighting of any differences takes precedence. 
@@ -17,7 +19,9 @@ The differencing algorithm allows comparison and highlighting of differences on 
 DifferencesPresenter is based on Ian Bartholomew''s DiffBrowser.
 
 '!
+
 !UI.DifferencesPresenter categoriesForClass!MVP-Presenters! !
+
 !UI.DifferencesPresenter methodsFor!
 
 afterText: afterString 
@@ -254,6 +258,7 @@ wordSeparators
 
 wordSeparators: aString 
 	wordSeparators := aString! !
+
 !UI.DifferencesPresenter categoriesForMethods!
 afterText:!accessing!public! !
 afterTitle:!accessing!public! !
@@ -313,6 +318,7 @@ wordSeparators
 
 wordSeparators: aString 
 	WordSeparators := aString! !
+
 !UI.DifferencesPresenter class categoriesForMethods!
 initialize!initializing!public! !
 resource_Default_view!public!resources-views! !

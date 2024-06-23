@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IVBSAXDTDHandler guid: (OS.COM.IID fromString: '{24fb3297-302d-4620-ba39-3a732d850558}')!
+
 MSXML.IVBSAXDTDHandler comment: '<IVBSAXDTDHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXDTDHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -39,7 +41,9 @@ interface IVBSAXDTDHandler : IDispatch
 		[in, out]BSTR* strNotationName);
 };
 '!
+
 !MSXML.IVBSAXDTDHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IVBSAXDTDHandler methodsFor!
 
 isExtensible
@@ -101,6 +105,7 @@ UnparsedEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId st
 
 	<virtual stdcall: hresult 9 bstr* bstr* bstr* bstr*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IVBSAXDTDHandler categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -122,6 +127,7 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:strPublicId:strSystemId:strNotationName:
 			argumentTypes: 'bstr* bstr* bstr* bstr*'
 ! !
+
 !MSXML.IVBSAXDTDHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

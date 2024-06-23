@@ -7,8 +7,11 @@ Kernel.Tests.STxFilerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.STBTest guid: (Core.GUID fromString: '{0e66d9d1-027f-4559-a87a-33e13ae709b8}')!
+
 Kernel.Tests.STBTest comment: ''!
+
 !Kernel.Tests.STBTest methodsFor!
 
 deserialize: aByteArray version: anInteger
@@ -577,6 +580,7 @@ verifyLargeIntegersAtVersion: anInteger
 verifyStringsAtPreUnicodeVersion: anInteger
 	super verifyStringsAtPreUnicodeVersion: anInteger.
 	self verifyString: '🐬' atVersion: anInteger! !
+
 !Kernel.Tests.STBTest categoriesForMethods!
 deserialize:version:!helpers!private! !
 infilerClass!constants!public! !

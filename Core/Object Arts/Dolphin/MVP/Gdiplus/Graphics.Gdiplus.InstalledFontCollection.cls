@@ -7,8 +7,11 @@ Graphics.Gdiplus.FontCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.InstalledFontCollection guid: (Core.GUID fromString: '{c09d8c03-5f28-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.InstalledFontCollection comment: 'GdiplusInstalledFontCollection class represents the fonts installed on the system.'!
+
 !Graphics.Gdiplus.InstalledFontCollection methodsFor!
 
 clone
@@ -25,6 +28,7 @@ ownedHandle: aHandle
 	"The underlying handle is to a singleton object. We don't want to (or need to) free it, so don't take ownership"
 	ownsHandle := false.
 	self handle: aHandle! !
+
 !Graphics.Gdiplus.InstalledFontCollection categoriesForMethods!
 clone!copying!public! !
 initializerClass!constants!private! !
@@ -35,6 +39,7 @@ ownedHandle:!accessing!private! !
 
 new
 	^self fromInitializer: InstalledFontCollectionInitializer default! !
+
 !Graphics.Gdiplus.InstalledFontCollection class categoriesForMethods!
 new!instance creation!public! !
 !

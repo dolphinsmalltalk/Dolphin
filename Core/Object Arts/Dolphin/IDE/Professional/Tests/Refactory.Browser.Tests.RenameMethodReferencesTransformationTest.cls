@@ -7,8 +7,11 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RenameMethodReferencesTransformationTest guid: (Core.GUID fromString: '{56462b45-7329-483d-afc5-f1c199753156}')!
+
 Refactory.Browser.Tests.RenameMethodReferencesTransformationTest comment: ''!
+
 !Refactory.Browser.Tests.RenameMethodReferencesTransformationTest methodsFor!
 
 setUp
@@ -102,6 +105,7 @@ testTargetMissing
 				to: #checkClass2:
 				permutation: (1 to: 1))
 		withMessage: 'BasicLintRuleTestData and all subclasses do not understand #checkClass2:'! !
+
 !Refactory.Browser.Tests.RenameMethodReferencesTransformationTest categoriesForMethods!
 setUp!public!set up! !
 testExistingSelector!failure tests!public! !

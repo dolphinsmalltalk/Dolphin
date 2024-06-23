@@ -81,26 +81,24 @@ Object subclass: #InkStroke
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #Scribble
 	instanceVariableNames: 'newStroke trackingCanvas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDocumentShell subclass: #ScribbleDocument
 	instanceVariableNames: 'scribblePresenter checkpoint'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #ScribbleView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

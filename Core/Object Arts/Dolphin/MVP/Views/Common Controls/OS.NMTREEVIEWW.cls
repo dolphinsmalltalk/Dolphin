@@ -13,9 +13,13 @@ OS.NMHDR
 			'_OffsetOf_itemOld' -> 16r10.
 			'_OffsetOf_ptDrag' -> 16r60
 		}!
+
 OS.NMTREEVIEWW guid: (Core.GUID fromString: '{87b4c62a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.NMTREEVIEWW comment: ''!
+
 !OS.NMTREEVIEWW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMTREEVIEWW methodsFor!
 
 action
@@ -42,6 +46,7 @@ ptDrag
 	"Answer the <POINTL> value of the receiver's 'ptDrag' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptDrag! !
+
 !OS.NMTREEVIEWW categoriesForMethods!
 action!**compiled accessors**!public! !
 itemHandle!accessing!public! !
@@ -77,6 +82,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #action #itemOld #itemNew #ptDrag)! !
+
 !OS.NMTREEVIEWW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

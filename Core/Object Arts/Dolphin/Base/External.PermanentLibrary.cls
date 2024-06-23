@@ -7,10 +7,15 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PermanentLibrary guid: (Core.GUID fromString: '{87b4c583-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.PermanentLibrary isNonInstantiable: true!
+
 External.PermanentLibrary comment: 'PermanentLibrary is the class of <ExternalLibrary>s which are expected to remain permanently open in order for the system to continue functioning. The set of permanent libraries includes all of the basic Win32 system DLLs, the C runtime library, and the Virtual Machine itself. In addition these are not opened lazily to avoid the overhead when accessing the default instance.'!
+
 !External.PermanentLibrary categoriesForClass!External-Libraries! !
+
 !External.PermanentLibrary methodsFor!
 
 close
@@ -23,6 +28,7 @@ close
 
 isSelfEvaluating
 	^true! !
+
 !External.PermanentLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
 isSelfEvaluating!public!testing! !
@@ -67,6 +73,7 @@ onStartup2
 	may get called."
 
 	self allSubclassesDo: [:c | c openDefault]! !
+
 !External.PermanentLibrary class categoriesForMethods!
 clear!initializing!private! !
 closeDefault!private!realizing/unrealizing! !

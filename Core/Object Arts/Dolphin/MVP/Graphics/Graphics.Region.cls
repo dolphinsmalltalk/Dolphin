@@ -7,9 +7,13 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Region guid: (Core.GUID fromString: '{87b4c638-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Region comment: ''!
+
 !Graphics.Region categoriesForClass!Graphics-Tools! !
+
 !Graphics.Region methodsFor!
 
 combine: aRegion mode: anInteger
@@ -59,6 +63,7 @@ union: aRegion
 	"Answers a new region which is the union of the receiver with aRegion"
 
 	^self combine: aRegion mode: RGN_OR! !
+
 !Graphics.Region categoriesForMethods!
 combine:mode:!operations!private! !
 containsPoint:!operations!public!testing! !
@@ -85,6 +90,7 @@ rectangle: aRectangle
 	"Answer a rectangular region defined by aRectangle"
 
 	^self fromOwnedHandle: (Gdi32 createRectRgnIndirect: aRectangle asParameter)! !
+
 !Graphics.Region class categoriesForMethods!
 ellipse:!instance creation!public! !
 empty!instance creation!public! !

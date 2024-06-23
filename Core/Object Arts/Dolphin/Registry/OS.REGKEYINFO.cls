@@ -17,9 +17,13 @@ External.Structure
 			'_OffsetOf_valueCount' -> 16rC.
 			'_REGKEYINFO_Size' -> 16r24
 		}!
+
 OS.REGKEYINFO guid: (Core.GUID fromString: '{15e72644-f20b-4040-964a-adfe90d8eb1e}')!
+
 OS.REGKEYINFO comment: 'Not a real Windows structure, but the one that should have been defined as the buffer to receiver values from the RegQueryInfoKey function, if it had been designed to return data through a single structure rather than a large number (11) of pointer parameters.'!
+
 !OS.REGKEYINFO categoriesForClass!External-Data-Structured! !
+
 !OS.REGKEYINFO methodsFor!
 
 ftLastWriteTime
@@ -66,6 +70,7 @@ valueCount
 	"Answer the <Integer> value of the receiver's 'valueCount' field."
 
 	^bytes uint32AtOffset: _OffsetOf_valueCount! !
+
 !OS.REGKEYINFO categoriesForMethods!
 ftLastWriteTime!**compiled accessors**!public! !
 maxClassLen!**compiled accessors**!public! !
@@ -100,6 +105,7 @@ defineFields
 
 getFieldNames
 	^#(#subKeyCount #maxSubKeyLen #maxClassLen #valueCount #maxValueNameLen #maxValueLen #securityDescriptorLen #ftLastWriteTime)! !
+
 !OS.REGKEYINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

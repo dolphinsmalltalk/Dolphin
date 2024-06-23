@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2PrintCompletedHandler guid: (OS.COM.IID fromString: '{8fd80075-ed08-42db-8570-f5d14977461e}')!
+
 WebView2.ICoreWebView2PrintCompletedHandler comment: '`ICoreWebView2PrintCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2PrintCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2PrintCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2PrintCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2PrintCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2PrintCompletedHandler!public! !
 !
@@ -54,6 +59,7 @@ defineFunctions
 		defineFunction: #Invoke:arg:
 			argumentTypes: 'hresult sdword'
 ! !
+
 !WebView2.ICoreWebView2PrintCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

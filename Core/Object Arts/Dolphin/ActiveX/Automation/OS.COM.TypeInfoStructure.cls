@@ -7,8 +7,11 @@ External.FinalizableStructure
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TypeInfoStructure guid: (Core.GUID fromString: '{c06f3b66-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.TypeInfoStructure isNonInstantiable: true!
+
 OS.COM.TypeInfoStructure comment: 'AXTypeInfoStructure is the class of <ExternalStructure>s representing the OLE Automation structures used in conjunction with <ITypeInfo>. AXTypeInfoStructure itself is abstract.
 
 Note that all subinstances of the receiver are allocated by an ITypeInfo and must be released by that same ITypeInfo. We achieve this by a backpointer to the allocating ITypeInfo/AXTypeInfoAnalyzer, and by marking the subinstance as finalizable. This does mean that holding onto one of these structures will cause the originating ITypeInfo to persist as well.
@@ -17,7 +20,9 @@ Instance variables:
 	piTypeInfo	<ITypeInfo> which allocated the struct and which must free it.
 	analyzer		<AXTypeInfoAnalyzer> which wraps piTypeInfo, and can analyze the receiver (may be nil)
 '!
+
 !OS.COM.TypeInfoStructure categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.TypeInfoStructure methodsFor!
 
 analyzer
@@ -77,6 +82,7 @@ vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
 
 	^self tdesc vtName! !
+
 !OS.COM.TypeInfoStructure categoriesForMethods!
 analyzer!accessing!private! !
 analyzer:!accessing!private! !
@@ -98,6 +104,7 @@ clear: addressOrBytes
 	as values in a <StructureArray>."
 
 	^self shouldNotImplement! !
+
 !OS.COM.TypeInfoStructure class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 !

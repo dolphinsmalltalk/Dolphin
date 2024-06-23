@@ -56,6 +56,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArithmeticValue
 	subclass: #'Graphics.Point'
 	instanceVariableNames: 'x y'
@@ -63,6 +64,7 @@ Core.ArithmeticValue
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ArithmeticValue
 	subclass: #'Graphics.Point3D'
 	instanceVariableNames: 'x y z'
@@ -70,6 +72,7 @@ Core.ArithmeticValue
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'External.POINT'
 	instanceVariableNames: ''
@@ -77,6 +80,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'External.RECT'
 	instanceVariableNames: ''
@@ -84,6 +88,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ExternalArray
 	subclass: #'External.POINTArray'
 	instanceVariableNames: ''
@@ -91,6 +96,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.POINTArray
 	subclass: #'External.POINTLArray'
 	instanceVariableNames: ''
@@ -98,6 +104,7 @@ External.POINTArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.POINT
 	subclass: #'OS.POINTL'
 	instanceVariableNames: ''
@@ -105,6 +112,7 @@ External.POINT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_x' -> 16r0. '_OffsetOf_y' -> 16r4. '_POINTL_Size' -> 16r8 }!
+
 External.RECT
 	subclass: #'OS.RECTL'
 	instanceVariableNames: ''
@@ -183,6 +191,7 @@ subtractFromPoint: aPoint
 	Can be overridden by subclasses that can implement more efficiently."
 
 	^aPoint retry: #- coercing: self! !
+
 !Core.ArithmeticValue categoriesForMethods!
 _expandRectangle:!double dispatch!private! !
 _insetRectangle:!double dispatch!private! !
@@ -240,6 +249,7 @@ subtractFromPoint: aPoint
 	"Private - Answer the result of subtracting the receiver from the known <point> argument."
 
 	^(aPoint x - self) @ (aPoint y - self)! !
+
 !Core.Number categoriesForMethods!
 @!converting!public! !
 addToPoint:!double dispatch!private! !
@@ -256,6 +266,7 @@ subtractFromPoint:!double dispatch!private! !
 subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2
 	<stdcall: bool SubtractRect RECTL* RECTL* RECTL*>
 	^self invalidCall: _failureCode! !
+
 !OS.UserLibrary categoriesForMethods!
 subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 !

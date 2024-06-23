@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'SourceOnlyMask' -> 16r1 }!
+
 Kernel.SourceFiler guid: (Core.GUID fromString: '{847f25f1-cd60-490c-817f-3f0f2cefd567}')!
+
 Kernel.SourceFiler isNonInstantiable: true!
+
 Kernel.SourceFiler comment: ''!
+
 !Kernel.SourceFiler categoriesForClass!Development!System-Support! !
+
 !Kernel.SourceFiler methodsFor!
 
 atEnd
@@ -108,6 +113,7 @@ stream
 	"Answer the receiver's <puttableStream>."
 
 	^stream! !
+
 !Kernel.SourceFiler categoriesForMethods!
 atEnd!public!testing! !
 close!operations!public! !
@@ -152,6 +158,7 @@ on: aWriteStream
 	^(self new)
 		setStream: aWriteStream;
 		yourself! !
+
 !Kernel.SourceFiler class categoriesForMethods!
 fileOutExtensionForClass:!enquiries!public! !
 fileOutNameForClass:!enquiries!public! !

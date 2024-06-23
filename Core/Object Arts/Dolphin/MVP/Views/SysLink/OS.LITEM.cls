@@ -15,7 +15,9 @@ External.Structure
 			'_OffsetOf_szID' -> 16r10.
 			'_OffsetOf_szURL' -> 16r70
 		}!
+
 OS.LITEM guid: (Core.GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!
+
 OS.LITEM comment: 'LITEM is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <SysLinkView>.
@@ -29,7 +31,9 @@ LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <
 	    WCHAR       szID[MAX_LINKID_TEXT] ;
 	    WCHAR       szUrl[L_MAX_URL_LENGTH] ;
 	} LITEM, * PLITEM ;'!
+
 !OS.LITEM categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.LITEM methodsFor!
 
 handle
@@ -167,6 +171,7 @@ url: aString
 	self
 		maskIn: LIF_URL;
 		szURL: text! !
+
 !OS.LITEM categoriesForMethods!
 handle!accessing!public! !
 id!accessing!public! !
@@ -215,6 +220,7 @@ defineFields
 
 getFieldNames
 	^#(#mask #iLink #state #stateMask #szID #szURL)! !
+
 !OS.LITEM class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

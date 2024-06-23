@@ -7,8 +7,11 @@ Graphics.Gdiplus.AbstractCustomLineCapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AdjustableArrowCapInitializer guid: (Core.GUID fromString: '{c1fcc801-8763-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.AdjustableArrowCapInitializer comment: ''!
+
 !Graphics.Gdiplus.AdjustableArrowCapInitializer methodsFor!
 
 = anObject
@@ -120,6 +123,7 @@ width
 widthOf: anAdjustableArrowCap set: aNumber
 	Gdip gdipSetAdjustableArrowCapWidth: anAdjustableArrowCap handle width: aNumber asFloat.
 	width := aNumber! !
+
 !Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesForMethods!
 =!comparing!public! !
 applyAdditionalAttributes:!private!realizing/unrealizing! !
@@ -158,6 +162,7 @@ stbConvertFrom: anSTBClassFormat
 				width: (data at: 3)
 				isFilled: (data at: 4)]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !Graphics.Gdiplus.AdjustableArrowCapInitializer class categoriesForMethods!
 height:width:isFilled:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

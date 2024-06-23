@@ -7,8 +7,11 @@ Kernel.Tests.AbstractParserErrorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ParserErrorTest guid: (Core.GUID fromString: '{67c4b011-40fa-43b7-83a4-cd8d616c16d0}')!
+
 Kernel.Tests.ParserErrorTest comment: ''!
+
 !Kernel.Tests.ParserErrorTest methodsFor!
 
 ifNil: aBlock
@@ -326,6 +329,7 @@ writtenNotReadRange: aString
 	| start |
 	start := aString lastIndexOf: $_.
 	^start to: start + 3! !
+
 !Kernel.Tests.ParserErrorTest categoriesForMethods!
 ifNil:!control flow!public! !
 ifNotNil:ifNil:!control flow!public! !

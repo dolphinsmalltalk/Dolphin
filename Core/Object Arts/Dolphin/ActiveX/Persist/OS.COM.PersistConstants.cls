@@ -25,6 +25,10 @@ Kernel.SharedPool
 			'TYMED_MFPICT' -> 16r20.
 			'TYMED_NULL' -> 16r0
 		}!
+
 OS.COM.PersistConstants guid: (Core.GUID fromString: '{099c6281-f06b-4af5-8017-e6535c5812c6}')!
+
 OS.COM.PersistConstants isNonInstantiable: true!
+
 OS.COM.PersistConstants comment: ''!
+

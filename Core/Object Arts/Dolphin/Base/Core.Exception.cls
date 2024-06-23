@@ -7,10 +7,15 @@ Core.Object
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Exception guid: (Core.GUID fromString: '{87b4c483-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Exception isNonInstantiable: true!
+
 Core.Exception comment: ''!
+
 !Core.Exception categoriesForClass!Kernel-Exception Handling! !
+
 !Core.Exception methodsFor!
 
 _descriptionArguments
@@ -522,6 +527,7 @@ toTrace: anInteger
 		cr.
 	self raisingFrame printStackOn: traceStream depth: anInteger.
 	traceStream flush! !
+
 !Core.Exception categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -670,6 +676,7 @@ signalWith: signallerTag
 	resumable, and the handler which catches it directs that it should be resumed."
 
 	^self signal: nil with: signallerTag! !
+
 !Core.Exception class categoriesForMethods!
 ,!filtering!public! !
 beep!parping!public! !

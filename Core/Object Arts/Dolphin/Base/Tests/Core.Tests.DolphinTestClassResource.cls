@@ -7,9 +7,13 @@ Core.Tests.DolphinTestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTestClassResource guid: (Core.GUID fromString: '{e358c277-08b0-4ffe-9f5a-c41be358f898}')!
+
 Core.Tests.DolphinTestClassResource isNonInstantiable: true!
+
 Core.Tests.DolphinTestClassResource comment: ''!
+
 !Core.Tests.DolphinTestClassResource methodsFor!
 
 compileAccessorsFor: aClass
@@ -77,6 +81,7 @@ setUp
 tearDown
 	super tearDown.
 	self destroyPackage! !
+
 !Core.Tests.DolphinTestClassResource categoriesForMethods!
 compileAccessorsFor:!Init / Release!private! !
 compileMethods!accessing!public! !

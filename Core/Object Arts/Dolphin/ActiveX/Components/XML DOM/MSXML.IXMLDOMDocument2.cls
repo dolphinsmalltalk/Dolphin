@@ -7,8 +7,11 @@ MSXML.IXMLDOMDocument
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMDocument2 guid: (OS.COM.IID fromString: '{2933bf95-7b36-11d2-b20e-00c04f983e60}')!
+
 MSXML.IXMLDOMDocument2 isEgressOnly: true!
+
 MSXML.IXMLDOMDocument2 comment: '<IXMLDOMDocument2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMDocument2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IDL definition follows:
@@ -43,7 +46,9 @@ interface IXMLDOMDocument2 : IXMLDOMDocument
 		[out, retval]VARIANT* value);
 };
 '!
+
 !MSXML.IXMLDOMDocument2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXMLDOMDocument2 methodsFor!
 
 get_namespaces: namespaceCollection
@@ -153,6 +158,7 @@ Validate: errorObj
 
 	<virtual stdcall: hresult 80 IXMLDOMParseError**>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IXMLDOMDocument2 categoriesForMethods!
 get_namespaces:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
 get_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
@@ -235,6 +241,7 @@ newFreeThreadedDOMDocument40
 	"Answer a new instance of the receiver on the FreeThreadedDOMDocument40 COM object"
 
 	^self onCLSID: (CLSID fromString: '{88D969C1-F192-11D4-A65F-0040963251E5}')! !
+
 !MSXML.IXMLDOMDocument2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 newDOMDocument!instance creation!public! !

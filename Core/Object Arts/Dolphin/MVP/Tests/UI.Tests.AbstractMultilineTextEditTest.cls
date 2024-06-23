@@ -7,9 +7,13 @@ UI.Tests.AbstractTextEditTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.AbstractMultilineTextEditTest guid: (Core.GUID fromString: '{8cec10d6-5d60-4f12-9a39-999fcc22b29d}')!
+
 UI.Tests.AbstractMultilineTextEditTest isNonInstantiable: true!
+
 UI.Tests.AbstractMultilineTextEditTest comment: ''!
+
 !UI.Tests.AbstractMultilineTextEditTest methodsFor!
 
 testPlainTextAtLine
@@ -56,6 +60,7 @@ The following messages defined in Object have optimized implementations inlined 
 #yourself
 In addition any selector in Object with a ''basic'' prefix may be subject to inlining in future releases, so these should not be overridden.
 '! !
+
 !UI.Tests.AbstractMultilineTextEditTest categoriesForMethods!
 testPlainTextAtLine!public!unit tests! !
 text!constants!private! !

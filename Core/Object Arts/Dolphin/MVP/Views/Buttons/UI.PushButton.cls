@@ -10,7 +10,9 @@ UI.CommandButton
 			'ButtonStyleMap'
 				-> (IdentityDictionary withAll: { #check -> 16r2. #link -> 16rE. #push -> 16r0. #toggle -> 16r1002 })
 		}!
+
 UI.PushButton guid: (Core.GUID fromString: '{87b4c729-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.PushButton comment: 'PushButton is a <CommandButton> implementing the Windows "BUTTON" class, usually in push button mode, i.e. with the BS_PUSHLIKE style. 
 
 Note that we have chosen not to support the text alignment styles of the BUTTON control on PushButton''s, because the ability to align the text in the push button rectangle doesn''t seem that useful. Alignment styles are, however, supported on the other incarnations of the BUTTON control as represented by the <CheckBox> and <RadioButton> classes, and so if needed the implementation can be borrowed from there.
@@ -27,7 +29,9 @@ Instance Variables:
 Class Variables:
 	ButtonStyleMap		<IdentityDictionary> mapping <Symbol>ic button style names to the corresponding <Integer> style flags.
 '!
+
 !UI.PushButton categoriesForClass!MVP-Views! !
+
 !UI.PushButton methodsFor!
 
 bmSetStyle: message wParam: wParam lParam: lParam 
@@ -271,6 +275,7 @@ text: aString
 
 	super text: aString.
 	commandDescription description: aString! !
+
 !UI.PushButton categoriesForMethods!
 bmSetStyle:wParam:lParam:!event handling-win32!private! !
 calculateExtent:!geometry!private! !
@@ -409,6 +414,7 @@ winClassName
 
 	^'BUTTON'
 ! !
+
 !UI.PushButton class categoriesForMethods!
 buttonMessageMappings!constants!must not strip!private! !
 icon!constants!public! !

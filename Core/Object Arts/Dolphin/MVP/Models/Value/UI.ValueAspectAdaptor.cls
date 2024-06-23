@@ -7,7 +7,9 @@ UI.ValueAdaptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueAspectAdaptor guid: (Core.GUID fromString: '{87b4c679-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ValueAspectAdaptor comment: 'A ValueAspectAdaptor is capable of adapting an aspect of a subject object and treating this as a <value>. An aspect is considered to be an attribute of an object that can be fetched and set using a pair of accessor methods (aspect and aspect: say). 
 
 ValueAspectAdaptors are typically used in two situations. The first is to adapt an aspect of a model to the generic <value> protocol of #value, #value: messages. This is a common requirement of <dialogPresenter>s which need to present multiple aspects of a model within their sub-presenters. The second is to allow aspects of a domain class which does  not generate change notifications to be used in situations that require them.  
@@ -17,7 +19,9 @@ Instance Variables:
 	putSelector	<Symbol> message selector used to set the aspect
 	getSelector	<Symbol> message selector used to get the aspect
 '!
+
 !UI.ValueAspectAdaptor categoriesForClass!MVP-Models! !
+
 !UI.ValueAspectAdaptor methodsFor!
 
 = comperand
@@ -105,6 +109,7 @@ value
 	by sending a message to the receiver's subject."
 
 	^self getValue! !
+
 !UI.ValueAspectAdaptor categoriesForMethods!
 =!comparing!public! !
 appyTo:!commands!public! !
@@ -135,6 +140,7 @@ subject: anObject aspect: aSymbol
 	an aspect of anObject identified by aSymbol"
 
 	^(super new) subject: anObject aspect: aSymbol; yourself! !
+
 !UI.ValueAspectAdaptor class categoriesForMethods!
 new!instance creation!private! !
 subject:aspect:!instance creation!public! !

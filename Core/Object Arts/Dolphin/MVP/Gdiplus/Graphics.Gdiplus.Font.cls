@@ -7,12 +7,15 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Font guid: (Core.GUID fromString: '{5b5d4ae1-5c87-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.Font comment: '<Gdiplus.Font> encapsulates the characteristics, such as family, height, size, and style (or combination of styles), of a specific font. A <Gdiplus.Font> is used when drawing strings on a GdiplusGraphics.
 
 Font instances do not have any attributes that can be altered after instantiation.
 
 '!
+
 !Graphics.Gdiplus.Font methodsFor!
 
 cellHeight
@@ -89,6 +92,7 @@ unit
 	"Answer an Integer, that represents the receiver's unit of measure."
 
 	^self initializer unit! !
+
 !Graphics.Gdiplus.Font categoriesForMethods!
 cellHeight!accessing!public! !
 clone!copying!public! !
@@ -197,6 +201,7 @@ new
 	"Answer a new initialized instance of the receiver for the default font."
 
 	^self genericSansSerif! !
+
 !Graphics.Gdiplus.Font class categoriesForMethods!
 defaultPointSize!instance creation!public! !
 fontFamily:emSize:!instance creation!public! !

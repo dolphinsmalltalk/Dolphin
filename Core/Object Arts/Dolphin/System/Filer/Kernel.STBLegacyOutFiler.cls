@@ -7,12 +7,17 @@ Kernel.STBOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBLegacyOutFiler guid: (Core.GUID fromString: '{de9ffce3-6ac1-4d88-a92d-8f7663a3391e}')!
+
 Kernel.STBLegacyOutFiler isNonInstantiable: true!
+
 Kernel.STBLegacyOutFiler comment: '`STBLegacyOutFiler` is the abstract class of  `STBOutFiler`s for previous STB versions.
 
 Note that although the old formats can be written with complete fidelity, this does not guarantee that the data will be deserializable in an older version of Dolphin because it may contain classes that are not present in the older image, or which have a different layout.'!
+
 !Kernel.STBLegacyOutFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STBLegacyOutFiler methodsFor!
 
 saveCollection: aCollection
@@ -47,6 +52,7 @@ saveStatic: aBindingReference for: anObject
 	anObject == #{Transcript} value
 		ifTrue: [self saveObject: anObject as: (STBSingletonProxy forClass: #{UI.TranscriptShell} value)]
 		ifFalse: [self errorStaticVarRefsNotSupported]! !
+
 !Kernel.STBLegacyOutFiler categoriesForMethods!
 saveCollection:!operations!public! !
 saveLookupTable:!operations!public! !

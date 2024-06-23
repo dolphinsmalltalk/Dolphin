@@ -7,13 +7,18 @@ Kernel.CompilerNotification
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.CompilerInfoNotification guid: (Core.GUID fromString: '{135aa40a-a210-4d71-8553-a1d64829c446}')!
+
 Kernel.CompilerInfoNotification comment: 'CompilerInfoNotification is a resumable exception used to represent low-severity semantic warnings detected by the <StSemanticChecker>'!
+
 !Kernel.CompilerInfoNotification categoriesForClass!System-Compiler! !
+
 !Kernel.CompilerInfoNotification methodsFor!
 
 severityName
 	^#Note! !
+
 !Kernel.CompilerInfoNotification categoriesForMethods!
 severityName!displaying!public! !
 !
@@ -25,6 +30,7 @@ severity
 	sorting compilation issues by severity."
 
 	^0! !
+
 !Kernel.CompilerInfoNotification class categoriesForMethods!
 severity!constants!public! !
 !

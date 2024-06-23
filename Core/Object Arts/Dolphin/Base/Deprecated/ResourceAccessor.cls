@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceAccessor guid: (Core.GUID fromString: '{87b4c4b0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ResourceAccessor comment: ''!
+
 !ResourceAccessor categoriesForClass!MVP-Resources! !
+
 !ResourceAccessor methodsFor!
 
 asInternalAccessor
@@ -78,6 +82,7 @@ save: anObject as: aResourceClass
 	"Save out anObject in the format dictated by aResourceClass."
 
 	^self subclassResponsibility! !
+
 !ResourceAccessor categoriesForMethods!
 asInternalAccessor!converting!private! !
 canSave!public!testing! !
@@ -149,6 +154,7 @@ stbConvertFromVersion0: version0Array
 		nextPut: 0;
 		nextPutAll: version0Array;
 		contents! !
+
 !ResourceAccessor class categoriesForMethods!
 ensureAccessorsAreInternal!operations!private! !
 icon!constants!development!public! !

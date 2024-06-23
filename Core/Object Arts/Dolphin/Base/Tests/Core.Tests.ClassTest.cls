@@ -7,8 +7,11 @@ Core.Tests.ClassDescriptionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ClassTest guid: (Core.GUID fromString: '{3c2fe318-ee64-4a1e-8b1a-8bf38c6d1803}')!
+
 Core.Tests.ClassTest comment: ''!
+
 !Core.Tests.ClassTest methodsFor!
 
 allClassHierarchyInstancesDo: aMonadicValuable
@@ -168,6 +171,7 @@ testShortName
 	self assert: self class shortName equals: 'Tests.ClassTest'.
 	"Core is imported before Kernel, so Tests in Core is bindable unqualified, but Kernel.Tests is not"
 	self assert: Kernel.Tests.NamespaceTest shortName equals: 'Kernel.Tests.NamespaceTest'! !
+
 !Core.Tests.ClassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
 testAllRoots!public!unit tests! !

@@ -7,9 +7,13 @@ Kernel.ExceptionHandlerAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ExceptionHandler guid: (Core.GUID fromString: '{87b4c575-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.ExceptionHandler comment: ''!
+
 !Kernel.ExceptionHandler categoriesForClass!Kernel-Exception Handling! !
+
 !Kernel.ExceptionHandler methodsFor!
 
 actionFor: exception
@@ -24,6 +28,7 @@ setHandler: monadicBlock
 setSelector: exceptionSelector
 	selector := exceptionSelector
 ! !
+
 !Kernel.ExceptionHandler categoriesForMethods!
 actionFor:!debugger-step over!helpers!private! !
 setHandler:!debugger-step over!initializing!private! !
@@ -40,6 +45,7 @@ on: selector do: action
 		setSelector: selector;
 		setHandler: action;
 		yourself! !
+
 !Kernel.ExceptionHandler class categoriesForMethods!
 on:do:!debugger-step through!instance creation!private! !
 !

@@ -69,6 +69,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.STxFilerTest'
 	instanceVariableNames: ''
@@ -76,6 +77,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.STxFilerTest
 	subclass: #'Kernel.Tests.STBTest'
 	instanceVariableNames: ''
@@ -83,6 +85,7 @@ Kernel.Tests.STxFilerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.STxFilerTest
 	subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
@@ -90,6 +93,7 @@ Kernel.Tests.STxFilerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.STBTest
 	subclass: #'Kernel.Tests.STBValidatingInFilerTest'
 	instanceVariableNames: 'locator'
@@ -115,6 +119,7 @@ testLiteralStoreOn
 	self assert: rehydrated equals: stlArray.
 	rehydrated := Object fromLiteralStoreArray: stlArray.
 	self assert: rehydrated equals: subject! !
+
 !Core.Tests.ArrayTest categoriesForMethods!
 testLiteralStoreOn!public!unit tests! !
 !
@@ -136,6 +141,7 @@ testSingletonSerialisationToStl
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
 	array := singletons literalStoreArray.
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty! !
+
 !Core.Tests.FileLocatorTest categoriesForMethods!
 testSingletonSerialisationToStb!public!unit tests! !
 testSingletonSerialisationToStl!public!unit tests! !
@@ -150,6 +156,7 @@ testSingletonSerialisationToStl
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
 	array := singletons literalStoreArray.
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty! !
+
 !External.Tests.DynamicLinkLibraryTest categoriesForMethods!
 testSingletonSerialisationToStl!public!unit tests! !
 !
@@ -235,6 +242,7 @@ testStlRoundTripUnnamedRGB
 	self assert: rehydrated first isKindOf: RGB.
 	self assert: rehydrated last identicalTo: rehydrated first.
 	self assert: rehydrated second identicalTo: Color blue! !
+
 !Graphics.Tests.ColorTest categoriesForMethods!
 testSingletonSerialisationToStl!public!unit tests! !
 testStlRoundTrip!public! !
@@ -248,6 +256,7 @@ testStlRoundTripUnnamedRGB!public! !
 
 correspondingTestCase
 	^Tests.STBTest! !
+
 !Kernel.STBInFiler class categoriesForMethods!
 correspondingTestCase!public! !
 !
@@ -256,6 +265,7 @@ correspondingTestCase!public! !
 
 correspondingTestCase
 	^Tests.STBTest! !
+
 !Kernel.STBOutFiler class categoriesForMethods!
 correspondingTestCase!public! !
 !
@@ -264,6 +274,7 @@ correspondingTestCase!public! !
 
 correspondingTestCase
 	^Tests.STBValidatingInFilerTest! !
+
 !Kernel.STBValidatingInFiler class categoriesForMethods!
 correspondingTestCase!public! !
 !
@@ -272,6 +283,7 @@ correspondingTestCase!public! !
 
 correspondingTestCase
 	^Tests.STLClassCollectorTest! !
+
 !Kernel.STLClassCollector class categoriesForMethods!
 correspondingTestCase!public! !
 !
@@ -280,6 +292,7 @@ correspondingTestCase!public! !
 
 correspondingTestCase
 	^Tests.STLFilerTest! !
+
 !Kernel.STLInFiler class categoriesForMethods!
 correspondingTestCase!public! !
 !
@@ -288,6 +301,7 @@ correspondingTestCase!public! !
 
 correspondingTestCase
 	^Tests.STLFilerTest! !
+
 !Kernel.STLOutFiler class categoriesForMethods!
 correspondingTestCase!public! !
 !
@@ -316,6 +330,7 @@ testLiteralStoreFull
 			array := {each. each value}.
 			rehydrated := Compiler evaluate: array literalStoreEvaluationString.
 			self assert: rehydrated equals: array]! !
+
 !Kernel.Tests.BindingReferenceTest categoriesForMethods!
 testLiteralStoreFull!public!unit tests! !
 !
@@ -341,6 +356,7 @@ testLiteralStoreRelative
 			self assertIsNil: (rehydrated instance instVarAt: 4).
 			self assertIsNil: (rehydrated instance instVarAt: 5).
 			self assert: rehydrated binding identicalTo: binding]! !
+
 !Kernel.Tests.ScopedBindingReferenceTest categoriesForMethods!
 testLiteralStoreRelative!public!unit tests! !
 !

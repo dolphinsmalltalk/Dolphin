@@ -45,6 +45,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.LagoonTests'
 	instanceVariableNames: ''
@@ -52,6 +53,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.PackageClosureTests'
 	instanceVariableNames: ''
@@ -97,6 +99,7 @@ forPackagesDeployment: aCollectionOfPackages
 	deployed
 		label: 'App deployed from ' , (names size = 1 ifTrue: [names first] ifFalse: [names]) printString.
 	^deployed! !
+
 !Refactory.Browser.BrowserEnvironment categoriesForMethods!
 forPackagesDeployment:!helpers!public! !
 !
@@ -106,6 +109,7 @@ forPackagesDeployment:!helpers!public! !
 newForTests
 
 	^self new initializeForTests! !
+
 !ImageStripper class categoriesForMethods!
 newForTests!public! !
 !

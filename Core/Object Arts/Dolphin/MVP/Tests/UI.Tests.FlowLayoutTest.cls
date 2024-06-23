@@ -7,8 +7,11 @@ UI.Tests.LayoutManagerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.FlowLayoutTest guid: (Core.GUID fromString: '{b71be04a-a575-4722-a8b1-c57127768758}')!
+
 UI.Tests.FlowLayoutTest comment: ''!
+
 !UI.Tests.FlowLayoutTest methodsFor!
 
 layoutManagerClass
@@ -81,6 +84,7 @@ testWrap
 			shell extent: shell extent - (each @ 0).
 			shell update.
 			1 to: 4 do: [:i | self assert: (children at: i) position equals: 0 @ ((i - 1) * (cy + vGap))]]! !
+
 !UI.Tests.FlowLayoutTest categoriesForMethods!
 layoutManagerClass!private!unit tests! !
 testVerticalCentreing!public!unit tests! !

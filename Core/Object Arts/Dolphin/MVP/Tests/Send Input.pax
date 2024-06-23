@@ -52,6 +52,7 @@ Kernel.SharedPool
 			'MOUSEEVENTF_XDOWN' -> 16r80.
 			'MOUSEEVENTF_XUP' -> 16r100
 		}!
+
 External.Structure
 	subclass: #'OS.INPUT'
 	instanceVariableNames: ''
@@ -92,6 +93,7 @@ mouse_event: dwFlags dx: dx dy: dy dwData: dwData dwExtraInfo: dwExtraInfo
 sendInput: cInputs pInputs: pInputs cbSize: cbSize
 	<stdcall: uint32 SendInput uint32 lpvoid* int32>
 	^self invalidCall: _failureCode! !
+
 !OS.UserLibrary categoriesForMethods!
 keybd_event:bScan:dwFlags:dwExtraInfo:!public!win32 functions-message and message queue! !
 mouse_event:dx:dy:dwData:dwExtraInfo:!public!win32 functions-message and message queue! !

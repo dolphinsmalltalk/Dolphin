@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest guid: (Core.GUID fromString: '{cf036663-3be7-40e4-9e4f-c090ff6abb4b}')!
+
 Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest methodsFor!
 
 testExistingInstanceVariableAccessors
@@ -67,6 +71,7 @@ testNonExistantName
 					class: BasicLintRuleTestData
 					classVariable: true)
 			withMessage: errorFormat << { BasicLintRuleTestData. 'foo' }! !
+
 !Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest categoriesForMethods!
 testExistingInstanceVariableAccessors!public!tests! !
 testNewClassVariableAccessors!public!tests! !

@@ -7,7 +7,9 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.PersonalAccountTransaction guid: (Core.GUID fromString: '{87b4c669-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Examples.PersonalAccountTransaction comment: 'A PersonalAccountTransaction holds details regarding a single transaction for an account within the PersonalMoney system.
 
 Instance Variables
@@ -15,7 +17,9 @@ Instance Variables
 	description		<String> describing the purpose of the transactions.
 	date		<Date> on which the transaction was made.
 	isDebit		<Boolean> that indicates whether the transaction is a debit or credit.'!
+
 !UI.Examples.PersonalAccountTransaction categoriesForClass!MVP-Models!Samples! !
+
 !UI.Examples.PersonalAccountTransaction methodsFor!
 
 actualAmount
@@ -93,6 +97,7 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
+
 !UI.Examples.PersonalAccountTransaction categoriesForMethods!
 actualAmount!accessing!public! !
 amount!accessing!public! !

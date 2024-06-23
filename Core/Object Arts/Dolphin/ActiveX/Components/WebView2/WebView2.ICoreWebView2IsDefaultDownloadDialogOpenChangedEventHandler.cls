@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler guid: (OS.COM.IID fromString: '{3117da26-ae13-438d-bd46-edbeb2c4ce81}')!
+
 WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler comment: '`ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2* IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -68,6 +73,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#isDefaultDownloadDialogOpenChanged! !
+
 !WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !

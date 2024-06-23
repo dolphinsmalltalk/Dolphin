@@ -7,8 +7,11 @@ UI.Tests.AbstractTextEditTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.TextEditTest guid: (Core.GUID fromString: '{5237b507-a634-4555-81af-e15822492437}')!
+
 UI.Tests.TextEditTest comment: ''!
+
 !UI.Tests.TextEditTest methodsFor!
 
 classToTest
@@ -69,6 +72,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 				and: [aResourceIdentifier selector == #resource_Default_view_D8_13])
 					ifTrue: [#perChar]
 					ifFalse: [#focusLost])! !
+
 !UI.Tests.TextEditTest categoriesForMethods!
 classToTest!constants!private! !
 margins!constants!private! !
@@ -106,6 +110,7 @@ resource_Default_view_D8_13
 	"
 
 	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.TextEdit} 34 16 nil nil 34 2 8 1140916352 1025 416 nil 917510 #{Graphics.Color} #default nil 7 nil nil nil 416 nil 8 1817911536 1049094 #{UI.NullConverter} nil nil 5 1310982 #{Core.MessageSequence} 34 2 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 6143 21 658 241 39 416 610 #text: 34 1 8 'perChar' 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 658 193 193 nil 27)! !
+
 !UI.Tests.TextEditTest class categoriesForMethods!
 resource_Default_view_D6!constants!public! !
 resource_Default_view_D7!constants!public! !

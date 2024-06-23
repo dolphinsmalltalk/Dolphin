@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LocaleTest guid: (Core.GUID fromString: '{85b9dbfa-a1e2-46f3-ae44-d016f209b03b}')!
+
 Core.Tests.LocaleTest isNonInstantiable: true!
+
 Core.Tests.LocaleTest comment: ''!
+
 !Core.Tests.LocaleTest methodsFor!
 
 defaultSubject
@@ -235,6 +239,7 @@ verifyEnglishNamesOfDays: aLocale
 verifyIndexOfEnglishMonths: aLocale
 	#('january' 'feb' 'march' 'apr' 'may' 'jun' 'july' 'aug' 'september' 'oct' 'november' 'dec')
 		keysAndValuesDo: [:eachKey :eachValue | self assert: (aLocale indexOfMonth: eachValue) equals: eachKey]! !
+
 !Core.Tests.LocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 displayScaledDecimal:in:!helpers!private! !

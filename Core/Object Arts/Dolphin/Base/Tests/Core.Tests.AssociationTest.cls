@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AssociationTest guid: (Core.GUID fromString: '{c99d4b53-db6c-4b09-9f2a-7a914d14a0d1}')!
+
 Core.Tests.AssociationTest comment: ''!
+
 !Core.Tests.AssociationTest methodsFor!
 
 testIsSelfEvaluating
@@ -28,6 +31,7 @@ testPrintOn
 	subject key: #a.
 	subject value: subject.
 	self assert: subject printString equals: '#a -> ... a cyclic ref to an Association...'! !
+
 !Core.Tests.AssociationTest categoriesForMethods!
 testIsSelfEvaluating!public! !
 testPrintOn!public! !

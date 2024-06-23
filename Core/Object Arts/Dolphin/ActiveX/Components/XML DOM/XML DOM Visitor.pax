@@ -50,6 +50,7 @@ Core.Object
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitAttribute: self! !
+
 !MSXML.IXMLDOMAttribute categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -58,6 +59,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitCDATA: self! !
+
 !MSXML.IXMLDOMCDATASection categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -66,6 +68,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitComment: self! !
+
 !MSXML.IXMLDOMComment categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -74,6 +77,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocument: self! !
+
 !MSXML.IXMLDOMDocument categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -82,6 +86,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocumentType: self! !
+
 !MSXML.IXMLDOMDocumentType categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -90,6 +95,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitElement: self! !
+
 !MSXML.IXMLDOMElement categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -98,6 +104,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntity: self! !
+
 !MSXML.IXMLDOMEntity categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -106,6 +113,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntityReference: self! !
+
 !MSXML.IXMLDOMEntityReference categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -114,6 +122,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDomNode: self! !
+
 !MSXML.IXMLDOMNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -122,6 +131,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitNotation: self! !
+
 !MSXML.IXMLDOMNotation categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -130,6 +140,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitProcessingInstruction: self! !
+
 !MSXML.IXMLDOMProcessingInstruction categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -138,6 +149,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitText: self! !
+
 !MSXML.IXMLDOMText categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !

@@ -7,8 +7,11 @@ WebView2.ICoreWebView2_18
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2_19 guid: (OS.COM.IID fromString: '{6921f954-79b0-437f-a997-c85811897c68}')!
+
 WebView2.ICoreWebView2_19 isEgressOnly: true!
+
 WebView2.ICoreWebView2_19 comment: '`ICoreWebView2_19` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_19'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2_19 : ICoreWebView2_18
 };
 ```
 '!
+
 !WebView2.ICoreWebView2_19 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2_19 methodsFor!
 
 get_MemoryUsageTargetLevel: level
@@ -53,6 +58,7 @@ put_MemoryUsageTargetLevel: level
 
 	<virtual stdcall: hresult 121 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2_19 categoriesForMethods!
 get_MemoryUsageTargetLevel:!**auto generated**!COM Interfaces-ICoreWebView2_19!private! !
 put_MemoryUsageTargetLevel:!**auto generated**!COM Interfaces-ICoreWebView2_19!private! !
@@ -70,6 +76,7 @@ defineFunctions
 		defineFunction: #put_MemoryUsageTargetLevel:
 			argumentTypes: 'int32'
 ! !
+
 !WebView2.ICoreWebView2_19 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

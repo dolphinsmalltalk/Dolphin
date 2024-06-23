@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #(#{Kernel.ParseErrorCodes} #{External})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AbstractParserErrorTest guid: (Core.GUID fromString: '{5f42cbdc-9ab6-40b0-826d-b9cb9dd30c78}')!
+
 Kernel.Tests.AbstractParserErrorTest isNonInstantiable: true!
+
 Kernel.Tests.AbstractParserErrorTest comment: ''!
+
 !Kernel.Tests.AbstractParserErrorTest methodsFor!
 
 buildNestedBlocks: nesting 
@@ -2047,6 +2051,7 @@ writtenNotReadRange: aString
 	compiler on the temp decl, the parser on the first dead store."
 
 	^self subclassResponsibility! !
+
 !Kernel.Tests.AbstractParserErrorTest categoriesForMethods!
 buildNestedBlocks:!helpers!private! !
 checkCompileError:range:code:line:source:!helpers!private! !

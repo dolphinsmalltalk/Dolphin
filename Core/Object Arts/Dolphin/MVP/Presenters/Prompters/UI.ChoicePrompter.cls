@@ -7,7 +7,9 @@ UI.ValueDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ChoicePrompter guid: (Core.GUID fromString: '{87b4c6a7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ChoicePrompter comment: 'ChoicePrompter is a <valueDialogPresenter> that allows a value to be chosen from a list of alternatives. 
 
 You can instantiate a single selection ChoicePrompter dialog using the class methods #choices:caption: or #on:choices:caption:. It is also possible to allow multiple selections by using the methods #multipleChoices:caption: and #on:multipleChoices:caption:. Each of these methods answers the model value if Ok (or nil if Cancel) is pressed. When a ChoicePrompter is being used to select multiple choices, the <valueModel> will be used to contain an Array of the selected items.
@@ -42,7 +44,9 @@ Instance Variables:
 
 
 '!
+
 !UI.ChoicePrompter categoriesForClass!MVP-Presenters! !
+
 !UI.ChoicePrompter methodsFor!
 
 choices: aSequenceableCollection
@@ -167,6 +171,7 @@ validater
 
 validater: aMonadicValuable
 	validater := aMonadicValuable! !
+
 !UI.ChoicePrompter categoriesForMethods!
 choices:!accessing!private! !
 createComponents!initializing!public! !
@@ -380,6 +385,7 @@ resource_Multiselection_choice_prompter
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 30 nil nil 8 #(13369344 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog 518 #{Graphics.Point} 501 701 133 nil 1030 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 130 193 193 nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 288 nil nil nil 5 nil nil nil 288 582 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_OK_Cancel_button_block nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 130 15 549 130 459 71 288 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 18 1 0 0 236 0 0 0 53 1 0 0] 8 #() 130 193 193 nil 27 nil nil 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140969801 1025 592 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default 130 485 577 5 nil nil nil 592 nil nil 518 #{Core.Message} #displayString 8 #() nil 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 690 1 3142 5 #{UI.ListViewColumn} 8 '' 451 #left nil 802 #<= 8 #() nil nil 592 nil 3 nil nil #report 8 #() nil 133121 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 386 50 1 434 #createAt:extent: 50 2 130 15 15 130 459 535 592 514 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 7 0 0 0 236 0 0 0 18 1 0 0] 8 #() 576 nil 35 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 592 8 'choices' 518 #{Graphics.Rectangle} 130 15 15 130 17 15 nil nil nil nil 1 nil nil nil 130 501 311 1 nil nil 774 #{Core.Semaphore} nil nil 1 nil nil 386 50 2 434 #createAt:extent: 50 2 130 6143 21 130 521 711 32 434 #text: 50 1 8 'Choose one or more of:' 32 514 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 3 13 0 0 109 1 0 0] 50 2 592 288 576 nil 27)! !
+
 !UI.ChoicePrompter class categoriesForMethods!
 choices:!instance creation!public! !
 choices:caption:!instance creation!public! !

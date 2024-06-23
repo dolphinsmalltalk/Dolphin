@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageManager guid: (Core.GUID fromString: '{87b4c492-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.ImageManager comment: ''!
+
 !Graphics.ImageManager categoriesForClass!Graphics-Tools! !
+
 !Graphics.ImageManager methodsFor!
 
 addImage: anImage
@@ -202,6 +206,7 @@ stbSaveOn: anSTBOutFiler
 
 	self purgeImages.
 	super stbSaveOn: anSTBOutFiler! !
+
 !Graphics.ImageManager categoriesForMethods!
 addImage:!adding!public! !
 addImage:extent:!adding!public! !
@@ -247,6 +252,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !Graphics.ImageManager class categoriesForMethods!
 new!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

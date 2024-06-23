@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.BrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.HatchBrushTest guid: (Core.GUID fromString: '{be9147c0-8247-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.Tests.HatchBrushTest comment: ''!
+
 !Graphics.Gdiplus.Tests.HatchBrushTest methodsFor!
 
 brushType
@@ -57,6 +60,7 @@ verifyEqualToModel: aGdiplusObject
 	self assert: aGdiplusObject backcolor equals: model backcolor.
 	self assert: aGdiplusObject forecolor equals: model forecolor.
 	self assert: aGdiplusObject hatchStyle equals: model hatchStyle! !
+
 !Graphics.Gdiplus.Tests.HatchBrushTest categoriesForMethods!
 brushType!constants!private! !
 createCanonicalSubject!initializing!private! !

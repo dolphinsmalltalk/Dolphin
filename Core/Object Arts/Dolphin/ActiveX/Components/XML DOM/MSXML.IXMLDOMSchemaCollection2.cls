@@ -7,8 +7,11 @@ MSXML.IXMLDOMSchemaCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMSchemaCollection2 guid: (OS.COM.IID fromString: '{50ea08b0-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 MSXML.IXMLDOMSchemaCollection2 isEgressOnly: true!
+
 MSXML.IXMLDOMSchemaCollection2 comment: '<IXMLDOMSchemaCollection2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -45,7 +48,9 @@ interface IXMLDOMSchemaCollection2 : IXMLDOMSchemaCollection
 		[out, retval]ISchemaItem** item);
 };
 '!
+
 !MSXML.IXMLDOMSchemaCollection2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXMLDOMSchemaCollection2 methodsFor!
 
 get_validateOnLoad: validateOnLoad
@@ -123,6 +128,7 @@ validateOnLoad: validateOnLoad
 	"Set the 'validateOnLoad' property of the receiver to the <varbool> value of the argument."
 
 	self put_validateOnLoad: validateOnLoad! !
+
 !MSXML.IXMLDOMSchemaCollection2 categoriesForMethods!
 get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
 getDeclaration:!**auto generated**!methods!public! !
@@ -158,6 +164,7 @@ defineFunctions
 		defineFunction: #GetDeclaration:item:
 			argumentTypes: 'IXMLDOMNode* ISchemaItem**'
 ! !
+
 !MSXML.IXMLDOMSchemaCollection2 class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

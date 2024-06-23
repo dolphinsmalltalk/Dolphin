@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Profile5
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Profile6 guid: (OS.COM.IID fromString: '{bd82fa6a-1d65-4c33-b2b4-0393020cc61b}')!
+
 WebView2.ICoreWebView2Profile6 isEgressOnly: true!
+
 WebView2.ICoreWebView2Profile6 comment: '`ICoreWebView2Profile6` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile6'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -38,7 +41,9 @@ interface ICoreWebView2Profile6 : ICoreWebView2Profile5
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Profile6 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Profile6 methodsFor!
 
 get_IsGeneralAutofillEnabled: value
@@ -78,6 +83,7 @@ put_IsPasswordAutosaveEnabled: value
 
 	<virtual stdcall: hresult 20 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Profile6 categoriesForMethods!
 get_IsGeneralAutofillEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Profile6!private! !
 get_IsPasswordAutosaveEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Profile6!private! !
@@ -101,6 +107,7 @@ defineFunctions
 		defineFunction: #put_IsGeneralAutofillEnabled:
 			argumentTypes: 'int32'
 ! !
+
 !WebView2.ICoreWebView2Profile6 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -7,7 +7,9 @@ UI.ShellView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Splash guid: (Core.GUID fromString: '{87b4c722-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Splash comment: 'Splash is a class that implements a <topView> for displaying a modal splash screen style bitmap. 
 
 A Splash window stays visible for a defined period of time indicated by the <Delay> passed to #showTimed:. If #showTimed is used, then a default delay period is automatically provided. If #show is used then the window remains visible for an indefinite period of time. One may choose to specify an overlay to be drawn on top of the bitmap using #overlayWith: and providing a suitable <monadicValuable> to perform the painting. 
@@ -20,7 +22,9 @@ Instance Variables:
 	overlayWith	<monadicValuable> or nil, specifying any paint actions to overlay the bitmap.
 
 '!
+
 !UI.Splash categoriesForClass!MVP-Views! !
+
 !UI.Splash methodsFor!
 
 bitmap: aBitmap
@@ -130,6 +134,7 @@ showWindow
 
 	super show.
 	self beTopMost; update! !
+
 !UI.Splash categoriesForMethods!
 bitmap:!accessing!initializing!private! !
 close!operations!public! !
@@ -168,6 +173,7 @@ bitmap: aBitmap overlayWith: aBlock
 		create;
 		yourself
 	! !
+
 !UI.Splash class categoriesForMethods!
 bitmap:!instance creation!public! !
 bitmap:overlayWith:!instance creation!public! !

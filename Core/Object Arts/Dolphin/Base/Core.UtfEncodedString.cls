@@ -7,9 +7,13 @@ Core.String
 	imports: #(#{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.UtfEncodedString guid: (Core.GUID fromString: '{f19f0843-d636-4c39-8815-afe452d16cb0}')!
+
 Core.UtfEncodedString isNullTerminated: true!
+
 Core.UtfEncodedString isNonInstantiable: true!
+
 Core.UtfEncodedString comment: '`UtfEncodedString` is the abstract class of variable-width UTF-encoded strings. It has specialised subclasses for UTF-8, and UTF-16.
 
 Like `AnsiString` and (as yet hypothetical) `Utf32String`, the elements of a `UtfEncodedString` are represented by `Character` instances when enumerating or accessing _by index_, but unlike those fixed-width encodings the values of the underlying elements are really code units rather than whole code points. Consequently the `Character` instances may represent surrogate (partial) characters from the encoding. This is a compromise required to represent the variable-width UTF encodings within the Smalltalk `SequenceableCollection` hierarchy, which was designed for fixed-width elements long before UTF-8 and UTF-16 were imagined, yet which also requires that the elements of `String`s be `Character`s. ANSI Smalltalk did nothing to address this issue; the `<readableString>` protocol is a sub-protocol of `<sequencedReadableCollection>` and contains many indexed access messages that cannot really be implemented efficiently against a variable width string. Even calculating the result for `#size` would require counting the characters and the count could be invalidated by any `#at:put:` operation, which might also require the string to be resized and its contents shuffled. Given the difficulty of squaring this circle, and the limited scenarios that really require direct indexing into strings, we have opted to interpret the requirement that the elements of strings be `Character`s by including surrogate characters as valid elements.
@@ -47,7 +51,9 @@ The fact that `Character`s may actually occupy more than one code unit element o
  - Enumerations passed an index (e.g. `from:do:`) or a range of indices (e.g. `from:to:do:`) are expecting code unit indices, but will enumerate code points between those indices. In other words it cannot be relied upon that number of elements enumerated will be `stop - start + 1`, although it will always be less than or equal to that.
  - Sequenceable collection operations that are passed an element count are expecting a code point count, not a code unit count. This is deliberately not consistent with indices being code unit indices.
  - When working with the `PositionableStream` hierarchy one must be careful when recording or adjusting the position, and remember that relative positioning (e.g. with `#skip:`) always works in terms of the code-unit elements of the streamed over collection, not necessarily whole characters. In the case of `UtfEncodeString`s the underlying elements are code unit integers of 8 or 16 bits for UTF-8 and UTF-16 respectively. The position of a stream over a UtfEncodedString is the position in terms of code units, not Characters. The use of relative positioning either through `#skip:` or by directly adjusting the position to a point calculated without regard to the encoding is likely to lead to positioning errors. It is safe to reset the position to step back (for example) by using a previously recorded position. To advance the stream the next and peek family of messagess should be used unless to a previously recorded position at the start of an encoded character. It is generally not a good idea to mix position or size calculations based on the fixed width code units used as indices and sizes for the collection itself and for the stream position with the variable width code points read and written by the streams. '!
+
 !Core.UtfEncodedString categoriesForClass!Collections-Text! !
+
 !Core.UtfEncodedString methodsFor!
 
 after: aCharacter ifAbsent: aNiladicValuable
@@ -488,6 +494,7 @@ with: otherCollection do: aDyadicValuable
 				ifNil: [self errorCollectionsOfDifferentSizes]
 				ifNotNil: [:ch | aDyadicValuable value: ch value: each]].
 	stream atEnd ifFalse: [^self errorCollectionsOfDifferentSizes]! !
+
 !Core.UtfEncodedString categoriesForMethods!
 after:ifAbsent:!public!searching! !
 allButFirst:!copying!public! !
@@ -551,6 +558,7 @@ codePage
 	"Answer the Windows code page constant for the receiver's encoding."
 
 	^self subclassResponsibility! !
+
 !Core.UtfEncodedString class categoriesForMethods!
 codePage!constants!public! !
 !

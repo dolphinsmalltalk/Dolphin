@@ -7,7 +7,9 @@ Tools.VirtualMethodCategory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MethodPrivacyCategory guid: (Core.GUID fromString: '{87b4c505-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.MethodPrivacyCategory comment: 'MethodPrivacyCategory is a virtual method category class used to dynamically group private/public methods.
 
 This class has two instances representing the ''private'' and ''public'' categories.
@@ -19,7 +21,9 @@ Instance Variables:
 
 Class Variables:
 	None'!
+
 !Tools.MethodPrivacyCategory categoriesForClass!System-Support! !
+
 !Tools.MethodPrivacyCategory methodsFor!
 
 acceptsAdditions
@@ -62,6 +66,7 @@ removeMethodSilently: aCompiledMethod
 	methods that are members of the receiver, and make no fuss about it."
 
 	aCompiledMethod isPrivate: privacy not! !
+
 !Tools.MethodPrivacyCategory categoriesForMethods!
 acceptsAdditions!public!testing! !
 addMethodSilently:!adding!private! !
@@ -94,6 +99,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Public := Private := nil! !
+
 !Tools.MethodPrivacyCategory class categoriesForMethods!
 initialize!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

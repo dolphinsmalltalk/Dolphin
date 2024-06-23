@@ -5,9 +5,13 @@ MainTestCase subclass: #DateAndTimeFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DateAndTimeFactoryANSITest guid: (GUID fromString: '{3291905d-72ee-4943-91dc-ca23d5131bc9}')!
+
 DateAndTimeFactoryANSITest comment: ''!
+
 !DateAndTimeFactoryANSITest categoriesForClass!Unclassified! !
+
 !DateAndTimeFactoryANSITest methodsFor!
 
 canonicalObject
@@ -80,6 +84,7 @@ testXyearXmonthXdayXhourXminuteXsecondXoffsetX
 					& (r hour = 1) & (r minute = 2) & (r second = 3)]
 		conformTo: #'DateAndTime factory'
 		selector: #'year:month:day:hour:minute:second:offset:'.! !
+
 !DateAndTimeFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

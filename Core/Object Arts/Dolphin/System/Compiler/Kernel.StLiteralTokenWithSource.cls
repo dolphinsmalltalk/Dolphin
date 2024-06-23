@@ -7,9 +7,13 @@ Kernel.StLiteralToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralTokenWithSource guid: (Core.GUID fromString: '{6e8336e5-0558-42fa-9b79-f818fd4c46bf}')!
+
 Kernel.StLiteralTokenWithSource isNonInstantiable: true!
+
 Kernel.StLiteralTokenWithSource comment: ''!
+
 !Kernel.StLiteralTokenWithSource methodsFor!
 
 formatOn: aStream source: aString
@@ -33,6 +37,7 @@ source
 
 source: aString 
 	source := aString! !
+
 !Kernel.StLiteralTokenWithSource categoriesForMethods!
 formatOn:source:!printing!public! !
 printOn:!public! !
@@ -51,6 +56,7 @@ start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger 
 		stop: stopInteger;
 		source: sourceString;
 		yourself! !
+
 !Kernel.StLiteralTokenWithSource class categoriesForMethods!
 start:comments:value:stop:source:!public! !
 !

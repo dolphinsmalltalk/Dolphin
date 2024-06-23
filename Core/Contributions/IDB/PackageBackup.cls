@@ -5,13 +5,17 @@ Object subclass: #PackageBackup
 	classVariableNames: 'BackupFolder Instance'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageBackup guid: (GUID fromString: '{6f50fcba-c386-440d-9426-dc697024bf9c}')!
+
 PackageBackup comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !PackageBackup categoriesForClass!IDB Goodies! !
+
 !PackageBackup methodsFor!
 
 backupPackage: aPackage
@@ -39,6 +43,7 @@ initialize
 
 onAboutToSavePackage: aPackage
 	self backupPackage: aPackage! !
+
 !PackageBackup categoriesForMethods!
 backupPackage:!operations!private! !
 free!finalizing!public! !
@@ -87,6 +92,7 @@ publishedAspects
 uninitialize
 	self disable.
 	Smalltalk developmentSystem unregisterTool: self! !
+
 !PackageBackup class categoriesForMethods!
 backupFolder!accessing!public! !
 backupFolder:!accessing!public! !

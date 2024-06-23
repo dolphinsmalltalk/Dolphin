@@ -7,9 +7,13 @@ Core.Tests.CollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractSetTest guid: (Core.GUID fromString: '{033c7642-45db-489a-b839-dfa0620bf22e}')!
+
 Core.Tests.AbstractSetTest isNonInstantiable: true!
+
 Core.Tests.AbstractSetTest comment: ''!
+
 !Core.Tests.AbstractSetTest methodsFor!
 
 assertCommutativelyEqual: aSet other: anotherSet
@@ -236,6 +240,7 @@ testShallowCopy
 	copy := set shallowCopy.
 	self assertIs: copy shallowCopyOf: set.
 	self assertValidSet: copy! !
+
 !Core.Tests.AbstractSetTest categoriesForMethods!
 assertCommutativelyEqual:other:!helpers!private! !
 assertIs:deepCopyOf:!private!unit tests! !

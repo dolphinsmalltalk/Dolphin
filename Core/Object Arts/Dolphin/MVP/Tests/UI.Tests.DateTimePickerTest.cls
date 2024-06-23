@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.DateTimePickerTest guid: (Core.GUID fromString: '{beb204cd-8c17-44a4-8305-c23345382e1e}')!
+
 UI.Tests.DateTimePickerTest comment: ''!
+
 !UI.Tests.DateTimePickerTest methodsFor!
 
 classToTest
@@ -21,6 +24,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view typeconverter isNullConverter.
 	self assertIsNil: view displayFormat! !
+
 !UI.Tests.DateTimePickerTest categoriesForMethods!
 classToTest!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -47,6 +51,7 @@ resource_Picker_view_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DateTimePicker) 34 16 nil nil 34 2 8 1140916235 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1904605520 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 738 251 51 416 690 #text: 34 1 8 '21:29:40' 416 690 #range: 34 1 8 #(nil nil) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 738 193 193 nil 27)! !
+
 !UI.Tests.DateTimePickerTest class categoriesForMethods!
 resource_Picker_view_D6!public!resources-views! !
 resource_Picker_view_D7!public!resources-views! !

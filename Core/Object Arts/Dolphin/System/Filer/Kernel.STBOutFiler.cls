@@ -7,7 +7,9 @@ Kernel.STxOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler guid: (Core.GUID fromString: '{87b4c6e8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STBOutFiler comment: '`STBOutFiler` is the basic binary filer for serializing a tree of `Object`s to a byte stream.
 
 `STBOutFiler` itself currently supports writing the STB 6 binary object serialization format. There are subclasses for writing each of the earlier versions from the original STB v0 up to previous version. The correct class of serializer can be specified using one of the instance creation methods that accepts a version number, or the relevant subclass can be instantiated directly.
@@ -17,7 +19,9 @@ Note that although the old formats can be written with complete fidelity, this d
 STB 6 differs from STB 5 in not requiring the use of proxies for most collections. SortedCollections are still be proxied, however.
 
 '!
+
 !Kernel.STBOutFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STBOutFiler methodsFor!
 
 inFilerClass
@@ -202,6 +206,7 @@ writeSignatureAndVersion
 		nextPutAll: STBInFiler.Signature;
 		nextPutAll: self version printString asByteArray;
 		nextPut: 16r20! !
+
 !Kernel.STBOutFiler categoriesForMethods!
 inFilerClass!constants!private! !
 saveArray:!operations!public! !
@@ -268,6 +273,7 @@ version
 
 versions
 	^Versions! !
+
 !Kernel.STBOutFiler class categoriesForMethods!
 initialize!class initialization!public! !
 newStream!helpers!private! !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ParseContext guid: (Core.GUID fromString: '{88b6a925-fc76-48fb-822c-c16b6cfd16f9}')!
+
 Tools.ParseContext isNonInstantiable: true!
+
 Tools.ParseContext comment: ''!
+
 !Tools.ParseContext methodsFor!
 
 environment
@@ -32,6 +36,7 @@ scope
 
 species
 	^ParseContext! !
+
 !Tools.ParseContext categoriesForMethods!
 environment!accessing!public! !
 methodClass!accessing!public! !
@@ -53,6 +58,7 @@ methodClass: aClass
 
 methodClass: aClass environment: aNamespace
 	^ClassParseContext new methodClass: aClass environment: aNamespace! !
+
 !Tools.ParseContext class categoriesForMethods!
 method:!instance creation!public! !
 methodClass:!instance creation!public! !

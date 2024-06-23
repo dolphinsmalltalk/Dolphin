@@ -15,8 +15,11 @@ Core.Object
 			'RelativePathPrefix' -> '_'.
 			'RelativePathStringPrefix' -> '_.'
 		}!
+
 Kernel.BindingReference guid: (Core.GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
+
 Kernel.BindingReference isNonInstantiable: true!
+
 Kernel.BindingReference comment: '`BindingReference` is the abstract superclass of binding reference objects.
 
 `BindingReference`s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular `VariableBinding`, with an optional context specifying the root namespace from which to start resolving the binding path.
@@ -37,7 +40,9 @@ Given the above you may be forgiven for thinking that relative binding reference
   `Generation`		`<integer>`. Latest valid generation. Incremented whenever a system change is made that could alter binding resolution, e.g. addition of a new class, invalidating any resolved references.
   `Undeclared`		`UndeclaredVariable` instance cached as the resolution for binding references that are not defined.
 '!
+
 !Kernel.BindingReference categoriesForClass!System-Namespaces! !
+
 !Kernel.BindingReference methodsFor!
 
 <= aBindingReference
@@ -372,6 +377,7 @@ valueOrNil
 	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
 
 	^self bindingOrNil ifNotNil: [:var | self valueOfBinding: var]! !
+
 !Kernel.BindingReference categoriesForMethods!
 <=!comparing!public! !
 <==>!comparing!public! !
@@ -674,6 +680,7 @@ stbConvertFromVersion1: anArray
 	newInstance := FullBindingReference basicNew.
 	1 to: anArray size do: [:i | newInstance instVarAt: i put: (anArray at: i)].
 	^newInstance! !
+
 !Kernel.BindingReference class categoriesForMethods!
 clearCachedBindings!operations!private! !
 flushBindings!operations!private! !

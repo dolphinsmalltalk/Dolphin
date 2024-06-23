@@ -7,9 +7,13 @@ Core.Set
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.IdentitySet guid: (Core.GUID fromString: '{87b4c527-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.IdentitySet comment: ''!
+
 !Core.IdentitySet categoriesForClass!Collections-Unordered! !
+
 !Core.IdentitySet methodsFor!
 
 findElementOrNil: anObject
@@ -38,6 +42,7 @@ identityIncludes: anObject
 	identical."
 
 	^(self basicAt: (self findElementOrNil: anObject)) notNil! !
+
 !Core.IdentitySet categoriesForMethods!
 findElementOrNil:!private!searching! !
 hash:max:!private!searching! !

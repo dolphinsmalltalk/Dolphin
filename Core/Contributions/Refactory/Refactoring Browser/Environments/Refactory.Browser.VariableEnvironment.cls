@@ -7,7 +7,9 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableEnvironment guid: (Core.GUID fromString: '{e9cada30-17fa-4434-96e9-1e962bb36333}')!
+
 Refactory.Browser.VariableEnvironment comment: 'VariableEnvironment defines a set of methods (and their classes) that read and/or write to any of a set of named instance and class variables. It is used to implement the browse variable references, readers & writers commands in the browsers.
 
 
@@ -22,7 +24,9 @@ Note that in Dolphin all <abstractDictionary>s are implemented as instances of <
 
 
 '!
+
 !Refactory.Browser.VariableEnvironment categoriesForClass!Refactory-Environments! !
+
 !Refactory.Browser.VariableEnvironment methodsFor!
 
 addClass: aClass classVariable: aString
@@ -324,6 +328,7 @@ storeOn: aStream
 		space.
 	classVariables storeOn: aStream.
 	aStream nextPutAll: '; yourself)'! !
+
 !Refactory.Browser.VariableEnvironment categoriesForMethods!
 addClass:classVariable:!accessing!public! !
 addClass:instanceVariable:!accessing!public! !
@@ -411,6 +416,7 @@ writersOfInstanceVariable: aString in: aClass
 		on: BrowserEnvironment new
 		writersOfInstanceVariable: aString
 		in: aClass! !
+
 !Refactory.Browser.VariableEnvironment class categoriesForMethods!
 on:readersOfInstanceVariable:in:!instance creation!public! !
 on:referencesToClassVariable:in:!instance creation!public! !

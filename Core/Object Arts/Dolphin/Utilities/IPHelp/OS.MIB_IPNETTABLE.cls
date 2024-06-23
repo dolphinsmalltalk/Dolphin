@@ -7,7 +7,9 @@ OS.IpHlpApiTableStruct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_MIB_IPNETTABLE_Size' -> 16r1C. '_OffsetOf_table' -> 16r4 }!
+
 OS.MIB_IPNETTABLE guid: (Core.GUID fromString: '{4ab2727d-d1c0-4aa5-a48d-3c805e4f41bb}')!
+
 OS.MIB_IPNETTABLE comment: '<MIB_IPNETTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagMIB_IPNETTABLE {
 	MIB_IPNETROW table[1];
 } MIB_IPNETTABLE;
 '!
+
 !OS.MIB_IPNETTABLE categoriesForClass!Win32-Structs! !
+
 !OS.MIB_IPNETTABLE methodsFor!
 
 table
@@ -32,6 +36,7 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_IPNETROW! !
+
 !OS.MIB_IPNETTABLE categoriesForMethods!
 table!**compiled accessors**!public! !
 !
@@ -63,6 +68,7 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
+
 !OS.MIB_IPNETTABLE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

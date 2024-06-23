@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AddInstanceVariableRefactoringTest guid: (Core.GUID fromString: '{95c6c15d-0113-4ae8-81d5-766bece4b2ac}')!
+
 Refactory.Browser.Tests.AddInstanceVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.AddInstanceVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.AddInstanceVariableRefactoringTest methodsFor!
 
 setUp
@@ -104,6 +108,7 @@ testNewHierarchyExistingName
 				class: (model classNamed: #BARFOO).
 	self shouldFail: refactoring
 		withMessage: 'BARFOO or one of its subclasses defines variable ''asdf'''! !
+
 !Refactory.Browser.Tests.AddInstanceVariableRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAddInstanceVariable!public!tests! !

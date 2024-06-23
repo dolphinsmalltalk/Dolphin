@@ -7,8 +7,11 @@ Graphics.Tests.ImageTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.MetafileTest guid: (Core.GUID fromString: '{698db9d3-9835-41ab-9c8f-11ed9e78700a}')!
+
 Graphics.Tests.MetafileTest comment: ''!
+
 !Graphics.Tests.MetafileTest methodsFor!
 
 canonicalInstance
@@ -22,6 +25,7 @@ imageFile
 
 subjectClass
 	^Metafile! !
+
 !Graphics.Tests.MetafileTest categoriesForMethods!
 canonicalInstance!constants!private! !
 expectedImageExtent!constants!private! !

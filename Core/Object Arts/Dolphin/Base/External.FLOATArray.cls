@@ -7,9 +7,13 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.FLOATArray guid: (Core.GUID fromString: '{87b4c5a3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.FLOATArray comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
+
 !External.FLOATArray categoriesForClass!External-Data-Structured! !
+
 !External.FLOATArray methodsFor!
 
 closeTo: aNumber
@@ -52,6 +56,7 @@ uncheckedAt: anInteger put: aFloat
 	with the Float argument."
 
 	^bytes floatAtOffset: (anInteger - 1) * VMConstants.FloatSize put: aFloat! !
+
 !External.FLOATArray categoriesForMethods!
 closeTo:!comparing!public! !
 closeTo:precision:!comparing!public! !
@@ -66,6 +71,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^FLOAT! !
+
 !External.FLOATArray class categoriesForMethods!
 elementClass!constants!public! !
 !

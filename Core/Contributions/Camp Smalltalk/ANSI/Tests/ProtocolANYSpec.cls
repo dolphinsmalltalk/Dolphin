@@ -5,9 +5,13 @@ Object subclass: #ProtocolANYSpec
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProtocolANYSpec guid: (GUID fromString: '{63019e4c-0fec-4287-8010-09f64c6c6b1b}')!
+
 ProtocolANYSpec comment: ''!
+
 !ProtocolANYSpec categoriesForClass!Unclassified! !
+
 !ProtocolANYSpec methodsFor!
 
 <= comperand
@@ -168,6 +172,7 @@ wrkAllConformsToMessageSelectorsTo: aDict visited: visitedProtocols
 				ifFalse: 
 					[(ProtocolSpec protocolNamed: aProtoName) wrkAllConformsToMessageSelectorsTo: aDict
 						visited: visitedProtocols]]! !
+
 !ProtocolANYSpec categoriesForMethods!
 <=!public! !
 =!public! !
@@ -207,6 +212,7 @@ privateNewProtocolANY
 	| newProtocol |
 	newProtocol := self basicNew.
 	^ newProtocol! !
+
 !ProtocolANYSpec class categoriesForMethods!
 new!public! !
 privateNewProtocolANY!public! !

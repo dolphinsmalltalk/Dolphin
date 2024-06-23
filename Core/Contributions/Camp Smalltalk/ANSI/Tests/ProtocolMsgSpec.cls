@@ -5,9 +5,13 @@ Object subclass: #ProtocolMsgSpec
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProtocolMsgSpec guid: (GUID fromString: '{49589213-e5b0-4d6a-91ae-67429ef89ee9}')!
+
 ProtocolMsgSpec comment: ''!
+
 !ProtocolMsgSpec categoriesForClass!Unclassified! !
+
 !ProtocolMsgSpec methodsFor!
 
 <= comperand
@@ -252,6 +256,7 @@ specSections
 
 	specSections isNil ifTrue: [^ProtocolSpec defaultSpecSectionsCollection].
 	^specSections! !
+
 !ProtocolMsgSpec categoriesForMethods!
 <=!public! !
 =!public! !
@@ -406,6 +411,7 @@ privateValidSpecSectionsOrNil: specSectionsIn ifError: errorBlock
 		ifFalse: [^ errorBlock value].
 	specSectionsIn isEmpty ifTrue: [^ nil].
 	^ specSectionsIn! !
+
 !ProtocolMsgSpec class categoriesForMethods!
 defaultParameterSpecificationCollection!public! !
 defaultReturnValueSpecificationCollection!public! !

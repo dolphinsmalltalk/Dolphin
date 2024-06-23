@@ -7,9 +7,13 @@ Core.Link
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.MoenLink guid: (Core.GUID fromString: '{68f4ac02-2f95-11d3-93ba-00a024ca708a}')!
+
 UI.MoenLink comment: 'MoenLink is a private helper class that is part of the implementation of the <MoenTreeView>'!
+
 !UI.MoenLink categoriesForClass!Collections-Support!MVP-Views-Support! !
+
 !UI.MoenLink methodsFor!
 
 printOn: aStream
@@ -38,6 +42,7 @@ y
 	"Private - Answer the y-coordinate."
 
 	^y! !
+
 !UI.MoenLink categoriesForMethods!
 printOn:!development!printing!public! !
 setX:y:!initializing!private! !
@@ -51,6 +56,7 @@ x: x y: y nextLink: aLink
 	"Answer a new, initialized, instance of the receiver."
 
 	^(self nextLink: aLink) setX: x y: y! !
+
 !UI.MoenLink class categoriesForMethods!
 x:y:nextLink:!instance creation!public! !
 !

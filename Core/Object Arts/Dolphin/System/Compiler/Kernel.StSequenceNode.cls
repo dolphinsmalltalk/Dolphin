@@ -7,7 +7,9 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSequenceNode guid: (Core.GUID fromString: '{73c3638c-06a8-4c0d-99ae-a572d08b5150}')!
+
 Kernel.StSequenceNode comment: 'StSequenceNode is a parse tree node that represents a sequence of statements. Both StBlockNodes and StMethodNodes contain these.
 
 Instance Variables:
@@ -18,7 +20,9 @@ Instance Variables:
 	temporaries	<SequenceableCollection> of <StVariableNode>	the temporaries defined
 
 '!
+
 !Kernel.StSequenceNode categoriesForClass!System-Compiler! !
+
 !Kernel.StSequenceNode methodsFor!
 
 = anObject
@@ -159,6 +163,7 @@ whichNodeIsContainedBy: anInterval
 			[(temporaries isEmpty and: [statements size == 1]) 
 				ifTrue: [^statements first]].
 	^node! !
+
 !Kernel.StSequenceNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -209,6 +214,7 @@ temporaries: variableNodes statements: statementNodes
 		temporaries: variableNodes;
 		statements: statementNodes;
 		yourself! !
+
 !Kernel.StSequenceNode class categoriesForMethods!
 leftBar:temporaries:rightBar:!instance creation!public! !
 statements:!instance creation!public! !

@@ -7,9 +7,13 @@ UI.Folder
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PackageFolder guid: (Core.GUID fromString: '{78425858-c3b5-4314-847a-772ff5268a84}')!
+
 Tools.PackageFolder comment: ''!
+
 !Tools.PackageFolder categoriesForClass!MVP-Models! !
+
 !Tools.PackageFolder methodsFor!
 
 icon
@@ -28,6 +32,7 @@ rootName
 	"Private - Answer the name to use for the folder at the root of the current image hierarchy"
 
 	^'$'! !
+
 !Tools.PackageFolder categoriesForMethods!
 icon!constants!public! !
 isDolphinFolder!private!testing! !
@@ -48,6 +53,7 @@ forPackage: aPackage
 	"Answer an instance of the receiver for the folder of aPackage"
 
 	^self pathname: aPackage packageFolder! !
+
 !Tools.PackageFolder class categoriesForMethods!
 dolphinRoot!instance creation!public! !
 dolphinRootPathname!constants!instance creation!public! !

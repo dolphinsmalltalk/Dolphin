@@ -902,10 +902,15 @@ Graphics
 			'WrapModeTileFlipY' -> 16r2.
 			'WrongState' -> 16r8
 		}!
+
 Graphics.Gdiplus guid: (Core.GUID fromString: '{4d5dfe22-b977-4eea-8fe7-379b8f43ebe8}')!
+
 Graphics.Gdiplus isNonInstantiable: true!
+
 Graphics.Gdiplus comment: ''!
+
 !Graphics.Gdiplus categoriesForClass!Kernel-Objects! !
+
 !Graphics.Gdiplus class methodsFor!
 
 nameOfLineCap: aLineCapConstant
@@ -915,6 +920,7 @@ nameOfLineCap: aLineCapConstant
 				ifTrue: ['LineCapCustom']
 				ifFalse: [AnchorCapNames at: (aLineCapConstant bitAnd: 16rF) + 1]]
 		ifFalse: [LineCapNames at: aLineCapConstant + 1]! !
+
 !Graphics.Gdiplus class categoriesForMethods!
 nameOfLineCap:!printing!public! !
 !

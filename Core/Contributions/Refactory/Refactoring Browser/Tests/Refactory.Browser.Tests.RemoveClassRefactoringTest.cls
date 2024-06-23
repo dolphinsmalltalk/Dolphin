@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RemoveClassRefactoringTest guid: (Core.GUID fromString: '{32d88853-b152-4b03-9590-22d6b1be0d4d}')!
+
 Refactory.Browser.Tests.RemoveClassRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RemoveClassRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RemoveClassRefactoringTest methodsFor!
 
 removableClassWithSubclasses
@@ -106,6 +110,7 @@ testRemoveSelfReferenced
 	self executeRefactoring: refactoring.
 	"Classes were unreferenced outside those being removed (within the scope) so should be gone"
 	classNames do: [:each | self assertIsNil: (model classNamed: each)]! !
+
 !Refactory.Browser.Tests.RemoveClassRefactoringTest categoriesForMethods!
 removableClassWithSubclasses!constants!private! !
 setRemoveReferencedClassOption:toAnswer:!helpers!private! !

@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ViewTest guid: (Core.GUID fromString: '{cf223394-a19e-45f9-a270-551c288901ef}')!
+
 UI.Tests.ViewTest comment: ''!
+
 !UI.Tests.ViewTest methodsFor!
 
 classToTest
@@ -79,6 +82,7 @@ testRecreateMaintainsModelConnection
 	presenter model value: 'bbb'.
 	"If this fails, then the view did not receive a #valueChanged event from the model"
 	self assert: presenter view value equals: 'bbb'! !
+
 !UI.Tests.ViewTest categoriesForMethods!
 classToTest!helpers!private! !
 testFontChangePropagationFromDesktop!public!unit tests! !

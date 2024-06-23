@@ -7,11 +7,15 @@ External.INTEGER
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_highPart' -> 16r4. '_OffsetOf_lowPart' -> 16r0. '_UInt64_Size' -> 16r8 }!
+
 External.UInt64 guid: (Core.GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.UInt64 comment: '`UInt64` is an `External.Structure` class to represent unsigned 64-bit integers. 
 
 This class of structures is useful for communication with Win32 services that require 64-bit integer parameters. They also provide for easy access to the high and low 32-bit constituents of the integer''s native representation (Intel format, i.e. little-endian).'!
+
 !External.UInt64 categoriesForClass!External-Data-Unstructured! !
+
 !External.UInt64 methodsFor!
 
 asSignedInteger
@@ -59,6 +63,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes uint64AtOffset: _OffsetOf_value put: anInteger! !
+
 !External.UInt64 categoriesForMethods!
 asSignedInteger!converting!public! !
 asUnsignedInteger!converting!public! !
@@ -97,6 +102,7 @@ defineFields
 		defineField: #highPart
 			type: UInt32Field new
 			offset: 4! !
+
 !External.UInt64 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -5,13 +5,17 @@ Object subclass: #ProfilerSampleSetManager
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerSampleSetManager guid: (GUID fromString: '{425d0eb2-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerSampleSetManager comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerSampleSetManager categoriesForClass!IDB Goodies! !
+
 !ProfilerSampleSetManager methodsFor!
 
 addSampleSetNamed: aString 
@@ -67,6 +71,7 @@ sampleSets
 	This method was automatically generated, but may be modified."
 
 	^sampleSets! !
+
 !ProfilerSampleSetManager categoriesForMethods!
 addSampleSetNamed:!operations!public! !
 initialize!initializing!public! !
@@ -105,6 +110,7 @@ reset
 	"Clear the singleton instance of this class"
 
 	Default := nil! !
+
 !ProfilerSampleSetManager class categoriesForMethods!
 default!instance creation!public! !
 defaultSetName!constants!public! !

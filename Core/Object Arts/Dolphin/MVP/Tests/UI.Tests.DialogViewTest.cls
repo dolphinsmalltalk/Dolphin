@@ -7,8 +7,11 @@ UI.Tests.AbstractShellViewTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.DialogViewTest guid: (Core.GUID fromString: '{a8b91e26-354f-4420-9358-156da6d19c83}')!
+
 UI.Tests.DialogViewTest comment: ''!
+
 !UI.Tests.DialogViewTest methodsFor!
 
 classToTest
@@ -209,6 +212,7 @@ testRemainsOnScreen
 		centered: true.
 	self assert: rect origin
 		equals: (self workAreaNearest: workArea topRight) topRight - (self dialogExtent x @ 0)! !
+
 !UI.Tests.DialogViewTest categoriesForMethods!
 classToTest!helpers!private! !
 createShell:text:!helpers!private! !
@@ -245,6 +249,7 @@ resource_Default_view_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 423 738 449 71 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 211 0 0 0 234 0 0 0 246 0 0 0] 8 #() 738 193 193 nil 27 nil nil nil 170 192 832 590342 ##(Smalltalk.Rectangle) 738 21 21 738 21 21 nil nil nil nil 9977 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2007860128 626 138 144 34 1 690 #createAt:extent: 34 2 738 7039 21 738 521 591 416 786 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 195 14 0 0 49 1 0 0] 34 1 528 848 nil 27)! !
+
 !UI.Tests.DialogViewTest class categoriesForMethods!
 resource_Default_view_D6!public!resources-views! !
 resource_Default_view_D7!public!resources-views! !

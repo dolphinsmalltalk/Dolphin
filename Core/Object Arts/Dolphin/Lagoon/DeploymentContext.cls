@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 DeploymentContext guid: (Core.GUID fromString: '{7703d82d-a2ec-402f-ad0b-3640cd30da56}')!
+
 DeploymentContext comment: ''!
+
 !DeploymentContext categoriesForClass!Kernel-Objects! !
+
 !DeploymentContext methodsFor!
 
 _aspectGetters
@@ -242,6 +246,7 @@ initialize
 	logStream := notifier := DeafObject current.
 	comInterfaceSelectors := IdentityDictionary new.
 	runFlags := 0! !
+
 !DeploymentContext categoriesForMethods!
 _aspectGetters!accessing!private! !
 _aspectGetters:!accessing!private! !

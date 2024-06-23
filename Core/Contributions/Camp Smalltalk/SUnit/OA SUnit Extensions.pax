@@ -67,6 +67,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'XProgramming.SUnit.TestRunLogger'
 	instanceVariableNames: ''
@@ -74,6 +75,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestRunLogger
 	subclass: #'XProgramming.SUnit.TestRunConsoleLogger'
 	instanceVariableNames: 'stream timings notifications'
@@ -317,6 +319,7 @@ skipUnless: aNiladicValuable
 
 thisTestMethod
 	^self class lookupMethod: self selector! !
+
 !XProgramming.SUnit.TestCase categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -367,6 +370,7 @@ buildSuiteFromConcreteMethods: testMethodSelectors
 
 debugWithResult: aSymbol
 	^(self selector: aSymbol) debugWithResult! !
+
 !XProgramming.SUnit.TestCase class categoriesForMethods!
 buildSuiteFromConcreteMethods:!Instance Creation!public! !
 debugWithResult:!Instance Creation!public! !
@@ -376,6 +380,7 @@ debugWithResult:!Instance Creation!public! !
 
 isKnownSlowTest
 	^case isKnownSlowTest! !
+
 !XProgramming.SUnit.TestCaseResult categoriesForMethods!
 isKnownSlowTest!accessing!public! !
 !
@@ -412,6 +417,7 @@ debugCase: aTestCase
 				[:signal |
 				self addSkip: aTestCase signal: signal.
 				signal return]! !
+
 !XProgramming.SUnit.TestResult categoriesForMethods!
 debugCase:!public!running! !
 !
@@ -420,6 +426,7 @@ debugCase:!public!running! !
 
 displayOn: aPuttableStream
 	aPuttableStream nextPutAll: self name! !
+
 !XProgramming.SUnit.TestSuite categoriesForMethods!
 displayOn:!displaying!public! !
 !

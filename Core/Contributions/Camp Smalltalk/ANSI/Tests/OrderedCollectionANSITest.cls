@@ -5,9 +5,13 @@ SequencedReadableCollectionTest subclass: #OrderedCollectionANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OrderedCollectionANSITest guid: (GUID fromString: '{6c9b7f37-1d66-46d9-89d1-5422c0657a28}')!
+
 OrderedCollectionANSITest comment: ''!
+
 !OrderedCollectionANSITest categoriesForClass!Unclassified! !
+
 !OrderedCollectionANSITest methodsFor!
 
 canonicalElement
@@ -283,6 +287,7 @@ testXaddXbeforeX
 		should: [:result | (result = 999) and: [(orderedCollection at: 5) = 999]]
 		conformTo: #OrderedCollection
 		selector: #add:before:! !
+
 !OrderedCollectionANSITest categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -311,6 +316,7 @@ helperClassesDo: aBlock
 	aBlock value: SequencedContractibleCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper.
 	aBlock value: SequencedCollectionHelper.! !
+
 !OrderedCollectionANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

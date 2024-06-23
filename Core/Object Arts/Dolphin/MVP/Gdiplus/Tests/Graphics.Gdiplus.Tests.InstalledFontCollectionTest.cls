@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.FontCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.InstalledFontCollectionTest guid: (Core.GUID fromString: '{154f4bf0-a043-403f-91b5-e1e132279d81}')!
+
 Graphics.Gdiplus.Tests.InstalledFontCollectionTest comment: ''!
+
 !Graphics.Gdiplus.Tests.InstalledFontCollectionTest methodsFor!
 
 assertClonedValid
@@ -32,6 +35,7 @@ verifyEqualToModel: anInstalledFontCollection
 	self assert: anInstalledFontCollection hash equals: model hash.
 	self assert: model equals: anInstalledFontCollection.
 	self assert: anInstalledFontCollection handle equals: model handle! !
+
 !Graphics.Gdiplus.Tests.InstalledFontCollectionTest categoriesForMethods!
 assertClonedValid!public! !
 subjectClass!constants!private! !

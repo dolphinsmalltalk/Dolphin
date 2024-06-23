@@ -7,8 +7,11 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXTLRuntime guid: (OS.COM.IID fromString: '{3efaa425-272f-11d2-836f-0000f87a7782}')!
+
 MSXML.IXTLRuntime isEgressOnly: true!
+
 MSXML.IXTLRuntime comment: '`IXTLRuntime` is a wrapper class for the COM interface ''MSXML2.IXTLRuntime'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -73,7 +76,9 @@ interface IXTLRuntime : IXMLDOMNode
 };
 ```
 '!
+
 !MSXML.IXTLRuntime categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXTLRuntime methodsFor!
 
 absoluteChildNumber: pNode
@@ -279,6 +284,7 @@ UniqueID: pNode pID: pID
 
 	<virtual stdcall: hresult 44 IXMLDOMNode* int32*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IXTLRuntime categoriesForMethods!
 absoluteChildNumber:!**auto generated**!methods!public! !
 AbsoluteChildNumber:pNumber:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
@@ -328,6 +334,7 @@ defineFunctions
 		defineFunction: #FormatTime:bstrFormat:varDestLocale:pbstrFormattedString:
 			argumentTypes: 'variant bstr variant bstr*'
 ! !
+
 !MSXML.IXTLRuntime class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

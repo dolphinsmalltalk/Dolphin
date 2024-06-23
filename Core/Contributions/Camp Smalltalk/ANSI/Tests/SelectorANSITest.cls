@@ -5,9 +5,13 @@ MainTestCase subclass: #SelectorANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectorANSITest guid: (GUID fromString: '{d5ea3520-ffb7-47ed-8536-450548213149}')!
+
 SelectorANSITest comment: ''!
+
 !SelectorANSITest categoriesForClass!Unclassified! !
+
 !SelectorANSITest methodsFor!
 
 canonicalObject
@@ -15,6 +19,7 @@ canonicalObject
 
 protocol
 	^#'selector'! !
+
 !SelectorANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

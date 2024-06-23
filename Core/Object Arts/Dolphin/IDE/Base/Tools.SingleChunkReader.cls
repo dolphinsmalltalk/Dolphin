@@ -7,9 +7,13 @@ Kernel.ChunkReader
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SingleChunkReader guid: (Core.GUID fromString: '{daff2a96-8e7c-400e-9fb0-df8d523f7136}')!
+
 Tools.SingleChunkReader comment: ''!
+
 !Tools.SingleChunkReader categoriesForClass!Kernel-Support! !
+
 !Tools.SingleChunkReader methodsFor!
 
 fileInFrom: aSourceFiler
@@ -20,6 +24,7 @@ fileInFrom: aSourceFiler
 	(aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]) 
 		ifFalse: [chunkBlock cull: chunk cull: aSourceFiler].
 	^endAction value! !
+
 !Tools.SingleChunkReader categoriesForMethods!
 fileInFrom:!private!source filing! !
 !

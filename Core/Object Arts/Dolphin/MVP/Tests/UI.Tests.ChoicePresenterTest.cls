@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ChoicePresenterTest guid: (Core.GUID fromString: '{f39cda5e-17b7-48ee-ae77-57c882174716}')!
+
 UI.Tests.ChoicePresenterTest comment: ''!
+
 !UI.Tests.ChoicePresenterTest methodsFor!
 
 classToTest
@@ -94,6 +97,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 
 viewClass
 	^ListBox! !
+
 !UI.Tests.ChoicePresenterTest categoriesForMethods!
 classToTest!helpers!private! !
 testChangeChoices!public!unit tests! !

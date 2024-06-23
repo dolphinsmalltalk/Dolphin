@@ -5,13 +5,17 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassProtocolChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserClassProtocolChunk guid: (GUID fromString: '{c8986897-7417-46b9-a404-28a5ab21ea14}')!
+
 ChunkBrowserClassProtocolChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserClassProtocolChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserClassProtocolChunk methodsFor!
 
 initialize: aString tokens: anArray
@@ -56,6 +60,7 @@ isMatch
 
 methodProtocol
 	^(MethodProtocol exists: identity2) ifTrue: [MethodProtocol name: identity2]! !
+
 !ChunkBrowserClassProtocolChunk categoriesForMethods!
 initialize:tokens:!initializing!private! !
 isMatch!public!testing! !
@@ -99,6 +104,7 @@ isChunkClassFor: aString tokens: anArrayOfStToken
 	token isSpecial: $)]
 			whileFalse: [token isLiteralSymbolToken ifFalse: [^false]].
 	^tokens atEnd! !
+
 !ChunkBrowserClassProtocolChunk class categoriesForMethods!
 chunkType!constants!public! !
 isChunkClassFor:tokens:!public!testing! !

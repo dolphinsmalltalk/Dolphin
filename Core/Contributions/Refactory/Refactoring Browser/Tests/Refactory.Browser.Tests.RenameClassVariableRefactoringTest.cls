@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RenameClassVariableRefactoringTest guid: (Core.GUID fromString: '{5d45357d-1056-4b27-b1a1-1df41ee18851}')!
+
 Refactory.Browser.Tests.RenameClassVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RenameClassVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RenameClassVariableRefactoringTest methodsFor!
 
 testAlreadyExistingName
@@ -120,6 +124,7 @@ testRenameClassVarWithExternalReferences
 		verifyMethod: #refersToClassVariablePartiallyQualifiedBinding
 		of: externalClass
 		equals: 'refersToClassVariablePartiallyQualifiedBinding ^#{_.Tests.ClassToRename.CV1} binding'! !
+
 !Refactory.Browser.Tests.RenameClassVariableRefactoringTest categoriesForMethods!
 testAlreadyExistingName!failure tests!public! !
 testMetaClassFailure!failure tests!public! !

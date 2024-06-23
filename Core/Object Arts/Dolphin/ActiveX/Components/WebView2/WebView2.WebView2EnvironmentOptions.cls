@@ -12,9 +12,13 @@ OS.COM.InterfaceImplementation
 			'CustomCrashReportingMask' -> 16r4.
 			'ExclusiveUserDataFolderAccessMask' -> 16r2
 		}!
+
 WebView2.WebView2EnvironmentOptions guid: (Core.GUID fromString: '{a29cb496-0b83-42f6-b6b1-2670cb4d42fb}')!
+
 WebView2.WebView2EnvironmentOptions comment: ''!
+
 !WebView2.WebView2EnvironmentOptions categoriesForClass!COM-Implementations! !
+
 !WebView2.WebView2EnvironmentOptions methodsFor!
 
 additionalBrowserArguments
@@ -268,6 +272,7 @@ trackingPreventionLevel: value
 								}
 					with: 'value'].
 	trackingPreventionLevel := value! !
+
 !WebView2.WebView2EnvironmentOptions categoriesForMethods!
 additionalBrowserArguments!accessing!public! !
 additionalBrowserArguments:!accessing!public! !
@@ -318,6 +323,7 @@ WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOpt
 
 icon
 	^ICoreWebView2 icon! !
+
 !WebView2.WebView2EnvironmentOptions class categoriesForMethods!
 icon!constants!development!public! !
 !

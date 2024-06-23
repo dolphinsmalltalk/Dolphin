@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ClassBuilderTest guid: (Core.GUID fromString: '{889ced5d-011b-4995-82ec-dcc53ee38da2}')!
+
 Kernel.Tests.ClassBuilderTest comment: ''!
+
 !Kernel.Tests.ClassBuilderTest categoriesForClass!Tests-Kernel-Classes! !
+
 !Kernel.Tests.ClassBuilderTest methodsFor!
 
 classBuilderTestClass
@@ -481,6 +485,7 @@ testValidateImports
 	"The final import is unbindable, and left unchanged. If imported privately and non-privately, the private import should be dropped."
 	self assert: subject imports
 		equals: #(#{Core.Tests.DolphinTest} #{XProgramming.SUnit.TestCase private} #{SUnit.TestCase private})! !
+
 !Kernel.Tests.ClassBuilderTest categoriesForMethods!
 classBuilderTestClass!public!unit tests! !
 classBuilderTestSubclass1!public!unit tests! !
@@ -514,6 +519,7 @@ testValidateImports!public!unit tests! !
 
 resources
 	^{ClassBuilderTestClasses}! !
+
 !Kernel.Tests.ClassBuilderTest class categoriesForMethods!
 resources!Accessing!public! !
 !

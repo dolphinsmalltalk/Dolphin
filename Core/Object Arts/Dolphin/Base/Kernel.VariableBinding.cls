@@ -7,7 +7,9 @@ Core.Association
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'ClassMask' -> 16r2. 'DeprecatedMask' -> 16r100. 'PrivateMask' -> 16r1 }!
+
 Kernel.VariableBinding guid: (Core.GUID fromString: '{1e72742f-5466-4331-bb39-2ff12ac9743f}')!
+
 Kernel.VariableBinding comment: '`VariableBinding` is the special class of `Assocation`s representing the static variables of classes and namespaces. Static variables include both class and namespace (formerly global) variables. The can be referred to in code directly by name using either a fully-qualified name, or, visibility depending, a partially-qualified or unqualified name.
 
 `VariableBinding`s are aware of their ''environment'', which is the `Class` in which they reside. They can be considered as owned by that environment, in which case they are referred to as ''class variables''. They can also be independently owned by a package, rather than the class in which they reside, in which case they are referred to as ''namespace variables''. The terminology ''shared variables'' is also used for namespace variables, but this may be confusing since class variables are also shareable (i.e. externally referenceable using a qualified name) if they are not marked as ''private''. As `Namespace`s in Dolphin 8 are actually classes, namespace variables are held as bindings in the same class pool as the class'' own variables. Any class is fundamentally a namespace, so any class may hold namespace variables. Conversely `Namespace`s (as classes) can have class variables and constants that they own as part of their definition.
@@ -29,7 +31,9 @@ The variable bindings for classes are somewhat special. These are constants, and
 Smalltalk bindings select: [:each | each isClassBinding]
 ```
 '!
+
 !Kernel.VariableBinding categoriesForClass!Kernel-Support! !
+
 !Kernel.VariableBinding methodsFor!
 
 = anObject
@@ -160,6 +164,7 @@ targetVariable
 
 unqualifiedName
 	^key! !
+
 !Kernel.VariableBinding categoriesForMethods!
 =!comparing!public! !
 absoluteName!accessing!public! !
@@ -200,6 +205,7 @@ key: aString value: anObject environment: aNamespace flags: anInteger
 		value: anObject
 		environment: aNamespace
 		flags: anInteger! !
+
 !Kernel.VariableBinding class categoriesForMethods!
 key:value:environment:flags:!instance creation!private! !
 !

@@ -10,10 +10,13 @@ Graphics.Gdiplus.GdiplusBase
 			'UnitNames'
 				-> #('UnitWorld' 'UnitDisplay' 'UnitPixel' 'UnitPoint' 'UnitInch' 'UnitDocument' 'UnitMillimeter')
 		}!
+
 Graphics.Gdiplus.GdiplusGraphics guid: (Core.GUID fromString: '{76d4e292-3cd0-44ac-af53-a4209708faa5}')!
+
 Graphics.Gdiplus.GdiplusGraphics comment: 'GdiplusGraphics class provides methods for drawing lines, curves, figures, images, and text. An instance stores attributes of the display device and attributes of the items to be drawn.
 
 '!
+
 !Graphics.Gdiplus.GdiplusGraphics methodsFor!
 
 beginContainer
@@ -860,6 +863,7 @@ translateTransform: aPoint
 translateTransform: aPoint order: aMatrixOrderConstant
 	#deprecated.
 	self translate: aPoint order: aMatrixOrderConstant! !
+
 !Graphics.Gdiplus.GdiplusGraphics categoriesForMethods!
 beginContainer!operations!public! !
 clear!operations!public! !
@@ -975,6 +979,7 @@ fromImage: aGdiplusImage
 
 fromView: aView
 	^self fromInitializer: (GraphicsFromHWNDInitializer on: aView)! !
+
 !Graphics.Gdiplus.GdiplusGraphics class categoriesForMethods!
 desktop!instance creation!public! !
 fromCanvas:!instance creation!public! !

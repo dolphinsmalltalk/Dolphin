@@ -13,7 +13,9 @@ OS.SOCKADDR
 			'_OffsetOf_ss_family' -> 16r0.
 			'_SOCKADDR_STORAGE_Size' -> 16r80
 		}!
+
 OS.SOCKADDR_STORAGE guid: (Core.GUID fromString: '{ff1980c9-d114-4e61-8569-e2ed5321209b}')!
+
 OS.SOCKADDR_STORAGE comment: '<SOCKADDR_STORAGE> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_STORAGE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +33,9 @@ struct tagSOCKADDR_STORAGE {
 	[hidden] BYTE __ss_pad2[112];
 } SOCKADDR_STORAGE;
 '!
+
 !OS.SOCKADDR_STORAGE categoriesForClass!Win32-Structs! !
+
 !OS.SOCKADDR_STORAGE class methodsFor!
 
 byteSize
@@ -60,6 +64,7 @@ defineFields
 
 getFieldNames
 	^#()! !
+
 !OS.SOCKADDR_STORAGE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

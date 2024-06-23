@@ -7,10 +7,14 @@ Refactory.Browser.RBSourceFormatter
 	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBFormatter guid: (Core.GUID fromString: '{75e99f13-8ba7-47c0-87c4-8987b5a20900}')!
+
 Refactory.Browser.RBFormatter comment: 'RBFormatter is an <StParseNodeVisitor> for pretty printing Smalltalk methods.
 '!
+
 !Refactory.Browser.RBFormatter categoriesForClass!System-Compiler-Formatters! !
+
 !Refactory.Browser.RBFormatter methodsFor!
 
 acceptBlockNode: aBlockNode startBlockString: startBlockString
@@ -360,6 +364,7 @@ visitSequenceNode: aSequenceNode
 	self formatTemporariesFor: aSequenceNode.
 	self formatMethodCommentFor: aSequenceNode indentBefore: false.
 	self formatStatementsFor: aSequenceNode! !
+
 !Refactory.Browser.RBFormatter categoriesForMethods!
 acceptBlockNode:startBlockString:!private!visitor/double dispatching! !
 firstLineLength!accessing!public! !
@@ -427,6 +432,7 @@ selectorsToStartOnNewLine
 
 selectorsToStartOnNewLine: anArrayOfSymbols
 	SelectorsToStartOnNewLine := anArrayOfSymbols! !
+
 !Refactory.Browser.RBFormatter class categoriesForMethods!
 initialize!initializing!public! !
 maximumArgumentsPerLine!options!public! !

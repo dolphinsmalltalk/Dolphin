@@ -96,6 +96,7 @@ setDeviceIndependentBitmap: aDeviceIndependentBitmap formatId: formatId
 	#idbAdded.	"Or was, this is present for backwards compatibility for any uses of this old package"
 	self setDeviceIndependentBitmap: aDeviceIndependentBitmap
 ! !
+
 !Clipboard categoriesForMethods!
 getDeviceIndependentBitmap!public! !
 getDeviceIndependentBitmapIfNone:!public! !
@@ -116,6 +117,7 @@ bitmapInfoStruct
 	bitmapInfoHeaderStruct biBitCount <= 8
 		ifTrue: [bitmapInfoStruct bmiColors: self getColorTable bytes].
 	^bitmapInfoStruct! !
+
 !DIBSection categoriesForMethods!
 bitmapInfoStruct!accessing!public! !
 !
@@ -345,6 +347,7 @@ colorTableForDepth: anInteger
 	DeviceIndependentBitmaps with anInteger color depth"
 
 	^self perform: ('colorTableDepth' , anInteger printString) asSymbol! !
+
 !DIBSection class categoriesForMethods!
 colorTableDepth1!constants!public! !
 colorTableDepth4!constants!public! !

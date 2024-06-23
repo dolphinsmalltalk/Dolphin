@@ -7,9 +7,13 @@ Tools.Scintilla.TypeReference
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.PointerTypeReference guid: (Core.GUID fromString: '{e266c63f-6fe4-4cc8-a4ff-18d6f3c3fafe}')!
+
 Tools.Scintilla.PointerTypeReference comment: ''!
+
 !Tools.Scintilla.PointerTypeReference categoriesForClass!Development! !
+
 !Tools.Scintilla.PointerTypeReference methodsFor!
 
 byRef
@@ -39,6 +43,7 @@ name: aString objectClass: aClass
 
 objectClass
 	^objectClass! !
+
 !Tools.Scintilla.PointerTypeReference categoriesForMethods!
 byRef!accessing!public! !
 defaultValue!constants!public! !
@@ -53,6 +58,7 @@ objectClass!accessing!public! !
 
 name: aString objectClass: aClass
 	^self new name: aString objectClass: aClass! !
+
 !Tools.Scintilla.PointerTypeReference class categoriesForMethods!
 name:objectClass:!instance creation!private! !
 !

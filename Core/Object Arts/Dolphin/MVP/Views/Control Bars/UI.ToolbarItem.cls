@@ -7,15 +7,20 @@ Core.Object
 	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ToolbarItem guid: (Core.GUID fromString: '{87b4c4c6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ToolbarItem isNonInstantiable: true!
+
 UI.ToolbarItem comment: '`ToolbarItem` is an abstract class whose subclasses represent the items held by a `Toolbar`.
 
 ## Instance Variables:
   `toolbar`		`Toolbar`
 
 '!
+
 !UI.ToolbarItem categoriesForClass!MVP-Views-Support! !
+
 !UI.ToolbarItem methodsFor!
 
 commandId
@@ -95,6 +100,7 @@ update
 
 validateUserInterface: route
 	"Set the UI state of the receiver. Overridden in subclasses"! !
+
 !UI.ToolbarItem categoriesForMethods!
 commandId!commands!private! !
 getCommandId!commands!private! !
@@ -145,6 +151,7 @@ findTools
 
 stbVersion
 	^1! !
+
 !UI.ToolbarItem class categoriesForMethods!
 buttonClass!constants!public! !
 editTools!instance creation!public! !

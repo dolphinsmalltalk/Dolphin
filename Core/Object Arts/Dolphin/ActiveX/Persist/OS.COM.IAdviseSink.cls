@@ -7,13 +7,17 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IAdviseSink guid: (OS.COM.IID fromString: '{0000010f-0000-0000-c000-000000000046}')!
+
 OS.COM.IAdviseSink comment: '<IAdviseSink> is a wrapper class for the COM interface ''OCIDL.IAdviseSink'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.IAdviseSink categoriesForClass!OBJIDL-Interfaces! !
+
 !OS.COM.IAdviseSink methodsFor!
 
 OnClose
@@ -60,6 +64,7 @@ OnViewChange: dwAspect lindex: lindex
 
 	<virtual stdcall: hresult 5 uint32 int32>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IAdviseSink categoriesForMethods!
 OnClose!**auto generated**!COM Interfaces-IAdviseSink!public! !
 OnDataChange:pStgmed:!**auto generated**!COM Interfaces-IAdviseSink!public! !
@@ -94,6 +99,7 @@ defineFunctions
 		defineFunction: #OnClose
 			returnType: 'void'
 ! !
+
 !OS.COM.IAdviseSink class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

@@ -7,9 +7,13 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.AbstractCustomLineCap guid: (Core.GUID fromString: '{024a0681-d554-4d57-a149-592647711f27}')!
+
 Graphics.Gdiplus.AbstractCustomLineCap isNonInstantiable: true!
+
 Graphics.Gdiplus.AbstractCustomLineCap comment: ''!
+
 !Graphics.Gdiplus.AbstractCustomLineCap methodsFor!
 
 strokeJoin
@@ -34,6 +38,7 @@ widthScale: aNumber
 	draw lines. The default value of 1.0 does not scale the line cap."
 
 	initializer widthScaleOf: self set: aNumber! !
+
 !Graphics.Gdiplus.AbstractCustomLineCap categoriesForMethods!
 strokeJoin!accessing!public! !
 strokeJoin:!accessing!public! !

@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GradientBrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.LinearGradientBrushTest guid: (Core.GUID fromString: '{da79074f-df9f-4e17-85cb-3cbe8999807f}')!
+
 Graphics.Gdiplus.Tests.LinearGradientBrushTest comment: ''!
+
 !Graphics.Gdiplus.Tests.LinearGradientBrushTest methodsFor!
 
 brushType
@@ -171,6 +174,7 @@ verifyEqualToModel: aGdiplusObject
 	self assert: aGdiplusObject startingColor equals: model startingColor.
 	self assert: aGdiplusObject endingColor equals: model endingColor.
 	self assert: aGdiplusObject mode equals: model mode! !
+
 !Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesForMethods!
 brushType!constants!private! !
 createCanonicalSubject!initializing!private! !

@@ -7,8 +7,11 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.QualifyStaticVariablesRefactoringTest guid: (Core.GUID fromString: '{68a6ac55-73c9-4f71-97b2-d5a2a093d2e7}')!
+
 Refactory.Browser.Tests.QualifyStaticVariablesRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.QualifyStaticVariablesRefactoringTest methodsFor!
 
 testRefersToClassBindingNotFound
@@ -156,6 +159,7 @@ testRefersToOwnClassVariable
 	self executeRefactoring: refactoring.
 	self assert: (refDataApp parseTreeFor: #refersToOwnClassVariable)
 		equals: (self parseMethod: 'refersToOwnClassVariable ^Refactory.Browser.TestData.RefactoryTestDataApp.ClassVar1')! !
+
 !Refactory.Browser.Tests.QualifyStaticVariablesRefactoringTest categoriesForMethods!
 testRefersToClassBindingNotFound!public! !
 testRefersToClassConstantPartiallyQualified!public! !

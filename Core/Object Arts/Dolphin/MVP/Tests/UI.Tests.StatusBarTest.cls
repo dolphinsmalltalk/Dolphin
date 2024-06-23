@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.StatusBarTest guid: (Core.GUID fromString: '{beb204cd-8c17-44a4-8305-c23345382e1e}')!
+
 UI.Tests.StatusBarTest comment: ''!
+
 !UI.Tests.StatusBarTest methodsFor!
 
 classToTest
@@ -190,6 +193,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: (view contents
 				allSatisfy: [:each | (each isKindOf: StatusBarItemAbstract) and: [each isOwnerDrawn]]).
 	self assert: (view baseStyleAllMask: OS.CommCtrlConstants.CCS_NOPARENTALIGN)! !
+
 !UI.Tests.StatusBarTest categoriesForMethods!
 classToTest!helpers!private! !
 testAddAndRemoveItems!public!unit tests! !
@@ -220,6 +224,7 @@ resource_Status_bar_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StatusBar) 34 18 nil nil 34 2 8 1409288460 1 416 nil 327686 ##(Smalltalk.Color) #default nil 5 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 159 4 0 134 63 1 0 0 204 53 63 1 2 0 20 59 0 0 0 0 247 0 5 86 111 1] 328198 ##(Smalltalk.Point) 193 193 nil 416 nil 8 1903688272 170 192 8 #() 34 1 853766 ##(Smalltalk.StatusBarItem) 1 -1 416 nil 459270 ##(Smalltalk.Message) #displayString 8 #() 722 #iconImageIndex 8 #() nil 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 416 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 594 3839 21 594 701 45 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 32 0 0 0] 8 #() 594 193 193 nil 27)! !
+
 !UI.Tests.StatusBarTest class categoriesForMethods!
 resource_Status_bar_D6!public!resources-views! !
 resource_Status_bar_D7!public!resources-views! !

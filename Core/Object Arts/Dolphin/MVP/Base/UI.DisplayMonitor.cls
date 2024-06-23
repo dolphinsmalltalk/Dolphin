@@ -11,7 +11,9 @@ Core.Object
 			'MONITOR_DEFAULTTONULL' -> 16r0.
 			'MONITOR_DEFAULTTOPRIMARY' -> 16r1
 		}!
+
 UI.DisplayMonitor guid: (Core.GUID fromString: '{2ab65289-2a77-4c76-9ab2-82178699a48c}')!
+
 UI.DisplayMonitor comment: '`UI.DisplayMonitor` is a simple abstraction over the Windows Multiple Display Monitors API. It allows one to enumerate the attached monitors, and to identify:
   - the primary monitor;
   - the monitor on which a point in desktop co-ordinates is displayed; 
@@ -24,7 +26,9 @@ Having identified a `DisplayMonitor`, one can then query the desktop co-ordinate
   `info`		`OS.MONITORINFO`
 
 '!
+
 !UI.DisplayMonitor categoriesForClass!Kernel-Objects! !
+
 !UI.DisplayMonitor methodsFor!
 
 = anObject
@@ -115,6 +119,7 @@ workArea
 	"Answer a `Rectangle` which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
 
 	^self info rcWork asRectangle! !
+
 !UI.DisplayMonitor categoriesForMethods!
 =!comparing!public! !
 adjustPosition:forExtent:!geometry!public! !
@@ -239,6 +244,7 @@ primary
 	^(User32 monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
 		ifNil: [Win32Error signal]
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]! !
+
 !UI.DisplayMonitor class categoriesForMethods!
 active!instance creation!public! !
 allIntersecting:!instance creation!public! !

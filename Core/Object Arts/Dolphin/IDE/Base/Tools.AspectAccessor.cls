@@ -7,14 +7,18 @@ UI.ValueAdaptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AspectAccessor guid: (Core.GUID fromString: '{87b4c67b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.AspectAccessor comment: 'Part of the PublishedAspectInspector framework. This is a <ValueAspectAdaptor> on a particular aspect of an object. It also holds an <Aspect> that describes the aspect so that sufficient information is available to be able to display or edit it within a presenter UI. An AspectAccessor instance is also capable of knowing it''s "parent" accessor. This allows instances to be manipulated by an <AspectAccessorTreeModel>.
 
 Instance Variables:
 	aspectDescriptor	<Aspect> the descriptor for the aspect being accessed.
 	parentAccessor	<AspectAccessor> the parent accessor or nil.
 '!
+
 !Tools.AspectAccessor categoriesForClass!MVP-Models! !
+
 !Tools.AspectAccessor methodsFor!
 
 <= anAspectAccessor
@@ -234,6 +238,7 @@ yourselfAspect
 	receiver's value."
 
 	^self value publishedAspects at: #yourself! !
+
 !Tools.AspectAccessor categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -289,6 +294,7 @@ subject: anObject aspect: anAspect
 	^self basicNew
 		setSubject: anObject aspectDescriptor: anAspect;
 		yourself! !
+
 !Tools.AspectAccessor class categoriesForMethods!
 new!instance creation!private! !
 subject:aspect:!instance creation!public! !

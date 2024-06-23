@@ -5,13 +5,17 @@ Dialog subclass: #ProfilerSetupDialog
 	classVariableNames: 'IsCollect IsOn ProfiledBlock ProfiledText ProfilingInterval SampleSetName SamplingInterval'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerSetupDialog guid: (GUID fromString: '{5bc9a7a0-5833-490b-b342-c0086dcf2ac1}')!
+
 ProfilerSetupDialog comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerSetupDialog categoriesForClass!IDB Goodies!MVP-Presenters! !
+
 !ProfilerSetupDialog methodsFor!
 
 apply
@@ -125,6 +129,7 @@ validateModel
 
 validationResultPresenterClass
 	^ValidationHintPresenter! !
+
 !ProfilerSetupDialog categoriesForMethods!
 apply!commands!public! !
 createComponents!initializing!public! !
@@ -179,6 +184,7 @@ sampleSetName
 	"Accessor for the SampleSetName class variable"
 
 	^SampleSetName! !
+
 !ProfilerSetupDialog class categoriesForMethods!
 defaultModel!models!public! !
 interval!accessing!public! !

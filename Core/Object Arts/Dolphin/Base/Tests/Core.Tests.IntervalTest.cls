@@ -7,8 +7,11 @@ Core.Tests.SequenceableCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.IntervalTest guid: (Core.GUID fromString: '{73485185-925f-48a9-bdf0-df459c5acb25}')!
+
 Core.Tests.IntervalTest comment: ''!
+
 !Core.Tests.IntervalTest methodsFor!
 
 assimilate: anObject 
@@ -245,6 +248,7 @@ verifyIntervalConsistency: anInterval
 	elements := elements contents.
 	self assert: elements equals: anInterval.
 	self assert: (anInterval allSatisfy: [:each | anInterval includes: each])! !
+
 !Core.Tests.IntervalTest categoriesForMethods!
 assimilate:!public!unit tests! !
 assimilateResultElement:!helpers!private! !

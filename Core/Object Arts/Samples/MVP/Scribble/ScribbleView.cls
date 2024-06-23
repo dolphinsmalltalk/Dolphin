@@ -5,11 +5,15 @@ View subclass: #ScribbleView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScribbleView guid: (GUID fromString: '{87b4c714-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ScribbleView comment: 'ScribbleView is a sample <view> capable of displaying the contents of a <listModel> populated with <InkStroke>a. ScribbleView will normally be used in conjunction with a <Scribble> presenter. 
 
 '!
+
 !ScribbleView categoriesForClass!MVP-Views!Samples! !
+
 !ScribbleView methodsFor!
 
 connectModel
@@ -40,6 +44,7 @@ onPaintRequired: aPaintEvent
 	| canvas |
 	canvas := aPaintEvent canvas.
 	self model do: [:each | each drawOn: canvas ].	! !
+
 !ScribbleView categoriesForMethods!
 connectModel!models!public! !
 onItem:addedAtIndex:!event handling!public! !
@@ -66,6 +71,7 @@ stbConvertFromVersion1: anArray
 
 	(anArray at: 5) ifNil: [anArray at: 5 put: ListModel new].
 	^anArray resize: 10! !
+
 !ScribbleView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

@@ -13,9 +13,13 @@ OS.SizedStructure
 			'_OffsetOf_rcBound' -> 16r10.
 			'_RGNDATA_Size' -> 16r20
 		}!
+
 OS.RGNDATA guid: (Core.GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.RGNDATA comment: ''!
+
 !OS.RGNDATA categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.RGNDATA methodsFor!
 
 iType
@@ -61,6 +65,7 @@ rcBound: aRECTL
 		from: ##(_OffsetOf_rcBound + 1)
 		to: ##(_OffsetOf_rcBound + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.RGNDATA categoriesForMethods!
 iType!**compiled accessors**!public! !
 iType:!**compiled accessors**!public! !
@@ -109,6 +114,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iType #nCount #nRgnSize #rcBound)! !
+
 !OS.RGNDATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

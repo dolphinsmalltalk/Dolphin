@@ -32,7 +32,9 @@ External.Structure
 			'_OffsetOf_dwReasmTimeout' -> 16r34.
 			'_OffsetOf_dwRoutingDiscards' -> 16r28
 		}!
+
 OS.MIB_IPSTATS guid: (Core.GUID fromString: '{3390e082-4252-4d18-accb-16911c750fb8}')!
+
 OS.MIB_IPSTATS comment: '<MIB_IPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -68,7 +70,9 @@ struct tagMIB_IPSTATS {
 	unsigned long dwNumRoutes;
 } MIB_IPSTATS;
 '!
+
 !OS.MIB_IPSTATS categoriesForClass!Win32-Structs! !
+
 !OS.MIB_IPSTATS methodsFor!
 
 dwDefaultTTL
@@ -185,6 +189,7 @@ dwRoutingDiscards
 	"Answer the <Integer> value of the receiver's 'dwRoutingDiscards' field."
 
 	^bytes uint32AtOffset: _OffsetOf_dwRoutingDiscards! !
+
 !OS.MIB_IPSTATS categoriesForMethods!
 dwDefaultTTL!**compiled accessors**!public! !
 dwForwarding!**compiled accessors**!public! !
@@ -276,6 +281,7 @@ defineFields
 
 getFieldNames
 	^#(#dwForwarding #dwDefaultTTL #dwInReceives #dwInHdrErrors #dwInAddrErrors #dwForwDatagrams #dwInUnknownProtos #dwInDiscards #dwInDelivers #dwOutRequests #dwRoutingDiscards #dwOutDiscards #dwOutNoRoutes #dwReasmTimeout #dwReasmReqds #dwReasmOks #dwReasmFails #dwFragOks #dwFragFails #dwFragCreates #dwNumIf #dwNumAddr #dwNumRoutes)! !
+
 !OS.MIB_IPSTATS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

@@ -64,6 +64,7 @@ STON
 	imports: #(#{Graphics} #{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'STON.Tests.AlternativeRepresentationTestObject'
 	instanceVariableNames: 'id time gridReference'
@@ -71,6 +72,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'STON.Tests.STONTestUser'
 	instanceVariableNames: 'username password enabled'
@@ -78,6 +80,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'STON.Tests.TestDomainObject'
 	instanceVariableNames: 'created modified integer float description color tags bytes boolean'
@@ -85,6 +88,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'STON.Tests.TestKnownObject'
 	instanceVariableNames: 'id description'
@@ -92,6 +96,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Bag
 	subclass: #'STON.Tests.IdentityBag'
 	instanceVariableNames: ''
@@ -99,6 +104,7 @@ Core.Bag
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Dictionary
 	variableSubclass: #'STON.Tests.TestMap'
 	instanceVariableNames: ''
@@ -106,6 +112,7 @@ Core.Dictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.GUID
 	variableByteSubclass: #'STON.Tests.UUID'
 	instanceVariableNames: ''
@@ -113,6 +120,7 @@ Core.GUID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Association
 	subclass: #'STON.Tests.TestAssociation'
 	instanceVariableNames: 'timestamp'
@@ -120,6 +128,7 @@ Core.Association
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTestUser
 	subclass: #'STON.Tests.STONTestUser2'
 	instanceVariableNames: ''
@@ -127,6 +136,7 @@ STON.Tests.STONTestUser
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTestUser
 	subclass: #'STON.Tests.STONTestUser3'
 	instanceVariableNames: ''
@@ -134,6 +144,7 @@ STON.Tests.STONTestUser
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'STON.Tests.CStyleCommentsSkipStreamTest'
 	instanceVariableNames: ''
@@ -141,6 +152,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'STON.Tests.STONTestCase'
 	instanceVariableNames: ''
@@ -148,6 +160,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTestCase
 	subclass: #'STON.Tests.JSONTest'
 	instanceVariableNames: ''
@@ -155,6 +168,7 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTestCase
 	subclass: #'STON.Tests.ReaderTest'
 	instanceVariableNames: ''
@@ -162,6 +176,7 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTestCase
 	subclass: #'STON.Tests.STONTest'
 	instanceVariableNames: ''
@@ -169,6 +184,7 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTestCase
 	subclass: #'STON.Tests.WriteReadTest'
 	instanceVariableNames: ''
@@ -176,6 +192,7 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTestCase
 	subclass: #'STON.Tests.WriterTest'
 	instanceVariableNames: ''
@@ -183,6 +200,7 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.WriteReadTest
 	subclass: #'STON.Tests.LargeWriteReadTest'
 	instanceVariableNames: ''
@@ -190,6 +208,7 @@ STON.Tests.WriteReadTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.WriteReadTest
 	subclass: #'STON.Tests.WriteAsciiOnlyReadTest'
 	instanceVariableNames: ''
@@ -197,6 +216,7 @@ STON.Tests.WriteReadTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.WriteReadTest
 	subclass: #'STON.Tests.WritePrettyPrinterReadTest'
 	instanceVariableNames: ''
@@ -204,6 +224,7 @@ STON.Tests.WriteReadTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.WriteReadTest
 	subclass: #'STON.Tests.WriteReadCommentsTest'
 	instanceVariableNames: ''
@@ -228,6 +249,7 @@ translateToUTC
 	"Private - This probably isn't correct, but then Dolphin's legacy Dates are not TZ aware. This is implemented purely to make the STON tests pass."
 
 	^self translateTo: 0 seconds! !
+
 !Core.Date categoriesForMethods!
 translateTo:!private! !
 translateToUTC!private! !

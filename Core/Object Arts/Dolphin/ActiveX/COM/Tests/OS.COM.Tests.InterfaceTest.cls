@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.InterfaceTest guid: (Core.GUID fromString: '{3cbd4156-925e-437d-b6b6-e862481e60c6}')!
+
 OS.COM.Tests.InterfaceTest comment: ''!
+
 !OS.COM.Tests.InterfaceTest methodsFor!
 
 testAllRegistered
@@ -52,6 +55,7 @@ testLatestDerivation
 	self should: [IUnknown latestDerivation] raise: Error matching: [:ex | ex description = 'IUnknown class should not implement #findMostDerived'].
 	self assert: IErrorInfo latestDerivation identicalTo: IErrorInfo.
 	self assert: IClassFactory latestDerivation identicalTo: IClassFactory2! !
+
 !OS.COM.Tests.InterfaceTest categoriesForMethods!
 testAllRegistered!public!unit tests! !
 testGetObject!public!unit tests! !

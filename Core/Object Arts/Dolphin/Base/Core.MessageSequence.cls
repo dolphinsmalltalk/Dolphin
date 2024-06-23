@@ -7,9 +7,13 @@ Core.MessageSequenceAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.MessageSequence guid: (Core.GUID fromString: '{87b4c665-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.MessageSequence comment: ''!
+
 !Core.MessageSequence categoriesForClass!Kernel-Methods! !
+
 !Core.MessageSequence methodsFor!
 
 add: aMessage
@@ -84,6 +88,7 @@ valueWithArguments: anArray
 	| answer |
 	1 to: messages size do: [:i | answer := (messages at: i) valueWithArguments: anArray].
 	^answer! !
+
 !Core.MessageSequence categoriesForMethods!
 add:!adding!public! !
 add:afterIndex:!adding!public! !
@@ -108,6 +113,7 @@ withMessages: aSequencedReadableCollection
 	^self new
 		messages: aSequencedReadableCollection asOrderedCollection;
 		yourself! !
+
 !Core.MessageSequence class categoriesForMethods!
 withMessages:!instance creation!public! !
 !

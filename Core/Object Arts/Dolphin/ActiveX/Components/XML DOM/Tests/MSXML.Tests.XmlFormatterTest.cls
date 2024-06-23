@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.Tests.XmlFormatterTest guid: (Core.GUID fromString: '{834290a8-1967-49c5-ad9f-f47cb1ed5d12}')!
+
 MSXML.Tests.XmlFormatterTest comment: ''!
+
 !MSXML.Tests.XmlFormatterTest methodsFor!
 
 assertReformat: text toCanonical: canonical
@@ -159,6 +162,7 @@ testDocumentType
 	"
 DiffBrowser compare: reformatted with: text
 "! !
+
 !MSXML.Tests.XmlFormatterTest categoriesForMethods!
 assertReformat:toCanonical:!helpers!private! !
 newDocument!helpers!private! !

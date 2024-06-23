@@ -20,7 +20,9 @@ External.FinalizableStructure
 			'_OffsetOf_type' -> 16r4.
 			'_STATSTG_Size' -> 16r48
 		}!
+
 OS.COM.STATSTG guid: (Core.GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
 
 STATSTG contains directory type information about a structured storage object (storage, stream, or lock bytes)
@@ -39,7 +41,9 @@ Member variables:
 	clsid			<CLSID> of storage object
 	grfStateBits		<integer> bit mask last set by IStorage>>SetStateBits
 	dwStgFmt			<integer> from STGFMT enumeration - the format of the storage object.'!
+
 !OS.COM.STATSTG categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.STATSTG methodsFor!
 
 atime
@@ -179,6 +183,7 @@ type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_type put: anInteger! !
+
 !OS.COM.STATSTG categoriesForMethods!
 atime!**compiled accessors**!public! !
 atime:!**compiled accessors**!public! !
@@ -254,6 +259,7 @@ defineFields
 
 getFieldNames
 	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits)! !
+
 !OS.COM.STATSTG class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !

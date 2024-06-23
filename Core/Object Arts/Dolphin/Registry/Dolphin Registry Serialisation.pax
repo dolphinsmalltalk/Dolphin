@@ -92,6 +92,7 @@ Core.Object
 	imports: #(#{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'OS.RegistryDeserializerStub'
 	instanceVariableNames: ''
@@ -99,6 +100,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'OS.RegistrySerializer'
 	instanceVariableNames: 'objects currentKey instVarsCache classNames'
@@ -117,6 +119,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Override back to the basic implementation."
 
 	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+
 !Core.ArrayedCollection class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -130,6 +133,7 @@ writeToRegistry: aRegistryWriter name: aString
 		classAt: aString
 		put: self class
 		with: nil! !
+
 !Core.Boolean categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -143,6 +147,7 @@ writeToRegistry: aRegistryWriter name: aString
 		classAt: aString
 		put: self class
 		with: nil! !
+
 !Core.Class categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -153,6 +158,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised to the registry."
 
 	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+
 !Core.ClassDescription categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -163,6 +169,7 @@ writeToRegistry: aRegistryWriter name: aString
 	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
 	aRegistryWriter writeCollection: self at: aString! !
+
 !Core.Collection categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -178,6 +185,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 		registerCurrentObject: rehydrated;
 		namesAndObjectsDo: [:eachName :eachValue | rehydrated add: eachValue].
 	^rehydrated! !
+
 !Core.Collection class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -222,6 +230,7 @@ writeToRegistry: aRegistryWriter name: aString
 		ifFalse: 
 			["Generic format for non-String keys - we need to store the pairs and they must be rehashed on load, rather than storing the actual instance variables of the Dictionary"
 			self writeAssociationsToRegistry: aRegistryWriter key: aString]	"But not Symbols"! !
+
 !Core.Dictionary categoriesForMethods!
 canWriteCompactRegistryFormat!public! !
 writeAssociationsToRegistry:key:!private!serializing! !
@@ -243,6 +252,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 		registerCurrentObject: rehydrated;
 		namesAndObjectsDo: [:eachName :each | rehydrated at: (self keyFromRegName: eachName) put: each].
 	^rehydrated! !
+
 !Core.Dictionary class categoriesForMethods!
 keyFromRegName:!public! !
 readFromRegistry:params:!public! !
@@ -254,6 +264,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised to the registry."
 
 	^false! !
+
 !Core.False class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -262,6 +273,7 @@ readFromRegistry:params:!public! !
 
 canWriteCompactRegistryFormat
 	^self allKeysSatisfy: [:each | each isKindOf: Symbol]! !
+
 !Core.IdentityDictionary categoriesForMethods!
 canWriteCompactRegistryFormat!public! !
 !
@@ -270,6 +282,7 @@ canWriteCompactRegistryFormat!public! !
 
 keyFromRegName: aString
 	^aString asSymbol! !
+
 !Core.IdentityDictionary class categoriesForMethods!
 keyFromRegName:!public! !
 !
@@ -282,6 +295,7 @@ writeToRegistry: aRegistryWriter name: aString
 	"Override back to object implementation as we don't want to serialize the elements themselves."
 
 	aRegistryWriter basicObjectAt: aString put: self! !
+
 !Core.Interval categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -294,6 +308,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Override back to the basic implementation."
 
 	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+
 !Core.Interval class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -312,6 +327,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	1 to: size do: [:i | answer basicAt: i put: (bytes basicAt: i)].
 	answer isImmutable: true.
 	^answer! !
+
 !Core.LargeInteger class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -325,6 +341,7 @@ writeToRegistry: aRegistryWriter name: aString
 		classAt: aString
 		put: Locale
 		with: self name! !
+
 !Core.Locale categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -335,6 +352,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised to the registry."
 
 	^self named: (anArray at: 2)! !
+
 !Core.Locale class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -353,6 +371,7 @@ writeToRegistry: aRegistryWriter name: aString
 		classAt: aString
 		put: self class
 		with: (aRegistryWriter nameForClass: self)! !
+
 !Core.Metaclass categoriesForMethods!
 readFromRegistry:params:!public! !
 writeToRegistry:name:!public! !
@@ -364,6 +383,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised to the registry."
 
 	^aRegistryDeserializer findClass: (anArray at: 2)! !
+
 !Core.Metaclass class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -382,6 +402,7 @@ writeToRegistry: aRegistryWriter name: aString
 	"Reflect back to the writer so it can write either an object reference, or the general purpose format if the object has been written already by the writer."
 
 	aRegistryWriter basicObjectAt: aString put: self! !
+
 !Core.Object categoriesForMethods!
 storeUnderRegKey:as:!public! !
 writeToRegistry:name:!public! !
@@ -394,6 +415,7 @@ fromRegKey: aRegKey
 
 	Notification deprecated.
 	^aRegKey parentKey objectAt: aRegKey name! !
+
 !Core.Object class categoriesForMethods!
 fromRegKey:!public! !
 !
@@ -409,6 +431,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 		registerCurrentObject: inst;
 		namesAndObjectsDo: [:indexString :each | inst at: (OS.Shlwapi strToInt: indexString) put: each].
 	^inst! !
+
 !Core.SequenceableCollection class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -419,6 +442,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised to the registry."
 
 	^self default! !
+
 !Core.SortAlgorithm class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -439,6 +463,7 @@ writeToRegistry: aRegistryWriter name: aString
 			sorted algorithm writeToRegistry: aRegistryWriter name: 'algorithm'.
 			sorted
 				keysAndValuesDo: [:eachKey :eachValue | eachValue writeToRegistry: writer name: eachKey printString]]! !
+
 !Core.SortedCollection categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -452,6 +477,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	inst := self ofSize: (OS.Shlwapi strToInt: (anArray at: 2)).
 	aRegistryDeserializer readInstVarsOf: inst.
 	^inst! !
+
 !Core.SortedCollection class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -465,6 +491,7 @@ writeToRegistry: aRegistryWriter name: aString
 		classAt: aString
 		put: self class
 		with: self! !
+
 !Core.Symbol categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -475,6 +502,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised under the specified registry key."
 
 	^self intern: (anArray at: 2)! !
+
 !Core.Symbol class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -485,6 +513,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised to the registry."
 
 	^true! !
+
 !Core.True class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -495,6 +524,7 @@ writeToRegistry: aRegistryWriter name: aString
 	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
 	aRegistryWriter noneAtPut: aString! !
+
 !External.Handle categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -511,6 +541,7 @@ writeToRegistry: aRegistryWriter name: aString
 		bytesAt: aString
 		put: self
 		as: self class! !
+
 !External.IntegerBytes categoriesForMethods!
 regKeyType!constants!public! !
 writeToRegistry:name:!public! !
@@ -520,6 +551,7 @@ writeToRegistry:name:!public! !
 
 regKeyType
 	^#dword! !
+
 !External.UInt32Bytes categoriesForMethods!
 regKeyType!constants!public! !
 !
@@ -528,6 +560,7 @@ regKeyType!constants!public! !
 
 regKeyType
 	^#qword! !
+
 !External.UInt64Bytes categoriesForMethods!
 regKeyType!constants!public! !
 !
@@ -538,6 +571,7 @@ regKeyType
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [#qword] ifFalse: [#dword]! !
+
 !External.UIntPtrBytes categoriesForMethods!
 regKeyType!public! !
 !
@@ -553,6 +587,7 @@ writeToRegistry: aRegistryWriter name: aString
 		name: aString
 		parameter: nil
 		do: [:writer :font | writer objectAt: 'logfont' put: font logFont]! !
+
 !Graphics.AbstractFont categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -567,6 +602,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	aRegistryDeserializer registerCurrentObject: font.
 	font logFont: (aRegistryDeserializer objectAt: 'logfont').
 	^font! !
+
 !Graphics.AbstractFont class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -582,6 +618,7 @@ writeToRegistry: aRegistryWriter name: aString
 		classAt: aString
 		put: Color
 		with: (self name ifNil: [self rgbaCode])! !
+
 !Graphics.Color categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -598,6 +635,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 			param first isDigit
 				ifTrue: [Color fromRgbaCode: (Shlwapi strToUInt: param)]
 				ifFalse: [self named: param]]! !
+
 !Graphics.Color class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -617,6 +655,7 @@ writeToRegistry: aRegistryWriter name: aString
 				put: Color
 				with: n]
 		ifNil: [aRegistryWriter basicObjectAt: aString put: self]! !
+
 !Graphics.VirtualColor categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -629,6 +668,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"Override back to the basic implementation."
 
 	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+
 !Kernel.MethodAnnotations class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -641,6 +681,7 @@ readFromRegistry: aRegistryDeserializer params: anArray
 	"We have to override back to the default implementation"
 
 	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+
 !Kernel.PluggableSortAlgorithm class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
@@ -696,6 +737,7 @@ readValueAt: aString into: aByteObject
 		lpData: aByteObject
 		lpcbData: metadata yourAddress + 4.
 	needsFree ifTrue: [self free]! !
+
 !OS.RegKeyAbstract categoriesForMethods!
 classAt:put:with:!public!serializing! !
 objectAt:!public!serializing! !
@@ -719,6 +761,7 @@ strToInt: lpSrc
 strToUInt: pszSrc
 	<stdcall: dword StrToIntW lpwstr>
 	^self invalidCall: _failureCode! !
+
 !OS.ShlwapiLibrary categoriesForMethods!
 strToInt:!**auto generated**!public!win32 functions-string manipulation! !
 strToUInt:!public!win32 functions-string manipulation! !

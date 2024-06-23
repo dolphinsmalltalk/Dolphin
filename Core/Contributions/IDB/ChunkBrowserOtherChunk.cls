@@ -5,13 +5,17 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserOtherChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserOtherChunk guid: (GUID fromString: '{593d449b-5b54-4990-9db8-1925ea103e40}')!
+
 ChunkBrowserOtherChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserOtherChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserOtherChunk methodsFor!
 
 = aChunk
@@ -65,6 +69,7 @@ summaryFromText
 			whileFalse: 
 				[ch == $\r ifTrue: [summary nextPutAll: '\n'] ifFalse: [ch == $\n ifFalse: [summary nextPut: ch]]].
 	^summary grabContents! !
+
 !ChunkBrowserOtherChunk categoriesForMethods!
 =!comparing!public! !
 browseTarget!operations!public! !
@@ -87,6 +92,7 @@ chunkType
 
 isChunkClassFor: aString tokens: anArray
 	^true! !
+
 !ChunkBrowserOtherChunk class categoriesForMethods!
 chunkType!constants!public! !
 isChunkClassFor:tokens:!public!testing! !

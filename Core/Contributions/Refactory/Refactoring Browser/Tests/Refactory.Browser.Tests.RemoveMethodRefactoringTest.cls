@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RemoveMethodRefactoringTest guid: (Core.GUID fromString: '{c62df609-c02a-4070-ae2d-e28d2e5b1603}')!
+
 Refactory.Browser.Tests.RemoveMethodRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RemoveMethodRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RemoveMethodRefactoringTest methodsFor!
 
 testModelRecursiveMethodThatIsNotReferencedFromOtherMethods
@@ -62,6 +66,7 @@ testRemoveSameMethodButSendsSuper
 			self assert: selectors asArray equals: #(#new).
 			true].
 	self executeRefactoring: refactoring! !
+
 !Refactory.Browser.Tests.RemoveMethodRefactoringTest categoriesForMethods!
 testModelRecursiveMethodThatIsNotReferencedFromOtherMethods!public!tests! !
 testRemoveMethod!public!tests! !

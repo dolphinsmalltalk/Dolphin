@@ -7,7 +7,9 @@ Kernel.STxInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'Signature' -> #[33 83 84 66 32] }!
+
 Kernel.STBInFiler guid: (Core.GUID fromString: '{87b4c6e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STBInFiler comment: '`STBInFiler` is the class of object deserializers for reading streams of objects serialized by a corresponding `STBOutFiler`.
 
 `STBInFiler` itself currently supports reading the STB 6 binary object serialization format. There are subclasses for reading each of the earlier versions from the original STB v0 up to previous version. The correct class of deserializer is instantiated automatically by reading the version from the header.
@@ -17,7 +19,9 @@ STB 6 differs from STB 5 in dropping the mandatory use of proxies for most colle
 Backwards compatibility (i.e. reading old formats) should be complete by virtue of this hierarchy of classes and the class specific conversions as implemented by each class'' `stbConvertFrom:` method. Any failure to read an old stream should be considered a bug.
 
 '!
+
 !Kernel.STBInFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STBInFiler methodsFor!
 
 basicNext
@@ -116,6 +120,7 @@ readSymbol: aSTxClassConversion
 	symbol := Symbol intern: (self readBytes: size into: (Utf8String new: size)).
 	decorator register: symbol.
 	^symbol! !
+
 !Kernel.STBInFiler categoriesForMethods!
 basicNext!accessing!private! !
 characterValue:!helpers!public! !
@@ -206,6 +211,7 @@ unregister
 
 versions
 	^Versions! !
+
 !Kernel.STBInFiler class categoriesForMethods!
 initialize!class initialization!public! !
 peekForSignatureIn:!public!testing! !

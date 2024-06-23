@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.RegistrySerializerTest guid: (Core.GUID fromString: '{dba1e292-4a5c-4484-b1d9-c3151b1df7c2}')!
+
 OS.Tests.RegistrySerializerTest comment: ''!
+
 !OS.Tests.RegistrySerializerTest methodsFor!
 
 keyPath
@@ -467,6 +470,7 @@ verifyDictionarySerializationWithNonStringKeys: aClass
 	restored removeKey: 'myself'.
 	self assert: restored equals: subject.
 	self assert: (restored keys identityIncludes: #'123')! !
+
 !OS.Tests.RegistrySerializerTest categoriesForMethods!
 keyPath!constants!private! !
 numberTestValues!constants!private! !

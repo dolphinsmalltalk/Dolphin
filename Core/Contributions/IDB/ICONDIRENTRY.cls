@@ -5,7 +5,9 @@ Win32Structure subclass: #ICONDIRENTRY
 	classVariableNames: '_ICONDIRENTRY_Size _OffsetOf_bColorCount _OffsetOf_bHeight _OffsetOf_bReserved _OffsetOf_bWidth _OffsetOf_dwBytesInRes _OffsetOf_dwImageOffset _OffsetOf_wBitCount _OffsetOf_wPlanes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICONDIRENTRY guid: (GUID fromString: '{c37d878b-52cb-41c6-a356-cc780f4eac95}')!
+
 ICONDIRENTRY addClassConstant: '_ICONDIRENTRY_Size' value: 16r10!
 ICONDIRENTRY addClassConstant: '_OffsetOf_bColorCount' value: 16r2!
 ICONDIRENTRY addClassConstant: '_OffsetOf_bHeight' value: 16r1!
@@ -20,7 +22,9 @@ ICONDIRENTRY comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ICONDIRENTRY categoriesForClass!IDB Goodies! !
+
 !ICONDIRENTRY methodsFor!
 
 bColorCount
@@ -97,6 +101,7 @@ wPlanes: anInteger
 	"Set the receiver's 'wPlanes' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wPlanes put: anInteger! !
+
 !ICONDIRENTRY categoriesForMethods!
 bColorCount!**compiled accessors**!public! !
 bColorCount:!**compiled accessors**!public! !
@@ -133,6 +138,7 @@ getFieldNames
 
 packing
 	^1! !
+
 !ICONDIRENTRY class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler guid: (OS.COM.IID fromString: '{38274481-a15c-4563-94cf-990edc9aeb95}')!
+
 WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler comment: '`ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler : IUnknow
 };
 ```
 '!
+
 !WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult WebView2.ICoreWebView2PermissionSettingCollectionView*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler!public! !
 !
@@ -54,6 +59,7 @@ defineFunctions
 		defineFunction: #Invoke:arg:
 			argumentTypes: 'hresult ICoreWebView2PermissionSettingCollectionView*'
 ! !
+
 !WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

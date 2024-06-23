@@ -5,13 +5,17 @@ Object subclass: #ILLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILLibrary guid: (GUID fromString: '{b60a9a63-5a6e-49a4-9c61-58463387b1d3}')!
+
 ILLibrary comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILLibrary categoriesForClass!IDB Goodies! !
+
 !ILLibrary methodsFor!
 
 addImage: aPoint
@@ -189,6 +193,7 @@ selectOnly: anILImage
 
 sortImages: aCollection
 	^aCollection asSortedCollection: [:a :b | (images indexOf: a) < (images indexOf: b)]! !
+
 !ILLibrary categoriesForMethods!
 addImage:!adding!public! !
 beModified!accessing!public! !
@@ -256,6 +261,7 @@ importIco: icoFilename exportExe: exeFilename
 
 new
 	^super new initialize! !
+
 !ILLibrary class categoriesForMethods!
 defaultExtents!constants!public! !
 importIco:exportExe:!operations!public! !

@@ -14,9 +14,13 @@ OS.NMHDR
 			'_OffsetOf_szText' -> 16r10.
 			'_OffsetOf_uFlags' -> 16rB4
 		}!
+
 OS.NMTTDISPINFOW guid: (Core.GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
+
 OS.NMTTDISPINFOW comment: ''!
+
 !OS.NMTTDISPINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMTTDISPINFOW methodsFor!
 
 idIsHandle
@@ -53,6 +57,7 @@ uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
 	^bytes uint32AtOffset: _OffsetOf_uFlags! !
+
 !OS.NMTTDISPINFOW categoriesForMethods!
 idIsHandle!private!testing! !
 lpszText!**compiled accessors**!public! !
@@ -91,6 +96,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpszText #uFlags)! !
+
 !OS.NMTTDISPINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

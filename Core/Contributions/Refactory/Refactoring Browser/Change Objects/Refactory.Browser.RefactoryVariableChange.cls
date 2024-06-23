@@ -7,10 +7,15 @@ Refactory.Browser.ClassModificationChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RefactoryVariableChange guid: (Core.GUID fromString: '{e776f08f-009c-4de7-ae6e-6658922002a0}')!
+
 Refactory.Browser.RefactoryVariableChange isNonInstantiable: true!
+
 Refactory.Browser.RefactoryVariableChange comment: ''!
+
 !Refactory.Browser.RefactoryVariableChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RefactoryVariableChange methodsFor!
 
 = aRefactoryVariableChange 
@@ -47,6 +52,7 @@ variable
 
 variable: aString
 	variable := aString! !
+
 !Refactory.Browser.RefactoryVariableChange categoriesForMethods!
 =!comparing!public! !
 changeObject!accessing!private! !
@@ -72,6 +78,7 @@ remove: aVariable from: aBehavior
 	but is here so we don't need to copy it to all subclasses"
 
 	^self new class: aBehavior variable: aVariable! !
+
 !Refactory.Browser.RefactoryVariableChange class categoriesForMethods!
 add:to:!instance creation!public! !
 remove:from:!instance creation!public! !

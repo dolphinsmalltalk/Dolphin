@@ -7,10 +7,13 @@ ImageStripper
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 AXDllImageStripper guid: (Core.GUID fromString: '{e6c57f56-c672-49b5-8157-893092e6eb6f}')!
+
 AXDllImageStripper comment: 'AXDllImageStripper is a specialized <ImageStripper> for stripping and deploying in-process ActiveX/COM component DLLs.
 
 See the ''ActiveX In-Process Server Kit'' package comment for further details.'!
+
 !AXDllImageStripper methodsFor!
 
 _updateStubResources: anExternalHandle
@@ -87,6 +90,7 @@ typeLibPath: aString
 	deployed by the receiver."
 
 	typeLibPath := FileLocator imageRelative relativePathTo: aString.! !
+
 !AXDllImageStripper categoriesForMethods!
 _updateStubResources:!operations!private! !
 _updateTypelibResource:!operations!private! !
@@ -115,6 +119,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect fileSave: #typeLibPath);
 		yourself! !
+
 !AXDllImageStripper class categoriesForMethods!
 defaultOptions!constants!development!private! !
 publishedAspectsOfInstances!constants!development!must strip!public! !

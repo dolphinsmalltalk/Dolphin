@@ -7,7 +7,9 @@ Tools.VirtualMethodCategory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AllMethodsCategory guid: (Core.GUID fromString: '{9f018e33-e5e0-4806-a700-6b15a55681e5}')!
+
 Tools.AllMethodsCategory comment: 'AllMethodsCategory is a virtual method category class the dynamically generated membership of which includes all methods.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 
 Class Variables:
 	None'!
+
 !Tools.AllMethodsCategory categoriesForClass!System-Support! !
+
 !Tools.AllMethodsCategory methodsFor!
 
 includesMethod: aCompiledMethod 
@@ -23,6 +27,7 @@ includesMethod: aCompiledMethod
 	The 'All' methods category includes all methods!!"
 
 	^true! !
+
 !Tools.AllMethodsCategory categoriesForMethods!
 includesMethod:!public!testing! !
 !
@@ -51,6 +56,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
+
 !Tools.AllMethodsCategory class categoriesForMethods!
 current!accessing!public! !
 initialize!initializing!private! !

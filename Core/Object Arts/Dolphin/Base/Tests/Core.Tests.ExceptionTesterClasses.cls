@@ -7,8 +7,11 @@ Core.Tests.DolphinTestClassResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ExceptionTesterClasses guid: (Core.GUID fromString: '{b20c60c4-bfd3-4bd6-b2c9-15a04318e517}')!
+
 Core.Tests.ExceptionTesterClasses comment: ''!
+
 !Core.Tests.ExceptionTesterClasses methodsFor!
 
 createClasses
@@ -50,6 +53,7 @@ testErrorClass
 
 testNotificationClass
 	^testNotificationClass! !
+
 !Core.Tests.ExceptionTesterClasses categoriesForMethods!
 createClasses!Init / Release!public! !
 isAvailable!public!Testing! !

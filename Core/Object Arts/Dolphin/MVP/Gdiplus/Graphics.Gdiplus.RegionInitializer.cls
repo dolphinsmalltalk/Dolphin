@@ -7,9 +7,13 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionInitializer guid: (Core.GUID fromString: '{6a87fbfa-ce5b-47de-82f0-a12f020a2178}')!
+
 Graphics.Gdiplus.RegionInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.RegionInitializer comment: ''!
+
 !Graphics.Gdiplus.RegionInitializer methodsFor!
 
 getRegionData: aGpRegion
@@ -47,6 +51,7 @@ isInfiniteRegion: aGdiplusRegion onGraphics: aGdiplusGraphics
 
 printAttributesOn: aLimitedWriteStream 
 ! !
+
 !Graphics.Gdiplus.RegionInitializer categoriesForMethods!
 getRegionData:!attributes!private! !
 hashGet:!attributes!private! !
@@ -76,6 +81,7 @@ onPreStripImage
 	"Private -  Allow the receiver to be stripped by clearing lazy initialized class variables that hold sub-instances of the receiver."
 
 	Infinite := Empty := nil! !
+
 !Graphics.Gdiplus.RegionInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 empty!instance creation!public! !

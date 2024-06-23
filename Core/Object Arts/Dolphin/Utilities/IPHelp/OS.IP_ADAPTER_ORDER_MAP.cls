@@ -7,7 +7,9 @@ OS.IpHlpApiTableStruct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_IP_ADAPTER_ORDER_MAP_Size' -> 16r8. '_OffsetOf_table' -> 16r4 }!
+
 OS.IP_ADAPTER_ORDER_MAP guid: (Core.GUID fromString: '{975761ac-0340-468d-bae7-f24198e8f83a}')!
+
 OS.IP_ADAPTER_ORDER_MAP comment: '<IP_ADAPTER_ORDER_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_ORDER_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagIP_ADAPTER_ORDER_MAP {
 	unsigned long AdapterOrder[1];
 } IP_ADAPTER_ORDER_MAP;
 '!
+
 !OS.IP_ADAPTER_ORDER_MAP categoriesForClass!Win32-Structs! !
+
 !OS.IP_ADAPTER_ORDER_MAP methodsFor!
 
 table
@@ -32,6 +36,7 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: UInt32! !
+
 !OS.IP_ADAPTER_ORDER_MAP categoriesForMethods!
 table!**compiled accessors**!public! !
 !
@@ -63,6 +68,7 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
+
 !OS.IP_ADAPTER_ORDER_MAP class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

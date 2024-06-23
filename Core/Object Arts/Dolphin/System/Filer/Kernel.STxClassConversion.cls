@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxClassConversion guid: (Core.GUID fromString: '{87b4c4c0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STxClassConversion comment: ''!
+
 !Kernel.STxClassConversion categoriesForClass!System-Binary storage! !
+
 !Kernel.STxClassConversion methodsFor!
 
 converterBlock
@@ -64,6 +68,7 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 	instSize := ((prefix := anInteger) bitShift: STxFiler.PrefixInstSizeUnshift)
 				bitAnd: STxFiler.PrefixInstSizeMask.
 	filer := anSTBInFiler! !
+
 !Kernel.STxClassConversion categoriesForMethods!
 converterBlock!accessing!public! !
 converterBlock:!accessing!public! !
@@ -87,6 +92,7 @@ forFiler: anSTBInFiler class: aClass version: oldVersion prefix: anInteger
 				filer: anSTBInFiler.
 	format converterBlock: (aClass stbConvertFrom: format).
 	^format! !
+
 !Kernel.STxClassConversion class categoriesForMethods!
 forFiler:class:version:prefix:!instance creation!public! !
 !

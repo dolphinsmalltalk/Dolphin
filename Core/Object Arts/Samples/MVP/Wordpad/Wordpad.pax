@@ -84,6 +84,7 @@ UI.TextDocument
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Dialog
 	subclass: #'UI.Examples.WordpadParagraphDialog'
 	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'

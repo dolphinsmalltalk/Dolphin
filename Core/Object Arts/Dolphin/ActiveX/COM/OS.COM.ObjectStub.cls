@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.Win32Errors private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ObjectStub guid: (Core.GUID fromString: '{87b4c46c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.ObjectStub comment: 'COMObjectStub is a private class of objects which are used to wrap any object in the system so that they may be exposed as COM objects. COMObjectStub implements most <IUnknown>, functionality, providing reference count based lifetime management, and the basic mechanics for QueryInterface().
 
 Note that each COM server objecty should have only one COMObjectStub so that the ref. count is correct, and so that queries for IUnknown always answer the same interface.
@@ -26,7 +28,9 @@ Class Variables:
 
 
 '!
+
 !OS.COM.ObjectStub categoriesForClass!COM-Implementations! !
+
 !OS.COM.ObjectStub methodsFor!
 
 addInterface: aCOMInterface
@@ -303,6 +307,7 @@ supportsInterface: interface
 	supports that implementation!!)."
 
 	^interface == IUnknown! !
+
 !OS.COM.ObjectStub categoriesForMethods!
 addInterface:!accessing-interfaces!private! !
 AddRef!COM Interfaces-IUnknown!private! !
@@ -379,6 +384,7 @@ uninitialize
 
 	self initializeRegistries.
 	VM registryAtIndex: 70 put: nil! !
+
 !OS.COM.ObjectStub class categoriesForMethods!
 disconnectAll!accessing!public! !
 initialize!development!initializing!private! !

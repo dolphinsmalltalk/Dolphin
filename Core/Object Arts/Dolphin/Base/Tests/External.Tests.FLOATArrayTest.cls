@@ -7,8 +7,11 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.FLOATArrayTest guid: (Core.GUID fromString: '{fa2c5d39-ea1c-431f-8a0d-f4fe888c1305}')!
+
 External.Tests.FLOATArrayTest comment: ''!
+
 !External.Tests.FLOATArrayTest methodsFor!
 
 arrayClass
@@ -41,6 +44,7 @@ testPrintString
 	self assert: expr
 		equals: '(FLOATArray withAll: #(0.100000001 1.20000005 1.23000002 12.3400002 123.456001 1234.56702 12345.6777 123456.789 1234567.13))'.
 	self assert: (Compiler evaluate: expr) equals: subject! !
+
 !External.Tests.FLOATArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 elementFromValue:!private!unit tests! !

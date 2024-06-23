@@ -7,8 +7,11 @@ WebView2.ICoreWebView2PermissionRequestedEventArgs2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2PermissionRequestedEventArgs3 guid: (OS.COM.IID fromString: '{e61670bc-3dce-4177-86d2-c629ae3cb6ac}')!
+
 WebView2.ICoreWebView2PermissionRequestedEventArgs3 isEgressOnly: true!
+
 WebView2.ICoreWebView2PermissionRequestedEventArgs3 comment: '`ICoreWebView2PermissionRequestedEventArgs3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionRequestedEventArgs3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2PermissionRequestedEventArgs3 : ICoreWebView2PermissionRe
 };
 ```
 '!
+
 !WebView2.ICoreWebView2PermissionRequestedEventArgs3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2PermissionRequestedEventArgs3 methodsFor!
 
 get_SavesInProfile: value
@@ -53,6 +58,7 @@ put_SavesInProfile: value
 
 	<virtual stdcall: hresult 13 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2PermissionRequestedEventArgs3 categoriesForMethods!
 get_SavesInProfile:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
 put_SavesInProfile:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
@@ -70,6 +76,7 @@ defineFunctions
 		defineFunction: #put_SavesInProfile:
 			argumentTypes: 'int32'
 ! !
+
 !WebView2.ICoreWebView2PermissionRequestedEventArgs3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

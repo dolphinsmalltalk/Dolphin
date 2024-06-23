@@ -117,6 +117,7 @@ External.Structure
 			'_OffsetOf_ciexyzY' -> 16r4.
 			'_OffsetOf_ciexyzZ' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS.CIEXYZTRIPLE'
 	instanceVariableNames: ''
@@ -129,6 +130,7 @@ External.Structure
 			'_OffsetOf_ciexyzGreen' -> 16rC.
 			'_OffsetOf_ciexyzRed' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.COLORADJUSTMENT'
 	instanceVariableNames: ''
@@ -150,6 +152,7 @@ External.Structure
 			'_OffsetOf_caReferenceWhite' -> 16rE.
 			'_OffsetOf_caSize' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.EMRTEXT'
 	instanceVariableNames: ''
@@ -165,6 +168,7 @@ External.Structure
 			'_OffsetOf_ptlReference' -> 16r0.
 			'_OffsetOf_rcl' -> 16r14
 		}!
+
 External.Structure
 	subclass: #'OS.EXTLOGFONTW'
 	instanceVariableNames: ''
@@ -184,6 +188,7 @@ External.Structure
 			'_OffsetOf_elfVendorId' -> 16r12C.
 			'_OffsetOf_elfVersion' -> 16r11C
 		}!
+
 External.Structure
 	subclass: #'OS.EXTLOGPEN'
 	instanceVariableNames: ''
@@ -200,6 +205,7 @@ External.Structure
 			'_OffsetOf_elpStyleEntry' -> 16r18.
 			'_OffsetOf_elpWidth' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.LOGCOLORSPACE'
 	instanceVariableNames: ''
@@ -219,6 +225,7 @@ External.Structure
 			'_OffsetOf_lcsSize' -> 16r8.
 			'_OffsetOf_lcsVersion' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.LOGCOLORSPACEW'
 	instanceVariableNames: ''
@@ -238,6 +245,7 @@ External.Structure
 			'_OffsetOf_lcsSize' -> 16r8.
 			'_OffsetOf_lcsVersion' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.PIXELFORMATDESCRIPTOR'
 	instanceVariableNames: ''
@@ -273,6 +281,7 @@ External.Structure
 			'_OffsetOf_nVersion' -> 16r2.
 			'_PIXELFORMATDESCRIPTOR_Size' -> 16r28
 		}!
+
 External.Structure
 	subclass: #'OS.XFORM'
 	instanceVariableNames: ''
@@ -288,6 +297,7 @@ External.Structure
 			'_OffsetOf_eM22' -> 16rC.
 			'_XFORM_Size' -> 16r18
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRALPHABLEND'
 	instanceVariableNames: ''
@@ -314,6 +324,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRANGLEARC'
 	instanceVariableNames: ''
@@ -327,6 +338,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_nRadius' -> 16r10.
 			'_OffsetOf_ptlCenter' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRARC'
 	instanceVariableNames: ''
@@ -339,6 +351,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_ptlStart' -> 16r18.
 			'_OffsetOf_rclBox' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRBITBLT'
 	instanceVariableNames: ''
@@ -363,6 +376,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCOLORCORRECTPALETTE'
 	instanceVariableNames: ''
@@ -376,6 +390,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_nPalEntries' -> 16r10.
 			'_OffsetOf_nReserved' -> 16r14
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCOLORMATCHTOTARGET'
 	instanceVariableNames: ''
@@ -390,6 +405,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_dwAction' -> 16r8.
 			'_OffsetOf_dwFlags' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCREATEBRUSHINDIRECT'
 	instanceVariableNames: ''
@@ -401,6 +417,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihBrush' -> 16r8.
 			'_OffsetOf_lb' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCREATECOLORSPACE'
 	instanceVariableNames: ''
@@ -412,6 +429,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihCS' -> 16r8.
 			'_OffsetOf_lcs' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCREATECOLORSPACEW'
 	instanceVariableNames: ''
@@ -426,6 +444,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihCS' -> 16r8.
 			'_OffsetOf_lcs' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCREATEDIBPATTERNBRUSHPT'
 	instanceVariableNames: ''
@@ -441,6 +460,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_offBits' -> 16r18.
 			'_OffsetOf_offBmi' -> 16r10
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCREATEMONOBRUSH'
 	instanceVariableNames: ''
@@ -456,6 +476,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_offBits' -> 16r18.
 			'_OffsetOf_offBmi' -> 16r10
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCREATEPALETTE'
 	instanceVariableNames: ''
@@ -467,6 +488,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihPal' -> 16r8.
 			'_OffsetOf_lgpl' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRCREATEPEN'
 	instanceVariableNames: ''
@@ -478,6 +500,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihPen' -> 16r8.
 			'_OffsetOf_lopn' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRELLIPSE'
 	instanceVariableNames: ''
@@ -485,6 +508,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRELLIPSE_Size' -> 16r18. '_OffsetOf_rclBox' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMREOF'
 	instanceVariableNames: ''
@@ -497,6 +521,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_nSizeLast' -> 16r10.
 			'_OffsetOf_offPalEntries' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMREXCLUDECLIPRECT'
 	instanceVariableNames: ''
@@ -504,6 +529,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMREXCLUDECLIPRECT_Size' -> 16r18. '_OffsetOf_rclClip' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMREXTCREATEFONTINDIRECTW'
 	instanceVariableNames: ''
@@ -515,6 +541,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_elfw' -> 16rC.
 			'_OffsetOf_ihFont' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMREXTCREATEPEN'
 	instanceVariableNames: ''
@@ -530,6 +557,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_offBits' -> 16r14.
 			'_OffsetOf_offBmi' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMREXTFLOODFILL'
 	instanceVariableNames: ''
@@ -542,6 +570,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_iMode' -> 16r14.
 			'_OffsetOf_ptlStart' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMREXTSELECTCLIPRGN'
 	instanceVariableNames: ''
@@ -554,6 +583,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_iMode' -> 16rC.
 			'_OffsetOf_RGNDATA' -> 16r10
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMREXTTEXTOUT'
 	instanceVariableNames: ''
@@ -567,6 +597,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_iGraphicsMode' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRFILLPATH'
 	instanceVariableNames: ''
@@ -574,6 +605,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRFILLPATH_Size' -> 16r18. '_OffsetOf_rclBounds' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRFILLRGN'
 	instanceVariableNames: ''
@@ -587,6 +619,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_rclBounds' -> 16r8.
 			'_OffsetOf_RGNDATA' -> 16r20
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRFRAMERGN'
 	instanceVariableNames: ''
@@ -601,6 +634,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_RGNDATA' -> 16r28.
 			'_OffsetOf_szlStroke' -> 16r20
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRGDICOMMENT'
 	instanceVariableNames: ''
@@ -612,6 +646,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_cbData' -> 16r8.
 			'_OffsetOf_Data' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRGLSBOUNDEDRECORD'
 	instanceVariableNames: ''
@@ -624,6 +659,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_Data' -> 16r1C.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRGLSRECORD'
 	instanceVariableNames: ''
@@ -635,6 +671,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_cbData' -> 16r8.
 			'_OffsetOf_Data' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRGRADIENTFILL'
 	instanceVariableNames: ''
@@ -649,6 +686,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_ulMode' -> 16r20.
 			'_OffsetOf_Ver' -> 16r24
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRINVERTRGN'
 	instanceVariableNames: ''
@@ -661,6 +699,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_rclBounds' -> 16r8.
 			'_OffsetOf_RGNDATA' -> 16r1C
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRLINETO'
 	instanceVariableNames: ''
@@ -668,6 +707,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRLINETO_Size' -> 16r10. '_OffsetOf_ptl' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRMASKBLT'
 	instanceVariableNames: ''
@@ -699,6 +739,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yMask' -> 16r68.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRMODIFYWORLDTRANSFORM'
 	instanceVariableNames: ''
@@ -710,6 +751,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_iMode' -> 16r20.
 			'_OffsetOf_XFORM' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMROFFSETCLIPRGN'
 	instanceVariableNames: ''
@@ -717,6 +759,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMROFFSETCLIPRGN_Size' -> 16r10. '_OffsetOf_ptlOffset' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPIXELFORMAT'
 	instanceVariableNames: ''
@@ -724,6 +767,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRPIXELFORMAT_Size' -> 16r30. '_OffsetOf_pfd' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPLGBLT'
 	instanceVariableNames: ''
@@ -753,6 +797,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yMask' -> 16r74.
 			'_OffsetOf_ySrc' -> 16r34
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPOLYDRAW'
 	instanceVariableNames: ''
@@ -766,6 +811,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_cptl' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPOLYDRAW16'
 	instanceVariableNames: ''
@@ -779,6 +825,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_cpts' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPOLYLINE'
 	instanceVariableNames: ''
@@ -791,6 +838,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_cptl' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPOLYLINE16'
 	instanceVariableNames: ''
@@ -803,6 +851,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_cpts' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPOLYPOLYLINE'
 	instanceVariableNames: ''
@@ -817,6 +866,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_nPolys' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPOLYPOLYLINE16'
 	instanceVariableNames: ''
@@ -831,6 +881,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_nPolys' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRPOLYTEXTOUTA'
 	instanceVariableNames: ''
@@ -846,6 +897,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_iGraphicsMode' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRRESIZEPALETTE'
 	instanceVariableNames: ''
@@ -857,6 +909,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_cEntries' -> 16rC.
 			'_OffsetOf_ihPal' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRRESTOREDC'
 	instanceVariableNames: ''
@@ -864,6 +917,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRRESTOREDC_Size' -> 16rC. '_OffsetOf_iRelative' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRROUNDRECT'
 	instanceVariableNames: ''
@@ -875,6 +929,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_rclBox' -> 16r8.
 			'_OffsetOf_szlCorner' -> 16r18
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSCALEVIEWPORTEXTEX'
 	instanceVariableNames: ''
@@ -888,6 +943,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDenom' -> 16r14.
 			'_OffsetOf_yNum' -> 16r10
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSELECTCLIPPATH'
 	instanceVariableNames: ''
@@ -895,6 +951,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSELECTCLIPPATH_Size' -> 16rC. '_OffsetOf_iMode' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSELECTOBJECT'
 	instanceVariableNames: ''
@@ -902,6 +959,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSELECTOBJECT_Size' -> 16rC. '_OffsetOf_ihObject' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSELECTPALETTE'
 	instanceVariableNames: ''
@@ -909,6 +967,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSELECTPALETTE_Size' -> 16rC. '_OffsetOf_ihPal' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETARCDIRECTION'
 	instanceVariableNames: ''
@@ -916,6 +975,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETARCDIRECTION_Size' -> 16rC. '_OffsetOf_iArcDirection' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETBKCOLOR'
 	instanceVariableNames: ''
@@ -923,6 +983,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETBKCOLOR_Size' -> 16rC. '_OffsetOf_crColor' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETCOLORADJUSTMENT'
 	instanceVariableNames: ''
@@ -930,6 +991,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETCOLORADJUSTMENT_Size' -> 16r20. '_OffsetOf_COLORADJUSTMENT' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETCOLORSPACE'
 	instanceVariableNames: ''
@@ -937,6 +999,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETCOLORSPACE_Size' -> 16rC. '_OffsetOf_ihCS' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETDIBITSTODEVICE'
 	instanceVariableNames: ''
@@ -960,6 +1023,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r24
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETICMPROFILE'
 	instanceVariableNames: ''
@@ -973,6 +1037,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_Data' -> 16r14.
 			'_OffsetOf_dwFlags' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETMAPPERFLAGS'
 	instanceVariableNames: ''
@@ -980,6 +1045,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETMAPPERFLAGS_Size' -> 16rC. '_OffsetOf_dwFlags' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETMITERLIMIT'
 	instanceVariableNames: ''
@@ -987,6 +1053,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETMITERLIMIT_Size' -> 16rC. '_OffsetOf_eMiterLimit' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETPALETTEENTRIES'
 	instanceVariableNames: ''
@@ -1000,6 +1067,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihPal' -> 16r8.
 			'_OffsetOf_iStart' -> 16rC
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETPIXELV'
 	instanceVariableNames: ''
@@ -1011,6 +1079,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_crColor' -> 16r10.
 			'_OffsetOf_ptlPixel' -> 16r8
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETVIEWPORTEXTEX'
 	instanceVariableNames: ''
@@ -1018,6 +1087,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETVIEWPORTEXTEX_Size' -> 16r10. '_OffsetOf_szlExtent' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETVIEWPORTORGEX'
 	instanceVariableNames: ''
@@ -1025,6 +1095,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETVIEWPORTORGEX_Size' -> 16r10. '_OffsetOf_ptlOrigin' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSETWORLDTRANSFORM'
 	instanceVariableNames: ''
@@ -1032,6 +1103,7 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETWORLDTRANSFORM_Size' -> 16r20. '_OffsetOf_XFORM' -> 16r8 }!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSTRETCHBLT'
 	instanceVariableNames: ''
@@ -1058,6 +1130,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRSTRETCHDIBITS'
 	instanceVariableNames: ''
@@ -1082,6 +1155,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r24
 		}!
+
 OS.ENHMETARECORD
 	subclass: #'OS.EMRTRANSPARENTBLT'
 	instanceVariableNames: ''
@@ -1108,6 +1182,7 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.EMREXTTEXTOUT
 	subclass: #'OS.EMREXTTEXTOUTA'
 	instanceVariableNames: ''
@@ -1115,6 +1190,7 @@ OS.EMREXTTEXTOUT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMREXTTEXTOUTA_Size' -> 16r50. '_OffsetOf_text' -> 16r4C }!
+
 OS.EMREXTTEXTOUT
 	subclass: #'OS.EMREXTTEXTOUTW'
 	instanceVariableNames: ''
@@ -1122,6 +1198,7 @@ OS.EMREXTTEXTOUT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMREXTTEXTOUTW_Size' -> 16r50. '_OffsetOf_text' -> 16r4C }!
+
 External.POINT
 	subclass: #'OS.POINTS'
 	instanceVariableNames: ''
@@ -1142,6 +1219,7 @@ fromAddress: anAddress
 	iType := anAddress uint32AtOffset: 0.
 	recordClass := (RecordTypes lookup: iType) ?? ENHMETARECORD.
 	^anAddress isNull ifFalse: [recordClass basicNew initializeAtAddress: anAddress]! !
+
 !OS.ENHMETARECORD class categoriesForMethods!
 fromAddress:!instance creation!public! !
 !

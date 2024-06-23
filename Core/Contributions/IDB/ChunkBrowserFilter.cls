@@ -5,13 +5,17 @@ Model subclass: #ChunkBrowserFilter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserFilter guid: (GUID fromString: '{cca89e53-eee3-495a-915f-463f69c7009a}')!
+
 ChunkBrowserFilter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserFilter categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserFilter methodsFor!
 
 chunkSelectAll
@@ -90,6 +94,7 @@ toggleRestrictingMostRecent
 
 toggleRestrictingPicked
 	restrictingPicked := restrictingPicked not! !
+
 !ChunkBrowserFilter categoriesForMethods!
 chunkSelectAll!operations!public! !
 chunkSelectDefault!operations!public! !

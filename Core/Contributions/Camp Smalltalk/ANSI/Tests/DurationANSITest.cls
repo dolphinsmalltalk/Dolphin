@@ -5,9 +5,13 @@ MainTestCase subclass: #DurationANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DurationANSITest guid: (GUID fromString: '{b2811169-0d04-48a4-acc8-2985adaf7547}')!
+
 DurationANSITest comment: ''!
+
 !DurationANSITest categoriesForClass!Unclassified! !
+
 !DurationANSITest methodsFor!
 
 canonicalObject
@@ -282,6 +286,7 @@ testXsubtractOp
 	self value: [off0123 - (Duration days: 1 hours: 1 minutes: 1 seconds: 1)]
 		should: [:r | r = (Duration days:-0 hours:-23 minutes:-58 seconds:-58)]
 		conformTo: #'Duration' selector: #'-'! !
+
 !DurationANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

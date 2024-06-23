@@ -7,11 +7,15 @@ Kernel.PoolDictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 PoolConstantsDictionary guid: (Core.GUID fromString: '{87b4c52e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PoolConstantsDictionary comment: 'Prior to Dolphin 8, `PoolConstantDictionary` instances were used as shared constants pools, the canonical example being `Win32Constants`.  From Dolphin 8 constants pools are `Namespace` classes specialised to hold immutable bindings, and are created as subclasses of `SharedPool`. 
 
 `PoolConstantDictionary` definitions stored in older packages will be automatically converted to `SharedPool` subclasses at package load time, so this class is only required for loading such packages, and also resaving in the legacy format. It is not expected to have instances at other times.'!
+
 !PoolConstantsDictionary categoriesForClass!Deprecated! !
+
 !PoolConstantsDictionary methodsFor!
 
 add: anAssociation
@@ -139,6 +143,7 @@ shortNameFor: aString
 
 sourceFilerClass
 	^LegacyChunkSourceFiler! !
+
 !PoolConstantsDictionary categoriesForMethods!
 add:!adding!public! !
 canFileOut!public!source filing! !

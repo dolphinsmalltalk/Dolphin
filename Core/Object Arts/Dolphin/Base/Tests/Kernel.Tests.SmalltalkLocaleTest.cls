@@ -7,8 +7,11 @@ OS.Tests.AbstractInvariantLocaleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.SmalltalkLocaleTest guid: (Core.GUID fromString: '{0a445b92-78d1-4c9c-a3f4-7be49f0c2932}')!
+
 Kernel.Tests.SmalltalkLocaleTest comment: ''!
+
 !Kernel.Tests.SmalltalkLocaleTest methodsFor!
 
 defaultSubject
@@ -94,6 +97,7 @@ testStlConvertFromVersion0
 	self assert: subject third first identicalTo: self defaultSubject.
 	self assert: subject fourth identicalTo: #foo.
 	self assert: subject second identicalTo: subject last! !
+
 !Kernel.Tests.SmalltalkLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 subjectName!constants!public! !

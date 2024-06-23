@@ -7,9 +7,13 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.AbstractCHARRANGE guid: (Core.GUID fromString: '{3595c0ec-31e8-4237-9857-8bc522529953}')!
+
 OS.AbstractCHARRANGE isNonInstantiable: true!
+
 OS.AbstractCHARRANGE comment: ''!
+
 !OS.AbstractCHARRANGE methodsFor!
 
 asObject
@@ -26,6 +30,7 @@ cpMin
 	"Answer the <Integer> value of the receiver's 'cpMin' field."
 
 	^self subclassResponsibility! !
+
 !OS.AbstractCHARRANGE categoriesForMethods!
 asObject!accessing!public! !
 cpMax!accessing!public! !
@@ -36,6 +41,7 @@ cpMin!accessing!public! !
 
 getFieldNames
 	^#(#cpMin #cpMax)! !
+
 !OS.AbstractCHARRANGE class categoriesForMethods!
 getFieldNames!constants!private! !
 !

@@ -7,7 +7,9 @@ UI.CommonDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FontDialog guid: (Core.GUID fromString: '{87b4c6b3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.FontDialog comment: 'FontDialog is a <valueDialogPresenter> implementing the Windows ChooseFont common dialog. The associated <valueModel> contains the <Font> chosen.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 
 
 '!
+
 !UI.FontDialog categoriesForClass!MVP-Presenters! !
+
 !UI.FontDialog methodsFor!
 
 basicShowModal
@@ -59,6 +63,7 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^CHOOSEFONTW! !
+
 !UI.FontDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 extractResult:!helpers!private! !
@@ -86,6 +91,7 @@ initialize
 
 	hookHandlers := IdentityDictionary new.
 	hookHandlers at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:! !
+
 !UI.FontDialog class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

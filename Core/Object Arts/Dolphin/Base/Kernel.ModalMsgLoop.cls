@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ModalMsgLoop guid: (Core.GUID fromString: '{9fe23040-75a9-11d3-b376-080046056106}')!
+
 Kernel.ModalMsgLoop comment: 'ModalMsgLoop is a special process synchronisation object that can be used to block the main UI process while still servicing the message queue, without having to start a new UI process.
 
 For example:
@@ -23,7 +25,9 @@ Instance Variables:
 	loop		<boolean>. Used to control termination of the modal loop.
 
 '!
+
 !Kernel.ModalMsgLoop categoriesForClass!Kernel-Processes! !
+
 !Kernel.ModalMsgLoop methodsFor!
 
 initialize
@@ -42,6 +46,7 @@ wait
 	message loop continues to be serviced, but keyboard and mouse input is discarded."
 
 	SessionManager.Current inputState loopWhile: [loop]! !
+
 !Kernel.ModalMsgLoop categoriesForMethods!
 initialize!initializing!private! !
 signal!process synchronisation!public! !
@@ -54,6 +59,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
+
 !Kernel.ModalMsgLoop class categoriesForMethods!
 new!instance creation!public! !
 !

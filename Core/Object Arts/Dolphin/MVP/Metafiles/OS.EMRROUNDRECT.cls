@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_rclBox' -> 16r8.
 			'_OffsetOf_szlCorner' -> 16r18
 		}!
+
 OS.EMRROUNDRECT guid: (Core.GUID fromString: '{31c4124d-eff4-4b42-adfd-7ed8d589eade}')!
+
 OS.EMRROUNDRECT comment: '<EMRROUNDRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRROUNDRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMRROUNDRECT {
 	SIZEL szlCorner;
 } EMRROUNDRECT;
 '!
+
 !OS.EMRROUNDRECT categoriesForClass!Win32-Structs! !
+
 !OS.EMRROUNDRECT methodsFor!
 
 rclBox
@@ -57,6 +61,7 @@ szlCorner: aSIZEL
 		from: ##(_OffsetOf_szlCorner + 1)
 		to: ##(_OffsetOf_szlCorner + SIZEL._SIZEL_Size)
 		startingAt: 1! !
+
 !OS.EMRROUNDRECT categoriesForMethods!
 rclBox!**compiled accessors**!public! !
 rclBox:!**compiled accessors**!public! !
@@ -99,6 +104,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ROUNDRECT}! !
+
 !OS.EMRROUNDRECT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

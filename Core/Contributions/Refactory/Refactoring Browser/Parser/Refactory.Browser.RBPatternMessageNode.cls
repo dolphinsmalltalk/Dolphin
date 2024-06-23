@@ -7,12 +7,16 @@ Kernel.StMessageNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBPatternMessageNode guid: (Core.GUID fromString: '{880ff09f-aa85-4f4d-bd3e-0416f929352d}')!
+
 Refactory.Browser.RBPatternMessageNode comment: 'RBPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
 
 Instance Variables:
 	isList	<Boolean>	are we matching each keyword or matching all keywords together (e.g., `keyword1: would match a one argument method whereas `@keywords: would match 0 or more arguments)'!
+
 !Refactory.Browser.RBPatternMessageNode categoriesForClass!Refactory-Parser! !
+
 !Refactory.Browser.RBPatternMessageNode methodsFor!
 
 copyInContext: aDictionary
@@ -103,6 +107,7 @@ sentMessages
 	^super sentMessages
 		remove: self selector ifAbsent: nil;
 		yourself! !
+
 !Refactory.Browser.RBPatternMessageNode categoriesForMethods!
 copyInContext:!matching!public! !
 isList!public!testing/matching! !
@@ -130,6 +135,7 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 				receiver: aValueNode
 				selectorParts: keywordTokens
 				arguments: valueNodes]! !
+
 !Refactory.Browser.RBPatternMessageNode class categoriesForMethods!
 receiver:selectorParts:arguments:!instance creation!public! !
 !

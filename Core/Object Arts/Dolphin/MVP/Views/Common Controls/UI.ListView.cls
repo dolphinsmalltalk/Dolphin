@@ -20,7 +20,9 @@ UI.IconicListAbstract
 							}).
 			'NoImageIndex' -> -16r1
 		}!
+
 UI.ListView guid: (Core.GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ListView comment: '`ListView` is the `<listView>` implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the `<selectableItems>` protocol for use with any `<listModel>`.
 
 A `ListView` is capable of displaying its items in one of a number of modes, e.g. `#smallIcons`, `#largeIcons`, `#list`, and `#report` which can be set using the `#viewMode` aspect. In all but `#report` mode the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of `ListViewColumn`. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
@@ -50,7 +52,9 @@ The underlying Windows common control is a sophisticated one with many options. 
 
 
 '!
+
 !UI.ListView categoriesForClass!MVP-Views! !
+
 !UI.ListView methodsFor!
 
 addColumn
@@ -2268,6 +2272,7 @@ viewModeChanged
 
 wantCustomDrawItemNotifications: pNMHDR
 	^self customDrawBlock notNil or: [self hasSubItemCustomDraw]! !
+
 !UI.ListView categoriesForMethods!
 addColumn!adding!columns!public! !
 addColumn:!adding!columns!public! !
@@ -2664,6 +2669,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysListView32'! !
+
 !UI.ListView class categoriesForMethods!
 columnClass!constants!private! !
 icon!constants!public! !

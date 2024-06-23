@@ -7,7 +7,9 @@ MSXML.ISAXXMLReader
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISAXXMLFilter guid: (OS.COM.IID fromString: '{70409222-ca09-4475-acb8-40312fe8d145}')!
+
 MSXML.ISAXXMLFilter comment: '`ISAXXMLFilter` is a wrapper class for the COM interface ''MSXML2.ISAXXMLFilter'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -34,7 +36,9 @@ interface ISAXXMLFilter : ISAXXMLReader
 };
 ```
 '!
+
 !MSXML.ISAXXMLFilter categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISAXXMLFilter methodsFor!
 
 getParent
@@ -62,6 +66,7 @@ PutParent: pReader
 
 	<virtual stdcall: hresult 23 ISAXXMLReader*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.ISAXXMLFilter categoriesForMethods!
 getParent!**auto generated**!methods!public! !
 GetParent:!**auto generated**!COM Interfaces-ISAXXMLFilter!private! !
@@ -80,6 +85,7 @@ defineFunctions
 		defineFunction: #PutParent:
 			argumentTypes: 'ISAXXMLReader*'
 ! !
+
 !MSXML.ISAXXMLFilter class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

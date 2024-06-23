@@ -7,7 +7,9 @@ Graphics.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Map3DColorsMask_Obsolete' -> 16r1. 'IsSharedMask' -> 16r2 }!
+
 Graphics.Bitmap guid: (Core.GUID fromString: '{87b4c63d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Bitmap comment: 'Bitmap is the class of <Image>s that represent Windows'' device-dependent Bitmaps.
 
 Instance Variables:
@@ -21,7 +23,9 @@ Class Variables:
 	IsSharedMask		<integer>
 
 '!
+
 !Graphics.Bitmap categoriesForClass!Graphics-Tools! !
+
 !Graphics.Bitmap methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
@@ -412,6 +416,7 @@ stbFixup: anSTBInFiler at: newObjectIndex
 			[answer := self asSharedCopy.
 			anSTBInFiler fixup: newObjectIndex to: answer].
 	^answer! !
+
 !Graphics.Bitmap categoriesForMethods!
 addToImageList:mask:!double dispatch!private! !
 alphaBlendOn:at:!drawing-bitmaps!public! !
@@ -615,6 +620,7 @@ width: widthInteger height: heightInteger planes: planesInteger bitsPerPixel: bp
 				depth: bpsInteger
 				planes: planesInteger
 				bytes: byteObject)! !
+
 !Graphics.Bitmap class categoriesForMethods!
 blankInitializerClass!constants!private! !
 bytesInitializerClass!constants!private! !

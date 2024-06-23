@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.PushUpMethodRefactoringTest guid: (Core.GUID fromString: '{890376aa-d3a6-46bb-badd-a03b14ffd1cd}')!
+
 Refactory.Browser.Tests.PushUpMethodRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.PushUpMethodRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.PushUpMethodRefactoringTest methodsFor!
 
 testPushUpAndCopyDown
@@ -284,6 +288,7 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 				pushUp: #(#foo)
 				from: class)
 		withMessage: 'The #foo method in superclass Subclass must be copied down to its other subclasses, but sends a super message that will be overridden.'! !
+
 !Refactory.Browser.Tests.PushUpMethodRefactoringTest categoriesForMethods!
 testPushUpAndCopyDown!public!tests! !
 testPushUpClassMethod!failure tests!public! !

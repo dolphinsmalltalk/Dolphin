@@ -13,7 +13,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_nPalEntries' -> 16r10.
 			'_OffsetOf_nReserved' -> 16r14
 		}!
+
 OS.EMRCOLORCORRECTPALETTE guid: (Core.GUID fromString: '{b425fd3a-cd17-44a5-972f-7f4d44d06495}')!
+
 OS.EMRCOLORCORRECTPALETTE comment: '<COLORCORRECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.COLORCORRECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagCOLORCORRECTPALETTE {
 	[helpstring("Reserved")] DWORD nReserved;
 } COLORCORRECTPALETTE;
 '!
+
 !OS.EMRCOLORCORRECTPALETTE categoriesForClass!Win32-Structs! !
+
 !OS.EMRCOLORCORRECTPALETTE methodsFor!
 
 ihPalette
@@ -73,6 +77,7 @@ nReserved: anInteger
 	"Set the receiver's 'nReserved' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_nReserved put: anInteger! !
+
 !OS.EMRCOLORCORRECTPALETTE categoriesForMethods!
 ihPalette!**compiled accessors**!public! !
 ihPalette:!**compiled accessors**!public! !
@@ -127,6 +132,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_COLORCORRECTPALETTE}! !
+
 !OS.EMRCOLORCORRECTPALETTE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

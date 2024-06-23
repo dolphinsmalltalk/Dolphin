@@ -7,8 +7,11 @@ UI.ValueAspectAdaptor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueModelAspectAdaptor guid: (Core.GUID fromString: '{29f1d21e-3179-4fa5-beff-50f95911c88a}')!
+
 UI.ValueModelAspectAdaptor comment: ''!
+
 !UI.ValueModelAspectAdaptor methodsFor!
 
 notifyChanged
@@ -34,6 +37,7 @@ subject: anObject
 				to: self
 				with: #valueChanged].
 	subject := anObject! !
+
 !UI.ValueModelAspectAdaptor categoriesForMethods!
 notifyChanged!private! !
 subject!private! !

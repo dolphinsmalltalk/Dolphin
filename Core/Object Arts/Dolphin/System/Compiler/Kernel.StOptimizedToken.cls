@@ -7,9 +7,13 @@ Kernel.StToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StOptimizedToken guid: (Core.GUID fromString: '{6fd2c057-1eef-416c-99a2-60958de98eb1}')!
+
 Kernel.StOptimizedToken comment: ''!
+
 !Kernel.StOptimizedToken categoriesForClass!System-Compiler! !
+
 !Kernel.StOptimizedToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -26,6 +30,7 @@ stop
 
 stop: anInteger
 	stopPosition := anInteger! !
+
 !Kernel.StOptimizedToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isOptimized!public!testing! !
@@ -43,6 +48,7 @@ start: anInteger comments: aCollectionOrNil stop: stopInteger
 		comments: aCollectionOrNil;
 		stop: stopInteger;
 		yourself! !
+
 !Kernel.StOptimizedToken class categoriesForMethods!
 start:comments:stop:!instance creation!public! !
 !

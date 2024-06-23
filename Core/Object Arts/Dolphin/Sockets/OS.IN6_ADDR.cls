@@ -7,7 +7,9 @@ OS.AbstractIN_ADDR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_IN6_ADDR_Size' -> 16r10. '_OffsetOf_Bytes' -> 16r0. '_OffsetOf_Words' -> 16r0 }!
+
 OS.IN6_ADDR guid: (Core.GUID fromString: '{bebf4c25-ce63-4511-b68e-2434810fa9c3}')!
+
 OS.IN6_ADDR comment: '`OS.IN6_ADDR` is an `External.Structure` class to wrap the struct ''Win32.IN6_ADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -24,7 +26,9 @@ struct tagIN6_ADDR {
 	};
 } IN6_ADDR;
 '!
+
 !OS.IN6_ADDR categoriesForClass!Win32-Structs! !
+
 !OS.IN6_ADDR methodsFor!
 
 Bytes
@@ -42,6 +46,7 @@ Bytes: anExternalArray
 		from: ##(_OffsetOf_Bytes + 1)
 		to: size
 		startingAt: 1! !
+
 !OS.IN6_ADDR categoriesForMethods!
 Bytes!**compiled accessors**!public! !
 Bytes:!**compiled accessors**!public! !
@@ -76,6 +81,7 @@ defineFields
 
 getFieldNames
 	^#(#Bytes)! !
+
 !OS.IN6_ADDR class categoriesForMethods!
 addressFamily!constants!public! !
 byteSize!**compiled accessors**!constants!public! !

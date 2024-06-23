@@ -7,9 +7,13 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ClassBrowserAbstractTest guid: (Core.GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
+
 Tools.Tests.ClassBrowserAbstractTest isNonInstantiable: true!
+
 Tools.Tests.ClassBrowserAbstractTest comment: ''!
+
 !Tools.Tests.ClassBrowserAbstractTest methodsFor!
 
 assertAllCategoriesInTreeOf: method
@@ -352,6 +356,7 @@ viewClass
 	^ShellView!
 
 visibilityTestPlaceHolder! !
+
 !Tools.Tests.ClassBrowserAbstractTest categoriesForMethods!
 assertAllCategoriesInTreeOf:!helpers!public! !
 assertIsOnlyMethodVisible:!helpers!public! !

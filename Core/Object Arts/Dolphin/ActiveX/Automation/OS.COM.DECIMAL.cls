@@ -17,13 +17,17 @@ External.Structure
 			'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
 			'SmallestValue' -> 0.0000000000000000000000000001s
 		}!
+
 OS.COM.DECIMAL guid: (Core.GUID fromString: '{e6470841-9795-44b8-ba35-cccbab3e9a0c}')!
+
 OS.COM.DECIMAL comment: '`DECIMAL` is an `External.Structure` class to represent the COM Automation structure of the same name.
 
 `DECIMAL` is a rather complex 16-byte fixed point value with 12-bytes (96-bits) to represent the absolute value, and a byte each for decimal scale (between 0 and 28) and sign, with the top two bytes unused so that a `DECIMAL` can be stored safely in a `VARIANT` without overwriting the vartype. `DECIMAL` corresponds to the vartype `VT_DECIMAL`.
 
 `DECIMAL`s are mapped to/from Dolphin''s `ScaledDecimal` objects, although of course the latter has unlimited range and precision, and therefore not all `ScaledDecimal`s can be represented in a `DECIMAL`.'!
+
 !OS.COM.DECIMAL categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.DECIMAL methodsFor!
 
 asVariant
@@ -105,6 +109,7 @@ value: aScaledDecimalOrInteger
 				ifFalse: [0]).
 	self hi32: (intVal bitShift: -64).
 	self lo64: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF)! !
+
 !OS.COM.DECIMAL categoriesForMethods!
 asVariant!converting!public! !
 displayOn:!displaying!public! !
@@ -163,6 +168,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DECIMAL! !
+
 !OS.COM.DECIMAL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

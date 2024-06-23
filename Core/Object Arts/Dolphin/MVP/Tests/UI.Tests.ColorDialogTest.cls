@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ColorDialogTest guid: (Core.GUID fromString: '{9f86c1ad-cb21-4061-be85-0cd9561cda37}')!
+
 UI.Tests.ColorDialogTest comment: ''!
+
 !UI.Tests.ColorDialogTest methodsFor!
 
 testColorDefault
@@ -23,6 +26,7 @@ testColorDefault
 	model value: Color black.
 	subject extractResult: true.
 	self assert: model value equals: Color default! !
+
 !UI.Tests.ColorDialogTest categoriesForMethods!
 testColorDefault!public!unit tests! !
 !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.NMGETINFOTIPTest guid: (Core.GUID fromString: '{7f1dac6e-bff1-4ae4-ae9a-208b2ada5c3e}')!
+
 OS.Tests.NMGETINFOTIPTest comment: ''!
+
 !OS.Tests.NMGETINFOTIPTest methodsFor!
 
 subjectClass
@@ -34,6 +37,7 @@ testSetText
 	"Set some overflowing text again, but this time not splitting an extended char"
 	self assert: (subject text: 87654321) equals: '876543…'.
 	self assert: buf equals: '876543…' , (String with: $\x0) , 'X'! !
+
 !OS.Tests.NMGETINFOTIPTest categoriesForMethods!
 subjectClass!constants!public! !
 testSetText!constants!public! !

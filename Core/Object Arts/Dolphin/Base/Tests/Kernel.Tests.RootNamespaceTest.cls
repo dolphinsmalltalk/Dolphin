@@ -7,8 +7,11 @@ Kernel.Tests.SystemNamespaceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.RootNamespaceTest guid: (Core.GUID fromString: '{d86d3cf1-c931-498c-b32a-89afd6f71306}')!
+
 Kernel.Tests.RootNamespaceTest comment: ''!
+
 !Kernel.Tests.RootNamespaceTest methodsFor!
 
 subject
@@ -40,6 +43,7 @@ testEnvironment
 testIncludesKey
 	#(#Root #Smalltalk) do: [:each | self assert: (self subject includesKey: each)].
 	self deny: (self subject includesKey: Object name)! !
+
 !Kernel.Tests.RootNamespaceTest categoriesForMethods!
 subject!constants!private! !
 testAbsoluteName!public!unit tests! !

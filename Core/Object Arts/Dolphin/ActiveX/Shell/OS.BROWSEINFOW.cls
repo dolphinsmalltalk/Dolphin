@@ -17,11 +17,15 @@ OS.CommonDialogStructure
 			'_OffsetOf_pidlRoot' -> 16r4.
 			'_OffsetOf_pszDisplayName' -> 16r8
 		}!
+
 OS.BROWSEINFOW guid: (Core.GUID fromString: '{87b4c5cc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.BROWSEINFOW comment: 'BROWSEINFO is an <ExternalStructure> class which represents the Windows common dialog structure of the same name.
 
 BROWSEINFO is used in conjunction with the BrowseFolderDialog.'!
+
 !OS.BROWSEINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.BROWSEINFOW methodsFor!
 
 displayName
@@ -80,6 +84,7 @@ title: text
 	We must hold onto the string to prevent it being prematurely GC'd."
 
 	self lpszTitle: (title := text asUtf16String)! !
+
 !OS.BROWSEINFOW categoriesForMethods!
 displayName!accessing!public! !
 flags!**compiled accessors**!public! !
@@ -127,6 +132,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !
+
 !OS.BROWSEINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,8 +7,11 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.StructureArrayFieldTest guid: (Core.GUID fromString: '{643619b7-e103-4887-bc6b-533f1a9c1d98}')!
+
 External.Tests.StructureArrayFieldTest comment: ''!
+
 !External.Tests.StructureArrayFieldTest methodsFor!
 
 testReadFrom
@@ -26,6 +29,7 @@ testWriteInto
 	subject offset: 8.
 	subject writeInto: struct value: (UInt32Array withAll: #(10 11 12 13)) bytes.
 	self assert: struct asArray equals: {0 @ 0. 10 @ 11. 12 @ 13. 0 @ 0}! !
+
 !External.Tests.StructureArrayFieldTest categoriesForMethods!
 testReadFrom!public! !
 testWriteInto!public! !

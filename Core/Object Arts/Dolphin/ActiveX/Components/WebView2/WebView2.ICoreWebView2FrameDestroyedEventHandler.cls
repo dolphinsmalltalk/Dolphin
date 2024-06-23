@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2FrameDestroyedEventHandler guid: (OS.COM.IID fromString: '{59dd7b4c-9baa-11eb-a8b3-0242ac130003}')!
+
 WebView2.ICoreWebView2FrameDestroyedEventHandler comment: '`ICoreWebView2FrameDestroyedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameDestroyedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2FrameDestroyedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2FrameDestroyedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2FrameDestroyedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2Frame* IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2FrameDestroyedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -68,6 +73,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#frameDestroyed! !
+
 !WebView2.ICoreWebView2FrameDestroyedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !

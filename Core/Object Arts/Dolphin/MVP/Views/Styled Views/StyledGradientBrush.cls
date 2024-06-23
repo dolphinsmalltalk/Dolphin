@@ -5,9 +5,13 @@ Object subclass: #StyledGradientBrush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StyledGradientBrush guid: (GUID fromString: '{4a31f78c-2126-4b71-bf0b-064199a1f828}')!
+
 StyledGradientBrush comment: 'A StyledBrush holds persistent details for a GdiplusLinearGradientBrush.'!
+
 !StyledGradientBrush categoriesForClass!Kernel-Objects! !
+
 !StyledGradientBrush methodsFor!
 
 asBackgroundGdiplusBrushFor: aView 
@@ -78,6 +82,7 @@ startPoint
 
 startPoint: aPoint 
 	startPoint := aPoint! !
+
 !StyledGradientBrush categoriesForMethods!
 asBackgroundGdiplusBrushFor:!converting!public! !
 endColor!accessing!public! !
@@ -143,6 +148,7 @@ new
 
 white
 	^self color: Color white! !
+
 !StyledGradientBrush class categoriesForMethods!
 black!instance creation!public! !
 color:!instance creation!public! !

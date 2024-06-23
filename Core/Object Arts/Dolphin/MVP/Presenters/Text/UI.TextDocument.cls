@@ -7,14 +7,18 @@ UI.AbstractDocumentShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TextDocument guid: (Core.GUID fromString: '{87b4c6bb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.TextDocument comment: '`TextDocument` is a `<documentPresenter>` capable of displaying and editing a `<readableString>` document.
 
 Instance Variables:
 	documentPresenter	`TextPresenter` holding the document text.
 
 '!
+
 !UI.TextDocument categoriesForClass!MVP-Presenters! !
+
 !UI.TextDocument methodsFor!
 
 createComponents
@@ -115,6 +119,7 @@ saveUserSettings
 validateUserInterface
 	modifiedModel value: self isModified.
 	^super validateUserInterface! !
+
 !UI.TextDocument categoriesForMethods!
 createComponents!initializing!public! !
 documentPresenterClass!constants!public! !
@@ -163,6 +168,7 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
+
 !UI.TextDocument class categoriesForMethods!
 defaultFileExtension!constants!public! !
 defaultModel!models!public! !

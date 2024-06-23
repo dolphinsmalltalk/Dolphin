@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.AddressTest guid: (Core.GUID fromString: '{55d8e17d-e5d8-4060-b20d-34dd8826180f}')!
+
 External.Tests.AddressTest comment: ''!
+
 !External.Tests.AddressTest methodsFor!
 
 stringFromAddressTestClass: aStringClass
@@ -49,6 +52,7 @@ testStringsFromAddress
 			self stringFromAddressTestClass: each.
 			self assertIsNil: (each fromAddress: nil).
 			self assertIsNil: (each fromAddress: 0)]! !
+
 !External.Tests.AddressTest categoriesForMethods!
 stringFromAddressTestClass:!helpers!public! !
 testExternalAddressAtAddress!public!unit tests! !

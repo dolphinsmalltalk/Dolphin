@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IVBSAXXMLFilter guid: (OS.COM.IID fromString: '{1299eb1b-5b88-433e-82de-82ca75ad4e04}')!
+
 MSXML.IVBSAXXMLFilter comment: '`IVBSAXXMLFilter` is a wrapper class for the COM interface ''MSXML2.IVBSAXXMLFilter'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -35,7 +37,9 @@ interface IVBSAXXMLFilter : IDispatch
 };
 ```
 '!
+
 !MSXML.IVBSAXXMLFilter categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IVBSAXXMLFilter methodsFor!
 
 get_parent: oReader
@@ -81,6 +85,7 @@ setParent: oReader
 	Helpstring: Set or get the parent reader"
 
 	self putref_parent: oReader! !
+
 !MSXML.IVBSAXXMLFilter categoriesForMethods!
 get_parent:!**auto generated**!COM Interfaces-IVBSAXXMLFilter!private! !
 isExtensible!**auto generated**!public!testing! !
@@ -102,6 +107,7 @@ defineFunctions
 		defineFunction: #putref_parent:
 			argumentTypes: 'IVBSAXXMLReader*'
 ! !
+
 !MSXML.IVBSAXXMLFilter class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

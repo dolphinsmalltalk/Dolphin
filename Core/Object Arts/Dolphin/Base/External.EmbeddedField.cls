@@ -7,12 +7,16 @@ External.Field
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.EmbeddedField guid: (Core.GUID fromString: '{87b4c4da-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.EmbeddedField comment: 'EmbeddedField is the abstract class of <ExternalField>s that describe fields of <ExternalStructure>s that are directly embedded in the structure itself, as opposed to being pointers to external memory where the data resides.
 
 Instance Variables:
 	fieldClass		<Class> of Smalltalk object that can be used to represent the data stored in the field.'!
+
 !External.EmbeddedField categoriesForClass!External-Data-Types! !
+
 !External.EmbeddedField methodsFor!
 
 alignment
@@ -54,6 +58,7 @@ printOn: aStream
 
 valueType
 	^self fieldClass! !
+
 !External.EmbeddedField categoriesForMethods!
 alignment!constants!public! !
 byteSize!accessing!private! !
@@ -71,6 +76,7 @@ new
 	a length."
 
 	^self shouldNotImplement! !
+
 !External.EmbeddedField class categoriesForMethods!
 new!instance creation!private! !
 !

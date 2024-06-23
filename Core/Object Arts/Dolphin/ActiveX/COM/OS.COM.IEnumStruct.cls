@@ -7,14 +7,18 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumStruct guid: (OS.COM.IID fromString: '{e153e32c-7cfb-4182-a9cd-e5394db58168}')!
+
 OS.COM.IEnumStruct comment: '`OS.COM.IEnumStruct` is a generic client implemention of IEnum for enumerating over structs. It can be parameterised with the structure type to be enumerated over on a per instance basis, eliminating the need to define a large number of IEnumStructName classes.
 
 Instance Variables:
 	elementClass		<externalStructure class>
 
 '!
+
 !OS.COM.IEnumStruct categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IEnumStruct methodsFor!
 
 elementClass
@@ -22,6 +26,7 @@ elementClass
 
 elementClass: anExternalStructure 
 	elementClass := anExternalStructure! !
+
 !OS.COM.IEnumStruct categoriesForMethods!
 elementClass!accessing!private! !
 elementClass:!accessing!private! !
@@ -44,6 +49,7 @@ elementClass: elementClass
 	^(self newPointer)
 		elementClass: elementClass;
 		yourself! !
+
 !OS.COM.IEnumStruct class categoriesForMethods!
 elementClass!constants!private! !
 elementClass:!instance creation!public! !

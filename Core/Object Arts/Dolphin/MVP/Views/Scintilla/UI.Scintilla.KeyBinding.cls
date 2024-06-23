@@ -122,7 +122,9 @@ Core.Object
 			'VirtualKeyMap'
 				-> #(16r0 16r1 16r2 16r3 16r4 16r5 16r6 16r7 16r8 16r9 16rA 16rB 16rC 16rD 16rE 16rF 16r10 16r11 16r13B 16r13 16r14 16r15 16r16 16r17 16r18 16r19 16r1A 16r7 16r1C 16r1D 16r1E 16r1F 16r20 16r132 16r133 16r131 16r130 16r12E 16r12D 16r12F 16r12C 16r29 16r2A 16r2B 16r2C 16r135 16r134 16r2F 16r30 16r31 16r32 16r33 16r34 16r35 16r36 16r37 16r38 16r39 16r3A 16r3B 16r3C 16r3D 16r3E 16r3F 16r40 16r41 16r42 16r43 16r44 16r45 16r46 16r47 16r48 16r49 16r4A 16r4B 16r4C 16r4D 16r4E 16r4F 16r50 16r51 16r52 16r53 16r54 16r55 16r56 16r57 16r58 16r59 16r5A 16r139 16r13A 16r5D 16r5E 16r5F 16r60 16r61 16r62 16r63 16r64 16r65 16r66 16r67 16r68 16r69 16r6A 16r136 16r6C 16r137 16r6E 16r138 16r70 16r71 16r72 16r73 16r74 16r75 16r76 16r77 16r78 16r79 16r7A 16r7B 16r7C 16r7D 16r7E 16r7F 16r80 16r81 16r82 16r83 16r84 16r85 16r86 16r87 16r88 16r89 16r8A 16r8B 16r8C 16r8D 16r8E 16r8F 16r90 16r91 16r92 16r93 16r94 16r95 16r96 16r97 16r98 16r99 16r9A 16r9B 16r9C 16r9D 16r9E 16r9F 16rA0 16rA1 16rA2 16rA3 16rA4 16rA5 16rA6 16rA7 16rA8 16rA9 16rAA 16rAB 16rAC 16rAD 16rAE 16rAF 16rB0 16rB1 16rB2 16rB3 16rB4 16rB5 16rB6 16rB7 16rB8 16rB9 16rBA 16rBB 16rBC 16rBD 16rBE 16r2F 16r60 16rC1 16rC2 16rC3 16rC4 16rC5 16rC6 16rC7 16rC8 16rC9 16rCA 16rCB 16rCC 16rCD 16rCE 16rCF 16rD0 16rD1 16rD2 16rD3 16rD4 16rD5 16rD6 16rD7 16rD8 16rD9 16rDA 16r5B 16r5C 16r5D 16rDE 16rDF 16rE0 16rE1 16rE2 16rE3 16rE4 16rE5 16rE6 16rE7 16rE8 16rE9 16rEA 16rEB 16rEC 16rED 16rEE 16rEF 16rF0 16rF1 16rF2 16rF3 16rF4 16rF5 16rF6 16rF7 16rF8 16rF9 16rFA 16rFB 16rFC 16rFD 16rFE 16rFF)
 		}!
+
 UI.Scintilla.KeyBinding guid: (Core.GUID fromString: '{bf35c065-fef0-4aa1-8dcd-e40e73c5447a}')!
+
 UI.Scintilla.KeyBinding comment: '`UI.Scintilla.KeyBinding` is a support class for the `ScintillaView`, used to represent the key bindings defined in a particular instance. The control itself defines a large set of default mappings, but these can be replaced and/or augmented.
 
 ## Instance Variables:
@@ -134,7 +136,9 @@ UI.Scintilla.KeyBinding comment: '`UI.Scintilla.KeyBinding` is a support class f
   `Commands`			`<IdentityDictionary>` mapping Dolphin accelerator key codes `<integer>`s to command `Symbol`s.
 
 '!
+
 !UI.Scintilla.KeyBinding categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.KeyBinding methodsFor!
 
 = comparand 
@@ -215,6 +219,7 @@ translateVirtualKey: vkInteger
 	key code (SCK_xxx)"
 
 	^VirtualKeyMap at: (vkInteger bitAnd: 16rFF) + 1! !
+
 !UI.Scintilla.KeyBinding categoriesForMethods!
 =!comparing!public! !
 acceleratorKey!accessing!public! !
@@ -403,6 +408,7 @@ newAcceleratorKey: keyInteger message: sciInteger
 
 newChord: aString message: sciInteger
 	^self newAcceleratorKey: (AcceleratorTable keyCodeFromInvariantString: aString) message: sciInteger! !
+
 !UI.Scintilla.KeyBinding class categoriesForMethods!
 icon!constants!development!public! !
 initialize!development!initializing!private! !

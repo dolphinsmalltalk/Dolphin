@@ -7,13 +7,17 @@ Kernel.PluggableSortAlgorithm
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.IntrosortAlgorithm guid: (Core.GUID fromString: '{80197d56-08be-4a10-a209-700b5452c610}')!
+
 Kernel.IntrosortAlgorithm comment: 'IntrosortAlgorithm implements David Musser''s introspective sort algorithm as a sorting strategy for use in conjunction with <SortedCollection>s.
 
 Introsort is not a new sorting algorithm, but rather hybrid of two others. It exhibits high-performance of Quicksort on average, but without the latter''s worst cases. It achieves this by using Quicksort as its default algorithm, but switching to Heapsort when it appears that quicksort is going quadratic. It is still not as fast as Heapsort on Quicksorts worst cases, because Quicksort wastes some time before the advisability of switching to Heapsort is detected, but it is a reasonable compromise.
 
 Introsort is not a stable sort, i.e. if the collection has previously been sorted by some other criteria, then the sort will not maintain this previous ordering for sort equal elements when resorting. Use <MergesortAlgorithm> if a stable sort is required.'!
+
 !Kernel.IntrosortAlgorithm categoriesForClass!Kernel-Objects! !
+
 !Kernel.IntrosortAlgorithm methodsFor!
 
 sort: anObject from: startInteger to: stopInteger 
@@ -115,6 +119,7 @@ sort: anObject from: startInteger to: stopInteger limit: limitInteger
 		insertionSort: anObject
 		from: lo
 		to: up! !
+
 !Kernel.IntrosortAlgorithm categoriesForMethods!
 sort:from:to:!operations!public! !
 sort:from:to:limit:!operations!private! !

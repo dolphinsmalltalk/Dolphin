@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ToolbarTest guid: (Core.GUID fromString: '{beb204cd-8c17-44a4-8305-c23345382e1e}')!
+
 UI.Tests.ToolbarTest comment: ''!
+
 !UI.Tests.ToolbarTest methodsFor!
 
 classToTest
@@ -29,6 +32,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view isTransparent.
 	self deny: view hasLabels.
 	self assert: (view baseStyleAllMask: OS.CommCtrlConstants.CCS_NOPARENTALIGN)! !
+
 !UI.Tests.ToolbarTest categoriesForMethods!
 classToTest!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -55,6 +59,7 @@ resource_Tool_bar_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409288972 131137 416 nil 327686 ##(Smalltalk.Color) #default nil 517 nil nil nil 416 496 8 1867527152 170 192 8 #() 170 192 544 138 144 544 nil nil 1 nil nil nil nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 738 701 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 29 15 0 0 35 0 0 0] 8 #() 738 193 193 nil 27 )! !
+
 !UI.Tests.ToolbarTest class categoriesForMethods!
 resource_Tool_bar_D6!public!resources-views! !
 resource_Tool_bar_D7!public!resources-views! !

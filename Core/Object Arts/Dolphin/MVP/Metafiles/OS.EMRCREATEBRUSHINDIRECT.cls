@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihBrush' -> 16r8.
 			'_OffsetOf_lb' -> 16rC
 		}!
+
 OS.EMRCREATEBRUSHINDIRECT guid: (Core.GUID fromString: '{491c3d56-fbf6-4cd9-8ea2-30cdf342f656}')!
+
 OS.EMRCREATEBRUSHINDIRECT comment: '<EMRCREATEBRUSHINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEBRUSHINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMRCREATEBRUSHINDIRECT {
 	[helpstring("The style must be BS_SOLID, BS_HOLLOW,")] LOGBRUSH lb;
 } EMRCREATEBRUSHINDIRECT;
 '!
+
 !OS.EMRCREATEBRUSHINDIRECT categoriesForClass!Win32-Structs! !
+
 !OS.EMRCREATEBRUSHINDIRECT methodsFor!
 
 ihBrush
@@ -53,6 +57,7 @@ lb: aLOGBRUSH
 		from: ##(_OffsetOf_lb + 1)
 		to: ##(_OffsetOf_lb + LOGBRUSH._LOGBRUSH_Size)
 		startingAt: 1! !
+
 !OS.EMRCREATEBRUSHINDIRECT categoriesForMethods!
 ihBrush!**compiled accessors**!public! !
 ihBrush:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEBRUSHINDIRECT}! !
+
 !OS.EMRCREATEBRUSHINDIRECT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

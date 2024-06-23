@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.PackageBrowserShellTest guid: (Core.GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
+
 Tools.Tests.PackageBrowserShellTest comment: ''!
+
 !Tools.Tests.PackageBrowserShellTest methodsFor!
 
 addRemoveRenameClasses
@@ -500,6 +503,7 @@ testRepackageMethods
 
 viewClass
 	^ShellView! !
+
 !Tools.Tests.PackageBrowserShellTest categoriesForMethods!
 addRemoveRenameClasses!private!unit tests! !
 assertClassesInSync!private!unit tests! !
@@ -538,6 +542,7 @@ viewClass!constants!private! !
 
 resources
 	^{Core.Tests.DolphinTestPackages}! !
+
 !Tools.Tests.PackageBrowserShellTest class categoriesForMethods!
 resources!public! !
 !

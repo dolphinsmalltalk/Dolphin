@@ -26,6 +26,10 @@ Kernel.SharedPool
 			'CRYPTPROTECTMEMORY_SAME_LOGON' -> 16r2.
 			'CRYPTPROTECTMEMORY_SAME_PROCESS' -> 16r0
 		}!
+
 OS.WinCryptConstants guid: (Core.GUID fromString: '{0766bf98-26e5-46e9-936f-814d23452c3a}')!
+
 OS.WinCryptConstants isNonInstantiable: true!
+
 OS.WinCryptConstants comment: ''!
+

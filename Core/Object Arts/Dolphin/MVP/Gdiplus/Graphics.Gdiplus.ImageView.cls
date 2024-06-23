@@ -7,7 +7,9 @@ UI.ImageViewAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.ImageView guid: (Core.GUID fromString: '{eede5c5a-f1e0-4e07-b766-9ea7d3169055}')!
+
 Graphics.Gdiplus.ImageView comment: '`Gdiplus.ImageView` is a `<valueView>` for displaying static `<image>`s based on Object-Art''''s ImageView, but using Gdiplus to draw the images.
 
 It can display either GDI or Gdiplus based images.
@@ -28,7 +30,9 @@ It can display either GDI or Gdiplus based images.
 
 
 '!
+
 !Graphics.Gdiplus.ImageView categoriesForClass!MVP-Views! !
+
 !Graphics.Gdiplus.ImageView methodsFor!
 
 default: imageExtent in: displayRect 
@@ -117,6 +121,7 @@ paintImageOn: aCanvas
 		drawBorderOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !
+
 !Graphics.Gdiplus.ImageView categoriesForMethods!
 default:in:!geometry!private! !
 imageAttributes!accessing!public! !
@@ -198,6 +203,7 @@ stbConvertFromVersion13: anArray
 
 stbVersion
 	^14! !
+
 !Graphics.Gdiplus.ImageView class categoriesForMethods!
 interpolationStyles!constants!public! !
 interpolationStyleTable!constants!public! !

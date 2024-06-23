@@ -7,8 +7,11 @@ OS.IniFileAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.IniFileSection guid: (Core.GUID fromString: '{958fca51-c92d-44e7-bba0-cfb419fa5b11}')!
+
 OS.IniFileSection comment: 'Implements <abstractDictionary> over a named section of a Windows .ini file'!
+
 !OS.IniFileSection methodsFor!
 
 = comparand
@@ -120,6 +123,7 @@ removeKey: aString ifAbsent: aNiladicValuable
 setFilename: filenameString section: sectionNameString
 	filename := filenameString asUtf16String.
 	name := sectionNameString asUtf16String shallowCopy! !
+
 !OS.IniFileSection categoriesForMethods!
 =!comparing!public! !
 at:ifAbsent:!adding!public! !
@@ -140,6 +144,7 @@ setFilename:section:!initializing!private! !
 open: filenameString section: sectionNameString
 	^self new
 		setFilename: filenameString section: sectionNameString! !
+
 !OS.IniFileSection class categoriesForMethods!
 open:section:!public! !
 !

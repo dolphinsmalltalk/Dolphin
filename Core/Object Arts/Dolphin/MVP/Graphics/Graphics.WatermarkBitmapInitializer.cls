@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.WatermarkBitmapInitializer guid: (Core.GUID fromString: '{58853b8d-ed91-47d3-a98e-ac2003604043}')!
+
 Graphics.WatermarkBitmapInitializer comment: ''!
+
 !Graphics.WatermarkBitmapInitializer methodsFor!
 
 = anObject
@@ -115,6 +118,7 @@ printImage: aBitmap on: aWriteStream
 		print: alphaPercent;
 		nextPutAll: ' backcolor: ';
 		print: backcolor! !
+
 !Graphics.WatermarkBitmapInitializer categoriesForMethods!
 =!comparing!public! !
 alphaPercent!accessing!public! !
@@ -134,6 +138,7 @@ image: anImage alphaPercent: anInteger backcolor: aColor
 		image: anImage
 		alphaPercent: anInteger
 		backcolor: aColor! !
+
 !Graphics.WatermarkBitmapInitializer class categoriesForMethods!
 image:alphaPercent:backcolor:!instance creation!public! !
 !

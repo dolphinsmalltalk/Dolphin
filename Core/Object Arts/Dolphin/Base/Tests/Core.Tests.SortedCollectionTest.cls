@@ -7,8 +7,11 @@ Core.Tests.OrderedCollectionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.SortedCollectionTest guid: (Core.GUID fromString: '{5ae7c3bc-62c7-454a-9917-c6accd854be1}')!
+
 Core.Tests.SortedCollectionTest comment: ''!
+
 !Core.Tests.SortedCollectionTest methodsFor!
 
 collectionClass
@@ -73,6 +76,7 @@ verifyConcatenation: b with: a
 		ifTrue: [self assert: ((a symmetricDifference: result) noDifference: b)]
 		ifFalse: [super verifyConcatenation: b with: a].
 	^result! !
+
 !Core.Tests.SortedCollectionTest categoriesForMethods!
 collectionClass!constants!private! !
 testAddAfterIndex!public!unit tests! !

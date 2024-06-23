@@ -13,11 +13,15 @@ External.RECT
 			'_OffsetOf_top' -> 16r4.
 			'_RECTL_Size' -> 16r10
 		}!
+
 OS.RECTL guid: (Core.GUID fromString: '{0a6e055d-001b-4817-b07d-fe982ca46330}')!
+
 OS.RECTL comment: '`RECT` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name.
 
 The `RECT` structure is used in many places in the Windows API to represent a rectangle consisting of 32-bit co-ordinates for top-left and bottom-right corners. `RECTL` is an alias for the same class/structure. `RECT` supports conversions to and from the Smalltalk `Rectangle` class.'!
+
 !OS.RECTL categoriesForClass!Win32-Structs! !
+
 !OS.RECTL methodsFor!
 
 asRectangle
@@ -108,6 +112,7 @@ topLeft
 	"Answer a <Point> representing the top left position of the receiver."
 
 	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_left) y: (bytes int32AtOffset: _OffsetOf_top)! !
+
 !OS.RECTL categoriesForMethods!
 asRectangle!converting!public! !
 bottom!**compiled accessors**!public! !
@@ -189,6 +194,7 @@ width: widthInteger height: heightInteger
 				int32AtOffset: _OffsetOf_right put: widthInteger;
 				int32AtOffset: _OffsetOf_bottom put: heightInteger;
 				yourself)! !
+
 !OS.RECTL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,7 +7,9 @@ WebView2.ICoreWebView2EventHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2MoveFocusRequestedEventHandler guid: (OS.COM.IID fromString: '{69035451-6dc7-4cb8-9bce-b2bd70ad289f}')!
+
 WebView2.ICoreWebView2MoveFocusRequestedEventHandler comment: '`ICoreWebView2MoveFocusRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2MoveFocusRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2MoveFocusRequestedEventHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2MoveFocusRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2MoveFocusRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -47,6 +51,7 @@ Invoke: sender args: args
 
 	<virtual stdcall: hresult 4 ICoreWebView2Controller* ICoreWebView2MoveFocusRequestedEventArgs*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2MoveFocusRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -71,6 +76,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#moveFocusRequested:! !
+
 !WebView2.ICoreWebView2MoveFocusRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !

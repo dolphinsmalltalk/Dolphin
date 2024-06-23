@@ -7,8 +7,11 @@ OS.COM.APIInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceTypeAnalyzer guid: (Core.GUID fromString: '{c06f3b7d-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.InterfaceTypeAnalyzer isNonInstantiable: true!
+
 OS.COM.InterfaceTypeAnalyzer comment: 'AXInterfaceTypeAnalyzer is the abstract superclass of <AXTypeInfoAnalyzer>s describing custom COM interfaces (TKindInterfaceAnalyzer) and dispatch interfaces (TKindDispatchAnalyzer).
 
 AXInterfaceTypeAnalyzers wrap <ITypeInfo> pointers from a type library, providing behaviour which allows one to query information and generate wrapper classes appropriate for COM interfaces.
@@ -22,7 +25,9 @@ Class Variables:
 	ReservedUnkSelectors	<IdentitySet> of <Symbol>. Selectors which should not be overridden by custom interfaces.
 
 '!
+
 !OS.COM.InterfaceTypeAnalyzer categoriesForClass!ActiveX Automation! !
+
 !OS.COM.InterfaceTypeAnalyzer methodsFor!
 
 classDesc
@@ -110,6 +115,7 @@ superInterface
 	"Answer a <TKindInterfaceAnalyzer> describing the <COMInterface> from which the receiver is derived, or nil if the receiver describes IUnknown."
 
 	^self isDerived ifTrue: [self getImplTypeInfoAt: 1]! !
+
 !OS.COM.InterfaceTypeAnalyzer categoriesForMethods!
 classDesc!accessing!private! !
 clsid!accessing!public! !

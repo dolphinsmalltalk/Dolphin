@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.MENUITEMINFOW private})
 	classInstanceVariableNames: ''
 	classConstants: { 'StringSeparator' -> $/. 'StylesMask' -> 16rFFFFF }!
+
 UI.MenuItem guid: (Core.GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.MenuItem isNonInstantiable: true!
+
 UI.MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.
 
 Instance Variables:
@@ -20,7 +23,9 @@ Class Variables:
 	StringSeparator	<Character> separator to use when parsing menu definitions using #fromString:
 
 '!
+
 !UI.MenuItem categoriesForClass!MVP-Views-Support! !
+
 !UI.MenuItem methodsFor!
 
 acceleratorKey
@@ -163,6 +168,7 @@ text
 
 toStrings
 	^self subclassResponsibility! !
+
 !UI.MenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!private! !
@@ -254,6 +260,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Dividers := nil! !
+
 !UI.MenuItem class categoriesForMethods!
 dividers!public! !
 errorIllegalMenuString:!exceptions!private! !

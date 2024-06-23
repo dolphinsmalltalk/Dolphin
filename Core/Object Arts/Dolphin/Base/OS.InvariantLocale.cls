@@ -7,9 +7,13 @@ OS.AbstractWindowsLocale
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.InvariantLocale guid: (Core.GUID fromString: '{de192d86-3877-4a04-9a30-86e0bbd3922a}')!
+
 OS.InvariantLocale comment: ''!
+
 !OS.InvariantLocale categoriesForClass!System-Localization! !
+
 !OS.InvariantLocale methodsFor!
 
 basicLcid
@@ -49,6 +53,7 @@ tag
 	"Answer the RFC4646 language aka tag for this locale."
 
 	^LOCALE_NAME_INVARIANT! !
+
 !OS.InvariantLocale categoriesForMethods!
 basicLcid!constants!private! !
 displayScaledDecimal:on:!displaying!public! !
@@ -66,6 +71,7 @@ current
 
 reset
 	Invariant := nil! !
+
 !OS.InvariantLocale class categoriesForMethods!
 current!instance creation!public! !
 reset!initializing!public! !

@@ -5,13 +5,17 @@ IdbToolShell subclass: #ChunkBrowser
 	classVariableNames: 'ChunkTypeSelection CompareMethodsUsingParser'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowser guid: (GUID fromString: '{625fa0d2-ffc4-4926-9ae7-06fb0998ec4e}')!
+
 ChunkBrowser comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowser categoriesForClass!IDB Goodies! !
+
 !ChunkBrowser methodsFor!
 
 browseChunk
@@ -338,6 +342,7 @@ updateStatus
 				with: (filter isRestrictingMostRecent ifTrue: [' Re'] ifFalse: [String new])
 				with: (filter isRestrictingPicked ifTrue: [' Pi'] ifFalse: [String new])).
 	self clearStatusReport! !
+
 !ChunkBrowser categoriesForMethods!
 browseChunk!commands!commands-actions!public!testing! !
 canBrowse!public!testing! !
@@ -506,6 +511,7 @@ stFileTypes
 		add: #('Smalltalk Files (*.st)' '*.st');
 		add: #('All Files (*.*)' '*.*');
 		yourself! !
+
 !ChunkBrowser class categoriesForMethods!
 chunkTypeSelection!accessing!public! !
 chunkTypeSelection:!accessing!public! !

@@ -7,8 +7,11 @@ External.Tests.ExternalArrayTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.DOUBLEArrayTest guid: (Core.GUID fromString: '{d4fa7f6e-7be8-407b-a002-47d609d8d311}')!
+
 External.Tests.DOUBLEArrayTest comment: ''!
+
 !External.Tests.DOUBLEArrayTest methodsFor!
 
 arrayClass
@@ -19,6 +22,7 @@ elementFromValue: anObject
 
 numericElementClass
 	^DOUBLE! !
+
 !External.Tests.DOUBLEArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 elementFromValue:!private!unit tests! !

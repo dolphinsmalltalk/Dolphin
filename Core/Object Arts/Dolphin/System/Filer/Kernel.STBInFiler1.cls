@@ -7,16 +7,20 @@ Kernel.STBInFiler0
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler1 guid: (Core.GUID fromString: '{7b25c85f-974d-4429-aba7-bbe2323a30f0}')!
+
 Kernel.STBInFiler1 comment: '`STBInFiler1` is an `STBInFiler` for reading STB 1 binary object serialization format.
 
 STB 1 was introduced in Dolphin 5. It differed little from STB 0, but included pre-registration of some classes to fix a chicken-before-egg problem but also to reduce the size of the STB streams.'!
+
 !Kernel.STBInFiler1 methodsFor!
 
 lastPredefined
 	"Private - Answer the index of the last pre-defined object. The indices of all objects actually present in the stream are offset from this."
 
 	^LastPredefinedClassRef! !
+
 !Kernel.STBInFiler1 categoriesForMethods!
 lastPredefined!constants!private! !
 !
@@ -55,6 +59,7 @@ uninitialize
 
 version
 	^1! !
+
 !Kernel.STBInFiler1 class categoriesForMethods!
 initialize!class initialization!public! !
 predefinedClasses!constants!public! !

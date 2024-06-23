@@ -7,9 +7,13 @@ OS.UserLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.FakeUserLibrary guid: (Core.GUID fromString: '{bbf4bdc3-fddb-4f49-8884-67abd17b5abf}')!
+
 UI.Tests.FakeUserLibrary comment: ''!
+
 !UI.Tests.FakeUserLibrary categoriesForClass!External-Libraries-Win32! !
+
 !UI.Tests.FakeUserLibrary methodsFor!
 
 close
@@ -56,6 +60,7 @@ open
 	handle := user32 handle.
 	self beFinalizable.
 	UserLibrary setDefault: self! !
+
 !UI.Tests.FakeUserLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
 getActiveWindow!public!win32 functions-keyboard input! !
@@ -78,6 +83,7 @@ uninitialize
 
 	"Override so that we don't close the default user library and undeclare User32"
 ! !
+
 !UI.Tests.FakeUserLibrary class categoriesForMethods!
 openDefault!instance creation!private!realizing/unrealizing! !
 uninitialize!class hierarchy-removing!private! !

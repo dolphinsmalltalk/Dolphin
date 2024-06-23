@@ -7,8 +7,11 @@ Kernel.StLiteralTokenWithSource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StNumberLiteralToken guid: (Core.GUID fromString: '{777f55ae-a939-4a73-9cc8-2cef3a91f41e}')!
+
 Kernel.StNumberLiteralToken comment: ''!
+
 !Kernel.StNumberLiteralToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -24,6 +27,7 @@ isNegative
 
 isNumberLiteralToken
 	^true! !
+
 !Kernel.StNumberLiteralToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 forgetNegative!helpers!private! !

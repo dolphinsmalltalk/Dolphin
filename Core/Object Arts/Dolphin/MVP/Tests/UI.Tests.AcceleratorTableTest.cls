@@ -7,8 +7,11 @@ UI.Tests.AbstractKeyboardTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.AcceleratorTableTest guid: (Core.GUID fromString: '{ffc00c13-8da5-4b75-b82d-f96bba254efe}')!
+
 UI.Tests.AcceleratorTableTest comment: ''!
+
 !UI.Tests.AcceleratorTableTest methodsFor!
 
 numMultCode
@@ -84,6 +87,7 @@ testRoundTrippingKeyNames
 	localised := AcceleratorTable keyStringFromCode: self numMultCode.
 	self assert: localised equals: 'Alt+Num *'.
 	self assert: (AcceleratorTable keyCodeFromString: localised) equals: self numMultCode! !
+
 !UI.Tests.AcceleratorTableTest categoriesForMethods!
 numMultCode!constants!private! !
 testKeycodeFromString!public!unit tests! !

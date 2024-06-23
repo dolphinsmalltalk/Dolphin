@@ -145,6 +145,7 @@ Kernel.SharedPool
 			'MCSC_TITLETEXT' -> 16r3.
 			'MCSC_TRAILINGTEXT' -> 16r5
 		}!
+
 OS.NMHDR
 	subclass: #'OS.NMSELCHANGE'
 	instanceVariableNames: ''
@@ -156,6 +157,7 @@ OS.NMHDR
 			'_OffsetOf_stSelEnd' -> 16r1C.
 			'_OffsetOf_stSelStart' -> 16rC
 		}!
+
 UI.ValueConvertingControlView
 	subclass: #'UI.DateTimeCommonControl'
 	instanceVariableNames: ''
@@ -163,6 +165,7 @@ UI.ValueConvertingControlView
 	imports: #(#{OS.DateTimeCommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DateTimeCommonControl
 	subclass: #'UI.DateTimePicker'
 	instanceVariableNames: 'displayFormat'
@@ -170,6 +173,7 @@ UI.DateTimeCommonControl
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DateTimeCommonControl
 	subclass: #'UI.MonthCalendarView'
 	instanceVariableNames: ''
@@ -201,6 +205,7 @@ resource_Picker_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DateTimePicker} 38 #{Core.Array} 16 nil nil 50 2 8 1140916230 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 178 #hash 8 #() 262 #{Core.Date} 70769 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 450 521 51 32 402 #range: 50 1 8 #(nil nil) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 3 13 0 0 35 0 0 0] 8 #() 450 193 193 nil 27)! !
+
 !UI.DatePresenter class categoriesForMethods!
 resource_Month_calendar_view!public!resources-views! !
 resource_Picker_view!public!resources-views! !
@@ -217,6 +222,7 @@ resource_Picker_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DateTimePicker} 38 #{Core.Array} 16 nil nil 50 2 8 1140916235 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 338 251 51 32 290 #range: 50 1 8 #(nil nil) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 35 0 0 0] 8 #() 338 193 193 nil 27)! !
+
 !UI.TimePresenter class categoriesForMethods!
 resource_Picker_view!public!resources-views! !
 !

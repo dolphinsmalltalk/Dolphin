@@ -7,10 +7,13 @@ Security.ProtectedProductSerialNumber
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.Examples.MyCompanySerialNumber guid: (Core.GUID fromString: '{c1ed7586-afe1-4ee9-997a-01c157674e7d}')!
+
 Security.Examples.MyCompanySerialNumber comment: 'This class is a serial number factory for products of "MyCompany". Any <ProtectedProductSessionManager> that wishes to make use of these serial numbers should override it''s #serialNumberClass to answer this class. New serial numbers can be generated for MyCompany''s products by evaluating:
 
 MyCompanySerialNumber new displayString "Display it"'!
+
 !Security.Examples.MyCompanySerialNumber class methodsFor!
 
 instanceDecodingKey
@@ -39,6 +42,7 @@ lockedMethodDecodingKeyHash
 
 	^ 1149340459812121771490846453905007528758311757049.
 	! !
+
 !Security.Examples.MyCompanySerialNumber class categoriesForMethods!
 instanceDecodingKey!constants!private! !
 lockedMethodDecodingKey!constants!private! !

@@ -7,9 +7,13 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.OrEnvironment guid: (Core.GUID fromString: '{72c876b4-b565-41f0-85a5-957532328c69}')!
+
 Refactory.Browser.OrEnvironment comment: ''!
+
 !Refactory.Browser.OrEnvironment categoriesForClass!Refactoring-Environment! !
+
 !Refactory.Browser.OrEnvironment methodsFor!
 
 classesDo: aBlock
@@ -58,6 +62,7 @@ storeOn: aStream
 	aStream nextPutAll: ' | '.
 	oredEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
+
 !Refactory.Browser.OrEnvironment categoriesForMethods!
 classesDo:!accessing!public! !
 definesClass:!public!testing! !
@@ -76,6 +81,7 @@ onEnvironment: anEnvironment or: anotherEnvironment
 	^(self onEnvironment: anEnvironment)
 		oredEnvironment: anotherEnvironment;
 		yourself! !
+
 !Refactory.Browser.OrEnvironment class categoriesForMethods!
 onEnvironment:or:!instance creation!public! !
 !

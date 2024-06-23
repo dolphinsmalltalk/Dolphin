@@ -7,10 +7,15 @@ Core.SharedLookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WeakLookupTable guid: (Core.GUID fromString: '{87b4c532-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.WeakLookupTable isMourner: true!
+
 Core.WeakLookupTable comment: ''!
+
 !Core.WeakLookupTable categoriesForClass!Collections-Unordered!Collections-Weak! !
+
 !Core.WeakLookupTable methodsFor!
 
 copyEmpty: anInteger
@@ -209,6 +214,7 @@ valuesClass
 	is configured to inform the receiver when it suffers losses."
 
 	^MourningWeakArray! !
+
 !Core.WeakLookupTable categoriesForMethods!
 copyEmpty:!copying!private! !
 copyingClass!copying!private! !
@@ -255,6 +261,7 @@ newWithWeakValues: anInteger
 
 	^super new: anInteger
 ! !
+
 !Core.WeakLookupTable class categoriesForMethods!
 new:!instance creation!public! !
 newWithWeakKeys:!instance creation!public! !

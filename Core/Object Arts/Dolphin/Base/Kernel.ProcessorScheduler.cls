@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ProcessorScheduler guid: (Core.GUID fromString: '{87b4c4aa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.ProcessorScheduler comment: 'The singleton instance of `Kernel.ProcessorScheduler` (the global, `Core.Processor`) manages the set of live, ready to run, processes, scheduling the interpreter in a round-robin fashion but in strict priority order. The class and its singleton instance are in split across Core and Kernel namespaces respectively because in general, and along with other members of `Kernel`, it is unlikely than an application will need to refer to the class directly but quite likely that a reference to the instance may be needed.
 
 `Processor` is the destination for all asynchronous interrupts from the VM, and also manages ''callbacks'' (i.e. invocations of Smalltalk code from external systems, such as the dispatching of windows messages to the window procedure). In particular the processor ensures that processes return from callbacks in strict LIFO order so that synchronization with the native machine stack is maintained.
@@ -26,7 +28,9 @@ Instance Variables:
 		
 Class Variables:
 	InterruptSelectors	`Array` of `Symbol` selectors for each of the interrupt numbers sent by the VM.'!
+
 !Kernel.ProcessorScheduler categoriesForClass!Kernel-Processes! !
+
 !Kernel.ProcessorScheduler methodsFor!
 
 activePriority
@@ -626,6 +630,7 @@ zeroDivide: interruptArg
 
 	self enableInterrupts.
 	ZeroDivide dividend: interruptArg! !
+
 !Kernel.ProcessorScheduler categoriesForMethods!
 activePriority!processes-accessing!public! !
 activeProcess!debugger-step over!processes-accessing!public! !
@@ -730,6 +735,7 @@ newPriorities: highestPriority activeProcess: aProcess
 	"Private - Create Processor during boot."
 
 	^self basicNew setHighestPriority: highestPriority activeProcess: aProcess! !
+
 !Kernel.ProcessorScheduler class categoriesForMethods!
 initialize!development!initializing!public! !
 initializeInterruptSelectors!initializing!must not strip!private! !

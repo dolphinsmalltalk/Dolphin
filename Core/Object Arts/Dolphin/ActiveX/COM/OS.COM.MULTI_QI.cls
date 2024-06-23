@@ -12,11 +12,15 @@ External.FinalizableStructure
 			'_OffsetOf_pIID' -> 16r0.
 			'_OffsetOf_pItf' -> 16r4
 		}!
+
 OS.COM.MULTI_QI guid: (Core.GUID fromString: '{87b4c5c2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.MULTI_QI comment: '`OS.COM.MULTI_QI` is an `External.Structure` class to represent the Win32 COM MULTI_QI structure.
 
 Arrays of MULTI_QI structures can be used to query multiple interface pointers in a single request. This is only really important for DCOM as it helps to minimize the number of network round-trips that are performed.'!
+
 !OS.COM.MULTI_QI categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.MULTI_QI methodsFor!
 
 hr
@@ -48,6 +52,7 @@ pItf: anIUnknown
 	"Set the receiver's 'pItf' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_pItf put: anIUnknown yourAddress! !
+
 !OS.COM.MULTI_QI categoriesForMethods!
 hr!**compiled accessors**!public! !
 hr:!**compiled accessors**!public! !
@@ -91,6 +96,7 @@ defineFields
 
 getFieldNames
 	^#(#pIID #pItf #hr)! !
+
 !OS.COM.MULTI_QI class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !

@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GradientBrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.PathGradientBrushTest guid: (Core.GUID fromString: '{fcef1a0f-834c-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.Tests.PathGradientBrushTest comment: ''!
+
 !Graphics.Gdiplus.Tests.PathGradientBrushTest methodsFor!
 
 brushType
@@ -244,6 +247,7 @@ verifyEqualToModel: aGdiplusObject
 	self assert: aGdiplusObject centerPoint equals: model centerPoint.
 	self assert: aGdiplusObject focusScales equals: model focusScales.
 	self assert: aGdiplusObject surroundColors equals: model surroundColors! !
+
 !Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesForMethods!
 brushType!constants!private! !
 createCanonicalSubject!initializing!private! !

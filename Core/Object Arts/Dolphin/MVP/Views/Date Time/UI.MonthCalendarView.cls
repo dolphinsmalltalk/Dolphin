@@ -7,12 +7,16 @@ UI.DateTimeCommonControl
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.MonthCalendarView guid: (Core.GUID fromString: '{7a3bc35d-5d09-4328-91de-d863711be2ea}')!
+
 UI.MonthCalendarView comment: '`MonthCalendarView` is a `<valueView>` implementing the Windows "SysMonthCal32" common control, referred to as the "Month Calendar Control" in the MSDN documentation. 
 
 The `<valueModel>` associated with a `MonthCalendarView` must always yield a value that can be converted to a `SYSTEMTIME` using `#asSYSTEMTIME` after mapping through the installed type converter (e.g. a `DateAndTime`), although any time portion is ignored. A `MonthCalendarView` will normally be used in conjunction with a `DatePresenter`.
 '!
+
 !UI.MonthCalendarView categoriesForClass!MVP-Views! !
+
 !UI.MonthCalendarView methodsFor!
 
 calculateExtent: aLayoutContext 
@@ -172,6 +176,7 @@ state
 
 today
 	^self mcmGetToday asDate! !
+
 !UI.MonthCalendarView categoriesForMethods!
 calculateExtent:!geometry!private! !
 defaultExtent!constants!private! !
@@ -213,6 +218,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysMonthCal32'! !
+
 !UI.MonthCalendarView class categoriesForMethods!
 defaultModel!models!public! !
 winClassName!constants!private! !

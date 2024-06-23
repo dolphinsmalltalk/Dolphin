@@ -92,159 +92,186 @@ Object subclass: #ILExport
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ILImage
 	instanceVariableNames: 'extent colorsUsed colorsUsedCount image bitmapCache hotSpot'
 	classVariableNames: 'TransparentRGB'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #ILImport
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ILImportBitmapProxy
 	instanceVariableNames: 'bitmapInfoHeader colorTable imageBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ILLibrary
 	instanceVariableNames: 'images selectedImages modified dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILExport subclass: #ILExportBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILExport subclass: #ILExportIcon
 	instanceVariableNames: 'iconImages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILExportIcon subclass: #ILExportCursor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILExportIcon subclass: #ILExportExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImage subclass: #ILEditingImage
 	instanceVariableNames: 'modified undoStack redoStack undoCollector brushCache'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImport subclass: #ILImportBitmap
 	instanceVariableNames: 'bitmapFileHeader bitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImport subclass: #ILImportIcon
 	instanceVariableNames: 'iconDir icons'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImport subclass: #ILImportLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportIcon subclass: #ILImportCursor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportIcon subclass: #ILImportExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportExe subclass: #ILImportStandardExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportExe subclass: #ILImportToGoExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportBitmapProxy subclass: #ILImportIconProxy
 	instanceVariableNames: 'useMaskBytes maskBytes colorBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILImportIconProxy subclass: #ILImportCursorProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #ILColorSelectorPresenter
 	instanceVariableNames: 'selectedRGB colorSelectorView selectedColorView selectedColorText dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #ILEditorWorkspacePresenter
 	instanceVariableNames: 'dum1 dum2 dum3 dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #ILLibraryWorkspacePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #ILExtentDialog
 	instanceVariableNames: 'widthPresenter heightPresenter optionsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILExtentDialog subclass: #ILBitmapExtentDialog
 	instanceVariableNames: 'bitmapExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdbShell subclass: #ILEditorShell
 	instanceVariableNames: 'editorWorkspace colorSelector backupImage imageStatus locationStatus zoneStatus zoomStatus modifiedStatus'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdbToolShell subclass: #ILLibraryShell
 	instanceVariableNames: 'libraryWorkspace libraryFilename libraryStatus imageStatus modifiedStatus'
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #ICONDIR
 	instanceVariableNames: ''
 	classVariableNames: '_ICONDIR_Size _OffsetOf_idCount _OffsetOf_idEntries _OffsetOf_idReserved _OffsetOf_idType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #ICONDIRENTRY
 	instanceVariableNames: ''
 	classVariableNames: '_ICONDIRENTRY_Size _OffsetOf_bColorCount _OffsetOf_bHeight _OffsetOf_bReserved _OffsetOf_bWidth _OffsetOf_dwBytesInRes _OffsetOf_dwImageOffset _OffsetOf_wBitCount _OffsetOf_wPlanes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #ILColorSelector
 	instanceVariableNames: 'colorTable dum2 dum3 dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #ILEditorWorkspace
 	instanceVariableNames: 'zoom location zone zoneBrushes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #ILLibraryWorkspace
 	instanceVariableNames: 'imageLayout imageLayoutRect lastSelection lastImage dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -258,6 +285,7 @@ dolphinYellow
 		r: 255
 		g: 255
 		b: 230! !
+
 !Color class categoriesForMethods!
 dolphinYellow!idb goodies!instance creation!public! !
 !
@@ -275,6 +303,7 @@ containsPointInclusive: aPoint
 increaseCornerBy: delta
 	#idbAdded.
 	^origin corner: corner + delta! !
+
 !Rectangle categoriesForMethods!
 containsPointInclusive:!idb goodies!public!testing! !
 increaseCornerBy:!idb goodies!public!rectangle functions! !
@@ -297,6 +326,7 @@ scroll: aSymbol toNextIn: aCollection
 			[:context | 
 			self scrollOffset: self scrollOffset x @ newValue context: context.
 			self layoutManager positionScrolledViewOf: self context: context]! !
+
 !ScrollingDecorator categoriesForMethods!
 scroll:toNextIn:!event handling!idb goodies!public! !
 !
@@ -322,6 +352,7 @@ resource_ILLibraryShell_tools
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853548 131137 416 nil 327686 ##(Smalltalk.Color) #default nil 519 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 496 8 1903898080 170 192 8 #() 170 192 34 18 53533 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #editImage 8 'Edit Image' 1 1 nil 53533 657990 3 ##(Smalltalk.DIBSection) 1 true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Ian Bartholomew\Resources\ImageLibrary.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 7 594 1 1 1 nil 3 53529 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 738 #saveLibrary 8 'Save Library' 1 1 nil 53529 1 17 53543 706 416 1 738 #moveToEnd 8 'Move to End' 1 1 nil 53543 800 11 53539 706 416 1 738 #moveUp 8 'Move Up' 1 1 nil 53539 800 7 53535 706 416 1 738 #deleteImage 8 'Delete Image' 1 1 nil 53535 800 13 53531 706 416 1 738 #addImage 8 'New Image' 1 1 nil 53531 800 1 53527 930 416 1 738 #openLibrary 8 'Open Library' 1 1 nil 53527 1 15 53541 706 416 1 738 #moveDown 8 'Move Down' 1 1 nil 53541 800 9 53537 706 416 1 738 #moveToStart 8 'Move to Start' 1 1 nil 53537 800 5 34 11 1184 944 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 1136 720 1088 1346 416 1 1280 1040 1232 992 nil nil 1 nil 594 33 33 594 45 45 nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 594 3839 21 594 451 51 416 1522 #updateSizePosted 656 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 96 8 0 0 35 0 0 0] 8 #() 594 193 193 nil 27 )! !
+
 !Toolbar class categoriesForMethods!
 resource_ILEditorShell_tools!public!resources-views! !
 resource_ILLibraryShell_tools!public!resources-views! !

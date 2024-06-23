@@ -7,10 +7,15 @@ Kernel.StVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSpecialVariable guid: (Core.GUID fromString: '{83bccab3-8ad0-4dbb-bbf0-dba008295503}')!
+
 Kernel.StSpecialVariable isNonInstantiable: true!
+
 Kernel.StSpecialVariable comment: '<StSpecialVariable> is an abstract class of <StVariable> with concrete subclasses to describe the special variables, ''self'', ''super'', and ''thisContext''. '!
+
 !Kernel.StSpecialVariable categoriesForClass!Kernel-Objects! !
+
 !Kernel.StSpecialVariable methodsFor!
 
 addAssignment: aStVariableNode fromScope: aStSemanticScope
@@ -40,6 +45,7 @@ reads
 	variable described by the receiver."
 
 	^reads ?? #()! !
+
 !Kernel.StSpecialVariable categoriesForMethods!
 addAssignment:fromScope:!public! !
 addRead:fromScope:!public! !

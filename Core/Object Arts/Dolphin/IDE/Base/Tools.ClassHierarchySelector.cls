@@ -7,9 +7,13 @@ Tools.ClassSelector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ClassHierarchySelector guid: (Core.GUID fromString: '{e11cf5f9-c2ec-47e1-ba1f-fa2fc4c88ad7}')!
+
 Tools.ClassHierarchySelector comment: 'A ClassHierarchySelector is used to display a tree of classes. It implements the behaviour common to the class hierarchy panes in the <ClassBrowserShell> and <ClassHierarchyDiagram>.'!
+
 !Tools.ClassHierarchySelector categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !Tools.ClassHierarchySelector methodsFor!
 
 createComponents
@@ -48,6 +52,7 @@ newClass
 	package := aClass isNil ifFalse: [aClass owningPackage].
 	(self developmentSystem createSubclassOf: aClass inPackage: package)
 		ifNotNil: [:newClass | self actualClass: newClass]! !
+
 !Tools.ClassHierarchySelector categoriesForMethods!
 createComponents!initializing!public! !
 customDrawClassTree:!helpers!private! !
@@ -85,6 +90,7 @@ resource_Moen_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ScrollingDecorator} 38 #{Core.Array} 18 nil nil 50 2 8 1412431872 131073 32 nil 6 #{Graphics.Color} #default nil 5 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #findClass 8 'Find…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'FindClass.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 146 nil true 50 4 194 1 226 #browseClassPackage 8 'Package <d>' 1 1 274 nil true 306 8 'Package.ico' 368 65541 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 194 1 226 #browseClass 8 '&Class' 1 1 274 nil true 306 8 'ClassBrowserShell.ico' 368 65541 nil nil nil 194 2097153 226 #browseClassReferences 8 'Class &References' 1 1 nil nil nil 8 '&Browse' #browse 134217729 nil nil nil nil nil 8 '&Class' nil 134217729 nil nil nil nil nil nil nil 32 326 1 #{UI.ScrollingDecoratorLayout} true 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 18 #{UI.MoenTreeView} 50 30 nil 32 50 2 8 1140916224 1 816 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 128 nil 541 nil nil nil 816 2566 #{UI.MoenTreeNode} nil 1030 #{UI.MoenContour} nil nil nil nil 518 #{Graphics.Point} 1 1 1088 nil nil nil nil nil 7 518 #{Core.Message} #unqualifiedName 8 #() 1106 #iconImageIndex 8 #() 3 3 1350 1 #{Graphics.IconImageManager} 1074 21 21 41 nil 774 #{Graphics.Pen} nil true 262 #{OS.LOGPEN} 8 #[0 0 0 0 1 0 0 0 0 0 0 0 212 208 200 0] 1074 33 33 1074 19999 19999 65609 1074 1 1 1074 35 1 nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 1074 1 1 1074 771 521 816 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 129 1 0 0 4 1 0 0] 8 #() 1074 193 193 nil 27 8 'classes' nil 1074 1 1 true 1074 33 33 1378 50 1 1426 #createAt:extent: 50 2 1074 6143 21 1074 771 521 32 1506 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 128 13 0 0 14 1 0 0] 50 1 816 1568 nil 27)! !
+
 !Tools.ClassHierarchySelector class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !

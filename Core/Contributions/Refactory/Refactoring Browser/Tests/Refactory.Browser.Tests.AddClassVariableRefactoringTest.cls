@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AddClassVariableRefactoringTest guid: (Core.GUID fromString: '{f9de1392-b16f-4543-891c-a1831dca7b74}')!
+
 Refactory.Browser.Tests.AddClassVariableRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.AddClassVariableRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.AddClassVariableRefactoringTest methodsFor!
 
 setUp
@@ -78,6 +82,7 @@ testRBMetaclassFailure
 				class: (model classNamed: #'Core.Object') metaclass.
 	refactoring model: model.
 	self shouldFail: refactoring withMessage: 'Object class is a metaclass'! !
+
 !Refactory.Browser.Tests.AddClassVariableRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAddClassVariable!public!tests! !

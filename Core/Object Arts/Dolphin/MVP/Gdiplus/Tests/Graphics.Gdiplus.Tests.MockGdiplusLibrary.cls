@@ -7,8 +7,11 @@ Graphics.Gdiplus.GdiplusLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.MockGdiplusLibrary guid: (Core.GUID fromString: '{9b3f9739-55ff-4517-a48e-695d9df4dc96}')!
+
 Graphics.Gdiplus.Tests.MockGdiplusLibrary comment: ''!
+
 !Graphics.Gdiplus.Tests.MockGdiplusLibrary methodsFor!
 
 gdipAddPathArc: path x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
@@ -3668,6 +3671,7 @@ messages
 
 resetMessages
 	messages := OrderedCollection new! !
+
 !Graphics.Gdiplus.Tests.MockGdiplusLibrary categoriesForMethods!
 gdipAddPathArc:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
 gdipAddPathArcI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
@@ -4320,6 +4324,7 @@ new
 
 sharedVariableName
 	^nil! !
+
 !Graphics.Gdiplus.Tests.MockGdiplusLibrary class categoriesForMethods!
 generateMockMethods!helpers!private! !
 new!instance creation!public! !

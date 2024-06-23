@@ -7,7 +7,9 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkSystemShell guid: (Core.GUID fromString: '{87b4c6c3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.SmalltalkSystemShell comment: 'SmalltalkSystemShell is a <SmalltalkToolShell> that implements the user interface onto theDolphin Smalltalk system folder. This an iconic daunting point for all of the installed tools, sample applications etc.
 
 Instance Variables:
@@ -21,7 +23,9 @@ Class Variables:
 
 
 '!
+
 !Tools.SmalltalkSystemShell categoriesForClass!MVP-Presenters! !
+
 !Tools.SmalltalkSystemShell methodsFor!
 
 addToCommandRoute: route 
@@ -249,6 +253,7 @@ updateCaption
 whatsThis
 	<commandQuery: #hasSelection>
 	systemFolderPresenter selection whatsThis! !
+
 !Tools.SmalltalkSystemShell categoriesForMethods!
 addToCommandRoute:!commands-routing!public! !
 applyOptions!operations!options!private! !
@@ -579,6 +584,7 @@ viewMode: aSymbol
 	ViewMode := aSymbol.
 	self persistOptions
 		ifTrue: [self primAllSubinstances do: [:each | each folderView viewMode: aSymbol]]! !
+
 !Tools.SmalltalkSystemShell class categoriesForMethods!
 applyOptions!accessing!options!private! !
 backcolor!accessing!options!public! !

@@ -7,9 +7,13 @@ External.SIZE
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_cx' -> 16r0. '_OffsetOf_cy' -> 16r4. '_SIZEL_Size' -> 16r8 }!
+
 OS.SIZEL guid: (Core.GUID fromString: '{3bfb9cb3-8eba-450f-9479-ba75abeb8463}')!
+
 OS.SIZEL comment: '`SIZE` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name. `SIZE` is used in many places to represent a 2-dimensional distance where the x and y dimensions are expressed as 32-bit signed integers. `SIZEL` is an alias for the same class/structure.'!
+
 !OS.SIZEL categoriesForClass!Win32-Structs! !
+
 !OS.SIZEL methodsFor!
 
 asPoint
@@ -48,6 +52,7 @@ width
 
 width: anObject
 	bytes int32AtOffset: _OffsetOf_cx put: anObject! !
+
 !OS.SIZEL categoriesForMethods!
 asPoint!converting!public! !
 cx!**compiled accessors**!public! !
@@ -94,6 +99,7 @@ width: cx height: cy
 				int32AtOffset: _OffsetOf_cx put: cx;
 				int32AtOffset: _OffsetOf_cy put: cy;
 				yourself)! !
+
 !OS.SIZEL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

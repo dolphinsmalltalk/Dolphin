@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Environment9
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Environment10 guid: (OS.COM.IID fromString: '{ee0eb9df-6f12-46ce-b53f-3f47b9c928e0}')!
+
 WebView2.ICoreWebView2Environment10 isEgressOnly: true!
+
 WebView2.ICoreWebView2Environment10 comment: '`ICoreWebView2Environment10` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment10'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -39,7 +42,9 @@ interface ICoreWebView2Environment10 : ICoreWebView2Environment9
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Environment10 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Environment10 methodsFor!
 
 CreateCoreWebView2CompositionControllerWithOptions: parentWindow options: options handler: handler
@@ -72,6 +77,7 @@ CreateCoreWebView2ControllerWithOptions: parentWindow options: options handler: 
 
 	<virtual stdcall: hresult 22 handle ICoreWebView2ControllerOptions* ICoreWebView2CreateCoreWebView2ControllerCompletedHandler*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Environment10 categoriesForMethods!
 CreateCoreWebView2CompositionControllerWithOptions:options:handler:!**auto generated**!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2ControllerOptions:!**auto generated**!COM Interfaces-ICoreWebView2Environment10!private! !
@@ -92,6 +98,7 @@ defineFunctions
 		defineFunction: #CreateCoreWebView2CompositionControllerWithOptions:options:handler:
 			argumentTypes: 'handle ICoreWebView2ControllerOptions* ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler*'
 ! !
+
 !WebView2.ICoreWebView2Environment10 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

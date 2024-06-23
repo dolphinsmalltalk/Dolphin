@@ -7,9 +7,13 @@ Tools.MenuPainter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PopupMenuPainter guid: (Core.GUID fromString: '{bebdf8c9-6967-41d3-92af-046ec7b3bff7}')!
+
 Tools.PopupMenuPainter comment: ''!
+
 !Tools.PopupMenuPainter categoriesForClass!Kernel-Objects! !
+
 !Tools.PopupMenuPainter methodsFor!
 
 borderInset
@@ -142,6 +146,7 @@ paintSeparatorOn: aCanvas in: aRectangle
 				bottom: aRectangle bottom)
 		edge: EDGE_ETCHED
 		grfFlags: BF_TOP! !
+
 !Tools.PopupMenuPainter categoriesForMethods!
 borderInset!constants!private! !
 calculateGeometry:!public!updating! !

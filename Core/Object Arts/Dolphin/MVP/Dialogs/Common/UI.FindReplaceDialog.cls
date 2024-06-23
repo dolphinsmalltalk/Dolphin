@@ -7,14 +7,18 @@ UI.FindDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FindReplaceDialog guid: (Core.GUID fromString: '{87b4c6b7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.FindReplaceDialog comment: 'FindReplaceDialog is a <valueDialogPresenter> implementing the Windows ReplaceText common dialog. The dialog must be associated with an owner view capable of responding to the <textFinder> protocol. It will then remain on-screen until dismissed and will forward <FindEvent>s to the owner via its #onFind: event handler. 
 
 Instance Variables:
 	replaceWith	<readableString> specifying the replacement text.
 
 '!
+
 !UI.FindReplaceDialog categoriesForClass!MVP-Presenters! !
+
 !UI.FindReplaceDialog methodsFor!
 
 basicShowModal
@@ -51,6 +55,7 @@ replaceWith: aString
 	| size |
 	size := self replaceWith size min: aString size.
 	self replaceWith replaceFrom: 1 to: size with: aString.! !
+
 !UI.FindReplaceDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 initialize!initializing!private! !
@@ -77,6 +82,7 @@ ownerView: aView findWhat: find replaceWith: replace
 		replaceWith: replace;
 		showModal;
 		yourself! !
+
 !UI.FindReplaceDialog class categoriesForMethods!
 initialize!development!initializing!private! !
 ownerView:findWhat:replaceWith:!constants!instance creation!public! !

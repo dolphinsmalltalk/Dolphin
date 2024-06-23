@@ -7,12 +7,17 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LayoutManager guid: (Core.GUID fromString: '{87b4c497-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.LayoutManager isNonInstantiable: true!
+
 UI.LayoutManager comment: 'LayoutManager is the abstract superclass for classes that wish to implement the <layoutManager> protocol for the automatic arrangement of views within a parent <compositeView>. Dolphin supplies a base set of general purpose concrete layout managers which are general purpose enough to cover most requirements. 
 
 To define a new layout manager you must implement the <layoutManager> protocol methods in [subclass responsibility], and you will probably want to override #preferredLayoutExtentOf:context: as well.'!
+
 !UI.LayoutManager categoriesForClass!MVP-Layout Managers-Abstract! !
+
 !UI.LayoutManager methodsFor!
 
 arrangementOf: aView
@@ -86,6 +91,7 @@ resolutionScaledBy: scale
 
 visibleSubViewsOf: aCompositeView context: aLayoutContext 
 	^aCompositeView managedSubViews select: [:each | aLayoutContext isViewVisible: each]! !
+
 !UI.LayoutManager categoriesForMethods!
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
@@ -107,6 +113,7 @@ new
 	"Answer an instance of the receiver. Instances require initialization"
 
 	^super new initialize! !
+
 !UI.LayoutManager class categoriesForMethods!
 new!instance creation!public! !
 !

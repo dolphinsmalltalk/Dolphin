@@ -7,9 +7,13 @@ External.StructureArrayPointerField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PointerArrayPointerField guid: (Core.GUID fromString: '{3a78c2fd-cf0b-4f89-be59-bf48cea436fa}')!
+
 External.PointerArrayPointerField comment: ''!
+
 !External.PointerArrayPointerField categoriesForClass!External-Data-Types! !
+
 !External.PointerArrayPointerField methodsFor!
 
 pointerClass
@@ -17,6 +21,7 @@ pointerClass
 	pointers of the receiver's type."
 
 	^PointerArray! !
+
 !External.PointerArrayPointerField categoriesForMethods!
 pointerClass!accessing!private! !
 !

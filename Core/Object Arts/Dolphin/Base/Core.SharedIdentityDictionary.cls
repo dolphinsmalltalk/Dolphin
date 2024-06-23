@@ -7,9 +7,13 @@ Core.SharedLookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SharedIdentityDictionary guid: (Core.GUID fromString: '{87b4c531-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.SharedIdentityDictionary comment: ''!
+
 !Core.SharedIdentityDictionary categoriesForClass!Collections-Unordered! !
+
 !Core.SharedIdentityDictionary methodsFor!
 
 findKeyOrNil: anObject
@@ -40,6 +44,7 @@ species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^IdentityDictionary! !
+
 !Core.SharedIdentityDictionary categoriesForMethods!
 findKeyOrNil:!private!searching! !
 hash:max:!private!searching! !

@@ -7,8 +7,11 @@ Graphics.AbstractBitmapFromBlankInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.BitmapFromBlankInitializer guid: (Core.GUID fromString: '{648adf74-5ff3-466d-af73-9cd905f08616}')!
+
 Graphics.BitmapFromBlankInitializer comment: ''!
+
 !Graphics.BitmapFromBlankInitializer methodsFor!
 
 bytes
@@ -34,6 +37,7 @@ printImage: aBitmap on: aWriteStream
 			[aWriteStream
 				nextPutAll: ' planes: ';
 				print: planes]! !
+
 !Graphics.BitmapFromBlankInitializer categoriesForMethods!
 bytes!accessing!public! !
 createImage:extent:!private!realizing/unrealizing! !
@@ -56,6 +60,7 @@ extent: aPoint depth: bppInteger planes: planesInteger
 		depth: bppInteger;
 		planes: planesInteger;
 		yourself! !
+
 !Graphics.BitmapFromBlankInitializer class categoriesForMethods!
 extent:depth:!instance creation!public! !
 extent:depth:planes:!instance creation!public! !

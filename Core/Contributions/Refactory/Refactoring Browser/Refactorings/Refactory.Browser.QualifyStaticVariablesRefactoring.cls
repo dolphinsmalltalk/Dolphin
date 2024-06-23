@@ -7,9 +7,13 @@ Refactory.Browser.ChangeStaticVariableQualificationRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.QualifyStaticVariablesRefactoring guid: (Core.GUID fromString: '{c1a01452-ac2f-4813-8a6c-7486f4b17285}')!
+
 Refactory.Browser.QualifyStaticVariablesRefactoring comment: ''!
+
 !Refactory.Browser.QualifyStaticVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.QualifyStaticVariablesRefactoring methodsFor!
 
 buildRewriter
@@ -39,6 +43,7 @@ buildRewriter
 								yourself]]]
 		when: [:literalNode | literalNode isOrContainsQualifiedReferenceMatching: [:refNode | refNode binding notNil]].
 	^rewriter! !
+
 !Refactory.Browser.QualifyStaticVariablesRefactoring categoriesForMethods!
 buildRewriter!private!transforming! !
 !

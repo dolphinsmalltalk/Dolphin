@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.VersionResourceTest guid: (Core.GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
+
 OS.Tests.VersionResourceTest comment: ''!
+
 !OS.Tests.VersionResourceTest methodsFor!
 
 assertResource: res atVersion: newVersion
@@ -96,6 +99,7 @@ testVersionStrings
 	self assertResource: res atVersion: newVersion.
 	res bumpProductVersion.
 	self assertResource: res atVersion: '101.202.304.404'! !
+
 !OS.Tests.VersionResourceTest categoriesForMethods!
 assertResource:atVersion:!public!unit tests! !
 assertVersionResource:equalTo:!private!unit tests! !

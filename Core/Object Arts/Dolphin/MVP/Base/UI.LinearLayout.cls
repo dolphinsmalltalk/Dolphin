@@ -7,10 +7,15 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LinearLayout guid: (Core.GUID fromString: '{f3556fda-7d0c-4e04-9193-43add8df9ffa}')!
+
 UI.LinearLayout isNonInstantiable: true!
+
 UI.LinearLayout comment: ''!
+
 !UI.LinearLayout categoriesForClass!MVP-Layout Managers-Abstract! !
+
 !UI.LinearLayout methodsFor!
 
 beHorizontal
@@ -81,6 +86,7 @@ preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 		do: [:each | accumulate value: (each layoutExtent: aLayoutContext)].
 	insets := aCompositeView actualInsets: aLayoutContext.
 	^box + insets topLeft + insets bottomRight! !
+
 !UI.LinearLayout categoriesForMethods!
 beHorizontal!modes!public! !
 beVertical!modes!public! !

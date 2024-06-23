@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.Tests.WebView2EnvironmentOptionsTest guid: (Core.GUID fromString: '{0a7ce017-d187-48bf-9d57-7bdb53a95f91}')!
+
 WebView2.Tests.WebView2EnvironmentOptionsTest comment: ''!
+
 !WebView2.Tests.WebView2EnvironmentOptionsTest methodsFor!
 
 testAdditionalBrowserArguments
@@ -101,6 +104,7 @@ testTargetCompatibleBrowserVersion
 	self assert: interface targetCompatibleBrowserVersion equals: version.
 	subject browserVersion: 'foo'.
 	self assert: interface targetCompatibleBrowserVersion equals: 'foo'.! !
+
 !WebView2.Tests.WebView2EnvironmentOptionsTest categoriesForMethods!
 testAdditionalBrowserArguments!public! !
 testAllowSSO!public! !

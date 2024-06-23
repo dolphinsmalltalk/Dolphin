@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.PairTest guid: (Core.GUID fromString: '{752723a5-58e1-45a4-ba7e-10c92064d896}')!
+
 Core.Tests.PairTest comment: ''!
+
 !Core.Tests.PairTest methodsFor!
 
 testEquals
@@ -30,6 +33,7 @@ testHash
 	pair2 := Pair first: #a second: #b.
 	self assert: pair1 hash equals: pair2 hash.
 	self deny: pair1 hash equals: Pair new hash! !
+
 !Core.Tests.PairTest categoriesForMethods!
 testEquals!public! !
 testHash!public! !

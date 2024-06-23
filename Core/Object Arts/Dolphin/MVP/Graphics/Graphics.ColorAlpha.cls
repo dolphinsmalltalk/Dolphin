@@ -7,9 +7,13 @@ Graphics.VirtualColor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ColorAlpha guid: (Core.GUID fromString: '{b850bd0f-5791-45ef-bb42-13dbd39a77d2}')!
+
 Graphics.ColorAlpha comment: '`ColorAlpha` is a `Color` that can decorate symbolic colours (e,.g. `SystemColor`s) with alpha (translucency), but preserving the original symbolic colour until the point where an RGBA or ARGB code is actually needed.'!
+
 !Graphics.ColorAlpha categoriesForClass!Drawing! !
+
 !Graphics.ColorAlpha methodsFor!
 
 actualColor
@@ -45,6 +49,7 @@ printOn: aStream
 setColor: aColor alpha: anInteger
 	color := aColor.
 	alpha := anInteger! !
+
 !Graphics.ColorAlpha categoriesForMethods!
 actualColor!accessing!public! !
 alpha!accessing!public! !
@@ -65,6 +70,7 @@ color: aColor alpha: anInteger
 newColor: aColor alpha: anInteger
 	<primitive: 157>
 	^self basicNew setColor: aColor alpha: anInteger! !
+
 !Graphics.ColorAlpha class categoriesForMethods!
 color:alpha:!instance creation!public! !
 newColor:alpha:!instance creation!private! !

@@ -30,7 +30,9 @@ Core.Object
 						withAll: { #exclusive -> 16r0. #read -> 16r1. #readWrite -> 16r3. #write -> 16r2 }).
 			'SniffSize' -> 16r1000
 		}!
+
 Core.File guid: (Core.GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
 
 Instance Variables:
@@ -48,7 +50,9 @@ Class Variables:
 	ShareModes		<IdentityDictionary>
 
 '!
+
 !Core.File categoriesForClass!System-Support! !
+
 !Core.File methodsFor!
 
 accessFlags
@@ -528,6 +532,7 @@ writeByte: anIntegerOrCharacter
 	Answer 1 or signal a FileException if the operation fails."
 
 	^self write: (ByteArray with: anIntegerOrCharacter asInteger) count: 1! !
+
 !Core.File categoriesForMethods!
 accessFlags!accessing!private! !
 asParameter!converting!public! !
@@ -1484,6 +1489,7 @@ workingDirectory: aString
 	"Set the current working directory."
 
 	^Kernel32 setCurrentDirectory: aString! !
+
 !Core.File class categoriesForMethods!
 appendPathDelimiter:!filename manipulation!public!testing! !
 attributes:!enquiries!public! !

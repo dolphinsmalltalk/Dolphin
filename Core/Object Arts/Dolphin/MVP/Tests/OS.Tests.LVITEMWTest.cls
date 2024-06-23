@@ -7,8 +7,11 @@ OS.Tests.CCITEMTest
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.LVITEMWTest guid: (Core.GUID fromString: '{fde465af-bcb1-4b30-9a93-3937f7842dc8}')!
+
 OS.Tests.LVITEMWTest comment: ''!
+
 !OS.Tests.LVITEMWTest methodsFor!
 
 subjectClass
@@ -73,6 +76,7 @@ testInstanceCreation2
 	self assert: subject printString
 		equals: 'a <1p>(mask=<2p> iItem=17 text=''Foo bar'' iImage=<3p> iIndent=2)'
 				<< { self subjectClass. LVIF_TEXT | LVIF_INDENT | LVIF_IMAGE. I_IMAGENONE }! !
+
 !OS.Tests.LVITEMWTest categoriesForMethods!
 subjectClass!constants!public! !
 testInstanceCreation!constants!public! !

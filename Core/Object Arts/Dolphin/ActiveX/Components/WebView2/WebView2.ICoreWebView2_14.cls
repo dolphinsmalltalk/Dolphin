@@ -7,8 +7,11 @@ WebView2.ICoreWebView2_13
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2_14 guid: (OS.COM.IID fromString: '{6daa4f10-4a90-4753-8898-77c5df534165}')!
+
 WebView2.ICoreWebView2_14 isEgressOnly: true!
+
 WebView2.ICoreWebView2_14 comment: '`ICoreWebView2_14` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_14'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -36,7 +39,9 @@ interface ICoreWebView2_14 : ICoreWebView2_13
 };
 ```
 '!
+
 !WebView2.ICoreWebView2_14 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2_14 methodsFor!
 
 Add_ServerCertificateErrorDetected: eventHandler token: token
@@ -66,6 +71,7 @@ Remove_ServerCertificateErrorDetected: token
 
 	<virtual stdcall: hresult 108 int64>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2_14 categoriesForMethods!
 Add_ServerCertificateErrorDetected:token:!**auto generated**!COM Interfaces-ICoreWebView2_14!private! !
 ClearServerCertificateErrorActions:!**auto generated**!COM Interfaces-ICoreWebView2_14!private! !
@@ -86,6 +92,7 @@ defineFunctions
 		defineFunction: #ClearServerCertificateErrorActions:
 			argumentTypes: 'ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler*'
 ! !
+
 !WebView2.ICoreWebView2_14 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

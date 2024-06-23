@@ -7,10 +7,14 @@ Tools.ChooseClassDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ChoosePackagedClassDialog guid: (Core.GUID fromString: '{66f6e532-7d50-44b1-877b-8e46061d0277}')!
+
 Tools.ChoosePackagedClassDialog comment: 'ChoosePackagedClassDialog is a specialised <ChooseClassDialog> that allows for filtering of the class hierarchy by package selection.
 '!
+
 !Tools.ChoosePackagedClassDialog categoriesForClass!MVP-Presenters! !
+
 !Tools.ChoosePackagedClassDialog methodsFor!
 
 classesPresenterClass
@@ -27,6 +31,7 @@ packages: aCollection
 	"Set the packages selected in the receiver. Ignored at this level."
 
 	classesPresenter packages: aCollection! !
+
 !Tools.ChoosePackagedClassDialog categoriesForMethods!
 classesPresenterClass!constants!private! !
 onViewOpened!event handling!public! !
@@ -58,6 +63,7 @@ resource_Default_view
 uninitialize
 	SmalltalkSystem.Current
 		ifNotNil: [:devsys | devsys classChooserClass == self ifTrue: [devsys classChooserClass: nil]]! !
+
 !Tools.ChoosePackagedClassDialog class categoriesForMethods!
 on:!instance creation!public! !
 resource_Default_view!public!resources-views! !

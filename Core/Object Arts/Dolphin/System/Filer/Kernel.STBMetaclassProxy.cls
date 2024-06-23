@@ -7,9 +7,13 @@ Kernel.STBClassProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBMetaclassProxy guid: (Core.GUID fromString: '{87b4c6f5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STBMetaclassProxy comment: ''!
+
 !Kernel.STBMetaclassProxy categoriesForClass!System-Binary storage! !
+
 !Kernel.STBMetaclassProxy methodsFor!
 
 resolveWithClassLocator: aClassLocator
@@ -28,6 +32,7 @@ withClassLocator: aClassLocator
 						key: locatorKey;
 						packageName: packageName;
 						yourself)]! !
+
 !Kernel.STBMetaclassProxy categoriesForMethods!
 resolveWithClassLocator:!converting!private! !
 withClassLocator:!converting!private! !

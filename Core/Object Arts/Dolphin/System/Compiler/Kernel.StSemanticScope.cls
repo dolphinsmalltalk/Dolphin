@@ -7,10 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSemanticScope guid: (Core.GUID fromString: '{6613bf75-bf16-4a7f-92f0-72a8a84738c9}')!
+
 Kernel.StSemanticScope isNonInstantiable: true!
+
 Kernel.StSemanticScope comment: ''!
+
 !Kernel.StSemanticScope categoriesForClass!Kernel-Objects! !
+
 !Kernel.StSemanticScope methodsFor!
 
 classScope
@@ -56,6 +61,7 @@ visibleVariablesDo: aMonadicValuable
 
 visibleVariablesDo: aMonadicValuable visited: aSet
 	^self subclassResponsibility! !
+
 !Kernel.StSemanticScope categoriesForMethods!
 classScope!accessing!public! !
 environment!accessing!public! !

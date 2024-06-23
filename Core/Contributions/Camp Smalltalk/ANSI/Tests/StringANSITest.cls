@@ -5,9 +5,13 @@ SequencedReadableCollectionTest subclass: #StringANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StringANSITest guid: (GUID fromString: '{8d98dc8b-46ae-4a17-ab30-e909e195319a}')!
+
 StringANSITest comment: ''!
+
 !StringANSITest categoriesForClass!Unclassified! !
+
 !StringANSITest methodsFor!
 
 canonicalElement
@@ -83,6 +87,7 @@ testXsameAsX
 testXsubStringsX
 	" <readableString>#subStrings: "
 	#'Collection'.! !
+
 !StringANSITest categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -111,6 +116,7 @@ helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper! !
+
 !StringANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

@@ -11,7 +11,9 @@ WinHttpServer.HttpServiceConfigQuery
 			'_OffsetOf_dwToken' -> 16r90.
 			'_OffsetOf_KeyDesc' -> 16r8
 		}!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY guid: (Core.GUID fromString: '{4d8cbfdf-8766-4e01-a7f0-c775406dd04c}')!
+
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY comment: '`HTTP_SERVICE_CONFIG_SSL_SNI_QUERY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +31,9 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SNI_QUERY {
 } HTTP_SERVICE_CONFIG_SSL_SNI_QUERY;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY methodsFor!
 
 dwToken
@@ -55,6 +59,7 @@ KeyDesc: aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 		from: ##(_OffsetOf_KeyDesc + 1)
 		to: ##(_OffsetOf_KeyDesc + HTTP_SERVICE_CONFIG_SSL_SNI_KEY._HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size)
 		startingAt: 1! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesForMethods!
 dwToken!**compiled accessors**!public! !
 dwToken:!**compiled accessors**!public! !
@@ -88,6 +93,7 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
+
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

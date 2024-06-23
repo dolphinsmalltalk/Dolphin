@@ -7,7 +7,9 @@ UI.ContainerView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ScrollingDecorator guid: (Core.GUID fromString: '{87b4c719-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ScrollingDecorator comment: 'A ScrollingDecorator is a <compositeView> that implements the <scrollingDecoratorView> protocol to allow scrolling around the area occupied by the sub-view it decorates. It has a fixed <ScrollingDecoratorLayout> manager and expects to have only one managed sub-view that it is responsible for scrolling around (typically this will be another <compositeView>). The scrollable area is determined by the #layoutExtent: of the sub-view.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	lineExtent	<Point> holding the scroll amount representing a scroll distance of one line.
 
 For example, the View Composer uses a ScrollingDecorator to scroll around the editing arena. Another common usage is with the MoenTreeView, which may have quite large extent when displaying large trees, but which has no scrolling capability of its own.'!
+
 !UI.ScrollingDecorator categoriesForClass!MVP-Views! !
+
 !UI.ScrollingDecorator methodsFor!
 
 addSubView: aView 
@@ -345,6 +349,7 @@ verticalScrollTo: anInteger
 
 wheelScrollLines
 	^SystemMetrics current getSysParamInt32: SPI_GETWHEELSCROLLLINES! !
+
 !UI.ScrollingDecorator categoriesForMethods!
 addSubView:!hierarchy!public!sub views! !
 defaultLayoutManager!constants!private! !
@@ -399,6 +404,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ScrollingDecorator} 38 #{Core.Array} 18 nil nil 50 2 8 1143996416 131073 32 nil nil nil 5 nil nil nil 32 326 1 #{UI.ScrollingDecoratorLayout} true 550 #{Core.IdentityDictionary} 0 nil 518 #{Graphics.Point} 1 1 true 178 17 17 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 178 6143 21 178 701 501 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 178 193 193 nil 27)! !
+
 !UI.ScrollingDecorator class categoriesForMethods!
 icon!constants!public! !
 resource_Default_view!public!resources-views! !

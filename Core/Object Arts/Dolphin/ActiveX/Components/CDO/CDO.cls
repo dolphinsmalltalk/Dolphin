@@ -372,7 +372,12 @@ Kernel.Namespace
 			'CdoXUnsent' -> 'urn:schemas:mailheader:x-unsent'.
 			'CdoYakutsk' -> 16r46
 		}!
+
 CDO guid: (Core.GUID fromString: '{64e69ea7-7d2f-40c6-878e-9e98ebba84d4}')!
+
 CDO isNonInstantiable: true!
+
 CDO comment: ''!
+
 !CDO categoriesForClass!Kernel-Objects! !
+

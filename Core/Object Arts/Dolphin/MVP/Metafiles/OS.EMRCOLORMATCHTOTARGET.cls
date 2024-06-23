@@ -14,7 +14,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_dwAction' -> 16r8.
 			'_OffsetOf_dwFlags' -> 16rC
 		}!
+
 OS.EMRCOLORMATCHTOTARGET guid: (Core.GUID fromString: '{8408e62d-3e54-483c-8938-98e099d9d6a2}')!
+
 OS.EMRCOLORMATCHTOTARGET comment: '<COLORMATCHTOTARGET> is an <ExternalStructure> class to wrap the struct ''Win32.COLORMATCHTOTARGET'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -33,7 +35,9 @@ struct tagCOLORMATCHTOTARGET {
 	[helpstring("Array size is cbName + cbData")] BYTE Data[1];
 } COLORMATCHTOTARGET;
 '!
+
 !OS.EMRCOLORMATCHTOTARGET categoriesForClass!Win32-Structs! !
+
 !OS.EMRCOLORMATCHTOTARGET methodsFor!
 
 cbData
@@ -96,6 +100,7 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger! !
+
 !OS.EMRCOLORMATCHTOTARGET categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -157,6 +162,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_COLORMATCHTOTARGETW}! !
+
 !OS.EMRCOLORMATCHTOTARGET class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

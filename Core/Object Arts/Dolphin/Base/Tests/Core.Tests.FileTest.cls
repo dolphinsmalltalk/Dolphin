@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.FileTest guid: (Core.GUID fromString: '{26ae9922-21e2-489a-845c-3c1dc1c2a3cf}')!
+
 Core.Tests.FileTest comment: ''!
+
 !Core.Tests.FileTest methodsFor!
 
 buildTestPathOfLength: anInteger
@@ -852,6 +855,7 @@ testSplitStemFrom
 	self printFilenameOfLength: self maxFname * 2 on: path.
 	path := path contents.
 	self assert: (File splitStemFrom: path) equals: ((path copyFrom: 4) upTo: $.)! !
+
 !Core.Tests.FileTest categoriesForMethods!
 buildTestPathOfLength:!helpers!private! !
 createTestDirectories!helpers!private! !

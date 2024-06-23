@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.IntegerBytesTest guid: (Core.GUID fromString: '{d2ec9130-5bc5-4da7-8856-735f904ab458}')!
+
 External.Tests.IntegerBytesTest isNonInstantiable: true!
+
 External.Tests.IntegerBytesTest comment: ''!
+
 !External.Tests.IntegerBytesTest methodsFor!
 
 canonicalValue
@@ -58,6 +62,7 @@ testStlVersion6
 	(STLOutFiler on: stream) nextPut: subject.
 	self assert: (STLPrinter printLiteralStoreArray: stream contents)
 		equals: (STLPrinter printLiteralStoreArray: self stlVersion6)! !
+
 !External.Tests.IntegerBytesTest categoriesForMethods!
 canonicalValue!constants!private! !
 stlVersion4!constants!private! !

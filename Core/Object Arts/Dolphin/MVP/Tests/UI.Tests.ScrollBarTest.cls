@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ScrollBarTest guid: (Core.GUID fromString: '{beb204cd-8c17-44a4-8305-c23345382e1e}')!
+
 UI.Tests.ScrollBarTest comment: ''!
+
 !UI.Tests.ScrollBarTest methodsFor!
 
 classToTest
@@ -21,6 +24,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view isTrackingContinuous.
 	self assert: view typeconverter isNullConverter! !
+
 !UI.Tests.ScrollBarTest categoriesForMethods!
 classToTest!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -47,6 +51,7 @@ resource_Vertical_scroll_bar_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollBar) 34 16 nil nil 34 2 8 1409351681 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) 1 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1904029216 852486 ##(Smalltalk.NullConverter) nil nil true 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 738 35 291 416 690 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 3 416 690 #pageSize: 8 #(0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 144 7 0 0 155 0 0 0] 8 #() 738 193 193 nil 27)! !
+
 !UI.Tests.ScrollBarTest class categoriesForMethods!
 resource_Vertical_scroll_bar_D6!public!resources-views! !
 resource_Vertical_scroll_bar_D7!public!resources-views! !

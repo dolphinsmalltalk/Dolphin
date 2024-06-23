@@ -7,10 +7,13 @@ Kernel.STBInFiler1
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler2 guid: (Core.GUID fromString: '{d8d3dab7-0798-4c4a-b684-fcdc42f8933b}')!
+
 Kernel.STBInFiler2 comment: '`STBInFiler2` is an `STBInFiler` for reading the STB 2 binary object serialization format.
 
 The key difference from STB 1 was that loading of objects was delegated to the object class. This remove the requirement to use proxies in many cases, although the pre-existing proxies largely remained. Only `STBSymbolProxy` became obsolete, with `Symbol`s being stored directly.'!
+
 !Kernel.STBInFiler2 methodsFor!
 
 readSymbol: aSTxClassConversion
@@ -23,6 +26,7 @@ readSymbol: aSTxClassConversion
 	symbol := Symbol intern: (self readBytes: size into: (AnsiString new: size)).
 	decorator register: symbol.
 	^symbol! !
+
 !Kernel.STBInFiler2 categoriesForMethods!
 readSymbol:!deserializing!public! !
 !
@@ -61,6 +65,7 @@ uninitialize
 
 version
 	^2! !
+
 !Kernel.STBInFiler2 class categoriesForMethods!
 initialize!class initialization!public! !
 predefinedClasses!constants!public! !

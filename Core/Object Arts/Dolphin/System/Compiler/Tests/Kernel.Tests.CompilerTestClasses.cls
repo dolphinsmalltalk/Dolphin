@@ -7,8 +7,11 @@ Core.Tests.DolphinTestClassResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.CompilerTestClasses guid: (Core.GUID fromString: '{23db72f8-4a90-4244-adbc-ea3e9c776d0a}')!
+
 Kernel.Tests.CompilerTestClasses comment: ''!
+
 !Kernel.Tests.CompilerTestClasses methodsFor!
 
 compileMethods
@@ -38,6 +41,7 @@ tearDown
 
 testClass
 	^testClass! !
+
 !Kernel.Tests.CompilerTestClasses categoriesForMethods!
 compileMethods!private!Running! !
 createClasses!private!Running! !

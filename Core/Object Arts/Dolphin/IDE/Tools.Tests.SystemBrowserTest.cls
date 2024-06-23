@@ -7,8 +7,11 @@ Tools.Tests.ClassBrowserAbstractTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.SystemBrowserTest guid: (Core.GUID fromString: '{2e020526-2bd1-4fb6-b539-9c2456468a2c}')!
+
 Tools.Tests.SystemBrowserTest comment: ''!
+
 !Tools.Tests.SystemBrowserTest methodsFor!
 
 classToTest
@@ -27,6 +30,7 @@ testBrowseItOpensSystemBrowserOnPackageOfLooseMethod
 	presenter := method browse.
 	self assert: presenter packages equals: {method owningPackage}]
 			ensure: [SmalltalkSystem current defaultBrowserClass: default]! !
+
 !Tools.Tests.SystemBrowserTest categoriesForMethods!
 classToTest!public!Running! !
 testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !

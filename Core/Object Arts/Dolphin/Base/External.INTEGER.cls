@@ -7,8 +7,11 @@ External.SCALAR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.INTEGER guid: (Core.GUID fromString: '{87b4c594-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.INTEGER isNonInstantiable: true!
+
 External.INTEGER comment: 'ExternalInteger is an abstract class of ExternalStructures to represent machine native integer formats. Various subclasses are defined to represent the signed and unsigned forms with varying numbers of bits:
 
 8-bit
@@ -24,7 +27,9 @@ External.INTEGER comment: 'ExternalInteger is an abstract class of ExternalStruc
 	signed	LARGE_INTEGER
 	unsigned	ULARGE_INTEGER
 '!
+
 !External.INTEGER categoriesForClass!External-Data-Unstructured! !
+
 !External.INTEGER methodsFor!
 
 asInteger
@@ -72,6 +77,7 @@ isSigned
 	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
 
 	^false! !
+
 !External.INTEGER categoriesForMethods!
 asInteger!converting!public! !
 asSignedInteger!converting!public! !
@@ -101,6 +107,7 @@ fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
 	^self new value: anInteger! !
+
 !External.INTEGER class categoriesForMethods!
 decompileDefinition!public! !
 defineTemplate!public!template definition! !

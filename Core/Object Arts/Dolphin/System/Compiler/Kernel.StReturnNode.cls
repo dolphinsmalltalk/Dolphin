@@ -7,7 +7,9 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StReturnNode guid: (Core.GUID fromString: '{7c9285e7-8d52-4fc6-9ff5-531771e8fe6e}')!
+
 Kernel.StReturnNode comment: 'StReturnNode is a parse tree node that represents a return expression.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	value	<StValueNode>	the value that is being returned
 
 '!
+
 !Kernel.StReturnNode categoriesForClass!System-Compiler! !
+
 !Kernel.StReturnNode methodsFor!
 
 = anObject 
@@ -59,6 +63,7 @@ value
 value: valueNode 
 	value := valueNode.
 	value parent: self! !
+
 !Kernel.StReturnNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -81,6 +86,7 @@ return: returnInteger value: aValueNode
 
 value: aNode
 	^self return: nil value: aNode! !
+
 !Kernel.StReturnNode class categoriesForMethods!
 return:value:!instance creation!public! !
 value:!instance creation!public! !

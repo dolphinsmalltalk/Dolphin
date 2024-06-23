@@ -42,6 +42,7 @@ WebView2
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest'
 	instanceVariableNames: ''
@@ -49,6 +50,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest
 	subclass: #'WebView2.Tests.WebView2ViewTest'
 	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited navigationStarting'
@@ -63,6 +65,7 @@ UI.Tests.PresenterTest
 
 correspondingTestCase
 	^WebView2.Tests.WebView2ViewTest! !
+
 !UI.WebView2View class categoriesForMethods!
 correspondingTestCase!public! !
 !

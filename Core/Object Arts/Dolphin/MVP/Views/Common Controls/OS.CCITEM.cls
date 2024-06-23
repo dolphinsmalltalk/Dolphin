@@ -7,10 +7,15 @@ External.Structure
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_mask' -> 16r0 }!
+
 OS.CCITEM guid: (Core.GUID fromString: '{87b4c5ce-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.CCITEM isNonInstantiable: true!
+
 OS.CCITEM comment: 'CCITEM is an <ExternalStructure> class which implements shared behaviour and state for the common controls item structures, LVITEM, TCITEM and TVITEM. There is no actual Win32 common control structure of this name.'!
+
 !OS.CCITEM categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.CCITEM methodsFor!
 
 cchTextMax
@@ -204,6 +209,7 @@ textValidMask
 	"This mask value is the same for most of the controls."
 
 	^16r1! !
+
 !OS.CCITEM categoriesForMethods!
 cchTextMax!accessing!public! !
 cchTextMax:!accessing!public! !
@@ -246,6 +252,7 @@ defineFields
 	"
 
 	self defineField: #mask type: UInt32Field new! !
+
 !OS.CCITEM class categoriesForMethods!
 defineFields!public!template definition! !
 !

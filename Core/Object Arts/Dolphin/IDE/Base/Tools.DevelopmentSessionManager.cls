@@ -7,9 +7,13 @@ UI.GUISessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DevelopmentSessionManager guid: (Core.GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
+
 Tools.DevelopmentSessionManager comment: ''!
+
 !Tools.DevelopmentSessionManager categoriesForClass!System-Support! !
+
 !Tools.DevelopmentSessionManager methodsFor!
 
 advanceImageVersionMinor
@@ -743,6 +747,7 @@ versionString
 
 warning: aString
 	UI.MessageBox warning: aString! !
+
 !Tools.DevelopmentSessionManager categoriesForMethods!
 advanceImageVersionMinor!operations-saving!public! !
 allowDuplicate!operations-startup!public! !
@@ -838,6 +843,7 @@ imageExtension
 	should be associated with this particular image."
 
 	^'img8'! !
+
 !Tools.DevelopmentSessionManager class categoriesForMethods!
 icon!constants!public! !
 imageExtension!constants!public! !

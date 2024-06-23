@@ -5,9 +5,13 @@ SUnitAbsModel subclass: #SUnitResourceBrowserModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitResourceBrowserModel guid: (GUID fromString: '{2342a0cf-f99b-4f61-a061-56dbee09429a}')!
+
 SUnitResourceBrowserModel comment: ''!
+
 !SUnitResourceBrowserModel categoriesForClass!Unclassified! !
+
 !SUnitResourceBrowserModel methodsFor!
 
 availableCount
@@ -145,6 +149,7 @@ unavailableResources
 unavailableSelectedResources
 
 	^self basicSelectedItems select: [:each | each isUnavailable]! !
+
 !SUnitResourceBrowserModel categoriesForMethods!
 availableCount!accessing!private! !
 availableResources!accessing!private! !
@@ -195,6 +200,7 @@ stateClass
 
 uninitialize
 	defaultConfiguration := nil! !
+
 !SUnitResourceBrowserModel class categoriesForMethods!
 builderClass!constants!public! !
 configurationClass!constants!public! !

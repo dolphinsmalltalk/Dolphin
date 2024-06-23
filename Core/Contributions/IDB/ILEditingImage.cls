@@ -5,13 +5,17 @@ ILImage subclass: #ILEditingImage
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILEditingImage guid: (GUID fromString: '{b234bbcf-8aaa-471d-9bbb-5463bf4d92be}')!
+
 ILEditingImage comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILEditingImage categoriesForClass!IDB Goodies! !
+
 !ILEditingImage methodsFor!
 
 beModified
@@ -259,6 +263,7 @@ usedRectangleIn: aCanvas within: aPoint
 					[:down | 
 					(0 to: aPoint x) anySatisfy: [:across | (aCanvas pixelAt: across @ down) = Color black]].
 	^left @ top corner: right @ bottom! !
+
 !ILEditingImage categoriesForMethods!
 beModified!accessing!public! !
 beNotModified!accessing!public! !

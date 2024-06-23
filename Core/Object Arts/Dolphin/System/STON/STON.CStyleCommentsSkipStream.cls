@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.CStyleCommentsSkipStream guid: (Core.GUID fromString: '{cbe95784-18b0-4161-a8b1-142a76001d59}')!
+
 STON.CStyleCommentsSkipStream comment: 'I am STONCStyleCommentsSkipStream, a character ReadStream wrapping another character ReadStream. I skip C style comments, much like a classic C preprocessor.
 
 C, C++, Java, JavaScript style comments are either the multiline
@@ -28,7 +30,9 @@ Here is an example:
 	
 Comments inside single and double quote delimited strings are ignored. Backslash escapes for single and double quotes inside strings are honored.
 '!
+
 !STON.CStyleCommentsSkipStream categoriesForClass!STON-Core-Utilities! !
+
 !STON.CStyleCommentsSkipStream methodsFor!
 
 atEnd
@@ -235,6 +239,7 @@ upToEnd
 
 wrappedStream
 	^ stream! !
+
 !STON.CStyleCommentsSkipStream categoriesForMethods!
 atEnd!public!testing! !
 close!initialization!public! !
@@ -277,6 +282,7 @@ on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
+
 !STON.CStyleCommentsSkipStream class categoriesForMethods!
 icon!constants!public! !
 on:!instance creation!public! !

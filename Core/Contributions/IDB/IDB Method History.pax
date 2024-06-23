@@ -75,39 +75,42 @@ Object subclass: #ChunkFileMethodScanner
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #MethodVersion
 	instanceVariableNames: 'methodClass selector source sourceDescriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SelectorParser
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #DiffBrowser
 	instanceVariableNames: 'diffsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #HistoryBrowser
 	instanceVariableNames: 'scanner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HistoryBrowser subclass: #ClassHistoryBrowser
 	instanceVariableNames: 'class list'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HistoryBrowser subclass: #MethodHistoryBrowser
 	instanceVariableNames: 'history class selector debugger selection slider source'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -119,6 +122,7 @@ sourceDescriptorForPosition: positionInteger
 	file index must be in the range 0..15, and the position >= 0."
 
 	^self sourceDescriptorForIndex: sourceFileIndex position: positionInteger! !
+
 !ChunkSourceFiler categoriesForMethods!
 sourceDescriptorForPosition:!private!source filing-file in! !
 !
@@ -138,6 +142,7 @@ browseMethodHistoryForClass
 	<commandQuery: #hasClassSelected>
 	#idbAdded.
 	ClassHistoryBrowser showOnClass: self actualClass! !
+
 !ClassBrowserAbstract categoriesForMethods!
 browseMethodHistory!commands-actions!idb goodies!private! !
 browseMethodHistoryForClass!commands-actions!idb goodies!public! !
@@ -154,6 +159,7 @@ versionHistory
 	"Answer a collection of MethodVersions representing the history of the receiver in this image"
 
 	^ChunkFileMethodScanner forMethod: self selector inClass: self methodClass! !
+
 !CompiledMethod categoriesForMethods!
 loadedVersion!accessing!public! !
 versionHistory!accessing!public! !
@@ -172,6 +178,7 @@ browseMethodHistory
 		showOnClass: method methodClass
 		selector: method selector
 		debugger: self! !
+
 !Debugger categoriesForMethods!
 browseMethodHistory!commands-actions!idb goodies!private! !
 !
@@ -184,6 +191,7 @@ browseMethodHistory
 	#idbAdded.
 	method := self selectedMethod.
 	MethodHistoryBrowser showOnClass: method methodClass selector: method selector! !
+
 !MethodBrowserShell categoriesForMethods!
 browseMethodHistory!commands-actions!idb goodies!private! !
 !

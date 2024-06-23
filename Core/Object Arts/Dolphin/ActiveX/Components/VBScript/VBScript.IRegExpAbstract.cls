@@ -7,11 +7,17 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 VBScript.IRegExpAbstract guid: (OS.COM.IID fromString: '{427e61d6-dda9-489b-9102-c745ec40641b}')!
+
 VBScript.IRegExpAbstract isNonInstantiable: true!
+
 VBScript.IRegExpAbstract isEgressOnly: true!
+
 VBScript.IRegExpAbstract comment: '`IRegExpAbstract` is an abstract class implementing methods common between the Microsoft Scripting IRegExp COM interfaces.'!
+
 !VBScript.IRegExpAbstract categoriesForClass!COM-Interfaces! !
+
 !VBScript.IRegExpAbstract methodsFor!
 
 execute: aString
@@ -174,6 +180,7 @@ test: aString
 
 Test: sourceString pMatch: pMatch
 	^self subclassResponsibility! !
+
 !VBScript.IRegExpAbstract categoriesForMethods!
 execute:!operations!public! !
 Execute:ppMatches:!private! !
@@ -211,6 +218,7 @@ clsid
 
 pattern: aString
 	^self new pattern: aString! !
+
 !VBScript.IRegExpAbstract class categoriesForMethods!
 clsid!constants!private! !
 pattern:!instance creation!public! !

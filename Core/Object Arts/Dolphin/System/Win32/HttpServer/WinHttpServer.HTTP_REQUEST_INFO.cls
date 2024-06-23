@@ -12,7 +12,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_InfoType' -> 16r0.
 			'_OffsetOf_pInfo' -> 16r8
 		}!
+
 WinHttpServer.HTTP_REQUEST_INFO guid: (Core.GUID fromString: '{8c37d370-da00-4186-b515-ebe6b57d8cc6}')!
+
 WinHttpServer.HTTP_REQUEST_INFO comment: '`HTTP_REQUEST_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +31,9 @@ struct tagHTTP_REQUEST_INFO {
 } HTTP_REQUEST_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_REQUEST_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_REQUEST_INFO methodsFor!
 
 info
@@ -76,6 +80,7 @@ pInfo: anExternalArray
 
 printFields: aCollection on: aStream
 	aStream print: self info! !
+
 !WinHttpServer.HTTP_REQUEST_INFO categoriesForMethods!
 info!accessing!public! !
 InfoLength!**compiled accessors**!private! !
@@ -113,6 +118,7 @@ defineFields
 
 getFieldNames
 	^#(#InfoType #InfoLength #pInfo)! !
+
 !WinHttpServer.HTTP_REQUEST_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

@@ -7,8 +7,11 @@ Graphics.Gdiplus.BitmapInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.BitmapFromGdiBitmapInitializer guid: (Core.GUID fromString: '{72187357-d718-4876-aaea-2cfefd2c5fd7}')!
+
 Graphics.Gdiplus.BitmapFromGdiBitmapInitializer comment: ''!
+
 !Graphics.Gdiplus.BitmapFromGdiBitmapInitializer methodsFor!
 
 = anObject
@@ -56,6 +59,7 @@ printImage: aGdiplusBitmap on: aWriteStream
 		nextPutAll: ' bitmap: ';
 		print: bitmap;
 		nextPut: $)! !
+
 !Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -74,6 +78,7 @@ bitmap: aBitmap
 	"SW: Would there be any need to allow the user to supply the HPALETTE ?"
 
 	^self new bitmap: aBitmap! !
+
 !Graphics.Gdiplus.BitmapFromGdiBitmapInitializer class categoriesForMethods!
 bitmap:!instance creation!public! !
 !

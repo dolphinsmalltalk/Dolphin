@@ -5,9 +5,13 @@ EmbeddedCheckButton subclass: #EmbeddedCheckBox
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EmbeddedCheckBox guid: (GUID fromString: '{611f80ae-2e05-4e6f-b0c8-a0adbd00ff31}')!
+
 EmbeddedCheckBox comment: ''!
+
 !EmbeddedCheckBox categoriesForClass!MVP-Views! !
+
 !EmbeddedCheckBox methodsFor!
 
 basicWindowStyle
@@ -67,6 +71,7 @@ uStateFor: aValue enabled: aBoolean
 	^aValue == false
 		ifTrue: [uState] 
 		ifFalse: [uState | DFCS_CHECKED]! !
+
 !EmbeddedCheckBox categoriesForMethods!
 basicWindowStyle!constants!private! !
 defaultIStateId!constants!public! !
@@ -83,6 +88,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^CheckBox icon! !
+
 !EmbeddedCheckBox class categoriesForMethods!
 icon!constants!public! !
 !

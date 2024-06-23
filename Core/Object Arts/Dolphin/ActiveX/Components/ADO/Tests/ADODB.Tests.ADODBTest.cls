@@ -7,8 +7,11 @@ Database.Tests.DBTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.Tests.ADODBTest guid: (Core.GUID fromString: '{cbc7f08c-1041-4e55-a86a-5a963bba1649}')!
+
 ADODB.Tests.ADODBTest comment: ''!
+
 !ADODB.Tests.ADODBTest methodsFor!
 
 field: aString fromRow: row 
@@ -21,6 +24,7 @@ setUp
 	connection close.
 	connection := _Connection new connectionString: self databaseResource connectString.
 	connection open! !
+
 !ADODB.Tests.ADODBTest categoriesForMethods!
 field:fromRow:!private!unit tests! !
 setUp!public!Running! !
@@ -30,6 +34,7 @@ setUp!public!Running! !
 
 resources
 	^{Database.Tests.SQLServerNorthwindDB}! !
+
 !ADODB.Tests.ADODBTest class categoriesForMethods!
 resources!public! !
 !

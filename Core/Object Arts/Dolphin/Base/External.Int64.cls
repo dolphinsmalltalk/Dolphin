@@ -7,14 +7,18 @@ External.UInt64
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Int64_Size' -> 16r8 }!
+
 External.Int64 guid: (Core.GUID fromString: '{87b4c630-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Int64 comment: '`Int64` is an `External.Structure` class to represent signed 64-bit integers. 
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	(-2**63) to: (2**63)-1
 
 '!
+
 !External.Int64 categoriesForClass!External-Data-Unstructured! !
+
 !External.Int64 methodsFor!
 
 highPart
@@ -41,6 +45,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes int64AtOffset: _OffsetOf_value put: anInteger! !
+
 !External.Int64 categoriesForMethods!
 highPart!**compiled accessors**!public! !
 highPart:!**compiled accessors**!public! !
@@ -73,6 +78,7 @@ defineFields
 		defineField: #highPart
 			type: Int32Field new beOverride
 			offset: 4! !
+
 !External.Int64 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

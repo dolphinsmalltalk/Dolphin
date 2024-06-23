@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.LagoonTests guid: (Core.GUID fromString: '{1d062465-a28b-438e-882d-da296eb78bfa}')!
+
 Tools.Tests.LagoonTests comment: ''!
+
 !Tools.Tests.LagoonTests methodsFor!
 
 testExternalStructureAfterTemplateRemoval
@@ -74,6 +77,7 @@ testExternalStructureAfterTemplateRemoval
 	self assert: #{External.Field} isDefined.
 	self assert: #{Smalltalk.ExternalField} isDefined.
 	self assert: (Smalltalk.BasicImageStripper includesSelector: #_deleteFieldClasses)! !
+
 !Tools.Tests.LagoonTests categoriesForMethods!
 testExternalStructureAfterTemplateRemoval!public!unit tests! !
 !

@@ -13,14 +13,18 @@ OS.SizedStructure
 			'_OffsetOf_hwnd' -> 16r4.
 			'_OffsetOf_uCount' -> 16rC
 		}!
+
 OS.FLASHWINFO guid: (Core.GUID fromString: '{2a5e4594-f531-486b-a082-17686b820cd4}')!
+
 OS.FLASHWINFO comment: 'FLASHWINFO is the class of <ExternalStructure> which represent the Win32 structure of the same name.
 
 FLASHWINFO is used to pass parameters to the FlashWindowEx() API call.
 
 Instance Variables:
 	None'!
+
 !OS.FLASHWINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.FLASHWINFO methodsFor!
 
 dwFlags
@@ -47,6 +51,7 @@ uCount: anInteger
 	"Set the receiver's 'uCount' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_uCount put: anInteger! !
+
 !OS.FLASHWINFO categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
@@ -83,6 +88,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwnd #dwFlags #uCount #dwTimeout)! !
+
 !OS.FLASHWINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

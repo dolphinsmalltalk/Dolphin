@@ -7,8 +7,11 @@ Graphics.IconFromSystemInitializer
 	imports: #(#{OS.ShellConstants private} #{OS.SHSTOCKICONINFO private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.IconFromShellStockInitializer guid: (Core.GUID fromString: '{3ef7de96-b077-44ab-b925-2b403b972b56}')!
+
 Graphics.IconFromShellStockInitializer comment: ''!
+
 !Graphics.IconFromShellStockInitializer methodsFor!
 
 createImage: anImage extent: aPoint
@@ -49,6 +52,7 @@ printImage: anIcon on: aWriteStream
 			[aWriteStream
 				nextPutAll: ' extent: ';
 				print: extent]! !
+
 !Graphics.IconFromShellStockInitializer categoriesForMethods!
 createImage:extent:!private!realizing/unrealizing! !
 getStockIconInfo:!helpers!private! !
@@ -63,6 +67,7 @@ extent: anInteger identifier: aPoint
 		identifier: anInteger;
 		extent: aPoint;
 		yourself! !
+
 !Graphics.IconFromShellStockInitializer class categoriesForMethods!
 extent:identifier:!instance creation!public! !
 !

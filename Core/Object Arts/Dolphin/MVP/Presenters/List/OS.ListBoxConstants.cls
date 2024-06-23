@@ -74,6 +74,10 @@ Kernel.SharedPool
 			'LBS_USETABSTOPS' -> 16r80.
 			'LBS_WANTKEYBOARDINPUT' -> 16r400
 		}!
+
 OS.ListBoxConstants guid: (Core.GUID fromString: '{c4c55da7-4db0-459e-92fd-fc4d5f563fce}')!
+
 OS.ListBoxConstants isNonInstantiable: true!
+
 OS.ListBoxConstants comment: ''!
+

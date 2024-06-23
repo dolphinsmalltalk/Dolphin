@@ -11,7 +11,9 @@ WinHttpServer.HTTP_SERVICE_BINDING_BASE
 			'_OffsetOf_Buffer' -> 16r4.
 			'_OffsetOf_BufferSize' -> 16r8
 		}!
+
 WinHttpServer.HTTP_SERVICE_BINDING_A guid: (Core.GUID fromString: '{88ca7833-a66a-4e2f-98bc-cd2313254b15}')!
+
 WinHttpServer.HTTP_SERVICE_BINDING_A comment: '`HTTP_SERVICE_BINDING_A` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_A'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +31,9 @@ struct tagHTTP_SERVICE_BINDING_A {
 } HTTP_SERVICE_BINDING_A;
 ```
 '!
+
 !WinHttpServer.HTTP_SERVICE_BINDING_A categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_SERVICE_BINDING_A methodsFor!
 
 Buffer
@@ -52,6 +56,7 @@ BufferSize: anInteger
 	"Set the receiver's 'BufferSize' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_BufferSize put: anInteger! !
+
 !WinHttpServer.HTTP_SERVICE_BINDING_A categoriesForMethods!
 Buffer!**compiled accessors**!public! !
 Buffer:!**compiled accessors**!public! !
@@ -85,6 +90,7 @@ defineFields
 
 getFieldNames
 	^#(#Type #Buffer #BufferSize)! !
+
 !WinHttpServer.HTTP_SERVICE_BINDING_A class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

@@ -7,11 +7,15 @@ Kernel.RelativeFileLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PackageRelativeFileLocator guid: (Core.GUID fromString: '{01881ac6-d4ec-4fc2-be62-f07236be9753}')!
+
 Kernel.PackageRelativeFileLocator comment: 'PackageRelativeFileLocator is a <RelativeFileLocator> that can be used to map between an absolute path and a path relative to a certain package''s directory. At runtime (i.e. in a deployed application from which packages have been stripped) PackageRelativeFileLocator''s behave in the same way as <ImageRelativeFileLocator>s.
 
 Thanks to Chris Uppal for the original idea behind this class.'!
+
 !Kernel.PackageRelativeFileLocator categoriesForClass!System-Support! !
+
 !Kernel.PackageRelativeFileLocator methodsFor!
 
 basePath
@@ -29,6 +33,7 @@ packageName
 
 setPackageName: aString 
 	packageName := aString! !
+
 !Kernel.PackageRelativeFileLocator categoriesForMethods!
 basePath!accessing!public! !
 package!accessing!public! !
@@ -53,6 +58,7 @@ packageNamed: aString
 	^(super new)
 		setPackageName: aString;
 		yourself! !
+
 !Kernel.PackageRelativeFileLocator class categoriesForMethods!
 package:!instance creation!public! !
 packageNamed:!instance creation!public! !

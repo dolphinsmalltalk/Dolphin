@@ -5,9 +5,13 @@ CheckButton subclass: #EmbeddedCheckButton
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
+
 EmbeddedCheckButton guid: (GUID fromString: '{577c445c-7f28-41c6-be9f-021847c53e4e}')!
+
 EmbeddedCheckButton comment: ''!
+
 !EmbeddedCheckButton categoriesForClass!MVP-Views! !
+
 !EmbeddedCheckButton methodsFor!
 
 _buttonExtent
@@ -268,6 +272,7 @@ totalExtent
 uStateFor: aValue enabled: aBoolean
 
 	^self subclassResponsibility! !
+
 !EmbeddedCheckButton categoriesForMethods!
 _buttonExtent!accessing!private! !
 buttonExtent!accessing!public! !
@@ -319,6 +324,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^22! !
+
 !EmbeddedCheckButton class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

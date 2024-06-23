@@ -7,8 +7,11 @@ Kernel.Tests.STBTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.STBValidatingInFilerTest guid: (Core.GUID fromString: '{078c50e0-a124-4739-8f98-fab43c74c0d7}')!
+
 Kernel.Tests.STBValidatingInFilerTest comment: ''!
+
 !Kernel.Tests.STBValidatingInFilerTest methodsFor!
 
 infilerClass
@@ -376,6 +379,7 @@ verifyVariableBindingsAtVersion: anInteger
 		includeClass: Object;
 		includeClass: Symbol.
 	super verifyVariableBindingsAtVersion: anInteger! !
+
 !Kernel.Tests.STBValidatingInFilerTest categoriesForMethods!
 infilerClass!helpers!private! !
 initializeLocator:!private!running! !

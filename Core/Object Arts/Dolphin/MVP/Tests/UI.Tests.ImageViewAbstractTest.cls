@@ -7,9 +7,13 @@ UI.Tests.StaticViewTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ImageViewAbstractTest guid: (Core.GUID fromString: '{ed83beab-fa00-4772-a8d4-fcf6e16c948a}')!
+
 UI.Tests.ImageViewAbstractTest isNonInstantiable: true!
+
 UI.Tests.ImageViewAbstractTest comment: ''!
+
 !UI.Tests.ImageViewAbstractTest methodsFor!
 
 image
@@ -51,6 +55,7 @@ testInvalidateOnResize
 				lpRect: rect
 				bErase: false).
 	self assert: rect extent equals: extent * 2 - (50 @ 100)! !
+
 !UI.Tests.ImageViewAbstractTest categoriesForMethods!
 image!private!Running! !
 initializePresenter!public!Running! !

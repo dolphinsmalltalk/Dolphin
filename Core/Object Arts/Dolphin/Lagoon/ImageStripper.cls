@@ -40,7 +40,9 @@ BasicImageStripper
 			'UnattendedMask' -> 16r1000000.
 			'WriteLogMask' -> 16r400
 		}!
+
 ImageStripper guid: (Core.GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ImageStripper comment: 'An ImageStripper holds deployment information that indicates how a Dolphin image should be stripped of redundant objects during deployment. ImageStripper is part of the Application Deployment Kit package.
 
 Instance Variables:
@@ -60,7 +62,9 @@ Instance Variables:
 	rootClasses			<IdentitySet> used to cache the classes in the root package.
 
 '!
+
 !ImageStripper categoriesForClass!MVP-Models! !
+
 !ImageStripper methodsFor!
 
 _actualRequiredPackages
@@ -2044,6 +2048,7 @@ writeLogFile
 	its stripping process"
 
 	^flags allMask: WriteLogMask! !
+
 !ImageStripper categoriesForMethods!
 _actualRequiredPackages!accessing!private! !
 _addClassesReferencedByClass:to:!helpers!private! !
@@ -2258,6 +2263,7 @@ isSafeToEncryptWithProductProtection
 	the deployment of a Protected Product application"
 
 	^false! !
+
 !ImageStripper class categoriesForMethods!
 classBuildingMethodCategoryNames!constants!public! !
 classRemovingMethodCategoryNames!constants!public! !

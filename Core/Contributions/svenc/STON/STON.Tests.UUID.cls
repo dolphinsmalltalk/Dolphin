@@ -7,8 +7,11 @@ Core.GUID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.UUID guid: (Core.GUID fromString: '{ad5fb5be-d9b1-44b0-9209-6d360fd900c8}')!
+
 STON.Tests.UUID comment: ''!
+
 !STON.Tests.UUID class methodsFor!
 
 new
@@ -18,6 +21,7 @@ new
 
 nilUUID
 	^self newNull! !
+
 !STON.Tests.UUID class categoriesForMethods!
 new!instance creation!public! !
 nilUUID!public! !

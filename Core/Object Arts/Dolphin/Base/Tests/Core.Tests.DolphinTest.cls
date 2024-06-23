@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest guid: (Core.GUID fromString: '{6444f9c6-8a25-4f8a-bade-5f08d7c882be}')!
+
 Core.Tests.DolphinTest isNonInstantiable: true!
+
 Core.Tests.DolphinTest comment: ''!
+
 !Core.Tests.DolphinTest methodsFor!
 
 allDeepCopiedInstVarsOf: anObject
@@ -123,6 +127,7 @@ verifyPropertyManagerOf: subject
 
 versionFromParts: versionNumbers
 	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
+
 !Core.Tests.DolphinTest categoriesForMethods!
 allDeepCopiedInstVarsOf:!private!unit tests! !
 assertIs:deepCopyOf:!private!unit tests! !

@@ -7,7 +7,9 @@ UI.ToolbarItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ToolbarSeparator guid: (Core.GUID fromString: '{87b4c701-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ToolbarSeparator comment: '`ToolbarSeparator` represents a separator item within a `Toolbar`. A separator can assume a default width, or an explicit pixel width can be set using the `#width` aspect. Separators can be used as a cheap and cheerful way to reserve space in a toolbar for a child window, although the separator will be visible unless completely overlapped by the child.
 
 ## Instance Variables:
@@ -16,7 +18,9 @@ UI.ToolbarSeparator comment: '`ToolbarSeparator` represents a separator item wit
 
 
 '!
+
 !UI.ToolbarSeparator categoriesForClass!MVP-Views-Support! !
+
 !UI.ToolbarSeparator methodsFor!
 
 imageIndexIn: aToolbar
@@ -55,6 +59,7 @@ width: pixelWidth
 	"Set the width of the receiever to pixelWidth. 0 indicates default width."
 
 	width := pixelWidth! !
+
 !UI.ToolbarSeparator categoriesForMethods!
 imageIndexIn:!operations!private! !
 isDivider!public!testing! !
@@ -95,6 +100,7 @@ width: pixelWidth
 	"Answer a new instance of the receiver whose width is set to pixelWidth."
 
 	^self basicNew setWidth: pixelWidth! !
+
 !UI.ToolbarSeparator class categoriesForMethods!
 new!instance creation!public! !
 stbConvertFrom:!binary filing!private! !

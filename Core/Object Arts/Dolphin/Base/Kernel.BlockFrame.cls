@@ -7,9 +7,13 @@ Kernel.StackFrame
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.BlockFrame guid: (Core.GUID fromString: '{87b4c6e5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.BlockFrame comment: ''!
+
 !Kernel.BlockFrame categoriesForClass!Kernel-Methods! !
+
 !Kernel.BlockFrame methodsFor!
 
 argumentCount
@@ -51,6 +55,7 @@ method: aCompiledMethod
 			block := block shallowCopy.
 			self environment: block].
 	block method: aCompiledMethod! !
+
 !Kernel.BlockFrame categoriesForMethods!
 argumentCount!accessing!public! !
 block!accessing!private! !
@@ -69,6 +74,7 @@ findInitialIP: anInteger inTextMap: aTextMap
 	"It is an invariant that there is an entry with a key matching the initialIP. If one is not found, a BoundsError will be thrown."
 	[anInteger == (aTextMap at: i) key] whileFalse: [i := i + 1].
 	^i! !
+
 !Kernel.BlockFrame class categoriesForMethods!
 findInitialIP:inTextMap:!helpers!private! !
 !

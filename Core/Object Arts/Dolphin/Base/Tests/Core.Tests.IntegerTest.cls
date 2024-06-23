@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.IntegerTest guid: (Core.GUID fromString: '{025b6e24-5e2b-49b1-9f4b-55b831a5aef3}')!
+
 Core.Tests.IntegerTest isNonInstantiable: true!
+
 Core.Tests.IntegerTest comment: ''!
+
 !Core.Tests.IntegerTest methodsFor!
 
 canonicalInstance
@@ -114,6 +118,7 @@ testTwoComplementRightShift
 	self should: 
 			[(small bitShift: -1) ~= (small + 1 bitShift: -1) 
 				== ((large bitShift: -1) ~= (large + 1 bitShift: -1))]! !
+
 !Core.Tests.IntegerTest categoriesForMethods!
 canonicalInstance!constants!private! !
 testClassReadFromRadix!public!unit tests! !

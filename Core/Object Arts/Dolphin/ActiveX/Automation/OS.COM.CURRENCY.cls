@@ -12,7 +12,9 @@ External.Structure
 			'MaxValue' -> 922337203685477.5807s.
 			'MinValue' -> -922337203685477.5808s
 		}!
+
 OS.COM.CURRENCY guid: (Core.GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
+
 OS.COM.CURRENCY comment: '`CURRENCY` is an `External.Structure` class to represent the Automation structure of the same name.
 
 `CURRENCY` is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB. It corresponds to the variant type `VT_CY`.
@@ -20,7 +22,9 @@ OS.COM.CURRENCY comment: '`CURRENCY` is an `External.Structure` class to represe
 `CURRENCY`s are mapped to/from Dolphin''s `ScaledDecimal` objects, although of course the latter has unlimited  range and precision, and therefore many `ScaledDecimal`s cannot be represented in a `CURRENCY`.
 
 See also `DECIMAL`'!
+
 !OS.COM.CURRENCY categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.CURRENCY methodsFor!
 
 asVariant
@@ -58,6 +62,7 @@ value: newValue
 	"Set the receiver's value to the <Number>, newValue."
 
 	self cy: (newValue * 10000) asInteger! !
+
 !OS.COM.CURRENCY categoriesForMethods!
 asVariant!converting!public! !
 cy!**compiled accessors**!public! !
@@ -119,6 +124,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_CY! !
+
 !OS.COM.CURRENCY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

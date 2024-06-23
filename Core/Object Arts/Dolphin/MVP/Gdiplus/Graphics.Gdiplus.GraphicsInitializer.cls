@@ -7,9 +7,13 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GraphicsInitializer guid: (Core.GUID fromString: '{6e6bbcda-3692-4de6-b203-2b607e175485}')!
+
 Graphics.Gdiplus.GraphicsInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.GraphicsInitializer comment: ''!
+
 !Graphics.Gdiplus.GraphicsInitializer methodsFor!
 
 = anObject
@@ -37,6 +41,7 @@ surface
 
 surface: anObject
 	surface := anObject! !
+
 !Graphics.Gdiplus.GraphicsInitializer categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !
@@ -60,6 +65,7 @@ on: aGraphicsSurface
 	"Creates a Gdiplus Graphics object that is associated with a specified surface (HDC, HWND or Gdiplus Image)."
 
 	^self new surface: aGraphicsSurface! !
+
 !Graphics.Gdiplus.GraphicsInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

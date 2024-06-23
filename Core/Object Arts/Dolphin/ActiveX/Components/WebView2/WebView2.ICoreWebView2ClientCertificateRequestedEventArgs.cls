@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ClientCertificateRequestedEventArgs guid: (OS.COM.IID fromString: '{bc59db28-bcc3-11eb-8529-0242ac130003}')!
+
 WebView2.ICoreWebView2ClientCertificateRequestedEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2ClientCertificateRequestedEventArgs comment: '`ICoreWebView2ClientCertificateRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -62,7 +65,9 @@ interface ICoreWebView2ClientCertificateRequestedEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ClientCertificateRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ClientCertificateRequestedEventArgs methodsFor!
 
 allowedCertificateAuthorities
@@ -259,6 +264,7 @@ selectedCertificate: value
 	"Set the 'SelectedCertificate' property of the receiver to the <ICoreWebView2ClientCertificate*> value of the argument."
 
 	self put_SelectedCertificate: value! !
+
 !WebView2.ICoreWebView2ClientCertificateRequestedEventArgs categoriesForMethods!
 allowedCertificateAuthorities!**auto generated**!properties!public! !
 cancel!properties!public! !
@@ -318,6 +324,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
+
 !WebView2.ICoreWebView2ClientCertificateRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

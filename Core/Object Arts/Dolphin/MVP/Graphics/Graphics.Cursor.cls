@@ -7,9 +7,13 @@ Graphics.Icon
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Cursor guid: (Core.GUID fromString: '{87b4c640-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Cursor comment: ''!
+
 !Graphics.Cursor categoriesForClass!Graphics-Tools! !
+
 !Graphics.Cursor methodsFor!
 
 loadFromSystem: anInteger extent: aPoint
@@ -33,6 +37,7 @@ loadResource: identifierObject fromModule: moduleObject extent: aPoint flags: an
 		cxDesired: aPoint x
 		cyDesired: aPoint y
 		fuLoad: (aPoint = Point.Zero ifTrue: [anInteger bitOr: LR_DEFAULTSIZE] ifFalse: [anInteger])! !
+
 !Graphics.Cursor categoriesForMethods!
 loadFromSystem:extent:!private!realizing/unrealizing! !
 loadResource:fromModule:extent:flags:!private!realizing/unrealizing! !
@@ -297,6 +302,7 @@ wait
 	"Answer the instance that is the Wait cursor."
 
 	^Wait ifNil: [Wait := self fromSystemId: IDC_WAIT]! !
+
 !Graphics.Cursor class categoriesForMethods!
 appStarting!accessing!public! !
 arrow!instance creation!public! !

@@ -86,6 +86,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.LockBytesAbstract'
 	instanceVariableNames: ''
@@ -93,6 +94,7 @@ OS.COM.InterfaceImplementation
 	imports: #(#{OS.COM.StorageConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.LockBytesAbstract
 	subclass: #'OS.COM.LockBytes'
 	instanceVariableNames: 'bytes'
@@ -100,6 +102,7 @@ OS.COM.LockBytesAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ILockBytes'
 	instanceVariableNames: ''
@@ -107,6 +110,7 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IRootStorage'
 	instanceVariableNames: ''
@@ -114,6 +118,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
@@ -172,6 +177,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 					}) at: file shareFlags + 1).
 	pstatstg grfMode: grfMode.
 	^hr! !
+
 !Core.FileStream categoriesForMethods!
 SetSize:!COM Interfaces-IStream!public! !
 Stat:grfStatFlag:!COM Interfaces-IStream!public! !
@@ -382,6 +388,7 @@ Write: pv cb: cb pcbWritten: pcbWritten
 		startingAt: 1.
 	pcbWritten bytes isNull ifFalse: [pcbWritten value: cb].
 	^S_OK! !
+
 !Core.SequencedStream categoriesForMethods!
 Commit:!public! !
 CopyTo:cb:pcbRead:pcbWritten:!COM Interfaces-IStream!public! !
@@ -415,6 +422,7 @@ SetSize: libNewSize
 
 	collection resize: (readLimit := writeLimit := libNewSize).
 	^S_OK! !
+
 !Core.WriteStream categoriesForMethods!
 SetSize:!COM Interfaces-IStream!public! !
 !
@@ -434,6 +442,7 @@ onURL: urlString
 		dwReserved: 0
 		lpfnCB: nil.
 	^answer! !
+
 !OS.COM.IStream class categoriesForMethods!
 onURL:!instance creation!public! !
 !
@@ -629,6 +638,7 @@ writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 
 	<stdcall: hresult WriteFmtUserTypeStg IStorage* uint16 lpwstr>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.OLELibrary categoriesForMethods!
 createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
 getConvertStg:!OLE Functions-Structured Storage!primitives!public! !
@@ -705,6 +715,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 		ifTrue: [grfMode := grfMode bitOr: StorageConstants.STGM_CREATE].
 	pstatstg grfMode: grfMode.
 	^hr! !
+
 !OS.StdioFileStream categoriesForMethods!
 Read:cb:pcbRead:!COM Interfaces-IStream!public! !
 SetSize:!COM Interfaces-IStream!public! !
@@ -727,6 +738,7 @@ Write: pv cb: cb pcbWritten: pcbWritten
 	self nextPutAll: (self bufferClass fromByteArray: pv length: cb // self bufferClass elementSize).
 	pcbWritten bytes isNull ifFalse: [pcbWritten value: cb].
 	^S_OK! !
+
 !OS.StdioTextFileStream categoriesForMethods!
 Write:cb:pcbWritten:!COM Interfaces-IStream!public! !
 !

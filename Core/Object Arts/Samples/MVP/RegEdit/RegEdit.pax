@@ -81,6 +81,7 @@ UI.VirtualTreeModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Shell
 	subclass: #'UI.Examples.RegEdit'
 	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'

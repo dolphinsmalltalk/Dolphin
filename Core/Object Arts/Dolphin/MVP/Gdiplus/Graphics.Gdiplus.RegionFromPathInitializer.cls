@@ -7,8 +7,11 @@ Graphics.Gdiplus.RegionInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.RegionFromPathInitializer guid: (Core.GUID fromString: '{2e7c1bb2-37d2-4d8b-9135-3eb9ab2ed1bb}')!
+
 Graphics.Gdiplus.RegionFromPathInitializer comment: ''!
+
 !Graphics.Gdiplus.RegionFromPathInitializer methodsFor!
 
 basicCreateHandle
@@ -30,6 +33,7 @@ printAttributesOn: aStream
 	aStream
 		nextPutAll: 'fromPath: ';
 		print: path! !
+
 !Graphics.Gdiplus.RegionFromPathInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 isPersistent!public!testing! !
@@ -41,6 +45,7 @@ printAttributesOn:!attributes!printing!private! !
 
 fromPath: aPath
 	^self new path: aPath! !
+
 !Graphics.Gdiplus.RegionFromPathInitializer class categoriesForMethods!
 fromPath:!instance creation!public! !
 !

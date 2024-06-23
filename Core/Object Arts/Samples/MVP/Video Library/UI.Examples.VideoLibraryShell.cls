@@ -7,7 +7,9 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.VideoLibraryShell guid: (Core.GUID fromString: '{46aa1198-1908-4799-b06c-c003165d09ff}')!
+
 UI.Examples.VideoLibraryShell comment: 'VideoLibraryShell a modeless user interface for displaying and editing the contents of a VideoLibrary. This class is part of the Video Library sample package. Please see the package comment for more details.
 
 Example:usage
@@ -17,7 +19,9 @@ VideoLibraryShell show.
 or 
 
 VideoLibraryShell showOn: (VideoLibrary new owner: ''Mary Joe'')'!
+
 !UI.Examples.VideoLibraryShell categoriesForClass!Samples! !
+
 !UI.Examples.VideoLibraryShell methodsFor!
 
 addTape
@@ -132,6 +136,7 @@ tape: aVideoTapeOrNil
 	"Sets the current selected tape in the receiver to aVideoTapeOrNil"
 
 	^tapesPresenter selectionOrNil: aVideoTapeOrNil! !
+
 !UI.Examples.VideoLibraryShell categoriesForMethods!
 addTape!commands-actions!public! !
 createComponents!initializing!public! !
@@ -196,6 +201,7 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
+
 !UI.Examples.VideoLibraryShell class categoriesForMethods!
 defaultModel!models!public! !
 displayOn:!displaying!public! !

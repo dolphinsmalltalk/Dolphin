@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPrintDialogServices guid: (OS.COM.IID fromString: '{509aaeda-5639-11d1-b6a1-0000f8757bf9}')!
+
 OS.COM.IPrintDialogServices comment: '`IPrintDialogServices` is a wrapper class for the COM interface ''Win32.IPrintDialogServices'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -39,7 +41,9 @@ interface IPrintDialogServices : IUnknown
 };
 ```
 '!
+
 !OS.COM.IPrintDialogServices categoriesForClass!COM-Interfaces!Win32-Interfaces! !
+
 !OS.COM.IPrintDialogServices methodsFor!
 
 GetCurrentDevMode: pDevMode pcbSize: pcbSize
@@ -74,6 +78,7 @@ GetCurrentPrinterName: pPrinterName pcchSize: pcchSize
 
 	<virtual stdcall: hresult 5 lpwstr uint32*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IPrintDialogServices categoriesForMethods!
 GetCurrentDevMode:pcbSize:!**auto generated**!COM Interfaces-IPrintDialogServices!public! !
 GetCurrentPortName:pcchSize:!**auto generated**!COM Interfaces-IPrintDialogServices!public! !
@@ -94,6 +99,7 @@ defineFunctions
 		defineFunction: #GetCurrentPortName:pcchSize:
 			argumentTypes: 'lpwstr uint32*'
 ! !
+
 !OS.COM.IPrintDialogServices class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

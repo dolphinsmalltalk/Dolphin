@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.CompiledMethodTest guid: (Core.GUID fromString: '{32df31e4-99ba-44fb-aaac-99e5dfe82c94}')!
+
 Kernel.Tests.CompiledMethodTest comment: ''!
+
 !Kernel.Tests.CompiledMethodTest categoriesForClass!Tests-Kernel-Methods! !
+
 !Kernel.Tests.CompiledMethodTest methodsFor!
 
 annotationReferenceTwo
@@ -151,6 +155,7 @@ testValueWithReceiverArguments
 	method := self class compiledMethodAt: #returnPlusOne:.
 	value := method value: self withArguments: #(1).
 	self assert: value equals: 2! !
+
 !Kernel.Tests.CompiledMethodTest categoriesForMethods!
 annotationReferenceTwo!examples!private! !
 returnPlusOne:!examples!private! !

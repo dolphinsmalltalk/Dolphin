@@ -32,6 +32,7 @@ Kernel.Announcement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Announcement
 	subclass: #'Kernel.Tests.AnnouncementMockB'
 	instanceVariableNames: ''
@@ -39,6 +40,7 @@ Kernel.Announcement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AnnouncementMockB
 	subclass: #'Kernel.Tests.AnnouncementMockC'
 	instanceVariableNames: ''
@@ -46,6 +48,7 @@ Kernel.Tests.AnnouncementMockB
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'Kernel.Tests.AnnouncementSetTest'
 	instanceVariableNames: ''
@@ -53,6 +56,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestCase
 	subclass: #'Kernel.Tests.AnnouncerTest'
 	instanceVariableNames: 'announcer'
@@ -60,6 +64,7 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AnnouncerTest
 	subclass: #'Kernel.Tests.WeakAnnouncerTest'
 	instanceVariableNames: ''

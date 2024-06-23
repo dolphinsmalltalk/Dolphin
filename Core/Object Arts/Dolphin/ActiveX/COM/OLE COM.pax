@@ -144,6 +144,7 @@ OS
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SharedPool
 	subclass: #'OS.COM.OLEConstants'
 	instanceVariableNames: ''
@@ -160,6 +161,7 @@ Kernel.SharedPool
 			'REGCLS_MULTI_SEPARATE' -> 16r2.
 			'REGCLS_MULTIPLEUSE' -> 16r1
 		}!
+
 Core.Object
 	subclass: #'OS.COM.AbstractInterfaceFunction'
 	instanceVariableNames: ''
@@ -167,6 +169,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'OS.COM.InterfaceImplementation'
 	instanceVariableNames: ''
@@ -174,6 +177,7 @@ Core.Object
 	imports: #(#{OS.Win32Errors} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'OS.COM.ObjectStub'
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
@@ -181,6 +185,7 @@ Core.Object
 	imports: #(#{OS.Win32Errors private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.AbstractInterfaceFunction
 	subclass: #'OS.COM.AddRefFunction'
 	instanceVariableNames: ''
@@ -188,6 +193,7 @@ OS.COM.AbstractInterfaceFunction
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.AbstractInterfaceFunction
 	subclass: #'OS.COM.InterfaceFunction'
 	instanceVariableNames: 'selector descriptor'
@@ -195,6 +201,7 @@ OS.COM.AbstractInterfaceFunction
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.AbstractInterfaceFunction
 	subclass: #'OS.COM.QueryInterfaceFunction'
 	instanceVariableNames: ''
@@ -202,6 +209,7 @@ OS.COM.AbstractInterfaceFunction
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.AbstractInterfaceFunction
 	subclass: #'OS.COM.ReleaseFunction'
 	instanceVariableNames: ''
@@ -209,6 +217,7 @@ OS.COM.AbstractInterfaceFunction
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequenceableCollection
 	subclass: #'OS.COM.Enumerable'
 	instanceVariableNames: 'interface'
@@ -216,6 +225,7 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Address
 	variableByteSubclass: #'OS.COM.BSTR'
 	instanceVariableNames: ''
@@ -223,6 +233,7 @@ External.Address
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Memory
 	variableByteSubclass: #'OS.COM.TaskMemory'
 	instanceVariableNames: ''
@@ -230,6 +241,7 @@ External.Memory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.COM.OLEAutLibrary'
 	instanceVariableNames: ''
@@ -237,6 +249,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
@@ -244,6 +257,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.GUID
 	variableByteSubclass: #'OS.COM.CLSID'
 	instanceVariableNames: ''
@@ -251,6 +265,7 @@ Core.GUID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_CLSID_Size' -> 16r10 }!
+
 Core.GUID
 	variableByteSubclass: #'OS.COM.IID'
 	instanceVariableNames: ''
@@ -258,6 +273,7 @@ Core.GUID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_IID_Size' -> 16r10 }!
+
 OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.ClassFactory'
 	instanceVariableNames: 'serverClass clsid registration'
@@ -265,6 +281,7 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.Enumerator'
 	instanceVariableNames: 'enumClass contents'
@@ -272,6 +289,7 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ClassFactory
 	subclass: #'OS.COM.SingletonClassFactory'
 	instanceVariableNames: 'current'
@@ -279,6 +297,7 @@ OS.COM.ClassFactory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Enumerator
 	subclass: #'OS.COM.InterfaceEnumerator'
 	instanceVariableNames: ''
@@ -286,6 +305,7 @@ OS.COM.Enumerator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.COM.COAUTHIDENTITY'
 	instanceVariableNames: ''
@@ -302,6 +322,7 @@ External.Structure
 			'_OffsetOf_User' -> 16r0.
 			'_OffsetOf_UserLength' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.COM.COAUTHINFO'
 	instanceVariableNames: ''
@@ -318,6 +339,7 @@ External.Structure
 			'_OffsetOf_pAuthIdentityData' -> 16r14.
 			'_OffsetOf_pwszServerPrincName' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS.COM.COSERVERINFO'
 	instanceVariableNames: 'hostName'
@@ -331,6 +353,7 @@ External.Structure
 			'_OffsetOf_pAuthInfo' -> 16r8.
 			'_OffsetOf_pwszName' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
@@ -345,6 +368,7 @@ External.Structure
 			'_OffsetOf_vtbl' -> 16r0.
 			'EgressOnlyMask' -> 16r10000
 		}!
+
 External.ExternalArray
 	subclass: #'OS.COM.CountedArray'
 	instanceVariableNames: 'elements'
@@ -352,6 +376,7 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_cElems' -> 16r0. '_OffsetOf_pElems' -> 16r4 }!
+
 OS.COM.CountedArray
 	subclass: #'OS.COM.CADWORD'
 	instanceVariableNames: ''
@@ -359,6 +384,7 @@ OS.COM.CountedArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_CADWORD_Size' -> 16r8 }!
+
 OS.COM.CountedArray
 	subclass: #'OS.COM.CALPOLESTR'
 	instanceVariableNames: ''
@@ -366,6 +392,7 @@ OS.COM.CountedArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_CALPOLESTR_Size' -> 16r8 }!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.EXCEPINFO'
 	instanceVariableNames: ''
@@ -384,6 +411,7 @@ External.FinalizableStructure
 			'_OffsetOf_wCode' -> 16r0.
 			'_OffsetOf_wReserved' -> 16r2
 		}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.MULTI_QI'
 	instanceVariableNames: ''
@@ -396,6 +424,7 @@ External.FinalizableStructure
 			'_OffsetOf_pIID' -> 16r0.
 			'_OffsetOf_pItf' -> 16r4
 		}!
+
 OS.COM.Interface
 	subclass: #'OS.COM.IUnknown'
 	instanceVariableNames: ''
@@ -403,6 +432,7 @@ OS.COM.Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IClassFactory'
 	instanceVariableNames: ''
@@ -410,6 +440,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IEnumXXXX'
 	instanceVariableNames: ''
@@ -417,6 +448,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IErrorInfo'
 	instanceVariableNames: ''
@@ -424,6 +456,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IMalloc'
 	instanceVariableNames: ''
@@ -431,6 +464,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IObjectWithSite'
 	instanceVariableNames: ''
@@ -438,6 +472,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IServiceProvider'
 	instanceVariableNames: ''
@@ -445,6 +480,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.ISupportErrorInfo'
 	instanceVariableNames: ''
@@ -452,6 +488,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IClassFactory
 	subclass: #'OS.COM.IClassFactory2'
 	instanceVariableNames: ''
@@ -459,6 +496,7 @@ OS.COM.IClassFactory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumXXXX
 	subclass: #'OS.COM.IEnumString'
 	instanceVariableNames: ''
@@ -466,6 +504,7 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumXXXX
 	subclass: #'OS.COM.IEnumStruct'
 	instanceVariableNames: 'elementClass'
@@ -473,6 +512,7 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumXXXX
 	subclass: #'OS.COM.IEnumUnknown'
 	instanceVariableNames: ''
@@ -480,6 +520,7 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.SizedStructure
 	subclass: #'OS.COM.LICINFO'
 	instanceVariableNames: ''
@@ -507,6 +548,7 @@ copyToCOMTaskMemory
 		to: size
 		with: self
 		startingAt: 1! !
+
 !Core.ByteArray categoriesForMethods!
 copyToCOMTaskMemory!copying!public! !
 !
@@ -518,6 +560,7 @@ hresult
 	Overridden by subclasses to answer more specified HRESULT codes."
 
 	^OS.HRESULT fromInteger: E_INVALIDARG! !
+
 !Core.InvalidArgumentError categoriesForMethods!
 hresult!accessing!public! !
 !
@@ -534,6 +577,7 @@ comStartup
 	COM.IUnknown onStartup.
 	"Attach the outer unknown passed by the stub, if any"
 	self outer notNull ifTrue: [startupArgs at: 2 put: (COM.IUnknown attach: self outer)]! !
+
 !Core.SessionManager categoriesForMethods!
 comStartup!operations-startup!private! !
 !
@@ -551,6 +595,7 @@ copyToCOMTaskMemory
 	characters."
 
 	^OS.COM.TaskMemory fromString: self! !
+
 !Core.String categoriesForMethods!
 asBSTR!converting!public! !
 copyToCOMTaskMemory!copying!public! !
@@ -569,6 +614,7 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	^interfaceClass == COM.IMalloc
 		ifTrue: [interfaceClass on: self]
 		ifFalse: [exceptionHandler value]! !
+
 !External.Memory class categoriesForMethods!
 queryInterface:ifNone:!accessing-interfaces!public! !
 !
@@ -583,6 +629,7 @@ copyToCOMTaskMemory
 		copy: COM.TaskMemory
 		from: 1
 		to: self byteSize! !
+
 !External.Structure categoriesForMethods!
 copyToCOMTaskMemory!copying!public! !
 !
@@ -616,6 +663,7 @@ unregisterCOMStub: cookie
 
 	comStubs isNil ifTrue: [comStubs := PermanentRegistry new].
 	comStubs removeAtIndex: cookie! !
+
 !Kernel.ProcessorScheduler categoriesForMethods!
 comCallback:id:subId:withArgumentsAt:cookie:!callbacks!debugger-step through!not restartable!private!vm entry points! !
 registerCOMStub:!accessing!private! !

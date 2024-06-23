@@ -25,6 +25,7 @@ refersToClassInPackageDefaultNamespace
 	"Reference a class in Tools using an unqualified name - bindable because the owning package, RBTestMethodsExtra, has Tools as its default namespace. Also refers to a class with an unnecessary partially qualified name so when renamed into new namespace a change is generated."
 
 	^{RefactoryTestDataApp. TestData.BasicLintRuleTestData}! !
+
 !Refactory.Browser.Tests.ClassToRename categoriesForMethods!
 refersToClassInPackageDefaultNamespace!performing!public! !
 !

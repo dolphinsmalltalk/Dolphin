@@ -7,9 +7,13 @@ Graphics.Gdiplus.Tests.TransformableBrushTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GradientBrushTest guid: (Core.GUID fromString: '{4c04f76d-ccb5-4687-b714-f7ed3ec51464}')!
+
 Graphics.Gdiplus.Tests.GradientBrushTest isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.GradientBrushTest comment: ''!
+
 !Graphics.Gdiplus.Tests.GradientBrushTest methodsFor!
 
 testClone
@@ -71,6 +75,7 @@ testWrapMode
 
 validWrapModes
 	^{WrapModeTile. WrapModeTileFlipX. WrapModeTileFlipY. WrapModeTileFlipXY. WrapModeClamp} ! !
+
 !Graphics.Gdiplus.Tests.GradientBrushTest categoriesForMethods!
 testClone!public!unit tests! !
 testCustomBlend!public!unit tests! !

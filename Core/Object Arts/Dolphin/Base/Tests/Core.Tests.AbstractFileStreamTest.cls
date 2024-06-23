@@ -7,9 +7,13 @@ Core.Tests.ReadWriteStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AbstractFileStreamTest guid: (Core.GUID fromString: '{fc7d3bee-d1b0-477d-a33c-33ee6cfb0339}')!
+
 Core.Tests.AbstractFileStreamTest isNonInstantiable: true!
+
 Core.Tests.AbstractFileStreamTest comment: ''!
+
 !Core.Tests.AbstractFileStreamTest methodsFor!
 
 arrayedCollections
@@ -440,6 +444,7 @@ testTruncate
 
 writeableCollections
 	^self strings , self byteArrays! !
+
 !Core.Tests.AbstractFileStreamTest categoriesForMethods!
 arrayedCollections!private! !
 assertBufferEmptyOrDirty:!helpers!private! !

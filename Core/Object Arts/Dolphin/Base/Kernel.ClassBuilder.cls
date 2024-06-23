@@ -70,9 +70,13 @@ Core.Object
 			'RecompileMask' -> 16r1.
 			'Unsubclassable' -> (Set withAll: #(#{Core.Character} #{Core.SmallInteger}))
 		}!
+
 Kernel.ClassBuilder guid: (Core.GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.ClassBuilder comment: ''!
+
 !Kernel.ClassBuilder categoriesForClass!System-Support! !
+
 !Kernel.ClassBuilder methodsFor!
 
 allInstVarNamesOf: aClass
@@ -1280,6 +1284,7 @@ validateSuperclassIsSubclassable
 		ifTrue: 
 			[(superclass class isMeta not or: [Unsubclassable includes: superclass fullyQualifiedReference])
 				ifTrue: [self error: ErrorUnsubclassable << superclass]]! !
+
 !Kernel.ClassBuilder categoriesForMethods!
 allInstVarNamesOf:!helpers!private! !
 baseEnvironment!helpers!private! !
@@ -1517,6 +1522,7 @@ renameClass: aClass to: aString
 		class: aClass;
 		className: aString;
 		rename! !
+
 !Kernel.ClassBuilder class categoriesForMethods!
 forModifying:!instance creation!public! !
 initialize!development!initializing!public! !

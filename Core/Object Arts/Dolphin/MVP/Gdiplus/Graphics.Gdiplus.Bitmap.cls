@@ -7,8 +7,11 @@ Graphics.Gdiplus.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Bitmap guid: (Core.GUID fromString: '{206fb497-cb98-42d3-a48f-1f83e25cce07}')!
+
 Graphics.Gdiplus.Bitmap comment: 'GdiplusBitmap expands on GdiplusImage by providing additional methods for creating and manipulating raster images.'!
+
 !Graphics.Gdiplus.Bitmap methodsFor!
 
 asBitmap
@@ -92,6 +95,7 @@ pixelAt: aPoint put: anARGB
 
 unlockBits: lockedBitmapData
 	Gdip gdipBitmapUnlockBits: self handle lockedBitmapData: lockedBitmapData! !
+
 !Graphics.Gdiplus.Bitmap categoriesForMethods!
 asBitmap!converting!public! !
 asIcon!converting!public! !
@@ -233,6 +237,7 @@ width: width height: height format: aPixelFormat
 				width: width
 				height: height
 				format: aPixelFormat)! !
+
 !Graphics.Gdiplus.Bitmap class categoriesForMethods!
 extent:!instance creation!public! !
 extent:format:!instance creation!public! !

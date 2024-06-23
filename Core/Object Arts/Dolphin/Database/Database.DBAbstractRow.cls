@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBAbstractRow guid: (Core.GUID fromString: '{c829ece2-5847-4e24-855e-a9c259dd955f}')!
+
 Database.DBAbstractRow isNonInstantiable: true!
+
 Database.DBAbstractRow comment: 'A DBAbstractRow respresents a row in a <DBResultSet>, either as a buffer containing a collection of field buffers used to receive data from ODBC (subclasses of DBRowBuffer), or as a reified row containing the column values as appropriate types of Smalltalk object (DBRow).
 
 From a DBAbstractRows one can access the column attributes and the actual field data for the columns. The columns can be accessed by name using #at: and by index using #atIndex:. The type of object returned depends on whether the receiver is a buffer (in which case one gets <DBField>s, or a reified <DBRow>, in which case one gets the field values). DBAbstractRows also provide implicit accessor methods for each column by overriding #doesNotUnderstand.
@@ -18,7 +21,9 @@ Instance Variables:
 	contents		<Array> of <DBField>|<Object>
 	selectors		<Dictionary> mapping <Symbol>s to <integer> column indices.
 	status		<WORD>|<integer> ODBC row status'!
+
 !Database.DBAbstractRow categoriesForClass!Kernel-Objects! !
+
 !Database.DBAbstractRow methodsFor!
 
 = comparand
@@ -136,6 +141,7 @@ selectors
 
 status
 	^status! !
+
 !Database.DBAbstractRow categoriesForMethods!
 =!comparing!public! !
 asObject!converting!private! !

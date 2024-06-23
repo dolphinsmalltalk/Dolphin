@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RemoveMethodRefactoring guid: (Core.GUID fromString: '{b0514c20-922f-4ee5-b5bb-e0ebabdf52bd}')!
+
 Refactory.Browser.RemoveMethodRefactoring comment: ''!
+
 !Refactory.Browser.RemoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RemoveMethodRefactoring methodsFor!
 
 checkReferencesToAnyOf: aSelectorCollection
@@ -104,6 +108,7 @@ superclassEquivalentlyDefines: aSelector
 
 transform
 	selectors do: [:each | class removeSelector: each]! !
+
 !Refactory.Browser.RemoveMethodRefactoring categoriesForMethods!
 checkReferencesToAnyOf:!preconditions!public! !
 checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
@@ -128,6 +133,7 @@ model: aRBModel removeMethods: selectorCollection from: aClass
 
 removeMethods: selectorCollection from: aClass
 	^self new removeMethods: selectorCollection from: aClass! !
+
 !Refactory.Browser.RemoveMethodRefactoring class categoriesForMethods!
 model:removeMethods:from:!instance creation!public! !
 removeMethods:from:!instance creation!public! !

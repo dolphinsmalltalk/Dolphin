@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IVBSAXXMLReader guid: (OS.COM.IID fromString: '{8c033caa-6cd6-4f73-b728-4531af74945f}')!
+
 MSXML.IVBSAXXMLReader comment: '<IVBSAXXMLReader> is a wrapper class for the COM interface ''MSXML2.IVBSAXXMLReader'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -86,7 +88,9 @@ interface IVBSAXXMLReader : IDispatch
 		[in]BSTR strURL);
 };
 '!
+
 !MSXML.IVBSAXXMLReader categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IVBSAXXMLReader methodsFor!
 
 baseURL
@@ -402,6 +406,7 @@ setErrorHandler: oHandler
 	Helpstring: Allow an application to register an error event handler or look up the current error event handler."
 
 	self putref_errorHandler: oHandler! !
+
 !MSXML.IVBSAXXMLReader categoriesForMethods!
 baseURL!**auto generated**!properties!public! !
 baseURL:!**auto generated**!properties!public! !
@@ -492,6 +497,7 @@ defineFunctions
 		defineFunction: #ParseURL:
 			argumentTypes: 'bstr'
 ! !
+
 !MSXML.IVBSAXXMLReader class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

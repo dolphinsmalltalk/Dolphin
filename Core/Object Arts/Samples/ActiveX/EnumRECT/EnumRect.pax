@@ -44,6 +44,7 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumXXXX
 	subclass: #'OS.COM.Examples.IEnumRECT'
 	instanceVariableNames: ''

@@ -74,6 +74,7 @@ styleName
 
 	Notification deprecated.
 	^self typeName! !
+
 !UI.Scintilla.Indicator categoriesForMethods!
 styleName!public! !
 !
@@ -90,6 +91,7 @@ styleName: aSymbolOrInteger range: anInterval tag: anObject
 		typeName: aSymbolOrInteger
 		range: anInterval
 		tag: anObject! !
+
 !UI.Scintilla.Indicator class categoriesForMethods!
 styleName:range:!instance creation!public! !
 styleName:range:tag:!instance creation!public! !
@@ -100,6 +102,7 @@ styleName:range:tag:!instance creation!public! !
 styleNames
 	Notification deprecated.
 	^IndicatorStyleNames! !
+
 !UI.Scintilla.IndicatorDefinition class categoriesForMethods!
 styleNames!initializing!public! !
 !
@@ -258,6 +261,7 @@ tokenStartAt: anInteger
 tokenTextAt: anInteger
 	#deprecated.
 	^self styleRunTextAt: anInteger! !
+
 !UI.Scintilla.ScintillaView categoriesForMethods!
 currentLineAlpha:!caret, selection, and hotspot styles!public! !
 firstVisibleLine:!public!scrolling! !

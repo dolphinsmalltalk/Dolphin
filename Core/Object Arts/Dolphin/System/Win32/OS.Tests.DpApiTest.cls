@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.DpApiTest guid: (Core.GUID fromString: '{9165806d-c1a3-45e6-bf08-54ea3a21b04c}')!
+
 OS.Tests.DpApiTest comment: ''!
+
 !OS.Tests.DpApiTest methodsFor!
 
 testProtectUnprotectData
@@ -37,6 +40,7 @@ verifyRoundTrip: aByteObject
 		should: [Crypt32Library unprotectData: encryptedExtra additionalEntropy: #[4 5 6]]
 		raise: Win32Error
 		matching: [:ex | ex tag statusCode = Win32Errors.ERROR_INVALID_DATA]! !
+
 !OS.Tests.DpApiTest categoriesForMethods!
 testProtectUnprotectData!public!unit tests! !
 verifyRoundTrip:!helpers!private! !

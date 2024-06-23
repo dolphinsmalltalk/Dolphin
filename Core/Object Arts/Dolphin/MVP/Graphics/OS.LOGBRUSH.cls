@@ -12,7 +12,9 @@ External.Structure
 			'_OffsetOf_lbHatch' -> 16r8.
 			'_OffsetOf_lbStyle' -> 16r0
 		}!
+
 OS.LOGBRUSH guid: (Core.GUID fromString: '{87b4c5f8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.LOGBRUSH comment: '<LOGBRUSH> is an <ExternalStructure> class to wrap the struct ''Win.LOGBRUSH'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The LOGBRUSH structure defines the style, color, and pattern of a physical brush. It is used by the CreateBrushIndirect and ExtCreatePen functions."
@@ -21,7 +23,9 @@ Instance Variables:
 	hatch		<integer> hatch code from the HS_XXX enumeration, or <Bitmap> (for a bitmap brush, preventing the premature GC of that Bitmap).
 
 '!
+
 !OS.LOGBRUSH categoriesForClass!Win32-Structs! !
+
 !OS.LOGBRUSH methodsFor!
 
 color
@@ -82,6 +86,7 @@ style: styleFlags color: aColour hatch: hatchObject
 		uint32AtOffset: _OffsetOf_lbStyle put: styleFlags;
 		uint32AtOffset: _OffsetOf_lbColor put: aColour asCOLORREF;
 		uintPtrAtOffset: _OffsetOf_lbHatch put: hatchObject asParameter! !
+
 !OS.LOGBRUSH categoriesForMethods!
 color!accessing!public! !
 hatch!accessing!public! !
@@ -145,6 +150,7 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 		style: styleFlags
 		color: aColour
 		hatch: hatchObject! !
+
 !OS.LOGBRUSH class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

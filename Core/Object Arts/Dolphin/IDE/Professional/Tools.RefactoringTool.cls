@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.RefactoringTool guid: (Core.GUID fromString: '{838c8c37-c249-4db4-b324-65cb5babdc40}')!
+
 Tools.RefactoringTool isNonInstantiable: true!
+
 Tools.RefactoringTool comment: 'RefactoringTool is the abstract class of plugins used to add refactoring functionality to browsers and other coding tools in the Dolphin IDE.
 
 Note that RefactoringTool is neither a presenter nor a model, but it is a <commandTarget>.
@@ -17,6 +20,7 @@ Instance Variables:
 	presenter		<presenter> hosting the refactoring tool. Its type will depend on the subclass.
 
 '!
+
 !Tools.RefactoringTool methodsFor!
 
 convertTempToInstVar: aStVariableNode 
@@ -108,6 +112,7 @@ renameTemporary: aStVariableNode
 
 setPresenter: aPresenter 
 	presenter := aPresenter! !
+
 !Tools.RefactoringTool categoriesForMethods!
 convertTempToInstVar:!public!refactoring! !
 developmentSystem!constants!public! !
@@ -136,6 +141,7 @@ forPresenter: aPresenter
 	^(self new)
 		setPresenter: aPresenter;
 		yourself! !
+
 !Tools.RefactoringTool class categoriesForMethods!
 commandAnnotations!accessing!public! !
 forPresenter:!instance creation!public! !

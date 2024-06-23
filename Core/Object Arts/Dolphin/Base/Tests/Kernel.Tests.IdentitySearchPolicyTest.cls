@@ -7,8 +7,11 @@ Core.Tests.SearchPolicyTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.IdentitySearchPolicyTest guid: (Core.GUID fromString: '{05134366-7e1d-469d-98b0-5b757f38592b}')!
+
 Kernel.Tests.IdentitySearchPolicyTest comment: ''!
+
 !Kernel.Tests.IdentitySearchPolicyTest methodsFor!
 
 policyClass
@@ -34,6 +37,7 @@ testCompareWith
 	self assert: (policy compare: 'hash' with: 'hash' copy) not.
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b) not! !
+
 !Kernel.Tests.IdentitySearchPolicyTest categoriesForMethods!
 policyClass!public!unit tests! !
 testCompareWith!public!unit tests! !

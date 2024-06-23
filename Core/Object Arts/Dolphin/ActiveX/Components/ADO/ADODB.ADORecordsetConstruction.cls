@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.ADORecordsetConstruction guid: (OS.COM.IID fromString: '{00000283-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.ADORecordsetConstruction comment: '`ADORecordsetConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordsetConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -45,7 +47,9 @@ interface ADORecordsetConstruction : IDispatch
 };
 ```
 '!
+
 !ADODB.ADORecordsetConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.ADORecordsetConstruction methodsFor!
 
 chapter
@@ -143,6 +147,7 @@ rowset: ppRowset
 	"Set the 'Rowset' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Rowset: ppRowset! !
+
 !ADODB.ADORecordsetConstruction categoriesForMethods!
 chapter!**auto generated**!properties!public! !
 chapter:!**auto generated**!properties!public! !
@@ -178,6 +183,7 @@ defineFunctions
 		defineFunction: #put_RowPosition:
 			argumentTypes: 'IUnknown*'
 ! !
+
 !ADODB.ADORecordsetConstruction class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

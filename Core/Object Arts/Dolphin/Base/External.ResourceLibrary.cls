@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.ResourceLibrary guid: (Core.GUID fromString: '{87b4c57f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.ResourceLibrary comment: 'ExternalResourceLibrary is a generic type of <ExternalLibrary>, instance of which can be used to access resources (e.g. icons, bitmaps, strings) from arbitrary modules (DLLs and EXES). A registry of open resource libraries is maintained so that each module is represented by a single instance, and aliasing of the library names is supported to map old Dolphin resources to new libraries should the latter be renamed.'!
+
 !External.ResourceLibrary categoriesForClass!External-Libraries! !
+
 !External.ResourceLibrary methodsFor!
 
 = anObject
@@ -91,6 +95,7 @@ printOn: aWriteStream
 		space;
 		print: self fileName;
 		nextPut: $)! !
+
 !External.ResourceLibrary categoriesForMethods!
 =!comparing!public! !
 attemptToOpen:!helpers!instance creation!private! !
@@ -195,6 +200,7 @@ open: aString withAliases: aCollection flags: anInteger
 									Libraries at: path put: existing]]].
 	aliases do: [:alias | Libraries at: (File default: alias extension: 'dll') put: lib].
 	^lib! !
+
 !External.ResourceLibrary class categoriesForMethods!
 aliasFor:!enquiries!public! !
 defaultLoadFlags!constants!private! !

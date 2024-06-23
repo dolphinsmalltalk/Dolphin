@@ -7,8 +7,11 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StVariableNode guid: (Core.GUID fromString: '{38ecca66-7d53-4b09-90f6-5c6f0e76ba79}')!
+
 Kernel.StVariableNode isNonInstantiable: true!
+
 Kernel.StVariableNode comment: 'StAbstractVariableNode is an abstract parse tree node with subclasses to represent variable references and definitions.
 
 Instance Variables:
@@ -16,7 +19,9 @@ Instance Variables:
 	variable	A subtype of <StVariable> describing the type of variable that this node is referencing or defining. Only set if semantic analysis has been run.
 
 '!
+
 !Kernel.StVariableNode categoriesForClass!System-Compiler! !
+
 !Kernel.StVariableNode methodsFor!
 
 = anObject
@@ -82,6 +87,7 @@ variable
 
 variable: aStVariable
 	variable := aStVariable! !
+
 !Kernel.StVariableNode categoriesForMethods!
 =!comparing!public! !
 binding!accessing!public! !
@@ -143,6 +149,7 @@ superNode
 
 thisContextNode
 	^StThisContextVariableNode start: 0! !
+
 !Kernel.StVariableNode class categoriesForMethods!
 identifierToken:!instance creation!public! !
 named:!instance creation!public! !

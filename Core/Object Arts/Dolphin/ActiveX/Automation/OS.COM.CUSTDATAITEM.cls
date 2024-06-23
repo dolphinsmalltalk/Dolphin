@@ -11,11 +11,15 @@ External.Structure
 			'_OffsetOf_guid' -> 16r0.
 			'_OffsetOf_varValue' -> 16r10
 		}!
+
 OS.COM.CUSTDATAITEM guid: (Core.GUID fromString: '{a72e70d7-34d7-4c65-9b12-5941c51fa3c2}')!
+
 OS.COM.CUSTDATAITEM comment: '<CUSTDATAITEM> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATAITEM'' from type information in the ''Ole Automation Type Library'' library.
 
 CUSTDATAITEM is used to represent blocks of custom data stored in a type library.'!
+
 !OS.COM.CUSTDATAITEM categoriesForClass!OAIDL-Structs! !
+
 !OS.COM.CUSTDATAITEM methodsFor!
 
 = anAssociation
@@ -56,6 +60,7 @@ varValue
 	"Answer the <VARIANT> value of the receiver's 'varValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + _OffsetOf_varValue! !
+
 !OS.COM.CUSTDATAITEM categoriesForMethods!
 =!comparing!public! !
 asObject!public! !
@@ -89,6 +94,7 @@ defineFields
 
 getFieldNames
 	^#(#guid #varValue)! !
+
 !OS.COM.CUSTDATAITEM class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

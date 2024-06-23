@@ -7,9 +7,13 @@ UI.Tests.ListControlTest
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ListViewTest guid: (Core.GUID fromString: '{bce10a8d-244e-4377-846c-bcbef9d853a1}')!
+
 UI.Tests.ListViewTest isNonInstantiable: true!
+
 UI.Tests.ListViewTest comment: ''!
+
 !UI.Tests.ListViewTest methodsFor!
 
 classToTest
@@ -420,6 +424,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assertIsNil: view backImage.
 	self assert: view largeIconExtent equals: Icon largeExtent.
 	self assert: view isDoubleBuffered! !
+
 !UI.Tests.ListViewTest categoriesForMethods!
 classToTest!helpers!private! !
 forceColumnResize!helpers!private! !

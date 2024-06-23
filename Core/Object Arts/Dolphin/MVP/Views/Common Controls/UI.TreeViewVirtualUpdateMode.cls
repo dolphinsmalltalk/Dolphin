@@ -7,10 +7,15 @@ UI.TreeViewUpdateMode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TreeViewVirtualUpdateMode guid: (Core.GUID fromString: '{e082c0fc-396e-4aee-934b-82d51d2b8917}')!
+
 UI.TreeViewVirtualUpdateMode isNonInstantiable: true!
+
 UI.TreeViewVirtualUpdateMode comment: '`TreeViewVirtualUpdateMode` is the abstract class of policy objects that implement the virtual `TreeView` update modes. In these modes the items are added to the tree without any data, and the view then sends callback notifications to request the text, icons, etc, when required. Whether or not it is asked to store this data once requested depends on the concrete update mode subclass.'!
+
 !UI.TreeViewVirtualUpdateMode categoriesForClass!MVP-Views-Support! !
+
 !UI.TreeViewVirtualUpdateMode methodsFor!
 
 addItems: aCollection inHandle: parentHandle afterHandle: siblingHandle
@@ -28,6 +33,7 @@ updateItem: anObject at: anExternalHandle
 	"Instruct the tree to send notification callbacks to fetch the item text, icon, etc"
 
 	view tvmSetItem: (TVITEMEXW callbacksForItem: anExternalHandle)! !
+
 !UI.TreeViewVirtualUpdateMode categoriesForMethods!
 addItems:inHandle:afterHandle:!adding!public! !
 isVirtual!public!testing! !

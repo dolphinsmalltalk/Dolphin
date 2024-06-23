@@ -19,6 +19,10 @@ Kernel.SharedPool
 			'FACILITY_WIN32' -> 16r7.
 			'FACILITY_WINDOWS' -> 16r8
 		}!
+
 OS.FacilityCodes guid: (Core.GUID fromString: '{c29edf9c-e9d8-4309-b214-7a3dae1c1a01}')!
+
 OS.FacilityCodes isNonInstantiable: true!
+
 OS.FacilityCodes comment: ''!
+

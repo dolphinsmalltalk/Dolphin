@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.MoveMethodRefactoringTest guid: (Core.GUID fromString: '{7313b46f-a4cc-4401-8345-57823fb459af}')!
+
 Refactory.Browser.Tests.MoveMethodRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.MoveMethodRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.MoveMethodRefactoringTest methodsFor!
 
 testMoveMethodIntoArgument
@@ -179,6 +183,7 @@ testMovePrimitiveMethod
 				class: Object
 				variable: 'OrderedCollection'.
 	self shouldFail: refactoring withMessage: 'Cannot move primitive methods'! !
+
 !Refactory.Browser.Tests.MoveMethodRefactoringTest categoriesForMethods!
 testMoveMethodIntoArgument!public!tests! !
 testMoveMethodIntoClassVariable!public!tests! !

@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ComboBoxTest guid: (Core.GUID fromString: '{beb204cd-8c17-44a4-8305-c23345382e1e}')!
+
 UI.Tests.ComboBoxTest comment: ''!
+
 !UI.Tests.ComboBoxTest methodsFor!
 
 classToTest
@@ -26,6 +29,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 		identicalTo: (aResourceIdentifier selector == #resource_Drop_down_list
 				ifTrue: [#dropDownList]
 				ifFalse: [#dropDown])! !
+
 !UI.Tests.ComboBoxTest categoriesForMethods!
 classToTest!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -62,6 +66,7 @@ resource_Combo_box_D8_STL5
 	"
 
 	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ComboBox} 34 17 nil nil 34 2 8 1412498946 1025 416 787270 2 #{UI.ListModel} 138 144 8 #() nil 1769478 #{Kernel.IdentitySearchPolicy} 917510 #{Graphics.Color} #default nil 5 nil nil nil 416 nil 8 1814646992 786950 #{Core.Message} #displayString 8 #() 8 #() 401 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 786 251 51 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 124 24 0 0 35 0 0 0] 8 #() 786 193 193 nil 27)! !
+
 !UI.Tests.ComboBoxTest class categoriesForMethods!
 resource_Combo_box_D6!public!resources-views! !
 resource_Combo_box_D7!public!resources-views! !

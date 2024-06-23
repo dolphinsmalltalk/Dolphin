@@ -48,61 +48,66 @@ Object subclass: #XMLNode
 	classVariableNames: 'CanonicalTable'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #XMLWriter
 	instanceVariableNames: 'stream stack scanner canonical'
 	classVariableNames: 'XMLTranslation'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #XMLException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLException subclass: #XMLMalformedException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SAXHandler subclass: #XMLDOMParser
 	instanceVariableNames: 'entity stack incremental'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLNode subclass: #XMLNodeWithEntities
 	instanceVariableNames: 'entities'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLNode subclass: #XMLPI
 	instanceVariableNames: 'target data'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLNode subclass: #XMLStringNode
 	instanceVariableNames: 'string'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLNodeWithEntities subclass: #XMLDocument
 	instanceVariableNames: 'dtd version encoding requiredMarkup'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLNodeWithEntities subclass: #XMLElement
 	instanceVariableNames: 'name contents attributes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLTokenizer subclass: #XMLParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,10 +5,15 @@ MainTestCase subclass: #CollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CollectionTest guid: (GUID fromString: '{92c1298a-2628-4867-8fbf-2c7f1d613a62}')!
+
 CollectionTest isAbstract: true!
+
 CollectionTest comment: ''!
+
 !CollectionTest categoriesForClass!Unclassified! !
+
 !CollectionTest methodsFor!
 
 conformanceOfPutElementOnXatAllPutX: aString
@@ -23,6 +28,7 @@ conformanceOfPutElementOnXatXputX: aString
 returnTypeHasLimitedElementTypes
 
 	^false! !
+
 !CollectionTest categoriesForMethods!
 conformanceOfPutElementOnXatAllPutX:!public! !
 conformanceOfPutElementOnXatAllXputX:!public! !
@@ -35,6 +41,7 @@ returnTypeHasLimitedElementTypes!public! !
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: CollectionHelper! !
+
 !CollectionTest class categoriesForMethods!
 helperClassesDo:!public! !
 !

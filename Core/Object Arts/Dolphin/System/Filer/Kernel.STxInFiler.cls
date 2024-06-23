@@ -7,12 +7,17 @@ Kernel.STxFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'UpgradingMask' -> 16r1 }!
+
 Kernel.STxInFiler guid: (Core.GUID fromString: '{28fb7b4f-ca63-4a50-af05-a1c54269e4ff}')!
+
 Kernel.STxInFiler isNonInstantiable: true!
+
 Kernel.STxInFiler comment: '`STxInFiler` is the abstract class of object deserializers for reading streams of objects serialized by a corresponding `STxOutFiler`. There are concrete classes for reading each version from the original STB v0 up to the current version.
 
 Backwards compatibility (i.e. reading old formats) should be complete by virtue of this hierarchy of classes and the class specific conversions as implemented by each class'' `stbConvertFrom:` method. Any failure to read an old stream should be considered a bug.'!
+
 !Kernel.STxInFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STxInFiler methodsFor!
 
 basicNext
@@ -307,6 +312,7 @@ reset
 stream: aStream
 	stream := aStream.
 	self initialize! !
+
 !Kernel.STxInFiler categoriesForMethods!
 basicNext!accessing!public! !
 characterValue:!helpers!public! !
@@ -394,6 +400,7 @@ readVersionFrom: aReadStream
 	"Private - Read and answer the <integer> STx format version from the stream."
 
 	^self subclassResponsibility! !
+
 !Kernel.STxInFiler class categoriesForMethods!
 errorInvalidClass:!exceptions!private! !
 newOn:!instance creation!private! !

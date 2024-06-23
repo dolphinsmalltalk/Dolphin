@@ -118,6 +118,7 @@ Kernel.SharedPool
 			'CBS_SORT' -> 16r100.
 			'CBS_UPPERCASE' -> 16r2000
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.ListBoxConstants'
 	instanceVariableNames: ''
@@ -192,6 +193,7 @@ Kernel.SharedPool
 			'LBS_USETABSTOPS' -> 16r80.
 			'LBS_WANTKEYBOARDINPUT' -> 16r400
 		}!
+
 UI.SelectableItemsPresenter
 	subclass: #'UI.ListPresenter'
 	instanceVariableNames: 'sortBlock'
@@ -199,6 +201,7 @@ UI.SelectableItemsPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ControlView
 	subclass: #'UI.ListControlView'
 	instanceVariableNames: 'getTextBlock'
@@ -206,6 +209,7 @@ UI.ControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ListControlView
 	subclass: #'UI.BasicListAbstract'
 	instanceVariableNames: 'lastSelIndices'
@@ -213,6 +217,7 @@ UI.ListControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.BasicListAbstract
 	subclass: #'UI.ComboBox'
 	instanceVariableNames: 'droppedHeight'
@@ -220,6 +225,7 @@ UI.BasicListAbstract
 	imports: #(#{OS.ComboBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'Modes' -> #(#simple #dropDown #dropDownList) }!
+
 UI.BasicListAbstract
 	subclass: #'UI.ListBox'
 	instanceVariableNames: 'approvedSelIndices'
@@ -240,6 +246,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^ListPresenter icon! !
+
 !UI.SelectableItemsPresenter class categoriesForMethods!
 icon!constants!public! !
 !
@@ -254,6 +261,7 @@ wmBeginDrag: message wParam: wParam lParam: lParam
 	listbox := self class withHandle: lParam.
 	^listbox lbnBeginDrag: wParam.
 ! !
+
 !UI.View categoriesForMethods!
 wmBeginDrag:wParam:lParam:!event handling-win32!private! !
 !

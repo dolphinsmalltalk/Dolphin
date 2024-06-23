@@ -5,13 +5,17 @@ Object subclass: #ProfilerFrame
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerFrame guid: (GUID fromString: '{425d0eae-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerFrame comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerFrame categoriesForClass!IDB Goodies! !
+
 !ProfilerFrame methodsFor!
 
 browse
@@ -170,6 +174,7 @@ setFrame: aStackFrame
 	ip := aStackFrame ip.
 	isBlock := aStackFrame isBlockFrame.
 	^self! !
+
 !ProfilerFrame categoriesForMethods!
 browse!commands-actions!public! !
 browseableObject!accessing!public! !
@@ -209,6 +214,7 @@ new
 	"Should only create a new instance using #frame:"
 
 	^self shouldNotImplement! !
+
 !ProfilerFrame class categoriesForMethods!
 frame:!instance creation!public! !
 icon!constants!public! !

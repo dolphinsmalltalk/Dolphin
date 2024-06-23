@@ -12,13 +12,17 @@ OS.CCHITTESTINFO
 			'_OffsetOf_iItem' -> 16rC.
 			'_OffsetOf_iSubItem' -> 16r10
 		}!
+
 OS.LVHITTESTINFO guid: (Core.GUID fromString: '{87b4c61e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.LVHITTESTINFO comment: 'LVHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 
 LVHISTTESTINFO is used for hit-testing with Enhanced List View controls. For example usage see ListView>>itemFromPoint:
 
 This Supercedes the LV_HITTESTINFO class present in release 2.1 and earlier.'!
+
 !OS.LVHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.LVHITTESTINFO methodsFor!
 
 flags
@@ -41,6 +45,7 @@ iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
 	^bytes int32AtOffset: _OffsetOf_iSubItem! !
+
 !OS.LVHITTESTINFO categoriesForMethods!
 flags!**compiled accessors**!public! !
 handle!accessing!private! !
@@ -74,6 +79,7 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags #iItem #iSubItem)! !
+
 !OS.LVHITTESTINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!development!public!template definition! !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ParseContextTest guid: (Core.GUID fromString: '{a63a7d3e-7ec8-4e28-b987-21b4c2c88ae9}')!
+
 Tools.Tests.ParseContextTest comment: ''!
+
 !Tools.Tests.ParseContextTest methodsFor!
 
 testClassParseContext
@@ -239,6 +242,7 @@ testRBMethodParseContext
 			[self assert: var isKindOf: StThisContextVariable.
 			self assert: var valueClass identicalTo: (model classFor: Integer)]
 		ifFalse: [self assertIsNil: var]! !
+
 !Tools.Tests.ParseContextTest categoriesForMethods!
 testClassParseContext!public! !
 testDefaultParseContext!public! !

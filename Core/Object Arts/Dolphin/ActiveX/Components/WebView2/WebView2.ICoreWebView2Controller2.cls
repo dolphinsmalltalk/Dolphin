@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Controller
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Controller2 guid: (OS.COM.IID fromString: '{c979903e-d4ca-4228-92eb-47ee3fa96eab}')!
+
 WebView2.ICoreWebView2Controller2 isEgressOnly: true!
+
 WebView2.ICoreWebView2Controller2 comment: '`ICoreWebView2Controller2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2Controller2 : ICoreWebView2Controller
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Controller2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Controller2 methodsFor!
 
 get_DefaultBackgroundColor: backgroundColor
@@ -53,6 +58,7 @@ put_DefaultBackgroundColor: backgroundColor
 
 	<virtual stdcall: hresult 28 uint64>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Controller2 categoriesForMethods!
 get_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2Controller2!private! !
 put_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2Controller2!private! !
@@ -70,6 +76,7 @@ defineFunctions
 		defineFunction: #put_DefaultBackgroundColor:
 			argumentTypes: 'qword'
 ! !
+
 !WebView2.ICoreWebView2Controller2 class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

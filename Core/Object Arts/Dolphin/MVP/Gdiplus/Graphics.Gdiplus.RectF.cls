@@ -13,7 +13,9 @@ Graphics.Gdiplus.AbstractRect
 			'_OffsetOf_y' -> 16r4.
 			'_RectF_Size' -> 16r10
 		}!
+
 Graphics.Gdiplus.RectF guid: (Core.GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
+
 Graphics.Gdiplus.RectF comment: '`RectF` is an `External.Structure` class to wrap the struct ''Gdiplus.RectF'' from type information in the ''GDI+ Library 1.10'' library, and represents a rectangle in a 2D coordinate system (floating-point coordinates).
 
 Note that rectangles in GDI+ follow the convention of specifying an origin and extent, not origin and corner.
@@ -28,6 +30,7 @@ struct tagRectF {
 	float height;
 } RectF;
 '!
+
 !Graphics.Gdiplus.RectF methodsFor!
 
 height
@@ -69,6 +72,7 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
+
 !Graphics.Gdiplus.RectF categoriesForMethods!
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
@@ -121,6 +125,7 @@ origin: aPoint
 				floatAtOffset: _OffsetOf_x put: aPoint x;
 				floatAtOffset: _OffsetOf_y put: aPoint y;
 				yourself)! !
+
 !Graphics.Gdiplus.RectF class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

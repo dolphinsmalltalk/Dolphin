@@ -26,7 +26,9 @@ UI.Shell
 			'ImagesBlockedMask' -> 16r2.
 			'LogEventsMask' -> 16r1
 		}!
+
 OS.COM.Examples.WebBrowserShell guid: (Core.GUID fromString: '{840f8a35-998b-4346-ab86-95db62f03a47}')!
+
 OS.COM.Examples.WebBrowserShell comment: '`WebBrowserShell` is a simple web browser application built around the Microsoft WebView2 Web Browser control, which is using the Edge chromium-based browser.
 
 This sample does wire up to a few events from the brower control (mainly for illustrative purposes), but if you want to learn more about what events are fired and when you can turn on logging of WebView2 events from the Settings menu, and will then see a trace of all events being logged to the Transcript as the browser is used.
@@ -46,7 +48,9 @@ Try:
   `flags`			`<integer>`. Various flags
 
 '!
+
 !OS.COM.Examples.WebBrowserShell categoriesForClass!Samples! !
+
 !OS.COM.Examples.WebBrowserShell methodsFor!
 
 areBrowserExtensionsEnabled
@@ -714,6 +718,7 @@ webviewSettings
 zoomReset
 	<acceleratorKey: 'Ctrl+0'>
 	browser view zoomFactor: 1! !
+
 !OS.COM.Examples.WebBrowserShell categoriesForMethods!
 areBrowserExtensionsEnabled!commands-queries!public! !
 browserExtensionsMenu!commands-menus!public! !
@@ -870,6 +875,7 @@ updateColorScheme: anInteger
 	(ColorSchemes at: actual)
 		keysAndValuesDo: [:eachKey :eachValue | (Color named: eachKey) actualColor: eachValue].
 	self trigger: #colorSchemeChanged! !
+
 !OS.COM.Examples.WebBrowserShell class categoriesForMethods!
 displayOn:!printing!public! !
 icon!constants!public! !

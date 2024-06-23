@@ -36,7 +36,9 @@ UI.Scintilla.Attribute
 								#folderTail -> 16r1C
 							})
 		}!
+
 UI.Scintilla.MarkerDefinition guid: (Core.GUID fromString: '{6191c503-f964-4afb-9973-c2106886ccf9}')!
+
 UI.Scintilla.MarkerDefinition comment: '`Scintilla.MarkerDefinition` instances represent the configured types of `Scintilla.Marker`s for a particular `ScintillaView`.
 
 Markers can be displayed in any symbol `Margin` configured for the view to mark particular lines.
@@ -71,7 +73,9 @@ Markers can be displayed in any symbol `Margin` configured for the view to mark 
 
 
 '!
+
 !UI.Scintilla.MarkerDefinition categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.MarkerDefinition methodsFor!
 
 alpha
@@ -212,6 +216,7 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
+
 !UI.Scintilla.MarkerDefinition categoriesForMethods!
 alpha!accessing!public! !
 alpha:!accessing!public! !
@@ -632,6 +637,7 @@ stbVersion
 visibleCharacterGlyphs
 	#todo.	"Select a better range of characters more likely to be useful as markers by using the Unicode classifications, e.g. geometric shapes."
 	^(Character byteCharacterSet select: [:each | each isGraph]) asArray! !
+
 !UI.Scintilla.MarkerDefinition class categoriesForMethods!
 arrows!constants!public! !
 boxTree!constants!public! !

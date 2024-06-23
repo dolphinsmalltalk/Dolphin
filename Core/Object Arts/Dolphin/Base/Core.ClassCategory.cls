@@ -7,9 +7,13 @@ Core.Category
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'UnclassifiedName' -> 'Unclassified' }!
+
 Core.ClassCategory guid: (Core.GUID fromString: '{87b4c500-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.ClassCategory comment: ''!
+
 !Core.ClassCategory categoriesForClass!System-Support! !
+
 !Core.ClassCategory methodsFor!
 
 addClass: class
@@ -44,6 +48,7 @@ removeClass: aClass
 
 	aClass removeFromCategory: self.
 	^aClass! !
+
 !Core.ClassCategory categoriesForMethods!
 addClass:!adding!public! !
 classes!public! !
@@ -115,6 +120,7 @@ uninitialize
 
 	Table := Unclassified := nil.
 	Deprecated := DeafObject current! !
+
 !Core.ClassCategory class categoriesForMethods!
 allClassCategories!accessing!public! !
 deprecated!instance creation!public! !

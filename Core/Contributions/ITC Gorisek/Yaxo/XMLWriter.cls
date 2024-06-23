@@ -5,9 +5,13 @@ Object subclass: #XMLWriter
 	classVariableNames: 'XMLTranslation'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLWriter guid: (GUID fromString: '{d99a57a4-3582-4065-9544-4b3cfa0ba480}')!
+
 XMLWriter comment: ''!
+
 !XMLWriter categoriesForClass!XML-Parser! !
+
 !XMLWriter methodsFor!
 
 attribute: attributeName value: attributeValue
@@ -168,6 +172,7 @@ xmlDeclaration: versionString
 				startPI: 'XML';
 				attribute: 'version' value: versionString;
 				endPI]! !
+
 !XMLWriter categoriesForMethods!
 attribute:value:!public!writing xml! !
 canonical!accessing!public! !
@@ -223,6 +228,7 @@ initialize
 
 on: aStream
 	^self basicNew initialize stream: aStream! !
+
 !XMLWriter class categoriesForMethods!
 initialize!class initialization!public! !
 on:!instance creation!public! !

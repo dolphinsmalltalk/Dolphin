@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.VisualShellFinder guid: (Core.GUID fromString: '{69da66cc-5c94-4f46-893b-41ba51969fb8}')!
+
 Tools.VisualShellFinder comment: ''!
+
 !Tools.VisualShellFinder categoriesForClass!Kernel-Objects! !
+
 !Tools.VisualShellFinder methodsFor!
 
 cancelTrackingAt: aPoint
@@ -76,6 +80,7 @@ visualShellAt: aPoint
 	self shellClassFilter isNil ifTrue: [^shell].
 	self shellClassFilter detect: [:each | shell isKindOf: each] ifNone: [^nil].
 	^shell! !
+
 !Tools.VisualShellFinder categoriesForMethods!
 cancelTrackingAt:!private!tracking! !
 continueTrackingAt:from:!private!tracking! !
@@ -108,6 +113,7 @@ forAnyOf: aSetOfShellClasses
 
 new
 	^super new initialize! !
+
 !Tools.VisualShellFinder class categoriesForMethods!
 for:!public! !
 forAnyOf:!public! !

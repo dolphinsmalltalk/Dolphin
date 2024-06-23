@@ -7,9 +7,13 @@ Core.Tests.BooleanTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.TrueTest guid: (Core.GUID fromString: '{e918b165-e08c-4cb2-8369-a5ffff502adb}')!
+
 Core.Tests.TrueTest comment: ''!
+
 !Core.Tests.TrueTest categoriesForClass!Tests-Kernel-Objects! !
+
 !Core.Tests.TrueTest methodsFor!
 
 subjectClass
@@ -85,6 +89,7 @@ testPrintOn
 testXor
 	self assert: (true xor: false).
 	self deny: (true xor: true)! !
+
 !Core.Tests.TrueTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsBit!public!unit tests! !

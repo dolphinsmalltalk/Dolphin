@@ -7,10 +7,15 @@ Core.Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SequenceableCollection guid: (Core.GUID fromString: '{87b4c50a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.SequenceableCollection isNonInstantiable: true!
+
 Core.SequenceableCollection comment: 'SequenceableCollection is the class of Collections whose elements are ordered and which are externally named by integer indices.'!
+
 !Core.SequenceableCollection categoriesForClass!Collections-Abstract! !
+
 !Core.SequenceableCollection methodsFor!
 
 , aSequencedReadableCollection
@@ -1272,6 +1277,7 @@ writeStream
 	"Answer a WriteStream on the receiver."
 
 	^WriteStream on: self! !
+
 !Core.SequenceableCollection categoriesForMethods!
 ,!copying!public! !
 _sameAsString:!comparing!private! !
@@ -1465,6 +1471,7 @@ writeStream: anInteger
 	initialize size, anInteger."
 
 	^WriteStream on: (self new: anInteger)! !
+
 !Core.SequenceableCollection class categoriesForMethods!
 binarySearch:for:using:!public!searching! !
 emitEncodingMarkerOn:!encode/decode!private! !

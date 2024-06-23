@@ -7,9 +7,13 @@ External.EmbeddedField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.StructureField guid: (Core.GUID fromString: '{87b4c4df-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.StructureField comment: 'StructureField is an <ExternalField> type  for described <ExternalStructure> fields that are themselves instances of <ExternalStructure>s.'!
+
 !External.StructureField categoriesForClass!External-Data-Types! !
+
 !External.StructureField methodsFor!
 
 readFrom: anExternalStructure
@@ -26,6 +30,7 @@ writeInto: anExternal value: anExternalStructure
 		from: offset+1
 		to: offset+self byteSize
 		startingAt: 1! !
+
 !External.StructureField categoriesForMethods!
 readFrom:!indirect accessing!private! !
 writeInto:value:!indirect accessing!private! !
@@ -40,6 +45,7 @@ type: aClass
 	^self basicNew
 		initialize;
 		fieldClass: aClass! !
+
 !External.StructureField class categoriesForMethods!
 type:!instance creation!public! !
 !

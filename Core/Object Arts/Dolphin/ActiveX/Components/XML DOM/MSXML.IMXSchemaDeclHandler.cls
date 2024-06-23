@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IMXSchemaDeclHandler guid: (OS.COM.IID fromString: '{fa4bb38c-faf9-4cca-9302-d1dd0fe520db}')!
+
 MSXML.IMXSchemaDeclHandler comment: '<IMXSchemaDeclHandler> is a wrapper class for the COM interface ''MSXML2.IMXSchemaDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -31,7 +33,9 @@ interface IMXSchemaDeclHandler : IDispatch
 		[in]ISchemaElement* oSchemaElement);
 };
 '!
+
 !MSXML.IMXSchemaDeclHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IMXSchemaDeclHandler methodsFor!
 
 isExtensible
@@ -53,6 +57,7 @@ SchemaElementDecl: oSchemaElement
 
 	<virtual stdcall: hresult 8 ISchemaElement*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IMXSchemaDeclHandler categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -69,6 +74,7 @@ defineFunctions
 		defineFunction: #SchemaElementDecl:
 			argumentTypes: 'ISchemaElement*'
 ! !
+
 !MSXML.IMXSchemaDeclHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

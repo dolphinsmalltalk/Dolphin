@@ -7,9 +7,13 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ClassCategoryChangeTest guid: (Core.GUID fromString: '{8933849e-9a86-4196-b80a-e7eaec8546a5}')!
+
 Refactory.Browser.Tests.ClassCategoryChangeTest comment: ''!
+
 !Refactory.Browser.Tests.ClassCategoryChangeTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ClassCategoryChangeTest methodsFor!
 
 subjectClass
@@ -33,6 +37,7 @@ testPrinting
 	self assert: subject afterText equals: printString.
 	self assert: subject changeString equals: 'Categorize Core.Object'.
 	self assert: subject printString equals: printString! !
+
 !Refactory.Browser.Tests.ClassCategoryChangeTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsUndo!public!unit tests! !

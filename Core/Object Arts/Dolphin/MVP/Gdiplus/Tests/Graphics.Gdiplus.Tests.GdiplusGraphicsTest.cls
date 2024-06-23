@@ -7,12 +7,15 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusGraphicsTest guid: (Core.GUID fromString: '{c612875a-7f39-4ba6-80bf-c091a74986db}')!
+
 Graphics.Gdiplus.Tests.GdiplusGraphicsTest comment: 'This TestCase is setup to provide a way to quickly ''test'' a GdiplusGraphics method.
 
 Most of the current tests are kick-the-tyres tests. They all could be extended by adding more asserts, but they are better than nothing
 
 '!
+
 !Graphics.Gdiplus.Tests.GdiplusGraphicsTest methodsFor!
 
 createCanonicalSubject
@@ -198,6 +201,7 @@ testWiden
 		fillPath: model brush: Brush green;
 		drawPath: model pen: Pen black.
 	false ifTrue: [bitmap showExample]! !
+
 !Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesForMethods!
 createCanonicalSubject!private!running! !
 subjectClass!constants!private! !

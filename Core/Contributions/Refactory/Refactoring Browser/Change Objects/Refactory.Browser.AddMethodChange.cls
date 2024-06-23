@@ -7,9 +7,13 @@ Refactory.Browser.RefactoryMethodChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.AddMethodChange guid: (Core.GUID fromString: '{67095785-de4e-4bb9-ae66-cb2d970c8a5f}')!
+
 Refactory.Browser.AddMethodChange comment: ''!
+
 !Refactory.Browser.AddMethodChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.AddMethodChange methodsFor!
 
 = anAddMethodChange 
@@ -150,6 +154,7 @@ selector
 
 source
 	^source! !
+
 !Refactory.Browser.AddMethodChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
@@ -223,6 +228,7 @@ compile: aString in: aClass environment: aNamespace categories: aSequenceableCol
 
 new
 	^self basicNew initialize! !
+
 !Refactory.Browser.AddMethodChange class categoriesForMethods!
 compile:in:!instance creation!public! !
 compile:in:categories:!instance creation!public! !

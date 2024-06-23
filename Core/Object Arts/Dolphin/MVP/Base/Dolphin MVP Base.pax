@@ -373,6 +373,7 @@ Kernel.SharedPool
 			'BST_INDETERMINATE' -> 16r2.
 			'BST_UNCHECKED' -> 16r0
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.CommCtrlConstants'
 	instanceVariableNames: ''
@@ -512,6 +513,7 @@ Kernel.SharedPool
 			'TTN_GETDISPINFOW' -> -16r212.
 			'TVM_GETEDITCONTROL' -> 16r110F
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.ThemeConstants'
 	instanceVariableNames: ''
@@ -1268,6 +1270,7 @@ Kernel.SharedPool
 			'WP_VERTSCROLL' -> 16r1B.
 			'WP_VERTTHUMB' -> 16r1C
 		}!
+
 Core.Object
 	subclass: #'UI.Clipboard'
 	instanceVariableNames: 'isOpen registeredFormats idToName'
@@ -1275,6 +1278,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.Command'
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
@@ -1282,6 +1286,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.CommandAnnotations'
 	instanceVariableNames: 'targetClass commandQueries menuPopulators accelerators acceleratorKeys'
@@ -1289,6 +1294,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.CommandAnnotationsRegister'
 	instanceVariableNames: 'register'
@@ -1296,6 +1302,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.CommandDescription'
 	instanceVariableNames: 'command description acceleratorKey flags image'
@@ -1310,6 +1317,7 @@ Core.Object
 			'StartingId' -> 16rFA0.
 			'TextSubstitutionsMask' -> 16r8
 		}!
+
 Core.Object
 	subclass: #'UI.CommandPolicy'
 	instanceVariableNames: 'source path'
@@ -1317,6 +1325,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.CommandQuery'
 	instanceVariableNames: 'commandDescription receiver source text flags image validationResult'
@@ -1324,6 +1333,7 @@ Core.Object
 	imports: #(#{OS.MENUITEMINFOW private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.DisplayMonitor'
 	instanceVariableNames: 'handle info devices'
@@ -1335,6 +1345,7 @@ Core.Object
 			'MONITOR_DEFAULTTONULL' -> 16r0.
 			'MONITOR_DEFAULTTOPRIMARY' -> 16r1
 		}!
+
 Core.Object
 	subclass: #'UI.DragDropObject'
 	instanceVariableNames: ''
@@ -1342,6 +1353,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.DragDropSession'
 	instanceVariableNames: 'dragSource dragPoint suggestedSource dragObjects defaultOperation dropTarget suggestedTarget operationsSupportedByDropTarget operation inDropTargetScrollZone dragImages scrollProcess'
@@ -1349,6 +1361,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.Event'
 	instanceVariableNames: 'window'
@@ -1356,6 +1369,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.FindDetails'
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
@@ -1368,6 +1382,7 @@ Core.Object
 			'WholeWordMask' -> 16r2.
 			'WrapMask' -> 16r4
 		}!
+
 Core.Object
 	subclass: #'UI.FramingCalculation'
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
@@ -1375,6 +1390,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'IndependentMask' -> 16r4. 'ProportionalMask' -> 16r2. 'VerticalMask' -> 16r1 }!
+
 Core.Object
 	subclass: #'UI.FramingConstraints'
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
@@ -1382,6 +1398,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.FramingContext'
 	instanceVariableNames: 'layoutContext view rectangle parentRect'
@@ -1389,6 +1406,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Graphics.Grid'
 	instanceVariableNames: 'resolution'
@@ -1396,6 +1414,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.Interactor'
 	instanceVariableNames: 'presenter'
@@ -1403,6 +1422,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.Keyboard'
 	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
@@ -1410,6 +1430,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.LayoutContext'
 	instanceVariableNames: 'container positions'
@@ -1417,6 +1438,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'DeferRectangles' -> true }!
+
 Core.Object
 	subclass: #'UI.LayoutManager'
 	instanceVariableNames: ''
@@ -1424,6 +1446,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.LayoutPosition'
 	instanceVariableNames: 'view rectangle show'
@@ -1431,6 +1454,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
@@ -1438,6 +1462,7 @@ Core.Object
 	imports: #(#{OS.MENUITEMINFOW private})
 	classInstanceVariableNames: ''
 	classConstants: { 'StringSeparator' -> $/. 'StylesMask' -> 16rFFFFF }!
+
 Core.Object
 	subclass: #'UI.Presenter'
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
@@ -1445,6 +1470,7 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: 'legacyQueryCommandHandlers'
 	classConstants: {}!
+
 Core.Object
 	subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
@@ -1463,6 +1489,7 @@ Core.Object
 			'UIValidMask' -> 16r10.
 			'UsePreferredExtentMask' -> 16r100
 		}!
+
 Core.Object
 	subclass: #'UI.ViewState'
 	instanceVariableNames: 'view state placement subViewStates'
@@ -1470,6 +1497,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.CommandDescription
 	subclass: #'UI.ClosedCommandDescription'
 	instanceVariableNames: 'queryBlock receiver'
@@ -1477,6 +1505,7 @@ UI.CommandDescription
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.CommandPolicy
 	subclass: #'UI.DelegatingCommandPolicy'
 	instanceVariableNames: ''
@@ -1484,6 +1513,7 @@ UI.CommandPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DragDropObject
 	subclass: #'UI.InternalDragDropObject'
 	instanceVariableNames: 'availableFormats'
@@ -1491,6 +1521,7 @@ UI.DragDropObject
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DragDropSession
 	subclass: #'UI.InternalDragDropSession'
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
@@ -1498,6 +1529,7 @@ UI.DragDropSession
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.DwmApiLibrary'
 	instanceVariableNames: ''
@@ -1505,6 +1537,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'DWMWA_USE_IMMERSIVE_DARK_MODE' -> 16r14 }!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
@@ -1512,6 +1545,7 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ThemeLibrary
 	subclass: #'OS.MockThemeLibrary'
 	instanceVariableNames: ''
@@ -1519,6 +1553,7 @@ OS.ThemeLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Event
 	subclass: #'UI.SelectionChangeEvent'
 	instanceVariableNames: 'newSelections oldSelections cause'
@@ -1526,6 +1561,7 @@ UI.Event
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Event
 	subclass: #'UI.WindowsEvent'
 	instanceVariableNames: 'message wParam lParam lResult'
@@ -1533,6 +1569,7 @@ UI.Event
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.SelectionChangeEvent
 	subclass: #'UI.SelectionChangedEvent'
 	instanceVariableNames: ''
@@ -1540,6 +1577,7 @@ UI.SelectionChangeEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.SelectionChangeEvent
 	subclass: #'UI.SelectionChangingEvent'
 	instanceVariableNames: 'permit'
@@ -1547,6 +1585,7 @@ UI.SelectionChangeEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent
 	subclass: #'UI.ColorEvent'
 	instanceVariableNames: ''
@@ -1554,6 +1593,7 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent
 	subclass: #'UI.KeyEvent'
 	instanceVariableNames: ''
@@ -1561,6 +1601,7 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent
 	subclass: #'UI.PaintEvent'
 	instanceVariableNames: 'hdc paintStruct'
@@ -1568,6 +1609,7 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent
 	subclass: #'UI.PointEvent'
 	instanceVariableNames: ''
@@ -1575,6 +1617,7 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent
 	subclass: #'UI.PositionEvent'
 	instanceVariableNames: 'lpwp flags'
@@ -1582,6 +1625,7 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent
 	subclass: #'UI.ScrollEvent'
 	instanceVariableNames: ''
@@ -1589,6 +1633,7 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent
 	subclass: #'UI.SettingsChangeEvent'
 	instanceVariableNames: 'area'
@@ -1596,6 +1641,7 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.WindowsEvent
 	subclass: #'UI.SizeEvent'
 	instanceVariableNames: ''
@@ -1603,6 +1649,7 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PointEvent
 	subclass: #'UI.MouseEvent'
 	instanceVariableNames: ''
@@ -1610,6 +1657,7 @@ UI.PointEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.MouseEvent
 	subclass: #'UI.MouseWheelEvent'
 	instanceVariableNames: ''
@@ -1617,6 +1665,7 @@ UI.MouseEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.GraphicsTool
 	subclass: #'UI.AcceleratorTable'
 	instanceVariableNames: 'commands'
@@ -1624,6 +1673,7 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'KeySeparator' -> $+ }!
+
 Graphics.GraphicsTool
 	subclass: #'UI.Menu'
 	instanceVariableNames: 'items text name flags image imageManager id lastQuery _reserved2'
@@ -1631,6 +1681,7 @@ Graphics.GraphicsTool
 	imports: #(#{OS.MENUITEMINFOW private} #{OS.MENUINFO private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.SystemFont
 	subclass: #'Graphics.UxThemeFont'
 	instanceVariableNames: 'themedObject'
@@ -1648,6 +1699,7 @@ Graphics.SystemFont
 								16r326 -> #iconTitle
 							})
 		}!
+
 UI.Menu
 	subclass: #'UI.MenuBar'
 	instanceVariableNames: ''
@@ -1655,6 +1707,7 @@ UI.Menu
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.InputState
 	subclass: #'UI.GuiInputState'
 	instanceVariableNames: ''
@@ -1662,6 +1715,7 @@ Kernel.InputState
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Interactor
 	subclass: #'UI.CapturingInteractor'
 	instanceVariableNames: 'oldInteractor stateFlags'
@@ -1674,6 +1728,7 @@ UI.Interactor
 			'MiddleDownMask' -> 16r8.
 			'RightDownMask' -> 16r10
 		}!
+
 UI.CapturingInteractor
 	subclass: #'UI.MouseTracker'
 	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
@@ -1681,6 +1736,7 @@ UI.CapturingInteractor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'HorizontalOnly' -> 16r1. 'TrackingMask' -> 16r400. 'VerticalOnly' -> 16r2 }!
+
 UI.MouseTracker
 	subclass: #'UI.DraggableViewInteractor'
 	instanceVariableNames: ''
@@ -1688,6 +1744,7 @@ UI.MouseTracker
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LayoutManager
 	subclass: #'UI.BorderLayout'
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
@@ -1695,6 +1752,7 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LayoutManager
 	subclass: #'UI.FlowLayout'
 	instanceVariableNames: 'horizontalGap verticalGap flags'
@@ -1722,6 +1780,7 @@ UI.LayoutManager
 			'AlignTop' -> 16r0.
 			'AlignVCenter' -> 16r4
 		}!
+
 UI.LayoutManager
 	subclass: #'UI.FramingLayout'
 	instanceVariableNames: 'framings'
@@ -1729,6 +1788,7 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LayoutManager
 	subclass: #'UI.GridLayout'
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'
@@ -1736,6 +1796,7 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LayoutManager
 	subclass: #'UI.LinearLayout'
 	instanceVariableNames: ''
@@ -1743,6 +1804,7 @@ UI.LayoutManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.LinearLayout
 	subclass: #'UI.ProportionalLayout'
 	instanceVariableNames: 'proportions isVertical'
@@ -1750,6 +1812,7 @@ UI.LinearLayout
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.MenuItem
 	subclass: #'UI.CommandMenuItem'
 	instanceVariableNames: 'commandDescription lastQuery _reserved'
@@ -1757,6 +1820,7 @@ UI.MenuItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'IsDefaultMask' -> 16r100000 }!
+
 UI.MenuItem
 	subclass: #'UI.DividerMenuItem'
 	instanceVariableNames: ''
@@ -1767,6 +1831,7 @@ UI.MenuItem
 			'DividerLookup'
 				-> (IdentityDictionary withAll: { 16r20 -> #barBreak. 16r40 -> #break. 16r800 -> #separator })
 		}!
+
 UI.Presenter
 	subclass: #'UI.SelectableItemsPresenter'
 	instanceVariableNames: ''
@@ -1774,6 +1839,7 @@ UI.Presenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Presenter
 	subclass: #'UI.Shell'
 	instanceVariableNames: 'caption commandHistory'
@@ -1781,6 +1847,7 @@ UI.Presenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Presenter
 	subclass: #'UI.ValuePresenter'
 	instanceVariableNames: ''
@@ -1788,6 +1855,7 @@ UI.Presenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SessionManager
 	subclass: #'UI.GUISessionManager'
 	instanceVariableNames: 'savedWindows'
@@ -1795,6 +1863,7 @@ Core.SessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'NoSplashMask' -> 16r2. 'UnattendedMask' -> 16r4 }!
+
 UI.GUISessionManager
 	subclass: #'UI.RuntimeSessionManager'
 	instanceVariableNames: ''
@@ -1802,6 +1871,7 @@ UI.GUISessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RuntimeSessionManager
 	subclass: #'UI.DefaultShellSessionManager'
 	instanceVariableNames: 'mainShellClass'
@@ -1809,6 +1879,7 @@ UI.RuntimeSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.ACCEL'
 	instanceVariableNames: ''
@@ -1821,6 +1892,7 @@ External.Structure
 			'_OffsetOf_fVirt' -> 16r0.
 			'_OffsetOf_key' -> 16r2
 		}!
+
 External.Structure
 	subclass: #'OS.MARGINS'
 	instanceVariableNames: ''
@@ -1834,6 +1906,7 @@ External.Structure
 			'_OffsetOf_cyBottomHeight' -> 16rC.
 			'_OffsetOf_cyTopHeight' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS.MINMAXINFO'
 	instanceVariableNames: ''
@@ -1848,6 +1921,7 @@ External.Structure
 			'_OffsetOf_ptMinTrackSize' -> 16r18.
 			'_OffsetOf_ptReserved' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.NCCALCSIZE_PARAMS'
 	instanceVariableNames: ''
@@ -1859,6 +1933,7 @@ External.Structure
 			'_OffsetOf_lppos' -> 16r30.
 			'_OffsetOf_rgrc' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.NMHDR'
 	instanceVariableNames: ''
@@ -1871,6 +1946,7 @@ External.Structure
 			'_OffsetOf_hwndFrom' -> 16r0.
 			'_OffsetOf_idFrom' -> 16r4
 		}!
+
 External.Structure
 	subclass: #'OS.OwnerDrawStruct'
 	instanceVariableNames: ''
@@ -1882,6 +1958,7 @@ External.Structure
 			'_OffsetOf_CtlType' -> 16r0.
 			'_OffsetOf_itemID' -> 16r8
 		}!
+
 External.Structure
 	subclass: #'OS.PAINTSTRUCT'
 	instanceVariableNames: ''
@@ -1897,6 +1974,7 @@ External.Structure
 			'_OffsetOf_rgbReserved' -> 16r20.
 			'_PAINTSTRUCT_Size' -> 16r40
 		}!
+
 External.Structure
 	subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
@@ -1913,6 +1991,7 @@ External.Structure
 			'_OffsetOf_y' -> 16rC.
 			'_WINDOWPOS_Size' -> 16r1C
 		}!
+
 External.Structure
 	subclass: #'OS.WNDCLASS'
 	instanceVariableNames: 'menuName className'
@@ -1932,6 +2011,7 @@ External.Structure
 			'_OffsetOf_style' -> 16r0.
 			'_WNDCLASS_Size' -> 16r28
 		}!
+
 OS.NMHDR
 	subclass: #'OS.NMTTDISPINFOW'
 	instanceVariableNames: 'text'
@@ -1946,6 +2026,7 @@ OS.NMHDR
 			'_OffsetOf_szText' -> 16r10.
 			'_OffsetOf_uFlags' -> 16rB4
 		}!
+
 OS.OwnerDrawStruct
 	subclass: #'OS.DRAWITEMSTRUCT'
 	instanceVariableNames: ''
@@ -1961,6 +2042,7 @@ OS.OwnerDrawStruct
 			'_OffsetOf_itemState' -> 16r10.
 			'_OffsetOf_rcItem' -> 16r1C
 		}!
+
 OS.OwnerDrawStruct
 	subclass: #'OS.MEASUREITEMSTRUCT'
 	instanceVariableNames: ''
@@ -1973,6 +2055,7 @@ OS.OwnerDrawStruct
 			'_OffsetOf_itemHeight' -> 16r10.
 			'_OffsetOf_itemWidth' -> 16rC
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.BP_ANIMATIONPARAMS'
 	instanceVariableNames: ''
@@ -1985,6 +2068,7 @@ OS.SizedStructure
 			'_OffsetOf_dwFlags' -> 16r4.
 			'_OffsetOf_style' -> 16r8
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.BP_PAINTPARAMS'
 	instanceVariableNames: 'blendFunction'
@@ -1997,6 +2081,7 @@ OS.SizedStructure
 			'_OffsetOf_pBlendFunction' -> 16rC.
 			'_OffsetOf_prcExclude' -> 16r8
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.DISPLAY_DEVICEW'
 	instanceVariableNames: ''
@@ -2016,6 +2101,7 @@ OS.SizedStructure
 			'DISPLAY_DEVICE_PRIMARY_DEVICE' -> 16r4.
 			'DISPLAY_DEVICE_VGA_COMPATIBLE' -> 16r10
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.DTBGOPTS'
 	instanceVariableNames: ''
@@ -2027,6 +2113,7 @@ OS.SizedStructure
 			'_OffsetOf_dwFlags' -> 16r4.
 			'_OffsetOf_rcClip' -> 16r8
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.FLASHWINFO'
 	instanceVariableNames: ''
@@ -2040,6 +2127,7 @@ OS.SizedStructure
 			'_OffsetOf_hwnd' -> 16r4.
 			'_OffsetOf_uCount' -> 16rC
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.LASTINPUTINFO'
 	instanceVariableNames: ''
@@ -2047,6 +2135,7 @@ OS.SizedStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_LASTINPUTINFO_Size' -> 16r8. '_OffsetOf_dwTime' -> 16r4 }!
+
 OS.SizedStructure
 	subclass: #'OS.MENUINFO'
 	instanceVariableNames: ''
@@ -2074,6 +2163,7 @@ OS.SizedStructure
 			'MNS_NOCHECK' -> 16r80000000.
 			'MNS_NOTIFYBYPOS' -> 16r8000000
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.MENUITEMINFOW'
 	instanceVariableNames: 'text bitmap'
@@ -2131,6 +2221,7 @@ OS.SizedStructure
 			'MIIM_SUBMENU' -> 16r4.
 			'MIIM_TYPE' -> 16r10
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.MONITORINFOEXW'
 	instanceVariableNames: ''
@@ -2145,6 +2236,7 @@ OS.SizedStructure
 			'_OffsetOf_szDevice' -> 16r28.
 			'MONITORINFOF_PRIMARY' -> 16r1
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.NOTIFYICONDATAW'
 	instanceVariableNames: ''
@@ -2160,6 +2252,7 @@ OS.SizedStructure
 			'_OffsetOf_uFlags' -> 16rC.
 			'_OffsetOf_uID' -> 16r8
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.RGNDATA'
 	instanceVariableNames: ''
@@ -2173,6 +2266,7 @@ OS.SizedStructure
 			'_OffsetOf_rcBound' -> 16r10.
 			'_RGNDATA_Size' -> 16r20
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.SCROLLINFO'
 	instanceVariableNames: ''
@@ -2188,6 +2282,7 @@ OS.SizedStructure
 			'_OffsetOf_nTrackPos' -> 16r18.
 			'_SCROLLINFO_Size' -> 16r1C
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.TRACKMOUSEEVENT'
 	instanceVariableNames: ''
@@ -2200,6 +2295,7 @@ OS.SizedStructure
 			'_OffsetOf_hwndTrack' -> 16r8.
 			'_TRACKMOUSEEVENT_Size' -> 16r10
 		}!
+
 OS.SizedStructure
 	subclass: #'OS.WINDOWPLACEMENT'
 	instanceVariableNames: ''
@@ -2214,6 +2310,7 @@ OS.SizedStructure
 			'_OffsetOf_showCmd' -> 16r8.
 			'_WINDOWPLACEMENT_Size' -> 16r2C
 		}!
+
 Kernel.STxProxy
 	subclass: #'UI.STBViewProxy'
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
@@ -2227,6 +2324,7 @@ Kernel.STxProxy
 			'FlagsIndex' -> 16r8.
 			'HandleIndex' -> 16r1
 		}!
+
 UI.View
 	subclass: #'UI.AbstractDelegatingView'
 	instanceVariableNames: 'resourceIdentifier referee'
@@ -2234,6 +2332,7 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.View
 	subclass: #'UI.ContainerView'
 	instanceVariableNames: 'layoutManager names insets'
@@ -2241,6 +2340,7 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.View
 	subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution _unused14 _unused15 _unused16'
@@ -2248,6 +2348,7 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.View
 	subclass: #'UI.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender'
@@ -2255,6 +2356,7 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractDelegatingView
 	subclass: #'UI.AbstractNonReferenceDelegatingView'
 	instanceVariableNames: ''
@@ -2262,6 +2364,7 @@ UI.AbstractDelegatingView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractDelegatingView
 	subclass: #'UI.ReferenceView'
 	instanceVariableNames: ''
@@ -2269,6 +2372,7 @@ UI.AbstractDelegatingView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ContainerView
 	subclass: #'UI.ShellView'
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
@@ -2276,6 +2380,7 @@ UI.ContainerView
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'DefaultButtonIndex' -> 16r14. 'TransientMask' -> 16r1 }!
+
 UI.ShellView
 	subclass: #'UI.Splash'
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
@@ -2292,6 +2397,7 @@ icon
 	"Answer the default icon for the receiver and its instances."
 	
 	^Graphics.Icon error! !
+
 !Core.Error class categoriesForMethods!
 icon!constants!public! !
 !
@@ -2306,6 +2412,7 @@ queryCommand: aCommandQuery
 		beEnabled;
 		receiver: self receiver.
 	^true! !
+
 !Core.MessageSend categoriesForMethods!
 queryCommand:!commands!private! !
 !
@@ -2316,6 +2423,7 @@ icon
 	"Answer the default icon for the receiver and its instances."
 
 	^Graphics.Icon information! !
+
 !Core.Notification class categoriesForMethods!
 icon!constants!public! !
 !
@@ -2329,6 +2437,7 @@ icon
 
 iconImageIndex
 	^self icon imageIndex! !
+
 !Core.Object categoriesForMethods!
 icon!constants!public! !
 iconImageIndex!accessing!public! !
@@ -2345,6 +2454,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self defaultIcon)! !
+
 !Core.Object class categoriesForMethods!
 icon!constants!public! !
 !
@@ -2362,6 +2472,7 @@ setTextInto: aView
 	message back to aView."
 
 	aView plainText: self! !
+
 !Core.String categoriesForMethods!
 copyToClipboard!copying!public! !
 setTextInto:!double dispatch!private! !
@@ -2373,6 +2484,7 @@ copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
 	UI.Clipboard current setRegisteredFormat: #String data: self! !
+
 !Core.Symbol categoriesForMethods!
 copyToClipboard!copying!public! !
 !
@@ -2381,6 +2493,7 @@ copyToClipboard!copying!public! !
 
 asResourceId
 	^self! !
+
 !Core.UndefinedObject categoriesForMethods!
 asResourceId!converting!public! !
 !
@@ -2391,6 +2504,7 @@ icon
 	"Answer the default icon for the receiver and its instances."
 
 	^Graphics.Icon warning! !
+
 !Core.Warning class categoriesForMethods!
 icon!constants!public! !
 !
@@ -2401,6 +2515,7 @@ copyToClipboard
 	"Copy the receiver to the clipboard."
 
 	UI.Clipboard current setBitmap: self! !
+
 !Graphics.Bitmap categoriesForMethods!
 copyToClipboard!copying!public! !
 !
@@ -2409,6 +2524,7 @@ copyToClipboard!copying!public! !
 
 sharedVariableName
 	^#{ComCtl32}! !
+
 !OS.CommCtrlLibrary class categoriesForMethods!
 sharedVariableName!constants!private! !
 !
@@ -2423,6 +2539,7 @@ getConsoleWindow
 
 	<stdcall: handle GetConsoleWindow>
 	^self invalidCall: _failureCode! !
+
 !OS.KernelLibrary categoriesForMethods!
 getConsoleWindow!**auto generated**!public!win32 functions-console! !
 !
@@ -2431,6 +2548,7 @@ getConsoleWindow!**auto generated**!public!win32 functions-console! !
 
 menuBarColor
 	^UxTheme isAppThemed ifTrue: [Graphics.Color menuBar] ifFalse: [Graphics.Color menu]! !
+
 !OS.SystemMetrics categoriesForMethods!
 menuBarColor!constants!public! !
 !
@@ -3804,6 +3922,7 @@ windowFromPoint: aPOINTL
 
 	<stdcall: handle WindowFromPoint POINTL>
 	^self invalidCall: _failureCode! !
+
 !OS.UserLibrary categoriesForMethods!
 adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
 animateWindow:dwTime:dwFlags:!**auto generated**!public! !
@@ -3973,6 +4092,7 @@ show
 
 	^self owningClass show: self name.
 ! !
+
 !UI.ResourceIdentifier categoriesForMethods!
 canShow!public!testing! !
 fixupIcon!helpers!private! !

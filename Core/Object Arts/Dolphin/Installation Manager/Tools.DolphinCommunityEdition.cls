@@ -7,9 +7,13 @@ Tools.DolphinBaseProduct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinCommunityEdition guid: (Core.GUID fromString: '{97ac6bc9-3516-42c9-845b-a5ed3579f331}')!
+
 Tools.DolphinCommunityEdition comment: ''!
+
 !Tools.DolphinCommunityEdition categoriesForClass!System-Support! !
+
 !Tools.DolphinCommunityEdition methodsFor!
 
 defaultSystemFolderExtent
@@ -27,6 +31,7 @@ preShrink
 	because they contain references to Lagoon, which only belongs in DolphinProfessional"
 
 	self packages do: [:each | each imageStripperBytes: nil]! !
+
 !Tools.DolphinCommunityEdition categoriesForMethods!
 defaultSystemFolderExtent!private! !
 fullName!accessing!public! !
@@ -44,6 +49,7 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCE'! !
+
 !Tools.DolphinCommunityEdition class categoriesForMethods!
 productName!accessing!public! !
 shortProductName!accessing!public! !

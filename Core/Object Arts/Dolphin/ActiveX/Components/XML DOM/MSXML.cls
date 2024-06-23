@@ -147,10 +147,15 @@ Kernel.Namespace
 			'XHR_PROP_SET_ENTERPRISEID' -> 16rA.
 			'XHR_PROP_TIMEOUT' -> 16r2
 		}!
+
 MSXML guid: (Core.GUID fromString: '{e41b4db3-8003-4382-a819-bf7d3581272d}')!
+
 MSXML isNonInstantiable: true!
+
 MSXML comment: 'Namespace for the generated MSXML DOM component wrapper classes and some associated utilities for working with XML.'!
+
 !MSXML categoriesForClass!Kernel-Objects! !
+
 !MSXML class methodsFor!
 
 icon
@@ -160,6 +165,7 @@ icon
 
 newDocument
 	^IXMLDOMDocument3 new! !
+
 !MSXML class categoriesForMethods!
 icon!constants!public! !
 newDocument!private! !

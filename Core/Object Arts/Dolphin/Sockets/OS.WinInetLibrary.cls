@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.WinInetLibrary guid: (Core.GUID fromString: '{96152a1d-1214-4ed9-82f2-10021d755f70}')!
+
 OS.WinInetLibrary comment: ''!
+
 !OS.WinInetLibrary categoriesForClass!External-Libraries-Win32! !
+
 !OS.WinInetLibrary methodsFor!
 
 internetCheckConnection: url dwFlags: flags dwReserved: reserved
@@ -56,6 +60,7 @@ ping: aURL
 	"Attempts to ping aURL. Answers true if a reply is received."
 
 	^self internetCheckConnection: aURL dwFlags: 1 dwReserved: 0! !
+
 !OS.WinInetLibrary categoriesForMethods!
 internetCheckConnection:dwFlags:dwReserved:!public!win32 functions-internet! !
 internetGetConnectedState:dwReserved:!public!win32 functions-internet! !
@@ -70,6 +75,7 @@ fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WinInet'! !
+
 !OS.WinInetLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.CommandAnnotationsRegisterTest guid: (Core.GUID fromString: '{bb1256fb-74b5-4d7e-8c95-35e18d66c311}')!
+
 UI.Tests.CommandAnnotationsRegisterTest comment: ''!
+
 !UI.Tests.CommandAnnotationsRegisterTest methodsFor!
 
 canA
@@ -255,6 +258,7 @@ verifyNullingQuery: aSymbol for: aClass
 	(aClass commandQueries at: aSymbol) value: #rcvr value: query.
 	self deny: query isEnabled.
 	self assert: query receiver identicalTo: #rcvr! !
+
 !UI.Tests.CommandAnnotationsRegisterTest categoriesForMethods!
 canA!private!testing / examples! !
 cmdA!private!testing / examples! !
@@ -293,6 +297,7 @@ commandQueries
 
 menuPopulators
 	^self commandAnnotations menuPopulators! !
+
 !UI.Tests.CommandAnnotationsRegisterTest class categoriesForMethods!
 acceleratorKeys!accessing!public!unit tests! !
 commandAnnotations!public! !

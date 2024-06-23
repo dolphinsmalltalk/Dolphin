@@ -7,9 +7,13 @@ Refactory.Browser.RBNamespaceClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBSmalltalkNamespace guid: (Core.GUID fromString: '{f5ac20c7-ec92-41b4-8353-a16f02604890}')!
+
 Refactory.Browser.RBSmalltalkNamespace comment: ''!
+
 !Refactory.Browser.RBSmalltalkNamespace categoriesForClass!Refactory-Model! !
+
 !Refactory.Browser.RBSmalltalkNamespace methodsFor!
 
 shortNameFor: aString
@@ -25,6 +29,7 @@ shortNameFor: aString in: aNamespace
 						ifNotNil: [:var | var environment == aNamespace or: [var environment == self]]]])
 		ifTrue: [aString]
 		ifFalse: [aNamespace fullNameFor: aString]! !
+
 !Refactory.Browser.RBSmalltalkNamespace categoriesForMethods!
 shortNameFor:!enquiries!private! !
 shortNameFor:in:!helpers!private! !

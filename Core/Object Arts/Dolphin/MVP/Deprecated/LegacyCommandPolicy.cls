@@ -5,9 +5,13 @@ CommandPolicy subclass: #LegacyCommandPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LegacyCommandPolicy guid: (GUID fromString: '{cd4f5c9f-18d7-4b31-94af-4f76d1e56c08}')!
+
 LegacyCommandPolicy comment: ''!
+
 !LegacyCommandPolicy categoriesForClass!Deprecated! !
+
 !LegacyCommandPolicy methodsFor!
 
 queryCommand: query
@@ -39,6 +43,7 @@ visitPresenter: presenter
 
 	self appendPresenter: presenter.
 	^presenter! !
+
 !LegacyCommandPolicy categoriesForMethods!
 queryCommand:!operations!private! !
 visitPresenter:!operations!private! !

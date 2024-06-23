@@ -33,13 +33,18 @@ Graphics.Gdiplus.ImageInitializer
 								16r34400D -> 'PixelFormat64bppARGB'
 							})
 		}!
+
 Graphics.Gdiplus.BitmapInitializer guid: (Core.GUID fromString: '{646505b6-e90d-4aef-a2a3-cb87d01e9dde}')!
+
 Graphics.Gdiplus.BitmapInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.BitmapInitializer comment: ''!
+
 !Graphics.Gdiplus.BitmapInitializer class methodsFor!
 
 nameOfPixelFormat: aPixelFormat
 	^PixelFormats at: aPixelFormat ifAbsent: ['PixelFormatDontCare']! !
+
 !Graphics.Gdiplus.BitmapInitializer class categoriesForMethods!
 nameOfPixelFormat:!public!realizing/unrealizing! !
 !

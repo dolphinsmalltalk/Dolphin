@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.PresenterTest guid: (Core.GUID fromString: '{80e6f4ef-64d4-40f6-857c-5b74578eb87b}')!
+
 UI.Tests.PresenterTest isNonInstantiable: true!
+
 UI.Tests.PresenterTest comment: ''!
+
 !UI.Tests.PresenterTest methodsFor!
 
 classToTest
@@ -187,6 +191,7 @@ viewClass
 
 waitForInputIdle
 	SessionManager inputState pumpMessages! !
+
 !UI.Tests.PresenterTest categoriesForMethods!
 classToTest!constants!private! !
 destroyPresenter!public!Running! !
@@ -220,6 +225,7 @@ allTestSelectors
 	#(#testStbUpgradeFromBinaryResources #testStlUpgradesFromLiteralResources)
 		do: [:each | [(self selector: each) evaluatePreconditions] on: TestSkip do: [:ex | selectors remove: each]].
 	^selectors! !
+
 !UI.Tests.PresenterTest class categoriesForMethods!
 allTestSelectors!Accessing!public! !
 !

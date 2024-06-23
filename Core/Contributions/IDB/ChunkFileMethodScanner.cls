@@ -5,7 +5,9 @@ Object subclass: #ChunkFileMethodScanner
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkFileMethodScanner guid: (GUID fromString: '{b8b83c19-e601-4265-b607-2a0b2122144b}')!
+
 ChunkFileMethodScanner comment: 'Scans the sources and changes file and answers a collection of either...
 - all the method versions for a specified class
 - all the method versions for a specified method in a class
@@ -24,7 +26,9 @@ at: 3 = the method source
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkFileMethodScanner categoriesForClass!IDB Goodies! !
+
 !ChunkFileMethodScanner methodsFor!
 
 defaultReadBufferSize
@@ -133,6 +137,7 @@ scanSourcesFileFor: aString
 		scan: SourceManager default sourcesFileStream
 		for: aString
 		sourceFileIndex: SourceManager.SourcesIndex! !
+
 !ChunkFileMethodScanner categoriesForMethods!
 defaultReadBufferSize!constants!public! !
 initialize!initializing!public! !
@@ -164,6 +169,7 @@ forMethodsInClass: aClass
 new
 
 	^super new initialize! !
+
 !ChunkFileMethodScanner class categoriesForMethods!
 forMethod:inClass:!instance creation!public! !
 forMethodsInClass:!instance creation!public! !

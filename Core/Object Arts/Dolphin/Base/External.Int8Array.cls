@@ -7,9 +7,13 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Int8Array guid: (Core.GUID fromString: '{8bfb3d84-076e-4c1c-b62f-d0d7e6258c10}')!
+
 External.Int8Array comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 8-bit signed integers.'!
+
 !External.Int8Array categoriesForClass!External-Data-Structured! !
+
 !External.Int8Array methodsFor!
 
 uncheckedAt: anInteger
@@ -23,6 +27,7 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes int8AtOffset: indexInteger - 1 put: valueInteger! !
+
 !External.Int8Array categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!private! !
@@ -34,6 +39,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^Int8! !
+
 !External.Int8Array class categoriesForMethods!
 elementClass!constants!public! !
 !

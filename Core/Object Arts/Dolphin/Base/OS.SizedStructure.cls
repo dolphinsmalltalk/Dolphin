@@ -7,9 +7,13 @@ External.Structure
 	imports: #(#{OS.Win32Constants private})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_dwSize' -> 16r0 }!
+
 OS.SizedStructure guid: (Core.GUID fromString: '{7575bf57-884e-4333-a593-eb3f9080c292}')!
+
 OS.SizedStructure isNonInstantiable: true!
+
 OS.SizedStructure comment: ''!
+
 !OS.SizedStructure methodsFor!
 
 dwSize: anInteger
@@ -22,6 +26,7 @@ initialize: anInteger
 
 	super initialize: anInteger.
 	self dwSize: anInteger! !
+
 !OS.SizedStructure categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 initialize:!initializing!private! !
@@ -35,6 +40,7 @@ defineFields
 	"
 
 	self defineField: #dwSize type: UInt32Field writeOnly! !
+
 !OS.SizedStructure class categoriesForMethods!
 defineFields!public!template definition! !
 !

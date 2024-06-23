@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.BrushTest guid: (Core.GUID fromString: '{1128ddc3-7330-4539-bc63-7a60b93fe7bc}')!
+
 Graphics.Tests.BrushTest comment: ''!
+
 !Graphics.Tests.BrushTest methodsFor!
 
 testBitmapBrush
@@ -93,6 +96,7 @@ testStbConversion2
 				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
 	self assert: brush logBrush lbStyle equals: BS_HATCHED! !
+
 !Graphics.Tests.BrushTest categoriesForMethods!
 testBitmapBrush!public!unit tests! !
 testPrintString!public!unit tests! !

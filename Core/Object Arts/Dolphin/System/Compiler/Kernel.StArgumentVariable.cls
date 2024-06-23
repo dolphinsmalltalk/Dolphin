@@ -7,9 +7,13 @@ Kernel.StLocalVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StArgumentVariable guid: (Core.GUID fromString: '{724d61eb-4b75-4eec-9d01-58a4af61ee45}')!
+
 Kernel.StArgumentVariable comment: '<StArgumentVariable> is a specialised class of <StLocalVariable> to describe method and block parameters (argument definitions).'!
+
 !Kernel.StArgumentVariable categoriesForClass!Kernel-Objects! !
+
 !Kernel.StArgumentVariable methodsFor!
 
 addAssignment: aStVariableNode fromScope: aStSemanticScope
@@ -25,6 +29,7 @@ isConstant
 	Arguments cannot be assigned to in Smalltalk."
 
 	^true! !
+
 !Kernel.StArgumentVariable categoriesForMethods!
 addAssignment:fromScope:!public! !
 isArgument!public!testing! !

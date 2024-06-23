@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.CommandAnnotations guid: (Core.GUID fromString: '{615757db-92fd-4ed3-a799-60dc5fecf8dc}')!
+
 UI.CommandAnnotations comment: ''!
+
 !UI.CommandAnnotations methodsFor!
 
 acceleratorKeys
@@ -242,6 +245,7 @@ validateQueriesIn: aCompilationResult
 								warning: '<1p> does not understand the selector <2p>, so the command query will not be registered.'
 										<< { targetClass. selector }.
 							self]]]! !
+
 !UI.CommandAnnotations categoriesForMethods!
 acceleratorKeys!accessing!public! !
 accelerators!public! !
@@ -269,6 +273,7 @@ validateQueriesIn:!helpers!private! !
 
 targetClass: aClass
 	^self new targetClass: aClass! !
+
 !UI.CommandAnnotations class categoriesForMethods!
 targetClass:!public! !
 !

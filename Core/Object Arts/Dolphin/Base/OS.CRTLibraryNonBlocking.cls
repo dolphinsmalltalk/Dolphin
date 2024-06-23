@@ -7,9 +7,13 @@ OS.CRTLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.CRTLibraryNonBlocking guid: (Core.GUID fromString: '{3214435f-9afe-47b3-8f9b-0d4b533d5b1d}')!
+
 OS.CRTLibraryNonBlocking comment: ''!
+
 !OS.CRTLibraryNonBlocking categoriesForClass!External-Libraries! !
+
 !OS.CRTLibraryNonBlocking methodsFor!
 
 _errno
@@ -38,6 +42,7 @@ fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: c
 
 isNonBlocking
 	^true! !
+
 !OS.CRTLibraryNonBlocking categoriesForMethods!
 _errno!CRT functions-process and environment control!public! !
 fgetc:!CRT functions-stream I/O!public! !
@@ -52,6 +57,7 @@ isNonBlocking!public!testing! !
 
 sharedVariableName
 	^nil! !
+
 !OS.CRTLibraryNonBlocking class categoriesForMethods!
 sharedVariableName!constants!private! !
 !

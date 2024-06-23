@@ -7,12 +7,16 @@ OS.COM.ITypeInfo
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ITypeInfo2 guid: (OS.COM.IID fromString: '{00020412-0000-0000-c000-000000000046}')!
+
 OS.COM.ITypeInfo2 comment: '''ITypeInfo2 is an interface pointer class to wrap COM interfaces of the same name.
 
 ITypeInfo2 is a refinement of ITypeInfo which adds some bits Microsoft forget about when the defined ITypeInfo, it also adds some capabilities to look up certain pieces of commonly used information that probably made VB quicker. However as we cache the TYPEATTR once retrieved, it is unlikely that ITypeInfo2 will be quicker within Dolphin.
 '!
+
 !OS.COM.ITypeInfo2 categoriesForClass!COM-Interfaces! !
+
 !OS.COM.ITypeInfo2 methodsFor!
 
 basicFree
@@ -347,6 +351,7 @@ typekind
 	answer := UInt32Bytes new.
 	self GetTypeKind: answer.
 	^answer asSignedInteger! !
+
 !OS.COM.ITypeInfo2 categoriesForMethods!
 basicFree!public!realizing/unrealizing! !
 getAllCustData!**auto generated**!public! !
@@ -421,6 +426,7 @@ defineFunctions
 		defineFunction: #GetAllImplTypeCustData:pCustData:
 			argumentTypes: 'uint32 CUSTDATA*'
 ! !
+
 !OS.COM.ITypeInfo2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

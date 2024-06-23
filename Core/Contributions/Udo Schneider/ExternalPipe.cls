@@ -5,9 +5,13 @@ Object subclass: #ExternalPipe
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalPipe guid: (GUID fromString: '{1ebee959-7771-41a4-9164-d9bfd2ac4ea5}')!
+
 ExternalPipe comment: ''!
+
 !ExternalPipe categoriesForClass!Unclassified! !
+
 !ExternalPipe methodsFor!
 
 connectStreams
@@ -43,6 +47,7 @@ writeHandle
 writeStream
 	streams isNil ifTrue: [self connectStreams].
 	^streams at: 2! !
+
 !ExternalPipe categoriesForMethods!
 connectStreams!private! !
 createPipe!helpers!initializing!private! !
@@ -139,6 +144,7 @@ example2
 
 new
 	^super new createPipe; yourself! !
+
 !ExternalPipe class categoriesForMethods!
 example1!must strip!public! !
 example2!must strip!public! !

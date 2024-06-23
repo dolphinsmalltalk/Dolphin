@@ -7,7 +7,9 @@ External.GenericExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.StructureArray guid: (Core.GUID fromString: '{87b4c5a5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.StructureArray comment: 'Generic `ExternalArray` class which can represent single-dimensioned arrays of any class of `External.Structure`. Packing and alignment rules are respected.
 
 Note that although `StructureArray` is capable of fulfilling the tasks of other more specialized `ExternalArray` classes such as `Uint32Array` and `FLOATArray`, it is far less efficient and marginally more inconvenient as indexed access always yields an `External.Structure` rather than a fundamental Smalltalk object.
@@ -16,7 +18,9 @@ Note that although `StructureArray` is capable of fulfilling the tasks of other 
   `elementSpacing`	`<integer>`. Distance (in bytes) between adjacent elements, there may be padding.
 
 '!
+
 !External.StructureArray categoriesForClass!External-Data-Structured! !
+
 !External.StructureArray methodsFor!
 
 alignment
@@ -103,6 +107,7 @@ with: aCollection do: aDyadicValuable
 			elem initializeAtAddress: addr.
 			aDyadicValuable value: elem value: each.
 			addr + spacing]! !
+
 !External.StructureArray categoriesForMethods!
 alignment!constants!public! !
 basicFree!private!realizing/unrealizing! !
@@ -169,6 +174,7 @@ withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadic
 	answer := self length: aCollection size elementClass: anExternalStructureClass.
 	answer with: aCollection do: aDyadicValuable.
 	^answer! !
+
 !External.StructureArray class categoriesForMethods!
 fromAddress:length:elementClass:!instance creation!public! !
 length:elementClass:!instance creation!public! !

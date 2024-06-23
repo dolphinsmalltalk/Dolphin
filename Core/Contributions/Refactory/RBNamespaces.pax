@@ -25,6 +25,7 @@ Kernel.Namespace
 	imports: #(#{Core} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory
 	subclass: #'Refactory.Browser'
 	instanceVariableNames: ''
@@ -32,6 +33,7 @@ Refactory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser
 	subclass: #'Refactory.Browser.TestData'
 	instanceVariableNames: ''

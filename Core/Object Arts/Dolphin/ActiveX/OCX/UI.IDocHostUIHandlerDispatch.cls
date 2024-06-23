@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.IDocHostUIHandlerDispatch guid: (OS.COM.IID fromString: '{425b5af0-65f1-11d1-9611-0000f81e0d0d}')!
+
 UI.IDocHostUIHandlerDispatch comment: '<IDocHostUIHandlerDispatch> is a wrapper class for the COM interface ''ActiveXHost.IDocHostUIHandlerDispatch'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -95,7 +97,9 @@ interface IDocHostUIHandlerDispatch : IDispatch {
 		[out] IUnknown** ppDORet);
 };
 '!
+
 !UI.IDocHostUIHandlerDispatch categoriesForClass!ActiveXHost-Interfaces!COM-Interfaces! !
+
 !UI.IDocHostUIHandlerDispatch methodsFor!
 
 EnableModeless: fEnable
@@ -360,6 +364,7 @@ UpdateUI
 
 	<virtual stdcall: hresult 12>
 	^self invalidCall: _failureCode! !
+
 !UI.IDocHostUIHandlerDispatch categoriesForMethods!
 EnableModeless:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
 filterDataObject:!**auto generated**!methods!public! !
@@ -423,6 +428,7 @@ defineFunctions
 		defineFunction: #FilterDataObject:ppDORet:
 			argumentTypes: 'IUnknown* IUnknown**'
 ! !
+
 !UI.IDocHostUIHandlerDispatch class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

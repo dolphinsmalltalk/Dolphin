@@ -7,9 +7,13 @@ Tools.InspectorAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.VisualObjectFinder guid: (Core.GUID fromString: '{b76a24f7-5ff3-41ac-9aa9-77ebf7b94816}')!
+
 Tools.VisualObjectFinder comment: ''!
+
 !Tools.VisualObjectFinder categoriesForClass!MVP-Presenters! !
+
 !Tools.VisualObjectFinder methodsFor!
 
 browseObject
@@ -145,6 +149,7 @@ visualObjectAt: aPoint
 			| localPoint |
 			localPoint := View desktop mapPoint: aPoint to: viewUnderCursor.
 			viewUnderCursor visualObjectAtPoint: localPoint]! !
+
 !Tools.VisualObjectFinder categoriesForMethods!
 browseObject!accessing!private! !
 cancelTrackingAt:!private!tracking! !
@@ -207,6 +212,7 @@ resource_Default_view
 
 unregisterAsToolWith: aSmalltalkSystem
 ! !
+
 !Tools.VisualObjectFinder class categoriesForMethods!
 findNonDolphinWindows!accessing!public! !
 findNonDolphinWindows:!accessing!public! !

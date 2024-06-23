@@ -10,7 +10,9 @@ OS.COM.ISequentialStream
 			'WriteOpenModes'
 				-> (IdentityDictionary withAll: { #append -> 16r11. #create -> 16r11. #truncate -> 16r1011 })
 		}!
+
 OS.COM.IStream guid: (OS.COM.IID fromString: '{0000000c-0000-0000-c000-000000000046}')!
+
 OS.COM.IStream comment: 'IStream is a COMInterface class to wrap the standard OLE/COM structured storage interface of the same name.
 
 IStream expands on ISequentialStream to offer the ability to access and adjust the current stream position, and to lock ranges of bytes in the underlying device (ILockBytes). It also offers transactional control, "directory" information, and copying. IStream is widely implmented and (in particular) used by COM objects for persistent storage purposes, marshalling, etc.
@@ -25,7 +27,9 @@ Example:
 	stm reset.				"...rewind..."
 	(STBInFiler on: stm) next.		"...rehydrate the STB''d object..."
 	stm close.				"...finally, close the stream (though finalization would do this anyway."'!
+
 !OS.COM.IStream categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IStream methodsFor!
 
 at: anInteger 
@@ -441,6 +445,7 @@ upToEnd
 	current position to the end)."
 
 	^self next: self size - self position! !
+
 !OS.COM.IStream categoriesForMethods!
 at:!accessing!public! !
 at:put:!accessing!public! !
@@ -586,6 +591,7 @@ write: aString mode: aSymbol
 		ppstm: instance.
 	aSymbol == #append ifTrue: [instance setToEnd].
 	^instance! !
+
 !OS.COM.IStream class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 fromBytes:!instance creation!public! !

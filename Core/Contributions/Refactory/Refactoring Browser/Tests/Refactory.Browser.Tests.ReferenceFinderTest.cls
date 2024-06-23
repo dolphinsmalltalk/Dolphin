@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ReferenceFinderTest guid: (Core.GUID fromString: '{9403e023-ffa2-4920-af9d-9b80e6055ac8}')!
+
 Refactory.Browser.Tests.ReferenceFinderTest comment: ''!
+
 !Refactory.Browser.Tests.ReferenceFinderTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ReferenceFinderTest methodsFor!
 
 testAllPaths
@@ -52,6 +56,7 @@ testPathToInstance
 	path := ReferenceFinder findPathToInstanceOf: RefactoringManager.
 	self assert: path last class identicalTo: RefactoringManager.
 	self assert: path first identicalTo: Smalltalk! !
+
 !Refactory.Browser.Tests.ReferenceFinderTest categoriesForMethods!
 testAllPaths!public!tests! !
 testAllPathsToInstance!public!tests! !

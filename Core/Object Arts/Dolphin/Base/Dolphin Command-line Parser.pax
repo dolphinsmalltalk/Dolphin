@@ -26,6 +26,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.CommandLineOption'
 	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
@@ -33,6 +34,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Notification
 	subclass: #'Kernel.CommandLineError'
 	instanceVariableNames: ''

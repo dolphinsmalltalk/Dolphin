@@ -90,6 +90,7 @@ UI.TextDocument
 	imports: #(#{MSXML private})
 	classInstanceVariableNames: ''
 	classConstants: { 'RememberPlacementMask' -> 16r1 }!
+
 UI.RuntimeSessionManager
 	subclass: #'UI.Examples.XmlPadSessionManager'
 	instanceVariableNames: ''
@@ -104,6 +105,7 @@ UI.RuntimeSessionManager
 
 formatAsText
 	^false! !
+
 !MSXML.IXMLDOMComment categoriesForMethods!
 formatAsText!public! !
 !
@@ -112,6 +114,7 @@ formatAsText!public! !
 
 formatAsText
 	^true! !
+
 !MSXML.IXMLDOMEntityReference categoriesForMethods!
 formatAsText!public! !
 !
@@ -120,6 +123,7 @@ formatAsText!public! !
 
 formatAsText
 	^self isText! !
+
 !MSXML.IXMLDOMNode categoriesForMethods!
 formatAsText!public! !
 !

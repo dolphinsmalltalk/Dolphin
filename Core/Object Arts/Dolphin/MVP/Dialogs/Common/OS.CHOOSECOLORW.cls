@@ -16,7 +16,9 @@ OS.ComDlgStructure
 			'_OffsetOf_lpTemplateName' -> 16r20.
 			'_OffsetOf_rgbResult' -> 16rC
 		}!
+
 OS.CHOOSECOLORW guid: (Core.GUID fromString: '{87b4c5d1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.CHOOSECOLORW comment: '<CHOOSECOLOR> is an <ExternalStructure> class to wrap the struct ''Win32.CHOOSECOLOR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -39,7 +41,9 @@ struct tagCHOOSECOLOR {
 	[hidden] LPSTR lpTemplateName;
 } CHOOSECOLOR;
 '!
+
 !OS.CHOOSECOLORW categoriesForClass!Win32-Structs! !
+
 !OS.CHOOSECOLORW methodsFor!
 
 color
@@ -89,6 +93,7 @@ rgbResult: anInteger
 	"Set the receiver's 'rgbResult' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_rgbResult put: anInteger! !
+
 !OS.CHOOSECOLORW categoriesForMethods!
 color!accessing!public! !
 flags!**compiled accessors**!public! !
@@ -153,6 +158,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
+
 !OS.CHOOSECOLORW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

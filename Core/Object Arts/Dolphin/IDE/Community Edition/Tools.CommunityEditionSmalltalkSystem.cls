@@ -7,9 +7,13 @@ Tools.SmalltalkSystem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.CommunityEditionSmalltalkSystem guid: (Core.GUID fromString: '{fe94a239-c422-4a02-a575-5e7923ce1d63}')!
+
 Tools.CommunityEditionSmalltalkSystem comment: ''!
+
 !Tools.CommunityEditionSmalltalkSystem categoriesForClass!MVP-Models! !
+
 !Tools.CommunityEditionSmalltalkSystem methodsFor!
 
 initializeSystemFolder
@@ -24,6 +28,7 @@ initializeSystemFolder
 					description: 'User Preferences'
 					openBlock: [:folder :item | self inspectSystemOptions]
 					helpId: 10580)! !
+
 !Tools.CommunityEditionSmalltalkSystem categoriesForMethods!
 initializeSystemFolder!initializing!private! !
 !
@@ -51,6 +56,7 @@ uninstallCurrent
 			[(self superclass basicNew)
 				initializeFrom: Current;
 				become: Current]! !
+
 !Tools.CommunityEditionSmalltalkSystem class categoriesForMethods!
 initialize!initializing!private! !
 installCurrent!initializing!private! !

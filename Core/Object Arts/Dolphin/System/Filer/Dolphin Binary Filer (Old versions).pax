@@ -41,6 +41,7 @@ Kernel.STBInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler
 	subclass: #'Kernel.STBInFiler5'
 	instanceVariableNames: ''
@@ -48,6 +49,7 @@ Kernel.STBInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler0
 	subclass: #'Kernel.STBInFiler1'
 	instanceVariableNames: ''
@@ -55,6 +57,7 @@ Kernel.STBInFiler0
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler1
 	subclass: #'Kernel.STBInFiler2'
 	instanceVariableNames: ''
@@ -62,6 +65,7 @@ Kernel.STBInFiler1
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler2
 	subclass: #'Kernel.STBInFiler3'
 	instanceVariableNames: ''
@@ -69,6 +73,7 @@ Kernel.STBInFiler2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler3
 	subclass: #'Kernel.STBInFiler4'
 	instanceVariableNames: ''
@@ -76,6 +81,7 @@ Kernel.STBInFiler3
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler
 	subclass: #'Kernel.STBLegacyOutFiler'
 	instanceVariableNames: ''
@@ -83,6 +89,7 @@ Kernel.STBOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBLegacyOutFiler
 	subclass: #'Kernel.STBOutFiler0'
 	instanceVariableNames: 'globals globalNils'
@@ -90,6 +97,7 @@ Kernel.STBLegacyOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBLegacyOutFiler
 	subclass: #'Kernel.STBOutFiler5'
 	instanceVariableNames: ''
@@ -97,6 +105,7 @@ Kernel.STBLegacyOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler0
 	subclass: #'Kernel.STBOutFiler1'
 	instanceVariableNames: ''
@@ -104,6 +113,7 @@ Kernel.STBOutFiler0
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler1
 	subclass: #'Kernel.STBOutFiler2'
 	instanceVariableNames: ''
@@ -111,6 +121,7 @@ Kernel.STBOutFiler1
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler2
 	subclass: #'Kernel.STBOutFiler3'
 	instanceVariableNames: ''
@@ -118,6 +129,7 @@ Kernel.STBOutFiler2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler3
 	subclass: #'Kernel.STBOutFiler4'
 	instanceVariableNames: ''

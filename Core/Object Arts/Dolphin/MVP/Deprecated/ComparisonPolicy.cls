@@ -5,9 +5,13 @@ Object subclass: #ComparisonPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ComparisonPolicy guid: (GUID fromString: '{02cd77f7-d41d-4e1c-82ee-92322a049235}')!
+
 ComparisonPolicy comment: 'This class has now been deprecated, use SearchPolicy (which implements the <comparisonPolicy> protocol) instead.'!
+
 !ComparisonPolicy categoriesForClass!Deprecated! !
+
 !ComparisonPolicy class methodsFor!
 
 always
@@ -58,6 +62,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !ComparisonPolicy class categoriesForMethods!
 always!instance creation!public! !
 equality!instance creation!public! !

@@ -24,7 +24,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.EMRBITBLT guid: (Core.GUID fromString: '{d5466d52-7472-4ffd-bd6b-49157e55918d}')!
+
 OS.EMRBITBLT comment: '<EMRBITBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRBITBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -53,7 +55,9 @@ struct tagEMRBITBLT {
 	[helpstring("Size of the source bitmap bits")] DWORD cbBitsSrc;
 } EMRBITBLT;
 '!
+
 !OS.EMRBITBLT categoriesForClass!Win32-Structs! !
+
 !OS.EMRBITBLT methodsFor!
 
 cbBitsSrc
@@ -213,6 +217,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !OS.EMRBITBLT categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -333,6 +338,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_BITBLT}! !
+
 !OS.EMRBITBLT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

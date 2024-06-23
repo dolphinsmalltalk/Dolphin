@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Folder guid: (Core.GUID fromString: '{a5b3954d-5310-45c1-b09e-ee7dd70d6cd5}')!
+
 UI.Folder comment: ''!
+
 !UI.Folder categoriesForClass!MVP-Models! !
+
 !UI.Folder methodsFor!
 
 <= aFolder
@@ -91,6 +95,7 @@ volumeName
 
 	^[(DiskVolumeInformation forPath: self pathname) explorerName] on: Win32Error
 		do: [:ex | File removePathDelimiter: self pathname]! !
+
 !UI.Folder categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -129,6 +134,7 @@ root
 	"Answer an instance of the receiver representing the current root folder."
 
 	^self pathname: ''! !
+
 !UI.Folder class categoriesForMethods!
 icon!constants!development!public! !
 new!instance creation!public! !

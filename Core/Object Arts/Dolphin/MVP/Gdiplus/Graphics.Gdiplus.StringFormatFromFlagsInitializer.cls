@@ -7,8 +7,11 @@ Graphics.Gdiplus.StringFormatInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.StringFormatFromFlagsInitializer guid: (Core.GUID fromString: '{f4b7aa82-5fd1-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.StringFormatFromFlagsInitializer comment: ''!
+
 !Graphics.Gdiplus.StringFormatFromFlagsInitializer methodsFor!
 
 = anObject
@@ -287,6 +290,7 @@ trimming
 trimmingOf: aStringFormat set: aStringTrimmingConstant
 	Gdip gdipSetStringFormatTrimming: aStringFormat handle
 		trimming: (trimming := aStringTrimmingConstant ?? StringTrimmingCharacter)! !
+
 !Graphics.Gdiplus.StringFormatFromFlagsInitializer categoriesForMethods!
 =!comparing!public! !
 alignment!attributes!public! !
@@ -319,6 +323,7 @@ trimmingOf:set:!attributes!public! !
 
 flags: flagsNumber language: languageNumber
 	^self new flags: flagsNumber language: languageNumber! !
+
 !Graphics.Gdiplus.StringFormatFromFlagsInitializer class categoriesForMethods!
 flags:language:!instance creation!public! !
 !

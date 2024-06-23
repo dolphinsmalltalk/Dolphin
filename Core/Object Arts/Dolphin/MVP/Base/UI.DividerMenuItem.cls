@@ -10,7 +10,9 @@ UI.MenuItem
 			'DividerLookup'
 				-> (IdentityDictionary withAll: { 16r20 -> #barBreak. 16r40 -> #break. 16r800 -> #separator })
 		}!
+
 UI.DividerMenuItem guid: (Core.GUID fromString: '{87b4c661-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.DividerMenuItem comment: 'DividerMenuItem represents a divider that can be placed between other items in a <Menu>. Separate singleton instances for the various styles are held in class variables and answered by the #separator, #break and #barBreak [instance creation] methods.
 
 Class Variables:
@@ -20,7 +22,9 @@ Class Variables:
 	Break		<DividerMenuItem> singleton instance for the break separater style
 
 '!
+
 !UI.DividerMenuItem categoriesForClass!MVP-Views-Support! !
+
 !UI.DividerMenuItem methodsFor!
 
 acceleratorKey
@@ -105,6 +109,7 @@ text
 
 toStrings
 	^self displayString! !
+
 !UI.DividerMenuItem categoriesForMethods!
 acceleratorKey!accessing!private! !
 acceleratorKey:!accessing!private! !
@@ -181,6 +186,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	BarBreak := Break := Separator := nil! !
+
 !UI.DividerMenuItem class categoriesForMethods!
 barBreak!instance creation!public! !
 break!instance creation!public! !

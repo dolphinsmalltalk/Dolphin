@@ -7,11 +7,14 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.DiskVolumeInformation guid: (Core.GUID fromString: '{3de35cee-9281-49c6-9bd5-7141432d16e4}')!
+
 OS.DiskVolumeInformation comment: 'DiskVolumeInformation can be used to access various statistics and various other items of information available through the Win32 API about disk volumes, for example the disk volumne label and serial number of the disk in a particular drive.
 
 Example Usage:
 	DiskVolumeInformation forPath: ''c:\'''!
+
 !OS.DiskVolumeInformation methodsFor!
 
 bytesPerSector
@@ -254,6 +257,7 @@ totalFreeBytes
 
 	totalFreeBytes isNil ifTrue: [self calcDiskSpace].
 	^totalFreeBytes! !
+
 !OS.DiskVolumeInformation categoriesForMethods!
 bytesPerSector!accessing!public! !
 calcDiskSpace!helpers!private! !
@@ -300,6 +304,7 @@ forSystemPath
 	"
 
 	^self forPath: SessionManager current systemDirectory! !
+
 !OS.DiskVolumeInformation class categoriesForMethods!
 forPath:!instance creation!public! !
 forSystemPath!instance creation!public! !

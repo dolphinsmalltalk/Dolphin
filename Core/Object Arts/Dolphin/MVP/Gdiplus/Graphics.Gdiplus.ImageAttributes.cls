@@ -7,8 +7,11 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.ImageAttributes guid: (Core.GUID fromString: '{c5f76a31-54e8-45a9-905c-14e9d8ae7c0d}')!
+
 Graphics.Gdiplus.ImageAttributes comment: 'A GdiplusImageAttributes object contains information about how bitmap and metafile colors are manipulated during rendering.  Accessors are available to adjust color, grayscale, gamma, brightness, transparency, and more.  Typically you will initialize an instance, change some settings, and pass the instance to a GdiplusGraphics drawImage method.'!
+
 !Graphics.Gdiplus.ImageAttributes methodsFor!
 
 clone
@@ -111,6 +114,7 @@ threshold: aFloat type: aColorAdjustTypeConstant
 		type: aColorAdjustTypeConstant
 		enableFlag: TRUE
 		threshold: aFloat! !
+
 !Graphics.Gdiplus.ImageAttributes categoriesForMethods!
 clone!copying!public! !
 colorKeys:colorLow:colorHigh:!accessing!public! !
@@ -132,6 +136,7 @@ threshold:type:!accessing!public! !
 
 new
 	^self fromInitializer: ImageAttributesInitializer default! !
+
 !Graphics.Gdiplus.ImageAttributes class categoriesForMethods!
 new!instance creation!public! !
 !

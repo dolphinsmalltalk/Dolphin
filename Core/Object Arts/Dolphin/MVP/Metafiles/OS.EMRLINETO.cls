@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRLINETO_Size' -> 16r10. '_OffsetOf_ptl' -> 16r8 }!
+
 OS.EMRLINETO guid: (Core.GUID fromString: '{fff03eec-0fdc-4448-ac60-d19e59624d01}')!
+
 OS.EMRLINETO comment: '<EMRLINETO> is an <ExternalStructure> class to wrap the struct ''Win32.EMRLINETO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRLINETO {
 	POINTL ptl;
 } EMRLINETO;
 '!
+
 !OS.EMRLINETO categoriesForClass!Win32-Structs! !
+
 !OS.EMRLINETO methodsFor!
 
 ptl
@@ -38,6 +42,7 @@ ptl: aPOINTL
 		from: ##(_OffsetOf_ptl + 1)
 		to: ##(_OffsetOf_ptl + POINTL._POINTL_Size)
 		startingAt: 1! !
+
 !OS.EMRLINETO categoriesForMethods!
 ptl!**compiled accessors**!public! !
 ptl:!**compiled accessors**!public! !
@@ -74,6 +79,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_LINETO. EMR_MOVETOEX}! !
+
 !OS.EMRLINETO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

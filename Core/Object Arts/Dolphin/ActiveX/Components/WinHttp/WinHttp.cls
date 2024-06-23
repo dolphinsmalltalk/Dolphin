@@ -42,7 +42,12 @@ Kernel.Namespace
 			'WinHttpRequestOption_UrlEscapeDisableQuery' -> 16r8.
 			'WinHttpRequestOption_UserAgentString' -> 16r0
 		}!
+
 WinHttp guid: (Core.GUID fromString: '{168eedf7-2e1e-4f8c-92f3-260db4cae775}')!
+
 WinHttp isNonInstantiable: true!
+
 WinHttp comment: ''!
+
 !WinHttp categoriesForClass!Kernel-Objects! !
+

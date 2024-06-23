@@ -7,12 +7,17 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMDocument guid: (OS.COM.IID fromString: '{2933bf81-7b36-11d2-b20e-00c04f983e60}')!
+
 MSXML.IXMLDOMDocument isEgressOnly: true!
+
 MSXML.IXMLDOMDocument comment: '<IXMLDOMDocument> is a wrapper class for the COM interface ''MSXML.IXMLDOMDocument'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent documents, i.e. it represents the top node of the XML DOM tree.'!
+
 !MSXML.IXMLDOMDocument categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !MSXML.IXMLDOMDocument methodsFor!
 
 Abort
@@ -659,6 +664,7 @@ validateOnParse: isValidating
 	Helpstring: indicates whether the parser performs validation"
 
 	self put_validateOnParse: isValidating! !
+
 !MSXML.IXMLDOMDocument categoriesForMethods!
 Abort!**auto generated**!COM Interfaces-IXMLDOMDocument!public! !
 async!**auto generated**!properties!public! !
@@ -818,6 +824,7 @@ new
 		<?xml version='1.0' ?> processing instruction."
 
 	^super new initialize! !
+
 !MSXML.IXMLDOMDocument class categoriesForMethods!
 clsid!constants!public! !
 defineFunctions!**auto generated**!initializing!private! !

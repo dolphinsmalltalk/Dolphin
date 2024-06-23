@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.MemoryMappedFileTest guid: (Core.GUID fromString: '{c5e2483c-650a-4155-a15c-2c4a79201f0c}')!
+
 External.Tests.MemoryMappedFileTest comment: ''!
+
 !External.Tests.MemoryMappedFileTest categoriesForClass!Kernel-Objects! !
+
 !External.Tests.MemoryMappedFileTest methodsFor!
 
 testDoubleArray
@@ -87,6 +91,7 @@ testReadOnly
 	view free.
 	mmf free.
 	File delete: fname! !
+
 !External.Tests.MemoryMappedFileTest categoriesForMethods!
 testDoubleArray!public! !
 testMaximumSize!public! !

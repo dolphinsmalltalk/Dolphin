@@ -7,14 +7,18 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 CDO.INNTPOnPostFinal guid: (OS.COM.IID fromString: '{cd000028-8b95-11d1-82db-00c04fb1625d}')!
+
 CDO.INNTPOnPostFinal comment: '<CDO.INNTPOnPostFinal> is a wrapper class for the COM interface ''CDO.INNTPOnPostFinal'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"The interface to implement when creating NNTP OnPostFinal event sinks"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDO.INNTPOnPostFinal categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDO.INNTPOnPostFinal methodsFor!
 
 isExtensible
@@ -37,6 +41,7 @@ OnPostFinal: msg EventStatus: eventStatus
 
 	<virtual stdcall: hresult 8 IMessage* int32*>
 	^self invalidCall: _failureCode! !
+
 !CDO.INNTPOnPostFinal categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -53,6 +58,7 @@ defineFunctions
 		defineFunction: #OnPostFinal:EventStatus:
 			argumentTypes: 'IMessage* sdword*'
 ! !
+
 !CDO.INNTPOnPostFinal class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

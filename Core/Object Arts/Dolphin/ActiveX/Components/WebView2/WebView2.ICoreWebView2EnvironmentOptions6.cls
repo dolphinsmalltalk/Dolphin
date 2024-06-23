@@ -7,7 +7,9 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2EnvironmentOptions6 guid: (OS.COM.IID fromString: '{57d29cc3-c84f-42a0-b0e2-effbd5e179de}')!
+
 WebView2.ICoreWebView2EnvironmentOptions6 comment: '`ICoreWebView2EnvironmentOptions6` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions6'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -31,7 +33,9 @@ interface ICoreWebView2EnvironmentOptions6 : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2EnvironmentOptions6 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2EnvironmentOptions6 methodsFor!
 
 areBrowserExtensionsEnabled
@@ -65,6 +69,7 @@ put_AreBrowserExtensionsEnabled: value
 
 	<virtual stdcall: hresult 5 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2EnvironmentOptions6 categoriesForMethods!
 areBrowserExtensionsEnabled!properties!public! !
 areBrowserExtensionsEnabled:!properties!public! !
@@ -86,6 +91,7 @@ defineFunctions
 		defineFunction: #put_AreBrowserExtensionsEnabled:
 			argumentTypes: 'int32'
 ! !
+
 !WebView2.ICoreWebView2EnvironmentOptions6 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

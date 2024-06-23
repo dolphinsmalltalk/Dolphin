@@ -7,9 +7,13 @@ OS.COM.InterfaceImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Examples.EnumRECT guid: (Core.GUID fromString: '{e3913c41-9396-11d3-b376-0800460222f0}')!
+
 OS.COM.Examples.EnumRECT comment: 'EnumRECT is a sample implementation of the generic COM enumeration interface, IEnumXXX, specialized to enumeration RECT (rectangle) structures.'!
+
 !OS.COM.Examples.EnumRECT categoriesForClass!Samples! !
+
 !OS.COM.Examples.EnumRECT methodsFor!
 
 Clone: ppEnum
@@ -96,6 +100,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^{IEnumRECT}! !
+
 !OS.COM.Examples.EnumRECT categoriesForMethods!
 Clone:!COM Interfaces-IEnumXXXX!public! !
 initialize!initializing!public! !
@@ -116,6 +121,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
+
 !OS.COM.Examples.EnumRECT class categoriesForMethods!
 initialize!initializing!private! !
 new!instance creation!public! !

@@ -14,7 +14,9 @@ External.Structure
 			'_OffsetOf_dwNumAddrs' -> 16r10.
 			'_OffsetOf_dwOutDatagrams' -> 16rC
 		}!
+
 OS.MIB_UDPSTATS guid: (Core.GUID fromString: '{c9d1622e-d10d-4ba8-a634-acebf006ae2e}')!
+
 OS.MIB_UDPSTATS comment: '<MIB_UDPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -32,7 +34,9 @@ struct tagMIB_UDPSTATS {
 	unsigned long dwNumAddrs;
 } MIB_UDPSTATS;
 '!
+
 !OS.MIB_UDPSTATS categoriesForClass!Win32-Structs! !
+
 !OS.MIB_UDPSTATS methodsFor!
 
 dwInDatagrams
@@ -59,6 +63,7 @@ dwOutDatagrams
 	"Answer the <Integer> value of the receiver's 'dwOutDatagrams' field."
 
 	^bytes uint32AtOffset: _OffsetOf_dwOutDatagrams! !
+
 !OS.MIB_UDPSTATS categoriesForMethods!
 dwInDatagrams!**compiled accessors**!public! !
 dwInErrors!**compiled accessors**!public! !
@@ -96,6 +101,7 @@ defineFields
 
 getFieldNames
 	^#(#dwInDatagrams #dwNoPorts #dwInErrors #dwOutDatagrams #dwNumAddrs)! !
+
 !OS.MIB_UDPSTATS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

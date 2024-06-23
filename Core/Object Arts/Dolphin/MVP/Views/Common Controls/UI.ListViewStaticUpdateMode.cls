@@ -7,8 +7,11 @@ UI.ListViewUpdateMode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ListViewStaticUpdateMode guid: (Core.GUID fromString: '{6a4a8dcc-afe3-4152-9c61-98ef3e933149}')!
+
 UI.ListViewStaticUpdateMode comment: ''!
+
 !UI.ListViewStaticUpdateMode methodsFor!
 
 addOrUpdate: msgInteger items: aSequenceableCollection afterIndex: indexInteger
@@ -122,6 +125,7 @@ updateStateImages
 				iItem: index - 1;
 				iStateImage: (view stateImageFromRow: each).
 			view lvmSetItem: index - 1 state: lvItem]! !
+
 !UI.ListViewStaticUpdateMode categoriesForMethods!
 addOrUpdate:items:afterIndex:!private!updating! !
 applyCallbackMask!operations!public! !

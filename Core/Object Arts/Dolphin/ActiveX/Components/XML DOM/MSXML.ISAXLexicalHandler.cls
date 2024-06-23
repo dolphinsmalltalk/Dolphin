@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISAXLexicalHandler guid: (OS.COM.IID fromString: '{7f85d5f5-47a8-4497-bda5-84ba04819ea6}')!
+
 MSXML.ISAXLexicalHandler comment: '<ISAXLexicalHandler> is a wrapper class for the COM interface ''MSXML2.ISAXLexicalHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -53,7 +55,9 @@ interface ISAXLexicalHandler : IUnknown
 		[in]int cchChars);
 };
 '!
+
 !MSXML.ISAXLexicalHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.ISAXLexicalHandler methodsFor!
 
 Comment: pwchChars cchChars: cchChars
@@ -123,6 +127,7 @@ StartEntity: pwchName cchName: cchName
 
 	<virtual stdcall: hresult 6 uint16* int32>
 	^self invalidCall: _failureCode! !
+
 !MSXML.ISAXLexicalHandler categoriesForMethods!
 Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
 EndCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
@@ -152,6 +157,7 @@ defineFunctions
 		defineFunction: #Comment:cchChars:
 			argumentTypes: 'word* sdword'
 ! !
+
 !MSXML.ISAXLexicalHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

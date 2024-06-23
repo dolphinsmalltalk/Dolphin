@@ -5,9 +5,13 @@ EmulatedPushButton subclass: #EmbeddedPushButton
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EmbeddedPushButton guid: (GUID fromString: '{b1d223a1-89b7-41cd-9057-4b9d84f774c7}')!
+
 EmbeddedPushButton comment: ''!
+
 !EmbeddedPushButton categoriesForClass!Unclassified! !
+
 !EmbeddedPushButton methodsFor!
 
 clientRectangle
@@ -236,6 +240,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	((self clientRectangle containsPoint: self cursorPosition) and: [Keyboard default isKeyDown: VK_LBUTTON]) ifTrue: [^self displayState: #pressed].
 
 	^super wmSetFocus: message wParam: wParam lParam: lParam! !
+
 !EmbeddedPushButton categoriesForMethods!
 clientRectangle!accessing!public! !
 createEmbeddedIn:!initialize/release!public! !
@@ -293,6 +298,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^20! !
+
 !EmbeddedPushButton class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

@@ -7,8 +7,11 @@ UI.Tests.AbstractMultilineTextEditTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.RichTextEditTest guid: (Core.GUID fromString: '{bc34bf3f-4b1c-44a8-9c0c-b25db1e72469}')!
+
 UI.Tests.RichTextEditTest comment: ''!
+
 !UI.Tests.RichTextEditTest methodsFor!
 
 classToTest
@@ -150,6 +153,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self view plainText: self printString.
 	self assert: (self view instVarNamed: 'teFlags') equals: TextEdit.WantTabMask.
 	self assert: (self view instVarAt: RichTextEdit instSize) isKindOf: OS.EDITSTREAM! !
+
 !UI.Tests.RichTextEditTest categoriesForMethods!
 classToTest!helpers!private! !
 margins!private!unit tests! !
@@ -204,6 +208,7 @@ resource_Default_view_D8_13
 \viewkind4\uc1\pard\f0\fs22\par
 }
 ' 416 1298 #textLimit: 8 #(1073741823) 416 1298 #resetCharFormat 8 #() 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 209 12 0 0 185 0 0 0] 8 #() 1346 193 193 nil 27)! !
+
 !UI.Tests.RichTextEditTest class categoriesForMethods!
 resource_Default_view_D6!public!resources-views! !
 resource_Default_view_D7!public!resources-views! !

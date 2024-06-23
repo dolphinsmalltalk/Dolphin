@@ -5,9 +5,13 @@ MainTestCase subclass: #WriteFileStreamANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WriteFileStreamANSITest guid: (GUID fromString: '{75562e52-c345-46dd-a2e1-734f105077f4}')!
+
 WriteFileStreamANSITest comment: ''!
+
 !WriteFileStreamANSITest categoriesForClass!Unclassified! !
+
 !WriteFileStreamANSITest methodsFor!
 
 canonicalObject
@@ -89,6 +93,7 @@ testXspace
 testXtab
 	" <puttableStream>#tab "
 	#'File Stream'.! !
+
 !WriteFileStreamANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

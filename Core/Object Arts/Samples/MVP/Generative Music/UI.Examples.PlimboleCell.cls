@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.PlimboleCell guid: (Core.GUID fromString: '{a9d9ae5c-52b6-43b7-9e6c-1bb39ef49f8a}')!
+
 UI.Examples.PlimboleCell comment: ''!
+
 !UI.Examples.PlimboleCell categoriesForClass!Kernel-Objects! !
+
 !UI.Examples.PlimboleCell methodsFor!
 
 arrowImage
@@ -99,6 +103,7 @@ x
 
 y
 	^self location y! !
+
 !UI.Examples.PlimboleCell categoriesForMethods!
 arrowImage!private! !
 color!accessing!public! !
@@ -133,6 +138,7 @@ location: aLocationPoint direction: directionIndex
 	^(super new)
 		setLocation: aLocationPoint direction: directionIndex;
 		yourself! !
+
 !UI.Examples.PlimboleCell class categoriesForMethods!
 arrowIcon!public! !
 icon!constants!public! !

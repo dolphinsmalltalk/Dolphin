@@ -7,8 +7,11 @@ Graphics.Gdiplus.GdiplusBase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Pen guid: (Core.GUID fromString: '{f98f70c8-58ea-4592-bc70-1907f78c8bc8}')!
+
 Graphics.Gdiplus.Pen comment: 'GdiplusPen is used to draw lines and curves.  In general, where an object has an outside and an inside, GdiplusPen draws the outside and GdiplusBrush is used to fill the inside.'!
+
 !Graphics.Gdiplus.Pen methodsFor!
 
 alignment
@@ -235,6 +238,7 @@ width: aNumber
 	"Set the width of the receiver's stroke."
 
 	initializer widthOf: self set: aNumber! !
+
 !Graphics.Gdiplus.Pen categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -356,6 +360,7 @@ width: aNumber
 	"Answer a new instance of the receiver with black and the specified <Number> line width."
 
 	^self ink: Color.Black width: aNumber! !
+
 !Graphics.Gdiplus.Pen class categoriesForMethods!
 black!instance creation!public! !
 blue!instance creation!public! !

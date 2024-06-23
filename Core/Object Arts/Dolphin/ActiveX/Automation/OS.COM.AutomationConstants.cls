@@ -243,6 +243,10 @@ Kernel.SharedPool
 			'VT_VECTOR' -> 16r1000.
 			'VT_VOID' -> 16r18
 		}!
+
 OS.COM.AutomationConstants guid: (Core.GUID fromString: '{e4e5f374-c852-48e6-9a06-8e05b8ae6578}')!
+
 OS.COM.AutomationConstants isNonInstantiable: true!
+
 OS.COM.AutomationConstants comment: ''!
+

@@ -13,11 +13,15 @@ OS.SizedStructure
 			'_OffsetOf_lpszDocName' -> 16r4.
 			'_OffsetOf_lpszOutput' -> 16r8
 		}!
+
 OS.DOCINFOW guid: (Core.GUID fromString: '{87b4c5e8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.DOCINFOW comment: 'DOCINFO is an <ExternalStructure> class which represents the Win32 DOCINFO structure of the same name.
 
 DOCINFO is used in conjunction with the StartDoc() GDI call.'!
+
 !OS.DOCINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.DOCINFOW methodsFor!
 
 docName: aString
@@ -43,6 +47,7 @@ lpszOutput: anUtf16String
 	"Set the receiver's 'lpszOutput' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpszOutput put: anUtf16String yourAddress! !
+
 !OS.DOCINFOW categoriesForMethods!
 docName:!accessing!public! !
 fwType:!**compiled accessors**!public! !
@@ -78,6 +83,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpszDocName #lpszOutput #lpszDatatype #fwType)! !
+
 !OS.DOCINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IVBSAXContentHandler guid: (OS.COM.IID fromString: '{2ed7290a-4dd5-4b46-bb26-4e4155e77faa}')!
+
 MSXML.IVBSAXContentHandler comment: '<IVBSAXContentHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXContentHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -66,7 +68,9 @@ interface IVBSAXContentHandler : IDispatch
 		[in, out]BSTR* strName);
 };
 '!
+
 !MSXML.IVBSAXContentHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IVBSAXContentHandler methodsFor!
 
 characters: strChars
@@ -266,6 +270,7 @@ StartPrefixMapping: strPrefix strURI: strURI
 
 	<virtual stdcall: hresult 11 bstr* bstr*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IVBSAXContentHandler categoriesForMethods!
 characters:!**auto generated**!methods!public! !
 Characters:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
@@ -319,6 +324,7 @@ defineFunctions
 		defineFunction: #SkippedEntity:
 			argumentTypes: 'bstr*'
 ! !
+
 !MSXML.IVBSAXContentHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

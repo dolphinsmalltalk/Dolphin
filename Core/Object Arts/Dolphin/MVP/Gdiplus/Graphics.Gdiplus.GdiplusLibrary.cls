@@ -11,10 +11,14 @@ External.DynamicLinkLibrary
 			'PixelFormatMax' -> 16rF.
 			'PixelFormatUndefined' -> 16r0
 		}!
+
 Graphics.Gdiplus.GdiplusLibrary guid: (Core.GUID fromString: '{de97dca0-ad17-4002-a790-a4b99480a5b8}')!
+
 Graphics.Gdiplus.GdiplusLibrary comment: 'Gdiplus is the `DynamicLinkLibrary` class to represent the dynamic link library, ''GDIPLUS.DLL''. It was generated from IDL built from the GDI+ header files. It contains wrapper methods for each of the methods in the GDI+ Flat API. The GDI+ class library (a set of C++ classes) sits on top of the flat API. There is very little documentation for the flat API, but the class library is, for the most part, a thin layer on top so it is easy to map between the C++ class library documentation and the corresponding flat API calls.
 '!
+
 !Graphics.Gdiplus.GdiplusLibrary categoriesForClass!External-Libraries-Win32! !
+
 !Graphics.Gdiplus.GdiplusLibrary methodsFor!
 
 close
@@ -7158,6 +7162,7 @@ unmarshalFloats: aByteArrayOrAddress count: anInteger
 			points at: i put: (aByteArrayOrAddress floatAtOffset: offset).
 			offset := offset + 4].
 	^points! !
+
 !Graphics.Gdiplus.GdiplusLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
 gdipAddPathArc:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
@@ -7800,6 +7805,7 @@ fileName
 
 sharedVariableName
 	^#{Gdip}! !
+
 !Graphics.Gdiplus.GdiplusLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !
 sharedVariableName!constants!private! !

@@ -7,8 +7,11 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ClassDetailsTest guid: (Core.GUID fromString: '{64e516b9-5b21-43b7-ae23-d6e32cd674ae}')!
+
 Refactory.Browser.Tests.ClassDetailsTest comment: ''!
+
 !Refactory.Browser.Tests.ClassDetailsTest methodsFor!
 
 testImports
@@ -174,6 +177,7 @@ testVariables
 	self assert: subject classVariableString equals: 'ClassConst1 ClassVar1'.
 	self assert: subject classConstants equals: ClassToRename classConstants.
 	self assert: subject classInstanceVariableNames equals: #('notUsed')! !
+
 !Refactory.Browser.Tests.ClassDetailsTest categoriesForMethods!
 testImports!public! !
 testInstanceSpec!public! !

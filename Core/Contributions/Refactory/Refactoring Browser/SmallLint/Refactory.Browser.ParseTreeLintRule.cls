@@ -7,9 +7,13 @@ Refactory.Browser.BasicLintRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ParseTreeLintRule guid: (Core.GUID fromString: '{db449dfa-5729-42a3-87e6-340f66c98e20}')!
+
 Refactory.Browser.ParseTreeLintRule comment: ''!
+
 !Refactory.Browser.ParseTreeLintRule categoriesForClass!Refactory-Lint! !
+
 !Refactory.Browser.ParseTreeLintRule methodsFor!
 
 checkMethod: aSmalllintContext 
@@ -32,6 +36,7 @@ resetResult
 	result
 		label: self name;
 		matcher: matcher! !
+
 !Refactory.Browser.ParseTreeLintRule categoriesForMethods!
 checkMethod:!accessing!public! !
 defaultResultClass!private! !
@@ -654,6 +659,7 @@ whileTrue
 yourselfNotUsed
 	^self createParseTreeRule: #('`{:node | node parent isUsed not} yourself')
 		name: 'Doesn''t use the result of a yourself message'! !
+
 !Refactory.Browser.ParseTreeLintRule class categoriesForMethods!
 anySatisfy!intention revealing!public! !
 asOrderedCollectionNotNeeded!miscellaneous!public! !

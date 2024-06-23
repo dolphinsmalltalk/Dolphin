@@ -71,6 +71,7 @@ literalReadFrom: aStream context: anObject
 	^(STLInFiler on: aStream)
 		context: anObject;
 		next! !
+
 !Core.Object class categoriesForMethods!
 fromLiteralStoreArray:!literal filing!public! !
 fromLiteralStoreArray:context:!literal filing!public! !

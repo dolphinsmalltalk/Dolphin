@@ -7,8 +7,11 @@ Kernel.Tests.ScopedBindingReferenceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.MetaBindingReferenceTest guid: (Core.GUID fromString: '{fd978d4f-c029-4293-a636-297a14b7fa15}')!
+
 Kernel.Tests.MetaBindingReferenceTest comment: ''!
+
 !Kernel.Tests.MetaBindingReferenceTest methodsFor!
 
 nameSuffix
@@ -168,6 +171,7 @@ testStlConvertRelativeFromVersion1
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
+
 !Kernel.Tests.MetaBindingReferenceTest categoriesForMethods!
 nameSuffix!constants!private! !
 printStringTestCases!constants!private! !

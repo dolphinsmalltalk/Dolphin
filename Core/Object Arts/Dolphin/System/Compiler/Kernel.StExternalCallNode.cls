@@ -7,9 +7,13 @@ Kernel.AbstractPrimitiveCallNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'OverlappedMask' -> 16r1. 'VirtualMask' -> 16r2 }!
+
 Kernel.StExternalCallNode guid: (Core.GUID fromString: '{66add179-2714-4fbb-b856-33dee83e11f4}')!
+
 Kernel.StExternalCallNode comment: ''!
+
 !Kernel.StExternalCallNode categoriesForClass!System-Compiler! !
+
 !Kernel.StExternalCallNode methodsFor!
 
 = anObject
@@ -98,6 +102,7 @@ returnType: aStExternalArgTypeNode
 
 selector
 	^FunctionDescriptor nameOfConvention: callingConvention! !
+
 !Kernel.StExternalCallNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -129,6 +134,7 @@ selector!accessing!public! !
 
 new
 	^super new initialize! !
+
 !Kernel.StExternalCallNode class categoriesForMethods!
 new!instance creation!public! !
 !

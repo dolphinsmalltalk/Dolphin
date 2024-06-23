@@ -36,6 +36,10 @@ Kernel.SharedPool
 			'UDS_SETBUDDYINT' -> 16r2.
 			'UDS_WRAP' -> 16r1
 		}!
+
 OS.UpDownControlConstants guid: (Core.GUID fromString: '{43828364-486d-4e85-b11c-ab07f6b6c5b6}')!
+
 OS.UpDownControlConstants isNonInstantiable: true!
+
 OS.UpDownControlConstants comment: ''!
+

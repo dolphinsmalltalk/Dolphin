@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSETCOLORADJUSTMENT_Size' -> 16r20. '_OffsetOf_COLORADJUSTMENT' -> 16r8 }!
+
 OS.EMRSETCOLORADJUSTMENT guid: (Core.GUID fromString: '{bc512904-3af5-4a18-a28b-bf413de2cf50}')!
+
 OS.EMRSETCOLORADJUSTMENT comment: '<EMRSETCOLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRSETCOLORADJUSTMENT {
 	COLORADJUSTMENT COLORADJUSTMENT;
 } EMRSETCOLORADJUSTMENT;
 '!
+
 !OS.EMRSETCOLORADJUSTMENT categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETCOLORADJUSTMENT methodsFor!
 
 COLORADJUSTMENT
@@ -38,6 +42,7 @@ COLORADJUSTMENT: aCOLORADJUSTMENT
 		from: ##(_OffsetOf_COLORADJUSTMENT + 1)
 		to: ##(_OffsetOf_COLORADJUSTMENT + COLORADJUSTMENT._COLORADJUSTMENT_Size)
 		startingAt: 1! !
+
 !OS.EMRSETCOLORADJUSTMENT categoriesForMethods!
 COLORADJUSTMENT!**compiled accessors**!public! !
 COLORADJUSTMENT:!**compiled accessors**!public! !
@@ -74,6 +79,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETCOLORADJUSTMENT}! !
+
 !OS.EMRSETCOLORADJUSTMENT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

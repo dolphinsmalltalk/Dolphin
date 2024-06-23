@@ -7,10 +7,13 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.VMTest guid: (Core.GUID fromString: '{d03f75a2-8c1c-4559-8177-eff37d37a6e8}')!
+
 Kernel.Tests.VMTest comment: 'Test the VM primitives and other VM related operations.
 
 SUnitBrowser openOnTestCase: self'!
+
 !Kernel.Tests.VMTest methodsFor!
 
 assertImmutableAtPut: anObject
@@ -3940,6 +3943,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 								value: eachTarget
 								value: eachArg
 								value: each]]]! !
+
 !Kernel.Tests.VMTest categoriesForMethods!
 assertImmutableAtPut:!private!unit tests! !
 assertImmutableBasicAtPut:!private!unit tests! !

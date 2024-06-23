@@ -5,9 +5,13 @@ SequencedStreamTest subclass: #WriteStreamANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WriteStreamANSITest guid: (GUID fromString: '{ad10f0de-1dd8-4427-b092-0efcb083e330}')!
+
 WriteStreamANSITest comment: ''!
+
 !WriteStreamANSITest categoriesForClass!Unclassified! !
+
 !WriteStreamANSITest methodsFor!
 
 canonicalObject
@@ -103,6 +107,7 @@ testXtab
 	byteStream := WriteStream on: ByteArray new.
 	self value: [byteStream tab] shouldRaise: Error
 	! !
+
 !WriteStreamANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !
@@ -121,6 +126,7 @@ helperClassesDo: aBlock
 	aBlock value: PuttableStreamHelper.
 	aBlock value: CollectionStreamHelper.
 	aBlock value: WriteStreamHelper.! !
+
 !WriteStreamANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

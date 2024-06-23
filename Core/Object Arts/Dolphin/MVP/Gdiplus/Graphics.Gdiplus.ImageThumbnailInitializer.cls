@@ -7,8 +7,11 @@ Graphics.Gdiplus.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.ImageThumbnailInitializer guid: (Core.GUID fromString: '{21b29424-81ce-40c7-9524-d9e4377b6a66}')!
+
 Graphics.Gdiplus.ImageThumbnailInitializer comment: ''!
+
 !Graphics.Gdiplus.ImageThumbnailInitializer methodsFor!
 
 = anObject
@@ -56,6 +59,7 @@ printImage: aGdiplusImage on: aWriteStream
 		space;
 		print: extent;
 		nextPut: $)! !
+
 !Graphics.Gdiplus.ImageThumbnailInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -71,6 +75,7 @@ printImage:on:!printing!private! !
 
 image: anImage extent: aPoint
 	^self new image: anImage extent: aPoint! !
+
 !Graphics.Gdiplus.ImageThumbnailInitializer class categoriesForMethods!
 image:extent:!instance creation!public! !
 !

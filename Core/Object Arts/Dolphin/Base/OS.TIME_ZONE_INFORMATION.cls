@@ -19,7 +19,9 @@ External.Structure
 			'TIME_ZONE_ID_STANDARD' -> 16r1.
 			'TIME_ZONE_ID_UNKNOWN' -> 16r0
 		}!
+
 OS.TIME_ZONE_INFORMATION guid: (Core.GUID fromString: '{ceb846ce-f4db-48fe-9fec-02e637cbc4b4}')!
+
 OS.TIME_ZONE_INFORMATION comment: '<TIME_ZONE_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.TIME_ZONE_INFORMATION'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -39,7 +41,9 @@ struct tagTIME_ZONE_INFORMATION {
 	[readonly] long DaylightBias;
 } TIME_ZONE_INFORMATION;
 '!
+
 !OS.TIME_ZONE_INFORMATION categoriesForClass!Win32-Structs! !
+
 !OS.TIME_ZONE_INFORMATION methodsFor!
 
 bias
@@ -106,6 +110,7 @@ zoneId
 
 zoneId: anInteger
 	zoneId := anInteger! !
+
 !OS.TIME_ZONE_INFORMATION categoriesForMethods!
 bias!**compiled accessors**!public! !
 currentBias!accessing!public! !
@@ -171,6 +176,7 @@ defineFields
 
 getFieldNames
 	^#(#bias #standardName #standardDate #standardBias #daylightName #daylightDate #daylightBias)! !
+
 !OS.TIME_ZONE_INFORMATION class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -82,6 +82,7 @@ Tools.SmalltalkSystem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkToolShell
 	subclass: #'Tools.ClassHierarchyDiagram'
 	instanceVariableNames: 'classesPresenter commentPresenter'
@@ -89,6 +90,7 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkToolShell
 	subclass: #'Tools.NamespacesShell'
 	instanceVariableNames: 'dictionariesPresenter'
@@ -96,6 +98,7 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkToolShell
 	subclass: #'Tools.ProtocolBrowserShell'
 	instanceVariableNames: 'protocolsPresenter selectorsPresenter classesPresenter'
@@ -103,6 +106,7 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkToolShell
 	subclass: #'Tools.SourceBrowser'
 	instanceVariableNames: 'listPresenter changedOnly refreshBlock packagesFilter statusModel'
@@ -110,6 +114,7 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkToolShell
 	subclass: #'Tools.UserPreferencesShell'
 	instanceVariableNames: 'preferencesPresenter'
@@ -129,6 +134,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #getSize);
 		add: (Aspect boolean: #isSingle);
 		yourself! !
+
 !OS.ITEMIDLIST class categoriesForMethods!
 publishedAspectsOfInstances!must strip!public! !
 !
@@ -144,6 +150,7 @@ browseMethodProtocol
 	self developmentSystem browseProtocols
 		protocol: protocol;
 		actualClass: (self actualClass whichClassImplementsProtocol: protocol)! !
+
 !Tools.ClassBrowserAbstract categoriesForMethods!
 browseMethodProtocol!commands-actions!private! !
 !
@@ -162,6 +169,7 @@ inspectSystemOptions
 	"Open a TwoLevelInspector on the system options."
 
 	^UserPreferencesShell showOn: (ListModel withAll: self systemOptions)! !
+
 !Tools.SmalltalkSystem categoriesForMethods!
 inspectNamespaces!initializing!public! !
 inspectSystemOptions!commands-actions!public! !
@@ -178,6 +186,7 @@ resource_Protocol_tools
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 3 1094 1 #{UI.ToolbarIconButton} 32 1 1350 4 #{UI.CommandDescription} #toggleReadOnly 8 'Lock/unlock protocol' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'Mutex.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 210 32 1 242 #toggleANSI 8 'Toggle ANSI status' 1 1 290 nil true 322 8 'METHODPROTOCOL_ANSI.ICO' 384 65541 nil nil 582 1 #{UI.ToolbarSeparator} 32 1 nil nil 1 nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 642 111 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 54 12 0 0 35 0 0 0] 8 #() 642 193 193 nil 29)! !
+
 !UI.Toolbar class categoriesForMethods!
 resource_Protocol_tools!public!resources-views! !
 !

@@ -7,9 +7,13 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PositionEvent guid: (Core.GUID fromString: '{cd69a072-3606-11d3-93bd-00a024ca708a}')!
+
 UI.PositionEvent comment: 'PositionEvent is the class of <Event> associated with a window reposition event originating from a WM_WINDOWPOSCHANGING or WM_WINDOWPOSCHANGED message.'!
+
 !UI.PositionEvent categoriesForClass!MVP-Views-Events! !
+
 !UI.PositionEvent methodsFor!
 
 extent
@@ -139,6 +143,7 @@ y
 	"Answer the y-position of the window origin."
 
 	^self lpwp y! !
+
 !UI.PositionEvent categoriesForMethods!
 extent!accessing!public! !
 extent:!accessing!public! !

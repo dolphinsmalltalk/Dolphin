@@ -7,9 +7,13 @@ Kernel.Tests.BindingReferenceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ScopedBindingReferenceTest guid: (Core.GUID fromString: '{08ed9f21-acc1-4531-8b3c-ac6baaed031a}')!
+
 Kernel.Tests.ScopedBindingReferenceTest isNonInstantiable: true!
+
 Kernel.Tests.ScopedBindingReferenceTest comment: ''!
+
 !Kernel.Tests.ScopedBindingReferenceTest methodsFor!
 
 bindingTestCases
@@ -136,6 +140,7 @@ testScope
 	self deny: coreRelative equals: subject.
 	self assert: coreRelative isRelative.
 	self assert: coreRelative scope identicalTo: Core! !
+
 !Kernel.Tests.ScopedBindingReferenceTest categoriesForMethods!
 bindingTestCases!constants!private! !
 pathTestCases!private!unit tests! !

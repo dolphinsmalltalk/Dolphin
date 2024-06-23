@@ -7,9 +7,13 @@ UI.Tests.SelectableItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SelectableListItemsTest guid: (Core.GUID fromString: '{48f12746-e517-4013-8077-973b1d783f60}')!
+
 UI.Tests.SelectableListItemsTest isNonInstantiable: true!
+
 UI.Tests.SelectableListItemsTest comment: ''!
+
 !UI.Tests.SelectableListItemsTest methodsFor!
 
 autoSelectsFirst
@@ -340,6 +344,7 @@ testUpdateSelectedObject
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !
+
 !UI.Tests.SelectableListItemsTest categoriesForMethods!
 autoSelectsFirst!private!testing! !
 objectsToTest!helpers!private! !

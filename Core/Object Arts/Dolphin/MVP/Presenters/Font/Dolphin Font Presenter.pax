@@ -37,6 +37,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticControlView
 	subclass: #'UI.FontView'
 	instanceVariableNames: 'previewText'

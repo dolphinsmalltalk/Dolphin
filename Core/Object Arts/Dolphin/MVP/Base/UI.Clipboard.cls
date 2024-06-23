@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Clipboard guid: (Core.GUID fromString: '{87b4c463-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Clipboard comment: ''!
+
 !UI.Clipboard categoriesForClass!System-Support! !
+
 !UI.Clipboard methodsFor!
 
 addRegisteredFormat: formatName id: id converter: aTypeConverter
@@ -296,6 +300,7 @@ setText: text
 	to the clipboard the text is considered to terminate at the first null character."
 
 	self setRegisteredFormat: #String data: text! !
+
 !UI.Clipboard categoriesForMethods!
 addRegisteredFormat:id:converter:!operations!public! !
 apply:!operations!private! !
@@ -365,6 +370,7 @@ onStartup
 	initialization."
 
 	Current := nil! !
+
 !UI.Clipboard class categoriesForMethods!
 current!instance creation!public! !
 icon!constants!public! !

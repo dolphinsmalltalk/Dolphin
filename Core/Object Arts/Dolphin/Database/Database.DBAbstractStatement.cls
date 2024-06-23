@@ -7,8 +7,11 @@ Core.Object
 	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBAbstractStatement guid: (Core.GUID fromString: '{f63fc993-6a18-49de-a8d2-07b192c69097}')!
+
 Database.DBAbstractStatement isNonInstantiable: true!
+
 Database.DBAbstractStatement comment: 'A DBAbstractStatements represent commands that can be executed by against a <DBConnection>. DBAbstractStatement is itself abstract. Its most commonly used concrete subclass is <DBStatement>, which can be used to execute SQL statements. Other subclasses represent individual queries that can be performed against the metadata in the database schema using the specific functions provided for this purpose in ODBC. Whatever the form of the command the subclass of statement represents, all yield a <DBResultSet>.
 
 Instance Variables:
@@ -16,7 +19,9 @@ Instance Variables:
 	parent		<DBConnection>. The connection on which the statement was (or will be) executed
 	executed		<Boolean>. Indicates if the command has been executed yet.
 	cursorType	<Symbol>. The symbolic name of the cursor type, e.g. #forwardOnly'!
+
 !Database.DBAbstractStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBAbstractStatement methodsFor!
 
 allocatedHandle
@@ -335,6 +340,7 @@ statusArray: anArrayOfWORDs
 
 suppressErrorsDo: aNiladicBlock
 	aNiladicBlock on: DBError do: [:e | e toTrace]! !
+
 !Database.DBAbstractStatement categoriesForMethods!
 allocatedHandle!accessing!private! !
 asParameter!accessing!public! !
@@ -459,6 +465,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
+
 !Database.DBAbstractStatement class categoriesForMethods!
 initialize!initializing!public! !
 new!instance creation!private! !

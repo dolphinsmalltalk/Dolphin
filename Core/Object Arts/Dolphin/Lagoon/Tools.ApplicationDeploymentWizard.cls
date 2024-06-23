@@ -7,7 +7,9 @@ UI.ValueDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ApplicationDeploymentWizard guid: (Core.GUID fromString: '{87b4c6a1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.ApplicationDeploymentWizard comment: 'ApplicationDeploymentWizard is a <dialogPresenter> used to edit the contents of an <ImageStripper> model.
 
 Instance Variables:
@@ -36,7 +38,9 @@ Class Variables:
 	SystemIcon		<UndefinedObject>
 
 '!
+
 !Tools.ApplicationDeploymentWizard categoriesForClass!MVP-Presenters! !
+
 !Tools.ApplicationDeploymentWizard methodsFor!
 
 accept
@@ -323,6 +327,7 @@ validateUserInterface
 	stripClassGuids view isEnabled: stripInfo.
 
 	! !
+
 !Tools.ApplicationDeploymentWizard categoriesForMethods!
 accept!commands-actions!public! !
 addToCommandRoute:!commands-routing!public! !
@@ -509,6 +514,7 @@ toolsFolderIcon
 	receiver in the system folder."
 
 	^SmalltalkSystemIcon showModal: self description: self displayString! !
+
 !Tools.ApplicationDeploymentWizard class categoriesForMethods!
 defaultModel!models!public! !
 displayOn:!displaying!public! !

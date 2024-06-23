@@ -55,7 +55,12 @@ Kernel.SharedPool
 			'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
 			'WCODE_HRESULT_LAST' -> -16r7FFB0001
 		}!
+
 OS.Win32Errors guid: (Core.GUID fromString: '{ebf1ffcb-3db7-4be5-bc6e-4f922ed6d1b8}')!
+
 OS.Win32Errors isNonInstantiable: true!
+
 OS.Win32Errors comment: ''!
+
 !OS.Win32Errors categoriesForClass!External-Data-Constants! !
+

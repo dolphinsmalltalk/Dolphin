@@ -7,9 +7,13 @@ UI.ListPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ResourceToolboxPresenter guid: (Core.GUID fromString: '{9b3e71d1-8684-48c9-b045-890f2cd430e6}')!
+
 Tools.ResourceToolboxPresenter comment: ''!
+
 !Tools.ResourceToolboxPresenter categoriesForClass!MVP-Resources-IDE Tools! !
+
 !Tools.ResourceToolboxPresenter methodsFor!
 
 add: aResourceIdentifier toCategory: aString 
@@ -236,6 +240,7 @@ selectableItems
 
 selectCategory: aStringOrNil
 	^categoriesPresenter selections: {aStringOrNil}! !
+
 !Tools.ResourceToolboxPresenter categoriesForMethods!
 add:toCategory:!operations!private! !
 addResourceIdentifierFor:!helpers!private! !
@@ -298,6 +303,7 @@ resource_Default_view
 
 resourceManager
 	^SessionManager current resourceManager! !
+
 !Tools.ResourceToolboxPresenter class categoriesForMethods!
 defaultModel!models!private! !
 icon!constants!public! !

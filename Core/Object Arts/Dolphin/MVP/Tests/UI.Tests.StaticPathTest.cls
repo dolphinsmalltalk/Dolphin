@@ -7,8 +7,11 @@ UI.Tests.StaticViewTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.StaticPathTest guid: (Core.GUID fromString: '{50b65118-29ff-4b14-b17a-56e21a6fefca}')!
+
 UI.Tests.StaticPathTest comment: ''!
+
 !UI.Tests.StaticPathTest methodsFor!
 
 classToTest
@@ -54,6 +57,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assertIsNil: view backcolor.
 	self assert: view interactor identicalTo: view.
 	self assert: view plainText equals: 'c:\Program Files\Dolphin Smalltalk'! !
+
 !UI.Tests.StaticPathTest categoriesForMethods!
 classToTest!helpers!private! !
 testCalculateExtent!public!unit tests! !
@@ -82,6 +86,7 @@ resource_Path_text_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticPath) 34 17 nil nil 34 2 8 1140850944 1 416 nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 8 'c:\Program Files\Dolphin Smalltalk' 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 658 241 39 416 610 #text: 34 1 528 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 239 5 0 0 29 0 0 0] 8 #() 658 193 193 nil 27 )! !
+
 !UI.Tests.StaticPathTest class categoriesForMethods!
 resource_Path_text_D6!public!resources-views! !
 resource_Path_text_D7!public!resources-views! !

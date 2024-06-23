@@ -7,7 +7,9 @@ UI.FileDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FileOpenDialog guid: (Core.GUID fromString: '{87b4c6b5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.FileOpenDialog comment: 'FileOpenDialog is a <valueDialogPresenter> implementing the Windows GetOpenFileName common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen file.
 
 The following example illustrates the use of a validation block to limit the choice of file that the user can make:
@@ -22,7 +24,9 @@ dialog
 					[MessageBox errorMsg: ''Sorry but that file is not writeable. Please choose another.''.
 					false]];
 	showModal'!
+
 !UI.FileOpenDialog categoriesForClass!MVP-Presenters! !
+
 !UI.FileOpenDialog methodsFor!
 
 basicShowModal
@@ -53,6 +57,7 @@ style
 	"Answers the style flags to be used when the receiver is opened."
 
 	^self maxFileCount > 1 ifTrue: [style | ##(OFN_ALLOWMULTISELECT | OFN_EXPLORER)] ifFalse: [style]! !
+
 !UI.FileOpenDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 defaultMaxFileCount!constants!private! !
@@ -70,6 +75,7 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
+
 !UI.FileOpenDialog class categoriesForMethods!
 initialize!development!initializing!private! !
 !

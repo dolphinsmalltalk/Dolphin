@@ -17,7 +17,9 @@ OS.SizedStructure
 			'SHGSI_LARGEICON' -> 16r0.
 			'SHGSI_SMALLICON' -> 16r1
 		}!
+
 OS.SHSTOCKICONINFO guid: (Core.GUID fromString: '{94b6ea81-773c-47d8-9e64-b42f7a2ac6dc}')!
+
 OS.SHSTOCKICONINFO comment: '`SHSTOCKICONINFO` is an `External.Structure` class to wrap the struct ''Win32.SHSTOCKICONINFO'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -37,7 +39,9 @@ struct tagSHSTOCKICONINFO {
 } SHSTOCKICONINFO;
 ```
 '!
+
 !OS.SHSTOCKICONINFO categoriesForClass!Win32-Structs! !
+
 !OS.SHSTOCKICONINFO methodsFor!
 
 hIcon
@@ -59,6 +63,7 @@ szPath
 	"Answer the <Utf16String> value of the receiver's 'szPath' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szPath! !
+
 !OS.SHSTOCKICONINFO categoriesForMethods!
 hIcon!**compiled accessors**!public! !
 iIcon!**compiled accessors**!public! !
@@ -96,6 +101,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hIcon #iSysImageIndex #iIcon #szPath)! !
+
 !OS.SHSTOCKICONINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!private!template definition! !

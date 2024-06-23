@@ -7,8 +7,11 @@ Core.Tests.LookupTableTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DeferredValueTableTest guid: (Core.GUID fromString: '{f7404400-6b8f-4fd7-ae47-8018e8aacb30}')!
+
 Core.Tests.DeferredValueTableTest comment: ''!
+
 !Core.Tests.DeferredValueTableTest methodsFor!
 
 assimilate: anObject
@@ -26,6 +29,7 @@ testAdd
 	assoc2 := subject newAssociation: #key value: (self assimilate: 3).
 	subject add: assoc2.
 	self assert: (subject associationAt: #key) value equals: assoc2 value value! !
+
 !Core.Tests.DeferredValueTableTest categoriesForMethods!
 assimilate:!private!unit tests! !
 collectionClass!helpers!private! !
@@ -38,6 +42,7 @@ allTestSelectors
 	^super allTestSelectors
 		remove: #testStrongTalkTests;
 		yourself! !
+
 !Core.Tests.DeferredValueTableTest class categoriesForMethods!
 allTestSelectors!Accessing!public! !
 !

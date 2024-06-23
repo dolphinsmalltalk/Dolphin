@@ -7,11 +7,15 @@ External.POINT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_x' -> 16r0. '_OffsetOf_y' -> 16r4. '_POINTF_Size' -> 16r8 }!
+
 External.POINTF guid: (Core.GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
+
 External.POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
 
 `POINTF` is a cartesian coordinate with single precision floating point x and y values.'!
+
 !External.POINTF categoriesForClass!External-Data-Structured! !
+
 !External.POINTF methodsFor!
 
 asUInt32
@@ -69,6 +73,7 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
+
 !External.POINTF categoriesForMethods!
 asUInt32!converting!public! !
 asUIntPtr!converting!public! !
@@ -119,6 +124,7 @@ x: x y: y
 				floatAtOffset: _OffsetOf_x put: x;
 				floatAtOffset: _OffsetOf_y put: y;
 				yourself)! !
+
 !External.POINTF class categoriesForMethods!
 arrayType!constants!private! !
 byteSize!**compiled accessors**!constants!public! !

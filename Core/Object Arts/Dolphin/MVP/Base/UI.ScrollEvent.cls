@@ -7,9 +7,13 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ScrollEvent guid: (Core.GUID fromString: '{87b4c552-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ScrollEvent comment: ''!
+
 !UI.ScrollEvent categoriesForClass!Events!MVP-Views-Events! !
+
 !UI.ScrollEvent methodsFor!
 
 bottom
@@ -101,6 +105,7 @@ top
 	"Answer whether the scroll event is to the far top/left."
 
 	^self scrollCode = SB_TOP! !
+
 !UI.ScrollEvent categoriesForMethods!
 bottom!public!testing! !
 endScroll!public!testing! !

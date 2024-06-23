@@ -7,15 +7,20 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ChangeMethodNameRefactoring guid: (Core.GUID fromString: '{3f93d212-d92e-4bbb-b225-17bed064896e}')!
+
 Refactory.Browser.ChangeMethodNameRefactoring isNonInstantiable: true!
+
 Refactory.Browser.ChangeMethodNameRefactoring comment: 'Abstract superclass for refactorings that change a methods selector, e.g. add/remove parameter and rename.
 
 Dolphin modifications to this class are:
 	#preconditions 			Cosmetic - includes list of affected classes in warning
 	#renameImplementors		Maintains previous package of loose methods
 	#renameMethod:in:to:permuation:	General change to ensure display string always valid '!
+
 !Refactory.Browser.ChangeMethodNameRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.ChangeMethodNameRefactoring methodsFor!
 
 hasPermutedArguments
@@ -117,6 +122,7 @@ transform
 	self removeRenamedImplementors
 
 ! !
+
 !Refactory.Browser.ChangeMethodNameRefactoring categoriesForMethods!
 hasPermutedArguments!public!testing! !
 implementors!accessing!private! !

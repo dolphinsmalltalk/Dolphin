@@ -25,7 +25,9 @@ UI.AbstractDocumentShell
 			'ReUseIfOpenMask' -> 16r2.
 			'VariableTipsMask' -> 16r4
 		}!
+
 Tools.SmalltalkWorkspaceDocument guid: (Core.GUID fromString: '{87b4c6ba-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.SmalltalkWorkspaceDocument comment: '`SmalltalkWorkspaceDocument` is a `<documentPresenter>` that can be used for displaying Smalltalk ST and CLS files. It also allows for the evaluation of Smalltalk expressions and the execution of various other commands targeted at the `SmalltalkSystem` singleton instance.
 
 Instance Variables:
@@ -35,7 +37,9 @@ Class Variables:
 	ReuseIfOpen	`<boolean>` indicating whether an open workspace should be re-used in preference to opening a new one.
 
 '!
+
 !Tools.SmalltalkWorkspaceDocument categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !Tools.SmalltalkWorkspaceDocument methodsFor!
 
 applyOptions
@@ -284,6 +288,7 @@ workspace
 	"Answers the SmalltalkWorkspace held by the receiver."
 
 	^workspacePresenter! !
+
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
 applyOptions!options!private! !
 areVariableTipsEnabled:!accessing!options!public! !
@@ -659,6 +664,7 @@ wordWrap: aBoolean
 
 workspaceClass
 	^SmalltalkSystem current workspaceClass! !
+
 !Tools.SmalltalkWorkspaceDocument class categoriesForMethods!
 activeIdeaSpace!helpers!private! !
 canUseIdeaSpace!options!public! !

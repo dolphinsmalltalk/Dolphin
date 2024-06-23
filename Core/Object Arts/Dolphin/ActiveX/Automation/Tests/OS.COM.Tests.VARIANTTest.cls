@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.VARIANTTest guid: (Core.GUID fromString: '{f436bdf8-12ff-47e4-ad1a-c96795760912}')!
+
 OS.COM.Tests.VARIANTTest comment: ''!
+
 !OS.COM.Tests.VARIANTTest methodsFor!
 
 isValidNullString: aString
@@ -490,6 +493,7 @@ testUI8
 	"dwordAtOffset:put: is unusual in accepting negative values"
 	var uint64: -1.
 	self assert: var value equals: 2 ** 64 - 1! !
+
 !OS.COM.Tests.VARIANTTest categoriesForMethods!
 isValidNullString:!private!testing! !
 testARRAY!public!unit tests! !

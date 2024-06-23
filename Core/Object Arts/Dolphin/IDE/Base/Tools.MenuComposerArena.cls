@@ -7,9 +7,13 @@ UI.ContainerView
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.MenuComposerArena guid: (Core.GUID fromString: '{14be7036-54a3-4888-9a4a-b0166fd82776}')!
+
 Tools.MenuComposerArena comment: 'MenuComposerArena is used by the <MenuComposer> to contain the menus being edited. It''s main function is to support the drag and drop of menu items between the menu views, which are dynamically opened and closed.'!
+
 !Tools.MenuComposerArena categoriesForClass!MVP-Views! !
+
 !Tools.MenuComposerArena methodsFor!
 
 beginDrag: aMouseEvent of: anInteger in: aMenuComposerView
@@ -126,6 +130,7 @@ startTrackingAt: aPoint
 	self createDragImageList.
 	dragImageList dragEnter: self at: aPoint.
 	^aPoint! !
+
 !Tools.MenuComposerArena categoriesForMethods!
 beginDrag:of:in:!helpers!private! !
 cancelTrackingAt:!private!tracking! !
@@ -156,6 +161,7 @@ publishedEventsOfInstances
 		add: #itemFrom:at:droppedBefore:copy:;
 		yourself.
 ! !
+
 !Tools.MenuComposerArena class categoriesForMethods!
 icon!constants!public! !
 publishedEventsOfInstances!events!public! !

@@ -5,9 +5,13 @@ MainTestCase subclass: #BooleanANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BooleanANSITest guid: (GUID fromString: '{99ac2aab-17ae-4622-a4d9-cbb929a4d3f0}')!
+
 BooleanANSITest comment: ''!
+
 !BooleanANSITest categoriesForClass!Unclassified! !
+
 !BooleanANSITest methodsFor!
 
 canonicalObject
@@ -172,6 +176,7 @@ testXxorX
 		conformTo: #'boolean' selector: #'xor:'.
 	self value: [false xor: false] shouldnt: [:r | r]
 		conformTo: #'boolean' selector: #'xor:'.! !
+
 !BooleanANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

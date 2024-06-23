@@ -23,7 +23,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r24
 		}!
+
 OS.EMRSETDIBITSTODEVICE guid: (Core.GUID fromString: '{3929212b-c9b8-4281-b17e-91160985d892}')!
+
 OS.EMRSETDIBITSTODEVICE comment: '<EMRSETDIBITSTODEVICE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETDIBITSTODEVICE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -51,7 +53,9 @@ struct tagEMRSETDIBITSTODEVICE {
 	DWORD cScans;
 } EMRSETDIBITSTODEVICE;
 '!
+
 !OS.EMRSETDIBITSTODEVICE categoriesForClass!Win32-Structs! !
+
 !OS.EMRSETDIBITSTODEVICE methodsFor!
 
 cbBitsSrc
@@ -197,6 +201,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !OS.EMRSETDIBITSTODEVICE categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -311,6 +316,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETDIBITSTODEVICE}! !
+
 !OS.EMRSETDIBITSTODEVICE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

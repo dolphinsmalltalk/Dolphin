@@ -26,7 +26,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.EMRALPHABLEND guid: (Core.GUID fromString: '{7ecd9c96-2cd7-4bbd-8fb5-91caa4c50908}')!
+
 OS.EMRALPHABLEND comment: '<EMRALPHABLEND> is an <ExternalStructure> class to wrap the struct ''Win32.EMRALPHABLEND'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -57,7 +59,9 @@ struct tagEMRALPHABLEND {
 	long cySrc;
 } EMRALPHABLEND;
 '!
+
 !OS.EMRALPHABLEND categoriesForClass!Win32-Structs! !
+
 !OS.EMRALPHABLEND methodsFor!
 
 cbBitsSrc
@@ -237,6 +241,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !OS.EMRALPHABLEND categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -369,6 +374,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ALPHABLEND}! !
+
 !OS.EMRALPHABLEND class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

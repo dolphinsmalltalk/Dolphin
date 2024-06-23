@@ -7,9 +7,13 @@ Refactory.Browser.Tests.BrowserEnvironmentTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.VariableEnvironmentTest guid: (Core.GUID fromString: '{dd03c304-e6e0-47f2-8f26-e7eef49d29bc}')!
+
 Refactory.Browser.Tests.VariableEnvironmentTest comment: ''!
+
 !Refactory.Browser.Tests.VariableEnvironmentTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.VariableEnvironmentTest methodsFor!
 
 classVariableReader
@@ -54,6 +58,7 @@ testInstVars
 	self universalTestFor: writers.
 	self universalTestFor: readers.
 	self assert: refs numberSelectors equals: (writers | readers) numberSelectors! !
+
 !Refactory.Browser.Tests.VariableEnvironmentTest categoriesForMethods!
 classVariableReader!private! !
 classVariableWriter!private! !

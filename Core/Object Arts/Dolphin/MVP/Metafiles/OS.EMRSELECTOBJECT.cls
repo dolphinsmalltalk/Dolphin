@@ -7,7 +7,9 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMRSELECTOBJECT_Size' -> 16rC. '_OffsetOf_ihObject' -> 16r8 }!
+
 OS.EMRSELECTOBJECT guid: (Core.GUID fromString: '{7a1bcb22-ae68-4f89-8318-06efd07dfcdb}')!
+
 OS.EMRSELECTOBJECT comment: '<EMRSELECTOBJECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTOBJECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagEMRSELECTOBJECT {
 	[helpstring("Object handle index")] DWORD ihObject;
 } EMRSELECTOBJECT;
 '!
+
 !OS.EMRSELECTOBJECT categoriesForClass!Win32-Structs! !
+
 !OS.EMRSELECTOBJECT methodsFor!
 
 ihObject
@@ -34,6 +38,7 @@ ihObject: anInteger
 	"Set the receiver's 'ihObject' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_ihObject put: anInteger! !
+
 !OS.EMRSELECTOBJECT categoriesForMethods!
 ihObject!**compiled accessors**!public! !
 ihObject:!**compiled accessors**!public! !
@@ -70,6 +75,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SELECTOBJECT. EMR_DELETEOBJECT}! !
+
 !OS.EMRSELECTOBJECT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

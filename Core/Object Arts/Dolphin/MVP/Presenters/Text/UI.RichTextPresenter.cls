@@ -7,9 +7,13 @@ UI.TextPresenter
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RichTextPresenter guid: (Core.GUID fromString: '{87b4c6d4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.RichTextPresenter comment: 'RichTextPresenter is a <valuePresenter> that displays a <valueModel> onto a <richString> value. A RichTextPresenter can be connected to any <valueView> capable of displaying <richString> values. Often, this will be a <RichTextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
+
 !UI.RichTextPresenter categoriesForClass!MVP-Presenters! !
+
 !UI.RichTextPresenter methodsFor!
 
 alignParagraphCenter
@@ -105,6 +109,7 @@ toggleUnderlined
 	<commandQuery: #queryToggleUnderlined:>
 	<acceleratorKey: 'Ctrl+U'>
 	self view isUnderlined: self view isUnderlined not! !
+
 !UI.RichTextPresenter categoriesForMethods!
 alignParagraphCenter!commands-actions!public! !
 alignParagraphLeft!commands-actions!public! !
@@ -156,6 +161,7 @@ resource_Static_text
 \viewkind4\uc1\pard\qc\f0\fs22 Type \b Rich \b0\i Static \i0 text \ul here\ulnone .\f1\par
 }
 ' 32 914 #textLimit: 8 #(1073741823) 32 914 #resetCharFormat 8 #() 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 209 12 0 0 75 0 0 0] 8 #() 962 193 193 nil 45)! !
+
 !UI.RichTextPresenter class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !

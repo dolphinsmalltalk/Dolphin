@@ -12,7 +12,9 @@ Core.Object
 			'STONSimpleSymbolCharacters'
 				-> #[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
 		}!
+
 STON.Writer guid: (Core.GUID fromString: '{ad80eebc-c783-428d-8dbf-ebde1ffe8ddf}')!
+
 STON.Writer comment: 'STON.Writer serializes objects using the Smalltalk Object Notation format. 
 
 Customization options are:
@@ -41,7 +43,9 @@ Customization options are:
 	
 Note that in default STON mode I only use the following named character escapes: \b \t \n \f \'' and \\ while in JSON mode \'' is replaced by \"
 '!
+
 !STON.Writer categoriesForClass!STON-Core-Writer! !
+
 !STON.Writer methodsFor!
 
 asciiOnly: boolean
@@ -398,6 +402,7 @@ writeSymbol: symbol
 	(self isSimpleSymbol: symbol)
 		ifTrue: [writeStream nextPutAll: symbol]
 		ifFalse: [self encodeString: symbol]! !
+
 !STON.Writer categoriesForMethods!
 asciiOnly:!initialization!public! !
 close!initialization!public! !
@@ -498,6 +503,7 @@ on: writeStream
 	^ self new
 		on: writeStream;
 		yourself! !
+
 !STON.Writer class categoriesForMethods!
 icon!constants!public! !
 initialize!class initialization!public! !

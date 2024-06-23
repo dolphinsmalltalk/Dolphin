@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RBSourceFormatterTest guid: (Core.GUID fromString: '{9edc9b30-32ca-4970-8068-dd559bb18608}')!
+
 Refactory.Browser.Tests.RBSourceFormatterTest comment: ''!
+
 !Refactory.Browser.Tests.RBSourceFormatterTest categoriesForClass!Browser-Testing! !
+
 !Refactory.Browser.Tests.RBSourceFormatterTest methodsFor!
 
 runMethodTestFor: method
@@ -292,6 +296,7 @@ testSmokeTestAll
 
 testUnaryMessage
 	self runTestForPairs: #(#('self halt') #('self halt halt'))! !
+
 !Refactory.Browser.Tests.RBSourceFormatterTest categoriesForMethods!
 runMethodTestFor:!private! !
 runTestForPairs:!private! !

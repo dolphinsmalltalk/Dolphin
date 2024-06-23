@@ -30,6 +30,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.TestResource
 	subclass: #'OS.Tests.IniFileTestResource'
 	instanceVariableNames: ''

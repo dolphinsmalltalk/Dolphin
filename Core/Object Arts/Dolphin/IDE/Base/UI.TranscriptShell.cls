@@ -7,7 +7,9 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.TranscriptShell guid: (Core.GUID fromString: '{87b4c6c5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.TranscriptShell comment: 'TranscriptShell is a <SmalltalkToolShell> that implements the Transcript notification logging window.
 
 Note that although TranscriptShell is a development tool, it is not dependent on the Development System package to operate. Among the Dolphin development tools it is unusual in that its model is not SmalltalkSystem, which means that it has to reproduce some of the functionality normally implemented there.
@@ -18,7 +20,9 @@ Instance Variables:
 	bufferProtect		<Mutex> protecting the buffer.
 
 '!
+
 !UI.TranscriptShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !UI.TranscriptShell methodsFor!
 
 << anObject
@@ -298,6 +302,7 @@ updateWindow
 
 visit: anObject do: aNiladicValuable
 	aNiladicValuable value! !
+
 !UI.TranscriptShell categoriesForMethods!
 <<!public! !
 addToCommandRoute:!commands-routing!public! !
@@ -463,6 +468,7 @@ uninitialize
 	allow clean removal from the system."
 
 	self free! !
+
 !UI.TranscriptShell class categoriesForMethods!
 create!instance creation!public! !
 current!instance creation!public! !

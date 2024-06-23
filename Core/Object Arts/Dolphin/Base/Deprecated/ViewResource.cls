@@ -7,9 +7,13 @@ Resource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ViewResource guid: (Core.GUID fromString: '{a018036d-0816-4244-a08b-0cb433e4eb97}')!
+
 ViewResource comment: ''!
+
 !ViewResource categoriesForClass!MVP-Resources! !
+
 !ViewResource class methodsFor!
 
 fileExtension
@@ -17,6 +21,7 @@ fileExtension
 	stored in files."
 
 	^'vu'! !
+
 !ViewResource class categoriesForMethods!
 fileExtension!private! !
 !

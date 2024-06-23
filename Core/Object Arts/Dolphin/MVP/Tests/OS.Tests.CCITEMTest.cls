@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.CCITEMTest guid: (Core.GUID fromString: '{dac52b06-6287-4083-8ce5-db04742e148e}')!
+
 OS.Tests.CCITEMTest isNonInstantiable: true!
+
 OS.Tests.CCITEMTest comment: ''!
+
 !OS.Tests.CCITEMTest methodsFor!
 
 subjectClass
@@ -35,6 +39,7 @@ testTextInBuffer
 	"Set some overflowing text again, but this time not splitting an extended char"
 	self assert: (subject textInBuffer: 87654321) equals: '876543…'.
 	self assert: subject text equals: '876543…' , (String with: $\x0) , 'X'! !
+
 !OS.Tests.CCITEMTest categoriesForMethods!
 subjectClass!constants!public! !
 testTextInBuffer!constants!public! !

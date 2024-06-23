@@ -7,13 +7,17 @@ OS.COM.TypeInfoAnalyzer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.TKindEnumAnalyzer guid: (Core.GUID fromString: '{c06f3b68-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.TKindEnumAnalyzer comment: 'TKindEnumAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes an enumerated type  (i.e. of type TKIND_ENUM). It adds higher level behaviours for analyzing the type information associated with that coclass, and for automatic generation.
 
 TKindEnumAnalyzer generates constants for each of the members of its enumerated type into a <PoolConstantsDictionary> when sent #generate/#generateAs:. Using this facility one can very quickly and easily define a set of constants needed to use some externally defined object or function library, at least when a typelib is available.
 
 The Active-X Component Wizard will automatically generate a constants pool for any type library that contains enumerated types when any structure or interface is generated from that type library.'!
+
 !OS.COM.TKindEnumAnalyzer categoriesForClass!ActiveX Automation! !
+
 !OS.COM.TKindEnumAnalyzer methodsFor!
 
 baseClass
@@ -72,6 +76,7 @@ vt
 	the receiver."
 
 	^VT_I4! !
+
 !OS.COM.TKindEnumAnalyzer categoriesForMethods!
 baseClass!constants!private! !
 binding!accessing!private! !
@@ -90,6 +95,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_ENUM! !
+
 !OS.COM.TKindEnumAnalyzer class categoriesForMethods!
 typekind!constants!private! !
 !

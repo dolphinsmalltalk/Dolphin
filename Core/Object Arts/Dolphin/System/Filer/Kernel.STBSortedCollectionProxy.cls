@@ -7,9 +7,13 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBSortedCollectionProxy guid: (Core.GUID fromString: '{87b4c6f7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.STBSortedCollectionProxy comment: ''!
+
 !Kernel.STBSortedCollectionProxy categoriesForClass!System-Binary storage! !
+
 !Kernel.STBSortedCollectionProxy methodsFor!
 
 array: anArray
@@ -48,6 +52,7 @@ value
 		setSortAlgorithm: sortAlgorithm;
 		basicAddAll: array;
 		yourself! !
+
 !Kernel.STBSortedCollectionProxy categoriesForMethods!
 array:!accessing!private! !
 class:!accessing!private! !
@@ -89,6 +94,7 @@ stbVersion
 		1 - sortBlock becomes sortAlgorithm"
 
 	^1! !
+
 !Kernel.STBSortedCollectionProxy class categoriesForMethods!
 forCollection:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

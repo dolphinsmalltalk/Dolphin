@@ -7,9 +7,13 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.DoubleBufferedView guid: (Core.GUID fromString: '{f0757e5d-e398-4ede-9e0f-8c6ccb3699fc}')!
+
 UI.DoubleBufferedView comment: ''!
+
 !UI.DoubleBufferedView categoriesForClass!MVP-Views! !
+
 !UI.DoubleBufferedView methodsFor!
 
 canvas
@@ -116,6 +120,7 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
+
 !UI.DoubleBufferedView categoriesForMethods!
 canvas!accessing!public! !
 filerProxyIn:!binary filing!private! !

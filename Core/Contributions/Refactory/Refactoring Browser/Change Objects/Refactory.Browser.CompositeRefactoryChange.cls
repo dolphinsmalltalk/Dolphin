@@ -7,12 +7,16 @@ Refactory.Browser.RefactoryChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.CompositeRefactoryChange guid: (Core.GUID fromString: '{74a295ee-f099-43f1-bd6e-d82d0b07d9d9}')!
+
 Refactory.Browser.CompositeRefactoryChange comment: 'RefactoryBuilder represents a series of changes (RefactoryChange) that need to be performed. It provides transaction-like behavior by defering all changes until it is told to commit them (#doIt).
 
 Instance Variables:
 	changes	<SequenceableCollection of: RefactoryChange>	the changes that need to be performed'!
+
 !Refactory.Browser.CompositeRefactoryChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.CompositeRefactoryChange methodsFor!
 
 = aRefactoryBuilder 
@@ -197,6 +201,7 @@ setSpecialBehavior: anInteger of: aClass
 
 uniquelyIdentify: aClass with: aGUID
 	^self addChange: (ClassGuidChange uniquelyIdentify: aClass with: aGUID)! !
+
 !Refactory.Browser.CompositeRefactoryChange categoriesForMethods!
 =!comparing!public! !
 addChange:!adding!public! !
@@ -248,6 +253,7 @@ named: aString
 	^(self new)
 		name: aString;
 		yourself! !
+
 !Refactory.Browser.CompositeRefactoryChange class categoriesForMethods!
 named:!instance creation!public! !
 !

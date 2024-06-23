@@ -7,7 +7,9 @@ UI.MessageBoxAbstract
 	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'IconIds' -> #[64 48 16]. 'LargeIconMask' -> 16r1. 'SilentMask' -> 16r2 }!
+
 UI.MessageBubble guid: (Core.GUID fromString: '{00e5c07e-c4fc-471c-b037-25bc55861176}')!
+
 UI.MessageBubble comment: '`MessageBubble` is similar to `MessageBox`, and supports a subset of its API. The principal difference is that messages are displayed using a `Tooltip` (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for Windows tray icons. 
 
 The other main differences from `MessageBox` are:
@@ -45,7 +47,9 @@ Example usage:
   `margins`		`<Object>` top, left, bottom and right margins between bubble border and text, in pels. `nil` if default.
   `maxWidth`		`<integer>` soft maximum width of the message text, or `nil` if default (the bubble will attempt to calculate a suitable size based on its content).
   `useLargeIcon`	`<boolean>` controlling whether the large (32x32) or small (16x16, default) icon is displayed in the bubble'!
+
 !UI.MessageBubble categoriesForClass!Kernel-Objects! !
+
 !UI.MessageBubble methodsFor!
 
 activateTooltip: aTOOLINFO 
@@ -353,6 +357,7 @@ willFade: aBoolean
 	style has no effect after opening."
 
 	tooltipStyle := tooltipStyle mask: TTS_NOFADE set: aBoolean not! !
+
 !UI.MessageBubble categoriesForMethods!
 activateTooltip:!private!realizing/unrealizing! !
 addTool!private!realizing/unrealizing! !
@@ -421,6 +426,7 @@ initialize
 				with: MB_ICONINFORMATION
 				with: MB_ICONWARNING
 				with: MB_ICONERROR)! !
+
 !UI.MessageBubble class categoriesForMethods!
 icon!constants!development!public! !
 initialize!class initialization!development!private! !

@@ -7,9 +7,13 @@ Graphics.AbstractFont
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Font guid: (Core.GUID fromString: '{87b4c634-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Font comment: ''!
+
 !Graphics.Font categoriesForClass!Graphics-Tools! !
+
 !Graphics.Font methodsFor!
 
 beBold
@@ -136,6 +140,7 @@ weight: anInteger
 	logfont lfWeight: anInteger.
 	"Cause the receiver to be re-realized"
 	self free! !
+
 !Graphics.Font categoriesForMethods!
 beBold!accessing!public! !
 beItalic!accessing!public! !

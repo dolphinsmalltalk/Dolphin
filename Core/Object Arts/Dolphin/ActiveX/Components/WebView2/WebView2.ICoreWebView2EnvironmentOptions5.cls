@@ -7,7 +7,9 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2EnvironmentOptions5 guid: (OS.COM.IID fromString: '{0ae35d64-c47f-4464-814e-259c345d1501}')!
+
 WebView2.ICoreWebView2EnvironmentOptions5 comment: '`ICoreWebView2EnvironmentOptions5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -31,7 +33,9 @@ interface ICoreWebView2EnvironmentOptions5 : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2EnvironmentOptions5 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2EnvironmentOptions5 methodsFor!
 
 enableTrackingPrevention
@@ -65,6 +69,7 @@ put_EnableTrackingPrevention: value
 
 	<virtual stdcall: hresult 5 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2EnvironmentOptions5 categoriesForMethods!
 enableTrackingPrevention!**auto generated**!properties!public! !
 enableTrackingPrevention:!**auto generated**!properties!public! !
@@ -86,6 +91,7 @@ defineFunctions
 		defineFunction: #put_EnableTrackingPrevention:
 			argumentTypes: 'int32'
 ! !
+
 !WebView2.ICoreWebView2EnvironmentOptions5 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

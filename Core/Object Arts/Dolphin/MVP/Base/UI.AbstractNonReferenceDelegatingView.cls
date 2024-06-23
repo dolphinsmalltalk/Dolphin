@@ -7,9 +7,13 @@ UI.AbstractDelegatingView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractNonReferenceDelegatingView guid: (Core.GUID fromString: '{0d2a2ef6-1bed-4665-b4c0-9a97c209b222}')!
+
 UI.AbstractNonReferenceDelegatingView comment: 'Adds some methods that are not appropriate for ReferenceViews. Strictly the introduction of this class is only requiredto ensure ReferenceView remains backwardly compatible.'!
+
 !UI.AbstractNonReferenceDelegatingView categoriesForClass!MVP-Resources-Misc! !
+
 !UI.AbstractNonReferenceDelegatingView methodsFor!
 
 ambientBackcolor
@@ -57,6 +61,7 @@ isEnabled
 
 isEnabled: aBoolean 
 	self isStateRestoring ifFalse: [self referee isEnabled: aBoolean]! !
+
 !UI.AbstractNonReferenceDelegatingView categoriesForMethods!
 ambientBackcolor!accessing!private! !
 hasBorder!accessing!accessing-styles!public! !

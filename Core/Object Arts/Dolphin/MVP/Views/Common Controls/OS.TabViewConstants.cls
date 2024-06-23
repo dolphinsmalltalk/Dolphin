@@ -69,6 +69,10 @@ Kernel.SharedPool
 			'TCS_TOOLTIPS' -> 16r4000.
 			'TCS_VERTICAL' -> 16r80
 		}!
+
 OS.TabViewConstants guid: (Core.GUID fromString: '{b17ee2d0-3b54-4ffd-a62e-eac4ee36000b}')!
+
 OS.TabViewConstants isNonInstantiable: true!
+
 OS.TabViewConstants comment: ''!
+

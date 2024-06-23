@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.MidiOutChannel guid: (Core.GUID fromString: '{f97d6167-73d1-4a93-8f82-93a9ebc90f5d}')!
+
 External.MidiOutChannel comment: ''!
+
 !External.MidiOutChannel categoriesForClass!Kernel-Objects! !
+
 !External.MidiOutChannel methodsFor!
 
 defaultDeviceId
@@ -125,6 +129,7 @@ playNote: noteName velocity: velocity duration: aDuration channel: channel
 
 voice: voice channel: channel
 	self midiout voice: (self mapVoiceToValue: voice ) channel: channel! !
+
 !External.MidiOutChannel categoriesForMethods!
 defaultDeviceId!private! !
 defaultDuration!private! !
@@ -152,6 +157,7 @@ generalMidiMap
 
 new
 	^super new initialize! !
+
 !External.MidiOutChannel class categoriesForMethods!
 generalMidiMap!public! !
 new!instance creation!public! !

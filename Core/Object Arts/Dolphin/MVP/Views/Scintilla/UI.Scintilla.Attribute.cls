@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: 'propertyDescriptors'
 	classConstants: {}!
+
 UI.Scintilla.Attribute guid: (Core.GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!
+
 UI.Scintilla.Attribute isNonInstantiable: true!
+
 UI.Scintilla.Attribute comment: '`ScintillaAttribute` is the abstract superclass of objects that wrap various attributes of `ScintillaView`s. It provides a generic mechanism for setting the attribute value into the underlying control.
 
 ## Instance Variables:
@@ -20,7 +23,9 @@ UI.Scintilla.Attribute comment: '`ScintillaAttribute` is the abstract superclass
 
 
 '!
+
 !UI.Scintilla.Attribute categoriesForClass!MVP-Views-Support! !
+
 !UI.Scintilla.Attribute methodsFor!
 
 = aScintillaAttribute 
@@ -109,6 +114,7 @@ view
 
 view: aScintillaView 
 	self subclassResponsibility! !
+
 !UI.Scintilla.Attribute categoriesForMethods!
 =!comparing!public! !
 applyToView:!helpers!private! !
@@ -139,6 +145,7 @@ propertyDescriptors
 
 sortByIdBlock
 	^[:a :b | a basicId ifNil: [true] ifNotNil: [:aId | b basicId ifNil: [false] ifNotNil: [:bId | aId <= bId]]]! !
+
 !UI.Scintilla.Attribute class categoriesForMethods!
 icon!constants!development!public! !
 propertyDescriptors!constants!private! !

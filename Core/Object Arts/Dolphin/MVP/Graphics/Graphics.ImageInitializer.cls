@@ -7,9 +7,13 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageInitializer guid: (Core.GUID fromString: '{37c30377-62f9-4396-a09b-b3c5a48ebfe3}')!
+
 Graphics.ImageInitializer isNonInstantiable: true!
+
 Graphics.ImageInitializer comment: ''!
+
 !Graphics.ImageInitializer methodsFor!
 
 createImage: anImage
@@ -81,6 +85,7 @@ printImage: anImage on: aWriteStream
 	"Private - Print a representation of the <Image> initialized by the receiver onto the <puttableStream> argument in the form a developer might want to see."
 
 	anImage basicPrintOn: aWriteStream! !
+
 !Graphics.ImageInitializer categoriesForMethods!
 createImage:!public!realizing/unrealizing! !
 createImage:extent:!private!realizing/unrealizing! !
@@ -108,6 +113,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Image icon! !
+
 !Graphics.ImageInitializer class categoriesForMethods!
 icon!constants!public! !
 !

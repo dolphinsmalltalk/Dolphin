@@ -7,7 +7,9 @@ XProgramming.SUnit.TestResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.FileResource guid: (Core.GUID fromString: '{fca5bf8a-3e20-4e92-9cb5-dedf99daae36}')!
+
 Graphics.Gdiplus.Tests.FileResource comment: 'A TestResource that writes a number of files to disk that can then be accessed by TestCases.
 
 The motivation behind this resource is to avoid the need to maintain external files that the TestCases depend on.
@@ -33,6 +35,7 @@ Best Practice
 
 
 '!
+
 !Graphics.Gdiplus.Tests.FileResource methodsFor!
 
 fileLocator
@@ -73,6 +76,7 @@ tearDown
 			[[File deleteDirectory: tempFileLocator basePath] on: Error do: [:ex | ].
 			tempFileLocator := nil].
 	super tearDown! !
+
 !Graphics.Gdiplus.Tests.FileResource categoriesForMethods!
 fileLocator!accessing!public! !
 fish32x32pngBytes!accessing-bytes!public! !
@@ -107,6 +111,7 @@ promptImageAsHex
 		display: '^'.
 	(image asByteArray: image mimeType) hexStoreOn: strm.
 	^strm contents! !
+
 !Graphics.Gdiplus.Tests.FileResource class categoriesForMethods!
 promptImageAsHex!helpers!private! !
 !

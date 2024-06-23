@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Sequence
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2BrowserExtensionList guid: (OS.COM.IID fromString: '{2ef3d2dc-bd5f-4f4d-90af-fd67798f0c2f}')!
+
 WebView2.ICoreWebView2BrowserExtensionList isEgressOnly: true!
+
 WebView2.ICoreWebView2BrowserExtensionList comment: '`ICoreWebView2BrowserExtensionList` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BrowserExtensionList'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +36,9 @@ interface ICoreWebView2BrowserExtensionList : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2BrowserExtensionList categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2BrowserExtensionList methodsFor!
 
 elementClass
@@ -48,6 +53,7 @@ GetValueAtIndex: index value: extension
 
 	<virtual stdcall: hresult 5 uint32 ICoreWebView2BrowserExtension**>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2BrowserExtensionList categoriesForMethods!
 elementClass!constants!private! !
 GetValueAtIndex:value:!COM Interfaces-ICoreWebView2BrowserExtensionList!private! !
@@ -65,6 +71,7 @@ defineFunctions
 		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'uint32 ICoreWebView2BrowserExtension**'
 ! !
+
 !WebView2.ICoreWebView2BrowserExtensionList class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

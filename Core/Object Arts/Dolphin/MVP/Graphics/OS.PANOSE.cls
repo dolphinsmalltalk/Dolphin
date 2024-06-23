@@ -19,8 +19,11 @@ External.Structure
 			'_OffsetOf_bXHeight' -> 16r9.
 			'_PANOSE_Size' -> 16rA
 		}!
+
 OS.PANOSE guid: (Core.GUID fromString: '{fd0c19a2-34cf-4a99-a522-d4fd0cc0f003}')!
+
 OS.PANOSE comment: ''!
+
 !OS.PANOSE methodsFor!
 
 bArmStyle
@@ -72,6 +75,7 @@ bXHeight
 	"Answer the <Integer> value of the receiver's 'bXHeight' field."
 
 	^bytes uint8AtOffset: _OffsetOf_bXHeight! !
+
 !OS.PANOSE categoriesForMethods!
 bArmStyle!**compiled accessors**!public! !
 bContrast!**compiled accessors**!public! !
@@ -123,6 +127,7 @@ defineFields
 
 getFieldNames
 	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
+
 !OS.PANOSE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

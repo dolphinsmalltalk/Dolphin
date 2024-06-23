@@ -7,8 +7,11 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IMXNamespaceManager guid: (OS.COM.IID fromString: '{c90352f6-643c-4fbc-bb23-e996eb2d51fd}')!
+
 MSXML.IMXNamespaceManager isEgressOnly: true!
+
 MSXML.IMXNamespaceManager comment: '<IMXNamespaceManager> is a wrapper class for the COM interface ''MSXML2.IMXNamespaceManager'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -65,7 +68,9 @@ interface IMXNamespaceManager : IUnknown
 		[in, out]int* pcchUri);
 };
 '!
+
 !MSXML.IMXNamespaceManager categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IMXNamespaceManager methodsFor!
 
 DeclarePrefix: prefix namespaceURI: namespaceURI
@@ -222,6 +227,7 @@ Reset
 
 	<virtual stdcall: hresult 6>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IMXNamespaceManager categoriesForMethods!
 DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
 getAllowOverride!**auto generated**!methods!public! !
@@ -264,6 +270,7 @@ defineFunctions
 		defineFunction: #GetURI:pContextNode:pwchUri:pcchUri:
 			argumentTypes: 'lpwstr IXMLDOMNode* word* sdword*'
 ! !
+
 !MSXML.IMXNamespaceManager class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

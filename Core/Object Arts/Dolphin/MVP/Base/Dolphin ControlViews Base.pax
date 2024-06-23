@@ -31,6 +31,7 @@ UI.View
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ControlView
 	subclass: #'UI.ValueConvertingControlView'
 	instanceVariableNames: 'typeconverter'
@@ -38,6 +39,7 @@ UI.ControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueConvertingControlView
 	subclass: #'UI.StaticView'
 	instanceVariableNames: 'unused'
@@ -45,6 +47,7 @@ UI.ValueConvertingControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticView
 	subclass: #'UI.StaticControlView'
 	instanceVariableNames: ''

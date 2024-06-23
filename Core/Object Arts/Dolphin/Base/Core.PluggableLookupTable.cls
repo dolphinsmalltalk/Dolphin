@@ -7,14 +7,18 @@ Core.LookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.PluggableLookupTable guid: (Core.GUID fromString: '{123a1504-7cb8-11d3-93ca-00a024ca708a}')!
+
 Core.PluggableLookupTable comment: 'PluggableLookupTable is the class of <LookupTable>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <LookupTable>s (equality search) or <IdentityDictionary>s (identity search), or indeed any user-defined search policy.
 
 Instance Variables:
 	searchPolicy		<searchPolicy>. The policy used to hash and compare elements of the receiver.
 
 '!
+
 !Core.PluggableLookupTable categoriesForClass!Collections-Unordered! !
+
 !Core.PluggableLookupTable methodsFor!
 
 copyEmpty: anInteger
@@ -89,6 +93,7 @@ setSearchPolicy: policy
 
 	searchPolicy := policy.
 	^self! !
+
 !Core.PluggableLookupTable categoriesForMethods!
 copyEmpty:!copying!private! !
 copyingClass!copying!private! !
@@ -120,6 +125,7 @@ searchPolicy: policy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
 	^self new setSearchPolicy: policy! !
+
 !Core.PluggableLookupTable class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 new:searchPolicy:!instance creation!public! !

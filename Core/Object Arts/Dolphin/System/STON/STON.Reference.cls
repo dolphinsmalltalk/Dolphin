@@ -7,10 +7,14 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Reference guid: (Core.GUID fromString: '{be937146-c626-437a-b2f6-097eef5bedc0}')!
+
 STON.Reference comment: 'STONReference holds a forward reference to another object during materialization.
 '!
+
 !STON.Reference categoriesForClass!STON-Core-Utilities! !
+
 !STON.Reference methodsFor!
 
 = anObject
@@ -38,6 +42,7 @@ printOn: stream
 
 refCount
 	^refCount! !
+
 !STON.Reference categoriesForMethods!
 =!comparing!public! !
 addReference!public! !
@@ -60,6 +65,7 @@ index: integer
 	^ self new
 		index: integer;
 		yourself! !
+
 !STON.Reference class categoriesForMethods!
 icon!constants!public! !
 index:!instance creation!public! !

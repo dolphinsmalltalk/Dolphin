@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.ColorTest guid: (Core.GUID fromString: '{7b5098b5-74d7-46c5-99de-ae2e0558fe5c}')!
+
 Graphics.Tests.ColorTest comment: ''!
+
 !Graphics.Tests.ColorTest methodsFor!
 
 shouldRaiseNotARealColorError: aNiladicValuable
@@ -693,6 +696,7 @@ testSingletonSerialisationToStb
 	self assert: rehydrated fourth identicalTo: subject1.
 	self assert: rehydrated fifth identicalTo: subject2.
 	self assert: rehydrated sixth identicalTo: subject3! !
+
 !Graphics.Tests.ColorTest categoriesForMethods!
 shouldRaiseNotARealColorError:!helpers!private! !
 testActualColor!public!unit tests! !

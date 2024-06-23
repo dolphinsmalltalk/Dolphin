@@ -7,9 +7,13 @@ Graphics.Gdiplus.Tests.GdiplusTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest guid: (Core.GUID fromString: '{582d7c90-0a71-4d9b-a82f-d37e0ab53192}')!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.GdiplusObjectTest comment: ''!
+
 !Graphics.Gdiplus.Tests.GdiplusObjectTest methodsFor!
 
 assertClonedValid
@@ -76,6 +80,7 @@ verifyEqualToModel: aGdiplusObject
 	self assert: aGdiplusObject hash equals: model hash.
 	self assert: model equals: aGdiplusObject.
 	self assert: (model == aGdiplusObject or: [aGdiplusObject handle ~= model handle])! !
+
 !Graphics.Gdiplus.Tests.GdiplusObjectTest categoriesForMethods!
 assertClonedValid!asserting!private! !
 assertPersistedValid!asserting!private! !

@@ -7,9 +7,13 @@ Graphics.Gdiplus.Initializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.FontFamilyInitializer guid: (Core.GUID fromString: '{c09d8c09-5f28-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.FontFamilyInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.FontFamilyInitializer comment: ''!
+
 !Graphics.Gdiplus.FontFamilyInitializer methodsFor!
 
 = anObject
@@ -20,6 +24,7 @@ hash
 
 isSelfEvaluating
 	^true! !
+
 !Graphics.Gdiplus.FontFamilyInitializer categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !
@@ -57,6 +62,7 @@ onPreStripImage
 	which hold sub-instance of the receiver."
 
 	GenericSansSerif := GenericSerif := nil! !
+
 !Graphics.Gdiplus.FontFamilyInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

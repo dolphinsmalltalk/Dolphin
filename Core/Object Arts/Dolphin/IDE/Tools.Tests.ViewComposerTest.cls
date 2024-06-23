@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ViewComposerTest guid: (Core.GUID fromString: '{84c0e504-bdda-4d87-92dc-53b89f80f634}')!
+
 Tools.Tests.ViewComposerTest comment: ''!
+
 !Tools.Tests.ViewComposerTest methodsFor!
 
 doArenaDropOf: subPresenterType operation: aSymbol
@@ -315,6 +318,7 @@ testZOrderPreservedByMutate
 	vc selection: shell.
 	vc mutateTo: ContainerView.
 	self assert: (shell subViews collect: [:each | each name]) asArray equals: #('1' '2' '3')! !
+
 !Tools.Tests.ViewComposerTest categoriesForMethods!
 doArenaDropOf:operation:!helpers!private! !
 dragResourceFor:!helpers!private! !

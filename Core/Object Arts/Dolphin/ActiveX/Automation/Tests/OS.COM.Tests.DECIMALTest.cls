@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.DECIMALTest guid: (Core.GUID fromString: '{f436bdf8-12ff-47e4-ad1a-c96795760912}')!
+
 OS.COM.Tests.DECIMALTest comment: ''!
+
 !OS.COM.Tests.DECIMALTest methodsFor!
 
 testAsVariant
@@ -135,6 +138,7 @@ testValue
 	value := subject value.
 	self assert: value equals: 123.456.
 	self assert: value scale equals: 4! !
+
 !OS.COM.Tests.DECIMALTest categoriesForMethods!
 testAsVariant!public!unit tests! !
 testDisplayString!public!unit tests! !

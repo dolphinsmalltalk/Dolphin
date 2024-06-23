@@ -15,7 +15,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_offBits' -> 16r14.
 			'_OffsetOf_offBmi' -> 16rC
 		}!
+
 OS.EMREXTCREATEPEN guid: (Core.GUID fromString: '{797b4380-74af-4163-8248-87bca7b9a3f4}')!
+
 OS.EMREXTCREATEPEN comment: '<EMREXTCREATEPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -35,7 +37,9 @@ struct tagEMREXTCREATEPEN {
 	[helpstring("The extended pen with the style array.")] EXTLOGPEN elp;
 } EMREXTCREATEPEN;
 '!
+
 !OS.EMREXTCREATEPEN categoriesForClass!Win32-Structs! !
+
 !OS.EMREXTCREATEPEN methodsFor!
 
 cbBits
@@ -101,6 +105,7 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_offBmi put: anInteger! !
+
 !OS.EMREXTCREATEPEN categoriesForMethods!
 cbBits!**compiled accessors**!public! !
 cbBits:!**compiled accessors**!public! !
@@ -167,6 +172,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTCREATEPEN}! !
+
 !OS.EMREXTCREATEPEN class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

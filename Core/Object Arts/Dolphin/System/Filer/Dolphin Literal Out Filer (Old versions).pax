@@ -35,6 +35,7 @@ Kernel.LiteralPrinter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLOutFiler
 	subclass: #'Kernel.STLLegacyOutFiler'
 	instanceVariableNames: ''
@@ -42,6 +43,7 @@ Kernel.STLOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLLegacyOutFiler
 	subclass: #'Kernel.STLOutFiler3'
 	instanceVariableNames: 'globals globalNils'
@@ -49,6 +51,7 @@ Kernel.STLLegacyOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLLegacyOutFiler
 	subclass: #'Kernel.STLOutFiler5'
 	instanceVariableNames: ''
@@ -56,6 +59,7 @@ Kernel.STLLegacyOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLOutFiler3
 	subclass: #'Kernel.STLOutFiler4'
 	instanceVariableNames: ''

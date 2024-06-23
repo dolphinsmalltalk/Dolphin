@@ -14,7 +14,9 @@ External.Structure
 			'_OffsetOf_h_length' -> 16rA.
 			'_OffsetOf_h_name' -> 16r0
 		}!
+
 OS.HOSTENT guid: (Core.GUID fromString: '{87b4c5f4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''Win32.HOSTENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -33,7 +35,9 @@ struct tagHOSTENT {
 	[readonly, helpstring("A NULL-terminated list of addresses for the host. Addresses are returned in network byte order.")] void** h_addr_list;
 } HOSTENT;
 '!
+
 !OS.HOSTENT categoriesForClass!Win32-Structs! !
+
 !OS.HOSTENT methodsFor!
 
 address
@@ -102,6 +106,7 @@ reifyNullTerminatedArray: ptrArray
 				[addresses nextPut: (addressClass fromAddress: each) address.
 				i := i + VMConstants.IntPtrSize].
 	^addresses contents! !
+
 !OS.HOSTENT categoriesForMethods!
 address!accessing!public! !
 addressClass!helpers!private! !
@@ -159,6 +164,7 @@ host: aStringHostName
 	^answer isNull
 		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
 		ifFalse: [answer]! !
+
 !OS.HOSTENT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

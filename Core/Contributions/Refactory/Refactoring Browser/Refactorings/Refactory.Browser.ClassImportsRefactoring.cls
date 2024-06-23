@@ -7,10 +7,15 @@ Refactory.Browser.ClassRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassImportsRefactoring guid: (Core.GUID fromString: '{7e59c514-a85b-4274-afc0-5e70cad7b638}')!
+
 Refactory.Browser.ClassImportsRefactoring isNonInstantiable: true!
+
 Refactory.Browser.ClassImportsRefactoring comment: ''!
+
 !Refactory.Browser.ClassImportsRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.ClassImportsRefactoring methodsFor!
 
 className: aString
@@ -49,6 +54,7 @@ transform
 	externalRefs do: [:each | each boundParseTree].
 	self modifyClassImports.
 	self rewriteStaleVariableReferences: externalRefs! !
+
 !Refactory.Browser.ClassImportsRefactoring categoriesForMethods!
 className:!initializing!public! !
 import:class:!initializing!private! !

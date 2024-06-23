@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2CapturePreviewCompletedHandler guid: (OS.COM.IID fromString: '{697e05e9-3d8f-45fa-96f4-8ffe1ededaf5}')!
+
 WebView2.ICoreWebView2CapturePreviewCompletedHandler comment: '`ICoreWebView2CapturePreviewCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CapturePreviewCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -28,7 +30,9 @@ interface ICoreWebView2CapturePreviewCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2CapturePreviewCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2CapturePreviewCompletedHandler methodsFor!
 
 Invoke: errorCode
@@ -39,6 +43,7 @@ Invoke: errorCode
 
 	<virtual stdcall: hresult 4 hresult>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2CapturePreviewCompletedHandler categoriesForMethods!
 Invoke:!**auto generated**!COM Interfaces-ICoreWebView2CapturePreviewCompletedHandler!public! !
 !
@@ -53,6 +58,7 @@ defineFunctions
 		defineFunction: #Invoke:
 			argumentTypes: 'hresult'
 ! !
+
 !WebView2.ICoreWebView2CapturePreviewCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

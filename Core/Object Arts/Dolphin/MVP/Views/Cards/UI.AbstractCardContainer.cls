@@ -7,11 +7,15 @@ UI.ContainerView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractCardContainer guid: (Core.GUID fromString: '{87b4c718-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.AbstractCardContainer comment: 'AbstractCardContainer is an abstract <compositeView> class that implements the base <cardView> protocol for its concrete sub-classes. A <cardView> has a fixed CardLayout manager for arranging its sub-views (which are generally known as "cards"). The cards are arranged in a stack, one on top of the other, like cards in a card file box. The <cardView> protocol provides methods for bringing individual cards to the front of the stack and allowing them to be displayed.
 
 Typically one would use a <cardView> to create "tabbed" dialog boxes or multi-page wizards. There are specific concrete subclasses, CardContainer and WizardCardContainer, to do this.'!
+
 !UI.AbstractCardContainer categoriesForClass!MVP-Resources-Card Containers!MVP-Views! !
+
 !UI.AbstractCardContainer methodsFor!
 
 cardLayout
@@ -145,6 +149,7 @@ validateSubViewLayouts: aLayoutContext
 	"Private - Validate the layout of the visible sub-views of the receiver."
 
 	self currentCard ifNotNil: [:card | card validateLayout: aLayoutContext]! !
+
 !UI.AbstractCardContainer categoriesForMethods!
 cardLayout!accessing!private! !
 cards!accessing!public! !

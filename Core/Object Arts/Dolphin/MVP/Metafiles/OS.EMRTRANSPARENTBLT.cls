@@ -26,7 +26,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.EMRTRANSPARENTBLT guid: (Core.GUID fromString: '{e45acb58-6465-4c29-84da-a3b8e0b9b384}')!
+
 OS.EMRTRANSPARENTBLT comment: '<EMRTRANSPARENTBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTRANSPARENTBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -57,7 +59,9 @@ struct tagEMRTRANSPARENTBLT {
 	long cySrc;
 } EMRTRANSPARENTBLT;
 '!
+
 !OS.EMRTRANSPARENTBLT categoriesForClass!Win32-Structs! !
+
 !OS.EMRTRANSPARENTBLT methodsFor!
 
 cbBitsSrc
@@ -237,6 +241,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !OS.EMRTRANSPARENTBLT categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -369,6 +374,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_TRANSPARENTBLT}! !
+
 !OS.EMRTRANSPARENTBLT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -7,12 +7,16 @@ Core.Set
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.PluggableSet guid: (Core.GUID fromString: '{faa6a208-2202-4d7e-b342-d9590b9bf6c8}')!
+
 Core.PluggableSet comment: 'PluggableSet is the class of <Set>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <Set>s (equality search) or <IdentitySet>s (identity search), or indeed any user-defined search policy.
 
 Instance Variables:
 	searchPolicy		<searchPolicy>. The policy used to hash and compare elements of the receiver.'!
+
 !Core.PluggableSet categoriesForClass!Collections-Unordered! !
+
 !Core.PluggableSet methodsFor!
 
 copyEmpty: anInteger
@@ -88,6 +92,7 @@ setSearchPolicy: aSearchPolicy
 
 	searchPolicy := aSearchPolicy.
 	^self! !
+
 !Core.PluggableSet categoriesForMethods!
 copyEmpty:!copying!private! !
 copyingClass!copying!private! !
@@ -119,6 +124,7 @@ searchPolicy: aSearchPolicy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
 	^self new setSearchPolicy: aSearchPolicy! !
+
 !Core.PluggableSet class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 new:searchPolicy:!instance creation!public! !

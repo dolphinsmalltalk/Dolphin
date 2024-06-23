@@ -5,9 +5,13 @@ XMLTokenizer subclass: #XMLParser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLParser guid: (GUID fromString: '{be04633b-820f-4cfe-b0b1-9545388c6de8}')!
+
 XMLParser comment: ''!
+
 !XMLParser categoriesForClass!XML-Parser! !
+
 !XMLParser methodsFor!
 
 attribute: aSymbol value: aString
@@ -54,6 +58,7 @@ text: aString
 	It preserves whitespace, but has all of the enclosed entities expanded"
 
 	^self subclassResponsibility! !
+
 !XMLParser categoriesForMethods!
 attribute:value:!callbacks!public! !
 beginStartTag:asPI:!callbacks!public! !

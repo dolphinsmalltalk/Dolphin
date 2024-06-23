@@ -7,9 +7,13 @@ Tools.KeyedAspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.KeyedAspectBatch guid: (Core.GUID fromString: '{0f7d3efe-6f95-4de3-a5e1-2ec7a86eb8b2}')!
+
 Tools.KeyedAspectBatch comment: 'Part of the PublishedAspectorInspector framework.<KeyedAspectBatch> instances are used to describe a group of <KeyedAspects> of a keyed collection. Batching the keyed aspects up in this way via a <KeyedAspectBatchAccessor> allows the PAI to only display a certain number of elements at a time. This can substantially improve performance when displaying large (or slow to access) collections.'!
+
 !Tools.KeyedAspectBatch categoriesForClass!Attribute-Definition! !
+
 !Tools.KeyedAspectBatch methodsFor!
 
 accessorClass
@@ -31,6 +35,7 @@ setKeys: aSequencedReadableCollection batchSize: anInteger accessorClass: aClass
 	keys := aSequencedReadableCollection.
 	batchSize := anInteger.
 	accessorClass := aClass! !
+
 !Tools.KeyedAspectBatch categoriesForMethods!
 accessorClass!constants!public! !
 batchSize!accessing!public! !
@@ -49,6 +54,7 @@ keys: aSequencedReadableCollection startingAt: startInteger batchSize: sizeInteg
 			batchSize: sizeInteger
 			accessorClass: aClass;
 		yourself! !
+
 !Tools.KeyedAspectBatch class categoriesForMethods!
 keys:startingAt:batchSize:accessorClass:!public! !
 !

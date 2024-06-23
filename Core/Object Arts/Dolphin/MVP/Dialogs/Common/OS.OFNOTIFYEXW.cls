@@ -12,7 +12,9 @@ OS.NMHDR
 			'_OffsetOf_psf' -> 16r10.
 			'_OFNOTIFYEXW_Size' -> 16r18
 		}!
+
 OS.OFNOTIFYEXW guid: (Core.GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
+
 OS.OFNOTIFYEXW comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +31,9 @@ struct tagOFNOTIFYEX {
 	LPVOID pidl;
 } OFNOTIFYEX;
 '!
+
 !OS.OFNOTIFYEXW categoriesForClass!Win32-Structs! !
+
 !OS.OFNOTIFYEXW methodsFor!
 
 lpOFN
@@ -46,6 +50,7 @@ psf
 	"Answer the <ExternalAddress> value of the receiver's 'psf' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_psf) asExternalAddress! !
+
 !OS.OFNOTIFYEXW categoriesForMethods!
 lpOFN!**compiled accessors**!public! !
 pidl!**compiled accessors**!public! !
@@ -79,6 +84,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #psf #pidl)! !
+
 !OS.OFNOTIFYEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

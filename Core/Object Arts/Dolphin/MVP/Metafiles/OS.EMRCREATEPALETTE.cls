@@ -11,7 +11,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_ihPal' -> 16r8.
 			'_OffsetOf_lgpl' -> 16rC
 		}!
+
 OS.EMRCREATEPALETTE guid: (Core.GUID fromString: '{b8739ed2-de47-467f-aa8d-3a62f4c00509}')!
+
 OS.EMRCREATEPALETTE comment: '<EMRCREATEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +29,9 @@ struct tagEMRCREATEPALETTE {
 	[helpstring("The peFlags fields in the palette entries do not contain any flags")] LOGPALETTE lgpl;
 } EMRCREATEPALETTE;
 '!
+
 !OS.EMRCREATEPALETTE categoriesForClass!Win32-Structs! !
+
 !OS.EMRCREATEPALETTE methodsFor!
 
 ihPal
@@ -53,6 +57,7 @@ lgpl: aLOGPALETTE
 		from: ##(_OffsetOf_lgpl + 1)
 		to: ##(_OffsetOf_lgpl + LOGPALETTE._LOGPALETTE_Size)
 		startingAt: 1! !
+
 !OS.EMRCREATEPALETTE categoriesForMethods!
 ihPal!**compiled accessors**!public! !
 ihPal:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEPALETTE}! !
+
 !OS.EMRCREATEPALETTE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -61,6 +61,7 @@ Core.Object
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	variableByteSubclass: #OldLargeInteger
 	instanceVariableNames: ''
@@ -68,6 +69,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #Resource
 	instanceVariableNames: 'accessor icon'
@@ -75,6 +77,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #ResourceAccessor
 	instanceVariableNames: 'flags'
@@ -82,6 +85,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OldLargeInteger
 	variableByteSubclass: #LargeNegativeInteger
 	instanceVariableNames: ''
@@ -89,6 +93,7 @@ OldLargeInteger
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OldLargeInteger
 	variableByteSubclass: #LargePositiveInteger
 	instanceVariableNames: ''
@@ -96,6 +101,7 @@ OldLargeInteger
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Resource
 	subclass: #ViewResource
 	instanceVariableNames: ''
@@ -103,6 +109,7 @@ Resource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceAccessor
 	subclass: #ResourceDummyAccessor
 	instanceVariableNames: 'object'
@@ -110,6 +117,7 @@ ResourceAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceAccessor
 	subclass: #ResourceGeneratorAccessor
 	instanceVariableNames: 'class selector'
@@ -117,6 +125,7 @@ ResourceAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceAccessor
 	subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
@@ -124,6 +133,7 @@ ResourceAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceSTBAccessor
 	subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
@@ -131,6 +141,7 @@ ResourceSTBAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceSTBAccessor
 	subclass: #ResourceSTBFileAccessor
 	instanceVariableNames: 'fileName'
@@ -138,6 +149,7 @@ ResourceSTBAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxProxy
 	subclass: #STBResourceSTBByteArrayAccessorProxy
 	instanceVariableNames: 'bytes'
@@ -145,6 +157,7 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxProxy
 	subclass: #STBResourceSTBFileAccessorProxy
 	instanceVariableNames: 'fileName bytes'
@@ -176,6 +189,7 @@ fileOutResource: aResourceIdentifier
 		cr.
 	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
 	self emitChunk: ')'! !
+
 !Kernel.AbstractChunkSourceFiler categoriesForMethods!
 fileOutResource:!public!source filing-file out! !
 !
@@ -287,6 +301,7 @@ stbConvertFrom: anSTBClassFormat
 					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
 	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
 	newBlock]! !
+
 !Kernel.BlockClosure class categoriesForMethods!
 attemptToRecompile:!binary filing!development!private! !
 attemptToUpgradeBlock:data:!binary filing!development!private! !
@@ -308,6 +323,7 @@ assignBinaryResourceData: aViewResource
 
 stlFilerClass
 	^self sourceFilerClass stlFilerClass! !
+
 !UI.ResourceIdentifier categoriesForMethods!
 assignBinaryResourceData:!private! !
 stlFilerClass!development!private! !
@@ -320,6 +336,7 @@ resourceAt: aResourceIdentifier ifAbsent: aBlock
 	Answers the resource data associated with aResourceIdentifier"
 
 	^aResourceIdentifier resource! !
+
 !UI.ResourceIdentifier class categoriesForMethods!
 resourceAt:ifAbsent:!accessing!public! !
 !
@@ -333,6 +350,7 @@ initializeFromSessionManager: oldSessionManager
 
 	super initializeFromSessionManager: oldSessionManager.
 	#{Smalltalk.ResourceAccessor} ifDefined: [:ra | ra ensureAccessorsAreInternal]! !
+
 !UI.RuntimeSessionManager categoriesForMethods!
 initializeFromSessionManager:!initializing!private! !
 !

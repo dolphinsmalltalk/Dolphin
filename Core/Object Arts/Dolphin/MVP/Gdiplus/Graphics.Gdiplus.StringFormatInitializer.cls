@@ -21,9 +21,13 @@ Graphics.Gdiplus.Initializer
 								16r4000 -> 'StringFormatFlagsNoClip'
 							})
 		}!
+
 Graphics.Gdiplus.StringFormatInitializer guid: (Core.GUID fromString: '{14ad5dde-0284-402d-bbce-89611bcd32c4}')!
+
 Graphics.Gdiplus.StringFormatInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.StringFormatInitializer comment: ''!
+
 !Graphics.Gdiplus.StringFormatInitializer methodsFor!
 
 = anObject
@@ -90,6 +94,7 @@ trimming
 
 trimmingOf: aStringFormat set: aStringTrimmingConstant
 	self subclassResponsibility! !
+
 !Graphics.Gdiplus.StringFormatInitializer categoriesForMethods!
 =!comparing!public! !
 alignment!accessing!public! !
@@ -163,6 +168,7 @@ stbConvertFrom: anSTBClassFormat
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
+
 !Graphics.Gdiplus.StringFormatInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 flags:language:!instance creation!public! !

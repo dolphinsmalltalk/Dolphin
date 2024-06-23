@@ -10,9 +10,13 @@ Graphics.GraphicsTool
 			'LineJoinNames'
 				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
 		}!
+
 Graphics.AbstractPen guid: (Core.GUID fromString: '{af590a75-95a8-46f6-8835-9349b173b75c}')!
+
 Graphics.AbstractPen isNonInstantiable: true!
+
 Graphics.AbstractPen comment: ''!
+
 !Graphics.AbstractPen methodsFor!
 
 = anObject
@@ -51,6 +55,7 @@ width
 	"Answer the width (in pels) of the line drawn by the receiver."
 
 	^logPen width! !
+
 !Graphics.AbstractPen categoriesForMethods!
 =!comparing!public! !
 color!accessing!public! !
@@ -85,6 +90,7 @@ white
 	"Answer the stock white pen."
 
 	^StockPen fromId: WHITE_PEN! !
+
 !Graphics.AbstractPen class categoriesForMethods!
 black!instance creation!public! !
 icon!constants!public! !

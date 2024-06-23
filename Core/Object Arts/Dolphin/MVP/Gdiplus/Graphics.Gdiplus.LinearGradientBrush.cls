@@ -7,8 +7,11 @@ Graphics.Gdiplus.GradientBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.LinearGradientBrush guid: (Core.GUID fromString: '{0ea671c7-823f-4367-89b3-c28e45a365ea}')!
+
 Graphics.Gdiplus.LinearGradientBrush comment: 'GdiplusLinearGradientBrush paints a color gradient in which the color changes evenly from the starting boundary line of an instance to its ending boundary line. Boundary lines are two parallel straight lines. The color gradient is perpendicular to the boundary lines, changing gradually across the stroke from starting to ending boundary lines. The color gradient has one color at the starting boundary line and another color at the ending boundary line.'!
+
 !Graphics.Gdiplus.LinearGradientBrush methodsFor!
 
 colors
@@ -44,6 +47,7 @@ startingColor: startColor endingColor: endColor
 		colorsSet: self asParameter
 		start: endColor
 		end: startColor! !
+
 !Graphics.Gdiplus.LinearGradientBrush categoriesForMethods!
 colors!accessing!public! !
 colors:!accessing!public! !
@@ -120,6 +124,7 @@ rect: aRectangle color1: aColor1 color2: aColor2 mode: aLinearGradientMode wrapM
 				mode: aLinearGradientMode))
 		wrapMode: aWrapModeConstant;
 		yourself! !
+
 !Graphics.Gdiplus.LinearGradientBrush class categoriesForMethods!
 newPoint1:point2:color1:color2:wrapMode:!instance creation!public! !
 point1:point2:color1:color2:!instance creation!public! !

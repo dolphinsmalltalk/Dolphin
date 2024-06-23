@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest guid: (Core.GUID fromString: '{bf0526be-e212-4666-8678-2c66a571d808}')!
+
 Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest comment: ''!
+
 !Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest methodsFor!
 
 subjectClass
@@ -31,6 +34,7 @@ testCreateHandleRealizesIcon
 	self assertIsNil: icon basicHandle.
 	model createHandle.
 	self denyIsNil: icon basicHandle! !
+
 !Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest categoriesForMethods!
 subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !

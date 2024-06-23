@@ -7,7 +7,9 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumFORMATETC guid: (OS.COM.IID fromString: '{00000103-0000-0000-c000-000000000046}')!
+
 OS.COM.IEnumFORMATETC comment: '`IEnumFORMATETC` is a wrapper class for the COM interface ''WebView2.IEnumFORMATETC'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -38,7 +40,9 @@ interface IEnumFORMATETC : IUnknown
 };
 ```
 '!
+
 !OS.COM.IEnumFORMATETC categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !OS.COM.IEnumFORMATETC class methodsFor!
 
 elementClass
@@ -46,6 +50,7 @@ elementClass
 
 	^FORMATETC
 ! !
+
 !OS.COM.IEnumFORMATETC class categoriesForMethods!
 elementClass!constants!private! !
 !

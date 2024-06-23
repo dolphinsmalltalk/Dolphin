@@ -62,6 +62,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.StVariable'
 	instanceVariableNames: 'scope'
@@ -69,6 +70,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ParseNodeVisitor
 	subclass: #'Kernel.SemanticAnalyser'
 	instanceVariableNames: 'methodNode classScope currentScope evalScope errorBlock scopes inStaticExpression inTag'
@@ -76,6 +78,7 @@ Kernel.ParseNodeVisitor
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SemanticAnalyser
 	subclass: #'Kernel.StaticVariableBinder'
 	instanceVariableNames: ''
@@ -83,6 +86,7 @@ Kernel.SemanticAnalyser
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SemanticAnalyser
 	subclass: #'Kernel.StSemanticAnalyser'
 	instanceVariableNames: 'literals stringLiterals isMutator'
@@ -95,6 +99,7 @@ Kernel.SemanticAnalyser
 			'SpecialSelectors' -> (IdentitySet
 						withAll: #(#- #* #/ #// #?? #\\ #~~ #~= #+ #< #<= #= #== #> #>= #at: #at:put: #basicAt: #basicAt:put: #basicClass #basicNew: #basicSize #bitAnd: #bitOr: #bitShift: #class #isNil #new #new: #not #notNil #size #value #value: #value:value:))
 		}!
+
 Kernel.StSemanticScope
 	subclass: #'Kernel.StClassScope'
 	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable metaScope staticVariables'
@@ -102,6 +107,7 @@ Kernel.StSemanticScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSemanticScope
 	subclass: #'Kernel.StEvalScope'
 	instanceVariableNames: 'pools outer'
@@ -109,6 +115,7 @@ Kernel.StSemanticScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSemanticScope
 	subclass: #'Kernel.StLexicalScope'
 	instanceVariableNames: 'node outer locals thisContextVariable flags'
@@ -116,6 +123,7 @@ Kernel.StSemanticScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'FarReturnMask' -> 16r2. 'NeedsSelfMask' -> 16r1 }!
+
 Kernel.StLexicalScope
 	subclass: #'Kernel.StBlockScope'
 	instanceVariableNames: ''
@@ -123,6 +131,7 @@ Kernel.StLexicalScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'EmptyBlockMask' -> 16r200. 'NeedsOuterMask' -> 16r100 }!
+
 Kernel.StLexicalScope
 	subclass: #'Kernel.StMethodScope'
 	instanceVariableNames: ''
@@ -130,6 +139,7 @@ Kernel.StLexicalScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StBlockScope
 	subclass: #'Kernel.StOptimizedBlockScope'
 	instanceVariableNames: ''
@@ -137,6 +147,7 @@ Kernel.StBlockScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StVariable
 	subclass: #'Kernel.StInstanceVariable'
 	instanceVariableNames: 'index name'
@@ -144,6 +155,7 @@ Kernel.StVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StVariable
 	subclass: #'Kernel.StLocalVariable'
 	instanceVariableNames: 'node storage reads index'
@@ -151,6 +163,7 @@ Kernel.StVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StVariable
 	subclass: #'Kernel.StSpecialVariable'
 	instanceVariableNames: 'reads'
@@ -158,6 +171,7 @@ Kernel.StVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StVariable
 	subclass: #'Kernel.StStaticVariable'
 	instanceVariableNames: 'binding'
@@ -165,6 +179,7 @@ Kernel.StVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLocalVariable
 	subclass: #'Kernel.StArgumentVariable'
 	instanceVariableNames: ''
@@ -172,6 +187,7 @@ Kernel.StLocalVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLocalVariable
 	subclass: #'Kernel.StGeneratedTempVariable'
 	instanceVariableNames: ''
@@ -179,6 +195,7 @@ Kernel.StLocalVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLocalVariable
 	subclass: #'Kernel.StTempVariable'
 	instanceVariableNames: 'writes'
@@ -186,6 +203,7 @@ Kernel.StLocalVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSpecialVariable
 	subclass: #'Kernel.StSelfVariable'
 	instanceVariableNames: ''
@@ -193,6 +211,7 @@ Kernel.StSpecialVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSpecialVariable
 	subclass: #'Kernel.StSuperVariable'
 	instanceVariableNames: ''
@@ -200,6 +219,7 @@ Kernel.StSpecialVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StSpecialVariable
 	subclass: #'Kernel.StThisContextVariable'
 	instanceVariableNames: ''
@@ -207,6 +227,7 @@ Kernel.StSpecialVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StStaticVariable
 	subclass: #'Kernel.StWorkspaceVariable'
 	instanceVariableNames: ''
@@ -221,6 +242,7 @@ Kernel.StStaticVariable
 
 newClassScope
 	^StClassScope methodClass: methodClass environment: environment! !
+
 !Kernel.StMethodNode categoriesForMethods!
 newClassScope!accessing!private! !
 !
@@ -235,6 +257,7 @@ classScope
 
 methodScope
 	^scope methodScope! !
+
 !Kernel.StProgramNode categoriesForMethods!
 analyze!operations!public! !
 classScope!accessing!public! !
@@ -263,6 +286,7 @@ resolveBinding
 			[| globalScope |
 			globalScope := scope classScope methodClass globalScope.
 			globalScope fullBindingFor: pathString environment: globalScope environment]! !
+
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 basicBinding!accessing!private! !
 binding!accessing!private! !
@@ -274,6 +298,7 @@ resolveBinding!accessing!public! !
 
 lookupInScope: aStSemanticScope
 	^aStSemanticScope resolveIdentifier: self name! !
+
 !Kernel.StRealVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !
@@ -282,6 +307,7 @@ lookupInScope:!operations!public! !
 
 lookupInScope: aStSemanticScope
 	^aStSemanticScope selfVariable! !
+
 !Kernel.StSelfVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !
@@ -290,6 +316,7 @@ lookupInScope:!operations!public! !
 
 lookupInScope: aStSemanticScope
 	^aStSemanticScope superVariable! !
+
 !Kernel.StSuperVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !
@@ -298,6 +325,7 @@ lookupInScope:!operations!public! !
 
 lookupInScope: aStSemanticScope
 	^aStSemanticScope thisContextVariable! !
+
 !Kernel.StThisContextVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !
@@ -306,6 +334,7 @@ lookupInScope:!operations!public! !
 
 lookupInScope: aStSemanticScope
 	^self subclassResponsibility! !
+
 !Kernel.StVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !

@@ -5,9 +5,13 @@ EmbeddedCheckButton subclass: #EmbeddedRadioButton
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EmbeddedRadioButton guid: (GUID fromString: '{326bf942-1142-4a1d-a365-f4b0dda88ffe}')!
+
 EmbeddedRadioButton comment: ''!
+
 !EmbeddedRadioButton categoriesForClass!MVP-Views! !
+
 !EmbeddedRadioButton methodsFor!
 
 basicWindowStyle
@@ -42,6 +46,7 @@ uStateFor: aValue enabled: aBoolean
 	^aValue 
 		ifTrue: [uState | DFCS_CHECKED] 
 		ifFalse: [uState]! !
+
 !EmbeddedRadioButton categoriesForMethods!
 basicWindowStyle!constants!private! !
 defaultIStateId!constants!public! !
@@ -56,6 +61,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^RadioButton icon! !
+
 !EmbeddedRadioButton class categoriesForMethods!
 icon!constants!public! !
 !

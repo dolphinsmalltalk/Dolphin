@@ -7,8 +7,11 @@ OS.Tests.AbstractInvariantLocaleTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Tests.InvariantLocaleTest guid: (Core.GUID fromString: '{297397a3-1ee2-48b4-b815-f58a5308bc8c}')!
+
 OS.Tests.InvariantLocaleTest comment: ''!
+
 !OS.Tests.InvariantLocaleTest methodsFor!
 
 defaultSubject
@@ -62,6 +65,7 @@ testStlConvertFromVersion0
 	self assert: subject third first identicalTo: Locale invariant.
 	self assert: subject fourth identicalTo: #foo.
 	self assert: subject second identicalTo: subject last! !
+
 !OS.Tests.InvariantLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 subjectName!constants!private! !

@@ -7,11 +7,15 @@ Database.Tests.DBTest
 	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.DBConnectionTest guid: (Core.GUID fromString: '{0a84fa8d-f7c4-4bbe-b459-da0409a391b9}')!
+
 Database.Tests.DBConnectionTest isNonInstantiable: true!
+
 Database.Tests.DBConnectionTest comment: 'SUnitBrowser openOnTestCase: self.
 
 If these tests fail make sure that Tests\NWind.mdb is available and NOT write protected.'!
+
 !Database.Tests.DBConnectionTest methodsFor!
 
 databaseResource
@@ -274,6 +278,7 @@ testTracing
 	self assert: connection isTracing not.
 	File delete: traceFile
 ! !
+
 !Database.Tests.DBConnectionTest categoriesForMethods!
 databaseResource!public! !
 dbmsFeaturesMap!constants!private! !

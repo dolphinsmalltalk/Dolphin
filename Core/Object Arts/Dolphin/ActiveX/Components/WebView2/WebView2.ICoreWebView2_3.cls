@@ -7,8 +7,11 @@ WebView2.ICoreWebView2_2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2_3 guid: (OS.COM.IID fromString: '{a0d6df20-3b92-416d-aa0c-437a9c727857}')!
+
 WebView2.ICoreWebView2_3 isEgressOnly: true!
+
 WebView2.ICoreWebView2_3 comment: '`ICoreWebView2_3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -42,7 +45,9 @@ interface ICoreWebView2_3 : ICoreWebView2_2
 };
 ```
 '!
+
 !WebView2.ICoreWebView2_3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2_3 methodsFor!
 
 ClearVirtualHostNameToFolderMapping: hostName
@@ -90,6 +95,7 @@ TrySuspend: handler
 
 	<virtual stdcall: hresult 69 ICoreWebView2TrySuspendCompletedHandler*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2_3 categoriesForMethods!
 ClearVirtualHostNameToFolderMapping:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
 get_IsSuspended:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
@@ -115,6 +121,7 @@ defineFunctions
 		defineFunction: #ClearVirtualHostNameToFolderMapping:
 			argumentTypes: 'lpwstr'
 ! !
+
 !WebView2.ICoreWebView2_3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

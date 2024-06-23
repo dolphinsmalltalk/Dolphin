@@ -7,10 +7,15 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_value' -> 16r0 }!
+
 External.SCALAR guid: (Core.GUID fromString: '{704554ca-46f7-49b2-92df-edcbe398040a}')!
+
 External.SCALAR isNonInstantiable: true!
+
 External.SCALAR comment: ''!
+
 !External.SCALAR categoriesForClass!External-Data-Structured! !
+
 !External.SCALAR methodsFor!
 
 = anObject
@@ -32,6 +37,7 @@ value: anObject
 	"Set the receiver's value field to the value of anObject."
 
 	^self subclassResponsibility! !
+
 !External.SCALAR categoriesForMethods!
 =!comparing!public! !
 displayOn:!printing!public! !
@@ -46,6 +52,7 @@ defineFields
 
 getFieldNames
 	^#(#value)! !
+
 !External.SCALAR class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!constants!private! !

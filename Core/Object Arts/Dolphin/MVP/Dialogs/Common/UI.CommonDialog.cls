@@ -7,8 +7,11 @@ UI.ValueDialog
 	imports: #(#{OS.CommonDialogConstants})
 	classInstanceVariableNames: 'hookHandlers'
 	classConstants: {}!
+
 UI.CommonDialog guid: (Core.GUID fromString: '{87b4c6a8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.CommonDialog isNonInstantiable: true!
+
 UI.CommonDialog comment: 'CommonDialog is an abstract <valueDialogPresenter> superclass for all Windows common dialogs.
 
 Instance Variables:
@@ -20,7 +23,9 @@ Class Instance Variables:
 
 
 '!
+
 !UI.CommonDialog categoriesForClass!MVP-Presenters! !
+
 !UI.CommonDialog methodsFor!
 
 attachHandle: anExternalHandle
@@ -148,6 +153,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 
 	self caption ifNotNil: [:text | self setViewCaption: text].
 	^1! !
+
 !UI.CommonDialog categoriesForMethods!
 attachHandle:!private!realizing/unrealizing! !
 basicShowModal!private!realizing/unrealizing! !
@@ -209,6 +215,7 @@ showModalOn: aModel
 	Answers the result of dialog if confirmed or nil otherwise"
 
 	^(self on: aModel) showModal! !
+
 !UI.CommonDialog class categoriesForMethods!
 defaultView!constants!public! !
 hookHandlers!accessing!private! !

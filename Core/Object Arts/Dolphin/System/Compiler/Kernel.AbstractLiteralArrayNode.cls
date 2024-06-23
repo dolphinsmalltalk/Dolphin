@@ -7,9 +7,13 @@ Kernel.StLiteralNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.AbstractLiteralArrayNode guid: (Core.GUID fromString: '{96fc9b84-f4c6-403b-b79a-a316c89abbaf}')!
+
 Kernel.AbstractLiteralArrayNode isNonInstantiable: true!
+
 Kernel.AbstractLiteralArrayNode comment: ''!
+
 !Kernel.AbstractLiteralArrayNode methodsFor!
 
 = anObject
@@ -70,6 +74,7 @@ value
 	array := self valueClass new: contents size.
 	1 to: contents size do: [:each | array at: each put: (contents at: each) value].
 	^array! !
+
 !Kernel.AbstractLiteralArrayNode categoriesForMethods!
 =!comparing!public! !
 children!accessing!public! !
@@ -105,6 +110,7 @@ value: aValue
 		startPosition: nil
 		contents: (aValue asArray collect: [:each | StLiteralNode value: each])
 		stopPosition: nil! !
+
 !Kernel.AbstractLiteralArrayNode class categoriesForMethods!
 contents:!instance creation!public! !
 startPosition:contents:stopPosition:!instance creation!public! !

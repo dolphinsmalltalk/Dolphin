@@ -18,9 +18,13 @@ OS.SizedStructure
 			'_OffsetOf_wNumbering' -> 16r8.
 			'_PARAFORMAT_Size' -> 16r9C
 		}!
+
 OS.PARAFORMAT guid: (Core.GUID fromString: '{87b4c607-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.PARAFORMAT comment: ''!
+
 !OS.PARAFORMAT categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.PARAFORMAT methodsFor!
 
 alignment
@@ -157,6 +161,7 @@ wNumbering: anInteger
 	"Set the receiver's 'wNumbering' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_wNumbering put: anInteger! !
+
 !OS.PARAFORMAT categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -214,6 +219,7 @@ getFieldNames
 
 packing
 	^VMConstants.IntPtrSize! !
+
 !OS.PARAFORMAT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

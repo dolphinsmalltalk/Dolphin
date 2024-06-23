@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.STxDebuggerTest guid: (Core.GUID fromString: '{5927e3bd-eb27-4032-a460-08beb17878b3}')!
+
 Tools.Tests.STxDebuggerTest isNonInstantiable: true!
+
 Tools.Tests.STxDebuggerTest comment: ''!
+
 !Tools.Tests.STxDebuggerTest methodsFor!
 
 dump: anArray withOffsets: aBoolean
@@ -244,6 +248,7 @@ testVersion6
 				version: 6.
 	dump := self dump: dessicated withOffsets: true.
 	self assert: dump equals: self expectedDump6! !
+
 !Tools.Tests.STxDebuggerTest categoriesForMethods!
 dump:withOffsets:!helpers!private! !
 expectedDump3!constants!private!unit tests! !

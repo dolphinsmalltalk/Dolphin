@@ -7,9 +7,13 @@ Tools.BasicInspector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.StructureInspector guid: (Core.GUID fromString: '{87b4c697-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.StructureInspector comment: 'StructureInspector is a <compositePresenter> that implements a specialised inspect facility onto a <ExternalStructure>. This allows the structure to be inspected via its name fields.'!
+
 !Tools.StructureInspector categoriesForClass!MVP-Presenters! !
+
 !Tools.StructureInspector methodsFor!
 
 fields
@@ -43,6 +47,7 @@ setField: anInteger to: anObject
 				setField: (self variableNamesList at: anInteger + self headerSize)
 				value: anObject]
 		ifFalse: [super setField: anInteger to: anObject]! !
+
 !Tools.StructureInspector categoriesForMethods!
 fields!accessing!private! !
 getField:!accessing!private! !

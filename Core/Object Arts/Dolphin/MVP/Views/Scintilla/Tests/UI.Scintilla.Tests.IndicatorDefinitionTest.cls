@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.Tests.IndicatorDefinitionTest guid: (Core.GUID fromString: '{f9336218-5504-41d4-bf04-d9bbe66ecfbe}')!
+
 UI.Scintilla.Tests.IndicatorDefinitionTest comment: ''!
+
 !UI.Scintilla.Tests.IndicatorDefinitionTest methodsFor!
 
 testDefaults
@@ -183,6 +186,7 @@ testStyle
 	self assert: subject style identicalTo: #hidden.
 	self assert: view messages asArray equals: { { SCI_INDICSETSTYLE. nil. INDIC_HIDDEN } }.
 ! !
+
 !UI.Scintilla.Tests.IndicatorDefinitionTest categoriesForMethods!
 testDefaults!public!unit tests! !
 testHoverStyleAndColor!public!unit tests! !

@@ -7,13 +7,17 @@ Security.DolphinSureCertificationAuthorityCertificate
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.ObjectArtsRootCertificate guid: (Core.GUID fromString: '{01ab17af-ef96-4982-a998-0d75dc9c4159}')!
+
 Security.ObjectArtsRootCertificate comment: 'The ObjectArtsCertificate class is used to represent the root DolphinSure certifying authority certificate for Object Arts Ltd. The actual encoded certificate data is held in the #new class method.  We specially include this class here to act as the root of the DolphinSureTrustedData trust hierarchy.
 
 If you wish to display the Object Arts root certificate, you can evaluate:
 
 ObjectArtsRootCertificate new show.'!
+
 !Security.ObjectArtsRootCertificate categoriesForClass!Cryptography-Certificates! !
+
 !Security.ObjectArtsRootCertificate methodsFor!
 
 publicKey
@@ -25,6 +29,7 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
+
 !Security.ObjectArtsRootCertificate categoriesForMethods!
 publicKey!accessing!public! !
 publisherPublicKey!accessing!private! !
@@ -69,6 +74,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
+
 !Security.ObjectArtsRootCertificate class categoriesForMethods!
 generate!instance creation!private! !
 new!instance creation!public! !

@@ -11,7 +11,9 @@ OS.LOGFONTW
 			'_OffsetOf_elfFullName' -> 16r5C.
 			'_OffsetOf_elfStyle' -> 16rDC
 		}!
+
 OS.ENUMLOGFONTW guid: (Core.GUID fromString: '{f10411f6-c151-4390-af05-3702d4f98f12}')!
+
 OS.ENUMLOGFONTW comment: '`ENUMLOGFONT` is an `External.Structure` class to wrap the struct ''Win32.ENUMLOGFONT'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +30,9 @@ struct tagENUMLOGFONT {
 } ENUMLOGFONT;
 ```
 '!
+
 !OS.ENUMLOGFONTW categoriesForClass!Win32-Structs! !
+
 !OS.ENUMLOGFONTW methodsFor!
 
 elfFullName
@@ -40,6 +44,7 @@ elfStyle
 	"Answer the <Utf16String> value of the receiver's 'elfStyle' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_elfStyle! !
+
 !OS.ENUMLOGFONTW categoriesForMethods!
 elfFullName!**compiled accessors**!public! !
 elfStyle!**compiled accessors**!public! !
@@ -71,6 +76,7 @@ defineFields
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName #elfFullName #elfStyle)! !
+
 !OS.ENUMLOGFONTW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

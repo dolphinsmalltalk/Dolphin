@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.GdiplusTest guid: (Core.GUID fromString: '{ea227fda-3570-490b-b8cf-4973dc534043}')!
+
 Graphics.Gdiplus.Tests.GdiplusTest isNonInstantiable: true!
+
 Graphics.Gdiplus.Tests.GdiplusTest comment: ''!
+
 !Graphics.Gdiplus.Tests.GdiplusTest methodsFor!
 
 createCanonicalSubject
@@ -33,6 +37,7 @@ subjectClass
 tearDown
 	model := nil.
 	super tearDown! !
+
 !Graphics.Gdiplus.Tests.GdiplusTest categoriesForMethods!
 createCanonicalSubject!private!running! !
 fileResource!accessing!public! !
@@ -47,6 +52,7 @@ tearDown!public!running! !
 
 resources
 	^{FileResource}! !
+
 !Graphics.Gdiplus.Tests.GdiplusTest class categoriesForMethods!
 resources!accessing!public! !
 !

@@ -7,8 +7,11 @@ Graphics.BitmapFromBlankInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.BitmapFromBytesInitializer guid: (Core.GUID fromString: '{1cc4ae6f-d94c-4c0b-a4b5-2b3707a1bba7}')!
+
 Graphics.BitmapFromBytesInitializer comment: ''!
+
 !Graphics.BitmapFromBytesInitializer methodsFor!
 
 bytes
@@ -22,6 +25,7 @@ isPersistent
 	In the receiver's case this depends on whether the bitmap bytes were supplied as a ByteArray, or a pointer to the bits."
 
 	^bytes isIndirection not! !
+
 !Graphics.BitmapFromBytesInitializer categoriesForMethods!
 bytes!accessing!public! !
 bytes:!initializing!private! !
@@ -38,6 +42,7 @@ extent: aPoint depth: bppInteger planes: planesInteger bytes: aByteArray
 		planes: planesInteger;
 		bytes: aByteArray;
 		yourself! !
+
 !Graphics.BitmapFromBytesInitializer class categoriesForMethods!
 extent:depth:planes:bytes:!instance creation!public! !
 !

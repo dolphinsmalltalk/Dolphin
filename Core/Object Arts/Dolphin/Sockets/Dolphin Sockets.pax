@@ -67,6 +67,7 @@ Kernel.Namespace
 	imports: #(#{Core} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.SharedPool
 	subclass: #'OS.WinSocketConstants'
 	instanceVariableNames: ''
@@ -183,6 +184,7 @@ Kernel.SharedPool
 			'WSADESCRIPTION_LEN' -> 16r100.
 			'WSASYS_STATUS_LEN' -> 16r80
 		}!
+
 Kernel.SharedPool
 	subclass: #'OS.WinSocketErrors'
 	instanceVariableNames: ''
@@ -253,6 +255,7 @@ Kernel.SharedPool
 			'WSATYPE_NOT_FOUND' -> 16r277D.
 			'WSAVERNOTSUPPORTED' -> 16r276C
 		}!
+
 Core.Object
 	subclass: #'Net.InternetAddress'
 	instanceVariableNames: 'host ipAddress'
@@ -260,6 +263,7 @@ Core.Object
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'MaxHostName' -> 16r100 }!
+
 Core.Object
 	subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor'
@@ -267,6 +271,7 @@ Core.Object
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.IPHlpApiLibrary'
 	instanceVariableNames: ''
@@ -274,6 +279,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
@@ -281,6 +287,7 @@ External.DynamicLinkLibrary
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.Win32Error
 	subclass: #'Net.SocketError'
 	instanceVariableNames: ''
@@ -288,6 +295,7 @@ OS.Win32Error
 	imports: #(#{OS.WinSocketConstants} #{OS.WinSocketErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.SocketError
 	subclass: #'Net.SocketClosed'
 	instanceVariableNames: ''
@@ -295,6 +303,7 @@ Net.SocketError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.SocketError
 	subclass: #'Net.SocketWaitCancelled'
 	instanceVariableNames: ''
@@ -302,6 +311,7 @@ Net.SocketError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.SocketAbstract
 	subclass: #'Net.ServerSocket'
 	instanceVariableNames: ''
@@ -309,6 +319,7 @@ Net.SocketAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.SocketAbstract
 	subclass: #'Net.Socket'
 	instanceVariableNames: 'address readStream writeStream isText'
@@ -316,6 +327,7 @@ Net.SocketAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.ReadStream
 	subclass: #'Net.SocketReadStream'
 	instanceVariableNames: 'socket'
@@ -323,6 +335,7 @@ Core.ReadStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WriteStream
 	subclass: #'Net.SocketWriteStream'
 	instanceVariableNames: 'socket dirty'
@@ -330,6 +343,7 @@ Core.WriteStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.AbstractIN_ADDR'
 	instanceVariableNames: ''
@@ -337,6 +351,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.FD_SET'
 	instanceVariableNames: ''
@@ -348,6 +363,7 @@ External.Structure
 			'_OffsetOf_fd_array' -> 16r4.
 			'_OffsetOf_fd_count' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.HOSTENT'
 	instanceVariableNames: ''
@@ -362,6 +378,7 @@ External.Structure
 			'_OffsetOf_h_length' -> 16rA.
 			'_OffsetOf_h_name' -> 16r0
 		}!
+
 External.Structure
 	subclass: #'OS.NET_ADDRESS_INFO'
 	instanceVariableNames: ''
@@ -377,6 +394,7 @@ External.Structure
 			'_OffsetOf_NamedAddress_Address' -> 16r4.
 			'_OffsetOf_NamedAddress_Port' -> 16r204
 		}!
+
 External.Structure
 	subclass: #'OS.PROTOENT'
 	instanceVariableNames: ''
@@ -389,6 +407,7 @@ External.Structure
 			'_OffsetOf_p_proto' -> 16r8.
 			'_PROTOENT_Size' -> 16rC
 		}!
+
 External.Structure
 	subclass: #'OS.SERVENT'
 	instanceVariableNames: ''
@@ -402,6 +421,7 @@ External.Structure
 			'_OffsetOf_s_proto' -> 16rC.
 			'_SERVENT_Size' -> 16r10
 		}!
+
 External.Structure
 	subclass: #'OS.SOCKADDR'
 	instanceVariableNames: ''
@@ -413,6 +433,7 @@ External.Structure
 			'_OffsetOf_sa_family' -> 16r0.
 			'_SOCKADDR_Size' -> 16r10
 		}!
+
 External.Structure
 	subclass: #'OS.TIMEVAL'
 	instanceVariableNames: ''
@@ -420,6 +441,7 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_tv_sec' -> 16r0. '_OffsetOf_tv_usec' -> 16r4. '_TIMEVAL_Size' -> 16r8 }!
+
 External.Structure
 	subclass: #'OS.WSADATA'
 	instanceVariableNames: ''
@@ -436,6 +458,7 @@ External.Structure
 			'_OffsetOf_wVersion' -> 16r0.
 			'_WSADATA_Size' -> 16r190
 		}!
+
 OS.AbstractIN_ADDR
 	subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''
@@ -452,6 +475,7 @@ OS.AbstractIN_ADDR
 			'_OffsetOf_s_w1' -> 16r0.
 			'_OffsetOf_s_w2' -> 16r2
 		}!
+
 OS.AbstractIN_ADDR
 	subclass: #'OS.IN6_ADDR'
 	instanceVariableNames: ''
@@ -459,6 +483,7 @@ OS.AbstractIN_ADDR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_IN6_ADDR_Size' -> 16r10. '_OffsetOf_Bytes' -> 16r0. '_OffsetOf_Words' -> 16r0 }!
+
 OS.SOCKADDR
 	subclass: #'OS.SOCKADDR_IN'
 	instanceVariableNames: ''
@@ -472,6 +497,7 @@ OS.SOCKADDR
 			'_OffsetOf_sin_zero' -> 16r8.
 			'_SOCKADDR_IN_Size' -> 16r10
 		}!
+
 OS.SOCKADDR
 	subclass: #'OS.SOCKADDR_IN6'
 	instanceVariableNames: ''
@@ -487,6 +513,7 @@ OS.SOCKADDR
 			'_OffsetOf_sin6_scope_struct' -> 16r18.
 			'_SOCKADDR_IN6_Size' -> 16r1C
 		}!
+
 OS.SOCKADDR
 	subclass: #'OS.SOCKADDR_STORAGE'
 	instanceVariableNames: ''

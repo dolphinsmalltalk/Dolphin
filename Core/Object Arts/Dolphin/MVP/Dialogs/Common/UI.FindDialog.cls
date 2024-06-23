@@ -7,14 +7,18 @@ UI.CommonDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FindDialog guid: (Core.GUID fromString: '{87b4c6b2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.FindDialog comment: 'FindDialog is a <valueDialogPresenter> implementing the Windows FindText common dialog. The dialog must be associated with an owner view capable of responding to the <textFinder> protocol. It will then remain on-screen until dismissed and will forward <FindEvent>s to the owner via its #onFind: event handler.
 
 Instance Variables:
 	findWhat		<readableString> or nil, specifying the text to search for.
 
 '!
+
 !UI.FindDialog categoriesForClass!MVP-Presenters! !
+
 !UI.FindDialog methodsFor!
 
 basicShowModal
@@ -83,6 +87,7 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^FINDREPLACEW! !
+
 !UI.FindDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 extractResult:!helpers!private! !
@@ -135,6 +140,7 @@ showModeless: aView on: aFindDetails
 				ownerView: aView.
 	"N.B. Doesn't really show as a modal dialog"
 	dialog showModal! !
+
 !UI.FindDialog class categoriesForMethods!
 defaultModel!public! !
 initialize!development!initializing!private! !

@@ -7,7 +7,9 @@ Graphics.ColorRef
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ColorDefault guid: (Core.GUID fromString: '{dc49f7c0-bb6c-444b-9e28-9342285c1880}')!
+
 Graphics.ColorDefault comment: '`ColorDefault` is the special `ColorRef` which represents the default colour for something, whatever that might be. Typically it is used with `ControlView`s to specify that the control should draw itself usings its default background or foreground colour.
 
 `ColorDefault`s singleton instance is accessed using the expression `Color default`.
@@ -15,6 +17,7 @@ Graphics.ColorDefault comment: '`ColorDefault` is the special `ColorRef` which r
 The superclass `code` instance variable has the value `Win32Constants.CLR_DEFAULT`.
 
 '!
+
 !Graphics.ColorDefault methodsFor!
 
 = aColor
@@ -70,6 +73,7 @@ shallowCopy
 
 species
 	^##(self)! !
+
 !Graphics.ColorDefault categoriesForMethods!
 =!comparing!public! !
 alpha!public! !

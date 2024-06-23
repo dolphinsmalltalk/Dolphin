@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.DebuggerTest guid: (Core.GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
+
 Tools.Tests.DebuggerTest comment: ''!
+
 !Tools.Tests.DebuggerTest methodsFor!
 
 setUp
@@ -109,6 +112,7 @@ testRemapIPSmokeTest
 					offset := ip - (textMap at: segment) key.
 					self assert: offset >= 0.
 					ip := ip + bytes size]"]! !
+
 !Tools.Tests.DebuggerTest categoriesForMethods!
 setUp!private!unit tests! !
 tearDown!private!unit tests! !

@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.DeferredValue guid: (Core.GUID fromString: '{b2986be9-3666-4cd8-8d87-c7e456f6dd95}')!
+
 Core.DeferredValue comment: 'A DeferredValue is a <niladicValuable> which is evaluated asynchronously in a background process, but which supplies its value synchronously on request, i.e. it blocks any sender of #value until the value is available.
 
 Instances of DeferredValue are typically created by sending the #deferredValue (calculate in background process forked at same priority as active process) and #deferredValueAt: (calculate in a background process at the specified priority) messages, but there is a class side instance creation protocol (#evaluate:[|with|#with:with:|withArguments:]at: which can be used to defer the calculation of other valuables.
@@ -20,6 +22,7 @@ To suppress exceptions in the asynchronous process wrap the deferred operation i
 		on: Error do: [:e | e]] deferredValue
 
 Alternatively create a subclass which overrides #_evaluate:withArguments: which includes such a generic error trap.'!
+
 !Core.DeferredValue methodsFor!
 
 _evaluate: operation withArguments: args
@@ -112,6 +115,7 @@ value
 		signal.
 	exception isNil ifFalse: [exception copy signal].
 	^value! !
+
 !Core.DeferredValue categoriesForMethods!
 _evaluate:withArguments:!evaluating!private! !
 deferredValue!evaluating!public! !
@@ -172,6 +176,7 @@ new
 	"Answer a instance of the receiver."
 
 	^self shouldNotImplement! !
+
 !Core.DeferredValue class categoriesForMethods!
 evaluate:at:!instance creation!public! !
 evaluate:with:at:!instance creation!public! !

@@ -7,9 +7,13 @@ Kernel.StBlockScope
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StOptimizedBlockScope guid: (Core.GUID fromString: '{c2ebf9a0-55a4-4d52-922c-923b6953482c}')!
+
 Kernel.StOptimizedBlockScope comment: ''!
+
 !Kernel.StOptimizedBlockScope categoriesForClass!Kernel-Objects! !
+
 !Kernel.StOptimizedBlockScope methodsFor!
 
 hasFarReturn
@@ -30,6 +34,7 @@ realScope
 	the receiver will actually be allocated."
 
 	^self outer realScope! !
+
 !Kernel.StOptimizedBlockScope categoriesForMethods!
 hasFarReturn!accessing!public! !
 markFarReturn!public!visiting! !

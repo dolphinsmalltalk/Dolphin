@@ -7,7 +7,9 @@ Kernel.STxOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLOutFiler guid: (Core.GUID fromString: '{72dee7e2-3402-4813-99f6-379ffc717b86}')!
+
 Kernel.STLOutFiler comment: '`STLOutFiler` is a class of object serializers that can store a graph of arbitrary `Object`s as an array of objects that have literal form when fed through an `STLPrinter`. The literal arrays resulting can be stored in the source code of methods, and therefore it provides a generic capability to store object instance state in source code. This format is currently used to store view resources, for example.
 
 `STLOutFiler` itself currently supports writing the STL 6 literal object serialization format. There are subclasses for writing each of the earlier versions from the original STL v3 up to previous version. The correct class of serializer can be specified using one of the instance creation methods that accepts a version number, although when possible it can be helpful for application deployment purposes to refer to the relevant subclass directly to ensure it forms part of the deployed application.
@@ -19,7 +21,9 @@ STL 6 differs from the (interim in Dolphin 8) STL 5 format in the following ways
   - Proxies are no longer required for most collections. SortedCollections are still proxied, however, and other collections can be proxied, e.g. to ensure that the elements are always emitted in a stable ordering.
   - STL 6 supports a stable mode, which is the default,. The idea is that that when serializing an object graph that is unchanged in stable mode the literal array does not change. Although `STLOutFiler` itself provides basic support for this, e.g. it sorts set elements before storing them, it can also require classes to add specific support in their `#stbSaveOn:` implementations. Browse senders of `#isStable` to see examples.
 '!
+
 !Kernel.STLOutFiler categoriesForClass!System-Binary storage! !
+
 !Kernel.STLOutFiler methodsFor!
 
 defaultFlags
@@ -246,6 +250,7 @@ writeSignatureAndVersion
 	stream
 		nextPut: STLInFiler.Signature;
 		nextPut: self version! !
+
 !Kernel.STLOutFiler categoriesForMethods!
 defaultFlags!constants!private! !
 inFilerClass!constants!private! !
@@ -322,6 +327,7 @@ version
 
 versions
 	^Versions! !
+
 !Kernel.STLOutFiler class categoriesForMethods!
 initialize!class initialization!public! !
 literalPrinterClass!constants!public! !

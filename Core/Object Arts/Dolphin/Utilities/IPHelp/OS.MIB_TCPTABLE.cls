@@ -7,7 +7,9 @@ OS.IpHlpApiTableStruct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_MIB_TCPTABLE_Size' -> 16r18. '_OffsetOf_table' -> 16r4 }!
+
 OS.MIB_TCPTABLE guid: (Core.GUID fromString: '{1308bd96-edb7-4030-85b1-a6651a737122}')!
+
 OS.MIB_TCPTABLE comment: '<MIB_TCPTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +24,9 @@ struct tagMIB_TCPTABLE {
 	MIB_TCPROW table[1];
 } MIB_TCPTABLE;
 '!
+
 !OS.MIB_TCPTABLE categoriesForClass!Win32-Structs! !
+
 !OS.MIB_TCPTABLE methodsFor!
 
 table
@@ -32,6 +36,7 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_TCPROW! !
+
 !OS.MIB_TCPTABLE categoriesForMethods!
 table!**compiled accessors**!public! !
 !
@@ -63,6 +68,7 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
+
 !OS.MIB_TCPTABLE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.PropertyManager guid: (Core.GUID fromString: '{87b4c4ab-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Kernel.PropertyManager comment: ''!
+
 !Kernel.PropertyManager categoriesForClass!System-Support! !
+
 !Kernel.PropertyManager methodsFor!
 
 initialize
@@ -71,6 +75,7 @@ removePropertyOf: anObject at: aSymbol ifAbsent: aBlock
 	removed := propertyDict removeKey: aSymbol ifAbsent: [^aBlock value].
 	propertyDict isEmpty ifTrue: [register removeKey: anObject].
 	^removed! !
+
 !Kernel.PropertyManager categoriesForMethods!
 initialize!initializing!private! !
 propertyOf:at:!adding!public! !
@@ -89,6 +94,7 @@ new
 	"Answers an instance of the receiver; instances require initialization"
 
 	^super new initialize! !
+
 !Kernel.PropertyManager class categoriesForMethods!
 new!instance creation!public! !
 !

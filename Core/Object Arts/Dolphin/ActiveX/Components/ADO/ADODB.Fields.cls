@@ -7,7 +7,9 @@ ADODB.Fields20
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.Fields guid: (OS.COM.IID fromString: '{00001564-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.Fields comment: '`Fields` is a wrapper class for the COM interface ''ADODB.Fields'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -43,7 +45,9 @@ interface Fields : Fields20
 };
 ```
 '!
+
 !ADODB.Fields categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.Fields methodsFor!
 
 append: name type: type
@@ -110,6 +114,7 @@ Update
 
 	<virtual stdcall: hresult 15>
 	^self invalidCall: _failureCode! !
+
 !ADODB.Fields categoriesForMethods!
 append:type:!**auto generated**!methods!public! !
 append:type:definedSize:attrib:fieldValue:!**auto generated**!methods!public! !
@@ -134,6 +139,7 @@ defineFunctions
 			argumentTypes: 'sdword';
 		defineFunction: #CancelUpdate
 ! !
+
 !ADODB.Fields class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

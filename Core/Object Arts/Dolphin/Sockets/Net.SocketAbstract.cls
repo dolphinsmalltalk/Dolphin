@@ -7,10 +7,15 @@ Core.Object
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.SocketAbstract guid: (Core.GUID fromString: '{e811faf7-4001-4b49-bda0-90a3ffae784f}')!
+
 Net.SocketAbstract isNonInstantiable: true!
+
 Net.SocketAbstract comment: 'This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!
+
 !Net.SocketAbstract categoriesForClass!Windows Sockets! !
+
 !Net.SocketAbstract methodsFor!
 
 asParameter
@@ -106,6 +111,7 @@ socketErrorOverlap
 	"Private - Raise a <SocketError> in response to an error in an overlapped socket library call."
 
 	SocketError signalWith: Processor activeProcess lastError! !
+
 !Net.SocketAbstract categoriesForMethods!
 asParameter!converting!public! !
 close!operations!public! !

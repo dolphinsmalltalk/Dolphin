@@ -7,9 +7,13 @@ Graphics.Gdiplus.GradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.PathGradientBrushInitializer guid: (Core.GUID fromString: '{bb3a4f15-88b6-4b1d-a774-940ea0c83fd2}')!
+
 Graphics.Gdiplus.PathGradientBrushInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.PathGradientBrushInitializer comment: ''!
+
 !Graphics.Gdiplus.PathGradientBrushInitializer methodsFor!
 
 = anObject
@@ -274,6 +278,7 @@ surroundColors: aHandle set: aSequenceOfColor
 
 surroundColorsGet: aHandle
 	^surroundColors ifNil: [self getSurroundColors: aHandle]! !
+
 !Graphics.Gdiplus.PathGradientBrushInitializer categoriesForMethods!
 =!comparing!public! !
 applyAdditionalAttributes:!private!realizing/unrealizing! !
@@ -330,6 +335,7 @@ path: aGraphicsPath wrapMode: aWrapModeConstant
 
 points: aSequenceOfPoints wrapMode: aWrapModeConstant
 	^PathGradientFromPointsInitializer new points: aSequenceOfPoints wrapMode: aWrapModeConstant! !
+
 !Graphics.Gdiplus.PathGradientBrushInitializer class categoriesForMethods!
 path:wrapMode:!instance creation!public! !
 points:wrapMode:!instance creation!public! !

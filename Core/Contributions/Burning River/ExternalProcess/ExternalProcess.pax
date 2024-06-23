@@ -56,34 +56,36 @@ Object subclass: #ExternalProcess
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Error subclass: #ExternalProcessExecuteError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #ExternalProcessWaitFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Notification subclass: #ExternalProcessWaitTimeout
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #PROCESS_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwProcessId _OffsetOf_dwThreadId _OffsetOf_hProcess _OffsetOf_hThread _PROCESS_INFORMATION_Size'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
 	classVariableNames: '_OffsetOf_cbReserved2 _OffsetOf_dwFillAttribute _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwX _OffsetOf_dwXCountChars _OffsetOf_dwXSize _OffsetOf_dwY _OffsetOf_dwYCountChars _OffsetOf_dwYSize _OffsetOf_hStdError _OffsetOf_hStdInput _OffsetOf_hStdOutput _OffsetOf_lpDesktop _OffsetOf_lpReserved _OffsetOf_lpReserved2 _OffsetOf_lpTitle _OffsetOf_wShowWindow _STARTUPINFOW_Size'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -110,6 +112,7 @@ createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThrea
 
 	<stdcall: bool CreateProcessW lpwstr lpwstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES* bool dword lpvoid lpwstr STARTUPINFOW* PROCESS_INFORMATION*>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
 !

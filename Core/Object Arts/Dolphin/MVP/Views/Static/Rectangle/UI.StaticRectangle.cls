@@ -20,7 +20,9 @@ UI.ControlView
 								#whiteRectangle -> 16r6
 							})
 		}!
+
 UI.StaticRectangle guid: (Core.GUID fromString: '{aad4f3a9-dc68-42b2-bedc-0a4fc49880f2}')!
+
 UI.StaticRectangle comment: '`StaticRectangle` is a simple `ControlView` class which wraps the Windows STATIC control for simple rectangles and frames.
 
 The rectangle styles paint a solid block of colour filling the client area. The frame styles draw a border/frame around the edge of the client area of the control allowing the background colour to show through.
@@ -29,7 +31,9 @@ Apart from its uses for background rectangles and frames, StaticRectangle can al
 
 ## Class Variables:
   `StyleMap`		`LookupTable` of `Symbol` rectangle/frame style names Windows styles.'!
+
 !UI.StaticRectangle categoriesForClass!MVP-Views! !
+
 !UI.StaticRectangle methodsFor!
 
 setStyle: rectangleStyleBits
@@ -49,6 +53,7 @@ style: rectangleStyleName
 	name, rectangleStyleName."
 
 	self setStyle: (StyleMap at: rectangleStyleName)! !
+
 !UI.StaticRectangle categoriesForMethods!
 setStyle:!accessing!private! !
 style!accessing!public! !
@@ -91,6 +96,7 @@ winClassName
 
 	^'STATIC'
 ! !
+
 !UI.StaticRectangle class categoriesForMethods!
 initialize!development!initializing!private! !
 resource_Default_view!public!resources-views! !

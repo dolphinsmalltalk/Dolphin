@@ -29,7 +29,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_yMask' -> 16r74.
 			'_OffsetOf_ySrc' -> 16r34
 		}!
+
 OS.EMRPLGBLT guid: (Core.GUID fromString: '{cdae1f25-39c4-4555-985b-3b2cd197d3e0}')!
+
 OS.EMRPLGBLT comment: '<EMRPLGBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPLGBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -63,7 +65,9 @@ struct tagEMRPLGBLT {
 	[helpstring("Size of the mask bitmap bits if any")] DWORD cbBitsMask;
 } EMRPLGBLT;
 '!
+
 !OS.EMRPLGBLT categoriesForClass!Win32-Structs! !
+
 !OS.EMRPLGBLT methodsFor!
 
 aptlDest
@@ -282,6 +286,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !OS.EMRPLGBLT categoriesForMethods!
 aptlDest!**compiled accessors**!public! !
 aptlDest:!**compiled accessors**!public! !
@@ -432,6 +437,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_PLGBLT}! !
+
 !OS.EMRPLGBLT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

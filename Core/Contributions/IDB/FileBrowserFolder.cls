@@ -5,13 +5,17 @@ FileBrowserAbstract subclass: #FileBrowserFolder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileBrowserFolder guid: (GUID fromString: '{782ed51b-5423-11d3-998b-bca753d3b065}')!
+
 FileBrowserFolder comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !FileBrowserFolder categoriesForClass!IDB Goodies! !
+
 !FileBrowserFolder methodsFor!
 
 children
@@ -44,6 +48,7 @@ searchPath
 		composePath: self path
 		stem: '*'
 		extension: '*'! !
+
 !FileBrowserFolder categoriesForMethods!
 children!accessing!public! !
 files!accessing!public! !

@@ -7,7 +7,9 @@ ADODB.Fields15
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.Fields20 guid: (OS.COM.IID fromString: '{0000154d-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.Fields20 comment: '`Fields20` is a wrapper class for the COM interface ''ADODB.Fields20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -38,7 +40,9 @@ interface Fields20 : Fields15
 };
 ```
 '!
+
 !ADODB.Fields20 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.Fields20 methodsFor!
 
 _append: name type: type
@@ -76,6 +80,7 @@ Delete: index
 
 	<virtual stdcall: hresult 13 variant>
 	^self invalidCall: _failureCode! !
+
 !ADODB.Fields20 categoriesForMethods!
 _append:type:!**auto generated**!methods!public! !
 _Append:Type:DefinedSize:Attrib:!**auto generated**!COM Interfaces-Fields20!public! !
@@ -95,6 +100,7 @@ defineFunctions
 		defineFunction: #Delete:
 			argumentTypes: 'variant'
 ! !
+
 !ADODB.Fields20 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

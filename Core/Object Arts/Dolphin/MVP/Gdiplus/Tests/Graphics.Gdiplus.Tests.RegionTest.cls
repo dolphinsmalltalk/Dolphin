@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.RegionTest guid: (Core.GUID fromString: '{3e99725f-064c-4d2a-afd6-3d4cf777e9f3}')!
+
 Graphics.Gdiplus.Tests.RegionTest comment: ''!
+
 !Graphics.Gdiplus.Tests.RegionTest methodsFor!
 
 createCanonicalSubject
@@ -555,6 +558,7 @@ testXorRegion
 verifyEqualToModel: aGdiplusObject
 	super verifyEqualToModel: aGdiplusObject.
 	self assert: (aGdiplusObject isEqualRegion: model)! !
+
 !Graphics.Gdiplus.Tests.RegionTest categoriesForMethods!
 createCanonicalSubject!private!running! !
 subjectBounds!constants!private! !

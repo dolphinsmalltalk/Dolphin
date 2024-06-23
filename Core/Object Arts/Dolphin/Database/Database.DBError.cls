@@ -7,9 +7,13 @@ Core.Error
 	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBError guid: (Core.GUID fromString: '{87b4c559-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Database.DBError comment: 'Instances of DBError hold exception information for Database Connection errors.'!
+
 !Database.DBError categoriesForClass!ODBC Interface! !
+
 !Database.DBError methodsFor!
 
 _descriptionFormat
@@ -22,6 +26,7 @@ signal
 
 	self tag buildErrorInfo.
 	super signal! !
+
 !Database.DBError categoriesForMethods!
 _descriptionFormat!displaying!public! !
 signal!public!signalling! !

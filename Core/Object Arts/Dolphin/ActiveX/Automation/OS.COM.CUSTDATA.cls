@@ -11,13 +11,17 @@ External.FinalizableStructure
 			'_OffsetOf_cCustData' -> 16r0.
 			'_OffsetOf_prgCustData' -> 16r4
 		}!
+
 OS.COM.CUSTDATA guid: (Core.GUID fromString: '{c06f3b7b-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.CUSTDATA comment: '<CUSTDATA> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATA'' from type information in the ''Ole Automation Type Library'' library.
 
 The type library contains no documentation for this struct
 
 Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !OS.COM.CUSTDATA categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.CUSTDATA methodsFor!
 
 associations
@@ -74,6 +78,7 @@ prgCustData
 
 table
 	^table ifNil: [table := Dictionary withAll: self associations]! !
+
 !OS.COM.CUSTDATA categoriesForMethods!
 associations!public! !
 at:!accessing!public! !
@@ -128,6 +133,7 @@ initialize
 		at: (GUID fromString: '{8e229a94-5e3f-45bd-88bd-06d9f8fef430}') put: #__errno;
 		at: (GUID fromString: '{905342e6-276b-4ca5-84cf-9e714b8e40e3}') put: #__category;
 		shrink! !
+
 !OS.COM.CUSTDATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !

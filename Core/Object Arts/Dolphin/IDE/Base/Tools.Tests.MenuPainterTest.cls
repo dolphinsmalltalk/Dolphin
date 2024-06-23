@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.MenuPainterTest guid: (Core.GUID fromString: '{3118e3fb-ce52-409f-9738-275074c5c9a6}')!
+
 Tools.Tests.MenuPainterTest comment: ''!
+
 !Tools.Tests.MenuPainterTest methodsFor!
 
 subjectClass
@@ -28,6 +31,7 @@ testSplitMenuText
 	self assert: (subject splitMenuText: 'c&&ab') equals: #('c&&ab' '' '').
 	self assert: (subject splitMenuText: '🐬&&&🍺🐬') equals: #('🐬&&' '🍺' '🐬').
 	self assert: (subject splitMenuText: '') equals: #('' '' '')! !
+
 !Tools.Tests.MenuPainterTest categoriesForMethods!
 subjectClass!constants!private! !
 testSplitMenuText!public! !

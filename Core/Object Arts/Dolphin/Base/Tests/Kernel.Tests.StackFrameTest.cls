@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StackFrameTest guid: (Core.GUID fromString: '{23991667-5a26-4271-a113-851da1870814}')!
+
 Kernel.Tests.StackFrameTest comment: ''!
+
 !Kernel.Tests.StackFrameTest methodsFor!
 
 testOnProcessIndex
@@ -24,6 +27,7 @@ testOnProcessIndex
 	"Invoke the method directly so we don't need to install it."
 	frame2 := testMethod value: StackFrame withArguments: {topFrame process. topFrame index}.
 	self assert: frame2 equals: topFrame! !
+
 !Kernel.Tests.StackFrameTest categoriesForMethods!
 testOnProcessIndex!public!unit tests! !
 !

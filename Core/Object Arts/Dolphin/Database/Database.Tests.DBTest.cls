@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.Tests.DBTest guid: (Core.GUID fromString: '{13e9a82d-7aae-43aa-864a-a15706b23ae3}')!
+
 Database.Tests.DBTest isNonInstantiable: true!
+
 Database.Tests.DBTest comment: ''!
+
 !Database.Tests.DBTest methodsFor!
 
 databaseResource
@@ -50,6 +54,7 @@ testIsEmpty
 	self assert: results isEmpty.
 	results := connection query: 'select CategoryID, CategoryName from categories where CategoryID = 1'.
 	self deny: results isEmpty! !
+
 !Database.Tests.DBTest categoriesForMethods!
 databaseResource!helpers!private! !
 employeeNames!helpers!private! !

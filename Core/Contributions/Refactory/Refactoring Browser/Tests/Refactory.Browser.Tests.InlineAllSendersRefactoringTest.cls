@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.InlineAllSendersRefactoringTest guid: (Core.GUID fromString: '{c022453d-1c4d-4bf0-a604-9abd6f068965}')!
+
 Refactory.Browser.Tests.InlineAllSendersRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.InlineAllSendersRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.InlineAllSendersRefactoringTest methodsFor!
 
 testInlineMethodWithMultipleSendersInMethod
@@ -39,6 +43,7 @@ testRecursiveMethod
 				in: class).
 	self assert: (class parseTreeFor: #foo) equals: (self parseMethod: 'foo ^self foo').
 	self assert: (class parseTreeFor: #bar) equals: (self parseMethod: 'bar ^self foo')! !
+
 !Refactory.Browser.Tests.InlineAllSendersRefactoringTest categoriesForMethods!
 testInlineMethodWithMultipleSendersInMethod!public!tests! !
 testRecursiveMethod!public!tests! !

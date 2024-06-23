@@ -7,10 +7,13 @@ Graphics.Gdiplus.AbstractCustomLineCap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.CustomLineCap guid: (Core.GUID fromString: '{ea986b35-8426-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.CustomLineCap comment: 'GdiplusCustomLineCap defines the style of graphic used to draw the ends of a line. It can be various shapes, such as a square, circle, or diamond and is defined by the path that draws it. The path is drawn by using a Pen object to draw the outline of a shape or by using a Brush object to fill the interior. The cap can be used on either or both ends of the line. Spacing can be adjusted between the end caps and the line.
 
 '!
+
 !Graphics.Gdiplus.CustomLineCap methodsFor!
 
 baseCap
@@ -101,6 +104,7 @@ strokePath
 	Note that a CustomLineCap cannot have both a fillPath and a strokePath."
 
 	^initializer strokePath! !
+
 !Graphics.Gdiplus.CustomLineCap categoriesForMethods!
 baseCap!accessing!public! !
 baseCap:!accessing!public! !
@@ -142,6 +146,7 @@ strokePath: aGraphicsPath baseCap: anIntegerLineCapConstant baseInset: aFloat
 				strokePath: aGraphicsPath
 				baseCap: anIntegerLineCapConstant
 				baseInset: aFloat)! !
+
 !Graphics.Gdiplus.CustomLineCap class categoriesForMethods!
 fillPath:baseCap:baseInset:!instance creation!public! !
 new!instance creation!public! !

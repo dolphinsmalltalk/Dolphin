@@ -5,9 +5,13 @@ ConsoleSessionManager subclass: #Catenate
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Catenate guid: (GUID fromString: '{8004fa9a-2326-4df3-8107-51cfcd06d5c9}')!
+
 Catenate comment: 'Catenate is a sample command line application that performs the same function as the Unix ''cat'' and DOS ''type'' commands (i.e. it copies the contents of the files specified on its command line to the standard output stream).'!
+
 !Catenate categoriesForClass!Unclassified! !
+
 !Catenate methodsFor!
 
 cat: fileNames 
@@ -40,6 +44,7 @@ openStdOut
 	"Private - We want to open stdout in untranslated mode as we are going to dump the file contents exactly as they are."
 
 	^StdioBinaryFileStream fromHandle: VM stdout! !
+
 !Catenate categoriesForMethods!
 cat:!operations-startup!public! !
 main!operations-startup!public! !

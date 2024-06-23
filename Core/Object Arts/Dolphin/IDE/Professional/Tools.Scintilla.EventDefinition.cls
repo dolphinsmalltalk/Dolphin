@@ -7,9 +7,13 @@ Tools.Scintilla.InterfaceDefinition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Scintilla.EventDefinition guid: (Core.GUID fromString: '{fdf0c39c-6309-4219-a64c-07355e04671c}')!
+
 Tools.Scintilla.EventDefinition comment: ''!
+
 !Tools.Scintilla.EventDefinition categoriesForClass!Development! !
+
 !Tools.Scintilla.EventDefinition methodsFor!
 
 args: anArrayOfArray 
@@ -51,6 +55,7 @@ id: anInteger name: nameString retType: aString
 
 retType: aString 
 	self assert: [aString = 'void']! !
+
 !Tools.Scintilla.EventDefinition categoriesForMethods!
 args:!private! !
 constPrefix!constants!initializing!private! !
@@ -69,6 +74,7 @@ tokens: anArray
 				retType: (anArray at: 1).
 	evt args: (anArray copyFrom: 4).
 	^evt! !
+
 !Tools.Scintilla.EventDefinition class categoriesForMethods!
 tokens:!instance creation!public! !
 !

@@ -7,9 +7,13 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBModel guid: (Core.GUID fromString: '{e04ee960-3b00-47a4-b10a-e93cb600dad5}')!
+
 Refactory.Browser.RBModel comment: ''!
+
 !Refactory.Browser.RBModel categoriesForClass!Refactory-Model! !
+
 !Refactory.Browser.RBModel methodsFor!
 
 addClassConstant: anAssociation to: aRBClass
@@ -376,6 +380,7 @@ smalltalkNamespace
 
 upgradePackage: aPackage
 	^changes addChange: (PackageVersionChange package: aPackage version: Package paxVersion)! !
+
 !Refactory.Browser.RBModel categoriesForMethods!
 addClassConstant:to:!changes!private! !
 addClassVariable:to:!changes!private! !
@@ -442,6 +447,7 @@ onEnvironment: aBrowserEnvironment
 	^self basicNew
 		setEnvironment: aBrowserEnvironment;
 		yourself! !
+
 !Refactory.Browser.RBModel class categoriesForMethods!
 new!instance creation!public! !
 onEnvironment:!instance creation!public! !

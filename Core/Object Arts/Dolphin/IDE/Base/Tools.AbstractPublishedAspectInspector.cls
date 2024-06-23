@@ -7,10 +7,15 @@ Tools.AspectInspector
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AbstractPublishedAspectInspector guid: (Core.GUID fromString: '{f1cdcdf4-e0b8-4070-953a-c17010bab8ad}')!
+
 Tools.AbstractPublishedAspectInspector isNonInstantiable: true!
+
 Tools.AbstractPublishedAspectInspector comment: ''!
+
 !Tools.AbstractPublishedAspectInspector categoriesForClass!MVP-Presenters! !
+
 !Tools.AbstractPublishedAspectInspector methodsFor!
 
 addToCommandRoute: route 
@@ -359,6 +364,7 @@ testForEditButtonClickAt: aPoint
 			self assert: [hit iItem = (aspectListTree selectionByIndex - 1)].
 			aspectAccessor := aspectListTree objectFromHandle: hit iItem + 1.
 			aspectAccessor canEdit ifTrue: [aspectAccessor editUsing: aspectPresenter]]! !
+
 !Tools.AbstractPublishedAspectInspector categoriesForMethods!
 addToCommandRoute:!private! !
 aspectChanged:!private!updating! !
@@ -422,6 +428,7 @@ shellOn: anObject
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
+
 !Tools.AbstractPublishedAspectInspector class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 resource_Vertical_view!public!resources-views! !

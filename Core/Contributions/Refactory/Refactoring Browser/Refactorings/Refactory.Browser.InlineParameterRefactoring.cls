@@ -7,9 +7,13 @@ Refactory.Browser.RemoveParameterRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.InlineParameterRefactoring guid: (Core.GUID fromString: '{9e2f3b66-4a50-4da3-97d8-7b1af9c59ea5}')!
+
 Refactory.Browser.InlineParameterRefactoring comment: ''!
+
 !Refactory.Browser.InlineParameterRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.InlineParameterRefactoring methodsFor!
 
 allExpressionsToInline
@@ -72,6 +76,7 @@ storeOn: aStream
 		nextPutAll: ' selector: ';
 		print: oldSelector;
 		nextPut: $)! !
+
 !Refactory.Browser.InlineParameterRefactoring categoriesForMethods!
 allExpressionsToInline!enquiries!private! !
 expressionsToInlineFrom:!private! !
@@ -96,6 +101,7 @@ model: aRBModel inlineParameter: aString in: aClass selector: aSelector
 			in: aClass
 			selector: aSelector;
 		yourself! !
+
 !Refactory.Browser.InlineParameterRefactoring class categoriesForMethods!
 inlineParameter:in:selector:!instance creation!public! !
 model:inlineParameter:in:selector:!instance creation!public! !

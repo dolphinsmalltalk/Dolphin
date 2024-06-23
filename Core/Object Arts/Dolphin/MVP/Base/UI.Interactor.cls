@@ -7,14 +7,19 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Interactor guid: (Core.GUID fromString: '{6281dd52-ad59-468b-b5b9-c5594195cef8}')!
+
 UI.Interactor isNonInstantiable: true!
+
 UI.Interactor comment: '`Interactor` is an abstract class of `<interactor>`s that provide a plug-in capability to replace a `<presenter>`s normal response to user input events with something else, either temporarily (such as for the duration of a drag session) or for the life of the presenter.
 
 ## Instance Variables:
   `presenter`		`<presenter>` for which the `Interactor` is processing user input.
 '!
+
 !UI.Interactor categoriesForClass!MVP-Interactors! !
+
 !UI.Interactor methodsFor!
 
 onCaptureChanged: aViewOrNil 
@@ -150,6 +155,7 @@ setPresenter: aPresenter
 
 view
 	^self presenter view! !
+
 !UI.Interactor categoriesForMethods!
 onCaptureChanged:!event handling!public! !
 onGetCursor:!event handling!public! !
@@ -214,6 +220,7 @@ stbConvertFromVersion0: anArray
 
 stbVersion
 	^1! !
+
 !UI.Interactor class categoriesForMethods!
 forPresenter:!instance creation!public! !
 icon!constants!public! !

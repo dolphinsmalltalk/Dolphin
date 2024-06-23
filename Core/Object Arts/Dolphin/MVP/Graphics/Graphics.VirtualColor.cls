@@ -7,10 +7,15 @@ Graphics.Color
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.VirtualColor guid: (Core.GUID fromString: '{aa0eebfb-75db-4ed8-a11f-55ac6b62948e}')!
+
 Graphics.VirtualColor isNonInstantiable: true!
+
 Graphics.VirtualColor comment: '`VirtualColor` is the abstract class of `Color`s with an indirectly stored or calculated color value that can vary at run time.'!
+
 !Graphics.VirtualColor categoriesForClass!Drawing! !
+
 !Graphics.VirtualColor methodsFor!
 
 actualColor
@@ -56,6 +61,7 @@ rgbCode
 	"Answer the receiver's <integer> color value in 24-bit RGB encoding with 8-bits per component in COLORREF order (red as low-order byte, green 2nd byte, and blue 3rd byte)."
 
 	^self actualColor rgbCode! !
+
 !Graphics.VirtualColor categoriesForMethods!
 actualColor!accessing!public! !
 alpha!accessing!public! !
@@ -77,6 +83,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 		readObjectOfClass: self
 		format: anSTBClassConversion
 		size: anInteger! !
+
 !Graphics.VirtualColor class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !

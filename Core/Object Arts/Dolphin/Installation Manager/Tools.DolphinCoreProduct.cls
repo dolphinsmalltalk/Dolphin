@@ -7,9 +7,13 @@ Tools.DolphinProduct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinCoreProduct guid: (Core.GUID fromString: '{610c5616-617f-4b75-9c31-7589f234a3c2}')!
+
 Tools.DolphinCoreProduct comment: ''!
+
 !Tools.DolphinCoreProduct categoriesForClass!System-Support! !
+
 !Tools.DolphinCoreProduct methodsFor!
 
 contents
@@ -151,6 +155,7 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Core'! !
+
 !Tools.DolphinCoreProduct categoriesForMethods!
 contents!accessing!public! !
 defaultSystemFolderColor!constants!private! !
@@ -169,6 +174,7 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCORE'! !
+
 !Tools.DolphinCoreProduct class categoriesForMethods!
 productName!accessing!public! !
 shortProductName!accessing!public! !

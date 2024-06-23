@@ -7,9 +7,13 @@ Kernel.StValueToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralByteArrayToken guid: (Core.GUID fromString: '{6acc5452-14fa-4ecd-8720-c75e3d6458a9}')!
+
 Kernel.StLiteralByteArrayToken comment: ''!
+
 !Kernel.StLiteralByteArrayToken categoriesForClass!System-Compiler! !
+
 !Kernel.StLiteralByteArrayToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -17,6 +21,7 @@ acceptVisitor: aTokenVisitor
 
 isLiteralByteArrayToken
 	^true! !
+
 !Kernel.StLiteralByteArrayToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isLiteralByteArrayToken!public!testing! !

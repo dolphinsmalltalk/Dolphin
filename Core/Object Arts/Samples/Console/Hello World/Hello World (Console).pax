@@ -87,10 +87,5 @@ ConsoleSessionManager subclass: #CommandLineHelloWorld
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
-"Loose Methods"!
-
 "End of package definition"!
 

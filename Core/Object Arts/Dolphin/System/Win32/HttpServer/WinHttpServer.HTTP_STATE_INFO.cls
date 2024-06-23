@@ -7,7 +7,9 @@ WinHttpServer.HTTP_PROPERTY_FLAGS
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_HTTP_STATE_INFO_Size' -> 16r8. '_OffsetOf_State' -> 16r4 }!
+
 WinHttpServer.HTTP_STATE_INFO guid: (Core.GUID fromString: '{5dc84435-3eb8-42fe-94bf-25f253e612fd}')!
+
 WinHttpServer.HTTP_STATE_INFO comment: '`HTTP_STATE_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_STATE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -24,7 +26,9 @@ struct tagHTTP_STATE_INFO {
 } HTTP_STATE_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_STATE_INFO categoriesForClass!Win32-Structs! !
+
 !WinHttpServer.HTTP_STATE_INFO methodsFor!
 
 isActive
@@ -62,6 +66,7 @@ value: anInteger
 			[self
 				Present: true;
 				State: anInteger]! !
+
 !WinHttpServer.HTTP_STATE_INFO categoriesForMethods!
 isActive!accessing!public! !
 isActive:!accessing!public! !
@@ -109,6 +114,7 @@ inactive
 
 propertyId
 	^HttpServerStateProperty! !
+
 !WinHttpServer.HTTP_STATE_INFO class categoriesForMethods!
 active!instance creation!public! !
 byteSize!**compiled accessors**!constants!public! !

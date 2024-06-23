@@ -5,9 +5,13 @@ XMLTokenizer subclass: #SAXDriver
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SAXDriver guid: (GUID fromString: '{3102df00-a9b7-41d1-9524-c0c87736c600}')!
+
 SAXDriver comment: ''!
+
 !SAXDriver categoriesForClass!XML-Parser! !
+
 !SAXDriver methodsFor!
 
 handleCData: aString
@@ -51,6 +55,7 @@ saxHandler
 
 saxHandler: aHandler
 	saxHandler := aHandler! !
+
 !SAXDriver categoriesForMethods!
 handleCData:!handling tokens!public! !
 handleEndDocument!handling tokens!public! !

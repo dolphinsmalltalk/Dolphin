@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Parser guid: (Core.GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
+
 Kernel.Parser comment: 'Instance Variables:
 	scanner		<SmalltalkScanner> performing lexical analysis over the source text
 	currentToken	<StToken>
@@ -27,7 +29,9 @@ Class Variables:
 Pools:
 	ExtCallArgTypes 		Maps standard external type names, as recognised by the old Dolphin Compiler to the parameter types to be used for passing by value and by reference.
 	SmalltalkParseErrorCodes	Maps compiler error/warning names to their corresponding integer code'!
+
 !Kernel.Parser categoriesForClass!System-Compiler! !
+
 !Kernel.Parser methodsFor!
 
 addCommentsTo: aNode 
@@ -1204,6 +1208,7 @@ validateTemp: aVariableNode of: aNode temps: anOrderedCollection
 
 variableNodeClass
 	^StVariableNode! !
+
 !Kernel.Parser categoriesForMethods!
 addCommentsTo:!helpers!private! !
 annotationNodeClass!constants!private! !
@@ -1446,6 +1451,7 @@ parseMethodPattern: aString
 
 warningClass
 	^CompilerWarningNotification! !
+
 !Kernel.Parser class categoriesForMethods!
 allowEmptyStatements!accessing!public! !
 allowEmptyStatements:!accessing!public! !

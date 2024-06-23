@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Profile
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Profile2 guid: (OS.COM.IID fromString: '{fa740d4b-5eae-4344-a8ad-74be31925397}')!
+
 WebView2.ICoreWebView2Profile2 isEgressOnly: true!
+
 WebView2.ICoreWebView2Profile2 comment: '`ICoreWebView2Profile2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -39,7 +42,9 @@ interface ICoreWebView2Profile2 : ICoreWebView2Profile
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Profile2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Profile2 methodsFor!
 
 clearBrowsingData: dataKinds from: startTime to: endTime thenDo: aMonadicValuable
@@ -85,6 +90,7 @@ ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime ha
 
 	<virtual stdcall: hresult 12 int32 double double ICoreWebView2ClearBrowsingDataCompletedHandler*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Profile2 categoriesForMethods!
 clearBrowsingData:from:to:thenDo:!methods!public! !
 ClearBrowsingData:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
@@ -106,6 +112,7 @@ defineFunctions
 		defineFunction: #ClearBrowsingDataAll:
 			argumentTypes: 'ICoreWebView2ClearBrowsingDataCompletedHandler*'
 ! !
+
 !WebView2.ICoreWebView2Profile2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

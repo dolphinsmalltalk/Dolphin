@@ -7,8 +7,11 @@ MSXML.IXMLDOMParseError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMParseError2 guid: (OS.COM.IID fromString: '{3efaa428-272f-11d2-836f-0000f87a7782}')!
+
 MSXML.IXMLDOMParseError2 isEgressOnly: true!
+
 MSXML.IXMLDOMParseError2 comment: '<IXMLDOMParseError2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMParseError2'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -42,7 +45,9 @@ interface IXMLDOMParseError2 : IXMLDOMParseError
 		[out, retval]long* count);
 };
 '!
+
 !MSXML.IXMLDOMParseError2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXMLDOMParseError2 methodsFor!
 
 allErrors
@@ -113,6 +118,7 @@ get_errorXPath: xpathexpr
 
 	<virtual stdcall: hresult 15 bstr*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IXMLDOMParseError2 categoriesForMethods!
 allErrors!**auto generated**!properties!public! !
 errorParameters:!**auto generated**!methods!public! !
@@ -140,6 +146,7 @@ defineFunctions
 		defineFunction: #get_errorParametersCount:
 			argumentTypes: 'sdword*'
 ! !
+
 !MSXML.IXMLDOMParseError2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

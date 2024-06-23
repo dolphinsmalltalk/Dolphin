@@ -7,9 +7,13 @@ External.ExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UIntPtrArray guid: (Core.GUID fromString: '{685f8656-e2d9-4365-8469-efaeb39fb86c}')!
+
 External.UIntPtrArray comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of pointer-sized unsigned integers.'!
+
 !External.UIntPtrArray categoriesForClass!External-Data-Structured! !
+
 !External.UIntPtrArray methodsFor!
 
 uncheckedAt: anInteger 
@@ -20,6 +24,7 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes uintPtrAtOffset: (indexInteger - 1) * VMConstants.IntPtrSize put: valueInteger! !
+
 !External.UIntPtrArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
@@ -31,6 +36,7 @@ elementClass
 	"Answer the class of <External.Structure> used to represent elements of the receiver."
 
 	^UIntPtr! !
+
 !External.UIntPtrArray class categoriesForMethods!
 elementClass!constants!public! !
 !

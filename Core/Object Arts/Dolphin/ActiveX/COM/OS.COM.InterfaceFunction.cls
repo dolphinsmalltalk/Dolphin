@@ -7,14 +7,18 @@ OS.COM.AbstractInterfaceFunction
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.InterfaceFunction guid: (Core.GUID fromString: '{87b4c466-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.COM.InterfaceFunction comment: 'COMFunction is the generic class of <COMFunctionAbstract> used to represent the majority of COM functions which are forwarded to the implementing <Object> (COM server) rather than the <COMObjectStub> or any other object.
 
 Instance Variables:
 	selector		<Symbol>. Selector to be forwarded.
 	descriptor		<FunctionDescriptor>. Argument type descriptions.
 '!
+
 !OS.COM.InterfaceFunction categoriesForClass!COM-Implementations! !
+
 !OS.COM.InterfaceFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress
@@ -49,6 +53,7 @@ selector: aSymbol
 	implementing the COM virtual function when that function is called."
 
 	selector := aSymbol! !
+
 !OS.COM.InterfaceFunction categoriesForMethods!
 callback:interface:withArgumentsAt:!debugger-step through!evaluating!private! !
 descriptor!accessing!private! !
@@ -74,6 +79,7 @@ selector: aSymbol descriptor: aFunctionDescriptor
 	^self new
 		selector: aSymbol;
 		descriptor: aFunctionDescriptor! !
+
 !OS.COM.InterfaceFunction class categoriesForMethods!
 prototype:!instance creation!public! !
 selector:descriptor:!instance creation!public! !

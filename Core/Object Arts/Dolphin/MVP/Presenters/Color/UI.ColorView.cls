@@ -7,9 +7,13 @@ UI.StaticControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ColorView guid: (Core.GUID fromString: '{87b4c73c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ColorView comment: 'ColorView is a <valueView> for displaying static <color>s. The <valueModel> associated with a ColorView must always yield a <color> value when mapped through the installed type converter. A ColorView will normally be used in conjunction with a <ColorPresenter>.'!
+
 !UI.ColorView categoriesForClass!MVP-Views! !
+
 !UI.ColorView methodsFor!
 
 basicActualBackcolor
@@ -43,6 +47,7 @@ paintTransparentBackgroundOn: aCanvas
 	aCanvas
 		brush: (HatchBrush diamond: Color whiteSmoke);
 		fillRectangle: self clientRectangle! !
+
 !UI.ColorView categoriesForMethods!
 basicActualBackcolor!accessing!private! !
 displayValue!private!updating! !
@@ -61,6 +66,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !UI.ColorView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

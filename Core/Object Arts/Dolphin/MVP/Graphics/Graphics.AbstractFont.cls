@@ -7,9 +7,13 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.AbstractFont guid: (Core.GUID fromString: '{894c6c14-886e-4fde-9d60-0038c187704b}')!
+
 Graphics.AbstractFont isNonInstantiable: true!
+
 Graphics.AbstractFont comment: ''!
+
 !Graphics.AbstractFont methodsFor!
 
 = aFont
@@ -158,6 +162,7 @@ weight
 	"Answer the receiver's <integer> 'weight' (thickness)."
 
 	^self logFont lfWeight! !
+
 !Graphics.AbstractFont categoriesForMethods!
 =!comparing!public! !
 actualFont!public! !
@@ -243,6 +248,7 @@ system
 	"Answer the stock System font."
 
 	^self fromId: SYSTEM_FONT! !
+
 !Graphics.AbstractFont class categoriesForMethods!
 default!instance creation!public! !
 defaultPointSize!constants!private! !

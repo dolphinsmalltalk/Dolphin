@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.ProtectedProductSerialNumber guid: (Core.GUID fromString: '{1e38759a-1c4b-4b07-bfa7-2b47b361a5d1}')!
+
 Security.ProtectedProductSerialNumber isNonInstantiable: true!
+
 Security.ProtectedProductSerialNumber comment: 'This class acts as an abstract superclass for serial numbers of protected products. A protected product can be encrypted using the #decodingKey of a serial number. The encryption process garbles the bytecodes of the product''s compiled methods so the application will not run successfully until it is decrypted by the same #decodingKey.
 
 Concrete subclasses should be created either for each product created or, more likely, for each publishing author. These subclasses must override the following methods (all on the class side) as described in the method comments:
@@ -32,7 +35,9 @@ If you find that a serial number has been illegally distributed to others you ca
 For a simple example see the ''Protected Scribble'' sample package (under Samples/Lagoon/Product Protection/).
 
 It is possible to override more of the class-side methods in the ''constants'' category in order to use different encryption of both the serial number itself, and of the ''garbled'' methods.  The ''Protected Notepad'' sample application showns one example of this.'!
+
 !Security.ProtectedProductSerialNumber categoriesForClass!Cryptography-Support! !
+
 !Security.ProtectedProductSerialNumber methodsFor!
 
 displayOn: aPuttableStream
@@ -158,6 +163,7 @@ value: anInteger
 
 	value := anInteger.
 	stringValue := nil! !
+
 !Security.ProtectedProductSerialNumber categoriesForMethods!
 displayOn:!displaying!public! !
 expiry!accessing!public! !
@@ -377,6 +383,7 @@ unlockClasses: aCollectionOfClasses using: aSerialNumber
 
 	(self productProtectorWithKey: aSerialNumber lockedMethodDecodingKey) 
 		unlockClasses: aCollectionOfClasses! !
+
 !Security.ProtectedProductSerialNumber class categoriesForMethods!
 fromString:!instance creation!public! !
 icon!constants!development!public! !

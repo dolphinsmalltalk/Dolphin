@@ -7,11 +7,17 @@ WebView2.ICoreWebView2IterableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2HttpHeadersCollection guid: (OS.COM.IID fromString: '{5b5d8e75-be21-4d21-9843-509bd2c0a429}')!
+
 WebView2.ICoreWebView2HttpHeadersCollection isNonInstantiable: true!
+
 WebView2.ICoreWebView2HttpHeadersCollection isEgressOnly: true!
+
 WebView2.ICoreWebView2HttpHeadersCollection comment: '`ICoreWebView2HttpHeadersCollection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implmentaton of most of the Smalltalk `<abstractDictionary>` protocol.'!
+
 !WebView2.ICoreWebView2HttpHeadersCollection categoriesForClass!COM-Interfaces! !
+
 !WebView2.ICoreWebView2HttpHeadersCollection methodsFor!
 
 add: anAssociation
@@ -190,6 +196,7 @@ values
 	names := Array writeStream: 2.
 	self keysAndValuesDo: [:eachKey :eachValue | names nextPut: eachValue].
 	^names grabContents! !
+
 !WebView2.ICoreWebView2HttpHeadersCollection categoriesForMethods!
 add:!adding!public! !
 addAll:!adding!public! !

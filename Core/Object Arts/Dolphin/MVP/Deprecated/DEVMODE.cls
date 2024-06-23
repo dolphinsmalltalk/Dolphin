@@ -5,7 +5,9 @@ ExternalStructure subclass: #DEVMODE
 	classVariableNames: '_DEVMODE_Size _OffsetOf_dmBitsPerPel _OffsetOf_dmCollate _OffsetOf_dmColor _OffsetOf_dmCopies _OffsetOf_dmDefaultSource _OffsetOf_dmDeviceName _OffsetOf_dmDisplayFlags _OffsetOf_dmDisplayFrequency _OffsetOf_dmDitherType _OffsetOf_dmDriverExtra _OffsetOf_dmDriverVersion _OffsetOf_dmDuplex _OffsetOf_dmFields _OffsetOf_dmFormName _OffsetOf_dmICMIntent _OffsetOf_dmICMMethod _OffsetOf_dmLogPixels _OffsetOf_dmMediaType _OffsetOf_dmOrientation _OffsetOf_dmPaperLength _OffsetOf_dmPaperSize _OffsetOf_dmPaperWidth _OffsetOf_dmPelsHeight _OffsetOf_dmPelsWidth _OffsetOf_dmPrintQuality _OffsetOf_dmReserved1 _OffsetOf_dmReserved2 _OffsetOf_dmScale _OffsetOf_dmSize _OffsetOf_dmSpecVersion _OffsetOf_dmTTOption _OffsetOf_dmYResolution'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DEVMODE guid: (GUID fromString: '{62ad7874-bbbf-4852-99d9-8040855ecb49}')!
+
 DEVMODE addClassConstant: '_DEVMODE_Size' value: 16r94!
 DEVMODE addClassConstant: '_OffsetOf_dmBitsPerPel' value: 16r68!
 DEVMODE addClassConstant: '_OffsetOf_dmCollate' value: 16r44!
@@ -83,7 +85,9 @@ struct tagDEVMODE {
 	DWORD dmReserved2;
 } DEVMODE;
 '!
+
 !DEVMODE categoriesForClass!Deprecated! !
+
 !DEVMODE class methodsFor!
 
 byteSize
@@ -168,6 +172,7 @@ defineFields
 
 getFieldNames
 	^#(#dmDeviceName #dmSpecVersion #dmDriverVersion #dmSize #dmDriverExtra #dmFields #dmOrientation #dmPaperSize #dmPaperLength #dmPaperWidth #dmScale #dmCopies #dmDefaultSource #dmPrintQuality #dmColor #dmDuplex #dmYResolution #dmTTOption #dmCollate #dmFormName #dmLogPixels #dmBitsPerPel #dmPelsWidth #dmPelsHeight #dmDisplayFlags #dmDisplayFrequency #dmICMMethod #dmICMIntent #dmMediaType #dmDitherType)! !
+
 !DEVMODE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

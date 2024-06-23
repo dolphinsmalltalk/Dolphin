@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.InlineParameterRefactoringTest guid: (Core.GUID fromString: '{6a76ec20-1cb3-4e28-84e7-947775648e57}')!
+
 Refactory.Browser.Tests.InlineParameterRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.InlineParameterRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.InlineParameterRefactoringTest methodsFor!
 
 testInlineBlockFailure
@@ -36,6 +40,7 @@ testInlineLiteralArray
 	change := refactoring model changes changes first.
 	self assert: change package identicalTo: self class owningPackage.
 	self assert: change environment identicalTo: Tools! !
+
 !Refactory.Browser.Tests.InlineParameterRefactoringTest categoriesForMethods!
 testInlineBlockFailure!failure tests!public! !
 testInlineLiteralArray!public!tests! !

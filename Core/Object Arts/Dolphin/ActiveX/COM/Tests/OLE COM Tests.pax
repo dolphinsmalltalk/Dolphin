@@ -30,6 +30,7 @@ OS.COM
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.EXCEPINFOTest'
 	instanceVariableNames: ''
@@ -37,6 +38,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.InterfaceTest'
 	instanceVariableNames: ''
@@ -44,6 +46,7 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.GUIDTest
 	subclass: #'OS.COM.Tests.CLSIDTest'
 	instanceVariableNames: ''
@@ -51,6 +54,7 @@ Core.Tests.GUIDTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.GUIDTest
 	subclass: #'OS.COM.Tests.IIDTest'
 	instanceVariableNames: ''

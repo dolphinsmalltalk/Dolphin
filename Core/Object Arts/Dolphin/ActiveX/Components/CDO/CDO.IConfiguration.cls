@@ -7,14 +7,18 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 CDO.IConfiguration guid: (OS.COM.IID fromString: '{cd000022-8b95-11d1-82db-00c04fb1625d}')!
+
 CDO.IConfiguration comment: '<CDO.IConfiguration> is a wrapper class for the COM interface ''CDO.IConfiguration'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage configuration information for CDO objects"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDO.IConfiguration categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDO.IConfiguration methodsFor!
 
 fields
@@ -91,6 +95,7 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self fields! !
+
 !CDO.IConfiguration categoriesForMethods!
 fields!properties!public! !
 get_Fields:!**auto generated**!COM Interfaces-IConfiguration!private! !
@@ -123,6 +128,7 @@ defineFunctions
 		defineFunction: #GetInterface:ppUnknown:
 			argumentTypes: 'bstr IDispatch**'
 ! !
+
 !CDO.IConfiguration class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

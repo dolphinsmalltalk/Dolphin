@@ -7,10 +7,15 @@ Core.WeakLookupTable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WeakIdentityDictionary guid: (Core.GUID fromString: '{87b4c534-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.WeakIdentityDictionary isMourner: true!
+
 Core.WeakIdentityDictionary comment: ''!
+
 !Core.WeakIdentityDictionary categoriesForClass!Collections-Unordered!Collections-Weak! !
+
 !Core.WeakIdentityDictionary methodsFor!
 
 copyingClass
@@ -49,6 +54,7 @@ species
 	Weak types are generally considered as of the same species as their equivalent strong type."
 
 	^IdentityDictionary! !
+
 !Core.WeakIdentityDictionary categoriesForMethods!
 copyingClass!copying!private! !
 findKeyOrNil:!private!searching! !
@@ -67,6 +73,7 @@ new: anInteger
 	^(super new: anInteger)
 		beWeak;
 		yourself! !
+
 !Core.WeakIdentityDictionary class categoriesForMethods!
 new:!instance creation!public! !
 !

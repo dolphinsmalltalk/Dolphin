@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IObjectWithSite guid: (OS.COM.IID fromString: '{fc4801a3-2ba9-11cf-a229-00aa003d7352}')!
+
 OS.COM.IObjectWithSite comment: '`IObjectWithSite` is a wrapper class for the COM interface ''Win32.IObjectWithSite'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -33,7 +35,9 @@ interface IObjectWithSite : IUnknown
 };
 ```
 '!
+
 !OS.COM.IObjectWithSite categoriesForClass!COM-Interfaces!Win32-Interfaces! !
+
 !OS.COM.IObjectWithSite methodsFor!
 
 GetSite: riid ppvSite: ppvSite
@@ -54,6 +58,7 @@ SetSite: pUnkSite
 
 	<virtual stdcall: hresult 4 IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IObjectWithSite categoriesForMethods!
 GetSite:ppvSite:!**auto generated**!COM Interfaces-IObjectWithSite!public! !
 SetSite:!**auto generated**!COM Interfaces-IObjectWithSite!public! !
@@ -73,6 +78,7 @@ defineFunctions
 		defineFunction: #GetSite:ppvSite:
 			argumentTypes: 'IID* IUnknown**'
 ! !
+
 !OS.COM.IObjectWithSite class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

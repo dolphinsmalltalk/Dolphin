@@ -7,11 +7,15 @@ UI.StaticView
 	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.SysLinkView guid: (Core.GUID fromString: '{e19a1369-3c1d-4216-b5b6-c6649e51dc4b}')!
+
 UI.SysLinkView comment: '`SysLinkView` is a `<valueView>` wrapper class for the Windows SysLink control. The SysLink control is similar to a normal `StaticText` control, but may contain embedded links, and triggers `#linkClicked:` notification events when the links are clicked. The `<valueModel>` associated with a `SysLinkView` must always yield a `<readableString>` value when mapped through the installed type converter. It is expected that links are expressed in the string as HTML `A` tags, e.g. ''Here is a <A HREF="https://www.microsoft.com">link</A> to Microsoft''.
 
 `SysLinkView` will normally be used in conjunction with a `TextPresenter`.'!
+
 !UI.SysLinkView categoriesForClass!MVP-Views! !
+
 !UI.SysLinkView methodsFor!
 
 calculateExtent: aLayoutContext 
@@ -155,6 +159,7 @@ useVisualStyle: aBoolean
 	"Set whether the link is displayed in the current visual style, or uses the default and ambient (visually inherited) visuals, e.g. for the font."
 
 	self baseStyleMask: LWS_USEVISUALSTYLE set: aBoolean recreateIfChanged: false! !
+
 !UI.SysLinkView categoriesForMethods!
 calculateExtent:!geometry!private! !
 defaultWindowStyle!constants!private! !
@@ -188,6 +193,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
+
 !UI.SysLinkView class categoriesForMethods!
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!public! !

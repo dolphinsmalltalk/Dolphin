@@ -7,7 +7,9 @@ UI.MenuItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'IsDefaultMask' -> 16r100000 }!
+
 UI.CommandMenuItem guid: (Core.GUID fromString: '{87b4c660-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.CommandMenuItem comment: 'CommandMenuItem represents a <commandSource> menu item held by a <Menu>. The item is configured with a <CommandDescription> to be fired when the item is chosen.. 
 
 Instance Variables:
@@ -20,7 +22,9 @@ Class Variables:
 
 
 '!
+
 !UI.CommandMenuItem categoriesForClass!MVP-Views-Support! !
+
 !UI.CommandMenuItem methodsFor!
 
 acceleratorKey
@@ -218,6 +222,7 @@ toStrings
 		nextPut: $/;
 		nextPutAll: self commandDescription commandSymbol;
 		contents! !
+
 !UI.CommandMenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!public! !
@@ -311,6 +316,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
+
 !UI.CommandMenuItem class categoriesForMethods!
 command:description:!instance creation!public! !
 command:description:image:!instance creation!public! !

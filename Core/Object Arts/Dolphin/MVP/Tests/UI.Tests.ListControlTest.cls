@@ -7,9 +7,13 @@ UI.Tests.SelectableListItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ListControlTest guid: (Core.GUID fromString: '{a10a1ba0-5afc-41f3-8b51-2b9e52718424}')!
+
 UI.Tests.ListControlTest isNonInstantiable: true!
+
 UI.Tests.ListControlTest comment: ''!
+
 !UI.Tests.ListControlTest methodsFor!
 
 assertCaretVisible
@@ -396,6 +400,7 @@ verifySingleSelectionsByIndex
 		trigger: #selectionChanged
 		against: presenter.
 	self assert: presenter selectionsByIndex equals: #()! !
+
 !UI.Tests.ListControlTest categoriesForMethods!
 assertCaretVisible!helpers!private! !
 expectedSelectionsForSendShiftClickTests!constants!private! !

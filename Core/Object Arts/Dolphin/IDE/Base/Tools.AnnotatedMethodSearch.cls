@@ -7,8 +7,11 @@ Tools.MethodSearch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AnnotatedMethodSearch guid: (Core.GUID fromString: '{ba126645-8637-444f-b92e-121f2559c06e}')!
+
 Tools.AnnotatedMethodSearch comment: ''!
+
 !Tools.AnnotatedMethodSearch methodsFor!
 
 referenceFilter
@@ -19,6 +22,7 @@ referenceFilter
 
 referencesLabelTag
 	^#annotated! !
+
 !Tools.AnnotatedMethodSearch categoriesForMethods!
 referenceFilter!accessing!private! !
 referencesLabelTag!constants!public! !

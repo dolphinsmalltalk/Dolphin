@@ -5,9 +5,13 @@ File subclass: #InheritableFile
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InheritableFile guid: (GUID fromString: '{948edc81-5c17-11d5-be18-00010240d5e2}')!
+
 InheritableFile comment: ''!
+
 !InheritableFile categoriesForClass!Unclassified! !
+
 !InheritableFile methodsFor!
 
 open
@@ -34,6 +38,7 @@ open
 
 	self beFinalizable.	
 ! !
+
 !InheritableFile categoriesForMethods!
 open!operations!public! !
 !

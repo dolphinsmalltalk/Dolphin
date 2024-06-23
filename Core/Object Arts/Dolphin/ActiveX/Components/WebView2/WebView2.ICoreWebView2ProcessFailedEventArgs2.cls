@@ -7,8 +7,11 @@ WebView2.ICoreWebView2ProcessFailedEventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ProcessFailedEventArgs2 guid: (OS.COM.IID fromString: '{4dab9422-46fa-4c3e-a5d2-41d2071d3680}')!
+
 WebView2.ICoreWebView2ProcessFailedEventArgs2 isEgressOnly: true!
+
 WebView2.ICoreWebView2ProcessFailedEventArgs2 comment: '`ICoreWebView2ProcessFailedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessFailedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -38,7 +41,9 @@ interface ICoreWebView2ProcessFailedEventArgs2 : ICoreWebView2ProcessFailedEvent
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ProcessFailedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ProcessFailedEventArgs2 methodsFor!
 
 get_ExitCode: exitCode
@@ -76,6 +81,7 @@ get_reason: reason
 
 	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2ProcessFailedEventArgs2 categoriesForMethods!
 get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_FrameInfosForFailedProcess:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
@@ -99,6 +105,7 @@ defineFunctions
 		defineFunction: #get_FrameInfosForFailedProcess:
 			argumentTypes: 'ICoreWebView2FrameInfoCollection**'
 ! !
+
 !WebView2.ICoreWebView2ProcessFailedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

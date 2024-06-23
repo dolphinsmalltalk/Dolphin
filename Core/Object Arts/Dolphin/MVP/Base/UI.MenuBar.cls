@@ -7,10 +7,14 @@ UI.Menu
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.MenuBar guid: (Core.GUID fromString: '{87b4c641-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.MenuBar comment: 'MenuBar represents the special class of menus drawn horizontally across the top of the client area of a top-level view, i.e. the menu bar.
 '!
+
 !UI.MenuBar categoriesForClass!Graphics-Tools! !
+
 !UI.MenuBar methodsFor!
 
 createHandle
@@ -54,6 +58,7 @@ showIn: aWindow position: aPos
 
 toStrings
 	^items collect: [:each | each toStrings]! !
+
 !UI.MenuBar categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 fromStrings:!converting!public! !

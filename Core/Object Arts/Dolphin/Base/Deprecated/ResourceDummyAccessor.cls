@@ -7,9 +7,13 @@ ResourceAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ResourceDummyAccessor guid: (Core.GUID fromString: '{87b4c6d7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ResourceDummyAccessor comment: ''!
+
 !ResourceDummyAccessor categoriesForClass!MVP-Resources! !
+
 !ResourceDummyAccessor methodsFor!
 
 loadWithContext: anObject forEdit: isLoadingForEdit 
@@ -28,6 +32,7 @@ save: anObject as: aResourceClass
 
 	self object: anObject.
 	self isChanged: true! !
+
 !ResourceDummyAccessor categoriesForMethods!
 loadWithContext:forEdit:!operations!public! !
 object:!accessing!public! !
@@ -40,6 +45,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !ResourceDummyAccessor class categoriesForMethods!
 stbVersion!binary filing!public! !
 !

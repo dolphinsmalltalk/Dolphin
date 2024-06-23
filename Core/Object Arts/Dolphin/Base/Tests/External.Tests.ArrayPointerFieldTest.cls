@@ -7,8 +7,11 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Tests.ArrayPointerFieldTest guid: (Core.GUID fromString: '{a0c1a616-8f49-45e5-9a9e-f968b315ce71}')!
+
 External.Tests.ArrayPointerFieldTest comment: ''!
+
 !External.Tests.ArrayPointerFieldTest methodsFor!
 
 testGenerateAccessorsForSizedString
@@ -74,6 +77,7 @@ testGenerateAccessorsForSizeIsExpression
 	struct Test: string.
 	self assert: struct Size equals: string size * 2.
 	self assert: struct Test equals: string! !
+
 !External.Tests.ArrayPointerFieldTest categoriesForMethods!
 testGenerateAccessorsForSizedString!public! !
 testGenerateAccessorsForSizeIsExpression!public! !

@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDataObject guid: (OS.COM.IID fromString: '{0000010e-0000-0000-c000-000000000046}')!
+
 OS.COM.IDataObject comment: '`IDataObject` is a wrapper class for the COM interface ''OCIDL.IDataObject'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -59,7 +61,9 @@ interface IDataObject : IUnknown
 };
 ```
 '!
+
 !OS.COM.IDataObject categoriesForClass!OBJIDL-Interfaces! !
+
 !OS.COM.IDataObject methodsFor!
 
 dAdvise: pformatetc advf: advf pAdvSink: pAdvSink
@@ -201,6 +205,7 @@ SetData: pformatetc pmedium: pmedium fRelease: fRelease
 
 	<virtual stdcall: hresult 8 FORMATETC* STGMEDIUM* int32>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IDataObject categoriesForMethods!
 dAdvise:advf:pAdvSink:!**auto generated**!methods!public! !
 DAdvise:advf:pAdvSink:pdwConnection:!**auto generated**!COM Interfaces-IDataObject!private! !
@@ -245,6 +250,7 @@ defineFunctions
 		defineFunction: #EnumDAdvise:
 			argumentTypes: 'IEnumSTATDATA**'
 ! !
+
 !OS.COM.IDataObject class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

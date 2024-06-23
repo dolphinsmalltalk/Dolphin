@@ -7,9 +7,13 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.SizeEvent guid: (Core.GUID fromString: '{87b4c553-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.SizeEvent comment: ''!
+
 !UI.SizeEvent categoriesForClass!Events!MVP-Views-Events! !
+
 !UI.SizeEvent methodsFor!
 
 extent
@@ -31,6 +35,7 @@ width
 	"Answer the width of the client area after the size event."
 
 	^self lParamX! !
+
 !UI.SizeEvent categoriesForMethods!
 extent!accessing!public! !
 height!accessing!public! !

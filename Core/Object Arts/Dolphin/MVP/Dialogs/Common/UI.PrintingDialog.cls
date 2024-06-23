@@ -7,9 +7,13 @@ UI.CommonDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PrintingDialog guid: (Core.GUID fromString: '{2db5c831-2da8-46f1-9146-23ef129fea95}')!
+
 UI.PrintingDialog isNonInstantiable: true!
+
 UI.PrintingDialog comment: ''!
+
 !UI.PrintingDialog methodsFor!
 
 devMode
@@ -29,6 +33,7 @@ flags
 
 returnDefaults
 	self winStruct returnDefaults! !
+
 !UI.PrintingDialog categoriesForMethods!
 devMode!public! !
 devMode:!accessing!public! !

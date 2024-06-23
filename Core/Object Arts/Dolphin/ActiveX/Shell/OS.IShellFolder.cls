@@ -7,10 +7,15 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.IShellFolder guid: (OS.COM.IID fromString: '{000214e6-0000-0000-c000-000000000046}')!
+
 OS.IShellFolder isEgressOnly: true!
+
 OS.IShellFolder comment: ''!
+
 !OS.IShellFolder categoriesForClass!COM-Interfaces! !
+
 !OS.IShellFolder methodsFor!
 
 BindToObject: bindToObject pbc: pbc riid: riid ppvOut: ppvOut
@@ -111,6 +116,7 @@ SetNameOf: setNameOf pidl: pidl lpszName: lpszName uFlags: uFlags ppidlOut: ppid
 
 	<virtual stdcall: hresult 13 handle lpvoid lpwstr uint32 lppvoid>
 	^self invalidCall: _failureCode! !
+
 !OS.IShellFolder categoriesForMethods!
 BindToObject:pbc:riid:ppvOut:!COM Interfaces-IShellFolder!public! !
 BindToStorage:pbc:riid:ppv:!COM Interfaces-IShellFolder!public! !
@@ -155,6 +161,7 @@ defineFunctions
 		defineFunction: #SetNameOf:pidl:lpszName:uFlags:ppidlOut:
 			argumentTypes: 'handle lpvoid lpwstr dword lppvoid'
 ! !
+
 !OS.IShellFolder class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

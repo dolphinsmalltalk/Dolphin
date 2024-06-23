@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IFont guid: (OS.COM.IID fromString: '{bef6e002-a874-101a-8bba-00aa00300cab}')!
+
 OS.COM.IFont comment: '`IFont` is a wrapper class for the COM interface ''stdole.IFont'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -95,7 +97,9 @@ interface IFont : IUnknown
 };
 ```
 '!
+
 !OS.COM.IFont categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IFont methodsFor!
 
 = anObject
@@ -455,6 +459,7 @@ weight: pweight
 	"Set the 'Weight' property of the receiver to the <sword> value of the argument."
 
 	self put_Weight: pweight! !
+
 !OS.COM.IFont categoriesForMethods!
 =!methods!public! !
 addRefHfont:!methods!public! !
@@ -562,6 +567,7 @@ defineFunctions
 		defineFunction: #ReleaseHfont:
 			argumentTypes: 'handle'
 ! !
+
 !OS.COM.IFont class categoriesForMethods!
 clsid!constants!private! !
 defineFunctions!initializing!public! !

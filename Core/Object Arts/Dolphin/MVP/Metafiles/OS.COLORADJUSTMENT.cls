@@ -21,7 +21,9 @@ External.Structure
 			'_OffsetOf_caReferenceWhite' -> 16rE.
 			'_OffsetOf_caSize' -> 16r0
 		}!
+
 OS.COLORADJUSTMENT guid: (Core.GUID fromString: '{dbe19b72-cea9-47cf-80f1-de6d59eefd32}')!
+
 OS.COLORADJUSTMENT comment: '<COLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.COLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -46,7 +48,9 @@ struct tagCOLORADJUSTMENT {
 	short caRedGreenTint;
 } COLORADJUSTMENT;
 '!
+
 !OS.COLORADJUSTMENT categoriesForClass!Win32-Structs! !
+
 !OS.COLORADJUSTMENT methodsFor!
 
 caBlueGamma
@@ -168,6 +172,7 @@ caSize: anInteger
 	"Set the receiver's 'caSize' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_caSize put: anInteger! !
+
 !OS.COLORADJUSTMENT categoriesForMethods!
 caBlueGamma!**compiled accessors**!public! !
 caBlueGamma:!**compiled accessors**!public! !
@@ -263,6 +268,7 @@ defineFields
 
 getFieldNames
 	^#(#caSize #caFlags #caIlluminantIndex #caRedGamma #caGreenGamma #caBlueGamma #caReferenceBlack #caReferenceWhite #caContrast #caBrightness #caColorfulness #caRedGreenTint)! !
+
 !OS.COLORADJUSTMENT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

@@ -7,8 +7,11 @@ UI.Tests.SelectableTreeItemsTest
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.TreePresenterTest guid: (Core.GUID fromString: '{152b5f25-c97c-404f-8e88-b8a27c9e8ffc}')!
+
 UI.Tests.TreePresenterTest comment: ''!
+
 !UI.Tests.TreePresenterTest methodsFor!
 
 assertContains: anObject
@@ -31,6 +34,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 
 viewClass
 	^TreeView! !
+
 !UI.Tests.TreePresenterTest categoriesForMethods!
 assertContains:!helpers!private! !
 classToTest!helpers!private! !
@@ -66,6 +70,7 @@ resource_Default_view_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903706176 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil 170 176 592 nil #noIcons 1 170 ##(Smalltalk.PluggableLookupTable) 592 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 882 401 571 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 71 8 0 0 39 1 0 0] 8 #() 882 193 193 nil 27 )! !
+
 !UI.Tests.TreePresenterTest class categoriesForMethods!
 resource_Default_view_13!public!resources-views! !
 resource_Default_view_D6!public!resources-views! !

@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.STLClassCollectorTest guid: (Core.GUID fromString: '{c73c341b-d268-45b7-8893-0219243afb8c}')!
+
 Kernel.Tests.STLClassCollectorTest comment: ''!
+
 !Kernel.Tests.STLClassCollectorTest methodsFor!
 
 testClassAndBindingReference
@@ -180,6 +183,7 @@ version6ViewResource
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #default nil 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil nil nil nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 160 nil nil nil 5 nil nil nil 160 582 1 #{UI.ResourceIdentifier} #{Smalltalk.Scribble} #resource_Default_view nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 354 1169 683 160 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 85 1 0 0] 8 #() 354 193 193 nil 27 550 #{Core.IdentityDictionary} 1 160 8 'scribble' nil 2886 4 #{UI.MenuBar} nil true 50 1 2886 4 #{UI.Menu} nil true 50 4 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #fileNew 8 '&New' 9373 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'DocumentShell.ico' 518 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 626 1 658 #fileOpen 8 '&Open…' 9375 1 706 nil true 738 8 'OpenWorkspace.ico' 800 65541 nil nil nil 626 1 658 #fileSave 8 '&Save' 9383 1 706 nil true 738 8 'FileSave.ico' 800 65541 nil nil nil 626 1 658 #fileSaveAs 8 'Save &As…' 1 1 nil nil nil 8 '&File' nil 134217729 nil nil 38585 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 706 nil true 738 8 'Scribble.ico' 800 65541 nil nil nil nil 1 nil nil 258 50 1 306 #createAt:extent: 50 2 354 781 781 354 4609 2443 32 402 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 134 1 0 0 134 1 0 0 134 10 0 0 75 6 0 0] 50 1 160 464 nil 27)! !
+
 !Kernel.Tests.STLClassCollectorTest categoriesForMethods!
 testClassAndBindingReference!public! !
 testEmptyArray!public! !

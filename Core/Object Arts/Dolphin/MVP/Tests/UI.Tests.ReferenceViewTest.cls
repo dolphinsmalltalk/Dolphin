@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ReferenceViewTest guid: (Core.GUID fromString: '{a38c1b83-5cc7-4717-8bc4-29b681abe8f9}')!
+
 UI.Tests.ReferenceViewTest comment: ''!
+
 !UI.Tests.ReferenceViewTest methodsFor!
 
 classToTest
@@ -62,6 +65,7 @@ testRecreate
 	self deny: referee isGroupStop.
 	self assert: referee isDragSource.
 	self assert: referee isDropTarget! !
+
 !UI.Tests.ReferenceViewTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !

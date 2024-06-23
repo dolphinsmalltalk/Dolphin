@@ -7,9 +7,13 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.FlipperInspector guid: (Core.GUID fromString: '{8dc9ca40-c164-11d5-9849-0800460222f0}')!
+
 Tools.FlipperInspector comment: ''!
+
 !Tools.FlipperInspector categoriesForClass!MVP-Presenters! !
+
 !Tools.FlipperInspector methodsFor!
 
 addToCommandRoute: route
@@ -109,6 +113,7 @@ value: anObject
 
 	self model value: anObject.
 ! !
+
 !Tools.FlipperInspector categoriesForMethods!
 addToCommandRoute:!commands!public! !
 createComponents!initializing!private! !
@@ -209,6 +214,7 @@ shellOn: anObject
 
 toolsFolderHelpId
 	^10600! !
+
 !Tools.FlipperInspector class categoriesForMethods!
 defaultModel!models!public! !
 defaultOptionFlags!constants!options!private! !

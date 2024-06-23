@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.FractionTest guid: (Core.GUID fromString: '{0f827f5d-fc60-490e-90f8-bc89012f1b54}')!
+
 Core.Tests.FractionTest comment: ''!
+
 !Core.Tests.FractionTest methodsFor!
 
 testComparePoint
@@ -389,6 +392,7 @@ testNanComparisons
 	self deny: nan >= subject.
 	self deny: subject > nan.
 	self deny: nan > subject! !
+
 !Core.Tests.FractionTest categoriesForMethods!
 testComparePoint!public!unit tests! !
 testComparison!public!unit tests! !

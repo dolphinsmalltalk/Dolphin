@@ -7,9 +7,13 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.CreateAccessorsForVariableRefactoring guid: (Core.GUID fromString: '{c3f653b0-6efe-4cb6-a2a6-781aac3447ec}')!
+
 Refactory.Browser.CreateAccessorsForVariableRefactoring comment: ''!
+
 !Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.CreateAccessorsForVariableRefactoring methodsFor!
 
 classVariable: aBoolean 
@@ -149,6 +153,7 @@ usesAssignmentOf: aString in: aClass classVariable: isClassVar
 								checkClass: each
 								selector: sel
 								using: matcher]]! !
+
 !Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesForMethods!
 classVariable:!initialize/release!public! !
 createGetterAccessor!private!transforming! !
@@ -183,6 +188,7 @@ model: aRBModel variable: aVarName class: aClass classVariable: aBoolean
 variable: aVarName class: aClass classVariable: aBoolean 
 	^(self variable: aVarName class: aClass)
 		classVariable: aBoolean; yourself! !
+
 !Refactory.Browser.CreateAccessorsForVariableRefactoring class categoriesForMethods!
 model:variable:class:classVariable:!instance creation!public! !
 variable:class:classVariable:!instance creation!public! !

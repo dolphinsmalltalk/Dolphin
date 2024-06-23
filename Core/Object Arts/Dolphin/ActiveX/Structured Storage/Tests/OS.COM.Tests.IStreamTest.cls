@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Tests.IStreamTest guid: (Core.GUID fromString: '{4a9f8a1d-6363-4e51-aaa3-f52a81f52344}')!
+
 OS.COM.Tests.IStreamTest comment: ''!
+
 !OS.COM.Tests.IStreamTest methodsFor!
 
 helloWorld
@@ -144,6 +147,7 @@ writeHelloWorldFile
 	(FileStream write: temp text: false)
 		nextPutAll: self helloWorld asByteArray;
 		close! !
+
 !OS.COM.Tests.IStreamTest categoriesForMethods!
 helloWorld!constants!private! !
 setUp!public!running! !

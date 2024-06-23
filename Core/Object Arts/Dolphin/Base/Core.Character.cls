@@ -14,7 +14,9 @@ Core.Magnitude
 			'Utf32Mask' -> 16r3000000.
 			'Utf8Mask' -> 16r1000000
 		}!
+
 Core.Character guid: (Core.GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Character comment: '`Character` is the class of objects which serve as the elemental values of Smalltalk `Strings`.
 
 Each `Character` instance generally represents a specific Unicode [code point](https://en.wikipedia.org/wiki/Code_point). Note that this does not necessarily mean that each `Character` corresponds to a single user-perceived, visually distinct, character (aka grapheme cluster). Multiple `Character`s may compose into a single grapheme cluster when displayed, some examples of different types being `👨🏻‍🍳`, `ö`, and `กำ`. The 2nd example has more than one valid representation and can have either one or two code-points.
@@ -49,7 +51,9 @@ At present only byte characters (that are not control characters) have a printab
   `$\r`		- Carriage return
   `$\x<HHHH>` - where <HHHH> is the hex representation of the character''s code point - can be used to represent any valid code point.
 '!
+
 !Core.Character categoriesForClass!Magnitude-General! !
+
 !Core.Character methodsFor!
 
 _beginsString: aString
@@ -584,6 +588,7 @@ utf8Length
 	t <= 16rFFFF ifTrue: [^3].
 	t <= UCHAR_MAX_VALUE ifTrue: [^4].
 	^self error: 'Invalid code point U+' , (t printStringBase: 16)! !
+
 !Core.Character categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _endsString:!comparing!double dispatch!private! !
@@ -920,6 +925,7 @@ value: anInteger
 	Raise an error if the argument is not a valid Unicode character code point."
 
 	^self codePoint: anInteger! !
+
 !Core.Character class categoriesForMethods!
 ansiValue:!instance creation!public! !
 asciiValue:!instance creation!public! !

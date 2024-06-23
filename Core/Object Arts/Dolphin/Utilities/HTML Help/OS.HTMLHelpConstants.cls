@@ -20,6 +20,10 @@ Kernel.SharedPool
 			'HH_TP_HELP_WM_HELP' -> 16r11.
 			'HH_UNINITIALIZE' -> 16r1D
 		}!
+
 OS.HTMLHelpConstants guid: (Core.GUID fromString: '{8fa353ac-bdb2-4d52-9169-e27fc53fe1b2}')!
+
 OS.HTMLHelpConstants isNonInstantiable: true!
+
 OS.HTMLHelpConstants comment: ''!
+

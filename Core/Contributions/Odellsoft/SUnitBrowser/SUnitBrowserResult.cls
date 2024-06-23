@@ -5,9 +5,13 @@ Object subclass: #SUnitBrowserResult
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserResult guid: (GUID fromString: '{ca60c917-290b-444c-b572-cd6c8a99d198}')!
+
 SUnitBrowserResult comment: ''!
+
 !SUnitBrowserResult categoriesForClass!Unclassified! !
+
 !SUnitBrowserResult methodsFor!
 
 add: aTestCase to: aLookupTable
@@ -244,6 +248,7 @@ testResult
 testResult: aTestResult
 
 	testResult := aTestResult! !
+
 !SUnitBrowserResult categoriesForMethods!
 add:to:!actions!private! !
 areAllTestsCompleted!public!querying! !
@@ -302,6 +307,7 @@ newOn: anSunitModel
 	^self new
 		initializeModel: anSunitModel;
 		yourself! !
+
 !SUnitBrowserResult class categoriesForMethods!
 new!instantiating!public! !
 newOn:!instantiating!public! !

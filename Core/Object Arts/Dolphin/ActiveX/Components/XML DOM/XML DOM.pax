@@ -356,6 +356,7 @@ Kernel.Namespace
 			'XHR_PROP_SET_ENTERPRISEID' -> 16rA.
 			'XHR_PROP_TIMEOUT' -> 16r2
 		}!
+
 Core.SequenceableCollection
 	subclass: #'MSXML.DOMNodeList'
 	instanceVariableNames: 'interface'
@@ -363,6 +364,7 @@ Core.SequenceableCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Dictionary
 	variableSubclass: #'MSXML.DOMNamedNodeMap'
 	instanceVariableNames: 'interface parentNode'
@@ -370,6 +372,7 @@ Core.Dictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.DOMNamedNodeMap
 	variableSubclass: #'MSXML.DOMAttributeMap'
 	instanceVariableNames: ''
@@ -377,6 +380,7 @@ MSXML.DOMNamedNodeMap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.DOMNamedNodeMap
 	variableSubclass: #'MSXML.DOMEntitiesMap'
 	instanceVariableNames: ''
@@ -384,6 +388,7 @@ MSXML.DOMNamedNodeMap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.DOMNamedNodeMap
 	variableSubclass: #'MSXML.DOMNotationsMap'
 	instanceVariableNames: ''
@@ -391,6 +396,7 @@ MSXML.DOMNamedNodeMap
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'MSXML.DOMParseError'
 	instanceVariableNames: ''
@@ -398,6 +404,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'MSXML.XHR_COOKIE'
 	instanceVariableNames: ''
@@ -413,6 +420,7 @@ External.Structure
 			'_OffsetOf_pwszValue' -> 16r8.
 			'_XHR_COOKIE_Size' -> 16r1C
 		}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.IMXNamespaceManager'
 	instanceVariableNames: ''
@@ -420,6 +428,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXAttributes'
 	instanceVariableNames: ''
@@ -427,6 +436,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXContentHandler'
 	instanceVariableNames: ''
@@ -434,6 +444,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXDeclHandler'
 	instanceVariableNames: ''
@@ -441,6 +452,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXDTDHandler'
 	instanceVariableNames: ''
@@ -448,6 +460,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXEntityResolver'
 	instanceVariableNames: ''
@@ -455,6 +468,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXErrorHandler'
 	instanceVariableNames: ''
@@ -462,6 +476,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXLexicalHandler'
 	instanceVariableNames: ''
@@ -469,6 +484,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXLocator'
 	instanceVariableNames: ''
@@ -476,6 +492,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.ISAXXMLReader'
 	instanceVariableNames: ''
@@ -483,6 +500,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.IXMLHTTPRequest2'
 	instanceVariableNames: ''
@@ -490,6 +508,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'MSXML.IXMLHTTPRequest2Callback'
 	instanceVariableNames: ''
@@ -497,6 +516,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IMXAttributes'
 	instanceVariableNames: ''
@@ -504,6 +524,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IMXNamespacePrefixes'
 	instanceVariableNames: ''
@@ -511,6 +532,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IMXReaderControl'
 	instanceVariableNames: ''
@@ -518,6 +540,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IMXSchemaDeclHandler'
 	instanceVariableNames: ''
@@ -525,6 +548,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IMXWriter'
 	instanceVariableNames: ''
@@ -532,6 +556,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IMXXMLFilter'
 	instanceVariableNames: ''
@@ -539,6 +564,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.ISchemaItem'
 	instanceVariableNames: ''
@@ -546,6 +572,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.ISchemaItemCollection'
 	instanceVariableNames: ''
@@ -553,6 +580,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.ISchemaStringCollection'
 	instanceVariableNames: ''
@@ -560,6 +588,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBMXNamespaceManager'
 	instanceVariableNames: ''
@@ -567,6 +596,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXAttributes'
 	instanceVariableNames: ''
@@ -574,6 +604,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXContentHandler'
 	instanceVariableNames: ''
@@ -581,6 +612,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXDeclHandler'
 	instanceVariableNames: ''
@@ -588,6 +620,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXDTDHandler'
 	instanceVariableNames: ''
@@ -595,6 +628,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXEntityResolver'
 	instanceVariableNames: ''
@@ -602,6 +636,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXErrorHandler'
 	instanceVariableNames: ''
@@ -609,6 +644,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXLexicalHandler'
 	instanceVariableNames: ''
@@ -616,6 +652,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXLocator'
 	instanceVariableNames: ''
@@ -623,6 +660,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXXMLFilter'
 	instanceVariableNames: ''
@@ -630,6 +668,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IVBSAXXMLReader'
 	instanceVariableNames: ''
@@ -637,6 +676,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXMLDOMImplementation'
 	instanceVariableNames: ''
@@ -644,6 +684,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXMLDOMNamedNodeMap'
 	instanceVariableNames: ''
@@ -651,6 +692,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXMLDOMNode'
 	instanceVariableNames: ''
@@ -658,6 +700,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXMLDOMNodeList'
 	instanceVariableNames: ''
@@ -665,6 +708,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXMLDOMParseError'
 	instanceVariableNames: ''
@@ -672,6 +716,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXMLDOMParseErrorCollection'
 	instanceVariableNames: ''
@@ -679,6 +724,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXMLDOMSchemaCollection'
 	instanceVariableNames: ''
@@ -686,6 +732,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXMLHttpRequest'
 	instanceVariableNames: ''
@@ -693,6 +740,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXSLProcessor'
 	instanceVariableNames: ''
@@ -700,6 +748,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IDispatch
 	subclass: #'MSXML.IXSLTemplate'
 	instanceVariableNames: ''
@@ -707,6 +756,7 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaItem
 	subclass: #'MSXML.ISchema'
 	instanceVariableNames: ''
@@ -714,6 +764,7 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaItem
 	subclass: #'MSXML.ISchemaAttribute'
 	instanceVariableNames: ''
@@ -721,6 +772,7 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaItem
 	subclass: #'MSXML.ISchemaAttributeGroup'
 	instanceVariableNames: ''
@@ -728,6 +780,7 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaItem
 	subclass: #'MSXML.ISchemaIdentityConstraint'
 	instanceVariableNames: ''
@@ -735,6 +788,7 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaItem
 	subclass: #'MSXML.ISchemaNotation'
 	instanceVariableNames: ''
@@ -742,6 +796,7 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaItem
 	subclass: #'MSXML.ISchemaParticle'
 	instanceVariableNames: ''
@@ -749,6 +804,7 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaItem
 	subclass: #'MSXML.ISchemaType'
 	instanceVariableNames: ''
@@ -756,6 +812,7 @@ MSXML.ISchemaItem
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaParticle
 	subclass: #'MSXML.ISchemaAny'
 	instanceVariableNames: ''
@@ -763,6 +820,7 @@ MSXML.ISchemaParticle
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaParticle
 	subclass: #'MSXML.ISchemaElement'
 	instanceVariableNames: ''
@@ -770,6 +828,7 @@ MSXML.ISchemaParticle
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaParticle
 	subclass: #'MSXML.ISchemaModelGroup'
 	instanceVariableNames: ''
@@ -777,6 +836,7 @@ MSXML.ISchemaParticle
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISchemaType
 	subclass: #'MSXML.ISchemaComplexType'
 	instanceVariableNames: ''
@@ -784,6 +844,7 @@ MSXML.ISchemaType
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMAttribute'
 	instanceVariableNames: ''
@@ -791,6 +852,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMCharacterData'
 	instanceVariableNames: ''
@@ -798,6 +860,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMDocument'
 	instanceVariableNames: ''
@@ -805,6 +868,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMDocumentFragment'
 	instanceVariableNames: ''
@@ -812,6 +876,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMDocumentType'
 	instanceVariableNames: ''
@@ -819,6 +884,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMElement'
 	instanceVariableNames: ''
@@ -826,6 +892,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMEntity'
 	instanceVariableNames: ''
@@ -833,6 +900,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMEntityReference'
 	instanceVariableNames: ''
@@ -840,6 +908,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMNotation'
 	instanceVariableNames: ''
@@ -847,6 +916,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXMLDOMProcessingInstruction'
 	instanceVariableNames: ''
@@ -854,6 +924,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNode
 	subclass: #'MSXML.IXTLRuntime'
 	instanceVariableNames: ''
@@ -861,6 +932,7 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMCharacterData
 	subclass: #'MSXML.IXMLDOMComment'
 	instanceVariableNames: ''
@@ -868,6 +940,7 @@ MSXML.IXMLDOMCharacterData
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMCharacterData
 	subclass: #'MSXML.IXMLDOMText'
 	instanceVariableNames: ''
@@ -875,6 +948,7 @@ MSXML.IXMLDOMCharacterData
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMText
 	subclass: #'MSXML.IXMLDOMCDATASection'
 	instanceVariableNames: ''
@@ -882,6 +956,7 @@ MSXML.IXMLDOMText
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMDocument
 	subclass: #'MSXML.IXMLDOMDocument2'
 	instanceVariableNames: ''
@@ -889,6 +964,7 @@ MSXML.IXMLDOMDocument
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMDocument2
 	subclass: #'MSXML.IXMLDOMDocument3'
 	instanceVariableNames: ''
@@ -896,6 +972,7 @@ MSXML.IXMLDOMDocument2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNodeList
 	subclass: #'MSXML.IXMLDOMSelection'
 	instanceVariableNames: ''
@@ -903,6 +980,7 @@ MSXML.IXMLDOMNodeList
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMParseError
 	subclass: #'MSXML.IXMLDOMParseError2'
 	instanceVariableNames: ''
@@ -910,6 +988,7 @@ MSXML.IXMLDOMParseError
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMSchemaCollection
 	subclass: #'MSXML.IXMLDOMSchemaCollection2'
 	instanceVariableNames: ''
@@ -917,6 +996,7 @@ MSXML.IXMLDOMSchemaCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLHttpRequest
 	subclass: #'MSXML.IServerXMLHTTPRequest'
 	instanceVariableNames: ''
@@ -924,6 +1004,7 @@ MSXML.IXMLHttpRequest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IServerXMLHTTPRequest
 	subclass: #'MSXML.IServerXMLHTTPRequest2'
 	instanceVariableNames: ''
@@ -931,6 +1012,7 @@ MSXML.IServerXMLHTTPRequest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.ISAXXMLReader
 	subclass: #'MSXML.ISAXXMLFilter'
 	instanceVariableNames: ''

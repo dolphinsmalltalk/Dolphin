@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #(#{OS.MessageBoxConstants} #{OS.TaskDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.MessageBoxTest guid: (Core.GUID fromString: '{a542ef51-98e0-4476-82b5-0aaae88ef637}')!
+
 UI.Tests.MessageBoxTest comment: ''!
+
 !UI.Tests.MessageBoxTest methodsFor!
 
 getDialogInfo
@@ -365,6 +368,7 @@ testSuppressible
 	response := self openSubject: [subject confirmOrCancel: 'Test'].
 	self assertIsNil: defaultButton.
 	self assert: response equals: #cancel! !
+
 !UI.Tests.MessageBoxTest categoriesForMethods!
 getDialogInfo!helpers!private! !
 loopUntil:!helpers!private! !

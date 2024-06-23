@@ -7,9 +7,13 @@ Refactory.Browser.RBClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBNamespaceClass guid: (Core.GUID fromString: '{35f11892-77d8-41e3-b3b1-679396a71df6}')!
+
 Refactory.Browser.RBNamespaceClass comment: ''!
+
 !Refactory.Browser.RBNamespaceClass categoriesForClass!Refactory-Model! !
+
 !Refactory.Browser.RBNamespaceClass methodsFor!
 
 addClass: aRBClass
@@ -43,6 +47,7 @@ hierarchyBindingFor: aString
 
 removeClass: aRBClass
 	self removeBindingFor: aRBClass unqualifiedName! !
+
 !Refactory.Browser.RBNamespaceClass categoriesForMethods!
 addClass:!public! !
 baseEnvironment!constants!public! !

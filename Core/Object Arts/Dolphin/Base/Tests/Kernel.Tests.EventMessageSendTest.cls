@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.EventMessageSendTest guid: (Core.GUID fromString: '{d55436fd-a2dc-4d79-a1c1-c8b5351a6ef1}')!
+
 Kernel.Tests.EventMessageSendTest comment: ''!
+
 !Kernel.Tests.EventMessageSendTest categoriesForClass!Tests-Kernel-Objects! !
+
 !Kernel.Tests.EventMessageSendTest methodsFor!
 
 testNoArguments
@@ -95,6 +99,7 @@ testTwoArguments
 				value: 4)
 		equals: #(2 3).
 	self assert: (subject valueWithArguments: #(2 3 4)) equals: #(2 3)! !
+
 !Kernel.Tests.EventMessageSendTest categoriesForMethods!
 testNoArguments!public!testing! !
 testOneArgument!public!testing! !

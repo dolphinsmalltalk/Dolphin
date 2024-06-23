@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.MethodCategoryTest guid: (Core.GUID fromString: '{d6293ad9-d0bd-4c64-8666-f44cdb20805a}')!
+
 Core.Tests.MethodCategoryTest comment: ''!
+
 !Core.Tests.MethodCategoryTest methodsFor!
 
 testMethodsInBehavior
@@ -22,6 +25,7 @@ testMethodsInBehavior
 	testBehavior methodDictionary: (MethodDictionary with: #key -> keyMethod).
 	methods := subject methodsInBehavior: testBehavior.
 	self assert: methods asArray equals: {keyMethod}! !
+
 !Core.Tests.MethodCategoryTest categoriesForMethods!
 testMethodsInBehavior!public! !
 !

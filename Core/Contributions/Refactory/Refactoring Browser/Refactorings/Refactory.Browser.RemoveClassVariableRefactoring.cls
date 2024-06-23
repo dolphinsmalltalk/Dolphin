@@ -7,9 +7,13 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RemoveClassVariableRefactoring guid: (Core.GUID fromString: '{eb266eb6-0cdb-4099-9a72-207d060e9210}')!
+
 Refactory.Browser.RemoveClassVariableRefactoring comment: ''!
+
 !Refactory.Browser.RemoveClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RemoveClassVariableRefactoring methodsFor!
 
 checkReferences
@@ -33,6 +37,7 @@ shouldRemoveVariable: aVariableBinding referencedIn: aCollectionOfMethods
 
 transform
 	class removeClassVariable: variableName! !
+
 !Refactory.Browser.RemoveClassVariableRefactoring categoriesForMethods!
 checkReferences!preconditions!private! !
 preconditions!preconditions!public! !

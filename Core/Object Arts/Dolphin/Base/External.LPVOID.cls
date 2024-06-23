@@ -7,7 +7,9 @@ External.SCALAR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_LPVOID_Size' -> 16r4 }!
+
 External.LPVOID guid: (Core.GUID fromString: '{87b4c596-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.LPVOID comment: 'LPVOID is an <ExternalStructure> class useful for representing pointers to arbitrary external memory blocks. In most respects LPVOID behaves like <ExternalAddress>, except that instances may be allocated using #newBuffer which can be passed to #lpvoid arguments without the VM implicitly dereferencing the address (i.e. the behaviour will be the same as if an ExternalAddress had been passed to an lppvoid parameter). LPVOID is also a pointer object, and can thus add instance variables to hold additional state.
 
 LPVOID is useful, for example, where references to pointers (i.e. VOID**) are required, an example being COM [out] pointer parameters. The VM also passes instances of LPVOID as lpvoid input parameters to callbacks and COM method implementations.
@@ -15,7 +17,9 @@ LPVOID is useful, for example, where references to pointers (i.e. VOID**) are re
 It is important to realise that LPVOID (and subclasses) are unlike other ExternalStructures in that they are already pointers, and therefore they already incorporate one level of indirection. Thus:
 1) #value answers the pointed at address in the case of doubly-indirect (reference) instances, or the address itself for internal buffer instances.
 2) The class method #fromAddress: will answer a pointer to a pointer, i.e. a double-indirection. This means that, for example, the subclass LPWSTR is useful as an element class for a <StructureArray> of LPWSTR pointers (as expected), but that ''LPWSTR fromAdddress: aUnicodeString yourAddress'' is not valid.'!
+
 !External.LPVOID categoriesForClass!External-Data-Unstructured! !
+
 !External.LPVOID methodsFor!
 
 asExternalAddress
@@ -32,6 +36,7 @@ value: anExternalAddress
 	"Set the receiver's 'value' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_value put: anExternalAddress! !
+
 !External.LPVOID categoriesForMethods!
 asExternalAddress!converting!public! !
 value!**compiled accessors**!public! !
@@ -68,6 +73,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
+
 !External.LPVOID class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

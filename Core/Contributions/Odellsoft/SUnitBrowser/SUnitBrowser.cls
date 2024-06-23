@@ -5,9 +5,13 @@ SUnitAbsBrowser subclass: #SUnitBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowser guid: (GUID fromString: '{fc3aa1de-e128-4ade-a04c-035ebda3b5c2}')!
+
 SUnitBrowser comment: ''!
+
 !SUnitBrowser categoriesForClass!Unclassified! !
+
 !SUnitBrowser methodsFor!
 
 browseHierarchy
@@ -399,6 +403,7 @@ wrapTest: aTest
 	^SUnitTestCaseWrapper
 		newOn: aTest
 		model: self model! !
+
 !SUnitBrowser categoriesForMethods!
 browseHierarchy!commands!private! !
 browserName!commands!private! !
@@ -557,6 +562,7 @@ uninitialize
 	of the development system have already been removed."
 
 	self uninitializeToolClass: self! !
+
 !SUnitBrowser class categoriesForMethods!
 defaultModel!accessing!private! !
 defaultModelClass!accessing!private! !

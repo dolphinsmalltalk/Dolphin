@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest guid: (Core.GUID fromString: '{2ca114c0-deee-48f6-ade7-9bc53b50d22c}')!
+
 Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest comment: ''!
+
 !Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest methodsFor!
 
 subjectClass
@@ -33,6 +36,7 @@ testCreateHandle
 	self assert: constructor arguments third equals: 1.
 	self assert: constructor arguments fourth equals: 2.
 	self assert: (constructor arguments at: 5) equals: WrapModeTile! !
+
 !Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest categoriesForMethods!
 subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !

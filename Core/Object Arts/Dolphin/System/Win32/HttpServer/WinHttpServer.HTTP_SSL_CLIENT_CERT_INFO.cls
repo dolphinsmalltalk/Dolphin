@@ -14,7 +14,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_pCertEncoded' -> 16r8.
 			'_OffsetOf_Token' -> 16rC
 		}!
+
 WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO guid: (Core.GUID fromString: '{2ea1d77c-9411-49f7-af99-3554a22fe89e}')!
+
 WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO comment: '`HTTP_SSL_CLIENT_CERT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -34,7 +36,9 @@ struct tagHTTP_SSL_CLIENT_CERT_INFO {
 } HTTP_SSL_CLIENT_CERT_INFO;
 ```
 '!
+
 !WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO methodsFor!
 
 CertEncodedSize
@@ -78,6 +82,7 @@ Token: aHandle
 	"Set the receiver's 'Token' field to the value of the argument, aHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_Token put: aHandle! !
+
 !WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesForMethods!
 CertEncodedSize!**compiled accessors**!private! !
 CertEncodedSize:!**compiled accessors**!private! !
@@ -119,6 +124,7 @@ defineFields
 
 getFieldNames
 	^#(#CertFlags #CertEncodedSize #pCertEncoded #Token)! !
+
 !WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

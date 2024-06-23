@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.ImageTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.BitmapTest guid: (Core.GUID fromString: '{fa986dbc-acca-46d6-98c9-d51feb7d04d6}')!
+
 Graphics.Gdiplus.Tests.BitmapTest comment: ''!
+
 !Graphics.Gdiplus.Tests.BitmapTest methodsFor!
 
 gdiBitmapClass
@@ -176,6 +179,7 @@ testPixelAfterSave
 			image free.
 			File delete: toFile].
 	bitmap free! !
+
 !Graphics.Gdiplus.Tests.BitmapTest categoriesForMethods!
 gdiBitmapClass!constants!private! !
 subjectClass!constants!private! !

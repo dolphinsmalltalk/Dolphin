@@ -7,10 +7,13 @@ Graphics.Gdiplus.FontCollection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.PrivateFontCollection guid: (Core.GUID fromString: '{c09d8c05-5f28-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.PrivateFontCollection comment: 'GdiplusPrivateFontCollection is a collection class for fonts. This class keeps a collection of fonts specifically for an application. The fonts in the collection can include installed fonts as well as fonts that have not been installed on the system.
 
 '!
+
 !Graphics.Gdiplus.PrivateFontCollection methodsFor!
 
 addFontFile: aFilename
@@ -20,6 +23,7 @@ addFontFile: aFilename
 
 initializerClass
 	^PrivateFontCollectionInitializer! !
+
 !Graphics.Gdiplus.PrivateFontCollection categoriesForMethods!
 addFontFile:!operations!public! !
 initializerClass!constants!private! !
@@ -29,6 +33,7 @@ initializerClass!constants!private! !
 
 new
 	^self fromInitializer: PrivateFontCollectionInitializer default! !
+
 !Graphics.Gdiplus.PrivateFontCollection class categoriesForMethods!
 new!instance creation!public! !
 !

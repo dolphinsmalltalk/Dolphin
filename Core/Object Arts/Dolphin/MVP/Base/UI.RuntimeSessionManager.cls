@@ -7,13 +7,17 @@ UI.GUISessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RuntimeSessionManager guid: (Core.GUID fromString: '{87b4c6dc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.RuntimeSessionManager comment: 'RuntimeSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed graphical application.
 
 The main entry point hook is the #main method, and typically one opens one''s main application window there, processing any command line arguments held in the receiver''s ''argv'' instance variable. See one of the samples such as Notepad for an example.
 
 '!
+
 !UI.RuntimeSessionManager categoriesForClass!System-Support! !
+
 !UI.RuntimeSessionManager methodsFor!
 
 keepAlive
@@ -35,6 +39,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^self class mainShellClass! !
+
 !UI.RuntimeSessionManager categoriesForMethods!
 keepAlive!idling!public! !
 mainShellClass!constants!public! !
@@ -64,6 +69,7 @@ new
 	"Private -  Use #createExecutable:"
 
 	self shouldNotImplement! !
+
 !UI.RuntimeSessionManager class categoriesForMethods!
 icon!constants!public! !
 isRuntime!public!testing! !

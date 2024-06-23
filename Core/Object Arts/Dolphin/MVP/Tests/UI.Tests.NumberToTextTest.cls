@@ -7,8 +7,11 @@ UI.Tests.TypeConverterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.NumberToTextTest guid: (Core.GUID fromString: '{cbd894b2-a2ef-4a75-9636-86d351c7aac3}')!
+
 UI.Tests.NumberToTextTest comment: ''!
+
 !UI.Tests.NumberToTextTest methodsFor!
 
 testConversions
@@ -72,6 +75,7 @@ testStbConvertFromVersion0
 	self assert: subject leftNullValue equals: 0.0.
 	self assert: subject rightNullValue equals: 'Zero'.
 	self assert: subject locale identicalTo: Locale default! !
+
 !UI.Tests.NumberToTextTest categoriesForMethods!
 testConversions!public! !
 testConvertNullValues!public! !

@@ -7,10 +7,15 @@ Core.Object
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'FACILITY_WIN32' -> 'Shadow' }!
+
 Refactory.Browser.TestData.LintRuleTestData guid: (Core.GUID fromString: '{ae7ff107-496e-46a9-8127-3cc651c7ccf7}')!
+
 Refactory.Browser.TestData.LintRuleTestData isNonInstantiable: true!
+
 Refactory.Browser.TestData.LintRuleTestData comment: ''!
+
 !Refactory.Browser.TestData.LintRuleTestData categoriesForClass!Refactory-Test data! !
+
 !Refactory.Browser.TestData.LintRuleTestData methodsFor!
 
 checkClass: aSmalllintContext!
@@ -77,6 +82,7 @@ runOnEnvironment: anEnvironment
 
 viewResults
 	self subclassResponsibility! !
+
 !Refactory.Browser.TestData.LintRuleTestData categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -102,6 +108,7 @@ viewResults!private! !
 
 new
 	^super new initialize! !
+
 !Refactory.Browser.TestData.LintRuleTestData class categoriesForMethods!
 new!instance creation!public! !
 !

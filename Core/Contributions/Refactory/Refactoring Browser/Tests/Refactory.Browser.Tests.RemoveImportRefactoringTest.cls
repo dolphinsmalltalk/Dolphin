@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RemoveImportRefactoringTest guid: (Core.GUID fromString: '{c5a25e16-ed38-40ce-9ab0-7d3b8c6ca8eb}')!
+
 Refactory.Browser.Tests.RemoveImportRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.RemoveImportRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RemoveImportRefactoringTest methodsFor!
 
 testNonExistantImport
@@ -46,6 +50,7 @@ testRemoveImport
 	"Fully-qualified binding reference should have been left unchanged"
 	self assertIsNil: (model changes changeForClassNamed: RefactoryTestDataApp
 				selector: #refersToPoolConstantBindingFullyQualified)! !
+
 !Refactory.Browser.Tests.RemoveImportRefactoringTest categoriesForMethods!
 testNonExistantImport!public! !
 testRemoveImport!public! !

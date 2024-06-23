@@ -28,11 +28,15 @@ OS.SizedStructure
 			'_OffsetOf_yHeight' -> 16rC.
 			'_OffsetOf_yOffset' -> 16r10
 		}!
+
 OS.CHARFORMAT2W guid: (Core.GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.CHARFORMAT2W comment: 'CHARFORMAT2W is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The CHARFORMAT2W structure contains information about character formatting in a rich edit control.'!
+
 !OS.CHARFORMAT2W categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.CHARFORMAT2W methodsFor!
 
 bAnimation
@@ -446,6 +450,7 @@ yHeight: anInteger
 	"Set the receiver's 'yHeight' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_yHeight put: anInteger! !
+
 !OS.CHARFORMAT2W categoriesForMethods!
 bAnimation!**compiled accessors**!public! !
 bAnimation:!**compiled accessors**!public! !
@@ -556,6 +561,7 @@ fromChooseFont: aCHOOSEFONT
 
 getFieldNames
 	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlineType #bAnimation #bRevAuthor #bUnderlineColor)! !
+
 !OS.CHARFORMAT2W class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

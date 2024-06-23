@@ -16,9 +16,13 @@ OS.NMHDR
 			'_OffsetOf_uNewState' -> 16r14.
 			'_OffsetOf_uOldState' -> 16r18
 		}!
+
 OS.NMLISTVIEW guid: (Core.GUID fromString: '{87b4c624-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.NMLISTVIEW comment: ''!
+
 !OS.NMLISTVIEW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMLISTVIEW methodsFor!
 
 iItem
@@ -60,6 +64,7 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes uint32AtOffset: _OffsetOf_uOldState! !
+
 !OS.NMLISTVIEW categoriesForMethods!
 iItem!**compiled accessors**!public! !
 iSubItem!**compiled accessors**!public! !
@@ -93,6 +98,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #lParam)! !
+
 !OS.NMLISTVIEW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

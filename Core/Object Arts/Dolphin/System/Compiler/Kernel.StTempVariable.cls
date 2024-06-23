@@ -7,9 +7,13 @@ Kernel.StLocalVariable
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StTempVariable guid: (Core.GUID fromString: '{2e234643-1178-4555-82a1-edb3c4317d7a}')!
+
 Kernel.StTempVariable comment: '<StTempVariable> is a specialised class of <StLocalVariable> to describe method and block temporary definitions.'!
+
 !Kernel.StTempVariable categoriesForClass!Kernel-Objects! !
+
 !Kernel.StTempVariable methodsFor!
 
 addAssignment: aStVariableNode fromScope: aStSemanticScope
@@ -51,6 +55,7 @@ writes
 	the variable described by the receiver."
 
 	^writes! !
+
 !Kernel.StTempVariable categoriesForMethods!
 addAssignment:fromScope:!public! !
 isTempVariable!public!testing! !

@@ -7,9 +7,13 @@ Tools.IndexedInstVarBatchAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SetBatchAspectAccessor guid: (Core.GUID fromString: '{cacfd817-4dcb-46be-bba9-bcb1585438f2}')!
+
 Tools.SetBatchAspectAccessor comment: ''!
+
 !Tools.SetBatchAspectAccessor categoriesForClass!MVP-Models! !
+
 !Tools.SetBatchAspectAccessor methodsFor!
 
 aspectClass
@@ -31,6 +35,7 @@ getBatchAccessors
 			i := i + 1].
 	(self nextBatch: i) ifNotNil: [:nextBatch | accessors add: nextBatch].
 	^accessors! !
+
 !Tools.SetBatchAspectAccessor categoriesForMethods!
 aspectClass!public! !
 getBatchAccessors!public! !

@@ -12,11 +12,15 @@ OS.NMCUSTOMDRAW
 			'_OffsetOf_clrTextBk' -> 16r34.
 			'_OffsetOf_iLevel' -> 16r38
 		}!
+
 OS.NMTVCUSTOMDRAW guid: (Core.GUID fromString: '{6c514b98-57bd-498b-a2ec-9763f141a8e6}')!
+
 OS.NMTVCUSTOMDRAW comment: 'NMTVCUSTOMDRAW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 NMTVCUSTOMDRAW is sent by <TreeView> controls to request custom draw information for the text of individual nodes. We implement the <customDrawContext> protocol against it in order that it can be passed directly to the views customDrawBlock.'!
+
 !OS.NMTVCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.NMTVCUSTOMDRAW methodsFor!
 
 backcolor
@@ -67,6 +71,7 @@ iLevel
 	"Answer the <Integer> value of the receiver's 'iLevel' field."
 
 	^bytes int32AtOffset: _OffsetOf_iLevel! !
+
 !OS.NMTVCUSTOMDRAW categoriesForMethods!
 backcolor!accessing!public! !
 backcolor:!accessing!public! !
@@ -97,6 +102,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iLevel)! !
+
 !OS.NMTVCUSTOMDRAW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

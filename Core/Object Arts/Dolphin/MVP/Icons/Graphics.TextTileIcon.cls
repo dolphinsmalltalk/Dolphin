@@ -11,7 +11,9 @@ Core.Object
 			'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
 			'RotationMask' -> 16r3
 		}!
+
 Graphics.TextTileIcon guid: (Core.GUID fromString: '{a5c05489-c3fa-486a-9e1b-1660f9b3a55a}')!
+
 Graphics.TextTileIcon comment: 'An icon representation of one or more letters on a plain solid colour background, which can be `Color none` for a transparent background. The text can contain any Unicode characters (including symbols, emoticons, etc), although there is limited font support for extended characters (if the text renders as an empty box, try using the ''Segoe UI Symbol'' font).
 
 The text colour can be specified, but if not then either white or black will be chosen depending on the luminance of the background colour. When drawn on a transparent background the text is black by default.
@@ -34,6 +36,7 @@ Examples:
 	((TextTileIcon text: $\x2618 fontName: ''Segoe UI Symbol'') textcolor: Color darkGreen; fontStyle: #bold) bitmapWithExtent: 128@128.
 
 	'!
+
 !Graphics.TextTileIcon methodsFor!
 
 = anObject
@@ -422,6 +425,7 @@ withExtent: arg1
 	and remains to be correctly implemented."
 
 	^Error notYetImplemented! !
+
 !Graphics.TextTileIcon categoriesForMethods!
 =!comparing!public! !
 actualFontName!accessing!private! !
@@ -544,6 +548,7 @@ text: labelString fontName: fontString color: aColor
 		setText: labelString
 		fontName: fontString
 		color: aColor! !
+
 !Graphics.TextTileIcon class categoriesForMethods!
 defaultExtent!constants!private! !
 icon!public! !

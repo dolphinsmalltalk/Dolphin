@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FramingContext guid: (Core.GUID fromString: '{ccf52b24-63ff-41c2-ab62-fe905a47ba3f}')!
+
 UI.FramingContext comment: ''!
+
 !UI.FramingContext categoriesForClass!Kernel-Objects! !
+
 !UI.FramingContext methodsFor!
 
 bottom
@@ -88,6 +92,7 @@ top
 
 width
 	^rectangle width! !
+
 !UI.FramingContext categoriesForMethods!
 bottom!accessing!public! !
 height!accessing!public! !
@@ -123,6 +128,7 @@ layoutContext: aLayoutContext view: aView parentRectangle: aRectangle
 			view: aView
 			parentRectangle: aRectangle;
 		yourself! !
+
 !UI.FramingContext class categoriesForMethods!
 layoutContext:view:parentRectangle:!instance creation!public! !
 !

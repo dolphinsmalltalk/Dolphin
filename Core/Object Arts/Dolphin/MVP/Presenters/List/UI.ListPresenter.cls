@@ -7,7 +7,9 @@ UI.SelectableItemsPresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ListPresenter guid: (Core.GUID fromString: '{87b4c685-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.ListPresenter comment: 'ListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <listView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 
 
 '!
+
 !UI.ListPresenter categoriesForClass!MVP-Presenters! !
+
 !UI.ListPresenter methodsFor!
 
 basicBeSorted
@@ -133,6 +137,7 @@ sortBlock
 
 sortBlock: anObject
 	sortBlock := anObject! !
+
 !UI.ListPresenter categoriesForMethods!
 basicBeSorted!private!sorting! !
 beNotSorted!public!sorting! !
@@ -202,6 +207,7 @@ resource_Drop_down_list
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ComboBox} 38 #{Core.Array} 17 nil nil 50 2 8 1412498947 1025 32 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() 401 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 402 251 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 35 0 0 0] 8 #() 402 193 193 nil 27)! !
+
 !UI.ListPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

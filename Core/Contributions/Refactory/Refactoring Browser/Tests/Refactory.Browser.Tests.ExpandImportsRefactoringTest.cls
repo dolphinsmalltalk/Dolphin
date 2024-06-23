@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.ExpandImportsRefactoringTest guid: (Core.GUID fromString: '{80dc1f93-4069-41fa-9050-c78718fcbf76}')!
+
 Refactory.Browser.Tests.ExpandImportsRefactoringTest comment: ''!
+
 !Refactory.Browser.Tests.ExpandImportsRefactoringTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.ExpandImportsRefactoringTest methodsFor!
 
 testExpandImports
@@ -30,6 +34,7 @@ testExpandImports
 			true].
 	self executeRefactoring: subject.
 	self assert: (thisClass imports includes: opcodes asQualifiedReference)! !
+
 !Refactory.Browser.Tests.ExpandImportsRefactoringTest categoriesForMethods!
 testExpandImports!public! !
 !

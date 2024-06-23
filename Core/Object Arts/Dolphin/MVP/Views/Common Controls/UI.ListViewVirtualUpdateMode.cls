@@ -7,8 +7,11 @@ UI.ListViewUpdateMode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ListViewVirtualUpdateMode guid: (Core.GUID fromString: '{b5226276-4f05-4707-a7bb-344514cabdfb}')!
+
 UI.ListViewVirtualUpdateMode comment: ''!
+
 !UI.ListViewVirtualUpdateMode methodsFor!
 
 applyCallbackMask
@@ -67,6 +70,7 @@ updateStateImageOf: anObject at: anInteger
 
 updateStateImages
 	view invalidate! !
+
 !UI.ListViewVirtualUpdateMode categoriesForMethods!
 applyCallbackMask!operations!public! !
 insertItem:atIndex:!event handling!public! !

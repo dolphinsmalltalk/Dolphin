@@ -34,6 +34,7 @@ UI.CommonDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.ComDlgStructure
 	subclass: #'OS.CHOOSEFONTW'
 	instanceVariableNames: 'logFont'
@@ -66,6 +67,7 @@ choose
 	font dialog."
 
 	^UI.FontDialog showModal! !
+
 !Graphics.Font class categoriesForMethods!
 choose!instance creation!public! !
 !
@@ -83,6 +85,7 @@ chooseFont: aWinCHOOSEFONT
 
 	<stdcall: bool ChooseFontW lpvoid>
 	^self invalidCall: _failureCode! !
+
 !OS.ComDlgLibrary categoriesForMethods!
 chooseFont:!primitives!private!win32 functions-common dialog box! !
 !

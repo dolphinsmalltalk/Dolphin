@@ -7,14 +7,18 @@ External.INTEGER
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_UInt8_Size' -> 16r1 }!
+
 External.UInt8 guid: (Core.GUID fromString: '{87b4c5a9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.UInt8 comment: '<BYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 BYTE is used to represent unsigned 8-bit integers in conjunction with Win32 APIs. 
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**8)-1	(i.e. 0 to: 255).'!
+
 !External.UInt8 categoriesForClass!External-Data-Unstructured! !
+
 !External.UInt8 methodsFor!
 
 asSignedInteger
@@ -41,6 +45,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes uint8AtOffset: _OffsetOf_value put: anInteger! !
+
 !External.UInt8 categoriesForMethods!
 asSignedInteger!converting!public! !
 asUnsignedInteger!converting!public! !
@@ -71,6 +76,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
+
 !External.UInt8 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

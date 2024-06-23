@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.GdiplusObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.MatrixTest guid: (Core.GUID fromString: '{3d97e3f4-09ba-4a98-bd9e-4e8546ee6c75}')!
+
 Graphics.Gdiplus.Tests.MatrixTest comment: ''!
+
 !Graphics.Gdiplus.Tests.MatrixTest methodsFor!
 
 subjectClass
@@ -169,6 +172,7 @@ testTranslate
 	bool := UInt32Bytes new.
 	Gdip gdipIsMatrixIdentity: model asParameter result: bool.
 	self assert: model isIdentity equals: bool asBoolean! !
+
 !Graphics.Gdiplus.Tests.MatrixTest categoriesForMethods!
 subjectClass!constants!private! !
 testClone!public!unit tests! !

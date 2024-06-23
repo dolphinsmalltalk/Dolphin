@@ -7,12 +7,16 @@ Core.Object
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'MaxHostName' -> 16r100 }!
+
 Net.InternetAddress guid: (Core.GUID fromString: '{87b4c495-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Net.InternetAddress comment: 'This class represents an Internet IP address. It can be created indirectly from the host name using the #host: class method or, if the IP address is known, from this using #ipAddress:, #fromString: or #readFrom:. 
 
 Since conversion from IP address to host name and vice versa requires a DNS or HOSTS lookup, the #ipAddress and #host accessors may lazily evaluate their answers if the information was not available when the instance was created. This is to save a potentially expensive DNS lookup during instantiation when it may not be appropriate or a TCP/IP connection may not be available. Note that a reverse lookup (ipAddress->host name) seems to be a particularly time consuming operation under Windows.
 '!
+
 !Net.InternetAddress categoriesForClass!Windows Sockets! !
+
 !Net.InternetAddress methodsFor!
 
 asParameter
@@ -83,6 +87,7 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
+
 !Net.InternetAddress categoriesForMethods!
 asParameter!accessing!public! !
 displayIPOn:!displaying!public! !
@@ -159,6 +164,7 @@ localHost
 	hostName := Utf16String new: MaxHostName.
 	Ws2_32 gethostname: hostName namelen: hostName size.
 	^self host: hostName trimNulls! !
+
 !Net.InternetAddress class categoriesForMethods!
 allForHost:!accessing!public! !
 fromIPString:!instance creation!public! !

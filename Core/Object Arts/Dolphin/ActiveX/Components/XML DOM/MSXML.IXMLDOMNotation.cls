@@ -7,13 +7,18 @@ MSXML.IXMLDOMNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXMLDOMNotation guid: (OS.COM.IID fromString: '{2933bf8c-7b36-11d2-b20e-00c04f983e60}')!
+
 MSXML.IXMLDOMNotation isEgressOnly: true!
+
 MSXML.IXMLDOMNotation comment: '<IXMLDOMNotation> is a wrapper class for the COM interface ''MSXML.IXMLDOMNotation'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent notations declared in the DTD or schema.
 '!
+
 !MSXML.IXMLDOMNotation categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !MSXML.IXMLDOMNotation methodsFor!
 
 childNodes
@@ -98,6 +103,7 @@ value: arg1
 	is fixed)."
 
 	^self shouldNotImplement! !
+
 !MSXML.IXMLDOMNotation categoriesForMethods!
 childNodes!properties!public! !
 get_publicId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
@@ -124,6 +130,7 @@ defineFunctions
 		defineFunction: #get_systemId:
 			argumentTypes: 'variant*'
 ! !
+
 !MSXML.IXMLDOMNotation class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

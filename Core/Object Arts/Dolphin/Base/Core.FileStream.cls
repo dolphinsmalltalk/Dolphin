@@ -15,7 +15,9 @@ Core.ReadWriteStream
 			'OwnsFileMask' -> 16r100.
 			'PageSize' -> 16r2000
 		}!
+
 Core.FileStream guid: (Core.GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.FileStream comment: '`FileStream` is a specialized `ReadWriteStream` for streaming over binary and text files.
 
 The collection instance variable inherited from `Stream` is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by `flush` or `fullFlush`. The `readLimit` and `writeLimit` instance variables inherited from `PositionableStream` and `WriteStream` respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The `readLimit` will always be equal to the page size, except on the last page of the file. The `writeLimit` is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for every efficient access within the current page, which means that even single character I/O is reasonably fast..
@@ -43,7 +45,9 @@ FileStream can read and write files as binary or text. It supports a number of i
 
 
 '!
+
 !Core.FileStream categoriesForClass!Collections-Streams!I/O-Streams! !
+
 !Core.FileStream methodsFor!
 
 absolutePosition
@@ -544,6 +548,7 @@ writePage
 		position: pageBase - 1;
 		write: collection count: readLimit.
 	flags := flags bitAnd: ##(BufferUpdatedMask bitInvert)! !
+
 !Core.FileStream categoriesForMethods!
 absolutePosition!accessing!private! !
 atEnd!public!testing! !
@@ -818,6 +823,7 @@ write: aString type: aSymbol
 		mode: #truncate
 		check: false
 		type: aSymbol! !
+
 !Core.FileStream class categoriesForMethods!
 bufferSize!constants!public! !
 file:mode:type:!instance creation!private! !

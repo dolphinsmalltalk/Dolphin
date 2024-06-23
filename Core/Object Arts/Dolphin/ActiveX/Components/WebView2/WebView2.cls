@@ -263,6 +263,10 @@ Kernel.Namespace
 			'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_WEBSOCKET' -> 16rB.
 			'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_XML_HTTP_REQUEST' -> 16r7
 		}!
+
 WebView2 guid: (Core.GUID fromString: '{014d57e9-7c7c-4e57-97f2-854b126080af}')!
+
 WebView2 isNonInstantiable: true!
+
 WebView2 comment: ''!
+

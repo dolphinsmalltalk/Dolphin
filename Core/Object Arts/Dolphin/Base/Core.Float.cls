@@ -27,9 +27,13 @@ Core.Number
 			'Precision' -> 16r35.
 			'SignificantDifference' -> 1.0e-9
 		}!
+
 Core.Float guid: (Core.GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format.'!
+
 !Core.Float categoriesForClass!Magnitude-Numbers! !
+
 !Core.Float methodsFor!
 
 - aNumber
@@ -1018,6 +1022,7 @@ truncated
 uint64AtOffset: anInteger
 	<primitive: 191>
 	^self primitiveFailed: _failureCode! !
+
 !Core.Float categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -1360,6 +1365,7 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^0.0! !
+
 !Core.Float class categoriesForMethods!
 defaultDecimalExponents!accessing!public! !
 defaultDecimalExponents:!accessing!public! !

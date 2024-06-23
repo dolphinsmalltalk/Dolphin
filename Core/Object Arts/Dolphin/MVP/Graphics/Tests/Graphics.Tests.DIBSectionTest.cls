@@ -7,8 +7,11 @@ Graphics.Tests.AbstractBitmapTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.DIBSectionTest guid: (Core.GUID fromString: '{068ce8da-6f60-49fc-82ee-64b8f1b16fcb}')!
+
 Graphics.Tests.DIBSectionTest comment: ''!
+
 !Graphics.Tests.DIBSectionTest methodsFor!
 
 stlVersion3_file
@@ -53,6 +56,7 @@ testStbConvertFromVersion1
 	self assert: dib initializer isKindOf: ImageFromStringResourceInitializer.
 	self assert: dib initializer identifier equals: 'DolphinSplash.bmp'.
 	self deny: dib initializer isLoadMap3dColors! !
+
 !Graphics.Tests.DIBSectionTest categoriesForMethods!
 stlVersion3_file!constants!private! !
 stlVersion3_resource!constants!private! !

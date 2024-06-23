@@ -7,8 +7,11 @@ Kernel.Tests.BindingReferenceTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.NamespaceImportTest guid: (Core.GUID fromString: '{bb6feae3-ac2b-4223-82f9-94aa698dd070}')!
+
 Kernel.Tests.NamespaceImportTest comment: ''!
+
 !Kernel.Tests.NamespaceImportTest methodsFor!
 
 bindingTestCases
@@ -73,6 +76,7 @@ testShortNameViaImport
 	| subject |
 	subject := self newSubjectWithPathString: 'External.Array'.
 	self assert: subject shortName equals: 'External.Array'! !
+
 !Kernel.Tests.NamespaceImportTest categoriesForMethods!
 bindingTestCases!constants!private! !
 pathTestCases!private!unit tests! !

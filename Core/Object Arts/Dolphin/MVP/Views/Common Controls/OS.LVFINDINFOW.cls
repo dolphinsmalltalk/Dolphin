@@ -14,14 +14,18 @@ External.Structure
 			'_OffsetOf_pt' -> 16rC.
 			'_OffsetOf_vkDirection' -> 16r14
 		}!
+
 OS.LVFINDINFOW guid: (Core.GUID fromString: '{87b4c5fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.LVFINDINFOW comment: 'LVFINDINFO is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVFINDINFO is used to contain information to search for items in a List View.
 
 Instance Variables:
 	None'!
+
 !OS.LVFINDINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.LVFINDINFOW methodsFor!
 
 flags
@@ -48,6 +52,7 @@ vkDirection
 	"Answer the <Integer> value of the receiver's 'vkDirection' field."
 
 	^bytes uint32AtOffset: _OffsetOf_vkDirection! !
+
 !OS.LVFINDINFOW categoriesForMethods!
 flags!**compiled accessors**!public! !
 lParam!**compiled accessors**!public! !
@@ -75,6 +80,7 @@ defineFields
 
 getFieldNames
 	^#(#flags #psz #lParam #pt #vkDirection)! !
+
 !OS.LVFINDINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

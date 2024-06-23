@@ -9,9 +9,13 @@ Graphics.SystemFont
 	classConstants: {
 			'StockNames' -> (IdentityDictionary withAll: { 16rD -> #system. 16r11 -> #default })
 		}!
+
 Graphics.StockFont guid: (Core.GUID fromString: '{87b4c63c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.StockFont comment: ''!
+
 !Graphics.StockFont categoriesForClass!Graphics-Tools! !
+
 !Graphics.StockFont methodsFor!
 
 basicFree
@@ -72,6 +76,7 @@ setId: anInteger
 	id := anInteger.
 	ownsHandle := false.
 	^self! !
+
 !Graphics.StockFont categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 basicRealize!private!realizing/unrealizing! !

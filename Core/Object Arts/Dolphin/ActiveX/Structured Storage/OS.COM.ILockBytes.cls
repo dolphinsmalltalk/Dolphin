@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ILockBytes guid: (OS.COM.IID fromString: '{0000000a-0000-0000-c000-000000000046}')!
+
 OS.COM.ILockBytes comment: 'ILockBytes is a COMInterface class to wrap the standard COM interface of the same name.
 
 ILockBytes is an abstraction of a simple byte-oriented block-mode device for reading, writing and locking (though this is typically not implemented) blocks of storage. Typically we will be using an ILockBytes on a device implemented externally to Dolphin, but see the OLELockBytes class for an example of an ILockBytes implemented in Dolphin over a ByteArray. ILockBytes is the "device" interface underlying OLEs Structured Storage mechanism. The relationship between IStorage/IStreams and ILockBytes is somewhat similar to that between PositionableStreams and SequenceableCollections.
@@ -20,7 +22,9 @@ Example:
 	i replaceFrom: 1 to: 5 with: #[72 101 108 108 111] startingAt: 1.
 	(i copyFrom: 1 to: 5) asString.
 	i free'!
+
 !OS.COM.ILockBytes categoriesForClass!COM-Interfaces! !
+
 !OS.COM.ILockBytes methodsFor!
 
 at: index 
@@ -209,6 +213,7 @@ WriteAt: ulOffset pv: pv cb: cb pcbWritten: pcbWritten
 
 	<virtual stdcall: hresult 5 uint64 int8* uint32 uint32*>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.ILockBytes categoriesForMethods!
 at:!accessing!public! !
 at:put:!accessing!public! !
@@ -261,6 +266,7 @@ onHGLOBAL: hGlobal
 		fDeleteOnRelease: true
 		pplkbyt: answer.
 	^answer! !
+
 !OS.COM.ILockBytes class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 onHGLOBAL!instance creation!public! !

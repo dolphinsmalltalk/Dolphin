@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.CodeMentorTest guid: (Core.GUID fromString: '{57ac07f6-6b32-42d2-a0cd-7488ae11ec92}')!
+
 Tools.Tests.CodeMentorTest comment: ''!
+
 !Tools.Tests.CodeMentorTest methodsFor!
 
 testLintRulesXml
@@ -24,6 +27,7 @@ testLintRulesXml
 			xpath := './/LintRule[name="<1s>"]' expandMacrosWithArguments: {name} locale: Locale invariant.
 			node := xml selectSingleNode: xpath.
 			self deny: node isNil]! !
+
 !Tools.Tests.CodeMentorTest categoriesForMethods!
 testLintRulesXml!public!unit tests! !
 !

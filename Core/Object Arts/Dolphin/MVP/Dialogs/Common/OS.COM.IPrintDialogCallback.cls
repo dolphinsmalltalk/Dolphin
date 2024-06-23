@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPrintDialogCallback guid: (OS.COM.IID fromString: '{5852a2c3-6530-11d1-b6a3-0000f8757bf9}')!
+
 OS.COM.IPrintDialogCallback comment: '`IPrintDialogCallback` is a wrapper class for the COM interface ''Win32.IPrintDialogCallback'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -38,7 +40,9 @@ interface IPrintDialogCallback : IUnknown
 };
 ```
 '!
+
 !OS.COM.IPrintDialogCallback categoriesForClass!COM-Interfaces!Win32-Interfaces! !
+
 !OS.COM.IPrintDialogCallback methodsFor!
 
 HandleMessage: hDlg uMsg: uMsg wParam: wParam lParam: lParam pResult: pResult
@@ -72,6 +76,7 @@ SelectionChange
 
 	<virtual stdcall: hresult 5>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IPrintDialogCallback categoriesForMethods!
 HandleMessage:uMsg:wParam:lParam:pResult:!**auto generated**!COM Interfaces-IPrintDialogCallback!public! !
 InitDone!**auto generated**!COM Interfaces-IPrintDialogCallback!public! !
@@ -92,6 +97,7 @@ defineFunctions
 		defineFunction: #HandleMessage:uMsg:wParam:lParam:pResult:
 			argumentTypes: 'handle uint32 uintptr intptr intptr*'
 ! !
+
 !OS.COM.IPrintDialogCallback class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

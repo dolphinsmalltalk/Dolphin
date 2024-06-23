@@ -11,13 +11,17 @@ External.Structure
 			'_OffsetOf_dwCookie' -> 16r4.
 			'_OffsetOf_punk' -> 16r0
 		}!
+
 OS.COM.CONNECTDATA guid: (Core.GUID fromString: '{3438d2e1-01d6-446c-8102-5f238099585d}')!
+
 OS.COM.CONNECTDATA comment: '<CONNECTDATA> is an <ExternalStructure> class to wrap the struct ''OBJIDL.CONNECTDATA'' from type information in the ''ObjIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !OS.COM.CONNECTDATA categoriesForClass!No category! !
+
 !OS.COM.CONNECTDATA methodsFor!
 
 dwCookie
@@ -39,6 +43,7 @@ punk: anIUnknown
 	"Set the receiver's 'punk' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_punk put: anIUnknown yourAddress! !
+
 !OS.COM.CONNECTDATA categoriesForMethods!
 dwCookie!**compiled accessors**!public! !
 dwCookie:!**compiled accessors**!public! !
@@ -68,6 +73,7 @@ defineFields
 
 getFieldNames
 	^#(#punk #dwCookie)! !
+
 !OS.COM.CONNECTDATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

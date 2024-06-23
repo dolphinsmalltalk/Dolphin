@@ -7,8 +7,11 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.PropertyReadError guid: (Core.GUID fromString: '{395bcbe7-6d49-461d-8e8e-617d944548f7}')!
+
 OS.COM.PropertyReadError comment: ''!
+
 !OS.COM.PropertyReadError methodsFor!
 
 errorLog
@@ -30,6 +33,7 @@ initialize
 	"Private - Initialize the receiver's instance variables."
 
 	messageText := 'Error loading from property bag'.! !
+
 !OS.COM.PropertyReadError categoriesForMethods!
 errorLog!accessing!public! !
 errorLog:!accessing!public! !

@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBConnection guid: (Core.GUID fromString: '{87b4c472-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Database.DBConnection comment: 'A DBConnection represents a connection to an ODBC data source.
 
 One can use a DBConnection to query the capabilities of the underlying driver and the structure of the database. One can then interact with the database by submitting SQL queries using #exec: or #query:[cursorType:]. One can also prepare a DBStatement for later parameterization and execution with #prepare:[cursorType:].
@@ -26,7 +28,9 @@ Class Variables:
 	TxnIsolationLevels	<IdentityDictionary>. Map between SQL_TXN_XXX values and symbolic names.
 	ScrollTypes	<IdentityDictionary>. Map between SQL_SO_XXX values and symbolic names.
 '!
+
 !Database.DBConnection categoriesForClass!ODBC Interface! !
+
 !Database.DBConnection methodsFor!
 
 allocStmtHandle: aDBStatement
@@ -1116,6 +1120,7 @@ willAutoCommit: aBoolean
 		setAttribute: SQL_ATTR_AUTOCOMMIT
 		value: (aBoolean ifTrue: [SQL_AUTOCOMMIT_ON] ifFalse: [SQL_AUTOCOMMIT_OFF])
 		size: SQL_IS_UINTEGER! !
+
 !Database.DBConnection categoriesForMethods!
 allocStmtHandle:!helpers!private! !
 asParameter!converting!public! !
@@ -1480,6 +1485,7 @@ transact: aDBConnection action: anInteger
 				handle: aDBConnection asParameter
 				completionType: anInteger.
 	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (aDBConnection exceptionDetails: ret)]! !
+
 !Database.DBConnection class categoriesForMethods!
 allocHandle!helpers!private! !
 connections!accessing!public! !

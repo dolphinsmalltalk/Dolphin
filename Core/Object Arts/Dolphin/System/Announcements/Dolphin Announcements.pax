@@ -47,6 +47,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.AnnouncementSubscription'
 	instanceVariableNames: 'announcer announcementClass subscriber action'
@@ -54,6 +55,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.Announcer'
 	instanceVariableNames: 'registry'
@@ -61,6 +63,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.SubscriptionRegistry'
 	instanceVariableNames: 'subscriptions monitor'
@@ -68,6 +71,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.WeakSubscriptionBuilder'
 	instanceVariableNames: 'announcer'
@@ -75,6 +79,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.WeakArray
 	variableSubclass: #'Kernel.WeakAnnouncementSubscription'
 	instanceVariableNames: 'announcer announcementClass action'
@@ -82,6 +87,7 @@ Core.WeakArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Set
 	variableSubclass: #'Kernel.AnnouncementSet'
 	instanceVariableNames: ''
@@ -104,6 +110,7 @@ asWeakMessageSend
 		receiver: receiver
 		selector: selector
 		arguments: args copy! !
+
 !Core.MessageSend categoriesForMethods!
 asWeakMessageSend!converting!public! !
 !
@@ -112,6 +119,7 @@ asWeakMessageSend!converting!public! !
 
 announcementSubscriber
 	^self receiver! !
+
 !Core.MessageSendAbstract categoriesForMethods!
 announcementSubscriber!public! !
 !
@@ -130,6 +138,7 @@ handlesAnnouncement: anAnnouncement
 		announce: #FOO should raise DNU bar"
 
 	^anAnnouncement == self! !
+
 !Core.Symbol categoriesForMethods!
 asAnnouncement!converting!public! !
 handlesAnnouncement:!converting!public! !
@@ -143,6 +152,7 @@ announcementSubscriber
 asWeakMessageSend
 	self receiver notNil ifTrue: [self error: 'Only clean blocks can be weak'].
 	^self! !
+
 !Kernel.BlockClosure categoriesForMethods!
 announcementSubscriber!public! !
 asWeakMessageSend!converting!public! !

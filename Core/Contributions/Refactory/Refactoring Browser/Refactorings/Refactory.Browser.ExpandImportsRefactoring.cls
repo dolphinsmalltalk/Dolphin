@@ -7,7 +7,9 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ExpandImportsRefactoring guid: (Core.GUID fromString: '{5567e549-3f11-4042-99cd-794dab099550}')!
+
 Refactory.Browser.ExpandImportsRefactoring comment: 'ExpandReferencedPoolsRefactoring is a refactoring that expands a PoolDictionary''s scope for a method that is being moved from one class to another. This refactoring is primarily used to support other, more complicated refactorings such as MoveMethod.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Instance Variables:
 	toClasses	<Collection of: RBClass>	The classes into which the pools must be expanded.
 
 '!
+
 !Refactory.Browser.ExpandImportsRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.ExpandImportsRefactoring methodsFor!
 
 addImport: aBindingReference toClass: aClass
@@ -84,6 +88,7 @@ whichNamespaceDefines: aString
 						ifNotNil: [:namespace | (namespace localBindingFor: aString) ifNotNil: [:var | var isClassVariable ifTrue: [^each]]]].
 			currentClass := currentClass superclass].
 	^nil! !
+
 !Refactory.Browser.ExpandImportsRefactoring categoriesForMethods!
 addImport:toClass:!private!transforming! !
 addImports!private!transforming! !
@@ -112,6 +117,7 @@ model: aRBModel forMethod: aParseTree fromClass: aClass toClasses: classCollecti
 			fromClass: aClass
 			toClasses: classCollection;
 		yourself! !
+
 !Refactory.Browser.ExpandImportsRefactoring class categoriesForMethods!
 forMethod:fromClass:toClasses:!instance creation!public! !
 model:forMethod:fromClass:toClasses:!instance creation!public! !

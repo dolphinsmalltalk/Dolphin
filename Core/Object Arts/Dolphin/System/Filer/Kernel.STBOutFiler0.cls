@@ -7,7 +7,9 @@ Kernel.STBLegacyOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler0 guid: (Core.GUID fromString: '{26c51f71-0639-44b9-b9e1-90423d6717e9}')!
+
 Kernel.STBOutFiler0 comment: '`STBOutFiler0` is an `STBOutFiler` for writing the first STB serialization format, version 0.
 
 This was the original format as used in the earliest betas prior to Dolphin 1.0, right through to Dolphin 4.x.
@@ -15,7 +17,9 @@ This was the original format as used in the earliest betas prior to Dolphin 1.0,
   - There were no pre-registered classes. Later versions pre-registered some classes for both space efficiency, and to fix some obscure boundary cases representing `String` and `STBClassProxy` classes.
   - Strings stored in STB used the encoding of the code page where written. If decoded (i.e. deserialised) no a system with a different code page, the resulting `String` might contain different characters to the original. for any code points outside the ASCII range. This was inherent in the pre-unicode string representation.
 '!
+
 !Kernel.STBOutFiler0 categoriesForClass!System-Binary storage! !
+
 !Kernel.STBOutFiler0 methodsFor!
 
 inFilerClass
@@ -194,6 +198,7 @@ writeInstanceVariables: anObject
 		ifTrue: 
 			[1 to: (instanceSpec bitAnd: Behavior._SizeMask) + basicSize
 				do: [:i | self nextPut: (anObject instVarAt: i)]]! !
+
 !Kernel.STBOutFiler0 categoriesForMethods!
 inFilerClass!constants!private! !
 lastPredefined!constants!private! !
@@ -230,6 +235,7 @@ version
 	"Answer the format version of the STB stream."
 
 	^0! !
+
 !Kernel.STBOutFiler0 class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !

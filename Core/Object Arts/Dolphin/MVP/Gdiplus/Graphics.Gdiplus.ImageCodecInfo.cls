@@ -22,7 +22,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_SigSize' -> 16r40.
 			'_OffsetOf_Version' -> 16r38
 		}!
+
 Graphics.Gdiplus.ImageCodecInfo guid: (Core.GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
+
 Graphics.Gdiplus.ImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -48,6 +50,7 @@ struct tagGpImageCodecInfo {
 	BYTE* SigMask;
 } GpImageCodecInfo;
 '!
+
 !Graphics.Gdiplus.ImageCodecInfo methodsFor!
 
 Clsid
@@ -187,6 +190,7 @@ Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_Version put: anInteger! !
+
 !Graphics.Gdiplus.ImageCodecInfo categoriesForMethods!
 Clsid!**compiled accessors**!public! !
 Clsid:!**compiled accessors**!public! !
@@ -287,6 +291,7 @@ defineFields
 
 getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
+
 !Graphics.Gdiplus.ImageCodecInfo class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

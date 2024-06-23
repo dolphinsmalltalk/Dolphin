@@ -7,8 +7,11 @@ UI.Tests.TypeConverterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.TimeToTextTest guid: (Core.GUID fromString: '{2abbcfbe-0c0d-4deb-bf0b-61d631c5f387}')!
+
 UI.Tests.TimeToTextTest comment: ''!
+
 !UI.Tests.TimeToTextTest methodsFor!
 
 testInvalidFormat
@@ -32,6 +35,7 @@ testStbConvertFromVersion0
 	self assert: subject locale identicalTo: Locale default.
 	self assert: subject format equals: 'HH:mm.ss'.
 	self assert: (subject convertFromLeftToRight: (Time fromSeconds: 5555)) equals: '01:32.35'! !
+
 !UI.Tests.TimeToTextTest categoriesForMethods!
 testInvalidFormat!public!unit tests! !
 testStbConvertFromVersion0!public! !

@@ -7,9 +7,13 @@ Kernel.Tests.StTokenTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.StValueTokenTest guid: (Core.GUID fromString: '{e1fb19ba-f9b5-4c51-b277-d6e1ffa5e66a}')!
+
 Kernel.Tests.StValueTokenTest isNonInstantiable: true!
+
 Kernel.Tests.StValueTokenTest comment: ''!
+
 !Kernel.Tests.StValueTokenTest methodsFor!
 
 exampleSource
@@ -42,6 +46,7 @@ testInstanceCreation
 	self assert: token2 stop equals: 20 + self exampleSource size - 1.
 	self assertIsNil: token2 comments.
 	self assert: token2 value equals: self exampleValue! !
+
 !Kernel.Tests.StValueTokenTest categoriesForMethods!
 exampleSource!constants!private! !
 exampleValue!constants!private! !

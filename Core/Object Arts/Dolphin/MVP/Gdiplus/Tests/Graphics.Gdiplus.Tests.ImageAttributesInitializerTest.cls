@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.ImageAttributesInitializerTest guid: (Core.GUID fromString: '{5b179394-fe1b-49be-8b4e-a8c385d87c6a}')!
+
 Graphics.Gdiplus.Tests.ImageAttributesInitializerTest comment: ''!
+
 !Graphics.Gdiplus.Tests.ImageAttributesInitializerTest methodsFor!
 
 createCanonicalSubject
@@ -26,6 +29,7 @@ testCreateHandle
 
 testIsPersistent
 	self deny: model isPersistent! !
+
 !Graphics.Gdiplus.Tests.ImageAttributesInitializerTest categoriesForMethods!
 createCanonicalSubject!helpers!private! !
 subjectClass!constants!private! !

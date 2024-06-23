@@ -7,11 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.ProductProtector guid: (Core.GUID fromString: '{14be1a34-57d2-46ce-b645-a0756bf2fe54}')!
+
 Security.ProductProtector isNonInstantiable: true!
+
 Security.ProductProtector comment: 'One of these handles the actual encryption/decryption for a (subclass of) ProtectedProductSessionManager.  The idea of factoring this code out is partly to make it easier to replace the encryptin strategy used by Protected Product but also, and perhaps more importantly, to make it easier for other SessionManager subclasses to use Protected Product without duplicating too much code.
 
 Note that instances only look after the encryption/decryption of methods, they are not responsible for the encyption/validation used by ProtectedProductSerialNumbers (which have different cryptographic requirements), see SerialNumberProtector for that.'!
+
 !Security.ProductProtector methodsFor!
 
 decryptClasses: aCollection 
@@ -43,6 +47,7 @@ unlockClasses: aCollectionOfClasses
 	"Unlock the given classes using the key we have been configured to use."
 
 	self decryptClasses: aCollectionOfClasses! !
+
 !Security.ProductProtector categoriesForMethods!
 decryptClasses:!operations!public! !
 encryptClasses:!operations!public! !
@@ -69,6 +74,7 @@ withKey: aKeyObject
 	^(self new)
 		key: aKeyObject;
 		yourself! !
+
 !Security.ProductProtector class categoriesForMethods!
 isSafeToEncryptWithProductProtection!constants!public!testing! !
 withKey:!instance creation!public! !

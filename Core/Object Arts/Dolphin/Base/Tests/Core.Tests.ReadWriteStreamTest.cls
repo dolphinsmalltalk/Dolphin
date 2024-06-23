@@ -7,8 +7,11 @@ Core.Tests.PositionableStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ReadWriteStreamTest guid: (Core.GUID fromString: '{575c0e65-e28f-4acb-a9c8-8294fa8503a3}')!
+
 Core.Tests.ReadWriteStreamTest comment: ''!
+
 !Core.Tests.ReadWriteStreamTest methodsFor!
 
 streamClass
@@ -56,6 +59,7 @@ testResetAfterWrite
 	stream reset.
 	self assert: stream next equals: $a.
 	self closeTempStream: stream! !
+
 !Core.Tests.ReadWriteStreamTest categoriesForMethods!
 streamClass!helpers!private! !
 streamOn:!helpers!private! !

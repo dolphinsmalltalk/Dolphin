@@ -7,9 +7,13 @@ Refactory.Browser.Tests.BrowserEnvironmentTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.PackageEnvironmentTest guid: (Core.GUID fromString: '{4375158a-0238-45ad-86e5-967559575ded}')!
+
 Tools.Tests.PackageEnvironmentTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !Tools.Tests.PackageEnvironmentTest categoriesForClass!Refactory-Testing! !
+
 !Tools.Tests.PackageEnvironmentTest methodsFor!
 
 classNamesFor: aPackageEnvironment
@@ -49,6 +53,7 @@ testPackageEnvironment
 			self assert: (env definesClass: each)].
 	self assert: (env includesSelector: #choose in: Font class).
 	self deny: (env includesSelector: #icon in: Font class)! !
+
 !Tools.Tests.PackageEnvironmentTest categoriesForMethods!
 classNamesFor:!BrowserEnvironment tests!public! !
 testPackageEnvironment!public!unit tests! !

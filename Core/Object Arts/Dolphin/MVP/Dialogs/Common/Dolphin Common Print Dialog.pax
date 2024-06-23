@@ -102,6 +102,7 @@ Kernel.SharedPool
 			'S_OK' -> 16r0.
 			'START_PAGE_GENERAL' -> -16r1
 		}!
+
 UI.CommonDialog
 	subclass: #'UI.PrintingDialog'
 	instanceVariableNames: ''
@@ -109,6 +110,7 @@ UI.CommonDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PrintingDialog
 	subclass: #'UI.PageSetupDialog'
 	instanceVariableNames: ''
@@ -116,6 +118,7 @@ UI.PrintingDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.PrintingDialog
 	subclass: #'UI.PrintDialog'
 	instanceVariableNames: 'dialogServices flags savedPreferLegacyPrintDialog'
@@ -123,6 +126,7 @@ UI.PrintingDialog
 	imports: #(#{OS.PrintDialogConstants} #{OS.Win32Errors private})
 	classInstanceVariableNames: ''
 	classConstants: { 'UnifiedPrintDialogMask' -> 16r1 }!
+
 External.Structure
 	subclass: #'OS.PRINTPAGERANGE'
 	instanceVariableNames: ''
@@ -134,6 +138,7 @@ External.Structure
 			'_OffsetOf_nToPage' -> 16r4.
 			'_PRINTPAGERANGE_Size' -> 16r8
 		}!
+
 OS.ComDlgStructure
 	subclass: #'OS.PrintDialogStructure'
 	instanceVariableNames: 'cachedHDevMode devMode cachedHDevNames devNames'
@@ -141,6 +146,7 @@ OS.ComDlgStructure
 	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_hDevMode' -> 16r8. '_OffsetOf_hDevNames' -> 16rC }!
+
 OS.PrintDialogStructure
 	subclass: #'OS.PAGESETUPDLGW'
 	instanceVariableNames: ''
@@ -160,6 +166,7 @@ OS.PrintDialogStructure
 			'_OffsetOf_rtMinMargin' -> 16r1C.
 			'_PAGESETUPDLGW_Size' -> 16r54
 		}!
+
 OS.PrintDialogStructure
 	subclass: #'OS.PRINTDLGEXW'
 	instanceVariableNames: 'printRanges callback'
@@ -186,6 +193,7 @@ OS.PrintDialogStructure
 			'_OffsetOf_nStartPage' -> 16r4C.
 			'_PRINTDLGEXW_Size' -> 16r54
 		}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IPrintDialogCallback'
 	instanceVariableNames: ''
@@ -193,6 +201,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IPrintDialogServices'
 	instanceVariableNames: ''
@@ -212,6 +221,7 @@ choose
 
 	| hDC |
 	^(hDC := UI.PrintDialog showModal) isNil ifFalse: [self withOwnedDC: hDC]! !
+
 !Graphics.PrinterCanvas class categoriesForMethods!
 choose!instance creation!public! !
 !
@@ -237,6 +247,7 @@ printDlgEx: lppd
 
 	<stdcall: hresult PrintDlgExW PRINTDLGEXW*>
 	^self invalidCall: _failureCode! !
+
 !OS.ComDlgLibrary categoriesForMethods!
 pageSetupDlg:!**auto generated**!public! !
 printDlgEx:!**auto generated**!public! !

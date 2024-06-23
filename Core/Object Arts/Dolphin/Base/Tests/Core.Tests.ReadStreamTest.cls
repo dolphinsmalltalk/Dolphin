@@ -7,8 +7,11 @@ Core.Tests.PositionableStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.ReadStreamTest guid: (Core.GUID fromString: '{29dd0ab5-9ebf-496f-aef0-ffc5ba1c2017}')!
+
 Core.Tests.ReadStreamTest comment: ''!
+
 !Core.Tests.ReadStreamTest methodsFor!
 
 streamClass
@@ -29,6 +32,7 @@ testPositionBoundsError
 		should: [stream position: pos]
 		raise: BoundsError
 		matching: [:e | e receiver == stream and: [e tag == 5]]! !
+
 !Core.Tests.ReadStreamTest categoriesForMethods!
 streamClass!helpers!private! !
 streamWith:!helpers!private! !

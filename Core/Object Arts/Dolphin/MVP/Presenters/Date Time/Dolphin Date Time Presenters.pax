@@ -40,6 +40,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValuePresenter
 	subclass: #'UI.TimePresenter'
 	instanceVariableNames: ''
@@ -47,6 +48,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractToTextConverter
 	subclass: #'UI.DateToText'
 	instanceVariableNames: 'format'
@@ -54,6 +56,7 @@ UI.AbstractToTextConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractToTextConverter
 	subclass: #'UI.DurationToText'
 	instanceVariableNames: 'format'
@@ -61,6 +64,7 @@ UI.AbstractToTextConverter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AbstractToTextConverter
 	subclass: #'UI.TimeToText'
 	instanceVariableNames: 'format'

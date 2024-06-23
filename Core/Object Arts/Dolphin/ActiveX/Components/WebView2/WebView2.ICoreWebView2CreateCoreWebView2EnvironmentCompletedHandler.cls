@@ -7,7 +7,9 @@ WebView2.ICoreWebView2CompletedHandler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler guid: (OS.COM.IID fromString: '{4e8a3389-c9d8-4bd2-b6b5-124fee6cc14d}')!
+
 WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler methodsFor!
 
 Invoke: invoke arg: arg
@@ -39,6 +43,7 @@ Invoke: invoke arg: arg
 
 	<virtual stdcall: hresult 4 hresult WebView2.ICoreWebView2Environment*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler!public! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2Environment*'! !
+
 !WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

@@ -7,9 +7,13 @@ Database.DBSchemaStatement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBTablesStatement guid: (Core.GUID fromString: '{404f79f7-4450-4d9d-9c0e-d2e9c8f897c6}')!
+
 Database.DBTablesStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about tables in a database.'!
+
 !Database.DBTablesStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBTablesStatement methodsFor!
 
 executeStatement
@@ -39,6 +43,7 @@ tableType
 
 tableType: aString
 	tableType := aString! !
+
 !Database.DBTablesStatement categoriesForMethods!
 executeStatement!operations!private! !
 initialize:!initializing!private!searching! !

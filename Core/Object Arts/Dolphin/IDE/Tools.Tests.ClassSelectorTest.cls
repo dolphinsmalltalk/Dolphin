@@ -7,9 +7,13 @@ UI.Tests.SelectableItemsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Tests.ClassSelectorTest guid: (Core.GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
+
 Tools.Tests.ClassSelectorTest isNonInstantiable: true!
+
 Tools.Tests.ClassSelectorTest comment: ''!
+
 !Tools.Tests.ClassSelectorTest methodsFor!
 
 create: aClassSymbol subclassOf: aClass
@@ -307,6 +311,7 @@ testSelection
 			self assertIsNil: presenter selectionOrNil.
 			self should: [presenter selection] raise: Error].
 	self removeClassesABC! !
+
 !Tools.Tests.ClassSelectorTest categoriesForMethods!
 create:subclassOf:!helpers!private! !
 create:subclassOf:inPackage:!helpers!private! !
@@ -331,6 +336,7 @@ testSelection!public!unit tests! !
 
 resources
 	^{Core.Tests.DolphinTestPackages}! !
+
 !Tools.Tests.ClassSelectorTest class categoriesForMethods!
 resources!Accessing!public! !
 !

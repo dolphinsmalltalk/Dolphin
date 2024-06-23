@@ -7,10 +7,14 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.OLELibrary guid: (Core.GUID fromString: '{64674066-3a82-101b-8181-00aa003743d3}')!
+
 OS.COM.OLELibrary comment: 'OLELibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLE32.DLL.
 This library contains functions pertaining to the use of OLE and COM.'!
+
 !OS.COM.OLELibrary categoriesForClass!External-Libraries-ActiveX! !
+
 !OS.COM.OLELibrary methodsFor!
 
 basicFree
@@ -274,6 +278,7 @@ uninitialize
 
 	#{IMalloc} ifDefined: [:imalloc | imalloc free].
 	self comOnly ifTrue: [self coUninitialize] ifFalse: [self oleUninitialize]! !
+
 !OS.COM.OLELibrary categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 clsidFromProgID:lpclsid:!**auto generated**!OLE Functions-GUID!public! !
@@ -315,6 +320,7 @@ fileName
 
 sharedVariableName
 	^#{Ole32}! !
+
 !OS.COM.OLELibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

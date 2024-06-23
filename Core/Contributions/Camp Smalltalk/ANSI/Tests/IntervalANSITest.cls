@@ -5,9 +5,13 @@ CollectionTest subclass: #IntervalANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IntervalANSITest guid: (GUID fromString: '{64086e40-bbed-4de2-b52b-2b8557ab27ec}')!
+
 IntervalANSITest comment: ''!
+
 !IntervalANSITest categoriesForClass!Unclassified! !
+
 !IntervalANSITest methodsFor!
 
 canonicalElement
@@ -31,6 +35,7 @@ testXkeysAndValuesDoX
 testXlast
 	" <sequencedReadableCollection>#last "
 	#'Collection'.! !
+
 !IntervalANSITest categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -45,6 +50,7 @@ testXlast!public! !
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedReadableCollectionHelper! !
+
 !IntervalANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

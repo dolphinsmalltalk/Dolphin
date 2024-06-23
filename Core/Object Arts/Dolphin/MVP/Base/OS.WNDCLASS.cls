@@ -19,10 +19,14 @@ External.Structure
 			'_OffsetOf_style' -> 16r0.
 			'_WNDCLASS_Size' -> 16r28
 		}!
+
 OS.WNDCLASS guid: (Core.GUID fromString: '{87b4c61c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.WNDCLASS comment: 'WNDCLASS is the class of <ExternalStructure> which represent the Windows structure of the same name. It is used to retrieve and specify Windows "Class" information, e.g. when registering a window class.
 '!
+
 !OS.WNDCLASS categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.WNDCLASS methodsFor!
 
 className: aString
@@ -90,6 +94,7 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_style put: anInteger! !
+
 !OS.WNDCLASS categoriesForMethods!
 className:!accessing!public! !
 hbrBackground:!**compiled accessors**!public! !
@@ -145,6 +150,7 @@ defineFields
 
 getFieldNames
 	^#(#style #lpfnWndProc #hInstance #hIcon #hCursor #hbrBackground #lpszMenuName #lpszClassName)! !
+
 !OS.WNDCLASS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

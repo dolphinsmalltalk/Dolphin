@@ -7,7 +7,9 @@ Core.Collection
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Bag guid: (Core.GUID fromString: '{87b4c509-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Bag comment: 'A Bag is a variable sized, unordered, collection which is extensible and contractible, but not accesssible using external keys. Bag is similar to Set, but can contain duplicate elements (which it counts). Elements are considered to  be duplicates if they compare as equal using #=.
 
 Bag conforms to the ANSI protocols:
@@ -15,7 +17,9 @@ Bag conforms to the ANSI protocols:
 	collection
 	extensibleCollection
 	Bag'!
+
 !Core.Bag categoriesForClass!Collections-Unordered! !
+
 !Core.Bag methodsFor!
 
 = anObject
@@ -173,6 +177,7 @@ sortedCounts
 
 valuesAndCountsDo: aBlock 
 	contents keysAndValuesDo: aBlock! !
+
 !Core.Bag categoriesForMethods!
 =!comparing!public! !
 add:!adding!public! !
@@ -225,6 +230,7 @@ new: count
 	which uses equality as the comparison for identifying duplicate elements."
 
 	^super new contents: (LookupTable new: count)! !
+
 !Core.Bag class categoriesForMethods!
 identityNew!instance creation!public! !
 identityNew:!instance creation!public! !

@@ -19,7 +19,9 @@ UI.MultilineTextEdit
 			'NumAnnotationStyles' -> 16r100.
 			'NumMarginStyles' -> 16r100
 		}!
+
 UI.Scintilla.ScintillaView guid: (Core.GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
+
 UI.Scintilla.ScintillaView comment: '`ScintillaView` is a `<valueView>` class that wraps the ["Scintilla" programmers'' edit control](https://www.scintilla.org/index.html). 
 
 Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html) if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
@@ -127,7 +129,9 @@ N.B. Scintilla is an excellent editor control with very rich functionality, but 
   `NumAnnotationStyles`			`<integer>`
   `NumMarginStyles`			`<integer>`
 '!
+
 !UI.Scintilla.ScintillaView categoriesForClass!MVP-Views! !
+
 !UI.Scintilla.ScintillaView methodsFor!
 
 acceptAutoCompletion
@@ -10119,6 +10123,7 @@ zoomOut
 		msg: SCI_ZOOMOUT
 		wParam: 0
 		lParam: 0! !
+
 !UI.Scintilla.ScintillaView categoriesForMethods!
 acceptAutoCompletion!**auto generated**!autocompletion!commands-actions!public!scintilla interface! !
 activeHotspotBackcolor!caret, selection, and hotspot styles!element colors!public! !
@@ -12129,6 +12134,7 @@ xmlTextStyles
 							b: 102);
 				yourself).
 	^styles! !
+
 !UI.Scintilla.ScintillaView class categoriesForMethods!
 annotationModes!constants!public! !
 autoCompletionSortModes!constants!private! !

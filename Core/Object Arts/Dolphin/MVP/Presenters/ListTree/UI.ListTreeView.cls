@@ -17,7 +17,9 @@ UI.ListView
 			'OpenImageIndex' -> 16r2.
 			'UseSmartRefreshMask' -> 16r20
 		}!
+
 UI.ListTreeView guid: (Core.GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
+
 UI.ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 
@@ -79,7 +81,9 @@ Instances can be set not to keep a record of which nodes were expanded when thei
 Instances can be set not to collapse the entire subtree below a node in response to #onTreeChanged: notification.  The default is to collapse the sub-tree because that''s what TreeView does.  This is controlled by the #useSmartUpdate aspect.
 
 	-- chris'!
+
 !UI.ListTreeView categoriesForClass!MVP-Views! !
+
 !UI.ListTreeView methodsFor!
 
 addAll: aCollection afterIndex: anInteger
@@ -1871,6 +1875,7 @@ wantExtendedSelection
 	extend the selection"
 
 	^self isMultiSelect and: [Keyboard default isShiftDown]! !
+
 !UI.ListTreeView categoriesForMethods!
 addAll:afterIndex:!do copy!expanding/collapsing!private! !
 addExpanded:!do copy!helpers!private! !
@@ -2308,6 +2313,7 @@ stbVersion
 	Note that we multiply *our* local version by the prime, this is necessary
 	to allow for older instances to appear to have a local version of 0"
 	^ self stbEncodingPrime * self localStbVersion + super stbVersion.! !
+
 !UI.ListTreeView class categoriesForMethods!
 convertToLocalVersion0:from:!binary filing!do copy!private! !
 convertToLocalVersion1:from:!binary filing!do copy!private! !

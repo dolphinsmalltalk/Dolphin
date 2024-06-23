@@ -7,7 +7,9 @@ UI.StatusBarItemAbstract
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StatusBarItem guid: (Core.GUID fromString: '{87b4c6e6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.StatusBarItem comment: '`StatusItem` is a class describing the standard items that can be held by a `StatusBar`. These can have both text and an image associated with them.
 
 ## Instance Variables:
@@ -15,7 +17,9 @@ UI.StatusBarItem comment: '`StatusItem` is a class describing the standard items
   getImageBlock	`<monadicValuable>` for mapping a list item to an <integer> image index.
   getTipTextBlock	`<monadicValuable>` for mapping a list item to its tool-tip text.
 '!
+
 !UI.StatusBarItem categoriesForClass!MVP-Views-Support! !
+
 !UI.StatusBarItem methodsFor!
 
 defaultGetTextBlock
@@ -197,6 +201,7 @@ toolTipText
 					["Not truncated, so we don't want to display a tip."
 					^nil]].
 	^tipText! !
+
 !UI.StatusBarItem categoriesForMethods!
 defaultGetTextBlock!adapters!constants!private! !
 drawImageOn:in:!drawing!private! !
@@ -225,6 +230,7 @@ toolTipText!enquiries!private! !
 value: anObject 
 	Notification deprecated.
 	^anObject iconImageIndex! !
+
 !UI.StatusBarItem class categoriesForMethods!
 value:!evaluating!private! !
 !

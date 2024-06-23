@@ -15,9 +15,13 @@ External.Structure
 			'_OffsetOf_rgbReserved' -> 16r20.
 			'_PAINTSTRUCT_Size' -> 16r40
 		}!
+
 OS.PAINTSTRUCT guid: (Core.GUID fromString: '{87b4c605-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.PAINTSTRUCT comment: ''!
+
 !OS.PAINTSTRUCT categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.PAINTSTRUCT methodsFor!
 
 fErase
@@ -29,6 +33,7 @@ rcPaint
 	"Answer the <RECTL> value of the receiver's 'rcPaint' field."
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcPaint! !
+
 !OS.PAINTSTRUCT categoriesForMethods!
 fErase!**compiled accessors**!public! !
 rcPaint!**compiled accessors**!public! !
@@ -55,6 +60,7 @@ defineFields
 
 getFieldNames
 	^#(#hdc #fErase #rcPaint)! !
+
 !OS.PAINTSTRUCT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,8 +7,11 @@ Refactory.Browser.RefactoryChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.PackageVersionChange guid: (Core.GUID fromString: '{c30ae03a-d2b9-4518-8375-23866457a161}')!
+
 Refactory.Browser.PackageVersionChange comment: ''!
+
 !Refactory.Browser.PackageVersionChange methodsFor!
 
 afterText
@@ -43,6 +46,7 @@ version
 
 version: anObject
 	version := anObject! !
+
 !Refactory.Browser.PackageVersionChange categoriesForMethods!
 afterText!printing!public! !
 beforeText!printing!public! !
@@ -65,6 +69,7 @@ packageName: aString version: aNumber
 		packageName: aString;
 		version: aNumber;
 		yourself! !
+
 !Refactory.Browser.PackageVersionChange class categoriesForMethods!
 package:version:!instance creation!public! !
 packageName:version:!instance creation!public! !

@@ -7,9 +7,13 @@ UI.FindDetails
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.AdvancedFindDetails guid: (Core.GUID fromString: '{6c4e30d4-924f-4c0a-be20-50f5ec823741}')!
+
 UI.AdvancedFindDetails comment: ''!
+
 !UI.AdvancedFindDetails categoriesForClass!Kernel-Objects! !
+
 !UI.AdvancedFindDetails methodsFor!
 
 findIn: aView range: anIntervalOfInteger
@@ -47,6 +51,7 @@ regularExpression
 		multiline: true;
 		global: true."
 	^regexp! !
+
 !UI.AdvancedFindDetails categoriesForMethods!
 findIn:range:!public! !
 hasValidRegularExpression!public!testing! !
@@ -62,6 +67,7 @@ regexpClass
 
 searchModes
 	^super searchModes copyWith: #regularExpression! !
+
 !UI.AdvancedFindDetails class categoriesForMethods!
 regexpClass!constants!public! !
 searchModes!constants!public! !

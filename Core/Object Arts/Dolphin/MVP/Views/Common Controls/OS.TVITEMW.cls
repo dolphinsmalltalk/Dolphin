@@ -18,7 +18,9 @@ OS.CCITEM
 			'_OffsetOf_stateMask' -> 16rC.
 			'_TVITEMW_Size' -> 16r28
 		}!
+
 OS.TVITEMW guid: (Core.GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.TVITEMW comment: 'TVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TVITEM is used to communicate information about the items (nodes) in a Tree View control such as the text, icon, state, etc.
@@ -35,7 +37,9 @@ TVITEM is used to communicate information about the items (nodes) in a Tree View
         int       cChildren;
         LPARAM	lParam;
     } TVITEM;'!
+
 !OS.TVITEMW categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.TVITEMW methodsFor!
 
 allCallbacks
@@ -219,6 +223,7 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
+
 !OS.TVITEMW categoriesForMethods!
 allCallbacks!accessing!public! !
 beStateExpandedOnce!accessing!public! !
@@ -306,6 +311,7 @@ initializeCallbackPrototype
 				allCallbacks;
 				bytes.
 	callbackPrototype beImmutableObject! !
+
 !OS.TVITEMW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 callbacksForItem:!instance creation!public! !

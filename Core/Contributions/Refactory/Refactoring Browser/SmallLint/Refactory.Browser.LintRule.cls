@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.LintRule guid: (Core.GUID fromString: '{0a5056c9-9803-42b3-9c34-5bf472b5d967}')!
+
 Refactory.Browser.LintRule isNonInstantiable: true!
+
 Refactory.Browser.LintRule comment: 'LintRule is an abstract class that represents some check on the code.
 
 Subclasses must implement the following messages:
@@ -24,7 +27,9 @@ Subclasses must implement the following messages:
 
 Instance Variables:
 	name	<String>	the display name of the rule'!
+
 !Refactory.Browser.LintRule categoriesForClass!Refactory-Lint! !
+
 !Refactory.Browser.LintRule methodsFor!
 
 allRules
@@ -94,6 +99,7 @@ rules
 
 viewResults
 	self subclassResponsibility! !
+
 !Refactory.Browser.LintRule categoriesForMethods!
 allRules!accessing!public! !
 checkClass:!accessing!public! !
@@ -120,6 +126,7 @@ viewResults!private! !
 
 new
 	^super new initialize! !
+
 !Refactory.Browser.LintRule class categoriesForMethods!
 new!instance creation!public! !
 !

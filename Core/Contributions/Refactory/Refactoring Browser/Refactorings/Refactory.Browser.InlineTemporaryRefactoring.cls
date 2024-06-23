@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.InlineTemporaryRefactoring guid: (Core.GUID fromString: '{462b284d-15e3-4d89-ac1a-048036a38c69}')!
+
 Refactory.Browser.InlineTemporaryRefactoring comment: ''!
+
 !Refactory.Browser.InlineTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.InlineTemporaryRefactoring methodsFor!
 
 checkMultipleAssignments
@@ -97,6 +101,7 @@ verifySelectedInterval
 	self determineVariableDefinition.
 	self checkMultipleAssignments.
 	self checkReadBeforeWritten! !
+
 !Refactory.Browser.InlineTemporaryRefactoring categoriesForMethods!
 checkMultipleAssignments!preconditions!private! !
 checkReadBeforeWritten!preconditions!private! !
@@ -129,6 +134,7 @@ model: aRBModel inline: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
+
 !Refactory.Browser.InlineTemporaryRefactoring class categoriesForMethods!
 inline:from:in:!instance creation!public! !
 model:inline:from:in:!instance creation!public! !

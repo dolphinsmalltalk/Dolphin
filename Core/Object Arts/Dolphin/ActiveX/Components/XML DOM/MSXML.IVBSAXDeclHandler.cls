@@ -7,7 +7,9 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IVBSAXDeclHandler guid: (OS.COM.IID fromString: '{e8917260-7579-4be1-b5dd-7afbfa6f077b}')!
+
 MSXML.IVBSAXDeclHandler comment: '<IVBSAXDeclHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -48,7 +50,9 @@ interface IVBSAXDeclHandler : IDispatch
 		[in, out]BSTR* strSystemId);
 };
 '!
+
 !MSXML.IVBSAXDeclHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IVBSAXDeclHandler methodsFor!
 
 attributeDecl: strElementName strAttributeName: strAttributeName strType: strType strValueDefault: strValueDefault strValue: strValue
@@ -156,6 +160,7 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
+
 !MSXML.IVBSAXDeclHandler categoriesForMethods!
 attributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!methods!public! !
 AttributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
@@ -185,6 +190,7 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:strPublicId:strSystemId:
 			argumentTypes: 'bstr* bstr* bstr*'
 ! !
+
 !MSXML.IVBSAXDeclHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

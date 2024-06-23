@@ -7,10 +7,15 @@ Core.Number
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Integer guid: (Core.GUID fromString: '{87b4c65c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Integer isNonInstantiable: true!
+
 Core.Integer comment: ''!
+
 !Core.Integer categoriesForClass!Magnitude-Numbers! !
+
 !Core.Integer methodsFor!
 
 - operand
@@ -832,6 +837,7 @@ yourAddress
 	"Assume that the integer is being used as an address, so answer self."
 
 	^self! !
+
 !Core.Integer categoriesForMethods!
 -!arithmetic!public! !
 &!bit manipulation!public! !
@@ -1021,6 +1027,7 @@ readPositiveFrom: aStream radix: anInteger
 					[aStream pop.
 					^value]].
 	^value! !
+
 !Core.Integer class categoriesForMethods!
 primesUpTo:!enquiries!public! !
 readFrom:!instance creation!public! !

@@ -7,11 +7,15 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'DeferRectangles' -> true }!
+
 UI.LayoutContext guid: (Core.GUID fromString: '{85935809-471d-43cd-98f0-4c8f861663de}')!
+
 UI.LayoutContext comment: 'LayoutContext is used by LayoutManagers to buffer window layout changes such as moving, resizing (i.e. changing the view rectangle) and hiding/showing views. LayoutContext can then apply the buffered changes en-masse using the Win32 DeferWindowPos APIs. This minimises the amount of unecesary relayout and redrawing that would otherwise occur as layout managers allocate space to their charges.
 
 Note that DeferWindowPos is only able to batch up window repositioning requests for children of the same parent window. Consequently if a LayoutContext is used to buffer layout requests for multiple layout managers (which is typically the case), then it will generate multiple deferred window repositioning batches. These batches are applied bottom up so that the innermost children are repositioned first, and so on up the parent chain.'!
+
 !UI.LayoutContext categoriesForClass!Kernel-Objects! !
+
 !UI.LayoutContext methodsFor!
 
 apply
@@ -108,6 +112,7 @@ setView: aView rectangle: aRectangle
 
 showView: aView
 	(self positionForView: aView) show: true! !
+
 !UI.LayoutContext categoriesForMethods!
 apply!operations!public! !
 clientExtentOf:!accessing!public! !
@@ -129,6 +134,7 @@ showView:!accessing!public! !
 
 forContainer: aView
 	^self new setContainer: aView! !
+
 !UI.LayoutContext class categoriesForMethods!
 forContainer:!instance creation!public! !
 !

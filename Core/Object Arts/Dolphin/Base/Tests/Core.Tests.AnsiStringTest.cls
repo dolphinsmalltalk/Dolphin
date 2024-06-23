@@ -7,8 +7,11 @@ Core.Tests.StringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.AnsiStringTest guid: (Core.GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
+
 Core.Tests.AnsiStringTest comment: 'Tests AnsiString.'!
+
 !Core.Tests.AnsiStringTest methodsFor!
 
 assimilate: each
@@ -183,6 +186,7 @@ testIndexOfSubCollectionStartingAtGPF
 			current := String new: 970.
 			self assert: (current indexOfSubCollection: search startingAt: 965) identicalTo: 0.
 			strings add: current]! !
+
 !Core.Tests.AnsiStringTest categoriesForMethods!
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !

@@ -40,6 +40,7 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxProxy
 	subclass: #STBGlobalObjectProxy
 	instanceVariableNames: 'symbol object'
@@ -47,6 +48,7 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STxProxy
 	subclass: #STBSymbolProxy
 	instanceVariableNames: 'string'
@@ -65,6 +67,7 @@ readObjectOfClass: aClass format: anSTBClassConversion
 		readObjectOfClass: aClass
 		format: anSTBClassConversion
 		size: (self readSizeOf: aClass)! !
+
 !Kernel.STxInFiler categoriesForMethods!
 readObjectOfClass:format:!operations!public! !
 !
@@ -110,6 +113,7 @@ writeProxyPreambleFor: anObject class: aClass version: verInteger instSize: size
 				instSize: sizeInteger.
 			self register: aClass].
 	self register: anObject! !
+
 !Kernel.STxOutFiler categoriesForMethods!
 errorBindingReferencesNotSupported:!exceptions!private! !
 errorExtendedCharacterNotSupported:!exceptions!private! !

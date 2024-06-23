@@ -14,9 +14,13 @@ External.Structure
 			'_OffsetOf_lpDefaultChar' -> 16rC.
 			'_OffsetOf_lpUsedDefChar' -> 16r10
 		}!
+
 OS.GETTEXTEX guid: (Core.GUID fromString: '{1ac7d35c-befe-4c13-b0b2-0c96f50feca0}')!
+
 OS.GETTEXTEX comment: ''!
+
 !OS.GETTEXTEX categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.GETTEXTEX methodsFor!
 
 cb
@@ -38,6 +42,7 @@ flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_flags put: anInteger! !
+
 !OS.GETTEXTEX categoriesForMethods!
 cb!**compiled accessors**!public! !
 cb:!**compiled accessors**!public! !
@@ -64,6 +69,7 @@ defineFields
 
 getFieldNames
 	^#(#cb #flags #codepage)! !
+
 !OS.GETTEXTEX class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,7 +7,9 @@ Tools.SmalltalkToolShell
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.PackageBrowserShell guid: (Core.GUID fromString: '{87b4c6c0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.PackageBrowserShell comment: 'PackageBrowserShell is a <SmalltalkToolShell> that implements the Package Browser tool. This provides a user interface onto all the <Package>s held by the current <PackageManager>. 
 
 Instance Variables:
@@ -31,7 +33,9 @@ Class Variables:
 	UpdateMap 
 	WordWrapComment		<boolean> indicating that the comment pane should word wrap.
 '!
+
 !Tools.PackageBrowserShell categoriesForClass!MVP-Presenters! !
+
 !Tools.PackageBrowserShell methodsFor!
 
 acceptItCommand
@@ -1238,6 +1242,7 @@ upgradeResources
 
 variableNames
 	^variablesPresenter selections! !
+
 !Tools.PackageBrowserShell categoriesForMethods!
 acceptItCommand!commands-mappings!private! !
 addToCommandRoute:!commands-routing!public! !
@@ -1445,6 +1450,7 @@ wordWrapComment: aBoolean
 	WordWrapComment == aBoolean ifTrue: [^self].
 	WordWrapComment := aBoolean.
 	self persistOptions! !
+
 !Tools.PackageBrowserShell class categoriesForMethods!
 defaultOptionFlags!constants!options!private! !
 displayOn:!displaying!public! !

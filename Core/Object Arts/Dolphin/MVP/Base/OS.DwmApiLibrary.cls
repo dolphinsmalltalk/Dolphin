@@ -7,9 +7,13 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'DWMWA_USE_IMMERSIVE_DARK_MODE' -> 16r14 }!
+
 OS.DwmApiLibrary guid: (Core.GUID fromString: '{fcb369e6-2d71-4ff5-ad95-d88dba33698c}')!
+
 OS.DwmApiLibrary comment: ''!
+
 !OS.DwmApiLibrary categoriesForClass!External-Libraries! !
+
 !OS.DwmApiLibrary methodsFor!
 
 dwmGetWindowAttribute: hwnd dwAttribute: dwAttribute pvAttribute: pvAttribute cbAttribute: cbAttribute
@@ -67,6 +71,7 @@ isDesktopCompositionEnabled
 	answer := ByteArray new: 4.
 	self dwmIsCompositionEnabled: answer.
 	^(answer int32AtOffset: 0) ~~ 0! !
+
 !OS.DwmApiLibrary categoriesForMethods!
 dwmGetWindowAttribute:dwAttribute:pvAttribute:cbAttribute:!public!win32 functions-desktop window manager! !
 dwmIsCompositionEnabled:!public!win32 functions-desktop window manager! !
@@ -89,6 +94,7 @@ isDesktopCompositionEnabled
 
 sharedVariableName
 	^#{OS.Dwmapi}! !
+
 !OS.DwmApiLibrary class categoriesForMethods!
 fileName!constants!public! !
 isDesktopCompositionEnabled!public!queries! !

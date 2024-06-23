@@ -7,9 +7,13 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameInstanceVariableRefactoring guid: (Core.GUID fromString: '{9ad927e1-5ba7-4dcf-bcd0-6555ab567203}')!
+
 Refactory.Browser.RenameInstanceVariableRefactoring comment: ''!
+
 !Refactory.Browser.RenameInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.RenameInstanceVariableRefactoring methodsFor!
 
 preconditions
@@ -55,6 +59,7 @@ transform
 		renameInstanceVariable: variableName
 		to: newName
 		around: [self renameReferences]! !
+
 !Refactory.Browser.RenameInstanceVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 rename:to:in:!initialize/release!public! !
@@ -78,6 +83,7 @@ rename: aVarName to: aName in: aClass
 		rename: aVarName
 		to: aName
 		in: aClass! !
+
 !Refactory.Browser.RenameInstanceVariableRefactoring class categoriesForMethods!
 model:rename:to:in:!instance creation!public! !
 rename:to:in:!instance creation!public! !

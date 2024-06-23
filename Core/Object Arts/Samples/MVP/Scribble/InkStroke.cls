@@ -5,14 +5,18 @@ Object subclass: #InkStroke
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InkStroke guid: (GUID fromString: '{87b4c493-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 InkStroke comment: 'InkStroke consists of an <OrderedCollection> of <Point>s that describe the movement of a pen (or mouse) drawing a single stroke of ink. A <Scribble> presenter operates on a <listModel> of InkStrokes that, when replayed, comprises the scribbled picture.
 
 Instance Variables:
 	data	<OrderedCollection> of <Points> describing the strokes track.
 
 '!
+
 !InkStroke categoriesForClass!Samples! !
+
 !InkStroke methodsFor!
 
 addPoint: aPoint
@@ -66,6 +70,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(; display: data size; nextPutAll: ' points)'! !
+
 !InkStroke categoriesForMethods!
 addPoint:!adding!public! !
 drawOn:!drawing!public! !
@@ -82,6 +87,7 @@ new
 	"Answer an initialized instance of the receiver"
 
 	^super new initialize! !
+
 !InkStroke class categoriesForMethods!
 new!instance creation!public! !
 !

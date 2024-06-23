@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #(#{Graphics.Gdiplus})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.IconFromTextTileIconInitializer guid: (Core.GUID fromString: '{53a894b4-e429-4ab9-ae95-a2a1e56cb506}')!
+
 Graphics.IconFromTextTileIconInitializer comment: ''!
+
 !Graphics.IconFromTextTileIconInitializer methodsFor!
 
 = anObject
@@ -53,6 +56,7 @@ textTile
 
 textTile: aTextTileIcon
 	textTile := aTextTileIcon! !
+
 !Graphics.IconFromTextTileIconInitializer categoriesForMethods!
 =!comparing!public! !
 createImage:extent:!private!realizing/unrealizing! !
@@ -72,6 +76,7 @@ extent: aPoint textTile: aTextTileIcon
 		extent: aPoint;
 		textTile: aTextTileIcon;
 		yourself! !
+
 !Graphics.IconFromTextTileIconInitializer class categoriesForMethods!
 extent:textTile:!public! !
 !

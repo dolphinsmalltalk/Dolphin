@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.Tests.DolphinSureTrustedDataTest guid: (Core.GUID fromString: '{2ed3ecdf-4736-4144-87cc-6b51d3857654}')!
+
 Security.Tests.DolphinSureTrustedDataTest comment: ''!
+
 !Security.Tests.DolphinSureTrustedDataTest methodsFor!
 
 testBinaryReadD7Certificate
@@ -59,6 +62,7 @@ testBinaryReadOldCertificate
 	oaCert2 := ObjectArtsCertificate new.
 	self assert: oaCert data equals: oaCert2 data.
 	self assert: oaCert binaryStoreBytes equals: oaCert2 binaryStoreBytes! !
+
 !Security.Tests.DolphinSureTrustedDataTest categoriesForMethods!
 testBinaryReadD7Certificate!public!unit tests! !
 testBinaryReadOldCertificate!public!unit tests! !

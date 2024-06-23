@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.MemoryManager guid: (Core.GUID fromString: '{703bd0ad-fbff-4d00-866b-b80387f7b1d7}')!
+
 Kernel.MemoryManager comment: 'MemoryManager is a singleton class whose sole instance is responsible for scheduling garbage collection, performing finalization, saving the image, etc.
 
 The MemoryManager owns two processes which are responsible for performing certain garbage collection activities in synchronization with the image. The garbage collector itself cannot perform these tasks because it runs asynchronously in the VM. The first of these processes is responsible for sending #finalize messages to objects that were previously marked as finalized before they expired. It does this by consuming objects from a queue which is populated by the collector. This activity is performed at low priority, as in general it is considered that reclaiming resources is a lower priority activity than interactive tasks. Also the asynchronous nature of garbage collection makes it unpredictable when (if ever) an object will actually be ready for finalization. However, to avoid the queue growing indefinitely when a higher priority CPU intensive task is consuming all available cycles, the finalization queue has a "high water mark". When the collector enqueues a finalizable object and finds the queue has passed the high water mark, it sends an interrupt (via the Processor object) to indicate this condition. The MemoryManager responds by temporarily boosting the priority of the finalization task to a relatively high level (above the normal "user" levels), so that it is cleared down quickly.
@@ -35,7 +37,9 @@ Class Variables:
 	Current		<MemoryManager>. Singleton instance.
 
 '!
+
 !Kernel.MemoryManager categoriesForClass!System-Support! !
+
 !Kernel.MemoryManager methodsFor!
 
 aboutToIdle
@@ -449,6 +453,7 @@ undertakerMain
 	[undertaker == Processor activeProcess] whileTrue: [
 	 	bereavements wait.
 		self directFunerals]! !
+
 !Kernel.MemoryManager categoriesForMethods!
 aboutToIdle!accessing!private! !
 administerLastRites!finalizing!private! !
@@ -523,6 +528,7 @@ removeFromSystem
 	and must not be deleted."
 
 	^self shouldNotImplement! !
+
 !Kernel.MemoryManager class categoriesForMethods!
 current!instance creation!public! !
 gcInterval:!accessing!public! !

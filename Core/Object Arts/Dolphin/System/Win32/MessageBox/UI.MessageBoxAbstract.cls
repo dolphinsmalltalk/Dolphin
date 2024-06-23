@@ -17,8 +17,11 @@ Core.Object
 								#warning -> 16r30
 							})
 		}!
+
 UI.MessageBoxAbstract guid: (Core.GUID fromString: '{32ce06b2-35c6-41eb-a41f-6b20f935676d}')!
+
 UI.MessageBoxAbstract isNonInstantiable: true!
+
 UI.MessageBoxAbstract comment: 'MessageBoxAbstract is the abstract class of dialogs that display a message to the user to acknowledge. Subclasses might include a number of responses that the user can make, typically by pressing buttons, making them useful for asking questions as well as displaying informational messages.
 
 Instance Variables:
@@ -31,7 +34,9 @@ Class Variables:
 	IconStyles			<IdentityDictionary>
 
 '!
+
 !UI.MessageBoxAbstract categoriesForClass!Kernel-Objects! !
+
 !UI.MessageBoxAbstract methodsFor!
 
 areLinksParsed
@@ -151,6 +156,7 @@ warning: warningString
 
 	self text: warningString.
 	^self warning! !
+
 !UI.MessageBoxAbstract categoriesForMethods!
 areLinksParsed!accessing-styles!public!testing! !
 areLinksParsed:!accessing-styles!public! !
@@ -234,6 +240,7 @@ warning: warningString caption: titleString
 	(self new)
 		caption: titleString;
 		warning: warningString! !
+
 !UI.MessageBoxAbstract class categoriesForMethods!
 defaultCaption:!constants!private! !
 errorMsg:!instance creation!public! !

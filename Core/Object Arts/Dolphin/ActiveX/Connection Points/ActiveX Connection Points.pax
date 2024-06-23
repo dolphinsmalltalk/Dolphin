@@ -39,6 +39,7 @@ OS.COM.AbstractDispatchImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'GenericEventMask' -> 16r2. 'NoIndividualEventsMask' -> 16r4. 'TraceMask' -> 16r1 }!
+
 External.Structure
 	subclass: #'OS.COM.CONNECTDATA'
 	instanceVariableNames: ''
@@ -50,6 +51,7 @@ External.Structure
 			'_OffsetOf_dwCookie' -> 16r4.
 			'_OffsetOf_punk' -> 16r0
 		}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IConnectionPoint'
 	instanceVariableNames: ''
@@ -57,6 +59,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IUnknown
 	subclass: #'OS.COM.IConnectionPointContainer'
 	instanceVariableNames: ''
@@ -64,6 +67,7 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IEnumUnknown
 	subclass: #'OS.COM.IEnumConnectionPoints'
 	instanceVariableNames: ''

@@ -7,8 +7,11 @@ WebView2.ICoreWebView2_17
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2_18 guid: (OS.COM.IID fromString: '{7a626017-28be-49b2-b865-3ba2b3522d90}')!
+
 WebView2.ICoreWebView2_18 isEgressOnly: true!
+
 WebView2.ICoreWebView2_18 comment: '`ICoreWebView2_18` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_18'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +36,9 @@ interface ICoreWebView2_18 : ICoreWebView2_17
 };
 ```
 '!
+
 !WebView2.ICoreWebView2_18 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2_18 methodsFor!
 
 Add_LaunchingExternalUriScheme: eventHandler token: token
@@ -54,6 +59,7 @@ Remove_LaunchingExternalUriScheme: token
 
 	<virtual stdcall: hresult 119 int64>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2_18 categoriesForMethods!
 Add_LaunchingExternalUriScheme:token:!**auto generated**!COM Interfaces-ICoreWebView2_18!private! !
 Remove_LaunchingExternalUriScheme:!**auto generated**!COM Interfaces-ICoreWebView2_18!private! !
@@ -71,6 +77,7 @@ defineFunctions
 		defineFunction: #Remove_LaunchingExternalUriScheme:
 			argumentTypes: 'int64'
 ! !
+
 !WebView2.ICoreWebView2_18 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

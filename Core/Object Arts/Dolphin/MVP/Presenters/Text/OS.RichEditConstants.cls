@@ -278,6 +278,10 @@ Kernel.SharedPool
 			'WCH_EMBEDDING' -> 16rFFFC.
 			'YHeightCharPtsMost' -> 16r666
 		}!
+
 OS.RichEditConstants guid: (Core.GUID fromString: '{ab3403bd-a9f3-46e7-97ea-92bc8d64ac52}')!
+
 OS.RichEditConstants isNonInstantiable: true!
+
 OS.RichEditConstants comment: ''!
+

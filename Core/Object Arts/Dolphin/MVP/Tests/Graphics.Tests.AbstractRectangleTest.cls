@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.AbstractRectangleTest guid: (Core.GUID fromString: '{87bd8e07-c183-4124-a098-05b9e73fbd86}')!
+
 Graphics.Tests.AbstractRectangleTest isNonInstantiable: true!
+
 Graphics.Tests.AbstractRectangleTest comment: ''!
+
 !Graphics.Tests.AbstractRectangleTest methodsFor!
 
 setUp
@@ -134,6 +138,7 @@ testTop
 
 testWidth
 	self assert: oddDesktop width equals: 1280! !
+
 !Graphics.Tests.AbstractRectangleTest categoriesForMethods!
 setUp!public!Running! !
 subjectClass!constants!private! !

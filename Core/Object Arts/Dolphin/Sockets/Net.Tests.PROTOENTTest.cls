@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Net.Tests.PROTOENTTest guid: (Core.GUID fromString: '{c8be89d3-f8f9-45e9-ac08-5f54f8b82f3a}')!
+
 Net.Tests.PROTOENTTest comment: ''!
+
 !Net.Tests.PROTOENTTest methodsFor!
 
 testFromInteger
@@ -34,6 +37,7 @@ testFromStringInvalid
 		should: [OS.PROTOENT fromString: GUID newUnique asString]
 		raise: SocketError
 		matching: [:ex | ex statusCode = WinSocketErrors.WSANO_DATA]! !
+
 !Net.Tests.PROTOENTTest categoriesForMethods!
 testFromInteger!public! !
 testFromIntegerInvalid!public! !

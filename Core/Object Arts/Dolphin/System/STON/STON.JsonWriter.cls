@@ -7,9 +7,13 @@ STON.Writer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.JsonWriter guid: (Core.GUID fromString: '{c227455c-4e8f-490b-a62a-eaf7a3985622}')!
+
 STON.JsonWriter comment: ''!
+
 !STON.JsonWriter categoriesForClass!STON-Core-Writer! !
+
 !STON.JsonWriter methodsFor!
 
 emitQuote
@@ -56,6 +60,7 @@ writeScaledDecimal: scaledDecimal
 
 writeSymbol: symbol
 	self writeString: symbol! !
+
 !STON.JsonWriter categoriesForMethods!
 emitQuote!helpers!private! !
 encodeKey:value:!helpers!private! !

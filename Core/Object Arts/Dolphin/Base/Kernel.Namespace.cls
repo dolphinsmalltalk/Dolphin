@@ -7,8 +7,11 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Namespace guid: (Core.GUID fromString: '{e40d6edd-5883-4edc-b117-c508f7c8d47c}')!
+
 Kernel.Namespace isNonInstantiable: true!
+
 Kernel.Namespace comment: '`Namespace` defines behavior common to all namespaces, although as all classes are namespaces much of the namespace functionality is inherited from `Class`. `Namespace` adds dictionary protocol for convenience and backwards compatibility. All `Namespace` behaviour is implemented on the class side as `Namespaces` are not instantiable (cannot have instances).
 
 It is a good practice to define sub-namespaces as subclasses of their enclosing namespace. This is a slight misuse of subclassing since a sub-namespace is not really a sub-type of its enclosing namespace in a behavioral sense, however it is convenient and means that tooling such as the class browser presents the hierarchy in a meaningful way that is easier to navigate.
@@ -25,7 +28,9 @@ Note that you can still use dictionary protocols to look up variables in namespa
  - Simple name or unqualified name, e.g. `Object`. Not necessarily bindable globally, although `Object` is because `Smalltalk` imports `Core`.
  - Short name - A name bindable from Smalltalk (i.e. globally), preferring unqualified form where possible.
  - Top-level namespace - a Namespace defined in Root, e.g. `Smalltalk` and `Core`.'!
+
 !Kernel.Namespace categoriesForClass!Kernel-Objects! !
+
 !Kernel.Namespace class methodsFor!
 
 add: aVariableBinding
@@ -307,6 +312,7 @@ variableRenamed: aVariableBinding from: aString
 		trigger: #variableRenamed:from:
 		with: aVariableBinding
 		with: (self fullNameFor: aString) asQualifiedReference! !
+
 !Kernel.Namespace class categoriesForMethods!
 add:!dictionary-adding!public! !
 addAll:!dictionary-adding!public! !

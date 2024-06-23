@@ -19,7 +19,9 @@ OS.SizedStructure
 			'_OffsetOf_wSuiteMask' -> 16r118.
 			'_OSVERSIONINFOEXW_Size' -> 16r11C
 		}!
+
 OS.OSVERSIONINFOEXW guid: (Core.GUID fromString: '{1c5e8929-8791-4aa9-b7ea-152ef36b23dd}')!
+
 OS.OSVERSIONINFOEXW comment: '<OSVERSIONINFOEX> is an <ExternalStructure> class to wrap the struct ''Win32.OSVERSIONINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -43,7 +45,9 @@ struct tagOSVERSIONINFOEXW {
 	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] BYTE wReserved;
 } OSVERSIONINFOEXW;
 '!
+
 !OS.OSVERSIONINFOEXW categoriesForClass!Win32-Structs! !
+
 !OS.OSVERSIONINFOEXW methodsFor!
 
 dwBuildNumber
@@ -130,6 +134,7 @@ wSuiteMask: anInteger
 	"Set the receiver's 'wSuiteMask' field to the value of the argument, anInteger"
 
 	bytes uint16AtOffset: _OffsetOf_wSuiteMask put: anInteger! !
+
 !OS.OSVERSIONINFOEXW categoriesForMethods!
 dwBuildNumber!**compiled accessors**!public! !
 dwBuildNumber:!**compiled accessors**!public! !
@@ -212,6 +217,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
+
 !OS.OSVERSIONINFOEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

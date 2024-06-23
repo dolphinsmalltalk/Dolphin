@@ -7,8 +7,11 @@ WebView2.ICoreWebView2EventArgs
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs guid: (OS.COM.IID fromString: '{012193ed-7c13-48ff-969d-a84c1f432a14}')!
+
 WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs isEgressOnly: true!
+
 WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs comment: '`ICoreWebView2ServerCertificateErrorDetectedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -44,7 +47,9 @@ interface ICoreWebView2ServerCertificateErrorDetectedEventArgs : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs methodsFor!
 
 action
@@ -143,6 +148,7 @@ serverCertificate
 	answer := ICoreWebView2Certificate newPointer.
 	self get_ServerCertificate: answer.
 	^answer asObject! !
+
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs categoriesForMethods!
 action!**auto generated**!properties!public! !
 action:!**auto generated**!properties!public! !
@@ -178,6 +184,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
+
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

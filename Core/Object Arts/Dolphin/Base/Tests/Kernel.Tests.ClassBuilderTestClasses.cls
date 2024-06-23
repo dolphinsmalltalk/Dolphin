@@ -7,8 +7,11 @@ Core.Tests.DolphinTestClassResource
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ClassBuilderTestClasses guid: (Core.GUID fromString: '{b9045f26-8b7d-468f-969a-7e228869fe20}')!
+
 Kernel.Tests.ClassBuilderTestClasses comment: ''!
+
 !Kernel.Tests.ClassBuilderTestClasses methodsFor!
 
 compileMethods
@@ -78,6 +81,7 @@ testSubclass1
 testSubclass2
 	classesDirtied ifTrue: [self createClassesAndMethods].
 	^testSubclass2! !
+
 !Kernel.Tests.ClassBuilderTestClasses categoriesForMethods!
 compileMethods!public!unit tests! !
 createClasses!private!unit tests! !

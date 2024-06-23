@@ -67,6 +67,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Kernel.ProcessCopier'
 	instanceVariableNames: 'source delta copied clone'
@@ -81,6 +82,7 @@ Core.Object
 
 acceptProcessCopier: aProcessCopier
 	^self! !
+
 !Core.Object categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 !
@@ -124,6 +126,7 @@ postCopy
 	nextLink := debugger := myList := thread := nil.
 	callbackDepth := 0.
 	^self! !
+
 !Core.Process categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 continueWith:!helpers!private! !
@@ -147,6 +150,7 @@ deepenProcessCopy: aProcessCopier
 	outer isNil ifFalse: [outer := aProcessCopier visit: outer].
 	"Visit the copied values in case referring to an object that must be copied"
 	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
+
 !Kernel.BlockClosure categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 callCC!evaluating!public! !
@@ -163,6 +167,7 @@ deepenProcessCopy: aProcessCopier
 	block := aProcessCopier visit: block.
 	"Visit the shared variables in case referring to an object that must be copied"
 	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
+
 !Kernel.Context categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 deepenProcessCopy:!copying!public! !
@@ -173,6 +178,7 @@ deepenProcessCopy:!copying!public! !
 deepenProcessCopy: aProcessCopier
 	super deepenProcessCopy: aProcessCopier.
 	handler := aProcessCopier visit: handler! !
+
 !Kernel.ExceptionHandler categoriesForMethods!
 deepenProcessCopy:!copying!private! !
 !
@@ -186,6 +192,7 @@ deepenProcessCopy: aProcessCopier
 	protectedBlock := aProcessCopier visit: protectedBlock.
 	returnContinuation := aProcessCopier visit: returnContinuation.
 	outer := aProcessCopier visit: outer! !
+
 !Kernel.ExceptionHandlerAbstract categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 deepenProcessCopy:!copying!private! !
@@ -199,6 +206,7 @@ deepenProcessCopy: aProcessCopier
 	2 to: handlers size
 		by: 2
 		do: [:i | handlers at: i put: (aProcessCopier visit: (handlers at: i))]! !
+
 !Kernel.ExceptionHandlerSet categoriesForMethods!
 deepenProcessCopy:!copying!private! !
 !
@@ -215,6 +223,7 @@ rebase: aProcessCopier
 	senderAddress == 0 ifFalse: [self basicSender: (senderAddress + delta) asStackPointer].
 	self basicSP: (self basicSP + delta) asStackPointer.
 	self basicBP: (self basicBP + delta) asStackPointer! !
+
 !Kernel.StackFrame categoriesForMethods!
 copyStack!copying!public! !
 rebase:!copying!public! !

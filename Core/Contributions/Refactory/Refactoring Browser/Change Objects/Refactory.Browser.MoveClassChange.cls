@@ -7,9 +7,13 @@ Refactory.Browser.ClassModificationChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MoveClassChange guid: (Core.GUID fromString: '{bc59a55b-44a6-46b0-bead-8e1fbf05e2a9}')!
+
 Refactory.Browser.MoveClassChange comment: 'DolphinMoveClassChange is a Dolphin specific class change that invokes the ClassBuilder to move a class under a new superclass.'!
+
 !Refactory.Browser.MoveClassChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.MoveClassChange methodsFor!
 
 = anObject 
@@ -29,6 +33,7 @@ superclassName
 
 superclassName: aString
 	superclassName := aString! !
+
 !Refactory.Browser.MoveClassChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
@@ -49,6 +54,7 @@ moveClassNamed: aSymbol toSuperClassNamed: superSymbol
 	^(self new changeClassName: aSymbol)
 		superclassName: superSymbol;
 		yourself! !
+
 !Refactory.Browser.MoveClassChange class categoriesForMethods!
 move:toSuperclass:!instance creation!public! !
 moveClassNamed:toSuperClassNamed:!instance creation!public! !

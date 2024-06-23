@@ -7,7 +7,9 @@ Kernel.STBInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBInFiler0 guid: (Core.GUID fromString: '{dafbcc07-56bb-4489-8d23-c09bd9d2a4eb}')!
+
 Kernel.STBInFiler0 comment: '`STBInFiler0` is an `STBInFiler` for reading the first STB binary object serialization format, version 0.
 
 This was the original format as used in the earliest betas prior to Dolphin 1.0, right through to Dolphin 4.x.
@@ -15,6 +17,7 @@ This was the original format as used in the earliest betas prior to Dolphin 1.0,
   - There were no pre-registered classes. Later versions pre-registered some classes for both space efficiency, and to fix some obscure boundary cases representing String and STBClassProxy classes.
   - Strings stored in STB used the encoding of the code page where written. If decoded (i.e. deserialised) no a system with a different code page, the resulting String might contain different characters to the original. for any code points outside the ASCII range. This was inherent in the pre-unicode string representation.
 '!
+
 !Kernel.STBInFiler0 methodsFor!
 
 characterValue: anIneger
@@ -89,6 +92,7 @@ readSymbol: aSTxClassConversion
 	"In STB versions 0 and 1, Symbols were proxied"
 
 	^self shouldNotImplement! !
+
 !Kernel.STBInFiler0 categoriesForMethods!
 characterValue:!helpers!public! !
 lastPredefined!constants!private! !
@@ -125,6 +129,7 @@ version
 	"Answer the format version of the STB stream."
 
 	^0! !
+
 !Kernel.STBInFiler0 class categoriesForMethods!
 initialize!class initialization!public! !
 predefinedClasses!constants!public! !

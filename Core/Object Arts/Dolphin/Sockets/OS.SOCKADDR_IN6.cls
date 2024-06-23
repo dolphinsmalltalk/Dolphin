@@ -15,7 +15,9 @@ OS.SOCKADDR
 			'_OffsetOf_sin6_scope_struct' -> 16r18.
 			'_SOCKADDR_IN6_Size' -> 16r1C
 		}!
+
 OS.SOCKADDR_IN6 guid: (Core.GUID fromString: '{a989cfcf-96f5-40b8-9904-cb33f7c78940}')!
+
 OS.SOCKADDR_IN6 comment: '<SOCKADDR_IN6> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN6'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -37,7 +39,9 @@ struct tagSOCKADDR_IN6 {
 	};
 } SOCKADDR_IN6;
 '!
+
 !OS.SOCKADDR_IN6 categoriesForClass!Win32-Structs! !
+
 !OS.SOCKADDR_IN6 methodsFor!
 
 flowInfo
@@ -113,6 +117,7 @@ sin6_scope_id: anInteger
 	"Set the receiver's 'sin6_scope_id' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_sin6_scope_id put: anInteger! !
+
 !OS.SOCKADDR_IN6 categoriesForMethods!
 flowInfo!accessing!public! !
 flowInfo:!accessing!public! !
@@ -167,6 +172,7 @@ defineFields
 
 getFieldNames
 	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
+
 !OS.SOCKADDR_IN6 class categoriesForMethods!
 addressFamily!constants!public! !
 byteSize!**compiled accessors**!constants!public! !

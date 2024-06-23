@@ -7,9 +7,13 @@ Tools.SmalltalkToolShell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.UserPreferencesShell guid: (Core.GUID fromString: '{952571b1-f954-4626-bf12-bdd570b30a14}')!
+
 Tools.UserPreferencesShell comment: ''!
+
 !Tools.UserPreferencesShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !Tools.UserPreferencesShell methodsFor!
 
 createComponents
@@ -24,6 +28,7 @@ model: aListModelOfObjects
 
 selectionOrNil: aClass 
 	^preferencesPresenter selectionOrNil: aClass! !
+
 !Tools.UserPreferencesShell categoriesForMethods!
 createComponents!private! !
 model:!public! !
@@ -79,6 +84,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10580! !
+
 !Tools.UserPreferencesShell class categoriesForMethods!
 defaultModel!public! !
 defaultOptionFlags!constants!options!private! !

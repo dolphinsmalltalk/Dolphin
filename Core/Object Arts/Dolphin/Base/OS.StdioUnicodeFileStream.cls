@@ -7,10 +7,15 @@ OS.StdioTextFileStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.StdioUnicodeFileStream guid: (Core.GUID fromString: '{a1e19207-b693-4313-ad8d-1f288be1a89e}')!
+
 OS.StdioUnicodeFileStream isNonInstantiable: true!
+
 OS.StdioUnicodeFileStream comment: '`OS.StdioUnicodeFileStream` is the abstract class of `StdioFileStream`s for streaming Unicode string data.'!
+
 !OS.StdioUnicodeFileStream categoriesForClass!Collections-Streams! !
+
 !OS.StdioUnicodeFileStream methodsFor!
 
 basicNextPut: anInteger
@@ -66,6 +71,7 @@ setStream: anExternalAddress name: aString flags: anInteger
 ungetchar: aCodeUnit
 	crtlib ungetwc: aCodeUnit stream: stream.
 	^aCodeUnit! !
+
 !OS.StdioUnicodeFileStream categoriesForMethods!
 basicNextPut:!accessing!private! !
 bufferClass!constants!private! !
@@ -82,6 +88,7 @@ ungetchar:!accessing!private! !
 
 encodingType
 	^#utf16le! !
+
 !OS.StdioUnicodeFileStream class categoriesForMethods!
 encodingType!constants!public! !
 !

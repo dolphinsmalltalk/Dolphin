@@ -7,8 +7,11 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSXML.IXSLProcessor guid: (OS.COM.IID fromString: '{2933bf92-7b36-11d2-b20e-00c04f983e60}')!
+
 MSXML.IXSLProcessor isEgressOnly: true!
+
 MSXML.IXSLProcessor comment: '<IXSLProcessor> is a wrapper class for the COM interface ''MSXML2.IXSLProcessor'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -74,7 +77,9 @@ interface IXSLProcessor : IDispatch
 		[out, retval]IXMLDOMNode** stylesheet);
 };
 '!
+
 !MSXML.IXSLProcessor categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !MSXML.IXSLProcessor methodsFor!
 
 AddObject: obj namespaceURI: namespaceURI
@@ -330,6 +335,7 @@ Transform: pDone
 
 	<virtual stdcall: hresult 16 varbool*>
 	^self invalidCall: _failureCode! !
+
 !MSXML.IXSLProcessor categoriesForMethods!
 AddObject:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
 addParameter:parameter:!**auto generated**!methods!public! !
@@ -397,6 +403,7 @@ defineFunctions
 		defineFunction: #get_stylesheet:
 			argumentTypes: 'IXMLDOMNode**'
 ! !
+
 !MSXML.IXSLProcessor class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

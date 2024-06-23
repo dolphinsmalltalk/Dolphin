@@ -7,9 +7,13 @@ External.DOUBLE
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.DATE guid: (Core.GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.DATE comment: ''!
+
 !OS.COM.DATE categoriesForClass!External-Data-Structured! !
+
 !OS.COM.DATE methodsFor!
 
 asDateAndTime
@@ -21,6 +25,7 @@ value
 	"Answer a <DateAndTime> equivalent to the the receiver's Active-X Automation date (an 8-byte floating point day number and fraction of a day)."
 
 	^DateAndTime fromSYSTEMTIME: (SYSTEMTIME fromDATE: (bytes doubleAtOffset: _OffsetOf_value))! !
+
 !OS.COM.DATE categoriesForMethods!
 asDateAndTime!accessing!public! !
 value!accessing!public! !
@@ -88,6 +93,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DATE! !
+
 !OS.COM.DATE class categoriesForMethods!
 fromString:!instance creation!public! !
 fromString:locale:!instance creation!public! !

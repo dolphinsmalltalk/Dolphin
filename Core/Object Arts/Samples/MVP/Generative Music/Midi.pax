@@ -38,6 +38,7 @@ Kernel.SharedPool
 			'MidiControlChange' -> 16rB.
 			'MidiProgramChange' -> 16rC
 		}!
+
 Core.Object
 	subclass: #'OS.MIDIOut'
 	instanceVariableNames: 'handle'
@@ -45,6 +46,7 @@ Core.Object
 	imports: #(#{OS.MidiConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'External.MidiOutChannel'
 	instanceVariableNames: 'midiout noteProcess octaveShift'
@@ -104,6 +106,7 @@ midiOutShortMsgHmo: hmo dwMsg: dwMsg
 
 	<stdcall: dword midiOutShortMsg dword dword>
 	^self invalidCall: _failureCode! !
+
 !OS.WinMMLibrary categoriesForMethods!
 midiOutCloseHmo:!public! !
 midiOutGetNumDevs!public! !

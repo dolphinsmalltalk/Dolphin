@@ -7,10 +7,14 @@ Kernel.Parser
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBPatternParser guid: (Core.GUID fromString: '{efae231d-9476-470e-9bef-e65273b2f157}')!
+
 Refactory.Browser.RBPatternParser comment: 'RBPatternParser is an extended <SmalltalkParser> that supports the RB''s extended syntax for pattern matching trees. The resulting trees are used as inputs to the <ParseTreeSearcher> and <ParseTreeRewriter> for searching and transforming source code (respectively).
 '!
+
 !Refactory.Browser.RBPatternParser categoriesForClass!Refactory-Parser! !
+
 !Refactory.Browser.RBPatternParser methodsFor!
 
 annotationNodeClass
@@ -101,6 +105,7 @@ tempDeclClass
 
 variableNodeClass
 	^RBPatternVariableNode! !
+
 !Refactory.Browser.RBPatternParser categoriesForMethods!
 annotationNodeClass!constants!private! !
 evaluateStatements:!parsing!private! !

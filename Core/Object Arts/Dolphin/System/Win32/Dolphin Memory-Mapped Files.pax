@@ -74,6 +74,7 @@ Kernel.SharedPool
 			'SEC_NOCACHE' -> 16r10000000.
 			'SEC_RESERVE' -> 16r4000000
 		}!
+
 Core.Object
 	subclass: #'External.MemoryMappedFile'
 	instanceVariableNames: 'file name handle maximumSize flags'
@@ -81,6 +82,7 @@ Core.Object
 	imports: #(#{OS.MMFConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'OwnsFileMask' -> 16r2. 'OwnsHandleMask' -> 16r1. 'ReadOnlyMask' -> 16r4 }!
+
 External.Address
 	variableByteSubclass: #'External.MemoryMappedFileView'
 	instanceVariableNames: ''
@@ -154,6 +156,7 @@ unmapViewOfFile: lpBaseAddress
 
 	<stdcall: bool UnmapViewOfFile void*>
 	^self invalidCall: _failureCode! !
+
 !OS.KernelLibrary categoriesForMethods!
 createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:!public!win32 functions-file management! !
 flushViewOfFile:dwNumberOfBytesToFlush:!public!win32 functions-memory management! !

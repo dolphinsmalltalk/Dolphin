@@ -69,6 +69,10 @@ Kernel.SharedPool
 			'TDN_TIMER' -> 16r4.
 			'TDN_VERIFICATION_CLICKED' -> 16r8
 		}!
+
 OS.TaskDialogConstants guid: (Core.GUID fromString: '{64cfd321-e4de-4816-829a-127c24d117fe}')!
+
 OS.TaskDialogConstants isNonInstantiable: true!
+
 OS.TaskDialogConstants comment: ''!
+

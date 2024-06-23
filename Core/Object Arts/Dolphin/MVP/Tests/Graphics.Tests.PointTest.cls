@@ -7,8 +7,11 @@ Graphics.Tests.AbstractPointTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.PointTest guid: (Core.GUID fromString: '{98f92001-3f3a-4296-8a76-5e67f93030a6}')!
+
 Graphics.Tests.PointTest comment: ''!
+
 !Graphics.Tests.PointTest methodsFor!
 
 subjectClass
@@ -57,6 +60,7 @@ testStrictlyPositive
 	self assert: (self subjectClass x: 1 y: 1) strictlyPositive.
 	self deny: (self subjectClass x: 1 y: -1) strictlyPositive.
 	self deny: (self subjectClass x: -1 y: 1) strictlyPositive! !
+
 !Graphics.Tests.PointTest categoriesForMethods!
 subjectClass!constants!private! !
 subjectSupportNonIntegralValues!private!testing! !

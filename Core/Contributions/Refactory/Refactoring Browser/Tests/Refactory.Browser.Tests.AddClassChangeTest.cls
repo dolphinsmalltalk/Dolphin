@@ -7,9 +7,13 @@ Refactory.Browser.Tests.ChangeObjectTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.AddClassChangeTest guid: (Core.GUID fromString: '{adf6db7e-6540-455d-a255-f09b57212403}')!
+
 Refactory.Browser.Tests.AddClassChangeTest comment: ''!
+
 !Refactory.Browser.Tests.AddClassChangeTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.AddClassChangeTest methodsFor!
 
 canonicalSubject
@@ -173,6 +177,7 @@ Core.Object guid: (Core.GUID fromString: ''{87b4c451-026e-11d3-9fd7-00a0cc3e4a32
 Core.Object comment: ', Object comment printString, '!!
 !!Core.Object categoriesForClass!!Kernel-Objects!! !!
 '! !
+
 !Refactory.Browser.Tests.AddClassChangeTest categoriesForMethods!
 canonicalSubject!helpers!private! !
 definitionWithEverything!helpers!private! !

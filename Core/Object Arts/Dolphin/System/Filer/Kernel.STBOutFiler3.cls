@@ -7,11 +7,15 @@ Kernel.STBOutFiler2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STBOutFiler3 guid: (Core.GUID fromString: '{ab6c3f09-f3f5-4324-8d0e-0a146a8f3c93}')!
+
 Kernel.STBOutFiler3 comment: '`STBOutFiler3` is an `STBOutFiler` for writing the STB 3 binary object serialization format.
 
 STB 3 was introduced in Dolphin 6. The key difference from STB 2 was that an object size was only written for indexable objects, rather than all objects. This was done to reduce the size of the serialized data.'!
+
 !Kernel.STBOutFiler3 categoriesForClass!System-Binary storage! !
+
 !Kernel.STBOutFiler3 methodsFor!
 
 inFilerClass
@@ -59,6 +63,7 @@ writeInstanceVariables: anObject
 						do: [:i | self nextPut: (anObject instVarAt: i)]]]
 		ifFalse: 
 			[1 to: (instanceSpec bitAnd: Behavior._SizeMask) do: [:i | self nextPut: (anObject instVarAt: i)]]! !
+
 !Kernel.STBOutFiler3 categoriesForMethods!
 inFilerClass!constants!private! !
 register:asGlobal:!globals!public! !
@@ -80,6 +85,7 @@ uninitialize
 
 version
 	^3! !
+
 !Kernel.STBOutFiler3 class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !

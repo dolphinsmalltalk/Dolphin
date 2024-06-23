@@ -151,26 +151,31 @@ ArrayField subclass: #ConformantArrayField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StructureArrayField subclass: #ConformantStructureArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayPointerField subclass: #ConformantArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: '_MEMORY_BASIC_INFORMATION_Size _OffsetOf_AllocationBase _OffsetOf_AllocationProtect _OffsetOf_BaseAddress _OffsetOf_Protect _OffsetOf_RegionSize _OffsetOf_State _OffsetOf_Type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #Win32Structure
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -198,6 +203,7 @@ causeName
 
 	#deprecated.	"Could be more than one cause"
 	^self causeNames last! !
+
 !_FPIEEE_RECORD categoriesForMethods!
 causeCode!accessing!public! !
 causeName!accessing!public! !
@@ -208,6 +214,7 @@ causeName!accessing!public! !
 valueType
 	#deprecated.
 	^self format! !
+
 !_FPIEEE_VALUE categoriesForMethods!
 valueType!accessing!public! !
 !
@@ -228,6 +235,7 @@ dateSeparator
 
 	Notification deprecated.	"Use dateFormat"
 	^self getStringInfo: LOCALE_SDATE! !
+
 !AbstractWindowsLocale categoriesForMethods!
 dateOrder!constants!public! !
 dateSeparator!constants!public! !
@@ -240,6 +248,7 @@ quoAndRem: aNumber
 	Notification deprecated.
 	quo := self quo: aNumber.
 	^{quo. self - (quo * aNumber)}! !
+
 !ArithmeticValue categoriesForMethods!
 quoAndRem:!arithmetic!public! !
 !
@@ -265,6 +274,7 @@ makeIndirect
 makeNullTerminated
 	Notification deprecated.
 	self isNullTerminated: true! !
+
 !Behavior categoriesForMethods!
 allInstVarNames!instance variables!public! !
 instVarNames!instance variables!public! !
@@ -277,6 +287,7 @@ makeNullTerminated!instance specification-accessing!private! !
 receiver: anObject
 	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:index:"
 	receiver := anObject! !
+
 !BoundsError categoriesForMethods!
 receiver:!accessing!public! !
 !
@@ -310,6 +321,7 @@ byteAtOffset: anInteger put: aByte
 	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. BYTE."
 
 	^self uint8AtOffset: anInteger put: aByte! !
+
 !ByteArray categoriesForMethods!
 asAnsiString!public! !
 asString!converting!public! !
@@ -322,6 +334,7 @@ byteAtOffset:put:!accessing!public! !
 byteCodeSegments
 	#deprecated.
 	^self segments! !
+
 !ByteCodeDispatcher categoriesForMethods!
 byteCodeSegments!accessing!public! !
 !
@@ -332,6 +345,7 @@ categoryIcon
 	"Answer an Icon representing the Category objects which the receiver collects." 
 
 	^self icon! !
+
 !Category class categoriesForMethods!
 categoryIcon!constants!public! !
 !
@@ -344,6 +358,7 @@ asAnsiString
 
 	Notification deprecated. "Avoid using AnsiStrings - they cannot represent many code points at all, and cannot be reliably interchanged with other systems that may be using a different code page."
 	^AnsiString with: self! !
+
 !Character categoriesForMethods!
 asAnsiString!converting!public! !
 !
@@ -353,6 +368,7 @@ asAnsiString!converting!public! !
 safeCodePoint: anInteger
 	Notification deprecated.
 	^self codePoint: anInteger ifInvalid: [Replacement]! !
+
 !Character class categoriesForMethods!
 safeCodePoint:!instance creation!public! !
 !
@@ -417,6 +433,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 		poolDictionaries: poolDictString)
 		categories: {ClassCategory name: aCategoryOrString};
 		yourself! !
+
 !Class categoriesForMethods!
 addSharedPool:!pool variables!public! !
 allSharedPoolNames!pool variables!public! !
@@ -430,6 +447,7 @@ variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:categ
 foldLiteralStrings
 	Notification deprecated.
 	^self foldLiterals at: #strings! !
+
 !Class class categoriesForMethods!
 foldLiteralStrings!operations!public! !
 !
@@ -469,6 +487,7 @@ sharedPoolsDo: aMonadicValuable
 	#deprecated.
 	self instanceClass
 		importedNamespacesDo: [:each | (each inheritsFrom: SharedPool) ifTrue: [aMonadicValuable value: each]]! !
+
 !ClassDescription categoriesForMethods!
 allSharedPoolNames!pool variables!public! !
 allSharedPools!pool variables!public! !
@@ -537,6 +556,7 @@ evaluate: aString for: anObject logged: aBoolean
 		for: anObject
 		evaluationPools: nil
 		logged: aBoolean! !
+
 !Compiler class categoriesForMethods!
 compileDebugExpression:in:evaluationPools:!compiling!public! !
 compileDebugMethod:in:!compiling!public! !
@@ -552,6 +572,7 @@ evaluate:for:logged:!evaluating!public! !
 extra
 	#deprecated.
 	^extras isEmpty ifFalse: [extras anyOne]! !
+
 !CompilerNotification categoriesForMethods!
 extra!accessing!public! !
 !
@@ -570,6 +591,7 @@ _spawnvp: mode cmdname: aString argv: argv
 	<overlap cdecl: sdword _spawnvp sdword lpstr lpvoid>
 	#deprecated. "Not used; see ExternalProcess contribution"
 	^self invalidCall: _failureCode! !
+
 !CRTLibrary categoriesForMethods!
 _spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
 !
@@ -587,6 +609,7 @@ resolution: aDuration do: aNiladicValuable
 resolution: aDuration set: aBoolean
 	Notification deprecated.
 	^self timerResolution: aDuration set: aBoolean! !
+
 !Delay class categoriesForMethods!
 resolution!constants!public! !
 resolution:do:!operations!public! !
@@ -598,6 +621,7 @@ resolution:set:!helpers!public! !
 at: keyObject ifAbsentPutValue: valueObject
 	#deprecated.	"With the addition of Object>>value, this is redundant"
 	^self at: keyObject ifAbsentPut: valueObject! !
+
 !Dictionary categoriesForMethods!
 at:ifAbsentPutValue:!accessing!public! !
 !
@@ -609,6 +633,7 @@ invalidCall
 
 	Notification deprecated.
 	^self invalidCall: Failed fromFrame: Processor activeProcess topFrame sender! !
+
 !ExternalLibrary categoriesForMethods!
 invalidCall!exceptions!public! !
 !
@@ -618,6 +643,7 @@ invalidCall!exceptions!public! !
 receiver: anObject
 	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:selector:arguments:"
 	self basicAt: 1 put: anObject! !
+
 !EventMessageSend categoriesForMethods!
 receiver:!accessing!public! !
 !
@@ -633,6 +659,7 @@ readCharacter
 	#deprecated.	"May read a partial character - better to open a stream on the file and read next character from that."
 	string := String new: 1.
 	^(self read: string count: 1) == 0 ifTrue: [nil] ifFalse: [string at: 1]! !
+
 !File categoriesForMethods!
 readCharacter!operations!public! !
 !
@@ -661,6 +688,7 @@ pathBuffer
 
 	#deprecated. "Not long filename compatible"
 	^Utf16String newFixed: MAX_PATH! !
+
 !File class categoriesForMethods!
 change:extension:!filename manipulation!public! !
 for:inAndBelow:do:!enumerating!public! !
@@ -673,6 +701,7 @@ pathBuffer!helpers!public! !
 fromString: aString
 	Notification deprecated.
 	^self fromString: aString environment: Smalltalk! !
+
 !FunctionDescriptor class categoriesForMethods!
 fromString:!instance creation!public! !
 !
@@ -691,6 +720,7 @@ printStringRadix: base showRadix: flag
 	aStream := String writeStream: 16.
 	self printOn: aStream base: base showRadix: flag.
 	^aStream contents! !
+
 !Integer categoriesForMethods!
 digitSize!accessing!public! !
 printStringRadix:showRadix:!printing!public! !
@@ -704,6 +734,7 @@ getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatSt
 	^self invalidCall: _failureCode
 
 ! !
+
 !KernelLibrary categoriesForMethods!
 getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
 !
@@ -715,6 +746,7 @@ isMonthBeforeDay
 
 	Notification deprecated.	"Use dateFormat"
 	^self dateOrder ~= 1! !
+
 !Locale categoriesForMethods!
 isMonthBeforeDay!helpers!public! !
 !
@@ -724,6 +756,7 @@ isMonthBeforeDay!helpers!public! !
 receiver: anObject
 	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:message:"
 	receiver := anObject! !
+
 !MessageNotUnderstood categoriesForMethods!
 receiver:!accessing!public! !
 !
@@ -734,6 +767,7 @@ receiver: anObject
 	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:selector:arguments:"
 	receiver := anObject.
 ! !
+
 !MessageSend categoriesForMethods!
 receiver:!accessing!public! !
 !
@@ -743,6 +777,7 @@ receiver:!accessing!public! !
 instVarNames: aString
 	#deprecated.
 	self instanceVariableNames: aString! !
+
 !Metaclass categoriesForMethods!
 instVarNames:!class hierarchy-mutating!instance variables!public! !
 !
@@ -752,6 +787,7 @@ instVarNames:!class hierarchy-mutating!instance variables!public! !
 receiver: anObject
 	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:object:"
 	receiver := anObject! !
+
 !NotFoundError categoriesForMethods!
 receiver:!accessing!public! !
 !
@@ -761,6 +797,7 @@ receiver:!accessing!public! !
 isWine
 	Notification deprecated.	"Use `NtDll isWine`"
 	^self default isWine! !
+
 !NTLibrary class categoriesForMethods!
 isWine!public!testing! !
 !
@@ -776,6 +813,7 @@ thousandSeparator
 thousandSeparator: aString
 	Notification deprecated.
 	self groupSeparator: aString! !
+
 !NUMBERFMTW categoriesForMethods!
 thousandSeparator!accessing!public! !
 thousandSeparator:!accessing!public! !
@@ -786,6 +824,7 @@ thousandSeparator:!accessing!public! !
 errorCantHold: anObject
 	#deprecated.
 	^self error: ('Can''t hold <1p>' expandMacrosWith: anObject)! !
+
 !Object categoriesForMethods!
 errorCantHold:!exceptions!public! !
 !
@@ -809,6 +848,7 @@ isBaseImagePackage
 untracedGlobals
 	#deprecated.
 	^self untracedVariables collect: [:each | each asSymbol]! !
+
 !Package categoriesForMethods!
 addGlobalNamed:!adding!public! !
 includesGlobalNamed:!public!testing! !
@@ -829,6 +869,7 @@ allGlobalAliases
 packageOfGlobalNamed: globalName 
 	#deprecated.
 	^self packageOfVariableNamed: globalName asQualifiedReference! !
+
 !PackageManager categoriesForMethods!
 addGlobalNamed:to:!adding!public! !
 allGlobalAliases!enquiries!public! !
@@ -840,6 +881,7 @@ packageOfGlobalNamed:!public!searching! !
 sortBlock: aDyadicValuable
 	Notification deprecated.
 	^self newSortBlock: aDyadicValuable! !
+
 !SortAlgorithm class categoriesForMethods!
 sortBlock:!instance creation!public! !
 !
@@ -853,6 +895,7 @@ value: anObject1 value: anObject2
 
 	Notification deprecated.
 	^anObject1 <= anObject2! !
+
 !SortedCollection class categoriesForMethods!
 value:value:!evaluating!private! !
 !
@@ -862,6 +905,7 @@ value:value:!evaluating!private! !
 nextOrNil
 	#deprecated.
 	^self nextAvailable! !
+
 !Stream categoriesForMethods!
 nextOrNil!accessing!public! !
 !
@@ -875,6 +919,7 @@ asUnicodeString
 equals: comperand
 	Notification deprecated.	"As of v7.1.6, Strings and Symbols with the same characters are always equal."
 	^self = comperand! !
+
 !String categoriesForMethods!
 asUnicodeString!converting!public! !
 equals:!comparing!public! !
@@ -901,6 +946,7 @@ fromUnicodeString: anAddressOrUnicodeString
 unicodeClass
 	#deprecated.
 	^self utf16Class! !
+
 !String class categoriesForMethods!
 ansiClass!constants!public! !
 fromId:!instance creation!public! !
@@ -918,6 +964,7 @@ do: aOneArgumentBlock
 do: operation separatedBy: separator 
 	#deprecated.
 	self fieldsDo: operation separatedBy: separator! !
+
 !ExternalStructure categoriesForMethods!
 do:!enumerating!public! !
 do:separatedBy:!enumerating!public! !
@@ -930,6 +977,7 @@ microsecondsToRun: timedBlock
 	(including the overhead)."
 
 	^timedBlock timeToRun asMicroseconds asInteger! !
+
 !Time class categoriesForMethods!
 microsecondsToRun:!operations!public! !
 !
@@ -955,6 +1003,7 @@ time: aTime
 	Notification deprecated.
 	self isImmutable: false.
 	time := aTime! !
+
 !TimeStamp categoriesForMethods!
 date:!accessing!public! !
 dateAndTime!accessing!public! !
@@ -972,6 +1021,7 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 		poolDictionaries: poolDictString)
 		categories: {ClassCategory name: aCategoryOrString};
 		yourself! !
+
 !UndefinedObject categoriesForMethods!
 subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !
@@ -983,6 +1033,7 @@ enable: aBoolean
 
 	#deprecated.
 	self isEnabled: aBoolean! !
+
 !View categoriesForMethods!
 enable:!operations!public! !
 !
@@ -1040,6 +1091,7 @@ shortName
 	"Answer the localised short name for Dolphin."
 	Notification deprecated.
 	^String fromId: 129 in: self! !
+
 !VMLibrary categoriesForMethods!
 isWindows10OrGreater!public!win32 functions-version helpers! !
 isWindows7OrGreater!public!win32 functions-version helpers! !

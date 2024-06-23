@@ -7,9 +7,13 @@ Tools.ClassBrowserAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.EnvironmentBrowserShell guid: (Core.GUID fromString: '{b6ccd231-d2fb-4d98-b006-6a3ba26a4849}')!
+
 Tools.EnvironmentBrowserShell comment: ''!
+
 !Tools.EnvironmentBrowserShell categoriesForClass!MVP-Presenters! !
+
 !Tools.EnvironmentBrowserShell methodsFor!
 
 browseExecutableManifest
@@ -99,6 +103,7 @@ saveStateOn: aWriteStream
 
 searchEnvironment
 	^model browserEnvironment! !
+
 !Tools.EnvironmentBrowserShell categoriesForMethods!
 browseExecutableManifest!commands-actions!public! !
 browseExecutableManifestFile:!operations!public! !
@@ -174,6 +179,7 @@ toolsFolderIcon
 				caption: desc;
 				show]
 		helpId: self toolsFolderHelpId! !
+
 !Tools.EnvironmentBrowserShell class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !

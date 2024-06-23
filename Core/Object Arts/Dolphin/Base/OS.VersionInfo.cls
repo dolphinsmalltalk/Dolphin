@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.VersionInfo guid: (Core.GUID fromString: '{87b4c4cb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.VersionInfo comment: 'VersionInfo is a wrapper class to simplify access to Win32 DLL and EXE version information.
 
 For example:
@@ -18,7 +20,9 @@ Instance Variables:
 	fileInfo		<ByteArray>. Buffer containing the raw version information resource.
 	prefix		<String>. Prefix used to access language specific information from the version info. string table.
 	fixedInfo		<VS_FIXEDFILEINFO>. The basic version information which is always present.'!
+
 !OS.VersionInfo categoriesForClass!System-Support! !
+
 !OS.VersionInfo methodsFor!
 
 at: valueName
@@ -157,6 +161,7 @@ specialBuild
 	"Answer the <readableString> product name from the receiver."
 
 	^self at: 'SpecialBuild'! !
+
 !OS.VersionInfo categoriesForMethods!
 at:!accessing!public! !
 comments!accessing!public! !
@@ -193,6 +198,7 @@ uninitialize
 	"Assist the version library in departing this world"
 
 	#{VersionLibrary} ifDefined: [:lib | lib closeDefault]! !
+
 !OS.VersionInfo class categoriesForMethods!
 forPath:!instance creation!public! !
 uninitialize!class hierarchy-removing!public! !

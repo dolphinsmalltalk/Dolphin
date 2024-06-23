@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.SpinButtonTest guid: (Core.GUID fromString: '{7befb3d7-8dc5-4dbb-92c2-7edaab76f305}')!
+
 UI.Tests.SpinButtonTest comment: ''!
+
 !UI.Tests.SpinButtonTest methodsFor!
 
 classToTest
@@ -22,6 +25,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view isEnabled.
 	self assert: view isVertical.
 	self assert: view range equals: (1 to: 100)! !
+
 !UI.Tests.SpinButtonTest categoriesForMethods!
 classToTest!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -48,6 +52,7 @@ resource_Spin_button_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.SpinButton) 34 15 nil nil 34 2 8 1140916240 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 1 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903809120 852486 ##(Smalltalk.NullConverter) nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 818 35 51 416 770 #setRange: 34 1 525062 ##(Smalltalk.Interval) 3 201 3 416 770 #udmSetAccel: 34 1 918854 1 ##(Smalltalk.StructureArray) 8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 ##(Smalltalk.UDACCEL) nil 17 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 144 7 0 0 35 0 0 0] 8 #() 818 193 193 nil 27 )! !
+
 !UI.Tests.SpinButtonTest class categoriesForMethods!
 resource_Spin_button_D6!public!resources-views! !
 resource_Spin_button_D7!public!resources-views! !

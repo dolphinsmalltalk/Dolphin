@@ -7,14 +7,18 @@ Graphics.AbstractPen
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Pen guid: (Core.GUID fromString: '{87b4c637-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Pen comment: 'Pen is a <GraphicsTool> that wraps a Windows GDI Pen object. Pens are selected into <Canvas>s to draw lines in various styles, widths, and colours.
 
 Instance Variables:
 	logPen	<LOGPEN>. Logical description of the pen.
 
 '!
+
 !Graphics.Pen categoriesForClass!Graphics-Tools! !
+
 !Graphics.Pen methodsFor!
 
 color: aColor
@@ -87,6 +91,7 @@ width: anInteger
 	self width = anInteger ifTrue: [^self].
 	logPen width: anInteger.
 	self free! !
+
 !Graphics.Pen categoriesForMethods!
 color:!accessing!public! !
 createHandle!private!realizing/unrealizing! !
@@ -264,6 +269,7 @@ withStyleName: aString
 		styleName: aString
 		width: 0
 		color: Color black! !
+
 !Graphics.Pen class categoriesForMethods!
 blue!instance creation!public! !
 color:!instance creation!public! !

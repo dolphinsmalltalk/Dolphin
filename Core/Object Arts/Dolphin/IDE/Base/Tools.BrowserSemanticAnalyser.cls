@@ -7,8 +7,11 @@ Kernel.StSemanticAnalyser
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.BrowserSemanticAnalyser guid: (Core.GUID fromString: '{590e979a-62f2-4b0e-9722-469cfb549990}')!
+
 Tools.BrowserSemanticAnalyser comment: '`Tools.BrowserSemanticAnalyser` is an extended semantic analyser for use in the IDE that detects and reports some additional semantic warnings that may help with early detection of issues while coding, e.g. sending unimplemented messages, or subclass responsbilities that are not implemented in all subclasses. All of these issues are reported by SmallLint (i.e. the Code Mentor), but the browser analyser runs unobtrusively and automatically, providing more immediate feedback.'!
+
 !Tools.BrowserSemanticAnalyser methodsFor!
 
 checkHardBreakpoint: aStMessageNode 
@@ -114,6 +117,7 @@ visitSequenceNode: aSequenceNode
 			[currentScope unreferencedArguments
 				do: [:each | self signalError: CInfoUnreferencedArg forNode: each node]].
 	^answer! !
+
 !Tools.BrowserSemanticAnalyser categoriesForMethods!
 checkHardBreakpoint:!helpers!private! !
 checkIfStubMessage:!helpers!private! !

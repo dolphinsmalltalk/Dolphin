@@ -7,14 +7,20 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Collection guid: (OS.COM.IID fromString: '{d7f78fbc-5e73-4009-9f6b-5a822b0a6313}')!
+
 WebView2.ICoreWebView2Collection isNonInstantiable: true!
+
 WebView2.ICoreWebView2Collection isEgressOnly: true!
+
 WebView2.ICoreWebView2Collection comment: '`ICoreWebView2Collection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implmentaton of most of the Smalltalk `<collection>` protocol.
 
 Subclasses must implement `do:` only.
 '!
+
 !WebView2.ICoreWebView2Collection categoriesForClass!COM-Interfaces! !
+
 !WebView2.ICoreWebView2Collection methodsFor!
 
 allSatisfy: discriminator
@@ -168,6 +174,7 @@ size
 	and subclasses will probably want to override it."
 
 	^self countElements! !
+
 !WebView2.ICoreWebView2Collection categoriesForMethods!
 allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !

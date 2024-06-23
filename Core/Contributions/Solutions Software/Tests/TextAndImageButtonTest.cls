@@ -5,9 +5,13 @@ TestCase subclass: #TextAndImageButtonTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TextAndImageButtonTest guid: (GUID fromString: '{fdb7cc36-fd20-49e9-b512-b324a64641e3}')!
+
 TextAndImageButtonTest comment: ''!
+
 !TextAndImageButtonTest categoriesForClass!SUnit! !
+
 !TextAndImageButtonTest methodsFor!
 
 setUp
@@ -83,6 +87,7 @@ testLabelWithAmpersand
 	self deny: (imageRect intersects: textRect).
 	canvas free.
 ! !
+
 !TextAndImageButtonTest categoriesForMethods!
 setUp!public!running! !
 tearDown!public!running! !

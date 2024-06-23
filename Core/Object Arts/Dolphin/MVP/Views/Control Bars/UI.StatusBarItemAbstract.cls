@@ -10,8 +10,11 @@ Core.Object
 			'BorderStyles' -> (IdentityDictionary
 						withAll: { #noBorder -> 16r100. #raisedBorder -> 16r200. #sunkenBorder -> 16r0 })
 		}!
+
 UI.StatusBarItemAbstract guid: (Core.GUID fromString: '{87b4c4bf-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.StatusBarItemAbstract isNonInstantiable: true!
+
 UI.StatusBarItemAbstract comment: '`StatusBarItemAbstract` is an abstract class whose subclasses represent the items held by a `StatusBar` view.
 
 Subclasses should redefine the `#drawItem:bounding:` method to paint in the desired manner.
@@ -26,7 +29,9 @@ Subclasses should redefine the `#drawItem:bounding:` method to paint in the desi
   `BorderStyles`		`IdentityDictionary` mapping border style symbols to style integers.
 
 '!
+
 !UI.StatusBarItemAbstract categoriesForClass!MVP-Views-Support! !
+
 !UI.StatusBarItemAbstract methodsFor!
 
 border
@@ -263,6 +268,7 @@ width: widthInteger
 	width = widthInteger ifTrue: [^self].
 	width := widthInteger.
 	self update! !
+
 !UI.StatusBarItemAbstract categoriesForMethods!
 border!accessing!private! !
 border:!accessing!private! !
@@ -341,6 +347,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !UI.StatusBarItemAbstract class categoriesForMethods!
 icon!constants!public! !
 new!instance creation!public! !

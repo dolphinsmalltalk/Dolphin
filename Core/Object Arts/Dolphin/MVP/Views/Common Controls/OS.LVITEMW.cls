@@ -25,7 +25,9 @@ OS.CCITEM
 			'CallbackPrototype'
 				-> #[3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 		}!
+
 OS.LVITEMW guid: (Core.GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.LVITEMW comment: 'LVITEMW is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVITEMW is used to communicate information about the items (rows) in a List View control such as the text, icon, state, etc.
@@ -49,7 +51,9 @@ struct tagLVITEMW {
 	[readonly] int iGroup;
 } LVITEMW;
 '!
+
 !OS.LVITEMW categoriesForClass!Win32-Structs! !
+
 !OS.LVITEMW methodsFor!
 
 allCallbacks
@@ -261,6 +265,7 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
+
 !OS.LVITEMW categoriesForMethods!
 allCallbacks!initializing!private! !
 cchTextMax!**compiled accessors**!public! !
@@ -369,6 +374,7 @@ initialize
 		value: (self new
 				allCallbacks;
 				bytes)! !
+
 !OS.LVITEMW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 callbacksForIndex:!instance creation!public! !

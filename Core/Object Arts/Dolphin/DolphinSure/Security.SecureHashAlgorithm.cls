@@ -7,10 +7,14 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Security.SecureHashAlgorithm guid: (Core.GUID fromString: '{44a4e77c-6645-42e0-bcc2-e8129d06655e}')!
+
 Security.SecureHashAlgorithm comment: 'This class implements the Secure Hash Algorithm (SHA) described in the U.S. government''s Secure Hash Standard (SHS). 
 This standard is described in FIPS PUB 180-1, "SECURE HASH STANDARD", April 17, 1995. The Secure Hash Algorithm is also described on p. 442 of ''Applied Cryptography: Protocols, Algorithms, and Source Code in C'' by Bruce Scheier, Wiley, 1996.'!
+
 !Security.SecureHashAlgorithm categoriesForClass!Cryptography-Support! !
+
 !Security.SecureHashAlgorithm methodsFor!
 
 context
@@ -101,6 +105,7 @@ resetContext
 		ifTrue: 
 			[OS.BCrypt shaDestroy: context.
 			context := nil]! !
+
 !Security.SecureHashAlgorithm categoriesForMethods!
 context!helpers!private! !
 finalHash!helpers!private! !
@@ -148,6 +153,7 @@ example2
 		self error: 'Test #3 failed!!'].
 	^true
 ! !
+
 !Security.SecureHashAlgorithm class categoriesForMethods!
 example!examples!public! !
 example2!examples!public! !

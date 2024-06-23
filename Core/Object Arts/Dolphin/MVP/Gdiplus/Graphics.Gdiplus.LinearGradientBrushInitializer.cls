@@ -7,9 +7,13 @@ Graphics.Gdiplus.GradientBrushInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.LinearGradientBrushInitializer guid: (Core.GUID fromString: '{5dd72bf9-0464-4f05-b1b3-faa11a8e112e}')!
+
 Graphics.Gdiplus.LinearGradientBrushInitializer isNonInstantiable: true!
+
 Graphics.Gdiplus.LinearGradientBrushInitializer comment: ''!
+
 !Graphics.Gdiplus.LinearGradientBrushInitializer methodsFor!
 
 = anObject
@@ -144,6 +148,7 @@ mode
 	"Answer the LinearGradientMode of the brushes created by t receiver."
 
 	^self subclassResponsibility! !
+
 !Graphics.Gdiplus.LinearGradientBrushInitializer categoriesForMethods!
 =!comparing!public! !
 color!accessing!public! !
@@ -219,6 +224,7 @@ rect: rect color1: color1 color2: color2 mode: aLinearGradientMode
 		color1: color1
 		color2: color2
 		mode: aLinearGradientMode! !
+
 !Graphics.Gdiplus.LinearGradientBrushInitializer class categoriesForMethods!
 point1:point2:color1:color2:!instance creation!public! !
 point1:point2:color1:color2:wrapMode:!instance creation!public! !

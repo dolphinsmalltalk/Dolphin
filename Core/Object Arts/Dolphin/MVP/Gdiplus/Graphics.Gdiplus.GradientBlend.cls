@@ -7,9 +7,13 @@ Graphics.Gdiplus.Attribute
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GradientBlend guid: (Core.GUID fromString: '{c54920c7-dc72-4bb3-8d64-aa1c64336295}')!
+
 Graphics.Gdiplus.GradientBlend isNonInstantiable: true!
+
 Graphics.Gdiplus.GradientBlend comment: ''!
+
 !Graphics.Gdiplus.GradientBlend methodsFor!
 
 = aGpAttribute
@@ -32,6 +36,7 @@ positions
 positions: aSequencedOfPositions
 	positions := FLOATArray marshal: aSequencedOfPositions.
 	^self! !
+
 !Graphics.Gdiplus.GradientBlend categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !

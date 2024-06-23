@@ -152,6 +152,7 @@ Kernel.SharedPool
 			'OFN_SHAREWARN' -> 16r0.
 			'OFN_SHOWHELP' -> 16r10
 		}!
+
 External.DynamicLinkLibrary
 	subclass: #'OS.ComDlgLibrary'
 	instanceVariableNames: ''
@@ -159,6 +160,7 @@ External.DynamicLinkLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueDialog
 	subclass: #'UI.CommonDialog'
 	instanceVariableNames: 'winStruct hook'
@@ -166,6 +168,7 @@ UI.ValueDialog
 	imports: #(#{OS.CommonDialogConstants})
 	classInstanceVariableNames: 'hookHandlers'
 	classConstants: {}!
+
 UI.CommonDialog
 	subclass: #'UI.FileDialog'
 	instanceVariableNames: 'style fileTypes validationBlock'
@@ -173,6 +176,7 @@ UI.CommonDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FileDialog
 	subclass: #'UI.FileOpenDialog'
 	instanceVariableNames: 'maxFileCount'
@@ -180,6 +184,7 @@ UI.FileDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.FileDialog
 	subclass: #'UI.FileSaveDialog'
 	instanceVariableNames: ''
@@ -187,6 +192,7 @@ UI.FileDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.CommonDialogStructure'
 	instanceVariableNames: ''
@@ -194,6 +200,7 @@ External.Structure
 	imports: #(#{OS.CommonDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.CommonDialogStructure
 	subclass: #'OS.ComDlgStructure'
 	instanceVariableNames: ''
@@ -201,6 +208,7 @@ OS.CommonDialogStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_dwSize' -> 16r0. '_OffsetOf_hwndOwner' -> 16r4 }!
+
 OS.ComDlgStructure
 	subclass: #'OS.OPENFILENAMEW'
 	instanceVariableNames: 'fileName title filter defExt initialDir'
@@ -231,6 +239,7 @@ OS.ComDlgStructure
 			'_OffsetOf_pvReserved' -> 16r4C.
 			'_OPENFILENAMEW_Size' -> 16r58
 		}!
+
 OS.NMHDR
 	subclass: #'OS.OFNOTIFYEXW'
 	instanceVariableNames: ''
@@ -243,6 +252,7 @@ OS.NMHDR
 			'_OffsetOf_psf' -> 16r10.
 			'_OFNOTIFYEXW_Size' -> 16r18
 		}!
+
 OS.NMHDR
 	subclass: #'OS.OFNOTIFYW'
 	instanceVariableNames: ''
@@ -263,6 +273,7 @@ title
 	"Answer the receiver's 'title' (i.e. the display name)."
 
 	^self class titleOf: self name! !
+
 !Core.File categoriesForMethods!
 title!accessing!public! !
 !
@@ -287,6 +298,7 @@ titleOf: aString
 		cbBuf: len) < 0
 		ifTrue: [ComDlg32 systemError: 123].
 	^buf! !
+
 !Core.File class categoriesForMethods!
 titleOf:!filename manipulation!public! !
 !

@@ -7,9 +7,13 @@ UI.WindowsEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.KeyEvent guid: (Core.GUID fromString: '{87b4c54e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.KeyEvent comment: ''!
+
 !UI.KeyEvent categoriesForClass!Events!MVP-Views-Events! !
+
 !UI.KeyEvent methodsFor!
 
 code
@@ -56,6 +60,7 @@ scanCode
 	"Answer the scan code."
 
 	^self data highWord bitAnd: 16rFF! !
+
 !UI.KeyEvent categoriesForMethods!
 code!accessing!public! !
 data!accessing!public! !

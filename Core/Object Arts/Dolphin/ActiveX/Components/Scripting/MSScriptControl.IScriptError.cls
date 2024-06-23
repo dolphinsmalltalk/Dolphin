@@ -7,13 +7,17 @@ OS.COM.IDispatch
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 MSScriptControl.IScriptError guid: (OS.COM.IID fromString: '{70841c78-067d-11d0-95d8-00a02463ab28}')!
+
 MSScriptControl.IScriptError comment: '<IScriptError> is a wrapper class for the COM interface ''MSScriptControl.IScriptError'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Provides access to scripting error information"
 '!
+
 !MSScriptControl.IScriptError categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+
 !MSScriptControl.IScriptError methodsFor!
 
 clear
@@ -189,6 +193,7 @@ value
 	"Answer the special property which is the default value for the receiver."
 
 	^self description! !
+
 !MSScriptControl.IScriptError categoriesForMethods!
 clear!**auto generated**!methods!public! !
 Clear!**auto generated**!COM Interfaces-IScriptError!private! !
@@ -250,6 +255,7 @@ initializeTypeLib
 		IScriptError initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
+
 !MSScriptControl.IScriptError class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

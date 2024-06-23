@@ -70,6 +70,7 @@ UI.Shell
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.RuntimeSessionManager
 	subclass: #'UI.Examples.CalculatorSessionManager'
 	instanceVariableNames: ''

@@ -5,13 +5,17 @@ SmalltalkToolShell subclass: #IdbShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdbShell guid: (GUID fromString: '{d143e0f5-fb16-48b9-999e-c66f61c6fd3e}')!
+
 IdbShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !IdbShell categoriesForClass!IDB Goodies! !
+
 !IdbShell methodsFor!
 
 idbAbout: aString
@@ -19,6 +23,7 @@ idbAbout: aString
 
 idbHelp: aFileNameStem
 	self class idbHelp: aFileNameStem! !
+
 !IdbShell categoriesForMethods!
 idbAbout:!operations!public! !
 idbHelp:!operations!public! !
@@ -51,6 +56,7 @@ idbHelp: aFileNameStem
 				composePath: SessionManager current idbDocumentationFolder
 				stem: aFileNameStem
 				extension: 'html')! !
+
 !IdbShell class categoriesForMethods!
 defaultIconName!constants!public! !
 idbAbout:!operations!public! !

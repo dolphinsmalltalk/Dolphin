@@ -7,11 +7,15 @@ Kernel.STLLegacyInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLInFiler4 guid: (Core.GUID fromString: '{20bbaf4d-fd4b-46a4-a73b-7b94062bfc63}')!
+
 Kernel.STLInFiler4 comment: '`STBInFiler4` is an `STLInFiler` for reading the STL 4 literal object serialization format introduced in Dolphin 7.1.
 
 STL 4 primarily differed from STL 3 in storing all strings as UTF-8 encoded literal strings. At some point in its history nil''s started being written in literal form rather than as a zero prefix code, but although this should have resulted in a version increment, that did not happen.'!
+
 !Kernel.STLInFiler4 categoriesForClass!System-Binary storage! !
+
 !Kernel.STLInFiler4 methodsFor!
 
 readBytes: anInteger into: aByteObject
@@ -40,6 +44,7 @@ readString: aClass format: aSTxClassConversion
 	"In STL 4, all Strings were serialized as literals, regardless of original encoding and whether printable or not. They were never saved in binary form"
 
 	self shouldNotImplement! !
+
 !Kernel.STLInFiler4 categoriesForMethods!
 readBytes:into:!helpers!private! !
 readClassDataWithPrefix:!operations!public! !
@@ -87,6 +92,7 @@ version
 	"STL 4 is the version in Dolphin 7.1."
 
 	^4! !
+
 !Kernel.STLInFiler4 class categoriesForMethods!
 initialize!class initialization!public! !
 predefinedClasses!constants!public! !

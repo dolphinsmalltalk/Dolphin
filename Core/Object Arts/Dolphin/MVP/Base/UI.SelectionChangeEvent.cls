@@ -7,10 +7,15 @@ UI.Event
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.SelectionChangeEvent guid: (Core.GUID fromString: '{d0986742-3873-4dce-8e8f-6693994a4f26}')!
+
 UI.SelectionChangeEvent isNonInstantiable: true!
+
 UI.SelectionChangeEvent comment: ''!
+
 !UI.SelectionChangeEvent categoriesForClass!Kernel-Objects! !
+
 !UI.SelectionChangeEvent methodsFor!
 
 canIntercept
@@ -53,6 +58,7 @@ oldSelections: anArray
 
 value
 	^self subclassResponsibility! !
+
 !UI.SelectionChangeEvent categoriesForMethods!
 canIntercept!public!testing! !
 cause!accessing!public! !

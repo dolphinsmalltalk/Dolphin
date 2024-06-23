@@ -7,9 +7,13 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Int32Field guid: (Core.GUID fromString: '{87b4c4ec-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Int32Field comment: '`Int32Field` is a `ScalarField` class to describe `External.Structure` fields that are 32-bit signed integers.'!
+
 !External.Int32Field categoriesForClass!External-Data-Types! !
+
 !External.Int32Field methodsFor!
 
 accessorMessage
@@ -28,6 +32,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes int32AtOffset: offset put: anInteger! !
+
 !External.Int32Field categoriesForMethods!
 accessorMessage!initializing!private! !
 readFrom:!indirect accessing!private! !
@@ -41,6 +46,7 @@ byteSize
 	An Int32 is always 4 bytes."
 
 	^4! !
+
 !External.Int32Field class categoriesForMethods!
 byteSize!constants!private! !
 !

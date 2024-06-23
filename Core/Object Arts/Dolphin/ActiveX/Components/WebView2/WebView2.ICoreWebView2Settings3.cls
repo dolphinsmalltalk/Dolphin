@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Settings2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Settings3 guid: (OS.COM.IID fromString: '{fdb5ab74-af33-4854-84f0-0a631deb5eba}')!
+
 WebView2.ICoreWebView2Settings3 isEgressOnly: true!
+
 WebView2.ICoreWebView2Settings3 comment: '`ICoreWebView2Settings3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +35,9 @@ interface ICoreWebView2Settings3 : ICoreWebView2Settings2
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Settings3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Settings3 methodsFor!
 
 get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
@@ -53,6 +58,7 @@ put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 
 	<virtual stdcall: hresult 25 int32>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Settings3 categoriesForMethods!
 get_AreBrowserAcceleratorKeysEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings3!private! !
 put_AreBrowserAcceleratorKeysEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings3!private! !
@@ -70,6 +76,7 @@ defineFunctions
 		defineFunction: #put_AreBrowserAcceleratorKeysEnabled:
 			argumentTypes: 'sdword'
 ! !
+
 !WebView2.ICoreWebView2Settings3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

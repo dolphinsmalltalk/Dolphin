@@ -7,9 +7,13 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MoveMethodRefactoring guid: (Core.GUID fromString: '{12a63bdc-2ded-4523-bc81-881a6bc3f085}')!
+
 Refactory.Browser.MoveMethodRefactoring comment: ''!
+
 !Refactory.Browser.MoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactory.Browser.MoveMethodRefactoring methodsFor!
 
 abstractVariables
@@ -276,6 +280,7 @@ transform
 verifyTemporaryVariableDoesNotOverride
 	(parseTree allDefinedVariables includes: selfVariableName) ifTrue: [^false].
 	^(moveToClasses anySatisfy: [:each | each definesVariable: selfVariableName]) not! !
+
 !Refactory.Browser.MoveMethodRefactoring categoriesForMethods!
 abstractVariables!public!transforming! !
 abstractVariablesRefactoring!private!transforming! !
@@ -324,6 +329,7 @@ selector: aSymbol class: aClass variable: aVariableName
 			class: aClass
 			variable: aVariableName;
 		yourself! !
+
 !Refactory.Browser.MoveMethodRefactoring class categoriesForMethods!
 model:selector:class:variable:!instance creation!public! !
 selector:class:variable:!instance creation!public! !

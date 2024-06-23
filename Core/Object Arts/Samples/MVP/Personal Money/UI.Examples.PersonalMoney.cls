@@ -7,13 +7,17 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Examples.PersonalMoney guid: (Core.GUID fromString: '{87b4c66a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.Examples.PersonalMoney comment: 'PersonalMoney represent the entirety of the Personal Money system for a single user. It hold owner details and a collection of accounts for this user.
 
 Instance Variables
 	owner	<String> containing the owner''s name
 	accounts	<OrderedCollection> of PersonalAccounts.'!
+
 !UI.Examples.PersonalMoney categoriesForClass!MVP-Models!Samples! !
+
 !UI.Examples.PersonalMoney methodsFor!
 
 accounts
@@ -53,6 +57,7 @@ removeAccount: aPersonalAccount
 	Answers aPersonalAccount"
 
 	^self accounts remove: aPersonalAccount! !
+
 !UI.Examples.PersonalMoney categoriesForMethods!
 accounts!accessing!initializing!public! !
 addAccount:!adding!public! !

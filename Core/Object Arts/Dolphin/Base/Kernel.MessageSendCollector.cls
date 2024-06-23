@@ -7,7 +7,9 @@ Kernel.MessageSendInterpreter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.MessageSendCollector guid: (Core.GUID fromString: '{f883fe35-9906-4e8c-9ef2-f84400555550}')!
+
 Kernel.MessageSendCollector comment: '`MessageSendCollector` is an `InstructionInterpreter` that collects all the message sends in a method.
 
 ## Instance Variables:
@@ -15,7 +17,9 @@ Kernel.MessageSendCollector comment: '`MessageSendCollector` is an `InstructionI
   `superMessages`		`<IdentitySet>`. The collected supersend messages.
 
 '!
+
 !Kernel.MessageSendCollector categoriesForClass!Kernel-Objects! !
+
 !Kernel.MessageSendCollector methodsFor!
 
 messages
@@ -59,6 +63,7 @@ supersend: literalIndex args: argumentCount
 	"Private - Interpret a Supersend [N] with M args instruction."
 
 	messages add: (method basicAt: literalIndex + 1)! !
+
 !Kernel.MessageSendCollector categoriesForMethods!
 messages!accessing!public! !
 send:!instructions-sending!public! !

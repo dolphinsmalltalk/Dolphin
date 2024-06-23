@@ -11,8 +11,11 @@ Graphics.Gdiplus.Initializer
 			'PathPointTypeNames'
 				-> #('PathPointTypeStart' 'PathPointTypeLine' 16r2 'PathPointTypeBezier' 16r4 16r5 16r6)
 		}!
+
 Graphics.Gdiplus.GraphicsPathInitializer guid: (Core.GUID fromString: '{fcef1a11-834c-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.GraphicsPathInitializer comment: ''!
+
 !Graphics.Gdiplus.GraphicsPathInitializer methodsFor!
 
 = anObject
@@ -132,6 +135,7 @@ printAttributesOn: aStream
 		printEnum: fillMode
 		names: FillModeNames
 		on: aStream! !
+
 !Graphics.Gdiplus.GraphicsPathInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -174,6 +178,7 @@ stbConvertFrom: anSTBClassFormat
 				types: (data at: 3)
 				fillMode: (data at: 4)]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !Graphics.Gdiplus.GraphicsPathInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

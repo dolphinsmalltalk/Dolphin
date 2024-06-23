@@ -7,9 +7,13 @@ Database.DBAbstractRow
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBRow guid: (Core.GUID fromString: '{fedd9382-e7b2-4030-935f-e688eac94360}')!
+
 Database.DBRow comment: 'A DBRow respresents a snapshot of a row in a <DBResultSet>, the contents of which are appropriate types of Smalltalk object to represent the column values of the row.'!
+
 !Database.DBRow categoriesForClass!Kernel-Objects! !
+
 !Database.DBRow methodsFor!
 
 asObject
@@ -23,6 +27,7 @@ initializeFromBuffer: aDBRow
 	contents := aDBRow objects.
 	status := aDBRow status.
 	^self! !
+
 !Database.DBRow categoriesForMethods!
 asObject!converting!private! !
 initializeFromBuffer:!instance creation!private! !
@@ -33,6 +38,7 @@ initializeFromBuffer:!instance creation!private! !
 fromBuffer: aDBRow
 	^super new
 		initializeFromBuffer: aDBRow! !
+
 !Database.DBRow class categoriesForMethods!
 fromBuffer:!instance creation!private! !
 !

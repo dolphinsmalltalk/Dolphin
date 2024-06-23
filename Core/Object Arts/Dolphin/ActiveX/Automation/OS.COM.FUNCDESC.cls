@@ -20,7 +20,9 @@ OS.COM.MemberDesc
 			'_OffsetOf_oVft' -> 16r1C.
 			'_OffsetOf_wFuncFlags' -> 16r30
 		}!
+
 OS.COM.FUNCDESC guid: (Core.GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
+
 OS.COM.FUNCDESC comment: 'FUNCDESC is an <ExternalStructure> class to represent the Active-X Automation FUNCDESC structure.
 
 A FUNCDESC describes various attributes of a function including, for example, the number of parameters, and their types.
@@ -39,7 +41,9 @@ Fields:
 	elemdescFunc	<ELEMDESC> describing the return type from the function
 	wFuncFlags	<WORD>. Various flags about the function.
 '!
+
 !OS.COM.FUNCDESC categoriesForClass!External-Data-Structured-COM! !
+
 !OS.COM.FUNCDESC methodsFor!
 
 argumentNameFor: paramName
@@ -373,6 +377,7 @@ wFuncFlags
 	"Answer the <Integer> value of the receiver's 'wFuncFlags' field."
 
 	^bytes uint16AtOffset: _OffsetOf_wFuncFlags! !
+
 !OS.COM.FUNCDESC categoriesForMethods!
 argumentNameFor:!helpers!private! !
 argumentNames!accessing!public! !
@@ -481,6 +486,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !OS.COM.FUNCDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

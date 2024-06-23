@@ -7,8 +7,11 @@ Core.Tests.IntegerTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Tests.LargeIntegerTest guid: (Core.GUID fromString: '{36a14bf1-e5f1-45a2-a72d-6e853ab71f46}')!
+
 Core.Tests.LargeIntegerTest comment: ''!
+
 !Core.Tests.LargeIntegerTest methodsFor!
 
 canonicalInstance
@@ -1546,6 +1549,7 @@ testSubtractSmall
 	self assert: res equals: 16rBFFFFFFF.
 	self assert: res class identicalTo: LargeInteger.
 	self assert: res isImmutable! !
+
 !Core.Tests.LargeIntegerTest categoriesForMethods!
 canonicalInstance!constants!private! !
 largeComparisonPairs!constants!private! !

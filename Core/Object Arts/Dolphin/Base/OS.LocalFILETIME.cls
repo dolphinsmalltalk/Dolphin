@@ -7,9 +7,13 @@ OS.FILETIME
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.LocalFILETIME guid: (Core.GUID fromString: '{87b4c623-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.LocalFILETIME comment: 'LocalFILETIME is an ExternalStructure class to represent the Win32 FILETIMEs that are in local time, as opposed to the usual UTC of normal FILETIMEs. See <FILETIME> for further details.'!
+
 !OS.LocalFILETIME categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.LocalFILETIME methodsFor!
 
 asLocalTime
@@ -38,6 +42,7 @@ offsetSeconds
 	"Answer the <number> of seconds this <FILETIME> is offset from UTC. It is assumed that the receiver expresses a time in the current platform timezone."
 
 	^Locale timeZoneInformation offsetSeconds! !
+
 !OS.LocalFILETIME categoriesForMethods!
 asLocalTime!converting!public! !
 asSYSTEMTIME!converting!public! !
@@ -72,6 +77,7 @@ now
 	"We can get away with passing in the same buffer for output as the input"
 	(Kernel32 fileTimeToLocalTime: answer lpLocalFileTime: answer) ifFalse: [Kernel32 systemError].
 	^answer! !
+
 !OS.LocalFILETIME class categoriesForMethods!
 fromDateAndTime:!public! !
 fromSYSTEMTIME:!instance creation!public! !

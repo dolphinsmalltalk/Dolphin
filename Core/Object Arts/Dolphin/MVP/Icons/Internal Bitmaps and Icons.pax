@@ -69,6 +69,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.InternalBitmap
 	subclass: #'Graphics.InternalIcon'
 	instanceVariableNames: 'tileColor'
@@ -143,6 +144,7 @@ to convert to PNG format first?'.
 	^'.
 	internalIcon printOn: methodSourceStream.
 	self class compile: methodSourceStream contents categories: { 'public'. 'constants' }! !
+
 !Core.ClassDescription categoriesForMethods!
 createBadgeMethod!development!public! !
 createIconMethod!development!public! !
@@ -158,6 +160,7 @@ internalize
 	removes the need for an external file reference"
 
 	^self class fromByteArray: (self asByteArray: 'image/png')! !
+
 !Graphics.Gdiplus.Image categoriesForMethods!
 internalize!operations!public! !
 !

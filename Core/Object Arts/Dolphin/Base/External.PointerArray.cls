@@ -7,14 +7,18 @@ External.UIntPtrArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.PointerArray guid: (Core.GUID fromString: '{fac953e0-dfd2-4e68-8c31-879bba4c50c4}')!
+
 External.PointerArray comment: 'Specialized `External.Array` to represent contiguous single-dimensioned arrays of pointers to arbitrary `External.Structure`s.	
 
 ## Instance Variables:
   `elementClass`	`External.Structure`. Class to represent elements of the array.
 
 '!
+
 !External.PointerArray categoriesForClass!External-Data-Structured! !
+
 !External.PointerArray methodsFor!
 
 elementClass
@@ -38,6 +42,7 @@ uncheckedAt: anInteger
 uncheckedAt: anInteger put: newValue 
 	super uncheckedAt: anInteger put: newValue yourAddress.
 	^newValue! !
+
 !External.PointerArray categoriesForMethods!
 elementClass!accessing!public! !
 elementClass:!accessing!private! !
@@ -67,6 +72,7 @@ length: anInteger elementClass: elementClass
 	of sufficient size to contain anInteger elements of type, elementClass."
 
 	^(self length: anInteger elementSize: self elementSize) elementClass: elementClass! !
+
 !External.PointerArray class categoriesForMethods!
 fromAddress:length:elementClass:!instance creation!public! !
 length:elementClass:!instance creation!public! !

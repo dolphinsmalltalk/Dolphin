@@ -7,8 +7,11 @@ Graphics.Tests.VirtualColorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.PluggableColorTest guid: (Core.GUID fromString: '{45e67cc5-eb59-46fa-9c66-7bd0cd8335d8}')!
+
 Graphics.Tests.PluggableColorTest comment: ''!
+
 !Graphics.Tests.PluggableColorTest methodsFor!
 
 testWith
@@ -23,6 +26,7 @@ testWith
 	"Invoke the method directly so we don't need to install it."
 	pc2 := testMethod value: PluggableColor withArguments: {[Color black]}.
 	self assert: pc2 equals: Color black! !
+
 !Graphics.Tests.PluggableColorTest categoriesForMethods!
 testWith!public!unit tests! !
 !

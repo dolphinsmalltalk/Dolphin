@@ -7,8 +7,11 @@ Graphics.ImageInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.ImageFromFileInitializer guid: (Core.GUID fromString: '{8d67281f-7675-4dea-9545-22e66181e2a3}')!
+
 Graphics.ImageFromFileInitializer comment: ''!
+
 !Graphics.ImageFromFileInitializer methodsFor!
 
 = anObject
@@ -79,6 +82,7 @@ printImage: anImage on: aWriteStream
 			[aWriteStream
 				nextPutAll: ' usingLocator: ';
 				print: fileLocator]! !
+
 !Graphics.ImageFromFileInitializer categoriesForMethods!
 =!comparing!public! !
 createImage:extent:!private!realizing/unrealizing! !
@@ -114,6 +118,7 @@ filename: aFilename fileLocator: aFileLocator flags: anInteger extent: aPoint
 		flags: anInteger;
 		extent: aPoint;
 		yourself! !
+
 !Graphics.ImageFromFileInitializer class categoriesForMethods!
 filename:fileLocator:flags:!instance creation!public! !
 filename:fileLocator:flags:extent:!instance creation!public! !

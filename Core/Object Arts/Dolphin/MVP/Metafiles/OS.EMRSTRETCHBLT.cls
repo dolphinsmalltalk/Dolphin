@@ -26,7 +26,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_yDest' -> 16r1C.
 			'_OffsetOf_ySrc' -> 16r30
 		}!
+
 OS.EMRSTRETCHBLT guid: (Core.GUID fromString: '{04e7165e-c2d6-4a3d-8a28-d197f35d85a3}')!
+
 OS.EMRSTRETCHBLT comment: '<EMRSTRETCHBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -57,7 +59,9 @@ struct tagEMRSTRETCHBLT {
 	long cySrc;
 } EMRSTRETCHBLT;
 '!
+
 !OS.EMRSTRETCHBLT categoriesForClass!Win32-Structs! !
+
 !OS.EMRSTRETCHBLT methodsFor!
 
 cbBitsSrc
@@ -237,6 +241,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !OS.EMRSTRETCHBLT categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -369,6 +374,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_STRETCHBLT}! !
+
 !OS.EMRSTRETCHBLT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

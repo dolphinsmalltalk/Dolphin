@@ -7,7 +7,9 @@ Core.Object
 	imports: #(#{OS.MMFConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'OwnsFileMask' -> 16r2. 'OwnsHandleMask' -> 16r1. 'ReadOnlyMask' -> 16r4 }!
+
 External.MemoryMappedFile guid: (Core.GUID fromString: '{87c4eee1-16f8-422b-b9e6-2e1c2963affd}')!
+
 External.MemoryMappedFile comment: 'MemoryMappedFile is an abstraction over the Win32 Memory-Mapped File API.
 
 Instance Variables:
@@ -18,7 +20,9 @@ Instance Variables:
 	ownsFile		<boolean>. Whether or not the mapping opened the file (and should therefore close it when free''d)
 
 '!
+
 !External.MemoryMappedFile categoriesForClass!Kernel-Objects! !
+
 !External.MemoryMappedFile methodsFor!
 
 asParameter
@@ -137,6 +141,7 @@ setHandle: anInteger
 	handle := anInteger.
 	flags := 0.
 	maximumSize := 0! !
+
 !External.MemoryMappedFile categoriesForMethods!
 asParameter!converting!public! !
 basicFree!private!realizing/unrealizing! !
@@ -208,6 +213,7 @@ open: aString mode: aSymbol check: aBoolean
 			owned: true
 			name: nil;
 		yourself! !
+
 !External.MemoryMappedFile class categoriesForMethods!
 fromHandle:!public! !
 icon!constants!public! !

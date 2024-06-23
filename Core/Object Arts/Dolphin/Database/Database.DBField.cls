@@ -12,7 +12,9 @@ Core.Object
 			'SetSelectors'
 				-> #(#setGuid: #setUtf16String: #setUtf16String: #setUtf16String: #setBoolean: #setByte: #setInt64: #setByteArray: #setByteArray: #setByteArray: #setAnsiString: nil #setAnsiString: #numberToNumeric: #numberToNumeric: #setLong: #setShort: #setDouble: #setFloat: #setDouble: nil nil nil #setAnsiString: nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #setDate: #setTime: #setDateAndTime:)
 		}!
+
 Database.DBField guid: (Core.GUID fromString: '{87b4c475-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Database.DBField comment: 'A DBField instance represents a column buffer for holding data as part of a DBRow.
 
 A field''s value may be converted to a Smalltalk object by sending #value, and conversely may be assigned with #value:.
@@ -27,7 +29,9 @@ Class Variables:
 	SetSelectors	<Array> of <Symbol>. Maps integer type codes to mutator for that type.
 
 '!
+
 !Database.DBField categoriesForClass!ODBC Interface! !
+
 !Database.DBField methodsFor!
 
 = comparand
@@ -391,6 +395,7 @@ value: anObject
 	^anObject
 		ifNil: [self beNull]
 		ifNotNil: [self perform: (SetSelectors at: column type + TypeOffset) with: anObject]! !
+
 !Database.DBField categoriesForMethods!
 =!comparing!public! !
 beNull!accessing!public! !
@@ -516,6 +521,7 @@ newForCol: aDBColAttr
 	"Answer a new instance of the receiver for the column described by aColAttr."
 
 	^super new initializeForColumn: aDBColAttr! !
+
 !Database.DBField class categoriesForMethods!
 initialize!initializing!public! !
 new!instance creation!public! !

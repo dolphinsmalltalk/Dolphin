@@ -7,7 +7,9 @@ OS.COM.AbstractDispatchImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'GenericEventMask' -> 16r2. 'NoIndividualEventsMask' -> 16r4. 'TraceMask' -> 16r1 }!
+
 OS.COM.EventSink guid: (Core.GUID fromString: '{d578b1aa-48d3-49f7-a2d0-de3267236311}')!
+
 OS.COM.EventSink comment: 'AXEventSink is a generic connection point callback interface (i.e. event sink) implementation for event dispinterfaces. AXEventSink itself handles incoming events by triggering a same named Smalltalk event, the selector of which is generated from the function description in the type library. The primary keyword of the selector is the name of the event (unchanged in any way), with subsequent keywords the name of the corresponding argument from the library, or just an underscore & colon pair (_:) if the argument is unnamed. In-only arguments are converted from the variant parameter to the equivalent Smalltalk object, whereas output arguments are passed around as a <VARIANT> which can be updated with the value to pass out.
 
 AXEventSink implements <IDispatch> (mostly via inheritance), but only the Invoke() method. All other methods are associated with requesting type information about the interface, which it wouldn''t make sense for the caller to do, since it defines the interface and ought therefore to be well aware of its specification.
@@ -15,7 +17,9 @@ AXEventSink implements <IDispatch> (mostly via inheritance), but only the Invoke
 Note that COM components "source" interfaces are almost always dispinterfaces because VB is restricted to this type, although connection point interface can be vtbl based interfaces too. Some components (e.g. ADO) support both types. Where an event interface is specified as a dual it can be more efficiently implemented using <AXForwardingDualImp>. Where a custom interface is employed, this can simply be implemented against the object which is to receive the events.
 
 '!
+
 !OS.COM.EventSink categoriesForClass!COM-Implementations! !
+
 !OS.COM.EventSink methodsFor!
 
 connect: anIUnknown
@@ -177,6 +181,7 @@ triggerIndividualEvents: aBoolean
 	its target on receipt of events from the COM event source. By default this is on."
 
 	flags := flags mask: NoIndividualEventsMask set: aBoolean not! !
+
 !OS.COM.EventSink categoriesForMethods!
 connect:!operations!public! !
 disconnect!operations!public! !
@@ -214,6 +219,7 @@ target: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer
 	to which this sink is connected invokes the methods."
 
 	^super new setTarget: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer! !
+
 !OS.COM.EventSink class categoriesForMethods!
 new!instance creation!public! !
 target:sourceTypeInfo:!instance creation!public! !

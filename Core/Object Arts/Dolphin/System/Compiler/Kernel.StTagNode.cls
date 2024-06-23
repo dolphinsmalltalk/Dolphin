@@ -7,10 +7,15 @@ Kernel.StProgramNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StTagNode guid: (Core.GUID fromString: '{eb694d50-0176-4a1d-a468-8f7a306f573b}')!
+
 Kernel.StTagNode isNonInstantiable: true!
+
 Kernel.StTagNode comment: ''!
+
 !Kernel.StTagNode categoriesForClass!System-Compiler! !
+
 !Kernel.StTagNode methodsFor!
 
 isExternalCall
@@ -33,6 +38,7 @@ stop
 
 stop: anInteger
 	stop := anInteger! !
+
 !Kernel.StTagNode categoriesForMethods!
 isExternalCall!public!testing! !
 isTag!public!testing! !

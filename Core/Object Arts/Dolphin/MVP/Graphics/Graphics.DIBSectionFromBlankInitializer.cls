@@ -7,8 +7,11 @@ Graphics.AbstractBitmapFromBlankInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.DIBSectionFromBlankInitializer guid: (Core.GUID fromString: '{0953f281-a3a6-4a0d-be96-7f12bd1fc826}')!
+
 Graphics.DIBSectionFromBlankInitializer comment: ''!
+
 !Graphics.DIBSectionFromBlankInitializer methodsFor!
 
 createImage: anImage extent: aPoint
@@ -53,6 +56,7 @@ createImage: anImage extent: aPoint
 				deleteDC: hdc;
 				deleteObject: palBitmap.
 			dibSection]! !
+
 !Graphics.DIBSectionFromBlankInitializer categoriesForMethods!
 createImage:extent:!private!realizing/unrealizing! !
 !
@@ -65,6 +69,7 @@ extent: aPoint depth: anInteger
 		extent: aPoint;
 		depth: anInteger;
 		yourself! !
+
 !Graphics.DIBSectionFromBlankInitializer class categoriesForMethods!
 extent:depth:!instance creation!public! !
 !

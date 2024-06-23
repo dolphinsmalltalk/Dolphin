@@ -5,9 +5,13 @@ Object subclass: #StyledShadow
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 StyledShadow guid: (GUID fromString: '{b7558f23-322b-4c65-ab23-0e43ead228bf}')!
+
 StyledShadow comment: ''!
+
 !StyledShadow categoriesForClass!Unclassified! !
+
 !StyledShadow methodsFor!
 
 color
@@ -49,6 +53,7 @@ paintShadowOf: path on: graphics
 
 shadowColor
 	^self color alpha: (self density * 255 min: 255)! !
+
 !StyledShadow categoriesForMethods!
 color!accessing!public! !
 color:!accessing!public! !
@@ -76,6 +81,7 @@ new
 		color: self defaultShadowColor;
 		offset: self defaultShadowOffset;
 		density: self defaultShadowDensity! !
+
 !StyledShadow class categoriesForMethods!
 defaultShadowColor!public! !
 defaultShadowDensity!public! !

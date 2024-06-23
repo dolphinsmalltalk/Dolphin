@@ -7,9 +7,13 @@ External.ScalarField
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.UInt16Field guid: (Core.GUID fromString: '{87b4c4ef-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.UInt16Field comment: '`UInt16Field` is a `ScalarField` class to describe `External.Structure` fields that are 16-bit unsigned integers.'!
+
 !External.UInt16Field categoriesForClass!External-Data-Types! !
+
 !External.UInt16Field methodsFor!
 
 accessorMessage
@@ -28,6 +32,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes uint16AtOffset: offset put: anInteger! !
+
 !External.UInt16Field categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !
@@ -41,6 +46,7 @@ byteSize
 	A WORD is always 16-bits/2 bytes."
 
 	^2! !
+
 !External.UInt16Field class categoriesForMethods!
 byteSize!constants!private! !
 !

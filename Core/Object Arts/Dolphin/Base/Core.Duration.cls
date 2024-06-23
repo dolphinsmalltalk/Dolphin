@@ -7,7 +7,9 @@ Core.Magnitude
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'SecondsPerDay' -> 16r15180. 'SecondsPerHour' -> 16rE10 }!
+
 Core.Duration guid: (Core.GUID fromString: '{87b4c654-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Core.Duration comment: '`Duration` is an implementation of the ANSI Smalltalk protocols `<Duration>` (instance side) and `<Duration factory>` (class side).
 
 A `Duration` represents a length of time, at any resolution, and is independent of any start or end point. `Duration`s are immutable.
@@ -32,7 +34,9 @@ A `Duration` represents a length of time, at any resolution, and is independent 
   `Zero`				Constant for <Duration factory> zero
 
 '!
+
 !Core.Duration categoriesForClass!Kernel-Chronology! !
+
 !Core.Duration methodsFor!
 
 - aDuration
@@ -308,6 +312,7 @@ subtractFromDateAndTime: aDateAndTime
 
 wait
 	(Delay forDuration: self) wait! !
+
 !Core.Duration categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -483,6 +488,7 @@ zero
 	"Answer a <Duration> representing an empty interval of time."
 
 	^Zero ifNil: [Zero := self seconds: 0]! !
+
 !Core.Duration class categoriesForMethods!
 days:!instance creation!public! !
 days:hours:minutes:seconds:!instance creation!public! !

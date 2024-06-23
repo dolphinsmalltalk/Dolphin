@@ -77,6 +77,7 @@ Kernel.SharedPool
 			'LWS_USEVISUALSTYLE' -> 16r8.
 			'MAX_LINKID_TEXT' -> 16r30
 		}!
+
 External.Structure
 	subclass: #'OS.LITEM'
 	instanceVariableNames: ''
@@ -92,6 +93,7 @@ External.Structure
 			'_OffsetOf_szID' -> 16r10.
 			'_OffsetOf_szURL' -> 16r70
 		}!
+
 OS.CCHITTESTINFO
 	subclass: #'OS.LHITTESTINFO'
 	instanceVariableNames: ''
@@ -99,6 +101,7 @@ OS.CCHITTESTINFO
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_LHITTESTINFO_Size' -> 16r10C0. '_OffsetOf_item' -> 16r8 }!
+
 OS.NMHDR
 	subclass: #'OS.NMLINK'
 	instanceVariableNames: ''
@@ -106,6 +109,7 @@ OS.NMHDR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_NMLINK_Size' -> 16r10C4. '_OffsetOf_item' -> 16rC }!
+
 UI.CommandButton
 	subclass: #'UI.LinkButton'
 	instanceVariableNames: ''
@@ -113,6 +117,7 @@ UI.CommandButton
 	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.StaticView
 	subclass: #'UI.SysLinkView'
 	instanceVariableNames: ''
@@ -134,6 +139,7 @@ resource_Link_text
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.SysLinkView} 38 #{Core.Array} 16 nil nil 50 2 8 1409286152 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 306 271 31 32 258 #text: 50 1 8 '<A HREF="https://github.com/dolphinsmalltalk/Dolphin">Dolphin Smalltalk Home</A>' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 134 12 0 0 25 0 0 0] 8 #() 306 193 193 nil 27)! !
+
 !UI.TextPresenter class categoriesForMethods!
 resource_Link_text!public!resources-views! !
 !

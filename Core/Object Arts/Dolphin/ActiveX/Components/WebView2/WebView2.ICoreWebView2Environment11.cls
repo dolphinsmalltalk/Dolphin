@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Environment10
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Environment11 guid: (OS.COM.IID fromString: '{f0913dc6-a0ec-42ef-9805-91dff3a2966a}')!
+
 WebView2.ICoreWebView2Environment11 isEgressOnly: true!
+
 WebView2.ICoreWebView2Environment11 comment: '`ICoreWebView2Environment11` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment11'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +32,9 @@ interface ICoreWebView2Environment11 : ICoreWebView2Environment10
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Environment11 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Environment11 methodsFor!
 
 get_FailureReportFolderPath: value
@@ -40,6 +45,7 @@ get_FailureReportFolderPath: value
 
 	<virtual stdcall: hresult 24 lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Environment11 categoriesForMethods!
 get_FailureReportFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Environment11!private! !
 !
@@ -54,6 +60,7 @@ defineFunctions
 		defineFunction: #get_FailureReportFolderPath:
 			argumentTypes: 'lpwstr*'
 ! !
+
 !WebView2.ICoreWebView2Environment11 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

@@ -7,8 +7,11 @@ UI.View
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.DoubleBufferedView guid: (Core.GUID fromString: '{3c1e8025-eba8-41c4-bd23-e8ba0536f783}')!
+
 Graphics.Gdiplus.DoubleBufferedView comment: ''!
+
 !Graphics.Gdiplus.DoubleBufferedView methodsFor!
 
 backSurface
@@ -110,6 +113,7 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
+
 !Graphics.Gdiplus.DoubleBufferedView categoriesForMethods!
 backSurface!accessing!public! !
 flip!operations!public! !
@@ -131,6 +135,7 @@ wmNcHitTest:wParam:lParam:!event handling-win32!private! !
 
 defaultModel
 	^UI.ListModel new! !
+
 !Graphics.Gdiplus.DoubleBufferedView class categoriesForMethods!
 defaultModel!constants!public! !
 !

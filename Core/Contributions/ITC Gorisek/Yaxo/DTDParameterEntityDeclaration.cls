@@ -5,9 +5,13 @@ DTDEntityDeclaration subclass: #DTDParameterEntityDeclaration
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DTDParameterEntityDeclaration guid: (GUID fromString: '{d99f2ec2-dcb6-4bc6-aba4-571ef1a16782}')!
+
 DTDParameterEntityDeclaration comment: ''!
+
 !DTDParameterEntityDeclaration categoriesForClass!XML-Parser! !
+
 !DTDParameterEntityDeclaration methodsFor!
 
 includePE
@@ -19,6 +23,7 @@ notRecognized
 
 registerIn: aParser
 	aParser parameterEntity: self name put: self! !
+
 !DTDParameterEntityDeclaration categoriesForMethods!
 includePE!behaviors!public! !
 notRecognized!behaviors!public! !
@@ -42,6 +47,7 @@ initialize
 
 leadIn
 	^'%'! !
+
 !DTDParameterEntityDeclaration class categoriesForMethods!
 initialize!class initialization!public! !
 leadIn!accessing!public! !

@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.AbstractNamespaceTest guid: (Core.GUID fromString: '{8509e019-ee66-42a0-9ef9-2a5afd16b048}')!
+
 Kernel.Tests.AbstractNamespaceTest isNonInstantiable: true!
+
 Kernel.Tests.AbstractNamespaceTest comment: ''!
+
 !Kernel.Tests.AbstractNamespaceTest methodsFor!
 
 canonicalSubject
@@ -64,6 +68,7 @@ testRemoveLocalBindingFor
 			ensure: 
 				[Smalltalk removeEventsTriggeredFor: self.
 				subject basicRemoveBinding: binding]! !
+
 !Kernel.Tests.AbstractNamespaceTest categoriesForMethods!
 canonicalSubject!private! !
 classTestCases!private! !

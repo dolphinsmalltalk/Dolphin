@@ -7,7 +7,9 @@ External.UInt32
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_Int32_Size' -> 16r4 }!
+
 External.Int32 guid: (Core.GUID fromString: '{87b4c5ab-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 External.Int32 comment: '<SDWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 SDWORD is used to represent signed 32-bit integers in conjunction with Win32 APIs. 
@@ -15,7 +17,9 @@ SDWORD is used to represent signed 32-bit integers in conjunction with Win32 API
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	(-2**31) to: (2**31)-1
 '!
+
 !External.Int32 categoriesForClass!External-Data-Structured! !
+
 !External.Int32 methodsFor!
 
 isSigned
@@ -38,6 +42,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_value put: anInteger! !
+
 !External.Int32 categoriesForMethods!
 isSigned!public!testing! !
 unsignedValue:!accessing!public! !
@@ -76,6 +81,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
+
 !External.Int32 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

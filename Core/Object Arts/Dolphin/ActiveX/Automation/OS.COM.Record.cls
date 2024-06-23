@@ -7,8 +7,11 @@ External.FinalizableStructure
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.Record guid: (Core.GUID fromString: '{4c783c74-4472-47ad-901f-ceb9de79dd8b}')!
+
 OS.COM.Record comment: ''!
+
 !OS.COM.Record methodsFor!
 
 basicFree
@@ -133,6 +136,7 @@ setRecordInfo: anIRecordInfo owner: dataOwner
 
 	recordInfo := anIRecordInfo.
 	owner := dataOwner! !
+
 !OS.COM.Record categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 byteSize!accessing!public! !
@@ -189,6 +193,7 @@ newWithRecordInfo: recInfo
 		setRecordInfo: recInfo owner: nil;
 		initialize;
 		yourself! !
+
 !OS.COM.Record class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 fromAddress:!instance creation!public! !

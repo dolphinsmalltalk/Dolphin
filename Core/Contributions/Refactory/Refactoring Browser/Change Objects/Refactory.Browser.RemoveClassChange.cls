@@ -7,9 +7,13 @@ Refactory.Browser.ClassModificationChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RemoveClassChange guid: (Core.GUID fromString: '{d652f7f1-4258-4cf0-8a95-562b45ae0e17}')!
+
 Refactory.Browser.RemoveClassChange comment: ''!
+
 !Refactory.Browser.RemoveClassChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RemoveClassChange methodsFor!
 
 afterText
@@ -42,6 +46,7 @@ printOn: aStream
 		space;
 		nextPutAll: #removeFromSystem;
 		nextPut: $!!! !
+
 !Refactory.Browser.RemoveClassChange categoriesForMethods!
 afterText!printing!public! !
 asUndoOperation!converting!public! !
@@ -58,6 +63,7 @@ remove: aClass
 
 removeClassName: aSymbol 
 	^self new changeClassName: aSymbol! !
+
 !Refactory.Browser.RemoveClassChange class categoriesForMethods!
 remove:!instance creation!public! !
 removeClassName:!instance creation!public! !

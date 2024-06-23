@@ -5,13 +5,17 @@ Presenter subclass: #ProfilerPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerPresenter guid: (GUID fromString: '{425d0eb3-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerPresenter categoriesForClass!IDB Goodies! !
+
 !ProfilerPresenter methodsFor!
 
 filter: anObject 
@@ -65,6 +69,7 @@ selectedMethod
 
 selectionOrNil
 	^self subclassResponsibility! !
+
 !ProfilerPresenter categoriesForMethods!
 filter:!filtering!public! !
 filterChanged!filtering!public! !
@@ -84,6 +89,7 @@ defaultModel
 	"Answer a default model to be used when the presenter is initialized"
 
 	^ProfilerSampleSet name: 'None'! !
+
 !ProfilerPresenter class categoriesForMethods!
 defaultModel!models!public! !
 !

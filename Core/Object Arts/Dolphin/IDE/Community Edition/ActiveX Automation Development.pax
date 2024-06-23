@@ -594,6 +594,7 @@ Core.Object
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Tools.AXTypeLibRegistration'
 	instanceVariableNames: 'description guidString versionString minor major'
@@ -601,6 +602,7 @@ Core.Object
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.Aspect
 	subclass: #'Tools.AXAutomationAspect'
 	instanceVariableNames: ''
@@ -608,6 +610,7 @@ Tools.Aspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AXAutomationAspect
 	subclass: #'Tools.AXRecordAspect'
 	instanceVariableNames: ''
@@ -615,6 +618,7 @@ Tools.AXAutomationAspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.AXAutomationAspect
 	subclass: #'Tools.DispatchAspect'
 	instanceVariableNames: 'dispid'
@@ -622,6 +626,7 @@ Tools.AXAutomationAspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.ValueDialog
 	subclass: #'Tools.AXTypeLibraryPrompter'
 	instanceVariableNames: 'typeLibs path guidPresenter'
@@ -629,6 +634,7 @@ UI.ValueDialog
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SmalltalkToolShell
 	subclass: #'Tools.AXComponentWizard'
 	instanceVariableNames: 'typeLibs types description guid namespaceName packageName forcePackage cards libraryName libraryPath buffer generateTypelib typelibVariableName constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing showStandard includeHidden'
@@ -636,6 +642,7 @@ Tools.SmalltalkToolShell
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.BasicInspector
 	subclass: #'Tools.AXInspector'
 	instanceVariableNames: 'collection'
@@ -672,6 +679,7 @@ printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
 		type: self
 		indirections: anInteger
 		on: aCodeGenerationContext! !
+
 !Core.ByteArray class categoriesForMethods!
 fieldType!constants!private! !
 fieldType:indirections:!constants!private! !
@@ -745,6 +753,7 @@ printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
 		type: self
 		indirections: anInteger
 		on: aCodeGenerationContext! !
+
 !Core.GUID class categoriesForMethods!
 elementType:!constants!private! !
 newToClipboard!public! !
@@ -842,6 +851,7 @@ printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
 				printArrayField: aVARDESC
 				type: self
 				on: aCodeGenerationContext]! !
+
 !Core.String class categoriesForMethods!
 elementType:!constants!private! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
@@ -866,6 +876,7 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 				nextPutAll: aString;
 				space;
 				nextPutAll: #asUtf16String]! !
+
 !Core.Utf16String class categoriesForMethods!
 printMethodArgument:elemdesc:indirections:on:for:!private! !
 !
@@ -877,6 +888,7 @@ fieldType
 	other structures."
 
 	^LPVOIDField! !
+
 !External.Address class categoriesForMethods!
 fieldType!constants!development!private! !
 !
@@ -893,6 +905,7 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 		printArrayField: aVARDESC
 		type: aClass
 		on: aCodeGenerationContext! !
+
 !External.ArrayField class categoriesForMethods!
 printVariable:type:indirections:on:!private! !
 !
@@ -909,6 +922,7 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 		printArrayField: aVARDESC
 		type: aClass arrayType
 		on: aCodeGenerationContext! !
+
 !External.ArrayPointerField class categoriesForMethods!
 printVariable:type:indirections:on:!private! !
 !
@@ -920,6 +934,7 @@ fieldType
 	other structures."
 
 	^BOOLField! !
+
 !External.BOOL class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -931,6 +946,7 @@ fieldType
 	structures."
 
 	^BOOLEANField! !
+
 !External.BOOLEAN class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -942,6 +958,7 @@ fieldType
 	other structures."
 
 	^DOUBLEField! !
+
 !External.DOUBLE class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -951,6 +968,7 @@ fieldType!constants!private! !
 DllRegisterServer
 	<stdcall: hresult DllRegisterServer>
 	^self invalidCall: _failureCode! !
+
 !External.DynamicLinkLibrary categoriesForMethods!
 DllRegisterServer!operations!private! !
 !
@@ -973,6 +991,7 @@ fieldType: aVARDESC indirections: anInteger
 
 pointerFieldType
 	^ArrayPointerField! !
+
 !External.ExternalArray class categoriesForMethods!
 fieldType!constants!private! !
 fieldType:indirections:!private! !
@@ -1063,6 +1082,7 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 warningMultiDimensionArray: aVARDESC
 	Warning
 		signal: 'Multi-dimensioned byte array treated as single-dimensioned: ' , aVARDESC printString! !
+
 !External.Field class categoriesForMethods!
 printArrayField:length:on:!generating!private! !
 printArrayField:type:on:!generating!private! !
@@ -1084,6 +1104,7 @@ fieldType
 printDefaultValue: aVARIANT on: aPuttableStream 
 	self assert: [aVARIANT vt == self vt].
 	aVARIANT value printOn: aPuttableStream significantFigures: 8! !
+
 !External.FLOAT class categoriesForMethods!
 fieldType!constants!private! !
 printDefaultValue:on:!helpers!private! !
@@ -1115,6 +1136,7 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 			aPuttableStream
 				space;
 				display: #new]! !
+
 !External.Handle class categoriesForMethods!
 fieldType!constants!development!private! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
@@ -1127,6 +1149,7 @@ fieldType
 	other structures."
 
 	^Int16Field! !
+
 !External.Int16 class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1138,6 +1161,7 @@ fieldType
 	other structures."
 
 	^Int32Field! !
+
 !External.Int32 class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1149,6 +1173,7 @@ fieldType
 	other structures."
 
 	^Int64Field! !
+
 !External.Int64 class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1160,6 +1185,7 @@ fieldType
 	other structures."
 
 	^Int8Field! !
+
 !External.Int8 class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1168,6 +1194,7 @@ fieldType!constants!private! !
 
 fieldType
 	^self subclassResponsibility! !
+
 !External.IntegerBytes class categoriesForMethods!
 fieldType!constants!development!private! !
 !
@@ -1179,6 +1206,7 @@ fieldType
 	other structures."
 
 	^IntPtrField! !
+
 !External.IntPtr class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1191,6 +1219,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		print: self asPoint! !
+
 !External.POINT categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -1202,6 +1231,7 @@ fieldType
 
 pointerFieldType
 	^PointerArrayPointerField! !
+
 !External.PointerArray class categoriesForMethods!
 fieldType!private! !
 pointerFieldType!private! !
@@ -1233,6 +1263,7 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 				ifFalse: [elemType])
 		length: arrayDesc elementCount
 		on: aCodeGenerationContext! !
+
 !External.PointerArrayField class categoriesForMethods!
 printVariable:type:indirections:on:!private! !
 !
@@ -1243,6 +1274,7 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 	"Private - Generate a structure field definition message onto the specified <puttableStream> for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the specified number of <integer> indirections."
 
 	self printTypedField: aClass on: aCodeGenerationContext! !
+
 !External.PointerField class categoriesForMethods!
 printVariable:type:indirections:on:!private! !
 !
@@ -1371,6 +1403,7 @@ unspecifiedParameterValue
 	^COM.VARIANT new
 		vt: self vt;
 		yourself! !
+
 !External.Structure class categoriesForMethods!
 elementType:!constants!private! !
 fieldType!constants!private! !
@@ -1391,6 +1424,7 @@ fieldType
 
 pointerFieldType
 	^StructureArrayPointerField! !
+
 !External.StructureArray class categoriesForMethods!
 fieldType!private! !
 pointerFieldType!private! !
@@ -1415,6 +1449,7 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aCodeGenerati
 		printArrayField: aVARDESC
 		type: elemclassdesc key
 		on: aCodeGenerationContext! !
+
 !External.StructureArrayField class categoriesForMethods!
 printVariable:type:indirections:on:!private! !
 !
@@ -1431,6 +1466,7 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 		printArrayField: aVARDESC
 		type: aClass
 		on: aCodeGenerationContext! !
+
 !External.StructureArrayPointerField class categoriesForMethods!
 printVariable:type:indirections:on:!private! !
 !
@@ -1441,6 +1477,7 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 	"Private - Generate a structure field definition message onto the specified <CodeGenerationContext> for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the specified number of <integer> indirections."
 
 	self printTypedField: aClass on: aCodeGenerationContext! !
+
 !External.StructureField class categoriesForMethods!
 printVariable:type:indirections:on:!private! !
 !
@@ -1452,6 +1489,7 @@ fieldType
 	other structures."
 
 	^UInt16Field! !
+
 !External.UInt16 class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1463,6 +1501,7 @@ fieldType
 	other structures."
 
 	^UInt32Field! !
+
 !External.UInt32 class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1474,6 +1513,7 @@ fieldType
 	other structures."
 
 	^UInt32Field! !
+
 !External.UInt32Bytes class categoriesForMethods!
 fieldType!constants!development!private! !
 !
@@ -1485,6 +1525,7 @@ fieldType
 	other structures."
 
 	^UInt64Field! !
+
 !External.UInt64 class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1496,6 +1537,7 @@ fieldType
 	other structures."
 
 	^UInt64Field! !
+
 !External.UInt64Bytes class categoriesForMethods!
 fieldType!constants!development!private! !
 !
@@ -1507,6 +1549,7 @@ fieldType
 	structures."
 
 	^UInt8Field! !
+
 !External.UInt8 class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1518,6 +1561,7 @@ fieldType
 	other structures."
 
 	^UIntPtrField! !
+
 !External.UIntPtr class categoriesForMethods!
 fieldType!constants!private! !
 !
@@ -1529,6 +1573,7 @@ fieldType
 	other structures."
 
 	^UIntPtrField! !
+
 !External.UIntPtrBytes class categoriesForMethods!
 fieldType!constants!development!private! !
 !
@@ -1546,6 +1591,7 @@ pointerFieldType
 	one indirection."
 
 	^LPVOIDField! !
+
 !External.VOID class categoriesForMethods!
 fieldType!constants!private! !
 pointerFieldType!constants!private! !
@@ -1557,6 +1603,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^Interface icon! !
+
 !OS.COM class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1567,6 +1614,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^IDispatch icon! !
+
 !OS.COM.AbstractDispatchImplementation class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1582,6 +1630,7 @@ printFieldsOn: aStream
 				print: self tdesc;
 				space].
 	^super printFieldsOn: aStream! !
+
 !OS.COM.AbstractELEMDESC categoriesForMethods!
 printFieldsOn:!printing!private! !
 !
@@ -1595,6 +1644,7 @@ icon
 	^##((TextTileIcon text: $\x2394 fontName: 'Consolas')
 		textcolor: Color navy;
 		yourself)! !
+
 !OS.COM.AbstractInterfaceFunction class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1912,6 +1962,7 @@ reinventBadSelector: aSequencedReadableCollection member: aMemberDesc
 						with: unique).
 			{primary} , aSequencedReadableCollection allButFirst]
 		ifFalse: [aSequencedReadableCollection]! !
+
 !OS.COM.APIInfoAnalyzer categoriesForMethods!
 areWrappersRequired!private!testing! !
 compileMethodWrapper:!private! !
@@ -1997,6 +2048,7 @@ unspecifiedParameterValue
 	^VARIANT new
 		vt: self vt;
 		yourself! !
+
 !OS.COM.BSTR class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 printDefaultValue:on:!helpers!private! !
@@ -2012,6 +2064,7 @@ fieldType
 
 pointerFieldType
 	^PointerField! !
+
 !OS.COM.CountedArray class categoriesForMethods!
 fieldType!constants!private! !
 pointerFieldType!constants!private! !
@@ -2027,6 +2080,7 @@ printOn: aStream
 		nextPut: $(.
 	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream print: self value].
 	aStream nextPut: $)! !
+
 !OS.COM.CURRENCY categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -2041,6 +2095,7 @@ newInstanceAspect: aSymbol class: aspectClass
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass number: aSymbol! !
+
 !OS.COM.CURRENCY class categoriesForMethods!
 mustWrapOptionalArgument:!private!testing! !
 newInstanceAspect:class:!adapters!private! !
@@ -2078,6 +2133,7 @@ idlAttributes
 							attr nextPutAll: $)]].
 			attrs nextPut: attr contents].
 	^attrs grabContents! !
+
 !OS.COM.CUSTDATA categoriesForMethods!
 idlAttributes!accessing!public! !
 !
@@ -2095,6 +2151,7 @@ printIDLOn: target
 	self varValue printIDLOn: target.
 	target nextPut: $).
 ! !
+
 !OS.COM.CUSTDATAITEM categoriesForMethods!
 printIDLOn:!printing-IDL!private! !
 !
@@ -2110,6 +2167,7 @@ newInstanceAspect: aSymbol class: aspectClass
 printDefaultValue: aVARIANT on: aPuttableStream
 	self assert: [aVARIANT vt == VT_DATE or: [aVARIANT vt == VT_R8]].
 	aVARIANT double displayOn: aPuttableStream! !
+
 !OS.COM.DATE class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 printDefaultValue:on:!helpers!private! !
@@ -2125,6 +2183,7 @@ printOn: aStream
 		nextPut: $(.
 	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream print: self value].
 	aStream nextPut: $)! !
+
 !OS.COM.DECIMAL categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -2136,6 +2195,7 @@ idlAttributes
 	from the receiver."
 
 	^self paramdesc idlAttributes , self getCustData idlAttributes! !
+
 !OS.COM.ELEMDESC categoriesForMethods!
 idlAttributes!printing-IDL!private! !
 !
@@ -2269,6 +2329,7 @@ reinventBadVarNames: aSequencedReadableCollection
 			"We obviously can't use a duplicate argument name"
 			badNames add: arg].
 	^aSequencedReadableCollection! !
+
 !OS.COM.FUNCDESC categoriesForMethods!
 buildMethodName!private! !
 displayOn:!printing!public! !
@@ -2338,6 +2399,7 @@ publishedAspects
 		ifFalse: 
 			[(self typeInfoIfNone: []) ifNotNil: [:ti | ti buildPublishedAspects: aspects forObject: self]].
 	^aspects! !
+
 !OS.COM.IDispatch categoriesForMethods!
 alternateInspectorClass!constants!public! !
 aspectDisplayOn:!private! !
@@ -2515,6 +2577,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !OS.COM.IDispatch class categoriesForMethods!
 example1!examples!public! !
 example2!examples!public! !
@@ -2549,6 +2612,7 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 
 printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
 	(anELEMDESC hasDefaultValue ifTrue: [anELEMDESC defaultValue value]) displayOn: aPuttableStream! !
+
 !OS.COM.Interface class categoriesForMethods!
 icon!constants!public! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
@@ -3268,6 +3332,7 @@ reservedSelectors
 	^self isDispatchable 
 		ifTrue: [self class reservedDispSelectors]
 		ifFalse: [self class reservedUnkSelectors]! !
+
 !OS.COM.InterfaceTypeAnalyzer categoriesForMethods!
 areWrappersRequired!private!testing! !
 autoGenPropertiesCategories!constants!private! !
@@ -3375,6 +3440,7 @@ reservedUnkSelectors
 						addAll: self optimizedSelectors;
 						yourself].
 	^ReservedUnkSelectors! !
+
 !OS.COM.InterfaceTypeAnalyzer class categoriesForMethods!
 icon!constants!public! !
 optimizedSelectors!constants!public! !
@@ -3397,6 +3463,7 @@ printOn: aStream
 		ifTrue: [aStream display: 'NULL']
 		ifFalse: [aStream print: (self nameOfID: MEMBERID_NIL)].
 	aStream nextPut: $)! !
+
 !OS.COM.ITypeInfo categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -3413,6 +3480,7 @@ printOn: aStream
 		ifTrue: [aStream display: 'NULL']
 		ifFalse: [aStream print: (self nameAt: 0 ifAbsent: ['<anon>'])].
 	aStream nextPut: $)! !
+
 !OS.COM.ITypeLib categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -3453,6 +3521,7 @@ printIDLOn: target indent: tabs
 	"Print the IDL description of the receiver on the <puttableStream>, target."
 
 	^self subclassResponsibility! !
+
 !OS.COM.MemberDesc categoriesForMethods!
 idlAttributes!printing-IDL!private! !
 idlAttributesAndId!accessing!private! !
@@ -3471,6 +3540,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect multilineString: #printIDL);
 		yourself! !
+
 !OS.COM.MemberDesc class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3500,6 +3570,7 @@ idlAttributes
 	^answer grabContents
 
 ! !
+
 !OS.COM.PARAMDESC categoriesForMethods!
 idlAttributes!accessing!private! !
 !
@@ -3517,6 +3588,7 @@ publishedAspects
 			[self getValidFields
 				do: [:each | aspects add: ((self getField: each) newAspect: each class: AXRecordAspect)]].
 	^aspects! !
+
 !OS.COM.Record categoriesForMethods!
 publishedAspects!accessing!public! !
 !
@@ -3541,6 +3613,7 @@ printOn: aStream
 						nextPutAll: '..';
 						print: (self upperBound: d);
 						nextPut: $]]]! !
+
 !OS.COM.SAFEARRAY categoriesForMethods!
 printOn:!printing!private! !
 !
@@ -3570,6 +3643,7 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 			aPuttableStream
 				space;
 				display: #newPointer]! !
+
 !OS.COM.SAFEARRAY class categoriesForMethods!
 fieldType!constants!private! !
 pointerFieldType!constants!private! !
@@ -3834,6 +3908,7 @@ printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aB
 	stream
 		nextPutAll: ' offset: ';
 		print: anInteger + aVARDESC oInst! !
+
 !OS.COM.StructureTypeAnalyzer categoriesForMethods!
 conformsToRequiredProtocols:!private!testing! !
 determineNewBase:forExistingWrapper:!private! !
@@ -3867,6 +3942,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect sequenceableCollection: #members) beReadOnly;
 		yourself! !
+
 !OS.COM.StructureTypeAnalyzer class categoriesForMethods!
 icon!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -3922,6 +3998,7 @@ printIDLOn: target indent: tabs
 	(self printIDLAttributesOn: target indent: -1)
 		ifTrue: [tabs > 0 ifTrue: [target crtab: tabs] ifFalse: [target space]].
 	self printIDLBodyOn: target indent: tabs! !
+
 !OS.COM.TKindAliasAnalyzer categoriesForMethods!
 generateWrapper!private! !
 idlAttributes!printing-IDL!private! !
@@ -3992,6 +4069,7 @@ printIDLBodyOn: target indent: tabs
 		tab: tabs;
 		nextPutAll: '};';
 		cr! !
+
 !OS.COM.TKindCoclassAnalyzer categoriesForMethods!
 generateWrapper!private! !
 idlAttributes!printing-IDL!private! !
@@ -4009,6 +4087,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect sequenceableCollection: #interfaces) beReadOnly;
 		yourself! !
+
 !OS.COM.TKindCoclassAnalyzer class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4461,6 +4540,7 @@ printRawPropPutBody: aMemberDesc name: anAXMethodName on: aPuttableStream
 		nextPutAll: 'value: ';
 		nextPutAll: argumentNames last;
 		cr! !
+
 !OS.COM.TKindDispatchAnalyzer categoriesForMethods!
 buildPropertyAccessorName:!private! !
 buildPropertyMutatorName:!private! !
@@ -4500,6 +4580,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect sequenceableCollection: #properties) beReadOnly;
 		yourself! !
+
 !OS.COM.TKindDispatchAnalyzer class categoriesForMethods!
 icon!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -4584,6 +4665,7 @@ printIDLOn: target indent: tabs
 
 removeOldWrappers: aClass
 	"Nothing to remove in this case"! !
+
 !OS.COM.TKindEnumAnalyzer categoriesForMethods!
 generateInstanceSide:!private! !
 generateVariableDefinition:!private! !
@@ -4605,6 +4687,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect sequenceableCollection: #constants) beReadOnly;
 		yourself! !
+
 !OS.COM.TKindEnumAnalyzer class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5056,6 +5139,7 @@ rawMethodNameForFunction: aFUNCDESC
 		keywords: (self reinventBadSelector: keywords member: aFUNCDESC)
 		argumentNames: name argumentNames
 		indices: name indices! !
+
 !OS.COM.TKindInterfaceAnalyzer categoriesForMethods!
 areWrappersRequired!private!testing! !
 functionHasReturnValue:!helpers!private! !
@@ -5253,6 +5337,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 		nextPut: $>;
 		crtab;
 		nextPutAll: '^self invalidCall: _failureCode'! !
+
 !OS.COM.TKindModuleAnalyzer categoriesForMethods!
 areWrappersRequired!private!testing! !
 generateClassFilename!private! !
@@ -5287,6 +5372,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect dictionary: #functionsByName) beReadOnly;
 		yourself! !
+
 !OS.COM.TKindModuleAnalyzer class categoriesForMethods!
 icon!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -5299,6 +5385,7 @@ idlKeyword
 	described by the receiver, e.g. dispinterface."
 
 	^'struct'! !
+
 !OS.COM.TKindRecordAnalyzer categoriesForMethods!
 idlKeyword!constants!private! !
 !
@@ -5310,6 +5397,7 @@ idlKeyword
 	described by the receiver, e.g. dispinterface."
 
 	^'union'! !
+
 !OS.COM.TKindUnionAnalyzer categoriesForMethods!
 idlKeyword!constants!private! !
 !
@@ -5329,6 +5417,7 @@ printOn: aStream
 				print: self typeInfo name]
 		ifFalse: [aStream print: self typeName].
 	aStream nextPut: $)! !
+
 !OS.COM.TYPEDESC categoriesForMethods!
 printOn:!development!printing!public! !
 !
@@ -6008,6 +6097,7 @@ You can Ignore this warning, but it is suggested that you check the location of 
 	mb buttonStyle: #abortRetryIgnore.
 	mb defaultButton: 2.
 	^mb open! !
+
 !OS.COM.TypeInfoAnalyzer categoriesForMethods!
 autoGenCategoryName!constants!private! !
 autoGenClassCommentMarker!constants!private! !
@@ -6071,6 +6161,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect multilineString: #printIDL) beReadOnly;
 		yourself! !
+
 !OS.COM.TypeInfoAnalyzer class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6341,6 +6432,7 @@ tracing: aSymbol
 	| flags |
 	flags := self generationFlags maskClear: TraceOnly.
 	self generationFlags: (flags maskSet: (self class tracingStyleMap at: aSymbol ifAbsent: 0))! !
+
 !OS.COM.TypeInfoObject categoriesForMethods!
 abortGeneration!private! !
 basicIdlAttributes!printing-IDL!private! !
@@ -6460,6 +6552,7 @@ tracingStyles
 	debugging problems with generation."
 
 	^self tracingStyleMap keys asSortedCollection! !
+
 !OS.COM.TypeInfoObject class categoriesForMethods!
 classCommentStyleMap!constants!private! !
 classCommentStyles!initializing!private! !
@@ -6482,6 +6575,7 @@ idlAttributes
 	helpfile notEmpty ifTrue: [attrs addLast: 'helpfile("' , helpfile , '")'].
 	helpcontext isZero ifFalse: [attrs addLast: ('helpcontext(%#010x)' sprintfWith: helpcontext)].
 	^attrs! !
+
 !OS.COM.TypeLibDocumentation categoriesForMethods!
 idlAttributes!printing-IDL!private! !
 !
@@ -6492,6 +6586,7 @@ icon
 	"Answers an <Icon> that can be used to represent this class"
 
 	^TypeLibraryAnalyzer icon! !
+
 !OS.COM.TypeLibDocumentation class categoriesForMethods!
 icon!constants!public! !
 !
@@ -6985,6 +7080,7 @@ variableName
 	stem := self variableNameFrom: self name.
 	(stem endsWith: 'Lib') ifFalse: [stem := stem , 'Lib'].
 	^stem asSymbol! !
+
 !OS.COM.TypeLibraryAnalyzer categoriesForMethods!
 addAlias:forType:!accessing!public! !
 addClassToPackage:!helpers!private! !
@@ -7298,6 +7394,7 @@ typeLibRegistrations
 										guidString: g
 										versionString: v)]]].
 	^list asSortedCollection! !
+
 !OS.COM.TypeLibraryAnalyzer class categoriesForMethods!
 example1!examples!must strip!public! !
 example2!examples!public! !
@@ -7328,6 +7425,7 @@ printOn: aStream
 		nextPut: $(.
 	self printIDLOn: aStream indent: -1.
 	aStream nextPut: $)! !
+
 !OS.COM.VARDESC categoriesForMethods!
 printIDLOn:indent:!printing-IDL!public! !
 printOn:!printing!public! !
@@ -7386,6 +7484,7 @@ printOn: aPuttableStream
 				nextPutAll: ': ';
 				print: self value].
 	aPuttableStream nextPut: $)! !
+
 !OS.COM.VARIANT categoriesForMethods!
 debugPrintOn:!printing!public! !
 printIDLOn:!printing-IDL!public! !
@@ -7455,6 +7554,7 @@ printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
 			aPuttableStream
 				space;
 				display: #unspecified]! !
+
 !OS.COM.VARIANT class categoriesForMethods!
 example1!examples!public! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
@@ -7472,6 +7572,7 @@ printOn: aStream
 			aStream nextPutAll: (self value	
 								ifTrue: ['VARIANT_TRUE']
 								ifFalse: ['VARIANT_FALSE'])]! !
+
 !OS.COM.VARIANT_BOOL categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -7483,6 +7584,7 @@ newInstanceAspect: aSymbol class: aspectClass
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass boolean: aSymbol! !
+
 !OS.COM.VARIANT_BOOL class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -7494,6 +7596,7 @@ fieldType
 	other structures."
 
 	^Int32Field! !
+
 !OS.HRESULT class categoriesForMethods!
 fieldType!constants!private! !
 !

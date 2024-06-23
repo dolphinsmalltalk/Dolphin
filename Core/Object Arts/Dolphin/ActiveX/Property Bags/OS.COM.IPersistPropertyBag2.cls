@@ -7,13 +7,17 @@ OS.COM.IPersistPropertyBag
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.IPersistPropertyBag2 guid: (OS.COM.IID fromString: '{22f55881-280b-11d0-a8a9-00a0c90c2004}')!
+
 OS.COM.IPersistPropertyBag2 comment: '`OS.COM.IPersistPropertyBag2` is a wrapper class for the COM interface ''OCIDL.IPersistPropertyBag2'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !OS.COM.IPersistPropertyBag2 categoriesForClass!COM-Interfaces! !
+
 !OS.COM.IPersistPropertyBag2 methodsFor!
 
 IsDirty
@@ -24,6 +28,7 @@ IsDirty
 
 	<virtual stdcall: hresult 8>
 	^self invalidCall: _failureCode! !
+
 !OS.COM.IPersistPropertyBag2 categoriesForMethods!
 IsDirty!**auto generated**!COM Interfaces-IPersistPropertyBag2!private! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 		defineFunction: #IsDirty
 			returnType: 'int32'
 ! !
+
 !OS.COM.IPersistPropertyBag2 class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

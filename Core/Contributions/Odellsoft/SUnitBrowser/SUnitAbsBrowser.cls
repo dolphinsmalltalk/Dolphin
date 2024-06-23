@@ -5,10 +5,15 @@ SmalltalkToolShell subclass: #SUnitAbsBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitAbsBrowser guid: (GUID fromString: '{06e4ebda-12c8-4e54-9880-e09eba8bc764}')!
+
 SUnitAbsBrowser isAbstract: true!
+
 SUnitAbsBrowser comment: ''!
+
 !SUnitAbsBrowser categoriesForClass!Unclassified! !
+
 !SUnitAbsBrowser methodsFor!
 
 addToCommandRoute: route
@@ -247,6 +252,7 @@ testCaseSelectionChanged
 useDisplayNames
 
 	self model toggleUseDisplayNames! !
+
 !SUnitAbsBrowser categoriesForMethods!
 addToCommandRoute:!commands!private! !
 callbackResetList!model callbacks!private! !
@@ -324,6 +330,7 @@ useDisplayNames
 useDisplayNames: aBoolean
 
 	^self  defaultModelClass useDisplayNames: aBoolean! !
+
 !SUnitAbsBrowser class categoriesForMethods!
 defaultOptionFlags!constants!options!private! !
 icon!constants!public! !

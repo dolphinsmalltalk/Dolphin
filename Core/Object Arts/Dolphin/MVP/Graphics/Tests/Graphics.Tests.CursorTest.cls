@@ -7,8 +7,11 @@ Graphics.Tests.ImageTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.CursorTest guid: (Core.GUID fromString: '{84acad1d-2783-48fc-a42a-94c73d6885ac}')!
+
 Graphics.Tests.CursorTest comment: ''!
+
 !Graphics.Tests.CursorTest methodsFor!
 
 expectedImageExtent
@@ -145,6 +148,7 @@ testStlConvertFromVersion3_system
 	self assert: rehydrated initializer isLoadShared.
 	self assert: rehydrated handle equals: comparand handle.
 	self assert: rehydrated extent equals: Cursor defaultExtent! !
+
 !Graphics.Tests.CursorTest categoriesForMethods!
 expectedImageExtent!constants!private! !
 imageFile!constants!private! !

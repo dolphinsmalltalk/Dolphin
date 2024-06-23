@@ -7,9 +7,13 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.WriterTest guid: (Core.GUID fromString: '{c786d815-b405-4113-a350-3ee3370c7879}')!
+
 STON.Tests.WriterTest comment: ''!
+
 !STON.Tests.WriterTest categoriesForClass!STON-Tests-Writer! !
+
 !STON.Tests.WriterTest methodsFor!
 
 serialize: anObject
@@ -409,6 +413,7 @@ testUserNil
 	| user |
 	user := STONTestUser new.
 	self assert: (self serialize: user) equals: 'TestUser{#enabled:true}'! !
+
 !STON.Tests.WriterTest categoriesForMethods!
 serialize:!private! !
 serializeAsciiOnly:!private! !

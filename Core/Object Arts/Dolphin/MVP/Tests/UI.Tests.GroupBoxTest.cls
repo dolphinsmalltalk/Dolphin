@@ -7,8 +7,11 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.GroupBoxTest guid: (Core.GUID fromString: '{beb204cd-8c17-44a4-8305-c23345382e1e}')!
+
 UI.Tests.GroupBoxTest comment: ''!
+
 !UI.Tests.GroupBoxTest methodsFor!
 
 classToTest
@@ -20,6 +23,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	view := self view.
 	self assert: view isTransparent.
 	self assert: ({ Color default. Color transparent } includes: self view backcolor)! !
+
 !UI.Tests.GroupBoxTest categoriesForMethods!
 classToTest!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
@@ -46,6 +50,7 @@ resource_Default_view_D7
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.GroupBox) 34 14 nil nil 34 2 8 1140850695 65 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903885040 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 642 301 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 21 8 0 0 110 0 0 0] 8 #() 642 193 193 nil 27)! !
+
 !UI.Tests.GroupBoxTest class categoriesForMethods!
 resource_Default_view_D6!public!resources-views! !
 resource_Default_view_D7!public!resources-views! !

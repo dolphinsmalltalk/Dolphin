@@ -7,7 +7,9 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.SortAlgorithm guid: (Core.GUID fromString: '{5bafb298-56ce-415c-a401-5d05f084e240}')!
+
 Core.SortAlgorithm comment: '`SortAlgorithm` is a class of policy objects that implement sort algorithms. A `SortAlgorithm` is responsible for defining the order of elements (i..e. it implements or holds the comparison predicate, or sort block), and for performing the sorting of a requested range of indexable instance variables of some other object, typically a `SortedCollection`, although in fact `SortAlgorithm`s can be used to sort the indexable variables of any object (see `Array>>#sort:`). 
 
 SortAlgorithm itself implements the default sorting algorithm using Introsort. Introsort is a modified Quicksort that switches to Heapsort when it detects that quicksort is going quadratic. The sort-order relationship is fixed and always uses the #<= message to compare elements. 
@@ -18,7 +20,9 @@ No one sort algorithm is best in all cases; the traditional Smalltalk sort algor
 
 If choosing a default sorting algorithm for Smalltalk today, as opposed to in the 1970s, the memory usage would not be such a significant issue, and Mergesort might be a better choice than Quicksort. Fortunately in Dolphin one has the flexibility to choose the sorting algorithm to suit the task: If sorting random data, use Quicksort; if the data is known to be mostly sorted, Insertion sort is (perhaps surprisingly) the algorithm of choice; if the data is sorted and one needs to reverse the sort order, avoid Quicksort because this is one of the cases for which it will perform very poorly, Heapsort or Mergesort are good choices in this case; for lists in a UI Mergesort is preferable because it is stable, as well as having no worse cases that can result in significant pauses when inverting the column sort order in a list view. You can even implement your own custom sorting algorithms - for example if you know you will be sorting strings, then a radix sort will beat the pants off any comparison based sorting algorithm. To squeeze the last ounce of speed from your sorting you can also implement a custom sorting algorithm in order to inline the comparison predicate, indeed `SortAlgorithm` is an example of this that uses #<= to compare elements in order to emulate the default SortedCollection sort block, or perhaps to implement some new sorting algorithm you want to try.
 '!
+
 !Core.SortAlgorithm categoriesForClass!Kernel-Objects! !
+
 !Core.SortAlgorithm methodsFor!
 
 compare: operand1 with: operand2 
@@ -196,6 +200,7 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^[:a :b | a <= b]! !
+
 !Core.SortAlgorithm categoriesForMethods!
 compare:with:!comparing!public! !
 copyWithSortBlock:!copying!private! !
@@ -224,6 +229,7 @@ newSortBlock: aDyadicValuable
 
 pluggableEquivalentClass
 	^IntrosortAlgorithm! !
+
 !Core.SortAlgorithm class categoriesForMethods!
 default!instance creation!public! !
 defaultSort:!instance creation!public! !

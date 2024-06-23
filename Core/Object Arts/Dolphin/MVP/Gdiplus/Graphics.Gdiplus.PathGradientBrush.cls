@@ -7,8 +7,11 @@ Graphics.Gdiplus.GradientBrush
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.PathGradientBrush guid: (Core.GUID fromString: '{c8f38622-766b-11d7-b609-00e0987e8081}')!
+
 Graphics.Gdiplus.PathGradientBrush comment: 'A path gradient brush paints a color gradient in which the color changes from a center point outward to a boundary that is defined by a closed curve or path. The color gradient has one color at the center point and one or multiple colors at the boundary. '!
+
 !Graphics.Gdiplus.PathGradientBrush methodsFor!
 
 centerColor
@@ -79,6 +82,7 @@ surroundColors: aSequenceOfColor
 	"Set the colors that appear on the receiver's boundaries. The colours are applied in sequenced to the point's on the receiver's path. If there are insufficient colours, then the final colour is applied to all remaining points. In effect this means that a single colour can be applied to all points by specifying a single-colour sequence."
 
 	initializer surroundColors: self handle set: aSequenceOfColor! !
+
 !Graphics.Gdiplus.PathGradientBrush categoriesForMethods!
 centerColor!accessing!public! !
 centerColor:!accessing!public! !
@@ -118,6 +122,7 @@ points: points wrapMode: aWrapModeConstant
 	wrap mode specified by aWrapModeConstant."
 
 	^self fromInitializer: (PathGradientBrushInitializer points: points wrapMode: aWrapModeConstant)! !
+
 !Graphics.Gdiplus.PathGradientBrush class categoriesForMethods!
 path:!instance creation!public! !
 path:wrapMode:!instance creation!public! !

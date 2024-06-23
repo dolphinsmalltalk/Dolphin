@@ -81,6 +81,7 @@ Core.Dictionary
 								#stringArray -> 16r7
 							})
 		}!
+
 OS.RegKeyAbstract
 	variableSubclass: #'OS.RegKey'
 	instanceVariableNames: ''
@@ -88,6 +89,7 @@ OS.RegKeyAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.RegKeyAbstract
 	variableSubclass: #'OS.RegKeyValues'
 	instanceVariableNames: ''
@@ -95,6 +97,7 @@ OS.RegKeyAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.Structure
 	subclass: #'OS.REGKEYINFO'
 	instanceVariableNames: ''
@@ -125,6 +128,7 @@ writeToRegistry: aRegistryWriter name: aString
 					each isAtomic not]])
 		ifTrue: [aRegistryWriter stringArrayAt: aString put: self]
 		ifFalse: [aRegistryWriter writeCollection: self at: aString]! !
+
 !Core.Array categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -135,6 +139,7 @@ writeToRegistry: aRegistryWriter name: aString
 	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
 	aRegistryWriter binaryAt: aString put: self! !
+
 !Core.ByteArray categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -154,6 +159,7 @@ writeToRegistry: aRegistryWriter name: aString
 						bytesAt: aString
 						put: self asByteArray
 						as: self class]]! !
+
 !Core.LargeInteger categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -168,6 +174,7 @@ writeToRegistry: aRegistryWriter name: aString
 	(VMConstants.IsWin64 and: [self isInt32 not])
 		ifTrue: [aRegistryWriter qwordAt: aString put: self]
 		ifFalse: [aRegistryWriter dwordAt: aString put: self]! !
+
 !Core.SmallInteger categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -178,6 +185,7 @@ writeToRegistry: aRegistryWriter name: aString
 	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
 	aRegistryWriter stringAt: aString put: self! !
+
 !Core.String categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -188,6 +196,7 @@ writeToRegistry: aRegistryWriter name: aString
 	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
 	aRegistryWriter noneAtPut: aString! !
+
 !Core.UndefinedObject categoriesForMethods!
 writeToRegistry:name:!public! !
 !
@@ -377,6 +386,7 @@ regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType
 
 	<stdcall: errno RegSetValueExW handle lpwstr dword dword lpvoid dword>
 	^self invalidCall: _failureCode! !
+
 !OS.AdvApiLibrary categoriesForMethods!
 regCloseKey:!public!win32 functions-registry! !
 regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !

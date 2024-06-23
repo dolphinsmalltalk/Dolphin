@@ -16,7 +16,9 @@ External.Structure
 			'_OffsetOf_wVersion' -> 16r0.
 			'_WSADATA_Size' -> 16r190
 		}!
+
 OS.WSADATA guid: (Core.GUID fromString: '{ef5075d3-312c-49e0-b590-98987a18d0d2}')!
+
 OS.WSADATA comment: '<WSADATA> is an <ExternalStructure> class to wrap the struct ''Win32.WSADATA'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -36,7 +38,9 @@ struct tagWSADATA {
 	[readonly, helpstring("A pointer to vendor-specific information. This member should be ignored for Windows Sockets version 2 and later.")] void* lpVendorInfo;
 } WSADATA;
 '!
+
 !OS.WSADATA categoriesForClass!Win32-Structs! !
+
 !OS.WSADATA methodsFor!
 
 iMaxSockets
@@ -73,6 +77,7 @@ wVersion
 	"Answer the <Integer> value of the receiver's 'wVersion' field."
 
 	^bytes uint16AtOffset: _OffsetOf_wVersion! !
+
 !OS.WSADATA categoriesForMethods!
 iMaxSockets!**compiled accessors**!public! !
 iMaxUdpDg!**compiled accessors**!public! !
@@ -117,6 +122,7 @@ defineFields
 
 getFieldNames
 	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
+
 !OS.WSADATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

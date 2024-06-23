@@ -27,9 +27,13 @@ OS.SizedStructure
 			'MNS_NOCHECK' -> 16r80000000.
 			'MNS_NOTIFYBYPOS' -> 16r8000000
 		}!
+
 OS.MENUINFO guid: (Core.GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
+
 OS.MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
+
 !OS.MENUINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.MENUINFO methodsFor!
 
 cyMax
@@ -78,6 +82,7 @@ maskIn: anInteger
 style: anInteger
 	bytes uint32AtOffset: _OffsetOf_dwStyle put: anInteger.
 	self maskIn: MIM_STYLE! !
+
 !OS.MENUINFO categoriesForMethods!
 cyMax!**compiled accessors**!public! !
 cyMax:!**compiled accessors**!public! !
@@ -124,6 +129,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
+
 !OS.MENUINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

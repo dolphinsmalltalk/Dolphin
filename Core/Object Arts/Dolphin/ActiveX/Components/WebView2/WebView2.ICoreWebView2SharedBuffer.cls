@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2SharedBuffer guid: (OS.COM.IID fromString: '{b747a495-0c6f-449e-97b8-2f81e9d6ab43}')!
+
 WebView2.ICoreWebView2SharedBuffer isEgressOnly: true!
+
 WebView2.ICoreWebView2SharedBuffer comment: '`ICoreWebView2SharedBuffer` is a wrapper class for the COM interface ''WebView2.ICoreWebView2SharedBuffer'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -40,7 +43,9 @@ interface ICoreWebView2SharedBuffer : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2SharedBuffer categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2SharedBuffer methodsFor!
 
 buffer
@@ -123,6 +128,7 @@ size
 	answer := UInt64Bytes new.
 	self get_Size: answer.
 	^answer asInteger! !
+
 !WebView2.ICoreWebView2SharedBuffer categoriesForMethods!
 buffer!properties!public! !
 Close!**auto generated**!COM Interfaces-ICoreWebView2SharedBuffer!public! !
@@ -153,6 +159,7 @@ defineFunctions
 			argumentTypes: 'handle*';
 		defineFunction: #Close
 ! !
+
 !WebView2.ICoreWebView2SharedBuffer class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

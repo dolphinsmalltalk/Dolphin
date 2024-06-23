@@ -7,9 +7,13 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.StructurePointer guid: (Core.GUID fromString: '{e3b2fb6a-4ea0-48f6-bd97-5f65c176fb00}')!
+
 External.StructurePointer comment: ''!
+
 !External.StructurePointer categoriesForClass!External-Data-Structured! !
+
 !External.StructurePointer methodsFor!
 
 elementClass
@@ -26,6 +30,7 @@ value
 	"Answer the receiver's value field as a Smalltalk object."
 
 	^self elementClass fromAddress: bytes! !
+
 !External.StructurePointer categoriesForMethods!
 elementClass!accessing!private! !
 elementClass:!accessing!private! !
@@ -67,6 +72,7 @@ newNull: pointerClass elementClass: elementClass
 		initializeAtAddress: pointerClass new;
 		elementClass: elementClass;
 		yourself! !
+
 !External.StructurePointer class categoriesForMethods!
 byteSize!accessing!public! !
 elementClass:!instance creation!public! !

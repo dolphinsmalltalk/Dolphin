@@ -7,9 +7,13 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.AbstractTEXTRANGE guid: (Core.GUID fromString: '{a8261391-02ae-4fd9-a6e8-044fd70e6f94}')!
+
 OS.AbstractTEXTRANGE isNonInstantiable: true!
+
 OS.AbstractTEXTRANGE comment: ''!
+
 !OS.AbstractTEXTRANGE methodsFor!
 
 cpMax
@@ -66,6 +70,7 @@ text: buffer
 	Note that buffer should have been allocated from the fixed heap."
 
 	self lpstrText: (text := buffer)! !
+
 !OS.AbstractTEXTRANGE categoriesForMethods!
 cpMax!accessing!public! !
 cpMax:!accessing!public! !
@@ -102,6 +107,7 @@ from: startInteger to: stopInteger type: aStringClass
 
 getFieldNames
 	^#(#chrg #lpstrText)! !
+
 !OS.AbstractTEXTRANGE class categoriesForMethods!
 from:to:text:!instance creation!public! !
 from:to:type:!instance creation!public! !

@@ -7,7 +7,9 @@ ADODB.Field20
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB.Field guid: (OS.COM.IID fromString: '{00001569-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB.Field comment: '`Field` is a wrapper class for the COM interface ''ADODB.Field'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +34,9 @@ interface Field : Field20
 };
 ```
 '!
+
 !ADODB.Field categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB.Field methodsFor!
 
 get_Status: pFStatus
@@ -51,6 +55,7 @@ status
 	answer := Int32 new.
 	self get_Status: answer.
 	^answer asObject! !
+
 !ADODB.Field categoriesForMethods!
 get_Status:!**auto generated**!COM Interfaces-Field!private! !
 status!**auto generated**!properties!public! !
@@ -66,6 +71,7 @@ defineFunctions
 		defineFunction: #get_Status:
 			argumentTypes: 'sdword*'
 ! !
+
 !ADODB.Field class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!private! !
 !

@@ -7,9 +7,13 @@ Tools.AbstractClassHierarchyModel
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.ClassHierarchyModel guid: (Core.GUID fromString: '{87b4c673-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.ClassHierarchyModel comment: 'ClassHierarchyModel implements a <treeModel> representing the hierarchy (or a subset of it) of <Class>es in the system.'!
+
 !Tools.ClassHierarchyModel categoriesForClass!MVP-Models! !
+
 !Tools.ClassHierarchyModel methodsFor!
 
 defaultGetChildrenBlock
@@ -30,6 +34,7 @@ onClassUpdated: aClass
 
 	aClass isMeta ifFalse: [self move: aClass asChildOf: aClass superclass].
 	self refresh: aClass ifAbsent: []! !
+
 !Tools.ClassHierarchyModel categoriesForMethods!
 defaultGetChildrenBlock!initializing!private! !
 defaultGetParentBlock!initializing!private! !
@@ -44,6 +49,7 @@ withAllClasses
 	"Answer an instance of the receiver on the entire class hiearchy"
 
 	^self withRoots: Smalltalk allRoots! !
+
 !Tools.ClassHierarchyModel class categoriesForMethods!
 withAllClasses!instance creation!public! !
 !

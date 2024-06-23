@@ -7,14 +7,18 @@ Database.DBAbstractStatement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBStatement guid: (Core.GUID fromString: '{87b4c477-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Database.DBStatement comment: 'A DBStatement is used to represent an SQL statement to be executed by a <DBConnection>.
 
 In general one does not DBStatements explicitly but rather by the use of DBConnection>>exec: and DBConnection>>query:. For pre-prepared statements DBConnection>>prepare: can be used to answer an instance of <DBParameterizedStatement> which can later be parameterized and executed.
 
 Instance Variables:
 	sqlString		<String>. The SQL statement.'!
+
 !Database.DBStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBStatement methodsFor!
 
 defaultCursorType
@@ -57,6 +61,7 @@ sqlString: aString
 	or lazily by examing the result set) has no effect."
 
 	sqlString := aString! !
+
 !Database.DBStatement categoriesForMethods!
 defaultCursorType!constants!public! !
 exec:!operations!public! !

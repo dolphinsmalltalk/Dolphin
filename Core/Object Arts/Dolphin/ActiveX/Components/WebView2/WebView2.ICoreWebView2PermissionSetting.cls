@@ -10,8 +10,11 @@ WebView2.ICoreWebView2Interface
 			'PermissionNames'
 				-> #('Microphone' 'Camera' 'Geolocation' 'Notifications' 'OtherSensors' 'ClipboardRead' 'MultipleAutomaticDownloads' 'FileReadWrite' 'Autoplay' 'LocalFonts' 'MidiSystemExclusiveMessages' 'WindowManagement')
 		}!
+
 WebView2.ICoreWebView2PermissionSetting guid: (OS.COM.IID fromString: '{792b6eca-5576-421c-9119-74ebb3a4ffb3}')!
+
 WebView2.ICoreWebView2PermissionSetting isEgressOnly: true!
+
 WebView2.ICoreWebView2PermissionSetting comment: '`ICoreWebView2PermissionSetting` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionSetting'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -38,7 +41,9 @@ interface ICoreWebView2PermissionSetting : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2PermissionSetting categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2PermissionSetting methodsFor!
 
 get_PermissionKind: value
@@ -105,6 +110,7 @@ permissionState
 
 printableProperties
 	^#(#permissionName #permissionOrigin #permissionState)! !
+
 !WebView2.ICoreWebView2PermissionSetting categoriesForMethods!
 get_PermissionKind:!**auto generated**!COM Interfaces-ICoreWebView2PermissionSetting!private! !
 get_PermissionOrigin:!**auto generated**!COM Interfaces-ICoreWebView2PermissionSetting!private! !
@@ -130,6 +136,7 @@ defineFunctions
 		defineFunction: #get_PermissionState:
 			argumentTypes: 'int32*'
 ! !
+
 !WebView2.ICoreWebView2PermissionSetting class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

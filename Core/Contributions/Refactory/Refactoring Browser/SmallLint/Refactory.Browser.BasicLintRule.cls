@@ -7,7 +7,9 @@ Refactory.Browser.LintRule
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.BasicLintRule guid: (Core.GUID fromString: '{b3fa342a-eaee-404e-b9a5-c8bc9276f559}')!
+
 Refactory.Browser.BasicLintRule comment: 'BasicLintRule represents a check on the code.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	result	<Object>	some object that represents the results found (it must understand openEditor, isEmpty, problemCount, and copyEmpty). Most of the time, this is a BrowserEnvironment object.
 
 '!
+
 !Refactory.Browser.BasicLintRule categoriesForClass!Refactory-Lint! !
+
 !Refactory.Browser.BasicLintRule methodsFor!
 
 defaultResultClass
@@ -66,6 +70,7 @@ resultClass: aClass
 
 viewResults
 	^self perform: openSymbol! !
+
 !Refactory.Browser.BasicLintRule categoriesForMethods!
 defaultResultClass!constants!private! !
 filteredResult!accessing!public! !
@@ -117,6 +122,7 @@ storeFiltersOn: aStream
 	aStream
 		tab;
 		nextPutAll: 'yourself))'! !
+
 !Refactory.Browser.BasicLintRule class categoriesForMethods!
 addFilter:for:!accessing!public! !
 filterDictionary!accessing!public! !

@@ -7,8 +7,11 @@ Graphics.Gdiplus.GraphicsInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.GraphicsFromHDCInitializer guid: (Core.GUID fromString: '{83cb0a86-604f-48a0-9336-619cfce00e47}')!
+
 Graphics.Gdiplus.GraphicsFromHDCInitializer comment: ''!
+
 !Graphics.Gdiplus.GraphicsFromHDCInitializer methodsFor!
 
 basicCreateHandle
@@ -25,6 +28,7 @@ basicCreateHandle
 	gpHandle := Handle new.
 	Gdip gdipCreateFromHDC: surface asParameter graphics: gpHandle.
 	^gpHandle! !
+
 !Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
 !
@@ -35,6 +39,7 @@ canvas: aCanvas
 	"Creates a Graphics object that is associated with a specified device context."
 
 	^self new surface: aCanvas! !
+
 !Graphics.Gdiplus.GraphicsFromHDCInitializer class categoriesForMethods!
 canvas:!instance creation!public! !
 !

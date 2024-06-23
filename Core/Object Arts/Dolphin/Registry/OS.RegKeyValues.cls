@@ -7,11 +7,15 @@ OS.RegKeyAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.RegKeyValues guid: (Core.GUID fromString: '{87b4c536-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.RegKeyValues comment: '`RegKeyValues` is the class of objects which represent the dictionary of named values under a particular key in  the Windows Registration Database.
 
 `RegKeyValues` implements the `<abstractDictionary>` protocol mapping value names to dictionary keys and the registry values to dictionary values.'!
+
 !OS.RegKeyValues categoriesForClass!Collections-Unordered!System-Support! !
+
 !OS.RegKeyValues methodsFor!
 
 associationAt: aString ifAbsent: aNiladicValuable
@@ -137,6 +141,7 @@ subValues
 	"Answer an <abstractDictionary> of sub-values in the receiver (a RegKeyValues)."
 
 	^self! !
+
 !OS.RegKeyValues categoriesForMethods!
 associationAt:ifAbsent:!accessing!public! !
 at:ifAbsent:!accessing!public! !
@@ -159,6 +164,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
+
 !OS.RegKeyValues class categoriesForMethods!
 icon!constants!public! !
 !

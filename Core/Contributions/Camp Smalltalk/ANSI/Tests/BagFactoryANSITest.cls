@@ -5,9 +5,13 @@ MainTestCase subclass: #BagFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BagFactoryANSITest guid: (GUID fromString: '{6ac712b4-66ac-454e-b274-1195e33c664e}')!
+
 BagFactoryANSITest comment: ''!
+
 !BagFactoryANSITest categoriesForClass!Unclassified! !
+
 !BagFactoryANSITest methodsFor!
 
 canonicalObject
@@ -43,6 +47,7 @@ testXwithXwithXwithX
 testXwithXwithXwithXwithX
 	" <Bag factory>#with:with:with:with: "
 	#'Collection'.! !
+
 !BagFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

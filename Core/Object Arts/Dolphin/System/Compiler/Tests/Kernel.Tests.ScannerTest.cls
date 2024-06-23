@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.Tests.ScannerTest guid: (Core.GUID fromString: '{f7b5ab2e-148e-4a76-acbc-60ae422b54ef}')!
+
 Kernel.Tests.ScannerTest comment: ''!
+
 !Kernel.Tests.ScannerTest methodsFor!
 
 assertToken: aStToken isChar: aCharacter
@@ -349,6 +352,7 @@ testSymbolScanning
 			self assert: token sourceInterval equals: (1 to: stop).
 			self deny: subject atEnd].
 	'#--'! !
+
 !Kernel.Tests.ScannerTest categoriesForMethods!
 assertToken:isChar:!helpers!private! !
 scan:tokenClass:valueClass:!helpers!private! !

@@ -24,7 +24,9 @@ Graphics.Gdiplus.GpStructure
 			'_OffsetOf_x' -> 16r18.
 			'_OffsetOf_y' -> 16r1C
 		}!
+
 Graphics.Gdiplus.MetafileHeader guid: (Core.GUID fromString: '{83583420-dbfc-415f-ab1b-93e52a2206ef}')!
+
 Graphics.Gdiplus.MetafileHeader comment: '<GpMetafileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpMetafileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -51,6 +53,7 @@ struct tagGpMetafileHeader {
 	int LogicalDpiY;
 } GpMetafileHeader;
 '!
+
 !Graphics.Gdiplus.MetafileHeader methodsFor!
 
 DpiX
@@ -210,6 +213,7 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_y put: anInteger! !
+
 !Graphics.Gdiplus.MetafileHeader categoriesForMethods!
 DpiX!**compiled accessors**!public! !
 DpiX:!**compiled accessors**!public! !
@@ -324,6 +328,7 @@ defineFields
 
 getFieldNames
 	^#(#type #size #Version #EmfPlusFlags #DpiX #DpiY #x #y #width #height #EmfHeader #WmfHeader #EmfPlusHeaderSize #LogicalDpiX #LogicalDpiY)! !
+
 !Graphics.Gdiplus.MetafileHeader class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

@@ -7,8 +7,11 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Image guid: (Core.GUID fromString: '{87b4c635-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Image isNonInstantiable: true!
+
 Graphics.Image comment: 'Image is the class of <GraphicsTools>s that represent pictures which can be drawn onto the display (or other device).
 
 Instance Variables:
@@ -17,7 +20,9 @@ Instance Variables:
 	instanceHandle	<ExternalLibrary> (usually <ExternalResourceLibrary) represent the module from which the image was loaded.
 
 '!
+
 !Graphics.Image categoriesForClass!Graphics-Tools! !
+
 !Graphics.Image methodsFor!
 
 = anObject
@@ -186,6 +191,7 @@ setInitializer: anImageInitializer
 	self initialize.
 	initializer := anImageInitializer.
 	^self! !
+
 !Graphics.Image categoriesForMethods!
 =!comparing!public! !
 addToImageList:mask:!public!testing! !
@@ -401,6 +407,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^4! !
+
 !Graphics.Image class categoriesForMethods!
 defaultCreationExtent!constants!private! !
 defaultExtent!private! !

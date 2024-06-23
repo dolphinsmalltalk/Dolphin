@@ -23,7 +23,9 @@ External.Structure
 			'_OffsetOf_dwForwardProto' -> 16r18.
 			'_OffsetOf_dwForwardType' -> 16r14
 		}!
+
 OS.MIB_IPFORWARDROW guid: (Core.GUID fromString: '{4e46d963-9a91-4e1a-b1eb-a9597b841a59}')!
+
 OS.MIB_IPFORWARDROW comment: '<MIB_IPFORWARDROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -50,7 +52,9 @@ struct tagMIB_IPFORWARDROW {
 	unsigned long dwForwardMetric5;
 } MIB_IPFORWARDROW;
 '!
+
 !OS.MIB_IPFORWARDROW categoriesForClass!Win32-Structs! !
+
 !OS.MIB_IPFORWARDROW methodsFor!
 
 dwForwardAge
@@ -122,6 +126,7 @@ dwForwardType
 	"Answer the <Integer> value of the receiver's 'dwForwardType' field."
 
 	^bytes uint32AtOffset: _OffsetOf_dwForwardType! !
+
 !OS.MIB_IPFORWARDROW categoriesForMethods!
 dwForwardAge!**compiled accessors**!public! !
 dwForwardDest!**compiled accessors**!public! !
@@ -214,6 +219,7 @@ defineFields
 
 getFieldNames
 	^#(#dwForwardDest #dwForwardMask #dwForwardPolicy #dwForwardNextHop #dwForwardIfIndex #dwForwardType #dwForwardProto #dwForwardAge #dwForwardNextHopAS #dwForwardMetric1 #dwForwardMetric2 #dwForwardMetric3 #dwForwardMetric4 #dwForwardMetric5)! !
+
 !OS.MIB_IPFORWARDROW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !

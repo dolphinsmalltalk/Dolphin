@@ -7,8 +7,11 @@ External.POINTArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 External.POINTLArray guid: (Core.GUID fromString: '{7870a66a-14c6-4a6c-9953-6114f3fc1662}')!
+
 External.POINTLArray comment: ''!
+
 !External.POINTLArray methodsFor!
 
 uncheckedAt: anInteger
@@ -26,6 +29,7 @@ uncheckedAt: anInteger put: aPoint
 	| offset |
 	offset := anInteger - 1 bitShift: 3.
 	^(bytes int32AtOffset: offset put: aPoint x) @ (bytes int32AtOffset: offset + 4 put: aPoint y)! !
+
 !External.POINTLArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
@@ -37,6 +41,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^POINTL! !
+
 !External.POINTLArray class categoriesForMethods!
 elementClass!constants!public! !
 !

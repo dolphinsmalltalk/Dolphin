@@ -7,10 +7,15 @@ Refactory.Browser.CompositeRefactoryChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RenameVariableChange guid: (Core.GUID fromString: '{e500a4e5-c686-4c27-903e-02242b8aa5f6}')!
+
 Refactory.Browser.RenameVariableChange isNonInstantiable: true!
+
 Refactory.Browser.RenameVariableChange comment: ''!
+
 !Refactory.Browser.RenameVariableChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.RenameVariableChange methodsFor!
 
 = aRenameVariableChange
@@ -73,6 +78,7 @@ printOn: aStream
 
 renameVariable
 	^self subclassResponsibility! !
+
 !Refactory.Browser.RenameVariableChange categoriesForMethods!
 =!comparing!public! !
 changeClass!accessing!public! !
@@ -100,6 +106,7 @@ rename: oldName to: newName in: aClass
 		newName: newName;
 		changeClass: aClass;
 		yourself! !
+
 !Refactory.Browser.RenameVariableChange class categoriesForMethods!
 rename:to:in:!instance creation!public! !
 !

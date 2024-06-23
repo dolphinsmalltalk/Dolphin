@@ -7,9 +7,13 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.InvalidInstallationError guid: (Core.GUID fromString: '{089355c5-e178-4599-a5b0-18d7bebd8acf}')!
+
 Tools.InvalidInstallationError comment: ''!
+
 !Tools.InvalidInstallationError categoriesForClass!Kernel-Exception Handling! !
+
 !Tools.InvalidInstallationError methodsFor!
 
 _descriptionFormat
@@ -17,6 +21,7 @@ _descriptionFormat
 
 	^'This copy of Dolphin Smalltalk has not been installed correctly; please re-install from the original source medium.'
 ! !
+
 !Tools.InvalidInstallationError categoriesForMethods!
 _descriptionFormat!displaying!public! !
 !

@@ -7,9 +7,13 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.SmalllintContext guid: (Core.GUID fromString: '{3cc8c7db-8970-4652-bff7-519cda9ca376}')!
+
 Refactory.Browser.SmalllintContext comment: ''!
+
 !Refactory.Browser.SmalllintContext categoriesForClass!Refactory-Lint! !
+
 !Refactory.Browser.SmalllintContext methodsFor!
 
 addImplementationSpecificLiterals
@@ -166,6 +170,7 @@ superMessages
 
 uses: anObject 
 	^self literals includes: anObject! !
+
 !Refactory.Browser.SmalllintContext categoriesForMethods!
 addImplementationSpecificLiterals!private! !
 buildParseTree!helpers!private! !
@@ -207,6 +212,7 @@ new
 
 newNoCache
 	^self basicNew! !
+
 !Refactory.Browser.SmalllintContext class categoriesForMethods!
 new!instance creation!public! !
 newNoCache!instance creation!public! !

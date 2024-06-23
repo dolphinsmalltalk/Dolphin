@@ -5,9 +5,13 @@ MainTestCase subclass: #OrderedCollectionFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OrderedCollectionFactoryANSITest guid: (GUID fromString: '{c0090cd9-2ca2-4b48-855b-d60ca0406ef1}')!
+
 OrderedCollectionFactoryANSITest comment: ''!
+
 !OrderedCollectionFactoryANSITest categoriesForClass!Unclassified! !
+
 !OrderedCollectionFactoryANSITest methodsFor!
 
 canonicalObject
@@ -44,6 +48,7 @@ testXwithXwithXwithX
 testXwithXwithXwithXwithX
 	" <OrderedCollection factory>#with:with:with:with: "
 	#'Collection'.! !
+
 !OrderedCollectionFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

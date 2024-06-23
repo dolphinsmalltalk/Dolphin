@@ -7,10 +7,15 @@ Refactory.Browser.ClassModificationChange
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassAttributeChange guid: (Core.GUID fromString: '{adabd533-923e-41d1-bee0-9cd1062d9a8e}')!
+
 Refactory.Browser.ClassAttributeChange isNonInstantiable: true!
+
 Refactory.Browser.ClassAttributeChange comment: ''!
+
 !Refactory.Browser.ClassAttributeChange categoriesForClass!Refactory-Change Objects! !
+
 !Refactory.Browser.ClassAttributeChange methodsFor!
 
 afterText
@@ -40,6 +45,7 @@ printOn: aStream
 	details className: classReference.
 	self mutateClassDetails: details.
 	self emitAttributeOf: details with: (self sourceFilerClass on: aStream)! !
+
 !Refactory.Browser.ClassAttributeChange categoriesForMethods!
 afterText!printing!public! !
 beforeText!printing!public! !

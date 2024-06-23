@@ -7,7 +7,9 @@ Core.ArithmeticValue
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Point guid: (Core.GUID fromString: '{87b4c658-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.Point comment: 'A Point represents an x-y pair of numbers usually indicating a point on a two-dimensional Cartesian coordinate plane. Points are often used to designate the location of pixels within a Bitmap or on the display screen. By Smalltalk convention, x increases to the right and y down, consistent with the layout of text on a page and with pixels in Windows'' bitmaps. This "left-handed" coordinate system is the convention for Points used within the standard Smalltalk image (in classes such as Rectangle) but there is nothing in the Point class itself that prohibits the implied use of a "right-handed" coordinate system in which y increases in the upward direction.
 
 A Point is typically created using the binary message @ to a Number:
@@ -19,7 +21,9 @@ Arithmetic operations can be carried out between two Points or between a Point a
 (150 @ 200) + (50 @ 50) "Addition of Points"
 (150 @ 200) + 100 "Addition of scalar"
 (150 @ 200) * 3 "Scaling"'!
+
 !Graphics.Point categoriesForClass!Graphics-Geometry! !
+
 !Graphics.Point methodsFor!
 
 - anArithmeticValue
@@ -302,6 +306,7 @@ y: aNumber
 	"Set the receiver's y coordinate"
 
 	y := aNumber! !
+
 !Graphics.Point categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -386,6 +391,7 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^Zero! !
+
 !Graphics.Point class categoriesForMethods!
 initialize!class initialization!development!public! !
 new!instance creation!public! !

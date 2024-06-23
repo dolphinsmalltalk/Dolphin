@@ -157,6 +157,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Refactory.Browser.RBAbstractCondition'
 	instanceVariableNames: 'errorMacro'
@@ -164,6 +165,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Refactory.Browser.RBMethod'
 	instanceVariableNames: 'class compiledMethod source selector parseTree hasSourceIntervals package'
@@ -171,6 +173,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Refactory.Browser.RBMethodName'
 	instanceVariableNames: 'selector arguments'
@@ -178,6 +181,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Refactory.Browser.Refactoring'
 	instanceVariableNames: 'model options'
@@ -185,6 +189,7 @@ Core.Object
 	imports: #(#{Kernel})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Refactory.Browser.RefactoringManager'
 	instanceVariableNames: 'refactorings'
@@ -192,6 +197,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Object
 	subclass: #'Refactory.Browser.RefactoryTyper'
 	instanceVariableNames: 'model class variableTypes bestGuesses variableMessages backpointers methodName selectorLookup'
@@ -199,6 +205,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Error
 	subclass: #'Refactory.Browser.RefactoringError'
 	instanceVariableNames: 'refactoring'
@@ -206,6 +213,7 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.VariableBinding
 	subclass: #'Refactory.Browser.RBVariableBinding'
 	instanceVariableNames: 'realBinding'
@@ -213,6 +221,7 @@ Kernel.VariableBinding
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Core.Model
 	subclass: #'Refactory.Browser.RBModel'
 	instanceVariableNames: 'changes environment rootClasses implementorsCache sendersCache rootNamespace smalltalkNamespace selectorsCache'
@@ -220,6 +229,7 @@ Core.Model
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ParseNodeVisitor
 	subclass: #'Refactory.Browser.RBReadBeforeWrittenTester'
 	instanceVariableNames: 'read checkNewTemps scopeStack'
@@ -227,6 +237,7 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StaticVariableBinder
 	subclass: #'Refactory.Browser.RBVariableAnalyser'
 	instanceVariableNames: ''
@@ -234,6 +245,7 @@ Kernel.StaticVariableBinder
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBAbstractClass
 	subclass: #'Refactory.Browser.RBClass'
 	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports categoryNames comment environment binding instanceSpec'
@@ -241,6 +253,7 @@ Refactory.Browser.RBAbstractClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBAbstractClass
 	subclass: #'Refactory.Browser.RBMetaclass'
 	instanceVariableNames: 'instanceClass'
@@ -248,6 +261,7 @@ Refactory.Browser.RBAbstractClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBClass
 	subclass: #'Refactory.Browser.RBNamespaceClass'
 	instanceVariableNames: ''
@@ -255,6 +269,7 @@ Refactory.Browser.RBClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBNamespaceClass
 	subclass: #'Refactory.Browser.RBRootNamespace'
 	instanceVariableNames: ''
@@ -262,6 +277,7 @@ Refactory.Browser.RBNamespaceClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBNamespaceClass
 	subclass: #'Refactory.Browser.RBSmalltalkNamespace'
 	instanceVariableNames: ''
@@ -269,6 +285,7 @@ Refactory.Browser.RBNamespaceClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBAbstractCondition
 	subclass: #'Refactory.Browser.RBCondition'
 	instanceVariableNames: 'block type errorBlock'
@@ -276,6 +293,7 @@ Refactory.Browser.RBAbstractCondition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBAbstractCondition
 	subclass: #'Refactory.Browser.RBConjunctiveCondition'
 	instanceVariableNames: 'left right failed'
@@ -283,6 +301,7 @@ Refactory.Browser.RBAbstractCondition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBAbstractCondition
 	subclass: #'Refactory.Browser.RBEmptyCondition'
 	instanceVariableNames: ''
@@ -290,6 +309,7 @@ Refactory.Browser.RBAbstractCondition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBAbstractCondition
 	subclass: #'Refactory.Browser.RBNegationCondition'
 	instanceVariableNames: 'condition'
@@ -297,6 +317,7 @@ Refactory.Browser.RBAbstractCondition
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.AbstractVariablesRefactoring'
 	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters privateClassVarReaders privateClassVarWriters toClasses ignore'
@@ -304,6 +325,7 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.AddClassRefactoring'
 	instanceVariableNames: 'details subclasses'
@@ -311,6 +333,7 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.ClassRefactoring'
 	instanceVariableNames: 'className'
@@ -318,6 +341,7 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.ExpandImportsRefactoring'
 	instanceVariableNames: 'imports fromClass parseTree toClasses isExpanded'
@@ -325,6 +349,7 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.MethodRefactoring'
 	instanceVariableNames: 'class'
@@ -332,6 +357,7 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.RemoveClassRefactoring'
 	instanceVariableNames: 'classNames'
@@ -339,6 +365,7 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.SplitClassRefactoring'
 	instanceVariableNames: 'class instanceVariables newClassName referenceVariableName newClass'
@@ -346,6 +373,7 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.VariableRefactoring'
 	instanceVariableNames: 'class variableName'
@@ -353,6 +381,7 @@ Refactory.Browser.Refactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassRefactoring
 	subclass: #'Refactory.Browser.ChildrenToSiblingsRefactoring'
 	instanceVariableNames: 'parent subclasses'
@@ -360,6 +389,7 @@ Refactory.Browser.ClassRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassRefactoring
 	subclass: #'Refactory.Browser.ClassImportsRefactoring'
 	instanceVariableNames: 'class import'
@@ -367,6 +397,7 @@ Refactory.Browser.ClassRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassRefactoring
 	subclass: #'Refactory.Browser.ClassNameToBindingReferenceRefactoring'
 	instanceVariableNames: 'class unqualifiedName'
@@ -374,6 +405,7 @@ Refactory.Browser.ClassRefactoring
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassRefactoring
 	subclass: #'Refactory.Browser.RenameClassRefactoring'
 	instanceVariableNames: 'newName class newClassReference oldUnqualified classBinding'
@@ -381,6 +413,7 @@ Refactory.Browser.ClassRefactoring
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassImportsRefactoring
 	subclass: #'Refactory.Browser.AddImportRefactoring'
 	instanceVariableNames: ''
@@ -388,6 +421,7 @@ Refactory.Browser.ClassImportsRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ClassImportsRefactoring
 	subclass: #'Refactory.Browser.RemoveImportRefactoring'
 	instanceVariableNames: ''
@@ -395,6 +429,7 @@ Refactory.Browser.ClassImportsRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.AddMethodRefactoring'
 	instanceVariableNames: 'protocols source'
@@ -402,6 +437,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.ChangeMethodNameRefactoring'
 	instanceVariableNames: 'newSelector oldSelector permutation implementors'
@@ -409,6 +445,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.ChangeStaticVariableQualificationRefactoring'
 	instanceVariableNames: 'selector sourceInterval method sourceTree node'
@@ -416,6 +453,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.ExtractMethodRefactoring'
 	instanceVariableNames: 'selector extractionInterval extractedParseTree modifiedParseTree parameters needsReturn'
@@ -423,6 +461,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.ExtractMethodToComponentRefactoring'
 	instanceVariableNames: 'selector extractionInterval extractedMethodSelector'
@@ -430,6 +469,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.ExtractToTemporaryRefactoring'
 	instanceVariableNames: 'sourceInterval selector newVariableName method'
@@ -437,6 +477,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.InlineAllSendersRefactoring'
 	instanceVariableNames: 'selector numberReplaced numberNotReplaced'
@@ -444,6 +485,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.InlineMethodRefactoring'
 	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass method'
@@ -451,6 +493,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.InlineTemporaryRefactoring'
 	instanceVariableNames: 'sourceInterval selector assignmentNode definingNode sourceTree method'
@@ -458,6 +501,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.MoveMethodRefactoring'
 	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName abstractVariables'
@@ -465,6 +509,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.MoveVariableDefinitionRefactoring'
 	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode method'
@@ -472,6 +517,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.PushDownMethodRefactoring'
 	instanceVariableNames: 'selectors'
@@ -479,6 +525,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.PushUpMethodRefactoring'
 	instanceVariableNames: 'removeDuplicates selectors'
@@ -486,6 +533,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.RemoveMethodRefactoring'
 	instanceVariableNames: 'selectors'
@@ -493,6 +541,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.RenameTemporaryRefactoring'
 	instanceVariableNames: 'selector interval oldName newName'
@@ -500,6 +549,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.TemporaryToInstanceVariableRefactoring'
 	instanceVariableNames: 'selector temporaryVariableName'
@@ -507,6 +557,7 @@ Refactory.Browser.MethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ChangeMethodNameRefactoring
 	subclass: #'Refactory.Browser.AddParameterRefactoring'
 	instanceVariableNames: 'initializer senders'
@@ -514,6 +565,7 @@ Refactory.Browser.ChangeMethodNameRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ChangeMethodNameRefactoring
 	subclass: #'Refactory.Browser.RemoveParameterRefactoring'
 	instanceVariableNames: 'parameterIndex argument'
@@ -521,6 +573,7 @@ Refactory.Browser.ChangeMethodNameRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ChangeMethodNameRefactoring
 	subclass: #'Refactory.Browser.RenameMethodRefactoring'
 	instanceVariableNames: 'hasPermutedArguments'
@@ -528,6 +581,7 @@ Refactory.Browser.ChangeMethodNameRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RemoveParameterRefactoring
 	subclass: #'Refactory.Browser.InlineParameterRefactoring'
 	instanceVariableNames: 'expressions'
@@ -535,6 +589,7 @@ Refactory.Browser.RemoveParameterRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ChangeStaticVariableQualificationRefactoring
 	subclass: #'Refactory.Browser.QualifyStaticVariablesRefactoring'
 	instanceVariableNames: ''
@@ -542,6 +597,7 @@ Refactory.Browser.ChangeStaticVariableQualificationRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.ChangeStaticVariableQualificationRefactoring
 	subclass: #'Refactory.Browser.UnqualifyStaticVariablesRefactoring'
 	instanceVariableNames: ''
@@ -549,6 +605,7 @@ Refactory.Browser.ChangeStaticVariableQualificationRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.InlineMethodRefactoring
 	subclass: #'Refactory.Browser.InlineMethodFromComponentRefactoring'
 	instanceVariableNames: ''
@@ -556,6 +613,7 @@ Refactory.Browser.InlineMethodRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.AbstractClassVariableRefactoring'
 	instanceVariableNames: 'accessorsRefactoring variableBinding'
@@ -563,6 +621,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.AbstractInstanceVariableRefactoring'
 	instanceVariableNames: 'accessorsRefactoring'
@@ -570,6 +629,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.AddClassVariableRefactoring'
 	instanceVariableNames: ''
@@ -577,6 +637,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.AddInstanceVariableRefactoring'
 	instanceVariableNames: ''
@@ -584,6 +645,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.CreateAccessorsForVariableRefactoring'
 	instanceVariableNames: 'getterMethod setterMethod classVariable needsReturn'
@@ -591,6 +653,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.ProtectInstanceVariableRefactoring'
 	instanceVariableNames: ''
@@ -598,6 +661,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.PullUpClassVariableRefactoring'
 	instanceVariableNames: ''
@@ -605,6 +669,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.PullUpInstanceVariableRefactoring'
 	instanceVariableNames: ''
@@ -612,6 +677,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.PushDownClassVariableRefactoring'
 	instanceVariableNames: 'destinationClass'
@@ -619,6 +685,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.PushDownInstanceVariableRefactoring'
 	instanceVariableNames: ''
@@ -626,6 +693,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.RemoveClassVariableRefactoring'
 	instanceVariableNames: ''
@@ -633,6 +701,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.RemoveInstanceVariableRefactoring'
 	instanceVariableNames: ''
@@ -640,6 +709,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.RenameClassVariableRefactoring'
 	instanceVariableNames: 'newName'
@@ -647,6 +717,7 @@ Refactory.Browser.VariableRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.RenameInstanceVariableRefactoring'
 	instanceVariableNames: 'newName'
@@ -668,6 +739,7 @@ hasLiteralMatching: aMonadicValuable
 			((aMonadicValuable value: each)
 				or: [each class == Array and: [each hasLiteralMatching: aMonadicValuable]]) ifTrue: [^true]].
 	^false! !
+
 !Core.Array categoriesForMethods!
 hasLiteralMatching:!private!testing! !
 !
@@ -682,6 +754,7 @@ instancesAreClasses
 
 newClassInModel: aRBModel
 	^Refactory.Browser.RBClass new model: aRBModel existing: self! !
+
 !Core.Class categoriesForMethods!
 classInModel:!public! !
 instancesAreClasses!public! !
@@ -693,6 +766,7 @@ newClassInModel:!private!refactoring! !
 rootsOfTheWorld
 	#rbFix.	"Dolphin uses #allRoots"
 	^Smalltalk allRoots! !
+
 !Core.Class class categoriesForMethods!
 rootsOfTheWorld!class hierarchy-accessing!private! !
 !
@@ -707,6 +781,7 @@ instancesAreClasses
 
 realClass
 	^self! !
+
 !Core.ClassDescription categoriesForMethods!
 classInModel:!public! !
 instancesAreClasses!public! !
@@ -720,6 +795,7 @@ classInModel: aRBModel
 
 instancesAreClasses
 	^true! !
+
 !Core.Metaclass categoriesForMethods!
 classInModel:!public! !
 instancesAreClasses!public! !
@@ -729,6 +805,7 @@ instancesAreClasses!public! !
 
 referenceInModel: aRBModel 
 	^Refactory.Browser.RBBindingReference model: aRBModel reference: self! !
+
 !Kernel.BindingReference categoriesForMethods!
 referenceInModel:!public! !
 !
@@ -744,6 +821,7 @@ hasLiteralMatching: aMonadicValuable
 			((aMonadicValuable value: literal)
 				or: [literal class == Array and: [literal hasLiteralMatching: aMonadicValuable]]) ifTrue: [^true]].
 	^false! !
+
 !Kernel.CompiledCode categoriesForMethods!
 hasLiteralMatching:!private!testing! !
 !
@@ -752,6 +830,7 @@ hasLiteralMatching:!private!testing! !
 
 newClassInModel: aRBModel
 	^Refactory.Browser.RBNamespaceClass new model: aRBModel existing: self! !
+
 !Kernel.Namespace class categoriesForMethods!
 newClassInModel:!private!refactoring! !
 !
@@ -770,6 +849,7 @@ refersToBinding: aVariableBinding
 
 refersToClass: aClass
 	^variable notNil and: [variable refersToClass: aClass]! !
+
 !Kernel.StBasicVariableNode categoriesForMethods!
 isBindingChanged!public!testing! !
 refersToBinding:!public!testing! !
@@ -791,6 +871,7 @@ refersToSymbol: aSymbol
 rewriteQualifiedReferencesWith: aMonadicValuable
 	^StLiteralArrayNode
 		contents: (self contents collect: [:each | each rewriteQualifiedReferencesWith: aMonadicValuable])! !
+
 !Kernel.StLiteralArrayNode categoriesForMethods!
 isOrContainsQualifiedReferenceMatching:!public!testing! !
 refersToClass:!public!testing! !
@@ -816,6 +897,7 @@ refersToSymbol: aSymbol
 
 rewriteQualifiedReferencesWith: aMonadicValuable
 	^self copy! !
+
 !Kernel.StLiteralNode categoriesForMethods!
 isOrContainsQualifiedReferenceMatching:!public!testing! !
 qualifiedReferencesDo:!public!testing! !
@@ -828,6 +910,7 @@ rewriteQualifiedReferencesWith:!public!transforming! !
 
 refersToSymbol: aSymbol
 	^self value refersToLiteral: aSymbol! !
+
 !Kernel.StLiteralValueNode categoriesForMethods!
 refersToSymbol:!public!testing! !
 !
@@ -845,6 +928,7 @@ refersToClass: aClass
 
 	self childrenDo: [:each | (each refersToClass: aClass) ifTrue: [^true]].
 	^false! !
+
 !Kernel.StProgramNode categoriesForMethods!
 refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
@@ -882,6 +966,7 @@ refersToClass: aClass
 
 rewriteQualifiedReferencesWith: aMonadicValuable
 	^aMonadicValuable value: self! !
+
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 copyWithName:!private!transforming! !
 isBindingChanged!public!testing! !
@@ -899,6 +984,7 @@ refersToBinding: aVariableBinding
 
 refersToClass: aClass
 	^binding notNil and: [binding refersToClass: aClass]! !
+
 !Kernel.StStaticVariable categoriesForMethods!
 refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
@@ -911,6 +997,7 @@ refersToBinding: aVariableBinding
 
 refersToClass: aClass
 	^false! !
+
 !Kernel.StVariable categoriesForMethods!
 refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
@@ -931,6 +1018,7 @@ isBindingChanged
 
 refersToClass: aRBClass
 	^false! !
+
 !Kernel.StVariableNode categoriesForMethods!
 copyWithName:!private!transforming! !
 isBindingChanged!accessing!public! !
@@ -948,6 +1036,7 @@ refersToBinding: aVariableBinding
 
 refersToClass: aClass
 	^(self isClassBinding and: [value == aClass]) or: [self environment includesEnvironment: aClass]! !
+
 !Kernel.VariableBinding categoriesForMethods!
 realBinding!accessing!public! !
 refersToBinding:!public!testing! !
@@ -961,6 +1050,7 @@ classInModel: aRBModel
 
 newClassInModel: aRBModel
 	^aRBModel rootNamespace! !
+
 !Root class categoriesForMethods!
 classInModel:!public! !
 newClassInModel:!private!refactoring! !
@@ -970,6 +1060,7 @@ newClassInModel:!private!refactoring! !
 
 newClassInModel: aRBModel
 	^Refactory.Browser.RBSmalltalkNamespace new model: aRBModel existing: self! !
+
 !Smalltalk class categoriesForMethods!
 newClassInModel:!private!refactoring! !
 !

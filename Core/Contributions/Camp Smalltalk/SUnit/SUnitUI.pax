@@ -59,6 +59,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(Graphics.TextTileIcon text: 'XP' fontName: 'Bauhaus 93')! !
+
 !XProgramming class categoriesForMethods!
 icon!constants!public! !
 !
@@ -69,6 +70,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
+
 !XProgramming.SUnit class categoriesForMethods!
 icon!constants!public! !
 !
@@ -82,6 +84,7 @@ icon
 	^##((TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
 		textcolor: Color lightSeaGreen;
 		yourself)! !
+
 !XProgramming.SUnit.TestCase class categoriesForMethods!
 icon!constants!public! !
 !
@@ -92,6 +95,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
+
 !XProgramming.SUnit.TestCaseResult class categoriesForMethods!
 icon!constants!public! !
 !
@@ -102,6 +106,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
+
 !XProgramming.SUnit.TestResource class categoriesForMethods!
 icon!constants!public! !
 !
@@ -112,6 +117,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
+
 !XProgramming.SUnit.TestResult class categoriesForMethods!
 icon!constants!public! !
 !
@@ -122,6 +128,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
+
 !XProgramming.SUnit.TestRunLogger class categoriesForMethods!
 icon!constants!public! !
 !
@@ -132,6 +139,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
+
 !XProgramming.SUnit.TestSuite class categoriesForMethods!
 icon!constants!public! !
 !

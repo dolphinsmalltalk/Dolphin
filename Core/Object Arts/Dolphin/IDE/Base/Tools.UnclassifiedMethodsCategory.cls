@@ -7,7 +7,9 @@ Tools.VirtualMethodCategory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.UnclassifiedMethodsCategory guid: (Core.GUID fromString: '{87b4c508-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Tools.UnclassifiedMethodsCategory comment: 'ReferencesCategory is a virtual method categories class which dynamically determines its membership to be those methods which are categorized only in other virtual categories, i.e. those methods which have not been specifically allocated a category.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 
 Class Variables:
 	None'!
+
 !Tools.UnclassifiedMethodsCategory categoriesForClass!System-Support! !
+
 !Tools.UnclassifiedMethodsCategory methodsFor!
 
 acceptsAdditions
@@ -59,6 +63,7 @@ methodsInBehavior: aBehavior do: aMonadicValuable
 		ifFalse: 
 			[(dict keys difference: classified) 
 				do: [:each | aMonadicValuable value: (aBehavior compiledMethodAt: each)]]! !
+
 !Tools.UnclassifiedMethodsCategory categoriesForMethods!
 acceptsAdditions!public!testing! !
 addMethodSilently:!adding!private! !
@@ -84,6 +89,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self removePseud: UnclassifiedName! !
+
 !Tools.UnclassifiedMethodsCategory class categoriesForMethods!
 initialize!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

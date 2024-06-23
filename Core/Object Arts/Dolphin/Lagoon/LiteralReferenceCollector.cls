@@ -7,8 +7,11 @@ Kernel.InstructionInterpreter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 LiteralReferenceCollector guid: (Core.GUID fromString: '{298ab962-1bef-4ec2-aef3-947eda9812d2}')!
+
 LiteralReferenceCollector comment: ''!
+
 !LiteralReferenceCollector methodsFor!
 
 countLiteralReferences
@@ -70,6 +73,7 @@ supersend: literalOffset args: argumentCount
 	"Private - Interpret a Supersend [N] with M args instruction."
 
 	self literalReferenced: literalOffset! !
+
 !LiteralReferenceCollector categoriesForMethods!
 countLiteralReferences!public! !
 lastReferenced!accessing!public! !
@@ -90,6 +94,7 @@ countLiteralReferencesIn: aCompiledMethod
 		reset;
 		interpret;
 		yourself! !
+
 !LiteralReferenceCollector class categoriesForMethods!
 countLiteralReferencesIn:!instance creation!public! !
 !

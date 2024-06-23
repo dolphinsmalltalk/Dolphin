@@ -7,10 +7,15 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.GraphicsTool guid: (Core.GUID fromString: '{87b4c48d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Graphics.GraphicsTool isNonInstantiable: true!
+
 Graphics.GraphicsTool comment: ''!
+
 !Graphics.GraphicsTool categoriesForClass!Graphics-Tools! !
+
 !Graphics.GraphicsTool methodsFor!
 
 asParameter
@@ -190,6 +195,7 @@ stbSaveOn: anSTBOutFiler
 	self isPersistent ifFalse: [self error: 'Cannot #stbSaveOn: ' , self printString].
 	anSTBOutFiler override: handle with: nil.
 	[super stbSaveOn: anSTBOutFiler] ensure: [anSTBOutFiler removeOverrideFor: handle]! !
+
 !Graphics.GraphicsTool categoriesForMethods!
 asParameter!converting!public! !
 basicFree!private!realizing/unrealizing! !
@@ -264,6 +270,7 @@ onStartup2
 	"Private - Perform system startup processing for all subclasses."
 
 	self allSubclassesDo: [:c | (c class includesSelector: #onStartup2) ifTrue: [c onStartup2]]! !
+
 !Graphics.GraphicsTool class categoriesForMethods!
 fromHandle:!instance creation!public! !
 fromOwnedHandle:!instance creation!public! !

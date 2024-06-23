@@ -14,7 +14,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_nPolys' -> 16r18.
 			'_OffsetOf_rclBounds' -> 16r8
 		}!
+
 OS.EMRPOLYPOLYLINE16 guid: (Core.GUID fromString: '{2a9bb18a-1223-4e8d-a462-82c531b52df3}')!
+
 OS.EMRPOLYPOLYLINE16 comment: '<EMRPOLYPOLYLINE16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYPOLYLINE16''.
 
 The type library contains no documentation for this struct
@@ -35,7 +37,9 @@ struct tagEMRPOLYPOLYLINE16 {
 	[helpstring("Array of points")] POINTS* apts;
 } EMRPOLYPOLYLINE16;
 '!
+
 !OS.EMRPOLYPOLYLINE16 categoriesForClass!Win32-Structs! !
+
 !OS.EMRPOLYPOLYLINE16 methodsFor!
 
 aPolyCounts
@@ -115,6 +119,7 @@ rclBounds: aRECTL
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
+
 !OS.EMRPOLYPOLYLINE16 categoriesForMethods!
 aPolyCounts!public! !
 aPolyCounts:!**compiled accessors**!public! !
@@ -173,6 +178,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYPOLYLINE16. EMR_POLYPOLYGON16}! !
+
 !OS.EMRPOLYPOLYLINE16 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

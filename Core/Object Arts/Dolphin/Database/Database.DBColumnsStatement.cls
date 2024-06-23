@@ -7,9 +7,13 @@ Database.DBSchemaStatement
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Database.DBColumnsStatement guid: (Core.GUID fromString: '{b6faef99-50db-490f-aa8c-b4483998fb14}')!
+
 Database.DBColumnsStatement comment: 'DBPrimaryKeysStatement is a specialized <DBSchemaStatement> for querying metadata about the columns of tables in a database.'!
+
 !Database.DBColumnsStatement categoriesForClass!ODBC Interface! !
+
 !Database.DBColumnsStatement methodsFor!
 
 columnName
@@ -32,6 +36,7 @@ executeStatement
 		nameLength3: SQL_NTS
 		columnName: self columnName
 		nameLength4: SQL_NTS! !
+
 !Database.DBColumnsStatement categoriesForMethods!
 columnName!accessing!public! !
 columnName:!accessing!public! !

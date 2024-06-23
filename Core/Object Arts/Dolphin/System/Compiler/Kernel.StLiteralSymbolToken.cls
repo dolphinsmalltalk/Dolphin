@@ -7,8 +7,11 @@ Kernel.StLiteralToken
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StLiteralSymbolToken guid: (Core.GUID fromString: '{c492fa20-8940-4822-a908-62f30a951c68}')!
+
 Kernel.StLiteralSymbolToken comment: ''!
+
 !Kernel.StLiteralSymbolToken methodsFor!
 
 formatOn: aStream source: aString
@@ -22,6 +25,7 @@ isLiteralSymbolToken
 
 valueClass
 	^Symbol! !
+
 !Kernel.StLiteralSymbolToken categoriesForMethods!
 formatOn:source:!public! !
 isLiteralSymbolToken!public!testing! !

@@ -13,7 +13,9 @@ OS.ENHMETARECORD
 			'_OffsetOf_nRadius' -> 16r10.
 			'_OffsetOf_ptlCenter' -> 16r8
 		}!
+
 OS.EMRANGLEARC guid: (Core.GUID fromString: '{76825af3-ec74-45d6-8539-0c31f3e069b9}')!
+
 OS.EMRANGLEARC comment: '<EMRANGLEARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRANGLEARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagEMRANGLEARC {
 	float eSweepAngle;
 } EMRANGLEARC;
 '!
+
 !OS.EMRANGLEARC categoriesForClass!Win32-Structs! !
+
 !OS.EMRANGLEARC methodsFor!
 
 eStartAngle
@@ -77,6 +81,7 @@ ptlCenter: aPOINTL
 		from: ##(_OffsetOf_ptlCenter + 1)
 		to: ##(_OffsetOf_ptlCenter + POINTL._POINTL_Size)
 		startingAt: 1! !
+
 !OS.EMRANGLEARC categoriesForMethods!
 eStartAngle!**compiled accessors**!public! !
 eStartAngle:!**compiled accessors**!public! !
@@ -131,6 +136,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ANGLEARC}! !
+
 !OS.EMRANGLEARC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

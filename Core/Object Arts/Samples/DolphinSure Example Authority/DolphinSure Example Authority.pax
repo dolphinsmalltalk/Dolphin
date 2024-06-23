@@ -41,16 +41,12 @@ DolphinSureCertificate subclass: #MyOwnCertificate
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

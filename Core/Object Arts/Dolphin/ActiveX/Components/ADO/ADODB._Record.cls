@@ -7,7 +7,9 @@ ADODB._ADO
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 ADODB._Record guid: (OS.COM.IID fromString: '{00001562-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB._Record comment: '`_Record` is a wrapper class for the COM interface ''ADODB._Record'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -102,7 +104,9 @@ interface _Record : _ADO
 };
 ```
 '!
+
 !ADODB._Record categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB._Record methodsFor!
 
 activeConnection
@@ -490,6 +494,7 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self fields! !
+
 !ADODB._Record categoriesForMethods!
 activeConnection!**auto generated**!properties!public! !
 activeConnection:!**auto generated**!properties!public! !
@@ -585,6 +590,7 @@ defineFunctions
 			argumentTypes: '_Recordset**';
 		defineFunction: #Cancel
 ! !
+
 !ADODB._Record class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!private! !

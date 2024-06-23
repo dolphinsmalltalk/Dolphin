@@ -5,9 +5,13 @@ Object subclass: #XMLNode
 	classVariableNames: 'CanonicalTable'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLNode guid: (GUID fromString: '{f5e6786e-7892-452d-a2c8-37e4dc0d3e55}')!
+
 XMLNode comment: ''!
+
 !XMLNode categoriesForClass!XML-Parser! !
+
 !XMLNode methodsFor!
 
 addContent: contentString
@@ -102,6 +106,7 @@ tagsNamed: aSymbol ifReceiverOrChildDo: aOneArgumentBlock
 	"Recurse all children"
 
 	self contentsDo: [:each | each tagsNamed: aSymbol ifReceiverDo: aOneArgumentBlock]! !
+
 !XMLNode categoriesForMethods!
 addContent:!accessing!public! !
 contentsDo:!enumerating!public! !

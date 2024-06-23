@@ -7,7 +7,9 @@ External.LPVOID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.LPBSTR guid: (Core.GUID fromString: '{8ed55b71-d72d-4df1-a211-434db718fef0}')!
+
 OS.COM.LPBSTR comment: 'LPBSTR is a class to represent pointers to BSTRs (Basic Strings). It is useful where an IDispatch method requires that a BSTR argument be passed by references, or when implement such a method as a means of returning a BSTR reference.
 
 LPBSTR implicitly converts to the referenced string when asked for its value, rather than answering the pointer value itself.
@@ -19,7 +21,9 @@ For example:
 
 Note that because BSTR is an indirection class (BSTRs are pointers to strings), it is necessary to send its instances #basicYourAddress to get the address of the object, rather than #yourAddress which will return the contained address.
 '!
+
 !OS.COM.LPBSTR categoriesForClass!External-Data-Unstructured! !
+
 !OS.COM.LPBSTR methodsFor!
 
 asString
@@ -59,6 +63,7 @@ value: aString
 	"Avoid side effect on argument if it is already a <BSTR>"
 	bstr == aString ifTrue: [bstr := bstr copy].
 	super value: bstr detach! !
+
 !OS.COM.LPBSTR categoriesForMethods!
 asString!converting!public! !
 asUtf16String!converting!public! !
@@ -80,6 +85,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
+
 !OS.COM.LPBSTR class categoriesForMethods!
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

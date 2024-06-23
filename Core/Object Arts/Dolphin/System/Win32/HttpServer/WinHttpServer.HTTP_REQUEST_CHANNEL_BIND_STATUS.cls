@@ -13,7 +13,9 @@ WinHttpServer.HttpServerStructure
 			'_OffsetOf_Flags' -> 16rC.
 			'_OffsetOf_ServiceName' -> 16r0
 		}!
+
 WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS guid: (Core.GUID fromString: '{2fc21c2a-e0c8-4c4c-a68f-e8270f8fbd2a}')!
+
 WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS comment: '`HTTP_REQUEST_CHANNEL_BIND_STATUS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +33,9 @@ struct tagHTTP_REQUEST_CHANNEL_BIND_STATUS {
 } HTTP_REQUEST_CHANNEL_BIND_STATUS;
 ```
 '!
+
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesForClass!WinHttpServer-Structs! !
+
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS methodsFor!
 
 ChannelToken
@@ -65,6 +69,7 @@ ServiceName: aHTTP_SERVICE_BINDING_BASE
 	"Set the receiver's 'ServiceName' field to the value of the argument, aHTTP_SERVICE_BINDING_BASE"
 
 	bytes uintPtrAtOffset: _OffsetOf_ServiceName put: aHTTP_SERVICE_BINDING_BASE yourAddress! !
+
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesForMethods!
 ChannelToken!**compiled accessors**!public! !
 ChannelToken:!**compiled accessors**!public! !
@@ -102,6 +107,7 @@ defineFields
 
 getFieldNames
 	^#(#ServiceName #ChannelToken #ChannelTokenSize)! !
+
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !

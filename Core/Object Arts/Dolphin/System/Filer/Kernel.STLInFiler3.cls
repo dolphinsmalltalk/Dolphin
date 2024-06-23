@@ -7,11 +7,15 @@ Kernel.STLLegacyInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.STLInFiler3 guid: (Core.GUID fromString: '{3f04c8bc-7157-48c8-9896-37f495bad391}')!
+
 Kernel.STLInFiler3 comment: '`STBInFiler3` is an `STLInFiler` for reading the STL 3 literal object serialization format.
 
 STL 3 was the original STL format introduced in Dolphin 6. There were no versions prior to 3 as the version number was synchronised with the STB version current at the time. This was partly because there was a lot of shared implementation and the object prefix encoding was the same. Not all literals were necessarily written as literals into the STL; nil appeared as the special prefix code zero (as in STB), and likewise Characters were encoded in the prefix. The same predefined objects and classes were also used, so some classes were not directly visible in the literal array source, but were hidden in the encoding (e.g. Array).'!
+
 !Kernel.STLInFiler3 categoriesForClass!System-Binary storage! !
+
 !Kernel.STLInFiler3 methodsFor!
 
 characterValue: anInteger
@@ -110,6 +114,7 @@ registerPredefinedObjects
 		register: false;
 		register: Smalltalk;
 		register: Processor! !
+
 !Kernel.STLInFiler3 categoriesForMethods!
 characterValue:!helpers!public! !
 readBytes:into:!helpers!private! !
@@ -156,6 +161,7 @@ version
 	"Private - Answer the version number of the format read by the receiver."
 
 	^3! !
+
 !Kernel.STLInFiler3 class categoriesForMethods!
 initialize!class initialization!public! !
 predefinedClasses!constants!public! !

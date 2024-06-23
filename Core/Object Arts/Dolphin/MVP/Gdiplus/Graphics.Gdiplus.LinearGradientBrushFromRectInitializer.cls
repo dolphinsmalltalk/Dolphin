@@ -10,8 +10,11 @@ Graphics.Gdiplus.LinearGradientBrushInitializer
 			'LinearGradientModeNames'
 				-> #('LinearGradientModeHorizontal' 'LinearGradientModeVertical' 'LinearGradientModeForwardDiagonal' 'LinearGradientModeBackwardDiagonal')
 		}!
+
 Graphics.Gdiplus.LinearGradientBrushFromRectInitializer guid: (Core.GUID fromString: '{e5737bca-1af2-4189-9de4-d6c506a8c20a}')!
+
 Graphics.Gdiplus.LinearGradientBrushFromRectInitializer comment: ''!
+
 !Graphics.Gdiplus.LinearGradientBrushFromRectInitializer methodsFor!
 
 = anObject
@@ -80,6 +83,7 @@ rect: aRectangle color1: startColor color2: endColor mode: aLinearGradientMode
 	mode := aLinearGradientMode.
 	wrapMode := self defaultWrapMode.
 	^self! !
+
 !Graphics.Gdiplus.LinearGradientBrushFromRectInitializer categoriesForMethods!
 =!comparing!public! !
 basicCreateHandle!private!realizing/unrealizing! !
@@ -103,6 +107,7 @@ stbConvertFrom: anSTBClassFormat
 				color2: (data at: 4)
 				mode: (data at: 5)]].
 	^super stbConvertFrom: anSTBClassFormat! !
+
 !Graphics.Gdiplus.LinearGradientBrushFromRectInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !

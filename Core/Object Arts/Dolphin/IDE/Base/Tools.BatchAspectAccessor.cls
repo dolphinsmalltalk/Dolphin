@@ -7,10 +7,15 @@ Tools.AspectAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.BatchAspectAccessor guid: (Core.GUID fromString: '{3a00a038-5f65-4669-9966-cbdf3d444a7e}')!
+
 Tools.BatchAspectAccessor isNonInstantiable: true!
+
 Tools.BatchAspectAccessor comment: ''!
+
 !Tools.BatchAspectAccessor categoriesForClass!MVP-Models! !
+
 !Tools.BatchAspectAccessor methodsFor!
 
 aspectClass
@@ -60,6 +65,7 @@ value
 
 valueIcon
 	^self icon! !
+
 !Tools.BatchAspectAccessor categoriesForMethods!
 aspectClass!accessing!public! !
 batchSize!accessing!public! !
@@ -96,6 +102,7 @@ subject: anObject keys: aSequencedReadableCollection startingAt: startInteger ba
 				startingAt: startInteger
 				batchSize: sizeInteger
 				accessorClass: self)! !
+
 !Tools.BatchAspectAccessor class categoriesForMethods!
 aspectBatchClass!public! !
 icon!constants!public! !

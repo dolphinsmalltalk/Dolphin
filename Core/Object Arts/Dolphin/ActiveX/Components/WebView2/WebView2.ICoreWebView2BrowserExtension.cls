@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2BrowserExtension guid: (OS.COM.IID fromString: '{7ef7ffa0-fac5-462c-b189-3d9edbe575da}')!
+
 WebView2.ICoreWebView2BrowserExtension isEgressOnly: true!
+
 WebView2.ICoreWebView2BrowserExtension comment: '`ICoreWebView2BrowserExtension` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BrowserExtension'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -42,7 +45,9 @@ interface ICoreWebView2BrowserExtension : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2BrowserExtension categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2BrowserExtension methodsFor!
 
 Enable: isEnabled handler: handler
@@ -135,6 +140,7 @@ removeThenDo: aMonadicValuable
 				queryInterface: ICoreWebView2BrowserExtensionRemoveCompletedHandler.
 	self Remove: handler.
 	handler free! !
+
 !WebView2.ICoreWebView2BrowserExtension categoriesForMethods!
 Enable:handler:!**auto generated**!COM Interfaces-ICoreWebView2BrowserExtension!public! !
 enable:thenDo:!async requests!public! !
@@ -167,6 +173,7 @@ defineFunctions
 		defineFunction: #Enable:handler:
 			argumentTypes: 'int32 ICoreWebView2BrowserExtensionEnableCompletedHandler*'
 ! !
+
 !WebView2.ICoreWebView2BrowserExtension class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

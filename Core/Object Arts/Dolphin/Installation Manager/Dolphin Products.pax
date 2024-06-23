@@ -31,6 +31,7 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinProduct
 	subclass: #'Tools.DolphinCoreProduct'
 	instanceVariableNames: ''
@@ -38,6 +39,7 @@ Tools.DolphinProduct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinCoreProduct
 	subclass: #'Tools.DolphinBaseProduct'
 	instanceVariableNames: ''
@@ -45,6 +47,7 @@ Tools.DolphinCoreProduct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinBaseProduct
 	subclass: #'Tools.DolphinCommunityEdition'
 	instanceVariableNames: ''
@@ -52,6 +55,7 @@ Tools.DolphinBaseProduct
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DolphinBaseProduct
 	subclass: #'Tools.DolphinProfessional'
 	instanceVariableNames: ''

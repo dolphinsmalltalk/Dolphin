@@ -12,7 +12,9 @@ External.Structure
 			'_OffsetOf_Vertex2' -> 16r4.
 			'_OffsetOf_Vertex3' -> 16r8
 		}!
+
 OS.GRADIENT_TRIANGLE guid: (Core.GUID fromString: '{55c55d30-6be7-45da-86bb-0f8bea48586a}')!
+
 OS.GRADIENT_TRIANGLE comment: '<GRADIENT_TRIANGLE> is an <ExternalStructure> class to wrap the struct ''Win32.GRADIENT_TRIANGLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +31,9 @@ struct tagGRADIENT_TRIANGLE {
 	ULONG Vertex3;
 } GRADIENT_TRIANGLE;
 '!
+
 !OS.GRADIENT_TRIANGLE categoriesForClass!Win32-Structs! !
+
 !OS.GRADIENT_TRIANGLE methodsFor!
 
 Vertex1
@@ -61,6 +65,7 @@ Vertex3: anInteger
 	"Set the receiver's 'Vertex3' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_Vertex3 put: anInteger! !
+
 !OS.GRADIENT_TRIANGLE categoriesForMethods!
 Vertex1!**compiled accessors**!public! !
 Vertex1:!**compiled accessors**!public! !
@@ -95,6 +100,7 @@ defineFields
 
 getFieldNames
 	^#(#Vertex1 #Vertex2 #Vertex3)! !
+
 !OS.GRADIENT_TRIANGLE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

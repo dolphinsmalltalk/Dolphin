@@ -13,7 +13,9 @@ External.Structure
 			'_OffsetOf_rgbReserved' -> 16r3.
 			'_RGBQUAD_Size' -> 16r4
 		}!
+
 OS.RGBQUAD guid: (Core.GUID fromString: '{87b4c60d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.RGBQUAD comment: '<RGBQUAD> is an <ExternalStructure> class to wrap the struct ''Win.RGBQUAD'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -30,7 +32,9 @@ struct tagRGBQUAD {
 	BYTE rgbReserved;
 } RGBQUAD;
 '!
+
 !OS.RGBQUAD categoriesForClass!External-Data-Structured-Win32! !
+
 !OS.RGBQUAD methodsFor!
 
 asColor
@@ -92,6 +96,7 @@ rgbRed: anInteger
 	"Set the receiver's 'rgbRed' field to the value of the argument, anInteger"
 
 	bytes uint8AtOffset: _OffsetOf_rgbRed put: anInteger! !
+
 !OS.RGBQUAD categoriesForMethods!
 asColor!converting!public! !
 blue!accessing!public! !
@@ -141,6 +146,7 @@ fromColor: aColor
 
 getFieldNames
 	^#(#rgbBlue #rgbGreen #rgbRed)! !
+
 !OS.RGBQUAD class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

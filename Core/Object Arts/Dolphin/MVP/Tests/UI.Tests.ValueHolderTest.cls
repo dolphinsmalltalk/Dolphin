@@ -7,8 +7,11 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Tests.ValueHolderTest guid: (Core.GUID fromString: '{599f6879-a7ea-4110-bc74-2bae85fbf825}')!
+
 UI.Tests.ValueHolderTest comment: ''!
+
 !UI.Tests.ValueHolderTest methodsFor!
 
 testStbConvertFromVersion0
@@ -32,6 +35,7 @@ testStbConvertFromVersion1
 	self assert: subject value equals: 'abc'.
 	self assert: (subject instVarNamed: 'settingValue') equals: false.
 	self assert: subject comparisonPolicy printString equals: 'SearchPolicy equality'! !
+
 !UI.Tests.ValueHolderTest categoriesForMethods!
 testStbConvertFromVersion0!public! !
 testStbConvertFromVersion1!public! !

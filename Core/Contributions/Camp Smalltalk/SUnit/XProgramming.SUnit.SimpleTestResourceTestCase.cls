@@ -7,9 +7,13 @@ XProgramming.SUnit.TestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 XProgramming.SUnit.SimpleTestResourceTestCase guid: (Core.GUID fromString: '{8998ffb7-787b-4da1-99fd-2f92b2c4e993}')!
+
 XProgramming.SUnit.SimpleTestResourceTestCase comment: ''!
+
 !XProgramming.SUnit.SimpleTestResourceTestCase categoriesForClass!SUnit! !
+
 !XProgramming.SUnit.SimpleTestResourceTestCase methodsFor!
 
 dummy
@@ -48,6 +52,7 @@ testResourcesCollection
 	| collection |
 	collection := self resources.
 	self assert: collection size equals: 1! !
+
 !XProgramming.SUnit.SimpleTestResourceTestCase categoriesForMethods!
 dummy!public! !
 error!public! !
@@ -65,6 +70,7 @@ resources
 	^Set new
 		add: SimpleTestResource;
 		yourself! !
+
 !XProgramming.SUnit.SimpleTestResourceTestCase class categoriesForMethods!
 resources!public! !
 !

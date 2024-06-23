@@ -7,9 +7,13 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.Tests.RBConditionTest guid: (Core.GUID fromString: '{d7c6868f-bf84-4580-b4c0-20abbdcdb10e}')!
+
 Refactory.Browser.Tests.RBConditionTest comment: ''!
+
 !Refactory.Browser.Tests.RBConditionTest categoriesForClass!Refactory-Testing! !
+
 !Refactory.Browser.Tests.RBConditionTest methodsFor!
 
 testConditions
@@ -99,6 +103,7 @@ testIsSubclassable
 	subject := RBCondition isSubclassable: Object.
 	self assert: subject check.
 	self assert: (subject errorStringFor: true) equals: 'Object is subclassable.'! !
+
 !Refactory.Browser.Tests.RBConditionTest categoriesForMethods!
 testConditions!public!tests! !
 testIsEmptyClass!public!tests! !

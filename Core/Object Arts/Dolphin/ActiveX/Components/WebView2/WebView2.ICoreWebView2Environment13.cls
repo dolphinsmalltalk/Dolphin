@@ -7,8 +7,11 @@ WebView2.ICoreWebView2Environment12
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2Environment13 guid: (OS.COM.IID fromString: '{af641f58-72b2-11ee-b962-0242ac120002}')!
+
 WebView2.ICoreWebView2Environment13 isEgressOnly: true!
+
 WebView2.ICoreWebView2Environment13 comment: '`ICoreWebView2Environment13` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment13'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +32,9 @@ interface ICoreWebView2Environment13 : ICoreWebView2Environment12
 };
 ```
 '!
+
 !WebView2.ICoreWebView2Environment13 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2Environment13 methodsFor!
 
 GetProcessExtendedInfos: handler
@@ -40,6 +45,7 @@ GetProcessExtendedInfos: handler
 
 	<virtual stdcall: hresult 26 ICoreWebView2GetProcessExtendedInfosCompletedHandler*>
 	^self invalidCall: _failureCode! !
+
 !WebView2.ICoreWebView2Environment13 categoriesForMethods!
 GetProcessExtendedInfos:!**auto generated**!COM Interfaces-ICoreWebView2Environment13!public! !
 !
@@ -54,6 +60,7 @@ defineFunctions
 		defineFunction: #GetProcessExtendedInfos:
 			argumentTypes: 'ICoreWebView2GetProcessExtendedInfosCompletedHandler*'
 ! !
+
 !WebView2.ICoreWebView2Environment13 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

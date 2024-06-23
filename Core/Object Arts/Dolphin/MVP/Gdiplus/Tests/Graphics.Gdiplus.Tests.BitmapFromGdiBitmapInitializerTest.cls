@@ -7,8 +7,11 @@ Graphics.Gdiplus.Tests.InitializerTests
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest guid: (Core.GUID fromString: '{acefb85f-8196-4e9b-b4fb-0c12068a6cad}')!
+
 Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest comment: ''!
+
 !Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest methodsFor!
 
 subjectClass
@@ -42,6 +45,7 @@ testCreateHandleFreesDC
 	"SW: note comment in GdiplusBitmap class>>fromBitmap: ... not sure if this should succeed"
 	model createHandle.
 	self assertIsNil: bitmap basicHdc! !
+
 !Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest categoriesForMethods!
 subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !

@@ -7,9 +7,13 @@ Core.MethodCategory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.DebuggerMethodCategory guid: (Core.GUID fromString: '{424b6561-1ba5-4a45-b1e3-6936f126dcd5}')!
+
 Tools.DebuggerMethodCategory comment: ''!
+
 !Tools.DebuggerMethodCategory categoriesForClass!System-Support! !
+
 !Tools.DebuggerMethodCategory methodsFor!
 
 addMethodSilently: aCompiledMethod
@@ -31,6 +35,7 @@ removeMethodSilently: aCompiledMethod
 		of: aCompiledMethod methodClass
 		maskClear: mask.
 	super removeMethodSilently: aCompiledMethod! !
+
 !Tools.DebuggerMethodCategory categoriesForMethods!
 addMethodSilently:!adding!private! !
 mask!accessing!public! !
@@ -56,6 +61,7 @@ initialize
 		at: stepOver name put: stepOver.
 	steppedThrough do: [:each | stepThrough addMethodSilently: each].
 	steppedOver do: [:each | stepOver addMethodSilently: each]! !
+
 !Tools.DebuggerMethodCategory class categoriesForMethods!
 initialize!public! !
 !

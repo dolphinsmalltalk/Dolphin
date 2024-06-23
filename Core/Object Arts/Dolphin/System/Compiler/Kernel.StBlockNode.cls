@@ -7,7 +7,9 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.StBlockNode guid: (Core.GUID fromString: '{74b8b736-f1fe-4d03-911f-c6f7f11620e8}')!
+
 Kernel.StBlockNode comment: 'StBlockNode is a parse tree node that represents a block "[...]".
 
 Instance Variables:
@@ -19,7 +21,9 @@ Instance Variables:
 	right	<Integer>	position of ]
 
 '!
+
 !Kernel.StBlockNode categoriesForClass!System-Compiler! !
+
 !Kernel.StBlockNode methodsFor!
 
 = anObject
@@ -151,6 +155,7 @@ uses: aNode
 				includes: parent selector) not 
 				or: [parent isUsed]]
 		ifFalse: [self isUsed]! !
+
 !Kernel.StBlockNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -199,6 +204,7 @@ arguments: argNodes body: sequenceNode
 
 body: sequenceNode 
 	^self arguments: #() body: sequenceNode! !
+
 !Kernel.StBlockNode class categoriesForMethods!
 arguments:body:!instance creation!public! !
 body:!instance creation!public! !

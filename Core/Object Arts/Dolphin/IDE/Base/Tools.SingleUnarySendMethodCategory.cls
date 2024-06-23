@@ -7,13 +7,17 @@ Tools.ReferencesCategory
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Tools.SingleUnarySendMethodCategory guid: (Core.GUID fromString: '{0adb321d-bb42-4acf-a21f-49b37095183a}')!
+
 Tools.SingleUnarySendMethodCategory comment: 'SingleUnarySendMethodCategory is the class of virtual method categories that dynamically determine their membership to include only those methods which are of a form where their body just sends one unary message to self, for example subclass responsibility methods such as:
 
 	blah
 		^self subclassResponsibility
 '!
+
 !Tools.SingleUnarySendMethodCategory categoriesForClass!System-Support! !
+
 !Tools.SingleUnarySendMethodCategory methodsFor!
 
 includesMethod: aCompiledMethod
@@ -22,6 +26,7 @@ includesMethod: aCompiledMethod
 	nothing else."
 
 	^aCompiledMethod isSimpleSelfSend: literal! !
+
 !Tools.SingleUnarySendMethodCategory categoriesForMethods!
 includesMethod:!public!testing! !
 !
@@ -37,6 +42,7 @@ initialize
 
 referenceSymbols
 	^#(#subclassResponsibility #shouldNotImplement)! !
+
 !Tools.SingleUnarySendMethodCategory class categoriesForMethods!
 initialize!initializing!private! !
 referenceSymbols!constants!private! !

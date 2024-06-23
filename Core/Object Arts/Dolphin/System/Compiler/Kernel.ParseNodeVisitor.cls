@@ -7,11 +7,15 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Kernel.ParseNodeVisitor guid: (Core.GUID fromString: '{8cf81be6-059c-46da-86e3-b21a6781066b}')!
+
 Kernel.ParseNodeVisitor comment: 'BRProgramNodeVisitor is an abstract visitor for the BRProgramNodes.
 
 '!
+
 !Kernel.ParseNodeVisitor categoriesForClass!Refactory-ParseTree Matching! !
+
 !Kernel.ParseNodeVisitor methodsFor!
 
 processBlock: aBlockNode
@@ -130,6 +134,7 @@ visitThisContextVariableNode: aStSelfVariableNode
 
 visitVariableNode: aVariableNode
 	^aVariableNode! !
+
 !Kernel.ParseNodeVisitor categoriesForMethods!
 processBlock:!helpers!private! !
 visitAnnotationNode:!public!visiting! !
@@ -168,6 +173,7 @@ Kernel.ParseNodeVisitor methodProtocol: #parseNodeVisitor attributes: #() select
 
 new
 	^super new initialize! !
+
 !Kernel.ParseNodeVisitor class categoriesForMethods!
 new!instance creation!public! !
 !

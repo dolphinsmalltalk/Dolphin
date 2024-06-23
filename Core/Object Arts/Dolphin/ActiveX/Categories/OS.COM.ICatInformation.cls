@@ -7,7 +7,9 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.COM.ICatInformation guid: (OS.COM.IID fromString: '{0002e013-0000-0000-c000-000000000046}')!
+
 OS.COM.ICatInformation comment: '<ICatInformation> is a wrapper class for the COM interface ''COMCAT.ICatInformation'' generated from type information in the ''OLE Component Categories Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 ICatInformation provides methods for obtaining information about the categories implemented or required by a certain class, as well as information about the categories registered on a given machine.
@@ -21,7 +23,9 @@ Class Variables:
 
 
 ICatInformation new allCategories'!
+
 !OS.COM.ICatInformation categoriesForClass!COM Category Manager!COM-Interfaces! !
+
 !OS.COM.ICatInformation methodsFor!
 
 allCategories
@@ -202,6 +206,7 @@ requiredCategoriesOfClass: rclsid
 	answer := IEnumStruct elementClass: GUID.
 	self EnumReqCategoriesOfClass: rclsid ppenumCatid: answer.
 	^Enumerable onIEnum: answer! !
+
 !OS.COM.ICatInformation categoriesForMethods!
 allCategories!enquiries!public! !
 allCategories:!enquiries!public! !
@@ -289,6 +294,7 @@ uninitialize
 	"Private -  Uninitialize the receiver as it is about to be removed from the image."
 
 	CatMan := Controls := nil.! !
+
 !OS.COM.ICatInformation class categoriesForMethods!
 clsid!constants!public! !
 controls!enquiries!public! !

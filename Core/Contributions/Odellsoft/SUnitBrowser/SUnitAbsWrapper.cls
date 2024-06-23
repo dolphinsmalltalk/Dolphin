@@ -5,9 +5,13 @@ Object subclass: #SUnitAbsWrapper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitAbsWrapper guid: (GUID fromString: '{d5b2a9f9-20ff-4e62-9b3f-5fedaa755651}')!
+
 SUnitAbsWrapper comment: ''!
+
 !SUnitAbsWrapper categoriesForClass!Unclassified! !
+
 !SUnitAbsWrapper methodsFor!
 
 icon
@@ -45,6 +49,7 @@ subject: anObject
 	"Private - Set the value of the receiver's ''subject'' instance variable to the argument, anObject."
 
 	subject := anObject! !
+
 !SUnitAbsWrapper categoriesForMethods!
 icon!accessing!constants!public! !
 model!accessing!private! !
@@ -60,6 +65,7 @@ newOn: anSUnitBrowserModel
 	^self new
 		model: anSUnitBrowserModel;
 		yourself! !
+
 !SUnitAbsWrapper class categoriesForMethods!
 newOn:!instantiating!public! !
 !

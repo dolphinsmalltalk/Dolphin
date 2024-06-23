@@ -7,7 +7,9 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.Scintilla.StylesCollectionPresenter guid: (Core.GUID fromString: '{dfa721d9-7de6-4fe7-9998-18dd7b52c0c4}')!
+
 UI.Scintilla.StylesCollectionPresenter comment: 'ScintillaStylesCollectionPresenter provides a master-detail presentation of a collection of <ScintillaTextStyle>s (e.g  those configured for a particular ScintillaView). It is composed of a <CollectionPresenter>, to present the list of styles, and a <ScintillaTextStylePresenter>, to present the detail view. A ScintillaStylesCollectionPresenter can be used to add new styles, and remove and modify existing styles, and as such is used for the #textStyles aspect of a <ScintillaView> when inspected with the Published Aspect Inspector, and also within the <ScintillaTextStylesDialog>. The latter is intended to allow for configuration of text styles in an end-user application that employs Scintilla.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	detailPresenter		<ScintillaTextStylePresenter>
 
 '!
+
 !UI.Scintilla.StylesCollectionPresenter categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !UI.Scintilla.StylesCollectionPresenter methodsFor!
 
 addItem
@@ -100,6 +104,7 @@ onValueChanged
 onViewOpened
 	super onViewOpened.
 	collectionPresenter selectionOrNil: (self model value lookup: 1)! !
+
 !UI.Scintilla.StylesCollectionPresenter categoriesForMethods!
 addItem!commands!public! !
 applyDefaultStyle!private!updating! !
@@ -141,6 +146,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 nil nil nil 32 1798 #{UI.BorderLayout} 17 11 nil nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 144 nil nil nil 5 nil nil nil 144 114 1 1 18 #{UI.StaticText} 50 16 nil 144 50 2 8 1140850944 1 224 nil nil nil 5 nil nil nil 224 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 418 321 39 224 370 #text: 50 1 8 '&Style Name:' 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 0 0 0 19 0 0 0] 8 #() 418 193 193 nil 27 nil nil nil 18 #{UI.ListView} 50 45 nil 144 50 2 8 1140936781 1025 592 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 592 nil nil 518 #{Core.Message} #displayString 8 #() nil 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 690 1 3142 5 #{UI.ListViewColumn} 8 '' 313 #left 786 #displayString 816 786 #<= 8 #() nil nil 592 nil 3 nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 3 1 976 8 'doIt' 8 '[:each | UI.Scintilla.StylesCollectionPresenter customDraw: each]' 8 #[31 105 45 17 177 106] 1094 2 #{Kernel.VariableBinding} #StylesCollectionPresenter #{UI.Scintilla.StylesCollectionPresenter} #{UI.Scintilla} 1 #customDraw: 992 7 257 nil #report 8 #() nil 133217 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 322 50 1 370 #createAt:extent: 50 2 418 1 39 418 321 685 592 514 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 19 0 0 0 160 0 0 0 105 1 0 0] 8 #() 576 nil 35 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 592 8 'list' nil 322 50 1 370 #createAt:extent: 50 2 418 1 1 418 321 723 144 514 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 0 0 0 105 1 0 0] 50 2 224 592 576 nil 27 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 1488 nil nil nil 5 nil nil nil 1488 582 1 #{UI.ResourceIdentifier} #{UI.Scintilla.TextStylePresenter} #resource_Default_view nil 322 50 1 370 #createAt:extent: 50 2 418 337 1 418 501 723 1488 514 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 168 0 0 0 0 0 0 0 162 1 0 0 105 1 0 0] 8 #() 576 nil 27 1282 #{Core.IdentityDictionary} 50 4 1488 8 'detail' 144 8 'styles' 518 #{Graphics.Rectangle} 418 1 1 418 1 1 322 50 2 370 #createAt:extent: 50 2 418 6143 21 418 837 723 32 370 #text: 50 1 8 'Text Styles' 32 514 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 161 13 0 0 115 1 0 0] 50 2 144 1488 576 nil 27)! !
+
 !UI.Scintilla.StylesCollectionPresenter class categoriesForMethods!
 customDraw:!helpers!public! !
 defaultModel!models!public! !

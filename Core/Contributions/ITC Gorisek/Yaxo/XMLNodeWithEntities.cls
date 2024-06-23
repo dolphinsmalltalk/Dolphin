@@ -5,9 +5,13 @@ XMLNode subclass: #XMLNodeWithEntities
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLNodeWithEntities guid: (GUID fromString: '{3a3489a9-1660-4041-ad01-203dc0006b3c}')!
+
 XMLNodeWithEntities comment: ''!
+
 !XMLNodeWithEntities categoriesForClass!XML-Parser! !
+
 !XMLNodeWithEntities methodsFor!
 
 addEntity: entity
@@ -42,6 +46,7 @@ printXMLOn: writer
 
 topElement
 	^self entities first value! !
+
 !XMLNodeWithEntities categoriesForMethods!
 addEntity:!accessing!public! !
 addEntity:value:!accessing!public! !

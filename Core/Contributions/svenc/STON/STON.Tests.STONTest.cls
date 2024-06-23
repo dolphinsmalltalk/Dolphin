@@ -7,9 +7,13 @@ STON.Tests.STONTestCase
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 STON.Tests.STONTest guid: (Core.GUID fromString: '{b7f68843-9e21-424e-96cd-9c4a89a45e6c}')!
+
 STON.Tests.STONTest comment: ''!
+
 !STON.Tests.STONTest categoriesForClass!STON-Tests-Facade! !
+
 !STON.Tests.STONTest methodsFor!
 
 testAssociationClass
@@ -81,6 +85,7 @@ testToString
 	| object |
 	object := STON listClass withAll: {1. 0. -1. true. false. nil}.
 	self assert: (STON toString: object) equals: '[1,0,-1,true,false,nil]'! !
+
 !STON.Tests.STONTest categoriesForMethods!
 testAssociationClass!public!tests! !
 testClassNameKey!public!tests! !

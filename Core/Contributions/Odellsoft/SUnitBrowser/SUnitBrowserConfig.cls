@@ -5,9 +5,13 @@ SUnitBrowserAbsConfig subclass: #SUnitBrowserConfig
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserConfig guid: (GUID fromString: '{fa1bbe24-e5e3-4931-bb4d-448d0401e1e1}')!
+
 SUnitBrowserConfig comment: ''!
+
 !SUnitBrowserConfig categoriesForClass!Unclassified! !
+
 !SUnitBrowserConfig methodsFor!
 
 shouldInitializeResources
@@ -65,6 +69,7 @@ toggleShowRunningStatusInList
 toggleShowStatusBackgroundColors
 
 	self showStatusBackgroundColors: self showStatusBackgroundColors not! !
+
 !SUnitBrowserConfig categoriesForMethods!
 shouldInitializeResources!configuring!public! !
 shouldInitializeResources:!configuring!public! !

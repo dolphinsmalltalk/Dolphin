@@ -7,11 +7,15 @@ OS.RegKeyAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 OS.RegKey guid: (Core.GUID fromString: '{87b4c535-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OS.RegKey comment: '`RegKey` is the class of objects which represent individual keys in the Windows Registration Database. The keys may themselves have sub-keys which are in turn represented by instances of `RegKey`. A `RegKey` is also a dictionary of registry values represented in Dolphin by instances of `RegKeyValues`.
 
 `RegKey` implements the `<abstractDictionary>` protocol as operations against its sub-keys. In order to operate on the values as if elements of a dictionary one must first acquire an instance of `RegKeyValues` using the `#subValues` message.'!
+
 !OS.RegKey categoriesForClass!System-Support! !
+
 !OS.RegKey methodsFor!
 
 associationAt: aString ifAbsent: aNiladicValuable
@@ -213,6 +217,7 @@ subValues
 				sam: sam.
 	self isRoot ifTrue: [values handle: handle].
 	^values! !
+
 !OS.RegKey categoriesForMethods!
 associationAt:ifAbsent:!accessing!public! !
 at:ifAbsent:!accessing!public! !
@@ -238,6 +243,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
+
 !OS.RegKey class categoriesForMethods!
 icon!constants!public! !
 !

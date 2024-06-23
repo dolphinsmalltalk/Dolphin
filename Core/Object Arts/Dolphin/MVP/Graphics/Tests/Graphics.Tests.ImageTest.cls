@@ -7,9 +7,13 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Graphics.Tests.ImageTest guid: (Core.GUID fromString: '{b1d5b3fb-9bac-444a-883b-3c3dfed414b1}')!
+
 Graphics.Tests.ImageTest isNonInstantiable: true!
+
 Graphics.Tests.ImageTest comment: ''!
+
 !Graphics.Tests.ImageTest methodsFor!
 
 canonicalInstance
@@ -44,6 +48,7 @@ testFromSystemIdInvalid
 	| subject |
 	subject := self subjectClass fromSystemId: 1.
 	self assert: subject handle equals: self subjectClass defaultHandle! !
+
 !Graphics.Tests.ImageTest categoriesForMethods!
 canonicalInstance!constants!private! !
 expectedImageExtent!constants!private! !

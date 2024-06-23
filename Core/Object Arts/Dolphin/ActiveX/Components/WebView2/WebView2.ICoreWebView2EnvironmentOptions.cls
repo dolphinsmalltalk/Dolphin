@@ -7,7 +7,9 @@ WebView2.ICoreWebView2Interface
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 WebView2.ICoreWebView2EnvironmentOptions guid: (OS.COM.IID fromString: '{2fde08a8-1e9a-4766-8c05-95a9ceb9d1c5}')!
+
 WebView2.ICoreWebView2EnvironmentOptions comment: '`ICoreWebView2EnvironmentOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -49,7 +51,9 @@ interface ICoreWebView2EnvironmentOptions : IUnknown
 };
 ```
 '!
+
 !WebView2.ICoreWebView2EnvironmentOptions categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !WebView2.ICoreWebView2EnvironmentOptions methodsFor!
 
 additionalBrowserArguments
@@ -185,6 +189,7 @@ targetCompatibleBrowserVersion: value
 	"Set the 'TargetCompatibleBrowserVersion' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_TargetCompatibleBrowserVersion: value asUtf16String! !
+
 !WebView2.ICoreWebView2EnvironmentOptions categoriesForMethods!
 additionalBrowserArguments!properties!public! !
 additionalBrowserArguments:!**auto generated**!properties!public! !
@@ -230,6 +235,7 @@ defineFunctions
 		defineFunction: #put_AllowSingleSignOnUsingOSPrimaryAccount:
 			argumentTypes: 'sdword'
 ! !
+
 !WebView2.ICoreWebView2EnvironmentOptions class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

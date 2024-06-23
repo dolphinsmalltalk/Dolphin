@@ -7,9 +7,13 @@ Refactory.Browser.RBNamespaceClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBRootNamespace guid: (Core.GUID fromString: '{51fd9f8c-25bd-44be-974c-b851a8e6fa3e}')!
+
 Refactory.Browser.RBRootNamespace comment: ''!
+
 !Refactory.Browser.RBRootNamespace categoriesForClass!Refactory-Model! !
+
 !Refactory.Browser.RBRootNamespace methodsFor!
 
 allClassesDo: aMonadicValuable
@@ -37,6 +41,7 @@ shortNameFor: aString
 	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. All of the receiver's variables are bindable by unqualified name from Smalltalk because Smalltalk is nested within Root."
 
 	^aString! !
+
 !Refactory.Browser.RBRootNamespace categoriesForMethods!
 allClassesDo:!enumerating!public! !
 bindingFor:!public! !

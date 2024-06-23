@@ -7,9 +7,13 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 Refactory.Browser.RBReadBeforeWrittenTester guid: (Core.GUID fromString: '{a344e3a6-5cf4-4eb9-ae6a-990cae954e18}')!
+
 Refactory.Browser.RBReadBeforeWrittenTester comment: ''!
+
 !Refactory.Browser.RBReadBeforeWrittenTester categoriesForClass!Refactory-ParseTree Matching! !
+
 !Refactory.Browser.RBReadBeforeWrittenTester methodsFor!
 
 checkNewTemps: aBoolean 
@@ -130,6 +134,7 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	self variableRead: aVariableNode! !
+
 !Refactory.Browser.RBReadBeforeWrittenTester categoriesForMethods!
 checkNewTemps:!initializing!public! !
 copyDictionary:!helpers!private! !
@@ -170,6 +175,7 @@ variablesReadBeforeWrittenIn: aParseTree
 	^(self new)
 		executeTree: aParseTree;
 		read! !
+
 !Refactory.Browser.RBReadBeforeWrittenTester class categoriesForMethods!
 isVariable:readBeforeWrittenIn:!accessing!public! !
 isVariable:writtenBeforeReadIn:!accessing!public! !

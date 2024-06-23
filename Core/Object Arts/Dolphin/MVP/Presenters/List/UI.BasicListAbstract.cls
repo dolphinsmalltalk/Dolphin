@@ -7,8 +7,11 @@ UI.ListControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
 UI.BasicListAbstract guid: (Core.GUID fromString: '{87b4c725-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 UI.BasicListAbstract isNonInstantiable: true!
+
 UI.BasicListAbstract comment: 'BasicListAbstract is an abstract class conforming to the <listView> protocol. Its concrete subclasses are implementations of the original Windows list boxes and combination boxes. All <listView>s are intended to be used in conjunction with a <listModel> holding the list items.
 
 Instance Variables:
@@ -17,7 +20,9 @@ Instance Variables:
 	lastSel		<integer> or <Array> indicating the index(es) of the last single or multiple selection.
 
 '!
+
 !UI.BasicListAbstract categoriesForClass!MVP-Views! !
+
 !UI.BasicListAbstract methodsFor!
 
 basicAdd: anObject 
@@ -255,6 +260,7 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]! !
+
 !UI.BasicListAbstract categoriesForMethods!
 basicAdd:!adding!private! !
 basicClear!private!removing! !
@@ -309,6 +315,7 @@ value: anObject
 	"Replace with `View defaultGetTextBlock`"
 	#deprecated.
 	^anObject displayString! !
+
 !UI.BasicListAbstract class categoriesForMethods!
 initialize!development!initializing!private! !
 stbConvertFromVersion10:!binary filing!private! !
