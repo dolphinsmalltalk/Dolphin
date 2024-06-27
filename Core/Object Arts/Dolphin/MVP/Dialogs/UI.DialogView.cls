@@ -397,6 +397,16 @@ templateId
 
 	^139!
 
+wmDpiChanged: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED message. This is only sent to top-level windows (e.g. ShellViews in Dolphin)
+		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word.
+		- lParam is a pointer to a RECTL providing the suggested new rectangle for the window.
+	"
+
+	super wmDpiChanged: message wParam: wParam lParam: lParam.
+	"We don't want the DefDlgProc to rescale Dolphin dialogs that are described by view resources. For these the template itself does not contain any controls, and our internal re-scaling (as used for normal shells) does the job. Dialogs that are built from a template will need to call the DefDlgProc to rescale correctly."
+	^0!
+
 wmInitDialog: message wParam: wParam lParam: lParam
 	"A WM_INITDIALOG message was sent by the dialog proc. Answer false if the focus has been set,
 	or true if leaving that to Windows.
@@ -459,6 +469,7 @@ showModalTo:!private!realizing/unrealizing! !
 showModeless:!private!realizing/unrealizing! !
 subclassWindow:!operations!private! !
 templateId!constants!private! !
+wmDpiChanged:wParam:lParam:!event handling-win32!private! !
 wmInitDialog:wParam:lParam:!event handling-win32!must not strip!public! !
 !
 

@@ -183,6 +183,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #drawFrameControl:lprc:uType:uState:)
 	#(#{OS.UserLibrary} #drawMenuBar:)
 	#(#{OS.UserLibrary} #emptyClipboard)
+	#(#{OS.UserLibrary} #enableNonClientDpiScaling:)
 	#(#{OS.UserLibrary} #endDeferWindowPos:)
 	#(#{OS.UserLibrary} #endPaint:lpPaint:)
 	#(#{OS.UserLibrary} #enumChildWindows:lpEnumFunction:lParam:)
@@ -2847,6 +2848,10 @@ emptyClipboard
 	<stdcall: bool EmptyClipboard>
 	^self invalidCall: _failureCode!
 
+enableNonClientDpiScaling: hWnd
+	<stdcall: bool EnableNonClientDpiScaling handle>
+	^self invalidCall: _failureCode!
+
 endDeferWindowPos: hWinPosInfo
 	"Invoke the EndDeferWindowPos() function of the module wrapped by the receiver.
 	Helpstring: Updates the position and size of one or more windows in a single screen-refreshing cycle
@@ -4057,6 +4062,7 @@ drawFocusRect:lprc:!public!win32 functions-painting and drawing! !
 drawFrameControl:lprc:uType:uState:!**auto generated**!public!win32 functions-painting and drawing! !
 drawMenuBar:!public!win32 functions-menu! !
 emptyClipboard!public!win32 functions-clipboard! !
+enableNonClientDpiScaling:!public!win32 functions-high DPI! !
 endDeferWindowPos:!**auto generated**!public! !
 endPaint:lpPaint:!public!win32 functions-painting and drawing! !
 enumChildWindows:lpEnumFunction:lParam:!**auto generated**!public! !
