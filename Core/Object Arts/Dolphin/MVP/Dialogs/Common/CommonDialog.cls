@@ -2,7 +2,7 @@
 
 ValueDialog subclass: #CommonDialog
 	instanceVariableNames: 'winStruct hook positioning'
-	classVariableNames: 'CreateCenteredMask'
+	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants Win32Constants'
 	classInstanceVariableNames: 'hookHandlers'!
 
