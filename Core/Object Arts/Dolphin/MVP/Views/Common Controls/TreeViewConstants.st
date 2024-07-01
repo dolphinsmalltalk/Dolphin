@@ -52,6 +52,7 @@ TreeViewConstants at: 'TVM_GETCOUNT' put: 16r1105!
 TreeViewConstants at: 'TVM_GETEXTENDEDSTYLE' put: 16r112D!
 TreeViewConstants at: 'TVM_GETIMAGELIST' put: 16r1108!
 TreeViewConstants at: 'TVM_GETINDENT' put: 16r1106!
+TreeViewConstants at: 'TVM_GETITEMHEIGHT' put: 16r111C!
 TreeViewConstants at: 'TVM_GETITEMRECT' put: 16r1104!
 TreeViewConstants at: 'TVM_GETITEMW' put: 16r113E!
 TreeViewConstants at: 'TVM_GETNEXTITEM' put: 16r110A!
@@ -60,9 +61,11 @@ TreeViewConstants at: 'TVM_HITTEST' put: 16r1111!
 TreeViewConstants at: 'TVM_INSERTITEMW' put: 16r1132!
 TreeViewConstants at: 'TVM_SELECTITEM' put: 16r110B!
 TreeViewConstants at: 'TVM_SETBKCOLOR' put: 16r111D!
+TreeViewConstants at: 'TVM_SETBORDER' put: 16r1123!
 TreeViewConstants at: 'TVM_SETEXTENDEDSTYLE' put: 16r112C!
 TreeViewConstants at: 'TVM_SETIMAGELIST' put: 16r1109!
 TreeViewConstants at: 'TVM_SETINDENT' put: 16r1107!
+TreeViewConstants at: 'TVM_SETITEMHEIGHT' put: 16r111B!
 TreeViewConstants at: 'TVM_SETITEMW' put: 16r113F!
 TreeViewConstants at: 'TVM_SETTEXTCOLOR' put: 16r111E!
 TreeViewConstants at: 'TVN_ASYNCDRAW' put: -16r1A4!
@@ -100,6 +103,8 @@ TreeViewConstants at: 'TVS_NOSCROLL' put: 16r2000!
 TreeViewConstants at: 'TVS_SHOWSELALWAYS' put: 16r20!
 TreeViewConstants at: 'TVS_SINGLEEXPAND' put: 16r400!
 TreeViewConstants at: 'TVS_TRACKSELECT' put: 16r200!
+TreeViewConstants at: 'TVSBF_XBORDER' put: 16r1!
+TreeViewConstants at: 'TVSBF_YBORDER' put: 16r2!
 TreeViewConstants at: 'TVSIL_NORMAL' put: 16r0!
 TreeViewConstants at: 'TVSIL_STATE' put: 16r2!
 TreeViewConstants shrink!

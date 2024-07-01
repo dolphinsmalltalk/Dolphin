@@ -1351,7 +1351,7 @@ Image subclass: #Bitmap
 
 Image subclass: #Icon
 	instanceVariableNames: ''
-	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
+	classVariableNames: 'Blank DefaultApplication Error Information LargestStandardSize Question StandardSizeMap Warning WinLogo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
