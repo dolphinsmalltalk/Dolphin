@@ -111,7 +111,7 @@ paintLabel: anInteger on: aCanvas in: aRectangle
 			labelRect := Rectangle center: rcItem center extent: textExtent]
 		ifFalse: 
 			[| space imageExtent |
-			imageExtent := self imageExtent.
+			imageExtent := self scaledImageExtent.
 			textOffset := imageExtent x + self imageTextGap.
 			labelRect := Rectangle center: rcItem center
 						extent: (textExtent isZero
@@ -313,7 +313,7 @@ paintVerticalLabel: anInteger on: aCanvas in: aRectangle
 			labelRect := Rectangle center: aRectangle center extent: textExtent]
 		ifFalse: 
 			[| space imagePos imageExtent |
-			imageExtent := self imageExtent.
+			imageExtent := self scaledImageExtent.
 			textOffset := imageExtent y + self imageTextGap.
 			labelRect := Rectangle center: aRectangle center
 						extent: (textExtent isZero

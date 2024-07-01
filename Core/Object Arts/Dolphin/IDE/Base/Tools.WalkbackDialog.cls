@@ -71,29 +71,40 @@ debuggable: aBoolean
 errorCreateWindowFailed
 	Notification signal: 'Failed to open walkback dialog'!
 
+onDpiChanged: aDpiChangedEvent
+	| lresult |
+	"In this case the controls are from a template, so we let DefDlgProc do the scaling."
+	lresult := super defaultWindowProcessing: aDpiChangedEvent.
+	"Save down the new DPI as in the superclass implementation we are replacing"
+	dpi := aDpiChangedEvent newDpi.
+	"We must rescale the error/warning image or Windows will just bitmap scale it with unpleasing results"
+	self setImage.
+	^lresult!
+
 onInitDialog
 	"Private - The walkback is opening and all controls have been created.
 	Initialize as necessary."
 
-	[
-		self class releaseCapture.
-	 	resumable 
-			ifTrue: [ 
-				self setItem: IconId icon: Icon warning.
-				Sound warningBeep]
-			ifFalse: [
-				self setItem: IconId icon: Icon error.
-				Sound errorBeep].
-		self text: caption.
-		self setItem: CallStackId text: callStack.
-		self 
-			enableItem: (Commands keyAtValue: #resume) state: resumable;
-			enableItem: IDOK state: debuggable.
-		
-		"Set default answer used if window closed rather than button pressed"
-		self answer: #terminate.
-	] on: Error do: [:e | e resignalAsWarning].
+	
+	[self class releaseCapture.
+	self
+		setImage;
+		parp;
+		text: caption;
+		setItem: CallStackId text: callStack;
+		enableItem: (Commands keyAtValue: #resume) state: resumable;
+		enableItem: IDOK state: debuggable.
+
+	"Set default answer used if window closed rather than button pressed"
+	self answer: #terminate]
+			on: Error
+			do: [:e | e resignalAsWarning].
 	^true	"direct Windows to set the focus"!
+
+parp
+	Sound beep: (resumable
+				ifTrue: [OS.MessageBoxConstants.MB_ICONWARNING]
+				ifFalse: [OS.MessageBoxConstants.MB_ICONERROR])!
 
 resumable: aBoolean
 	"Set whether the resume key should be enabled or disabled."
@@ -107,6 +118,12 @@ runModalLoop
 
 	[self show] postToMessageQueue.
 	super runModalLoop!
+
+setImage
+	self setItem: IconId
+		icon: (resumable
+				ifTrue: [Icon warning withExtent: self metrics largeIconExtent]
+				ifFalse: [Icon error withExtent: self metrics largeIconExtent])!
 
 setInitialPosition: aRectangle
 	"Private - Set the initial position and extent of the dialog window immediately after creation."
@@ -143,15 +160,6 @@ wmCommand: message wParam: wParam lParam: lParam
 			^false].
 	^self destroy!
 
-wmDpiChanged: message wParam: wParam lParam: lParam
-	"Private - Handles a WM_DPICHANGED message. This is only sent to top-level windows (e.g. ShellViews in Dolphin)
-		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word.
-		- lParam is a pointer to a RECTL providing the suggested new rectangle for the window.
-	"
-
-	"In this case the controls are from a template, so let DefDlgProc do the scaling."
-	^nil!
-
 wmSize: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_SIZE (window resized) message."
 
@@ -166,13 +174,15 @@ caption:!accessing!public! !
 copyWalkbackToClipboard!commands!public! !
 debuggable:!accessing!public! !
 errorCreateWindowFailed!operations!private! !
+onDpiChanged:!event handling!public! !
 onInitDialog!event handling!private! !
+parp!operations!private! !
 resumable:!accessing!public! !
 runModalLoop!operations!private! !
+setImage!private!updating! !
 setInitialPosition:!private!realizing/unrealizing! !
 templateId!constants!private! !
 wmCommand:wParam:lParam:!event handling-win32!public! !
-wmDpiChanged:wParam:lParam:!event handling-win32!private! !
 wmSize:wParam:lParam:!event handling-win32!private! !
 !
 

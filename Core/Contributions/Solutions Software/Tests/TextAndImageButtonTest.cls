@@ -19,7 +19,7 @@ setUp
 	super setUp.
 	button := TextAndImageButton new.
 	button font: (Font name: 'Segoe UI' pointSize: 8).
-	button image: Icon warning asLargeIcon.
+	button image: Icon warning.
 	button hasBorder: true.
 	shell := ShellView new create.
 	shell layoutManager: BorderLayout new.

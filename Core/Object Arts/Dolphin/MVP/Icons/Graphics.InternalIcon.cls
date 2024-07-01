@@ -71,7 +71,10 @@ asSharedBitmap: aPoint
 	^self class imageManager bitmapForIcon: self extent: aPoint!
 
 asSmallIcon
-	^self asIcon asSmallIcon!
+	"Answer an `Icon` like the receiver but of the small icon size for the primary monitor (16x16 @ 96-dpi)."
+
+	Notification deprecated.	"Not per-monitor DPI aware."
+	^self withExtent: SystemMetrics current smallIconExtent!
 
 bitmap
 	^tileColor isNil ifTrue: [gdiplusBitmap] ifFalse: [self tileBitmapWithExtent: gdiplusBitmap extent]!
@@ -165,7 +168,7 @@ tileColor:!accessing!private! !
 withExtent:!converting!public! !
 !
 
-Graphics.InternalIcon methodProtocol: #icon attributes: #() selectors: #(#asAlphaBitmap: #asParameter #asSharedBitmap: #asSmallIcon #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
+Graphics.InternalIcon methodProtocol: #icon attributes: #(#readOnly) selectors: #(#asAlphaBitmap: #asParameter #asSharedBitmap: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
 
 !Graphics.InternalIcon class methodsFor!
 

@@ -30,7 +30,7 @@ package!
 
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.MessageBoxTest'
-	instanceVariableNames: 'subject enablement defaultButton buttonLabels caption radioButtonLabels'
+	instanceVariableNames: 'subject enablement defaultButton buttonLabels caption radioButtonLabels metrics'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.TaskDialogConstants})
 	classInstanceVariableNames: ''

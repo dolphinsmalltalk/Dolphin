@@ -2,7 +2,7 @@
 
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.MessageBoxTest'
-	instanceVariableNames: 'subject enablement defaultButton buttonLabels caption radioButtonLabels'
+	instanceVariableNames: 'subject enablement defaultButton buttonLabels caption radioButtonLabels metrics'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.TaskDialogConstants})
 	classInstanceVariableNames: ''
@@ -18,6 +18,7 @@ getDialogInfo
 	| subviews buttons dialog radioButtons |
 	dialog := DialogView fromHandle: subject handle.
 	caption := dialog getWindowText.
+	metrics := dialog metrics.
 	subviews := OrderedCollection new.
 	dialog allChildWindowHandlesDo: [:each | subviews addLast: (UI.View fromHandle: each)].
 	buttons := Array writeStream.
@@ -191,14 +192,12 @@ testConfirm
 			newEnablement := enablement collect: [:each | Pair first: each first second: each first isEnabled].
 			
 			["Enable the delay to visually inspect"
-
-			"1 seconds wait."
-			subject clickButton: buttonId]
-					fork].
+			false ifTrue: [1 seconds wait].
+			subject clickButton: buttonId] fork].
 	self assert: (self openSubject: [subject confirm: 'Test']).
 	yes := String fromResourceId: 805 in: User32.
 	no := String fromResourceId: 806 in: User32.
-	self assert: buttonLabels equals: {yes. no}.
+	self assert: buttonLabels equals: { yes. no }.
 	self assert: defaultButton equals: yes.
 	self assert: caption equals: 'Please confirm…'.
 	self deny: (newEnablement anySatisfy: [:each | each second]).
@@ -213,7 +212,11 @@ testConfirm
 	subject customButtons: #(#(#yes 'Qui') #(#no 'Non') #(#help 'Help!!')).
 	subject defaultButton: 3.
 	subject icon: self class icon.
+	self assert: subject iconStyle identicalTo: #user.
 	self assert: subject iconId equals: 0.
+	subject
+		footerText: 'Footer';
+		footerIcon: Object icon.
 	self
 		assert: (self openSubject: 
 					[subject
@@ -222,7 +225,9 @@ testConfirm
 						onNo: ['onNo']
 						onCancel: ['onCancel']])
 		equals: 'onNo'.
-	self assert: buttonLabels equals: {'Qui'. 'Non'. 'Help!!'. String fromResourceId: 801 in: User32}.
+	self assert: subject icon extent equals: metrics largeIconExtent.
+	self assert: subject footerIcon extent equals: metrics smallIconExtent.
+	self assert: buttonLabels equals: { 'Qui'. 'Non'. 'Help!!'. String fromResourceId: 801 in: User32 }.
 	self assert: defaultButton equals: 'Help!!'.
 	self assert: caption equals: expectedCaption.
 	self assertIsNil: subject handle!

@@ -3,10 +3,269 @@
 Graphics.Image
 	subclass: #'Graphics.Icon'
 	instanceVariableNames: ''
-	classVariableNames: 'Blank DefaultApplication Error HasScaleDown Information LargeExtent Question SmallExtent Warning WinLogo'
+	classVariableNames: 'Blank DefaultApplication Error HasScaleDown Information Question Warning WinLogo'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'ExtraLargeExtent' -> (16r100 @ 16r100). 'TileExtent' -> (16r30 @ 16r30) }!
+	classConstants: {
+			'LargestStandardSize' -> (16r100 @ 16r100).
+			'StandardSizeMap' -> {
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r10 @ 16r10.
+						16r14 @ 16r14.
+						16r14 @ 16r14.
+						16r14 @ 16r14.
+						16r14 @ 16r14.
+						16r18 @ 16r18.
+						16r18 @ 16r18.
+						16r18 @ 16r18.
+						16r18 @ 16r18.
+						16r18 @ 16r18.
+						16r18 @ 16r18.
+						16r18 @ 16r18.
+						16r18 @ 16r18.
+						16r20 @ 16r20.
+						16r20 @ 16r20.
+						16r20 @ 16r20.
+						16r20 @ 16r20.
+						16r20 @ 16r20.
+						16r20 @ 16r20.
+						16r20 @ 16r20.
+						16r20 @ 16r20.
+						16r28 @ 16r28.
+						16r28 @ 16r28.
+						16r28 @ 16r28.
+						16r28 @ 16r28.
+						16r28 @ 16r28.
+						16r28 @ 16r28.
+						16r28 @ 16r28.
+						16r28 @ 16r28.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r30 @ 16r30.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r40 @ 16r40.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r60 @ 16r60.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80.
+						16r80 @ 16r80
+					}
+		}!
 
 Graphics.Icon guid: (Core.GUID fromString: '{87b4c63e-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -49,21 +308,11 @@ asCursor
 asIcon
 	^self!
 
-asLargeIcon
-	"Answer an `Icon` like the receiver but optimized for the standard large icon size (32x32)."
-
-	^self withExtent: SystemMetrics current largeIconExtent!
-
 asSharedBitmap: aPoint
 	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at the specified extenT. The result will be a shared bitmap which is always the same
 	instance for the same icon."
 
 	^self imageManager bitmapForIcon: self extent: aPoint!
-
-asSmallIcon
-	"Answer an `Icon` like the receiver but optimized for the standard small icon size (16x16)."
-
-	^self withExtent: SystemMetrics default smallIconExtent!
 
 createHandle
 	"Private - Answer an external handle to the image represented by the receiver.
@@ -304,9 +553,7 @@ addToImageList:mask:!double dispatch!private! !
 asAlphaBitmap:!converting!public! !
 asCursor!converting!public! !
 asIcon!public! !
-asLargeIcon!converting!public! !
 asSharedBitmap:!converting!public! !
-asSmallIcon!converting!public! !
 createHandle!private!realizing/unrealizing! !
 drawDisabledOn:at:extent:!drawing-bitmaps!public! !
 drawOn:at:!drawing-bitmaps!public! !
@@ -331,7 +578,7 @@ valueWithHandle:extent:!private! !
 withExtent:!converting!public! !
 !
 
-Graphics.Icon methodProtocol: #icon attributes: #() selectors: #(#asAlphaBitmap: #asParameter #asSharedBitmap: #asSmallIcon #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
+Graphics.Icon methodProtocol: #icon attributes: #(#readOnly) selectors: #(#asAlphaBitmap: #asParameter #asSharedBitmap: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
 
 !Graphics.Icon class methodsFor!
 
@@ -437,6 +684,24 @@ information
 
 	^Information ifNil: [Information := self fromSystemId: IDI_INFORMATION]!
 
+initialize
+	"
+		self initialize
+	"
+
+	| standardSizes mapStream sizeStream next current |
+	standardSizes := #(16 20 24 32 40 48 64 96 128 256) collect: [:each | (each @ each) isImmutable: true; yourself ].
+	self addClassConstant: 'LargestStandardSize' value: standardSizes last.
+	mapStream := Array writeStream.
+	sizeStream := standardSizes readStream.
+	current := sizeStream next.
+	mapStream next: 15 put: standardSizes first.
+	[sizeStream atEnd] whileFalse: [
+		next := sizeStream next.
+		mapStream next: next y - current y put: current.
+		current := next].
+	self addClassConstant: 'StandardSizeMap' value: mapStream contents!
+
 newSystemInitializer: anInteger
 	^IconFromSystemInitializer identifier: anInteger!
 
@@ -473,6 +738,12 @@ shield
 	"Answer a new instance of the default system 'shield' icon (used in security warning messages)"
 
 	^self fromSystemId: IDI_SHIELD!
+
+standardSizeFor: aPoint
+	"Answer the best standard icon size for the size specified by the <Point> argument. This will be the nearest size that is <= the requested size, except if the requested size is out of range in which case it will be clamped."
+
+	^(StandardSizeMap lookup: aPoint y)
+		ifNil: [aPoint >= LargestStandardSize ifTrue: [LargestStandardSize] ifFalse: [Point.Zero]]!
 
 systemNames
 	^##(LookupTable withAll: {IDI_APPLICATION -> #defaultApplication.
@@ -521,6 +792,7 @@ icon!constants!public! !
 imageManager!accessing!public! !
 imageType!constants!private! !
 information!instance creation!public! !
+initialize!class initialization!public! !
 newSystemInitializer:!helpers!private! !
 null!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
@@ -529,7 +801,8 @@ onStartup2!event handling!private! !
 question!instance creation!public! !
 resetSystemInstances!helpers!private! !
 shield!instance creation!public! !
-systemNames!public! !
+standardSizeFor:!enquiries!public! !
+systemNames!accessing!public! !
 uninitialize!class hierarchy-removing!private! !
 warning!instance creation!public! !
 window!instance creation!public! !

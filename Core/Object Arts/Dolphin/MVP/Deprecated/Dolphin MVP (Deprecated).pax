@@ -46,7 +46,9 @@ package methodNames
 	add: #ColorRef -> #asIndexedColor;
 	add: #ColorRef -> #asIndexedColorUsingPalette:;
 	add: #GDILibrary -> #enumFonts:lpFaceName:lpFontFunc:lParam:;
+	add: #Icon -> #asLargeIcon;
 	add: #Icon -> #asMenuBitmap;
+	add: #Icon -> #asSmallIcon;
 	add: #IconImageManager -> #menuBitmapForIcon:;
 	add: #Image -> #fileLocator:;
 	add: #Image -> #identifier:;
@@ -558,12 +560,26 @@ enumFonts:lpFaceName:lpFontFunc:lParam:!public!win32 functions-font and text! !
 
 !Icon methodsFor!
 
+asLargeIcon
+	"Answer an `Icon` like the receiver but of the large icon size of the primary monitor (32x32 @ 96-dpi)."
+
+	Notification deprecated.	"Not per-monitor DPI aware."
+	^self withExtent: SystemMetrics current largeIconExtent!
+
 asMenuBitmap
 	Notification deprecated.	"Extent required depends on DPI of the view the menu"
-	^self asSharedBitmap: SystemMetrics current menuImageExtent! !
+	^self asSharedBitmap: SystemMetrics current menuImageExtent!
+
+asSmallIcon
+	"Answer an `Icon` like the receiver but of the small icon size for the primary monitor (16x16 @ 96-dpi)."
+
+	Notification deprecated.	"Not per-monitor DPI aware."
+	^self withExtent: SystemMetrics current smallIconExtent! !
 
 !Icon categoriesForMethods!
+asLargeIcon!converting!public! !
 asMenuBitmap!converting!public! !
+asSmallIcon!converting!public! !
 !
 
 !Icon class methodsFor!

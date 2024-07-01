@@ -392,8 +392,16 @@ footerIcon
 footerIcon: anIcon
 	"Set the receiver's footer icon to be the argument, anIcon. The Footer icon is only displayed when there is also footerText."
 
-	footerIcon := anIcon asSmallIcon.
+	footerIcon := anIcon withExtent: self footerIconExtent.
 	self setElement: TDIE_ICON_FOOTER icon: footerIcon!
+
+footerIconExtent
+	"Private - Answer the extent for a message box footer icon scaled to the receiver's DPI. At 96-dpi this would be a 16x16 icon."
+
+	| dpi |
+	dpi := self dpi.
+	^(User32 getSystemMetricsForDpi: SM_CXSMICON dpi: dpi)
+		@ (User32 getSystemMetricsForDpi: SM_CYSMICON dpi: dpi)!
 
 footerText
 	"Answer the text to be displayed as the receiver's footer text, or nil if none."
@@ -485,7 +493,7 @@ icon: anIcon
 					[icon := nil.
 					#none]
 				ifNotNil: 
-					[icon := anIcon asLargeIcon.
+					[icon := anIcon withExtent: self mainIconExtent.
 					#user])!
 
 iconId
@@ -662,6 +670,16 @@ isTopMost: aBoolean
 	"Answer whether the message should be the top-most window when opened."
 
 	flags := flags mask: TopMostMask set: aBoolean!
+
+mainIconExtent
+	"Private - Answer the extent for the main message box icon scaled to the receiver's DPI. At 96-dpi this would normally be a 32x32 icon."
+
+	"Note that we want to avoid a dependency on the GDI Graphics package, which would be a layering violation, so we use the Win32 system metrics API directly rather than the OS.SystemMetrics class."
+
+	| dpi |
+	dpi := self dpi.
+	^(User32 getSystemMetricsForDpi: SM_CXICON dpi: dpi)
+		@ (User32 getSystemMetricsForDpi: SM_CYICON dpi: dpi)!
 
 mergedCustomButtons
 	"Private - Answer the combination of the custom buttons implementing standard message box buttons that are not provided by the task dialog as common buttons, and the user supplied buttons. The latter take precedence."
@@ -1128,6 +1146,7 @@ expandLabel!accessing!public! !
 expandLabel:!accessing!public! !
 footerIcon!accessing!public! !
 footerIcon:!accessing-styles!public! !
+footerIconExtent!geometry!private! !
 footerText!accessing!public! !
 footerText:!accessing!public! !
 getDefaultButton!helpers!private! !
@@ -1175,6 +1194,7 @@ isSuppressible:!accessing-styles!public! !
 isTaskModal!accessing-styles!public!testing! !
 isTopMost!accessing-styles!public! !
 isTopMost:!accessing-styles!public! !
+mainIconExtent!geometry!private! !
 mergedCustomButtons!helpers!private! !
 modality!accessing-styles!public! !
 modality:!accessing-styles!public! !

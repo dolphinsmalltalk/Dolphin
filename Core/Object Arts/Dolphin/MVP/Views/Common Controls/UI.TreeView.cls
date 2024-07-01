@@ -68,7 +68,7 @@ applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
 	| imList stateImList imageSize |
-	imageSize := self imageExtent.
+	imageSize := self scaledImageExtent.
 	imList := imageSize > 0
 				ifTrue: 
 					[stateImList := self stateImageManager ifNotNil: [:sim | sim imageListWithExtent: imageSize].
@@ -76,12 +76,12 @@ applyImageLists
 	User32
 		sendMessageU: handle
 			msg: TVM_SETIMAGELIST
-			wParam: TVSIL_NORMAL
-			lParam: imList asParameter;
+			wParam: TVSIL_STATE
+			lParam: stateImList asParameter;
 		sendMessageU: handle
 			msg: TVM_SETIMAGELIST
-			wParam: TVSIL_STATE
-			lParam: stateImList asParameter!
+			wParam: TVSIL_NORMAL
+			lParam: imList asParameter!
 
 basicAdd: anObject atIndex: anInteger 
 	"Private - Adds an item to the list view at the index given by anInteger"
@@ -554,10 +554,26 @@ isVirtual
 
 	^updateMode isVirtual!
 
+itemBorders
+	"Answers a <Point> the x and y values of which are the left and top borders of items."
+
+	| result |
+	result := self sendMessage: TVM_SETBORDER wParam: 0 lParam: 0.
+	"The LOWORD is a SHORT that specifies the size of the left border, in pixels. The HIWORD is a SHORT that specifies the size of the top border, in pixels."
+	^(result bitAnd: 16rFFFF) @ (result bitShift: -16)!
+
 itemCount
 	"Answer the total number of items in the view."
 
 	^self sendMessage: TVM_GETCOUNT!
+
+itemFromNMHDRW: pNMHDR
+	^TVITEMW fromAddress: pNMHDR yourAddress + ##(NMHDR byteSize)!
+
+itemHeight
+	"Answers the height of the items in the tree."
+
+	^self sendMessage: TVM_GETITEMHEIGHT!
 
 itemRect: itemHandle textOnly: aBoolean
 	"Answers the <Rectangle> surrounding the receiver's item with the specified handle, optionally for the text part of the label only."
@@ -1141,8 +1157,11 @@ updateIndentation
 			self sendMessage: TVM_SETINDENT wParam: 0]
 		ifNotNil: 
 			[| imageWidth |
-			imageWidth := self imageExtent x.
-			self sendMessage: TVM_SETINDENT wParam: (imageWidth + indentSeparation max: self minimumIndent).
+			imageWidth := self scaledImageExtent x.
+			self
+				sendMessage: TVM_SETINDENT
+				wParam: (imageWidth + indentSeparation max: self minimumIndent)
+				lParam: 0.
 			indentSeparation := (self sendMessage: TVM_GETINDENT) - imageWidth]!
 
 updateItem: anObject
@@ -1274,8 +1293,11 @@ isMonoExpandable!accessing-styles!public! !
 isMonoExpandable:!accessing-styles!public! !
 isSelected:!public!testing! !
 isSmallIcons!public!testing! !
-isVirtual!accessing-styles!public! !
+isVirtual!accessing-styles!private! !
+itemBorders!enquiries!public! !
 itemCount!accessing!public! !
+itemFromNMHDRW:!event handling-win32!private! !
+itemHeight!enquiries!public! !
 itemRect:textOnly:!enquiries!public! !
 itemStructure!constants!private! !
 minimumIndent!constants!public! !

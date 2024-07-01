@@ -97,6 +97,22 @@ testNullIcon
 	self assert: Icon null identicalTo: null.
 	self assert: null handle equals: 0!
 
+testStandardSizeFor
+	-2 to: 0 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 0 @ 0].
+	1 to: 19 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 16 @ 16].
+	20 to: 23 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 20 @ 20].
+	24 to: 31 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 24 @ 24].
+	32 to: 39 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 32 @ 32].
+	40 to: 47 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 40 @ 40].
+	48 to: 63 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 48 @ 48].
+	64 to: 95 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 64 @ 64].
+	96 to: 127 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 96 @ 96].
+	128 to: 255 do: [:i | self assert: (Icon standardSizeFor: i @ i) equals: 128 @ 128].
+	self assert: (Icon standardSizeFor: Icon.LargestStandardSize) equals: Icon.LargestStandardSize.
+	self assert: (Icon standardSizeFor: Icon.LargestStandardSize * 2) equals: Icon.LargestStandardSize.
+	self assert: (Icon standardSizeFor: Icon.LargestStandardSize * 2.25)
+		equals: Icon.LargestStandardSize!
+
 testStbConvertFromVersion1_resource
 	| bytes icon |
 	bytes := #[33 83 84 66 32 48 32 6 4 4 0 73 99 111 110 0 0 0 0 0 0 0 0 16 0 0 0 54 0 6 0 83 116 114 105 110 103 10 0 0 0 79 98 106 101 99 116 46 105 99 111 14 2 31 0 83 84 66 69 120 116 101 114 110 97 108 82 101 115 111 117 114 99 101 76 105 98 114 97 114 121 80 114 111 120 121 0 0 0 0 114 0 0 0 13 0 0 0 68 111 108 112 104 105 110 68 101 118 82 101 115 0 0 0 0].
@@ -210,6 +226,7 @@ testFromShellStock!public!unit tests! !
 testFromSystemId!public!unit tests! !
 testImageIndexDoesntRealize!public!unit tests! !
 testNullIcon!public!unit tests! !
+testStandardSizeFor!public!unit tests! !
 testStbConvertFromVersion1_resource!public!unit tests! !
 testStbConvertFromVersion1_system!public!unit tests! !
 testStbConvertFromVersion3_resource!public!unit tests! !

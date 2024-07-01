@@ -67,6 +67,13 @@ caption: aString
 defaultCaption
 	^self class defaultCaption: self iconStyle!
 
+dpi
+	"Answer the logical dots-per-inch for this message box."
+
+	| actualDpi |
+	actualDpi := User32 getDpiForWindow: self ownerHandle.
+	^actualDpi == 0 ifTrue: [Win32Constants.USER_DEFAULT_SCREEN_DPI] ifFalse: [actualDpi]!
+
 errorMsg
 	self hasIcon ifFalse: [self iconStyle: #error].
 	^self open!
@@ -164,6 +171,7 @@ beep!parping!private! !
 caption!accessing!public! !
 caption:!accessing!public! !
 defaultCaption!constants!private! !
+dpi!geometry!high DPI!public! !
 errorMsg!public! !
 errorMsg:!operations!public! !
 exceptionDescription:!accessing!public! !

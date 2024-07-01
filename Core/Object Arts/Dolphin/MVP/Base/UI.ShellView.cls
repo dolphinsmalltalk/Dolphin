@@ -2,7 +2,7 @@
 
 UI.ContainerView
 	subclass: #'UI.ShellView'
-	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags dpi'
+	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent actualIcons svFlags dpi'
 	classVariableNames: 'DialogMessageMap'
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
@@ -290,7 +290,8 @@ filerProxyIn: anSTxOutFiler
 	proxy instVars
 		at: ##(self indexOfInstVar: 'lastFocus') put: nil;
 		at: ##(self indexOfInstVar: 'combinedAcceleratorTable') put: nil;
-		at: ##(self indexOfInstVar: 'defaultButton') put: 0.
+		at: ##(self indexOfInstVar: 'defaultButton') put: 0;
+		at: ##(self indexOfInstVar: 'actualIcons') put: nil.
 	^proxy!
 
 flash: anInteger
@@ -427,9 +428,7 @@ initialize
 	"Private - Initialise the receiver. Register with SessionManager events."
 
 	super initialize. 
-	self parentView: self class desktop.
-	flashes := 0.
-!
+	self parentView: self class desktop!
 
 invalidateUserInterface
 	"Invalidates the user interface of the receiver indicating that it needs
@@ -993,19 +992,21 @@ updateCaption
 updateIcons
 	"Private - Update the large and small icons of the receiver"
 
-	| actualLargeIcon |
+	| large small |
 	self isTopView ifFalse: [^self].
-	actualLargeIcon := largeIcon ifNil: [self presenter icon].
+	large := (largeIcon ifNil: [self presenter icon]) withExtent: self metrics largeIconExtent.
 	self
 		sendMessage: WM_SETICON
 		wParam: ICON_BIG
-		lParam: actualLargeIcon asParameter.
+		lParam: large asParameter.
 	"Ensure that the small icon is rendered at the right size"
-	smallIcon ifNotNil: [smallIcon := smallIcon asSmallIcon].
+	small := smallIcon ?? large withExtent: self metrics smallIconExtent.
 	self
 		sendMessage: WM_SETICON
 		wParam: ICON_SMALL
-		lParam: smallIcon asParameter!
+		lParam: small asParameter.
+	"We hold onto the actual icons just to prevent them being GC'd while associated with the Window"
+	actualIcons := { large. small }!
 
 updateMenuBar
 	self isStateRestoring ifTrue: [^self].

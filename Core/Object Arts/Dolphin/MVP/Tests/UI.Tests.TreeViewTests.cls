@@ -133,6 +133,32 @@ testSetTextBlockDoesNotAffectSelection
 			super testSetTextBlockDoesNotAffectSelection.
 			presenter view model clear]!
 
+testViewModes
+	| dpi canvas minHeight |
+	dpi := presenter monitor dpi.
+	presenter model: (TreeModel withRoots: {Object} searchPolicy: SearchPolicy identity).
+	{Behavior. View. Magnitude} do: [:each | presenter model add: each asChildOf: Object].
+	presenter model
+		add: ArithmeticValue asChildOf: Magnitude;
+		add: Number asChildOf: ArithmeticValue.
+	presenter expandAll.
+	canvas := presenter canvas.
+	canvas font: presenter actualFont.
+	"The minimum height is determined by the font height, plus a 1 pixel border, rounded to even"
+	minHeight := canvas textMetrics tmHeight + (2 * dpi // USER_DEFAULT_SCREEN_DPI) roundTo: 2.
+	canvas free.
+	presenter class viewModes keysAndValuesDo: 
+			[:eachKey :eachValue |
+			"Skip extra large icons as these will be particularly expensive to populate into the icon image manager"
+			eachKey == #extraLargeIcons
+				ifFalse: 
+					[| expectedExtent |
+					presenter viewMode: eachKey.
+					self assert: presenter imageExtent equals: eachValue.
+					expectedExtent := Icon standardSizeFor: eachValue * dpi // USER_DEFAULT_SCREEN_DPI.
+					self assert: presenter scaledImageExtent equals: expectedExtent.
+					self assert: presenter itemHeight equals: (expectedExtent y max: minHeight)]]!
+
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
 	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
@@ -160,6 +186,7 @@ testSelectionSetter!public!unit tests! !
 testSelectionsPreservedOnRecreate!public!unit tests! !
 testSetImageBlockDoesNotAffectSelection!public!unit tests! !
 testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+testViewModes!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !
 !
 

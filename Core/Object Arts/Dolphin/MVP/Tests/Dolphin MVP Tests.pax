@@ -1300,16 +1300,15 @@ testMinimalResourceReadWrite
 
 testMinimalResourceWrite4
 	| shell dolphin7Stl |
-	"This is the STL from Dolphin 7.2 of the Shell presenter default view after adding the enhancement to store the MessageSequence message list as an Array rather than an OrderedCollection, and with the 
-	placement rectangle deliberately modified to (100@200 extent: 600@400)."
-	dolphin7Stl := #(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 517 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil nil nil 1 nil 193 983302 ##(Smalltalk.MessageSequence) 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 201 401 690 1401 1201 193 448 8 '' 416 1 8 #() 690 193 193 nil 27 ).
+	"This is the STL from Dolphin 7.2 of the Shell presenter default view after adding the enhancement to store the MessageSequence message list as an Array rather than an OrderedCollection, with the former 'flashes' inst var nil'd out, and with the placement rectangle deliberately modified to (100@200 extent: 600@400)."
+	dolphin7Stl := #(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 517 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil nil nil nil nil 193 983302 ##(Smalltalk.MessageSequence) 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 201 401 690 1401 1201 193 448 8 '' 416 1 8 #() 690 193 193 nil 27).
 	self dumpToTranscriptIfDebug: dolphin7Stl.
 	
 	[| stl |
 	shell := (STLInFiler on: dolphin7Stl readStream)
 				context: Tools.DesignDesktopView default;
 				next.
-	self assert: shell extent equals: 600@400.
+	self assert: shell extent equals: 600 @ 400.
 	shell position: 100 @ 200.
 	stl := self literalStoreArrayOf: shell version: 4.
 	self dumpToTranscriptIfDebug: stl.

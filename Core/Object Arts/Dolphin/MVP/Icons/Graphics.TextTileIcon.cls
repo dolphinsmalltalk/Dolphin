@@ -123,18 +123,19 @@ asImageKey
 		yourself!
 
 asLargeIcon
-	"Answer a 'large' (32x32) <Icon> equivalent of the receiver. This is sometimes needed, e.g. to set the icon for a Window."
+	"Answer an `Icon` like the receiver but of the large icon size of the primary monitor (32x32 @ 96-dpi)."
 
-	^Icon fromTextTile: self!
+	Notification deprecated.	"Not per-monitor DPI aware.."
+	^self withExtent: SystemMetrics current largeIconExtent!
 
 asMenuBitmap
 	#deprecated.	"Extent required depends on DPI of the view the menu"
 	^self asSharedBitmap: SystemMetrics current menuImageExtent!
 
 asParameter
-	"Answer a Windows HICON handle for receiver's default icon representation, realizing it if necessary. 
-	Implementing this allows TextTileIcons to be used as the icons for ShellViews."
+	"Answer a Windows HICON handle for receiver's default icon representation, realizing it if necessary."
 
+	Notification deprecated.
 	^self asLargeIcon asParameter
 
 
@@ -147,9 +148,10 @@ asSharedBitmap: aPoint
 	^self imageManager bitmapForIcon: self extent: aPoint!
 
 asSmallIcon
-	"Answer a 'small' (16x16) `Icon` equivalent of the receiver."
+	"Answer an `Icon` like the receiver but of the small icon size for the primary monitor (16x16 @ 96-dpi)."
 
-	^Icon initializer: (IconFromTextTileIconInitializer extent: SystemMetrics default smallIconExtent textTile: self)!
+	Notification deprecated.	"Not per-monitor DPI aware."
+	^self withExtent: SystemMetrics current smallIconExtent!
 
 bitmapWithExtent: aPoint
 	| bitmap graphics |
@@ -426,11 +428,10 @@ tilecolor
 
 	^tilecolor!
 
-withExtent: arg1
-	"This is an auto-generated target implementation for the protocol <icon>
-	and remains to be correctly implemented."
+withExtent: aPoint
+	"Answer an <icon> that has the specified preferred extent."
 
-	^Error notYetImplemented! !
+	^Icon initializer: (IconFromTextTileIconInitializer extent: aPoint textTile: self)! !
 
 !Graphics.TextTileIcon categoriesForMethods!
 =!comparing!public! !
@@ -486,7 +487,7 @@ tilecolor!accessing!public! !
 withExtent:!public! !
 !
 
-Graphics.TextTileIcon methodProtocol: #icon attributes: #() selectors: #(#asAlphaBitmap: #asParameter #asSharedBitmap: #asSmallIcon #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
+Graphics.TextTileIcon methodProtocol: #icon attributes: #(#readOnly) selectors: #(#asAlphaBitmap: #asParameter #asSharedBitmap: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
 Graphics.TextTileIcon methodProtocol: #image attributes: #(#readOnly) selectors: #(#addToImageList:mask: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.TextTileIcon class methodsFor!
