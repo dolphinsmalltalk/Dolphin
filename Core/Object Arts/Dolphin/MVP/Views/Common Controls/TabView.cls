@@ -36,7 +36,7 @@ applyImageLists
 	"Private - Set the receiver's image list from the image manager."
 
 	| imList |
-	imList := self hasIcons ifTrue: [self imageManager imageListWithExtent: self imageExtent].
+	imList := self hasIcons ifTrue: [self imageManager imageListWithExtent: self scaledImageExtent].
 	self tcmSetImageList: imList!
 
 basicAdd: anObject atIndex: anInteger 

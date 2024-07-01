@@ -369,9 +369,9 @@ hideDropHighlight
 	self removePropertyAt: #dropHighlight ifAbsent: []!
 
 imageExtent
-	"Private - Answer the extent of images to use based on the current view mode and resolution."
+	"Private - Answer the device-independent (96-dpi) extent of images to use based on the current view mode"
 
-	^(self class viewModes at: self viewMode) * self dpi // USER_DEFAULT_SCREEN_DPI!
+	^self class viewModes at: self viewMode!
 
 imageManager
 	"Private - Answer the receiver's normal image manager."
@@ -745,6 +745,11 @@ queryCommand: aCommandQuery
 renameIt
 	self canEditLabels ifTrue: [self editSelectionLabel]!
 
+scaledImageExtent
+	"Private - Answer the extent of images to use based on the current view mode and resolution."
+
+	^Icon standardSizeFor: (self imageExtent * self dpi // USER_DEFAULT_SCREEN_DPI)!
+
 setViewMode: aSymbol 
 	^self subclassResponsibility!
 
@@ -936,6 +941,7 @@ onViewCreated!event handling!public! !
 positionForKeyboardContextMenu!enquiries!public! !
 queryCommand:!commands!public! !
 renameIt!commands!public! !
+scaledImageExtent!accessing!private! !
 setViewMode:!accessing!private! !
 showDragDrop:highlight:!drag & drop!event handling!public! !
 showDropHighlight:!drag & drop!private! !

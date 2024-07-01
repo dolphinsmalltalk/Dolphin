@@ -177,14 +177,15 @@ applyImageLists
 					self imageManager
 						ifNotNil: [:im | im imageListWithExtent: self largeIconExtent * dpi // USER_DEFAULT_SCREEN_DPI]].
 	smallExt := self smallIconExtent * dpi // USER_DEFAULT_SCREEN_DPI.
-	self lvmSetImageList: (self imageManager ifNotNil: [:im | im imageListWithExtent: smallExt])
-		type: LVSIL_SMALL.
-	self lvmSetImageList: largeImList type: LVSIL_NORMAL.
+	"The state image list must be set first to avoid a sizing bug in the control, e.g. on certain DPI changes"
 	self hasCheckBoxes
 		ifFalse: 
 			[self lvmSetImageList: (self stateImageManager
 						ifNotNil: [:stateImages | stateImages imageListWithExtent: smallExt])
-				type: LVSIL_STATE]!
+				type: LVSIL_STATE].
+	self lvmSetImageList: (self imageManager ifNotNil: [:im | im imageListWithExtent: smallExt])
+		type: LVSIL_SMALL.
+	self lvmSetImageList: largeImList type: LVSIL_NORMAL!
 
 autoResizeColumns
 	"Private - Attempt to share the available width in the receiver between all automagically resizeable

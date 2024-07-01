@@ -96,13 +96,14 @@ applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
 	| imList stateImList imageSize |
-	imageSize := self imageExtent.
+	imageSize := self scaledImageExtent.
 	imList := imageSize > 0
 				ifTrue: 
 					[stateImList := self stateImageManager ifNotNil: [:sim | sim imageListWithExtent: imageSize].
 					self imageManager imageListWithExtent: imageSize].
+	self tvmSetImageList: stateImList type: TVSIL_STATE.
 	self tvmSetImageList: imList type: TVSIL_NORMAL.
-	self tvmSetImageList: stateImList type: TVSIL_STATE!
+!
 
 basicAdd: anObject atIndex: anInteger 
 	"Private - Adds an item to the list view at the index given by anInteger"
@@ -543,6 +544,14 @@ isVirtual
 
 	^tvFlags noMask: NonVirtualMask!
 
+itemBorders
+	"Answers a <Point> the x and y values of which are the left and top borders of items."
+
+	| result |
+	result := self sendMessage: TVM_SETBORDER wParam: 0 lParam: 0.
+	"The LOWORD is a SHORT that specifies the size of the left border, in pixels. The HIWORD is a SHORT that specifies the size of the top border, in pixels."
+	^(result bitAnd: 16rFFFF) @ (result bitShift: -16)!
+
 itemCount
 	"Answer the total number of items in the view."
 
@@ -550,6 +559,11 @@ itemCount
 
 itemFromNMHDRW: pNMHDR
 	^TVITEMW fromAddress: pNMHDR yourAddress + ##(NMHDR byteSize)!
+
+itemHeight
+	"Answers the height of the items in the tree."
+
+	^self sendMessage: TVM_GETITEMHEIGHT!
 
 itemRect: itemHandle textOnly: aBoolean
 	"Answers the rectangle surrounding the item with anIntegerIndex within
@@ -1155,7 +1169,7 @@ updateIndentation
 			self sendMessage: TVM_SETINDENT wParam: 0]
 		ifNotNil: 
 			[| imageWidth |
-			imageWidth := self imageExtent x.
+			imageWidth := self scaledImageExtent x.
 			self
 				sendMessage: TVM_SETINDENT
 				wParam: (imageWidth + indentSeparation max: self minimumIndent)
@@ -1281,8 +1295,10 @@ isMonoExpandable:!accessing-styles!public! !
 isSelected:!public!testing! !
 isSmallIcons!public!testing! !
 isVirtual!accessing-styles!private! !
+itemBorders!enquiries!public! !
 itemCount!accessing!public! !
 itemFromNMHDRW:!event handling-win32!private! !
+itemHeight!enquiries!public! !
 itemRect:textOnly:!enquiries!public! !
 minimumIndent!constants!public! !
 newMaps!helpers!private! !

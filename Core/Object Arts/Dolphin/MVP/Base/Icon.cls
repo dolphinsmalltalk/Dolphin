@@ -2,7 +2,7 @@
 
 Image subclass: #Icon
 	instanceVariableNames: ''
-	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
+	classVariableNames: 'Blank DefaultApplication Error Information LargestStandardSize Question StandardSizeMap Warning WinLogo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -401,6 +401,24 @@ information
 
 	^Information ifNil: [Information := self fromSystemId: IDI_INFORMATION]!
 
+initialize
+	"
+		self initialize
+	"
+
+	| standardSizes mapStream sizeStream next current |
+	standardSizes := #(16 20 24 32 40 48 64 96 128 256) collect: [:each | (each @ each) isImmutable: true; yourself ].
+	self addClassConstant: 'LargestStandardSize' value: standardSizes last.
+	mapStream := Array writeStream.
+	sizeStream := standardSizes readStream.
+	current := sizeStream next.
+	mapStream next: 15 put: standardSizes first.
+	[sizeStream atEnd] whileFalse: [
+		next := sizeStream next.
+		mapStream next: next y - current y put: current.
+		current := next].
+	self addClassConstant: 'StandardSizeMap' value: mapStream contents!
+
 null
 	^NullIcon current!
 
@@ -421,6 +439,12 @@ question
 	"N.B. It is imperative that this always loads, as it is used to provide the handle for any icon that fails to load!!"
 
 	^Question ifNil: [Question := self fromSystemId: IDI_QUESTION]!
+
+standardSizeFor: aPoint
+	"Answer the best standard icon size for the size specified by the <Point> argument. This will be the nearest size that is <= the requested size, except if the requested size is out of range in which case it will be clamped."
+
+	^(StandardSizeMap lookup: aPoint y)
+		ifNil: [aPoint >= LargestStandardSize ifTrue: [LargestStandardSize] ifFalse: [Point.Zero]]!
 
 uninitialize
 	"Uninitialize the class variables of the receiver."
@@ -451,10 +475,12 @@ hand!instance creation!public! !
 icon!constants!public! !
 imageManager!accessing!public! !
 information!instance creation!public! !
+initialize!class initialization!public! !
 null!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 onStartup2!event handling!private! !
 question!instance creation!public! !
+standardSizeFor:!enquiries!public! !
 uninitialize!class hierarchy-removing!private! !
 warning!instance creation!public! !
 window!instance creation!public! !

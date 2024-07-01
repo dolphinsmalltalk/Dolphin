@@ -33,29 +33,28 @@ defaultGetTextBlock
 
 	^Message selector: #displayString!
 
-drawImageOn: aCanvas in: aRectangle
+drawImageOn: aCanvas at: positionPoint extent: extentPoint
 	^self getImage
 		ifNotNil: 
 			[:image |
-			(self imageManager imageListWithExtent: aRectangle extent)
+			(self imageManager imageListWithExtent: extentPoint)
 				draw: image
 				on: aCanvas
-				at: aRectangle origin.
-			aRectangle width + (self textWidth: ' ' on: aCanvas)]
+				at: positionPoint.
+			extentPoint x + (self textWidth: ' ' on: aCanvas)]
 		ifNil: [0]!
 
 drawItem: aCanvas bounding: aRectangle
 	"Private - Draw the receiver's current model's value onto the <Canvas> argument."
 
-	| textOffset imageRect imageSize |
+	| textOffset imageSize |
 	(model isNil or: [model value isNil]) ifTrue: [^self].
-	"The image is drawn in one of the system icon sizes (the largest that will fit). It's
-	possible that the status bar is too small to draw even a 16x16 icon (most likely it is less
-	than 15 pixels high due to a design-time error. In this case draw a 16x16 icon and just let
-	the system truncate it."
+	"The image is drawn in one of the system icon sizes (the largest that will fit). It's possible that the status bar is too small to draw even a 16x16 icon (most likely it is less than 15 pixels high due to a design-time error. In this case draw a 16x16 icon and just let the system truncate it."
 	imageSize := self imageSizeIn: aRectangle.
-	imageRect := aRectangle origin extent: imageSize.
-	textOffset := 1 + (self drawImageOn: aCanvas in: imageRect).
+	textOffset := 1 + (self
+						drawImageOn: aCanvas
+						at: aRectangle left @ (aRectangle top + ((aRectangle height - imageSize y) // 2))
+						extent: imageSize).
 	self drawTextOn: aCanvas offset: textOffset!
 
 drawTextFlags
@@ -138,10 +137,9 @@ imageManager
 	^IconImageManager current!
 
 imageSizeIn: aRectangle
-	| minImageSize imageSize |
-	minImageSize := self parentView metrics smallIconExtent y.
-	imageSize := aRectangle height.
-	^imageSize < minImageSize ifTrue: [minImageSize] ifFalse: [imageSize truncateTo: minImageSize]!
+	| height |
+	height := aRectangle height.
+	^Icon standardSizeFor: height @ height!
 
 initialize
 	"Private - Initialize the state of the receiver."
@@ -205,7 +203,7 @@ toolTipText
 !StatusBarItem categoriesForMethods!
 defaultGetImageBlock!adapters!constants!private! !
 defaultGetTextBlock!adapters!constants!private! !
-drawImageOn:in:!drawing!private! !
+drawImageOn:at:extent:!drawing!private! !
 drawItem:bounding:!drawing!private! !
 drawTextFlags!constants!drawing!private! !
 drawTextOn:offset:!drawing!private! !
