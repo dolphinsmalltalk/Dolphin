@@ -22,7 +22,7 @@ expectDelay: expectedDuration for: nowMicroseconds
 	e.g. if the CPU is very busy, this should happen only rarely, and we do not want
 	to tolerate it if it happens all the time as that would indicate an actual bug."
 	self assert: (delta > -1000 and: [delta < 3000])
-		description: ('Expected delay of <1d>ms, got <2d>ms' expandMacrosWith: expectedDuration
+		description: ('Expected delay of <1d>, got <2d>ms' expandMacrosWith: expectedDuration humanReadablePrintString
 				with: (elapsed // 100 / 10 asScaledDecimal: 1))!
 
 setUp
