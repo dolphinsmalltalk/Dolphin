@@ -725,7 +725,7 @@ scaledBitmapSize
 
 	| size |
 	size := self actualBitmapSize.
-	^self isScalable ifTrue: [size * self dpi // USER_DEFAULT_SCREEN_DPI] ifFalse: [size]!
+	^self isScalable ifTrue: [Icon standardSizeFor: (size * self dpi // USER_DEFAULT_SCREEN_DPI)] ifFalse: [size]!
 
 scalePadding: anInteger
 	^anInteger * self actualBitmapSize x * self dpi // ##(16 * USER_DEFAULT_SCREEN_DPI)!
