@@ -171,12 +171,18 @@ applyImageLists
 	| largeImList smallExt dpi |
 	dpi := self dpi.
 	largeImList := self customImageExtent
-				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: ext * dpi // USER_DEFAULT_SCREEN_DPI]
+				ifNotNil: 
+					[:ext |
+					self thumbnailsImageManager
+						imageListWithExtent: (Icon standardSizeFor: ext * dpi // USER_DEFAULT_SCREEN_DPI)]
 				ifNil: 
 					[thumbnailsImageManager := nil.
 					self imageManager
-						ifNotNil: [:im | im imageListWithExtent: self largeIconExtent * dpi // USER_DEFAULT_SCREEN_DPI]].
-	smallExt := self smallIconExtent * dpi // USER_DEFAULT_SCREEN_DPI.
+						ifNotNil: 
+							[:im |
+							im
+								imageListWithExtent: (Icon standardSizeFor: self largeIconExtent * dpi // USER_DEFAULT_SCREEN_DPI)]].
+	smallExt := Icon standardSizeFor: self smallIconExtent * dpi // USER_DEFAULT_SCREEN_DPI.
 	"The state image list must be set first to avoid a sizing bug in the control, e.g. on certain DPI changes"
 	self hasCheckBoxes
 		ifFalse: 

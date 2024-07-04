@@ -143,7 +143,7 @@ testViewModes
 	canvas := presenter canvas.
 	canvas font: presenter actualFont.
 	"The minimum height is determined by the font height, plus a 1 pixel border, rounded to even"
-	minHeight := canvas textMetrics tmHeight + (2 * dpi // USER_DEFAULT_SCREEN_DPI) roundTo: 2.
+	minHeight := canvas textMetrics tmHeight + 2 roundTo: 2.
 	canvas free.
 	presenter class viewModes keysAndValuesDo: 
 			[:eachKey :eachValue |
