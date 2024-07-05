@@ -41,7 +41,7 @@ addToImageList: aWinImageList mask: aColorOrNil
 		mask: aColorOrNil!
 
 asAlphaBitmap: aPoint
-	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) that contains the receiver's image rendered at the specified size."
+	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) of the specified size that contains the receiver's image rendered at the nearest standard icon size that fits."
 
 	^DIBSection initializer: (BitmapFromIconInitializer extent: aPoint icon: self)!
 

@@ -23,7 +23,6 @@ package setClassNames: #(
 	#{OS.Tests.POINTLTest}
 	#{OS.Tests.POINTSTest}
 	#{OS.Tests.RECTLTest}
-	#{OS.Tests.SystemMetricsTest}
 	#{OS.Tests.TCITEMWTest}
 	#{OS.Tests.TVITEMEXWTest}
 	#{OS.Tests.TVITEMWTest}
@@ -431,14 +430,6 @@ Core.Tests.DolphinTest
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.ResourceIdentifierTest'
 	instanceVariableNames: 'tempViewResource'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Tests.DolphinTest
-	subclass: #'OS.Tests.SystemMetricsTest'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

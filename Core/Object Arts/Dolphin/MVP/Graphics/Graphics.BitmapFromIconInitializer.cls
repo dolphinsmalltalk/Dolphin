@@ -23,14 +23,15 @@ Graphics.BitmapFromIconInitializer comment: ''!
 createImage: aBitmap extent: aPoint
 	"Answer the handle of a 32-bpp RGBA bitmap (i.e. with Alpha channel) of the same native type as that expected by<Bitmap> argument, which represents the best rendering of the receiver's <icon> at the extent specified by the <Point>, aPoint."
 
-	| bmp |
+	| bmp iconSize |
 	bmp := aBitmap class extent: aPoint depth: 32.
-	"Use the services of an ImageList to get the correct sized icon automagically, and to
-	provide an alpha channel even if the original icon had no more than a simple mask."
-	(icon imageManager imageListWithExtent: aPoint)
+	"Use the services of an ImageList to get the correct sized icon automagically, and to provide an alpha channel even if the original icon had no more than a simple mask."
+	#todo.	"If we could determine that the icon is 32-bit (with alpha) then we could just draw it directly with DrawIconEx, which would save rendering the icons into an image list at the desired extent."
+	iconSize := Icon standardSizeFor: aPoint.
+	(icon imageManager imageListWithExtent: iconSize)
 		draw: icon imageIndex
 		on: bmp hdc
-		at: Point.Zero
+		at: (aPoint - iconSize) // 2
 		flags: ImageList.ILD_PRESERVEALPHA.
 	^bmp detachHandle!
 

@@ -264,6 +264,18 @@ Graphics.Image
 						16r80 @ 16r80.
 						16r80 @ 16r80.
 						16r80 @ 16r80
+					}.
+			'StandardSizes' -> {
+						16r10 @ 16r10.
+						16r14 @ 16r14.
+						16r18 @ 16r18.
+						16r20 @ 16r20.
+						16r28 @ 16r28.
+						16r30 @ 16r30.
+						16r40 @ 16r40.
+						16r60 @ 16r60.
+						16r80 @ 16r80.
+						16r100 @ 16r100
 					}
 		}!
 
@@ -296,7 +308,7 @@ addToImageList: aWinImageList mask: aColorOrNil
 		extent: aWinImageList extent!
 
 asAlphaBitmap: aPoint
-	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) that contains the receiver's image rendered at the specified size."
+	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) of the specified size that contains the receiver's image rendered at the nearest standard icon size that fits."
 
 	^DIBSection initializer: (BitmapFromIconInitializer extent: aPoint icon: self)!
 
@@ -689,17 +701,15 @@ initialize
 		self initialize
 	"
 
-	| standardSizes mapStream sizeStream next current |
-	standardSizes := #(16 20 24 32 40 48 64 96 128 256) collect: [:each | (each @ each) isImmutable: true; yourself ].
-	self addClassConstant: 'LargestStandardSize' value: standardSizes last.
+	| mapStream sizeStream next current |
 	mapStream := Array writeStream.
-	sizeStream := standardSizes readStream.
+	sizeStream := StandardSizes readStream.
 	current := sizeStream next.
-	mapStream next: 15 put: standardSizes first.
-	[sizeStream atEnd] whileFalse: [
-		next := sizeStream next.
-		mapStream next: next y - current y put: current.
-		current := next].
+	mapStream next: 15 put: StandardSizes first.
+	[sizeStream atEnd] whileFalse: 
+			[next := sizeStream next.
+			mapStream next: next y - current y put: current.
+			current := next].
 	self addClassConstant: 'StandardSizeMap' value: mapStream contents!
 
 newSystemInitializer: anInteger

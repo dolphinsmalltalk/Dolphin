@@ -218,17 +218,19 @@ detach
 	self clearCached.
 	1 to: items size do: [:i | (items at: i) detach]!
 
-drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
-	| imageList extent imageIndex callback |
+drawItemImage: itemImage on: hDC at: aPoint disabled: aBoolean
+	| imageList extent imageIndex callback iconSize inset |
 	extent := metrics menuImageExtent.
-	imageList := self imageManager imageListWithExtent: extent.
+	iconSize := Icon standardSizeFor: extent.
+	inset := (extent - iconSize) // 2.
+	imageList := self imageManager imageListWithExtent: iconSize.
 	imageIndex := self imageManager indexOfImage: itemImage.
 	aBoolean
 		ifFalse: 
 			[imageList
 				draw: imageIndex
 				on: hDC
-				at: topLeft.
+				at: aPoint + inset.
 			^self].
 	"Use DrawState() API to get the correct disabled image look, but use the callback option
 	because we want to draw out of an image list rather than from an icon or bitmap"
@@ -238,7 +240,7 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 					imageList
 						draw: wData
 						on: hdc
-						at: 0 @ 0.
+						at: inset.
 					true]
 				descriptor: DrawStateCallbackDescriptor.
 	User32
@@ -247,8 +249,8 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 		lpOutputFunc: callback asParameter
 		lData: nil
 		wData: imageIndex
-		x: topLeft x
-		y: topLeft y
+		x: aPoint x
+		y: aPoint y
 		cx: extent x
 		cy: extent y
 		fuFlags: ##(DST_COMPLEX bitOr: DSS_DISABLED).

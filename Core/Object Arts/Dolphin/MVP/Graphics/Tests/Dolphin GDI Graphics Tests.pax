@@ -25,6 +25,7 @@ package setClassNames: #(
 	#{Graphics.Tests.ThemeColorTest}
 	#{Graphics.Tests.VirtualColorTest}
 	#{OS.Tests.RGBQUADTest}
+	#{OS.Tests.SystemMetricsTest}
 ).
 
 package setPrerequisites: #(
@@ -106,6 +107,14 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'OS.Tests.RGBQUADTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.SystemMetricsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
