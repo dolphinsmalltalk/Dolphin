@@ -38,21 +38,20 @@ addToImageList: aWinImageList mask: aColorOrNil
 		addToImageList: aWinImageList
 		mask: aColorOrNil!
 
-asAlphaBitmap: aPoint 
-	"Answer a 32-bpp bitmap (i.e. with Alpha channel) that contains the receiver's
-	image rendered at the specified size."
+asAlphaBitmap: aPoint
+	"Answer a 32-bpp bitmap (i.e. with Alpha channel) that contains the receiver's image rendered at the specified size."
 
-	| bmp |
-	bmp := DIBSection 
+	| bmp iconSize |
+	bmp := DIBSection
 				width: aPoint x
 				height: aPoint y
 				depth: 32.
-	"Use the services of an ImageList to get the correct sized icon automagically, and to
-	provide an alpha channel even if the original icon had no more than a simple mask."
-	(self class imageManager imageListWithExtent: aPoint) 
+	"Use the services of an ImageList to get the correct sized icon automagically, and to provide an alpha channel even if the original icon had no more than a simple mask."
+	iconSize := Icon standardSizeFor: aPoint.
+	(self imageManager imageListWithExtent: iconSize)
 		draw: self imageIndex
 		on: bmp canvas
-		at: Point.Zero
+		at: (aPoint - iconSize) // 2
 		flags: CommCtrlConstants.ILD_PRESERVEALPHA.
 	bmp freeDC.
 	^bmp!

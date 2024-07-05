@@ -271,9 +271,7 @@ menuHeight
 menuImageExtent
 	"Answer a <Point>, being the width and height of the images displayed on menus."
 
-	"Implementation Note: There does not seem to be a system metric for this, and annoyingly if one uses the small icon extent, which is scaled for DPI, it is then gives poor results for some scales. Unlike most places where images are used, for menu images there is some granularity and the images get resized to a fixed extent for that DPI. Results are particularly poor at 125% if we use a 20@20 icon. This seems to be because the theme images for menu check buttons at 120 and 144 dpi are the rather odd sizes 18@18 and 25@25. Scaling down a 20@20 icon to 18@18 does not give good results. Scaling down of larger icon images by small amounts is less noticeable, but we still get better results by providing an icon image that fits within the menu check button extent for that DPI so that it is not scaled down at all, and we can perform the mapping using a simple calculation that will work for any scale factor, including custom ones. At present Windows only includes theme images for DPIs up to 384/400%, topping out at 64@64."
-
-	^((#(16 16 24 24 32 32 40 40 48 48 48 48) lookup: dpi // 24 - 3) ?? 64) asPoint!
+	^self menuCheckExtent max: ##(16@16)!
 
 menuImageTextGap
 	"The gap between the text in a menu item and the image. It doesn't seem to be possible to determine this from system metrics, and it doesn't appear to scale with DPI either."

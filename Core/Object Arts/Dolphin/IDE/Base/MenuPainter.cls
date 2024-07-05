@@ -138,7 +138,7 @@ horizontalSpacer
 imageExtent
 	"Private - Answer the width and height of menu item images."
 
-	^self metrics menuImageExtent!
+	^Icon standardSizeFor: self metrics menuImageExtent!
 
 imageMargin
 	^2 * self dpi // USER_DEFAULT_SCREEN_DPI!

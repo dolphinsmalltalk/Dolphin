@@ -2,7 +2,7 @@
 
 Image subclass: #Icon
 	instanceVariableNames: ''
-	classVariableNames: 'Blank DefaultApplication Error Information LargestStandardSize Question StandardSizeMap Warning WinLogo'
+	classVariableNames: 'Blank DefaultApplication Error Information LargestStandardSize Question StandardSizeMap StandardSizes Warning WinLogo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -32,24 +32,21 @@ addToImageList: aWinImageList mask: aColorOrNil
 
 	^self valueWithHandle: [:hIcon | aWinImageList addIcon: hIcon] forExtent: aWinImageList extent!
 
-asAlphaBitmap: aPoint 
-	"Answer a 32-bpp bitmap (i.e. with Alpha channel) that contains the receiver's
-	image rendered at the specified size."
+asAlphaBitmap: aPoint
+	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) of the specified size that contains the receiver's image rendered at the nearest standard icon size that fits."
 
-	| bmp |
-	bmp := DIBSection 
+	| bmp iconSize |
+	bmp := DIBSection
 				width: aPoint x
 				height: aPoint y
 				depth: 32.
-	"Use the services of an ImageList to get the correct sized icon automagically, and to
-	provide an alpha channel even if the original icon had no more than a simple mask."
-	#todo. "If we could determine that the icon is 32-bit (with alpha) then we could just draw
-	       it directly with DrawIconEx, which would save rendering all the icons into an image
-	       list at the desired extent."
-	(self imageManager imageListWithExtent: aPoint) 
+	"Use the services of an ImageList to get the correct sized icon automagically, and to provide an alpha channel even if the original icon had no more than a simple mask."
+	#todo.	"If we could determine that the icon is 32-bit (with alpha) then we could just draw it directly with DrawIconEx, which would save rendering the icons into an image list at the desired extent."
+	iconSize := self class standardSizeFor: aPoint.
+	(self imageManager imageListWithExtent: iconSize)
 		draw: self imageIndex
 		on: bmp canvas
-		at: Point.Zero
+		at: (aPoint - iconSize) // 2
 		flags: CommCtrlConstants.ILD_PRESERVEALPHA.
 	bmp freeDC.
 	^bmp!
@@ -408,6 +405,7 @@ initialize
 
 	| standardSizes mapStream sizeStream next current |
 	standardSizes := #(16 20 24 32 40 48 64 96 128 256) collect: [:each | (each @ each) isImmutable: true; yourself ].
+	self addClassConstant: 'StandardSizes' value: standardSizes.
 	self addClassConstant: 'LargestStandardSize' value: standardSizes last.
 	mapStream := Array writeStream.
 	sizeStream := standardSizes readStream.
