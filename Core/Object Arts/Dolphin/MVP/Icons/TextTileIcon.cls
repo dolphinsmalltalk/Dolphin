@@ -104,21 +104,20 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 	aGdiplusGraphics transform: matrix.
 	matrix free!
 
-asAlphaBitmap: aPoint 
-	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) that contains the receiver's
-	image rendered at the specified size."
+asAlphaBitmap: aPoint
+	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) of the specified size that contains the receiver's image rendered at the nearest standard icon size that fits."
 
-	| bmp |
-	bmp := DIBSection 
+	| bmp iconSize |
+	bmp := DIBSection
 				width: aPoint x
 				height: aPoint y
 				depth: 32.
-	"Use the services of an ImageList to get the correct sized icon automagically, and to
-	provide an alpha channel even if the original icon had no more than a simple mask."
-	(self imageManager imageListWithExtent: aPoint) 
+	"Use the services of an ImageList to get the correct sized icon automagically, and to provide an alpha channel even if the original icon had no more than a simple mask."
+	iconSize := Icon standardSizeFor: aPoint.
+	(self imageManager imageListWithExtent: iconSize)
 		draw: self imageIndex
 		on: bmp canvas
-		at: Point.Zero
+		at: (aPoint - iconSize) // 2
 		flags: CommCtrlConstants.ILD_PRESERVEALPHA.
 	bmp freeDC.
 	^bmp!
