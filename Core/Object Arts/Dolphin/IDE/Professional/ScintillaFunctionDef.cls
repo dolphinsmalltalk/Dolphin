@@ -1,13 +1,17 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ScintillaDef subclass: #ScintillaFunctionDef
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaFunctionDef guid: (GUID fromString: '{1c19ff8a-f7a5-4f32-ad24-5ddb1990984f}')!
+
 ScintillaFunctionDef comment: ''!
+
 !ScintillaFunctionDef categoriesForClass!Development! !
+
 !ScintillaFunctionDef methodsFor!
 
 constPrefix
@@ -1003,43 +1007,46 @@ stringResultsCountNull
 
 wParam: anArray
 	wParam := self makeParam: anArray! !
-!ScintillaFunctionDef categoriesFor: #constPrefix!initializing!private! !
-!ScintillaFunctionDef categoriesFor: #defaultReturnValue!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #displayOn:!displaying!public! !
-!ScintillaFunctionDef categoriesFor: #emitBasicNullLParamFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitBasicWParamLParamFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitCommentOn:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitCommentString:on:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitMethodBodyOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitMethodPreambleOn:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitMethodTextOn:!generating!public! !
-!ScintillaFunctionDef categoriesFor: #emitNullLParamFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitNullNullFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitScintillaCallOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitStringResultFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitWParamLParamFunctionOn:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitWParamNullFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitWParamStringResultFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #fixedClassStringResults!accessing!constants!private! !
-!ScintillaFunctionDef categoriesFor: #funcType:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #hasReturnValue!helpers!public! !
-!ScintillaFunctionDef categoriesFor: #hasStringResult!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #isCommand!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #isFunction!public!testing! !
-!ScintillaFunctionDef categoriesFor: #isPrivate!private!testing! !
-!ScintillaFunctionDef categoriesFor: #isPropGet!public!testing! !
-!ScintillaFunctionDef categoriesFor: #isPropSet!public!testing! !
-!ScintillaFunctionDef categoriesFor: #lParam:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #makeParam:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #name!accessing!public! !
-!ScintillaFunctionDef categoriesFor: #printOn:!printing!public! !
-!ScintillaFunctionDef categoriesFor: #remappedReturnTypes!private! !
-!ScintillaFunctionDef categoriesFor: #renamedFunctions!constants!private! !
-!ScintillaFunctionDef categoriesFor: #retType:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #returnType!accessing!public! !
-!ScintillaFunctionDef categoriesFor: #selector!generating!private! !
-!ScintillaFunctionDef categoriesFor: #stringResultsCountNull!constants!private! !
-!ScintillaFunctionDef categoriesFor: #wParam:!accessing!private! !
+
+!ScintillaFunctionDef categoriesForMethods!
+constPrefix!initializing!private! !
+defaultReturnValue!accessing!private! !
+displayOn:!displaying!public! !
+emitBasicNullLParamFunctionOn:!generating!private! !
+emitBasicWParamLParamFunctionOn:!generating!private! !
+emitCommentOn:!helpers!private! !
+emitCommentString:on:!helpers!private! !
+emitMethodBodyOn:!generating!private! !
+emitMethodPreambleOn:!helpers!private! !
+emitMethodTextOn:!generating!public! !
+emitNullLParamFunctionOn:!generating!private! !
+emitNullNullFunctionOn:!generating!private! !
+emitScintillaCallOn:!generating!private! !
+emitStringResultFunctionOn:!generating!private! !
+emitWParamLParamFunctionOn:!helpers!private! !
+emitWParamNullFunctionOn:!generating!private! !
+emitWParamStringResultFunctionOn:!generating!private! !
+fixedClassStringResults!accessing!constants!private! !
+funcType:!accessing!private! !
+hasReturnValue!helpers!public! !
+hasStringResult!helpers!private! !
+isCommand!helpers!private! !
+isFunction!public!testing! !
+isPrivate!private!testing! !
+isPropGet!public!testing! !
+isPropSet!public!testing! !
+lParam:!accessing!private! !
+makeParam:!accessing!private! !
+name!accessing!public! !
+printOn:!printing!public! !
+remappedReturnTypes!private! !
+renamedFunctions!constants!private! !
+retType:!accessing!private! !
+returnType!accessing!public! !
+selector!generating!private! !
+stringResultsCountNull!constants!private! !
+wParam:!accessing!private! !
+!
 
 !ScintillaFunctionDef class methodsFor!
 
@@ -1049,5 +1056,8 @@ tokens: anArray
 	func wParam: (anArray at: 4).
 	func lParam: (anArray at: 5).
 	^func! !
-!ScintillaFunctionDef class categoriesFor: #tokens:!instance creation!public! !
+
+!ScintillaFunctionDef class categoriesForMethods!
+tokens:!instance creation!public! !
+!
 

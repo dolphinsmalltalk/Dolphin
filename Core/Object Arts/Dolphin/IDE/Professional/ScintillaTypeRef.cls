@@ -1,13 +1,17 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ScintillaTypeRef
 	instanceVariableNames: 'name objectClass byRef toMessage fromMessage default'
 	classVariableNames: 'TypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaTypeRef guid: (GUID fromString: '{c10bac58-803f-49da-939e-1f2522b7856d}')!
+
 ScintillaTypeRef comment: ''!
+
 !ScintillaTypeRef categoriesForClass!Development! !
+
 !ScintillaTypeRef methodsFor!
 
 byRef
@@ -69,19 +73,22 @@ toMessage: anObject
 
 toScintilla
 	^toMessage! !
-!ScintillaTypeRef categoriesFor: #byRef!accessing!public! !
-!ScintillaTypeRef categoriesFor: #default!accessing!private! !
-!ScintillaTypeRef categoriesFor: #default:!accessing!private! !
-!ScintillaTypeRef categoriesFor: #displayOn:!displaying!public! !
-!ScintillaTypeRef categoriesFor: #emitReturnConversionAround:on:!generating!private! !
-!ScintillaTypeRef categoriesFor: #fromMessage:!accessing!public! !
-!ScintillaTypeRef categoriesFor: #isVoid!accessing!public! !
-!ScintillaTypeRef categoriesFor: #name!accessing!public! !
-!ScintillaTypeRef categoriesFor: #name:objectClass:byRef:!instance creation!private! !
-!ScintillaTypeRef categoriesFor: #objectClass!accessing!public! !
-!ScintillaTypeRef categoriesFor: #printOn:!printing!public! !
-!ScintillaTypeRef categoriesFor: #toMessage:!accessing!private! !
-!ScintillaTypeRef categoriesFor: #toScintilla!accessing!public! !
+
+!ScintillaTypeRef categoriesForMethods!
+byRef!accessing!public! !
+default!accessing!private! !
+default:!accessing!private! !
+displayOn:!displaying!public! !
+emitReturnConversionAround:on:!generating!private! !
+fromMessage:!accessing!public! !
+isVoid!accessing!public! !
+name!accessing!public! !
+name:objectClass:byRef:!instance creation!private! !
+objectClass!accessing!public! !
+printOn:!printing!public! !
+toMessage:!accessing!private! !
+toScintilla!accessing!public! !
+!
 
 !ScintillaTypeRef class methodsFor!
 
@@ -207,10 +214,13 @@ resetTypeMap
 							fromMessage: #fromAddress:;
 							yourself);
 				yourself! !
-!ScintillaTypeRef class categoriesFor: #declareEnum:!constants!public! !
-!ScintillaTypeRef class categoriesFor: #icon!constants!development!public! !
-!ScintillaTypeRef class categoriesFor: #initialize!constants!private! !
-!ScintillaTypeRef class categoriesFor: #name:objectClass:byRef:!instance creation!private! !
-!ScintillaTypeRef class categoriesFor: #named:!public! !
-!ScintillaTypeRef class categoriesFor: #resetTypeMap!constants!private! !
+
+!ScintillaTypeRef class categoriesForMethods!
+declareEnum:!constants!public! !
+icon!constants!development!public! !
+initialize!constants!private! !
+name:objectClass:byRef:!instance creation!private! !
+named:!public! !
+resetTypeMap!constants!private! !
+!
 
