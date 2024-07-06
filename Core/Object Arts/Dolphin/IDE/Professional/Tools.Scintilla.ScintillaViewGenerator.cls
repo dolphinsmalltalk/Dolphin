@@ -2014,6 +2014,9 @@ ignoredMessages
 	"We now use SCI_GETSTYLEINDEXAT"
 	ignoredMessages add: 'SCI_GETSTYLEAT'.
 
+	"Replaced with manually coded wrapper to set both at once"
+	ignoredMessages addAll: #('SCI_RGBAIMAGESETHEIGHT' 'SCI_RGBAIMAGESETWIDTH').
+
 	ignoredMessages
 		shrink;
 		beImmutableObject;

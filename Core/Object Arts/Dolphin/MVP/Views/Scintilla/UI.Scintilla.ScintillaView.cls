@@ -1315,6 +1315,21 @@ command: anInteger id: id
 
 	self shouldNotImplement!
 
+completionListImageExtent
+	^(##({16 @ 16.
+		16 @ 16.
+		24 @ 24.
+		24 @ 24.
+		32 @ 32.
+		32 @ 32.
+		40 @ 40.
+		40 @ 40.
+		48 @ 48.
+		48 @ 48.
+		48 @ 48.
+		48 @ 48}) lookup: self dpi // 24 - 3)
+		?? ##(64 @ 64)!
+
 controlCharacter
 	"Answer the character used to display control characters in the document, or nil if the
 	control characters are drawn (the default)."
@@ -2858,19 +2873,13 @@ idOfStyleNamed: aSymbol
 	^(self styleNamed: aSymbol) ifNil: [0] ifNotNil: [:style | style id]!
 
 imageIndexForIcon: anIcon
-	^registeredImages at: anIcon
-		ifAbsentPut: 
-			[| type bmp |
-			type := registeredImages size.
-			bmp := anIcon asSharedBitmap: self metrics menuImageExtent.
-			type = 0
-				ifTrue: 
-					[| ext |
-					ext := bmp extent.
-					self
-						sciRGBAImageSetWidth: ext x;
-						sciRGBAImageSetHeight: ext y].
-			self sciRegisterRGBAImage: type pixels: (self rgbaBitsFromBitmap: bmp).
+	^(registeredImages lookup: anIcon)
+		ifNil: 
+			[| type ext |
+			ext := self completionListImageExtent.
+			type := registeredImages at: anIcon put: registeredImages size.
+			type == 0 ifTrue: [self setRGBAImageExtent: ext].
+			self sciRegisterRGBAImage: type pixels: (self rgbaBitsFromBitmap: (anIcon asSharedBitmap: ext)).
 			type]!
 
 imeMode
@@ -3047,7 +3056,7 @@ initialize
 		at: SC_ELEMENT_LIST_BACK put: Color.Window.
 	scFlags := 0.
 	stringClass := Utf8String.
-	registeredImages := LookupTable new!
+	self initializeRegisteredImages!
 
 initializeControl
 	"Private - Prime the Scintilla control with any settings stored in instance variables that
@@ -3056,7 +3065,7 @@ initializeControl
 	"Discard registered images rather than restoring - these can be re-registered dynamically as required"
 
 	| marginStylesOffset annotationStyleOffset |
-	registeredImages := LookupTable new.
+	self initializeRegisteredImages.
 	self sciSetModEventMask: self modificationEventMask.
 	"See Scintilla documentatio: https://www.scintilla.org/ScintillaDoc.html#SCI_GETBUFFEREDDRAW, although it incorrectly states that this should almost always be turned off. My experience is that unless Direct Draw is being used, that there is a lot of flicker without double-buffering."
 	self sciSetBufferedDraw: self sciGetTechnology == SC_TECHNOLOGY_DEFAULT.
@@ -3080,6 +3089,9 @@ initializeControl
 
 initializeMarkerDefinitions
 	markerDefinitions do: [:each | each initializeView: self]!
+
+initializeRegisteredImages
+	registeredImages := LookupTable new!
 
 insertText: aString
 	"Insert text into the document at current position."
@@ -4850,6 +4862,12 @@ resetKeyBindings
 resetMarkers
 	markers do: [:each | each removedFromView].
 	markers := IdentitySet new!
+
+resetRegisteredImages
+	self
+		cancelAutoCompletion;
+		destroyAutoCompletionListImages;
+		initializeRegisteredImages!
 
 resetZoom
 	"Reset the zoom level so the text is displayed at standard size."
@@ -7311,15 +7329,6 @@ sciResetElementColour: elementInteger
 		wParam: elementInteger
 		lParam: 0!
 
-sciRGBAImageSetHeight: heightInteger
-	"Private - Set the height for future RGBA image data."
-
-	library
-		directFunction: this
-		msg: SCI_RGBAIMAGESETHEIGHT
-		wParam: heightInteger
-		lParam: 0!
-
 sciRGBAImageSetScale: scalePercentInteger
 	"Private - Set the scale factor in percent for future RGBA image data."
 
@@ -7327,15 +7336,6 @@ sciRGBAImageSetScale: scalePercentInteger
 		directFunction: this
 		msg: SCI_RGBAIMAGESETSCALE
 		wParam: scalePercentInteger
-		lParam: 0!
-
-sciRGBAImageSetWidth: widthInteger
-	"Private - Set the width for future RGBA image data."
-
-	library
-		directFunction: this
-		msg: SCI_RGBAIMAGESETWIDTH
-		wParam: widthInteger
 		lParam: 0!
 
 sciScrollCaret
@@ -9186,6 +9186,19 @@ setReadOnly: readOnlyBoolean
 		wParam: readOnlyBoolean asParameter
 		lParam: 0!
 
+setRGBAImageExtent: aPoint
+	this
+		ifNotNil: 
+			[library
+				directFunction: this
+					msg: SCI_RGBAIMAGESETWIDTH
+					wParam: aPoint x
+					lParam: 0;
+				directFunction: this
+					msg: SCI_RGBAIMAGESETHEIGHT
+					wParam: aPoint y
+					lParam: 0]!
+
 setTabStops: anInteger 
 	"Private - Set the width of the receiver's tab stops to anInteger."
 
@@ -9946,6 +9959,15 @@ wmContextMenu: message wParam: wParam lParam: lParam
 	self cancelModes.
 	^super wmContextMenu: message wParam: wParam lParam: lParam!
 
+wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
+	"Private - Change of DPI invalidates all the images we have registered."
+
+	self resetRegisteredImages.
+	^super
+		wmDpiChangedBeforeParent: message
+		wParam: wParam
+		lParam: lParam!
+
 wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Handle WM_KEYDOWN. Implementation Note: We override here in order to allow
 	the correct behaviour for the RETURN key in dialogs (i.e. to send a the id of the default
@@ -10268,6 +10290,7 @@ codePage!other settings!public! !
 codePage:!other settings!public! !
 columnFromPosition:!**auto generated**!information!public!scintilla interface! !
 command:id:!commands-actions!private! !
+completionListImageExtent!autocompletion!helpers!private! !
 controlCharacter!caret, selection, and hotspot styles!public! !
 controlCharacter:!caret, selection, and hotspot styles!public! !
 convertToLowercase!**auto generated**!commands-actions!public!scintilla interface! !
@@ -10477,6 +10500,7 @@ indicatorsUnder:!indicators!private! !
 initialize!initializing!public! !
 initializeControl!initializing!private! !
 initializeMarkerDefinitions!helpers!markers!private! !
+initializeRegisteredImages!initializing!private! !
 insertText:!public!text retrieval & modification! !
 insertText:at:!public!text retrieval & modification! !
 invalidateStyling!public!styling! !
@@ -10687,6 +10711,7 @@ requiredLineMarginWidth!helpers!margins!private! !
 resetElementColor:!autocompletion!element colors!private! !
 resetKeyBindings!helpers!key bindings!private! !
 resetMarkers!helpers!markers!private! !
+resetRegisteredImages!autocompletion!private! !
 resetZoom!commands-actions!public!zooming! !
 restyleAll!public!styling! !
 restyleFrom:to:!**auto generated**!public!scintilla interface!styling! !
@@ -10933,9 +10958,7 @@ sciReplaceTarget:text:!**auto generated**!private!scintilla interface!searching 
 sciReplaceTargetMinimal:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 sciReplaceTargetRE:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 sciResetElementColour:!**auto generated**!element colors!private!scintilla interface! !
-sciRGBAImageSetHeight:!**auto generated**!markers!private!scintilla interface! !
 sciRGBAImageSetScale:!**auto generated**!markers!private!scintilla interface! !
-sciRGBAImageSetWidth:!**auto generated**!markers!private!scintilla interface! !
 sciScrollCaret!**auto generated**!private!scintilla interface!scrolling! !
 sciScrollRange:primary:!**auto generated**!private!scintilla interface!scrolling! !
 sciSearchAnchor!**auto generated**!caret!private!scintilla interface!searching & replacing! !
@@ -11128,6 +11151,7 @@ setOrResetElement:color:!element colors!private! !
 setOrResetElement:color:defaultSystem:!autocompletion!element colors!private! !
 setRawAnnotations:!annotations!helpers!private! !
 setReadOnly:!**auto generated**!modes!public!scintilla interface!text retrieval & modification! !
+setRGBAImageExtent:!initializing!private! !
 setTabStops:!private!tabs & indentation guides! !
 setTargetRangeFromSelection!**auto generated**!public!scintilla interface!searching & replacing! !
 setText:!helpers!private!text retrieval & modification! !
@@ -11219,6 +11243,7 @@ willCaptureMouse!**auto generated**!mouse capture!public!scintilla interface!tes
 willCaptureMouse:!**auto generated**!mouse capture!public!scintilla interface! !
 wmChar:wParam:lParam:!event handling-win32!private! !
 wmContextMenu:wParam:lParam:!event handling-win32!private! !
+wmDpiChangedBeforeParent:wParam:lParam:!event handling-win32!private! !
 wmKeyDown:wParam:lParam:!event handling-win32!private! !
 wmTimer:wParam:lParam:!event handling-win32!private!timers! !
 wordChars!character classes!other settings!public! !
