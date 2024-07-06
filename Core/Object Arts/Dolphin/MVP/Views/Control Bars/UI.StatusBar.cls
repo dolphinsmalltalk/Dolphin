@@ -376,16 +376,7 @@ updateItem: aStatusBarItem
 	index == 0 ifTrue: [^self].
 	self setRightEdges.
 	self setItemText: aStatusBarItem at: index.
-	self invalidateRect: (self getItemRect: index - 1)!
-
-wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
-	super
-		wmDpiChangedBeforeParent: message
-		wParam: wParam
-		lParam: lParam.
-	"If not using preferred extent, then rescale the height. If using preferred extent, this will adjust automatically to fit the font/icons as part of layout."
-	self usePreferredExtent ifFalse: [self extent: self extent * self dpi // self topView dpi].
-	^nil! !
+	self invalidateRect: (self getItemRect: index - 1)! !
 
 !UI.StatusBar categoriesForMethods!
 addItem:!adding!items!public! !
@@ -430,7 +421,6 @@ setWindowText:!accessing!private!win32 bug fix! !
 size!accessing!public! !
 sizeGripWidth!constants!private! !
 updateItem:!private!updating! !
-wmDpiChangedBeforeParent:wParam:lParam:!event handling-win32!private! !
 !
 
 !UI.StatusBar class methodsFor!
