@@ -1,13 +1,17 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ScintillaParam
 	instanceVariableNames: 'name typeName typeRef'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaParam guid: (GUID fromString: '{c2e4de9a-2733-4744-a2e1-c18af7a172d1}')!
+
 ScintillaParam comment: ''!
+
 !ScintillaParam categoriesForClass!Kernel-Objects! !
+
 !ScintillaParam methodsFor!
 
 displayOn: aStream
@@ -44,14 +48,17 @@ type
 
 typeName
 	^typeName! !
-!ScintillaParam categoriesFor: #displayOn:!displaying!public! !
-!ScintillaParam categoriesFor: #emitOutParam:on:!generating!private! !
-!ScintillaParam categoriesFor: #isUnused!generating!helpers!public! !
-!ScintillaParam categoriesFor: #name!initializing!private! !
-!ScintillaParam categoriesFor: #parameterName!helpers!private! !
-!ScintillaParam categoriesFor: #setName:typeName:!initializing!private! !
-!ScintillaParam categoriesFor: #type!initializing!private! !
-!ScintillaParam categoriesFor: #typeName!public! !
+
+!ScintillaParam categoriesForMethods!
+displayOn:!displaying!public! !
+emitOutParam:on:!generating!private! !
+isUnused!generating!helpers!public! !
+name!initializing!private! !
+parameterName!helpers!private! !
+setName:typeName:!initializing!private! !
+type!initializing!private! !
+typeName!public! !
+!
 
 !ScintillaParam class methodsFor!
 
@@ -61,6 +68,9 @@ icon
 newName: nameString typeName: typeString
 	^self new
 		setName: nameString typeName: typeString! !
-!ScintillaParam class categoriesFor: #icon!constants!development!public! !
-!ScintillaParam class categoriesFor: #newName:typeName:!instance creation!public! !
+
+!ScintillaParam class categoriesForMethods!
+icon!constants!development!public! !
+newName:typeName:!instance creation!public! !
+!
 

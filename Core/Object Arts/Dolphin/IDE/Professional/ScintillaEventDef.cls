@@ -1,13 +1,17 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ScintillaDef subclass: #ScintillaEventDef
 	instanceVariableNames: 'args'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaEventDef guid: (GUID fromString: '{fdf0c39c-6309-4219-a64c-07355e04671c}')!
+
 ScintillaEventDef comment: ''!
+
 !ScintillaEventDef categoriesForClass!Development! !
+
 !ScintillaEventDef methodsFor!
 
 args: anArrayOfArray 
@@ -49,11 +53,14 @@ id: anInteger name: nameString retType: aString
 
 retType: aString 
 	self assert: [aString = 'void']! !
-!ScintillaEventDef categoriesFor: #args:!private! !
-!ScintillaEventDef categoriesFor: #constPrefix!constants!initializing!private! !
-!ScintillaEventDef categoriesFor: #generateHandlerOn:!helpers!private! !
-!ScintillaEventDef categoriesFor: #id:name:retType:!initializing!private! !
-!ScintillaEventDef categoriesFor: #retType:!accessing!private! !
+
+!ScintillaEventDef categoriesForMethods!
+args:!private! !
+constPrefix!constants!initializing!private! !
+generateHandlerOn:!helpers!private! !
+id:name:retType:!initializing!private! !
+retType:!accessing!private! !
+!
 
 !ScintillaEventDef class methodsFor!
 
@@ -65,5 +72,8 @@ tokens: anArray
 				retType: (anArray at: 1).
 	evt args: (anArray copyFrom: 4).
 	^evt! !
-!ScintillaEventDef class categoriesFor: #tokens:!instance creation!public! !
+
+!ScintillaEventDef class categoriesForMethods!
+tokens:!instance creation!public! !
+!
 

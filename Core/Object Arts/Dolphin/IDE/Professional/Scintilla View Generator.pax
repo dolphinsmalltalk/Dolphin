@@ -7,7 +7,6 @@ You will need to download the Scintilla source matching the binary version of Sc
 
 It is suggested that you run the generator in preview mode, which is the default. The ScintillaView is an integral part of the Dolphin IDE, so if the regeneration fails, or introduces issues, Dolphin may crash or become unusable. In preview mode the generator will open a "Rewrite Changes Browser" showing all of the added, modified, and removed methods. These may be perused to identify unexpected changes, or to look for opportunities to add higher-level wrappers for new features.'.
 
-
 package classNames
 	add: #ScintillaDef;
 	add: #ScintillaEventDef;
@@ -44,36 +43,36 @@ Object subclass: #ScintillaDef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaParam
 	instanceVariableNames: 'name typeName typeRef'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaTypeRef
 	instanceVariableNames: 'name objectClass byRef toMessage fromMessage default'
 	classVariableNames: 'TypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaViewGenerator
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaDef subclass: #ScintillaEventDef
 	instanceVariableNames: 'args'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaDef subclass: #ScintillaFunctionDef
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 
