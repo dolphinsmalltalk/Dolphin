@@ -90,8 +90,6 @@ onViewOpened
 	viewChoice choices: Graphics.Gdiplus.ImageView viewModes.
 	interpolationChoice choices: Graphics.Gdiplus.ImageView interpolationStyles.
 	imageClasses := {Image. Bitmap. Graphics.Bitmap. DIBSection. Icon}.
-	#{OS.COM.Picture} valueOrNil
-		ifNotNil: [:olePicture | imageClasses := imageClasses copyWith: olePicture].
 	classChoice choices: imageClasses.
 	edgeChoice model: (image view aspectValue: #imageBorder).
 	viewChoice model: (image view aspectValue: #viewMode).

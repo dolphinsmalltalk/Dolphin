@@ -68,11 +68,10 @@ createHandle
 			hmExtent := extent := 1 @ 1.
 			0]
 		ifNotNil: 
-			[| dc |
+			[| dpi |
 			hmExtent := picture extent.
-			dc := Canvas forDesktop.
-			extent := dc hiMetricToPels: hmExtent.
-			dc free.
+			dpi := SystemMetrics current dpi.
+			extent := (dpi * hmExtent x // 2540) @ (dpi * hmExtent y // 2540)].
 			picture handle]!
 
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
@@ -150,6 +149,11 @@ picture: anIPicture
 	picture := anIPicture
 !
 
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	^##(72 @ 72)!
+
 saveAsFile: pathString
 	"Save this picture to a file at the specified path, and existing file at that path is
 	overwritten."
@@ -174,6 +178,7 @@ loadFromFile:extent:flags:!private!realizing/unrealizing! !
 loadResource:fromModule:extent:flags:!public! !
 picture!accessing!private! !
 picture:!accessing!private! !
+resolution!accessing!public! !
 saveAsFile:!file operations!public! !
 !
 

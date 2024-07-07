@@ -46,8 +46,6 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation (Old Names).pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Font\OLE Font.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\ListTree\Dolphin List Tree Presenter.pax' #plain #imageBased);
 		yourself.

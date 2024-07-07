@@ -18,9 +18,17 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Security.DolphinSureCertificate} #backgroundImageFile)
+	#(#{Security.DolphinSureCertificate} #gap)
 	#(#{Security.DolphinSureCertificate} #image)
-	#(#{Security.DolphinSureCertificate} #imagePrint:on:labelBox:textBox:)
+	#(#{Security.DolphinSureCertificate} #imageAttributes)
+	#(#{Security.DolphinSureCertificate} #imagePrint:in:label:in:on:brush:)
 	#(#{Security.DolphinSureCertificate} #show)
+	#(#{Security.DolphinSureCertificationAuthorityCertificate} #imageAttributes)
+	#(#{Security.DolphinSurePersonalCertificate} #backgroundImageFile)
+	#(#{Security.DolphinSurePersonalCertificate} #imageAttributes)
+	#(#{Security.NotSignedCertificate} #backgroundImageFile)
+	#(#{Security.NotSignedCertificate} #imageAttributes)
 ).
 
 package setPrerequisites: #(
@@ -59,58 +67,118 @@ UI.Dialog
 
 !Security.DolphinSureCertificate methodsFor!
 
+backgroundImageFile
+	"Private - Answers the resource name of the background image file
+	for the receiver"
+
+	^'Resources/DolphinSureCert.jpg'
+!
+
+gap	
+	"Private - Answers a string to leave a gap"
+
+	^' '!
+
 image
 	"Answers an image displaying the certificate details"
 
-	"First validate the certificate"
+	<namespace: Graphics.Gdiplus>
 
-	| background image extent canvas labelBox textBox |
+	| background image extent labelBox textBox graphics blackBrush dpi |
+	"First validate the certificate"
 	self validData.
-	background := Graphics.Gdiplus.Bitmap fromFile: self backgroundImageFile
+	background := Bitmap fromFile: self backgroundImageFile
 				usingLocator: FileLocator installRelative.
 	extent := background extent.
-	image := Graphics.DIBSection width: extent x height: extent y.
-	canvas := image canvas.
-	background
-		drawOn: canvas
-		at: Graphics.Point zero
+	labelBox := RectF origin: 35 @ 55 corner: 110 @ (extent y - 20).
+	textBox := RectF origin: 120 @ 55 corner: extent - 20.
+	dpi := SystemMetrics current dpi.
+	extent := extent * dpi / 96.0.
+	labelBox scaleToDpi: dpi from: 96.
+	textBox scaleToDpi: dpi from: 96.
+	image := Bitmap width: extent x height: extent y.
+	graphics := image graphics.
+	image graphics
+		drawImage: background
+		at: Point zero
 		extent: extent.
-	canvas backgroundMode: TRANSPARENT.
-	labelBox := Graphics.Rectangle origin: 35 @ 55 corner: 110 @ (extent y - 20).
-	textBox := Graphics.Rectangle origin: 120 @ 55 corner: extent - 20.
-
+	background free.
+	blackBrush := SolidBrush black.
 	"Draw attributes"
 	self imageAttributes do: 
 			[:each |
-			canvas save.
-			each value == #validityString
-				ifTrue: [self info hasExpired ifTrue: [canvas forecolor: Graphics.Color red]].
-			self
-				imagePrint: each
-				on: canvas
-				labelBox: labelBox
-				textBox: textBox.
-			canvas restore].
-	image freeDC.
+			| text attributeName |
+			attributeName := each value.
+			(text := self perform: attributeName) isEmpty
+				ifFalse: 
+					[self
+						imagePrint: text
+						in: textBox
+						label: each key
+						in: labelBox
+						on: graphics
+						brush: ((attributeName == #validityString and: [self info hasExpired])
+								ifTrue: [SolidBrush red]
+								ifFalse: [blackBrush])]].
+	blackBrush free.
+	graphics free.
 	^image!
 
-imagePrint: attributeAssociation on: aCanvas labelBox: labelRect textBox: textRect 
+imageAttributes
+	"Private - Answers a <sequencedReadableCollection> of <Association> detailing the attributes that should appear on a image displaying the certificate details"
+
+	^{'Serial no:' -> #serial.
+		'Publisher:' -> #owner.
+		'Details:' -> #details.
+		'' -> #gap.
+		'Purpose:' -> #purpose.
+		'' -> #gap.
+		'Validity:' -> #validityString.
+		'Issued by:' -> #issuingAuthority}!
+
+imagePrint: textString in: textRect label: labelString in: labelRect on: aGdiplusGraphics brush: aGdiplusBrush
 	"Private - Prints the attribute of the receiver identified by attributeAssociation on aCanvas
 	in labelRect and textRect. The key of the association is a <readableString> that acts as a heading for
 	the attribute data while the value is a selector to use to get the attribute data itself. Once
 	the attribute has been printed on the canvas then labelRect and textRect are updated to the next location."
 
-	| value |
-	(value := self perform: attributeAssociation value) notEmpty 
-		ifTrue: 
-			[| lh th h |
-			aCanvas font: (Graphics.Font name: 'Arial' pixelSize: 11) beBold.
-			lh := aCanvas formatText: attributeAssociation key in: labelRect.
-			aCanvas font: (Graphics.Font name: 'Arial' pixelSize: 11).
-			th := aCanvas formatText: value in: textRect.
-			h := lh max: th.
-			labelRect top: labelRect top + h.
-			textRect top: textRect top + h]!
+	<namespace: Graphics.Gdiplus>
+
+	| value font height fontHeight |
+	value := textString.
+	fontHeight := 8 * SystemMetrics current dpi / 72.0.
+	font := Font
+				name: 'Arial'
+				pixelSize: fontHeight
+				style: FontStyleBold.
+	height := (aGdiplusGraphics
+				measureString: labelString
+				font: font
+				rect: labelRect
+				format: nil) height.
+	aGdiplusGraphics
+		drawString: labelString
+		font: font
+		rect: labelRect
+		format: nil
+		brush: aGdiplusBrush.
+	font free.
+	font := Font name: 'Arial' pixelSize: fontHeight.
+	aGdiplusGraphics
+		drawString: value
+		font: font
+		rect: textRect
+		format: nil
+		brush: aGdiplusBrush.
+	height := height
+				max: (aGdiplusGraphics
+						measureString: value
+						font: font
+						rect: textRect
+						format: nil) height.
+	font free.
+	labelRect top: labelRect top + height.
+	textRect top: textRect top + height!
 
 show
 	"Shows the receiver as a splash screen"
@@ -118,9 +186,75 @@ show
 	(UI.Splash bitmap: self image) show	! !
 
 !Security.DolphinSureCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+gap!drawing!helpers!private! !
 image!drawing!public! !
-imagePrint:on:labelBox:textBox:!drawing!helpers!private! !
+imageAttributes!drawing!helpers!private! !
+imagePrint:in:label:in:on:brush:!drawing!helpers!private! !
 show!operations!public! !
+!
+
+!Security.DolphinSureCertificationAuthorityCertificate methodsFor!
+
+imageAttributes
+	"Private - Answers a <sequencedReadableCollection> of <Association> detailing the attributes that should appear on a image displaying the certificate details"
+
+	^{'Serial no:' -> #serial.
+		'Certifying Authority:' -> #owner.
+		'Details:' -> #details.
+		'' -> #gap.
+		'Purpose:' -> #purpose.
+		'' -> #gap.
+		'Validity:' -> #validityString.
+		'Issued by:' -> #issuingAuthority}! !
+
+!Security.DolphinSureCertificationAuthorityCertificate categoriesForMethods!
+imageAttributes!accessing!private! !
+!
+
+!Security.DolphinSurePersonalCertificate methodsFor!
+
+backgroundImageFile
+	"Private - Answers the resource name of the background image file
+	for the receiver"
+
+	^'Resources/DolphinSurePersonalCert.jpg'
+!
+
+imageAttributes
+	"Private - Answers a <sequencedReadableCollection> of <Association> detailing the attributes that should appear on a image displaying the certificate details"
+
+	^{'Serial no:' -> #serial.
+		'Issued to:' -> #owner.
+		'Details:' -> #details.
+		'' -> #gap.
+		'Purpose:' -> #purpose.
+		'' -> #gap.
+		'Validity:' -> #validityString.
+		'Issued by:' -> #issuingAuthority}! !
+
+!Security.DolphinSurePersonalCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+imageAttributes!drawing!helpers!private! !
+!
+
+!Security.NotSignedCertificate methodsFor!
+
+backgroundImageFile
+	"Private - Answers the resource name of the background image file
+	for the receiver"
+
+	^'Resources/DolphinSureNotSignedCert.jpg'
+!
+
+imageAttributes
+	"Private - Answers a <sequencedReadableCollection> of <Association> detailing the attributes that should appear on a image displaying the certificate details"
+
+	^{'' -> #gap. 'IMPORTANT:' -> #purpose}! !
+
+!Security.NotSignedCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+imageAttributes!accessing!private! !
 !
 
 "End of package definition"!

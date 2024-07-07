@@ -25,13 +25,6 @@ If you wish to be able to make use of DolphinSureTrustedData within your applica
 
 	^self species == anObject species and: [self publicKey = anObject publicKey]!
 
-backgroundImageFile
-	"Private - Answers the resource name of the background image file
-	for the receiver"
-
-	^'Resources/DolphinSureCert.jpg'
-!
-
 beNotPermanentlyTrusted
 	"Sets the receiver to be untrusted in the permanent store"
 
@@ -93,32 +86,12 @@ displayOn: aPuttableStream
 		display: info serial;
 		nextPut: $)!
 
-gap	
-	"Private - Answers a string to leave a gap"
-
-	^' '!
-
 hasExpired
 	"Answer true if the receiver has expired"
 
 	| info |
 	info := self info.
 	^Date today between: info issued and: info expiry!
-
-imageAttributes
-	"Private - Answers an OrderedCollection detailing the attributes that should
-	appear on a image displaying the certificate details"
-
-	^##(OrderedCollection new
-		add: 'Serial no:' -> #serial;
-		add: 'Publisher:' -> #owner;
-		add: 'Details:' -> #details;
-		add: '' -> #gap;
-		add: 'Purpose:' -> #purpose;
-		add: '' -> #gap;
-		add: 'Validity:' -> #validityString;
-		add: 'Issued by:' -> #issuingAuthority;
-		yourself)!
 
 info
 	"Answers the decoded information for the receiver"
@@ -218,7 +191,6 @@ validityString
 
 !Security.DolphinSureCertificate categoriesForMethods!
 =!comparing!public! !
-backgroundImageFile!constants!private! !
 beNotPermanentlyTrusted!accessing!public!trust! !
 beNotTemporarilyTrusted!accessing!public!trust! !
 beNotTrusted!accessing!public!trust! !
@@ -228,9 +200,7 @@ canBePermanentlyTrusted!public!testing!trust! !
 confirmTrustFor:!operations!public!trust! !
 details!accessing!public! !
 displayOn:!printing!public! !
-gap!drawing!helpers!private! !
 hasExpired!public!testing! !
-imageAttributes!drawing!helpers!private! !
 info!accessing!public! !
 info:privateKey:!accessing!private! !
 isPermanentlyTrusted!public!testing!trust! !

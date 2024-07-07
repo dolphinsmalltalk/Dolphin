@@ -5,7 +5,9 @@ package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk OLE Picture component. 
 Copyright (c) Object Arts Ltd 2000-2002.
 
-This package wraps the OLE StdPicture object (a useful COM object that can load and paint images of most types including JPEGS, BMPs, etc).'.
+This package wraps the OLE StdPicture object, a COM image object that was once useful for its ability to load and paint images of most types including JPEGS, PNGs, BMPs, etc. However, StdPicture does not play well with high DPI, so it is recommended that GDI+ images be used instead as these can also be loaded from jpegs, pngs, etc.
+
+In consideration of its limitations, this package is no longer used by nor loaded in the standard image.'.
 
 package basicPackageVersion: '6.2'.
 

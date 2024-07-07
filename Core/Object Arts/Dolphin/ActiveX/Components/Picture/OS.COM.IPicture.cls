@@ -123,9 +123,9 @@ extent
 	| buf x |
 	buf := Int32 new.
 	self get_Width: buf.
-	x := buf asInteger.
+	x := buf asSignedInteger.
 	self get_Height: buf.
-	^x @ buf asInteger!
+	^x @ buf asSignedInteger!
 
 get_Attributes: pdwAttr
 	"Private - Get the value of the 'Attributes' property of the receiver.
@@ -238,9 +238,9 @@ keepOriginalFormat
 	"Answer the <bool> value of the 'KeepOriginalFormat' property of the receiver."
 
 	| answer |
-	answer := Int32 new.
+	answer := BOOL newBuffer.
 	self get_KeepOriginalFormat: answer.
-	^answer asInteger asBoolean
+	^answer value
 !
 
 keepOriginalFormat: pfkeep

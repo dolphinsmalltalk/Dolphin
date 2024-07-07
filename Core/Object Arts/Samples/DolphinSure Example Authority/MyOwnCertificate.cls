@@ -22,19 +22,16 @@ backgroundImageFile
 !
 
 imageAttributes
-	"Private - Answers an OrderedCollection detailing the attributes that should
-	appear on a image displaying the certificate details"
+	"Private - Answers a <sequencedReadableCollection> of <Association> detailing the attributes that should appear on a image displaying the certificate details"
 
-	^##(OrderedCollection new
-		add: 'Serial no:' -> #serial;
-		add: 'Issued to:' -> #owner;
-		add: 'Email:' -> #details;
-		add: '' -> #gap;
-		add: 'Purpose:' -> #purpose;
-		add: '' -> #gap;
-		add: 'Validity:' -> #validityString;
-		add: 'Issued by:' -> #issuingAuthority;
-		yourself)!
+	^{'Serial no:' -> #serial.
+		'Issued to:' -> #owner.
+		'Email:' -> #details.
+		'' -> #gap.
+		'Purpose:' -> #purpose.
+		'' -> #gap.
+		'Validity:' -> #validityString.
+		'Issued by:' -> #issuingAuthority}!
 
 purpose
 	"Answers the purpose of this certificate"
