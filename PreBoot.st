@@ -64,3 +64,33 @@ compileForMethod: aString in: aClass environment: aNamespaceOrNil flags: anInteg
 		in: aClass
 		environment: aNamespaceOrNil
 		flags: anInteger! !
+
+!Kernel.CompilerLibrary class methodsFor!
+
+compilerNotification: aCompilerNotification
+	self error: aCompilerNotification displayString!
+
+notificationCallback: anArray
+	| errorCode offset sourceText lineNumber errorStart errorStop selector methodClass extras notified |
+	errorCode := anArray first.
+	lineNumber := anArray at: 2.
+	errorStart := anArray at: 3.
+	errorStop := anArray at: 4.
+	"The offset must be added to the error range to get the actual interval in the source text"
+	offset := anArray at: 5.
+	sourceText := anArray at: 6.
+	selector := anArray at: 7.
+	methodClass := anArray at: 8.
+	notified := anArray at: 9.
+	extras := anArray at: 10 ifAbsent: #().
+	^notified compilerNotification: ((CompilerNotification
+				code: errorCode
+				in: sourceText
+				for: methodClass
+				selector: selector
+				position: errorStart + 1
+				line: lineNumber
+				range: (errorStart to: errorStop) + 1
+				extras: extras)
+				offset: offset;
+				yourself)! !

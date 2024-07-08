@@ -117,6 +117,15 @@ onPreSaveImage
 	#{Delay} ifDefined: [:d | d onPreSaveImage]
 !
 
+onUnhandledNotification: aNotification
+	"Stop the boot immediately on compilation errors as this makes them much easier to locate"
+
+	aNotification severityClass == Error
+		ifTrue: 
+			[self logError: aNotification.
+			self quit: -1].
+	^super onUnhandledNotification: aNotification!
+
 onUnhandledWarning: aWarning
 	self stderr
 		nextPutAll: aWarning description;
@@ -344,6 +353,7 @@ keepAlive!idling!public! !
 logError:!operations-logging!public! !
 main!operations-startup!public! !
 onPreSaveImage!event handling!public! !
+onUnhandledNotification:!event handling!public! !
 onUnhandledWarning:!event handling!public! !
 openConsole!operations!public! !
 openFd:mode:!operations!private! !
