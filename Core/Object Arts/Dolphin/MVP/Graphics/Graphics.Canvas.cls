@@ -1144,7 +1144,7 @@ desktopResolution
 	"Answer the resolution of the active desktop."
 
 	| dpi |
-	dpi := User32 getDpiForSystem.
+	dpi := SystemMetrics current dpi.
 	^Point x: dpi y: dpi!
 
 forDesktop

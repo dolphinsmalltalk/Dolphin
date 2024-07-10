@@ -128,10 +128,10 @@ initialize
 		registerTool: self!
 
 previewDpiAwareness
-	^ResourceListPresenter previewDpiAwareness!
+	^ResourcePreview previewDpiAwareness!
 
 previewDpiAwareness: aSymbol
-	ResourceListPresenter previewDpiAwareness: aSymbol!
+	ResourcePreview previewDpiAwareness: aSymbol!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

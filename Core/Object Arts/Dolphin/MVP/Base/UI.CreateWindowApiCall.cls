@@ -39,7 +39,8 @@ position: aPoint
 printOn: aStream
 	aStream
 		basicPrint: self;
-		print: self rectangle;
+		nextPut: $(;
+		display: self rectangle;
 		nextPutAll: ' dpi: ';
 		print: dpi;
 		nextPut: $)!
@@ -50,18 +51,18 @@ rectangle
 	^rectangle!
 
 rectangle: aRectangle dpi: anInteger
-	"Set the <rectangle> specifying the position and extent of the window that will be created, and the dpi in which the pixel co-ordinates that it contains are measured."
+	"Private - Set the <rectangle> specifying the position and extent of the window that will be created, and the dpi in which the pixel co-ordinates that it contains are measured."
 
 	rectangle := RECTL marshal: aRectangle.
 	dpi := anInteger! !
 
 !UI.CreateWindowApiCall categoriesForMethods!
-dpi!accessing!high DPI!public! !
+dpi!accessing!public! !
 dpi:!accessing!public! !
 extent:!accessing!public! !
 position:!accessing!public! !
 printOn:!printing!public! !
 rectangle!accessing!public! !
-rectangle:dpi:!accessing!public! !
+rectangle:dpi:!initializing!private! !
 !
 

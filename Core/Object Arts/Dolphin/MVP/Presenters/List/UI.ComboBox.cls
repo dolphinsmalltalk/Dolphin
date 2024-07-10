@@ -31,7 +31,7 @@ actualHeight
 
 	^self height + self droppedHeight!
 
-adjustRectangle: aRectangle 
+adjustRectangle: aRectangle
 	"Update the <Rectangle> argument, which is a proposed new position and extent for the
 	receiver, to account for any of the receiver's foibles."
 
@@ -39,10 +39,10 @@ adjustRectangle: aRectangle
 	changed (unless in simple mode) - it is fixed as the height of the edit box plus the 
 	droppedHeight."
 
-	^self mode == #simple 
+	^self isSimple
 		ifTrue: [aRectangle]
 		ifFalse: 
-			[(aRectangle copy)
+			[aRectangle copy
 				height: self actualHeight;
 				yourself]!
 
@@ -188,7 +188,7 @@ droppedHeight
 	^droppedHeight
 		ifNil: 
 			[handle
-				ifNil: [self defaultDroppedHeight * self dpi // USER_DEFAULT_SCREEN_DPI]
+				ifNil: [self defaultDroppedHeight * SystemMetrics current dpi // USER_DEFAULT_SCREEN_DPI]
 				ifNotNil: [self getDroppedControlRect height - self height]]!
 
 droppedHeight: anInteger
@@ -253,6 +253,9 @@ getSingleSelection
 	zero if there is none."
 
 	^(self sendMessage: CB_GETCURSEL) + 1!
+
+isSimple
+	^self mode == #simple!
 
 itemCount
 	"Answers the count of elements in the receiver. This may be 
@@ -320,6 +323,19 @@ placement: aWINDOWPLACEMENT
 					placement := aWINDOWPLACEMENT copy.
 					placement height: self droppedHeight.
 					placement])!
+
+recreationFunction
+	"Private - Answer a function object that encapsulates a CreateWindow API call to recreate the receiver's window."
+
+	^self isSimple
+		ifTrue: [super recreationFunction]
+		ifFalse: 
+			["When the ComboBox is recreated the rectangle needs to be that when dropped as this is how the dropped height is set."
+			self creationFunction: (User32
+						mapRectangle: self getDroppedControlRect
+						from: nil
+						to: self parentView)
+				dpi: self dpi]!
 
 resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
@@ -392,12 +408,14 @@ extent:!geometry!public! !
 getDroppedControlRect!geometry!private! !
 getSelectionsByIndex!private!selection! !
 getSingleSelection!helpers!private!selection! !
+isSimple!geometry!public! !
 itemCount!accessing!public! !
 itemFromPoint:!enquiries!private! !
 mode!accessing-styles!public! !
 mode:!accessing-styles!public! !
 onPositionChanged:!event handling!public! !
 placement:!geometry!private! !
+recreationFunction!geometry!private!realizing/unrealizing! !
 resolutionScaledBy:!geometry!private! !
 selectionByIndex!helpers!private!selection! !
 setActualHeight!geometry!private! !

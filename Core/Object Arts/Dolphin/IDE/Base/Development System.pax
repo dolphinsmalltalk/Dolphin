@@ -106,6 +106,7 @@ package setClassNames: #(
 	#{Tools.ResourceBrowser}
 	#{Tools.ResourceIdentifierDialog}
 	#{Tools.ResourceListPresenter}
+	#{Tools.ResourcePreview}
 	#{Tools.ResourceToolboxPresenter}
 	#{Tools.Scintilla}
 	#{Tools.Scintilla.CharacterClassificationAspect}
@@ -339,6 +340,7 @@ package setMethodNames: #(
 	#(#{External.POINTArray} #printEvaluationOn:)
 	#(#{External.PointerField} #printAccessorExpression:on:)
 	#(#{External.PointerField} #printMutatorBody:on:)
+	#(#{External.RECT} #displayOn:)
 	#(#{External.RECT} #printOn:)
 	#(#{External.SCALAR class} #shouldOverrideGetFieldNames)
 	#(#{External.ScalarField} #newAspect:class:)
@@ -1595,8 +1597,8 @@ UI.ListPresenter
 
 UI.ListPresenter
 	subclass: #'Tools.ResourceListPresenter'
-	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
-	classVariableNames: 'DesignDesktop'
+	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -2072,6 +2074,14 @@ UI.ImageViewAbstract
 	subclass: #'Tools.ImageListView'
 	instanceVariableNames: ''
 	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.ImageView
+	subclass: #'Tools.ResourcePreview'
+	instanceVariableNames: ''
+	classVariableNames: 'DesignDesktop'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -4250,6 +4260,12 @@ printMutatorBody:on:!automatic generation!private! !
 
 !External.RECT methodsFor!
 
+displayOn: aStream
+	"Append a short textual description of the receiver to aStream."
+
+	self isNull ifTrue: [^super displayOn: aStream].
+	aStream display: self asRectangle!
+
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
@@ -4257,12 +4273,11 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(;
-		print: self topLeft;
-		nextPutAll: ' corner: ';
-		print: self bottomRight;
+		display: self;
 		nextPut: $)! !
 
 !External.RECT categoriesForMethods!
+displayOn:!printing!public! !
 printOn:!printing!public! !
 !
 

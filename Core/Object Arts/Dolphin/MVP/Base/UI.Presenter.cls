@@ -405,6 +405,11 @@ onCloseRequested
 
 	^self view onCloseRequested!
 
+onDpiChanged: aDpiChangeEvent
+	"Default handler for a DPI change event. This is only received by presenters for top-level Windows in per-monitor mode."
+	
+	^self view onDpiChanged: aDpiChangeEvent!
+
 onGetCursor: aSymbol
 	"The named area of the view associated with the receiver has been hit.
 	Answer the appropriate mouse cursor or nil to accept the default."
@@ -881,6 +886,7 @@ onAboutToDisplayMenu:!event handling!public! !
 onActionPerformed!event handling!public! !
 onCaptureChanged:!event handling!public! !
 onCloseRequested!event handling!public! !
+onDpiChanged:!event handling!public! !
 onGetCursor:!event handling!public! !
 onHotKey:!event handling!public! !
 onIdleEntered!event handling!public! !

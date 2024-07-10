@@ -61,10 +61,6 @@ activateLastPopup
 							[popup beForeground.
 							true]]]!
 
-actualFont
-	#highDpiToDo. "Not sure we need #atDpi:. Consumer of font should scale before use?"
-	^font ifNil: [self parentView actualFont atDpi: self dpi]!
-
 addCommandHistory: aCommand
 	"Private - Provided for protocol compatiblity with Shell presenters.
 	ShellViews do not support command history so do nothing."!
@@ -224,8 +220,10 @@ displayOnMonitor: aMonitor
 	"Move the receiver so it is displayed on the specified `DisplayMonitor`, but attempting to maintain the same position relative to the display origin.
 	This can be used, for example, to position a dialog on the same monitor as its owner."
 
-	self displayMonitor = aMonitor
-		ifFalse: [self positionNear: aMonitor origin + (self position - self displayMonitor origin)]!
+	| currentMonitor |
+	currentMonitor := DisplayMonitor nearestView: self.
+	currentMonitor = aMonitor
+		ifFalse: [self positionNear: aMonitor origin + (self position - currentMonitor origin)]!
 
 dmGetDefId: message wParam: wParam lParam: lParam
 	"Private - Default handler for a DM_GETDEFID message sent to request the id of any default
@@ -633,6 +631,23 @@ onCloseRequested
 			^true].
 	^false!
 
+onDpiChanged: aDpiChangedEvent
+	| newDpi |
+	newDpi := aDpiChangedEvent newDpi.
+	self resolutionScaledBy: newDpi / self resolution.
+	dpi := newDpi.
+	self rectangle: aDpiChangedEvent proposedRect.
+	"We must recreate the menubar to ensure it paints correctly at the new resolution"
+	self menuBar
+		ifNotNil: 
+			[:menu |
+			self releaseMenu.
+			menuBar := menu.
+			self updateMenuBar].
+	self presenter trigger: #dpiChanged: with: aDpiChangedEvent.
+	"Docs state that 0 should be returned if handled. It is stated that there is no implementation in the DefWindowProc anyway, but there definitely is one in DefDlgProc, and we normally want to suppress that because our dialogs are normally built from an empty template and then populated."
+	^0!
+
 onDrawMenuItem: aDRAWITEMSTRUCT 
 	| menu |
 	(menuBar isNil or: [(menu := menuBar menuFromHandle: aDRAWITEMSTRUCT hwndItem) isNil]) 
@@ -1031,28 +1046,6 @@ wmActivate: message wParam: wParam lParam: lParam
 		ifTrue: [self presenter onViewDeactivated: event]
 		ifFalse: [self presenter onViewActivated: event	"send onActivate for WA_ACTIVE and WA_CLICKACTIVE"]!
 
-wmDpiChanged: message wParam: wParam lParam: lParam
-	"Private - Handles a WM_DPICHANGED message. This is only sent to top-level windows (e.g. ShellViews in Dolphin)
-		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word.
-		- lParam is a pointer to a RECTL providing the suggested new rectangle for the window.
-	"
-
-	| newDpi newRect |
-	newDpi := wParam lowWord.
-	newRect := RECTL fromAddress: lParam.
-	self resolutionScaledBy: newDpi / self resolution.
-	dpi := newDpi.
-	self rectangle: newRect.
-	"We must recreate the menubar to ensure it paints correctly at the new resolution"
-	self menuBar
-		ifNotNil: 
-			[:menu |
-			self releaseMenu.
-			menuBar := menu.
-			self updateMenuBar].
-	"Docs state that 0 should be returned if handled. It is stated that there is no implementation in the DefWindowProc anyway, but there definitely is one in DefDlgProc, and we normally want to suppress that because our dialogs are normally built from an empty template and then populated."
-	^0!
-
 wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_DPICHANGED_BEFOREPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
 
@@ -1137,8 +1130,7 @@ wmNcCreate: message wParam: wParam lParam: lParam
 
 	"The [documentation](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enablenonclientdpiscaling) states that it is not necessary to call EnableNonClientScaling for apps running at per monitor V2 awareness level, but as far as I can determine it makes no difference in any mode on Windows 11 as the NC areas are always scaled, regardless of mode and whether this is called or not. It also doesn't have any effect on the bug where at certain DPIs in per-monitor mode menu bars leave small black areas around some edges (i.e. don't paint the entire background)."
 
-	(UserLibrary.DpiAwareness == DPI_AWARENESS_CONTEXT_SYSTEM_AWARE 
-		or: [UserLibrary.DpiAwareness == DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE])
+	UserLibrary dpiAwareness == #system
 			ifTrue: [User32 enableNonClientDpiScaling: handle].
 	^nil!
 
@@ -1223,7 +1215,6 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 acceleratorTable!accelerator!public! !
 acceleratorTable:!accelerator!public! !
 activateLastPopup!helpers!private! !
-actualFont!accessing!font!private! !
 addCommandHistory:!accessing!private! !
 allAdditionalAccelerators!accessing!public! !
 allAdditionalKeyBindings!accessing!public! !
@@ -1306,6 +1297,7 @@ minExtent:!accessing!public! !
 minimize!operations!public! !
 onAboutToDisplaySystemMenu:!event handling!public! !
 onCloseRequested!event handling!public! !
+onDpiChanged:!event handling-win32!public! !
 onDrawMenuItem:!event handling-win32!public! !
 onGetCursor:!event handling!public! !
 onIdleEntered!event handling!public! !
@@ -1351,7 +1343,6 @@ updateMenuBar!menus!public! !
 validateUserInterface!operations!public! !
 winFinalize!event handling!private! !
 wmActivate:wParam:lParam:!event handling-win32!private! !
-wmDpiChanged:wParam:lParam:!event handling-win32!private! !
 wmDpiChangedBeforeParent:wParam:lParam:!event handling-win32!private! !
 wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
 wmInitMenu:wParam:lParam:!event handling-win32!private! !

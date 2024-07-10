@@ -80,7 +80,7 @@ actualFont
 	"Private - Answer the actual font to be used to paint text in the receiver.
 	Views which have a nil font use the ambient font (i.e. their parent's actualFont)."
 
-	^font ifNil: [self parentView actualFont]!
+	^self getActualFont atDpi: self dpi!
 
 actualPreferredExtent: aLayoutContext 
 	"Private - Answer the preferred extent of the receiver given the suggested extent specifed
@@ -361,7 +361,7 @@ basicDestroy
 	^User32 destroyWindow: handle!
 
 basicFont: aFontOrNil
-	font := aFontOrNil!
+	font := aFontOrNil ifNotNil: [aFontOrNil atDpi: self dpi]!
 
 basicInvalidateLayout
 	"Private - Invalidates the layout of the receiver (only) indicating that the geometry
@@ -693,7 +693,7 @@ createWindow: aCreateWindow
 	"Private - Create the View window ensuring it has the VM window procedure.
 	Answer the receiver."
 
-	aCreateWindow scaleToDpi: creationParent dpi.
+	aCreateWindow scaleToDpiOf: creationParent.
 	self basicCreateWindow: aCreateWindow!
 
 creationFunction
@@ -726,7 +726,7 @@ cursor
 cursorPosition
 	"Answer the position of the cursor in the receiver's co-ordinate system."
 
-	^self class desktop mapPoint: Cursor position to: self!
+	^self mapScreenToClient: Cursor position!
 
 ddCut: session
 	"Private - The <DragDropSession>, session, has just completed a successful move operation.
@@ -1067,21 +1067,37 @@ displayOnMaxCharacters
 dpi
 	"Answer the logical dots-per-inch for this Window."
 
-	^User32 getDpiForWindow: handle!
+	| actualDpi |
+	actualDpi := User32 getDpiForWindow: handle.
+	^actualDpi == 0 ifTrue: [USER_DEFAULT_SCREEN_DPI] ifFalse: [actualDpi]!
 
 dpiAwareness
 	"Answer the symbolic name of the DPI awareness mode for this View."
 
-	^User32 getWindowDpiAwareness: handle!
+	^User32 awarenessFromDpiAwarenessContext: self dpiAwarenessContext!
 
 dpiAwareness: aSymbol
-	"Set the DPI awareness mode for this View, recreating if necessary. Note that in order for a non-top-level view to have a DPI awareness different from its parent, the parent must have mixed-mode hosting enabled. Mixed DPI awareness in a window hierarchy can sometimes be useful, but has many consequences that can be difficult to manage, so is not something to undertake lightly."
+	"Set the DPI awareness mode for this View, recreating if necessary. Note that in order for a non-top-level view to have a DPI awareness different from its parent, the parent must have mixed-mode hosting enabled. Mixed DPI awareness in a window hierarchy can sometimes be useful, but has many consequences that can be difficult to manage, so is not something to undertake lightly. Answer's whether the receiver had to be recreated."
 
 	| context |
 	context := UserLibrary dpiAwarenessContextFromName: aSymbol.
 	(User32 areDpiAwarenessContextsEqual: context
-		dpiContextB: (User32 getWindowDpiAwarenessContext: handle))
-			ifFalse: [User32 inDpiAwarenessContext: context do: [self recreateAround: [:state | state dpiAwarenessContext: context ]]]!
+		dpiContextB: (User32 getWindowDpiAwarenessContext: handle)) ifTrue: [^false].
+	(creationParent isDesktop or: [creationParent isMixedDpiHost])
+		ifFalse: [self error: 'Parent unable to host mixed DPI children'].
+	User32 inDpiAwarenessContext: context
+		do: [self recreateAround: [:state | state dpiAwarenessContext: context]].
+	^true!
+
+dpiAwarenessContext
+	"Private - Answer the <integer> DPI awareness context value of this view."
+
+	^User32 getWindowDpiAwarenessContext: handle!
+
+dpiHostingBehavior
+	"Private - Answer the <integer> DPI hosting behaviour value of this view."
+
+	^User32 getWindowDpiHostingBehavior: handle!
 
 dragCut: session
 	"The <DragDropSession>, session, has just completed a successful move operation.
@@ -1444,6 +1460,9 @@ freeTheme
 		- caches theme metrics or colours that would be wrong if the Windows theme is changed by the user."
 !
 
+getActualFont
+	^font ifNil: [self parentView getActualFont]!
+
 getClientRect
 	| rect |
 	rect := RECTL newBuffer.
@@ -1750,6 +1769,8 @@ id: anInteger
 	^self setWindowLong: GWL_ID to: anInteger!
 
 inDpiAwarenessContextDo: aNiladicValuable
+	"Evaluate the <niladicValuable> argument in the receiver's native DPI awareness context."
+
 	^User32 inWindowDpiAwarenessContext: handle do: aNiladicValuable!
 
 inheritContextMenu
@@ -1959,7 +1980,7 @@ isGroupStop: aBoolean
 
 	self baseStyleMask: WS_GROUP set: aBoolean recreateIfChanged: false!
 
-isInOwnDpiAwarenessContext
+isInNativeDpiAwarenessContext
 	"Answer whether the current thread DPI awareness context is the same as that of this Window. If not then any geometry queries may return pixel measurements that are at a different scale that it might normally expect."
 
 	^User32 isAtWindowDpiAwareness: handle!
@@ -1980,6 +2001,17 @@ isManaged: aBoolean
 	aBoolean"
 
 	flags := flags mask: ManagedMask set: aBoolean!
+
+isMixedDpiHost
+	"Answer whether the receiver can host child views with differing DPI awareness to its own. Note that this is only possible for views that themselves have per-monitor DPI awareness."
+
+	^flags allMask: MixedDpiAwarenessMask!
+
+isMixedDpiHost: aBoolean
+	"Set whether the receiver can host child views with differing DPI awareness to its own. Note that it is only possible to host windows at lower or equivalent awareness levels. For example a per-monitor aware window can host system or unaware window, but a system aware window cannot host a per-monitor aware window. Obviously this means that an unaware window cannot support mixed hosting."
+
+	flags := flags mask: MixedDpiAwarenessMask set: aBoolean.
+	self dpiHostingBehavior == DPI_HOSTING_BEHAVIOR_MIXED == aBoolean ifFalse: [self recreate]!
 
 isOpen
 	"Answer whether the receiver has an associated Win32 Window.
@@ -2394,6 +2426,9 @@ onDestroyed
 	self isStateRestoring ifFalse: [self model removeEventsTriggeredFor: self].
 	self parentView onSubViewRemoved: self.
 	self presenter onViewClosed.
+	^nil!
+
+onDpiChanged: aDpiChangedEvent
 	^nil!
 
 onDrawItem: aDRAWITEMSTRUCT 
@@ -3017,9 +3052,11 @@ recreateAround: aNiladicValuable
 	presenter := existingPresenter!
 
 recreationFunction
-	"Private - Answer a function object that encapsulates a CreateWindow API to recreate the receiver's window."
+	"Private - Answer a function object that encapsulates a CreateWindow API call to recreate the receiver's window."
 
-	^self creationFunction: self getRect dpi: self dpi!
+	| func |
+	func := self creationFunction: self getRect dpi: self dpi.
+	^self isMixedDpiHost ifTrue: [CreateMixedDpiHost decorating: func] ifFalse: [func]!
 
 rectangle
 	"Answer a <Rectangle> containing the receiver's outer rectangle in the coordinate system of its parent."
@@ -3996,7 +4033,13 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 		- lParam is a pointer to a RECTL providing the suggested new rectangle for the window.
 	"
 
-	^nil!
+	^self presenter onDpiChanged: ((DpiChangedEvent
+				window: self
+				message: message
+				wParam: wParam
+				lParam: lParam)
+				currentDpi: self dpi;
+				yourself)!
 
 wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, top-down, after the top-level window receives a WM_DPICHANGED."
@@ -4678,7 +4721,7 @@ basicActualBackcolor!accessing!private! !
 basicAddSubView:!hierarchy!private!sub views! !
 basicCreateWindow:!private!realizing/unrealizing! !
 basicDestroy!private!realizing/unrealizing! !
-basicFont:!accessing!private! !
+basicFont:!accessing!font!private! !
 basicInvalidateLayout!geometry!private! !
 basicPaint:wParam:lParam:!drawing!private! !
 basicRestore:scalingBy:!geometry!private! !
@@ -4723,7 +4766,7 @@ create!private!realizing/unrealizing! !
 createAt:extent:!private!realizing/unrealizing! !
 createWindow:!private!realizing/unrealizing! !
 creationFunction!geometry!private!realizing/unrealizing! !
-creationFunction:dpi:!geometry!private!realizing/unrealizing! !
+creationFunction:dpi:!private!realizing/unrealizing! !
 creationParentView!accessing!private! !
 cursor!constants!public! !
 cursorPosition!accessing!public! !
@@ -4766,6 +4809,8 @@ displayOnMaxCharacters!constants!displaying!private! !
 dpi!geometry!high DPI!public! !
 dpiAwareness!accessing!high DPI!public! !
 dpiAwareness:!accessing!high DPI!public! !
+dpiAwarenessContext!private! !
+dpiHostingBehavior!private!testing! !
 dragCut:!drag & drop!public! !
 dragDropSessionClass!constants!public! !
 dragEnter:!drag & drop!public! !
@@ -4807,6 +4852,7 @@ forecolorChanged!private!updating! !
 frameChanged!helpers!private! !
 frameWidths!accessing!public! !
 freeTheme!private!theming! !
+getActualFont!accessing!font!private! !
 getClientRect!geometry!private! !
 getDC!accessing!public! !
 getEvents!events!private! !
@@ -4886,10 +4932,12 @@ isEnabledDeeply:!accessing!public! !
 isForeground!public!testing! !
 isGroupStop!accessing-styles!public! !
 isGroupStop:!accessing-styles!public! !
-isInOwnDpiAwarenessContext!high DPI!public!testing! !
+isInNativeDpiAwarenessContext!high DPI!public!testing! !
 isLayoutValid!geometry!public!testing! !
 isManaged!accessing!public! !
 isManaged:!accessing!public! !
+isMixedDpiHost!public!testing! !
+isMixedDpiHost:!public!testing! !
 isOpen!public!testing! !
 isPerMonitorDpiAware!high DPI!instance creation!public!testing! !
 isPersistentlyDisabled!private!testing! !
@@ -4951,6 +4999,7 @@ onColorRequired:!event handling!public! !
 onCommand:!event handling!public! !
 onCreated:!event handling!public! !
 onDestroyed!event handling!private! !
+onDpiChanged:!event handling-win32!public! !
 onDrawItem:!event handling-win32!public! !
 onDrawMenuItem:!event handling-win32!public! !
 onEraseRequired:!event handling!public! !

@@ -6,7 +6,10 @@ Graphics.AbstractFont
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'Qualities'
+				-> #(#default #draft #proof #nonantialiased #antialiased #cleartype #cleartypeNatural)
+		}!
 
 Graphics.Font guid: (Core.GUID fromString: '{87b4c634-026e-11d3-9fd7-00a0cc3e4a32}')!
 

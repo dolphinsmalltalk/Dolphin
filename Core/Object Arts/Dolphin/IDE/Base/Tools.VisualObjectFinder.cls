@@ -124,10 +124,8 @@ viewFromPoint: aPoint
 	under := desktop := View desktop.
 	#highDpiToDo.	"ChildWindowFromPointEx does not appear to work correctly with mixed DPI"
 	
-	[child := OS.User32
-				childWindowFromPointEx: under asParameter
-				pt: clientPoint asParameter
-				uFlags: CWP_SKIPINVISIBLE.	"| CWP_SKIPTRANSPARENT"
+	[child := OS.User32 realChildWindowFromPoint: under asParameter
+				ptParentClientCoords: clientPoint asParameter.
 	child isNil or: [child = under asParameter]]
 			whileFalse: 
 				[clientPoint := desktop mapPoint: aPoint to: child.
@@ -144,7 +142,7 @@ visualObjectAt: aPoint
 		ifNotNil: 
 			[:viewUnderCursor | 
 			| localPoint |
-			localPoint := View desktop mapPoint: aPoint to: viewUnderCursor.
+			localPoint := viewUnderCursor mapScreenToClient: aPoint.
 			viewUnderCursor visualObjectAtPoint: localPoint]! !
 
 !Tools.VisualObjectFinder categoriesForMethods!

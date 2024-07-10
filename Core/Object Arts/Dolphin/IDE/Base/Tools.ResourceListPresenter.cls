@@ -2,8 +2,8 @@
 
 UI.ListPresenter
 	subclass: #'Tools.ResourceListPresenter'
-	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
-	classVariableNames: 'DesignDesktop'
+	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -58,15 +58,6 @@ browseSystem
 caption
 	^''!
 
-changePreviewDpiAwareness
-	| resId |
-	resId := resourceIdModel value.
-	resourceIdModel value: nil.
-	previewPresenter view dpiAwareness: DesignDesktop dpiAwareness.
-	#highDpiToDo.	"Should be set in resource"
-	previewPresenter view isWholeBackgroundErased: true.
-	resourceIdModel value: resId!
-
 clear
 	"Empty the resource list."
 
@@ -95,14 +86,7 @@ confirmMoveResource: aResourceIdentifier toPackage: aPackage
 createComponents
 	super createComponents.
 	resourcesPresenter := self add: ListPresenter new name: 'resources'.
-	previewPresenter := self add: ImagePresenter new name: 'preview'.
-	resourceIdModel := ValueHolder new.
-	previewPresenter model: (ValueConverter subject: resourceIdModel
-				typeConverter: ((PluggableTypeConverter
-						leftToRight: [:resourceId | self imageFromResource: resourceId]
-						rightToLeft: [:image | nil])
-						rightNullValue: View icon;
-						yourself))!
+	previewPresenter := self add: ValuePresenter new name: 'preview'!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -162,20 +146,6 @@ filterBlock: monadicValuable
 	self refresh.
 	self selections: sels ifAbsent: []!
 
-imageFromResource: aResourceIdentifier
-	| resourceView |
-	resourceView := [DesignDesktop loadViewResource: aResourceIdentifier resource forEdit: false]
-				on: Error
-				do: 
-					[:x |
-					x toTrace.
-					nil].
-	^resourceView notNil 
-		ifTrue: 
-			[resourceView invalidateLayoutDeeply.
-			[Bitmap fromView: resourceView] ensure: [resourceView destroy]]
-		ifFalse: [Error icon]!
-
 initialize
 	"Private - Initialize the receiver"
 
@@ -226,13 +196,11 @@ onResourceRepackaged: aResourceIdentifier from: aPackage to: aPackage2
 		ifFalse: [index ~= 0 ifTrue: [self model removeAtIndex: index]]!
 
 onResourceSelected
-	resourceIdModel value: self resourceIdentifier!
+	previewPresenter value: self resourceIdentifier!
 
 onViewAvailable
 	#highDpiToDo.	"Temporary: This should be configured into the view resource"
 	previewPresenter view parentView isMixedDpiHost: true.
-	self changePreviewDpiAwareness.
-	previewPresenter view parentView invalidate.
 	^super onViewAvailable!
 
 passesFilter: aResourceIdentifier
@@ -319,7 +287,6 @@ browseIt!commands-actions!public! !
 browseReferences!commands-actions!public! !
 browseSystem!commands-actions!public! !
 caption!accessing!public! !
-changePreviewDpiAwareness!event handling!helpers!private! !
 clear!commands-actions!public! !
 clearSelection!commands-actions!public! !
 confirmMoveResource:toPackage:!accessing!private! !
@@ -330,7 +297,6 @@ deleteResource!commands-actions!public! !
 developmentSystem!accessing!private! !
 editResource!commands-actions!public! !
 filterBlock:!accessing!public! !
-imageFromResource:!helpers!private! !
 initialize!initializing!private! !
 model:!accessing!public! !
 onDragResource:!event handling!private! !
@@ -338,7 +304,7 @@ onMethodAdded:!event handling!private! !
 onMethodRemoved:!event handling!private! !
 onResourceRepackaged:from:to:!event handling!private! !
 onResourceSelected!event handling!private! !
-onViewAvailable!event handling!public! !
+onViewAvailable!public! !
 passesFilter:!event handling!private! !
 queryBrowseOwningClass:!commands-queries!private! !
 queryShowResource:!commands-queries!private! !
@@ -365,17 +331,6 @@ icon
 
 	^ResourceBrowser icon!
 
-initialize
-	DesignDesktop := DesignDesktopView default!
-
-previewDpiAwareness
-	^DesignDesktop dpiAwareness!
-
-previewDpiAwareness: aSymbol
-	aSymbol = DesignDesktop dpiAwareness ifTrue: [^self].
-	DesignDesktop := DesignDesktopView perform: aSymbol.
-	self allSubinstances do: [:each | each changePreviewDpiAwareness]!
-
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -384,7 +339,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409351680 131073 32 nil nil nil 5 2886 4 #{UI.Menu} nil true 50 11 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browseHierarchy 8 '&Browse <1s>' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'ClassBrowserShell.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 162 1 194 #browseReferences 8 'Browse &References' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 162 1 194 #editResource 8 '&Edit' 9349 1 242 nil true 274 8 'ViewComposer.ico' 336 65541 nil nil nil 162 1 194 #showResource 8 '&Show' 1 1 nil nil nil 162 1 194 #newView 8 '&New…' 1 1 nil nil nil 418 4097 162 1 194 #deleteResource 8 '&Delete…' 1 1 242 nil true 274 8 'EditClear.ico' 336 65541 nil nil nil 418 4097 162 1 194 #resourcePackage 8 '&Package…' 1 1 nil nil nil 162 1 194 #categoryResource 8 'Categories…' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140854861 1025 992 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 13 nil nil nil 992 nil nil 518 #{Core.Message} #displayString 8 #() 1186 #iconImageIndex 1216 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 1090 1 3142 5 #{UI.ListViewColumn} 8 'View Name' 561 #left nil 1186 #<= 8 #() nil nil 992 1232 3 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 1490 561 463 992 1442 #text: 50 1 8 'View Name' 992 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 24 1 0 0 231 0 0 0] 8 #() 1490 193 193 nil 35 518 #{Core.Fraction} 7 11 962 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 393217 1712 nil nil nil 5 nil nil nil 1712 1798 #{UI.BorderLayout} 1 1 18 #{UI.StaticText} 50 16 nil 1712 50 2 8 1140850944 1 1808 nil nil nil 5 nil nil nil 1808 nil nil 518 #{UI.NullConverter} nil nil nil 1394 50 2 1442 #createAt:extent: 50 2 1490 11 11 1490 537 39 1808 1442 #text: 50 1 8 ' Preview' 1808 1586 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 17 1 0 0 24 0 0 0] 8 #() 1648 nil 27 nil nil nil 18 #{UI.ImageView} 50 21 nil 1712 50 2 8 1140850944 262209 2096 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 1186 #= 8 #() 1186 #hash 8 #() nil 1154 #applicationWorkspace nil 5 nil nil nil 2096 nil nil 1874 nil nil nil nil #scaleBestFit 1 518 #{Graphics.Rectangle} 1490 21 21 1490 21 21 nil 1394 50 1 1442 #createAt:extent: 50 2 1490 11 49 1490 537 247 2096 1586 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 24 0 0 0 17 1 0 0 147 0 0 0] 8 #() 1648 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 2096 8 'preview' 2322 1490 11 11 1490 11 11 1394 50 1 1442 #createAt:extent: 50 2 1490 1 473 1490 561 309 1712 1586 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 236 0 0 0 24 1 0 0 134 1 0 0] 50 2 1808 2096 1648 nil 27 1666 5 11 true 2530 #{Core.IdentityDictionary} 50 2 992 8 'resources' nil 1394 50 1 1442 #createAt:extent: 50 2 1490 6143 21 1490 561 781 32 1586 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 23 13 0 0 144 1 0 0] 50 3 992 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 2992 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 2992 nil 1 #left nil nil nil 1490 1 1 1490 9 9 nil 3088 nil 1394 50 1 1442 #createAt:extent: 50 2 1490 1 463 1490 561 11 2992 1586 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 231 0 0 0 24 1 0 0 236 0 0 0] 8 #() 1648 nil 27 1712 1648 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409351680 131073 32 nil nil nil 5 2886 4 #{UI.Menu} nil true 50 11 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browseHierarchy 8 '&Browse <1s>' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'ClassBrowserShell.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 162 1 194 #browseReferences 8 'Browse &References' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 162 1 194 #editResource 8 '&Edit' 9349 1 242 nil true 274 8 'ViewComposer.ico' 336 65541 nil nil nil 162 1 194 #showResource 8 '&Show' 1 1 nil nil nil 162 1 194 #newView 8 '&New…' 1 1 nil nil nil 418 4097 162 1 194 #deleteResource 8 '&Delete…' 1 1 242 nil true 274 8 'EditClear.ico' 336 65541 nil nil nil 418 4097 162 1 194 #resourcePackage 8 '&Package…' 1 1 nil nil nil 162 1 194 #categoryResource 8 'Categories…' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140854861 1025 992 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 13 nil nil nil 992 nil nil 518 #{Core.Message} #displayString 8 #() 1186 #iconImageIndex 1216 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 1090 1 3142 5 #{UI.ListViewColumn} 8 'View Name' 561 #left nil 1186 #<= 8 #() nil nil 992 1232 3 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 262 #{UI.ListViewVirtualUpdateMode} 992 nil nil nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[0 0 0 0 0 0 0 0 24 1 0 0 231 0 0 0] 193 1024 8 'View Name' 992 3 8 #() 518 #{Graphics.Point} 193 193 nil 35 518 #{Core.Fraction} 7 11 962 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 1712 nil 1154 #applicationWorkspace nil 4101 nil nil nil 1712 1798 #{UI.BorderLayout} 1 1 nil nil nil nil 18 #{Tools.ResourcePreview} 50 21 nil 1712 50 2 8 1140850944 262209 1824 1350 2 #{UI.ValueConverter} nil false 6 #{Kernel.EqualitySearchPolicy} 1094 2 #{UI.ValueHolder} nil false 1936 nil 1030 #{UI.PluggableTypeConverter} nil 242 nil true 274 8 'View.ico' 336 65541 nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledMethod} 11 65539 #{Tools.ResourcePreview} #setModel: 533587331 8 #[57 45 17 46 252 1 0 0 1 3 0 65 178 106 38 193 100 49 163 182 97 197 217 40 108 60 106] 1094 2 #{Kernel.VariableBinding} #ValueConverter 1888 #{UI} 1 2146 #PluggableTypeConverter 1984 #{UI} 1 #imageFromResource: #leftToRight:rightToLeft: 2146 #View #{UI.View} #{UI} 1 #icon #rightNullValue: #subject:typeConverter: #setModel: 2066 0 nil 2112 53 257 nil #yourself 25 257 1824 2208 1776 nil 5 nil nil nil 1824 nil nil 518 #{UI.NullConverter} nil nil nil 2016 #scaleBestFit 3 518 #{Graphics.Rectangle} 1634 21 21 1634 21 21 #none 1426 50 2 1474 #createWindow: 50 1 518 #{UI.CreateInDpiAwarenessContext} 1522 1554 8 #[0 0 0 0 0 0 0 0 24 1 0 0 154 0 0 0] 193 1856 nil -9 1824 1474 #text: 50 1 8 '' 1824 3 8 #() 1634 193 193 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 1824 8 'preview' nil 1426 50 1 1474 #createWindow: 50 1 262 #{UI.CreateMixedDpiHost} 1522 1554 8 #[0 0 0 0 236 0 0 0 24 1 0 0 134 1 0 0] 193 1744 8 '' 1712 3 50 1 1824 1634 193 193 nil 27 1666 5 11 true 2546 #{Core.IdentityDictionary} 50 2 992 8 'resources' nil 1426 50 2 1474 #createWindow: 50 1 1522 1554 8 #[255 14 0 0 10 0 0 0 23 16 0 0 144 1 0 0] 193 80 8 '' 32 1474 #contextMenu: 50 1 128 32 3 50 3 992 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 3040 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 3040 nil 1 #left nil nil nil 1634 1 1 1634 9 9 nil 3136 nil 1426 50 1 1474 #createWindow: 50 1 1522 1554 8 #[0 0 0 0 231 0 0 0 24 1 0 0 236 0 0 0] 193 3072 8 '' 3040 3 8 #() 1634 193 193 nil 27 1712 1634 193 193 nil 27)!
 
 resource_Package_view
 	"Answer the literal data from which the 'Package view' resource can be reconstituted.
@@ -394,7 +349,7 @@ resource_Package_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Package_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409351680 131073 32 nil nil nil 5 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140854857 1025 224 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 13 nil nil nil 224 nil nil 518 #{Core.Message} #displayString 8 #() 418 #iconImageIndex 448 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 322 2 3142 5 #{UI.ListViewColumn} 8 'View Name' 389 #left nil 418 #<= 8 #() nil nil 224 464 3 nil nil 530 8 'Package' 387 #left 432 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 656 7 513 nil 418 #owningPackage 8 #() nil 224 nil 3 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 898 775 651 224 850 #text: 50 1 8 'View Name' 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 131 1 0 0 69 1 0 0] 8 #() 898 193 193 nil 35 518 #{Core.Fraction} 205 155 194 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 393217 1120 nil nil nil 5 nil nil nil 1120 1798 #{UI.BorderLayout} 1 1 18 #{UI.StaticText} 50 16 nil 1120 50 2 8 1140850944 1 1216 nil nil nil 5 nil nil nil 1216 nil nil 518 #{UI.NullConverter} nil nil nil 802 50 2 850 #createAt:extent: 50 2 898 1 1 898 393 39 1216 850 #text: 50 1 8 '   Preview' 1216 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 196 0 0 0 19 0 0 0] 8 #() 1056 nil 27 nil nil nil 18 #{UI.ImageView} 50 21 nil 1120 50 2 8 1140850944 262209 1504 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 418 #= 8 #() 418 #hash 8 #() nil 386 #applicationWorkspace nil 5 nil nil nil 1504 nil nil 1282 nil nil nil nil #scaleBestFit 1 518 #{Graphics.Rectangle} 898 21 21 898 21 21 nil 802 50 1 850 #createAt:extent: 50 2 898 1 39 898 393 609 1504 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 19 0 0 0 196 0 0 0 67 1 0 0] 8 #() 1056 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 1504 8 'preview' nil 802 50 1 850 #createAt:extent: 50 2 898 785 1 898 397 651 1120 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 136 1 0 0 0 0 0 0 78 2 0 0 69 1 0 0] 50 2 1216 1504 1056 nil 27 1074 105 155 false 1938 #{Core.IdentityDictionary} 50 2 224 8 'resources' nil 802 50 1 850 #createAt:extent: 50 2 898 6143 21 898 1181 651 32 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 77 14 0 0 79 1 0 0] 50 3 224 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 2352 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 2352 nil 1 #left nil nil nil 898 1 1 898 9 9 nil 2448 nil 802 50 1 850 #createAt:extent: 50 2 898 775 1 898 11 651 2352 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 131 1 0 0 0 0 0 0 136 1 0 0 69 1 0 0] 8 #() 1056 nil 27 1120 1056 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409351680 131073 32 nil nil nil 5 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140854857 1025 224 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 13 nil nil nil 224 nil nil 518 #{Core.Message} #displayString 8 #() 418 #iconImageIndex 448 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 322 2 3142 5 #{UI.ListViewColumn} 8 'View Name' 389 #left nil 418 #<= 8 #() nil nil 224 464 3 nil nil 530 8 'Package' 387 #left 432 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 656 7 513 nil 418 #owningPackage 8 #() nil 224 nil 3 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 262 #{UI.ListViewVirtualUpdateMode} 224 nil nil nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[0 0 0 0 0 0 0 0 131 1 0 0 69 1 0 0] 193 256 8 'View Name' 224 3 8 #() 518 #{Graphics.Point} 193 193 nil 35 518 #{Core.Fraction} 205 155 194 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 393217 1120 nil nil nil 4101 nil nil nil 1120 1798 #{UI.BorderLayout} 1 1 18 #{UI.StaticText} 50 16 nil 1120 50 2 8 1140850944 1 1216 nil nil nil 5 nil nil nil 1216 nil nil 518 #{UI.NullConverter} nil nil nil 834 50 2 882 #createWindow: 50 1 930 962 8 #[0 0 0 0 0 0 0 0 196 0 0 0 19 0 0 0] 193 1248 nil 1216 882 #text: 50 1 8 '   Preview' 1216 3 8 #() 1042 193 193 nil 27 nil nil nil 18 #{Tools.ResourcePreview} 50 21 nil 1120 50 2 8 1140850944 262209 1504 1350 2 #{UI.ValueConverter} nil false 6 #{Kernel.EqualitySearchPolicy} 1094 2 #{UI.ValueHolder} nil false 1616 nil 1030 #{UI.PluggableTypeConverter} nil 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'View.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil 642 0 nil 1318 #{Kernel.CompiledMethod} 11 65539 #{Tools.ResourcePreview} #setModel: 533587331 8 #[57 45 17 46 252 1 0 0 1 3 0 65 178 106 38 193 100 49 163 182 97 197 217 40 108 60 106] 1094 2 #{Kernel.VariableBinding} #ValueConverter 1568 #{UI} 1 1890 #PluggableTypeConverter 1664 #{UI} 1 #imageFromResource: #leftToRight:rightToLeft: 1890 #View #{UI.View} #{UI} 1 #icon #rightNullValue: #subject:typeConverter: #setModel: 642 0 nil 1856 53 257 nil #yourself 25 257 1504 1952 386 #applicationWorkspace nil 5 nil nil nil 1504 nil nil 1282 nil nil nil 1712 #scaleBestFit 3 518 #{Graphics.Rectangle} 1042 21 21 1042 21 21 #none 834 50 2 882 #createWindow: 50 1 518 #{UI.CreateInDpiAwarenessContext} 930 962 8 #[0 0 0 0 19 0 0 0 196 0 0 0 67 1 0 0] 193 1536 nil -9 1504 882 #text: 50 1 8 '' 1504 3 8 #() 1042 193 193 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 1504 8 'preview' nil 834 50 1 882 #createWindow: 50 1 262 #{UI.CreateMixedDpiHost} 930 962 8 #[136 1 0 0 0 0 0 0 78 2 0 0 69 1 0 0] 193 1152 8 '' 1120 3 50 2 1216 1504 1042 193 193 nil 27 1074 105 155 false 2290 #{Core.IdentityDictionary} 50 2 224 8 'resources' nil 834 50 1 882 #createWindow: 50 1 930 962 8 #[255 14 0 0 10 0 0 0 77 17 0 0 79 1 0 0] 193 80 8 '' 32 3 50 3 224 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 2752 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 2752 nil 1 #left nil nil nil 1042 1 1 1042 9 9 nil 2848 nil 834 50 1 882 #createWindow: 50 1 930 962 8 #[131 1 0 0 0 0 0 0 136 1 0 0 69 1 0 0] 193 2784 8 '' 2752 3 8 #() 1042 193 193 nil 27 1120 1042 193 193 nil 27)!
 
 showResourcesReferencingView: aResourceIdentifier
 	| browser |
@@ -406,9 +361,6 @@ showResourcesReferencingView: aResourceIdentifier
 !Tools.ResourceListPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !
-initialize!public! !
-previewDpiAwareness!accessing!public! !
-previewDpiAwareness:!accessing!public! !
 resource_Default_view!public!resources-views! !
 resource_Package_view!public!resources-views! !
 showResourcesReferencingView:!instance creation!public! !

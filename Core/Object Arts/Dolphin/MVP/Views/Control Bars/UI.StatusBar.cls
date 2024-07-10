@@ -199,7 +199,10 @@ layoutManager: aLayoutManager
 onDrawItem: drawItemStruct
 	| part |
 	part := parts at: drawItemStruct itemID + 1.
-	part drawItem: (Canvas withNonOwnedDC: drawItemStruct hDC dpi: self dpi)
+	part drawItem: ((Canvas withNonOwnedDC: drawItemStruct hDC dpi: self dpi)
+				backcolor: self actualBackcolor;
+				font: self actualFont;
+				yourself)
 		bounding: drawItemStruct rcItem asRectangle.
 	^true!
 

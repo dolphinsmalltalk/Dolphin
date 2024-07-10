@@ -19,7 +19,7 @@ doArenaDropOf: subPresenterType operation: aSymbol
 	self denyIsNil: aSymbol.
 	ddSession := self dragResourceFor: subPresenterType.
 	aSymbol ifNotNil: [ddSession defaultOperation: aSymbol].
-	overShell := vc arena mapPoint: 50 @ 50 to: View desktop.
+	overShell := vc arena mapPointToScreen: 50 @ 50.
 	"To avoid any dependency on the state of the runtime environment (such as the desktop being
 	locked, or there being other Windows on top of the VC), we simulate the dragging over the VC
 	arena"
@@ -160,7 +160,7 @@ testCutCopyPaste
 testDragResourceOverEmptyArena
 	| session |
 	self openTestSubjectOn: nil.
-	vc arena onDragOver: (session := self dragResourceFor: Shell).
+	vc onDragOverArena: (session := self dragResourceFor: Shell).
 	self assert: session operation identicalTo: #copy.
 	self assert: session suggestedTarget identicalTo: vc arena!
 
@@ -231,7 +231,7 @@ testNoDragResourceOverInUseArena
 	session
 		startTrackingAt: 20 @ 20;
 		operation: #copy.
-	vc arena onDragOver: session.
+	vc onDragOverArena: session.
 	self assertIsNil: session operation.
 	self assertIsNil: session suggestedTarget!
 

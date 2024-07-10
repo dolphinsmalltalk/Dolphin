@@ -88,10 +88,6 @@ destroyWindow: aWindowHandle
 	<stdcall: bool DestroyWindow handle>
 	^self invalidCall: _failureCode!
 
-disableProcessWindowsGhosting
-	<stdcall: void DisableProcessWindowsGhosting>
-	^self invalidCall: _failureCode!
-
 dispatchMessage: aMSG
 	"Dispatch a message to a window procedure.
 		LONG DispatchMessage(
@@ -646,7 +642,6 @@ createDialogParam:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 f
 defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 destroyWindow:!public!win32 functions-window! !
-disableProcessWindowsGhosting!public!win32 functions-message and message queue! !
 dispatchMessage:!public!win32 functions-message and message queue! !
 enableWindow:bEnable:!public!win32 functions-keyboard input! !
 getActiveWindow!public!win32 functions-keyboard input! !

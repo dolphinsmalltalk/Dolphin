@@ -47,7 +47,7 @@ model: aValueModel
 
 	| font lf lfw |
 	super model: aValueModel.
-	font := self value ifNil: [Font default].
+	font := self value ifNil: [SystemMetrics current iconTitleFont].
 	"Might be a legacy Font instance with a LOGFONTA description, but we need a LOGFONTW"
 	lf := font logFont.
 	lfw := LOGFONTW newBuffer.

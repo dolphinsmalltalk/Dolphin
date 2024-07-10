@@ -30,17 +30,30 @@ atDpi: anInteger
 			[instances at: anInteger
 				put: (canonical copy
 						dpi: anInteger;
+						series: self;
 						yourself)]!
+
+printOn: aStream
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		display: canonical;
+		nextPut: $)!
 
 setFont: aFont
 	instances := LookupTable new.
 	canonical := aFont.
 	instances at: aFont dpi put: aFont.
-	aFont series: self! !
+	aFont series: self!
+
+stbSaveOn: anSTBOutFiler
+	self shouldNotImplement! !
 
 !Graphics.FontSeries categoriesForMethods!
 atDpi:!accessing!public! !
+printOn:!printing!public! !
 setFont:!initializing!private! !
+stbSaveOn:!binary filing!public! !
 !
 
 !Graphics.FontSeries class methodsFor!

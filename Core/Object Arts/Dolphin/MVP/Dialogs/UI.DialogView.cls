@@ -435,7 +435,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 answer!accessing!public! !
 answer:!accessing!not an aspect!public! !
 cancel!commands!public! !
-creationFunction:dpi:!geometry!private!realizing/unrealizing! !
+creationFunction:dpi:!private!realizing/unrealizing! !
 defaultBackcolor!colors!constants!private! !
 defaultButton!accessing!public! !
 defaultExtent!constants!public! !

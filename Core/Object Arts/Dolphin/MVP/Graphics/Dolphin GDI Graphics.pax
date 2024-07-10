@@ -490,7 +490,10 @@ Graphics.AbstractFont
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'Qualities'
+				-> #(#default #draft #proof #nonantialiased #antialiased #cleartype #cleartypeNatural)
+		}!
 
 Graphics.AbstractFont
 	subclass: #'Graphics.SystemFont'

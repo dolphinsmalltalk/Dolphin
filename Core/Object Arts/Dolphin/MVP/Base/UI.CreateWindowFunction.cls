@@ -59,31 +59,40 @@ rectangle
 	^self subclassResponsibility!
 
 rectangle: aRectangle dpi: anInteger
-	"Set the <rectangle> specifying the position and extent of the window that will be created, and the dpi in which the pixel co-ordinates that it contains are measured."
+	"Private - Set the <rectangle> specifying the position and extent of the window that will be created, and the dpi in which the pixel co-ordinates that it contains are measured."
 
 	self subclassResponsibility!
 
 scaleToDpi: anInteger
-	"Scale the receiver in-place by the specified <Point> or <Number> multiplier. Note that the receiver should not be scaled multiple times, as rounding error may accumulate. The intent is that the receiver be scaled once for DPI, if required."
+	"Private - Scale the receiver in-place from it's current DPI to that specified by the <SmallInteger> argument."
 
 	"Note that we scale the rectangle corners rather than origin and extent as this is what Windows DWM appears to do:
 		rect := (10@10 extent: 183@19) scaledBy: 1.25.
 		rect truncated extent	=> 229@24
 		rect extent truncated	=> 228@23"
 
-	self rectangle: (self rectangle scaleToDpi: anInteger from: self dpi) dpi: anInteger! !
+	| currentDpi |
+	currentDpi := self dpi.
+	currentDpi == anInteger
+		ifFalse: [self rectangle: (self rectangle scaleToDpi: anInteger from: currentDpi) dpi: anInteger]!
+
+scaleToDpiOf: aView
+	"Scale the receiver in-place to the dpi of the <View> argument (which would normally be the parent). Note that the receiver should not be scaled multiple times, as rounding error may accumulate. The intent is that the receiver be scaled once for DPI, if required."
+
+	self scaleToDpi: aView dpi! !
 
 !UI.CreateWindowFunction categoriesForMethods!
 create:!operations!public! !
 dpi!accessing!high DPI!public! !
 extent!accessing!public! !
-hasDefaultExtent!accessing!public! !
-hasDefaultPosition!accessing!public! !
+hasDefaultExtent!public!testing! !
+hasDefaultPosition!public!testing! !
 position!accessing!public! !
-position:extent:dpi:!accessing!public! !
+position:extent:dpi:!initializing!public! !
 rectangle!accessing!public! !
-rectangle:dpi:!accessing!public! !
-scaleToDpi:!accessing!public! !
+rectangle:dpi:!initializing!private! !
+scaleToDpi:!helpers!high DPI!private! !
+scaleToDpiOf:!high DPI!operations!public! !
 !
 
 !UI.CreateWindowFunction class methodsFor!
@@ -92,6 +101,6 @@ initialize
 	self addClassConstant: 'UseDefaultGeometry' value: CW_USEDEFAULT @ CW_USEDEFAULT! !
 
 !UI.CreateWindowFunction class categoriesForMethods!
-initialize!public! !
+initialize!class initialization!public! !
 !
 

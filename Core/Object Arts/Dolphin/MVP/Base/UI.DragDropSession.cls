@@ -115,7 +115,7 @@ dragPointInView: aView
 	"Answer the receiver's dragPoint converted to the coordinate system of
 	aView. This contains the last known coordinates of the drag operation."
 
-	^View desktop mapPoint: self dragPoint to: aView!
+	^aView mapScreenToClient: self dragPoint!
 
 dragSource
 	"Answer the drag source View."

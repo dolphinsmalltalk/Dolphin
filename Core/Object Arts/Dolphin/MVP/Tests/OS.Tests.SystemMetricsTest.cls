@@ -14,6 +14,14 @@ OS.Tests.SystemMetricsTest comment: ''!
 
 !OS.Tests.SystemMetricsTest methodsFor!
 
+testIconTitleFont
+	| font96 fontSys |
+	font96 := SystemMetrics default iconTitleFont.
+	fontSys := SystemMetrics current iconTitleFont.
+	self assert: fontSys equals: font96.
+	self assert: fontSys dpi equals: UserLibrary default getDpiForSystem.
+	self assert: font96 dpi equals: 96!
+
 testLargeIconExtent
 	| metrics |
 	metrics := SystemMetrics default.
@@ -57,6 +65,7 @@ testSmallIconExtent
 	self assert: metrics smallIconExtent equals: 20 @ 20! !
 
 !OS.Tests.SystemMetricsTest categoriesForMethods!
+testIconTitleFont!public! !
 testLargeIconExtent!public! !
 testMenuBarHeight!public! !
 testMenuImageExtent!public! !

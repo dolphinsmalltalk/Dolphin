@@ -33,16 +33,16 @@ rectangle
 	^decorated rectangle!
 
 rectangle: aRectangle dpi: anInteger
-	"Set the <rectangle> specifying the position and extent of the window that will be created, and the dpi in which the pixel co-ordinates that it contains are measured."
+	"Private - Set the <rectangle> specifying the position and extent of the window that will be created, and the dpi in which the pixel co-ordinates that it contains are measured."
 
 	decorated rectangle: aRectangle dpi: anInteger! !
 
 !UI.CreateWindowDecorator categoriesForMethods!
 decorated!accessing!private! !
 decorated:!accessing!private! !
-dpi!public! !
-rectangle!public! !
-rectangle:dpi:!accessing!public! !
+dpi!accessing!public! !
+rectangle!accessing!public! !
+rectangle:dpi:!initializing!private! !
 !
 
 !UI.CreateWindowDecorator class methodsFor!
@@ -52,6 +52,6 @@ decorating: aCreateWindow
 	^self new decorated: aCreateWindow! !
 
 !UI.CreateWindowDecorator class categoriesForMethods!
-decorating:!public! !
+decorating:!instance creation!public! !
 !
 

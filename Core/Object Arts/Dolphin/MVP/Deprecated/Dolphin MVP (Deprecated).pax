@@ -143,6 +143,7 @@ package methodNames
 	add: 'SystemColor class' -> #fromId:;
 	add: 'TextTileIcon class' -> #text:font:color:;
 	add: 'ThemeLibrary class' -> #isAppThemed;
+	add: 'View class' -> #mapRectangle:from:to:;
 	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
 	yourself.
 
@@ -1346,6 +1347,16 @@ winHelpPopup: helpFileString topic: topicId at: aPointOrNil
 defaultWindowProcessing:!dispatching!public! !
 winHelpPopup:topic:!public! !
 winHelpPopup:topic:at:!public! !
+!
+
+!View class methodsFor!
+
+mapRectangle: aRectangle from: aSourceView to: aDestinationView
+	Notification deprecated.
+	^User32 mapRectangle: aRectangle from: aSourceView to: aDestinationView! !
+
+!View class categoriesForMethods!
+mapRectangle:from:to:!geometry!public! !
 !
 
 !WindowsEvent class methodsFor!
