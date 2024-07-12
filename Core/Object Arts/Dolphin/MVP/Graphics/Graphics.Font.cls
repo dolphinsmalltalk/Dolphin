@@ -132,6 +132,23 @@ printOn: aStream
 				separatedBy: [aStream nextPut: $;].
 			aStream nextPut: $)]!
 
+quality
+	^Qualities at: self logFont lfQuality + 1!
+
+quality: aSymbol
+	"Set the Font rendering quality to that named by the <Symbol> argument, one of:
+		default			- Use default font quality
+		draft				- Appearance of the font does not matter
+		proof			- Character quality of the font is more important than exact matching of the logical-font attributes.
+		nonantialiased		- Anti-aliasing is disabled
+		antialiased		- Font is anti-aliased if the font supports it, depending on size.
+		cleartype 			- Cleartype anti-aliasing is used, if the font supports it
+		cleartypeNatural	- Not well documented
+	See the documentation for the lfQuality member of [LOGFONTW](view-source:https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfontw) for further details.
+	Setting this value has no immediate effect if the receiver is already realized."
+
+	self logFont lfQuality: (Qualities identityIndexOf: aSymbol) - 1!
+
 styleChanged
 	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
 
@@ -161,6 +178,8 @@ logFont:!accessing!public! !
 name:!accessing!public! !
 pixelSize:!accessing!public! !
 printOn:!development!printing!public! !
+quality!accessing!public! !
+quality:!accessing!public! !
 styleChanged!helpers!private! !
 weight:!accessing!public! !
 !

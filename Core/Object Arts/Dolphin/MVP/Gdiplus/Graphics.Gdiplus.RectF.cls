@@ -33,6 +33,13 @@ struct tagRectF {
 
 !Graphics.Gdiplus.RectF methodsFor!
 
+extent: aPoint
+	"Set the extent of the receiver to aPoint. (The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined)."
+
+	self
+		width: aPoint x;
+		height: aPoint y!
+
 height
 	"Answer the <Float> value of the receiver's 'height' field."
 
@@ -42,19 +49,6 @@ height: aFloat
 	"Set the receiver's 'height' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_height put: aFloat!
-
-scaleBy: aMagnitude
-	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
-
-	| p |
-	p := self topLeft * aMagnitude.
-	self
-		x: p x;
-		y: p y.
-	p := self extent * aMagnitude.
-	self
-		width: p x;
-		height: p y!
 
 scaledBy: anArithmeticValue
 	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
@@ -103,9 +97,9 @@ y: aFloat
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
 
 !Graphics.Gdiplus.RectF categoriesForMethods!
+extent:!accessing!public! !
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
-scaleBy:!public!transforming! !
 scaledBy:!public! !
 scaleToDpi:from:!public!transforming! !
 width!**compiled accessors**!public! !
@@ -140,6 +134,9 @@ defineFields
 		defineField: #width type: FLOATField new;
 		defineField: #height type: FLOATField new!
 
+getFieldNames
+	^#(#x #y #width #height)!
+
 left: left top: top width: width height: height
 	"Answer a new instance of the receiver with the specified origin and extent."
 
@@ -161,6 +158,7 @@ origin: aPoint
 !Graphics.Gdiplus.RectF class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
 left:top:width:height:!instance creation!public! !
 origin:!instance creation!public! !
 !

@@ -66,6 +66,7 @@ semver := [ | process outputPipe |
 	[process isTerminated] whileFalse: [].
 	SemVer fromGitDescription: outputPipe readStream contents
 ] on: ExternalProcessExecuteError do: [:ex | nil].
+DolphinProduct current version: semver.
 sesh := SessionManager current.
 sesh bootInfo: semver.
 "Patch up the messed up version inserted by DolphinProduct classes"

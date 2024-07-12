@@ -111,6 +111,14 @@ Any state changes you make to the device context between GetHDC and ReleaseHDC w
 	hdc := self getHDC.
 	[anOperation value: hdc] ensure: [self releaseHDC: hdc]!
 
+dpi
+	"Answer the dots per inch of the display device associated with the receiver. It is assumed that the horizontal and vertical dpi are the same, which will be the case for any display device."
+
+	| dpiY |
+	dpiY := ByteArray newFixed: 4.
+	Gdip gdipGetDpiY: self asParameter dpi: dpiY.
+	^(dpiY floatAtOffset: 0) asInteger!
+
 drawArc: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAngle
 	"Draw an arc on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusPen."
 
@@ -209,18 +217,20 @@ drawEllipse: aRectangle pen: aPen
 drawImage: aGdiplusImage
 	"Draw all of aGdiplusImage on the receiver, at the receiver's origin."
 
-	self
-		drawImage: aGdiplusImage
-		at: Point.Zero
-		extent: aGdiplusImage extent!
+	Gdip
+		gdipDrawImageI: self asParameter
+		image: aGdiplusImage asParameter
+		x: 0
+		y: 0!
 
 drawImage: aGdiplusImage at: aPoint
 	"Draw all of aGdiplusImage on the receiver, at aPoint."
 
-	self 
-		drawImage: aGdiplusImage
-		at: aPoint
-		extent: aGdiplusImage extent!
+	Gdip
+		gdipDrawImageI: self asParameter
+		image: aGdiplusImage asParameter
+		x: aPoint x
+		y: aPoint y!
 
 drawImage: aGdiplusImage at: aPoint attributes: imageAttributes
 	"Draw the <Gdiplus.Image> 1st argument at its full extent at the origin, aPoint, with <ImageAttributes> specified by the 3rd argument."
@@ -467,6 +477,11 @@ endContainer: containerInteger
 	"Close a graphics container specified by containerInteger."
 
 	Gdip gdipEndContainer: self handle state: containerInteger!
+
+erase
+	"Clear the receiver to white."
+
+	Gdip gdipGraphicsClear: self asParameter color: -1!
 
 excludeClip: aGdiplusObject
 	"Exclude the specified <Rectangle> from the receiver's clip region, this means that any attempt to draw in that rectangle will be ignored."
@@ -731,13 +746,12 @@ resetTransform
 resolution
 	"Answer the resolution, in dots per inch, of the display device associated with the receiver."
 
-	| dpi dpiX dpiY |
-	dpi := ByteArray new: 4.
-	Gdip gdipGetDpiX: self handle dpi: dpi.
-	dpiX := dpi floatAtOffset: 0.
-	Gdip gdipGetDpiY: handle dpi: dpi.
-	dpiY := dpi floatAtOffset: 0.
-	^dpiX asInteger @ dpiY asInteger!
+	| buf dpiX |
+	buf := ByteArray newFixed: 4.
+	Gdip gdipGetDpiX: self handle dpi: buf.
+	dpiX := buf floatAtOffset: 0.
+	Gdip gdipGetDpiY: handle dpi: buf.
+	^dpiX asInteger @ (buf floatAtOffset: 0) asInteger!
 
 rotate: aNumber
 	"Prepend a rotation of the receiver's world transform by the <Number> angle in degrees argument."
@@ -878,7 +892,8 @@ compositingQuality!accessing-modes!public! !
 compositingQuality:!accessing-modes!public! !
 doWithCanvas:!gdi interop!public! !
 doWithDC:!gdi interop!public! !
-drawArc:pen:startAngle:sweepAngle:!drawing-lines!public! !
+dpi!accessing!drawArc:pen:startAngle:sweepAngle:!drawing-lines!public! !
+drawArc:pen:startAngle:sweepAngle:!public! !
 drawBezier:pen:!drawing-lines!public! !
 drawCachedBitmap:at:!drawing-bitmaps!public! !
 drawClosedCurve:pen:tension:!drawing-lines!public! !
@@ -911,6 +926,7 @@ drawString:font:at:format:brush:!drawing-strings!public! !
 drawString:font:rect:format:brush:!drawing-strings!public! !
 drawString:layoutRect:!drawing-strings!public! !
 endContainer:!operations!public! !
+erase!operations!public! !
 excludeClip:!clipping!public! !
 excludeClipRectangle:!clipping!public! !
 fillClosedCurve:brush:!drawing-lines!public! !

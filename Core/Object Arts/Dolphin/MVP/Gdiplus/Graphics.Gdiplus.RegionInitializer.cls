@@ -31,23 +31,23 @@ hashGet: aGpRegion
 
 isEmptyRegion: aGdiplusRegion onGraphics: aGdiplusGraphics
 	| result graphics |
-	result := UInt32Bytes new.
+	result := ByteArray newFixed: 4.
 	graphics := aGdiplusGraphics ifNil: [GdiplusGraphics desktop].
 	Gdip
 		gdipIsEmptyRegion: aGdiplusRegion asParameter
 		graphics: graphics asParameter
 		result: result.
-	^result asBoolean!
+	^(result int32AtOffset: 0) ~~ 0!
 
 isInfiniteRegion: aGdiplusRegion onGraphics: aGdiplusGraphics
 	| result graphics |
-	result := UInt32Bytes new.
+	result := ByteArray newFixed: 4.
 	graphics := aGdiplusGraphics ifNil: [GdiplusGraphics desktop].
 	Gdip
 		gdipIsInfiniteRegion: aGdiplusRegion asParameter
 		graphics: graphics asParameter
 		result: result.
-	^result asBoolean!
+	^(result int32AtOffset: 0) ~~ 0!
 
 printAttributesOn: aLimitedWriteStream 
 ! !

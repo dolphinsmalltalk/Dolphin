@@ -42,6 +42,19 @@ height: anInteger
 
 	bytes int32AtOffset: _OffsetOf_height put: anInteger!
 
+scaleToDpi: desiredInteger from: currentInteger
+	"Scale the receiver in-place by from the DPI represented by the first <integer> argument to that represented by the second integer argument."
+
+	bytes
+		int32AtOffset: _OffsetOf_x
+			put: (bytes int32AtOffset: _OffsetOf_x) * desiredInteger // currentInteger;
+		int32AtOffset: _OffsetOf_y
+			put: (bytes int32AtOffset: _OffsetOf_y) * desiredInteger // currentInteger;
+		int32AtOffset: _OffsetOf_width
+			put: (bytes int32AtOffset: _OffsetOf_width) * desiredInteger // currentInteger;
+		int32AtOffset: _OffsetOf_height
+			put: (bytes int32AtOffset: _OffsetOf_height) * desiredInteger // currentInteger!
+
 width
 	"Answer the <Integer> value of the receiver's 'width' field."
 
@@ -75,6 +88,7 @@ y: anInteger
 !Graphics.Gdiplus.Rect categoriesForMethods!
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
+scaleToDpi:from:!public!transforming! !
 width!**compiled accessors**!public! !
 width:!**compiled accessors**!public! !
 x!**compiled accessors**!public! !
@@ -99,6 +113,9 @@ defineFields
 		defineField: #width type: Int32Field new;
 		defineField: #height type: Int32Field new!
 
+getFieldNames
+	^#(#x #y #width #height)!
+
 left: left top: top width: width height: height
 	"Answer a new instance of the receiver with the specified origin and extent."
 
@@ -112,6 +129,7 @@ left: left top: top width: width height: height
 !Graphics.Gdiplus.Rect class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
 left:top:width:height:!instance creation!public! !
 !
 

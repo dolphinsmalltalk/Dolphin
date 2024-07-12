@@ -2,7 +2,7 @@
 
 UI.View
 	subclass: #'Graphics.Gdiplus.DoubleBufferedView'
-	instanceVariableNames: 'backSurface requiresRender graphics'
+	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -22,20 +22,21 @@ backSurface
 flip
 	"Private - Flip the current back surface to the front and paint it"
 
-	self isOpen
-		ifTrue: 
-			[| canvas |
-			canvas := self canvas.
-			backSurface
-				drawOn: canvas
-				at: 0 @ 0
-				extent: backSurface extent.
-			canvas free]!
+	| canvas |
+	self isOpen ifFalse: [^self].
+	canvas := self canvas.
+	self flip: canvas.
+	canvas free!
+
+flip: aCanvas
+	(GdiplusGraphics fromCanvas: aCanvas)
+		drawImage: backSurface;
+		free!
 
 graphics
 	"Answer a <GdiplusGraphics> onto the back surface"
 
-	^graphics ifNil: [graphics := backSurface graphics]!
+	^backSurface graphics!
 
 initialize
 	"Private - Initialise the receiver."
@@ -74,9 +75,8 @@ onEraseRequired: aColorEvent
 onPaintRequired: aPaintEvent
 	"Private - Handler for paint event"
 
-	requiresRender ifTrue: [ self render ].
-	self flip.
-!
+	requiresRender ifTrue: [self render].
+	self flip: aPaintEvent canvas!
 
 onPositionChanged: aPositionEvent
 	"Private - Handle a window position change event (move or resize)."
@@ -117,6 +117,7 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 !Graphics.Gdiplus.DoubleBufferedView categoriesForMethods!
 backSurface!accessing!public! !
 flip!operations!public! !
+flip:!operations!private! !
 graphics!accessing!public! !
 initialize!initializing!private! !
 initializeSurfacesFor:!initializing!private! !

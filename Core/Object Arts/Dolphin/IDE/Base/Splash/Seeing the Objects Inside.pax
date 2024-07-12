@@ -34,7 +34,7 @@ package!
 
 Core.Object
 	subclass: #'Tools.ObjectInside'
-	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
+	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix extent center baseScale attributes'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
@@ -50,7 +50,7 @@ UI.AbstractSplash
 
 Graphics.Gdiplus.DoubleBufferedView
 	subclass: #'Tools.SeeingTheObjectsInside'
-	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale sunPosition originalBitmapDips'
+	instanceVariableNames: 'insideObjectsScale background cachedBackground sun stepProcess random dolphinIntensity dolphinInside splashDelay hintBubble startTime scale originalBitmapDips'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: 'splashPlayTheGame'

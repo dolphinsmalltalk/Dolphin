@@ -134,6 +134,10 @@ imageBorder: aSymbol
 	imageBorder := aSymbol.
 	self invalidate!
 
+imageRectangle
+	(image isNil or: [image isRealized not]) ifTrue: [^nil].
+	^self calcRectangle: self displayRectangle!
+
 initialize
 	"Private - Initialise the new receiver."
 
@@ -330,6 +334,7 @@ eraseBackground:around:!event handling!private! !
 image:!accessing!private! !
 imageBorder!modes!public! !
 imageBorder:!modes!public! !
+imageRectangle!accessing!public! !
 initialize!initializing!private! !
 insets!accessing!public! !
 insets:!accessing!public! !

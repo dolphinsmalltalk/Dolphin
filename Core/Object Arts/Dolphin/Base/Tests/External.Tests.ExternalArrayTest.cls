@@ -344,10 +344,10 @@ testWithDo
 
 !External.Tests.ExternalArrayTest categoriesForMethods!
 arrayClass!constants!private! !
-arrayValueString:!private!unit tests! !
-canonicalizeValue:!private!unit tests! !
-elementFromValue:!private!unit tests! !
-elementToValue:!private!unit tests! !
+arrayValueString:!helpers!private! !
+canonicalizeValue:!helpers!private! !
+elementFromValue:!helpers!private! !
+elementToValue:!helpers!private! !
 newArrayOfIntegers:!helpers!private! !
 newNumericArray:!helpers!private! !
 numericElementClass!constants!private! !

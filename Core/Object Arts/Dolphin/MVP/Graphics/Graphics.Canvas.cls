@@ -172,7 +172,7 @@ clipRegion
 
 	| answer |
 	answer := Region empty.
-	GDILibrary default getClipRgn: self asParameter hrgn: answer asParameter.
+	Gdi32 getClipRgn: self asParameter hrgn: answer asParameter.
 	^answer!
 
 colorDepth

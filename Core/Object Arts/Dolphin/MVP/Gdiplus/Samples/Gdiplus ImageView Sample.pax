@@ -17,6 +17,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Views\Control Bars\Dolphin Control Bars'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Presenters\Image\Dolphin Image Presenter'
 	'..\..\Models\List\Dolphin List Models'
@@ -24,11 +25,7 @@ package setPrerequisites: #(
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
-	'..\..\Presenters\Number\Dolphin Number Presenter'
-	'..\..\Views\SpinButton\Dolphin SpinButton Control'
-	'..\..\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\..\System\Filer\Dolphin STx Filer Core'
-	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
 	'..\Gdiplus'
@@ -42,7 +39,7 @@ package!
 
 UI.Shell
 	subclass: #'UI.Examples.GdiplusImageViewSampleShell'
-	instanceVariableNames: 'image edgeChoice viewChoice padding paddingSpinner interpolationChoice classChoice useImageClass filename'
+	instanceVariableNames: 'image edgeChoice viewChoice interpolationChoice classChoice useImageClass filename statusModel'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus})
 	classInstanceVariableNames: ''

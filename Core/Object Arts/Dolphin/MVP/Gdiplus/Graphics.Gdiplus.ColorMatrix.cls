@@ -111,7 +111,7 @@ identity
 withAll: anArray
 	"Answer an instance created from anArray. anArray must have 25 <Number> elements"
 
-	| floats bytes |
+	| floats |
 	anArray size == 25
 		ifFalse: [InvalidArgumentError signal: 'ColorMatrix requires 25 elements' with: 'anArray'].
 	floats := FLOATArray marshal: anArray.

@@ -76,13 +76,13 @@ pixelAt: aPoint
 	"Answer an ARGB that is the color of the receiver at aPoint."
 
 	| color |
-	color := UInt32Bytes new.
+	color := ByteArray newFixed: 4.
 	Gdip
 		gdipBitmapGetPixel: self handle
 		x: aPoint x
 		y: aPoint y
 		color: color.
-	^Color fromArgbCode: color asInteger!
+	^Color fromArgbCode: (color uint32AtOffset: 0)!
 
 pixelAt: aPoint put: anARGB
 	"Set the pixel at aPoint to be anARGB"
@@ -92,6 +92,14 @@ pixelAt: aPoint put: anARGB
 		x: aPoint x
 		y: aPoint y
 		color: anARGB argbCode!
+
+resolution: aPoint
+	"Set  the horizontal and vertical DPI of the receiver to those specified by the <point> argument."
+
+	Gdip
+		gdipBitmapSetResolution: self asParameter
+		xdpi: aPoint x
+		ydpi: aPoint y!
 
 unlockBits: lockedBitmapData
 	Gdip gdipBitmapUnlockBits: self handle lockedBitmapData: lockedBitmapData! !
@@ -109,6 +117,7 @@ lockBits:flags:format:!accessing!public! !
 mimeType!public! !
 pixelAt:!accessing!public! !
 pixelAt:put:!accessing!public! !
+resolution:!accessing!public! !
 unlockBits:!accessing!public! !
 !
 
@@ -192,6 +201,7 @@ fromImage: aGdiplusImage extent: aPoint
 	| bitmap |
 	bitmap := self extent: aPoint.
 	bitmap graphics
+		interpolationMode: InterpolationModeHighQualityBicubic;
 		drawImage: aGdiplusImage
 			at: 0 @ 0
 			extent: aPoint;

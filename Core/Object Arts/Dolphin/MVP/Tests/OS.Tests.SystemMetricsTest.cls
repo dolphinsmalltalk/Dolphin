@@ -65,7 +65,7 @@ testSmallIconExtent
 	self assert: metrics smallIconExtent equals: 20 @ 20! !
 
 !OS.Tests.SystemMetricsTest categoriesForMethods!
-testIconTitleFont!public! !
+testIconTitleFont!public!unit tests! !
 testLargeIconExtent!public! !
 testMenuBarHeight!public! !
 testMenuImageExtent!public! !

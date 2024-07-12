@@ -2,7 +2,7 @@
 
 UI.Shell
 	subclass: #'UI.Examples.GdiplusImageViewSampleShell'
-	instanceVariableNames: 'image edgeChoice viewChoice padding paddingSpinner interpolationChoice classChoice useImageClass filename'
+	instanceVariableNames: 'image edgeChoice viewChoice interpolationChoice classChoice useImageClass filename statusModel'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus})
 	classInstanceVariableNames: ''
@@ -34,7 +34,7 @@ Instance Variables:
 attemptDisplayOABitmap
 	"Try opening an OA bitmap ... will show warning icon in deployed version"
 
-	filename := FileLocator installRelative localFileSpecFor: 'Resources/DolphinSplash.png'.
+	filename := FileLocator installRelative localFileSpecFor: 'Resources/Splash.jpg'.
 	[self displayImage] on: Error
 		do: 
 			[:e |
@@ -48,9 +48,11 @@ createComponents
 	edgeChoice := self add: ChoicePresenter new name: 'edgeChoice'.
 	viewChoice := self add: ChoicePresenter new name: 'viewChoice'.
 	interpolationChoice := self add: ChoicePresenter new name: 'interpolationChoice'.
-	classChoice := self add: ChoicePresenter new name: 'classChoice'.
-	padding := self add: NumberPresenter new name: 'padding'.
-	paddingSpinner := self add: NumberPresenter new name: 'spinner'!
+	classChoice := self add: ChoicePresenter new name: 'classChoice'!
+
+createSchematicWiring
+	super createSchematicWiring.
+	viewChoice when: #valueChanged send: #onViewChoiceChanged to: self!
 
 displayImage
 	| theImage |
@@ -80,26 +82,29 @@ initialize
 	useImageClass := Image.
 	super initialize!
 
+onPositionChanged: aPositionEvent
+	self updateStatus.
+	^super onPositionChanged: aPositionEvent!
+
+onViewChoiceChanged
+	self updateStatus!
+
 onViewOpened
-	| paddingModel imageClasses |
 	super onViewOpened.
-	image view
-		insets: 0;
-		viewMode: #scaleToFit.
 	edgeChoice choices: Graphics.Gdiplus.ImageView edgeStyles.
 	viewChoice choices: Graphics.Gdiplus.ImageView viewModes.
 	interpolationChoice choices: Graphics.Gdiplus.ImageView interpolationStyles.
-	imageClasses := {Image. Bitmap. Graphics.Bitmap. DIBSection. Icon}.
-	classChoice choices: imageClasses.
+	classChoice choices: { Image. Bitmap. Graphics.Bitmap. DIBSection. Icon }.
 	edgeChoice model: (image view aspectValue: #imageBorder).
 	viewChoice model: (image view aspectValue: #viewMode).
 	interpolationChoice model: (image view aspectValue: #interpolationMode).
-	paddingModel := image view aspectValue: #insets.
-	padding model: paddingModel.
-	paddingSpinner view range: (0 to: 100).
-	paddingSpinner model: paddingModel.
 	classChoice model: (self aspectValue: #useImageClass).
+	statusModel := nil asValue.
+	(self view viewNamed: 'extentStatus') model: statusModel.
 	self attemptDisplayOABitmap!
+
+updateStatus
+	statusModel value: image view imageRectangle!
 
 useImageClass
 	"Answer the image class to use"
@@ -113,11 +118,15 @@ useImageClass: aClass
 !UI.Examples.GdiplusImageViewSampleShell categoriesForMethods!
 attemptDisplayOABitmap!operations!public! !
 createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
 displayImage!operations!public! !
 fileOpen!commands!public! !
 helpAbout!commands!public! !
 initialize!event handling!public! !
+onPositionChanged:!event handling!public! !
+onViewChoiceChanged!event handling!public! !
 onViewOpened!event handling!public! !
+updateStatus!public!updating! !
 useImageClass!accessing!public! !
 useImageClass:!accessing!public! !
 !
@@ -149,7 +158,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #face3d 518 #{Graphics.Point} 1001 1391 517 nil nil nil 32 262 #{UI.FramingLayout} 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.LookupTable} 50 4 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 240 nil 112 nil 5 nil nil nil 240 nil 194 #{Core.IdentityDictionary} 50 12 18 #{UI.ListBox} 50 17 nil 240 50 2 8 1144062209 1025 336 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 98 #default nil 5 nil nil nil 336 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() false 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 130 605 9 130 351 221 336 626 #horizontalExtent: 8 #(0) 336 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 46 1 0 0 4 0 0 0 221 1 0 0 114 0 0 0] 8 #() 130 193 193 nil 27 8 'classChoice' 18 #{UI.ListBox} 50 17 nil 240 50 2 8 1144062209 1025 832 402 434 0 nil 480 496 nil 5 nil nil nil 832 nil nil 528 560 false 578 50 2 626 #createAt:extent: 50 2 130 31 11 130 181 221 832 626 #horizontalExtent: 8 #(0) 832 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 15 0 0 0 5 0 0 0 105 0 0 0 115 0 0 0] 8 #() 800 nil 27 8 'edgeChoice' 18 #{UI.ListBox} 50 17 nil 240 50 2 8 1144062209 1025 1120 402 434 0 nil 480 496 nil 5 nil nil nil 1120 nil nil 528 560 false 578 50 2 626 #createAt:extent: 50 2 130 411 11 130 181 221 1120 626 #horizontalExtent: 8 #(0) 1120 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 205 0 0 0 5 0 0 0 39 1 0 0 115 0 0 0] 8 #() 800 nil 27 8 'interpolationChoice' 18 #{UI.TextEdit} 50 20 nil 240 50 2 8 1140924416 1025 1408 nil 496 nil 5 nil nil nil 1408 nil nil 1094 1 #{UI.IntegerToText} nil 8 '' 326 1 #{Core.Locale} #userDefault nil 1 #focusLost nil nil nil 578 50 1 626 #createAt:extent: 50 2 130 835 239 130 1 51 1408 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 161 1 0 0 119 0 0 0 161 1 0 0 144 0 0 0] 8 #() 800 nil 45 8 'padding' 18 #{UI.SpinButton} 50 15 nil 240 50 2 8 1140916244 1 1712 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 514 #= 8 #() 514 #hash 8 #() 1 496 nil 5 nil nil nil 1712 nil nil 518 #{UI.NullConverter} nil nil 578 50 3 626 #createAt:extent: 50 2 130 921 239 130 35 51 1712 626 #setRange: 50 1 774 #{Core.Interval} 3 201 3 1712 626 #udmSetAccel: 50 1 1350 1 #{External.StructureArray} 8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 #{OS.UDACCEL} nil 17 1712 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 204 1 0 0 119 0 0 0 221 1 0 0 144 0 0 0] 8 #() 800 nil 27 8 'spinner' 18 #{UI.ListBox} 50 17 nil 240 50 2 8 1144062209 1025 2240 402 434 0 nil 480 496 nil 5 nil nil nil 2240 nil nil 528 560 false 578 50 2 626 #createAt:extent: 50 2 130 221 11 130 181 221 2240 626 #horizontalExtent: 8 #(0) 2240 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 110 0 0 0 5 0 0 0 200 0 0 0 115 0 0 0] 8 #() 800 nil 27 8 'viewChoice' nil 578 50 1 626 #createAt:extent: 50 2 130 1 1 130 969 301 240 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 150 0 0 0] 50 7 832 2240 1120 336 18 #{UI.StaticText} 50 16 nil 240 50 2 8 1140850944 65 2672 nil nil nil 5 nil nil nil 2672 nil nil 1906 nil nil nil 578 50 2 626 #createAt:extent: 50 2 130 721 241 130 111 41 2672 626 #text: 50 1 8 'Padding:' 2672 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 104 1 0 0 120 0 0 0 159 1 0 0 140 0 0 0] 8 #() 800 nil 27 1408 1712 800 nil 27 2118 2 #{UI.FramingConstraints} 1030 #{UI.FramingCalculation} #fixedParentLeft 1 2978 #fixedParentRight 1 2978 #fixedParentTop 1 2978 #fixedViewTop 301 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 3056 nil 112 nil 5 nil nil nil 3056 1798 #{UI.BorderLayout} 1 1 nil nil nil nil 18 #{Graphics.Gdiplus.ImageView} 50 28 nil 3056 50 2 8 1140850944 1 3152 1778 nil false 6 #{Kernel.EqualitySearchPolicy} nil 112 nil 5 nil nil nil 3152 nil nil 1906 nil nil nil nil #normal 3 518 #{Graphics.Rectangle} 130 1 1 130 1 1 nil #default #none nil nil nil nil nil 578 50 1 626 #createAt:extent: 50 2 130 21 21 130 929 933 3152 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 218 1 0 0 220 1 0 0] 8 #() 800 nil 29 194 #{Core.IdentityDictionary} 50 2 3152 8 'image' 3282 130 21 21 130 21 21 578 50 1 626 #createAt:extent: 50 2 130 1 301 130 969 973 3056 738 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 150 0 0 0 228 1 0 0 124 2 0 0] 50 1 3152 800 nil 27 2946 2992 1 3008 1 2978 #fixedPreviousBottom 1 2978 #fixedParentBottom 1 550 #{Core.IdentityDictionary} 0 nil 2886 4 #{UI.MenuBar} nil true 50 2 2886 4 #{UI.Menu} nil true 50 1 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #fileOpen 8 '&Open ...' 9375 1 nil nil nil 8 '&File' nil 1 nil nil nil nil nil 3858 nil true 50 1 3906 1 3938 #helpAbout 8 'About' 1 1 nil nil nil 8 'Help' nil 1 nil nil nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 578 50 2 626 #createAt:extent: 50 2 130 6143 21 130 1001 1391 32 626 #text: 50 1 8 'GdiplusImageView Sample' 32 738 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 243 13 0 0 193 2 0 0] 50 2 240 3056 800 nil 27)! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #face3d 518 #{Graphics.Point} 1601 1201 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 192 nil 112 nil 5 nil nil nil 192 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 8 18 #{UI.ListBox} 50 17 nil 192 50 2 8 1144062209 1025 304 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 98 #default nil 5 nil nil nil 304 nil nil 518 #{Core.Message} #shortName 8 #() 8 #() false 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[96 1 0 0 4 0 0 0 216 1 0 0 114 0 0 0] 193 336 8 '' 304 594 #horizontalExtent: 8 #(0) 304 3 8 #() 130 193 193 nil 27 8 'classChoice' 18 #{UI.ListBox} 50 17 nil 192 50 2 8 1144062209 1025 816 370 402 0 nil 448 464 nil 5 nil nil nil 816 nil nil 482 #displayString 8 #() 528 false 546 50 2 594 #createWindow: 50 1 642 674 8 #[15 0 0 0 5 0 0 0 105 0 0 0 115 0 0 0] 193 848 8 '' 816 594 #horizontalExtent: 8 #(0) 816 3 8 #() 130 193 193 nil 27 8 'edgeChoice' 18 #{UI.ListBox} 50 17 nil 192 50 2 8 1144062209 1025 1152 370 402 0 nil 448 464 nil 5 nil nil nil 1152 nil nil 912 528 false 546 50 2 594 #createWindow: 50 1 642 674 8 #[205 0 0 0 5 0 0 0 89 1 0 0 115 0 0 0] 193 1184 8 '' 1152 594 #horizontalExtent: 8 #(0) 1152 3 8 #() 130 193 193 nil 27 8 'interpolationChoice' 18 #{UI.ListBox} 50 17 nil 192 50 2 8 1144062209 1025 1456 370 402 0 nil 448 464 nil 5 nil nil nil 1456 nil nil 912 528 false 546 50 2 594 #createWindow: 50 1 642 674 8 #[110 0 0 0 5 0 0 0 200 0 0 0 115 0 0 0] 193 1488 8 '' 1456 594 #horizontalExtent: 8 #(0) 1456 3 8 #() 130 193 193 nil 27 8 'viewChoice' nil 546 50 1 594 #createWindow: 50 1 642 674 8 #[0 0 0 0 0 0 0 0 16 3 0 0 129 0 0 0] 193 224 8 '' 192 3 50 4 816 1456 1152 304 130 193 193 nil 27 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1409288460 1 1920 nil 464 nil 517 nil nil nil 1920 nil nil 258 #{Core.IdentityDictionary} 50 2 1862 1 #{UI.StatusBarItem} 8193 301 1920 nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 480 8 'doIt' 8 '[:rect | (rect ifNotNil: [rect extent]) displayString]' 8 #[31 105 17 222 3 226 0 110 60 159 106] #extent #displayString 2064 #ifNotNil: 7 257 nil 2050 0 nil 2082 5 1 480 8 'doIt' 8 '[:image | (Graphics.Icon fromId: ''EXTENT.ICO'') imageIndex]' 8 #[33 105 45 30 178 161 106] 1094 2 #{Kernel.VariableBinding} #Icon #{Graphics.Icon} #{Graphics} 1 8 'EXTENT.ICO' #fromId: #imageIndex 2160 7 257 nil nil 8 'extentStatus' nil nil nil 50 1 2032 1094 1 #{UI.StatusBarNullItem} 8705 1 1920 nil nil 546 50 1 594 #createWindow: 50 1 642 674 8 #[0 0 0 0 9 2 0 0 16 3 0 0 29 2 0 0] 193 1952 8 '' 1920 3 8 #() 130 193 193 nil 29 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 2512 nil 112 nil 5 nil nil nil 2512 162 1 1 nil nil nil nil 18 #{Graphics.Gdiplus.ImageView} 50 28 nil 2512 50 2 8 1140850944 1 2592 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 112 nil 5 nil nil nil 2592 nil nil 518 #{UI.NullConverter} nil nil nil nil #normal 3 518 #{Graphics.Rectangle} 130 1 1 130 1 1 nil #default #none nil nil nil nil nil 546 50 2 594 #createWindow: 50 1 642 674 8 #[10 0 0 0 10 0 0 0 6 3 0 0 126 1 0 0] 193 2624 nil 2592 594 #text: 50 1 8 '' 2592 3 8 #() 130 193 193 nil 29 258 #{Core.IdentityDictionary} 50 2 2592 8 'image' 2754 130 21 21 130 21 21 546 50 1 594 #createWindow: 50 1 642 674 8 #[0 0 0 0 129 0 0 0 16 3 0 0 9 2 0 0] 193 2544 8 '' 2512 3 50 1 2592 130 193 193 nil 27 550 #{Core.IdentityDictionary} 0 nil 2886 4 #{UI.MenuBar} nil true 50 2 2886 4 #{UI.Menu} nil true 50 1 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #fileOpen 8 '&Open ...' 9375 1 nil nil nil 8 '&File' nil 1 nil nil nil nil nil 3346 nil true 50 1 3394 1 3426 #helpAbout 8 'About' 1 1 nil nil nil 8 'Help' nil 1 nil nil nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil 193 546 50 1 594 #createWindow: 50 1 642 674 8 #[255 14 0 0 10 0 0 0 31 18 0 0 98 2 0 0] 193 80 8 'GdiplusImageView Sample' 32 1 50 3 192 2512 1920 130 193 193 nil 27)! !
 
 !UI.Examples.GdiplusImageViewSampleShell class categoriesForMethods!
 aboutText!enquiries!public! !

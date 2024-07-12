@@ -25,6 +25,12 @@ bottom
 bottom: aNumber
 	self height: aNumber - self y!
 
+height
+	^self subclassResponsibility!
+
+height: aNumber
+	self subclassResponsibility!
+
 left
 	^self x!
 
@@ -42,12 +48,31 @@ right
 right: aNumber
 	self width: aNumber - self x!
 
+scaleBy: aMagnitude
+	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+
+	| p |
+	p := self topLeft * aMagnitude.
+	self
+		x: p x;
+		y: p y.
+	p := self extent * aMagnitude.
+	self
+		width: p x;
+		height: p y!
+
 top
 	^self y!
 
 top: aNumber
 	self height: self height + (self y - aNumber).
 	self y: aNumber!
+
+width
+	^self subclassResponsibility!
+
+width: aNumber
+	self subclassResponsibility!
 
 x
 	self subclassResponsibility!
@@ -65,12 +90,17 @@ y: aFloat
 asRectangle!converting!public! !
 bottom!accessing!public! !
 bottom:!accessing!public! !
+height!accessing!public! !
+height:!accessing!public! !
 left!accessing!public! !
 left:!accessing!public! !
 right!accessing!public! !
 right:!accessing!public! !
+scaleBy:!public!transforming! !
 top!accessing!public! !
 top:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
 x!accessing!public! !
 x:!accessing!public! !
 y!accessing!public! !

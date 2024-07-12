@@ -2,7 +2,7 @@
 
 Graphics.Gdiplus.DoubleBufferedView
 	subclass: #'Tools.SeeingTheObjectsInside'
-	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale sunPosition originalBitmapDips'
+	instanceVariableNames: 'insideObjectsScale background cachedBackground sun stepProcess random dolphinIntensity dolphinInside splashDelay hintBubble startTime scale originalBitmapDips'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: 'splashPlayTheGame'
@@ -22,19 +22,19 @@ SeeingTheObjectsInside show
 
 !Tools.SeeingTheObjectsInside methodsFor!
 
-addInsideObject: anObject minScale: minScale maxScale: maxScale
+addInsideObject: anObjectInside minScale: minScale maxScale: maxScale
 	"Private - Adds an object and finds a position for it"
 
-	anObject scale: minScale asPoint.
+	anObjectInside scale: minScale asPoint.
 
 	"Check not touching at first"
-	(anObject testCollisionIn: self backSurface) ifTrue: [^nil].
+	(anObjectInside testCollisionIn: backSurface) ifTrue: [^nil].
 	
-	[anObject scale: anObject scale * 1.2.
-	(anObject testCollisionIn: self backSurface) or: [anObject scale r > maxScale ]] 
+	[anObjectInside scale: anObjectInside scale * 1.2.
+	(anObjectInside testCollisionIn: backSurface) or: [anObjectInside scale r > maxScale]]
 			whileFalse.
-	self model add: anObject.
-!
+	anObjectInside baseScale: anObjectInside scale.
+	self model add: anObjectInside!
 
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
@@ -45,19 +45,19 @@ dismiss
 	self topShell close!
 
 dolphinInsideBaseColor
-	^Color 
+	^##(Color 
 		r: 1
 		g: 1
-		b: 1!
+		b: 1)!
 
 dolphinInsideIntensityColor
-	^Color
+	^##(Color 
 		r: 192
 		g: 89
-		b: 207!
+		b: 207)!
 
 dolphinInsideIntensityPeriod
-	^1500!
+	^1500.0!
 
 dolphinInsideIntensityTime
 	^7000!
@@ -68,50 +68,67 @@ dolphinMaxScale
 dolphinMinScale
 	^0.3!
 
-dolphinOutline
-	^dolphinOutline
-		ifNil: 
-			[dolphinOutline := Gdiplus.Bitmap fromFile: 'Resources\DolphinOutline.png'
-						usingLocator: FileLocator installRelative.
-			self baseStyle = 1
-				ifFalse: [dolphinOutline := Gdiplus.Bitmap fromImage: dolphinOutline scaledBy: baseScale]]!
+drawBigVersionNumberOn: aCanvas
+	aCanvas
+		forecolor: (Color
+					red: 215
+					green: 109
+					blue: 10);
+		font: ((Font name: 'Arial Narrow' pointSize: 206)
+					weight: 600;
+					yourself);
+		text: SessionManager current productVersion major displayString at: (376 @ 338 * scale) truncated!
 
-drawInfoTextOn: aGdiplusGraphics
-	| fontCopyright brush |
-	brush := Gdiplus.Brush color: Color white.
-	#highDpiToDo.	"There must be a better way of working with GDI+ and per-monitor DPI than scaling everything to pixels. If we don't do this, then the font scaling always uses the primary monitor DPI (which is the DPI of the graphics context)."
-	fontCopyright := Gdiplus.Font name: 'Arial' pixelSize: 9 * self dpi / 72.
-	aGdiplusGraphics
-		textRenderingHint: TextRenderingHintAntiAlias;
-		drawString: info
-			font: fontCopyright
-			at: (48 @ 630 * baseScale) rounded
-			format: StringFormat genericDefault
-			brush: brush.
-	fontCopyright free.
-	brush free!
+drawInfoTextOn: aCanvas
+	aCanvas
+		forecolor: self textColor;
+		font: (Font name: 'Segoe UI' pointSize: 8);
+		formatText: self getBlurb in: ((50 @ 632 extent: 400 + 80) scaledBy: scale) truncated!
+
+drawTextOn: aGraphics atDpi: anInteger
+	self registerTitleFont.
+	aGraphics doWithCanvas: 
+			[:canvas |
+			canvas
+				dpi: anInteger;
+				backcolor: (background pixelAt: Point.Zero).
+			self
+				drawTitlesOn: canvas;
+				drawBigVersionNumberOn: canvas;
+				drawInfoTextOn: canvas]!
+
+drawTitlesOn: aCanvas
+	aCanvas
+		forecolor: self textColor;
+		font: (self titleFontOfSize: 68);
+		text: 'Smalltalk' at: (44 @ 502 * scale) truncated;
+		font: (self titleFontOfSize: 88);
+		text: 'Dolphin' at: (40 @ 372 * scale) truncated!
 
 elapsedTime
 	"Answer the elapsed time in ms since the start of the animation"
 
 	^Delay millisecondClockValue - startTime!
 
-fill
-	| dolphinPt min max pts |
+fillWith: aLookupTableOfObjectsInside
+	| graphics min max pts aCollectionOfObjectsInside dolphins |
+	dolphins := {aLookupTableOfObjectsInside removeKey: 'Dolphin1.png'.
+				aLookupTableOfObjectsInside removeKey: 'Dolphin2.png'}.
+	aCollectionOfObjectsInside := aLookupTableOfObjectsInside values.
 	self model removeAll.
 
 	"Render the Dolphin outline so we can fit out objects inside"
 	self render.
-	dolphinInside := (self randomFrom: dolphins) copy.
+	dolphinInside := (self randomFrom: dolphins).
 	dolphinInside rotation: (random next * 360) rounded.
-
+	graphics := self graphics.
+	graphics interpolationMode: InterpolationModeHighQualityBicubic.
 	"Find a suitable position and scale for the dolphin inside"
 	min := self dolphinMinScale.
 	max := self dolphinMaxScale.
 	pts := self points.
 	
-	[dolphinPt := self randomFrom: pts.
-	dolphinInside position: dolphinPt.
+	[dolphinInside position: (self randomFrom: pts).
 	(self
 		addInsideObject: dolphinInside
 		minScale: min
@@ -125,15 +142,15 @@ fill
 	pts do: 
 			[:pt |
 			| object |
-			object := (self randomFrom: objects) copy.
+			object := (self randomFrom: aCollectionOfObjectsInside) copy.
 			object
 				position: pt;
 				rotation: (random next * 180) truncated - 90.
-			self
+			(self
 				addInsideObject: object
 				minScale: min
-				maxScale: max.
-			object drawOn: graphics].
+				maxScale: max) ifNil: [object free] ifNotNil: [object drawOn: graphics]].
+	graphics free.
 
 	"Re-render to fill the Dolphin with objects of the correct scale"
 	dolphinInside color: self dolphinInsideBaseColor.
@@ -155,6 +172,7 @@ getBlurb
 	stream
 		nextPut: $.;
 		cr;
+		nextPutAll: 'Dolphin ';
 		nextPutAll: SessionManager current versionString;
 		nextPutAll: ' is Open Source under the MIT License.'.
 	SessionManager current bootInfo
@@ -162,7 +180,7 @@ getBlurb
 			[:bootInfo |
 			stream
 				cr;
-				nextPutAll: 'Image boot info: ';
+				nextPutAll: 'Image version: ';
 				display: bootInfo].
 	^stream contents!
 
@@ -175,10 +193,13 @@ initialize
 	insideObjectsScale := 0.1.
 	dolphinIntensity := 0.
 	random := Random new.
-	info := self getBlurb.
-	self loadBackgroundBitmap.
-	self loadTextureMap: 'ObjectsInside'.
-!
+	self prepareBackground!
+
+initializeSurfacesFor: aPointExtent
+	"Private - Initialize the front and back surfaces for a view size of aPointExtent"
+
+	super initializeSurfacesFor: aPointExtent.
+	cachedBackground := Gdiplus.CachedBitmap bitmap: background graphics: self graphics!
 
 insideObjectMaxScale
 	^1!
@@ -187,7 +208,7 @@ insideObjectMinScale
 	^0.07!
 
 insideObjectScaleInPeriod
-	^4500!
+	^4500.0!
 
 isActionPoint: aPoint
 	^self class splashPlayTheGame
@@ -197,43 +218,38 @@ isActionPoint: aPoint
 isPointInDolphin: aPoint
 	"Answer true if aPoint is within the dolphin inside. Do this most easily by looking for pixel colours"
 
-	| pixel |
-	pixel := self backSurface pixelAt: aPoint.
-	^pixel = dolphinInside color!
-
-loadBackgroundBitmap
-	| dpiScale scale bitmapDpi |
-	background := Gdiplus.Bitmap fromFile: 'Resources\DolphinSplash.png'
-				usingLocator: FileLocator installRelative.
-	"The bitmap has been saved at 72 dpi, but treat it as 96 to get 3/4 scale"
-	bitmapDpi := 96.	"background resolution x"
-	originalBitmapDips := background extent * USER_DEFAULT_SCREEN_DPI / bitmapDpi.
-	"Splash screen should always be shown on the active monitor"
-	dpiScale := DisplayMonitor active dpi / bitmapDpi.
-	scale := View desktop extent * 0.75 / (originalBitmapDips * dpiScale).
-	baseScale := (scale x min: scale y) min: dpiScale.
-	baseScale = 1 ifFalse: [background := Gdiplus.Bitmap fromImage: background scaledBy: baseScale]!
+	^(self backSurface pixelAt: aPoint) = dolphinInside color!
 
 loadTextureMap: mapName
-	| textureFileName mapFileName texture map |
-	textureFileName := 'Resources\' , (File default: mapName extension: 'png').
-	texture := Gdiplus.Bitmap fromFile: textureFileName usingLocator: FileLocator installRelative.
-	mapFileName := 'Resources\' , (File default: mapName extension: 'txt').
-	map := FileStream read: (FileLocator installRelative localFileSpecFor: mapFileName) text: true.
+	| texture map textureMap |
+	texture := Gdiplus.Bitmap fromFile: 'Resources\' , (File default: mapName extension: 'png')
+				usingLocator: FileLocator installRelative.
+	map := FileStream read: (FileLocator installRelative
+						localFileSpecFor: 'Resources\' , (File default: mapName extension: 'txt'))
+				text: true.
 	textureMap := LookupTable new.
 	[map atEnd] whileFalse: 
-			[| elements bm |
+			[| elements image |
 			elements := $, split: map nextLine.
-			bm := Gdiplus.Bitmap fromImage: texture
+			image := Gdiplus.Bitmap fromImage: texture
 						crop: (elements second trimBlanks asNumber @ elements third trimBlanks asNumber
 								extent: elements fourth trimBlanks asNumber @ elements fifth trimBlanks asNumber).
-			textureMap at: elements first put: (ObjectInside fromImage: bm scaledBy: baseScale)].
-	sun := textureMap removeKey: 'SeeingTheObjects.png'.
-	dolphins := {textureMap removeKey: 'Dolphin1.png'. textureMap removeKey: 'Dolphin2.png'}.
-	objects := textureMap values!
+			scale = 1
+				ifFalse: 
+					[| scaled |
+					scaled := Gdiplus.Bitmap fromImage: image scaledBy: scale.
+					image free.
+					image := scaled].
+			textureMap at: elements first put: (ObjectInside fromImage: image)].
+	texture free.
+	^textureMap!
 
 onDestroyed
 	self stopStepProcess.
+	cachedBackground free.
+	cachedBackground := nil.
+	background free.
+	background := nil.
 	^super onDestroyed!
 
 onGetCursor: aSymbol
@@ -246,81 +262,105 @@ onGetCursor: aSymbol
 
 onLeftButtonPressed: aMouseEvent
 	self render.
-	(self isActionPoint: aMouseEvent position) ifTrue: [self dismiss] ifFalse: [self showHintBubble]!
+	(self isActionPoint: aMouseEvent position) 
+		ifTrue: 
+			[Cursor reset.
+			self dismiss]
+		ifFalse: [self showHintBubble]!
 
 onViewCreated
 	"Private - The receiver has just been created."
 
+	| textureMap |
 	super onViewCreated.
+	textureMap := self loadTextureMap: 'ObjectsInside'.
+	sun := textureMap removeKey: 'SeeingTheObjects.png'.
+
 	"The rotating sun should be inset half an inch from the top right corner"
-	sunPosition := (background extent x @ 0 - ((sun extent + self dpi) / 2)) truncated abs.
+	sun position: (background extent x @ 0 - ((sun extent + self dpi) / 2)) truncated abs.
 	self startStepProcess.
-	self fill!
+	self fillWith: textureMap.
+	textureMap do: [:each | each free]!
 
 pointResolution
-	^25 @ 25 * baseScale!
+	^##(25 @ 25) * scale!
 
 points
 	"Compute a set of point locations that are inside the dolphin"
 
-	^points
-		ifNil: 
-			[| mask |
-			points := OrderedCollection new.
-			"Add some know good points"
-			points
-				add: 306 @ 156;
-				add: 247 @ 266;
-				add: 518 @ 394;
-				add: 335 @ 52;
-				add: 62 @ 307.
-			mask := background.
-			6 to: mask width - 6
-				by: self pointResolution x
+	| resolution points height |
+	points := Array writeStream: 100.
+	"Add some know good points"
+	points
+		nextPut: 306 @ 156;
+		nextPut: 247 @ 266;
+		nextPut: 518 @ 394;
+		nextPut: 335 @ 52;
+		nextPut: 62 @ 307.
+	resolution := self pointResolution.
+	height := background height.
+	6 to: background width - 6
+		by: resolution x
+		do: 
+			[:x |
+			6 to: height - 6
+				by: resolution y
 				do: 
-					[:x |
-					6 to: mask height - 6
-						by: self pointResolution y
-						do: 
-							[:y |
-							| pt |
-							pt := ((random next * 2 + x) @ (random next * 2 + y)) rounded.
-							((mask pixelAt: pt) alpha = 0 and: [random next > 0.2]) ifTrue: [points add: pt]]].
-			points]!
+					[:y |
+					| pt |
+					pt := ((random next * 2 + x) @ (random next * 2 + y)) rounded.
+					((background pixelAt: pt) alpha == 0 and: [random next > 0.2]) ifTrue: [points nextPut: pt]]].
+	^points contents!
 
-randomFrom: anOrderedCollection
-	| index |
-	index := (random next * anOrderedCollection size) truncated + 1.
-	^anOrderedCollection at: index!
+prepareBackground
+	| bitmapDpi graphics dpi dolphinOutline |
+	background := Gdiplus.Bitmap fromFile: 'Resources\DolphinSplash.png'
+				usingLocator: FileLocator installRelative.
+	"The bitmap has been saved at 72 dpi, but treat it as 96 to get 3/4 scale as otherwise the splash is too large"
+	bitmapDpi := 96.0.	"background resolution x"
+	originalBitmapDips := background extent * USER_DEFAULT_SCREEN_DPI // bitmapDpi.
+	"Splash screen should always be shown on the active monitor"
+	dpi := DisplayMonitor active dpi.
+	scale := dpi / bitmapDpi.
+	background := self rescaleBitmap: background.
+	graphics := background graphics.
+	self drawTextOn: graphics atDpi: dpi.
+	dolphinOutline := self rescaleBitmap: (Gdiplus.Bitmap fromFile: 'Resources\DolphinOutline.png'
+						usingLocator: FileLocator installRelative).
+	graphics
+		drawImage: dolphinOutline
+		at: Point zero
+		extent: dolphinOutline extent.
+	dolphinOutline free.
+	graphics free!
+
+randomFrom: aSequencedReadableCollection
+	^aSequencedReadableCollection at: (random next * aSequencedReadableCollection size) truncated + 1!
+
+registerTitleFont
+	"Private - "
+
+	OS.Gdi32
+		addFontResourceEx: (FileLocator installRelative localFileSpecFor: 'Resources\Mohave-Medium.ttf')
+		fl: ##(FR_PRIVATE | FR_NOT_ENUM)
+		res: 0!
 
 render
 	"Private - Render the background image"
 
 	
-	[| graphics dolphin back |
+	[| graphics |
 	graphics := self graphics.
-	graphics clear: Color white.
+	graphics
+		erase;
+		interpolationMode: InterpolationModeHighQualityBicubic.
 	self model do: 
 			[:each |
-			| existingScale |
-			existingScale := each scale.
-			each scale: existingScale * insideObjectsScale.
-			each drawOn: graphics.
-			each scale: existingScale].
-	back := background.
-	graphics
-		drawImage: back
-		at: Point zero
-		extent: back extent.
-	dolphin := self dolphinOutline.
-	graphics
-		drawImage: dolphin
-		at: Point zero
-		extent: dolphin extent.
-	sun
-		position: sunPosition;
-		drawOn: graphics.
-	self drawInfoTextOn: graphics.
+			each
+				scale: each baseScale * insideObjectsScale;
+				drawOn: graphics].
+	graphics drawCachedBitmap: cachedBackground at: Point.Zero.
+	sun drawOn: graphics.
 	super render.
 	graphics free]
 			on: Error
@@ -329,6 +369,13 @@ render
 				self stopStepProcess.
 				ex pass]!
 
+rescaleBitmap: aGdiplusBitmap
+	| scaled |
+	scale = 1 ifTrue: [^aGdiplusBitmap].
+	scaled := Gdiplus.Bitmap fromImage: aGdiplusBitmap scaledBy: scale.
+	aGdiplusBitmap free.
+	^scaled!
+
 showHintBubble
 	self hasHintBubble ifTrue: [^self].
 	hintBubble := MessageBubble new
@@ -336,27 +383,8 @@ showHintBubble
 				maxWidth: 140;
 				timeout: 5 seconds.
 	hintBubble
-		position: (self mapPointToScreen: sunPosition);
+		position: (self mapPointToScreen: sun position);
 		notify: 'Find the dolphin inside and click to continue.'!
-
-splashBitmap
-	| bitmap rawBitmap extent imageAttr bitmapBackcolor systemBackcolor |
-	rawBitmap := Gdiplus.Bitmap fromFile: 'Resources\DolphinSplash.png'
-				usingLocator: FileLocator installRelative.
-	extent := rawBitmap extent.
-	bitmap := Gdiplus.Bitmap extent: extent.
-	bitmapBackcolor := rawBitmap pixelAt: Point.Zero.
-	systemBackcolor := SmalltalkSystemShell backcolor.
-	imageAttr := bitmapBackcolor = systemBackcolor
-				ifFalse: 
-					[ImageAttributes new
-						remapColor: bitmapBackcolor to: systemBackcolor;
-						yourself].
-	bitmap graphics
-		drawImage: rawBitmap attributes: imageAttr;
-		free.
-	imageAttr free.
-	^bitmap!
 
 startStepProcess
 	self stopStepProcess.
@@ -393,7 +421,21 @@ stopStepProcess
 	stepProcess 
 		ifNotNil: 
 			[stepProcess terminate.
-			stepProcess := nil]! !
+			stepProcess := nil]!
+
+textColor
+	^Color white!
+
+titleFontOfSize: anInteger
+	^(Font name: 'Mohave Medium' pointSize: anInteger)
+		quality: #proof;
+		yourself!
+
+unregisterTitleFont
+	"Private - "
+
+	OS.Gdi32
+		removeFontResource: (FileLocator installRelative localFileSpecFor: 'Resources\Mohave-Regular.ttf')! !
 
 !Tools.SeeingTheObjectsInside categoriesForMethods!
 addInsideObject:minScale:maxScale:!private! !
@@ -405,20 +447,22 @@ dolphinInsideIntensityPeriod!constants!operations!public! !
 dolphinInsideIntensityTime!constants!operations!public! !
 dolphinMaxScale!public! !
 dolphinMinScale!public! !
-dolphinOutline!accessing!private! !
+drawBigVersionNumberOn:!operations!private! !
 drawInfoTextOn:!operations!private! !
+drawTextOn:atDpi:!operations!private! !
+drawTitlesOn:!operations!private! !
 elapsedTime!operations!public! !
-fill!event handling!private! !
+fillWith:!event handling!private! !
 frameRate!constants!public! !
 getBlurb!helpers!private! !
 hasHintBubble!event handling!private!testing! !
 initialize!initializing!private! !
+initializeSurfacesFor:!initializing!private! !
 insideObjectMaxScale!constants!public! !
 insideObjectMinScale!constants!public! !
 insideObjectScaleInPeriod!constants!operations!public! !
 isActionPoint:!event handling!private! !
 isPointInDolphin:!event handling!private!testing! !
-loadBackgroundBitmap!initializing!private! !
 loadTextureMap:!accessing!private! !
 onDestroyed!event handling!private! !
 onGetCursor:!event handling!private! !
@@ -426,15 +470,20 @@ onLeftButtonPressed:!event handling!private! !
 onViewCreated!event handling!private! !
 pointResolution!constants!public! !
 points!accessing!private! !
+prepareBackground!initializing!private! !
 randomFrom:!private! !
+registerTitleFont!operations!private! !
 render!operations!private! !
+rescaleBitmap:!initializing!private! !
 showHintBubble!private! !
-splashBitmap!helpers!private! !
 startStepProcess!initializing!private! !
 step!operations!public! !
 stepDolphinInsideIntensity!operations!private! !
 stepInsideObjectsScale!operations!private! !
 stopStepProcess!initializing!private! !
+textColor!constants!private! !
+titleFontOfSize:!operations!private! !
+unregisterTitleFont!operations!private! !
 !
 
 !Tools.SeeingTheObjectsInside class methodsFor!

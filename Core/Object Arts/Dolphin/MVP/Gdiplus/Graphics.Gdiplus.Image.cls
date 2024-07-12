@@ -197,12 +197,12 @@ extent
 	"Answer a <Point> specifying the dimensions of the receiver in pixels."
 
 	| buf width hImage |
-	buf := UInt32Bytes new.
+	buf := ByteArray newFixed: 4.
 	hImage := self asParameter.
 	Gdip gdipGetImageWidth: hImage width: buf.
-	width := buf asInteger.
+	width := buf uint32AtOffset: 0.
 	Gdip gdipGetImageHeight: hImage height: buf.
-	^width @ buf asInteger!
+	^width @ (buf uint32AtOffset: 0)!
 
 filename
 	"Answer the <readableString> filename associated with the receiver.
@@ -348,9 +348,9 @@ height
 	"Answer an <Integer> specifying the height of the receiver in pixels."
 
 	| buf |
-	buf := UInt32Bytes new.
+	buf := ByteArray newFixed: 4.
 	Gdip gdipGetImageHeight: self asParameter height: buf.
-	^buf asInteger!
+	^buf uint32AtOffset: 0!
 
 initializerClass
 	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
@@ -561,7 +561,7 @@ rectScaledToFit: aRectangle centered: aBoolean
 	^origin rounded extent: extent truncated!
 
 resolution
-	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+	"Answer a <Point> specifying the horizontal and vertical DPI of the receiver."
 
 	| buf dpiX |
 	buf := ByteArray new: 4.
@@ -747,9 +747,9 @@ width
 	"Answer an <Integer> specifying the width of the receiver in pixels."
 
 	| buf |
-	buf := UInt32Bytes new.
+	buf := ByteArray newFixed: 4.
 	Gdip gdipGetImageWidth: self asParameter width: buf.
-	^buf asInteger! !
+	^buf uint32AtOffset: 0! !
 
 !Graphics.Gdiplus.Image categoriesForMethods!
 addToImageList:mask:!double dispatch!public! !

@@ -47,7 +47,7 @@ anySatisfy: discriminator
 	Implementation Note: The argument is evaluated for every element of the
 	receiver iff it evaluates to false for every element."
 
-	self do: [:e | (discriminator value: e) ifTrue: [^true]].
+	1 to: self size do: [:i | (discriminator value: (self uncheckedAt: i)) ifTrue: [^true]].
 	^false!
 
 appendToStream: puttableStream
@@ -464,7 +464,7 @@ with: aCollection do: aDyadicValuable
 
 !External.ExternalArray categoriesForMethods!
 =!comparing!public! !
-allSatisfy:!public! !
+allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
 appendToStream:!double dispatch!private! !
 asArray!converting!public! !

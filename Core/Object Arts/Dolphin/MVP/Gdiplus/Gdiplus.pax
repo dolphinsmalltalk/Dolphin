@@ -2408,7 +2408,7 @@ Graphics.Gdiplus.AbstractRect
 
 UI.View
 	subclass: #'Graphics.Gdiplus.DoubleBufferedView'
-	instanceVariableNames: 'backSurface requiresRender graphics'
+	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

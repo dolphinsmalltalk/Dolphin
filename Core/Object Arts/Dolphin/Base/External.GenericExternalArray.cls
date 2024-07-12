@@ -23,6 +23,18 @@ External.GenericExternalArray comment: '`GenericExternalArray` is an abstract cl
 
 !External.GenericExternalArray methodsFor!
 
+anySatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	any element of the receiver.
+	Implementation Note: The argument is evaluated for every element of the
+	receiver iff it evaluates to false for every element."
+
+	self
+		uncheckedFrom: 1
+		to: self size
+		keysAndValuesDo: [:i :elem | (discriminator value: elem) ifTrue: [^true]].
+	^false!
+
 asArray
 	"Answer an <Array> containing the constituent elements of the receiver."
 
@@ -105,6 +117,7 @@ with: aCollection do: aDyadicValuable
 	self subclassResponsibility! !
 
 !External.GenericExternalArray categoriesForMethods!
+anySatisfy:!enumerating!public! !
 asArray!converting!public! !
 base!accessing!private! !
 elementClass!accessing!public! !
