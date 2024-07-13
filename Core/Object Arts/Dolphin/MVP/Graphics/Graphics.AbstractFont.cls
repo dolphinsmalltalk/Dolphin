@@ -19,7 +19,9 @@ Graphics.AbstractFont comment: ''!
 = aFont
 	"Answer true if aFont is equal to (has the same logical font info) as the receiver."
 
-	^self species == aFont species and: [self logFont = aFont logFont]!
+	^self species == aFont species and: 
+			[series == aFont series
+				or: [(logfont equalExcludingSize: aFont logFont) and: [self pointSize == aFont pointSize]]]!
 
 actualFont
 	^self!
@@ -55,7 +57,7 @@ dpi
 	^dpi!
 
 dpi: anInteger
-	"Sets the logical pixels per inch of the receiver. Note that if the dpi changes, this will free the font handle, breaking any existing uses. This tends to be obvious as controls will mysteriously start painting using some default font. Changing the DPI of a shared font must therefore be avoided. Instead use #atDpi: to get an equivalent Font at the desired scale."
+	"Sets the logical pixels per inch of the receiver. Note that if the dpi changes, this will free the font handle, breaking any existing uses. This tends to be obvious as controls will mysteriously start painting using the system font. Changing the DPI of a shared font must therefore be avoided. Instead use #atDpi: to get an equivalent Font at the desired scale."
 
 	| oldDpi |
 	dpi = anInteger ifTrue: [^self].
@@ -74,7 +76,7 @@ getLogFont
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
-	^logfont hash!
+	^self pointSize hashMultiply + self name hash!
 
 initialize
 	"Initialise the receiver."
@@ -118,32 +120,26 @@ name
 
 	^self logFont faceName!
 
-pixelFromPoints: size
-	"Private - Answers a pixel size from a given point size."
-
-	^(size * self dpi / 72.0) rounded!
-
 pixelSize
 	"Answers the receiver's pixel size."
 
 	^self logFont lfHeight abs!
 
-pointFromPixels: size
-	"Private - Answers a point size from a given pixel size."
-
-	^(size * 72 / self dpi) rounded.
-!
-
 pointSize
 	"Answers the receiver's point size."
 
-	^self pointFromPixels: self logFont lfHeight abs!
-
-pointSize: anInteger
-	"Convert anInteger to pixels and store in the receiver's logfont lfHeight.
-	This has no affect if the receiver is already realized."
-
-	self logFont lfHeight: (self pixelFromPoints: anInteger) negated!
+	| lfHeight |
+	lfHeight := self logFont lfHeight.
+	lfHeight > 0 ifTrue: [ | dc tm |
+"		dc := Canvas forDesktop.
+		dc font: self.
+		tm := dc outlineTextMetrics.
+		dc free."
+		] ifFalse: [lfHeight := lfHeight negated].
+	^(lfHeight * 72 / self dpi) rounded
+"
+Font system pointSize
+"!
 
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy
@@ -205,7 +201,7 @@ stbSaveOn: anSTBOutFiler
 			[anSTBOutFiler saveObject: self] ensure: 
 					[handle := savedHandle.
 					series := savedSeries]]
-		ifFalse: [anSTBOutFiler basicNextPut: (series atDpi: USER_DEFAULT_SCREEN_DPI)]!
+		ifFalse: [anSTBOutFiler nextPut: (series atDpi: USER_DEFAULT_SCREEN_DPI)]!
 
 styleChanged
 	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
@@ -240,13 +236,10 @@ isDefault!public!testing! !
 isItalic!public!testing! !
 isStruckThrough!public!testing! !
 isUnderlined!public!testing! !
-logFont!accessing!public! !
-name!accessing!public! !
-pixelFromPoints:!mapping!private! !
-pixelSize!accessing!public! !
-pointFromPixels:!mapping!private! !
+logFont!public! !
+name!public! !
+pixelSize!public! !
 pointSize!accessing!public! !
-pointSize:!accessing!public! !
 postCopy!copying!public! !
 resolution!accessing!public! !
 resolution:!accessing!public!scaling! !
@@ -362,8 +355,6 @@ stbVersion
 	^1!
 
 system
-	"Answer the stock System font."
-
 	^self fromId: SYSTEM_FONT! !
 
 !Graphics.AbstractFont class categoriesForMethods!

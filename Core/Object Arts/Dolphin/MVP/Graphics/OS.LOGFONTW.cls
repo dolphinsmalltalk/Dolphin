@@ -58,6 +58,13 @@ struct tagLOGFONTW {
 
 !OS.LOGFONTW methodsFor!
 
+equalExcludingSize: aLOGFONTW
+	^self lfFaceName = aLOGFONTW lfFaceName and: 
+			[(CRTLibrary default
+				memcmp: bytes yourAddress + _OffsetOf_lfEscapement
+				buf2: aLOGFONTW bytes yourAddress + _OffsetOf_lfEscapement
+				count: ##(_OffsetOf_lfFaceName - _OffsetOf_lfEscapement)) == 0]!
+
 faceName
 	"Answer the receiver's lfFaceName field as a UTF-8 encoded string."
 	
@@ -189,6 +196,7 @@ lfWidth: anInteger
 	bytes int32AtOffset: _OffsetOf_lfWidth put: anInteger! !
 
 !OS.LOGFONTW categoriesForMethods!
+equalExcludingSize:!comparing!public! !
 faceName!accessing!public! !
 faceName:!accessing!public! !
 isFixedWidth!public! !

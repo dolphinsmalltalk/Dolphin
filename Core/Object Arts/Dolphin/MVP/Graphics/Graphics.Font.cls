@@ -98,6 +98,12 @@ pixelSize: anInteger
 
 	self logFont lfHeight: anInteger negated!
 
+pointSize: anInteger
+	"Convert anInteger to pixels and store in the receiver's logfont lfHeight.
+	This has no affect if the receiver is already realized."
+
+	self logFont lfHeight: (anInteger * self dpi / 72) rounded negated!
+
 printOn: aStream
 	"Append, to aStream, a String whose characters are a description of the receiver as a developer
 	would want to see it."

@@ -15,13 +15,30 @@ Graphics.Tests.FontTest comment: ''!
 !Graphics.Tests.FontTest methodsFor!
 
 testAtDpi
-	| subject oneTwenty |
+	| subject double |
 	subject := Font name: 'Arial' pointSize: 12.
 	self assert: subject dpi equals: 96.
 	self assert: (subject atDpi: 96) identicalTo: subject.
-	oneTwenty := subject atDpi: 96 * 2.
-	self assert: oneTwenty dpi equals: 96 * 2.
-	self assert: (oneTwenty atDpi: 96) identicalTo: subject!
+	double := subject atDpi: 96 * 2.
+	self assert: double dpi equals: 96 * 2.
+	self assert: (double atDpi: 96) identicalTo: subject!
+
+testComparing
+	| subject comperand |
+	subject := Font name: 'Arial' pointSize: 12.
+	self assert: subject dpi equals: 96.
+	comperand := subject atDpi: 96 * 2.
+	self assert: subject equals: comperand.
+	self assert: comperand equals: subject.
+	self assert: subject hash equals: comperand hash.
+	comperand := (Font name: 'Arial' pointSize: 12) atDpi: 96 * 2.
+	self deny: subject series equals: comperand series.
+	self assert: subject equals: comperand.
+	self assert: comperand equals: subject.
+	self assert: subject hash equals: comperand hash.
+	comperand := (Font name: 'Arial' pointSize: 12) beBold.
+	self deny: subject equals: comperand.
+	self deny: comperand equals: subject!
 
 testFromHandle
 	| desktopFont systemFont |
@@ -69,12 +86,14 @@ testStbRoundTrip
 testSystem
 	| systemFont |
 	systemFont := Font system.
-	self assert: systemFont dpi equals: 96.
+	self assert: systemFont pointSize equals: 10.
+	self assert: systemFont dpi equals: SystemMetrics current dpi.
 	self assert: Font system identicalTo: systemFont.
 	self assert: systemFont isKindOf: StockFont! !
 
 !Graphics.Tests.FontTest categoriesForMethods!
 testAtDpi!public!unit tests! !
+testComparing!public!unit tests! !
 testFromHandle!public!unit tests! !
 testStbConvertFrom0!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
