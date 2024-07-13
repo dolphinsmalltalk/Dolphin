@@ -34,9 +34,13 @@ getScaleFactorForMonitor:pScale:!public!win32 functions-high DPI! !
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
-	^'SHCore'! !
+	^'SHCore'!
+
+sharedVariableName
+	^#{OS.SHCore}! !
 
 !OS.SHCoreLibrary class categoriesForMethods!
 fileName!constants!public! !
+sharedVariableName!constants!private! !
 !
 

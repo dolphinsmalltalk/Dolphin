@@ -115,7 +115,7 @@ dpi
 getResolution: anInteger
 	| buf |
 	buf := ByteArray newFixed: 8.
-	SHCoreLibrary default
+	SHCore
 		getDpiForMonitor: handle
 		dpiType: anInteger
 		dpiX: buf yourAddress
@@ -197,7 +197,7 @@ scalePercentage
 	| factor |
 	#highDpiToDo.	"What does this return for custom scale factors?"
 	factor := ByteArray newFixed: 4.
-	SHCoreLibrary default getScaleFactorForMonitor: handle pScale: factor.
+	SHCore getScaleFactorForMonitor: handle pScale: factor.
 	^factor sdwordAtOffset: 0!
 
 workArea

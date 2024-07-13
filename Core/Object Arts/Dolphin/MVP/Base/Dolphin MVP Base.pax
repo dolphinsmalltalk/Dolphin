@@ -351,11 +351,13 @@ package setMethodNames: #(
 
 package setVariableNames: #(
 	#{OS.Dwmapi}
+	#{OS.SHCore}
 	#{OS.UxTheme}
 ).
 
 package setBinaryVariableNames: #(
 	#{OS.Dwmapi}
+	#{OS.SHCore}
 	#{OS.UxTheme}
 ).
 
