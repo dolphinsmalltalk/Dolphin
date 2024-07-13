@@ -46,13 +46,8 @@ description: aStringDescription
 	description value: aStringDescription
 !
 
-model: aCertificate
-	"Set the model associated with the receiver."
-
-	super model: aCertificate.
-	certificateImage value: aCertificate image.
-
-!
+displayImageAtDpi: anInteger
+	certificateImage value: (self model value imageAtDpi: anInteger)!
 
 ok
 	"The user has chose to trust the receiver's certificate so add it to an appropriate trust store"
@@ -62,6 +57,15 @@ ok
 		ifFalse: [self model beTemporarilyTrusted].
 	super ok.
 !
+
+onDpiChanged: aDpiChangeEvent
+	| result |
+	result := super onDpiChanged: aDpiChangeEvent.
+	self displayImageAtDpi: aDpiChangeEvent newDpi.
+	^result!
+
+onViewAvailable
+	self displayImageAtDpi: self view dpi!
 
 validateUserInterface
 	"Set the state of the receiver accordingly. "
@@ -74,8 +78,10 @@ validateUserInterface
 alwaysTrust!accessing!public! !
 createComponents!initializing!public! !
 description:!accessing!private! !
-model:!accessing!public! !
+displayImageAtDpi:!operations!private! !
 ok!commands!public! !
+onDpiChanged:!event handling!public! !
+onViewAvailable!event handling!public! !
 validateUserInterface!operations!public! !
 !
 
@@ -95,10 +101,9 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 30 nil nil 8 #(13107200 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog nil 133 nil 1030 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 77 0 105 0 99 0 114 0 111 0 115 0 111 0 102 0 116 0 32 0 83 0 97 0 110 0 115 0 32 0 83 0 101 0 114 0 105 0 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 518 #{Graphics.Point} 193 193 nil 32 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 6 18 #{UI.CheckBox} 50 16 nil 32 50 2 8 1140924451 1 288 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 5 nil nil nil 288 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 210 45 733 210 621 61 288 498 #text: 50 1 8 '&Always trust content with this certificate?' 288 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 22 0 0 0 110 1 0 0 76 1 0 0 140 1 0 0] 8 #() 210 193 193 nil 27 8 'alwaysTrust' 18 #{UI.ImageView} 50 21 nil 32 50 2 8 1140850944 1 720 354 nil false 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 834 #hash 8 #() 774 #{Graphics.Gdiplus.Bitmap} nil true 582 1 #{Graphics.Gdiplus.BitmapFromFileInitializer} 8 'Resources\DolphinSureCert.jpg' 6 #{Kernel.ImageRelativeFileLocator} 6 #{Graphics.Color} #default nil 5 nil nil nil 720 nil nil 418 nil nil nil 928 #centered 1 nil nil 450 50 1 498 #createAt:extent: 50 2 210 11 11 210 681 501 720 626 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 89 1 0 0 255 0 0 0] 8 #() 688 nil 27 8 'certificateImage' 18 #{UI.StaticText} 50 16 nil 32 50 2 8 1140850945 1 1232 nil nil nil 5 nil 130 nil true 162 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 34 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 210 193 193 nil 1232 nil nil 418 nil nil nil 450 50 2 498 #createAt:extent: 50 2 210 51 521 210 611 41 1232 498 #text: 50 1 8 'Unknown
-' 1232 626 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 25 0 0 0 4 1 0 0 74 1 0 0 24 1 0 0] 8 #() 688 nil 27 8 'description' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 774 #{Core.Semaphore} nil nil 1 nil nil 450 50 2 498 #createAt:extent: 50 2 210 6143 21 210 731 961 32 498 #text: 50 1 8 'Security Warning' 32 626 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 108 13 0 0 234 1 0 0] 50 6 18 #{UI.PushButton} 50 20 nil 32 50 2 8 1140924416 1 1808 nil 1040 nil 5 nil nil nil 1808 nil nil 1350 4 #{UI.CommandDescription} #cancel 8 '&No, don''t install' 1 1 nil nil false nil nil nil 450 50 2 498 #createAt:extent: 50 2 210 381 801 210 291 61 1808 498 #text: 50 1 8 '&No, don''t install' 1808 626 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 190 0 0 0 144 1 0 0 79 1 0 0 174 1 0 0] 8 #() 688 nil 29 288 18 #{UI.PushButton} 50 20 nil 32 50 2 8 1140924416 1 2112 nil 1040 nil 5 nil nil nil 2112 nil nil 1874 #ok 8 '&Yes, trust this content' 1 1 nil nil false nil nil nil 450 50 3 498 #createAt:extent: 50 2 210 41 801 210 291 61 2112 498 #isEnabled: 8 #(false) 2112 498 #text: 50 1 8 '&Yes, trust this content' 2112 626 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 144 1 0 0 165 0 0 0 174 1 0 0] 8 #() 688 nil 29 720 1232 18 #{UI.StaticText} 50 16 nil 32 50 2 8 1140850944 1 2432 nil nil nil 5 nil nil nil 2432 nil nil 418 nil nil nil 450 50 2 498 #createAt:extent: 50 2 210 45 559 210 631 171 2432 498 #text: 50 1 8 'Do you want to install and run this content? The authenticity certificate for the original publisher is displayed above. 
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 30 nil nil 8 #(13107200 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog nil 133 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 32 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 6 18 #{UI.CheckBox} 50 16 nil 32 50 2 8 1140924451 1 256 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 5 nil nil nil 256 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[23 0 0 0 109 1 0 0 77 1 0 0 139 1 0 0] 193 288 8 '&Always trust content with this certificate?' 256 3 8 #() 518 #{Graphics.Point} 193 193 nil 27 8 'alwaysTrust' 18 #{UI.ImageView} 50 21 nil 32 50 2 8 1140850944 1 672 322 nil false 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 786 #hash 8 #() 774 #{Graphics.Gdiplus.Image} nil true 582 1 #{Graphics.Gdiplus.ImageFromFileInitializer} 8 'Resources\DolphinSureCert.jpg' 6 #{Kernel.InstallRelativeFileLocator} 6 #{Graphics.Color} #default nil 5 nil nil nil 672 nil nil 386 nil nil nil 880 #scale 1 nil nil 418 50 2 466 #createWindow: 50 1 514 546 8 #[5 0 0 0 5 0 0 0 89 1 0 0 255 0 0 0] 193 704 nil 672 466 #text: 50 1 8 '' 672 3 8 #() 626 193 193 nil 27 8 'certificateImage' 18 #{UI.StaticText} 50 16 nil 32 50 2 8 1140850945 1 1232 nil nil nil 5 nil 130 nil true 162 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 88 2 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 32 0 83 0 101 0 109 0 105 0 98 0 111 0 108 0 100 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 1232 nil nil 386 nil nil nil 418 50 2 466 #createWindow: 50 1 514 546 8 #[22 0 0 0 4 1 0 0 81 1 0 0 20 1 0 0] 193 1264 nil 1232 466 #text: 50 1 8 'Unknown' 1232 3 8 #() 626 193 193 nil 27 8 'description' nil nil nil nil nil 1 nil nil nil nil 1 nil 193 774 #{Core.Semaphore} nil nil 1 nil nil 418 50 2 466 #createWindow: 50 1 518 #{UI.CreateDialog} 546 8 #[255 14 0 0 10 0 0 0 108 16 0 0 234 1 0 0] 193 32 466 #setWindowText: 50 1 8 'Security Warning' 32 1 50 6 18 #{UI.PushButton} 50 20 nil 32 50 2 8 1140924416 1 1792 nil 992 nil 5 nil nil nil 1792 nil nil 1350 4 #{UI.CommandDescription} #cancel 8 '&No, don''t install' 1 1 nil nil false nil nil nil 418 50 2 466 #createWindow: 50 1 514 546 8 #[190 0 0 0 144 1 0 0 79 1 0 0 174 1 0 0] 193 1824 8 '&No, don''t install' 1792 466 #isEnabled: 8 #(false) 1792 3 8 #() 626 193 193 nil 29 256 18 #{UI.PushButton} 50 20 nil 32 50 2 8 1140924416 1 2096 nil 992 nil 5 nil nil nil 2096 nil nil 1858 #ok 8 '&Yes, trust this content' 1 1 nil nil false nil nil nil 418 50 2 466 #createWindow: 50 1 514 546 8 #[20 0 0 0 144 1 0 0 165 0 0 0 174 1 0 0] 193 2128 8 '&Yes, trust this content' 2096 466 #isEnabled: 8 #(false) 2096 3 8 #() 626 193 193 nil 29 672 1232 18 #{UI.StaticText} 50 16 nil 32 50 2 8 1140850944 1 2384 nil nil nil 5 nil nil nil 2384 nil nil 386 nil nil nil 418 50 2 466 #createWindow: 50 1 514 546 8 #[20 0 0 0 26 1 0 0 79 1 0 0 106 1 0 0] 193 2416 nil 2384 466 #text: 50 1 8 'Do you want to install and run this content? The authenticity certificate for the original publisher is displayed above. 
 
-"DolphinSure" is a security mechanism provided by Object Arts Ltd exclusively for Dolphin Smalltalk applications.' 2432 626 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 22 0 0 0 23 1 0 0 81 1 0 0 108 1 0 0] 8 #() 688 nil 27 688 nil 27)!
+"DolphinSure" is a security mechanism provided by Object Arts Ltd exclusively for Dolphin Smalltalk applications.' 2384 3 8 #() 626 193 193 nil 27 626 193 193 nil 27)!
 
 showModalOn: aDolphinSureCertificate description: aStringDescription
 	"Creates and shows an instance of the receiver on aDolphinSureCertificate and with aStringDescription"
