@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'UI.LayoutContext'
-	instanceVariableNames: 'container positions'
+	instanceVariableNames: 'container placements'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -23,7 +23,7 @@ apply
 
 	DeferRectangles ifFalse: [^self].
 	self repositionSubViewsOf: container.
-	(positions lookup: container) ifNotNil: [:pos | pos applyRectangle]!
+	(placements lookup: container) ifNotNil: [:placement | container rectangle: placement rectangle]!
 
 clientExtentOf: aView 
 	"Answer a <Point> representing the client extent of the specified <View>. This may be
@@ -35,9 +35,9 @@ clientRectangleOf: aView
 	"Answer the client  <Rectangle> of the specified <View>. This may be different to its current
 	client rectangle if it has been repositioned during this operation."
 
-	^(positions lookup: aView)
+	^(placements lookup: aView)
 		ifNil: [aView clientRectangle]
-		ifNotNil: [:pos | aView calcClientRectangleFromRectangle: pos rectangle]!
+		ifNotNil: [:placement | aView calcClientRectangleFromRectangle: placement rectangle]!
 
 extentOf: aView 
 	"Answer a <Point>, being the window extent (not client extent) of the specified <View>. This
@@ -47,44 +47,45 @@ extentOf: aView
 	^(self rectangleOf: aView) extent!
 
 hideView: aView
-	(self positionForView: aView) show: false!
+	(self placementForView: aView) show: false!
 
 isViewVisible: aView
 	"Answer whether the specified <View> will be visible after the window repositioning
 	operations specified in this context are applied."
 
-	(positions lookup: aView) ifNotNil: [:pos | pos show ifNotNil: [:show | ^show]].
-	^aView hasVisibleStyle!
+	^(placements lookup: aView)
+		ifNil: [aView hasVisibleStyle]
+		ifNotNil: [:placement | placement isVisible]!
 
-positionForView: aView
-	^(positions lookup: aView) ifNil: [positions at: aView put: (LayoutPosition view: aView)]!
+placementForView: aView
+	^(placements lookup: aView) ifNil: [placements at: aView put: (LayoutPlacement view: aView)]!
 
 rectangleOf: aView
 	"Answer the window <Rectangle> of the specified <View>. This may be different to its current
 	view rectangle if it has been repositioned during this operation."
 
-	(positions lookup: aView) ifNotNil: [:pos | pos rectangle ifNotNil: [:rect | ^rect]].
+	(placements lookup: aView) ifNotNil: [:placement | placement rectangle ifNotNil: [:rect | ^rect]].
 	^aView rectangle!
 
 repositionSubViewsOf: aView
 	"Private - Recursively reposition the sub-views of the argument.
 	Unfortunately the DeferWindowPos API has the limitation that all windows in the repositioning batch must have the same parent, and consequently we must recursively position the subviews as multiple batches, rather than accumulating all the positions and then applying one large deferred update."
 
-	| newPositions hdwp stream count |
-	stream := WriteStream on: (newPositions := Array new).
+	| newPlacements hdwp stream count |
+	stream := WriteStream on: (newPlacements := Array new).
 	aView subViewsDo: 
 			[:each |
 			self repositionSubViewsOf: each.
-			(positions lookup: each) ifNotNil: [:pos | pos hasPositionChange ifTrue: [stream nextPut: pos]]].
+			(placements lookup: each) ifNotNil: [:placement | placement hasDeferredChange ifTrue: [stream nextPut: placement]]].
 	count := stream position.
 	count == 0 ifTrue: [^self].
 	hdwp := User32 beginDeferWindowPos: count.
-	1 to: count do: [:i | hdwp := (newPositions at: i) deferWindowPos: hdwp].
+	1 to: count do: [:i | hdwp := (newPlacements at: i) deferWindowPos: hdwp].
 	User32 endDeferWindowPos: hdwp!
 
 setContainer: aContainerView
 	container := aContainerView.
-	positions := IdentityDictionary new.
+	placements := IdentityDictionary new.
 	^self!
 
 setView: aView extent: aPoint 
@@ -106,12 +107,19 @@ setView: aView rectangle: aRectangle
 	will not actually be repositioned until the batch of deferred position changes represented
 	by the receiver are applied."
 
-	(self positionForView: aView) rectangle: aRectangle.
+	(self placementForView: aView) rectangle: aRectangle.
 	DeferRectangles ifFalse: [aView rectangle: aRectangle].
 	^aRectangle!
 
 showView: aView
-	(self positionForView: aView) show: true! !
+	(self placementForView: aView) show: true!
+
+visibleExtentOf: aView
+	"Answer a <Point>, being the window extent (not client extent) of the specified <View> that will be visible at the end of the layout operation."
+
+	^(placements lookup: aView)
+		ifNil: [aView hasVisibleStyle ifTrue: [aView getWindowRect extent] ifFalse: [Point.Zero]]
+		ifNotNil: [:placement | placement visibleExtent]! !
 
 !UI.LayoutContext categoriesForMethods!
 apply!operations!public! !
@@ -120,7 +128,7 @@ clientRectangleOf:!accessing!public! !
 extentOf:!accessing!public! !
 hideView:!accessing!public! !
 isViewVisible:!enquiries!public! !
-positionForView:!accessing!private! !
+placementForView:!accessing!private! !
 rectangleOf:!accessing!public! !
 repositionSubViewsOf:!operations!private! !
 setContainer:!initializing!private! !
@@ -128,6 +136,7 @@ setView:extent:!accessing!public! !
 setView:origin:!accessing!public! !
 setView:rectangle:!accessing!public! !
 showView:!accessing!public! !
+visibleExtentOf:!enquiries!public! !
 !
 
 !UI.LayoutContext class methodsFor!

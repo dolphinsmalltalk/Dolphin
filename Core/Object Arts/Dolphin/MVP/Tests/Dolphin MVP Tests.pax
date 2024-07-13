@@ -74,6 +74,7 @@ package setClassNames: #(
 	#{UI.Tests.InternalDragDropSessionTest}
 	#{UI.Tests.KeyboardTest}
 	#{UI.Tests.LayoutManagerTest}
+	#{UI.Tests.LayoutPlacementTest}
 	#{UI.Tests.LinkButtonTest}
 	#{UI.Tests.ListBoxTest}
 	#{UI.Tests.ListControlTest}
@@ -245,7 +246,7 @@ UI
 
 OS.UserLibrary
 	subclass: #'UI.Tests.FakeUserLibrary'
-	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
+	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -368,6 +369,14 @@ Core.Tests.DolphinTest
 	instanceVariableNames: 'shell'
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.LayoutPlacementTest'
+	instanceVariableNames: 'view'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

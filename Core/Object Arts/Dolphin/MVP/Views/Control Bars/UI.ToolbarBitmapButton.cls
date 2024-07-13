@@ -57,7 +57,12 @@ imageIndexIn: aToolbar
 	Answer the index of the bitmap within aToolbar's registered bitmaps"
 
 	^aToolbar addBitmap: self bitmap index: self bitmapIndex
-! !
+!
+
+isScalable
+	"Answer whether the receiver can be scaled, e.g. for DPI."
+
+	^false! !
 
 !UI.ToolbarBitmapButton categoriesForMethods!
 bitmap!accessing!public! !
@@ -66,6 +71,7 @@ bitmap:index:commandDescription:!initializing!private! !
 bitmapIndex!accessing!public! !
 bitmapIndex:!accessing!public! !
 imageIndexIn:!operations!private! !
+isScalable!public!testing! !
 !
 
 UI.ToolbarBitmapButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!

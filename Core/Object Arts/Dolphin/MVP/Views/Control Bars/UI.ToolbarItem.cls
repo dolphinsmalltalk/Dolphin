@@ -53,7 +53,7 @@ isDropdownStyle
 isScalable
 	"Answer whether the receiver can be scaled, e.g. for DPI."
 
-	^false!
+	^true!
 
 onClick: aPoint 
 	"This toolbar item was left-clicked at the specified <Point>."

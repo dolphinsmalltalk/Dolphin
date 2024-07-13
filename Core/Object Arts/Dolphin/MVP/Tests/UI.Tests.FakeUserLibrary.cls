@@ -2,7 +2,7 @@
 
 OS.UserLibrary
 	subclass: #'UI.Tests.FakeUserLibrary'
-	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
+	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -54,12 +54,22 @@ initializeForDesktopActive
 	getForegroundWindowBlock := [self findWindow: 'Progman' lpWindowName: nil].
 	getActiveWindowBlock := []!
 
+invalidCall: anInteger
+	| frame |
+	frame := Processor activeProcess topFrame sender.
+	messages add: (Message selector: frame method selector arguments: frame arguments).
+	^0!
+
+messages
+	^messages!
+
 open
 	process := Processor activeProcess.
 	user32 := User32.
 	handle := user32 handle.
 	self beFinalizable.
-	UserLibrary setDefault: self! !
+	UserLibrary setDefault: self.
+	messages := OrderedCollection new! !
 
 !UI.Tests.FakeUserLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
@@ -70,7 +80,9 @@ getCursorPosBlock:!initializing!private! !
 getForegroundWindow!public!win32 functions-keyboard input! !
 getForegroundWindowBlock:!initializing!private! !
 initializeForDesktopActive!initializing!public! !
-open!private!realizing/unrealizing! !
+invalidCall:!exceptions!private! !
+messages!accessing!public! !
+open!public!realizing/unrealizing! !
 !
 
 !UI.Tests.FakeUserLibrary class methodsFor!

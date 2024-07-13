@@ -1,21 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object
-	subclass: #'UI.LayoutPosition'
+	subclass: #'UI.LayoutPlacement'
 	instanceVariableNames: 'view rectangle show'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-UI.LayoutPosition guid: (Core.GUID fromString: '{20f9e2d1-c328-4f0b-9dbf-8b973e199865}')!
+UI.LayoutPlacement guid: (Core.GUID fromString: '{a6d52cfe-6403-4ec9-881b-ea5faa78ea9b}')!
 
-UI.LayoutPosition comment: ''!
+UI.LayoutPlacement comment: ''!
 
-!UI.LayoutPosition methodsFor!
-
-applyRectangle
-	view rectangle: rectangle!
+!UI.LayoutPlacement methodsFor!
 
 deferWindowPos: aHandle
 	^rectangle
@@ -52,15 +49,20 @@ deferWindowPos: aHandle
 								ifTrue: [##(SWP_SHOWWINDOW | SWP_NOZORDER | SWP_NOACTIVATE)]
 								ifFalse: [##(SWP_HIDEWINDOW | SWP_NOZORDER | SWP_NOACTIVATE)]])]!
 
-hasPositionChange
-	^(rectangle notNil and: [rectangle ~= view rectangle])
-		or: [show notNil and: [show ~~ view isWindowVisible]]!
+hasDeferredChange
+	"Does the receiver describe a deferred change of view rectangle or visibility?"
+
+	^(rectangle notNil and: [view getRect ~= rectangle])
+		or: [show notNil and: [view hasVisibleStyle ~~ show]]!
+
+isVisible
+	^show ifNil: [view hasVisibleStyle]!
 
 rectangle
 	^rectangle!
 
-rectangle: anObject
-	rectangle := anObject!
+rectangle: aRectangle
+	rectangle := aRectangle!
 
 show
 	^show!
@@ -68,22 +70,34 @@ show
 show: aBoolean
 	show := aBoolean!
 
+view
+	^view!
+
 view: aView
 	view := aView.
-	^self! !
+	^self!
 
-!UI.LayoutPosition categoriesForMethods!
-applyRectangle!private!testing! !
+visibleExtent
+	"Answer a <point> representing the extent of the associated view that is expected to be visible after the placement has been applied. This doesn't take into account partial visibility; if the view is to be visible it is assumed the whole extent will be visible. This is intended for use in determining the amount of space that should be reserved for a view as part of a layout calculation."
+
+	self isVisible ifFalse: [^Point.Zero].
+	rectangle ifNotNil: [:rect | ^rect extent].
+	^view getWindowRect extent! !
+
+!UI.LayoutPlacement categoriesForMethods!
 deferWindowPos:!operations!private! !
-hasPositionChange!private!testing! !
+hasDeferredChange!private!testing! !
+isVisible!public!testing! !
 rectangle!accessing!public! !
 rectangle:!accessing!public! !
 show!accessing!public! !
 show:!accessing!public! !
-view:!accessing!private! !
+view!accessing!public! !
+view:!initializing!private! !
+visibleExtent!accessing!public! !
 !
 
-!UI.LayoutPosition class methodsFor!
+!UI.LayoutPlacement class methodsFor!
 
 view: aView
 	<primitive: 157>
@@ -91,7 +105,7 @@ view: aView
 		view: aView;
 		yourself! !
 
-!UI.LayoutPosition class categoriesForMethods!
-view:!public! !
+!UI.LayoutPlacement class categoriesForMethods!
+view:!instance creation!public! !
 !
 

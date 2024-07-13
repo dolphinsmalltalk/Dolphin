@@ -103,7 +103,12 @@ imageIndexIn: aToolbar
 	"Private - Adds the receiver's bitmap to aToolbar.
 	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
-	^aToolbar addSystemBitmap: self bitmapId index: self bitmapIndex! !
+	^aToolbar addSystemBitmap: self bitmapId index: self bitmapIndex!
+
+isScalable
+	"Answer whether the receiver can be scaled, e.g. for DPI."
+
+	^false! !
 
 !UI.ToolbarSystemButton categoriesForMethods!
 bitmapId!accessing!public! !
@@ -112,6 +117,7 @@ bitmapId:index:commandDescription:!initializing!private! !
 bitmapIndex!accessing!public! !
 bitmapIndex:!accessing!public! !
 imageIndexIn:!operations!private! !
+isScalable!public!testing! !
 !
 
 !UI.ToolbarSystemButton class methodsFor!

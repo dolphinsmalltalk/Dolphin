@@ -132,7 +132,7 @@ package setMethodNames: #(
 	#(#{UI.GridLayout class} #icon)
 	#(#{UI.Keyboard class} #icon)
 	#(#{UI.LayoutManager class} #icon)
-	#(#{UI.LayoutPosition class} #icon)
+	#(#{UI.LayoutPlacement class} #icon)
 	#(#{UI.ProportionalLayout class} #icon)
 	#(#{UI.RadioButton class} #icon)
 	#(#{UI.RadioButtonSetPresenter class} #icon)
@@ -1665,7 +1665,7 @@ icon
 icon!constants!public! !
 !
 
-!UI.LayoutPosition class methodsFor!
+!UI.LayoutPlacement class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class: ⯐"
@@ -1674,7 +1674,7 @@ icon
 		textcolor: Color darkBlue;
 		yourself)! !
 
-!UI.LayoutPosition class categoriesForMethods!
+!UI.LayoutPlacement class categoriesForMethods!
 icon!constants!public! !
 !
 

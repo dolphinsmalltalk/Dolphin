@@ -119,7 +119,7 @@ package setClassNames: #(
 	#{UI.KeyEvent}
 	#{UI.LayoutContext}
 	#{UI.LayoutManager}
-	#{UI.LayoutPosition}
+	#{UI.LayoutPlacement}
 	#{UI.LinearLayout}
 	#{UI.Menu}
 	#{UI.MenuBar}
@@ -1529,7 +1529,7 @@ Core.Object
 
 Core.Object
 	subclass: #'UI.LayoutContext'
-	instanceVariableNames: 'container positions'
+	instanceVariableNames: 'container placements'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -1544,7 +1544,7 @@ Core.Object
 	classConstants: {}!
 
 Core.Object
-	subclass: #'UI.LayoutPosition'
+	subclass: #'UI.LayoutPlacement'
 	instanceVariableNames: 'view rectangle show'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
