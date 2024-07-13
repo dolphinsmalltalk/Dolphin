@@ -1138,7 +1138,7 @@ OS.SizedStructure
 			'_OffsetOf_iScrollWidth' -> 16r8.
 			'_OffsetOf_iSmCaptionHeight' -> 16r78.
 			'_OffsetOf_iSmCaptionWidth' -> 16r74.
-			'_OffsetOf_lfCationFont' -> 16r18.
+			'_OffsetOf_lfCaptionFont' -> 16r18.
 			'_OffsetOf_lfMenuFont' -> 16rE0.
 			'_OffsetOf_lfMessageFont' -> 16r198.
 			'_OffsetOf_lfSmCaptionFont' -> 16r7C.

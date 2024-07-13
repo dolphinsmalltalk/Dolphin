@@ -243,17 +243,6 @@ getSystemMetrics: index
 	<stdcall: int32 GetSystemMetrics int32>
 	^self invalidCall: _failureCode!
 
-initialize
-	"We must ensure the DPI awareness level is set before we do anything that might do any UI operations, otherwise we'll end up with a mess."
-
-	self setProcessDpiAwarenessContext: DesiredDpiAwarenessContext.
-	"We cache the actual system-wide awareness context now because:
-		- it cannot be changed once set, but the configured context can be changed for the next image restart (so DpiAwarenessContext may not be the system-wide context)
-		- we may not get what we asked for, e.g. in an application with a manifest defined awareness
-		- the result of GetDpiAwarenessContextForProcess will depend on the thread awareness context at the time it is called (!!)"
-	SystemDpiAwarenessContext := self getDpiAwarenessContextForProcess: -1.
-	^self!
-
 inSendMessage
 	<stdcall: bool InSendMessage>
 	^self invalidCall: _failureCode!
@@ -664,7 +653,6 @@ getQueueStatus:!public!win32 functions-message and message queue! !
 getSysColor:!public!win32 functions-system information! !
 getSysColorBrush:!public!win32 functions-cursor! !
 getSystemMetrics:!public!win32 functions-system information! !
-initialize!initializing!public! !
 inSendMessage!public!win32 functions-message and message queue! !
 isWindow:!public!win32 functions-window! !
 isWindowEnabled:!public!win32 functions-window! !
@@ -705,26 +693,6 @@ clear
 	super clear.
 	#(#{OS.SystemMetrics} #{UI.DisplayMonitor}) do: [:each | each ifDefined: [:c | c reset]]!
 
-desiredDpiAwareness
-	"Answer the symbolic name of the DPI awareness mode to be requested when the process starts. Note that this may not be the same as the current system DPI awareness because:
-		- the desired awareness can be configured for future image starts, but cannot take effect in the current session
-		- the awareness achieved may be different to that requested, e.g. in an application with a manifest that specifies a different awareness."
-
-	^DpiAwarenessContexts at: DesiredDpiAwarenessContext negated!
-
-desiredDpiAwareness: aSymbol
-	"Set the DPI awareness mode to be requested when this image is restarted. N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
-
-	DesiredDpiAwarenessContext := self dpiAwarenessContextFromName: aSymbol!
-
-dpiAwareness
-	"Answer the symbolic name of the actual system wide DPI awareness for this process. Note that this cannot be changed."
-
-	^self default awarenessFromDpiAwarenessContext: SystemDpiAwarenessContext!
-
-dpiAwarenessContextFromName: aSymbol
-	^(DpiAwarenessContexts identityIndexOf: aSymbol) negated!
-
 fileName
 	"Answer the host system file name of the external library which 
 	the receiver represents."
@@ -739,10 +707,6 @@ sharedVariableName
 
 !OS.UserLibrary class categoriesForMethods!
 clear!initializing!private! !
-desiredDpiAwareness!accessing!high DPI!public! !
-desiredDpiAwareness:!accessing!high DPI!public! !
-dpiAwareness!accessing!high DPI!public! !
-dpiAwarenessContextFromName:!accessing!high DPI!public! !
 fileName!constants!public! !
 initialize!class initialization!public! !
 sharedVariableName!constants!private! !

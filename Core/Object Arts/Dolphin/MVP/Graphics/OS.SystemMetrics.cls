@@ -40,7 +40,7 @@ borderExtent
 captionFont
 	"Answer the currently configured window caption font."
 
-	^Graphics.Font fromLogFont: self nonClientMetrics lfCationFont dpi: self dpi!
+	^Graphics.Font fromLogFont: self nonClientMetrics lfCaptionFont dpi: self dpi!
 
 captionHeight
 	^self nonClientMetrics iCaptionHeight!

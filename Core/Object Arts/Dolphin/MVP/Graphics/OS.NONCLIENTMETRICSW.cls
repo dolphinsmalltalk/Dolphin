@@ -18,7 +18,7 @@ OS.SizedStructure
 			'_OffsetOf_iScrollWidth' -> 16r8.
 			'_OffsetOf_iSmCaptionHeight' -> 16r78.
 			'_OffsetOf_iSmCaptionWidth' -> 16r74.
-			'_OffsetOf_lfCationFont' -> 16r18.
+			'_OffsetOf_lfCaptionFont' -> 16r18.
 			'_OffsetOf_lfMenuFont' -> 16rE0.
 			'_OffsetOf_lfMessageFont' -> 16r198.
 			'_OffsetOf_lfSmCaptionFont' -> 16r7C.
@@ -65,6 +65,11 @@ iScrollWidth
 
 	^bytes int32AtOffset: _OffsetOf_iScrollWidth!
 
+lfCaptionFont
+	"Answer the <LOGFONTW> value of the receiver's 'lfCaptionFont' field."
+
+	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfCaptionFont!
+
 lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
@@ -77,6 +82,7 @@ iMenuWidth!**compiled accessors**!public! !
 iPaddedBorderWidth!**compiled accessors**!public! !
 iScrollHeight!**compiled accessors**!public! !
 iScrollWidth!**compiled accessors**!public! !
+lfCaptionFont!**compiled accessors**!public! !
 lfMenuFont!**compiled accessors**!public! !
 !
 
@@ -116,7 +122,7 @@ defineFields
 		defineField: #iScrollHeight type: Int32Field readOnly;
 		defineField: #iCaptionWidth type: Int32Field uncompiled;
 		defineField: #iCaptionHeight type: Int32Field readOnly;
-		defineField: #lfCationFont type: (StructureField type: LOGFONTW) beUncompiled;
+		defineField: #lfCaptionFont type: (StructureField type: LOGFONTW) beReadOnly;
 		defineField: #iSmCaptionWidth type: Int32Field uncompiled;
 		defineField: #iSmCaptionHeight type: Int32Field uncompiled;
 		defineField: #lfSmCaptionFont type: (StructureField type: LOGFONTW) beUncompiled;
@@ -128,7 +134,7 @@ defineFields
 		defineField: #iPaddedBorderWidth type: Int32Field readOnly!
 
 getFieldNames
-	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
+	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCaptionFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
 
 !OS.NONCLIENTMETRICSW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
