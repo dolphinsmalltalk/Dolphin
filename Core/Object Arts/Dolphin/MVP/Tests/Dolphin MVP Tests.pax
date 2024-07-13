@@ -27,6 +27,7 @@ package setClassNames: #(
 	#{OS.Tests.TCITEMWTest}
 	#{OS.Tests.TVITEMEXWTest}
 	#{OS.Tests.TVITEMWTest}
+	#{OS.Tests.WINDOWPLACEMENTTest}
 	#{UI.Tests}
 	#{UI.Tests.AbstractCardContainerTest}
 	#{UI.Tests.AbstractContainerViewTest}
@@ -460,6 +461,14 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.ValueHolderTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.WINDOWPLACEMENTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

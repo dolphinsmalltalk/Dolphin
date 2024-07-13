@@ -20,7 +20,7 @@ classToTest
 testGeometry
 	"Combobox's have an inconsistency with regards to placement because the dropped height must be included when the placement is set, but is not included in the placement when retrieved. Obviously we abstract this away so that the rectangle reported by the object is that part of the control that is always visible (edit box and drop-down), and likewise this is what is specified when the rectangle is set. This was incorrectly managed in a number of versions of Dolphin."
 
-	| rect droppedHeight height rect2 |
+	| rect droppedHeight height |
 	rect := presenter rectangle.
 	"Note that the change in width will apply, but the height not as the height of the text box is determined by the font. However, we need to perturb the height to cause the control to attempt to adjust its height."
 	droppedHeight := presenter droppedHeight.
@@ -32,11 +32,21 @@ testGeometry
 	self assert: presenter droppedHeight equals: droppedHeight.
 	"If we explicitly set the dropped height, then it should change"
 	presenter droppedHeight: 150.
+	presenter validateLayout.
 	height := presenter getDroppedControlRect height.
 	self assert: height equals: presenter height + 150.
 	self assert: presenter actualHeight equals: height.
 	"But changing the dropped height should have no effect on the reported view rectangle"
-	self assert: presenter rectangle equals: rect!
+	self assert: presenter rectangle equals: rect.
+	"Reset placement should maintain dropped height"
+	rect := presenter getDroppedControlRect.
+	rect moveBy: 200 @ 100.
+	presenter placement: (presenter placement position: presenter placement origin + (200 @ 100)).
+	self assert: presenter getDroppedControlRect equals: rect.
+	self assert: presenter actualHeight equals: height.
+	presenter recreate.
+	SessionManager inputState pumpMessages.
+	self assert: presenter getDroppedControlRect height equals: rect height!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |

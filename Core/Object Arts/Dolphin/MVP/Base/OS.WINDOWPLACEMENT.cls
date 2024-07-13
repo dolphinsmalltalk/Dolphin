@@ -23,6 +23,12 @@ OS.WINDOWPLACEMENT comment: ''!
 
 !OS.WINDOWPLACEMENT methodsFor!
 
+corner
+	"Set the <point> representing the corner of the placement rectangle."
+
+	^(bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_right))
+		@ (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_bottom))!
+
 corner: aPoint
 	"Set the <point> representing the corner of the placement rectangle."
 
@@ -32,6 +38,9 @@ corner: aPoint
 
 extent
 	^self width @ self height!
+
+extent: aPoint
+	self rcNormalPosition extent: aPoint!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -53,7 +62,7 @@ height: anInteger
 	"Set the height of the placement rectangle to the <integer> argument."
 
 	bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_bottom)
-		put: (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_bottom)) + anInteger!
+		put: (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_top)) + anInteger!
 
 origin
 	"Answer a <Point> representing the origin (top-left corner) of the placement rectangle."
@@ -67,6 +76,13 @@ origin: aPoint
 	bytes
 		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left) put: aPoint x;
 		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_top) put: aPoint y!
+
+position: aPoint
+	"Move the receiver so that its top-left corner is at the specified position."
+
+	self
+		corner: aPoint + self extent;
+		origin: aPoint!
 
 ptMaxPosition
 	"Private - Answer the <POINTL> value of the receiver's 'ptMaxPosition' field."
@@ -141,17 +157,24 @@ width
 	"Answer the width of the receiver's placement rectangle."
 
 	^(bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_right))
-		- (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left))! !
+		- (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left))!
+
+width: anInteger
+	bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_right)
+		put: (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left)) + anInteger! !
 
 !OS.WINDOWPLACEMENT categoriesForMethods!
+corner!accessing!public! !
 corner:!accessing!public! !
 extent!accessing!public! !
+extent:!accessing!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 height!accessing!public! !
 height:!accessing!public! !
 origin!accessing!public! !
 origin:!accessing!public! !
+position:!accessing!public! !
 ptMaxPosition!**compiled accessors**!private! !
 ptMaxPosition:!**compiled accessors**!private! !
 ptMinPosition!**compiled accessors**!private! !
@@ -162,6 +185,7 @@ scaleBy:!public!transforming! !
 showCmd!**compiled accessors**!public! !
 showCmd:!**compiled accessors**!public! !
 width!accessing!public! !
+width:!accessing!public! !
 !
 
 !OS.WINDOWPLACEMENT class methodsFor!

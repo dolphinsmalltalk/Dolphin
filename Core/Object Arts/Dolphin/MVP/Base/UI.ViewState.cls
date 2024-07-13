@@ -40,7 +40,7 @@ recordStateOf: aView forRecreate: aBoolean
 
 	view := aView.
 	aBoolean ifTrue: [view setStateRestoring].
-	dpiAwareness := User32 getWindowDpiAwarenessContext: aView handle.
+	dpiAwareness := aView dpiAwarenessContext.
 	"We need to capture state in the correct DPI awareness context so the measurements are in the correct (possibly virtual) co-ordinate system."
 	state := User32 inDpiAwarenessContext: dpiAwareness do: [aView state].
 	state freeze.
