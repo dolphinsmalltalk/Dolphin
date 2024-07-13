@@ -260,6 +260,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #inDpiAwarenessContext:do:)
 	#(#{OS.UserLibrary} #inheritWindowMonitor:hwndInherit:)
 	#(#{OS.UserLibrary} #insertMenuItem:uItem:fByPosition:lpmii:)
+	#(#{OS.UserLibrary} #inSystemDpiAwarenessContextDo:)
 	#(#{OS.UserLibrary} #invalidate:lpRect:bErase:)
 	#(#{OS.UserLibrary} #invalidateRgn:hRgn:bErase:)
 	#(#{OS.UserLibrary} #inWindowDpiAwarenessContext:do:)
@@ -271,6 +272,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #isForegroundProcess:)
 	#(#{OS.UserLibrary} #isIconic:)
 	#(#{OS.UserLibrary} #isProcessDPIAware)
+	#(#{OS.UserLibrary} #isSystemDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #isValidDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #isWindowUnicode:)
 	#(#{OS.UserLibrary} #isZoomed:)
@@ -1428,7 +1430,7 @@ Core.Object
 
 Core.Object
 	subclass: #'UI.DisplayMonitor'
-	instanceVariableNames: 'handle info devices resolution metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
+	instanceVariableNames: 'handle info devices dpi metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
 	classVariableNames: 'Instances'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1591,7 +1593,7 @@ Core.Object
 
 Core.Object
 	subclass: #'UI.ViewState'
-	instanceVariableNames: 'view state showCmd dpi dpiAwareness subViewStates'
+	instanceVariableNames: 'view state showCmd dpi dpiAwarenessContext subViewStates'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -3616,6 +3618,8 @@ inDpiAwarenessContext: anInteger do: aNiladicBlock
 	This can be useful to establish a known co-ordinate system when DPI-sensitive calculations need to be performed."
 
 	| currentContext |
+	(self areDpiAwarenessContextsEqual: self getThreadDpiAwarenessContext dpiContextB: anInteger)
+		ifTrue: [^aNiladicBlock value].
 	currentContext := self setThreadDpiAwarenessContext: anInteger.
 	^aNiladicBlock ensure: [self setThreadDpiAwarenessContext: currentContext]!
 
@@ -3642,6 +3646,11 @@ insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINF
 
 	<stdcall: bool InsertMenuItemW handle uint32 bool MENUITEMINFOW*>
 	^self invalidCall: _failureCode!
+
+inSystemDpiAwarenessContextDo: aNiladicBlock
+	"Evaluate the niladic <BlockClosure> argument, aNiladicBlock, in the system-wide DPI awareness context. This is the context established when the process was started."
+
+	^self inDpiAwarenessContext: SystemDpiAwarenessContext do: aNiladicBlock!
 
 invalidate: hWnd lpRect: aRECT bErase: aBoolean
 	"Add aRECT to hWnd's update region (that portion of the
@@ -3673,9 +3682,7 @@ inWindowDpiAwarenessContext: hWnd do: aNiladicBlock
 	"Evaluate the niladic <BlockClosure> argument, aNiladicBlock, in the DPI awareness context of the Window with <ExternalHandle>, hWnd.
 	This can be useful to establish a known co-ordinate system when DPI-sensitive calculations need to be performed."
 
-	| currentContext |
-	currentContext := self setThreadDpiAwarenessContext: (self getWindowDpiAwarenessContext: hWnd).
-	^aNiladicBlock ensure: [self setThreadDpiAwarenessContext: currentContext]!
+	^self inDpiAwarenessContext: (self getWindowDpiAwarenessContext: hWnd) do: aNiladicBlock!
 
 isAtWindowDpiAwareness: anExternalHandle
 	"Answer whether the current thread DPI awareness context is the same as that of the window with the specified handle. This is useful to know whether any queries for Window geometry will be in the Window's own context, or some foreign context. For example, if I am a DPI unaware window, then I expect to see all geometry in device-independent (96-dpi) pixels, but if my window geometry is queried from a per-monitor context, then the measurements will actually be in physical pixels and may be much larger."
@@ -3738,6 +3745,11 @@ isProcessDPIAware
 
 	<stdcall: bool IsProcessDPIAware>
 	^self invalidCall: _failureCode!
+
+isSystemDpiAwarenessContext: anInteger
+	"Answer whether the <integer> DPI awareness context argument is equivalent to the current system context."
+
+	^self areDpiAwarenessContextsEqual: anInteger dpiContextB: SystemDpiAwarenessContext!
 
 isValidDpiAwarenessContext: value
 	"Invoke the IsValidDpiAwarenessContext() function of the module wrapped by the receiver.
@@ -4583,6 +4595,7 @@ getWindowULongPtr:nIndex:!public!win32 functions-window class! !
 inDpiAwarenessContext:do:!high DPI!operations!public! !
 inheritWindowMonitor:hwndInherit:!**auto generated**!public!win32 functions-high DPI! !
 insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
+inSystemDpiAwarenessContextDo:!high DPI!operations!public! !
 invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
 invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
 inWindowDpiAwarenessContext:do:!high DPI!operations!public! !
@@ -4594,6 +4607,7 @@ isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
 isForegroundProcess:!enquiries!public! !
 isIconic:!public!win32 functions-icon! !
 isProcessDPIAware!**auto generated**!public!win32 functions-high DPI! !
+isSystemDpiAwarenessContext:!high DPI!operations!public! !
 isValidDpiAwarenessContext:!**auto generated**!public!win32 functions-high DPI! !
 isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
 isZoomed:!public!win32 functions-window! !

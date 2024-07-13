@@ -4053,7 +4053,7 @@ External.PermanentLibrary
 External.PermanentLibrary
 	subclass: #'OS.UserLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'DpiAwareness'
+	classVariableNames: 'DesiredDpiAwarenessContext SystemDpiAwarenessContext'
 	imports: #(#{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {

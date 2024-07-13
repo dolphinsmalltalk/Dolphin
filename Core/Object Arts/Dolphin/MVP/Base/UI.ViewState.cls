@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'UI.ViewState'
-	instanceVariableNames: 'view state showCmd dpi dpiAwareness subViewStates'
+	instanceVariableNames: 'view state showCmd dpi dpiAwarenessContext subViewStates'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -23,24 +23,26 @@ UI.ViewState comment: '`ViewState` is capable of holding the relevant state of a
 
 !UI.ViewState methodsFor!
 
-dpiAwareness
-	"Answer the symbolic name of the DPI awareness mode of the View when saved."
-
-	^User32 awarenessFromDpiAwarenessContext: dpiAwareness!
-
 dpiAwarenessContext
-	^dpiAwareness!
+	"Answer any custom DPI awareness context for the view. If the view did not have a custom context, then this will be nil."
 
-dpiAwarenessContext: anInteger
-	dpiAwareness := anInteger!
+	^dpiAwarenessContext!
+
+dpiAwarenessContext: anObject
+	dpiAwarenessContext := anObject!
 
 recordStateOf: aView forRecreate: aBoolean
 	"Private - Initialize the receiver so that it is capable of restoring the <View>, aView, after it's handle has become invalid. The <boolean> argument, aBoolean, indicates whether the state will be used to immediately restore the receiver, in which case the state restoring flag is set on aView and all its sub-views as they are traversed.
 	Note that the flag is set before the state is recorded, so it can be tested in the #state implementation, but this is not usually necessary."
 
+	| dpiAwareness |
 	view := aView.
 	aBoolean ifTrue: [view setStateRestoring].
 	dpiAwareness := aView dpiAwarenessContext.
+	(UserLibrary default isSystemDpiAwarenessContext: dpiAwarenessContext)
+		ifFalse: 
+			["This view has a custom DPI awareness that differs from the system awareness, so we want to restore it with the correct awareness on recreation"
+			dpiAwarenessContext := dpiAwareness].
 	"We need to capture state in the correct DPI awareness context so the measurements are in the correct (possibly virtual) co-ordinate system."
 	state := User32 inDpiAwarenessContext: dpiAwareness do: [aView state].
 	state freeze.
@@ -53,10 +55,16 @@ restore
 	"Restore the receiver's view to its former glory"
 
 	| scale |
-	view
-		setStateRestoring.
-	User32 inDpiAwarenessContext: dpiAwareness do: [view state: state].
-	subViewStates do: [:each | each restore].
+	view setStateRestoring.
+	dpiAwarenessContext
+		ifNil: 
+			[view state: state.
+			subViewStates do: [:each | each restore]]
+		ifNotNil: 
+			[User32 inDpiAwarenessContext: dpiAwarenessContext
+				do: 
+					[view state: state.
+					subViewStates do: [:each | each restore]]].
 	scale := view resolution / dpi.
 	scale = 1
 		ifFalse: 
@@ -68,7 +76,6 @@ restore
 		resetStateRestoring! !
 
 !UI.ViewState categoriesForMethods!
-dpiAwareness!accessing!public! !
 dpiAwarenessContext!accessing!public! !
 dpiAwarenessContext:!accessing!public! !
 recordStateOf:forRecreate:!initializing!private! !
@@ -87,8 +94,7 @@ recordStateOf: aView forRecreate: aBoolean
 	aView. This will allow aView's handle to be rebuilt when #restore is sent
 	to this instance."
 
-	^super new 
-		recordStateOf: aView forRecreate: aBoolean! !
+	^self basicNew recordStateOf: aView forRecreate: aBoolean! !
 
 !UI.ViewState class categoriesForMethods!
 new!instance creation!private! !

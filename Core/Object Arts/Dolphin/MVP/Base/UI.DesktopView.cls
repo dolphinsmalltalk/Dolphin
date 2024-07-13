@@ -45,10 +45,10 @@ adjustPlacementOfShell: aShellView forResolution: aPoint
 
 	| monitor extent targetDpi |
 	monitor := DisplayMonitor active.
-	targetDpi := monitor dpi.
+	targetDpi := monitor effectiveDpi.
 	aPoint = targetDpi ifFalse: [aShellView resolutionScaledBy: targetDpi / aPoint].
 	extent := aShellView usePreferredExtent
-				ifTrue: [aShellView preferredExtent ifNil: [monitor defaultWindowExtent]]
+				ifTrue: [aShellView preferredExtent ifNil: [monitor defaultWindowExtent * targetDpi // monitor dpi]]
 				ifFalse: [aShellView extent].
 	aShellView rectangle: (monitor
 				adjustWindowRect: ((aShellView isInitiallyCentered
@@ -133,10 +133,10 @@ createShellWindow: aShellView withFunction: aCreateWindow
 		ifTrue: 
 			["Default position, so should go on the active monitor"
 			monitor := DisplayMonitor active.
-			targetDpi := monitor dpi.
+			targetDpi := monitor effectiveDpi.
 			"Now work out the extent to use at the DPI of the active monitor, which is either the specified extent remapped to the active monitor DPI, or if unspecified the monitor default"
 			extent := aCreateWindow hasDefaultExtent
-						ifTrue: [monitor defaultWindowExtent]
+						ifTrue: [monitor defaultWindowExtent * targetDpi // monitor dpi]
 						ifFalse: [aCreateWindow extent * targetDpi // aCreateWindow dpi].
 			position := aShellView isInitiallyCentered
 						ifTrue: [monitor centerExtent: extent]
@@ -145,10 +145,10 @@ createShellWindow: aShellView withFunction: aCreateWindow
 			["Position was specified. Determine the monitor from that."
 			position := aCreateWindow position.
 			monitor := DisplayMonitor nearestPoint: position.
-			targetDpi := monitor dpi.
+			targetDpi := monitor effectiveDpi.
 			"Now we can calculate the extent as above"
 			extent := aCreateWindow hasDefaultExtent
-						ifTrue: [monitor defaultWindowExtent]
+						ifTrue: [monitor defaultWindowExtent * targetDpi // monitor dpi]
 						ifFalse: [aCreateWindow extent * targetDpi // aCreateWindow dpi].
 			"If should be initially centered, override the specified position, but keeping to the same monitor"
 			position := aShellView isInitiallyCentered
