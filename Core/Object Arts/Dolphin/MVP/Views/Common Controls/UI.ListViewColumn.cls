@@ -322,8 +322,8 @@ printOn: aStream
 resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
-	#highDpiToDo.	"Note that we are sending a new column width to the view, as the columns have already been added. If we do this in #list mode, it disables the LVs auto-sizing, which is undesirable. Probably need to delay sending column widths until go into report mode (if not already in report mode). Also when in report mode the columns are being resized multiple times."
-	self width: (width * aPoint x) truncated!
+	"Note that this merely adjusts the internal column size. We don't transfer to the view here as that is done en-masse when required by the ListView."
+	width := (width * aPoint x) truncated!
 
 rowSortBlock
 	"Private - Answer a two argument block that can be used to compare two rows based on this
@@ -405,8 +405,11 @@ width: aNumber
 	N.B. This may cause the width of other (auto-resizable) columns to change."
 
 	self basicWidth: aNumber.
-	#highDpiToDo.	"We should not be sending the new width to the control at this point if not in report mode, but then need to send later when entering report mode"
-	self parent ifNotNil: [:view | view setWidthOfColumn: self index to: aNumber asInteger]! !
+	self parent
+		ifNotNil: 
+			[:listView |
+			"We do not want to transfer the column width to the view if not in report mode as doing so disables column auto-sizing in other modes."
+			listView isReportMode ifTrue: [listView setWidthOfColumn: self index to: aNumber asInteger]]! !
 
 !UI.ListViewColumn categoriesForMethods!
 alignment!alignment!public! !

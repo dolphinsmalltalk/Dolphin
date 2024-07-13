@@ -1982,8 +1982,9 @@ resetSelection
 resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
+	iconSpacing ifNotNil: [self iconSpacing: (iconSpacing * aPoint) truncated].
 	self allColumns do: [:each | each resolutionScaledBy: aPoint].
-	iconSpacing ifNotNil: [self iconSpacing: (iconSpacing * aPoint) truncated]!
+	self updateColumnWidths!
 
 selectAll
 	| size |
@@ -2104,7 +2105,11 @@ setSelectionsByIndex: indices
 setSingleSelection: anInteger 
 	self selectIndex: anInteger set: anInteger ~~ 0!
 
-setViewMode: aSymbol 
+setViewMode: aSymbol
+	(viewMode == #report and: [aSymbol ~~ #report])
+		ifTrue: 
+			["If switching out of report mode, we must cache the column widths before the mode is changed"
+			self cacheColumnWidths].
 	viewMode := aSymbol!
 
 setWidthOfColumn: colIndexInteger to: widthInteger
@@ -2252,6 +2257,14 @@ updateColumn: aListViewColumn
 	self basicUpdateColumn: aListViewColumn.
 	self updateAll!
 
+updateColumnWidths
+	self isReportMode ifFalse: [^self].
+	"Switching into report mode, we need to transfer across the fixed columns widths and then resize other columns to fit"
+	self noRedrawDo: 
+			[self allColumns
+				keysAndValuesDo: [:i :each | each isAutoResize ifFalse: [self lvmSetColumnWidth: i - 1 to: each basicWidth]].
+			self isReportMode ifTrue: [self autoResizeColumns: self availableClientWidth]]!
+
 updateItem: anObject at: anInteger
 	"Re-render the specified item, which is at the specified <integer> index in the list."
 
@@ -2307,7 +2320,7 @@ viewModeChanged
 		baseStyle: style
 		maskedBy: LVS_TYPEMASK
 		recreateIfChanged: false.
-	self autoResizeColumns.
+	self updateColumnWidths.
 	self updateAll.
 	self trigger: #viewModeChanged!
 
@@ -2566,6 +2579,7 @@ thumbnailsImageManager!image management!private! !
 topIndex!accessing!public! !
 updateAll!public!updating! !
 updateColumn:!columns!private!updating! !
+updateColumnWidths!helpers!private! !
 updateItem:at:!public!updating! !
 updateMode!accessing!public! !
 updateMode:!accessing!public! !
