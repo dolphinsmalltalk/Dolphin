@@ -216,7 +216,7 @@ displayValue: anObject
 	"Private - Set the displayed contents of the receiver."
 
 	(webview isNull or: [webview source = anObject]) ifTrue: [^self].
-	(self canNavigateToStrings not or: [ShlwapiLibrary default pathIsURL: anObject])
+	(self canNavigateToStrings not or: [Shlwapi pathIsURL: anObject])
 		ifTrue: [webview navigate: anObject ?? 'about:blank']
 		ifFalse: [webview navigateToString: anObject ?? '']!
 

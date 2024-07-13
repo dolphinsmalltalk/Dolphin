@@ -606,7 +606,7 @@ attributesEx: aString
 
 	| attributes |
 	attributes := WIN32_FILE_ATTRIBUTE_DATA newBuffer.
-	^(KernelLibrary default
+	^(Kernel32
 		getFileAttributesEx: aString
 		fInfoLevelId: 0
 		lpFileInformation: attributes) ifTrue: [attributes]!
