@@ -6,6 +6,7 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{Graphics.Tests.AbstractBitmapTest}
+	#{Graphics.Tests.AbstractFontTest}
 	#{Graphics.Tests.ARGBTest}
 	#{Graphics.Tests.BitmapTest}
 	#{Graphics.Tests.BrushTest}
@@ -40,6 +41,14 @@ package!
 "Class Definitions"!
 
 Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.AbstractFontTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
 	subclass: #'Graphics.Tests.ARGBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -65,14 +74,6 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'Graphics.Tests.ColorTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Tests.DolphinTest
-	subclass: #'Graphics.Tests.FontTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -112,15 +113,23 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 
 Core.Tests.DolphinTest
-	subclass: #'Graphics.Tests.StockFontTest'
+	subclass: #'Graphics.Tests.VirtualColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-Core.Tests.DolphinTest
-	subclass: #'Graphics.Tests.VirtualColorTest'
+Graphics.Tests.AbstractFontTest
+	subclass: #'Graphics.Tests.FontTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Graphics.Tests.AbstractFontTest
+	subclass: #'Graphics.Tests.StockFontTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -58,7 +58,8 @@ printOn: aStream
 
 setId: anInteger themedObject: anObjectWithTheme
 	id := anInteger.
-	themedObject := anObjectWithTheme! !
+	themedObject := anObjectWithTheme.
+	^self! !
 
 !Graphics.UxThemeFont categoriesForMethods!
 getLogFont!initializing!private! !

@@ -69,6 +69,9 @@ struct tagTEXTMETRIC {
 
 !OS.TEXTMETRICW methodsFor!
 
+emHeight
+	^(bytes int32AtOffset: _OffsetOf_tmHeight) - (bytes int32AtOffset: _OffsetOf_tmInternalLeading)!
+
 tmAscent
 	"Answer the <Integer> value of the receiver's 'tmAscent' field."
 
@@ -170,6 +173,7 @@ tmWeight
 	^bytes int32AtOffset: _OffsetOf_tmWeight! !
 
 !OS.TEXTMETRICW categoriesForMethods!
+emHeight!accessing!public! !
 tmAscent!**compiled accessors**!public! !
 tmAveCharWidth!**compiled accessors**!public! !
 tmBreakChar!**compiled accessors**!public! !

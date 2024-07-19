@@ -410,7 +410,7 @@ External.PermanentLibrary
 Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
 	instanceVariableNames: 'logfont dpi series'
-	classVariableNames: ''
+	classVariableNames: 'System'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -906,7 +906,28 @@ External.Structure
 			'_OffsetOf_lfStrikeOut' -> 16r16.
 			'_OffsetOf_lfUnderline' -> 16r15.
 			'_OffsetOf_lfWeight' -> 16r10.
-			'_OffsetOf_lfWidth' -> 16r4
+			'_OffsetOf_lfWidth' -> 16r4.
+			'ANTIALIASED_QUALITY' -> 16r4.
+			'CLEARTYPE_NATURAL_QUALITY' -> 16r6.
+			'CLEARTYPE_QUALITY' -> 16r5.
+			'DEFAULT_PITCH' -> 16r0.
+			'DEFAULT_QUALITY' -> 16r0.
+			'DRAFT_QUALITY' -> 16r1.
+			'FIXED_PITCH' -> 16r1.
+			'NONANTIALIASED_QUALITY' -> 16r3.
+			'OUT_CHARACTER_PRECIS' -> 16r2.
+			'OUT_DEFAULT_PRECIS' -> 16r0.
+			'OUT_DEVICE_PRECIS' -> 16r5.
+			'OUT_OUTLINE_PRECIS' -> 16r8.
+			'OUT_PS_ONLY_PRECIS' -> 16rA.
+			'OUT_RASTER_PRECIS' -> 16r6.
+			'OUT_SCREEN_OUTLINE_PRECIS' -> 16r9.
+			'OUT_STRING_PRECIS' -> 16r1.
+			'OUT_STROKE_PRECIS' -> 16r3.
+			'OUT_TT_ONLY_PRECIS' -> 16r7.
+			'OUT_TT_PRECIS' -> 16r4.
+			'PROOF_QUALITY' -> 16r2.
+			'VARIABLE_PITCH' -> 16r2
 		}!
 
 External.Structure

@@ -3,7 +3,7 @@
 Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
 	instanceVariableNames: 'logfont dpi series'
-	classVariableNames: ''
+	classVariableNames: 'System'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -12,7 +12,14 @@ Graphics.AbstractFont guid: (Core.GUID fromString: '{894c6c14-886e-4fde-9d60-003
 
 Graphics.AbstractFont isNonInstantiable: true!
 
-Graphics.AbstractFont comment: ''!
+Graphics.AbstractFont comment: '`AbstractFont` is the abstract class of `GraphicsTool`s that wrap a Windows Font object
+
+## Instance Variables:
+  `logfont`	`LOGFONTW` structure with details describing the font.
+  `dpi`		`<integer>` . The DPI at which this font is realised.
+  `series`		`FontSeries`. Series of equivalent fonts at different DPIs.
+
+'!
 
 !Graphics.AbstractFont methodsFor!
 
@@ -21,7 +28,7 @@ Graphics.AbstractFont comment: ''!
 
 	^self species == aFont species and: 
 			[series == aFont series
-				or: [(logfont equalExcludingSize: aFont logFont) and: [self pointSize == aFont pointSize]]]!
+				or: [(self logFont equalExcludingSize: aFont logFont) and: [self pointSize == aFont pointSize]]]!
 
 actualFont
 	^self!
@@ -55,20 +62,6 @@ dpi
 	"Answer the logical pixels per inch of the receiver"
 
 	^dpi!
-
-dpi: anInteger
-	"Sets the logical pixels per inch of the receiver. Note that if the dpi changes, this will free the font handle, breaking any existing uses. This tends to be obvious as controls will mysteriously start painting using the system font. Changing the DPI of a shared font must therefore be avoided. Instead use #atDpi: to get an equivalent Font at the desired scale."
-
-	| oldDpi |
-	dpi = anInteger ifTrue: [^self].
-	self free.
-	oldDpi := dpi.
-	
-	[| ptSize |
-	ptSize := self pointSize.
-	dpi := anInteger.
-	self pointSize: ptSize]
-			ifCurtailed: [dpi := oldDpi]!
 
 getLogFont
 	^self subclassResponsibility!
@@ -121,25 +114,25 @@ name
 	^self logFont faceName!
 
 pixelSize
-	"Answers the receiver's pixel size."
+	"Answers the receiver's pixel size (this is the Em height, or character height). Note that this is the physical size, so will increase proportionally to DPI scale for the same logical point size."
 
-	^self logFont lfHeight abs!
+	| lf emHeight dc tm |
+	lf := self logFont.
+	emHeight := lf lfHeight.
+	emHeight < 0 ifTrue: [^emHeight negated].
+	"If the height in the LOGFONT is positive, then it is a pixel cell height. To calculate the point size we will need to follow [Q32667](https://jeffpar.github.io/kbarchive/kb/032/Q32667/). We use the raw Win32 APIs to reduce overhead and class dependencies. This is relatively expensive, but in practice we only tend to encounter this case for older non-scalable rasterized fonts such as the venerable Windows System font."
+	dc := User32 getDC: nil.
+	
+	[Gdi32 selectObject: dc hgdiobj: self handle.
+	tm := TEXTMETRICW newBuffer.
+	Gdi32 getTextMetrics: dc lptm: tm]
+			ensure: [User32 releaseDC: nil hDC: dc].
+	^tm emHeight!
 
 pointSize
-	"Answers the receiver's point size."
+	"Answers the receiver's point size. Note that this is logical point size independent of DPI scaling. For example a 10 point font at 96-dpi will be physically the size of a 20 point font at 192 dpi, but the logical point size will still be 10. See also #pixelSize."
 
-	| lfHeight |
-	lfHeight := self logFont lfHeight.
-	lfHeight > 0 ifTrue: [ | dc tm |
-"		dc := Canvas forDesktop.
-		dc font: self.
-		tm := dc outlineTextMetrics.
-		dc free."
-		] ifFalse: [lfHeight := lfHeight negated].
-	^(lfHeight * 72 / self dpi) rounded
-"
-Font system pointSize
-"!
+	^(self pixelSize * 72 / self dpi) rounded!
 
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy
@@ -221,13 +214,12 @@ weight
 
 !Graphics.AbstractFont categoriesForMethods!
 =!comparing!public! !
-actualFont!public! !
+actualFont!accessing!public! !
 atDpi:!public!scaling! !
 characterSet!accessing!public! !
 createHandle!private!realizing/unrealizing! !
 displayOn:!displaying!public! !
 dpi!accessing!public!scaling! !
-dpi:!accessing!public!scaling! !
 getLogFont!initializing!private! !
 hash!comparing!public! !
 initialize!initializing!public! !
@@ -236,9 +228,9 @@ isDefault!public!testing! !
 isItalic!public!testing! !
 isStruckThrough!public!testing! !
 isUnderlined!public!testing! !
-logFont!public! !
-name!public! !
-pixelSize!public! !
+logFont!accessing!public! !
+name!accessing!public! !
+pixelSize!accessing!public! !
 pointSize!accessing!public! !
 postCopy!copying!public! !
 resolution!accessing!public! !
@@ -248,7 +240,7 @@ series:!accessing!public! !
 setHandle:dpi:!initializing!private! !
 setLogFont:dpi:!initializing!private! !
 setOwnedHandle:dpi:!initializing!private! !
-species!public! !
+species!constants!public! !
 stbSaveOn:!binary filing!public! !
 styleChanged!modes!private! !
 unstyledCopy!copying!public! !
@@ -268,14 +260,8 @@ defaultPointSize
 
 	^10!
 
-fromHandle: aHandle
-	Notification deprecated.	"Use #fromHandle:dpi:"
-	^self fromHandle: aHandle dpi: SystemMetrics current dpi!
-
-fromHandle: aHandle dpi: anInteger
-	"Answers an instance of the receiver with aHandle that has been created for use at the specified DPI. The handle is not owned by the instance and will not therefore be freed by it."
-
-	^self basicNew setHandle: aHandle dpi: anInteger!
+fixedSystem
+	^self fromId: SYSTEM_FIXEDFONT!
 
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock font id anInteger."
@@ -283,26 +269,6 @@ fromId: anInteger
 	^StockFont new
 		setId: anInteger;
 		yourself!
-
-fromLogFont: aLOGFONT
-	"Answer a new instance of the receiver with specified logical attributes. Note that it is assumed that the font height in the LOGFONT is specified for a font to be used at the current system (i.e. primary monitor) DPI. It is usually preferable to use #fromLogFont:dpi: and specify the DPI, otherwise the font may be sized incorrectly. Unfortunately there is no way to specify a point size directly in a LOGFONT - the physical size must be specified."
-
-	Notification deprecated. "Use fromLogFont:dpi: to be explicit about the DPI"
-	^self fromLogFont: aLOGFONT dpi: SystemMetrics current dpi!
-
-fromLogFont: aLOGFONT dpi: anInteger
-	"Answer a new instance of the receiver with specified logical attributes."
-
-	^self basicNew setLogFont: aLOGFONT dpi: anInteger!
-
-fromOwnedHandle: aHandle
-	Notification deprecated.	"Use #fromOwnedHandle:dpi:"
-	^self fromOwnedHandle: aHandle dpi: SystemMetrics current dpi!
-
-fromOwnedHandle: aHandle dpi: anInteger
-	"Answers an instance of the receiver with aHandle assumed to have been created for the specified DPI. The handle is owned by the instance and will therefore be freed by it."
-
-	^Font basicNew setOwnedHandle: aHandle dpi: anInteger!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -331,6 +297,9 @@ name: aString pointSize: anInteger
 		pointSize: anInteger;
 		yourself!
 
+onStartup2
+	System := self fromId: SYSTEM_FONT!
+
 stbConvertFrom: anSTBClassFormat
 	| version |
 	version := anSTBClassFormat version.
@@ -355,22 +324,18 @@ stbVersion
 	^1!
 
 system
-	^self fromId: SYSTEM_FONT! !
+	^System! !
 
 !Graphics.AbstractFont class categoriesForMethods!
 default!instance creation!public! !
 defaultPointSize!constants!private! !
-fromHandle:!instance creation!public! !
-fromHandle:dpi:!instance creation!public! !
+fixedSystem!instance creation!public! !
 fromId:!instance creation!public! !
-fromLogFont:!instance creation!public! !
-fromLogFont:dpi:!instance creation!public! !
-fromOwnedHandle:!instance creation!public! !
-fromOwnedHandle:dpi:!instance creation!public! !
 icon!constants!public! !
 name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !
 name:pointSize:!instance creation!public! !
+onStartup2!event handling!private! !
 stbConvertFrom:!binary filing!private! !
 stbConvertFromVersion0:!binary filing!private! !
 stbVersion!binary filing!public! !

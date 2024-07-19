@@ -16,7 +16,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Graphics.AbstractFont class} #fromOleFont:)
+	#(#{Graphics.Font class} #fromOleFont:)
 	#(#{OS.LOGFONTW class} #fromOleFont:)
 ).
 
@@ -49,7 +49,7 @@ OS.COM.IDispatch
 
 "Loose Methods"!
 
-!Graphics.AbstractFont class methodsFor!
+!Graphics.Font class methodsFor!
 
 fromOleFont: pFont
 	"Answer a new instance of the receiver which is equivalent to the OLE font on which the <IFont>|<IFontDisp> argument, anIFont, is an interface."
@@ -58,7 +58,7 @@ fromOleFont: pFont
 
 	^self fromLogFont: (LOGFONTW fromOleFont: pFont) dpi: USER_DEFAULT_SCREEN_DPI! !
 
-!Graphics.AbstractFont class categoriesForMethods!
+!Graphics.Font class categoriesForMethods!
 fromOleFont:!instance creation!public! !
 !
 

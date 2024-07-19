@@ -21,7 +21,28 @@ External.Structure
 			'_OffsetOf_lfStrikeOut' -> 16r16.
 			'_OffsetOf_lfUnderline' -> 16r15.
 			'_OffsetOf_lfWeight' -> 16r10.
-			'_OffsetOf_lfWidth' -> 16r4
+			'_OffsetOf_lfWidth' -> 16r4.
+			'ANTIALIASED_QUALITY' -> 16r4.
+			'CLEARTYPE_NATURAL_QUALITY' -> 16r6.
+			'CLEARTYPE_QUALITY' -> 16r5.
+			'DEFAULT_PITCH' -> 16r0.
+			'DEFAULT_QUALITY' -> 16r0.
+			'DRAFT_QUALITY' -> 16r1.
+			'FIXED_PITCH' -> 16r1.
+			'NONANTIALIASED_QUALITY' -> 16r3.
+			'OUT_CHARACTER_PRECIS' -> 16r2.
+			'OUT_DEFAULT_PRECIS' -> 16r0.
+			'OUT_DEVICE_PRECIS' -> 16r5.
+			'OUT_OUTLINE_PRECIS' -> 16r8.
+			'OUT_PS_ONLY_PRECIS' -> 16rA.
+			'OUT_RASTER_PRECIS' -> 16r6.
+			'OUT_SCREEN_OUTLINE_PRECIS' -> 16r9.
+			'OUT_STRING_PRECIS' -> 16r1.
+			'OUT_STROKE_PRECIS' -> 16r3.
+			'OUT_TT_ONLY_PRECIS' -> 16r7.
+			'OUT_TT_PRECIS' -> 16r4.
+			'PROOF_QUALITY' -> 16r2.
+			'VARIABLE_PITCH' -> 16r2
 		}!
 
 OS.LOGFONTW guid: (Core.GUID fromString: '{37140088-772d-4f72-aac2-27311f7805d8}')!
@@ -78,6 +99,11 @@ faceName: aString
 isFixedWidth
 	^(self lfPitchAndFamily bitAnd: 16r3) == 1!
 
+isRasterFont
+	"The lfOutPrecision can be used to identify a raster font. See [LOGFONTW](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfontw). Raster fonts as they are essentially pre-rendered bitmaps at certain sizes so they don't scale well to arbitrary point sizes."
+
+	^self lfOutPrecision == OUT_STRING_PRECIS!
+
 lfCharSet
 	"Answer the <Integer> value of the receiver's 'lfCharSet' field."
 
@@ -87,6 +113,16 @@ lfCharSet: anInteger
 	"Set the receiver's 'lfCharSet' field to the value of the argument, anInteger"
 
 	bytes uint8AtOffset: _OffsetOf_lfCharSet put: anInteger!
+
+lfClipPrecision
+	"Answer the <Integer> value of the receiver's 'lfClipPrecision' field."
+
+	^bytes uint8AtOffset: _OffsetOf_lfClipPrecision!
+
+lfClipPrecision: anInteger
+	"Set the receiver's 'lfClipPrecision' field to the value of the argument, anInteger"
+
+	bytes uint8AtOffset: _OffsetOf_lfClipPrecision put: anInteger!
 
 lfEscapement
 	"Answer the <Integer> value of the receiver's 'lfEscapement' field."
@@ -134,6 +170,16 @@ lfItalic: anInteger
 	"Set the receiver's 'lfItalic' field to the value of the argument, anInteger"
 
 	bytes uint8AtOffset: _OffsetOf_lfItalic put: anInteger!
+
+lfOutPrecision
+	"Answer the <Integer> value of the receiver's 'lfOutPrecision' field."
+
+	^bytes uint8AtOffset: _OffsetOf_lfOutPrecision!
+
+lfOutPrecision: anInteger
+	"Set the receiver's 'lfOutPrecision' field to the value of the argument, anInteger"
+
+	bytes uint8AtOffset: _OffsetOf_lfOutPrecision put: anInteger!
 
 lfPitchAndFamily
 	"Answer the <Integer> value of the receiver's 'lfPitchAndFamily' field."
@@ -200,8 +246,11 @@ equalExcludingSize:!comparing!public! !
 faceName!accessing!public! !
 faceName:!accessing!public! !
 isFixedWidth!public! !
+isRasterFont!public!testing! !
 lfCharSet!**compiled accessors**!public! !
 lfCharSet:!**compiled accessors**!public! !
+lfClipPrecision!**compiled accessors**!public! !
+lfClipPrecision:!**compiled accessors**!public! !
 lfEscapement!**compiled accessors**!public! !
 lfEscapement:!**compiled accessors**!public! !
 lfFaceName!**compiled accessors**!public! !
@@ -210,6 +259,8 @@ lfHeight!**compiled accessors**!public! !
 lfHeight:!**compiled accessors**!public! !
 lfItalic!**compiled accessors**!public! !
 lfItalic:!**compiled accessors**!public! !
+lfOutPrecision!**compiled accessors**!public! !
+lfOutPrecision:!**compiled accessors**!public! !
 lfPitchAndFamily!**compiled accessors**!public! !
 lfPitchAndFamily:!**compiled accessors**!public! !
 lfQuality!**compiled accessors**!public! !
@@ -244,8 +295,8 @@ defineFields
 		defineField: #lfUnderline type: UInt8Field new;
 		defineField: #lfStrikeOut type: UInt8Field new;
 		defineField: #lfCharSet type: UInt8Field new;
-		defineField: #lfOutPrecision type: UInt8Field new beUncompiled;
-		defineField: #lfClipPrecision type: UInt8Field new beUncompiled;
+		defineField: #lfOutPrecision type: UInt8Field new;
+		defineField: #lfClipPrecision type: UInt8Field new;
 		defineField: #lfQuality type: UInt8Field new;
 		defineField: #lfPitchAndFamily type: UInt8Field new;
 		defineField: #lfFaceName type: (StringField type: Utf16String length: OS.Win32Constants.LF_FACESIZE)!

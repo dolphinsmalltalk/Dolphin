@@ -41,6 +41,20 @@ characterSet: anInteger
 	logfont lfCharSet: anInteger.
 	self styleChanged!
 
+dpi: anInteger
+	"Sets the logical pixels per inch of the receiver. Note that if the dpi changes, this will free the font handle, breaking any existing uses. This tends to be obvious as controls will mysteriously start painting using the system font. Changing the DPI of a shared font must therefore be avoided. Instead use #atDpi: to get an equivalent Font at the desired scale."
+
+	| oldDpi |
+	dpi = anInteger ifTrue: [^self].
+	self free.
+	oldDpi := dpi.
+	
+	[| ptSize |
+	ptSize := self pointSize.
+	dpi := anInteger.
+	self pointSize: ptSize]
+			ifCurtailed: [dpi := oldDpi]!
+
 getLogFont
 	logfont ifNil: [logfont := LOGFONTW newBuffer].
 	self isRealized ifTrue: [self getData: logfont] ifFalse: [logfont lfWeight: FW_NORMAL].
@@ -151,9 +165,11 @@ quality: aSymbol
 		cleartype 			- Cleartype anti-aliasing is used, if the font supports it
 		cleartypeNatural	- Not well documented
 	See the documentation for the lfQuality member of [LOGFONTW](view-source:https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfontw) for further details.
-	Setting this value has no immediate effect if the receiver is already realized."
+	Setting this value causes the Font to be re-realised so should not be done to a Font that is in use."
 
-	self logFont lfQuality: (Qualities identityIndexOf: aSymbol) - 1!
+	self quality == aSymbol ifTrue: [^self].
+	self logFont lfQuality: (Qualities identityIndexOf: aSymbol) - 1.
+	self styleChanged!
 
 styleChanged
 	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
@@ -174,6 +190,7 @@ beBold!accessing!public! !
 beItalic!accessing!public! !
 beUnderlined!accessing!public! !
 characterSet:!accessing!public! !
+dpi:!accessing!public!scaling! !
 getLogFont!initializing!private! !
 handle:!accessing!public! !
 isBold:!modes!public! !
@@ -183,10 +200,52 @@ isUnderlined:!modes!public! !
 logFont:!accessing!public! !
 name:!accessing!public! !
 pixelSize:!accessing!public! !
+pointSize:!accessing!public! !
 printOn:!development!printing!public! !
 quality!accessing!public! !
 quality:!accessing!public! !
 styleChanged!helpers!private! !
 weight:!accessing!public! !
+!
+
+!Graphics.Font class methodsFor!
+
+fromHandle: aHandle
+	Notification deprecated.	"Use #fromHandle:dpi:"
+	^self fromHandle: aHandle dpi: SystemMetrics current dpi!
+
+fromHandle: aHandle dpi: anInteger
+	"Answers an instance of the receiver with aHandle that has been created for use at the specified DPI. The handle is not owned by the instance and will not therefore be freed by it."
+
+	aHandle = System handle ifTrue: [^System].
+	^self basicNew setHandle: aHandle dpi: anInteger!
+
+fromLogFont: aLOGFONT
+	"Answer a new instance of the receiver with specified logical attributes. Note that it is assumed that the font height in the LOGFONT is specified for a font to be used at the current system (i.e. primary monitor) DPI. It is usually preferable to use #fromLogFont:dpi: and specify the DPI, otherwise the font may be sized incorrectly. Unfortunately there is no way to specify a point size directly in a LOGFONT - the physical size must be specified."
+
+	Notification deprecated. "Use fromLogFont:dpi: to be explicit about the DPI"
+	^self fromLogFont: aLOGFONT dpi: SystemMetrics current dpi!
+
+fromLogFont: aLOGFONT dpi: anInteger
+	"Answer a new instance of the receiver with specified logical attributes."
+
+	^self basicNew setLogFont: aLOGFONT dpi: anInteger!
+
+fromOwnedHandle: aHandle
+	Notification deprecated.	"Use #fromOwnedHandle:dpi:"
+	^self fromOwnedHandle: aHandle dpi: SystemMetrics current dpi!
+
+fromOwnedHandle: aHandle dpi: anInteger
+	"Answers an instance of the receiver with aHandle assumed to have been created for the specified DPI. The handle is owned by the instance and will therefore be freed by it."
+
+	^self basicNew setOwnedHandle: aHandle dpi: anInteger! !
+
+!Graphics.Font class categoriesForMethods!
+fromHandle:!instance creation!public! !
+fromHandle:dpi:!instance creation!public! !
+fromLogFont:!instance creation!public! !
+fromLogFont:dpi:!instance creation!public! !
+fromOwnedHandle:!instance creation!public! !
+fromOwnedHandle:dpi:!instance creation!public! !
 !
 
