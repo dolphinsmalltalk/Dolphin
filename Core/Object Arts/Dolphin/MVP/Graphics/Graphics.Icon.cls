@@ -123,24 +123,23 @@ drawOn: aCanvas at: aPoint extent: sizePoint frame: anInteger background: aBrush
 		flags: DI_NORMAL!
 
 drawOn: aCanvas at: aPoint extent: sizePoint frame: anInteger background: aBrush flags: flagsInteger
-	"Copies the receiver to aCanvas at position aPoint with size sizePoint
-	with frame anInteger and background aBrush. Answer whether the frame
-	could be drawn. Note that the frame number is ignored if the receiver is not
-	an animated icon/cursor."
+	"Copies the receiver to aCanvas at position aPoint with size sizePoint with frame anInteger and background aBrush. Answer whether the frame could be drawn. 
+	Note that the frame number is ignored if the receiver is not an animated icon/cursor."
 
-	^self valueWithHandle: 
-			[:hIcon |
-			User32
-				drawIconEx: aCanvas asParameter
-				xLeft: aPoint x
-				yTop: aPoint y
-				hIcon: hIcon
-				cxWidth: sizePoint x
-				cyHeight: sizePoint y
-				istepIfAniCur: anInteger
-				hbrFlickerFreeDraw: aBrush asParameter
-				diFlags: flagsInteger]
-		extent: sizePoint!
+	^sizePoint strictlyPositive and: 
+			[self valueWithHandle: 
+					[:hIcon |
+					User32
+						drawIconEx: aCanvas asParameter
+						xLeft: aPoint x
+						yTop: aPoint y
+						hIcon: hIcon
+						cxWidth: sizePoint x
+						cyHeight: sizePoint y
+						istepIfAniCur: anInteger
+						hbrFlickerFreeDraw: aBrush asParameter
+						diFlags: flagsInteger]
+				extent: sizePoint]!
 
 drawOn: aCanvas at: aPoint frame: anInteger background: aBrush
 	"Copies the receiver to aCanvas at position aPoint with frame anInteger and 

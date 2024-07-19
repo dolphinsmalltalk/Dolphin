@@ -28,6 +28,45 @@ imageFile
 subjectClass
 	^self subclassResponsibility!
 
+testDrawWithNegativeExtent
+	| subject bitmap canvas |
+	subject := self canonicalInstance.
+	bitmap := DIBSection extent: 48 @ 48.
+	canvas := bitmap canvas.
+	canvas
+		brush: Color chartreuse brush;
+		pen: Color tomato pen.
+	canvas rectangle: (0 @ 0 extent: bitmap extent).
+	-5 to: -10 by: -5
+		do: 
+			[:i |
+			self assert: (canvas pixelAt: 0 @ 0) equals: Color tomato.
+			self assert: (canvas pixelAt: 1 @ 1) equals: Color chartreuse.
+			subject
+				drawOn: canvas
+				at: 0 @ 0
+				extent: i @ i].
+	bitmap free!
+
+testDrawWithNullExtent
+	| subject bitmap canvas |
+	subject := self canonicalInstance.
+	bitmap := DIBSection extent: 48 @ 48.
+	canvas := bitmap canvas.
+	canvas
+		brush: Color chartreuse brush;
+		pen: Color tomato pen.
+	canvas rectangle: (0 @ 0 extent: bitmap extent).
+	self assert: (canvas pixelAt: 0 @ 0) equals: Color tomato.
+	self assert: (canvas pixelAt: 1 @ 1) equals: Color chartreuse.
+	subject
+		drawOn: canvas
+		at: 0 @ 0
+		extent: 0 @ 0.
+	self assert: (canvas pixelAt: 0 @ 0) equals: Color tomato.
+	self assert: (canvas pixelAt: 1 @ 1) equals: Color chartreuse.
+	bitmap free!
+
 testFromFile
 	| image1 image2 |
 	image1 := self subjectClass fromFile: self imageFile.
@@ -54,6 +93,8 @@ canonicalInstance!constants!private! !
 expectedImageExtent!constants!private! !
 imageFile!constants!private! !
 subjectClass!constants!private! !
+testDrawWithNegativeExtent!public! !
+testDrawWithNullExtent!public! !
 testFromFile!public! !
 testFromFileNotFound!public! !
 testFromSystemIdInvalid!public! !

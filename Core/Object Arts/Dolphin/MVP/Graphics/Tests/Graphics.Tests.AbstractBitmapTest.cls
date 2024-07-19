@@ -38,6 +38,32 @@ testDisplayCompatible
 	self assert: bitmap1 extent equals: 123 @ 456.
 	self deny: bitmap1 isPersistent!
 
+testDrawWithNegativeExtent
+	| subject bitmap canvas actualEndColor startColor extent |
+	"Create a colour gradient as the source to draw from"
+	extent := 48 @ 48.
+	subject := self subjectClass displayCompatibleWithExtent: extent.
+	canvas := subject canvas.
+	startColor := Color red.
+	canvas
+		fillRectangle: (0 @ 0 extent: subject extent)
+		startColor: startColor
+		endColor: Color blue
+		verticalGradient: true.
+	actualEndColor := canvas pixelAt: extent - 1.
+	bitmap := DIBSection compatible: subject canvas extent: extent.
+	canvas := bitmap canvas.
+	"Should draw inverted onto the target if we specify negative extent"
+	subject
+		drawOn: canvas
+		at: extent - 1
+		extent: extent negated
+		from: 0 @ 0
+		extent: extent.
+	self assert: (canvas pixelAt: 0 @ 0) equals: actualEndColor.
+	self assert: (canvas pixelAt: extent - 1) equals: startColor.
+	bitmap free!
+
 testFromFileFallback
 	| bitmap1 bitmap2 |
 	bitmap1 := self subjectClass fromFile: 'HeaderPin.bmp'.
@@ -90,6 +116,7 @@ imageFile!constants!private! !
 stlVersion3_file!constants!private! !
 stlVersion3_resource!constants!private! !
 testDisplayCompatible!public!unit tests! !
+testDrawWithNegativeExtent!public! !
 testFromFileFallback!public!unit tests! !
 testFromResource!public! !
 testStlConvertFromVersion3_file!public! !

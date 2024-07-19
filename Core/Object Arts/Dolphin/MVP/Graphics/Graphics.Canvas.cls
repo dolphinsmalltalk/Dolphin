@@ -197,7 +197,7 @@ drawBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcE
 	"Private - Blit the specified rectangle of aBitmap to the specified destination
 	rectangle with the specified raster op. The receiver is stretched to
 	fit the destination rectangle. Handles any palette changes required
-	by the bitmap. Answers zero if the operation fails"
+	by the bitmap. Answers false if the operation fails"
 
 	| hPalette oldPalette answer |
 	self isPaletteDevice
