@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Tools.ObjectInside'
-	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix extent center baseScale attributes'
+	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix centerOffset baseScale attributes'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
@@ -38,27 +38,21 @@ color: aColorOrNil
 	self attributes remapColor: baseColor to: color!
 
 drawOn: aGdiplusGraphics
-	aGdiplusGraphics transform: self matrix.
-	attributes
-		ifNil: [aGdiplusGraphics drawImage: image]
-		ifNotNil: [aGdiplusGraphics drawImage: image attributes: attributes].
-	aGdiplusGraphics resetTransform!
+	aGdiplusGraphics
+		transform: self matrix;
+		drawImage: image attributes: attributes!
 
 edgePoints
-	^edgePoints
-		ifNil: 
-			[edgePoints := self findEdgePoints.
-			"B add: edgePoints size."
-			edgePoints]!
+	^edgePoints ifNil: [edgePoints := External.POINTLArray withAll: self findEdgePoints]!
 
 extent
-	^extent!
+	^image extent!
 
 findEdgePoints
 	| width argb imageHandle height pts |
 	pts := Array writeStream: 100.
-	height := extent y.
-	width := extent x.
+	height := image height.
+	width := image width.
 	argb := ByteArray newFixed: 4.
 	imageHandle := image asParameter.
 	0 to: height + EdgePointResolution
@@ -77,7 +71,7 @@ findEdgePoints
 						x: (x min: width - 1)
 						y: ym
 						color: argb.
-					(argb uint32AtOffset: 0) == 0 == found
+					(argb int32AtOffset: 0) == 0 == found
 						ifTrue: 
 							[pts nextPutAll: x @ y.
 							found := found not]]].
@@ -105,7 +99,7 @@ matrix
 						translate: position;
 						rotate: rotation;
 						scale: scale asPoint;
-						translate: center negated;
+						translate: centerOffset;
 						yourself]!
 
 position
@@ -141,14 +135,13 @@ scale: aFloat
 
 setImage: aGdiplusImage
 	image := aGdiplusImage.
-	extent := image extent.
-	center := extent / 2.0!
+	centerOffset := image extent / -2.0!
 
 testCollisionIn: aGdiplusBitmap
 	| pixel bitmapHandle |
 	pixel := ByteArray newFixed: 4.
 	bitmapHandle := aGdiplusBitmap asParameter.
-	^(self matrix transformPoints: self edgePoints) anySatisfy: 
+	^(self matrix transformPoints: self edgePoints copy) anySatisfy: 
 			[:each |
 			(Gdip
 				gdipBitmapGetPixel: bitmapHandle

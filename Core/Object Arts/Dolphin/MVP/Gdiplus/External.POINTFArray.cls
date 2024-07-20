@@ -27,7 +27,7 @@ uncheckedAt: anInteger
 
 	| offset |
 	offset := anInteger - 1 bitShift: 3.
-	^(bytes floatAtOffset: offset) @ (bytes floatAtOffset: offset + 4)!
+	^Graphics.Point x: (bytes floatAtOffset: offset) y: (bytes floatAtOffset: offset + 4)!
 
 uncheckedAt: anInteger put: aPoint
 	"Private - Replace the <POINTF> value at the specified index in the receiver with the x and y co-ordindates of the <Point> argument.
@@ -35,7 +35,8 @@ uncheckedAt: anInteger put: aPoint
 
 	| offset |
 	offset := anInteger - 1 bitShift: 3.
-	^(bytes floatAtOffset: offset put: aPoint x) @ (bytes floatAtOffset: offset + 4 put: aPoint y)! !
+	^Graphics.Point x: (bytes floatAtOffset: offset put: aPoint x)
+		y: (bytes floatAtOffset: offset + 4 put: aPoint y)! !
 
 !External.POINTFArray categoriesForMethods!
 printElement:on:!printing!private! !

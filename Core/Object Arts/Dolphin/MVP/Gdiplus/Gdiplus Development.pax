@@ -370,6 +370,7 @@ exampleGdipCBPerformance
 	bitmap := Bitmap new.
 	graphics := bitmap graphics.
 	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
+	image forceValidation.
 	strm := String smalltalkWriteStream.
 	strm
 		display: 'CachedBitmap drawing time';

@@ -304,16 +304,31 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 drawImage: aGdiplusImage attributes: imageAttributes
 	"Draw the <Gdiplus.Image> 1st argument at its full extent at the receiver's origin with <ImageAttributes> specified by the 2nd argument."
 
-	| extent |
-	extent := aGdiplusImage extent.
-	self
-		drawImage: aGdiplusImage
-		at: Point.Zero
-		extent: extent
-		from: Point.Zero
-		extent: extent
-		unit: UnitPixel
-		attributes: imageAttributes!
+	imageAttributes
+		ifNil: 
+			[Gdip
+				gdipDrawImageI: self handle
+				image: aGdiplusImage asParameter
+				x: 0
+				y: 0]
+		ifNotNil: 
+			[| extent |
+			extent := aGdiplusImage extent.
+			Gdip
+				gdipDrawImageRectRectI: self handle
+				image: aGdiplusImage asParameter
+				dstx: 0
+				dsty: 0
+				dstwidth: extent x
+				dstheight: extent y
+				srcx: 0
+				srcy: 0
+				srcwidth: extent x
+				srcheight: extent y
+				srcUnit: UnitPixel
+				imageAttributes: imageAttributes asParameter
+				callback: nil
+				callbackData: nil]!
 
 drawImage: anImage points: threePoints
 	"Draw anImage on the receiver stretched to fit the parallelogram specified by threePoints."

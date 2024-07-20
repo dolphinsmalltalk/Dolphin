@@ -34,7 +34,7 @@ package!
 
 Core.Object
 	subclass: #'Tools.ObjectInside'
-	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix extent center baseScale attributes'
+	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix centerOffset baseScale attributes'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
@@ -50,11 +50,31 @@ UI.AbstractSplash
 
 Graphics.Gdiplus.DoubleBufferedView
 	subclass: #'Tools.SeeingTheObjectsInside'
-	instanceVariableNames: 'insideObjectsScale background cachedBackground sun stepProcess random dolphinIntensity dolphinInside splashDelay hintBubble startTime scale originalBitmapDips'
+	instanceVariableNames: 'insideObjectsScale background cachedBackground sun stepProcess random dolphinIntensity dolphinInside splashDelay hintBubble startTime scale originalBitmapDips renderBlock'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: 'splashPlayTheGame'
-	classConstants: {}!
+	classConstants: {
+			'DolphinBackColor' -> Color white.
+			'DolphinInsideBaseColor' -> (Color brightness: 16r1 / 16rFF).
+			'DolphinInsideIntensityColor' -> (Color
+						r: 16rC0
+						g: 16r59
+						b: 16rCF).
+			'DolphinInsideIntensityPeriod' -> 1500.0.
+			'DolphinInsideIntensityTime' -> 16r1B58.
+			'DolphinMaxInitialScale' -> 0.4.
+			'DolphinMinInitialScale' -> 0.3.
+			'FrameRate' -> 16r19.
+			'InsideObjectExpandingPeriod' -> 4500.0.
+			'InsideObjectMaxScale' -> 0.9.
+			'InsideObjectMinScale' -> 0.07.
+			'MajorVersionColor' -> (Color
+						r: 16rC4
+						g: 16r55
+						b: 16rD3).
+			'TitleTextColor' -> Color white
+		}!
 
 "End of package definition"!
 
