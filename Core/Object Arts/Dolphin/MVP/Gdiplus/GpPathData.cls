@@ -43,24 +43,26 @@ Count: anInteger
 	bytes sdwordAtOffset: _OffsetOf_Count put: anInteger!
 
 Points
-	"Answer the <POINTF> value of the receiver's 'Points' field."
+	"Answer the <POINTFArray> value of the receiver's 'Points' field."
 
-	^POINTF fromAddress: (bytes intPtrAtOffset: _OffsetOf_Points)!
+	^POINTFArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_Points) length: self Count!
 
-Points: aPOINTF
-	"Set the receiver's 'Points' field to the value of the argument, aPOINTF"
+Points: aPOINTFArray
+	"Set the receiver's 'Points' field to the value of the argument, aPOINTFArray"
 
-	bytes uintPtrAtOffset: _OffsetOf_Points put: aPOINTF yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_Points put: aPOINTFArray yourAddress.
+	self Count: aPOINTFArray size!
 
 Types
-	"Answer the <BYTE> value of the receiver's 'Types' field."
+	"Answer the <ExternalArray> value of the receiver's 'Types' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_Types)!
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_Types) length: self Count!
 
-Types: aBYTE
-	"Set the receiver's 'Types' field to the value of the argument, aBYTE"
+Types: anExternalArray
+	"Set the receiver's 'Types' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: _OffsetOf_Types put: aBYTE yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_Types put: anExternalArray yourAddress.
+	self Count: anExternalArray size! !
 
 !GpPathData categoriesForMethods!
 Count!**compiled accessors**!public! !
@@ -74,21 +76,22 @@ Types:!**compiled accessors**!public! !
 !GpPathData class methodsFor!
 
 defineFields
-	"Define the fields of the GpPathData structure.
-		GpPathData compileDefinition
-	
-		typedef [uuid(411A9CB7-6ABC-4F55-AA9A-82C7E0D44142)]
-		struct tagGpPathData {
+	"Define the fields of the PathData structure.
+
+	GpPathData compileDefinition
+
+		typedef [uuid(411a9cb7-6abc-4f55-aa9a-82c7e0d44142), helpstring('State-only definition of GDI+ PathData class.')]
+		struct tagPathData {
 			int Count;
-			POINTF* Points;
-			BYTE* Types;
-		} GpPathData;
+			[size_is('Count')] POINTF* Points;
+			[size_is('Count')] BYTE* Types;
+		} PathData;
 "
 
 	self
 		defineField: #Count type: SDWORDField new offset: 0;
-		defineField: #Points type: (PointerField type: POINTF) offset: 4;
-		defineField: #Types type: (PointerField type: BYTE) offset: 8.
+		defineField: #Points type: (ArrayPointerField type: POINTFArray lengthField: #Count) offset: 4;
+		defineField: #Types type: (ArrayPointerField type: ExternalArray lengthField: #Count) offset: 8.
 	self byteSize: 12!
 
 getFieldNames

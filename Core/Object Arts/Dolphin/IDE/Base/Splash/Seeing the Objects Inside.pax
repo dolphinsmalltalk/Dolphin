@@ -36,7 +36,7 @@ package!
 "Class Definitions"!
 
 Object subclass: #ObjectInside
-	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix extent center baseScale attributes'
+	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix centerOffset baseScale attributes'
 	classVariableNames: 'EdgePointResolution'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
@@ -48,10 +48,10 @@ AbstractSplash subclass: #DolphinSplash
 	classInstanceVariableNames: ''!
 
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
-	instanceVariableNames: 'insideObjectsScale background cachedBackground sun stepProcess random dolphinIntensity dolphinInside splashDelay hintBubble startTime scale originalBitmapDips'
-	classVariableNames: ''
+	instanceVariableNames: 'insideObjectsScale background cachedBackground sun stepProcess random dolphinIntensity dolphinInside splashDelay hintBubble startTime scale originalBitmapDips renderBlock'
+	classVariableNames: 'DolphinBackColor DolphinInsideBaseColor DolphinInsideIntensityColor DolphinInsideIntensityPeriod DolphinInsideIntensityTime DolphinMaxInitialScale DolphinMinInitialScale FrameRate InsideObjectExpandingPeriod InsideObjectMaxScale InsideObjectMinScale MajorVersionColor TitleTextColor'
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!
+	classInstanceVariableNames: 'splashPlayTheGame'!
 
 "End of package definition"!
 

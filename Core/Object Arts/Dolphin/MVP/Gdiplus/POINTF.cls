@@ -91,6 +91,12 @@ y:!**compiled accessors**!public! !
 
 !POINTF class methodsFor!
 
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^POINTFArray!
+
 defineFields
 	"Define the fields of the POINTF structure.
 		POINTF compileDefinition
@@ -120,6 +126,7 @@ x: x y: y
 ! !
 
 !POINTF class categoriesForMethods!
+arrayType!constants!private! !
 defineFields!**auto generated**!public!template definition! !
 x:y:!instance creation!public! !
 !

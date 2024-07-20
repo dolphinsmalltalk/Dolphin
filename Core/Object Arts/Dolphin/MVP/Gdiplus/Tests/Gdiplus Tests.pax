@@ -46,6 +46,7 @@ package classNames
 	add: #GdiplusTests;
 	add: #GpColorMatrixTest;
 	add: #GpRectTest;
+	add: #POINTFArrayTest;
 	add: #POINTFTest;
 	add: #RECTFTest;
 	yourself.
@@ -191,6 +192,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Presenters\Image\Dolphin Image Presenter'
 	'..\..\..\Base\Dolphin Message Box'
@@ -230,6 +232,12 @@ ExternalRectangleTest subclass: #GpRectTest
 	classInstanceVariableNames: ''!
 
 ExternalRectangleTest subclass: #RECTFTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ExternalArrayTest subclass: #POINTFArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -703,6 +711,7 @@ exampleGdipCBPerformance
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
 	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
+	image forceValidation.
 	cachedBitmap := GdiplusCachedBitmap bitmap: image graphics: graphics.
 	strm := String new writeStream.
 	strm

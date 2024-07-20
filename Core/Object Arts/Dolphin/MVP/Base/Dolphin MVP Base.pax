@@ -180,7 +180,6 @@ package classNames
 	add: #Pen;
 	add: #PluggableColor;
 	add: #PointEvent;
-	add: #POINTF;
 	add: #PositionEvent;
 	add: #Presenter;
 	add: #PrinterCanvas;
@@ -969,12 +968,6 @@ ExternalStructure subclass: #ExternalSize
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lppos _OffsetOf_rgrc'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-ExternalPoint subclass: #POINTF
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

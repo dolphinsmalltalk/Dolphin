@@ -1,12 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
-	instanceVariableNames: 'insideObjectsScale background cachedBackground sun stepProcess random dolphinIntensity dolphinInside splashDelay hintBubble startTime scale originalBitmapDips'
-	classVariableNames: ''
+	instanceVariableNames: 'insideObjectsScale background cachedBackground sun stepProcess random dolphinIntensity dolphinInside splashDelay hintBubble startTime scale originalBitmapDips renderBlock'
+	classVariableNames: 'DolphinBackColor DolphinInsideBaseColor DolphinInsideIntensityColor DolphinInsideIntensityPeriod DolphinInsideIntensityTime DolphinMaxInitialScale DolphinMinInitialScale FrameRate InsideObjectExpandingPeriod InsideObjectMaxScale InsideObjectMinScale MajorVersionColor TitleTextColor'
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!
+	classInstanceVariableNames: 'splashPlayTheGame'!
 
 SeeingTheObjectsInside guid: (GUID fromString: '{66a4dee3-a72c-4a2f-a14f-bffd6813ceef}')!
+
+SeeingTheObjectsInside addClassConstant: 'DolphinInsideIntensityPeriod' value: 1500.0!
+SeeingTheObjectsInside addClassConstant: 'DolphinInsideIntensityTime' value: 16r1B58!
+SeeingTheObjectsInside addClassConstant: 'DolphinMaxInitialScale' value: 0.4!
+SeeingTheObjectsInside addClassConstant: 'DolphinMinInitialScale' value: 0.3!
+SeeingTheObjectsInside addClassConstant: 'FrameRate' value: 16r19!
+SeeingTheObjectsInside addClassConstant: 'InsideObjectExpandingPeriod' value: 4500.0!
+SeeingTheObjectsInside addClassConstant: 'InsideObjectMaxScale' value: 0.9!
+SeeingTheObjectsInside addClassConstant: 'InsideObjectMinScale' value: 0.07!
 
 SeeingTheObjectsInside comment: '"Seeing the Objects Inside" is the Dolphin tag line. The implication is that the fine grained approach of Smalltalk helps you, as a developer, to find the objects (and  classes) in your problem domain more easily than you can in many other languages. The SeeingTheObjectsInside class is intended to be a fun way to represent this idea as a game that can be played as part of the Dolphin splash screen. Try to find the hidden Dolphin object inside the larger Dolphin outline. Once found, click on it to dismiss the splash.
 
@@ -36,6 +45,9 @@ addInsideObject: anObjectInside minScale: minScale maxScale: maxScale
 	anObjectInside baseScale: anObjectInside scale.
 	self model add: anObjectInside!
 
+bigVersionNumberFont
+	^Font name: 'Arial Narrow' pointSize: 206!
+
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
@@ -44,44 +56,15 @@ defaultExtent
 dismiss
 	self topShell close!
 
-dolphinInsideBaseColor
-	^##(Color 
-		r: 1
-		g: 1
-		b: 1)!
-
-dolphinInsideIntensityColor
-	^##(Color 
-		r: 215
-		g: 109
-		b: 10)!
-
-dolphinInsideIntensityPeriod
-	^1500.0!
-
-dolphinInsideIntensityTime
-	^7000!
-
-dolphinMaxScale
-	^0.4!
-
-dolphinMinScale
-	^0.3!
-
 drawBigVersionNumberOn: aCanvas
 	aCanvas
-		forecolor: (Color
-					red: 215
-					green: 109
-					blue: 10);
-		font: ((Font name: 'Arial Narrow' pointSize: 206)
-					weight: 600;
-					yourself);
-		text: '7' at: (376 @ 338 * scale) truncated!
+		forecolor: MajorVersionColor;
+		font: self bigVersionNumberFont;
+		text: SessionManager current productVersion asInteger displayString at: (376 @ 338 * scale) truncated!
 
 drawInfoTextOn: aCanvas
 	aCanvas
-		forecolor: self textColor;
+		forecolor: TitleTextColor;
 		font: (Font name: 'Segoe UI' pointSize: 8);
 		formatText: self getBlurb in: ((50 @ 632 extent: 320 + 80) scaledBy: scale) truncated!
 
@@ -99,7 +82,7 @@ drawTextOn: aGraphics atDpi: anInteger
 
 drawTitlesOn: aCanvas
 	aCanvas
-		forecolor: self textColor;
+		forecolor: TitleTextColor;
 		font: (self titleFontOfSize: 68);
 		text: 'Smalltalk' at: (44 @ 502 * scale) truncated;
 		font: (self titleFontOfSize: 88);
@@ -110,35 +93,60 @@ elapsedTime
 
 	^Delay millisecondClockValue - startTime!
 
+endZoomIn
+	"Private - Re-render the background with the final expanded form of the objects inside, but using higher quality (but substantially slower) interpolation so that the visuals are better quality.
+	The dolphin inside is a special case, as this changes colour in time. The resulting bitmap is then converted to a cached bitmap for use in a simplified render block that just draws the dolphin inside onto a white background before dumping the cached bitmap over that, the space inside the dolphin that is not occuppied by objects inside being transparent as before."
+
+	| graphics |
+	insideObjectsScale := InsideObjectMaxScale.
+	background free.
+	background := GdiplusBitmap extent: backSurface extent.
+	graphics := background graphics.
+	graphics interpolationMode: InterpolationModeHighQualityBicubic.
+	self model from: 2
+		do: 
+			[:each |
+			each
+				scale: each baseScale * InsideObjectMaxScale;
+				drawOn: graphics;
+				free].
+	graphics
+		resetTransform;
+		drawCachedBitmap: cachedBackground at: Point.Zero;
+		free.
+	cachedBackground free.
+	cachedBackground := GdiplusCachedBitmap bitmap: background graphics: self graphics.
+	dolphinInside scale: dolphinInside baseScale * InsideObjectMaxScale.
+	renderBlock := self zoomedInRenderBlock!
+
 fillWith: aLookupTableOfObjectsInside
-	| graphics min max pts aCollectionOfObjectsInside dolphins |
-	dolphins := {aLookupTableOfObjectsInside removeKey: 'Dolphin1.png'.
-				aLookupTableOfObjectsInside removeKey: 'Dolphin2.png'}.
+	| graphics pts aCollectionOfObjectsInside dolphins |
+	dolphins := {
+				aLookupTableOfObjectsInside removeKey: 'Dolphin1.png'.
+				aLookupTableOfObjectsInside removeKey: 'Dolphin2.png'
+			}.
 	aCollectionOfObjectsInside := aLookupTableOfObjectsInside values.
 	self model removeAll.
 
 	"Render the Dolphin outline so we can fit out objects inside"
 	self render.
-	dolphinInside := (self randomFrom: dolphins).
+	dolphinInside := self randomFrom: dolphins.
 	dolphinInside rotation: (random next * 360) rounded.
 	graphics := self graphics.
-	graphics interpolationMode: InterpolationModeHighQualityBicubic.
+	graphics interpolationMode: InterpolationModeLowQuality.
 	"Find a suitable position and scale for the dolphin inside"
-	min := self dolphinMinScale.
-	max := self dolphinMaxScale.
 	pts := self points.
 	
 	[dolphinInside position: (self randomFrom: pts).
 	(self
 		addInsideObject: dolphinInside
-		minScale: min
-		maxScale: max) notNil
-		and: [dolphinInside scale >= min]]
+		minScale: DolphinMinInitialScale
+		maxScale: DolphinMaxInitialScale) notNil
+		and: [dolphinInside scale >= DolphinMinInitialScale]]
 			whileFalse.
 	dolphinInside drawOn: graphics.
+	graphics resetTransform.
 	"Now fill in the remaining objects inside"
-	min := self insideObjectMinScale.
-	max := self insideObjectMaxScale.
 	pts do: 
 			[:pt |
 			| object |
@@ -148,16 +156,14 @@ fillWith: aLookupTableOfObjectsInside
 				rotation: (random next * 180) truncated - 90.
 			(self
 				addInsideObject: object
-				minScale: min
-				maxScale: max) ifNil: [object free] ifNotNil: [object drawOn: graphics]].
+				minScale: InsideObjectMinScale
+				maxScale: InsideObjectMaxScale) ifNil: [object free] ifNotNil: [object drawOn: graphics]].
 	graphics free.
 
-	"Re-render to fill the Dolphin with objects of the correct scale"
-	dolphinInside color: self dolphinInsideBaseColor.
+	"Re-render to unzoomed"	
+	insideObjectsScale := 1 / InsideObjectExpandingPeriod.
+	dolphinInside color: DolphinInsideBaseColor.
 	self render!
-
-frameRate
-	^25!
 
 getBlurb
 	| copyright stream |
@@ -189,11 +195,12 @@ hasHintBubble
 
 initialize
 	super initialize.
-	self backcolor: Color white.
+	self backcolor: DolphinBackColor.
 	insideObjectsScale := 0.1.
 	dolphinIntensity := 0.
 	random := Random new.
-	self prepareBackground!
+	self prepareBackground.
+	renderBlock := self zoomInRenderBlock!
 
 initializeSurfacesFor: aPointExtent
 	"Private - Initialize the front and back surfaces for a view size of aPointExtent"
@@ -201,16 +208,14 @@ initializeSurfacesFor: aPointExtent
 	super initializeSurfacesFor: aPointExtent.
 	cachedBackground := GdiplusCachedBitmap bitmap: background graphics: self graphics!
 
-insideObjectMaxScale
-	^1!
+invalidate
+	"Flag the current rendition as being invalid. A repaint will cause a
+	render to occur"
 
-insideObjectMinScale
-	^0.07!
+	requiresRender := true.
+	self invalidateRect: nil erase: false!
 
-insideObjectScaleInPeriod
-	^4500.0!
-
-isActionPoint: aPoint 
+isActionPoint: aPoint
 	^self class splashPlayTheGame
 		ifTrue: [self isPointInDolphin: aPoint]
 		ifFalse: [self rectangle containsPoint: aPoint]!
@@ -224,28 +229,36 @@ loadTextureMap: mapName
 	| texture map textureMap |
 	texture := GdiplusBitmap fromFile: 'Resources\' , (File default: mapName extension: 'png')
 				usingLocator: FileLocator installRelative.
+	"Drawing the images individually from the texture goes a lot faster if we force Gdiplus to load the whole thing now."
+	texture forceValidation.
 	map := FileStream read: (FileLocator installRelative
 						localFileSpecFor: 'Resources\' , (File default: mapName extension: 'txt'))
 				text: true.
 	textureMap := LookupTable new.
 	[map atEnd] whileFalse: 
-			[| elements image |
+			[| elements image sourceExtent targetExtent |
 			elements := $, split: map nextLine.
-			image := GdiplusBitmap fromImage: texture
-						crop: (elements second trimBlanks asNumber @ elements third trimBlanks asNumber
-								extent: elements fourth trimBlanks asNumber @ elements fifth trimBlanks asNumber).
-			scale = 1
-				ifFalse: 
-					[| scaled |
-					scaled := GdiplusBitmap fromImage: image scaledBy: scale.
-					image free.
-					image := scaled].
+			sourceExtent := elements fourth trimBlanks asNumber @ elements fifth trimBlanks asNumber.
+			targetExtent := (sourceExtent * scale) rounded.
+			image := GdiplusBitmap extent: targetExtent.
+			image graphics
+				interpolationMode: InterpolationModeHighQualityBicubic;
+				drawImage: texture
+					at: Point.Zero
+					extent: targetExtent
+					from: elements second trimBlanks asNumber @ elements third trimBlanks asNumber
+					extent: sourceExtent;
+				free.
 			textureMap at: elements first put: (ObjectInside fromImage: image)].
 	texture free.
 	^textureMap!
 
 onDestroyed
 	self stopStepProcess.
+	sun free.
+	sun := nil.
+	dolphinInside free.
+	dolphinInside := nil.
 	cachedBackground free.
 	cachedBackground := nil.
 	background free.
@@ -278,8 +291,9 @@ onViewCreated
 
 	"The rotating sun should be inset half an inch from the top right corner"
 	sun position: (background extent x @ 0 - ((sun extent + self dpi) / 2)) truncated abs.
-	self startStepProcess.
 	self fillWith: textureMap.
+	"Defer starting the step process until the image has quiesced. Otherwise when starting an image with a lot of open windows, the splash will appear and render a zoomed out state, then jump ahead when all the old windows have been restored. We want it to zoom in smoothly, so need background cycles available to do that."
+	[self startStepProcess] postToInputQueue.
 	textureMap do: [:each | each free]!
 
 pointResolution
@@ -288,17 +302,16 @@ pointResolution
 points
 	"Compute a set of point locations that are inside the dolphin"
 
-	| resolution points height |
+	| argb hbmp gdip resolution height points |
 	points := Array writeStream: 100.
 	"Add some know good points"
-	points
-		nextPut: 306 @ 156;
-		nextPut: 247 @ 266;
-		nextPut: 518 @ 394;
-		nextPut: 335 @ 52;
-		nextPut: 62 @ 307.
+	##({ 306 @ 156. 247 @ 266. 518 @ 394. 335 @ 52. 62 @ 307 })
+		do: [:each | points nextPut: (each * scale) truncated].
 	resolution := self pointResolution.
 	height := background height.
+	argb := ByteArray newFixed: 4.
+	hbmp := background handle.
+	gdip := GdiplusLibrary default.
 	6 to: background width - 6
 		by: resolution x
 		do: 
@@ -307,32 +320,53 @@ points
 				by: resolution y
 				do: 
 					[:y |
-					| pt |
-					pt := ((random next * 2 + x) @ (random next * 2 + y)) rounded.
-					((background pixelAt: pt) alpha == 0 and: [random next > 0.2]) ifTrue: [points nextPut: pt]]].
+					| ptX ptY |
+					ptX := (random next * 2 + x) rounded.
+					ptY := (random next * 2 + y) rounded.
+					gdip
+						gdipBitmapGetPixel: hbmp
+						x: ptX
+						y: ptY
+						color: argb.
+					((argb sdwordAtOffset: 0) == 0 and: [random next > 0.2]) ifTrue: [points nextPut: ptX @ ptY]]].
 	^points contents!
 
 prepareBackground
-	| bitmapDpi graphics dpi dolphinOutline |
+	| dpi dolphinOutline extent graphics |
 	background := GdiplusBitmap fromFile: 'Resources\Dolphin7Splash.png'
 				usingLocator: FileLocator installRelative.
 	"The bitmap has been saved at 72 dpi, but treat it as 96 to get 3/4 scale as otherwise the splash is too large"
-	bitmapDpi := 96.0.	"background resolution x"
-	originalBitmapDips := background extent * USER_DEFAULT_SCREEN_DPI // bitmapDpi.
+	originalBitmapDips := background extent.
 	"Splash screen should always be shown on the active monitor"
 	dpi := DisplayMonitor active dpi.
-	scale := dpi / bitmapDpi.
-	background := self rescaleBitmap: background.
+	scale := dpi / 96.0.
+	scale = 1
+		ifFalse: 
+			[| bitmap |
+			extent := originalBitmapDips * scale.
+			bitmap := GdiplusBitmap extent: extent.
+			bitmap graphics
+				interpolationMode: InterpolationModeHighQuality;
+				drawImage: background
+					at: Point.Zero
+					extent: extent;
+				free.
+			background free.
+			background := bitmap].
+	dolphinOutline := GdiplusBitmap fromFile: 'Resources\DolphinOutline.png'
+				usingLocator: FileLocator installRelative.
+	extent := dolphinOutline extent.
 	graphics := background graphics.
 	self drawTextOn: graphics atDpi: dpi.
-	dolphinOutline := self rescaleBitmap: (GdiplusBitmap fromFile: 'Resources\DolphinOutline.png'
-						usingLocator: FileLocator installRelative).
 	graphics
+		interpolationMode: InterpolationModeHighQuality;
 		drawImage: dolphinOutline
-		at: Point zero
-		extent: dolphinOutline extent.
-	dolphinOutline free.
-	graphics free!
+			at: Point.Zero
+			extent: (extent * scale) rounded
+			from: Point.Zero
+			extent: extent;
+		free.
+	dolphinOutline free!
 
 randomFrom: aSequencedReadableCollection
 	^aSequencedReadableCollection at: (random next * aSequencedReadableCollection size) truncated + 1!
@@ -348,36 +382,13 @@ registerTitleFont
 render
 	"Private - Render the background image"
 
-	
-	[| graphics |
-	graphics := self graphics.
-	graphics
-		erase;
-		interpolationMode: InterpolationModeHighQualityBicubic.
-	self model do: 
-			[:each |
-			each
-				scale: each baseScale * insideObjectsScale;
-				drawOn: graphics].
-	graphics drawCachedBitmap: cachedBackground at: Point.Zero.
-	sun drawOn: graphics.
-	super render.
-	graphics free]
-			on: Error
-			do: 
-				[:ex |
-				self stopStepProcess.
-				ex pass]!
-
-rescaleBitmap: aGdiplusBitmap
-	| scaled |
-	scale = 1 ifTrue: [^aGdiplusBitmap].
-	scaled := GdiplusBitmap fromImage: aGdiplusBitmap scaledBy: scale.
-	aGdiplusBitmap free.
-	^scaled!
+	renderBlock on: Error
+		do: 
+			[:ex |
+			self stopStepProcess.
+			ex pass]!
 
 showHintBubble
-	self hasHintBubble ifTrue: [^self].
 	hintBubble := MessageBubble new
 				caption: 'Hint';
 				maxWidth: 140;
@@ -393,38 +404,39 @@ startStepProcess
 	stepProcess := 
 			[
 			[[self step] on: Error do: [:ex | ex toTrace].
-			Processor sleep: 1000 // self frameRate] repeat]
+			Processor sleep: 1000 // FrameRate.
+			self isOpen]
+					whileTrue]
 					forkAt: Processor userBackgroundPriority!
 
 step
 	sun rotation: sun rotation - (1.3 * insideObjectsScale).
 	dolphinIntensity > 0
-		ifTrue: [dolphinInside color: (self dolphinInsideIntensityColor intensity: dolphinIntensity)].
+		ifTrue: [dolphinInside color: (DolphinInsideIntensityColor intensity: dolphinIntensity)].
 	self stepInsideObjectsScale.
 	self stepDolphinInsideIntensity.
 	self invalidate!
 
 stepDolphinInsideIntensity
-	"Increase the intensity of the dolphin inside so it acts as a visual clue for the blind"
+	"Increase the intensity of the dolphin inside so it acts as a visually obvious clue."
 
-	dolphinIntensity := ((self elapsedTime 
-				- (self insideObjectScaleInPeriod + self dolphinInsideIntensityTime)) 
-					/ self dolphinInsideIntensityPeriod min: 1) 
+	dolphinIntensity := ((self elapsedTime - (InsideObjectExpandingPeriod + DolphinInsideIntensityTime))
+				/ DolphinInsideIntensityPeriod min: 1)
 				max: 0!
 
 stepInsideObjectsScale
 	"Increase the scale of the objects inside so they zoom in when the animation starts"
 
-	insideObjectsScale := self elapsedTime / self insideObjectScaleInPeriod min: 0.9!
+	insideObjectsScale < InsideObjectMaxScale
+		ifTrue: 
+			[insideObjectsScale := (self elapsedTime max: 1) / InsideObjectExpandingPeriod.
+			insideObjectsScale >= InsideObjectMaxScale ifTrue: [self endZoomIn]]!
 
 stopStepProcess
 	stepProcess 
 		ifNotNil: 
 			[stepProcess terminate.
 			stepProcess := nil]!
-
-textColor
-	^Color white!
 
 titleFontOfSize: anInteger
 	^(Font name: 'Mohave Medium' pointSize: anInteger)
@@ -435,32 +447,64 @@ unregisterTitleFont
 	"Private - "
 
 	GDILibrary default
-		removeFontResource: (FileLocator installRelative localFileSpecFor: 'Resources\Mohave-Regular.ttf')! !
+		removeFontResource: (FileLocator installRelative localFileSpecFor: 'Resources\Mohave-Regular.ttf')!
+
+zoomedInRenderBlock
+	"Private - Answer the rendering logic for painting the splash onto the backsurface when the inside objects have finished expanding. At this point the cached bitmap has been updated to include the final high quality rendering of the inside objects excluding the dolphin and the rotating sun. Therefore all we need to do is draw the dolphin (which will change colour over time to emphasise its position), overlap the background and other objects, and finally draw the sun. This should take only a few milliseconds."
+
+	^
+	[| graphics |
+	requiresRender := false.
+	graphics := self graphics.
+	graphics
+		erase;
+		interpolationMode: InterpolationModeHighQualityBicubic.
+	dolphinInside drawOn: graphics.
+	graphics
+		resetTransform;
+		interpolationMode: InterpolationModeDefault.
+	graphics drawCachedBitmap: cachedBackground at: Point.Zero.
+	sun drawOn: graphics.
+	graphics free]!
+
+zoomInRenderBlock
+	"Private - Answer the rendering logic for painting the splash onto the backsurface while the inside objects are expanding. To make this fast (<10mS), we use a low-quality interpolation mode for the scaling. Since the edges are moving, this is less obvious. If we scale each of the inside objects with high quality interpolation then the rendering time will be more like 50mS, and we would not be able to sustain a frame rate > 20fps."
+
+	^
+	[| graphics |
+	requiresRender := false.
+	graphics := self graphics.
+	graphics
+		erase;
+		interpolationMode: InterpolationModeLowQuality.
+	self model do: 
+			[:each |
+			each
+				scale: each baseScale * insideObjectsScale;
+				drawOn: graphics].
+	graphics
+		resetTransform;
+		drawCachedBitmap: cachedBackground at: Point.Zero.
+	sun drawOn: graphics.
+	graphics free]! !
 
 !SeeingTheObjectsInside categoriesForMethods!
 addInsideObject:minScale:maxScale:!private! !
+bigVersionNumberFont!constants!private! !
 defaultExtent!constants!geometry!private!realizing/unrealizing! !
 dismiss!event handling!private! !
-dolphinInsideBaseColor!constants!public! !
-dolphinInsideIntensityColor!constants!public! !
-dolphinInsideIntensityPeriod!constants!operations!public! !
-dolphinInsideIntensityTime!constants!operations!public! !
-dolphinMaxScale!public! !
-dolphinMinScale!public! !
 drawBigVersionNumberOn:!operations!private! !
 drawInfoTextOn:!operations!private! !
 drawTextOn:atDpi:!operations!private! !
 drawTitlesOn:!operations!private! !
 elapsedTime!operations!public! !
+endZoomIn!operations!private! !
 fillWith:!event handling!private! !
-frameRate!constants!public! !
 getBlurb!helpers!private! !
 hasHintBubble!event handling!private!testing! !
 initialize!initializing!private! !
 initializeSurfacesFor:!initializing!private! !
-insideObjectMaxScale!constants!public! !
-insideObjectMinScale!constants!public! !
-insideObjectScaleInPeriod!constants!operations!public! !
+invalidate!operations!public! !
 isActionPoint:!event handling!private! !
 isPointInDolphin:!event handling!private!testing! !
 loadTextureMap:!accessing!private! !
@@ -474,16 +518,16 @@ prepareBackground!initializing!private! !
 randomFrom:!private! !
 registerTitleFont!operations!private! !
 render!operations!private! !
-rescaleBitmap:!initializing!private! !
 showHintBubble!private! !
 startStepProcess!initializing!private! !
 step!operations!public! !
 stepDolphinInsideIntensity!operations!private! !
 stepInsideObjectsScale!operations!private! !
 stopStepProcess!initializing!private! !
-textColor!constants!private! !
 titleFontOfSize:!operations!private! !
 unregisterTitleFont!operations!private! !
+zoomedInRenderBlock!operations!private! !
+zoomInRenderBlock!operations!private! !
 !
 
 !SeeingTheObjectsInside class methodsFor!
@@ -499,6 +543,21 @@ canDisplay
 	^(metrics defaultColorDepth > 8 and: [View desktop extent >= (800 @ 600)])
 		and: [metrics supportsAlphaBlending]!
 
+initialize
+	self addClassConstant: 'DolphinBackColor' value: Color white.
+	self addClassConstant: 'DolphinInsideBaseColor' value: (Color brightness: 16r1 / 16rFF).
+	self addClassConstant: 'DolphinInsideIntensityColor'
+		value: (Color
+				r: 16rC0
+				g: 16r59
+				b: 16rCF).
+	self addClassConstant: 'MajorVersionColor'
+		value: (Color
+				r: 16rD7
+				g: 16r6D
+				b: 16r0A).
+	self addClassConstant: 'TitleTextColor' value: Color white!
+
 splashPlayTheGame
 	^splashPlayTheGame ifNil: [splashPlayTheGame := false]!
 
@@ -507,7 +566,8 @@ splashPlayTheGame: aBoolean
 
 !SeeingTheObjectsInside class categoriesForMethods!
 canDisplay!accessing!public! !
-splashPlayTheGame!public! !
-splashPlayTheGame:!public! !
+initialize!class initialization!public! !
+splashPlayTheGame!accessing!public! !
+splashPlayTheGame:!accessing!public! !
 !
 

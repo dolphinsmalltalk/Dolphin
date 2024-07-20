@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ObjectInside
-	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix extent center baseScale attributes'
+	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix centerOffset baseScale attributes'
 	classVariableNames: 'EdgePointResolution'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
@@ -38,27 +38,21 @@ color: aColorOrNil
 	self attributes remapColor: baseColor to: color!
 
 drawOn: aGdiplusGraphics
-	aGdiplusGraphics transform: self matrix.
-	attributes
-		ifNil: [aGdiplusGraphics drawImage: image]
-		ifNotNil: [aGdiplusGraphics drawImage: image attributes: attributes].
-	aGdiplusGraphics resetTransform!
+	aGdiplusGraphics
+		transform: self matrix;
+		drawImage: image attributes: attributes!
 
 edgePoints
-	^edgePoints
-		ifNil: 
-			[edgePoints := self findEdgePoints.
-			"B add: edgePoints size."
-			edgePoints]!
+	^edgePoints ifNil: [edgePoints := POINTLArray withAll: self findEdgePoints]!
 
 extent
-	^extent!
+	^image extent!
 
 findEdgePoints
 	| width argb gdipluslib imageHandle height pts |
 	pts := Array writeStream: 100.
-	height := extent y.
-	width := extent x.
+	height := image height.
+	width := image width.
 	argb := ByteArray newFixed: 4.
 	gdipluslib := GdiplusLibrary default.
 	imageHandle := image asParameter.
@@ -106,7 +100,7 @@ matrix
 						translateTransform: position;
 						rotateTransform: rotation;
 						scaleTransform: scale asPoint;
-						translateTransform: center negated;
+						translateTransform: centerOffset;
 						yourself]!
 
 position
@@ -142,15 +136,14 @@ scale: aFloat
 
 setImage: aGdiplusImage
 	image := aGdiplusImage.
-	extent := image extent.
-	center := extent / 2.0!
+	centerOffset := image extent / -2.0!
 
 testCollisionIn: aGdiplusBitmap
 	| pixel gdiplusLib bitmapHandle |
 	pixel := ByteArray new: 4.
 	gdiplusLib := GdiplusLibrary default.
 	bitmapHandle := aGdiplusBitmap asParameter.
-	^(self matrix transformPoints: self edgePoints) anySatisfy: 
+	^(self matrix transformPoints: self edgePoints copy) anySatisfy: 
 			[:each |
 			(gdiplusLib
 				gdipBitmapGetPixel: bitmapHandle

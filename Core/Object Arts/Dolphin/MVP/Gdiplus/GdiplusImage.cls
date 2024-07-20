@@ -240,6 +240,9 @@ flipY
 
 	self basicRotate: RotateNoneFlipY!
 
+forceValidation
+	GdiplusLibrary default gdipImageForceValidation: self handle!
+
 frameCount
 	"Answer the number of frames in the receiver's first frame dimension."
 
@@ -754,6 +757,7 @@ filename!accessing!public! !
 flags!accessing!public! !
 flipX!operations!public! !
 flipY!operations!public! !
+forceValidation!public!realizing/unrealizing! !
 frameCount!accessing-frames!public! !
 frameCount:!accessing-frames!public! !
 frameDimension!accessing-frames!private! !

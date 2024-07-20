@@ -217,6 +217,8 @@ package classNames
 	add: #GpWmfPlaceableFileHeader;
 	add: #GpWMFRect16;
 	add: #METAHEADER;
+	add: #POINTF;
+	add: #POINTFArray;
 	add: #RECTF;
 	yourself.
 
@@ -373,6 +375,18 @@ ExternalStructure subclass: #GpWMFRect16
 ExternalStructure subclass: #METAHEADER
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_mtHeaderSize _OffsetOf_mtMaxRecord _OffsetOf_mtNoObjects _OffsetOf_mtNoParameters _OffsetOf_mtSize _OffsetOf_mtType _OffsetOf_mtVersion'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+POINTArray subclass: #POINTFArray
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ExternalPoint subclass: #POINTF
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
