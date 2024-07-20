@@ -176,17 +176,16 @@ onPaintRequired: aPaintEvent
 	back := self actualBackcolor.
 	self hasFlatAppearance
 		ifTrue: 
-			[| brush |
-			brush := back brush.
-			self interactor isHot
+			[self interactor isHot
 				ifTrue: 
-					["When hot draw with a subtle edge so the splitter can be seen. Normally it blends into the background."
-					canvas
-						brush: brush;
-						pen: self forecolor pen;
-						rectangle: rect]
-				ifFalse: [canvas fillRectangle: rect brush: brush].
-			brush free]
+					[| oldPen oldBrush |
+					"When hot, draw with a subtle edge so the splitter can be seen. Normally it blends into the background."
+					oldBrush := canvas brush: back brush.
+					oldPen := canvas pen: self forecolor pen.
+					canvas rectangle: rect.
+					(canvas pen: oldPen) free.
+					(canvas brush: oldBrush) free]
+				ifFalse: [canvas fillRectangle: rect color: back]]
 		ifFalse: 
 			[canvas
 				fillRectangle: rect

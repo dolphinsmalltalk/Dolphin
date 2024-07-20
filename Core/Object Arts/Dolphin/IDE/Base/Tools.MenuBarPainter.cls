@@ -62,15 +62,13 @@ menuColor
 offsetForSubmenu: anInteger canvas: aCanvas 
 	^(self itemRect: anInteger using: aCanvas) bottomLeft!
 
-paintEdgeOn: aCanvas in: aRectangle 
+paintEdgeOn: aCanvas in: aRectangle
 	| cx cy oldPen |
 	cx := aRectangle width.
 	cy := aRectangle height.
-	oldPen := aCanvas pen.
-	aCanvas
-		pen: Color highlight3d pen;
-		lineFrom: 0 @ cy - 1 to: cx @ cy - 1;
-		pen: oldPen!
+	oldPen := aCanvas pen: Color highlight3d pen.
+	aCanvas lineFrom: 0 @ cy - 1 to: cx @ cy - 1.
+	(aCanvas pen: oldPen) free!
 
 paintItem: aMenuItem on: aCanvas in: aRectangle
 	"Private - Paint the menu item on the canvas in the specified <Rectangle>."
@@ -88,18 +86,15 @@ paintItem: aMenuItem on: aCanvas in: aRectangle
 		on: aCanvas
 		in: textRect!
 
-paintSeparatorOn: aCanvas in: aRectangle 
+paintSeparatorOn: aCanvas in: aRectangle
 	| position cy oldPen |
 	position := aRectangle origin + (self horizontalSpacer @ 0).
 	cy := aRectangle height.
-	oldPen := aCanvas pen.
-	
-	[aCanvas
-		pen: Color shadow3d pen;
-		lineFrom: position to: position + (0 @ cy);
-		pen: Color highlight3d pen;
-		lineFrom: position + (1 @ 0) to: position + (1 @ cy)] 
-			ensure: [aCanvas pen: oldPen]! !
+	oldPen := aCanvas pen: Color shadow3d pen.
+	aCanvas lineFrom: position to: position + (0 @ cy).
+	(aCanvas pen: Color highlight3d pen) free.
+	aCanvas lineFrom: position + (1 @ 0) to: position + (1 @ cy).
+	(aCanvas pen: oldPen) free! !
 
 !Tools.MenuBarPainter categoriesForMethods!
 borderInset!constants!private! !

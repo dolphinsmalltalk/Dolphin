@@ -74,7 +74,7 @@ menuColor
 offsetForSubmenu: itemIndex canvas: aCanvas 
 	^(self itemRect: itemIndex using: aCanvas) topRight - self borderInset origin!
 
-paintEdgeOn: aCanvas in: aRectangle 
+paintEdgeOn: aCanvas in: aRectangle
 	"Private - Paint the receiver's 3-d shadow border."
 
 	| cx cy oldPen |
@@ -82,13 +82,12 @@ paintEdgeOn: aCanvas in: aRectangle
 	cx := aRectangle width.
 	cy := aRectangle height.
 	oldPen := aCanvas pen: Color shadow3d pen.
-	
-	[aCanvas
+	aCanvas
 		lineFrom: (cx - 1) @ 0 to: 0 @ 0;
 		lineTo: 0 @ (cy - 1);
 		lineTo: cx @ cy - 1;
-		lineTo: (cx - 1) @ 0] 
-			ensure: [aCanvas pen: oldPen]!
+		lineTo: (cx - 1) @ 0.
+	(aCanvas pen: oldPen) free!
 
 paintItem: aMenuItem on: aCanvas in: aRectangle
 	| aPoint offset border imageWidth |

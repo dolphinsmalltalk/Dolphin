@@ -551,11 +551,11 @@ onEraseRequired: aColorEvent
 			canvas fillRectangle: rect color: back.
 			self isVertical
 				ifFalse: 
-					[| bottom |
+					[| bottom oldPen |
 					bottom := rect bottom - 1.
-					canvas
-						pen: (back intensity: 0.95) pen;
-						lineFrom: rect left @ bottom to: rect right @ bottom]]
+					oldPen := canvas pen: (back intensity: 0.95) pen.
+					canvas lineFrom: rect left @ bottom to: rect right @ bottom.
+					(canvas pen: oldPen) free]]
 		ifFalse: 
 			[canvas
 				fillRectangle: rect
@@ -568,8 +568,11 @@ onEraseRequired: aColorEvent
 		ifFalse: 
 			[canvas
 				excludeClipRectangle: ((self isVertical
-						ifTrue: [rect left @ (rect top + (self calculateExtent: (LayoutContext  forContainer: self parentView)) y)]
-						ifFalse: [(rect left + (self calculateExtent: (LayoutContext  forContainer: self parentView)) x) @ rect top]) corner: rect corner)].
+						ifTrue: 
+							[rect left @ (rect top + (self calculateExtent: (LayoutContext forContainer: self parentView)) y)]
+						ifFalse: 
+							[(rect left + (self calculateExtent: (LayoutContext forContainer: self parentView)) x) @ rect top])
+							corner: rect corner)].
 	^true!
 
 onPositionChanged: aPositionEvent

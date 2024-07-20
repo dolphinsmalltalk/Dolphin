@@ -319,11 +319,9 @@ paintSeparatorOn: aCanvas in: aRectangle
 paintSmudge: aRectangle on: aCanvas
 	| oldPen smudge |
 	smudge := aRectangle leftCenter.
-	oldPen := aCanvas pen.
-	aCanvas
-		pen: (Pen width: aRectangle height color: Color red);
-		lineFrom: smudge to: smudge + (aRectangle width @ 0);
-		pen: oldPen!
+	oldPen := aCanvas pen: (Pen width: aRectangle height color: Color red).
+	aCanvas lineFrom: smudge to: smudge + (aRectangle width @ 0).
+	(aCanvas pen: oldPen) free!
 
 paintSmudgeFor: aString on: aCanvas in: aRectangle
 	| parts rect mnemonic smudgeOrigin origin text |
