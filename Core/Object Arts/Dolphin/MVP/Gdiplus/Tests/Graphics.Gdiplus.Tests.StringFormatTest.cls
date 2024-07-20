@@ -125,6 +125,8 @@ testMeasurableCharacterRanges
 				width: 160
 				height: 160
 				format: PixelFormat32bppARGB.
+	"Avoid DPI scaling differences by working with a 96-dpi surface"
+	bitmap resolution: 96 @ 96.
 	graphics := bitmap graphics.
 	model := StringFormat new.
 	"Note that the char ranges are specified as UTF-16 code point positions"

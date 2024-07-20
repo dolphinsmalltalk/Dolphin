@@ -115,7 +115,7 @@ ddNone
 	^DDNone ifNil: [DDNone := self fromId: 1 in: (External.ResourceLibrary open: 'ole32')]!
 
 default
-	^self hand
+	^self arrow
 !
 
 defaultExtent

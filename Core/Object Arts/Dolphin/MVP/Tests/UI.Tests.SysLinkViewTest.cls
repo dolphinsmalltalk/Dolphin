@@ -24,8 +24,10 @@ testItemFromPoint
 	presenter useVisualStyle: false.
 	self waitForInputIdle.
 	self assert: (presenter itemFromPoint: 0 @ 0) equals: 1.
-	ext := presenter canvas textExtent: 'Foo '.
-	self assert: (presenter itemFromPoint: ext) equals: 2.
+	ext := presenter canvas
+				font: presenter actualFont;
+				textExtent: 'Foo '.
+	self assert: (presenter itemFromPoint: ext + (0@-1)) equals: 2.
 	self assertIsNil: (presenter itemFromPoint: 1000 @ 1000)!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier

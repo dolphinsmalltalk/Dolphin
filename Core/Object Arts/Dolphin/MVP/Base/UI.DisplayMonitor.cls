@@ -258,7 +258,7 @@ active
 
 	^View active
 		ifNil: [self containingPoint: Cursor position]
-		ifNotNil: [:hWnd | self displayingView: hWnd]!
+		ifNotNil: [:hWnd | self nearestView: hWnd]!
 
 allIntersecting: aRectangle
 	"Answer a `<collection>` containing instances of the receiver describing all the display monitors with display areas that intersect the specified virtual screen area (i.e. desktop area)."

@@ -221,7 +221,7 @@ verifySharedBuffer
 	buf free!
 
 verifyWebViewControllerProperties
-	| controller baseController |
+	| controller baseController rasterizationScale |
 	controller := presenter view webviewController.
 	self assert: controller isKindOf: ICoreWebView2Controller4.
 	baseController := controller queryInterface: ICoreWebView2Controller.
@@ -251,10 +251,12 @@ verifyWebViewControllerProperties
 	self assert: baseController boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
 	self assert: controller boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE.
 	self assert: baseController rasterizationScale equals: 1.0.
-	self assert: controller rasterizationScale equals: 1.0.
-	controller rasterizationScale: 1.25.
+	rasterizationScale := controller rasterizationScale.
+	self assert: rasterizationScale equals: presenter view dpi / USER_DEFAULT_SCREEN_DPI.
+	controller rasterizationScale: rasterizationScale * 2.
 	self assert: baseController rasterizationScale equals: 1.0.
-	self assert: controller rasterizationScale equals: 1.25.
+	self assert: controller rasterizationScale equals: rasterizationScale * 2.
+	controller rasterizationScale: rasterizationScale.
 	self assert: baseController shouldDetectMonitorScaleChanges.
 	self assert: controller shouldDetectMonitorScaleChanges.
 	controller shouldDetectMonitorScaleChanges: false.

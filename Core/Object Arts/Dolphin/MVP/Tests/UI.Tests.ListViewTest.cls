@@ -329,12 +329,13 @@ testColumnWidth
 	self assert: presenter view isLayoutValid.
 	after := primary width.
 	self assert: after < before.
-	self assert: column width equals: width.
+	self assert: column width equals: (width * presenter view dpi // USER_DEFAULT_SCREEN_DPI).
 	column width: 100.
 	self deny: presenter view isLayoutValid.
 	presenter view validateLayout.
 	self assert: presenter view isLayoutValid.
 	self assert: primary width < after.
+	"Note the inconsistency that if the width is set after the view is open, then it is interpreted literally. but the column width set into the column before it is added to a view will be scaled to the view resolution. There really needs to be a way to set the physical width or design width, i.e. separate pairs of accessors, since no one measure is right all the time."
 	self assert: column width equals: 100!
 
 testNewSelectionsClickOutsideListWithModifiers
@@ -443,7 +444,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view lvFlags equals: 0.
 	self assertIsNil: view customDrawBlock.
 	self assertIsNil: view backImage.
-	self assert: view largeIconExtent equals: Icon largeExtent.
+	self assert: view largeIconExtent equals: SystemMetrics default largeIconExtent.
 	self assert: view isDoubleBuffered! !
 
 !UI.Tests.ListViewTest categoriesForMethods!

@@ -18,13 +18,17 @@ classToTest
 	^Toolbar!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
-	| view |
+	| view hasBitmapButtons |
 	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: (view items allSatisfy: [:each | each isKindOf: ToolbarItem]).
+	hasBitmapButtons := view items anySatisfy: [:each | each isKindOf: ToolbarBitmapButton].
 	self assert: view interactor identicalTo: view.
-	self assert: view actualBitmapSize equals: view defaultBitmapSize.
-	self assert: view buttonSize y equals: view defaultButtonSize y.
+	self assert: view actualImageSize equals: #smallIcons.
+	self assert: view scaledBitmapSize
+		equals: (hasBitmapButtons
+				ifTrue: [SystemMetrics default smallIconExtent]
+				ifFalse: [view metrics smallIconExtent]).
 	self assert: view indent equals: 0.
 	"12->13 conversion"
 	self assert: view backcolor identicalTo: Color default.

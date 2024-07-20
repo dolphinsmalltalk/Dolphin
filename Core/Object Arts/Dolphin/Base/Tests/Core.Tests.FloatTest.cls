@@ -426,12 +426,12 @@ testEqualsColon
 	self assert: (Float fmin * 2 equals: Float fmin).
 	self assert: (Float fmin * 2 equals: 1e-10).
 	self assert: (Float fmin * 2 equals: 1e-8) not.
-	self assert: (1.123456789e308 equals: 1.1234567891e308).
-	self assert: (1.1234567891e308 equals: 1.123456789e308).
-	self assert: (1.123456788e308 equals: 1.123456789e308).
-	self assert: (1.12345678e308 equals: 1.12345679e308) not.
-	self assert: (1.123456789e20 equals: 1.1234567899e20).
-	self assert: (1.123456799e20 equals: 1.123456789e20) not.
+	self deny: (1.123456789e308 equals: 1.1234567891e308).
+	self deny: (1.1234567891e308 equals: 1.123456789e308).
+	self deny: (1.123456788e308 equals: 1.123456789e308).
+	self deny: (1.12345678e308 equals: 1.12345679e308).
+	self deny: (1.123456789e20 equals: 1.1234567899e20).
+	self deny: (1.123456799e20 equals: 1.123456789e20).
 	self deny: (Float nan equals: 1.0).
 	self deny: (Float nan equals: Float nan)!
 

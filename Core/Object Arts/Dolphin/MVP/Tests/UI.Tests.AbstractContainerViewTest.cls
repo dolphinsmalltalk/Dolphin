@@ -94,7 +94,9 @@ checkRectangle: rect inBitmap: bitmap color: color
 initializePresenter
 	presenter := self classToTest show.
 	presenter topView layoutManager: nil.
-	presenter rectangle: self initialParentRect.
+	initialParentRect := ((10 @ 20 extent: self initialParentExtent) scaledBy: self view scaleFactor)
+				truncated.
+	presenter rectangle: initialParentRect.
 	presenter backcolor: self backgroundColor!
 
 initialParentExtent
@@ -105,11 +107,6 @@ initialParentExtent
 
 initialParentRect
 	^initialParentRect!
-
-setUp
-	super setUp.
-	initialParentRect := ((10 @ 20 extent: self initialParentExtent) scaledBy: self view scaleFactor)
-				truncated!
 
 testBorderedNcRectangle
 	"Check that applying a border correctly changes the NC and Client rectagle calcs"
@@ -144,6 +141,7 @@ testNcCalcSize
 	self assert: ret equals: 0.
 
 	"Border on simple test"
+	containerView hasBorder: true.
 	rect := RECTL marshal: containerView rectangle.
 	self assert: rect asRectangle equals: initialParentRect.
 	ret := containerView
@@ -203,7 +201,6 @@ checkRectangle:inBitmap:color:!helpers!private! !
 initializePresenter!public!Running! !
 initialParentExtent!constants!private! !
 initialParentRect!accessing!private! !
-setUp!public!Running! !
 testBorderedNcRectangle!public!unit tests! !
 testNcCalcSize!public!unit tests! !
 testNonBorderedNcRectangle!public!unit tests! !

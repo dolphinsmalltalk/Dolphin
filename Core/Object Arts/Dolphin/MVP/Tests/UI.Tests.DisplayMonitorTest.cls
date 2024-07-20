@@ -20,7 +20,9 @@ testActive
 	primary := DisplayMonitor primary.
 	shell := ShellView show.
 	
-	[self assert: View foreground equals: shell.
+	[self skipUnless: 
+			["If for some reason the test shell does not open on top, e.g monitors are turned off, the test is not valid"
+			View foreground == shell].
 	shell position: primary workArea topLeft + 50.
 	self assert: DisplayMonitor active equals: primary.
 	((DisplayMonitor desktopMonitors reject: [:each | each = primary]) lookup: 1)

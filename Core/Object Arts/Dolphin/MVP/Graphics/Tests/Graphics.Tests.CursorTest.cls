@@ -39,15 +39,15 @@ testFromOwnedHandle
 
 testFromResource
 	| cursor1 cursor2 |
-	cursor1 := Cursor fromId: 'hsplit' in: VM.
+	cursor1 := Cursor fromId: 3 in: (ResourceLibrary open: 'ole32').
 	self assert: cursor1 initializer isLoadShared.
-	cursor2 := Cursor splitHorizontal.
+	cursor2 := Cursor ddCopy.
 	self assert: cursor1 equals: cursor2.
 	self assert: cursor2 equals: cursor1.
 	self assert: cursor1 hash equals: cursor2 hash.
 	self assert: cursor1 handle equals: cursor2 handle.
 	self assert: cursor1 imageIndex equals: cursor2 imageIndex.
-	self assert: cursor1 extent equals: Cursor largeExtent!
+	self assert: cursor1 extent equals: SystemMetrics default largeIconExtent!
 
 testFromSystemId
 	| cursor1 cursor2 |
@@ -72,8 +72,7 @@ testStbConvertFromVersion1_resource
 	self assert: cursor initializer isKindOf: ImageFromStringResourceInitializer.
 	self assert: cursor initializer identifier equals: 'VSPLIT'.
 	self assert: cursor initializer module equals: VM.
-	self assert: cursor equals: Cursor splitVertical.
-	self assert: cursor extent equals: Icon largeExtent.
+	self assert: cursor extent equals: SystemMetrics default largeIconExtent.
 	cursor free!
 
 testStbConvertFromVersion1_system
@@ -98,8 +97,7 @@ testStbConvertFromVersion3_resource
 	self assert: cursor initializer isKindOf: ImageFromStringResourceInitializer.
 	self assert: cursor initializer identifier equals: 'VSPLIT'.
 	self assert: cursor initializer module equals: VM.
-	self assert: cursor equals: Cursor splitVertical.
-	self assert: cursor extent equals: Icon largeExtent.
+	self assert: cursor extent equals: SystemMetrics default largeIconExtent.
 	cursor free!
 
 testStbConvertFromVersion3_system
@@ -135,8 +133,11 @@ testStlConvertFromVersion3_resource
 	self assert: rehydrated isPersistent.
 	self assert: rehydrated printString equals: 'Cursor fromId: ''HSPLIT'' in: VM'.
 	self assert: rehydrated initializer isLoadShared.
-	comparand := Cursor splitHorizontal.
-	self assert: rehydrated equals: comparand!
+	self assert: rehydrated initializer isKindOf: ImageFromStringResourceInitializer.
+	self assert: rehydrated initializer identifier equals: 'HSPLIT'.
+	self assert: rehydrated initializer module equals: VM.
+	self assert: rehydrated extent equals: SystemMetrics default largeIconExtent.
+	rehydrated free!
 
 testStlConvertFromVersion3_system
 	| rehydrated comparand |

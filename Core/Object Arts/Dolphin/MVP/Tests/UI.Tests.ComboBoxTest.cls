@@ -54,7 +54,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assertIsNil: view forecolor.
-	self assert: view droppedHeight equals: 200.
+	self assert: view droppedHeight equals: 200 * view dpi // USER_DEFAULT_SCREEN_DPI.
 	self assert: view interactor identicalTo: view.
 	self assert: view mode
 		identicalTo: (aResourceIdentifier selector == #resource_Drop_down_list

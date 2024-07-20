@@ -473,7 +473,11 @@ fromRectangle: aRectangle
 	^self marshal: aRectangle!
 
 left: left top: top right: right bottom: bottom
-	^self subclassResponsibility!
+	^RECTL
+		left: left
+		top: top
+		right: right
+		bottom: bottom!
 
 left: left top: top width: width height: height
 	"Answer a new instance of the receiver with the specified position

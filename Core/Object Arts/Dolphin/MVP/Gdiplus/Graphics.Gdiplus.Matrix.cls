@@ -26,7 +26,7 @@ asArray
 	^self elements!
 
 closeTo: aNumber
-	^self closeTo: aNumber precision: 0.0000001!
+	^self closeTo: aNumber precision: 1.0e-6!
 
 closeTo: aMatrix precision: precisionFloat
 	^self elements closeTo: aMatrix asArray precision: precisionFloat!

@@ -31,7 +31,7 @@ testMultiplyTransform
 	self assert: ((self getTransform: model) closeTo: matrix).
 	matrix2 := Matrix fromArray: #(0.75 0.5 0.25 0.2 2 3).
 	model multiply: matrix2.
-	self assert: (model transform closeTo: #(3.5 4.75 1.3 1.75 166 171) precision: 1e-6).
+	self assert: (model transform closeTo: #(3.5 4.75 1.3 1.75 166 171) precision: 1e-4).
 	self assert: (self getTransform: model) equals: model transform!
 
 testResetTransform

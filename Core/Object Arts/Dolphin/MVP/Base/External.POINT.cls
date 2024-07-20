@@ -224,7 +224,7 @@ displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
 	would want to see it."
 
-	aStream print: self asPoint!
+	aStream display: self asPoint!
 
 dist: aPoint 
 	"Answer the distance between aPoint and the receiver."
@@ -426,7 +426,7 @@ printOn: aStream
 
 	aStream
 		basicPrint: self;
-		nextPut: $(; print: self asPoint; nextPut: $)!
+		print: self asPoint!
 
 quo: operand
 	"Answer the <number> quotient resulting from by division of the receiver

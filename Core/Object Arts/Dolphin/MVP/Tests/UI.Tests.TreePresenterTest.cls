@@ -27,10 +27,11 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view updateMode identicalTo: #dynamic.
 	self assertIsNil: view customDrawBlock.
-	self assert: view largeIconExtent equals: Icon largeExtent.
+	self assert: view largeIconExtent equals: SystemMetrics default largeIconExtent.
 	self assert: view isExpandAllEnabled.
 	self assert: view isVirtual.
-	anInteger < 13 ifTrue: [self assert: self view indentSeparation equals: 16]!
+	anInteger < 13
+		ifTrue: [self assert: self view indentSeparation equals: 16 * view dpi // USER_DEFAULT_SCREEN_DPI]!
 
 viewClass
 	^TreeView! !

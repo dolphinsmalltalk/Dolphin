@@ -158,6 +158,14 @@ degrees
 				ifTrue: [y >= 0 ifTrue: [^theta radiansToDegrees] ifFalse: [^360.0 + theta radiansToDegrees]]
 				ifFalse: [^180.0 + theta radiansToDegrees]]!
 
+displayOn: aStream
+	"Append a short textual description of the receiver to the <puttableStream> argument."
+
+	aStream
+		print: x;
+		nextPut: $@;
+		print: y!
+
 dist: aPoint 
 	"Answer the distance between aPoint and the receiver."
 
@@ -241,9 +249,7 @@ printOn: aStream
 
 	aStream
 		nextPut: $(;
-		print: x;
-		nextPut: $@;
-		print: y;
+		display: self;
 		nextPut: $)!
 
 r
@@ -337,6 +343,7 @@ ceiling!public!truncation and round off! !
 coerce:!coercing!private! !
 corner:!converting!public! !
 degrees!accessing!public! !
+displayOn:!printing!public! !
 dist:!operations!public! !
 divideIntoInteger:!double dispatch!private! !
 divideIntoPoint:!double dispatch!private! !
