@@ -17,12 +17,12 @@ Tools.ResourcePreview comment: ''!
 !Tools.ResourcePreview methodsFor!
 
 createWindow: aCreateInDpiAwarenessContext
-	aCreateInDpiAwarenessContext dpiAwarenessContext == DesignDesktop dpiAwarenessContext
+	aCreateInDpiAwarenessContext dpiAwareness = DesignDesktop dpiAwareness
 		ifFalse: 
 			["The preview option has been changed relative to the saved state. We may need to rescale, and also need to update the creation function with the new context"
 			aCreateInDpiAwarenessContext
 				scaleToDpi: DesignDesktop dpi;
-				dpiAwarenessContext: DesignDesktop dpiAwarenessContext].
+				dpiAwareness: DesignDesktop dpiAwareness].
 	^super createWindow: aCreateInDpiAwarenessContext!
 
 creationFunction: aRectangle dpi: anInteger
@@ -32,8 +32,8 @@ creationFunction: aRectangle dpi: anInteger
 	^CreateInDpiAwarenessContext decorating: (super creationFunction: aRectangle dpi: anInteger)
 		withDpiAwareness: DesignDesktop dpiAwareness!
 
-dpiAwareness: aSymbol
-	(super dpiAwareness: aSymbol) ifTrue: [self refreshContents]!
+dpiAwareness: aDpiAwareness
+	(super dpiAwareness: aDpiAwareness) ifTrue: [self refreshContents]!
 
 imageFromResource: aResourceIdentifier
 	| resourceView |
@@ -41,18 +41,32 @@ imageFromResource: aResourceIdentifier
 				on: Error
 				do: 
 					[:x |
-					x toTrace.
-					nil].
-	^resourceView notNil
-		ifTrue: 
-			[resourceView invalidateLayoutDeeply.
-			[resourceView screenshot: self actualBackcolor brush] ensure: [resourceView destroy]]
-		ifFalse: [Error icon]!
+					| rect |
+					Processor activeProcess newWindow: nil.
+					backcolor := Color darkOrange.
+					rect := DpiAwareness gdiScaled inContextDo: [self displayRectangle].
+					viewMode := #normal.
+					DesignDesktop dpiAwareness inContextDo: 
+							[MultilineTextEdit new
+								parentView: DesignDesktop;
+								hasClientEdge: false;
+								font: (Font name: 'Segoe UI' pointSize: 8);
+								backcolor: backcolor;
+								createAt: 0 @ 0 extent: rect extent;
+								plainText: (String streamContents: [:strm | x printTraceOn: strm]);
+								yourself]].
+	resourceView invalidateLayoutDeeply.
+	^[resourceView screenshot: backcolor brush] ensure: [resourceView destroy]!
 
 recreationFunction
 	"Private - Answer a function object that encapsulates a CreateWindow API call to recreate the receiver's window."
 
 	^self creationFunction: self getRect dpi: DesignDesktop dpi!
+
+refreshContents
+	backcolor := Color applicationWorkspace.
+	viewMode := #scaleBestFit.
+	^super refreshContents!
 
 setDpiAwareness
 	self dpiAwareness: DesignDesktop dpiAwareness!
@@ -71,6 +85,7 @@ creationFunction:dpi:!private!realizing/unrealizing! !
 dpiAwareness:!accessing!high DPI!public! !
 imageFromResource:!helpers!private! !
 recreationFunction!geometry!private!realizing/unrealizing! !
+refreshContents!public! !
 setDpiAwareness!high DPI!private! !
 setModel:!accessing!private! !
 !
@@ -78,11 +93,13 @@ setModel:!accessing!private! !
 !Tools.ResourcePreview class methodsFor!
 
 dpiAwareness
+	"Answer the <DpiAwareness> context to be used for generating and displaying resource preview images."
+
 	^DesignDesktop dpiAwareness!
 
-dpiAwareness: aSymbol
-	aSymbol = DesignDesktop dpiAwareness ifTrue: [^self].
-	DesignDesktop := DesignDesktopView perform: aSymbol.
+dpiAwareness: aDpiAwareness
+	aDpiAwareness = DesignDesktop dpiAwareness ifTrue: [^self].
+	DesignDesktop := DesignDesktopView perform: aDpiAwareness name.
 	self allSubinstances do: [:each | each isOpen ifTrue: [each setDpiAwareness]]!
 
 initialize

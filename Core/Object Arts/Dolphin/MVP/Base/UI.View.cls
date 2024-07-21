@@ -1072,27 +1072,20 @@ dpi
 	^actualDpi == 0 ifTrue: [USER_DEFAULT_SCREEN_DPI] ifFalse: [actualDpi]!
 
 dpiAwareness
-	"Answer the symbolic name of the DPI awareness mode for this View."
+	"Answer the <DpiAwareness> context of this View."
 
-	^User32 awarenessFromDpiAwarenessContext: self dpiAwarenessContext!
+	^DpiAwareness ofWindow: self!
 
-dpiAwareness: aSymbol
-	"Set the DPI awareness mode for this View, recreating if necessary. Note that in order for a non-top-level view to have a DPI awareness different from its parent, the parent must have mixed-mode hosting enabled. Mixed DPI awareness in a window hierarchy can sometimes be useful, but has many consequences that can be difficult to manage, so is not something to undertake lightly. Answer's whether the receiver had to be recreated."
+dpiAwareness: aDpiAwareness
+	"Set the <DpiAwareness> context for this View, recreating the native window if necessary. Note that in order for a non-top-level view to have a DPI awareness different from its parent, the parent must have mixed-mode hosting enabled. Mixed DPI awareness in a window hierarchy can sometimes be useful, but has many consequences that can be difficult to manage, so is not something to undertake lightly. Answer's whether the receiver had to be recreated."
 
-	| context |
-	context := UserLibrary dpiAwarenessContextFromName: aSymbol.
-	(User32 areDpiAwarenessContextsEqual: context
-		dpiContextB: (User32 getWindowDpiAwarenessContext: handle)) ifTrue: [^false].
+	| current |
+	current := self dpiAwareness.
+	current = aDpiAwareness ifTrue: [^false].
 	(creationParent isDesktop or: [creationParent isMixedDpiHost])
 		ifFalse: [self error: 'Parent unable to host mixed DPI children'].
-	User32 inDpiAwarenessContext: context
-		do: [self recreateAround: [:state | state dpiAwarenessContext: context]].
+	current inContextDo: [self recreateAround: [:state | state dpiAwareness: aDpiAwareness]].
 	^true!
-
-dpiAwarenessContext
-	"Private - Answer the <integer> DPI awareness context value of this view."
-
-	^User32 getWindowDpiAwarenessContext: handle!
 
 dpiHostingBehavior
 	"Private - Answer the <integer> DPI hosting behaviour value of this view."
@@ -1773,7 +1766,7 @@ id: anInteger
 inDpiAwarenessContextDo: aNiladicValuable
 	"Evaluate the <niladicValuable> argument in the receiver's native DPI awareness context."
 
-	^User32 inWindowDpiAwarenessContext: handle do: aNiladicValuable!
+	^self dpiAwareness inContextDo: aNiladicValuable!
 
 inheritContextMenu
 	"Answer whether the receiver will inherit the parent view's context menu if it has
@@ -1985,7 +1978,7 @@ isGroupStop: aBoolean
 isInNativeDpiAwarenessContext
 	"Answer whether the current thread DPI awareness context is the same as that of this Window. If not then any geometry queries may return pixel measurements that are at a different scale that it might normally expect."
 
-	^User32 isAtWindowDpiAwareness: handle!
+	^self dpiAwareness isCurrent!
 
 isLayoutValid
 	"Answer true if the layout of the receiver is currently valid"
@@ -2025,7 +2018,7 @@ isOpen
 	^handle notNil and: [User32 isWindow: handle]!
 
 isPerMonitorDpiAware
-	^self dpiAwareness == #perMonitor!
+	^self dpiAwareness isPerMonitor!
 
 isPersistentlyDisabled
 	"Private - Answer whether the receiver is disabled in a way that should be persisted.
@@ -2197,6 +2190,18 @@ layoutManager
 	The default is to answer nil, and this is overridden in ContainerView."
 
 	^nil!
+
+loadViewResource: aResourceArray forEdit: isLoadingForEdit
+	"Add an instance of the resource held in aResourceArray. Answer the new view."
+
+	| filer child |
+	filer := aResourceArray stbInFiler.
+	child := filer
+				isUpgrading: isLoadingForEdit;
+				context: self;
+				basicNext.
+	[filer evaluateDeferredActions] ifCurtailed: [child destroy].
+	^child!
 
 managedSubViews
 	"Answer a <sequencedReadableCollection> of the sub views of the receiver that are managed.
@@ -4816,7 +4821,6 @@ displayOnMaxCharacters!constants!displaying!private! !
 dpi!geometry!high DPI!public! !
 dpiAwareness!accessing!high DPI!public! !
 dpiAwareness:!accessing!high DPI!public! !
-dpiAwarenessContext!private! !
 dpiHostingBehavior!private!testing! !
 dragCut:!drag & drop!public! !
 dragDropSessionClass!constants!public! !
@@ -4974,6 +4978,7 @@ layout!geometry!public! !
 layout:!geometry!private! !
 layoutExtent:!geometry!public! !
 layoutManager!geometry!public! !
+loadViewResource:forEdit:!binary filing!public! !
 managedSubViews!hierarchy!public!sub views! !
 managedSubViewsDo:!hierarchy!public!sub views! !
 mapPoint:to:!geometry!public! !

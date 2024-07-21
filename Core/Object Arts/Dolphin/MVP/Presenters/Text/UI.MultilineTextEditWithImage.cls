@@ -104,7 +104,7 @@ defaultBackgroundImage
 	icon, toned down to a watermark."
 
 	| blend percent icon extent bmp color |
-	extent := 48 @ 48.
+	extent := 48 @ 48 * self dpi // USER_DEFAULT_SCREEN_DPI.
 	percent := 25.
 	color := self actualBackcolor.
 	"First we need an image to use, in this case we choose the default application icon. N.B. If we

@@ -1701,7 +1701,7 @@ dolphinWikiWeb
 	self openUrl: self dolphinWikiUrl!
 
 dpiAwareness
-	"Answer the symbolic name of the DPI awareness mode for the development environment."
+	"Answer the preferred <DpiAwareness> context for the development environment."
 
 	^OS.UserLibrary desiredDpiAwareness!
 
@@ -4828,7 +4828,8 @@ publishedAspectsOfInstances
 					choice: #displayItLocale
 					from: [{Locale smalltalk. Locale userDefault. Locale invariant}]
 					type: Locale);
-		add: (Aspect choice: #dpiAwareness from: #(#unaware #system #perMonitor #gdiScaled));
+		add: (Aspect choice: #dpiAwareness
+					from: {DpiAwareness unaware. DpiAwareness system. DpiAwareness perMonitor. DpiAwareness gdiScaled});
 		yourself!
 
 publishedEventsOfInstances

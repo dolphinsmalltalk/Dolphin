@@ -127,6 +127,7 @@ package setMethodNames: #(
 	#(#{UI.CardLabel class} #icon)
 	#(#{UI.CardLayout class} #icon)
 	#(#{UI.CheckButton class} #icon)
+	#(#{UI.DpiAwareness class} #icon)
 	#(#{UI.FlowLayout class} #icon)
 	#(#{UI.FramingLayout class} #icon)
 	#(#{UI.GridLayout class} #icon)
@@ -1607,6 +1608,17 @@ icon
 	^##((TextTileIcon text: $\x2611 fontName: 'Segoe UI Emoji') textcolor: Color hotlight)! !
 
 !UI.CheckButton class categoriesForMethods!
+icon!constants!public! !
+!
+
+!UI.DpiAwareness class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\x1F4CF)! !
+
+!UI.DpiAwareness class categoriesForMethods!
 icon!constants!public! !
 !
 

@@ -55,6 +55,7 @@ package setClassNames: #(
 	#{UI.Tests.DialogViewTest}
 	#{UI.Tests.DifferencesPresenterTest}
 	#{UI.Tests.DisplayMonitorTest}
+	#{UI.Tests.DpiAwarenessTest}
 	#{UI.Tests.DurationToTextTest}
 	#{UI.Tests.EvaluationConverterTest}
 	#{UI.Tests.FakeUserLibrary}
@@ -321,6 +322,14 @@ Core.Tests.DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.DpiAwarenessTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

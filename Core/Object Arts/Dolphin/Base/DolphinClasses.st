@@ -4053,13 +4053,10 @@ External.PermanentLibrary
 External.PermanentLibrary
 	subclass: #'OS.UserLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'DesiredDpiAwarenessContext SystemDpiAwarenessContext'
+	classVariableNames: 'DesiredDpiAwarenessContext SystemDpiAwareness'
 	imports: #(#{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
-	classConstants: {
-			'DpiAwarenessContexts' -> #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled).
-			'DpiAwarenesses' -> #(#invalid #unaware #system #perMonitor)
-		}!
+	classConstants: {}!
 
 External.PermanentLibrary
 	subclass: #'Kernel.VMLibrary'

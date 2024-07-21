@@ -3,13 +3,10 @@
 External.PermanentLibrary
 	subclass: #'OS.UserLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'DesiredDpiAwarenessContext SystemDpiAwarenessContext'
+	classVariableNames: 'DesiredDpiAwarenessContext SystemDpiAwareness'
 	imports: #(#{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'DpiAwarenessContexts' -> #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled).
-		'DpiAwarenesses' -> #(#invalid #unaware #system #perMonitor)
-	}!
+	classConstants: {}!
 
 OS.UserLibrary guid: (Core.GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
 
@@ -700,7 +697,7 @@ fileName
 	^'USER32'!
 
 initialize
-	SystemDpiAwarenessContext := DesiredDpiAwarenessContext := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2!
+	DesiredDpiAwarenessContext := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2!
 
 sharedVariableName
 	^#{User32}! !

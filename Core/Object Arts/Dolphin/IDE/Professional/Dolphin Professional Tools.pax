@@ -467,9 +467,9 @@ updateHelpMenus
 	"
 
 	| view helpmenu toolShells |
-	view := Smalltalk developmentSystem
+	view := DesignDesktopView default
 				loadViewResource: (ResourceIdentifier class: SystemBrowserShell name: 'Default view')
-				inContext: DesignDesktopView default.
+				forEdit: true.
 	helpmenu := (view menuBar findCommand: #help) binaryStoreBytes.
 	view destroy.
 	toolShells := (SmalltalkToolShell allSubclasses copyWith: SmalltalkWorkspaceDocument)

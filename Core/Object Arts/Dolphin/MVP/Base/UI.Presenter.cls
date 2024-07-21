@@ -823,8 +823,8 @@ view: aView
 	"Set the view for the receiver to aView. We also connect up any sub-views
 	to same named presenters in our subPresenters collection"
 
-	self attachSubPresenterViews: aView.	
 	view := aView.
+	self attachSubPresenterViews: aView.	
 	self onViewAvailable.
 	self connectView!
 
@@ -1105,9 +1105,7 @@ legacyCommandQueryHandlers
 loadViewResource: aString inContext: aParentView
 	"Private - Load a view resource called aString owned by this class."
 
-	| resourceIdentifier |
-	resourceIdentifier := ResourceIdentifier class: self name: aString.
-	^resourceIdentifier loadWithContext: aParentView!
+	^(ResourceIdentifier class: self name: aString) loadWithContext: aParentView!
 
 new
 	"Answer an instance of the receiver not yet connected to any view

@@ -51,7 +51,7 @@ applyPreferredExtent
 				calcRectangleFromClientRectangle: (aspectRectangle topLeft extent: actualExtentToUse).
 
 	"Finally, just check that our rectangle doesn't go off the screen"
-	screenRectangle := screenRectangle intersect: SystemMetrics current virtualScreenRectangle.
+	screenRectangle := screenRectangle intersect: OS.SystemMetrics current virtualScreenRectangle.
 	self view rectangle: screenRectangle.
 
 	"Once we're done we can decide where to position the buttons"

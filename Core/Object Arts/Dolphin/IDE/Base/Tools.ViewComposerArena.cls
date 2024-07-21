@@ -107,7 +107,7 @@ creationFunction: aRectangle dpi: anInteger
 	self assert: [anInteger = USER_DEFAULT_SCREEN_DPI].
 	^CreateInDpiAwarenessContext
 		decorating: (super creationFunction: aRectangle dpi: USER_DEFAULT_SCREEN_DPI)
-		withDpiAwareness: #gdiScaled!
+		withDpiAwareness: DpiAwareness gdiScaled!
 
 cursor
 	"Answers the cursor to be used.

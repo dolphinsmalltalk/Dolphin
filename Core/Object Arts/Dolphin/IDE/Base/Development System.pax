@@ -827,7 +827,6 @@ package setMethodNames: #(
 	#(#{UI.ValueModel class} #publishedEventsOfInstances)
 	#(#{UI.ValuePresenter class} #publishedEventsOfInstances)
 	#(#{UI.View} #aspectDisplayOn:)
-	#(#{UI.View} #loadViewResource:forEdit:)
 	#(#{UI.View} #publishedAspects)
 	#(#{UI.View} #visualObjectAtPoint:)
 	#(#{UI.View class} #editNewDefaultView)
@@ -9046,12 +9045,13 @@ edit
 	ViewComposer openOn: self!
 
 editViewUsing: aMonadicBlock
-	| view |
-	view := Smalltalk developmentSystem loadViewResource: self resource
-				inContext: DesignDesktopView default.
-	aMonadicBlock value: view.
-	self assignView: view.
-	view destroy!
+	| view designDesktop |
+	designDesktop := DesignDesktopView default.
+	view := designDesktop loadViewResource: self resource forEdit: true.
+	
+	[aMonadicBlock value: view.
+	self assign: (designDesktop inDpiAwarenessContextDo: [view literalStoreArray])]
+			ensure: [view destroy]!
 
 hiddenObjects
 	"Private - Answers a <collection> of the <Object>s that are contained in the receiver's resource
@@ -9087,11 +9087,11 @@ publishedAspects
 	^answer!
 
 reassign
-	| view |
-	view := Smalltalk developmentSystem loadViewResource: self resource
-				inContext: DesignDesktopView default.
-	self assignView: view.
-	view destroy!
+	| view designDesktop |
+	designDesktop := DesignDesktopView default.
+	view := designDesktop loadViewResource: self resource forEdit: true.
+	[self assign: (designDesktop dpiAwareness inContextDo: [view literalStoreArray])]
+		ensure: [view destroy]!
 
 sourceFilerClass
 	^(self owningPackage ifNil: [self owningClass]) sourceFilerClass! !
@@ -10493,14 +10493,6 @@ aspectDisplayOn: aStream
   
   	self printOn: aStream!
 
-loadViewResource: aResourceArray forEdit: isLoadingForEdit
-	"Add an instance of the resource held in aResourceArray. Answer the new view."
-
-	^aResourceArray stbInFiler
-		isUpgrading: isLoadingForEdit;
-		context: self;
-		next!
-
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
@@ -10521,7 +10513,6 @@ visualObjectAtPoint: aPoint
 
 !UI.View categoriesForMethods!
 aspectDisplayOn:!private! !
-loadViewResource:forEdit:!binary filing!public! !
 publishedAspects!constants!public! !
 visualObjectAtPoint:!enquiries!private! !
 !

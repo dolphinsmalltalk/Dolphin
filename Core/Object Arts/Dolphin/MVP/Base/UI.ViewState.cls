@@ -23,13 +23,13 @@ UI.ViewState comment: '`ViewState` is capable of holding the relevant state of a
 
 !UI.ViewState methodsFor!
 
-dpiAwarenessContext
-	"Answer any custom DPI awareness context for the view. If the view did not have a custom context, then this will be nil."
+dpiAwareness
+	"Answer any custom DPI awareness context for the described view. If the view did not have a custom context, then this will be nil."
 
 	^dpiAwarenessContext!
 
-dpiAwarenessContext: anObject
-	dpiAwarenessContext := anObject!
+dpiAwareness: aDpiAwareness
+	dpiAwarenessContext := aDpiAwareness!
 
 recordStateOf: aView forRecreate: aBoolean
 	"Private - Initialize the receiver so that it is capable of restoring the <View>, aView, after it's handle has become invalid. The <boolean> argument, aBoolean, indicates whether the state will be used to immediately restore the receiver, in which case the state restoring flag is set on aView and all its sub-views as they are traversed.
@@ -38,13 +38,13 @@ recordStateOf: aView forRecreate: aBoolean
 	| dpiAwareness |
 	view := aView.
 	aBoolean ifTrue: [view setStateRestoring].
-	dpiAwareness := aView dpiAwarenessContext.
-	(UserLibrary default isSystemDpiAwarenessContext: dpiAwarenessContext)
+	dpiAwareness := aView dpiAwareness.
+	UserLibrary dpiAwareness = dpiAwareness
+		ifTrue: [state := aView state]
 		ifFalse: 
-			["This view has a custom DPI awareness that differs from the system awareness, so we want to restore it with the correct awareness on recreation"
-			dpiAwarenessContext := dpiAwareness].
-	"We need to capture state in the correct DPI awareness context so the measurements are in the correct (possibly virtual) co-ordinate system."
-	state := User32 inDpiAwarenessContext: dpiAwareness do: [aView state].
+			["This view has a custom DPI awareness that differs from the system awareness, so we want to restore it with the correct awareness on recreation.
+			To do that we must capture state in the correct DPI awareness context so the measurements are in the correct (possibly virtual) co-ordinate system."
+			state := (dpiAwarenessContext := dpiAwareness) inContextDo: [aView state]].
 	state freeze.
 	showCmd := aView placement showCmd.
 	dpi := aView dpi.
@@ -61,8 +61,7 @@ restore
 			[view state: state.
 			subViewStates do: [:each | each restore]]
 		ifNotNil: 
-			[User32 inDpiAwarenessContext: dpiAwarenessContext
-				do: 
+			[dpiAwarenessContext inContextDo: 
 					[view state: state.
 					subViewStates do: [:each | each restore]]].
 	scale := view resolution / dpi.
@@ -76,8 +75,8 @@ restore
 		resetStateRestoring! !
 
 !UI.ViewState categoriesForMethods!
-dpiAwarenessContext!accessing!public! !
-dpiAwarenessContext:!accessing!public! !
+dpiAwareness!accessing!public! !
+dpiAwareness:!accessing!public! !
 recordStateOf:forRecreate:!initializing!private! !
 restore!operations!public! !
 !

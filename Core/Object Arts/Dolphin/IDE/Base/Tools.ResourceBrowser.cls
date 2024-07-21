@@ -128,10 +128,12 @@ initialize
 		registerTool: self!
 
 previewDpiAwareness
-	^ResourcePreview previewDpiAwareness!
+	^ResourcePreview dpiAwareness!
 
 previewDpiAwareness: aSymbol
-	ResourcePreview previewDpiAwareness: aSymbol!
+	self previewDpiAwareness == aSymbol ifTrue: [^self].
+	ResourcePreview dpiAwareness: aSymbol.
+	self persistOptions!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
@@ -139,9 +141,12 @@ publishedAspects
 	| aspects |
 	aspects := super publishedAspects.
 	(aspects at: #reuseIfOpen) defaultValue: true.
-	^aspects 
+	^aspects
 		add: self canUseIdeaSpaceAspect;
-		add: (Aspect choice: #previewDpiAwareness from: #(#gdiScaled #system #unaware));
+		add: ((Aspect choice: #previewDpiAwareness
+					from: { DpiAwareness gdiScaled. DpiAwareness system. DpiAwareness unaware })
+					defaultValue: DpiAwareness gdiScaled;
+					yourself);
 		yourself!
 
 resource_Default_view

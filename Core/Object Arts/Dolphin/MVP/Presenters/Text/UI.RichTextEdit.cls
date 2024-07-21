@@ -933,9 +933,8 @@ zoomRatio: aNumber
 		ifTrue: [self error: 'Invalid zoom ratio ' , fraction printString]!
 
 zoomRelativeToSystemDpi
-	self zoomRatio: (self dpiAwareness == #perMonitor
-				ifTrue: [self dpi / SystemMetrics current dpi]
-				ifFalse: [1])! !
+	self
+		zoomRatio: (self isPerMonitorDpiAware ifTrue: [self dpi / SystemMetrics current dpi] ifFalse: [1])! !
 
 !UI.RichTextEdit categoriesForMethods!
 ansiText!public!streaming! !

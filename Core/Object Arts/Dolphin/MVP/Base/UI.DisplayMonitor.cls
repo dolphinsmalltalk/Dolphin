@@ -110,7 +110,7 @@ devices
 dpi
 	"Answer the logical DPI for this monitor. Note that this may not be the same as the physical DPI, depending on the DPI awareness of the application and the OS magnification setting. When DPI unaware, this is always 96. When system DPI aware it is the system-wide DPI, even if different than this monitor's DPI. When per-monitor DPI aware, it is the effective DPI of the monitor (i.e. the monitors's DPI at the configured magnification)."
 
-	^dpi ifNil: [dpi := UserLibrary default inSystemDpiAwarenessContextDo: [self effectiveDpi]]!
+	^dpi ifNil: [dpi := UserLibrary dpiAwareness inContextDo: [self effectiveDpi]]!
 
 effectiveDpi
 	"Answer the logical DPI of this monitor as measured in the current thread DPI awareness context. This may be different to #dpi, which is the DPI at the process wide (default) context."
