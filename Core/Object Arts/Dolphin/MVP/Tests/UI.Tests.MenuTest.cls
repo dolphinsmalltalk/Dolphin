@@ -56,16 +56,34 @@ testStbConvertFromVersion0
 	menu := Object fromBinaryStoreBytes: bytes.
 	self assert: menu isKindOf: MenuBar.
 	self assert: menu toStrings printString caseFolded
-		equals: '#(#(''&file'' ''&new/ctrl+n/filenew'' ''|'' ''&open.../ctrl+o/fileopen'' ''-'' ''e&xit//fileexit'') ''||'' ''f&ire!!//fire'' ''|'' #(''&tools'' ''&workspace.../ctrl+n/filenew'' ''-'' #(''&options'' ''default font...//choosedefaultfont'')))'! !
+		equals: '#(#(''&file'' ''&new/ctrl+n/filenew'' ''|'' ''&open.../ctrl+o/fileopen'' ''-'' ''e&xit//fileexit'') ''||'' ''f&ire!!//fire'' ''|'' #(''&tools'' ''&workspace.../ctrl+n/filenew'' ''-'' #(''&options'' ''default font...//choosedefaultfont'')))'!
+
+testStlRoundTrip
+	| subject stl rehydrated |
+	subject := self exampleMenu.
+	subject metrics: (SystemMetrics forDpi: 168).
+	self assertNotNil: subject handle.
+	stl := subject literalStoreArray.
+	self assertNotNil: subject basicHandle.
+	self deny: (stl includes: SystemMetrics).
+	rehydrated := Object fromLiteralStoreArray: stl.
+	self assertIsNil: rehydrated basicHandle.
+	self assertEqualToExampleMenu: rehydrated.
+	self assertIsNil: rehydrated basicHandle.
+	self deny: rehydrated handle equals: subject handle.
+	self assertIsNil: (rehydrated instVarNamed: 'metrics').
+	subject free.
+	rehydrated free! !
 
 !UI.Tests.MenuTest categoriesForMethods!
 assertEqualToExampleMenu:!helpers!private! !
-exampleMenu!helpers!private! !
+exampleMenu!constants!private! !
 exampleStrings!constants!private! !
-testAllItems!constants!private! !
-testAllMenus!constants!private! !
+testAllItems!public!unit tests! !
+testAllMenus!public!unit tests! !
 testFindCommand!public!unit tests! !
 testFromStrings!public!unit tests! !
 testStbConvertFromVersion0!public!unit tests! !
+testStlRoundTrip!public!unit tests! !
 !
 

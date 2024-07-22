@@ -126,7 +126,7 @@ queryAlong:!operations!public! !
 styleName!accessing!public! !
 styleName:!accessing!private! !
 text!accessing!private! !
-toStrings!public! !
+toStrings!converting!public! !
 !
 
 UI.DividerMenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
@@ -146,6 +146,11 @@ break
 	^Break ifNil: [Break := self dividers at: '|']!
 
 initialize
+	"Private - Initialize the receiver's class variables.
+
+		DividerMenuItem initialize
+	"
+
 	self addClassConstant: 'DividerLookup'
 		value: (IdentityDictionary
 				withAll: { MFT_MENUBARBREAK -> #barBreak. MFT_MENUBREAK -> #break. MFT_SEPARATOR -> #separator })!

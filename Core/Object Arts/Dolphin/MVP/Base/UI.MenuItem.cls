@@ -262,7 +262,7 @@ uninitialize
 	Dividers := nil! !
 
 !UI.MenuItem class categoriesForMethods!
-dividers!public! !
+dividers!accessing!public! !
 errorIllegalMenuString:!exceptions!private! !
 fromString:!instance creation!public! !
 new!instance creation!private! !

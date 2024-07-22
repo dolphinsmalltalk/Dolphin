@@ -260,7 +260,7 @@ queryAlong:!operations!public! !
 registerAcceleratorKeyIn:!menus!public! !
 stbSaveOn:!binary filing!public! !
 text!accessing!public! !
-toStrings!public! !
+toStrings!converting!public! !
 !
 
 UI.CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
