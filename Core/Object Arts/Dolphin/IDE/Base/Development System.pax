@@ -9045,13 +9045,11 @@ edit
 	ViewComposer openOn: self!
 
 editViewUsing: aMonadicBlock
-	| view designDesktop |
-	designDesktop := DesignDesktopView default.
-	view := designDesktop loadViewResource: self resource forEdit: true.
+	| view |
+	view := DesignDesktopView default loadViewResource: self resource forEdit: true.
 	
 	[aMonadicBlock value: view.
-	self assign: (designDesktop inDpiAwarenessContextDo: [view literalStoreArray])]
-			ensure: [view destroy]!
+	self assign: view literalStoreArray] ensure: [view destroy]!
 
 hiddenObjects
 	"Private - Answers a <collection> of the <Object>s that are contained in the receiver's resource
@@ -9090,8 +9088,7 @@ reassign
 	| view designDesktop |
 	designDesktop := DesignDesktopView default.
 	view := designDesktop loadViewResource: self resource forEdit: true.
-	[self assign: (designDesktop dpiAwareness inContextDo: [view literalStoreArray])]
-		ensure: [view destroy]!
+	[self assign: view literalStoreArray] ensure: [view destroy]!
 
 sourceFilerClass
 	^(self owningPackage ifNil: [self owningClass]) sourceFilerClass! !

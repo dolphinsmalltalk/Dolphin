@@ -480,14 +480,15 @@ beTopMost
 binaryStoreUsing: anSTXOutFiler
 	"Stores the receiver in a serialized form using the <STxOutFiler> argument such that it can be reconstituted to an equivalent view. For Views we need to store a proxy that captures any external state not represented directly in the Smalltalk object."
 
-	| viewProxy |
-	viewProxy := self whileInvisibleDo: 
-					[(self filerProxyIn: anSTXOutFiler)
-						beTopView;
-						yourself].
-	anSTXOutFiler
-		override: self with: viewProxy;
-		nextPut: self!
+	DpiAwareness unaware inContextDo: 
+			[| viewProxy |
+			viewProxy := self whileInvisibleDo: 
+							[(self filerProxyIn: anSTXOutFiler)
+								beTopView;
+								yourself].
+			anSTXOutFiler
+				override: self with: viewProxy;
+				nextPut: self]!
 
 bmSetStyle: message wParam: wParam lParam: lParam
 	"Private - Handler for BM_SETSTYLE message.
