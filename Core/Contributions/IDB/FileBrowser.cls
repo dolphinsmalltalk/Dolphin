@@ -398,10 +398,12 @@ hexFont: aFont
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon
-		text: $\x1F5C3
-		fontName: 'Segoe UI Emoji'
-		color: Color red)!
+	^##((TextTileIcon
+		text: $\xEC50
+		fontName: 'Segoe Fluent Icons'
+		color: Color red)
+		margin: 1;
+		yourself)!
 
 publishedAspects
 	"Answer a Set of the aspects published by  instances of the receiver"

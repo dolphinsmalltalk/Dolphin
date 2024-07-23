@@ -482,10 +482,10 @@ icon!constants!public! !
 !Core.Link class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: 🔗"
+	"Answers an Icon that can be used to represent this class."
 
 	<namespace: Graphics>
-	^##(TextTileIcon text: $\x1F517)! !
+	^##(TextTileIcon text: $\xE71B fontName: 'Segoe MDL2 Assets') textcolor: Color darkBlue! !
 
 !Core.Link class categoriesForMethods!
 icon!public! !
@@ -1089,9 +1089,11 @@ icon!constants!public! !
 !Graphics.Rectangle class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ▬"
+	"Answers an Icon that can be used to represent this class: ▭"
 
-	^##(TextTileIcon text: $\x25AC fontName: 'Cambria')! !
+	^##((TextTileIcon text: $\x25AD)
+		margin: -1;
+		yourself)! !
 
 !Graphics.Rectangle class categoriesForMethods!
 icon!constants!public! !
@@ -1114,7 +1116,7 @@ icon
 	"Answers an Icon that can be used to represent this class: 📢"
 
 	<namespace: Graphics>
-	^##((TextTileIcon text: $\x1F4E2)
+	^##((TextTileIcon text: $\xEC24 fontName: 'Segoe Fluent Icons')
 		textcolor: Color darkBlue;
 		yourself)! !
 
@@ -1557,8 +1559,9 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: 🔳"
 
-	^##((TextTileIcon text: $\x1F533 fontName: 'Segoe UI Emoji')
+	^##((TextTileIcon text: $\xE73B fontName: 'Segoe Fluent Icons')
 		textcolor: Color forestGreen;
+		margin: 1;
 		yourself)! !
 
 !UI.BooleanPresenter class categoriesForMethods!
@@ -1568,9 +1571,9 @@ icon!constants!public! !
 !UI.BorderLayout class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ⬒"
+	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x2B12 fontName: 'Arial')! !
+	^##(TextTileIcon text: $\xF58A fontName: 'Segoe Fluent Icons')! !
 
 !UI.BorderLayout class categoriesForMethods!
 icon!constants!public! !
@@ -1579,9 +1582,9 @@ icon!constants!public! !
 !UI.CardLabel class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: 🏷"
+	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: $\x1F3F7 fontName: 'Segoe UI Emoji')
+	^##((TextTileIcon text: $\xE8EC fontName: 'Segoe Fluent Icons')
 		textcolor: Color darkBlue;
 		yourself)! !
 
@@ -1592,9 +1595,9 @@ icon!constants!public! !
 !UI.CardLayout class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: 🗂"
+	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x1F5C2 fontName: 'Segoe UI Emoji')! !
+	^##(TextTileIcon text: $\xF12B fontName: 'Segoe Fluent Icons')! !
 
 !UI.CardLayout class categoriesForMethods!
 icon!constants!public! !
@@ -1603,9 +1606,12 @@ icon!constants!public! !
 !UI.CheckButton class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ☑"
+	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: $\x2611 fontName: 'Segoe UI Emoji') textcolor: Color hotlight)! !
+	^##((TextTileIcon text: $\xE73D fontName: 'Segoe Fluent Icons')
+		textcolor: Color hotlight;
+		margin: 1;
+		yourself)! !
 
 !UI.CheckButton class categoriesForMethods!
 icon!constants!public! !
@@ -1616,7 +1622,9 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x1F4CF)! !
+	"Use the 'unit' fluent icon"
+
+	^##(TextTileIcon text: $\xECC6 fontName: 'Segoe Fluent Icons')! !
 
 !UI.DpiAwareness class categoriesForMethods!
 icon!constants!public! !
@@ -1625,9 +1633,9 @@ icon!constants!public! !
 !UI.FlowLayout class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ⏖"
+	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x23D6 fontName: 'Arial')! !
+	^##(TextTileIcon text: $\xEABB fontName: 'Segoe Fluent Icons')! !
 
 !UI.FlowLayout class categoriesForMethods!
 icon!constants!public! !
@@ -1636,9 +1644,9 @@ icon!constants!public! !
 !UI.FramingLayout class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: 🖽"
+	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x1F5BD)! !
+	^##(TextTileIcon text: $\xF246 fontName: 'Segoe Fluent Icons')! !
 
 !UI.FramingLayout class categoriesForMethods!
 icon!constants!public! !
@@ -1647,9 +1655,9 @@ icon!constants!public! !
 !UI.GridLayout class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class:⌗"
+	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x2317 fontName: 'Arial')! !
+	^##(TextTileIcon text: $\xF0E2 fontName: 'Segoe Fluent Icons')! !
 
 !UI.GridLayout class categoriesForMethods!
 icon!constants!public! !
@@ -1669,9 +1677,9 @@ icon!constants!public! !
 !UI.LayoutManager class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ⧉"
+	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x29C9 fontName: 'Cambria')! !
+	^##(TextTileIcon text: $\xECA5 fontName: 'Segoe Fluent Icons')! !
 
 !UI.LayoutManager class categoriesForMethods!
 icon!constants!public! !
@@ -1693,9 +1701,9 @@ icon!constants!public! !
 !UI.ProportionalLayout class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ⎅"
+	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x2385 fontName: 'Arial')! !
+	^##(TextTileIcon text: $\xE90D fontName: 'Segoe Fluent Icons')! !
 
 !UI.ProportionalLayout class categoriesForMethods!
 icon!constants!public! !
@@ -1741,9 +1749,9 @@ icon!constants!development!public! !
 !UI.ScrollingDecoratorLayout class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ⮹"
+	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x2BB9 fontName: 'Arial')! !
+	^##(TextTileIcon text: $\xEC8F fontName: 'Segoe Fluent Icons')! !
 
 !UI.ScrollingDecoratorLayout class categoriesForMethods!
 icon!constants!public! !

@@ -458,13 +458,15 @@ fileTypes
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon
-		text: $\x203C
-		fontName: 'Georgia'
+	^##((TextTileIcon
+		text: $\xE90F
+		fontName: 'Segoe Fluent Icons'
 		color: (Color
 				r: 0
 				g: 105
-				b: 175))!
+				b: 175))
+		margin: 1;
+		yourself)!
 
 publishedAspects
 	"ss"

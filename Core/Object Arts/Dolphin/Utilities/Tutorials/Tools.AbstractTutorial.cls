@@ -72,9 +72,11 @@ welcome!pages!public! !
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: $\x1F393
+	^##((TextTileIcon text: $\xE7BE
+		fontName: 'Segoe Fluent Icons'
 		color: Color orchid)
 		textcolor: Color white;
+		margin: 1;
 		yourself)! !
 
 !Tools.AbstractTutorial class categoriesForMethods!

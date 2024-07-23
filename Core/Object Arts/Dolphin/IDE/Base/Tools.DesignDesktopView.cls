@@ -105,6 +105,11 @@ gdiScaled
 
 	^self default!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\xEB3C fontName: 'Segoe Fluent Icons')!
+
 onStartup
 	"As the receiver's instances are not registered windows, they won't receive onStartup from GuiInputState>>#guiStartup."
 
@@ -127,6 +132,7 @@ unaware
 default!instance creation!public! !
 dpiAwareness:!instance creation!private! !
 gdiScaled!instance creation!public! !
+icon!constants!public! !
 onStartup!event handling!public! !
 perMonitor!instance creation!public! !
 system!instance creation!public! !
