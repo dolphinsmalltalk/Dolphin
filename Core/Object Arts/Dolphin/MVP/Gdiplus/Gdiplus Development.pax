@@ -1115,7 +1115,7 @@ exampleGdipState
 	"Quality Settings"
 
 	| bitmap graphics pen brush region |
-	bitmap := Bitmap extent: 250 @ 275.
+	bitmap := Bitmap extent: 250 @ 275 dpi: 96.
 	graphics := bitmap graphics.
 	pen := Pen red width: 5.
 	graphics smoothingMode: SmoothingModeAntiAlias.
@@ -1125,7 +1125,7 @@ exampleGdipState
 	bitmap showExample.
 
 	"Transformations"
-	bitmap := Bitmap extent: 325 @ 325.
+	bitmap := Bitmap extent: 325 @ 325 dpi: 96.
 	graphics := bitmap graphics.
 	pen := Pen red.
 	graphics resetTransform.
@@ -1136,7 +1136,7 @@ exampleGdipState
 	bitmap showExample.
 
 	"Clipping Region"
-	bitmap := Bitmap extent: 175 @ 175.
+	bitmap := Bitmap extent: 175 @ 175 dpi: 96.
 	graphics := bitmap graphics.
 	pen := Pen red width: 5.
 	brush := Brush color: (Color fromArray: #(255 180 255 255)).
@@ -3975,6 +3975,7 @@ exampleGdipSFGenerics
 
 	| bitmap graphics brush font rect stringFormat pen |
 	bitmap := Bitmap extent: 300 @ 350.
+	bitmap resolution: 96@96.
 	graphics := bitmap graphics.
 	brush := Brush blue.
 	font := Font name: 'Times New Roman' pointSize: 12.
@@ -4099,6 +4100,7 @@ exampleGdipSFTabs
 
 	| bitmap graphics font rect stringFormat offset |
 	bitmap := Bitmap extent: 550 @ 200.
+	bitmap resolution: 96@96.
 	graphics := bitmap graphics.
 	font := Font name: 'Courier New' pointSize: 12.
 	stringFormat := StringFormat new tabOffsets: #(150 100 100).
@@ -4131,6 +4133,7 @@ exampleGdipSFTrimming
 
 	| bitmap graphics string font captionHeight |
 	bitmap := Bitmap extent: 550 @ 450.
+	bitmap resolution: 96@96.
 	graphics := bitmap graphics.
 	string := 'One two three four five six seven eight nine'.
 	font := Font name: 'Times New Roman' pointSize: 24.

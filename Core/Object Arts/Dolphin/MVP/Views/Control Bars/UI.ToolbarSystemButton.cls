@@ -55,18 +55,12 @@ UI.ToolbarButton
 
 UI.ToolbarSystemButton guid: (Core.GUID fromString: '{87b4c702-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-UI.ToolbarSystemButton comment: '`ToolbarSystemButton` represents a system defined button for a `Toolbar`. The button image is identified by an index into one of a number of system supplied bitmaps. Unfortunately these are not very useful any more, as Microsoft has not updated some of the bitmaps for decades.
+UI.ToolbarSystemButton comment: '`ToolbarSystemButton` represents a system defined button for a `Toolbar`. The button image is identified by an index into one of a number of system supplied bitmaps. The bitmaps have not been changed since the 90''s and look very outdated now.
 
-For example (evaluated one expression at a time):
-```
-tb := Toolbar new hasFlatAppearance: true; isTransparent: true; show; extent: 300@ 64; zOrderTop; yourself.
-"Add all the available system buttons to the toolbar; as you''ll see they are a mix of old a newer styles"
-((MethodCategory name: ''instance creation-system buttons'') methodsInBehavior: ToolbarButton class) do: [:each | 
-	each selector argumentCount = 0 ifTrue: [tb addItem: (ToolbarButton perform: each selector)]].
-tb destroy.
-```'!
+Aside from the fact that Microsoft has not updated the bitmaps for decades, they do not scale so are not High DPI friendly. Given the aesthetic and accessibility issues, it is recommended that these no longer be used, so the class is soft deprecated.
+'!
 
-!UI.ToolbarSystemButton categoriesForClass!MVP-Views-Support! !
+!UI.ToolbarSystemButton categoriesForClass!Deprecated! !
 
 !UI.ToolbarSystemButton methodsFor!
 

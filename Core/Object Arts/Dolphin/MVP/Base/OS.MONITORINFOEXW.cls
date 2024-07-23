@@ -53,32 +53,32 @@ isPrimary
 rectangle
 	"Answer a <Rectangle> representing the total area of the monitor."
 
-	^Rectangle
-		left: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_left)
-		top: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_top)
-		right: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_right)
-		bottom: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_bottom)!
-
-workArea
-	"Answer a <Rectangle> representing the usable area of the monitor."
-
-	^Rectangle
-		left: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_left)
-		top: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_top)
-		right: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_right)
-		bottom: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_bottom)! !
+	^Graphics.Rectangle
+		left: (bytes int32AtOffset: _OffsetOf_rcMonitor + RECTL._OffsetOf_left)
+		top: (bytes int32AtOffset: _OffsetOf_rcMonitor + RECTL._OffsetOf_top)
+		right: (bytes int32AtOffset: _OffsetOf_rcMonitor + RECTL._OffsetOf_right)
+		bottom: (bytes int32AtOffset: _OffsetOf_rcMonitor + RECTL._OffsetOf_bottom)!
 
 szDevice
 	"Answer the <Utf16String> value of the receiver's 'szDevice' field."
 
-	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDevice! !
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDevice!
+
+workArea
+	"Answer a <Rectangle> representing the usable area of the monitor."
+
+	^Graphics.Rectangle
+		left: (bytes int32AtOffset: _OffsetOf_rcWork + RECTL._OffsetOf_left)
+		top: (bytes int32AtOffset: _OffsetOf_rcWork + RECTL._OffsetOf_top)
+		right: (bytes int32AtOffset: _OffsetOf_rcWork + RECTL._OffsetOf_right)
+		bottom: (bytes int32AtOffset: _OffsetOf_rcWork + RECTL._OffsetOf_bottom)! !
 
 !OS.MONITORINFOEXW categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 isPrimary!public!testing! !
 rectangle!accessing!public! !
-workArea!accessing!public! !
 szDevice!**compiled accessors**!public! !
+workArea!accessing!public! !
 !
 
 !OS.MONITORINFOEXW class methodsFor!

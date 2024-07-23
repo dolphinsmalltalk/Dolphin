@@ -135,13 +135,13 @@ installRelative: aFilenameString
 ! !
 
 !Core.FileLocator class categoriesForMethods!
-absolute!accessing!public! !
-default!accessing!public! !
+absolute!instance creation!public! !
+default!instance creation!public! !
 folderRelative:!instance creation!public! !
 imageFolderRelative:!instance creation!public! !
-imageRelative!accessing!public! !
+imageRelative!instance creation!public! !
 imageRelative:!instance creation!public! !
-installRelative!accessing!public! !
+installRelative!instance creation!public! !
 installRelative:!instance creation!public! !
 !
 

@@ -47,6 +47,14 @@ cloneRectangle: aRectangle format: aPixelFormatConstant
 				rectangle: aRectangle
 				format: aPixelFormatConstant)!
 
+dpi: anInteger
+	"Set  the horizontal and vertical DPI of the receiver to that specified by the <integer> argument."
+
+	Gdip
+		gdipBitmapSetResolution: self asParameter
+		xdpi: anInteger
+		ydpi: anInteger!
+
 initializerClass
 	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
 
@@ -110,11 +118,12 @@ asIcon!converting!public! !
 cloneFormat:!copying!public! !
 cloneRectangle:!copying!public! !
 cloneRectangle:format:!copying!public! !
+dpi:!accessing!public! !
 initializerClass!private!realizing/unrealizing! !
 lockBits:!accessing!public! !
 lockBits:flags:!accessing!public! !
 lockBits:flags:format:!accessing!public! !
-mimeType!public! !
+mimeType!constants!public! !
 pixelAt:!accessing!public! !
 pixelAt:put:!accessing!public! !
 resolution:!accessing!public! !
@@ -127,6 +136,13 @@ extent: aPoint
 	"Creates a Bitmap object of a specified size with the default pixel format PixelFormat32bppARGB."
 
 	^self width: aPoint x height: aPoint y!
+
+extent: aPoint dpi: anInteger
+	"Creates a Bitmap object of a specified size and resolution and with the default pixel format PixelFormat32bppARGB."
+
+	^(self width: aPoint x height: aPoint y)
+		dpi: anInteger;
+		yourself.!
 
 extent: aPoint format: aPixelFormat
 	"Creates a Bitmap object of a specified size and PixelFormat."
@@ -250,6 +266,7 @@ width: width height: height format: aPixelFormat
 
 !Graphics.Gdiplus.Bitmap class categoriesForMethods!
 extent:!instance creation!public! !
+extent:dpi:!instance creation!public! !
 extent:format:!instance creation!public! !
 fromBitmap:!instance creation!public! !
 fromByteArray:!instance creation!public! !

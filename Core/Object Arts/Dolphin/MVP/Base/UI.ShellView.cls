@@ -782,7 +782,7 @@ parentView: aView
 	"Private - Sets the parent of the receiver to aView. Can only be used when the receiver is not yet realized since Windows has a bug when reparenting"
 
 	creationParent := aView.
-	creationStyle at: 1
+	creationStyles at: 1
 		put: (self baseStyle mask: WS_CHILD set: (aView isNil or: [aView isDesktop]) not)!
 
 performCommand: aCommand

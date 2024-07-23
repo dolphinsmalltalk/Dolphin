@@ -30,7 +30,7 @@ package!
 
 Core.Object
 	subclass: #'Graphics.TextTileIcon'
-	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags _reserved8 _reserved9'
+	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags margin _reserved9'
 	classVariableNames: 'TextFormat'
 	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''

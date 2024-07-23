@@ -112,7 +112,13 @@ copyToClipboard
 
 	self asBitmap copyToClipboard!
 
-drawOn: aCanvas
+dpi
+	| buf |
+	buf := ByteArray new: 4.
+	Gdip gdipGetImageHorizontalResolution: self asParameter resolution: buf.
+	^buf floatAtOffset: 0!
+
+drawOn: aCanvas 
 	"Draw the receiver on aCanvas (no stretching)."
 
 	self drawOn: aCanvas at: Point.Zero!
@@ -297,7 +303,7 @@ getBounds
 	element the UnitConstant that indicates the unit of measure for the bounding rectangle."
 
 	| rect unit |
-	rect := RectF new.
+	rect := RectF newBuffer.
 	unit := UInt32Bytes new.
 	Gdip
 		gdipGetImageBounds: self asParameter
@@ -766,6 +772,7 @@ clone!copying!public! !
 copy!copying!public! !
 copyPropertiesFrom:!accessing-properties!public! !
 copyToClipboard!copying!public! !
+dpi!accessing!public! !
 drawOn:!drawing-bitmaps!public! !
 drawOn:at:!drawing-bitmaps!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !

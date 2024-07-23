@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Graphics.TextTileIcon'
-	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags _reserved8 _reserved9'
+	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags margin _reserved9'
 	classVariableNames: 'TextFormat'
 	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
@@ -204,8 +204,8 @@ drawOnGraphics: graphics at: originPoint extent: extentPoint
 			[| backbrush |
 			backbrush := tilecolor gdiplusBrush: rect.
 			graphics fillRectangle: rect brush: backbrush.
-			backbrush free.
-			rect := rect	"insetBy: 1 @ 0"].
+			backbrush free].
+	margin ifNotNil: [rect := rect insetBy: extentPoint * margin // 16].
 	utf16 := self text asUtf16String.
 	"TextTileIcon can be used to render empty tiles efficiently if no text is provided."
 	utf16 isEmpty ifTrue: [^self].
@@ -221,22 +221,22 @@ drawOnGraphics: graphics at: originPoint extent: extentPoint
 				pixelSize: height
 				style: style.
 	graphics textRenderingHint: TextRenderingHintAntiAlias.
-	format := StringFormat genericTypographic.
+	format := StringFormat genericTypographic clone.
+	format flags: (format flags maskClear: StringFormatFlagsLineLimit).
 	textExtent := (graphics
 				measureString: utf16
 				font: font
 				rect: RectF new
 				format: format) extent.
 	scale := width asFloat / textExtent x.
-	scale * textExtent y > height
-		ifTrue: 
-			[format := self stringFormat.
-			scale := height asFloat / textExtent y].
-	font free.
-	font := Gdiplus.Font
-				name: faceName
-				pixelSize: (height * scale max: 1)
-				style: style.
+	scale * textExtent y > height ifTrue: [scale := height asFloat / textExtent y].
+	scale = 1
+		ifFalse: 
+			[font free.
+			font := Gdiplus.Font
+						name: faceName
+						pixelSize: (height * scale max: 1)
+						style: style].
 	textBrush := Gdiplus.Brush color: self actualTextcolor.
 	graphics
 		drawString: utf16
@@ -322,6 +322,9 @@ largeIcon
 lockActualColors
 	tilecolor ifNotNil: [tilecolor := tilecolor actualColor].
 	textcolor ifNotNil: [textcolor := textcolor actualColor]!
+
+margin: anInteger 
+	margin := anInteger!
 
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream."
@@ -457,7 +460,7 @@ flags:!accessing!private! !
 fontName!accessing!public! !
 fontStyle!accessing!public! !
 fontStyle:!accessing!public! !
-freeDC!public! !
+freeDC!public!realizing/unrealizing! !
 hash!comparing!public! !
 hotspot!accessing!public! !
 icon!accessing!public! !
@@ -468,6 +471,7 @@ isPersistent!public! !
 isRealized!public!testing! !
 largeIcon!converting!public! !
 lockActualColors!initializing!private! !
+margin:!initializing!public! !
 printOn:!printing!public! !
 realize!public!realizing/unrealizing! !
 rotation!accessing!public! !
@@ -488,7 +492,7 @@ Graphics.TextTileIcon methodProtocol: #image attributes: #(#readOnly) selectors:
 !Graphics.TextTileIcon class methodsFor!
 
 defaultExtent
-	^SystemMetrics default largeIconExtent!
+	^SystemMetrics current largeIconExtent!
 
 icon
 	^(self
@@ -496,6 +500,7 @@ icon
 		fontName: 'Georgia'
 		color: Color cadetBlue)
 		fontStyle: #italic;
+		margin: 1;
 		yourself!
 
 new

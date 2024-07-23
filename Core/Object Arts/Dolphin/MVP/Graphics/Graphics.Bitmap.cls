@@ -230,6 +230,12 @@ detachHandle
 	self freeDC.
 	^super detachHandle!
 
+dimensions
+	| buf |
+	buf := SIZE newBuffer.
+	GDILibrary default getBitmapDimensionEx: self asParameter lpsize: buf.
+	^buf!
+
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
 
@@ -399,6 +405,13 @@ pixelData
 	self freeDC.
 	^pixData!
 
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	"Unspecified, assume system DPI. This probably won't be correct for bitmaps loaded from files, but should be for in-memory bitmaps."
+
+	^self canvas resolution!
+
 setMap3DColors: aBoolean
 	"Set whether the receiver's colours will be mapped to suitable 3D ones when loaded in."
 
@@ -440,6 +453,7 @@ createPalette!private!realizing/unrealizing! !
 createWatermarkAlphaPercent:backcolor:!helpers!public! !
 depth!accessing!public! !
 detachHandle!accessing!public! !
+dimensions!drawing-bitmaps!public! !
 drawDisabledOn:at:extent:!drawing-bitmaps!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !
 drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
@@ -458,6 +472,7 @@ initialize!initializing!private! !
 isShared!private!testing! !
 isShared:!accessing!private! !
 pixelData!accessing!public! !
+resolution!accessing!public! !
 setMap3DColors:!accessing!public! !
 stbFixup:at:!binary filing!public! !
 !

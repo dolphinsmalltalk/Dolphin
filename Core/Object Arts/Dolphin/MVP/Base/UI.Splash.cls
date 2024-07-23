@@ -39,7 +39,7 @@ creationFunction
 	^CreateWindow
 		rectangle: (self defaultPosition extent: extent)
 		dpi: d
-		styles: creationStyle!
+		styles: creationStyles!
 
 defaultSplashDelay
 	"Answer the default delay that a splash should be displayed for"

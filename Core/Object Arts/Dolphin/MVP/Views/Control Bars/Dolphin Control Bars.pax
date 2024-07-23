@@ -18,6 +18,7 @@ package setClassNames: #(
 	#{OS.TBADDBITMAP}
 	#{OS.TBBUTTON}
 	#{OS.TBBUTTONINFOW}
+	#{OS.TBMETRICS}
 	#{OS.ToolbarConstants}
 	#{UI.ControlBarAbstract}
 	#{UI.StatusBar}
@@ -31,6 +32,7 @@ package setClassNames: #(
 	#{UI.ToolbarItem}
 	#{UI.ToolbarSeparator}
 	#{UI.ToolbarSystemButton}
+	#{UI.ToolbarTextButton}
 	#{UI.ToolButton}
 ).
 
@@ -104,6 +106,7 @@ Kernel.SharedPool
 			'HIST_FORWARD' -> 16r1.
 			'HIST_VIEW_SMALL_COLOR' -> 16r8.
 			'HIST_VIEWTREE' -> 16r4.
+			'IDB_HIST_LARGE_COLOR' -> 16r9.
 			'IDB_HIST_SMALL_COLOR' -> 16r8.
 			'IDB_STD_LARGE_COLOR' -> 16r1.
 			'IDB_STD_SMALL_COLOR' -> 16r0.
@@ -144,13 +147,21 @@ Kernel.SharedPool
 			'TB_GETBUTTONINFOW' -> 16r43F.
 			'TB_GETBUTTONSIZE' -> 16r43A.
 			'TB_GETBUTTONTEXTW' -> 16r44B.
+			'TB_GETCOLORSCHEME' -> 16r2003.
 			'TB_GETDISABLEDIMAGELIST' -> 16r437.
+			'TB_GETEXTENDEDSTYLE' -> 16r455.
 			'TB_GETHOTIMAGELIST' -> 16r435.
 			'TB_GETIDEALSIZE' -> 16r463.
 			'TB_GETIMAGELIST' -> 16r431.
+			'TB_GETIMAGELISTCOUNT' -> 16r462.
+			'TB_GETINSERTMARK' -> 16r44F.
+			'TB_GETINSERTMARKCOLOR' -> 16r459.
+			'TB_GETITEMDROPDOWNRECT' -> 16r467.
 			'TB_GETITEMRECT' -> 16r41D.
 			'TB_GETMAXSIZE' -> 16r453.
+			'TB_GETMETRICS' -> 16r465.
 			'TB_GETPADDING' -> 16r456.
+			'TB_GETPRESSEDIMAGELIST' -> 16r469.
 			'TB_GETRECT' -> 16r433.
 			'TB_GETROWS' -> 16r428.
 			'TB_GETSTATE' -> 16r412.
@@ -158,9 +169,11 @@ Kernel.SharedPool
 			'TB_GETSTYLE' -> 16r439.
 			'TB_GETTEXTROWS' -> 16r43D.
 			'TB_GETTOOLTIPS' -> 16r423.
+			'TB_HASACCELERATOR' -> 16r45F.
 			'TB_HIDEBUTTON' -> 16r404.
 			'TB_INDETERMINATE' -> 16r405.
 			'TB_INSERTBUTTONW' -> 16r443.
+			'TB_INSERTMARKHITTEST' -> 16r451.
 			'TB_ISBUTTONCHECKED' -> 16r40A.
 			'TB_ISBUTTONENABLED' -> 16r409.
 			'TB_ISBUTTONHIDDEN' -> 16r40C.
@@ -169,28 +182,41 @@ Kernel.SharedPool
 			'TB_LINEDOWN' -> 16r1.
 			'TB_LINEUP' -> 16r0.
 			'TB_LOADIMAGES' -> 16r432.
+			'TB_MAPACCELERATOR' -> 16r45A.
 			'TB_MAPACCELERATORW' -> 16r45A.
+			'TB_MOVEBUTTON' -> 16r452.
 			'TB_PAGEDOWN' -> 16r3.
 			'TB_PAGEUP' -> 16r2.
 			'TB_PRESSBUTTON' -> 16r403.
 			'TB_REPLACEBITMAP' -> 16r42E.
 			'TB_SAVERESTOREW' -> 16r44C.
 			'TB_SETBITMAPSIZE' -> 16r420.
+			'TB_SETBOUNDINGSIZE' -> 16r45D.
 			'TB_SETBUTTONINFOW' -> 16r440.
 			'TB_SETBUTTONSIZE' -> 16r41F.
 			'TB_SETBUTTONWIDTH' -> 16r43B.
 			'TB_SETCMDID' -> 16r42A.
+			'TB_SETCOLORSCHEME' -> 16r2002.
 			'TB_SETDISABLEDIMAGELIST' -> 16r436.
+			'TB_SETDRAWTEXTFLAGS' -> 16r446.
 			'TB_SETEXTENDEDSTYLE' -> 16r454.
 			'TB_SETHOTIMAGELIST' -> 16r434.
+			'TB_SETHOTITEM2' -> 16r45E.
 			'TB_SETIMAGELIST' -> 16r430.
 			'TB_SETINDENT' -> 16r42F.
+			'TB_SETINSERTMARK' -> 16r450.
+			'TB_SETINSERTMARKCOLOR' -> 16r458.
+			'TB_SETLISTGAP' -> 16r460.
 			'TB_SETMAXTEXTROWS' -> 16r43C.
+			'TB_SETMETRICS' -> 16r466.
+			'TB_SETPADDING' -> 16r457.
 			'TB_SETPARENT' -> 16r425.
+			'TB_SETPRESSEDIMAGELIST' -> 16r468.
 			'TB_SETROWS' -> 16r427.
 			'TB_SETSTATE' -> 16r411.
 			'TB_SETSTYLE' -> 16r438.
 			'TB_SETTOOLTIPS' -> 16r424.
+			'TB_SETWINDOWTHEME' -> 16r200B.
 			'TB_STATECHECKED' -> 16r1.
 			'TB_STATEENABLED' -> 16r4.
 			'TB_STATEHIDDEN' -> 16r8.
@@ -211,6 +237,9 @@ Kernel.SharedPool
 			'TBIF_STATE' -> 16r4.
 			'TBIF_STYLE' -> 16r8.
 			'TBIF_TEXT' -> 16r2.
+			'TBMF_BARPAD' -> 16r2.
+			'TBMF_BUTTONSPACING' -> 16r4.
+			'TBMF_PAD' -> 16r1.
 			'TBN_BEGINADJUST' -> -16r2BF.
 			'TBN_BEGINDRAG' -> -16r2BD.
 			'TBN_CLOSEUP' -> -16r2C7.
@@ -381,6 +410,23 @@ OS.SizedStructure
 			'_TBBUTTONINFOW_Size' -> 16r20
 		}!
 
+OS.SizedStructure
+	subclass: #'OS.TBMETRICS'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ToolbarConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_cxBarPad' -> 16r10.
+			'_OffsetOf_cxButtonSpacing' -> 16r18.
+			'_OffsetOf_cxPad' -> 16r8.
+			'_OffsetOf_cyBarPad' -> 16r14.
+			'_OffsetOf_cyButtonSpacing' -> 16r1C.
+			'_OffsetOf_cyPad' -> 16rC.
+			'_OffsetOf_dwMask' -> 16r4.
+			'_TBMETRICS_Size' -> 16r20
+		}!
+
 UI.ToolbarItem
 	subclass: #'UI.ToolbarButton'
 	instanceVariableNames: 'style commandDescription commandId'
@@ -466,6 +512,14 @@ UI.ToolbarButton
 							})
 		}!
 
+UI.ToolbarButton
+	subclass: #'UI.ToolbarTextButton'
+	instanceVariableNames: 'buttonText'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 UI.AbstractNonReferenceDelegatingView
 	subclass: #'UI.ToolButton'
 	instanceVariableNames: ''
@@ -493,10 +547,11 @@ UI.ControlBarAbstract
 UI.ControlBarAbstract
 	subclass: #'UI.Toolbar'
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent imageSize buttonSize dropDownMenu layoutManager'
-	classVariableNames: ''
+	classVariableNames: 'FluentIconFonts'
 	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+			'FluentIconsMask' -> 16r2.
 			'ImageSizes'
 				-> (IdentityDictionary withAll: {
 								#largeIcons -> (16r20 @ 16r20).
@@ -507,7 +562,10 @@ UI.ControlBarAbstract
 								#thumbnails -> (16r40 @ 16r40).
 								#tileIcons -> (16r30 @ 16r30)
 							}).
-			'LabelsMask' -> 16r1
+			'IsScalableMask' -> 16r4.
+			'LabelsMask' -> 16r1.
+			'NotScalableMask' -> 16r8.
+			'ScalableMask' -> 16rC
 		}!
 
 "End of package definition"!

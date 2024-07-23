@@ -927,7 +927,7 @@ isAutoArranged
 
 	"Implementation Note: From MSDN: 'All virtual list-view controls default to the LVS_AUTOARRANGE style.'"
 
-	^(creationStyle at: 1) anyMask: ##(LVS_AUTOARRANGE | LVS_OWNERDATA)!
+	^(creationStyles at: 1) anyMask: ##(LVS_AUTOARRANGE | LVS_OWNERDATA)!
 
 isAutoArranged: aBoolean 
 	"Set whether icons should be automatically arranged."

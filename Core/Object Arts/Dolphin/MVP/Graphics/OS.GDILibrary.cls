@@ -435,6 +435,15 @@ gdiTransparentBlt: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest w
 	<stdcall: bool GdiTransparentBlt handle int32 int32 int32 int32 handle int32 int32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
+getBitmapDimensionEx: hbit lpsize: lpsize
+	"	BOOL GetBitmapDimensionEx(
+			[in]  HBITMAP hbit,
+		[out] LPSIZE  lpsize
+	);"
+
+	<stdcall: bool GetBitmapDimensionEx handle SIZE*>
+	^self invalidCall: _failureCode!
+
 getBkColor: hdc
 	"Invoke the GetBkColor() function of the module wrapped by the receiver.
 	Helpstring: Get the background color of a DC
@@ -1258,6 +1267,7 @@ frameRgn:hRgn:hBr:nWidth:nHeight:!public!win32 functions-region! !
 gdiAlphaBlend:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginSrc:wSrc:hSrc:ftn:!**auto generated**!public!win32 functions-bitmap! !
 gdiGradientFill:pVertex:nVertex:pMesh:nCount:ulMode:!**auto generated**!public! !
 gdiTransparentBlt:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginSrc:wSrc:hSrc:crTransparent:!**auto generated**!public! !
+getBitmapDimensionEx:lpsize:!**auto generated**!public! !
 getBkColor:!**auto generated**!public!win32 functions-device context! !
 getBkMode:!**auto generated**!public!win32 functions-device context! !
 getClipBox:lprc:!**auto generated**!public!win32 functions-clipping! !
