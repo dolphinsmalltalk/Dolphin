@@ -32,6 +32,15 @@ circleExtent
 circleVelocity
 	^6.5!
 
+creationFunction: aRectangle dpi: anInteger
+	"Private - Answer a function object that encapsulates a CreateWindow API call to create or recreate a window for the receiver, with the specified position and extent, measured at the specified DPI."
+
+	"The geometry is hard-coded, so create in a DPI unaware context to minimize code changes (and as an example)."
+
+	self assert: [anInteger == 96].
+	^CreateInDpiAwarenessContext decorating: (super creationFunction: aRectangle dpi: anInteger)
+		withDpiAwareness: DpiAwareness gdiScaled!
+
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
@@ -51,6 +60,7 @@ initialize
 	end := 300@190.
 	circle := start.
 	self text: 'Sliding Ball Demonstration'.
+	creationParent := View desktop
 !
 
 isCompleted
@@ -118,19 +128,21 @@ render
 	super render
 !
 
-showCompletedMessage
-	"It is not straightforward to automatically terminate a standard MessgaeBox so for 
-	expendiency we use a custom Splash screen"
+show
+	super show.
+	self beActive!
 
-	| bm |
-	bm := DIBSection width: 200 height: 100.
-	(bm canvas)
-		forecolor: Color white;
-		backgroundMode: TRANSPARENT;
-		text: 'The package has arrived' at: 20 @ 40.
-	(Splash new)
-		bitmap: bm;
-		showTimed: (Delay forSeconds: 5)!
+showCompletedMessage
+	"It is not straightforward to automatically terminate a standard MessageBox after a timeout so use a MessageBubble instead."
+
+	MessageBubble new
+		willFade: true;
+		timeout: 5000 milliseconds;
+		position: (self mapPointToScreen: circle * self displayMonitor effectiveDpi // 96);
+		caption: '';
+		font: (Font name: 'Segoe UI' pointSize: 12);
+		text: 'The package has arrived';
+		open!
 
 showStartMessageOn: aCanvas
 	aCanvas 
@@ -141,14 +153,15 @@ startStepProcess
 	stepProcess := [[Processor sleep: (1000 // self frameRate). self step] repeat ] fork!
 
 step
-	| unitStep |
-	unitStep := (end-start) / 1000.
-	circle := circle + (unitStep*self circleVelocity).
-	self invalidate.
-	self isCompleted ifTrue: [
-		self showCompletedMessage.
-		self stopStepProcess ].
-!
+	self isCompleted
+		ifTrue: 
+			[self showCompletedMessage.
+			self stopStepProcess]
+		ifFalse: 
+			[| unitStep |
+			self invalidate.
+			unitStep := (end - start) / 1000.
+			circle := circle + (unitStep * self circleVelocity)]!
 
 stepProcess
 	"Private - Answer the value of the receiver's ''stepProcess'' instance variable."
@@ -163,6 +176,7 @@ stopStepProcess
 !UI.Examples.SlidingBallDemo categoriesForMethods!
 circleExtent!constants!public! !
 circleVelocity!constants!public! !
+creationFunction:dpi:!private!realizing/unrealizing! !
 defaultExtent!constants!private! !
 defaultWindowStyle!constants!private! !
 frameRate!constants!public! !
@@ -177,6 +191,7 @@ paintLineOn:!displaying!private! !
 paintStartOn:!displaying!private! !
 rectangleExtent!constants!public! !
 render!operations!private! !
+show!operations!public! !
 showCompletedMessage!operations!private! !
 showStartMessageOn:!displaying!private! !
 startStepProcess!initializing!private! !

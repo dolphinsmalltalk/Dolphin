@@ -27,6 +27,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips'
 	'..\UI Examples'
 ).
 
