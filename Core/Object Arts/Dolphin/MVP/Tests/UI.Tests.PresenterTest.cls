@@ -19,9 +19,6 @@ UI.Tests.PresenterTest comment: ''!
 classToTest
 	^self subclassResponsibility!
 
-d3ResourceStream: aString
-	^self resourceStream: 'D3ViewResources/' , aString text: false!
-
 destroyPresenter
 	| shell |
 	presenter ifNil: [^self].
@@ -197,7 +194,6 @@ waitForInputIdle
 
 !UI.Tests.PresenterTest categoriesForMethods!
 classToTest!constants!private! !
-d3ResourceStream:!helpers!private! !
 destroyPresenter!public!Running! !
 hasTestStbViewResources!private!testing! !
 hasTestStlViewResources!private!testing! !

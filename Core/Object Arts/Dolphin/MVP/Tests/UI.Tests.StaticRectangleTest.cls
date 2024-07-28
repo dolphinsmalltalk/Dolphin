@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest
+UI.Tests.StaticViewTest
 	subclass: #'UI.Tests.StaticRectangleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''

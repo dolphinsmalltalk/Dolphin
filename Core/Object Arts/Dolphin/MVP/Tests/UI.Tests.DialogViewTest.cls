@@ -239,7 +239,10 @@ testRemainsOnScreen
 		centered: true.
 	self assert: rect origin
 		equals: (self workAreaNearest: workArea topRight) topRight
-				- (self dialogExtent x @ 0 * monitor dpi // 96)! !
+				- (self dialogExtent x @ 0 * monitor dpi // 96)!
+
+workAreaNearest: aPoint
+	^(DisplayMonitor nearestPoint: aPoint) workArea! !
 
 !UI.Tests.DialogViewTest categoriesForMethods!
 classToTest!helpers!private! !
@@ -255,6 +258,7 @@ testNearOwnerModal!public!unit tests! !
 testNearOwnerModeless!public!unit tests! !
 testRecreate!public!unit tests! !
 testRemainsOnScreen!public!unit tests! !
+workAreaNearest:!helpers!private! !
 !
 
 !UI.Tests.DialogViewTest class methodsFor!

@@ -10,7 +10,7 @@ MultipleSelectionListControlTest guid: (GUID fromString: '{bef7231e-b333-4717-a4
 
 MultipleSelectionListControlTest isAbstract: true!
 
-MultipleSelectionListControlTest comment: ''!
+MultipleSelectionListControlTest comment: 'Test that the behaviour of the deprecated MultipleSelectionListBox class retains its legacy features in the refactored ListControlView hierarchy.'!
 
 !MultipleSelectionListControlTest categoriesForClass!Unclassified! !
 

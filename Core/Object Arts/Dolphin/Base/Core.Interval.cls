@@ -262,7 +262,7 @@ isEmpty!public!testing! !
 isSelfEvaluating!public!testing! !
 last!accessing!public! !
 printOn:!printing!public! !
-resize:!mutating!public! !
+resize:!mutating!private! !
 setFrom:to:by:!accessing!private! !
 size!accessing!public! !
 species!accessing!public! !

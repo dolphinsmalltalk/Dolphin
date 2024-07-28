@@ -51,6 +51,9 @@ setUpFakeUserLibrary
 	"In this configuration the active window is nil (i.e. simulating foreground window not a Dolphin window), and the foreground window will be external."
 	self assertIsNil: View active!
 
+shouldSetupPresenter
+	^false!
+
 tearDown
 	fakeUser32 ifNotNil: [fakeUser32 close].
 	shells do: [:each | each destroy].
@@ -64,6 +67,7 @@ createShell:text:!helpers!private! !
 getSecondaryMonitorIfAvailable!helpers!private! !
 setUp!public!running! !
 setUpFakeUserLibrary!helpers!private! !
+shouldSetupPresenter!helpers!private! !
 tearDown!public!running! !
 workAreaNearest:!helpers!private! !
 !

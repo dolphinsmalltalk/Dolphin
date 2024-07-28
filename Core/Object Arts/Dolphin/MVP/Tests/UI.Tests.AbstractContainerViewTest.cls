@@ -94,7 +94,7 @@ checkRectangle: rect inBitmap: bitmap color: color
 initializePresenter
 	presenter := self classToTest show.
 	presenter topView layoutManager: nil.
-	initialParentRect := ((10 @ 20 extent: self initialParentExtent) scaledBy: self view scaleFactor)
+	initialParentRect := ((10 @ 20 extent: self initialParentExtent) scaledBy: presenter topView scaleFactor)
 				truncated.
 	presenter rectangle: initialParentRect.
 	presenter backcolor: self backgroundColor!
@@ -191,7 +191,7 @@ waitForScreenUpdate
 
 !UI.Tests.AbstractContainerViewTest categoriesForMethods!
 backgroundColor!constants!private! !
-bitmapOfPaintView:!helpers!public! !
+bitmapOfPaintView:!helpers!private! !
 bitmapOfPrintView:!helpers!private! !
 borderColor!constants!private! !
 borderRectangleOf:!helpers!private! !

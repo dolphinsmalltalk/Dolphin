@@ -52,7 +52,9 @@ verifyStbUpgrade: anInteger
 	| notifications |
 	notifications := super verifyStbUpgrade: anInteger.
 	self assert: notifications single description
-		equals: 'Deprecated message sent: Slider>>#selection: from: MessageSendAbstract>>#value'!
+		equals: 'Deprecated message sent: <1p> from: <2p>'
+				<< {Slider >> #selection:. MessageSendAbstract >> #value}.
+	^#()!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |

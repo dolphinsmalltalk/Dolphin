@@ -1,28 +1,42 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableTreeItemsTest
-	subclass: #'UI.Tests.TreePresenterTest'
+	subclass: #'UI.Tests.TreeViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-UI.Tests.TreePresenterTest guid: (Core.GUID fromString: '{152b5f25-c97c-404f-8e88-b8a27c9e8ffc}')!
+UI.Tests.TreeViewTest guid: (Core.GUID fromString: '{9f22e0fe-4151-461c-a92a-f1d9f25e6605}')!
 
-UI.Tests.TreePresenterTest comment: ''!
+UI.Tests.TreeViewTest comment: ''!
 
-!UI.Tests.TreePresenterTest methodsFor!
+!UI.Tests.TreeViewTest methodsFor!
 
 assertContains: anObject
 	self assertNotNil: (presenter view findNode: anObject)!
 
 classToTest
-	^TreePresenter!
+	^TreeView!
 
-verifyUpgradedView: anInteger identifier: aResourceIdentifier
+testSetImageBlockDoesNotAffectSelection
+	presenter view class updateModes do: 
+			[:each | 
+			presenter view updateMode: each.
+			super testSetImageBlockDoesNotAffectSelection.
+			presenter view model clear]!
+
+testSetTextBlockDoesNotAffectSelection
+	presenter view class updateModes do: 
+			[:each | 
+			presenter view updateMode: each.
+			super testSetTextBlockDoesNotAffectSelection.
+			presenter view model clear]!
+
+verifyUpgradedView: anInteger  identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
+	super verifyUpgradedView: anInteger  identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view updateMode identicalTo: #dynamic.
@@ -31,19 +45,17 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view isExpandAllEnabled.
 	self assert: view isVirtual.
 	anInteger < 13
-		ifTrue: [self assert: self view indentSeparation equals: 16 * view dpi // USER_DEFAULT_SCREEN_DPI]!
+		ifTrue: [self assert: self view indentSeparation equals: 16 * self view dpi // USER_DEFAULT_SCREEN_DPI]! !
 
-viewClass
-	^TreeView! !
-
-!UI.Tests.TreePresenterTest categoriesForMethods!
+!UI.Tests.TreeViewTest categoriesForMethods!
 assertContains:!helpers!private! !
 classToTest!helpers!private! !
+testSetImageBlockDoesNotAffectSelection!public!unit tests! !
+testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !
-viewClass!constants!private! !
 !
 
-!UI.Tests.TreePresenterTest class methodsFor!
+!UI.Tests.TreeViewTest class methodsFor!
 
 resource_Default_view_13
 	"TreePresenter default TreeView resource at at STB version 13 (prior to addition of tvStyle and updateMode."
@@ -72,7 +84,7 @@ resource_Default_view_D7
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903706176 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil 170 176 592 nil #noIcons 1 170 ##(Smalltalk.PluggableLookupTable) 592 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 882 401 571 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 71 8 0 0 39 1 0 0] 8 #() 882 193 193 nil 27 )! !
 
-!UI.Tests.TreePresenterTest class categoriesForMethods!
+!UI.Tests.TreeViewTest class categoriesForMethods!
 resource_Default_view_13!public!resources-views! !
 resource_Default_view_D6!public!resources-views! !
 resource_Default_view_D7!public!resources-views! !

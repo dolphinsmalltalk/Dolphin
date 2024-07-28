@@ -127,7 +127,7 @@ package setClassNames: #(
 	#{UI.Tests.TextEditTest}
 	#{UI.Tests.TimeToTextTest}
 	#{UI.Tests.ToolbarTest}
-	#{UI.Tests.TreePresenterTest}
+	#{UI.Tests.TreeViewTest}
 	#{UI.Tests.TypeConverterTest}
 	#{UI.Tests.ValueBufferTest}
 	#{UI.Tests.ValueConverterTest}
@@ -220,7 +220,6 @@ package setPrerequisites: #(
 	'..\Presenters\Text\Dolphin Text Presenter'
 	'..\Icons\Dolphin Text Tile Icons'
 	'..\Models\Tree\Dolphin Tree Models'
-	'..\Presenters\Tree\Dolphin Tree Presenter'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
 	'..\..\..\Samples\MVP\Scribble\Scribble'
@@ -878,14 +877,6 @@ UI.Tests.PresenterTest
 	classConstants: {}!
 
 UI.Tests.PresenterTest
-	subclass: #'UI.Tests.StaticRectangleTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.Tests.PresenterTest
 	subclass: #'UI.Tests.StaticViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1150,10 +1141,10 @@ UI.Tests.SelectableTreeItemsTest
 	classConstants: {}!
 
 UI.Tests.SelectableTreeItemsTest
-	subclass: #'UI.Tests.TreePresenterTest'
+	subclass: #'UI.Tests.TreeViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1199,6 +1190,14 @@ UI.Tests.StaticViewTest
 
 UI.Tests.StaticViewTest
 	subclass: #'UI.Tests.StaticPathTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.StaticRectangleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
