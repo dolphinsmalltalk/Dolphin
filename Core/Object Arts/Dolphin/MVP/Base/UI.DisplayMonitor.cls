@@ -232,7 +232,14 @@ workArea
 	"Answer a <rectangle> which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
 
 	workArea ifNil: [self cacheInfo].
-	^workArea! !
+	^workArea!
+
+workAreaOffset
+	"Answer a <Point> which is the offset of the receiver's work area from the receiver's origin. This is always in the measurement system of the current DPI awareness context."
+
+	| monitorInfo |
+	monitorInfo := self info.
+	^monitorInfo workArea topLeft - self origin! !
 
 !UI.DisplayMonitor categoriesForMethods!
 =!comparing!public! !
@@ -264,6 +271,7 @@ resolution!accessing!public! !
 scaleFactor!accessing!public! !
 scalePercentage!accessing!public! !
 workArea!accessing!public! !
+workAreaOffset!accessing!public! !
 !
 
 !UI.DisplayMonitor class methodsFor!

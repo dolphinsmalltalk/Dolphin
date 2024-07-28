@@ -338,18 +338,17 @@ placement: aWINDOWPLACEMENT
 					placement height: placement height + self droppedHeight.
 					placement])!
 
-recreationFunction
-	"Private - Answer a function object that encapsulates a CreateWindow API call to recreate the receiver's window."
+recreationRectangle
+	"Private - Answer a <rectangle> that specifies the position and extent at which the receiver should be recreated."
 
 	^self isSimple
-		ifTrue: [super recreationFunction]
+		ifTrue: [super recreationRectangle]
 		ifFalse: 
 			["When the ComboBox is recreated the rectangle needs to be that when dropped as this is how the dropped height is set."
-			self creationFunction: (User32
+			User32
 						mapRectangle: self getDroppedControlRect
 						from: nil
-						to: self parentView)
-				dpi: self dpi]!
+						to: self parentView]!
 
 resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
@@ -431,7 +430,7 @@ mode!accessing-styles!public! !
 mode:!accessing-styles!public! !
 onPositionChanged:!event handling!public! !
 placement:!geometry!private! !
-recreationFunction!geometry!private!realizing/unrealizing! !
+recreationRectangle!geometry!private!realizing/unrealizing! !
 resolutionScaledBy:!geometry!private! !
 selectionByIndex!helpers!private!selection! !
 setActualHeight!geometry!private! !

@@ -836,6 +836,13 @@ queryClose
 	self presenter trigger: #closeRequested: with: okValue.
 	^okValue value!
 
+recreationRectangle
+	"Private - Answer a <rectangle> that specifies the position and extent at which the receiver should be recreated."
+
+	"If the receiver is minimized, then its window rectangle will be positioned off screen and have the minimal extent of an old-style window tile (if you minimize a dialog and put the taskbar into auto-hide, you'll still see such a tile for the minimized dialog). Therefore we need to use the rectangle retrieved by GetWindowPlacement, adjusting it to account for any work area offset."
+
+	^self placement rcNormalPosition translatedBy: self displayMonitor workAreaOffset!
+
 releaseAccelerators
 	"Private - Unrealize self created accelerators."
 
@@ -1319,6 +1326,7 @@ positionNear:!geometry!public! !
 preTranslateKeyboardInput:!dispatching!public! !
 preTranslateMouseInput:!dispatching!public! !
 queryClose!event handling!public! !
+recreationRectangle!geometry!private!realizing/unrealizing! !
 releaseAccelerators!private!realizing/unrealizing! !
 releaseMenu!private!realizing/unrealizing! !
 resetDefaultButton!accessing!default button!private! !

@@ -61,7 +61,7 @@ imageFromResource: aResourceIdentifier
 recreationFunction
 	"Private - Answer a function object that encapsulates a CreateWindow API call to recreate the receiver's window."
 
-	^self creationFunction: self getRect dpi: DesignDesktop dpi!
+	^self creationFunction: self recreationRectangle dpi: DesignDesktop dpi!
 
 refreshContents
 	backcolor := Color applicationWorkspace.
