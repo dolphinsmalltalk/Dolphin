@@ -586,6 +586,11 @@ initialize
 new
 	^self extent: 0 @ 0 depth: 1!
 
+newInitializerFromStbVersion3: anArray
+	^(anArray at: 4)
+		ifNil: [self blankInitializerClass extent: (anArray at: 8) depth: 24]
+		ifNotNil: [super newInitializerFromStbVersion3: anArray]!
+
 sharedCopyOf: aBitmap
 	"Answers a cached copy of aBitmap if one has already been loaded from the same
 	identifier. This can help save memory if the bitmap is not intended to be modified, 
@@ -659,6 +664,7 @@ fromView:background:!instance creation!public! !
 imageType!constants!private! !
 initialize!development!initializing!private! !
 new!instance creation!public! !
+newInitializerFromStbVersion3:!binary filing!private! !
 sharedCopyOf:!instance creation!public! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !

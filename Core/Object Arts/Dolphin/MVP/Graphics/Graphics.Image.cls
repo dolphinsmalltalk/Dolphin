@@ -338,6 +338,15 @@ newFileInitializer: aString locator: aFileLocator
 		fileLocator: aFileLocator
 		flags: self defaultLoadFlags!
 
+newInitializerFromStbVersion3: anArray
+	^(anArray at: 5)
+		ifNil: [self newFileInitializer: (anArray at: 4) locator: (anArray at: 3)]
+		ifNotNil: 
+			[:instanceHandle |
+			instanceHandle == 0
+				ifTrue: [self newSystemInitializer: (anArray at: 4)]
+				ifFalse: [self newResourceInitializer: (anArray at: 4) module: instanceHandle]]!
+
 newResourceInitializer: anIntegerOrStringId module: anInstanceHandle
 	^(anIntegerOrStringId isString
 		ifTrue: [ImageFromStringResourceInitializer]
@@ -395,14 +404,7 @@ stbConvertFromVersion3: anArray
 			to: 2
 			with: anArray
 			startingAt: 1;
-		at: 3
-			put: ((anArray at: 5)
-					ifNil: [self newFileInitializer: (anArray at: 4) locator: (anArray at: 3)]
-					ifNotNil: 
-						[:instanceHandle |
-						instanceHandle == 0
-							ifTrue: [self newSystemInitializer: (anArray at: 4)]
-							ifFalse: [self newResourceInitializer: (anArray at: 4) module: instanceHandle]]);
+		at: 3 put: (self newInitializerFromStbVersion3: anArray);
 		replaceFrom: 4
 			to: count
 			with: anArray
@@ -434,6 +436,7 @@ imageManager!accessing!public! !
 imageType!private! !
 initializer:!public! !
 newFileInitializer:locator:!helpers!private! !
+newInitializerFromStbVersion3:!binary filing!private! !
 newResourceInitializer:module:!helpers!private! !
 newSystemInitializer:!helpers!private! !
 stbConvertFrom:!binary filing!public! !
