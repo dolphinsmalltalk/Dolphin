@@ -127,44 +127,12 @@ commandPolicyWithSource: sourceView
 	^CommandPolicy defaultClass commandSource: sourceView!
 
 createShellWindow: aShellView withFunction: aCreateWindow
-	| monitor position extent targetDpi |
-	"If the position is not specified, we will need to work out a suitable position on the active monitor"
-	(aShellView isRestoringFromProxy or: [aCreateWindow hasDefaultPosition])
-		ifTrue: 
-			["Default position, so should go on the active monitor"
-			monitor := DisplayMonitor active.
-			targetDpi := monitor effectiveDpi.
-			"Now work out the extent to use at the DPI of the active monitor, which is either the specified extent remapped to the active monitor DPI, or if unspecified the monitor default"
-			extent := aCreateWindow hasDefaultExtent
-						ifTrue: [monitor defaultWindowExtent * targetDpi // monitor dpi]
-						ifFalse: [aCreateWindow extent * targetDpi // aCreateWindow dpi].
-			position := aShellView isInitiallyCentered
-						ifTrue: [monitor centerExtent: extent]
-						ifFalse: [monitor nextWindowPosition]]
-		ifFalse: 
-			["Position was specified. Determine the monitor from that."
-			position := aCreateWindow position.
-			monitor := DisplayMonitor nearestPoint: position.
-			targetDpi := monitor effectiveDpi.
-			"Now we can calculate the extent as above"
-			extent := aCreateWindow hasDefaultExtent
-						ifTrue: [monitor defaultWindowExtent * targetDpi // monitor dpi]
-						ifFalse: [aCreateWindow extent * targetDpi // aCreateWindow dpi].
-			"If should be initially centered, override the specified position, but keeping to the same monitor"
-			position := aShellView isInitiallyCentered
-						ifTrue: 
-							["Position so as to centre the window at whatever its extent should be"
-							monitor centerExtent: extent]
-						ifFalse: [position * targetDpi // aCreateWindow dpi]].
-	"Set the dpi of the shell to that of the monitor we think it is on, and to which we have scaled it. This will mean that even if we made the wrong choice, and Windows thinks it is placed on another monitor, when it is moved between monitors it should at least rescale correctly. Note that we would at least need to clear any cached DPI, as otherwise the shell will keep getting rescaled from its original DPI. Basically the cached ShellView DPI needs to always be the same as the actual DPI, except during the per-monitor transition process when Windows is sending WM_DPICHANGED_BEFOREPARENT to all the children. In order for the children to rescale correctly, they need to know the DPI to which they were last scaled, which is the primary reason to cache the DPI in ShellView."
-	aShellView dpi: targetDpi.
-	"Adjust the position to fit on the monitor, if possible"
-	aCreateWindow
-		position: (monitor adjustPosition: position forExtent: extent)
-		extent: extent
-		dpi: targetDpi.
-	"Finally, create the top-level Window"
-	aShellView basicCreateWindow: aCreateWindow!
+	aCreateWindow createShellWindow: aShellView!
+
+dialogOwner
+	"Answer the <View> that should be specified as the default owner of dialogs of which the receiver is the parent. This is passed as the hWndParent parameter to the CreateDialogXxx API call. For child dialogs (e.g. dialogs embedded as tabs or pages in a wizard) this parameter does specify the parent of the dialog box. For top-level dialog boxes, this is really the 'owner' of the dialog rather than the parent. The significance of the owner relationship is that Windows will enable/disable the owner of a modal dialog when it is shown/closed, and will also activate the dialog to the foreground when the user attempts to activate the owner (e.g. by left-click).  Since [A window can have a parent or an owner but not both](https://devblogs.microsoft.com/oldnewthing/20100315-00/?p=14613), then in the case of the desktop view the default owner should be the curent active view."
+
+	^View active!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -253,6 +221,9 @@ layoutManager: layoutManager
 
 metrics
 	^SystemMetrics current!
+
+monitor
+	^DisplayMonitor active!
 
 name
 	"Answer the name of the receiver in its parent or nil if no name has been set.
@@ -404,6 +375,7 @@ centerExtent:!geometry!private! !
 childLayoutInvalidated!geometry!private! !
 commandPolicyWithSource:!commands!public! !
 createShellWindow:withFunction:!operations!public! !
+dialogOwner!accessing!public! !
 displayOn:!displaying!public! !
 dpi!accessing!high DPI!public! !
 ensureSubView:rectangleVisible:!private!updating! !
@@ -421,6 +393,7 @@ isDesktop!public!testing! !
 isLayoutValid!geometry!public!testing! !
 layoutManager:!geometry!public! !
 metrics!public! !
+monitor!operations!public! !
 name!accessing!public! !
 name:!accessing!public! !
 name:as:!hierarchy!public!sub views! !

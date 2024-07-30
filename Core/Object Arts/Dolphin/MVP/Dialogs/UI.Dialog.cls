@@ -59,6 +59,16 @@ cancel
 	self view close.
 !
 
+createView: aResourceNameString
+	"Private - Creates and connects a view for the receiver from the resource identified
+	by aResourceNameString. Answers the new view created"
+
+	self view: (self class loadViewResource: aResourceNameString
+				inContext: (STBViewContext
+						parent: (parentPresenter ifNil: [View desktop] ifNotNil: [parentPresenter view])
+						owner: ownerView)).
+	^self view!
+
 clearValidationResult
 	validationResultPresenter value: nil!
 
@@ -168,7 +178,7 @@ revert
 show
 	"Shows the view of the receiver"
 
-	self view showModeless: ownerView!
+	self view showModeless!
 
 showModal
 	"Show the receiver's view as a modal dialog.
@@ -178,7 +188,7 @@ showModal
 	^self answer!
 
 showModalView
-	self view showModalTo: ownerView!
+	self view showModal!
 
 showShell
 	"Show the receiver a modeless dialog"
@@ -235,6 +245,7 @@ cancel!commands-actions!public! !
 clearValidationResult!operations!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+createView:!operations!private! !
 deferredValidate!operations!public! !
 flushChanges!commands-actions!private! !
 hintDwell!constants!public! !

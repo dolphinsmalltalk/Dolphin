@@ -59,6 +59,43 @@ rectangle: aRectangle dpi: anInteger styles: anArray title: aString
 	styles := anArray.
 	title := aString!
 
+resolveShellGeometry: aShellView
+	| targetDpi extent monitor position |
+	position := self position.
+	extent := self extent.
+	"If the position is not specified, we will need to work out a suitable position on the active monitor"
+	(aShellView isRestoringFromProxy or: [position = UseDefaultGeometry])
+		ifTrue: 
+			["Default position, so should go on the default monitor. This is usually the active monitor, but for a dialog it would be the monitor of the owner."
+			monitor := DisplayMonitor active.
+			targetDpi := monitor effectiveDpi.
+			"Now work out the extent to use at the DPI of the active monitor, which is either the specified extent remapped to the active monitor DPI, or if unspecified the monitor default"
+			extent := extent = UseDefaultGeometry
+						ifTrue: [monitor defaultWindowExtent * targetDpi // monitor dpi]
+						ifFalse: [extent * targetDpi // dpi].
+			position := aShellView isInitiallyCentered
+						ifTrue: [monitor centerExtent: extent]
+						ifFalse: [monitor nextWindowPosition]]
+		ifFalse: 
+			["Position was specified. Determine the monitor from that."
+			monitor := DisplayMonitor nearestPoint: position.
+			targetDpi := monitor effectiveDpi.
+			"Now we can calculate the extent as above"
+			extent := extent = UseDefaultGeometry
+						ifTrue: [monitor defaultWindowExtent * targetDpi // monitor dpi]
+						ifFalse: [extent * targetDpi // dpi].
+			"If should be initially centered, override the specified position, but keeping to the same monitor"
+			position := aShellView isInitiallyCentered
+						ifTrue: 
+							["Position so as to centre the window at whatever its extent should be"
+							monitor centerExtent: extent]
+						ifFalse: [position * targetDpi // dpi]].
+
+
+	"Adjust the position to fit on the monitor, if possible"
+	rectangle := RECT origin: (monitor adjustPosition: position forExtent: extent) extent: extent.
+	dpi := targetDpi!
+
 styles
 	"Answer a two-element <Array> containing the basic and extended window styles to be applied to the new window on creation."
 
@@ -76,6 +113,7 @@ create:!operations!public! !
 extendedStyle!accessing!public! !
 extendedStyle:!accessing!public! !
 rectangle:dpi:styles:title:!initializing!private! !
+resolveShellGeometry:!operations!private! !
 styles!accessing!public! !
 title!accessing!public! !
 !

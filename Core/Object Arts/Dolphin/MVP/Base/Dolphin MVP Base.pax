@@ -145,6 +145,7 @@ package setClassNames: #(
 	#{UI.ShellView}
 	#{UI.SizeEvent}
 	#{UI.Splash}
+	#{UI.STBViewContext}
 	#{UI.STBViewProxy}
 	#{UI.ValuePresenter}
 	#{UI.View}
@@ -1580,6 +1581,14 @@ Core.Object
 	classConstants: {}!
 
 Core.Object
+	subclass: #'UI.STBViewContext'
+	instanceVariableNames: 'parent owner'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
 	subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyles presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
@@ -1587,6 +1596,7 @@ Core.Object
 	classInstanceVariableNames: 'theme'
 	classConstants: {
 			'CreateCenteredMask' -> 16r40.
+			'CreationParentInstVarIndex' -> 16r2.
 			'DragSourceMask' -> 16r4.
 			'DropTargetMask' -> 16r8.
 			'LayoutValidMask' -> 16r1.
@@ -2484,12 +2494,7 @@ Kernel.STxProxy
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {
-			'CreationParentIndex' -> 16r2.
-			'EventsIndex' -> 16rB.
-			'FlagsIndex' -> 16r8.
-			'HandleIndex' -> 16r1
-		}!
+	classConstants: { 'EventsIndex' -> 16rB. 'FlagsIndex' -> 16r8. 'HandleIndex' -> 16r1 }!
 
 UI.View
 	subclass: #'UI.AbstractDelegatingView'

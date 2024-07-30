@@ -58,8 +58,12 @@ dpiAwareness
 
 	^dpiAwareness!
 
-loadViewResource: aResourceArray forEdit: isLoadingForEdit
-	^dpiAwareness inContextDo: [super loadViewResource: aResourceArray forEdit: isLoadingForEdit]!
+loadViewResource: aResourceArray withContext: aViewContext forEdit: isLoadingForEdit
+	^dpiAwareness inContextDo: 
+			[super
+				loadViewResource: aResourceArray
+				withContext: aViewContext
+				forEdit: isLoadingForEdit]!
 
 metrics
 	"Answer a <SytemMetrics> instance that can provide standard measurements scaled to the receiver's current DPI."
@@ -81,7 +85,7 @@ createShellWindow:withFunction:!operations!public! !
 defaultWindowExtent!constants!public! !
 dpi!accessing!high DPI!public! !
 dpiAwareness!accessing!high DPI!public! !
-loadViewResource:forEdit:!binary filing!public! !
+loadViewResource:withContext:forEdit:!binary filing!public! !
 metrics!public! !
 printOn:!development!printing!public! !
 !

@@ -221,7 +221,7 @@ displayOnMonitor: aMonitor
 	This can be used, for example, to position a dialog on the same monitor as its owner."
 
 	| currentMonitor |
-	currentMonitor := DisplayMonitor nearestView: self.
+	currentMonitor := self monitor.
 	currentMonitor = aMonitor
 		ifFalse: [self positionNear: aMonitor origin + (self position - currentMonitor origin)]!
 
@@ -638,12 +638,7 @@ onDpiChanged: aDpiChangedEvent
 	dpi := newDpi.
 	self rectangle: aDpiChangedEvent proposedRect.
 	"We must recreate the menubar to ensure it paints correctly at the new resolution"
-	self menuBar
-		ifNotNil: 
-			[:menu |
-			self releaseMenu.
-			menuBar := menu.
-			self updateMenuBar].
+	self recreateMenuBar.
 	self presenter trigger: #dpiChanged: with: aDpiChangedEvent.
 	"Docs state that 0 should be returned if handled. It is stated that there is no implementation in the DefWindowProc anyway, but there definitely is one in DefDlgProc, and we normally want to suppress that because our dialogs are normally built from an empty template and then populated."
 	^0!
@@ -836,12 +831,22 @@ queryClose
 	self presenter trigger: #closeRequested: with: okValue.
 	^okValue value!
 
+recreateMenuBar
+	self menuBar
+		ifNotNil: 
+			[:menu |
+			self releaseMenu.
+			menuBar := menu.
+			self updateMenuBar]!
+
 recreationRectangle
 	"Private - Answer a <rectangle> that specifies the position and extent at which the receiver should be recreated."
 
 	"If the receiver is minimized, then its window rectangle will be positioned off screen and have the minimal extent of an old-style window tile (if you minimize a dialog and put the taskbar into auto-hide, you'll still see such a tile for the minimized dialog). Therefore we need to use the rectangle retrieved by GetWindowPlacement, adjusting it to account for any work area offset."
 
-	^self placement rcNormalPosition translatedBy: self monitor workAreaOffset!
+	| placement |
+	placement := self placement.
+	^placement rcNormalPosition translatedBy: self monitor workAreaOffset!
 
 releaseAccelerators
 	"Private - Unrealize self created accelerators."
@@ -1230,7 +1235,7 @@ buildCombinedAcceleratorTable!private!realizing/unrealizing! !
 buttonRemoved:!default button!private! !
 caption!accessing!public! !
 caption:!accessing!public! !
-centerNear:atDpi:!private! !
+centerNear:atDpi:!geometry!private! !
 close!public!realizing/unrealizing! !
 combinedAcceleratorTable!accelerator!accessing!private! !
 commandPolicyClass!commands!constants!public! !
@@ -1243,7 +1248,7 @@ defaultExtent!constants!private! !
 defaultPosition!geometry!private!realizing/unrealizing! !
 defaultShowStyle!constants!private! !
 defaultWindowStyle!constants!private! !
-dialogMessageMap!private! !
+dialogMessageMap!constants!private! !
 dispatchUser:wParam:lParam:!dispatching!private! !
 displayOnMonitor:!geometry!helpers!public! !
 dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
@@ -1258,7 +1263,7 @@ filerProxyIn:!binary filing!private! !
 flash:!operations!public! !
 flash:flags:!operations!public! !
 getDefId!default button!private! !
-getDpi!private! !
+getDpi!high DPI!private! !
 getLastActivePopup!hierarchy!private! !
 getLastActivePopupHandle!hierarchy!private! !
 hasCaption!accessing-styles!public! !
@@ -1326,6 +1331,7 @@ positionNear:!geometry!public! !
 preTranslateKeyboardInput:!dispatching!public! !
 preTranslateMouseInput:!dispatching!public! !
 queryClose!event handling!public! !
+recreateMenuBar!event handling-win32!public! !
 recreationRectangle!geometry!private!realizing/unrealizing! !
 releaseAccelerators!private!realizing/unrealizing! !
 releaseMenu!private!realizing/unrealizing! !

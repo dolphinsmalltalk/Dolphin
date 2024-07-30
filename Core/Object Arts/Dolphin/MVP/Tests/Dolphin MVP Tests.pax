@@ -950,7 +950,7 @@ UI.Tests.AbstractContainerViewTest
 
 UI.Tests.AbstractShellViewTest
 	subclass: #'UI.Tests.DialogViewTest'
-	instanceVariableNames: 'owner shell2'
+	instanceVariableNames: 'owner'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

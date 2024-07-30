@@ -111,7 +111,7 @@ runModalLoop
 setInitialPosition: aRectangle
 	"Private - Set the initial position and extent of the dialog window immediately after creation."
 
-	"In this case the dialog is loaded from a template, so we let the dialog manager worry about the correct extent."
+	"In this case the dialog content is loaded from the template, so we let the dialog manager worry about the correct extent, but we do allow the walkback dialog to be repositioned."
 
 	OS.User32
 		setWindowPos: handle
