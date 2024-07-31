@@ -65,12 +65,15 @@ state
 
 	"STATIC control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
 
-	^super state
-		add: (MessageSend
-					receiver: self
-					selector: #text:
-					argument: self text);
-		yourself!
+	| state text |
+	state := super state.
+	text := self text.
+	text notEmpty
+		ifTrue: [state add: (MessageSend
+						receiver: self
+						selector: #text:
+						argument: text)].
+	^state!
 
 updateModel
 	"Flush changes in the view back to the associated model.
