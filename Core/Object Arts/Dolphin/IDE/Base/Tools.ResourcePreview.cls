@@ -32,6 +32,10 @@ creationFunction: aRectangle dpi: anInteger
 	^CreateInDpiAwarenessContext decorating: (super creationFunction: aRectangle dpi: anInteger)
 		withDpiAwareness: DesignDesktop dpiAwareness!
 
+displayValue: aBitmap
+	self image: aBitmap.
+	self invalidate!
+
 dpiAwareness: aDpiAwareness
 	(super dpiAwareness: aDpiAwareness) ifTrue: [self refreshContents]!
 
@@ -63,11 +67,6 @@ recreationFunction
 
 	^self creationFunction: self recreationRectangle dpi: DesignDesktop dpi!
 
-refreshContents
-	backcolor := Color applicationWorkspace.
-	viewMode := #scaleBestFit.
-	^super refreshContents!
-
 setDpiAwareness
 	self dpiAwareness: DesignDesktop dpiAwareness!
 
@@ -82,10 +81,10 @@ setModel: aModel
 !Tools.ResourcePreview categoriesForMethods!
 createWindow:!private!realizing/unrealizing! !
 creationFunction:dpi:!private!realizing/unrealizing! !
+displayValue:!private!updating! !
 dpiAwareness:!accessing!high DPI!public! !
 imageFromResource:!helpers!private! !
 recreationFunction!geometry!private!realizing/unrealizing! !
-refreshContents!public! !
 setDpiAwareness!high DPI!private! !
 setModel:!accessing!private! !
 !
