@@ -403,7 +403,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ScrollingDecorator} 38 #{Core.Array} 18 nil nil 50 2 8 1143996416 131073 32 nil nil nil 5 nil nil nil 32 326 1 #{UI.ScrollingDecoratorLayout} true 550 #{Core.IdentityDictionary} 0 nil 518 #{Graphics.Point} 1 1 true 178 17 17 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 178 6143 21 178 701 501 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 178 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ScrollingDecorator} 38 #{Core.Array} 18 nil nil 50 2 8 1143996416 131073 32 nil nil nil 5 nil nil nil 32 326 1 #{UI.ScrollingDecoratorLayout} true 550 #{Core.IdentityDictionary} 0 nil 518 #{Graphics.Point} 1 1 true 178 17 17 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 93 16 0 0 4 1 0 0] 193 80 8 '' 32 3 8 #() 178 193 193 nil 27)! !
 
 !UI.ScrollingDecorator class categoriesForMethods!
 icon!constants!public! !

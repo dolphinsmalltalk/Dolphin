@@ -35,7 +35,7 @@ resource_CheckBox_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_CheckBox_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.CheckBox} 38 #{Core.Array} 16 nil nil 50 2 8 1409363203 1 32 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 517 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 306 227 43 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 112 12 0 0 31 0 0 0] 8 #() 306 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.CheckBox} 38 #{Core.Array} 16 nil nil 50 2 8 1409363203 1 32 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 517 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 112 15 0 0 31 0 0 0] 193 80 8 '' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 27)!
 
 resource_Push_to_toggle
 	"Answer the literal data from which the 'Push to toggle' resource can be reconstituted.
@@ -45,7 +45,7 @@ resource_Push_to_toggle
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Push_to_toggle)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.CheckBox} 38 #{Core.Array} 16 nil nil 50 2 8 1409367811 1 32 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 306 131 61 32 258 #text: 50 1 8 'Toggle' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 64 12 0 0 40 0 0 0] 8 #() 306 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.CheckBox} 38 #{Core.Array} 16 nil nil 50 2 8 1409367811 1 32 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 64 15 0 0 40 0 0 0] 193 80 8 'Toggle' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 27)!
 
 resource_Three_state_view
 	"Answer the literal data from which the 'Three state view' resource can be reconstituted.
@@ -55,7 +55,7 @@ resource_Three_state_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Three_state_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.CheckBox} 38 #{Core.Array} 16 nil nil 50 2 8 1409363206 1 32 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 517 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 306 227 51 32 258 #text: 50 1 8 'Yes/no/maybe?' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 112 12 0 0 35 0 0 0] 8 #() 306 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.CheckBox} 38 #{Core.Array} 16 nil nil 50 2 8 1409363206 1 32 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false nil nil 517 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 112 15 0 0 35 0 0 0] 193 80 8 'Yes/no/maybe?' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 27)!
 
 resource_Truefalse_text
 	"Answer the literal data from which the 'Truefalse text' resource can be reconstituted.
@@ -65,7 +65,7 @@ resource_Truefalse_text
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Truefalse_text)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticText} 38 #{Core.Array} 16 nil nil 50 2 8 1140850945 1 32 nil nil nil 5 nil nil nil 32 nil nil 1094 1 #{UI.BooleanToText} nil 8 '' 326 1 #{Core.Locale} #userDefault 50 2 8 'False' 8 'True' nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 338 241 51 32 290 #text: 50 1 8 'True' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 35 0 0 0] 8 #() 338 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.StaticText} 38 #{Core.Array} 16 nil nil 50 2 8 1140850945 1 32 nil nil nil 5 nil nil nil 32 nil nil 1094 1 #{UI.BooleanToText} nil 8 '' 326 1 #{Core.Locale} #userDefault 50 2 8 'False' 8 'True' nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 119 15 0 0 35 0 0 0] 193 80 nil 32 290 #text: 50 1 8 'True' 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 27)!
 
 resource_Yesno_text
 	"Answer the literal data from which the 'Yesno text' resource can be reconstituted.
@@ -75,8 +75,8 @@ resource_Yesno_text
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Yesno_text)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticText} 38 #{Core.Array} 16 nil nil 50 2 8 1140850945 1 32 nil nil nil 5 nil nil nil 32 nil nil 1094 1 #{UI.BooleanToText} nil 8 '' 326 1 #{Core.Locale} #userDefault 50 2 8 'No' 8 'Yes' nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 338 241 51 32 290 #text: 50 1 8 'Yes
-' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 35 0 0 0] 8 #() 338 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.StaticText} 38 #{Core.Array} 16 nil nil 50 2 8 1140850945 1 32 nil nil nil 5 nil nil nil 32 nil nil 1094 1 #{UI.BooleanToText} nil 8 '' 326 1 #{Core.Locale} #userDefault 50 2 8 'No' 8 'Yes' nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 119 15 0 0 35 0 0 0] 193 80 nil 32 290 #text: 50 1 8 'Yes
+' 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 27)!
 
 threeStateView
 	"Answer the view to be used for presentation of  three states (true, false and indeterminate)."

@@ -58,11 +58,14 @@ verifyUpgradedView:identifier:!helpers!private! !
 !UI.Tests.TreeViewTest class methodsFor!
 
 resource_Default_view_13
-	"TreePresenter default TreeView resource at at STB version 13 (prior to addition of tvStyle and updateMode."
+	"Answer the literal data from which the 'Default view 13' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
-	"DO NOT EDIT THIS RESOURCE. It must remain unchanged for STL upgrade verification purposes. If affected by a global refactoring, undo the method change."
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view_13)
+	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.TreeView} 38 #{Core.Array} 27 nil nil 50 2 8 1409352231 1025 32 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{Core.Message} #displayString 8 #() 274 #iconImageIndex 8 #() 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #noIcons 1 210 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 530 401 571 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 199 12 0 0 39 1 0 0] 8 #() 530 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.TreeView} 38 #{Core.Array} 35 nil nil 50 2 8 1409352231 1025 32 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{Core.Message} #displayString 8 #() 274 #iconImageIndex 8 #() 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #noIcons 1 210 0 1 262 #{UI.TreeViewDynamicUpdateMode} 32 nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 199 15 0 0 39 1 0 0] 193 80 8 '' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 29)!
 
 resource_Default_view_D6
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

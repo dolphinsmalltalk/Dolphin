@@ -144,7 +144,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.TextEdit} 38 #{Core.Array} 20 nil nil 50 2 8 1140916352 1025 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 274 241 39 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 274 193 193 nil 45)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.TextEdit} 38 #{Core.Array} 20 nil nil 50 2 8 1140916352 1025 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 119 15 0 0 29 0 0 0] 193 80 nil 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 45)!
 
 resource_Multiline_text
 	"Answer the literal data from which the 'Multiline text' resource can be reconstituted.
@@ -154,7 +154,7 @@ resource_Multiline_text
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Multiline_text)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.MultilineTextEdit} 38 #{Core.Array} 20 nil nil 50 2 8 1143017796 1025 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 9 #focusLost nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 274 401 161 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 199 12 0 0 90 0 0 0] 8 #() 274 193 193 nil 45)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.MultilineTextEdit} 38 #{Core.Array} 20 nil nil 50 2 8 1143017796 1025 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 9 #focusLost nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 199 15 0 0 90 0 0 0] 193 80 nil 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 45)!
 
 resource_Password_text
 	"Answer the literal data from which the 'Password text' resource can be reconstituted.
@@ -164,7 +164,7 @@ resource_Password_text
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Password_text)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.TextEdit} 38 #{Core.Array} 20 nil nil 50 2 8 1140916384 1025 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 274 241 39 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 274 193 193 nil 45)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.TextEdit} 38 #{Core.Array} 20 nil nil 50 2 8 1140916384 1025 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 119 15 0 0 29 0 0 0] 193 80 nil 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 45)!
 
 resource_Static_text
 	"Answer the literal data from which the 'Static text' resource can be reconstituted.
@@ -174,7 +174,7 @@ resource_Static_text
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Static_text)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticText} 38 #{Core.Array} 16 nil nil 50 2 8 1140850944 65 32 nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 242 241 39 32 194 #text: 50 1 8 'Static Text' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 242 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.StaticText} 38 #{Core.Array} 16 nil nil 50 2 8 1140850944 65 32 nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 119 15 0 0 29 0 0 0] 193 80 nil 32 194 #text: 50 1 8 'Static Text' 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 27)! !
 
 !UI.TextPresenter class categoriesForMethods!
 defaultModel!models!public! !

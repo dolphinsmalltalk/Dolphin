@@ -64,7 +64,7 @@ resource_Radio_button
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Radio_button)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.RadioButton} 38 #{Core.Array} 16 nil nil 50 2 8 1141058825 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 178 #hash 8 #() false nil nil 517 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 386 225 55 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 111 12 0 0 37 0 0 0] 8 #() 386 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.RadioButton} 38 #{Core.Array} 16 nil nil 50 2 8 1141058825 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 178 #hash 8 #() false nil nil 517 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 111 15 0 0 37 0 0 0] 193 80 8 '' 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 27)! !
 
 !UI.BooleanPresenter class categoriesForMethods!
 resource_Radio_button!public!resources-views! !

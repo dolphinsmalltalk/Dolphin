@@ -334,18 +334,6 @@ setItemText: aStatusBarItem at: anInteger
 
 	| style |
 	style := aStatusBarItem style.
-	self
-		sendMessageNz: SB_SETTEXT
-		wParam: (style bitOr: anInteger - 1)
-		lpParam: ((style allMask: SBT_OWNERDRAW) ifFalse: [aStatusBarItem getText asUtf16String])!
-
-setItemText: aStatusBarItem at: anInteger
-	"Private - Set the SB_SETTEXT of the receiver's common control for specified one of the receiver's <StatusBarItem>s."
-
-	"In the case of owner-drawn items, this amounts to an instruction to the control to request re-draw of the item, and we don't need to pass the text here."
-
-	| style |
-	style := aStatusBarItem style.
 	(self
 		sendMessage: SB_SETTEXT
 		wParam: (style bitOr: anInteger - 1)
@@ -460,7 +448,7 @@ resource_Status_bar
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Status_bar)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StatusBar} 38 #{Core.Array} 21 nil nil 50 2 8 1409288460 1 32 nil 6 #{Graphics.Color} #default nil 5 nil 1030 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 518 #{Graphics.Point} 193 193 nil 32 nil nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil 50 1 1862 1 #{UI.StatusBarItem} 8193 -1 32 nil 518 #{Core.Message} #displayString 8 #() 354 #iconImageIndex 8 #() nil 1094 1 #{UI.StatusBarNullItem} 8705 1 32 nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 226 6143 21 226 701 45 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 32 0 0 0] 8 #() 226 193 193 nil 29)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.StatusBar} 38 #{Core.Array} 21 nil nil 50 2 8 1409288460 1 32 nil 6 #{Graphics.Color} #default nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 32 nil nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil 50 1 1862 1 #{UI.StatusBarItem} 8193 -1 32 nil 518 #{Core.Message} #displayString 8 #() 322 #iconImageIndex 8 #() nil 1094 1 #{UI.StatusBarNullItem} 8705 1 32 nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 93 16 0 0 32 0 0 0] 193 80 8 '' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 29)!
 
 themePartName
 	^'STATUS'

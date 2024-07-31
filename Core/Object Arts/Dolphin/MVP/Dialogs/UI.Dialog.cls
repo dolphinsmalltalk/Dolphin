@@ -59,16 +59,6 @@ cancel
 	self view close.
 !
 
-createView: aResourceNameString
-	"Private - Creates and connects a view for the receiver from the resource identified
-	by aResourceNameString. Answers the new view created"
-
-	self view: (self class loadViewResource: aResourceNameString
-				inContext: (STBViewContext
-						parent: (parentPresenter ifNil: [View desktop] ifNotNil: [parentPresenter view])
-						owner: ownerView)).
-	^self view!
-
 clearValidationResult
 	validationResultPresenter value: nil!
 
@@ -85,6 +75,16 @@ createSchematicWiring
 		when: #timerTick:
 		send: #onTimerTick:
 		to: self!
+
+createView: aResourceNameString
+	"Private - Creates and connects a view for the receiver from the resource identified
+	by aResourceNameString. Answers the new view created"
+
+	self view: (self class loadViewResource: aResourceNameString
+				inContext: (STBViewContext
+						parent: (parentPresenter ifNil: [View desktop] ifNotNil: [parentPresenter view])
+						owner: ownerView)).
+	^self view!
 
 deferredValidate
 	self clearValidationResult.
@@ -293,7 +293,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 30 nil nil 8 #(13107200 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog nil 133 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 160 nil nil nil 5 nil nil nil 160 582 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_OK_Cancel_button_block nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 21 423 354 449 71 160 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 211 0 0 0 234 0 0 0 246 0 0 0] 8 #() 354 193 193 nil 27 nil nil nil 550 #{Core.IdentityDictionary} 0 518 #{Graphics.Rectangle} 354 21 21 354 21 21 nil nil nil nil 1 nil nil nil nil 1 nil nil 774 #{Core.Semaphore} nil nil 1 nil nil 258 50 1 306 #createAt:extent: 50 2 354 6143 21 354 521 591 32 402 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 3 13 0 0 49 1 0 0] 50 1 160 464 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 34 nil nil 8 #(13107200 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog nil 133 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 160 nil nil nil 5 nil nil nil 160 582 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_OK_Cancel_button_block nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[10 0 0 0 211 0 0 0 234 0 0 0 246 0 0 0] 193 192 8 '' 160 3 8 #() 518 #{Graphics.Point} 193 193 nil 27 nil nil nil 550 #{Core.IdentityDictionary} 0 518 #{Graphics.Rectangle} 466 21 21 466 21 21 nil nil nil nil 1 nil nil nil nil 1 nil 193 774 #{Core.Semaphore} nil nil 1 nil nil nil nil nil nil 258 50 2 306 #createWindow: 50 1 518 #{UI.CreateDialog} 530 466 7679 21 466 8199 611 193 32 306 #setWindowText: 50 1 8 '' 32 1 50 1 160 466 193 193 nil 29)!
 
 showModal
 	"Creates a default instance of the receiver with a default view	and displays it modal 
