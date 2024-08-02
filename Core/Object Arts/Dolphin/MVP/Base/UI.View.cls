@@ -4670,7 +4670,7 @@ wndClassAtom
 wndClassName
 	"Answer the `String` name of the receiver's Window class."
 
-	^User32 getClassName: handle!
+	^handle isNull ifTrue: [self class wndClassName] ifFalse: [User32 getClassName: handle]!
 
 x
 	"Answer the left coordinate of the receiver in the coordinate system of the parent."

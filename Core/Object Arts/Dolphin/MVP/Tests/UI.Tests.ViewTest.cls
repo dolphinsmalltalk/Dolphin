@@ -34,6 +34,12 @@ testDesignRectangle
 	self assert: (view extent closeTo: rect extent precision: 1).
 	self assert: (view position closeTo: rect origin precision: 1)!
 
+testDisplayString
+	| subject |
+	self assert: presenter view displayString equals: 'view'.
+	subject := ShellView new.
+	self assert: subject displayString equals: 'UI.ShellView'!
+
 testFontChangePropagationFromDesktop
 	"Note that this test may be quite slow if there are more than a few windows open. The particular culprit is the TreeView - it responds very slowly to a WM_SETFONT, although this is partly because it has to have available the text of all the nodes in order to be able to calculate its layout correctly. When the TreeView is in #dynamic update mode, which is true of the trees in the class browser, getting the current text involves sending a callback to request the text. Since the callback has to be sent for every node currently in the tree (not just the displayed nodes) this can take some time. Even when not in #dynamic update mode, the calculation done by the control is not fast. The test also has to change the desktop font twice, so the propagation cost is incurred twice."
 
@@ -89,6 +95,13 @@ testFontChangePropagationFromShell
 	actual := edit getFont.
 	self assert: actual equals: expected!
 
+testPrintString
+	| subject |
+	self assert: presenter view printString
+		equals: 'a TextEdit(<1d>, ''view'')' << presenter view handle.
+	subject := ShellView new.
+	self assert: subject printString equals: 'a ShellView(NULL, ''UI.ShellView'')'!
+
 testRecreateMaintainsModelConnection
 	presenter model value: 'aaa'.
 	self assert: presenter view value equals: 'aaa'.
@@ -101,9 +114,11 @@ testRecreateMaintainsModelConnection
 classToTest!helpers!private! !
 simulateIconTitleFontChange:!helpers!private! !
 testDesignRectangle!public!unit tests! !
+testDisplayString!public!unit tests! !
 testFontChangePropagationFromDesktop!public!unit tests! !
 testFontChangePropagationFromSettingsChange!public!unit tests! !
 testFontChangePropagationFromShell!public!unit tests! !
+testPrintString!public!unit tests! !
 testRecreateMaintainsModelConnection!public!unit tests! !
 !
 
