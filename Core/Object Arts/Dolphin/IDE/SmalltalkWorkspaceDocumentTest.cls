@@ -43,7 +43,7 @@ testDefaultPositioning
 				self assert: nextShell position equals: shell position + monitor cascadeOffset.
 				shell := nextShell].
 	"Should have wrapped"
-	self assert: nextShell position equals: monitor cascadeOffset]
+	self assert: nextShell position equals: monitor origin + monitor cascadeOffset]
 			ensure: [workspaces do: [:each | each destroy]]!
 
 viewClass
