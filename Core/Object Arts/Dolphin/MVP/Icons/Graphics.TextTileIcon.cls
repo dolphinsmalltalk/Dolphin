@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Graphics.TextTileIcon'
 	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags margin _reserved9'
-	classVariableNames: 'TextFormat'
+	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -223,7 +223,7 @@ drawOnGraphics: graphics at: originPoint extent: extentPoint
 				pixelSize: height
 				style: style.
 	graphics textRenderingHint: TextRenderingHintAntiAlias.
-	format := StringFormat genericTypographic clone.
+	format := StringFormat genericTypographic.
 	format flags: (format flags maskClear: StringFormatFlagsLineLimit).
 	textExtent := (graphics
 				measureString: utf16
@@ -240,6 +240,7 @@ drawOnGraphics: graphics at: originPoint extent: extentPoint
 						pixelSize: (height * scale max: 1)
 						style: style].
 	textBrush := Gdiplus.Brush color: self actualTextcolor.
+	format centered.
 	graphics
 		drawString: utf16
 		font: font
@@ -398,17 +399,6 @@ storeOn: aStream
 						nextPut: $;].
 			aStream nextPutAll: ' yourself)']!
 
-stringFormat
-	(TextFormat isNil or: [TextFormat isRealized not])
-		ifTrue: 
-			[TextFormat := (StringFormat
-						flags: ##(StringFormatFlagsNoFitBlackBox | StringFormatFlagsNoClip | StringFormatFlagsNoWrap))
-						trimming: StringTrimmingNone;
-						lineAlignment: StringAlignmentCenter;
-						alignment: StringAlignmentCenter;
-						yourself].
-	^TextFormat!
-
 text
 	"Answer the text to be rendered onto the tile."
 
@@ -479,7 +469,6 @@ rotation!accessing!public! !
 rotation:!accessing!public! !
 setText:fontName:color:!initializing!private! !
 storeOn:!printing!public! !
-stringFormat!drawing-bitmaps!private! !
 text!accessing!public! !
 textcolor!accessing!public! !
 textcolor:!accessing!public! !

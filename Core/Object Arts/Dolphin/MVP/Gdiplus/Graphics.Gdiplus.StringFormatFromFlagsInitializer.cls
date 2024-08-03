@@ -34,18 +34,19 @@ alignmentOf: aStringFormat set: aStringAlignmentConstant
 		align: (alignment := aStringAlignmentConstant ?? StringAlignmentNear)!
 
 applyAdditionalAttributes: aHandle
-	alignment == StringAlignmentNear ifFalse: [Gdip gdipSetStringFormatAlign: aHandle align: alignment].
-	lineAlignment == StringAlignmentNear
+	alignment == self defaultAlignment
+		ifFalse: [Gdip gdipSetStringFormatAlign: aHandle align: alignment].
+	lineAlignment == self defaultLineAlignment
 		ifFalse: [Gdip gdipSetStringFormatLineAlign: aHandle align: lineAlignment].
-	trimming == StringTrimmingCharacter
+	trimming == self defaultTrimming
 		ifFalse: [Gdip gdipSetStringFormatTrimming: aHandle trimming: trimming].
-	digitSubstitution == StringDigitSubstituteUser
+	digitSubstitution == self defaultDigitSubstitution
 		ifFalse: 
 			[Gdip
 				gdipSetStringFormatDigitSubstitution: aHandle
 				language: language
 				substitute: digitSubstitution].
-	hotkeyPrefix == HotkeyPrefixNone
+	hotkeyPrefix == self defaultHotkeyPrefix
 		ifFalse: [Gdip gdipSetStringFormatHotkeyPrefix: aHandle hotkeyPrefix: hotkeyPrefix].
 	tabOffsets isEmpty
 		ifFalse: 

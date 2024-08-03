@@ -242,6 +242,7 @@ package setClassNames: #(
 	#{Graphics.Gdiplus.StringFormat}
 	#{Graphics.Gdiplus.StringFormatFromFlagsInitializer}
 	#{Graphics.Gdiplus.StringFormatGenericDefaultInitializer}
+	#{Graphics.Gdiplus.StringFormatGenericDerivedInitializer}
 	#{Graphics.Gdiplus.StringFormatGenericInitializer}
 	#{Graphics.Gdiplus.StringFormatGenericTypographicInitializer}
 	#{Graphics.Gdiplus.StringFormatInitializer}
@@ -2041,6 +2042,14 @@ Graphics.Gdiplus.StringFormatInitializer
 Graphics.Gdiplus.StringFormatInitializer
 	subclass: #'Graphics.Gdiplus.StringFormatGenericInitializer'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Graphics.Gdiplus.StringFormatFromFlagsInitializer
+	subclass: #'Graphics.Gdiplus.StringFormatGenericDerivedInitializer'
+	instanceVariableNames: 'genericInitializer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

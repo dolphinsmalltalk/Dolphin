@@ -42,6 +42,24 @@ alignmentOf: aStringFormat set: aStringAlignmentConstant
 characterRanges
 	^#()!
 
+defaultAlignment
+	^StringAlignmentNear!
+
+defaultDigitSubstitution
+	^StringDigitSubstituteUser!
+
+defaultFlags
+	^0!
+
+defaultHotkeyPrefix
+	^HotkeyPrefixNone!
+
+defaultLineAlignment
+	^StringAlignmentNear!
+
+defaultTrimming
+	^StringTrimmingCharacter!
+
 digitSubstitution
 	^StringDigitSubstituteUser!
 
@@ -100,6 +118,12 @@ trimmingOf: aStringFormat set: aStringTrimmingConstant
 alignment!accessing!public! !
 alignmentOf:set:!attributes!public! !
 characterRanges!attributes!public! !
+defaultAlignment!constants!private! !
+defaultDigitSubstitution!constants!private! !
+defaultFlags!constants!private! !
+defaultHotkeyPrefix!constants!private! !
+defaultLineAlignment!constants!private! !
+defaultTrimming!constants!private! !
 digitSubstitution!accessing!public! !
 digitSubstitutionOf:set:!attributes!public! !
 flags!attributes!public! !

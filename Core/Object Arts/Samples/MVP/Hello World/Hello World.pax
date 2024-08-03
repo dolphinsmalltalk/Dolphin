@@ -40,10 +40,12 @@ UI.Examples.XmlPad openOn: ''HelloGui.xml''
 
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamplesFolderIcon: (SmalltalkSystemIcon
 			tool: UI.Examples.HelloWorld
-			icon: (TextTileIcon
+			icon: ((TextTileIcon
 					text: $\xED3A
 					fontName: ''Segoe Fluent Icons''
 					color: (ARGB named: #darkOrchid))
+					margin: 1;
+					yourself)
 			description: ''Hello World''
 			openBlock: nil
 			helpId: 10739)'.

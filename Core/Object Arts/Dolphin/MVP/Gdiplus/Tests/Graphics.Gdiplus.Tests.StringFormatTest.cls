@@ -83,6 +83,47 @@ testGenericDefault
 	self assertPersistedValid free.
 	self assertClonedValid free!
 
+testGenericDerived
+	| generic temp |
+	generic := StringFormat genericTypographic.
+	self verifyGenericTypographicAttributes: generic.
+	model := StringFormat genericTypographic.
+	self verifyGenericTypographicAttributes: model.
+	model flags: (model flags maskClear: StringFormatFlagsLineLimit).
+	temp := model handle.
+	self deny: temp equals: generic handle.
+	self deny: model initializer identicalTo: generic initializer.
+	model alignment: StringAlignmentCenter.
+	self assert: model handle equals: temp.
+	self verifyGenericTypographicAttributes: generic.
+	"The derived format has all the generic typographic attribute values, except the flags"
+	self assert: model flags equals: StringFormatFlagsNoFitBlackBox | StringFormatFlagsNoClip.
+	self assert: model alignment equals: StringAlignmentCenter.
+	self assert: model lineAlignment equals: StringAlignmentNear.
+	self assert: model language equals: NlsConstants.LANG_NEUTRAL.
+	self assert: model digitSubstitution equals: StringDigitSubstituteUser.
+	self assert: model hotkeyPrefix equals: HotkeyPrefixNone.
+	self assert: model tabStopCount equals: 0.
+	self assert: model tabOffsets equals: #().
+	self assert: model trimming equals: StringTrimmingNone.
+	self assert: model measurableCharacterRanges equals: #().
+	"Free the format so we can check that the attributes are restored when re-realized"
+	model free.
+	"Create a temporary initializer to query all the attributes from the recreated handle."
+	self deny: model handle equals: generic handle.
+	temp := StringFormatFromFlagsInitializer fromHandle: model handle.
+	self assert: temp flags equals: StringFormatFlagsNoFitBlackBox | StringFormatFlagsNoClip.
+	self assert: temp alignment equals: StringAlignmentCenter.
+	self assert: temp lineAlignment equals: StringAlignmentNear.
+	self assert: temp language equals: NlsConstants.LANG_NEUTRAL.
+	self assert: temp digitSubstitution equals: StringDigitSubstituteUser.
+	self assert: temp hotkeyPrefix equals: HotkeyPrefixNone.
+	self assert: temp tabOffsets equals: #().
+	self assert: temp trimming equals: StringTrimmingNone.
+	self assert: temp characterRanges equals: #().
+	self assertPersistedValid free.
+	self assertClonedValid free!
+
 testGenericTypographic
 	| genericHandle |
 	model := StringFormat genericTypographic.
@@ -279,6 +320,7 @@ testDigitSubstitution!public!unit tests! !
 testFlags!public!unit tests! !
 testFromHandle!public!unit tests! !
 testGenericDefault!public!unit tests! !
+testGenericDerived!public!unit tests! !
 testGenericTypographic!public!unit tests! !
 testHotkeyPrefix!public!unit tests! !
 testLineAlignment!public!unit tests! !

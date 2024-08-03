@@ -20,6 +20,12 @@ basicCreateHandle
 	Gdip gdipStringFormatGetGenericTypographic: gpHandle.
 	^gpHandle!
 
+defaultFlags
+	^##(StringFormatFlagsLineLimit | StringFormatFlagsNoClip | StringFormatFlagsNoFitBlackBox)!
+
+defaultTrimming
+	^StringTrimmingNone!
+
 flags
 	^##(StringFormatFlagsNoClip | StringFormatFlagsLineLimit | StringFormatFlagsNoFitBlackBox)!
 
@@ -34,6 +40,8 @@ trimming
 
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
+defaultFlags!constants!private! !
+defaultTrimming!constants!private! !
 flags!attributes!public! !
 isGenericTypographic!public!testing! !
 printAttributesOn:!attributes!printing!private! !

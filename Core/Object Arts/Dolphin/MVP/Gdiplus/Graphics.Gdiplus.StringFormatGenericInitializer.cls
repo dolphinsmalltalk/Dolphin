@@ -21,13 +21,21 @@ alignmentOf: aStringFormat set: aStringAlignmentConstant
 
 copyGenericInstance: aStringFormat
 	"Private - Gdiplus has singleton generic default and typographic instances, but they are modifiable so we must be careful not to have side effects on these.
-	If an attempt is made to modify a generic instance, we make a non-generic copy and modify that."
+	If an attempt is made to modify a generic instance, we make a clone and modify that."
 
-	| newInitializer |
-	newInitializer := StringFormatFromFlagsInitializer fromHandle: aStringFormat handle.
-	aStringFormat initializer: newInitializer.
-	aStringFormat clearCached.
-	^newInitializer!
+	| newInitializer clone |
+	clone := self class cloneHandle: aStringFormat handle.
+	newInitializer := StringFormatGenericDerivedInitializer new.
+	newInitializer genericInitializer: self.
+	aStringFormat
+		initializer: newInitializer;
+		ownedHandle: clone.
+	^newInitializer
+		initializeFromHandle: clone;
+		yourself!
+
+derivedInitializerClass
+	^StringFormatFromFlagsInitializer!
 
 digitSubstitutionOf: aStringFormat set: aStringDigitSubstituteConstant
 	(self copyGenericInstance: aStringFormat) digitSubstitutionOf: aStringFormat
@@ -59,6 +67,7 @@ trimmingOf: aStringFormat set: aStringTrimmingConstant
 !Graphics.Gdiplus.StringFormatGenericInitializer categoriesForMethods!
 alignmentOf:set:!attributes!public! !
 copyGenericInstance:!helpers!private! !
+derivedInitializerClass!helpers!private! !
 digitSubstitutionOf:set:!attributes!public! !
 flagsOf:set:!attributes!public! !
 hotkeyPrefixOf:set:!attributes!public! !
