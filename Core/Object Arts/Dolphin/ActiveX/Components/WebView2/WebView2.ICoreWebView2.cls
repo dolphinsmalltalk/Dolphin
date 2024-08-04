@@ -512,6 +512,24 @@ AddWebResourceRequestedFilter: uri resourceContext: resourceContext
 	<virtual stdcall: hresult 58 lpwstr int32>
 	^self invalidCall: _failureCode!
 
+addWebResourceRequestedFilterWithRequestSourceKinds: uri resourceContext: resourceContext requestSourceKinds: requestSourceKinds
+	"Invoke the AddWebResourceRequestedFilterWithRequestSourceKinds() method of the COM object."
+
+	^self
+		AddWebResourceRequestedFilterWithRequestSourceKinds: uri asUtf16String
+		resourceContext: resourceContext
+		requestSourceKinds: requestSourceKinds!
+
+AddWebResourceRequestedFilterWithRequestSourceKinds: uri resourceContext: resourceContext requestSourceKinds: requestSourceKinds
+	"Private - Invoke the AddWebResourceRequestedFilterWithRequestSourceKinds() method of the COM object.
+
+		HRESULT __stdcall AddWebResourceRequestedFilterWithRequestSourceKinds(
+			[in]LPWSTR uri,
+			[in]COREWEBVIEW2_WEB_RESOURCE_CONTEXT ResourceContext,
+			[in]COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS requestSourceKinds);"
+
+	^E_NOTIMPL!
+
 browserProcessId
 	"Answer the <dword> value of the 'BrowserProcessId' property of the receiver."
 
@@ -748,6 +766,24 @@ executeScript: javaScript thenDo: aDyadicValuable
 	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
 				queryInterface: ICoreWebView2ExecuteScriptCompletedHandler.
 	self ExecuteScript: javaScript asUtf16String handler: handler.
+	handler free!
+
+ExecuteScriptWithResult: javaScript handler: handler
+	"Private - Invoke the ExecuteScriptWithResult() method of the COM object.
+
+		HRESULT __stdcall ExecuteScriptWithResult(
+			[in]LPWSTR javaScript,
+			[in]ICoreWebView2ExecuteScriptWithResultCompletedHandler* handler);"
+
+	^E_NOTIMPL!
+
+executeScriptWithResult: javaScript thenDo: aDyadicValuable
+	"Request the execution of some javascript in the browser, evaluating the <dyadicValuable> second argument when the script has finished running, passing it an HRESULT status code and a result object described by an `ICoreWebView2ExecuteScriptResult`."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2ExecuteScriptWithResultCompletedHandler.
+	self ExecuteScriptWithResult: javaScript asUtf16String handler: handler.
 	handler free!
 
 faviconUri
@@ -1553,6 +1589,24 @@ RemoveWebResourceRequestedFilter: uri resourceContext: resourceContext
 	<virtual stdcall: hresult 59 lpwstr int32>
 	^self invalidCall: _failureCode!
 
+removeWebResourceRequestedFilterWithRequestSourceKinds: uri resourceContext: resourceContext requestSourceKinds: requestSourceKinds
+	"Invoke the RemoveWebResourceRequestedFilterWithRequestSourceKinds() method of the COM object."
+
+	^self
+		RemoveWebResourceRequestedFilterWithRequestSourceKinds: uri asUtf16String
+		resourceContext: resourceContext
+		requestSourceKinds: requestSourceKinds!
+
+RemoveWebResourceRequestedFilterWithRequestSourceKinds: uri resourceContext: resourceContext requestSourceKinds: requestSourceKinds
+	"Private - Invoke the RemoveWebResourceRequestedFilterWithRequestSourceKinds() method of the COM object.
+
+		HRESULT __stdcall RemoveWebResourceRequestedFilterWithRequestSourceKinds(
+			[in]LPWSTR uri,
+			[in]COREWEBVIEW2_WEB_RESOURCE_CONTEXT ResourceContext,
+			[in]COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS requestSourceKinds);"
+
+	^E_NOTIMPL!
+
 resume
 	"Invoke the Resume() method of the COM object."
 
@@ -1698,6 +1752,8 @@ AddScriptToExecuteOnDocumentCreated:handler:!**auto generated**!COM Interfaces-I
 addScriptToExecuteOnDocumentCreated:thenDo:!async requests!public! !
 addWebResourceRequestedFilter:resourceContext:!**auto generated**!methods!public! !
 AddWebResourceRequestedFilter:resourceContext:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+addWebResourceRequestedFilterWithRequestSourceKinds:resourceContext:requestSourceKinds:!methods!public! !
+AddWebResourceRequestedFilterWithRequestSourceKinds:resourceContext:requestSourceKinds:!COM Interfaces-ICoreWebView2_22!private! !
 browserProcessId!**auto generated**!properties!public! !
 CallDevToolsProtocolMethod:parametersAsJson:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 callDevToolsProtocolMethod:parametersAsJson:thenDo:!async requests!public! !
@@ -1725,6 +1781,8 @@ documentTitle!properties!public! !
 environment!properties!public! !
 ExecuteScript:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 executeScript:thenDo:!async requests!public! !
+ExecuteScriptWithResult:handler:!COM Interfaces-ICoreWebView2_21!private! !
+executeScriptWithResult:thenDo:!async requests!public! !
 faviconUri!properties!public! !
 frameId!properties!public! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1828,6 +1886,8 @@ removeScriptToExecuteOnDocumentCreated:!**auto generated**!methods!public! !
 RemoveScriptToExecuteOnDocumentCreated:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 removeWebResourceRequestedFilter:resourceContext:!**auto generated**!methods!public! !
 RemoveWebResourceRequestedFilter:resourceContext:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+removeWebResourceRequestedFilterWithRequestSourceKinds:resourceContext:requestSourceKinds:!methods!public! !
+RemoveWebResourceRequestedFilterWithRequestSourceKinds:resourceContext:requestSourceKinds:!COM Interfaces-ICoreWebView2_22!private! !
 resume!methods!public! !
 Resume!COM Interfaces-ICoreWebView2_3!private! !
 settings!properties!public! !

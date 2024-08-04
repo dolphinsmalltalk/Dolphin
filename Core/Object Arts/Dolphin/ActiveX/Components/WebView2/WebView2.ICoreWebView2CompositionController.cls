@@ -73,6 +73,15 @@ Add_CursorChanged: eventHandler token: token
 	<virtual stdcall: hresult 10 ICoreWebView2CursorChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
+Add_NonClientRegionChanged: eventHandler token: token
+	"Private - Invoke the add_NonClientRegionChanged() method of the COM object.
+
+		HRESULT __stdcall add_NonClientRegionChanged(
+			[in]ICoreWebView2NonClientRegionChangedEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
+
 currentCursor
 	"Answer the current <Cursor>."
 
@@ -87,6 +96,45 @@ cursor
 	answer := Handle new.
 	self get_Cursor: answer.
 	^answer asObject!
+
+DragEnter: dataObject keyState: keyState point: point effect: effect
+	"Private - Invoke the DragEnter() method of the COM object.
+
+		HRESULT __stdcall DragEnter(
+			[in]IDataObject* dataObject,
+			[in]unsigned long keyState,
+			[in]POINT point,
+			[out, retval]unsigned long* effect);"
+
+	^E_NOTIMPL!
+
+DragLeave
+	"Private - Invoke the DragLeave() method of the COM object.
+
+		HRESULT __stdcall DragLeave();"
+
+	^E_NOTIMPL!
+
+DragOver: keyState point: point effect: effect
+	"Private - Invoke the DragOver() method of the COM object.
+
+		HRESULT __stdcall DragOver(
+			[in]unsigned long keyState,
+			[in]POINT point,
+			[out, retval]unsigned long* effect);"
+
+	^E_NOTIMPL!
+
+Drop: dataObject keyState: keyState point: point effect: effect
+	"Private - Invoke the Drop() method of the COM object.
+
+		HRESULT __stdcall Drop(
+			[in]IDataObject* dataObject,
+			[in]unsigned long keyState,
+			[in]POINT point,
+			[out, retval]unsigned long* effect);"
+
+	^E_NOTIMPL!
 
 get_Cursor: cursor
 	"Private - Get the value of the 'Cursor' property of the receiver.
@@ -124,6 +172,15 @@ get_UIAProvider: provider
 	"Not implemented in this version"
 	^E_NOTIMPL!
 
+GetNonClientRegionAtPoint: point value: value
+	"Private - Invoke the GetNonClientRegionAtPoint() method of the COM object.
+
+		HRESULT __stdcall GetNonClientRegionAtPoint(
+			[in]POINT point,
+			[out, retval]COREWEBVIEW2_NON_CLIENT_REGION_KIND* value);"
+
+	^E_NOTIMPL!
+
 printableProperties
 	| propertyNames |
 	propertyNames := #(rootVisualTarget #systemCursorId).
@@ -140,6 +197,15 @@ put_RootVisualTarget: target
 	<virtual stdcall: hresult 5 IUnknown*>
 	^self invalidCall: _failureCode!
 
+QueryNonClientRegion: kind rects: rects
+	"Private - Invoke the QueryNonClientRegion() method of the COM object.
+
+		HRESULT __stdcall QueryNonClientRegion(
+			[in]COREWEBVIEW2_NON_CLIENT_REGION_KIND Kind,
+			[out, retval]ICoreWebView2RegionRectCollectionView** rects);"
+
+	^E_NOTIMPL!
+
 Remove_CursorChanged: token
 	"Private - Invoke the remove_CursorChanged() method of the COM object.
 
@@ -148,6 +214,14 @@ Remove_CursorChanged: token
 
 	<virtual stdcall: hresult 11 int64>
 	^self invalidCall: _failureCode!
+
+Remove_NonClientRegionChanged: token
+	"Private - Invoke the remove_NonClientRegionChanged() method of the COM object.
+
+		HRESULT __stdcall remove_NonClientRegionChanged(
+			[in]EventRegistrationToken token);"
+	
+	^E_NOTIMPL!
 
 rootVisualTarget
 	"Answer the <IUnknown> value of the 'RootVisualTarget' property of the receiver."
@@ -202,15 +276,23 @@ uiaProvider
 
 !WebView2.ICoreWebView2CompositionController categoriesForMethods!
 Add_CursorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!events!private! !
+Add_NonClientRegionChanged:token:!COM Interfaces-ICoreWebView2CompositionController4!private! !
 currentCursor!properties!public! !
 cursor!**auto generated**!properties!public! !
+DragEnter:keyState:point:effect:!COM Interfaces-ICoreWebView2CompositionController3!private! !
+DragLeave!COM Interfaces-ICoreWebView2CompositionController3!private! !
+DragOver:point:effect:!COM Interfaces-ICoreWebView2CompositionController3!private! !
+Drop:keyState:point:effect:!COM Interfaces-ICoreWebView2CompositionController3!private! !
 get_Cursor:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
 get_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
 get_SystemCursorId:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
 get_UIAProvider:!COM Interfaces-ICoreWebView2CompositionController2!private! !
+GetNonClientRegionAtPoint:value:!COM Interfaces-ICoreWebView2CompositionController4!private! !
 printableProperties!printing!private! !
 put_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
+QueryNonClientRegion:rects:!COM Interfaces-ICoreWebView2CompositionController4!private! !
 Remove_CursorChanged:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!events!private! !
+Remove_NonClientRegionChanged:!COM Interfaces-ICoreWebView2CompositionController4!private! !
 rootVisualTarget!**auto generated**!properties!public! !
 rootVisualTarget:!**auto generated**!properties!public! !
 SendMouseInput:virtualKeys:mouseData:point:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!methods!private! !

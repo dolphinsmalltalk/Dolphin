@@ -58,6 +58,14 @@ get_Request: request
 	<virtual stdcall: hresult 4 ICoreWebView2WebResourceRequest**>
 	^self invalidCall: _failureCode!
 
+get_RequestedSourceKind: requestedSourceKind
+	"Private - Get the value of the 'RequestedSourceKind' property of the receiver.
+
+		HRESULT __stdcall RequestedSourceKind(
+			[out, retval]COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS* RequestedSourceKind);"
+
+	^E_NOTIMPL!
+
 get_ResourceContext: context
 	"Private - Get the value of the 'ResourceContext' property of the receiver.
 
@@ -85,11 +93,13 @@ GetDeferral: deferral
 	<virtual stdcall: hresult 7 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
+printableProperties
+	^#(#resourceContext)!
+
 printPropertiesOn: aStream
 	self request printPropertiesOn: aStream.
-	aStream
-		nextPutAll: ', resourceContext: ';
-		print: self resourceContext!
+	aStream nextPutAll: ', '.
+	super printPropertiesOn: aStream!
 
 put_Response: response
 	"Private - Set the value of the 'Response' property of the object wrapped by the 
@@ -107,6 +117,14 @@ request
 	| answer |
 	answer := ICoreWebView2WebResourceRequest newPointer.
 	self get_Request: answer.
+	^answer asObject!
+
+requestedSourceKind
+	"Answer the <int32> value of the 'RequestedSourceKind' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_RequestedSourceKind: answer.
 	^answer asObject!
 
 resourceContext
@@ -132,12 +150,15 @@ response: response
 
 !WebView2.ICoreWebView2WebResourceRequestedEventArgs categoriesForMethods!
 get_Request:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
+get_RequestedSourceKind:!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs2!private! !
 get_ResourceContext:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
+printableProperties!printing!private! !
 printPropertiesOn:!printing!private! !
 put_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 request!**auto generated**!properties!public! !
+requestedSourceKind!properties!public! !
 resourceContext!**auto generated**!properties!public! !
 response!**auto generated**!properties!public! !
 response:!**auto generated**!properties!public! !
@@ -160,9 +181,13 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2Deferral**';
 		defineFunction: #get_ResourceContext:
 			argumentTypes: 'sdword*'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 
 !WebView2.ICoreWebView2WebResourceRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

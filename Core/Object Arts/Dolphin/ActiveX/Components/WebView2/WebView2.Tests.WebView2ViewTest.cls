@@ -497,7 +497,13 @@ verifyWebViewSettings
 		ifTrue: 
 			[settings isReputationCheckingRequired: false.
 			self deny: settings isReputationCheckingRequired.
-			self assert: baseSettings isReputationCheckingRequired]!
+			self assert: baseSettings isReputationCheckingRequired].
+	"ICoreWebView2Settings9: IsNonClientRegionSupportEnabled"
+	(settings isKindOf: ICoreWebView2Settings9)
+		ifTrue: 
+			[settings isNonClientRegionSupportEnabled: true.
+			self assert: settings isNonClientRegionSupportEnabled.
+			self deny: baseSettings isNonClientRegionSupportEnabled]!
 
 viewClass
 	^UI.WebView2View!

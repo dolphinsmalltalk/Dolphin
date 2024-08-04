@@ -47,6 +47,20 @@ testAreBrowserExtensionsEnabled
 	interface areBrowserExtensionsEnabled: false.
 	self deny: subject areBrowserExtensionsEnabled!
 
+testChannelSearchKind
+	| subject interface |
+	subject := WebView2EnvironmentOptions new.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions7.
+	self assert: subject channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+	self assert: interface channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+	interface channelSearchKind: COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE.
+	self assert: subject channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE.
+	self assert: interface channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE.
+	self
+		should: [interface channelSearchKind: -1]
+		raise: HRESULTError
+		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_INVALID_PARAMETER]!
+
 testEnableTrackingPrevention
 	| subject interface |
 	subject := WebView2EnvironmentOptions new.
@@ -92,6 +106,37 @@ testLanguage
 	subject locale: (Locale lcid: 1055).
  	self assert: interface language equals: 'tr-TR'!
 
+testReleaseChannels
+	| subject interface |
+	subject := WebView2EnvironmentOptions new.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions7.
+	self assert: subject releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+	self assert: interface releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+	interface
+		releaseChannels: COREWEBVIEW2_RELEASE_CHANNELS_STABLE | COREWEBVIEW2_RELEASE_CHANNELS_DEV.
+	self assert: subject releaseChannels
+		equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE | COREWEBVIEW2_RELEASE_CHANNELS_DEV.
+	self assert: interface releaseChannels
+		equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE | COREWEBVIEW2_RELEASE_CHANNELS_DEV.
+	self
+		should: [interface releaseChannels: -1]
+		raise: HRESULTError
+		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_INVALID_PARAMETER]!
+
+testScrollbarStyle
+	| subject interface |
+	subject := WebView2EnvironmentOptions new.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions8.
+	self assert: subject scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
+	self assert: interface scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
+	interface scrollBarStyle: COREWEBVIEW2_SCROLLBAR_STYLE_FLUENT_OVERLAY.
+	self assert: subject scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_FLUENT_OVERLAY.
+	self assert: interface scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_FLUENT_OVERLAY.
+	self
+		should: [interface scrollBarStyle: -1]
+		raise: HRESULTError
+		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_INVALID_PARAMETER]!
+
 testTargetCompatibleBrowserVersion
 	| subject interface version |
 	subject := WebView2EnvironmentOptions new.
@@ -109,10 +154,13 @@ testTargetCompatibleBrowserVersion
 testAdditionalBrowserArguments!public! !
 testAllowSSO!public! !
 testAreBrowserExtensionsEnabled!public! !
+testChannelSearchKind!public! !
 testEnableTrackingPrevention!public! !
 testExclusiveDataFolderAccess!public! !
 testIsCustomCrashReportingEnabled!public! !
 testLanguage!public! !
+testReleaseChannels!public! !
+testScrollbarStyle!public! !
 testTargetCompatibleBrowserVersion!public! !
 !
 

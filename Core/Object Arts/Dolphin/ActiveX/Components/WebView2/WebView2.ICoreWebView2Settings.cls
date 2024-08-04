@@ -225,6 +225,14 @@ get_IsGeneralAutofillEnabled: value
 	value value: 1.
 	^S_FALSE!
 
+get_IsNonClientRegionSupportEnabled: enabled
+	"Private - Get the value of the 'IsNonClientRegionSupportEnabled' property of the receiver.
+
+		HRESULT __stdcall IsNonClientRegionSupportEnabled(
+			[out, retval]long* enabled);"
+
+	^E_NOTIMPL!
+
 get_IsPasswordAutosaveEnabled: value
 	"Private - Get the value of the 'IsPasswordAutosaveEnabled' property of the receiver.
 
@@ -344,6 +352,19 @@ isGeneralAutofillEnabled: value
 	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the <sdword> value of the argument."
 
 	self put_IsGeneralAutofillEnabled: value asParameter!
+
+isNonClientRegionSupportEnabled
+	"Answer the <boolean> value of the 'IsNonClientRegionSupportEnabled' property of the receiver."
+
+	| answer |
+	answer := ByteArray newFixed: 4.
+	self get_IsNonClientRegionSupportEnabled: answer.
+	^(answer uint32AtOffset: 0) ~~ 0!
+
+isNonClientRegionSupportEnabled: enabled
+	"Set the 'IsNonClientRegionSupportEnabled' property of the receiver to the <boolean> value of the argument."
+
+	self put_IsNonClientRegionSupportEnabled: enabled asParameter!
 
 isPasswordAutosaveEnabled
 	"Answer the <Boolean> value of the 'IsPasswordAutosaveEnabled' property of the receiver."
@@ -529,6 +550,15 @@ put_IsGeneralAutofillEnabled: value
 
 	^E_NOTIMPL!
 
+put_IsNonClientRegionSupportEnabled: enabled
+	"Private - Set the value of the 'IsNonClientRegionSupportEnabled' property of the object wrapped by the 
+	 receiver to the <int32> argument, enabled.
+
+		HRESULT __stdcall IsNonClientRegionSupportEnabled(
+			[in]long enabled);"
+
+	^E_NOTIMPL!
+
 put_IsPasswordAutosaveEnabled: value
 	"Private - Set the value of the 'IsPasswordAutosaveEnabled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, value.
@@ -648,6 +678,7 @@ get_AreHostObjectsAllowed:!**auto generated**!COM Interfaces-ICoreWebView2Settin
 get_HiddenPdfToolbarItems:!COM Interfaces-ICoreWebView2Settings7!private! !
 get_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
+get_IsNonClientRegionSupportEnabled:!COM Interfaces-ICoreWebView2Settings9!private! !
 get_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 get_IsPinchZoomEnabled:!COM Interfaces-ICoreWebView2Settings5!private! !
 get_IsReputationCheckingRequired:!COM Interfaces-ICoreWebView2Settings8!private! !
@@ -663,6 +694,8 @@ isBuiltInErrorPageEnabled!properties!public!testing! !
 isBuiltInErrorPageEnabled:!properties!public! !
 isGeneralAutofillEnabled!properties!public!testing! !
 isGeneralAutofillEnabled:!properties!public! !
+isNonClientRegionSupportEnabled!properties!public! !
+isNonClientRegionSupportEnabled:!properties!public! !
 isPasswordAutosaveEnabled!properties!public!testing! !
 isPasswordAutosaveEnabled:!properties!public! !
 isPinchZoomEnabled!properties!public!testing! !
@@ -688,12 +721,13 @@ put_AreHostObjectsAllowed:!**auto generated**!COM Interfaces-ICoreWebView2Settin
 put_HiddenPdfToolbarItems:!COM Interfaces-ICoreWebView2Settings7!private! !
 put_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
+put_IsNonClientRegionSupportEnabled:!COM Interfaces-ICoreWebView2Settings9!private! !
 put_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 put_IsPinchZoomEnabled:!COM Interfaces-ICoreWebView2Settings5!private! !
 put_IsReputationCheckingRequired:!COM Interfaces-ICoreWebView2Settings8!private! !
 put_IsScriptEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsStatusBarEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
-put_IsSwipeNavigationEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings6!private! !
+put_IsSwipeNavigationEnabled:!COM Interfaces-ICoreWebView2Settings6!private! !
 put_IsWebMessageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsZoomControlEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_UserAgent:!COM Interfaces-ICoreWebView2Settings2!private! !

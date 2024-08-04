@@ -45,6 +45,16 @@ exitCode
 	self get_ExitCode: answer.
 	^answer asObject!
 
+failureSourceModulePath
+	"Answer the <lpwstr> value of the 'FailureSourceModulePath' property of the receiver."
+
+	| ptr answer |
+	ptr := TaskMemory new.
+	self get_FailureSourceModulePath: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
 frameInfosForFailedProcess
 	"Answer the <ICoreWebView2FrameInfoCollection> value of the 'FrameInfosForFailedProcess' property of the receiver."
 
@@ -54,6 +64,14 @@ frameInfosForFailedProcess
 	^answer asObject!
 
 get_ExitCode: exitCode
+	^E_NOTIMPL!
+
+get_FailureSourceModulePath: value
+	"Private - Get the value of the 'FailureSourceModulePath' property of the receiver.
+
+		HRESULT __stdcall FailureSourceModulePath(
+			[out, retval]LPWSTR* value);"
+
 	^E_NOTIMPL!
 
 get_FrameInfosForFailedProcess: frames
@@ -124,8 +142,10 @@ reason
 
 !WebView2.ICoreWebView2ProcessFailedEventArgs categoriesForMethods!
 exitCode!properties!public! !
+failureSourceModulePath!properties!public! !
 frameInfosForFailedProcess!properties!public! !
 get_ExitCode:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+get_FailureSourceModulePath:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs3!private! !
 get_FrameInfosForFailedProcess:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessDescription:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessFailedKind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs!private! !

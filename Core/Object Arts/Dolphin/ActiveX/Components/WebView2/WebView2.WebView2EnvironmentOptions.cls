@@ -2,7 +2,7 @@
 
 OS.COM.InterfaceImplementation
 	subclass: #'WebView2.WebView2EnvironmentOptions'
-	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel'
+	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel channelSearchKind releaseChannels scrollBarStyle'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -45,6 +45,25 @@ browserVersion
 browserVersion: aString
 	browserVersion := aString!
 
+channelSearchKind
+	"Answer the <integer> from the COREWEBVIEW2_CHANNEL_SEARCH_KIND enumeration that specifies the channel search order for locating the webview2 runtime to load.
+	By default this is COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE (2)."
+
+	^channelSearchKind!
+
+channelSearchKind: value
+	(value between: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE
+		and: COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE)
+			ifFalse: 
+				[InvalidArgumentError
+					signal: 'Channel search kind <1p> not in expected range [<2p>, <3p>}' << {
+									value.
+									COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+									COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE
+								}
+					with: 'value'].
+	channelSearchKind := value!
+
 exclusiveUserDataFolderAccess
 	^flags allMask: ExclusiveUserDataFolderAccessMask!
 
@@ -78,6 +97,15 @@ get_AreBrowserExtensionsEnabled: value
 			[out, retval]long* value);"
 
 	value value: self areBrowserExtensionsEnabled asParameter.
+	^S_OK!
+
+get_ChannelSearchKind: value
+	"Private - Get the value of the 'ChannelSearchKind' property of the receiver.
+
+		HRESULT __stdcall ChannelSearchKind(
+			[out, retval]COREWEBVIEW2_CHANNEL_SEARCH_KIND* value);"
+
+	value value: self channelSearchKind.
 	^S_OK!
 
 get_EnableTrackingPrevention: value
@@ -116,6 +144,24 @@ get_Language: value
 	value value: self locale tag asUtf16String copyToCOMTaskMemory detach.
 	^S_OK!
 
+get_ReleaseChannels: value
+	"Private - Get the value of the 'ReleaseChannels' property of the receiver.
+
+		HRESULT __stdcall ReleaseChannels(
+			[out, retval]COREWEBVIEW2_RELEASE_CHANNELS* value);"
+
+	value value: self releaseChannels.
+	^S_OK!
+
+get_ScrollBarStyle: value
+	"Private - Get the value of the 'ScrollBarStyle' property of the receiver.
+
+		HRESULT __stdcall ScrollBarStyle(
+			[out, retval]COREWEBVIEW2_SCROLLBAR_STYLE* value);"
+
+	value value: self scrollBarStyle.
+	^S_OK!
+
 get_TargetCompatibleBrowserVersion: value
 	"Private - Get the value of the 'TargetCompatibleBrowserVersion' property of the receiver.
 
@@ -141,7 +187,10 @@ initialize
 	super initialize.
 	flags := ##(AllowSSOMask | ExclusiveUserDataFolderAccessMask).
 	browserVersion := CORE_WEBVIEW_TARGET_PRODUCT_VERSION.
-	trackingPreventionLevel := COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED!
+	trackingPreventionLevel := COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	channelSearchKind := COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+	releaseChannels := COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+	scrollBarStyle := COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT!
 
 isCustomCrashReportingEnabled
 	^flags allMask: CustomCrashReportingMask!
@@ -185,6 +234,17 @@ put_AreBrowserExtensionsEnabled: value
 	self areBrowserExtensionsEnabled: value asBoolean.
 	^S_OK!
 
+put_ChannelSearchKind: value
+	"Private - Set the value of the 'ChannelSearchKind' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall ChannelSearchKind(
+			[in]COREWEBVIEW2_CHANNEL_SEARCH_KIND value);"
+
+	^
+	[self channelSearchKind: value.
+	S_OK] on: Error do: [:ex | ex hresult asInteger]!
+
 put_EnableTrackingPrevention: value
 	"Private - Set the value of the 'EnableTrackingPrevention' property of the object wrapped by the 
 	 receiver to the <int32> argument, value.
@@ -225,6 +285,28 @@ put_Language: value
 	locale := Locale named: value.
 	^S_OK!
 
+put_ReleaseChannels: value
+	"Private - Set the value of the 'ReleaseChannels' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall ReleaseChannels(
+			[in]COREWEBVIEW2_RELEASE_CHANNELS value);"
+
+	^
+	[self releaseChannels: value.
+	S_OK] on: Error do: [:ex | ex hresult asInteger]!
+
+put_ScrollBarStyle: value
+	"Private - Set the value of the 'ScrollBarStyle' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall ScrollBarStyle(
+			[in]COREWEBVIEW2_SCROLLBAR_STYLE value);"
+
+	^
+	[self scrollBarStyle: value.
+	S_OK] on: Error do: [:ex | ex hresult asInteger]!
+
 put_TargetCompatibleBrowserVersion: value
 	"Private - Set the value of the 'TargetCompatibleBrowserVersion' property of the object wrapped by the 
 	 receiver to the <lpwstr> argument, value.
@@ -234,6 +316,38 @@ put_TargetCompatibleBrowserVersion: value
 
 	browserVersion := value.
 	^S_OK!
+
+releaseChannels
+	"Answer the <integer> flags from the COREWEBVIEW2_RELEASE_CHANNELS flags enumeration specifying the webview2 release channels to search to locate the webview2 runtime to load.
+	By default this is COREWEBVIEW2_RELEASE_CHANNELS_STABLE (1)."
+
+	^releaseChannels!
+
+releaseChannels: value
+	(value
+		maskClear: ##(COREWEBVIEW2_RELEASE_CHANNELS_NONE | COREWEBVIEW2_RELEASE_CHANNELS_STABLE
+				| COREWEBVIEW2_RELEASE_CHANNELS_BETA | COREWEBVIEW2_RELEASE_CHANNELS_DEV
+				| COREWEBVIEW2_RELEASE_CHANNELS_CANARY))
+			~~ 0
+			ifTrue: 
+				[InvalidArgumentError signal: 'Release channels flags <1p> is not valid' << { value }
+					with: 'value'].
+	releaseChannels := value!
+
+scrollBarStyle
+	"Answer the <integer> from the COREWEBVIEW2_SCROLLBAR_STYLE enumeration that specifies the style of scrollbar to use in the webview.
+	By default this is COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT (0)."
+
+	^scrollBarStyle!
+
+scrollBarStyle: value
+	(value between: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT
+		and: COREWEBVIEW2_SCROLLBAR_STYLE_FLUENT_OVERLAY)
+			ifFalse: 
+				[InvalidArgumentError signal: 'Scrollbar style <1p> not in expected range [<2p>, <3p>}'
+							<< { value. COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT. COREWEBVIEW2_SCROLLBAR_STYLE_FLUENT_OVERLAY }
+					with: 'value'].
+	scrollBarStyle := value!
 
 SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 	"Private - Invoke the SetCustomSchemeRegistrations() method of the COM object.
@@ -245,14 +359,16 @@ SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 	^E_NOTIMPL!
 
 supportedInterfaces
-	^{
+	^##({
 		ICoreWebView2EnvironmentOptions.
 		ICoreWebView2EnvironmentOptions2.
 		ICoreWebView2EnvironmentOptions3.
 		ICoreWebView2EnvironmentOptions4.
 		ICoreWebView2EnvironmentOptions5.
-		ICoreWebView2EnvironmentOptions6
-	}!
+		ICoreWebView2EnvironmentOptions6.
+		ICoreWebView2EnvironmentOptions7.
+		ICoreWebView2EnvironmentOptions8
+	})!
 
 trackingPreventionLevel
 	"Answer the <integer> from the COREWEBVIEW2_TRACKING_PREVENTION_LEVEL enumeration that specifies the tracking prevention level to be configured for WebView2's created in the environment.
@@ -282,15 +398,20 @@ areBrowserExtensionsEnabled!accessing!public! !
 areBrowserExtensionsEnabled:!accessing!public! !
 browserVersion!accessing!public! !
 browserVersion:!accessing!public! !
+channelSearchKind!accessing!public! !
+channelSearchKind:!accessing!public! !
 exclusiveUserDataFolderAccess!accessing!public! !
 exclusiveUserDataFolderAccess:!accessing!public! !
 get_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_AllowSingleSignOnUsingOSPrimaryAccount:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_AreBrowserExtensionsEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions6!private! !
+get_ChannelSearchKind:!COM Interfaces-ICoreWebView2EnvironmentOptions7!private! !
 get_EnableTrackingPrevention:!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 get_ExclusiveUserDataFolderAccess:!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 get_IsCustomCrashReportingEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions3!private! !
 get_Language:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+get_ReleaseChannels:!COM Interfaces-ICoreWebView2EnvironmentOptions7!private! !
+get_ScrollBarStyle:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions8!private! !
 get_TargetCompatibleBrowserVersion:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 GetCustomSchemeRegistrations:schemeRegistrations:!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
 initialize!initializing!public! !
@@ -301,11 +422,18 @@ locale:!accessing!public! !
 put_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_AllowSingleSignOnUsingOSPrimaryAccount:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_AreBrowserExtensionsEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions6!private! !
+put_ChannelSearchKind:!COM Interfaces-ICoreWebView2EnvironmentOptions7!private! !
 put_EnableTrackingPrevention:!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 put_ExclusiveUserDataFolderAccess:!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 put_IsCustomCrashReportingEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions3!private! !
 put_Language:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+put_ReleaseChannels:!COM Interfaces-ICoreWebView2EnvironmentOptions7!private! !
+put_ScrollBarStyle:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions8!private! !
 put_TargetCompatibleBrowserVersion:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+releaseChannels!accessing!public! !
+releaseChannels:!accessing!public! !
+scrollBarStyle!accessing!public! !
+scrollBarStyle:!accessing!public! !
 SetCustomSchemeRegistrations:schemeRegistrations:!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
 supportedInterfaces!constants!public! !
 trackingPreventionLevel!accessing!public! !
@@ -318,13 +446,33 @@ WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOpt
 WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions4 attributes: #(#readOnly) selectors: #(#GetCustomSchemeRegistrations:schemeRegistrations: #SetCustomSchemeRegistrations:schemeRegistrations:)!
 WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions5 attributes: #(#readOnly) selectors: #(#get_EnableTrackingPrevention: #put_EnableTrackingPrevention:)!
 WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions6 attributes: #(#readOnly) selectors: #(#get_AreBrowserExtensionsEnabled: #put_AreBrowserExtensionsEnabled:)!
+WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions7 attributes: #(#readOnly) selectors: #(#get_ChannelSearchKind: #get_ReleaseChannels: #put_ChannelSearchKind: #put_ReleaseChannels:)!
+WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions8 attributes: #(#readOnly) selectors: #(#get_ScrollBarStyle: #put_ScrollBarStyle:)!
 
 !WebView2.WebView2EnvironmentOptions class methodsFor!
 
 icon
-	^ICoreWebView2 icon! !
+	^ICoreWebView2 icon!
+
+stbConvertFrom: anSTBClassFormat
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			data , {
+						COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+						COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+						COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT
+					}
+				becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	^1! !
 
 !WebView2.WebView2EnvironmentOptions class categoriesForMethods!
 icon!constants!development!public! !
+stbConvertFrom:!public! !
+stbVersion!binary filing!public! !
 !
 

@@ -354,20 +354,19 @@ notifyMove
 	webviewController NotifyParentWindowPositionChanged!
 
 observeControllerEvents
-	##({ICoreWebView2AcceleratorKeyPressedEventHandler.
+	##({
+		ICoreWebView2AcceleratorKeyPressedEventHandler.
 		ICoreWebView2FocusLostEventHandler.
 		ICoreWebView2FocusGainedEventHandler.
 		ICoreWebView2RasterizationScaleChangedEventHandler.
 		ICoreWebView2ZoomFactorChangedEventHandler.
-		ICoreWebView2MoveFocusRequestedEventHandler})
-			do: [:each | self observeEvent: each from: webviewController].
+		ICoreWebView2MoveFocusRequestedEventHandler
+	}) do: [:each | self observeEvent: each from: webviewController].
 	(webviewController queryInterface: ICoreWebView2CompositionController ifNone: [])
 		ifNotNil: 
 			[:webviewComposition |
-			self registerEventSink: (WebView2EventSink
-						source: webviewComposition
-						interfaceClass: ICoreWebView2CursorChangedEventHandler
-						handler: [:source :args | self presenter trigger: ICoreWebView2CursorChangedEventHandler eventName with: args])]!
+			##({ ICoreWebView2CursorChangedEventHandler. ICoreWebView2NonClientRegionChangedEventHandler })
+				do: [:each | self observeEvent: each from: webviewComposition]]!
 
 observeEnvironmentEvents
 	environmentEventHandlers := OrderedCollection new: 3.
@@ -558,6 +557,15 @@ scriptLocale: aLocale
 	scriptLocale := aLocale.
 	webviewController notNull ifTrue: [self recreate]!
 
+scrollBarStyle
+	^environmentOptions scrollBarStyle!
+
+scrollBarStyle: anInteger
+	| style |
+	style := anInteger ?? COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
+	self scrollBarStyle = style ifTrue: [^self].
+	self recreateAround: [environmentOptions scrollBarStyle: style]!
+
 setControlBackcolor: aColor
 	self webviewController defaultBackgroundColor: aColor!
 
@@ -727,6 +735,8 @@ releaseWebView!operations!private!realizing/unrealizing! !
 resizeContentToFit!helpers!private! !
 scriptLocale!accessing!public! !
 scriptLocale:!accessing!public! !
+scrollBarStyle!public!settings! !
+scrollBarStyle:!public!settings! !
 setControlBackcolor:!helpers!private! !
 setFocus!operations!public! !
 stop!commands!public! !
