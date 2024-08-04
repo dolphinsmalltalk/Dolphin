@@ -64,8 +64,7 @@ clearValidationResult
 
 createComponents
 	super createComponents.
-	validationResultPresenter := self add: self validationResultPresenterClass new
-				name: 'validationResult'!
+	self createValidationResultPresenter!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -75,6 +74,10 @@ createSchematicWiring
 		when: #timerTick:
 		send: #onTimerTick:
 		to: self!
+
+createValidationResultPresenter
+	validationResultPresenter := self add: self validationResultPresenterClass new
+				name: 'validationResult'!
 
 createView: aResourceNameString
 	"Private - Creates and connects a view for the receiver from the resource identified
@@ -245,6 +248,7 @@ cancel!commands-actions!public! !
 clearValidationResult!operations!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+createValidationResultPresenter!initializing!private! !
 createView:!operations!private! !
 deferredValidate!operations!public! !
 flushChanges!commands-actions!private! !

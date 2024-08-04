@@ -43,7 +43,8 @@ createComponents
 
 	promptPresenter := self add: TextPresenter new name: 'prompt'.
 	replyPresenter := self add: NumberPresenter new name: 'reply'.
-	intervalPresenter := self add: NumberPresenter new name: 'spinner'!
+	intervalPresenter := self add: NumberPresenter new name: 'spinner'.
+	self createValidationResultPresenter!
 
 getValidater
 	^

@@ -34,9 +34,6 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
-	"We don't want to show an error bubble if the user hasn't entered any text yet."
-	validationResultPresenter
-		filterBlock: [:result | self showHintBubble and: [self hasEmptyValue not or: [self showHintWhenEmpty]]].
 	promptPresenter := self add: TextPresenter new name: 'prompt'.
 	replyPresenter := self add: TextPresenter new name: 'reply'!
 
@@ -48,6 +45,12 @@ createSchematicWiring
 		when: #valueChanged
 		send: #onReplyChanged
 		to: self!
+
+createValidationResultPresenter
+	super createValidationResultPresenter.
+	"We don't want to show an error bubble if the user hasn't entered any text yet."
+	validationResultPresenter
+		filterBlock: [:result | self showHintBubble and: [self hasEmptyValue not or: [self showHintWhenEmpty]]]!
 
 hasEmptyValue
 	^self value isEmpty!
@@ -119,6 +122,7 @@ validationResultPresenterClass
 !UI.Prompter categoriesForMethods!
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+createValidationResultPresenter!initializing!private! !
 hasEmptyValue!private!testing! !
 initialize!initializing!private! !
 model:!accessing!public! !
