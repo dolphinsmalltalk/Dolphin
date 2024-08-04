@@ -165,12 +165,16 @@ insets: aRectangleOrPointOrNil
 	"Set the <Rectangle> whose edges specify the distance (in pixels) by which the sub views are
 	inset from the border of the receiver."
 
-	insets := (aRectangleOrPointOrNil isKindOf: Number)
+	| newInsets |
+	newInsets := (aRectangleOrPointOrNil isKindOf: Number)
 				ifTrue: [aRectangleOrPointOrNil asPoint corner: aRectangleOrPointOrNil asPoint]
 				ifFalse: 
 					[(aRectangleOrPointOrNil isKindOf: Point)
 						ifTrue: [aRectangleOrPointOrNil corner: aRectangleOrPointOrNil]
 						ifFalse: [aRectangleOrPointOrNil]].
+	newInsets = Rectangle.Empty ifTrue: [newInsets := nil].
+	newInsets = insets ifTrue: [^self].
+	insets := newInsets.
 	self invalidateLayout!
 
 isControlParent
@@ -282,7 +286,9 @@ resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
 	super resolutionScaledBy: aPoint.
-	self layoutManager ifNotNil: [:lm | lm resolutionScaledBy: aPoint]!
+	self layoutManager ifNotNil: [:lm | lm resolutionScaledBy: aPoint].
+	insets
+		ifNotNil: [insets := (insets origin * aPoint) truncated corner: (insets corner * aPoint) truncated]!
 
 tabFirst
 	"Set focus to the first subview with a tab stop (if any). Answers the view tabbed
