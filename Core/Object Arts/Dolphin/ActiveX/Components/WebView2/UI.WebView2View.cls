@@ -558,6 +558,9 @@ scriptLocale: aLocale
 	scriptLocale := aLocale.
 	webviewController notNull ifTrue: [self recreate]!
 
+setControlBackcolor: aColor
+	self webviewController defaultBackgroundColor: aColor!
+
 setFocus
 	"Sets focus to the receiver. Answers the View which previously had focus, or nil if
 	none/invalid handle. Implicitly re-enables the enclosing popup (shell) view if currently
@@ -598,7 +601,7 @@ unregisterEvents
 			environmentEventHandlers := nil]!
 
 updateSettings
-	| settings |
+	| settings back |
 	settings := self webviewSettings.
 	self allowContextMenu ifFalse: [settings areDefaultContextMenusEnabled: false].
 	self areBrowserAcceleratorKeysEnabled ifFalse: [settings areBrowserAcceleratorKeysEnabled: false].
@@ -612,7 +615,9 @@ updateSettings
 	self isZoomControlEnabled ifFalse: [settings isZoomControlEnabled: false].
 	self isGeneralAutofillEnabled ifFalse: [settings isGeneralAutofillEnabled: false].
 	self isPasswordAutosaveEnabled ifFalse: [settings isPasswordAutosaveEnabled: false].
-	self isPinchZoomEnabled ifFalse: [settings isPinchZoomEnabled: false]!
+	self isPinchZoomEnabled ifFalse: [settings isPinchZoomEnabled: false].
+	back := self actualBackcolor.
+	back isDefault ifFalse: [self setControlBackcolor: back]!
 
 webview
 	^webview!
@@ -722,6 +727,7 @@ releaseWebView!operations!private!realizing/unrealizing! !
 resizeContentToFit!helpers!private! !
 scriptLocale!accessing!public! !
 scriptLocale:!accessing!public! !
+setControlBackcolor:!helpers!private! !
 setFocus!operations!public! !
 stop!commands!public! !
 subclassWindow:!operations!private! !

@@ -118,6 +118,8 @@ buildSettingsPopup: aMenu
 		addItem: ((Menu description: 'Preferred &Color Scheme')
 					name: #colorSchemeMenu;
 					yourself);
+		addCommand: #chooseBackcolor description: 'Background &Color'.
+	aMenu
 		addSeparator;
 		addCommand: #toggleGeneralAutofill description: 'General &Autofill';
 		addCommand: #togglePasswordAutosave description: '&Password Autosave';
@@ -138,6 +140,17 @@ buildTrackingPreventionLevelMenu: aMenu
 						description: eachValue)
 						isRadioButtonStyle: true;
 						yourself)]!
+
+chooseBackcolor
+	<commandQuery: #hasWebview>
+	| color |
+	color := browser view actualBackcolor.
+	color = (Color named: #browserBackground) ifTrue: [color := Color default].
+	color := color asValue.
+	(ColorDialog showModalOn: color) ifNil: [^self].
+	color := color value.
+	color isDefault ifTrue: [color := Color named: #browserBackground].
+	browser view backcolor: color!
 
 colorSchemeMenu
 	<commandQuery: #hasWebview>
@@ -727,6 +740,7 @@ buildBrowserExtensionsMenu:!commands-menus!private! !
 buildColorSchemeMenu:!commands-menus!private! !
 buildSettingsPopup:!commands-menus!private! !
 buildTrackingPreventionLevelMenu:!commands-menus!private! !
+chooseBackcolor!commands-actions!public! !
 colorSchemeMenu!commands-menus!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !

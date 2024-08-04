@@ -198,6 +198,8 @@ verifySharedBuffer
 		ifFalse: 
 			["Browser version is too old"
 			^self].
+	self should: [env createSharedBuffer: 0] raise: Win32Error matching: [:ex | ex hresult asInteger = E_INVALIDARG].
+
 	buf := env createSharedBuffer: 4096.
 	testBytes := Object comment asByteArray.
 	buf buffer
@@ -241,9 +243,9 @@ verifyWebViewControllerProperties
 	"ICoreWebView2Controller2: defaultBackgroundColor"
 	self assert: baseController defaultBackgroundColor equals: Color white.
 	self assert: controller defaultBackgroundColor equals: Color white.
-	controller defaultBackgroundColor: Color magenta.
+	controller defaultBackgroundColor: Color face3d.
 	self assert: baseController defaultBackgroundColor equals: Color white.
-	self assert: controller defaultBackgroundColor equals: Color magenta.
+	self assert: controller defaultBackgroundColor equals: Color face3d.
 	"ICoreWebView2Controller3: boundsMode, rasterizationScale, shouldDetectMonitorScaleChanges"
 	self assert: baseController boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
 	self assert: controller boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.

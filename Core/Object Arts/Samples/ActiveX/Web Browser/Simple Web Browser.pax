@@ -43,6 +43,7 @@ package setPrerequisites: #(
 	'..\COM Examples'
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Color Dialog'
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'

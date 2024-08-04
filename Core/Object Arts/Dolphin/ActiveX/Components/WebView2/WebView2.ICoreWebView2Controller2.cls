@@ -46,7 +46,7 @@ get_DefaultBackgroundColor: backgroundColor
 		HRESULT __stdcall DefaultBackgroundColor(
 			[out, retval]COREWEBVIEW2_COLOR* backgroundColor);"
 
-	<virtual stdcall: hresult 27 uint64*>
+	<virtual stdcall: hresult 27 uint32*>
 	^self invalidCall: _failureCode!
 
 put_DefaultBackgroundColor: backgroundColor
@@ -56,7 +56,7 @@ put_DefaultBackgroundColor: backgroundColor
 		HRESULT __stdcall DefaultBackgroundColor(
 			[in]COREWEBVIEW2_COLOR backgroundColor);"
 
-	<virtual stdcall: hresult 28 uint64>
+	<virtual stdcall: hresult 28 uint32>
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2Controller2 categoriesForMethods!
@@ -72,9 +72,9 @@ defineFunctions
 
 	self
 		defineFunction: #get_DefaultBackgroundColor:
-			argumentTypes: 'qword*';
+			argumentTypes: 'uint32*';
 		defineFunction: #put_DefaultBackgroundColor:
-			argumentTypes: 'qword'
+			argumentTypes: 'uint32'
 ! !
 
 !WebView2.ICoreWebView2Controller2 class categoriesForMethods!

@@ -224,14 +224,14 @@ defaultBackgroundColor
 	"Answer the <Color> value of the 'DefaultBackgroundColor' property of the receiver."
 
 	| answer |
-	answer := UInt64 newBuffer.
+	answer := UInt32Bytes new.
 	self get_DefaultBackgroundColor: answer.
-	^Graphics.Color fromArgbCode: answer value!
+	^Graphics.Color fromArray: answer!
 
 defaultBackgroundColor: backgroundColor
 	"Set the 'DefaultBackgroundColor' property of the receiver to the <COREWEBVIEW2_COLOR> value of the argument."
 
-	self put_DefaultBackgroundColor: backgroundColor argbCode!
+	self put_DefaultBackgroundColor: backgroundColor argb asByteArray!
 
 get_AllowExternalDrop: value
 	"Private - Get the value of the 'AllowExternalDrop' property of the receiver.
