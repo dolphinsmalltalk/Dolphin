@@ -1174,12 +1174,13 @@ onDragLeaveArena: session
 			arena showAdornment]!
 
 onDragOverArena: session
+	| arena arenaPoint |
+	arena := self arena.
+	arenaPoint := (arena mapScreenToClient: session dragPoint) * arena dpi // session dragSource dpi.
 	self inDesignDpiContextDo: 
-			[| arena op dropTarget |
-			arena := self arena.
+			[| op dropTarget |
 			session operation: nil.
-			dropTarget := arena
-						dropTargetFromScreenPoint: session dragPoint * arena dpi // session dragSource dpi.
+			dropTarget := arena dropTargetAt: arenaPoint.
 			dropTarget == session suggestedTarget
 				ifFalse: 
 					[session suggestedTarget ifNotNil: [:target | arena invalidateAdornmentFor: target].
@@ -1223,18 +1224,17 @@ onDragOverHierarchy: session
 					^self]]!
 
 onDropOverArena: session
+	| arena arenaPoint |
+	arena := self arena.
+	arenaPoint := (arena mapScreenToClient: session dragPoint) * arena dpi // session dragSource dpi.
 	self inDesignDpiContextDo: 
-			[| arena dropObject dropTarget position |
-			arena := self arena.
-			position := session dragPoint * arena dpi // session dragSource dpi.
-			dropTarget := arena dropTargetFromScreenPoint: position.
+			[| dropObject dropTarget position |
+			dropTarget := arena dropTargetAt: arenaPoint.
 			dropTarget == arena
 				ifTrue: 
 					[dropTarget := self designDesktop.
 					position := arena defaultComposingPosition]
-				ifFalse: 
-					[position := arena mapScreenToClient: position.
-					position := arena mapPoint: position toView: dropTarget].
+				ifFalse: [position := arena mapPoint: arenaPoint toView: dropTarget].
 			dropObject := session dragObjects first.
 			(session isCopy or: [session isMove])
 				ifTrue: 
