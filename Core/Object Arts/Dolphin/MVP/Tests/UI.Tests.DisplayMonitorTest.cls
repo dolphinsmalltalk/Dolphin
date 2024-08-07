@@ -85,7 +85,7 @@ testContainingPoint
 		assertIsNil: (DisplayMonitor containingPoint: SystemMetrics current virtualScreenRectangle corner + 1)!
 
 testDesktop
-	self assert: View desktop monitor identicalTo: DisplayMonitor primary!
+	self assert: View desktop monitor identicalTo: DisplayMonitor active!
 
 testDeviceName
 	self deny: DisplayMonitor primary deviceName equals: ''!
