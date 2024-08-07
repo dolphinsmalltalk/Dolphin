@@ -111,9 +111,8 @@ debugTest: aTestCaseResult
 defaultHelpId
 	^10994!
 
-displayColor: aColor 
-	modePresenter view backcolor: aColor.
-	detailsPresenter view backcolor: aColor!
+displayColor: aColor
+	(self view viewNamed: 'colorField') backcolor: aColor!
 
 displayDefects: aCollection
 	defectsPresenter list: aCollection.

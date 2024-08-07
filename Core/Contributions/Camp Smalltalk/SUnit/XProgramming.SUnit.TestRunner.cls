@@ -19,46 +19,53 @@ XProgramming.SUnit.TestRunner comment: 'A TestRunner is a simple graphical user 
 allTestSuite
 	^TestCase buildSuite!
 
+colorField
+	^self view viewNamed: 'colorField'!
+
 createSchematicWiring
-	| list |
-	list := self view viewNamed: 'defects' ifNone: [^self].
-	list when: #selectionChanged send: #debugTest to: self.	
-!
+	self defectsList
+		when: #selectionChanged
+		send: #debugTest
+		to: self!
 
 debugFailedTest
+	<commandQuery: #hasFailureSelected>
 	self debugTest!
 
 debugTest
-	| list  |
-	list := self view viewNamed: 'defects' ifNone: [^self].
+	| list failed |
+	list := self defectsList.
 	list selectionOrNil isNil ifTrue: [^self].
-	self debugTest: list selection.
-!
+	failed := list selection.
+	self debugTest: failed!
 
 debugTest: aTestCase 
 	aTestCase isNil ifTrue: [^self].
 	self displayMode: 'Debugging'.
 	aTestCase debug!
 
-displayClear
-	self displayColor: #default!
+defectsList
+	^self view viewNamed: 'defects'!
 
-displayColor: aSymbol
- 	(self view viewNamed: 'colorField') backcolor: (Graphics.Color perform: aSymbol).
- 	(self view viewNamed: 'mode') backcolor: (Graphics.Color perform: aSymbol).
- 	(self view viewNamed: 'details') backcolor: (Graphics.Color perform: aSymbol)!
+detailsField
+	^self view viewNamed: 'details'!
+
+displayClear
+	self displayColor: UI.Color default!
+
+displayColor: aColor
+	self colorField backcolor: aColor!
 
 displayDefects: aCollection
 	| list |
-	list := self view viewNamed: 'defects' ifNone: [^self].
+	list := self defectsList.
 	list selectionOrNil: nil.
 	list list: aCollection.
-	list isEnabled: aCollection isEmpty not.
-!
+	list isEnabled: aCollection isEmpty not!
 
 displayDetails: aString
 	| details |
-	details := self view viewNamed: 'details' ifNone: [^self].
+	details := self detailsField.
 	details value: aString.
 	SessionManager inputState pumpMessages!
 
@@ -68,11 +75,14 @@ displayFail
 	self displayDetails: result printString.!
 
 displayGreen
- 	self displayColor: #green!
+	self displayColor: (Graphics.Color
+				r: 100
+				g: 210
+				b: 103)!
 
 displayMode: aString
  	| mode |
-	mode := self view viewNamed: 'mode' ifNone: [^self].
+	mode := self view viewNamed: 'mode'.
 	mode value: aString.
 	!
 
@@ -83,7 +93,10 @@ displayPass
 	lastPass := DateAndTime now!
 
 displayRed
- 	self displayColor: #red!
+	self displayColor: (Graphics.Color
+				r: 243
+				g: 27
+				b: 65)!
 
 displayReset
 	self displayClear.
@@ -93,28 +106,35 @@ displayReset
 
 displayRunning
 	self displayYellow.
-	self displayMode: 'running'. 
-	self displayDetails: '...'.!
+	self displayMode: 'Running'. 
+	self displayDetails: '…'.!
 
 displayYellow
- 	self displayColor: #yellow!
+	self displayColor: (Graphics.Color
+				r: 235
+				g: 201
+				b: 65)!
+
+failure
+	^self defectsList selectionOrNil!
+
+fillTestList
+	self scriptList list: TestCase allSubclasses asSortedCollection!
+
+hasFailureSelected
+	^self failure notNil!
+
+hasTestSelected
+	^self script notNil!
 
 onViewOpened
-
 	super onViewOpened.
-	self caption: 'SUnit Camp Smalltalk ', TestCase version, ' TestRunner'.
-	(self view viewNamed: 'scriptModel') 
-		list: TestCase allSubclasses.
-	!
+	self caption: 'SUnit Camp Smalltalk ' , TestCase version , ' TestRunner'.
+	self fillTestList!
 
 refreshTests
-	(self view viewNamed: 'scriptModel') 
-		list: TestCase allSubclasses; 
-		selectionByIndex: 0; 
-		updateAll.
-	self displayReset.
-
-!
+	self fillTestList.
+	self displayReset!
 
 result
 	^result!
@@ -130,14 +150,14 @@ runSuite: aTestSuite
 	self updateWindow!
 
 runTests
-	self script isNil ifFalse: 
-		[self runSuite: self script suite]!
+	<commandQuery: #hasTestSelected>
+	self runSuite: self script suite!
 
 script
-	| scriptModel |
-	scriptModel := self view viewNamed: 'scriptModel' ifNone: [^nil].
-	scriptModel selectionOrNil isNil ifTrue: [^nil].
-	^scriptModel selection!
+	^self scriptList selectionOrNil!
+
+scriptList
+	^self view viewNamed: 'scriptModel'!
 
 timeSinceLastPassAsString
 	| stream |
@@ -164,12 +184,15 @@ updateWindow
 
 !XProgramming.SUnit.TestRunner categoriesForMethods!
 allTestSuite!helpers!public! !
+colorField!accessing!private! !
 createSchematicWiring!helpers!private! !
 debugFailedTest!Actions!public! !
 debugTest!Actions!public! !
 debugTest:!Actions!public! !
+defectsList!accessing!private! !
+detailsField!accessing!private! !
 displayClear!public!Updating! !
-displayColor:!public!Updating! !
+displayColor:!private!Updating! !
 displayDefects:!public!Updating! !
 displayDetails:!public!Updating! !
 displayFail!public!Updating! !
@@ -180,6 +203,10 @@ displayRed!public!Updating! !
 displayReset!public!Updating! !
 displayRunning!public!Updating! !
 displayYellow!public!Updating! !
+failure!Accessing!public! !
+fillTestList!helpers!private! !
+hasFailureSelected!public!testing! !
+hasTestSelected!public!testing! !
 onViewOpened!Actions!public! !
 refreshTests!Actions!public! !
 result!Accessing!public! !
@@ -187,6 +214,7 @@ runAllTests!Actions!public! !
 runSuite:!Actions!public! !
 runTests!Actions!public! !
 script!Accessing!public! !
+scriptList!accessing!private! !
 timeSinceLastPassAsString!helpers!public! !
 update:!helpers!public! !
 updateDefects!public!Updating! !
@@ -227,7 +255,7 @@ resource_SUnit_Runner_30
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_SUnit_Runner_30)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #silver nil 5 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 160 nil 112 nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 160 130 1 1 nil nil 18 #{UI.ContainerView} 50 15 nil 160 50 2 8 1140850688 131073 320 nil 112 nil 5 nil nil nil 320 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 18 #{UI.PushButton} 50 20 nil 320 50 2 8 1140924416 1 432 nil 112 518 #{Graphics.Point} 177 57 5 nil 226 nil true 258 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 432 nil nil 1350 4 #{UI.CommandDescription} #runTests 8 'Run' 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[0 0 0 0 0 0 0 0 60 0 0 0 24 0 0 0] 193 464 8 'Run' 432 674 #isEnabled: 8 #(false) 432 3 8 #() 498 193 193 nil 29 8 'runOne' nil 626 50 1 674 #createWindow: 50 1 722 754 8 #[92 1 0 0 0 0 0 0 212 1 0 0 24 0 0 0] 193 352 8 '' 320 3 50 2 18 #{UI.PushButton} 50 20 nil 320 50 2 8 1140924416 1 1040 nil 98 #default nil 5 nil 226 nil true 258 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 1040 nil nil 578 #runAllTests 8 'RunAll' 1 1 nil nil false nil nil nil 626 50 2 674 #createWindow: 50 1 722 754 8 #[60 0 0 0 0 0 0 0 120 0 0 0 24 0 0 0] 193 1072 8 'RunAll' 1040 674 #isEnabled: 8 #(false) 1040 3 8 #() 498 193 193 nil 29 432 498 193 193 nil 27 18 #{UI.PushButton} 50 20 nil 160 50 2 8 1140924416 1 1408 nil 1104 nil 5 nil 226 nil true 258 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 1408 nil nil 578 #refreshTests 8 'Refresh' 1 1 nil nil false nil nil nil 626 50 2 674 #createWindow: 50 1 722 754 8 #[0 0 0 0 0 0 0 0 74 0 0 0 24 0 0 0] 193 1440 8 'Refresh' 1408 674 #isEnabled: 8 #(false) 1408 3 8 #() 498 193 193 nil 29 18 #{UI.ComboBox} 50 17 nil 160 50 2 8 1144063491 1025 1744 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 1104 nil 5 nil 226 nil true 258 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 1744 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() 401 626 50 1 674 #createWindow: 50 1 722 754 8 #[74 0 0 0 0 0 0 0 92 1 0 0 224 0 0 0] 193 1776 8 '' 1744 3 8 #() 498 193 193 nil 27 386 #{Core.IdentityDictionary} 50 4 1408 8 'refreshButton' 1744 8 'scriptModel' nil 626 50 1 674 #createWindow: 50 1 722 754 8 #[0 0 0 0 0 0 0 0 212 1 0 0 24 0 0 0] 193 192 8 '' 160 3 50 3 1408 1744 320 498 193 193 nil 27 nil nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 2400 nil 1104 nil 5 nil nil nil 2400 130 1 1 nil 18 #{UI.ContainerView} 50 15 nil 2400 50 2 8 1140850688 131073 2480 nil 1104 nil 5 nil nil nil 2480 130 1 1 nil nil 18 #{UI.PushButton} 50 20 nil 2480 50 2 8 1140924416 1 2560 nil 1104 nil 5 nil 226 nil true 258 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 2560 nil nil 578 #debugFailedTest 8 'Debug' 1 1 nil nil false nil nil nil 626 50 2 674 #createWindow: 50 1 722 754 8 #[135 1 0 0 0 0 0 0 212 1 0 0 24 0 0 0] 193 2592 8 'Debug' 2560 674 #isEnabled: 8 #(false) 2560 3 8 #() 498 193 193 nil 29 nil 18 #{UI.ComboBox} 50 17 nil 2480 50 2 8 1144063491 1 2896 1810 1842 0 nil 1888 1104 nil 5 nil 226 nil true 258 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 2896 nil nil 1968 2000 401 626 50 2 674 #createWindow: 50 1 722 754 8 #[0 0 0 0 0 0 0 0 135 1 0 0 224 0 0 0] 193 2928 8 '' 2896 674 #isEnabled: 8 #(false) 2896 3 8 #() 498 193 193 nil 27 386 #{Core.IdentityDictionary} 50 4 2560 8 'debugButton' 2896 8 'defects' nil 626 50 1 674 #createWindow: 50 1 722 754 8 #[0 0 0 0 103 0 0 0 212 1 0 0 127 0 0 0] 193 2512 8 '' 2480 3 50 2 2560 2896 498 193 193 nil 27 nil nil 18 #{UI.ContainerView} 50 15 nil 2400 50 2 8 1149239296 131073 3456 nil 1104 nil 5 nil nil nil 3456 130 1 1 18 #{UI.StaticText} 50 16 nil 3456 50 2 8 1140850945 1 3536 nil nil 498 177 81 5 nil 226 nil true 258 8 #[224 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 32 0 66 0 108 0 97 0 99 0 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 3536 nil nil 518 #{UI.NullConverter} nil nil true 626 50 2 674 #createWindow: 50 1 722 754 8 #[0 0 0 0 0 0 0 0 210 1 0 0 60 0 0 0] 193 3568 nil 3536 674 #text: 50 1 8 'N/A' 3536 3 8 #() 498 193 193 nil 27 nil nil nil 18 #{UI.StaticText} 50 16 nil 3456 50 2 8 1140850945 65 3888 nil nil nil 5 nil 226 nil true 258 8 #[240 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 3888 nil nil 3666 nil nil nil 626 50 2 674 #createWindow: 50 1 722 754 8 #[0 0 0 0 60 0 0 0 210 1 0 0 101 0 0 0] 193 3920 nil 3888 674 #text: 50 1 8 '...' 3888 3 8 #() 498 193 193 nil 27 386 #{Core.IdentityDictionary} 50 4 3888 8 'details' 3536 8 'mode' nil 626 50 1 674 #createWindow: 50 1 722 754 8 #[0 0 0 0 0 0 0 0 212 1 0 0 103 0 0 0] 193 3488 8 '' 3456 3 50 2 3888 3536 498 193 193 nil 27 550 #{Core.IdentityDictionary} 0 518 #{Graphics.Rectangle} 498 1 1 498 1 1 626 50 1 674 #createWindow: 50 1 722 754 8 #[0 0 0 0 24 0 0 0 212 1 0 0 151 0 0 0] 193 2432 8 '' 2400 3 50 2 3456 2480 498 193 193 nil 27 386 4432 50 2 2400 8 'colorField' nil nil nil nil nil 1 nil nil nil 498 969 381 1 nil 193 626 50 1 674 #createWindow: 50 1 722 4466 498 7679 21 498 8647 401 193 80 8 'SUnit Camp Smalltalk 3.0 TestRunner' 32 1 50 2 160 2400 498 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #silver 518 #{Graphics.Point} 1121 381 517 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 272 nil 112 nil 5 nil nil nil 272 242 1 1 nil nil 18 #{UI.Toolbar} 50 28 nil 272 50 2 8 1409293132 131137 352 nil 98 #face3d nil 517 nil nil nil 352 98 #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 2 1094 1 #{UI.ToolbarIconButton} 352 1 1350 4 #{UI.CommandDescription} #runTests 8 '&Run' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'Run.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 514 352 1 546 #runAllTests 8 'Run &All' 1 1 594 nil true 626 8 'ProgressBar.ico' 688 65541 nil nil nil nil 11 1 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[164 1 0 0 0 0 0 0 32 2 0 0 24 0 0 0] 193 384 8 '' 352 3 8 #() 130 193 193 nil 31 18 #{UI.Toolbar} 50 28 nil 272 50 2 8 1409293132 131137 1040 nil 432 nil 517 nil nil nil 1040 432 nil 450 #{Core.IdentityDictionary} 480 nil nil nil nil 50 1 514 1040 1 546 #refreshTests 8 'Re&fresh' 1 1 594 nil true 626 8 'Refresh.ico' 688 65541 nil nil nil nil 11 nil #smallIcons nil nil 838 1 #{UI.FlowLayout} 1 1 1 818 50 1 866 #createWindow: 50 1 914 946 8 #[0 0 0 0 0 0 0 0 70 0 0 0 24 0 0 0] 193 1072 8 '' 1040 3 8 #() 130 193 193 nil 31 18 #{UI.ComboBox} 50 17 nil 272 50 2 8 1144063491 1025 1424 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 432 nil 5 nil nil nil 1424 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 8 1 #{Core.Message} 8 'doIt' 8 '[:each | ''<1s> (<2s>)'' << { each name. each environment fullName }]' 8 #[36 105 29 226 1 226 2 161 49 64 181 182 106] 8 '<1s> (<2s>)' #name #environment #fullName 1094 2 #{Kernel.VariableBinding} #Array 48 #{Core} 1 #newFromStack: #<< 1600 7 257 nil 8 #() 401 818 50 1 866 #createWindow: 50 1 914 946 8 #[70 0 0 0 0 0 0 0 164 1 0 0 225 0 0 0] 193 1456 8 '' 1424 3 8 #() 130 193 193 nil 27 450 #{Core.IdentityDictionary} 50 6 1040 8 'refreshButton' 352 8 'runButtons' 1424 8 'scriptModel' nil 818 50 1 866 #createWindow: 50 1 914 946 8 #[0 0 0 0 0 0 0 0 32 2 0 0 24 0 0 0] 193 304 8 '' 272 3 50 3 1040 1424 352 130 193 193 nil 27 nil nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 2160 nil 432 nil 5 nil nil nil 2160 242 1 1 nil 18 #{UI.ContainerView} 50 15 nil 2160 50 2 8 1140850688 131073 2240 nil 416 nil 5 nil nil nil 2240 242 1 1 nil nil 18 #{UI.Toolbar} 50 28 nil 2240 50 2 8 1409293132 131137 2320 nil 432 nil 517 nil nil nil 2320 432 nil 450 #{Core.IdentityDictionary} 480 nil nil nil nil 50 1 514 2320 1 546 #debugFailedTest 8 '&Debug' 1 1 594 nil true 626 8 'Debugger.ico' 688 65541 nil nil nil nil 11 nil nil nil nil 1234 1 1 1 818 50 1 866 #createWindow: 50 1 914 946 8 #[218 1 0 0 0 0 0 0 32 2 0 0 26 0 0 0] 193 2352 8 '' 2320 3 8 #() 130 193 193 nil 31 nil 18 #{UI.ComboBox} 50 17 nil 2240 50 2 8 1144063491 1 2688 1490 1522 0 nil 1568 nil nil 5 nil nil nil 2688 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() 401 818 50 2 866 #createWindow: 50 1 914 946 8 #[0 0 0 0 0 0 0 0 218 1 0 0 225 0 0 0] 193 2720 8 '' 2688 866 #isEnabled: 8 #(false) 2688 3 8 #() 130 193 193 nil 27 450 #{Core.IdentityDictionary} 50 4 2320 8 'debugFailedTest' 2688 8 'defects' nil 818 50 1 866 #createWindow: 50 1 914 946 8 #[0 0 0 0 101 0 0 0 32 2 0 0 127 0 0 0] 193 2272 8 '' 2240 3 50 2 2688 2320 130 193 193 nil 27 nil nil 18 #{UI.ContainerView} 50 15 nil 2160 50 2 8 1149239296 131073 3264 nil nil nil 5 nil nil nil 3264 242 1 1 18 #{UI.StaticText} 50 16 nil 3264 50 2 8 1140850945 1 3344 nil nil 130 177 81 5 nil 162 nil true 194 8 #[224 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 3344 nil nil 518 #{UI.NullConverter} nil nil true 818 50 2 866 #createWindow: 50 1 914 946 8 #[0 0 0 0 10 0 0 0 30 2 0 0 65 0 0 0] 193 3376 nil 3344 866 #text: 50 1 8 'N/A' 3344 3 8 #() 130 193 193 nil 27 nil nil nil 18 #{UI.StaticText} 50 16 nil 3264 50 2 8 1140850945 65 3696 nil nil nil 5 nil 162 nil true 194 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 88 2 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 32 0 83 0 101 0 109 0 105 0 98 0 111 0 108 0 100 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 3696 nil nil 3474 nil nil nil 818 50 2 866 #createWindow: 50 1 914 946 8 #[0 0 0 0 65 0 0 0 30 2 0 0 99 0 0 0] 193 3728 nil 3696 866 #text: 50 1 8 '...' 3696 3 8 #() 130 193 193 nil 27 450 #{Core.IdentityDictionary} 50 4 3696 8 'details' 3344 8 'mode' 518 #{Graphics.Rectangle} 130 1 21 130 1 1 818 50 1 866 #createWindow: 50 1 914 946 8 #[0 0 0 0 0 0 0 0 32 2 0 0 101 0 0 0] 193 3296 8 '' 3264 3 50 2 3696 3344 130 193 193 nil 27 550 #{Core.IdentityDictionary} 0 nil 818 50 1 866 #createWindow: 50 1 914 946 8 #[0 0 0 0 24 0 0 0 32 2 0 0 151 0 0 0] 193 2192 8 '' 2160 3 50 2 3264 2240 130 193 193 nil 27 450 4304 50 2 2160 8 'colorField' nil nil nil nil nil 1 nil nil nil 130 969 381 nil nil 193 818 50 1 866 #createWindow: 50 1 914 4082 130 7679 21 130 8799 401 193 80 8 'SUnit Camp Smalltalk 3.0 TestRunner' 32 1 50 2 272 2160 130 193 193 nil 27)!
 
 toolDescription
 	"Answer the description of this tool that should be displayed in, for example,
