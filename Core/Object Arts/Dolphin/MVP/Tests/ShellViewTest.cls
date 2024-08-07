@@ -49,7 +49,7 @@ testDefaultPositioning
 				self assert: nextShell position equals: lastShell position + monitor cascadeOffset.
 				lastShell := nextShell].
 	"Should have wrapped"
-	self assert: nextShell position equals: monitor cascadeOffset!
+	self assert: nextShell position equals: monitor workArea origin + monitor cascadeOffset!
 
 testOpensOnForegroundMonitor
 	"Test that shell opens on the monitor of the monitor with cursor, but preferring the monitor with the foreground window if the program manager has focus."
