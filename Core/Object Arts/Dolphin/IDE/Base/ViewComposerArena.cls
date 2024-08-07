@@ -163,12 +163,9 @@ drawTrackingAt: pointOffset
 					rect := Rectangle origin: positionInParent extent: focusRect extent.
 					composer statusValue: rect]]!
 
-dropTargetFromScreenPoint: aPoint
-	"Private - Determine where the view should be dropped."
-
-	| viewHit arenaPoint |
-	arenaPoint := self mapScreenToClient: aPoint.
-	viewHit := self viewHitBy: arenaPoint.
+dropTargetAt: aPoint
+	| viewHit |
+	viewHit := self viewHitBy: aPoint.
 	
 	[viewHit isNil ifTrue: [^self].
 	viewHit canAcceptSubViews]
@@ -363,11 +360,11 @@ snapPoint: aPoint context: contextView
 	^self mapPoint: (self constrainPoint: (contextView mapPoint: aPoint to: self)) to: contextView!
 
 startTrackingAt: pointOffset
-	"Private - Start selection tracking at pointOffset. Part of the <MouseTracker> 
-	target protocol. Answers the actual position achieved after any  
-	constraints have been applied"
+	"Private - Start selection move tracking at pointOffset. Part of the <MouseTracker>  target protocol. Answers the actual position achieved after any constraints have been applied"
 
-	self hideAdornment; update.
+	self
+		hideAdornment;
+		update.
 	Cursor sizeAll setCursor.
 	self drawTrackingAt: pointOffset.
 	^pointOffset!
@@ -426,7 +423,7 @@ defaultComposingPosition!constants!private! !
 displayValue:!private!updating! !
 drawSelectionFor:!adornments!private! !
 drawTrackingAt:!private!tracking! !
-dropTargetFromScreenPoint:!drag & drop!private! !
+dropTargetAt:!drag & drop!private! !
 endTrackingAt:!private!tracking! !
 eraseTrackingAt:!private!tracking! !
 grabberHitBy:!helpers!private! !
