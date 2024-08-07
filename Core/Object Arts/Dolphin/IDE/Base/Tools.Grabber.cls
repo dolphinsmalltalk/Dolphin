@@ -193,7 +193,7 @@ trackMouseFrom: aScreenPoint origin: aPoint
 	"The mouse went down within the receiver. Start tracking its movement"
 
 	| tracker |
-	(tracker := MouseTracker forPresenter: view presenter startingAt: aScreenPoint) origin: aPoint.
+	(tracker := MouseTracker forPresenter: composer arena startingAt: aScreenPoint) origin: aPoint.
 	self isHorizontalOnly ifTrue: [tracker beHorizontalOnly].
 	self isVerticalOnly ifTrue: [tracker beVerticalOnly].
 	tracker startTracking: self!
