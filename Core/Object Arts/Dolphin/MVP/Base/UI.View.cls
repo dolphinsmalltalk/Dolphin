@@ -1588,7 +1588,7 @@ getWindowLongPtr: anInteger
 		ifFalse: [User32 getWindowLong: handle nIndex: anInteger]!
 
 getWindowRect
-	"Private - Answer a raw (unmapped) RECTL containing the bounding rectangle of the receiver's non-client window."
+	"Private - Answer a raw (unmapped) RECTL containing co-ordinates of the bounding rectangle of the receiver's non-client window relative to the upper-left corner of the screen."
 
 	| rect |
 	rect := RECTL newBuffer.
@@ -3251,7 +3251,7 @@ scaleFactor
 screenRectangle
 	"Answer the <Rectangle> boundary of the receiver window in screen coordinates"
 
-	^self parentView mapRectangle: self getRect to: self class desktop!
+	^self getWindowRect asRectangle!
 
 screenRectangle: aRectangle
 	"Sets the boundary of the receiver to aRectangle.
