@@ -3289,7 +3289,7 @@ scaleFactor
 screenRectangle
 	"Answer the boundary of the receiver window in screen coordinates"
 
-	^self parentView mapRectangle: self getRect to: self class desktop!
+	^self getWindowRect asRectangle!
 
 screenRectangle: aRectangle
 	"Sets the boundary of the receiver to aRectangle.
