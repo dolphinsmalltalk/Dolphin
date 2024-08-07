@@ -73,7 +73,7 @@ resource_Gdiplus_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Gdiplus_view)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{Graphics.Gdiplus.ImageView} 38 #{Core.Array} 28 nil nil 50 2 8 1140850944 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil nil #normal 1 518 #{Graphics.Rectangle} 518 #{Graphics.Point} 1 1 242 1 1 nil nil #none nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 99 15 0 0 110 0 0 0] 193 80 nil 32 3 8 #() 242 193 193 nil 29)! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{Graphics.Gdiplus.ImageView} 38 #{Core.Array} 28 nil nil 50 2 8 1140850944 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil nil #normal 1 nil nil nil #none nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 99 15 0 0 110 0 0 0] 193 80 nil 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 29)! !
 
 !UI.ImagePresenter class categoriesForMethods!
 resource_Gdiplus_view!public!resources-views! !
