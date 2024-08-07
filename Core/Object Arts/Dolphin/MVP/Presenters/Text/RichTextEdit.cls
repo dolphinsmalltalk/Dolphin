@@ -432,7 +432,7 @@ onViewCreated
 	self forecolor ifNotNil: [:color | self forecolor: color].
 
 	"Also ask to receive notifications"
-	self 
+	self
 		sendMessage: WM_SETEVENTMASK
 		wParam: 0
 		lParam: self defaultNotificationMask.
@@ -779,13 +779,15 @@ setWindowText: aString
 	"Unusually the RichEdit control will accept different string encodings through EM_SETTEXTEX,
 	so we don't need to first translate to UTF-16, but just pass along whatever we get."
 
-	| stex |
+	| stex zoom |
+	zoom := self zoomRatio.
 	stex := ByteArray newFixed: 8.
 	stex dwordAtOffset: 4 put: aString codePage.
 	self
 		sendMessage: EM_SETTEXTEX
 		wParam: stex yourAddress
-		lpParam: aString!
+		lpParam: aString.
+	zoom = 1 ifFalse: [self zoomRatio: zoom]!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
@@ -807,7 +809,8 @@ state
 	^sequence!
 
 streamInFrom: aPositionableStream format: anInteger
-	| elementSize answer callback |
+	| elementSize answer callback zoom |
+	zoom := self zoomRatio.
 	elementSize := aPositionableStream elementSize.
 	callback := ExternalCallback block: 
 					[:dwCookie :pbBuff :cb :pcb |
@@ -832,6 +835,7 @@ streamInFrom: aPositionableStream format: anInteger
 	self setMaxTextLimit.
 	streamIn isNil ifFalse: [streamIn free].
 	streamIn := callback.
+	zoom = 1 ifFalse: [self zoomRatio: zoom].
 	^answer!
 
 streamOutOn: aWriteStream format: anInteger
