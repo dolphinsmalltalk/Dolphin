@@ -2,7 +2,7 @@
 
 UI.Presenter
 	subclass: #'UI.Examples.PlimbolePresenter'
-	instanceVariableNames: 'palette'
+	instanceVariableNames: 'palette brushes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -50,14 +50,24 @@ bePentatonicScale
 	self plimbole scaleName: #pentatonicScale.
 	self showHintBubble: 'Playing in Pentatonic Scale'!
 
+brushes
+	^brushes!
+
+canPasteClipboard
+	^
+	[PlimbolePiece fromString: Clipboard current getText.
+	true] on: Error do: [:ex | false]!
+
 clearAll
 	"Clear all the cells but leave everythinng else"
 
+	<commandQuery: #hasCells>
 	self plimbole clearCells!
 
 copyToClipboard
 	"Copy the current piece signature to the clipboard for sharing/later pasting"
 
+	<commandQuery: #hasCells>
 	| signature |
 	signature := self plimbole signature.
 	Clipboard current setText: signature.
@@ -72,9 +82,12 @@ fasterTempo
 favourites
 	^#('20_1_142_653643411513833522422360460231241473742140132580750302371051_9_D_1B' '20_1_150_350570331151532312733553622270121663612260763221_9_3A_3A' '20_1_150_030621270423452562860760662170_9_13_11' '20_1_150_462641243830303420581052733570151312322633560251631562253320_9_7_8' '20_1_150_420243641252561462323630461242423640471142110711772173413740763111320631270712562121773253612170_9_2A_33' '20_2_150_153310051302731833572580732742611511411311120130140150273373473573762752_9_19_1E')!
 
+hasCells
+	^self plimbole cells notEmpty!
+
 initialize	
 	super initialize.
-	palette := self class defaultPalette.!
+	self palette: self class defaultPalette.!
 
 isPlaying
 	^self plimbole isPlaying!
@@ -136,14 +149,13 @@ onLeftButtonPressed: aMouseEvent
 		ifNil: 
 			[| cell |
 			cell := PlimboleCell location: loc direction: 0.
-			cell palette: self palette.
-			self plimbole addCell: cell]!
+			self plimbole addCell: cell].
+	self invalidateUserInterface!
 
 onPaletteChanged
 	| pal |
 	pal := self palette.
-	self view backcolor: pal first.
-	self plimbole cells do: [:each | each palette: pal]!
+	self view backcolor: pal first!
 
 onPlayStarted
 	self plimbole setVoices!
@@ -157,7 +169,7 @@ onViewClosed
 
 onViewOpened
 	super onViewOpened.
-	self palette: palette.
+	self onPaletteChanged.
 	Plimbole
 		when: #playStarted
 		send: #onPlayStarted
@@ -167,19 +179,18 @@ onViewOpened
 palette
 	^palette!
 
-palette: anArrayOfColors 
-	palette = anArrayOfColors 
-		ifFalse: 
-			[palette := anArrayOfColors.
-			self onPaletteChanged]!
+palette: anArrayOfColors
+	palette = anArrayOfColors ifTrue: [^self].
+	palette := anArrayOfColors.
+	brushes := palette collect: [:each | Gdiplus.SolidBrush color: each].
+	self onPaletteChanged!
 
 pasteClipboard
 	"Paste the contents of the clipboard (if possible) as new piece"
 
-	
-	[self plimbole signature: Clipboard current getText.
-	self onPaletteChanged] on: Error
-			do: [:ex | self showHintBubble: 'The Clipboard doesn''t have a piece to Paste.']!
+	<commandQuery: #canPasteClipboard>
+	self plimbole signature: Clipboard current getText.
+	self onPaletteChanged!
 
 play
 	<commandQuery: #queryPlay:>
@@ -225,15 +236,12 @@ queryBePentatonicScale: aCommandQuery
 
 queryPlay: aCommandQuery
 	aCommandQuery
-		isChecked: self isPlaying;
-		beEnabled!
+		isEnabled: self hasCells;
+		isChecked: self isPlaying!
 
 randomFavourite
-	| random |
-	random := (Random new)
-				next;
-				next.
-	self plimbole signature: (self favourites at: (self favourites size * random) truncated + 1)!
+	self plimbole signature: self favourites atRandom.
+	self invalidateUserInterface!
 
 showHintBubble: aString 
 	"Display a useful hint to the user about any command effect"
@@ -250,7 +258,7 @@ showHintBubble: aString
 slowerTempo
 	"Slow down the playing tempo"
 
-	self plimbole tempo: self plimbole tempo // 1.05.
+	self plimbole tempo: (self plimbole tempo / 1.05) rounded.
 	self showHintBubble: 'Tempo ' , self plimbole tempo displayString! !
 
 !UI.Examples.PlimbolePresenter categoriesForMethods!
@@ -258,16 +266,19 @@ availableGridExtents!constants!public! !
 beChromaticScale!constants!public! !
 beHangScale!constants!public! !
 bePentatonicScale!constants!public! !
-clearAll!constants!public! !
-copyToClipboard!public! !
-fasterTempo!commands!public! !
+brushes!accessing!private! !
+canPasteClipboard!commands-queries!public! !
+clearAll!commands-actions!public! !
+copyToClipboard!commands-actions!public! !
+fasterTempo!commands-actions!public! !
 favourites!constants!public! !
+hasCells!commands-queries!private! !
 initialize!accessing!initializing!private! !
 isPlaying!public! !
 model:!event handling!private! !
-nextAltoVoice!commands!public! !
-nextGridExtent!commands!public! !
-nextTenorVoice!commands!public! !
+nextAltoVoice!commands-actions!public! !
+nextGridExtent!commands-actions!public! !
+nextTenorVoice!commands-actions!public! !
 onLeftButtonDoubleClicked:!event handling!private! !
 onLeftButtonPressed:!event handling!private! !
 onPaletteChanged!private! !
@@ -279,15 +290,15 @@ palette:!public! !
 pasteClipboard!public! !
 play!public! !
 plimbole!public! !
-previousAltoVoice!commands!public! !
-previousTenorVoice!commands!public! !
+previousAltoVoice!commands-actions!public! !
+previousTenorVoice!commands-actions!public! !
 queryBeChromaticScale:!private! !
 queryBeHangScale:!private! !
 queryBePentatonicScale:!private! !
 queryPlay:!private! !
-randomFavourite!commands!public! !
+randomFavourite!commands-actions!public! !
 showHintBubble:!private! !
-slowerTempo!commands!public! !
+slowerTempo!commands-actions!public! !
 !
 
 !UI.Examples.PlimbolePresenter class methodsFor!

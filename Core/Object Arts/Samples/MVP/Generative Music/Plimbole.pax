@@ -43,6 +43,7 @@ UI.Examples.XmlPad openOn: ''Plimbole.xml''
 package setClassNames: #(
 	#{UI.Examples.Plimbole}
 	#{UI.Examples.PlimboleCell}
+	#{UI.Examples.PlimbolePiece}
 	#{UI.Examples.PlimbolePresenter}
 	#{UI.Examples.PlimboleShell}
 	#{UI.Examples.PlimboleView}
@@ -59,7 +60,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\System\Filer\Dolphin STx Filer Core'
 	'..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips'
 	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus'
-	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
 	'Midi'
 	'..\UI Examples'
 ).
@@ -70,9 +70,17 @@ package!
 
 Core.Object
 	subclass: #'UI.Examples.PlimboleCell'
-	instanceVariableNames: 'location velocity plimbole palette'
+	instanceVariableNames: 'location velocity'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'UI.Examples.PlimbolePiece'
+	instanceVariableNames: 'version cells tempo scaleIndex gridSize tenorIndex altoIndex'
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -86,7 +94,7 @@ Core.Model
 
 UI.Presenter
 	subclass: #'UI.Examples.PlimbolePresenter'
-	instanceVariableNames: 'palette'
+	instanceVariableNames: 'palette brushes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

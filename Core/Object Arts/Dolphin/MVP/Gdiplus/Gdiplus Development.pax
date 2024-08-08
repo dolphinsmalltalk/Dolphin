@@ -193,9 +193,10 @@ exampleGdipAACArrowCap
 	| bitmap graphics arrowCap pen |
 	bitmap := Bitmap extent: 350 @ 300.
 	graphics := bitmap graphics.
+	graphics smoothingMode: SmoothingModeHighQuality.
 	arrowCap := AdjustableArrowCap
 				height: 10
-				width: 5
+				width: 10
 				isFilled: false.
 	arrowCap widthScale: 2.
 	pen := Pen red width: 2.
@@ -411,6 +412,7 @@ exampleGdipCLCStrokeCaps
 	| bitmap graphics path customCap pen rect |
 	bitmap := Bitmap extent: 450 @ 300.
 	graphics := bitmap graphics.
+	graphics smoothingMode: SmoothingModeHighQuality.
 	path := GraphicsPath lines: {-15 @ -15. 0 @ 0. 15 @ -15}.
 	customCap := CustomLineCap strokePath: path.
 	customCap startCap: LineCapTriangle endCap: LineCapRound.
