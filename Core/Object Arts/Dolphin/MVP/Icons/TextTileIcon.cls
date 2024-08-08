@@ -37,14 +37,13 @@ Examples:
 
 !TextTileIcon methodsFor!
 
-= comperand
-	^self == comperand or: 
-			[self species = comperand species and: 
-					[text = comperand text and: 
-							[tilecolor = comperand tilecolor and: 
-									[fontName = comperand fontName and: 
-											[textcolor = comperand textcolor
-												and: [fontStyle == comperand basicFontStyle and: [flags == comperand flags]]]]]]]!
+= anObject
+	^self == anObject or: 
+			[self species == anObject species and: 
+					[text = anObject text and: 
+							[tilecolor = anObject tilecolor and: 
+									[fontName = anObject fontName
+										and: [textcolor = anObject textcolor and: [flags == anObject flags and: [margin == anObject margin]]]]]]]!
 
 actualFontName
 	^fontName ifNil: [self defaultFontName]!
@@ -262,6 +261,9 @@ flags: anInteger
 fontName
 	^fontName!
 
+fontName: anObject
+	fontName := anObject!
+
 fontStyle
 	^FontStyleNames at: (fontStyle ?? 0) + 1!
 
@@ -305,6 +307,9 @@ largeIcon
 
 	(icon isNil or: [icon isRealized not]) ifTrue: [icon := (self bitmapWithExtent: SystemMetrics current largeIconExtent) asIcon].
 	^icon!
+
+margin
+	^margin!
 
 margin: anInteger 
 	margin := anInteger!
@@ -376,6 +381,14 @@ storeOn: aStream
 						space;
 						print: self fontStyle;
 						nextPut: $;].
+			margin
+				ifNotNil: 
+					[aStream
+						space;
+						display: #margin:;
+						space;
+						print: margin;
+						nextPut: $;].
 			r = 0
 				ifFalse: 
 					[aStream
@@ -401,6 +414,9 @@ text
 
 	^text!
 
+text: anObject
+	text := anObject!
+
 textcolor
 	"Answer the colour used to draw the text. If unspecified (nil) this will be defaulted to either black
 	or white, depending on the luminance of the tile background colour when the tile is eventually drawn."
@@ -413,7 +429,10 @@ textcolor: aColor
 tilecolor
 	"Answer the tile background colour, or nil for transparent."
 
-	^tilecolor! !
+	^tilecolor!
+
+tilecolor: aColor
+	tilecolor := aColor! !
 
 !TextTileIcon categoriesForMethods!
 =!comparison!public! !
@@ -439,6 +458,7 @@ extent!accessing!public! !
 flags!accessing!private! !
 flags:!accessing!private! !
 fontName!accessing!public! !
+fontName:!private! !
 fontStyle!accessing!public! !
 fontStyle:!accessing!public! !
 freeDC!public!realizing/unrealizing! !
@@ -450,6 +470,7 @@ imageManager!image management!private! !
 imageType!constants!public! !
 isRealized!public!testing! !
 largeIcon!converting!public! !
+margin!accessing!public! !
 margin:!initializing!public! !
 printOn:!printing!public! !
 realize!public!realizing/unrealizing! !
@@ -460,9 +481,11 @@ stbSaveOn:!binary filing!public! !
 storeOn:!printing!public! !
 stringFormat!drawing-bitmaps!private! !
 text!accessing!public! !
+text:!private! !
 textcolor!accessing!public! !
 textcolor:!accessing!public! !
 tilecolor!accessing!public! !
+tilecolor:!accessing!public! !
 !
 
 !TextTileIcon class methodsFor!
