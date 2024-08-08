@@ -223,7 +223,7 @@ drawImage: aGdiplusImage at: aPoint
 	"Draw all of aGdiplusImage on the receiver, at aPoint."
 
 	GdiplusLibrary default
-		gdipDrawImageI: self asParameter
+		gdipDrawImage: self asParameter
 		image: aGdiplusImage asParameter
 		x: aPoint x
 		y: aPoint y!
@@ -317,7 +317,7 @@ drawLineFrom: fromPoint to: toPoint pen: aGdiplusPen
 	"Draw a line that connects two points using aGdiplusPen."
 
 	GdiplusLibrary default
-		gdipDrawLineI: self asParameter
+		gdipDrawLine: self handle
 		pen: aGdiplusPen asParameter
 		x1: fromPoint x
 		y1: fromPoint y
@@ -497,12 +497,12 @@ fillRectangle: aRectangle brush: aGdiplusBrush
 	"Fill aRectangle on the receiver using a aGdiplusBrush."
 
 	GdiplusLibrary default
-		gdipFillRectangleI: self asParameter
+		gdipFillRectangle: self handle
 		brush: aGdiplusBrush asParameter
-		x: aRectangle left asInteger
-		y: aRectangle top asInteger
-		width: aRectangle width asInteger
-		height: aRectangle height asInteger!
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height!
 
 fillRectangle: aRectangle color: aColor
 	| fillBrush |

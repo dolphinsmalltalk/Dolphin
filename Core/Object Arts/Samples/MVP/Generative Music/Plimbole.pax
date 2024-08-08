@@ -42,6 +42,7 @@ XmlPad openOn: ''Plimbole.xml''
 package classNames
 	add: #Plimbole;
 	add: #PlimboleCell;
+	add: #PlimbolePiece;
 	add: #PlimbolePresenter;
 	add: #PlimboleShell;
 	add: #PlimboleView;
@@ -61,7 +62,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
 	'..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips'
 	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus'
-	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
 	'Midi').
 
 package!
@@ -69,9 +69,15 @@ package!
 "Class Definitions"!
 
 Object subclass: #PlimboleCell
-	instanceVariableNames: 'location velocity plimbole palette'
+	instanceVariableNames: 'location velocity'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+
+Object subclass: #PlimbolePiece
+	instanceVariableNames: 'version cells tempo scaleIndex gridSize tenorIndex altoIndex'
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 Model subclass: #Plimbole
@@ -81,7 +87,7 @@ Model subclass: #Plimbole
 	classInstanceVariableNames: ''!
 
 Presenter subclass: #PlimbolePresenter
-	instanceVariableNames: 'palette'
+	instanceVariableNames: 'palette brushes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

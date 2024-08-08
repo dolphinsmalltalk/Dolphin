@@ -7836,12 +7836,14 @@ publishedAspectsOfInstances!constants!public! !
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
+	^super publishedAspectsOfInstances
 		add: (Aspect name: #commandDescription);
 		add: (Aspect boolean: #isCheckStyle);
 		add: (Aspect boolean: #isGroupStyle);
 		add: (Aspect boolean: #isDropdownStyle);
 		add: (Aspect boolean: #isDropDownOnly);
+		add: (Aspect color: #textcolor);
+		add: (Aspect font: #font);
 		yourself! !
 
 !ToolbarButton class categoriesForMethods!

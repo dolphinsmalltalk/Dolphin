@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Presenter subclass: #PlimbolePresenter
-	instanceVariableNames: 'palette'
+	instanceVariableNames: 'palette brushes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -45,6 +45,14 @@ bePentatonicScale
 	self plimbole scaleName: #pentatonicScale.
 	self showHintBubble: 'Playing in Pentatonic Scale'!
 
+brushes
+	^brushes!
+
+canPasteClipboard
+	^
+	[PlimbolePiece fromString: Clipboard current getText.
+	true] on: Error do: [:ex | false]!
+
 clearAll
 	"Clear all the cells but leave everythinng else"
 
@@ -67,9 +75,12 @@ fasterTempo
 favourites
 	^#('20_1_142_653643411513833522422360460231241473742140132580750302371051_9_D_1B' '20_1_150_350570331151532312733553622270121663612260763221_9_3A_3A' '20_1_150_030621270423452562860760662170_9_13_11' '20_1_150_462641243830303420581052733570151312322633560251631562253320_9_7_8' '20_1_150_420243641252561462323630461242423640471142110711772173413740763111320631270712562121773253612170_9_2A_33' '20_2_150_153310051302731833572580732742611511411311120130140150273373473573762752_9_19_1E')!
 
+hasCells
+	^self plimbole cells notEmpty!
+
 initialize	
 	super initialize.
-	palette := self class defaultPalette.!
+	self palette: self class defaultPalette.!
 
 isPlaying
 	^self plimbole isPlaying!
@@ -131,14 +142,13 @@ onLeftButtonPressed: aMouseEvent
 		ifNil: 
 			[| cell |
 			cell := PlimboleCell location: loc direction: 0.
-			cell palette: self palette.
-			self plimbole addCell: cell]!
+			self plimbole addCell: cell].
+	self invalidateUserInterface!
 
 onPaletteChanged
 	| pal |
 	pal := self palette.
-	self view backcolor: pal first.
-	self plimbole cells do: [:each | each palette: pal]!
+	self view backcolor: pal first!
 
 onPlayStarted
 	self plimbole setVoices!
@@ -152,8 +162,8 @@ onViewClosed
 
 onViewOpened
 	super onViewOpened.
-	self palette: palette.
-	Plimbole 
+	self onPaletteChanged.
+	Plimbole
 		when: #playStarted
 		send: #onPlayStarted
 		to: self.
@@ -162,19 +172,17 @@ onViewOpened
 palette
 	^palette!
 
-palette: anArrayOfColors 
-	palette = anArrayOfColors 
-		ifFalse: 
-			[palette := anArrayOfColors.
-			self onPaletteChanged]!
+palette: anArrayOfColors
+	palette = anArrayOfColors ifTrue: [^self].
+	palette := anArrayOfColors.
+	brushes := palette collect: [:each | GdiplusSolidBrush color: each].
+	self onPaletteChanged!
 
 pasteClipboard
 	"Paste the contents of the clipboard (if possible) as new piece"
 
-	
-	[self plimbole signature: Clipboard current getText.
-	self onPaletteChanged] on: Error
-			do: [:ex | self showHintBubble: 'The Clipboard doesn''t have a piece to Paste.']!
+	self plimbole signature: Clipboard current getText.
+	self onPaletteChanged!
 
 play
 	self plimbole play!
@@ -202,34 +210,42 @@ previousTenorVoice
 	self plimbole tenorVoice: (voices at: n).
 	self showHintBubble: 'Tenor voice is ' , self plimbole tenorVoice!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Fills in details about the current state of the receiver into aCommandQuery"
 
 	| cmd |
 	cmd := aCommandQuery commandSymbol.
-	cmd == #play 
+	cmd == #play
 		ifTrue: 
 			[aCommandQuery
 				isChecked: self isPlaying;
-				isEnabled: true.
+				isEnabled: self hasCells.
 			^true].
-	cmd == #bePentatonicScale 
+	cmd == #bePentatonicScale
 		ifTrue: 
 			[aCommandQuery
 				isChecked: self plimbole scaleName = #pentatonicScale;
 				isEnabled: true.
 			^true].
-	cmd == #beChromaticScale 
+	cmd == #beChromaticScale
 		ifTrue: 
 			[aCommandQuery
 				isChecked: self plimbole scaleName = #chromaticScale;
 				isEnabled: true.
 			^true].
-	cmd == #beHangScale 
+	cmd == #beHangScale
 		ifTrue: 
 			[aCommandQuery
 				isChecked: self plimbole scaleName = #hangScale;
 				isEnabled: true.
+			^true].
+	(#(#clearAll #copyToClipboard) identityIncludes: cmd)
+		ifTrue: 
+			[aCommandQuery isEnabled: self hasCells.
+			^true].
+	cmd == #pasteClipboard
+		ifTrue: 
+			[aCommandQuery isEnabled: self canPasteClipboard.
 			^true].
 	^super queryCommand: aCommandQuery!
 
@@ -238,7 +254,8 @@ randomFavourite
 	random := (Random new)
 				next;
 				next.
-	self plimbole signature: (self favourites at: (self favourites size * random) truncated + 1)!
+	self plimbole signature: (self favourites at: (self favourites size * random) truncated + 1).
+	self invalidateUserInterface!
 
 showHintBubble: aString 
 	"Display a useful hint to the user about any command effect"
@@ -256,7 +273,7 @@ showHintBubble: aString
 slowerTempo
 	"Slow down the playing tempo"
 
-	self plimbole tempo: self plimbole tempo // 1.05.
+	self plimbole tempo: (self plimbole tempo / 1.05) rounded.
 	self showHintBubble: 'Tempo ' , self plimbole tempo displayString! !
 
 !PlimbolePresenter categoriesForMethods!
@@ -264,10 +281,13 @@ availableGridExtents!constants!public! !
 beChromaticScale!constants!public! !
 beHangScale!constants!public! !
 bePentatonicScale!constants!public! !
-clearAll!constants!public! !
-copyToClipboard!public! !
+brushes!accessing!private! !
+canPasteClipboard!public!testing! !
+clearAll!commands!public! !
+copyToClipboard!commands!public! !
 fasterTempo!commands!public! !
 favourites!constants!public! !
+hasCells!private!testing! !
 initialize!accessing!initializing!private! !
 isPlaying!public! !
 model:!event handling!private! !

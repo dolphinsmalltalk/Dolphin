@@ -65,14 +65,8 @@ beatTime
 cellAtLocation: location 
 	^self cells detect: [:each | each location = location] ifNone: []!
 
-cellExtent
-	^(self view extent / self gridExtent) rounded!
-
 cells
 	^cells!
-
-cells: anOrderedCollection 
-	cells := anOrderedCollection!
 
 checkCell: cell 
 	| loc |
@@ -98,7 +92,7 @@ chromaticScale
 	^#(C4 D4 E4 F4 G4 A5 B5 C5 D5 E5 F5 G5)!
 
 clearCells
-	self cells: OrderedCollection new.
+	cells := OrderedCollection new.
 	self update!
 
 defaultVoice
@@ -141,6 +135,25 @@ otomataSignature
 
 pentatonicScale
 	^#(C4 D4 E4 G4 A5 C5 D5 E5 G5 A6 C6 D6 E6 G6 A6 )!
+
+piece
+	^PlimbolePiece new
+		scaleIndex: scaleIndex;
+		tempo: self tempo;
+		cells: self cells;
+		gridSize: self gridExtent x;
+		tenorIndex: self tenorVoiceIndex;
+		altoIndex: self altoVoiceIndex;
+		yourself!
+
+piece: details
+	self reset.
+	cells := details cells.
+	self tempo: details tempo.
+	scaleIndex := details scaleIndex.
+	self gridExtent: details gridSize asPoint.
+	self tenorVoiceIndex: details tenorIndex.
+	self altoVoiceIndex: details altoIndex!
 
 play
 	self class play!
@@ -200,21 +213,12 @@ reset
 scale
 	^self perform: self scaleName!
 
-scaleIndex
-	^scaleIndex
-
-!
-
-scaleIndex: anInteger
-	scaleIndex := anInteger
-
-!
-
 scaleName
-	^self scaleNames at: self scaleIndex!
+	^self scaleNames at: scaleIndex!
 
 scaleName: aSymbol
-	^self scaleIndex: (self scaleNames indexOf: aSymbol)!
+	scaleIndex := self scaleNames indexOf: aSymbol.
+	^self!
 
 scaleNames
 	^#(#pentatonicScale #chromaticScale #hangScale)!
@@ -227,92 +231,12 @@ setVoices
 signature
 	"Answer a signature string that represents the current piece"
 
-	| stream |
-	stream := String writeStream.
-	stream
-		display: self signatureVersion;
-		nextPut: $_;
-		display: self scaleIndex-1;
-		nextPut: $_;
-		display: self tempo;
-		nextPut: $_.
+	^self piece asString!
 
-	"Cell positions"
-	self cells do: 
-			[:each | 
-			each x 
-				printOn: stream
-				base: 16
-				showRadix: false.
-			each y 
-				printOn: stream
-				base: 16
-				showRadix: false.
-			stream display: each directionIndex].
+signature: aString
+	"Sets the current piece to that parsed from a String."
 
-	"Grid size"
-	stream nextPut: $_.
-	self gridExtent x
-		printOn: stream
-		base: 16
-		showRadix: false.
-
-	"Voices"
-	stream nextPut: $_.
-	self tenorVoiceIndex
-		printOn: stream
-		base: 16
-		showRadix: false.
-	stream nextPut: $_.
-	self altoVoiceIndex
-		printOn: stream
-		base: 16
-		showRadix: false.
-	^stream contents!
-
-signature: aString 
-	"Sets the current piece to that held in aString"
-
-	| stream version tempo scaleIndex cells gridSize tenorIndex altoIndex |
-	stream := aString readStream.
-	(aString beginsWith: 'http:') ifTrue: [stream skipToAll: '?q='].
-	version := Integer readFrom: stream.
-	(#(10 20) includes: version) ifFalse: [self error: 'Wrong version'].
-	stream next = $_ ifFalse: [self error: 'Wrong format'].
-	scaleIndex := (Integer readFrom: stream)+1.
-	stream next = $_ ifFalse: [self error: 'Wrong format'].
-	tempo := Integer readFrom: stream.
-	stream next = $_ ifFalse: [self error: 'Wrong format'].
-	cells := OrderedCollection new.
-	[stream atEnd or: [stream peek = $_]] whileFalse: 
-			[| cell x y direction |
-			x := stream next digitValue.
-			y := stream next digitValue.
-			direction := stream next digitValue.
-			cell := PlimboleCell location: x @ y direction: direction.
-			cells add: cell].
-	tenorIndex := altoIndex := 1.
-	gridSize := 9.
-	version = self signatureVersion 
-		ifTrue: 
-			["Version 20 format includes gris size and voices"
-			stream next = $_ ifFalse: [self error: 'Wrong format'].
-			gridSize := stream next digitValue.
-			stream next = $_ ifFalse: [self error: 'Wrong format'].
-			tenorIndex := Integer readFrom: stream radix: 16.
-			stream next = $_ ifFalse: [self error: 'Wrong format'].
-			altoIndex := Integer readFrom: stream radix: 16].
-	self reset.
-	self cells: cells.
-	self tempo: tempo.
-	self scaleIndex: scaleIndex.
-	self gridExtent: gridSize asPoint.
-	self tenorVoiceIndex: tenorIndex.
-	self altoVoiceIndex: altoIndex!
-
-signatureVersion
-
-	^20!
+	self piece: (PlimbolePiece fromString: aString)!
 
 step
 	recurse ifTrue: [^self].
@@ -379,60 +303,57 @@ voiceChannelForNoteIndex: n
 
 !Plimbole categoriesForMethods!
 addCell:!operations!public! !
-altoChannel!public! !
+altoChannel!accessing!public! !
 altoVoice!accessing!public! !
 altoVoice:!accessing!public! !
-altoVoiceIndex!accessing!public! !
-altoVoiceIndex:!accessing!public! !
+altoVoiceIndex!accessing!private! !
+altoVoiceIndex:!accessing!private! !
 altoVoices!constants!public!voices! !
 assignAvailableChannels!private! !
 beatTime!accessing!constants!public! !
 cellAtLocation:!helpers!private! !
-cellExtent!helpers!public! !
 cells!accessing!public! !
-cells:!accessing!private! !
 checkCell:!private! !
 checkCellCollisions:!helpers!private! !
 chromaticScale!constants!public!scales! !
-clearCells!public! !
+clearCells!operations!public! !
 defaultVoice!constants!private! !
 gridExtent!accessing!public! !
-gridExtent:!public! !
+gridExtent:!accessing!public! !
 hangScale!constants!public!scales! !
 initialize!accessing!initializing!private! !
 isPlaying!public!testing! !
 midiOutChannel!private! !
 noteDuration!accessing!helpers!public! !
-noteDuration:!public! !
-otomataSignature!public! !
+noteDuration:!accessing!public! !
+otomataSignature!accessing!public! !
 pentatonicScale!constants!public!scales! !
-play!commands!public! !
+piece!accessing!public! !
+piece:!initializing!public! !
+play!operations!public! !
 playCellNote:!operations!private! !
 playNoteAtX:!helpers!operations!private! !
 playNoteAtY:!helpers!operations!private! !
 register!public! !
-removeCell:!public! !
+removeCell:!operations!public! !
 reset!operations!private! !
 scale!accessing!public!scales! !
-scaleIndex!accessing!public!scales! !
-scaleIndex:!accessing!public!scales! !
 scaleName!accessing!public!scales! !
 scaleName:!accessing!public!scales! !
 scaleNames!public!scales! !
 setVoices!private! !
 signature!accessing!public! !
-signature:!public! !
-signatureVersion!private! !
+signature:!initializing!public! !
 step!operations!public! !
 stepCell:!operations!private! !
-stop!commands!public! !
-tempo!public! !
-tempo:!public! !
-tenorChannel!public! !
+stop!operations!public! !
+tempo!accessing!public! !
+tempo:!accessing!public! !
+tenorChannel!accessing!public! !
 tenorVoice!accessing!public! !
 tenorVoice:!accessing!public! !
-tenorVoiceIndex!accessing!public! !
-tenorVoiceIndex:!accessing!public! !
+tenorVoiceIndex!accessing!private! !
+tenorVoiceIndex:!accessing!private! !
 tenorVoices!constants!public!voices! !
 unregister!public! !
 update!private! !
