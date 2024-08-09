@@ -10056,6 +10056,7 @@ publishedAspectsOfInstances
 							addEvaluationFrom: ##({ToolbarIconButton. ToolbarBitmapButton. ToolbarTextButton. ToolbarSeparator}
 									collect: [:each | each shortName , ' new']))
 								beImmutable;
+				add: (Aspect color: #textcolor);
 				yourself.
 	#(#hasFlatAppearance #hasFluentIcons #hasListAppearance #hasLabels #canCustomize)
 		do: [:each | aspects add: (Aspect boolean: each)].

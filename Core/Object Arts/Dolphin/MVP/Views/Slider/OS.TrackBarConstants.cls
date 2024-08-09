@@ -7,6 +7,15 @@ Kernel.SharedPool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'TB_BOTTOM' -> 16r7.
+			'TB_ENDTRACK' -> 16r8.
+			'TB_LINEDOWN' -> 16r1.
+			'TB_LINEUP' -> 16r0.
+			'TB_PAGEDOWN' -> 16r3.
+			'TB_PAGEUP' -> 16r2.
+			'TB_THUMBPOSITION' -> 16r4.
+			'TB_THUMBTRACK' -> 16r5.
+			'TB_TOP' -> 16r6.
 			'TBM_CLEARSEL' -> 16r413.
 			'TBM_CLEARTICS' -> 16r409.
 			'TBM_GETBUDDY' -> 16r421.

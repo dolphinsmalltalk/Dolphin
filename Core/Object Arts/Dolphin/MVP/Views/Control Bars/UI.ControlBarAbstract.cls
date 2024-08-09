@@ -2,7 +2,7 @@
 
 UI.ControlView
 	subclass: #'UI.ControlBarAbstract'
-	instanceVariableNames: 'names _tipText _unused17 _unused18'
+	instanceVariableNames: 'names _tipText _unused17'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

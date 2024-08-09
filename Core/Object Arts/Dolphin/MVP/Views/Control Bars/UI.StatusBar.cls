@@ -2,7 +2,7 @@
 
 UI.ControlBarAbstract
 	subclass: #'UI.StatusBar'
-	instanceVariableNames: 'parts leftOverSeparator layoutManager'
+	instanceVariableNames: '_unused18 parts leftOverSeparator layoutManager'
 	classVariableNames: ''
 	imports: #(#{OS.StatusBarConstants})
 	classInstanceVariableNames: ''
