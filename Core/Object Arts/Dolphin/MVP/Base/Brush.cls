@@ -50,7 +50,7 @@ printOn: aPuttableStream
 				space;
 				display: #color:;
 				space;
-				print: lb color;
+				print: lb lbColor;
 				nextPut: $)]
 		ifFalse: 
 			[aPuttableStream
@@ -203,7 +203,7 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 
 	^self fromLogBrush: (LOGBRUSH new
 				style: styleFlags;
-				color: aColour;
+				lbColor: aColour;
 				hatch: hatchObject;
 				yourself)! !
 

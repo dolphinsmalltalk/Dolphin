@@ -28,12 +28,7 @@ Instance Variables:
 color
 	"Answer the colour member of the receiver as a Colour"
 
-	^Color fromCOLORREF: self lbColor!
-
-color: aColor
-	"Sets the colour member of the receiver from  the <Color> argument."
-
-	self lbColor: aColor asCOLORREF!
+	^self lbColor!
 
 hatch
 	"Answer the hatch object. This is either a <Bitmap>, or one of a set of standard <integer> constants."
@@ -53,14 +48,14 @@ hatchStyleName
 		ifTrue: [#(#horizontal #vertical #reverseDiagonal #diagonal #cross #diamond) lookup: self lbHatch + 1]!
 
 lbColor
-	"Answer the <Integer> value of the receiver's 'lbColor' field."
+	"Answer the <Color> value of the receiver's 'lbColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lbColor!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_lbColor)!
 
-lbColor: anInteger
-	"Set the receiver's 'lbColor' field to the value of the argument, anInteger"
+lbColor: aColor
+	"Set the receiver's 'lbColor' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_lbColor put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lbColor put: aColor asCOLORREF!
 
 lbHatch
 	"Answer the <Integer> value of the receiver's 'lbHatch' field."
@@ -90,7 +85,6 @@ style: anInteger
 
 !LOGBRUSH categoriesForMethods!
 color!accessing!public! !
-color:!accessing!public! !
 hatch!accessing!public! !
 hatch:!accessing!public! !
 hatchStyleName!accessing!public! !
@@ -121,7 +115,7 @@ defineFields
 
 	self
 		defineField: #lbStyle type: DWORDField new;
-		defineField: #lbColor type: DWORDField new;
+		defineField: #lbColor type: COLORREFField new;
 		defineField: #lbHatch type: UINT_PTRField new!
 
 getFieldNames
@@ -140,7 +134,7 @@ stbVersion
 	^1! !
 
 !LOGBRUSH class categoriesForMethods!
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

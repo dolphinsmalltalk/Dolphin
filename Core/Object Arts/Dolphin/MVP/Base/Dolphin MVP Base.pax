@@ -67,6 +67,7 @@ package classNames
 	add: #ColorEvent;
 	add: #ColorNone;
 	add: #ColorRef;
+	add: #COLORREFField;
 	add: #Command;
 	add: #CommandButton;
 	add: #CommandDescription;
@@ -673,6 +674,12 @@ Object subclass: #View
 
 Object subclass: #ViewState
 	instanceVariableNames: 'view state showCmd dpi dpiAwarenessContext subViewStates'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DWORDField subclass: #COLORREFField
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

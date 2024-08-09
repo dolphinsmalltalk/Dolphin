@@ -40,7 +40,7 @@ extractResult: aBoolean
 
 	| color |
 	aBoolean ifFalse: [^self checkError].
-	color := self winStruct color.
+	color := self winStruct rgbResult.
 	color = self defaultColor ifTrue: [self value: Color default] ifFalse: [self value: color].
 	self apply!
 
@@ -61,7 +61,7 @@ prepareStruct
 	(color isNil or: [color isDefault]) ifTrue: [color := self defaultColor].
 	(self winStruct)
 		hInstance: VMLibrary default applicationHandle;
-		rgbResult: color rgbCode;
+		rgbResult: color;
 		maskIn: CC_RGBINIT;
 		lpCustColors: customColors!
 
@@ -87,7 +87,7 @@ winStructClass
 wmColorOk: msgInteger wParam: wParamInteger lParam: lParamInteger 
 	"Private - The user has pressed the OK button."
 
-	^(self validationBlock value: winStruct color) ifTrue: [0] ifFalse: [1]! !
+	^(self validationBlock value: winStruct rgbResult) ifTrue: [0] ifFalse: [1]! !
 
 !ColorDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !

@@ -33,12 +33,6 @@ CHOOSEFONT is used in conjunction with <FontDialog> to pop a common file dialog 
 
 !CHOOSEFONTW methodsFor!
 
-color
-	^Color fromCOLORREF: self rgbColors!
-
-color: aColor 
-	self rgbColors: aColor asCOLORREF!
-
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
@@ -102,18 +96,16 @@ ownerView: aView
 	hWnd isNull ifFalse: [self hwndOwner: hWnd].!
 
 rgbColors
-	"Answer the <Integer> value of the receiver's 'rgbColors' field."
+	"Answer the <Color> value of the receiver's 'rgbColors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_rgbColors!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_rgbColors)!
 
-rgbColors: anInteger
-	"Set the receiver's 'rgbColors' field to the value of the argument, anInteger"
+rgbColors: aColor
+	"Set the receiver's 'rgbColors' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_rgbColors put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_rgbColors put: aColor asCOLORREF! !
 
 !CHOOSEFONTW categoriesForMethods!
-color!public! !
-color:!public! !
 dwSize:!**compiled accessors**!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
@@ -145,7 +137,7 @@ defineFields
 		LPLOGFONT	lpLogFont;
 		INT			iPointSize;
 		DWORD		Flags;
-		DWORD		rgbColors;
+		COLORREF	rgbColors;
 		LPARAM		lCustData;
 		LPCFHOOKPROC	lpfnHook;
 		LPCTSTR		lpTemplateName;
@@ -163,7 +155,7 @@ defineFields
 		defineField: #lpLogFont type: (PointerField type: LOGFONTW);
 		defineField: #iPointSize type: DWORDField readOnly;
 		defineField: #flags type: DWORDField new beOverride;
-		defineField: #rgbColors type: DWORDField new;
+		defineField: #rgbColors type: COLORREFField new;
 		defineField: #lCustData type: INT_PTRField filler;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
 		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller;

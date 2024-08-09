@@ -31,33 +31,32 @@ backcolor
 
 	| clrTextBk |
 	clrTextBk := self clrTextBk.
-	^clrTextBk = CLR_DEFAULT ifTrue: [Color window] ifFalse: [Color fromCOLORREF: clrTextBk]!
+	^clrTextBk isDefault ifTrue: [Color window] ifFalse: [clrTextBk]!
 
 backcolor: aColor
-	"Sets the background <Color>.
-	Implementation Note: We must convert to an RGB because a COLORREF is needed."
+	"Sets the background <Color>."
 
-	self clrTextBk: aColor asCOLORREF!
+	self clrTextBk: aColor!
 
 clrText
-	"Answer the <Integer> value of the receiver's 'clrText' field."
+	"Answer the <Color> value of the receiver's 'clrText' field."
 
-	^bytes dwordAtOffset: _OffsetOf_clrText!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_clrText)!
 
-clrText: anInteger
-	"Set the receiver's 'clrText' field to the value of the argument, anInteger"
+clrText: aColor
+	"Set the receiver's 'clrText' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_clrText put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_clrText put: aColor asCOLORREF!
 
 clrTextBk
-	"Answer the <Integer> value of the receiver's 'clrTextBk' field."
+	"Answer the <Color> value of the receiver's 'clrTextBk' field."
 
-	^bytes dwordAtOffset: _OffsetOf_clrTextBk!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_clrTextBk)!
 
-clrTextBk: anInteger
-	"Set the receiver's 'clrTextBk' field to the value of the argument, anInteger"
+clrTextBk: aColor
+	"Set the receiver's 'clrTextBk' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_clrTextBk put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_clrTextBk put: aColor asCOLORREF!
 
 column
 	"Answer the <ListViewColumn> associated with the sub-item if this is a sub-item
@@ -74,12 +73,12 @@ forecolor
 
 	| clrText |
 	clrText := self clrText.
-	^clrText = CLR_DEFAULT ifTrue: [Color windowText] ifFalse: [Color fromCOLORREF: clrText]!
+	^clrText isDefault ifTrue: [Color windowText] ifFalse: [clrText]!
 
 forecolor: aColor
 	"Sets the text foreground <Color>."
 
-	self clrText: aColor asCOLORREF!
+	self clrText: aColor!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
@@ -129,8 +128,8 @@ defineFields
 
 	super defineFields.
 	self 
-		defineField: #clrText type: DWORDField new;
-		defineField: #clrTextBk type: DWORDField new;
+		defineField: #clrText type: COLORREFField new;
+		defineField: #clrTextBk type: COLORREFField new;
 		defineField: #iSubItem type: SDWORDField readOnly!
 
 getFieldNames

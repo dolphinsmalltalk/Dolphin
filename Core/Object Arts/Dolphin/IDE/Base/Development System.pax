@@ -218,6 +218,9 @@ package methodNames
 	add: #Collection -> #publishedAspects;
 	add: #Collection -> #publishedKeyedAspects;
 	add: #Collection -> #publishedKeyedAspectsBatchSize;
+	add: #COLORREFField -> #newAspect:class:;
+	add: #COLORREFField -> #printAccessorExpression:on:;
+	add: #COLORREFField -> #printMutatorValueOn:parameter:;
 	add: #ComboBox -> #visualObjectAtPoint:;
 	add: #CommandMenuItem -> #edit;
 	add: #CompiledCode -> #alternateInspectorClass;
@@ -2716,6 +2719,43 @@ newInstanceAspect: aSymbol class: aspectClass
 newInstanceAspect:class:!adapters!private! !
 !
 
+!COLORREFField methodsFor!
+
+newAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass color: aSymbol!
+
+printAccessorExpression: aSymbol on: aWriteStream
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which will read the value of this field from an instance of the structure."
+
+	aWriteStream
+		nextPut: $(;
+		display: Color;
+		space;
+		display: #fromCOLORREF:;
+		nextPutAll: ' (bytes ';
+		display: #dwordAtOffset:;
+		space.
+	self printOffsetExpression: aSymbol on: aWriteStream.
+	aWriteStream nextPutAll: '))'.
+	^self!
+
+printMutatorValueOn: aWriteStream parameter: aString
+	"Private - Print a suitable expression onto the specified <CodeGenerationContext> which will evaluate to the value to be stored into this field in an instance of the structure when compiled into a mutator method where the value parameter is named by the <String> argument."
+
+	aWriteStream
+		nextPutAll: aString;
+		space;
+		display: #asCOLORREF! !
+
+!COLORREFField categoriesForMethods!
+newAspect:class:!adapters!private! !
+printAccessorExpression:on:!automatic generation!private! !
+printMutatorValueOn:parameter:!automatic generation!development!private! !
+!
+
 !ColorView class methodsFor!
 
 publishedAspectsOfInstances
@@ -4565,7 +4605,7 @@ printFieldsOn: aStream limit: anInteger
 		print: self width;
 		space;
 		display: 'color=';
-		print: self color! !
+		print: self lopnColor! !
 
 !LOGPEN categoriesForMethods!
 printFieldsOn:limit:!printing!private! !

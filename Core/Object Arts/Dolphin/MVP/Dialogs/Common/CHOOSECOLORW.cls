@@ -46,9 +46,8 @@ struct tagCHOOSECOLOR {
 !CHOOSECOLORW methodsFor!
 
 color
-	"Answer the chosen colour."
-
-	^Color fromCOLORREF: self rgbResult!
+	#deprecated.
+	^self rgbResult!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -101,14 +100,14 @@ ownerView: aView
 	hWnd isNull ifFalse: [self hwndOwner: hWnd].!
 
 rgbResult
-	"Answer the <Integer> value of the receiver's 'rgbResult' field."
+	"Answer the <Color> value of the receiver's 'rgbResult' field."
 
-	^bytes dwordAtOffset: _OffsetOf_rgbResult!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_rgbResult)!
 
-rgbResult: anInteger
-	"Set the receiver's 'rgbResult' field to the value of the argument, anInteger"
+rgbResult: aColor
+	"Set the receiver's 'rgbResult' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_rgbResult put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_rgbResult put: aColor asCOLORREF! !
 
 !CHOOSECOLORW categoriesForMethods!
 color!accessing!public! !
@@ -151,7 +150,7 @@ defineFields
 		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
 		defineField: #hwndOwner type: HANDLEField new beWriteOnly offset: 4;
 		defineField: #hInstance type: HANDLEField new beWriteOnly offset: 8;
-		defineField: #rgbResult type: DWORDField new offset: 12;
+		defineField: #rgbResult type: COLORREFField new offset: 12;
 		defineField: #lpCustColors type: (ArrayPointerField type: DWORDArray length: 16) offset: 16;
 		defineField: #flags type: DWORDField new offset: 20;
 		defineField: #lCustData type: INT_PTRField new beFiller offset: 24;

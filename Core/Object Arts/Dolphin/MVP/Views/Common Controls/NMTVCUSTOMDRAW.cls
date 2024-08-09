@@ -25,44 +25,44 @@ backcolor
 
 	| clrTextBk |
 	clrTextBk := self clrTextBk.
-	^clrTextBk = CLR_DEFAULT ifTrue: [Color window] ifFalse: [Color fromCOLORREF: clrTextBk]!
+	^clrTextBk isDefault ifTrue: [Color windowText] ifFalse: [clrTextBk]!
 
 backcolor: aColor
 	"Sets the background <Color>."
 
-	self clrTextBk: aColor asCOLORREF!
+	self clrTextBk: aColor!
 
 clrText
-	"Answer the <Integer> value of the receiver's 'clrText' field."
+	"Answer the <Color> value of the receiver's 'clrText' field."
 
-	^bytes dwordAtOffset: _OffsetOf_clrText!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_clrText)!
 
-clrText: anInteger
-	"Set the receiver's 'clrText' field to the value of the argument, anInteger"
+clrText: aColor
+	"Set the receiver's 'clrText' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_clrText put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_clrText put: aColor asCOLORREF!
 
 clrTextBk
-	"Answer the <Integer> value of the receiver's 'clrTextBk' field."
+	"Answer the <Color> value of the receiver's 'clrTextBk' field."
 
-	^bytes dwordAtOffset: _OffsetOf_clrTextBk!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_clrTextBk)!
 
-clrTextBk: anInteger
-	"Set the receiver's 'clrTextBk' field to the value of the argument, anInteger"
+clrTextBk: aColor
+	"Set the receiver's 'clrTextBk' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_clrTextBk put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_clrTextBk put: aColor asCOLORREF!
 
 forecolor
 	"Answer the foreground text colour."
 
 	| clrText |
 	clrText := self clrText.
-	^clrText = CLR_DEFAULT ifTrue: [Color windowText] ifFalse: [Color fromCOLORREF: clrText]!
+	^clrText isDefault ifTrue: [Color windowText] ifFalse: [clrText]!
 
 forecolor: aColor
 	"Sets the text foreground <Color>."
 
-	self clrText: aColor asCOLORREF!
+	self clrText: aColor!
 
 iLevel
 	"Answer the <Integer> value of the receiver's 'iLevel' field."
@@ -90,8 +90,8 @@ defineFields
 
 	super defineFields.
 	self 
-		defineField: #clrText type: DWORDField new;
-		defineField: #clrTextBk type: DWORDField new;
+		defineField: #clrText type: COLORREFField new;
+		defineField: #clrTextBk type: COLORREFField new;
 		defineField: #iLevel type: SDWORDField readOnly!
 
 getFieldNames

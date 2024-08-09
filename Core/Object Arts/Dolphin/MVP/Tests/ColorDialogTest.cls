@@ -22,7 +22,7 @@ testColorDefault
 	subject := ColorDialog on: model.
 	subject prepareStruct.
 	struct := subject winStruct.
-	self assert: struct color equals: ColorRef defaultColorRepresentation.
+	self assert: struct rgbResult equals: ColorRef defaultColorRepresentation.
 	model value: Color black.
 	subject extractResult: true.
 	self assert: model value equals: Color default! !

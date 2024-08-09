@@ -21,7 +21,7 @@ Instance Variables:
 
 color: aColor
 	self color = aColor ifTrue: [^self].
-	logPen color: (aColor ifNil: [Color black]).
+	logPen lopnColor: aColor ?? Color.Black.
 	self free!
 
 createHandle
@@ -196,7 +196,7 @@ style: styleInteger width: widthInteger color: aColour
 	^self fromLogPen: (LOGPEN newBuffer
 				lopnStyle: styleInteger;
 				width: widthInteger;
-				color: aColour;
+				lopnColor: aColour;
 				yourself)!
 
 styleName: aString
@@ -229,7 +229,7 @@ styleName: aSymbol width: anInteger color: aColour
 	^self fromLogPen: (LOGPEN newBuffer
 				lopnStyle: (self styleNamed: aSymbol);
 				width: anInteger;
-				color: aColour;
+				lopnColor: aColour;
 				yourself)!
 
 styleNamed: aString

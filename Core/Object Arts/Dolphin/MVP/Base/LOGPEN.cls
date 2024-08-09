@@ -18,38 +18,28 @@ The type library contains the following helpstring for this struct
 	"The LOGPEN structure defines the style, width, and color of a pen. The CreatePenIndirect function uses the LOGPEN structure."
 
 IDL definition follows:
-
+```
 typedef [uuid(87B4C5FB-026E-11D3-9FD7-00A0CC3E4A32), helpstring("The LOGPEN structure defines the style, width, and color of a pen. The CreatePenIndirect function uses the LOGPEN structure.")]
 struct tagLOGPEN {
 	unsigned int lopnStyle;
 	POINTL lopnWidth;
-	unsigned long lopnColor;
+	COLORREF lopnColor;
 } LOGPEN;
-'!
+```'!
 
 !LOGPEN categoriesForClass!Win32-Structs! !
 
 !LOGPEN methodsFor!
 
-color
-	"Answer the <Color> of the pen described by the receiver."
-
-	^Color fromCOLORREF: self lopnColor!
-
-color: aColor 
-	"Set the <Color> of the pen described by the receiver."
-
-	self lopnColor: aColor asCOLORREF!
-
 lopnColor
-	"Answer the <Integer> value of the receiver's 'lopnColor' field."
+	"Answer the <Color> value of the receiver's 'lopnColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lopnColor!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_lopnColor)!
 
-lopnColor: anInteger
-	"Set the receiver's 'lopnColor' field to the value of the argument, anInteger"
+lopnColor: aColor
+	"Set the receiver's 'lopnColor' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_lopnColor put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lopnColor put: aColor asCOLORREF!
 
 lopnStyle
 	"Answer the <Integer> value of the receiver's 'lopnStyle' field."
@@ -87,8 +77,6 @@ width: anInteger
 	bytes sdwordAtOffset: _OffsetOf_lopnWidth put: anInteger! !
 
 !LOGPEN categoriesForMethods!
-color!accessing!public! !
-color:!accessing!public! !
 lopnColor!**compiled accessors**!public! !
 lopnColor:!**compiled accessors**!public! !
 lopnStyle!**compiled accessors**!public! !
@@ -109,14 +97,14 @@ defineFields
 		struct tagLOGPEN {
 			unsigned int lopnStyle;
 			POINTL lopnWidth;
-			unsigned long lopnColor;
+			COLORREF lopnColor;
 		} LOGPEN;
 "
 
 	self
 		defineField: #lopnStyle type: DWORDField new;
 		defineField: #lopnWidth type: (StructureField type: POINTL) beFiller;
-		defineField: #lopnColor type: DWORDField new!
+		defineField: #lopnColor type: COLORREFField new!
 
 getFieldNames
 	^#(#lopnStyle #lopnColor)! !

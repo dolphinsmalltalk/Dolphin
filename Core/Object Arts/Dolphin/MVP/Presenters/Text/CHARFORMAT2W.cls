@@ -40,13 +40,13 @@ The CHARFORMAT2W structure contains information about character formatting in a 
 backcolor
 	"Answer the character background color."
 
-	^Color fromCOLORREF: self crBackColor!
+	^self crBackColor!
 
 backcolor: aColor
 	"Set the character background colour."
 
 	self maskIn: CFM_BACKCOLOR.
-	self crBackColor: (aColor ifNil: [Color window]) asCOLORREF!
+	self crBackColor: (aColor ifNil: [Color window])!
 
 bAnimation
 	"Answer the <Integer> value of the receiver's 'bAnimation' field."
@@ -156,33 +156,33 @@ characterSet: anIntegerOrNil
 color
 	"Answer the character colour."
 
-	^Color fromCOLORREF: self crTextColor!
+	^self crTextColor!
 
 color: aColor
 	"Set the character colour."
 
 	self maskIn: CFM_COLOR.
-	self crTextColor: (aColor ifNil: [Color windowText]) asCOLORREF!
+	self crTextColor: (aColor ?? Color.WindowText)!
 
 crBackColor
-	"Answer the <Integer> value of the receiver's 'crBackColor' field."
+	"Answer the <Color> value of the receiver's 'crBackColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_crBackColor!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_crBackColor)!
 
-crBackColor: anInteger
-	"Set the receiver's 'crBackColor' field to the value of the argument, anInteger"
+crBackColor: aColor
+	"Set the receiver's 'crBackColor' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_crBackColor put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_crBackColor put: aColor asCOLORREF!
 
 crTextColor
-	"Answer the <Integer> value of the receiver's 'crTextColor' field."
+	"Answer the <Color> value of the receiver's 'crTextColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_crTextColor!
+	^Color fromCOLORREF: (bytes dwordAtOffset: _OffsetOf_crTextColor)!
 
-crTextColor: anInteger
-	"Set the receiver's 'crTextColor' field to the value of the argument, anInteger"
+crTextColor: aColor
+	"Set the receiver's 'crTextColor' field to the value of the argument, aColor"
 
-	bytes dwordAtOffset: _OffsetOf_crTextColor put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_crTextColor put: aColor asCOLORREF!
 
 dwEffects
 	"Answer the <Integer> value of the receiver's 'dwEffects' field."
@@ -362,7 +362,7 @@ populateChooseFont: aCHOOSEFONT
 	(mask allMask: CFM_SIZE) ifFalse: [flags := flags bitOr: CF_NOSIZESEL].
 	(mask allMask: CFM_CHARSET) ifFalse: [flags := flags bitOr: CF_NOSCRIPTSEL].
 	aCHOOSEFONT flags: flags.
-	aCHOOSEFONT color: self color!
+	aCHOOSEFONT rgbColors: self color!
 
 populateFromChooseFont: aCHOOSEFONT
 	| lf flags |
@@ -552,13 +552,13 @@ defineFields
 		defineField: #dwEffects type: DWORDField new;
 		defineField: #yHeight type: SDWORDField new;
 		defineField: #yOffset type: SDWORDField new beUncompiled;
-		defineField: #crTextColor type: DWORDField new;
+		defineField: #crTextColor type: COLORREFField new;
 		defineField: #bCharSet type: BYTEField new;
 		defineField: #bPitchAndFamily type: BYTEField new;
 		defineField: #szFaceName type: (StringField type: Utf16String length: 32);
 		defineField: #wWeight type: WORDField new;
 		defineField: #sSpacing type: SWORDField new;
-		defineField: #crBackColor type: DWORDField new;
+		defineField: #crBackColor type: COLORREFField new;
 		defineField: #lcid type: DWORDField new;
 		defineField: #dwCookie type: DWORDField filler;
 		defineField: #sStyle type: SWORDField new;
