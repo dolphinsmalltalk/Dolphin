@@ -52,7 +52,7 @@ printOn: aPuttableStream
 				space;
 				display: #color:;
 				space;
-				print: lb color;
+				print: lb lbColor;
 				nextPut: $)]
 		ifFalse: 
 			[aPuttableStream

@@ -31,7 +31,7 @@ Instance Variables:
 color
 	"Answer the colour member of the receiver as a Colour"
 
-	^Graphics.Color fromCOLORREF: self lbColor!
+	^self lbColor!
 
 hatch
 	"Answer the hatch object. This is either a <Bitmap>, or one of a set of standard <integer> constants."
@@ -51,14 +51,14 @@ hatchStyleName
 		ifTrue: [#(#horizontal #vertical #reverseDiagonal #diagonal #cross #diamond) lookup: self lbHatch + 1]!
 
 lbColor
-	"Answer the <Integer> value of the receiver's 'lbColor' field."
+	"Answer the <Graphics.Color> value of the receiver's 'lbColor' field."
 
-	^bytes uint32AtOffset: _OffsetOf_lbColor!
+	^Graphics.Color fromCOLORREF: (bytes uint32AtOffset: _OffsetOf_lbColor)!
 
-lbColor: anInteger
-	"Set the receiver's 'lbColor' field to the value of the argument, anInteger"
+lbColor: aColor
+	"Set the receiver's 'lbColor' field to the value of the argument, aColor"
 
-	bytes uint32AtOffset: _OffsetOf_lbColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lbColor put: aColor asCOLORREF!
 
 lbHatch
 	"Answer the <Integer> value of the receiver's 'lbHatch' field."
@@ -121,7 +121,7 @@ defineFields
 
 	self
 		defineField: #lbStyle type: UInt32Field new;
-		defineField: #lbColor type: UInt32Field new;
+		defineField: #lbColor type: COLORREFField new;
 		defineField: #lbHatch type: UIntPtrField new!
 
 getFieldNames
@@ -153,7 +153,7 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 
 !OS.LOGBRUSH class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

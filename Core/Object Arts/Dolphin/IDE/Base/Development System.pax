@@ -587,6 +587,9 @@ package setMethodNames: #(
 	#(#{Kernel.StWorkspaceVariable class} #icon)
 	#(#{OS._FPIEEE_RECORD} #printFieldsOn:)
 	#(#{OS._FPIEEE_VALUE} #printFieldsOn:)
+	#(#{OS.COLORREFField} #newAspect:class:)
+	#(#{OS.COLORREFField} #printAccessorExpression:on:)
+	#(#{OS.COLORREFField} #printMutatorValueOn:parameter:)
 	#(#{OS.FILETIME} #printOn:)
 	#(#{OS.KernelLibrary} #queryThreadCycleTime:cycleTime:)
 	#(#{OS.LOGBRUSH} #printFieldsOn:)
@@ -7063,6 +7066,43 @@ printFieldsOn: aStream
 printFieldsOn:!printing!private! !
 !
 
+!OS.COLORREFField methodsFor!
+
+newAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass color: aSymbol!
+
+printAccessorExpression: aSymbol on: aCodeGenerationContext
+	"Private - Print a suitable statement or statement onto the specified <CodeGenerationContext> which will read the value of this field from an instance of the structure."
+
+	aCodeGenerationContext writeStream
+		nextPut: $(;
+		display: Graphics.Color;
+		space;
+		display: #fromCOLORREF:;
+		nextPutAll: ' (bytes ';
+		display: #uint32AtOffset: ;
+		space.
+	self printOffsetExpression: aSymbol on: aCodeGenerationContext.
+	aCodeGenerationContext writeStream nextPutAll: '))'.
+	^self!
+
+printMutatorValueOn: aCodeGenerationContext parameter: aString
+	"Private - Print a suitable expression onto the specified <CodeGenerationContext> which will evaluate to the value to be stored into this field in an instance of the structure when compiled into a mutator method where the value parameter is named by the <String> argument."
+
+	aCodeGenerationContext writeStream
+		nextPutAll: aString;
+		space;
+		display: #asCOLORREF! !
+
+!OS.COLORREFField categoriesForMethods!
+newAspect:class:!adapters!private! !
+printAccessorExpression:on:!automatic generation!private! !
+printMutatorValueOn:parameter:!automatic generation!development!private! !
+!
+
 !OS.FILETIME methodsFor!
 
 printOn: aStream
@@ -7096,7 +7136,7 @@ printFieldsOn: aStream
 		print: self lbStyle;
 		space;
 		display: 'color=';
-		print: self color.
+		print: self lbColor.
 	self hatchStyleName
 		ifNotNil: 
 			[:symbol |
@@ -7120,7 +7160,7 @@ printFieldsOn: aStream
 		print: self width;
 		space;
 		display: 'color=';
-		print: self color! !
+		print: self lopnColor! !
 
 !OS.LOGPEN categoriesForMethods!
 printFieldsOn:!printing!private! !

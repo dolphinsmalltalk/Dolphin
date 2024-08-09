@@ -64,6 +64,7 @@ package setClassNames: #(
 	#{OS.BITMAPINFO}
 	#{OS.BITMAPINFOHEADER}
 	#{OS.BLENDFUNCTION}
+	#{OS.COLORREFField}
 	#{OS.DEVMODEW}
 	#{OS.DEVNAMESW}
 	#{OS.DIBSECTION}
@@ -218,6 +219,14 @@ Core.Object
 	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
 	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MouseHoverTime SysParamVariables WheelScrollLines'
 	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.UInt32Field
+	subclass: #'OS.COLORREFField'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

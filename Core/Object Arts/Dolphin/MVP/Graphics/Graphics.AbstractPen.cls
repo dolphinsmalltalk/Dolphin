@@ -25,7 +25,7 @@ Graphics.AbstractPen comment: ''!
 	^self == anObject or: [self species == anObject species and: [self logPen = anObject logPen]]!
 
 color
-	^logPen color!
+	^logPen lopnColor!
 
 handle: anExternalHandle
 	"Private - Set the handle for the receiver and query its logical info."

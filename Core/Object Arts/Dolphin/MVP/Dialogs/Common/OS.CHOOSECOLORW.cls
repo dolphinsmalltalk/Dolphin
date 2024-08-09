@@ -47,9 +47,8 @@ struct tagCHOOSECOLOR {
 !OS.CHOOSECOLORW methodsFor!
 
 color
-	"Answer the chosen colour."
-
-	^Graphics.Color fromCOLORREF: self rgbResult!
+	#deprecated.
+	^self rgbResult!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -85,14 +84,14 @@ lpfnHook: anAddress
 	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anAddress!
 
 rgbResult
-	"Answer the <Integer> value of the receiver's 'rgbResult' field."
+	"Answer the <Graphics.Color> value of the receiver's 'rgbResult' field."
 
-	^bytes uint32AtOffset: _OffsetOf_rgbResult!
+	^Graphics.Color fromCOLORREF: (bytes uint32AtOffset: _OffsetOf_rgbResult)!
 
-rgbResult: anInteger
-	"Set the receiver's 'rgbResult' field to the value of the argument, anInteger"
+rgbResult: aColor
+	"Set the receiver's 'rgbResult' field to the value of the argument, aColor"
 
-	bytes uint32AtOffset: _OffsetOf_rgbResult put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_rgbResult put: aColor asCOLORREF! !
 
 !OS.CHOOSECOLORW categoriesForMethods!
 color!accessing!public! !
@@ -137,7 +136,7 @@ defineFields
 			type: HANDLEField new beWriteOnly
 			offset: 8;
 		defineField: #rgbResult
-			type: UInt32Field new
+			type: COLORREFField new
 			offset: 12;
 		defineField: #lpCustColors
 			type: (ArrayPointerField type: UInt32Array length: 16)

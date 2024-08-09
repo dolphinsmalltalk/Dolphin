@@ -28,44 +28,44 @@ backcolor
 
 	| clrTextBk |
 	clrTextBk := self clrTextBk.
-	^clrTextBk = OS.Win32Constants.CLR_DEFAULT ifTrue: [Graphics.Color window] ifFalse: [Graphics.Color fromCOLORREF: clrTextBk]!
+	^clrTextBk isDefault ifTrue: [Graphics.Color windowText] ifFalse: [clrTextBk]!
 
 backcolor: aColor
 	"Sets the background <Color>."
 
-	self clrTextBk: aColor asCOLORREF!
+	self clrTextBk: aColor!
 
 clrText
-	"Answer the <Integer> value of the receiver's 'clrText' field."
+	"Answer the <Graphics.Color> value of the receiver's 'clrText' field."
 
-	^bytes uint32AtOffset: _OffsetOf_clrText!
+	^Graphics.Color fromCOLORREF: (bytes uint32AtOffset: _OffsetOf_clrText)!
 
-clrText: anInteger
-	"Set the receiver's 'clrText' field to the value of the argument, anInteger"
+clrText: aColor
+	"Set the receiver's 'clrText' field to the value of the argument, aColor"
 
-	bytes uint32AtOffset: _OffsetOf_clrText put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_clrText put: aColor asCOLORREF!
 
 clrTextBk
-	"Answer the <Integer> value of the receiver's 'clrTextBk' field."
+	"Answer the <Graphics.Color> value of the receiver's 'clrTextBk' field."
 
-	^bytes uint32AtOffset: _OffsetOf_clrTextBk!
+	^Graphics.Color fromCOLORREF: (bytes uint32AtOffset: _OffsetOf_clrTextBk)!
 
-clrTextBk: anInteger
-	"Set the receiver's 'clrTextBk' field to the value of the argument, anInteger"
+clrTextBk: aColor
+	"Set the receiver's 'clrTextBk' field to the value of the argument, aColor"
 
-	bytes uint32AtOffset: _OffsetOf_clrTextBk put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_clrTextBk put: aColor asCOLORREF!
 
 forecolor
 	"Answer the foreground text colour."
 
 	| clrText |
 	clrText := self clrText.
-	^clrText = OS.Win32Constants.CLR_DEFAULT ifTrue: [Graphics.Color windowText] ifFalse: [Graphics.Color fromCOLORREF: clrText]!
+	^clrText isDefault ifTrue: [Graphics.Color windowText] ifFalse: [clrText]!
 
 forecolor: aColor
 	"Sets the text foreground <Color>."
 
-	self clrText: aColor asCOLORREF!
+	self clrText: aColor!
 
 iLevel
 	"Answer the <Integer> value of the receiver's 'iLevel' field."
@@ -96,8 +96,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #clrText type: UInt32Field new;
-		defineField: #clrTextBk type: UInt32Field new;
+		defineField: #clrText type: COLORREFField new;
+		defineField: #clrTextBk type: COLORREFField new;
 		defineField: #iLevel type: Int32Field readOnly!
 
 getFieldNames

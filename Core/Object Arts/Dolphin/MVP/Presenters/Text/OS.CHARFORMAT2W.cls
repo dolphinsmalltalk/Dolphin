@@ -42,13 +42,13 @@ The CHARFORMAT2W structure contains information about character formatting in a 
 backcolor
 	"Answer the character background color."
 
-	^Graphics.Color fromCOLORREF: self crBackColor!
+	^self crBackColor!
 
 backcolor: aColor
 	"Set the character background colour."
 
 	self maskIn: CFM_BACKCOLOR.
-	self crBackColor: (aColor ifNil: [Graphics.Color window]) asCOLORREF!
+	self crBackColor: (aColor ifNil: [Graphics.Color window])!
 
 bAnimation
 	"Answer the <Integer> value of the receiver's 'bAnimation' field."
@@ -158,33 +158,33 @@ characterSet: anIntegerOrNil
 color
 	"Answer the character colour."
 
-	^Graphics.Color fromCOLORREF: self crTextColor!
+	^self crTextColor!
 
 color: aColor
 	"Set the character colour."
 
 	self maskIn: CFM_COLOR.
-	self crTextColor: (aColor ?? Graphics.Color.WindowText) asCOLORREF!
+	self crTextColor: (aColor ?? Graphics.Color.WindowText)!
 
 crBackColor
-	"Answer the <Integer> value of the receiver's 'crBackColor' field."
+	"Answer the <Graphics.Color> value of the receiver's 'crBackColor' field."
 
-	^bytes uint32AtOffset: _OffsetOf_crBackColor!
+	^Graphics.Color fromCOLORREF: (bytes uint32AtOffset: _OffsetOf_crBackColor)!
 
-crBackColor: anInteger
-	"Set the receiver's 'crBackColor' field to the value of the argument, anInteger"
+crBackColor: aColor
+	"Set the receiver's 'crBackColor' field to the value of the argument, aColor"
 
-	bytes uint32AtOffset: _OffsetOf_crBackColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_crBackColor put: aColor asCOLORREF!
 
 crTextColor
-	"Answer the <Integer> value of the receiver's 'crTextColor' field."
+	"Answer the <Graphics.Color> value of the receiver's 'crTextColor' field."
 
-	^bytes uint32AtOffset: _OffsetOf_crTextColor!
+	^Graphics.Color fromCOLORREF: (bytes uint32AtOffset: _OffsetOf_crTextColor)!
 
-crTextColor: anInteger
-	"Set the receiver's 'crTextColor' field to the value of the argument, anInteger"
+crTextColor: aColor
+	"Set the receiver's 'crTextColor' field to the value of the argument, aColor"
 
-	bytes uint32AtOffset: _OffsetOf_crTextColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_crTextColor put: aColor asCOLORREF!
 
 dwEffects
 	"Answer the <Integer> value of the receiver's 'dwEffects' field."
@@ -359,7 +359,7 @@ populateChooseFont: aCHOOSEFONT
 	(mask allMask: CFM_SIZE) ifFalse: [flags := flags bitOr: CF_NOSIZESEL].
 	(mask allMask: CFM_CHARSET) ifFalse: [flags := flags bitOr: CF_NOSCRIPTSEL].
 	aCHOOSEFONT flags: flags.
-	aCHOOSEFONT color: self color!
+	aCHOOSEFONT rgbColors: self color!
 
 populateFromChooseFont: aCHOOSEFONT
 	| lf flags |
@@ -552,13 +552,13 @@ defineFields
 		defineField: #dwEffects type: UInt32Field new;
 		defineField: #yHeight type: Int32Field new;
 		defineField: #yOffset type: Int32Field new beUncompiled;
-		defineField: #crTextColor type: UInt32Field new;
+		defineField: #crTextColor type: COLORREFField new;
 		defineField: #bCharSet type: UInt8Field new;
 		defineField: #bPitchAndFamily type: UInt8Field new;
 		defineField: #szFaceName type: (StringField type: Utf16String length: 32);
 		defineField: #wWeight type: UInt16Field new;
 		defineField: #sSpacing type: Int16Field new;
-		defineField: #crBackColor type: UInt32Field new;
+		defineField: #crBackColor type: COLORREFField new;
 		defineField: #lcid type: UInt32Field new;
 		defineField: #dwCookie type: UInt32Field filler;
 		defineField: #sStyle type: Int16Field new;
