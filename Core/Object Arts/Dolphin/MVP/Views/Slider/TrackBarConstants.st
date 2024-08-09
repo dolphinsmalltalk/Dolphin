@@ -1,6 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #TrackBarConstants put: (PoolConstantsDictionary named: #TrackBarConstants)!
+TrackBarConstants at: 'TB_BOTTOM' put: 16r7!
+TrackBarConstants at: 'TB_ENDTRACK' put: 16r8!
+TrackBarConstants at: 'TB_LINEDOWN' put: 16r1!
+TrackBarConstants at: 'TB_LINEUP' put: 16r0!
+TrackBarConstants at: 'TB_PAGEDOWN' put: 16r3!
+TrackBarConstants at: 'TB_PAGEUP' put: 16r2!
+TrackBarConstants at: 'TB_THUMBPOSITION' put: 16r4!
+TrackBarConstants at: 'TB_THUMBTRACK' put: 16r5!
+TrackBarConstants at: 'TB_TOP' put: 16r6!
 TrackBarConstants at: 'TBM_CLEARSEL' put: 16r413!
 TrackBarConstants at: 'TBM_CLEARTICS' put: 16r409!
 TrackBarConstants at: 'TBM_GETBUDDY' put: 16r421!

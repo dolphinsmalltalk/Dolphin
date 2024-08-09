@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ControlView subclass: #ControlBarAbstract
-	instanceVariableNames: 'names _tipText _unused17 _unused18'
+	instanceVariableNames: 'names _tipText _unused17'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

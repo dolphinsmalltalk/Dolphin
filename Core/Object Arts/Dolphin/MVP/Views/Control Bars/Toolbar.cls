@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ControlBarAbstract subclass: #Toolbar
-	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent imageSize buttonSize _unused27 layoutManager'
+	instanceVariableNames: 'textcolor idMap items bitmapsStart insets tbFlags indent imageSize buttonSize _unused27 layoutManager'
 	classVariableNames: 'FluentIconFonts FluentIconsMask ImageSizes IsScalableMask LabelsMask NotScalableMask ScalableMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
@@ -316,6 +316,27 @@ creationStyles
 		ifTrue: [{(creationStyles at: 1) bitOr: TBSTYLE_LIST. creationStyles at: 2}]
 		ifFalse: [creationStyles]!
 
+customDrawContextClass
+	"Private - Answer the class of <customDrawContext> associated with the receiver.
+	This is the type of object passed to the customDrawBlock. and provides access to
+	all the contextual information to implement partial or complete custom drawing."
+
+	^NMTBCUSTOMDRAW!
+
+customDrawItem: aNMTBCUSTOMDRAW
+	"Private - Custom draw the 'item' identified in the argument.
+	Answer the custom draw return code (an integer from the [TB]CDRF_XXXX enumeration) to be returned to the control."
+
+	"Implementation Note: We don't implement a full custom draw capability because this is ignored when using themed controls, and consequently it would be necessary to disable themes for the toolbar, then requiring substantial work to emulate those aspects of the theme behaviour that one wanted to retain, such as the hot-highlighting. We can however use this to allow setting of the text colour, as otherwise the text is always black which may not suit a dark background colour. This is particularly useful when using fluent (text glyph) icons, as in that case the button 'image' is actually text."
+
+	| rc |
+	rc := CDRF_DODEFAULT.
+	textcolor
+		ifNotNil: 
+			[aNMTBCUSTOMDRAW clrText: textcolor.
+			rc := rc bitOr: TBCDRF_USECDCOLORS].
+	^rc!
+
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
@@ -576,6 +597,26 @@ layoutManager: aLayoutManager
 
 	layoutManager := aLayoutManager.
 	self basicInvalidateLayout!
+
+nmCustomDraw: pNMHDR
+	"Private - Handle a NM_CUSTOMDRAW notification message."
+
+	| drawStage context item |
+	(drawStage := pNMHDR dwordAtOffset: NMCUSTOMDRAW._OffsetOf_dwDrawStage) == CDDS_PREPAINT
+		ifTrue: 
+			["Before any painting"
+			^(self wantCustomDrawItemNotifications: pNMHDR)
+				ifTrue: [CDRF_NOTIFYITEMDRAW]
+				ifFalse: [CDRF_DODEFAULT]].
+	"Before painting item"
+	(drawStage allMask: CDDS_ITEMPREPAINT) ifFalse: [^nil].
+	context := self customDrawContextClass fromAddress: pNMHDR.
+	item := self itemFromId: context dwItemSpec.
+	item ifNil: [^CDRF_DODEFAULT].
+	context
+		item: item;
+		view: self.
+	^self customDrawItem: context!
 
 nmNotify: pNMHDR
 	"Private - Handler for a WM_NOTIFY message."
@@ -1138,6 +1179,12 @@ tbSetToolTips: toolTipHandle
 
 	self sendMessage: TB_SETTOOLTIPS wParam: toolTipHandle!
 
+textcolor
+	^textcolor!
+
+textcolor: aColor
+	textcolor := aColor!
+
 updateAllItems
 	"Private - Cause all of the receivers items to be rebuilt"
 
@@ -1168,6 +1215,9 @@ validateUserInterface
 	works in lieu"
 	self isVertical ifTrue: [self tbAutoSize].
 	super validateUserInterface!
+
+wantCustomDrawItemNotifications: pNMHDR
+	^textcolor notNil!
 
 wmCreate: message wParam: wParam lParam: lParam
 	"Private - As we create the receiver with the standard CreateWindowEx call we have to inform
@@ -1221,6 +1271,8 @@ clearIdMap!initializing!private! !
 command:id:!commands!private! !
 commandSource!commands!public! !
 creationStyles!private!realizing/unrealizing! !
+customDrawContextClass!constants!private! !
+customDrawItem:!event handling!private! !
 defaultExtent!constants!private! !
 defaultGradientBackcolor!colors!constants!private! !
 defaultGradientForecolor!colors!constants!private! !
@@ -1260,6 +1312,7 @@ items!accessing!private! !
 items:!accessing!private! !
 layoutManager!geometry!public! !
 layoutManager:!geometry!public! !
+nmCustomDraw:!event handling-win32!private! !
 nmNotify:!event handling-win32!private! !
 onDropDown:!event handling!private! !
 onEraseRequired:!event handling!private! !
@@ -1327,10 +1380,13 @@ tbSetPadding:!geometry!private! !
 tbSetRows:large:!geometry!private! !
 tbSetState:state:!helpers!private! !
 tbSetToolTips:!accessing!private! !
+textcolor!accessing!public! !
+textcolor:!accessing!public! !
 updateAllItems!operations!private! !
 updateSize!operations!private! !
 updateSizePosted!operations!private! !
 validateUserInterface!operations!public! !
+wantCustomDrawItemNotifications:!event handling-win32!private! !
 wmCreate:wParam:lParam:!event handling-win32!private! !
 wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
 !

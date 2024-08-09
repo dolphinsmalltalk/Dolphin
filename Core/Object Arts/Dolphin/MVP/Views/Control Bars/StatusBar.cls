@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ControlBarAbstract subclass: #StatusBar
-	instanceVariableNames: 'parts leftOverSeparator layoutManager'
+	instanceVariableNames: '_unused18 parts leftOverSeparator layoutManager'
 	classVariableNames: ''
 	poolDictionaries: 'StatusBarConstants'
 	classInstanceVariableNames: ''!

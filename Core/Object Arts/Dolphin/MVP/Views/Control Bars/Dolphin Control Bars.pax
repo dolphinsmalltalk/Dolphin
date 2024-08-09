@@ -12,6 +12,7 @@ package basicPackageVersion: '6.2'.
 package classNames
 	add: #ControlBarAbstract;
 	add: #NMMOUSE;
+	add: #NMTBCUSTOMDRAW;
 	add: #NMTOOLBARW;
 	add: #StatusBar;
 	add: #StatusBarItem;
@@ -46,6 +47,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\Common Controls\Dolphin Common Controls'
 	'..\..\Base\Dolphin MVP Base').
 
 package!
@@ -97,6 +99,12 @@ NMHDR subclass: #NMMOUSE
 NMHDR subclass: #NMTOOLBARW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cchText _OffsetOf_iItem _OffsetOf_pszText _OffsetOf_tbButton'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+NMCUSTOMDRAW subclass: #NMTBCUSTOMDRAW
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_clrBtnFace _OffsetOf_clrBtnHighlight _OffsetOf_clrHighlightHotTrack _OffsetOf_clrMark _OffsetOf_clrText _OffsetOf_clrTextHighlight _OffsetOf_hbrLines _OffsetOf_hbrMonoDither _OffsetOf_hpenLines _OffsetOf_iListGap _OffsetOf_nHLStringBkMode _OffsetOf_nStringBkMode _OffsetOf_rcText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -155,19 +163,19 @@ AbstractNonReferenceDelegatingView subclass: #ToolButton
 	classInstanceVariableNames: ''!
 
 ControlView subclass: #ControlBarAbstract
-	instanceVariableNames: 'names _tipText _unused17 _unused18'
+	instanceVariableNames: 'names _tipText _unused17'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 ControlBarAbstract subclass: #StatusBar
-	instanceVariableNames: 'parts leftOverSeparator layoutManager'
+	instanceVariableNames: '_unused18 parts leftOverSeparator layoutManager'
 	classVariableNames: ''
 	poolDictionaries: 'StatusBarConstants'
 	classInstanceVariableNames: ''!
 
 ControlBarAbstract subclass: #Toolbar
-	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent imageSize buttonSize _unused27 layoutManager'
+	instanceVariableNames: 'textcolor idMap items bitmapsStart insets tbFlags indent imageSize buttonSize _unused27 layoutManager'
 	classVariableNames: 'FluentIconFonts FluentIconsMask ImageSizes IsScalableMask LabelsMask NotScalableMask ScalableMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
