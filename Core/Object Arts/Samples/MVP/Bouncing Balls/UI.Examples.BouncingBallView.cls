@@ -26,7 +26,7 @@ defaultExtent
 	^640 @ 480!
 
 frameRate
-	^25!
+	^30!
 
 initialize
 	| rnd icons |
@@ -131,7 +131,7 @@ displayOn: aPuttableStream
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x1F3B1 fontName: 'Segoe UI Emoji')!
+	^Ball icon!
 
 initialize
 	"Private - Initialize the receiver's class variables

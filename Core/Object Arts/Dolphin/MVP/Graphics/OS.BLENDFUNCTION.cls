@@ -3,7 +3,7 @@
 External.Structure
 	subclass: #'OS.BLENDFUNCTION'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'BlendPixels'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -119,6 +119,9 @@ blend: aNumber
 		blend: aNumber;
 		yourself!
 
+blendPixels
+	^BlendPixels!
+
 byteSize
 	^_BLENDFUNCTION_Size!
 
@@ -143,12 +146,23 @@ defineFields
 		defineField: #AlphaFormat type: UInt8Field new!
 
 getFieldNames
-	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
+	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)!
+
+initialize
+	"Standard alpha blend of a bitmap is to just use the per-pixel alpha."
+
+	self addClassConstant: 'BlendPixels'
+		value: (self new
+				blendPercentage: 100;
+				usePerPixelAlpha: true;
+				yourself)! !
 
 !OS.BLENDFUNCTION class categoriesForMethods!
 blend:!instance creation!public! !
+blendPixels!constants!instance creation!public! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+initialize!class initialization!public! !
 !
 

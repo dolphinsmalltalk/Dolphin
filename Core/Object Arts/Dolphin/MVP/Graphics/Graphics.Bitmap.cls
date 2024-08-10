@@ -42,7 +42,7 @@ alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent
 		alphaBlendOn: aCanvas
 		at: dstOrigin
 		extent: dstExtent
-		from: 0 @ 0!
+		from: Point.Zero!
 
 alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin 
 	^self 
@@ -53,18 +53,13 @@ alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin
 		extent: self extent!
 
 alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent
-	| blend |
-	blend := BLENDFUNCTION new.
-	blend
-		blendPercentage: 100;
-		usePerPixelAlpha: true.
 	^self
 		alphaBlendOn: aCanvas
 		at: dstOrigin
 		extent: dstExtent
 		from: srcOrigin
 		extent: srcExtent
-		blend: blend!
+		blend: BLENDFUNCTION.BlendPixels!
 
 alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent blend: blendFunction
 	"Alpha blend the specified rectangle of the receiver to the specified destination

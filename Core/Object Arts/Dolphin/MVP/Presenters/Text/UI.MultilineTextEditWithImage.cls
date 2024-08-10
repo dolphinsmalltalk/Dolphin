@@ -104,7 +104,7 @@ defaultBackgroundImage
 	icon, toned down to a watermark."
 
 	| blend percent icon extent bmp color |
-	extent := 48 @ 48 * self dpi // USER_DEFAULT_SCREEN_DPI.
+	extent := Icon standardSizeFor: self metrics tileIconExtent.
 	percent := 25.
 	color := self actualBackcolor.
 	"First we need an image to use, in this case we choose the default application icon. N.B. If we
@@ -117,7 +117,7 @@ defaultBackgroundImage
 				backcolor: color;
 				erase;
 				yourself)
-		at: 0 @ 0
+		at: Point.Zero
 		flags: 0.
 
 	"Now we're going to layer the image onto a white Bitmap to create a watermark image"
@@ -125,15 +125,15 @@ defaultBackgroundImage
 	bmp canvas
 		backcolor: color;
 		erase.
-	blend := BLENDFUNCTION new.
+	blend := BLENDFUNCTION newBuffer.
 	blend
 		blendPercentage: percent;
 		usePerPixelAlpha: false.
 	icon
 		alphaBlendOn: bmp canvas
-		at: 0 @ 0
+		at: Point.Zero
 		extent: bmp extent
-		from: 0 @ 0
+		from: Point.Zero
 		extent: icon extent
 		blend: blend.
 	icon free.

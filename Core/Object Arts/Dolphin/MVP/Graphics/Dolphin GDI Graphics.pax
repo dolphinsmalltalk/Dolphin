@@ -1032,7 +1032,7 @@ External.Structure
 External.Structure
 	subclass: #'OS.BLENDFUNCTION'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'BlendPixels'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
