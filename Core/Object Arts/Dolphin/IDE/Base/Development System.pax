@@ -523,7 +523,6 @@ package methodNames
 	add: 'ImagePresenter class' -> #resource_ImageList_view;
 	add: 'ImageViewAbstract class' -> #publishedAspectsOfInstances;
 	add: 'InputState class' -> #publishedEventsOfInstances;
-	add: 'InternalIcon class' -> #choose;
 	add: 'ListBox class' -> #publishedAspectsOfInstances;
 	add: 'ListControlView class' -> #publishedAspectsOfInstances;
 	add: 'ListControlView class' -> #publishedEventsOfInstances;
@@ -734,7 +733,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
 	'..\..\MVP\Gdiplus\Gdiplus'
-	'..\..\MVP\Icons\Internal Bitmaps and Icons'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
@@ -4310,26 +4308,6 @@ publishedEventsOfInstances
 
 !InputState class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
-!
-
-!InternalIcon class methodsFor!
-
-choose
-	| filename |
-	filename := (FileOpenDialog new)
-				fileTypes: (Array 
-							with: self filesType
-							with: Icon filesType
-							with: FileDialog allFilesType);
-				showModal.
-	^filename notNil 
-		ifTrue: 
-			[(File splitExtensionFrom: filename) asLowercase = 'png' 
-				ifTrue: [self fromFile: filename]
-				ifFalse: [Icon fromFile: filename]]! !
-
-!InternalIcon class categoriesForMethods!
-choose!public! !
 !
 
 !Interval methodsFor!

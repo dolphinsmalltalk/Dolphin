@@ -168,6 +168,21 @@ badgeTile: anIconBadge color: aColor extent: extent
 		tileColor: aColor;
 		yourself!
 
+choose
+	| filename |
+	filename := FileOpenDialog new
+				fileTypes: {
+							#('PNG Files (*.png)' '*.png').
+							#('Icon Files (*.ico)' '*.ico').
+							FileDialog allFilesType
+						};
+				showModal.
+	^filename notNil
+		ifTrue: 
+			[((File splitExtensionFrom: filename) compareOrdinals: 'png' ignoringCase: true) == 0
+				ifTrue: [self fromFile: filename]
+				ifFalse: [Icon fromFile: filename]]!
+
 defaultExtent
 	#highDpiToDo. "Should this be scaled?"
 	^48 @ 48!
@@ -231,6 +246,7 @@ stbVersion
 !InternalIcon class categoriesForMethods!
 badgeTile:color:!instance creation!public! !
 badgeTile:color:extent:!instance creation!public! !
+choose!public! !
 defaultExtent!constants!private! !
 defaultTileExtent!constants!private! !
 filesType!constants!private! !

@@ -615,19 +615,31 @@ icon: anIconAspectSymbol
 	The aspect is viewable using an ImagePresenter with a 'Basic image' view
 	and editable using a FileDialog, or edited in-place with a single line ValueWorkspace."
 
+	^self image: anIconAspectSymbol type: Icon!
+
+image: aSymbol type: imageClass
+	"Answer an instance of the receiver for aBitmapAspectSymbol.
+	The aspect is viewable using an ImagePresenter with a 'Basic image' view
+	and editable using a FileDialog"
+
 	^(self
-		name: anIconAspectSymbol
+		name: aSymbol
 		presenterBlock: 
 			[:p :m |
-			| ip |
-			ip := ImagePresenter
+			| presenter |
+			presenter := ImagePresenter
 						create: 'Basic image'
 						in: p
 						on: m.
-			ip view isWholeBackgroundErased: true.
-			(m value notNil and: [m value isPersistent not]) ifTrue: [ip view viewMode: #scaleBestFit].
-			ip]
-		editBlock: [:p | InternalIcon choose ifNotNil: [:icon | p value: icon]])
+			presenter view
+				viewMode: #scaleBestFit;
+				isWholeBackgroundErased: true.
+			m value
+				ifNotNil: 
+					[:image |
+					presenter view viewMode: (image isPersistent ifTrue: [#scaleToFit] ifFalse: [#scaleBestFit])].
+			presenter]
+		editBlock: [:p | imageClass choose ifNotNil: [:choice | p value: choice]])
 		bePresenterBlockReadOnly;
 		yourself!
 
@@ -925,6 +937,7 @@ folder:!instance creation!public! !
 font:!instance creation!public! !
 hotkey:!instance creation!public! !
 icon:!instance creation!public! !
+image:type:!instance creation!public! !
 imageList:!instance creation!public! !
 inspector:!instance creation!public! !
 integer:!instance creation!public! !

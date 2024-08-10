@@ -56,7 +56,6 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Icons\Dolphin Base Icons.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons\Internal Bitmaps and Icons.pax' #plain #imageBased);
 		yourself.
 
 	"Additional development tools"
