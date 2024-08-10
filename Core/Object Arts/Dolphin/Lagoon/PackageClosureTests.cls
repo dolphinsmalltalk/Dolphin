@@ -80,13 +80,12 @@ testCommandLineHelloWorld
 		missing: self consoleAppUnimplemented!
 
 testEtchASketch
-	"Etch-a-sketch uses an InternalIcon, and STB."
+	"Etch-a-sketch uses STB."
 
 	| env |
 	env := self environmentForAppDeployment: {EtchASketch owningPackage}.
 	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate: #packages).
-	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so."
-	self assert: (env includesClass: InternalIcon).
+	"Etch-a-sketch (actually the Scribble app on which it is based) uses STB to serialize data"
 	self assert: (env includesClass: STBOutFiler).
 	self assert: (env includesSelector: #owningPackage in: ClassDescription).
 	self deny: (env includesSelector: #owningPackage in: Class)!

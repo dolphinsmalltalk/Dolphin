@@ -1003,6 +1003,7 @@
     </Image>
     <Image Include="Res\PrintIt.ico" />
     <Image Include="Res\TimeZone.ico" />
+    <Image Include="Res\EtchASketch.ico" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Icons">

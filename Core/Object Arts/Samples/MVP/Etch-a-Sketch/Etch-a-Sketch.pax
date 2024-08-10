@@ -66,7 +66,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
 	'..\Scribble\Scribble').
 
 package!
