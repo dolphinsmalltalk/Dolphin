@@ -265,6 +265,7 @@
     <Image Include="Res\EditUndo.ico" />
     <Image Include="Res\EllipsisButton.ico" />
     <Image Include="Res\EnvironmentBrowserShell.ico" />
+    <Image Include="Res\EtchASketch.ico" />
     <Image Include="Res\EvaluateIt.ico" />
     <Image Include="Res\Event.ico" />
     <Image Include="Res\EventMessageSend.ico" />

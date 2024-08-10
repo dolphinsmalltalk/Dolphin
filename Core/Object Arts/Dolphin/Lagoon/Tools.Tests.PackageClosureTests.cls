@@ -36,7 +36,7 @@ testCommandLineHelloWorld
 		missing: self consoleAppUnimplemented!
 
 testEtchASketch
-	"Etch-a-sketch uses an InternalIcon, and STB."
+	"Etch-a-sketch uses STB."
 
 	| env |
 	env := BrowserEnvironment new forPackagesDeployment: { UI.Examples.EtchASketch owningPackage }.
@@ -44,7 +44,6 @@ testEtchASketch
 	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so.
 		EnvironmentBrowserShell onEnvironment: envEnvironment Browser.
 	"
-	self assert: (env includesClass: InternalIcon).
 	"Etch-a-sketch (actually the Scribble app on which it is based) uses STB to serialize data"
 	self assert: (env includesClass: STBOutFiler).
 	self assert: (env includesSelector: #owningPackage in: ClassDescription).

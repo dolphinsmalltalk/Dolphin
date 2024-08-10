@@ -184,6 +184,8 @@ ELLIPSISBUTTON.ICO      ICON                    "Res\\EllipsisButton.ico"
 
 ENVIRONMENTBROWSERSHELL.ICO ICON                    "Res\\EnvironmentBrowserShell.ico"
 
+ETCHASKETCH.ICO         ICON                    "Res\\EtchASketch.ico"
+
 EVALUATEIT.ICO          ICON                    "Res\\EvaluateIt.ico"
 
 EVENT.ICO               ICON                    "Res\\Event.ico"

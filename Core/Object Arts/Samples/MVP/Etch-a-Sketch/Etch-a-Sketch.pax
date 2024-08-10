@@ -65,7 +65,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\System\Filer\Dolphin STx Filer Core'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
 	'..\Scribble\Scribble'
 	'..\UI Examples'
 ).
