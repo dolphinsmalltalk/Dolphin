@@ -395,7 +395,6 @@ package setMethodNames: #(
 	#(#{Graphics.Image class} #fileTypes)
 	#(#{Graphics.Image class} #newInstanceAspect:class:)
 	#(#{Graphics.ImageList class} #newInstanceAspect:class:)
-	#(#{Graphics.InternalIcon class} #choose)
 	#(#{Graphics.Metafile class} #fileTypes)
 	#(#{Graphics.Pen class} #publishedAspectsOfInstances)
 	#(#{Graphics.Point class} #publishedAspectsOfInstances)
@@ -929,7 +928,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Gdiplus\Gdiplus'
 	'..\..\MVP\Gdiplus\Gdiplus ImageView'
 	'..\..\Utilities\HTML Help\HTML Help'
-	'..\..\MVP\Icons\Internal Bitmaps and Icons'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
@@ -4918,27 +4916,6 @@ newInstanceAspect: aSymbol class: aspectClass
 
 !Graphics.ImageList class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
-!
-
-!Graphics.InternalIcon class methodsFor!
-
-choose
-	| filename |
-	filename := FileOpenDialog new
-				fileTypes: {
-							#('PNG Files (*.png)' '*.png').
-							#('Icon Files (*.ico)' '*.ico').
-							FileDialog allFilesType
-						};
-				showModal.
-	^filename notNil
-		ifTrue: 
-			[((File splitExtensionFrom: filename) compareOrdinals: 'png' ignoringCase: true) == 0
-				ifTrue: [self fromFile: filename]
-				ifFalse: [Icon fromFile: filename]]! !
-
-!Graphics.InternalIcon class categoriesForMethods!
-choose!public! !
 !
 
 !Graphics.Metafile class methodsFor!
@@ -10251,6 +10228,8 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #isGroupStyle);
 		add: (Aspect boolean: #isDropdownStyle);
 		add: (Aspect boolean: #isDropDownOnly);
+		add: (Aspect color: #textcolor);
+		add: (Aspect font: #font);
 		yourself! !
 
 !UI.ToolbarButton class categoriesForMethods!
