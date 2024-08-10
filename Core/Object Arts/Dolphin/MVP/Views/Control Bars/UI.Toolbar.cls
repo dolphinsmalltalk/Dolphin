@@ -907,6 +907,17 @@ tbGetButtonSize
 	size := self sendMessage: TB_GETBUTTONSIZE.
 	^size lowWord @ size highWord!
 
+tbGetIdealSize
+	"Private - Answer the 'ideal' extent for the receiver."
+
+	| size |
+	size := SIZEL newBuffer.
+	self
+		sendMessageNz: TB_GETIDEALSIZE
+		wParam: 0
+		lpParam: size.
+	^size asPoint!
+
 tbGetItemRect: anInteger
 	"Private - Answer the bounding RECTL for the receiver's button with the zero-based
 	<Integer> index."
@@ -1254,7 +1265,11 @@ wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
 
 	"Toolbars don't resize properly when the bitmap size is changed, so we have to recreate them. Note that as the WM_DPICHANGED_AFTERPARENT message is sent top-down (the opposite of WM_DPICHANGED_BEFOREPARENT), this will mean that the existing sub-toolbars will not receive the resize because they have been replaced, which is ideal"
 
-	self isScalable ifTrue: [self recreate].
+	self isScalable
+		ifTrue: 
+			[self
+				recreate;
+				invalidateUserInterface].
 	"Obviously we don't want this passed on since we recreated the window and the new Toolbar won't be expecting it."
 	^0!
 
@@ -1371,6 +1386,7 @@ tbEnableButton:state:!operations!private! !
 tbGetButton:!accessing!private! !
 tbGetButtonInfo:tbbi:!accessing!private! !
 tbGetButtonSize!geometry!private! !
+tbGetIdealSize!geometry!private! !
 tbGetItemRect:!geometry!private! !
 tbGetMaxSize!geometry!private! !
 tbGetMetrics!geometry!private! !
