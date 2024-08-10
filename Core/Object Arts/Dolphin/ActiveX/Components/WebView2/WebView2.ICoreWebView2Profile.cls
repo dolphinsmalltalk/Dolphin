@@ -298,7 +298,7 @@ getNonDefaultPermissionSettingsThenDo: aDyadicValuable
 icon
 	self isNull ifTrue: [^super icon].
 	^self isInPrivateModeEnabled
-		ifTrue: [Graphics.TextTileIcon text: $⛔]
+		ifTrue: [Graphics.TextTileIcon text: $\xE727 fontName: 'Segoe Fluent Icons']
 		ifFalse: [Graphics.Icon null]!
 
 isGeneralAutofillEnabled
