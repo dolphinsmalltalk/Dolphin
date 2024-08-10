@@ -11,7 +11,7 @@ BouncingBallView show
 
 You can control the frame rate and number of balls displayed by editing the BouncingBallView methods #frameRate and #numberOfBalls respectively. If you change the latter then you will have to open a new window. 
 
-The sample demonstrates the use of double buffering to provide non-flickering animation. In this case we have chosen to use Icons for our sprites since these already have the ability to support masking of the graphic to a non-rectangular shape. Please note that no attempt has been made to make the bouncing motion accurate (i.e. the balls don''t bounce off the walls correctly or off each other at all).'.
+The sample demonstrates the use of double buffering to provide non-flickering animation. Icons are used for the sprint images, but these are rendered into PARGB bitmaps to improve the rendering performance. Please note that no attempt has been made to make the bouncing motion accurate (i.e. the balls don''t bounce off the walls correctly or off each other at all).'.
 
 package classNames
 	add: #Ball;
@@ -29,8 +29,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
-	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
-	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons').
+	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons').
 
 package!
 

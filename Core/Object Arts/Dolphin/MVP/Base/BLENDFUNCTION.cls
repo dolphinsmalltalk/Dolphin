@@ -2,7 +2,7 @@
 
 Win32Structure subclass: #BLENDFUNCTION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AlphaFormat _OffsetOf_BlendFlags _OffsetOf_BlendOp _OffsetOf_SourceConstantAlpha'
+	classVariableNames: '_OffsetOf_AlphaFormat _OffsetOf_BlendFlags _OffsetOf_BlendOp _OffsetOf_SourceConstantAlpha BlendPixels'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -116,6 +116,9 @@ blend: aNumber
 		blend: aNumber;
 		yourself!
 
+blendPixels
+	^BlendPixels!
+
 defineFields
 	"Define the fields of the BLENDFUNCTION structure.
 
@@ -137,11 +140,22 @@ defineFields
 		defineField: #AlphaFormat type: BYTEField new!
 
 getFieldNames
-	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
+	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)!
+
+initialize
+	"Standard alpha blend of a bitmap is to just use the per-pixel alpha."
+
+	self addClassConstant: 'BlendPixels'
+		value: (self new
+				blendPercentage: 100;
+				usePerPixelAlpha: true;
+				yourself)! !
 
 !BLENDFUNCTION class categoriesForMethods!
 blend:!instance creation!public! !
+blendPixels!constants!instance creation!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+initialize!class initialization!public! !
 !
 

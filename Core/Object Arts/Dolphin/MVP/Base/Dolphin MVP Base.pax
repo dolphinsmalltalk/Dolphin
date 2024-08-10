@@ -1003,7 +1003,7 @@ Win32Structure subclass: #BITMAPINFOHEADER
 
 Win32Structure subclass: #BLENDFUNCTION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AlphaFormat _OffsetOf_BlendFlags _OffsetOf_BlendOp _OffsetOf_SourceConstantAlpha'
+	classVariableNames: '_OffsetOf_AlphaFormat _OffsetOf_BlendFlags _OffsetOf_BlendOp _OffsetOf_SourceConstantAlpha BlendPixels'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
