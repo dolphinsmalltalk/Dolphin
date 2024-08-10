@@ -29,8 +29,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\System\Random\Dolphin Random Stream'
 	'..\..\..\MVP\Views\Tooltips\Dolphin Tooltips'
-	'..\..\..\MVP\Gdiplus\Gdiplus'
-	'..\..\..\MVP\Icons\Internal Bitmaps and Icons').
+	'..\..\..\MVP\Gdiplus\Gdiplus').
 
 package!
 
