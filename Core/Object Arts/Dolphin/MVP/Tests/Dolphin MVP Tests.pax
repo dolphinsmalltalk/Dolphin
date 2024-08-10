@@ -213,6 +213,7 @@ package setPrerequisites: #(
 	'..\Views\Static\Rectangle\Dolphin StaticRectangle Control'
 	'..\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\System\Filer\Dolphin STx Filer Core'
+	'..\..\System\Filer\Dolphin STx Filer Core (Old versions)'
 	'..\..\System\Filer\Dolphin STx Filer Tests'
 	'..\Views\Styled Views\Dolphin Styled Views'
 	'..\Views\SysLink\Dolphin SysLink Control'

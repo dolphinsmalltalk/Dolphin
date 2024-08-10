@@ -323,12 +323,23 @@ customDrawItem: aNMTBCUSTOMDRAW
 	"Implementation Note: We don't implement a full custom draw capability because this is ignored when using themed controls, and consequently it would be necessary to disable themes for the toolbar, then requiring substantial work to emulate those aspects of the theme behaviour that one wanted to retain, such as the hot-highlighting. We can however use this to allow setting of the text colour, as otherwise the text is always black which may not suit a dark background colour. This is particularly useful when using fluent (text glyph) icons, as in that case the button 'image' is actually text."
 
 	| rc |
-	rc := CDRF_DODEFAULT.
+	rc := 0.
 	textcolor
 		ifNotNil: 
 			[aNMTBCUSTOMDRAW clrText: textcolor.
 			rc := rc bitOr: TBCDRF_USECDCOLORS].
-	^rc!
+	(self itemFromId: aNMTBCUSTOMDRAW dwItemSpec)
+		ifNotNil: 
+			[:item |
+			item isDivider
+				ifFalse: 
+					[item textcolor
+						ifNotNil: 
+							[:c |
+							aNMTBCUSTOMDRAW clrText: c.
+							rc := rc bitOr: TBCDRF_USECDCOLORS].
+					item font ifNotNil: [:f | aNMTBCUSTOMDRAW font: f]]].
+	^rc bitOr: aNMTBCUSTOMDRAW applyFont!
 
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."

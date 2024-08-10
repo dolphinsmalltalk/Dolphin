@@ -453,7 +453,7 @@ OS.SizedStructure
 
 UI.ToolbarItem
 	subclass: #'UI.ToolbarButton'
-	instanceVariableNames: 'style commandDescription commandId'
+	instanceVariableNames: 'style commandDescription commandId textcolor font'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
