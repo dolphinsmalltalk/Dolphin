@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ToolbarItem subclass: #ToolbarButton
-	instanceVariableNames: 'style commandDescription commandId'
+	instanceVariableNames: 'style commandDescription commandId textcolor font'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -58,6 +58,12 @@ enabled
 enabled: aBoolean
 	#deprecated.
 	self isEnabled: aBoolean!
+
+font
+	^font!
+
+font: aFont
+	font := aFont!
 
 getCommandId
 	"Private - Determine and answer the Integer command identifier for the receiver"
@@ -225,6 +231,12 @@ text: aString
 
 	^self commandDescription description: aString!
 
+textcolor
+	^textcolor!
+
+textcolor: aColor
+	textcolor := aColor!
+
 textIndexIn: aToolbar
 	"Private - Answer the text for the receiver to aToolbar and answer the
 	index of this text"
@@ -257,6 +269,8 @@ commandDescription:!accessing!public! !
 commandId!commands!private! !
 enabled!public!testing! !
 enabled:!public!state! !
+font!accessing!public! !
+font:!accessing!public! !
 getCommandId!commands!private! !
 hide:!public!state! !
 indeterminate:!public!state! !
@@ -290,6 +304,8 @@ style!private!style! !
 style:!private!style! !
 text!accessing!public! !
 text:!accessing!public! !
+textcolor!accessing!public! !
+textcolor:!accessing!public! !
 textIndexIn:!operations!private! !
 toolTipText!operations!public! !
 validateUserInterface:!operations!public! !
@@ -579,6 +595,8 @@ stbConvertFrom: anSTBClassFormat
 			[:data |
 			"Need to remap former concrete ToolbarButtons to ToolbarBitmapButtons."
 			(self stbConvertFromVersion0: data) becomeA: ToolbarBitmapButton]].
+	anSTBClassFormat version == 1
+		ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
 	^super stbConvertFrom: anSTBClassFormat!
 
 stbConvertFromVersion0: anArray
@@ -605,7 +623,26 @@ stbConvertFromVersion0: anArray
 			6: bitmapIndex
 	"
 
-	^{ anArray at: 3. anArray at: 4. anArray at: 5. anArray at: 1. anArray at: 6. anArray at: 7 }!
+	^{ anArray at: 3. anArray at: 4. anArray at: 5. anArray at: 1. nil. nil. anArray at: 6. anArray at: 7 }!
+
+stbConvertFromVersion1: anArray
+	"Version 2 adds textcolor and font"
+
+	| count |
+	count := anArray size + 2.
+	^(Array new: count)
+		replaceFrom: 1
+			to: 4
+			with: anArray
+			startingAt: 1;
+		replaceFrom: 7
+			to: count
+			with: anArray
+			startingAt: 5;
+		yourself!
+
+stbVersion
+	^2!
 
 systemBitmap: anInteger image: bitmapIndex command: aCommand description: aString
 	^self systemButtonClass
@@ -662,6 +699,8 @@ sortSize!instance creation-system buttons!public! !
 sortType!instance creation-system buttons!public! !
 stbConvertFrom:!binary filing!private! !
 stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbVersion!public! !
 systemBitmap:image:command:description:!instance creation-system buttons!private! !
 systemButtonClass!constants!instance creation!public! !
 undo!instance creation!public! !

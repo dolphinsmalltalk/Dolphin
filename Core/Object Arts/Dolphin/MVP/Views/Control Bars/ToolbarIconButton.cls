@@ -113,7 +113,7 @@ stbConvertFromVersion0: anArray
 		ToolbarIconButton
 	"
 
-	^{ anArray at: 3. anArray at: 4. anArray at: 5. anArray at: 1 }! !
+	^{ anArray at: 3. anArray at: 4. anArray at: 5. anArray at: 1. nil. nil }! !
 
 !ToolbarIconButton class categoriesForMethods!
 command:description:image:!instance creation!public! !

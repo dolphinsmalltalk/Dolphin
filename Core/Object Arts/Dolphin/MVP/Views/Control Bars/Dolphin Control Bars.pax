@@ -121,7 +121,7 @@ StatusBarItemAbstract subclass: #StatusBarNullItem
 	classInstanceVariableNames: ''!
 
 ToolbarItem subclass: #ToolbarButton
-	instanceVariableNames: 'style commandDescription commandId'
+	instanceVariableNames: 'style commandDescription commandId textcolor font'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
