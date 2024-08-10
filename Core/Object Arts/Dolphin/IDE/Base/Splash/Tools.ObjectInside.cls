@@ -193,14 +193,6 @@ y:!accessing!public! !
 
 !Tools.ObjectInside class methodsFor!
 
-chooseFile
-	^self fromBytes: InternalBitmap chooseFile asByteArray.
-!
-
-fromBytes: aByteArray 
-	^(self fromImage: (InternalBitmap fromBytes: aByteArray) gdiplusBitmap)
-		yourself!
-
 fromImage: aGdiplusImage
 	^super new 	
 		initialize;
@@ -208,8 +200,6 @@ fromImage: aGdiplusImage
 		yourself! !
 
 !Tools.ObjectInside class categoriesForMethods!
-chooseFile!public! !
-fromBytes:!public! !
 fromImage:!public! !
 !
 
