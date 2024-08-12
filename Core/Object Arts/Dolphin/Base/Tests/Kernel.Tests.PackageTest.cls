@@ -706,7 +706,7 @@ testStbConvertFromD5Version6
 	self assert: package prerequisiteNames isKindOf: Array.
 	self assert: package prerequisiteNames asSortedArray equals: #('Dolphin' 'Dolphin MVP Base' 'Scribble').
 	self assert: package classNames equals: (Set withAll: #(#{Smalltalk.ScribbleTest})).
-	self assert: package methodNames equals: {MethodName class: Smalltalk.Scribble selector: #looseA. MethodName class: Smalltalk.Scribble selector: #looseC} asSet!
+	self assert: package methodNames equals: {MethodName className: #{Smalltalk.Scribble} selector: #looseA. MethodName className: #{Smalltalk.Scribble} selector: #looseC} asSet!
 
 testTimestampInitialized
 	self assert: Package new timestamp asInteger equals: 0!
