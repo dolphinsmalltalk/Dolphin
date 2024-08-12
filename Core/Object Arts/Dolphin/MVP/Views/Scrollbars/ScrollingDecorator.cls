@@ -56,23 +56,23 @@ ensureSubView: aView rectangleVisible: aRectangle
 
 getScrollPage: anInteger
 	| struct |
-	struct := (SCROLLINFO new)
-				maskIn: SIF_PAGE;
+	struct := SCROLLINFO newBuffer
+				fMask: SIF_PAGE;
 				yourself.
 	UserLibrary default
 		getScrollInfo: handle
-		fnBar: anInteger
+		nBar: anInteger
 		lpsi: struct.
 	^struct page!
 
 getScrollRange: anInteger
 	| struct |
-	struct := (SCROLLINFO new)
-				maskIn: SIF_RANGE;
+	struct := SCROLLINFO newBuffer
+				fMask: SIF_RANGE;
 				yourself.
 	UserLibrary default
 		getScrollInfo: handle
-		fnBar: anInteger
+		nBar: anInteger
 		lpsi: struct.
 	^struct range!
 
@@ -272,30 +272,27 @@ setScrollInfo: aPoint
 	scrollinfo pos: aPoint x.
 	lib
 		setScrollInfo: handle
-		fnBar: SB_HORZ
+		nBar: SB_HORZ
 		lpsi: scrollinfo
-		fRedraw: true.
+		redraw: true.
 	scrollinfo pos: aPoint y.
 	lib
 		setScrollInfo: handle
-		fnBar: SB_VERT
+		nBar: SB_VERT
 		lpsi: scrollinfo
-		fRedraw: true!
+		redraw: true!
 
 setScrollInfo: barInteger position: positionInteger range: rangeInterval page: pageInteger
 	"Private - Set the position, range and page size of bar in one operation."
 
-	| scrollinfo |
-	scrollinfo := (SCROLLINFO new)
-				range: rangeInterval;
-				pos: positionInteger;
-				page: pageInteger;
-				yourself.
 	UserLibrary default
 		setScrollInfo: handle
-		fnBar: barInteger
-		lpsi: scrollinfo
-		fRedraw: true!
+		nBar: barInteger
+		lpsi: (SCROLLINFO
+				range: rangeInterval
+				position: positionInteger
+				page: pageInteger)
+		redraw: true!
 
 updateScrollBarOffsets: aLayoutContext
 	"Private - Update the state of the receivers standard scroll bars to reflect the current

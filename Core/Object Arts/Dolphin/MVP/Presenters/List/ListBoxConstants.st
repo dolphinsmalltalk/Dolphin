@@ -18,6 +18,7 @@ ListBoxConstants at: 'LB_GETHORIZONTALEXTENT' put: 16r193!
 ListBoxConstants at: 'LB_GETITEMDATA' put: 16r199!
 ListBoxConstants at: 'LB_GETITEMHEIGHT' put: 16r1A1!
 ListBoxConstants at: 'LB_GETITEMRECT' put: 16r198!
+ListBoxConstants at: 'LB_GETLISTBOXINFO' put: 16r1B2!
 ListBoxConstants at: 'LB_GETLOCALE' put: 16r1A6!
 ListBoxConstants at: 'LB_GETSEL' put: 16r187!
 ListBoxConstants at: 'LB_GETSELCOUNT' put: 16r190!

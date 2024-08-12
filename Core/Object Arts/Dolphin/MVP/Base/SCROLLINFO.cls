@@ -175,10 +175,20 @@ defineFields
 		defineField: #nTrackPos type: SDWORDField readOnly "cannot be set"!
 
 getFieldNames
-	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
+	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)!
+
+range: anInterval position: posInteger page: pageInteger
+	^self newBuffer
+		nMin: anInterval start;
+		nMax: anInterval stop;
+		nPos: posInteger;
+		nPage: pageInteger;
+		fMask: ##(SIF_RANGE | SIF_POS | SIF_PAGE);
+		yourself! !
 
 !SCROLLINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+range:position:page:!instance creation!public! !
 !
 

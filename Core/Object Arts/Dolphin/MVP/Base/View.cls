@@ -1560,13 +1560,21 @@ getRect
 		cPoints: 2.
 	^rect!
 
+getScrollInfo: anInteger
+	"Private - Get the information about the receiver's vertical or horizontal scroll bar."
+
+	| si |
+	si := SCROLLINFO newBuffer.
+	si fMask: SIF_ALL.
+	^(self getScrollInfo: si bar: anInteger) ifTrue: [si]!
+
 getScrollInfo: siStruct bar: bar
 	"Private - Get the information about the receivers bar.
 	Answer whether values were retrieved."
 
 	^UserLibrary default
 		getScrollInfo: handle
-		fnBar: bar
+		nBar: bar
 		lpsi: siStruct!
 
 getWindow: anInteger
@@ -3310,7 +3318,7 @@ scrollBy: aPoint scroll: scrollRectangle clip: clipRectangle
 		prcClip: clipRectangle asParameter
 		hrgnUpdate: nil
 		prcUpdate: nil
-		flags: SW_ERASE | SW_INVALIDATE!
+		flags: ##(SW_ERASE | SW_INVALIDATE)!
 
 sendMessage: anIntegerMessageID
 	"Private - Send the Win32 message anIntegerMessageID to the receiver's real window with wParam and lParam set to 0."
@@ -3419,9 +3427,9 @@ setScrollInfo: siStruct bar: bar
 
 	^UserLibrary default
 		setScrollInfo: handle
-		fnBar: bar
+		nBar: bar
 		lpsi: siStruct
-		fRedraw: true!
+		redraw: true!
 
 setStateRestoring
 	"Private - Set a flag to indicate that state of the receiver is being restored according to aBoolean. 
@@ -4919,6 +4927,7 @@ getOwner!hierarchy!private! !
 getParent!hierarchy!private! !
 getPreviousSibling!hierarchy!private! !
 getRect!geometry!private! !
+getScrollInfo:!accessing!private! !
 getScrollInfo:bar:!accessing!private! !
 getWindow:!hierarchy!private! !
 getWindowDC!drawing!private! !

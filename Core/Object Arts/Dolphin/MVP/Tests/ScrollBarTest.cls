@@ -17,6 +17,19 @@ ScrollBarTest comment: ''!
 classToTest
 	^ScrollBar!
 
+testRecreate
+	| info |
+	presenter range: (1 to: 100).
+	presenter scrollPosition: 11.
+	presenter pageSize: 10.
+	info := presenter getScrollInfo.
+	self assert: info nPage equals: 10.
+	self assert: info range equals: (1 to: 100).
+	self assert: info pos equals: 11.
+	self assert: info nTrackPos equals: 11.
+	presenter recreate.
+	self assert: presenter getScrollInfo equals: info!
+
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
 	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
@@ -27,6 +40,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 
 !ScrollBarTest categoriesForMethods!
 classToTest!helpers!private! !
+testRecreate!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !
 !
 

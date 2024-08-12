@@ -271,6 +271,10 @@ Win32Constants at: 'EDGE_SUNKEN' put: 16rA!
 Win32Constants at: 'ELF_VENDOR_SIZE' put: 16r4!
 Win32Constants at: 'EM_LINESCROLL' put: 16rB6!
 Win32Constants at: 'EM_SCROLL' put: 16rB5!
+Win32Constants at: 'ESB_DISABLE_BOTH' put: 16r3!
+Win32Constants at: 'ESB_DISABLE_LTUP' put: 16r1!
+Win32Constants at: 'ESB_DISABLE_RTDN' put: 16r2!
+Win32Constants at: 'ESB_ENABLE_BOTH' put: 16r0!
 Win32Constants at: 'EVENTLOG_ERROR_TYPE' put: 16r1!
 Win32Constants at: 'EVENTLOG_INFORMATION_TYPE' put: 16r4!
 Win32Constants at: 'EVENTLOG_SUCCESS' put: 16r0!

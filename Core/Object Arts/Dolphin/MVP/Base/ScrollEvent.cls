@@ -70,12 +70,12 @@ pos
 	co-ordinate space. Instead the current trackbar position is queried using GetScrollInfo()."
 
 	| struct |
-	struct := (SCROLLINFO new)
-				maskIn: SIF_TRACKPOS;
+	struct := SCROLLINFO newBuffer
+				fMask: SIF_TRACKPOS;
 				yourself.
 	^(UserLibrary default 
 		getScrollInfo: self hwnd
-		fnBar: (message = WM_HSCROLL ifTrue: [SB_HORZ] ifFalse: [SB_VERT])
+		nBar: (message == WM_HSCROLL ifTrue: [SB_HORZ] ifFalse: [SB_VERT])
 		lpsi: struct) ifTrue: [struct nTrackPos] ifFalse: [wParam highWord]!
 
 scrollBar

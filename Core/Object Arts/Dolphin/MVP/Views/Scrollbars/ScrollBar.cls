@@ -41,12 +41,24 @@ displayValue: anInteger
 
 	self scrollPosition: anInteger!
 
+getScrollInfo
+	| si |
+	si := SCROLLINFO newBuffer
+				fMask: SIF_ALL;
+				yourself.
+	^(UserLibrary default
+		getScrollInfo: self asParameter
+		nBar: SB_CTL
+		lpsi: si) ifTrue: [si]!
+
 getScrollInfo: siStruct
 	"Private - Ask windows for information about the receiver.
 	Answer true if values were retrieved successfully."
 
 	^UserLibrary default
-		getScrollInfo: self asParameter fnBar: SB_CTL lpsi: siStruct!
+		getScrollInfo: self asParameter
+		nBar: SB_CTL
+		lpsi: siStruct!
 
 isTrackingContinuous
 	"Answer whether the receiver will update the model as the thumb
@@ -125,7 +137,9 @@ pageSize
 	"Answer the page size of the receiver."
 
 	| struct |
-	struct := SCROLLINFO new maskIn: SIF_PAGE; yourself.
+	struct := SCROLLINFO newBuffer
+				fMask: SIF_PAGE;
+				yourself.
 	self getScrollInfo: struct.
 	^struct page!
 
@@ -139,7 +153,9 @@ range
 	"Answer the Interval range of the receiver."
 
 	| struct |
-	struct := SCROLLINFO new maskIn: SIF_RANGE; yourself.
+	struct := SCROLLINFO newBuffer
+				fMask: SIF_RANGE;
+				yourself.
 	self getScrollInfo: struct.
 	^struct range!
 
@@ -155,7 +171,9 @@ scrollPosition
 	to its range rather than spatial position." 
 
 	| struct |
-	struct := SCROLLINFO new maskIn: SIF_POS; yourself.
+	struct := SCROLLINFO newBuffer
+				fMask: SIF_POS;
+				yourself.
 	self getScrollInfo: struct.
 	^struct pos!
 
@@ -170,27 +188,28 @@ setScrollInfo: siStruct
 	A wrapper for the Win32 function. Answer the current position of the thumb."
 
 	^UserLibrary default 
-		setScrollInfo: self asParameter 
-			fnBar: SB_CTL 
-			lpsi: siStruct 
-			fRedraw: true!
+		setScrollInfo: self asParameter
+		nBar: SB_CTL
+		lpsi: siStruct
+		redraw: true!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
 	to its current state"
 
 	^super state
-		add: (MessageSend receiver: self selector: #range: argument: self range);
-		add: (MessageSend receiver: self selector: #pageSize: argument: self pageSize);
-		yourself
-
-! !
+		add: (MessageSend
+					receiver: self
+					selector: #setScrollInfo:
+					argument: self getScrollInfo);
+		yourself! !
 
 !ScrollBar categoriesForMethods!
 calculateExtent:!geometry!private! !
 defaultExtent!constants!private! !
 displayValue!private!updating! !
 displayValue:!private!updating! !
+getScrollInfo!accessing!private! !
 getScrollInfo:!accessing!private! !
 isTrackingContinuous!accessing!public! !
 isTrackingContinuous:!accessing!public! !
