@@ -59,22 +59,22 @@ ensureSubView: aView rectangleVisible: aRectangle
 getScrollPage: anInteger
 	| struct |
 	struct := SCROLLINFO newBuffer
-				maskIn: SIF_PAGE;
+				fMask: SIF_PAGE;
 				yourself.
 	User32
 		getScrollInfo: handle
-		fnBar: anInteger
+		nBar: anInteger
 		lpsi: struct.
 	^struct page!
 
 getScrollRange: anInteger
 	| struct |
 	struct := SCROLLINFO newBuffer
-				maskIn: SIF_RANGE;
+				fMask: SIF_RANGE;
 				yourself.
 	User32
 		getScrollInfo: handle
-		fnBar: anInteger
+		nBar: anInteger
 		lpsi: struct.
 	^struct range!
 
@@ -274,30 +274,27 @@ setScrollInfo: aPoint
 	scrollinfo pos: aPoint x.
 	User32
 		setScrollInfo: handle
-		fnBar: SB_HORZ
+		nBar: SB_HORZ
 		lpsi: scrollinfo
-		fRedraw: true.
+		redraw: true.
 	scrollinfo pos: aPoint y.
 	User32
 		setScrollInfo: handle
-		fnBar: SB_VERT
+		nBar: SB_VERT
 		lpsi: scrollinfo
-		fRedraw: true!
+		redraw: true!
 
 setScrollInfo: barInteger position: positionInteger range: rangeInterval page: pageInteger
 	"Private - Set the position, range and page size of bar in one operation."
 
-	| scrollinfo |
-	scrollinfo := SCROLLINFO newBuffer
-				range: rangeInterval;
-				pos: positionInteger;
-				page: pageInteger;
-				yourself.
 	User32
 		setScrollInfo: handle
-		fnBar: barInteger
-		lpsi: scrollinfo
-		fRedraw: true!
+		nBar: barInteger
+		lpsi: (SCROLLINFO
+				range: rangeInterval
+				position: positionInteger
+				page: pageInteger)
+		redraw: true!
 
 updateScrollBarOffsets: aLayoutContext
 	"Private - Update the state of the receiver's standard scroll bars to reflect the current

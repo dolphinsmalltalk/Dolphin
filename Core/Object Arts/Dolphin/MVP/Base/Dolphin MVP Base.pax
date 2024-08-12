@@ -195,6 +195,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #drawMenuBar:)
 	#(#{OS.UserLibrary} #emptyClipboard)
 	#(#{OS.UserLibrary} #enableNonClientDpiScaling:)
+	#(#{OS.UserLibrary} #enableScrollBar:wSBFlags:wArrows:)
 	#(#{OS.UserLibrary} #endDeferWindowPos:)
 	#(#{OS.UserLibrary} #endPaint:lpPaint:)
 	#(#{OS.UserLibrary} #enumChildWindows:lpEnumFunction:lParam:)
@@ -231,7 +232,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getNextDlgGroupItem:hCtl:bPrevious:)
 	#(#{OS.UserLibrary} #getNextDlgTabItem:hCtl:bPrevious:)
 	#(#{OS.UserLibrary} #getProp:lpString:)
-	#(#{OS.UserLibrary} #getScrollInfo:fnBar:lpsi:)
+	#(#{OS.UserLibrary} #getScrollInfo:nBar:lpsi:)
 	#(#{OS.UserLibrary} #getSystemDpiForProcess:)
 	#(#{OS.UserLibrary} #getSystemMenu:bRevert:)
 	#(#{OS.UserLibrary} #getSystemMetricsForDpi:dpi:)
@@ -317,7 +318,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #setProcessDPIAware)
 	#(#{OS.UserLibrary} #setProcessDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #setProp:lpString:hData:)
-	#(#{OS.UserLibrary} #setScrollInfo:fnBar:lpsi:fRedraw:)
+	#(#{OS.UserLibrary} #setScrollInfo:nBar:lpsi:redraw:)
 	#(#{OS.UserLibrary} #setThreadDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #setThreadDpiHostingBehavior:)
 	#(#{OS.UserLibrary} #setWindowLong:nIndex:dwNewLong:)
@@ -326,6 +327,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:)
 	#(#{OS.UserLibrary} #setWindowULong:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setWindowULongPtr:nIndex:dwNewLong:)
+	#(#{OS.UserLibrary} #showScrollBar:wBar:bShow:)
 	#(#{OS.UserLibrary} #systemParametersInfo:uiParam:pvParam:fWinIni:)
 	#(#{OS.UserLibrary} #systemParametersInfoForDpi:uiParam:pvParam:fWinIni:dpi:)
 	#(#{OS.UserLibrary} #trackMouseEvent:)
@@ -3016,6 +3018,18 @@ enableNonClientDpiScaling: hwnd
 	<stdcall: bool EnableNonClientDpiScaling handle>
 	^self invalidCall: _failureCode!
 
+enableScrollBar: hwnd wSBFlags: wSBFlags wArrows: wArrows
+	"Invoke the EnableScrollBar() function of the module wrapped by the receiver.
+	Helpstring: Enables or disables scroll bar arrows (see SB_ and ESB_ constants)
+
+		BOOL __stdcall EnableScrollBar(
+			[in]wireHWND hwnd,
+			[in]unsigned int wSBFlags,
+			[in]unsigned int wArrows);"
+
+	<stdcall: bool EnableScrollBar handle uint32 uint32>
+	^self invalidCall: _failureCode!
+
 endDeferWindowPos: hWinPosInfo
 	"Invoke the EndDeferWindowPos() function of the module wrapped by the receiver.
 	Helpstring: Updates the position and size of one or more windows in a single screen-refreshing cycle
@@ -3352,14 +3366,14 @@ getProp: aWindowHandle lpString: name
 	<stdcall: uintptr GetPropW handle lpwstr>
 	^self invalidCall: _failureCode!
 
-getScrollInfo: aWindowHandle fnBar: flag lpsi: struct
-	"Retrieve the parameters of a scroll bar, including the minimum and maximum 
-	scrolling positions, the page size, and the position of the thumb.
-		BOOL GetScrollInfo(
-  			HWND hwnd,	// handle of window with scroll bar
-			int fnBar,	// scroll bar flag
-			LPSCROLLINFO lpsi	// pointer to structure for scroll parameters
-		);"
+getScrollInfo: hwnd nBar: nBar lpsi: lpsi
+	"Invoke the GetScrollInfo() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the parameters of a scroll bar, including the minimum and maximum scrolling positions, the page size, and the position of the scroll box(thumb).
+
+		BOOL __stdcall GetScrollInfo(
+			wireHWND hwnd,
+			int nBar,
+			SCROLLINFO* lpsi);"
 
 	<stdcall: bool GetScrollInfo handle int32 SCROLLINFO*>
 	^self invalidCall: _failureCode!
@@ -4022,22 +4036,21 @@ screenToClient: hwnd lpPoint: lpPoint
 	<stdcall: bool ScreenToClient handle POINTL*>
 	^self invalidCall: _failureCode!
 
-scrollWindowEx: aWindowHandle dx: horizontalScrolling dy: verticalScrolling prcScroll: scrollRECT prcClip: clipRECT hrgnUpdate: hUpdateRegion prcUpdate: update flags: flags
-	"The ScrollWindowEx function scrolls the content of the specified window's client
-	area. This function is similar to the ScrollWindow function, but it has additional features. 
+scrollWindowEx: hwnd dx: dx dy: dy prcScroll: prcScroll prcClip: prcClip hrgnUpdate: hrgnUpdate prcUpdate: prcUpdate flags: flags
+	"Invoke the ScrollWindowEx() function of the module wrapped by the receiver.
+	Helpstring: Scrolls the content of the specified window’s client area
 
-	int ScrollWindowEx(
-		HWND hWnd				// handle of window to scroll
-		int dx				// amount of horizontal scrolling
-		int dy				// amount of vertical scrolling
-		CONST RECT *prcScroll	// address of structure with scroll rectangle
-		CONST RECT *prcClip	// address of structure with clip rectangle
-		HRGN hrgnUpdate		// handle of update region
-		LPRECT prcUpdate		// address of structure for update rectangle
-		UINT flags			// scrolling flags
-	);"
+		int __stdcall ScrollWindowEx(
+			[in]wireHWND hwnd,
+			[in]int dx,
+			[in]int dy,
+			RECT* prcScroll,
+			RECT* prcClip,
+			wireHRGN hrgnUpdate,
+			RECT* prcUpdate,
+			[in]unsigned int flags);"
 
-	<stdcall: int32 ScrollWindowEx handle int32 int32 RECTL* RECTL* handle lpvoid uint32>
+	<stdcall: int32 ScrollWindowEx handle int32 int32 RECTL* RECTL* handle RECTL* uint32>
 	^self invalidCall: _failureCode!
 
 sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
@@ -4253,15 +4266,15 @@ setProp: aWindowHandle lpString: name hData: anObject
 	<stdcall: bool SetPropW handle lpvoid handle>
 	^self invalidCall: _failureCode!
 
-setScrollInfo: aWindowHandle fnBar: flag lpsi: struct fRedraw: redraw
-	"Set the minimum and maximum scrolling positions, the page size, and the position 
-	of thumb, of a scroll bar, redrawing if requested.
-		int SetScrollInfo(
-			HWND hwnd,		// handle of window with scroll bar
-			int fnBar,		// scroll bar flag
-			LPSCROLLINFO lpsi,	// pointer to structure with scroll parameters
-			BOOL fRedraw		// redraw flag
-		);"
+setScrollInfo: hwnd nBar: nBar lpsi: lpsi redraw: redraw
+	"Invoke the SetScrollInfo() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the parameters of a scroll bar, including the minimum and maximum scrolling positions, the page size, and the position of the scroll box(thumb).
+
+		int __stdcall SetScrollInfo(
+			wireHWND hwnd,
+			int nBar,
+			SCROLLINFO* lpsi,
+			BOOL redraw);"
 
 	<stdcall: int32 SetScrollInfo handle int32 SCROLLINFO* bool>
 	^self invalidCall: _failureCode!
@@ -4341,6 +4354,18 @@ setWindowULongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	"N.B. This is not equivalent to SetWindowLong, even on 32-bit Windows. The documentation is misleading in this regard - 32/64-bit compatibility using SetWindowLongPtr in C is achieved by defining a macro."
 
 	<stdcall: uintptr SetWindowLongPtrW handle int32 uintptr>
+	^self invalidCall: _failureCode!
+
+showScrollBar: hwnd wBar: wBar bShow: bShow
+	"Invoke the ShowScrollBar() function of the module wrapped by the receiver.
+	Helpstring: Shows or hides a scroll bar
+
+		BOOL __stdcall ShowScrollBar(
+			[in]wireHWND hwnd,
+			[in]int wBar,
+			[in]BOOL bShow);"
+
+	<stdcall: bool ShowScrollBar handle int32 bool>
 	^self invalidCall: _failureCode!
 
 systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
@@ -4498,6 +4523,7 @@ drawFrameControl:lprc:uType:uState:!**auto generated**!public!win32 functions-pa
 drawMenuBar:!public!win32 functions-menu! !
 emptyClipboard!public!win32 functions-clipboard! !
 enableNonClientDpiScaling:!**auto generated**!public!win32 functions-high DPI! !
+enableScrollBar:wSBFlags:wArrows:!**auto generated**!public!win32 functions-scroll bar! !
 endDeferWindowPos:!**auto generated**!public! !
 endPaint:lpPaint:!public!win32 functions-painting and drawing! !
 enumChildWindows:lpEnumFunction:lParam:!**auto generated**!public! !
@@ -4534,7 +4560,7 @@ getMonitorInfo:lpmi:!public!win32 functions-multiple display monitors! !
 getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
 getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
 getProp:lpString:!public!win32 functions-window property! !
-getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
+getScrollInfo:nBar:lpsi:!**auto generated**!public!win32 functions-scroll bar! !
 getSystemDpiForProcess:!**auto generated**!public!win32 functions-high DPI! !
 getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
 getSystemMetricsForDpi:dpi:!public!win32 functions-high DPI! !
@@ -4599,7 +4625,7 @@ releaseCapture!public!win32 functions-mouse input! !
 removeMenu:uPosition:uFlags:!public!win32 functions-menu! !
 removeProp:lpString:!public!win32 functions-window property! !
 screenToClient:lpPoint:!**auto generated**!public!win32 functions-coordinate space and transformation! !
-scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!public!win32 functions-window! !
+scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!**auto generated**!public!win32 functions-scroll bar! !
 sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
 sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
 sendMessageU:msg:wParam:lParam:!public!win32 functions-message and message queue! !
@@ -4620,7 +4646,7 @@ setParent:hWndNewParent:!public!win32 functions-window! !
 setProcessDPIAware!**auto generated**!public!win32 functions-high DPI! !
 setProcessDpiAwarenessContext:!**auto generated**!public!win32 functions-high DPI! !
 setProp:lpString:hData:!public!win32 functions-window property! !
-setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
+setScrollInfo:nBar:lpsi:redraw:!**auto generated**!public!win32 functions-scroll bar! !
 setThreadDpiAwarenessContext:!**auto generated**!public!win32 functions-high DPI! !
 setThreadDpiHostingBehavior:!**auto generated**!public!win32 functions-high DPI! !
 setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
@@ -4629,6 +4655,7 @@ setWindowPlacement:lpwndpl:!public!win32 functions-window! !
 setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
 setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
 setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
+showScrollBar:wBar:bShow:!**auto generated**!public!win32 functions-scroll bar! !
 systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
 systemParametersInfoForDpi:uiParam:pvParam:fWinIni:dpi:!public!win32 functions-string manipulation! !
 trackMouseEvent:!public!win32 functions-mouse input! !

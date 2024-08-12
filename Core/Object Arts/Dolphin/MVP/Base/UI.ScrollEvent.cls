@@ -73,11 +73,11 @@ pos
 
 	| struct |
 	struct := SCROLLINFO newBuffer
-				maskIn: SIF_TRACKPOS;
+				fMask: SIF_TRACKPOS;
 				yourself.
 	^(User32
 		getScrollInfo: self hwnd
-		fnBar: (message = WM_HSCROLL ifTrue: [SB_HORZ] ifFalse: [SB_VERT])
+		nBar: (message == WM_HSCROLL ifTrue: [SB_HORZ] ifFalse: [SB_VERT])
 		lpsi: struct) ifTrue: [struct nTrackPos] ifFalse: [wParam highWord]!
 
 scrollBar

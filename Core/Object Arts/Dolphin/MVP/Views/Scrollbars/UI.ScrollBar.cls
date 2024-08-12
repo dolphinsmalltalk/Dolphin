@@ -43,13 +43,23 @@ displayValue: anInteger
 
 	self scrollPosition: anInteger!
 
+getScrollInfo
+	| si |
+	si := SCROLLINFO newBuffer
+				fMask: SIF_ALL;
+				yourself.
+	^(User32
+		getScrollInfo: self asParameter
+		nBar: SB_CTL
+		lpsi: si) ifTrue: [si]!
+
 getScrollInfo: siStruct
 	"Private - Ask windows for information about the receiver.
 	Answer true if values were retrieved successfully."
 
 	^User32
 		getScrollInfo: self asParameter
-		fnBar: SB_CTL
+		nBar: SB_CTL
 		lpsi: siStruct!
 
 isTrackingContinuous
@@ -130,7 +140,7 @@ pageSize
 
 	| struct |
 	struct := SCROLLINFO newBuffer
-				maskIn: SIF_PAGE;
+				fMask: SIF_PAGE;
 				yourself.
 	self getScrollInfo: struct.
 	^struct page!
@@ -147,7 +157,7 @@ range
 
 	| struct |
 	struct := SCROLLINFO newBuffer
-				maskIn: SIF_RANGE;
+				fMask: SIF_RANGE;
 				yourself.
 	self getScrollInfo: struct.
 	^struct range!
@@ -166,7 +176,7 @@ scrollPosition
 
 	| struct |
 	struct := SCROLLINFO newBuffer
-				maskIn: SIF_POS;
+				fMask: SIF_POS;
 				yourself.
 	self getScrollInfo: struct.
 	^struct pos!
@@ -185,9 +195,9 @@ setScrollInfo: siStruct
 
 	^User32
 		setScrollInfo: self asParameter
-		fnBar: SB_CTL
+		nBar: SB_CTL
 		lpsi: siStruct
-		fRedraw: true!
+		redraw: true!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
@@ -196,12 +206,8 @@ state
 	^super state
 		add: (MessageSend
 					receiver: self
-					selector: #range:
-					argument: self range);
-		add: (MessageSend
-					receiver: self
-					selector: #pageSize:
-					argument: self pageSize);
+					selector: #setScrollInfo:
+					argument: self getScrollInfo);
 		yourself! !
 
 !UI.ScrollBar categoriesForMethods!
@@ -209,6 +215,7 @@ calculateExtent:!geometry!private! !
 defaultExtent!constants!private! !
 displayValue!private!updating! !
 displayValue:!private!updating! !
+getScrollInfo!accessing!private! !
 getScrollInfo:!accessing!private! !
 isTrackingContinuous!accessing!public! !
 isTrackingContinuous:!accessing!public! !

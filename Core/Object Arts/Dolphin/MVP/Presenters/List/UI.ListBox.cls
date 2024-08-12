@@ -346,6 +346,11 @@ itemFromPoint: aPoint
 	index := self basicItemFromPoint: aPoint.
 	^index < 0 ifFalse: [index + 1]!
 
+itemHeight
+	"Answers the height of the receiver's items."
+
+	^self sendMessage: LB_GETITEMHEIGHT!
+
 itemRect: anIntegerIndex
 	"Answers the rectangle surrounding the item with anIntegerIndex within
 	the receiver"
@@ -635,7 +640,54 @@ state
 						receiver: self
 						selector: #scrollableWidth:
 						argument: width)].
-	^state! !
+	^state!
+
+topIndex
+	"Answer the 1-based index of the first visible item in the list box."
+
+	^(self sendMessage: LB_GETTOPINDEX) + 1!
+
+topIndex: anInteger
+	"Set the 1-based index of the first visible item in the list box."
+
+	^self sendMessage: LB_SETTOPINDEX wParam: anInteger - 1!
+
+wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, top-down, after the top-level window receives a WM_DPICHANGED."
+
+	"The control doesn't recalculate its scrollbars when it's DPI is changed, so we need to force it to do so. There are various ways to perturb the scrollbar, e.g. zeroing and then resetting the range or hide and reshow, but none seems sufficient to get it to recalculate correctly in all circumstances. Calculating and setting the page size ourselves seems to be the best approach, although permanent scrollbars are still tricky. It seems very unlikely Microsoft will fix high-DPI bugs (or indeed any others) in the ancient Win32 controls now, but in consequent this fiddly workaround is likely to continue to work reasonably well."
+
+	| si clientY rowY perm |
+	super
+		wmDpiChangedAfterParent: message
+		wParam: wParam
+		lParam: lParam.
+	si := SCROLLINFO newBuffer.
+	si fMask: SIF_PAGE.
+	(perm := self hasPermanentScrollbars)
+		ifTrue: 
+			["Prevent permanent scrollbar disappearing, but disable it."
+			si maskIn: SIF_DISABLENOSCROLL].
+	"Calculate and set the number of items per page at the new DPI. Assumes fixed item height so won't work with LBS_OWNERDRAWVARIABLE, but we don't support that anyway. A custom subclass would be required to support owner-draw of variable height items, and could then also override this behaviour."
+	clientY := self clientExtent y.
+	rowY := self itemHeight.
+	si nPage: clientY // rowY.
+	self setScrollInfo: si bar: SB_VERT.
+	perm
+		ifTrue: 
+			["A permanent vertical scroll bar may now be inappropriately disabled."
+			clientY < (rowY * self itemCount)
+				ifTrue: 
+					[User32
+						enableScrollBar: handle
+						wSBFlags: SB_VERT
+						wArrows: ESB_ENABLE_BOTH]
+				ifFalse: 
+					["The scrollbar is not technically needed as there is sufficient client height to display all items. Consequently the scrollbar should remain disabled, however the list may still be in a scrolled state if it was before the DPI change, so we need to reset it to the top."
+					self topIndex: 1]].
+	"The selection may also become hidden. Better might be to remember if visible before and if not scroll to the first previously visible item, however this is probably good enough."
+	self ensureSelectionVisible.
+	^nil! !
 
 !UI.ListBox categoriesForMethods!
 anchorIndex!public!selection! !
@@ -676,6 +728,7 @@ isReadOnly!accessing-styles!public!testing! !
 isReadOnly:!accessing-styles!public! !
 itemCount!accessing!public! !
 itemFromPoint:!enquiries!private! !
+itemHeight!accessing!public! !
 itemRect:!accessing!public! !
 lbnBeginDrag:!event handling-win32!private! !
 lbnDblClk!event handling-win32!private! !
@@ -701,6 +754,9 @@ selectionMode:!accessing-styles!public! !
 setSingleSelection:!private!selection! !
 showDropHighlight:!drag & drop!private! !
 state!accessing!private! !
+topIndex!accessing!public!selection! !
+topIndex:!accessing!public!selection! !
+wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
 !
 
 UI.ListBox methodProtocol: #multipleIndexSelectableItems attributes: #(#readOnly) selectors: #(#addSelectionsByIndex: #clearSelectionsByIndex: #selectionsByIndex #selectionsByIndex: #selectionsByIndex:ifAbsent:)!

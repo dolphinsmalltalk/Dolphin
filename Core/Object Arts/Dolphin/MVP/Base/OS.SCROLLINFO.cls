@@ -174,11 +174,21 @@ defineFields
 		defineField: #nTrackPos type: Int32Field readOnly	"cannot be set"!
 
 getFieldNames
-	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
+	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)!
+
+range: anInterval position: posInteger page: pageInteger
+	^self newBuffer
+		nMin: anInterval start;
+		nMax: anInterval stop;
+		nPos: posInteger;
+		nPage: pageInteger;
+		fMask: ##(SIF_RANGE | SIF_POS | SIF_PAGE);
+		yourself! !
 
 !OS.SCROLLINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+range:position:page:!instance creation!public! !
 !
 
