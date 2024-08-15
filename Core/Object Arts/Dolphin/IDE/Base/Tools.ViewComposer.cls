@@ -1371,6 +1371,12 @@ onRequestDropOpsForShield: session
 
 	session supportedOperations: #(copy link)!
 
+onResourceToolboxShown
+	"Private - The resource toolbox slidey has been show (slid out). The resource preview is at 96-dpi, and parented by a container with mixed-DPI hosting enabled. This doesn't interact particularly well with the AnimateWindow API used to do the sliding, and if the VC is itself shown on a monitor at higher DPI when the tray is first slid out with no resource selected the background will fail to paint, leaving an ugly mess of black and white. To workaround this, we invalidate the preview once the tray has slid out."
+
+	self view dpi == USER_DEFAULT_SCREEN_DPI ifTrue: [^self].
+	toolboxPresenter invalidatePreview!
+
 onSelectionPositioned: aPositionEvent
 	"Private - The selection has been resized or moved.
 	Refresh the receiver appropriately"
@@ -1427,8 +1433,14 @@ onViewOpened
 	(myView viewNamed: 'extentStatus') model: status.
 	modificationStatus := ValueHolder new.
 	(myView viewNamed: 'modificationStatus') model: modificationStatus.
-	self adjustScroll.
-!
+	(myView viewNamed: 'toolsSlidey' ifNone: nil)
+		ifNotNil: 
+			[:slidey |
+			slidey
+				when: #trayShown
+				send: #onResourceToolboxShown
+				to: self].
+	self adjustScroll!
 
 openOn: aResourceIdentifier 
 	"Private - Open the ViewResource identified by aResourceIdentifier for editing and record its
@@ -2282,6 +2294,7 @@ onImageSaveStarting!private! !
 onInspecteeChanged!event handling!private! !
 onPromptToSaveChanges:!private!testing! !
 onRequestDropOpsForShield:!event handling!private! !
+onResourceToolboxShown!public! !
 onSelectionPositioned:!event handling!private! !
 onSessionStarted!private! !
 onSettingChanged:!event handling-win32!private! !

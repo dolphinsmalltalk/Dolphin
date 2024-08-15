@@ -152,6 +152,9 @@ initialize
 	super initialize.
 	self basicBeSorted!
 
+invalidatePreview
+	previewPresenter view invalidate!
+
 model: aListModel
 	"Set the receiver's model to aListModel of CompiledMethods"
 
@@ -298,6 +301,7 @@ developmentSystem!accessing!private! !
 editResource!commands-actions!public! !
 filterBlock:!accessing!public! !
 initialize!initializing!private! !
+invalidatePreview!public!updating! !
 model:!accessing!public! !
 onDragResource:!event handling!private! !
 onMethodAdded:!event handling!private! !

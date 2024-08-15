@@ -41,17 +41,18 @@ dpiAwareness: aDpiAwareness
 
 imageFromResource: aResourceIdentifier
 	| resourceView |
+	backcolor := Color applicationWorkspace.
 	resourceView := [DesignDesktop loadViewResource: aResourceIdentifier resource forEdit: false]
 				on: Error
 				do: 
 					[:x |
-					| rect |
 					Processor activeProcess newWindow: nil.
 					backcolor := Color darkOrange.
-					rect := DpiAwareness gdiScaled inContextDo: [self displayRectangle].
 					viewMode := #normal.
-					DesignDesktop dpiAwareness inContextDo: 
-							[MultilineTextEdit new
+					self dpiAwareness inContextDo: 
+							[| rect |
+							rect := self displayRectangle.
+							MultilineTextEdit new
 								parentView: DesignDesktop;
 								hasClientEdge: false;
 								font: (Font name: 'Segoe UI' pointSize: 8);
