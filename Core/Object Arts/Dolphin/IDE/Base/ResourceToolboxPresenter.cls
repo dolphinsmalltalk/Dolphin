@@ -101,6 +101,9 @@ initialize
 	super initialize.
 	self resetIconMap!
 
+invalidatePreview
+	resourcesPresenter invalidatePreview!
+
 localResourceCategoriesOf: aClass 
 	| categories |
 	categories := (aClass categories 
@@ -262,6 +265,7 @@ createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
 imageForCategory:!helpers!private! !
 initialize!initializing!private! !
+invalidatePreview!public!updating! !
 localResourceCategoriesOf:!helpers!private! !
 move:toCategory:!operations!private! !
 onCategorySelected!private! !

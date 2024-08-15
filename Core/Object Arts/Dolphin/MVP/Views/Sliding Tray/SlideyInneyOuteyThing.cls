@@ -463,7 +463,8 @@ showTray
 	This is more useable anyway, as it allows us to introduce a slight delay before the window
 	slides in. This means that if the user moves the mouse outside the tray momentarily by
 	mistake the tray will not slide in."
-	self startAutoHideTimer!
+	self startAutoHideTimer.
+	presenter trigger: #trayShown!
 
 startAutoHideTimer
 	tickCounter := 0.
