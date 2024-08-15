@@ -9703,7 +9703,7 @@ publishedAspectsOfInstances
 		add: ((Aspect extent: #maxExtent)
 					editBlock: maxMinExtentEditBlock;
 					yourself);
-		add: ((Aspect name: #minExtent)
+		add: ((Aspect extent: #minExtent)
 					editBlock: maxMinExtentEditBlock;
 					yourself);
 		yourself!

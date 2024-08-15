@@ -960,7 +960,9 @@ point: aSymbol
 position: aSymbol
 	"Answer an instance of the receiver for editing a <Point> position aspect of a View (or supporting object) that may be expressed in the virtualized co-ordinate system that is sensitive to DPI awareness context."
 
-	^self logicalPoint: aSymbol!
+	^(self logicalPoint: aSymbol)
+		icon: (Icon fromId: 'position.ico');
+		yourself!
 
 rectangle: aSymbol
 	"Answer an instance of the receiver for editing a <Rectangle> aspect of an 
