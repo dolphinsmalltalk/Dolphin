@@ -208,7 +208,7 @@ imageFromRow: item
 	As of Dolphin 3.0 the image block is permitted to be nil for the common case where the columns does not have images."
 
 	^getImageBlock isNil
-		ifTrue: [ListView.NoImageIndex]
+		ifTrue: [0]
 		ifFalse: [getImageBlock value: (self contentFromRow: item)]!
 
 index
