@@ -39,7 +39,7 @@ queryInterface: anInterfaceClass ifNone: exceptionHandler
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^ICoreWebView2CompletedHandler allSubclasses! !
+	^##({ IUnknown } , ICoreWebView2CompletedHandler allSubclasses)! !
 
 !WebView2.WebView2CompletionHandler categoriesForMethods!
 completionBlock:!initializing!private! !

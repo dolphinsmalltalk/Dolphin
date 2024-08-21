@@ -191,7 +191,7 @@ supportedInterfaces
 	all other control container requirements are satisfied by the ATL host window
 	that we are wrapping."
 
-	^{ COM.IPrintDialogCallback. COM.IObjectWithSite }!
+	^{ COM.IUnknown. COM.IPrintDialogCallback. COM.IObjectWithSite }!
 
 useLegacyPrintDialog
 	"Answer whether the legacy Print Dialog should be used in preference to the new Unified Print Dialog (UPD). Although the UPD looks more in keeping with the general UI style of Windows 11, it (frankly) doesn't work very well for Win32 apps, e.g. the preview pane is always just blank and the page ranges, etc, don't respect the data passed in. The facility to change a setting such as the selected printer, Apply, and then Cancel, is also completely absent. The extensibility interfaces, IPrintDialogCallback and IPrintDialogServices, are also completely missing. For these reason we prefer to use the legacy dialog by default."

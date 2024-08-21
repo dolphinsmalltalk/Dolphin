@@ -196,7 +196,7 @@ setProperties: array
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^{IPropertyBag}!
+	^##({ IUnknown. IPropertyBag })!
 
 Write: pszPropName pVar: pVar
 	"Implement the IPropertyBag::Write() method by saving the property to the receiver's

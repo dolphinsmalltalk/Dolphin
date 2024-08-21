@@ -209,7 +209,7 @@ interfaceCookie: anInteger
 	bytes uint32AtOffset: _OffsetOf_interfaceCookie put: anInteger!
 
 isSameCOMObject: aCOMInterface
-	"Answer true if aCOMInterface has the same underlying COMObject as the receiver."
+	"Answer whether the argument is a COM interface onto the the same underlying COM object as the receiver. This can be determined by comparing the addresses of the IUnknowns of the two objects because the 'Objects must have identity' rule requires that querying IUnknown for an object must always return the same physical pointer value."
 
 	^self identity = aCOMInterface identity!
 
@@ -361,7 +361,7 @@ implementor:!accessing!public! !
 initialize:!initializing!private! !
 initializeAtAddress:!initializing!private! !
 interfaceCookie:!**compiled accessors**!public! !
-isSameCOMObject:!public!testing! !
+isSameCOMObject:!comparing!public!testing! !
 objectCookie:!**compiled accessors**!public! !
 onExit!event handling!public! !
 onStartup!event handling!public! !

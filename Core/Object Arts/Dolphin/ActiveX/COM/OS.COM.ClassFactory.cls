@@ -179,7 +179,7 @@ serverClass: aClass
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^{IClassFactory}! !
+	^##({ IUnknown. IClassFactory })! !
 
 !OS.COM.ClassFactory categoriesForMethods!
 basicFree!private!realizing/unrealizing! !

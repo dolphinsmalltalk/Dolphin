@@ -144,7 +144,7 @@ notifyDispatchError: anError invoking: dispidInteger
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^{IDispatch}!
+	^##({ IUnknown. IDispatch })!
 
 typeInfo: lcid ifNone: exceptionHandler
 	"Private - Answer an <ITypeInfo> on the type information for this dispinterface,

@@ -878,7 +878,7 @@ supportedInterfaces
 	all other control container requirements are satisfied by the ATL host window
 	that we are wrapping."
 
-	^{IPropertyNotifySink}!
+	^{ IUnknown. IPropertyNotifySink }!
 
 triggeredEvents
 	"Answer the events that the receiver triggers off its presenter."

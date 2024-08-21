@@ -81,7 +81,7 @@ queryInterface: anInterfaceClass ifNone: exceptionHandler
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^{IErrorLog. IEnumErrorInfo}! !
+	^##({ IUnknown. IErrorLog. IEnumErrorInfo })! !
 
 !OS.COM.PropertyBagErrorLog categoriesForMethods!
 AddError:pExcepInfo:!COM Interfaces-IErrorLog!public! !

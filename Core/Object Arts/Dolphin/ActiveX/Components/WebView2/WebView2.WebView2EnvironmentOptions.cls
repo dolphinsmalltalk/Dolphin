@@ -360,6 +360,7 @@ SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 
 supportedInterfaces
 	^##({
+		IUnknown.
 		ICoreWebView2EnvironmentOptions.
 		ICoreWebView2EnvironmentOptions2.
 		ICoreWebView2EnvironmentOptions3.

@@ -80,7 +80,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver.
 	This is IDispatch plus the IDispatch subclass of the dual interface."
 
-	^{IDispatch. self interfaceClass}!
+	^{ IUnknown. IDispatch. self interfaceClass }!
 
 typeInfo
 	"Private - Answer the ITypeInfo we use to actually implement this IDispatch

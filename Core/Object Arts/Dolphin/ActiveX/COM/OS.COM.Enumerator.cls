@@ -101,7 +101,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver.
 	This will vary on a per-instance basis."
 
-	^{enumClass}! !
+	^{ IUnknown. enumClass }! !
 
 !OS.COM.Enumerator categoriesForMethods!
 arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !

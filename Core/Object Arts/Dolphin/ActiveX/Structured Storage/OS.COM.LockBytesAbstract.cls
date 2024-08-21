@@ -103,7 +103,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^{ILockBytes}!
+	^##({ IUnknown. ILockBytes })!
 
 UnlockRegion: UnlockRegion cb: cb dwLockType: dwLockType 
 	"Private - Implement the ILockBytes::UnlockRegion() interface function.

@@ -99,7 +99,7 @@ Skip: cSkip
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^{IEnumRECT}! !
+	^{ IUnknown. IEnumRECT }! !
 
 !OS.COM.Examples.EnumRECT categoriesForMethods!
 Clone:!COM Interfaces-IEnumXXXX!public! !

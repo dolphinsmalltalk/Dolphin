@@ -51,6 +51,25 @@ testGetObject
 	font := factory createInstance: nil iid: (IID fromString: '{bef6e002-a874-101a-8bba-00aa00300cab}').
 	font name!
 
+testIsSameCOMObject
+	"There was a historic bug in Dolphin's COM infrastructure that broke the COM object identity rule (i.e. that there must be only one unique IUnknown per object). Specifically if an out parameter could return an IUnknown, the actual interface returned might be a derived interface. If the object supports more than one interface, and an alternate interface not of the same derivation as the first is queried, then comparing the IUnknowns retrieved through the two paths would yield different actual interface instances, making them appear to relate to different objects.
+
+	We can test this using the RandomStream example, which implements its own specific interface, and IDispatch. If we create the object through the class factory requesting an IUnknown, we would actually have got an IDispatch. Although technically IDispatch is an IUnknown in that all COM interfaces derived from IUnknown, it would not be the same IUnknown that we'd get by querying an IUnknown from the object's IRandomStream interface, breaking the identity comparison."
+
+	| unk random stream |
+	unk := IUnknown onCLSID: OS.COM.Examples.RandomStream clsid.
+	random := unk queryInterface: OS.COM.Examples.IRandomStream.
+	"Would fail in the presence of the bug"
+	self assert: (unk isSameCOMObject: random).
+	self assert: (random isSameCOMObject: unk).
+	"That this would have failed was the reason behind the bug"
+	self deny: (unk queryInterface: IDispatch) yourAddress equals: unk yourAddress.
+	"More normal path that did work anyway because the QueryInterface implementation always returned the first interface for IUnknown"
+	stream := OS.COM.Examples.RandomStream new.
+	self assert: ((stream queryInterface: IDispatch)
+				isSameCOMObject: (stream queryInterface: OS.COM.Examples.IRandomStream)).
+	self deny: ((stream queryInterface: IDispatch) isSameCOMObject: unk)!
+
 testLatestDerivation
 	self should: [IUnknown latestDerivation] raise: Error matching: [:ex | ex description = 'IUnknown class should not implement #findMostDerived'].
 	self assert: IErrorInfo latestDerivation identicalTo: IErrorInfo.
@@ -59,6 +78,7 @@ testLatestDerivation
 !OS.COM.Tests.InterfaceTest categoriesForMethods!
 testAllRegistered!public!unit tests! !
 testGetObject!public!unit tests! !
+testIsSameCOMObject!public!unit tests! !
 testLatestDerivation!public!unit tests! !
 !
 

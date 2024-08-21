@@ -74,7 +74,8 @@ source: anICoreWebView2EventSource interfaceClass: anICoreWebView2EventHandlerCl
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^ICoreWebView2EventHandler allSubclasses reject: [:each | each isNonInstantiable]!
+	^##({ IUnknown }
+		, (ICoreWebView2EventHandler allSubclasses reject: [:each | each isNonInstantiable]))!
 
 unregister
 	interface ifNil: [^self].

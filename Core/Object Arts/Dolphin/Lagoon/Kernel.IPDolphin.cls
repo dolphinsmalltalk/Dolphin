@@ -165,7 +165,7 @@ RegisterServer
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^{IIPDolphin}!
+	^{ IUnknown. IIPDolphin }!
 
 UnregisterServer 
 	"Private - The DLLUnregisterServer() function of the in-proc DLL has been called.

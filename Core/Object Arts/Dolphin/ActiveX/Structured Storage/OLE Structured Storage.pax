@@ -266,9 +266,8 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	a subinstance will do, or even a completely different class, as long as the
 	protocol of the requested class is supported.."
 
-	^(IStream supportsInterface: interfaceClass)
-		ifTrue: [IStream on: self]
-		ifFalse: [exceptionHandler value]!
+	^(##({ IUnknown. IStream }) detect: [:each | each supportsInterface: interfaceClass]
+		ifNone: [^exceptionHandler value]) on: self!
 
 Read: pv cb: cb pcbRead: pcbRead 
 	"Implement the IStream::Read().

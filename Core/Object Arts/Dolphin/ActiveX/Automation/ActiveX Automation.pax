@@ -2281,7 +2281,7 @@ supportedInterfaces
 	it seems that DX-7 actually ignores the IRecordInfo (perhaps not surprisingly for a C library), so it is only 
 	really needed in order to create VT_RECORD SAFEARRAYs and VARIANTs."
 
-	^{COM.IRecordInfo}!
+	^##({COM.IUnknown. COM.IRecordInfo})!
 
 typeInfo
 	"Answer an <ITypeInfo> on the receiver's type information."
