@@ -1,12 +1,16 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-IUnknown subclass: #IPropertyStorage
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPropertyStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IPropertyStorage guid: (IID fromString: '{00000138-0000-0000-C000-000000000046}')!
-IPropertyStorage comment: '<IPropertyStorage> is a wrapper class for the COM interface ''OBJIDL.IPropertyStorage'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.IPropertyStorage guid: (OS.COM.IID fromString: '{00000138-0000-0000-c000-000000000046}')!
+
+OS.COM.IPropertyStorage comment: '<IPropertyStorage> is a wrapper class for the COM interface ''OBJIDL.IPropertyStorage'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -69,8 +73,10 @@ interface IPropertyStorage : IUnknown {
 		[out] STATPROPSETSTG* pstatpsstg);
 };
 '!
-!IPropertyStorage categoriesForClass!COM-Interfaces!OBJIDL-Interfaces! !
-!IPropertyStorage methodsFor!
+
+!OS.COM.IPropertyStorage categoriesForClass!COM-Interfaces!OBJIDL-Interfaces! !
+
+!OS.COM.IPropertyStorage methodsFor!
 
 commit: grfCommitFlags 
 	"Invoke the Commit() method of the COM Object."
@@ -134,7 +140,7 @@ directory
 	"Answer a <sequencedReadableCollection> of <STATPROPSTG> structures describing the
 	elements of the receiver."
 
-	^OLEEnumerator onIEnum: self enum!
+	^Enumerable onIEnum: self enum!
 
 enum
 	"Answer the <IEnumSTATPROPSTG> result of invoking the COM Object's Enum() method."
@@ -184,7 +190,7 @@ readPropertyNames: cpropid rgpropid: rgpropid
 	"Answer the <UnicodeString> result of invoking the COM Object's ReadPropertyNames() method."
 
 	| answer |
-	answer := (StructurePointer newNull: COMTaskMemory elementClass: UnicodeString).
+	answer := (StructurePointer newNull: TaskMemory elementClass: Utf16String).
 	self
 		ReadPropertyNames: cpropid
 		rgpropid: rgpropid
@@ -327,33 +333,36 @@ WritePropertyNames: cpropid rgpropid: rgpropid rglpwstrName: rglpwstrName
 	<virtual stdcall: hresult 8 dword dword* lpwstr*>
 	^self invalidCall
 ! !
-!IPropertyStorage categoriesFor: #commit:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #Commit:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #deleteMultiple:rgpspec:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #DeleteMultiple:rgpspec:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #deletePropertyNames:rgpropid:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #DeletePropertyNames:rgpropid:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #directory!accessing!public! !
-!IPropertyStorage categoriesFor: #enum!methods!public! !
-!IPropertyStorage categoriesFor: #Enum:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #readMultiple:rgpspec:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #ReadMultiple:rgpspec:rgpropvar:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #readPropertyNames:rgpropid:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #ReadPropertyNames:rgpropid:rglpwstrName:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #revert!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #Revert!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #setClass:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #SetClass:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #setTimes:patime:pmtime:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #SetTimes:patime:pmtime:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #stat!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #Stat:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #writeMultiple:rgpspec:rgpropvar:propidNameFirst:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #WriteMultiple:rgpspec:rgpropvar:propidNameFirst:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
-!IPropertyStorage categoriesFor: #writePropertyNames:rgpropid:rglpwstrName:!**auto generated**!methods!public! !
-!IPropertyStorage categoriesFor: #WritePropertyNames:rgpropid:rglpwstrName:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
 
-!IPropertyStorage class methodsFor!
+!OS.COM.IPropertyStorage categoriesForMethods!
+commit:!**auto generated**!methods!public! !
+Commit:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+deleteMultiple:rgpspec:!**auto generated**!methods!public! !
+DeleteMultiple:rgpspec:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+deletePropertyNames:rgpropid:!**auto generated**!methods!public! !
+DeletePropertyNames:rgpropid:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+directory!accessing!public! !
+enum!methods!public! !
+Enum:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+readMultiple:rgpspec:!**auto generated**!methods!public! !
+ReadMultiple:rgpspec:rgpropvar:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+readPropertyNames:rgpropid:!**auto generated**!methods!public! !
+ReadPropertyNames:rgpropid:rglpwstrName:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+revert!**auto generated**!methods!public! !
+Revert!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+setClass:!**auto generated**!methods!public! !
+SetClass:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+setTimes:patime:pmtime:!**auto generated**!methods!public! !
+SetTimes:patime:pmtime:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+stat!**auto generated**!methods!public! !
+Stat:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+writeMultiple:rgpspec:rgpropvar:propidNameFirst:!**auto generated**!methods!public! !
+WriteMultiple:rgpspec:rgpropvar:propidNameFirst:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+writePropertyNames:rgpropid:rglpwstrName:!**auto generated**!methods!public! !
+WritePropertyNames:rgpropid:rglpwstrName:!**auto generated**!COM Interfaces-IPropertyStorage!private! !
+!
+
+!OS.COM.IPropertyStorage class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OBJIDL.IPropertyStorage'
@@ -385,5 +394,8 @@ defineFunctions
 		defineFunction: #Stat:
 			argumentTypes: 'STATPROPSETSTG*'
 ! !
-!IPropertyStorage class categoriesFor: #defineFunctions!initializing!public! !
+
+!OS.COM.IPropertyStorage class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

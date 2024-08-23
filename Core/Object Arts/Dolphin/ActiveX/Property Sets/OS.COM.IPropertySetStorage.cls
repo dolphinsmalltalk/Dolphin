@@ -1,12 +1,16 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-IUnknown subclass: #IPropertySetStorage
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPropertySetStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
-IPropertySetStorage guid: (IID fromString: '{0000013A-0000-0000-C000-000000000046}')!
-IPropertySetStorage comment: '<IPropertySetStorage> is a wrapper class for the COM interface ''OBJIDL.IPropertySetStorage'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #(#{OS.COM.StorageConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.IPropertySetStorage guid: (OS.COM.IID fromString: '{0000013a-0000-0000-c000-000000000046}')!
+
+OS.COM.IPropertySetStorage comment: '<IPropertySetStorage> is a wrapper class for the COM interface ''OBJIDL.IPropertySetStorage'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -39,8 +43,10 @@ interface IPropertySetStorage : IUnknown {
 		[out] IEnumSTATPROPSETSTG** ppenum);
 };
 '!
-!IPropertySetStorage categoriesForClass!COM-Interfaces!OBJIDL-Interfaces! !
-!IPropertySetStorage methodsFor!
+
+!OS.COM.IPropertySetStorage categoriesForClass!COM-Interfaces!OBJIDL-Interfaces! !
+
+!OS.COM.IPropertySetStorage methodsFor!
 
 create: rfmtid pClsid: pClsid grfFlags: grfFlags grfMode: grfMode 
 	"Answer the <IPropertyStorage> result of invoking the COM Object's Create() method."
@@ -93,7 +99,7 @@ directory
 	"Answer a <sequencedReadableCollection> of <STATPROPSETSTG> structures describing the
 	elements of the receiver."
 
-	^OLEEnumerator onIEnum: self enum!
+	^Enumerable onIEnum: self enum!
 
 enum
 	"Answer the <IEnumSTATPROPSETSTG> result of invoking the COM Object's Enum() method."
@@ -143,18 +149,21 @@ Open: rfmtid grfMode: grfMode ppprstg: ppprstg
 	<virtual stdcall: hresult 5 GUID* dword IPropertyStorage**>
 	^self invalidCall
 ! !
-!IPropertySetStorage categoriesFor: #create:pClsid:grfFlags:grfMode:!**auto generated**!methods!public! !
-!IPropertySetStorage categoriesFor: #Create:pClsid:grfFlags:grfMode:ppprstg:!**auto generated**!COM Interfaces-IPropertySetStorage!private! !
-!IPropertySetStorage categoriesFor: #delete:!**auto generated**!methods!public! !
-!IPropertySetStorage categoriesFor: #Delete:!**auto generated**!COM Interfaces-IPropertySetStorage!private! !
-!IPropertySetStorage categoriesFor: #directory!accessing!public! !
-!IPropertySetStorage categoriesFor: #enum!methods!public! !
-!IPropertySetStorage categoriesFor: #Enum:!**auto generated**!COM Interfaces-IPropertySetStorage!private! !
-!IPropertySetStorage categoriesFor: #open:!**auto generated**!methods!public! !
-!IPropertySetStorage categoriesFor: #open:grfMode:!**auto generated**!methods!public! !
-!IPropertySetStorage categoriesFor: #Open:grfMode:ppprstg:!**auto generated**!COM Interfaces-IPropertySetStorage!private! !
 
-!IPropertySetStorage class methodsFor!
+!OS.COM.IPropertySetStorage categoriesForMethods!
+create:pClsid:grfFlags:grfMode:!**auto generated**!methods!public! !
+Create:pClsid:grfFlags:grfMode:ppprstg:!**auto generated**!COM Interfaces-IPropertySetStorage!private! !
+delete:!**auto generated**!methods!public! !
+Delete:!**auto generated**!COM Interfaces-IPropertySetStorage!private! !
+directory!accessing!public! !
+enum!methods!public! !
+Enum:!**auto generated**!COM Interfaces-IPropertySetStorage!private! !
+open:!**auto generated**!methods!public! !
+open:grfMode:!**auto generated**!methods!public! !
+Open:grfMode:ppprstg:!**auto generated**!COM Interfaces-IPropertySetStorage!private! !
+!
+
+!OS.COM.IPropertySetStorage class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OBJIDL.IPropertySetStorage'
@@ -171,5 +180,8 @@ defineFunctions
 		defineFunction: #Enum:
 			argumentTypes: 'void**'
 ! !
-!IPropertySetStorage class categoriesFor: #defineFunctions!initializing!public! !
+
+!OS.COM.IPropertySetStorage class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

@@ -1,6 +1,6 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX Property Sets'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk OLE Property Sets Support. 
 Copyright (c) Object Arts Ltd 1997-2001.
 
@@ -14,61 +14,83 @@ stg := set open: (set directory at: 1) fmtid.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #IPropertySetStorage;
-	add: #IPropertyStorage;
-	add: #PROPSPEC;
-	add: #STATPROPSETSTG;
-	add: #STATPROPSTG;
-	yourself.
+package setClassNames: #(
+	#{OS.COM.IPropertySetStorage}
+	#{OS.COM.IPropertyStorage}
+	#{OS.COM.PROPSPEC}
+	#{OS.COM.STATPROPSETSTG}
+	#{OS.COM.STATPROPSTG}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
-
-package setPrerequisites: (IdentitySet new
-	add: '..\Automation\ActiveX Automation';
-	add: '..\..\Base\Dolphin';
-	add: '..\COM\OLE COM';
-	add: '..\Structured Storage\OLE Structured Storage';
-	yourself).
+package setPrerequisites: #(
+	'..\Automation\ActiveX Automation'
+	'..\..\Base\Dolphin'
+	'..\COM\OLE COM'
+	'..\Structured Storage\OLE Streams'
+).
 
 package!
 
 "Class Definitions"!
 
-ExternalStructure subclass: #PROPSPEC
+External.Structure
+	subclass: #'OS.COM.PROPSPEC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #STATPROPSETSTG
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #STATPROPSTG
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IUnknown subclass: #IPropertySetStorage
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #IPropertyStorage
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_lpwstr' -> 16r4.
+			'_OffsetOf_propid' -> 16r4.
+			'_OffsetOf_ulKind' -> 16r0.
+			'_PROPSPEC_Size' -> 16r8
+		}!
 
-"Global Aliases"!
+External.Structure
+	subclass: #'OS.COM.STATPROPSETSTG'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_atime' -> 16r34.
+			'_OffsetOf_clsid' -> 16r10.
+			'_OffsetOf_ctime' -> 16r2C.
+			'_OffsetOf_dwOSVersion' -> 16r3C.
+			'_OffsetOf_fmtid' -> 16r0.
+			'_OffsetOf_grfFlags' -> 16r20.
+			'_OffsetOf_mtime' -> 16r24.
+			'_STATPROPSETSTG_Size' -> 16r40
+		}!
 
+External.Structure
+	subclass: #'OS.COM.STATPROPSTG'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_lpwstrName' -> 16r0.
+			'_OffsetOf_propid' -> 16r4.
+			'_OffsetOf_vt' -> 16r8.
+			'_STATPROPSTG_Size' -> 16rC
+		}!
 
-"Loose Methods"!
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPropertySetStorage'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.StorageConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPropertyStorage'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

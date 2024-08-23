@@ -20,6 +20,7 @@ package setVariableNames: #(
 	#{Smalltalk.IID}
 	#{Smalltalk.IMalloc}
 	#{Smalltalk.IUnknown}
+	#{Smalltalk.OLEEnumerator}
 	#{Smalltalk.OLEFinalizableStructure}
 	#{Smalltalk.OLELibrary}
 	#{Smalltalk.OLEStructure}
@@ -41,6 +42,7 @@ package setAliasVariableNames: #(
 	#{Smalltalk.IID}
 	#{Smalltalk.IMalloc}
 	#{Smalltalk.IUnknown}
+	#{Smalltalk.OLEEnumerator}
 	#{Smalltalk.OLEFinalizableStructure}
 	#{Smalltalk.OLELibrary}
 	#{Smalltalk.OLEStructure}
@@ -85,6 +87,8 @@ Smalltalk.IID := OS.COM.IID!
 Smalltalk.IMalloc := OS.COM.IMalloc!
 
 Smalltalk.IUnknown := OS.COM.IUnknown!
+
+Smalltalk.OLEEnumerator := OS.COM.Enumerable!
 
 Smalltalk.OLEFinalizableStructure := External.FinalizableStructure!
 
