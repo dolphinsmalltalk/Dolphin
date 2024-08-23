@@ -45,6 +45,14 @@ asLookupTable
 	self keysAndValuesDo: [:eachKey :eachValue | answer at: eachKey put: eachValue].
 	^answer!
 
+associations
+	"Answer a <Collection> containing the receiver's associations"
+
+	| answer |
+	answer := WriteStream on: (Array new: self size).
+	self associationsDo: [:assoc | answer nextPut: assoc].
+	^answer grabContents!
+
 associationsDo: aMonadicValuable
 	^self keysAndValuesDo: [:eachKey :eachValue | aMonadicValuable value: eachKey -> eachValue]!
 
@@ -202,6 +210,7 @@ add:!adding!public! !
 addAll:!adding!public! !
 asDictionary!converting!public! !
 asLookupTable!converting!public! !
+associations!accessing!public! !
 associationsDo:!enumerating!public! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !

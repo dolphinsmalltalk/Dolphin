@@ -2,7 +2,7 @@
 
 OS.COM.InterfaceImplementation
 	subclass: #'WebView2.WebView2EnvironmentOptions'
-	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel channelSearchKind releaseChannels scrollBarStyle'
+	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel channelSearchKind releaseChannels scrollBarStyle customSchemeRegistrations'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -63,6 +63,12 @@ channelSearchKind: value
 								}
 					with: 'value'].
 	channelSearchKind := value!
+
+customSchemeRegistrations
+	^customSchemeRegistrations!
+
+customSchemeRegistrations: aCollection
+	customSchemeRegistrations := aCollection asArray!
 
 exclusiveUserDataFolderAccess
 	^flags allMask: ExclusiveUserDataFolderAccessMask!
@@ -172,15 +178,25 @@ get_TargetCompatibleBrowserVersion: value
 		value: (browserVersion ifNil: [0] ifNotNil: [browserVersion asUtf16String copyToCOMTaskMemory detach]).
 	^S_OK!
 
-GetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
-	"Private - Invoke the GetCustomSchemeRegistrations() method of the COM object.
+GetCustomSchemeRegistrations: pCount schemeRegistrations: ppSchemeRegistrations
+	"Private - Implement the GetCustomSchemeRegistrations() method of the COM object.
 
 		HRESULT __stdcall GetCustomSchemeRegistrations(
 			[out]unsigned int* Count,
-			[out]ICoreWebView2CustomSchemeRegistration*** schemeRegistrations);"
+			[out]ICoreWebView2CustomSchemeRegistration*** ppSchemeRegistrations);"
 
-	count value: 0.
-	schemeRegistrations value: 0.
+	| count buf |
+	count := customSchemeRegistrations size.
+	pCount value: count.
+	count = 0
+		ifTrue: 
+			[ppSchemeRegistrations value: 0.
+			^S_OK].
+	buf := PointerArray new: count bufferClass: TaskMemory.
+	buf elementClass: ICoreWebView2CustomSchemeRegistration.
+	1 to: count do: [:i | buf uncheckedAt: i put: ((customSchemeRegistrations at: i) queryInterface: ICoreWebView2CustomSchemeRegistration) detach].
+	"Ownership of the task memory block, and the interface pointers, is passed to the caller."
+	ppSchemeRegistrations value: buf bytes detach.
 	^S_OK!
 
 initialize
@@ -190,7 +206,8 @@ initialize
 	trackingPreventionLevel := COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
 	channelSearchKind := COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
 	releaseChannels := COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
-	scrollBarStyle := COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT!
+	scrollBarStyle := COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
+	customSchemeRegistrations := #()!
 
 isCustomCrashReportingEnabled
 	^flags allMask: CustomCrashReportingMask!
@@ -350,13 +367,17 @@ scrollBarStyle: value
 	scrollBarStyle := value!
 
 SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
-	"Private - Invoke the SetCustomSchemeRegistrations() method of the COM object.
+	"Private - Implement the SetCustomSchemeRegistrations() method of the COM object.
 
 		HRESULT __stdcall SetCustomSchemeRegistrations(
 			[in]unsigned int Count,
 			[in]ICoreWebView2CustomSchemeRegistration** schemeRegistrations);"
 
-	^E_NOTIMPL!
+	"Not necessary to explicitly free any existing registrations, but useful for deterministic testing behaviour."
+	customSchemeRegistrations do: [:each | each free].
+	"Overwrite with new registrations"
+	customSchemeRegistrations := (PointerArray fromAddress: schemeRegistrations yourAddress length: count elementClass: ICoreWebView2CustomSchemeRegistration) asArray.
+	^S_OK!
 
 supportedInterfaces
 	^##({
@@ -401,6 +422,8 @@ browserVersion!accessing!public! !
 browserVersion:!accessing!public! !
 channelSearchKind!accessing!public! !
 channelSearchKind:!accessing!public! !
+customSchemeRegistrations!public! !
+customSchemeRegistrations:!public! !
 exclusiveUserDataFolderAccess!accessing!public! !
 exclusiveUserDataFolderAccess:!accessing!public! !
 get_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
@@ -456,24 +479,48 @@ icon
 	^ICoreWebView2 icon!
 
 stbConvertFrom: anSTBClassFormat
-	anSTBClassFormat version == 0
-		ifTrue: 
-			[^
-			[:data |
-			data , {
-						COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
-						COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
-						COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT
-					}
-				becomeA: self]].
+	| version |
+	version := anSTBClassFormat version.
+	version == 1 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
+	version == 0 ifTrue: [^[:data | self stbConvertFromVersion0: data]].
 	^super stbConvertFrom: anSTBClassFormat!
 
+stbConvertFromVersion0: anArray
+	"Private - Convert version 0 package by adding default values for channelSearchKind, releaseChannels, and scrollBarStyle, then chaining to conversions for later versions"
+
+	"The stbVersion should have been incremented when the trackingPreventionLevel inst var was added, but this was not done so we have to handle both 4 and 5 inst vars"
+
+	^self stbConvertFromVersion1: (anArray size == 4
+				ifTrue: 
+					[anArray , ##({
+								COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+								COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+								COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+								COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT
+							})]
+				ifFalse: 
+					[anArray , ##({
+								COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+								COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+								COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT
+							})])!
+
+stbConvertFromVersion1: anArray
+	"Private - Convert version 1 package by adding default values for customSchemeRegistrations, then as this is the last converter in the chain, translate to a class instance."
+
+	^(anArray copyWith: #()) becomeA: self!
+
 stbVersion
-	^1! !
+	"Version 1 - adds channelSearchKind, releaseChannels, scrollBarStyle.
+	Version 2 - adds customSchemeRegistrations"
+
+	^2! !
 
 !WebView2.WebView2EnvironmentOptions class categoriesForMethods!
 icon!constants!development!public! !
 stbConvertFrom:!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

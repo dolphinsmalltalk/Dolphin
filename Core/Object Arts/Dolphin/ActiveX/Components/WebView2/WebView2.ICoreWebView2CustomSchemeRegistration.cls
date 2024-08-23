@@ -57,6 +57,33 @@ interface ICoreWebView2CustomSchemeRegistration : IUnknown
 
 !WebView2.ICoreWebView2CustomSchemeRegistration methodsFor!
 
+allowedOrigins
+	"GetAllowedOrigins would be easier to use and implement if it employed ICoreWebView2StringCollection. Unfortunately the designer of this API somehow failed to notice the way collections are generally managed in WebView2, and chose to return a sequence of strings through a dynamically allocated array of dynamically allocated strings and the length of the array through out parameters. This is ugly and requires some complex/error-prone memory management. As ownership of the memory is assumed by the caller (i.e. us). We must be careful to free each of the individual strings and the array that we are given to avoid leaking memory."
+
+	| allowedOrigins taskAllocator pStrings count |
+	count := UInt32Bytes new.
+	pStrings := External.Address new.
+	self GetAllowedOrigins: count allowedOrigins: pStrings.
+	count := count value.
+	allowedOrigins := Array new: count.
+	taskAllocator := TaskMemory allocator.
+	1 to: count
+		do: 
+			[:i |
+			| pwsz |
+			pwsz := pStrings uintPtrAtOffset: (i - 1) * Kernel.VMConstants.IntPtrSize.
+			allowedOrigins at: i put: (Utf16String fromAddress: pwsz).
+			self assert: [(taskAllocator DidAlloc: pwsz) ~~ 0].
+			taskAllocator Free: pwsz].
+	self assert: [(taskAllocator DidAlloc: pStrings) ~~ 0].
+	^allowedOrigins!
+
+allowedOrigins: aCollection
+	| strings allowedOrigins |
+	strings := aCollection collect: [:each | each asUtf16String].
+	allowedOrigins := PointerArray withAll: strings.
+	self SetAllowedOrigins: strings size allowedOrigins: allowedOrigins!
+
 get_HasAuthorityComponent: hasAuthorityComponent
 	"Private - Get the value of the 'HasAuthorityComponent' property of the receiver.
 
@@ -84,25 +111,6 @@ get_TreatAsSecure: treatAsSecure
 	<virtual stdcall: hresult 5 sdword*>
 	^self invalidCall: _failureCode!
 
-getAllowedOrigins
-	| allowedOrigins taskAllocator pStrings count |
-	count := UInt32Bytes new.
-	pStrings := External.Address new.
-	self GetAllowedOrigins: count allowedOrigins: pStrings.
-	count := count value.
-	allowedOrigins := Array new: count.
-	taskAllocator := TaskMemory allocator.
-	1 to: count
-		do: 
-			[:i |
-			| pwsz |
-			pwsz := pStrings uintPtrAtOffset: (i - 1) * Kernel.VMConstants.IntPtrSize.
-			allowedOrigins at: i put: (Utf16String fromAddress: pwsz).
-			self assert: [taskAllocator DidAlloc: pwsz].
-			taskAllocator Free: pwsz].
-	self assert: [taskAllocator DidAlloc: pStrings].
-	^allowedOrigins!
-
 GetAllowedOrigins: allowedOriginsCount allowedOrigins: allowedOrigins
 	"Private - Invoke the GetAllowedOrigins() method of the COM object.
 
@@ -110,7 +118,7 @@ GetAllowedOrigins: allowedOriginsCount allowedOrigins: allowedOrigins
 			[out]unsigned int* allowedOriginsCount,
 			[out]LPWSTR** allowedOrigins);"
 
-	<virtual stdcall: hresult 7 dword* lpwstr>
+	<virtual stdcall: hresult 7 dword* lpwstr*>
 	^self invalidCall: _failureCode!
 
 hasAuthorityComponent
@@ -125,6 +133,9 @@ hasAuthorityComponent: hasAuthorityComponent
 	"Set the 'HasAuthorityComponent' property of the receiver to the <boolean> value of the argument."
 
 	self put_HasAuthorityComponent: hasAuthorityComponent asParameter!
+
+printableProperties
+	^#(#schemeName #treatAsSecure #hasAuthorityComponent #allowedOrigins)!
 
 put_HasAuthorityComponent: hasAuthorityComponent
 	"Private - Set the value of the 'HasAuthorityComponent' property of the object wrapped by the 
@@ -156,13 +167,6 @@ schemeName
 	ptr free.
 	^answer!
 
-setAllowedOrigins: aCollection
-	| strings allowedOrigins |
-	strings := aCollection collect: [:each | each asUtf16String].
-	allowedOrigins := UIntPtrArray new: strings size withAll: strings.
-	self SetAllowedOrigins: strings size allowedOrigins: allowedOrigins
-!
-
 SetAllowedOrigins: allowedOriginsCount allowedOrigins: allowedOrigins
 	"Private - Invoke the SetAllowedOrigins() method of the COM object.
 
@@ -187,21 +191,24 @@ treatAsSecure: treatAsSecure
 	self put_TreatAsSecure: treatAsSecure asParameter! !
 
 !WebView2.ICoreWebView2CustomSchemeRegistration categoriesForMethods!
+allowedOrigins!properties!public! !
+allowedOrigins:!properties!public! !
 get_HasAuthorityComponent:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 get_SchemeName:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 get_TreatAsSecure:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
-getAllowedOrigins!methods!public! !
 GetAllowedOrigins:allowedOrigins:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 hasAuthorityComponent!properties!public! !
 hasAuthorityComponent:!properties!public! !
+printableProperties!constants!private! !
 put_HasAuthorityComponent:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 put_TreatAsSecure:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 schemeName!properties!public! !
-setAllowedOrigins:!methods!public! !
 SetAllowedOrigins:allowedOrigins:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 treatAsSecure!properties!public! !
 treatAsSecure:!properties!public! !
 !
+
+WebView2.ICoreWebView2CustomSchemeRegistration methodProtocol: #ICoreWebView2CustomSchemeRegistration attributes: #(#readOnly) selectors: #(#get_HasAuthorityComponent: #get_SchemeName: #get_TreatAsSecure: #GetAllowedOrigins:allowedOrigins: #put_HasAuthorityComponent: #put_TreatAsSecure: #SetAllowedOrigins:allowedOrigins:)!
 
 !WebView2.ICoreWebView2CustomSchemeRegistration class methodsFor!
 

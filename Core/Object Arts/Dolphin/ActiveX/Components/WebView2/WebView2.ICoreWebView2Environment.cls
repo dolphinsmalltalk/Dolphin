@@ -95,7 +95,7 @@ createContextMenuItem: label iconStream: iconStream kind: kind
 		iconStream: iconStream
 		kind: kind
 		item: answer.
-	^answer asObject!
+	^answer!
 
 CreateContextMenuItem: label iconStream: iconStream kind: kind item: item
 	"Private - Invoke the CreateContextMenuItem() method of the COM object.
@@ -214,6 +214,34 @@ CreateCoreWebView2PointerInfo: pointerInfo
 
 	^E_NOTIMPL!
 
+createObjectCollection: aCollection
+	"Answer an <ICoreWebView2ObjectCollection> containing the IUknown's of the collection of COM objects in the argument."
+
+	| answer unknowns pointers count stream |
+	answer := ICoreWebView2ObjectCollection newPointer.
+	count := aCollection size.
+	unknowns := Array new: count.
+	stream := unknowns writeStream.
+	aCollection do: [:each | stream nextPut: (each queryInterface: IUnknown)].
+	pointers := PointerArray length: count elementClass: IUnknown.
+	1 to: count do: [:i | pointers uncheckedAt: i put: (unknowns at: i)].
+	self
+		CreateObjectCollection: count
+		items: pointers
+		objectCollection: answer.
+	unknowns do: [:each | each free].
+	^answer!
+
+CreateObjectCollection: length items: items objectCollection: objectCollection
+	"Private - Invoke the CreateObjectCollection() method of the COM object.
+
+		HRESULT __stdcall CreateObjectCollection(
+			[in]unsigned int length,
+			[in]IUnknown** items,
+			[out, retval]ICoreWebView2ObjectCollection** objectCollection);"
+
+	^E_NOTIMPL!
+
 createPointerInfo
 	"Answer a new <ICoreWebView2PointerInfo> to be populated with settings to pass to a composition controller via SendPointerInput."
 
@@ -221,6 +249,14 @@ createPointerInfo
 	answer := ICoreWebView2PointerInfo newPointer.
 	self CreateCoreWebView2PointerInfo: answer.
 	^answer asObject!
+
+createPrintSettings
+	"Answer the <ICoreWebView2PrintSettings> result of invoking the CreatePrintSettings() method of the COM object."
+
+	| answer |
+	answer := ICoreWebView2PrintSettings newPointer.
+	self CreatePrintSettings: answer.
+	^answer downCast!
 
 CreatePrintSettings: printSettings
 	"Private - Invoke the CreatePrintSettings() method of the COM object.
@@ -245,6 +281,48 @@ CreateSharedBuffer: size shared_buffer: shared_buffer
 		HRESULT __stdcall CreateSharedBuffer(
 			[in]unsigned __int64 Size,
 			[out, retval]ICoreWebView2SharedBuffer** shared_buffer);"
+
+	^E_NOTIMPL!
+
+createWebFileSystemDirectoryHandle: path permission: permission
+	"Answer the <ICoreWebView2FileSystemHandle> result of invoking the CreateWebFileSystemDirectoryHandle() method of the COM object."
+
+	| answer |
+	answer := ICoreWebView2FileSystemHandle newPointer.
+	self
+		CreateWebFileSystemDirectoryHandle: path
+		permission: permission
+		value: answer.
+	^answer!
+
+CreateWebFileSystemDirectoryHandle: path permission: permission value: value
+	"Private - Invoke the CreateWebFileSystemDirectoryHandle() method of the COM object.
+
+		HRESULT __stdcall CreateWebFileSystemDirectoryHandle(
+			[in]LPWSTR Path,
+			[in]COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION Permission,
+			[out, retval]ICoreWebView2FileSystemHandle** value);"
+
+	^E_NOTIMPL!
+
+createWebFileSystemFileHandle: path permission: permission
+	"Answer the <ICoreWebView2FileSystemHandle> result of invoking the CreateWebFileSystemFileHandle() method of the COM object."
+
+	| answer |
+	answer := ICoreWebView2FileSystemHandle newPointer.
+	self
+		CreateWebFileSystemFileHandle: path
+		permission: permission
+		value: answer.
+	^answer!
+
+CreateWebFileSystemFileHandle: path permission: permission value: value
+	"Private - Invoke the CreateWebFileSystemFileHandle() method of the COM object.
+
+		HRESULT __stdcall CreateWebFileSystemFileHandle(
+			[in]LPWSTR Path,
+			[in]COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION Permission,
+			[out, retval]ICoreWebView2FileSystemHandle** value);"
 
 	^E_NOTIMPL!
 
@@ -278,15 +356,17 @@ CreateWebResourceRequest: uri method: method postData: postData headers: headers
 createWebResourceResponse: content statusCode: statusCode reasonPhrase: reasonPhrase headers: headers
 	"Answer the <ICoreWebView2WebResourceResponse> result of invoking the CreateWebResourceResponse() method of the COM object."
 
-	| answer |
+	| answer contentStream |
 	answer := ICoreWebView2WebResourceResponse newPointer.
+	contentStream := content queryInterface: IStream.
 	self
-		CreateWebResourceResponse: content
+		CreateWebResourceResponse: contentStream
 		statusCode: statusCode
-		reasonPhrase: reasonPhrase asUtf16String
-		headers: headers asUtf16String
+		reasonPhrase: reasonPhrase
+		headers: headers
 		response: answer.
-	^answer asObject!
+	contentStream free.
+	^answer!
 
 CreateWebResourceResponse: content statusCode: statusCode reasonPhrase: reasonPhrase headers: headers response: response
 	"Private - Invoke the CreateWebResourceResponse() method of the COM object.
@@ -386,14 +466,6 @@ GetProviderForHwnd: hwnd provider: provider
 	^E_NOTIMPL
 !
 
-printSettings
-	"Answer the <ICoreWebView2PrintSettings> result of invoking the CreatePrintSettings() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2PrintSettings newPointer.
-	self CreatePrintSettings: answer.
-	^answer downCast!
-
 processInfos
 	"Answer the <ICoreWebView2ProcessInfoCollection> result of invoking the GetProcessInfos() method of the COM object."
 
@@ -449,10 +521,17 @@ createCoreWebView2ControllerOptions!methods!public! !
 CreateCoreWebView2ControllerOptions:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2ControllerWithOptions:options:handler:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2PointerInfo:!COM Interfaces-ICoreWebView2Environment3!methods!private! !
+createObjectCollection:!methods!public! !
+CreateObjectCollection:items:objectCollection:!COM Interfaces-ICoreWebView2Environment14!private! !
 createPointerInfo!methods!public! !
+createPrintSettings!methods!public! !
 CreatePrintSettings:!COM Interfaces-ICoreWebView2Environment6!methods!private! !
 createSharedBuffer:!methods!public! !
 CreateSharedBuffer:shared_buffer:!COM Interfaces-ICoreWebView2Environment12!private! !
+createWebFileSystemDirectoryHandle:permission:!methods!public! !
+CreateWebFileSystemDirectoryHandle:permission:value:!COM Interfaces-ICoreWebView2Environment14!private! !
+createWebFileSystemFileHandle:permission:!methods!public! !
+CreateWebFileSystemFileHandle:permission:value:!COM Interfaces-ICoreWebView2Environment14!private! !
 createWebResourceRequest:method:postData:headers:!methods!public! !
 CreateWebResourceRequest:method:postData:headers:request:!COM Interfaces-ICoreWebView2Environment2!displaying!private! !
 createWebResourceResponse:statusCode:reasonPhrase:headers:!methods!public! !
@@ -460,14 +539,13 @@ CreateWebResourceResponse:statusCode:reasonPhrase:headers:response:!**auto gener
 displayOn:!displaying!public! !
 failureReportFolderPath!properties!public! !
 get_BrowserVersionString:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
-get_FailureReportFolderPath:!COM Interfaces-ICoreWebView2Environment11!private! !
+get_FailureReportFolderPath:!COM Interfaces-ICoreWebView2Environment11!private!properties! !
 get_UserDataFolder:!COM Interfaces-ICoreWebView2Environment7!private!properties! !
 GetProcessExtendedInfos:!COM Interfaces-ICoreWebView2Environment13!public! !
 getProcessExtendedInfosThenDo:!async requests!public! !
 GetProcessInfos:!COM Interfaces-ICoreWebView2Environment8!methods!private! !
 getProviderForHwnd:!methods!public! !
 GetProviderForHwnd:provider:!COM Interfaces-ICoreWebView2Environment4!methods!private! !
-printSettings!methods!public! !
 processInfos!methods!public! !
 Remove_BrowserProcessExited:!COM Interfaces-ICoreWebView2Environment5!events!private! !
 Remove_NewBrowserVersionAvailable:!**auto generated**!COM Interfaces-ICoreWebView2Environment!events!private! !

@@ -128,7 +128,7 @@ method: method
 	self put_Method: method asUtf16String!
 
 printableProperties
-	^#(method uri)!
+	^#(#method #uri #headers)!
 
 put_Content: content
 	"Private - Set the value of the 'Content' property of the object wrapped by the 

@@ -98,11 +98,12 @@ testContextMenu
 	newCmd := presenter view webviewEnvironment
 				createContextMenuItem: '&Blah'
 				iconStream: iconStream
-				kind: WebView2.COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND_COMMAND.
+				kind: COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND_COMMAND.
 	self assertIsNil: newCmd items.
 	self assert: newCmd label equals: '&Blah'.
 	self assert: newCmd name equals: '&Blah'.
-	self assert: newCmd kind equals: #command.
+	self assert: newCmd kind equals: COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND_COMMAND.
+	self assert: newCmd kindName equals: #command.
 	self deny: newCmd isChecked.
 	self assert: newCmd isEnabled.
 	cmdFired := false.
@@ -167,9 +168,7 @@ testProperties
 	self verifyWebViewEnvironmentProperties.
 	self verifyWebViewControllerProperties.
 	self verifyWebViewSettings.
-	self verifyWebViewProfile.
-	"Not really a property, but WebView2's are expensive to create"
-	self verifySharedBuffer!
+	self verifyWebViewProfile!
 
 testWebBrowserCrashRecovery
 	"Test browser recovery after a crash of the browser process that causes it to exit"
@@ -189,38 +188,6 @@ testWebBrowserCrashRecovery
 	self assert: navigationCompleted isSuccess.
 	self assert: webview displayValue equals: 'edge://crashes/'.
 	self assert: navigationCompleted navigationId equals: domContentLoaded!
-
-verifySharedBuffer
-	| webview buf testBytes bytes fv env |
-	webview := presenter view.
-	env := webview webviewEnvironment.
-	(env isKindOf: ICoreWebView2Environment12)
-		ifFalse: 
-			["Browser version is too old"
-			^self].
-	self should: [env createSharedBuffer: 0] raise: Win32Error matching: [:ex | ex hresult asInteger = E_INVALIDARG].
-
-	buf := env createSharedBuffer: 4096.
-	testBytes := Object comment asByteArray.
-	buf buffer
-		replaceFrom: 1
-		to: testBytes size
-		with: testBytes
-		startingAt: 1.
-	bytes := buf openStream contents.
-	self assert: bytes size equals: 4096.
-	self assert: (Utf8String fromByteArray: bytes length: testBytes size) equals: Object comment.
-	testBytes := testBytes resize: 4096.
-	self assert: buf buffer asByteArray equals: testBytes.
-	fv := buf memoryMappedFile mapView.
-	self assert: (fv copyFrom: 1 to: 4096) equals: testBytes.
-	fv free.
-	self assert: buf Close equals: OS.Win32Errors.S_OK.
-	self
-		should: [buf memoryMappedFile]
-		raise: HRESULTError
-		matching: [:ex | ex hresult asInteger = Win32Errors.RO_E_CLOSED].
-	buf free!
 
 verifyWebViewControllerProperties
 	| controller baseController rasterizationScale |
@@ -275,25 +242,15 @@ verifyWebViewControllerProperties
 	self assert: baseController allowExternalDrop!
 
 verifyWebViewEnvironmentProperties
-	| browserVersion environment baseEnvironment parts |
+	"Most environment properties are tested in the separate WebViewEnvironment test hierarchy as these do only create the environment object and so are much cheaper to run. Some properties are not available unless we have the full browser stack through."
+
+	| environment extendedProcessInfos renderer |
 	environment := presenter view webviewEnvironment.
-	baseEnvironment := environment queryInterface: ICoreWebView2Environment.
-	"ICoreWebView2Environment: browserVersionString"
-	browserVersion := baseEnvironment browserVersionString.
-	parts := ($. split: browserVersion) collect: [:each | Integer fromString: each].
-	self assert: parts size equals: 4.
-	"ICoreWebView2Environment2: No new properties."
-	"ICoreWebView2Environment3: No new properties."
-	"ICoreWebView2Environment4: No new properties."
-	"ICoreWebView2Environment5: No new properties."
-	"ICoreWebView2Environment6: No new properties."
-	"ICoreWebView2Environment7: userDataFolder."
-	self assertIsNil: baseEnvironment userDataFolder.
-	self
-		assert: (environment userDataFolder beginsWith: (SessionManager current getenv: 'LocalAppData')).
-	"ICoreWebView2Environment9: No new properties."
-	"ICoreWebView2Environment10: No new properties."
-	^environment!
+	environment getProcessExtendedInfosThenDo: [:hr :infos | extendedProcessInfos := infos].
+	self waitAtMost: 2 seconds while: [extendedProcessInfos isNil].
+	self assert: (#('RENDERER' 'BROWSER' 'UTILITY')
+				difference: (extendedProcessInfos collect: [:each | each kindName]))
+		equals: #()!
 
 verifyWebViewProfile
 	"In general we can't assert for particular profile property values, as these may have been altered from the defaults in a persistent profile."
@@ -538,7 +495,6 @@ testContextMenu!public!unit tests! !
 testNavigateToString!public!unit tests! !
 testProperties!public!unit tests! !
 testWebBrowserCrashRecovery!public!unit tests! !
-verifySharedBuffer!helpers!private! !
 verifyWebViewControllerProperties!helpers!private! !
 verifyWebViewEnvironmentProperties!helpers!private! !
 verifyWebViewProfile!helpers!private! !

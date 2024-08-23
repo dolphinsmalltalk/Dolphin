@@ -48,10 +48,6 @@ interface ICoreWebView2ContextMenuItemCollection : IUnknown
 
 !WebView2.ICoreWebView2ContextMenuItemCollection methodsFor!
 
-add: anICoreWebView2ContextMenuItem beforeIndex: anInteger
-	self InsertValueAtIndex: anInteger - 1 value: anICoreWebView2ContextMenuItem.
-	^anICoreWebView2ContextMenuItem!
-
 elementClass
 	^ICoreWebView2ContextMenuItem!
 
@@ -75,15 +71,6 @@ InsertValueAtIndex: index value: value
 	<virtual stdcall: hresult 7 uint32 ICoreWebView2ContextMenuItem*>
 	^self invalidCall: _failureCode!
 
-removeAtIndex: anInteger
-	"Remove, and answer, the element of the receiver at the specified <integer> index, by shuffling elements which succeed it down one slot.
-	Raise a <BoundsError> if there is no element with that index."
-
-	| item |
-	item := self at: anInteger.
-	self RemoveValueAtIndex: anInteger - 1.
-	^item!
-
 RemoveValueAtIndex: index
 	"Private - Invoke the RemoveValueAtIndex() method of the COM object.
 
@@ -94,11 +81,9 @@ RemoveValueAtIndex: index
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2ContextMenuItemCollection categoriesForMethods!
-add:beforeIndex:!**auto generated**!methods!public! !
 elementClass!constants!private! !
 GetValueAtIndex:value:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItemCollection!private! !
 InsertValueAtIndex:value:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItemCollection!private! !
-removeAtIndex:!public!removing! !
 RemoveValueAtIndex:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItemCollection!private! !
 !
 

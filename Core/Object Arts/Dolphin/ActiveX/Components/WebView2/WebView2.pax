@@ -32,6 +32,7 @@ package setClassNames: #(
 	#{UI.URLPresenter}
 	#{UI.WebView2View}
 	#{WebView2}
+	#{WebView2.AbstractICoreWebView2WebResourceResponse}
 	#{WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS}
 	#{WebView2.ICoreWebView2}
 	#{WebView2.ICoreWebView2_10}
@@ -48,6 +49,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2_20}
 	#{WebView2.ICoreWebView2_21}
 	#{WebView2.ICoreWebView2_22}
+	#{WebView2.ICoreWebView2_23}
 	#{WebView2.ICoreWebView2_3}
 	#{WebView2.ICoreWebView2_4}
 	#{WebView2.ICoreWebView2_5}
@@ -123,6 +125,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Environment11}
 	#{WebView2.ICoreWebView2Environment12}
 	#{WebView2.ICoreWebView2Environment13}
+	#{WebView2.ICoreWebView2Environment14}
 	#{WebView2.ICoreWebView2Environment2}
 	#{WebView2.ICoreWebView2Environment3}
 	#{WebView2.ICoreWebView2Environment4}
@@ -147,6 +150,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2ExecuteScriptWithResultCompletedHandler}
 	#{WebView2.ICoreWebView2FaviconChangedEventHandler}
 	#{WebView2.ICoreWebView2File}
+	#{WebView2.ICoreWebView2FileSystemHandle}
 	#{WebView2.ICoreWebView2FocusChangedEventHandler}
 	#{WebView2.ICoreWebView2FocusGainedEventHandler}
 	#{WebView2.ICoreWebView2FocusLostEventHandler}
@@ -201,6 +205,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2NewWindowRequestedEventHandler}
 	#{WebView2.ICoreWebView2NonClientRegionChangedEventArgs}
 	#{WebView2.ICoreWebView2NonClientRegionChangedEventHandler}
+	#{WebView2.ICoreWebView2ObjectCollection}
 	#{WebView2.ICoreWebView2ObjectCollectionView}
 	#{WebView2.ICoreWebView2PermissionRequestedEventArgs}
 	#{WebView2.ICoreWebView2PermissionRequestedEventArgs2}
@@ -275,6 +280,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2WindowFeatures}
 	#{WebView2.ICoreWebView2ZoomFactorChangedEventHandler}
 	#{WebView2.WebView2CompletionHandler}
+	#{WebView2.WebView2CustomSchemeRegistration}
 	#{WebView2.WebView2EnvironmentOptions}
 	#{WebView2.WebView2EventSink}
 	#{WebView2.WebView2Loader}
@@ -391,6 +397,10 @@ Kernel.Namespace
 			'COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED' -> 16r1.
 			'COREWEBVIEW2_FAVICON_IMAGE_FORMAT_JPEG' -> 16r1.
 			'COREWEBVIEW2_FAVICON_IMAGE_FORMAT_PNG' -> 16r0.
+			'COREWEBVIEW2_FILE_SYSTEM_HANDLE_KIND_DIRECTORY' -> 16r1.
+			'COREWEBVIEW2_FILE_SYSTEM_HANDLE_KIND_FILE' -> 16r0.
+			'COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_ONLY' -> 16r0.
+			'COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_WRITE' -> 16r1.
 			'COREWEBVIEW2_FRAME_KIND_EMBED' -> 16r3.
 			'COREWEBVIEW2_FRAME_KIND_IFRAME' -> 16r2.
 			'COREWEBVIEW2_FRAME_KIND_MAIN_FRAME' -> 16r1.
@@ -602,8 +612,16 @@ OS.COM.InterfaceImplementation
 	classConstants: {}!
 
 OS.COM.InterfaceImplementation
+	subclass: #'WebView2.WebView2CustomSchemeRegistration'
+	instanceVariableNames: 'flags schemeName allowedOrigins'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'AuthorityComponentMask' -> 16r1. 'TreatAsSecureMask' -> 16r2 }!
+
+OS.COM.InterfaceImplementation
 	subclass: #'WebView2.WebView2EnvironmentOptions'
-	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel channelSearchKind releaseChannels scrollBarStyle'
+	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel channelSearchKind releaseChannels scrollBarStyle customSchemeRegistrations'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -650,6 +668,14 @@ OS.COM.IUnknown
 	subclass: #'WebView2.ICoreWebView2Interface'
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.AbstractICoreWebView2WebResourceResponse'
+	instanceVariableNames: ''
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -895,6 +921,14 @@ WebView2.ICoreWebView2Interface
 	classConstants: {}!
 
 WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2FileSystemHandle'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2Frame'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -951,7 +985,14 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CollationNames' -> #(#default #collated #uncollated).
+			'ColorModeNames' -> #(#default #color #grayscale).
+			'DuplexModeNames'
+				-> #(#default #singleSided #doubleSidedLongEdge #duobleSidedShortEdge).
+			'MediaSizeNames' -> #(#default #custom).
+			'OrientationNames' -> #(#portrait #landscape)
+		}!
 
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2ProcessExtendedInfo'
@@ -1013,6 +1054,14 @@ WebView2.ICoreWebView2Interface
 	classConstants: {}!
 
 WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2WindowFeatures'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.AbstractICoreWebView2WebResourceResponse
 	subclass: #'WebView2.ICoreWebView2WebResourceResponse'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1020,16 +1069,8 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-WebView2.ICoreWebView2Interface
+WebView2.AbstractICoreWebView2WebResourceResponse
 	subclass: #'WebView2.ICoreWebView2WebResourceResponseView'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-WebView2.ICoreWebView2Interface
-	subclass: #'WebView2.ICoreWebView2WindowFeatures'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1204,6 +1245,14 @@ WebView2.ICoreWebView2_21
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+WebView2.ICoreWebView2_22
+	subclass: #'WebView2.ICoreWebView2_23'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 WebView2.ICoreWebView2Certificate
 	subclass: #'WebView2.ICoreWebView2ClientCertificate'
 	instanceVariableNames: ''
@@ -1334,6 +1383,14 @@ WebView2.ICoreWebView2Sequence
 
 WebView2.ICoreWebView2Sequence
 	subclass: #'WebView2.ICoreWebView2StringCollection'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2ObjectCollectionView
+	subclass: #'WebView2.ICoreWebView2ObjectCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1678,6 +1735,14 @@ WebView2.ICoreWebView2Environment11
 
 WebView2.ICoreWebView2Environment12
 	subclass: #'WebView2.ICoreWebView2Environment13'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2Environment13
+	subclass: #'WebView2.ICoreWebView2Environment14'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

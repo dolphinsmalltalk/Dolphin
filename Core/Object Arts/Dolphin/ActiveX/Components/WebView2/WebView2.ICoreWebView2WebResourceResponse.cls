@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2Interface
+WebView2.AbstractICoreWebView2WebResourceResponse
 	subclass: #'WebView2.ICoreWebView2WebResourceResponse'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -66,7 +66,7 @@ content
 content: content
 	"Set the 'Content' property of the receiver to the <IStream*> value of the argument."
 
-	self put_Content: content!
+	self put_Content: (content queryInterface: IStream)!
 
 get_Content: content
 	"Private - Get the value of the 'Content' property of the receiver.
@@ -104,17 +104,6 @@ get_StatusCode: statusCode
 	<virtual stdcall: hresult 7 int32*>
 	^self invalidCall: _failureCode!
 
-headers
-	"Answer the <ICoreWebView2HttpResponseHeaders> value of the 'Headers' property of the receiver."
-
-	| answer |
-	answer := ICoreWebView2HttpResponseHeaders newPointer.
-	self get_Headers: answer.
-	^answer asObject!
-
-printableProperties
-	^#(#statusCode #reasonPhrase)!
-
 put_Content: content
 	"Private - Set the value of the 'Content' property of the object wrapped by the 
 	 receiver to the <IStream*> argument, content.
@@ -145,28 +134,10 @@ put_StatusCode: statusCode
 	<virtual stdcall: hresult 8 int32>
 	^self invalidCall: _failureCode!
 
-reasonPhrase
-	"Answer the <lpwstr> value of the 'ReasonPhrase' property of the receiver."
-
-	| ptr answer |
-	ptr := TaskMemory new.
-	self get_ReasonPhrase: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
 reasonPhrase: reasonPhrase
 	"Set the 'ReasonPhrase' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_ReasonPhrase: reasonPhrase asUtf16String!
-
-statusCode
-	"Answer the <sdword> value of the 'StatusCode' property of the receiver."
-
-	| answer |
-	answer := Int32 new.
-	self get_StatusCode: answer.
-	^answer asObject!
 
 statusCode: statusCode
 	"Set the 'StatusCode' property of the receiver to the <sdword> value of the argument."
@@ -180,14 +151,10 @@ get_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!
 get_Headers:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 get_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 get_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
-headers!**auto generated**!properties!public! !
-printableProperties!printing!private! !
 put_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 put_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 put_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
-reasonPhrase!properties!public! !
 reasonPhrase:!**auto generated**!properties!public! !
-statusCode!**auto generated**!properties!public! !
 statusCode:!**auto generated**!properties!public! !
 !
 

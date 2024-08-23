@@ -6,7 +6,14 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CollationNames' -> #(#default #collated #uncollated).
+			'ColorModeNames' -> #(#default #color #grayscale).
+			'DuplexModeNames'
+				-> #(#default #singleSided #doubleSidedLongEdge #duobleSidedShortEdge).
+			'MediaSizeNames' -> #(#default #custom).
+			'OrientationNames' -> #(#portrait #landscape)
+		}!
 
 WebView2.ICoreWebView2PrintSettings guid: (OS.COM.IID fromString: '{377f3721-c74e-48ca-8db1-df68e51d60e2}')!
 
@@ -112,6 +119,78 @@ interface ICoreWebView2PrintSettings : IUnknown
 
 !WebView2.ICoreWebView2PrintSettings methodsFor!
 
+collation
+	"Answer the <sdword> value of the 'Collation' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_Collation: answer.
+	^answer asObject!
+
+collation: value
+	"Set the 'Collation' property of the receiver to the <sdword> value of the argument."
+
+	self put_Collation: value!
+
+collationName
+	^CollationNames at: self collation + 1!
+
+collationName: aSymbol
+	self collation: (CollationNames identityIndexOf: aSymbol) - 1!
+
+colorMode
+	"Answer the <sdword> value of the 'ColorMode' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_ColorMode: answer.
+	^answer asObject!
+
+colorMode: value
+	"Set the 'ColorMode' property of the receiver to the <sdword> value of the argument."
+
+	self put_ColorMode: value!
+
+colorModeName
+	"Answer the <sdword> value of the 'ColorMode' property of the receiver."
+
+	^ColorModeNames at: self colorMode + 1!
+
+colorModeName: aSymbol
+	self colorMode: (ColorModeNames identityIndexOf: aSymbol) - 1!
+
+copies
+	"Answer the <sdword> value of the 'Copies' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_Copies: answer.
+	^answer asObject!
+
+copies: value
+	"Set the 'Copies' property of the receiver to the <sdword> value of the argument."
+
+	self put_Copies: value!
+
+duplex
+	"Answer the <sdword> value of the 'Duplex' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_Duplex: answer.
+	^answer asObject!
+
+duplex: value
+	"Set the 'Duplex' property of the receiver to the <sdword> value of the argument."
+
+	self put_Duplex: value!
+
+duplexModeName
+	^DuplexModeNames at: self duplex + 1!
+
+duplexModeName: aSymbol
+	self duplex: (DuplexModeNames identityIndexOf: aSymbol) - 1!
+
 footerUri
 	"Answer the <lpwstr> value of the 'FooterUri' property of the receiver."
 
@@ -126,6 +205,42 @@ footerUri: footerUri
 	"Set the 'FooterUri' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_FooterUri: footerUri asUtf16String!
+
+get_Collation: value
+	"Private - Get the value of the 'Collation' property of the receiver.
+
+		HRESULT __stdcall Collation(
+			[out, retval]COREWEBVIEW2_PRINT_COLLATION* value);"
+
+	value value: COREWEBVIEW2_PRINT_COLLATION_DEFAULT.
+	^S_OK!
+
+get_ColorMode: value
+	"Private - Get the value of the 'ColorMode' property of the receiver.
+
+		HRESULT __stdcall ColorMode(
+			[out, retval]COREWEBVIEW2_PRINT_COLOR_MODE* value);"
+
+	value value: COREWEBVIEW2_PRINT_COLOR_MODE_DEFAULT.
+	^S_OK!
+
+get_Copies: value
+	"Private - Get the value of the 'Copies' property of the receiver.
+
+		HRESULT __stdcall Copies(
+			[out, retval]int* value);"
+
+	value value: 1.
+	^S_OK!
+
+get_Duplex: value
+	"Private - Get the value of the 'Duplex' property of the receiver.
+
+		HRESULT __stdcall Duplex(
+			[out, retval]COREWEBVIEW2_PRINT_DUPLEX* value);"
+
+	value value: COREWEBVIEW2_PRINT_DUPLEX_DEFAULT.
+	^S_OK!
 
 get_FooterUri: footerUri
 	"Private - Get the value of the 'FooterUri' property of the receiver.
@@ -181,6 +296,15 @@ get_MarginTop: marginTop
 	<virtual stdcall: hresult 12 double*>
 	^self invalidCall: _failureCode!
 
+get_MediaSize: value
+	"Private - Get the value of the 'MediaSize' property of the receiver.
+
+		HRESULT __stdcall MediaSize(
+			[out, retval]COREWEBVIEW2_PRINT_MEDIA_SIZE* value);"
+
+	value value: COREWEBVIEW2_PRINT_MEDIA_SIZE_DEFAULT.
+	^S_OK!
+
 get_Orientation: orientation
 	"Private - Get the value of the 'Orientation' property of the receiver.
 
@@ -199,6 +323,23 @@ get_PageHeight: pageHeight
 	<virtual stdcall: hresult 10 double*>
 	^self invalidCall: _failureCode!
 
+get_PageRanges: value
+	"Private - Get the value of the 'PageRanges' property of the receiver.
+
+		HRESULT __stdcall PageRanges(
+			[out, retval]LPWSTR* value);"
+
+	^S_OK!
+
+get_PagesPerSide: value
+	"Private - Get the value of the 'PagesPerSide' property of the receiver.
+
+		HRESULT __stdcall PagesPerSide(
+			[out, retval]int* value);"
+
+	value value: 1.
+	^S_OK!
+
 get_PageWidth: pageWidth
 	"Private - Get the value of the 'PageWidth' property of the receiver.
 
@@ -207,6 +348,14 @@ get_PageWidth: pageWidth
 
 	<virtual stdcall: hresult 8 double*>
 	^self invalidCall: _failureCode!
+
+get_PrinterName: value
+	"Private - Get the value of the 'PrinterName' property of the receiver.
+
+		HRESULT __stdcall PrinterName(
+			[out, retval]LPWSTR* value);"
+
+	^S_OK!
 
 get_ScaleFactor: scaleFactor
 	"Private - Get the value of the 'ScaleFactor' property of the receiver.
@@ -301,6 +450,13 @@ marginRight: marginRight
 margins
 	^self marginLeft @ self marginTop corner: self marginRight @ self marginBottom!
 
+margins: aRectangle
+	self
+		marginLeft: aRectangle left;
+		marginTop: aRectangle top;
+		marginRight: aRectangle right;
+		marginBottom: aRectangle bottom!
+
 marginTop
 	"Answer the <double> value of the 'MarginTop' property of the receiver."
 
@@ -313,6 +469,25 @@ marginTop: marginTop
 	"Set the 'MarginTop' property of the receiver to the <double> value of the argument."
 
 	self put_MarginTop: marginTop!
+
+mediaSize
+	"Answer the <sdword> value of the 'MediaSize' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_MediaSize: answer.
+	^answer asObject!
+
+mediaSize: value
+	"Set the 'MediaSize' property of the receiver to the <sdword> value of the argument."
+
+	self put_MediaSize: value!
+
+mediaSizeName
+	^MediaSizeNames at: self mediaSize + 1!
+
+mediaSizeName: aSymbol
+	self mediaSize: (MediaSizeNames identityIndexOf: aSymbol) - 1!
 
 orientation
 	"Answer the <sdword> value of the 'Orientation' property of the receiver."
@@ -327,8 +502,11 @@ orientation: orientation
 
 	self put_Orientation: orientation!
 
-pageExtent
-	^self pageWidth @ self pageHeight!
+orientationName
+	^OrientationNames at: self orientation + 1!
+
+orientationName: aSymbol
+	self orientation: (OrientationNames identityIndexOf: aSymbol) - 1!
 
 pageHeight
 	"Answer the <double> value of the 'PageHeight' property of the receiver."
@@ -342,6 +520,42 @@ pageHeight: pageHeight
 	"Set the 'PageHeight' property of the receiver to the <double> value of the argument."
 
 	self put_PageHeight: pageHeight!
+
+pageRanges
+	"Answer the <lpwstr> value of the 'PageRanges' property of the receiver."
+
+	| ptr answer |
+	ptr := TaskMemory new.
+	self get_PageRanges: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
+pageRanges: value
+	"Set the 'PageRanges' property of the receiver to the <lpwstr> value of the argument."
+
+	self put_PageRanges: value asUtf16String!
+
+pageSize
+	^self pageWidth @ self pageHeight!
+
+pageSize: aPoint
+	self
+		pageWidth: aPoint x;
+		pageHeight: aPoint y!
+
+pagesPerSide
+	"Answer the <sdword> value of the 'PagesPerSide' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_PagesPerSide: answer.
+	^answer asObject!
+
+pagesPerSide: value
+	"Set the 'PagesPerSide' property of the receiver to the <sdword> value of the argument."
+
+	self put_PagesPerSide: value!
 
 pageWidth
 	"Answer the <double> value of the 'PageWidth' property of the receiver."
@@ -357,7 +571,62 @@ pageWidth: pageWidth
 	self put_PageWidth: pageWidth!
 
 printableProperties
-	^#(#footerUri #headerTitle #margins #orientation #pageExtent #scaleFactor #shouldPrintBackgrounds #shouldPrintHeaderAndFooter #shouldPrintSelectionOnly)!
+	^#(#footerUri #headerTitle #margins #orientation #pageSize #scaleFactor #shouldPrintBackgrounds #shouldPrintHeaderAndFooter #shouldPrintSelectionOnly)!
+
+printerName
+	"Answer the <lpwstr> value of the 'PrinterName' property of the receiver."
+
+	| ptr answer |
+	ptr := TaskMemory new.
+	self get_PrinterName: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
+printerName: value
+	"Set the 'PrinterName' property of the receiver to the <lpwstr> value of the argument."
+
+	self put_PrinterName: value asUtf16String!
+
+put_Collation: value
+	"Private - Set the value of the 'Collation' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall Collation(
+			[in]COREWEBVIEW2_PRINT_COLLATION value);"
+
+	^value = COREWEBVIEW2_PRINT_COLLATION_DEFAULT ifTrue: [S_OK] ifFalse: [E_NOTIMPL]!
+
+put_ColorMode: value
+	"Private - Set the value of the 'ColorMode' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall ColorMode(
+			[in]COREWEBVIEW2_PRINT_COLOR_MODE value);"
+	
+	^value = COREWEBVIEW2_PRINT_COLOR_MODE_DEFAULT
+		ifTrue: [S_OK]
+		ifFalse: [E_NOTIMPL]!
+
+put_Copies: value
+	"Private - Set the value of the 'Copies' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall Copies(
+			[in]int value);"
+
+	^value = 1 ifTrue: [S_OK] ifFalse: [E_NOTIMPL]!
+
+put_Duplex: value
+	"Private - Set the value of the 'Duplex' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall Duplex(
+			[in]COREWEBVIEW2_PRINT_DUPLEX value);"
+
+	^value = COREWEBVIEW2_PRINT_DUPLEX_DEFAULT
+		ifTrue: [S_OK]
+		ifFalse: [E_NOTIMPL]!
 
 put_FooterUri: footerUri
 	"Private - Set the value of the 'FooterUri' property of the object wrapped by the 
@@ -419,6 +688,17 @@ put_MarginTop: marginTop
 	<virtual stdcall: hresult 13 double>
 	^self invalidCall: _failureCode!
 
+put_MediaSize: value
+	"Private - Set the value of the 'MediaSize' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall MediaSize(
+			[in]COREWEBVIEW2_PRINT_MEDIA_SIZE value);"
+
+	^value = COREWEBVIEW2_PRINT_MEDIA_SIZE_DEFAULT
+		ifTrue: [S_OK]
+		ifFalse: [E_NOTIMPL]!
+
 put_Orientation: orientation
 	"Private - Set the value of the 'Orientation' property of the object wrapped by the 
 	 receiver to the <sdword> argument, orientation.
@@ -439,6 +719,24 @@ put_PageHeight: pageHeight
 	<virtual stdcall: hresult 11 double>
 	^self invalidCall: _failureCode!
 
+put_PageRanges: value
+	"Private - Set the value of the 'PageRanges' property of the object wrapped by the 
+	 receiver to the <lpwstr> argument, value.
+
+		HRESULT __stdcall PageRanges(
+			[in]LPWSTR value);"
+
+	^(value isNil or: [value isEmpty]) ifTrue: [S_OK] ifFalse: [E_NOTIMPL]!
+
+put_PagesPerSide: value
+	"Private - Set the value of the 'PagesPerSide' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall PagesPerSide(
+			[in]int value);"
+
+	^value = 1 ifTrue: [S_OK] ifFalse: [E_NOTIMPL]!
+
 put_PageWidth: pageWidth
 	"Private - Set the value of the 'PageWidth' property of the object wrapped by the 
 	 receiver to the <double> argument, pageWidth.
@@ -448,6 +746,15 @@ put_PageWidth: pageWidth
 
 	<virtual stdcall: hresult 9 double>
 	^self invalidCall: _failureCode!
+
+put_PrinterName: value
+	"Private - Set the value of the 'PrinterName' property of the object wrapped by the 
+	 receiver to the <lpwstr> argument, value.
+
+		HRESULT __stdcall PrinterName(
+			[in]LPWSTR value);"
+
+	^(value isNil or: [value isEmpty]) ifTrue: [S_OK] ifFalse: [E_NOTIMPL]!
 
 put_ScaleFactor: scaleFactor
 	"Private - Set the value of the 'ScaleFactor' property of the object wrapped by the 
@@ -542,17 +849,39 @@ shouldPrintSelectionOnly: shouldPrintSelectionOnly
 	self put_ShouldPrintSelectionOnly: shouldPrintSelectionOnly asParameter! !
 
 !WebView2.ICoreWebView2PrintSettings categoriesForMethods!
+collation!properties!public! !
+collation:!properties!public! !
+collationName!properties!public! !
+collationName:!properties!public! !
+colorMode!properties!public! !
+colorMode:!properties!public! !
+colorModeName!properties!public! !
+colorModeName:!properties!public! !
+copies!properties!public! !
+copies:!properties!public! !
+duplex!properties!public! !
+duplex:!properties!public! !
+duplexModeName!properties!public! !
+duplexModeName:!properties!public! !
 footerUri!properties!public! !
 footerUri:!**auto generated**!properties!public! !
+get_Collation:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
+get_ColorMode:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
+get_Copies:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
+get_Duplex:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 get_FooterUri:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 get_HeaderTitle:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 get_MarginBottom:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 get_MarginLeft:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 get_MarginRight:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 get_MarginTop:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
+get_MediaSize:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 get_Orientation:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 get_PageHeight:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
+get_PageRanges:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
+get_PagesPerSide:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 get_PageWidth:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
+get_PrinterName:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 get_ScaleFactor:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 get_ShouldPrintBackgrounds:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 get_ShouldPrintHeaderAndFooter:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
@@ -566,25 +895,47 @@ marginLeft:!**auto generated**!properties!public! !
 marginRight!**auto generated**!properties!public! !
 marginRight:!**auto generated**!properties!public! !
 margins!properties!public! !
+margins:!properties!public! !
 marginTop!**auto generated**!properties!public! !
 marginTop:!**auto generated**!properties!public! !
+mediaSize!properties!public! !
+mediaSize:!properties!public! !
+mediaSizeName!properties!public! !
+mediaSizeName:!properties!public! !
 orientation!**auto generated**!properties!public! !
 orientation:!**auto generated**!properties!public! !
-pageExtent!properties!public! !
+orientationName!properties!public! !
+orientationName:!properties!public! !
 pageHeight!**auto generated**!properties!public! !
 pageHeight:!**auto generated**!properties!public! !
+pageRanges!public! !
+pageRanges:!properties!public! !
+pageSize!properties!public! !
+pageSize:!properties!public! !
+pagesPerSide!properties!public! !
+pagesPerSide:!properties!public! !
 pageWidth!**auto generated**!properties!public! !
 pageWidth:!**auto generated**!properties!public! !
 printableProperties!printing!public! !
+printerName!public! !
+printerName:!properties!public! !
+put_Collation:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
+put_ColorMode:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
+put_Copies:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
+put_Duplex:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 put_FooterUri:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 put_HeaderTitle:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 put_MarginBottom:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 put_MarginLeft:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 put_MarginRight:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 put_MarginTop:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
+put_MediaSize:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 put_Orientation:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 put_PageHeight:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
+put_PageRanges:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
+put_PagesPerSide:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 put_PageWidth:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
+put_PrinterName:!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 put_ScaleFactor:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 put_ShouldPrintBackgrounds:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
 put_ShouldPrintHeaderAndFooter:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !

@@ -221,7 +221,15 @@ items
 	^self kind == #subMenu ifTrue: [self children]!
 
 kind
-	"Answer the kind of menu item the receiver describes.
+	"Answer the <int32> value of the 'Kind' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_Kind: answer.
+	^answer asObject!
+
+kindName
+	"Answer the symbolic name of the kind of menu item the receiver describes.
 		#command	- Regular menu command
 		#checkBox	- Toggle command
 		#radioButton	- Option command in a group
@@ -229,10 +237,7 @@ kind
 		#subMenu	- Drill-down menu
 	"
 
-	| answer |
-	answer := Int32 newBuffer.
-	self get_Kind: answer.
-	^#(#command #checkBox #radioButton #separator #subMenu) at: answer value + 1!
+	^#(#command #checkBox #radioButton #separator #subMenu) at: self kind + 1!
 
 label
 	"Answer the menu item label, including &-shortcut designator. May be localised."
@@ -258,8 +263,8 @@ printableProperties
 	| propertyNames kind |
 	propertyNames := OrderedCollection new: 4.
 	self name = 'other' ifFalse: [propertyNames addLast: #name].
-	kind := self kind.
-	kind == #command ifFalse: [propertyNames addLast: #kind].
+	kind := self kindName.
+	kind == #command ifFalse: [propertyNames addLast: #kindName].
 	kind == #separator ifTrue: [^propertyNames].
 	propertyNames addLast: #label.
 	self commandId < 0 ifFalse: [propertyNames addLast: #commandId].
@@ -326,7 +331,8 @@ isChecked:!**auto generated**!properties!public! !
 isEnabled!properties!public! !
 isEnabled:!**auto generated**!properties!public! !
 items!properties!public! !
-kind!properties!public! !
+kind!**auto generated**!properties!public! !
+kindName!properties!public! !
 label!properties!public! !
 name!properties!public! !
 printableProperties!printing!private! !

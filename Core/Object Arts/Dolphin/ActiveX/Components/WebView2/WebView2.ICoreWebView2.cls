@@ -1195,6 +1195,15 @@ PostWebMessageAsJson: webMessageAsJson
 	<virtual stdcall: hresult 33 lpwstr>
 	^self invalidCall: _failureCode!
 
+PostWebMessageAsJsonWithAdditionalObjects: webMessageAsJson additionalObjects: additionalObjects
+	"Private - Invoke the PostWebMessageAsJsonWithAdditionalObjects() method of the COM object.
+
+		HRESULT __stdcall PostWebMessageAsJsonWithAdditionalObjects(
+			[in]LPWSTR webMessageAsJson,
+			[in]ICoreWebView2ObjectCollectionView* additionalObjects);"
+
+	^E_NOTIMPL!
+
 postWebMessageAsString: webMessageAsString
 	"Invoke the PostWebMessageAsString() method of the COM object."
 
@@ -1625,7 +1634,6 @@ settings
 	| settings |
 	settings := ICoreWebView2Settings newPointer.
 	self get_Settings: settings.
-	settings isNull ifTrue: [^nil].
 	^settings downCast!
 
 setVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: accessKind
@@ -1833,6 +1841,7 @@ OpenTaskManagerWindow!COM Interfaces-ICoreWebView2_6!private! !
 PostSharedBufferToScript:access:additionalDataAsJson:!**auto generated**!COM Interfaces-ICoreWebView2_17!public! !
 postWebMessageAsJson:!**auto generated**!methods!public! !
 PostWebMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+PostWebMessageAsJsonWithAdditionalObjects:additionalObjects:!COM Interfaces-ICoreWebView2_23!private! !
 postWebMessageAsString:!**auto generated**!methods!public! !
 PostWebMessageAsString:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Print:handler:!COM Interfaces-ICoreWebView2_16!public! !

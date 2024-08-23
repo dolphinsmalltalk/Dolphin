@@ -61,6 +61,54 @@ testChannelSearchKind
 		raise: HRESULTError
 		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_INVALID_PARAMETER]!
 
+testCustomSchemeRegistrations
+	| subject interface schemes scheme2 scheme1 unknowns |
+	subject := WebView2EnvironmentOptions new.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions4.
+	schemes := interface customSchemeRegistrations.
+	self assert: schemes equals: #().
+	scheme1 := (WebView2CustomSchemeRegistration newScheme: 'foo')
+				treatAsSecure: true;
+				hasAuthorityComponent: true;
+				allowedOrigins: #('https://www.object-arts.com');
+				yourself.
+	scheme2 := (WebView2CustomSchemeRegistration newScheme: 'bar')
+				allowedOrigins: #('https://www.object-arts.com' 'https://www.github.com');
+				yourself.
+	interface customSchemeRegistrations: { scheme1. scheme2 }.
+	schemes := subject customSchemeRegistrations.
+	self assert: schemes size equals: 2.
+	schemes do: [:each | self assert: each referenceCount equals: 1].
+	unknowns := { scheme1 queryInterface: IUnknown. scheme2 queryInterface: IUnknown }.
+	schemes do: [:each | self assert: each referenceCount equals: 2].
+	self assert: (schemes first isSameCOMObject: unknowns first).
+	self assert: (schemes second isSameCOMObject: unknowns second).
+	schemes := interface customSchemeRegistrations.
+	schemes do: [:each | self assert: each referenceCount equals: 3].
+	self assert: (schemes first isSameCOMObject: unknowns first).
+	self assert: (schemes second isSameCOMObject: unknowns second).
+	"Verify that the call and implementation wrappers correctly implement the fairly complex memory management requirements of the GetAllowedOrigins function"
+	self assert: schemes first allowedOrigins equals: scheme1 allowedOrigins.
+	self assert: schemes second allowedOrigins equals: scheme2 allowedOrigins.
+	"Check the simple properties."
+	self assert: schemes first schemeName equals: 'foo'.
+	self assert: schemes second schemeName equals: 'bar'.
+	self assert: schemes first treatAsSecure.
+	self deny: schemes second treatAsSecure.
+	self assert: schemes first hasAuthorityComponent.
+	self deny: schemes second hasAuthorityComponent.
+
+	"The reference counting is quite involved here, so we check to make sure we've got it right"
+	schemes do: [:each | each free].
+	subject customSchemeRegistrations do: [:each | self assert: each referenceCount equals: 2].
+	unknowns do: [:each | each free].
+	subject customSchemeRegistrations do: [:each | self assert: each referenceCount equals: 1].
+	self assert: (ObjectStub registry includesKey: scheme1).
+	self assert: (ObjectStub registry includesKey: scheme2).
+	interface customSchemeRegistrations: #().
+	self deny: (ObjectStub registry includesKey: scheme1).
+	self deny: (ObjectStub registry includesKey: scheme2)!
+
 testEnableTrackingPrevention
 	| subject interface |
 	subject := WebView2EnvironmentOptions new.
@@ -137,6 +185,65 @@ testScrollbarStyle
 		raise: HRESULTError
 		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_INVALID_PARAMETER]!
 
+testStlConvertFromVersion0
+	| options |
+	options := Object
+				fromLiteralStoreArray: #(#'!!STL' 4 1704966 ##(Smalltalk.WebView2EnvironmentOptions) nil 13 8 'fr-FR' 8 '100.0.1185').
+	self deny: options allowSSO.
+	self assert: options isCustomCrashReportingEnabled.
+	self assert: options browserVersion equals: '100.0.1185'.
+	self assert: options locale equals: 'fr-FR'.
+	self assert: options trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	self assert: options channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+	self assert: options releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+	self assert: options scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
+	self assert: options customSchemeRegistrations equals: #()!
+
+testStlConvertFromVersion0a
+	| options |
+	options := (Object fromLiteralStoreArray: #(#'!!STL' 6 1286 #{WebView2.WebView2EnvironmentOptions} nil 13 8 'fr-FR' 8 '100.0.1185' 5)).
+	self deny: options allowSSO.
+	self assert: options isCustomCrashReportingEnabled.
+	self assert: options browserVersion equals: '100.0.1185'.
+	self assert: options locale equals: 'fr-FR'.
+	self assert: options trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	self assert: options channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+	self assert: options releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+	self assert: options scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
+	self assert: options customSchemeRegistrations equals: #()!
+
+testStlConvertFromVersion1
+	| options |
+	options := Object
+				fromLiteralStoreArray: #(#'!!STL' 6 2118 1 #{WebView2.WebView2EnvironmentOptions} nil 13 8 'fr-FR' 8 '100.0.1185' 7 3 5 3).
+	self deny: options allowSSO.
+	self assert: options isCustomCrashReportingEnabled.
+	self assert: options browserVersion equals: '100.0.1185'.
+	self assert: options locale equals: 'fr-FR'.
+	self assert: options trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT.
+	self assert: options channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE.
+	self assert: options releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_BETA.
+	self assert: options scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_FLUENT_OVERLAY.
+	self assert: options customSchemeRegistrations equals: #()!
+
+testStlConvertFromVersion2
+	| options scheme |
+	options := (Object fromLiteralStoreArray: #(#'!!STL' 6 2374 2 #{WebView2.WebView2EnvironmentOptions} nil 13 8 'fr-FR' 8 '100.0.1185' 5 1 3 1 38 #{Core.Array} 1 774 #{WebView2.WebView2CustomSchemeRegistration} 3 8 'foo' 82 2 8 'https://www.object-arts.com' 8 'https://www.github.com/DolphinSmalltalk')).
+	self deny: options allowSSO.
+	self assert: options isCustomCrashReportingEnabled.
+	self assert: options browserVersion equals: '100.0.1185'.
+	self assert: options locale equals: 'fr-FR'.
+	self assert: options trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	self assert: options channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+	self assert: options releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+	self assert: options scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
+	scheme := options customSchemeRegistrations single.
+	self assert: scheme schemeName equals: 'foo'.
+	self assert: scheme allowedOrigins
+		equals: #('https://www.object-arts.com' 'https://www.github.com/DolphinSmalltalk').
+	self assert: scheme hasAuthorityComponent.
+	self deny: scheme treatAsSecure!
+
 testTargetCompatibleBrowserVersion
 	| subject interface version |
 	subject := WebView2EnvironmentOptions new.
@@ -155,12 +262,17 @@ testAdditionalBrowserArguments!public! !
 testAllowSSO!public! !
 testAreBrowserExtensionsEnabled!public! !
 testChannelSearchKind!public! !
+testCustomSchemeRegistrations!public! !
 testEnableTrackingPrevention!public! !
 testExclusiveDataFolderAccess!public! !
 testIsCustomCrashReportingEnabled!public! !
 testLanguage!public! !
 testReleaseChannels!public! !
 testScrollbarStyle!public! !
+testStlConvertFromVersion0!public! !
+testStlConvertFromVersion0a!public! !
+testStlConvertFromVersion1!public! !
+testStlConvertFromVersion2!public! !
 testTargetCompatibleBrowserVersion!public! !
 !
 

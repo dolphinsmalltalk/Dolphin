@@ -140,6 +140,11 @@ length: length elementClass: elementClass
 
 	^self subclassResponsibility!
 
+new: anInteger bufferClass: bufferClass
+	"Answer a new instance of the receiver allocated at an immovable location."
+
+	^self shouldNotImplement!
+
 withAll: aCollection elementClass: structClass 
 	"Answer a new instance of the receiver containing all of the elements of the <collection> 
 	argument, represented in the format of the <ExternalStructure> class argument.  An error 
@@ -156,6 +161,7 @@ withAll: aCollection elementClass: structClass
 
 !External.GenericExternalArray class categoriesForMethods!
 length:elementClass:!instance creation!public! !
+new:bufferClass:!instance creation!public! !
 withAll:elementClass:!instance creation!public! !
 !
 

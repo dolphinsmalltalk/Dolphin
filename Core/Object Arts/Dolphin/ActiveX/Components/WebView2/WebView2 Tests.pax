@@ -6,15 +6,37 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{WebView2.Tests}
+	#{WebView2.Tests.ICoreWebView2Environment10Test}
+	#{WebView2.Tests.ICoreWebView2Environment11Test}
+	#{WebView2.Tests.ICoreWebView2Environment12Test}
+	#{WebView2.Tests.ICoreWebView2Environment13Test}
+	#{WebView2.Tests.ICoreWebView2Environment14Test}
+	#{WebView2.Tests.ICoreWebView2Environment2Test}
+	#{WebView2.Tests.ICoreWebView2Environment3Test}
+	#{WebView2.Tests.ICoreWebView2Environment6Test}
+	#{WebView2.Tests.ICoreWebView2Environment7Test}
+	#{WebView2.Tests.ICoreWebView2Environment8Test}
+	#{WebView2.Tests.ICoreWebView2EnvironmentTest}
+	#{WebView2.Tests.ICoreWebView2ObjectCollectionTest}
+	#{WebView2.Tests.WebView2CustomSchemeRegistrationTest}
 	#{WebView2.Tests.WebView2EnvironmentOptionsTest}
 	#{WebView2.Tests.WebView2ViewTest}
+	#{WebView2.Tests.WebViewEnvironmentTest}
 ).
 
 package setMethodNames: #(
 	#(#{UI.WebView2View class} #correspondingTestCase)
+	#(#{WebView2.AbstractICoreWebView2WebResourceResponse class} #correspondingTestCase)
+	#(#{WebView2.ICoreWebView2CustomSchemeRegistration class} #correspondingTestCase)
+	#(#{WebView2.ICoreWebView2FileSystemHandle class} #correspondingTestCase)
+	#(#{WebView2.ICoreWebView2PointerInfo class} #correspondingTestCase)
+	#(#{WebView2.ICoreWebView2PrintSettings class} #correspondingTestCase)
+	#(#{WebView2.ICoreWebView2SharedBuffer class} #correspondingTestCase)
+	#(#{WebView2.ICoreWebView2WebResourceRequest class} #correspondingTestCase)
 ).
 
 package setPrerequisites: #(
+	'..\..\..\..\Samples\ActiveX\Random\COM Random Stream'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
@@ -25,10 +47,12 @@ package setPrerequisites: #(
 	'..\..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\COM\OLE COM'
 	'..\..\Structured Storage\OLE Streams'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'WebView2'
+	'WebView2 (Old Names)'
 ).
 
 package!
@@ -44,8 +68,24 @@ WebView2
 	classConstants: {}!
 
 Core.Tests.DolphinTest
+	subclass: #'WebView2.Tests.WebView2CustomSchemeRegistrationTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
 	subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'WebView2.Tests.WebViewEnvironmentTest'
+	instanceVariableNames: 'webviewEnvironment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -59,6 +99,102 @@ UI.Tests.PresenterTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment10Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment11Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment12Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment13Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment14Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment2Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment3Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment6Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment7Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment8Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2EnvironmentTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2ObjectCollectionTest'
+	instanceVariableNames: 'objects'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 "Loose Methods"!
 
 !UI.WebView2View class methodsFor!
@@ -67,6 +203,69 @@ correspondingTestCase
 	^WebView2.Tests.WebView2ViewTest! !
 
 !UI.WebView2View class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!WebView2.AbstractICoreWebView2WebResourceResponse class methodsFor!
+
+correspondingTestCase
+	^Tests.ICoreWebView2EnvironmentTest! !
+
+!WebView2.AbstractICoreWebView2WebResourceResponse class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!WebView2.ICoreWebView2CustomSchemeRegistration class methodsFor!
+
+correspondingTestCase
+	^Tests.WebView2EnvironmentOptionsTest! !
+
+!WebView2.ICoreWebView2CustomSchemeRegistration class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!WebView2.ICoreWebView2FileSystemHandle class methodsFor!
+
+correspondingTestCase
+	^Tests.ICoreWebView2Environment14Test! !
+
+!WebView2.ICoreWebView2FileSystemHandle class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!WebView2.ICoreWebView2PointerInfo class methodsFor!
+
+correspondingTestCase
+	^Tests.ICoreWebView2Environment3Test! !
+
+!WebView2.ICoreWebView2PointerInfo class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!WebView2.ICoreWebView2PrintSettings class methodsFor!
+
+correspondingTestCase
+	^Tests.ICoreWebView2Environment6Test! !
+
+!WebView2.ICoreWebView2PrintSettings class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!WebView2.ICoreWebView2SharedBuffer class methodsFor!
+
+correspondingTestCase
+	^Tests.ICoreWebView2Environment12Test! !
+
+!WebView2.ICoreWebView2SharedBuffer class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!WebView2.ICoreWebView2WebResourceRequest class methodsFor!
+
+correspondingTestCase
+	^Tests.ICoreWebView2Environment2Test! !
+
+!WebView2.ICoreWebView2WebResourceRequest class categoriesForMethods!
 correspondingTestCase!public! !
 !
 

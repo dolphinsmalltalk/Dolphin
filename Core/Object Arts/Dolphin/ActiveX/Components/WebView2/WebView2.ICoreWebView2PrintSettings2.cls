@@ -82,58 +82,6 @@ interface ICoreWebView2PrintSettings2 : ICoreWebView2PrintSettings
 
 !WebView2.ICoreWebView2PrintSettings2 methodsFor!
 
-collation
-	"Answer the <sdword> value of the 'Collation' property of the receiver."
-
-	| answer |
-	answer := Int32 new.
-	self get_Collation: answer.
-	^answer asObject!
-
-collation: value
-	"Set the 'Collation' property of the receiver to the <sdword> value of the argument."
-
-	self put_Collation: value!
-
-colorMode
-	"Answer the <sdword> value of the 'ColorMode' property of the receiver."
-
-	| answer |
-	answer := Int32 new.
-	self get_ColorMode: answer.
-	^answer asObject!
-
-colorMode: value
-	"Set the 'ColorMode' property of the receiver to the <sdword> value of the argument."
-
-	self put_ColorMode: value!
-
-copies
-	"Answer the <sdword> value of the 'Copies' property of the receiver."
-
-	| answer |
-	answer := Int32 new.
-	self get_Copies: answer.
-	^answer asObject!
-
-copies: value
-	"Set the 'Copies' property of the receiver to the <sdword> value of the argument."
-
-	self put_Copies: value!
-
-duplex
-	"Answer the <sdword> value of the 'Duplex' property of the receiver."
-
-	| answer |
-	answer := Int32 new.
-	self get_Duplex: answer.
-	^answer asObject!
-
-duplex: value
-	"Set the 'Duplex' property of the receiver to the <sdword> value of the argument."
-
-	self put_Duplex: value!
-
 get_Collation: value
 	"Private - Get the value of the 'Collation' property of the receiver.
 
@@ -206,65 +154,9 @@ get_PrinterName: value
 	<virtual stdcall: hresult 44 lpwstr*>
 	^self invalidCall: _failureCode!
 
-mediaSize
-	"Answer the <sdword> value of the 'MediaSize' property of the receiver."
-
-	| answer |
-	answer := Int32 new.
-	self get_MediaSize: answer.
-	^answer asObject!
-
-mediaSize: value
-	"Set the 'MediaSize' property of the receiver to the <sdword> value of the argument."
-
-	self put_MediaSize: value!
-
-pageRanges
-	"Answer the <lpwstr> value of the 'PageRanges' property of the receiver."
-
-	| ptr answer |
-	ptr := TaskMemory new.
-	self get_PageRanges: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
-pageRanges: value
-	"Set the 'PageRanges' property of the receiver to the <lpwstr> value of the argument."
-
-	self put_PageRanges: value asUtf16String!
-
-pagesPerSide
-	"Answer the <sdword> value of the 'PagesPerSide' property of the receiver."
-
-	| answer |
-	answer := Int32 new.
-	self get_PagesPerSide: answer.
-	^answer asObject!
-
-pagesPerSide: value
-	"Set the 'PagesPerSide' property of the receiver to the <sdword> value of the argument."
-
-	self put_PagesPerSide: value!
-
 printableProperties
 	^#(#printerName #pageRanges #collation #colorMode #copies #duplex #mediaSize #pagesPerSide)
 		, super printableProperties!
-
-printerName
-	"Answer the <lpwstr> value of the 'PrinterName' property of the receiver."
-
-	| ptr answer |
-	ptr := TaskMemory new.
-	self get_PrinterName: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
-printerName: value
-	"Set the 'PrinterName' property of the receiver to the <lpwstr> value of the argument."
-
-	self put_PrinterName: value asUtf16String!
 
 put_Collation: value
 	"Private - Set the value of the 'Collation' property of the object wrapped by the 
@@ -347,14 +239,6 @@ put_PrinterName: value
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2PrintSettings2 categoriesForMethods!
-collation!**auto generated**!properties!public! !
-collation:!**auto generated**!properties!public! !
-colorMode!**auto generated**!properties!public! !
-colorMode:!**auto generated**!properties!public! !
-copies!**auto generated**!properties!public! !
-copies:!**auto generated**!properties!public! !
-duplex!**auto generated**!properties!public! !
-duplex:!**auto generated**!properties!public! !
 get_Collation:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 get_ColorMode:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 get_Copies:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
@@ -363,15 +247,7 @@ get_MediaSize:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!pri
 get_PageRanges:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 get_PagesPerSide:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 get_PrinterName:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
-mediaSize!**auto generated**!properties!public! !
-mediaSize:!**auto generated**!properties!public! !
-pageRanges!properties!public! !
-pageRanges:!**auto generated**!properties!public! !
-pagesPerSide!**auto generated**!properties!public! !
-pagesPerSide:!**auto generated**!properties!public! !
 printableProperties!printing!public! !
-printerName!properties!public! !
-printerName:!**auto generated**!properties!public! !
 put_Collation:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 put_ColorMode:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 put_Copies:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !

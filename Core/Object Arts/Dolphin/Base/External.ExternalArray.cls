@@ -577,6 +577,13 @@ new: anInteger
 
 	^self length: anInteger elementSize: self elementSize!
 
+new: anInteger bufferClass: bufferClass
+	"Answer a new instance of the receiver allocated at an immovable location."
+
+	^(super new: anInteger * self elementSize bufferClass: bufferClass)
+		basicLength: anInteger;
+		yourself!
+
 new: elementCount withAll: elementValue
 	"Answer a new instance of the receiver with <integer>, anInteger, elements, each of which is initialized to the <Object>, anObject."
 
@@ -617,6 +624,7 @@ getFieldNames!constants!private! !
 length:elementSize:!instance creation!private! !
 marshal:!instance creation!public! !
 new:!instance creation!public! !
+new:bufferClass:!instance creation!public! !
 new:withAll:!public! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !

@@ -25,6 +25,33 @@ Subclasses must provide at least `elementClass` and `GetValueAtIndex:value:` to 
 , aSequencedReadableCollection
 	^self asArray , aSequencedReadableCollection!
 
+add: newElement
+	"Append, and answer, newElement as the last element of the receiver."
+
+	^self addLast: newElement!
+
+add: anObject beforeIndex: anInteger
+	| unk |
+	unk := anObject queryInterface: self elementClass.
+	self InsertValueAtIndex: anInteger - 1 value: unk.
+	^unk!
+
+addAll: aCollection
+	"Include all the elements of the <collection> argument as the receiver's elements. 
+	Answer the argument. Note that this modifies and answers the receiver, not a copy."
+
+	^self addAllLast: aCollection!
+
+addAllLast: aCollection
+	"Append the elements of the <collection> argument to the receiver, in the order that they appear in that collection (as defined by its implementation of #do:). Answer the collection."
+
+	^aCollection collect: [:each | self addLast: each]!
+
+addLast: anObject
+	"Insert the argument as the last element of the receiver."
+
+	^self add: anObject beforeIndex: self size + 1!
+
 after: anObject
 	"Answer the element after the argument, anObject. Report an error if target is not in the receiver, or if there are no elements after it."
 
@@ -57,6 +84,29 @@ at: index ifAbsent: exceptionBlock
 	^(index > 0 and: [index <= self size])
 		ifTrue: [self at: index]
 		ifFalse: [exceptionBlock value]!
+
+at: anInteger put: anObject
+	"There is no overwrite operation, so we must remove and insert"
+
+	| added |
+	self removeAtIndex: anInteger.
+	added := self add: anObject beforeIndex: anInteger.
+	^added!
+
+atAll: aCollectionOfIntegers put: anObject
+	"Replace the elements of the receiver at each <integer> element of the <collection> first argument with the <Object> last argument."
+
+	aCollectionOfIntegers do: [:index | self at: index put: anObject]!
+
+atAllPut: newElement
+	"Replace all the elements of the receiver with the <Object> argument, newElement."
+
+	| count unk |
+	count := self size.
+	self removeAll.
+	unk := newElement queryInterface: self elementClass.
+	0 to: count - 1 do: [:i | self InsertValueAtIndex: i value: unk].
+	^unk!
 
 basicIndexOfSubCollection: targetSequence startingAt: start
 	| firstElement subSize size |
@@ -237,6 +287,11 @@ indexOfSubCollection: targetSequence startingAt: start ifAbsent: exceptionHandle
 		ifTrue: [exceptionHandler value]
 		ifFalse: [index]!
 
+InsertValueAtIndex: anInteger value: anObject
+	"Only implemented by writable sequences"
+
+	^self shouldNotImplement!
+
 keys
 	"Answer a <collection> containing the receiver's keys."
 
@@ -254,6 +309,12 @@ last
 
 	^self at: self size!
 
+maybeBoundsError: codeInteger atIndex: indexInteger
+	((HRESULT decodePrimitiveFailureCode: codeInteger) = E_INVALIDARG
+		and: [indexInteger isInteger and: [indexInteger positive]]) ifFalse: [^self].
+	(indexInteger between: 0 and: self size - 1)
+		ifFalse: [^self errorSubscriptBounds: indexInteger + 1]!
+
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 
 	startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
@@ -265,8 +326,86 @@ printOn: aPuttableStream
 	aPuttableStream
 		basicPrint: self;
 		nextPut: $(.
-	self do: [:each | each printOn: aPuttableStream] separatedBy: [aPuttableStream space].
+	self isNull
+		ifTrue: [aPuttableStream nextPutAll: 'NULL']
+		ifFalse: [self do: [:each | each printOn: aPuttableStream] separatedBy: [aPuttableStream space]].
 	aPuttableStream nextPut: $)!
+
+removeAll
+	"Empty the receiver of all contents"
+
+	self size - 1 to: 0
+		by: -1
+		do: [:i | self RemoveValueAtIndex: i]!
+
+removeAtIndex: anInteger
+	"Remove, and answer, the element of the receiver at the specified <integer> index, by shuffling elements which succeed it down one slot.
+	Raise a <BoundsError> if there is no element with that index."
+
+	| item |
+	item := self at: anInteger.
+	self RemoveValueAtIndex: anInteger - 1.
+	^item!
+
+removeFirst
+	"Remove and answer the first element of the receiver, raising an exception if the receiver is empty."
+
+	^self removeAtIndex: 1!
+
+removeLast
+	"Remove and answer the last element of the receiver, raising an exception if the receiver is empty."
+
+	^self removeAtIndex: self size!
+
+RemoveValueAtIndex: anInteger
+	"Only implemented by writable sequences"
+
+	^self shouldNotImplement!
+
+replaceFrom: start to: stop with: replacementElements
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	start and stop with the <Object> elements of the <sequencedReadableCollection> argument, 
+	replacementElements. Answer the receiver. Raise an Exception if  replacementElements does 
+	not contain the number of elements required to exactly fill the replacement interval in the receiver."
+
+	replacementElements size = (stop - start + 1)
+		ifFalse: [^self error: 'size of replacement incorrect'].
+	^self replaceFrom: start to: stop with: replacementElements startingAt: 1!
+
+replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger 
+	"Destructively replace the elements of the receiver between the <integer> arguments
+	startInteger and stopInteger inclusive with the <Object> elements of the
+	<sequencedReadableCollection> argument, aSequencedReadableCollection, beginning with its
+	element with <integer> index startAtInteger. Answer the receiver. Overlapping moves are
+	correctly handled. Unlike #replaceFrom:to:with:, the size of aSequenceableCollection is not
+	checked directly (X3J20 does not specify that this should be an error), but an error will be
+	raised when an attempt is made to access an out-of-bounds element in replacementElements. It
+	is not an error to specify an empty replacement interval, even if startInteger, stopInteger,
+	and/or startAtInteger are out-of-bounds (this is compatible with the major
+	implementations)."
+
+	"Implementation Note: The performance of this method is very important to overall 
+	system performance. This implementation is mostly inlined by the compiler."
+
+	| offset |
+	offset := startAtInteger - startInteger.
+	"Perform overlapping moves backwards, otherwise forwards"
+	(self == aSequencedReadableCollection and: [startAtInteger < startInteger]) 
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | self at: i put: (aSequencedReadableCollection at: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger
+				do: [:i | self at: i put: (aSequencedReadableCollection at: offset + i)]]!
+
+replaceFrom: start to: stop withObject: replacementElement
+	"Destructively replace the elements of the receiver between the
+	<integer> indices start and stop with the <Object> argument,
+	replacementElement. Answer replacementElement."
+
+	start to: stop do: [:i | self at: i put: replacementElement].
+	^replacementElement!
 
 reverse
 	"Implemented because this is part of the ANSI compatibility sequencedReadableCollection protocols, but discouraged because the use of the present tense implies that the operation happens in place, whereas in fact a new instance is answered. #reversed should be used in preference."
@@ -294,6 +433,12 @@ reverseDo: operation
 
 	self size to: 1 by: -1 do: [:i | operation value: (self at: i)]!
 
+second
+	"Answer an <Object> which is the second element of the receiver. 
+	Raise an exception if the element does not exist."
+
+	^self at: 2!
+
 size
 	"Answer the <dword> value of the 'Count' property of the receiver."
 
@@ -301,6 +446,12 @@ size
 	answer := UInt32 new.
 	self get_Count: answer.
 	^answer asObject!
+
+third
+	"Answer an <Object> which is the third element of the receiver. 
+	Raise an exception if the element does not exist."
+
+	^self at: 3!
 
 with: otherCollection do: operation
 	"Evaluate the <dyadicValuable> argument, operation, with each of 
@@ -313,10 +464,18 @@ with: otherCollection do: operation
 
 !WebView2.ICoreWebView2Sequence categoriesForMethods!
 ,!copying!public! !
+add:!adding!public! !
+add:beforeIndex:!adding!public! !
+addAll:!adding!public! !
+addAllLast:!adding!public! !
+addLast:!adding!public! !
 after:!public!searching! !
 after:ifAbsent:!public!searching! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+atAll:put:!accessing!public! !
+atAllPut:!accessing!public! !
 basicIndexOfSubCollection:startingAt:!private!searching! !
 before:!public!searching! !
 before:ifAbsent:!public!searching! !
@@ -341,18 +500,32 @@ indexOf:!public!searching! !
 indexOf:ifAbsent:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:ifAbsent:!public!searching! !
+InsertValueAtIndex:value:!adding!private! !
 keys!accessing!public! !
 keysAndValuesDo:!enumerating!public! !
 last!accessing!public! !
+maybeBoundsError:atIndex:!accessing!private! !
 nextIndexOf:from:to:!public!searching! !
 printOn:!printing!public! !
+removeAll!public!removing! !
+removeAtIndex:!public!removing! !
+removeFirst!public!removing! !
+removeLast!public!removing! !
+RemoveValueAtIndex:!private!removing! !
+replaceFrom:to:with:!public!replacing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+replaceFrom:to:withObject:!public!replacing! !
 reverse!copying!public! !
 reversed!copying!public! !
 reversedFrom:to:!copying!public! !
 reverseDo:!enumerating!public! !
+second!accessing!public! !
 size!accessing!public! !
+third!accessing!public! !
 with:do:!enumerating!public! !
 !
 
+WebView2.ICoreWebView2Sequence methodProtocol: #sequencedCollection attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
+WebView2.ICoreWebView2Sequence methodProtocol: #sequencedContractibleCollection attributes: #(#ansi #readOnly) selectors: #(#allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #removeAtIndex: #removeFirst #removeLast #select: #size)!
 WebView2.ICoreWebView2Sequence methodProtocol: #sequencedReadableCollection attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
 

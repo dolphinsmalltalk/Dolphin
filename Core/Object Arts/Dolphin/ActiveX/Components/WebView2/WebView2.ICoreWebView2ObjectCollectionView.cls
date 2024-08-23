@@ -52,11 +52,12 @@ GetValueAtIndex: index value: value
 			[out, retval]IUnknown** value);"
 
 	<virtual stdcall: hresult 5 uint32 IUnknown**>
+	self maybeBoundsError: _failureCode atIndex: index.
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2ObjectCollectionView categoriesForMethods!
 elementClass!constants!private! !
-GetValueAtIndex:value:!**auto generated**!COM Interfaces-ICoreWebView2ObjectCollectionView!private! !
+GetValueAtIndex:value:!COM Interfaces-ICoreWebView2ObjectCollectionView!private! !
 !
 
 !WebView2.ICoreWebView2ObjectCollectionView class methodsFor!

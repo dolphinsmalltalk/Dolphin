@@ -40,21 +40,37 @@ interface ICoreWebView2EnvironmentOptions4 : IUnknown
 
 !WebView2.ICoreWebView2EnvironmentOptions4 methodsFor!
 
-getCustomSchemeRegistrations
+customSchemeRegistrations
+	"Answer an <Array> of <ICoreWebView2CustomSchemeRegistration>s describing the receiver's custom URI schemes."
+
+	"This API is not as well designed as most of the other APIs in WebView2 that represent sequences as there is no collection object defined. Rather a contiguous array has to be allocated from the task allocator, populated with addref'd interface pointers, and then owership (i.e. responsibility to free) that array is passed out to the caller."
+
 	| registrations pArray count |
 	count := UInt32Bytes new.
-	pArray := External.Address new.
+	pArray := TaskMemory new.
 	self GetCustomSchemeRegistrations: count schemeRegistrations: pArray.
+	self assert: [(TaskMemory DidAlloc: pArray) ~~ 0].
 	count := count value.
 	registrations := Array new: count.
 	1 to: count
 		do: 
 			[:i |
+			"By attaching the interface pointers in the array, we are assuming the ref count added by the implementor of GetCustomSchemeRegistrations"
 			registrations at: i
 				put: (ICoreWebView2CustomSchemeRegistration
 						attach: (pArray uintPtrAtOffset: (i - 1) * Kernel.VMConstants.IntPtrSize))].
-	TaskMemory free: pArray.
+	pArray free.
 	^registrations!
+
+customSchemeRegistrations: aCollection
+	"Set the collection of <ICoreWebView2CustomSchemeRegistration>s describing the receiver's custom URI schemes."
+
+	| interfaces pointers |
+	interfaces := aCollection
+				collect: [:each | each queryInterface: ICoreWebView2CustomSchemeRegistration].
+	pointers := PointerArray withAll: interfaces.
+	self SetCustomSchemeRegistrations: pointers size schemeRegistrations: pointers.
+	interfaces do: [:each | each free]!
 
 GetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 	"Private - Invoke the GetCustomSchemeRegistrations() method of the COM object.
@@ -65,14 +81,6 @@ GetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 
 	<virtual stdcall: hresult 4 dword* ICoreWebView2CustomSchemeRegistration**>
 	^self invalidCall: _failureCode!
-
-setCustomSchemeRegistrations: aCollection
-	| interfaces pointers |
-	interfaces := aCollection
-				collect: [:each | each queryInterface: ICoreWebView2CustomSchemeRegistration].
-	pointers := PointerArray withAll: interfaces.
-	self SetCustomSchemeRegistrations: pointers size schemeRegistrations: pointers.
-	interfaces do: [:each | each free]!
 
 SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 	"Private - Invoke the SetCustomSchemeRegistrations() method of the COM object.
@@ -85,9 +93,9 @@ SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2EnvironmentOptions4 categoriesForMethods!
-getCustomSchemeRegistrations!COM Interfaces-ICoreWebView2EnvironmentOptions4!public! !
+customSchemeRegistrations!accessing!public! !
+customSchemeRegistrations:!accessing!public! !
 GetCustomSchemeRegistrations:schemeRegistrations:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
-setCustomSchemeRegistrations:!COM Interfaces-ICoreWebView2EnvironmentOptions4!public! !
 SetCustomSchemeRegistrations:schemeRegistrations:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
 !
 

@@ -66,11 +66,20 @@ get_processInfo: processInfo
 	<virtual stdcall: hresult 4 ICoreWebView2ProcessInfo**>
 	^self invalidCall: _failureCode!
 
+kindName
+	^self processInfo kindName!
+
 printableProperties
 	| propertyNames |
-	propertyNames := OrderedCollection with: #processInfo.
-	self associatedFrameInfos isEmpty ifFalse: [propertyNames addLast: #associatedFrameInfos].
+	propertyNames := #(#processId #kindName).
+	self associatedFrameInfos isEmpty
+		ifFalse: [propertyNames := propertyNames copyWith: #associatedFrameInfos].
 	^propertyNames!
+
+processId
+	"Answer the <integer> id of the process."
+
+	^self processInfo processId!
 
 processInfo
 	"Answer the <ICoreWebView2ProcessInfo> value of the 'processInfo' property of the receiver."
@@ -84,7 +93,9 @@ processInfo
 associatedFrameInfos!**auto generated**!properties!public! !
 get_AssociatedFrameInfos:!**auto generated**!COM Interfaces-ICoreWebView2ProcessExtendedInfo!private! !
 get_processInfo:!**auto generated**!COM Interfaces-ICoreWebView2ProcessExtendedInfo!private! !
+kindName!properties!public! !
 printableProperties!printing!private! !
+processId!properties!public! !
 processInfo!**auto generated**!properties!public! !
 !
 
