@@ -147,6 +147,7 @@ Kernel.SharedPool
 			'SYS_MAC' -> 16r2.
 			'SYS_WIN16' -> 16r0.
 			'SYS_WIN32' -> 16r1.
+			'SYS_WIN64' -> 16r3.
 			'TKIND_ALIAS' -> 16r6.
 			'TKIND_COCLASS' -> 16r5.
 			'TKIND_DISPATCH' -> 16r4.

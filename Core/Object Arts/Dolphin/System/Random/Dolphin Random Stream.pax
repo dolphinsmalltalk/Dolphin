@@ -33,7 +33,11 @@ Core.Random
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'AnsiCIncrement' -> 16r3039.
+			'AnsiCModulus' -> 16r80000000.
+			'AnsiCMultiplier' -> 16r41C64E6D
+		}!
 
 Kernel.RandomLinearCongruential
 	subclass: #'Kernel.RandomParkMiller'

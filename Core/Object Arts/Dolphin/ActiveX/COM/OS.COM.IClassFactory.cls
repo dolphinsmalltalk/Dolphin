@@ -89,11 +89,41 @@ defineFunctions
 			returnType: 'int32'
 			argumentTypes: 'IUnknown* GUID* IUnknown**';
 		defineFunction: #LockServer:
-			argumentTypes: 'bool'! !
+			argumentTypes: 'bool'!
+
+onCLSID: aCLSID
+	| pFactory |
+	pFactory := self newPointer.
+	Ole32
+		coGetClassObject: aCLSID
+		dwClsContext: self ctxServer
+		pServerInfo: nil
+		riid: self iid
+		ppv: pFactory.
+	^pFactory!
+
+onCLSID: aCLSID hostName: aString
+	| pServerInfo pFactory dwClsContext |
+	dwClsContext := self ctxServer.
+	(aString notNil and: [aString notEmpty])
+		ifTrue: 
+			[pServerInfo := COSERVERINFO new.
+			pServerInfo hostName: aString.
+			dwClsContext := dwClsContext bitOr: CLSCTX_REMOTE_SERVER].
+	pFactory := self newPointer.
+	Ole32
+		coGetClassObject: aCLSID
+		dwClsContext: dwClsContext
+		pServerInfo: pServerInfo
+		riid: self iid
+		ppv: pFactory.
+	^pFactory! !
 
 !OS.COM.IClassFactory class categoriesForMethods!
 ctxAll!constants!public! !
 ctxServer!constants!public! !
 defineFunctions!initializing!public!template definition! !
+onCLSID:!instance creation!public! !
+onCLSID:hostName:!instance creation!public! !
 !
 

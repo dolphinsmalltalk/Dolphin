@@ -17,6 +17,7 @@ package setPrerequisites: #(
 	'..\..\..\..\Samples\ActiveX\Random\COM Random Stream'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\..\System\Random\Dolphin Random Stream'
 	'..\OLE COM'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 ).

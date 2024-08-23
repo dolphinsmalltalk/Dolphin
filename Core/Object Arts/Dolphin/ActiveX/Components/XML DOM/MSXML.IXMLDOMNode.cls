@@ -201,6 +201,7 @@ downCast
 	with DOM nodes because there is a type id in the base interface."
 
 	| specializedClass |
+	self isNull ifTrue: [^nil].
 	^self class == (specializedClass := self nodeTypes at: self nodeType ifAbsent: [IXMLDOMNode])
 		ifTrue: [self]
 		ifFalse: [self queryInterface: specializedClass]!

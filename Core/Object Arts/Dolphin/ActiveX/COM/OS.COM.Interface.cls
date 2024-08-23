@@ -109,9 +109,10 @@ detach
 			self yourAddress asExternalAddress]!
 
 downCast
-	"Query the latest derivation of this interface. This should be an instance of the latest knwon version of the interface if the common practice of deriving later versions as a subclass of the previous version is employed. It is an error if there is more than one subclass of the receiver's class. If the receiver is already of the most derived type known, then answer the receiver."
+	"Query the latest derivation of this interface. This should be an instance of the latest known version of the interface if the common practice of deriving later versions as a subclass of the previous version is employed. It is an error if there is more than one subclass of the receiver's class. If the receiver is already of the most derived type known, then answer the receiver. If the receiver is a null interface pointer, then answer nil."
 
 	| interfaceClass thisClass |
+	self isNull ifTrue: [^nil].
 	thisClass := self class.
 	interfaceClass := thisClass latestDerivation.
 	[interfaceClass == thisClass] whileFalse: 
@@ -935,27 +936,11 @@ onCLSID: aCLSID outerIUnknown: anIUnknown hostName:aString
 	^self onCLSID: aCLSID outerIUnknown: anIUnknown hostName:aString licenseKey: nil!
 
 onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: licenseString
-	"Answer an instance or subinstance of the receiver on an instance of the specified COM 
-	component class, instantiated by its registered server, with the specified outer (controlling) 
-	unknown, on the specified remote host, and using the specified license string (or nil if not 
-	licensed)."
+	"Answer an instance or subinstance of the receiver on an instance of the specified COM component class, instantiated by its registered server, with the specified outer (controlling) 	unknown, on the specified remote host, and using the specified license string (or nil if not licensed)."
 
-	| dwClsContext hr pServerInfo pUnk pFactory |
-	dwClsContext := self createContextFlags.
-	(hostNameString notNil and: [hostNameString notEmpty])
-		ifTrue: 
-			[pServerInfo := COSERVERINFO new.
-			pServerInfo hostName: hostNameString.
-			dwClsContext := dwClsContext bitOr: CLSCTX_REMOTE_SERVER].
-	pFactory := IClassFactory newPointer.
-	Ole32
-		coGetClassObject: aCLSID
-		dwClsContext: dwClsContext
-		pServerInfo: pServerInfo
-		riid: pFactory iid
-		ppv: pFactory.
-	"pFactory should not be null (an exception should have been raised), but just in case the class factory is
-	implemented incorrectly..."
+	| hr pUnk pFactory |
+	pFactory := IClassFactory onCLSID: aCLSID hostName: hostNameString.
+	"pFactory should not be null (an exception should have been raised), but just in case the class factory is implemented incorrectly..."
 	pFactory isNull ifTrue: [^nil].
 	"Successfully retrieved class factory - now ask it to make an instance"
 	pUnk := self newPointer.
@@ -965,7 +950,7 @@ onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: li
 				ppvObject: pUnk.
 	hr < 0
 		ifTrue: 
-			["Failed for some reason, perhaps it needs a license"
+			["Failed for some reason, perhaps it needs a license?"
 			hr = CLASS_E_NOTLICENSED ifFalse: [^HRESULTError signalWith: hr].
 			"Requires a runtime license. Must be a licensable object that is running on a machine without a valid machine-wide license, in which case a runtime license would have to be allocated on a machine that has such a license and then the license string passed in"
 			pFactory := pFactory queryInterface: IClassFactory2.

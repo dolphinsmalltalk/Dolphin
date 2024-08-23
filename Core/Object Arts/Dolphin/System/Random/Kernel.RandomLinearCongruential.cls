@@ -6,7 +6,11 @@ Core.Random
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'AnsiCIncrement' -> 16r3039.
+			'AnsiCModulus' -> 16r80000000.
+			'AnsiCMultiplier' -> 16r41C64E6D
+		}!
 
 Kernel.RandomLinearCongruential guid: (Core.GUID fromString: '{23d4b049-ae11-4fd4-872a-7fa0b04b2e6b}')!
 
@@ -20,8 +24,26 @@ The values of a, c, and m are the multiplier, increment and modulus constants re
 
 !Kernel.RandomLinearCongruential methodsFor!
 
+increment
+	^increment!
+
+increment: anInteger
+	increment := anInteger!
+
 lcg
 	^seed * multiplier + increment rem: modulus!
+
+modulus
+	^modulus!
+
+modulus: anInteger
+	modulus := anInteger!
+
+multiplier
+	^multiplier!
+
+multiplier: anInteger
+	multiplier := anInteger!
 
 next
 	"Answer the next <Float> between 0 and 1 in the pseudo-random number stream."
@@ -42,7 +64,13 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	seed := 1! !
 
 !Kernel.RandomLinearCongruential categoriesForMethods!
+increment!accessing!public! !
+increment:!initializing!private! !
 lcg!helpers!private! !
+modulus!accessing!public! !
+modulus:!initializing!private! !
+multiplier!accessing!public! !
+multiplier:!initializing!private! !
 next!accessing!public! !
 peek!accessing!public! !
 setModulus:multiplier:increment:!initializing!private! !
@@ -54,9 +82,9 @@ newANSIC
 	"Answer a new <RandomLinearCongruential> configured as the ANSI C rand() generator."
 
 	^self 
-		newModulus: 16r80000000
-		multiplier: 1103515245
-		increment: 12345!
+		newModulus: AnsiCModulus
+		multiplier: AnsiCMultiplier
+		increment: AnsiCIncrement!
 
 newModulus: mInteger multiplier: aInteger increment: cInteger 
 	"Answer a new <RandomLinearCongruential> generator, configured with the specified a, c, and m

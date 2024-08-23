@@ -1,0 +1,9 @@
+.vs
+Random.h
+*_i.c
+*_p.c
+*.VC.*
+*.vcxproj.user
+Debug
+Release
+*.tlog

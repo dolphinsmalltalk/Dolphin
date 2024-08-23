@@ -740,7 +740,6 @@ environment
 	| environment |
 	environment := ICoreWebView2Environment newPointer.
 	self get_Environment: environment.
-	environment isNull ifTrue: [^nil].
 	^environment downCast!
 
 ExecuteScript: javaScript handler: handler
@@ -1277,7 +1276,7 @@ profile
 	| answer |
 	answer := ICoreWebView2Profile newPointer.
 	self get_Profile: answer.
-	^answer notNull ifTrue: [answer downCast]!
+	^answer downCast!
 
 put_DefaultDownloadDialogCornerAlignment: value
 	"Private - Set the value of the 'DefaultDownloadDialogCornerAlignment' property of the object wrapped by the 

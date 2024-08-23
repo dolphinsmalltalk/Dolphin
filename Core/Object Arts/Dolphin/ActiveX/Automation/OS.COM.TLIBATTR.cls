@@ -76,6 +76,17 @@ lcid
 
 	^bytes uint32AtOffset: _OffsetOf_lcid!
 
+syskind
+	^VMConstants.IsWin64 ifTrue: [SYS_WIN64] ifFalse: [SYS_WIN32]!
+
+unregister
+	OleAut32
+		unRegisterTypeLib: self guid
+		wVerMajor: self wMajorVerNum
+		wVerMinor: self wMinorVerNum
+		lcid: self lcid
+		syskind: self syskind!
+
 version
 	"Answer an N.N version string for the receiver."
 
@@ -91,10 +102,20 @@ wMajorVerNum
 
 	^bytes uint16AtOffset: _OffsetOf_wMajorVerNum!
 
+wMajorVerNum: anInteger
+	"Set the receiver's 'wMajorVerNum' field to the value of the argument, anInteger"
+
+	bytes uint16AtOffset: _OffsetOf_wMajorVerNum put: anInteger!
+
 wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
-	^bytes uint16AtOffset: _OffsetOf_wMinorVerNum! !
+	^bytes uint16AtOffset: _OffsetOf_wMinorVerNum!
+
+wMinorVerNum: anInteger
+	"Set the receiver's 'wMinorVerNum' field to the value of the argument, anInteger"
+
+	bytes uint16AtOffset: _OffsetOf_wMinorVerNum put: anInteger! !
 
 !OS.COM.TLIBATTR categoriesForMethods!
 comparisonSize!accessing!private! !
@@ -104,10 +125,14 @@ isControl!public!testing! !
 isHidden!public!testing! !
 isRestricted!public!testing! !
 lcid!**compiled accessors**!public! !
+syskind!constants!public! !
+unregister!operations!public! !
 version!accessing-version!public! !
 wLibFlags!**compiled accessors**!public! !
 wMajorVerNum!**compiled accessors**!public! !
+wMajorVerNum:!**compiled accessors**!public! !
 wMinorVerNum!**compiled accessors**!public! !
+wMinorVerNum:!**compiled accessors**!public! !
 !
 
 !OS.COM.TLIBATTR class methodsFor!
@@ -149,8 +174,8 @@ defineFields
 		defineField: #guid			type: (StructureField type: GUID) beReadOnly;
 		defineField: #lcid				type: UInt32Field readOnly;
 		defineField: #syskind			type: Int32Field filler;		"Always Win32"
-		defineField: #wMajorVerNum	type: UInt16Field readOnly;
-		defineField: #wMinorVerNum	type: UInt16Field readOnly;
+		defineField: #wMajorVerNum	type: UInt16Field new;
+		defineField: #wMinorVerNum	type: UInt16Field new;
 		defineField: #wLibFlags		type: UInt16Field readOnly!
 
 getFieldNames

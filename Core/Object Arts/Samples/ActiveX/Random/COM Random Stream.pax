@@ -23,6 +23,7 @@ OS.COM.Examples.RandomStream revokeClassFactories'.
 
 package setClassNames: #(
 	#{OS.COM.Examples.IRandomStream}
+	#{OS.COM.Examples.IRandomStream2}
 	#{OS.COM.Examples.RandomStream}
 	#{OS.COM.Examples.RandomStreamSessionManager}
 ).
@@ -71,6 +72,14 @@ UI.RuntimeSessionManager
 
 OS.COM.IDispatch
 	subclass: #'OS.COM.Examples.IRandomStream'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Examples.IRandomStream
+	subclass: #'OS.COM.Examples.IRandomStream2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

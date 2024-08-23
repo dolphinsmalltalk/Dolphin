@@ -33,10 +33,35 @@ import "ocidl.idl";
 			HRESULT UpperBound([in] long newVal);
 	};
 
+	[
+		object,
+			uuid(32829FC4-B067-4665-99AE-8F9E452D996E),
+			dual,
+			helpstring("IRandomStream2 Interface"),
+			pointer_default(unique),
+			nonextensible,
+			restricted	// Uses unsigned integers, so not really suitable for scripting languages
+	]
+	interface IRandomStream2 : IRandomStream
+	{
+		[propget, id(5), helpstring("LCG multiplier")]
+			HRESULT Multiplier([out, retval] DWORD* pVal);
+		[propput, id(5), helpstring("LCG multiplier")]
+			HRESULT Multiplier([in] DWORD newVal);
+		[propget, id(6), helpstring("LCG increment")]
+			HRESULT Increment([out, retval] DWORD * pVal);
+		[propput, id(6), helpstring("LCG increment")]
+			HRESULT Increment([in] DWORD newVal);
+		[propget, id(7), helpstring("LCG modulus")]
+			HRESULT Modulus([out, retval] DWORD* pVal);
+		[propput, id(7), helpstring("LCG modulus")]
+			HRESULT Modulus([in] DWORD newVal);
+	};
+
 [
 	uuid(0E2CEA2F-E6C4-11D2-833B-0020AFAB8EFE),
-	version(1.0),
-	helpstring("Random 1.0 Type Library")
+	version(1.1),
+	helpstring("Random 1.1 Type Library")
 ]
 library RANDOMLib
 {
@@ -51,5 +76,6 @@ library RANDOMLib
 	coclass RandomStream
 	{
 		[default] interface IRandomStream;
+		interface IRandomStream2;
 	};
 };

@@ -43,6 +43,46 @@ testAllRegistered
 	self assert: (registered associations reject: [:each | each value name == #IDispatch]) asArray
 		equals: #()!
 
+testDowncast
+	| random random2 disp |
+	random := OS.COM.Examples.IRandomStream new.
+	disp := random queryInterface: IDispatch.
+	"This is important for the test"
+	self assert: disp typeInfo name equals: 'IRandomStream'.
+	self assert: random isKindOf: OS.COM.Examples.IRandomStream.
+	random2 := random downCast.
+	self assert: random2 isKindOf: OS.COM.Examples.IRandomStream2.
+	self assert: random2 multiplier equals: RandomLinearCongruential.AnsiCMultiplier.
+	self assert: random2 modulus equals: RandomLinearCongruential.AnsiCModulus.
+	self assert: random2 increment equals: RandomLinearCongruential.AnsiCIncrement.
+	random2 := disp downCast.
+	self assert: random2 isKindOf: OS.COM.Examples.IRandomStream2!
+
+testDowncastNotImplemented
+	| factory f1 f2 pointerMonikerClsid |
+	factory := ClassFactory on: Examples.RandomStream.
+	f1 := factory queryInterface: IClassFactory.
+	self assert: f1 class latestDerivation identicalTo: IClassFactory2.
+	f2 := f1 downCast.
+	"Dolphin's ClassFactory doesn't actually implement IClassFactory2."
+	self assert: f2 class identicalTo: IClassFactory.
+	f2 free.
+	f1 free.
+	"Likewise, system pointer monikers don't implement IClassFactory2 either"
+	pointerMonikerClsid := CLSID fromString: '{00000306-0000-0000-C000-000000000046}'.
+	f1 := IClassFactory onCLSID: pointerMonikerClsid.
+	f2 := f1 downCast.
+	self assert: f2 class identicalTo: IClassFactory.
+	f2 free.
+	f1 free!
+
+testDowncastNull
+	| f1 f2 |
+	f1 := IClassFactory newPointer.
+	self assert: f1 class latestDerivation identicalTo: IClassFactory2.
+	f2 := f1 downCast.
+	self assertIsNil: f2!
+
 testGetObject
 	| factory font |
 	self should: [IUnknown getObject: 'bad'] raise: HRESULTError.
@@ -77,6 +117,9 @@ testLatestDerivation
 
 !OS.COM.Tests.InterfaceTest categoriesForMethods!
 testAllRegistered!public!unit tests! !
+testDowncast!public!unit tests! !
+testDowncastNotImplemented!public!unit tests! !
+testDowncastNull!public!unit tests! !
 testGetObject!public!unit tests! !
 testIsSameCOMObject!public!unit tests! !
 testLatestDerivation!public!unit tests! !

@@ -207,6 +207,10 @@ defineFunctions
 			argumentTypes: 'sdword'
 !
 
+initialize
+	ITypeLib open: (FileLocator imageRelative: 'Core\Object Arts\Samples\ActiveX\Random\Random.tlb') register: true.
+	^super initialize!
+
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
 		IRandomStream initializeTypeLib"
@@ -216,6 +220,7 @@ initializeTypeLib
 !OS.COM.Examples.IRandomStream class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !
+initialize!development!initializing!private! !
 initializeTypeLib!**auto generated**!initializing!private! !
 !
 

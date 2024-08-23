@@ -499,10 +499,11 @@ suggestBindingForType: userType
 		ifTrue: [(self classBindingForGuid: typeGuid) ifNotNil: [:var | ^var]].
 	nsBinding := self suggestedBinding.
 	ns := nsBinding value.
-	ns ifNotNil: [(ns localBindingFor: suggestedName) ifNotNil: [:var | ^var]].
+	(ns notNil and: [ns class isMeta])
+		ifTrue: [(ns localBindingFor: suggestedName) ifNotNil: [:var | ^var]].
 
 	"Not currently defined, or defined but _may_ not be correct object, so suggest name"
-	#todo. "This isn't right. If the NS hasn't already been generated, i.e. ns is nil, we'll end up generating types into Smalltalk"
+	#todo.	"This isn't right. If the NS hasn't already been generated, i.e. ns is nil, we'll end up generating types into Smalltalk"
 	^(VariableBinding key: suggestedName value: nil)
 		environment: ns ?? Smalltalk;
 		yourself!
@@ -586,6 +587,9 @@ unions
 
 	^self selectTypeKind: TKIND_UNION!
 
+unregister
+	self attributes unregister!
+
 variableNameFrom: aString
 	"Private - Answer a suitable global name based on the <readableString> argument.
 	Static variables must start with an uppercase letter, ignoring any leading underscores."
@@ -601,7 +605,7 @@ versionString
 
 	| attr |
 	attr := self attributes.
-	^'%d.%d' sprintfWith: attr wMajorVerNum with: attr wMinorVerNum!
+	^attr wMajorVerNum printString , '.' , attr wMinorVerNum printString!
 
 vtblInterfaces
 	"Answer a <collection> of all the early-bound, vtable based, interfaces 
@@ -672,6 +676,7 @@ typeInfoCount!accessing!public! !
 typeInfoForGuid:ifNone:!accessing!private! !
 uninitialize!initializing!private! !
 unions!enumerating!public! !
+unregister!operations!public! !
 variableNameFrom:!accessing!helpers!private! !
 versionString!accessing!public! !
 vtblInterfaces!enumerating!public! !

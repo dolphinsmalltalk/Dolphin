@@ -274,7 +274,7 @@ on: serverClass clsid: aCLSID
 	"Answer an instance of the receiver for the specified server class and CLSID."
 
 	| factory |
-	Factories at: serverClass ifPresent: [:f | ^f].
+	(Factories lookup: serverClass) ifNotNil: [:f | ^f].
 	factory := self basicOn: serverClass clsid: aCLSID.
 	factory register.
 	^Factories at: serverClass put: factory!

@@ -226,17 +226,16 @@ doesNotUnderstand: aMessage
 	^self basicDoesNotUnderstand: aMessage!
 
 downCast
-	"Attempt to 'cast' the receiver down to a derived dual interface class 
-	if type information is available, and a wrapper class has previously been generated
-	for the interface. Normally one would only send this to direct instances of IDispatch
-	rather than subinstances, as it is effectively a no-op for most derived classes
-	except where they too are base types."
+	"Attempt to 'cast' the receiver down to a derived dual interface class if type information is available, and a wrapper class has previously been generated for the interface."
 
-	^self queryInterface: (self class classForIID: 
-						(typeInfo isNil 
-							ifTrue: [self getTypeInfo: 0 ifNone: [^self]]
-							ifFalse: [self typeInfoIfNone: [^self]]) guid
-						ifNone: [^self])!
+	self class == IDispatch ifFalse: [^super downCast].
+	self isNull ifTrue: [^nil].
+	(typeInfo ifNil: [self getTypeInfo: 0 ifNone: nil] ifNotNil: [self typeInfoIfNone: nil])
+		ifNotNil: 
+			[:ti |
+			(self class classForIID: ti guid ifNone: nil)
+				ifNotNil: [:derived | ^(self queryInterface: derived) downCast]].
+	^self!
 
 getIDsOfNames: names
 	"Answer a <sequencedReadableCollection> of the ids of the named

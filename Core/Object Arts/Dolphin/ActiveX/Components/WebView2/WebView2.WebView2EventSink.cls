@@ -38,7 +38,7 @@ Invoke: sender args: args
 			[in]IUnknown* sender,
 			[in]IUnknown* args);"
 
-	handler cull: sender cull: (args isNull ifFalse: [args downCast]).
+	handler cull: sender cull: args downCast.
 	^S_OK!
 
 printOn: aPuttableStream

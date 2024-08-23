@@ -67,22 +67,20 @@ GetIDsOfNames: getIDsOfNames rgszNames: rgszNames cNames: cNames lcid: lcid rgdi
 	ids keysAndValuesDo: [:i :id | pdispids at: i put: id].
 	^S_OK!
 
-GetTypeInfo: itinfo lcid: lcid pptinfo: pptinfo 
-	"Implement the IDispatch::GetTypeInfo() interface function.
-	We don't need to provide any type information since this is an
-	event sink, and the caller knows all about the interface.
-
-	Implementation Note: At present we ignore the locale, which is permitted: 
-	'For classes that do not support localized member names, this 
-	parameter can be ignored'. (from Win32 help)"
+GetTypeInfo: itinfo lcid: lcid pptinfo: pptinfo
+	"Implement the IDispatch::GetTypeInfo() interface function."
 
 	| piTi |
 	pptinfo value: 0.
 	itinfo == 0 ifFalse: [^DISP_E_BADINDEX].
-	piTi := (self typeInfo: lcid ifNone: [^TYPE_E_ELEMENTNOTFOUND]) asParameter.
-	pptinfo value: piTi bytes.
-	piTi AddRef.
-	^S_OK!
+	^(self typeInfo: lcid ifNone: nil)
+		ifNil: [TYPE_E_ELEMENTNOTFOUND]
+		ifNotNil: 
+			[:ti |
+			piTi := ti asParameter.
+			pptinfo value: piTi bytes.
+			piTi AddRef.
+			S_OK]!
 
 GetTypeInfoCount: count
 	"Implement the IDispatch::GetTypeInfoCount() interface function.
