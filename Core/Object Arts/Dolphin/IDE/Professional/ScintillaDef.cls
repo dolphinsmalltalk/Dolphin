@@ -1,14 +1,19 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ScintillaDef
 	instanceVariableNames: 'id name isDeprecated comment selector constName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaDef guid: (GUID fromString: '{5d1763e5-2a8b-42e5-9a1c-c1973b7e2d8b}')!
+
 ScintillaDef isAbstract: true!
+
 ScintillaDef comment: ''!
+
 !ScintillaDef categoriesForClass!Development! !
+
 !ScintillaDef methodsFor!
 
 comment
@@ -45,16 +50,19 @@ retType: aString
 
 selector
 	^selector! !
-!ScintillaDef categoriesFor: #comment!accessing!public! !
-!ScintillaDef categoriesFor: #comment:!accessing!private! !
-!ScintillaDef categoriesFor: #constName!helpers!public! !
-!ScintillaDef categoriesFor: #constPrefix!constants!private! !
-!ScintillaDef categoriesFor: #id!accessing!public! !
-!ScintillaDef categoriesFor: #id:name:retType:!initializing!private! !
-!ScintillaDef categoriesFor: #isDeprecated!accessing!public!testing! !
-!ScintillaDef categoriesFor: #isDeprecated:!accessing!private! !
-!ScintillaDef categoriesFor: #retType:!accessing!private! !
-!ScintillaDef categoriesFor: #selector!accessing!private! !
+
+!ScintillaDef categoriesForMethods!
+comment!accessing!public! !
+comment:!accessing!private! !
+constName!helpers!public! !
+constPrefix!constants!private! !
+id!accessing!public! !
+id:name:retType:!initializing!private! !
+isDeprecated!accessing!public!testing! !
+isDeprecated:!accessing!private! !
+retType:!accessing!private! !
+selector!accessing!private! !
+!
 
 !ScintillaDef class methodsFor!
 
@@ -72,7 +80,10 @@ tokens: anArray
 		id: (anArray at: 3)
 		name: (anArray at: 2)
 		retType: (anArray at: 1)! !
-!ScintillaDef class categoriesFor: #icon!constants!development!public! !
-!ScintillaDef class categoriesFor: #id:name:retType:!initializing!public! !
-!ScintillaDef class categoriesFor: #tokens:!instance creation!public! !
+
+!ScintillaDef class categoriesForMethods!
+icon!constants!development!public! !
+id:name:retType:!initializing!public! !
+tokens:!instance creation!public! !
+!
 

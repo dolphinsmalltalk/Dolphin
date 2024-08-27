@@ -1507,7 +1507,7 @@ RuntimeSessionManager subclass: #DefaultShellSessionManager
 
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state showCmd subViews resolution events version'
-	classVariableNames: 'CreationParentIndex EventsIndex HandleIndex'
+	classVariableNames: 'EventsIndex HandleIndex'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -1573,7 +1573,7 @@ ShellView subclass: #AbstractSplash
 
 ShellView subclass: #DialogView
 	instanceVariableNames: 'endModal isModal oldWndProc owner _reserved32 _reserved33 _reserved34'
-	classVariableNames: 'InProcLoopMask OwnerInstVarIndex OwnerViewInstVarIndex'
+	classVariableNames: 'InProcLoopMask OwnerInstVarIndex'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
 
