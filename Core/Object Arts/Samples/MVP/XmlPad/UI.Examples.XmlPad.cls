@@ -268,7 +268,10 @@ restoreUserSettings
 	settings ifNil: [^self].
 	self restoreBooleanOptions: self booleanViewOptions from: settings.
 	self isRememberingPlacement
-		ifTrue: [(settings at: 'Placement' ifAbsent: nil) ifNotNil: [:placement | view placement: placement]].
+		ifTrue: [(settings at: 'Placement' ifAbsent: nil) ifNotNil: [:placement | 
+			"We saved the placement extent scaled to 96 dpi. We then need to scale to the DPI of the current monitor of the view, rather than the DPI of the monitor to which we will actually restore"
+			placement extent: placement extent *  view dpi // USER_DEFAULT_SCREEN_DPI. 
+			view placement: placement]].
 	(settings at: 'TextStyles' ifAbsent: nil) ifNotNil: [:styles | self scintilla textStyles: styles].
 	(settings at: 'TabWidth' ifAbsent: nil)
 		ifNotNil: [:width | (width isInteger and: [width between: 1 and: 16]) ifTrue: [self tabWidth: width]].
@@ -288,6 +291,8 @@ saveUserSettings
 			[| placement |
 			placement := self view placement.
 			placement showCmd: (self view isMaximized ifTrue: [SW_SHOWMAXIMIZED] ifFalse: [SW_SHOW]).
+			"Store extent at a known logical DPI"
+			placement extent: placement extent *  USER_DEFAULT_SCREEN_DPI // view dpi.
 			settings at: 'Placement' put: placement].
 	settings at: 'Font' put: self view actualFont logFont.
 	OS.RegistrySerializer
