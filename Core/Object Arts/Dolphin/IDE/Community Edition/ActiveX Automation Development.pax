@@ -7383,9 +7383,9 @@ typeLibRegistrations
 	^list asSortedCollection! !
 
 !OS.COM.TypeLibraryAnalyzer class categoriesForMethods!
-example1!examples!must strip!public! !
+example1!examples!public! !
 example2!examples!public! !
-example3!examples!must strip!public! !
+example3!examples!public! !
 fileTypes!constants!public! !
 fromRegistration:!instance creation!public! !
 icon!constants!public! !

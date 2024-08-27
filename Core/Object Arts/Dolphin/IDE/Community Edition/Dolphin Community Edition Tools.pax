@@ -136,7 +136,7 @@ publishedAspectsOfInstances
 		yourself! !
 
 !OS.ITEMIDLIST class categoriesForMethods!
-publishedAspectsOfInstances!must strip!public! !
+publishedAspectsOfInstances!constants!public! !
 !
 
 !Tools.ClassBrowserAbstract methodsFor!

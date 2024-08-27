@@ -1786,7 +1786,8 @@ notRequiredMethodCategories
 	alter the stripping strategy"
 
 	| categoryNames |
-	categoryNames := Set with: 'examples' with: 'must strip'.
+	"Ensure the must strip methods are removed first, disabling regeneration of methods for method protocols"
+	categoryNames := OrderedCollection with: 'must strip'.
 	self stripDeprecatedMethods ifTrue: [categoryNames add: 'deprecated'].
 	self stripSubclassResponsibility
 		ifTrue: 
@@ -1797,6 +1798,7 @@ notRequiredMethodCategories
 		ifTrue: 
 			["Ditto"
 			categoryNames add: 'should not implement'].
+	categoryNames add: 'examples'.
 	^categoryNames!
 
 prepareToStrip

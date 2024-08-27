@@ -435,7 +435,7 @@ toolsFolderHelpId
 !Tools.AXControlBrowser class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !
-initialize!initializing!must strip!private! !
+initialize!initializing!private! !
 resource_Default_view!public!resources-views! !
 toolsFolderHelpId!constants!public! !
 !

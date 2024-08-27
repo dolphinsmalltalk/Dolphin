@@ -122,6 +122,6 @@ publishedAspectsOfInstances
 
 !AXDllImageStripper class categoriesForMethods!
 defaultOptions!constants!development!private! !
-publishedAspectsOfInstances!constants!development!must strip!public! !
+publishedAspectsOfInstances!constants!development!public! !
 !
 

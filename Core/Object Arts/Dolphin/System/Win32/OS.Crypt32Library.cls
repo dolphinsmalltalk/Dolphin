@@ -196,7 +196,7 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 	^answer! !
 
 !OS.Crypt32Library class categoriesForMethods!
-example1!examples!must strip!public! !
+example1!examples!public! !
 fileName!**auto generated**!constants!public! !
 protectData:!operations!public! !
 protectData:additionalEntropy:!operations!public! !

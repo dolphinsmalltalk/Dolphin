@@ -4864,7 +4864,7 @@ publishedAspectsOfInstances
 		yourself! !
 
 !Graphics.Gdiplus.ImageView class categoriesForMethods!
-publishedAspectsOfInstances!must strip!public! !
+publishedAspectsOfInstances!constants!public! !
 !
 
 !Graphics.Icon class methodsFor!
@@ -7859,7 +7859,7 @@ publishedAspectsOfInstances
 		yourself! !
 
 !UI.AXControlSite class categoriesForMethods!
-publishedAspectsOfInstances!constants!must strip!public! !
+publishedAspectsOfInstances!constants!public! !
 !
 
 !UI.AXValueConvertingControlSite class methodsFor!
@@ -7879,7 +7879,7 @@ publishedAspectsOfInstances
 		yourself! !
 
 !UI.AXValueConvertingControlSite class categoriesForMethods!
-publishedAspectsOfInstances!constants!must strip!public! !
+publishedAspectsOfInstances!constants!public! !
 !
 
 !UI.BasicListAbstract class methodsFor!
@@ -8639,7 +8639,7 @@ publishedEventsOfInstances
 		yourself.! !
 
 !UI.ListTreeView class categoriesForMethods!
-publishedAspectsOfInstances!constants!do copy!must strip!public! !
+publishedAspectsOfInstances!constants!do copy!public! !
 publishedEventsOfInstances!constants!do copy!events!public! !
 !
 
@@ -9778,7 +9778,7 @@ publishedAspects
 	^aspects! !
 
 !UI.SpinButton categoriesForMethods!
-publishedAspects!accessing!must strip!public! !
+publishedAspects!accessing!public! !
 !
 
 !UI.SpinButton class methodsFor!
@@ -9807,7 +9807,7 @@ publishedEventsOfInstances
     ! !
 
 !UI.SpinButton class categoriesForMethods!
-publishedAspectsOfInstances!accessing!must strip!public! !
+publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
 !
 

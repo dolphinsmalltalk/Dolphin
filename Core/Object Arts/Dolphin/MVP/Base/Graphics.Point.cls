@@ -394,7 +394,7 @@ one
 
 	^self x: 1 y: 1!
 
-unitialize
+uninitialize
 	#{Zero} binding setValue: nil!
 
 x: xCoord y: yCoord 
@@ -413,7 +413,7 @@ zero
 initialize!class initialization!development!public! !
 new!instance creation!public! !
 one!instance creation!public! !
-unitialize!class hierarchy-removing!public! !
+uninitialize!class hierarchy-removing!public! !
 x:y:!instance creation!public! !
 zero!instance creation!public! !
 !

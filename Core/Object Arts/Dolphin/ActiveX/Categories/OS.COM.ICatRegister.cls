@@ -291,7 +291,7 @@ new
 !OS.COM.ICatRegister class categoriesForMethods!
 current!instance creation!public! !
 defineFunctions!**auto generated**!initializing!public! !
-example1!examples!must strip!public! !
+example1!examples!public! !
 new!instance creation!public! !
 !
 
