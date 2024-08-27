@@ -301,8 +301,7 @@ storeOn: aStream
 
 	aStream
 		print: seconds;
-		space;
-		display: #seconds!
+		nextPutAll: ' seconds'!
 
 subtractFromDateAndTime: aDateAndTime
 	"Private - Part of a double dispatch for <DateAndTime> subtraction. Answers a 
