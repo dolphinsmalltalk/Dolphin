@@ -114,7 +114,7 @@ resource_Gdiplus_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Gdiplus_view)
 	"
 
-	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.GdiplusImageView) 34 28 nil nil 34 2 8 1140850944 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 5 nil nil nil 416 nil 8 4294902331 852486 ##(Smalltalk.NullConverter) nil nil nil nil #normal 1 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 1 1 626 1 1 nil nil #none nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[0 0 0 0 0 0 0 0 100 0 0 0 100 0 0 0] 193 448 nil 416 738 #text: 34 1 8 '' 416 1 8 #() 626 193 193 nil 29 )! !
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.GdiplusImageView) 34 28 nil nil 34 2 8 1140850944 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 7 nil nil nil 416 nil 8 4294902331 852486 ##(Smalltalk.NullConverter) nil nil nil nil #normal 1 nil nil nil #none nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 11 0 0 10 0 0 0 99 12 0 0 110 0 0 0] 193 448 nil 416 658 #text: 34 1 8 '' 416 3 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 29 )! !
 
 !ImagePresenter class categoriesForMethods!
 resource_Gdiplus_view!public!resources-views! !
