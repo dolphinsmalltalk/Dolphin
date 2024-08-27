@@ -259,7 +259,6 @@ initialize
 	allInstVarNames := View allInstVarNames.
 	self
 		addClassConstant: 'HandleIndex' value: (allInstVarNames indexOf: 'handle');
-		addClassConstant: 'CreationParentIndex' value: (allInstVarNames indexOf: 'creationParent');
 		addClassConstant: 'EventsIndex' value: (allInstVarNames indexOf: 'events')!
 
 stbConvertFrom: anSTBClassFormat

@@ -491,8 +491,7 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	self addClassConstant: 'InProcLoopMask' value: 16r100000.
-	self addClassConstant: 'OwnerViewInstVarIndex' value: (self indexOfInstVar: 'owner')!
+	self addClassConstant: 'InProcLoopMask' value: 16r100000!
 
 new
 	"Answer an instance of the receiver on a nil model"
