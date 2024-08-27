@@ -2482,6 +2482,8 @@ onDestroyed
 	^nil!
 
 onDpiChanged: aDpiChangedEvent
+	"Default handler for a DPI change event. This is only received by Views wrapping top-level Windows in per-monitor mode."
+
 	^nil!
 
 onDrawItem: aDRAWITEMSTRUCT 
