@@ -901,9 +901,9 @@ tbGetIdealSize
 	"Private - Answer the 'ideal' extent for the receiver."
 
 	| size |
-	size := SIZEL newBuffer.
+	size := SIZE newBuffer.
 	self
-		sendMessageNz: TB_GETIDEALSIZE
+		sendMessage: TB_GETIDEALSIZE
 		wParam: 0
 		lpParam: size.
 	^size asPoint!

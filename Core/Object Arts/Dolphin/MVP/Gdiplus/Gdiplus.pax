@@ -227,6 +227,7 @@ package methodNames
 	add: #Point -> #scaledOver:;
 	add: #Point -> #scaledTo:;
 	add: #Rectangle -> #asGdiplusRectangle;
+	add: #View -> #addToImageList:mask:;
 	add: #View -> #createThumbnailExtent:mask:;
 	yourself.
 
@@ -899,6 +900,14 @@ asGdiplusRectangle!converting!public! !
 
 !View methodsFor!
 
+addToImageList: aWinImageList mask: aColorOrNil 
+	"Private - Add a pictorial representation of the receiver to aWinImageList. Typically this is used to create
+	a thumbnail representation of the receiver."
+
+	| thumbnail |
+	thumbnail := self createThumbnailExtent: aWinImageList extent mask: aColorOrNil.
+	^aWinImageList addBitmap: thumbnail mask: aColorOrNil!
+
 createThumbnailExtent: extent mask: aColor 
 	| image crop rect scale thumbnail canvas r scaledExtent |
 	image := GdiplusBitmap fromView: self.
@@ -930,6 +939,7 @@ createThumbnailExtent: extent mask: aColor
 	^thumbnail! !
 
 !View categoriesForMethods!
+addToImageList:mask:!double dispatch!private! !
 createThumbnailExtent:mask:!private! !
 !
 

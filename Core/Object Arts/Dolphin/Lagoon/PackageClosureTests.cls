@@ -71,7 +71,7 @@ simpleGuiAppUnimplementedMessages
 		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- packages - sent by PackageRelativeFileLocator, but the class will be removed on actual deployment"
 
-	^#(#createThumbnailExtent:mask: #ttmRelayEvent: #defineTemplate #evaluate: #packages)!
+	^#(#ttmRelayEvent: #defineTemplate #evaluate: #packages)!
 
 testCommandLineHelloWorld
 	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log. In the case of 'Hello World' the unimplemented message set should actually be empty when deploying."
