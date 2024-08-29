@@ -63,6 +63,7 @@ package classNames
 	add: #IntegerToTextTest;
 	add: #InternalDragDropSessionTest;
 	add: #LayoutManagerTest;
+	add: #LayoutPlacementTest;
 	add: #LinkButtonTest;
 	add: #ListBoxTest;
 	add: #ListControlTest;
@@ -330,6 +331,12 @@ DolphinTest subclass: #InternalDragDropSessionTest
 
 DolphinTest subclass: #LayoutManagerTest
 	instanceVariableNames: 'shell'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #LayoutPlacementTest
+	instanceVariableNames: 'view'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
