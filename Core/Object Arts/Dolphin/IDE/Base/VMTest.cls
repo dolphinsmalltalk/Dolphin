@@ -539,7 +539,6 @@ testExtCallArgLppvoid
 	self verifyExtCallArgLppvoid: false!
 
 testExtCallArgLpwstr
-	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
 	self verifyExtCallArgLpwstr: false!
 
 testExtCallCrtFault
