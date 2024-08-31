@@ -78,8 +78,8 @@ testComparing
 			self deny: secondary equals: primary]!
 
 testContainingPoint
-	self
-		assert: (DisplayMonitor containingPoint: SystemMetrics current virtualScreenRectangle bottomRight - 1)
+	self assert: (DisplayMonitor containingPoint: 0 @ 0) equals: DisplayMonitor primary.
+	self assert: (DisplayMonitor containingPoint: DisplayMonitor primary workArea center)
 		equals: DisplayMonitor primary.
 	self
 		assertIsNil: (DisplayMonitor containingPoint: SystemMetrics current virtualScreenRectangle corner + 1)!
@@ -124,9 +124,10 @@ testIntersecting
 		equals: DisplayMonitor primary!
 
 testNearestPoint
+	self assert: (DisplayMonitor containingPoint: 0 @ 0) equals: DisplayMonitor primary.
 	self
 		assert: (DisplayMonitor nearestPoint: SystemMetrics current virtualScreenRectangle bottomRight - 1)
-		equals: DisplayMonitor primary!
+		equals: (DisplayMonitor desktopMonitors asSortedCollection: [:a :b | a workArea corner < b workArea corner]) last!
 
 testNearestRectangle
 	self assert: (DisplayMonitor nearestRectangle: (0 @ 0 corner: 100 @ 100))

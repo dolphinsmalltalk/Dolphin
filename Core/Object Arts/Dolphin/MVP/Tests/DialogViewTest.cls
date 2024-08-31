@@ -144,12 +144,13 @@ testCreatedNearOwnerModeless
 
 testInplaceNotRepositioned
 	| desktopMonitors position dialog leftMonitor ownerRect |
-	desktopMonitors := DisplayMonitor desktopMonitors.
+	desktopMonitors := DisplayMonitor desktopMonitors
+				asSortedCollection: [:a :b | a workArea topLeft < b workArea topLeft].
 	leftMonitor := desktopMonitors first.
 	"This test requires multiple monitors arranged in a typical horizontal configuration. It could be made to work in a vertical configuration, but there isn't much value."
 	self skipUnless: 
 			[desktopMonitors size > 1
-				and: [(desktopMonitors at: 2) workArea origin >= leftMonitor workArea topRight]].
+				and: [desktopMonitors second workArea origin >= leftMonitor workArea topRight]].
 	"We need a view that is mainly on the left-most monitor, and partially on the next"
 	ownerRect := (leftMonitor workArea corner x - 400) @ 100 extent: 640 @ 480.
 	owner := self createShell: ownerRect text: self printString , ' owner'.
@@ -215,8 +216,9 @@ testRemainsOnScreen
 	| rect workArea captureRect monitor |
 	workArea := SystemMetrics current virtualScreenRectangle.
 	"Position the (small) owner top-left so the dialog needs to be bumped back to the origin"
-	monitor := DisplayMonitor containingPoint: workArea origin.
-	owner := self createShell: (Rectangle origin: workArea origin + (25 @ 25 * monitor dpi // 96)
+	monitor := DisplayMonitor nearestPoint: workArea origin.
+	owner := self
+				createShell: (Rectangle origin: monitor workArea origin + (25 @ 25 * monitor dpi // 96)
 						extent: 75 @ 50 * monitor dpi // 96)
 				text: self printString.
 	captureRect := [:dialog | rect := dialog rectangle].
@@ -225,21 +227,21 @@ testRemainsOnScreen
 	self assert: rect origin equals: monitor workArea topLeft.
 	"Now bottom-left"
 	monitor := DisplayMonitor nearestPoint: workArea bottomLeft.
-	owner rectangle: (Rectangle origin: workArea bottomLeft + (25 @ -100 * monitor dpi // 96)
+	owner rectangle: (Rectangle origin: monitor workArea bottomLeft + (25 @ -100 * monitor dpi // 96)
 				extent: 75 @ 50 * monitor dpi // 96).
 	self evaluateInModalDialog: captureRect centered: true.
 	self assert: rect origin
 		equals: monitor workArea bottomLeft - (0 @ self dialogExtent y * monitor dpi // 96).
 	"Now bottom-right"
 	monitor := DisplayMonitor nearestPoint: workArea bottomRight.
-	owner rectangle: (Rectangle origin: workArea bottomRight + (-75 @ -100 * monitor dpi // 96)
+	owner rectangle: (Rectangle origin: monitor workArea bottomRight + (-75 @ -100 * monitor dpi // 96)
 				extent: 75 @ 50 * monitor dpi // 96).
 	self evaluateInModalDialog: captureRect centered: true.
 	self assert: rect origin
 		equals: monitor workArea bottomRight - (self dialogExtent * monitor dpi // 96).
 	"Finally, top-right"
 	monitor := DisplayMonitor nearestPoint: workArea topRight.
-	owner rectangle: (Rectangle origin: workArea topRight + (-75 @ 25 * monitor dpi // 96)
+	owner rectangle: (Rectangle origin: monitor workArea topRight + (-75 @ 25 * monitor dpi // 96)
 				extent: 75 @ 50 * monitor dpi // 96).
 	self evaluateInModalDialog: captureRect centered: true.
 	self assert: rect origin
