@@ -7,7 +7,8 @@ Graphics.SystemFont
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'StockNames' -> (IdentityDictionary withAll: { 16rD -> #system. 16r11 -> #default })
+			'StockNames'
+				-> (IdentityDictionary withAll: { 16rD -> #system. 16r10 -> #fixedSystem. 16r11 -> #default })
 		}!
 
 Graphics.StockFont guid: (Core.GUID fromString: '{87b4c63c-026e-11d3-9fd7-00a0cc3e4a32}')!

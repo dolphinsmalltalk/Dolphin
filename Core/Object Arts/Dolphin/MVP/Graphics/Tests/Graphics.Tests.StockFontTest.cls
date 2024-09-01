@@ -91,7 +91,13 @@ testFixedSystem
 	self assert: (subject atDpi: Win32Constants.USER_DEFAULT_SCREEN_DPI) identicalTo: subject.
 	system150 := subject atDpi: 144.
 	self assert: system150 pointSize equals: pointSize.
-	self assert: system150 identicalTo: subject!
+	self assert: system150 identicalTo: subject.
+	self assert: subject printString equals: 'Graphics.Font fixedSystem'!
+
+testPrintString
+	self assert: Font default printString equals: 'Graphics.Font default'.
+	self assert: Font system printString equals: 'Graphics.Font system'.
+	self assert: Font fixedSystem printString equals: 'Graphics.Font fixedSystem'!
 
 testStbConvertFrom0
 	| version0Bytes font |
@@ -126,6 +132,7 @@ testCopy!public!unit tests! !
 testDcDefaultFont!public!unit tests! !
 testDefault!public!unit tests! !
 testFixedSystem!public!unit tests! !
+testPrintString!public!unit tests! !
 testStbConvertFrom0!public!unit tests! !
 testSystem!public!unit tests! !
 !

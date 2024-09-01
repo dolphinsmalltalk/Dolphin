@@ -168,7 +168,7 @@ quality: aSymbol
 	Setting this value causes the Font to be re-realised so should not be done to a Font that is in use."
 
 	self quality == aSymbol ifTrue: [^self].
-	self logFont lfQuality: (Qualities identityIndexOf: aSymbol) - 1.
+	logfont lfQuality: (Qualities identityIndexOf: aSymbol) - 1.
 	self styleChanged!
 
 styleChanged

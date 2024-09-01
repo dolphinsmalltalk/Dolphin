@@ -50,8 +50,6 @@ testStbConvertFrom0
 	self assert: font class identicalTo: Font.
 	self assert: font dpi equals: 96.
 	self assert: font handle notNil.
-	"We have to re-retrieve the LOGFONT so we have in LOGFONTW form for comparison"
-	font getLogFont.
 	self assert: font equals: ((Font name: 'Segoe UI' pointSize: 12) atDpi: 96)! !
 
 !Graphics.Tests.FontTest categoriesForMethods!

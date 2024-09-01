@@ -26,9 +26,10 @@ Graphics.AbstractFont comment: '`AbstractFont` is the abstract class of `Graphic
 = aFont
 	"Answer true if aFont is equal to (has the same logical font info) as the receiver."
 
-	^self species == aFont species and: 
-			[series == aFont series
-				or: [(self logFont equalExcludingSize: aFont logFont) and: [self pointSize == aFont pointSize]]]!
+	^self == aFont or: 
+			[self species == aFont species and: 
+					[series == aFont series
+						or: [(self logFont equalExcludingSize: aFont logFont) and: [self pointSize == aFont pointSize]]]]!
 
 actualFont
 	^self!
@@ -116,18 +117,12 @@ name
 pixelSize
 	"Answers the receiver's pixel size (this is the Em height, or character height). Note that this is the physical size, so will increase proportionally to DPI scale for the same logical point size."
 
-	| lf emHeight dc tm |
+	| lf emHeight |
+	"If the height in the LOGFONT is positive, then it is a pixel cell height. To calculate the point size we will need to follow [Q32667](https://jeffpar.github.io/kbarchive/kb/032/Q32667/). We use the raw Win32 APIs to reduce overhead and class dependencies. This is relatively expensive, but in practice we only tend to encounter this case for older non-scalable rasterized fonts such as the venerable Windows System font."
 	lf := self logFont.
 	emHeight := lf lfHeight.
 	emHeight < 0 ifTrue: [^emHeight negated].
-	"If the height in the LOGFONT is positive, then it is a pixel cell height. To calculate the point size we will need to follow [Q32667](https://jeffpar.github.io/kbarchive/kb/032/Q32667/). We use the raw Win32 APIs to reduce overhead and class dependencies. This is relatively expensive, but in practice we only tend to encounter this case for older non-scalable rasterized fonts such as the venerable Windows System font."
-	dc := User32 getDC: nil.
-	
-	[Gdi32 selectObject: dc hgdiobj: self handle.
-	tm := TEXTMETRICW newBuffer.
-	Gdi32 getTextMetrics: dc lptm: tm]
-			ensure: [User32 releaseDC: nil hDC: dc].
-	^tm emHeight!
+	^self textMetrics emHeight!
 
 pointSize
 	"Answers the receiver's point size. Note that this is logical point size independent of DPI scaling. For example a 10 point font at 96-dpi will be physically the size of a 20 point font at 192 dpi, but the logical point size will still be 10. See also #pixelSize."
@@ -161,8 +156,8 @@ series: aFontSeries
 
 setHandle: anExternalHandle dpi: anInteger
 	ownsHandle := false.
-	self handle: anExternalHandle.
 	dpi := anInteger.
+	self handle: anExternalHandle.
 	^self!
 
 setLogFont: aLOGFONT dpi: anInteger
@@ -172,9 +167,8 @@ setLogFont: aLOGFONT dpi: anInteger
 	^self!
 
 setOwnedHandle: anExternalHandle dpi: anInteger
-	self ownedHandle: anExternalHandle.
 	dpi := anInteger.
-	self getLogFont.
+	self ownedHandle: anExternalHandle.
 	^self!
 
 species
@@ -201,6 +195,16 @@ styleChanged
 
 	self free.
 	series := nil!
+
+textMetrics
+	| tm dc |
+	dc := User32 getDC: nil.
+	
+	[Gdi32 selectObject: dc hgdiobj: self handle.
+	tm := TEXTMETRICW newBuffer.
+	Gdi32 getTextMetrics: dc lptm: tm]
+			ensure: [User32 releaseDC: nil hDC: dc].
+	^tm!
 
 unstyledCopy
 	"Answer a new <Font> that is the same as the receiver, but without any styling (i.e. without italics, bold, or underlining)."
@@ -243,6 +247,7 @@ setOwnedHandle:dpi:!initializing!private! !
 species!constants!public! !
 stbSaveOn:!binary filing!public! !
 styleChanged!modes!private! !
+textMetrics!accessing!public! !
 unstyledCopy!copying!public! !
 weight!accessing!public! !
 !

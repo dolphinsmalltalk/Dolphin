@@ -228,6 +228,8 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getLastActivePopup:)
 	#(#{OS.UserLibrary} #getLastInputInfo:)
 	#(#{OS.UserLibrary} #getMenuInfo:lpcmi:)
+	#(#{OS.UserLibrary} #getMenuItemInfo:uItem:fByPosition:lpmii:)
+	#(#{OS.UserLibrary} #getMenuItemRect:hMenu:uItem:lprcItem:)
 	#(#{OS.UserLibrary} #getMonitorInfo:lpmi:)
 	#(#{OS.UserLibrary} #getNextDlgGroupItem:hCtl:bPrevious:)
 	#(#{OS.UserLibrary} #getNextDlgTabItem:hCtl:bPrevious:)
@@ -3321,6 +3323,22 @@ getMenuInfo: hMenu lpcmi: aMenuItemInfo
 	<stdcall: bool GetMenuInfo handle MENUINFO*>
 	^self invalidCall: _failureCode!
 
+getMenuItemInfo: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMenuItemInfo
+	"Get various information about a menu item.
+		BOOL GetMenuItemInfo(
+			HMENU hMenu,
+			UINT uItem,
+			BOOL fByPosition,
+			LPMENUITEMINFO lpmii
+		);"
+
+	<stdcall: bool GetMenuItemInfoW handle uint32 bool MENUITEMINFOW*>
+	^self invalidCall: _failureCode!
+
+getMenuItemRect: hWnd hMenu: hMenu uItem: uItem lprcItem: lprcItem
+	<stdcall: bool GetMenuItemRect handle handle uint32 RECTL*>
+	^self invalidCall: _failureCode!
+
 getMonitorInfo: hmonitor lpmi: lpmi
 	"Invoke the GetMonitorInfo() function of the module wrapped by the receiver.
 	Helpstring: Retrieves a handle to the display monitor that has the largest area of intersection with the bounding rectangle of a specified window.
@@ -4556,6 +4574,8 @@ getForegroundWindow!public!win32 functions-keyboard input! !
 getLastActivePopup:!public!win32 functions-window! !
 getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
 getMenuInfo:lpcmi:!public!win32 functions-menu! !
+getMenuItemInfo:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
+getMenuItemRect:hMenu:uItem:lprcItem:!public!win32 functions-menu! !
 getMonitorInfo:lpmi:!public!win32 functions-multiple display monitors! !
 getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
 getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !

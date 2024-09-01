@@ -216,7 +216,7 @@ Core.Object
 
 Core.Object
 	subclass: #'OS.SystemMetrics'
-	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
+	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent menuImageExtent'
 	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MouseHoverTime SysParamVariables WheelScrollLines'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -519,7 +519,8 @@ Graphics.SystemFont
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'StockNames' -> (IdentityDictionary withAll: { 16rD -> #system. 16r11 -> #default })
+			'StockNames'
+				-> (IdentityDictionary withAll: { 16rD -> #system. 16r10 -> #fixedSystem. 16r11 -> #default })
 		}!
 
 Graphics.AbstractPen
