@@ -36,20 +36,24 @@ testMenuBarHeight
 		equals: SystemMetrics default menuBarHeight * 1.5!
 
 testMenuImageExtent
+	self skipUnless: 
+			[| menuFont |
+			menuFont := SystemMetrics default menuFont.
+			menuFont name = 'Segoe UI' and: [menuFont pointSize = 9]].
 	self assert: SystemMetrics default menuImageExtent equals: 16 @ 16.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 120) menuImageExtent) equals: 16 @ 16.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 143) menuImageExtent) equals: 16 @ 16.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 144) menuImageExtent) equals: 24 @ 24.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 168) menuImageExtent) equals: 24 @ 24.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 192) menuImageExtent) equals: 24 @ 24.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 216) menuImageExtent) equals: 32 @ 32.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 240) menuImageExtent) equals: 40 @ 40.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 288) menuImageExtent) equals: 40 @ 40.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 336) menuImageExtent) equals: 48 @ 48.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 336) menuImageExtent) equals: 48 @ 48.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 384) menuImageExtent) equals: 64 @ 64.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 432) menuImageExtent) equals: 64 @ 64.
-	self assert: (Icon standardSizeFor: (SystemMetrics forDpi: 480) menuImageExtent) equals: 64 @ 64.
+	self assert: (SystemMetrics forDpi: 120) menuImageExtent equals: 16 @ 16.
+	self assert: (SystemMetrics forDpi: 144) menuImageExtent equals: 25 @ 25.
+	self assert: (SystemMetrics forDpi: 168) menuImageExtent equals: 30 @ 30.
+	self assert: (SystemMetrics forDpi: 192) menuImageExtent equals: 32 @ 32.
+	self assert: (SystemMetrics forDpi: 216) menuImageExtent equals: 37 @ 37.
+	self assert: (SystemMetrics forDpi: 240) menuImageExtent equals: 41 @ 41.
+	self assert: (SystemMetrics forDpi: 288) menuImageExtent equals: 48 @ 48.
+	self assert: (SystemMetrics forDpi: 312) menuImageExtent equals: 52 @ 52.
+	self assert: (SystemMetrics forDpi: 336) menuImageExtent equals: 57 @ 57.
+	self assert: (SystemMetrics forDpi: 384) menuImageExtent equals: 65 @ 65.
+	self assert: (SystemMetrics forDpi: 408) menuImageExtent equals: 68 @ 68.
+	self assert: (SystemMetrics forDpi: 432) menuImageExtent equals: 72 @ 72.
+	self assert: (SystemMetrics forDpi: 480) menuImageExtent equals: 81 @ 81
 !
 
 testSmallIconExtent

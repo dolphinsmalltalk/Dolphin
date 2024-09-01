@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
+	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent menuImageExtent'
 	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MouseHoverTime SysParamVariables WheelScrollLines'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -271,7 +271,12 @@ menuHeight
 menuImageExtent
 	"Answer a <Point>, being the width and height of the images displayed on menus."
 
-	^self menuCheckExtent max: ##(16@16)!
+	^menuImageExtent
+		ifNil: 
+			[| size |
+			size := self menuFont textMetrics tmHeight.
+			size <= 20 ifTrue: [size := 16].
+			menuImageExtent := size @ size]!
 
 menuImageTextGap
 	"The gap between the text in a menu item and the image. It doesn't seem to be possible to determine this from system metrics, and it doesn't appear to scale with DPI either."

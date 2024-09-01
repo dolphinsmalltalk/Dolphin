@@ -196,18 +196,12 @@ name: aString
 pixelSize
 	"Answers the receiver's pixel size (this is the Em height, or character height). Note that this is the physical size, so will increase proportionally to DPI scale for the same logical point size."
 
-	| lf emHeight dc tm |
+	| lf emHeight |
+	"If the height in the LOGFONT is positive, then it is a pixel cell height. To calculate the point size we will need to follow [Q32667](https://jeffpar.github.io/kbarchive/kb/032/Q32667/). We use the raw Win32 APIs to reduce overhead and class dependencies. This is relatively expensive, but in practice we only tend to encounter this case for older non-scalable rasterized fonts such as the venerable Windows System font."
 	lf := self logFont.
 	emHeight := lf lfHeight.
 	emHeight < 0 ifTrue: [^emHeight negated].
-	"If the height in the LOGFONT is positive, then it is a pixel cell height. To calculate the point size we will need to follow [Q32667](https://jeffpar.github.io/kbarchive/kb/032/Q32667/). We use the raw Win32 APIs to reduce overhead and class dependencies. This is relatively expensive, but in practice we only tend to encounter this case for older non-scalable rasterized fonts such as the venerable Windows System font."
-	dc := UserLibrary default getDC: nil.
-	
-	[GDILibrary default selectObject: dc hgdiobj: self handle.
-	tm := TEXTMETRICW newBuffer.
-	GDILibrary default  getTextMetrics: dc lptm: tm]
-			ensure: [UserLibrary default releaseDC: nil hDC: dc].
-	^tm emHeight!
+	^self textMetrics emHeight!
 
 pixelSize: anInteger
 	"Set's the receiver's pixel size to anInteger pixels.
@@ -285,7 +279,7 @@ quality: aSymbol
 	Setting this value has no immediate effect if the receiver is already realized."
 
 	self quality == aSymbol ifTrue: [^self].
-	logfont lfQuality: (Qualities identityIndexOf: aSymbol) - 1.
+	self logFont lfQuality: (Qualities identityIndexOf: aSymbol) - 1.
 	self styleChanged!
 
 resolution
@@ -346,6 +340,16 @@ styleChanged
 	self free.
 	series := nil!
 
+textMetrics
+	| tm dc |
+	dc := UserLibrary default getDC: nil.
+	
+	[GDILibrary default selectObject: dc hgdiobj: self handle.
+	tm := TEXTMETRICW newBuffer.
+	GDILibrary default getTextMetrics: dc lptm: tm]
+			ensure: [UserLibrary default releaseDC: nil hDC: dc].
+	^tm!
+
 weight
 	"Answer the receiver's <integer> 'weight' (thickness)."
 
@@ -405,6 +409,7 @@ setOwnedHandle:dpi:!initializing!private! !
 species!constants!public! !
 stbSaveOn:!binary filing!public! !
 styleChanged!modes!private! !
+textMetrics!accessing!public! !
 weight!accessing!public! !
 weight:!accessing!public! !
 !
