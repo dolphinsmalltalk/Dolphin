@@ -17,7 +17,7 @@ UI.View
 								#custom -> nil.
 								#largeIcons -> (16r20 @ 16r20).
 								#mediumIcons -> (16r18 @ 16r18).
-								#noIcons -> (-16r1 @ 16r0).
+								#noIcons -> (16r0 @ 16r0).
 								#smallIcons -> (16r10 @ 16r10).
 								#tileIcons -> (16r30 @ 16r30)
 							})
@@ -648,10 +648,15 @@ iconExtent: aPoint
 	"Private - Set the extent of the iconic images used when painting the node labels. Note that the argument is measured at 96-dpi, so we scale it to the receiver's current dpi.
 	Also take this opportunity to cache the inset of the text that is therefore necessary."
 
-	| dpi |
-	dpi := self dpi.
-	iconExtent := aPoint * dpi // USER_DEFAULT_SCREEN_DPI.
-	textInset := (iconExtent x + (TextInset * dpi // USER_DEFAULT_SCREEN_DPI)) @ 0.
+	aPoint y > 0
+		ifTrue: 
+			[| dpi |
+			dpi := self dpi.
+			iconExtent := Icon standardSizeFor: aPoint * dpi // USER_DEFAULT_SCREEN_DPI.
+			textInset := (iconExtent x + (TextInset * dpi // USER_DEFAULT_SCREEN_DPI)) @ 0]
+		ifFalse: 
+			[iconExtent := Point.Zero.
+			textInset := 0].
 	self invalidateGeometry!
 
 imageManager

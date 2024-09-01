@@ -1248,7 +1248,7 @@ testRemoveSelection
 	self assert: presenter selection equals: 'ROOT2'!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
-	| view |
+	| view iconSize |
 	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
@@ -1256,8 +1256,10 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view anchorNode isExpanded.
 	self assert: view anchorNode hasExpanded.
 	self assert: view hasWordWrap.
-	self assert: (view instVarNamed: 'iconExtent') equals: Icon smallExtent .
-	self assert: (view instVarNamed: 'textInset') equals: Icon smallExtent x + (view dpi // USER_DEFAULT_SCREEN_DPI) @ 0.
+	iconSize := Icon standardSizeFor: view metrics smallIconExtent.
+	self assert: (view instVarNamed: 'iconExtent') equals: iconSize.
+	self assert: (view instVarNamed: 'textInset')
+		equals: (iconSize x + (view dpi // USER_DEFAULT_SCREEN_DPI)) @ 0.
 	self assert: view margin isKindOf: Point.
 	self assert: view maxTextExtent equals: 9999 @ 9999.
 	self assert: view linePen isKindOf: Pen! !
