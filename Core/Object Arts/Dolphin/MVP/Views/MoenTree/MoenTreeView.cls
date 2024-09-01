@@ -626,10 +626,15 @@ iconExtent: aPoint
 	"Private - Set the extent of the iconic images used when painting the node labels. Note that the argument is measured at 96-dpi, so we scale it to the receiver's current dpi.
 	Also take this opportunity to cache the inset of the text that is therefore necessary."
 
-	| dpi |
-	dpi := self dpi.
-	iconExtent := aPoint * dpi // USER_DEFAULT_SCREEN_DPI.
-	textInset := (iconExtent x + (TextInset * dpi // USER_DEFAULT_SCREEN_DPI)) @ 0.
+	aPoint y > 0
+		ifTrue: 
+			[| dpi |
+			dpi := self dpi.
+			iconExtent := Icon standardSizeFor: aPoint * dpi // USER_DEFAULT_SCREEN_DPI.
+			textInset := (iconExtent x + (TextInset * dpi // USER_DEFAULT_SCREEN_DPI)) @ 0]
+		ifFalse: 
+			[iconExtent := Point.Zero.
+			textInset := 0].
 	self invalidateGeometry!
 
 imageManager
@@ -1980,7 +1985,7 @@ initialize
 	self addClassConstant: 'HasButtonsMask' value: 16r1.
 	self addClassConstant: 'AutoExpandingMask' value: 16r8000000.
 	self addClassConstant: 'ViewModes'
-		value: ((IdentityDictionary withAll: {#noIcons -> (-1 @ 0).
+		value: ((IdentityDictionary withAll: {#noIcons -> (0 @ 0).
 						#smallIcons -> (16 @ 16).
 						#mediumSmallIcons -> (20 @ 20).
 						#mediumIcons -> (24 @ 24).
