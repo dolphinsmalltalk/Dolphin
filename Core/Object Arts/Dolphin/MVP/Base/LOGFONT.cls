@@ -22,7 +22,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Replace the LOGFONT in the serialised data with an equivalent LOGFONTW"
 
 	| logfontw lfbytes |
-	logfontw := LOGFONTW new.
+	logfontw := LOGFONTW newBuffer.
 	anSTBInFiler register: logfontw.
 	lfbytes := anSTBInFiler basicNext.
 	logfontw bytes

@@ -8,6 +8,7 @@ package classNames
 	add: #AbstractBitmapTest;
 	add: #AbstractCardContainerTest;
 	add: #AbstractContainerViewTest;
+	add: #AbstractFontTest;
 	add: #AbstractMultilineTextEditTest;
 	add: #AbstractPointTest;
 	add: #AbstractRectangleTest;
@@ -121,6 +122,7 @@ package classNames
 	add: #StaticTextTest;
 	add: #StaticViewTest;
 	add: #StatusBarTest;
+	add: #StockFontTest;
 	add: #StyledContainerTest;
 	add: #SysLinkViewTest;
 	add: #SystemMetricsTest;
@@ -221,6 +223,12 @@ UserLibrary subclass: #FakeUserLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+DolphinTest subclass: #AbstractFontTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #AbstractPointTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -301,12 +309,6 @@ DolphinTest subclass: #FileDialogTest
 
 DolphinTest subclass: #FolderTest
 	instanceVariableNames: 'c windows system root oa'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-DolphinTest subclass: #FontTest
-	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -438,6 +440,18 @@ DolphinTest subclass: #WINDOWPLACEMENTTest
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #WindowsEventTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractFontTest subclass: #FontTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractFontTest subclass: #StockFontTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

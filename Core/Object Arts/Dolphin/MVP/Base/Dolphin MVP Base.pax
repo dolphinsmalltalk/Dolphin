@@ -1093,7 +1093,7 @@ Win32Structure subclass: #LOGBRUSH
 
 Win32Structure subclass: #LOGFONTW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfFaceName _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth'
+	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfFaceName _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth ANTIALIASED_QUALITY CLEARTYPE_NATURAL_QUALITY CLEARTYPE_QUALITY DEFAULT_PITCH DEFAULT_QUALITY DRAFT_QUALITY FIXED_PITCH NONANTIALIASED_QUALITY OUT_CHARACTER_PRECIS OUT_DEFAULT_PRECIS OUT_DEVICE_PRECIS OUT_OUTLINE_PRECIS OUT_PS_ONLY_PRECIS OUT_RASTER_PRECIS OUT_SCREEN_OUTLINE_PRECIS OUT_STRING_PRECIS OUT_STROKE_PRECIS OUT_TT_ONLY_PRECIS OUT_TT_PRECIS PROOF_QUALITY VARIABLE_PITCH'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -1339,7 +1339,7 @@ StockBrush subclass: #SysColorBrush
 
 Font subclass: #StockFont
 	instanceVariableNames: 'id'
-	classVariableNames: ''
+	classVariableNames: 'StockNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

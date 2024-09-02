@@ -10,7 +10,14 @@ Font guid: (GUID fromString: '{87b4c634-026e-11d3-9fd7-00a0cc3e4a32}')!
 
 Font addClassConstant: 'Qualities' value: #(#default #draft #proof #nonantialiased #antialiased #cleartype #cleartypeNatural)!
 
-Font comment: ''!
+Font comment: '`Font` is the class of `GraphicsTool`s that wrap a Windows Font object
+
+## Instance Variables:
+  `logfont`	`LOGFONTW` structure with details describing the font.
+  `dpi`		`<integer>` . The DPI at which this font is realised.
+  `series`		`FontSeries`. Series of equivalent fonts at different DPIs.
+
+'!
 
 !Font categoriesForClass!Graphics-Tools! !
 
@@ -19,9 +26,10 @@ Font comment: ''!
 = aFont
 	"Answer true if aFont is equal to (has the same logical font info) as the receiver."
 
-	^self species == aFont species and: 
-			[series == aFont series
-				or: [(logfont equalExcludingSize: aFont logFont) and: [self pointSize == aFont pointSize]]]!
+	^self == aFont or: 
+			[self species == aFont species and: 
+					[series == aFont series
+						or: [(self logFont equalExcludingSize: aFont logFont) and: [self pointSize == aFont pointSize]]]]!
 
 atDpi: anInteger
 	"Answer a <Font> that is same as the receiver, but with the specified resolution. If that resolution is the same as the receiver's, then answer the receiver."
@@ -59,7 +67,7 @@ characterSet: anInteger
 createHandle
 	"Private - Answer an external handle to a new font as described by the logfont structure."
 
-	^logfont createFont!
+	^GDILibrary default createFontIndirectW: self logFont!
 
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
@@ -90,15 +98,15 @@ dpi: anInteger
 			ifCurtailed: [dpi := oldDpi]!
 
 getLogFont
-	logfont := LOGFONTW newBuffer
-				getData: handle;
-				yourself!
+	logfont ifNil: [logfont := LOGFONTW newBuffer].
+	self isRealized ifTrue: [self getData: logfont] ifFalse: [logfont lfWeight: FW_NORMAL].
+	^logfont!
 
 handle: hFont
 	"Sets the non-owned handle for the receiver and queries its logical info."
 
 	super handle: hFont.
-	logfont getData: hFont!
+	self getLogFont!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
@@ -109,7 +117,6 @@ initialize
 	"Initialise the receiver."
 
 	super initialize.
-	(logfont := LOGFONTW new) lfWeight: FW_NORMAL.
 	"With per-monitor high DPI scaling, we don't know what actual pixel size font we will need out of context. If not running at 96-dpi, then the correct size of font will be derived based on this one at point of use, and both are linked together via a FontSeries, meaning that a reference to either will prevent both being GC'd. This is necessary because the object memory reference will likely be to the original 96-dpi font, but the font handle passed to a control may be from a scaled version of the font. The series also allows us to share a single scaled instance when installing the font into multiple controls."
 	dpi := USER_DEFAULT_SCREEN_DPI!
 
@@ -131,7 +138,7 @@ isDefault
 isItalic
 	"Answer whether the receiver is itatic."
 
-	^logfont lfItalic ~= 0!
+	^self logFont lfItalic ~= 0!
 
 isItalic: aBoolean
 	"Set whether the receiver is an italic typeface."
@@ -144,7 +151,7 @@ isItalic: aBoolean
 isStruckThrough
 	"Answer whether the strike-out effect is set."
 
-	^logfont lfStrikeOut ~= 0!
+	^self logFont lfStrikeOut ~= 0!
 
 isStruckThrough: aBoolean 
 	"Set the struck out character effect."
@@ -156,7 +163,7 @@ isStruckThrough: aBoolean
 isUnderlined
 	"Answer whether the receiver is underlined."
 
-	^logfont lfUnderline ~= 0!
+	^self logFont lfUnderline ~= 0!
 
 isUnderlined: aBoolean 
 	"Reset the receiver's underline attribute."
@@ -168,7 +175,7 @@ isUnderlined: aBoolean
 logFont
 	"Answer the receiver's logical attributes."
 
-	^logfont!
+	^logfont ifNil: [self getLogFont]!
 
 logFont: aLOGFONT 
 	"Set the receiver's logical attributes."
@@ -179,17 +186,28 @@ logFont: aLOGFONT
 name
 	"Answer the face name of the font."
 
-	^logfont faceName!
+	^self logFont faceName!
 
 name: aString
 	"Set the receiver's font name attribute. This has no affect if the receiver is already realized."
 
-	logfont faceName: aString!
+	self logFont faceName: aString!
 
 pixelSize
-	"Answers the receiver's pixel size."
+	"Answers the receiver's pixel size (this is the Em height, or character height). Note that this is the physical size, so will increase proportionally to DPI scale for the same logical point size."
 
-	^self logFont lfHeight abs!
+	| lf emHeight dc tm |
+	lf := self logFont.
+	emHeight := lf lfHeight.
+	emHeight < 0 ifTrue: [^emHeight negated].
+	"If the height in the LOGFONT is positive, then it is a pixel cell height. To calculate the point size we will need to follow [Q32667](https://jeffpar.github.io/kbarchive/kb/032/Q32667/). We use the raw Win32 APIs to reduce overhead and class dependencies. This is relatively expensive, but in practice we only tend to encounter this case for older non-scalable rasterized fonts such as the venerable Windows System font."
+	dc := UserLibrary default getDC: nil.
+	
+	[GDILibrary default selectObject: dc hgdiobj: self handle.
+	tm := TEXTMETRICW newBuffer.
+	GDILibrary default  getTextMetrics: dc lptm: tm]
+			ensure: [UserLibrary default releaseDC: nil hDC: dc].
+	^tm emHeight!
 
 pixelSize: anInteger
 	"Set's the receiver's pixel size to anInteger pixels.
@@ -198,9 +216,9 @@ pixelSize: anInteger
 	self logFont lfHeight: anInteger negated!
 
 pointSize
-	"Answers the receiver's point size."
+	"Answers the receiver's point size. Note that this is logical point size independent of DPI scaling. For example a 10 point font at 96-dpi will be physically the size of a 20 point font at 192 dpi, but the logical point size will still be 10. See also #pixelSize."
 
-	^(self logFont lfHeight abs * 72 / self dpi) rounded!
+	^(self pixelSize * 72 / self dpi) rounded!
 
 pointSize: anInteger
 	"Convert anInteger to pixels and store in the receiver's logfont lfHeight.
@@ -266,7 +284,9 @@ quality: aSymbol
 	See the documentation for the lfQuality member of [LOGFONTW](view-source:https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfontw) for further details.
 	Setting this value has no immediate effect if the receiver is already realized."
 
-	self logFont lfQuality: (Qualities identityIndexOf: aSymbol) - 1!
+	self quality == aSymbol ifTrue: [^self].
+	logfont lfQuality: (Qualities identityIndexOf: aSymbol) - 1.
+	self styleChanged!
 
 resolution
 	"Answer the logical pixels per inch of the receiver"
@@ -286,9 +306,8 @@ series: aFontSeries
 
 setHandle: anExternalHandle dpi: anInteger
 	ownsHandle := false.
-	handle := anExternalHandle.
 	dpi := anInteger.
-	self getLogFont.
+	self handle: anExternalHandle.
 	^self!
 
 setLogFont: aLOGFONT dpi: anInteger
@@ -298,10 +317,12 @@ setLogFont: aLOGFONT dpi: anInteger
 	^self!
 
 setOwnedHandle: anExternalHandle dpi: anInteger
-	self ownedHandle: anExternalHandle.
 	dpi := anInteger.
-	self getLogFont.
+	self ownedHandle: anExternalHandle.
 	^self!
+
+species
+	^Font!
 
 stbSaveOn: anSTBOutFiler
 	"Serialize the receiver to anSTBOutFiler."
@@ -381,6 +402,7 @@ series:!accessing!public! !
 setHandle:dpi:!initializing!private! !
 setLogFont:dpi:!initializing!private! !
 setOwnedHandle:dpi:!initializing!private! !
+species!constants!public! !
 stbSaveOn:!binary filing!public! !
 styleChanged!modes!private! !
 weight!accessing!public! !
@@ -392,13 +414,15 @@ weight:!accessing!public! !
 default
 	"Answers the default font for the system."
 
-	^self system
-!
+	^self fromId: DEFAULT_GUI_FONT!
 
 defaultPointSize
 	"Private - Answer a default point size to use when it is not explicitly specified"
 
 	^10!
+
+fixedSystem
+	^self fromId: SYSTEM_FIXEDFONT!
 
 fromHandle: aHandle
 	Notification deprecated.	"Use #fromHandle:dpi:"
@@ -407,8 +431,15 @@ fromHandle: aHandle
 fromHandle: aHandle dpi: anInteger
 	"Answers an instance of the receiver with aHandle that has been created for use at the specified DPI. The handle is not owned by the instance and will not therefore be freed by it."
 
-	aHandle = self system handle ifTrue: [^System].
+	aHandle = System handle ifTrue: [^System].
 	^self basicNew setHandle: aHandle dpi: anInteger!
+
+fromId: anInteger
+	"Answer a new instance of the receiver representing the stock font id anInteger."
+
+	^StockFont new
+		setId: anInteger;
+		yourself!
 
 fromLogFont: aLOGFONT
 	"Answer a new instance of the receiver with specified logical attributes. Note that it is assumed that the font height in the LOGFONT is specified for a font to be used at the current system (i.e. primary monitor) DPI. It is usually preferable to use #fromLogFont:dpi: and specify the DPI, otherwise the font may be sized incorrectly. Unfortunately there is no way to specify a point size directly in a LOGFONT - the physical size must be specified."
@@ -457,16 +488,8 @@ name: aString pointSize: anInteger
 		pointSize: anInteger;
 		yourself!
 
-onPreStripImage
-	"Private - The image is about to be stripped. Nil the lazily initialized cursors to allow
-	them to be removed (and also perhaps the ref to the resource library)."
-
-	self uninitialize!
-
-reset
-	"Clear down the receiver's lazily initialized class variables."
-
-	System := nil!
+onStartup2
+	System := self fromId: SYSTEM_FONT!
 
 stbConvertFrom: anSTBClassFormat
 	| version |
@@ -494,18 +517,15 @@ stbVersion
 system
 	"Answer the stock System font."
 
-	^System ifNil: [System := StockFont fromId: SYSTEM_FONT]!
-
-uninitialize
-	"Uninitialize the class variables of the receiver as it is about to be removed from the system."
-
-	System := nil! !
+	^System! !
 
 !Font class categoriesForMethods!
 default!instance creation!public! !
 defaultPointSize!constants!private! !
+fixedSystem!instance creation!public! !
 fromHandle:!instance creation!public! !
 fromHandle:dpi:!instance creation!public! !
+fromId:!instance creation!public! !
 fromLogFont:!instance creation!public! !
 fromLogFont:dpi:!instance creation!public! !
 fromOwnedHandle:!instance creation!public! !
@@ -514,12 +534,10 @@ icon!constants!public! !
 name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !
 name:pointSize:!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
-reset!instance creation!public! !
+onStartup2!event handling!private! !
 stbConvertFrom:!binary filing!private! !
 stbConvertFromVersion0:!binary filing!private! !
 stbVersion!binary filing!public! !
 system!instance creation!public! !
-uninitialize!class hierarchy-removing!private! !
 !
 

@@ -2,7 +2,7 @@
 
 Win32Structure subclass: #LOGFONTW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfFaceName _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth'
+	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfFaceName _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth ANTIALIASED_QUALITY CLEARTYPE_NATURAL_QUALITY CLEARTYPE_QUALITY DEFAULT_PITCH DEFAULT_QUALITY DRAFT_QUALITY FIXED_PITCH NONANTIALIASED_QUALITY OUT_CHARACTER_PRECIS OUT_DEFAULT_PRECIS OUT_DEVICE_PRECIS OUT_OUTLINE_PRECIS OUT_PS_ONLY_PRECIS OUT_RASTER_PRECIS OUT_SCREEN_OUTLINE_PRECIS OUT_STRING_PRECIS OUT_STROKE_PRECIS OUT_TT_ONLY_PRECIS OUT_TT_PRECIS PROOF_QUALITY VARIABLE_PITCH'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -22,6 +22,27 @@ LOGFONTW addClassConstant: '_OffsetOf_lfStrikeOut' value: 16r16!
 LOGFONTW addClassConstant: '_OffsetOf_lfUnderline' value: 16r15!
 LOGFONTW addClassConstant: '_OffsetOf_lfWeight' value: 16r10!
 LOGFONTW addClassConstant: '_OffsetOf_lfWidth' value: 16r4!
+LOGFONTW addClassConstant: 'ANTIALIASED_QUALITY' value: 16r4!
+LOGFONTW addClassConstant: 'CLEARTYPE_NATURAL_QUALITY' value: 16r6!
+LOGFONTW addClassConstant: 'CLEARTYPE_QUALITY' value: 16r5!
+LOGFONTW addClassConstant: 'DEFAULT_PITCH' value: 16r0!
+LOGFONTW addClassConstant: 'DEFAULT_QUALITY' value: 16r0!
+LOGFONTW addClassConstant: 'DRAFT_QUALITY' value: 16r1!
+LOGFONTW addClassConstant: 'FIXED_PITCH' value: 16r1!
+LOGFONTW addClassConstant: 'NONANTIALIASED_QUALITY' value: 16r3!
+LOGFONTW addClassConstant: 'OUT_CHARACTER_PRECIS' value: 16r2!
+LOGFONTW addClassConstant: 'OUT_DEFAULT_PRECIS' value: 16r0!
+LOGFONTW addClassConstant: 'OUT_DEVICE_PRECIS' value: 16r5!
+LOGFONTW addClassConstant: 'OUT_OUTLINE_PRECIS' value: 16r8!
+LOGFONTW addClassConstant: 'OUT_PS_ONLY_PRECIS' value: 16rA!
+LOGFONTW addClassConstant: 'OUT_RASTER_PRECIS' value: 16r6!
+LOGFONTW addClassConstant: 'OUT_SCREEN_OUTLINE_PRECIS' value: 16r9!
+LOGFONTW addClassConstant: 'OUT_STRING_PRECIS' value: 16r1!
+LOGFONTW addClassConstant: 'OUT_STROKE_PRECIS' value: 16r3!
+LOGFONTW addClassConstant: 'OUT_TT_ONLY_PRECIS' value: 16r7!
+LOGFONTW addClassConstant: 'OUT_TT_PRECIS' value: 16r4!
+LOGFONTW addClassConstant: 'PROOF_QUALITY' value: 16r2!
+LOGFONTW addClassConstant: 'VARIABLE_PITCH' value: 16r2!
 
 LOGFONTW comment: '<LOGFONTW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGFONTW'' from type information in the ''Win32 API'' library.
 
@@ -55,9 +76,6 @@ struct tagLOGFONTW {
 
 !LOGFONTW methodsFor!
 
-createFont
-	^GDILibrary default createFontIndirectW: self!
-
 equalExcludingSize: aLOGFONTW
 	^self lfFaceName = aLOGFONTW lfFaceName and: 
 			[(CRTLibrary default
@@ -69,7 +87,7 @@ faceName
 	"Answer the receiver's lfFaceName field as a UTF-8 encoded string, having trimmed any extra
 	nulls."
 	
-	^self lfFaceName asUtf8String trimNulls!
+	^self lfFaceName asUtf8String!
 
 faceName: aString
 	"Set the receiver's lfFaceName field."
@@ -85,6 +103,11 @@ getData: hFont
 isFixedWidth
 	^(self lfPitchAndFamily bitAnd: 16r3) == 1!
 
+isRasterFont
+	"The lfOutPrecision can be used to identify a raster font. See [LOGFONTW](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfontw). Raster fonts as they are essentially pre-rendered bitmaps at certain sizes so they don't scale well to arbitrary point sizes."
+
+	^self lfOutPrecision == OUT_STRING_PRECIS!
+
 lfCharSet
 	"Answer the <Integer> value of the receiver's 'lfCharSet' field."
 
@@ -94,6 +117,16 @@ lfCharSet: anInteger
 	"Set the receiver's 'lfCharSet' field to the value of the argument, anInteger"
 
 	bytes byteAtOffset: _OffsetOf_lfCharSet put: anInteger!
+
+lfClipPrecision
+	"Answer the <Integer> value of the receiver's 'lfClipPrecision' field."
+
+	^bytes byteAtOffset: _OffsetOf_lfClipPrecision!
+
+lfClipPrecision: anInteger
+	"Set the receiver's 'lfClipPrecision' field to the value of the argument, anInteger"
+
+	bytes byteAtOffset: _OffsetOf_lfClipPrecision put: anInteger!
 
 lfEscapement
 	"Answer the <Integer> value of the receiver's 'lfEscapement' field."
@@ -141,6 +174,16 @@ lfItalic: anInteger
 	"Set the receiver's 'lfItalic' field to the value of the argument, anInteger"
 
 	bytes byteAtOffset: _OffsetOf_lfItalic put: anInteger!
+
+lfOutPrecision
+	"Answer the <Integer> value of the receiver's 'lfOutPrecision' field."
+
+	^bytes byteAtOffset: _OffsetOf_lfOutPrecision!
+
+lfOutPrecision: anInteger
+	"Set the receiver's 'lfOutPrecision' field to the value of the argument, anInteger"
+
+	bytes byteAtOffset: _OffsetOf_lfOutPrecision put: anInteger!
 
 lfPitchAndFamily
 	"Answer the <Integer> value of the receiver's 'lfPitchAndFamily' field."
@@ -203,14 +246,16 @@ lfWidth: anInteger
 	bytes sdwordAtOffset: _OffsetOf_lfWidth put: anInteger! !
 
 !LOGFONTW categoriesForMethods!
-createFont!private!realizing/unrealizing! !
 equalExcludingSize:!comparing!public! !
 faceName!accessing!public! !
 faceName:!accessing!public! !
 getData:!helpers!private! !
 isFixedWidth!public! !
+isRasterFont!public!testing! !
 lfCharSet!**compiled accessors**!public! !
 lfCharSet:!**compiled accessors**!public! !
+lfClipPrecision!**compiled accessors**!public! !
+lfClipPrecision:!**compiled accessors**!public! !
 lfEscapement!**compiled accessors**!public! !
 lfEscapement:!**compiled accessors**!public! !
 lfFaceName!**compiled accessors**!public! !
@@ -219,6 +264,8 @@ lfHeight!**compiled accessors**!public! !
 lfHeight:!**compiled accessors**!public! !
 lfItalic!**compiled accessors**!public! !
 lfItalic:!**compiled accessors**!public! !
+lfOutPrecision!**compiled accessors**!public! !
+lfOutPrecision:!**compiled accessors**!public! !
 lfPitchAndFamily!**compiled accessors**!public! !
 lfPitchAndFamily:!**compiled accessors**!public! !
 lfQuality!**compiled accessors**!public! !
@@ -250,8 +297,8 @@ defineFields
 		defineField: #lfUnderline type: BYTEField new;
 		defineField: #lfStrikeOut type: BYTEField new;
 		defineField: #lfCharSet type: BYTEField new;
-		defineField: #lfOutPrecision type: BYTEField new beUncompiled;
-		defineField: #lfClipPrecision type: BYTEField new beUncompiled;
+		defineField: #lfOutPrecision type: BYTEField new;
+		defineField: #lfClipPrecision type: BYTEField new;
 		defineField: #lfQuality type: BYTEField new;
 		defineField: #lfPitchAndFamily type: BYTEField new;
 		defineField: #lfFaceName type: (StringField type: Utf16String length: LF_FACESIZE)!

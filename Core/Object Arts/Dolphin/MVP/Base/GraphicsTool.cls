@@ -86,16 +86,6 @@ getData: aWinStruct
 	the specified structure. N.B. This only works for GDI objects."
 
 	^GDILibrary default
-		getObject: self asParameter
-		cbBuffer: aWinStruct byteSize
-		lpvObject: aWinStruct
-		!
-
-getDataW: aWinStruct
-	"Private - Get the data bytes of the receiver's external resource object into	
-	the specified structure. N.B. This only works for GDI objects."
-
-	^GDILibrary default
 		getObjectW: self asParameter
 		cbBuffer: aWinStruct byteSize
 		lpvObject: aWinStruct
@@ -217,7 +207,6 @@ detachHandle!accessing!public! !
 equals:!comparing!public! !
 free!public!realizing/unrealizing! !
 getData:!accessing!private! !
-getDataW:!accessing!private! !
 getStockObject:!accessing!private! !
 handle!accessing!public! !
 handle:!accessing!private! !
