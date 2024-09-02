@@ -45,19 +45,13 @@ initialize
 model: aValueModel
 	"Set the model of the receiver to be aValueModel."
 
-	| font lf lfw |
+	| font |
 	super model: aValueModel.
-	font := self value ifNil: [SystemMetrics current iconTitleFont].
-	"Might be a legacy Font instance with a LOGFONTA description, but we need a LOGFONTW"
-	lf := font logFont.
-	lfw := LOGFONTW newBuffer.
-	lfw
-		replaceFrom: 1
-		to: lf byteSize
-		with: lf bytes
-		startingAt: 1.
-	lfw faceName: lf faceName.
-	self winStruct logFont: lfw!
+	"Note that the LOGFONT we pass to the dialog must be scaled for the current system DPI, regardless of the DPI of the monitor where the dialog is opened."
+	font := self value
+				ifNil: [SystemMetrics current iconTitleFont]
+				ifNotNil: [:f | f atDpi: SystemMetrics current dpi].
+	self winStruct logFont: font logFont!
 
 winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
