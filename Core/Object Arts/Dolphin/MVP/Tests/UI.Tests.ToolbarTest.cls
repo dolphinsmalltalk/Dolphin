@@ -34,7 +34,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view scaledBitmapSize
 		equals: (hasBitmapButtons
 				ifTrue: [SystemMetrics default smallIconExtent]
-				ifFalse: [view metrics smallIconExtent]).
+				ifFalse: [Icon standardSizeFor: view metrics smallIconExtent]).
 	self assert: view indent equals: 0.
 	"12->13 conversion"
 	self assert: (view backcolor == Color default or: [view backcolor isNil]).
