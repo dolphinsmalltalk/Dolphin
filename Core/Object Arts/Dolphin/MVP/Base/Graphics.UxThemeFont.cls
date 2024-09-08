@@ -59,12 +59,31 @@ printOn: aStream
 setId: anInteger themedObject: anObjectWithTheme
 	id := anInteger.
 	themedObject := anObjectWithTheme.
-	^self! !
+	^self!
+
+stbFixup: anSTBInFiler at: newObjectIndex
+	dpi := User32 getDpiForSystem.
+	^self!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler. For theme fonts we do not want to persist the cached LOGFONT information."
+
+	| savedHandle savedSeries savedLogFont |
+	savedHandle := handle.
+	savedSeries := series.
+	savedLogFont := logfont.
+	logfont := handle := series := nil.
+	[anSTBOutFiler saveObject: self] ensure: 
+			[handle := savedHandle.
+			logfont := savedLogFont.
+			series := savedSeries]! !
 
 !Graphics.UxThemeFont categoriesForMethods!
 getLogFont!initializing!private! !
 printOn:!development!printing!public! !
 setId:themedObject:!initializing!private! !
+stbFixup:at:!binary filing!public! !
+stbSaveOn:!binary filing!public! !
 !
 
 !Graphics.UxThemeFont class methodsFor!

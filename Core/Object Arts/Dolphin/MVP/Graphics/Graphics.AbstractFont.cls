@@ -3,7 +3,7 @@
 Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
 	instanceVariableNames: 'logfont dpi series'
-	classVariableNames: 'System'
+	classVariableNames: 'Stock System'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -177,9 +177,10 @@ species
 stbSaveOn: anSTBOutFiler
 	"Serialize the receiver to anSTBOutFiler."
 
-	"For Fonts we want to replace all instances from a series with a 96-dpi design instance, and we never want to serialize the series itself"
-
-	dpi == USER_DEFAULT_SCREEN_DPI
+	| canonical |
+	canonical := self series canonical.
+	"For Fonts we want to replace all instances from a series with the original instance (usually a 96-dpi design instance, but the DPI doesn't particularly matter since Font's are always scaled to the target DPI on use anyway)."
+	canonical == self
 		ifTrue: 
 			[| savedHandle savedSeries |
 			savedHandle := handle.
@@ -188,7 +189,7 @@ stbSaveOn: anSTBOutFiler
 			[anSTBOutFiler saveObject: self] ensure: 
 					[handle := savedHandle.
 					series := savedSeries]]
-		ifFalse: [anSTBOutFiler nextPut: (series atDpi: USER_DEFAULT_SCREEN_DPI)]!
+		ifFalse: [anSTBOutFiler nextPut: canonical]!
 
 styleChanged
 	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
@@ -257,7 +258,7 @@ weight!accessing!public! !
 default
 	"Answers the default font for the system."
 
-	^self fromId: DEFAULT_GUI_FONT
+	^self fromId: StockFont.DEFAULT_GUI_FONT
 !
 
 defaultPointSize
@@ -265,20 +266,20 @@ defaultPointSize
 
 	^10!
 
-fixedSystem
-	^self fromId: SYSTEM_FIXEDFONT!
-
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock font id anInteger."
 
-	^StockFont new
-		setId: anInteger;
-		yourself!
+	| index |
+	index := anInteger - ##(StockFont.OEM_FIXED_FONT - 1).
+	^(Stock at: index) ifNil: [Stock at: index put: (StockFont newId: anInteger)]!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Icon fromId: 'Font.ico'!
+
+initialize
+	self reset!
 
 name: aString
 	"Answer a new instance of the receiver for fontname aString and a default point size"
@@ -303,7 +304,11 @@ name: aString pointSize: anInteger
 		yourself!
 
 onStartup2
-	System := self fromId: SYSTEM_FONT!
+	self reset!
+
+reset
+	Stock := Array new: ##(StockFont.DEFAULT_GUI_FONT - StockFont.OEM_FIXED_FONT + 1).
+	System := self fromId: StockFont.SYSTEM_FONT.!
 
 stbConvertFrom: anSTBClassFormat
 	| version |
@@ -329,21 +334,26 @@ stbVersion
 	^1!
 
 system
-	^System! !
+	^System!
+
+systemFixed
+	^self fromId: StockFont.SYSTEM_FIXED_FONT! !
 
 !Graphics.AbstractFont class categoriesForMethods!
 default!instance creation!public! !
 defaultPointSize!constants!private! !
-fixedSystem!instance creation!public! !
 fromId:!instance creation!public! !
 icon!constants!public! !
+initialize!class initialization!public! !
 name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !
 name:pointSize:!instance creation!public! !
 onStartup2!event handling!private! !
+reset!initializing!private! !
 stbConvertFrom:!binary filing!private! !
 stbConvertFromVersion0:!binary filing!private! !
 stbVersion!binary filing!public! !
 system!instance creation!public! !
+systemFixed!instance creation!public! !
 !
 

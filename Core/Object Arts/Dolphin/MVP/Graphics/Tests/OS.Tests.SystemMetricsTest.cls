@@ -19,7 +19,7 @@ testIconTitleFont
 	font96 := SystemMetrics default iconTitleFont.
 	fontSys := SystemMetrics current iconTitleFont.
 	self assert: fontSys equals: font96.
-	self assert: fontSys dpi equals: UserLibrary default getDpiForSystem.
+	self assert: fontSys dpi equals: SystemMetrics current dpi.
 	self assert: font96 dpi equals: 96!
 
 testLargeIconExtent

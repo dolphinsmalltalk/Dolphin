@@ -220,7 +220,6 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getDialogDpiChangeBehavior:)
 	#(#{OS.UserLibrary} #getDlgCtrlID:)
 	#(#{OS.UserLibrary} #getDpiAwarenessContextForProcess:)
-	#(#{OS.UserLibrary} #getDpiForSystem)
 	#(#{OS.UserLibrary} #getDpiForWindow:)
 	#(#{OS.UserLibrary} #getDpiFromDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #getFocus)
@@ -3255,15 +3254,6 @@ getDpiAwarenessContextForProcess: hProcess
 	<stdcall: intptr GetDpiAwarenessContextForProcess handle>
 	^self invalidCall: _failureCode!
 
-getDpiForSystem
-	"Invoke the GetDpiForSystem() function of the module wrapped by the receiver.
-	Helpstring: Returns the system DPI.
-
-		unsigned int __stdcall GetDpiForSystem();"
-
-	<stdcall: uint32 GetDpiForSystem>
-	^self invalidCall: _failureCode!
-
 getDpiForWindow: hwnd
 	"Invoke the GetDpiForWindow() function of the module wrapped by the receiver.
 	Helpstring: Get the DPI of the specified Window.
@@ -4566,7 +4556,6 @@ getDialogControlDpiChangeBehavior:!**auto generated**!public!win32 functions-hig
 getDialogDpiChangeBehavior:!**auto generated**!public!win32 functions-high DPI! !
 getDlgCtrlID:!public!win32 functions-dialog box! !
 getDpiAwarenessContextForProcess:!**auto generated**!public!win32 functions-high DPI! !
-getDpiForSystem!**auto generated**!public!win32 functions-high DPI! !
 getDpiForWindow:!**auto generated**!public!win32 functions-high DPI! !
 getDpiFromDpiAwarenessContext:!**auto generated**!public!win32 functions-high DPI! !
 getFocus!public!win32 functions-keyboard input! !

@@ -18,13 +18,15 @@ canonicalSubject
 	^Font name: 'Arial' pointSize: 12!
 
 testAtDpi
-	| subject double |
+	| subject subject200 |
 	subject := self canonicalSubject.
 	self assert: subject dpi equals: 96.
 	self assert: (subject atDpi: 96) identicalTo: subject.
-	double := subject atDpi: 96 * 2.
-	self assert: double dpi equals: 96 * 2.
-	self assert: (double atDpi: 96) identicalTo: subject!
+	subject200 := subject atDpi: 96 * 2.
+	self deny: subject200 identicalTo: subject.
+	self assert: subject200 equals: subject.
+	self assert: subject200 dpi equals: 96 * 2.
+	self assert: (subject200 atDpi: 96) identicalTo: subject!
 
 testComparing
 	| subject comperand |
@@ -50,12 +52,20 @@ testStbConvertFrom0
 	self assert: font class identicalTo: Font.
 	self assert: font dpi equals: 96.
 	self assert: font handle notNil.
-	self assert: font equals: ((Font name: 'Segoe UI' pointSize: 12) atDpi: 96)! !
+	self assert: font equals: (Font name: 'Segoe UI' pointSize: 12)!
+
+testStlConvertFrom0
+	| font |
+	font := Object
+				fromLiteralStoreArray: #(#'!!STL' 3 263174 ##(Smalltalk.Font) 0 16 459014 ##(Smalltalk.LOGFONT) 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 0 0 0 0 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193).
+	self assert: font equals: ((Graphics.Font name: 'Arial' pointSize: 11) isBold: true).
+	self assert: font dpi equals: Win32Constants.USER_DEFAULT_SCREEN_DPI! !
 
 !Graphics.Tests.FontTest categoriesForMethods!
 canonicalSubject!helpers!private! !
 testAtDpi!public!unit tests! !
 testComparing!public!unit tests! !
 testStbConvertFrom0!public!unit tests! !
+testStlConvertFrom0!public!unit tests! !
 !
 

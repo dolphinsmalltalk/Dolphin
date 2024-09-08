@@ -132,6 +132,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getCursorPos:)
 	#(#{OS.UserLibrary} #getDC)
 	#(#{OS.UserLibrary} #getDC:)
+	#(#{OS.UserLibrary} #getDpiForSystem)
 	#(#{OS.UserLibrary} #getIconInfo:piconinfo:)
 	#(#{OS.UserLibrary} #invertRect:lprc:)
 	#(#{OS.UserLibrary} #loadIcon:lpIconName:)
@@ -419,7 +420,7 @@ External.PermanentLibrary
 Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
 	instanceVariableNames: 'logfont dpi series'
-	classVariableNames: 'System'
+	classVariableNames: 'Stock System'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -519,8 +520,13 @@ Graphics.SystemFont
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'StockNames'
-				-> (IdentityDictionary withAll: { 16rD -> #system. 16r10 -> #fixedSystem. 16r11 -> #default })
+			'ANSI_FIXED_FONT' -> 16rB.
+			'ANSI_VAR_FONT' -> 16rC.
+			'DEFAULT_GUI_FONT' -> 16r11.
+			'DEVICE_DEFAULT_FONT' -> 16rE.
+			'OEM_FIXED_FONT' -> 16rA.
+			'SYSTEM_FIXED_FONT' -> 16r10.
+			'SYSTEM_FONT' -> 16rD
 		}!
 
 Graphics.AbstractPen
@@ -2010,6 +2016,15 @@ getDC: aWindowHandle
 	<stdcall: handle GetDC handle>
 	^self invalidCall: _failureCode!
 
+getDpiForSystem
+	"Invoke the GetDpiForSystem() function of the module wrapped by the receiver.
+	Helpstring: Returns the system DPI.
+
+		unsigned int __stdcall GetDpiForSystem();"
+
+	<stdcall: uint32 GetDpiForSystem>
+	^self invalidCall: _failureCode!
+
 getIconInfo: hIcon piconinfo: anICONINFO
 	"Populate the argument, anICONINFO, with information about the  icon or cursor
 	whose handle is hIcon.
@@ -2116,6 +2131,7 @@ getCursor!public!win32 functions-cursor! !
 getCursorPos:!public!win32 functions-cursor! !
 getDC!operations!public! !
 getDC:!not an aspect!public!win32 functions-device context! !
+getDpiForSystem!**auto generated**!public!win32 functions-high DPI! !
 getIconInfo:piconinfo:!public!win32 functions-icon! !
 invertRect:lprc:!public!win32 functions-filled shape! !
 loadIcon:lpIconName:!public!win32 functions-icon! !

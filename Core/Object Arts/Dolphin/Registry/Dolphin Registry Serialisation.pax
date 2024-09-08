@@ -63,6 +63,8 @@ package setMethodNames: #(
 	#(#{Graphics.AbstractFont class} #readFromRegistry:params:)
 	#(#{Graphics.Color} #writeToRegistry:name:)
 	#(#{Graphics.Color class} #readFromRegistry:params:)
+	#(#{Graphics.SystemFont} #writeToRegistry:name:)
+	#(#{Graphics.SystemFont class} #readFromRegistry:params:)
 	#(#{Graphics.VirtualColor} #writeToRegistry:name:)
 	#(#{Kernel.MethodAnnotations class} #readFromRegistry:params:)
 	#(#{Kernel.PluggableSortAlgorithm class} #readFromRegistry:params:)
@@ -637,6 +639,36 @@ readFromRegistry: aRegistryDeserializer params: anArray
 				ifFalse: [self named: param]]! !
 
 !Graphics.Color class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Graphics.SystemFont methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter
+		writeObject: self
+		class: self class
+		name: aString
+		parameter: nil
+		do: [:writer :font | writer objectAt: 'id' put: font id]! !
+
+!Graphics.SystemFont categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Graphics.SystemFont class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised under the specified registry key."
+
+	| sysfont |
+	sysfont := self fromId: (aRegistryDeserializer objectAt: 'id').
+	aRegistryDeserializer registerCurrentObject: sysfont.
+	^sysfont! !
+
+!Graphics.SystemFont class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
 

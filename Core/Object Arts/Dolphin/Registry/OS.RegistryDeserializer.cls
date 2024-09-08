@@ -62,6 +62,7 @@ defaultSafeClassReferences
 				'Color' -> #{Graphics.Color}.
 				'ColorAlpha' -> #{Graphics.ColorAlpha}.
 				'Font' -> #{Graphics.Font}.
+				'StockFont' -> #{Graphics.StockFont}.
 				'Point' -> #{Graphics.Point}.
 				'DefaultSortAlgorithm' -> #{Kernel.SortAlgorithm}.
 				'SortAlgorithm' -> #{Kernel.SortAlgorithm}.

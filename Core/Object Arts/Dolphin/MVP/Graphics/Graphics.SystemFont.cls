@@ -41,17 +41,18 @@ id
 
 	^id!
 
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler. For systems fonts we do not want to persist the cached LOGFONT information."
+initialize
+	"Initialise the receiver."
 
-	anSTBOutFiler override: logfont with: nil.
-	super stbSaveOn: anSTBOutFiler.! !
+	super initialize.
+	"The stock fonts are sized for the system (primary monitor) DPI."
+	dpi := User32 getDpiForSystem! !
 
 !Graphics.SystemFont categoriesForMethods!
 actualFont!accessing!public! !
 clearCached!private!realizing/unrealizing! !
 copy!copying!public! !
 id!accessing!private! !
-stbSaveOn:!binary filing!public! !
+initialize!initializing!public! !
 !
 

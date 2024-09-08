@@ -280,6 +280,11 @@ menuTextAcceleratorGap
 menuWidth
 	^self nonClientMetrics iMenuWidth!
 
+messageFont
+	"Answer the currently configured message box font."
+
+	^Graphics.Font fromLogFont: self nonClientMetrics lfMessageFont dpi: self dpi!
+
 minimumTreeViewIndent
 	^16!
 
@@ -360,10 +365,20 @@ sizingFrameExtent
 	^sizingFrameExtent
 		ifNil: [sizingFrameExtent := self getMetric: SM_CXSIZEFRAME pair: SM_CYSIZEFRAME]!
 
+smallCaptionFont
+	"Answer the currently configured small window caption font."
+
+	^Graphics.Font fromLogFont: self nonClientMetrics lfSmCaptionFont dpi: self dpi!
+
 smallIconExtent
 	"Answer a <Point> that gives the dimensions of a small size icon."
 
 	^smallIconExtent ifNil: [smallIconExtent := self getMetric: SM_CXSMICON pair: SM_CYSMICON]!
+
+statusFont
+	"Answer the currently configured status bar font."
+
+	^Graphics.Font fromLogFont: self nonClientMetrics lfStatusFont dpi: self dpi!
 
 tileIconExtent
 	"Answer a <Point> that gives the dimensions of an icon tile."
@@ -430,6 +445,7 @@ menuImageExtent!accessing!public! !
 menuImageTextGap!constants!public! !
 menuTextAcceleratorGap!constants!public! !
 menuWidth!constants!public! !
+messageFont!constants!public! !
 minimumTreeViewIndent!constants!public! !
 monitorCount!accessing!public! !
 mouseHoverTime!constants!public! !
@@ -445,7 +461,9 @@ scrollThumbExtent!constants!public! !
 setDpi:!initializing!private! !
 setSysParamBool:value:!helpers!private! !
 sizingFrameExtent!constants!public! !
+smallCaptionFont!constants!public! !
 smallIconExtent!constants!public! !
+statusFont!constants!public! !
 tileIconExtent!constants!public! !
 virtualScreenExtent!constants!public! !
 virtualScreenOrigin!constants!public! !

@@ -15,6 +15,7 @@ package setClassNames: #(
 	#{Graphics.Tests.PointTest}
 	#{Graphics.Tests.RectangleTest}
 	#{Graphics.Tests.TextTileIconTest}
+	#{Graphics.Tests.UxThemeFontTest}
 	#{OS.Tests.CCITEMTest}
 	#{OS.Tests.LVITEMWTest}
 	#{OS.Tests.NMGETINFOTIPTest}
@@ -184,6 +185,7 @@ package setPrerequisites: #(
 	'..\Models\Tree\Dolphin Folder Tree Model'
 	'..\Presenters\Font\Dolphin Font Presenter'
 	'..\Graphics\Dolphin GDI Graphics'
+	'..\Graphics\Tests\Dolphin GDI Graphics Tests'
 	'..\Views\Static\GroupBox\Dolphin GroupBox'
 	'..\Presenters\Image\Dolphin Image Presenter'
 	'..\Presenters\Prompters\Dolphin In-place Text Editor'
@@ -486,6 +488,14 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.WindowsEventTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Graphics.Tests.SystemFontTest
+	subclass: #'Graphics.Tests.UxThemeFontTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

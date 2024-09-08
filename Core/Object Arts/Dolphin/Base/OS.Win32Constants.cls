@@ -160,11 +160,9 @@ Kernel.SharedPool
 			'DDC_DISABLE_ALL' -> 16r1.
 			'DDC_DISABLE_CONTROL_RELAYOUT' -> 16r4.
 			'DDC_DISABLE_RESIZE' -> 16r2.
-			'DEFAULT_GUI_FONT' -> 16r11.
 			'DEFAULT_PALETTE' -> 16rF.
 			'DESKTOPVERTRES' -> 16r76.
 			'DETACHED_PROCESS' -> 16r8.
-			'DEVICE_DEFAULT_FONT' -> 16rE.
 			'DFC_BUTTON' -> 16r4.
 			'DFC_CAPTION' -> 16r1.
 			'DFC_MENU' -> 16r2.
@@ -558,7 +556,6 @@ Kernel.SharedPool
 			'ODT_LISTBOX' -> 16r2.
 			'ODT_MENU' -> 16r1.
 			'ODT_STATIC' -> 16r5.
-			'OEM_FIXED_FONT' -> 16rA.
 			'OPAQUE' -> 16r2.
 			'OPEN_ALWAYS' -> 16r4.
 			'OPEN_EXISTING' -> 16r3.
@@ -816,8 +813,6 @@ Kernel.SharedPool
 			'SWP_NOSIZE' -> 16r1.
 			'SWP_NOZORDER' -> 16r4.
 			'SWP_SHOWWINDOW' -> 16r40.
-			'SYSTEM_FIXEDFONT' -> 16r10.
-			'SYSTEM_FONT' -> 16rD.
 			'TA_BASELINE' -> 16r18.
 			'TA_BOTTOM' -> 16r8.
 			'TA_CENTER' -> 16r6.

@@ -6,7 +6,7 @@ Core.Tests.DolphinTest
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'LogFontIndex' -> 16r3 }!
 
 Graphics.Tests.AbstractFontTest guid: (Core.GUID fromString: '{8a4906fc-95c2-4d0c-af13-60c309d9ada0}')!
 
@@ -19,35 +19,55 @@ Graphics.Tests.AbstractFontTest comment: ''!
 canonicalSubject
 	^self subclassResponsibility!
 
+stbRoundTripBlock
+	^[:object | Object fromBinaryStoreBytes: object binaryStoreBytes]!
+
+stlRoundTripBlock
+	^[:object | Object fromLiteralStoreArray: object literalStoreArray]!
+
 testAtDpi
 	self subclassResponsibility!
 
 testComparing
 	self subclassResponsibility!
 
-testStbConvertFrom0
-	self subclassResponsibility!
-
 testStbRoundTrip
-	| subject subject2 bytes array deserialized |
+	self verifyStxRoundTrip: self stbRoundTripBlock!
+
+testStlRoundTrip
+	self verifyStxRoundTrip: self stlRoundTripBlock!
+
+verifyStxRoundTrip: aMonadicValuable
+	| array deserialized subject150 subject original |
 	subject := self canonicalSubject.
-	self assert: subject dpi equals: 96.
-	subject2 := subject atDpi: subject dpi * 2.
-	self assert: subject2 series identicalTo: subject series.
-	bytes := { subject2. subject. subject. subject2 } binaryStoreBytes.
-	array := Object fromBinaryStoreBytes: bytes.
-	1 to: 3 do: [:i | self assert: (array at: i) identicalTo: (array at: i + 1)].
+	subject150 := subject atDpi: subject dpi * 3 / 2.
+	self assert: subject150 series identicalTo: subject series.
+	original := { subject150. subject. subject. subject150 }.
+	array := aMonadicValuable value: original.
+	self assert: array asIdentitySet size equals: 1.
 	deserialized := array first.
 	self deny: deserialized identicalTo: subject.
-	self assert: array first equals: subject.
-	self deny: array first series identicalTo: subject series.
-	self assert: deserialized dpi equals: 96! !
+	self assert: deserialized equals: subject.
+	self deny: deserialized series identicalTo: subject series.
+	self assert: deserialized dpi equals: subject dpi! !
 
 !Graphics.Tests.AbstractFontTest categoriesForMethods!
 canonicalSubject!helpers!private! !
+stbRoundTripBlock!constants!private! !
+stlRoundTripBlock!constants!private! !
 testAtDpi!public!unit tests! !
 testComparing!public!unit tests! !
-testStbConvertFrom0!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
+testStlRoundTrip!public!unit tests! !
+verifyStxRoundTrip:!helpers!private! !
+!
+
+!Graphics.Tests.AbstractFontTest class methodsFor!
+
+initialize
+	self addClassConstant: 'LogFontIndex' value: (Font indexOfInstVar: 'logfont')! !
+
+!Graphics.Tests.AbstractFontTest class categoriesForMethods!
+initialize!class initialization!public! !
 !
 

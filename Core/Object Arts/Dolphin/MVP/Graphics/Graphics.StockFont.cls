@@ -7,8 +7,13 @@ Graphics.SystemFont
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'StockNames'
-				-> (IdentityDictionary withAll: { 16rD -> #system. 16r10 -> #fixedSystem. 16r11 -> #default })
+			'ANSI_FIXED_FONT' -> 16rB.
+			'ANSI_VAR_FONT' -> 16rC.
+			'DEFAULT_GUI_FONT' -> 16r11.
+			'DEVICE_DEFAULT_FONT' -> 16rE.
+			'OEM_FIXED_FONT' -> 16rA.
+			'SYSTEM_FIXED_FONT' -> 16r10.
+			'SYSTEM_FONT' -> 16rD
 		}!
 
 Graphics.StockFont guid: (Core.GUID fromString: '{87b4c63c-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -66,20 +71,21 @@ printOn: aStream
 	"Append, to aStream, a String whose characters are a description of the receiver as a developer
 	would want to see it."
 
-	(StockNames lookup: id)
-		ifNil: 
+	id == SYSTEM_FONT
+		ifTrue: 
+			[aStream
+				display: Font;
+				space;
+				display: #system]
+		ifFalse: 
 			[aStream
 				nextPut: $(;
 				display: Font;
 				nextPutAll: ' fromId: ';
-				print: id;
-				nextPut: $)]
-		ifNotNil: 
-			[:name |
-			aStream
-				display: Font;
-				space;
-				nextPutAll: name]!
+				display: ((self class classPool keyAtValue: id ifAbsent: nil)
+							ifNil: [id]
+							ifNotNil: [:const | self class classPool associationAt: const]) displayString;
+				nextPut: $)]!
 
 resolution: aPoint
 	"Sets the logical pixels per inch of the receiver"
@@ -91,7 +97,20 @@ resolution: aPoint
 setId: anInteger
 	id := anInteger.
 	ownsHandle := false.
-	^self! !
+	^self!
+
+stbFixup: anSTBInFiler at: newObjectIndex
+	"We don't want to clear the cached LOGFONT from the shared instances, so override superclass to do nothing."
+
+	^self!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler."
+
+	anSTBOutFiler
+		saveSingleton: self
+		class: self class
+		name: id! !
 
 !Graphics.StockFont categoriesForMethods!
 atDpi:!public!scaling! !
@@ -103,5 +122,44 @@ ownedHandle:!accessing!private! !
 printOn:!development!printing!public! !
 resolution:!accessing!public! !
 setId:!initializing!private! !
+stbFixup:at:!binary filing!public! !
+stbSaveOn:!binary filing!public! !
+!
+
+!Graphics.StockFont class methodsFor!
+
+newId: anInteger
+	"Private - Answer a new instance of the receiver representing the stock font id anInteger."
+
+	^self new
+		setId: anInteger;
+		yourself!
+
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 StockFont. Version 1 uses a singleton representation."
+
+	^(self fromId: (anArray at: 5)) atDpi: (anArray at: 4) y!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
+
+	"Implementation Note: Overridden in order to support conversion from pre version 1 instances, which can be found in STB files from versions of Dolphin predating 6.0"
+
+	^(anSTBClassConversion notNil and: [anSTBClassConversion version < 1])
+		ifTrue: 
+			[| vars |
+			vars := anSTBInFiler readObjectOfClass: Array size: anSTBClassConversion instSize.
+			(self fromId: (vars at: 5)) atDpi: (vars at: 4) y]
+		ifFalse: 
+			[| stock |
+			"Otherwise use the custom deserialization"
+			stock := self fromId: anSTBInFiler basicNext.
+			anSTBInFiler register: stock.
+			stock]! !
+
+!Graphics.StockFont class categoriesForMethods!
+newId:!instance creation!private! !
+stbConvertFromVersion0:!binary filing!private! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 

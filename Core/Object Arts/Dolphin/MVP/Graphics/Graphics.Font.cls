@@ -123,6 +123,10 @@ printOn: aStream
 	would want to see it."
 
 	| attributes weight |
+	(series notNil and: [series canonical ~~ self])
+		ifTrue: 
+			[series canonical printOn: aStream.
+			^self].
 	attributes := OrderedCollection new.
 	weight := self weight.
 	weight == FW_NORMAL
