@@ -30,6 +30,11 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 					self assertIsNil: each font]].
 	hasBitmapButtons := view items anySatisfy: [:each | each isKindOf: ToolbarBitmapButton].
 	self assert: view interactor identicalTo: view.
+	self assert: view actualImageSize equals: #smallIcons.
+	self assert: view scaledBitmapSize
+		equals: (hasBitmapButtons
+				ifTrue: [SystemMetrics default smallIconExtent]
+				ifFalse: [Icon standardSizeFor: view metrics smallIconExtent]).
 	self assert: view indent equals: 0.
 	"12->13 conversion"
 	self assert: (view backcolor == Color default or: [view backcolor isNil]).
