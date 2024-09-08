@@ -2,11 +2,19 @@
 
 Font subclass: #StockFont
 	instanceVariableNames: 'id'
-	classVariableNames: 'StockNames'
+	classVariableNames: 'ANSI_FIXED_FONT ANSI_VAR_FONT DEFAULT_GUI_FONT DEVICE_DEFAULT_FONT OEM_FIXED_FONT SYSTEM_FIXED_FONT SYSTEM_FONT'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 StockFont guid: (GUID fromString: '{87b4c63c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
+StockFont addClassConstant: 'ANSI_FIXED_FONT' value: 16rB!
+StockFont addClassConstant: 'ANSI_VAR_FONT' value: 16rC!
+StockFont addClassConstant: 'DEFAULT_GUI_FONT' value: 16r11!
+StockFont addClassConstant: 'DEVICE_DEFAULT_FONT' value: 16rE!
+StockFont addClassConstant: 'OEM_FIXED_FONT' value: 16rA!
+StockFont addClassConstant: 'SYSTEM_FIXED_FONT' value: 16r10!
+StockFont addClassConstant: 'SYSTEM_FONT' value: 16rD!
 
 StockFont comment: '`StockFont` is the class of `GraphicsTool`s that wrap a Windows standard Font such as System, or Fixed System.
 
@@ -55,6 +63,13 @@ id
 
 	^id!
 
+initialize
+	"Initialise the receiver."
+
+	super initialize.
+	"The stock fonts are sized for the system (primary monitor) DPI."
+	dpi := UserLibrary default getDpiForSystem!
+
 ownedHandle: aHandle 
 	"Private - Set the handle of the external graphics's tool object represented and owned by
 	the receiver to be the argument."
@@ -67,31 +82,38 @@ printOn: aStream
 	"Append, to aStream, a String whose characters are a description of the receiver as a developer
 	would want to see it."
 
-	(StockNames lookup: id)
-		ifNil: 
+	id == SYSTEM_FONT
+		ifTrue: 
+			[aStream
+				display: Font;
+				space;
+				display: #system]
+		ifFalse: 
 			[aStream
 				nextPut: $(;
 				display: Font;
-				nextPutAll: ' fromId: ';
-				print: id;
-				nextPut: $)]
-		ifNotNil: 
-			[:name |
-			aStream
-				display: Font;
-				space;
-				nextPutAll: name]!
+				nextPutAll: ' fromId: StockFont.';
+				display: ((self class classPool keyAtValue: id ifAbsent: nil)
+							ifNil: [id]
+							ifNotNil: [:const | self class classPool associationAt: const]) displayString;
+				nextPut: $)]!
 
 setId: anInteger
 	id := anInteger.
 	ownsHandle := false.
 	^self!
 
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler. For systems fonts we do not want to persist the cached LOGFONT information."
+stbFixup: anSTBInFiler at: newObjectIndex
+	"We don't want to clear the cached LOGFONT from the shared instances, so override superclass to do nothing."
 
-	anSTBOutFiler override: logfont with: nil.
-	super stbSaveOn: anSTBOutFiler! !
+	^self!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler."
+
+	anSTBOutFiler 
+		writePreambleFor: self;
+		nextPut: id! !
 
 !StockFont categoriesForMethods!
 atDpi:!public!scaling! !
@@ -100,19 +122,48 @@ copy!copying!public! !
 createHandle!private!realizing/unrealizing! !
 getLogFont!initializing!private! !
 id!accessing!private! !
+initialize!initializing!public! !
 ownedHandle:!accessing!private! !
 printOn:!printing!public! !
 setId:!initializing!private! !
+stbFixup:at:!binary filing!public! !
 stbSaveOn:!binary filing!public! !
 !
 
 !StockFont class methodsFor!
 
-initialize
-	self addClassConstant: 'StockNames'
-		value: (IdentityDictionary withAll: {16rD -> #system. 16r10 -> #fixedSystem. 16r11 -> #default})! !
+newId: anInteger
+	"Private - Answer a new instance of the receiver representing the stock font id anInteger."
+
+	^self new
+		setId: anInteger;
+		yourself!
+
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 StockFont. Version 1 uses a singleton representation."
+
+	^(self fromId: (anArray at: 5)) atDpi: (anArray at: 4) y!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
+
+	"Implementation Note: Overridden in order to support conversion from pre version 1 instances, which can be found in STB files from versions of Dolphin predating 6.0"
+
+	^(anSTBClassConversion notNil and: [anSTBClassConversion version < 1])
+		ifTrue: 
+			[| vars |
+			vars := anSTBInFiler readObjectOfClass: Array size: anSTBClassConversion instSize.
+			(self fromId: (vars at: 5)) atDpi: (vars at: 4) y]
+		ifFalse: 
+			[| stock |
+			"Otherwise use the custom deserialization"
+			stock := self fromId: anSTBInFiler basicNext.
+			anSTBInFiler register: stock.
+			stock]! !
 
 !StockFont class categoriesForMethods!
-initialize!class initialization!public! !
+newId:!instance creation!private! !
+stbConvertFromVersion0:!binary filing!private! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 

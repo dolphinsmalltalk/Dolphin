@@ -2,7 +2,7 @@
 
 GraphicsTool subclass: #Font
 	instanceVariableNames: 'logfont dpi series'
-	classVariableNames: 'Qualities System'
+	classVariableNames: 'Qualities Stock System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -234,6 +234,10 @@ printOn: aStream
 	would want to see it."
 
 	| attributes weight |
+	(series notNil and: [series canonical ~~ self])
+		ifTrue: 
+			[series canonical printOn: aStream.
+			^self].
 	attributes := OrderedCollection new.
 	weight := self weight.
 	weight == FW_NORMAL
@@ -321,9 +325,10 @@ species
 stbSaveOn: anSTBOutFiler
 	"Serialize the receiver to anSTBOutFiler."
 
-	"For Fonts we want to replace all instances from a series with a 96-dpi design instance, and we never want to serialize the series itself"
-
-	dpi == USER_DEFAULT_SCREEN_DPI
+	| canonical |
+	canonical := self series canonical.
+	"For Fonts we want to replace all instances from a series with the original instance (usually a 96-dpi design instance, but the DPI doesn't particularly matter since Font's are always scaled to the target DPI on use anyway)."
+	canonical == self
 		ifTrue: 
 			[| savedHandle savedSeries |
 			savedHandle := handle.
@@ -332,7 +337,7 @@ stbSaveOn: anSTBOutFiler
 			[anSTBOutFiler saveObject: self] ensure: 
 					[handle := savedHandle.
 					series := savedSeries]]
-		ifFalse: [anSTBOutFiler basicNextPut: (series atDpi: USER_DEFAULT_SCREEN_DPI)]!
+		ifFalse: [anSTBOutFiler nextPut: canonical]!
 
 styleChanged
 	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
@@ -419,15 +424,12 @@ weight:!accessing!public! !
 default
 	"Answers the default font for the system."
 
-	^self fromId: DEFAULT_GUI_FONT!
+	^self fromId: StockFont.DEFAULT_GUI_FONT!
 
 defaultPointSize
 	"Private - Answer a default point size to use when it is not explicitly specified"
 
 	^10!
-
-fixedSystem
-	^self fromId: SYSTEM_FIXEDFONT!
 
 fromHandle: aHandle
 	Notification deprecated.	"Use #fromHandle:dpi:"
@@ -442,9 +444,9 @@ fromHandle: aHandle dpi: anInteger
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock font id anInteger."
 
-	^StockFont new
-		setId: anInteger;
-		yourself!
+	| index |
+	index := anInteger - StockFont.OEM_FIXED_FONT + 1.
+	^(Stock at: index) ifNil: [Stock at: index put: (StockFont newId: anInteger)]!
 
 fromLogFont: aLOGFONT
 	"Answer a new instance of the receiver with specified logical attributes. Note that it is assumed that the font height in the LOGFONT is specified for a font to be used at the current system (i.e. primary monitor) DPI. It is usually preferable to use #fromLogFont:dpi: and specify the DPI, otherwise the font may be sized incorrectly. Unfortunately there is no way to specify a point size directly in a LOGFONT - the physical size must be specified."
@@ -494,7 +496,11 @@ name: aString pointSize: anInteger
 		yourself!
 
 onStartup2
-	System := self fromId: SYSTEM_FONT!
+	self reset!
+
+reset
+	Stock := Array new: StockFont.DEFAULT_GUI_FONT - StockFont.OEM_FIXED_FONT + 1.
+	System := self fromId: StockFont.SYSTEM_FONT.!
 
 stbConvertFrom: anSTBClassFormat
 	| version |
@@ -520,14 +526,14 @@ stbVersion
 	^1!
 
 system
-	"Answer the stock System font."
+	^System!
 
-	^System! !
+systemFixed
+	^self fromId: StockFont.SYSTEM_FIXED_FONT! !
 
 !Font class categoriesForMethods!
 default!instance creation!public! !
 defaultPointSize!constants!private! !
-fixedSystem!instance creation!public! !
 fromHandle:!instance creation!public! !
 fromHandle:dpi:!instance creation!public! !
 fromId:!instance creation!public! !
@@ -540,9 +546,11 @@ name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !
 name:pointSize:!instance creation!public! !
 onStartup2!event handling!private! !
+reset!initializing!private! !
 stbConvertFrom:!binary filing!private! !
 stbConvertFromVersion0:!binary filing!private! !
 stbVersion!binary filing!public! !
 system!instance creation!public! !
+systemFixed!instance creation!public! !
 !
 

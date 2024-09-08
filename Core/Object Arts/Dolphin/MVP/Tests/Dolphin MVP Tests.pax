@@ -225,7 +225,7 @@ UserLibrary subclass: #FakeUserLibrary
 
 DolphinTest subclass: #AbstractFontTest
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'LogFontIndex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

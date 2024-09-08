@@ -31,6 +31,9 @@ atDpi: anInteger
 						series: self;
 						yourself)]!
 
+canonical
+	^canonical!
+
 printOn: aStream
 	aStream
 		basicPrint: self;
@@ -49,6 +52,7 @@ stbSaveOn: anSTBOutFiler
 
 !FontSeries categoriesForMethods!
 atDpi:!accessing!public! !
+canonical!accessing!private! !
 printOn:!printing!public! !
 setFont:!initializing!private! !
 stbSaveOn:!binary filing!public! !

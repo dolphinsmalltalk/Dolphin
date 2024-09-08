@@ -1281,7 +1281,7 @@ GraphicsTool subclass: #Brush
 
 GraphicsTool subclass: #Font
 	instanceVariableNames: 'logfont dpi series'
-	classVariableNames: 'Qualities System'
+	classVariableNames: 'Qualities Stock System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -1341,7 +1341,7 @@ StockBrush subclass: #SysColorBrush
 
 Font subclass: #StockFont
 	instanceVariableNames: 'id'
-	classVariableNames: 'StockNames'
+	classVariableNames: 'ANSI_FIXED_FONT ANSI_VAR_FONT DEFAULT_GUI_FONT DEVICE_DEFAULT_FONT OEM_FIXED_FONT SYSTEM_FIXED_FONT SYSTEM_FONT'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

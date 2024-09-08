@@ -152,11 +152,9 @@ Win32Constants at: 'DDC_DEFAULT' put: 16r0!
 Win32Constants at: 'DDC_DISABLE_ALL' put: 16r1!
 Win32Constants at: 'DDC_DISABLE_CONTROL_RELAYOUT' put: 16r4!
 Win32Constants at: 'DDC_DISABLE_RESIZE' put: 16r2!
-Win32Constants at: 'DEFAULT_GUI_FONT' put: 16r11!
 Win32Constants at: 'DEFAULT_PALETTE' put: 16rF!
 Win32Constants at: 'DESKTOPVERTRES' put: 16r76!
 Win32Constants at: 'DETACHED_PROCESS' put: 16r8!
-Win32Constants at: 'DEVICE_DEFAULT_FONT' put: 16rE!
 Win32Constants at: 'DFC_BUTTON' put: 16r4!
 Win32Constants at: 'DFC_CAPTION' put: 16r1!
 Win32Constants at: 'DFC_MENU' put: 16r2!
@@ -583,7 +581,6 @@ Win32Constants at: 'ODT_COMBOBOX' put: 16r3!
 Win32Constants at: 'ODT_LISTBOX' put: 16r2!
 Win32Constants at: 'ODT_MENU' put: 16r1!
 Win32Constants at: 'ODT_STATIC' put: 16r5!
-Win32Constants at: 'OEM_FIXED_FONT' put: 16rA!
 Win32Constants at: 'OPAQUE' put: 16r2!
 Win32Constants at: 'OPEN_ALWAYS' put: 16r4!
 Win32Constants at: 'OPEN_EXISTING' put: 16r3!
@@ -838,8 +835,6 @@ Win32Constants at: 'SWP_NOSENDCHANGING' put: 16r400!
 Win32Constants at: 'SWP_NOSIZE' put: 16r1!
 Win32Constants at: 'SWP_NOZORDER' put: 16r4!
 Win32Constants at: 'SWP_SHOWWINDOW' put: 16r40!
-Win32Constants at: 'SYSTEM_FIXEDFONT' put: 16r10!
-Win32Constants at: 'SYSTEM_FONT' put: 16rD!
 Win32Constants at: 'TA_BASELINE' put: 16r18!
 Win32Constants at: 'TA_BOTTOM' put: 16r8!
 Win32Constants at: 'TA_CENTER' put: 16r6!

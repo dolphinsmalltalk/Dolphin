@@ -43,13 +43,19 @@ initialize
 model: aValueModel
 	"Set the model of the receiver to be aValueModel."
 
-	| font |
+	| font lf sysmetrics |
 	super model: aValueModel.
 	"Note that the LOGFONT we pass to the dialog must be scaled for the current system DPI, regardless of the DPI of the monitor where the dialog is opened."
-	font := self value
-				ifNil: [SystemMetrics current iconTitleFont]
-				ifNotNil: [:f | f atDpi: SystemMetrics current dpi].
-	self winStruct logFont: font logFont!
+	sysmetrics := SystemMetrics current.
+	font := (self value ifNil: [sysmetrics iconTitleFont]) atDpi: sysmetrics dpi.
+	lf := font logFont.
+	"If the font's height is specified as cell height, ensure translated to character height."
+	lf lfHeight > 0
+		ifTrue: 
+			[lf := lf copy
+						lfHeight: font pixelSize negated;
+						yourself].
+	self winStruct logFont: lf!
 
 winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."

@@ -76,7 +76,22 @@ lfCaptionFont
 lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
-	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont! !
+	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont!
+
+lfMessageFont
+	"Answer the <LOGFONTW> value of the receiver's 'lfMessageFont' field."
+
+	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMessageFont!
+
+lfSmCaptionFont
+	"Answer the <LOGFONTW> value of the receiver's 'lfSmCaptionFont' field."
+
+	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfSmCaptionFont!
+
+lfStatusFont
+	"Answer the <LOGFONTW> value of the receiver's 'lfStatusFont' field."
+
+	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfStatusFont! !
 
 !NONCLIENTMETRICSW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
@@ -88,6 +103,9 @@ iScrollHeight!**compiled accessors**!public! !
 iScrollWidth!**compiled accessors**!public! !
 lfCaptionFont!**compiled accessors**!public! !
 lfMenuFont!**compiled accessors**!public! !
+lfMessageFont!**compiled accessors**!public! !
+lfSmCaptionFont!**compiled accessors**!public! !
+lfStatusFont!**compiled accessors**!public! !
 !
 
 !NONCLIENTMETRICSW class methodsFor!
@@ -126,12 +144,12 @@ defineFields
 		defineField: #lfCaptionFont type: (StructureField type: LOGFONTW) beReadOnly;
 		defineField: #iSmCaptionWidth type: SDWORDField uncompiled;
 		defineField: #iSmCaptionHeight type: SDWORDField uncompiled;
-		defineField: #lfSmCaptionFont type: (StructureField type: LOGFONTW) beUncompiled;
+		defineField: #lfSmCaptionFont type: (StructureField type: LOGFONTW) beReadOnly;
 		defineField: #iMenuWidth type: SDWORDField readOnly;
 		defineField: #iMenuHeight type: SDWORDField readOnly;
 		defineField: #lfMenuFont type: (StructureField type: LOGFONTW) beReadOnly;
-		defineField: #lfStatusFont type: (StructureField type: LOGFONTW) beUncompiled;
-		defineField: #lfMessageFont type: (StructureField type: LOGFONTW) beUncompiled;
+		defineField: #lfStatusFont type: (StructureField type: LOGFONTW) beReadOnly;
+		defineField: #lfMessageFont type: (StructureField type: LOGFONTW) beReadOnly;
 		defineField: #iPaddedBorderWidth type: SDWORDField readOnly!
 
 getFieldNames

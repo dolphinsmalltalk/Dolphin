@@ -46,7 +46,7 @@ captionHeight
 	^self nonClientMetrics iCaptionHeight!
 
 cursorExtent
-	"Answer a <Point> that gives the dimensions of the system cursor."
+	"Answer a <Point> that gives the dimensions of the system cursor. Note that this is only a nominal/default size. It is essentially useless for practical purposes in more recent versions of Windows: See [What is the deal with the SM_CXCURSOR system metric?](https://devblogs.microsoft.com/oldnewthing/20210819-00/?p=105572). The follow up [](https://devblogs.microsoft.com/oldnewthing/20210820-00/?p=105593) suggests loading the arrow cursor and querying its extent. Experimentation suggests that, on Windows 11 at least, this doesn't work. The cursor loaded is always the 32x32 image, regardless of DPI and magnification. It seems there is no reliable way to find the actual size of cursor that should be considered the default load size."
 
 	^self getMetric: SM_CXCURSOR pair: SM_CYCURSOR!
 
@@ -183,6 +183,8 @@ hasGdiPalettes
 hasIconScaleDown
 	"Answer whether the host supports scaling down of larger icons when the requested size is not available (as opposed to scaling up)."
 
+	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally availble under Vista and later. Hence we don't allow this to be called even if the Windows version indicates Vista is available."
+
 	^IsNotWine!
 
 hasImageListDragCursors
@@ -271,6 +273,8 @@ menuHeight
 menuImageExtent
 	"Answer a <Point>, being the width and height of the images displayed on menus."
 
+	"The menu bitmap image must be the correct (usually odd) size for the menu font and scale. If we do not generate the correct size bitmap, then windows will stretch/shrink it, which often results in a poor quality image. Unfortunately there is no reliable metric from the system that tells us the correct size. The menu check button extent system metric is usually assumed to be the correct size, but empirical testing demonstrates that for some scales this results in undesirable bitmap scaling, e.g. the menu check extent at 200% may be 31@31 but the correct menu bitmap extent is 32@32. It seems there is no alternative but to calculate the correct bitmap size ourselves from the menu font height. Note that we will still draw icons into the menu bitmaps using the nearest standard size that fits within the bitmap extent. For example at 350% the bitmap image extent is 57@57, into which we draw a centered 48@48 icon. This provides a best effort to avoid image scaling, although if the icon does not provide a complete set of standard image sizes then scaling for some sizes may be unavoidable."
+
 	^menuImageExtent
 		ifNil: 
 			[| size |
@@ -292,6 +296,11 @@ menuTextAcceleratorGap
 
 menuWidth
 	^self nonClientMetrics iMenuWidth!
+
+messageFont
+	"Answer the currently configured message box font."
+
+	^Font fromLogFont: self nonClientMetrics lfMessageFont dpi: self dpi!
 
 minimumTreeViewIndent
 	^16!
@@ -373,10 +382,20 @@ sizingFrameExtent
 	^sizingFrameExtent
 		ifNil: [sizingFrameExtent := self getMetric: SM_CXSIZEFRAME pair: SM_CYSIZEFRAME]!
 
+smallCaptionFont
+	"Answer the currently configured small window caption font."
+
+	^Font fromLogFont: self nonClientMetrics lfSmCaptionFont dpi: self dpi!
+
 smallIconExtent
 	"Answer a <Point> that gives the dimensions of a small size icon."
 
 	^smallIconExtent ifNil: [smallIconExtent := self getMetric: SM_CXSMICON pair: SM_CYSMICON]!
+
+statusFont
+	"Answer the currently configured status bar font."
+
+	^Font fromLogFont: self nonClientMetrics lfStatusFont dpi: self dpi!
 
 supportsAlphaBlending
 	"Answer whether the host supports alpha blending."
@@ -451,6 +470,7 @@ menuImageExtent!accessing!public! !
 menuImageTextGap!constants!public! !
 menuTextAcceleratorGap!constants!public! !
 menuWidth!constants!public! !
+messageFont!constants!public! !
 minimumTreeViewIndent!constants!public! !
 monitorCount!accessing!public! !
 mouseHoverTime!constants!public! !
@@ -466,7 +486,9 @@ scrollThumbExtent!constants!public! !
 setDpi:!initializing!private! !
 setSysParamBool:value:!helpers!private! !
 sizingFrameExtent!constants!public! !
+smallCaptionFont!constants!public! !
 smallIconExtent!constants!public! !
+statusFont!constants!public! !
 supportsAlphaBlending!capability enquiries!public! !
 tileIconExtent!constants!public! !
 virtualScreenExtent!constants!public! !
