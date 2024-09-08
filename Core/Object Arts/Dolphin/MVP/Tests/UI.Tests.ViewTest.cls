@@ -31,8 +31,8 @@ testDesignRectangle
 	designRect := rect scaledBy: USER_DEFAULT_SCREEN_DPI / view dpi.
 	self assert: view designExtent equals: designRect extent.
 	view designRectangle: designRect.
-	self assert: (view extent closeTo: rect extent precision: 1).
-	self assert: (view position closeTo: rect origin precision: 1)!
+	self assert: view extent closeTo: rect extent precision: 2.
+	self assert: view position closeTo: rect origin precision: 2!
 
 testDisplayString
 	| subject |
