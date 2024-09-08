@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'OS.SystemMetrics'
 	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent menuImageExtent'
-	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MouseHoverTime SysParamVariables WheelScrollLines'
+	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MessageDuration MouseHoverTime SysParamVariables WheelScrollLines'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -280,6 +280,10 @@ menuTextAcceleratorGap
 menuWidth
 	^self nonClientMetrics iMenuWidth!
 
+messageDuration
+	^MessageDuration
+		ifNil: [MessageDuration := (self getSysParamUInt32: SPI_GETMESSAGEDURATION ifError: [5]) seconds]!
+
 messageFont
 	"Answer the currently configured message box font."
 
@@ -445,6 +449,7 @@ menuImageExtent!accessing!public! !
 menuImageTextGap!constants!public! !
 menuTextAcceleratorGap!constants!public! !
 menuWidth!constants!public! !
+messageDuration!constants!public! !
 messageFont!constants!public! !
 minimumTreeViewIndent!constants!public! !
 monitorCount!accessing!public! !
@@ -497,13 +502,16 @@ forDpi: anInteger
 initialize
 	| sysParamVars |
 	sysParamVars := IdentityDictionary new.
-	{SPI_SETFLATMENU.
+	{
+		SPI_SETFLATMENU.
 		'HasFlatMenus'.
+		SPI_GETMESSAGEDURATION.
+		'MessageDuration'.
 		SPI_SETMOUSEHOVERTIME.
 		'MouseHoverTime'.
 		SPI_SETWHEELSCROLLLINES.
-		'WheelScrollLines'}
-			pairsDo: [:setting :varName | sysParamVars at: setting put: (self bindingFor: varName)].
+		'WheelScrollLines'
+	} pairsDo: [:setting :varName | sysParamVars at: setting put: (self bindingFor: varName)].
 	self addClassConstant: 'SysParamVariables' value: sysParamVars.
 	self reset.
 	SessionManager current

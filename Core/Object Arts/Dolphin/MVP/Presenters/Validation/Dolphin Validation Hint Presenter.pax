@@ -10,6 +10,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Views\Tooltips\Dolphin Tooltips'
 	'Dolphin Validation Result Presenter'
 ).

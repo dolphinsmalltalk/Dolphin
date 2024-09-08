@@ -23,7 +23,7 @@ defaultCaption
 	^'One-Off Note'!
 
 defaultTimeout
-	^5 seconds!
+	^SystemMetrics current messageDuration!
 
 defaultWidth
 	^300!

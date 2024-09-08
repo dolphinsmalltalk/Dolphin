@@ -70,7 +70,7 @@ initialize
 	super initialize.
 	filterBlock := [:result | true].
 	positionBlock := [:result | self defaultPositionFor: result].
-	dwell := 10 seconds!
+	dwell := SystemMetrics current messageDuration!
 
 onParentPositionChanged: aPositionEvent
 	"Private - The parent has been moved/resized. The hint bubble is a child of the desktop, so won't move with the parent. Leaving it behind may orphan the bubble visually, which is aesthetically unpleasing, so ensure it is closed."
