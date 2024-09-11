@@ -19,6 +19,9 @@ UI.Tests.PresenterTest comment: ''!
 classToTest
 	^self subclassResponsibility!
 
+desktopMonitors
+	^DisplayMonitor desktopMonitors asSortedArray: [:a :b | a origin < b origin]!
+
 destroyPresenter
 	| shell |
 	presenter ifNil: [^self].
@@ -203,6 +206,7 @@ waitForInputIdle
 
 !UI.Tests.PresenterTest categoriesForMethods!
 classToTest!constants!private! !
+desktopMonitors!helpers!private! !
 destroyPresenter!public!Running! !
 getTextExtent:!helpers!private! !
 hasTestStbViewResources!private!testing! !

@@ -72,6 +72,18 @@ testOpensOnForegroundMonitor
 	shell3 := self createShell: self printString , ': shell3' centered: false.
 	self assert: shell3 displayMonitor equals: primary!
 
+testPositionAtOriginOfLastMonitor
+	| subject monitor designPosition designExtent |
+	monitor := self desktopMonitors last.
+	designPosition := (monitor infoWithDpiAwareness: DpiAwareness unaware) rcWork origin.
+	designExtent := 200 @ 100.
+	subject := shells add: ShellView new.
+	subject
+		createAt: designPosition extent: designExtent;
+		show.
+	self assert: subject position equals: monitor origin.
+	self assert: subject extent equals: designExtent * monitor dpi // USER_DEFAULT_SCREEN_DPI!
+
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
 	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
@@ -88,6 +100,7 @@ classToTest!helpers!private! !
 createShell:centered:!helpers!private! !
 testDefaultPositioning!public!unit tests! !
 testOpensOnForegroundMonitor!public!unit tests! !
+testPositionAtOriginOfLastMonitor!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !
 !
 
