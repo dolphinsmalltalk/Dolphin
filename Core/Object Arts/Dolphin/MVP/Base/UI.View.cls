@@ -3222,7 +3222,7 @@ resolutionScaledBy: aPoint
 restore: anInteger resolution: aPoint
 	"Private - Restore the placement for the receiver to the <WINDOWPLACEMENT> first argument, which was measured at the screen resolution described by the <Point> 2nd argument. If the current resolution is different then the placement rectangle will have to be scaled appropriately. The view is also invited to rescale any other geometry it may need to change."
 
-	self basicRestore: anInteger scalingBy: creationParent resolution / aPoint!
+	self basicRestore: anInteger scalingBy: self dpi / aPoint!
 
 restoreFromProxy: aViewProxy
 	"Private - Complete state restoration from proxy form by apply the saved state, and restoring the subviews from their proxies."
@@ -3250,6 +3250,9 @@ richText: aRichText
 
 	self plainText: aRichText asString
 !
+
+scaleChildCreation: aCreateWindow
+	aCreateWindow scaleToDpi: self dpi!
 
 scaleFactor
 	"Answer the DPI scale factor of the receiver relative to 96-dpi, e.g. for a scale of 125% this might be 5/4 (i.e. 1.25). At 96-dpi, the scale will be 1."
@@ -5161,6 +5164,7 @@ resolutionScaledBy:!geometry!private! !
 restore:resolution:!geometry!private! !
 restoreFromProxy:!binary filing!private! !
 richText:!accessing!private! !
+scaleChildCreation:!private!realizing/unrealizing! !
 scaleFactor!geometry!public! !
 screenRectangle!geometry!public! !
 screenRectangle:!geometry!public! !

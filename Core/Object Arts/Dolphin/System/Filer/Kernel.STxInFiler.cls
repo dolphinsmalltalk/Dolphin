@@ -146,7 +146,7 @@ errorUnrecognisedClass: aClass version: version
 evaluateDeferredActions
 	"Private - Evaluate any deferred actions then clear the deferredActions collection."
 
-	(deferredActions ifNil: [^self]) do: [:aNiladicValuable | aNiladicValuable value].
+	deferredActions ?? #() do: [:aNiladicValuable | aNiladicValuable value].
 	deferredActions := nil!
 
 fixup: anInteger to: anObject

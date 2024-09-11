@@ -74,7 +74,10 @@ printOn: aStream
 	aStream
 		display: self class;
 		space;
-		display: self dpiAwareness name! !
+		display: self dpiAwareness name!
+
+scaleChildCreation: aCreateWindow
+	aCreateWindow scaleToDpi: dpi! !
 
 !Tools.DesignDesktopView categoriesForMethods!
 addSubView:!hierarchy!public!sub views! !
@@ -88,6 +91,7 @@ dpiAwareness!accessing!high DPI!public! !
 loadViewResource:withContext:forEdit:!binary filing!public! !
 metrics!public! !
 printOn:!development!printing!public! !
+scaleChildCreation:!private!realizing/unrealizing! !
 !
 
 !Tools.DesignDesktopView class methodsFor!
