@@ -19,6 +19,9 @@ PresenterTest comment: ''!
 classToTest
 	^self subclassResponsibility!
 
+desktopMonitors
+	^DisplayMonitor desktopMonitors asSortedCollection: [:a :b | a origin < b origin]!
+
 destroyPresenter
 	| shell |
 	presenter ifNil: [^self].
@@ -178,6 +181,7 @@ waitForInputIdle
 
 !PresenterTest categoriesForMethods!
 classToTest!constants!private! !
+desktopMonitors!helpers!private! !
 destroyPresenter!public!Running! !
 getTextExtent:!helpers!private! !
 initializePresenter!public!Running! !

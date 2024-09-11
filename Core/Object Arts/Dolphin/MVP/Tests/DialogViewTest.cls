@@ -144,8 +144,7 @@ testCreatedNearOwnerModeless
 
 testInplaceNotRepositioned
 	| desktopMonitors position dialog leftMonitor ownerRect |
-	desktopMonitors := DisplayMonitor desktopMonitors
-				asSortedCollection: [:a :b | a workArea topLeft < b workArea topLeft].
+	desktopMonitors := self desktopMonitors.
 	leftMonitor := desktopMonitors first.
 	"This test requires multiple monitors arranged in a typical horizontal configuration. It could be made to work in a vertical configuration, but there isn't much value."
 	self skipUnless: 

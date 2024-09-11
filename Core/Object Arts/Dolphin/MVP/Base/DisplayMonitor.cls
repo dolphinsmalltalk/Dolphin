@@ -56,14 +56,12 @@ adjustWindowRect: aRectangle
 		yourself!
 
 cacheInfo
-	| buf |
-	buf := MONITORINFOEXW newBuffer.
-	(UserLibrary dpiAwareness inContextDo: [UserLibrary default getMonitorInfo: handle lpmi: buf])
-		ifFalse: [Win32Error signal].
-	workArea := buf workArea.
-	rectangle := buf rectangle.
-	deviceName := buf szDevice.
-	isPrimary := buf isPrimary.!
+	| monitorInfo |
+	monitorInfo := self infoWithDpiAwareness: UserLibrary dpiAwareness.
+	workArea := monitorInfo workArea.
+	rectangle := monitorInfo rectangle.
+	deviceName := monitorInfo szDevice.
+	isPrimary := monitorInfo isPrimary!
 
 cascadeOffset
 	"Private - Answer the offset of a new default window position from the last. This should neatly cascade the windows in a diagonal down from a starting point inset from the top corner by one such offset.
@@ -156,6 +154,13 @@ info
 	info ifNil: [info := MONITORINFO newBuffer].
 	(UserLibrary default getMonitorInfo: handle lpmi: info) ifFalse: [Win32Error signal].
 	^info!
+
+infoWithDpiAwareness: aDpiAwareness
+	| buf |
+	buf := MONITORINFOEXW newBuffer.
+	(aDpiAwareness inContextDo: [UserLibrary default getMonitorInfo: handle lpmi: buf])
+		ifFalse: [Win32Error signal].
+	^buf!
 
 isAttachedToDesktop
 	"Answer whether the receiver has any displays attached to the desktop."
@@ -257,6 +262,7 @@ handle!accessing!private! !
 handle:!accessing!private! !
 hash!comparing!public! !
 info!accessing!private! !
+infoWithDpiAwareness:!enquiries!private! !
 isAttachedToDesktop!public!testing! !
 isPrimary!public!testing! !
 metrics!accessing!public! !

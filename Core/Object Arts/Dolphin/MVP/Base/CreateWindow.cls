@@ -76,7 +76,7 @@ resolveShellGeometry: aShellView
 						ifFalse: [monitor nextWindowPosition]]
 		ifFalse: 
 			["Position was specified. Determine the monitor from that."
-			monitor := DisplayMonitor nearestPoint: position.
+			monitor := DisplayMonitor nearestPoint: position * SystemMetrics current dpi // dpi.
 			targetDpi := monitor effectiveDpi.
 			"Now we can calculate the extent as above"
 			extent := extent = UseDefaultGeometry
