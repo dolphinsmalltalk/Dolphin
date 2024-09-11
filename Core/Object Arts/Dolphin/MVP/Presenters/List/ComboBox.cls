@@ -157,7 +157,7 @@ createAt: originPoint extent: extentPoint
 
 	self
 		createWindow: (self creationFunction: (originPoint
-						extent: extentPoint + (0 @ (droppedHeight ifNil: [self defaultDroppedHeight])))
+						extent: extentPoint x @ (extentPoint y + (droppedHeight ifNil: [self defaultDroppedHeight])))
 				dpi: USER_DEFAULT_SCREEN_DPI)!
 
 cueBanner

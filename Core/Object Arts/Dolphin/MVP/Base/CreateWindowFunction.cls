@@ -69,7 +69,7 @@ scaleToDpi: anInteger
 scaleToDpiOf: aView
 	"Scale the receiver in-place to the dpi of the <View> argument (which would normally be the parent). Note that the receiver should not be scaled multiple times, as rounding error may accumulate. The intent is that the receiver be scaled once for DPI, if required."
 
-	self scaleToDpi: aView dpi! !
+	aView scaleChildCreation: self! !
 
 !CreateWindowFunction categoriesForMethods!
 create:!operations!public! !

@@ -82,9 +82,8 @@ deferAction: aNiladicValuable
 evaluateDeferredActions
 	"Private - Evaluate any deferred actions then clear the deferredActions collection."
 
-	deferredActions notNil ifTrue: [
-		deferredActions do: [:aNiladicValuable | aNiladicValuable value].
-		deferredActions := nil]!
+	deferredActions ?? #() do: [:aNiladicValuable | aNiladicValuable value].
+	deferredActions := nil!
 
 fixup: anInteger to: anObject
 	"Replace the readMap entry at anInteger with anObject."

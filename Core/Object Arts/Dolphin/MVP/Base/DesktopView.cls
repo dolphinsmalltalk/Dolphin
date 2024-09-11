@@ -321,6 +321,11 @@ repositionShell: aShellView
 		ifTrue: [aShellView centerNear: activeMonitor effectiveWorkArea center atDpi: activeMonitor dpi]
 		ifFalse: [aShellView displayOnMonitor: activeMonitor]!
 
+scaleChildCreation: aCreateWindow
+	aCreateWindow
+		scaleToDpi: (DisplayMonitor nearestPoint: aCreateWindow position * self dpi // aCreateWindow dpi)
+				dpi!
+
 screenRectangle
 	"Answer the boundary of the receiver window in screen coordinates"
 
@@ -408,6 +413,7 @@ performCommand:!commands!public! !
 queryContextMenu!menus!public! !
 refresh!drawing!public! !
 repositionShell:!helpers!private! !
+scaleChildCreation:!private!realizing/unrealizing! !
 screenRectangle!geometry!public! !
 setDefaultButton:state:!accessing!default button!private! !
 setFocus!operations!public! !
