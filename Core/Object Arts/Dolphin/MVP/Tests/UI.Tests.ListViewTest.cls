@@ -149,24 +149,26 @@ testAutoResizeColumnsPositionChangedAddingScrollbar
 	self verifyColumnWidths: {196 - SystemMetrics default scrollbarWidth}!
 
 testAutoResizeColumnsWithChangedBorderStyles
+	| column |
 	presenter viewMode: #report.
-	self verifyColumnWidths: #(196).
+	column := presenter columnsList single.
+	self assert: column width equals: presenter availableClientWidth.
 	"Static edge adds an additional 1px on each side"
 	presenter hasStaticEdge: true.
 	self forceColumnResize.
-	self verifyColumnWidths: #(194).
+	self assert: column width equals: presenter availableClientWidth.
 	"This is a special case--we might expect to see 198 here, but when
 	static edge is the *only* border style, the columns must total 2px less
 	than the actual client width or a scrollbar appears."
 	presenter hasClientEdge: false.
 	self forceColumnResize.
-	self verifyColumnWidths: #(196).
+	self assert: column width equals: presenter availableClientWidth.
 	"Giving the control a border stops this strange behavior,
 	resulting in no actual change in width even though the
 	visual thickness of the border increases by 1px."
 	presenter hasBorder: true.
 	self forceColumnResize.
-	self verifyColumnWidths: #(196)!
+	self assert: column width equals: presenter availableClientWidth!
 
 testAutoResizeColumnsWithLargeNumberOfItems
 	| font |
