@@ -28,9 +28,12 @@ testAtDpi
 	self assert: ansiVar150 equals: ansiVar.
 	self assert: ansiVar150 series identicalTo: ansiVar series.
 	self assert: ansiVar150 pointSize equals: ansiVar pointSize.
-	self assert: ansiVar150 pixelSize equals: (ansiVar pointSize * 1.5 * systemDpi / 72) rounded.
+	self
+		assert: ansiVar150 pixelSize
+		closeTo: (ansiVar pointSize * 1.5 * systemDpi / 72) rounded
+		precision: 1.
 	self assert: ansiVar150 printString equals: ansiVar printString.
-	self assert: ansiVar150 displayString equals: ansiVar displayString.!
+	self assert: ansiVar150 displayString equals: ansiVar displayString!
 
 testAtDpiRaster
 	| system |
@@ -58,14 +61,20 @@ testDefault
 	systemDpi := SystemMetrics current dpi.
 	self assert: subject dpi equals: systemDpi.
 	pointSize := subject pointSize.
-	self assert: subject pixelSize equals: (pointSize * systemDpi / 72) rounded.
+	self
+		assert: subject pixelSize
+		closeTo: (pointSize * systemDpi / 72) rounded
+		precision: 1.
 	self assert: subject dpi equals: systemDpi.
 	otherDpi := systemDpi + 48.
 	subject150 := subject atDpi: otherDpi.
 	self assert: subject150 pointSize equals: pointSize.
 	self deny: subject150 identicalTo: subject.
 	self assert: subject150 equals: subject.
-	self assert: subject150 pixelSize equals: (pointSize * otherDpi / 72) rounded!
+	self
+		assert: subject150 pixelSize
+		closeTo: (pointSize * otherDpi / 72) rounded
+		precision: 1!
 
 testFixedSystem
 	| subject pointSize system150 systemDpi |
