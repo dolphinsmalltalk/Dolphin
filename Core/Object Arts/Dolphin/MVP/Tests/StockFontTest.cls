@@ -28,7 +28,10 @@ testAtDpi
 	self assert: ansiVar150 equals: ansiVar.
 	self assert: ansiVar150 series identicalTo: ansiVar series.
 	self assert: ansiVar150 pointSize equals: ansiVar pointSize.
-	self assert: ansiVar150 pixelSize closeTo: (ansiVar pointSize * 1.5 * systemDpi / 72) rounded precision: 1.
+	self
+		assert: ansiVar150 pixelSize
+		closeTo: (ansiVar pointSize * 1.5 * systemDpi / 72) rounded
+		precision: 1.
 	self assert: ansiVar150 printString equals: ansiVar printString.
 	self assert: ansiVar150 displayString equals: ansiVar displayString.!
 
