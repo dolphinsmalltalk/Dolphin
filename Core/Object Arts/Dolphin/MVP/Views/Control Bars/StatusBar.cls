@@ -401,7 +401,7 @@ size
 	^self contents size!
 
 sizeGripWidth
-	^self hasSizeGrip ifTrue: [SystemMetrics current scrollThumbExtent x] ifFalse: [0]!
+	^self hasSizeGrip ifTrue: [self metrics scrollThumbExtent x] ifFalse: [0]!
 
 updateItem: aStatusBarItem
 	"Private - Update the controls knowledge of this part."
