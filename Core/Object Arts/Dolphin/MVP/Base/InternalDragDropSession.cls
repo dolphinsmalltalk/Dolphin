@@ -37,7 +37,7 @@ buildDragImageList
 	maxImageExtent := Point new.
 	dragImages do: [:image | maxImageExtent := maxImageExtent max: image extent].
 	imageList := WinImageList 
-				newExtent: (maxImageExtent min: SystemMetrics current largeIconExtent)
+				newExtent: (maxImageExtent min: Cursor defaultExtent)
 				depth: self defaultDragColorDepth
 				initialSize: dragImages size
 				growBy: 1
