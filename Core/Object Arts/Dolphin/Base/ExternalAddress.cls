@@ -220,7 +220,7 @@ sdwordAtOffset: anInteger put: anObject
 	<primitive: 137>
 	| value |
 	value := anObject asInteger.
-	value isSDWORD ifFalse: [^self errorCantHold: anObject].
+	value isInt32 ifFalse: [^self errorCantHold: anObject].
 	1 to: 4 do: [:index | self at: anInteger + index put: (value digitAt: index)].
 	^anObject!
 

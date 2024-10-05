@@ -1055,6 +1055,19 @@ testImmutable
 						self assert: tmp isImmutable.
 						self assert: int bitInvert isImmutable]]!
 
+testIsInt16
+	self largePositive do: [:each | self deny: each isInt16].
+	self largeNegative do: [:each | self deny: each isInt16]!
+
+testIsInt32
+	self assert: (SmallInteger maximum + 1) isInt32.
+	self assert: (SmallInteger minimum - 1) isInt32.
+	self assert: 16r7FFFFFFF isInt32.
+	self assert: -16r80000000 isInt32.
+	self deny: 16r80000000 isInt32.
+	self deny: -16r80000001 isInt32.
+	self deny: 100 factorial isInt32!
+
 testLessOrEqual
 	self largePositive do: 
 			[:each |
@@ -1536,6 +1549,8 @@ testGreaterThan!public!unit tests! !
 testGreaterThanFloat!public!unit tests! !
 testHighBit!public!unit tests! !
 testImmutable!public!unit tests! !
+testIsInt16!public!unit tests! !
+testIsInt32!public!unit tests! !
 testLessOrEqual!public!unit tests! !
 testLessOrEqualToFloat!public!unit tests! !
 testLessThan!public!unit tests! !

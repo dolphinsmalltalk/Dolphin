@@ -334,6 +334,26 @@ intPtrAtOffset: anInteger put: anObject
 		do: [:index | self basicAt: anInteger + index put: (value digitAt: index)].
 	^anObject!
 
+isInt16
+	"Answer whether the receiver can be represented as a 16-bit two's complement signed integer."
+
+	^false!
+
+isInt8
+	"Answer whether the receiver can be represented as a 8-bit two's complement signed integer."
+
+	^false!
+
+isUInt16
+	"Answer whether the receiver can be represented as a 16-bit unsigned integer."
+
+	^false!
+
+isUInt8
+	"Answer whether the receiver can be represented as a 8-bit unsigned integer."
+
+	^false!
+
 isZero
 	"Answer whether the receiver is zero.
 	LargeIntegers cannot be zero, because there is a more compact representation
@@ -512,6 +532,10 @@ greaterThanInteger:!double dispatch!private! !
 hash!comparing!public! !
 highBit!bit manipulation!public! !
 intPtrAtOffset:put:!initializing!primitives!private! !
+isInt16!public!testing! !
+isInt8!public!testing! !
+isUInt16!public!testing! !
+isUInt8!public!testing! !
 isZero!public!testing! !
 limbSize!accessing!private! !
 multiplyByInteger:!double dispatch!private! !
