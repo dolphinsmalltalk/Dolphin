@@ -207,6 +207,24 @@ testIntegerDivide
 			self should: [each // 0.0] raise: ZeroDivide].
 	self should: [0 // 0] raise: ZeroDivide!
 
+testIsInt16
+	self assert: 0 isInt16.
+	self assert: 1 isInt16.
+	self assert: -1 isInt16.
+	self assert: -32768 isInt16.
+	self assert: 32767 isInt16.
+	self deny: 32768 isInt16.
+	self deny: -32769 isInt16.
+	self deny: SmallInteger maximum isInt16.
+	self deny: SmallInteger minimum isInt16!
+
+testIsInt32
+	self assert: 0 isInt32.
+	self assert: 1 isInt32.
+	self assert: -1 isInt32.
+	self assert: SmallInteger maximum isInt32.
+	self assert: SmallInteger minimum isInt32!
+
 testLargeSmallComparisons
 	self assert: SmallInteger maximum < (SmallInteger maximum + 1).
 	self assert: SmallInteger maximum <= (SmallInteger maximum + 1).
@@ -502,6 +520,8 @@ testGreaterOrEqualToFloat!public!unit tests! !
 testGreaterThanFloat!public!unit tests! !
 testHighBit!public!unit tests! !
 testIntegerDivide!public!unit tests! !
+testIsInt16!public!unit tests! !
+testIsInt32!public!unit tests! !
 testLargeSmallComparisons!public!unit tests! !
 testLcm!public!unit tests! !
 testLessOrEqualToFloat!public!unit tests! !

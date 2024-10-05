@@ -542,6 +542,26 @@ isBitSet: index
 
 	^self anyMask: (1 bitShift: index-1)!
 
+isInt16
+	"Answer whether the receiver can be represented as a 16-bit two's complement signed integer."
+
+	^self >= -16r8000 and: [self <= 16r7FFF]!
+
+isInt32
+	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer."
+
+	^self >= -16r80000000 and: [self <= 16r7FFFFFFF]!
+
+isInt64
+	"Answer whether the receiver can be represented as a 64-bit two's complement signed integer."
+
+	^self >= -16r8000000000000000 and: [self <= 16r7FFFFFFFFFFFFFFF]!
+
+isInt8
+	"Answer whether the receiver can be represented as a 8-bit two's complement signed integer."
+
+	^self >= -16r80 and: [self <= 16r7F]!
+
 isInteger
 	"Answer whether the receiver is an <integer>."
 
@@ -569,11 +589,25 @@ isPrime
 			i := i + 6].
 	^true!
 
-isSDWORD
-	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer
-	(i.e. as an SDWORD)."
+isUInt16
+	"Answer whether the receiver can be represented as a 16-bit unsigned integer."
 
-	^self >= ##(-2 raisedToInteger: 31) and: [self < ##(2 raisedToInteger: 31)]!
+	^self >= 0 and: [self <= 16rFFFF]!
+
+isUInt32
+	"Answer whether the receiver can be represented as a 32-bit unsigned integer."
+
+	^self >= 0 and: [self <= 16rFFFFFFFF]!
+
+isUInt64
+	"Answer whether the receiver can be represented as a 64-bit unsigned integer."
+
+	^self >= 0 and: [self <= 16rFFFFFFFFFFFFFFFF]!
+
+isUInt8
+	"Answer whether the receiver can be represented as an 8-bit unsigned integer."
+
+	^self >= 0 and: [self <= 16rFF]!
 
 lcm: anInteger 
 	"Answer the least common multiple of the receiver and the <integer> argument."
@@ -884,11 +918,18 @@ highPartSigned!bit manipulation!public! !
 highWord!bit manipulation!public! !
 integerPart!accessing!public! !
 isBitSet:!bit manipulation!public!testing! !
+isInt16!public!testing! !
+isInt32!public!testing! !
+isInt64!public!testing! !
+isInt8!public!testing! !
 isInteger!public!testing! !
 isNull!public!testing! !
 isPowerOfTwo!public!testing! !
 isPrime!public!testing! !
-isSDWORD!public!testing! !
+isUInt16!public!testing! !
+isUInt32!public!testing! !
+isUInt64!public!testing! !
+isUInt8!public!testing! !
 lcm:!factorization!public! !
 lowBit!bit manipulation!public! !
 lowPart!bit manipulation!public! !

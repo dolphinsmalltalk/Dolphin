@@ -15,9 +15,9 @@ package methodNames
 	add: #DWORDBytes -> #regKeyType;
 	add: #ExternalIntegerBytes -> #regKeyType;
 	add: #ExternalIntegerBytes -> #storeUnderRegKey:as:;
+	add: #Integer -> #storeUnderRegKey:as:;
 	add: #LargeInteger -> #storeUnderRegKey:as:;
 	add: #Object -> #storeUnderRegKey:as:;
-	add: #SmallInteger -> #storeUnderRegKey:as:;
 	add: #String -> #storeUnderRegKey:as:;
 	add: #Symbol -> #storeUnderRegKey:as:;
 	add: #UIntPtrBytes -> #regKeyType;
@@ -121,6 +121,28 @@ regKeyType!constants!public! !
 storeUnderRegKey:as:!public! !
 !
 
+!Integer methodsFor!
+
+storeUnderRegKey: aRegKey as: aString 
+	"Store a serialised representation of the receiver to the registry under the <RegKey>,
+	aRegKey, with the <readableString> name, aString."
+
+	self isInt32 
+		ifTrue: 
+			[aRegKey 
+				valueAt: aString
+				put: (DWORD fromInteger: self)
+				type: #dword]
+		ifFalse: 
+			[aRegKey 
+				valueAt: aString
+				put: (ULARGE_INTEGER fromInteger: self)
+				type: #qword]! !
+
+!Integer categoriesForMethods!
+storeUnderRegKey:as:!public! !
+!
+
 !LargeInteger methodsFor!
 
 storeUnderRegKey: aRegKey as: aString 
@@ -216,28 +238,6 @@ fromRegKey: aRegKey
 
 !Object class categoriesForMethods!
 fromRegKey:!public! !
-!
-
-!SmallInteger methodsFor!
-
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
-
-	self isSDWORD 
-		ifTrue: 
-			[aRegKey 
-				valueAt: aString
-				put: (DWORD fromInteger: self)
-				type: #dword]
-		ifFalse: 
-			[aRegKey 
-				valueAt: aString
-				put: (ULARGE_INTEGER fromInteger: self)
-				type: #qword]! !
-
-!SmallInteger categoriesForMethods!
-storeUnderRegKey:as:!public! !
 !
 
 !String methodsFor!

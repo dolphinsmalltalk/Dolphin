@@ -93,6 +93,7 @@ package methodNames
 	add: #File -> #readCharacter;
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
+	add: #Integer -> #isSDWORD;
 	add: #Integer -> #lowSWord;
 	add: #Integer -> #printStringRadix:showRadix:;
 	add: #KernelLibrary -> #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:;
@@ -885,6 +886,10 @@ highSWord
 	^(DWORD fromInteger: self) highSWord
 !
 
+isSDWORD
+	Notification deprecated.
+	^self isInt32!
+
 lowSWord
 	"Answers the low order signed word of the receiver (assumes the receiver is a 32-bit Integer)."
 
@@ -904,6 +909,7 @@ printStringRadix: base showRadix: flag
 !Integer categoriesForMethods!
 digitSize!accessing!public! !
 highSWord!bit manipulation!public! !
+isSDWORD!public!testing! !
 lowSWord!bit manipulation!public! !
 printStringRadix:showRadix:!printing!public! !
 !

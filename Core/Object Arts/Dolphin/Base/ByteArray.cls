@@ -506,7 +506,7 @@ retrySDwordAtOffset: anInteger put: anObject failureCode: failureCode
 			[| intVal |
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
 			intVal := anObject asInteger.
-			intVal isSDWORD ifTrue: [^self dwordAtOffset: anInteger put: intVal]].
+			intVal isInt32 ifTrue: [^self dwordAtOffset: anInteger put: intVal]].
 	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
 retrySWordAtOffset: anInteger put: anObject failureCode: failureCode

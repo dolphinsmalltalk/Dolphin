@@ -393,7 +393,7 @@ initialize
 intPtr: newValue 
 	"Set the signed integer value of the receiver."
 
-	newValue isSDWORD ifTrue: [self sdword: newValue] ifFalse: [self qword: newValue]!
+	newValue isInt32 ifTrue: [self sdword: newValue] ifFalse: [self qword: newValue]!
 
 isArray
 	"Answer whether the receiver points at a SAFEARRAY."
