@@ -378,6 +378,16 @@ isInt64
 
 	^true!
 
+isUInt32
+	"Answer whether the receiver can be represented as a 32-bit unsigned integer."
+
+	^self >= 0!
+
+isUInt64
+	"Answer whether the receiver can be represented as a 64-bit unsigned integer."
+
+	^self >= 0!
+
 isZero
 	"Answer whether the receiver is zero. SmallIntegers can be zero, and there is a
 	very fast check."
@@ -592,6 +602,8 @@ isAtomic!public!testing! !
 isImmediate!public!testing! !
 isInt32!public!testing! !
 isInt64!public!testing! !
+isUInt32!public!testing! !
+isUInt64!public!testing! !
 isZero!public!testing! !
 lowBit!bit manipulation!public! !
 multiplyByInteger:!double dispatch!private! !
