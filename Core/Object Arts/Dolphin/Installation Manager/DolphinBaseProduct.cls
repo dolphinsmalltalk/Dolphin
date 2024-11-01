@@ -109,6 +109,7 @@ contents
 
 	"Add-ons"
 	contents
+		add: #('Core\Object Arts\Dolphin\System\Win32\Windows Service Manager.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Database\Database Connection Base.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Database\Database Connection.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Database\Database Connection (Deprecated).pax' #plain #imageBased);
