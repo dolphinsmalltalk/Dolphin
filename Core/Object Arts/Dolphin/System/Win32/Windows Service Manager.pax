@@ -1,0 +1,145 @@
+﻿| package |
+package := Package name: 'Windows Service Manager'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Win32 Service Manager
+Copyright (c) Object Arts Ltd, 2024'.
+
+package classNames
+	add: #SERVICE_STATUS;
+	add: #SERVICE_STATUS_PROCESS;
+	yourself.
+
+package methodNames
+	add: #AdvApiLibrary -> #closeServiceHandle:;
+	add: #AdvApiLibrary -> #getServiceState:;
+	add: #AdvApiLibrary -> #isServiceRunning:;
+	add: #AdvApiLibrary -> #openSCManager:lpDatabaseName:dwDesiredAccess:;
+	add: #AdvApiLibrary -> #openService:lpServiceName:dwDesiredAccess:;
+	add: #AdvApiLibrary -> #queryServiceStatusEx:infoLevel:lpBuffer:cbBufSize:pcbBytesNeeded:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin').
+
+package!
+
+"Class Definitions"!
+
+Win32Structure subclass: #SERVICE_STATUS
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_dwCheckPoint _OffsetOf_dwControlsAccepted _OffsetOf_dwCurrentState _OffsetOf_dwServiceSpecificExitCode _OffsetOf_dwServiceType _OffsetOf_dwWaitHint _OffsetOf_dwWin32ExitCode SC_STATUS_PROCESS_INFO SERVICE_CONTINUE_PENDING SERVICE_PAUSE_PENDING SERVICE_PAUSED SERVICE_RUNNING SERVICE_START_PENDING SERVICE_STOP_PENDING SERVICE_STOPPED'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+SERVICE_STATUS subclass: #SERVICE_STATUS_PROCESS
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_dwProcessId _OffsetOf_dwServiceFlags'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Loose Methods"!
+
+!AdvApiLibrary methodsFor!
+
+closeServiceHandle: hSCObject
+	"Invoke the CloseServiceHandle() function of the module wrapped by the receiver.
+	Helpstring: Closes a handle to a service control manager or service object.
+
+		BOOL __stdcall CloseServiceHandle(
+			HANDLE hSCObject);"
+
+	<stdcall: bool CloseServiceHandle handle>
+	^self invalidCall: _failureCode!
+
+getServiceState: aString
+	"Answer the current state of a named service."
+
+	| hSCManager |
+	hSCManager := self
+				openSCManager: nil
+				lpDatabaseName: nil
+				dwDesiredAccess: GENERIC_READ.
+	hSCManager ifNil: [^self systemError].
+	^
+	[(self
+		openService: hSCManager
+		lpServiceName: aString
+		dwDesiredAccess: GENERIC_READ)
+			ifNil: 
+				["Service does not exist"
+				#unknown]
+			ifNotNil: 
+				[:hService |
+				
+				[| status bytesNeeded |
+				status := SERVICE_STATUS_PROCESS newBuffer.
+				bytesNeeded := DWORDBytes new.
+				(self
+					queryServiceStatusEx: hService
+					infoLevel: SERVICE_STATUS.SC_STATUS_PROCESS_INFO
+					lpBuffer: status
+					cbBufSize: status byteSize
+					pcbBytesNeeded: bytesNeeded) ifTrue: [status currentState] ifFalse: [self systemError]]
+						ensure: [self closeServiceHandle: hService]]]
+			ensure: [self closeServiceHandle: hSCManager]!
+
+isServiceRunning: aString
+	"Answer whether the named service is running."
+
+	^(self getServiceState: aString) == #running!
+
+openSCManager: lpMachineName lpDatabaseName: lpDatabaseName dwDesiredAccess: dwDesiredAccess
+	"Invoke the OpenSCManager() function of the module wrapped by the receiver.
+	Helpstring: Establishes a connection to the service control manager on the specified computer and opens the specified service control manager database.
+
+		HANDLE __stdcall OpenSCManager(
+			LPCWSTR lpMachineName,
+			LPCWSTR lpDatabaseName,
+			DWORD dwDesiredAccess);"
+
+	<stdcall: handle OpenSCManagerW lpwstr lpwstr dword>
+	^self invalidCall: _failureCode!
+
+openService: hSCManager lpServiceName: lpServiceName dwDesiredAccess: dwDesiredAccess
+	"Invoke the OpenService() function of the module wrapped by the receiver.
+	Helpstring: Opens an existing service.
+
+		HANDLE __stdcall OpenService(
+			HANDLE hSCManager,
+			LPCWSTR lpServiceName,
+			DWORD dwDesiredAccess);"
+
+	<stdcall: handle OpenServiceW handle lpwstr dword>
+	^self invalidCall: _failureCode!
+
+queryServiceStatusEx: hService infoLevel: infoLevel lpBuffer: lpBuffer cbBufSize: cbBufSize pcbBytesNeeded: pcbBytesNeeded
+	"Invoke the QueryServiceStatusEx() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the current status of the specified service based on the specified information level.
+
+		BOOL __stdcall QueryServiceStatusEx(
+			HANDLE hService,
+			SC_STATUS_TYPE InfoLevel,
+			BYTE* lpBuffer,
+			DWORD cbBufSize,
+			unsigned long* pcbBytesNeeded);"
+
+	<stdcall: bool QueryServiceStatusEx handle sdword byte* dword dword*>
+	^self invalidCall: _failureCode! !
+
+!AdvApiLibrary categoriesForMethods!
+closeServiceHandle:!**auto generated**!public! !
+getServiceState:!enquiries!public! !
+isServiceRunning:!enquiries!public! !
+openSCManager:lpDatabaseName:dwDesiredAccess:!**auto generated**!public!win32 functions-service manager! !
+openService:lpServiceName:dwDesiredAccess:!**auto generated**!public!win32 functions-service manager! !
+queryServiceStatusEx:infoLevel:lpBuffer:cbBufSize:pcbBytesNeeded:!**auto generated**!public!win32 functions-service manager! !
+!
+
+"End of package definition"!
+
