@@ -14,13 +14,23 @@ package setClassNames: #(
 	#{Database.Tests.DBTest}
 	#{Database.Tests.SQLServerDBTest}
 	#{Database.Tests.SQLServerNorthwindDB}
+	#{Smalltalk.DBFieldTest}
+	#{Smalltalk.MimerSqlDBTest}
+	#{Smalltalk.MimerSqlNorthwindDB}
+	#{Smalltalk.OracleDBTest}
+	#{Smalltalk.OracleNorthwindDB}
+	#{Smalltalk.SQL_INTERVAL_STRUCTTest}
 ).
 
 package setPrerequisites: #(
+	'Database Connection (Old Names)'
 	'Database Connection Base'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
+	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\Base\Dolphin Legacy Date & Time'
+	'..\Base\Deprecated\Dolphin Legacy FFI Types (Old Names)'
+	'..\Registry\Dolphin Registry Access'
 	'..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
@@ -39,6 +49,14 @@ Database
 	classConstants: {}!
 
 Core.Tests.DolphinTest
+	subclass: #DBFieldTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ODBCCTypes} #{OS.ODBCTypes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
 	subclass: #'Database.Tests.DBTest'
 	instanceVariableNames: 'connection'
 	classVariableNames: ''
@@ -46,9 +64,17 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+Core.Tests.DolphinTest
+	subclass: #SQL_INTERVAL_STRUCTTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ODBCCTypes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 Database.Tests.DBTest
 	subclass: #'Database.Tests.DBConnectionTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'dbResources savedBlockSize savedMaxBoundSize createdTestTable'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
@@ -56,6 +82,22 @@ Database.Tests.DBTest
 
 Database.Tests.DBConnectionTest
 	subclass: #'Database.Tests.AccessDBTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.Tests.DBConnectionTest
+	subclass: #MimerSqlDBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.Tests.DBConnectionTest
+	subclass: #OracleDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -81,6 +123,22 @@ XProgramming.SUnit.TestResource
 Database.Tests.DBConnectionTestResource
 	subclass: #'Database.Tests.AccessNorthwindDB'
 	instanceVariableNames: 'filename'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.Tests.DBConnectionTestResource
+	subclass: #MimerSqlNorthwindDB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.Tests.DBConnectionTestResource
+	subclass: #OracleNorthwindDB
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

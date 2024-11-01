@@ -94,7 +94,7 @@ CREATE TABLE [dbo].[Employees](
 	[HomePhone] [nvarchar](24) NULL,
 	[Extension] [nvarchar](4) NULL,
 	[Photo] [image] NULL,
-	[Notes] [ntext] NULL,
+	[Notes] [nvarchar](max) NULL,
 	[ReportsTo] [int] NULL,
 	[PhotoPath] [nvarchar](255) NULL,
  CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED 
@@ -190,7 +190,7 @@ GO
 CREATE TABLE [dbo].[Categories](
 	[CategoryID] [int] IDENTITY(1,1) NOT NULL,
 	[CategoryName] [nvarchar](15) NOT NULL,
-	[Description] [ntext] NULL,
+	[Description] [nvarchar](max) NULL,
 	[Picture] [image] NULL,
  CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
 (

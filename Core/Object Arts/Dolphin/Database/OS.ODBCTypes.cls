@@ -37,6 +37,8 @@ Kernel.SharedPool
 			'SQL_NUMERIC' -> 16r2.
 			'SQL_REAL' -> 16r7.
 			'SQL_SMALLINT' -> 16r5.
+			'SQL_SS_TIME2' -> -16r9A.
+			'SQL_SS_TIMESTAMPOFFSET' -> -16r9B.
 			'SQL_TIME' -> 16rA.
 			'SQL_TIMESTAMP' -> 16rB.
 			'SQL_TINYINT' -> -16r6.

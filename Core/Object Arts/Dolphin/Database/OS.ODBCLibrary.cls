@@ -14,10 +14,10 @@ OS.ODBCLibrary comment: 'This is the ExternalLibrary class to represent the Win3
 This library contains functions pertaining to the use of Open Database Connectivity 3.0.
 
 Type mapping:
-	SQLSMALLINT	->	sword	(16-bit signed integer)
-	SQLUSMALLINT	->	word	(16-bit unsigned integer)
-	SQLINTEGER	->	sdword	(32-bit signed integer)
-	SQLUINTEGER	->	dword	(32-bit unsigned integer).
+	SQLSMALLINT	->	int16	(16-bit signed integer)
+	SQLUSMALLINT	->	uint16 (16-bit unsigned integer)
+	SQLINTEGER	->	int32	(32-bit signed integer)
+	SQLUINTEGER	->	uint32	(32-bit unsigned integer).
 	SQLFLOAT	-> 	double	(64-bit float)
 	SQLDOUBLE	->	double	(64-bit float)
 	
@@ -324,6 +324,17 @@ sqlGetStmtAttr: anExternalHandle attribute: optionCode valuePtr: anIntegerOrStri
 	<stdcall: int16 SQLGetStmtAttrW handle int32 lpvoid int32 int32*>
 	^self invalidCall: _failureCode!
 
+sqlGetTypeInfo: anExternalHandle dataType: anInteger
+	"Returns information about data types supported by the data source.
+
+	SQLRETURN SQLGetTypeInfo(  
+		SQLHSTMT      StatementHandle,  
+		SQLSMALLINT   DataType);  
+	"
+
+	<stdcall: int16 SQLGetTypeInfo handle int16>
+	^self invalidCall: _failureCode!
+
 sqlNumResultCols: anExternalHandle pccol: anSWORD
 	"Return the number of columns in the result set for the statement.
 
@@ -332,6 +343,14 @@ sqlNumResultCols: anExternalHandle pccol: anSWORD
 			SQLSMALLINT * ColumnCountPtr);"
 
 	<stdcall: int16 SQLNumResultCols handle int16*>
+	^self invalidCall: _failureCode!
+
+sqlParamData: anExternalHandle valuePtrPtr: valuePtrPtr
+	"SQLRETURN SQLParamData(  
+		SQLHSTMT       StatementHandle,  
+		SQLPOINTER *   ValuePtrPtr);  "
+
+	<stdcall: int16 SQLParamData handle void**>
 	^self invalidCall: _failureCode!
 
 sqlPrepare: anExternalHandle statementText: aString textLength: anInteger
@@ -367,6 +386,15 @@ sqlProcedures: anExternalHandle catalogName: aStringParmPQ nameLength1: anIntege
 		SQLSMALLINT     NameLength3);"
 
 	<stdcall: int16 SQLProceduresW handle lpwstr int16 lpwstr int16 lpwstr int16>
+	^self invalidCall: _failureCode!
+
+sqlPutData: anExternalHandleSTMT dataPtr: dataPtr strLenOrInd: anSDWORD
+	"SQLRETURN SQLPutData(  
+		SQLHSTMT     StatementHandle,  
+		SQLPOINTER   DataPtr,  
+		SQLLEN       StrLen_or_Ind);  "
+
+	<stdcall: int16 SQLPutData handle void* int32>
 	^self invalidCall: _failureCode!
 
 sqlRowCount: anExternalHandle rowCountPtr: anSDWORD
@@ -476,10 +504,13 @@ sqlGetEnvAttr:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 f
 sqlGetFunctions:functionId:supportedPtr:!public!win32 functions-odbc library! !
 sqlGetInfo:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
 sqlGetStmtAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+sqlGetTypeInfo:dataType:!public!win32 functions-odbc library! !
 sqlNumResultCols:pccol:!public!win32 functions-odbc library! !
+sqlParamData:valuePtrPtr:!public!win32 functions-odbc library! !
 sqlPrepare:statementText:textLength:!public!win32 functions-odbc library! !
 sqlPrimaryKeys:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:!public!win32 functions-odbc library! !
 sqlProcedures:catalogName:nameLength1:schemaName:nameLength1:procName:nameLength3:!public!win32 functions-odbc library! !
+sqlPutData:dataPtr:strLenOrInd:!public!win32 functions-odbc library! !
 sqlRowCount:rowCountPtr:!public!win32 functions-odbc library! !
 sqlSetConnectAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
 sqlSetEnvAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !

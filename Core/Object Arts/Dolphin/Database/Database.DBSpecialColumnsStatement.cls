@@ -26,17 +26,18 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^OS.Odbc32
-		sqlSpecialColumns: self allocatedHandle
-		identifierType: self columnType
-		catalogName: self catalogName
-		nameLength1: SQL_NTS
-		schemaName: self schemaName
-		nameLength2: SQL_NTS
-		tableName: self tableName
-		nameLength3: SQL_NTS
-		scope: self scope
-		nullable: (self nullable ifTrue: [SQL_NULLABLE] ifFalse: [SQL_NO_NULLS])!
+	^self dbCheckException: (OS.Odbc32
+				sqlSpecialColumns: self allocatedHandle
+				identifierType: self columnType
+				catalogName: self catalogName
+				nameLength1: SQL_NTS
+				schemaName: self schemaName
+				nameLength2: SQL_NTS
+				tableName: self tableName
+				nameLength3: SQL_NTS
+				scope: self scope
+				nullable: (self nullable ifTrue: [SQL_NULLABLE] ifFalse: [SQL_NO_NULLS]))
+		function: 'SQLSpecialColumns'!
 
 nullable
 	^nullable!

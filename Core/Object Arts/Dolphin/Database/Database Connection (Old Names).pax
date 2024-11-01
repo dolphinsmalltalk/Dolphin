@@ -1,0 +1,43 @@
+﻿| package |
+package := Package name: 'Database Connection (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.DBColAttr}
+	#{Smalltalk.DBError}
+	#{Smalltalk.ODBCDATE}
+	#{Smalltalk.ODBCTIME}
+	#{Smalltalk.ODBCTIMESTAMP}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.DBColAttr}
+	#{Smalltalk.DBError}
+	#{Smalltalk.ODBCDATE}
+	#{Smalltalk.ODBCTIME}
+	#{Smalltalk.ODBCTIMESTAMP}
+).
+
+package setPrerequisites: #(
+	'Database Connection Base'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.DBColAttr := Database.DBColAttr!
+
+Smalltalk.DBError := Database.DBError!
+
+Smalltalk.ODBCDATE := Smalltalk.SQL_DATE_STRUCT!
+
+Smalltalk.ODBCTIME := Smalltalk.SQL_TIME_STRUCT!
+
+Smalltalk.ODBCTIMESTAMP := Smalltalk.SQL_TIMESTAMP_STRUCT!
+
+
+"End of package definition"!
+

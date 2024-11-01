@@ -63,6 +63,9 @@ Core.DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smallt
 
 	^self species == comparand species and: [self asSeconds = comparand asSeconds]!
 
+asDateAndTime
+	^self!
+
 asFILETIME
 	"Answer a <FILETIME> representing the same point in time as the receiver. This is a fairly accurate conversion as FILETIME's have a precision of 100nS."
 
@@ -112,6 +115,9 @@ asUTC
 	"Answer a <DateAndTime> that represents the same absolute time as the receiver but in Co-ordinated Universal Time (UTC)."
 
 	^self offsetSeconds: 0!
+
+closeTo: aDateAndTime precision: aDuration
+	^(self - aDateAndTime) abs <= aDuration!
 
 day
 	"For compatibility - equivalent to #dayOfMonth"
@@ -345,6 +351,11 @@ rataDie
 
 	^rataDie!
 
+roundTo: factor
+	"Answer the multiple of the <number> argument, factor, that is nearest the receiver"
+
+	^factor * (self / factor) rounded!
+
 second
 	"Answer a <rational> in the range [0, 60), representing the second of the minute of the local time of the receiver, including any fractional part."
 
@@ -421,12 +432,14 @@ year
 +!arithmetic!public! !
 <!comparing!public! !
 =!comparing!public! !
+asDateAndTime!converting!public! !
 asFILETIME!converting!public! !
 asLocal!comparing!public! !
 asSeconds!converting!public! !
 asSYSTEMTIME!converting!public! !
 asUnixTime!converting!public! !
 asUTC!converting!public! !
+closeTo:precision:!comparing!public! !
 day!accessing!public! !
 dayMonthYearDo:!accessing!public! !
 dayOfMonth!accessing!public! !
@@ -460,6 +473,7 @@ printOn:format:!printing!public! !
 printOn:withLeadingSpace:!printing!public! !
 printStringFormat:!printing!public! !
 rataDie!accessing!public! !
+roundTo:!public!truncation and round off! !
 second!accessing!public! !
 seconds!accessing!public! !
 setRataDie:seconds:offset:!initializing!private! !

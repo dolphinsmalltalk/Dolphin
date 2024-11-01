@@ -64,8 +64,14 @@ asSYSTEMTIME
 		wMilliseconds: self millisecond truncated;
 		yourself!
 
+asTime
+	^self!
+
 asTimeStamp
 	^self asDateAndTime asTimeStamp!
+
+closeTo: aTime precision: aDuration
+	^(seconds - aTime seconds) abs <= aDuration!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -101,6 +107,11 @@ minute
 	"Answer an <integer> in the range [0,60), representing the minute of the hour in the local time of the receiver."
 
 	^seconds // 60 \\ 60!
+
+nanosecond
+	"Answer a <rational> in the range [0,1000000000), representing the nanosecond of the second of the local time of the receiver, including any fractional part."
+
+	^seconds fractionPart * 1e9!
 
 print24: hr24Boolean showSeconds: secsBoolean on: aWriteStream
 	| format |
@@ -173,7 +184,9 @@ asMilliseconds!converting!public! !
 asParameter!converting!public! !
 asSeconds!converting!public! !
 asSYSTEMTIME!converting!public! !
+asTime!converting!public! !
 asTimeStamp!converting!public! !
+closeTo:precision:!comparing!public! !
 displayOn:!printing!public! !
 hash!comparing!public! !
 hour!accessing!public! !
@@ -181,6 +194,7 @@ hour12!accessing!public! !
 hour24!accessing!public! !
 millisecond!accessing!public! !
 minute!accessing!public! !
+nanosecond!accessing!public! !
 print24:showSeconds:on:!public!ston! !
 printOn:!printing!public! !
 printOn:format:!printing!public! !

@@ -21,14 +21,22 @@ _descriptionFormat
 	
 	^'%1 %2'!
 
+exceptionDetails
+	^tag!
+
 signal
 	"Signal this exception."
 
 	self tag buildErrorInfo.
-	super signal! !
+	super signal!
+
+sqlState
+	^self exceptionDetails errors first sqlState! !
 
 !Database.DBError categoriesForMethods!
 _descriptionFormat!displaying!public! !
+exceptionDetails!accessing!public! !
 signal!public!signalling! !
+sqlState!accessing!public! !
 !
 

@@ -352,8 +352,7 @@ new
 newBuffer
 	"Answer a new instance containing its own buffer."
 
-	^self newNull
-!
+	^self newFixed: self byteSize!
 
 newNull
 	"Answer a new, null, instance of the receiver."

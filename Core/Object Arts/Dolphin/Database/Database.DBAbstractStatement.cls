@@ -28,14 +28,15 @@ allocatedHandle
 	"Private - Answer the receiver's ODBC statement handle, which is lazily 
 	allocated if necessary."
 
-	handle isNull 
-		ifTrue: 
-			[executed := false.
-			handle := parent allocStmtHandle: self.
-			self
-				beFinalizable;
-				setDefaultAttributes].
+	handle isNull ifTrue: [self allocateHandle].
 	^handle!
+
+allocateHandle
+	executed := false.
+	handle := parent allocStmtHandle: self.
+	self
+		beFinalizable;
+		setDefaultAttributes!
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function
@@ -55,7 +56,7 @@ cancel
 		ifTrue: 
 			[handle isNull
 				ifTrue: [executed := false]
-				ifFalse: [self dbCheckException: (OS.Odbc32 sqlCancel: handle)]]!
+				ifFalse: [self dbCheckException: (OS.Odbc32 sqlCancel: handle) function: 'SQLCancel']]!
 
 close
 	"Private - Close the cursor, but keep the handle.
@@ -65,23 +66,26 @@ close
 	executed
 		ifTrue: 
 			[executed := false.
-			handle isNull ifFalse: [self dbCheckException: (OS.Odbc32 sqlFreeStmt: handle option: SQL_CLOSE)]]!
+			handle isNull
+				ifFalse: 
+					[self dbCheckException: (OS.Odbc32 sqlFreeStmt: handle option: SQL_CLOSE)
+						function: 'SQLFreeStmt']]!
 
 columnLength: anInteger
 	"Answer the length (bytes) of column number anInteger in the Result Set."
 
-	| ret len |
+	| len |
 	len := ByteArray newFixed: 4.
-	ret := OS.Odbc32
+	self dbCheckException: (OS.Odbc32
 				sqlColAttribute: self executedHandle
 				columnNumber: anInteger
 				fieldIdentifier: SQL_COLUMN_LENGTH
 				characterAttributePtr: nil
 				bufferLength: 0
 				stringLengthPtr: nil
-				numericAttributePtr: len.	"Note using ODBC 2.x definition of column length"
-	self dbCheckException: ret.
-	^len uint32AtOffset: 0!
+				numericAttributePtr: len)
+		function: 'SQLColAttribute'.
+	^len int32AtOffset: 0!
 
 cursorType
 	"Answer the symbolic cursor type name (one of #dynamic, #forwardOnly, #keysetDriven or #static)."
@@ -95,23 +99,24 @@ cursorType: aSymbol
 	"Attempting to change the cursorType once the statement has been executed will raise an error"
 	handle isNull ifFalse: [self setCursorType]!
 
-dbCheckException: anIntegerRetCode
-	"Private - Checks anIntegerRetCode to see if a DBError or DBWarning should be 
-	signalled. Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a 
-	more appropriate level of reporting for SQL_SUCCESS_WITH_INFO."
+dbCheckException: anIntegerRetCode function: aString
+	"Private - Checks anIntegerRetCode to see if a DBError or DBWarning should be signalled. 
+	Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a more appropriate level of reporting for SQL_SUCCESS_WITH_INFO."
 
-	^anIntegerRetCode = SQL_SUCCESS
+	anIntegerRetCode == SQL_SUCCESS
 		ifFalse: 
 			["Signal an error or warning - decide which"
-			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
+			((anIntegerRetCode == SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode == SQL_NO_DATA])
 				ifTrue: [DBWarning]
-				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
+				ifFalse: [DBError]) signal: aString with: (self newExceptionDetails: anIntegerRetCode)].
+	^anIntegerRetCode!
 
 defaultCursorType
 	"Answer the <Symbol>ic name of the default cursor type to be used for statements
 	(one of #dynamic, #forwardOnly, #keysetDriven, #static)."
 
-	^self subclassResponsibility!
+	^#forwardOnly
+!
 
 describeCol: anInteger
 	"Answer a DBColAttr object which describes the column with the specified
@@ -122,57 +127,54 @@ describeCol: anInteger
 describeCols: columnNumbers
 	"Answer an array of <DBColAttr>s describing each of the columns of the receiver's results with indices in the <sequencedReadableCollection> argument."
 
-	| answer i name columnSize colNameLen dataType decimalDigits nullable nameBufSize hStmt colLen |
+	| name nameBufSize hStmt buf base |
 	"Allocate a buffer sufficient to hold any column name, that we will re-use for all the columns"
 	nameBufSize := self parent maxColumnNameLength + 1.
 	name := Utf16String newFixed: nameBufSize.
-	"Similarly, re-usable buffers for all the other output parameters"
-	colNameLen := External.Int16 new.
-	dataType := External.Int16 new.
-	columnSize := External.UInt32Bytes new.
-	decimalDigits := External.Int16 new.
-	nullable := External.Int16 new.
-	colLen := External.UInt32Bytes new.
+	"Single buffer for all the output parameters, organised as follows:
+		0..1: 16-bit column name length (nameLengthPtr)
+		2..3: 16-bit data type (dataTypePtr)
+		4..7: 32-bit column size (columnSizePtr)
+		8..9: 16-bit decimal digits count (decimalDigitsPtr)
+		10..11: 16-bit nullable enum (nullablePtr)"
+	buf := ByteArray newFixed: 12.
+	base := buf yourAddress.
 	hStmt := self executedHandle.
-	answer := Array new: columnNumbers size.
-	i := 1.
-	columnNumbers do: 
+	^columnNumbers collect: 
 			[:each |
-			| ret col |
-			ret := OS.Odbc32
+			| column |
+			self dbCheckException: (OS.Odbc32
 						sqlDescribeCol: hStmt
 						columnNumber: each
 						columnName: name
 						bufferLength: nameBufSize
-						nameLengthPtr: colNameLen
-						dataTypePtr: dataType
-						columnSizePtr: columnSize
-						decimalDigitsPtr: decimalDigits
-						nullablePtr: nullable.
-			self dbCheckException: ret.
-			col := DBColAttr new
+						nameLengthPtr: base
+						dataTypePtr: base + 2
+						columnSizePtr: base + 4
+						decimalDigitsPtr: base + 8
+						nullablePtr: base + 10)
+				function: 'SQLDescribeCol'.
+			column := DBColAttr new
 						columnNumber: each;
-						name: (name copyFrom: 1 to: colNameLen value);
-						type: dataType value;
-						precision: columnSize value;
-						scale: decimalDigits value;
+						name: (name copyFrom: 1 to: (buf int16AtOffset: 0));
+						precision: (buf uint32AtOffset: 4);
+						scale: (buf int16AtOffset: 8);
+						type: (buf int16AtOffset: 2);
 						yourself.
-			col hasVariableTransferOctetLength
+			column length == 0
 				ifTrue: 
-					[ret := OS.Odbc32
+					[buf uint32AtOffset: 0 put: 0.
+					self dbCheckException: (OS.Odbc32
 								sqlColAttribute: hStmt
 								columnNumber: each
 								fieldIdentifier: SQL_DESC_OCTET_LENGTH
 								characterAttributePtr: nil
 								bufferLength: nil
 								stringLengthPtr: nil
-								numericAttributePtr: colLen.
-					self dbCheckException: ret.
-					col length: colLen value]
-				ifFalse: [col length: col transferOctetLength].
-			answer at: i put: col.
-			i := i + 1].
-	^answer!
+								numericAttributePtr: base)
+						function: 'SQLColAttribute'.
+					column length: (buf int32AtOffset: 0)].
+			column]!
 
 driverHStmt
 	"Private - Answer the handle to the driver statement"
@@ -184,23 +186,15 @@ driverHStmt
 				infoType: SQL_DRIVER_HSTMT
 				infoValuePtr: value
 				bufferLength: Kernel.VMConstants.IntPtrSize
-				stringLengthPtr: nil).
+				stringLengthPtr: nil)
+		function: 'SQLGetInfo'.
 	^value!
-
-exceptionDetails: anIntegerRetCode
-	"Private - Answer a DBExceptionDetails instance that describes the state of the
-	receiver following an exception. This will be available as the tag of a subsequent 
-	signalled DBError or DBWarning."
-
-	^(self parent exceptionDetails: anIntegerRetCode)
-		hStmt: handle;
-		yourself.!
 
 exec
 	"Private - Execute the tables query the receiver represents."
 
-	self dbCheckException: self executeStatement.
-	executed := true.!
+	self executeStatement.
+	executed := true!
 
 executedHandle
 	"Private - Answer the receiver's ODBC statement handle having lazily
@@ -239,7 +233,8 @@ getStringAttribute: anInteger
 				attribute: anInteger
 				valuePtr: buffer
 				bufferLength: ##((SQL_MAX_OPTION_STRING_LENGTH + 1) * 2)
-				stringLengthPtr: nil).	"Byte size including implicit null terminator"
+				stringLengthPtr: nil)
+		function: 'SQLGetStmtAttr'.	"Byte size including implicit null terminator"
 	"N.B. We assume that as with SqlGetConnectAttr that the SQL server driver will not populate the stringLengthPtr argument. There do not seem to be any string options to test this against currently."
 	^buffer trimNulls!
 
@@ -268,15 +263,25 @@ moveTo: anIntegerRow
 				sqlSetPos: self executedHandle
 				rowNumber: anIntegerRow
 				operation: SQL_POSITION
-				lockType: SQL_LOCK_NO_CHANGE)!
+				lockType: SQL_LOCK_NO_CHANGE)
+		function: 'SQLSetPos'!
+
+newExceptionDetails: anIntegerRetCode
+	"Private - Answer a DBExceptionDetails instance that describes the state of the
+	receiver following an exception. This will be available as the tag of a subsequent 
+	signalled DBError or DBWarning."
+
+	^(self parent newExceptionDetails: anIntegerRetCode)
+		hStmt: handle;
+		yourself!
 
 numColumns
 	"Answer the number of columns in the receiver's result set."
 
-	| ccol ret |
+	| ccol |
 	ccol := ByteArray newFixed: 2.
-	ret := OS.Odbc32 sqlNumResultCols: self executedHandle pccol: ccol.
-	self dbCheckException: ret.
+	self dbCheckException: (OS.Odbc32 sqlNumResultCols: self executedHandle pccol: ccol)
+		function: 'SQLNumResultCols'.
 	^ccol int16AtOffset: 0!
 
 numRows
@@ -284,10 +289,10 @@ numRows
 	the receiver. May also work for some SELECTs, although often the answer will be -1
 	indicating that the driver does not know."
 
-	| rowCount ret |
+	| rowCount |
 	rowCount := ByteArray newFixed: 4.
-	ret := OS.Odbc32 sqlRowCount: self executedHandle rowCountPtr: rowCount.
-	self dbCheckException: ret.
+	self dbCheckException: (OS.Odbc32 sqlRowCount: self executedHandle rowCountPtr: rowCount)
+		function: 'SQLRowCount'.
 	^rowCount int32AtOffset: 0!
 
 parent
@@ -308,13 +313,12 @@ results
 		statement: self!
 
 setAttribute: attributeInteger value: anIntegerOrStringOrBytes size: sizeInteger
-	| ret |
-	ret := OS.Odbc32
+	^self dbCheckException: (OS.Odbc32
 				sqlSetStmtAttr: self allocatedHandle
 				attribute: attributeInteger
 				valuePtr: anIntegerOrStringOrBytes
-				stringLength: sizeInteger.
-	self dbCheckException: ret!
+				stringLength: sizeInteger)
+		function: 'SQLSetStmtAttr'!
 
 setCursorType
 	"Private - Set the cursor type of the statement to one of: #static, #dynamic, #keysetDriven or #forwardOnly. 
@@ -343,6 +347,7 @@ suppressErrorsDo: aNiladicBlock
 
 !Database.DBAbstractStatement categoriesForMethods!
 allocatedHandle!accessing!private! !
+allocateHandle!helpers!private! !
 asParameter!accessing!public! !
 basicFree!private!realizing/unrealizing! !
 cancel!operations!public! !
@@ -350,12 +355,11 @@ close!operations!private! !
 columnLength:!accessing!public! !
 cursorType!accessing!public! !
 cursorType:!accessing!public! !
-dbCheckException:!exceptions!private! !
+dbCheckException:function:!exceptions!private! !
 defaultCursorType!constants!public! !
 describeCol:!accessing!public! !
 describeCols:!accessing!public! !
 driverHStmt!accessing!private! !
-exceptionDetails:!exceptions!private! !
 exec!operations!private! !
 executedHandle!accessing!private! !
 executeStatement!operations!private! !
@@ -366,6 +370,7 @@ handle!accessing!private! !
 initialize!initializing!private! !
 initialize:!initializing!private! !
 moveTo:!accessing!private! !
+newExceptionDetails:!exceptions!private! !
 numColumns!accessing!public! !
 numRows!accessing!public! !
 parent!accessing!public! !

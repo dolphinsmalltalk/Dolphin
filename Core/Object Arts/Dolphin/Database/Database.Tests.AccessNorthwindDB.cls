@@ -29,11 +29,15 @@ createDatabase
 
 dropDatabase
 	super dropDatabase.
-	(File exists: filename) ifTrue: [File delete: filename]! !
+	(File exists: filename) ifTrue: [File delete: filename]!
+
+filename
+	^filename! !
 
 !Database.Tests.AccessNorthwindDB categoriesForMethods!
-connectString!private! !
-createDatabase!private! !
-dropDatabase!private! !
+connectString!accessing!private! !
+createDatabase!operations!private! !
+dropDatabase!operations!private! !
+filename!accessing!public! !
 !
 
