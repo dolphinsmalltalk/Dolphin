@@ -1,0 +1,13 @@
+DROP TABLE OrderDetails;
+DROP TABLE Orders;
+DROP TABLE CustomerCustomerDemo;
+DROP TABLE CustomerDemographics;
+DROP TABLE EmployeeTerritories;
+DROP TABLE Employees;
+DROP TABLE Customers;
+DROP TABLE Shippers;
+DROP TABLE Products;
+DROP TABLE Suppliers; 
+DROP TABLE Categories; 
+DROP TABLE Territories; 
+DROP TABLE Region;

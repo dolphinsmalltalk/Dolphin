@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DBErrorDetails
-	instanceVariableNames: 'msg nativeErr sqlState origin'
+	instanceVariableNames: 'msg nativeErr sqlState'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -25,9 +25,7 @@ messageText
 	"Answer a text representation of the error of the form:
 		STATE: MSG"
 
-	^(sqlState isNil 
-		ifTrue: ['']
-		ifFalse: [sqlState, ': ']), msg!
+	^(sqlState ifNil: [''] ifNotNil: [sqlState , ': ']) , msg!
 
 msg
 	"Answer the msg instance variable."
@@ -39,15 +37,10 @@ msg: aString
 
 	msg := aString!
 
-nativeErr: aString
-	"Private - Set the nativeErr instance variable to aString."
+nativeErr: anInteger
+	"Private - Set the nativeErr instance variable to the argument."
 
-	nativeErr := aString!
-
-origin: aString
-	"Private - Set the origin instance variable to aString."
-
-	origin := aString.!
+	nativeErr := anInteger!
 
 sqlState
 	"Answer the sqlState instance variable."
@@ -62,11 +55,10 @@ sqlState: aString
 !DBErrorDetails categoriesForMethods!
 messageText!accessing!public! !
 msg!accessing!public! !
-msg:!accessing!private! !
-nativeErr:!accessing!private! !
-origin:!accessing!private! !
+msg:!initializing!private! !
+nativeErr:!initializing!private! !
 sqlState!accessing!public! !
-sqlState:!accessing!private! !
+sqlState:!initializing!private! !
 !
 
 !DBErrorDetails class methodsFor!
@@ -75,12 +67,7 @@ fromSQLError: errorString
 	"Answer a new instance of the receiver built from the information in the 
 	<readableString>, errorString."
 
-	| lastBrkt |
-	lastBrkt := errorString lastIndexOf: $].
-	^self new
-		msg: errorString;
-		origin: (errorString copyFrom: 1 to: lastBrkt);
-		yourself! !
+	^self new msg: errorString yourself! !
 
 !DBErrorDetails class categoriesForMethods!
 fromSQLError:!instance creation!public! !

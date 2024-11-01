@@ -20,13 +20,6 @@ catalogName
 catalogName: aString
 	catalogName := aString!
 
-defaultCursorType
-	"Answer the <Symbol>ic name of the default cursor type to be used for statements
-	(one of #dynamic, #forwardOnly, #keysetDriven, #static)."
-
-	^#forwardOnly
-!
-
 schemaName
 	^schemaName!
 
@@ -42,7 +35,6 @@ tableName: aStringPattern
 !DBSchemaStatement categoriesForMethods!
 catalogName!accessing!public!searching! !
 catalogName:!accessing!public!searching! !
-defaultCursorType!constants!public! !
 schemaName!accessing!public!searching! !
 schemaName:!accessing!public!searching! !
 tableName!accessing!public!searching! !

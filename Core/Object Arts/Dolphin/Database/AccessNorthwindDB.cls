@@ -29,11 +29,15 @@ createDatabase
 
 dropDatabase
 	super dropDatabase.
-	File delete: filename! !
+	KernelLibrary default deleteFile: filename!
+
+filename
+	^filename! !
 
 !AccessNorthwindDB categoriesForMethods!
-connectString!private! !
-createDatabase!private! !
-dropDatabase!private! !
+connectString!accessing!private! !
+createDatabase!operations!private! !
+dropDatabase!operations!private! !
+filename!accessing!public! !
 !
 

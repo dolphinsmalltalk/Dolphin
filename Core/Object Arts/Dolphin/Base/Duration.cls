@@ -79,6 +79,9 @@ abs
 		ifTrue: [self class seconds: seconds negated]
 		ifFalse: [self]!
 
+asDuration
+	^self!
+
 asMicroseconds
 	"Answer the <rational> total number of microseconds in the length of time represented by the receiver including any fractional part. 
 	If the receiver is less than <Duration factory> #zero then the result will be less than 0."
@@ -221,6 +224,14 @@ setSeconds: aNumber
 	seconds := aNumber.
 	^self!
 
+sign
+	"Answer the <integer> sign of the receiver:
+		1 if the receiver is greater than 0, 
+		-1 if less than 0
+		0 if equal to 0."
+
+	^seconds sign!
+
 storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <Duration> equivalent to the receiver."
 
@@ -246,6 +257,7 @@ wait
 <!comparing!public! !
 =!comparing!public! !
 abs!arithmetic!public! !
+asDuration!converting!public! !
 asMicroseconds!converting!public! !
 asMilliseconds!converting!public! !
 asNanoseconds!converting!public! !
@@ -270,6 +282,7 @@ printOn:format:!printing!public! !
 printStringFormat:!printing!public! !
 seconds!accessing!public! !
 setSeconds:!initializing!private! !
+sign!accessing!public! !
 storeOn:!printing!public! !
 subtractFromDateAndTime:!initializing!private! !
 wait!process synchronisation!public! !
@@ -337,6 +350,11 @@ minutes: aNumber
 	If the argument is negative then the answer will be less than <Duration factory>#zero."
 
 	^self seconds: aNumber * 60!
+
+minutes: minutesNumber seconds: secondsNumber
+	"Answer a <Duration> representing specified <number> of minutes and seconds."
+
+	^self seconds: minutesNumber * 60 + secondsNumber!
 
 nanoseconds: aNumber
 	"Answer a <Duration> representing the specified <number> of nanoseconds.
@@ -421,6 +439,7 @@ hours:minutes:seconds:!instance creation!public! !
 microseconds:!instance creation!public! !
 milliseconds:!instance creation!public! !
 minutes:!instance creation!public! !
+minutes:seconds:!instance creation!public! !
 nanoseconds:!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 readFrom:!instance creation!public! !

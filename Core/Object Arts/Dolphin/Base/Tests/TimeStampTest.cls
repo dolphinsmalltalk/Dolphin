@@ -100,13 +100,13 @@ testFromSYSTEMTIME
 
 !TimeStampTest categoriesForMethods!
 currentTimeStamp!helpers!private! !
-testAddSeconds!public! !
-testAsMilliseconds!public! !
-testAsSeconds!public! !
-testCurrentUTC!public! !
+testAddSeconds!public!unit tests! !
+testAsMilliseconds!public!unit tests! !
+testAsSeconds!public!unit tests! !
+testCurrentUTC!public!unit tests! !
 testDateTime!public!unit tests! !
-testFromMilliseconds!public! !
-testFromSeconds!public! !
-testFromSYSTEMTIME!public! !
+testFromMilliseconds!public!unit tests! !
+testFromSeconds!public!unit tests! !
+testFromSYSTEMTIME!public!unit tests! !
 !
 

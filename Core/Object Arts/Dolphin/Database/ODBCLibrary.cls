@@ -322,6 +322,17 @@ sqlGetStmtAttr: anExternalHandle attribute: optionCode valuePtr: anIntegerOrStri
 	<stdcall: sword SQLGetStmtAttrW handle sdword lpvoid sdword sdword*>
 	^self invalidCall: _failureCode!
 
+sqlGetTypeInfo: anExternalHandle dataType: anInteger
+	"Returns information about data types supported by the data source.
+
+	SQLRETURN SQLGetTypeInfo(  
+		SQLHSTMT      StatementHandle,  
+		SQLSMALLINT   DataType);  
+	"
+
+	<stdcall: sword SQLGetTypeInfo handle sword>
+	^self invalidCall: _failureCode!
+
 sqlNumResultCols: anExternalHandle pccol: anSWORD
 	"Return the number of columns in the result set for the statement.
 
@@ -330,6 +341,14 @@ sqlNumResultCols: anExternalHandle pccol: anSWORD
 			SQLSMALLINT * ColumnCountPtr);"
 
 	<stdcall: sword SQLNumResultCols handle sword*>
+	^self invalidCall: _failureCode!
+
+sqlParamData: anExternalHandle valuePtrPtr: valuePtrPtr
+	"SQLRETURN SQLParamData(  
+		SQLHSTMT       StatementHandle,  
+		SQLPOINTER *   ValuePtrPtr);  "
+
+	<stdcall: sword SQLParamData handle void**>
 	^self invalidCall: _failureCode!
 
 sqlPrepare: anExternalHandle statementText: aString textLength: anInteger
@@ -365,6 +384,15 @@ sqlProcedures: anExternalHandle catalogName: aStringParmPQ nameLength1: anIntege
 		SQLSMALLINT     NameLength3);"
 
 	<stdcall: sword SQLProceduresW handle lpwstr sword lpwstr sword lpwstr sword>
+	^self invalidCall: _failureCode!
+
+sqlPutData: anExternalHandleSTMT dataPtr: dataPtr strLenOrInd: anSDWORD
+	"SQLRETURN SQLPutData(  
+		SQLHSTMT     StatementHandle,  
+		SQLPOINTER   DataPtr,  
+		SQLLEN       StrLen_or_Ind);  "
+
+	<stdcall: sword SQLPutData handle void* sdword>
 	^self invalidCall: _failureCode!
 
 sqlRowCount: anExternalHandle rowCountPtr: anSDWORD
@@ -474,10 +502,13 @@ sqlGetEnvAttr:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 f
 sqlGetFunctions:functionId:supportedPtr:!public!win32 functions-odbc library! !
 sqlGetInfo:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
 sqlGetStmtAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+sqlGetTypeInfo:dataType:!public!win32 functions-odbc library! !
 sqlNumResultCols:pccol:!public!win32 functions-odbc library! !
+sqlParamData:valuePtrPtr:!public!win32 functions-odbc library! !
 sqlPrepare:statementText:textLength:!public!win32 functions-odbc library! !
 sqlPrimaryKeys:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:!public!win32 functions-odbc library! !
 sqlProcedures:catalogName:nameLength1:schemaName:nameLength1:procName:nameLength3:!public!win32 functions-odbc library! !
+sqlPutData:dataPtr:strLenOrInd:!public!win32 functions-odbc library! !
 sqlRowCount:rowCountPtr:!public!win32 functions-odbc library! !
 sqlSetConnectAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
 sqlSetEnvAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !

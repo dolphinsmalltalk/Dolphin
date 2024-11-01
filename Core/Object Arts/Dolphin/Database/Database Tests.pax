@@ -9,7 +9,15 @@ package classNames
 	add: #AccessNorthwindDB;
 	add: #DBConnectionTest;
 	add: #DBConnectionTestResource;
+	add: #DBFieldTest;
 	add: #DBTest;
+	add: #MimerSqlDBTest;
+	add: #MimerSqlNorthwindDB;
+	add: #MySqlDBTest;
+	add: #MySqlNorthwindDB;
+	add: #OracleDBTest;
+	add: #OracleNorthwindDB;
+	add: #SQL_INTERVAL_STRUCTTest;
 	add: #SQLServerDBTest;
 	add: #SQLServerNorthwindDB;
 	yourself.
@@ -22,16 +30,27 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'Database Connection Base'
-	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
 	'..\Base\Dolphin Legacy Date & Time'
+	'..\MVP\Base\Dolphin MVP Base'
+	'..\Registry\Dolphin Registry Access'
 	'..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
-	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit').
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\System\Win32\Windows Service Manager').
+
+package setManualPrerequisites: #(
+	'Windows Service Manager').
 
 package!
 
 "Class Definitions"!
+
+DolphinTest subclass: #DBFieldTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ODBCCTypes ODBCTypes'
+	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #DBTest
 	instanceVariableNames: 'connection'
@@ -39,13 +58,37 @@ DolphinTest subclass: #DBTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DBTest subclass: #DBConnectionTest
+DolphinTest subclass: #SQL_INTERVAL_STRUCTTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'ODBCCTypes'
+	classInstanceVariableNames: ''!
+
+DBTest subclass: #DBConnectionTest
+	instanceVariableNames: 'dbResources savedBlockSize savedMaxBoundSize createdTestTable'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCTypes'
 	classInstanceVariableNames: ''!
 
 DBConnectionTest subclass: #AccessDBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBConnectionTest subclass: #MimerSqlDBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBConnectionTest subclass: #MySqlDBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBConnectionTest subclass: #OracleDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -65,6 +108,24 @@ TestResource subclass: #DBConnectionTestResource
 
 DBConnectionTestResource subclass: #AccessNorthwindDB
 	instanceVariableNames: 'filename'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBConnectionTestResource subclass: #MimerSqlNorthwindDB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBConnectionTestResource subclass: #MySqlNorthwindDB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBConnectionTestResource subclass: #OracleNorthwindDB
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

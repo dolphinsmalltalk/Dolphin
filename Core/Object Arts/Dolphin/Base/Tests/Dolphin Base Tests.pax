@@ -314,7 +314,7 @@ DolphinTest subclass: #EventMessageSendTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #'ExceptionTest'
+DolphinTest subclass: #ExceptionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -24,16 +24,17 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^ODBCLibrary default 
-		sqlStatistics: self allocatedHandle
-		catalogName: self catalogName
-		nameLength1: SQL_NTS
-		schemaName: self schemaName
-		nameLength2: SQL_NTS
-		tableName: self tableName
-		nameLength3: SQL_NTS
-		unique: self type
-		reserved: (accurate ifTrue: [SQL_ENSURE] ifFalse: [SQL_QUICK])!
+	^self dbCheckException: (ODBCLibrary default
+				sqlStatistics: self allocatedHandle
+				catalogName: self catalogName
+				nameLength1: SQL_NTS
+				schemaName: self schemaName
+				nameLength2: SQL_NTS
+				tableName: self tableName
+				nameLength3: SQL_NTS
+				unique: self type
+				reserved: (accurate ifTrue: [SQL_ENSURE] ifFalse: [SQL_QUICK]))
+		function: 'SQLStatistics'!
 
 initialize: aDBConnection 
 	"Private - Initialize the receiver as a new statement of the

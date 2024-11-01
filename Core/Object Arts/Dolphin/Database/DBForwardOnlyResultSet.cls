@@ -20,14 +20,6 @@ Instance Variables:
 
 !DBForwardOnlyResultSet methodsFor!
 
-bind: anArrayOfColNums
-	"Private - Create and bind a buffer to hold the
-	specified columns (or #() for all columns)
-	as they are fetched from the result set"
-
-	super bind: anArrayOfColNums.
-	position := 0.!
-
 close
 	"Close the statement which generated the receiver."
 
@@ -102,10 +94,15 @@ reverseDo: operation
 	memory (since it needs to reify the entire result set) for speed (since
 	it only moves forward through the result set)."
 
-	^self asOrderedCollection reverseDo: operation! !
+	^self asOrderedCollection reverseDo: operation!
+
+statement: aDBStatement
+	"Private - Set the statement instance variable to aDBStatement."
+
+	super statement: aDBStatement.
+	position := 0! !
 
 !DBForwardOnlyResultSet categoriesForMethods!
-bind:!binding!private! !
 close!public!realizing/unrealizing! !
 free!public!realizing/unrealizing! !
 moveFirst!operations!private! !
@@ -116,5 +113,6 @@ moveTo:!accessing!private! !
 onStartup!event handling!private! !
 requery!operations!private! !
 reverseDo:!enumerating!public! !
+statement:!accessing!private! !
 !
 

@@ -47,15 +47,25 @@ package methodNames
 	add: #DBConnection -> #uniqueIndexOf:;
 	add: #DBResultSet -> #invalidate;
 	add: #DBResultSet -> #prev;
-	add: #ODBCTIMESTAMP -> #asTimeStamp;
+	add: #DBRowBuffer -> #sizeInBytes;
+	add: #SQL_TIMESTAMP_STRUCT -> #asTimeStamp;
 	add: 'DBConnection class' -> #interpretTxnIsolationMask:;
-	add: 'ODBCTIMESTAMP class' -> #fromTimeStamp:;
+	add: 'SQL_TIMESTAMP_STRUCT class' -> #fromTimeStamp:;
+	yourself.
+
+package globalNames
+	add: #ODBCDATE;
+	add: #ODBCTIME;
+	add: #ODBCTIMESTAMP;
 	yourself.
 
 package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
+	add: #ODBCDATE;
+	add: #ODBCTIME;
+	add: #ODBCTIMESTAMP;
 	yourself).
 
 package setPrerequisites: #(
@@ -63,6 +73,15 @@ package setPrerequisites: #(
 	'..\Base\Dolphin').
 
 package!
+
+"Global Aliases"!
+
+ODBCDATE := SQL_DATE_STRUCT!
+
+ODBCTIME := SQL_TIME_STRUCT!
+
+ODBCTIMESTAMP := SQL_TIMESTAMP_STRUCT!
+
 
 "Loose Methods"!
 
@@ -307,23 +326,35 @@ invalidate!operations!public! !
 prev!accessing!public! !
 !
 
-!ODBCTIMESTAMP methodsFor!
+!DBRowBuffer methodsFor!
+
+sizeInBytes
+	"Answer the size of the receiver structure in bytes."
+
+	Notification deprecated. "Not used and only works for fully bound buffers anyway"
+	 ^self contents inject: 0 into: [ :size :f | size + f size ].! !
+
+!DBRowBuffer categoriesForMethods!
+sizeInBytes!accessing!public! !
+!
+
+!SQL_TIMESTAMP_STRUCT methodsFor!
 
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
 
-!ODBCTIMESTAMP categoriesForMethods!
+!SQL_TIMESTAMP_STRUCT categoriesForMethods!
 asTimeStamp!converting!public! !
 !
 
-!ODBCTIMESTAMP class methodsFor!
+!SQL_TIMESTAMP_STRUCT class methodsFor!
 
 fromTimeStamp: aTimeStamp
 	Notification deprecated.
 	^self fromTimeStamp: aTimeStamp asDateAndTime! !
 
-!ODBCTIMESTAMP class categoriesForMethods!
+!SQL_TIMESTAMP_STRUCT class categoriesForMethods!
 fromTimeStamp:!instance creation!public! !
 !
 

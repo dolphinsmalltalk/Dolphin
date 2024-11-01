@@ -30,7 +30,11 @@ setUp
 	self skipUnless: [connection notNil]!
 
 tearDown
-	connection ifNotNil: [:cnxn | cnxn close]!
+	connection
+		ifNotNil: 
+			[:cnxn |
+			connection close.
+			connection := nil]!
 
 testCollect
 	| names rs |

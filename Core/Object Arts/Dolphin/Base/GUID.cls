@@ -2,11 +2,13 @@
 
 Object variableByteSubclass: #GUID
 	instanceVariableNames: ''
-	classVariableNames: 'Null'
+	classVariableNames: 'ByteSize Null'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 GUID guid: (GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
+GUID addClassConstant: 'ByteSize' value: 16r10!
 
 GUID comment: 'GUID is the class of 128-bit Globally Unique Identifiers (guids) which are used wherever a unique identifier is required in COM, for example to identify specific coclasses and interfaces.
 
@@ -82,6 +84,9 @@ asString
 			startingAt: 1;
 		at: sz put: $};
 		yourself!
+
+byteSize
+	^ByteSize!
 
 displayOn: target
 	"Append an 'end-user suitable' textual representation of the receiver to the
@@ -181,6 +186,9 @@ stringSize
 
 	^38!
 
+value
+	^self!
+
 value: guidBytes
 	"Set the raw binary value of the receiver from those of the argument."
 
@@ -193,6 +201,7 @@ asByteArray!converting!public! !
 asInteger!converting!public! !
 asObject!accessing!public! !
 asString!converting!public! !
+byteSize!accessing!public! !
 displayOn:!printing!public! !
 hash!comparing!public! !
 idlString!converting!public! !
@@ -203,6 +212,7 @@ replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
 species!accessing!public! !
 storeOn:!printing!public! !
 stringSize!constants!public! !
+value!accessing!public! !
 value:!accessing!public! !
 !
 
@@ -327,8 +337,7 @@ new
 newBuffer
 	"Answer a new instance containing its own buffer."
 
-	^self newNull
-!
+	^self newFixed: self byteSize!
 
 newNull
 	"Answer a new, null, instance of the receiver."
