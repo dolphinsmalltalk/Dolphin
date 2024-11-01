@@ -16,12 +16,10 @@ DBUnboundBuffer comment: 'A DBUnboundRow represents a row buffer that is not sta
 
 !DBUnboundBuffer methodsFor!
 
-getData: aDBStatement
-	"Private - Copy data from the result table into fields of the receiver."
-
-	self contents do: [:f | f getData: aDBStatement]! !
+newFieldForCol: aDBColAttr
+	^DBUnboundField newForCol: aDBColAttr! !
 
 !DBUnboundBuffer categoriesForMethods!
-getData:!data retrieval!private! !
+newFieldForCol:!helpers!private! !
 !
 

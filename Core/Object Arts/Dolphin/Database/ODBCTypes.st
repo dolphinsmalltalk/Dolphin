@@ -31,6 +31,8 @@ ODBCTypes at: 'SQL_LONGVARCHAR' put: -16r1!
 ODBCTypes at: 'SQL_NUMERIC' put: 16r2!
 ODBCTypes at: 'SQL_REAL' put: 16r7!
 ODBCTypes at: 'SQL_SMALLINT' put: 16r5!
+ODBCTypes at: 'SQL_SS_TIME2' put: -16r9A!
+ODBCTypes at: 'SQL_SS_TIMESTAMPOFFSET' put: -16r9B!
 ODBCTypes at: 'SQL_TIME' put: 16rA!
 ODBCTypes at: 'SQL_TIMESTAMP' put: 16rB!
 ODBCTypes at: 'SQL_TINYINT' put: -16r6!

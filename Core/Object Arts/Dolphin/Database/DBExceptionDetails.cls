@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DBExceptionDetails
-	instanceVariableNames: 'errors hEnv hDBC hStmt code'
+	instanceVariableNames: 'code hEnv hDBC hStmt errors'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
@@ -25,59 +25,10 @@ Depending on the activity in progress at the time of the exception, one or more 
 
 !DBExceptionDetails methodsFor!
 
-addErrorDetails: newErrorDetails
-	"Private - Add a new error details object to my collection."
-
-	errors isNil ifTrue: [self errors: OrderedCollection new].
-	errors addLast: newErrorDetails.!
-
 buildErrorInfo
-	"Private - Retrieve all error information available from the ODBC Driver
-	 for my handles, unless none is found in which case
-	 a 'reduced' error is created using the return code from function
-	 which caused the error"
+	"Private - Retrieve all error information available from the ODBC Driver for my handles, unless none is found in which case a 'reduced' error is created using the return code from function which caused the error"
 
-	(code ~~ SQL_SUCCESS and: [code ~~ SQL_INVALID_HANDLE]) ifTrue:
-			[hEnv isNull ifFalse: [self buildErrorInfoFrom: hEnv type: SQL_HANDLE_ENV].
-			hDBC isNull ifFalse: [self buildErrorInfoFrom: hDBC type: SQL_HANDLE_DBC].
-			hStmt isNull ifFalse: [self buildErrorInfoFrom: hStmt type: SQL_HANDLE_STMT]].
-	errors isNil ifTrue: [self retCodeError: code].!
-
-buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
-	"Private - Retrieve all error information available from the ODBC Driver for <anExternalHandle>, which is of type <anIntegerHandleType>"
-
-	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber odbc |
-	szSqlState := Utf16String newFixed: SQL_SQLSTATE_SIZE.
-	szErrorMsg := Utf16String new: 128.
-	cbErrorMsg := SWORD new.
-	fNativeError := SDWORD new.
-	recNumber := 1.
-	odbc := ODBCLibrary default.
-	
-	[| ret |
-	
-	[ret := odbc
-				sqlGetDiagRec: anIntegerHandleType
-				handle: anExternalHandle
-				recNumber: recNumber
-				szSqlState: szSqlState
-				pfNativeError: fNativeError
-				szErrorMsg: szErrorMsg
-				cbErrorMsgMax: szErrorMsg size + 1
-				pcbErrorMsg: cbErrorMsg.
-	ret == SQL_SUCCESS_WITH_INFO]
-			whileTrue: 
-				["Try again with a larger buffer"
-				szErrorMsg := Utf16String new: cbErrorMsg value].
-	ret == SQL_SUCCESS]
-			whileTrue: 
-				[| newErr |
-				newErr := DBErrorDetails fromSQLError: (szErrorMsg copyFrom: 1 to: cbErrorMsg asInteger).
-				newErr
-					nativeErr: fNativeError asInteger;
-					sqlState: (szSqlState copyFrom: 1 to: 5).
-				self addErrorDetails: newErr.
-				recNumber := recNumber + 1]!
+	errors := DBErrorDetailsBuilder buildErrorDetailsFor: self!
 
 code
 	"Answer the code instance variable."
@@ -132,25 +83,14 @@ hStmt: anExternalHandle
 printOn: aStream
 	"Print an textual representation of the receiver to aStream"
 
-	self errors 
+	errors ifNil: [^self].
+	errors 
 		do: [ :e | aStream print: e messageText]
 		separatedBy: [aStream space]
-!
-
-retCodeError: anInteger
-	"Private - Add to our collection, a new error whose code is anIteger."
-
-	self addErrorDetails: (
-	        DBErrorDetails new
-			msg: ('SQL Error: ',
-					(ODBCRetCodes keyAtValue: code
-				                ifAbsent: ['Unknown']));
-			yourself)! !
+! !
 
 !DBExceptionDetails categoriesForMethods!
-addErrorDetails:!operations!private! !
-buildErrorInfo!operations!private! !
-buildErrorInfoFrom:type:!operations!private! !
+buildErrorInfo!initializing!private! !
 code!accessing!public! !
 code:!accessing!private! !
 errors!accessing!public! !
@@ -162,6 +102,18 @@ hEnv:!accessing!private! !
 hStmt!accessing!public! !
 hStmt:!accessing!private! !
 printOn:!printing!public! !
-retCodeError:!accessing!private! !
+!
+
+!DBExceptionDetails class methodsFor!
+
+code: anInteger hEnv: anExternalHandle
+	<primitive: 157>
+	^self new
+		code: anInteger;
+		hEnv: anExternalHandle;
+		yourself! !
+
+!DBExceptionDetails class categoriesForMethods!
+code:hEnv:!instance creation!public! !
 !
 

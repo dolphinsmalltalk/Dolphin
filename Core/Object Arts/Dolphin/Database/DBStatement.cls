@@ -34,10 +34,11 @@ exec: aString
 	self sqlString: aString; exec!
 
 executeStatement
-	^ODBCLibrary default 
-		sqlExecDirect: self allocatedHandle
-		statementText: self sqlString
-		textLength: SQL_NTS!
+	^self dbCheckException: (ODBCLibrary default
+				sqlExecDirect: self allocatedHandle
+				statementText: self sqlString
+				textLength: SQL_NTS)
+		function: 'SQLExecDirect'!
 
 printOn: aStream
 	"Print a string representation of self onto aStream"

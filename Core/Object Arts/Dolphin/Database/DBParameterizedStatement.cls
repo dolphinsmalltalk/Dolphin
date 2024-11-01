@@ -28,39 +28,28 @@ bindParams
 	subsequently fill the buffer fields the statement is ready to exec. Normally only done 
 	just before first exec (from #parameters)."
 
-	| odbc hstmt |
-	odbc := ODBCLibrary default.
-	hstmt := self allocatedHandle.
-	parameters keysAndValuesDo: 
-			[:i :eachField |
-			| buf column |
-			buf := eachField fieldBuf.
-			column := eachField column.
-			self dbCheckException: (odbc
-						sqlBindParameter: hstmt
-						parameterNumber: i
-						inputOutputType: column parameterType
-						valueType: column cType
-						parameterType: column type
-						columnSize: column precision
-						decimalDigits: column scale
-						parameterValuePtr: buf
-						bufferLength: buf byteSize
-						strLenOrIndPtr: eachField lengthBuf)]!
+	1 to: parameters size do: [:i | (parameters at: i) bindAsParameter: i of: self]!
 
 exec
 	"(Re)Execute a prepared statement."
 
-	| ret |
+	| ret hStmt odbc32 function |
 	self close.
-	isPrepared
-		ifFalse: [self prepare].
-	paramCols notNil
-		ifTrue: [self setValues].
-	ret := ODBCLibrary default sqlExecute: self allocatedHandle.
-	self dbCheckException: ret.
-	executed := true.
-!
+	isPrepared ifFalse: [self prepare].
+	paramCols notNil ifTrue: [self setValues].
+	hStmt := self allocatedHandle.
+	odbc32 := ODBCLibrary default.
+	function := 'SQLExecute'.
+	ret := odbc32 sqlExecute: hStmt.
+	ret == SQL_NEED_DATA
+		ifTrue: 
+			[| paramDataBuf |
+			function := 'SQLParamData'.
+			paramDataBuf := ByteArray newFixed: 4.
+			[(ret := odbc32 sqlParamData: hStmt valuePtrPtr: paramDataBuf) == SQL_NEED_DATA]
+				whileTrue: [(parameters at: (paramDataBuf dwordAtOffset: 0)) putData: self]].
+	self dbCheckException: ret function: function.
+	executed := true!
 
 free
 	"Release external resources held by the receiver,
@@ -88,7 +77,7 @@ parameters
 
 	^parameters
 		ifNil: 
-			[parameters := paramCols collect: [:col | DBField newForCol: col].
+			[parameters := paramCols collect: [:col | col newBoundField].
 			self bindParams.
 			parameters]!
 
@@ -96,14 +85,13 @@ prepare
 	"Private - Prepare the receiver for later execution when the parameter values have 
 	been set. N.B. This should only be sent once unless closed in the interm."
 
-	| ret |
 	isPrepared := false.
 	parameters := nil.
-	ret := ODBCLibrary default 
+	self dbCheckException: (ODBCLibrary default
 				sqlPrepare: self allocatedHandle
 				statementText: self sqlString
-				textLength: SQL_NTS.
-	self dbCheckException: ret.
+				textLength: SQL_NTS)
+		function: 'SQLPrepare'.
 	isPrepared := true!
 
 prepare: aString

@@ -33,6 +33,11 @@ addSeconds: anInteger
 
 	^self class fromSeconds: self asSeconds + anInteger!
 
+asDate
+	"Answer the <Date> of the receiver."
+
+	^date!
+
 asDateAndTime
 	^DateAndTime fromDate: date time: time!
 
@@ -61,6 +66,11 @@ asSeconds
 	arithmetic with Dates and Times."
 
 	^self date asSeconds + self time asSeconds!
+
+asTime
+	"Answer the <Time> of the receiver."
+
+	^time!
 
 asTimeStamp
 	"Answer the receiver as a <TimeStamp>."
@@ -160,14 +170,16 @@ year
 <!comparing!public! !
 =!comparing!public! !
 addSeconds:!arithmetic!comparing!public! !
-asDateAndTime!public! !
+asDate!converting!public! !
+asDateAndTime!converting!public! !
 asMilliseconds!converting!public! !
 asParameter!converting!public! !
 asSeconds!converting!public! !
+asTime!converting!public! !
 asTimeStamp!converting!public! !
 date!accessing!public! !
 dayOfMonth!accessing!public! !
-dayOfWeek!public! !
+dayOfWeek!accessing!public! !
 hash!comparing!public! !
 hour!accessing!public! !
 hour12!accessing!public! !
@@ -269,9 +281,9 @@ currentUTC!instance creation!public! !
 date:!instance creation!public! !
 date:time:!instance creation!public! !
 fromDateAndTime:!instance creation!public! !
-fromMilliseconds:!public! !
+fromMilliseconds:!instance creation!public! !
 fromSeconds:!instance creation!public! !
-fromString:!public! !
+fromString:!instance creation!public! !
 fromSYSTEMTIME:!instance creation!public! !
 new!instance creation!public! !
 time:!instance creation!public! !

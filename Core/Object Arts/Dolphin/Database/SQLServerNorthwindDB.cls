@@ -14,37 +14,45 @@ SQLServerNorthwindDB comment: ''!
 
 !SQLServerNorthwindDB methodsFor!
 
-connectString
-	"Private - APPVEYOR config is 'DRIVER=SQL Server;Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!!'"
+connectionStringFormat
+	^'DRIVER={<1s>}' << self latestSqlServerOdbcDriver , (self isCiBuild
+				ifTrue: 
+					["APPVEYOR config is 'DRIVER=SQL Server;Server=(local)\SQL2019;Database=master;User ID=sa;Password=Password12!!"
+					';SERVER=<1d>;DATABASE=master;UID=<2d>;PWD=<3d>']
+				ifFalse: 
+					["If running locally use localdb. There will need to be an instance named MSSQLlocalDB"
+					';SERVER=(localdb)\MSSQLLocalDB;Trusted_Connection=Yes'])!
 
-	^'DRIVER=SQL Server;Server=<1d>;Database=master;uid=<2d>;pwd=<3d>;Language=us_english'
+connectString
+	^self connectionStringFormat
 		expandMacrosWith: self serverName
 		with: self uid
 		with: self pwd!
 
 createDatabase
-	| sql cmd process |
+	| sql |
 	sql := (PackageRelativeFileLocator package: self class owningPackage)
 				localFileSpecFor: 'Northwind.sql'.
-	cmd := 'sqlcmd -S <1d> -U <2d> -P <3d> -i "<4d>"'
-				expandMacrosWith: self serverName
-				with: self uid
-				with: self pwd
-				with: sql.
-	process := ExternalProcess new.
-	process commandLine: cmd.
-	^
-	[process executeSync.
-	process processExitCode = 0] on: ExternalProcessExecuteError do: [:ex | false]!
+	^self execSqlCmd: 'sqlcmd -S <1d> -i "<4d>"' << {self serverName. self uid. self pwd. sql}
+		stdin: nil!
 
 dropDatabase
 	self connection
 		ifNotNil: 
 			[:cnxn |
-			cnxn
+			
+			[cnxn
 				exec: 'USE [master]';
-				exec: 'DROP DATABASE [Northwind]'].
+				exec: 'DROP DATABASE [Northwind]'] on: DBError
+					do: [:ex | ex toTrace]].
 	super dropDatabase!
+
+latestSqlServerOdbcDriver
+	| drivers odbc |
+	drivers := (self installedOdbcDrivers select: [:each | each endsWith: 'SQL Server'])
+				asSortedCollection.
+	odbc := drivers select: [:each | each beginsWith: 'ODBC'].
+	^(odbc isEmpty ifTrue: [drivers] ifFalse: [odbc]) last!
 
 newConnection
 	^super newConnection
@@ -54,22 +62,24 @@ newConnection
 				exec: 'USE [Northwind]';
 				yourself]!
 
-pwd
-	^'Password12!!'!
+requiredOdbcVersion
+	^ODBCConstants.SQL_OV_ODBC3_80!
 
 serverName
-	^'(local)\SQL2019'!
+	^self isCiBuild ifTrue: ['(local)\SQL2019'] ifFalse: ['(localdb)\MSSQLLocalDB']!
 
 uid
 	^'sa'! !
 
 !SQLServerNorthwindDB categoriesForMethods!
-connectString!private! !
-createDatabase!private! !
-dropDatabase!private! !
-newConnection!public! !
-pwd!private! !
-serverName!private! !
-uid!private! !
+connectionStringFormat!constants!private! !
+connectString!accessing!private! !
+createDatabase!operations!private! !
+dropDatabase!operations!private! !
+latestSqlServerOdbcDriver!constants!private! !
+newConnection!operations!public! !
+requiredOdbcVersion!constants!private! !
+serverName!constants!private! !
+uid!constants!public! !
 !
 

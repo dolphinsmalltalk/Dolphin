@@ -39,6 +39,7 @@ package methodNames
 	add: #TestCase -> #skipIfWin32;
 	add: #TestCase -> #skipUnless:;
 	add: #TestCase -> #thisTestMethod;
+	add: #TestResource -> #isCiBuild;
 	add: #TestResult -> #debugCase:;
 	add: 'TestCase class' -> #buildSuiteFromConcreteMethods:;
 	add: 'TestCase class' -> #debugWithResult:;
@@ -355,6 +356,15 @@ debugWithResult: aSymbol
 !TestCase class categoriesForMethods!
 buildSuiteFromConcreteMethods:!Instance Creation!public! !
 debugWithResult:!Instance Creation!public! !
+!
+
+!TestResource methodsFor!
+
+isCiBuild
+	^(SessionManager current getenv: 'APPVEYOR') notNil! !
+
+!TestResource categoriesForMethods!
+isCiBuild!helpers!public! !
 !
 
 !TestResult methodsFor!

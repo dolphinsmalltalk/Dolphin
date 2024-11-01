@@ -1,35 +1,39 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DBColAttr
-	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
-	classVariableNames: 'CTypesExtraBytes SQLToCTypes'
+	instanceVariableNames: 'columnNumber name length sqlType precision scale special bufferClass'
+	classVariableNames: 'BufferClasses'
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
 	classInstanceVariableNames: ''!
 
 DBColAttr guid: (GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-DBColAttr addClassConstant: 'CTypesExtraBytes' value: #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)!
-DBColAttr addClassConstant: 'SQLToCTypes' value: #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 nil nil nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 91 92 93)!
+DBColAttr comment: 'A `DBColAttr` instance describes an SQL column in a table or in a `DBRow` within a `DBResultSet`. 
 
-DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
+## Instance Variables:
+  `columnNumber`	`SmallInteger` index of column in the result set.
+  `name`			`<String>` name of column.
+  `length`			`SmallInteger` length (byte size) of the column.
+  `sqlType`		`SmallInteger` SQL type code.
+  `precision`		`SmallInteger` number of characters/digits if numeric.
+  `scale`			`SmallInteger` number of digits after the decimal point if numeric
+  `special`			`<integer>` flags
 
-Instance Variables:
-	columnNumber	<Integer>. Index of column in the result set.
-	name		<String>. Name of column.
-	length		<Integer>. Length (bytes) of the column.
-	sqlType		<Integer>. Type code.
-	precision		<Integer>. Number of characters/digits. 
-	scale		<Integer>. Digits after decimal point.
-	special		<Integer>. Flags.
-
-Class Variables:
-	ODBCBaseTypes	<IdentityDictionary>
+## Class Variables:
+  `CTypesExtraBytes`	`Array` listing extra bytes to allocate for each C type code (e.g. for null terminators of strings)
+  `SQLToCTypes`		`Array` mapping from SQL type code to C type code
 
 '!
 
 !DBColAttr categoriesForClass!ODBC Interface! !
 
 !DBColAttr methodsFor!
+
+bufferClass
+	^bufferClass!
+
+bufferClass: anObject
+	bufferClass := anObject!
 
 columnNumber
 	"Answer the instance variable columnNumber"
@@ -40,12 +44,6 @@ columnNumber: anInteger
 	"Private - Set the instance variable columnNumber to anInteger."
 
 	columnNumber := anInteger!
-
-cType
-	"Private - Answer the 'C' type to which the described column's values should be converted when loaded
-	into Dolphin buffers (DBFields)."
-
-	^SQLToCTypes at: sqlType+TypeOffset!
 
 deleteRuleMask
 	"Answer the delete rule mask for the receiver"
@@ -58,45 +56,26 @@ deleteRuleMask: anInteger
 	"Private - Set the delete rule mask for the receiver to anInteger"
 
 	special := special bitAnd: DeleteRules bitInvert.
-	anInteger isNil ifFalse: [
-		self specialFlagAt:
-			(1 bitShift: (anInteger+4))
-			put: true ]!
+	anInteger isNil ifFalse: [special mask: (1 bitShift: anInteger + 4) set: true]!
 
 hasVariableTransferOctetLength
-
-	^(self isCharType or: [self isBinaryType]) and: [self isFixedPointType not]!
+	^bufferClass dbHasVariableTransferOctetLength!
 
 initialize
 	"Private - Initialize the receiver"
 
-	special := ##(SQL_PARAM_INPUT bitShift: ParameterTypeShift)!
-
-isBinaryType
-	"Private - Answers true if the receiver represents a character based column"
-
-	^self cType == SQL_C_BINARY!
-
-isCharType
-	"Private - Answers true if the receiver represents a character based column"
-
-	| cType |
-
-	^(cType := self cType) == SQL_C_CHAR or: [cType == SQL_C_WCHAR]!
-
-isFixedPointType
-
-	^sqlType == SQL_DECIMAL or: [sqlType == SQL_NUMERIC]!
+	special := ##(SQL_PARAM_INPUT bitShift: ParameterTypeShift).
+	length := 0!
 
 isForeignKey
 	"Answer true if the receiver represents a foreign key"
 
-	^self specialFlagAt: ForeignKey!
+	^special allMask: ForeignKey!
 
 isForeignKey: aBoolean
 	"Private - Mark the receiver as representing a foreign key according to aBoolean"
 
-	self specialFlagAt: ForeignKey put: aBoolean!
+	special mask: ForeignKey set: aBoolean!
 
 isKey
 	"Answer true if the receiver is a key"
@@ -106,27 +85,25 @@ isKey
 isPrimaryKey
 	"Answer true if the receiver is a primary key"
 
-	^self specialFlagAt: PrimaryKey!
+	^special allMask: PrimaryKey!
 
 isPrimaryKey: aBoolean
 	"Private - Sets the receiver to be a primary key according to aBoolean"
 
-	self specialFlagAt: PrimaryKey put: aBoolean!
+	special mask: PrimaryKey set: aBoolean!
 
 length
-	"Answer the length instance variable."
+	"Answer the octet length of the column. This is only the actual octet length for fixed width columns."
 
 	^length!
 
 length: anInteger
-	"Private - Set the length instance variable to anInteger."
+	"Private - Record the octet length of the column described."
 
 	length := anInteger!
 
-lengthC
-	"Private - Answer the length of ByteArray sufficient to hold an entry for this column when converted to 'C' data. This needs to include any extra space for null-terminators if the 'C' target type is some kind of string."
-
-	^length + (CTypesExtraBytes at: sqlType+TypeOffset)!
+marshaller
+	^bufferClass!
 
 name
 	"Answer the name instance variable."
@@ -134,9 +111,12 @@ name
 	^name!
 
 name: aString
-	"Private - Set the name instance variable to aString."
+	"Set the name instance variable to aString."
 
 	name := aString!
+
+newBoundField
+	^(bufferClass dbBoundFieldClassForColumn: self) newForCol: self!
 
 parameterType
 	"Answer the SQL_PARAM_XXXX value that defines the type of parameter
@@ -181,7 +161,7 @@ printOn: aStream
 		nextPut: $(;
 		print: self columnNumber;
 		nextPutAll: ', ';
-		nextPutAll: self name;
+		display: self name;
 		nextPutAll: ', ';
 		nextPutAll: (ODBCTypes keyAtValue: self type ifAbsent: ['SQL_TYPE_NULL']);
 		nextPutAll: ', ';
@@ -194,43 +174,14 @@ scale
 	^scale!
 
 scale: anInteger
-	"Private - Set the scale instance variable to anInteger."
+	"Set the scale instance variable to anInteger."
 
 	scale := anInteger!
 
-specialFlagAt: flagMask
-	"Private - Answer the special flag identified by flagMask"
-
-	^special allMask: flagMask!
-
-specialFlagAt: flagMask put: aBoolean
-	"Private - Set the special flag identified by flagMask to aBoolean"
-
-	special mask: flagMask set: aBoolean!
-
 transferOctetLength
+	"Private - Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) based on the column type."
 
-	"Private - Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) based on the column type.
-	https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/transfer-octet-length"
-
-	(sqlType = SQL_BIT or: [sqlType = SQL_TINYINT]) ifTrue: [^1].
-	sqlType = SQL_SMALLINT ifTrue: [^2].
-	(sqlType = SQL_INTEGER or: [sqlType = SQL_REAL]) ifTrue: [^4].
-	(sqlType = SQL_TYPE_DATE or: [sqlType = SQL_TYPE_TIME]) ifTrue: [^6].
-	(sqlType = SQL_FLOAT or: [sqlType = SQL_DOUBLE]) ifTrue: [^8].
-	(sqlType = SQL_TYPE_TIMESTAMP or: [sqlType = SQL_GUID]) ifTrue: [^16].
-
-	"SQL_BIGINT
-	The number of bytes required to hold the character representation of this data if the character set is ANSI, and twice this number if the character set is UNICODE, because this data type is returned as a character string by default. The character representation consists of 20 characters: 19 for digits and a sign, if signed, or 20 digits, if unsigned. Therefore, the length is 20."
-	sqlType = SQL_BIGINT ifTrue: [^##(20 * 2 "allow for unicode")].
-
-	"SQL_DECIMAL, SQL_NUMERIC
-	The number of bytes required to hold the character representation of this data if the character set is ANSI, and twice this number if the character set is UNICODE. This is the maximum number of digits plus two, because the data is returned as a character string and characters are needed for the digits, a sign, and a decimal point. For example, the transfer length of a column defined as NUMERIC(10,3) is 12."
-	(sqlType = SQL_DECIMAL or: [sqlType = SQL_NUMERIC]) ifTrue: [^(self precision + 2) * 2 "allow for unicode"].
-
-	self hasVariableTransferOctetLength
-		ifTrue: [self error: 'column has variable transfer octet length']
-		ifFalse: [self error: 'unknown type']!
+	^bufferClass dbTransferOctetLengthForColumn: self!
 
 type
 	"Answer the sqlType instance variable."
@@ -240,7 +191,10 @@ type
 type: anInteger
 	"Private - Set the sqlType instance variable to anInteger."
 
-	sqlType := anInteger!
+	sqlType := anInteger.
+	bufferClass := BufferClasses at: anInteger
+				ifAbsent: [self error: 'Unmarshallable column: ' , self printString].
+	length := self transferOctetLength!
 
 updateRuleMask
 	"Answer the update rule mask for the receiver"
@@ -252,23 +206,18 @@ updateRuleMask
 updateRuleMask: anInteger
 	"Private - Set the update rule mask for the receiver to anInteger"
 
-	special := special bitAnd: UpdateRules bitInvert.
-	anInteger isNil ifFalse: [
-		self specialFlagAt:
-			(1 bitShift: (anInteger+8)) 
-			put: true ]! !
+	special := special bitAnd: ##(UpdateRules bitInvert).
+	anInteger ifNotNil: [special bitOr: (1 bitShift: anInteger + 8)]! !
 
 !DBColAttr categoriesForMethods!
+bufferClass!accessing!public! !
+bufferClass:!accessing!private! !
 columnNumber!accessing!public! !
 columnNumber:!accessing!private! !
-cType!accessing!private! !
 deleteRuleMask!accessing!public! !
 deleteRuleMask:!accessing!private! !
 hasVariableTransferOctetLength!public!testing! !
 initialize!initializing!private! !
-isBinaryType!private!testing! !
-isCharType!private!testing! !
-isFixedPointType!private!testing! !
 isForeignKey!public!testing! !
 isForeignKey:!accessing!private! !
 isKey!public!testing! !
@@ -276,18 +225,17 @@ isPrimaryKey!public!testing! !
 isPrimaryKey:!accessing!private! !
 length!accessing!public! !
 length:!accessing!private! !
-lengthC!accessing!private! !
+marshaller!accessing!public! !
 name!accessing!public! !
-name:!accessing!private! !
+name:!accessing!public! !
+newBoundField!helpers!private! !
 parameterType!accessing!public! !
 parameterType:!accessing!public! !
 precision!accessing!public! !
 precision:!accessing!private! !
 printOn:!printing!public! !
 scale!accessing!public! !
-scale:!accessing!private! !
-specialFlagAt:!accessing!private! !
-specialFlagAt:put:!accessing!private! !
+scale:!accessing!public! !
 transferOctetLength!accessing!initializing!private! !
 type!accessing!public! !
 type:!accessing!private! !
@@ -302,46 +250,49 @@ initialize
 		self initialize
 	"
 
-	"The types to convert the result data to on loading into our buffers - normally these are the default conversions
-	 because they are sensible for most things except GUIDs (where the default string conversion doesn't match 
-	 the reported column length, which makes allocating an appropriately sized buffer tricky)."
-
-	"The 'C' buffer types specified here must match up with the 'get' conversions defined for the SQL column type in the DBField class (see DBField>>#initialize)"
-
-	| extraBytes |
-	self addClassConstant: 'SQLToCTypes'
-		value: ((Array new: SQL_NUM_TYPES)
-				at: SQL_CHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_VARCHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_LONGVARCHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_WCHAR + TypeOffset put: SQL_C_WCHAR;
-				at: SQL_WVARCHAR + TypeOffset put: SQL_C_WCHAR;
-				at: SQL_WLONGVARCHAR + TypeOffset put: SQL_C_WCHAR;
-				at: SQL_BINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_VARBINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_LONGVARBINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_BIT + TypeOffset put: SQL_C_BIT;
-				at: SQL_TINYINT + TypeOffset put: SQL_C_TINYINT;
-				at: SQL_SMALLINT + TypeOffset put: SQL_C_SHORT;
-				at: SQL_INTEGER + TypeOffset put: SQL_C_LONG;
-				at: SQL_BIGINT + TypeOffset put: SQL_C_SBIGINT;
-				at: SQL_NUMERIC + TypeOffset put: SQL_C_CHAR;
-				at: SQL_DECIMAL + TypeOffset put: SQL_C_CHAR;
-				at: SQL_FLOAT + TypeOffset put: SQL_C_DOUBLE;
-				at: SQL_REAL + TypeOffset put: SQL_C_FLOAT;
-				at: SQL_DOUBLE + TypeOffset put: SQL_C_DOUBLE;
-				at: SQL_TYPE_DATE + TypeOffset put: SQL_C_TYPE_DATE;
-				at: SQL_TYPE_TIME + TypeOffset put: SQL_C_TYPE_TIME;
-				at: SQL_TYPE_TIMESTAMP + TypeOffset put: SQL_C_TYPE_TIMESTAMP;
-				at: SQL_GUID + TypeOffset put: SQL_C_GUID;
-				at: SQL_TYPE_NULL + TypeOffset put: SQL_C_DEFAULT;
-				yourself).
-	extraBytes := Array new: SQL_NUM_TYPES withAll: 0.
-	SQLToCTypes keysAndValuesDo: 
-			[:eachKey :eachValue |
-			eachValue == SQL_C_CHAR ifTrue: [extraBytes at: eachKey put: 1].
-			eachValue == SQL_C_WCHAR ifTrue: [extraBytes at: eachKey put: 2]].
-	self addClassConstant: 'CTypesExtraBytes' value: extraBytes!
+	self addClassConstant: 'BufferClasses'
+		value: (IdentityDictionary withAll: {SQL_CHAR -> DBVarCharBuffer.
+						SQL_VARCHAR -> DBVarCharBuffer.
+						SQL_LONGVARCHAR -> DBVarCharBuffer.
+						SQL_WCHAR -> DBVarWCharBuffer.
+						SQL_WVARCHAR -> DBVarWCharBuffer.
+						SQL_WLONGVARCHAR -> DBVarWCharBuffer.
+						SQL_BINARY -> DBVarBinaryBuffer.
+						SQL_VARBINARY -> DBVarBinaryBuffer.
+						SQL_LONGVARBINARY -> DBVarBinaryBuffer.
+						SQL_BIT -> BOOLEAN.
+						SQL_TINYINT -> BYTE.
+						SQL_SMALLINT -> SWORD.
+						SQL_INTEGER -> SDWORD.
+						SQL_BIGINT -> LARGE_INTEGER.
+						SQL_NUMERIC -> DBNumericFieldBuffer.
+						SQL_DECIMAL -> DBNumericFieldBuffer.
+						SQL_FLOAT -> DOUBLE.
+						SQL_REAL -> FLOAT.
+						SQL_DOUBLE -> DOUBLE.
+						SQL_DATE -> SQL_DATE_STRUCT.
+						SQL_TYPE_DATE -> SQL_DATE_STRUCT.
+						SQL_TIME -> SQL_TIME_STRUCT.
+						SQL_TYPE_TIME -> SQL_TIME_STRUCT.
+						SQL_TIMESTAMP -> SQL_TIMESTAMP_STRUCT.
+						SQL_TYPE_TIMESTAMP -> SQL_TIMESTAMP_STRUCT.
+						SQL_GUID -> GUID.
+						SQL_TYPE_NULL -> nil.
+						SQL_INTERVAL_DAY -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_DAY_TO_HOUR -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_DAY_TO_MINUTE -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_DAY_TO_SECOND -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_HOUR -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_HOUR_TO_MINUTE -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_HOUR_TO_SECOND -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_MINUTE -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_MINUTE_TO_SECOND -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_SECOND -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_MONTH -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_YEAR -> SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_YEAR_TO_MONTH -> SQL_INTERVAL_STRUCT.
+						SQL_SS_TIMESTAMPOFFSET -> SQL_SS_TIMESTAMPOFFSET_STRUCT.
+						SQL_SS_TIME2 -> DBTIME2})!
 
 new
 	"Answer a new initialized instance of the receiver."

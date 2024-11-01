@@ -16,15 +16,20 @@ package classNames
 	add: #DBAbstractRow;
 	add: #DBAbstractStatement;
 	add: #DBBoundBuffer;
+	add: #DBBoundField;
 	add: #DBColAttr;
 	add: #DBColumnsStatement;
 	add: #DBConnection;
 	add: #DBError;
 	add: #DBErrorDetails;
+	add: #DBErrorDetailsBuilder;
 	add: #DBExceptionDetails;
 	add: #DBField;
+	add: #DBFixedSizeField;
 	add: #DBForeignKeysStatement;
 	add: #DBForwardOnlyResultSet;
+	add: #DBLongVarField;
+	add: #DBNumericFieldBuffer;
 	add: #DBParameterizedStatement;
 	add: #DBPrimaryKeysStatement;
 	add: #DBProceduresStatement;
@@ -36,13 +41,71 @@ package classNames
 	add: #DBStatement;
 	add: #DBStatisticsStatement;
 	add: #DBTablesStatement;
+	add: #DBTIME2;
 	add: #DBTxn;
+	add: #DBTypeInfoStatement;
 	add: #DBUnboundBuffer;
+	add: #DBUnboundField;
+	add: #DBUnstructuredFieldBuffer;
+	add: #DBVarBinaryBuffer;
+	add: #DBVarCharBuffer;
+	add: #DBVarFieldBuffer;
+	add: #DBVarWCharBuffer;
 	add: #DBWarning;
-	add: #ODBCDATE;
 	add: #ODBCLibrary;
-	add: #ODBCTIME;
-	add: #ODBCTIMESTAMP;
+	add: #SQL_DATE_STRUCT;
+	add: #SQL_DAY_SECOND_STRUCT;
+	add: #SQL_INTERVAL_STRUCT;
+	add: #SQL_SS_TIMESTAMPOFFSET_STRUCT;
+	add: #SQL_TIME_STRUCT;
+	add: #SQL_TIMESTAMP_STRUCT;
+	add: #SQL_YEAR_MONTH_STRUCT;
+	yourself.
+
+package methodNames
+	add: #AnsiString -> #dbOctetTransferSize;
+	add: #BOOLEAN -> #dbConvert:for:;
+	add: #BOOLEAN -> #dbInterchangeType;
+	add: #BOOLEAN -> #valueClass;
+	add: #BYTE -> #dbInterchangeType;
+	add: #ByteArray -> #dbOctetTransferSize;
+	add: #DOUBLE -> #dbConvert:for:;
+	add: #DOUBLE -> #dbInterchangeType;
+	add: #DOUBLE -> #valueClass;
+	add: #DWORD -> #dbInterchangeType;
+	add: #ExternalInteger -> #dbConvert:for:;
+	add: #ExternalInteger -> #valueClass;
+	add: #ExternalStructure -> #dbConvert:for:;
+	add: #ExternalStructure -> #dbInterchangeType;
+	add: #ExternalStructure -> #dbMarshal:into:;
+	add: #ExternalStructure -> #dbOctetTransferSize;
+	add: #ExternalStructure -> #dbUnmarshal:;
+	add: #ExternalStructure -> #valueClass;
+	add: #FLOAT -> #dbConvert:for:;
+	add: #FLOAT -> #dbInterchangeType;
+	add: #FLOAT -> #valueClass;
+	add: #GUID -> #dbConvert:for:;
+	add: #GUID -> #dbInterchangeType;
+	add: #GUID -> #dbMarshal:into:;
+	add: #GUID -> #dbOctetTransferSize;
+	add: #GUID -> #dbUnmarshal:;
+	add: #GUID -> #valueClass;
+	add: #LARGE_INTEGER -> #dbInterchangeType;
+	add: #SBYTE -> #dbInterchangeType;
+	add: #SDWORD -> #dbInterchangeType;
+	add: #SWORD -> #dbInterchangeType;
+	add: #ULARGE_INTEGER -> #dbInterchangeType;
+	add: #UndefinedObject -> #dbOctetTransferSize;
+	add: #Utf16String -> #dbOctetTransferSize;
+	add: #WORD -> #dbInterchangeType;
+	add: 'ExternalStructure class' -> #dbBoundFieldClassForColumn:;
+	add: 'ExternalStructure class' -> #dbHasVariableTransferOctetLength;
+	add: 'ExternalStructure class' -> #dbNewForColumn:;
+	add: 'ExternalStructure class' -> #dbTransferOctetLengthForColumn:;
+	add: 'GUID class' -> #dbBoundFieldClassForColumn:;
+	add: 'GUID class' -> #dbHasVariableTransferOctetLength;
+	add: 'GUID class' -> #dbNewForColumn:;
+	add: 'GUID class' -> #dbTransferOctetLengthForColumn:;
 	yourself.
 
 package globalNames
@@ -80,32 +143,38 @@ Object subclass: #DBAbstractStatement
 	classInstanceVariableNames: ''!
 
 Object subclass: #DBColAttr
-	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
-	classVariableNames: 'CTypesExtraBytes SQLToCTypes'
+	instanceVariableNames: 'columnNumber name length sqlType precision scale special bufferClass'
+	classVariableNames: 'BufferClasses'
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
 	classInstanceVariableNames: ''!
 
 Object subclass: #DBConnection
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
-	classVariableNames: 'Connections DriverCompleteMask HEnv ScrollTypes TxnIsolationLevels'
+	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
 
 Object subclass: #DBErrorDetails
-	instanceVariableNames: 'msg nativeErr sqlState origin'
+	instanceVariableNames: 'msg nativeErr sqlState'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+Object subclass: #DBErrorDetailsBuilder
+	instanceVariableNames: 'errors odbc32 szSqlState szErrorMsg cbErrorMsg fNativeError'
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	classInstanceVariableNames: ''!
+
 Object subclass: #DBExceptionDetails
-	instanceVariableNames: 'errors hEnv hDBC hStmt code'
+	instanceVariableNames: 'code hEnv hDBC hStmt errors'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
 
 Object subclass: #DBField
 	instanceVariableNames: 'column buffer lengthBuf'
-	classVariableNames: 'GetSelectors SetSelectors'
+	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCCTypes ODBCRetCodes ODBCTypes'
 	classInstanceVariableNames: ''!
 
@@ -113,6 +182,12 @@ Object subclass: #DBTxn
 	instanceVariableNames: 'connection readOnly creator'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants'
+	classInstanceVariableNames: ''!
+
+Object subclass: #DBUnstructuredFieldBuffer
+	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	poolDictionaries: 'ODBCConstants ODBCCTypes ODBCRetCodes ODBCTypes'
 	classInstanceVariableNames: ''!
 
 SequenceableCollection subclass: #DBResultSet
@@ -159,6 +234,12 @@ DBAbstractStatement subclass: #DBSchemaStatement
 
 DBAbstractStatement subclass: #DBStatement
 	instanceVariableNames: 'sqlString'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBAbstractStatement subclass: #DBTypeInfoStatement
+	instanceVariableNames: 'dataType'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -211,6 +292,60 @@ DBStatement subclass: #DBParameterizedStatement
 	poolDictionaries: 'ODBCCTypes'
 	classInstanceVariableNames: ''!
 
+DBField subclass: #DBFixedSizeField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBField subclass: #DBLongVarField
+	instanceVariableNames: 'value'
+	classVariableNames: 'BufferSize'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBFixedSizeField subclass: #DBBoundField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBFixedSizeField subclass: #DBUnboundField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBUnstructuredFieldBuffer subclass: #DBNumericFieldBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBUnstructuredFieldBuffer subclass: #DBVarFieldBuffer
+	instanceVariableNames: ''
+	classVariableNames: 'BlockTransferOctetLength MaxBoundOctetLength'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBVarFieldBuffer subclass: #DBVarBinaryBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBVarFieldBuffer subclass: #DBVarCharBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBVarFieldBuffer subclass: #DBVarWCharBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 Error subclass: #DBError
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -229,23 +364,406 @@ ExternalLibrary subclass: #ODBCLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-ExternalStructure subclass: #ODBCDATE
+ExternalStructure subclass: #SQL_DATE_STRUCT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_day _OffsetOf_month _OffsetOf_year'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-ExternalStructure subclass: #ODBCTIME
+ExternalStructure subclass: #SQL_INTERVAL_STRUCT
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_interval_sign _OffsetOf_interval_type BodyClasses MinutesPerDay SecondsPerDay SQL_IS_DAY SQL_IS_DAY_TO_HOUR SQL_IS_DAY_TO_MINUTE SQL_IS_DAY_TO_SECOND SQL_IS_HOUR SQL_IS_HOUR_TO_MINUTE SQL_IS_HOUR_TO_SECOND SQL_IS_MINUTE SQL_IS_MINUTE_TO_SECOND SQL_IS_MONTH SQL_IS_SECOND SQL_IS_YEAR SQL_IS_YEAR_TO_MONTH'
+	poolDictionaries: 'ODBCCTypes'
+	classInstanceVariableNames: ''!
+
+ExternalStructure subclass: #SQL_TIME_STRUCT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_hour _OffsetOf_minute _OffsetOf_second'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-ExternalStructure subclass: #ODBCTIMESTAMP
+ExternalStructure subclass: #SQL_TIMESTAMP_STRUCT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_day _OffsetOf_fraction _OffsetOf_hour _OffsetOf_minute _OffsetOf_month _OffsetOf_second _OffsetOf_year'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
+SQL_INTERVAL_STRUCT subclass: #SQL_DAY_SECOND_STRUCT
+	instanceVariableNames: 'scaleExp'
+	classVariableNames: '_OffsetOf_day _OffsetOf_fraction _OffsetOf_hour _OffsetOf_minute _OffsetOf_second DefaultFractionScaler'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+SQL_INTERVAL_STRUCT subclass: #SQL_YEAR_MONTH_STRUCT
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_fiiller3 _OffsetOf_filler1 _OffsetOf_filler2 _OffsetOf_month _OffsetOf_year'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+SQL_TIME_STRUCT subclass: #DBTIME2
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_fraction'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+SQL_TIMESTAMP_STRUCT subclass: #SQL_SS_TIMESTAMPOFFSET_STRUCT
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_timezone_hour _OffsetOf_timezone_minute'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Loose Methods"!
+
+!AnsiString methodsFor!
+
+dbOctetTransferSize
+	"Answer the octet transfer size for the receiver when used as ODBC interchange data. Note that this size does not include the null terminator (cf. byteSize)."
+
+	^self size! !
+
+!AnsiString categoriesForMethods!
+dbOctetTransferSize!accessing!public! !
+!
+
+!BOOLEAN methodsFor!
+
+dbConvert: anObject for: aDBField
+	"Convert the argument from a <Boolean> to a bit value (i.e. 1 for true, 0 for false) for marshalling as a SQL_C_BIT in the <DBField> 2nd argument. Throw an error if this is not possible."
+
+	^anObject ifTrue: [1] ifFalse: [0]!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_BIT!
+
+valueClass
+	^Boolean! !
+
+!BOOLEAN categoriesForMethods!
+dbConvert:for:!operations!public! !
+dbInterchangeType!constants!public! !
+valueClass!constants!operations!public! !
+!
+
+!BYTE methodsFor!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_UTINYINT! !
+
+!BYTE categoriesForMethods!
+dbInterchangeType!constants!public! !
+!
+
+!ByteArray methodsFor!
+
+dbOctetTransferSize
+	"Answer the octet transfer size for the receiver when used as ODBC interchange data."
+
+	^self size! !
+
+!ByteArray categoriesForMethods!
+dbOctetTransferSize!accessing!public! !
+!
+
+!DOUBLE methodsFor!
+
+dbConvert: anObject for: aDBField
+	"Convert the argument to a <Float> for marshalling to SQL_C_DOUBLE representation in the <DBField> 2nd argument. Throw an error if this is not possible, e.g. because anObject is not a Number."
+
+	^anObject asFloat!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_DOUBLE!
+
+valueClass
+	^Float! !
+
+!DOUBLE categoriesForMethods!
+dbConvert:for:!operations!public! !
+dbInterchangeType!constants!public! !
+valueClass!constants!public! !
+!
+
+!DWORD methodsFor!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_ULONG! !
+
+!DWORD categoriesForMethods!
+dbInterchangeType!constants!public! !
+!
+
+!ExternalInteger methodsFor!
+
+dbConvert: anObject for: aDBField
+	"Convert the argument to an <Integer> for marshalling as the value of the <DBField> 2nd argument. Throw an error if this is not possible, e.g. because anObject is not a Number."
+
+	^anObject asInteger!
+
+valueClass
+	^Integer! !
+
+!ExternalInteger categoriesForMethods!
+dbConvert:for:!operations!public! !
+valueClass!constants!operations!public! !
+!
+
+!ExternalStructure methodsFor!
+
+dbConvert: anObject for: aDBField
+	"Convert the argument to the type required for marshalling as the value of the <DBField> 2nd argument. Throw an error if this is not possible."
+
+	(anObject species == self species) ifTrue: [^anObject].
+	HRESULTError
+		signal: anObject species displayString , '(' , anObject displayString , ') invalid: '
+				, self valueClass displayString , ' expected'
+		with: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH.
+	^nil!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver. This is a value from the SQL_C_XXXX enumeration."
+
+	^self subclassResponsibility!
+
+dbMarshal: anObject into: aDBField
+	"Populate the receiver, as buffer of the <DBField> 2nd argument, with appropriate the SQL_C_TYPE_XXXX representation of the 1st argument."
+
+	self value: (self dbConvert: anObject for: aDBField).
+	aDBField length: self byteSize!
+
+dbOctetTransferSize
+	"Answer the octet transfer size for the receiver when used as ODBC interchange data."
+
+	^self byteSize!
+
+dbUnmarshal: aDBField
+	"Answer Smalltalk object equivalent to the value in the receiver, assumed to be the buffer of the <DBField> argument."
+
+	^self value!
+
+valueClass
+	"Answer the class of Smalltalk object that is returned by the receiver's #value accessor."
+
+	^self class! !
+
+!ExternalStructure categoriesForMethods!
+dbConvert:for:!operations!public! !
+dbInterchangeType!constants!public! !
+dbMarshal:into:!operations!public! !
+dbOctetTransferSize!accessing!public! !
+dbUnmarshal:!operations!public! !
+valueClass!constants!public! !
+!
+
+!ExternalStructure class methodsFor!
+
+dbBoundFieldClassForColumn: aDBColAttr
+	^DBBoundField!
+
+dbHasVariableTransferOctetLength
+	"Answer whether the marshalled type supports variable length columns."
+
+	^false!
+
+dbNewForColumn: aDBColAttr
+	^self newBuffer!
+
+dbTransferOctetLengthForColumn: aDBColAttr
+	"Answer the transfer octet length for the column described by the <DBColAttr> argument, i.e. the size in bytes of the buffer necessary to interchanged data for the column.
+	For all structured column types, the transfer octet length is the same as the byte size of the structure. See https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/transfer-octet-length"
+
+	^self byteSize! !
+
+!ExternalStructure class categoriesForMethods!
+dbBoundFieldClassForColumn:!enquiries!public! !
+dbHasVariableTransferOctetLength!public!testing! !
+dbNewForColumn:!helpers!public! !
+dbTransferOctetLengthForColumn:!enquiries!public! !
+!
+
+!FLOAT methodsFor!
+
+dbConvert: anObject for: aDBField
+	"Convert the argument to a <Float> for marshalling to SQL_C_FLOAT representation in the <DBField> 2nd argument. Throw an error if this is not possible, e.g. because anObject is not a Number."
+
+	^anObject asFloat!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_FLOAT!
+
+valueClass
+	^Float! !
+
+!FLOAT categoriesForMethods!
+dbConvert:for:!operations!public! !
+dbInterchangeType!constants!public! !
+valueClass!constants!public! !
+!
+
+!GUID methodsFor!
+
+dbConvert: anObject for: aDBField
+	"Convert the argument to a <GUID> for marshalling to SQL_C_GUID representation in the <DBField> 2nd argument. Throw an error if this is not possible."
+
+	(anObject isKindOf: GUID) ifTrue: [^anObject].
+	HRESULTError
+		signal: 'GUID expected, not <1s> (<2d>)' << {  anObject basicPrintString. anObject }
+		withFailureCode: _PrimitiveFailureCode.ObjectTypeMismatch.
+	^nil!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_GUID!
+
+dbMarshal: anObject into: aDBField
+	"Populate the receiver, as buffer of the <DBField> 2nd argument, with appropriate the SQL_C_GUID representation of the 1st argument."
+
+	self value: (self dbConvert: anObject for: aDBField).
+	aDBField length: ByteSize!
+
+dbOctetTransferSize
+	"Answer the octet transfer size for the receiver when used as ODBC interchange data."
+
+	^ByteSize!
+
+dbUnmarshal: aDBField
+	"Answer a <GUID> read from the receiver, assumed to be the buffer of the <DBField> argument containing a SQL_C_GUID value."
+
+	^self copy!
+
+valueClass
+	^self class! !
+
+!GUID categoriesForMethods!
+dbConvert:for:!operations!public! !
+dbInterchangeType!constants!public! !
+dbMarshal:into:!operations!public! !
+dbOctetTransferSize!accessing!public! !
+dbUnmarshal:!operations!public! !
+valueClass!constants!public! !
+!
+
+!GUID class methodsFor!
+
+dbBoundFieldClassForColumn: aDBColAttr
+	^DBBoundField!
+
+dbHasVariableTransferOctetLength
+	"Answer whether the marshalled type supports variable length columns."
+
+	^false!
+
+dbNewForColumn: aDBColAttr
+	^self new!
+
+dbTransferOctetLengthForColumn: aDBColAttr
+	"Answer the transfer octet length for the column described by the <DBColAttr> argument, i.e. the size in bytes of the buffer necessary to interchanged data for the column.
+	See https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/transfer-octet-length"
+
+	^16! !
+
+!GUID class categoriesForMethods!
+dbBoundFieldClassForColumn:!enquiries!public! !
+dbHasVariableTransferOctetLength!public!testing! !
+dbNewForColumn:!instance creation!public! !
+dbTransferOctetLengthForColumn:!enquiries!public! !
+!
+
+!LARGE_INTEGER methodsFor!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_SBIGINT! !
+
+!LARGE_INTEGER categoriesForMethods!
+dbInterchangeType!constants!public! !
+!
+
+!SBYTE methodsFor!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_STINYINT! !
+
+!SBYTE categoriesForMethods!
+dbInterchangeType!constants!public! !
+!
+
+!SDWORD methodsFor!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_SLONG! !
+
+!SDWORD categoriesForMethods!
+dbInterchangeType!constants!public! !
+!
+
+!SWORD methodsFor!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_SSHORT! !
+
+!SWORD categoriesForMethods!
+dbInterchangeType!constants!public! !
+!
+
+!ULARGE_INTEGER methodsFor!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_UBIGINT! !
+
+!ULARGE_INTEGER categoriesForMethods!
+dbInterchangeType!constants!public! !
+!
+
+!UndefinedObject methodsFor!
+
+dbOctetTransferSize
+	^ODBCConstants.SQL_NULL_DATA! !
+
+!UndefinedObject categoriesForMethods!
+dbOctetTransferSize!constants!public! !
+!
+
+!Utf16String methodsFor!
+
+dbOctetTransferSize
+	"Answer the octet transfer size for the receiver when used as ODBC interchange data. Note that this size does not include the null terminator (cf. byteSize)."
+
+	^self size * 2! !
+
+!Utf16String categoriesForMethods!
+dbOctetTransferSize!accessing!public! !
+!
+
+!WORD methodsFor!
+
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
+
+	^ODBCCTypes.SQL_C_USHORT! !
+
+!WORD categoriesForMethods!
+dbInterchangeType!constants!public! !
+!
 
 "End of package definition"!
 

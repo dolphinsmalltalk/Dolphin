@@ -194,7 +194,7 @@ Object subclass: #FileLocator
 
 Object variableByteSubclass: #GUID
 	instanceVariableNames: ''
-	classVariableNames: 'Null'
+	classVariableNames: 'ByteSize Null'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

@@ -25,16 +25,25 @@ bind: aDBStatement
 	| hStmt |
 	hStmt := aDBStatement executedHandle.
 	#todo "Will need an array of status values if to fetch a block of rows at a time".
-	status := WORD new.
+	status := ByteArray newFixed: 2.
 	aDBStatement statusArray: status.
 	^hStmt!
 
 contents
 	"Answer the contents instance variable."
 
-	contents isNil
-		ifTrue: [contents := columns collect: [:colAttr | DBField newForCol: colAttr]].
-	^contents.!
+	^contents ifNil: [contents := self getContents]!
+
+getContents
+	^columns collect: [:each | self newFieldForCol: each]!
+
+getData: aDBStatement
+	"Private - Copy data from the result table into fields of the receiver."
+
+	self contents do: [:each | each getData: aDBStatement]!
+
+newFieldForCol: aDBColAttr
+	^self subclassResponsibility!
 
 objects
 	"Private - Answer the receivers contents as an <Array> of <Object>s
@@ -42,20 +51,17 @@ objects
 
 	^self contents collect: [:c | c value]!
 
-sizeInBytes
-	"Answer the size of the receiver structure in bytes."
-
-	 ^self contents inject: 0 into: [ :size :f | size + f size ].!
-
 status
-	^status value! !
+	^status wordAtOffset: 0! !
 
 !DBRowBuffer categoriesForMethods!
 asObject!converting!private! !
 bind:!operations!private! !
 contents!accessing!public! !
+getContents!helpers!private! !
+getData:!data retrieval!private! !
+newFieldForCol:!helpers!private! !
 objects!accessing!private! !
-sizeInBytes!accessing!public! !
 status!accessing!private! !
 !
 

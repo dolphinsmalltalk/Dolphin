@@ -14,6 +14,17 @@ BOOLEAN comment: ''!
 
 !BOOLEAN methodsFor!
 
+printOn: aWriteStream
+	"Append a textual representation of the receiver to aStream."
+
+	aWriteStream
+		basicPrint: self;
+		nextPut: $(.
+	self isNull
+		ifTrue: [aWriteStream nextPutAll: 'NULL']
+		ifFalse: [aWriteStream nextPutAll: self value printString titleCased].
+	aWriteStream nextPut: $)!
+
 value
 	"Answer the <Boolean> value of the receiver's 'value' field."
 
@@ -25,6 +36,7 @@ value: aBoolean
 	bytes byteAtOffset: _OffsetOf_value put: aBoolean asParameter! !
 
 !BOOLEAN categoriesForMethods!
+printOn:!printing!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !
