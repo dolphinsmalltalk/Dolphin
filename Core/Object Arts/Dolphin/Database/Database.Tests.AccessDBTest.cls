@@ -14,8 +14,20 @@ Database.Tests.AccessDBTest comment: ''!
 
 !Database.Tests.AccessDBTest methodsFor!
 
+categoriesColumns
+	^{{'CategoryID'. SQL_INTEGER. 10. 0. 4}.
+		{'CategoryName'. SQL_WVARCHAR. 15. nil. 30}.
+		{'Description'. SQL_WLONGVARCHAR. 1073741823. nil. 2147483646}.
+		{'Picture'. SQL_LONGVARBINARY. 1073741823. nil. 1073741823}}!
+
+databaseName
+	^File removeExtension: self databaseResource filename!
+
 databaseResource
 	^AccessNorthwindDB current!
+
+dataSourceName
+	^''!
 
 dbmsFeaturesMap
 	"Private - See MSDN help 'SQLGetInfo Returned Values for Access"
@@ -61,8 +73,23 @@ dbmsFeaturesMap
 		at: #searchPatternEscape put: #(#= '\');
 		yourself!
 
-queryColumns
-	^#(#('OrderID' 4 4) #('CustomerID' ##(SQL_WVARCHAR) 10) #('EmployeeID' 4 4) #('OrderDate' ##(SQL_TYPE_TIMESTAMP) 16) #('RequiredDate' ##(SQL_TYPE_TIMESTAMP) 16) #('ShippedDate' ##(SQL_TYPE_TIMESTAMP) 16) #('ShipVia' 4 4) #('Freight' 2 21) #('ShipName' ##(SQL_WVARCHAR) 80) #('ShipAddress' ##(SQL_WVARCHAR) 120) #('ShipCity' ##(SQL_WVARCHAR) 30) #('ShipRegion' ##(SQL_WVARCHAR) 30) #('ShipPostalCode' ##(SQL_WVARCHAR) 20) #('ShipCountry' ##(SQL_WVARCHAR) 30))!
+ordersColumns
+	"Note that timestamps have no fractional seconds"
+
+	^{{'OrderID'. SQL_INTEGER. 10. 0. 4}.
+		{'CustomerID'. SQL_WVARCHAR. 5. nil. 10}.
+		{'EmployeeID'. SQL_INTEGER. 10. 0. 4}.
+		{'OrderDate'. SQL_TYPE_TIMESTAMP. 19. 0. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 19. 0. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 19. 0. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'ShipVia'. SQL_INTEGER. 10. 0. 4}.
+		{'Freight'. SQL_NUMERIC. 19. 4. 22}.
+		{'ShipName'. SQL_WVARCHAR. 40. nil. 80}.
+		{'ShipAddress'. SQL_WVARCHAR. 60. nil. 120}.
+		{'ShipCity'. SQL_WVARCHAR. 15. nil. 30}.
+		{'ShipRegion'. SQL_WVARCHAR. 15. nil. 30}.
+		{'ShipPostalCode'. SQL_WVARCHAR. 10. nil. 20}.
+		{'ShipCountry'. SQL_WVARCHAR. 15. nil. 30}}!
 
 testAccessConnectionAttributes
 	self should: [connection transactionIsolation: #readUncommitted] raise: DBError.
@@ -74,6 +101,29 @@ testAccessConnectionAttributes
 	self should: [connection translationDLL: 'blah.dll'] raise: DBError.
 	self assert: connection uid isNil.
 	self assert: connection pwd isNil!
+
+testDSNlessConnection
+	"See MSDN help 'SQLGetInfo Returned Values for Access"
+
+	| c connStr locator |
+	c := DBConnection new.
+	locator := Kernel.PackageRelativeFileLocator package: self class owningPackage.
+	connStr := 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' 
+				expandMacrosWith: (locator localFileSpecFor: 'Northwind.mdb')
+				with: locator basePath.
+	c connectString: connStr.
+	c connect.
+	self assert: (c tables includes: 'Customers').
+	c close.
+	c := DBConnection new.
+	c connectString: connStr.
+	c useDriverCompletion: false.
+	c open.
+	self assert: (c tables includes: 'Customers').
+	c close.
+	"#1473 - failure to parse connect string containing embedded semi-colons"
+	c := DBConnection new.
+	c connectString: 'DRIVER={Microsoft Text Driver (*.txt; *.csv)}'!
 
 testForeignKeysQuery
 	"The order DB is an Access DB and it doesn't support the foreign key querying stuff"
@@ -103,10 +153,14 @@ testViewsQuery
 				noDifference: #('Alphabetical List of Products' 'Category Sales for 1997' 'Current Product List' 'Customers and Suppliers by City' 'Employee Sales by Country' 'Invoices' 'Invoices Filter' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Quarterly Orders by Product' 'Sales by Category' 'Sales by Year' 'Ten Most Expensive Products'))! !
 
 !Database.Tests.AccessDBTest categoriesForMethods!
-databaseResource!private! !
-dbmsFeaturesMap!private! !
-queryColumns!private! !
+categoriesColumns!constants!private! !
+databaseName!constants!private! !
+databaseResource!accessing!private! !
+dataSourceName!constants!private! !
+dbmsFeaturesMap!constants!private! !
+ordersColumns!constants!private! !
 testAccessConnectionAttributes!public!unit tests! !
+testDSNlessConnection!public!unit tests! !
 testForeignKeysQuery!public!unit tests! !
 testPrimaryKeysQuery!public!unit tests! !
 testProceduresQuery!public!unit tests! !
@@ -120,6 +174,6 @@ resources
 	^{AccessNorthwindDB}! !
 
 !Database.Tests.AccessDBTest class categoriesForMethods!
-resources!public! !
+resources!accessing!public! !
 !
 

@@ -6,29 +6,13 @@ Core.Object
 	classVariableNames: ''
 	imports: #(#{OS.ODBCTypes} #{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
-	classConstants: {
-			'GetSelectors'
-				-> #(#getGuid #getUtf16String #getUtf16String #getUtf16String #getBoolean #getByte #getInt64 #getByteArray #getByteArray #getByteArray #getAnsiString nil #getAnsiString #numberFromNumeric #numberFromNumeric #getLong #getShort #getDouble #getFloat #getDouble nil nil nil #getAnsiString nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #getDate #getTime #getDateAndTime).
-			'SetSelectors'
-				-> #(#setGuid: #setUtf16String: #setUtf16String: #setUtf16String: #setBoolean: #setByte: #setInt64: #setByteArray: #setByteArray: #setByteArray: #setAnsiString: nil #setAnsiString: #numberToNumeric: #numberToNumeric: #setLong: #setShort: #setDouble: #setFloat: #setDouble: nil nil nil #setAnsiString: nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #setDate: #setTime: #setDateAndTime:)
-		}!
+	classConstants: {}!
 
-Database.DBField guid: (Core.GUID fromString: '{87b4c475-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBField guid: (Core.GUID fromString: '{d08e99fa-5317-4859-b605-350ea25e758f}')!
 
-Database.DBField comment: 'A DBField instance represents a column buffer for holding data as part of a DBRow.
+Database.DBField isNonInstantiable: true!
 
-A field''s value may be converted to a Smalltalk object by sending #value, and conversely may be assigned with #value:.
-
-Instance Variables:
-	column		<DBColAttr>. Metadata about the column
-	buffer		<ByteArray>. Buffer to hold column data.
-	lengthBuf		<SDWORD>. 32-bit integer buffer to hold column data length.
-
-Class Variables:
-	GetSelectors	<Array> of <Symbol>. Maps integer type codes to accessor for that type.
-	SetSelectors	<Array> of <Symbol>. Maps integer type codes to mutator for that type.
-
-'!
+Database.DBField comment: '`DBField` is the abstract class of objects responsible for data transfer for the individual columns of a `DBRowBuffer`. There are concrete subclasses representing bound buffers, unbound buffers, and partially buffered fields for long variable length binary and char types that are read (for select statements) with SQLGetData and written (for query parameters) with SQLPutData.'!
 
 !Database.DBField categoriesForClass!ODBC Interface! !
 
@@ -41,122 +25,50 @@ Class Variables:
 	^comparand species == self species and: [
 		column = comparand column and: [self value = comparand value]]!
 
-beNull
-	"Set the receiver to be a null valued field."
+allocateBuffer
+	"Private - Allocate a buffer for the column. For most columns this is the fixed, or maximum, width required for the 'C' representation of the data that we request for interchange with the driver."
 
-	lengthBuf value: SQL_NULL_DATA!
+	^self bufferClass dbNewForColumn: column!
+
+beNull
+	"Set the receiver to be a null valued field. ODBC represents this by a special indicator value in the length buffer."
+
+	self length: OS.ODBCConstants.SQL_NULL_DATA!
+
+bind: aDBStatement
+	"Private - Bind the receiver's buffers (data and length) for the <DBStatement> argument, which is assumed to have been executed already."
+
+	"Unbound by default, so do nothing"
+
+	!
+
+bindAsParameter: anInteger of: aDBParameterizedStatement
+	"Private - Bind the receiver as the supplier of data for the parameter numbered, anInteger, of aDBParameterizedStatement."
+
+	self subclassResponsibility!
+
+bufferClass
+	^column bufferClass!
 
 column
 	^column!
 
+dbInterchangeType
+	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver. This is a value from the SQL_C_XXXX enumeration."
+
+	^buffer dbInterchangeType!
+
 fieldBuf
-	"Private - Answer the address of the buffer for passing to the ODBC DLL."
+	"Private - Answer the buffer for passing to the ODBC DLL for data transfer."
 
 	^buffer!
 
-fieldSize
-	"Private - Answer the 'C' length of the receiver's associated column (the C length includes space for the null
-	terminator if the column is a string)"
-
-	^column lengthC!
-
-getAnsiString
-	"Private - Answer an <AnsiString> read from the receiver's buffer, i.e. to read from a SQL_C_CHAR, SQL_C_VARCHAR, or SQL_C_LONGVARCHAR buffer."
-
-	| len |
-	len := lengthBuf value.
-	^buffer
-		replaceBytesOf: (AnsiString new: len)
-		from: 1
-		to: len
-		startingAt: 1!
-
-getBoolean
-	"Private - Answer a <Boolean> read from the receiver's buffer."
-
-	^(buffer at: 1) allMask: 1!
-
-getByte
-	"Private - Answer the receiver's buffer as an unsigned byte."
-
-	^buffer basicAt: 0 + 1!
-
-getByteArray
-	"Private - Answer a <ByteArray> copied from the receiver's buffer."
-
-	^buffer copyFrom: 1 to: lengthBuf value!
-
 getData: aDBStatement
-	"Private - Retrieve the receiver's associated column data from the ODBC result set
-	following a fetch (into the receiver's buffer)."
+	"Private - Retrieve the receiver's associated column data from the ODBC result set following a fetch (into the receiver's buffer)."
 
-	| ret |
-	ret := OS.Odbc32
-				sqlGetData: aDBStatement executedHandle
-				columnNumber: column columnNumber
-				targetType: column cType
-				targetValuePtr: buffer
-				bufferLength: buffer size
-				strLenOrIndPtr: lengthBuf.
-	aDBStatement dbCheckException: ret!
+	self subclassResponsibility
 
-getDate
-	"Private - Answer an instance of <Date> representing the contents of the receiver.
-	Use the services of the ODBCDATE structure to split the buffer."
-
-	^(OS.ODBCDATE withBytes: buffer) asDate!
-
-getDateAndTime
-	"Private - Answer an instance of <DateAndTime> representing the same DateAndTime as that stored in the buffer as an ODBCDATE and ODBCTIME."
-
-	^(OS.ODBCTIMESTAMP withBytes: buffer) asDateAndTime!
-
-getDouble
-	"Private - Answer a <Float> read from the IEEE 64-bit double precision floating point number in the receiver's buffer."
-
-	^buffer doubleAtOffset: 0!
-
-getFloat
-	"Private - Answer a <Float> representing the 32-bit IEEE single precision floating point number in the receiver's buffer."
-
-	^buffer floatAtOffset: 0!
-
-getGuid
-	"Private - Answer a <GUID> read from the receiver's buffer."
-
-	^GUID fromBytes: buffer!
-
-getInt64
-	"Private - Answer an <integer> read from the 64-bit signed integer in the receiver's buffer."
-
-	^buffer int64AtOffset: 0!
-
-getLong
-	"Private - Answer an <integer> read from the 32-bit signed integer in the receiver's buffer."
-
-	^buffer int32AtOffset: 0!
-
-getShort
-	"Private - Answer an <integer> read from the signed 16-bit value in the receiver's buffer."
-
-	^buffer int16AtOffset: 0!
-
-getTime
-	"Private - Answer an instance of <Time> representing the buffer of the receiver.
-	Use the services of the <ODBCTIME> structure to split the buffer."
-
-	^(OS.ODBCTIME withBytes: buffer) asTime!
-
-getUtf16String
-	"Private - Answer the receiver's buffer as an <AnsiString>, i.e. to read from a SQL_C_WCHAR, SQL_C_WVARCHAR, or SQL_C_WLONGVARCHAR buffer."
-
-	| len |
-	len := lengthBuf value.
-	^buffer
-		replaceBytesOf: (Utf16String new: (len bitShift: -1))
-		from: 1
-		to: len
-		startingAt: 1!
+	!
 
 hash
 	"Answer the <integer> hash value for the receiver. Must be the same for any two DBField's that compare equal."
@@ -164,353 +76,84 @@ hash
 	^column hash bitXor: self value hash!
 
 initializeForColumn: aDBColAttr
-	"Private - Initialize the receiver to represent a value from
-	the database column described by the <DBColAttr> argument.
-	Answer the receiver."
+	"Private - Initialize the receiver to represent a value from the database column described by the <DBColAttr> argument. Answer the receiver."
 
-	lengthBuf := External.Int32 fromInteger: SQL_NULL_DATA.
+	lengthBuf := ByteArray newFixed: 4.
+	self beNull.
 	column := aDBColAttr.
-	buffer := ByteArray newFixed: (##(2 raisedTo: 16) min: aDBColAttr lengthC).
+	buffer := self allocateBuffer.
 	^self!
 
 isNull
-	"Answer whether the receiver represents a null field."
+	"Answer whether the receiver currently holds a null value."
 
-	^lengthBuf value == SQL_NULL_DATA!
+	^self length == OS.ODBCConstants.SQL_NULL_DATA!
 
-lengthBuf
-	"Private - Answer the address of the length buffer for passing to ODBC"
+length
+	"Private - Answer the octet length of the interchange data in this field, or -1 if NULL."
 
-	^lengthBuf!
+	^lengthBuf sdwordAtOffset: 0!
 
-numberFromNumeric
-	"Private - Answer the receiver's contents converted from a
-	string NUMERIC to a <ScaledDecimal> (ODBC converts NUMERIC
-	fields to strings by default, but NUMERIC is a decimal type)."
+length: anInteger
+	"Private - Set the octet length of the data in this field. If anInteger is -1, then the field is considered NULL."
 
-	| integerPart number fractionPart scale char isNegative stream |
-	stream := ReadStream
-				on: buffer
-				from: 1
-				to: lengthBuf value.
-	integerPart := 0.
-	scale := 0.
-	isNegative := stream peekFor: ##($- codePoint).
-	[stream atEnd or: [(char := stream next) == ##($. codePoint)]]
-		whileFalse: [integerPart := integerPart * 10 + (char - ##($0 codePoint))].
-	fractionPart := 0.
-	[stream atEnd] whileFalse: 
-			[char := stream next.
-			fractionPart := fractionPart * 10 + (char - ##($0 codePoint)).
-			scale := scale + 1].
-	number := fractionPart / scale exp10 + integerPart.
-	isNegative ifTrue: [number := number negated].
-	^ScaledDecimal newFromNumber: number scale: scale!
+	lengthBuf sdwordAtOffset: 0 put: anInteger!
 
-numberToNumeric: aNumber
-	"Private - Convert the argument to a 'C' string stored in the receiver for passing to ODBC (probably as a
-	bound parameter) where a NUMERIC is expected."
-
-	#todo. "Define and use the SQL_NUMERIC_STRUCT instead of converting to a string"
-	(self shouldTranslate: aNumber class: Number) 	ifTrue: [ 
-		self setAnsiString: (aNumber asScaledDecimal: column scale) displayString]!
-
-printOn: aStream 
-	"Append the ASCII representation of the receiver to aStream."
+printOn: aStream
+	"Append, to the <puttableStream>, aStream, a string representation of the receiver in a form that a developer might want to see."
 
 	super printOn: aStream.
 	aStream
 		nextPut: $(;
-		nextPutAll: column name;
+		display: column name;
 		nextPut: $=;
 		print: self value;
 		nextPut: $)!
 
-setAnsiString: aString
-	"Private - Set the receiver's buffer from aString."
+scale
+	"Answer the 'scale' of the column. This can mean different things for different column types but is some kind of sub-length of the overall length of the field, for example for a numeric field it is the number of decimal places."
 
-	(self shouldTranslate: aString class: String)
-		ifTrue: 
-			[| ansi byteCount |
-			"This conversion may be lossy - any non-ANSI characters will be substituted with the replacement character."
-			ansi := aString asAnsiString.
-			byteCount := ansi size.
-			buffer
-				replaceFrom: 1
-				to: byteCount
-				with: ansi
-				startingAt: 1.
-			lengthBuf value: byteCount]!
+	^self column scale!
 
-setBoolean: aBoolean
-	"Private - Load the receiver's contents buffer with the <Boolean> argument."
+type
+	"Answer the SQL type of the column associated with the receiver."
 
-	(self shouldTranslate: aBoolean class: Boolean)
-		ifTrue: 
-			[buffer at: 1 put: aBoolean asParameter.
-			lengthBuf value: 1]!
-
-setByte: aNumber
-	"Private - Set the receiver's buffer to an unsigned byte representation of the 
-	<Number> argument."
-
-	(self shouldTranslate: aNumber class: Number)
-		ifTrue: 
-			[buffer at: 1 put: aNumber asInteger.
-			lengthBuf value: 1]!
-
-setByteArray: aByteArray
-	"Private - Set the receiver's buffer from the <ByteArray> argument."
-
-	(self shouldTranslate: aByteArray class: ByteArray)
-		ifTrue: 
-			[| byteCount |
-			byteCount := aByteArray size min: buffer size.
-			buffer
-				replaceFrom: 1
-				to: byteCount
-				with: aByteArray
-				startingAt: 1.
-			lengthBuf value: byteCount]!
-
-setDate: aDate
-	"Private - Set the receiver's buffer with an <ODBCDATE> object instantiated from 
-	the <Date> argument."
-
-	(self shouldTranslate: aDate class: Date)
-		ifTrue: 
-			[(OS.ODBCDATE withBytes: buffer) date: aDate.
-			lengthBuf value: OS.ODBCDATE._ODBCDATE_Size]!
-
-setDateAndTime: aDateAndTime
-	"Private - Set the receiver's buffer with an ODBCTIMESTAMP object instantiated from aDateAndTime."
-
-	(self shouldTranslate: aDateAndTime class: DateAndTime)
-		ifTrue: 
-			[(OS.ODBCTIMESTAMP withBytes: buffer) dateAndTime: aDateAndTime.
-			lengthBuf value: OS.ODBCTIMESTAMP._ODBCTIMESTAMP_Size]!
-
-setDouble: aNumber
-	"Private - Set the receiver's double buffer with <Float> value of the 
-	<Number> argument."
-
-	(self shouldTranslate: aNumber class: Number)
-		ifTrue: 
-			[buffer doubleAtOffset: 0 put: aNumber asFloat.
-			lengthBuf value: 8]!
-
-setFloat: aNumber
-	"Private - Set the receiver's float buffer with the <Float> value of the 
-	<Number> argument, aNumber."
-
-	(self shouldTranslate: aNumber class: Number)
-		ifTrue: 
-			[buffer floatAtOffset: 0 put: aNumber asFloat.
-			lengthBuf value: 4]!
-
-setGuid: aGUID
-	"Private - Set the receiver's buffer with an <GUID> value."
-
-	(self shouldTranslate: aGUID class: GUID)
-		ifTrue: 
-			[buffer
-				replaceFrom: 1
-				to: 16
-				with: aGUID
-				startingAt: 1.
-			lengthBuf value: 16]!
-
-setInt64: aNumber
-	"Private - Set the receiver's buffer to the 64-bit signed integer value of the argument."
-
-	(self shouldTranslate: aNumber class: Number)
-		ifTrue: 
-			[buffer int64AtOffset: 0 put: aNumber asInteger.
-			lengthBuf value: 8]!
-
-setLong: aNumber
-	"Private - Set the receiver's buffer to a 32-bit signed integer representation of the <Integer> argument."
-
-	(self shouldTranslate: aNumber class: Number)
-		ifTrue: 
-			[buffer int32AtOffset: 0 put: aNumber asInteger.
-			lengthBuf value: 4]!
-
-setShort: aNumber
-	"Private - Set the receiver's buffer to the 16-bit signed integer value of the argument."
-
-	(self shouldTranslate: aNumber class: Number)
-		ifTrue: 
-			[buffer int16AtOffset: 0 put: aNumber asInteger.
-			lengthBuf value: 2]!
-
-setTime: aTime
-	"Private - Set the receiver's buffer with an ODBCTIME object instantiated from aTime."
-
-	(self shouldTranslate: aTime class: Time)
-		ifTrue: 
-			[(OS.ODBCTIME withBytes: buffer) time: aTime.
-			lengthBuf value: OS.ODBCTIME._ODBCTIME_Size]!
-
-setUtf16String: aString
-	"Private - Set the receiver's buffer from aString."
-
-	(self shouldTranslate: aString class: String)
-		ifTrue: 
-			[| utf16 byteCount |
-			utf16 := aString asUtf16String.
-			byteCount := utf16 size << 1.
-			buffer
-				replaceFrom: 1
-				to: byteCount
-				with: utf16
-				startingAt: 1.
-			lengthBuf value: byteCount]!
-
-shouldTranslate: anObject class: aClass
-	"Private - Answer whether the receiver should attempt to translate anObject into its buffer.
-	If anObject isNil then we can set the receiver to be null and answer false.
-	If anObject does not descend from aClass then issue an error and answer false."
-
-	(anObject isKindOf: aClass)
-		ifFalse: [
-			self error: anObject class displayString, '(', anObject displayString,') invalid: ', aClass displayString,' expected'.
-			^false].
-	^true!
-
-size
-	"Private - Answer the size of the receiver's buffer."
-
-	^buffer size!
+	^column type!
 
 value
-	"Answer the contents of the receiver as a suitable
-	Smalltalk object."
+	"Answer an object of a suitable type unmarshalled from the database value in the receiver's buffer."
 
-	^self isNull ifFalse: [self perform: (GetSelectors at: column type + TypeOffset)]!
+	^self isNull ifFalse: [buffer dbUnmarshal: self]!
 
 value: anObject
-	"Set the contents of the receiver's buffer from anObject."
+	"Marshal the argument into a suitable binary representation in the receiver's buffer for transfer to the database."
 
-	^anObject
-		ifNil: [self beNull]
-		ifNotNil: [self perform: (SetSelectors at: column type + TypeOffset) with: anObject]! !
+	^anObject ifNil: [self beNull] ifNotNil: [buffer dbMarshal: anObject into: self]! !
 
 !Database.DBField categoriesForMethods!
 =!comparing!public! !
+allocateBuffer!accessing!private! !
 beNull!accessing!public! !
+bind:!operations!private! !
+bindAsParameter:of:!operations!private! !
+bufferClass!accessing!public! !
 column!accessing!private! !
+dbInterchangeType!constants!public! !
 fieldBuf!accessing!private! !
-fieldSize!accessing!private! !
-getAnsiString!converting!private! !
-getBoolean!converting!private! !
-getByte!converting!private! !
-getByteArray!converting!private! !
 getData:!accessing!private! !
-getDate!converting!private! !
-getDateAndTime!converting!private! !
-getDouble!converting!private! !
-getFloat!converting!private! !
-getGuid!converting!private! !
-getInt64!converting!private! !
-getLong!converting!private! !
-getShort!converting!private! !
-getTime!converting!private! !
-getUtf16String!converting!private! !
 hash!comparing!public! !
-initializeForColumn:!accessing!private! !
+initializeForColumn:!initializing!private! !
 isNull!public!testing! !
-lengthBuf!accessing!private! !
-numberFromNumeric!converting!private! !
-numberToNumeric:!converting!private! !
+length!accessing!private! !
+length:!accessing!private! !
 printOn:!printing!public! !
-setAnsiString:!converting!private! !
-setBoolean:!converting!private! !
-setByte:!converting!private! !
-setByteArray:!converting!private! !
-setDate:!converting!private! !
-setDateAndTime:!converting!private! !
-setDouble:!converting!private! !
-setFloat:!converting!private! !
-setGuid:!converting!private! !
-setInt64:!converting!private! !
-setLong:!converting!private! !
-setShort:!converting!private! !
-setTime:!converting!private! !
-setUtf16String:!converting!private! !
-shouldTranslate:class:!accessing!private! !
-size!accessing!private! !
+scale!accessing!public! !
+type!accessing!public! !
 value!accessing!public! !
 value:!accessing!public! !
 !
 
 !Database.DBField class methodsFor!
-
-initialize
-	"Initialize the dictionaries of to/from
-	C Type/Smalltalk object converters.
-		DBField initialize
-	Note that the maps rely on the sequential numbering of the type enumerations.
-	"
-
-	"Note that the mappings here must match those defined for the mappings between SQL and 'C' buffer types in the DBColAttr class>>#initialize.
-	Ideally these maps would just be from the SQL_C_xxx types, avoiding the need to keep in sync with the DBColAttr map, but at present the need
-	to convert SQL_NUMERIC via SQL_C_CHAR prevents that."
-
-	self assert: [TypeOffset = (SQL_GUID abs + 1)].
-	self assert: [SQL_NUM_TYPES = (TypeOffset + SQL_TYPE_TIMESTAMP)].
-	self addClassConstant: 'GetSelectors'
-		value: ((Array new: SQL_NUM_TYPES)
-				at: SQL_CHAR + TypeOffset put: #getAnsiString;
-				at: SQL_VARCHAR + TypeOffset put: #getAnsiString;
-				at: SQL_LONGVARCHAR + TypeOffset put: #getAnsiString;
-				at: SQL_WCHAR + TypeOffset put: #getUtf16String;
-				at: SQL_WVARCHAR + TypeOffset put: #getUtf16String;
-				at: SQL_WLONGVARCHAR + TypeOffset put: #getUtf16String;
-				at: SQL_BINARY + TypeOffset put: #getByteArray;
-				at: SQL_VARBINARY + TypeOffset put: #getByteArray;
-				at: SQL_LONGVARBINARY + TypeOffset put: #getByteArray;
-				at: SQL_BIT + TypeOffset put: #getBoolean;
-				at: SQL_TINYINT + TypeOffset put: #getByte;
-				at: SQL_SMALLINT + TypeOffset put: #getShort;
-				at: SQL_INTEGER + TypeOffset put: #getLong;
-				at: SQL_BIGINT + TypeOffset put: #getInt64;
-				at: SQL_NUMERIC + TypeOffset put: #numberFromNumeric;
-				at: SQL_DECIMAL + TypeOffset put: #numberFromNumeric;
-				at: SQL_FLOAT + TypeOffset put: #getDouble;
-				at: SQL_REAL + TypeOffset put: #getFloat;
-				at: SQL_DOUBLE + TypeOffset put: #getDouble;
-				at: SQL_TYPE_DATE + TypeOffset put: #getDate;
-				at: SQL_TYPE_TIME + TypeOffset put: #getTime;
-				at: SQL_TYPE_TIMESTAMP + TypeOffset put: #getDateAndTime;
-				at: SQL_GUID + TypeOffset put: #getGuid;
-				yourself).
-	self addClassConstant: 'SetSelectors'
-		value: ((Array new: SQL_NUM_TYPES)
-				at: SQL_CHAR + TypeOffset put: #setAnsiString:;
-				at: SQL_VARCHAR + TypeOffset put: #setAnsiString:;
-				at: SQL_LONGVARCHAR + TypeOffset put: #setAnsiString:;
-				at: SQL_WCHAR + TypeOffset put: #setUtf16String:;
-				at: SQL_WVARCHAR + TypeOffset put: #setUtf16String:;
-				at: SQL_WLONGVARCHAR + TypeOffset put: #setUtf16String:;
-				at: SQL_BINARY + TypeOffset put: #setByteArray:;
-				at: SQL_VARBINARY + TypeOffset put: #setByteArray:;
-				at: SQL_LONGVARBINARY + TypeOffset put: #setByteArray:;
-				at: SQL_TINYINT + TypeOffset put: #setByte:;
-				at: SQL_BIT + TypeOffset put: #setBoolean:;
-				at: SQL_SMALLINT + TypeOffset put: #setShort:;
-				at: SQL_INTEGER + TypeOffset put: #setLong:;
-				at: SQL_BIGINT + TypeOffset put: #setInt64:;
-				at: SQL_NUMERIC + TypeOffset put: #numberToNumeric:;
-				at: SQL_DECIMAL + TypeOffset put: #numberToNumeric:;
-				at: SQL_FLOAT + TypeOffset put: #setDouble:;
-				at: SQL_REAL + TypeOffset put: #setFloat:;
-				at: SQL_DOUBLE + TypeOffset put: #setDouble:;
-				at: SQL_TYPE_DATE + TypeOffset put: #setDate:;
-				at: SQL_TYPE_TIME + TypeOffset put: #setTime:;
-				at: SQL_TYPE_TIMESTAMP + TypeOffset put: #setDateAndTime:;
-				at: SQL_GUID + TypeOffset put: #setGuid:;
-				yourself)!
 
 new
 	"Use #newForCol:"
@@ -520,10 +163,9 @@ new
 newForCol: aDBColAttr
 	"Answer a new instance of the receiver for the column described by aColAttr."
 
-	^super new initializeForColumn: aDBColAttr! !
+	^self basicNew initializeForColumn: aDBColAttr! !
 
 !Database.DBField class categoriesForMethods!
-initialize!initializing!public! !
 new!instance creation!public! !
 newForCol:!instance creation!public! !
 !

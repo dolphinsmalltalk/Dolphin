@@ -147,7 +147,7 @@ fileOutNameForClass: aClass
 	| path |
 	path := File composeStem: aClass fileOutStem extension: (self fileOutExtensionForClass: aClass).
 	aClass owningPackage
-		ifNil: [Notification signal: 'Warning: ' , self printString , ' is unpackaged']
+		ifNil: [Notification signal: 'Warning: ' , aClass printString , ' is unpackaged']
 		ifNotNil: [:package | path := File replacePath: path with: package path].
 	^path!
 

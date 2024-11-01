@@ -207,6 +207,25 @@ testAsUTC
 				second: 59 + (666666666 / 1000000000)
 				offset: 0 hours)!
 
+testCloseToPrecision
+	| subject |
+	subject := DateAndTime now.
+	self
+		assert: subject
+		closeTo: subject
+		precision: 1 nanoseconds.
+	self assert: (subject closeTo: subject + 1 nanoseconds precision: 1 nanoseconds).
+	self assert: (subject closeTo: subject - 1 nanoseconds precision: 1 nanoseconds).
+	self deny: (subject closeTo: subject + 2 nanoseconds precision: 1 nanoseconds).
+	self deny: (subject closeTo: subject - 2 nanoseconds precision: 1 nanoseconds).
+	self assert: (subject closeTo: subject + 999 microseconds precision: 1 milliseconds).
+	self assert: (subject closeTo: subject + 1 milliseconds precision: 1 milliseconds).
+	self assert: (subject closeTo: subject - 999 microseconds precision: 1 milliseconds).
+	self assert: (subject closeTo: subject - 1 milliseconds precision: 1 milliseconds).
+	self deny: (subject closeTo: subject + 2 milliseconds precision: 1 milliseconds).
+	self deny: (subject closeTo: subject + 1001 microseconds precision: 1 milliseconds).
+	self deny: (subject closeTo: subject - 1001 microseconds precision: 1 milliseconds)!
+
 testDayOfMonth
 	self assert: self canonicalInstance dayOfMonth equals: 29!
 
@@ -818,7 +837,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 canonicalInstance!constants!private! !
 julianEpoch!constants!private! !
 test1193!public!unit tests! !
-testAddDuration!public! !
+testAddDuration!public!unit tests! !
 testAsDate!public!unit tests! !
 testAsFILETIME!public!unit tests! !
 testAsSeconds!public!unit tests! !
@@ -827,6 +846,7 @@ testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
 testAsTime!public!unit tests! !
 testAsUnixTime!public!unit tests! !
 testAsUTC!public!unit tests! !
+testCloseToPrecision!public!unit tests! !
 testDayOfMonth!public!unit tests! !
 testDayOfWeek!public!unit tests! !
 testDayOfWeekAbbreviation!public!unit tests! !
@@ -835,7 +855,7 @@ testDayOfYear!public!unit tests! !
 testFromFILETIME!public! !
 testFromLocalFILETIME!public! !
 testFromString!public!unit tests! !
-testFromSYSTEMTIME!public! !
+testFromSYSTEMTIME!public!unit tests! !
 testFromUnixTime!public!unit tests! !
 testHour!public!unit tests! !
 testHour12!public!unit tests! !

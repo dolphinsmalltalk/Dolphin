@@ -34,6 +34,8 @@ Kernel.SharedPool
 			'SQL_C_SBIGINT' -> -16r19.
 			'SQL_C_SHORT' -> 16r5.
 			'SQL_C_SLONG' -> -16r10.
+			'SQL_C_SS_TIME2' -> 16r4000.
+			'SQL_C_SS_TIMESTAMPOFFSET' -> 16r4001.
 			'SQL_C_SSHORT' -> -16rF.
 			'SQL_C_STINYINT' -> -16r1A.
 			'SQL_C_TIME' -> 16rA.

@@ -49,8 +49,9 @@ package setMethodNames: #(
 	#(#{Database.DBConnection class} #interpretTxnIsolationMask:)
 	#(#{Database.DBResultSet} #invalidate)
 	#(#{Database.DBResultSet} #prev)
-	#(#{OS.ODBCTIMESTAMP} #asTimeStamp)
-	#(#{OS.ODBCTIMESTAMP class} #fromTimeStamp:)
+	#(#{Database.DBRowBuffer} #sizeInBytes)
+	#(#{Smalltalk.SQL_TIMESTAMP_STRUCT} #asTimeStamp)
+	#(#{Smalltalk.SQL_TIMESTAMP_STRUCT class} #fromTimeStamp:)
 ).
 
 package setPrerequisites: #(
@@ -303,23 +304,35 @@ invalidate!operations!public! !
 prev!accessing!public! !
 !
 
-!OS.ODBCTIMESTAMP methodsFor!
+!Database.DBRowBuffer methodsFor!
+
+sizeInBytes
+	"Answer the size of the receiver structure in bytes."
+
+	Notification deprecated. "Not used and only works for fully bound buffers anyway"
+	 ^self contents inject: 0 into: [ :size :f | size + f size ].! !
+
+!Database.DBRowBuffer categoriesForMethods!
+sizeInBytes!accessing!public! !
+!
+
+!SQL_TIMESTAMP_STRUCT methodsFor!
 
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
 
-!OS.ODBCTIMESTAMP categoriesForMethods!
+!SQL_TIMESTAMP_STRUCT categoriesForMethods!
 asTimeStamp!converting!public! !
 !
 
-!OS.ODBCTIMESTAMP class methodsFor!
+!SQL_TIMESTAMP_STRUCT class methodsFor!
 
 fromTimeStamp: aTimeStamp
 	Notification deprecated.
 	^self fromTimeStamp: aTimeStamp asDateAndTime! !
 
-!OS.ODBCTIMESTAMP class categoriesForMethods!
+!SQL_TIMESTAMP_STRUCT class categoriesForMethods!
 fromTimeStamp:!instance creation!public! !
 !
 

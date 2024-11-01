@@ -48,6 +48,7 @@ package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase class} #buildSuiteFromConcreteMethods:)
 	#(#{XProgramming.SUnit.TestCase class} #debugWithResult:)
 	#(#{XProgramming.SUnit.TestCaseResult} #isKnownSlowTest)
+	#(#{XProgramming.SUnit.TestResource} #isCiBuild)
 	#(#{XProgramming.SUnit.TestResult} #debugCase:)
 	#(#{XProgramming.SUnit.TestSuite} #displayOn:)
 ).
@@ -395,6 +396,15 @@ isKnownSlowTest
 
 !XProgramming.SUnit.TestCaseResult categoriesForMethods!
 isKnownSlowTest!accessing!public! !
+!
+
+!XProgramming.SUnit.TestResource methodsFor!
+
+isCiBuild
+	^(SessionManager current getenv: 'APPVEYOR') notNil! !
+
+!XProgramming.SUnit.TestResource categoriesForMethods!
+isCiBuild!helpers!public! !
 !
 
 !XProgramming.SUnit.TestResult methodsFor!

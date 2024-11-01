@@ -14,10 +14,6 @@ For documentation evaluate:
 
 package basicPackageVersion: '6.1'.
 
-package basicScriptAt: #postinstall put: 'ODBCDATE defineTemplate.
-ODBCTIME defineTemplate.
-ODBCTIMESTAMP defineTemplate.
-ODBCLibrary initialize.'.
 
 package setMethodNames: #(
 	#(#{Database.DBAbstractRow} #publishedAspects)

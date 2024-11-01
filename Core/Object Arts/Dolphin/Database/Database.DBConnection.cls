@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Database.DBConnection'
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
-	classVariableNames: 'Connections DriverCompleteMask HEnv ScrollTypes TxnIsolationLevels'
+	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
 	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -43,7 +43,7 @@ allocStmtHandle: aDBStatement
 				sqlAllocHandle: SQL_HANDLE_STMT
 				inputHandle: self asParameter
 				outputHandlePtr: hStmt.
-	self dbCheckException: ret.
+	self dbCheckException: ret function: 'SQLAllocHandle'.
 	self statements add: aDBStatement.
 	^hStmt!
 
@@ -59,16 +59,30 @@ basicConnect
 	Assumes not already connected."
 
 	
-	[| ret |
-	ret := OS.Odbc32
-				sqlConnect: self getHandle
-				serverName: dsn
-				nameLength1: SQL_NTS
-				userName: uid
-				nameLength2: SQL_NTS
-				authentication: pwd
-				nameLength3: SQL_NTS.
-	self dbCheckException: ret]
+	[dsn
+		ifNil: 
+			[| lenConnSz |
+			lenConnSz := External.Int16 new.
+			self dbCheckException: (OS.Odbc32
+						sqlDriverConnect: self getHandle
+						windowHandle: nil
+						inConnectionString: connectString
+						stringLength1: SQL_NTS
+						outConnectionString: nil
+						bufferLength: 0
+						stringLength2Ptr: lenConnSz
+						driverCompletion: SQL_DRIVER_NOPROMPT)
+				function: 'SQLDriverConnect']
+		ifNotNil: 
+			[self dbCheckException: (OS.Odbc32
+						sqlConnect: self getHandle
+						serverName: dsn
+						nameLength1: SQL_NTS
+						userName: uid
+						nameLength2: SQL_NTS
+						authentication: pwd
+						nameLength3: SQL_NTS)
+				function: 'SQLConnect']]
 			ifCurtailed: [self free]!
 
 beginRWTxn
@@ -152,26 +166,25 @@ columns: aStringTableName
 columns: aStringColumn qualifier: aStringQualifier owner: aStringOwner table: aStringTable
 	"Answer the list of columns in the table matching the specified search criteria"
 
-	| i stmt colAttrs |
-	stmt := DBColumnsStatement parent: self.
-	stmt
-		catalogName: aStringQualifier;
-		schemaName: aStringOwner;
-		tableName: aStringTable;
-		columnName: aStringColumn.
-	i := 0.
-	colAttrs := stmt results collect: 
-					[:each |
-					i := i + 1.
-					"at: 'column_name'"	"at: 'DATA_TYPE'"	"at: 'LENGTH'"	"at: 'PRECISION'"	"at: 'SCALE'"
-					DBColAttr new
-						columnNumber: i;
+	| stmt colAttrs |
+	colAttrs := OrderedCollection new.
+	stmt := (DBColumnsStatement parent: self)
+				catalogName: aStringQualifier;
+				schemaName: aStringOwner;
+				tableName: aStringTable;
+				columnName: aStringColumn;
+				yourself.
+	stmt results do: 
+			[:each |
+			| column |
+			column := DBColAttr new
+						columnNumber: colAttrs size;
 						name: (each atIndex: 4);
-						type: (each atIndex: 5);
-						length: (each atIndex: 8);
 						precision: (each atIndex: 7);
 						scale: (each atIndex: 9);
-						yourself].
+						type: (each atIndex: 5).
+			column length == 0 ifTrue: [column length: (each atIndex: 8)].
+			colAttrs addLast: column].
 	stmt free.
 	^colAttrs!
 
@@ -235,21 +248,21 @@ databaseName
 	^self getStringInfo: SQL_DATABASE_NAME!
 
 dataSourceName
-	"Answer the data source name as a <readableString>."
+	"Private - Answer the data source name as a <readableString>."
 
 	^self getStringInfo: SQL_DATA_SOURCE_NAME!
 
-dbCheckException: anIntegerRetCode
+dbCheckException: anIntegerRetCode function: aString
 	"Private - Checks anIntegerRetCode to see if a DBError or DBWarning should be signalled.
-	Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a more appropriate
-	level of reporting for SQL_SUCCESS_WITH_INFO."
+	Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a more appropriate level of reporting for SQL_SUCCESS_WITH_INFO."
 
-	^anIntegerRetCode = SQL_SUCCESS
+	anIntegerRetCode == SQL_SUCCESS
 		ifFalse: 
 			["Signal an error or warning - decide which"
-			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
+			((anIntegerRetCode == SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode == SQL_NO_DATA])
 				ifTrue: [DBWarning]
-				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
+				ifFalse: [DBError]) signal: aString with: (self newExceptionDetails: anIntegerRetCode)].
+	^anIntegerRetCode!
 
 dbmsName
 	"Answers the underlying DBMS name as a <readableString>."
@@ -297,7 +310,7 @@ disconnect
 			[| ret |
 			self invalidateAllStmts.
 			ret := OS.Odbc32 sqlDisconnect: handle.
-			self dbCheckException: ret]!
+			self dbCheckException: ret function: 'SQLDisconnect']!
 
 driverHDBC
 	"Private - Answer the handle to the driver connection"
@@ -330,15 +343,6 @@ dsn: aString
 	connectString := nil.
 	dsn := aString.!
 
-exceptionDetails: code
-	"Private - Answer a <DBExceptionDetails> instance that describes the state of the
-	receiver following an exception with the specified <integer> return code. This will 
-	be available as the tag of a subsequent signalled DBError or DBWarning."
-
-	^(self class exceptionDetails: code)
-		hDBC: handle;
-		yourself.!
-
 exec: aString 
 	"Execute the SQL in aString.
 	Answer the <DBStatement> used to execute the statement"
@@ -365,10 +369,10 @@ finalize
 free
 	"Private - Free the connection handle."
 
-	handle isNull ifFalse: [
-		self dbCheckException: self freeNoFail.
-		handle := nil]
-!
+	handle isNull
+		ifFalse: 
+			[self dbCheckException: self freeNoFail function: 'SQLFreeHandle'.
+			handle := nil]!
 
 freeNoFail
 	"Private - Free the connection handle ignoring any errors."
@@ -376,10 +380,10 @@ freeNoFail
 	^OS.Odbc32 sqlFreeHandle: SQL_HANDLE_DBC handle: handle!
 
 freeStmtHandle: aDBAbstractStatement
-	| ret |
 	handle isNull ifTrue: [^self].
-	ret := OS.Odbc32 sqlFreeHandle: SQL_HANDLE_STMT handle: aDBAbstractStatement handle.
-	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (aDBAbstractStatement exceptionDetails: ret)]!
+	self dbCheckException: (OS.Odbc32 sqlFreeHandle: SQL_HANDLE_STMT
+				handle: aDBAbstractStatement handle)
+		function: 'SQLFreeHandle'!
 
 getBoolInfo: anInteger
 	"Private - Answer a <Boolean> indicating the receiver's info attribute described by anInteger."
@@ -391,23 +395,38 @@ getBoolInfo: anInteger
 				infoType: anInteger
 				infoValuePtr: value
 				bufferLength: ##((1 + 1) * 2	"Byte size including implict null char")
-				stringLengthPtr: nil).	"Byte size including implict null char"
+				stringLengthPtr: nil)
+		function: 'SQLGetInfo'.
 	^value = ##($Y asUtf16String)!
 
 getDWordAttribute: anInteger
 	"Private - Answer an <Integer> containing the 32-bit unsigned integer value of the 
 	connection attribute identified by the <integer> argument."
 
-	| buffer ret |
+	| buffer |
 	buffer := ByteArray newFixed: 4.
-	ret := OS.Odbc32
+	self dbCheckException: (OS.Odbc32
 				sqlGetConnectAttr: self asParameter
 				attribute: anInteger
 				valuePtr: buffer
 				bufferLength: SQL_IS_UINTEGER
-				stringLengthPtr: nil.
-	self dbCheckException: ret.
+				stringLengthPtr: nil)
+		function: 'SQLGetConnectAttr'.
 	^buffer uint32AtOffset: 0!
+
+getDWordInfo: anInteger
+	"Private - Answer an Integer containing the value of the receiver's DWORD info attribute described by anInteger."
+
+	| value |
+	value := ByteArray newFixed: 4.
+	self dbCheckException: (OS.Odbc32
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: 4
+				stringLengthPtr: nil)
+		function: 'SQLGetInfo'.
+	^value uint32AtOffset: 0!
 
 getHandle
 	"Private - Answer the handle instance variable.
@@ -428,7 +447,8 @@ getHandle: anInteger
 				infoType: anInteger
 				infoValuePtr: value
 				bufferLength: Kernel.VMConstants.IntPtrSize
-				stringLengthPtr: nil).
+				stringLengthPtr: nil)
+		function: 'SQLGetInfo'.
 	^value!
 
 getStringAttribute: anInteger
@@ -441,7 +461,8 @@ getStringAttribute: anInteger
 				attribute: anInteger
 				valuePtr: buffer
 				bufferLength: ##((SQL_MAX_OPTION_STRING_LENGTH + 1) * 2)
-				stringLengthPtr: nil).	"Byte size including implicit null terminator"
+				stringLengthPtr: nil)
+		function: 'SQLGetConnectAttr'.	"Byte size including implicit null terminator"
 	"N.B. The SQL server driver never seems to populate the stringLengthPtr argument, so we are forced to trim up to the nulls."
 	^buffer trimNulls!
 
@@ -456,7 +477,8 @@ getStringInfo: anInteger
 				infoType: anInteger
 				infoValuePtr: value
 				bufferLength: ##((SQL_MAX_MESSAGE_LENGTH + 1) * 2)
-				stringLengthPtr: len).
+				stringLengthPtr: len)
+		function: 'SQLGetInfo'.
 	^value resize: ((len int16AtOffset: 0) bitShift: -1)!
 
 getUInt32Info: anInteger
@@ -482,7 +504,8 @@ getWordInfo: anInteger
 				infoType: anInteger
 				infoValuePtr: value
 				bufferLength: 2
-				stringLengthPtr: nil).
+				stringLengthPtr: nil)
+		function: 'SQLGetInfo'.
 	^value uint16AtOffset: 0!
 
 hasAccessibleTables
@@ -624,7 +647,14 @@ maxTableNameLength
 
 	^self getWordInfo: SQL_MAX_TABLE_NAME_LEN!
 
-newParameterizedStatement: aSymbol
+newExceptionDetails: anInteger
+	"Private - Answer a <DBExceptionDetails> instance that describes the state of the receiver following an exception with the specified <integer> return code. This will be available as the tag of a subsequent signalled DBError or DBWarning."
+
+	^(self class newExceptionDetails: anInteger)
+		hDBC: handle;
+		yourself!
+
+newParameterizedStatement: aSymbol 
 	"Private - Answer a DBParameterizedStatement connected to the receiver"
 
 	^DBParameterizedStatement parent: self cursorType: aSymbol!
@@ -676,7 +706,7 @@ open
 	[| ret |
 	"#1306: From MSDN, 'Applications should allocate at least 1,024 characters for [the connection string] buffer'"
 	connSz := Utf16String newFixed: 2048.
-	lenConnSz := External.Int16 new.
+	lenConnSz := ByteArray newFixed: 2.
 	ret := OS.Odbc32
 				sqlDriverConnect: self getHandle
 				windowHandle: OS.User32 getActiveWindow
@@ -689,9 +719,9 @@ open
 						ifTrue: [SQL_DRIVER_COMPLETE]
 						ifFalse: [SQL_DRIVER_NOPROMPT]).
 	ret == SQL_NO_DATA ifTrue: [^nil	"cancelled"].
-	self dbCheckException: ret]
+	self dbCheckException: ret function: 'SQLDriverConnect']
 			ifCurtailed: [self free].
-	self connectString: (connSz copyFrom: 1 to: (lenConnSz value min: connSz size))!
+	self connectString: (connSz copyFrom: 1 to: ((lenConnSz int16AtOffset: 0) min: connSz size))!
 
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy
@@ -856,13 +886,12 @@ serverName
 setAttribute: idInteger value: anIntegerOrStringOrBytes size: sizeInteger
 	"Private - Set the an attribute of the receiver's connection."
 
-	| ret |
-	ret := OS.Odbc32
+	^self dbCheckException: (OS.Odbc32
 				sqlSetConnectAttr: self asParameter
 				attribute: idInteger
 				valuePtr: anIntegerOrStringOrBytes
-				stringLength: sizeInteger.
-	self dbCheckException: ret!
+				stringLength: sizeInteger)
+		function: 'SQLSetConnectAttr'!
 
 setDefaultAttributes
 	"Private - Set the default connection attributes."
@@ -1070,8 +1099,17 @@ translationDLL: aString
 		value: aString asUtf16String
 		size: SQL_NTS!
 
+typeInfo: anInteger
+	| stmt info |
+	stmt := (Smalltalk.DBTypeInfoStatement parent: self)
+				dataType: anInteger;
+				yourself.
+	info := stmt results asArray.
+	stmt free.
+	^info!
+
 uid
-	"Answer the user identifier for the receiver"
+	"Private - Answer the user identifier for the receiver"
 
 	^uid!
 
@@ -1082,8 +1120,7 @@ uid: aString
 	uid := aString!
 
 uniqueIndicesOf: aString
-	"Answer the a <collection> of <DBRows> being details of the unique indices for the 
-	table with the specified <readableString> name."
+	"Answer a <collection> of <DBRows> being details of the unique indices for the table with the specified <readableString> name."
 
 	^self 
 		statisticsFor: aString
@@ -1143,8 +1180,8 @@ convertFunctions!enquiries!public! !
 cursorCommitBehaviour!enquiries!public! !
 cursorRollbackBehaviour!enquiries!public! !
 databaseName!enquiries!public! !
-dataSourceName!enquiries!public! !
-dbCheckException:!exceptions!private! !
+dataSourceName!constants!enquiries!private! !
+dbCheckException:function:!exceptions!private! !
 dbmsName!enquiries!public! !
 dbmsVersion!enquiries!public! !
 decodeBitMask:map:!helpers!private! !
@@ -1158,7 +1195,6 @@ driverName!enquiries!public! !
 driverVersion!enquiries!public! !
 dsn!accessing!public! !
 dsn:!accessing!public! !
-exceptionDetails:!exceptions!private! !
 exec:!executing!public! !
 exec:cursorType:!executing!public! !
 finalize!finalizing!private! !
@@ -1166,7 +1202,8 @@ free!private!realizing/unrealizing! !
 freeNoFail!private!realizing/unrealizing! !
 freeStmtHandle:!helpers!private! !
 getBoolInfo:!enquiries!private! !
-getDWordAttribute:!accessing!private! !
+getDWordAttribute:!accessing!enquiries!private! !
+getDWordInfo:!enquiries!private! !
 getHandle!accessing!private! !
 getHandle:!helpers!private! !
 getStringAttribute:!accessing!private! !
@@ -1198,6 +1235,7 @@ maxProcedureNameLength!enquiries!public! !
 maxSchemaNameLength!enquiries!public! !
 maxStatements!enquiries!public! !
 maxTableNameLength!enquiries!public! !
+newExceptionDetails:!exceptions!private! !
 newParameterizedStatement:!operations!private! !
 newStatement:!operations!private! !
 numericFunctions!enquiries!public! !
@@ -1253,7 +1291,8 @@ translate!accessing!public! !
 translate:!accessing!public! !
 translationDLL!accessing!public! !
 translationDLL:!accessing!public! !
-uid!accessing!public! !
+typeInfo:!enquiries!public! !
+uid!accessing!constants!private! !
 uid:!accessing!public! !
 uniqueIndicesOf:!enquiries!public! !
 useDriverCompletion!accessing!public! !
@@ -1266,6 +1305,19 @@ willAutoCommit:!accessing!public! !
 
 !Database.DBConnection class methodsFor!
 
+allocEnvironmentHandle
+	"Private - Answer the environment handle.
+	Create it if we haven't done so already."
+
+	self assert: [HEnv isNull].
+	HEnv := External.Handle new.
+	self dbCheckException: (OS.Odbc32
+				sqlAllocHandle: SQL_HANDLE_ENV
+				inputHandle: nil
+				outputHandlePtr: HEnv)
+		function: 'SQLAllocHandle'.
+	self setDefaultEnvAttrs!
+
 allocHandle
 	"Private - Answer a new connection handle."
 
@@ -1275,7 +1327,7 @@ allocHandle
 				sqlAllocHandle: SQL_HANDLE_DBC
 				inputHandle: self environmentHandle
 				outputHandlePtr: hDBC.
-	self dbCheckException: ret.
+	self dbCheckException: ret function: 'SQLAllocHandle'.
 	^hDBC!
 
 connections
@@ -1304,21 +1356,20 @@ connectString: aString do: aTwoArgBlock
 				paramValue := (stream peekFor: ${) ifTrue: [stream upTo: $}] ifFalse: [stream upTo: $;].
 				aTwoArgBlock value: paramName value: paramValue]!
 
-dbCheckException: anIntegerRetCode
+dbCheckException: anIntegerRetCode function: aString
 	"Private - Checks anIntegerRetCode to see if a DBError or DBWarning should be signalled.
-	Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a more appropriate
-	level of reporting for SQL_SUCCESS_WITH_INFO."
+	Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a more appropriate level of reporting for SQL_SUCCESS_WITH_INFO."
 
-	^anIntegerRetCode = SQL_SUCCESS
+	anIntegerRetCode == SQL_SUCCESS
 		ifFalse: 
 			["Signal an error or warning - decide which"
-			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
+			((anIntegerRetCode == SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode == SQL_NO_DATA])
 				ifTrue: [DBWarning]
-				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
+				ifFalse: [DBError]) signal: aString with: (self newExceptionDetails: anIntegerRetCode)].
+	^anIntegerRetCode!
 
 enumerateDataSources
-	"Answers an array of associations of all the data sources and
-	 their descriptions"
+	"Answers an array of associations of all the data sources and their descriptions"
 
 	| dsn description dsnLength descriptionLength hEnv ret sources |
 	dsn := Utf16String newFixed: SQL_MAX_DSN_LENGTH.
@@ -1354,37 +1405,14 @@ enumerateDataSources
 						nameLength2Ptr: descriptionLength.
 			ret == SQL_SUCCESS_WITH_INFO]
 					whileTrue: [description := Utf16String newFixed: descriptionLength value]].
-	ret ~= SQL_NO_DATA ifTrue: [self dbCheckException: ret].
+	ret ~= SQL_NO_DATA ifTrue: [self dbCheckException: ret function: 'SQLDataSources'].
 	^sources contents!
 
 environmentHandle
-	"Private - Answer the environment handle.
-	Create it if we haven't done so already."
+	"Private - Answer the environment handle. Create it if we haven't done so already."
 
-	HEnv isNull
-		ifTrue: 
-			[| ret |
-			HEnv := External.Handle new.
-			ret := OS.Odbc32
-						sqlAllocHandle: SQL_HANDLE_ENV
-						inputHandle: nil
-						outputHandlePtr: HEnv.
-			ret = SQL_SUCCESS
-				ifFalse: 
-					[HEnv := nil.
-					^self dbCheckException: ret].
-			self setDefaultEnvAttrs].
+	HEnv isNull ifTrue: [self allocEnvironmentHandle].
 	^HEnv!
-
-exceptionDetails: retCode
-	"Private - Answer a <DBExceptionDetails> instance that describes the state of the
-	receiver following an exception with the specified <integer> return code. This will 
-	be available as the tag of a subsequent signalled DBError or DBWarning."
-
-	^DBExceptionDetails new
-		code: retCode;
-		hEnv: HEnv;
-		yourself!
 
 freeAll
 	"Private - Free all of my instances which are recorded
@@ -1399,12 +1427,10 @@ freeAll
 freeEnvironment
 	"Private - Free the environment"
 
-	HEnv isNull
-		ifFalse: 
-			[| ret |
-			ret := OS.Odbc32 sqlFreeHandle: SQL_HANDLE_ENV handle: HEnv.
-			self dbCheckException: ret.
-			HEnv := nil]!
+	HEnv isNull ifTrue: [^self].
+	self dbCheckException: (OS.Odbc32 sqlFreeHandle: SQL_HANDLE_ENV handle: HEnv)
+		function: 'SQLFreeHandle'.
+	HEnv := nil!
 
 initialize
 	"Private - Initialize the receiver's class variable.s
@@ -1412,14 +1438,14 @@ initialize
 	"
 
 	DriverCompleteMask := 1.
-	TxnIsolationLevels := (IdentityDictionary new)
+	TxnIsolationLevels := IdentityDictionary new
 				at: SQL_TXN_READ_UNCOMMITTED put: #readUncommitted;
 				at: SQL_TXN_READ_COMMITTED put: #readCommitted;
 				at: SQL_TXN_REPEATABLE_READ put: #repeatableRead;
 				at: SQL_TXN_SERIALIZABLE put: #serializable;
 				shrink;
 				yourself.
-	ScrollTypes := (IdentityDictionary new)
+	ScrollTypes := IdentityDictionary new
 				at: SQL_SO_FORWARD_ONLY put: #forwardOnly;
 				at: SQL_SO_DYNAMIC put: #dynamic;
 				at: SQL_SO_KEYSET_DRIVEN put: #keysetDriven;
@@ -1434,11 +1460,9 @@ invalidateHandle: anExternalHandle
 	This is used by DBConnection class to free a connection handle
 	when it only knows the handle"
 
-	| ret |
-	ret := OS.Odbc32 sqlDisconnect: anExternalHandle.
-	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)].
-	ret := OS.Odbc32 sqlFreeHandle: SQL_HANDLE_DBC handle: anExternalHandle.
-	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)]!
+	self dbCheckException: (OS.Odbc32 sqlDisconnect: anExternalHandle) function: 'SQLDisconnect'.
+	self dbCheckException: (OS.Odbc32 sqlFreeHandle: SQL_HANDLE_DBC handle: anExternalHandle)
+		function: 'SQLFreeHandle'!
 
 new
 	"Answer an initialized instance of the receiver."
@@ -1451,57 +1475,77 @@ new
 newConnections
 	Connections := WeakSet new!
 
+newExceptionDetails: anInteger
+	"Private - Answer a <DBExceptionDetails> instance that describes the state of the receiver following an exception with the specified <integer> return code. This will be available as the tag of a subsequent signalled DBError or DBWarning."
+
+	^DBExceptionDetails code: anInteger hEnv: HEnv!
+
 odbcVersion
 	"self odbcVersion"
 
 	| version |
 	version := ByteArray newFixed: 2.
 	self dbCheckException: (OS.Odbc32
-				sqlGetEnvAttr: HEnv
+				sqlGetEnvAttr: self environmentHandle
 				infoType: SQL_ATTR_ODBC_VERSION
 				infoValuePtr: version
 				bufferLength: nil
-				stringLengthPtr: nil).
+				stringLengthPtr: nil)
+		function: 'SQLGetEnvAttr'.
 	^version int16AtOffset: 0!
 
+requiredOdbcVersion
+	^RequiredOdbcVersion ifNil: [RequiredOdbcVersion := SQL_OV_ODBC3_80]!
+
+requiredOdbcVersion: anInteger
+	"Set the ODBC version that will be requested when the environment handle is allocated. This is SQL_OV_ODBC3_80, i.e. 3.8, by default, but can be downgraded to ODBC 3.0 (SQL_OV_ODBC3). ODBC 2.0 is no longer supported."
+
+	RequiredOdbcVersion = anInteger ifTrue: [^self].
+	self freeAll.
+	RequiredOdbcVersion := anInteger.
+!
+
 setDefaultEnvAttrs
-	| ret |
-	ret := OS.Odbc32
+	^self setRequiredOdbcVersion!
+
+setRequiredOdbcVersion
+	^self dbCheckException: (OS.Odbc32
 				sqlSetEnvAttr: HEnv
 				attribute: SQL_ATTR_ODBC_VERSION
-				valuePtr: SQL_OV_ODBC3
-				stringLength: 0.
-	self dbCheckException: ret.
-	^ret!
+				valuePtr: self requiredOdbcVersion
+				stringLength: 0)
+		function: 'SQLSetEnvAttr'!
 
 transact: aDBConnection action: anInteger
-	"Private - Performs the requested transaction action on the specified
-	 connection (which if Null implies that ODBC should commit/rollback
-	 all connections within the environment."
+	"Private - Performs the requested transaction action on the specified connection (which if Null implies that ODBC should commit/rollback all connections within the environment."
 
 	| ret |
 	ret := OS.Odbc32
 				sqlEndTran: SQL_HANDLE_DBC
 				handle: aDBConnection asParameter
 				completionType: anInteger.
-	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (aDBConnection exceptionDetails: ret)]! !
+	aDBConnection ?? self dbCheckException: ret function: 'SQLEndTran'! !
 
 !Database.DBConnection class categoriesForMethods!
+allocEnvironmentHandle!accessing!private! !
 allocHandle!helpers!private! !
 connections!accessing!public! !
 connectString:do:!operations!private! !
-dbCheckException:!exceptions!private! !
+dbCheckException:function:!exceptions!private! !
 enumerateDataSources!accessing!public! !
 environmentHandle!accessing!private! !
-exceptionDetails:!exceptions!private! !
 freeAll!private!realizing/unrealizing! !
 freeEnvironment!private!realizing/unrealizing! !
 initialize!initializing!private! !
 invalidateHandle:!private!realizing/unrealizing! !
 new!instance creation!public! !
 newConnections!accessing!private! !
+newExceptionDetails:!exceptions!private! !
 odbcVersion!accessing!public! !
+requiredOdbcVersion!accessing!public! !
+requiredOdbcVersion:!accessing!public! !
 setDefaultEnvAttrs!accessing!private! !
+setRequiredOdbcVersion!accessing!private! !
 transact:action:!operations!private! !
 !
 

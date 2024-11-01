@@ -20,14 +20,15 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^OS.Odbc32
-		sqlPrimaryKeys: self allocatedHandle
-		catalogName: catalogName
-		nameLength1: SQL_NTS
-		schemaName: schemaName
-		nameLength2: SQL_NTS
-		tableName: tableName
-		nameLength3: SQL_NTS! !
+	^self dbCheckException: (OS.Odbc32
+				sqlPrimaryKeys: self allocatedHandle
+				catalogName: catalogName
+				nameLength1: SQL_NTS
+				schemaName: schemaName
+				nameLength2: SQL_NTS
+				tableName: tableName
+				nameLength3: SQL_NTS)
+		function: 'SQLPrimaryKeys'! !
 
 !Database.DBPrimaryKeysStatement categoriesForMethods!
 executeStatement!operations!private! !

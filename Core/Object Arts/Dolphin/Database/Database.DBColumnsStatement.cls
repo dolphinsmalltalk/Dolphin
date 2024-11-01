@@ -26,16 +26,17 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^OS.Odbc32
-		sqlColumns: self allocatedHandle
-		catalogName: self catalogName
-		nameLength1: SQL_NTS
-		schemaName: self schemaName
-		nameLength2: SQL_NTS
-		tableName: self tableName
-		nameLength3: SQL_NTS
-		columnName: self columnName
-		nameLength4: SQL_NTS! !
+	^self dbCheckException: (OS.Odbc32
+				sqlColumns: self allocatedHandle
+				catalogName: self catalogName
+				nameLength1: SQL_NTS
+				schemaName: self schemaName
+				nameLength2: SQL_NTS
+				tableName: self tableName
+				nameLength3: SQL_NTS
+				columnName: self columnName
+				nameLength4: SQL_NTS)
+		function: 'SQLColumns'! !
 
 !Database.DBColumnsStatement categoriesForMethods!
 columnName!accessing!public! !

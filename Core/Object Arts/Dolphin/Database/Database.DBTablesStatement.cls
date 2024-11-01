@@ -20,16 +20,17 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^OS.Odbc32
-		sqlTables: self allocatedHandle
-		szTableQualifier: catalogName
-		cbTableQualifier: SQL_NTS
-		szTableOwner: schemaName
-		cbTableOwner: SQL_NTS
-		szTableName: tableName
-		cbTableName: SQL_NTS
-		szTableType: tableType
-		cbTableType: SQL_NTS!
+	^self dbCheckException: (OS.Odbc32
+				sqlTables: self allocatedHandle
+				szTableQualifier: catalogName
+				cbTableQualifier: SQL_NTS
+				szTableOwner: schemaName
+				cbTableOwner: SQL_NTS
+				szTableName: tableName
+				cbTableName: SQL_NTS
+				szTableType: tableType
+				cbTableType: SQL_NTS)
+		function: 'SQLTables'!
 
 initialize: aDBConnection
 	"Private - Initialize the receiver as a new statement of the

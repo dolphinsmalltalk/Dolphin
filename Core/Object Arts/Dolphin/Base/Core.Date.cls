@@ -99,6 +99,9 @@ addYears: yearCount desiredDay: desiredDay
 				monthIndex: mm
 				year: year]!
 
+asDate
+	^self!
+
 asDateAndTime
 	"Answer a new <DateAndTime> representing the midnight, local time, on the same date as the receiver."
 
@@ -360,6 +363,7 @@ addMonths:!arithmetic!public! !
 addMonths:desiredDay:!arithmetic!public! !
 addYears:!arithmetic!public! !
 addYears:desiredDay:!arithmetic!public! !
+asDate!converting!public! !
 asDateAndTime!converting!public! !
 asDays!converting!public! !
 asFloat!converting!public! !

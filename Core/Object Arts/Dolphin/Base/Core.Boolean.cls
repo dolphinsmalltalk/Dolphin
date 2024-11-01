@@ -220,7 +220,7 @@ not!logical operations!public! !
 or:!control flow!public! !
 printOn:!printing!public! !
 shallowCopy!copying!public! !
-species!comparing!public! !
+species!accessing!public! !
 xor:!logical operations!public! !
 !
 

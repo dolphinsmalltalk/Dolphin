@@ -41,7 +41,7 @@ allocBuffer: anArrayOfColNums
 	the specified column numbers in the receiver's
 	result set. Answer the buffer."
 
-	^buffer := self bufferClass new columns: (self describeCols: anArrayOfColNums)!
+	^buffer := self bufferClass new columns: anArrayOfColNums!
 
 appendToStream: puttableStream
 	"Private - Append the receiver's elements to the argument, puttableStream.
@@ -104,12 +104,15 @@ bind
 
 	self bind: #()!
 
-bind: anArrayOfColNums 
+bind: anArrayOfColNums
 	"Private - Create and bind a buffer to hold the
 	specified columns (or #() for all columns)
 	as they are fetched from the result set"
 
-	(self allocBuffer: anArrayOfColNums) bind: statement!
+	(self allocBuffer: (self describeCols: anArrayOfColNums)) bind: statement!
+
+buffer
+	^buffer!
 
 buffer: aDBObjBuf
 	"Private - Set the receiver's buffer. Mainly used to
@@ -119,9 +122,7 @@ buffer: aDBObjBuf
 	buffer := aDBObjBuf.!
 
 bufferClass
-	"Private - Answer the buffer class to use for DBResultSets (e.g. DBBoundRow for bound buffers 
-	where memory is allocated and bound using SQLBindCol, or DBUnboundRow for unbound buffers 
-	which are retrieved individually)."
+	"Private - Answer the buffer class to use for DBResultSets (e.g. DBBoundRow for bound buffers where memory is allocated and bound using SQLBindCol, or DBUnboundRow for unbound buffers which are retrieved individually)."
 
 	^DBBoundBuffer!
 
@@ -144,6 +145,9 @@ collect: transformer
 	answer := self copyLike.
 	self do: [:each | answer addLast: (transformer value: each)].
 	^answer!
+
+columns: anArrayOfDBColAttr
+	columns := anArrayOfDBColAttr!
 
 copyEmpty: anInteger
 	"Private - Answer an empty copy of the receiver, with sufficient capacity for anInteger
@@ -207,20 +211,15 @@ describeCols
 
 	^self describeCols: #()!
 
-describeCols: anArray 
+describeCols: anArray
 	"Answer a list of column attributes for the columns in
 	the receiver's result set specified by the column numbers
 	in anArray"
 
-	columns isNil 
-		ifTrue: 
-			[| num columnNumbers |
-			(num := anArray size) == 0 
-				ifTrue: 
-					[num := self numColumns.
-					columnNumbers := Interval from: 1 to: num]
-				ifFalse: [columnNumbers := anArray].
-			columns := statement describeCols: columnNumbers].
+	columns
+		ifNil: 
+			[columns := statement
+						describeCols: (anArray size == 0 ifTrue: [1 to: self numColumns] ifFalse: [anArray])].
 	^columns!
 
 fetchScroll: orientationInteger offset: offsetInteger
@@ -230,12 +229,13 @@ fetchScroll: orientationInteger offset: offsetInteger
 	DBError exception if an error occurs"
 
 	| ret |
+	buffer ifNil: [self bind].
 	ret := OS.Odbc32
 				sqlFetchScroll: self statementHandle
 				fetchOrientation: orientationInteger
 				fetchOffset: offsetInteger.
-	ret = SQL_NO_DATA ifTrue: [^nil].
-	statement dbCheckException: ret.
+	ret == SQL_NO_DATA ifTrue: [^nil].
+	statement dbCheckException: ret function: 'SQLFetchScroll'.
 
 	"Unbound buffers must now retrieve all columns, bound
 	 buffers must retrieve long unbound columns"
@@ -521,9 +521,7 @@ statement
 statement: aDBStatement
 	"Private - Set the statement instance variable to aDBStatement."
 
-	statement := aDBStatement.
-	"It is assumed that the statement has already been executed."
-	self bind!
+	statement := aDBStatement!
 
 statementHandle
 	"Private - Answer the handle of the associated statement."
@@ -565,10 +563,12 @@ at:put:!accessing!public! !
 atIndex:!accessing!public! !
 bind!binding!private! !
 bind:!binding!private! !
+buffer!accessing!private! !
 buffer:!accessing!private! !
 bufferClass!constants!private! !
 close!public!realizing/unrealizing! !
 collect:!enumerating!public! !
+columns:!accessing!public! !
 copyEmpty:!copying!private! !
 copyFrom:!copying!public! !
 copyingClass!copying!private! !
