@@ -746,13 +746,13 @@ primaryKeysOf: aString
 	stmt free.
 	^answer!
 
-printOn: aStream 
+printOn: aStream
 	"Append the ASCII representation of the receiver
 	 to aStream."
 
 	super printOn: aStream.
 	aStream nextPut: $(.
-	self dsn printOn: aStream.
+	(self dsn ifNil: [self connectString]) printOn: aStream.
 	aStream nextPut: $)!
 
 procedure: aStringQual owner: aStringOwner name: aStringName
@@ -1189,7 +1189,7 @@ free!private!realizing/unrealizing! !
 freeNoFail!private!realizing/unrealizing! !
 freeStmtHandle:!helpers!private! !
 getBoolInfo:!enquiries!private! !
-getDWordAttribute:!accessing!private! !
+getDWordAttribute:!enquiries!private! !
 getDWordInfo:!enquiries!private! !
 getHandle!accessing!private! !
 getHandle:!helpers!private! !
