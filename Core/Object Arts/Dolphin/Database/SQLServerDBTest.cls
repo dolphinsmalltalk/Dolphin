@@ -437,83 +437,6 @@ testRealColumn
 				matching: [:ex | ex sqlState = '42000']].
 	insert free!
 
-testSqlDateAndTimeIntervals
-	| resultSet values actual columns |
-self skip.
-	self dropTestTable.
-	connection
-		exec: 'CREATE TABLE TestTable (Years [float](53), Months [smallint], Days [smallint], 
-Hours [smallint], Minutes [smallint], Seconds [decimal](10,3) )'.
-	connection
-		exec: 'INSERT TestTable (Years, Months, Days,Hours,Minutes,Seconds) VALUES (
-99, 99, 99, 
-13, 25, 57.123)'.
-	"The fractional seconds get truncated, which doesn't seem right. But SQL server does not support the interval types natively, and the driver does not appear to do what it is required to do for conversions either. For example it barfs on years/months/days intervals > 99. Also it won't convert varchar columns to intervals for any of the types, which should be supported (this causes a 22018 'Invalid character value for cast'. Attempting to map seconds to a float, which should also be supported, will cause a 07006 'Restricted data type access violation'. Given that conversions from character columns do not work, I haven't been able to exercise the multi-component interval types at all. Testing this properly probably requires a "
-	values := {SQL_INTERVAL_STRUCT years: 99.
-				SQL_INTERVAL_STRUCT months: 99.
-				SQL_INTERVAL_STRUCT days: 99.
-				SQL_INTERVAL_STRUCT hours: 13.
-				SQL_INTERVAL_STRUCT minutes: 25.
-				"SQL_INTERVAL_STRUCT seconds: 57"}.
-	"SQL_INTERVAL_STRUCT years: 58 months: 5.
-	SQL_INTERVAL_STRUCT days: 5 hours: 13.
-				SQL_INTERVAL_STRUCT
-					days: 5
-					hours: 13
-					minutes: 25.
-				SQL_INTERVAL_STRUCT
-					days: 5
-					hours: 13
-					minutes: 25
-					seconds: 13.1234567.
-				SQL_INTERVAL_STRUCT hours: 13 minutes: 25.
-				SQL_INTERVAL_STRUCT
-					hours: 13
-					minutes: 25
-					seconds: 13.1234567.
-
-				SQL_INTERVAL_STRUCT minutes: 25 seconds: 13.1234567.
-		
-	"
-	columns := {DBColAttr new
-					name: 'Years';
-					columnNumber: 1;
-					type: SQL_INTERVAL_YEAR;
-					yourself.
-				DBColAttr new
-					name: 'Months';
-					columnNumber: 2;
-					type: SQL_INTERVAL_MONTH;
-					yourself.
-				DBColAttr new
-					name: 'Days';
-					columnNumber: 3;
-					type: SQL_INTERVAL_DAY;
-					yourself.
-				DBColAttr new
-					name: 'Hours';
-					columnNumber: 4;
-					type: SQL_INTERVAL_HOUR;
-					yourself.
-				DBColAttr new
-					name: 'Minutes';
-					columnNumber: 5;
-					type: SQL_INTERVAL_MINUTE;
-					yourself.
-				"DBColAttr new
-					name: 'Seconds';
-					columnNumber: 6;
-					type: SQL_INTERVAL_SECOND;
-					yourself"}.
-	resultSet := connection
-				query: 'SELECT ' , ($, join: (columns collect: [:each | each name])) , ' from TestTable'.
-	resultSet columns: columns.
-	self assert: resultSet size equals: 1.
-	actual := resultSet first contents.
-	self assert: actual size equals: columns size.
-	actual with: values do: [:eachActual :eachExpected | self assert: eachActual equals: eachExpected].
-	resultSet free!
-
 testSqlDateAndTimeTypes
 	"Example from https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetimeoffset-transact-sql"
 
@@ -746,7 +669,6 @@ testNumericColumn!public!unit tests! !
 testPrimaryKeysQuery!public!unit tests! !
 testProceduresQuery!public!unit tests! !
 testRealColumn!public!unit tests! !
-testSqlDateAndTimeIntervals!public!unit tests! !
 testSqlDateAndTimeTypes!public!unit tests! !
 testSQLServerConnectionAttributes!public!unit tests! !
 testTablesQuery!public!unit tests! !
