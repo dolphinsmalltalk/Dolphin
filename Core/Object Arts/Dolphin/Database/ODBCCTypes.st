@@ -44,5 +44,4 @@ ODBCCTypes at: 'SQL_C_USHORT' put: -16r11!
 ODBCCTypes at: 'SQL_C_UTINYINT' put: -16r1C!
 ODBCCTypes at: 'SQL_C_VARBOOKMARK' put: -16r2!
 ODBCCTypes at: 'SQL_C_WCHAR' put: -16r8!
-ODBCCTypes at: 'SQL_SS_C_TIMESTAMPOFFSET' put: 16r4001!
 ODBCCTypes shrink!
