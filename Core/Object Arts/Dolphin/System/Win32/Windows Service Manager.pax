@@ -1,51 +1,72 @@
 ﻿| package |
 package := Package name: 'Windows Service Manager'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Win32 Service Manager
 Copyright (c) Object Arts Ltd, 2024'.
 
-package classNames
-	add: #SERVICE_STATUS;
-	add: #SERVICE_STATUS_PROCESS;
-	yourself.
 
-package methodNames
-	add: #AdvApiLibrary -> #closeServiceHandle:;
-	add: #AdvApiLibrary -> #getServiceState:;
-	add: #AdvApiLibrary -> #isServiceRunning:;
-	add: #AdvApiLibrary -> #openSCManager:lpDatabaseName:dwDesiredAccess:;
-	add: #AdvApiLibrary -> #openService:lpServiceName:dwDesiredAccess:;
-	add: #AdvApiLibrary -> #queryServiceStatusEx:infoLevel:lpBuffer:cbBufSize:pcbBytesNeeded:;
-	yourself.
+package setClassNames: #(
+	#{OS.SERVICE_STATUS}
+	#{OS.SERVICE_STATUS_PROCESS}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{OS.AdvApiLibrary} #closeServiceHandle:)
+	#(#{OS.AdvApiLibrary} #getServiceState:)
+	#(#{OS.AdvApiLibrary} #isServiceRunning:)
+	#(#{OS.AdvApiLibrary} #openSCManager:lpDatabaseName:dwDesiredAccess:)
+	#(#{OS.AdvApiLibrary} #openService:lpServiceName:dwDesiredAccess:)
+	#(#{OS.AdvApiLibrary} #queryServiceStatusEx:infoLevel:lpBuffer:cbBufSize:pcbBytesNeeded:)
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
 "Class Definitions"!
 
-Win32Structure subclass: #SERVICE_STATUS
+External.Structure
+	subclass: #'OS.SERVICE_STATUS'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwCheckPoint _OffsetOf_dwControlsAccepted _OffsetOf_dwCurrentState _OffsetOf_dwServiceSpecificExitCode _OffsetOf_dwServiceType _OffsetOf_dwWaitHint _OffsetOf_dwWin32ExitCode SC_STATUS_PROCESS_INFO SERVICE_CONTINUE_PENDING SERVICE_PAUSE_PENDING SERVICE_PAUSED SERVICE_RUNNING SERVICE_START_PENDING SERVICE_STOP_PENDING SERVICE_STOPPED'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_dwCheckPoint' -> 16r14.
+			'_OffsetOf_dwControlsAccepted' -> 16r8.
+			'_OffsetOf_dwCurrentState' -> 16r4.
+			'_OffsetOf_dwServiceSpecificExitCode' -> 16r10.
+			'_OffsetOf_dwServiceType' -> 16r0.
+			'_OffsetOf_dwWaitHint' -> 16r18.
+			'_OffsetOf_dwWin32ExitCode' -> 16rC.
+			'_SERVICE_STATUS_Size' -> 16r1C.
+			'SC_STATUS_PROCESS_INFO' -> 16r0.
+			'SERVICE_CONTINUE_PENDING' -> 16r5.
+			'SERVICE_PAUSE_PENDING' -> 16r6.
+			'SERVICE_PAUSED' -> 16r7.
+			'SERVICE_RUNNING' -> 16r4.
+			'SERVICE_START_PENDING' -> 16r2.
+			'SERVICE_STOP_PENDING' -> 16r3.
+			'SERVICE_STOPPED' -> 16r1
+		}!
 
-SERVICE_STATUS subclass: #SERVICE_STATUS_PROCESS
+OS.SERVICE_STATUS
+	subclass: #'OS.SERVICE_STATUS_PROCESS'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwProcessId _OffsetOf_dwServiceFlags'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_dwProcessId' -> 16r1C.
+			'_OffsetOf_dwServiceFlags' -> 16r20.
+			'_SERVICE_STATUS_PROCESS_Size' -> 16r24
+		}!
 
 "Loose Methods"!
 
-!AdvApiLibrary methodsFor!
+!OS.AdvApiLibrary methodsFor!
 
 closeServiceHandle: hSCObject
 	"Invoke the CloseServiceHandle() function of the module wrapped by the receiver.
@@ -79,7 +100,7 @@ getServiceState: aString
 				
 				[| status bytesNeeded |
 				status := SERVICE_STATUS_PROCESS newBuffer.
-				bytesNeeded := DWORDBytes new.
+				bytesNeeded := UInt32Bytes new.
 				(self
 					queryServiceStatusEx: hService
 					infoLevel: SERVICE_STATUS.SC_STATUS_PROCESS_INFO
@@ -132,7 +153,7 @@ queryServiceStatusEx: hService infoLevel: infoLevel lpBuffer: lpBuffer cbBufSize
 	<stdcall: bool QueryServiceStatusEx handle sdword byte* dword dword*>
 	^self invalidCall: _failureCode! !
 
-!AdvApiLibrary categoriesForMethods!
+!OS.AdvApiLibrary categoriesForMethods!
 closeServiceHandle:!**auto generated**!public! !
 getServiceState:!enquiries!public! !
 isServiceRunning:!enquiries!public! !
