@@ -18,14 +18,14 @@ SQL_SS_TIMESTAMPOFFSET_STRUCT comment: ''!
 !SQL_SS_TIMESTAMPOFFSET_STRUCT methodsFor!
 
 dbConvert: anObject for: aDBField
-	"Convert the argument to a <DateAndTime> for marshalling to SQL_SS_C_TIMESTAMPOFFSET representation in the <DBField> 2nd argument. Note that the timezone offset is retained (i.e. not converted to a local time). Throw an error if this is not possible."
+	"Convert the argument to a <DateAndTime> for marshalling to SQL_C_SS_TIMESTAMPOFFSET representation in the <DBField> 2nd argument. Note that the timezone offset is retained (i.e. not converted to a local time). Throw an error if this is not possible."
 
 	^anObject asDateAndTime!
 
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_SS_C_TIMESTAMPOFFSET!
+	^ODBCCTypes.SQL_C_SS_TIMESTAMPOFFSET!
 
 value
 	"Answers a local <DateAndTime> which represents the receiver."
