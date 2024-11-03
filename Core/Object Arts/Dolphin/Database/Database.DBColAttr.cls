@@ -3,56 +3,10 @@
 Core.Object
 	subclass: #'Database.DBColAttr'
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special bufferClass'
-	classVariableNames: ''
+	classVariableNames: 'BufferClasses'
 	imports: #(#{Database.DBColFlags} #{OS.ODBCTypes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
-	classConstants: {
-			'BufferClasses'
-				-> (IdentityDictionary withAll: {
-								-16r9B -> SQL_SS_TIMESTAMPOFFSET_STRUCT.
-								-16r9A -> DBTIME2.
-								-16rB -> GUID.
-								-16rA -> Database.DBVarWCharBuffer.
-								-16r9 -> Database.DBVarWCharBuffer.
-								-16r8 -> Database.DBVarWCharBuffer.
-								-16r7 -> BOOLEAN.
-								-16r6 -> UInt8.
-								-16r5 -> Int64.
-								-16r4 -> Database.DBVarBinaryBuffer.
-								-16r3 -> Database.DBVarBinaryBuffer.
-								-16r2 -> Database.DBVarBinaryBuffer.
-								-16r1 -> Database.DBVarCharBuffer.
-								16r0 -> nil.
-								16r1 -> Database.DBVarCharBuffer.
-								16r2 -> Database.DBNumericFieldBuffer.
-								16r3 -> Database.DBNumericFieldBuffer.
-								16r4 -> Int32.
-								16r5 -> Int16.
-								16r6 -> DOUBLE.
-								16r7 -> FLOAT.
-								16r8 -> DOUBLE.
-								16r9 -> SQL_DATE_STRUCT.
-								16rA -> SQL_TIME_STRUCT.
-								16rB -> SQL_TIMESTAMP_STRUCT.
-								16rC -> Database.DBVarCharBuffer.
-								16r5B -> SQL_DATE_STRUCT.
-								16r5C -> SQL_TIME_STRUCT.
-								16r5D -> SQL_TIMESTAMP_STRUCT.
-								16r65 -> SQL_INTERVAL_STRUCT.
-								16r66 -> SQL_INTERVAL_STRUCT.
-								16r67 -> SQL_INTERVAL_STRUCT.
-								16r68 -> SQL_INTERVAL_STRUCT.
-								16r69 -> SQL_INTERVAL_STRUCT.
-								16r6A -> SQL_INTERVAL_STRUCT.
-								16r6B -> SQL_INTERVAL_STRUCT.
-								16r6C -> SQL_INTERVAL_STRUCT.
-								16r6D -> SQL_INTERVAL_STRUCT.
-								16r6E -> SQL_INTERVAL_STRUCT.
-								16r6F -> SQL_INTERVAL_STRUCT.
-								16r70 -> SQL_INTERVAL_STRUCT.
-								16r71 -> SQL_INTERVAL_STRUCT
-							})
-		}!
+	classConstants: {}!
 
 Database.DBColAttr guid: (Core.GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -298,8 +252,7 @@ initialize
 		self initialize
 	"
 
-	self addClassConstant: 'BufferClasses'
-		value: (IdentityDictionary withAll: {SQL_CHAR -> DBVarCharBuffer.
+	BufferClasses := (IdentityDictionary withAll: {SQL_CHAR -> DBVarCharBuffer.
 						SQL_VARCHAR -> DBVarCharBuffer.
 						SQL_LONGVARCHAR -> DBVarCharBuffer.
 						SQL_WCHAR -> DBVarWCharBuffer.
