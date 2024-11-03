@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-SQL_TIME_STRUCT
-	subclass: #DBTIME2
+OS.SQL_TIME_STRUCT
+	subclass: #'OS.DBTIME2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_DBTIME2_Size' -> 16rC. '_OffsetOf_fraction' -> 16r8 }!
 
-DBTIME2 guid: (Core.GUID fromString: '{e6ec3d86-d568-4feb-b360-0fd8d8232c97}')!
+OS.DBTIME2 guid: (Core.GUID fromString: '{e6ec3d86-d568-4feb-b360-0fd8d8232c97}')!
 
-DBTIME2 comment: ''!
+OS.DBTIME2 comment: ''!
 
-!DBTIME2 categoriesForClass!External-Data-Structured-ODBC! !
+!OS.DBTIME2 categoriesForClass!External-Data-Structured-ODBC! !
 
-!DBTIME2 methodsFor!
+!OS.DBTIME2 methodsFor!
 
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
@@ -45,14 +45,14 @@ value: aTime scale: anInteger
 		uint32AtOffset: _OffsetOf_fraction
 			put: (anInteger == 0 ifTrue: [0] ifFalse: [aTime nanosecond truncateTo: (9 - anInteger) exp10])! !
 
-!DBTIME2 categoriesForMethods!
+!OS.DBTIME2 categoriesForMethods!
 dbInterchangeType!constants!public! !
 dbMarshal:into:!operations!public! !
 value!converting!public! !
 value:scale:!accessing!public! !
 !
 
-!DBTIME2 class methodsFor!
+!OS.DBTIME2 class methodsFor!
 
 defineFields
 	"
@@ -72,7 +72,7 @@ defineFields
 getFieldNames
 	^#(#hour #minute #second #fraction)! !
 
-!DBTIME2 class categoriesForMethods!
+!OS.DBTIME2 class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

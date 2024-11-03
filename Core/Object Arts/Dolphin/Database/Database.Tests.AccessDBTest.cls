@@ -79,9 +79,9 @@ ordersColumns
 	^{{'OrderID'. SQL_INTEGER. 10. 0. 4}.
 		{'CustomerID'. SQL_WVARCHAR. 5. nil. 10}.
 		{'EmployeeID'. SQL_INTEGER. 10. 0. 4}.
-		{'OrderDate'. SQL_TYPE_TIMESTAMP. 19. 0. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
-		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 19. 0. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
-		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 19. 0. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'OrderDate'. SQL_TYPE_TIMESTAMP. 19. 0. OS.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 19. 0. OS.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 19. 0. OS.SQL_TIMESTAMP_STRUCT byteSize}.
 		{'ShipVia'. SQL_INTEGER. 10. 0. 4}.
 		{'Freight'. SQL_NUMERIC. 19. 4. 22}.
 		{'ShipName'. SQL_WVARCHAR. 40. nil. 80}.

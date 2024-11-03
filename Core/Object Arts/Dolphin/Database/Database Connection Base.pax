@@ -18,16 +18,21 @@ package setClassNames: #(
 	#{Database.DBAbstractRow}
 	#{Database.DBAbstractStatement}
 	#{Database.DBBoundBuffer}
+	#{Database.DBBoundField}
 	#{Database.DBColAttr}
 	#{Database.DBColFlags}
 	#{Database.DBColumnsStatement}
 	#{Database.DBConnection}
 	#{Database.DBError}
 	#{Database.DBErrorDetails}
+	#{Database.DBErrorDetailsBuilder}
 	#{Database.DBExceptionDetails}
 	#{Database.DBField}
+	#{Database.DBFixedSizeField}
 	#{Database.DBForeignKeysStatement}
 	#{Database.DBForwardOnlyResultSet}
+	#{Database.DBLongVarField}
+	#{Database.DBNumericFieldBuffer}
 	#{Database.DBParameterizedStatement}
 	#{Database.DBPrimaryKeysStatement}
 	#{Database.DBProceduresStatement}
@@ -40,33 +45,28 @@ package setClassNames: #(
 	#{Database.DBStatisticsStatement}
 	#{Database.DBTablesStatement}
 	#{Database.DBTxn}
+	#{Database.DBTypeInfoStatement}
 	#{Database.DBUnboundBuffer}
+	#{Database.DBUnboundField}
+	#{Database.DBUnstructuredFieldBuffer}
+	#{Database.DBVarBinaryBuffer}
+	#{Database.DBVarCharBuffer}
+	#{Database.DBVarFieldBuffer}
+	#{Database.DBVarWCharBuffer}
 	#{Database.DBWarning}
+	#{OS.DBTIME2}
 	#{OS.ODBCConstants}
 	#{OS.ODBCCTypes}
 	#{OS.ODBCLibrary}
 	#{OS.ODBCRetCodes}
 	#{OS.ODBCTypes}
-	#{Smalltalk.DBBoundField}
-	#{Smalltalk.DBErrorDetailsBuilder}
-	#{Smalltalk.DBFixedSizeField}
-	#{Smalltalk.DBLongVarField}
-	#{Smalltalk.DBNumericFieldBuffer}
-	#{Smalltalk.DBTIME2}
-	#{Smalltalk.DBTypeInfoStatement}
-	#{Smalltalk.DBUnboundField}
-	#{Smalltalk.DBUnstructuredFieldBuffer}
-	#{Smalltalk.DBVarBinaryBuffer}
-	#{Smalltalk.DBVarCharBuffer}
-	#{Smalltalk.DBVarFieldBuffer}
-	#{Smalltalk.DBVarWCharBuffer}
-	#{Smalltalk.SQL_DATE_STRUCT}
-	#{Smalltalk.SQL_DAY_SECOND_STRUCT}
-	#{Smalltalk.SQL_INTERVAL_STRUCT}
-	#{Smalltalk.SQL_SS_TIMESTAMPOFFSET_STRUCT}
-	#{Smalltalk.SQL_TIME_STRUCT}
-	#{Smalltalk.SQL_TIMESTAMP_STRUCT}
-	#{Smalltalk.SQL_YEAR_MONTH_STRUCT}
+	#{OS.SQL_DATE_STRUCT}
+	#{OS.SQL_DAY_SECOND_STRUCT}
+	#{OS.SQL_INTERVAL_STRUCT}
+	#{OS.SQL_SS_TIMESTAMPOFFSET_STRUCT}
+	#{OS.SQL_TIME_STRUCT}
+	#{OS.SQL_TIMESTAMP_STRUCT}
+	#{OS.SQL_YEAR_MONTH_STRUCT}
 ).
 
 package setMethodNames: #(
@@ -1654,7 +1654,53 @@ Core.Object
 	classVariableNames: ''
 	imports: #(#{Database.DBColFlags} #{OS.ODBCTypes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'BufferClasses'
+				-> (IdentityDictionary withAll: {
+								-16r9B -> SQL_SS_TIMESTAMPOFFSET_STRUCT.
+								-16r9A -> DBTIME2.
+								-16rB -> GUID.
+								-16rA -> Database.DBVarWCharBuffer.
+								-16r9 -> Database.DBVarWCharBuffer.
+								-16r8 -> Database.DBVarWCharBuffer.
+								-16r7 -> BOOLEAN.
+								-16r6 -> UInt8.
+								-16r5 -> Int64.
+								-16r4 -> Database.DBVarBinaryBuffer.
+								-16r3 -> Database.DBVarBinaryBuffer.
+								-16r2 -> Database.DBVarBinaryBuffer.
+								-16r1 -> Database.DBVarCharBuffer.
+								16r0 -> nil.
+								16r1 -> Database.DBVarCharBuffer.
+								16r2 -> Database.DBNumericFieldBuffer.
+								16r3 -> Database.DBNumericFieldBuffer.
+								16r4 -> Int32.
+								16r5 -> Int16.
+								16r6 -> DOUBLE.
+								16r7 -> FLOAT.
+								16r8 -> DOUBLE.
+								16r9 -> SQL_DATE_STRUCT.
+								16rA -> SQL_TIME_STRUCT.
+								16rB -> SQL_TIMESTAMP_STRUCT.
+								16rC -> Database.DBVarCharBuffer.
+								16r5B -> SQL_DATE_STRUCT.
+								16r5C -> SQL_TIME_STRUCT.
+								16r5D -> SQL_TIMESTAMP_STRUCT.
+								16r65 -> SQL_INTERVAL_STRUCT.
+								16r66 -> SQL_INTERVAL_STRUCT.
+								16r67 -> SQL_INTERVAL_STRUCT.
+								16r68 -> SQL_INTERVAL_STRUCT.
+								16r69 -> SQL_INTERVAL_STRUCT.
+								16r6A -> SQL_INTERVAL_STRUCT.
+								16r6B -> SQL_INTERVAL_STRUCT.
+								16r6C -> SQL_INTERVAL_STRUCT.
+								16r6D -> SQL_INTERVAL_STRUCT.
+								16r6E -> SQL_INTERVAL_STRUCT.
+								16r6F -> SQL_INTERVAL_STRUCT.
+								16r70 -> SQL_INTERVAL_STRUCT.
+								16r71 -> SQL_INTERVAL_STRUCT
+							})
+		}!
 
 Core.Object
 	subclass: #'Database.DBConnection'
@@ -1673,7 +1719,7 @@ Core.Object
 	classConstants: {}!
 
 Core.Object
-	subclass: #DBErrorDetailsBuilder
+	subclass: #'Database.DBErrorDetailsBuilder'
 	instanceVariableNames: 'errors szSqlState szErrorMsg cbErrorMsg fNativeError'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCConstants} #{OS.ODBCRetCodes})
@@ -1705,7 +1751,7 @@ Core.Object
 	classConstants: {}!
 
 Core.Object
-	subclass: #DBUnstructuredFieldBuffer
+	subclass: #'Database.DBUnstructuredFieldBuffer'
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes} #{OS.ODBCRetCodes} #{OS.ODBCTypes})
@@ -1777,7 +1823,7 @@ Database.DBAbstractStatement
 	classConstants: {}!
 
 Database.DBAbstractStatement
-	subclass: #DBTypeInfoStatement
+	subclass: #'Database.DBTypeInfoStatement'
 	instanceVariableNames: 'dataType'
 	classVariableNames: ''
 	imports: #()
@@ -1849,7 +1895,7 @@ Database.DBStatement
 	classConstants: {}!
 
 Database.DBField
-	subclass: #DBFixedSizeField
+	subclass: #'Database.DBFixedSizeField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1857,63 +1903,63 @@ Database.DBField
 	classConstants: {}!
 
 Database.DBField
-	subclass: #DBLongVarField
+	subclass: #'Database.DBLongVarField'
 	instanceVariableNames: 'value'
 	classVariableNames: 'BufferSize'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBFixedSizeField
-	subclass: #DBBoundField
+Database.DBFixedSizeField
+	subclass: #'Database.DBBoundField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBFixedSizeField
-	subclass: #DBUnboundField
+Database.DBFixedSizeField
+	subclass: #'Database.DBUnboundField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBUnstructuredFieldBuffer
-	subclass: #DBNumericFieldBuffer
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBNumericFieldBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBUnstructuredFieldBuffer
-	subclass: #DBVarFieldBuffer
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBVarFieldBuffer'
 	instanceVariableNames: ''
 	classVariableNames: 'BlockTransferOctetLength MaxBoundOctetLength'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBVarFieldBuffer
-	subclass: #DBVarBinaryBuffer
+Database.DBVarFieldBuffer
+	subclass: #'Database.DBVarBinaryBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBVarFieldBuffer
-	subclass: #DBVarCharBuffer
+Database.DBVarFieldBuffer
+	subclass: #'Database.DBVarCharBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBVarFieldBuffer
-	subclass: #DBVarWCharBuffer
+Database.DBVarFieldBuffer
+	subclass: #'Database.DBVarWCharBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1945,7 +1991,7 @@ Core.Notification
 	classConstants: {}!
 
 External.Structure
-	subclass: #SQL_DATE_STRUCT
+	subclass: #'OS.SQL_DATE_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1959,7 +2005,7 @@ External.Structure
 		}!
 
 External.Structure
-	subclass: #SQL_INTERVAL_STRUCT
+	subclass: #'OS.SQL_INTERVAL_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ODBCCTypes})
@@ -1987,7 +2033,7 @@ External.Structure
 		}!
 
 External.Structure
-	subclass: #SQL_TIME_STRUCT
+	subclass: #'OS.SQL_TIME_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2001,7 +2047,7 @@ External.Structure
 		}!
 
 External.Structure
-	subclass: #SQL_TIMESTAMP_STRUCT
+	subclass: #'OS.SQL_TIMESTAMP_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2017,8 +2063,8 @@ External.Structure
 			'_SQL_TIMESTAMP_STRUCT_Size' -> 16r10
 		}!
 
-SQL_INTERVAL_STRUCT
-	subclass: #SQL_DAY_SECOND_STRUCT
+OS.SQL_INTERVAL_STRUCT
+	subclass: #'OS.SQL_DAY_SECOND_STRUCT'
 	instanceVariableNames: 'scaleExp'
 	classVariableNames: ''
 	imports: #()
@@ -2033,8 +2079,8 @@ SQL_INTERVAL_STRUCT
 			'DefaultFractionScaler' -> 16rF4240
 		}!
 
-SQL_INTERVAL_STRUCT
-	subclass: #SQL_YEAR_MONTH_STRUCT
+OS.SQL_INTERVAL_STRUCT
+	subclass: #'OS.SQL_YEAR_MONTH_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2048,16 +2094,16 @@ SQL_INTERVAL_STRUCT
 			'_SQL_YEAR_MONTH_STRUCT_Size' -> 16r1C
 		}!
 
-SQL_TIME_STRUCT
-	subclass: #DBTIME2
+OS.SQL_TIME_STRUCT
+	subclass: #'OS.DBTIME2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_DBTIME2_Size' -> 16rC. '_OffsetOf_fraction' -> 16r8 }!
 
-SQL_TIMESTAMP_STRUCT
-	subclass: #SQL_SS_TIMESTAMPOFFSET_STRUCT
+OS.SQL_TIMESTAMP_STRUCT
+	subclass: #'OS.SQL_SS_TIMESTAMPOFFSET_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2139,7 +2185,7 @@ valueClass!constants!public! !
 !Core.GUID class methodsFor!
 
 dbBoundFieldClassForColumn: aDBColAttr
-	^Smalltalk.DBBoundField!
+	^Database.DBBoundField!
 
 dbHasVariableTransferOctetLength
 	"Answer whether the marshalled type supports variable length columns."
@@ -2354,7 +2400,7 @@ valueClass!constants!public! !
 !External.Structure class methodsFor!
 
 dbBoundFieldClassForColumn: aDBColAttr
-	^Smalltalk.DBBoundField!
+	^Database.DBBoundField!
 
 dbHasVariableTransferOctetLength
 	"Answer whether the marshalled type supports variable length columns."

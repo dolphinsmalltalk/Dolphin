@@ -1,23 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DBFixedSizeField subclass: #DBBoundField
+Database.DBFixedSizeField
+	subclass: #'Database.DBBoundField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-DBBoundField guid: (GUID fromString: '{d5c24a9c-ecd9-44bd-a7da-2bfad35a59e0}')!
+Database.DBBoundField guid: (Core.GUID fromString: '{d5c24a9c-ecd9-44bd-a7da-2bfad35a59e0}')!
 
-DBBoundField comment: '`DBBoundField` is the class of `DBField`s that provide a pre-bound buffer of fixed size, providing the most efficient means of data transfer for fixed width columns, and for variable length columns of relatively small fixed maximum size (i.e. other than the long binary and char columns that can hold data up to 2Gb).'!
+Database.DBBoundField comment: '`DBBoundField` is the class of `DBField`s that provide a pre-bound buffer of fixed size, providing the most efficient means of data transfer for fixed width columns, and for variable length columns of relatively small fixed maximum size (i.e. other than the long binary and char columns that can hold data up to 2Gb).'!
 
-!DBBoundField categoriesForClass!ODBC Interface! !
+!Database.DBBoundField categoriesForClass!ODBC Interface! !
 
-!DBBoundField methodsFor!
+!Database.DBBoundField methodsFor!
 
 bind: aDBStatement
 	"Private - Bind the receiver's buffers (data and length) for the <DBStatement> argument, which is assumed to have been executed already."
 
-	^aDBStatement dbCheckException: (ODBCLibrary default
+	^aDBStatement dbCheckException: (OS.ODBCLibrary default
 				sqlBindCol: aDBStatement handle
 				columnNumber: column columnNumber
 				targetType: buffer dbInterchangeType
@@ -33,7 +35,7 @@ getData: aDBStatement
 
 	! !
 
-!DBBoundField categoriesForMethods!
+!Database.DBBoundField categoriesForMethods!
 bind:!operations!private! !
 getData:!accessing!private! !
 !

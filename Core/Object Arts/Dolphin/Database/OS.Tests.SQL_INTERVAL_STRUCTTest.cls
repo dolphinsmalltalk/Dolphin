@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DolphinTest subclass: #SQL_INTERVAL_STRUCTTest
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.SQL_INTERVAL_STRUCTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ODBCCTypes'
-	classInstanceVariableNames: ''!
+	imports: #(#{OS.ODBCCTypes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-SQL_INTERVAL_STRUCTTest guid: (GUID fromString: '{4fdd0033-b9f6-4c37-bf4a-ae29c0aee2a6}')!
+OS.Tests.SQL_INTERVAL_STRUCTTest guid: (Core.GUID fromString: '{4fdd0033-b9f6-4c37-bf4a-ae29c0aee2a6}')!
 
-SQL_INTERVAL_STRUCTTest comment: ''!
+OS.Tests.SQL_INTERVAL_STRUCTTest comment: ''!
 
-!SQL_INTERVAL_STRUCTTest categoriesForClass!Unclassified! !
-
-!SQL_INTERVAL_STRUCTTest methodsFor!
+!OS.Tests.SQL_INTERVAL_STRUCTTest methodsFor!
 
 testComparingDaysToSeconds
 	| subjects |
@@ -371,7 +371,7 @@ testSetMinutesToSecondsFromSeconds
 
 testSetMonthsFromMonths
 	| subject |
-	subject := SQL_INTERVAL_STRUCT dbInterchangeType: ODBCCTypes.SQL_C_INTERVAL_MONTH.
+	subject := SQL_INTERVAL_STRUCT dbInterchangeType: SQL_C_INTERVAL_MONTH.
 	subject totalMonths: 25.
 	self assert: subject interval_sign equals: 0.
 	self assert: subject year equals: 0.
@@ -395,7 +395,7 @@ testSetMonthsFromMonths
 
 testSetMonthsFromYears
 	| subject |
-	subject := SQL_INTERVAL_STRUCT dbInterchangeType: ODBCCTypes.SQL_C_INTERVAL_MONTH.
+	subject := SQL_INTERVAL_STRUCT dbInterchangeType: SQL_C_INTERVAL_MONTH.
 	subject totalYears: 2.
 	self assert: subject interval_sign equals: 0.
 	self assert: subject year equals: 0.
@@ -423,7 +423,7 @@ testSetMonthsFromYears
 
 testSetYearsFromMonths
 	| subject |
-	subject := SQL_INTERVAL_STRUCT dbInterchangeType: ODBCCTypes.SQL_C_INTERVAL_YEAR.
+	subject := SQL_INTERVAL_STRUCT dbInterchangeType: SQL_C_INTERVAL_YEAR.
 	subject totalMonths: 26.5.
 	self assert: subject interval_sign equals: 0.
 	self assert: subject year equals: 2.
@@ -449,7 +449,7 @@ testSetYearsFromMonths
 
 testSetYearsFromYears
 	| subject |
-	subject := SQL_INTERVAL_STRUCT dbInterchangeType: ODBCCTypes.SQL_C_INTERVAL_YEAR.
+	subject := SQL_INTERVAL_STRUCT dbInterchangeType: SQL_C_INTERVAL_YEAR.
 	subject totalYears: 6.5.
 	self assert: subject interval_sign equals: 0.
 	self assert: subject year equals: 6.
@@ -467,7 +467,7 @@ testSetYearsFromYears
 	self assert: subject totalMonths equals: -60.
 	self assert: subject months equals: 0! !
 
-!SQL_INTERVAL_STRUCTTest categoriesForMethods!
+!OS.Tests.SQL_INTERVAL_STRUCTTest categoriesForMethods!
 testComparingDaysToSeconds!public!unit tests! !
 testComparingIncompatibleIntervals!public!unit tests! !
 testComparingYearsToMonths!public!unit tests! !

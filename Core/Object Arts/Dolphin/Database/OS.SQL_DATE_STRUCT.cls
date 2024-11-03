@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure
-	subclass: #SQL_DATE_STRUCT
+	subclass: #'OS.SQL_DATE_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -14,13 +14,13 @@ External.Structure
 			'_SQL_DATE_STRUCT_Size' -> 16r6
 		}!
 
-SQL_DATE_STRUCT guid: (Core.GUID fromString: '{87b4c597-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.SQL_DATE_STRUCT guid: (Core.GUID fromString: '{87b4c597-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-SQL_DATE_STRUCT comment: 'SQL_DATE_STRUCT is a representation of the same named Win32 ODBC structure.'!
+OS.SQL_DATE_STRUCT comment: 'SQL_DATE_STRUCT is a representation of the same named Win32 ODBC structure.'!
 
-!SQL_DATE_STRUCT categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+!OS.SQL_DATE_STRUCT categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 
-!SQL_DATE_STRUCT methodsFor!
+!OS.SQL_DATE_STRUCT methodsFor!
 
 asDate
 	"Answers a Date which represents the receiver."
@@ -64,7 +64,7 @@ value: aDate
 valueClass
 	^Date! !
 
-!SQL_DATE_STRUCT categoriesForMethods!
+!OS.SQL_DATE_STRUCT categoriesForMethods!
 asDate!converting!public! !
 date:!accessing!public! !
 dbConvert:for:!operations!public! !
@@ -74,7 +74,7 @@ value:!accessing!public! !
 valueClass!constants!public! !
 !
 
-!SQL_DATE_STRUCT class methodsFor!
+!OS.SQL_DATE_STRUCT class methodsFor!
 
 defineFields
 	"
@@ -103,7 +103,7 @@ fromDate: aDate
 getFieldNames
 	^#(#year #month #day)! !
 
-!SQL_DATE_STRUCT class categoriesForMethods!
+!OS.SQL_DATE_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
 fromDate:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

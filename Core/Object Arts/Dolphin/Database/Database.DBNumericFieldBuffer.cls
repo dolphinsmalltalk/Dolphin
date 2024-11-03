@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DBUnstructuredFieldBuffer
-	subclass: #DBNumericFieldBuffer
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBNumericFieldBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBNumericFieldBuffer guid: (Core.GUID fromString: '{719e2584-f762-4496-896a-389518c8ba75}')!
+Database.DBNumericFieldBuffer guid: (Core.GUID fromString: '{719e2584-f762-4496-896a-389518c8ba75}')!
 
-DBNumericFieldBuffer comment: ''!
+Database.DBNumericFieldBuffer comment: ''!
 
-!DBNumericFieldBuffer categoriesForClass!Kernel-Objects! !
+!Database.DBNumericFieldBuffer categoriesForClass!Kernel-Objects! !
 
-!DBNumericFieldBuffer methodsFor!
+!Database.DBNumericFieldBuffer methodsFor!
 
 dbConvert: anObject for: aDBField
 	"Convert the first argument to a <ScaledDecimal> of the correct scale for for marshalling as the value of the <DBField> 2nd argument. Throw an error if this is not possible, e.g. because anObject is not a Number."
@@ -62,7 +62,7 @@ initializeForColumn: aDBColAttr
 valueClass
 	^Number! !
 
-!DBNumericFieldBuffer categoriesForMethods!
+!Database.DBNumericFieldBuffer categoriesForMethods!
 dbConvert:for:!operations!public! !
 dbInterchangeType!constants!public! !
 dbMarshal:into:!operations!public! !
@@ -71,7 +71,7 @@ initializeForColumn:!initializing!private! !
 valueClass!constants!private! !
 !
 
-!DBNumericFieldBuffer class methodsFor!
+!Database.DBNumericFieldBuffer class methodsFor!
 
 dbTransferOctetLengthForColumn: aDBColAttr
 	"Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) based on the column type.
@@ -85,7 +85,7 @@ dbTransferOctetLengthForColumn: aDBColAttr
 
 	^aDBColAttr precision + 2 + 1	"We are transferring as SQL_C_CHAR, as there is no point using UTF-16 for numbers"! !
 
-!DBNumericFieldBuffer class categoriesForMethods!
+!Database.DBNumericFieldBuffer class categoriesForMethods!
 dbTransferOctetLengthForColumn:!accessing!initializing!public! !
 !
 

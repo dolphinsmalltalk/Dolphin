@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Database.Tests.DBConnectionTest
-	subclass: #MimerSqlDBTest
+	subclass: #'Database.Tests.MimerSqlDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-MimerSqlDBTest guid: (Core.GUID fromString: '{a7533b57-3642-4098-b4c2-8d9e7b4eda8a}')!
+Database.Tests.MimerSqlDBTest guid: (Core.GUID fromString: '{a7533b57-3642-4098-b4c2-8d9e7b4eda8a}')!
 
-MimerSqlDBTest comment: ''!
+Database.Tests.MimerSqlDBTest comment: ''!
 
-!MimerSqlDBTest methodsFor!
+!Database.Tests.MimerSqlDBTest methodsFor!
 
 categoriesColumns
 	^{{'CategoryID'. SQL_INTEGER. 10. 0. 4}.
@@ -41,9 +41,9 @@ ordersColumns
 	^{{'OrderID'. SQL_INTEGER. 10. 0. 4}.
 		{'CustomerID'. SQL_CHAR. 5. nil. 5}.
 		{'EmployeeID'. SQL_INTEGER. 10. 0. 4}.
-		{'OrderDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize}.
+		{'OrderDate'. SQL_TYPE_TIMESTAMP. 26. 6. OS.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 26. 6. OS.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 26. 6. OS.SQL_TIMESTAMP_STRUCT byteSize}.
 		{'ShipVia'. SQL_INTEGER. 10. 0. 4}.
 		{'Freight'. SQL_DECIMAL. 10. 2. 13}.
 		{'ShipName'. SQL_WVARCHAR. 40. nil. 160}.
@@ -97,9 +97,9 @@ testDayToSecondsIntervals
 				0 seconds.
 				-31 days}.
 	"Do a sanity check that the buffer class is set up and marshals as expected"
-	buf := SQL_INTERVAL_STRUCT dbNewForColumn: intervalCol.
-	self assert: buf isKindOf: SQL_DAY_SECOND_STRUCT.
-	self assert: buf dbInterchangeType equals: ODBCCTypes.SQL_C_INTERVAL_DAY_TO_SECOND.
+	buf := OS.SQL_INTERVAL_STRUCT dbNewForColumn: intervalCol.
+	self assert: buf isKindOf: OS.SQL_DAY_SECOND_STRUCT.
+	self assert: buf dbInterchangeType equals: OS.ODBCCTypes.SQL_C_INTERVAL_DAY_TO_SECOND.
 	values do: 
 			[:each |
 			buf value: each.
@@ -120,8 +120,8 @@ testDayToSecondsIntervals
 			insert values: {key * 2. each}.
 			self
 				should: [insert exec]
-				raise: HRESULTError
-				matching: [:ex | ex hresult = (HRESULT fromInteger: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]!
+				raise: OS.HRESULTError
+				matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]!
 
 testIntervalLiterals
 	"Examples based on https://learn.microsoft.com/en-us/sql/odbc/reference/appendixes/interval-literals"
@@ -147,13 +147,13 @@ testIntervalLiterals
 	self assert: resultSet size equals: 1.
 	actual := resultSet first contents.
 	self assert: actual size equals: 14.
-	self assert: (actual at: 1) equals: (SQL_INTERVAL_STRUCT years: 1997).
-	self assert: (actual at: 2) equals: (SQL_INTERVAL_STRUCT months: 993).
+	self assert: (actual at: 1) equals: (OS.SQL_INTERVAL_STRUCT years: 1997).
+	self assert: (actual at: 2) equals: (OS.SQL_INTERVAL_STRUCT months: 993).
 	self assert: (actual at: 3) equals: 3261 days.
 	self assert: (actual at: 4) equals: 163 hours.
 	self assert: (actual at: 5) equals: -163 minutes.
 	self assert: (actual at: 6) equals: 223.25 seconds.
-	self assert: (actual at: 7) equals: (SQL_INTERVAL_STRUCT years: 163 months: 11).
+	self assert: (actual at: 7) equals: (OS.SQL_INTERVAL_STRUCT years: 163 months: 11).
 	self assert: (actual at: 8) equals: 163 days + 12 hours.
 	self assert: (actual at: 9) equals: 163 days + 12 hours + 39 minutes.
 	self assert: (actual at: 10) equals: 999 days + 23 hours + 39 minutes + 59.125 seconds.
@@ -170,16 +170,16 @@ testMonthIntervals
 						<< {self temporaryTableName. colAttrs second name}.
 	dbResources add: insert.
 	insert paramCols: colAttrs.
-	values := {SQL_INTERVAL_STRUCT years: 1.
-				SQL_INTERVAL_STRUCT years: 8.
-				SQL_INTERVAL_STRUCT months: 99.
-				SQL_INTERVAL_STRUCT years: 8 months: 3.
-				SQL_INTERVAL_STRUCT years: 0.
-				SQL_INTERVAL_STRUCT months: 0.
-				SQL_INTERVAL_STRUCT years: 0 months: 0.
-				SQL_INTERVAL_STRUCT years: -8.
-				SQL_INTERVAL_STRUCT months: -99.
-				SQL_INTERVAL_STRUCT years: -8 months: 3}.
+	values := {OS.SQL_INTERVAL_STRUCT years: 1.
+				OS.SQL_INTERVAL_STRUCT years: 8.
+				OS.SQL_INTERVAL_STRUCT months: 99.
+				OS.SQL_INTERVAL_STRUCT years: 8 months: 3.
+				OS.SQL_INTERVAL_STRUCT years: 0.
+				OS.SQL_INTERVAL_STRUCT months: 0.
+				OS.SQL_INTERVAL_STRUCT years: 0 months: 0.
+				OS.SQL_INTERVAL_STRUCT years: -8.
+				OS.SQL_INTERVAL_STRUCT months: -99.
+				OS.SQL_INTERVAL_STRUCT years: -8 months: 3}.
 	values keysAndValuesDo: 
 			[:i :each |
 			insert values: {i. each}.
@@ -196,8 +196,8 @@ testMonthIntervals
 			insert values: {key * 2. each}.
 			self
 				should: [insert exec]
-				raise: HRESULTError
-				matching: [:ex | ex hresult = (HRESULT fromInteger: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]!
+				raise: OS.HRESULTError
+				matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]!
 
 testQueryAndUpdateBlob
 	"Test that updating long binary field through a parameterized query (i.e. using SQLPutData) works."
@@ -213,15 +213,15 @@ testYearToMonthIntervals
 						<< {self temporaryTableName. colAttrs second name}.
 	dbResources add: insert.
 	insert paramCols: colAttrs.
-	values := {SQL_INTERVAL_STRUCT years: 99.
-				SQL_INTERVAL_STRUCT months: 99.
-				SQL_INTERVAL_STRUCT years: 58 months: 5.
-				SQL_INTERVAL_STRUCT years: 0.
-				SQL_INTERVAL_STRUCT months: 0.
-				SQL_INTERVAL_STRUCT years: 0 months: 0.
-				SQL_INTERVAL_STRUCT years: -99.
-				SQL_INTERVAL_STRUCT months: -99.
-				SQL_INTERVAL_STRUCT years: -58 months: 5}.
+	values := {OS.SQL_INTERVAL_STRUCT years: 99.
+				OS.SQL_INTERVAL_STRUCT months: 99.
+				OS.SQL_INTERVAL_STRUCT years: 58 months: 5.
+				OS.SQL_INTERVAL_STRUCT years: 0.
+				OS.SQL_INTERVAL_STRUCT months: 0.
+				OS.SQL_INTERVAL_STRUCT years: 0 months: 0.
+				OS.SQL_INTERVAL_STRUCT years: -99.
+				OS.SQL_INTERVAL_STRUCT months: -99.
+				OS.SQL_INTERVAL_STRUCT years: -58 months: 5}.
 	values keysAndValuesDo: 
 			[:i :each |
 			insert values: {i. each}.
@@ -238,10 +238,10 @@ testYearToMonthIntervals
 			insert values: {key * 2. each}.
 			self
 				should: [insert exec]
-				raise: HRESULTError
-				matching: [:ex | ex hresult = (HRESULT fromInteger: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]! !
+				raise: OS.HRESULTError
+				matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]! !
 
-!MimerSqlDBTest categoriesForMethods!
+!Database.Tests.MimerSqlDBTest categoriesForMethods!
 categoriesColumns!constants!private! !
 createTableStatementTemplate!constants!private! !
 databaseName!constants!private! !
@@ -258,12 +258,12 @@ testQueryAndUpdateBlob!public!unit tests! !
 testYearToMonthIntervals!public!unit tests! !
 !
 
-!MimerSqlDBTest class methodsFor!
+!Database.Tests.MimerSqlDBTest class methodsFor!
 
 resources
 	^{MimerSqlNorthwindDB}! !
 
-!MimerSqlDBTest class categoriesForMethods!
+!Database.Tests.MimerSqlDBTest class categoriesForMethods!
 resources!accessing!public! !
 !
 

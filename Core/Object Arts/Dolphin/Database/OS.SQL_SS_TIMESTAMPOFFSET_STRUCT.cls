@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-SQL_TIMESTAMP_STRUCT
-	subclass: #SQL_SS_TIMESTAMPOFFSET_STRUCT
+OS.SQL_TIMESTAMP_STRUCT
+	subclass: #'OS.SQL_SS_TIMESTAMPOFFSET_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -12,13 +12,13 @@ SQL_TIMESTAMP_STRUCT
 			'_SQL_SS_TIMESTAMPOFFSET_STRUCT_Size' -> 16r14
 		}!
 
-SQL_SS_TIMESTAMPOFFSET_STRUCT guid: (Core.GUID fromString: '{50763637-4fb0-4add-8ba9-dc5b146de8e7}')!
+OS.SQL_SS_TIMESTAMPOFFSET_STRUCT guid: (Core.GUID fromString: '{50763637-4fb0-4add-8ba9-dc5b146de8e7}')!
 
-SQL_SS_TIMESTAMPOFFSET_STRUCT comment: ''!
+OS.SQL_SS_TIMESTAMPOFFSET_STRUCT comment: ''!
 
-!SQL_SS_TIMESTAMPOFFSET_STRUCT categoriesForClass!External-Data-Structured-ODBC! !
+!OS.SQL_SS_TIMESTAMPOFFSET_STRUCT categoriesForClass!External-Data-Structured-ODBC! !
 
-!SQL_SS_TIMESTAMPOFFSET_STRUCT methodsFor!
+!OS.SQL_SS_TIMESTAMPOFFSET_STRUCT methodsFor!
 
 dbConvert: anObject for: aDBField
 	"Convert the argument to a <DateAndTime> for marshalling to SQL_SS_C_TIMESTAMPOFFSET representation in the <DBField> 2nd argument. Note that the timezone offset is retained (i.e. not converted to a local time). Throw an error if this is not possible."
@@ -53,14 +53,14 @@ value: aDateAndTime scale: anInteger
 		int16AtOffset: _OffsetOf_timezone_hour put: offset hours;
 		int16AtOffset: _OffsetOf_timezone_minute put: offset minutes! !
 
-!SQL_SS_TIMESTAMPOFFSET_STRUCT categoriesForMethods!
+!OS.SQL_SS_TIMESTAMPOFFSET_STRUCT categoriesForMethods!
 dbConvert:for:!operations!public! !
 dbInterchangeType!constants!public! !
 value!converting!public! !
 value:scale:!accessing!public! !
 !
 
-!SQL_SS_TIMESTAMPOFFSET_STRUCT class methodsFor!
+!OS.SQL_SS_TIMESTAMPOFFSET_STRUCT class methodsFor!
 
 defineFields
 	"
@@ -87,7 +87,7 @@ defineFields
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction #timezone_hour #timezone_minute)! !
 
-!SQL_SS_TIMESTAMPOFFSET_STRUCT class categoriesForMethods!
+!OS.SQL_SS_TIMESTAMPOFFSET_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

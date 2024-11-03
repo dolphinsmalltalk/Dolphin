@@ -30,7 +30,7 @@ Depending on the activity in progress at the time of the exception, one or more 
 buildErrorInfo
 	"Private - Retrieve all error information available from the ODBC Driver for my handles, unless none is found in which case a 'reduced' error is created using the return code from function which caused the error"
 
-	errors := Smalltalk.DBErrorDetailsBuilder buildErrorDetailsFor: self!
+	errors := DBErrorDetailsBuilder buildErrorDetailsFor: self!
 
 code
 	"Answer the code instance variable."

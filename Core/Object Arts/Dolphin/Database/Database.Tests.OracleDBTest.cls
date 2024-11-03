@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.Tests.DBConnectionTest subclass: #OracleDBTest
+Database.Tests.DBConnectionTest
+	subclass: #'Database.Tests.OracleDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-OracleDBTest guid: (GUID fromString: '{9afce793-d0c9-4b6e-ab84-654850391cae}')!
+Database.Tests.OracleDBTest guid: (Core.GUID fromString: '{9afce793-d0c9-4b6e-ab84-654850391cae}')!
 
-OracleDBTest comment: ''!
+Database.Tests.OracleDBTest comment: ''!
 
-!OracleDBTest categoriesForClass!Unclassified! !
-
-!OracleDBTest methodsFor!
+!Database.Tests.OracleDBTest methodsFor!
 
 databaseName
 	^''!
@@ -39,9 +39,9 @@ ordersColumns
 	^{{'ORDERID'. SQL_DECIMAL. 10. 0. 13}.
 		{'CUSTOMERID'. SQL_CHAR. 5. nil. 5}.
 		{'EMPLOYEEID'. SQL_DECIMAL. 10. 0. 13}.
-		{'ORDERDATE'. SQL_TYPE_TIMESTAMP. 19. 6. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'REQUIREDDATE'. SQL_TYPE_TIMESTAMP. 19. nil. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'SHIPPEDDATE'. SQL_TYPE_TIMESTAMP. 19. 6. SQL_TIMESTAMP_STRUCT byteSize}.
+		{'ORDERDATE'. SQL_TYPE_TIMESTAMP. 19. 6. OS.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'REQUIREDDATE'. SQL_TYPE_TIMESTAMP. 19. nil. OS.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'SHIPPEDDATE'. SQL_TYPE_TIMESTAMP. 19. 6. OS.SQL_TIMESTAMP_STRUCT byteSize}.
 		{'SHIPVIA'. SQL_DECIMAL. 10. 0. 13}.
 		{'FREIGHT'. SQL_DECIMAL. 10. 2. 13}.
 		{'SHIPNAME'. SQL_WVARCHAR. 40. nil. 80}.
@@ -61,9 +61,9 @@ self skip.	"Oracle's ODBC driver still doesn't support INTERVALs..."
 	colAttr := self createTestTable: 'INTERVAL YEAR TO MONTH'.
 	insert := connection prepare: 'INSERT <1s> (<2s>) VALUES (?)' << {self temporaryTableName. colAttr name}.
 	insert paramCols: {colAttr}.
-	values := {SQL_INTERVAL_STRUCT years: 99.
-				SQL_INTERVAL_STRUCT months: 99.
-				SQL_INTERVAL_STRUCT years: 58 months: 5}.
+	values := {OS.SQL_INTERVAL_STRUCT years: 99.
+				OS.SQL_INTERVAL_STRUCT months: 99.
+				OS.SQL_INTERVAL_STRUCT years: 58 months: 5}.
 	values do: 
 			[:each |
 			insert values: {each}.
@@ -87,11 +87,11 @@ self skip.	"Oracle's ODBC driver still doesn't support INTERVALs..."
 			insert values: {each}.
 			self
 				should: [insert exec]
-				raise: DBError
+				raise: Smalltalk.DBError
 				matching: [:ex | ex sqlState = '22003']].
 ! !
 
-!OracleDBTest categoriesForMethods!
+!Database.Tests.OracleDBTest categoriesForMethods!
 databaseName!constants!private! !
 databaseResource!accessing!private! !
 defaultCursorCommitBehavior!constants!private! !
@@ -104,12 +104,12 @@ orderTableRowIds!constants!private! !
 testYearToMonthIntervals!public!unit tests! !
 !
 
-!OracleDBTest class methodsFor!
+!Database.Tests.OracleDBTest class methodsFor!
 
 resources
 	^{OracleNorthwindDB}! !
 
-!OracleDBTest class categoriesForMethods!
+!Database.Tests.OracleDBTest class categoriesForMethods!
 resources!accessing!public! !
 !
 

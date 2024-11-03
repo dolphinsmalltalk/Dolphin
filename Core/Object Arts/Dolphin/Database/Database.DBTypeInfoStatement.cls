@@ -1,18 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBAbstractStatement subclass: #DBTypeInfoStatement
+Database.DBAbstractStatement
+	subclass: #'Database.DBTypeInfoStatement'
 	instanceVariableNames: 'dataType'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-DBTypeInfoStatement guid: (GUID fromString: '{f2031aa4-c44d-4c58-9231-649abb882cba}')!
+Database.DBTypeInfoStatement guid: (Core.GUID fromString: '{f2031aa4-c44d-4c58-9231-649abb882cba}')!
 
-DBTypeInfoStatement comment: ''!
+Database.DBTypeInfoStatement comment: ''!
 
-!DBTypeInfoStatement categoriesForClass!ODBC Interface! !
+!Database.DBTypeInfoStatement categoriesForClass!ODBC Interface! !
 
-!DBTypeInfoStatement methodsFor!
+!Database.DBTypeInfoStatement methodsFor!
 
 dataType
 	^dataType!
@@ -28,7 +30,7 @@ executeStatement
 		dbCheckException: (OS.Odbc32 sqlGetTypeInfo: self allocatedHandle dataType: self dataType)
 		function: 'SQLGetTypeInfo'! !
 
-!DBTypeInfoStatement categoriesForMethods!
+!Database.DBTypeInfoStatement categoriesForMethods!
 dataType!accessing!public! !
 dataType:!accessing!public! !
 executeStatement!operations!private! !

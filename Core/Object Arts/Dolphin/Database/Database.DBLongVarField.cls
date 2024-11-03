@@ -1,24 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBField subclass: #DBLongVarField
+Database.DBField
+	subclass: #'Database.DBLongVarField'
 	instanceVariableNames: 'value'
 	classVariableNames: 'BufferSize'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-DBLongVarField guid: (GUID fromString: '{7b8fe6e8-5081-461c-aafb-631a9371c63c}')!
+Database.DBLongVarField guid: (Core.GUID fromString: '{7b8fe6e8-5081-461c-aafb-631a9371c63c}')!
 
-DBLongVarField comment: '`DBLongVarField` is the class of `DBField`s that provide data transfer to/from the driver for long binary and char columns. These are used primarily for SQL_LONGVARBINARY, SQL_LONGVARCHAR colums of "unlimited" width, but are also be used for any binary/char column with a maximum size greater than a threshold to save the memory that would otherwise be required for allocating very large buffers. Transfer data types other than SQL_C_CHAR, SQL_C_WCHAR, and SQL_C_BINARY are not supported.'!
+Database.DBLongVarField comment: '`DBLongVarField` is the class of `DBField`s that provide data transfer to/from the driver for long binary and char columns. These are used primarily for SQL_LONGVARBINARY, SQL_LONGVARCHAR colums of "unlimited" width, but are also be used for any binary/char column with a maximum size greater than a threshold to save the memory that would otherwise be required for allocating very large buffers. Transfer data types other than SQL_C_CHAR, SQL_C_WCHAR, and SQL_C_BINARY are not supported.'!
 
-!DBLongVarField categoriesForClass!ODBC Interface! !
+!Database.DBLongVarField categoriesForClass!ODBC Interface! !
 
-!DBLongVarField methodsFor!
+!Database.DBLongVarField methodsFor!
 
 bindAsParameter: anInteger of: aDBParameterizedStatement
 	"Private - Bind the receiver as the supplier of data for the parameter numbered, anInteger, of aDBParameterizedStatement. For long variable fields, the partial buffer is not used for output, rather the interchange value is passed directly with a call to SQLPutData after exec. Here we instruct the driver to request the data, using the column number as the correlation value."
 
 	self length: SQL_DATA_AT_EXEC.
-	aDBParameterizedStatement dbCheckException: (ODBCLibrary default
+	aDBParameterizedStatement dbCheckException: (OS.ODBCLibrary default
 				sqlBindParameter: aDBParameterizedStatement allocatedHandle
 				parameterNumber: anInteger
 				inputOutputType: column parameterType
@@ -38,7 +40,7 @@ getData: aDBStatement
 
 	| ret odbc32 hStmt stream targetType |
 	hStmt := aDBStatement executedHandle.
-	odbc32 := ODBCLibrary default.
+	odbc32 := OS.ODBCLibrary default.
 	"Optimise for the case where the first read succeeds because the data fits in the buffer anyway."
 	ret := odbc32
 				sqlGetData: hStmt
@@ -51,7 +53,7 @@ getData: aDBStatement
 		ifTrue: 
 			[| length |
 			length := self length.
-			value := length == ODBCConstants.SQL_NULL_DATA ifFalse: [buffer dbUnmarshal: self].
+			value := length == SQL_NULL_DATA ifFalse: [buffer dbUnmarshal: self].
 			^self].
 	"There was either an error, or it didn't fit and we need to go into the read loop."
 	value := nil.
@@ -75,7 +77,7 @@ getData: aDBStatement
 putData: aDBStatement
 	"Private - Set the data for this long variable length field when used in a parameterised query. The interchange data is not buffered for output. We use the value directly, as for all long column types the data is a byte value (String or ByteArray), or nil for nullable columns. If nil, then SQL_NULL_DATA is passed as the strLenOrInd parameter, which should be interpreted by the driver as indicating a null value."
 
-	aDBStatement dbCheckException: (ODBCLibrary default
+	aDBStatement dbCheckException: (OS.ODBCLibrary default
 				sqlPutData: aDBStatement allocatedHandle
 				dataPtr: value
 				strLenOrInd: value dbOctetTransferSize)
@@ -93,7 +95,7 @@ value: anObject
 
 	value := anObject ifNotNil: [buffer dbConvert: anObject for: self]! !
 
-!DBLongVarField categoriesForMethods!
+!Database.DBLongVarField categoriesForMethods!
 bindAsParameter:of:!operations!private! !
 getData:!accessing!private! !
 putData:!accessing!private! !
