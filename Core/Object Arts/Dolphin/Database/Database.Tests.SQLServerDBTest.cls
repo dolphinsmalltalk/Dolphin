@@ -453,7 +453,7 @@ testSqlDateAndTimeTypes
 	dateAndTime := DateAndTime fromString: '2007-05-08T12:35:29.1234567+12:15'.
 	actual := resultSet first contents.
 	self assert: actual size equals: 7.
-	self assert: (actual at: 1) equals: dateAndTime asTime.
+	self assert: (actual at: 1) equals: (Time fromSeconds: dateAndTime seconds).
 	self assert: (actual at: 2) equals: dateAndTime asDate.
 	self assert: (actual at: 3)
 		equals: (DateAndTime

@@ -414,20 +414,6 @@ getDWordAttribute: anInteger
 		function: 'SQLGetConnectAttr'.
 	^buffer uint32AtOffset: 0!
 
-getDWordInfo: anInteger
-	"Private - Answer an Integer containing the value of the receiver's DWORD info attribute described by anInteger."
-
-	| value |
-	value := ByteArray newFixed: 4.
-	self dbCheckException: (OS.Odbc32
-				sqlGetInfo: self asParameter
-				infoType: anInteger
-				infoValuePtr: value
-				bufferLength: 4
-				stringLengthPtr: nil)
-		function: 'SQLGetInfo'.
-	^value uint32AtOffset: 0!
-
 getHandle
 	"Private - Answer the handle instance variable.
 	Allocate it if we haven't done so already."
@@ -491,7 +477,8 @@ getUInt32Info: anInteger
 				infoType: anInteger
 				infoValuePtr: value
 				bufferLength: 4
-				stringLengthPtr: nil).
+				stringLengthPtr: nil)
+		function: 'SQLGetInfo'.
 	^value uint32AtOffset: 0!
 
 getWordInfo: anInteger
@@ -1203,7 +1190,6 @@ freeNoFail!private!realizing/unrealizing! !
 freeStmtHandle:!helpers!private! !
 getBoolInfo:!enquiries!private! !
 getDWordAttribute:!accessing!enquiries!private! !
-getDWordInfo:!enquiries!private! !
 getHandle!accessing!private! !
 getHandle:!helpers!private! !
 getStringAttribute:!accessing!private! !

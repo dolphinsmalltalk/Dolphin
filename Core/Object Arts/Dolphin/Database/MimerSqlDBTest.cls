@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.Tests.DBConnectionTest subclass: #MimerSqlDBTest
+Database.Tests.DBConnectionTest
+	subclass: #MimerSqlDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-MimerSqlDBTest guid: (GUID fromString: '{a7533b57-3642-4098-b4c2-8d9e7b4eda8a}')!
+MimerSqlDBTest guid: (Core.GUID fromString: '{a7533b57-3642-4098-b4c2-8d9e7b4eda8a}')!
 
 MimerSqlDBTest comment: ''!
-
-!MimerSqlDBTest categoriesForClass!Unclassified! !
 
 !MimerSqlDBTest methodsFor!
 
@@ -64,7 +64,7 @@ testDateDiff
 			hired := each at: 'HireDate'.
 			born := each at: 'BirthDate'.
 			ageAtHire := each at: 'AgeAtHire'.
-			self assert: ageAtHire years equals: (hired monthsSince: born) / 12]!
+			self assert: ageAtHire totalYears equals: (hired monthsSince: born) / 12]!
 
 testDateTimeDiff
 	| resultSet |

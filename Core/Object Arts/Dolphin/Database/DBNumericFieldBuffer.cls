@@ -1,12 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DBUnstructuredFieldBuffer subclass: #DBNumericFieldBuffer
+DBUnstructuredFieldBuffer
+	subclass: #DBNumericFieldBuffer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-DBNumericFieldBuffer guid: (GUID fromString: '{719e2584-f762-4496-896a-389518c8ba75}')!
+DBNumericFieldBuffer guid: (Core.GUID fromString: '{719e2584-f762-4496-896a-389518c8ba75}')!
 
 DBNumericFieldBuffer comment: ''!
 
@@ -27,15 +29,10 @@ dbInterchangeType
 dbMarshal: anObject into: aDBField
 	"Populate the receiver, as buffer of the <DBField> 2nd argument, with a 'C' string representation of the <Number> argument for a SQL_NUMERIC column. We use the string representation because using SQL_C_NUMERIC without losing the fractional part is convoluted and (frankly) clumsy."
 
-	| byteCount string |
-	string := (self dbConvert: anObject for: aDBField) displayString.
-	byteCount := string size.
-	bytes
-		replaceFrom: 1
-		to: byteCount
-		with: string
-		startingAt: 1.
-	aDBField length: byteCount!
+	| stream |
+	stream := LimitedWriteStream on: bytes limit: bytes size limitBlock: [bytes errorSubscriptBounds: bytes size + 1].
+	Locale invariant displayScaledDecimal: (self dbConvert: anObject for: aDBField) on: stream.
+	aDBField length: stream position!
 
 dbUnmarshal: aDBField
 	" Answer a <ScaledDecimal> equivalent to SQL_NUMERIC/SQL_DECIMAL value in the <DBField> argument's buffer, but for which we have asked for a SQL_C_CHAR representation."
