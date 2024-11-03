@@ -1,25 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBField subclass: #DBFixedSizeField
+Database.DBField
+	subclass: #'Database.DBFixedSizeField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-DBFixedSizeField guid: (GUID fromString: '{c6cf9438-7cb8-4c51-b5a1-f2630c29fb8f}')!
+Database.DBFixedSizeField guid: (Core.GUID fromString: '{c6cf9438-7cb8-4c51-b5a1-f2630c29fb8f}')!
 
-DBFixedSizeField isAbstract: true!
+Database.DBFixedSizeField isNonInstantiable: true!
 
-DBFixedSizeField comment: ''!
+Database.DBFixedSizeField comment: ''!
 
-!DBFixedSizeField categoriesForClass!Unclassified! !
-
-!DBFixedSizeField methodsFor!
+!Database.DBFixedSizeField methodsFor!
 
 bindAsParameter: anInteger of: aDBParameterizedStatement
 	"Private - Bind the receiver as the supplier of data for the parameter numbered, anInteger, of aDBParameterizedStatement. For fixed-sized fields, the buffer is bound directly so that data transfer occurs on exec without the need for SQLPutData calls."
 
-	aDBParameterizedStatement dbCheckException: (ODBCLibrary default
+	aDBParameterizedStatement dbCheckException: (OS.ODBCLibrary default
 				sqlBindParameter: aDBParameterizedStatement allocatedHandle
 				parameterNumber: anInteger
 				inputOutputType: column parameterType
@@ -32,7 +32,7 @@ bindAsParameter: anInteger of: aDBParameterizedStatement
 				strLenOrIndPtr: lengthBuf)
 		function: 'SQLBindParameter'! !
 
-!DBFixedSizeField categoriesForMethods!
+!Database.DBFixedSizeField categoriesForMethods!
 bindAsParameter:of:!operations!private! !
 !
 

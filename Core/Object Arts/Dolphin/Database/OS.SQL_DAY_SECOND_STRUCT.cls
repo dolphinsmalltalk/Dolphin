@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-SQL_INTERVAL_STRUCT
-	subclass: #SQL_DAY_SECOND_STRUCT
+OS.SQL_INTERVAL_STRUCT
+	subclass: #'OS.SQL_DAY_SECOND_STRUCT'
 	instanceVariableNames: 'scaleExp'
 	classVariableNames: ''
 	imports: #()
@@ -16,13 +16,13 @@ SQL_INTERVAL_STRUCT
 			'DefaultFractionScaler' -> 16rF4240
 		}!
 
-SQL_DAY_SECOND_STRUCT guid: (Core.GUID fromString: '{57e065d6-15bb-4a76-b1ab-892cbb690cd7}')!
+OS.SQL_DAY_SECOND_STRUCT guid: (Core.GUID fromString: '{57e065d6-15bb-4a76-b1ab-892cbb690cd7}')!
 
-SQL_DAY_SECOND_STRUCT comment: ''!
+OS.SQL_DAY_SECOND_STRUCT comment: ''!
 
-!SQL_DAY_SECOND_STRUCT categoriesForClass!External-Data-Structured! !
+!OS.SQL_DAY_SECOND_STRUCT categoriesForClass!External-Data-Structured! !
 
-!SQL_DAY_SECOND_STRUCT methodsFor!
+!OS.SQL_DAY_SECOND_STRUCT methodsFor!
 
 = anExternalStructure
 	self == anExternalStructure ifTrue: [^true].
@@ -204,7 +204,7 @@ value: anObject
 valueClass
 	^Duration! !
 
-!SQL_DAY_SECOND_STRUCT categoriesForMethods!
+!OS.SQL_DAY_SECOND_STRUCT categoriesForMethods!
 =!comparing!public! !
 asDuration!converting!public! !
 asSeconds!converting!public! !
@@ -232,7 +232,7 @@ value:!accessing!public! !
 valueClass!constants!public! !
 !
 
-!SQL_DAY_SECOND_STRUCT class methodsFor!
+!OS.SQL_DAY_SECOND_STRUCT class methodsFor!
 
 defineFields
 	"
@@ -255,7 +255,7 @@ defineFields
 		defineField: #second type: UInt32Field new;
 		defineField: #fraction type: UInt32Field new! !
 
-!SQL_DAY_SECOND_STRUCT class categoriesForMethods!
+!OS.SQL_DAY_SECOND_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
 !
 

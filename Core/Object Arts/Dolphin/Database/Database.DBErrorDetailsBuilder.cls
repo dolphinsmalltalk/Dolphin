@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object
-	subclass: #DBErrorDetailsBuilder
+	subclass: #'Database.DBErrorDetailsBuilder'
 	instanceVariableNames: 'errors szSqlState szErrorMsg cbErrorMsg fNativeError'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCConstants} #{OS.ODBCRetCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-DBErrorDetailsBuilder guid: (Core.GUID fromString: '{fe3c3c6b-84ce-4773-aa45-c9eb7b8f734d}')!
+Database.DBErrorDetailsBuilder guid: (Core.GUID fromString: '{fe3c3c6b-84ce-4773-aa45-c9eb7b8f734d}')!
 
-DBErrorDetailsBuilder comment: ''!
+Database.DBErrorDetailsBuilder comment: ''!
 
-!DBErrorDetailsBuilder categoriesForClass!Kernel-Objects! !
+!Database.DBErrorDetailsBuilder categoriesForClass!Kernel-Objects! !
 
-!DBErrorDetailsBuilder methodsFor!
+!Database.DBErrorDetailsBuilder methodsFor!
 
 buildErrorDetailsFor: aDBExceptionDetails
 	"Private - Retrieve all error information available from the ODBC Driver for the handles of aDBExceptionDetails, unless none is found in which case a 'reduced' error is created using the return code from function which caused the error"
@@ -62,29 +62,29 @@ buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 	ret == SQL_SUCCESS]
 			whileTrue: 
 				["The Oracle ODBC driver appears to return the byte length rather than the character length of the message. To keep things simple, just copy up to the first null"
-				errors nextPut: ((Database.DBErrorDetails fromSQLError: szErrorMsg trimNulls)
+				errors nextPut: ((DBErrorDetails fromSQLError: szErrorMsg trimNulls)
 							nativeErr: (fNativeError int32AtOffset: 0);
 							sqlState: szSqlState asUtf8String;
 							yourself).
 				recNumber := recNumber + 1]!
 
 retCodeError: anInteger
-	^Database.DBErrorDetails new
-		msg: 'SQL Error: ' , (ODBCRetCodes keyAtValue: anInteger ifAbsent: ['Unknown']);
+	^DBErrorDetails new
+		msg: 'SQL Error: ' , (OS.ODBCRetCodes keyAtValue: anInteger ifAbsent: ['Unknown']);
 		yourself! !
 
-!DBErrorDetailsBuilder categoriesForMethods!
+!Database.DBErrorDetailsBuilder categoriesForMethods!
 buildErrorDetailsFor:!accessing!private! !
 buildErrorInfoFrom:type:!operations!private! !
 retCodeError:!accessing!private! !
 !
 
-!DBErrorDetailsBuilder class methodsFor!
+!Database.DBErrorDetailsBuilder class methodsFor!
 
 buildErrorDetailsFor: aDBExceptionDetails
 	^self new buildErrorDetailsFor: aDBExceptionDetails! !
 
-!DBErrorDetailsBuilder class categoriesForMethods!
+!Database.DBErrorDetailsBuilder class categoriesForMethods!
 buildErrorDetailsFor:!helpers!public! !
 !
 

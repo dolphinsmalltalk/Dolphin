@@ -1088,7 +1088,7 @@ translationDLL: aString
 
 typeInfo: anInteger
 	| stmt info |
-	stmt := (Smalltalk.DBTypeInfoStatement parent: self)
+	stmt := (DBTypeInfoStatement parent: self)
 				dataType: anInteger;
 				yourself.
 	info := stmt results asArray.

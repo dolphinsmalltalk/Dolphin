@@ -32,11 +32,11 @@ Smalltalk.DBColAttr := Database.DBColAttr!
 
 Smalltalk.DBError := Database.DBError!
 
-Smalltalk.ODBCDATE := Smalltalk.SQL_DATE_STRUCT!
+Smalltalk.ODBCDATE := OS.SQL_DATE_STRUCT!
 
-Smalltalk.ODBCTIME := Smalltalk.SQL_TIME_STRUCT!
+Smalltalk.ODBCTIME := OS.SQL_TIME_STRUCT!
 
-Smalltalk.ODBCTIMESTAMP := Smalltalk.SQL_TIMESTAMP_STRUCT!
+Smalltalk.ODBCTIMESTAMP := OS.SQL_TIMESTAMP_STRUCT!
 
 
 "End of package definition"!

@@ -19,7 +19,7 @@ Database.DBUnboundBuffer comment: 'A DBUnboundRow represents a row buffer that i
 !Database.DBUnboundBuffer methodsFor!
 
 newFieldForCol: aDBColAttr
-	^Smalltalk.DBUnboundField newForCol: aDBColAttr! !
+	^DBUnboundField newForCol: aDBColAttr! !
 
 !Database.DBUnboundBuffer categoriesForMethods!
 newFieldForCol:!helpers!private! !

@@ -1,18 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DBVarFieldBuffer subclass: #DBVarCharBuffer
+Database.DBVarFieldBuffer
+	subclass: #'Database.DBVarCharBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-DBVarCharBuffer guid: (GUID fromString: '{a0016f97-328c-4a8b-ac48-949d50b51c30}')!
+Database.DBVarCharBuffer guid: (Core.GUID fromString: '{a0016f97-328c-4a8b-ac48-949d50b51c30}')!
 
-DBVarCharBuffer comment: ''!
+Database.DBVarCharBuffer comment: ''!
 
-!DBVarCharBuffer categoriesForClass!Kernel-Objects! !
+!Database.DBVarCharBuffer categoriesForClass!Kernel-Objects! !
 
-!DBVarCharBuffer methodsFor!
+!Database.DBVarCharBuffer methodsFor!
 
 blockTransferOctetSize
 	"Private - Answer the size of indexable byte object to be allocated as the buffer used for transferring blocks of data when reading column values via SQLGetData."
@@ -54,7 +56,7 @@ dbUnmarshal: aDBField
 valueClass
 	^AnsiString! !
 
-!DBVarCharBuffer categoriesForMethods!
+!Database.DBVarCharBuffer categoriesForMethods!
 blockTransferOctetSize!constants!private! !
 dbConvert:for:!operations!public! !
 dbInterchangeType!constants!public! !

@@ -1,35 +1,38 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ExternalStructure subclass: #SQL_INTERVAL_STRUCT
+External.Structure
+	subclass: #'OS.SQL_INTERVAL_STRUCT'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_interval_sign _OffsetOf_interval_type BodyClasses MinutesPerDay SecondsPerDay SQL_IS_DAY SQL_IS_DAY_TO_HOUR SQL_IS_DAY_TO_MINUTE SQL_IS_DAY_TO_SECOND SQL_IS_HOUR SQL_IS_HOUR_TO_MINUTE SQL_IS_HOUR_TO_SECOND SQL_IS_MINUTE SQL_IS_MINUTE_TO_SECOND SQL_IS_MONTH SQL_IS_SECOND SQL_IS_YEAR SQL_IS_YEAR_TO_MONTH'
-	poolDictionaries: 'ODBCCTypes'
-	classInstanceVariableNames: ''!
+	classVariableNames: ''
+	imports: #(#{OS.ODBCCTypes})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_interval_sign' -> 16r4.
+			'_OffsetOf_interval_type' -> 16r0.
+			'BodyClasses'
+				-> #(#SQL_YEARS_STRUCT #SQL_MONTHS_STRUCT #SQL_DAYS_STRUCT #SQL_HOURS_STRUCT #SQL_MINUTES_STRUCT #SQL_SECONDS_STRUCT #SQL_YEARS_TO_MONTHS_STRUCT #SQL_DAYS_TO_HOURS_STRUCT #SQL_DAYS_TO_MINUTES_STRUCT #SQL_DAY_SECOND_STRUCT #SQL_HOURS_TO_MINUTES_STRUCT #SQL_HOURS_TO_SECONDS_STRUCT #SQL_MINUTES_TO_SECONDS_STRUCT).
+			'MinutesPerDay' -> 16r5A0.
+			'SecondsPerDay' -> 16r15180.
+			'SQL_IS_DAY' -> 16r3.
+			'SQL_IS_DAY_TO_HOUR' -> 16r8.
+			'SQL_IS_DAY_TO_MINUTE' -> 16r9.
+			'SQL_IS_DAY_TO_SECOND' -> 16rA.
+			'SQL_IS_HOUR' -> 16r4.
+			'SQL_IS_HOUR_TO_MINUTE' -> 16rB.
+			'SQL_IS_HOUR_TO_SECOND' -> 16rC.
+			'SQL_IS_MINUTE' -> 16r5.
+			'SQL_IS_MINUTE_TO_SECOND' -> 16rD.
+			'SQL_IS_MONTH' -> 16r2.
+			'SQL_IS_SECOND' -> 16r6.
+			'SQL_IS_YEAR' -> 16r1.
+			'SQL_IS_YEAR_TO_MONTH' -> 16r7
+		}!
 
-SQL_INTERVAL_STRUCT guid: (GUID fromString: '{e4ec1ff8-4415-44ae-891b-ba3bb6cae2b2}')!
+OS.SQL_INTERVAL_STRUCT guid: (Core.GUID fromString: '{e4ec1ff8-4415-44ae-891b-ba3bb6cae2b2}')!
 
-SQL_INTERVAL_STRUCT isAbstract: true!
+OS.SQL_INTERVAL_STRUCT isNonInstantiable: true!
 
-SQL_INTERVAL_STRUCT addClassConstant: '_OffsetOf_interval_sign' value: 16r4!
-SQL_INTERVAL_STRUCT addClassConstant: '_OffsetOf_interval_type' value: 16r0!
-SQL_INTERVAL_STRUCT addClassConstant: 'BodyClasses' value: #(SQL_YEARS_STRUCT SQL_MONTHS_STRUCT SQL_DAYS_STRUCT SQL_HOURS_STRUCT SQL_MINUTES_STRUCT SQL_SECONDS_STRUCT SQL_YEARS_TO_MONTHS_STRUCT SQL_DAYS_TO_HOURS_STRUCT SQL_DAYS_TO_MINUTES_STRUCT SQL_DAY_SECOND_STRUCT SQL_HOURS_TO_MINUTES_STRUCT SQL_HOURS_TO_SECONDS_STRUCT SQL_MINUTES_TO_SECONDS_STRUCT)!
-SQL_INTERVAL_STRUCT addClassConstant: 'MinutesPerDay' value: 16r5A0!
-SQL_INTERVAL_STRUCT addClassConstant: 'SecondsPerDay' value: 16r15180!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_DAY' value: 16r3!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_DAY_TO_HOUR' value: 16r8!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_DAY_TO_MINUTE' value: 16r9!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_DAY_TO_SECOND' value: 16rA!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_HOUR' value: 16r4!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_HOUR_TO_MINUTE' value: 16rB!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_HOUR_TO_SECOND' value: 16rC!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_MINUTE' value: 16r5!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_MINUTE_TO_SECOND' value: 16rD!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_MONTH' value: 16r2!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_SECOND' value: 16r6!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_YEAR' value: 16r1!
-SQL_INTERVAL_STRUCT addClassConstant: 'SQL_IS_YEAR_TO_MONTH' value: 16r7!
-
-SQL_INTERVAL_STRUCT comment: 'SQL_INTERVAL_STRUCT is a representation of the same named Win32 ODBC structure.
+OS.SQL_INTERVAL_STRUCT comment: 'SQL_INTERVAL_STRUCT is a representation of the same named Win32 ODBC structure.
 
 This structure supports the INTERVAL data type which is supported by Oracle, though not by its ODBC driver, and Mimer SQL (which does have ODBC support). Intervals are not supported by SQL Server at the time of writing.
 
@@ -39,9 +42,7 @@ The concrete subclass SQL_DAY_SECOND_STRUCT, a Dolphin invention as it does not 
 
 The concrete subclass SQL_YEAR_MONTH_STRUCT, also a Dolphin invention that does not exist in ODBC, supports YEAR TO MONTH intervals. These have no corresponding representation in the base class library.'!
 
-!SQL_INTERVAL_STRUCT categoriesForClass!Unclassified! !
-
-!SQL_INTERVAL_STRUCT methodsFor!
+!OS.SQL_INTERVAL_STRUCT methodsFor!
 
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
@@ -98,7 +99,7 @@ sign: anInteger
 
 	bytes int16AtOffset: _OffsetOf_interval_sign put: (1 - anInteger bitShift: -1)! !
 
-!SQL_INTERVAL_STRUCT categoriesForMethods!
+!OS.SQL_INTERVAL_STRUCT categoriesForMethods!
 dbInterchangeType!constants!public! !
 errorWrongIntervalType!error handling!private! !
 getValidFields!accessing!private! !
@@ -110,7 +111,7 @@ sign!accessing!public! !
 sign:!accessing!public! !
 !
 
-!SQL_INTERVAL_STRUCT class methodsFor!
+!OS.SQL_INTERVAL_STRUCT class methodsFor!
 
 days: aNumber
 	"Answer a new instance of the receiver which is a SQL_C_INTERVAL_DAY representation of the <Number> of days in the argument. Any fractional days are lost."
@@ -256,7 +257,7 @@ years: yearsNumber months: monthsNumber
 		totalMonths: yearsNumber * 12 + monthsNumber;
 		yourself! !
 
-!SQL_INTERVAL_STRUCT class categoriesForMethods!
+!OS.SQL_INTERVAL_STRUCT class categoriesForMethods!
 days:!instance creation!public! !
 days:hours:!instance creation!public! !
 days:hours:minutes:!instance creation!public! !

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure
-	subclass: #SQL_TIMESTAMP_STRUCT
+	subclass: #'OS.SQL_TIMESTAMP_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -17,15 +17,15 @@ External.Structure
 			'_SQL_TIMESTAMP_STRUCT_Size' -> 16r10
 		}!
 
-SQL_TIMESTAMP_STRUCT guid: (Core.GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.SQL_TIMESTAMP_STRUCT guid: (Core.GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-SQL_TIMESTAMP_STRUCT comment: 'SQL_TIMESTAMP_STRUCT is a representation of the same named Win32 ODBC structure.
+OS.SQL_TIMESTAMP_STRUCT comment: 'SQL_TIMESTAMP_STRUCT is a representation of the same named Win32 ODBC structure.
 
 The fraction field is the number of billionths of a second, i.e. a value of 1,000,000 is one millisecond.'!
 
-!SQL_TIMESTAMP_STRUCT categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+!OS.SQL_TIMESTAMP_STRUCT categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 
-!SQL_TIMESTAMP_STRUCT methodsFor!
+!OS.SQL_TIMESTAMP_STRUCT methodsFor!
 
 asDateAndTime
 	"Answers a DateAndTime which represents the receiver."
@@ -84,7 +84,7 @@ value: aDateAndTime scale: anInteger
 valueClass
 	^DateAndTime! !
 
-!SQL_TIMESTAMP_STRUCT categoriesForMethods!
+!OS.SQL_TIMESTAMP_STRUCT categoriesForMethods!
 asDateAndTime!converting!public! !
 dbConvert:for:!operations!public! !
 dbInterchangeType!constants!public! !
@@ -95,7 +95,7 @@ value:scale:!accessing!public! !
 valueClass!constants!public! !
 !
 
-!SQL_TIMESTAMP_STRUCT class methodsFor!
+!OS.SQL_TIMESTAMP_STRUCT class methodsFor!
 
 defineFields
 	"Define the fields of the ODBC TIMESTAMP structure
@@ -132,7 +132,7 @@ fromDateAndTime: aDateAndTime
 getFieldNames
 	^#()! !
 
-!SQL_TIMESTAMP_STRUCT class categoriesForMethods!
+!OS.SQL_TIMESTAMP_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
 fromDateAndTime:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

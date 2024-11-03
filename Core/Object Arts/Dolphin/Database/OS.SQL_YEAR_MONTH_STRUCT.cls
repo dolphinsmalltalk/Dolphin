@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-SQL_INTERVAL_STRUCT
-	subclass: #SQL_YEAR_MONTH_STRUCT
+OS.SQL_INTERVAL_STRUCT
+	subclass: #'OS.SQL_YEAR_MONTH_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -15,13 +15,13 @@ SQL_INTERVAL_STRUCT
 			'_SQL_YEAR_MONTH_STRUCT_Size' -> 16r1C
 		}!
 
-SQL_YEAR_MONTH_STRUCT guid: (Core.GUID fromString: '{7035b2b3-b254-4c8c-af2b-ce487a9fe29f}')!
+OS.SQL_YEAR_MONTH_STRUCT guid: (Core.GUID fromString: '{7035b2b3-b254-4c8c-af2b-ce487a9fe29f}')!
 
-SQL_YEAR_MONTH_STRUCT comment: ''!
+OS.SQL_YEAR_MONTH_STRUCT comment: ''!
 
-!SQL_YEAR_MONTH_STRUCT categoriesForClass!External-Data-Structured! !
+!OS.SQL_YEAR_MONTH_STRUCT categoriesForClass!External-Data-Structured! !
 
-!SQL_YEAR_MONTH_STRUCT methodsFor!
+!OS.SQL_YEAR_MONTH_STRUCT methodsFor!
 
 = anExternalStructure
 	self == anExternalStructure ifTrue: [^true].
@@ -108,7 +108,7 @@ years
 
 	^self totalMonths quo: 12! !
 
-!SQL_YEAR_MONTH_STRUCT categoriesForMethods!
+!OS.SQL_YEAR_MONTH_STRUCT categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !
 isYearMonth!public!testing! !
@@ -126,7 +126,7 @@ year:!**compiled accessors**!public! !
 years!accessing!public! !
 !
 
-!SQL_YEAR_MONTH_STRUCT class methodsFor!
+!OS.SQL_YEAR_MONTH_STRUCT class methodsFor!
 
 defineFields
 	"
@@ -146,7 +146,7 @@ defineFields
 		defineField: #filler2 type: UInt32Field filler;
 		defineField: #fiiller3 type: UInt32Field filler! !
 
-!SQL_YEAR_MONTH_STRUCT class categoriesForMethods!
+!OS.SQL_YEAR_MONTH_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
 !
 

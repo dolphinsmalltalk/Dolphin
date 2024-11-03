@@ -50,8 +50,8 @@ package setMethodNames: #(
 	#(#{Database.DBResultSet} #invalidate)
 	#(#{Database.DBResultSet} #prev)
 	#(#{Database.DBRowBuffer} #sizeInBytes)
-	#(#{Smalltalk.SQL_TIMESTAMP_STRUCT} #asTimeStamp)
-	#(#{Smalltalk.SQL_TIMESTAMP_STRUCT class} #fromTimeStamp:)
+	#(#{OS.SQL_TIMESTAMP_STRUCT} #asTimeStamp)
+	#(#{OS.SQL_TIMESTAMP_STRUCT class} #fromTimeStamp:)
 ).
 
 package setPrerequisites: #(
@@ -316,23 +316,23 @@ sizeInBytes
 sizeInBytes!accessing!public! !
 !
 
-!SQL_TIMESTAMP_STRUCT methodsFor!
+!OS.SQL_TIMESTAMP_STRUCT methodsFor!
 
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
 
-!SQL_TIMESTAMP_STRUCT categoriesForMethods!
+!OS.SQL_TIMESTAMP_STRUCT categoriesForMethods!
 asTimeStamp!converting!public! !
 !
 
-!SQL_TIMESTAMP_STRUCT class methodsFor!
+!OS.SQL_TIMESTAMP_STRUCT class methodsFor!
 
 fromTimeStamp: aTimeStamp
 	Notification deprecated.
 	^self fromTimeStamp: aTimeStamp asDateAndTime! !
 
-!SQL_TIMESTAMP_STRUCT class categoriesForMethods!
+!OS.SQL_TIMESTAMP_STRUCT class categoriesForMethods!
 fromTimeStamp:!instance creation!public! !
 !
 

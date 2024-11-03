@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure
-	subclass: #SQL_TIME_STRUCT
+	subclass: #'OS.SQL_TIME_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -14,13 +14,13 @@ External.Structure
 			'_SQL_TIME_STRUCT_Size' -> 16r6
 		}!
 
-SQL_TIME_STRUCT guid: (Core.GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.SQL_TIME_STRUCT guid: (Core.GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-SQL_TIME_STRUCT comment: 'SQL_TIME_STRUCT is a representation of the same named Win32 ODBC structure.'!
+OS.SQL_TIME_STRUCT comment: 'SQL_TIME_STRUCT is a representation of the same named Win32 ODBC structure.'!
 
-!SQL_TIME_STRUCT categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+!OS.SQL_TIME_STRUCT categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 
-!SQL_TIME_STRUCT methodsFor!
+!OS.SQL_TIME_STRUCT methodsFor!
 
 asTime
 	"Answers a Time which represents the receiver."
@@ -61,7 +61,7 @@ value: aTime
 valueClass
 	^Time! !
 
-!SQL_TIME_STRUCT categoriesForMethods!
+!OS.SQL_TIME_STRUCT categoriesForMethods!
 asTime!converting!public! !
 dbConvert:for:!operations!public! !
 dbInterchangeType!constants!public! !
@@ -71,7 +71,7 @@ value:!accessing!public! !
 valueClass!constants!public! !
 !
 
-!SQL_TIME_STRUCT class methodsFor!
+!OS.SQL_TIME_STRUCT class methodsFor!
 
 defineFields
 	"
@@ -99,7 +99,7 @@ fromTime: aTime
 getFieldNames
 	^#(#hour #minute #second)! !
 
-!SQL_TIME_STRUCT class categoriesForMethods!
+!OS.SQL_TIME_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
 fromTime:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

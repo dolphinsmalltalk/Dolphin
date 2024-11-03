@@ -3,10 +3,56 @@
 Core.Object
 	subclass: #'Database.DBColAttr'
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special bufferClass'
-	classVariableNames: 'BufferClasses'
+	classVariableNames: ''
 	imports: #(#{Database.DBColFlags} #{OS.ODBCTypes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'BufferClasses'
+				-> (IdentityDictionary withAll: {
+								-16r9B -> SQL_SS_TIMESTAMPOFFSET_STRUCT.
+								-16r9A -> DBTIME2.
+								-16rB -> GUID.
+								-16rA -> Database.DBVarWCharBuffer.
+								-16r9 -> Database.DBVarWCharBuffer.
+								-16r8 -> Database.DBVarWCharBuffer.
+								-16r7 -> BOOLEAN.
+								-16r6 -> UInt8.
+								-16r5 -> Int64.
+								-16r4 -> Database.DBVarBinaryBuffer.
+								-16r3 -> Database.DBVarBinaryBuffer.
+								-16r2 -> Database.DBVarBinaryBuffer.
+								-16r1 -> Database.DBVarCharBuffer.
+								16r0 -> nil.
+								16r1 -> Database.DBVarCharBuffer.
+								16r2 -> Database.DBNumericFieldBuffer.
+								16r3 -> Database.DBNumericFieldBuffer.
+								16r4 -> Int32.
+								16r5 -> Int16.
+								16r6 -> DOUBLE.
+								16r7 -> FLOAT.
+								16r8 -> DOUBLE.
+								16r9 -> SQL_DATE_STRUCT.
+								16rA -> SQL_TIME_STRUCT.
+								16rB -> SQL_TIMESTAMP_STRUCT.
+								16rC -> Database.DBVarCharBuffer.
+								16r5B -> SQL_DATE_STRUCT.
+								16r5C -> SQL_TIME_STRUCT.
+								16r5D -> SQL_TIMESTAMP_STRUCT.
+								16r65 -> SQL_INTERVAL_STRUCT.
+								16r66 -> SQL_INTERVAL_STRUCT.
+								16r67 -> SQL_INTERVAL_STRUCT.
+								16r68 -> SQL_INTERVAL_STRUCT.
+								16r69 -> SQL_INTERVAL_STRUCT.
+								16r6A -> SQL_INTERVAL_STRUCT.
+								16r6B -> SQL_INTERVAL_STRUCT.
+								16r6C -> SQL_INTERVAL_STRUCT.
+								16r6D -> SQL_INTERVAL_STRUCT.
+								16r6E -> SQL_INTERVAL_STRUCT.
+								16r6F -> SQL_INTERVAL_STRUCT.
+								16r70 -> SQL_INTERVAL_STRUCT.
+								16r71 -> SQL_INTERVAL_STRUCT
+							})
+		}!
 
 Database.DBColAttr guid: (Core.GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -253,48 +299,48 @@ initialize
 	"
 
 	self addClassConstant: 'BufferClasses'
-		value: (IdentityDictionary withAll: {SQL_CHAR -> Smalltalk.DBVarCharBuffer.
-						SQL_VARCHAR -> Smalltalk.DBVarCharBuffer.
-						SQL_LONGVARCHAR -> Smalltalk.DBVarCharBuffer.
-						SQL_WCHAR -> Smalltalk.DBVarWCharBuffer.
-						SQL_WVARCHAR -> Smalltalk.DBVarWCharBuffer.
-						SQL_WLONGVARCHAR -> Smalltalk.DBVarWCharBuffer.
-						SQL_BINARY -> Smalltalk.DBVarBinaryBuffer.
-						SQL_VARBINARY -> Smalltalk.DBVarBinaryBuffer.
-						SQL_LONGVARBINARY -> Smalltalk.DBVarBinaryBuffer.
+		value: (IdentityDictionary withAll: {SQL_CHAR -> DBVarCharBuffer.
+						SQL_VARCHAR -> DBVarCharBuffer.
+						SQL_LONGVARCHAR -> DBVarCharBuffer.
+						SQL_WCHAR -> DBVarWCharBuffer.
+						SQL_WVARCHAR -> DBVarWCharBuffer.
+						SQL_WLONGVARCHAR -> DBVarWCharBuffer.
+						SQL_BINARY -> DBVarBinaryBuffer.
+						SQL_VARBINARY -> DBVarBinaryBuffer.
+						SQL_LONGVARBINARY -> DBVarBinaryBuffer.
 						SQL_BIT -> External.BOOLEAN.
 						SQL_TINYINT -> External.UInt8.
 						SQL_SMALLINT -> External.Int16.
 						SQL_INTEGER -> External.Int32.
 						SQL_BIGINT -> External.Int64.
-						SQL_NUMERIC -> Smalltalk.DBNumericFieldBuffer.
-						SQL_DECIMAL -> Smalltalk.DBNumericFieldBuffer.
+						SQL_NUMERIC -> DBNumericFieldBuffer.
+						SQL_DECIMAL -> DBNumericFieldBuffer.
 						SQL_FLOAT -> External.DOUBLE.
 						SQL_REAL -> External.FLOAT.
 						SQL_DOUBLE -> External.DOUBLE.
-						SQL_DATE -> Smalltalk.SQL_DATE_STRUCT.
-						SQL_TYPE_DATE -> Smalltalk.SQL_DATE_STRUCT.
-						SQL_TIME -> Smalltalk.SQL_TIME_STRUCT.
-						SQL_TYPE_TIME -> Smalltalk.SQL_TIME_STRUCT.
-						SQL_TIMESTAMP -> Smalltalk.SQL_TIMESTAMP_STRUCT.
-						SQL_TYPE_TIMESTAMP -> Smalltalk.SQL_TIMESTAMP_STRUCT.
-						SQL_GUID -> Core.GUID.
+						SQL_DATE -> OS.SQL_DATE_STRUCT.
+						SQL_TYPE_DATE -> OS.SQL_DATE_STRUCT.
+						SQL_TIME -> OS.SQL_TIME_STRUCT.
+						SQL_TYPE_TIME -> OS.SQL_TIME_STRUCT.
+						SQL_TIMESTAMP -> OS.SQL_TIMESTAMP_STRUCT.
+						SQL_TYPE_TIMESTAMP -> OS.SQL_TIMESTAMP_STRUCT.
+						SQL_GUID -> GUID.
 						SQL_TYPE_NULL -> nil.
-						SQL_INTERVAL_DAY -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_DAY_TO_HOUR -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_DAY_TO_MINUTE -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_DAY_TO_SECOND -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_HOUR -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_HOUR_TO_MINUTE -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_HOUR_TO_SECOND -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_MINUTE -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_MINUTE_TO_SECOND -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_SECOND -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_MONTH -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_YEAR -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_YEAR_TO_MONTH -> Smalltalk.SQL_INTERVAL_STRUCT.
-						SQL_SS_TIMESTAMPOFFSET -> Smalltalk.SQL_SS_TIMESTAMPOFFSET_STRUCT.
-						SQL_SS_TIME2 -> Smalltalk.DBTIME2})!
+						SQL_INTERVAL_DAY -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_DAY_TO_HOUR -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_DAY_TO_MINUTE -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_DAY_TO_SECOND -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_HOUR -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_HOUR_TO_MINUTE -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_HOUR_TO_SECOND -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_MINUTE -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_MINUTE_TO_SECOND -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_SECOND -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_MONTH -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_YEAR -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_YEAR_TO_MONTH -> OS.SQL_INTERVAL_STRUCT.
+						SQL_SS_TIMESTAMPOFFSET -> OS.SQL_SS_TIMESTAMPOFFSET_STRUCT.
+						SQL_SS_TIME2 -> OS.DBTIME2})!
 
 new
 	"Answer a new initialized instance of the receiver."

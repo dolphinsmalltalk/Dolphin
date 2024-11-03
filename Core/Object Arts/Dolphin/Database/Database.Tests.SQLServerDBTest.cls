@@ -75,9 +75,9 @@ ordersColumns
 	^{{'OrderID'. SQL_INTEGER. 10. 0. 4}.
 		{'CustomerID'. SQL_WCHAR. 5. nil. 10}.
 		{'EmployeeID'. SQL_INTEGER. 10. 0. 4}.
-		{'OrderDate'. SQL_TYPE_TIMESTAMP. 23. 3. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
-		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 23. 3. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
-		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 23. 3. Smalltalk.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'OrderDate'. SQL_TYPE_TIMESTAMP. 23. 3. OS.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 23. 3. OS.SQL_TIMESTAMP_STRUCT byteSize}.
+		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 23. 3. OS.SQL_TIMESTAMP_STRUCT byteSize}.
 		{'ShipVia'. SQL_INTEGER. 10. 0. 4}.
 		{'Freight'. SQL_DECIMAL. 19. 4. 22}.
 		{'ShipName'. SQL_WVARCHAR. 40. nil. 80}.
@@ -554,7 +554,7 @@ testVarCharColumn
 			self assert: (resultSet collect: [:each | each at: vcharCol name]) asArray equals: strings.
 			resultSet free.
 			insert values: {100. 'abcdefghijklmnopq'}.
-			Smalltalk.DBVarFieldBuffer.MaxBoundOctetLength >= 16
+			DBVarFieldBuffer.MaxBoundOctetLength >= 16
 				ifTrue: 
 					["Because the parameter is bound, we pass the data through the bound buffer and detect overflow when attempting to populate the buffer"
 					self should: [insert exec] raise: BoundsError]
@@ -567,8 +567,8 @@ testVarCharColumn
 			insert free.
 			connection exec: 'DELETE FROM ' , self temporaryTableName.
 			"Deliberately force use of long column transfer, i.e. calls to SQLGetData to retrieve the data rather than bound columns"
-			Smalltalk.DBVarFieldBuffer.BlockTransferOctetLength := transferLen + 1.
-			Smalltalk.DBVarFieldBuffer.MaxBoundOctetLength := 15]!
+			DBVarFieldBuffer.BlockTransferOctetLength := transferLen + 1.
+			DBVarFieldBuffer.MaxBoundOctetLength := 15]!
 
 testVarCharColumnUnbound
 	| colAttrs vcharCol insert resultSet str strings |
@@ -646,8 +646,8 @@ testWVarCharColumn
 			resultSet free.
 			insert free.
 			connection exec: 'DELETE FROM ' , self temporaryTableName.
-			Smalltalk.DBVarFieldBuffer.BlockTransferOctetLength := (each + 1) * 2.
-			Smalltalk.DBVarFieldBuffer.MaxBoundOctetLength := 8]! !
+			DBVarFieldBuffer.BlockTransferOctetLength := (each + 1) * 2.
+			DBVarFieldBuffer.MaxBoundOctetLength := 8]! !
 
 !Database.Tests.SQLServerDBTest categoriesForMethods!
 categoriesColumns!constants!private! !

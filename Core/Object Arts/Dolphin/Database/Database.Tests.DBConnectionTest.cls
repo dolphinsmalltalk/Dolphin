@@ -109,8 +109,8 @@ setUp
 	dbResources := OrderedCollection new.
 	super setUp.
 	DBConnection requiredOdbcVersion: self requiredOdbcVersion.
-	savedBlockSize := Smalltalk.DBVarFieldBuffer.BlockTransferOctetLength.
-	savedMaxBoundSize := Smalltalk.DBVarFieldBuffer.MaxBoundOctetLength!
+	savedBlockSize := DBVarFieldBuffer.BlockTransferOctetLength.
+	savedMaxBoundSize := DBVarFieldBuffer.MaxBoundOctetLength!
 
 shouldRaiseNotSupported: block 
 	self 
@@ -122,8 +122,8 @@ supportsReadOnlyMode
 	^true!
 
 tearDown
-	savedBlockSize ifNotNil: [Smalltalk.DBVarFieldBuffer.BlockTransferOctetLength := savedBlockSize].
-	savedMaxBoundSize ifNotNil: [Smalltalk.DBVarFieldBuffer.MaxBoundOctetLength := savedMaxBoundSize].
+	savedBlockSize ifNotNil: [DBVarFieldBuffer.BlockTransferOctetLength := savedBlockSize].
+	savedMaxBoundSize ifNotNil: [DBVarFieldBuffer.MaxBoundOctetLength := savedMaxBoundSize].
 	createdTestTable ifTrue: [self dropTestTable].
 	self freeDbResources.
 	super tearDown!
@@ -138,7 +138,7 @@ testAsArray
 	results with: array do: [:row1 :row2 | self assert: row1 = row2].
 	results asArray with: array do: [:row1 :row2 | self assert: row1 = row2].
 	"Query again after deliberately causing the buffers for long variable columns to be too small to provoke SQLGetData loops"
-	Smalltalk.DBVarFieldBuffer blockTransferOctetLength: 64.
+	DBVarFieldBuffer blockTransferOctetLength: 64.
 	results free.
 	results := connection query: 'SELECT* FROM Employees'.
 	results asArray with: array do: [:row1 :row2 | self assert: row1 = row2].
@@ -314,14 +314,14 @@ testQueryAndUpdateBlob
 	"Test that updating long binary field through a parameterized query (i.e. using SQLPutData) works."
 
 	| update updateStatement resultSet picture row originalPicture selectStatement rowBuffer field |
-	Smalltalk.DBVarFieldBuffer maxBoundOctetLength: 32768.
+	DBVarFieldBuffer maxBoundOctetLength: 32768.
 	selectStatement := 'SELECT Picture,CategoryID FROM Categories where CategoryID=1'.
 	resultSet := connection query: selectStatement.
 	row := resultSet single.
 	rowBuffer := resultSet buffer.
 	field := rowBuffer contents first.
-	self assert: field isKindOf: Smalltalk.DBLongVarField.
-	self assert: field fieldBuf isKindOf: Smalltalk.DBVarBinaryBuffer.
+	self assert: field isKindOf: DBLongVarField.
+	self assert: field fieldBuf isKindOf: DBVarBinaryBuffer.
 	originalPicture := field value.
 	self assert: originalPicture isKindOf: ByteArray.
 	updateStatement := 'UPDATE Categories SET Picture=? WHERE CategoryID=?'.
@@ -340,7 +340,7 @@ testQueryAndUpdateBlob
 	#(88 86) do: 
 			[:each |
 			| pic2 |
-			Smalltalk.DBVarFieldBuffer blockTransferOctetLength: each.
+			DBVarFieldBuffer blockTransferOctetLength: each.
 			"We have to re-run the query to get the column buffers rebuilt"
 			resultSet := connection query: selectStatement.
 			row := resultSet first.
@@ -407,8 +407,8 @@ testQueryAndUpdateNClob
 	row := resultSet first.
 	rowBuffer := resultSet buffer.
 	field := rowBuffer contents first.
-	self assert: field isKindOf: Smalltalk.DBLongVarField.
-	self assert: field fieldBuf isKindOf: Smalltalk.DBVarWCharBuffer.
+	self assert: field isKindOf: DBLongVarField.
+	self assert: field fieldBuf isKindOf: DBVarWCharBuffer.
 	originalDescription := field value.
 	self assert: originalDescription isKindOf: Utf16String.
 	self assert: field length equals: originalDescription size * 2.
@@ -426,7 +426,7 @@ testQueryAndUpdateNClob
 	#(88 86) do: 
 			[:each |
 			| desc2 pic2 |
-			Smalltalk.DBVarFieldBuffer blockTransferOctetLength: each.
+			DBVarFieldBuffer blockTransferOctetLength: each.
 			"We have to re-run the query to get the column buffers rebuilt"
 			resultSet := connection query: selectStatement.
 			row := resultSet first.

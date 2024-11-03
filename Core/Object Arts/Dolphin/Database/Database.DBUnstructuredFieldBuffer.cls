@@ -1,22 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Object subclass: #DBUnstructuredFieldBuffer
+Core.Object
+	subclass: #'Database.DBUnstructuredFieldBuffer'
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants ODBCCTypes ODBCRetCodes ODBCTypes'
-	classInstanceVariableNames: ''!
+	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes} #{OS.ODBCRetCodes} #{OS.ODBCTypes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-DBUnstructuredFieldBuffer guid: (GUID fromString: '{2460e923-ce24-43db-90da-e92c0bd7a961}')!
+Database.DBUnstructuredFieldBuffer guid: (Core.GUID fromString: '{2460e923-ce24-43db-90da-e92c0bd7a961}')!
 
-DBUnstructuredFieldBuffer isAbstract: true!
+Database.DBUnstructuredFieldBuffer isNonInstantiable: true!
 
-DBUnstructuredFieldBuffer comment: '`DBSpecialFieldBuffer` is an abstract class of objects that provide services for interchange from Smalltalk objects to C representations that can be used to transmit data to a database through ODBC for certain special column types.
+Database.DBUnstructuredFieldBuffer comment: '`DBSpecialFieldBuffer` is an abstract class of objects that provide services for interchange from Smalltalk objects to C representations that can be used to transmit data to a database through ODBC for certain special column types.
 
 Concrete subclasses exist for the long variable length columns, and specific other column types with non-standard marshalling. Most column types are buffered using `ExternalStructure` classes, and these are extended by the database connection base package with the necessary behaviour.'!
 
-!DBUnstructuredFieldBuffer categoriesForClass!Kernel-Objects! !
+!Database.DBUnstructuredFieldBuffer categoriesForClass!Kernel-Objects! !
 
-!DBUnstructuredFieldBuffer methodsFor!
+!Database.DBUnstructuredFieldBuffer methodsFor!
 
 bytes
 	^bytes!
@@ -30,9 +32,9 @@ dbConvert: anObject for: aDBField
 	"Convert the argument to the type required for marshalling as the value of the <DBField> 2nd argument. Throw an error if this is not possible."
 
 	(anObject isKindOf: self valueClass) ifTrue: [^anObject].
-	HRESULTError
+	OS.HRESULTError
 		signal: '<3d> expected, not <1s> (<2d>)' << {anObject basicPrintString. anObject. self valueClass}
-		withFailureCode: _PrimitiveFailureCode.ObjectTypeMismatch.
+		withFailureCode: Kernel._PrimitiveFailureCode.ObjectTypeMismatch.
 	^nil!
 
 dbInterchangeType
@@ -60,7 +62,7 @@ valueClass
 
 	^self subclassResponsibility! !
 
-!DBUnstructuredFieldBuffer categoriesForMethods!
+!Database.DBUnstructuredFieldBuffer categoriesForMethods!
 bytes!accessing!private! !
 byteSize!accessing!public! !
 dbConvert:for:!operations!public! !
@@ -71,9 +73,9 @@ initializeForColumn:!initializing!private! !
 valueClass!constants!public! !
 !
 
-DBUnstructuredFieldBuffer methodProtocol: #dbFieldBuffer attributes: #() selectors: #(#byteSize #dbConvert:for: #dbInterchangeType #dbMarshal:into: #dbUnmarshal: #valueClass)!
+Database.DBUnstructuredFieldBuffer methodProtocol: #dbFieldBuffer attributes: #() selectors: #(#byteSize #dbConvert:for: #dbInterchangeType #dbMarshal:into: #dbUnmarshal: #valueClass)!
 
-!DBUnstructuredFieldBuffer class methodsFor!
+!Database.DBUnstructuredFieldBuffer class methodsFor!
 
 dbBoundFieldClassForColumn: aDBColAttr
 	^DBBoundField!
@@ -92,12 +94,12 @@ dbTransferOctetLengthForColumn: aDBColAttr
 
 	^aDBColAttr length! !
 
-!DBUnstructuredFieldBuffer class categoriesForMethods!
+!Database.DBUnstructuredFieldBuffer class categoriesForMethods!
 dbBoundFieldClassForColumn:!helpers!private! !
 dbHasVariableTransferOctetLength!private!testing! !
 dbNewForColumn:!helpers!private! !
 dbTransferOctetLengthForColumn:!enquiries!public! !
 !
 
-DBUnstructuredFieldBuffer class methodProtocol: #dbFieldBufferFactory attributes: #() selectors: #(#dbBoundFieldClassForColumn: #dbHasVariableTransferOctetLength #dbNewForColumn: #dbTransferOctetLengthForColumn:)!
+Database.DBUnstructuredFieldBuffer class methodProtocol: #dbFieldBufferFactory attributes: #() selectors: #(#dbBoundFieldClassForColumn: #dbHasVariableTransferOctetLength #dbNewForColumn: #dbTransferOctetLengthForColumn:)!
 

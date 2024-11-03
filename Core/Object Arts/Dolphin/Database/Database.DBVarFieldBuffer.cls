@@ -1,20 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DBUnstructuredFieldBuffer subclass: #DBVarFieldBuffer
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBVarFieldBuffer'
 	instanceVariableNames: ''
 	classVariableNames: 'BlockTransferOctetLength MaxBoundOctetLength'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-DBVarFieldBuffer guid: (GUID fromString: '{6a913ba0-0d23-4749-b30d-a3f6e2b5e8b4}')!
+Database.DBVarFieldBuffer guid: (Core.GUID fromString: '{6a913ba0-0d23-4749-b30d-a3f6e2b5e8b4}')!
 
-DBVarFieldBuffer isAbstract: true!
+Database.DBVarFieldBuffer isNonInstantiable: true!
 
-DBVarFieldBuffer comment: ''!
+Database.DBVarFieldBuffer comment: ''!
 
-!DBVarFieldBuffer categoriesForClass!Kernel-Objects! !
+!Database.DBVarFieldBuffer categoriesForClass!Kernel-Objects! !
 
-!DBVarFieldBuffer methodsFor!
+!Database.DBVarFieldBuffer methodsFor!
 
 blockTransferOctetSize
 	"Private - Answer the size of indexable byte object to be allocated as the buffer used for transferring blocks of data when reading column values via SQLGetData."
@@ -29,13 +31,13 @@ initializeForColumn: aDBColAttr
 						ifTrue: [self blockTransferOctetSize]
 						ifFalse: [self bufferSizeForColumn: aDBColAttr])! !
 
-!DBVarFieldBuffer categoriesForMethods!
+!Database.DBVarFieldBuffer categoriesForMethods!
 blockTransferOctetSize!constants!private! !
 bufferSizeForColumn:!initializing!private! !
 initializeForColumn:!initializing!private! !
 !
 
-!DBVarFieldBuffer class methodsFor!
+!Database.DBVarFieldBuffer class methodsFor!
 
 blockTransferOctetLength
 	"Answer the number of bytes to transfer per SQLGetData call when performing block transfer for long columns."
@@ -73,7 +75,7 @@ maxBoundOctetLength
 maxBoundOctetLength: anInteger
 	MaxBoundOctetLength := anInteger! !
 
-!DBVarFieldBuffer class categoriesForMethods!
+!Database.DBVarFieldBuffer class categoriesForMethods!
 blockTransferOctetLength!accessing!public! !
 blockTransferOctetLength:!accessing!public! !
 dbBoundFieldClassForColumn:!helpers!private! !
