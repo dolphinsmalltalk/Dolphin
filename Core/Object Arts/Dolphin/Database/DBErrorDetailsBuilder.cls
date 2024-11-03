@@ -58,12 +58,12 @@ buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 	ret == SQL_SUCCESS_WITH_INFO]
 			whileTrue: 
 				["Try again with a larger buffer"
-				szErrorMsg := Utf16String new: (cbErrorMsg swordAtOffset: 0)].
+				szErrorMsg := Utf16String new: (cbErrorMsg int16AtOffset: 0)].
 	ret == SQL_SUCCESS]
 			whileTrue: 
 				["The Oracle ODBC driver appears to return the byte length rather than the character length of the message. To keep things simple, just copy up to the first null"
 				errors nextPut: ((Database.DBErrorDetails fromSQLError: szErrorMsg trimNulls)
-							nativeErr: (fNativeError sdwordAtOffset: 0);
+							nativeErr: (fNativeError int32AtOffset: 0);
 							sqlState: szSqlState asUtf8String;
 							yourself).
 				recNumber := recNumber + 1]!

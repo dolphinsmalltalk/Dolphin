@@ -31,18 +31,18 @@ value
 	"Answers a Time which represents the receiver."
 
 	^Time
-		hours: (bytes wordAtOffset: _OffsetOf_hour)
-		minutes: (bytes wordAtOffset: _OffsetOf_minute)
-		seconds: (bytes wordAtOffset: _OffsetOf_second) + ((bytes dwordAtOffset: _OffsetOf_fraction) / 1e9)!
+		hours: (bytes uint16AtOffset: _OffsetOf_hour)
+		minutes: (bytes uint16AtOffset: _OffsetOf_minute)
+		seconds: (bytes uint16AtOffset: _OffsetOf_second) + ((bytes uint32AtOffset: _OffsetOf_fraction) / 1e9)!
 
 value: aTime scale: anInteger
 	"Set the receiver's fields from the <Time> argument."
 
 	bytes
-		wordAtOffset: _OffsetOf_hour put: aTime hour;
-		wordAtOffset: _OffsetOf_minute put: aTime minute;
-		wordAtOffset: _OffsetOf_second put: aTime second truncated;
-		dwordAtOffset: _OffsetOf_fraction
+		uint16AtOffset: _OffsetOf_hour put: aTime hour;
+		uint16AtOffset: _OffsetOf_minute put: aTime minute;
+		uint16AtOffset: _OffsetOf_second put: aTime second truncated;
+		uint32AtOffset: _OffsetOf_fraction
 			put: (anInteger == 0 ifTrue: [0] ifFalse: [aTime nanosecond truncateTo: (9 - anInteger) exp10])! !
 
 !DBTIME2 categoriesForMethods!
@@ -67,7 +67,7 @@ defineFields
 	} 	DBTIME2;"
 
 	super defineFields.
-	self defineField: #fraction type: DWORDField uncompiled!
+	self defineField: #fraction type: UInt32Field uncompiled!
 
 getFieldNames
 	^#(#hour #minute #second #fraction)! !

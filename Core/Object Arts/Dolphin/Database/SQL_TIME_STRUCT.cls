@@ -47,16 +47,16 @@ value
 	"Answers a Time which represents the receiver."
 
 	^Time
-		fromSeconds: ((bytes wordAtOffset: _OffsetOf_hour) * 60 + (bytes wordAtOffset: _OffsetOf_minute))
-				* 60 + (bytes wordAtOffset: _OffsetOf_second)!
+		fromSeconds: ((bytes uint16AtOffset: _OffsetOf_hour) * 60 + (bytes uint16AtOffset: _OffsetOf_minute))
+				* 60 + (bytes uint16AtOffset: _OffsetOf_second)!
 
 value: aTime
 	"Set the receiver's fields from the <Time> argument."
 
 	bytes
-		wordAtOffset: _OffsetOf_hour put: aTime hour;
-		wordAtOffset: _OffsetOf_minute put: aTime minute;
-		wordAtOffset: _OffsetOf_second put: aTime second truncated!
+		uint16AtOffset: _OffsetOf_hour put: aTime hour;
+		uint16AtOffset: _OffsetOf_minute put: aTime minute;
+		uint16AtOffset: _OffsetOf_second put: aTime second truncated!
 
 valueClass
 	^Time! !

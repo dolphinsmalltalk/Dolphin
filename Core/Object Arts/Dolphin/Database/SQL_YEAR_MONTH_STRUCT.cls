@@ -38,12 +38,12 @@ isYearMonth
 month
 	"Answer the <Integer> value of the receiver's 'month' field."
 
-	^bytes dwordAtOffset: _OffsetOf_month!
+	^bytes uint32AtOffset: _OffsetOf_month!
 
 month: anInteger
 	"Set the receiver's 'month' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_month put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_month put: anInteger!
 
 months
 	"Answer an <integer> in the range [-11, 11], inclusive, which is the number of whole months represented by the receiver after complete years have been removed."
@@ -96,12 +96,12 @@ value: aSQL_YEAR_MONTH_STRUCT
 year
 	"Answer the <Integer> value of the receiver's 'year' field."
 
-	^bytes dwordAtOffset: _OffsetOf_year!
+	^bytes uint32AtOffset: _OffsetOf_year!
 
 year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_year put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_year put: anInteger!
 
 years
 	"Answer the <Integer> number of whole years in the interval described by the receiver. Any fractional part is truncated."
@@ -140,11 +140,11 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #year type: DWORDField new;
-		defineField: #month type: DWORDField new;
-		defineField: #filler1 type: DWORDField filler;
-		defineField: #filler2 type: DWORDField filler;
-		defineField: #fiiller3 type: DWORDField filler! !
+		defineField: #year type: UInt32Field new;
+		defineField: #month type: UInt32Field new;
+		defineField: #filler1 type: UInt32Field filler;
+		defineField: #filler2 type: UInt32Field filler;
+		defineField: #fiiller3 type: UInt32Field filler! !
 
 !SQL_YEAR_MONTH_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
