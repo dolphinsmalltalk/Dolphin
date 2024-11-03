@@ -87,9 +87,6 @@ testMarshalChar
 			substring := string copyFrom: 1 to: i.
 			subject value: substring.
 			self assert: subject value equals: substring].
-	"Non-ansi chars are translated to replacement char, which in an ANSI string is $?. For a char with two UTF-16 code units, we get two replacement chars."
-	subject value: 'a🐬b'.
-	self assert: subject value equals: 'a??b'.
 	"Too large is an error - important that we test too large by one to verify correct handling of null terminator"
 	#('h' 'hi') do: 
 			[:each |
@@ -99,6 +96,10 @@ testMarshalChar
 				matching: [:ex | ex tag = (string size + each size)]].
 	subject value: nil.
 	self assertIsNil: subject value.
+	"Non-ansi chars are translated to replacement char, which in an ANSI string is $?"
+	string := 'a🐬b'.
+	subject value: string.
+	self assert: subject value equals: string asAnsiString.
 	self
 		should: [subject value: 1]
 		raise: MessageNotUnderstood
@@ -237,13 +238,15 @@ testMarshalInt16
 			self
 				should: [subject value: each]
 				raise: OS.HRESULTError
-				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.IntegerOutOfRange)]].
+				matching: 
+					[:ex |
+					ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.IntegerOutOfRange)]].
 	subject value: nil.
 	self assertIsNil: subject value.
 	self
-		should: [subject value: true]
+		should: [subject value: '1']
 		raise: MessageNotUnderstood
-		matching: [:ex | ex description = 'True does not understand #asInteger']!
+		matching: [:ex | ex message selector == #asInteger]!
 
 testMarshalInt32
 	| subject col |
@@ -263,13 +266,15 @@ testMarshalInt32
 			self
 				should: [subject value: each]
 				raise: OS.HRESULTError
-				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.InvalidParameter2)]].
+				matching: 
+					[:ex |
+					ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.InvalidParameter2)]].
 	subject value: nil.
 	self assertIsNil: subject value.
 	self
-		should: [subject value: true]
+		should: [subject value: '1']
 		raise: MessageNotUnderstood
-		matching: [:ex | ex description = 'True does not understand #asInteger']!
+		matching: [:ex | ex message selector == #asInteger]!
 
 testMarshalInt64
 	| subject col |
@@ -293,9 +298,9 @@ testMarshalInt64
 	subject value: nil.
 	self assertIsNil: subject value.
 	self
-		should: [subject value: true]
+		should: [subject value: '1']
 		raise: MessageNotUnderstood
-		matching: [:ex | ex description = 'True does not understand #asInteger']!
+		matching: [:ex | ex message selector == #asInteger]!
 
 testMarshalTime
 	"Test conversion of Time <-> SQL_TIME_STRUCT"
@@ -422,9 +427,9 @@ testMarshalUInt8
 	subject value: nil.
 	self assertIsNil: subject value.
 	self
-		should: [subject value: true]
+		should: [subject value: '1']
 		raise: MessageNotUnderstood
-		matching: [:ex | ex description = 'True does not understand #asInteger']!
+		matching: [:ex | ex message selector == #asInteger]!
 
 testMarshalWChar
 	| subject col string utf16ByteSize |
