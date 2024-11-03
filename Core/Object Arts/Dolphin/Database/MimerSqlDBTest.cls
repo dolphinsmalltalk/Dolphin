@@ -64,7 +64,7 @@ testDateDiff
 			hired := each at: 'HireDate'.
 			born := each at: 'BirthDate'.
 			ageAtHire := each at: 'AgeAtHire'.
-			self assert: ageAtHire years equals: (hired monthsSince: born) / 12]!
+			self assert: ageAtHire totalYears equals: (hired monthsSince: born) / 12]!
 
 testDateTimeDiff
 	| resultSet |
