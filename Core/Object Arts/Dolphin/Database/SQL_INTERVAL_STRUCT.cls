@@ -71,17 +71,17 @@ getValidFields
 interval_sign
 	"Answer the <Integer> value of the receiver's 'interval_sign' field."
 
-	^bytes swordAtOffset: _OffsetOf_interval_sign!
+	^bytes int16AtOffset: _OffsetOf_interval_sign!
 
 interval_type
 	"Answer the <Integer> value of the receiver's 'interval_type' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_interval_type!
+	^bytes int32AtOffset: _OffsetOf_interval_type!
 
 interval_type: anInteger
 	"Set the receiver's 'interval_type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_interval_type put: anInteger!
+	bytes int32AtOffset: _OffsetOf_interval_type put: anInteger!
 
 isYearMonth
 	"Answer whether the receiver describes a years to months interval (as opposed to days to seconds)."
@@ -91,12 +91,12 @@ isYearMonth
 sign
 	"Answer the sign of the interval; -1 if negative, 1 if positive."
 
-	^1 + ((bytes swordAtOffset: _OffsetOf_interval_sign) * -2)!
+	^1 + ((bytes int16AtOffset: _OffsetOf_interval_sign) * -2)!
 
 sign: anInteger
 	"Answer the sign of the interval; -1 if negative, 1 if positive."
 
-	bytes swordAtOffset: _OffsetOf_interval_sign put: (1 - anInteger bitShift: -1)! !
+	bytes int16AtOffset: _OffsetOf_interval_sign put: (1 - anInteger bitShift: -1)! !
 
 !SQL_INTERVAL_STRUCT categoriesForMethods!
 dbInterchangeType!constants!public! !
@@ -179,8 +179,8 @@ defineFields
 	} SQL_INTERVAL_STRUCT;"
 
 	self
-		defineField: #interval_type type: SDWORDField new;
-		defineField: #interval_sign type: SWORDField readOnly!
+		defineField: #interval_type type: Int32Field new;
+		defineField: #interval_sign type: Int16Field readOnly!
 
 hours: aNumber
 	"Answer a new instance of the receiver which is a SQL_C_INTERVAL_HOUR representation of the <Number> of hours in the argument. Any fractional hours are lost."

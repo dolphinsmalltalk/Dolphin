@@ -47,9 +47,9 @@ value
 	"Answers a Date which represents the receiver."
 
 	^Date
-		newDay: (bytes wordAtOffset: _OffsetOf_day)
-		monthIndex: (bytes wordAtOffset: _OffsetOf_month)
-		year: (bytes swordAtOffset: _OffsetOf_year)!
+		newDay: (bytes uint16AtOffset: _OffsetOf_day)
+		monthIndex: (bytes uint16AtOffset: _OffsetOf_month)
+		year: (bytes int16AtOffset: _OffsetOf_year)!
 
 value: aDate
 	"Set the receiver's fields from the <Date> argument."
@@ -57,9 +57,9 @@ value: aDate
 	aDate dayMonthYearDo: 
 			[:d :m :y |
 			bytes
-				wordAtOffset: _OffsetOf_day put: d;
-				wordAtOffset: _OffsetOf_month put: m;
-				swordAtOffset: _OffsetOf_year put: y]!
+				uint16AtOffset: _OffsetOf_day put: d;
+				uint16AtOffset: _OffsetOf_month put: m;
+				int16AtOffset: _OffsetOf_year put: y]!
 
 valueClass
 	^Date! !

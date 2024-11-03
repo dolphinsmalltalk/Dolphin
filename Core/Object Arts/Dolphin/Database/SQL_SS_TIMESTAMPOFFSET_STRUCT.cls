@@ -34,14 +34,14 @@ value
 	"Answers a local <DateAndTime> which represents the receiver."
 
 	^DateAndTime
-		year: (bytes swordAtOffset: _OffsetOf_year)
-		month: (bytes wordAtOffset: _OffsetOf_month)
-		day: (bytes wordAtOffset: _OffsetOf_day)
-		hour: (bytes wordAtOffset: _OffsetOf_hour)
-		minute: (bytes wordAtOffset: _OffsetOf_minute)
-		second: (bytes wordAtOffset: _OffsetOf_second) + ((bytes dwordAtOffset: _OffsetOf_fraction) / 1e9)
-		offset: (bytes swordAtOffset: _OffsetOf_timezone_hour) hours
-				+ (bytes swordAtOffset: _OffsetOf_timezone_minute) minutes!
+		year: (bytes int16AtOffset: _OffsetOf_year)
+		month: (bytes uint16AtOffset: _OffsetOf_month)
+		day: (bytes uint16AtOffset: _OffsetOf_day)
+		hour: (bytes uint16AtOffset: _OffsetOf_hour)
+		minute: (bytes uint16AtOffset: _OffsetOf_minute)
+		second: (bytes uint16AtOffset: _OffsetOf_second) + ((bytes uint32AtOffset: _OffsetOf_fraction) / 1e9)
+		offset: (bytes int16AtOffset: _OffsetOf_timezone_hour) hours
+				+ (bytes int16AtOffset: _OffsetOf_timezone_minute) minutes!
 
 value: aDateAndTime scale: anInteger
 	"Set the receiver's fields from the <Time> argument."
@@ -50,8 +50,8 @@ value: aDateAndTime scale: anInteger
 	super value: aDateAndTime scale: anInteger.
 	offset := aDateAndTime offset.
 	bytes
-		swordAtOffset: _OffsetOf_timezone_hour put: offset hours;
-		swordAtOffset: _OffsetOf_timezone_minute put: offset minutes! !
+		int16AtOffset: _OffsetOf_timezone_hour put: offset hours;
+		int16AtOffset: _OffsetOf_timezone_minute put: offset minutes! !
 
 !SQL_SS_TIMESTAMPOFFSET_STRUCT categoriesForMethods!
 dbConvert:for:!operations!public! !
@@ -81,8 +81,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #timezone_hour type: SWORDField uncompiled;
-		defineField: #timezone_minute type: SWORDField uncompiled!
+		defineField: #timezone_hour type: Int16Field uncompiled;
+		defineField: #timezone_minute type: Int16Field uncompiled!
 
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction #timezone_hour #timezone_minute)! !

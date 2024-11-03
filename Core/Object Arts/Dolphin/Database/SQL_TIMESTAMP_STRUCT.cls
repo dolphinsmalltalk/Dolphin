@@ -52,18 +52,18 @@ milliseconds
 	"Answer the number of whole milliseconds in the fraction part of
 	the receiver."
 
-	^(bytes dwordAtOffset: _OffsetOf_fraction) // 1000000!
+	^(bytes uint32AtOffset: _OffsetOf_fraction) // 1000000!
 
 value
 	"Answers a local <DateAndTime> which represents the receiver."
 
 	^DateAndTime
-		year: (bytes swordAtOffset: _OffsetOf_year)
-		month: (bytes wordAtOffset: _OffsetOf_month)
-		day: (bytes wordAtOffset: _OffsetOf_day)
-		hour: (bytes wordAtOffset: _OffsetOf_hour)
-		minute: (bytes wordAtOffset: _OffsetOf_minute)
-		second: (bytes wordAtOffset: _OffsetOf_second) + ((bytes dwordAtOffset: _OffsetOf_fraction) / 1e9)!
+		year: (bytes int16AtOffset: _OffsetOf_year)
+		month: (bytes uint16AtOffset: _OffsetOf_month)
+		day: (bytes uint16AtOffset: _OffsetOf_day)
+		hour: (bytes uint16AtOffset: _OffsetOf_hour)
+		minute: (bytes uint16AtOffset: _OffsetOf_minute)
+		second: (bytes uint16AtOffset: _OffsetOf_second) + ((bytes uint32AtOffset: _OffsetOf_fraction) / 1e9)!
 
 value: aDateAndTime scale: anInteger
 	"Set the receiver's field values from the <DateAndTime> argument."
@@ -71,14 +71,14 @@ value: aDateAndTime scale: anInteger
 	aDateAndTime dayMonthYearDo: 
 			[:d :m :y |
 			bytes
-				wordAtOffset: _OffsetOf_day put: d;
-				wordAtOffset: _OffsetOf_month put: m;
-				swordAtOffset: _OffsetOf_year put: y].
+				uint16AtOffset: _OffsetOf_day put: d;
+				uint16AtOffset: _OffsetOf_month put: m;
+				int16AtOffset: _OffsetOf_year put: y].
 	bytes
-		wordAtOffset: _OffsetOf_hour put: aDateAndTime hour;
-		wordAtOffset: _OffsetOf_minute put: aDateAndTime minute;
-		wordAtOffset: _OffsetOf_second put: aDateAndTime second truncated;
-		dwordAtOffset: _OffsetOf_fraction
+		uint16AtOffset: _OffsetOf_hour put: aDateAndTime hour;
+		uint16AtOffset: _OffsetOf_minute put: aDateAndTime minute;
+		uint16AtOffset: _OffsetOf_second put: aDateAndTime second truncated;
+		uint32AtOffset: _OffsetOf_fraction
 			put: (anInteger == 0 ifTrue: [0] ifFalse: [aDateAndTime nanosecond truncateTo: (9 - anInteger) exp10])!
 
 valueClass
@@ -114,13 +114,13 @@ self fullyCompileDefinition
 
 	self
 		beUncompiled;
-		defineField: #year type: SWORDField filler;
-		defineField: #month type: WORDField filler;
-		defineField: #day type: WORDField filler;
-		defineField: #hour type: WORDField filler;
-		defineField: #minute type: WORDField filler;
-		defineField: #second type: WORDField filler;
-		defineField: #fraction type: DWORDField filler!
+		defineField: #year type: Int16Field filler;
+		defineField: #month type: UInt16Field filler;
+		defineField: #day type: UInt16Field filler;
+		defineField: #hour type: UInt16Field filler;
+		defineField: #minute type: UInt16Field filler;
+		defineField: #second type: UInt16Field filler;
+		defineField: #fraction type: UInt32Field filler!
 
 fromDateAndTime: aDateAndTime
 	"Answer an instance of the receiver representing the same local time as the <DateAndTime> argument."

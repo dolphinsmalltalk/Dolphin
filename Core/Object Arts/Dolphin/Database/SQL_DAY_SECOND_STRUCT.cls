@@ -56,12 +56,12 @@ asSeconds
 day
 	"Answer the <Integer> value of the receiver's 'day' field."
 
-	^bytes dwordAtOffset: _OffsetOf_day!
+	^bytes uint32AtOffset: _OffsetOf_day!
 
 day: anInteger
 	"Set the receiver's 'day' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_day put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_day put: anInteger!
 
 dbConvert: anObject for: aDBField
 	(anObject species == self species or: [anObject isKindOf: Duration]) ifTrue: [^anObject].
@@ -132,15 +132,15 @@ duration: aDuration
 fraction
 	"Answer the <Integer> value of the receiver's 'fraction' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fraction!
+	^bytes uint32AtOffset: _OffsetOf_fraction!
 
 fraction: anInteger
 	"Set the receiver's 'fraction' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fraction put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fraction put: anInteger!
 
 getSeconds
-	^(bytes dwordAtOffset: _OffsetOf_second) + ((bytes dwordAtOffset: _OffsetOf_fraction) / scaleExp)!
+	^(bytes uint32AtOffset: _OffsetOf_second) + ((bytes uint32AtOffset: _OffsetOf_fraction) / scaleExp)!
 
 hash
 	^self species hash + self asSeconds hash!
@@ -148,12 +148,12 @@ hash
 hour
 	"Answer the <Integer> value of the receiver's 'hour' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hour!
+	^bytes uint32AtOffset: _OffsetOf_hour!
 
 hour: anInteger
 	"Set the receiver's 'hour' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hour put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hour put: anInteger!
 
 initialize
 	super initialize.
@@ -162,12 +162,12 @@ initialize
 minute
 	"Answer the <Integer> value of the receiver's 'minute' field."
 
-	^bytes dwordAtOffset: _OffsetOf_minute!
+	^bytes uint32AtOffset: _OffsetOf_minute!
 
 minute: anInteger
 	"Set the receiver's 'minute' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_minute put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_minute put: anInteger!
 
 scale
 	^scaleExp log truncated!
@@ -183,17 +183,17 @@ scale: anInteger
 second
 	"Answer the <Integer> value of the receiver's 'second' field."
 
-	^bytes dwordAtOffset: _OffsetOf_second!
+	^bytes uint32AtOffset: _OffsetOf_second!
 
 second: anInteger
 	"Set the receiver's 'second' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_second put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_second put: anInteger!
 
 setSeconds: aNumber
 	bytes
-		dwordAtOffset: _OffsetOf_second put: aNumber truncated;
-		dwordAtOffset: _OffsetOf_fraction put: (aNumber fractionPart * scaleExp) truncated!
+		uint32AtOffset: _OffsetOf_second put: aNumber truncated;
+		uint32AtOffset: _OffsetOf_fraction put: (aNumber fractionPart * scaleExp) truncated!
 
 value
 	^self duration!
@@ -249,11 +249,11 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #day type: DWORDField new;
-		defineField: #hour type: DWORDField new;
-		defineField: #minute type: DWORDField new;
-		defineField: #second type: DWORDField new;
-		defineField: #fraction type: DWORDField new! !
+		defineField: #day type: UInt32Field new;
+		defineField: #hour type: UInt32Field new;
+		defineField: #minute type: UInt32Field new;
+		defineField: #second type: UInt32Field new;
+		defineField: #fraction type: UInt32Field new! !
 
 !SQL_DAY_SECOND_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !

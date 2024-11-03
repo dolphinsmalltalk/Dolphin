@@ -92,12 +92,12 @@ isNull
 length
 	"Private - Answer the octet length of the interchange data in this field, or -1 if NULL."
 
-	^lengthBuf sdwordAtOffset: 0!
+	^lengthBuf int32AtOffset: 0!
 
 length: anInteger
 	"Private - Set the octet length of the data in this field. If anInteger is -1, then the field is considered NULL."
 
-	lengthBuf sdwordAtOffset: 0 put: anInteger!
+	lengthBuf int32AtOffset: 0 put: anInteger!
 
 printOn: aStream
 	"Append, to the <puttableStream>, aStream, a string representation of the receiver in a form that a developer might want to see."
