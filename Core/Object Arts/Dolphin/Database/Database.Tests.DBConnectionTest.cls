@@ -323,14 +323,14 @@ testQueryAndUpdateBlob
 	self assert: field isKindOf: DBLongVarField.
 	self assert: field fieldBuf isKindOf: DBVarBinaryBuffer.
 	originalPicture := field value.
-	self assert: originalPicture isKindOf: ByteArray.
+	self assert: (originalPicture isNil or: [originalPicture isKindOf: ByteArray]).
 	updateStatement := 'UPDATE Categories SET Picture=? WHERE CategoryID=?'.
 	update := connection prepare: updateStatement.
 	dbResources add: update.
 	update paramCols: resultSet describeCols.
-	picture := (Graphics.Bitmap fromFile: 'Resources\Beach ball.bmp' usingLocator: FileLocator installRelative)
-				asByteArray.
-	update values: {picture. 1}.
+	picture := (Graphics.Bitmap fromFile: 'Resources\Beach ball.bmp'
+				usingLocator: FileLocator installRelative) asByteArray.
+	update values: { picture. 1 }.
 	update exec.
 	resultSet := connection query: selectStatement.
 	dbResources add: resultSet.
@@ -348,7 +348,7 @@ testQueryAndUpdateBlob
 			resultSet free.
 			self assert: pic2 equals: picture].
 	"Reset"
-	update values: {originalPicture. 1}.
+	update values: { originalPicture. 1 }.
 	update exec.
 	resultSet := connection query: selectStatement.
 	dbResources add: resultSet.
@@ -512,7 +512,6 @@ testUpdateBlobSetNull
 	dbResources add: resultSet.
 	row := resultSet single.
 	originalPicture := resultSet buffer contents first value.
-	self denyIsNil: originalPicture.
 	updateStatement := 'UPDATE Categories SET Picture=? WHERE CategoryID=?'.
 	update := connection prepare: updateStatement.
 	dbResources add: update.

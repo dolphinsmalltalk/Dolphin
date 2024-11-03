@@ -14,22 +14,32 @@ Database.Tests.DBConnectionTestResource comment: ''!
 
 !Database.Tests.DBConnectionTestResource methodsFor!
 
-canConnect
-	| cnxn |
-	cnxn := self createConnection.
-	^[cnxn notNil] ensure: [cnxn close]!
-
 basicConnection
 	^(DBConnection new connectString: self connectString)
 		useDriverCompletion: false;
 		open;
 		yourself!
 
+canConnect
+	| cnxn |
+	cnxn := self createConnection.
+	^[cnxn notNil] ensure: [cnxn close]!
+
 connect
 	connection := self newConnection!
 
 connection
 	^connection ifNil: [connection := self newConnection]!
+
+connectionStringAttributes
+	| keyValuePairs |
+	keyValuePairs := Dictionary
+				withAll: (($; split: self connectString) collect: 
+							[:each |
+							| keyValuePair |
+							keyValuePair := $= split: each.
+							keyValuePair first asUppercase -> keyValuePair second]).
+	^keyValuePairs!
 
 connectString
 	self subclassResponsibility!
@@ -102,9 +112,12 @@ tearDown
 
 !Database.Tests.DBConnectionTestResource categoriesForMethods!
 basicConnection!helpers!private! !
+canConnect!public!testing! !
 connect!helpers!private! !
 connection!accessing!private! !
+connectionStringAttributes!constants!private! !
 connectString!accessing!private! !
+createConnection!operations!public! !
 createDatabase!operations!private! !
 dropDatabase!helpers!private! !
 execSqlCmd:stdin:!helpers!private! !
