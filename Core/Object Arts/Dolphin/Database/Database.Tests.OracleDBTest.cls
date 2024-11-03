@@ -14,11 +14,20 @@ Database.Tests.OracleDBTest comment: ''!
 
 !Database.Tests.OracleDBTest methodsFor!
 
+categoriesColumns
+	^{{'CATEGORYID'. SQL_DECIMAL. 10. 0. 13}.
+		{'CATEGORYNAME'. SQL_WVARCHAR. 15. nil. 30}.
+		{'DESCRIPTION'. SQL_WLONGVARCHAR. 16r7FFFFFFF. nil. 16r7FFFFFFF}.
+		{'PICTURE'. SQL_LONGVARBINARY. 16r7FFFFFFF. nil. 16r7FFFFFFF}}!
+
 databaseName
 	^''!
 
 databaseResource
 	^OracleNorthwindDB current!
+
+dataSourceName
+	^OracleNorthwindDB current connectionStringAttributes at: 'DSN'!
 
 defaultCursorCommitBehavior
 	^SQL_CB_PRESERVE!
@@ -92,8 +101,10 @@ self skip.	"Oracle's ODBC driver still doesn't support INTERVALs..."
 ! !
 
 !Database.Tests.OracleDBTest categoriesForMethods!
+categoriesColumns!constants!private! !
 databaseName!constants!private! !
 databaseResource!accessing!private! !
+dataSourceName!constants!private! !
 defaultCursorCommitBehavior!constants!private! !
 defaultCursorRollbackBehaviour!constants!private! !
 field:fromRow:!helpers!private! !
