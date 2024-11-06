@@ -15,10 +15,12 @@ MimerSqlDBTest comment: ''!
 !MimerSqlDBTest methodsFor!
 
 categoriesColumns
-	^{{'CategoryID'. SQL_INTEGER. 10. 0. 4}.
-		{'CategoryName'. SQL_WVARCHAR. 15. nil. 60}.
-		{'Description'. SQL_WLONGVARCHAR. 1048576. nil. 4194304}.
-		{'Picture'. SQL_LONGVARBINARY. 4194304. nil. 4194304}}!
+	^{
+		{ 'CategoryID'. SQL_INTEGER. 10. 0. 4 }.
+		{ 'CategoryName'. SQL_WVARCHAR. 15. nil. 60 }.
+		{ 'Description'. SQL_WLONGVARCHAR. 1048576. nil. 4194304 }.
+		{ 'Picture'. SQL_LONGVARBINARY. 4194304. nil. 4194304 }
+	}!
 
 createTableStatementTemplate
 	^'CREATE TABLE <1s> (  ID INT PRIMARY KEY, <2s> <3s><4d> NULL ) IN Northwind'!
@@ -36,22 +38,24 @@ orderDetailsTable
 	^'OrderDetails'!
 
 ordersColumns
-	"Mimer's WCHAR's are UTF-32, and its ODBC driver reports WCHAR column octet transfer length as 4x precision. This isn't correct since the transfer format is UTF-16, and therefore the octet transfer length is 2x, not 4x."
+	"Mimer's WCHAR's are UTF-32, and its ODBC driver reports WCHAR column buffer sizes as 4x character length. This isn't correct since the ODBC transfer format can only be UTF-16, and therefore the octet transfer length is 2x, not 4x."
 
-	^{{'OrderID'. SQL_INTEGER. 10. 0. 4}.
-		{'CustomerID'. SQL_CHAR. 5. nil. 5}.
-		{'EmployeeID'. SQL_INTEGER. 10. 0. 4}.
-		{'OrderDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'ShipVia'. SQL_INTEGER. 10. 0. 4}.
-		{'Freight'. SQL_DECIMAL. 10. 2. 13}.
-		{'ShipName'. SQL_WVARCHAR. 40. nil. 160}.
-		{'ShipAddress'. SQL_WVARCHAR. 60. nil. 240}.
-		{'ShipCity'. SQL_WVARCHAR. 15. nil. 60}.
-		{'ShipRegion'. SQL_WVARCHAR. 15. nil. 60}.
-		{'ShipPostalCode'. SQL_WVARCHAR. 10. nil. 40}.
-		{'ShipCountry'. SQL_WVARCHAR. 15. nil. 60}}!
+	^{
+		{ 'OrderID'. SQL_INTEGER. 10. 0. 4 }.
+		{ 'CustomerID'. SQL_CHAR. 5. nil. 5 }.
+		{ 'EmployeeID'. SQL_INTEGER. 10. 0. 4 }.
+		{ 'OrderDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize }.
+		{ 'RequiredDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize }.
+		{ 'ShippedDate'. SQL_TYPE_TIMESTAMP. 26. 6. SQL_TIMESTAMP_STRUCT byteSize }.
+		{ 'ShipVia'. SQL_INTEGER. 10. 0. 4 }.
+		{ 'Freight'. SQL_DECIMAL. 10. 2. 12 }.
+		{ 'ShipName'. SQL_WVARCHAR. 40. nil. 160 }.
+		{ 'ShipAddress'. SQL_WVARCHAR. 60. nil. 240 }.
+		{ 'ShipCity'. SQL_WVARCHAR. 15. nil. 60 }.
+		{ 'ShipRegion'. SQL_WVARCHAR. 15. nil. 60 }.
+		{ 'ShipPostalCode'. SQL_WVARCHAR. 10. nil. 40 }.
+		{ 'ShipCountry'. SQL_WVARCHAR. 15. nil. 60 }
+	}!
 
 testDateDiff
 	| resultSet |

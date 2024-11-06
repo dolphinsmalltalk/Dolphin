@@ -83,7 +83,7 @@ ordersColumns
 		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 19. 0. SQL_TIMESTAMP_STRUCT byteSize}.
 		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 19. 0. SQL_TIMESTAMP_STRUCT byteSize}.
 		{'ShipVia'. SQL_INTEGER. 10. 0. 4}.
-		{'Freight'. SQL_NUMERIC. 19. 4. 22}.
+		{'Freight'. SQL_NUMERIC. 19. 4. 21}.
 		{'ShipName'. SQL_WVARCHAR. 40. nil. 80}.
 		{'ShipAddress'. SQL_WVARCHAR. 60. nil. 120}.
 		{'ShipCity'. SQL_WVARCHAR. 15. nil. 30}.

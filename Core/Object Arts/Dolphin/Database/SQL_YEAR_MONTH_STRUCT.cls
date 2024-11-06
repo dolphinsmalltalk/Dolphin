@@ -141,9 +141,13 @@ defineFields
 		defineField: #month type: DWORDField new;
 		defineField: #filler1 type: DWORDField filler;
 		defineField: #filler2 type: DWORDField filler;
-		defineField: #fiiller3 type: DWORDField filler! !
+		defineField: #fiiller3 type: DWORDField filler!
+
+getFieldNames
+	^#(#interval_type #interval_sign #year #month)! !
 
 !SQL_YEAR_MONTH_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
 !
 

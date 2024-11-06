@@ -60,7 +60,7 @@ dbUnmarshal: aDBField
 	^ScaledDecimal newFromNumber: number scale: scale!
 
 initializeForColumn: aDBColAttr
-	bytes := AnsiString newFixed: aDBColAttr length - 1!
+	bytes := AnsiString newFixed: aDBColAttr length!
 
 valueClass
 	^Number! !
@@ -86,7 +86,7 @@ dbTransferOctetLengthForColumn: aDBColAttr
 
 	The maximum number of digits is specified by the column precision."
 
-	^aDBColAttr precision + 2 + 1	"We are transferring as SQL_C_CHAR, as there is no point using UTF-16 for numbers"! !
+	^aDBColAttr precision + 2	"We are transferring as SQL_C_CHAR, as there is no point using UTF-16 for numbers"! !
 
 !DBNumericFieldBuffer class categoriesForMethods!
 dbTransferOctetLengthForColumn:!accessing!initializing!public! !

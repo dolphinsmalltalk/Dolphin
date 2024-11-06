@@ -76,6 +76,9 @@ dropTestTable
 dsn
 	^Error notYetImplemented!
 
+exampleLongText
+	^Object comment!
+
 field: aString fromRow: aDBRow 
 	^aDBRow at: aString!
 
@@ -411,25 +414,25 @@ testQueryAndUpdateNClob
 	update := connection prepare: updateStatement.
 	dbResources add: update.
 	update paramCols: resultSet describeCols.
-	update values: {Object comment. 1}.
+	update values: { self exampleLongText. 1 }.
 	update exec.
 	resultSet := connection query: selectStatement.
 	dbResources add: resultSet.
 	row := resultSet first.
-	self assert: (row atIndex: 1) equals: Object comment.
+	self assert: (row atIndex: 1) equals: self exampleLongText.
 	"Repeat but with a deliberately small buffer sizes so the data has to be queried in pieces."
 	#(88 86) do: 
 			[:each |
-			| desc2 pic2 |
+			| desc2 |
 			DBVarFieldBuffer blockTransferOctetLength: each.
 			"We have to re-run the query to get the column buffers rebuilt"
 			resultSet := connection query: selectStatement.
 			row := resultSet first.
 			desc2 := row atIndex: 1.
 			resultSet free.
-			self assert: desc2 equals: Object comment].
+			self assert: desc2 equals: self exampleLongText].
 	"Reset"
-	update values: {originalDescription. 1}.
+	update values: { originalDescription. 1 }.
 	update exec.
 	resultSet := connection query: selectStatement.
 	dbResources add: resultSet.
@@ -596,6 +599,7 @@ defaultCursorRollbackBehaviour!constants!private! !
 defaultTransactionIsolation!constants!private! !
 dropTestTable!helpers!private! !
 dsn!accessing!public! !
+exampleLongText!constants!private! !
 field:fromRow:!private!unit tests! !
 freeDbResources!helpers!private! !
 isNumericOutOfRangeError:!helpers!private! !
