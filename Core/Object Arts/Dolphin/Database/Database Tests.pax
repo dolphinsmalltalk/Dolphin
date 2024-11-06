@@ -15,6 +15,8 @@ package setClassNames: #(
 	#{Database.Tests.DBTest}
 	#{Database.Tests.MimerSqlDBTest}
 	#{Database.Tests.MimerSqlNorthwindDB}
+	#{Database.Tests.MySqlDBTest}
+	#{Database.Tests.MySqlNorthwindDB}
 	#{Database.Tests.OracleDBTest}
 	#{Database.Tests.OracleNorthwindDB}
 	#{Database.Tests.SQLServerDBTest}
@@ -97,6 +99,14 @@ Database.Tests.DBConnectionTest
 	classConstants: {}!
 
 Database.Tests.DBConnectionTest
+	subclass: #'Database.Tests.MySqlDBTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.Tests.DBConnectionTest
 	subclass: #'Database.Tests.OracleDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -130,6 +140,14 @@ Database.Tests.DBConnectionTestResource
 
 Database.Tests.DBConnectionTestResource
 	subclass: #'Database.Tests.MimerSqlNorthwindDB'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.Tests.DBConnectionTestResource
+	subclass: #'Database.Tests.MySqlNorthwindDB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

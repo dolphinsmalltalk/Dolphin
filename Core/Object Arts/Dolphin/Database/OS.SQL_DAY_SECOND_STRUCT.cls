@@ -234,6 +234,9 @@ valueClass!constants!public! !
 
 !OS.SQL_DAY_SECOND_STRUCT class methodsFor!
 
+byteSize
+	^_SQL_DAY_SECOND_STRUCT_Size!
+
 defineFields
 	"
 		self compileDefinition
@@ -253,9 +256,14 @@ defineFields
 		defineField: #hour type: UInt32Field new;
 		defineField: #minute type: UInt32Field new;
 		defineField: #second type: UInt32Field new;
-		defineField: #fraction type: UInt32Field new! !
+		defineField: #fraction type: UInt32Field new!
+
+getFieldNames
+	^#(#interval_type #interval_sign #day #hour #minute #second #fraction)! !
 
 !OS.SQL_DAY_SECOND_STRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
 !
 

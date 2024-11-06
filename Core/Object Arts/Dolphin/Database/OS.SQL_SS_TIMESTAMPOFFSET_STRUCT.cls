@@ -62,6 +62,9 @@ value:scale:!accessing!public! !
 
 !OS.SQL_SS_TIMESTAMPOFFSET_STRUCT class methodsFor!
 
+byteSize
+	^_SQL_SS_TIMESTAMPOFFSET_STRUCT_Size!
+
 defineFields
 	"
 		self compileDefinition
@@ -88,6 +91,7 @@ getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction #timezone_hour #timezone_minute)! !
 
 !OS.SQL_SS_TIMESTAMPOFFSET_STRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

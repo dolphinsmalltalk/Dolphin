@@ -128,6 +128,9 @@ years!accessing!public! !
 
 !OS.SQL_YEAR_MONTH_STRUCT class methodsFor!
 
+byteSize
+	^_SQL_YEAR_MONTH_STRUCT_Size!
+
 defineFields
 	"
 		self compileDefinition
@@ -144,9 +147,14 @@ defineFields
 		defineField: #month type: UInt32Field new;
 		defineField: #filler1 type: UInt32Field filler;
 		defineField: #filler2 type: UInt32Field filler;
-		defineField: #fiiller3 type: UInt32Field filler! !
+		defineField: #fiiller3 type: UInt32Field filler!
+
+getFieldNames
+	^#(#interval_type #interval_sign #year #month)! !
 
 !OS.SQL_YEAR_MONTH_STRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
 !
 

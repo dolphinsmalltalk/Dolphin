@@ -97,10 +97,13 @@ valueClass!constants!public! !
 
 !OS.SQL_TIMESTAMP_STRUCT class methodsFor!
 
+byteSize
+	^_SQL_TIMESTAMP_STRUCT_Size!
+
 defineFields
 	"Define the fields of the ODBC TIMESTAMP structure
 		self compileDefinition
-self fullyCompileDefinition
+
 	typedef struct tagTIMESTAMP_STRUCT
 	{
 		SQLSMALLINT    year;
@@ -114,13 +117,13 @@ self fullyCompileDefinition
 
 	self
 		beUncompiled;
-		defineField: #year type: Int16Field filler;
-		defineField: #month type: UInt16Field filler;
-		defineField: #day type: UInt16Field filler;
-		defineField: #hour type: UInt16Field filler;
-		defineField: #minute type: UInt16Field filler;
-		defineField: #second type: UInt16Field filler;
-		defineField: #fraction type: UInt32Field filler!
+		defineField: #year type: Int16Field readOnly;
+		defineField: #month type: UInt16Field readOnly;
+		defineField: #day type: UInt16Field readOnly;
+		defineField: #hour type: UInt16Field readOnly;
+		defineField: #minute type: UInt16Field readOnly;
+		defineField: #second type: UInt16Field readOnly;
+		defineField: #fraction type: UInt32Field readOnly!
 
 fromDateAndTime: aDateAndTime
 	"Answer an instance of the receiver representing the same local time as the <DateAndTime> argument."
@@ -130,9 +133,10 @@ fromDateAndTime: aDateAndTime
 		yourself!
 
 getFieldNames
-	^#()! !
+	^#(#year #month #day #hour #minute #second #fraction)! !
 
 !OS.SQL_TIMESTAMP_STRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromDateAndTime:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

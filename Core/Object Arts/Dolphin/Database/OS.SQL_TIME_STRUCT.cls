@@ -7,7 +7,6 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_ODBCTIME_Size' -> 16r6.
 			'_OffsetOf_hour' -> 16r0.
 			'_OffsetOf_minute' -> 16r2.
 			'_OffsetOf_second' -> 16r4.
@@ -73,6 +72,9 @@ valueClass!constants!public! !
 
 !OS.SQL_TIME_STRUCT class methodsFor!
 
+byteSize
+	^_SQL_TIME_STRUCT_Size!
+
 defineFields
 	"
 		self compileDefinition
@@ -100,6 +102,7 @@ getFieldNames
 	^#(#hour #minute #second)! !
 
 !OS.SQL_TIME_STRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromTime:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

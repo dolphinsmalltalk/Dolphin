@@ -176,15 +176,13 @@ columns: aStringColumn qualifier: aStringQualifier owner: aStringOwner table: aS
 				yourself.
 	stmt results do: 
 			[:each |
-			| column |
-			column := DBColAttr new
+			colAttrs addLast: (DBColAttr new
 						columnNumber: colAttrs size;
 						name: (each atIndex: 4);
 						precision: (each atIndex: 7);
 						scale: (each atIndex: 9);
-						type: (each atIndex: 5).
-			column length == 0 ifTrue: [column length: (each atIndex: 8)].
-			colAttrs addLast: column].
+						type: (each atIndex: 5);
+						length: (each atIndex: 8))].
 	stmt free.
 	^colAttrs!
 

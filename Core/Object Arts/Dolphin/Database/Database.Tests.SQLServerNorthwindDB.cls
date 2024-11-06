@@ -24,10 +24,7 @@ connectionStringFormat
 					';SERVER=(localdb)\MSSQLLocalDB;Trusted_Connection=Yes'])!
 
 connectString
-	^self connectionStringFormat
-		expandMacrosWith: self serverName
-		with: self uid
-		with: self pwd!
+	^self connectionStringFormat << { self serverName. self uid. self pwd }!
 
 createDatabase
 	| sql |

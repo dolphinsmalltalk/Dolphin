@@ -7,7 +7,6 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_ODBCDATE_Size' -> 16r6.
 			'_OffsetOf_day' -> 16r4.
 			'_OffsetOf_month' -> 16r2.
 			'_OffsetOf_year' -> 16r0.
@@ -76,6 +75,9 @@ valueClass!constants!public! !
 
 !OS.SQL_DATE_STRUCT class methodsFor!
 
+byteSize
+	^_SQL_DATE_STRUCT_Size!
+
 defineFields
 	"
 		self compileDefinition
@@ -104,6 +106,7 @@ getFieldNames
 	^#(#year #month #day)! !
 
 !OS.SQL_DATE_STRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromDate:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
