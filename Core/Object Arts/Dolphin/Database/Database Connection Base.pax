@@ -1951,7 +1951,6 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_ODBCDATE_Size' -> 16r6.
 			'_OffsetOf_day' -> 16r4.
 			'_OffsetOf_month' -> 16r2.
 			'_OffsetOf_year' -> 16r0.
@@ -1993,7 +1992,6 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_ODBCTIME_Size' -> 16r6.
 			'_OffsetOf_hour' -> 16r0.
 			'_OffsetOf_minute' -> 16r2.
 			'_OffsetOf_second' -> 16r4.

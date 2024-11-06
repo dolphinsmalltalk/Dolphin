@@ -20,12 +20,12 @@ connectString
 !
 
 createDatabase
-	| sqlFile process |
+	| sqlFile |
 	(OS.AdvApiLibrary default isServiceRunning: 'OracleServiceFREE') ifFalse: [^false].
 	sqlFile := (Kernel.PackageRelativeFileLocator package: self class owningPackage)
 				localFileSpecFor: 'NorthwindOracle.sql'.
 	"N.B. Obviously storing a password in a method and passing it on a command line is insecure, but this is a test database"
-	^self execSqlCmd: 'sqlplus <2s>/<3s> @"<1s>"' << {sqlFile. self uid. self pwd} stdin: nil!
+	^self execSqlCmd: 'sqlplus <2s>/<3s> @"<1s>"' << { sqlFile. self uid. self pwd } stdin: nil!
 
 dropDatabase
 	self connection

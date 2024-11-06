@@ -68,3 +68,16 @@ dbUnmarshal:!operations!public! !
 valueClass!constants!public! !
 !
 
+!Database.DBVarWCharBuffer class methodsFor!
+
+dbTransferOctetLengthForColumn: aDBColAttr
+	"Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) based on the column type, if fixed, else 0 for variable width columns.
+		The transfer octet length of a column is the maximum number of bytes returned to the application when data is transferred to its default C data type. For character data, the transfer octet length does not include space for the null-termination character. The transfer octet length of a column may be different than the number of bytes required to store the data on the data source.
+	From https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/transfer-octet-length"
+
+	^(aDBColAttr precision ?? 0) bitShift: 1! !
+
+!Database.DBVarWCharBuffer class categoriesForMethods!
+dbTransferOctetLengthForColumn:!enquiries!public! !
+!
+

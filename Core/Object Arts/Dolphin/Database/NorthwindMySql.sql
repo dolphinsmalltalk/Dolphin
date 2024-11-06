@@ -1,13 +1,13 @@
 DROP DATABASE   /*!32312 IF EXISTS*/ Northwind;
 
-CREATE DATABASE Northwind  CHAR SET utf8 COLLATE utf8_bin ; 
-
+CREATE DATABASE Northwind CHARSET utf8mb4; 
 
 USE Northwind;
+SET NAMES utf8mb4;
 
 CREATE TABLE Categories (
   CategoryID INT AUTO_INCREMENT NOT NULL
-  ,CategoryName NVARCHAR(15) NOT NULL
+  ,CategoryName VARCHAR(15) NOT NULL
   ,Description MEDIUMTEXT NULL
   ,Picture LONGBLOB NULL
   ,PRIMARY KEY (CategoryID)
@@ -15,14 +15,14 @@ CREATE TABLE Categories (
 
 CREATE TABLE Region (
   RegionID INT NOT NULL
-  ,RegionDescription NVARCHAR(50) NOT NULL
+  ,RegionDescription VARCHAR(50) NOT NULL
   ,PRIMARY KEY (RegionID)
   ) ENGINE=INNODB;
 
 
 CREATE TABLE Territories (
-  TerritoryID NVARCHAR(20) NOT NULL
-  ,TerritoryDescription NVARCHAR(50) NOT NULL
+  TerritoryID VARCHAR(20) NOT NULL
+  ,TerritoryDescription VARCHAR(50) NOT NULL
   ,RegionID INT NOT NULL
   ,PRIMARY KEY (TerritoryId)
   ,FOREIGN KEY (RegionID)
@@ -36,25 +36,25 @@ CREATE TABLE CustomerDemographics (
   ) ENGINE=INNODB;
 
 CREATE TABLE Customers (
-  CustomerID NCHAR(5) NOT NULL
-  ,CompanyName NVARCHAR(40) NOT NULL
-  ,ContactName NVARCHAR(30) NULL
-  ,ContactTitle NVARCHAR(30) NULL
-  ,Address NVARCHAR(60) NULL
-  ,City NVARCHAR(15) NULL
-  ,Region NVARCHAR(15) NULL
-  ,PostalCode NVARCHAR(10) NULL
-  ,Country NVARCHAR(15) NULL
-  ,Phone NVARCHAR(24) NULL
-  ,mobile NVARCHAR(24) NULL
-  ,Email NVARCHAR(225) NULL
-  ,Fax NVARCHAR(24) NULL
+  CustomerID VARCHAR(5) CHARACTER SET ascii NOT NULL
+  ,CompanyName VARCHAR(40) NOT NULL
+  ,ContactName VARCHAR(30) NULL
+  ,ContactTitle VARCHAR(30) NULL
+  ,Address VARCHAR(60) NULL
+  ,City VARCHAR(15) NULL
+  ,Region VARCHAR(15) NULL
+  ,PostalCode VARCHAR(10) NULL
+  ,Country VARCHAR(15) NULL
+  ,Phone VARCHAR(24) NULL
+  ,mobile VARCHAR(24) NULL
+  ,Email VARCHAR(225) NULL
+  ,Fax VARCHAR(24) NULL
   ,PRIMARY KEY (CustomerID)
   ) ENGINE=INNODB;
 
 
 CREATE TABLE CustCustDemographics (
-  CustomerID NCHAR(5) NOT NULL
+  CustomerID VARCHAR(5) CHARACTER SET ascii NOT NULL
   ,CustomerTypeID INT NOT NULL
   ,PRIMARY KEY (CustomerID, CustomerTypeID)
     ,FOREIGN KEY (CustomerID)
@@ -63,36 +63,33 @@ CREATE TABLE CustCustDemographics (
       REFERENCES CustomerDemographics(CustomerTypeID)
   ) ENGINE=INNODB;
 
-
-
-
 CREATE TABLE Employees (
   EmployeeID INT AUTO_INCREMENT NOT NULL
-  ,LastName NVARCHAR(20) NOT NULL
-  ,FirstName NVARCHAR(10) NOT NULL
-  ,Title NVARCHAR(30) NULL
-  ,titleOfCourtesy NVARCHAR(25) NULL
+  ,LastName VARCHAR(20) NOT NULL
+  ,FirstName VARCHAR(10) NOT NULL
+  ,Title VARCHAR(30) NULL
+  ,titleOfCourtesy VARCHAR(25) NULL
   ,BirthDate DATETIME NULL
   ,HireDate DATETIME NULL
-  ,Address NVARCHAR(60) NULL
-  ,City NVARCHAR(15) NULL
-  ,Region NVARCHAR(15) NULL
-  ,PostalCode NVARCHAR(10) NULL
-  ,Country NVARCHAR(15) NULL
-  ,Phone NVARCHAR(24) NULL
-  ,Extension NVARCHAR(4) NULL
-  ,Mobile NVARCHAR(24) NULL
-  ,Email NVARCHAR(225) NULL
+  ,Address VARCHAR(60) NULL
+  ,City VARCHAR(15) NULL
+  ,Region VARCHAR(15) NULL
+  ,PostalCode VARCHAR(10) NULL
+  ,Country VARCHAR(15) NULL
+  ,Phone VARCHAR(24) NULL
+  ,Extension VARCHAR(4) NULL
+  ,Mobile VARCHAR(24) NULL
+  ,Email VARCHAR(225) NULL
   ,Photo BLOB NULL
   ,Notes BLOB NULL
   ,ReportsTo INT NULL
-  ,PhotoPath NVARCHAR(255) NULL
+  ,PhotoPath VARCHAR(255) NULL
   ,PRIMARY KEY (EmployeeID)
   ) ENGINE=INNODB;
 
 CREATE TABLE EmployeeTerritories (
   EmployeeID  INT AUTO_INCREMENT NOT NULL
-  ,TerritoryID NVARCHAR(20) NOT NULL
+  ,TerritoryID VARCHAR(20) NOT NULL
   ,PRIMARY KEY (EmployeeId, TerritoryID)
   ,FOREIGN KEY (EmployeeId)
       REFERENCES Employees(EmployeeId)
@@ -102,17 +99,17 @@ CREATE TABLE EmployeeTerritories (
 
 CREATE TABLE Suppliers (
   SupplierID INT AUTO_INCREMENT NOT NULL
-  ,CompanyName NVARCHAR(40) NOT NULL
-  ,ContactName NVARCHAR(30) NULL
-  ,ContactTitle NVARCHAR(30) NULL
-  ,Address NVARCHAR(60) NULL
-  ,City NVARCHAR(15) NULL
-  ,Region NVARCHAR(15) NULL
-  ,PostalCode NVARCHAR(10) NULL
-  ,Country NVARCHAR(15) NULL
-  ,Phone NVARCHAR(24) NULL
-  ,Email NVARCHAR(225) NULL
-  ,Fax NVARCHAR(24) NULL
+  ,CompanyName VARCHAR(40) NOT NULL
+  ,ContactName VARCHAR(30) NULL
+  ,ContactTitle VARCHAR(30) NULL
+  ,Address VARCHAR(60) NULL
+  ,City VARCHAR(15) NULL
+  ,Region VARCHAR(15) NULL
+  ,PostalCode VARCHAR(10) NULL
+  ,Country VARCHAR(15) NULL
+  ,Phone VARCHAR(24) NULL
+  ,Email VARCHAR(225) NULL
+  ,Fax VARCHAR(24) NULL
   ,HomePage TEXT NULL
   ,PRIMARY KEY (SupplierID)
   ) ENGINE=INNODB;
@@ -121,10 +118,10 @@ CREATE TABLE Suppliers (
 
 CREATE TABLE Products (
   ProductID INT AUTO_INCREMENT NOT NULL
-  ,ProductName NVARCHAR(40) NOT NULL
+  ,ProductName VARCHAR(40) NOT NULL
   ,SupplierID INT NULL
   ,CategoryID INT NULL
-  ,QuantityPerUnit NVARCHAR(20) NULL
+  ,QuantityPerUnit VARCHAR(20) NULL
   ,UnitPrice DECIMAL(10, 2) NULL
   ,UnitsInStock SMALLINT NULL
   ,UnitsOnOrder SMALLINT NULL
@@ -141,29 +138,27 @@ CREATE TABLE Products (
 
 CREATE TABLE Shippers (
   ShipperID INT AUTO_INCREMENT NOT NULL
-  ,CompanyName NVARCHAR(40) NOT NULL
-  ,Phone NVARCHAR(44) NULL
+  ,CompanyName VARCHAR(40) NOT NULL
+  ,Phone VARCHAR(44) NULL
   ,PRIMARY KEY (ShipperID)
   ) ENGINE=INNODB;
 
 
-
-
 CREATE TABLE Orders (
   OrderID INT AUTO_INCREMENT NOT NULL
-  ,CustomerID NCHAR(5) NOT NULL
+  ,CustomerID VARCHAR(5) CHARACTER SET ascii NOT NULL
   ,EmployeeID INT NULL
   ,OrderDate DATETIME NULL
   ,RequiredDate DATETIME NULL
   ,ShippedDate DATETIME NULL
   ,ShipVia INT NOT NULL
   ,Freight DECIMAL(10, 2) NULL
-  ,ShipName NVARCHAR(40) NULL
-  ,ShipAddress NVARCHAR(60) NULL
-  ,ShipCity NVARCHAR(15) NULL
-  ,ShipRegion NVARCHAR(15) NULL
-  ,ShipPostalCode NVARCHAR(10) NULL
-  ,ShipCountry NVARCHAR(15) NULL
+  ,ShipName VARCHAR(40) NULL
+  ,ShipAddress VARCHAR(60) NULL
+  ,ShipCity VARCHAR(15) NULL
+  ,ShipRegion VARCHAR(15) NULL
+  ,ShipPostalCode VARCHAR(10) NULL
+  ,ShipCountry VARCHAR(15) NULL
   ,PRIMARY KEY (OrderID)
    , FOREIGN KEY (ShipVia)
       REFERENCES Shippers(ShipperID)

@@ -54,6 +54,9 @@ value:scale:!accessing!public! !
 
 !OS.DBTIME2 class methodsFor!
 
+byteSize
+	^_DBTIME2_Size!
+
 defineFields
 	"
 		self compileDefinition
@@ -73,6 +76,7 @@ getFieldNames
 	^#(#hour #minute #second #fraction)! !
 
 !OS.DBTIME2 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
