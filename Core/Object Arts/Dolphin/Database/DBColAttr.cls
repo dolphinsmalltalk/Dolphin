@@ -250,7 +250,7 @@ initialize
 		self initialize
 	"
 
-	self addClassConstant: 'BufferClasses'
+	self addClassVariable: 'BufferClasses'
 		value: (IdentityDictionary withAll: {SQL_CHAR -> DBVarCharBuffer.
 						SQL_VARCHAR -> DBVarCharBuffer.
 						SQL_LONGVARCHAR -> DBVarCharBuffer.

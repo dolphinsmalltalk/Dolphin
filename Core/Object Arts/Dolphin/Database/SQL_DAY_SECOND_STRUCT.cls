@@ -250,9 +250,13 @@ defineFields
 		defineField: #hour type: DWORDField new;
 		defineField: #minute type: DWORDField new;
 		defineField: #second type: DWORDField new;
-		defineField: #fraction type: DWORDField new! !
+		defineField: #fraction type: DWORDField new!
+
+getFieldNames
+	^#(#interval_type #interval_sign #day #hour #minute #second #fraction)! !
 
 !SQL_DAY_SECOND_STRUCT class categoriesForMethods!
 defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
 !
 

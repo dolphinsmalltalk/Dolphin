@@ -15,7 +15,7 @@ OracleDBTest comment: ''!
 !OracleDBTest methodsFor!
 
 categoriesColumns
-	^{{'CATEGORYID'. SQL_DECIMAL. 10. 0. 13}.
+	^{{'CATEGORYID'. SQL_DECIMAL. 10. 0. 12}.
 		{'CATEGORYNAME'. SQL_WVARCHAR. 15. nil. 30}.
 		{'DESCRIPTION'. SQL_WLONGVARCHAR. 16r7FFFFFFF. nil. 16r7FFFFFFF}.
 		{'PICTURE'. SQL_LONGVARBINARY. 16r7FFFFFFF. nil. 16r7FFFFFFF}}!
@@ -27,7 +27,7 @@ databaseResource
 	^OracleNorthwindDB current!
 
 dataSourceName
-	^OracleNorthwindDB current connectionStringAttributes at: 'DSN'!
+	^self databaseResource connectionStringAttributes at: 'DSN'!
 
 defaultCursorCommitBehavior
 	^SQL_CB_PRESERVE!
@@ -45,60 +45,27 @@ orderDetailsTable
 	^'OrderDetails'!
 
 ordersColumns
-	^{{'ORDERID'. SQL_DECIMAL. 10. 0. 13}.
-		{'CUSTOMERID'. SQL_CHAR. 5. nil. 5}.
-		{'EMPLOYEEID'. SQL_DECIMAL. 10. 0. 13}.
-		{'ORDERDATE'. SQL_TYPE_TIMESTAMP. 19. 6. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'REQUIREDDATE'. SQL_TYPE_TIMESTAMP. 19. nil. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'SHIPPEDDATE'. SQL_TYPE_TIMESTAMP. 19. 6. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'SHIPVIA'. SQL_DECIMAL. 10. 0. 13}.
-		{'FREIGHT'. SQL_DECIMAL. 10. 2. 13}.
-		{'SHIPNAME'. SQL_WVARCHAR. 40. nil. 80}.
-		{'SHIPADDRESS'. SQL_WVARCHAR. 60. nil. 120}.
-		{'SHIPCITY'. SQL_WVARCHAR. 15. nil. 30}.
-		{'SHIPREGION'. SQL_WVARCHAR. 15. nil. 30}.
-		{'SHIPPOSTALCODE'. SQL_WVARCHAR. 10. nil. 20}.
-		{'SHIPCOUNTRY'. SQL_WVARCHAR. 15. nil. 30}}!
+	"Note the weirdness that the ORDERDATE and SHIPPEDDATE columns configured in the DB as of type TIMESTAMP, and REQUIREDDATE defined as a DATE, all get reported as SQL_TIMESTAMP_STRUCT, but the buffer size for the first two is 11, but we get the expected 16 bytes for the DATE column. In all cases a SQL_TIMESTAMP_STRUCT is transferred, so the buffer size for the order and ship dates is reported incorrectly by the driver."
+
+	^{
+		{ 'ORDERID'. SQL_DECIMAL. 10. 0. 12 }.
+		{ 'CUSTOMERID'. SQL_CHAR. 5. nil. 5 }.
+		{ 'EMPLOYEEID'. SQL_DECIMAL. 10. 0. 12 }.
+		{ 'ORDERDATE'. SQL_TYPE_TIMESTAMP. 19. 6. 11 }.
+		{ 'REQUIREDDATE'. SQL_TYPE_TIMESTAMP. 19. nil. SQL_TIMESTAMP_STRUCT byteSize }.
+		{ 'SHIPPEDDATE'. SQL_TYPE_TIMESTAMP. 19. 6. 11 }.
+		{ 'SHIPVIA'. SQL_DECIMAL. 10. 0. 12 }.
+		{ 'FREIGHT'. SQL_DECIMAL. 10. 2. 12 }.
+		{ 'SHIPNAME'. SQL_WVARCHAR. 40. nil. 80 }.
+		{ 'SHIPADDRESS'. SQL_WVARCHAR. 60. nil. 120 }.
+		{ 'SHIPCITY'. SQL_WVARCHAR. 15. nil. 30 }.
+		{ 'SHIPREGION'. SQL_WVARCHAR. 15. nil. 30 }.
+		{ 'SHIPPOSTALCODE'. SQL_WVARCHAR. 10. nil. 20 }.
+		{ 'SHIPCOUNTRY'. SQL_WVARCHAR. 15. nil. 30 }
+	}!
 
 orderTableRowIds
-	^#('ROWID')!
-
-testYearToMonthIntervals
-	| resultSet values colAttr insert |
-self skip.	"Oracle's ODBC driver still doesn't support INTERVALs..."
-	self dropTestTable.
-	colAttr := self createTestTable: 'INTERVAL YEAR TO MONTH'.
-	insert := connection prepare: 'INSERT <1s> (<2s>) VALUES (?)' << {self temporaryTableName. colAttr name}.
-	insert paramCols: {colAttr}.
-	values := {SQL_INTERVAL_STRUCT years: 99.
-				SQL_INTERVAL_STRUCT months: 99.
-				SQL_INTERVAL_STRUCT years: 58 months: 5}.
-	values do: 
-			[:each |
-			insert values: {each}.
-			insert exec].
-	resultSet := connection query: 'select <1s> from TestTable' << colAttr name.
-	(resultSet collect: [:each | each atIndex: 1]) with: values
-		do: 
-			[:actual :expected |
-			expected isNil
-				ifTrue: [self assertIsNil: actual]
-				ifFalse: 
-					[self
-						assert: actual
-						closeTo: expected
-						precision: 1 months]].
-	resultSet free.
-	"Invalid"
-	values := {10000000000 / 1000}.
-	values do: 
-			[:each |
-			insert values: {each}.
-			self
-				should: [insert exec]
-				raise: DBError
-				matching: [:ex | ex sqlState = '22003']].
-! !
+	^#('ROWID')! !
 
 !OracleDBTest categoriesForMethods!
 categoriesColumns!constants!private! !
@@ -112,7 +79,6 @@ isNumericOutOfRangeError:!helpers!private! !
 orderDetailsTable!constants!private! !
 ordersColumns!constants!private! !
 orderTableRowIds!constants!private! !
-testYearToMonthIntervals!public!unit tests! !
 !
 
 !OracleDBTest class methodsFor!

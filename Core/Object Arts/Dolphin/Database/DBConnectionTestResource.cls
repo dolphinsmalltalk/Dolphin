@@ -8,6 +8,8 @@ TestResource subclass: #DBConnectionTestResource
 
 DBConnectionTestResource guid: (GUID fromString: '{2661c6fe-6796-4f00-a5c4-6ac7f74bb107}')!
 
+DBConnectionTestResource isAbstract: true!
+
 DBConnectionTestResource comment: ''!
 
 !DBConnectionTestResource categoriesForClass!Unclassified! !

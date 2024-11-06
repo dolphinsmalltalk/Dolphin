@@ -372,7 +372,7 @@ ExternalStructure subclass: #SQL_DATE_STRUCT
 
 ExternalStructure subclass: #SQL_INTERVAL_STRUCT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_interval_sign _OffsetOf_interval_type BodyClasses MinutesPerDay SecondsPerDay SQL_IS_DAY SQL_IS_DAY_TO_HOUR SQL_IS_DAY_TO_MINUTE SQL_IS_DAY_TO_SECOND SQL_IS_HOUR SQL_IS_HOUR_TO_MINUTE SQL_IS_HOUR_TO_SECOND SQL_IS_MINUTE SQL_IS_MINUTE_TO_SECOND SQL_IS_MONTH SQL_IS_SECOND SQL_IS_YEAR SQL_IS_YEAR_TO_MONTH'
+	classVariableNames: '_OffsetOf_interval_sign _OffsetOf_interval_type MinutesPerDay SecondsPerDay SQL_IS_DAY SQL_IS_DAY_TO_HOUR SQL_IS_DAY_TO_MINUTE SQL_IS_DAY_TO_SECOND SQL_IS_HOUR SQL_IS_HOUR_TO_MINUTE SQL_IS_HOUR_TO_SECOND SQL_IS_MINUTE SQL_IS_MINUTE_TO_SECOND SQL_IS_MONTH SQL_IS_SECOND SQL_IS_YEAR SQL_IS_YEAR_TO_MONTH'
 	poolDictionaries: 'ODBCCTypes'
 	classInstanceVariableNames: ''!
 
