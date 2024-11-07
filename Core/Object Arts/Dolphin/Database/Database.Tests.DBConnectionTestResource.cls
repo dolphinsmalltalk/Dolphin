@@ -99,6 +99,12 @@ newConnection
 		"DBConnection requiredOdbcVersion: self requiredOdbcVersion."
 		self basicConnection]!
 
+odbcDriver
+	^self subclassResponsibility!
+
+prereqsAvailable
+	^self installedOdbcDrivers includes: self odbcDriver!
+
 pwd
 	^'Password12!!'!
 
@@ -106,7 +112,7 @@ requiredOdbcVersion
 	^OS.ODBCConstants.SQL_OV_ODBC3!
 
 setUp
-	isAvailable := self createDatabase!
+	isAvailable := self prereqsAvailable and: [self createDatabase]!
 
 tearDown
 	self dropDatabase.
@@ -126,6 +132,8 @@ execSqlCmd:stdin:!helpers!private! !
 installedOdbcDrivers!enquiries!private! !
 isAvailable!public!Testing! !
 newConnection!helpers!public! !
+odbcDriver!constants!private! !
+prereqsAvailable!operations!private! !
 pwd!constants!private! !
 requiredOdbcVersion!constants!private! !
 setUp!public!running! !
@@ -135,7 +143,9 @@ tearDown!public!running! !
 !Database.Tests.DBConnectionTestResource class methodsFor!
 
 isAvailable
-	^true! !
+	"We want the DB to be initialized up front when the test suite is being initialized so that the cost is measured there, rather than during the execution of the first test case, but we don't want unavailability of the DB to fail the run, rather we just skip those tests later."
+
+	^super isAvailable or: [true]! !
 
 !Database.Tests.DBConnectionTestResource class categoriesForMethods!
 isAvailable!public!Testing! !

@@ -25,9 +25,12 @@ employeeNames
 field: aString fromRow: aDBRow 
 	^aDBRow at: aString!
 
+newConnection
+	^self databaseResource newConnection!
+
 setUp
 	super setUp.
-	connection := self databaseResource newConnection.
+	connection := self newConnection.
 	self skipUnless: [connection notNil]!
 
 tearDown
@@ -62,6 +65,7 @@ testIsEmpty
 databaseResource!helpers!private! !
 employeeNames!helpers!private! !
 field:fromRow:!helpers!private! !
+newConnection!public!running! !
 setUp!public!running! !
 tearDown!public!running! !
 testCollect!public!unit tests! !
