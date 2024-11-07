@@ -17,17 +17,16 @@ ADODBTest comment: ''!
 field: aString fromRow: row 
 	^(super field: aString fromRow: row) value!
 
-setUp
-	"Run the standard setup to skip if DB resource is unavailable"
-	super setUp.
-	"Then replace the connection"
-	connection close.
-	connection := ADODB_Connection new connectionString: self databaseResource connectString.
-	connection open! !
+newConnection
+	| adoConnection |
+	self databaseResource isAvailable ifFalse: [^nil].
+	adoConnection := ADODB_Connection new connectionString: self databaseResource connectString.
+	adoConnection open.
+	^adoConnection! !
 
 !ADODBTest categoriesForMethods!
 field:fromRow:!private!unit tests! !
-setUp!public!Running! !
+newConnection!public!running! !
 !
 
 !ADODBTest class methodsFor!

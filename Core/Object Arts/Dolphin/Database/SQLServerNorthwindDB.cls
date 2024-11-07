@@ -14,17 +14,15 @@ SQLServerNorthwindDB comment: ''!
 
 !SQLServerNorthwindDB methodsFor!
 
-connectionStringFormat
-	^'DRIVER={<1s>}' << self latestSqlServerOdbcDriver , (self isCiBuild
+connectString
+	^('DRIVER={<1s>};SERVER=<2s>;' , (self isCiBuild
 				ifTrue: 
 					["APPVEYOR config is 'DRIVER=SQL Server;Server=(local)\SQL2019;Database=master;User ID=sa;Password=Password12!!"
-					';SERVER=<1d>;DATABASE=master;UID=<2d>;PWD=<3d>']
+					'DATABASE=master;UID=<3s>;PWD=<4s>']
 				ifFalse: 
 					["If running locally use localdb. There will need to be an instance named MSSQLlocalDB"
-					';SERVER=(localdb)\MSSQLLocalDB;Trusted_Connection=Yes'])!
-
-connectString
-	^self connectionStringFormat << { self serverName. self uid. self pwd }!
+					'Trusted_Connection=Yes']))
+		<< { self odbcDriver. self serverName. self uid. self pwd }!
 
 createDatabase
 	| sql |
@@ -44,13 +42,6 @@ dropDatabase
 					do: [:ex | ex toTrace]].
 	super dropDatabase!
 
-latestSqlServerOdbcDriver
-	| drivers odbc |
-	drivers := (self installedOdbcDrivers select: [:each | each endsWith: 'SQL Server'])
-				asSortedCollection.
-	odbc := drivers select: [:each | each beginsWith: 'ODBC'].
-	^(odbc isEmpty ifTrue: [drivers] ifFalse: [odbc]) last!
-
 newConnection
 	^super newConnection
 		ifNotNil: 
@@ -59,24 +50,58 @@ newConnection
 				exec: 'USE [Northwind]';
 				yourself]!
 
+odbcDriver
+	| drivers odbc |
+	drivers := (self installedOdbcDrivers select: [:each | each endsWith: 'SQL Server'])
+				asSortedCollection.
+	drivers isEmpty ifTrue: [^nil].
+	odbc := drivers select: [:each | each beginsWith: 'ODBC'].
+	^(odbc isEmpty ifTrue: [drivers] ifFalse: [odbc]) last!
+
+prereqsAvailable
+	^super prereqsAvailable
+		and: [self isCiBuild or: [self sqllocaldbInstances includes: 'MSSQLLocalDB']]!
+
 requiredOdbcVersion
 	^ODBCConstants.SQL_OV_ODBC3_80!
 
 serverName
 	^self isCiBuild ifTrue: ['(local)\SQL2019'] ifFalse: ['(localdb)\MSSQLLocalDB']!
 
+sqllocaldbInstances
+	| process instances |
+	process := Smalltalk.ExternalProcess new.
+	instances := OrderedCollection new.
+	
+	[process
+		executeCommand: 'sqllocaldb i'
+		inDirectory: nil
+		waitForSeconds: 1
+		stdin: nil
+		stdout: [:out | instances := out lines]
+		stderr: 
+			[:err |
+			Transcript
+				nextPutAll: err;
+				cr].
+	process processExitCode = 0]
+			on: Smalltalk.ExternalProcessExecuteError
+			do: [:ex | ex toTrace].
+	^instances!
+
 uid
 	^'sa'! !
 
 !SQLServerNorthwindDB categoriesForMethods!
-connectionStringFormat!constants!private! !
 connectString!accessing!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
-latestSqlServerOdbcDriver!constants!private! !
 newConnection!operations!public! !
+odbcDriver!constants!private! !
+prereqsAvailable!operations!private! !
 requiredOdbcVersion!constants!private! !
 serverName!constants!private! !
+sqllocaldbInstances!constants!private! !
 uid!constants!public! !
 !
 

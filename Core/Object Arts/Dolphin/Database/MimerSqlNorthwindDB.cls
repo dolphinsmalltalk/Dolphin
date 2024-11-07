@@ -20,8 +20,7 @@ connectString
 !
 
 createDatabase
-	(AdvApiLibrary default isServiceRunning: 'MIMER-Mimer') ifFalse: [^false].
-	^self execSqlCmd: 'bsql -u <1s> -p <2s> <3s>' << {self uid. self pwd. 'Mimer'}
+	^self execSqlCmd: 'bsql -u <1s> -p <2s> <3s>' << { self uid. self pwd. 'Mimer' }
 		stdin: (FileStream read: ((PackageRelativeFileLocator package: self class owningPackage)
 						localFileSpecFor: 'NorthwindMimerSql.sql')
 				text: true)!
@@ -34,6 +33,12 @@ dropDatabase
 				do: [:each | [cnxn exec: each] on: DBError do: [:ex | ex toTrace]]].
 	super dropDatabase!
 
+odbcDriver
+	^'MIMER'!
+
+prereqsAvailable
+	^super prereqsAvailable and: [AdvApiLibrary default isServiceRunning: 'MIMER-Mimer']!
+
 uid
 	^'SYSADM'! !
 
@@ -41,6 +46,8 @@ uid
 connectString!constants!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
+odbcDriver!constants!private! !
+prereqsAvailable!operations!private! !
 uid!constants!private! !
 !
 
