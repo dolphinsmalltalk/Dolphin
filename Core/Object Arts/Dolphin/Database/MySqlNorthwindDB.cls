@@ -10,6 +10,8 @@ MySqlNorthwindDB guid: (GUID fromString: '{9bfea414-9714-441c-9398-5e8683836e56}
 
 MySqlNorthwindDB comment: ''!
 
+!MySqlNorthwindDB categoriesForClass!Unclassified! !
+
 !MySqlNorthwindDB methodsFor!
 
 binPath
@@ -22,13 +24,10 @@ binPath
 				mySqlPath copyReplaceAll: 'MySQL Shell' with: 'MySQL Server']!
 
 connectString
-	^'DRIVER={<1d>};UID=<2d>;PWD=<3d>' << { self latestMySqlOdbcDriver. self uid. self pwd }!
+	^'DRIVER={<1d>};UID=<2d>;PWD=<3d>' << { self odbcDriver. self uid. self pwd }!
 
 createDatabase
 	| binPath |
-	"The MySQL80 service needs to be installed with ODBC driver, and running. Note that it must also be explicitly configured to utf8mb4 character set, or tests that attempt to insert non-BMP characters will error."
-	(self latestMySqlOdbcDriver notNil and: [AdvApiLibrary default isServiceRunning: 'MySQL80'])
-		ifFalse: [^false].
 	"N.B. Obviously storing a password in a method and passing it on a command line is insecure, but this is a test database"
 	binPath := self binPath.
 	binPath ifNil: [^false].
@@ -47,13 +46,6 @@ dropDatabase
 				exec: 'DROP DATABASE Northwind'].
 	super dropDatabase!
 
-latestMySqlOdbcDriver
-	| drivers |
-	drivers := (self installedOdbcDrivers
-				select: [:each | (each beginsWith: 'MySQL') and: [each endsWith: 'Unicode Driver']])
-					asSortedCollection.
-	^drivers isEmpty ifFalse: [drivers last]!
-
 newConnection
 	^super newConnection
 		ifNotNil: 
@@ -61,6 +53,18 @@ newConnection
 			cnxn
 				exec: 'USE Northwind';
 				yourself]!
+
+odbcDriver
+	| drivers |
+	drivers := (self installedOdbcDrivers
+				select: [:each | (each beginsWith: 'MySQL') and: [each endsWith: 'Unicode Driver']])
+					asSortedCollection.
+	^drivers isEmpty ifFalse: [drivers last]!
+
+prereqsAvailable
+	"The MySQL80 service needs to be installed with ODBC driver, and running. Note that it must also be explicitly configured to utf8mb4 character set, or tests that attempt to insert non-BMP characters will error."
+
+	^super prereqsAvailable and: [AdvApiLibrary default isServiceRunning: 'MySQL80']!
 
 uid
 	^'root'! !
@@ -70,8 +74,9 @@ binPath!accessing!private! !
 connectString!constants!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
-latestMySqlOdbcDriver!constants!private! !
 newConnection!operations!public! !
+odbcDriver!constants!private! !
+prereqsAvailable!operations!private! !
 uid!constants!private! !
 !
 

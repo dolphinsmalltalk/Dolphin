@@ -21,7 +21,6 @@ connectString
 
 createDatabase
 	| sqlFile |
-	(AdvApiLibrary default isServiceRunning: 'OracleServiceFREE') ifFalse: [^false].
 	sqlFile := (PackageRelativeFileLocator package: self class owningPackage)
 				localFileSpecFor: 'NorthwindOracle.sql'.
 	"N.B. Obviously storing a password in a method and passing it on a command line is insecure, but this is a test database"
@@ -36,6 +35,14 @@ dropDatabase
 				do: [:each | [cnxn exec: 'DROP TABLE <1s>' << each] on: DBError do: [:ex | ex toTrace]]].
 	super dropDatabase!
 
+odbcDriver
+	^self shouldNotImplement!
+
+prereqsAvailable
+	"Private - Answer whether the pre-reqs for the database resource, e.g. the ODBC driver, are available."
+
+	^AdvApiLibrary default isServiceRunning: 'OracleServiceFREE'!
+
 uid
 	^'system'! !
 
@@ -43,6 +50,8 @@ uid
 connectString!constants!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
+odbcDriver!constants!private! !
+prereqsAvailable!operations!private! !
 uid!constants!public! !
 !
 

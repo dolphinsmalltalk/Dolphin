@@ -15,29 +15,30 @@ AccessNorthwindDB comment: ''!
 !AccessNorthwindDB methodsFor!
 
 connectString
-	^'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' expandMacrosWith: filename
-
-!
+	^'DRIVER={<1s>};DBQ=<2s>' << { self odbcDriver. self filename }!
 
 createDatabase
-	| source |
-	source := (PackageRelativeFileLocator package: self class owningPackage) localFileSpecFor: 'Northwind.mdb'.
-	filename := File composePath: File tempPath subPath: 'Northwind.mdb'.
-	File copy: source to: filename.
-	(File isWriteable: filename) ifFalse: [File isWriteable: filename set: true].
+	| mdb |
+	mdb := self filename.
+	File copy: (self class owningPackage fileLocator localFileSpecFor: 'Northwind.mdb') to: mdb.
+	(File isWriteable: mdb) ifFalse: [File isWriteable: mdb set: true].
 	^true!
 
 dropDatabase
 	super dropDatabase.
-	KernelLibrary default deleteFile: filename!
+	(filename notNil and: [File exists: filename]) ifTrue: [File delete: filename]!
 
 filename
-	^filename! !
+	^filename ifNil: [filename := File composePath: File tempPath subPath: 'Northwind.mdb']!
+
+odbcDriver
+	^'Microsoft Access Driver (*.mdb)'! !
 
 !AccessNorthwindDB categoriesForMethods!
 connectString!accessing!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
 filename!accessing!public! !
+odbcDriver!constants!private! !
 !
 
