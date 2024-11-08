@@ -89,11 +89,17 @@ value
 	^value!
 
 value: anObject
-	"Marshal the argument into a suitable binary representation in the receiver's buffer for transfer to the database."
+	"Marshal the argument into a suitable binary representation in the receiver's buffers for transfer to the database."
 
-	"For unlimited parameters, the data is supplied to the driver after exec using SQLPutData, so for now we just store it"
+	"For unlimited parameters, the data is supplied to the driver after exec using SQLPutData, so for now we just store it. However, some drivers needs to know at `SQLExecute` how much data will be sent through `SQLPutData` for long columns (see https://learn.microsoft.com/en-us/sql/odbc/reference/develop-app/sending-long-data). Such drivers return 'Y' to a `SQLGetInfo` query for `SQL_NEED_LONG_DATA_LEN`, although note that SQLServer returns 'Y' for this info attribute but in practice but works fine if the length is not provided. Mimer wants to know the length, and really does need it. It expects that the value in the length buf is `SQL_LEN_DATA_AT_EXEC(length)`. If that value is left as `SQL_DATA_AT_EXEC`, this is equivalent to `SQL_LEN_DATA_AT_EXEC(0)`, so it sets the blob to empty, effectively ignoring the length passed to `SQLPutData` and truncating the data without raising the expected 22001/'String data, right truncation' error that is documented for this case](https://learn.microsoft.com/en-us/sql/odbc/reference/syntax/sqlputdata-function) error. For most DB's we don't need to provided the length at exec, but the cost is very small so it is probably not worth the extra complexity of specialising for `SQL_NEED_LONG_DATA_LEN` drivers."
 
-	value := anObject ifNotNil: [buffer dbConvert: anObject for: self]! !
+	anObject
+		ifNil: 
+			[value := nil.
+			self length: SQL_DATA_AT_EXEC]
+		ifNotNil: 
+			[value := buffer dbConvert: anObject for: self.
+			self length: 0 - value dbOctetTransferSize + SQL_LEN_DATA_AT_EXEC_OFFSET]! !
 
 !Database.DBLongVarField categoriesForMethods!
 bindAsParameter:of:!operations!private! !
