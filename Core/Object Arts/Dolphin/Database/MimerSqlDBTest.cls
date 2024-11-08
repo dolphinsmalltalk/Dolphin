@@ -203,12 +203,6 @@ testMonthIntervals
 				raise: HRESULTError
 				matching: [:ex | ex hresult = (HRESULT fromInteger: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]!
 
-testQueryAndUpdateBlob
-	"Test that updating long binary field through a parameterized query (i.e. using SQLPutData) works."
-
-	"Test result is that the value of the blob to 0 length byte array rather than NULL. As the test works fine on other DB's, this would appear to be a bug in the Mimer ODBC driver"
-	self skip!
-
 testYearToMonthIntervals
 	| resultSet values colAttrs insert |
 	self dropTestTable.
@@ -258,7 +252,6 @@ testDateTimeDiff!public!unit tests! !
 testDayToSecondsIntervals!public!unit tests! !
 testIntervalLiterals!public!unit tests! !
 testMonthIntervals!public!unit tests! !
-testQueryAndUpdateBlob!public!unit tests! !
 testYearToMonthIntervals!public!unit tests! !
 !
 
