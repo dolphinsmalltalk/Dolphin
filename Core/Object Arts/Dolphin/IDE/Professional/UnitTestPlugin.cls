@@ -54,6 +54,10 @@ classUnderTest
 				ifNone: [].
 	^classUnderTest!
 
+completeRun: aTestSuite
+	aTestSuite removeDependentFromHierachy: self.
+	self stopAutoSwitchProcess!
+
 createComponents
 	"Private - Create the presenters contained by the receiver"
 
@@ -127,6 +131,9 @@ displayFail
 	self displayDetails: result displayString.
 	self ensureVisible!
 
+displayMode
+	^modePresenter value!
+
 displayMode: aString 
 	"Display aString to indicate the current mode"
 
@@ -160,12 +167,13 @@ displayReset
 	self displayDefects: OrderedCollection new.
 	result := nil!
 
-displayRunning
+displayRunning: aString
 	"Indicate that tests are being run"
 
+	self displayMode = aString ifTrue: [^self].
 	self icon: (Icon fromId: 'UnitTestPluginDefect.ico').
 	self displayColor: self class runningColor.
-	self displayMode: 'Running'.
+	self displayMode: aString.
 	self displayDetails: '...'!
 
 hasDefects
@@ -276,6 +284,12 @@ onViewOpened
 	self installMenuCommands.
 	self displayReset!
 
+prepareToRun: aTestSuite
+	self
+		displayRunning: 'Initializing';
+		startAutoSwitchProcess.
+	aTestSuite addDependentToHierachy: self!
+
 queryCommand: aCommandQuery 
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery> argument."
@@ -300,14 +314,9 @@ runIndividualTests
 	suite := self testClass buildSuiteFromMethods: self currentTestMethodSelectors.
 	self runSuite: suite!
 
-runSuite: aTestSuite 
-	self
-		displayRunning;
-		startAutoSwitchProcess.
-	aTestSuite addDependentToHierachy: self.
-	result := [aTestSuite run] ensure: 
-					[aTestSuite removeDependentFromHierachy: self.
-					self stopAutoSwitchProcess].
+runSuite: aTestSuite
+	self prepareToRun: aTestSuite.
+	result := [aTestSuite run] ensure: [self completeRun: aTestSuite].
 	self updateWindow!
 
 runTests
@@ -360,10 +369,10 @@ toggleToTestsClassDescription
 
 update: anObject
 	(anObject isKindOf: TestCase)
-		ifTrue: 
-			[self displayDetails: anObject printString.
-			SessionManager inputState pumpMessages]
-		ifFalse: [super update: anObject]!
+		ifTrue: [self displayRunning: 'Running']
+		ifFalse: [(anObject isKindOf: TestResource class) ifFalse: [^super update: anObject]].
+	self displayDetails: anObject printString.
+	SessionManager inputState pumpMessages!
 
 updateDefects
 	self displayDefects: (result defects collect: [:each | result resultFor: each])!
@@ -378,22 +387,24 @@ updateWindow
 allContextMenus!helpers!private! !
 allMenuBarMenus!helpers!private! !
 classUnderTest!Accessing!private! !
+completeRun:!operations!private! !
 createComponents!initializing!private! !
 createSchematicWiring!helpers!private! !
 currentTestMethodSelectors!commands!private! !
 debugTest!commands!public! !
 debugTest:!operations!private! !
 defaultHelpId!constants!public! !
-displayColor:!private!Updating! !
-displayDefects:!private!Updating! !
-displayDetails:!private!Updating! !
-displayErrors!private!Updating! !
-displayFail!private!Updating! !
-displayMode:!private!Updating! !
+displayColor:!private!updating! !
+displayDefects:!private!updating! !
+displayDetails:!private!updating! !
+displayErrors!private!updating! !
+displayFail!private!updating! !
+displayMode!accessing!private! !
+displayMode:!private!updating! !
 displayOn:!displaying!private! !
 displayPass!private!Updating! !
 displayReset!private!Updating! !
-displayRunning!private!Updating! !
+displayRunning:!private!Updating! !
 hasDefects!public!testing! !
 hasIndividualTests!public!Updating! !
 hasTestClass!public!Updating! !
@@ -406,6 +417,7 @@ isBrowserLookingAtTestClass!private!testing! !
 onBrowserClassSelected!event handling!private! !
 onBrowserMethodSelected!event handling!private! !
 onViewOpened!event handling!private! !
+prepareToRun:!operations!private! !
 queryCommand:!commands!private! !
 refreshIcon!operations!private! !
 runIndividualTests!commands!public! !

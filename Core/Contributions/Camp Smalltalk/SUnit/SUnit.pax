@@ -52,7 +52,7 @@ Object subclass: #TestResult
 	classInstanceVariableNames: ''!
 
 Object subclass: #TestSuite
-	instanceVariableNames: 'tests resources name'
+	instanceVariableNames: 'tests resources name dependents'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
