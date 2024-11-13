@@ -34,6 +34,7 @@ package setClassNames: #(
 	#{Core.Tests.DolphinTestPackages}
 	#{Core.Tests.DolphinTestResource}
 	#{Core.Tests.DurationTest}
+	#{Core.Tests.ExceptionSetTest}
 	#{Core.Tests.ExceptionTest}
 	#{Core.Tests.ExceptionTesterClasses}
 	#{Core.Tests.FalseTest}
@@ -484,6 +485,14 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.EventMessageSequenceTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'Core.Tests.ExceptionSetTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

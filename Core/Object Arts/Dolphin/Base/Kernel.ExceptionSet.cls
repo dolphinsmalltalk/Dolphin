@@ -36,6 +36,11 @@ initialize
 
 	selectors := #()!
 
+matching: aMonadicValuable
+	"Answer an <exceptionSelector> for catching subinstances of the receiver for which the <monadicValuable> argument evaluates to true."
+
+	^ExceptionFilter select: self matching: aMonadicValuable!
+
 selectors
 	"Answer the value of the receiver's instance variable 'selectors'.
 	This method was automatically generated, but may be modified."
@@ -52,6 +57,7 @@ selectors: anObject
 ,!adding!public! !
 handles:!accessing!public! !
 initialize!initializing!public! !
+matching:!filtering!public! !
 selectors!accessing!public! !
 selectors:!accessing!public! !
 !
