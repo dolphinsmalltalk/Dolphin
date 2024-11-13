@@ -57,8 +57,8 @@ resources: anObject
 run
 	| result |
 	result := TestResult new.
-	self resources do: [:res | res isAvailable ifFalse: [^res signalInitializationError]].
-	[self run: result] ensure: [self resources do: [:each | each reset]].
+	self setUp.
+	[self run: result] ensure: [self tearDown].
 	^result!
 
 run: aResult
@@ -72,6 +72,15 @@ run: aResult
 
 setDependents: aDependentsCollectionOrNil
 	dependents := aDependentsCollectionOrNil!
+
+setUp
+	self resources do: 
+			[:res |
+			self changed: res.
+			res isAvailable ifFalse: [res signalInitializationError]]!
+
+tearDown
+	^self resources do: [:each | each reset]!
 
 tests
 	tests isNil ifTrue: [tests := OrderedCollection new].
@@ -91,6 +100,8 @@ resources:!Accessing!public! !
 run!public!Running! !
 run:!public!Running! !
 setDependents:!dependency!private! !
+setUp!public!Running! !
+tearDown!public!Running! !
 tests!Accessing!public! !
 !
 

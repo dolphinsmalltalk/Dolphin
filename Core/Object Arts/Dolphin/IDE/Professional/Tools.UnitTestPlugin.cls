@@ -141,6 +141,9 @@ displayFail
 	self displayDetails: (result displayString: Locale smalltalk).
 	self ensureVisible!
 
+displayMode
+	^modePresenter value!
+
 displayMode: aString 
 	"Display aString to indicate the current mode"
 
@@ -175,6 +178,7 @@ displayReset
 displayRunning: aString
 	"Indicate that tests are being run"
 
+	self displayMode = aString ifTrue: [^self].
 	self icon: (Icon fromId: 'UnitTestPluginDefect.ico').
 	self displayColor: self class runningColor.
 	self displayMode: aString.
@@ -291,7 +295,7 @@ onViewOpened
 
 prepareToRun: aTestSuite
 	self
-		displayRunning: 'Running';
+		displayRunning: 'Initializing';
 		startAutoSwitchProcess.
 	aTestSuite addDependentToHierachy: self!
 
@@ -399,10 +403,10 @@ toggleToTestsClassDescription
 
 update: anObject
 	(anObject isKindOf: TestCase)
-		ifTrue: 
-			[self displayDetails: anObject printString.
-			SessionManager inputState pumpMessages]
-		ifFalse: [super update: anObject]!
+		ifTrue: [self displayRunning: 'Running']
+		ifFalse: [(anObject isKindOf: TestResource class) ifFalse: [^super update: anObject]].
+	self displayDetails: anObject printString.
+	SessionManager inputState pumpMessages!
 
 updateDefects
 	self displayDefects: (result defects asSortedArray , result skipped asSortedArray
@@ -430,6 +434,7 @@ displayDefects:!private!updating! !
 displayDetails:!private!updating! !
 displayErrors!private!updating! !
 displayFail!private!updating! !
+displayMode!accessing!private! !
 displayMode:!private!updating! !
 displayOn:!displaying!private! !
 displayPass!private!updating! !

@@ -207,7 +207,7 @@ should: aNiladicValuable raise: anExceptionSelector matching: aMonadicValuable
 	self
 		should: aNiladicValuable
 		raise: (anExceptionSelector matching: aMonadicValuable)
-		description: ['Matching <1p> not raised' << anExceptionSelector]!
+		description: ['Exception matching <1d> not raised' << anExceptionSelector]!
 
 should: aNiladicValuable trigger: aSymbol against: anObject
 	"Example Usage:
