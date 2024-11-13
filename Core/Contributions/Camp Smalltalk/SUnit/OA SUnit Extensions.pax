@@ -162,12 +162,15 @@ hash
 isCiBuild
 	^(SessionManager current getenv: 'APPVEYOR') notNil!
 
-should: aBlock raise: anException matching: discriminator
+should: aNiladicValuable raise: anExceptionSelector matching: aMonadicValuable
 	"Example usage:
 		self should: [array at: $1] raise: Error matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
 	"
 
-	self should: aBlock raise: (anException matching: discriminator)!
+	self
+		should: aNiladicValuable
+		raise: (anExceptionSelector matching: aMonadicValuable)
+		description: ['Exception matching <1d> not raised' << anExceptionSelector]!
 
 should: aZeroArgBlock trigger: aSymbol against: anObject 
 	"Example Usage:
