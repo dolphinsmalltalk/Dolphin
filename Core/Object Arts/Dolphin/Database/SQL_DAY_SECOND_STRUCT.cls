@@ -33,6 +33,9 @@ asDuration
 asSeconds
 	"Answer the total <Number> of seconds in the interval described by the receiver."
 
+	| type |
+	type := self interval_type.
+	type = 0 ifTrue: [^0].
 	^((##((Array new: 13 withAll: [:interval | interval errorWrongIntervalType])
 		at: SQL_IS_DAY put: [:interval | interval day * SecondsPerDay];
 		at: SQL_IS_HOUR put: [:interval | interval hour * 3600];
@@ -47,7 +50,7 @@ asSeconds
 		at: SQL_IS_HOUR_TO_SECOND
 			put: [:interval | (interval hour * 60 + interval minute) * 60 + interval getSeconds];
 		at: SQL_IS_MINUTE_TO_SECOND put: [:interval | interval minute * 60 + interval getSeconds];
-		yourself) at: self interval_type)
+		yourself) at: type)
 		value: self) * self sign!
 
 day
@@ -172,7 +175,9 @@ scale
 scale: anInteger
 	"Set the seconds precision of the receiver."
 
-	| fractionalSeconds |
+	| newScaleExp fractionalSeconds |
+	newScaleExp := anInteger ?? DefaultFractionScaler.
+	newScaleExp = scaleExp ifTrue: [^self].
 	fractionalSeconds := self fraction / scaleExp.
 	scaleExp := anInteger exp10.
 	self fraction: (fractionalSeconds * scaleExp) truncated!
@@ -231,6 +236,11 @@ valueClass!constants!public! !
 
 !SQL_DAY_SECOND_STRUCT class methodsFor!
 
+dbInterchangeType: anInteger
+	^self newBuffer
+		interval_type: anInteger - 100;
+		yourself!
+
 defineFields
 	"
 		self compileDefinition
@@ -256,6 +266,7 @@ getFieldNames
 	^#(#interval_type #interval_sign #day #hour #minute #second #fraction)! !
 
 !SQL_DAY_SECOND_STRUCT class categoriesForMethods!
+dbInterchangeType:!instance creation!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

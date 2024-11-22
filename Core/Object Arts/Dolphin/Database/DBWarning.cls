@@ -2,7 +2,7 @@
 
 Notification subclass: #DBWarning
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'TraceStream'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -21,14 +21,47 @@ _descriptionFormat
 	
 	^'%1 %2'!
 
+exceptionDetails
+	^tag!
+
+nativeError
+	^self primaryError nativeError!
+
+primaryError
+	^self exceptionDetails errors first!
+
 signal
 	"Signal this exception."
 
 	self tag buildErrorInfo.
-	super signal! !
+	super signal!
+
+sqlState
+	^self primaryError sqlState!
+
+traceStream
+	^TraceStream ifNil: [super traceStream]! !
 
 !DBWarning categoriesForMethods!
 _descriptionFormat!displaying!public! !
+exceptionDetails!accessing!public! !
+nativeError!accessing!public! !
+primaryError!accessing!public! !
 signal!public!signalling! !
+sqlState!accessing!public! !
+traceStream!accessing!private! !
+!
+
+!DBWarning class methodsFor!
+
+traceStream
+	^TraceStream!
+
+traceStream: aWriteStream
+	TraceStream := aWriteStream! !
+
+!DBWarning class categoriesForMethods!
+traceStream!public! !
+traceStream:!public! !
 !
 

@@ -21,8 +21,15 @@ blockTransferOctetSize
 
 	^self subclassResponsibility!
 
-bufferSizeForColumn: aDBColAttr
-	^aDBColAttr length!
+dbMarshal: anObject into: aDBField
+	"Populate the receiver, as buffer of the <DBField> 2nd argument, with appropriate the SQL_C_TYPE_XXXX representation of the 1st argument."
+
+	self subclassResponsibility!
+
+dbUnmarshal: aDBField
+	"Answer Smalltalk object equivalent to the value in the receiver, assumed to be the buffer of DBField."
+
+	^self subclassResponsibility!
 
 initializeForColumn: aDBColAttr
 	bytes := self valueClass newFixed: ((self class isLongColumn: aDBColAttr)
@@ -31,9 +38,12 @@ initializeForColumn: aDBColAttr
 
 !DBVarFieldBuffer categoriesForMethods!
 blockTransferOctetSize!constants!private! !
-bufferSizeForColumn:!initializing!private! !
+dbMarshal:into:!operations!public! !
+dbUnmarshal:!operations!public! !
 initializeForColumn:!initializing!private! !
 !
+
+DBVarFieldBuffer methodProtocol: #dbFieldBuffer attributes: #() selectors: #(#byteSize #dbConvert:for: #dbInterchangeType #dbMarshal:into: #dbUnmarshal: #valueClass)!
 
 !DBVarFieldBuffer class methodsFor!
 
@@ -61,18 +71,28 @@ dbTransferOctetLengthForColumn: aDBColAttr
 
 	^aDBColAttr precision ?? 0!
 
+defaultBlockTransferOctetLength
+	"The default block size for unbound data transfers. This is a performance vs memory usage trade-off, and needs to be a balance between allocating an excessively large buffer for reading data and the number of SQLGetData calls that will be required in the read loop. There isn't really an ideal choice, as the best trade-off will depend on the application. If a lot of large blobs are being transferred, you may want to set a larger value for #blockTransferOctetLength than 256Kb. Note that this does not affect data transfer to the DB as SQLPutData is called once to transfer the entire data value."
+
+	^##(256 * 1024)!
+
+defaultMaxBoundOctetLength
+	"In most DBMSs fixed length columns are limited to a relatively small maximum column length. 64Kb will usually cover it, but if not we just use unbound data access (i.e. SQLGetData, SQLPutData)."
+
+	^##(64 * 1024)!
+
 initialize
 	"
 		self initialize
 	"
 
-	BlockTransferOctetLength := 256 * 1024.
-	MaxBoundOctetLength := 256 * 1024!
+	BlockTransferOctetLength := self defaultBlockTransferOctetLength.
+	MaxBoundOctetLength := self defaultMaxBoundOctetLength!
 
 isLongColumn: aDBColAttr
 	| octetLength |
 	octetLength := aDBColAttr length.
-	^octetLength == SQL_SS_LENGTH_UNLIMITED or: [octetLength > MaxBoundOctetLength]!
+	^octetLength <= 0 or: [octetLength > MaxBoundOctetLength]!
 
 maxBoundOctetLength
 	^MaxBoundOctetLength!
@@ -86,6 +106,8 @@ blockTransferOctetLength:!accessing!public! !
 dbBoundFieldClassForColumn:!helpers!private! !
 dbHasVariableTransferOctetLength!private!testing! !
 dbTransferOctetLengthForColumn:!enquiries!public! !
+defaultBlockTransferOctetLength!constants!public! !
+defaultMaxBoundOctetLength!constants!public! !
 initialize!class initialization!public! !
 isLongColumn:!helpers!private! !
 maxBoundOctetLength!accessing!public! !

@@ -11,12 +11,15 @@ package classNames
 	add: #DBConnectionTestResource;
 	add: #DBFieldTest;
 	add: #DBTest;
+	add: #GenericDBTest;
 	add: #MimerSqlDBTest;
 	add: #MimerSqlNorthwindDB;
 	add: #MySqlDBTest;
 	add: #MySqlNorthwindDB;
 	add: #OracleDBTest;
 	add: #OracleNorthwindDB;
+	add: #PostgresDBTest;
+	add: #PostgresNorthwindDB;
 	add: #SQL_INTERVAL_STRUCTTest;
 	add: #SQLServerDBTest;
 	add: #SQLServerNorthwindDB;
@@ -53,7 +56,13 @@ DolphinTest subclass: #DBFieldTest
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #DBTest
-	instanceVariableNames: 'connection'
+	instanceVariableNames: 'connection dbResources'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #GenericDBTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -65,7 +74,7 @@ DolphinTest subclass: #SQL_INTERVAL_STRUCTTest
 	classInstanceVariableNames: ''!
 
 DBTest subclass: #DBConnectionTest
-	instanceVariableNames: 'dbResources savedBlockSize savedMaxBoundSize createdTestTable'
+	instanceVariableNames: 'savedBlockSize savedMaxBoundSize createdTestTable savedDBWarningTraceStream'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCTypes'
 	classInstanceVariableNames: ''!
@@ -89,6 +98,12 @@ DBConnectionTest subclass: #MySqlDBTest
 	classInstanceVariableNames: ''!
 
 DBConnectionTest subclass: #OracleDBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBConnectionTest subclass: #PostgresDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -125,6 +140,12 @@ DBConnectionTestResource subclass: #MySqlNorthwindDB
 	classInstanceVariableNames: ''!
 
 DBConnectionTestResource subclass: #OracleNorthwindDB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBConnectionTestResource subclass: #PostgresNorthwindDB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
