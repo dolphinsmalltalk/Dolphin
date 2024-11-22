@@ -621,32 +621,38 @@ readFrom: aStream
 	"Answers a new instance of the receiver read from aStream <gettableStream> in the Reg. Ex. format:
 		[- ]YYYY-MM-DDThh:mm:ss(.ss*)?[-+]ZZ:zz(:zz*)?."
 
-	| sign yyyy month dd offset hh mm ss ch |
-	aStream skipWhile: [:c | c isWhitespace].
+	^self readFrom: aStream ifInvalid: [##(self) errorInvalidFormat]!
+
+readFrom: aStream ifInvalid: aNiladicValuable
+	"Answers a new instance of the receiver read from aStream <gettableStream> in the Reg. Ex. format:
+		[- ]YYYY-MM-DDThh:mm:ss(.ss*)?[-+]ZZ:zz(:zz*)?."
+
+	| sign yyyy month dd hh mm ss ch |
+	aStream skipSeparators.
 	sign := (aStream peekFor: $-) ifTrue: [-1] ifFalse: [1].
-	aStream peek isDigit ifFalse: [^self errorInvalidFormat].
+	aStream peek isDigit ifFalse: [^aNiladicValuable value].
 	yyyy := Integer readFrom: aStream radix: 10.
 	((yyyy between: 0 and: 9999) and: [(aStream peekFor: $-) and: [aStream peek isDigit]])
-		ifFalse: [^self errorInvalidFormat].
+		ifFalse: [^aNiladicValuable value].
 	month := Integer readFrom: aStream radix: 10.
 	((month between: 1 and: 12) and: [(aStream peekFor: $-) and: [aStream peek isDigit]])
-		ifFalse: [^self errorInvalidFormat].
+		ifFalse: [^aNiladicValuable value].
 	dd := Integer readFrom: aStream radix: 10.
 	((dd between: 1 and: 31) and: [(aStream peekFor: $T) and: [aStream peek isDigit]])
-		ifFalse: [^self errorInvalidFormat].
+		ifFalse: [^aNiladicValuable value].
 	hh := Integer readFrom: aStream radix: 10.
 	((hh between: 0 and: 23) and: [(aStream peekFor: $:) and: [aStream peek isDigit]])
-		ifFalse: [^self errorInvalidFormat].
+		ifFalse: [^aNiladicValuable value].
 	mm := Integer readFrom: aStream radix: 10.
 	((mm between: 0 and: 59) and: [(aStream peekFor: $:) and: [aStream peek isDigit]])
-		ifFalse: [^self errorInvalidFormat].
+		ifFalse: [^aNiladicValuable value].
 	ss := Integer readFrom: aStream radix: 10.
-	(ss between: 0 and: 59) ifFalse: [^self errorInvalidFormat].
+	(ss between: 0 and: 59) ifFalse: [^aNiladicValuable value].
 	ch := aStream next.
 	ch == $.
 		ifTrue: 
 			[| ff digits |
-			aStream peek isDigit ifFalse: [^self errorInvalidFormat].
+			aStream peek isDigit ifFalse: [^aNiladicValuable value].
 			ff := 0.
 			digits := 0.
 			
@@ -654,28 +660,41 @@ readFrom: aStream
 			ch notNil and: [ch isDigit]] whileTrue: 
 						[ff := ff * 10 + ch digitValue.
 						digits := digits + 1].
-			(digits between: 1 and: 9) ifFalse: [^self errorInvalidFormat].
+			(digits between: 1 and: 9) ifFalse: [^aNiladicValuable value].
 			ss := ss + (ff / digits exp10)].
-	offset := self readOffsetFrom: aStream sign: ch.
-	^self
-		year: yyyy * sign
-		month: month
-		day: dd
-		hour: hh
-		minute: mm
-		second: ss
-		offset: offset!
+	^(self
+		readOffsetFrom: aStream
+		sign: ch
+		ifInvalid: nil)
+			ifNil: [aNiladicValuable value]
+			ifNotNil: 
+				[:offset |
+				self
+					year: yyyy * sign
+					month: month
+					day: dd
+					hour: hh
+					minute: mm
+					second: ss
+					offset: offset]!
 
 readOffsetFrom: aStream sign: aCharacter
+	^self
+		readOffsetFrom: aStream
+		sign: aCharacter
+		ifInvalid: [##(self) errorInvalidFormat]!
+
+readOffsetFrom: aStream sign: aCharacter ifInvalid: aNiladicValuable
 	| sign |
-	aCharacter = $Z ifTrue: [^Duration zero].
-	sign := aCharacter = $+
+	aCharacter == $Z ifTrue: [^Duration zero].
+	sign := aCharacter == $+
 				ifTrue: [1]
-				ifFalse: [aCharacter = $- ifTrue: [-1] ifFalse: [^Locale timeZoneInformation offset]].
+				ifFalse: [aCharacter == $- ifTrue: [-1] ifFalse: [^Locale timeZoneInformation offset]].
 	^Duration
 		readFrom: aStream
 		sign: sign
-		withDays: false!
+		withDays: false
+		ifInvalid: aNiladicValuable!
 
 stbConvertFrom: anSTBClassFormat
 	"Version 1 changes the internal representation to a RataDie day number and seconds in the day."
@@ -927,7 +946,9 @@ midnight!instance creation!public! !
 now!instance creation!public! !
 nowUTC!instance creation!public! !
 readFrom:!instance creation!public! !
+readFrom:ifInvalid:!instance creation!public! !
 readOffsetFrom:sign:!helpers!private! !
+readOffsetFrom:sign:ifInvalid:!helpers!private! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!development!public! !
 today!instance creation!public! !
