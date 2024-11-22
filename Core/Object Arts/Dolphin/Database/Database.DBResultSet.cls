@@ -109,7 +109,7 @@ bind: anArrayOfColNums
 	specified columns (or #() for all columns)
 	as they are fetched from the result set"
 
-	(self allocBuffer: (self describeCols: anArrayOfColNums)) bind: statement!
+	(self allocBuffer: (self describeColumns: anArrayOfColNums)) bind: statement!
 
 buffer
 	^buffer!
@@ -145,6 +145,9 @@ collect: transformer
 	answer := self copyLike.
 	self do: [:each | answer addLast: (transformer value: each)].
 	^answer!
+
+columns
+	^columns!
 
 columns: anArrayOfDBColAttr
 	columns := anArrayOfDBColAttr!
@@ -199,19 +202,23 @@ countElements
 	self rawDo: [tally := tally + 1].
 	^tally!
 
-describeCol: anInteger
+describeCols: columnNumbers
+	#deprecated.
+	^self describeColumns: columnNumbers!
+
+describeColumnAt: anInteger
 	"Answer a DBColAttr object which describes the column
 	numbered anInteger in the receiver's result set"
 
-	^statement describeCol: anInteger!
+	^statement describeColumnAt: anInteger!
 
-describeCols
+describeColumns
 	"Answer the list of column attributes for all of
 	the columns in the receiver's result set"
 
-	^self describeCols: #()!
+	^self describeColumns: #()!
 
-describeCols: anArray
+describeColumns: anArray
 	"Answer a list of column attributes for the columns in
 	the receiver's result set specified by the column numbers
 	in anArray"
@@ -219,7 +226,7 @@ describeCols: anArray
 	columns
 		ifNil: 
 			[columns := statement
-						describeCols: (anArray size == 0 ifTrue: [1 to: self numColumns] ifFalse: [anArray])].
+						describeColumns: (anArray size == 0 ifTrue: [1 to: self numColumns] ifFalse: [anArray])].
 	^columns!
 
 fetchScroll: orientationInteger offset: offsetInteger
@@ -420,7 +427,7 @@ printOn: aStream
 	aStream 
 		basicPrint: self;
 		nextPut: $(;
-		print: self describeCols;
+		print: self describeColumns;
 		nextPut: $).!
 
 rawCollect: aZeroArgBlock 
@@ -568,6 +575,7 @@ buffer:!accessing!private! !
 bufferClass!constants!private! !
 close!public!realizing/unrealizing! !
 collect:!enumerating!public! !
+columns!accessing!private! !
 columns:!accessing!public! !
 copyEmpty:!copying!private! !
 copyFrom:!copying!public! !
@@ -576,9 +584,10 @@ copyLike!copying!private! !
 copySize!copying!private! !
 copyWith:!copying!public! !
 countElements!accessing!private! !
-describeCol:!operations!public! !
-describeCols!accessing!public! !
 describeCols:!accessing!public! !
+describeColumnAt:!operations!public! !
+describeColumns!accessing!public! !
+describeColumns:!accessing!public! !
 fetchScroll:offset:!positioning!private! !
 findLast:!public!searching! !
 first!accessing!public! !

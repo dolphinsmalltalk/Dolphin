@@ -11,7 +11,6 @@ Kernel.SharedPool
 			'SQL_BINARY' -> -16r2.
 			'SQL_BIT' -> -16r7.
 			'SQL_CHAR' -> 16r1.
-			'SQL_DATE' -> 16r9.
 			'SQL_DATETIME' -> 16r9.
 			'SQL_DECIMAL' -> 16r3.
 			'SQL_DOUBLE' -> 16r8.
@@ -39,7 +38,8 @@ Kernel.SharedPool
 			'SQL_SMALLINT' -> 16r5.
 			'SQL_SS_TIME2' -> -16r9A.
 			'SQL_SS_TIMESTAMPOFFSET' -> -16r9B.
-			'SQL_TIME' -> 16rA.
+			'SQL_SS_VARIANT' -> -16r96.
+			'SQL_SS_XML' -> -16r98.
 			'SQL_TIMESTAMP' -> 16rB.
 			'SQL_TINYINT' -> -16r6.
 			'SQL_TYPE_DATE' -> 16r5B.

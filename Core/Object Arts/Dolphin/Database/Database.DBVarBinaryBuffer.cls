@@ -42,16 +42,21 @@ dbMarshal: anObject into: aDBField
 dbUnmarshal: aDBField
 	"Answer a <ByteArray> read from the receiver, assumed to be the buffer of the <DBField> argument containing a SQL_C_BINARY value."
 
-	^bytes copyFrom: 1 to: aDBField length!
-
-valueClass
-	^ByteArray! !
+	^bytes copyFrom: 1 to: aDBField length! !
 
 !Database.DBVarBinaryBuffer categoriesForMethods!
 blockTransferOctetSize!constants!private! !
 dbInterchangeType!constants!public! !
 dbMarshal:into:!operations!public! !
 dbUnmarshal:!operations!public! !
+!
+
+!Database.DBVarBinaryBuffer class methodsFor!
+
+valueClass
+	^ByteArray! !
+
+!Database.DBVarBinaryBuffer class categoriesForMethods!
 valueClass!constants!public! !
 !
 

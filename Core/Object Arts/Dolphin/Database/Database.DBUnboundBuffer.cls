@@ -18,10 +18,10 @@ Database.DBUnboundBuffer comment: 'A DBUnboundRow represents a row buffer that i
 
 !Database.DBUnboundBuffer methodsFor!
 
-newFieldForCol: aDBColAttr
+newFieldForColumn: aDBColAttr
 	^DBUnboundField newForCol: aDBColAttr! !
 
 !Database.DBUnboundBuffer categoriesForMethods!
-newFieldForCol:!helpers!private! !
+newFieldForColumn:!helpers!private! !
 !
 

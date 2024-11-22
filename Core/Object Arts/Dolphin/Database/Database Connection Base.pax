@@ -17,8 +17,10 @@ package setClassNames: #(
 	#{Database}
 	#{Database.DBAbstractRow}
 	#{Database.DBAbstractStatement}
+	#{Database.DBBinaryBuffer}
 	#{Database.DBBoundBuffer}
 	#{Database.DBBoundField}
+	#{Database.DBCharBuffer}
 	#{Database.DBColAttr}
 	#{Database.DBColFlags}
 	#{Database.DBColumnsStatement}
@@ -54,6 +56,7 @@ package setClassNames: #(
 	#{Database.DBVarFieldBuffer}
 	#{Database.DBVarWCharBuffer}
 	#{Database.DBWarning}
+	#{Database.DBWCharBuffer}
 	#{OS.DBTIME2}
 	#{OS.ODBCConstants}
 	#{OS.ODBCCTypes}
@@ -1589,7 +1592,6 @@ Kernel.SharedPool
 			'SQL_BINARY' -> -16r2.
 			'SQL_BIT' -> -16r7.
 			'SQL_CHAR' -> 16r1.
-			'SQL_DATE' -> 16r9.
 			'SQL_DATETIME' -> 16r9.
 			'SQL_DECIMAL' -> 16r3.
 			'SQL_DOUBLE' -> 16r8.
@@ -1617,7 +1619,8 @@ Kernel.SharedPool
 			'SQL_SMALLINT' -> 16r5.
 			'SQL_SS_TIME2' -> -16r9A.
 			'SQL_SS_TIMESTAMPOFFSET' -> -16r9B.
-			'SQL_TIME' -> 16rA.
+			'SQL_SS_VARIANT' -> -16r96.
+			'SQL_SS_XML' -> -16r98.
 			'SQL_TIMESTAMP' -> 16rB.
 			'SQL_TINYINT' -> -16r6.
 			'SQL_TYPE_DATE' -> 16r5B.
@@ -1660,7 +1663,7 @@ Core.Object
 	subclass: #'Database.DBConnection'
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1881,6 +1884,22 @@ Database.DBFixedSizeField
 	classConstants: {}!
 
 Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBBinaryBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBCharBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBUnstructuredFieldBuffer
 	subclass: #'Database.DBNumericFieldBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1892,6 +1911,14 @@ Database.DBUnstructuredFieldBuffer
 	subclass: #'Database.DBVarFieldBuffer'
 	instanceVariableNames: ''
 	classVariableNames: 'BlockTransferOctetLength MaxBoundOctetLength'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBWCharBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -1939,7 +1966,7 @@ Core.Error
 Core.Notification
 	subclass: #'Database.DBWarning'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'TraceStream'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -2098,7 +2125,7 @@ dbConvert: anObject for: aDBField
 	(anObject isKindOf: GUID) ifTrue: [^anObject].
 	OS.HRESULTError
 		signal: 'GUID expected, not <1s> (<2d>)' << {  anObject basicPrintString. anObject }
-		withFailureCode: _PrimitiveFailureCode.ObjectTypeMismatch.
+		with: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH.
 	^nil!
 
 dbInterchangeType

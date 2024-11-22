@@ -37,14 +37,14 @@ contents
 	^contents ifNil: [contents := self getContents]!
 
 getContents
-	^columns collect: [:each | self newFieldForCol: each]!
+	^columns collect: [:each | self newFieldForColumn: each]!
 
 getData: aDBStatement
 	"Private - Copy data from the result table into fields of the receiver."
 
 	self contents do: [:each | each getData: aDBStatement]!
 
-newFieldForCol: aDBColAttr
+newFieldForColumn: aDBColAttr
 	^self subclassResponsibility!
 
 objects
@@ -62,7 +62,7 @@ bind:!operations!private! !
 contents!accessing!public! !
 getContents!helpers!private! !
 getData:!data retrieval!private! !
-newFieldForCol:!helpers!private! !
+newFieldForColumn:!helpers!private! !
 objects!accessing!private! !
 status!accessing!private! !
 !

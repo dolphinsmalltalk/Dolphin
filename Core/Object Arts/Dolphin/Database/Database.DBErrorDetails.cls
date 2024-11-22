@@ -23,6 +23,18 @@ Instance Variables:
 
 !Database.DBErrorDetails methodsFor!
 
+displayOn: aPuttableStream
+	aPuttableStream display: self messageText!
+
+messageParts
+	| parts stream |
+	parts := Array writeStream.
+	stream := self msg readStream.
+	[stream peekFor: $[] whileTrue: [parts nextPut: (stream upTo: $])].
+	^parts
+		nextPut: stream upToEnd;
+		contents!
+
 messageText
 	"Answer a text representation of the error of the form:
 		STATE: MSG"
@@ -44,6 +56,18 @@ nativeErr: anInteger
 
 	nativeErr := anInteger!
 
+nativeError
+	^nativeErr!
+
+printOn: aStream
+	"Print an textual representation of the receiver to aStream"
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		display: self;
+		nextPut: $)!
+
 sqlState
 	"Answer the sqlState instance variable."
 
@@ -55,10 +79,14 @@ sqlState: aString
 	sqlState := aString! !
 
 !Database.DBErrorDetails categoriesForMethods!
+displayOn:!displaying!public! !
+messageParts!accessing!public! !
 messageText!accessing!public! !
 msg!accessing!public! !
 msg:!initializing!private! !
 nativeErr:!initializing!private! !
+nativeError!accessing!public! !
+printOn:!printing!public! !
 sqlState!accessing!public! !
 sqlState:!initializing!private! !
 !

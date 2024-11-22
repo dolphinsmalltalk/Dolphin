@@ -8,6 +8,7 @@ package basicPackageVersion: '6.0'.
 
 
 package setMethodNames: #(
+	#(#{Database.DBAbstractStatement} #describeCol:)
 	#(#{Database.DBConnection} #accessibleTables)
 	#(#{Database.DBConnection} #autoCommit)
 	#(#{Database.DBConnection} #autoCommit:)
@@ -47,6 +48,8 @@ package setMethodNames: #(
 	#(#{Database.DBConnection} #txnIsolationOptions)
 	#(#{Database.DBConnection} #uniqueIndexOf:)
 	#(#{Database.DBConnection class} #interpretTxnIsolationMask:)
+	#(#{Database.DBResultSet} #describeCol:)
+	#(#{Database.DBResultSet} #describeCols)
 	#(#{Database.DBResultSet} #invalidate)
 	#(#{Database.DBResultSet} #prev)
 	#(#{Database.DBRowBuffer} #sizeInBytes)
@@ -62,6 +65,16 @@ package setPrerequisites: #(
 package!
 
 "Loose Methods"!
+
+!Database.DBAbstractStatement methodsFor!
+
+describeCol: anInteger
+	#deprecated.
+	^self describeColumnAt: anInteger! !
+
+!Database.DBAbstractStatement categoriesForMethods!
+describeCol:!accessing!public! !
+!
 
 !Database.DBConnection methodsFor!
 
@@ -291,6 +304,14 @@ interpretTxnIsolationMask:!operations!private! !
 
 !Database.DBResultSet methodsFor!
 
+describeCol: anInteger
+	#deprecated.
+	^self describeColumnAt: anInteger!
+
+describeCols
+	#deprecated.
+	^self describeColumns!
+
 invalidate
 	#deprecated.
 	self free!
@@ -300,6 +321,8 @@ prev
 	^self previous! !
 
 !Database.DBResultSet categoriesForMethods!
+describeCol:!accessing!public! !
+describeCols!accessing!public! !
 invalidate!operations!public! !
 prev!accessing!public! !
 !

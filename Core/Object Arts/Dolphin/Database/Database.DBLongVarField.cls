@@ -96,7 +96,7 @@ value: anObject
 	anObject
 		ifNil: 
 			[value := nil.
-			self length: SQL_DATA_AT_EXEC]
+			self length: SQL_NULL_DATA]
 		ifNotNil: 
 			[value := buffer dbConvert: anObject for: self.
 			self length: 0 - value dbOctetTransferSize + SQL_LEN_DATA_AT_EXEC_OFFSET]! !

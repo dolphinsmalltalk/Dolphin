@@ -20,6 +20,9 @@ Concrete subclasses exist for the long variable length columns, and specific oth
 
 !Database.DBUnstructuredFieldBuffer methodsFor!
 
+bufferSizeForColumn: aDBColAttr
+	^aDBColAttr length!
+
 bytes
 	^bytes!
 
@@ -33,8 +36,8 @@ dbConvert: anObject for: aDBField
 
 	(anObject isKindOf: self valueClass) ifTrue: [^anObject].
 	OS.HRESULTError
-		signal: '<3d> expected, not <1s> (<2d>)' << {anObject basicPrintString. anObject. self valueClass}
-		withFailureCode: Kernel._PrimitiveFailureCode.ObjectTypeMismatch.
+		signal: '<3d> expected, not <1s> (<2d>)' << { anObject basicPrintString. anObject. self valueClass }
+		with: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH.
 	^nil!
 
 dbInterchangeType
@@ -45,24 +48,31 @@ dbInterchangeType
 	^self shouldNotImplement!
 
 dbMarshal: anObject into: aDBField
-	"Populate the receiver, as buffer of the <DBField> 2nd argument, with appropriate the SQL_C_TYPE_XXXX representation of the 1st argument."
+	"Populate the receiver, as buffer of the <DBField> 2nd argument, with the SQL_C_BINARY (e.g. ByteArray) representation of the 1st argument."
 
-	self subclassResponsibility!
+	| byteArray byteCount |
+	byteArray := self dbConvert: anObject for: aDBField.
+	byteCount := byteArray size.
+	bytes
+		replaceFrom: 1
+		to: byteCount
+		with: byteArray
+		startingAt: 1.
+	aDBField length: byteCount!
 
 dbUnmarshal: aDBField
-	"Answer Smalltalk object equivalent to the value in the receiver, assumed to be the buffer of DBField."
+	"Answer a <Utf16String> read from the receiver, assumed to be the buffer of the <DBField> argument containing a SQL_C_WCHAR value."
 
-	^self subclassResponsibility!
+	^bytes copy!
 
 initializeForColumn: aDBColAttr
-	bytes := ByteArray newFixed: aDBColAttr length!
+	bytes := self valueClass newFixed: (self bufferSizeForColumn: aDBColAttr)!
 
 valueClass
-	"The class of unmarshalled values."
-
-	^self subclassResponsibility! !
+	^self class valueClass! !
 
 !Database.DBUnstructuredFieldBuffer categoriesForMethods!
+bufferSizeForColumn:!initializing!private! !
 bytes!accessing!private! !
 byteSize!accessing!public! !
 dbConvert:for:!operations!public! !
@@ -72,8 +82,6 @@ dbUnmarshal:!operations!public! !
 initializeForColumn:!initializing!private! !
 valueClass!constants!public! !
 !
-
-Database.DBUnstructuredFieldBuffer methodProtocol: #dbFieldBuffer attributes: #() selectors: #(#byteSize #dbConvert:for: #dbInterchangeType #dbMarshal:into: #dbUnmarshal: #valueClass)!
 
 !Database.DBUnstructuredFieldBuffer class methodsFor!
 
@@ -93,6 +101,11 @@ dbTransferOctetLengthForColumn: aDBColAttr
 		The transfer octet length of a column is the maximum number of bytes returned to the application when data is transferred to its default C data type. For character data, the transfer octet length does not include space for the null-termination character. The transfer octet length of a column may be different than the number of bytes required to store the data on the data source.
 	From https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/transfer-octet-length"
 
+	^aDBColAttr precision ?? 0!
+
+valueClass
+	"The class of unmarshalled values."
+
 	^self subclassResponsibility! !
 
 !Database.DBUnstructuredFieldBuffer class categoriesForMethods!
@@ -100,6 +113,7 @@ dbBoundFieldClassForColumn:!helpers!private! !
 dbHasVariableTransferOctetLength!private!testing! !
 dbNewForColumn:!helpers!private! !
 dbTransferOctetLengthForColumn:!enquiries!public! !
+valueClass!constants!public! !
 !
 
 Database.DBUnstructuredFieldBuffer class methodProtocol: #dbFieldBufferFactory attributes: #() selectors: #(#dbBoundFieldClassForColumn: #dbHasVariableTransferOctetLength #dbNewForColumn: #dbTransferOctetLengthForColumn:)!

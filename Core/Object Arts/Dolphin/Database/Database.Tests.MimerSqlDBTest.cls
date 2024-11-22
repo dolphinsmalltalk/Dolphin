@@ -14,6 +14,59 @@ Database.Tests.MimerSqlDBTest comment: ''!
 
 !Database.Tests.MimerSqlDBTest methodsFor!
 
+allDataTypes
+	^{
+		'BIGINT' -> SQL_BIGINT.
+		'BINARY' -> SQL_BINARY.
+		'BINARY LARGE OBJECT' -> SQL_LONGVARBINARY.
+		'BINARY VARYING' -> SQL_VARBINARY.
+		'BOOLEAN' -> SQL_BIT.
+		'BUILTIN.GIS_COORDINATE' -> SQL_BINARY.
+		'BUILTIN.GIS_LATITUDE' -> SQL_BINARY.
+		'BUILTIN.GIS_LOCATION' -> SQL_BINARY.
+		'BUILTIN.GIS_LONGITUDE' -> SQL_BINARY.
+		'BUILTIN.UUID' -> SQL_GUID.
+		'CHARACTER' -> SQL_CHAR.
+		'CHARACTER LARGE OBJECT' -> SQL_LONGVARCHAR.
+		'CHARACTER VARYING' -> SQL_VARCHAR.
+		'DATE' -> SQL_DATETIME.
+		'DECIMAL' -> SQL_DECIMAL.
+		'DOUBLE PRECISION' -> SQL_DOUBLE.
+		'Float' -> SQL_FLOAT.
+		'FLOAT' -> SQL_FLOAT.
+		'INFORMATION_SCHEMA.CARDINAL_NUMBER' -> SQL_INTEGER.
+		'INFORMATION_SCHEMA.CHARACTER_DATA' -> SQL_VARCHAR.
+		'INFORMATION_SCHEMA.SQL_IDENTIFIER' -> SQL_WVARCHAR.
+		'INFORMATION_SCHEMA.TIME_STAMP' -> SQL_DATETIME.
+		'Integer' -> SQL_BIGINT.
+		'INTEGER' -> SQL_INTEGER.
+		'INTERVAL DAY' -> SQL_INTERVAL.
+		'INTERVAL DAY() TO HOUR' -> SQL_INTERVAL.
+		'INTERVAL DAY() TO MINUTE' -> SQL_INTERVAL.
+		'INTERVAL DAY() TO SECOND' -> SQL_INTERVAL.
+		'INTERVAL HOUR' -> SQL_INTERVAL.
+		'INTERVAL HOUR() TO MINUTE' -> SQL_INTERVAL.
+		'INTERVAL HOUR() TO SECOND' -> SQL_INTERVAL.
+		'INTERVAL MINUTE' -> SQL_INTERVAL.
+		'INTERVAL MINUTE() TO SECOND' -> SQL_INTERVAL.
+		'INTERVAL MONTH' -> SQL_INTERVAL.
+		'INTERVAL SECOND' -> SQL_INTERVAL.
+		'INTERVAL YEAR' -> SQL_INTERVAL.
+		'INTERVAL YEAR() TO MONTH' -> SQL_INTERVAL.
+		'NATIONAL CHAR LARGE OBJECT' -> SQL_WLONGVARCHAR.
+		'NATIONAL CHARACTER' -> SQL_WCHAR.
+		'NATIONAL CHARACTER VARYING' -> SQL_WVARCHAR.
+		'NUMERIC' -> SQL_NUMERIC.
+		'ODBC.BIT' -> SQL_BIT.
+		'ODBC.GUID' -> SQL_GUID.
+		'ODBC.TINYINT' -> SQL_TINYINT.
+		'REAL' -> SQL_REAL.
+		'SMALLINT' -> SQL_SMALLINT.
+		'SYSADM.TEXT' -> SQL_WLONGVARCHAR.
+		'TIME' -> SQL_DATETIME.
+		'TIMESTAMP' -> SQL_DATETIME
+	}!
+
 categoriesColumns
 	^{
 		{ 'CategoryID'. SQL_INTEGER. 10. 0. 4 }.
@@ -22,8 +75,14 @@ categoriesColumns
 		{ 'Picture'. SQL_LONGVARBINARY. 4194304. nil. 4194304 }
 	}!
 
+columnTypeNameBlob
+	^'BINARY LARGE OBJECT'!
+
+columnTypeNameDateTime
+	^'TIMESTAMP'!
+
 createTableStatementTemplate
-	^'CREATE TABLE <1s> (  ID INT PRIMARY KEY, <2s> <3s><4d> NULL ) IN Northwind'!
+	^'CREATE TABLE <1s> (  <2s> INT PRIMARY KEY, <3s> <4s><5d> <6?:NOT >NULL ) IN Northwind'!
 
 databaseName
 	^'MIMER'!
@@ -31,14 +90,20 @@ databaseName
 databaseResource
 	^MimerSqlNorthwindDB current!
 
+dataSourceName
+	^self databaseName!
+
+defaultDateTimeColumnScale
+	^6!
+
 defaultTransactionIsolation
 	^#repeatableRead!
 
-orderDetailsTable
-	^'OrderDetails'!
+hasDateTimeOffsetDataType
+	^false!
 
 ordersColumns
-	"Mimer's WCHAR's are UTF-32, and its ODBC driver reports WCHAR column buffer sizes as 4x character length. This isn't correct since the ODBC transfer format can only be UTF-16, and therefore the octet transfer length is 2x, not 4x."
+	"Mimer has a similar bug to MySql in the reporting of the length of WCHAR columns. It's WCHAR's are UTF-32, and its ODBC driver reports WCHAR column buffer sizes as 4x character length. This isn't correct since the ODBC transfer format can only be UTF-16, and therefore the octet transfer length is 2x, not 4x."
 
 	^{
 		{ 'OrderID'. SQL_INTEGER. 10. 0. 4 }.
@@ -57,202 +122,63 @@ ordersColumns
 		{ 'ShipCountry'. SQL_WVARCHAR. 15. nil. 60 }
 	}!
 
-testDateDiff
-	| resultSet |
-	resultSet := connection
-				query: 'SELECT EmployeeID, BirthDate, HireDate, (HireDate - BirthDate) YEAR TO MONTH as AgeAtHire from Employees'.
-	dbResources add: resultSet.
-	resultSet do: 
-			[:each |
-			| hired born ageAtHire |
-			hired := each at: 'HireDate'.
-			born := each at: 'BirthDate'.
-			ageAtHire := each at: 'AgeAtHire'.
-			self assert: ageAtHire totalYears equals: (hired monthsSince: born) / 12]!
+sqlStateInvalidDouble
+	"22018 is 'Invalid character value for cast specification', but the mimer driver raises this for 'Invalid numeric value'"
 
-testDateTimeDiff
-	| resultSet |
-	resultSet := connection
-				query: 'SELECT OrderID, RequiredDate, ShippedDate, (ShippedDate - RequiredDate) DAY TO SECOND as TimeToShip from Orders'.
-	dbResources add: resultSet.
-	resultSet do: 
-			[:each |
-			| shipped required delay |
-			shipped := each at: 'ShippedDate'.
-			shipped
-				ifNil: [self assert: (each at: 'TimeToShip') isNil]
-				ifNotNil: 
-					[required := each at: 'RequiredDate'.
-					delay := each at: 'TimeToShip'.
-					self assert: delay equals: (shipped - required)]]!
+	^'22018'!
 
-testDayToSecondsIntervals
-	| resultSet values colAttrs intervalCol insert buf |
-	self dropTestTable.
-	colAttrs := self createTestTable: 'INTERVAL DAY TO SECOND'.
-	insert := connection prepare: 'INSERT INTO <1s> (ID, <2s>) VALUES (?, ?)'
-						<< {self temporaryTableName. colAttrs second name}.
-	dbResources add: insert.
+supportsIntervalStructs
+	"Private - Mimer is the only DB tested so far that has intervals and implements them completely and correctly in its ODBC driver."
+
+	^true!
+
+testColumnTypeVarCharBoundOverflow
+	| colAttrs vcharCol insert |
+	self assert: DBVarFieldBuffer maxBoundOctetLength > 16.
+	colAttrs := self createTestTable: 'varchar' qualifiers: #(16).
+	vcharCol := colAttrs last.
+	insert := self
+				prepare: 'INSERT INTO <1s> (ID,<2s>) VALUES (?,?)' << { self temporaryTableName. vcharCol name }.
 	insert paramCols: colAttrs.
-	intervalCol := colAttrs last.
-	values := {30 days.
-				48 hours.
-				58 days + 5 hours + 22 minutes + 3.109375 seconds.
-				0 seconds.
-				-31 days}.
-	"Do a sanity check that the buffer class is set up and marshals as expected"
-	buf := OS.SQL_INTERVAL_STRUCT dbNewForColumn: intervalCol.
-	self assert: buf isKindOf: OS.SQL_DAY_SECOND_STRUCT.
-	self assert: buf dbInterchangeType equals: OS.ODBCCTypes.SQL_C_INTERVAL_DAY_TO_SECOND.
-	values do: 
-			[:each |
-			buf value: each.
-			self assert: buf value equals: each].
-	values keysAndValuesDo: 
-			[:i :each |
-			insert values: {i. each}.
-			insert exec].
-	resultSet := connection
-				query: 'select ID, <2s> from <1s>' << {self temporaryTableName. intervalCol name}.
-	dbResources add: resultSet.
-	(resultSet collect: [:each | each atIndex: 2]) with: values
-		do: [:actual :expected | expected isNil ifTrue: [self assertIsNil: actual] ifFalse: [self assert: actual equals: expected]].
-	"Invalid"
-	values := {10000000000 / 1000}.
-	values keysAndValuesDo: 
-			[:key :each |
-			insert values: {key * 2. each}.
-			self
-				should: [insert exec]
-				raise: OS.HRESULTError
-				matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]!
+	insert values: { 100. 'abcdefghijklmnopq' }.
+	"If the parameter is bound, we pass the data through the bound buffer and detect overflow when attempting to populate the buffer."
+	self
+		should: [insert exec]
+		raise: BoundsError
+		matching: 
+			[:ex |
+			(ex isKindOf: BoundsError) or: 
+					[Transcript
+						print: self;
+						nextPutAll: ' nativeError on truncation';
+						print: ex nativeError;
+						cr.
+					ex sqlState = self sqlStateTruncatedString	"String data, right truncation"]]!
 
-testIntervalLiterals
-	"Examples based on https://learn.microsoft.com/en-us/sql/odbc/reference/appendixes/interval-literals"
-
-	| resultSet actual |
-	resultSet := connection
-				query: 'SELECT (INTERVAL ''1997'' YEAR(4)) AS years1997,
-						INTERVAL ''993'' MONTH(3) AS months993,
-						(INTERVAL ''3261'' DAY(4)) as days3261,
-						(INTERVAL ''163'' HOUR(3)) as hours163,
-						(INTERVAL ''-163'' MINUTE(3)) as minutes163,
-						(INTERVAL ''223.25'' SECOND(3,2)) as seconds223,
-						(INTERVAL ''163-11'' YEAR(3) TO MONTH) as y163m11,
-						(INTERVAL ''163 12'' DAY(3) TO HOUR) as d163h12,
-						(INTERVAL ''163 12:39'' DAY(3) TO MINUTE) as d163h12m39,
-						(INTERVAL ''999 23:39:59.125'' DAY(3) TO SECOND(3)) as d999h12m39s59f18,
-						(INTERVAL ''163:39'' HOUR(3) TO MINUTE) as d163m39,
-						(INTERVAL ''163:39:59.875'' HOUR(3) TO SECOND(4)) as h163m39s39f78,
-						(INTERVAL ''163:59.375'' MINUTE(3) TO SECOND(5)) as m163s59f38,
-						(INTERVAL ''-16 23:39:56.109375'' DAY TO SECOND) as nd16h23m39s56f764
-							from Orders where OrderID=10248;'.
-	dbResources add: resultSet.
-	self assert: resultSet size equals: 1.
-	actual := resultSet first contents.
-	self assert: actual size equals: 14.
-	self assert: (actual at: 1) equals: (OS.SQL_INTERVAL_STRUCT years: 1997).
-	self assert: (actual at: 2) equals: (OS.SQL_INTERVAL_STRUCT months: 993).
-	self assert: (actual at: 3) equals: 3261 days.
-	self assert: (actual at: 4) equals: 163 hours.
-	self assert: (actual at: 5) equals: -163 minutes.
-	self assert: (actual at: 6) equals: 223.25 seconds.
-	self assert: (actual at: 7) equals: (OS.SQL_INTERVAL_STRUCT years: 163 months: 11).
-	self assert: (actual at: 8) equals: 163 days + 12 hours.
-	self assert: (actual at: 9) equals: 163 days + 12 hours + 39 minutes.
-	self assert: (actual at: 10) equals: 999 days + 23 hours + 39 minutes + 59.125 seconds.
-	self assert: (actual at: 11) equals: 163 hours + 39 minutes.
-	self assert: (actual at: 12) equals: 163 hours + 39 minutes + 59.875 seconds.
-	self assert: (actual at: 13) equals: 163 minutes + 59.375 seconds.
-	self assert: (actual at: 14) equals: -16 days - 23 hours - 39 minutes - 56.109375 seconds!
-
-testMonthIntervals
-	| resultSet values colAttrs insert |
-	self dropTestTable.
-	colAttrs := self createTestTable: 'INTERVAL MONTH(4)'.
-	insert := connection prepare: 'INSERT INTO <1s> (ID, <2s>) VALUES (?, ?)'
-						<< {self temporaryTableName. colAttrs second name}.
-	dbResources add: insert.
-	insert paramCols: colAttrs.
-	values := {OS.SQL_INTERVAL_STRUCT years: 1.
-				OS.SQL_INTERVAL_STRUCT years: 8.
-				OS.SQL_INTERVAL_STRUCT months: 99.
-				OS.SQL_INTERVAL_STRUCT years: 8 months: 3.
-				OS.SQL_INTERVAL_STRUCT years: 0.
-				OS.SQL_INTERVAL_STRUCT months: 0.
-				OS.SQL_INTERVAL_STRUCT years: 0 months: 0.
-				OS.SQL_INTERVAL_STRUCT years: -8.
-				OS.SQL_INTERVAL_STRUCT months: -99.
-				OS.SQL_INTERVAL_STRUCT years: -8 months: 3}.
-	values keysAndValuesDo: 
-			[:i :each |
-			insert values: {i. each}.
-			insert exec].
-	resultSet := connection
-				query: 'select ID, <2s> from <1s>' << {self temporaryTableName. colAttrs second name}.
-	dbResources add: resultSet.
-	(resultSet collect: [:each | each atIndex: 2]) with: values
-		do: [:actual :expected | expected isNil ifTrue: [self assertIsNil: actual] ifFalse: [self assert: actual equals: expected]].
-	"Invalid"
-	values := {10000000000 / 1000}.
-	values keysAndValuesDo: 
-			[:key :each |
-			insert values: {key * 2. each}.
-			self
-				should: [insert exec]
-				raise: OS.HRESULTError
-				matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]!
-
-testYearToMonthIntervals
-	| resultSet values colAttrs insert |
-	self dropTestTable.
-	colAttrs := self createTestTable: 'INTERVAL YEAR TO MONTH'.
-	insert := connection prepare: 'INSERT INTO <1s> (ID, <2s>) VALUES (?, ?)'
-						<< {self temporaryTableName. colAttrs second name}.
-	dbResources add: insert.
-	insert paramCols: colAttrs.
-	values := {OS.SQL_INTERVAL_STRUCT years: 99.
-				OS.SQL_INTERVAL_STRUCT months: 99.
-				OS.SQL_INTERVAL_STRUCT years: 58 months: 5.
-				OS.SQL_INTERVAL_STRUCT years: 0.
-				OS.SQL_INTERVAL_STRUCT months: 0.
-				OS.SQL_INTERVAL_STRUCT years: 0 months: 0.
-				OS.SQL_INTERVAL_STRUCT years: -99.
-				OS.SQL_INTERVAL_STRUCT months: -99.
-				OS.SQL_INTERVAL_STRUCT years: -58 months: 5}.
-	values keysAndValuesDo: 
-			[:i :each |
-			insert values: {i. each}.
-			insert exec].
-	resultSet := connection
-				query: 'select ID, <2s> from <1s>' << {self temporaryTableName. colAttrs second name}.
-	dbResources add: resultSet.
-	(resultSet collect: [:each | each atIndex: 2]) with: values
-		do: [:actual :expected | expected isNil ifTrue: [self assertIsNil: actual] ifFalse: [self assert: actual equals: expected]].
-	"Invalid"
-	values := {10000000000 / 1000}.
-	values keysAndValuesDo: 
-			[:key :each |
-			insert values: {key * 2. each}.
-			self
-				should: [insert exec]
-				raise: OS.HRESULTError
-				matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]]! !
+verifyInvalidFloatValues: aDBParameterizedStatement
+	| fpeMask |
+	"The driver will throw a floating point exceptions since we have unmasked some which it doesn't handle well as the driver is then left in an unrecoverable state."
+	fpeMask := Float exceptionMask: OS.CRTConstants._MCW_EM.
+	[super verifyInvalidFloatValues: aDBParameterizedStatement]
+			ensure: [Float exceptionMask: fpeMask]! !
 
 !Database.Tests.MimerSqlDBTest categoriesForMethods!
+allDataTypes!constants!private! !
 categoriesColumns!constants!private! !
+columnTypeNameBlob!constants!private! !
+columnTypeNameDateTime!constants!private! !
 createTableStatementTemplate!constants!private! !
 databaseName!constants!private! !
 databaseResource!accessing!private! !
+dataSourceName!public! !
+defaultDateTimeColumnScale!constants!private! !
 defaultTransactionIsolation!constants!private! !
-orderDetailsTable!constants!private! !
+hasDateTimeOffsetDataType!private!testing! !
 ordersColumns!constants!private! !
-testDateDiff!public!unit tests! !
-testDateTimeDiff!public!unit tests! !
-testDayToSecondsIntervals!public!unit tests! !
-testIntervalLiterals!public!unit tests! !
-testMonthIntervals!public!unit tests! !
-testYearToMonthIntervals!public!unit tests! !
+sqlStateInvalidDouble!constants!private! !
+supportsIntervalStructs!private!testing! !
+testColumnTypeVarCharBoundOverflow!public!unit tests! !
+verifyInvalidFloatValues:!helpers!private! !
 !
 
 !Database.Tests.MimerSqlDBTest class methodsFor!

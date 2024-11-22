@@ -521,12 +521,15 @@ toTrace: anInteger
 	along with a stack track of depth as specified by the <integer>, frames."
 
 	| traceStream |
-	traceStream := SessionManager current traceStream.
+	traceStream := self traceStream.
 	traceStream
 		nextPutAll: self description;
 		cr.
 	self raisingFrame printStackOn: traceStream depth: anInteger.
-	traceStream flush! !
+	traceStream flush!
+
+traceStream
+	^SessionManager current traceStream! !
 
 !Core.Exception categoriesForMethods!
 _descriptionArguments!displaying!public! !
@@ -581,6 +584,7 @@ tag!accessing!public! !
 tag:!accessing!private! !
 toTrace!accessing!public! !
 toTrace:!accessing!public! !
+traceStream!accessing!private! !
 !
 
 Core.Exception methodProtocol: #Exception attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!

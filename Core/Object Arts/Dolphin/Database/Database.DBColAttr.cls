@@ -34,8 +34,9 @@ Database.DBColAttr comment: 'A `DBColAttr` instance describes an SQL column in a
 bufferClass
 	^bufferClass!
 
-bufferClass: anObject
-	bufferClass := anObject!
+bufferClass: aClass
+	bufferClass := aClass.
+	length := bufferClass dbTransferOctetLengthForColumn: self!
 
 columnNumber
 	"Answer the instance variable columnNumber"
@@ -180,11 +181,6 @@ scale: anInteger
 
 	scale := anInteger!
 
-transferOctetLength
-	"Private - Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) based on the column type."
-
-	^bufferClass dbTransferOctetLengthForColumn: self!
-
 type
 	"Answer the sqlType instance variable."
 
@@ -194,9 +190,8 @@ type: anInteger
 	"Private - Set the sqlType instance variable to anInteger."
 
 	sqlType := anInteger.
-	bufferClass := BufferClasses at: anInteger
-				ifAbsent: [self error: 'Unmarshallable column: ' , self printString].
-	length := self transferOctetLength!
+	self bufferClass: (BufferClasses at: anInteger
+				ifAbsent: [self error: 'Unmarshallable column: ' , self printString])!
 
 updateRuleMask
 	"Answer the update rule mask for the receiver"
@@ -213,7 +208,7 @@ updateRuleMask: anInteger
 
 !Database.DBColAttr categoriesForMethods!
 bufferClass!accessing!public! !
-bufferClass:!accessing!private! !
+bufferClass:!initializing!private! !
 columnNumber!accessing!public! !
 columnNumber:!accessing!private! !
 deleteRuleMask!accessing!public! !
@@ -238,9 +233,8 @@ precision:!accessing!private! !
 printOn:!printing!public! !
 scale!accessing!public! !
 scale:!accessing!public! !
-transferOctetLength!accessing!initializing!private! !
 type!accessing!public! !
-type:!accessing!private! !
+type:!initializing!private! !
 updateRuleMask!accessing!public! !
 updateRuleMask:!accessing!private! !
 !
@@ -252,13 +246,13 @@ initialize
 		self initialize
 	"
 
-	BufferClasses := (IdentityDictionary withAll: {SQL_CHAR -> DBVarCharBuffer.
+	BufferClasses := (IdentityDictionary withAll: {SQL_CHAR -> DBCharBuffer.
 						SQL_VARCHAR -> DBVarCharBuffer.
 						SQL_LONGVARCHAR -> DBVarCharBuffer.
-						SQL_WCHAR -> DBVarWCharBuffer.
+						SQL_WCHAR -> DBWCharBuffer.
 						SQL_WVARCHAR -> DBVarWCharBuffer.
 						SQL_WLONGVARCHAR -> DBVarWCharBuffer.
-						SQL_BINARY -> DBVarBinaryBuffer.
+						SQL_BINARY -> DBBinaryBuffer.
 						SQL_VARBINARY -> DBVarBinaryBuffer.
 						SQL_LONGVARBINARY -> DBVarBinaryBuffer.
 						SQL_BIT -> External.BOOLEAN.
@@ -271,27 +265,26 @@ initialize
 						SQL_FLOAT -> External.DOUBLE.
 						SQL_REAL -> External.FLOAT.
 						SQL_DOUBLE -> External.DOUBLE.
-						SQL_DATE -> OS.SQL_DATE_STRUCT.
 						SQL_TYPE_DATE -> OS.SQL_DATE_STRUCT.
-						SQL_TIME -> OS.SQL_TIME_STRUCT.
+						SQL_INTERVAL -> OS.SQL_TIME_STRUCT.
 						SQL_TYPE_TIME -> OS.SQL_TIME_STRUCT.
 						SQL_TIMESTAMP -> OS.SQL_TIMESTAMP_STRUCT.
 						SQL_TYPE_TIMESTAMP -> OS.SQL_TIMESTAMP_STRUCT.
 						SQL_GUID -> GUID.
 						SQL_TYPE_NULL -> nil.
-						SQL_INTERVAL_DAY -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_DAY_TO_HOUR -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_DAY_TO_MINUTE -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_DAY_TO_SECOND -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_HOUR -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_HOUR_TO_MINUTE -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_HOUR_TO_SECOND -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_MINUTE -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_MINUTE_TO_SECOND -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_SECOND -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_MONTH -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_YEAR -> OS.SQL_INTERVAL_STRUCT.
-						SQL_INTERVAL_YEAR_TO_MONTH -> OS.SQL_INTERVAL_STRUCT.
+						SQL_INTERVAL_DAY -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_DAY_TO_HOUR -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_DAY_TO_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_DAY_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_HOUR -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_HOUR_TO_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_HOUR_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_MINUTE_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_MONTH -> OS.SQL_YEAR_MONTH_STRUCT.
+						SQL_INTERVAL_YEAR -> OS.SQL_YEAR_MONTH_STRUCT.
+						SQL_INTERVAL_YEAR_TO_MONTH -> OS.SQL_YEAR_MONTH_STRUCT.
 						SQL_SS_TIMESTAMPOFFSET -> OS.SQL_SS_TIMESTAMPOFFSET_STRUCT.
 						SQL_SS_TIME2 -> OS.DBTIME2})!
 

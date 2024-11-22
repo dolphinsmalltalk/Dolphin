@@ -24,6 +24,12 @@ _descriptionFormat
 exceptionDetails
 	^tag!
 
+nativeError
+	^self primaryError nativeError!
+
+primaryError
+	^self exceptionDetails errors first!
+
 signal
 	"Signal this exception."
 
@@ -31,11 +37,13 @@ signal
 	super signal!
 
 sqlState
-	^self exceptionDetails errors first sqlState! !
+	^self primaryError sqlState! !
 
 !Database.DBError categoriesForMethods!
 _descriptionFormat!displaying!public! !
 exceptionDetails!accessing!public! !
+nativeError!accessing!public! !
+primaryError!accessing!public! !
 signal!public!signalling! !
 sqlState!accessing!public! !
 !

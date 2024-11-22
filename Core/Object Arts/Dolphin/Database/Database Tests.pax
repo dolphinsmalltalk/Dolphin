@@ -13,12 +13,15 @@ package setClassNames: #(
 	#{Database.Tests.DBConnectionTestResource}
 	#{Database.Tests.DBFieldTest}
 	#{Database.Tests.DBTest}
+	#{Database.Tests.GenericDBTest}
 	#{Database.Tests.MimerSqlDBTest}
 	#{Database.Tests.MimerSqlNorthwindDB}
 	#{Database.Tests.MySqlDBTest}
 	#{Database.Tests.MySqlNorthwindDB}
 	#{Database.Tests.OracleDBTest}
 	#{Database.Tests.OracleNorthwindDB}
+	#{Database.Tests.PostgresDBTest}
+	#{Database.Tests.PostgresNorthwindDB}
 	#{Database.Tests.SQLServerDBTest}
 	#{Database.Tests.SQLServerNorthwindDB}
 	#{OS.Tests.SQL_INTERVAL_STRUCTTest}
@@ -60,7 +63,15 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'Database.Tests.DBTest'
-	instanceVariableNames: 'connection'
+	instanceVariableNames: 'connection dbResources'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'Database.Tests.GenericDBTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -76,7 +87,7 @@ Core.Tests.DolphinTest
 
 Database.Tests.DBTest
 	subclass: #'Database.Tests.DBConnectionTest'
-	instanceVariableNames: 'dbResources savedBlockSize savedMaxBoundSize createdTestTable'
+	instanceVariableNames: 'savedBlockSize savedMaxBoundSize createdTestTable savedDBWarningTraceStream'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
@@ -108,6 +119,14 @@ Database.Tests.DBConnectionTest
 
 Database.Tests.DBConnectionTest
 	subclass: #'Database.Tests.OracleDBTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.Tests.DBConnectionTest
+	subclass: #'Database.Tests.PostgresDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -156,6 +175,14 @@ Database.Tests.DBConnectionTestResource
 
 Database.Tests.DBConnectionTestResource
 	subclass: #'Database.Tests.OracleNorthwindDB'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.Tests.DBConnectionTestResource
+	subclass: #'Database.Tests.PostgresNorthwindDB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

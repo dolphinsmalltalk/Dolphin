@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Database.DBConnection'
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1520,7 +1520,7 @@ enumerateDataSources!accessing!public! !
 environmentHandle!accessing!private! !
 freeAll!private!realizing/unrealizing! !
 freeEnvironment!private!realizing/unrealizing! !
-initialize!initializing!private! !
+initialize!class initialization!private! !
 invalidateHandle:!private!realizing/unrealizing! !
 new!instance creation!public! !
 newConnections!accessing!private! !

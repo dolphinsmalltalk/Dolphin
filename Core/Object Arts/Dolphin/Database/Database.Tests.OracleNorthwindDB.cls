@@ -30,7 +30,6 @@ dropDatabase
 	self connection
 		ifNotNil: 
 			[:cnxn |
-			Notification signal: 'Dropping Oracle Northwind tables'.
 			#('OrderDetails' 'Orders' 'CustomerCustomerDemo' 'CustomerDemographics' 'EmployeeTerritories' 'Employees' 'Customers' 'Shippers' 'Products' 'Suppliers' 'Categories' 'Territories' 'Region')
 				do: [:each | [cnxn exec: 'DROP TABLE <1s>' << each] on: Smalltalk.DBError do: [:ex | ex toTrace]]].
 	super dropDatabase!

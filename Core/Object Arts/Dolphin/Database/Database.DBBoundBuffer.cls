@@ -28,11 +28,11 @@ bind: aDBStatement
 	self contents do: [:eachField | eachField bind: aDBStatement].
 	^hStmt!
 
-newFieldForCol: aDBColAttr
+newFieldForColumn: aDBColAttr
 	^aDBColAttr newBoundField! !
 
 !Database.DBBoundBuffer categoriesForMethods!
 bind:!operations!private! !
-newFieldForCol:!helpers!private! !
+newFieldForColumn:!helpers!private! !
 !
 

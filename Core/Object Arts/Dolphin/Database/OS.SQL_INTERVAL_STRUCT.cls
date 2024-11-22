@@ -53,7 +53,7 @@ errorWrongIntervalType
 	self error: 'Interval type mismatch'!
 
 getValidFields
-	^##((Array new: 13)
+	^(##((Array new: 13)
 		at: SQL_IS_YEAR put: #(#sign #year);
 		at: SQL_IS_MONTH put: #(#sign #month);
 		at: SQL_IS_DAY put: #(#sign #day);
@@ -67,7 +67,8 @@ getValidFields
 		at: SQL_IS_HOUR_TO_MINUTE put: #(#sign #hour #minute);
 		at: SQL_IS_HOUR_TO_SECOND put: #(#sign #hour #minute #second #fraction);
 		at: SQL_IS_MINUTE_TO_SECOND put: #(#sign #minute #second #fraction);
-		yourself) at: self interval_type!
+		yourself) lookup: self interval_type)
+		ifNil: [#()]!
 
 interval_sign
 	"Answer the <Integer> value of the receiver's 'interval_sign' field."

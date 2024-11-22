@@ -53,12 +53,13 @@ months
 totalMonths
 	"Answer the <integer> number of whole months in the interval described by the receiver."
 
-	^((##((Array new: 13 withAll: [:interval | interval errorWrongIntervalType])
+	^(((##((Array new: 13 withAll: [:interval | interval errorWrongIntervalType])
 		at: SQL_IS_YEAR put: [:interval | interval year * 12];
 		at: SQL_IS_MONTH put: [:interval | interval month];
 		at: SQL_IS_YEAR_TO_MONTH put: [:interval | interval year * 12 + interval month];
-		yourself) at: self interval_type)
-		value: self) * self sign!
+		yourself) lookup: self interval_type)
+		ifNil: [[:interval | 0]]) value: self)
+		* self sign!
 
 totalMonths: aNumber
 	"Set the <Number> of months in the interval described by the receiver."
@@ -131,6 +132,11 @@ years!accessing!public! !
 byteSize
 	^_SQL_YEAR_MONTH_STRUCT_Size!
 
+dbInterchangeType: anInteger
+	^self newBuffer
+		interval_type: anInteger - 100;
+		yourself!
+
 defineFields
 	"
 		self compileDefinition
@@ -154,6 +160,7 @@ getFieldNames
 
 !OS.SQL_YEAR_MONTH_STRUCT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
+dbInterchangeType:!instance creation!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
