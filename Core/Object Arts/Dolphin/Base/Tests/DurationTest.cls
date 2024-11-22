@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #DurationTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -13,6 +13,17 @@ DurationTest comment: ''!
 !DurationTest categoriesForClass!Unclassified! !
 
 !DurationTest methodsFor!
+
+setUp
+	super setUp.
+	savedLocale := Locale userDefault!
+
+tearDown
+	savedLocale
+		ifNotNil: 
+			[Locale userDefault: savedLocale.
+			savedLocale := nil].
+	super tearDown!
 
 testAbs
 	self deny: 1.5 seconds equals: -1.5 seconds.
@@ -177,6 +188,121 @@ testHumanReadablePrintString
 	self assert: 1 nanoseconds humanReadablePrintString equals: '1 ns'.
 	self assert: (9 / 10) nanoseconds humanReadablePrintString equals: '0 s'.
 	self assert: 0 days humanReadablePrintString equals: '0 s'!
+
+testISO8601ParsingBasic
+	self assert: (Duration fromString: 'P2D') equals: 2 days.
+	self assert: (Duration fromString: '-P1D') equals: -24 hours.
+	self assert: (Duration fromString: 'PT23H') equals: 23 hours.
+	self assert: (Duration fromString: 'PT36H') equals: 1 days + 12 hours.
+	self assert: (Duration fromString: 'PT59M') equals: 59 minutes.
+	self assert: (Duration fromString: 'PT123S') equals: 123 seconds.
+	self assert: (Duration fromString: 'P4DT12H30M5S')
+		equals: 4 days + 12 hours + 30 minutes + 5 seconds.
+	self assert: (Duration fromString: '-P3DT18H') equals: -3.75 days.
+	"There is no Dolphin imposed limit, within the bounds of memory, on the size of individual time elements. Such Durations are unlikely to be interchangeable with other systems, however."
+	self assert: (Duration fromString: 100 factorial days asString) equals: 100 factorial days!
+
+testISO8601ParsingExtraInput
+	"Invalid IS08601 - Extraneous input at end"
+
+	{ 'PDT1S2'. 1 seconds. 'P4D '. 4 days. 'P0.75DS'. 0.75 days } pairsDo: 
+			[:string :expected |
+			| stream actual |
+			self should: [Duration fromString: string] raise: InvalidFormat.
+			stream := string readStream.
+			actual := Duration readFrom: stream.
+			self assert: actual equals: expected.
+			self assert: stream next equals: string last.
+			self assert: stream atEnd]!
+
+testISO8601ParsingFractions
+	"Decimal point an be full stop or comma. Fraction is only allowed on the smallest (last) component, although can be fractional days, hours, minutes or seconds. There is no practical limit on the precision as Dolphin will use fractional arithmetic, but the likelihood is that any other system with which the ISO8601 values are interchanged will impose a limit. The standard states that the systems need to agree a limit. When printing Durations in ISO8601 format we limit the fraction to 9 decimal places (i.e. nanoseconds), which is a reasonable maximum precision. Equally we allow unbounded values for any of the elements."
+
+	self
+		assert: (Duration fromString: 'PT59.123456789S')
+		closeTo: 59.123456789 seconds
+		precision: 1 nanoseconds.
+	self assert: (Duration fromString: 'P1DT2H3M4.1S')
+		equals: 1 days + 2 hours + 3 minutes + 4.1 seconds.
+	self assert: (Duration fromString: 'PT1,0S') equals: 1 seconds.
+	self assert: (Duration fromString: '-P0,5D') equals: -12 hours.
+	self assert: (Duration fromString: 'PT0.5H') equals: 30 minutes.
+	self assert: 1 nanoseconds asUtf16String
+		equals: 'PT0<s>000000001S' << Locale userDefault decimalSeparator.
+	self assert: (Duration fromString: 'PT1M0.0S') equals: 1 minutes.
+	self assert: (Duration fromString: 'PT1H0,0M') equals: 1 hours!
+
+testISO8601ParsingIncomplete
+	"Invalid IS08601 - Incomplete"
+
+	#('P' 'PT' 'P1' 'T' '1S' 'P2DT' 'P1D2')
+		do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+
+testISO8601ParsingInvalidQualifiers
+	"Invalid IS08601 - Invalid components"
+
+	#('P4Q' 'PT4D' 'P4T')
+		do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+
+testISO8601ParsingMisplacedFractions
+	"Invalid IS08601 - Only the last component can have fractional amount"
+
+	#('P0.5DT1S' 'PT0.5H1S' 'PT0.0H0.1S')
+		do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+
+testISO8601ParsingNegativeElements
+	"Invalid IS08601 - The elements must be positive"
+
+	#('P-1D' '-PT-1S') do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+
+testISO8601ParsingRepeatedElements
+	"Invalid IS08601 - Repeated components"
+
+	#('PT3M4M' 'PT3H2M5H') do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+
+testISO8601ParsingUnsupported
+	"Valid ISO8601, but not supported by Duration"
+
+	#('P3Y' 'P2W' 'P4M' 'P3Y6M4DT12H30M5S' 'P0,5Y' 'P0003-06-04T12:30:05')
+		do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+
+testISO8601ParsingZeroes
+	"Zeroes"
+
+	#('P0D' 'P0DT0H0M0.0S' 'P0DT0S' 'PT0,0H' 'PT0M' 'PT0S' 'PT0.0S') do: 
+			[:each |
+			self assert: (Duration fromString: each) equals: 0 seconds.
+			self assert: (Duration fromString: '-' , each) equals: 0 seconds].
+
+	"Zero leading or trailing components are allowed and effectively ignored."
+	#('P0DT0H0M1S' 'P0DT1S' 'PT0H0M1S' 'PT0M1S') do: 
+			[:each |
+			self assert: (Duration fromString: each) equals: 1 seconds.
+			self assert: (Duration fromString: '-' , each) equals: -1 seconds].
+	self assert: (Duration fromString: '-P4DT0H0M0S') equals: -4 days.
+	self assert: (Duration fromString: 'P0DT30M0S') equals: 30 minutes!
+
+testISO8601Printing
+	self assert: 2 days asString equals: 'P2D'.
+	self assert: 24 hours asString equals: 'P1D'.
+	self assert: 23 hours asString equals: 'PT23H'.
+	self assert: 36 hours asString equals: 'P1DT12H'.
+	self assert: 59 minutes asString equals: 'PT59M'.
+	self assert: 0 seconds asString equals: 'PT0S'.
+	self assert: -1 seconds asString equals: '-PT1S'.
+	self assert: (4 days + 12 hours + 30 minutes + 5 seconds) asString equals: 'P4DT12H30M5S'.
+	self assert: -3.75 days asString equals: '-P3DT18H'.
+	{ Locale named: 'en-GB'. Locale named: 'fr-FR' } do: 
+			[:each |
+			| decimalSeparator |
+			Locale userDefault: each.
+			decimalSeparator := each decimalSeparator.
+			self assert: 59.1234567891 seconds asString equals: 'PT59<s>123456789S' << decimalSeparator.
+			self assert: (1 days + 2 hours + 3 minutes + 4.1 seconds) asString
+				equals: 'P1DT2H3M4<s>1S' << decimalSeparator.
+			self assert: 1 nanoseconds asUtf16String equals: 'PT0<s>000000001S' << decimalSeparator].
+	"Note that we truncate the fractional seconds to nanoseconds when printing, although internally the precision is unlimited."
+	self assert: (123456789654321 / 1e15) seconds asString equals: 'PT0,123456789S'!
 
 testLessThan
 	| subject |
@@ -353,6 +479,8 @@ testSubtract
 	self assert: subject - -1800 seconds  equals: 2 hours! !
 
 !DurationTest categoriesForMethods!
+setUp!public!running! !
+tearDown!public!running! !
 testAbs!public!unit tests! !
 testAdd!public!unit tests! !
 testAsMicroseconds!public!unit tests! !
@@ -369,6 +497,17 @@ testHash!public!unit tests! !
 testHours!public!unit tests! !
 testHoursMinutes!public!unit tests! !
 testHumanReadablePrintString!public!unit tests! !
+testISO8601ParsingBasic!public!unit tests! !
+testISO8601ParsingExtraInput!public!unit tests! !
+testISO8601ParsingFractions!public!unit tests! !
+testISO8601ParsingIncomplete!public!unit tests! !
+testISO8601ParsingInvalidQualifiers!public!unit tests! !
+testISO8601ParsingMisplacedFractions!public!unit tests! !
+testISO8601ParsingNegativeElements!public!unit tests! !
+testISO8601ParsingRepeatedElements!public!unit tests! !
+testISO8601ParsingUnsupported!public!unit tests! !
+testISO8601ParsingZeroes!public!unit tests! !
+testISO8601Printing!public!unit tests! !
 testLessThan!public!unit tests! !
 testMilliseconds!public!unit tests! !
 testMinutes!public!unit tests! !
