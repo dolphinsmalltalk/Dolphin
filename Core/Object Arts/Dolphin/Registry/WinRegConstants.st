@@ -16,6 +16,8 @@ WinRegConstants at: 'KEY_NOTIFY' put: 16r10!
 WinRegConstants at: 'KEY_QUERY_VALUE' put: 16r1!
 WinRegConstants at: 'KEY_READ' put: 16r20019!
 WinRegConstants at: 'KEY_SET_VALUE' put: 16r2!
+WinRegConstants at: 'KEY_WOW64_32KEY' put: 16r200!
+WinRegConstants at: 'KEY_WOW64_64KEY' put: 16r100!
 WinRegConstants at: 'KEY_WRITE' put: 16r20006!
 WinRegConstants at: 'REG_BINARY' put: 16r3!
 WinRegConstants at: 'REG_DWORD' put: 16r4!

@@ -69,7 +69,7 @@ asTimeStamp
 	^self asDateAndTime asTimeStamp!
 
 closeTo: aTime precision: aDuration
-	^(seconds - aTime seconds) abs <= aDuration!
+	^(seconds - aTime seconds) abs <= aDuration asSeconds!
 
 displayOn: aStream
 	"Append to the <puttableStream> argument, aStream, a String whose characters are a representation of this<Time> that a user in the current<Locale> might expect to see."

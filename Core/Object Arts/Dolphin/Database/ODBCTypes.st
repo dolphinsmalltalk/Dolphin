@@ -5,7 +5,6 @@ ODBCTypes at: 'SQL_BIGINT' put: -16r5!
 ODBCTypes at: 'SQL_BINARY' put: -16r2!
 ODBCTypes at: 'SQL_BIT' put: -16r7!
 ODBCTypes at: 'SQL_CHAR' put: 16r1!
-ODBCTypes at: 'SQL_DATE' put: 16r9!
 ODBCTypes at: 'SQL_DATETIME' put: 16r9!
 ODBCTypes at: 'SQL_DECIMAL' put: 16r3!
 ODBCTypes at: 'SQL_DOUBLE' put: 16r8!
@@ -33,7 +32,8 @@ ODBCTypes at: 'SQL_REAL' put: 16r7!
 ODBCTypes at: 'SQL_SMALLINT' put: 16r5!
 ODBCTypes at: 'SQL_SS_TIME2' put: -16r9A!
 ODBCTypes at: 'SQL_SS_TIMESTAMPOFFSET' put: -16r9B!
-ODBCTypes at: 'SQL_TIME' put: 16rA!
+ODBCTypes at: 'SQL_SS_VARIANT' put:-16r96!
+ODBCTypes at: 'SQL_SS_XML' put: -16r98!
 ODBCTypes at: 'SQL_TIMESTAMP' put: 16rB!
 ODBCTypes at: 'SQL_TINYINT' put: -16r6!
 ODBCTypes at: 'SQL_TYPE_DATE' put: 16r5B!

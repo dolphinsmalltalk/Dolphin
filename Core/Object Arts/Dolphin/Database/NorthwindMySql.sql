@@ -4,6 +4,7 @@ CREATE DATABASE Northwind CHARSET utf8mb4;
 
 USE Northwind;
 SET NAMES utf8mb4;
+SET GLOBAL sql_mode = 'TRADITIONAL';
 
 CREATE TABLE Categories (
   CategoryID INT AUTO_INCREMENT NOT NULL
@@ -126,7 +127,7 @@ CREATE TABLE Products (
   ,UnitsInStock SMALLINT NULL
   ,UnitsOnOrder SMALLINT NULL
   ,ReorderLevel SMALLINT NULL
-  ,Discontinued CHAR(1) NOT NULL
+  ,Discontinued bit NOT NULL
   ,PRIMARY KEY (ProductID)
   ,FOREIGN KEY (SupplierID)
       REFERENCES Suppliers(SupplierID)

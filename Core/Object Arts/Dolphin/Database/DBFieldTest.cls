@@ -18,18 +18,16 @@ shouldRaiseTypeMismatch: aNiladicValuable
 	self
 		should: aNiladicValuable
 		raise: HRESULTError
-		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.ObjectTypeMismatch)]!
+		matching: [:ex | ex hresult = (HRESULT fromInteger: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]!
 
 testMarshalBinary
 	| subject col |
-	col := DBColAttr new type: SQL_BINARY.
-	self assert: col length equals: 0.
-	subject := col newBoundField.
-	self assert: subject isKindOf: DBLongVarField.
-	col length: 4.
+	col := DBColAttr new
+				precision: 4;
+				type: SQL_BINARY.
 	subject := col newBoundField.
 	self assert: subject isKindOf: DBBoundField.
-	self assert: subject fieldBuf isKindOf: DBVarBinaryBuffer.
+	self assert: subject fieldBuf isKindOf: DBBinaryBuffer.
 	self assertIsNil: subject value.
 	0 to: 4
 		do: 
@@ -37,7 +35,7 @@ testMarshalBinary
 			| bytes |
 			bytes := (0 to: i - 1) asByteArray.
 			subject value: bytes.
-			self assert: subject value equals: bytes].
+			self assert: subject value equals: (bytes copy resize: 4)].
 	"If too large, gets truncated. Not sure this is the right behaviour, but too late to change now."
 	self
 		should: [subject value: #[1 2 3 4 5]]
@@ -69,13 +67,13 @@ testMarshalBit
 testMarshalChar
 	| subject col string |
 	string := 'Abcdefg'.
-	col := DBColAttr new type: SQL_CHAR.
-	self assert: col length equals: 0.
-	self assert: col newBoundField isKindOf: DBLongVarField.
-	col length: string size.
+	col := DBColAttr new
+				precision: string size;
+				type: SQL_CHAR;
+				yourself.
 	subject := col newBoundField.
 	self assert: subject isKindOf: DBBoundField.
-	self assert: subject fieldBuf isKindOf: DBVarCharBuffer.
+	self assert: subject fieldBuf isKindOf: DBCharBuffer.
 	self assert: subject fieldBuf byteSize equals: string size + 1.
 	self assertIsNil: subject value.
 	0 to: string size
@@ -84,7 +82,8 @@ testMarshalChar
 			| substring |
 			substring := string copyFrom: 1 to: i.
 			subject value: substring.
-			self assert: subject value equals: substring].
+			self assert: subject value
+				equals: substring , ((String new: string size withAll: $\0) copyFrom: 1 to: string size - i)].
 	"Too large is an error - important that we test too large by one to verify correct handling of null terminator"
 	#('h' 'hi') do: 
 			[:each |
@@ -95,7 +94,7 @@ testMarshalChar
 	subject value: nil.
 	self assertIsNil: subject value.
 	"Non-ansi chars are translated to replacement char, which in an ANSI string is $?"
-	string := 'a🐬b'.
+	string := 'a🐬b   '.
 	subject value: string.
 	self assert: subject value equals: string asAnsiString.
 	self
@@ -296,6 +295,38 @@ testMarshalInt64
 		raise: MessageNotUnderstood
 		matching: [:ex | ex message selector == #asInteger]!
 
+testMarshalLongWChar
+	| subject col string utf16ByteSize |
+	string := 'a🐬b'.
+	utf16ByteSize := 4 * 2.
+	col := Smalltalk.DBColAttr new type: SQL_WCHAR.
+	self assert: col length equals: 0.
+	col length: utf16ByteSize.
+	subject := col newBoundField.
+	self assert: subject isKindOf: DBBoundField.
+	self assert: subject fieldBuf isKindOf: DBWCharBuffer.
+	self assert: subject fieldBuf byteSize equals: utf16ByteSize + 2.
+	self assertIsNil: subject value.
+	0 to: 4
+		do: 
+			[:i |
+			| substring |
+			substring := string asUtf16String copyFrom: 1 to: i.
+			subject value: substring.
+			self assert: subject value equals: (substring copy resize: 4)].
+	"Too large is an error - important that we test too large by one to verify correct handling of null terminator"
+	#('h' 'hi') do: 
+			[:each |
+			| utf16 |
+			utf16 := (string , each) asUtf16String.
+			self should: [subject value: utf16] raise: BoundsError].
+	subject value: nil.
+	self assertIsNil: subject value.
+	self
+		should: [subject value: 1]
+		raise: MessageNotUnderstood
+		matching: [:ex | ex description = 'SmallInteger does not understand #asUtf16String']!
+
 testMarshalTime
 	"Test conversion of Time <-> SQL_TIME_STRUCT"
 
@@ -332,7 +363,7 @@ testMarshalTime
 				self
 					assert: subject value
 					closeTo: each asTime
-					precision: 1].
+					precision: 1 seconds].
 	self
 		should: [subject value: 1]
 		raise: MessageNotUnderstood
@@ -358,7 +389,7 @@ testMarshalTime2
 				self
 					assert: subject value
 					closeTo: each asTime
-					precision: 0.001].
+					precision: 1 milliseconds].
 	subject value: nil.
 	self assertIsNil: subject value.
 	self
@@ -426,25 +457,27 @@ testMarshalUInt8
 		matching: [:ex | ex message selector == #asInteger]!
 
 testMarshalWChar
-	| subject col string utf16ByteSize |
+	| subject col string utf16ByteSize precision |
 	string := 'a🐬b'.
-	utf16ByteSize := 4 * 2.
-	col := DBColAttr new type: SQL_WCHAR.
-	self assert: col length equals: 0.
-	self assert: col newBoundField isKindOf: DBLongVarField.
-	col length: utf16ByteSize.
+	precision := 4.
+	utf16ByteSize := precision * 2.
+	col := DBColAttr new
+				precision: precision;
+				type: SQL_WCHAR;
+				yourself.
+	self assert: col length equals: utf16ByteSize.
 	subject := col newBoundField.
 	self assert: subject isKindOf: DBBoundField.
-	self assert: subject fieldBuf isKindOf: DBVarWCharBuffer.
+	self assert: subject fieldBuf isKindOf: DBWCharBuffer.
 	self assert: subject fieldBuf byteSize equals: utf16ByteSize + 2.
 	self assertIsNil: subject value.
-	0 to: 4
+	0 to: precision
 		do: 
 			[:i |
 			| substring |
 			substring := string asUtf16String copyFrom: 1 to: i.
 			subject value: substring.
-			self assert: subject value equals: substring].
+			self assert: subject value equals: (substring copy resize: precision)].
 	"Too large is an error - important that we test too large by one to verify correct handling of null terminator"
 	#('h' 'hi') do: 
 			[:each |
@@ -471,6 +504,7 @@ testMarshalGuid!public!unit tests! !
 testMarshalInt16!public!unit tests! !
 testMarshalInt32!public!unit tests! !
 testMarshalInt64!public!unit tests! !
+testMarshalLongWChar!public!unit tests! !
 testMarshalTime!public!unit tests! !
 testMarshalTime2!public!unit tests! !
 testMarshalTimeStamp!public!unit tests! !

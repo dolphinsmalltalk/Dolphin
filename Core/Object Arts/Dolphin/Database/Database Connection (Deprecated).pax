@@ -7,6 +7,7 @@ package paxVersion: 1;
 package basicPackageVersion: '6.0'.
 
 package methodNames
+	add: #DBAbstractStatement -> #describeCol:;
 	add: #DBConnection -> #accessibleTables;
 	add: #DBConnection -> #autoCommit;
 	add: #DBConnection -> #autoCommit:;
@@ -45,6 +46,8 @@ package methodNames
 	add: #DBConnection -> #txnCapable;
 	add: #DBConnection -> #txnIsolationOptions;
 	add: #DBConnection -> #uniqueIndexOf:;
+	add: #DBResultSet -> #describeCol:;
+	add: #DBResultSet -> #describeCols;
 	add: #DBResultSet -> #invalidate;
 	add: #DBResultSet -> #prev;
 	add: #DBRowBuffer -> #sizeInBytes;
@@ -84,6 +87,16 @@ ODBCTIMESTAMP := SQL_TIMESTAMP_STRUCT!
 
 
 "Loose Methods"!
+
+!DBAbstractStatement methodsFor!
+
+describeCol: anInteger
+	#deprecated.
+	^self describeColumnAt: anInteger! !
+
+!DBAbstractStatement categoriesForMethods!
+describeCol:!accessing!public! !
+!
 
 !DBConnection methodsFor!
 
@@ -313,6 +326,14 @@ interpretTxnIsolationMask:!operations!private! !
 
 !DBResultSet methodsFor!
 
+describeCol: anInteger
+	#deprecated.
+	^self describeColumnAt: anInteger!
+
+describeCols
+	#deprecated.
+	^self describeColumns!
+
 invalidate
 	#deprecated.
 	self free!
@@ -322,6 +343,8 @@ prev
 	^self previous! !
 
 !DBResultSet categoriesForMethods!
+describeCol:!accessing!public! !
+describeCols!accessing!public! !
 invalidate!operations!public! !
 prev!accessing!public! !
 !

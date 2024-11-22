@@ -116,13 +116,17 @@ defaultCursorType
 	^#forwardOnly
 !
 
-describeCol: anInteger
+describeCols: columnNumbers
+	#deprecated.
+	^self describeColumns: columnNumbers!
+
+describeColumnAt: anInteger
 	"Answer a DBColAttr object which describes the column with the specified
 	<integer> index in the receiver's result set."
 
-	^(self describeCols: {anInteger}) first!
+	^(self describeColumns: { anInteger }) first!
 
-describeCols: columnNumbers
+describeColumns: columnNumbers
 	"Answer an array of <DBColAttr>s describing each of the columns of the receiver's results with indices in the <sequencedReadableCollection> argument."
 
 	| name nameBufSize hStmt lib buf base |
@@ -357,8 +361,9 @@ cursorType!accessing!public! !
 cursorType:!accessing!public! !
 dbCheckException:function:!exceptions!private! !
 defaultCursorType!constants!public! !
-describeCol:!accessing!public! !
 describeCols:!accessing!public! !
+describeColumnAt:!accessing!public! !
+describeColumns:!accessing!public! !
 driverHStmt!accessing!private! !
 exec!operations!private! !
 executedHandle!accessing!private! !

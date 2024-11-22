@@ -3,7 +3,7 @@
 Object subclass: #DBConnection
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
-	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	poolDictionaries: 'ODBCConstants ODBCRetCodes ODBCTypes'
 	classInstanceVariableNames: ''!
 
 DBConnection guid: (GUID fromString: '{87b4c472-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -1523,7 +1523,7 @@ enumerateDataSources!accessing!public! !
 environmentHandle!accessing!private! !
 freeAll!private!realizing/unrealizing! !
 freeEnvironment!private!realizing/unrealizing! !
-initialize!initializing!private! !
+initialize!class initialization!private! !
 invalidateHandle:!private!realizing/unrealizing! !
 new!instance creation!public! !
 newConnections!accessing!private! !

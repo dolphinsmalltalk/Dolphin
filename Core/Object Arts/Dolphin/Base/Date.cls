@@ -144,6 +144,9 @@ asSYSTEMTIME
 				wDay: dd].
 	^struct!
 
+asTime
+	^Time fromSeconds: 0!
+
 asTimeStamp
 	^self asDateAndTime asTimeStamp
 !
@@ -355,6 +358,7 @@ asMilliseconds!converting!public! !
 asParameter!converting!public! !
 asSeconds!converting!public! !
 asSYSTEMTIME!converting!public! !
+asTime!converting!public! !
 asTimeStamp!converting!public! !
 day!accessing!public! !
 dayMonthYearDo:!accessing!public! !

@@ -49,10 +49,7 @@ dbMarshal: anObject into: aDBField
 dbUnmarshal: aDBField
 	"Answer an <AnsiString> read from the receiver, assumed to be the buffer of the <DBField> argument containing a SQL_C_CHAR value."
 
-	^bytes copyFrom: 1 to: aDBField length!
-
-valueClass
-	^AnsiString! !
+	^bytes copyFrom: 1 to: (aDBField length min: bytes size)! !
 
 !DBVarCharBuffer categoriesForMethods!
 blockTransferOctetSize!constants!private! !
@@ -60,6 +57,14 @@ dbConvert:for:!operations!public! !
 dbInterchangeType!constants!public! !
 dbMarshal:into:!operations!public! !
 dbUnmarshal:!operations!public! !
+!
+
+!DBVarCharBuffer class methodsFor!
+
+valueClass
+	^AnsiString! !
+
+!DBVarCharBuffer class categoriesForMethods!
 valueClass!constants!public! !
 !
 

@@ -40,6 +40,12 @@ code: anInteger
 
 	code := anInteger!
 
+displayOn: aStream
+	"Print an textual representation of the receiver to aStream"
+
+	errors ifNil: [^self].
+	errors do: [:each | each displayOn: aStream] separatedBy: [aStream space]!
+
 errors
 	"Answer the errors instance variable."
 
@@ -83,16 +89,17 @@ hStmt: anExternalHandle
 printOn: aStream
 	"Print an textual representation of the receiver to aStream"
 
-	errors ifNil: [^self].
-	errors 
-		do: [ :e | aStream print: e messageText]
-		separatedBy: [aStream space]
-! !
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		display: self;
+		nextPut: $)! !
 
 !DBExceptionDetails categoriesForMethods!
 buildErrorInfo!initializing!private! !
 code!accessing!public! !
 code:!accessing!private! !
+displayOn:!printing!public! !
 errors!accessing!public! !
 errors:!accessing!private! !
 hDBC!accessing!public! !

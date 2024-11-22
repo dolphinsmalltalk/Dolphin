@@ -15,8 +15,10 @@ package basicPackageVersion: '6.1'.
 package classNames
 	add: #DBAbstractRow;
 	add: #DBAbstractStatement;
+	add: #DBBinaryBuffer;
 	add: #DBBoundBuffer;
 	add: #DBBoundField;
+	add: #DBCharBuffer;
 	add: #DBColAttr;
 	add: #DBColumnsStatement;
 	add: #DBConnection;
@@ -52,6 +54,7 @@ package classNames
 	add: #DBVarFieldBuffer;
 	add: #DBVarWCharBuffer;
 	add: #DBWarning;
+	add: #DBWCharBuffer;
 	add: #ODBCLibrary;
 	add: #SQL_DATE_STRUCT;
 	add: #SQL_DAY_SECOND_STRUCT;
@@ -151,7 +154,7 @@ Object subclass: #DBColAttr
 Object subclass: #DBConnection
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
-	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	poolDictionaries: 'ODBCConstants ODBCRetCodes ODBCTypes'
 	classInstanceVariableNames: ''!
 
 Object subclass: #DBErrorDetails
@@ -316,6 +319,18 @@ DBFixedSizeField subclass: #DBUnboundField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+DBUnstructuredFieldBuffer subclass: #DBBinaryBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBUnstructuredFieldBuffer subclass: #DBCharBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 DBUnstructuredFieldBuffer subclass: #DBNumericFieldBuffer
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -325,6 +340,12 @@ DBUnstructuredFieldBuffer subclass: #DBNumericFieldBuffer
 DBUnstructuredFieldBuffer subclass: #DBVarFieldBuffer
 	instanceVariableNames: ''
 	classVariableNames: 'BlockTransferOctetLength MaxBoundOctetLength'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DBUnstructuredFieldBuffer subclass: #DBWCharBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -360,7 +381,7 @@ Notification subclass: #DBWarning
 
 ExternalLibrary subclass: #ODBCLibrary
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'TraceStream'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -617,7 +638,7 @@ dbConvert: anObject for: aDBField
 	(anObject isKindOf: GUID) ifTrue: [^anObject].
 	HRESULTError
 		signal: 'GUID expected, not <1s> (<2d>)' << {  anObject basicPrintString. anObject }
-		withFailureCode: _PrimitiveFailureCode.ObjectTypeMismatch.
+		with: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH.
 	^nil!
 
 dbInterchangeType
