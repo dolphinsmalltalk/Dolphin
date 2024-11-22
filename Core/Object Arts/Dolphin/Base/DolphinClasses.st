@@ -1998,6 +1998,12 @@ STBCollectionProxy subclass: #STBSortedCollectionProxy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+Stream subclass: #NullStream
+	instanceVariableNames: 'contentsSpecies'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 Stream subclass: #SequencedStream
 	instanceVariableNames: ''
 	classVariableNames: ''
