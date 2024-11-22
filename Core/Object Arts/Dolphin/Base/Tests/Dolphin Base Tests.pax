@@ -58,6 +58,7 @@ package setClassNames: #(
 	#{Core.Tests.MetaclassTest}
 	#{Core.Tests.MethodCategoryTest}
 	#{Core.Tests.MustBeBooleanTestClasses}
+	#{Core.Tests.NullStreamTest}
 	#{Core.Tests.NumberTest}
 	#{Core.Tests.ObjectTest}
 	#{Core.Tests.OrderedCollectionTest}
@@ -1461,6 +1462,14 @@ Kernel.Tests.StableSortAlgorithmTest
 
 Kernel.Tests.StableSortAlgorithmTest
 	subclass: #'Kernel.Tests.MergesortAlgorithmTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.StreamTest
+	subclass: #'Core.Tests.NullStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

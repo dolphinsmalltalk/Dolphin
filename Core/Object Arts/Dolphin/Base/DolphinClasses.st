@@ -4984,6 +4984,14 @@ Kernel.StackFrame
 	classConstants: {}!
 
 Core.Stream
+	subclass: #'Core.NullStream'
+	instanceVariableNames: 'contentsSpecies'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Stream
 	subclass: #'Core.SequencedStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
