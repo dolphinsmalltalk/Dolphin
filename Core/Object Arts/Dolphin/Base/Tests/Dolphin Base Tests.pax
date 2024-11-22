@@ -92,6 +92,7 @@ package classNames
 	add: #MethodDictionaryTest;
 	add: #MustBeBooleanTestClasses;
 	add: #NeverSearchPolicyTest;
+	add: #NullStreamTest;
 	add: #NumberTest;
 	add: #ObjectTest;
 	add: #OrderedCollectionTest;
@@ -928,6 +929,12 @@ StableSortAlgorithmTest subclass: #InsertionSortAlgorithmTest
 	classInstanceVariableNames: ''!
 
 StableSortAlgorithmTest subclass: #MergesortAlgorithmTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+StreamTest subclass: #NullStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
