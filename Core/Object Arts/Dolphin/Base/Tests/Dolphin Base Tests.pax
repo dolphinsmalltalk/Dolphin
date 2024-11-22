@@ -461,7 +461,7 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.DurationTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

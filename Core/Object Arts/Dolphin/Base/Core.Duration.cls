@@ -117,6 +117,25 @@ asSeconds
 	<nonBrowsable>
 	^seconds!
 
+asString
+	"Answer the ISO8601 representation of the receiver."
+
+	| stream |
+	stream := String writeStream: 22.
+	self printISO8601On: stream.
+	^stream contents!
+
+asUtf16String
+	"Answer the ISO8601 representation of the receiver as a UTF-16 encoded string."
+
+	| stream |
+	stream := Utf16String writeStream: 22.
+	self printISO8601On: stream.
+	^stream contents!
+
+closeTo: otherDuration precision: precisionDuration
+	^(self - otherDuration) abs <= precisionDuration!
+
 days
 	"Answer the <integer> number of whole days represented by the receiver.
 	The answer may be negative for negative durations."
@@ -256,6 +275,63 @@ printHumanReadableOn: aWriteStream
 
 	Locale smalltalk displayDuration: self on: aWriteStream!
 
+printISO8601On: aPuttableStream
+	"Print the ISO8601 representation of the receiver onto the <puttableStream> argument."
+
+	| element timePrefix |
+	self negative
+		ifTrue: 
+			[aPuttableStream nextPut: $-.
+			self negated printISO8601On: aPuttableStream.
+			^self].
+	aPuttableStream nextPut: $P.
+	element := self days.
+	element == 0
+		ifFalse: 
+			[aPuttableStream
+				print: element;
+				nextPut: $D].
+	timePrefix := $T.
+	element := self hours.
+	element == 0
+		ifFalse: 
+			[aPuttableStream
+				display: timePrefix;
+				print: element;
+				nextPut: $H.
+			timePrefix := nil].
+	element := self minutes.
+	element == 0
+		ifFalse: 
+			[aPuttableStream
+				display: timePrefix;
+				print: element;
+				nextPut: $M.
+			timePrefix := nil].
+	element := self seconds.
+	(element ~~ 0 or: [seconds == 0])
+		ifTrue: 
+			[| fractionPart |
+			aPuttableStream
+				display: timePrefix;
+				print: element truncated.
+			fractionPart := element abs fractionPart.
+			fractionPart == 0
+				ifFalse: 
+					[| digits count |
+					"Any fractional part is truncated to 9 decimal places."
+					digits := (fractionPart * 1000000000) truncated printStringBase: 10 nDigits: 9.
+					count := digits size.
+					[count > 1 and: [(digits at: count) = $0]] whileTrue: [count := count - 1].
+					"The decimal separator can be $., or $, depending on the stream locale."
+					aPuttableStream
+						nextPutAll: aPuttableStream locale decimalSeparator;
+						next: count
+							putAll: digits
+							startingAt: 1].
+			aPuttableStream locale.
+			aPuttableStream nextPut: $S]!
+
 printOn: aStream
 	"Append a default string representation of the receiver to the <puttableStream>, aStream.
 	The result will be of the format: [-]d:hh:mm:ss[.fff] where:
@@ -266,7 +342,7 @@ printOn: aStream
 		ss	is the number of complete seconds with leading zeroes to fill to two places
 		fff	is the fraction part of the number of seconds, if any, displayed with up to 9 digits of precision (i.e. down to nanoseconds)."
 
-	"This is an ANSI Smalltalk compliant definition. It would probably be more useful if Duration>>printOn: produced a self-evaluating form."
+	"This is an ANSI Smalltalk compliant definition. It would probably be more useful if Duration>>printOn: produced a self-evaluating form, or possibly ISO8601."
 
 	aStream locale
 		printDuration: self
@@ -338,6 +414,9 @@ asMilliseconds!converting!public! !
 asNanoseconds!converting!public! !
 asParameter!converting!public! !
 asSeconds!converting!public! !
+asString!printing!public! !
+asUtf16String!printing!public! !
+closeTo:precision:!comparing!public! !
 days!accessing!public! !
 displayOn:!printing!public! !
 divideIntoDuration:!arithmetic!double dispatch!private! !
@@ -354,6 +433,7 @@ negated!arithmetic!public! !
 negative!public!testing! !
 positive!public!testing! !
 printHumanReadableOn:!printing!public! !
+printISO8601On:!printing!public! !
 printOn:!printing!public! !
 printOn:format:!printing!public! !
 printStringFormat:!printing!public! !
@@ -390,7 +470,11 @@ errorInvalidFormat
 fromString: aString
 	"Answer an instance of the receiver constructed from the <String> argument, assumed to be expressed in the same format used for the printString of the receiver's instances."
 
-	^self readFrom: (ReadStream on: aString)!
+	| stream instance|
+	stream := ReadStream on: aString.
+	instance := self readFrom: stream.
+	stream atEnd ifFalse: [self errorInvalidFormat].
+	^instance!
 
 hours: aNumber
 	"Answer a <Duration> representing the specified <number> of hours. 
@@ -446,20 +530,29 @@ onPreStripImage
 	Zero := nil!
 
 readFrom: aStream
-	"Answers a new instance of the receiver read from the <readableStream> argument, which is assumed to contain a duration expressed in the printString format of the receiver's instances."
+	"Answers a new instance of the receiver read from the <readableStream> argument, which is assumed to contain a duration expressed in either the ANSI standard printString format of the receiver's instances, or in ISO8601 'P' (period) format."
 
 	| sign |
 	aStream skipSeparators.
 	sign := (aStream peekFor: $-) ifTrue: [-1] ifFalse: [1].
-	^self
-		readFrom: aStream
-		sign: sign
-		withDays: true
-		ifInvalid: [##(self) errorInvalidFormat]!
+	^(aStream peekFor: $P)
+		ifTrue: 
+			[self
+				readISO8601From: aStream
+				sign: sign
+				ifInvalid: [self errorInvalidFormat]]
+		ifFalse: 
+			[self
+				readFrom: aStream
+				sign: sign
+				withDays: true
+				ifInvalid: [self errorInvalidFormat]]!
 
 readFrom: aStream sign: sign withDays: aBoolean ifInvalid: aNiladicValuable
-	| mm hh ss days |
-	aStream peek isDigit ifFalse: [^aNiladicValuable value].
+	| ch mm hh ss days |
+	ch := aStream peek.
+	ch = $P ifTrue: [].
+	ch isDigit ifFalse: [^aNiladicValuable value].
 	aBoolean
 		ifTrue: 
 			[days := Integer readFrom: aStream radix: 10.
@@ -476,10 +569,10 @@ readFrom: aStream sign: sign withDays: aBoolean ifInvalid: aNiladicValuable
 			[aStream peek isDigit ifFalse: [^aNiladicValuable value].
 			ss := Integer readFrom: aStream radix: 10.
 			(ss between: 0 and: 59) ifFalse: [^aNiladicValuable value].
-			"We read the fraction part of the seconds separately as an Integer in order to avoid an rounding error that might arise should we read the whole as a Float."
+			"We read the fraction part of the seconds separately as an Integer in order to avoid any rounding error that might arise should we read the whole as a Float."
 			(aStream peekFor: $.)
 				ifTrue: 
-					[| ff digits ch |
+					[| ff digits  |
 					ff := 0.
 					digits := 0.
 					
@@ -491,6 +584,81 @@ readFrom: aStream sign: sign withDays: aBoolean ifInvalid: aNiladicValuable
 					ss := ss + (ff / digits exp10)]]
 		ifFalse: [ss := 0].
 	^self seconds: (((days * 24 + hh) * 60 + mm) * 60 + ss) * sign!
+
+readISO8601ElementMagnitudeFrom: aStream
+	| pos fractionPart ch number |
+	number := self readUnsignedIntegerFrom: aStream.
+	number ifNil: [^nil].
+	ch := aStream peek ifNil: [^number].
+	(ch == $. or: [ch == $,])
+		ifTrue: 
+			[| scale |
+			pos := aStream
+						next;
+						position.
+			fractionPart := self readUnsignedIntegerFrom: aStream.
+			scale := aStream position - pos.
+			scale == 0
+				ifTrue: 
+					[aStream pop.
+					^nil].
+			number := number + (fractionPart / scale exp10).
+			number == 0 ifTrue: [number := 0.0]].
+	^number!
+
+readISO8601From: aStream sign: sign ifInvalid: aNiladicValuable
+	"Read up to the end of the next valid ISO8601 days-to-seconds period in the <gettableStream> of <Character>, aStream. If there is no complete valid period beginning at the head of the stream, raise an InvalidFormat error. The stream is left positioned on the first character after the ISO8601 period, or at end of stream if there is no more data. For a description of ISO8601 Period/Durations see https://en.wikipedia.org/wiki/ISO_8601. Note that periods with years and months are not supported as these cannot be represented correctly with <Duration>s."
+
+	| ch seconds element qualifier elementTypes seenFraction |
+	(aStream peekFor: $T)
+		ifTrue: [seconds := 0]
+		ifFalse: 
+			[element := self readISO8601ElementMagnitudeFrom: aStream.
+			element ifNil: [^aNiladicValuable value].
+			aStream nextAvailable == $D ifFalse: [^aNiladicValuable value].
+			(aStream peekFor: $T) ifFalse: [^self days: element * sign].
+			"Can't have any time elements after a fractional number of days as only the smallest element can have a fraction"
+			element isInteger ifFalse: [^aNiladicValuable value].
+			seconds := element * 24].
+	"Read the remaining elements, hours to seconds. Any or all may be missing, but if present they must be in sequence. There be at least one element after a T"
+	element := self readISO8601ElementMagnitudeFrom: aStream.
+	element ifNil: [^aNiladicValuable value].
+	ch := aStream nextAvailable.
+	ch ifNil: [^aNiladicValuable value].
+	seenFraction := element isInteger not.
+	elementTypes := #($H 60 $M 60 $S 1) readStream.
+	
+	[
+	[qualifier := elementTypes nextAvailable.
+	qualifier ifNil: [^aNiladicValuable value].
+	ch == qualifier]
+			whileFalse: [seconds := seconds * elementTypes next].
+	seconds := (seconds + element) * elementTypes next.
+	elementTypes atEnd or: [aStream atEnd]]
+			whileFalse: 
+				["Can't be another element after a fractional one"
+				seenFraction ifTrue: [^aNiladicValuable value].
+				element := self readISO8601ElementMagnitudeFrom: aStream.
+				element ifNil: [^aNiladicValuable value].
+				seenFraction := element isInteger not.
+				ch := aStream nextAvailable.
+				ch ifNil: [^aNiladicValuable value]].
+
+	"If reached the end of the input, but not the element types, multiply up into seconds."
+	[elementTypes nextAvailable isNil] whileFalse: [seconds := seconds * elementTypes next].
+	^self seconds: seconds * sign!
+
+readUnsignedIntegerFrom: aStream
+	| value char |
+	value := 0.
+	[(char := aStream nextAvailable) isNil] whileFalse: 
+			[| digit |
+			((digit := char digitValue) < 10 and: [digit >= 0])
+				ifTrue: [value := value * 10 + digit]
+				ifFalse: 
+					[aStream pop.
+					^value]].
+	^value!
 
 seconds: aNumber
 	"Answer a <Duration> which is the specified <number> of seconds in length. 
@@ -522,6 +690,9 @@ nanoseconds:!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 readFrom:!instance creation!public! !
 readFrom:sign:withDays:ifInvalid:!helpers!private! !
+readISO8601ElementMagnitudeFrom:!helpers!private! !
+readISO8601From:sign:ifInvalid:!helpers!private! !
+readUnsignedIntegerFrom:!helpers!private! !
 seconds:!instance creation!public! !
 zero!instance creation!public! !
 !
