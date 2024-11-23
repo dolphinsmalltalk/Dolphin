@@ -33,12 +33,7 @@ createDatabase
 				text: true)!
 
 dropDatabase
-	self connection
-		ifNotNil: 
-			[:cnxn |
-			cnxn
-				exec: 'USE world';
-				exec: 'DROP DATABASE Northwind'].
+	self connection ifNotNil: [:cnxn | cnxn exec: 'DROP DATABASE Northwind'].
 	super dropDatabase!
 
 getOdbcDriver
