@@ -28,6 +28,8 @@ artifacts:
   name: DolphinVM
 - path: DolphinPdbs.zip
   name: DolphinPdbs
+- path: '*.log'
+  name: Logs
 notifications:
 - provider: Email
   to:
