@@ -31,7 +31,7 @@ dropDatabase
 filename
 	^filename ifNil: [filename := File composePath: File tempPath subPath: 'Northwind.mdb']!
 
-odbcDriver
+getOdbcDriver
 	^'Microsoft Access Driver (*.mdb)'! !
 
 !AccessNorthwindDB categoriesForMethods!
@@ -39,6 +39,6 @@ connectString!accessing!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
 filename!accessing!public! !
-odbcDriver!constants!private! !
+getOdbcDriver!constants!private! !
 !
 
