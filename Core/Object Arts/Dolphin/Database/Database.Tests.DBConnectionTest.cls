@@ -349,8 +349,8 @@ tearDown
 	savedBlockSize ifNotNil: [DBVarFieldBuffer.BlockTransferOctetLength := savedBlockSize].
 	savedMaxBoundSize ifNotNil: [DBVarFieldBuffer.MaxBoundOctetLength := savedMaxBoundSize].
 	createdTestTable ifTrue: [self dropTestTable].
-	DBWarning traceStream: savedDBWarningTraceStream.
-	super tearDown!
+	super tearDown.
+	DBWarning traceStream: savedDBWarningTraceStream!
 
 temporaryColumnName
 	^'DolphinTestColumn'!
