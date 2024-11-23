@@ -25,6 +25,7 @@ StdErr
 _snprintf_s
 IsUserBreakRequested
 AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
+invalidParameterHandler=?invalidParameterHandler@@YAXPB_W00II@Z
 
 CompileForClass=_PrimCompileForClass@28
 CompileForEval=_PrimCompileForEval@32

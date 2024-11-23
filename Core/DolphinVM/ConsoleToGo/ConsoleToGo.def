@@ -16,6 +16,7 @@ StdOut
 StdErr
 IsUserBreakRequested
 AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
+invalidParameterHandler=?invalidParameterHandler@@YAXPB_W00II@Z
 
 CompileForClass=_PrimCompileForClass@28
 CompileForEval=_PrimCompileForEval@32
@@ -37,6 +38,7 @@ uncompress
 	_fileno
 	_fseeki64
 	_ftelli64
+	_get_invalid_parameter_handler
 	_get_osfhandle
 	_isatty
 	_makepath_s

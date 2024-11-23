@@ -351,6 +351,11 @@ getCPUTime
 		lpUserTime: user.
 	^Duration microseconds: (kernel asInteger + user asInteger) / 10!
 
+hasDolphinCrtInvalidParameterHandler
+	"Private - Unfortunately the MySql ODBC driver installs a CRT invalid parameter handler that breaks tests of the Dolphin handler because it just returns and does not chain - see https://github.com/mysql/mysql-connector-odbc/blob/trunk/mysql_sys/my_init.cc#L420. DLLs should try and avoid affecting the global state set by an application, and so should not be installing a global handler for invalid parameters in the CRT that persists when the library is not active. If this is really necessary, it should be done only for the duration of the calls into the library, not globally. Fortunately we don't really need the Dolphin handler for anything other than detecting errors so they can be handled from Smalltalk. If you really have to use MySql, then then this particular piece of poor engineering isn't likely to cause major problems in itself."
+
+	^Ucrt _get_invalid_parameter_handler = (VM getProcAddress: 'invalidParameterHandler')!
+
 hashBytes: aByteArray
 	"Private - PJW hash (Aho, Sethi, and Ullman pp. 434-438).
 	Note that this algorithm is optimised for ASCII characters, making it a good choice for symbols, but probably not as a general byte hash algorithm."
@@ -457,6 +462,7 @@ testCRTFault
 	"Tests that the VM sends an interrupt when the CRT is passed an invalid parameter and calls
 	the invalid parameter handler (issue #59). On an unfixed V2015 VM this will just crash."
 
+	<skipUnless: #hasDolphinCrtInvalidParameterHandler>
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
@@ -498,6 +504,7 @@ testExtCallArgLpwstr
 	self verifyExtCallArgLpwstr: false!
 
 testExtCallCrtFault
+	<skipUnless: #hasDolphinCrtInvalidParameterHandler>
 	self verifyExtCallCrtFault: false!
 
 testExtCallFpFault
@@ -3985,6 +3992,7 @@ findCaller:in:!helpers!private! !
 findFaultInterruptFrame:!helpers!private! !
 firstVmVersionRespectingNonInstantiable!constants!private! !
 getCPUTime!private!unit tests! !
+hasDolphinCrtInvalidParameterHandler!private!testing! !
 hashBytes:!helpers!private! !
 immutableTestSubjects!constants!private!unit tests! !
 isFault:raisedIn:receiver:!helpers!private! !
