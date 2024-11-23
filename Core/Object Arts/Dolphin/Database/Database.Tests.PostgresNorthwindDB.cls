@@ -78,12 +78,8 @@ getOdbcDriver
 			[drivers last]!
 
 installationFolder
-	^((OS.RegKey
-		hive: 'HKEY_LOCAL_MACHINE'
-		handle: OS.WinRegConstants.HKEY_LOCAL_MACHINE
-		sam: ##(OS.WinRegConstants.KEY_READ | OS.WinRegConstants.KEY_WOW64_64KEY))
-			lookup: 'SOFTWARE\PostgreSQL Global Development Group\PostgreSQL')
-			ifNotNil: [:regkey | regkey valueAt: 'Location' ifAbsent: nil]!
+	^(OS.RegKey localMachineRoot64 lookup: 'SOFTWARE\PostgreSQL Global Development Group\PostgreSQL')
+		ifNotNil: [:regkey | regkey valueAt: 'Location' ifAbsent: nil]!
 
 prereqsAvailable
 	^self getOdbcDriver notNil and: [self installationFolder notNil]!

@@ -972,10 +972,7 @@ initialize
 localMachineRoot
 	"Answer a new instance of the receiver, rooted in HKEY_LOCAL_MACHINE, opened in #read mode (admin priviledges are required to open this key so #readWrite does not make sense as as default)."
 
-	^self
-		hive: 'HKEY_LOCAL_MACHINE'
-		handle: HKEY_LOCAL_MACHINE
-		sam: KEY_READ!
+	^self localMachineRoot: #read!
 
 localMachineRoot: aSymbol
 	"Answer a new instance of the receiver, rooted in HKEY_LOCAL_MACHINE"
@@ -984,6 +981,22 @@ localMachineRoot: aSymbol
 		hive: 'HKEY_LOCAL_MACHINE'
 		handle: HKEY_LOCAL_MACHINE
 		mode: aSymbol!
+
+localMachineRoot64
+	"Answer a new instance of the receiver, rooted in the 64-bit HKEY_LOCAL_MACHINE, opened in #read mode (admin priviledges are required to open this key so #readWrite does not make sense as as default)."
+
+	^self
+		hive: 'HKEY_LOCAL_MACHINE'
+		handle: HKEY_LOCAL_MACHINE
+		sam: (KEY_READ bitOr: KEY_WOW64_64KEY)!
+
+localMachineRoot64: aSymbol
+	"Answer a new instance of the receiver, rooted in HKEY_LOCAL_MACHINE"
+
+	^self
+		hive: 'HKEY_LOCAL_MACHINE'
+		handle: HKEY_LOCAL_MACHINE
+		sam: ((AccessModes at: aSymbol) bitOr: KEY_WOW64_64KEY)!
 
 myComputer
 	"Answer a new instance of the receiver, rooted in this computers
@@ -1051,6 +1064,8 @@ icon!constants!public! !
 initialize!development!initializing!private! !
 localMachineRoot!instance creation!public! !
 localMachineRoot:!instance creation!public! !
+localMachineRoot64!instance creation!public! !
+localMachineRoot64:!instance creation!public! !
 myComputer!instance creation!public! !
 new!instance creation!public! !
 roots!instance creation!public! !
