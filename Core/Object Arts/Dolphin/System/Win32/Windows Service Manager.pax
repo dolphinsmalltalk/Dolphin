@@ -6,17 +6,24 @@ Copyright (c) Object Arts Ltd, 2024'.
 
 
 package setClassNames: #(
+	#{OS.ENUM_SERVICE_STATUS_PROCESS}
 	#{OS.SERVICE_STATUS}
 	#{OS.SERVICE_STATUS_PROCESS}
 ).
 
 package setMethodNames: #(
+	#(#{OS.AdvApiLibrary} #allServiceNames)
 	#(#{OS.AdvApiLibrary} #closeServiceHandle:)
+	#(#{OS.AdvApiLibrary} #enumServices:type:state:)
+	#(#{OS.AdvApiLibrary} #enumServicesStatusEx:infoLevel:dwServiceType:dwServiceState:lpServices:cbBufSize:pcbBytesNeeded:lpServicesReturned:lpResumeHandle:pszGroupName:)
 	#(#{OS.AdvApiLibrary} #getServiceState:)
 	#(#{OS.AdvApiLibrary} #isServiceRunning:)
 	#(#{OS.AdvApiLibrary} #openSCManager:lpDatabaseName:dwDesiredAccess:)
 	#(#{OS.AdvApiLibrary} #openService:lpServiceName:dwDesiredAccess:)
 	#(#{OS.AdvApiLibrary} #queryServiceStatusEx:infoLevel:lpBuffer:cbBufSize:pcbBytesNeeded:)
+	#(#{OS.AdvApiLibrary} #serviceStatii:)
+	#(#{OS.AdvApiLibrary} #win32ServiceNames)
+	#(#{OS.AdvApiLibrary} #win32ServiceStatii)
 ).
 
 package setPrerequisites: #(
@@ -26,6 +33,37 @@ package setPrerequisites: #(
 package!
 
 "Class Definitions"!
+
+External.Structure
+	subclass: #'OS.ENUM_SERVICE_STATUS_PROCESS'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_ENUM_SERVICE_STATUS_PROCESS_Size' -> 16r2C.
+			'_OffsetOf_lpDisplayName' -> 16r4.
+			'_OffsetOf_lpServiceName' -> 16r0.
+			'_OffsetOf_ServiceStatusProcess' -> 16r8.
+			'SERVICE_ACTIVE' -> 16r1.
+			'SERVICE_ADAPTER' -> 16r4.
+			'SERVICE_DRIVER' -> 16rB.
+			'SERVICE_FILE_SYSTEM_DRIVER' -> 16r2.
+			'SERVICE_INACTIVE' -> 16r2.
+			'SERVICE_INTERACTIVE_PROCESS' -> 16r100.
+			'SERVICE_KERNEL_DRIVER' -> 16r1.
+			'SERVICE_PKG_SERVICE' -> 16r200.
+			'SERVICE_RECOGNIZER_DRIVER' -> 16r8.
+			'SERVICE_STATE_ALL' -> 16r3.
+			'SERVICE_TYPE_ALL' -> 16r3FF.
+			'SERVICE_USER_OWN_PROCESS' -> 16r50.
+			'SERVICE_USER_SERVICE' -> 16r40.
+			'SERVICE_USER_SHARE_PROCESS' -> 16r60.
+			'SERVICE_USERSERVICE_INSTANCE' -> 16r80.
+			'SERVICE_WIN32' -> 16r30.
+			'SERVICE_WIN32_OWN_PROCESS' -> 16r10.
+			'SERVICE_WIN32_SHARE_PROCESS' -> 16r20
+		}!
 
 External.Structure
 	subclass: #'OS.SERVICE_STATUS'
@@ -68,6 +106,18 @@ OS.SERVICE_STATUS
 
 !OS.AdvApiLibrary methodsFor!
 
+allServiceNames
+	"
+	AdvApi32 allServiceNames size
+	"
+	| services |
+	services := OrderedCollection new.
+	self
+		enumServices: [:each | services addLast: each lpServiceName]
+		type: ENUM_SERVICE_STATUS_PROCESS.SERVICE_TYPE_ALL
+		state: ENUM_SERVICE_STATUS_PROCESS.SERVICE_STATE_ALL.
+	^services!
+
 closeServiceHandle: hSCObject
 	"Invoke the CloseServiceHandle() function of the module wrapped by the receiver.
 	Helpstring: Closes a handle to a service control manager or service object.
@@ -76,6 +126,77 @@ closeServiceHandle: hSCObject
 			HANDLE hSCObject);"
 
 	<stdcall: bool CloseServiceHandle handle>
+	^self invalidCall: _failureCode!
+
+enumServices: aMonadicValuable type: typeInteger state: stateInteger
+	"Answer the current state of a named service."
+
+	| hSCManager |
+	hSCManager := self
+				openSCManager: nil
+				lpDatabaseName: nil
+				dwDesiredAccess: 4.	"SC_MANAGER_ENUMERATE_SERVICE"
+	hSCManager ifNil: [^self systemError].
+	
+	[| buf bytesNeeded servicesReturned resumeHandle ret |
+	bytesNeeded := UInt32Bytes new.
+	servicesReturned := UInt32Bytes new.
+	resumeHandle := Handle new.
+	"First call to establish initial buffer size"
+	self
+		enumServicesStatusEx: hSCManager
+		infoLevel: 0
+		dwServiceType: typeInteger
+		dwServiceState: stateInteger
+		lpServices: nil
+		cbBufSize: 0
+		pcbBytesNeeded: bytesNeeded
+		lpServicesReturned: servicesReturned
+		lpResumeHandle: resumeHandle
+		pszGroupName: nil.
+	ret := Kernel32 getLastError.
+	ret ~~ ERROR_MORE_DATA ifTrue: [self systemError: ret].
+	
+	[buf := ByteArray newFixed: bytesNeeded value.
+	(self
+		enumServicesStatusEx: hSCManager
+		infoLevel: 0
+		dwServiceType: typeInteger
+		dwServiceState: stateInteger
+		lpServices: buf
+		cbBufSize: buf size
+		pcbBytesNeeded: bytesNeeded
+		lpServicesReturned: servicesReturned
+		lpResumeHandle: resumeHandle
+		pszGroupName: nil)
+			ifTrue: [ret := ERROR_SUCCESS]
+			ifFalse: 
+				[ret := Kernel32 getLastError.
+				ret ~~ ERROR_MORE_DATA ifTrue: [self systemError: ret]].
+	(StructureArray basicNew
+		bytes: buf;
+		length: servicesReturned value elementClass: ENUM_SERVICE_STATUS_PROCESS) do: aMonadicValuable.
+	ret == ERROR_MORE_DATA]
+			whileTrue]
+			ensure: [self closeServiceHandle: hSCManager]!
+
+enumServicesStatusEx: hSCManager infoLevel: infoLevel dwServiceType: dwServiceType dwServiceState: dwServiceState lpServices: lpServices cbBufSize: cbBufSize pcbBytesNeeded: pcbBytesNeeded lpServicesReturned: lpServicesReturned lpResumeHandle: lpResumeHandle pszGroupName: pszGroupName
+	"Invoke the EnumServicesStatusEx() function of the module wrapped by the receiver.
+	Helpstring: Enumerates services in the specified service control manager database.
+
+		BOOL __stdcall EnumServicesStatusEx(
+			HANDLE hSCManager,
+			SC_ENUM_TYPE InfoLevel,
+			DWORD dwServiceType,
+			DWORD dwServiceState,
+			ENUM_SERVICE_STATUS_PROCESS* lpServices,
+			DWORD cbBufSize,
+			unsigned long* pcbBytesNeeded,
+			unsigned long* lpServicesReturned,
+			unsigned long* lpResumeHandle,
+			LPCWSTR pszGroupName);"
+
+	<stdcall: bool EnumServicesStatusExW handle int32 uint32 uint32 ENUM_SERVICE_STATUS_PROCESS* uint32 uint32* uint32* uint32* lpwstr>
 	^self invalidCall: _failureCode!
 
 getServiceState: aString
@@ -151,15 +272,48 @@ queryServiceStatusEx: hService infoLevel: infoLevel lpBuffer: lpBuffer cbBufSize
 			unsigned long* pcbBytesNeeded);"
 
 	<stdcall: bool QueryServiceStatusEx handle sdword byte* dword dword*>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+serviceStatii: anInteger
+	| services |
+	services := LookupTable new.
+	self
+		enumServices: [:each | services at: each lpServiceName put: each ServiceStatusProcess copy]
+		type: anInteger
+		state: ENUM_SERVICE_STATUS_PROCESS.SERVICE_STATE_ALL.
+	^services!
+
+win32ServiceNames
+	"
+	AdvApi32 win32ServiceNames
+	"
+	| services |
+	services := OrderedCollection new.
+	self
+		enumServices: [:each | services addLast: each lpServiceName]
+		type: ENUM_SERVICE_STATUS_PROCESS.SERVICE_WIN32
+		state: ENUM_SERVICE_STATUS_PROCESS.SERVICE_STATE_ALL.
+	^services!
+
+win32ServiceStatii
+	"
+	AdvApi32 win32ServiceStatii
+	"
+	^self serviceStatii: ENUM_SERVICE_STATUS_PROCESS.SERVICE_WIN32! !
 
 !OS.AdvApiLibrary categoriesForMethods!
+allServiceNames!enquiries!public! !
 closeServiceHandle:!**auto generated**!public! !
+enumServices:type:state:!enquiries!public! !
+enumServicesStatusEx:infoLevel:dwServiceType:dwServiceState:lpServices:cbBufSize:pcbBytesNeeded:lpServicesReturned:lpResumeHandle:pszGroupName:!**auto generated**!public!win32 functions-service manager! !
 getServiceState:!enquiries!public! !
 isServiceRunning:!enquiries!public! !
 openSCManager:lpDatabaseName:dwDesiredAccess:!**auto generated**!public!win32 functions-service manager! !
 openService:lpServiceName:dwDesiredAccess:!**auto generated**!public!win32 functions-service manager! !
 queryServiceStatusEx:infoLevel:lpBuffer:cbBufSize:pcbBytesNeeded:!**auto generated**!public!win32 functions-service manager! !
+serviceStatii:!enquiries!public! !
+win32ServiceNames!enquiries!public! !
+win32ServiceStatii!enquiries!public! !
 !
 
 "End of package definition"!
