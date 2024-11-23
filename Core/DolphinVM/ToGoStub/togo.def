@@ -19,6 +19,7 @@ RegisterAsEventSource
 IsUserBreakRequested
 AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
 UnicodeDefaultChar=?m_unicodeReplacementChar@Interpreter@@2_WA
+invalidParameterHandler=?invalidParameterHandler@@YAXPB_W00II@Z
 
 CompileForClass=_PrimCompileForClass@20
 CompileForEval=_PrimCompileForEval@24
@@ -45,6 +46,7 @@ uncompress
 	_fileno
 	_fseeki64
 	_ftelli64
+	_get_invalid_parameter_handler
 	_get_osfhandle
 	_isatty
 	_makepath_s
