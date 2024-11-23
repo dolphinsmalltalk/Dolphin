@@ -113,7 +113,10 @@ setUp
 	isAvailable := self prereqsAvailable and: [self createDatabase]!
 
 tearDown
-	self dropDatabase! !
+	[self dropDatabase] on: DBWarning do: [:ex | 
+		"Suppress any log noise"
+		ex resume].
+	super tearDown! !
 
 !DBConnectionTestResource categoriesForMethods!
 basicConnection!helpers!private! !
