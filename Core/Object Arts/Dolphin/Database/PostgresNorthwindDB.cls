@@ -34,9 +34,14 @@ createDatabase
 			ensure: [SessionManager current setenv: 'PGPASSWORD' value: nil]!
 
 dropDatabase
-	| cmdString process |
+	| cmdString process dropdb |
 	super dropDatabase.
-	cmdString := '"<1s>\bin\dropdb" -U <2s> -f "Northwind"' << { self installationFolder. self uid }.
+	dropdb := File composePath: self installationFolder subPath: 'bin\dropdb.exe'.
+	(File exists: dropdb)
+		ifFalse: 
+			[Notification signal: dropdb , ' not found'.
+			^self].
+	cmdString := '"<1s>" -U <2s> -f "Northwind"' << { dropdb. self uid }.
 	process := ExternalProcess new.
 	SessionManager current setenv: 'PGPASSWORD' value: self pwd.
 	
@@ -51,7 +56,7 @@ dropDatabase
 			[:err |
 			err isEmpty
 				ifFalse: 
-					[Transcript
+					[SessionManager current traceStream
 						nextPutAll: err;
 						cr]]]
 			on: ExternalProcessExecuteError
