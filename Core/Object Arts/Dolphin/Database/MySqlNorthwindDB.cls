@@ -42,11 +42,21 @@ dropDatabase
 	super dropDatabase!
 
 getOdbcDriver
-	| drivers |
-	drivers := (self installedOdbcDrivers
-				select: [:each | (each beginsWith: 'MySQL') and: [each endsWith: 'Unicode Driver']])
-					asSortedCollection.
-	^drivers isEmpty ifFalse: [drivers last]!
+	^'MySQL ODBC 8.0 Unicode Driver'!
+
+installationFolder
+	^((RegKey localMachineRoot64 lookup: 'SOFTWARE\MySQL AB\MySQL Server 8.0')
+		ifNotNil: [:regkey | regkey valueAt: 'Location' ifAbsent: nil])
+			ifNil: 
+				[File composePath: (SessionManager current getenv: 'ProgramW6432') subPath: 'MySQL\MySQL Server 8.0\']!
+
+newConnection
+	^super newConnection
+		ifNotNil: 
+			[:cnxn |
+			cnxn
+				exec: 'USE Northwind';
+				yourself]!
 
 prereqsAvailable
 	"The MySQL80 service needs to be installed with ODBC driver, and running. Note that it must also be explicitly configured to utf8mb4 character set, or tests that attempt to insert non-BMP characters will error."

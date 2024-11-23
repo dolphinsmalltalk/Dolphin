@@ -71,6 +71,10 @@ testExpandSz
 		type: #expandString.
 	self assert: (testKey valueAt: 'PATH') equals: path!
 
+testIncludesKey
+	self assert: (RegKey localMachineRoot64 includesKey: 'SOFTWARE\Microsoft\Wow64').
+	self deny: (RegKey localMachineRoot includesKey: 'SOFTWARE\Microsoft\Wow64').!
+
 testIntegerSerialisation
 	| ints ints2 |
 	ints := OrderedCollection new.
@@ -167,6 +171,7 @@ tearDown!private!unit tests! !
 testCreateUnderRoot!public!unit tests! !
 testEmptySz!public!unit tests! !
 testExpandSz!public!unit tests! !
+testIncludesKey!public!unit tests! !
 testIntegerSerialisation!public!unit tests! !
 testMultiSz!public!unit tests! !
 testParentPath!public!unit tests! !
