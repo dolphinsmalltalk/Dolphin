@@ -69,6 +69,14 @@ dropDatabase
 	process processExitCode = 0 ifFalse: [Notification signal: 'Failed to drop Postgres Northwind DB']]
 			ensure: [SessionManager current setenv: 'PGPASSWORD' value: nil]!
 
+getOdbcDriver
+	| drivers installed |
+	installed := self installedOdbcDrivers asSortedArray.
+	drivers := (installed select: [:each | 'PostgreSQL*Unicode*' match: each]) asSortedArray.
+	^drivers isEmpty
+		ifFalse: 
+			[drivers last]!
+
 installationFolder
 	^((OS.RegKey
 		hive: 'HKEY_LOCAL_MACHINE'
@@ -77,14 +85,8 @@ installationFolder
 			lookup: 'SOFTWARE\PostgreSQL Global Development Group\PostgreSQL')
 			ifNotNil: [:regkey | regkey valueAt: 'Location' ifAbsent: nil]!
 
-odbcDriver
-	| drivers |
-	drivers := (self installedOdbcDrivers select: [:each | 'PostgreSQL*Unicode*' match: each])
-				asSortedArray.
-	^drivers isEmpty ifFalse: [drivers last]!
-
 prereqsAvailable
-	^self odbcDriver notNil and: [self installationFolder notNil]!
+	^self getOdbcDriver notNil and: [self installationFolder notNil]!
 
 uid
 	^'postgres'! !
@@ -93,8 +95,8 @@ uid
 connectString!constants!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
+getOdbcDriver!constants!private! !
 installationFolder!constants!private! !
-odbcDriver!constants!private! !
 prereqsAvailable!operations!private! !
 uid!constants!private! !
 !

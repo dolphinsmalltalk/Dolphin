@@ -42,6 +42,14 @@ dropDatabase
 					do: [:ex | ex toTrace]].
 	super dropDatabase!
 
+getOdbcDriver
+	| drivers odbc |
+	drivers := (self installedOdbcDrivers select: [:each | each endsWith: 'SQL Server'])
+				asSortedCollection.
+	drivers isEmpty ifTrue: [^nil].
+	odbc := drivers select: [:each | each beginsWith: 'ODBC'].
+	^(odbc isEmpty ifTrue: [drivers] ifFalse: [odbc]) last!
+
 newConnection
 	^super newConnection
 		ifNotNil: 
@@ -49,14 +57,6 @@ newConnection
 			cnxn
 				exec: 'USE [Northwind]';
 				yourself]!
-
-odbcDriver
-	| drivers odbc |
-	drivers := (self installedOdbcDrivers select: [:each | each endsWith: 'SQL Server'])
-				asSortedCollection.
-	drivers isEmpty ifTrue: [^nil].
-	odbc := drivers select: [:each | each beginsWith: 'ODBC'].
-	^(odbc isEmpty ifTrue: [drivers] ifFalse: [odbc]) last!
 
 prereqsAvailable
 	^super prereqsAvailable
@@ -96,8 +96,8 @@ uid
 connectString!accessing!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
+getOdbcDriver!constants!private! !
 newConnection!operations!public! !
-odbcDriver!constants!private! !
 prereqsAvailable!operations!private! !
 requiredOdbcVersion!constants!private! !
 serverName!constants!private! !

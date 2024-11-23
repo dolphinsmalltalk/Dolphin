@@ -2,7 +2,7 @@
 
 XProgramming.SUnit.TestResource
 	subclass: #'Database.Tests.DBConnectionTestResource'
-	instanceVariableNames: 'connection isAvailable'
+	instanceVariableNames: 'connection isAvailable odbcDriver'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -88,6 +88,9 @@ execSqlCmd: cmdString stdin: stdinStream
 				ex toTrace.
 				false]!
 
+getOdbcDriver
+	^self subclassResponsibility!
+
 installedOdbcDrivers
 	^((OS.RegKey localMachineRoot: #read) at: 'SOFTWARE\ODBC\ODBCINST.INI') keys!
 
@@ -100,7 +103,7 @@ newConnection
 		self basicConnection]!
 
 odbcDriver
-	^self subclassResponsibility!
+	^odbcDriver ifNil: [odbcDriver := self getOdbcDriver]!
 
 prereqsAvailable
 	^self installedOdbcDrivers includes: self odbcDriver!
@@ -129,6 +132,7 @@ createConnection!operations!public! !
 createDatabase!operations!private! !
 dropDatabase!helpers!private! !
 execSqlCmd:stdin:!helpers!private! !
+getOdbcDriver!constants!private! !
 installedOdbcDrivers!enquiries!private! !
 isAvailable!public!Testing! !
 newConnection!helpers!public! !
