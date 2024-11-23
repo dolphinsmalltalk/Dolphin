@@ -158,7 +158,7 @@ static int vmmainFilter(LPEXCEPTION_POINTERS pEx, EXCEPTION_RECORD& exRec)
 	return action;
 }
 
-static void __cdecl invalidParameterHandler(
+void __cdecl invalidParameterHandler(
 	wchar_t const* expression,
 	wchar_t const* function,
 	wchar_t const* file,

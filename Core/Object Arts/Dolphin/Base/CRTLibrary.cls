@@ -103,6 +103,10 @@ _ftelli64: anExternalHandle
 	<cdecl: sqword _ftelli64 handle>
 	^self invalidCall: _failureCode!
 
+_get_invalid_parameter_handler
+	<cdecl: lpvoid _get_invalid_parameter_handler>
+	^self invalidCall: _failureCode!
+
 _get_osfhandle: anInteger
 	<cdecl: handle _get_osfhandle sdword>
 	^self invalidCall: _failureCode!
@@ -397,6 +401,7 @@ _filelengthi64:!CRT functions-file handling!public! !
 _fileno:!CRT functions-stream I/O!public! !
 _fseeki64:offset:origin:!CRT functions-stream I/O!public! !
 _ftelli64:!CRT functions-stream I/O!public! !
+_get_invalid_parameter_handler!CRT functions-process and environment control!public! !
 _get_osfhandle:!CRT functions-file handling!public! !
 _isatty:!CRT functions-data conversion!public! !
 _makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
