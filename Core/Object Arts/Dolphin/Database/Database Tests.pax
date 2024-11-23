@@ -116,7 +116,7 @@ DBConnectionTest subclass: #SQLServerDBTest
 	classInstanceVariableNames: ''!
 
 TestResource subclass: #DBConnectionTestResource
-	instanceVariableNames: 'connection isAvailable'
+	instanceVariableNames: 'connection isAvailable odbcDriver'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

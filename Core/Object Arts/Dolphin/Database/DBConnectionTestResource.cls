@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 TestResource subclass: #DBConnectionTestResource
-	instanceVariableNames: 'connection isAvailable'
+	instanceVariableNames: 'connection isAvailable odbcDriver'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -83,6 +83,9 @@ execSqlCmd: cmdString stdin: stdinStream
 				ex toTrace.
 				false]!
 
+getOdbcDriver
+	^self subclassResponsibility!
+
 installedOdbcDrivers
 	^((RegKey localMachineRoot: #read) at: 'SOFTWARE\ODBC\ODBCINST.INI') keys!
 
@@ -95,7 +98,7 @@ newConnection
 		self basicConnection]!
 
 odbcDriver
-	^self subclassResponsibility!
+	^odbcDriver ifNil: [odbcDriver := self getOdbcDriver]!
 
 prereqsAvailable
 	^self installedOdbcDrivers includes: self odbcDriver!
@@ -123,6 +126,7 @@ createConnection!operations!public! !
 createDatabase!operations!private! !
 dropDatabase!helpers!private! !
 execSqlCmd:stdin:!helpers!private! !
+getOdbcDriver!constants!private! !
 installedOdbcDrivers!enquiries!private! !
 isAvailable!public!Testing! !
 newConnection!helpers!public! !

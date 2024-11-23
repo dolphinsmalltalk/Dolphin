@@ -14,15 +14,6 @@ MySqlNorthwindDB comment: ''!
 
 !MySqlNorthwindDB methodsFor!
 
-binPath
-	^(($; split: (SessionManager current getenv: 'PATH'))
-		detect: [:each | (each indexOfSubCollection: 'MySQL') ~~ 0]
-		ifNone: [])
-			ifNotNil: 
-				[:mySqlPath |
-				"e.g. 'C:\Program Files\MySQL\MySQL Shell 8.0\bin\'"
-				mySqlPath copyReplaceAll: 'MySQL Shell' with: 'MySQL Server']!
-
 connectString
 	"Notes on options:
 		- PAD_SPACE: MySql does not implement CHAR columns correctly. These should be of fixed width, and padded with spaces out to that width. MySql implements them as variable length strings treating the defined length as a maximum (i.e. no differently to varchar). The developers have been claiming since 2006 that this is not a bug because it is documented behaviour, a rather specious argument: https://bugs.mysql.com/bug.php?id=24424. However they have at least included an option that can be passed in the ODBC connection string to request standard SQL behaviour of padding CHAR columns 
@@ -31,12 +22,12 @@ connectString
 	^'DRIVER={<1d>};UID=<2d>;PWD=<3d>;PAD_SPACE=1;COLUMN_SIZE_S32=1' << { self odbcDriver. self uid. self pwd }!
 
 createDatabase
-	| binPath |
+	| installFolder |
 	"N.B. Obviously storing a password in a method and passing it on a command line is insecure, but this is a test database"
-	binPath := self binPath.
-	binPath ifNil: [^false].
+	installFolder := self installationFolder.
+	installFolder ifNil: [^false].
 	^self execSqlCmd: '"<1s>" -u <2s> -p<3s>'
-				<< { File composePath: binPath subPath: 'mysql.exe'. self uid. self pwd }
+				<< { File composePath: installFolder subPath: 'bin\mysql.exe'. self uid. self pwd }
 		stdin: (FileStream read: ((PackageRelativeFileLocator package: self class owningPackage)
 						localFileSpecFor: 'NorthwindMySql.sql')
 				text: true)!
@@ -50,15 +41,7 @@ dropDatabase
 				exec: 'DROP DATABASE Northwind'].
 	super dropDatabase!
 
-newConnection
-	^super newConnection
-		ifNotNil: 
-			[:cnxn |
-			cnxn
-				exec: 'USE Northwind';
-				yourself]!
-
-odbcDriver
+getOdbcDriver
 	| drivers |
 	drivers := (self installedOdbcDrivers
 				select: [:each | (each beginsWith: 'MySQL') and: [each endsWith: 'Unicode Driver']])
@@ -74,12 +57,12 @@ uid
 	^'root'! !
 
 !MySqlNorthwindDB categoriesForMethods!
-binPath!accessing!private! !
 connectString!constants!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
+getOdbcDriver!constants!private! !
+installationFolder!constants!private! !
 newConnection!operations!public! !
-odbcDriver!constants!private! !
 prereqsAvailable!operations!private! !
 uid!constants!private! !
 !

@@ -33,7 +33,7 @@ dropDatabase
 				do: [:each | [cnxn exec: each] on: DBError do: [:ex | ex toTrace]]].
 	super dropDatabase!
 
-odbcDriver
+getOdbcDriver
 	^'MIMER'!
 
 prereqsAvailable
@@ -46,7 +46,7 @@ uid
 connectString!constants!private! !
 createDatabase!operations!private! !
 dropDatabase!operations!private! !
-odbcDriver!constants!private! !
+getOdbcDriver!constants!private! !
 prereqsAvailable!operations!private! !
 uid!constants!private! !
 !
