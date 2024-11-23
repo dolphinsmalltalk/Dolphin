@@ -17,7 +17,7 @@ Database.Tests.SQLServerNorthwindDB comment: ''!
 connectString
 	^('DRIVER={<1s>};SERVER=<2s>;' , (self isCiBuild
 				ifTrue: 
-					["APPVEYOR config is 'DRIVER=SQL Server;Server=(local)\SQL2019;Database=master;User ID=sa;Password=Password12!!"
+					["APPVEYOR config is 'DRIVER=SQL Server;Server=(local)\SQL2022;Database=master;User ID=sa;Password=Password12!!"
 					'DATABASE=master;UID=<3s>;PWD=<4s>']
 				ifFalse: 
 					["If running locally use localdb. There will need to be an instance named MSSQLlocalDB"
@@ -66,7 +66,7 @@ requiredOdbcVersion
 	^OS.ODBCConstants.SQL_OV_ODBC3_80!
 
 serverName
-	^self isCiBuild ifTrue: ['(local)\SQL2019'] ifFalse: ['(localdb)\MSSQLLocalDB']!
+	^self isCiBuild ifTrue: ['(local)\SQL2022'] ifFalse: ['(localdb)\MSSQLLocalDB']!
 
 sqllocaldbInstances
 	| process instances |
