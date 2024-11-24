@@ -1,18 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.StreamTest
-	subclass: #'Core.Tests.NullStreamTest'
+StreamTest subclass: #NullStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
-Core.Tests.NullStreamTest guid: (Core.GUID fromString: '{9acbef26-66af-43a0-baf6-3facc80760ac}')!
+NullStreamTest guid: (GUID fromString: '{9acbef26-66af-43a0-baf6-3facc80760ac}')!
 
-Core.Tests.NullStreamTest comment: ''!
+NullStreamTest comment: ''!
 
-!Core.Tests.NullStreamTest methodsFor!
+!NullStreamTest methodsFor!
 
 streamClass
 	^NullStream!
@@ -122,7 +120,7 @@ testUpToEnd
 	subject := NullStream on: #(1 2 3).
 	self assert: subject upToEnd equals: #()! !
 
-!Core.Tests.NullStreamTest categoriesForMethods!
+!NullStreamTest categoriesForMethods!
 streamClass!helpers!private! !
 testAtEnd!public!unit tests! !
 testContentSpecies!public!unit tests! !
