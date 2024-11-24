@@ -1,18 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest
-	subclass: #'Database.Tests.GenericDBTest'
+Core.Tests.DolphinTest subclass: #GenericDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
-Database.Tests.GenericDBTest guid: (Core.GUID fromString: '{a77dad68-c606-49b9-8719-f34488d8989a}')!
+GenericDBTest guid: (GUID fromString: '{a77dad68-c606-49b9-8719-f34488d8989a}')!
 
-Database.Tests.GenericDBTest comment: ''!
+GenericDBTest comment: ''!
 
-!Database.Tests.GenericDBTest methodsFor!
+!GenericDBTest methodsFor!
 
 testConnectionString
 	"#1284"
@@ -58,11 +56,11 @@ testPackagesCorrectlySetUp
 	"The base package should not be dependent upon the development system."
 
 	self
-		assert: ((Kernel.Package manager packageNamed: 'Database Connection Base') prerequisites
+		assert: ((Package manager packageNamed: 'Database Connection Base') prerequisites
 				collect: [:each | each name]) asSortedArray
 		equals: #('Dolphin' 'Dolphin Legacy Date & Time')! !
 
-!Database.Tests.GenericDBTest categoriesForMethods!
+!GenericDBTest categoriesForMethods!
 testConnectionString!public!unit tests! !
 testConnectStringDo!public!unit tests! !
 testPackagesCorrectlySetUp!public!unit tests! !

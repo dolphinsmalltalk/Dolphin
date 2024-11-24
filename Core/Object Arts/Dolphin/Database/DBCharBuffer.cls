@@ -1,18 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBUnstructuredFieldBuffer
-	subclass: #'Database.DBCharBuffer'
+DBUnstructuredFieldBuffer subclass: #DBCharBuffer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
-Database.DBCharBuffer guid: (Core.GUID fromString: '{a53123d6-3370-4505-a70a-c8b2c0d7b43b}')!
+DBCharBuffer guid: (GUID fromString: '{a53123d6-3370-4505-a70a-c8b2c0d7b43b}')!
 
-Database.DBCharBuffer comment: ''!
+DBCharBuffer comment: ''!
 
-!Database.DBCharBuffer methodsFor!
+!DBCharBuffer methodsFor!
 
 dbConvert: anObject for: aDBField
 	"Convert the argument to an <AnsiString> for marshalling to SQL_C_CHAR representation in the <DBField> 2nd argument. Throw an error if this is not possible."
@@ -24,17 +22,17 @@ dbInterchangeType
 
 	^SQL_C_CHAR! !
 
-!Database.DBCharBuffer categoriesForMethods!
+!DBCharBuffer categoriesForMethods!
 dbConvert:for:!operations!public! !
 dbInterchangeType!constants!public! !
 !
 
-!Database.DBCharBuffer class methodsFor!
+!DBCharBuffer class methodsFor!
 
 valueClass
 	^AnsiString! !
 
-!Database.DBCharBuffer class categoriesForMethods!
+!DBCharBuffer class categoriesForMethods!
 valueClass!constants!public! !
 !
 

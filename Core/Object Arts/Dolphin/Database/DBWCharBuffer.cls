@@ -1,18 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBUnstructuredFieldBuffer
-	subclass: #'Database.DBWCharBuffer'
+DBUnstructuredFieldBuffer subclass: #DBWCharBuffer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
-Database.DBWCharBuffer guid: (Core.GUID fromString: '{2d5ec228-0f92-4205-9f40-09f0a186dacd}')!
+DBWCharBuffer guid: (GUID fromString: '{2d5ec228-0f92-4205-9f40-09f0a186dacd}')!
 
-Database.DBWCharBuffer comment: ''!
+DBWCharBuffer comment: ''!
 
-!Database.DBWCharBuffer methodsFor!
+!DBWCharBuffer methodsFor!
 
 bufferSizeForColumn: aDBColAttr
 	^(aDBColAttr length bitShift: -1)!
@@ -41,14 +39,14 @@ dbMarshal: anObject into: aDBField
 		startingAt: 1.
 	aDBField length: octetSize! !
 
-!Database.DBWCharBuffer categoriesForMethods!
+!DBWCharBuffer categoriesForMethods!
 bufferSizeForColumn:!initializing!private! !
 dbConvert:for:!operations!public! !
 dbInterchangeType!constants!public! !
 dbMarshal:into:!operations!public! !
 !
 
-!Database.DBWCharBuffer class methodsFor!
+!DBWCharBuffer class methodsFor!
 
 dbTransferOctetLengthForColumn: aDBColAttr
 	"Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) for the configured precision of the WCHAR (fixed-width) column.
@@ -60,7 +58,7 @@ dbTransferOctetLengthForColumn: aDBColAttr
 valueClass
 	^Utf16String! !
 
-!Database.DBWCharBuffer class categoriesForMethods!
+!DBWCharBuffer class categoriesForMethods!
 dbTransferOctetLengthForColumn:!enquiries!public! !
 valueClass!constants!public! !
 !
