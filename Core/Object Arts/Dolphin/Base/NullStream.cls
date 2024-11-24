@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Stream
-	subclass: #'Core.NullStream'
+Stream subclass: #NullStream
 	instanceVariableNames: 'contentsSpecies'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
-Core.NullStream guid: (Core.GUID fromString: '{0a1bb10e-cc8e-4a43-b431-da230811ae95}')!
+NullStream guid: (GUID fromString: '{0a1bb10e-cc8e-4a43-b431-da230811ae95}')!
 
-Core.NullStream comment: '`NullStream` is a class of readable and writeable `Stream`s that contain no past or future sequence values (i.e. they are perpetually empty). `NullStream` implements the ANSI protocols `<puttableStream>` and `<gettableStream>` appropriately so that there is no available input to read, and all output is discarded.'!
+NullStream comment: '`NullStream` is a class of readable and writeable `Stream`s that contain no past or future sequence values (i.e. they are perpetually empty). `NullStream` implements the ANSI protocols `<puttableStream>` and `<gettableStream>` appropriately so that there is no available input to read, and all output is discarded.'!
 
-!Core.NullStream methodsFor!
+!NullStream categoriesForClass!Unclassified! !
+
+!NullStream methodsFor!
 
 atEnd
 	"Answer whether the receiver cannot access any more objects."
@@ -33,6 +33,9 @@ contentsSpecies
 
 contentsSpecies: aClass
 	contentsSpecies := aClass!
+
+cr
+	"Store the line delimiter character sequence (as required by the environment) as the next element(s) of the receiver."!
 
 flush
 	"Flush any buffered output."
@@ -55,6 +58,17 @@ next
 	"Answer the next object accessible by the receiver. A null stream is always at its end, so this is always an end of stream error."
 
 	^self errorEndOfStream!
+
+next: anInteger put: anObject
+	"Store the argument, anObject, as the next anInteger number of elements accessible by the receiver. 
+	Answer anObject."
+
+	^anObject!
+
+next: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection."
+
+	^aSequenceableCollection!
 
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the next line delimiter. If there are no further line delimiters in the receiver, then the rest of the receiver's contents are answered. If the receiver is at its end, then an empty collection is answered."
@@ -86,29 +100,47 @@ peekFor: anObject
 position
 	"Answer the current <integer> position in the stream of values."
 
-	^0! !
+	^0!
 
-!Core.NullStream categoriesForMethods!
+skip: anInteger
+	"Set the receiver's position reference to be the current position plus the argument, anInteger, possibly adjusting the result so as to remain within the bounds of the collection."
+
+	anInteger < 0 ifTrue: [self error: 'Cannot move backwards in non-positionable stream'].
+	anInteger timesRepeat: [self next]!
+
+space
+	"Store a space character as the next element of the receiver"!
+
+tab
+	"Store a tab character as the next element of the receiver"! !
+
+!NullStream categoriesForMethods!
 atEnd!public!testing! !
 close!operations!public! !
 contentsSpecies!accessing!private! !
 contentsSpecies:!accessing!private! !
+cr!accessing!public! !
 flush!operations!public! !
-isEmpty!public! !
+isEmpty!public!testing! !
 isWriteable!public!testing! !
 next!accessing!public! !
+next:put:!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
 nextLine!accessing!public! !
 nextPut:!adding!public! !
 nextPutAll:!adding!public! !
 peek!accessing!public! !
 peekFor:!accessing!public! !
 position!positioning!public! !
+skip:!positioning!public! !
+space!accessing!public! !
+tab!accessing!public! !
 !
 
-Core.NullStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
-Core.NullStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+NullStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
+NullStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 
-!Core.NullStream class methodsFor!
+!NullStream class methodsFor!
 
 new
 	^self basicNew
@@ -120,7 +152,7 @@ on: aCollection
 		contentsSpecies: aCollection copyingClass;
 		yourself! !
 
-!Core.NullStream class categoriesForMethods!
+!NullStream class categoriesForMethods!
 new!public! !
 on:!instance creation!public! !
 !
