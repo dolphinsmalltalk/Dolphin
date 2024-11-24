@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #GenericDBTest
+DolphinTest subclass: #GenericDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -9,6 +9,8 @@ Core.Tests.DolphinTest subclass: #GenericDBTest
 GenericDBTest guid: (GUID fromString: '{a77dad68-c606-49b9-8719-f34488d8989a}')!
 
 GenericDBTest comment: ''!
+
+!GenericDBTest categoriesForClass!Unclassified! !
 
 !GenericDBTest methodsFor!
 
@@ -57,8 +59,8 @@ testPackagesCorrectlySetUp
 
 	self
 		assert: ((Package manager packageNamed: 'Database Connection Base') prerequisites
-				collect: [:each | each name]) asSortedArray
-		equals: #('Dolphin' 'Dolphin Legacy Date & Time')! !
+				collect: [:each | each name]) asArray sort
+		equals: #('Dolphin' 'Dolphin Legacy Date & Time' 'Dolphin Registry Access')! !
 
 !GenericDBTest categoriesForMethods!
 testConnectionString!public!unit tests! !

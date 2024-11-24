@@ -10,6 +10,8 @@ PostgresNorthwindDB guid: (GUID fromString: '{892e25a6-1bd6-41b4-82df-fdb1bfc704
 
 PostgresNorthwindDB comment: ''!
 
+!PostgresNorthwindDB categoriesForClass!Unclassified! !
+
 !PostgresNorthwindDB methodsFor!
 
 connectString
@@ -69,11 +71,9 @@ dropDatabase
 
 getOdbcDriver
 	| drivers installed |
-	installed := self installedOdbcDrivers asSortedArray.
-	drivers := (installed select: [:each | 'PostgreSQL*Unicode*' match: each]) asSortedArray.
-	^drivers isEmpty
-		ifFalse: 
-			[drivers last]!
+	installed := DBConnection installedOdbcDrivers.
+	drivers := (installed select: [:each | 'PostgreSQL*Unicode*' match: each]) asSortedCollection .
+	^drivers isEmpty ifFalse: [drivers last]!
 
 installationFolder
 	^(RegKey localMachineRoot64 lookup: 'SOFTWARE\PostgreSQL Global Development Group\PostgreSQL')

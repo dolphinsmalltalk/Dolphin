@@ -86,9 +86,6 @@ execSqlCmd: cmdString stdin: stdinStream
 getOdbcDriver
 	^self subclassResponsibility!
 
-installedOdbcDrivers
-	^((RegKey localMachineRoot: #read) at: 'SOFTWARE\ODBC\ODBCINST.INI') keys!
-
 isAvailable
 	^isAvailable!
 
@@ -101,7 +98,7 @@ odbcDriver
 	^odbcDriver ifNil: [odbcDriver := self getOdbcDriver]!
 
 prereqsAvailable
-	^self installedOdbcDrivers includes: self odbcDriver!
+	^DBConnection installedOdbcDrivers includes: self odbcDriver!
 
 pwd
 	^'Password12!!'!
@@ -130,7 +127,6 @@ createDatabase!operations!private! !
 dropDatabase!helpers!private! !
 execSqlCmd:stdin:!helpers!private! !
 getOdbcDriver!constants!private! !
-installedOdbcDrivers!enquiries!private! !
 isAvailable!public!Testing! !
 newConnection!helpers!public! !
 odbcDriver!constants!private! !

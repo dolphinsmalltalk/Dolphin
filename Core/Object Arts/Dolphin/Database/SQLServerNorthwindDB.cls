@@ -44,7 +44,7 @@ dropDatabase
 
 getOdbcDriver
 	| drivers odbc |
-	drivers := (self installedOdbcDrivers select: [:each | each endsWith: 'SQL Server'])
+	drivers := (DBConnection installedOdbcDrivers select: [:each | each endsWith: 'SQL Server'])
 				asSortedCollection.
 	drivers isEmpty ifTrue: [^nil].
 	odbc := drivers select: [:each | each beginsWith: 'ODBC'].
