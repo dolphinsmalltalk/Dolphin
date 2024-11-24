@@ -3,7 +3,7 @@ IF %ERRORLEVEL% NEQ 0 (
     echo Aborting.
     exit /b %ERRORLEVEL%
 )
-choco install psqlodbc --no-progress
+choco install psqlodbc --no-progress --forcex86 
 powershell.exe -ExecutionPolicy RemoteSigned -file InstallMysqlOdbc.ps1
 net start MySQL80
 net start MSSQL$SQL2022
