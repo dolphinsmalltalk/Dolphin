@@ -1,2 +1,2 @@
-(new-object net.webclient).DownloadFile('https://cdn.mysql.com//Downloads/Connector-ODBC/8.0/mysql-connector-odbc-8.0.40-win32.msi', 'mysqlodbc.msi')
+(new-object net.webclient).DownloadFile('https://dlm.mariadb.com/3978178/Connectors/odbc/connector-odbc-3.2.4/mariadb-connector-odbc-3.2.4-win32.msi', 'mysqlodbc.msi')
 msiexec /i mysqlodbc.msi /quiet /qn /norestart /log mysqlodbc.install.log
