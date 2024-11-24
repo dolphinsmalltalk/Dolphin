@@ -99,6 +99,11 @@ dbmsFeaturesMap
 		at: #searchPatternEscape put: #(#= '\');
 		yourself!
 
+defaultDateTimeColumnScale
+	"DATETIMEs to the second only"
+
+	^0!
+
 execShouldRaiseSqlDateOverflow: aDBParameterizedStatement
 	self
 		should: [aDBParameterizedStatement exec]
@@ -156,6 +161,9 @@ ordersColumns
 		{'ShipPostalCode'. SQL_WVARCHAR. 10. nil. 20}.
 		{'ShipCountry'. SQL_WVARCHAR. 15. nil. 30}}!
 
+sqlDataTypeDate
+	^SQL_TYPE_TIMESTAMP!
+
 sqlDataTypeVarChar
 	^SQL_WVARCHAR!
 
@@ -172,82 +180,6 @@ testAccessConnectionAttributes
 	self should: [connection translationDLL: 'blah.dll'] raise: DBError.
 	self assert: connection uid isNil.
 	self assert: connection pwd isNil!
-
-testColumnTypeDate
-	| colAttrs dateCol insert resultSet timestamp dateAndTime date insertedValues actualValues expectedValues |
-	colAttrs := self createTestTable: 'DATE'.
-	dateCol := colAttrs last.
-	self assert: dateCol type equals: SQL_TYPE_TIMESTAMP.
-	insert := self
-				prepare: 'INSERT INTO <1s> (ID,<2s>) VALUES (?,?)' << { self temporaryTableName. dateCol name }.
-	insert paramCols: colAttrs.
-	date := Date today.
-	dateAndTime := DateAndTime
-				year: 9999
-				day: 365
-				seconds: 1234
-				offset: 13.5 hours.
-	"Minimum DATE in MS Access is January 2, 100"
-	timestamp := TimeStamp current.
-	insertedValues := { date. dateAndTime. timestamp. nil }.
-	insertedValues keysAndValuesDo: 
-			[:i :each |
-			insert values: { i. each }.
-			insert exec].
-	resultSet := self query: 'SELECT <1s> from <2s>' << { dateCol name. self temporaryTableName }.
-	expectedValues := { date asDateAndTime. dateAndTime asLocal. timestamp asDateAndTime. nil }.
-	actualValues := (resultSet collect: [:each | each at: dateCol name]) asArray.
-	expectedValues with: actualValues
-		do: 
-			[:expected :actual |
-			expected
-				ifNil: [self assertIsNil: actual]
-				ifNotNil: 
-					[self
-						assert: actual
-						closeTo: expected
-						precision: 1 seconds]].
-	resultSet free.
-	"Invalid dates"
-	insert values: { 100. Date newDay: 365 year: -1 }.
-	self execShouldRaiseSqlDateOverflow: insert.
-	insert values: { 100. Date newDay: 1 year: 10000 }.
-	self execShouldRaiseSqlInvalidDateFormat: insert!
-
-testColumnTypeDatetime
-	| colAttrs dtCol insert resultSet timestamp dateAndTime date insertedValues expectedValues actualValues |
-	colAttrs := self createTestTable: 'DATETIME'.
-	dtCol := colAttrs last.
-	self assert: dtCol scale equals: 0.
-	insert := self
-				prepare: 'INSERT INTO <1s> (ID,<2s>) VALUES (?,?)' << { self temporaryTableName. dtCol name }.
-	insert paramCols: colAttrs.
-	date := Date today.
-	dateAndTime := DateAndTime fromString: ' 9999-12-31T00:20:34.123+13:30'.
-	timestamp := TimeStamp fromSeconds: 3905691359467 / 1000.
-	insertedValues := { date. dateAndTime. timestamp. nil }.
-	insertedValues keysAndValuesDo: 
-			[:i :each |
-			insert values: { i. each }.
-			insert exec].
-	resultSet := self query: 'SELECT <1s> FROM <2s>' << { dtCol name. self temporaryTableName }.
-	expectedValues := { date asDateAndTime. dateAndTime asLocal. timestamp asDateAndTime. nil }.
-	actualValues := (resultSet collect: [:each | each at: dtCol name]) asArray.
-	expectedValues with: actualValues
-		do: 
-			[:expected :actual |
-			expected
-				ifNil: [self assertIsNil: actual]
-				ifNotNil: 
-					[self
-						assert: actual
-						closeTo: expected
-						precision: 1 seconds]].
-	resultSet free.	"Invalid dates"
-	insert values: { 100. Date newDay: 365 year: -1 }.
-	self execShouldRaiseSqlDateOverflow: insert.
-	insert values: { 100. Date newDay: 1 year: 10000 }.
-	self execShouldRaiseSqlInvalidDateFormat: insert!
 
 testDSNlessConnection
 	"See MSDN help 'SQLGetInfo Returned Values for Access"
@@ -293,6 +225,12 @@ testViewsQuery
 	self assert: (views
 				noDifference: #('Alphabetical List of Products' 'Category Sales for 1997' 'Current Product List' 'Customers and Suppliers by City' 'Employee Sales by Country' 'Invoices' 'Invoices Filter' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Quarterly Orders by Product' 'Sales by Category' 'Sales by Year' 'Ten Most Expensive Products'))!
 
+verifyInvalidDates: insert
+	insert values: { 100. Date newDay: 365 year: -1 }.
+	self execShouldRaiseSqlDateOverflow: insert.
+	insert values: { 100. Date newDay: 1 year: 10000 }.
+	self execShouldRaiseSqlInvalidDateFormat: insert!
+
 verifyInvalidFloatValues: aDBParameterizedStatement
 	"Access can store non-finite floats"
 	self verifyCanStoreNonFiniteFloats: aDBParameterizedStatement! !
@@ -306,6 +244,7 @@ columnTypeNameWideVarChar!constants!private! !
 databaseName!constants!private! !
 databaseResource!accessing!private! !
 dbmsFeaturesMap!constants!private! !
+defaultDateTimeColumnScale!constants!private! !
 execShouldRaiseSqlDateOverflow:!private! !
 execShouldRaiseSqlTruncatedString:!helpers!private! !
 hasDateTimeOffsetDataType!private!testing! !
@@ -315,16 +254,16 @@ hasTimeDataType!private!testing! !
 invalidDoubleValues!constants!private! !
 orderDetailsTable!constants!private! !
 ordersColumns!constants!private! !
+sqlDataTypeDate!constants!private! !
 sqlDataTypeVarChar!constants!private! !
 sqlStateTruncatedString!constants!private! !
 testAccessConnectionAttributes!public!unit tests! !
-testColumnTypeDate!public!unit tests! !
-testColumnTypeDatetime!public!unit tests! !
 testDSNlessConnection!public!unit tests! !
 testForeignKeysQuery!public!unit tests! !
 testPrimaryKeysQuery!public!unit tests! !
 testProceduresQuery!public!unit tests! !
 testViewsQuery!public!unit tests! !
+verifyInvalidDates:!helpers!private! !
 verifyInvalidFloatValues:!helpers!private! !
 !
 

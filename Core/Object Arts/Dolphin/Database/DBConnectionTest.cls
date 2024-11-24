@@ -24,6 +24,9 @@ ageAtHireQuery
 allDataTypes
 	^self subclassResponsibility!
 
+canDisableAutoCommit
+	^true!
+
 categoriesColumns
 	^self subclassResponsibility!
 
@@ -182,9 +185,6 @@ execShouldRaiseTypeMismatch: aDBParameterizedStatement
 field: aString fromRow: aDBRow 
 	^aDBRow at: aString!
 
-getTypeInfoDataTypeColumn
-	^'SQL_DATA_TYPE'!
-
 hasDateTimeOffsetDataType
 	^true!
 
@@ -217,6 +217,9 @@ insertsNullForEmptyBinaryIfUnbound
 
 insertsNullForEmptyString
 	^false!
+
+insertsNullForEmptyStringIfUnbound
+	^self insertsNullForEmptyString!
 
 intervalLiteralsQuery
 	^'SELECT (INTERVAL ''1997'' YEAR(4)) AS years1997,
@@ -253,20 +256,22 @@ orderDetailsTable
 ordersColumns
 	"Column metadata from SQL Server, which we'll consider as a baseline."
 
-	^{{'OrderID'. SQL_INTEGER. 10. 0. 4}.
-		{'CustomerID'. SQL_WCHAR. 5. nil. 10}.
-		{'EmployeeID'. SQL_INTEGER. 10. 0. 4}.
-		{'OrderDate'. SQL_TYPE_TIMESTAMP. 23. 3. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'RequiredDate'. SQL_TYPE_TIMESTAMP. 23. 3. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'ShippedDate'. SQL_TYPE_TIMESTAMP. 23. 3. SQL_TIMESTAMP_STRUCT byteSize}.
-		{'ShipVia'. SQL_INTEGER. 10. 0. 4}.
-		{'Freight'. SQL_DECIMAL. 19. 4. 21}.
-		{'ShipName'. SQL_WVARCHAR. 40. nil. 80}.
-		{'ShipAddress'. SQL_WVARCHAR. 60. nil. 120}.
-		{'ShipCity'. SQL_WVARCHAR. 15. nil. 30}.
-		{'ShipRegion'. SQL_WVARCHAR. 15. nil. 30}.
-		{'ShipPostalCode'. SQL_WVARCHAR. 10. nil. 20}.
-		{'ShipCountry'. SQL_WVARCHAR. 15. nil. 30}}!
+	^{
+		{ 'OrderID'. SQL_INTEGER. 10. 0. 4 }.
+		{ 'CustomerID'. SQL_WCHAR. 5. nil. 10 }.
+		{ 'EmployeeID'. SQL_INTEGER. 10. 0. 4 }.
+		{ 'OrderDate'. self sqlDataTypeTimeStamp. 23. 3. SQL_TIMESTAMP_STRUCT byteSize }.
+		{ 'RequiredDate'. self sqlDataTypeTimeStamp. 23. 3. SQL_TIMESTAMP_STRUCT byteSize }.
+		{ 'ShippedDate'. self sqlDataTypeTimeStamp. 23. 3. SQL_TIMESTAMP_STRUCT byteSize }.
+		{ 'ShipVia'. SQL_INTEGER. 10. 0. 4 }.
+		{ 'Freight'. SQL_DECIMAL. 19. 4. 21 }.
+		{ 'ShipName'. SQL_WVARCHAR. 40. nil. 80 }.
+		{ 'ShipAddress'. SQL_WVARCHAR. 60. nil. 120 }.
+		{ 'ShipCity'. SQL_WVARCHAR. 15. nil. 30 }.
+		{ 'ShipRegion'. SQL_WVARCHAR. 15. nil. 30 }.
+		{ 'ShipPostalCode'. SQL_WVARCHAR. 10. nil. 20 }.
+		{ 'ShipCountry'. SQL_WVARCHAR. 15. nil. 30 }
+	}!
 
 ordersRowVersionColumns
 	^#()!
@@ -285,6 +290,10 @@ query: aString cursorType: aSymbol
 	resultSet := connection query: aString cursorType: aSymbol.
 	dbResources add: resultSet.
 	^resultSet!
+
+queryTypeInfo: anInteger
+	^(connection typeInfo: anInteger)
+		collect: [:each | (each at: 'TYPE_NAME') -> (each at: 'SQL_DATA_TYPE')]!
 
 requiredOdbcVersion
 	^SQL_OV_ODBC3_80!
@@ -313,8 +322,14 @@ shouldRaiseNotSupported: aNiladicValuable
 sqlDataTypeBlob
 	^SQL_LONGVARBINARY!
 
+sqlDataTypeDate
+	^SQL_TYPE_DATE!
+
 sqlDataTypeTime
 	^SQL_TYPE_TIME!
+
+sqlDataTypeTimeStamp
+	^SQL_TYPE_TIMESTAMP!
 
 sqlDataTypeVarChar
 	^SQL_VARCHAR!
@@ -507,57 +522,62 @@ testColumnTypeChar
 	self should: [insert exec] raise: MessageNotUnderstood!
 
 testColumnTypeDate
-	| colAttrs column insert resultSet timestamp dateAndTime date insertedValues identifiers |
-	"Invalid dates"
+	| colAttrs column insert resultSet timestamp dateAndTime date insertedValues identifiers expectedValues actualValues |
 	colAttrs := self createTestTable: 'DATE'.
 	column := colAttrs last.
-	self assert: column type equals: SQL_TYPE_DATE.
+	self assert: column type equals: self sqlDataTypeDate.
 	identifiers := { self temporaryTableName. 'ID'. column name } collect: [:name | self dbName: name].
 	insert := self prepare: 'INSERT INTO <1s> (<2s>,<3s>) VALUES (?, ?)' << identifiers.
 	insert paramCols: colAttrs.
 	date := Date today.
-	dateAndTime := DateAndTime
-				year: 9999
-				day: 365
-				seconds: 1234
-				offset: 13.5 hours.
-	timestamp := TimeStamp date: (Date newDay: 1 year: 1) time: Time now.
+	dateAndTime := DateAndTime now offset: 13.5 hours.
+	timestamp := TimeStamp current.
 	insertedValues := { date. dateAndTime. timestamp. nil }.
 	insertedValues keysAndValuesDo: 
 			[:i :each |
 			insert values: { i. each }.
 			insert exec].
 	resultSet := self query: 'SELECT <3s> from <1s>' << identifiers.
-	self assert: (resultSet collect: [:each | each at: column name]) asArray
-		equals: (insertedValues collect: [:each | each ifNotNil: [each asDate]]).
+	expectedValues := insertedValues collect: [:each | each ifNotNil: [each asDate]].
+	actualValues := (resultSet collect: [:each | each at: column name]) asArray.
+	expectedValues with: actualValues
+		do: 
+			[:expected :actual |
+			expected ifNil: [self assertIsNil: actual] ifNotNil: [self assert: actual asDate equals: expected]].
 	resultSet free.
 	self verifyInvalidDates: insert!
 
 testColumnTypeDatetime
-	| colAttrs column insert resultSet timestamp dateAndTime date identifiers |
+	| colAttrs column insert resultSet timestamp dateAndTime date insertedValues expectedValues actualValues identifiers |
 	colAttrs := self createTestTable: self columnTypeNameDateTime.
 	column := colAttrs last.
-	self assert: column scale equals: self defaultDateTimeColumnScale.
+	self assert: column scale ?? 0 equals: self defaultDateTimeColumnScale.
 	identifiers := { self temporaryTableName. 'ID'. column name } collect: [:name | self dbName: name].
-	insert := self prepare: 'INSERT INTO <1s> (<2s>,<3s>) VALUES (?, ?)' << identifiers.
+	insert := self prepare: 'INSERT INTO <1s> (<2s>,<3s>) VALUES (?,?)' << identifiers.
 	insert paramCols: colAttrs.
 	date := Date today.
-	"Default precision is 1mS, i.e. 3 decimal places for the seconds - we test elsewhere that the marshalling truncates correctly"
-	dateAndTime := DateAndTime fromString: ' 9999-12-31T00:20:34.123+13:30'.
-	timestamp := TimeStamp fromSeconds: 3905691359467 / 1000.
-	{ date. dateAndTime. timestamp. nil } keysAndValuesDo: 
+	dateAndTime := DateAndTime now.
+	timestamp := TimeStamp fromSeconds: 39056913597654321 / 1e7.
+	insertedValues := { date. dateAndTime. timestamp. nil }.
+	insertedValues keysAndValuesDo: 
 			[:i :each |
 			insert values: { i. each }.
 			insert exec].
 	resultSet := self query: 'SELECT <3s> FROM <1s>' << identifiers.
-	self assert: (resultSet collect: [:each | each at: column name]) asArray
-		equals: { date asDateAndTime. dateAndTime asLocal. timestamp asDateAndTime. nil }.
-	resultSet free.
-	"Invalid dates"
-	self invalidDates keysAndValuesDo: 
-			[:i :each |
-			insert values: { 100 + i. each }.
-			self execShouldRaiseSqlInvalidDateFormat: insert]!
+	expectedValues := { date asDateAndTime. dateAndTime asLocal. timestamp asDateAndTime. nil }.
+	actualValues := (resultSet collect: [:each | each at: column name]) asArray.
+	expectedValues with: actualValues
+		do: 
+			[:expected :actual |
+			expected
+				ifNil: [self assertIsNil: actual]
+				ifNotNil: 
+					[self
+						assert: actual
+						closeTo: expected
+						precision: (1 / self defaultDateTimeColumnScale exp10) seconds * 2]].
+	resultSet free.	"Invalid dates"
+	self verifyInvalidDateTimes: insert!
 
 testColumnTypeDatetimeOffset
 	"DATETIMEOFFSET is an extended SQL Server column type that extends datetime to include time zone offset. The default scale of the seconds is also more precise (7 rather than 3). Some other DBs support a similar type, e.g. postgres has timestamptz"
@@ -705,7 +725,7 @@ testColumnTypeTime
 	colAttrs := self createTimeTestTable.
 	column := colAttrs last.
 	self assert: column type equals: self sqlDataTypeTime.
-	self assert: column scale equals: self scaleOfTimeColumns.
+	self assert: column scale ?? 0 equals: self scaleOfTimeColumns.
 	identifiers := { self temporaryTableName. 'ID'. column name } collect: [:name | self dbName: name].
 	insert := self prepare: 'INSERT INTO <1s> (<2s>,<3s>) VALUES (?, ?)' << identifiers.
 	insert paramCols: colAttrs.
@@ -817,7 +837,7 @@ testColumnTypeVarCharBoundOverflow
 	insert paramCols: colAttrs.
 	insert values: { 100. 'abcdefghijklmnopq' }.
 	"If the parameter is bound, we pass the data through the bound buffer and detect overflow when attempting to populate the buffer."
-	self should: [insert exec] raise: BoundsError!
+	self verifyBoundCharBufferOverflow: insert!
 
 testColumnTypeVarCharUnbound
 	| colAttrs column identifiers |
@@ -842,7 +862,8 @@ testColumnTypeVarCharUnbound
 							insert values: { i. str }.
 							insert exec.
 							str].
-			self insertsNullForEmptyString ifTrue: [expectedValues at: 1 put: nil].
+			"Some ODBC drivers treats SQLPutData of zero length the same as inserting a nil, which is of course incorrect since empty string is a distinct value from NULL."
+			self insertsNullForEmptyStringIfUnbound ifTrue: [expectedValues at: 1 put: nil].
 			self assert: insert parameters last isKindOf: DBLongVarField.
 			resultSet := self query: 'SELECT <3s> FROM <1s> ORDER BY <2s>' << identifiers.
 			self assert: (resultSet collect: [:each | each at: column name]) asArray equals: expectedValues.
@@ -951,7 +972,8 @@ testColumnTypeWVarCharUnbound
 							insert values: { i. str }.
 							insert exec.
 							str].
-			self insertsNullForEmptyString ifTrue: [strings at: 1 put: nil].
+			self insertsNullForEmptyStringIfUnbound ifTrue: [strings at: 1 put: nil].
+			self assert: insert parameters last isKindOf: DBLongVarField.
 			resultSet := self query: 'SELECT <3s> FROM <1s> ORDER BY <2s>' << identifiers.
 			self assert: (resultSet collect: [:r | r at: column name]) asArray equals: strings.
 			resultSet free.
@@ -962,10 +984,12 @@ testConnectionAttributes
 	self assert: connection driverHDBC notNull.
 	self assert: connection driverHEnv notNull.
 	self assert: connection willAutoCommit.
-	connection willAutoCommit: false.
-	self assert: connection willAutoCommit not.
-	connection willAutoCommit: true.
-	self assert: connection willAutoCommit.
+	self canDisableAutoCommit
+		ifTrue: 
+			[connection willAutoCommit: false.
+			self assert: connection willAutoCommit not.
+			connection willAutoCommit: true.
+			self assert: connection willAutoCommit].
 	self assert: connection transactionIsolation equals: self defaultTransactionIsolation.
 	self
 		should: [connection transactionIsolation: #hash]
@@ -1465,6 +1489,9 @@ uniqueIndicesOf: aString
 validDoubleValues
 	^{ nil. 0. -1. 3 / 8. 1.79e308. -2.23e-308. Float fmin. }!
 
+verifyBoundCharBufferOverflow: insert
+	self should: [insert exec] raise: BoundsError	"If the parameter is bound, we pass the data through the bound buffer and detect overflow when attempting to populate the buffer."!
+
 verifyCanStoreNonFiniteFloats: aDBParameterizedStatement
 	| inserted |
 	"Postgres can store non-finite floats"
@@ -1479,11 +1506,14 @@ verifyCanStoreNonFiniteFloats: aDBParameterizedStatement
 	self assert: inserted second isNaN.
 	self assert: inserted third equals: Float negativeInfinity!
 
-verifyInvalidDates: insert
-	insert values: { 100. Date newDay: 365 year: -1 }.
-	self execShouldRaiseSqlInvalidDateFormat: insert.
-	insert values: { 100. Date newDay: 1 year: 10000 }.
-	self execShouldRaiseSqlDateOverflow: insert!
+verifyInvalidDates: aDBParameterizedStatement
+	self invalidDates keysAndValuesDo: 
+			[:i :each |
+			aDBParameterizedStatement values: { 100 + i. each }.
+			self execShouldRaiseSqlInvalidDateFormat: aDBParameterizedStatement]!
+
+verifyInvalidDateTimes: aDBParameterizedStatement
+	self verifyInvalidDates: aDBParameterizedStatement!
 
 verifyInvalidFloatValues: aDBParameterizedStatement
 	{ Float infinity. Float nan. Float negativeInfinity } do: 
@@ -1494,6 +1524,7 @@ verifyInvalidFloatValues: aDBParameterizedStatement
 !DBConnectionTest categoriesForMethods!
 ageAtHireQuery!constants!private! !
 allDataTypes!constants!private! !
+canDisableAutoCommit!public! !
 categoriesColumns!constants!private! !
 columnOverflowSqlState!constants!private! !
 columnsOf:!helpers!private! !
@@ -1531,16 +1562,16 @@ execShouldRaiseSqlNumberOutOfRange:!private! !
 execShouldRaiseSqlTruncatedString:!helpers!private! !
 execShouldRaiseTypeMismatch:!helpers!private! !
 field:fromRow:!helpers!private! !
-getTypeInfoDataTypeColumn!constants!private! !
 hasDateTimeOffsetDataType!private!testing! !
 hasFixedWidthBinaryDataType!private!testing! !
 hasIntervalDataType!private!testing! !
 hasNumericDataType!private!testing! !
 hasTimeDataType!private!testing! !
 hasVarBinaryWithLimitDataType!private!testing! !
-insertsNullForEmptyBinary!constants!private! !
-insertsNullForEmptyBinaryIfUnbound!constants!private! !
-insertsNullForEmptyString!constants!private! !
+insertsNullForEmptyBinary!private!testing! !
+insertsNullForEmptyBinaryIfUnbound!private!testing! !
+insertsNullForEmptyString!private!testing! !
+insertsNullForEmptyStringIfUnbound!private!testing! !
 intervalLiteralsQuery!constants!private! !
 invalidDates!private! !
 invalidDatesAndTimesWithOffset!private! !
@@ -1552,14 +1583,17 @@ ordersRowVersionColumns!constants!private! !
 orderTableRowIds!constants!private! !
 prepare:!helpers!private! !
 query:cursorType:!helpers!private! !
+queryTypeInfo:!helpers!private! !
 requiredOdbcVersion!constants!private! !
-rowIdColumnsOf:!public!unit tests! !
+rowIdColumnsOf:!helpers!private! !
 scaleOfTimeColumns!constants!private! !
 setUp!public!running! !
 shouldRaiseNotSupported:!helpers!private! !
 sqlDataTypeBlob!constants!private! !
+sqlDataTypeDate!constants!private! !
 sqlDataTypeTime!constants!private! !
-sqlDataTypeVarChar!public!unit tests! !
+sqlDataTypeTimeStamp!constants!private! !
+sqlDataTypeVarChar!constants!private! !
 sqlStateGeneralError!constants!private! !
 sqlStateInvalidDouble!constants!private! !
 sqlStateTruncatedString!constants!private! !
@@ -1616,8 +1650,10 @@ testYearToMonthIntervals!public!unit tests! !
 timeToShipQuery!constants!private! !
 uniqueIndicesOf:!helpers!private! !
 validDoubleValues!constants!private! !
+verifyBoundCharBufferOverflow:!helpers!private! !
 verifyCanStoreNonFiniteFloats:!helpers!private! !
 verifyInvalidDates:!helpers!private! !
+verifyInvalidDateTimes:!helpers!private! !
 verifyInvalidFloatValues:!helpers!private! !
 !
 
