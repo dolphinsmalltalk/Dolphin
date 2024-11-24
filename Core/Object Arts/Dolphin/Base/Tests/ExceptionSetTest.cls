@@ -1,18 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest
-	subclass: #'Core.Tests.ExceptionSetTest'
+DolphinTest
+	subclass: #'ExceptionSetTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
-Core.Tests.ExceptionSetTest guid: (Core.GUID fromString: '{5f2adc73-f36c-4e96-88e4-1ffa950f50b0}')!
+ExceptionSetTest guid: (GUID fromString: '{5f2adc73-f36c-4e96-88e4-1ffa950f50b0}')!
 
-Core.Tests.ExceptionSetTest comment: ''!
+ExceptionSetTest comment: ''!
 
-!Core.Tests.ExceptionSetTest methodsFor!
+!ExceptionSetTest methodsFor!
 
 testMatching
 	"Also implicitly tested by use in the OA SUnit extension, #should:raise:matching:"
@@ -33,7 +32,7 @@ testMatching
 			NotFoundError signal: 'Foo']
 		raise: selector! !
 
-!Core.Tests.ExceptionSetTest categoriesForMethods!
+!ExceptionSetTest categoriesForMethods!
 testMatching!public! !
 !
 
