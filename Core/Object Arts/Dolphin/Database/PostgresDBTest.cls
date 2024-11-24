@@ -1,16 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.Tests.DBConnectionTest
-	subclass: #'Database.Tests.PostgresDBTest'
+DBConnectionTest subclass: #PostgresDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
-Database.Tests.PostgresDBTest guid: (Core.GUID fromString: '{493047ac-7af4-4660-b729-c5280bfaf422}')!
+PostgresDBTest guid: (GUID fromString: '{493047ac-7af4-4660-b729-c5280bfaf422}')!
 
-Database.Tests.PostgresDBTest comment: ''!
+PostgresDBTest comment: ''!
 
 !PostgresDBTest categoriesForClass!Unclassified! !
 
@@ -195,7 +193,7 @@ verifyInvalidFloatValues: aDBParameterizedStatement
 	"Postgres can store non-finite floats"
 	self verifyCanStoreNonFiniteFloats: aDBParameterizedStatement! !
 
-!Database.Tests.PostgresDBTest categoriesForMethods!
+!PostgresDBTest categoriesForMethods!
 ageAtHireQuery!constants!private! !
 allDataTypes!constants!private! !
 categoriesColumns!constants!private! !
@@ -230,7 +228,7 @@ verifyInvalidDates:!helpers!private! !
 verifyInvalidFloatValues:!helpers!private! !
 !
 
-!Database.Tests.PostgresDBTest class methodsFor!
+!PostgresDBTest class methodsFor!
 
 resources
 	^{ PostgresNorthwindDB }! !
