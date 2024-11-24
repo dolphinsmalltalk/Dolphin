@@ -320,7 +320,9 @@ package setMethodNames: #(
 	#(#{Tools.MethodWorkspace} #populateAutoCorrectMenu:forVariable:)
 	#(#{Tools.MethodWorkspace} #populateImplementMenu:)
 	#(#{Tools.MethodWorkspace} #populateImplementMenu:forMessage:)
+	#(#{Tools.MethodWorkspace} #qualifyIdentifier)
 	#(#{Tools.MethodWorkspace} #queryAddParameterToMessage:)
+	#(#{Tools.MethodWorkspace} #queryChangeIdentifierQualification:)
 	#(#{Tools.MethodWorkspace} #queryChangeSignature:)
 	#(#{Tools.MethodWorkspace} #queryConvertTempToInstVar:)
 	#(#{Tools.MethodWorkspace} #queryInlineMessage:)
@@ -353,6 +355,7 @@ package setMethodNames: #(
 	#(#{Tools.MethodWorkspace} #renameVariable)
 	#(#{Tools.MethodWorkspace} #renameVariable:operation:validationBlock:)
 	#(#{Tools.MethodWorkspace} #renameVariableCommand:)
+	#(#{Tools.MethodWorkspace} #unqualifyIdentifier)
 	#(#{Tools.PackageBrowserShell} #addImport)
 	#(#{Tools.PackageBrowserShell} #addParameter)
 	#(#{Tools.PackageBrowserShell} #addParameterTo:)
@@ -3861,9 +3864,32 @@ populateImplementMenu: aMenu forMessage: aStMessageNode
 		description: '&Class…'.
 	aMenu setDefault: 1!
 
+qualifyIdentifier
+	"Invoke the 'Qualify Static Variable'  refactoring to fully qualify the selected static variable, 
+	or that under the cursor if no selection."
+
+	<commandQuery: #queryChangeIdentifierQualification:>
+	self performMethodRefactoring: 
+			[:method |
+			self developmentSystem
+				qualifyStaticVariable: self selectedNode sourceInterval
+				inMethod: method selector
+				of: method methodClass]!
+
 queryAddParameterToMessage: aCommandQuery
 	(self addParameterCommand: self selectedNode)
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryChangeIdentifierQualification: aCommandQuery
+	| varType description node |
+	node := self selectedNode.
+	varType := self variableClassification: node.
+	(varType == #class or: [varType == #classGlobal]) ifFalse: [^self].
+	aCommandQuery beEnabled.
+	description := self descriptionForVariableNode: node.
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: (description copyFrom: 1 to: 1) asLowercase , description allButFirst!
 
 queryChangeSignature: aCommandQuery
 	| cmd |
@@ -4139,7 +4165,19 @@ renameVariableCommand: aStVariableNode
 				#classGlobal -> #renameClass
 			})
 		lookup: (self variableClassification: aStVariableNode))
-			ifNotNil: [:selector | Message selector: selector]! !
+			ifNotNil: [:selector | Message selector: selector]!
+
+unqualifyIdentifier
+	"Invoke the 'Unqualify Static Variable' refactoring to remove any redundant namespace qualifiers from the selected static variable, 
+	or that under the cursor if no selection."
+
+	<commandQuery: #queryChangeIdentifierQualification:>
+	self performMethodRefactoring: 
+			[:method |
+			self developmentSystem
+				unqualifyStaticVariable: self selectedNode sourceInterval
+				inMethod: method selector
+				of: method methodClass]! !
 
 !Tools.MethodWorkspace categoriesForMethods!
 addClassVariable:to:!private!refactoring! !
@@ -4182,7 +4220,9 @@ populateAutoCorrectMenu:forUndefinedVar:!commands-menus!private! !
 populateAutoCorrectMenu:forVariable:!commands-menus!private! !
 populateImplementMenu:!commands-menus!private! !
 populateImplementMenu:forMessage:!commands-menus!private! !
+qualifyIdentifier!commands-actions!public!refactoring! !
 queryAddParameterToMessage:!commands-queries!public!refactoring! !
+queryChangeIdentifierQualification:!commands-queries!public!refactoring! !
 queryChangeSignature:!public!refactoring! !
 queryConvertTempToInstVar:!public!refactoring! !
 queryInlineMessage:!public!refactoring! !
@@ -4215,6 +4255,7 @@ renameTemporary:!private!refactoring! !
 renameVariable!commands-actions!public!refactoring! !
 renameVariable:operation:validationBlock:!private!refactoring! !
 renameVariableCommand:!commands-mappings!private!refactoring! !
+unqualifyIdentifier!commands-actions!public!refactoring! !
 !
 
 !Tools.PackageBrowserShell methodsFor!

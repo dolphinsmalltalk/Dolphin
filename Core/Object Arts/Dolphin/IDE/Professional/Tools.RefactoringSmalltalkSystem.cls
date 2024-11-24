@@ -1094,6 +1094,12 @@ pushUpMethods: aCollectionOfMethods
 
 	^self pushMethods: aCollectionOfMethods up: true!
 
+qualifyStaticVariable: anInterval inMethod: aSelector of: aBehavior
+	self performRefactoring: (QualifyStaticVariablesRefactoring
+				rewrite: anInterval
+				inMethod: aSelector
+				forClass: aBehavior)!
+
 refactoringError
 	"Private - Answer an <exceptionSelector> which can be used to trap exceptions raised during
 	a refactoring operation."
@@ -1520,6 +1526,12 @@ stubTextFor: aSymbol arguments: anArray inClass: aClass
 		nextPutAll: body.
 	^source contents!
 
+unqualifyStaticVariable: anInterval inMethod: aSelector of: aBehavior
+	self performRefactoring: (UnqualifyStaticVariablesRefactoring
+				rewrite: anInterval
+				inMethod: aSelector
+				forClass: aBehavior)!
+
 validateCreateSubclass: aClassDetails
 	^(AddClassRefactoring details: aClassDetails subclasses: #()) preconditions validate!
 
@@ -1649,6 +1661,7 @@ pushDownInstanceVariables:!public!refactoring! !
 pushDownMethods:!public!refactoring! !
 pushMethods:up:!private!refactoring! !
 pushUpMethods:!public!refactoring! !
+qualifyStaticVariable:inMethod:of:!public!refactoring! !
 refactoringError!constants!private! !
 refactoringToRenameVariable:to:isClassVariable:of:within:!private!refactoring! !
 removeClasses:!public!refactoring! !
@@ -1673,6 +1686,7 @@ renameVariable:to:isClassVariable:of:within:!private!refactoring! !
 selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
 showChangesText!constants!private! !
 stubTextFor:arguments:inClass:!private! !
+unqualifyStaticVariable:inMethod:of:!public!refactoring! !
 validateCreateSubclass:!helpers!private!refactoring! !
 validateNewClassVarName:for:!helpers!private!refactoring! !
 validateNewInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
