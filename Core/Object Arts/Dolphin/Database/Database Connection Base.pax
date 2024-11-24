@@ -129,6 +129,7 @@ package setBinaryVariableNames: #(
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Legacy Date & Time'
+	'..\Registry\Dolphin Registry Access'
 ).
 
 package!

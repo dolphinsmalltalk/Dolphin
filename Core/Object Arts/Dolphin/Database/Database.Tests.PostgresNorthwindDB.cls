@@ -71,11 +71,9 @@ dropDatabase
 
 getOdbcDriver
 	| drivers installed |
-	installed := self installedOdbcDrivers asSortedArray.
+	installed := DBConnection installedOdbcDrivers asSortedArray.
 	drivers := (installed select: [:each | 'PostgreSQL*Unicode*' match: each]) asSortedArray.
-	^drivers isEmpty
-		ifFalse: 
-			[drivers last]!
+	^drivers isEmpty ifFalse: [drivers last]!
 
 installationFolder
 	^(OS.RegKey localMachineRoot64 lookup: 'SOFTWARE\PostgreSQL Global Development Group\PostgreSQL')

@@ -60,7 +60,7 @@ testPackagesCorrectlySetUp
 	self
 		assert: ((Kernel.Package manager packageNamed: 'Database Connection Base') prerequisites
 				collect: [:each | each name]) asSortedArray
-		equals: #('Dolphin' 'Dolphin Legacy Date & Time')! !
+		equals: #('Dolphin' 'Dolphin Legacy Date & Time' 'Dolphin Registry Access')! !
 
 !Database.Tests.GenericDBTest categoriesForMethods!
 testConnectionString!public!unit tests! !

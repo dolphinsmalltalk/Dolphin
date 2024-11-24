@@ -1439,6 +1439,11 @@ initialize
 				yourself.
 	self newConnections!
 
+installedOdbcDrivers
+	"Answer a <collection> of the <readableString> names of the installed ODBC drivers. In 32-bit Dolphin these will be 32-bit drivers as they are read from the 32-bit registry view. In a (currently hypothetical) 64-bit Dolphin, they would be read from the main (64-bit) registry view."
+
+	^((OS.RegKey localMachineRoot: #read) at: 'SOFTWARE\ODBC\ODBCINST.INI') keys!
+
 invalidateHandle: anExternalHandle
 	"Private - Disconnect and free the specified connection handle.
 	This is used by DBConnection class to free a connection handle
@@ -1521,6 +1526,7 @@ environmentHandle!accessing!private! !
 freeAll!private!realizing/unrealizing! !
 freeEnvironment!private!realizing/unrealizing! !
 initialize!class initialization!private! !
+installedOdbcDrivers!enquiries!public! !
 invalidateHandle:!private!realizing/unrealizing! !
 new!instance creation!public! !
 newConnections!accessing!private! !
