@@ -80,6 +80,10 @@ testExpandSz
 	path := Kernel32 expandEnvironmentStrings: '%PATH%'.
 	self assert: (testKey valueAt: 'PATH') equals: path!
 
+testIncludesKey
+	self assert: (RegKey localMachineRoot64 includesKey: 'SOFTWARE\Microsoft\Wow64').
+	self deny: (RegKey localMachineRoot includesKey: 'SOFTWARE\Microsoft\Wow64').!
+
 testLocalMachineRootReadOnly
 	| hklm |
 	hklm := RegKey localMachineRoot.
@@ -264,6 +268,7 @@ testClassesRootReadOnly!public!unit tests! !
 testCreateUnderRoot!public!unit tests! !
 testDefaultValue!public!unit tests! !
 testExpandSz!public!unit tests! !
+testIncludesKey!public!unit tests! !
 testLocalMachineRootReadOnly!public!unit tests! !
 testMultiSz!public!unit tests! !
 testParentPath!public!unit tests! !

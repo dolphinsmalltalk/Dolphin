@@ -2285,6 +2285,7 @@ Kernel.SharedPool
 			'KEY_SET_VALUE' -> 16r2.
 			'KEY_WOW64_32KEY' -> 16r200.
 			'KEY_WOW64_64KEY' -> 16r100.
+			'KEY_WOW64_RES' -> 16r300.
 			'KEY_WRITE' -> 16r20006.
 			'REG_BINARY' -> 16r3.
 			'REG_DWORD' -> 16r4.

@@ -134,7 +134,7 @@ includesKey: keyString
 				regOpenKeyEx: handle
 				lpSubKey: keyString
 				ulOptions: 0
-				samDesired: KEY_READ
+				samDesired: (KEY_READ bitOr: (sam bitAnd: KEY_WOW64_RES))
 				phkResult: subKey.
 	AdvApi32 regCloseKey: subKey.
 	needsFree ifTrue: [self free].
