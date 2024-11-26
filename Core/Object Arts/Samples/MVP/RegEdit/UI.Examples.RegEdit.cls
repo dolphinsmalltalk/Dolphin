@@ -2,11 +2,11 @@
 
 UI.Shell
 	subclass: #'UI.Examples.RegEdit'
-	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
+	instanceVariableNames: 'keyPresenter valuesPresenter statusModel flags'
 	classVariableNames: 'ResourceLib'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'IsWow64View' -> 16r1 }!
 
 UI.Examples.RegEdit guid: (Core.GUID fromString: '{87b4c69e-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -204,11 +204,24 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
+	flags := 0.
 	keyPresenter model roots: {RegKey classesRoot: #read.
 				RegKey userRoot.
 				RegKey localMachineRoot: #read.
 				RegKey usersRoot.
 				RegKey configRoot}!
+
+isWow64View
+	^flags allMask: IsWow64View!
+
+isWow64View: aBoolean
+	| selected |
+	self isWow64View = aBoolean ifTrue: [^self].
+	flags := flags mask: IsWow64View set: aBoolean.
+	selected := self selectedKey.
+	keyPresenter model roots do: [:each | each isWow64: aBoolean].
+	self refresh.
+	selected ifNotNil: [keyPresenter selection: selected ifAbsent: []]!
 
 newBinaryValue
 	"Add a new, empty, string value under the currently selected key."
@@ -349,6 +362,11 @@ queryToggleStatusBar: aCommandQuery
 		beEnabled;
 		isChecked: self statusBar isWindowVisible!
 
+queryToggleWow64View: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		isChecked: self isWow64View!
+
 refresh
 	| selection |
 	selection := keyPresenter selectionOrNil.
@@ -404,7 +422,11 @@ toggleStatusBar
 	| statusBar |
 	statusBar := self statusBar.
 	statusBar isWindowVisible ifTrue: [statusBar hide] ifFalse: [statusBar show].
-	self view invalidateLayout! !
+	self view invalidateLayout!
+
+viewToggleWow64
+	<commandQuery: #queryToggleWow64View:>
+	self isWow64View: self isWow64View not! !
 
 !UI.Examples.RegEdit categoriesForMethods!
 aboutRegistryEditor!commands-actions!private! !
@@ -427,6 +449,8 @@ hasWriteableKeySelected!commands-queries!private! !
 hasWriteableNonRootKeySelected!commands-queries!private! !
 importRegistryFile!commands-actions!private! !
 initialize!initializing!private! !
+isWow64View!commands-queries!public!testing! !
+isWow64View:!accessing!public! !
 newBinaryValue!commands-actions!public! !
 newDWORDValue!commands-actions!public! !
 newKey!commands-actions!public! !
@@ -442,6 +466,7 @@ onViewOpened!event handling!public! !
 queryDeleteCommand:!commands-queries!private! !
 queryRenameCommand:!commands-queries!private! !
 queryToggleStatusBar:!commands-queries!private! !
+queryToggleWow64View:!commands-queries!private! !
 refresh!commands-actions!private! !
 rename!commands-actions!private! !
 renameCommand!commands-mappings!private! !
@@ -452,6 +477,7 @@ selectedKey!accessing!public! !
 selectedValue!accessing!public! !
 statusBar!accessing!private! !
 toggleStatusBar!commands-actions!private! !
+viewToggleWow64!commands-actions!private! !
 !
 
 !UI.Examples.RegEdit class methodsFor!
@@ -540,7 +566,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #default nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1140850956 1 240 nil 112 nil 5 nil nil nil 240 nil nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 1862 1 #{UI.StatusBarItem} 8193 -1 240 nil 518 #{Core.Message} #fullPath 8 #() nil nil 8 'key name' nil nil nil 50 1 368 1094 1 #{UI.StatusBarNullItem} 8705 1 240 nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[0 0 0 0 59 1 0 0 162 2 0 0 80 1 0 0] 193 272 8 '' 240 3 8 #() 518 #{Graphics.Point} 193 193 nil 29 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 736 nil 112 nil 5 nil nil nil 736 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.Splitter} 50 12 nil 736 50 2 8 1140850688 1 912 nil 112 nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 912 nil 1 #left nil nil nil 706 1 1 706 9 9 nil 1008 nil 498 50 1 546 #createWindow: 50 1 594 626 8 #[223 0 0 0 0 0 0 0 228 0 0 0 59 1 0 0] 193 944 8 '' 912 3 8 #() 706 193 193 nil 27 1 882 18 #{UI.ListView} 50 45 nil 736 50 2 8 1140955717 1025 1216 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 112 nil 5 2886 4 #{UI.Menu} nil true 50 4 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #modifySelectedValue 8 'Modify' 1 5 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 1426 1 1458 #deleteSelectedValue 8 '&Delete' 1 1 nil nil nil 1426 1 1458 #renameSelectedValue 8 '&Rename' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1216 nil nil 386 #displayString 8 #() 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 1680 8 'doIt' 8 '[:o | (UI.Examples.RegEdit iconFor: o value) imageIndex]' 8 #[32 105 45 17 142 177 160 106] 1094 2 #{Kernel.VariableBinding} #RegEdit #{UI.Examples.RegEdit} #{UI.Examples} 1 #iconFor: #imageIndex 1696 7 257 nil 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 1314 2 3142 5 #{UI.ListViewColumn} 8 'Name' 451 #left 1682 0 nil 1714 4 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x | x isEmpty ifTrue: [''(Default)''] ifFalse: [x displayString]]' 8 #[32 105 17 158 119 30 106 17 160 106] #isEmpty 8 '(Default)' #displayString 1920 7 257 nil 1682 0 nil 1714 1 83886081 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a <= b]' 8 #[29 105 233 1 130 106] 2016 7 513 nil 386 #key 8 #() nil 1216 386 #iconImageIndex 8 #() 1 nil nil 1874 8 'Data' 601 #left 1682 0 nil 1714 3 1 1680 8 'doIt' 8 '[:v | UI.Examples.RegEdit displayStringForValue: v]' 8 #[31 105 45 17 177 106] 1808 #displayStringForValue: 2192 7 257 nil 1682 0 nil 1714 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a displayString <= b displayString]' 8 #[30 105 17 158 18 158 130 106] #displayString 2272 7 513 nil 386 #value 8 #() nil 1216 386 #iconImageIndex 1664 1 nil nil #report 8 #() nil 131073 nil 1 nil nil nil nil 1 262 #{UI.ListViewVirtualUpdateMode} 1216 nil nil nil nil nil nil nil nil nil 498 50 2 546 #createWindow: 50 1 594 626 8 #[228 0 0 0 0 0 0 0 162 2 0 0 59 1 0 0] 193 1248 8 'Name' 1216 546 #contextMenu: 50 1 1392 1216 3 8 #() 706 193 193 nil 35 5 false 306 #{Core.IdentityDictionary} 50 4 18 #{UI.TreeView} 50 35 nil 736 50 2 8 1140916743 1025 2672 1094 3 #{UI.TreeModel} nil 1360 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 112 nil 5 1378 nil true 50 11 1426 1 1458 #expandSelection 8 'Expand/Collapse' 1 1 nil nil nil 1378 nil true 50 5 1426 1 1458 #newKey 8 '&Key' 1 5 nil nil nil 1506 4097 1426 1 1458 #newStringValue 8 '&String Value' 1 1 nil nil nil 1426 1 1458 #newBinaryValue 8 '&Binary Value' 1 1 nil nil nil 1426 1 1458 #newDWORDValue 8 '&DWORD Value' 1 1 nil nil nil 8 '&New' nil 1 nil nil nil nil nil 1426 1 1458 #findItem 8 '&Find…' 1 5 nil nil nil 1506 4097 1426 1 1458 #deleteSelectedKey 8 '&Delete' 1 1 nil nil nil 1426 1 1458 #renameSelectedKey 8 '&Rename' 1 1 nil nil nil 1506 4097 1426 1 1458 #exportRegistryFile 8 '&Export' 1 1 nil nil nil 1426 1 1458 #permissions 8 '&Permissions…' 1 1 nil nil nil 1506 4097 1426 1 1458 #copyKeyName 8 '&Copy Key Name' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2672 nil nil 386 #name 8 #() 1682 0 nil 1714 4 1 1680 8 'doIt' 8 '[:k | UI.Examples.RegEdit keyIcon imageIndex]' 8 #[32 105 45 159 160 106] 1808 #keyIcon #imageIndex 3552 7 257 nil 1840 nil nil nil nil nil 550 #{Core.LookupTable} 0 9 #smallIcons 1 2802 0 1 262 #{UI.TreeViewDynamicUpdateMode} 2672 nil nil nil nil nil nil 498 50 2 546 #createWindow: 50 1 594 626 8 #[0 0 0 0 0 0 0 0 223 0 0 0 59 1 0 0] 193 2704 8 '' 2672 546 #contextMenu: 50 1 2832 2672 3 8 #() 706 193 193 nil 29 8 'keys' 1216 8 'values' nil 498 50 1 546 #createWindow: 50 1 594 626 8 #[0 0 0 0 0 0 0 0 162 2 0 0 59 1 0 0] 193 768 8 '' 736 3 50 3 2672 912 1216 706 193 193 nil 27 306 2800 50 2 240 8 'status' nil 2886 4 #{UI.MenuBar} nil true 50 4 1378 nil true 50 12 1426 1 1458 #importRegistryFile 8 'Import…' 1 1 nil nil nil 1426 1 1458 #exportRegistryFile 8 '&Export…' 1 1 nil nil nil 1506 4097 1426 1 1458 #loadHive 8 '&Load Hive' 1 1 nil nil nil 1426 1 1458 #unloadHive 8 '&Unload Hive' 1 1 nil nil nil 1506 4097 1426 1 1458 #connectNetworkRegistry 8 '&Connect Network Registry' 1 1 nil nil nil 1426 1 1458 #disconnectNetworkRegistry 8 '&Disconnect Network Registry' 1 1 nil nil nil 1506 4097 1426 1 1458 #print 8 '&Print' 8353 1 nil nil nil 1506 4097 1426 1 1458 #exit 8 'E&xit' 1 1 nil nil nil 8 '&Registry' nil 1 nil nil nil nil nil 1378 nil true 50 11 1378 nil true 50 7 1426 1 1458 #newKey 8 '&Key' 1 1 nil nil nil 1506 4097 1426 1 1458 #newStringValue 8 '&String Value' 1 1 nil nil nil 1426 1 1458 #newBinaryValue 8 '&Binary Value' 1 1 nil nil nil 1426 1 1458 #newDWORDValue 8 '&DWORD Value' 1 1 nil nil nil 1426 1 1458 #newMultiStringValue 8 '&Multi-String Value' 1 1 nil nil nil 1426 1 1458 #newExpandableStringValue 8 '&Expandable String Value' 1 1 nil nil nil 8 '&New' nil 1 nil nil nil nil nil 1506 4097 1426 1 1458 #permissions 8 '&Permissions…' 1 1 nil nil nil 1506 4097 1426 1 1458 #delete 8 '&Delete' 605 1 nil nil nil 1426 1 1458 #rename 8 '&Rename' 1 1 nil nil nil 1506 4097 1426 1 1458 #copyKeyName 8 '&Copy Key Name' 1 1 nil nil nil 1506 4097 1426 1 1458 #find 8 '&Find…' 8333 1 nil nil nil 1426 1 1458 #findNext 8 'Find Ne&xt' 229 1 nil nil nil 8 '&Edit' nil 1 nil nil nil nil nil 1378 nil true 50 8 1426 1 1458 #toggleStatusBar 8 '&Status Bar' 1 1 nil nil nil 1506 4097 1426 1 1458 #viewSplit 8 'Sp&lit' 1 1 nil nil nil 1506 4097 1426 1 1458 #viewDisplayBinary 8 '&Display Binary Data' 1 1 nil nil nil 1506 4097 1426 1 1458 #refresh 8 '&Refresh' 233 1 nil nil nil 1426 1 1458 #chooseFont 8 '&Font' 1 1 nil nil nil 8 '&View' nil 1 nil nil nil nil nil 1378 nil true 50 1 1426 1 1458 #aboutRegistryEditor 8 '&About Registry Editor' 1 1 nil nil nil 8 '&Help' nil 1 nil nil nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil 193 498 50 1 546 #createWindow: 50 1 594 518 #{Graphics.Rectangle} 706 7679 21 706 9059 811 193 80 8 'Dolphin Registry Editor' 32 1 50 2 736 240 706 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #default nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1140850956 1 240 nil 112 nil 5 nil nil nil 240 nil nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 1862 1 #{UI.StatusBarItem} 8193 -1 240 nil 518 #{Core.Message} #fullPath 8 #() nil nil 8 'key name' nil nil nil 50 1 368 1094 1 #{UI.StatusBarNullItem} 8705 1 240 nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[0 0 0 0 59 1 0 0 162 2 0 0 80 1 0 0] 193 272 8 '' 240 3 8 #() 518 #{Graphics.Point} 193 193 nil 29 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 736 nil 112 nil 5 nil nil nil 736 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.Splitter} 50 12 nil 736 50 2 8 1140850688 1 912 nil 112 nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 912 nil 1 #left nil nil nil 706 1 1 706 9 9 nil 1008 nil 498 50 1 546 #createWindow: 50 1 594 626 8 #[223 0 0 0 0 0 0 0 228 0 0 0 59 1 0 0] 193 944 8 '' 912 3 8 #() 706 193 193 nil 27 1 882 18 #{UI.ListView} 50 45 nil 736 50 2 8 1140955717 1025 1216 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 112 nil 5 2886 4 #{UI.Menu} nil true 50 4 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #modifySelectedValue 8 'Modify' 1 5 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 1426 1 1458 #deleteSelectedValue 8 '&Delete' 1 1 nil nil nil 1426 1 1458 #renameSelectedValue 8 '&Rename' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1216 nil nil 386 #displayString 8 #() 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 1680 8 'doIt' 8 '[:o | (UI.Examples.RegEdit iconFor: o value) imageIndex]' 8 #[32 105 45 17 142 177 160 106] 1094 2 #{Kernel.VariableBinding} #RegEdit #{UI.Examples.RegEdit} #{UI.Examples} 1 #iconFor: #imageIndex 1696 7 257 nil 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 1314 2 3142 5 #{UI.ListViewColumn} 8 'Name' 451 #left 1682 0 nil 1714 4 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x | x isEmpty ifTrue: [''(Default)''] ifFalse: [x displayString]]' 8 #[32 105 17 158 119 30 106 17 160 106] #isEmpty 8 '(Default)' #displayString 1920 7 257 nil 1682 0 nil 1714 1 83886081 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a <= b]' 8 #[29 105 233 1 130 106] 2016 7 513 nil 386 #key 8 #() nil 1216 386 #iconImageIndex 8 #() 1 nil nil 1874 8 'Data' 601 #left 1682 0 nil 1714 3 1 1680 8 'doIt' 8 '[:v | UI.Examples.RegEdit displayStringForValue: v]' 8 #[31 105 45 17 177 106] 1808 #displayStringForValue: 2192 7 257 nil 1682 0 nil 1714 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a displayString <= b displayString]' 8 #[30 105 17 158 18 158 130 106] #displayString 2272 7 513 nil 386 #value 8 #() nil 1216 386 #iconImageIndex 1664 1 nil nil #report 8 #() nil 131073 nil 1 nil nil nil nil 1 262 #{UI.ListViewVirtualUpdateMode} 1216 nil nil nil nil nil nil nil nil nil 498 50 2 546 #createWindow: 50 1 594 626 8 #[228 0 0 0 0 0 0 0 162 2 0 0 59 1 0 0] 193 1248 8 'Name' 1216 546 #contextMenu: 50 1 1392 1216 3 8 #() 706 193 193 nil 35 5 false 306 #{Core.IdentityDictionary} 50 4 18 #{UI.TreeView} 50 35 nil 736 50 2 8 1140916743 1025 2672 1094 3 #{UI.TreeModel} nil 1360 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 112 nil 5 1378 nil true 50 11 1426 1 1458 #expandSelection 8 'Expand/Collapse' 1 1 nil nil nil 1378 nil true 50 5 1426 1 1458 #newKey 8 '&Key' 1 5 nil nil nil 1506 4097 1426 1 1458 #newStringValue 8 '&String Value' 1 1 nil nil nil 1426 1 1458 #newBinaryValue 8 '&Binary Value' 1 1 nil nil nil 1426 1 1458 #newDWORDValue 8 '&DWORD Value' 1 1 nil nil nil 8 '&New' nil 1 nil nil nil nil nil 1426 1 1458 #findItem 8 '&Find…' 1 5 nil nil nil 1506 4097 1426 1 1458 #deleteSelectedKey 8 '&Delete' 1 1 nil nil nil 1426 1 1458 #renameSelectedKey 8 '&Rename' 1 1 nil nil nil 1506 4097 1426 1 1458 #exportRegistryFile 8 '&Export' 1 1 nil nil nil 1426 1 1458 #permissions 8 '&Permissions…' 1 1 nil nil nil 1506 4097 1426 1 1458 #copyKeyName 8 '&Copy Key Name' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2672 nil nil 386 #name 8 #() 1682 0 nil 1714 4 1 1680 8 'doIt' 8 '[:k | UI.Examples.RegEdit keyIcon imageIndex]' 8 #[32 105 45 159 160 106] 1808 #keyIcon #imageIndex 3552 7 257 nil 1840 nil nil nil nil nil 550 #{Core.LookupTable} 0 9 #smallIcons 1 2802 0 1 262 #{UI.TreeViewDynamicUpdateMode} 2672 nil nil nil nil nil nil 498 50 2 546 #createWindow: 50 1 594 626 8 #[0 0 0 0 0 0 0 0 223 0 0 0 59 1 0 0] 193 2704 8 '' 2672 546 #contextMenu: 50 1 2832 2672 3 8 #() 706 193 193 nil 29 8 'keys' 1216 8 'values' nil 498 50 1 546 #createWindow: 50 1 594 626 8 #[0 0 0 0 0 0 0 0 162 2 0 0 59 1 0 0] 193 768 8 '' 736 3 50 3 2672 912 1216 706 193 193 nil 27 306 2800 50 2 240 8 'status' nil 2886 4 #{UI.MenuBar} nil true 50 4 1378 nil true 50 12 1426 1 1458 #importRegistryFile 8 'Import…' 1 1 nil nil nil 1426 1 1458 #exportRegistryFile 8 '&Export…' 1 1 nil nil nil 1506 4097 1426 1 1458 #loadHive 8 '&Load Hive' 1 1 nil nil nil 1426 1 1458 #unloadHive 8 '&Unload Hive' 1 1 nil nil nil 1506 4097 1426 1 1458 #connectNetworkRegistry 8 '&Connect Network Registry' 1 1 nil nil nil 1426 1 1458 #disconnectNetworkRegistry 8 '&Disconnect Network Registry' 1 1 nil nil nil 1506 4097 1426 1 1458 #print 8 '&Print' 8353 1 nil nil nil 1506 4097 1426 1 1458 #exit 8 'E&xit' 1 1 nil nil nil 8 '&Registry' nil 1 nil nil nil nil nil 1378 nil true 50 11 1378 nil true 50 7 1426 1 1458 #newKey 8 '&Key' 1 1 nil nil nil 1506 4097 1426 1 1458 #newStringValue 8 '&String Value' 1 1 nil nil nil 1426 1 1458 #newBinaryValue 8 '&Binary Value' 1 1 nil nil nil 1426 1 1458 #newDWORDValue 8 '&DWORD Value' 1 1 nil nil nil 1426 1 1458 #newMultiStringValue 8 '&Multi-String Value' 1 1 nil nil nil 1426 1 1458 #newExpandableStringValue 8 '&Expandable String Value' 1 1 nil nil nil 8 '&New' nil 1 nil nil nil nil nil 1506 4097 1426 1 1458 #permissions 8 '&Permissions…' 1 1 nil nil nil 1506 4097 1426 1 1458 #delete 8 '&Delete' 605 1 nil nil nil 1426 1 1458 #rename 8 '&Rename' 1 1 nil nil nil 1506 4097 1426 1 1458 #copyKeyName 8 '&Copy Key Name' 1 1 nil nil nil 1506 4097 1426 1 1458 #find 8 '&Find…' 8333 1 nil nil nil 1426 1 1458 #findNext 8 'Find Ne&xt' 229 1 nil nil nil 8 '&Edit' nil 1 nil nil nil nil nil 1378 nil true 50 9 1426 1 1458 #toggleStatusBar 8 '&Status Bar' 1 1 nil nil nil 1506 4097 1426 1 1458 #viewSplit 8 'Sp&lit' 1 1 nil nil nil 1506 4097 1426 1 1458 #viewDisplayBinary 8 '&Display Binary Data' 1 1 nil nil nil 1426 1 1458 #viewToggleWow64 8 '&64-bit View' 1 1 nil nil nil 1506 4097 1426 1 1458 #refresh 8 '&Refresh' 233 1 nil nil nil 1426 1 1458 #chooseFont 8 '&Font' 1 1 nil nil nil 8 '&View' nil 1 nil nil nil nil nil 1378 nil true 50 1 1426 1 1458 #aboutRegistryEditor 8 '&About Registry Editor' 1 1 nil nil nil 8 '&Help' nil 1 nil nil nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil nil nil 193 498 50 1 546 #createWindow: 50 1 594 518 #{Graphics.Rectangle} 706 6143 21 706 7523 811 193 80 8 'Dolphin Registry Editor' 32 1 50 2 736 240 706 193 193 nil 27)!
 
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."

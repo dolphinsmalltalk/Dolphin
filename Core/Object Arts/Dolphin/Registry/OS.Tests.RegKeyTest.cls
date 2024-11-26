@@ -84,6 +84,18 @@ testIncludesKey
 	self assert: (RegKey localMachineRoot64 includesKey: 'SOFTWARE\Microsoft\Wow64').
 	self deny: (RegKey localMachineRoot includesKey: 'SOFTWARE\Microsoft\Wow64').!
 
+testIsWow64
+	| subject |
+	self assert: RegKey localMachineRoot64 isWow64.
+	subject := RegKey localMachineRoot.
+	self deny: subject isWow64.
+	self assertIsNil: (subject at: 'SOFTWARE\Microsoft\Wow64' ifAbsent: nil).
+	subject isWow64: true.
+	self assertNotNil: (subject at: 'SOFTWARE\Microsoft\Wow64' ifAbsent: nil).
+	subject isWow64: false.
+	self assertIsNil: (subject at: 'SOFTWARE\Microsoft\Wow64' ifAbsent: nil).
+!
+
 testLocalMachineRootReadOnly
 	| hklm |
 	hklm := RegKey localMachineRoot.
@@ -269,6 +281,7 @@ testCreateUnderRoot!public!unit tests! !
 testDefaultValue!public!unit tests! !
 testExpandSz!public!unit tests! !
 testIncludesKey!public!unit tests! !
+testIsWow64!public!unit tests! !
 testLocalMachineRootReadOnly!public!unit tests! !
 testMultiSz!public!unit tests! !
 testParentPath!public!unit tests! !

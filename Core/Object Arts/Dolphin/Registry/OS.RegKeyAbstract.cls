@@ -208,6 +208,15 @@ isRoot
 isSelfEvaluating: visitedSet
 	^false!
 
+isWow64
+	^sam allMask: KEY_WOW64_64KEY!
+
+isWow64: aBoolean
+	| newSam |
+	newSam := sam bitAnd: ##(KEY_WOW64_RES bitInvert).
+	aBoolean ifTrue: [newSam := newSam bitOr: KEY_WOW64_64KEY].
+	self sam: newSam!
+
 isWriteable
 	"Answer whether this key can be written to (i.e. create, update and delete operations on sub-keys and values are possible)."
 
@@ -790,6 +799,8 @@ hash!comparing!public! !
 includesKey:!public!searching! !
 isRoot!public!testing! !
 isSelfEvaluating:!private!testing! !
+isWow64!public!testing! !
+isWow64:!accessing!public! !
 isWriteable!public!testing! !
 key!accessing!public! !
 key:!accessing!public! !
