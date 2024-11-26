@@ -84,11 +84,11 @@ UI.VirtualTreeModel
 
 UI.Shell
 	subclass: #'UI.Examples.RegEdit'
-	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
+	instanceVariableNames: 'keyPresenter valuesPresenter statusModel flags'
 	classVariableNames: 'ResourceLib'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'IsWow64View' -> 16r1 }!
 
 "End of package definition"!
 
