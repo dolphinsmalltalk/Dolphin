@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
 
-**Please note: The master branch is now the development branch for version 8.0. This adds support for namespaces and has numerous other improvements, but is currently in a beta state. It also changes the package and class file formats when namespaces are used, and consequently code saved in the new format is not loadable directly into earlier versions of Dolphin. It is still possible to save packages in the old format, but only if namespaces are not used or referenced. Please use the `release/7.1` branch if you need to keep working with code in release 7.1, or if you require a stable version. PRs for bug fixes, etc, will still be accepted against the `release/7.1` branch for the foreseeable future.**
+**Please note: The master branch is now the development branch for version 8.x. This adds support for namespaces and has numerous other improvements, but application code from 7.x will probably require changes when ported to it as it is a major version change. Dolphin 8 changes the package and class file formats when namespaces are used, and consequently code saved in the new format is not loadable directly into earlier versions of Dolphin. It is still possible to save packages in the old format from 8.x, but only if namespaces are not used or referenced. Please use the `release/7.2` branch if you need to keep working with code in release 7.2, or if you require a stable version. PRs for bug fixes, etc, will still be accepted against the `release/7.2` branch for the foreseeable future.**
 
 This repository contains:
 * A VS2022 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
@@ -22,9 +22,9 @@ It is not always necessary to build the VM, since pre-built binaries are availab
 
 Follow these instructions to create the product image and launch Dolphin Smalltalk for the first time.
 
-* First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any supported version of Windows should be suitable, and at the moment that means _only_ Windows 10 or 11. Dolphin _may_ run on older Windows versions, but there should be no expectation that it will, or will continue to do so.
+* First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any supported version of Windows should be suitable, and at the moment that means _only_ Windows 10 or 11. Dolphin _may_ run on older Windows versions, but there should be no expectation that it will, or will continue to do so. 
 
-* The master branch is on the bleeding edge and current is in an unstable state while version 8.0 is in development, although the tests should always be passing. If you need a stable build then you should use the `release/7.1` branch.
+* The master branch is on the bleeding edge and may be in a relatively unstable state, although the tests should always be passing. If you need a more stable build then you should use the `release/7.2` branch.
 
 * Next you will need to build the binaries as described above, or fetch the VM binaries. For convenience a batch file, `FetchVM.CMD` is supplied that will determine the correct VM version and invoke the helper PowerShell script `FetchVM.ps1` to download it. If you want to download an alternative VM (which is not usually recommended) then this can be done by invoking `FetchVM.ps1` with a parameter..
 
@@ -48,7 +48,7 @@ You should see Dolphin Professional 8 launch successfully.
 
 If you want to submit changes, you will need to create your own fork and clone that instead. You will not be able to push directly to the main Dolphin repo.
 
-If you wish to contribute to 8.0 VM, please make and commit your VM changes in this Dolphin repo and submit a PR here. PRs can contain synchronized changes to both the VM and the image, and the PR validation build will exercise both.
+If you wish to contribute to 8.x VM, please make and commit your VM changes in this Dolphin repo and submit a PR here. PRs can contain synchronized changes to both the VM and the image, and the PR validation build will exercise both.
 
 Any contributions are welcome, but are expected to be of a very high standard. You are more likely to have your contribution accepted unchanged if you follow these rules:
 - PRs should be associated with a pre-existing issue. In other words, create a github issue describing your bug or proposed improvement first. This allows the merits of the change to be discussed and should save wasted time preparing a PR that is rejected because the change is not agreed on principle.
@@ -58,6 +58,6 @@ Any contributions are welcome, but are expected to be of a very high standard. Y
 
 ## Releasing a new version of Dolphin
 
-If sufficient changes have been made to the VM or image such that a new release is warranted, you can push a new tag of the form _8.x.y_ (eg: **8.0.4**). When the tag is eventually pushed to the GitHub master branch (by a maintainer) this will trigger AppVeyor to build and generate a new [Release](https://github.com/dolphinsmalltalk/Dolphin/releases). Each release consists of the full set of VM binaries wrapped up as a zip called `DolphinVM.zip`, and associated PDBs (native debug information for the binaries). The `FetchVM` script will automatically download the correct set of binaries associated with the latest tag at which the repository is checked out. The release build does also build a setup .exe, but this is not maintained so it may not function correctly.
+If sufficient changes have been made to the VM or image such that a new release is warranted, you can push a new tag of the form _8.x.y_ (eg: **8.3.9**). When the tag is eventually pushed to the GitHub master branch (by a maintainer) this will trigger AppVeyor to build and generate a new [Release](https://github.com/dolphinsmalltalk/Dolphin/releases). Each release consists of the full set of VM binaries wrapped up as a zip called `DolphinVM.zip`, and associated PDBs (native debug information for the binaries). The `FetchVM` script will automatically download the correct set of binaries associated with the latest tag at which the repository is checked out. The release build does also build a setup .exe, but this is not maintained so it may not function correctly.
 
 
