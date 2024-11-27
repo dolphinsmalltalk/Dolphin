@@ -42,7 +42,7 @@ Follow these instructions to create the product image and launch Dolphin Smallta
 
 You should see Dolphin Professional 8 launch successfully.
 
-![Dolphin System Folder](https://user-images.githubusercontent.com/15128107/44483893-33180800-a644-11e8-843b-ce731367e4cb.png)
+![image](https://github.com/user-attachments/assets/13af4b10-9a5d-49fe-8857-2ef6e85575d8)
 
 ## Contributing to Dolphin
 
