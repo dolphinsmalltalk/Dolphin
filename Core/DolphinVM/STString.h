@@ -119,14 +119,14 @@ namespace ST
 
 		static POTE __fastcall New(size_t cch)
 		{
-			MyOTE* stringPointer = ObjectMemory::newUninitializedNullTermObject<MyType>(cch);
+			MyOTE* stringPointer = ObjectMemory::template newUninitializedNullTermObject<MyType>(cch);
 			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
 
 		static POTE __fastcall New(PCSZ __restrict value, size_t cch)
 		{
-			MyOTE* stringPointer = ObjectMemory::newUninitializedNullTermObject<MyType>(cch);
+			MyOTE* stringPointer = ObjectMemory::template newUninitializedNullTermObject<MyType>(cch);
 			MyType* __restrict string = stringPointer->m_location;
 			string->m_characters[cch] = '\0';
 			memcpy(string->m_characters, value, cch);
@@ -137,7 +137,7 @@ namespace ST
 		static POTE __fastcall New(PCSZ __restrict sz)
 		{
 			size_t cch = strlen((LPCSTR)sz);
-			MyOTE* stringPointer = ObjectMemory::newUninitializedNullTermObject<MyType>(cch);
+			MyOTE* stringPointer = ObjectMemory::template newUninitializedNullTermObject<MyType>(cch);
 			MyType* __restrict string = stringPointer->m_location;
 			// Copy the string and null terminator
 			memcpy(string->m_characters, sz, cch + sizeof(CU));
