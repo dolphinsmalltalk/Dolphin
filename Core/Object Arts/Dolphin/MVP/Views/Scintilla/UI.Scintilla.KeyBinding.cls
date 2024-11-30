@@ -265,7 +265,9 @@ initializeCommands
 						SCI_CLEAR -> #clearSelection.
 						SCI_CLEARALL -> #clearAll.
 						SCI_COPY -> #copySelection.
+						SCI_COPYALLOWLINE -> #basicCopySelectionOrLine.
 						SCI_CUT -> #cutSelection.
+						SCI_CUTALLOWLINE -> #basicCutSelectionOrLine.
 						SCI_DELETEBACK -> #backspace.
 						SCI_DELETEBACKNOTLINE -> #backspaceNoLine.
 						SCI_DELLINELEFT -> #deleteToStartOfLine.
@@ -288,6 +290,7 @@ initializeCommands
 						SCI_HOMEWRAPEXTEND -> #extendToStartOfWrappedLine.
 						SCI_LINECOPY -> #copyLine.
 						SCI_LINECUT -> #cutLine.
+						SCI_LINEDEDENT -> #unindentLines.
 						SCI_LINEDELETE -> #deleteLine.
 						SCI_LINEDOWN -> #moveDown.
 						SCI_LINEDOWNEXTEND -> #extendDown.
@@ -300,6 +303,7 @@ initializeCommands
 						SCI_LINEENDRECTEXTEND -> #extendRectangleToEndOfLine.
 						SCI_LINEENDWRAP -> #moveToEndOfWrappedLine.
 						SCI_LINEENDWRAPEXTEND -> #extendToEndOfWrappedLine.
+						SCI_LINEINDENT -> #indentLines.
 						SCI_LINEREVERSE -> #reverseSelectedLines.
 						SCI_LINESCROLLDOWN -> #scrollDown.
 						SCI_LINESCROLLUP -> #scrollUp.

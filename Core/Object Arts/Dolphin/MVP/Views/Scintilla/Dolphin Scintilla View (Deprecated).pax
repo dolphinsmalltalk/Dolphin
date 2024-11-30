@@ -127,7 +127,7 @@ highlightRange: anInterval withIndicator: idInteger
 	self setIndicator: idInteger range: anInterval!
 
 hoverTime
-	#deprecated.	"Use #hoverDwell"
+	#deprecated.	"Use #mouseDwellTime"
 	^self sciGetMouseDwellTime!
 
 hoverTime: periodMillisecondsInteger
@@ -263,32 +263,32 @@ tokenTextAt: anInteger
 	^self styleRunTextAt: anInteger! !
 
 !UI.Scintilla.ScintillaView categoriesForMethods!
-currentLineAlpha:!caret, selection, and hotspot styles!public! !
+currentLineAlpha:!public!selection, caret, and hotspot styles! !
 firstVisibleLine:!public!scrolling! !
 highlightRange:withIndicator:!indicators!public! !
 hoverTime!other settings!private! !
 hoverTime:!other settings!private! !
 indicatorCount!constants!indicators!public! !
-indicatorStyles!public!scintilla interface! !
-indicatorStyles:!public!scintilla interface! !
-isCurrentLineHighlighted:!caret, selection, and hotspot styles!public! !
+indicatorStyles!indicators!public! !
+indicatorStyles:!indicators!public! !
+isCurrentLineHighlighted:!public!selection, caret, and hotspot styles! !
 isDrawingBuffered!other settings!public!testing! !
 isDrawingBuffered:!other settings!public! !
-isDrawingTwoPhase!public!scintilla interface! !
-isDrawingTwoPhase:!public!scintilla interface! !
-isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
-isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
-marginCount!margins!public!scintilla interface! !
-marginCount:!margins!public!scintilla interface! !
-sciFormatRange:fr:!printing!private!scintilla interface! !
-sciSetEdgeColumn:!long lines!private!scintilla interface! !
-secondarySelectionAlpha:!caret, selection, and hotspot styles!public! !
-selectionAlpha:!caret, selection, and hotspot styles!public! !
-tokenEndAt:!enquiries!public! !
-tokenRangeAt:!enquiries!public! !
+isDrawingTwoPhase!public!scintilla interface-deprecated and discouraged messages and notifications! !
+isDrawingTwoPhase:!public!scintilla interface-deprecated and discouraged messages and notifications! !
+isKeyboardInputUnicode!**auto generated**!public!scintilla interface-other settings!testing! !
+isKeyboardInputUnicode:!**auto generated**!public!scintilla interface-other settings! !
+marginCount!public! !
+marginCount:!public! !
+sciFormatRange:fr:!private!scintilla interface-printing! !
+sciSetEdgeColumn:!private!scintilla interface-long lines! !
+secondarySelectionAlpha:!public!selection, caret, and hotspot styles! !
+selectionAlpha:!public!selection, caret, and hotspot styles! !
+tokenEndAt:!public!styling! !
+tokenRangeAt:!public!styling! !
 tokensFrom:to:!public!text retrieval & modification! !
-tokenStartAt:!enquiries!public! !
-tokenTextAt:!enquiries!public! !
+tokenStartAt:!public!styling! !
+tokenTextAt:!public!styling! !
 !
 
 "End of package definition"!

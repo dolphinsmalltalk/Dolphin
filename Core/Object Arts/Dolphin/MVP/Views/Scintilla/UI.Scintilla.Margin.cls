@@ -133,7 +133,13 @@ isFolders
 	^mask allMask: SC_MASK_FOLDERS!
 
 isFolders: aBoolean 
-	self mask: (self mask mask: SC_MASK_FOLDERS set: aBoolean)!
+	self mask: (mask mask: SC_MASK_FOLDERS set: aBoolean)!
+
+isHistory
+	^mask allMask: SC_MASK_HISTORY!
+
+isHistory: aBoolean
+	self mask: (mask mask: SC_MASK_HISTORY set: aBoolean)!
 
 isSensitive
 	"Answer whether this margin is sensitive to mouse clicks."
@@ -145,7 +151,7 @@ isSensitive: aBooleanOrNil
 	self updateViewProperty: IsSensitiveProperty!
 
 mask
-	"Answe the <integer> mask which controls which shapes will be visible in the margin.
+	"Answer the <integer> mask which controls which shapes will be visible in the margin.
 
 	From the Scintilla documentation:
 
@@ -178,10 +184,11 @@ maskPrintString
 	| uint32 |
 	mask ifNil: [^nil].
 	uint32 := mask asUInt32.
-	^uint32 = SC_MASK_FOLDERS
-		ifTrue: ['SC_MASK_FOLDERS']
-		ifFalse: 
-			[uint32 = ##(SC_MASK_FOLDERS bitInvert asUInt32) ifTrue: ['~SC_MASK_FOLDERS'] ifFalse: [uint32 hex]]!
+	uint32 = SC_MASK_FOLDERS ifTrue: [^'SC_MASK_FOLDERS'].
+	uint32 = SC_MASK_HISTORY ifTrue: [^'SC_MASK_HISTORY'].
+	uint32 = ##(SC_MASK_FOLDERS bitInvert asUInt32) ifTrue: [^'~SC_MASK_FOLDERS'].
+	uint32 = ##(SC_MASK_HISTORY bitInvert asUInt32) ifTrue: [^'~SC_MASK_HISTORY'].
+	^uint32 hex!
 
 type
 	"The symbolic name of the Scintilla margin type, defaulting to #symbol."
@@ -223,6 +230,8 @@ cursorType!accessing!public! !
 cursorType:!accessing!public! !
 isFolders!accessing!public! !
 isFolders:!accessing!public! !
+isHistory!accessing!public! !
+isHistory:!accessing!public! !
 isSensitive!public!testing! !
 isSensitive:!accessing!public! !
 mask!accessing!public! !

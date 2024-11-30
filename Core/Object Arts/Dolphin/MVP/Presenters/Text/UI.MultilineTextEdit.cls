@@ -28,6 +28,9 @@ basicCutLine
 	self selectLineAndTerminator: self currentLine.
 	self basicCutSelection!
 
+basicCutSelectionOrLine
+	self hasSelection ifTrue: [self basicCutSelection] ifFalse: [self basicCutLine]!
+
 basicDeleteLine
 	self selectLineAndTerminator: self currentLine.
 	self clearSelection!
@@ -127,6 +130,9 @@ cutLine
 
 	<commandQuery: #canCut>
 	self basicCutLine!
+
+cutSelectionOrLine
+	self basicCutSelectionOrLine!
 
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
@@ -390,6 +396,7 @@ wordWrap: aBoolean
 basicCopyLine!clipboard operations!private! !
 basicCopySelectionOrLine!clipboard operations!private! !
 basicCutLine!clipboard operations!private! !
+basicCutSelectionOrLine!clipboard operations!private! !
 basicDeleteLine!operations!private! !
 basicDuplicateLine!operations!private! !
 basicDuplicateSelection!private!selection! !
@@ -403,6 +410,7 @@ copyLine!clipboard operations!commands-actions!public! !
 copySelectionOrLine!clipboard operations!commands-actions!public! !
 currentLine!public!selection! !
 cutLine!clipboard operations!commands-actions!public! !
+cutSelectionOrLine!clipboard operations!commands-actions!public! !
 defaultExtent!constants!private! !
 defaultWindowStyle!constants!private! !
 deleteLine!commands-actions!public! !

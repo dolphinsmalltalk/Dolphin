@@ -18,6 +18,7 @@ UI.Scintilla.Attribute
 								#braceMismatch -> 16r23.
 								#callTip -> 16r26.
 								#controlChar -> 16r24.
+								#default -> 16r20.
 								#foldDisplayText -> 16r27.
 								#indentGuide -> 16r25.
 								#lineNumber -> 16r21.
@@ -55,6 +56,10 @@ UI.Scintilla.Attribute
 								16rF -> 16rF
 							}).
 			'ReadOnlyMask' -> 16r300.
+			'SpacingNames'
+				-> #(#ultraCondensed #extraCondensed #condensed #semiCondensed #normal #semiExpanded #expanded #extraExpanded #ultraExpanded).
+			'StretchMask' -> 16rF0000.
+			'StretchShift' -> 16r10.
 			'UnderlinedMask' -> 16r30
 		}!
 
@@ -161,7 +166,7 @@ clearFont
 	"Clear all font settings so that these are inherited."
 
 	fontName := centiPointSize := characterSet := nil.
-	flags := flags bitAnd: ##((ItalicMask | UnderlinedMask) bitInvert).
+	flags := flags bitAnd: ##((ItalicMask | UnderlinedMask | StretchMask) bitInvert).
 	weight := nil!
 
 description
@@ -201,6 +206,11 @@ fontName: aStringOrNil
 	fontName = aStringOrNil ifTrue: [^self].
 	fontName := aStringOrNil!
 
+fontStretch
+	| stretch |
+	stretch := (flags bitAnd: StretchMask) bitShift: ##(0 - StretchShift).
+	^stretch == 0 ifFalse: [stretch]!
+
 forecolor
 	"Answer the foreground <Color> used to draw text in this style, or nil if the style does not specify a foreground colour and should inherit the default."
 
@@ -213,7 +223,7 @@ getThreeStateFlag: anInteger
 	^#(nil true false) at: ((flags bitAnd: anInteger) bitShift: 1 - anInteger lowBit) + 1!
 
 initialize
-	flags := 0.
+	flags := 0
 !
 
 invisibleRepresentation
@@ -384,6 +394,9 @@ restyleFont: aFont
 	self isUnderlined ifNotNil: [:isUnderlined | aFont isUnderlined: isUnderlined].
 	self characterSet ifNotNil: [:set | aFont characterSet: set]!
 
+scStretch: anInteger
+	flags := (flags bitAnd: ##(StretchMask bitInvert)) bitOr: (anInteger ?? 0 bitShift: StretchShift)!
+
 setPredefinedId
 	^id := PredefinedStyleNames lookup: name!
 
@@ -393,6 +406,20 @@ setThreeStateFlag: anInteger value: aBooleanOrNil
 				ifNotNil: 
 					[(flags bitAnd: anInteger bitInvert)
 						bitOr: ((anInteger bitShift: (aBooleanOrNil ifTrue: [-1] ifFalse: [1])) bitAnd: anInteger)]!
+
+spacing
+	"Answer the symbolic name of the spacing (aka pitch adjustment, proportion, compression, or [ugh] stretch) of the described Font, e.g. #condensed. If nil, then the spacing is not set by this style and is inherited."
+
+	"Note that Font spacing only work when the host `ScintillaView`s `#drawingTechnology` aspect is `#directWrite` (i.e. it requires Direct Write). Also most fonts do not support different spacings, and those that do typically only supported a limited set of choices. You can identify the spacings supported by a font by referencing the Font Styles column of the Font Dialog (try `Font choose`) on that font. For example the Bahnschrift font has styles with condensed, semi-condensed, normal (regular) spacing. These are them combined with various weight and/or italic options. The latter are represented as separate individual properties of the logical font description, but the spacings are combined into the font name. This rather awkward arrangement is required to use the different font spacings with GDI, whereas on the other hand only the base font type should be named for Direct Write, and then the spacing set to adjust the pitch."
+
+	| stretch |
+	stretch := self fontStretch.
+	^stretch == 0 ifFalse: [SpacingNames lookup: stretch]!
+
+spacing: aSymbol
+	"Set the character spacing (aka pitch adjustment, proportion, compression, or [ugh] stretch) of the described Font, e.g. #condensed. If nil, then the spacing is not specified and the default will be inherited."
+
+	self scStretch: (SpacingNames identityIndexOf: aSymbol)!
 
 storeableProperties
 	| attribs |
@@ -434,6 +461,7 @@ font!accessing!public! !
 font:!accessing!public! !
 fontName!accessing!public! !
 fontName:!accessing!public! !
+fontStretch!accessing!private! !
 forecolor!accessing!public! !
 forecolor:!accessing!public! !
 getThreeStateFlag:!helpers!private! !
@@ -467,8 +495,11 @@ name:!accessing!public! !
 pointSize!accessing!public! !
 pointSize:!accessing!public! !
 restyleFont:!accessing!public! !
+scStretch:!accessing!private! !
 setPredefinedId!accessing!private! !
 setThreeStateFlag:value:!helpers!private! !
+spacing!accessing!public! !
+spacing:!accessing!public! !
 storeableProperties!development!printing!private! !
 view!accessing!private! !
 view:!accessing!private! !
@@ -581,6 +612,16 @@ buildPropertyDescriptors
 			setSelector: #invisibleRepresentation:;
 			beNullable;
 "			isNonBrowsable: true;"
+			yourself.
+		(EnumPropertyDescriptor
+			key: #spacing
+			defaultValue: nil
+			setMessage: SCI_STYLESETSTRETCH)
+			getSelector: #fontStretch;
+			setSelector: #scStretch:;
+			values: SpacingNames;
+			beNullable;
+			isNonBrowsable: true;
 			yourself}!
 
 caseNames
@@ -613,7 +654,8 @@ initialize
 								#lineNumber -> STYLE_LINENUMBER.
 								#indentGuide -> STYLE_INDENTGUIDE.
 								#callTip -> STYLE_CALLTIP.
-								#foldDisplayText -> STYLE_FOLDDISPLAYTEXT
+								#foldDisplayText -> STYLE_FOLDDISPLAYTEXT.
+								#default -> STYLE_DEFAULT
 							})!
 
 name: aSymbol 
