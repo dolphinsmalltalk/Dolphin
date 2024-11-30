@@ -108,7 +108,12 @@ getIconTitleFont
 	^(self
 		getSysParamForDpi: SPI_GETICONTITLELOGFONT
 		type: LOGFONTW
-		ifError: []) ifNil: [Graphics.Font system atDpi: self dpi] ifNotNil: [:lf | Graphics.Font fromLogFont: lf dpi: dpi]!
+		ifError: [])
+			ifNil: [Graphics.Font system atDpi: self dpi]
+			ifNotNil: 
+				[:lf |
+				lf beImmutableObject.
+				Graphics.Font fromLogFont: lf dpi: dpi]!
 
 getMetric: anInteger 
 	^User32 getSystemMetricsForDpi: anInteger dpi: dpi!
