@@ -52,19 +52,6 @@ interface ICoreWebView2BasicAuthenticationRequestedEventArgs : IUnknown
 
 !WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs methodsFor!
 
-cancel
-	"Answer the <Boolean> value of the 'Cancel' property of the receiver."
-
-	| answer |
-	answer := BOOL newBuffer.
-	self get_Cancel: answer.
-	^answer value!
-
-cancel: cancel
-	"Set the 'Cancel' property of the receiver to the <sdword> value of the argument."
-
-	self put_Cancel: cancel!
-
 challenge
 	"Answer the <lpwstr> value of the 'Challenge' property of the receiver."
 
@@ -77,7 +64,7 @@ challenge
 	ptr free.
 	^answer!
 
-get_Cancel: cancel
+get_Cancel: pBOOL
 	"Private - Get the value of the 'Cancel' property of the receiver.
 
 		HRESULT __stdcall Cancel(
@@ -156,8 +143,6 @@ uri
 	^answer! !
 
 !WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs categoriesForMethods!
-cancel!properties!public! !
-cancel:!**auto generated**!properties!public! !
 challenge!properties!public! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRequestedEventArgs!private! !
 get_Challenge:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRequestedEventArgs!private! !

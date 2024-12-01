@@ -431,7 +431,11 @@ observeWindowEvents
 		ICoreWebView2WebResourceRequestedEventHandler.
 		ICoreWebView2WebResourceResponseReceivedEventHandler.
 		ICoreWebView2WindowCloseRequestedEventHandler.
-		ICoreWebView2LaunchingExternalUriSchemeEventHandler
+		ICoreWebView2LaunchingExternalUriSchemeEventHandler.
+		ICoreWebView2NotificationReceivedEventHandler.
+		ICoreWebView2SaveAsUIShowingEventHandler.
+		ICoreWebView2SaveFileSecurityCheckStartingEventHandler.
+		ICoreWebView2ScreenCaptureStartingEventHandler
 	}) do: [:each | self observeEvent: each from: webview]!
 
 onControllerCreated: anICoreWebView2Controller
@@ -817,7 +821,7 @@ stbVersion
 webview2Events
 	"This is the full set of events. Not all are actually published currently; for example the frame and download events are not."
 
-	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #dowloadStateChanged #downloadStarting: #favIconChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #launchingExternalUriScheme: #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processExited: #processFailed: #processInfosChanged #rasterizationScaleChanged #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
+	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #dowloadStateChanged #downloadStarting: #favIconChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #launchingExternalUriScheme: #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #notificationReceived: #permissionRequested: #processExited: #processFailed: #processInfosChanged #rasterizationScaleChanged #safeFileSecurityCheckStarting: #saveAsUIShowing: #screenCaptureStarting: #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
 
 winClassName
 	"Private - Answer the Windows class name, or atom, to be used when creating Windows attached

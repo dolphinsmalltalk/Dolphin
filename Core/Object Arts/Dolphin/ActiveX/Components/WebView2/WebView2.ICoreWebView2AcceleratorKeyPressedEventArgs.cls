@@ -97,19 +97,6 @@ get_VirtualKey: virtualKey
 	<virtual stdcall: hresult 5 uint32*>
 	^self invalidCall: _failureCode!
 
-handled
-	"Answer the <Boolean> value of the 'Handled' property of the receiver."
-
-	| buf |
-	buf := UInt32Bytes new.
-	self get_Handled: buf.
-	^buf asBoolean!
-
-handled: handled
-	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
-
-	self put_Handled: handled asParameter!
-
 keyEventKind
 	"Answer the <sdword> value of the 'KeyEventKind' property of the receiver."
 
@@ -172,8 +159,6 @@ get_KeyEventKind:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyP
 get_KeyEventLParam:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_PhysicalKeyStatus:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_VirtualKey:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
-handled!properties!public! !
-handled:!properties!public! !
 keyEventKind!**auto generated**!properties!public! !
 keyEventLParam!**auto generated**!properties!public! !
 keyName!accessing!public! !

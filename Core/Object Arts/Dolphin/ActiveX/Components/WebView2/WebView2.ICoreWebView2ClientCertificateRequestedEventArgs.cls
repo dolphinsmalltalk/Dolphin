@@ -78,19 +78,6 @@ allowedCertificateAuthorities
 	self get_AllowedCertificateAuthorities: answer.
 	^answer asObject!
 
-cancel
-	"Answer the <Boolean> value of the 'Cancel' property of the receiver."
-
-	| buf |
-	buf := UInt32Bytes new.
-	self get_Cancel: buf.
-	^buf asBoolean!
-
-cancel: cancel
-	"Set the 'Cancel' property of the receiver to the <sdword> value of the argument."
-
-	self put_Cancel: cancel asParameter!
-
 get_AllowedCertificateAuthorities: value
 	"Private - Get the value of the 'AllowedCertificateAuthorities' property of the receiver.
 
@@ -171,19 +158,6 @@ GetDeferral: deferral
 
 	<virtual stdcall: hresult 15 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
-
-handled
-	"Answer the <Boolean> value of the 'Handled' property of the receiver."
-
-	| answer |
-	answer := BOOL newBuffer.
-	self get_Handled: answer.
-	^answer value!
-
-handled: handled
-	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
-
-	self put_Handled: handled asParameter!
 
 host
 	"Answer the <lpwstr> value of the 'Host' property of the receiver."
@@ -267,8 +241,6 @@ selectedCertificate: value
 
 !WebView2.ICoreWebView2ClientCertificateRequestedEventArgs categoriesForMethods!
 allowedCertificateAuthorities!**auto generated**!properties!public! !
-cancel!properties!public! !
-cancel:!properties!public! !
 get_AllowedCertificateAuthorities:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
@@ -278,8 +250,6 @@ get_MutuallyTrustedCertificates:!**auto generated**!COM Interfaces-ICoreWebView2
 get_Port:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 get_SelectedCertificate:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
-handled!properties!public! !
-handled:!properties!public! !
 host!properties!public! !
 isProxy!**auto generated**!properties!public! !
 mutuallyTrustedCertificates!**auto generated**!properties!public! !

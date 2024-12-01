@@ -77,6 +77,15 @@ get_FailureSourceModulePath: value
 get_FrameInfosForFailedProcess: frames
 	^E_NOTIMPL!
 
+get_Handled: pHandled
+	"Private - Get the value of the 'Handled' property of the receiver.
+
+		HRESULT __stdcall Handled(
+			[out, retval]long* Handled);"
+
+	handled value: handled asParameter.
+	^S_OK!
+
 get_ProcessDescription: processDescription
 	^E_NOTIMPL!
 
@@ -91,12 +100,6 @@ get_ProcessFailedKind: processFailedKind
 
 get_reason: reason
 	^E_NOTIMPL!
-
-handled
-	^handled!
-
-handled: anObject
-	handled := anObject!
 
 isBrowserProcessExit
 	^self processFailedKind = COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED!
@@ -132,6 +135,16 @@ processFailedKind
 	self get_ProcessFailedKind: answer.
 	^answer asObject!
 
+put_Handled: anInteger
+	"Private - Set the value of the 'Handled' property of the object wrapped by the 
+	 receiver to the <sdword> argument, handled.
+
+		HRESULT __stdcall Handled(
+			[in]long Handled);"
+
+	handled := anInteger asBoolean.
+	^S_OK!
+
 reason
 	"Answer the <sdword> value of the 'reason' property of the receiver."
 
@@ -147,15 +160,15 @@ frameInfosForFailedProcess!properties!public! !
 get_ExitCode:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_FailureSourceModulePath:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs3!private! !
 get_FrameInfosForFailedProcess:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+get_Handled:!private!properties! !
 get_ProcessDescription:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessFailedKind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs!private! !
 get_reason:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
-handled!accessing!public! !
-handled:!accessing!public! !
 isBrowserProcessExit!public!testing! !
 printableProperties!printing!private! !
 processDescription!properties!public! !
 processFailedKind!**auto generated**!properties!public! !
+put_Handled:!private!properties! !
 reason!properties!public! !
 !
 

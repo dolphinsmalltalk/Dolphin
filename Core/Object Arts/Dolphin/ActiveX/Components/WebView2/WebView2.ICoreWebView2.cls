@@ -374,6 +374,15 @@ Add_NewWindowRequested: eventHandler token: token
 	<virtual stdcall: hresult 45 ICoreWebView2NewWindowRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
+Add_NotificationReceived: eventHandler token: token
+	"Private - Invoke the add_NotificationReceived() method of the COM object.
+
+		HRESULT __stdcall add_NotificationReceived(
+			[in]ICoreWebView2NotificationReceivedEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
+
 Add_PermissionRequested: eventHandler token: token
 	"Private - Invoke the add_PermissionRequested() method of the COM object.
 
@@ -393,6 +402,33 @@ Add_ProcessFailed: eventHandler token: token
 
 	<virtual stdcall: hresult 26 ICoreWebView2ProcessFailedEventHandler* int64*>
 	^self invalidCall: _failureCode!
+
+Add_SaveAsUIShowing: eventHandler token: token
+	"Private - Invoke the add_SaveAsUIShowing() method of the COM object.
+
+		HRESULT __stdcall add_SaveAsUIShowing(
+			[in]ICoreWebView2SaveAsUIShowingEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
+
+Add_SaveFileSecurityCheckStarting: eventHandler token: token
+	"Private - Invoke the add_SaveFileSecurityCheckStarting() method of the COM object.
+
+		HRESULT __stdcall add_SaveFileSecurityCheckStarting(
+			[in]ICoreWebView2SaveFileSecurityCheckStartingEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
+
+Add_ScreenCaptureStarting: eventHandler token: token
+	"Private - Invoke the add_ScreenCaptureStarting() method of the COM object.
+
+		HRESULT __stdcall add_ScreenCaptureStarting(
+			[in]ICoreWebView2ScreenCaptureStartingEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
 
 Add_ScriptDialogOpening: eventHandler token: token
 	"Private - Invoke the add_ScriptDialogOpening() method of the COM object.
@@ -1473,6 +1509,14 @@ Remove_NewWindowRequested: token
 	<virtual stdcall: hresult 46 int64>
 	^self invalidCall: _failureCode!
 
+Remove_NotificationReceived: token
+	"Private - Invoke the remove_NotificationReceived() method of the COM object.
+
+		HRESULT __stdcall remove_NotificationReceived(
+			[in]EventRegistrationToken token);"
+
+	^E_NOTIMPL!
+
 Remove_PermissionRequested: token
 	"Private - Invoke the remove_PermissionRequested() method of the COM object.
 
@@ -1490,6 +1534,30 @@ Remove_ProcessFailed: token
 
 	<virtual stdcall: hresult 27 int64>
 	^self invalidCall: _failureCode!
+
+Remove_SaveAsUIShowing: token
+	"Private - Invoke the remove_SaveAsUIShowing() method of the COM object.
+
+		HRESULT __stdcall remove_SaveAsUIShowing(
+			[in]EventRegistrationToken token);"
+
+	^E_NOTIMPL!
+
+Remove_SaveFileSecurityCheckStarting: token
+	"Private - Invoke the remove_SaveFileSecurityCheckStarting() method of the COM object.
+
+		HRESULT __stdcall remove_SaveFileSecurityCheckStarting(
+			[in]EventRegistrationToken token);"
+
+	^E_NOTIMPL!
+
+Remove_ScreenCaptureStarting: token
+	"Private - Invoke the remove_ScreenCaptureStarting() method of the COM object.
+
+		HRESULT __stdcall remove_ScreenCaptureStarting(
+			[in]EventRegistrationToken token);"
+
+	^E_NOTIMPL!
 
 Remove_ScriptDialogOpening: token
 	"Private - Invoke the remove_ScriptDialogOpening() method of the COM object.
@@ -1666,6 +1734,23 @@ ShowPrintUI: printDialogKind
 
 	^E_NOTIMPL!
 
+ShowSaveAsUI: handler
+	"Private - Invoke the ShowSaveAsUI() method of the COM object.
+
+		HRESULT __stdcall ShowSaveAsUI(
+			[in]ICoreWebView2ShowSaveAsUICompletedHandler* handler);"
+
+	^E_NOTIMPL!
+
+showSaveAsUIThenDo: aDyadicValuable
+	"Trigger a Save As action for the currently loaded document. When complete the <dyadicValuable> argument is evaluated passing an HRESULT code and a member of the COREWEBVIEW2_SAVE_AS_UI_RESULT enumeration as the arguments."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2ShowSaveAsUICompletedHandler.
+	self ShowSaveAsUI: handler.
+	handler free!
+
 showSystemPrintDialog
 	self ShowPrintUI: COREWEBVIEW2_PRINT_DIALOG_KIND_SYSTEM!
 
@@ -1743,8 +1828,12 @@ Add_LaunchingExternalUriScheme:token:!COM Interfaces-ICoreWebView2_18!private! !
 Add_NavigationCompleted:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_NavigationStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_NewWindowRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_NotificationReceived:token:!COM Interfaces-ICoreWebView2_24!private! !
 Add_PermissionRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_ProcessFailed:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_SaveAsUIShowing:token:!COM Interfaces-ICoreWebView2_25!private! !
+Add_SaveFileSecurityCheckStarting:token:!COM Interfaces-ICoreWebView2_26!private! !
+Add_ScreenCaptureStarting:token:!COM Interfaces-ICoreWebView2_27!private! !
 Add_ScriptDialogOpening:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_ServerCertificateErrorDetected:token:!COM Interfaces-ICoreWebView2_14!private! !
 Add_SourceChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
@@ -1801,13 +1890,13 @@ get_DefaultDownloadDialogCornerAlignment:!COM Interfaces-ICoreWebView2_9!private
 get_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 get_DocumentTitle:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Environment:!COM Interfaces-ICoreWebView2_2!private!properties! !
-get_FaviconUri:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
+get_FaviconUri:!COM Interfaces-ICoreWebView2_15!private! !
 get_FrameId:!COM Interfaces-ICoreWebView2_20!private! !
 get_IsDefaultDownloadDialogOpen:!COM Interfaces-ICoreWebView2_9!private! !
 get_IsDocumentPlayingAudio:!COM Interfaces-ICoreWebView2_8!private! !
 get_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
 get_IsSuspended:!COM Interfaces-ICoreWebView2_3!private! !
-get_MemoryUsageTargetLevel:!**auto generated**!COM Interfaces-ICoreWebView2_19!private! !
+get_MemoryUsageTargetLevel:!COM Interfaces-ICoreWebView2_19!private! !
 get_Profile:!COM Interfaces-ICoreWebView2_13!private! !
 get_Settings:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1838,7 +1927,7 @@ openDevToolsWindow!**auto generated**!methods!public! !
 OpenDevToolsWindow!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 openTaskManagerWindow!methods!public! !
 OpenTaskManagerWindow!COM Interfaces-ICoreWebView2_6!private! !
-PostSharedBufferToScript:access:additionalDataAsJson:!**auto generated**!COM Interfaces-ICoreWebView2_17!public! !
+PostSharedBufferToScript:access:additionalDataAsJson:!COM Interfaces-ICoreWebView2_17!public! !
 postWebMessageAsJson:!**auto generated**!methods!public! !
 PostWebMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 PostWebMessageAsJsonWithAdditionalObjects:additionalObjects:!COM Interfaces-ICoreWebView2_23!private! !
@@ -1855,7 +1944,7 @@ profile!properties!public! !
 put_DefaultDownloadDialogCornerAlignment:!COM Interfaces-ICoreWebView2_9!private! !
 put_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 put_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
-put_MemoryUsageTargetLevel:!**auto generated**!COM Interfaces-ICoreWebView2_19!private! !
+put_MemoryUsageTargetLevel:!COM Interfaces-ICoreWebView2_19!private! !
 reload!**auto generated**!methods!public! !
 Reload!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_BasicAuthenticationRequested:!COM Interfaces-ICoreWebView2_10!private! !
@@ -1866,7 +1955,7 @@ Remove_ContextMenuRequested:!COM Interfaces-ICoreWebView2_11!private! !
 Remove_DocumentTitleChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_DOMContentLoaded:!COM Interfaces-ICoreWebView2_2!events!private! !
 Remove_DownloadStarting:!COM Interfaces-ICoreWebView2_4!private! !
-Remove_FaviconChanged:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
+Remove_FaviconChanged:!COM Interfaces-ICoreWebView2_15!private! !
 Remove_FrameCreated:!COM Interfaces-ICoreWebView2_4!private! !
 Remove_FrameNavigationCompleted:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_FrameNavigationStarting:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1878,8 +1967,12 @@ Remove_LaunchingExternalUriScheme:!COM Interfaces-ICoreWebView2_18!private! !
 Remove_NavigationCompleted:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_NavigationStarting:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_NewWindowRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+Remove_NotificationReceived:!COM Interfaces-ICoreWebView2_24!private! !
 Remove_PermissionRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_ProcessFailed:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+Remove_SaveAsUIShowing:!COM Interfaces-ICoreWebView2_25!private! !
+Remove_SaveFileSecurityCheckStarting:!COM Interfaces-ICoreWebView2_26!private! !
+Remove_ScreenCaptureStarting:!COM Interfaces-ICoreWebView2_27!private! !
 Remove_ScriptDialogOpening:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_ServerCertificateErrorDetected:!COM Interfaces-ICoreWebView2_14!private! !
 Remove_SourceChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1903,6 +1996,8 @@ setVirtualHostNameToFolderMapping:folderPath:accessKind:!methods!public! !
 SetVirtualHostNameToFolderMapping:folderPath:accessKind:!COM Interfaces-ICoreWebView2_3!private! !
 showBrowserPrintDialog!methods!public! !
 ShowPrintUI:!COM Interfaces-ICoreWebView2_16!public! !
+ShowSaveAsUI:!COM Interfaces-ICoreWebView2_25!private! !
+showSaveAsUIThenDo:!async requests!public! !
 showSystemPrintDialog!methods!public! !
 source!properties!public! !
 statusBarText!properties!public! !

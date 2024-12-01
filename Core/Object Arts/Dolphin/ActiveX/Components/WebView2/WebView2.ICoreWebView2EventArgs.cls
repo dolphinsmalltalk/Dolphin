@@ -21,6 +21,19 @@ WebView2.ICoreWebView2EventArgs comment: '`ICoreWebView2EventArgs` is not define
 
 !WebView2.ICoreWebView2EventArgs methodsFor!
 
+cancel
+	"Answer whether the operation associated with the event is to be cancelled."
+
+	| answer |
+	answer := ByteArray newFixed: 4.
+	self get_Cancel: answer.
+	^(answer int32AtOffset: 0) ~~ 0!
+
+cancel: value
+	"Set the 'Cancel' property of the receiver to the <int32> value of the argument."
+
+	self put_Cancel: value asParameter!
+
 defer
 	"Defer this event, answering an <ICoreWebView2Deferral> that can be used to complete it later, or nil if the event is not of a deferrable type."
 
@@ -29,11 +42,77 @@ defer
 	self GetDeferral: answer.
 	^answer asObject!
 
+get_Cancel: pBOOL
+	"Private - Get the value of the 'Cancel' property of the receiver.
+
+		HRESULT __stdcall Cancel(
+			[out, retval]long* Cancel);"
+
+	pBOOL value: 0.
+	^S_OK!
+
+get_Handled: pBOOL
+	"Private - Get the value of the 'Handled' property of the receiver.
+
+		HRESULT __stdcall Handled(
+			[out, retval]long* Handled);"
+
+	pBOOL value: 0.
+	^S_OK!
+
+getDeferral
+	"Answer the <ICoreWebView2Deferral> result of invoking the GetDeferral() method of the COM object."
+
+	| answer |
+	answer := ICoreWebView2Deferral newPointer.
+	self GetDeferral: answer.
+	^answer asObject!
+
 GetDeferral: anICoreWebView2Deferral
+	^E_NOTIMPL!
+
+handled
+	"Answer whether this event is considered to have  been handled already."
+
+	| answer |
+	answer := ByteArray newFixed: 4.
+	self get_Handled: answer.
+	^(answer int32AtOffset: 0) ~~ 0!
+
+handled: handled
+	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
+
+	self put_Handled: handled asParameter!
+
+put_Cancel: cancel
+	"Private - Set the value of the 'Cancel' property of the object wrapped by the 
+	 receiver to the <sdword> argument, cancel.
+
+		HRESULT __stdcall Cancel(
+			[in]long Cancel);"
+
+	^E_NOTIMPL!
+
+put_Handled: handled
+	"Private - Set the value of the 'Handled' property of the object wrapped by the 
+	 receiver to the <sdword> argument, handled.
+
+		HRESULT __stdcall Handled(
+			[in]long Handled);"
+
 	^E_NOTIMPL! !
 
 !WebView2.ICoreWebView2EventArgs categoriesForMethods!
+cancel!properties!public! !
+cancel:!properties!public! !
 defer!methods!public! !
+get_Cancel:!private!properties! !
+get_Handled:!private!properties! !
+getDeferral!methods!public! !
 GetDeferral:!methods!private! !
+handled!properties!public! !
+handled:!properties!public! !
+put_Cancel:!private!properties! !
+put_Handled:!private!properties! !
 !
 

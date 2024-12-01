@@ -70,19 +70,6 @@ additionalAllowedFrameAncestors: value
 
 	self put_AdditionalAllowedFrameAncestors: value asUtf16String!
 
-cancel
-	"Answer whether the navigation is to be cancelled."
-
-	| buf |
-	buf := UInt32Bytes new.
-	self get_Cancel: buf.
-	^buf asBoolean!
-
-cancel: aBoolean
-	"Set whether the navigation should be cancelled."
-
-	self put_Cancel: aBoolean asParameter!
-
 get_AdditionalAllowedFrameAncestors: value
 	^E_NOTIMPL!
 
@@ -224,8 +211,6 @@ uri
 !WebView2.ICoreWebView2NavigationStartingEventArgs categoriesForMethods!
 additionalAllowedFrameAncestors!properties!public! !
 additionalAllowedFrameAncestors:!properties!public! !
-cancel!properties!public! !
-cancel:!properties!public! !
 get_AdditionalAllowedFrameAncestors:!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_IsRedirected:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !

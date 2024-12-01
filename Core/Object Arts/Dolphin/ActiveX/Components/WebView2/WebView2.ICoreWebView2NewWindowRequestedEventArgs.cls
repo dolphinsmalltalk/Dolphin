@@ -124,19 +124,6 @@ GetDeferral: deferral
 	<virtual stdcall: hresult 10 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
-handled
-	"Answer the <Boolean> value of the 'Handled' property of the receiver."
-
-	| buf |
-	buf := UInt32Bytes new.
-	self get_Handled: buf.
-	^buf asBoolean!
-
-handled: handled
-	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
-
-	self put_Handled: handled asParameter!
-
 isUserInitiated
 	"Answer the <Boolean> value of the 'IsUserInitiated' property of the receiver."
 
@@ -226,8 +213,6 @@ get_OriginalSourceFrameInfo:!COM Interfaces-ICoreWebView2NewWindowRequestedEvent
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_WindowFeatures:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
-handled!properties!public! !
-handled:!properties!public! !
 isUserInitiated!properties!public! !
 name!properties!public! !
 newWindow!**auto generated**!properties!public! !

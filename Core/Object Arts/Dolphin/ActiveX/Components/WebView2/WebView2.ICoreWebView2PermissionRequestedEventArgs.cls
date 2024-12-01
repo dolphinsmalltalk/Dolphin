@@ -52,15 +52,6 @@ interface ICoreWebView2PermissionRequestedEventArgs : IUnknown
 
 !WebView2.ICoreWebView2PermissionRequestedEventArgs methodsFor!
 
-get_Handled: handled
-	"Private - Get the value of the 'Handled' property of the receiver.
-
-		HRESULT __stdcall Handled(
-			[out, retval]long* Handled);"
-
-	handled value: 0.
-	^S_OK!
-
 get_IsUserInitiated: isUserInitiated
 	"Private - Get the value of the 'IsUserInitiated' property of the receiver.
 
@@ -115,19 +106,6 @@ GetDeferral: deferral
 	<virtual stdcall: hresult 9 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
-handled
-	"Answer whether this event is considered to have  been handled already."
-
-	| answer |
-	answer := ByteArray new: 4.
-	self get_Handled: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
-
-handled: aBoolean
-	"Set whether this event is considered as having been handled already."
-
-	self put_Handled: aBoolean asParameter!
-
 isUserInitiated
 	"Answer the <Boolean> value of the 'IsUserInitiated' property of the receiver."
 
@@ -151,15 +129,6 @@ permissionName
 
 printableProperties
 	^#(#isUserInitiated #permissionName #savesInProfile #uri)!
-
-put_Handled: handled
-	"Private - Set the value of the 'Handled' property of the object wrapped by the 
-	 receiver to the <sdword> argument, handled.
-
-		HRESULT __stdcall Handled(
-			[in]long Handled);"
-
-	^E_NOTIMPL!
 
 put_SavesInProfile: value
 	"Private - Set the value of the 'SavesInProfile' property of the object wrapped by the 
@@ -217,20 +186,16 @@ uri
 	^answer! !
 
 !WebView2.ICoreWebView2PermissionRequestedEventArgs categoriesForMethods!
-get_Handled:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_PermissionKind:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_SavesInProfile:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
 get_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
-handled!properties!public! !
-handled:!properties!public! !
 isUserInitiated!properties!public! !
 permissionKind!**auto generated**!properties!public! !
 permissionName!properties!public! !
 printableProperties!printing!private! !
-put_Handled:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 put_SavesInProfile:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
 put_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 savesInProfile!properties!public! !

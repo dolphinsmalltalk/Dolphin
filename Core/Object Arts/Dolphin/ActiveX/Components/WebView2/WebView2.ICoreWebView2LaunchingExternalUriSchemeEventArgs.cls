@@ -52,19 +52,6 @@ interface ICoreWebView2LaunchingExternalUriSchemeEventArgs : IUnknown
 
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs methodsFor!
 
-cancel
-	"Answer the <Boolean> value of the 'Cancel' property of the receiver."
-
-	| answer |
-	answer :=UInt32Bytes new.
-	self get_Cancel: answer.
-	^answer asBoolean!
-
-cancel: value
-	"Set the 'Cancel' property of the receiver to the <int32> value of the argument."
-
-	self put_Cancel: value!
-
 get_Cancel: value
 	"Private - Get the value of the 'Cancel' property of the receiver.
 
@@ -100,14 +87,6 @@ get_uri: value
 
 	<virtual stdcall: hresult 4 lpwstr*>
 	^self invalidCall: _failureCode!
-
-getDeferral
-	"Answer the <ICoreWebView2Deferral> result of invoking the GetDeferral() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2Deferral newPointer.
-	self GetDeferral: answer.
-	^answer asObject!
 
 GetDeferral: value
 	"Private - Invoke the GetDeferral() method of the COM object.
@@ -160,13 +139,10 @@ uri
 	^answer! !
 
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs categoriesForMethods!
-cancel!properties!public! !
-cancel:!**auto generated**!properties!public! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !
 get_InitiatingOrigin:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !
-getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !
 initiatingOrigin!**auto generated**!properties!public! !
 isUserInitiated!properties!public! !

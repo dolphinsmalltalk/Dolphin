@@ -120,19 +120,6 @@ GetDeferral: deferral
 	<virtual stdcall: hresult 11 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
-handled
-	"Answer the <Boolean> value of the 'Handled' property of the receiver."
-
-	| answer |
-	answer := BOOL newBuffer.
-	self get_Handled: answer.
-	^answer value!
-
-handled: value
-	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
-
-	self put_Handled: value!
-
 location
 	"Answer the <POINTL> value of the 'Location' property of the receiver."
 
@@ -193,8 +180,6 @@ get_Location:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequeste
 get_MenuItems:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
 get_SelectedCommandId:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
-handled!properties!public! !
-handled:!**auto generated**!properties!public! !
 location!**auto generated**!properties!public! !
 menuItems!**auto generated**!properties!public! !
 printableProperties!printing!private! !

@@ -128,6 +128,15 @@ Add_PermissionRequested: handler token: token
 
 	^E_NOTIMPL!
 
+Add_ScreenCaptureStarting: eventHandler token: token
+	"Private - Invoke the add_ScreenCaptureStarting() method of the COM object.
+
+		HRESULT __stdcall add_ScreenCaptureStarting(
+			[in]ICoreWebView2FrameScreenCaptureStartingEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
+
 Add_WebMessageReceived: handler token: token
 	"Private - Invoke the add_WebMessageReceived() method of the COM object.
 
@@ -325,6 +334,14 @@ Remove_PermissionRequested: token
 
 	^E_NOTIMPL!
 
+Remove_ScreenCaptureStarting: token
+	"Private - Invoke the remove_ScreenCaptureStarting() method of the COM object.
+
+		HRESULT __stdcall remove_ScreenCaptureStarting(
+			[in]EventRegistrationToken token);"
+
+	^E_NOTIMPL!
+
 Remove_WebMessageReceived: token
 	"Private - Invoke the remove_WebMessageReceived() method of the COM object.
 
@@ -355,13 +372,14 @@ Add_NameChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame!even
 Add_NavigationCompleted:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_NavigationStarting:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_PermissionRequested:token:!COM Interfaces-ICoreWebView2Frame3!private! !
+Add_ScreenCaptureStarting:token:!COM Interfaces-ICoreWebView2Frame6!private! !
 Add_WebMessageReceived:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 addHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!methods!public! !
 AddHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !
 ExecuteScript:handler:!COM Interfaces-ICoreWebView2Frame2!methods!private! !
 executeScript:thenDo:!methods!public! !
 frameId!properties!public! !
-get_FrameId:!**auto generated**!COM Interfaces-ICoreWebView2Frame5!private! !
+get_FrameId:!COM Interfaces-ICoreWebView2Frame5!private! !
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private!properties! !
 isDestroyed!methods!public! !
 IsDestroyed:!**auto generated**!COM Interfaces-ICoreWebView2Frame!methods!private! !
@@ -379,6 +397,7 @@ Remove_NameChanged:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!
 Remove_NavigationCompleted:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Remove_NavigationStarting:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Remove_PermissionRequested:!COM Interfaces-ICoreWebView2Frame3!private! !
+Remove_ScreenCaptureStarting:!COM Interfaces-ICoreWebView2Frame6!private! !
 Remove_WebMessageReceived:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 removeHostObjectFromScript:!methods!public! !
 RemoveHostObjectFromScript:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !

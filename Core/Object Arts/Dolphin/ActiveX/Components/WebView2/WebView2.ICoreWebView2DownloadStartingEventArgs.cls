@@ -58,19 +58,6 @@ interface ICoreWebView2DownloadStartingEventArgs : IUnknown
 
 !WebView2.ICoreWebView2DownloadStartingEventArgs methodsFor!
 
-cancel
-	"Answer the <Boolean> value of the 'Cancel' property of the receiver."
-
-	| buf |
-	buf := UInt32Bytes new.
-	self get_Cancel: buf.
-	^buf asBoolean!
-
-cancel: cancel
-	"Set the 'Cancel' property of the receiver to the <sdword> value of the argument."
-
-	self put_Cancel: cancel asParameter!
-
 downloadOperation
 	"Answer the <ICoreWebView2DownloadOperation> value of the 'DownloadOperation' property of the receiver."
 
@@ -124,19 +111,6 @@ GetDeferral: deferral
 	<virtual stdcall: hresult 11 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
-handled
-	"Answer the <Boolean> value of the 'Handled' property of the receiver."
-
-	| buf |
-	buf := UInt32Bytes new.
-	self get_Handled: buf.
-	^buf asBoolean!
-
-handled: handled
-	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
-
-	self put_Handled: handled asParameter!
-
 put_Cancel: cancel
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 
 	 receiver to the <sdword> argument, cancel.
@@ -183,16 +157,12 @@ resultFilePath: resultFilePath
 	self put_ResultFilePath: resultFilePath asUtf16String! !
 
 !WebView2.ICoreWebView2DownloadStartingEventArgs categoriesForMethods!
-cancel!properties!public! !
-cancel:!properties!public! !
 downloadOperation!**auto generated**!properties!public! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 get_DownloadOperation:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 get_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
-handled!properties!public! !
-handled:!properties!public! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 put_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !

@@ -61,19 +61,6 @@ get_reason: reason
 	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
-handled
-	"Answer the <Boolean> value of the 'Handled' property of the receiver."
-
-	| buf |
-	buf := UInt32Bytes new.
-	self get_Handled: buf.
-	^buf asBoolean!
-
-handled: value
-	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
-
-	self put_Handled: value asParameter!
-
 put_Handled: value
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, value.
@@ -95,8 +82,6 @@ reason
 !WebView2.ICoreWebView2MoveFocusRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
-handled!properties!public! !
-handled:!properties!public! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 reason!**auto generated**!properties!public! !
 !
