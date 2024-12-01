@@ -262,12 +262,12 @@ iconUri
 	^answer!
 
 isSilent
-	"Answer the <boolean> value of the 'IsSilent' property of the receiver."
+	"Answer the <Boolean> value of the 'IsSilent' property of the receiver."
 
 	| buf |
-	buf := ByteArray newFixed: 4.
+	buf := UInt32Bytes new.
 	self get_IsSilent: buf.
-	^(buf int32AtOffset: 0) ~~ 0!
+	^buf asBoolean!
 
 language
 	"Answer the <lpwstr> value of the 'Language' property of the receiver."
@@ -313,20 +313,20 @@ ReportShown
 	^self invalidCall: _failureCode!
 
 requiresInteraction
-	"Answer the <int32> value of the 'RequiresInteraction' property of the receiver."
+	"Answer the <Boolean> value of the 'RequiresInteraction' property of the receiver."
 
 	| buf |
-	buf := ByteArray newFixed: 4.
+	buf := UInt32Bytes new.
 	self get_RequiresInteraction: buf.
-	^(buf int32AtOffset: 0) ~~ 0!
+	^buf asBoolean!
 
 shouldRenotify
-	"Answer the <int32> value of the 'ShouldRenotify' property of the receiver."
+	"Answer the <Boolean> value of the 'ShouldRenotify' property of the receiver."
 
 	| buf |
-	buf := ByteArray newFixed: 4.
+	buf := UInt32Bytes new.
 	self get_ShouldRenotify: buf.
-	^(buf int32AtOffset: 0) ~~ 0!
+	^buf asBoolean!
 
 tag
 	"Answer the <lpwstr> value of the 'Tag' property of the receiver."

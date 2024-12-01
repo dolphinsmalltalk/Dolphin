@@ -74,10 +74,10 @@ additionalBrowserArguments: value
 allowSingleSignOnUsingOSPrimaryAccount
 	"Answer the <Boolean> value of the 'AllowSingleSignOnUsingOSPrimaryAccount' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_AllowSingleSignOnUsingOSPrimaryAccount: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AllowSingleSignOnUsingOSPrimaryAccount: buf.
+	^buf asBoolean!
 
 allowSingleSignOnUsingOSPrimaryAccount: allow
 	"Set the 'AllowSingleSignOnUsingOSPrimaryAccount' property of the receiver to the <sdword> value of the argument."

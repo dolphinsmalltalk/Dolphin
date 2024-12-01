@@ -192,28 +192,28 @@ icon_
 isChecked
 	"Answer whether the item is checked or not."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsChecked: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsChecked: buf.
+	^buf asBoolean!
 
 isChecked: value
 	"Set the 'IsChecked' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsChecked: value!
+	self put_IsChecked: value asParameter!
 
 isEnabled
 	"Answer whether the item is enabled or not."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsEnabled: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsEnabled: buf.
+	^buf asBoolean!
 
 isEnabled: value
 	"Set the 'IsEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsEnabled: value!
+	self put_IsEnabled: value asParameter!
 
 items
 	"Answer an <ICoreWebView2ContextMenuItemCollection> containing the receiver's sub-menu items, or nil if not a sub-menu"
@@ -327,9 +327,9 @@ get_name:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItem!private
 get_ShortcutKeyDescription:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItem!private! !
 icon_!**auto generated**!properties!public! !
 isChecked!properties!public! !
-isChecked:!**auto generated**!properties!public! !
+isChecked:!properties!public! !
 isEnabled!properties!public! !
-isEnabled:!**auto generated**!properties!public! !
+isEnabled:!properties!public! !
 items!properties!public! !
 kind!**auto generated**!properties!public! !
 kindName!properties!public! !

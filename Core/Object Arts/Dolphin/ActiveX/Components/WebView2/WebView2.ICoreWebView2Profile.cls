@@ -82,6 +82,19 @@ addBrowserExtension: extensionFolderPath thenDo: aDyadicValuable
 	self AddBrowserExtension: extensionFolderPath asUtf16String handler: handler.
 	handler free!
 
+clearBrowsingData: dataKinds from: startTime to: endTime thenDo: aMonadicValuable
+	"Clear browsing data of the kinds indicated by the flags in the <integer> dataKinds argument in a range specified by the <DateAndTime> startTime and endTime arguments. When done invoke the <monadicValuable> argument passing an integer HRESULT indicating success/failure."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aMonadicValuable)
+				queryInterface: ICoreWebView2ClearBrowsingDataCompletedHandler.
+	self
+		ClearBrowsingDataInTimeRange: dataKinds
+		startTime: startTime asUnixTime asFloat
+		endTime: endTime asUnixTime asFloat
+		handler: handler.
+	handler free!
+
 ClearBrowsingData: dataKinds handler: handler
 	"Private - Invoke the ClearBrowsingData() method of the COM object.
 
@@ -304,36 +317,36 @@ icon
 isGeneralAutofillEnabled
 	"Answer the <Boolean> value of the 'IsGeneralAutofillEnabled' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_IsGeneralAutofillEnabled: answer.
-	^answer asBoolean!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsGeneralAutofillEnabled: buf.
+	^buf asBoolean!
 
-isGeneralAutofillEnabled: value
-	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the <int32> value of the argument."
+isGeneralAutofillEnabled: aBoolean
+	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the argument."
 
-	self put_IsGeneralAutofillEnabled: value!
+	self put_IsGeneralAutofillEnabled: aBoolean asParameter!
 
 isInPrivateModeEnabled
 	"Answer the <Boolean> value of the 'IsInPrivateModeEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsInPrivateModeEnabled: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsInPrivateModeEnabled: buf.
+	^buf asBoolean!
 
 isPasswordAutosaveEnabled
 	"Answer the <Boolean> value of the 'IsPasswordAutosaveEnabled' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_IsPasswordAutosaveEnabled: answer.
-	^answer asBoolean!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsPasswordAutosaveEnabled: buf.
+	^buf asBoolean!
 
-isPasswordAutosaveEnabled: value
-	"Set the 'IsPasswordAutosaveEnabled' property of the receiver to the <int32> value of the argument."
+isPasswordAutosaveEnabled: aBoolean
+	"Set the 'IsPasswordAutosaveEnabled' property of the receiver to the  the argument."
 
-	self put_IsPasswordAutosaveEnabled: value!
+	self put_IsPasswordAutosaveEnabled: aBoolean asParameter!
 
 preferredColorScheme
 	"Answer the <sdword> value of the 'PreferredColorScheme' property of the receiver."
@@ -474,6 +487,7 @@ setPermissionState: permissionKindInteger origin: originString state: stateInteg
 Add_Deleted:token:!COM Interfaces-ICoreWebView2Profile8!private! !
 AddBrowserExtension:handler:!COM Interfaces-ICoreWebView2Profile7!public! !
 addBrowserExtension:thenDo:!async requests!public! !
+clearBrowsingData:from:to:thenDo:!methods!public! !
 ClearBrowsingData:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
 clearBrowsingData:startTime:endTime:handler:!methods!public! !
 clearBrowsingData:thenDo:!async requests!public! !

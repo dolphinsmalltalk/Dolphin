@@ -107,10 +107,10 @@ id
 isEnabled
 	"Answer the <boolean> value of the 'IsEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsEnabled: buf.
+	^buf asBoolean!
 
 name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."

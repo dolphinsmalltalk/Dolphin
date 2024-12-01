@@ -71,10 +71,10 @@ interface ICoreWebView2SaveAsUIShowingEventArgs : IUnknown
 allowReplace
 	"Answer the <boolean> value of the 'AllowReplace' property of the receiver."
 
-	| answer |
-	answer := ByteArray newFixed: 4.
-	self get_AllowReplace: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AllowReplace: buf.
+	^buf asBoolean!
 
 allowReplace: aBoolean
 	"Set the 'AllowReplace' property of the receiver to the <int32> value of the argument."
@@ -235,10 +235,10 @@ saveAsFilePath: value
 suppressDefaultDialog
 	"Answer the <boolean> value of the 'SuppressDefaultDialog' property of the receiver."
 
-	| answer |
-	answer := ByteArray newFixed: 4.
-	self get_SuppressDefaultDialog: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_SuppressDefaultDialog: buf.
+	^buf asBoolean!
 
 suppressDefaultDialog: aBoolean
 	"Set the 'SuppressDefaultDialog' property of the receiver to the <int32> value of the argument."

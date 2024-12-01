@@ -41,10 +41,10 @@ interface ICoreWebView2EnvironmentOptions6 : IUnknown
 areBrowserExtensionsEnabled
 	"Answer the <boolean> value of the 'AreBrowserExtensionsEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_AreBrowserExtensionsEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AreBrowserExtensionsEnabled: buf.
+	^buf asBoolean!
 
 areBrowserExtensionsEnabled: value
 	"Set the 'AreBrowserExtensionsEnabled' property of the receiver to the <int32> value of the argument."

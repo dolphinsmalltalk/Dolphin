@@ -49,19 +49,6 @@ get_IsBrowserAcceleratorKeyEnabled: value
 	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
-isBrowserAcceleratorKeyEnabled
-	"Answer the <int32> value of the 'IsBrowserAcceleratorKeyEnabled' property of the receiver."
-
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsBrowserAcceleratorKeyEnabled: answer.
-	^answer asObject!
-
-isBrowserAcceleratorKeyEnabled: value
-	"Set the 'IsBrowserAcceleratorKeyEnabled' property of the receiver to the <int32> value of the argument."
-
-	self put_IsBrowserAcceleratorKeyEnabled: value asParameter!
-
 printPropertiesOn: aStream
 	super printPropertiesOn: aStream.
 	
@@ -81,8 +68,6 @@ put_IsBrowserAcceleratorKeyEnabled: value
 
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2 categoriesForMethods!
 get_IsBrowserAcceleratorKeyEnabled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs2!private! !
-isBrowserAcceleratorKeyEnabled!properties!public! !
-isBrowserAcceleratorKeyEnabled:!properties!public! !
 printPropertiesOn:!printing!private! !
 put_IsBrowserAcceleratorKeyEnabled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs2!private! !
 !

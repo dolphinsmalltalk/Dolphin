@@ -84,10 +84,10 @@ httpStatusCode
 isSuccess
 	"Answer the <Boolean> value of the 'IsSuccess' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsSuccess: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsSuccess: buf.
+	^buf asBoolean!
 
 navigationId
 	"Answer the <qword> value of the 'NavigationId' property of the receiver."

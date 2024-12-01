@@ -39,17 +39,17 @@ interface ICoreWebView2EnvironmentOptions5 : IUnknown
 !WebView2.ICoreWebView2EnvironmentOptions5 methodsFor!
 
 enableTrackingPrevention
-	"Answer the <int32> value of the 'EnableTrackingPrevention' property of the receiver."
+	"Answer the <Boolean> value of the 'EnableTrackingPrevention' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_EnableTrackingPrevention: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_EnableTrackingPrevention: buf.
+	^buf asBoolean!
 
-enableTrackingPrevention: value
+enableTrackingPrevention: aBoolean
 	"Set the 'EnableTrackingPrevention' property of the receiver to the <int32> value of the argument."
 
-	self put_EnableTrackingPrevention: value!
+	self put_EnableTrackingPrevention: aBoolean asParameter!
 
 get_EnableTrackingPrevention: value
 	"Private - Get the value of the 'EnableTrackingPrevention' property of the receiver.
@@ -71,8 +71,8 @@ put_EnableTrackingPrevention: value
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2EnvironmentOptions5 categoriesForMethods!
-enableTrackingPrevention!**auto generated**!properties!public! !
-enableTrackingPrevention:!**auto generated**!properties!public! !
+enableTrackingPrevention!properties!public! !
+enableTrackingPrevention:!properties!public! !
 get_EnableTrackingPrevention:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 put_EnableTrackingPrevention:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 !

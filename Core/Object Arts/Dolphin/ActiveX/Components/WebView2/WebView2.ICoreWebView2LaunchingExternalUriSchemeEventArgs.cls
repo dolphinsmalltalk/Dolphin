@@ -110,10 +110,10 @@ initiatingOrigin
 isUserInitiated
 	"Answer the <Boolean> value of the 'IsUserInitiated' property of the receiver."
 
-	| answer |
-	answer :=UInt32Bytes new.
-	self get_IsUserInitiated: answer.
-	^answer asBoolean!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsUserInitiated: buf.
+	^buf asBoolean!
 
 printableProperties
 	^#(#uri #isUserInitiated #cancel #initiatingOrigin)!

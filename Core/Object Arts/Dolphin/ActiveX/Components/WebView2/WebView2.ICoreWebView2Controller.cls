@@ -165,10 +165,10 @@ Add_ZoomFactorChanged: eventHandler token: token
 allowExternalDrop
 	"Answer the <Boolean> value of the 'AllowExternalDrop' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_AllowExternalDrop: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AllowExternalDrop: buf.
+	^buf asBoolean!
 
 allowExternalDrop: aBoolean
 	self put_AllowExternalDrop: aBoolean asParameter!

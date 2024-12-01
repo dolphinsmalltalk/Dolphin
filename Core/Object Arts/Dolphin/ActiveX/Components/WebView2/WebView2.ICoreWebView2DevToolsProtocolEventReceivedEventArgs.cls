@@ -46,6 +46,14 @@ get_ParameterObjectAsJson: parameterObjectAsJson
 	<virtual stdcall: hresult 4 lpwstr*>
 	^self invalidCall: _failureCode!
 
+get_sessionId: sessionId
+	"Private - Get the value of the 'sessionId' property of the receiver.
+
+		HRESULT __stdcall sessionId(
+			[out, retval]LPWSTR* sessionId);"
+
+	^E_NOTIMPL!
+
 parameterObjectAsJson
 	"Answer the <lpwstr> value of the 'ParameterObjectAsJson' property of the receiver."
 
@@ -54,11 +62,23 @@ parameterObjectAsJson
 	self get_ParameterObjectAsJson: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
+	^answer!
+
+sessionId
+	"Answer the <lpwstr> value of the 'sessionId' property of the receiver."
+
+	| ptr answer |
+	ptr := TaskMemory new.
+	self get_sessionId: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
 	^answer! !
 
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs categoriesForMethods!
 get_ParameterObjectAsJson:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceivedEventArgs!private! !
+get_sessionId:!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceivedEventArgs2!private! !
 parameterObjectAsJson!properties!public! !
+sessionId!properties!public! !
 !
 
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs class methodsFor!

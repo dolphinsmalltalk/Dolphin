@@ -44,21 +44,10 @@ get_sessionId: sessionId
 			[out, retval]LPWSTR* sessionId);"
 
 	<virtual stdcall: hresult 5 lpwstr*>
-	^self invalidCall: _failureCode!
-
-sessionId
-	"Answer the <lpwstr> value of the 'sessionId' property of the receiver."
-
-	| ptr answer |
-	ptr := TaskMemory new.
-	self get_sessionId: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer! !
+	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 categoriesForMethods!
 get_sessionId:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceivedEventArgs2!private! !
-sessionId!properties!public! !
 !
 
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 class methodsFor!

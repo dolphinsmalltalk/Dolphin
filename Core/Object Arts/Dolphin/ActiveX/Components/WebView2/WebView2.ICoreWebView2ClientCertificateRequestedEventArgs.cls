@@ -251,7 +251,7 @@ get_Port:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateReques
 get_SelectedCertificate:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 host!properties!public! !
-isProxy!**auto generated**!properties!public! !
+isProxy!properties!public! !
 mutuallyTrustedCertificates!**auto generated**!properties!public! !
 port!**auto generated**!properties!public! !
 printableProperties!printing!private! !

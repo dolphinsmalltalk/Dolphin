@@ -157,10 +157,10 @@ savesInProfile
 	self get_SavesInProfile: buf.
 	^buf asBoolean!
 
-savesInProfile: value
+savesInProfile: aBoolean
 	"Set the 'SavesInProfile' property of the receiver to the <boolean> argument."
 
-	self put_SavesInProfile: value asParameter!
+	self put_SavesInProfile: aBoolean asParameter!
 
 state
 	"Answer the <sdword> value of the 'State' property of the receiver."

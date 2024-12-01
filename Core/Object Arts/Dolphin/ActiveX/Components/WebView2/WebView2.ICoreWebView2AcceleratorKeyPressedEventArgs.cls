@@ -61,6 +61,15 @@ get_Handled: handled
 	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
+get_IsBrowserAcceleratorKeyEnabled: value
+	"Private - Get the value of the 'IsBrowserAcceleratorKeyEnabled' property of the receiver.
+
+		HRESULT __stdcall IsBrowserAcceleratorKeyEnabled(
+			[out, retval]long* value);"
+
+	value value: 1.
+	^S_OK!
+
 get_KeyEventKind: keyEventKind
 	"Private - Get the value of the 'KeyEventKind' property of the receiver.
 
@@ -96,6 +105,19 @@ get_VirtualKey: virtualKey
 
 	<virtual stdcall: hresult 5 uint32*>
 	^self invalidCall: _failureCode!
+
+isBrowserAcceleratorKeyEnabled
+	"Answer the <Boolean> value of the 'IsBrowserAcceleratorKeyEnabled' property of the receiver."
+
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsBrowserAcceleratorKeyEnabled: buf.
+	^buf asBoolean!
+
+isBrowserAcceleratorKeyEnabled: aBoolean
+	"Set the 'IsBrowserAcceleratorKeyEnabled' property of the receiver to the <int32> value of the argument."
+
+	self put_IsBrowserAcceleratorKeyEnabled: aBoolean asParameter!
 
 keyEventKind
 	"Answer the <sdword> value of the 'KeyEventKind' property of the receiver."
@@ -142,6 +164,15 @@ put_Handled: handled
 	<virtual stdcall: hresult 9 int32>
 	^self invalidCall: _failureCode!
 
+put_IsBrowserAcceleratorKeyEnabled: value
+	"Private - Set the value of the 'IsBrowserAcceleratorKeyEnabled' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall IsBrowserAcceleratorKeyEnabled(
+			[in]long value);"
+
+	^E_NOTIMPL!
+
 virtualKey
 	"Answer the <dword> value of the 'VirtualKey' property of the receiver."
 
@@ -155,16 +186,20 @@ windowsKeyEvent
 
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
+get_IsBrowserAcceleratorKeyEnabled:!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs2!private! !
 get_KeyEventKind:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_KeyEventLParam:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_PhysicalKeyStatus:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_VirtualKey:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
+isBrowserAcceleratorKeyEnabled!properties!public! !
+isBrowserAcceleratorKeyEnabled:!properties!public! !
 keyEventKind!**auto generated**!properties!public! !
 keyEventLParam!**auto generated**!properties!public! !
 keyName!accessing!public! !
 physicalKeyStatus!**auto generated**!properties!public! !
 printPropertiesOn:!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
+put_IsBrowserAcceleratorKeyEnabled:!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs2!private! !
 virtualKey!**auto generated**!properties!public! !
 windowsKeyEvent!printing!public! !
 !

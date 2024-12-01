@@ -817,10 +817,10 @@ shouldPrintBackgrounds
 	self get_ShouldPrintBackgrounds: buf.
 	^buf asBoolean!
 
-shouldPrintBackgrounds: shouldPrintBackgrounds
-	"Set the 'ShouldPrintBackgrounds' property of the receiver to the <sdword> value of the argument."
+shouldPrintBackgrounds: aBoolean
+	"Set the 'ShouldPrintBackgrounds' property of the receiver to the argument."
 
-	self put_ShouldPrintBackgrounds: shouldPrintBackgrounds asParameter!
+	self put_ShouldPrintBackgrounds: aBoolean asParameter!
 
 shouldPrintHeaderAndFooter
 	"Answer the <Boolean> value of the 'ShouldPrintHeaderAndFooter' property of the receiver."
@@ -830,10 +830,10 @@ shouldPrintHeaderAndFooter
 	self get_ShouldPrintHeaderAndFooter: buf.
 	^buf asBoolean!
 
-shouldPrintHeaderAndFooter: shouldPrintHeaderAndFooter
-	"Set the 'ShouldPrintHeaderAndFooter' property of the receiver to the <sdword> value of the argument."
+shouldPrintHeaderAndFooter: aBoolean
+	"Set the 'ShouldPrintHeaderAndFooter' property of the receiver to the argument."
 
-	self put_ShouldPrintHeaderAndFooter: shouldPrintHeaderAndFooter asParameter!
+	self put_ShouldPrintHeaderAndFooter: aBoolean asParameter!
 
 shouldPrintSelectionOnly
 	"Answer the <Boolean> value of the 'ShouldPrintSelectionOnly' property of the receiver."
@@ -843,10 +843,10 @@ shouldPrintSelectionOnly
 	self get_ShouldPrintSelectionOnly: buf.
 	^buf asBoolean!
 
-shouldPrintSelectionOnly: shouldPrintSelectionOnly
-	"Set the 'ShouldPrintSelectionOnly' property of the receiver to the <sdword> value of the argument."
+shouldPrintSelectionOnly: aBoolean
+	"Set the 'ShouldPrintSelectionOnly' property of the receiver to the argument."
 
-	self put_ShouldPrintSelectionOnly: shouldPrintSelectionOnly asParameter! !
+	self put_ShouldPrintSelectionOnly: aBoolean asParameter! !
 
 !WebView2.ICoreWebView2PrintSettings categoriesForMethods!
 collation!properties!public! !

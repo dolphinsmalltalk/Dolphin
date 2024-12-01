@@ -47,19 +47,6 @@ interface ICoreWebView2Profile2 : ICoreWebView2Profile
 
 !WebView2.ICoreWebView2Profile2 methodsFor!
 
-clearBrowsingData: dataKinds from: startTime to: endTime thenDo: aMonadicValuable
-	"Clear browsing data of the kinds indicated by the flags in the <integer> dataKinds argument in a range specified by the <DateAndTime> startTime and endTime arguments. When done invoke the <monadicValuable> argument passing an integer HRESULT indicating success/failure."
-
-	| handler |
-	handler := (WebView2CompletionHandler completionBlock: aMonadicValuable)
-				queryInterface: ICoreWebView2ClearBrowsingDataCompletedHandler.
-	self
-		ClearBrowsingDataInTimeRange: dataKinds
-		startTime: startTime asUnixTime asFloat
-		endTime: endTime asUnixTime asFloat
-		handler: handler.
-	handler free!
-
 ClearBrowsingData: dataKinds handler: handler
 	"Private - Invoke the ClearBrowsingData() method of the COM object.
 
@@ -92,7 +79,6 @@ ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime ha
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2Profile2 categoriesForMethods!
-clearBrowsingData:from:to:thenDo:!methods!public! !
 ClearBrowsingData:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
 ClearBrowsingDataAll:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !

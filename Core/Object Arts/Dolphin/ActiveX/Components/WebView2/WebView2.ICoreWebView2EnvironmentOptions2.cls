@@ -50,10 +50,10 @@ interface ICoreWebView2EnvironmentOptions2 : IUnknown
 exclusiveUserDataFolderAccess
 	"Answer the <Boolean> value of the 'ExclusiveUserDataFolderAccess' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_ExclusiveUserDataFolderAccess: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ExclusiveUserDataFolderAccess: buf.
+	^buf asBoolean!
 
 exclusiveUserDataFolderAccess: value
 	"Set the 'ExclusiveUserDataFolderAccess' property of the receiver to the <sdword> value of the argument."
@@ -81,7 +81,7 @@ put_ExclusiveUserDataFolderAccess: value
 
 !WebView2.ICoreWebView2EnvironmentOptions2 categoriesForMethods!
 exclusiveUserDataFolderAccess!properties!public! !
-exclusiveUserDataFolderAccess:!**auto generated**!properties!public! !
+exclusiveUserDataFolderAccess:!properties!public! !
 get_ExclusiveUserDataFolderAccess:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 put_ExclusiveUserDataFolderAccess:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 !

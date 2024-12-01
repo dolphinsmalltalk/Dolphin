@@ -59,15 +59,15 @@ interface ICoreWebView2SaveFileSecurityCheckStartingEventArgs : IUnknown
 cancelSave
 	"Answer the <boolean> value of the 'CancelSave' property of the receiver."
 
-	| answer |
-	answer := ByteArray newFixed: 4.
-	self get_CancelSave: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_CancelSave: buf.
+	^buf asBoolean!
 
-cancelSave: value
-	"Set the 'CancelSave' property of the receiver to the <int32> value of the argument."
+cancelSave: aBoolean
+	"Set the 'CancelSave' property of the receiver to the argument."
 
-	self put_CancelSave: value asParameter!
+	self put_CancelSave: aBoolean asParameter!
 
 documentOriginUri
 	"Answer the <lpwstr> value of the 'DocumentOriginUri' property of the receiver."
@@ -174,17 +174,17 @@ put_SuppressDefaultPolicy: value
 	^self invalidCall: _failureCode!
 
 suppressDefaultPolicy
-	"Answer the <int32> value of the 'SuppressDefaultPolicy' property of the receiver."
+	"Answer the <Boolean> value of the 'SuppressDefaultPolicy' property of the receiver."
 
-	| answer |
-	answer := ByteArray newFixed: 4.
-	self get_SuppressDefaultPolicy: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_SuppressDefaultPolicy: buf.
+	^buf asBoolean!
 
-suppressDefaultPolicy: value
-	"Set the 'SuppressDefaultPolicy' property of the receiver to the <int32> value of the argument."
+suppressDefaultPolicy: aBoolean
+	"Set the 'SuppressDefaultPolicy' property of the receiver to the argument."
 
-	self put_SuppressDefaultPolicy: value asParameter! !
+	self put_SuppressDefaultPolicy: aBoolean asParameter! !
 
 !WebView2.ICoreWebView2SaveFileSecurityCheckStartingEventArgs categoriesForMethods!
 cancelSave!properties!public! !

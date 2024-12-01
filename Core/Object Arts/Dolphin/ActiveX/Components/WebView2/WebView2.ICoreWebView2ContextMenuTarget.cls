@@ -203,50 +203,50 @@ get_SourceUri: value
 hasLinkText
 	"Answer the <Boolean> value of the 'HasLinkText' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_HasLinkText: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HasLinkText: buf.
+	^buf asBoolean!
 
 hasLinkUri
 	"Answer the <Boolean> value of the 'HasLinkUri' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_HasLinkUri: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HasLinkUri: buf.
+	^buf asBoolean!
 
 hasSelection
 	"Answer the <Boolean> value of the 'HasSelection' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_HasSelection: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HasSelection: buf.
+	^buf asBoolean!
 
 hasSourceUri
-	"Answer the <sdword> value of the 'HasSourceUri' property of the receiver."
+	"Answer the <Boolean> value of the 'HasSourceUri' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_HasSourceUri: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HasSourceUri: buf.
+	^buf asBoolean!
 
 isEditable
 	"Answer the <Boolean> value of the 'IsEditable' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsEditable: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsEditable: buf.
+	^buf asBoolean!
 
 isRequestedForMainFrame
 	"Answer the <Boolean> value of the 'IsRequestedForMainFrame' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsRequestedForMainFrame: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsRequestedForMainFrame: buf.
+	^buf asBoolean!
 
 kind
 	"Answer the <sdword> value of the 'Kind' property of the receiver."

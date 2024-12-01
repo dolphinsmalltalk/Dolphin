@@ -50,10 +50,10 @@ get_IsCustomCrashReportingEnabled: value
 isCustomCrashReportingEnabled
 	"Answer the <boolean> value of the 'IsCustomCrashReportingEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsCustomCrashReportingEnabled: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsCustomCrashReportingEnabled: buf.
+	^buf asBoolean!
 
 isCustomCrashReportingEnabled: value
 	"Set the 'IsCustomCrashReportingEnabled' property of the receiver to the <sdword> value of the argument."

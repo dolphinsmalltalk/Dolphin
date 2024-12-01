@@ -124,10 +124,10 @@ GetAllowedOrigins: allowedOriginsCount allowedOrigins: allowedOrigins
 hasAuthorityComponent
 	"Answer the <boolean> value of the 'HasAuthorityComponent' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_HasAuthorityComponent: answer.
-	^answer asBoolean!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HasAuthorityComponent: buf.
+	^buf asBoolean!
 
 hasAuthorityComponent: hasAuthorityComponent
 	"Set the 'HasAuthorityComponent' property of the receiver to the <boolean> value of the argument."
@@ -178,12 +178,12 @@ SetAllowedOrigins: allowedOriginsCount allowedOrigins: allowedOrigins
 	^self invalidCall: _failureCode!
 
 treatAsSecure
-	"Answer the <sdword> value of the 'TreatAsSecure' property of the receiver."
+	"Answer the <Boolean> value of the 'TreatAsSecure' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_TreatAsSecure: answer.
-	^answer asBoolean!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_TreatAsSecure: buf.
+	^buf asBoolean!
 
 treatAsSecure: treatAsSecure
 	"Set the 'TreatAsSecure' property of the receiver to the <boolean> value of the argument."

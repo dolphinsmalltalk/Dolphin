@@ -76,15 +76,15 @@ get_ScriptLocale: locale
 isInPrivateModeEnabled
 	"Answer the <sdword> value of the 'IsInPrivateModeEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsInPrivateModeEnabled: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsInPrivateModeEnabled: buf.
+	^buf asBoolean!
 
 isInPrivateModeEnabled: value
 	"Set the 'IsInPrivateModeEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsInPrivateModeEnabled: value!
+	self put_IsInPrivateModeEnabled: value asParameter!
 
 printableProperties
 	^#(#profileName #isInPrivateModeEnabled #scriptLocale)!
@@ -156,7 +156,7 @@ get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Contr
 get_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 get_ScriptLocale:!COM Interfaces-ICoreWebView2ControllerOptions2!private! !
 isInPrivateModeEnabled!properties!public! !
-isInPrivateModeEnabled:!**auto generated**!properties!public! !
+isInPrivateModeEnabled:!properties!public! !
 printableProperties!printing!private! !
 profileName!properties!public! !
 profileName:!**auto generated**!properties!public! !

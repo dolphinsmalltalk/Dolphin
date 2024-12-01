@@ -96,10 +96,10 @@ areBrowserAcceleratorKeysEnabled
 	self get_AreBrowserAcceleratorKeysEnabled: buf.
 	^buf asBoolean!
 
-areBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
-	"Set the 'AreBrowserAcceleratorKeysEnabled' property of the receiver to the <sdword> value of the argument."
+areBrowserAcceleratorKeysEnabled: aBoolean
+	"Set the 'AreBrowserAcceleratorKeysEnabled' property of the receiver to the argument."
 
-	self put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled asParameter!
+	self put_AreBrowserAcceleratorKeysEnabled: aBoolean asParameter!
 
 areDefaultContextMenusEnabled
 	"Answer the <sdword> value of the 'AreDefaultContextMenusEnabled' property of the receiver."
@@ -109,23 +109,23 @@ areDefaultContextMenusEnabled
 	self get_AreDefaultContextMenusEnabled: buf.
 	^buf asBoolean!
 
-areDefaultContextMenusEnabled: enabled
-	"Set the 'AreDefaultContextMenusEnabled' property of the receiver to the <sdword> value of the argument."
+areDefaultContextMenusEnabled: aBoolean
+	"Set the 'AreDefaultContextMenusEnabled' property of the receiver to the argument."
 
-	self put_AreDefaultContextMenusEnabled: enabled asParameter!
+	self put_AreDefaultContextMenusEnabled: aBoolean asParameter!
 
 areDefaultScriptDialogsEnabled
 	"Answer the <Boolean> value of the 'AreDefaultScriptDialogsEnabled' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_AreDefaultScriptDialogsEnabled: answer.
-	^answer asBoolean!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AreDefaultScriptDialogsEnabled: buf.
+	^buf asBoolean!
 
-areDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled
-	"Set the 'AreDefaultScriptDialogsEnabled' property of the receiver to the <sdword> value of the argument."
+areDefaultScriptDialogsEnabled: aBoolean
+	"Set the 'AreDefaultScriptDialogsEnabled' property of the receiver to the argument."
 
-	self put_AreDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled asParameter!
+	self put_AreDefaultScriptDialogsEnabled: aBoolean asParameter!
 
 areDevToolsEnabled
 	"Answer the <Boolean> value of the 'AreDevToolsEnabled' property of the receiver."
@@ -135,10 +135,10 @@ areDevToolsEnabled
 	self get_AreDevToolsEnabled: buf.
 	^buf asBoolean!
 
-areDevToolsEnabled: areDevToolsEnabled
-	"Set the 'AreDevToolsEnabled' property of the receiver to the <sdword> value of the argument."
+areDevToolsEnabled: aBoolean
+	"Set the 'AreDevToolsEnabled' property of the receiver to the argument."
 
-	self put_AreDevToolsEnabled: areDevToolsEnabled asParameter!
+	self put_AreDevToolsEnabled: aBoolean asParameter!
 
 areHostObjectsAllowed
 	"Answer the <Boolean> value of the 'AreHostObjectsAllowed' property of the receiver."
@@ -148,10 +148,10 @@ areHostObjectsAllowed
 	self get_AreHostObjectsAllowed: buf.
 	^buf asBoolean!
 
-areHostObjectsAllowed: allowed
-	"Set the 'AreHostObjectsAllowed' property of the receiver to the <sdword> value of the argument."
+areHostObjectsAllowed: aBoolean
+	"Set the 'AreHostObjectsAllowed' property of the receiver to the argument."
 
-	self put_AreHostObjectsAllowed: allowed asParameter!
+	self put_AreHostObjectsAllowed: aBoolean asParameter!
 
 get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	"Private - Get the value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver.
@@ -322,10 +322,10 @@ hiddenPdfToolbarItems
 	self get_HiddenPdfToolbarItems: answer.
 	^answer asObject!
 
-hiddenPdfToolbarItems: hidden_pdf_toolbar_items
-	"Set the 'HiddenPdfToolbarItems' property of the receiver to the <sdword> value of the argument."
+hiddenPdfToolbarItems: aBoolean
+	"Set the 'HiddenPdfToolbarItems' property of the receiver to the argument."
 
-	self put_HiddenPdfToolbarItems: hidden_pdf_toolbar_items!
+	self put_HiddenPdfToolbarItems: aBoolean!
 
 isBuiltInErrorPageEnabled
 	"Answer the <Boolean> value of the 'IsBuiltInErrorPageEnabled' property of the receiver."
@@ -335,10 +335,10 @@ isBuiltInErrorPageEnabled
 	self get_IsBuiltInErrorPageEnabled: buf.
 	^buf asBoolean!
 
-isBuiltInErrorPageEnabled: enabled
-	"Set the 'IsBuiltInErrorPageEnabled' property of the receiver to the <sdword> value of the argument."
+isBuiltInErrorPageEnabled: aBoolean
+	"Set the 'IsBuiltInErrorPageEnabled' property of the receiver to the argument."
 
-	self put_IsBuiltInErrorPageEnabled: enabled asParameter!
+	self put_IsBuiltInErrorPageEnabled: aBoolean asParameter!
 
 isGeneralAutofillEnabled
 	"Answer the <Boolean> value of the 'IsGeneralAutofillEnabled' property of the receiver."
@@ -348,23 +348,23 @@ isGeneralAutofillEnabled
 	self get_IsGeneralAutofillEnabled: buf.
 	^buf asBoolean!
 
-isGeneralAutofillEnabled: value
-	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the <sdword> value of the argument."
+isGeneralAutofillEnabled: aBoolean
+	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the argument."
 
-	self put_IsGeneralAutofillEnabled: value asParameter!
+	self put_IsGeneralAutofillEnabled: aBoolean asParameter!
 
 isNonClientRegionSupportEnabled
 	"Answer the <boolean> value of the 'IsNonClientRegionSupportEnabled' property of the receiver."
 
-	| answer |
-	answer := ByteArray newFixed: 4.
-	self get_IsNonClientRegionSupportEnabled: answer.
-	^(answer uint32AtOffset: 0) ~~ 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsNonClientRegionSupportEnabled: buf.
+	^buf asBoolean!
 
-isNonClientRegionSupportEnabled: enabled
-	"Set the 'IsNonClientRegionSupportEnabled' property of the receiver to the <boolean> value of the argument."
+isNonClientRegionSupportEnabled: aBoolean
+	"Set the 'IsNonClientRegionSupportEnabled' property of the receiver to the argument."
 
-	self put_IsNonClientRegionSupportEnabled: enabled asParameter!
+	self put_IsNonClientRegionSupportEnabled: aBoolean asParameter!
 
 isPasswordAutosaveEnabled
 	"Answer the <Boolean> value of the 'IsPasswordAutosaveEnabled' property of the receiver."
@@ -374,36 +374,36 @@ isPasswordAutosaveEnabled
 	self get_IsPasswordAutosaveEnabled: buf.
 	^buf asBoolean!
 
-isPasswordAutosaveEnabled: value
-	"Set the 'IsPasswordAutosaveEnabled' property of the receiver to the <sdword> value of the argument."
+isPasswordAutosaveEnabled: aBoolean
+	"Set the 'IsPasswordAutosaveEnabled' property of the receiver to the argument."
 
-	self put_IsPasswordAutosaveEnabled: value asParameter!
+	self put_IsPasswordAutosaveEnabled: aBoolean asParameter!
 
 isPinchZoomEnabled
 	"Answer the <Boolean> value of the 'IsPinchZoomEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsPinchZoomEnabled: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsPinchZoomEnabled: buf.
+	^buf asBoolean!
 
-isPinchZoomEnabled: enabled
-	"Set the 'IsPinchZoomEnabled' property of the receiver to the <sdword> value of the argument."
+isPinchZoomEnabled: aBoolean
+	"Set the 'IsPinchZoomEnabled' property of the receiver to the argument."
 
-	self put_IsPinchZoomEnabled: enabled asParameter!
+	self put_IsPinchZoomEnabled: aBoolean asParameter!
 
 isReputationCheckingRequired
 	"Answer the <boolean> value of the 'IsReputationCheckingRequired' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_IsReputationCheckingRequired: answer.
-	^answer asBoolean!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsReputationCheckingRequired: buf.
+	^buf asBoolean!
 
-isReputationCheckingRequired: value
-	"Set the 'IsReputationCheckingRequired' property of the receiver to the <boolean> value of the argument."
+isReputationCheckingRequired: aBoolean
+	"Set the 'IsReputationCheckingRequired' property of the receiver to the argument."
 
-	self put_IsReputationCheckingRequired: value asParameter!
+	self put_IsReputationCheckingRequired: aBoolean asParameter!
 
 isScriptEnabled
 	"Answer the <Boolean> value of the 'IsScriptEnabled' property of the receiver."
@@ -413,10 +413,10 @@ isScriptEnabled
 	self get_IsScriptEnabled: buf.
 	^buf asBoolean!
 
-isScriptEnabled: isScriptEnabled
-	"Set the 'IsScriptEnabled' property of the receiver to the <sdword> value of the argument."
+isScriptEnabled: aBoolean
+	"Set the 'IsScriptEnabled' property of the receiver to the argument."
 
-	self put_IsScriptEnabled: isScriptEnabled asParameter!
+	self put_IsScriptEnabled: aBoolean asParameter!
 
 isStatusBarEnabled
 	"Answer the <Boolean> value of the 'IsStatusBarEnabled' property of the receiver."
@@ -426,23 +426,23 @@ isStatusBarEnabled
 	self get_IsStatusBarEnabled: buf.
 	^buf asBoolean!
 
-isStatusBarEnabled: isStatusBarEnabled
-	"Set the 'IsStatusBarEnabled' property of the receiver to the <sdword> value of the argument."
+isStatusBarEnabled: aBoolean
+	"Set the 'IsStatusBarEnabled' property of the receiver to the argument."
 
-	self put_IsStatusBarEnabled: isStatusBarEnabled asParameter!
+	self put_IsStatusBarEnabled: aBoolean asParameter!
 
 isSwipeNavigationEnabled
 	"Answer the <Boolean> value of the 'IsSwipeNavigationEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsSwipeNavigationEnabled: answer.
-	^answer value!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsSwipeNavigationEnabled: buf.
+	^buf asBoolean!
 
-isSwipeNavigationEnabled: enabled
-	"Set the 'IsSwipeNavigationEnabled' property of the receiver to the <sdword> value of the argument."
+isSwipeNavigationEnabled: aBoolean
+	"Set the 'IsSwipeNavigationEnabled' property of the receiver to the argument."
 
-	self put_IsSwipeNavigationEnabled: enabled asParameter!
+	self put_IsSwipeNavigationEnabled: aBoolean asParameter!
 
 isWebMessageEnabled
 	"Answer the <Boolean> value of the 'IsWebMessageEnabled' property of the receiver."
@@ -452,10 +452,10 @@ isWebMessageEnabled
 	self get_IsWebMessageEnabled: buf.
 	^buf asBoolean!
 
-isWebMessageEnabled: isWebMessageEnabled
-	"Set the 'IsWebMessageEnabled' property of the receiver to the <sdword> value of the argument."
+isWebMessageEnabled: aBoolean
+	"Set the 'IsWebMessageEnabled' property of the receiver to the argument."
 
-	self put_IsWebMessageEnabled: isWebMessageEnabled asParameter!
+	self put_IsWebMessageEnabled: aBoolean asParameter!
 
 isZoomControlEnabled
 	"Answer the <Boolean> value of the 'IsZoomControlEnabled' property of the receiver."
@@ -465,10 +465,10 @@ isZoomControlEnabled
 	self get_IsZoomControlEnabled: buf.
 	^buf asBoolean!
 
-isZoomControlEnabled: enabled
-	"Set the 'IsZoomControlEnabled' property of the receiver to the <sdword> value of the argument."
+isZoomControlEnabled: aBoolean
+	"Set the 'IsZoomControlEnabled' property of the receiver to the argument."
 
-	self put_IsZoomControlEnabled: enabled asParameter!
+	self put_IsZoomControlEnabled: aBoolean asParameter!
 
 printableProperties
 	^#(#areDefaultContextMenusEnabled #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isScriptEnabled #isStatusBarEnabled #isWebMessageEnabled #isZoomControlEnabled #areBrowserAcceleratorKeysEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled #isSwipeNavigationEnabled #hiddenPdfToolbarItems)!

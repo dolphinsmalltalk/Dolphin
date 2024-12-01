@@ -24,15 +24,15 @@ WebView2.ICoreWebView2EventArgs comment: '`ICoreWebView2EventArgs` is not define
 cancel
 	"Answer whether the operation associated with the event is to be cancelled."
 
-	| answer |
-	answer := ByteArray newFixed: 4.
-	self get_Cancel: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Cancel: buf.
+	^buf asBoolean!
 
-cancel: value
-	"Set the 'Cancel' property of the receiver to the <int32> value of the argument."
+cancel: aBoolean
+	"Set whether the event should be cancelled."
 
-	self put_Cancel: value asParameter!
+	self put_Cancel: aBoolean asParameter!
 
 defer
 	"Defer this event, answering an <ICoreWebView2Deferral> that can be used to complete it later, or nil if the event is not of a deferrable type."
@@ -79,10 +79,10 @@ handled
 	self get_Handled: answer.
 	^(answer int32AtOffset: 0) ~~ 0!
 
-handled: handled
-	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
+handled: aBoolean
+	"Set whether or not the event has been handled. This may suppress any further or default response."
 
-	self put_Handled: handled asParameter!
+	self put_Handled: aBoolean asParameter!
 
 put_Cancel: cancel
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 

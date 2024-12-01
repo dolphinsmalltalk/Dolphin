@@ -96,10 +96,10 @@ resultAsJson
 succeeded
 	"Answer the <boolean> value of the 'Succeeded' property of the receiver."
 
-	| answer |
-	answer := ByteArray new: 4.
-	self get_Succeeded: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Succeeded: buf.
+	^buf asBoolean!
 
 tryGetResultAsString
 	"Return the string result of the script execution if it succeeded, or nil if it returned a non-string type."
