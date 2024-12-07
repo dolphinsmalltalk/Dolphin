@@ -2,7 +2,7 @@
 
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2EventHandler'
-	instanceVariableNames: 'source token'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -20,36 +20,31 @@ There are a large number of event handler interfaces that have essentially the s
 
 !WebView2.ICoreWebView2EventHandler methodsFor!
 
-basicRegister: tokenBuffer
+basicRegister: tokenBuffer with: anObject
 	^self subclassResponsibility!
 
-basicUnregister
+basicUnregister: anInteger from: anICoreWebView2Interface
 	self subclassResponsibility!
 
-Invoke: sender args: args
+Invoke: anICoreWebView2Interface args: anIUnknown
 	^self subclassResponsibility!
 
-register
-	token ifNotNil: [^self].
-	token := ByteArray new: 8.
-	self basicRegister: token.
-	token := token int64AtOffset: 0!
+register: anICoreWebView2Interface
+	| tokenBuf |
+	tokenBuf := ByteArray newFixed: 8.
+	self basicRegister: tokenBuf with: anICoreWebView2Interface.
+	^tokenBuf int64AtOffset: 0!
 
-source: anICoreWebView2EventSource
-	source := anICoreWebView2EventSource!
-
-unregister
-	token ifNil: [^self].
-	self basicUnregister.
-	token := nil! !
+unregister: anInteger from: anICoreWebView2Interface
+	anInteger ifNil: [^self].
+	self basicUnregister: anInteger from: anICoreWebView2Interface! !
 
 !WebView2.ICoreWebView2EventHandler categoriesForMethods!
-basicRegister:!private!realizing/unrealizing! !
-basicUnregister!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventHandler!public! !
-register!public!realizing/unrealizing! !
-source:!initializing!private! !
-unregister!public!realizing/unrealizing! !
+basicRegister:with:!private!realizing/unrealizing! !
+basicUnregister:from:!private!realizing/unrealizing! !
+Invoke:args:!public! !
+register:!public!realizing/unrealizing! !
+unregister:from:!public!realizing/unrealizing! !
 !
 
 WebView2.ICoreWebView2EventHandler methodProtocol: #ICoreWebView2EventHandler attributes: #(#readOnly) selectors: #(#Invoke:args:)!

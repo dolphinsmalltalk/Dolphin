@@ -72,7 +72,7 @@ UI.Shell
 	subclass: #'OS.COM.Examples.WebBrowserShell'
 	instanceVariableNames: 'address browser statusModel zoomModel flags profileModel'
 	classVariableNames: 'CurrentColorScheme PreferredColorScheme'
-	imports: #(#{UI})
+	imports: #(#{UI} #{WebView2 private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ColorSchemes' -> {
@@ -91,8 +91,10 @@ UI.Shell
 									#browserToolbarButton -> (Color brightness: 16r3B / 16rFF)
 								}
 					}.
+			'DisableScreenCaptureMask' -> 16r8.
 			'ImagesBlockedMask' -> 16r2.
-			'LogEventsMask' -> 16r1
+			'LogEventsMask' -> 16r1.
+			'SuppressSaveAsDialogMask' -> 16r4
 		}!
 
 UI.RuntimeSessionManager

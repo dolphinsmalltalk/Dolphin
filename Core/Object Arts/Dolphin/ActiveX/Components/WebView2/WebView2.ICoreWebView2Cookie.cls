@@ -87,15 +87,18 @@ domain
 	^answer!
 
 expires
-	"Answer the <double> value of the 'Expires' property of the receiver."
+	"Answer the expiry timestamp of the cookie, or nil for session cookies."
 
-	| answer |
-	answer := DOUBLE new.
-	self get_Expires: answer.
-	^DateAndTime fromUnixTime: answer value asInteger!
+	"The WebView2 object represents this as the number of seconds since the UNIX epoch, or -1 for session cookies."
+
+	| buf seconds |
+	buf := ByteArray newFixed: 8.
+	self get_Expires: buf.
+	seconds := (buf doubleAtOffset: 0) asInteger.
+	^seconds = -1 ifFalse: [DateAndTime fromUnixTime: seconds]!
 
 expires: aDateAndTime
-	"Set the 'Expires' property of the receiver to the <double> value of the argument."
+	"Set the cookie expiry timestamp."
 
 	self put_Expires: aDateAndTime asUnixTime!
 

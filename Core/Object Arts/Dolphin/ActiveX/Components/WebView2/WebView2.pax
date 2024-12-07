@@ -666,7 +666,7 @@ OS.COM.InterfaceImplementation
 
 OS.COM.InterfaceImplementation
 	subclass: #'WebView2.WebView2EventSink'
-	instanceVariableNames: 'source interfaceClass interface handler'
+	instanceVariableNames: 'source interfaceClass interface handler token'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -930,7 +930,7 @@ WebView2.ICoreWebView2Interface
 
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2EventHandler'
-	instanceVariableNames: 'source token'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -998,7 +998,7 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'DirectionNames' -> #(#default #leftToRight #rightToLeft) }!
 
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2PermissionSetting'
@@ -1971,7 +1971,7 @@ WebView2.ICoreWebView2EventArgs
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'StateNames' -> #('Default' 'Allow' 'Deny') }!
 
 WebView2.ICoreWebView2EventArgs
 	subclass: #'WebView2.ICoreWebView2ProcessFailedEventArgs'
@@ -1987,7 +1987,7 @@ WebView2.ICoreWebView2EventArgs
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'KindNames' -> #('DEFAULT' 'HTML_ONLY' 'SINGLE_FILE' 'COMPLETE') }!
 
 WebView2.ICoreWebView2EventArgs
 	subclass: #'WebView2.ICoreWebView2SaveFileSecurityCheckStartingEventArgs'
@@ -2019,7 +2019,11 @@ WebView2.ICoreWebView2EventArgs
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'Actions' -> #(#alwaysAllow #cancel #default).
+			'ErrorMessages'
+				-> #('Unknown' 'Certificate common name is incorrect' 'Certificate expired' 'Client certificate contains errors' 'Certificate revoked' 'Certificate is invalid' 'Server unreachable' 'Timeout' 'Error http invalid server response' 'Connection aborted' 'Connection reset' 'Disconnected' 'Cannot connect' 'Host name not resolved' 'Operation canceled' 'Redirect failed' 'Unexpected error' 'Valid authentication credentials required' 'Valid proxy authentication required')
+		}!
 
 WebView2.ICoreWebView2EventArgs
 	subclass: #'WebView2.ICoreWebView2SourceChangedEventArgs'

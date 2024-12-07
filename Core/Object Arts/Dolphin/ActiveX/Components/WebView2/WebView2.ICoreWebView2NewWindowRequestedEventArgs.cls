@@ -77,6 +77,11 @@ get_IsUserInitiated: isUserInitiated
 	^self invalidCall: _failureCode!
 
 get_name: value
+	"Private - Get the value of the 'name' property of the receiver.
+
+		HRESULT __stdcall name(
+			[out, retval]LPWSTR* value);"
+
 	^E_NOTIMPL!
 
 get_NewWindow: newWindow

@@ -6,7 +6,7 @@ WebView2.ICoreWebView2EventArgs
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'StateNames' -> #('Default' 'Allow' 'Deny') }!
 
 WebView2.ICoreWebView2PermissionRequestedEventArgs guid: (OS.COM.IID fromString: '{973ae2ef-ff18-4894-8fb2-3c758f046810}')!
 
@@ -127,8 +127,33 @@ permissionName
 
 	^(ICoreWebView2PermissionSetting.PermissionNames lookup: self permissionKind) ?? 'UnknownPermission'!
 
+permissionState
+	"Answer a 3-state <boolean>|nil value (i.e. true|false|nil) that is the state of the requested permission.
+		- If the permission is explicitly allowed, the answer is true.
+		- If the permission is explicity denied, the answer is false.
+		- If the permission has no explicit setting (i.e. it is the default) the answer is nil, indicating it is not set.
+
+	The initial state of the permission will usually be defaulted, although permissions may be requested at frame and page level, in that order, and if the frame permission request changed the permission state then this will be the initial state when the page permission request is received."
+
+	| state |
+	state := self state.
+	^state == 0 ifFalse: [(state - 1) asBoolean]!
+
+permissionState: aBooleanOrNil
+	"Set the state of the requested permission:
+		- If the argument is true, the permission is explicitly allowed.
+		- If the argument is false, the permission is explicity denied.
+		- If the argument is nil, the permission is defaulted (not set)."
+
+	"COREWEBVIEW2_PERMISSION_STATE_DEFAULT = 0
+	COREWEBVIEW2_PERMISSION_STATE_ALLOW =	 1
+	COREWEBVIEW2_PERMISSION_STATE_DENY  =	 2"
+
+	self state: COREWEBVIEW2_PERMISSION_STATE_DENY
+				- (aBooleanOrNil ?? COREWEBVIEW2_PERMISSION_STATE_DENY) asInteger!
+
 printableProperties
-	^#(#isUserInitiated #permissionName #savesInProfile #uri)!
+	^#(#isUserInitiated #permissionName #stateName #savesInProfile #uri)!
 
 put_SavesInProfile: value
 	"Private - Set the value of the 'SavesInProfile' property of the object wrapped by the 
@@ -175,6 +200,11 @@ state: state
 
 	self put_State: state!
 
+stateName
+	"Answer the <readableString> name of the receiver's permission state."
+
+	^(StateNames lookup: self state + 1) ?? 'Unknown'!
+
 uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
@@ -195,6 +225,8 @@ GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedE
 isUserInitiated!properties!public! !
 permissionKind!**auto generated**!properties!public! !
 permissionName!properties!public! !
+permissionState!properties!public! !
+permissionState:!properties!public! !
 printableProperties!printing!private! !
 put_SavesInProfile:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
 put_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
@@ -202,6 +234,7 @@ savesInProfile!properties!public! !
 savesInProfile:!properties!public! !
 state!**auto generated**!properties!public! !
 state:!**auto generated**!properties!public! !
+stateName!printing!properties!public! !
 uri!properties!public! !
 !
 

@@ -55,9 +55,9 @@ statusCode
 	^answer asObject! !
 
 !WebView2.AbstractICoreWebView2WebResourceResponse categoriesForMethods!
-get_Headers:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
-get_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
-get_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
+get_Headers:!**auto generated**!private! !
+get_ReasonPhrase:!**auto generated**!private! !
+get_StatusCode:!**auto generated**!private! !
 headers!**auto generated**!properties!public! !
 printableProperties!printing!private! !
 reasonPhrase!properties!public! !

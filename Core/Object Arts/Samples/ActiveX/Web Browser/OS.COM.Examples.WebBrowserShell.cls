@@ -4,7 +4,7 @@ UI.Shell
 	subclass: #'OS.COM.Examples.WebBrowserShell'
 	instanceVariableNames: 'address browser statusModel zoomModel flags profileModel'
 	classVariableNames: 'CurrentColorScheme PreferredColorScheme'
-	imports: #(#{UI})
+	imports: #(#{UI} #{WebView2 private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ColorSchemes' -> {
@@ -23,8 +23,10 @@ UI.Shell
 									#browserToolbarButton -> (Color brightness: 16r3B / 16rFF)
 								}
 					}.
+			'DisableScreenCaptureMask' -> 16r8.
 			'ImagesBlockedMask' -> 16r2.
-			'LogEventsMask' -> 16r1
+			'LogEventsMask' -> 16r1.
+			'SuppressSaveAsDialogMask' -> 16r4
 		}!
 
 OS.COM.Examples.WebBrowserShell guid: (Core.GUID fromString: '{840f8a35-998b-4346-ab86-95db62f03a47}')!
@@ -106,7 +108,8 @@ buildSettingsPopup: aMenu
 		addCommand: #toggleAllowContextMenu description: 'Context &Menus';
 		addCommand: #toggleBrowserAcceleratorKeysEnabled description: '&Accelerator Keys';
 		addCommand: #toggleBuiltinErrorPageEnabled description: '&Error Pages';
-		addCommand: #toggleDefaultScriptDialogsEnabled description: 'Script &Dialogs'.
+		addCommand: #toggleDefaultScriptDialogsEnabled description: 'Script &Dialogs';
+		addCommand: #toggleSuppressSaveAsDialog description: 'Sa&ve As Dialog'.
 	aMenu
 		addSeparator;
 		addCommand: #toggleEnableBrowserExtensions description: 'Enable E&xtensions'.
@@ -139,6 +142,7 @@ buildSettingsPopup: aMenu
 		addCommand: #toggleGeneralAutofill description: 'General &Autofill';
 		addCommand: #togglePasswordAutosave description: '&Password Autosave';
 		addCommand: #toggleBlockImages description: 'Block &Images';
+		addCommand: #toggleDisableScreenCapture description: 'Disable Scree&n Capture';
 		addCommand: #toggleJavaScript description: '&JavaScript';
 		addCommand: #toggleInPrivateMode description: 'In Private &Mode';
 		addItem: ((Menu description: '&Tracking Prevention Level')
@@ -212,7 +216,29 @@ createSchematicWiring
 			to: self;
 		when: #webResourceRequested:
 			send: #onWebResourceRequested:
+			to: self;
+		when: #saveAsUIShowing:
+			send: #onSaveAs:
+			to: self;
+		when: #permissionRequested:
+			send: #onPagePermissionRequested:
+			to: self;
+		when: #framePermissionRequested:
+			send: #onFramePermissionRequested:
+			to: self;
+		when: #notificationReceived:
+			send: #onNotificationReceived:
+			to: self;
+		when: #screenCaptureStarting:
+			send: #onScreenCaptureStarting:
+			to: self;
+		when: #webMessageReceived:
+			send: #onWebMessageReceived:
+			to: self;
+		when: #basicAuthenticationRequested:
+			send: #onBasicAuthenticationRequested:
 			to: self.
+
 	"We don't really need all these other events, but observe them for illustrative purposes"
 	WebView2View webview2Events do: 
 			[:each |
@@ -261,11 +287,11 @@ isBlockingImages: aBoolean
 		ifTrue: 
 			[flags := flags maskSet: ImagesBlockedMask.
 			self webview2 addWebResourceRequestedFilter: '*'
-				resourceContext: WebView2.COREWEBVIEW2_WEB_RESOURCE_CONTEXT_IMAGE]
+				resourceContext: COREWEBVIEW2_WEB_RESOURCE_CONTEXT_IMAGE]
 		ifFalse: 
 			[flags := flags maskClear: ImagesBlockedMask.
 			self webview2 removeWebResourceRequestedFilter: '*'
-				resourceContext: WebView2.COREWEBVIEW2_WEB_RESOURCE_CONTEXT_IMAGE]!
+				resourceContext: COREWEBVIEW2_WEB_RESOURCE_CONTEXT_IMAGE]!
 
 isInPrivateModeEnabled
 	^browser view isInPrivateModeEnabled!
@@ -279,6 +305,22 @@ isLoggingEvents: aBoolean
 	"Enable/disable logging of WebView2 events to the transcript."
 
 	flags := flags mask: LogEventsMask set: aBoolean!
+
+isSaveAsDialogSuppressed
+	"Answer whether the Save As dialog should be suppressed. If so the complete web page is just downloaded to its default path without the intervening file dialog."
+
+	^flags allMask: SuppressSaveAsDialogMask!
+
+isSaveAsDialogSuppressed: aBoolean
+	"Enable/disable the file Save As dialog normally shown when the context menu Save As command is actioned. Note that the sense of this flag is inverted. When the argument is true, the dialog is disabled."
+
+	flags := flags mask: SuppressSaveAsDialogMask set: aBoolean!
+
+isScreenCaptureDisabled
+	^flags allMask: DisableScreenCaptureMask!
+
+isScreenCaptureDisabled: aBoolean 
+	flags := flags mask: DisableScreenCaptureMask set: aBoolean!
 
 navigate
 	"Navigate to the address in the address bar."
@@ -295,7 +337,7 @@ navigateTo: aString
 		do: 
 			[:ex |
 			"If the URI is invalid, the browser will throw an invalid arg error. If it was invalid because there was no protocol specified, assume it is intended as a web page request, prepend https, and try again"
-			(ex hresult asInteger = Win32Errors.E_INVALIDARG and: 
+			(ex hresult asInteger = E_INVALIDARG and: 
 					[(aString indexOfSubCollection: '//:') == 0
 						and: [(aString anySatisfy: [:each | each isSeparator]) not]])
 				ifTrue: 
@@ -305,10 +347,21 @@ navigateTo: aString
 					[statusModel value: ex.
 					Sound errorBeep]]!
 
+onBasicAuthenticationRequested: anICoreWebView2BasicAuthenticationRequestedEventArgs
+	"Private - Example showing unprompted response to basic auth request (visit https://authenticationtest.com/HTTPAuth/)"
+
+	anICoreWebView2BasicAuthenticationRequestedEventArgs uri
+		= 'https://authenticationtest.com/HTTPAuth/'
+			ifTrue: 
+				[anICoreWebView2BasicAuthenticationRequestedEventArgs response
+					userName: 'user';
+					password: 'pass']
+	"If no response is provided (and the request is not marked as cancelled), the browser will prompt for credentials"!
+
 onColorSchemeChanged
 	self view
 		invalidate;
-		hasDarkWindowFrame: CurrentColorScheme = WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_DARK.
+		hasDarkWindowFrame: CurrentColorScheme = COREWEBVIEW2_PREFERRED_COLOR_SCHEME_DARK.
 	"We have to rebuild the toolbar to repopulate it with new icons rendered from the TextTileIcons with the foreground/background colours of the new scheme"
 	(self view viewNamed: 'toolbar') recreate!
 
@@ -318,8 +371,73 @@ onDocumentTitleChanged
 	self caption: self browserView documentTitle!
 
 onFavIconChanged
-	self webview2 getFavIcon: WebView2.COREWEBVIEW2_FAVICON_IMAGE_FORMAT_PNG
+	self webview2 getFavIcon: COREWEBVIEW2_FAVICON_IMAGE_FORMAT_PNG
 		thenDo: [:hr :stream | self view smallIcon: (Gdiplus.Bitmap fromIStream: stream) asIcon]!
+
+onFramePermissionRequested: anICoreWebView2PermissionRequestedEventArgs
+	"Handle a permission request from a frame."
+
+	self onPermissionRequested: anICoreWebView2PermissionRequestedEventArgs level: 'frame'!
+
+onNotificationReceived: anICoreWebView2NotificationReceivedEventArgs
+	"Private - Here we can choose to display the notification in a custom way, e.g. using our own message bubble, and mark the argument as handled to suppress the default handling (which is to display a popup message similar to a taskbar notification).
+	We could also just suppress the notification, although a better way to do that in general would be to deny Notifications permission when requested."
+
+	"To test try https://html-preview.github.io/?url=https://github.com/MicrosoftEdge/WebView2Samples/blob/main/SampleApps/WebView2APISample/assets/ScenarioNotificationReceived.html"
+
+	"Note that we are observing the notification close requested event here only for illustrative purposes, not really to do anything especially useful with it. This event is unusual in that it is not implemented by one of the main WebView2 objects (environment, controller, and view), but rather by a temporary object (an ICoreWebView2Notification). This makes it more difficult to manaage the lifetime correctly to avoid a leak caused by the circular reference between the notification object and the observing event sink. Our event sinks hold a reference (and implicitly a COM reference) to the event source. The event source in turn holds a COM reference to any registered event sinks, creating a circular reference. Normally our event sinks have a well known point at which they can be explicitly unregistered, typically when the browser control is closed. Explicitly unregistering the event releases the references in both directions, allowing the COM objects at either end to be released if they are not in use elsewhere. In this case however, we are sinking an event from an object that we do not control the lifetime of, and furthermore the event itself may not be received at all. In fact we only receive the close requested event when the notification is clicked (and perhaps when close is requested in script). When the default  notification UI is used, we get no event (and apparently have no other way of knowing) if the notification is closed explicitly by the user clicking the close button rather than clicking the notification itself. Consequently we cannot rely on receiving the event to be able to unregister in a timely manner. The webview2 docs suggest that in general event handlers can avoid leaks by not taking a reference to the source (observed object). However even if we eschew our usual reference to the observed object from the sink, the WebView2 control does not clean things up when the notification is closed using the close button. Therefore to avoid a leak in this case we add the sink to the global set of live handlers owned by the view. Although this means the handler will likely persist much longer than is needed, it will at least be cleaned up when the browser control is closed. In a real application the most likely reason to hook this event would seem to be to know to close a custom notification, the event handler can be associated with the lifetime of that custom notification itself."
+
+	| closeRequested |
+	closeRequested := WebView2EventSink new.
+	closeRequested
+		source: anICoreWebView2NotificationReceivedEventArgs notification
+		interfaceClass: ICoreWebView2NotificationCloseRequestedEventHandler
+		handler: 
+			[:source :args |
+			self onWebView2Event: source name: #closeRequested:.
+			self browserView unregisterEventSink: closeRequested].
+	self browserView registerEventSink: closeRequested!
+
+onPagePermissionRequested: anICoreWebView2PermissionRequestedEventArgs
+	"Handle a permission request from a page."
+
+	self onPermissionRequested: anICoreWebView2PermissionRequestedEventArgs level: 'page'!
+
+onPermissionRequested: anICoreWebView2PermissionRequestedEventArgs level: aString
+	"Handle a permission request from a page."
+
+	"To test try https://html-preview.github.io/?url=https://github.com/MicrosoftEdge/WebView2Samples/blob/main/SampleApps/WebView2APISample/assets/ScenarioNotificationReceived.html"
+
+	| mb details |
+	"Permission may have already been chosen, e.g. from frame."
+	anICoreWebView2PermissionRequestedEventArgs permissionState ifNotNil: [^self].
+	details := String writeStream.
+	'This request <?originated:did not originate> from a user gesture.'
+		expandMacrosWithArguments: { anICoreWebView2PermissionRequestedEventArgs isUserInitiated }
+		on: details.
+	details
+		cr;
+		nextPutAll: 'Requesting Uri: ';
+		nextPutAll: anICoreWebView2PermissionRequestedEventArgs uri;
+		cr;
+		nextPutAll: 'Current permission: ';
+		nextPutAll: anICoreWebView2PermissionRequestedEventArgs stateName.
+	mb := MessageBox new
+				headline: 'Permit <1s>?' << anICoreWebView2PermissionRequestedEventArgs permissionName;
+				customButtons: #(#(#yes '&Allow') #(#no '&Deny'));
+				isCancellable: false;
+				detailsText: details contents;
+				checkboxText: 'Save to profile?';
+				isChecked: anICoreWebView2PermissionRequestedEventArgs savesInProfile;
+				iconStyle: #shield;
+				yourself.
+	(mb confirm: 'The <2s> is requesting permission for <1s>. Do you want to allow this?'
+				<< { anICoreWebView2PermissionRequestedEventArgs permissionName. aString })
+		ifNotNil: 
+			[:answer |
+			anICoreWebView2PermissionRequestedEventArgs
+				permissionState: answer;
+				savesInProfile: mb isChecked]!
 
 onProcessFailed: anICoreWebView2ProcessFailedEventArgs
 	| stream |
@@ -339,6 +457,17 @@ onProcessFailed: anICoreWebView2ProcessFailedEventArgs
 		separatedBy: [stream cr].
 	MessageBox errorMsg: stream contents caption: 'Oops!!'!
 
+onSaveAs: anICoreWebView2SaveAsUIShowingEventArgs
+	anICoreWebView2SaveAsUIShowingEventArgs
+		allowReplace: true;
+		kind: COREWEBVIEW2_SAVE_AS_KIND_COMPLETE;
+		suppressDefaultDialog: self isSaveAsDialogSuppressed!
+
+onScreenCaptureStarting: anICoreWebView2ScreenCaptureStartingEventArgs 
+	"To test: https://html-preview.github.io/?url=https://github.com/MicrosoftEdge/WebView2Samples/blob/main/SampleApps/WebView2APISample/assets/ScenarioScreenCapture.html"
+
+	self isScreenCaptureDisabled ifTrue: [anICoreWebView2ScreenCaptureStartingEventArgs cancel: true].!
+
 onSourceChanged: anICoreWebView2NavigationCompletedEventArgs
 	"Private - Event fired by Edge WebView2 when a the 'source' has changed - this may include in-page navigation, in which case the document will not have changed, but the source URI will."
 
@@ -348,7 +477,7 @@ onSourceChanged: anICoreWebView2NavigationCompletedEventArgs
 
 onSystemSettingChanged: anArray
 	(anArray first = 'ImmersiveColorSet'
-		and: [self preferredColorScheme = WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO])
+		and: [self preferredColorScheme = COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO])
 			ifTrue: [self updateColorScheme]!
 
 onViewOpened
@@ -363,12 +492,26 @@ onViewOpened
 	statusItem := self view viewNamed: 'profile'.
 	statusItem model: profileModel!
 
+onWebMessageReceived: anICoreWebView2WebMessageReceivedEventArgs2
+	| message |
+	message := anICoreWebView2WebMessageReceivedEventArgs2 tryGetWebMessageAsString.
+	"e.g. Implement web messages to back sample scenario https://html-preview.github.io/?url=https://github.com/MicrosoftEdge/WebView2Samples/blob/main/SampleApps/WebView2APISample/assets/ScenarioScreenCapture.html"
+	message = 'DisableScreenCapture'
+		ifTrue: 
+			[self isScreenCaptureDisabled: true.
+			^self].
+	message = 'EnableScreenCapture'
+		ifTrue: 
+			[self isScreenCaptureDisabled: false.
+			^self].
+	^self!
+
 onWebResourceRequested: anICoreWebView2WebResourceRequestedEventArgs
 	"Private - Implement web request filter, in this case to block images when that option is enabled by the user."
 
 	| response |
 	anICoreWebView2WebResourceRequestedEventArgs resourceContext
-		== WebView2.COREWEBVIEW2_WEB_RESOURCE_CONTEXT_IMAGE ifFalse: [^self].
+		== COREWEBVIEW2_WEB_RESOURCE_CONTEXT_IMAGE ifFalse: [^self].
 	"Override the response with an empty one to block the download."
 	response := self webview2 environment
 				createWebResourceResponse: nil
@@ -392,7 +535,7 @@ onWebViewAvailable
 
 	self preferredColorScheme: PreferredColorScheme.
 	"The view resource is configured in the light colour scheme, so if that is not the current scheme we'll need to rebuild the toolbar, change the caption colour, etc"
-	CurrentColorScheme ~= WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT
+	CurrentColorScheme ~= COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT
 		ifTrue: [self onColorSchemeChanged].
 	"Display the Edge browser version in the status bar field on the right"
 	(self view viewNamed: 'browserVersion') model: self browserView webviewEnvironment asValue.
@@ -412,7 +555,7 @@ openUrl: aString
 
 preferredColorScheme
 	^self profile
-		ifNil: [WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO]
+		ifNil: [COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO]
 		ifNotNil: 
 			[:profile |
 			| preferred |
@@ -505,6 +648,11 @@ queryToggleDevToolsEnabled: aCommandQuery
 		beEnabled;
 		isChecked: browser view areDevToolsEnabled!
 
+queryToggleDisableScreenCapture: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		isChecked: self isScreenCaptureDisabled!
+
 queryToggleEnableBrowserExtension: aCommandQuery
 	| browserExt |
 	browserExt := aCommandQuery command arguments single.
@@ -557,6 +705,11 @@ queryToggleStatusBar: aCommandQuery
 		beEnabled;
 		isChecked: browser view isStatusBarEnabled!
 
+queryToggleSuppressSaveAsDialog: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		isChecked: self isSaveAsDialogSuppressed not!
+
 queryToggleSwipeNavigation: aCommandQuery
 	aCommandQuery
 		beEnabled;
@@ -579,6 +732,15 @@ queryTrackingPreventionLevel: aCommandQuery
 
 refresh
 	self webview2 reload!
+
+saveAs
+	self webview2 showSaveAsUIThenDo: 
+			[:hresult :saveAsUiResult |
+			saveAsUiResult ~= COREWEBVIEW2_SAVE_AS_UI_RESULT_SUCCESS
+				ifTrue: 
+					[Notification signal: 'showSaveAsUI failed: <1d>'
+								<< (#('COREWEBVIEW2_SAVE_AS_UI_RESULT_SUCCESS' 'COREWEBVIEW2_SAVE_AS_UI_RESULT_INVALID_PATH' 'COREWEBVIEW2_SAVE_AS_UI_RESULT_FILE_ALREADY_EXISTS' 'COREWEBVIEW2_SAVE_AS_UI_RESULT_KIND_NOT_SUPPORTED' 'COREWEBVIEW2_SAVE_AS_UI_RESULT_CANCELLED')
+										lookup: saveAsUiResult + 1)]]!
 
 scrollBarStyle: anInteger
 	<commandQuery: #queryScrollBarStyle:>
@@ -647,6 +809,10 @@ toggleDevToolsEnabled
 	"Most settings do not take effect until after navigation, so refresh"
 	self refresh!
 
+toggleDisableScreenCapture
+	<commandQuery: #queryToggleDisableScreenCapture:>
+	self isScreenCaptureDisabled: self isScreenCaptureDisabled not!
+
 toggleEnableBrowserExtension: anICoreWebView2BrowserExtension
 	"Note that this doesn't appear to have any lasting effect. The interface indicates that an extension has been disabled, but when the list of extensions are queried again, they are all enabled."
 
@@ -714,6 +880,10 @@ toggleStatusBar
 	webview isStatusBarEnabled: webview isStatusBarEnabled not.
 	"Most settings do not take effect until after navigation, so refresh"
 	self refresh!
+
+toggleSuppressSaveAsDialog
+	<commandQuery: #queryToggleSuppressSaveAsDialog:>
+	self isSaveAsDialogSuppressed: self isSaveAsDialogSuppressed not!
 
 toggleSwipeNavigation
 	<commandQuery: #queryToggleSwipeNavigation:>
@@ -785,15 +955,27 @@ isBlockingImages:!accessing!public! !
 isInPrivateModeEnabled!accessing!public! !
 isLoggingEvents!public!testing! !
 isLoggingEvents:!commands-actions!public! !
+isSaveAsDialogSuppressed!public!testing! !
+isSaveAsDialogSuppressed:!accessing!public! !
+isScreenCaptureDisabled!public!testing! !
+isScreenCaptureDisabled:!accessing!public! !
 navigate!commands-actions!public! !
 navigateTo:!operations!private! !
+onBasicAuthenticationRequested:!event handling!private! !
 onColorSchemeChanged!private!updating! !
 onDocumentTitleChanged!event handling!private! !
 onFavIconChanged!event handling!private! !
+onFramePermissionRequested:!event handling!private! !
+onNotificationReceived:!private! !
+onPagePermissionRequested:!event handling!private! !
+onPermissionRequested:level:!event handling!private! !
 onProcessFailed:!event handling!private! !
+onSaveAs:!event handling!private! !
+onScreenCaptureStarting:!private! !
 onSourceChanged:!event handling!private! !
 onSystemSettingChanged:!event handling-win32!private! !
 onViewOpened!event handling!public! !
+onWebMessageReceived:!event handling!private! !
 onWebResourceRequested:!event handling!private! !
 onWebView2Event:name:!event handling!private! !
 onWebViewAvailable!event handling!private! !
@@ -816,6 +998,7 @@ queryToggleBrowserAcceleratorKeysEnabled:!commands-queries!private! !
 queryToggleBuiltinErrorPageEnabled:!commands-queries!private! !
 queryToggleDefaultScriptDialogsEnabled:!commands-queries!private! !
 queryToggleDevToolsEnabled:!commands-queries!private! !
+queryToggleDisableScreenCapture:!commands-queries!private! !
 queryToggleEnableBrowserExtension:!commands-queries!private! !
 queryToggleEnableBrowserExtensions:!commands-queries!private! !
 queryToggleEventLogging:!commands-queries!private! !
@@ -826,11 +1009,13 @@ queryTogglePasswordAutosave:!commands-queries!private! !
 queryTogglePinchZoomEnabled:!commands-queries!private! !
 queryToggleSmartScreen:!commands-queries!private! !
 queryToggleStatusBar:!commands-queries!private! !
+queryToggleSuppressSaveAsDialog:!commands-queries!private! !
 queryToggleSwipeNavigation:!commands-queries!private! !
 queryToggleWebMessaging:!commands-queries!private! !
 queryToggleZoomControl:!commands-queries!private! !
 queryTrackingPreventionLevel:!commands-queries!private! !
 refresh!commands-actions!public! !
+saveAs!commands-actions!public! !
 scrollBarStyle:!commands-actions!public! !
 scrollBarStyleMenu!commands-menus!public! !
 settingsMenu!commands-actions!public! !
@@ -841,6 +1026,7 @@ toggleBrowserAcceleratorKeysEnabled!commands-actions!public! !
 toggleBuiltinErrorPageEnabled!commands-actions!public! !
 toggleDefaultScriptDialogsEnabled!commands-actions!public! !
 toggleDevToolsEnabled!commands-actions!public! !
+toggleDisableScreenCapture!commands-actions!public! !
 toggleEnableBrowserExtension:!commands-actions!public! !
 toggleEnableBrowserExtensions!commands-actions!public! !
 toggleEventLogging!commands-actions!public! !
@@ -851,6 +1037,7 @@ togglePasswordAutosave!commands-actions!public! !
 togglePinchZoomEnabled!commands-actions!public! !
 toggleSmartScreen!commands-actions!public! !
 toggleStatusBar!commands-actions!public! !
+toggleSuppressSaveAsDialog!commands-actions!public! !
 toggleSwipeNavigation!commands-actions!public! !
 toggleWebMessaging!commands-actions!public! !
 toggleZoomControl!commands-actions!public! !
@@ -883,8 +1070,8 @@ initialize
 		addSamplesFolderIconFor: self
 		description: self displayString
 		helpId: 10621.
-	PreferredColorScheme := WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO.
-	CurrentColorScheme := WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT.
+	PreferredColorScheme := COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO.
+	CurrentColorScheme := COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT.
 	(ColorSchemes at: CurrentColorScheme)
 		keysAndValuesDo: [:eachKey :eachValue | ThemeColor addNamed: eachKey color: eachValue]!
 
@@ -896,7 +1083,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 518 #{Graphics.ThemeColor} #browserBar nil 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.Toolbar} 50 28 nil 32 50 2 8 1140853580 131137 160 nil 112 nil 517 nil nil nil 160 112 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 18 #{UI.Toolbar} 50 28 nil 160 50 2 8 1140857676 131137 272 nil 112 nil 517 nil nil nil 272 nil nil 226 #{Core.IdentityDictionary} 8 #() nil nil 98 #browserForeground nil 50 9 1862 2 #{UI.ToolbarTextButton} 272 161 1350 4 #{UI.CommandDescription} #goBack 8 'Back' 1 1 nil nil 98 #browserHistoryArrow nil 8 $\xE830 402 272 161 434 #goForward 8 'Forward' 1 1 nil nil 480 nil 8 $\xEA47 402 272 161 434 #refresh 8 'Re&fresh (Ctrl+R)' 9381 1 nil nil nil nil 8 $\xE72C 402 272 161 434 #home 8 'Home page' 1 1 nil nil nil nil 8 $\xE80F 402 272 161 434 #print 8 'Print ...' 1 1 nil nil nil nil 8 $\xE749 402 272 161 434 #help 8 'Information' 1 1 nil nil nil nil 8 $\xE946 402 272 161 434 #openTaskManagerWindow 8 'Open &Task Manager' 1 1 nil nil nil nil 8 $\xE9F5 402 272 433 434 #settingsMenu 8 'Settings' 1 1 nil nil nil nil 8 $\xE713 582 1 #{UI.ToolbarSeparator} 272 1 nil nil 13 5 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[6 0 0 0 7 0 0 0 16 1 0 0 40 0 0 0] 193 50 2 8 1140857676 131137 8 '' 272 3 8 #() 518 #{Graphics.Point} 193 193 nil 31 8 'browserTools' nil nil nil nil 8 #() nil 518 #{Graphics.Rectangle} 1234 13 15 1234 9 1 9 2369 #mediumSmallIcons nil nil 130 1 1 nil nil nil 272 18 #{UI.ContainerView} 50 15 nil 160 50 2 8 1140850688 131073 1376 nil 112 nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 1376 130 9 1 nil nil 18 #{UI.PushButton} 50 20 nil 1376 50 2 8 1140924416 1 1536 nil 112 1234 101 51 5 nil nil nil 1536 nil nil 434 #navigate 8 '&Go' 1 1 nil nil true nil nil nil 994 50 2 1042 #createWindow: 50 1 1090 1122 8 #[90 3 0 0 1 0 0 0 140 3 0 0 26 0 0 0] 193 1568 8 '&Go' 1536 1042 #isEnabled: 8 #(false) 1536 3 8 #() 1234 193 193 nil 29 nil 18 #{UI.TextEdit} 50 20 nil 1376 50 2 8 1149304960 1 1840 nil 98 #browserBackground nil 5 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 434 #navigate 8 '&Go' 1 1 nil nil nil 1970 2097153 434 #accept 8 '&Accept' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1840 368 nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 994 50 3 1042 #createWindow: 50 1 1090 1122 8 #[0 0 0 0 1 0 0 0 86 3 0 0 26 0 0 0] 193 1872 nil 1840 1042 #contextMenu: 50 1 1936 1840 1042 #setMarginWidths: 50 1 8 #(4 4) 1840 3 8 #() 1234 193 193 nil 45 226 #{Core.IdentityDictionary} 50 4 1840 8 'address' 1536 8 'go' 1298 1234 1 3 1234 1 15 994 50 1 1042 #createWindow: 50 1 1090 1122 8 #[16 1 0 0 7 0 0 0 156 4 0 0 40 0 0 0] 193 1408 8 '' 1376 3 50 2 1840 1536 1234 193 193 nil 27 994 50 1 1042 #createWindow: 50 1 1090 1122 8 #[0 0 0 0 0 0 0 0 160 4 0 0 40 0 0 0] 193 192 8 '' 160 3 50 2 272 1376 1234 193 193 nil 31 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1140850956 1 2784 nil 6 #{Graphics.Color} #default nil 5 nil 1862 1 #{Graphics.UxThemeFont} nil true nil 193 nil 1609 nil nil 2784 368 nil 226 #{Core.IdentityDictionary} 50 8 1862 1 #{UI.StatusBarItem} 8193 301 2784 nil 518 #{Core.Message} #displayString 8 #() 2978 #iconImageIndex 8 #() nil 8 'browserVersion' 2946 8193 251 2784 nil 2978 #displayString 8 #() 2978 #iconImageIndex 3104 nil 8 'profile' 2946 8193 -1 2784 nil 2978 #displayString 3040 nil nil 8 'status' 2946 8193 101 2784 nil 2978 #displayString 8 #() nil nil 8 'zoom' nil nil nil 50 4 3152 3072 3200 2960 1094 1 #{UI.StatusBarNullItem} 8705 1 2784 nil nil 994 50 1 1042 #createWindow: 50 1 1090 1122 8 #[0 0 0 0 254 2 0 0 160 4 0 0 19 3 0 0] 193 2816 8 '' 2784 3 8 #() 1234 193 193 nil 29 nil nil 18 #{UI.WebView2View} 50 26 nil 32 50 2 8 1140850688 1 3472 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 1904 nil 5 nil nil nil 3472 nil nil 2098 nil nil 262145 nil nil nil nil nil 2118 1 #{WebView2.WebView2EnvironmentOptions} nil 15 nil 8 '110.0.1549.0' 5 1 3 1 nil nil nil nil 994 50 1 1042 #createWindow: 50 1 1090 1122 8 #[0 0 0 0 40 0 0 0 160 4 0 0 254 2 0 0] 193 3504 8 '' 3472 3 352 1234 193 193 nil 29 226 #{Core.IdentityDictionary} 50 6 3472 8 'browser' 2784 8 'progress' 160 8 'toolbar' nil nil nil nil nil 1 nil nil nil nil nil nil 193 994 50 1 1042 #createWindow: 50 1 1090 1298 1234 7679 21 1234 10079 1673 193 80 8 'WebView2 Browser' 32 1 50 3 2784 160 3472 1234 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 518 #{Graphics.ThemeColor} #browserBar nil 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.Toolbar} 50 28 nil 32 50 2 8 1140853580 131137 160 nil 112 nil 517 nil nil nil 160 112 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 18 #{UI.Toolbar} 50 28 nil 160 50 2 8 1140857676 131137 272 nil 112 nil 517 nil nil nil 272 nil nil 226 #{Core.IdentityDictionary} 8 #() nil nil 98 #browserForeground nil 50 10 1862 2 #{UI.ToolbarTextButton} 272 161 1350 4 #{UI.CommandDescription} #goBack 8 'Back' 1 1 nil nil 98 #browserHistoryArrow nil 8 $\xE830 402 272 161 434 #goForward 8 'Forward' 1 1 nil nil 480 nil 8 $\xEA47 402 272 161 434 #refresh 8 'Re&fresh (Ctrl+R)' 9381 1 nil nil nil nil 8 $\xE72C 402 272 161 434 #home 8 'Home page' 1 1 nil nil nil nil 8 $\xE80F 402 272 161 434 #print 8 'Print ...' 1 1 nil nil nil nil 8 $\xE749 402 272 161 434 #saveAs 8 'Save As ...' 1 1 nil nil nil nil 8 $\xE78C 402 272 161 434 #help 8 'Information' 1 1 nil nil nil nil 8 $\xE946 402 272 161 434 #openTaskManagerWindow 8 'Open &Task Manager' 1 1 nil nil nil nil 8 $\xE9F5 402 272 433 434 #settingsMenu 8 'Settings' 1 1 nil nil nil nil 8 $\xE713 582 1 #{UI.ToolbarSeparator} 272 1 nil nil 13 5 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[6 0 0 0 7 0 0 0 46 1 0 0 40 0 0 0] 193 50 2 8 1140857676 131137 8 '' 272 3 8 #() 518 #{Graphics.Point} 193 193 nil 31 8 'browserTools' nil nil nil nil 8 #() nil 518 #{Graphics.Rectangle} 1298 13 15 1298 9 1 9 2369 #mediumSmallIcons nil nil 130 1 1 nil nil nil 272 18 #{UI.ContainerView} 50 15 nil 160 50 2 8 1140850688 131073 1440 nil 112 nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 1440 130 9 1 nil nil 18 #{UI.PushButton} 50 20 nil 1440 50 2 8 1140924416 1 1600 nil 112 1298 101 51 5 nil nil nil 1600 nil nil 434 #navigate 8 '&Go' 1 1 nil nil true nil nil nil 1058 50 2 1106 #createWindow: 50 1 1154 1186 8 #[60 3 0 0 1 0 0 0 110 3 0 0 26 0 0 0] 193 1632 8 '&Go' 1600 1106 #isEnabled: 8 #(false) 1600 3 8 #() 1298 193 193 nil 29 nil 18 #{UI.TextEdit} 50 20 nil 1440 50 2 8 1149304960 1 1904 nil 98 #browserBackground nil 5 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 434 #navigate 8 '&Go' 1 1 nil nil nil 2034 2097153 434 #accept 8 '&Accept' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1904 368 nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 1058 50 3 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 1 0 0 0 56 3 0 0 26 0 0 0] 193 1936 nil 1904 1106 #contextMenu: 50 1 2000 1904 1106 #setMarginWidths: 50 1 8 #(4 4) 1904 3 8 #() 1298 193 193 nil 45 226 #{Core.IdentityDictionary} 50 4 1904 8 'address' 1600 8 'go' 1362 1298 1 3 1298 1 15 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[46 1 0 0 7 0 0 0 156 4 0 0 40 0 0 0] 193 1472 8 '' 1440 3 50 2 1904 1600 1298 193 193 nil 27 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 0 0 0 0 160 4 0 0 40 0 0 0] 193 192 8 '' 160 3 50 2 272 1440 1298 193 193 nil 31 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1140850956 1 2848 nil 6 #{Graphics.Color} #default nil 5 nil 1862 1 #{Graphics.UxThemeFont} nil true nil 193 nil 1609 nil nil 2848 368 nil 226 #{Core.IdentityDictionary} 50 8 1862 1 #{UI.StatusBarItem} 8193 301 2848 nil 518 #{Core.Message} #displayString 8 #() 3042 #iconImageIndex 8 #() nil 8 'browserVersion' 3010 8193 251 2848 nil 3042 #displayString 8 #() 3042 #iconImageIndex 3168 nil 8 'profile' 3010 8193 -1 2848 nil 3042 #displayString 3104 nil nil 8 'status' 3010 8193 101 2848 nil 3042 #displayString 8 #() nil nil 8 'zoom' nil nil nil 50 4 3216 3136 3264 3024 1094 1 #{UI.StatusBarNullItem} 8705 1 2848 nil nil 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 254 2 0 0 160 4 0 0 19 3 0 0] 193 2880 8 '' 2848 3 8 #() 1298 193 193 nil 29 nil nil 18 #{UI.WebView2View} 50 26 nil 32 50 2 8 1140850688 1 3536 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 1968 nil 5 nil nil nil 3536 nil nil 2162 nil nil 262145 nil nil nil nil nil 2374 2 #{WebView2.WebView2EnvironmentOptions} nil 15 nil 8 '110.0.1549.0' 5 1 3 1 8 #() nil nil nil nil 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 40 0 0 0 160 4 0 0 254 2 0 0] 193 3568 8 '' 3536 3 352 1298 193 193 nil 29 226 #{Core.IdentityDictionary} 50 6 3536 8 'browser' 2848 8 'progress' 160 8 'toolbar' nil nil nil nil nil 1 nil nil nil nil nil nil 193 1058 50 1 1106 #createWindow: 50 1 1154 1362 1298 6143 21 1298 8543 1673 193 80 8 'WebView2 Browser' 32 1 50 3 2848 160 3536 1298 193 193 nil 27)!
 
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
@@ -906,13 +1093,13 @@ shutdownOnExit
 updateColorScheme: anInteger
 	| actual |
 	PreferredColorScheme := anInteger.
-	actual := anInteger = WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO
+	actual := anInteger = COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO
 				ifTrue: 
 					["[Microsoft recommand a cheesy check on the value of the system foreground colour](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/apply-windows-themes) to detect if in dark mode!! Just too horrible, so use the undocumented theme API instead."
 					UxTheme refreshImmersiveColorPolicyState.
 					actual := UxTheme shouldAppsUseDarkMode
-								ifTrue: [WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_DARK]
-								ifFalse: [WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT]]
+								ifTrue: [COREWEBVIEW2_PREFERRED_COLOR_SCHEME_DARK]
+								ifFalse: [COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT]]
 				ifFalse: [anInteger].
 	CurrentColorScheme = actual ifTrue: [^self].
 	CurrentColorScheme := actual.

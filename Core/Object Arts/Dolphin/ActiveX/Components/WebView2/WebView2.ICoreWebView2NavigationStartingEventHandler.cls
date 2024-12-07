@@ -36,11 +36,11 @@ interface ICoreWebView2NavigationStartingEventHandler : IUnknown
 
 !WebView2.ICoreWebView2NavigationStartingEventHandler methodsFor!
 
-basicRegister: tokenBuffer
-	source Add_NavigationStarting: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Interface
+	anICoreWebView2Interface Add_NavigationStarting: self token: tokenBuffer!
 
-basicUnregister
-	source Remove_NavigationStarting: token!
+basicUnregister: anInteger from: anICoreWebView2Interface
+	anICoreWebView2Interface Remove_NavigationStarting: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.
@@ -53,8 +53,8 @@ Invoke: sender args: args
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2NavigationStartingEventHandler categoriesForMethods!
-basicRegister:!private!realizing/unrealizing! !
-basicUnregister!private!realizing/unrealizing! !
+basicRegister:with:!private!realizing/unrealizing! !
+basicUnregister:from:!private!realizing/unrealizing! !
 Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventHandler!public! !
 !
 

@@ -94,6 +94,9 @@ originalSourceFrameInfo
 	self get_OriginalSourceFrameInfo: answer.
 	^answer asObject!
 
+printableProperties
+	^#(#originalSourceFrameInfo cancel handled)!
+
 put_Cancel: value
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 
 	 receiver to the <int32> argument, value.
@@ -120,6 +123,7 @@ get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2ScreenCaptureStartin
 get_OriginalSourceFrameInfo:!**auto generated**!COM Interfaces-ICoreWebView2ScreenCaptureStartingEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ScreenCaptureStartingEventArgs!private! !
 originalSourceFrameInfo!**auto generated**!properties!public! !
+printableProperties!printing!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2ScreenCaptureStartingEventArgs!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2ScreenCaptureStartingEventArgs!private! !
 !

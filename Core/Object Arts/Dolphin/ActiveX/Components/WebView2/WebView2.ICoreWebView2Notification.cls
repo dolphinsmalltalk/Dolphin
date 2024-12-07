@@ -6,7 +6,7 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'DirectionNames' -> #(#default #leftToRight #rightToLeft) }!
 
 WebView2.ICoreWebView2Notification guid: (OS.COM.IID fromString: '{b7434d98-6bc8-419d-9da5-fb5a96d4dacd}')!
 
@@ -132,6 +132,9 @@ direction
 	answer := Int32 new.
 	self get_Direction: answer.
 	^answer asObject!
+
+directionName
+	^(DirectionNames at: self direction + 1)!
 
 get_BadgeUri: value
 	"Private - Get the value of the 'BadgeUri' property of the receiver.
@@ -279,6 +282,9 @@ language
 	ptr free.
 	^answer!
 
+printableProperties
+	^#(#title #body #directionName #isSilent #requiresInteraction #tag #timestamp)!
+
 Remove_CloseRequested: token
 	"Private - Invoke the remove_CloseRequested() method of the COM object.
 
@@ -339,12 +345,14 @@ tag
 	^answer!
 
 timestamp
-	"Answer the <DateAndTime> value of the 'Timestamp' property of the receiver."
+	"Answer the <DateAndTime> value of the 'Timestamp' property of the receiver. From https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2notification:
+		Indicates the time at which a notification is created or applicable (past, present, or future) as the number of milliseconds since the UNIX epoch.
+	"
 
-	| answer |
-	answer := DOUBLE new.
-	self get_Timestamp: answer.
-	^DateAndTime fromUnixTime: answer value!
+	| buf |
+	buf := ByteArray newFixed: 8.
+	self get_Timestamp: buf.
+	^DateAndTime fromUnixTime: (buf doubleAtOffset: 0) asInteger /1000!
 
 title
 	"Answer the <lpwstr> value of the 'title' property of the receiver."
@@ -362,6 +370,7 @@ badgeUri!properties!public! !
 body!properties!public! !
 bodyImageUri!properties!public! !
 direction!**auto generated**!properties!public! !
+directionName!properties!public! !
 get_BadgeUri:!**auto generated**!COM Interfaces-ICoreWebView2Notification!private! !
 get_Body:!**auto generated**!COM Interfaces-ICoreWebView2Notification!private! !
 get_BodyImageUri:!**auto generated**!COM Interfaces-ICoreWebView2Notification!private! !
@@ -378,6 +387,7 @@ GetVibrationPattern:vibrationPattern:!**auto generated**!COM Interfaces-ICoreWeb
 iconUri!properties!public! !
 isSilent!properties!public! !
 language!properties!public! !
+printableProperties!printing!private! !
 Remove_CloseRequested:!**auto generated**!COM Interfaces-ICoreWebView2Notification!private! !
 ReportClicked!**auto generated**!COM Interfaces-ICoreWebView2Notification!private! !
 ReportClosed!**auto generated**!COM Interfaces-ICoreWebView2Notification!private! !

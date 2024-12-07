@@ -196,7 +196,9 @@ ToPemEncoding: pemEncodedData
 	^self invalidCall: _failureCode!
 
 validFrom
-	"Answer the <DateAndTime> value of the 'ValidFrom' property of the receiver."
+	"Answer a <DateAndTime> representing the start of the validity period of the certificate."
+
+	"The underlying COM object represents this as the number of seconds since the UNIX epoch."
 
 	| answer |
 	answer := DOUBLE newBuffer.
@@ -204,7 +206,9 @@ validFrom
 	^DateAndTime fromUnixTime: answer value!
 
 validTo
-	"Answer the <double> value of the 'ValidTo' property of the receiver."
+	"Answer a <DateAndTime> representing the expiry timestamp of the certificate."
+
+	"The underlying COM object represents this as the number of seconds since the UNIX epoch."
 
 	| answer |
 	answer := DOUBLE newBuffer.

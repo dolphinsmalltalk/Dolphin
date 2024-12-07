@@ -77,6 +77,9 @@ get_webMessageAsJson: webMessageAsJson
 	<virtual stdcall: hresult 5 lpwstr*>
 	^self invalidCall: _failureCode!
 
+printableProperties
+	^#(#source #webMessageAsJson #additionalObjects)!
+
 source
 	"Answer the <lpwstr> value of the 'Source' property of the receiver."
 
@@ -121,6 +124,7 @@ additionalObjects!properties!public! !
 get_AdditionalObjects:!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs2!private! !
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
 get_webMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
+printableProperties!printing!private! !
 source!properties!public! !
 tryGetWebMessageAsString!methods!public! !
 TryGetWebMessageAsString:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !

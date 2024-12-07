@@ -91,6 +91,9 @@ notification
 	self get_Notification: answer.
 	^answer asObject!
 
+printableProperties
+	^#(#notification #senderOrigin)!
+
 put_Handled: value
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
 	 receiver to the <int32> argument, value.
@@ -117,6 +120,7 @@ get_Notification:!**auto generated**!COM Interfaces-ICoreWebView2NotificationRec
 get_SenderOrigin:!**auto generated**!COM Interfaces-ICoreWebView2NotificationReceivedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2NotificationReceivedEventArgs!private! !
 notification!**auto generated**!properties!public! !
+printableProperties!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NotificationReceivedEventArgs!private! !
 senderOrigin!properties!public! !
 !

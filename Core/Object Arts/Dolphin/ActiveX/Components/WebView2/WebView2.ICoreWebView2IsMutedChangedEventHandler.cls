@@ -36,11 +36,11 @@ interface ICoreWebView2IsMutedChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2IsMutedChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer
-	source Add_IsMutedChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Interface
+	anICoreWebView2Interface Add_IsMutedChanged: self token: tokenBuffer!
 
-basicUnregister
-	source Remove_IsMutedChanged: token!
+basicUnregister: anInteger from: anICoreWebView2Interface
+	anICoreWebView2Interface Remove_IsMutedChanged: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.
@@ -53,8 +53,8 @@ Invoke: sender args: args
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2IsMutedChangedEventHandler categoriesForMethods!
-basicRegister:!private!realizing/unrealizing! !
-basicUnregister!private!realizing/unrealizing! !
+basicRegister:with:!private!realizing/unrealizing! !
+basicUnregister:from:!private!realizing/unrealizing! !
 Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2IsMutedChangedEventHandler!public! !
 !
 

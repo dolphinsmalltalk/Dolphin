@@ -612,6 +612,14 @@ unregisterEvents
 			[environmentEventHandlers do: [:each | each free].
 			environmentEventHandlers := nil]!
 
+unregisterEventSink: aWebView2EventSink
+	"Explicitly unregister an event handler."
+
+	"Note that normally this is not necessary since all handlers are unregistered when the browser control is closed. It is also rather expensive with the current implementation (which could of course be changed), since it involves removing an object from an OrderedCollection (i.e. serial search and then moving memory to close any hole opened up in the collection)."
+
+	aWebView2EventSink unregister.
+	eventHandlers remove: aWebView2EventSink ifAbsent: nil!
+
 updateSettings
 	| settings back |
 	settings := self webviewSettings.
@@ -749,6 +757,7 @@ subViews!hierarchy!public!sub views! !
 trackingPreventionLevel!public!settings! !
 trackingPreventionLevel:!public!settings! !
 unregisterEvents!private!realizing/unrealizing! !
+unregisterEventSink:!helpers!public! !
 updateSettings!private!realizing/unrealizing! !
 webview!accessing!public! !
 webviewController!accessing!public! !

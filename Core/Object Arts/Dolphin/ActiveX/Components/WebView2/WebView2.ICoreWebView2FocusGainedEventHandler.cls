@@ -16,15 +16,15 @@ WebView2.ICoreWebView2FocusGainedEventHandler comment: ''!
 
 !WebView2.ICoreWebView2FocusGainedEventHandler methodsFor!
 
-basicRegister: tokenBuffer
-	source Add_GotFocus: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Interface
+	anICoreWebView2Interface Add_GotFocus: self token: tokenBuffer!
 
-basicUnregister
-	source Remove_GotFocus: token! !
+basicUnregister: anInteger from: anICoreWebView2Interface
+	anICoreWebView2Interface Remove_GotFocus: anInteger! !
 
 !WebView2.ICoreWebView2FocusGainedEventHandler categoriesForMethods!
-basicRegister:!private!realizing/unrealizing! !
-basicUnregister!private!realizing/unrealizing! !
+basicRegister:with:!private!realizing/unrealizing! !
+basicUnregister:from:!private!realizing/unrealizing! !
 !
 
 !WebView2.ICoreWebView2FocusGainedEventHandler class methodsFor!

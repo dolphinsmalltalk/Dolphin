@@ -217,13 +217,13 @@ at:ifAbsent:!accessing!public! !
 at:ifAbsentPut:!accessing!public! !
 at:put:!accessing!public! !
 collect:!enumerating!public! !
-Contains:contains:!COM Interfaces-ICoreWebView2HttpRequestHeaders!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
+Contains:contains:!private! !
 errorKeyNotFound:!exceptions!private! !
 errorValueNotFound:!exceptions!private! !
 getHeader:!methods!public! !
-GetHeader:value:!COM Interfaces-ICoreWebView2HttpRequestHeaders!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
+GetHeader:value:!private! !
 getHeaders:!methods!public! !
-GetHeaders:iterator:!COM Interfaces-ICoreWebView2HttpRequestHeaders!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
+GetHeaders:iterator:!private! !
 includesKey:!public!searching! !
 iteratorClass!methods!private! !
 keyAtValue:!accessing!public! !
@@ -234,7 +234,7 @@ keysDo:!enumerating!public! !
 printPropertiesOn:!printing!private! !
 removeAllKeys:!public!removing! !
 removeAllKeys:ifAbsent:!public!removing! !
-RemoveHeader:!COM Interfaces-ICoreWebView2HttpRequestHeaders!private! !
+RemoveHeader:!private! !
 removeKey:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 select:!enumerating!public! !

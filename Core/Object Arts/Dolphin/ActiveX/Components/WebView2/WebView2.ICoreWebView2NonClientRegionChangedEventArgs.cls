@@ -58,7 +58,15 @@ regionKind
 regionKindName
 	"Answer the symbolic name of the 'RegionKind' property of the receiver."
 
-	^#(#nowhere #client #caption) lookup: self regionKind - 1! !
+	^(IdentityDictionary withAll: {
+				COREWEBVIEW2_NON_CLIENT_REGION_KIND_NOWHERE -> #nowhere.
+				COREWEBVIEW2_NON_CLIENT_REGION_KIND_CLIENT -> #client.
+				COREWEBVIEW2_NON_CLIENT_REGION_KIND_CAPTION -> #caption.
+				COREWEBVIEW2_NON_CLIENT_REGION_KIND_MINIMIZE -> #minimize.
+				COREWEBVIEW2_NON_CLIENT_REGION_KIND_MAXIMIZE -> #maximize.
+				COREWEBVIEW2_NON_CLIENT_REGION_KIND_CLOSE -> #close
+			})
+		lookup: self regionKind! !
 
 !WebView2.ICoreWebView2NonClientRegionChangedEventArgs categoriesForMethods!
 get_RegionKind:!**auto generated**!COM Interfaces-ICoreWebView2NonClientRegionChangedEventArgs!private! !

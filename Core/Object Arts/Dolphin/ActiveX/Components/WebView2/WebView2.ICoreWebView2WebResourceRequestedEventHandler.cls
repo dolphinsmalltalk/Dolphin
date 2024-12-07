@@ -36,11 +36,11 @@ interface ICoreWebView2WebResourceRequestedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2WebResourceRequestedEventHandler methodsFor!
 
-basicRegister: tokenBuffer
-	source Add_WebResourceRequested: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Interface
+	anICoreWebView2Interface Add_WebResourceRequested: self token: tokenBuffer!
 
-basicUnregister
-	source Remove_WebResourceRequested: token!
+basicUnregister: anInteger from: anICoreWebView2Interface
+	anICoreWebView2Interface Remove_WebResourceRequested: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.
@@ -53,8 +53,8 @@ Invoke: sender args: args
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2WebResourceRequestedEventHandler categoriesForMethods!
-basicRegister:!private!realizing/unrealizing! !
-basicUnregister!private!realizing/unrealizing! !
+basicRegister:with:!private!realizing/unrealizing! !
+basicUnregister:from:!private!realizing/unrealizing! !
 Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventHandler!public! !
 !
 

@@ -110,7 +110,7 @@ GetDeferral: deferral
 	^self invalidCall: _failureCode!
 
 printableProperties
-	^#(#uri #cancel)!
+	^#(#uri #challenge #cancel)!
 
 put_Cancel: cancel
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 

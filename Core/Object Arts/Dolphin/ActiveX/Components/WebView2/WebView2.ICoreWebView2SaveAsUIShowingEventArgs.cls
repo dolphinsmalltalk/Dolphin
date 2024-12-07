@@ -6,7 +6,7 @@ WebView2.ICoreWebView2EventArgs
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'KindNames' -> #('DEFAULT' 'HTML_ONLY' 'SINGLE_FILE' 'COMPLETE') }!
 
 WebView2.ICoreWebView2SaveAsUIShowingEventArgs guid: (OS.COM.IID fromString: '{55902952-0e0d-5aaa-a7d0-e833cdb34f62}')!
 
@@ -167,6 +167,12 @@ kind: value
 
 	self put_Kind: value!
 
+kindName
+	^(KindNames lookup: self kind + 1) ?? '(Unknown kind)'!
+
+printableProperties
+	^#(#contentMimeType #kindName #saveAsFilePath)!
+
 put_AllowReplace: value
 	"Private - Set the value of the 'AllowReplace' property of the object wrapped by the 
 	 receiver to the <int32> argument, value.
@@ -258,6 +264,8 @@ get_SuppressDefaultDialog:!**auto generated**!COM Interfaces-ICoreWebView2SaveAs
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2SaveAsUIShowingEventArgs!private! !
 kind!properties!public! !
 kind:!**auto generated**!properties!public! !
+kindName!private!properties! !
+printableProperties!printing!private! !
 put_AllowReplace:!**auto generated**!COM Interfaces-ICoreWebView2SaveAsUIShowingEventArgs!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2SaveAsUIShowingEventArgs!private! !
 put_Kind:!**auto generated**!COM Interfaces-ICoreWebView2SaveAsUIShowingEventArgs!private! !

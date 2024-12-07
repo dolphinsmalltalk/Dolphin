@@ -146,13 +146,16 @@ physicalKeyStatus
 	self get_PhysicalKeyStatus: answer.
 	^answer asObject!
 
+printableProperties
+	^#(#handled #isBrowserAcceleratorKeyEnabled)!
+
 printPropertiesOn: aStream
 	aStream
 		nextPutAll: self windowsKeyEvent;
 		nextPutAll: ': ';
 		nextPutAll: self keyName;
-		nextPutAll: ', handled: ';
-		print: self handled!
+		nextPutAll: ', '.
+	super printPropertiesOn: aStream!
 
 put_Handled: handled
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
@@ -197,6 +200,7 @@ keyEventKind!**auto generated**!properties!public! !
 keyEventLParam!**auto generated**!properties!public! !
 keyName!accessing!public! !
 physicalKeyStatus!**auto generated**!properties!public! !
+printableProperties!printing!private! !
 printPropertiesOn:!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 put_IsBrowserAcceleratorKeyEnabled:!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs2!private! !

@@ -36,11 +36,11 @@ interface ICoreWebView2RasterizationScaleChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2RasterizationScaleChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer
-	source Add_RasterizationScaleChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Interface
+	anICoreWebView2Interface Add_RasterizationScaleChanged: self token: tokenBuffer!
 
-basicUnregister
-	source Remove_RasterizationScaleChanged: token!
+basicUnregister: anInteger from: anICoreWebView2Interface
+	anICoreWebView2Interface Remove_RasterizationScaleChanged: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.
@@ -53,8 +53,8 @@ Invoke: sender args: args
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2RasterizationScaleChangedEventHandler categoriesForMethods!
-basicRegister:!private!realizing/unrealizing! !
-basicUnregister!private!realizing/unrealizing! !
+basicRegister:with:!private!realizing/unrealizing! !
+basicUnregister:from:!private!realizing/unrealizing! !
 Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2RasterizationScaleChangedEventHandler!public! !
 !
 

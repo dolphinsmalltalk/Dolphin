@@ -116,7 +116,7 @@ isUserInitiated
 	^buf asBoolean!
 
 printableProperties
-	^#(#uri #isUserInitiated #cancel #initiatingOrigin)!
+	^#(#uri #isUserInitiated #initiatingOrigin)!
 
 put_Cancel: value
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 

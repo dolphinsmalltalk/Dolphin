@@ -6,7 +6,11 @@ WebView2.ICoreWebView2EventArgs
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'Actions' -> #(#alwaysAllow #cancel #default).
+			'ErrorMessages'
+				-> #('Unknown' 'Certificate common name is incorrect' 'Certificate expired' 'Client certificate contains errors' 'Certificate revoked' 'Certificate is invalid' 'Server unreachable' 'Timeout' 'Error http invalid server response' 'Connection aborted' 'Connection reset' 'Disconnected' 'Cannot connect' 'Host name not resolved' 'Operation canceled' 'Redirect failed' 'Unexpected error' 'Valid authentication credentials required' 'Valid proxy authentication required')
+		}!
 
 WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs guid: (OS.COM.IID fromString: '{012193ed-7c13-48ff-969d-a84c1f432a14}')!
 
@@ -65,6 +69,19 @@ action: value
 
 	self put_Action: value!
 
+actionName
+	"Answer the symbolic name of the 'Action' property of the receiver."
+
+	^Actions at: self action + 1!
+
+actionName: aSymbol
+	"Set the 'Action' property of the receiver."
+
+	self action: (Actions identityIndexOf: aSymbol) - 1!
+
+errorMessage
+	^(ErrorMessages lookup: self errorStatus + 1) ?? 'Unknown'!
+
 errorStatus
 	"Answer the <sdword> value of the 'ErrorStatus' property of the receiver."
 
@@ -119,7 +136,7 @@ GetDeferral: deferral
 	^self invalidCall: _failureCode!
 
 printableProperties
-	^#(#action #errorStatus #requestUri #serverCertificate)!
+	^#(#actionName #errorMessage #requestUri #serverCertificate)!
 
 put_Action: value
 	"Private - Set the value of the 'Action' property of the object wrapped by the 
@@ -152,6 +169,9 @@ serverCertificate
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs categoriesForMethods!
 action!**auto generated**!properties!public! !
 action:!**auto generated**!properties!public! !
+actionName!properties!public! !
+actionName:!properties!public! !
+errorMessage!**auto generated**!properties!public! !
 errorStatus!**auto generated**!properties!public! !
 get_Action:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !
 get_ErrorStatus:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !
@@ -183,9 +203,21 @@ defineFunctions
 			argumentTypes: 'sdword';
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
-! !
+!
+
+initialize
+	super initialize.
+	self addClassConstant: 'ErrorMessages'
+		value: (((WebView2 associations
+				select: [:each | each key beginsWith: 'COREWEBVIEW2_WEB_ERROR_STATUS'])
+					asSortedArray: [:a :b | a value < b value]) collect: 
+						[:each |
+						| parts |
+						parts := $_ split: each key.
+						$\x20 join: { (parts at: 5) titleCased } , ((parts copyFrom: 6) collect: [:p | p asLowercase])])! !
 
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
+initialize!public! !
 !
 

@@ -52,7 +52,7 @@ iteratorClass
 !WebView2.ICoreWebView2IterableCollection categoriesForMethods!
 do:!enumerating!public! !
 getIterator!methods!public! !
-GetIterator:!COM Interfaces-ICoreWebView2FrameInfoCollection!COM Interfaces-ICoreWebView2HttpRequestHeaders!COM Interfaces-ICoreWebView2HttpResponseHeaders!methods!private! !
+GetIterator:!methods!private! !
 isEmpty!public!testing! !
 iteratorClass!constants!private! !
 !

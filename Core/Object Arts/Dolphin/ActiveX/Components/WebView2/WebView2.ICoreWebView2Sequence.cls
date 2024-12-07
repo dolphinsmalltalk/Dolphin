@@ -443,9 +443,9 @@ size
 	"Answer the <dword> value of the 'Count' property of the receiver."
 
 	| answer |
-	answer := UInt32 new.
+	answer := ByteArray newFixed: 4.
 	self get_Count: answer.
-	^answer asObject!
+	^answer uint32AtOffset: 0!
 
 third
 	"Answer an <Object> which is the third element of the receiver. 
@@ -494,8 +494,8 @@ findLast:!public!searching! !
 first!accessing!public! !
 from:to:do:!enumerating!public! !
 from:to:keysAndValuesDo:!enumerating!public! !
-get_Count:!COM Interfaces-ICoreWebView2ClientCertificateCollection!COM Interfaces-ICoreWebView2ContextMenuItemCollection!COM Interfaces-ICoreWebView2CookieList!COM Interfaces-ICoreWebView2ProcessInfoCollection!COM Interfaces-ICoreWebView2StringCollection!private! !
-GetValueAtIndex:value:!COM Interfaces-ICoreWebView2CookieList!private! !
+get_Count:!private! !
+GetValueAtIndex:value:!private! !
 indexOf:!public!searching! !
 indexOf:ifAbsent:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !

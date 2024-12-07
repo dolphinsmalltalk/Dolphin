@@ -2,7 +2,7 @@
 
 OS.COM.InterfaceImplementation
 	subclass: #'WebView2.WebView2EventSink'
-	instanceVariableNames: 'source interfaceClass interface handler'
+	instanceVariableNames: 'source interfaceClass interface handler token'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -58,13 +58,11 @@ queryInterface: anInterfaceClass ifNone: exceptionHandler
 		ifFalse: [exceptionHandler value]!
 
 register
-	interface := self queryInterface: interfaceClass.
-	interface
-		source: source;
-		register!
+	self register: source!
 
-source
-	^source!
+register: anICoreWebView2Interface
+	interface := self queryInterface: interfaceClass.
+	token := interface register: anICoreWebView2Interface!
 
 source: anICoreWebView2EventSource interfaceClass: anICoreWebView2EventHandlerClass handler: aDyadicValuable
 	source := anICoreWebView2EventSource.
@@ -78,11 +76,15 @@ supportedInterfaces
 		, (ICoreWebView2EventHandler allSubclasses reject: [:each | each isNonInstantiable]))!
 
 unregister
+	self unregister: source.
+	source := nil!
+
+unregister: anICoreWebView2Interface
 	interface ifNil: [^self].
 	interface
-		unregister;
+		unregister: token from: anICoreWebView2Interface;
 		free.
-	interface := nil! !
+	interface := token := nil! !
 
 !WebView2.WebView2EventSink categoriesForMethods!
 destroy!private!realizing/unrealizing! !
@@ -92,10 +94,11 @@ Invoke:args:!COM Interfaces-ICoreWebView2EventHandler!private! !
 printOn:!printing!public! !
 queryInterface:ifNone:!accessing!accessing-interfaces!public! !
 register!initializing!public! !
-source!accessing!private! !
+register:!initializing!public! !
 source:interfaceClass:handler:!initializing!private! !
 supportedInterfaces!constants!public! !
 unregister!public!realizing/unrealizing! !
+unregister:!public!realizing/unrealizing! !
 !
 
 WebView2.WebView2EventSink methodProtocol: #ICoreWebView2EventHandler attributes: #(#readOnly) selectors: #(#Invoke:args:)!

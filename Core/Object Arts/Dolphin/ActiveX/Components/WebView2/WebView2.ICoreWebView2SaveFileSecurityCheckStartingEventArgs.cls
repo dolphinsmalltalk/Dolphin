@@ -153,6 +153,9 @@ GetDeferral: value
 	<virtual stdcall: hresult 11 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
+printableProperties
+	^#(#documentOriginUri #fileExtension #filePath #suppressDefaultPolicy #cancelSave)!
+
 put_CancelSave: value
 	"Private - Set the value of the 'CancelSave' property of the object wrapped by the 
 	 receiver to the <int32> argument, value.
@@ -198,6 +201,7 @@ get_FileExtension:!**auto generated**!COM Interfaces-ICoreWebView2SaveFileSecuri
 get_FilePath:!**auto generated**!COM Interfaces-ICoreWebView2SaveFileSecurityCheckStartingEventArgs!private! !
 get_SuppressDefaultPolicy:!**auto generated**!COM Interfaces-ICoreWebView2SaveFileSecurityCheckStartingEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2SaveFileSecurityCheckStartingEventArgs!private! !
+printableProperties!printing!private! !
 put_CancelSave:!**auto generated**!COM Interfaces-ICoreWebView2SaveFileSecurityCheckStartingEventArgs!private! !
 put_SuppressDefaultPolicy:!**auto generated**!COM Interfaces-ICoreWebView2SaveFileSecurityCheckStartingEventArgs!private! !
 suppressDefaultPolicy!properties!public! !
