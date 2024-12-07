@@ -47,10 +47,10 @@ interface ICoreWebView2EnvironmentOptions7 : IUnknown
 channelSearchKind
 	"Answer the <int32> value of the 'ChannelSearchKind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ChannelSearchKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ChannelSearchKind: buf.
+	^buf asSignedInteger!
 
 channelSearchKind: value
 	"Set the 'ChannelSearchKind' property of the receiver to the <int32> value of the argument."
@@ -98,10 +98,10 @@ put_ReleaseChannels: value
 releaseChannels
 	"Answer the <int32> value of the 'ReleaseChannels' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ReleaseChannels: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ReleaseChannels: buf.
+	^buf asSignedInteger!
 
 releaseChannels: value
 	"Set the 'ReleaseChannels' property of the receiver to the <int32> value of the argument."

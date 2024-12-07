@@ -69,12 +69,12 @@ get_Permission: value
 	^self invalidCall: _failureCode!
 
 kind
-	"Answer the <int32> value of the 'Kind' property of the receiver."
+	"Answer the COREWEBVIEW2_FILE_SYSTEM_HANDLE_KIND enum value of the 'Kind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Kind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Kind: buf.
+	^buf asSignedInteger!
 
 path
 	"Answer the <lpwstr> value of the 'Path' property of the receiver."
@@ -87,20 +87,20 @@ path
 	^answer!
 
 permission
-	"Answer the <int32> value of the 'Permission' property of the receiver."
+	"Answer the COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION enum value of the 'Permission' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Permission: answer.
-	^answer asObject! !
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Permission: buf.
+	^buf asSignedInteger! !
 
 !WebView2.ICoreWebView2FileSystemHandle categoriesForMethods!
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2FileSystemHandle!private! !
 get_Path:!**auto generated**!COM Interfaces-ICoreWebView2FileSystemHandle!private! !
 get_Permission:!**auto generated**!COM Interfaces-ICoreWebView2FileSystemHandle!private! !
-kind!**auto generated**!properties!public! !
+kind!properties!public! !
 path!properties!public! !
-permission!**auto generated**!properties!public! !
+permission!properties!public! !
 !
 
 !WebView2.ICoreWebView2FileSystemHandle class methodsFor!

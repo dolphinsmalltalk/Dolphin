@@ -349,25 +349,25 @@ isPasswordAutosaveEnabled: aBoolean
 	self put_IsPasswordAutosaveEnabled: aBoolean asParameter!
 
 preferredColorScheme
-	"Answer the <sdword> value of the 'PreferredColorScheme' property of the receiver."
+	"Answer the COREWEBVIEW2_PREFERRED_COLOR_SCHEME enumeration value of the 'PreferredColorScheme' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_PreferredColorScheme: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PreferredColorScheme: buf.
+	^buf asSignedInteger!
 
 preferredColorScheme: value
-	"Set the 'PreferredColorScheme' property of the receiver to the <sdword> value of the argument."
+	"Set the 'PreferredColorScheme' property of the receiver to the COREWEBVIEW2_PREFERRED_COLOR_SCHEME enumeration value of the argument."
 
 	self put_PreferredColorScheme: value!
 
 preferredTrackingPreventionLevel
 	"Answer the <int32> value of the 'PreferredTrackingPreventionLevel' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_PreferredTrackingPreventionLevel: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PreferredTrackingPreventionLevel: buf.
+	^buf asSignedInteger!
 
 preferredTrackingPreventionLevel: value
 	"Set the 'PreferredTrackingPreventionLevel' property of the receiver to the <int32> value of the argument."
@@ -520,8 +520,8 @@ isGeneralAutofillEnabled:!properties!public! !
 isInPrivateModeEnabled!properties!public! !
 isPasswordAutosaveEnabled!properties!public! !
 isPasswordAutosaveEnabled:!properties!public! !
-preferredColorScheme!**auto generated**!properties!public! !
-preferredColorScheme:!**auto generated**!properties!public! !
+preferredColorScheme!properties!public! !
+preferredColorScheme:!properties!public! !
 preferredTrackingPreventionLevel!properties!public! !
 preferredTrackingPreventionLevel:!properties!public! !
 printableProperties!printing!private! !

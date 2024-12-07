@@ -80,7 +80,7 @@ allowSingleSignOnUsingOSPrimaryAccount
 	^buf asBoolean!
 
 allowSingleSignOnUsingOSPrimaryAccount: allow
-	"Set the 'AllowSingleSignOnUsingOSPrimaryAccount' property of the receiver to the <sdword> value of the argument."
+	"Set the 'AllowSingleSignOnUsingOSPrimaryAccount' property of the receiver to the <boolean> value of the argument."
 
 	self put_AllowSingleSignOnUsingOSPrimaryAccount: allow asParameter!
 

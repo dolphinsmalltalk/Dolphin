@@ -122,18 +122,18 @@ request
 requestedSourceKind
 	"Answer the <int32> value of the 'RequestedSourceKind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_RequestedSourceKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_RequestedSourceKind: buf.
+	^buf asSignedInteger!
 
 resourceContext
-	"Answer the <sdword> value of the 'ResourceContext' property of the receiver."
+	"Answer the COREWEBVIEW2_WEB_RESOURCE_CONTEXT enum value of the 'ResourceContext' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ResourceContext: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ResourceContext: buf.
+	^buf asSignedInteger!
 
 response
 	"Answer the <ICoreWebView2WebResourceResponse> value of the 'Response' property of the receiver."
@@ -159,7 +159,7 @@ printPropertiesOn:!printing!private! !
 put_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 request!**auto generated**!properties!public! !
 requestedSourceKind!properties!public! !
-resourceContext!**auto generated**!properties!public! !
+resourceContext!properties!public! !
 response!**auto generated**!properties!public! !
 response:!**auto generated**!properties!public! !
 !

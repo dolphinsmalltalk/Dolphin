@@ -186,12 +186,12 @@ mutuallyTrustedCertificates
 	^answer asObject!
 
 port
-	"Answer the <sdword> value of the 'Port' property of the receiver."
+	"Answer the <integer> value of the 'Port' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Port: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Port: buf.
+	^buf asSignedInteger!
 
 printableProperties
 	^#(#host #isProxy #selectedCertificate)!
@@ -253,7 +253,7 @@ GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateReq
 host!properties!public! !
 isProxy!properties!public! !
 mutuallyTrustedCertificates!**auto generated**!properties!public! !
-port!**auto generated**!properties!public! !
+port!properties!public! !
 printableProperties!printing!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !

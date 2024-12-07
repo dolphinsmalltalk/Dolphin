@@ -38,12 +38,12 @@ interface ICoreWebView2ProcessFailedEventArgs : IUnknown
 !WebView2.ICoreWebView2ProcessFailedEventArgs methodsFor!
 
 exitCode
-	"Answer the <sdword> value of the 'ExitCode' property of the receiver."
+	"Answer the <integer> value of the 'ExitCode' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ExitCode: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ExitCode: buf.
+	^buf asSignedInteger!
 
 failureSourceModulePath
 	"Answer the <lpwstr> value of the 'FailureSourceModulePath' property of the receiver."
@@ -83,7 +83,7 @@ get_Handled: pHandled
 		HRESULT __stdcall Handled(
 			[out, retval]long* Handled);"
 
-	handled value: handled asParameter.
+	pHandled value: handled asParameter.
 	^S_OK!
 
 get_ProcessDescription: processDescription
@@ -128,12 +128,12 @@ processDescription
 	^answer!
 
 processFailedKind
-	"Answer the <sdword> value of the 'ProcessFailedKind' property of the receiver."
+	"Answer the COREWEBVIEW2_PROCESS_FAILED_KIND enum value of the 'ProcessFailedKind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ProcessFailedKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ProcessFailedKind: buf.
+	^buf asSignedInteger!
 
 put_Handled: anInteger
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
@@ -146,12 +146,12 @@ put_Handled: anInteger
 	^S_OK!
 
 reason
-	"Answer the <sdword> value of the 'reason' property of the receiver."
+	"Answer the COREWEBVIEW2_PROCESS_FAILED_REASON enum value of the 'reason' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_reason: answer.
-	^answer asObject! !
+	| buf |
+	buf := UInt32Bytes new.
+	self get_reason: buf.
+	^buf asSignedInteger! !
 
 !WebView2.ICoreWebView2ProcessFailedEventArgs categoriesForMethods!
 exitCode!properties!public! !
@@ -167,7 +167,7 @@ get_reason:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 isBrowserProcessExit!public!testing! !
 printableProperties!printing!private! !
 processDescription!properties!public! !
-processFailedKind!**auto generated**!properties!public! !
+processFailedKind!properties!public! !
 put_Handled:!private!properties! !
 reason!properties!public! !
 !

@@ -47,19 +47,19 @@ get_NavigationId: navigationId
 	^self invalidCall: _failureCode!
 
 navigationId
-	"Answer the <qword> value of the 'NavigationId' property of the receiver."
+	"Answer the <integer> value of the 'NavigationId' property of the receiver."
 
-	| answer |
-	answer := UInt64 new.
-	self get_NavigationId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt64Bytes new.
+	self get_NavigationId: buf.
+	^buf asInteger!
 
 printableProperties
 	^#(#navigationId)! !
 
 !WebView2.ICoreWebView2DOMContentLoadedEventArgs categoriesForMethods!
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2DOMContentLoadedEventArgs!private! !
-navigationId!**auto generated**!properties!public! !
+navigationId!properties!public! !
 printableProperties!printing!private! !
 !
 

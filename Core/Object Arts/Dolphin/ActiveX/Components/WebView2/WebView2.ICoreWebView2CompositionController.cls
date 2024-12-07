@@ -259,12 +259,12 @@ SendPointerInput: eventKind pointerInfo: pointerInfo
 	^self invalidCall: _failureCode!
 
 systemCursorId
-	"Answer the <dword> value of the 'SystemCursorId' property of the receiver."
+	"Answer the unsigned <integer> value of the 'SystemCursorId' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_SystemCursorId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_SystemCursorId: buf.
+	^buf asInteger!
 
 uiaProvider
 	"Answer the <IUnknown> value of the 'UIAProvider' property of the receiver."
@@ -297,7 +297,7 @@ rootVisualTarget!**auto generated**!properties!public! !
 rootVisualTarget:!**auto generated**!properties!public! !
 SendMouseInput:virtualKeys:mouseData:point:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!methods!private! !
 SendPointerInput:pointerInfo:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!methods!private! !
-systemCursorId!**auto generated**!properties!public! !
+systemCursorId!properties!public! !
 uiaProvider!properties!public! !
 !
 

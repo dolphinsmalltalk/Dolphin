@@ -37,7 +37,7 @@ interface ICoreWebView2ShowSaveAsUICompletedHandler : IUnknown
 !WebView2.ICoreWebView2ShowSaveAsUICompletedHandler methodsFor!
 
 Invoke: errorCode arg: result
-	"Private - Invoke the Invoke() method of the COM object.
+	"Invoke the Invoke() method of the COM object.
 
 		HRESULT __stdcall Invoke(
 			[in]HRESULT errorCode,
@@ -47,7 +47,7 @@ Invoke: errorCode arg: result
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2ShowSaveAsUICompletedHandler categoriesForMethods!
-Invoke:arg:!**auto generated**!COM Interfaces-ICoreWebView2ShowSaveAsUICompletedHandler!private! !
+Invoke:arg:!**auto generated**!COM Interfaces-ICoreWebView2ShowSaveAsUICompletedHandler!public! !
 !
 
 !WebView2.ICoreWebView2ShowSaveAsUICompletedHandler class methodsFor!

@@ -50,10 +50,10 @@ interface ICoreWebView2ScriptException : IUnknown
 columnNumber
 	"Answer the <uint32> value of the 'ColumnNumber' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_ColumnNumber: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ColumnNumber: buf.
+	^buf asInteger!
 
 get_ColumnNumber: value
 	"Private - Get the value of the 'ColumnNumber' property of the receiver.
@@ -103,10 +103,10 @@ get_ToJson: value
 lineNumber
 	"Answer the <uint32> value of the 'LineNumber' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_LineNumber: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_LineNumber: buf.
+	^buf asInteger!
 
 message
 	"Answer the <lpwstr> value of the 'Message' property of the receiver."
@@ -151,13 +151,13 @@ toJson
 	^answer! !
 
 !WebView2.ICoreWebView2ScriptException categoriesForMethods!
-columnNumber!**auto generated**!properties!public! !
+columnNumber!properties!public! !
 get_ColumnNumber:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!private! !
 get_LineNumber:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!private! !
 get_Message:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!private! !
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!private! !
 get_ToJson:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!private! !
-lineNumber!**auto generated**!properties!public! !
+lineNumber!properties!public! !
 message!properties!public! !
 name!properties!public! !
 printPropertiesOn:!printing!private! !

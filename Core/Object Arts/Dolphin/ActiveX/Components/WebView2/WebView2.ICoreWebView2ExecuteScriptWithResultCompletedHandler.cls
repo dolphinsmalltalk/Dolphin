@@ -37,7 +37,7 @@ interface ICoreWebView2ExecuteScriptWithResultCompletedHandler : IUnknown
 !WebView2.ICoreWebView2ExecuteScriptWithResultCompletedHandler methodsFor!
 
 Invoke: errorCode arg: result
-	"Private - Invoke the Invoke() method of the COM object.
+	"Invoke the Invoke() method of the COM object.
 
 		HRESULT __stdcall Invoke(
 			[in]HRESULT errorCode,
@@ -47,7 +47,7 @@ Invoke: errorCode arg: result
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2ExecuteScriptWithResultCompletedHandler categoriesForMethods!
-Invoke:arg:!COM Interfaces-ICoreWebView2ExecuteScriptWithResultCompletedHandler!private! !
+Invoke:arg:!COM Interfaces-ICoreWebView2ExecuteScriptWithResultCompletedHandler!public! !
 !
 
 !WebView2.ICoreWebView2ExecuteScriptWithResultCompletedHandler class methodsFor!

@@ -67,12 +67,12 @@ isErrorPage
 	^buf asBoolean!
 
 navigationId
-	"Answer the <qword> value of the 'NavigationId' property of the receiver."
+	"Answer the <integer> value of the 'NavigationId' property of the receiver."
 
-	| answer |
-	answer := UInt64 new.
-	self get_NavigationId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt64Bytes new.
+	self get_NavigationId: buf.
+	^buf asInteger!
 
 printableProperties
 	^#(#navigationId #isErrorPage)! !
@@ -81,7 +81,7 @@ printableProperties
 get_IsErrorPage:!**auto generated**!COM Interfaces-ICoreWebView2ContentLoadingEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2ContentLoadingEventArgs!private! !
 isErrorPage!properties!public! !
-navigationId!**auto generated**!properties!public! !
+navigationId!properties!public! !
 printableProperties!printing!private! !
 !
 

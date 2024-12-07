@@ -57,15 +57,15 @@ interface ICoreWebView2ServerCertificateErrorDetectedEventArgs : IUnknown
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs methodsFor!
 
 action
-	"Answer the <sdword> value of the 'Action' property of the receiver."
+	"Answer the COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION enum value of the 'Action' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Action: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Action: buf.
+	^buf asSignedInteger!
 
 action: value
-	"Set the 'Action' property of the receiver to the <sdword> value of the argument."
+	"Set the 'Action' property of the receiver to the COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION enum value of the argument."
 
 	self put_Action: value!
 
@@ -83,12 +83,12 @@ errorMessage
 	^(ErrorMessages lookup: self errorStatus + 1) ?? 'Unknown'!
 
 errorStatus
-	"Answer the <sdword> value of the 'ErrorStatus' property of the receiver."
+	"Answer the COREWEBVIEW2_WEB_ERROR_STATUS enum value of the 'ErrorStatus' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ErrorStatus: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ErrorStatus: buf.
+	^buf asSignedInteger!
 
 get_Action: value
 	"Private - Get the value of the 'Action' property of the receiver.
@@ -167,12 +167,12 @@ serverCertificate
 	^answer asObject! !
 
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs categoriesForMethods!
-action!**auto generated**!properties!public! !
-action:!**auto generated**!properties!public! !
+action!properties!public! !
+action:!properties!public! !
 actionName!properties!public! !
 actionName:!properties!public! !
-errorMessage!**auto generated**!properties!public! !
-errorStatus!**auto generated**!properties!public! !
+errorMessage!properties!public! !
+errorStatus!properties!public! !
 get_Action:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !
 get_ErrorStatus:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !
 get_RequestUri:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !

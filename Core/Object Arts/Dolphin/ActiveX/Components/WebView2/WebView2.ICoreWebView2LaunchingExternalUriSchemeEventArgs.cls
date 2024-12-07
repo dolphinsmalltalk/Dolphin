@@ -144,7 +144,7 @@ get_InitiatingOrigin:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingEx
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !
-initiatingOrigin!**auto generated**!properties!public! !
+initiatingOrigin!properties!public! !
 isUserInitiated!properties!public! !
 printableProperties!printing!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2LaunchingExternalUriSchemeEventArgs!private! !

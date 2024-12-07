@@ -126,12 +126,12 @@ bodyImageUri
 	^answer!
 
 direction
-	"Answer the <int32> value of the 'Direction' property of the receiver."
+	"Answer the COREWEBVIEW2_TEXT_DIRECTION_KIND enum value of the 'Direction' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Direction: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Direction: buf.
+	^buf asSignedInteger!
 
 directionName
 	^(DirectionNames at: self direction + 1)!
@@ -350,7 +350,7 @@ timestamp
 	"
 
 	| buf |
-	buf := ByteArray newFixed: 8.
+	buf := UInt64Bytes new.
 	self get_Timestamp: buf.
 	^DateAndTime fromUnixTime: (buf doubleAtOffset: 0) asInteger /1000!
 
@@ -369,7 +369,7 @@ Add_CloseRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2Notific
 badgeUri!properties!public! !
 body!properties!public! !
 bodyImageUri!properties!public! !
-direction!**auto generated**!properties!public! !
+direction!properties!public! !
 directionName!properties!public! !
 get_BadgeUri:!**auto generated**!COM Interfaces-ICoreWebView2Notification!private! !
 get_Body:!**auto generated**!COM Interfaces-ICoreWebView2Notification!private! !

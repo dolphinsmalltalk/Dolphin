@@ -120,15 +120,15 @@ interface ICoreWebView2PrintSettings : IUnknown
 !WebView2.ICoreWebView2PrintSettings methodsFor!
 
 collation
-	"Answer the <sdword> value of the 'Collation' property of the receiver."
+	"Answer the COREWEBVIEW2_PRINT_COLLATION enumeration value of the 'Collation' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Collation: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Collation: buf.
+	^buf asSignedInteger!
 
 collation: value
-	"Set the 'Collation' property of the receiver to the <sdword> value of the argument."
+	"Set the 'Collation' property of the receiver to the COREWEBVIEW2_PRINT_COLLATION enumeration value of the argument."
 
 	self put_Collation: value!
 
@@ -139,20 +139,20 @@ collationName: aSymbol
 	self collation: (CollationNames identityIndexOf: aSymbol) - 1!
 
 colorMode
-	"Answer the <sdword> value of the 'ColorMode' property of the receiver."
+	"Answer the COREWEBVIEW2_PRINT_COLOR_MODE enumeration value of the 'ColorMode' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ColorMode: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ColorMode: buf.
+	^buf asSignedInteger!
 
 colorMode: value
-	"Set the 'ColorMode' property of the receiver to the <sdword> value of the argument."
+	"Set the 'ColorMode' property of the receiver to the COREWEBVIEW2_PRINT_COLOR_MODE enumeration value of the argument."
 
 	self put_ColorMode: value!
 
 colorModeName
-	"Answer the <sdword> value of the 'ColorMode' property of the receiver."
+	"Answer the symbolic value of the 'ColorMode' property of the receiver."
 
 	^ColorModeNames at: self colorMode + 1!
 
@@ -160,28 +160,28 @@ colorModeName: aSymbol
 	self colorMode: (ColorModeNames identityIndexOf: aSymbol) - 1!
 
 copies
-	"Answer the <sdword> value of the 'Copies' property of the receiver."
+	"Answer the <integer> value of the 'Copies' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Copies: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Copies: buf.
+	^buf asSignedInteger!
 
 copies: value
-	"Set the 'Copies' property of the receiver to the <sdword> value of the argument."
+	"Set the 'Copies' property of the receiver to the <integer> value of the argument."
 
 	self put_Copies: value!
 
 duplex
-	"Answer the <sdword> value of the 'Duplex' property of the receiver."
+	"Answer the COREWEBVIEW2_PRINT_DUPLEX enumeration value of the 'Duplex' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Duplex: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Duplex: buf.
+	^buf asSignedInteger!
 
 duplex: value
-	"Set the 'Duplex' property of the receiver to the <sdword> value of the argument."
+	"Set the 'Duplex' property of the receiver to the COREWEBVIEW2_PRINT_DUPLEX enumeration value of the argument."
 
 	self put_Duplex: value!
 
@@ -471,15 +471,15 @@ marginTop: marginTop
 	self put_MarginTop: marginTop!
 
 mediaSize
-	"Answer the <sdword> value of the 'MediaSize' property of the receiver."
+	"Answer the COREWEBVIEW2_PRINT_MEDIA_SIZE enumeration value of the 'MediaSize' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_MediaSize: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_MediaSize: buf.
+	^buf asSignedInteger!
 
 mediaSize: value
-	"Set the 'MediaSize' property of the receiver to the <sdword> value of the argument."
+	"Set the 'MediaSize' property of the receiver to the COREWEBVIEW2_PRINT_MEDIA_SIZE enumeration value of the argument."
 
 	self put_MediaSize: value!
 
@@ -490,15 +490,15 @@ mediaSizeName: aSymbol
 	self mediaSize: (MediaSizeNames identityIndexOf: aSymbol) - 1!
 
 orientation
-	"Answer the <sdword> value of the 'Orientation' property of the receiver."
+	"Answer the COREWEBVIEW2_PRINT_ORIENTATION enumeration value of the 'Orientation' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Orientation: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Orientation: buf.
+	^buf asSignedInteger!
 
 orientation: orientation
-	"Set the 'Orientation' property of the receiver to the <sdword> value of the argument."
+	"Set the 'Orientation' property of the receiver to the COREWEBVIEW2_PRINT_ORIENTATION enumeration value of the argument."
 
 	self put_Orientation: orientation!
 
@@ -545,15 +545,15 @@ pageSize: aPoint
 		pageHeight: aPoint y!
 
 pagesPerSide
-	"Answer the <sdword> value of the 'PagesPerSide' property of the receiver."
+	"Answer the <integer> value of the 'PagesPerSide' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_PagesPerSide: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PagesPerSide: buf.
+	^buf asSignedInteger!
 
 pagesPerSide: value
-	"Set the 'PagesPerSide' property of the receiver to the <sdword> value of the argument."
+	"Set the 'PagesPerSide' property of the receiver to the <integer> value of the argument."
 
 	self put_PagesPerSide: value!
 
@@ -902,8 +902,8 @@ mediaSize!properties!public! !
 mediaSize:!properties!public! !
 mediaSizeName!properties!public! !
 mediaSizeName:!properties!public! !
-orientation!**auto generated**!properties!public! !
-orientation:!**auto generated**!properties!public! !
+orientation!properties!public! !
+orientation:!properties!public! !
 orientationName!properties!public! !
 orientationName:!properties!public! !
 pageHeight!**auto generated**!properties!public! !

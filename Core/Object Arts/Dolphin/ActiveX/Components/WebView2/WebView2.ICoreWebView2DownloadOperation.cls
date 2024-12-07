@@ -122,12 +122,12 @@ Add_StateChanged: eventHandler token: token
 	^self invalidCall: _failureCode!
 
 bytesReceived
-	"Answer the <sqword> value of the 'BytesReceived' property of the receiver."
+	"Answer the <integer> value of the 'BytesReceived' property of the receiver."
 
-	| answer |
-	answer := Int64 new.
-	self get_BytesReceived: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt64Bytes new.
+	self get_BytesReceived: buf.
+	^buf asSignedInteger!
 
 cancel
 	"Invoke the Cancel() method of the COM object."
@@ -261,12 +261,12 @@ get_uri: uri
 	^self invalidCall: _failureCode!
 
 interruptReason
-	"Answer the <sdword> value of the 'InterruptReason' property of the receiver."
+	"Answer the COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON enum value of the 'InterruptReason' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_InterruptReason: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_InterruptReason: buf.
+	^buf asSignedInteger!
 
 mimeType
 	"Answer the <lpwstr> value of the 'MimeType' property of the receiver."
@@ -342,20 +342,20 @@ Resume
 	^self invalidCall: _failureCode!
 
 state
-	"Answer the <sdword> value of the 'State' property of the receiver."
+	"Answer the COREWEBVIEW2_DOWNLOAD_STATE enum value of the 'State' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_State: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_State: buf.
+	^buf asSignedInteger!
 
 totalBytesToReceive
-	"Answer the <sqword> value of the 'TotalBytesToReceive' property of the receiver."
+	"Answer the <integer> value of the 'TotalBytesToReceive' property of the receiver."
 
-	| answer |
-	answer := Int64 new.
-	self get_TotalBytesToReceive: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt64Bytes new.
+	self get_TotalBytesToReceive: buf.
+	^buf asSignedInteger!
 
 uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
@@ -371,7 +371,7 @@ uri
 Add_BytesReceivedChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 Add_EstimatedEndTimeChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 Add_StateChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-bytesReceived!**auto generated**!properties!public! !
+bytesReceived!properties!public! !
 cancel!**auto generated**!methods!public! !
 Cancel!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 canResume!properties!public! !
@@ -387,7 +387,7 @@ get_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOpera
 get_State:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 get_TotalBytesToReceive:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-interruptReason!**auto generated**!properties!public! !
+interruptReason!properties!public! !
 mimeType!properties!public! !
 pause!**auto generated**!methods!public! !
 Pause!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
@@ -397,8 +397,8 @@ Remove_StateChanged:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOper
 resultFilePath!properties!public! !
 resume!**auto generated**!methods!public! !
 Resume!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-state!**auto generated**!properties!public! !
-totalBytesToReceive!**auto generated**!properties!public! !
+state!properties!public! !
+totalBytesToReceive!properties!public! !
 uri!properties!public! !
 !
 

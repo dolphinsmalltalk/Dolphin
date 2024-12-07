@@ -140,7 +140,7 @@ reasonPhrase: reasonPhrase
 	self put_ReasonPhrase: reasonPhrase asUtf16String!
 
 statusCode: statusCode
-	"Set the 'StatusCode' property of the receiver to the <sdword> value of the argument."
+	"Set the 'StatusCode' property of the receiver to the <integer> value of the argument."
 
 	self put_StatusCode: statusCode! !
 
@@ -155,7 +155,7 @@ put_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!
 put_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 put_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 reasonPhrase:!**auto generated**!properties!public! !
-statusCode:!**auto generated**!properties!public! !
+statusCode:!properties!public! !
 !
 
 !WebView2.ICoreWebView2WebResourceResponse class methodsFor!

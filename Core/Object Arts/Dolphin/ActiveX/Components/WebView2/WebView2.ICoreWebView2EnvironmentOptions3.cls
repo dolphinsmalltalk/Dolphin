@@ -56,7 +56,7 @@ isCustomCrashReportingEnabled
 	^buf asBoolean!
 
 isCustomCrashReportingEnabled: value
-	"Set the 'IsCustomCrashReportingEnabled' property of the receiver to the <sdword> value of the argument."
+	"Set the 'IsCustomCrashReportingEnabled' property of the receiver to the <boolean> value of the argument."
 
 	self put_IsCustomCrashReportingEnabled: value asParameter!
 

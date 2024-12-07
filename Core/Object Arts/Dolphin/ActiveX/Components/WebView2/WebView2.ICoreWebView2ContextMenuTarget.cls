@@ -249,12 +249,12 @@ isRequestedForMainFrame
 	^buf asBoolean!
 
 kind
-	"Answer the <sdword> value of the 'Kind' property of the receiver."
+	"Answer the COREWEBVIEW2_CONTEXT_MENU_TARGET_KIND enum value of the 'Kind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Kind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Kind: buf.
+	^buf asSignedInteger!
 
 linkText
 	"Answer the <readableString> value of the 'LinkText' property of the receiver."
@@ -337,7 +337,7 @@ hasSelection!properties!public! !
 hasSourceUri!properties!public! !
 isEditable!properties!public! !
 isRequestedForMainFrame!properties!public! !
-kind!**auto generated**!properties!public! !
+kind!properties!public! !
 linkText!properties!public! !
 linkUri!properties!public! !
 pageUri!properties!public! !

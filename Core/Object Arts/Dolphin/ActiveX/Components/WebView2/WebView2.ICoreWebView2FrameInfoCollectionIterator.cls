@@ -48,7 +48,7 @@ do: aMonadicValuable
 	Note that as the iterator cannot be reset, it can only be enumerated once."
 
 	| notAtEnd |
-	notAtEnd := ByteArray new: 4.
+	notAtEnd := ByteArray newFixed: 4.
 	self get_hasCurrent: notAtEnd.
 	[(notAtEnd int32AtOffset: 0) == 0] whileFalse: 
 			[aMonadicValuable value: self getCurrent.

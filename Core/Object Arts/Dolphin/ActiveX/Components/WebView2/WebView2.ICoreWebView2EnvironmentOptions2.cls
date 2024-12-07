@@ -56,7 +56,7 @@ exclusiveUserDataFolderAccess
 	^buf asBoolean!
 
 exclusiveUserDataFolderAccess: value
-	"Set the 'ExclusiveUserDataFolderAccess' property of the receiver to the <sdword> value of the argument."
+	"Set the 'ExclusiveUserDataFolderAccess' property of the receiver to the <boolean> value of the argument."
 
 	self put_ExclusiveUserDataFolderAccess: value asParameter!
 

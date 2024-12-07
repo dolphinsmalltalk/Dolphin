@@ -93,12 +93,12 @@ get_ProcessId: value
 	^self invalidCall: _failureCode!
 
 kind
-	"Answer the <sdword> value of the 'Kind' property of the receiver."
+	"Answer the COREWEBVIEW2_PROCESS_KIND enum value of the 'Kind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Kind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Kind: buf.
+	^buf asSignedInteger!
 
 kindName
 	^(KindNames lookup: self kind + 1) ?? '(Unknown process kind)'!
@@ -107,12 +107,12 @@ printableProperties
 	^#(#kindName #processId)!
 
 processId
-	"Answer the <sdword> value of the 'ProcessId' property of the receiver."
+	"Answer the <integer> value of the 'ProcessId' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ProcessId: answer.
-	^answer asObject! !
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ProcessId: buf.
+	^buf asSignedInteger! !
 
 !WebView2.ICoreWebView2ProcessInfo categoriesForMethods!
 ClearBrowsingData:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
@@ -120,10 +120,10 @@ ClearBrowsingDataAll:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!pr
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 get_ProcessId:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
-kind!**auto generated**!properties!public! !
+kind!properties!public! !
 kindName!properties!public! !
 printableProperties!printing!private! !
-processId!**auto generated**!properties!public! !
+processId!properties!public! !
 !
 
 !WebView2.ICoreWebView2ProcessInfo class methodsFor!

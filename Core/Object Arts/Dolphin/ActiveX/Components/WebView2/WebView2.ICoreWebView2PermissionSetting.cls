@@ -74,12 +74,12 @@ get_PermissionState: value
 	^self invalidCall: _failureCode!
 
 permissionKind
-	"Answer the <int32> value of the 'PermissionKind' property of the receiver."
+	"Answer the COREWEBVIEW2_PERMISSION_KIND enumeration value of the 'PermissionKind' property of the receiver."
 
-	| answer |
-	answer := ByteArray new: 4.
-	self get_PermissionKind: answer.
-	^answer int32AtOffset: 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PermissionKind: buf.
+	^buf asSignedInteger!
 
 permissionName
 	"Answer a <String> identifying the permission requested."
@@ -103,7 +103,7 @@ permissionState
 		- If the permission has no explicit setting (i.e. it is the default) the answer is nil, indicating it is not set."
 
 	| state |
-	state := ByteArray new: 4.
+	state := ByteArray newFixed: 4.
 	self get_PermissionState: state.
 	state := state int32AtOffset: 0.
 	^state == 0 ifFalse: [(state - 1) asBoolean]!

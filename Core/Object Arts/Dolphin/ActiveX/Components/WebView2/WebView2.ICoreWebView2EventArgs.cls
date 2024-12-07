@@ -75,9 +75,9 @@ handled
 	"Answer whether this event is considered to have  been handled already."
 
 	| answer |
-	answer := ByteArray newFixed: 4.
+	answer := UInt32Bytes new.
 	self get_Handled: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
+	^answer asBoolean!
 
 handled: aBoolean
 	"Set whether or not the event has been handled. This may suppress any further or default response."

@@ -74,7 +74,7 @@ get_ScriptLocale: locale
 	^S_OK!
 
 isInPrivateModeEnabled
-	"Answer the <sdword> value of the 'IsInPrivateModeEnabled' property of the receiver."
+	"Answer the <boolean> value of the 'IsInPrivateModeEnabled' property of the receiver."
 
 	| buf |
 	buf := UInt32Bytes new.
@@ -82,7 +82,7 @@ isInPrivateModeEnabled
 	^buf asBoolean!
 
 isInPrivateModeEnabled: value
-	"Set the 'IsInPrivateModeEnabled' property of the receiver to the <sdword> value of the argument."
+	"Set the 'IsInPrivateModeEnabled' property of the receiver to the <boolean> value of the argument."
 
 	self put_IsInPrivateModeEnabled: value asParameter!
 

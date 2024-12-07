@@ -41,20 +41,20 @@ interface ICoreWebView2BrowserProcessExitedEventArgs : IUnknown
 !WebView2.ICoreWebView2BrowserProcessExitedEventArgs methodsFor!
 
 browserProcessExitKind
-	"Answer the <sdword> value of the 'BrowserProcessExitKind' property of the receiver."
+	"Answer the COREWEBVIEW2_BROWSER_PROCESS_EXIT_KIND enumeration value of the 'BrowserProcessExitKind' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_BrowserProcessExitKind: answer.
-	^answer asSignedInteger!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_BrowserProcessExitKind: buf.
+	^buf asSignedInteger!
 
 browserProcessId
-	"Answer the <dword> value of the 'BrowserProcessId' property of the receiver."
+	"Answer the unsigned <integer> value of the 'BrowserProcessId' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_BrowserProcessId: answer.
-	^answer asInteger!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_BrowserProcessId: buf.
+	^buf asInteger!
 
 get_BrowserProcessExitKind: browserProcessExitKind
 	"Private - Get the value of the 'BrowserProcessExitKind' property of the receiver.

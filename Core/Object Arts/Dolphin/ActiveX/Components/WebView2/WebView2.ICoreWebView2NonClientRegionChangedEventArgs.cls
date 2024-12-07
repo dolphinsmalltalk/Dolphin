@@ -48,12 +48,12 @@ printableProperties
 	^#(#regionKindName)!
 
 regionKind
-	"Answer the <int32> value of the 'RegionKind' property of the receiver."
+	"Answer the COREWEBVIEW2_NON_CLIENT_REGION_KIND enum value of the 'RegionKind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_RegionKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_RegionKind: buf.
+	^buf asSignedInteger!
 
 regionKindName
 	"Answer the symbolic name of the 'RegionKind' property of the receiver."
@@ -71,7 +71,7 @@ regionKindName
 !WebView2.ICoreWebView2NonClientRegionChangedEventArgs categoriesForMethods!
 get_RegionKind:!**auto generated**!COM Interfaces-ICoreWebView2NonClientRegionChangedEventArgs!private! !
 printableProperties!printing!private! !
-regionKind!**auto generated**!properties!public! !
+regionKind!properties!public! !
 regionKindName!properties!public! !
 !
 

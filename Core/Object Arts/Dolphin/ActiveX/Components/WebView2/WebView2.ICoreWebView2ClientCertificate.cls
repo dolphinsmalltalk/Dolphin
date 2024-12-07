@@ -71,16 +71,16 @@ get_Kind: value
 	^self invalidCall: _failureCode!
 
 kind
-	"Answer the <sdword> value of the 'Kind' property of the receiver."
+	"Answer the COREWEBVIEW2_CLIENT_CERTIFICATE_KIND enum value of the 'Kind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Kind: answer.
-	^answer asObject! !
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Kind: buf.
+	^buf asSignedInteger! !
 
 !WebView2.ICoreWebView2ClientCertificate categoriesForMethods!
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-kind!**auto generated**!properties!public! !
+kind!properties!public! !
 !
 
 !WebView2.ICoreWebView2ClientCertificate class methodsFor!

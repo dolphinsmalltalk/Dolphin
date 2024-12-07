@@ -188,10 +188,10 @@ executeScript: aString thenDo: aDyadicValuable
 frameId
 	"Answer the <uint32> value of the 'FrameId' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_FrameId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_FrameId: buf.
+	^buf asInteger!
 
 get_FrameId: id
 	"Private - Get the value of the 'FrameId' property of the receiver.

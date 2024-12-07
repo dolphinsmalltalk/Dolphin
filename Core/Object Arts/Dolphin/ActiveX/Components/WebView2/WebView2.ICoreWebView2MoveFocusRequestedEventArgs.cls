@@ -72,18 +72,18 @@ put_Handled: value
 	^self invalidCall: _failureCode!
 
 reason
-	"Answer the <sdword> value of the 'reason' property of the receiver."
+	"Answer the COREWEBVIEW2_MOVE_FOCUS_REASON enum value of the 'reason' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_reason: answer.
-	^answer asObject! !
+	| buf |
+	buf := UInt32Bytes new.
+	self get_reason: buf.
+	^buf asSignedInteger! !
 
 !WebView2.ICoreWebView2MoveFocusRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
-reason!**auto generated**!properties!public! !
+reason!properties!public! !
 !
 
 !WebView2.ICoreWebView2MoveFocusRequestedEventArgs class methodsFor!

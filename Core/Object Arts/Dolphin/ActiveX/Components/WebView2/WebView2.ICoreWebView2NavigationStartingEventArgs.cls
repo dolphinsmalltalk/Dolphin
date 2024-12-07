@@ -153,20 +153,20 @@ isUserInitiated
 	^buf asBoolean!
 
 navigationId
-	"Answer the <qword> value of the 'NavigationId' property of the receiver."
+	"Answer the <integer> value of the 'NavigationId' property of the receiver."
 
-	| answer |
-	answer := UInt64 new.
-	self get_NavigationId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt64Bytes new.
+	self get_NavigationId: buf.
+	^buf asInteger!
 
 navigationKind
 	"Answer the <int32> value of the 'NavigationKind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_NavigationKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_NavigationKind: buf.
+	^buf asSignedInteger!
 
 printableProperties
 	^#(#navigationId #uri #navigationKind)!

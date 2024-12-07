@@ -54,16 +54,16 @@ interface ICoreWebView2CompositionController3 : ICoreWebView2CompositionControll
 !WebView2.ICoreWebView2CompositionController3 methodsFor!
 
 dragEnter: dataObject keyState: keyState point: point
-	"Answer the <UInt32> result of invoking the DragEnter() method of the COM object."
+	"Answer the unsigned <integer>result of invoking the DragEnter() method of the COM object."
 
-	| answer |
-	answer := UInt32 new.
+	| buf |
+	buf := UInt32Bytes new.
 	self
 		DragEnter: dataObject
 		keyState: keyState
 		point: point
-		effect: answer.
-	^answer asObject!
+		effect: buf.
+	^buf asInteger!
 
 DragEnter: dataObject keyState: keyState point: point effect: effect
 	"Private - Invoke the DragEnter() method of the COM object.
@@ -91,15 +91,15 @@ DragLeave
 	^self invalidCall: _failureCode!
 
 dragOver: keyState point: point
-	"Answer the <UInt32> result of invoking the DragOver() method of the COM object."
+	"Answer the unsigned <integer> result of invoking the DragOver() method of the COM object."
 
-	| answer |
-	answer := UInt32 new.
+	| buf |
+	buf := UInt32Bytes new.
 	self
 		DragOver: keyState
 		point: point
-		effect: answer.
-	^answer asObject!
+		effect: buf.
+	^buf asInteger!
 
 DragOver: keyState point: point effect: effect
 	"Private - Invoke the DragOver() method of the COM object.
@@ -113,16 +113,16 @@ DragOver: keyState point: point effect: effect
 	^self invalidCall: _failureCode!
 
 drop: dataObject keyState: keyState point: point
-	"Answer the <UInt32> result of invoking the Drop() method of the COM object."
+	"Answer the unsigned <integer> result of invoking the Drop() method of the COM object."
 
-	| answer |
-	answer := UInt32 new.
+	| buf |
+	buf := UInt32Bytes new.
 	self
 		Drop: dataObject
 		keyState: keyState
 		point: point
-		effect: answer.
-	^answer asObject!
+		effect: buf.
+	^buf asInteger!
 
 Drop: dataObject keyState: keyState point: point effect: effect
 	"Private - Invoke the Drop() method of the COM object.
@@ -137,13 +137,13 @@ Drop: dataObject keyState: keyState point: point effect: effect
 	^self invalidCall: _failureCode! !
 
 !WebView2.ICoreWebView2CompositionController3 categoriesForMethods!
-dragEnter:keyState:point:!**auto generated**!methods!public! !
+dragEnter:keyState:point:!methods!public! !
 DragEnter:keyState:point:effect:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController3!private! !
 dragLeave!**auto generated**!methods!public! !
 DragLeave!**auto generated**!COM Interfaces-ICoreWebView2CompositionController3!private! !
-dragOver:point:!**auto generated**!methods!public! !
+dragOver:point:!methods!public! !
 DragOver:point:effect:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController3!private! !
-drop:keyState:point:!**auto generated**!methods!public! !
+drop:keyState:point:!methods!public! !
 Drop:keyState:point:effect:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController3!private! !
 !
 

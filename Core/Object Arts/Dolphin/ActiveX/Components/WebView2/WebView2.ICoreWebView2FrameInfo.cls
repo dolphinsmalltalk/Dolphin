@@ -43,18 +43,18 @@ interface ICoreWebView2FrameInfo : IUnknown
 frameId
 	"Answer the <uint32> value of the 'FrameId' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_FrameId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_FrameId: buf.
+	^buf asInteger!
 
 frameKind
 	"Answer the <int32> value of the 'FrameKind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_FrameKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_FrameKind: buf.
+	^buf asSignedInteger!
 
 get_FrameId: id
 	"Private - Get the value of the 'FrameId' property of the receiver.

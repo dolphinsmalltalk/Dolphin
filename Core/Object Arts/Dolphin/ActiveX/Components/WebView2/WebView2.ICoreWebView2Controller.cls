@@ -187,15 +187,15 @@ bounds: bounds
 	self put_Bounds: bounds!
 
 boundsMode
-	"Answer the <sdword> value of the 'BoundsMode' property of the receiver."
+	"Answer the COREWEBVIEW2_BOUNDS_MODE enumeration value of the 'BoundsMode' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_BoundsMode: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_BoundsMode: buf.
+	^buf asSignedInteger!
 
 boundsMode: boundsMode
-	"Set the 'BoundsMode' property of the receiver to the <sdword> value of the argument."
+	"Set the 'BoundsMode' property of the receiver to the COREWEBVIEW2_BOUNDS_MODE enumeration value of the argument."
 
 	self put_BoundsMode: boundsMode!
 
@@ -223,10 +223,10 @@ coreWebView2
 defaultBackgroundColor
 	"Answer the <Color> value of the 'DefaultBackgroundColor' property of the receiver."
 
-	| answer |
-	answer := UInt32Bytes new.
-	self get_DefaultBackgroundColor: answer.
-	^Graphics.Color fromArray: answer!
+	| buf |
+	buf := ByteArray newFixed: 4.
+	self get_DefaultBackgroundColor: buf.
+	^Graphics.Color fromArray: buf!
 
 defaultBackgroundColor: backgroundColor
 	"Set the 'DefaultBackgroundColor' property of the receiver to the <COREWEBVIEW2_COLOR> value of the argument."
@@ -337,7 +337,7 @@ isVisible
 	^buf asBoolean!
 
 isVisible: isVisible
-	"Set the 'IsVisible' property of the receiver to the <sdword> value of the argument."
+	"Set the 'IsVisible' property of the receiver to the <boolean> value of the argument."
 
 	self put_IsVisible: isVisible asParameter!
 
@@ -568,7 +568,7 @@ shouldDetectMonitorScaleChanges
 	^buf asBoolean!
 
 shouldDetectMonitorScaleChanges: value
-	"Set the 'ShouldDetectMonitorScaleChanges' property of the receiver to the <sdword> value of the argument."
+	"Set the 'ShouldDetectMonitorScaleChanges' property of the receiver to the <boolean> value of the argument."
 
 	self put_ShouldDetectMonitorScaleChanges: value asParameter!
 

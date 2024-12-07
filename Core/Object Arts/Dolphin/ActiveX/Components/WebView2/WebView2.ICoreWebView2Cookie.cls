@@ -92,7 +92,7 @@ expires
 	"The WebView2 object represents this as the number of seconds since the UNIX epoch, or -1 for session cookies."
 
 	| buf seconds |
-	buf := ByteArray newFixed: 8.
+	buf := UInt64Bytes new.
 	self get_Expires: buf.
 	seconds := (buf doubleAtOffset: 0) asInteger.
 	^seconds = -1 ifFalse: [DateAndTime fromUnixTime: seconds]!
@@ -192,7 +192,7 @@ isHttpOnly
 	^buf asBoolean!
 
 isHttpOnly: isHttpOnly
-	"Set the 'IsHttpOnly' property of the receiver to the <sdword> value of the argument."
+	"Set the 'IsHttpOnly' property of the receiver to the <boolean> value of the argument."
 
 	self put_IsHttpOnly: isHttpOnly asParameter!
 
@@ -205,7 +205,7 @@ isSecure
 	^buf asBoolean!
 
 isSecure: isSecure
-	"Set the 'IsSecure' property of the receiver to the <sdword> value of the argument."
+	"Set the 'IsSecure' property of the receiver to the <boolean> value of the argument."
 
 	self put_IsSecure: isSecure asParameter!
 
@@ -306,7 +306,7 @@ sameSite
 	^buf asBoolean!
 
 sameSite: sameSite
-	"Set the 'SameSite' property of the receiver to the <sdword> value of the argument."
+	"Set the 'SameSite' property of the receiver to the <boolean> value of the argument."
 
 	self put_SameSite: sameSite asParameter!
 

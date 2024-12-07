@@ -131,7 +131,7 @@ get_Succeeded:!**auto generated**!COM Interfaces-ICoreWebView2ExecuteScriptResul
 printableProperties!printing!private! !
 resultAsJson!properties!public! !
 succeeded!properties!public! !
-tryGetResultAsString!**auto generated**!methods!public! !
+tryGetResultAsString!methods!public! !
 TryGetResultAsString:value:!**auto generated**!COM Interfaces-ICoreWebView2ExecuteScriptResult!private! !
 !
 

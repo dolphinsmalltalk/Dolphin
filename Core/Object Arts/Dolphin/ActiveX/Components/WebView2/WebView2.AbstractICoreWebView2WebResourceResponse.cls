@@ -47,20 +47,20 @@ reasonPhrase
 	^answer!
 
 statusCode
-	"Answer the <sdword> value of the 'StatusCode' property of the receiver."
+	"Answer the <integer> value of the 'StatusCode' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_StatusCode: answer.
-	^answer asObject! !
+	| buf |
+	buf := UInt32Bytes new.
+	self get_StatusCode: buf.
+	^buf asSignedInteger! !
 
 !WebView2.AbstractICoreWebView2WebResourceResponse categoriesForMethods!
-get_Headers:!**auto generated**!private! !
-get_ReasonPhrase:!**auto generated**!private! !
-get_StatusCode:!**auto generated**!private! !
-headers!**auto generated**!properties!public! !
+get_Headers:!private!properties! !
+get_ReasonPhrase:!private!properties! !
+get_StatusCode:!private!properties! !
+headers!properties!public! !
 printableProperties!printing!private! !
 reasonPhrase!properties!public! !
-statusCode!**auto generated**!properties!public! !
+statusCode!properties!public! !
 !
 

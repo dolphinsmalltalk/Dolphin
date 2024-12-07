@@ -102,7 +102,7 @@ areBrowserAcceleratorKeysEnabled: aBoolean
 	self put_AreBrowserAcceleratorKeysEnabled: aBoolean asParameter!
 
 areDefaultContextMenusEnabled
-	"Answer the <sdword> value of the 'AreDefaultContextMenusEnabled' property of the receiver."
+	"Answer the <boolean> value of the 'AreDefaultContextMenusEnabled' property of the receiver."
 
 	| buf |
 	buf := UInt32Bytes new.
@@ -315,12 +315,12 @@ get_UserAgent: userAgent
 	^S_OK!
 
 hiddenPdfToolbarItems
-	"Answer the <sdword> value of the 'HiddenPdfToolbarItems' property of the receiver. These are flag values from the COREWEBVIEW2_PDF_TOOLBAR_ITEMS enumeration."
+	"Answer the COREWEBVIEW2_PDF_TOOLBAR_ITEMS flags value of the 'HiddenPdfToolbarItems' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_HiddenPdfToolbarItems: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HiddenPdfToolbarItems: buf.
+	^buf asSignedInteger!
 
 hiddenPdfToolbarItems: aBoolean
 	"Set the 'HiddenPdfToolbarItems' property of the receiver to the argument."

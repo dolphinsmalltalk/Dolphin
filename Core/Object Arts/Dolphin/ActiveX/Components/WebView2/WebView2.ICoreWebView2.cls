@@ -568,12 +568,12 @@ AddWebResourceRequestedFilterWithRequestSourceKinds: uri resourceContext: resour
 	^E_NOTIMPL!
 
 browserProcessId
-	"Answer the <dword> value of the 'BrowserProcessId' property of the receiver."
+	"Answer the unsigned <integer> value of the 'BrowserProcessId' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_BrowserProcessId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_BrowserProcessId: buf.
+	^buf asInteger!
 
 CallDevToolsProtocolMethod: methodName parametersAsJson: parametersAsJson handler: handler
 	"Private - Invoke the CallDevToolsProtocolMethod() method of the COM object.
@@ -731,15 +731,15 @@ cookieManager
 	^answer asObject!
 
 defaultDownloadDialogCornerAlignment
-	"Answer the <sdword> value of the 'DefaultDownloadDialogCornerAlignment' property of the receiver."
+	"Answer the <integer> value of the 'DefaultDownloadDialogCornerAlignment' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_DefaultDownloadDialogCornerAlignment: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_DefaultDownloadDialogCornerAlignment: buf.
+	^buf asSignedInteger!
 
 defaultDownloadDialogCornerAlignment: value
-	"Set the 'DefaultDownloadDialogCornerAlignment' property of the receiver to the <sdword> value of the argument."
+	"Set the 'DefaultDownloadDialogCornerAlignment' property of the receiver to the <integer> value of the argument."
 
 	self put_DefaultDownloadDialogCornerAlignment: value!
 
@@ -835,10 +835,10 @@ faviconUri
 frameId
 	"Answer the <uint32> value of the 'FrameId' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_FrameId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_FrameId: buf.
+	^buf asInteger!
 
 get_BrowserProcessId: value
 	"Private - Get the value of the 'BrowserProcessId' property of the receiver.
@@ -1120,10 +1120,10 @@ isSuspended
 memoryUsageTargetLevel
 	"Answer the <int32> value of the 'MemoryUsageTargetLevel' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_MemoryUsageTargetLevel: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_MemoryUsageTargetLevel: buf.
+	^buf asSignedInteger!
 
 memoryUsageTargetLevel: level
 	"Set the 'MemoryUsageTargetLevel' property of the receiver to the <int32> value of the argument."
@@ -1851,7 +1851,7 @@ addWebResourceRequestedFilter:resourceContext:!methods!public! !
 AddWebResourceRequestedFilter:resourceContext:!COM Interfaces-ICoreWebView2!private! !
 addWebResourceRequestedFilterWithRequestSourceKinds:resourceContext:requestSourceKinds:!methods!public! !
 AddWebResourceRequestedFilterWithRequestSourceKinds:resourceContext:requestSourceKinds:!COM Interfaces-ICoreWebView2_22!private! !
-browserProcessId!**auto generated**!properties!public! !
+browserProcessId!properties!public! !
 CallDevToolsProtocolMethod:parametersAsJson:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 callDevToolsProtocolMethod:parametersAsJson:thenDo:!async requests!public! !
 CallDevToolsProtocolMethodForSession:methodName:parametersAsJson:handler:!COM Interfaces-ICoreWebView2_11!private! !

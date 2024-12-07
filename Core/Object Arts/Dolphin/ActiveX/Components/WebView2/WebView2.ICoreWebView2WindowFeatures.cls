@@ -174,20 +174,20 @@ hasSize
 	^buf asBoolean!
 
 height
-	"Answer the <dword> value of the 'Height' property of the receiver."
+	"Answer the unsigned <integer> value of the 'Height' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_Height: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Height: buf.
+	^buf asInteger!
 
 left
-	"Answer the <dword> value of the 'left' property of the receiver."
+	"Answer the unsigned <integer> value of the 'left' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_left: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_left: buf.
+	^buf asInteger!
 
 position
 	^self left @ self top!
@@ -234,20 +234,20 @@ shouldDisplayToolbar
 	^buf asBoolean!
 
 top
-	"Answer the <dword> value of the 'top' property of the receiver."
+	"Answer the unsigned <integer> value of the 'top' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_top: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_top: buf.
+	^buf asInteger!
 
 width
-	"Answer the <dword> value of the 'Width' property of the receiver."
+	"Answer the unsigned <integer> value of the 'Width' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_Width: answer.
-	^answer asObject! !
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Width: buf.
+	^buf asInteger! !
 
 !WebView2.ICoreWebView2WindowFeatures categoriesForMethods!
 extent!properties!public! !
@@ -263,16 +263,16 @@ get_top:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! 
 get_Width:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
 hasPosition!properties!public! !
 hasSize!properties!public! !
-height!**auto generated**!properties!public! !
-left!**auto generated**!properties!public! !
+height!properties!public! !
+left!properties!public! !
 position!properties!public! !
 printableProperties!printing!private! !
 shouldDisplayMenuBar!properties!public! !
 shouldDisplayScrollBars!properties!public! !
 shouldDisplayStatus!properties!public! !
 shouldDisplayToolbar!properties!public! !
-top!**auto generated**!properties!public! !
-width!**auto generated**!properties!public! !
+top!properties!public! !
+width!properties!public! !
 !
 
 !WebView2.ICoreWebView2WindowFeatures class methodsFor!

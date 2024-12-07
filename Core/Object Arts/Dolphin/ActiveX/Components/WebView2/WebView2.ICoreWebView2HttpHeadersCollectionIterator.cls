@@ -85,7 +85,7 @@ keysAndValuesDo: aDyadicValuable
 	valuePtr := TaskMemory new
 				beUnfinalizable;
 				yourself.
-	notAtEnd := ByteArray new: 4.
+	notAtEnd := ByteArray newFixed: 4.
 	self get_HasCurrentHeader: notAtEnd.
 	[(notAtEnd int32AtOffset: 0) == 0] whileFalse: 
 			[| name value |

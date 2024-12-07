@@ -60,10 +60,10 @@ Add_NonClientRegionChanged: eventHandler token: token
 getNonClientRegionAtPoint: point
 	"Answer the <int32> result of invoking the GetNonClientRegionAtPoint() method of the COM object."
 
-	| answer |
-	answer := Int32 new.
-	self GetNonClientRegionAtPoint: point value: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self GetNonClientRegionAtPoint: point value: buf.
+	^buf asSignedInteger!
 
 GetNonClientRegionAtPoint: point value: value
 	"Private - Invoke the GetNonClientRegionAtPoint() method of the COM object.
@@ -104,7 +104,7 @@ Remove_NonClientRegionChanged: token
 
 !WebView2.ICoreWebView2CompositionController4 categoriesForMethods!
 Add_NonClientRegionChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController4!events!private! !
-getNonClientRegionAtPoint:!**auto generated**!methods!public! !
+getNonClientRegionAtPoint:!methods!public! !
 GetNonClientRegionAtPoint:value:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController4!private! !
 queryNonClientRegion:!**auto generated**!methods!public! !
 QueryNonClientRegion:rects:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController4!private! !

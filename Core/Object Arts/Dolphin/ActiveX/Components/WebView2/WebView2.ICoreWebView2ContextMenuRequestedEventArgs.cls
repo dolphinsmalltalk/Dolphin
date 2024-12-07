@@ -160,15 +160,15 @@ put_SelectedCommandId: value
 	^self invalidCall: _failureCode!
 
 selectedCommandId
-	"Answer the <sdword> value of the 'SelectedCommandId' property of the receiver."
+	"Answer the <integer> value of the 'SelectedCommandId' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_SelectedCommandId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_SelectedCommandId: buf.
+	^buf asSignedInteger!
 
 selectedCommandId: value
-	"Set the 'SelectedCommandId' property of the receiver to the <sdword> value of the argument."
+	"Set the 'SelectedCommandId' property of the receiver to the <integer> value of the argument."
 
 	self put_SelectedCommandId: value! !
 
@@ -185,8 +185,8 @@ menuItems!**auto generated**!properties!public! !
 printableProperties!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
 put_SelectedCommandId:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
-selectedCommandId!**auto generated**!properties!public! !
-selectedCommandId:!**auto generated**!properties!public! !
+selectedCommandId!properties!public! !
+selectedCommandId:!properties!public! !
 !
 
 !WebView2.ICoreWebView2ContextMenuRequestedEventArgs class methodsFor!

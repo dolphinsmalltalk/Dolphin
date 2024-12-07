@@ -60,10 +60,10 @@ put_ScrollBarStyle: value
 scrollBarStyle
 	"Answer the <int32> value of the 'ScrollBarStyle' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ScrollBarStyle: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ScrollBarStyle: buf.
+	^buf asSignedInteger!
 
 scrollBarStyle: value
 	"Set the 'ScrollBarStyle' property of the receiver to the <int32> value of the argument."

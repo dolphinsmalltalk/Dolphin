@@ -115,12 +115,12 @@ isUserInitiated
 	^buf asBoolean!
 
 permissionKind
-	"Answer the <sdword> value of the 'PermissionKind' property of the receiver."
+	"Answer the COREWEBVIEW2_PERMISSION_KIND enumeration value of the 'PermissionKind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_PermissionKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PermissionKind: buf.
+	^buf asSignedInteger!
 
 permissionName
 	"Answer a <String> identifying the permission requested."
@@ -188,15 +188,15 @@ savesInProfile: aBoolean
 	self put_SavesInProfile: aBoolean asParameter!
 
 state
-	"Answer the <sdword> value of the 'State' property of the receiver."
+	"Answer the COREWEBVIEW2_PERMISSION_STATE enum value of the 'State' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_State: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_State: buf.
+	^buf asSignedInteger!
 
 state: state
-	"Set the 'State' property of the receiver to the <sdword> value of the argument."
+	"Set the 'State' property of the receiver to the COREWEBVIEW2_PERMISSION_STATE enum value of the argument."
 
 	self put_State: state!
 
@@ -223,7 +223,7 @@ get_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEve
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 isUserInitiated!properties!public! !
-permissionKind!**auto generated**!properties!public! !
+permissionKind!properties!public! !
 permissionName!properties!public! !
 permissionState!properties!public! !
 permissionState:!properties!public! !
@@ -232,8 +232,8 @@ put_SavesInProfile:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!pr
 put_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 savesInProfile!properties!public! !
 savesInProfile:!properties!public! !
-state!**auto generated**!properties!public! !
-state:!**auto generated**!properties!public! !
+state!properties!public! !
+state:!properties!public! !
 stateName!printing!properties!public! !
 uri!properties!public! !
 !

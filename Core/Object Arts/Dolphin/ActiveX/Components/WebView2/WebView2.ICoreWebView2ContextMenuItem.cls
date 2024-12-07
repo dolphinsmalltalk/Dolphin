@@ -93,12 +93,12 @@ children
 	^answer asObject!
 
 commandId
-	"Answer the <sdword> value of the 'CommandId' property of the receiver."
+	"Answer the <integer> value of the 'CommandId' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_CommandId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_CommandId: buf.
+	^buf asSignedInteger!
 
 get_Children: value
 	"Private - Get the value of the 'Children' property of the receiver.
@@ -198,7 +198,7 @@ isChecked
 	^buf asBoolean!
 
 isChecked: value
-	"Set the 'IsChecked' property of the receiver to the <sdword> value of the argument."
+	"Set the 'IsChecked' property of the receiver to the <boolean> value of the argument."
 
 	self put_IsChecked: value asParameter!
 
@@ -211,7 +211,7 @@ isEnabled
 	^buf asBoolean!
 
 isEnabled: value
-	"Set the 'IsEnabled' property of the receiver to the <sdword> value of the argument."
+	"Set the 'IsEnabled' property of the receiver to the <boolean> value of the argument."
 
 	self put_IsEnabled: value asParameter!
 
@@ -221,12 +221,12 @@ items
 	^self kind == #subMenu ifTrue: [self children]!
 
 kind
-	"Answer the <int32> value of the 'Kind' property of the receiver."
+	"Answer the COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND enum value of the 'Kind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Kind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Kind: buf.
+	^buf asSignedInteger!
 
 kindName
 	"Answer the symbolic name of the kind of menu item the receiver describes.
@@ -315,7 +315,7 @@ shortcutKeyDescription
 !WebView2.ICoreWebView2ContextMenuItem categoriesForMethods!
 Add_CustomItemSelected:token:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItem!private! !
 children!**auto generated**!properties!public! !
-commandId!**auto generated**!properties!public! !
+commandId!properties!public! !
 get_Children:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItem!private! !
 get_CommandId:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItem!private! !
 get_Icon:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItem!private! !
@@ -331,7 +331,7 @@ isChecked:!properties!public! !
 isEnabled!properties!public! !
 isEnabled:!properties!public! !
 items!properties!public! !
-kind!**auto generated**!properties!public! !
+kind!properties!public! !
 kindName!properties!public! !
 label!properties!public! !
 name!properties!public! !

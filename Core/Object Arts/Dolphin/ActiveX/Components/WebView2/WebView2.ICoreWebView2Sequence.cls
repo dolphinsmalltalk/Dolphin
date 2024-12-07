@@ -440,12 +440,12 @@ second
 	^self at: 2!
 
 size
-	"Answer the <dword> value of the 'Count' property of the receiver."
+	"Answer the <integer> length of the sequence."
 
-	| answer |
-	answer := ByteArray newFixed: 4.
-	self get_Count: answer.
-	^answer uint32AtOffset: 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Count: buf.
+	^buf asInteger!
 
 third
 	"Answer an <Object> which is the third element of the receiver. 

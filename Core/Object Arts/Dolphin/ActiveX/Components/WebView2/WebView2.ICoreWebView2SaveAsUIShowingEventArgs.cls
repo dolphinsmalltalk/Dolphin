@@ -157,13 +157,13 @@ GetDeferral: value
 kind
 	"Answer the <int32> value of the 'Kind' property of the receiver."
 
-	| answer |
-	answer := ByteArray newFixed: 4.
-	self get_Kind: answer.
-	^answer int32AtOffset: 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Kind: buf.
+	^buf asSignedInteger!
 
 kind: value
-	"Set the 'Kind' property of the receiver to the <int32> value of the argument."
+	"Set the 'Kind' property of the receiver to the COREWEBVIEW2_SAVE_AS_KIND enum value of the argument."
 
 	self put_Kind: value!
 
@@ -263,7 +263,7 @@ get_SaveAsFilePath:!**auto generated**!COM Interfaces-ICoreWebView2SaveAsUIShowi
 get_SuppressDefaultDialog:!**auto generated**!COM Interfaces-ICoreWebView2SaveAsUIShowingEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2SaveAsUIShowingEventArgs!private! !
 kind!properties!public! !
-kind:!**auto generated**!properties!public! !
+kind:!properties!public! !
 kindName!private!properties! !
 printableProperties!printing!private! !
 put_AllowReplace:!**auto generated**!COM Interfaces-ICoreWebView2SaveAsUIShowingEventArgs!private! !

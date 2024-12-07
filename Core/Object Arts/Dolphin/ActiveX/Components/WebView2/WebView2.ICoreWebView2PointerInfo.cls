@@ -203,15 +203,15 @@ interface ICoreWebView2PointerInfo : IUnknown
 !WebView2.ICoreWebView2PointerInfo methodsFor!
 
 buttonChangeKind
-	"Answer the <sdword> value of the 'ButtonChangeKind' property of the receiver."
+	"Answer the POINTER_BUTTON_CHANGE_KIND enum value of the 'ButtonChangeKind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_ButtonChangeKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ButtonChangeKind: buf.
+	^buf asSignedInteger!
 
 buttonChangeKind: buttonChangeKind
-	"Set the 'ButtonChangeKind' property of the receiver to the <sdword> value of the argument."
+	"Set the 'ButtonChangeKind' property of the receiver to the POINTER_BUTTON_CHANGE_KIND enum value of the argument."
 
 	self put_ButtonChangeKind: buttonChangeKind!
 
@@ -229,15 +229,15 @@ displayRect: displayRect
 	self put_DisplayRect: displayRect asParameter!
 
 frameId
-	"Answer the <dword> value of the 'FrameId' property of the receiver."
+	"Answer the unsigned <integer> value of the 'FrameId' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_FrameId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_FrameId: buf.
+	^buf asInteger!
 
 frameId: frameId
-	"Set the 'FrameId' property of the receiver to the <dword> value of the argument."
+	"Set the 'FrameId' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_FrameId: frameId!
 
@@ -520,93 +520,93 @@ himetricLocationRaw: himetricLocationRaw
 	self put_HimetricLocationRaw: himetricLocationRaw asParameter!
 
 historyCount
-	"Answer the <dword> value of the 'HistoryCount' property of the receiver."
+	"Answer the unsigned <integer> value of the 'HistoryCount' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_HistoryCount: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HistoryCount: buf.
+	^buf asInteger!
 
 historyCount: historyCount
-	"Set the 'HistoryCount' property of the receiver to the <dword> value of the argument."
+	"Set the 'HistoryCount' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_HistoryCount: historyCount!
 
 inputData
-	"Answer the <sdword> value of the 'InputData' property of the receiver."
+	"Answer the <integer> value of the 'InputData' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_InputData: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_InputData: buf.
+	^buf asSignedInteger!
 
 inputData: inputData
-	"Set the 'InputData' property of the receiver to the <sdword> value of the argument."
+	"Set the 'InputData' property of the receiver to the <integer> value of the argument."
 
 	self put_InputData: inputData!
 
 keyStates
-	"Answer the <dword> value of the 'KeyStates' property of the receiver."
+	"Answer the unsigned <integer> value of the 'KeyStates' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_KeyStates: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_KeyStates: buf.
+	^buf asInteger!
 
 keyStates: keyStates
-	"Set the 'KeyStates' property of the receiver to the <dword> value of the argument."
+	"Set the 'KeyStates' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_KeyStates: keyStates!
 
 penFlags
-	"Answer the <dword> value of the 'PenFlags' property of the receiver."
+	"Answer the unsigned <integer> value of the 'PenFlags' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_PenFlags: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PenFlags: buf.
+	^buf asInteger!
 
 penFlags: penFlags
-	"Set the 'PenFlags' property of the receiver to the <dword> value of the argument."
+	"Set the 'PenFlags' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_PenFlags: penFlags!
 
 penMask
-	"Answer the <dword> value of the 'PenMask' property of the receiver."
+	"Answer the unsigned <integer> value of the 'PenMask' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_PenMask: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PenMask: buf.
+	^buf asInteger!
 
 penMask: penMask
-	"Set the 'PenMask' property of the receiver to the <dword> value of the argument."
+	"Set the 'PenMask' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_PenMask: penMask!
 
 penPressure
-	"Answer the <dword> value of the 'PenPressure' property of the receiver."
+	"Answer the unsigned <integer> value of the 'PenPressure' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_PenPressure: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PenPressure: buf.
+	^buf asInteger!
 
 penPressure: penPressure
-	"Set the 'PenPressure' property of the receiver to the <dword> value of the argument."
+	"Set the 'PenPressure' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_PenPressure: penPressure!
 
 penRotation
-	"Answer the <dword> value of the 'PenRotation' property of the receiver."
+	"Answer the unsigned <integer> value of the 'PenRotation' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_PenRotation: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PenRotation: buf.
+	^buf asInteger!
 
 penRotation: penRotation
-	"Set the 'PenRotation' property of the receiver to the <dword> value of the argument."
+	"Set the 'PenRotation' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_PenRotation: penRotation!
 
@@ -614,41 +614,41 @@ penTilt
 	^self penTiltX @ self penTiltY!
 
 penTiltX
-	"Answer the <sdword> value of the 'PenTiltX' property of the receiver."
+	"Answer the <integer> value of the 'PenTiltX' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_PenTiltX: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PenTiltX: buf.
+	^buf asSignedInteger!
 
 penTiltX: penTiltX
-	"Set the 'PenTiltX' property of the receiver to the <sdword> value of the argument."
+	"Set the 'PenTiltX' property of the receiver to the <integer> value of the argument."
 
 	self put_PenTiltX: penTiltX!
 
 penTiltY
-	"Answer the <sdword> value of the 'PenTiltY' property of the receiver."
+	"Answer the <integer> value of the 'PenTiltY' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_PenTiltY: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PenTiltY: buf.
+	^buf asSignedInteger!
 
 penTiltY: penTiltY
-	"Set the 'PenTiltY' property of the receiver to the <sdword> value of the argument."
+	"Set the 'PenTiltY' property of the receiver to the <integer> value of the argument."
 
 	self put_PenTiltY: penTiltY!
 
 performanceCount
-	"Answer the <qword> value of the 'PerformanceCount' property of the receiver."
+	"Answer the <integer> value of the 'PerformanceCount' property of the receiver."
 
-	| answer |
-	answer := UInt64 new.
-	self get_PerformanceCount: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt64Bytes new.
+	self get_PerformanceCount: buf.
+	^buf asInteger!
 
 performanceCount: performanceCount
-	"Set the 'PerformanceCount' property of the receiver to the <qword> value of the argument."
+	"Set the 'PerformanceCount' property of the receiver to the <integer> value of the argument."
 
 	self put_PerformanceCount: performanceCount!
 
@@ -692,41 +692,41 @@ pointerDeviceRect: pointerDeviceRect
 	self put_PointerDeviceRect: pointerDeviceRect asParameter!
 
 pointerFlags
-	"Answer the <dword> value of the 'PointerFlags' property of the receiver."
+	"Answer the unsigned <integer> value of the 'PointerFlags' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_PointerFlags: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PointerFlags: buf.
+	^buf asInteger!
 
 pointerFlags: pointerFlags
-	"Set the 'PointerFlags' property of the receiver to the <dword> value of the argument."
+	"Set the 'PointerFlags' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_PointerFlags: pointerFlags!
 
 pointerId
-	"Answer the <dword> value of the 'PointerId' property of the receiver."
+	"Answer the unsigned <integer> value of the 'PointerId' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_PointerId: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PointerId: buf.
+	^buf asInteger!
 
 pointerId: pointerId
-	"Set the 'PointerId' property of the receiver to the <dword> value of the argument."
+	"Set the 'PointerId' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_PointerId: pointerId!
 
 pointerKind
-	"Answer the <dword> value of the 'PointerKind' property of the receiver."
+	"Answer the unsigned <integer> value of the 'PointerKind' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_PointerKind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_PointerKind: buf.
+	^buf asInteger!
 
 pointerKind: pointerKind
-	"Set the 'PointerKind' property of the receiver to the <dword> value of the argument."
+	"Set the 'PointerKind' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_PointerKind: pointerKind!
 
@@ -1014,15 +1014,15 @@ put_TouchPressure: touchPressure
 	^self invalidCall: _failureCode!
 
 time
-	"Answer the <dword> value of the 'Time' property of the receiver."
+	"Answer the unsigned <integer> value of the 'Time' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_Time: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Time: buf.
+	^buf asInteger!
 
 time: time
-	"Set the 'Time' property of the receiver to the <dword> value of the argument."
+	"Set the 'Time' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_Time: time!
 
@@ -1053,64 +1053,64 @@ touchContactRaw: touchContactRaw
 	self put_TouchContactRaw: touchContactRaw!
 
 touchFlags
-	"Answer the <dword> value of the 'TouchFlags' property of the receiver."
+	"Answer the unsigned <integer> value of the 'TouchFlags' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_TouchFlags: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_TouchFlags: buf.
+	^buf asInteger!
 
 touchFlags: touchFlags
-	"Set the 'TouchFlags' property of the receiver to the <dword> value of the argument."
+	"Set the 'TouchFlags' property of the receiver to the <uint32> value of the argument."
 
 	self put_TouchFlags: touchFlags!
 
 touchMask
-	"Answer the <dword> value of the 'TouchMask' property of the receiver."
+	"Answer the unsigned <integer> value of the 'TouchMask' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_TouchMask: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_TouchMask: buf.
+	^buf asInteger!
 
 touchMask: touchMask
-	"Set the 'TouchMask' property of the receiver to the <dword> value of the argument."
+	"Set the 'TouchMask' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_TouchMask: touchMask!
 
 touchOrientation
-	"Answer the <dword> value of the 'TouchOrientation' property of the receiver."
+	"Answer the unsigned <integer> value of the 'TouchOrientation' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_TouchOrientation: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_TouchOrientation: buf.
+	^buf asInteger!
 
 touchOrientation: touchOrientation
-	"Set the 'TouchOrientation' property of the receiver to the <dword> value of the argument."
+	"Set the 'TouchOrientation' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_TouchOrientation: touchOrientation!
 
 touchPressure
-	"Answer the <dword> value of the 'TouchPressure' property of the receiver."
+	"Answer the unsigned <integer> value of the 'TouchPressure' property of the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self get_TouchPressure: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_TouchPressure: buf.
+	^buf asInteger!
 
 touchPressure: touchPressure
-	"Set the 'TouchPressure' property of the receiver to the <dword> value of the argument."
+	"Set the 'TouchPressure' property of the receiver to the unsigned <integer> value of the argument."
 
 	self put_TouchPressure: touchPressure! !
 
 !WebView2.ICoreWebView2PointerInfo categoriesForMethods!
-buttonChangeKind!**auto generated**!properties!public! !
-buttonChangeKind:!**auto generated**!properties!public! !
+buttonChangeKind!properties!public! !
+buttonChangeKind:!properties!public! !
 displayRect!**auto generated**!properties!public! !
 displayRect:!properties!public! !
-frameId!**auto generated**!properties!public! !
-frameId:!**auto generated**!properties!public! !
+frameId!properties!public! !
+frameId:!properties!public! !
 get_ButtonChangeKind:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 get_DisplayRect:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 get_FrameId:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
@@ -1143,39 +1143,39 @@ himetricLocation!**auto generated**!properties!public! !
 himetricLocation:!properties!public! !
 himetricLocationRaw!**auto generated**!properties!public! !
 himetricLocationRaw:!properties!public! !
-historyCount!**auto generated**!properties!public! !
-historyCount:!**auto generated**!properties!public! !
-inputData!**auto generated**!properties!public! !
-inputData:!**auto generated**!properties!public! !
-keyStates!**auto generated**!properties!public! !
-keyStates:!**auto generated**!properties!public! !
-penFlags!**auto generated**!properties!public! !
-penFlags:!**auto generated**!properties!public! !
-penMask!**auto generated**!properties!public! !
-penMask:!**auto generated**!properties!public! !
-penPressure!**auto generated**!properties!public! !
-penPressure:!**auto generated**!properties!public! !
-penRotation!**auto generated**!properties!public! !
-penRotation:!**auto generated**!properties!public! !
+historyCount!properties!public! !
+historyCount:!properties!public! !
+inputData!properties!public! !
+inputData:!properties!public! !
+keyStates!properties!public! !
+keyStates:!properties!public! !
+penFlags!properties!public! !
+penFlags:!properties!public! !
+penMask!properties!public! !
+penMask:!properties!public! !
+penPressure!properties!public! !
+penPressure:!properties!public! !
+penRotation!properties!public! !
+penRotation:!properties!public! !
 penTilt!properties!public! !
-penTiltX!**auto generated**!properties!public! !
-penTiltX:!**auto generated**!properties!public! !
-penTiltY!**auto generated**!properties!public! !
-penTiltY:!**auto generated**!properties!public! !
-performanceCount!**auto generated**!properties!public! !
-performanceCount:!**auto generated**!properties!public! !
+penTiltX!properties!public! !
+penTiltX:!properties!public! !
+penTiltY!properties!public! !
+penTiltY:!properties!public! !
+performanceCount!properties!public! !
+performanceCount:!properties!public! !
 pixelLocation!**auto generated**!properties!public! !
 pixelLocation:!properties!public! !
 pixelLocationRaw!**auto generated**!properties!public! !
 pixelLocationRaw:!properties!public! !
 pointerDeviceRect!**auto generated**!properties!public! !
 pointerDeviceRect:!properties!public! !
-pointerFlags!**auto generated**!properties!public! !
-pointerFlags:!**auto generated**!properties!public! !
-pointerId!**auto generated**!properties!public! !
-pointerId:!**auto generated**!properties!public! !
-pointerKind!**auto generated**!properties!public! !
-pointerKind:!**auto generated**!properties!public! !
+pointerFlags!properties!public! !
+pointerFlags:!properties!public! !
+pointerId!properties!public! !
+pointerId:!properties!public! !
+pointerKind!properties!public! !
+pointerKind:!properties!public! !
 printableProperties!printing!public! !
 put_ButtonChangeKind:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 put_DisplayRect:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
@@ -1205,20 +1205,20 @@ put_TouchFlags:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!priva
 put_TouchMask:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 put_TouchOrientation:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 put_TouchPressure:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
-time!**auto generated**!properties!public! !
-time:!**auto generated**!properties!public! !
+time!properties!public! !
+time:!properties!public! !
 touchContact!**auto generated**!properties!public! !
 touchContact:!**auto generated**!properties!public! !
 touchContactRaw!**auto generated**!properties!public! !
 touchContactRaw:!**auto generated**!properties!public! !
-touchFlags!**auto generated**!properties!public! !
-touchFlags:!**auto generated**!properties!public! !
-touchMask!**auto generated**!properties!public! !
-touchMask:!**auto generated**!properties!public! !
-touchOrientation!**auto generated**!properties!public! !
-touchOrientation:!**auto generated**!properties!public! !
-touchPressure!**auto generated**!properties!public! !
-touchPressure:!**auto generated**!properties!public! !
+touchFlags!properties!public! !
+touchFlags:!properties!public! !
+touchMask!properties!public! !
+touchMask:!properties!public! !
+touchOrientation!properties!public! !
+touchOrientation:!properties!public! !
+touchPressure!properties!public! !
+touchPressure:!properties!public! !
 !
 
 !WebView2.ICoreWebView2PointerInfo class methodsFor!

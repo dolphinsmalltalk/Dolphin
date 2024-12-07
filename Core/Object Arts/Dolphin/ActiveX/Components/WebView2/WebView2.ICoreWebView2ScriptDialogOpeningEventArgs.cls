@@ -135,12 +135,12 @@ GetDeferral: deferral
 	^self invalidCall: _failureCode!
 
 kind
-	"Answer the <sdword> value of the 'Kind' property of the receiver."
+	"Answer the COREWEBVIEW2_SCRIPT_DIALOG_KIND enum value of the 'Kind' property of the receiver."
 
-	| answer |
-	answer := Int32 new.
-	self get_Kind: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Kind: buf.
+	^buf asSignedInteger!
 
 message
 	"Answer the <lpwstr> value of the 'Message' property of the receiver."
@@ -197,7 +197,7 @@ get_Message:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningE
 get_ResultText:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
-kind!**auto generated**!properties!public! !
+kind!properties!public! !
 message!properties!public! !
 put_ResultText:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
 resultText!properties!public! !

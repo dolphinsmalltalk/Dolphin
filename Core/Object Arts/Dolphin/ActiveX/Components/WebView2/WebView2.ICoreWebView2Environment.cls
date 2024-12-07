@@ -358,7 +358,7 @@ createWebResourceResponse: content statusCode: statusCode reasonPhrase: reasonPh
 
 	| answer contentStream |
 	answer := ICoreWebView2WebResourceResponse newPointer.
-	contentStream := content queryInterface: IStream.
+	contentStream := content ifNotNil: [content queryInterface: IStream].
 	self
 		CreateWebResourceResponse: contentStream
 		statusCode: statusCode
