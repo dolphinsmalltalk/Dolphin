@@ -507,6 +507,7 @@ iconId
 		at: #error put: TD_ERROR_ICON;
 		at: #warning put: TD_WARNING_ICON;
 		at: #notify put: TD_INFORMATION_ICON;
+		at: #shield put: TD_SHIELD_ICON;
 		at: #prompt put: IDI_QUESTION;
 		shrink;
 		yourself) at: iconStyle!
