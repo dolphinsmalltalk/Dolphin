@@ -536,7 +536,7 @@ addScriptToExecuteOnDocumentCreated: javaScript thenDo: aDyadicValuable
 addWebResourceRequestedFilter: uri resourceContext: resourceContext
 	"Invoke the AddWebResourceRequestedFilter() method of the COM object."
 
-	^self AddWebResourceRequestedFilter: uri asUtf16String resourceContext: resourceContext!
+	self addWebResourceRequestedFilterWithRequestSourceKinds: uri resourceContext: resourceContext requestSourceKinds: COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS_ALL!
 
 AddWebResourceRequestedFilter: uri resourceContext: resourceContext
 	"Private - Invoke the AddWebResourceRequestedFilter() method of the COM object.
@@ -546,6 +546,7 @@ AddWebResourceRequestedFilter: uri resourceContext: resourceContext
 			[in]COREWEBVIEW2_WEB_RESOURCE_CONTEXT ResourceContext);"
 
 	<virtual stdcall: hresult 58 lpwstr int32>
+	#deprecated.
 	^self invalidCall: _failureCode!
 
 addWebResourceRequestedFilterWithRequestSourceKinds: uri resourceContext: resourceContext requestSourceKinds: requestSourceKinds
@@ -1846,8 +1847,8 @@ addHostObjectToScript:object:!**auto generated**!methods!public! !
 AddHostObjectToScript:object:!**auto generated**!COM Interfaces-ICoreWebView2!methods!private! !
 AddScriptToExecuteOnDocumentCreated:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 addScriptToExecuteOnDocumentCreated:thenDo:!async requests!public! !
-addWebResourceRequestedFilter:resourceContext:!**auto generated**!methods!public! !
-AddWebResourceRequestedFilter:resourceContext:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+addWebResourceRequestedFilter:resourceContext:!methods!public! !
+AddWebResourceRequestedFilter:resourceContext:!COM Interfaces-ICoreWebView2!private! !
 addWebResourceRequestedFilterWithRequestSourceKinds:resourceContext:requestSourceKinds:!methods!public! !
 AddWebResourceRequestedFilterWithRequestSourceKinds:resourceContext:requestSourceKinds:!COM Interfaces-ICoreWebView2_22!private! !
 browserProcessId!**auto generated**!properties!public! !
