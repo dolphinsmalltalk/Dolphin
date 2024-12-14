@@ -54,6 +54,7 @@ testBasicUInt32AtOffsetPut
 
 testFromHexString
 	| hex expected bytes |
+	self assert: (ByteArray fromHexString: '') equals: #[].
 	hex := String writeStream.
 	expected := ByteArray writeStream.
 	0 to: 255
@@ -70,10 +71,26 @@ testFromHexString
 	bytes := ByteArray fromHexString: hex.
 	self assert: bytes equals: expected.
 	self assert: bytes asHexString caseFolded equals: hex caseFolded.
-	self assert: (ByteArray fromHexString: '') equals: #[].
 	"We allow lower case chars too."
-	self assert: (ByteArray fromHexString: 'fe') equals: #[254].
-	#(' 0' '1 ' 'GH' '1') do: [:each | self should: [ByteArray fromHexString: each] raise: Error]!
+	self assert: (ByteArray fromHexString: 'a12d ef') equals: #[16rA1 16r2D 16rEF].
+	"Error if not even number of valid hex chars. Whitespace OK, nulls not."
+	#(' 0' '1 ' '0H' '1' 'H0' '🐬' '@0' '0@' '0£' '£0' '0$' '$0')
+		, { String with: $\0 with: $0. String with: $0 with: $\0 }
+			do: [:each | self should: [ByteArray fromHexString: each] raise: Error]!
+
+testFromHexStringWhitespace
+	| original bytes |
+	self assert: (ByteArray fromHexString: ' 
+	') equals: #[].
+	original := '
+			d131dd02c5e6eec4 693d9a0698aff95c 2fcab58712467eab 4004583eb8fb7f89
+			55ad340609f4b302 83e488832571415a 085125e8f7cdc99f d91dbdf280373c5b
+			d8823e3156348f5b ae6dacd436c919c6 dd53e2b487da03fd 02396306d248cda0
+			e99f33420f577ee8 ce54b67080a80d1e c69821bcb6a88393 96f9652b6ff72a70
+			'.
+	bytes := ByteArray fromHexString: original.
+	self assert: (ByteArray fromHexString: (original select: [:each | each isSeparator not]))
+		equals: bytes!
 
 testInt32AtOffsetPut
 	| array |
@@ -207,6 +224,7 @@ testAsUtf16String!public!unit tests! !
 testAsUtf8String!public!unit tests! !
 testBasicUInt32AtOffsetPut!public!unit tests! !
 testFromHexString!public! !
+testFromHexStringWhitespace!public! !
 testInt32AtOffsetPut!public!unit tests! !
 testInt8AtOffset!public!unit tests! !
 testInt8AtOffsetPut!public!unit tests! !

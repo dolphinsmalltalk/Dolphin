@@ -816,22 +816,22 @@ fromGlobalHandle: anExternalHandle
 			ensure: [OS.Kernel32 globalUnlock: anExternalHandle]!
 
 fromHexString: aString
-	"Answer a new instance of the receiver instantiated from the contents of the hexadecimal <String> argument."
+	"Answer a new instance of the receiver instantiated from the contents of the hexadecimal <String> argument. The string must contain an even number of hex digit characters (i.e. [0-9a-fA-F]) and whitespace. If there are any invalid characters, or if there is not an even number of characters, an (unspecified) error will be thrown."
 
-	| answer count digits |
-	count := aString size.
-	(count bitAnd: 1) == 0 ifFalse: [self error: 'Invalid hex string (odd length)'].
-	count := count bitShift: -1.
-	answer := self new: count.
-	digits := #(0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15).
-	1 to: count
-		do: 
-			[:i |
-			| j |
-			answer at: i
-				put: (digits at: (aString basicAt: (j := i + i) - 1) - ##($0 codePoint - 1)) * 16
-						+ (digits at: (aString basicAt: j) - ##($0 codePoint - 1))].
-	^answer! !
+	| read digit1 digit2 hexDigitValues write |
+	"Whitespace marked by -1, other non-digit characters 256."
+	hexDigitValues := #(256 256 256 256 256 256 256 256 -1 -1 -1 -1 -1 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 -1 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 0 1 2 3 4 5 6 7 8 9 256 256 256 256 256 256 256 10 11 12 13 14 15 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 10 11 12 13 14 15 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256 256).
+	write := WriteStream on: (self new: (aString size bitShift: -1)).
+	read := ReadStream on: aString.
+	[read atEnd] whileFalse: 
+			[digit1 := hexDigitValues at: read basicNext.
+			digit1 == -1
+				ifFalse: 
+					[
+					[digit2 := hexDigitValues at: read basicNext.
+					digit2 == -1] whileTrue.
+					write nextPut: digit1 * 16 + digit2]].
+	^write grabContents! !
 
 !Core.ByteArray class categoriesForMethods!
 elementSize!constants!private! !
