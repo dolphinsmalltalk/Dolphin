@@ -4,9 +4,28 @@ External.DynamicLinkLibrary
 	subclass: #'OS.Crypt32Library'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.WinCryptConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CRYPTPROTECT_AUDIT' -> 16r10.
+			'CRYPTPROTECT_CRED_REGENERATE' -> 16r80.
+			'CRYPTPROTECT_CRED_SYNC' -> 16r8.
+			'CRYPTPROTECT_FIRST_RESERVED_FLAGVAL' -> 16rFFFFFFF.
+			'CRYPTPROTECT_LAST_RESERVED_FLAGVAL' -> 16rFFFFFFFF.
+			'CRYPTPROTECT_LOCAL_MACHINE' -> 16r4.
+			'CRYPTPROTECT_NO_RECOVERY' -> 16r20.
+			'CRYPTPROTECT_PROMPT_ON_PROTECT' -> 16r2.
+			'CRYPTPROTECT_PROMPT_ON_UNPROTECT' -> 16r1.
+			'CRYPTPROTECT_PROMPT_REQUIRE_STRONG' -> 16r10.
+			'CRYPTPROTECT_PROMPT_RESERVED' -> 16r4.
+			'CRYPTPROTECT_PROMPT_STRONG' -> 16r8.
+			'CRYPTPROTECT_UI_FORBIDDEN' -> 16r1.
+			'CRYPTPROTECT_VERIFY_PROTECTION' -> 16r40.
+			'CRYPTPROTECTMEMORY_BLOCK_SIZE' -> 16r10.
+			'CRYPTPROTECTMEMORY_CROSS_PROCESS' -> 16r1.
+			'CRYPTPROTECTMEMORY_SAME_LOGON' -> 16r2.
+			'CRYPTPROTECTMEMORY_SAME_PROCESS' -> 16r0
+		}!
 
 OS.Crypt32Library guid: (Core.GUID fromString: '{02c78993-ba10-47a1-953f-63f60b7693ab}')!
 
@@ -75,10 +94,10 @@ cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 	^self invalidCall: _failureCode! !
 
 !OS.Crypt32Library categoriesForMethods!
-cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
-cryptProtectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
-cryptUnprotectData:ppszDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
-cryptUnprotectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
+cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public!win32 functions-security and identity! !
+cryptProtectMemory:cbDataIn:dwFlags:!**auto generated**!public!win32 functions-security and identity! !
+cryptUnprotectData:ppszDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public!win32 functions-security and identity! !
+cryptUnprotectMemory:cbDataIn:dwFlags:!**auto generated**!public!win32 functions-security and identity! !
 !
 
 !OS.Crypt32Library class methodsFor!
@@ -124,8 +143,8 @@ protectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBoolea
 	| unencrypted encrypted flags description answer entropy |
 	unencrypted := CRYPTOAPI_BLOB fromBytes: aByteObject.
 	encrypted := CRYPTOAPI_BLOB new.
-	flags := WinCryptConstants.CRYPTPROTECT_UI_FORBIDDEN.
-	aBoolean ifTrue: [flags := flags | WinCryptConstants.CRYPTPROTECT_LOCAL_MACHINE].
+	flags := CRYPTPROTECT_UI_FORBIDDEN.
+	aBoolean ifTrue: [flags := flags | CRYPTPROTECT_LOCAL_MACHINE].
 	description := aByteObject class name.
 	entropy := aByteArrayOrNil ifNotNil: [CRYPTOAPI_BLOB fromBytes: aByteArrayOrNil].
 	(self default
@@ -141,6 +160,9 @@ protectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBoolea
 	avoid generating finalizable garbage"
 	encrypted free.
 	^answer!
+
+sharedVariableName
+	^#{OS.Crypt32}!
 
 unprotectData: aByteArray
 	"Decrypt the per-user protected data in the <ByteArray> argument, assumed to have been
@@ -172,8 +194,8 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 	| unencrypted encrypted flags description answer dataClass entropy size |
 	encrypted := CRYPTOAPI_BLOB fromBytes: aByteObject.
 	unencrypted := CRYPTOAPI_BLOB new.
-	flags := WinCryptConstants.CRYPTPROTECT_UI_FORBIDDEN.
-	aBoolean ifTrue: [flags := flags | WinCryptConstants.CRYPTPROTECT_LOCAL_MACHINE].
+	flags := CRYPTPROTECT_UI_FORBIDDEN.
+	aBoolean ifTrue: [flags := flags | CRYPTPROTECT_LOCAL_MACHINE].
 	description := aByteObject class name asUtf16String.
 	description := Address new.
 	entropy := aByteArrayOrNil ifNotNil: [CRYPTOAPI_BLOB fromBytes: aByteArrayOrNil].
@@ -201,6 +223,7 @@ fileName!**auto generated**!constants!public! !
 protectData:!operations!public! !
 protectData:additionalEntropy:!operations!public! !
 protectData:additionalEntropy:machineWide:!operations!public! !
+sharedVariableName!constants!private! !
 unprotectData:!operations!public! !
 unprotectData:additionalEntropy:!operations!public! !
 unprotectData:additionalEntropy:machineWide:!operations!public! !

@@ -15,20 +15,19 @@ package setClassNames: #(
 	#{OS.Crypt32Library}
 	#{OS.CRYPTOAPI_BLOB}
 	#{OS.CRYPTPROTECT_PROMPTSTRUCT}
-	#{OS.WinCryptConstants}
 ).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Conformant Array Fields'
 ).
 
 package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.WinCryptConstants'
+External.DynamicLinkLibrary
+	subclass: #'OS.Crypt32Library'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -53,14 +52,6 @@ Kernel.SharedPool
 			'CRYPTPROTECTMEMORY_SAME_LOGON' -> 16r2.
 			'CRYPTPROTECTMEMORY_SAME_PROCESS' -> 16r0
 		}!
-
-External.DynamicLinkLibrary
-	subclass: #'OS.Crypt32Library'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.WinCryptConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 External.Structure
 	subclass: #'OS.CRYPTOAPI_BLOB'

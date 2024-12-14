@@ -18,7 +18,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Random\Dolphin Random Stream Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\MessageBox\Tests\Dolphin Message Box Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Dolphin MMF Tests.pax';
-	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Data Protection API Tests.pax';
+	install: 'Core\Object Arts\Dolphin\System\Win32\DPAPI\Windows Data Protection API Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Ini Files Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\COM\Tests\OLE COM Tests.pax';
