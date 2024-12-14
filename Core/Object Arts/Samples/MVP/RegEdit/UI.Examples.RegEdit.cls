@@ -534,7 +534,7 @@ iconFor: anObject
 	"Private - Answer an appropriate registry editor icon for the argument, anObject.
 	Not clean, but..."
 
-	^(anObject isNil or: [anObject isKindOf: String])
+	^(anObject isNil or: [anObject isString or: [anObject class == Array]])
 		ifTrue: [self stringIcon]
 		ifFalse: [self binaryIcon]!
 
