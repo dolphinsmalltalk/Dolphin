@@ -92,7 +92,7 @@ size_t ObjectMemory::compact(Oop* const sp)
 	// First perform a normal GC
 	reclaimInaccessibleObjects(GCNormal);
 
-	Interpreter::freePools();
+	Interpreter::FlushPools();
 
 	// Walk the OT from the bottom to locate free entries, and from the top to locate candidates to move
 	// 

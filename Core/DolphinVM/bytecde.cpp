@@ -610,8 +610,7 @@ ContextOTE* __fastcall Context::New(size_t tempCount, Oop oopOuter)
 	{
 		// Can allocate from pool of contexts
 
-		newContext = reinterpret_cast<ContextOTE*>(Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Contexts)].newPointerObject(Pointers.ClassContext,
-										FixedSize + MaxEnvironmentTemps, Spaces::Contexts));
+		newContext = reinterpret_cast<ContextOTE*>(Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Contexts)].newPointerObject(Pointers.ClassContext));
 		pContext = newContext->m_location;
 
 		const Oop nil = Oop(Pointers.Nil);		// Loop invariant
@@ -787,8 +786,7 @@ BlockOTE* __stdcall Interpreter::blockCopy(BlockCopyExtension extension)
 
 	if (nValuesToCopy <= BlockClosure::MaxCopiedValues)
 	{
-		oteBlock = reinterpret_cast<BlockOTE*>(Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Blocks)].newPointerObject(Pointers.ClassBlockClosure,
-			BlockClosure::FixedSize + BlockClosure::MaxCopiedValues, Spaces::Blocks));
+		oteBlock = reinterpret_cast<BlockOTE*>(Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Blocks)].newPointerObject(Pointers.ClassBlockClosure));
 		oteBlock->setSize(SizeOfPointers(BlockClosure::FixedSize + nValuesToCopy));
 	}
 	else

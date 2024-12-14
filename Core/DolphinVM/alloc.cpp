@@ -35,7 +35,7 @@
 // No auto-inlining in this module please
 #pragma auto_inline(off)
 
-ObjectMemory::FixedSizePool	ObjectMemory::m_pools[MaxPools];
+ObjectMemory::FixedSizePool	ObjectMemory::m_pools[NumPools];
 ObjectMemory::FixedSizePool::Link* ObjectMemory::FixedSizePool::m_pFreePages;
 void** ObjectMemory::FixedSizePool::m_pAllocations;
 size_t ObjectMemory::FixedSizePool::m_nAllocations;
@@ -934,10 +934,10 @@ void ObjectMemory::FixedSizePool::moreChunks()
 void ObjectMemory::FixedSizePool::setSize(size_t nChunkSize)
 {
 	m_nChunkSize = nChunkSize;
-// Must be on 4 byte boundaries
-	ASSERT(m_nChunkSize % PoolGranularity == 0);
 	ASSERT(m_nChunkSize >= MinObjectSize);
-//	m_dwPageUsed = (dwPageSize / m_nChunkSize) * m_nChunkSize;
+	// Must be on 4 byte boundaries
+	ASSERT(m_nChunkSize % MinObjectSize == 0);
+	//	m_dwPageUsed = (dwPageSize / m_nChunkSize) * m_nChunkSize;
 }
 
 inline ObjectMemory::FixedSizePool::FixedSizePool(size_t nChunkSize) : m_pFreeChunks(0)
@@ -989,12 +989,19 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, size_t newChunkSize)
 		checkPools();
 #endif
 
-		TRACESTREAM << std::endl<< L"Pool Statistics:" << std::endl
+		TRACESTREAM << std::endl << L"OTE Pools:" << std::endl
+			<< L"------------------" << std::endl;
+
+		// We need to empty the OTEPool free lists as these hold pre-allocated objects for certain special types
+		// These are marked as free in the OT to reserve them
+		Interpreter::FlushPools();
+
+		TRACESTREAM << std::endl << L"Pool Statistics:" << std::endl
 			 << L"------------------" << std::endl << std::dec
-			  << NumPools<< L" pools in the interval ("
+			  << NumPools<< L" pools in the interval "
 			  << m_pools[0].getSize()<< L" to: "
-			  << m_pools[NumPools-1].getSize()<< L" by: "
-			  << PoolGranularity << L')' << std::endl << std::endl;
+			  << m_pools[NumPools-1].getSize()
+			  << std::endl << std::endl;
 
 		size_t pageWaste=0;
 		size_t totalPages=0;
@@ -1021,29 +1028,66 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, size_t newChunkSize)
 
 		size_t objectWaste = 0;
 		size_t totalObjects = 0;
+		size_t totalSmallHeapObjects = 0;
+		size_t totalSmallHeapObjectsSize = 0;
+		size_t totalPoolObjects = 0;
 		const OTE* pEnd = m_pOT+m_nOTSize;
-		for (OTE* ote=m_pOT; ote < pEnd; ote++)
+		for (OTE* ote = m_pOT + NumPermanent; ote < pEnd; ote++)
 		{
 			if (!ote->isFree())
 			{
 				totalObjects++;
-				if (ote->heapSpace() == Spaces::Pools)
+				switch (ote->heapSpace())
 				{
-					size_t size = ote->sizeOf();
-					size_t chunkSize = _ROUND2(size, PoolGranularity);
-					objectWaste += chunkSize - size;
+					case Spaces::Normal:
+					{
+						size_t size = ote->sizeOf();
+						if (size <= MaxSmallObjectSize)
+						{
+							TRACESTREAM << L"Normal object of size " << size << " below threshold: " << ote << std::endl;
+						}
+						break;
+					}
+					case Spaces::Virtual:
+						break;
+					case Spaces::Heap:
+						break;
+
+					case Spaces::Blocks:
+					case Spaces::Contexts:
+					case Spaces::Dwords:
+					case Spaces::Floats:
+					case Spaces::Pools:
+					{
+						size_t size = ote->sizeOf();
+						if (size != 0 && size <= PoolObjectSizeLimit)
+						{
+							totalPoolObjects++;
+							size_t chunkSize = spacePoolForSize(size).getSize();
+							objectWaste += chunkSize - size;
+						}
+						else
+						{
+							ASSERT(size <= MaxSmallObjectSize);
+							totalSmallHeapObjects++;
+							totalSmallHeapObjectsSize += size;
+						}
+						break;
+					}
 				}
 			}
 		}
 
+		ASSERT((totalChunks - totalFreeChunks) == totalPoolObjects);
 		size_t wastePercentage = (totalChunks - totalFreeChunks) == 0 
 								? 0 
 								: size_t(double(objectWaste)/
-										double(totalChunks-totalFreeChunks)*100.0);
+										double(totalPoolObjects)*100.0);
 
 		TRACESTREAM<< L"===============================================" << std::endl;
 		TRACE(L"Total objects	= %d\n"
 			  "Total pool objs	= %d\n"
+			  "Total small objs = %d (%d bytes)\n"
 			  "Total chunks		= %d\n"
 			  "Total Pages		= %d\n"
 			  "Total Allocs		= %d\n"
@@ -1054,7 +1098,8 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, size_t newChunkSize)
 			  "Total free chks	= %d\n"
 			  "Total Free		= %d bytes\n",
 				totalObjects,
-				totalChunks-totalFreeChunks,
+				totalPoolObjects,
+				totalSmallHeapObjects, totalSmallHeapObjectsSize,
 				totalChunks,
 				totalPages, 
 				FixedSizePool::m_nAllocations,

@@ -60,6 +60,7 @@ void Interpreter::NotifyOTOverflow()
 
 void Interpreter::syncGC(uintptr_t gcFlags)
 {
+	FlushPools();
 	asyncGC(gcFlags);
 	CheckProcessSwitch();
 }
@@ -117,52 +118,10 @@ void Interpreter::DumpOTEPoolStats()
 }
 #endif
 
-void Interpreter::freePools()
+void Interpreter::FlushPools()
 {
-	#if defined(_DEBUG) && defined(VMDLL)
-	{
-		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"Clearing down OTE pools. Stats before clear..." << std::endl;
-	}
-	#endif
-
-	// Must first adjust context size back to normal for free
-	// in case from a pool (avoids freeing mem back to smaller pool)
-	{
-		ObjectMemory::OTEPool& contextPool = m_otePools[static_cast<size_t>(Pools::Contexts)];
-		OTE* ote = contextPool.m_pFreeList;
-		const size_t sizeOfPoolContext = SizeOfPointers(Context::FixedSize+Context::MaxEnvironmentTemps);
-		while (ote)
-		{
-			ote->setSize(sizeOfPoolContext);
-			ote = ObjectMemory::OTEPool::NextFree(ote);
-		}
-	}
-
-	{
-		ObjectMemory::OTEPool& blockPool = m_otePools[static_cast<size_t>(Pools::Blocks)];
-		OTE* ote = blockPool.m_pFreeList;
-		const size_t sizeOfPoolBlock = SizeOfPointers(BlockClosure::FixedSize+BlockClosure::MaxCopiedValues);
-		while (ote)
-		{
-			ote->setSize(sizeOfPoolBlock);
-			ote = ObjectMemory::OTEPool::NextFree(ote);
-		}
-	}
-
-	#ifdef _DEBUG
-		//DumpOTEPoolStats();
-	#endif
-
-	for (auto i=0u;i<NumOtePools;i++)
+	for (auto i = 0u; i<NumOtePools; i++)
 		m_otePools[i].clear();
-
-	#if defined(_DEBUG) && defined(VMDLL)
-	{
-		tracelock lock(TRACESTREAM);
-		TRACESTREAM << std::endl;
-	}
-	#endif
 }
 
 Oop* PRIMCALL Interpreter::primitiveOopsLeft(Oop* const sp, primargcount_t)

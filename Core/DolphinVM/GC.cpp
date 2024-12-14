@@ -556,8 +556,19 @@ size_t ObjectMemory::CountFreeOTEs()
 					//errors++;
 				}*/
 				OTE* ote = &m_pOT[i];
-				if (!ote->isFree() && ote->heapSpace() == Spaces::Pools)
-					HARDASSERT(ote->sizeOf() <= MaxSmallObjectSize);
+				if (!ote->isFree())
+				{
+					Spaces space = ote->heapSpace();
+					if (space == Spaces::Pools)
+					{
+						HARDASSERT(ote->sizeOf() <= MaxSmallObjectSize);
+					}
+					else if (space == Spaces::Normal)
+					{
+						// Not a valid assertion as objects can be resized down below the threshold
+						//HARDASSERT(ote->sizeOf() > MaxSmallObjectSize);
+					}
+				}
 				currentRefs[i] = ote->m_count;
 				ote->m_count = 0;
 			}

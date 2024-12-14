@@ -304,7 +304,7 @@ public:
 	static void MarkRoots();
 
 	// Clear down the object caches for VM alloc'd objects
-	static void freePools();
+    static void FlushPools();
 
 	// All of these may throw SE_VMCALLBACKUNWIND, as well as stack/OT overflow access violations, and
 	// so should be called within a callbackExceptionFilter() __try/__except block
@@ -828,8 +828,8 @@ private:
 
 public:
 	// Pools
-	enum class Pools { Dwords, Floats, Contexts, Blocks };
-	static constexpr size_t NumOtePools = static_cast<size_t>(Pools::Blocks) + 1;
+	enum class Pools { Blocks, Contexts, Floats, Dwords };
+	static constexpr size_t NumOtePools = static_cast<size_t>(Pools::Dwords) + 1;
 	static ObjectMemory::OTEPool m_otePools[NumOtePools];
 private:
 

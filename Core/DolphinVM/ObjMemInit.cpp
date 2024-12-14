@@ -70,8 +70,8 @@ HRESULT ObjectMemory::Initialize()
 	ASSERT(Context::FixedSize == 2);
 	ASSERT(BlockClosure::FixedSize == 5);
 	ASSERT(sizeof(BlockCopyExtension) == sizeof(uint32_t));
-	ASSERT(PoolGranularity >= sizeof(Oop));
-	ASSERT(_ROUND2(PoolGranularity,sizeof(Oop)) == PoolGranularity);
+	ASSERT(MinObjectSize >= sizeof(Oop));
+	ASSERT(_ROUND2(MinObjectSize,sizeof(Oop)) == MinObjectSize);
 	//ASSERT(sizeof(Object) == ObjectHeaderSize*sizeof(MWORD));
 	ASSERT(sizeof(VMPointers) == (192*sizeof(Oop)+ObjectByteSize));
 	// Check that the const objects segment is still exactly one page
@@ -146,7 +146,7 @@ HRESULT ObjectMemory::Initialize()
 	//}
 
  	for (auto j=0;j<NumPools;j++)
-		m_pools[j].setSize(j*PoolGranularity+MinObjectSize);
+		m_pools[j].setSize(MinObjectSize << j);
 
 	// Ensure we can write to const space in order to initialie it
 	m_pConstObjs = &_Pointers;

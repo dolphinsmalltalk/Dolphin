@@ -384,7 +384,7 @@ Oop	__stdcall Interpreter::performWithArguments(Oop receiver, SymbolOTE* selecto
 // Allocate a new four byte object of the specified (unref counted) class from the DWORD pool
 BytesOTE* __fastcall Interpreter::NewUint32(uint32_t value, BehaviorOTE* classPointer)
 {
-	BytesOTE* ote = m_otePools[static_cast<size_t>(Pools::Dwords)].newByteObject(classPointer, sizeof(uint32_t), Spaces::Dwords);
+	BytesOTE* ote = m_otePools[static_cast<size_t>(Pools::Dwords)].newByteObject(classPointer);
 	ASSERT(ObjectMemory::hasCurrentMark(ote));
 
 	// Assign class as this can differ in this particular pool, which is used for all manner of 32-bit objects

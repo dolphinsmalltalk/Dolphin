@@ -138,11 +138,8 @@ void ObjectMemory::deallocate(OTE* ote)
 void ObjectMemory::OTEPool::clear()
 {
 	#ifdef MEMSTATS
-	{
-		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"OTEPool(" << this<< L") before clear, " << std::dec << m_nAllocated<< L" allocated, " 
-			<< m_nFree<< L" free" << std::endl;
-	}
+	auto nFree = m_nFree;
+	auto nAllocated = m_nAllocated;
 	#endif
 
 	while (m_pFreeList)
@@ -154,6 +151,7 @@ void ObjectMemory::OTEPool::clear()
 		// All objects on the free list originated from pool space, so we need to
 		// send them back there
 		ote->m_flags.m_space = static_cast<space_t>(Spaces::Pools);
+		ote->setSize(ote->isPointers() ? SizeOfPointers(m_size) : m_size);
 
 		ObjectMemory::deallocate(ote);
 	}
@@ -161,10 +159,11 @@ void ObjectMemory::OTEPool::clear()
 	#ifdef MEMSTATS
 	{
 		ASSERT(m_nFree <= m_nAllocated);
-		m_nAllocated -= m_nFree;
-		m_nFree = 0;
+		m_nAllocated -= nFree;
+		ASSERT(m_nFree == 0);
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"OTEPool(" << this<< L") after clear, " << std::dec << m_nAllocated<< L" allocated" << std::endl;
+		TRACESTREAM << L"OTEPool(" << static_cast<int>(m_space) << L") before clear, " << std::dec << m_nAllocated << L" allocated, "
+			<< m_nFree << L" free; after clear, " << std::dec << m_nAllocated<< L" allocated" << std::endl;
 	}
 	#endif
 }

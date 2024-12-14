@@ -622,6 +622,10 @@ void ObjectMemory::Terminate()
 //	ASSERT(!m_nInCritSection);		// A thread is still running, or other problem
 //	::DeleteCriticalSection(&m_csAsyncProtect);
 
+#ifdef MEMSTATS
+	DumpStats();
+#endif
+
 	// Free up all the memory used by the object table. We need to call this
 	// before the statically allocated object is destroyed to avoid spurious
 	// messages from the heap about lost memory allocations.
@@ -650,8 +654,6 @@ void ObjectMemory::Terminate()
 		}
 	}
 
-	// Clean up the OTE pools before object table is deleted
-	Interpreter::freePools();
 	//for (auto j=0;j<NUMOTEPOOLS;j++)
 	//	m_otePools[j].terminate();
 

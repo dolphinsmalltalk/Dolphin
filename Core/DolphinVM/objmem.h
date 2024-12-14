@@ -42,8 +42,6 @@ using namespace ST;
 #define MaxSmallInteger 0x3FFFFFFF
 #endif
 
-constexpr size_t PoolGranularity = 8;
-
 class ibinstream;
 class obinstream;
 
@@ -96,9 +94,11 @@ public:
 
 	// Use CRT Small block heap OR pool if size <= this threshold
 	static constexpr size_t MaxSmallObjectSize = 0x3f8;
-	static constexpr size_t PoolObjectSizeLimit = 144;
-	static constexpr size_t MinObjectSize = /*sizeof(Object)+*/PoolGranularity;
-	static constexpr size_t MaxPools = (PoolObjectSizeLimit - MinObjectSize) / PoolGranularity + 1;
+	static constexpr size_t NumPools = 5;
+	static constexpr size_t MinSizeHighBit = 3;
+	static constexpr size_t MinObjectSize = 1 << MinSizeHighBit;
+	static constexpr size_t PoolObjectSizeLimit = MinObjectSize << (NumPools - 1);
+
 
 	static VirtualOTE* __fastcall newVirtualObject(BehaviorOTE* classPointer, size_t initialSize, size_t maxSize);
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer);
@@ -281,6 +281,8 @@ public:
 	class OTEPool
 	{
 	public:
+		Spaces	m_space;
+		size_t	m_size;
 		OTE*	m_pFreeList;
 
 #ifdef MEMSTATS
@@ -291,7 +293,7 @@ public:
 		void	registerNew(OTE* newOTE, BehaviorOTE* classPointer);
 #endif
 
-		OTEPool() : m_pFreeList(nullptr)
+		OTEPool(Spaces space, size_t size) : m_space(space), m_size(size), m_pFreeList(nullptr)
 		{
 #ifdef MEMSTATS
 			m_nFree = 0;
@@ -305,8 +307,8 @@ public:
 
 		void deallocate(OTE* ote);
 
-		BytesOTE* newByteObject(BehaviorOTE* classPointer, size_t bytes, Spaces space);
-		PointersOTE* newPointerObject(BehaviorOTE* classPointer, size_t pointers, Spaces space);
+		BytesOTE* newByteObject(BehaviorOTE* classPointer);
+		PointersOTE* newPointerObject(BehaviorOTE* classPointer);
 
 		void terminate()
 		{
@@ -578,7 +580,7 @@ private:
 	static OTE*		m_pFreePointerList;				// Head of list of free Object Table Entries
 
 private:
-	static FixedSizePool	m_pools[MaxPools];
+	static FixedSizePool	m_pools[NumPools];
 };
 
 // Lower level object creation
@@ -887,11 +889,19 @@ inline size_t ObjectMemory::lastStrongPointerOf(const OTE* ote)
 
 inline ObjectMemory::FixedSizePool& ObjectMemory::spacePoolForSize(size_t objectSize)
 {
-	auto nPool = (_ROUND2(objectSize, PoolGranularity) - MinObjectSize) / PoolGranularity;
-	ASSERT(nPool < MaxPools);
-	__assume(nPool < MaxPools);
-	ASSERT(nPool * PoolGranularity + (DWORD)MinObjectSize >= objectSize);
-	return m_pools[nPool];
+	HARDASSERT(objectSize != 0);
+	HARDASSERT(objectSize <= PoolObjectSizeLimit);
+	unsigned long nPool;
+	if (!_BitScanReverse(&nPool, (objectSize - 1) >> (MinSizeHighBit - 1)))
+	{
+		HARDASSERT(objectSize < MinObjectSize);
+		return m_pools[0];
+	}
+	ASSUME(nPool < NumPools);
+	ObjectMemory::FixedSizePool& pool = m_pools[nPool];
+	HARDASSERT(pool.getSize() >= objectSize);
+	HARDASSERT(nPool == 0 || (m_pools[nPool - 1].getSize() < objectSize));
+	return pool;
 }
 
 inline POBJECT ObjectMemory::FixedSizePool::allocate()
@@ -993,7 +1003,7 @@ inline void ObjectMemory::OTEPool::deallocate(OTE* ote)
 }
 
 // Although this looks like a long routine to inline, in fact it is very few machine instructions
-inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer, size_t bytes, Spaces space)
+inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer)
 {
 	BytesOTE* ote = reinterpret_cast<BytesOTE*>(PopFree());
 	if (ote)
@@ -1005,7 +1015,7 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 	else
 	{
 		// We don't need to ref. count the class, so use the basic instantiation method for byte objects
-		ote = ObjectMemory::newByteObject<false, false>(classPointer, bytes);
+		ote = ObjectMemory::newByteObject<false, false>(classPointer, m_size);
 		#ifdef MEMSTATS
 			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
 		#endif
@@ -1014,10 +1024,10 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 		ASSERT(ote->heapSpace() == Spaces::Pools);
 	}
 
-	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(space)];
+	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(m_space)];
 	ASSERT(!ote->isFree());
 	ASSERT(!ote->isPointers());
-	ASSERT(ote->heapSpace() == space);
+	ASSERT(ote->heapSpace() == m_space);
 	ASSERT(ObjectMemory::hasCurrentMark(ote));
 	ASSERT(ote->m_count == 0);
 	ASSERT(!ote->isImmutable());
@@ -1026,7 +1036,7 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 }
 
 // Although this looks like a long routine to inline, in fact it is very few machine instructions
-inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPointer, size_t pointers, Spaces space)
+inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPointer)
 {
 	PointersOTE* ote = reinterpret_cast<PointersOTE*>(PopFree());
 	if (ote)
@@ -1038,7 +1048,7 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	else
 	{
 		// We don't need to ref. count the class, so use the basic instantiation method for pointer objects
-		ote = ObjectMemory::newPointerObject(classPointer, pointers);
+		ote = ObjectMemory::newPointerObject(classPointer, m_size);
 		#ifdef MEMSTATS
 			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
 		#endif
@@ -1047,10 +1057,10 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 		ASSERT(ote->heapSpace() == Spaces::Pools);
 	}
 
-	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(space)];
+	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(m_space)];
 	ASSERT(!ote->isFree());
 	ASSERT(ote->isPointers());
-	ASSERT(ote->heapSpace() == space);
+	ASSERT(ote->heapSpace() ==m_space);
 	ASSERT(ObjectMemory::hasCurrentMark(ote));
 	ASSERT(ote->m_count == 0);
 
@@ -1076,7 +1086,6 @@ inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointe
 	return oteBytes;
 }
 
-#define NumPools MaxPools
 #define MaxSizeOfPoolObject PoolObjectSizeLimit
 
 inline bool ObjectMemory::IsConstObj(void* ptr)
