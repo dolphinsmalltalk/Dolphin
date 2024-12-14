@@ -575,9 +575,18 @@ uint32AtOffset:put:!accessing!primitives!private! !
 
 !Core.LargeInteger class methodsFor!
 
+fromBigEndianBytes: aByteObject
+	"Answer an instance of the receiver instantiated from the byte object argument, which is assumed to contain a big-endian positive Integer magnitude."
+
+	| offset answer size |
+	answer := self basicNew: ((size := aByteObject size) roundUpTo: 4) + 4.
+	offset := size + 1.
+	1 to: size do: [:i | answer basicAt: offset - i put: (aByteObject at: i)].
+	answer isImmutable: true.
+	^answer normalize!
+
 fromBytes: bytes 
-	"Answer an instance of the receiver instantiated from the byte object, bytes,
-	which is assumed to contain a positive Integer magnitude."
+	"Answer an instance of the receiver instantiated from the byte object, bytes, which is assumed to contain a little-endian positive Integer magnitude."
 
 	| size answer |
 	size := bytes size.
@@ -609,6 +618,7 @@ new64
 	^self basicNew: 8! !
 
 !Core.LargeInteger class categoriesForMethods!
+fromBigEndianBytes:!instance creation!public! !
 fromBytes:!instance creation!public! !
 fromSmallInteger:!instance creation!private! !
 new:!instance creation!private! !

@@ -19,14 +19,20 @@ Security.Tests.SecureHashAlgorithmTest comment: 'This is the unit test for the c
 
 !Security.Tests.SecureHashAlgorithmTest methodsFor!
 
+testEmpty
+	"See https://www.di-mgt.com.au/sha_testvectors.html"
+
+	hash := SecureHashAlgorithm new hashMessage: ''.
+	self assert: hash equals: 16rDA39A3EE5E6B4B0D3255BFEF95601890AFD80709!
+
 testExample1
-	"This is the first example from the specification document (FIPS PUB 180-1)"
+	"This is the first example from the specification document (FIPS PUB 180-1). 24-bit input."
 
 	hash := SecureHashAlgorithm new hashMessage: 'abc'.
 	self assert: hash equals: 16rA9993E364706816ABA3E25717850C26C9CD0D89D!
 
 testExample2
-	"This is the second example from the specification document (FIPS PUB 180-1)"
+	"This is the second example from the specification document (FIPS PUB 180-1). 448 bit input"
 
 	hash := SecureHashAlgorithm new
 				hashMessage: 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq'.
@@ -37,11 +43,20 @@ testExample3
 	This example may take several minutes."
 
 	hash := SecureHashAlgorithm new hashMessage: (String new: 1000000 withAll: $a).
-	self assert: hash equals: 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F! !
+	self assert: hash equals: 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F!
+
+testExample896
+	"896 bit example from https://www.di-mgt.com.au/sha_testvectors.html"
+
+	hash := SecureHashAlgorithm new
+				hashMessage: 'abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu'.
+	self assert: hash equals: 16rA49B2446A02C645BF419F995B67091253A04A259! !
 
 !Security.Tests.SecureHashAlgorithmTest categoriesForMethods!
+testEmpty!public!testing / examples! !
 testExample1!public!testing / examples! !
 testExample2!public!testing / examples! !
 testExample3!public!testing / examples! !
+testExample896!public!testing / examples! !
 !
 

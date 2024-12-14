@@ -5668,8 +5668,15 @@ generateConstantsIntoPool: aNamespace
 						expandMacrosWith: self idlKeyword
 						with: self name
 						with: aNamespace fullName)].
-	self constants
-		do: [:each | aNamespace addClassConstant: each name capitalized value: each lpvarValue value]!
+	self constants do: 
+			[:each |
+			| value |
+			value := each lpvarValue value.
+			value isString
+				ifTrue: 
+					["Convert any UTF-16 constants"
+					value := value asUtf8String].
+			aNamespace addClassConstant: each name capitalized value: value]!
 
 generateInstanceSide: aClass
 	"By default, do nothing. To be overridden by subclasses where necessary."!

@@ -4,9 +4,9 @@ Core.Object
 	subclass: #'Security.SecureHashAlgorithm'
 	instanceVariableNames: 'context'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.BCryptLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'StreamBlockSize' -> 16r4000 }!
 
 Security.SecureHashAlgorithm guid: (Core.GUID fromString: '{44a4e77c-6645-42e0-bcc2-e8129d06655e}')!
 
@@ -18,29 +18,37 @@ This standard is described in FIPS PUB 180-1, "SECURE HASH STANDARD", April 17, 
 !Security.SecureHashAlgorithm methodsFor!
 
 context
-	"Private - Gets an SHA context"
+	"Private - Gets a SHA context"
 
-	context isNil
-		ifTrue: 
-			[OS.Kernel32 isWindows7OrGreater
-				ifFalse: [self error: 'Not supported on Vista and earlier versions of  Windows'].
-			context := OS.BCrypt shaCreate].
-	^context!
+	^context
+		ifNil: 
+			[self beFinalizable.
+			context := OS.BCrypt createHash: BCRYPT_SHA1_ALG_HANDLE]!
 
 finalHash
 	"Private - Answers the final hash from the context and closes it"
 
-	| hashBytes hashValue |
-	hashBytes := OS.BCrypt shaGetHash: self context.
+	| hash |
+	hash := ByteArray newFixed: 20.
+	OS.BCrypt
+		bCryptFinishHash: context
+		pbOutput: hash
+		cbOutput: 20
+		dwFlags: 0.
 	self resetContext.
-	hashValue := 0.
-	1 to: hashBytes size do: [:i | hashValue := (hashValue bitShift: 8) bitOr: (hashBytes at: i)].
-	^hashValue!
+	^LargeInteger fromBigEndianBytes: hash!
+
+free
+	self resetContext!
 
 hashIn: aByteArray
 	"Private - Hashes the data in aByteArray using the current SHA context"
 
-	OS.BCrypt shaHashBuffer: self context buffer: aByteArray!
+	OS.BCrypt
+		bCryptHashData: self context
+		pbInput: aByteArray
+		cbInput: aByteArray size
+		dwFlags: 0!
 
 hashInInteger: aPositiveInteger 
 	"Hash in the given positive integer. The integer to be hashed should have 512 or fewer bits."
@@ -56,22 +64,18 @@ hashInInteger: aPositiveInteger
 	"process that one block"
 	self hashIn: buffer!
 
-hashInMessage: aStringOrByteArray
-	"Hash in the given message using the Secure Hash Algorithm."
+hashInMessage: aByteObject
+	"Hash in the given byte object message using the Secure Hash Algorithm. Note that if the argument is a string, then the resulting hash may vary depending on the encoding of the string because the binary representation may be different. To get a consistent hash value for strings you should ensure that the encoding is always either UTF-16, or UTF-8."
 
-	^self hashInStream: (ReadStream on: aStringOrByteArray asByteArray)
+	^self hashIn: aByteObject
 !
 
-hashInStream: aPositionableStream 
+hashInStream: aPositionableStream
 	"Hash in the contents of the given stream from the current position to the end using the Secure Hash Algorithm. 
-	The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, 	Algorithms, and Source Code in C' by Bruce Scheier, Wiley, 1996.
-	
-	"
+	The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, Algorithms, and Source Code in C' by Bruce Scheier, Wiley, 1996."
 
-	[aPositionableStream atEnd] whileFalse: 
-			[| buf |
-			buf := aPositionableStream nextAvailable: 64.
-			self hashIn: buf]!
+	[aPositionableStream atEnd]
+		whileFalse: [self hashIn: (aPositionableStream basicNextAvailable: StreamBlockSize)]!
 
 hashInteger: aPositiveInteger 
 	"Hash the given positive integer. The integer to be hashed should have 512 or fewer bits. 
@@ -91,7 +95,7 @@ hashMessage: aStringOrByteArray
 
 hashStream: aPositionableStream 
 	"Hash the contents of the given stream from the current position to the end using the Secure Hash Algorithm. 
-	The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, 	Algorithms, and Source Code in C' by Bruce Scheier, Wiley, 1996.
+	The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, Algorithms, and Source Code in C' by Bruce Scheier, Wiley, 1996.
 	
 	SecureHashAlgorithm new hashStream: (ReadStream on: 'foo')
 	"
@@ -101,14 +105,15 @@ hashStream: aPositionableStream
 	^self finalHash!
 
 resetContext
-	context notNil
-		ifTrue: 
-			[OS.BCrypt shaDestroy: context.
-			context := nil]! !
+	context ifNil: [^self].
+	self beUnfinalizable.
+	OS.BCrypt bCryptDestroyHash: context.
+	context := nil! !
 
 !Security.SecureHashAlgorithm categoriesForMethods!
 context!helpers!private! !
 finalHash!helpers!private! !
+free!finalizing!public! !
 hashIn:!helpers!private! !
 hashInInteger:!operations!public! !
 hashInMessage:!operations!public! !

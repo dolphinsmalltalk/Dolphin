@@ -1,0 +1,30 @@
+﻿| package |
+package := Package name: 'Windows Crypto NG Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.Tests.BCryptLibraryTest}
+).
+
+package setPrerequisites: #(
+	'..\..\..\..\Base\Dolphin'
+	'..\..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\Windows Crypto NG'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.BCryptLibraryTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.BCryptLibrary})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+
