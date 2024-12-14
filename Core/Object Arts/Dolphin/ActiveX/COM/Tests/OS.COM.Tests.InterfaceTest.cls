@@ -43,6 +43,17 @@ testAllRegistered
 	self assert: (registered associations reject: [:each | each value name == #IDispatch]) asArray
 		equals: #()!
 
+testCopy
+	| random random2 count |
+	random := OS.COM.Examples.IRandomStream new.
+	count := random referenceCount.
+	random2 := random copy.
+	self assert: random referenceCount equals: count + 1.
+	self assert: (random2 isSameCOMObject: random).
+	random free.
+	self assert: random2 referenceCount equals: count.
+	random2 free!
+
 testDowncast
 	| random random2 disp |
 	random := OS.COM.Examples.IRandomStream new.
@@ -117,6 +128,7 @@ testLatestDerivation
 
 !OS.COM.Tests.InterfaceTest categoriesForMethods!
 testAllRegistered!public!unit tests! !
+testCopy!public!unit tests! !
 testDowncast!public!unit tests! !
 testDowncastNotImplemented!public!unit tests! !
 testDowncastNull!public!unit tests! !

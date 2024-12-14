@@ -239,7 +239,9 @@ postCopy
 	"Apply any final flourish to the copy that may be required.
 	In this case we may need to AddRef()."
 
-	self isPointer ifTrue: [self _addRef].
+	self isPointer ifTrue: [
+		self _addRef.
+ 		self beFinalizable].
 	^self!
 
 printOn: aStream
