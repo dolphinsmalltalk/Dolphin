@@ -964,7 +964,7 @@ disableRedraw
 disconnectFromModel
 	"Private - Remove all event registrations lodged with the current model."
 
-	model notNil ifTrue: [model removeEventsTriggeredFor: self]!
+	model ifNotNil: [model removeEventsTriggeredFor: self]!
 
 dispatchMessage: message wParam: wParam lParam: lParam 
 	"Private - Dispatch a message to the first level View message handler, if one
@@ -2459,7 +2459,7 @@ onDestroyed
 	is now probably invalid. Inform the presenter that its view is now
 	gone. Answer nil to accept the default processing."
 
-	self isStateRestoring ifFalse: [self model removeEventsTriggeredFor: self].
+	self isStateRestoring ifFalse: [self disconnectFromModel].
 	self parentView onSubViewRemoved: self.
 	self presenter onViewClosed.
 	^nil!

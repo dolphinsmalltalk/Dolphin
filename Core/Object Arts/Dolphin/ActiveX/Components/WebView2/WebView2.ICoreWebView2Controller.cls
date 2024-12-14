@@ -224,7 +224,7 @@ defaultBackgroundColor
 	"Answer the <Color> value of the 'DefaultBackgroundColor' property of the receiver."
 
 	| buf |
-	buf := ByteArray newFixed: 4.
+	buf := UInt32Bytes new.
 	self get_DefaultBackgroundColor: buf.
 	^Graphics.Color fromArray: buf!
 

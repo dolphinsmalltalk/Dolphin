@@ -65,6 +65,16 @@ browserExtensionsMenu
 	"<menuPopulator: #buildExtensionsMenu:>"
 	!
 
+browserScrollBarStyle: anInteger
+	"Note that if we named this #scrollBarStyle:, if the browser view itself has focus then because WebView2View implements #scrollBarStyle:, then the command routing framework would judge the browser view to be a valid command target meaning that our command query would not be run, and the radio buttons would not be set. We could alter the command routing to avoid this, but it is simpler just to use a different selector for the command."
+
+	<commandQuery: #queryScrollBarStyle:>
+	self browserView scrollBarStyle: anInteger!
+
+browserTrackingPreventionLevel: anInteger
+	<commandQuery: #queryTrackingPreventionLevel:>
+	self browserView trackingPreventionLevel: anInteger!
+
 browserView
 	^browser view!
 
@@ -93,7 +103,7 @@ buildScrollBarStyleMenu: aMenu
 	aMenu clear.
 	#('&Default' '&Fluent Overlay') keysAndValuesDo: 
 			[:eachKey :eachValue |
-			aMenu addItem: ((CommandMenuItem command: (Message selector: #scrollBarStyle: argument: eachKey - 1)
+			aMenu addItem: ((CommandMenuItem command: (Message selector: #browserScrollBarStyle: argument: eachKey - 1)
 						description: eachValue)
 						isRadioButtonStyle: true;
 						yourself)]!
@@ -130,14 +140,10 @@ buildSettingsPopup: aMenu
 		addItem: ((Menu description: 'Preferred &Color Scheme')
 					name: #colorSchemeMenu;
 					yourself);
-		addCommand: #chooseBackcolor description: 'Background &Color'.
-	"With the fluent overlay scrollbar style the browser seems to stop rendering (is blank)."
-	false
-		ifTrue: 
-			[aMenu addItem: ((Menu description: '&ScrollBar Style')
-						name: #scrollBarStyleMenu;
-						yourself)].
-	aMenu
+		addCommand: #chooseBackcolor description: 'Background &Color';
+		addItem: ((Menu description: '&ScrollBar Style')
+					name: #scrollBarStyleMenu;
+					yourself);
 		addSeparator;
 		addCommand: #toggleGeneralAutofill description: 'General &Autofill';
 		addCommand: #togglePasswordAutosave description: '&Password Autosave';
@@ -152,10 +158,11 @@ buildSettingsPopup: aMenu
 
 buildTrackingPreventionLevelMenu: aMenu
 	aMenu clear.
+Sound bell.
 	#('&None' '&Basic' 'Ba&lanced' '&Strict') keysAndValuesDo: 
 			[:eachKey :eachValue |
 			aMenu addItem: ((CommandMenuItem
-						command: (Message selector: #trackingPreventionLevel: argument: eachKey - 1)
+						command: (Message selector: #browserTrackingPreventionLevel: argument: eachKey - 1)
 						description: eachValue)
 						isRadioButtonStyle: true;
 						yourself)]!
@@ -195,7 +202,14 @@ createSchematicWiring
 		send: #onColorSchemeChanged
 		to: self.
 	"Some events we need to hook to stay in sync"
+	browser view
+		when: #environmentAvailable
+		send: #onWebViewEnvironmentAvailable
+		to: self.
 	browser
+		when: #controllerAvailable
+			send: #onWebViewControllerAvailable
+			to: self;
 		when: #webviewAvailable
 			send: #onWebViewAvailable
 			to: self;
@@ -540,7 +554,17 @@ onWebViewAvailable
 	"Display the Edge browser version in the status bar field on the right"
 	(self view viewNamed: 'browserVersion') model: self browserView webviewEnvironment asValue.
 	self onZoomFactorChanged.
-	profileModel value: self browserView profile!
+	"profileModel value: self browserView profile"!
+
+onWebViewControllerAvailable
+	"Private - Not really a view event, but send through the trace logic anyway"
+
+	self onWebView2Event: self browserView webviewController name: #controllerAvailable:!
+
+onWebViewEnvironmentAvailable
+	"Private - Not really a view event, but send through the trace logic anyway"
+
+	self onWebView2Event: self browserView webviewEnvironment name: #environmentAvailable:!
 
 onZoomFactorChanged
 	zoomModel value: '<1p>%%' << (self browserView zoomFactor * 100) rounded!
@@ -726,6 +750,7 @@ queryToggleZoomControl: aCommandQuery
 		isChecked: browser view isZoomControlEnabled!
 
 queryTrackingPreventionLevel: aCommandQuery
+Sound bell.
 	aCommandQuery
 		beEnabled;
 		isChecked: self browserView trackingPreventionLevel = aCommandQuery command argument!
@@ -741,10 +766,6 @@ saveAs
 					[Notification signal: 'showSaveAsUI failed: <1d>'
 								<< (#('COREWEBVIEW2_SAVE_AS_UI_RESULT_SUCCESS' 'COREWEBVIEW2_SAVE_AS_UI_RESULT_INVALID_PATH' 'COREWEBVIEW2_SAVE_AS_UI_RESULT_FILE_ALREADY_EXISTS' 'COREWEBVIEW2_SAVE_AS_UI_RESULT_KIND_NOT_SUPPORTED' 'COREWEBVIEW2_SAVE_AS_UI_RESULT_CANCELLED')
 										lookup: saveAsUiResult + 1)]]!
-
-scrollBarStyle: anInteger
-	<commandQuery: #queryScrollBarStyle:>
-	self browserView scrollBarStyle: anInteger!
 
 scrollBarStyleMenu
 	<commandQuery: #hasWebview>
@@ -907,10 +928,6 @@ toggleZoomControl
 	"Most settings do not take effect until after navigation, so refresh"
 	self refresh!
 
-trackingPreventionLevel: anInteger
-	<commandQuery: #queryTrackingPreventionLevel:>
-	self browserView trackingPreventionLevel: anInteger!
-
 trackingPreventionLevelMenu
 	<commandQuery: #hasWebview>
 	<menuPopulator: #buildTrackingPreventionLevelMenu:>
@@ -934,6 +951,8 @@ zoomReset
 !OS.COM.Examples.WebBrowserShell categoriesForMethods!
 areBrowserExtensionsEnabled!commands-queries!public! !
 browserExtensionsMenu!commands-menus!public! !
+browserScrollBarStyle:!commands-actions!public! !
+browserTrackingPreventionLevel:!commands-actions!public! !
 browserView!accessing!public! !
 buildBrowserExtensionsMenu:!commands-menus!private! !
 buildColorSchemeMenu:!commands-menus!private! !
@@ -979,6 +998,8 @@ onWebMessageReceived:!event handling!private! !
 onWebResourceRequested:!event handling!private! !
 onWebView2Event:name:!event handling!private! !
 onWebViewAvailable!event handling!private! !
+onWebViewControllerAvailable!private! !
+onWebViewEnvironmentAvailable!private! !
 onZoomFactorChanged!event handling!private! !
 openTaskManagerWindow!commands-actions!public! !
 openUrl:!operations!public! !
@@ -1016,7 +1037,6 @@ queryToggleZoomControl:!commands-queries!private! !
 queryTrackingPreventionLevel:!commands-queries!private! !
 refresh!commands-actions!public! !
 saveAs!commands-actions!public! !
-scrollBarStyle:!commands-actions!public! !
 scrollBarStyleMenu!commands-menus!public! !
 settingsMenu!commands-actions!public! !
 toggleAllowContextMenu!commands-actions!public! !
@@ -1041,7 +1061,6 @@ toggleSuppressSaveAsDialog!commands-actions!public! !
 toggleSwipeNavigation!commands-actions!public! !
 toggleWebMessaging!commands-actions!public! !
 toggleZoomControl!commands-actions!public! !
-trackingPreventionLevel:!commands-actions!public! !
 trackingPreventionLevelMenu!commands-menus!public! !
 updateColorScheme!private!updating! !
 webview2!accessing!private! !
@@ -1083,7 +1102,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 518 #{Graphics.ThemeColor} #browserBar nil 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.Toolbar} 50 28 nil 32 50 2 8 1140853580 131137 160 nil 112 nil 517 nil nil nil 160 112 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 18 #{UI.Toolbar} 50 28 nil 160 50 2 8 1140857676 131137 272 nil 112 nil 517 nil nil nil 272 nil nil 226 #{Core.IdentityDictionary} 8 #() nil nil 98 #browserForeground nil 50 10 1862 2 #{UI.ToolbarTextButton} 272 161 1350 4 #{UI.CommandDescription} #goBack 8 'Back' 1 1 nil nil 98 #browserHistoryArrow nil 8 $\xE830 402 272 161 434 #goForward 8 'Forward' 1 1 nil nil 480 nil 8 $\xEA47 402 272 161 434 #refresh 8 'Re&fresh (Ctrl+R)' 9381 1 nil nil nil nil 8 $\xE72C 402 272 161 434 #home 8 'Home page' 1 1 nil nil nil nil 8 $\xE80F 402 272 161 434 #print 8 'Print ...' 1 1 nil nil nil nil 8 $\xE749 402 272 161 434 #saveAs 8 'Save As ...' 1 1 nil nil nil nil 8 $\xE78C 402 272 161 434 #help 8 'Information' 1 1 nil nil nil nil 8 $\xE946 402 272 161 434 #openTaskManagerWindow 8 'Open &Task Manager' 1 1 nil nil nil nil 8 $\xE9F5 402 272 433 434 #settingsMenu 8 'Settings' 1 1 nil nil nil nil 8 $\xE713 582 1 #{UI.ToolbarSeparator} 272 1 nil nil 13 5 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[6 0 0 0 7 0 0 0 46 1 0 0 40 0 0 0] 193 50 2 8 1140857676 131137 8 '' 272 3 8 #() 518 #{Graphics.Point} 193 193 nil 31 8 'browserTools' nil nil nil nil 8 #() nil 518 #{Graphics.Rectangle} 1298 13 15 1298 9 1 9 2369 #mediumSmallIcons nil nil 130 1 1 nil nil nil 272 18 #{UI.ContainerView} 50 15 nil 160 50 2 8 1140850688 131073 1440 nil 112 nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 1440 130 9 1 nil nil 18 #{UI.PushButton} 50 20 nil 1440 50 2 8 1140924416 1 1600 nil 112 1298 101 51 5 nil nil nil 1600 nil nil 434 #navigate 8 '&Go' 1 1 nil nil true nil nil nil 1058 50 2 1106 #createWindow: 50 1 1154 1186 8 #[60 3 0 0 1 0 0 0 110 3 0 0 26 0 0 0] 193 1632 8 '&Go' 1600 1106 #isEnabled: 8 #(false) 1600 3 8 #() 1298 193 193 nil 29 nil 18 #{UI.TextEdit} 50 20 nil 1440 50 2 8 1149304960 1 1904 nil 98 #browserBackground nil 5 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 434 #navigate 8 '&Go' 1 1 nil nil nil 2034 2097153 434 #accept 8 '&Accept' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1904 368 nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 1058 50 3 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 1 0 0 0 56 3 0 0 26 0 0 0] 193 1936 nil 1904 1106 #contextMenu: 50 1 2000 1904 1106 #setMarginWidths: 50 1 8 #(4 4) 1904 3 8 #() 1298 193 193 nil 45 226 #{Core.IdentityDictionary} 50 4 1904 8 'address' 1600 8 'go' 1362 1298 1 3 1298 1 15 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[46 1 0 0 7 0 0 0 156 4 0 0 40 0 0 0] 193 1472 8 '' 1440 3 50 2 1904 1600 1298 193 193 nil 27 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 0 0 0 0 160 4 0 0 40 0 0 0] 193 192 8 '' 160 3 50 2 272 1440 1298 193 193 nil 31 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1140850956 1 2848 nil 6 #{Graphics.Color} #default nil 5 nil 1862 1 #{Graphics.UxThemeFont} nil true nil 193 nil 1609 nil nil 2848 368 nil 226 #{Core.IdentityDictionary} 50 8 1862 1 #{UI.StatusBarItem} 8193 301 2848 nil 518 #{Core.Message} #displayString 8 #() 3042 #iconImageIndex 8 #() nil 8 'browserVersion' 3010 8193 251 2848 nil 3042 #displayString 8 #() 3042 #iconImageIndex 3168 nil 8 'profile' 3010 8193 -1 2848 nil 3042 #displayString 3104 nil nil 8 'status' 3010 8193 101 2848 nil 3042 #displayString 8 #() nil nil 8 'zoom' nil nil nil 50 4 3216 3136 3264 3024 1094 1 #{UI.StatusBarNullItem} 8705 1 2848 nil nil 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 254 2 0 0 160 4 0 0 19 3 0 0] 193 2880 8 '' 2848 3 8 #() 1298 193 193 nil 29 nil nil 18 #{UI.WebView2View} 50 26 nil 32 50 2 8 1140850688 1 3536 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 1968 nil 5 nil nil nil 3536 nil nil 2162 nil nil 262145 nil nil nil nil nil 2374 2 #{WebView2.WebView2EnvironmentOptions} nil 15 nil 8 '110.0.1549.0' 5 1 3 1 8 #() nil nil nil nil 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 40 0 0 0 160 4 0 0 254 2 0 0] 193 3568 8 '' 3536 3 352 1298 193 193 nil 29 226 #{Core.IdentityDictionary} 50 6 3536 8 'browser' 2848 8 'progress' 160 8 'toolbar' nil nil nil nil nil 1 nil nil nil nil nil nil 193 1058 50 1 1106 #createWindow: 50 1 1154 1362 1298 6143 21 1298 8543 1673 193 80 8 'WebView2 Browser' 32 1 50 3 2848 160 3536 1298 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 518 #{Graphics.ThemeColor} #browserBar nil 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.Toolbar} 50 28 nil 32 50 2 8 1140853580 131137 160 nil 112 nil 517 nil nil nil 160 112 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 18 #{UI.Toolbar} 50 28 nil 160 50 2 8 1140857676 131137 272 nil 112 nil 517 nil nil nil 272 nil nil 226 #{Core.IdentityDictionary} 8 #() nil nil 98 #browserForeground nil 50 10 1862 2 #{UI.ToolbarTextButton} 272 161 1350 4 #{UI.CommandDescription} #goBack 8 'Back' 1 1 nil nil 98 #browserHistoryArrow nil 8 $\xE830 402 272 161 434 #goForward 8 'Forward' 1 1 nil nil 480 nil 8 $\xEA47 402 272 161 434 #refresh 8 'Re&fresh (Ctrl+R)' 9381 1 nil nil nil nil 8 $\xE72C 402 272 161 434 #home 8 'Home page' 1 1 nil nil nil nil 8 $\xE80F 402 272 161 434 #print 8 'Print ...' 1 1 nil nil nil nil 8 $\xE749 402 272 161 434 #saveAs 8 'Save As ...' 1 1 nil nil nil nil 8 $\xE78C 402 272 161 434 #help 8 'Information' 1 1 nil nil nil nil 8 $\xE946 402 272 161 434 #openTaskManagerWindow 8 'Open &Task Manager' 1 1 nil nil nil nil 8 $\xE9F5 402 272 433 434 #settingsMenu 8 'Settings' 1 1 nil nil nil nil 8 $\xE713 582 1 #{UI.ToolbarSeparator} 272 1 nil nil 13 5 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[6 0 0 0 7 0 0 0 46 1 0 0 40 0 0 0] 193 50 2 8 1140857676 131137 8 '' 272 3 8 #() 518 #{Graphics.Point} 193 193 nil 31 8 'browserTools' nil nil nil nil 8 #() nil 518 #{Graphics.Rectangle} 1298 13 15 1298 9 1 9 2369 #mediumSmallIcons nil nil 130 1 1 nil nil nil 272 18 #{UI.ContainerView} 50 15 nil 160 50 2 8 1140850688 131073 1440 nil 112 nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 1440 130 9 1 nil nil 18 #{UI.PushButton} 50 20 nil 1440 50 2 8 1140924416 1 1600 nil 112 1298 101 51 5 nil nil nil 1600 nil nil 434 #navigate 8 '&Go' 1 1 nil nil true nil nil nil 1058 50 2 1106 #createWindow: 50 1 1154 1186 8 #[60 3 0 0 1 0 0 0 110 3 0 0 26 0 0 0] 193 1632 8 '&Go' 1600 1106 #isEnabled: 8 #(false) 1600 3 8 #() 1298 193 193 nil 29 nil 18 #{UI.TextEdit} 50 20 nil 1440 50 2 8 1149304960 1 1904 nil 98 #browserBackground nil 5 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 434 #navigate 8 '&Go' 1 1 nil nil nil 2034 2097153 434 #accept 8 '&Accept' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1904 368 nil 518 #{UI.NullConverter} nil nil 1 #focusLost nil nil nil 1058 50 3 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 1 0 0 0 56 3 0 0 26 0 0 0] 193 1936 nil 1904 1106 #contextMenu: 50 1 2000 1904 1106 #setMarginWidths: 50 1 8 #(4 4) 1904 3 8 #() 1298 193 193 nil 45 226 #{Core.IdentityDictionary} 50 4 1904 8 'address' 1600 8 'go' 1362 1298 1 3 1298 1 15 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[46 1 0 0 7 0 0 0 156 4 0 0 40 0 0 0] 193 1472 8 '' 1440 3 50 2 1904 1600 1298 193 193 nil 27 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 0 0 0 0 160 4 0 0 40 0 0 0] 193 192 8 '' 160 3 50 2 272 1440 1298 193 193 nil 31 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1140850956 1 2848 nil 6 #{Graphics.Color} #default nil 5 nil 1862 1 #{Graphics.UxThemeFont} nil true nil 193 nil 1609 nil nil 2848 368 nil 226 #{Core.IdentityDictionary} 50 8 1862 1 #{UI.StatusBarItem} 8193 301 2848 nil 518 #{Core.Message} #displayString 8 #() 3042 #iconImageIndex 8 #() nil 8 'browserVersion' 3010 8193 251 2848 nil 3042 #displayString 8 #() 3042 #iconImageIndex 3168 nil 8 'profile' 3010 8193 -1 2848 nil 3042 #displayString 3104 nil nil 8 'status' 3010 8193 101 2848 nil 3042 #displayString 8 #() nil nil 8 'zoom' nil nil nil 50 4 3216 3136 3264 3024 1094 1 #{UI.StatusBarNullItem} 8705 1 2848 nil nil 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 254 2 0 0 160 4 0 0 19 3 0 0] 193 2880 8 '' 2848 3 8 #() 1298 193 193 nil 29 nil nil 18 #{UI.WebView2View} 50 26 nil 32 50 2 8 1140850688 1 3536 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 1968 nil 5 nil nil nil 3536 nil nil 2162 nil nil 262145 nil nil nil nil nil 2374 3 #{WebView2.WebView2EnvironmentOptions} nil 7 nil 8 '115.0.1901.177' nil 1 3 1 352 nil nil nil nil 1058 50 1 1106 #createWindow: 50 1 1154 1186 8 #[0 0 0 0 40 0 0 0 160 4 0 0 254 2 0 0] 193 3568 8 '' 3536 3 352 1298 193 193 nil 29 226 #{Core.IdentityDictionary} 50 6 3536 8 'browser' 2848 8 'progress' 160 8 'toolbar' nil nil nil nil nil 1 nil nil nil nil nil nil 193 1058 50 1 1106 #createWindow: 50 1 1154 1362 1298 6143 21 1298 8543 1673 193 80 8 'WebView2 Browser' 32 1 50 3 2848 160 3536 1298 193 193 nil 27)!
 
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."

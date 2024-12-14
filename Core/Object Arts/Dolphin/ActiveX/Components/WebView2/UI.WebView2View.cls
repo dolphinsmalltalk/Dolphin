@@ -149,8 +149,6 @@ createUnavailableLink
 		to: self!
 
 createWebView
-	"Currently we don't attempt to set any controller options - see ICoreWebView2ControllerOptions[2]"
-
 	| controllerOptions |
 	controllerOptions := webviewEnvironment createCoreWebView2ControllerOptions.
 	self isInPrivateModeEnabled ifTrue: [controllerOptions isInPrivateModeEnabled: true].
@@ -165,7 +163,9 @@ createWebView
 createWebViewEnvironment
 	| completed userDataFolder |
 	completed := (WebView2CompletionHandler
-				completionBlock: [:hr :env | hr < 0 ifFalse: [self onEnvironmentCreated: env]])
+				completionBlock: [:hr :env | hr < 0 
+						ifTrue: [HRESULTError signal: 'Failed to create WebView2 environment' with: hr]
+						ifFalse: [self onEnvironmentCreated: env]])
 					queryInterface: ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler.
 	userDataFolder := self defaultUserDataFolder.
 	
@@ -183,8 +183,13 @@ createWebViewEnvironment
 		to: self!
 
 defaultUserDataFolder
+	"Answer a path for the browser data folder that is writable with user privileges. We make this unique for a particular configuration of environment options, because it isn't possible to start webview2 instances with the same data folder that have mismatched environment options."
+
 	^File composePath: (SessionManager current getenv: 'LocalAppData')
-		subPath: (File splitFilenameFrom: (DynamicLinkLibrary moduleFileName: nil)) , '.WebView2'!
+		subPath: '<1s>-<2s>.WebView2' << {
+						File splitStemFrom: (DynamicLinkLibrary moduleFileName: nil).
+						self environmentOptions thumbprint
+					}!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver."
@@ -353,6 +358,22 @@ notifyMove
 	webviewController isNull ifTrue: [^self].
 	webviewController NotifyParentWindowPositionChanged!
 
+observeBrowserProcessExit
+	"Private - Process exit is a special case as we don't want to unregister this immediately when closing the browser view, or we will never get the event!!.
+	When the view is being fully recreated, e.g. due to changing a style that is set in environment options such as the scrollbar style, we may very well receive this for the previous browser process after we have already started creating the new view."
+
+	| urlPresenter processExited |
+	urlPresenter := self presenter.
+	processExited := WebView2EventSink new.
+	processExited
+		source: webviewEnvironment
+		interfaceClass: ICoreWebView2BrowserProcessExitedEventHandler
+		handler: 
+			[:source :args |
+			urlPresenter trigger: #processExited: with: args.
+			processExited free].
+	processExited register!
+
 observeControllerEvents
 	##({
 		ICoreWebView2AcceleratorKeyPressedEventHandler.
@@ -369,17 +390,22 @@ observeControllerEvents
 				do: [:each | self observeEvent: each from: webviewComposition]]!
 
 observeEnvironmentEvents
-	environmentEventHandlers := OrderedCollection new: 3.
-	##({
-		ICoreWebView2NewBrowserVersionAvailableEventHandler.
-		ICoreWebView2BrowserProcessExitedEventHandler.
-		ICoreWebView2ProcessInfosChangedEventHandler
-	}) do: 
-				[:each |
-				self registerEnvironmentEventSink: (WebView2EventSink
-							source: webviewEnvironment
-							interfaceClass: each
-							handler: (each triggerBlockFor: self presenter))]!
+	"Process exit is a special case as we don't want to unregister this immediately when closing the browser view, or we will never get the event!!"
+
+	environmentEventHandlers
+		ifNil: 
+			[environmentEventHandlers := ##({
+						ICoreWebView2NewBrowserVersionAvailableEventHandler.
+						ICoreWebView2ProcessInfosChangedEventHandler
+					}) collect: 
+								[:each |
+								(WebView2EventSink
+									source: webviewEnvironment
+									interfaceClass: each
+									handler: (each triggerBlockFor: self presenter))
+									register;
+									yourself]].
+	self observeBrowserProcessExit!
 
 observeEvent: anICoreWebView2EventHandlerClass from: anICoreWebView2EventSource
 	^self registerEventSink: (WebView2EventSink
@@ -439,8 +465,12 @@ observeWindowEvents
 	}) do: [:each | self observeEvent: each from: webview]!
 
 onControllerCreated: anICoreWebView2Controller
-	webviewController := self queryControllerInterface: anICoreWebView2Controller.
-	self observeControllerEvents.
+	webviewController := anICoreWebView2Controller downCast.
+	"Since we cannot trigger events off the presenter until it has been set, we delay observing environment events to here as at this point we know we definitely have a presenter and webview environment"
+	self
+		observeEnvironmentEvents;
+		observeControllerEvents.
+	self presenter trigger: #controllerAvailable.
 	self resizeContentToFit.
 	webview := webviewController coreWebView2.
 	self initializeControl!
@@ -449,13 +479,13 @@ onDestroyed
 	self unregisterEvents.
 	self content close.
 	self releaseWebView.
-	"We don't free the webview environment, but rather let it be finalised. This allows an external observer to watch for the browser process exiting."
-	webviewEnvironment := nil.
+	self releaseWebViewEnvironment.
 	^super onDestroyed!
 
 onEnvironmentCreated: anICoreWebView2Environment
 	webviewEnvironment := anICoreWebView2Environment downCast.
-	self observeEnvironmentEvents.
+	"Note that the presenter has not been set this point"
+	self trigger: #environmentAvailable.
 	self createWebView!
 
 onHistoryChanged
@@ -522,19 +552,6 @@ profileName: aString
 	profileName := aString.
 	webviewController notNull ifTrue: [self recreate]!
 
-queryControllerInterface: anIUnknown
-	| interfaceClass |
-	interfaceClass := ICoreWebView2Controller4.
-	
-	[(anIUnknown queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == ICoreWebView2Controller]
-			whileFalse.
-	^anIUnknown queryInterface: ICoreWebView2Controller!
-
-registerEnvironmentEventSink: aWebView2EventSink
-	aWebView2EventSink register.
-	^environmentEventHandlers add: aWebView2EventSink!
-
 registerEventSink: aWebView2EventSink
 	aWebView2EventSink register.
 	^eventHandlers add: aWebView2EventSink!
@@ -549,6 +566,9 @@ releaseWebView
 		ifNotNil: 
 			[webviewController free.
 			webviewController := nil]!
+
+releaseWebViewEnvironment
+	webviewEnvironment := nil!
 
 resizeContentToFit
 	self content rectangle: self clientRectangle!
@@ -568,7 +588,7 @@ scrollBarStyle: anInteger
 	| style |
 	style := anInteger ?? COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
 	self scrollBarStyle = style ifTrue: [^self].
-	self recreateAround: [environmentOptions scrollBarStyle: style]!
+	self recreateAround: ["self halt. "environmentOptions scrollBarStyle: style]!
 
 setControlBackcolor: aColor
 	self webviewController defaultBackgroundColor: aColor!
@@ -594,13 +614,13 @@ subViews
 	^#()!
 
 trackingPreventionLevel
-	^environmentOptions trackingPreventionLevel!
+	^environmentOptions isTrackingPreventionEnabled
+		ifTrue: [self profile preferredTrackingPreventionLevel]
+		ifFalse: [COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE]!
 
 trackingPreventionLevel: anInteger
-	| level |
-	level := anInteger ?? COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
-	self trackingPreventionLevel = level ifTrue: [^self].
-	self recreateAround: [environmentOptions trackingPreventionLevel: level]!
+	self profile
+		preferredTrackingPreventionLevel: anInteger ?? COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED!
 
 unregisterEvents
 	eventHandlers
@@ -723,6 +743,7 @@ isWebMessageEnabled:!public!settings! !
 isZoomControlEnabled!public!settings! !
 isZoomControlEnabled:!public!settings! !
 notifyMove!event handling!private! !
+observeBrowserProcessExit!private!realizing/unrealizing! !
 observeControllerEvents!private!realizing/unrealizing! !
 observeEnvironmentEvents!private!realizing/unrealizing! !
 observeEvent:from:!helpers!private! !
@@ -740,10 +761,9 @@ onViewCreated!event handling!public! !
 profile!commands!public! !
 profileName!accessing!public! !
 profileName:!accessing!public! !
-queryControllerInterface:!helpers!private! !
-registerEnvironmentEventSink:!helpers!public! !
 registerEventSink:!helpers!public! !
 releaseWebView!operations!private!realizing/unrealizing! !
+releaseWebViewEnvironment!operations!private!realizing/unrealizing! !
 resizeContentToFit!helpers!private! !
 scriptLocale!accessing!public! !
 scriptLocale:!accessing!public! !

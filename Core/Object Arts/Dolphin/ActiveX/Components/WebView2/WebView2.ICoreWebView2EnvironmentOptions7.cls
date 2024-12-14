@@ -109,13 +109,13 @@ releaseChannels: value
 	self put_ReleaseChannels: value! !
 
 !WebView2.ICoreWebView2EnvironmentOptions7 categoriesForMethods!
-channelSearchKind!**auto generated**!properties!public! !
+channelSearchKind!properties!public! !
 channelSearchKind:!**auto generated**!properties!public! !
 get_ChannelSearchKind:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions7!private! !
 get_ReleaseChannels:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions7!private! !
 put_ChannelSearchKind:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions7!private! !
 put_ReleaseChannels:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions7!private! !
-releaseChannels!**auto generated**!properties!public! !
+releaseChannels!properties!public! !
 releaseChannels:!**auto generated**!properties!public! !
 !
 

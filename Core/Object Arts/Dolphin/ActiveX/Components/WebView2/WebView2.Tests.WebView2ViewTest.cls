@@ -2,7 +2,7 @@
 
 UI.Tests.PresenterTest
 	subclass: #'WebView2.Tests.WebView2ViewTest'
-	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited navigationStarting'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady webviewEnvironment processExited navigationStarting'
 	classVariableNames: ''
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
@@ -34,6 +34,9 @@ initializePresenter
 			to: self;
 		when: #webviewAvailable
 			send: #onWebViewAvailable
+			to: self;
+		when: #processExited:
+			send: #onBrowserProcessExited:
 			to: self.
 	webViewReady := false.
 	presenter createView: URLPresenter defaultView.
@@ -42,13 +45,13 @@ initializePresenter
 	self waitAtMost: 20 seconds while: [webViewReady not].
 	self assert: presenter view webview notNull.
 	webviewEnvironment := presenter view webviewEnvironment.
-	self assert: webviewEnvironment notNull.
-	"Set up our own event sink to be notified of the browser process shutting down. There is no point observing the presenter for normal process exit, because the events are torn down before that happens, so we have to register our own event sink. This is only necessary so that we can ensure the browser is truly shut down at the end of one test case before we fire it up again for the next."
-	processExitedSink := WebView2EventSink
-				source: presenter view webviewEnvironment
-				interfaceClass: ICoreWebView2BrowserProcessExitedEventHandler
-				handler: [:source :args | args isNormalExit ifTrue: [processExited := args browserProcessId]].
-	processExitedSink register!
+	self assert: webviewEnvironment notNull!
+
+onBrowserProcessExited: anICoreWebView2BrowserProcessExitedEventArgs
+	"We track browser process shut down in order to wait at the end of one test case before we fire it up again for the next. This significantly increases the reliability of the tests when run together."
+
+	anICoreWebView2BrowserProcessExitedEventArgs isNormalExit
+		ifTrue: [processExited := anICoreWebView2BrowserProcessExitedEventArgs browserProcessId]!
 
 onDomContentLoaded: anICoreWebView2DOMContentLoadedEventArgs
 	domContentLoaded := anICoreWebView2DOMContentLoadedEventArgs navigationId!
@@ -77,11 +80,7 @@ tearDown
 			[navigationCompleted free.
 			navigationCompleted := nil].
 	self destroyPresenter.
-	processExitedSink
-		ifNotNil: 
-			[self waitAtMost: 20 seconds while: [processExited isNil].
-			processExitedSink free.
-			processExitedSink := nil].
+	self waitAtMost: 20 seconds while: [processExited isNil].
 	webviewEnvironment notNull
 		ifTrue: 
 			[webviewEnvironment free.
@@ -136,8 +135,9 @@ testContextMenu
 	self sendKeyPress: VK_RETURN extended: false.
 	self waitAtMost: 200 milliseconds while: [cmdFired not].
 	cmdEventSink free.
-	newCmd free.
-	self assert: cmdFired!
+	self assert: cmdFired.
+
+!
 
 testNavigateToString
 	"Bit of a kick-the-tyres test, but it does execute a lot of the integration, e.g. creating the WebView2 environment, controller and view, and setting up event handlers and handling of events."
@@ -485,6 +485,7 @@ waitForNavigationCompleted
 !WebView2.Tests.WebView2ViewTest categoriesForMethods!
 classToTest!constants!private! !
 initializePresenter!public!Running! !
+onBrowserProcessExited:!event handling!private! !
 onDomContentLoaded:!event handling!private! !
 onNavigationCompleted:!event handling!private! !
 onNavigationStarting:!event handling!private! !

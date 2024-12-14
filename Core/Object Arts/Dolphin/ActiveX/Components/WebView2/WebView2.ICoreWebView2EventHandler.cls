@@ -60,14 +60,14 @@ eventName
 	^self subclassResponsibility!
 
 hasArgs
-	^self argsClass == IUnknown!
+	^self argsClass ~~ IUnknown!
 
 triggerBlockFor: aUrlPresenter
 	| event |
 	event := self eventName.
 	^self hasArgs
-		ifTrue: [[aUrlPresenter trigger: event]]
-		ifFalse: [[:source :args | aUrlPresenter trigger: event with: args]]! !
+		ifTrue: [[:source :args | aUrlPresenter trigger: event with: args]]
+		ifFalse: [[aUrlPresenter trigger: event]]! !
 
 !WebView2.ICoreWebView2EventHandler class categoriesForMethods!
 argsClass!constants!public! !

@@ -114,12 +114,14 @@ testEnableTrackingPrevention
 	subject := WebView2EnvironmentOptions new.
 	interface := subject queryInterface: ICoreWebView2EnvironmentOptions5.
 	self assert: subject trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
-	self assert: interface enableTrackingPrevention
-		equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
-	interface enableTrackingPrevention: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT.
-	self assert: subject trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT.
-	self assert: interface enableTrackingPrevention
-		equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT!
+	self assert: interface enableTrackingPrevention.
+	interface enableTrackingPrevention: false.
+	self deny: subject isTrackingPreventionEnabled.
+	self assert: subject trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE.
+	interface enableTrackingPrevention: true.
+	self assert: subject isTrackingPreventionEnabled.
+	self assert: subject trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+!
 
 testExclusiveDataFolderAccess
 	| subject interface |
@@ -193,7 +195,7 @@ testStlConvertFromVersion0
 	self assert: options isCustomCrashReportingEnabled.
 	self assert: options browserVersion equals: '100.0.1185'.
 	self assert: options locale equals: 'fr-FR'.
-	self assert: options trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	self assert: options isTrackingPreventionEnabled.
 	self assert: options channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
 	self assert: options releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
 	self assert: options scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
@@ -201,12 +203,12 @@ testStlConvertFromVersion0
 
 testStlConvertFromVersion0a
 	| options |
-	options := (Object fromLiteralStoreArray: #(#'!!STL' 6 1286 #{WebView2.WebView2EnvironmentOptions} nil 13 8 'fr-FR' 8 '100.0.1185' 5)).
+	options := (Object fromLiteralStoreArray: #(#'!!STL' 6 1286 #{WebView2.WebView2EnvironmentOptions} nil 13 8 'fr-FR' 8 '100.0.1185' 1)).
 	self deny: options allowSSO.
 	self assert: options isCustomCrashReportingEnabled.
 	self assert: options browserVersion equals: '100.0.1185'.
 	self assert: options locale equals: 'fr-FR'.
-	self assert: options trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	self deny: options isTrackingPreventionEnabled.
 	self assert: options channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
 	self assert: options releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
 	self assert: options scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
@@ -220,7 +222,7 @@ testStlConvertFromVersion1
 	self assert: options isCustomCrashReportingEnabled.
 	self assert: options browserVersion equals: '100.0.1185'.
 	self assert: options locale equals: 'fr-FR'.
-	self assert: options trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT.
+	self assert: options isTrackingPreventionEnabled.
 	self assert: options channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE.
 	self assert: options releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_BETA.
 	self assert: options scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_FLUENT_OVERLAY.
@@ -233,7 +235,7 @@ testStlConvertFromVersion2
 	self assert: options isCustomCrashReportingEnabled.
 	self assert: options browserVersion equals: '100.0.1185'.
 	self assert: options locale equals: 'fr-FR'.
-	self assert: options trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	self assert: options isTrackingPreventionEnabled.
 	self assert: options channelSearchKind equals: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
 	self assert: options releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
 	self assert: options scrollBarStyle equals: COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.

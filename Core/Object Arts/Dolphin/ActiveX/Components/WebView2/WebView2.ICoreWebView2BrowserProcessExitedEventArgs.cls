@@ -48,6 +48,9 @@ browserProcessExitKind
 	self get_BrowserProcessExitKind: buf.
 	^buf asSignedInteger!
 
+browserProcessExitKindName
+	^(#('Normal' 'Failed') lookup: self browserProcessExitKind + 1) ?? 'Unknown'!
+
 browserProcessId
 	"Answer the unsigned <integer> value of the 'BrowserProcessId' property of the receiver."
 
@@ -78,10 +81,11 @@ isNormalExit
 	^self browserProcessExitKind == COREWEBVIEW2_BROWSER_PROCESS_EXIT_KIND_NORMAL!
 
 printableProperties
-	^#(#browserProcessExitKind #browserProcessId)! !
+	^#(#browserProcessExitKindName #browserProcessId)! !
 
 !WebView2.ICoreWebView2BrowserProcessExitedEventArgs categoriesForMethods!
 browserProcessExitKind!properties!public! !
+browserProcessExitKindName!properties!public! !
 browserProcessId!properties!public! !
 get_BrowserProcessExitKind:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !

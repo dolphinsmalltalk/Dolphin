@@ -2,7 +2,7 @@
 
 OS.COM.InterfaceImplementation
 	subclass: #'WebView2.WebView2EnvironmentOptions'
-	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel channelSearchKind releaseChannels scrollBarStyle customSchemeRegistrations'
+	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion _unused5 channelSearchKind releaseChannels scrollBarStyle customSchemeRegistrations'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -10,7 +10,8 @@ OS.COM.InterfaceImplementation
 			'AllowSSOMask' -> 16r1.
 			'BrowseExtensionsEnabledMask' -> 16r8.
 			'CustomCrashReportingMask' -> 16r4.
-			'ExclusiveUserDataFolderAccessMask' -> 16r2
+			'ExclusiveUserDataFolderAccessMask' -> 16r2.
+			'TrackingPreventionDisabledMask' -> 16r10
 		}!
 
 WebView2.WebView2EnvironmentOptions guid: (Core.GUID fromString: '{a29cb496-0b83-42f6-b6b1-2670cb4d42fb}')!
@@ -70,6 +71,48 @@ customSchemeRegistrations
 customSchemeRegistrations: aCollection
 	customSchemeRegistrations := aCollection asArray!
 
+displayOn: aPuttableStream
+	browserVersion
+		ifNotNil: 
+			[aPuttableStream
+				nextPutAll: 'browserVersion: ';
+				print: browserVersion].
+	additionalBrowserArguments
+		ifNotNil: 
+			[aPuttableStream
+				nextPutAll: ', additionalBrowserArguments: ';
+				print: additionalBrowserArguments].
+	flags == 0
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ', flags: ';
+				display: flags].
+	locale
+		ifNotNil: 
+			[aPuttableStream
+				nextPutAll: ', locale: ';
+				print: locale name].
+	channelSearchKind = COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ', channelSearchKind: ';
+				display: channelSearchKind].
+	releaseChannels = COREWEBVIEW2_RELEASE_CHANNELS_STABLE
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ', releaseChannels: ';
+				display: releaseChannels].
+	scrollBarStyle = COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ', scrollBarStyle: ';
+				display: scrollBarStyle].
+	customSchemeRegistrations isEmpty
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ', customSchemeRegistrations: ';
+				display: customSchemeRegistrations]!
+
 exclusiveUserDataFolderAccess
 	^flags allMask: ExclusiveUserDataFolderAccessMask!
 
@@ -120,7 +163,7 @@ get_EnableTrackingPrevention: value
 		HRESULT __stdcall EnableTrackingPrevention(
 			[out, retval]long* value);"
 
-	value value: self trackingPreventionLevel.
+	value value: self isTrackingPreventionEnabled asParameter.
 	^S_OK!
 
 get_ExclusiveUserDataFolderAccess: value
@@ -174,8 +217,7 @@ get_TargetCompatibleBrowserVersion: value
 		HRESULT __stdcall TargetCompatibleBrowserVersion(
 			[out, retval]LPWSTR* value);"
 
-	value
-		value: (browserVersion ifNil: [0] ifNotNil: [browserVersion asUtf16String copyToCOMTaskMemory detach]).
+	value value: (browserVersion ?? '') asUtf16String copyToCOMTaskMemory detach.
 	^S_OK!
 
 GetCustomSchemeRegistrations: pCount schemeRegistrations: ppSchemeRegistrations
@@ -203,7 +245,6 @@ initialize
 	super initialize.
 	flags := ##(AllowSSOMask | ExclusiveUserDataFolderAccessMask).
 	browserVersion := CORE_WEBVIEW_TARGET_PRODUCT_VERSION.
-	trackingPreventionLevel := COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
 	channelSearchKind := COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
 	releaseChannels := COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
 	scrollBarStyle := COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
@@ -214,6 +255,16 @@ isCustomCrashReportingEnabled
 
 isCustomCrashReportingEnabled: aBoolean
 	flags := flags mask: CustomCrashReportingMask set: aBoolean!
+
+isTrackingPreventionEnabled
+	"Answer whether tracking prevention measures should be enabled."
+	
+	^flags noMask: TrackingPreventionDisabledMask!
+
+isTrackingPreventionEnabled: aBoolean
+	"Set whether tracking prevention measures should be enabled."
+	
+	flags := flags mask: TrackingPreventionDisabledMask set: aBoolean not!
 
 locale
 	^locale ?? Locale.UserDefault!
@@ -392,24 +443,23 @@ supportedInterfaces
 		ICoreWebView2EnvironmentOptions8
 	})!
 
+thumbprint
+	"Answer a short (32 character) hex string that uniquely identifies the specific settings in the receiver."
+
+	^(BCrypt md5Hash: self displayString) asHexString!
+
 trackingPreventionLevel
 	"Answer the <integer> from the COREWEBVIEW2_TRACKING_PREVENTION_LEVEL enumeration that specifies the tracking prevention level to be configured for WebView2's created in the environment.
 	By default this is COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED (2)."
 
-	^trackingPreventionLevel!
+	#deprecated.	"It isn't possible to control the TPL at this level, only whether on or off. It should be set in the profile."
+	^self isTrackingPreventionEnabled
+		ifTrue: [COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED]
+		ifFalse: [COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE]!
 
-trackingPreventionLevel: value
-	(value between: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE
-		and: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT)
-			ifFalse: 
-				[InvalidArgumentError
-					signal: 'Tracking prevention level <1p> not in expected range [<2p>, <3p>}' << {
-									value.
-									COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE.
-									COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT
-								}
-					with: 'value'].
-	trackingPreventionLevel := value! !
+trackingPreventionLevel: anInteger
+	#deprecated.	"It isn't possible to control the TPL at this level, only whether on or off. It should be set in the profile."
+	self isTrackingPreventionEnabled: anInteger ~= COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE! !
 
 !WebView2.WebView2EnvironmentOptions categoriesForMethods!
 additionalBrowserArguments!accessing!public! !
@@ -424,6 +474,7 @@ channelSearchKind!accessing!public! !
 channelSearchKind:!accessing!public! !
 customSchemeRegistrations!public! !
 customSchemeRegistrations:!public! !
+displayOn:!displaying!public! !
 exclusiveUserDataFolderAccess!accessing!public! !
 exclusiveUserDataFolderAccess:!accessing!public! !
 get_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
@@ -441,6 +492,8 @@ GetCustomSchemeRegistrations:schemeRegistrations:!COM Interfaces-ICoreWebView2En
 initialize!initializing!public! !
 isCustomCrashReportingEnabled!accessing!public! !
 isCustomCrashReportingEnabled:!accessing!public! !
+isTrackingPreventionEnabled!accessing!public! !
+isTrackingPreventionEnabled:!accessing!public! !
 locale!accessing!public! !
 locale:!accessing!public! !
 put_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
@@ -460,6 +513,7 @@ scrollBarStyle!accessing!public! !
 scrollBarStyle:!accessing!public! !
 SetCustomSchemeRegistrations:schemeRegistrations:!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
 supportedInterfaces!constants!public! !
+thumbprint!accessing!public! !
 trackingPreventionLevel!accessing!public! !
 trackingPreventionLevel:!accessing!public! !
 !
@@ -481,6 +535,7 @@ icon
 stbConvertFrom: anSTBClassFormat
 	| version |
 	version := anSTBClassFormat version.
+	version == 2 ifTrue: [^[:data | self stbConvertFromVersion2: data]].
 	version == 1 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
 	version == 0 ifTrue: [^[:data | self stbConvertFromVersion0: data]].
 	^super stbConvertFrom: anSTBClassFormat!
@@ -508,19 +563,32 @@ stbConvertFromVersion0: anArray
 stbConvertFromVersion1: anArray
 	"Private - Convert version 1 package by adding default values for customSchemeRegistrations, then as this is the last converter in the chain, translate to a class instance."
 
-	^(anArray copyWith: #()) becomeA: self!
+	^self stbConvertFromVersion2: (anArray copyWith: #())!
+
+stbConvertFromVersion2: anArray
+	"Private - Convert version 2 options by fixing the misunderstanding of tracking prevention. At the environment options level it is only possible to enable/disable tracking. The actual tracking prevention level must be set in the profile."
+
+	| tpl |
+	tpl := anArray at: 5.
+	anArray at: 5 put: nil.
+	"End of the chain"
+	^(anArray becomeA: self)
+		isTrackingPreventionEnabled: tpl ~= COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE;
+		yourself!
 
 stbVersion
 	"Version 1 - adds channelSearchKind, releaseChannels, scrollBarStyle.
-	Version 2 - adds customSchemeRegistrations"
+	Version 2 - adds customSchemeRegistrations
+	Version 3 - fixes misunderstanding of tracking prevention in environment options. This can only be turned on and off, not level set."
 
-	^2! !
+	^3! !
 
 !WebView2.WebView2EnvironmentOptions class categoriesForMethods!
 icon!constants!development!public! !
 stbConvertFrom:!public! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

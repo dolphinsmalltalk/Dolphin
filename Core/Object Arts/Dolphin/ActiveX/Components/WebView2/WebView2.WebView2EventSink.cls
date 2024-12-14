@@ -64,6 +64,9 @@ register: anICoreWebView2Interface
 	interface := self queryInterface: interfaceClass.
 	token := interface register: anICoreWebView2Interface!
 
+source
+	^source!
+
 source: anICoreWebView2EventSource interfaceClass: anICoreWebView2EventHandlerClass handler: aDyadicValuable
 	source := anICoreWebView2EventSource.
 	interfaceClass := anICoreWebView2EventHandlerClass.
@@ -72,15 +75,14 @@ source: anICoreWebView2EventSource interfaceClass: anICoreWebView2EventHandlerCl
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^##({ IUnknown }
-		, (ICoreWebView2EventHandler allSubclasses reject: [:each | each isNonInstantiable]))!
+	^{ IUnknown. interfaceClass }!
 
 unregister
 	self unregister: source.
 	source := nil!
 
 unregister: anICoreWebView2Interface
-	interface ifNil: [^self].
+	interface isNull ifTrue: [^self].
 	interface
 		unregister: token from: anICoreWebView2Interface;
 		free.
@@ -95,6 +97,7 @@ printOn:!printing!public! !
 queryInterface:ifNone:!accessing!accessing-interfaces!public! !
 register!initializing!public! !
 register:!initializing!public! !
+source!accessing!private! !
 source:interfaceClass:handler:!initializing!private! !
 supportedInterfaces!constants!public! !
 unregister!public!realizing/unrealizing! !

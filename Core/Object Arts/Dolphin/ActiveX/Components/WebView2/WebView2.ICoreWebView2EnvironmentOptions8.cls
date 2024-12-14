@@ -73,7 +73,7 @@ scrollBarStyle: value
 !WebView2.ICoreWebView2EnvironmentOptions8 categoriesForMethods!
 get_ScrollBarStyle:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions8!private! !
 put_ScrollBarStyle:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions8!private! !
-scrollBarStyle!**auto generated**!properties!public! !
+scrollBarStyle!properties!public! !
 scrollBarStyle:!**auto generated**!properties!public! !
 !
 
