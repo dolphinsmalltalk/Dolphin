@@ -114,6 +114,14 @@ testAtAndAtPut
 			self assert: (array at: each put: elem) equals: elem.
 			self assert: (self elementToValue: (array at: each)) equals: (self canonicalizeValue: each)]!
 
+testCollect
+	| subject |
+	#(1 2 5) do: 
+			[:each |
+			subject := self newNumericArray: each.
+			self assert: (subject collect: [:int | int value])
+				equals: ((1 to: each) collect: [:int | self canonicalizeValue: int])]!
+
 testComparing
 	| subject array |
 	subject := self newNumericArray: 0.
@@ -354,6 +362,7 @@ numericElementClass!constants!private! !
 testAllSatisfy!public! !
 testAtAllPut!public! !
 testAtAndAtPut!public!unit tests! !
+testCollect!public!unit tests! !
 testComparing!public!unit tests! !
 testCopyFromTo!public!unit tests! !
 testDoSeparatedBy!public!unit tests! !

@@ -21,6 +21,14 @@ newArrayOfIntegers: anArray
 	^self arrayClass withAll: (anArray collect: [:each | self elementFromValue: each])
 		elementClass: self numericElementClass!
 
+testCollectGuids
+	| guids strings |
+	guids := StructureArray length: 2 elementClass: GUID.
+	guids at: 1 put: StructureArray guid.
+	guids at: 2 put: self class guid.
+	strings := guids collect: [:each | each printString].
+	self assert: strings equals: {StructureArray guid printString. self class guid printString}!
+
 testMarshal
 	self
 		should: [super testMarshal]
@@ -39,6 +47,7 @@ testStbConvertFromVersion0
 !External.Tests.StructureArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 newArrayOfIntegers:!helpers!private! !
+testCollectGuids!public!unit tests! !
 testMarshal!public!unit tests! !
 testStbConvertFromVersion0!public!unit tests! !
 !
