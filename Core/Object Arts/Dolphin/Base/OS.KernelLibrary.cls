@@ -1279,6 +1279,26 @@ getUserDefaultLCID
 	<stdcall: uint32 GetUserDefaultLCID>
 	^self invalidCall: _failureCode!
 
+getVersionEx
+	"
+		Kernel32 getVersionEx =>
+			an OSVERSIONINFOEXW(dwMajorVersion=10 dwMinorVersion=0 dwBuildNumber=22635 dwPlatformId=2 szCSDVersion='' wServicePackMajor=0 wServicePackMinor=0 wSuiteMask=256 wProductType=1)
+	"
+	|  buf |
+	buf := OSVERSIONINFOEXW newBuffer.
+	(self getVersionEx: buf) ifFalse: [self systemError].
+	^buf!
+
+getVersionEx: lpVersionInformation
+	"Invoke the GetVersionEx() function of the module wrapped by the receiver.
+	Helpstring: Gets Windows version information
+
+		BOOL __stdcall GetVersionEx(
+			OSVERSIONINFO* lpVersionInformation);"
+
+	<stdcall: bool GetVersionExW OSVERSIONINFOEXW*>
+	^self invalidCall: _failureCode!
+
 getVolumeInformation: lpRootPathName lpVolumeNameBuffer: lpVolumeNameBuffer nVolumeNameSize: nVolumeNameSize lpVolumeSerialNumber: lpVolumeSerialNumber lpMaximumComponentLength: lpMaximumComponentLength lpFileSystemFlags: lpFileSystemFlags lpFileSystemNameBuffer: lpFileSystemNameBuffer nFileSystemNameSize: nFileSystemNameSize
 	"Invoke the GetVolumeInformation() function of the module wrapped by the receiver.
 	Helpstring: Gets information about a disk including volume name, serial number, maximum component length, and file system name
@@ -1484,18 +1504,7 @@ isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePa
 	^self
 		verifyVersionInfo: osvi
 		dwTypeMask: ##(VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR)
-		dwlConditionMask: (WinVerOrGreaterMask
-				ifNil: 
-					[WinVerOrGreaterMask := self
-								verSetConditionMask: (self
-										verSetConditionMask: (self
-												verSetConditionMask: 0
-												typeMask: VER_MAJORVERSION
-												condition: VER_GREATER_EQUAL)
-										typeMask: VER_MINORVERSION
-										condition: VER_GREATER_EQUAL)
-								typeMask: VER_SERVICEPACKMAJOR
-								condition: VER_GREATER_EQUAL])!
+		dwlConditionMask: self winVerOrGreaterMask!
 
 isWindowsVistaOrGreater
 	"Dolphin 7 and later no longer run on platforms prior to Vista."
@@ -2079,6 +2088,20 @@ waitForSingleObject: hHandle dwMilliseconds: dwMilliseconds
 	<overlap stdcall: uint32 WaitForSingleObject handle uint32>
 	^self invalidCall: _failureCode!
 
+winVerOrGreaterMask
+	^WinVerOrGreaterMask
+		ifNil: 
+			[WinVerOrGreaterMask := self
+						verSetConditionMask: (self
+								verSetConditionMask: (self
+										verSetConditionMask: 0
+										typeMask: VER_MAJORVERSION
+										condition: VER_GREATER_EQUAL)
+								typeMask: VER_MINORVERSION
+								condition: VER_GREATER_EQUAL)
+						typeMask: VER_SERVICEPACKMAJOR
+						condition: VER_GREATER_EQUAL]!
+
 writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWrite lpNumberOfBytesWritten: anAddressBytesWritten lpOverlapped: anOVERLAPPED
 	"The WriteFile function writes data to a file and is designed for both synchronous and asynchronous operation.
 	The function starts writing data to the file at the position indicated by the file pointer. After the write
@@ -2212,6 +2235,8 @@ getThreadUILanguage!public!win32 functions-national language support! !
 getTickCount!public!win32 functions-date and time!win32 functions-system information! !
 getTimeZoneInformation:!public!win32 functions-date and time! !
 getUserDefaultLCID!public!win32 functions-national language support! !
+getVersionEx!public!win32 functions-version helpers! !
+getVersionEx:!public!win32 functions-version helpers! !
 getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public!win32 functions-file system! !
 globalAlloc:dwBytes:!public!win32 functions-memory management! !
 globalFree:!public!win32 functions-memory management! !
@@ -2290,6 +2315,7 @@ virtualFree:dwSize:dwFreeType:!**auto generated**!public!win32 functions-memory 
 virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public!win32 functions-memory management! !
 virtualQuery:lpBuffer:dwLength:!**auto generated**!public!win32 functions-memory management! !
 waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
+winVerOrGreaterMask!constants!private! !
 writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file management! !
 zeroMemory:length:!public!win32 functions-memory management! !
 !
