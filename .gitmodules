@@ -1,0 +1,3 @@
+[submodule "Core/DolphinVM/mimalloc"]
+	path = Core/DolphinVM/mimalloc
+	url = https://github.com/microsoft/mimalloc.git
