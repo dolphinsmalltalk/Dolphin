@@ -6,7 +6,6 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Tools.Tests.CRTLibraryImportTest}
 	#{Tools.Tests.LagoonTests}
 	#{Tools.Tests.PackageClosureTests}
 ).
@@ -36,14 +35,6 @@ package setPrerequisites: #(
 package!
 
 "Class Definitions"!
-
-Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.CRTLibraryImportTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.LagoonTests'

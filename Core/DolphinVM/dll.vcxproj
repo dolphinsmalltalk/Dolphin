@@ -114,6 +114,7 @@
       <ModuleDefinitionFile>.\VM.def</ModuleDefinitionFile>
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <DataExecutionPrevention />
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\out\msvc-$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
     </PreBuildEvent>
@@ -160,6 +161,7 @@
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <TargetMachine>MachineX86</TargetMachine>
       <MapExports>true</MapExports>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\out\msvc-$(Platform)\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -214,6 +216,7 @@
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\out\msvc-$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>

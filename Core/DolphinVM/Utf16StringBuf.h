@@ -37,7 +37,8 @@ public:
 
 	~Utf16StringBuf()
 	{
-		if (m_pBuf != m_wcsBuf) free(m_pBuf);
+		if (m_pBuf != m_wcsBuf) 
+			delete m_pBuf;
 	}
 
 public:

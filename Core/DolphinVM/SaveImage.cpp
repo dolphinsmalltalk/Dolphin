@@ -15,7 +15,6 @@
 #include "binstream.h"
 #include "zfbinstream.h"
 #include "objmem.h"
-#include "ObjMemPriv.inl"
 #include "interprt.h"
 #include "rc_vm.h"
 

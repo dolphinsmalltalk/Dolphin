@@ -13,38 +13,11 @@
 
 #include "ObjMem.h"
 #include "interprt.h"
-#include "ObjMemPriv.inl"
 
 // Smalltalk classes
 #include "STBehavior.h"		// Need to look at class flags, and fixed fields
 #include "STVirtualObject.h"
 #include "STByteArray.h"
-
-///////////////////////////////////////////////////////////////////////////////
-// Low-level memory chunk (not object) management routines
-//
-// These map directly onto C or Win32 heap
-
-
-inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, size_t newChunkSize)
-{
-	#if defined(_DEBUG)
-		if (__sbh_find_block(pChunk) != NULL)
-			// Hang on a minute, this block is from the SBH
-			ASSERT(FALSE);
-		else
-		{
-			for (auto i=0;i<NumPools;i++)
-				ASSERT(!m_pools[i].isMyChunk(reinterpret_cast<void*>(pChunk)));
-		}
-	#endif
-
-	#ifdef PRIVATE_HEAP
-		return static_cast<POBJECT>(::HeapReAlloc(m_hHeap, 0, pChunk, newChunkSize));
-	#else
-		return realloc(pChunk, newChunkSize);
-	#endif
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Use with care. Neither initialises new space, or cleans up old pointers
@@ -71,7 +44,7 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 		{
 //			TRACE("Resizing normal object...\n");
 			pObject = ote->m_location;
-			pObject = reallocChunk(pObject, byteSize+Extra);
+			pObject = static_cast<POBJECT>(reallocChunk(pObject, byteSize+Extra));
 
 			if (pObject)
 			{
@@ -86,33 +59,6 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 			pObject = resizeVirtual(ote, byteSize+Extra);
 			break;
 	
-		case Spaces::Pools:
-		{
-			#if defined(_DEBUG)
-				if (abs(Interpreter::executionTrace) > 0)
-					checkPools();
-			#endif
-
-			// May be able to do some quicker resizing here if size is still in same pool?
-			if ((byteSize + Extra) <= MaxSmallObjectSize)
-			{
-				pObject = allocSmallChunk(byteSize + Extra);
-			}
-			else
-			{
-				pObject = allocChunk(byteSize + Extra);
-				ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
-			}
-	
-			POBJECT pOldObject = ote->m_location;
-			auto oldSize = ote->getSize();
-			memcpy(pObject, pOldObject, min(oldSize, byteSize));
-			freeSmallChunk(pOldObject, ote->sizeOf());
-			ote->m_location = pObject;
-			ote->setSize(byteSize);
-			break;
-		}
-
 		default:
 			// Not resizeable
 			return nullptr;

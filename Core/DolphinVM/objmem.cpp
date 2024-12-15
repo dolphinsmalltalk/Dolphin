@@ -12,7 +12,6 @@
 #pragma code_seg(MEM_SEG)
 
 #include "ObjMem.h"
-#include "ObjMemPriv.inl"
 #include "Interprt.h"
 #include "rc_vm.h"
 #include "VMExcept.h"
@@ -21,15 +20,9 @@
 
 using namespace concurrency;
 
-
-HANDLE ObjectMemory::m_hHeap;
-extern "C" { HANDLE _crtheap; }
-
 #ifdef MEMSTATS
-	size_t m_nLargeAllocated = 0;
-	size_t m_nLargeFreed = 0;
-	size_t m_nSmallAllocated = 0;
-	size_t m_nSmallFreed = 0;
+	size_t m_nAllocated = 0;
+	size_t m_nFreed = 0;
 #endif
 
 #ifdef TRACKFREEOTEs
@@ -508,23 +501,7 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer, bool
 
 *****************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////
-// Low-level memory chunk (not object) management routines
-//
-// These map directly onto C or Win32 heap
-
-#ifdef _DEBUG
-	size_t ObjectMemory::chunkSize(void* pChunk)
-	{
-		#ifdef PRIVATE_HEAP
-			return ::HeapSize(m_hHeap, 0, pChunk);
-		#else
-			return _msize(pChunk);
-		#endif
-	}
-#endif
-
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 //	OT Allocation
 
 #pragma code_seg(GC_SEG)
@@ -589,42 +566,10 @@ HRESULT ObjectMemory::allocateOT(size_t reserve, size_t commit)
 
 #pragma code_seg(GC_SEG)
 
-// Compact any object memory heaps to minimize working set
-void ObjectMemory::HeapCompact()
-{
-	// Minimize space occuppied by the heap
-	__sbh_heapmin();
-	#ifdef PRIVATE_HEAP
-		::HeapCompact(m_hHeap, 0);
-	#endif
-
-	_heapmin();
-}
-
-#pragma code_seg(TERM_SEG)
-
-void ObjectMemory::FixedSizePool::Terminate()
-{
-	const size_t loopEnd = m_nAllocations;
-	for (size_t i=0;i<loopEnd;i++)
-		VERIFY(::VirtualFree(m_pAllocations[i], 0, MEM_RELEASE));
-
-	free(m_pAllocations);
-	m_pFreePages = 0;
-	m_pAllocations = 0;
-	m_nAllocations = 0;
-}
-
-#pragma code_seg(TERM_SEG)
-
 void ObjectMemory::Terminate()
 {
 //	ASSERT(!m_nInCritSection);		// A thread is still running, or other problem
 //	::DeleteCriticalSection(&m_csAsyncProtect);
-
-#ifdef MEMSTATS
-	DumpStats();
-#endif
 
 	// Free up all the memory used by the object table. We need to call this
 	// before the statically allocated object is destroyed to avoid spurious
@@ -637,41 +582,21 @@ void ObjectMemory::Terminate()
 			OTE& ote = m_pOT[i];
 			if (!ote.isFree())
 			{
-				bool bNeedsDealloc;
-				#ifdef PRIVATE_HEAP
-					Spaces space = ote.heapSpace();
-					bNeedsDealloc = space != Spaces::Pools || (ote.sizeOf() > MaxSizeOfPoolObject);
-				#else
-					bNeedsDealloc = ote.getSpace != Spaces::Pools;
-				#endif
-
-				if (bNeedsDealloc)
-				{
-					ote.m_count = 0;	// To avoid assertion
-					deallocate(&ote);
-				}
+				ote.m_count = 0;	// To avoid assertion
+				deallocate(&ote);
 			}
 		}
 	}
 
-	//for (auto j=0;j<NUMOTEPOOLS;j++)
-	//	m_otePools[j].terminate();
-
 	// Clean up the GC cache
 	ClearGCInfo();
-
-	// Clean up the pools by freeing the pages
-	for (auto j=0;j<NumPools;j++)
-		m_pools[j].terminate();
-	FixedSizePool::Terminate();
-
 	HeapCompact();
 
-// Leave heap around for use next time?
-//	::HeapDestroy(m_hHeap);
-//	m_hHeap = 0;
-//	_crtheap = 0;
-	
+#ifdef MEMSTATS
+	DumpStats(L"");
+#endif
+
+	UninitializeHeap();
 
 	if (m_pOT)
 	{
@@ -767,9 +692,9 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		// The OT overflowed
 		TRACE(L"OT overflowed at %p (OT next %p, free %p), sp=%p (m_stackPointer=%p)\n", pFault, otNext, m_pFreePointerList, pExInfo->ContextRecord->Esi, Interpreter::m_registers.m_stackPointer);
 		#ifdef MEMSTATS
-			trace(L"Small Allocated %u, freed %u, large allocated %u, freed %u\n",
-					m_nSmallAllocated, m_nSmallFreed, m_nLargeAllocated, m_nLargeFreed);
-			m_nLargeAllocated = m_nLargeFreed = m_nSmallAllocated = m_nSmallFreed = 0;
+			trace(L"Objects allocated %u, freed %u\n",
+					m_nAllocated, m_nFreed);
+			m_nAllocated = m_nFreed = 0;
 		#endif
 		const size_t extraBytes = OTPagesAllocatedPerOverflow*dwPageSize;
 		const size_t extraOTEs = extraBytes/sizeof(OTE);

@@ -13,7 +13,6 @@
 #pragma code_seg(MEM_SEG)
 
 #include "ObjMem.h"
-#include "ObjMemPriv.inl"
 #include "Interprt.h"
 #include "VirtualMemoryStats.h"
 
@@ -23,33 +22,48 @@
 #include "rc_vm.h"
 #endif
 
-#ifdef MEMSTATS
-	extern size_t m_nLargeAllocated;
-	extern size_t m_nSmallAllocated;
-#endif
-
 // Smalltalk classes
 #include "STVirtualObject.h"
 #include "STByteArray.h"
 
-// No auto-inlining in this module please
-#pragma auto_inline(off)
+///////////////////////////////////////////////////////////////////////////////
+// Oop allocation
 
-ObjectMemory::FixedSizePool	ObjectMemory::m_pools[NumPools];
-ObjectMemory::FixedSizePool::Link* ObjectMemory::FixedSizePool::m_pFreePages;
-void** ObjectMemory::FixedSizePool::m_pAllocations;
-size_t ObjectMemory::FixedSizePool::m_nAllocations;
+inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
+{
+	__assume(m_pFreePointerList != nullptr);
+
+	// N.B. By not ref. counting class here, we make a useful saving of a redundant
+	// ref. counting operation in primitiveNew and primitiveNewWithArg
+
+	OTE* ote = m_pFreePointerList;
+
+	m_pFreePointerList = NextFree(ote);
+
+	ASSERT(ote->isFree());
+#ifdef TRACKFREEOTEs
+	--m_nFreeOTEs;
+	assert(m_nFreeOTEs >= 0);
+	//assert(m_nFreeOTEs == CountFreeOTEs());
+#endif
+
+	// Set OTE fields of the Oop
+	ote->m_location = pLocation;
+
+	// Maintain the last used garbage collector mark to speed up collections
+	// Doing this will also reset the free bit and set the pointer bit
+	// so byte allocations will need to reset it
+	ote->m_flagsWord = *reinterpret_cast<uint8_t*>(&m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)]);
+
+	return ote;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Public object allocation routines
 
-// Rarely used, so don't inline it
-POBJECT ObjectMemory::allocLargeObject(size_t objectSize, OTE*& ote)
+POBJECT ObjectMemory::allocObject(size_t objectSize, OTE*& ote)
 {
-#ifdef MEMSTATS
-	++m_nLargeAllocated;
-#endif
-
 	POBJECT pObj = static_cast<POBJECT>(allocChunk(_ROUND2(objectSize, sizeof(Oop))));
 
 	// allocateOop expects crit section to be used
@@ -57,30 +71,6 @@ POBJECT ObjectMemory::allocLargeObject(size_t objectSize, OTE*& ote)
 	ote->setSize(objectSize);
 	ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
 	return pObj;
-}
-
-inline POBJECT ObjectMemory::allocObject(size_t objectSize, OTE*& ote)
-{
-	// Callers are expected to round requests to Oop granularity
-	if (objectSize <= MaxSmallObjectSize)
-	{
-		// Smallblock heap already has space for object size at start of obj which includes
-		// heap overhead,etc, and is rounded to a paragraph size
-		// Why not alloc. four bytes less, overwrite this size with our object size, and then
-		// move back the object body pointer by four. On delete need to reapply the object
-		// size back into the object? - No wouldn't work because of the way heap accesses
-		// adjoining objects when freeing!
-
-		POBJECT pObj = static_cast<POBJECT>(allocSmallChunk(objectSize));
-		ote = allocateOop(pObj);
-		ote->setSize(objectSize);
-		ASSERT(ote->heapSpace() == Spaces::Pools);
-		return pObj;
-	}
-	else
-	{
-		return allocLargeObject(objectSize, ote);
-	}
 }
 
 
@@ -387,8 +377,7 @@ PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE*
 	size_t objectSize = SizeOfPointers(oops);
 	OTE* ote;
 	allocObject(objectSize, ote);
-	ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == Spaces::Normal)
-			|| ote->heapSpace() == Spaces::Pools);
+	ASSERT(ote->heapSpace() == Spaces::Normal);
 
 	// These are stored in the object itself
 	ASSERT(ote->getSize() == objectSize);
@@ -412,9 +401,7 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 		ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
 
 		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(elementCount + SizeOfPointers(0), ote));
-		ASSERT((elementCount > MaxSizeOfPoolObject && ote->heapSpace() == Spaces::Normal)
-			|| ote->heapSpace() == Spaces::Pools);
-
+		ASSERT(ote->heapSpace() == Spaces::Normal);
 		ASSERT(ote->getSize() == elementCount + SizeOfPointers(0));
 
 		if (Initialized)
@@ -455,8 +442,7 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 		objectSize += NULLTERMSIZE;
 
 		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(objectSize + SizeOfPointers(0), ote));
-		ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == Spaces::Normal)
-			|| ote->heapSpace() == Spaces::Pools);
+		ASSERT(ote->heapSpace() == Spaces::Normal);
 
 		ASSERT(ote->getSize() == objectSize + SizeOfPointers(0));
 
@@ -636,8 +622,7 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 	OTE* copyPointer;
 	// Allocate an uninitialized object ...
 	VariantByteObject* pLocation = static_cast<VariantByteObject*>(allocObject(objectSize, copyPointer));
-	ASSERT((objectSize > MaxSizeOfPoolObject && copyPointer->heapSpace() == Spaces::Normal)
-		|| copyPointer->heapSpace() == Spaces::Pools);
+	ASSERT(copyPointer->heapSpace() == Spaces::Normal);
 
 	ASSERT(copyPointer->getSize() == objectSize);
 	// This set does not want to copy over the immutability bit - i.e. even if the original was immutable, the 
@@ -816,344 +801,4 @@ VirtualOTE* ObjectMemory::newVirtualObject(BehaviorOTE* classPointer, size_t ini
 
 	return nullptr;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-// Low-level memory chunk (not object) management routines
-//
-void ObjectMemory::FixedSizePool::morePages()
-{
-	const size_t nPages = dwAllocationGranularity / dwPageSize;
-	UNREFERENCED_PARAMETER(nPages);
-	ASSERT(dwPageSize*nPages == dwAllocationGranularity);
-
-	uint8_t* pStart = static_cast<uint8_t*>(::VirtualAlloc(NULL, dwAllocationGranularity, MEM_COMMIT, PAGE_READWRITE));
-	if (pStart)
-	{
-#ifdef _DEBUG
-		{
-			tracelock lock(TRACESTREAM);
-			TRACESTREAM << L"FixedSizePool: new pages @ " << LPVOID(pStart) << std::endl;
-		}
-#endif
-
-		// Put the allocation (64k) into the allocation list so we can free it later
-		{
-			m_nAllocations++;
-			m_pAllocations = static_cast<void**>(realloc(m_pAllocations, m_nAllocations * sizeof(void*)));
-			m_pAllocations[m_nAllocations - 1] = pStart;
-		}
-
-		// We don't know whether the chunks are to contain zeros or nils, so we don't bother to init the space
-#ifdef _DEBUG
-		memset(pStart, 0xCD, dwAllocationGranularity);
-#endif
-
-		uint8_t* pLast = pStart + dwAllocationGranularity - dwPageSize;
-
-#ifdef _DEBUG
-		// ASSERT that pLast is correct by causing a GPF if it isn't!
-		memset(reinterpret_cast<uint8_t*>(pLast), 0xCD, dwPageSize);
-#endif
-
-		for (uint8_t* p = pStart; p < pLast; p += dwPageSize)
-			reinterpret_cast<Link*>(p)->next = reinterpret_cast<Link*>(p + dwPageSize);
-
-		reinterpret_cast<Link*>(pLast)->next = 0;
-		m_pFreePages = reinterpret_cast<Link*>(pStart);
-
-#ifdef _DEBUG
-		//		m_nPages++;
-#endif
-	}
-	else
-	{
-		::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, NULL);	// Fatal - we must exit Dolphin
-	}
-}
-
-inline uint8_t* ObjectMemory::FixedSizePool::allocatePage()
-{
-	if (!m_pFreePages)
-	{
-		morePages();
-		ASSERT(m_pFreePages);
-	}
-
-	Link* pPage = m_pFreePages;
-	m_pFreePages = pPage->next;
-	
-	return reinterpret_cast<uint8_t*>(pPage);
-}
-
-// Allocate another page for a fixed size pool
-void ObjectMemory::FixedSizePool::moreChunks()
-{
-	constexpr size_t nOverhead = 0;//12;
-	constexpr size_t nBlockSize = dwPageSize - nOverhead;
-	const size_t nChunks = nBlockSize / m_nChunkSize;
-
-	uint8_t* pStart = allocatePage();
-
-	#ifdef _DEBUG
-		if (abs(Interpreter::executionTrace) > 0)
-		{
-			tracelock lock(TRACESTREAM);
-			TRACESTREAM<< L"FixedSizePool(" << this 
-				<< L" new page @ " << pStart 
-				<< L" (" << m_nPages<< L" pages of " 
-				<< nChunks <<" chunks of "
-				<< m_nChunkSize <<" bytes, total waste "
-				<< m_nPages*(nBlockSize-(nChunks*m_nChunkSize)) << L')' << std::endl;
-		}
-		memset(pStart, 0xCD, nBlockSize);
-	#else
-		// We don't know whether the chunks are to contain zeros or nils, so we don't bother to init the space
-	#endif
-
-	uint8_t* pLast = &pStart[(nChunks-1) * m_nChunkSize];
-
-	#ifdef _DEBUG
-		// ASSERT that pLast is correct by causing a GPF if it isn't!
-		memset(static_cast<uint8_t*>(pLast), 0xCD, m_nChunkSize);
-	#endif
-
-	const size_t chunkSize = m_nChunkSize;			// Loop invariant
-	for (uint8_t* p = pStart; p < pLast; p += chunkSize)
-		reinterpret_cast<Link*>(p)->next = reinterpret_cast<Link*>(p + chunkSize);
-
-	reinterpret_cast<Link*>(pLast)->next = 0;
-	m_pFreeChunks = reinterpret_cast<Link*>(pStart);
-
-	#ifdef _DEBUG
-		m_nPages++;
-		m_pages = static_cast<void**>(realloc(m_pages, m_nPages*sizeof(void*)));
-		m_pages[m_nPages-1] = pStart;
-	#endif
-}
-
-void ObjectMemory::FixedSizePool::setSize(size_t nChunkSize)
-{
-	m_nChunkSize = nChunkSize;
-	ASSERT(m_nChunkSize >= MinObjectSize);
-	// Must be on 4 byte boundaries
-	ASSERT(m_nChunkSize % MinObjectSize == 0);
-	//	m_dwPageUsed = (dwPageSize / m_nChunkSize) * m_nChunkSize;
-}
-
-inline ObjectMemory::FixedSizePool::FixedSizePool(size_t nChunkSize) : m_pFreeChunks(0)
-#ifdef _DEBUG
-	, m_pages(0), m_nPages(0)
-#endif
-{
-	setSize(nChunkSize);
-}
-
-//#ifdef NDEBUG
-//	#pragma auto_inline(on)
-//#endif
-
-inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, size_t newChunkSize)
-{
-	#ifdef PRIVATE_HEAP
-		return static_cast<POBJECT>(::HeapReAlloc(m_hHeap, 0, pChunk, newChunkSize));
-	#else
-		void *oldPointer = pChunk;
-		void *newPointer = realloc(pChunk, newChunkSize);
-		_ASSERT(newPointer);
-		if (NULL == newPointer)
-			free(oldPointer);
-		return newPointer;
-	#endif
-}
-
-
-#ifdef MEMSTATS
-	void ObjectMemory::OTEPool::DumpStats()
-	{
-		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"OTEPool(" << this<< L"): total " << std::dec << m_nAllocated <<", free " << m_nFree << std::endl;
-	}
-
-	static _CrtMemState CRTMemState;
-	void ObjectMemory::DumpStats()
-	{
-		tracelock lock(TRACESTREAM);
-
-		TRACESTREAM << std::endl<< L"Object Memory Statistics:" << std::endl
-			<< L"------------------------------" << std::endl;
-
-		CheckPoint();
-		_CrtMemDumpStatistics(&CRTMemState);
-
-#ifdef _DEBUG
-		checkPools();
-#endif
-
-		TRACESTREAM << std::endl << L"OTE Pools:" << std::endl
-			<< L"------------------" << std::endl;
-
-		// We need to empty the OTEPool free lists as these hold pre-allocated objects for certain special types
-		// These are marked as free in the OT to reserve them
-		Interpreter::FlushPools();
-
-		TRACESTREAM << std::endl << L"Pool Statistics:" << std::endl
-			 << L"------------------" << std::endl << std::dec
-			  << NumPools<< L" pools in the interval "
-			  << m_pools[0].getSize()<< L" to: "
-			  << m_pools[NumPools-1].getSize()
-			  << std::endl << std::endl;
-
-		size_t pageWaste=0;
-		size_t totalPages=0;
-		size_t totalFreeBytes=0;
-		size_t totalChunks=0;
-		size_t totalFreeChunks=0;
-		for (auto i=0;i<NumPools;i++)
-		{
-			size_t nSize = m_pools[i].getSize();
-			size_t perPage = dwPageSize/nSize;
-			size_t wastePerPage = dwPageSize - (perPage*nSize);
-			size_t nPages = m_pools[i].getPages();
-			size_t nChunks = perPage*nPages;
-			size_t waste = nPages*wastePerPage;
-			size_t nFree = m_pools[i].getFree();
-			TRACE(L"%d: size %d, %d objects on %d pgs (%d per pg, %d free), waste %d (%d per page)\n",
-				i, nSize, nChunks-nFree, nPages, perPage, nFree, waste, wastePerPage);
-			totalChunks += nChunks;
-			pageWaste += waste;
-			totalPages += nPages;
-			totalFreeBytes += nFree*nSize;
-			totalFreeChunks += nFree;
-		}
-
-		size_t objectWaste = 0;
-		size_t totalObjects = 0;
-		size_t totalSmallHeapObjects = 0;
-		size_t totalSmallHeapObjectsSize = 0;
-		size_t totalPoolObjects = 0;
-		const OTE* pEnd = m_pOT+m_nOTSize;
-		for (OTE* ote = m_pOT + NumPermanent; ote < pEnd; ote++)
-		{
-			if (!ote->isFree())
-			{
-				totalObjects++;
-				switch (ote->heapSpace())
-				{
-					case Spaces::Normal:
-					{
-						size_t size = ote->sizeOf();
-						if (size <= MaxSmallObjectSize)
-						{
-							TRACESTREAM << L"Normal object of size " << size << " below threshold: " << ote << std::endl;
-						}
-						break;
-					}
-					case Spaces::Virtual:
-						break;
-					case Spaces::Heap:
-						break;
-
-					case Spaces::Blocks:
-					case Spaces::Contexts:
-					case Spaces::Dwords:
-					case Spaces::Floats:
-					case Spaces::Pools:
-					{
-						size_t size = ote->sizeOf();
-						if (size != 0 && size <= PoolObjectSizeLimit)
-						{
-							totalPoolObjects++;
-							size_t chunkSize = spacePoolForSize(size).getSize();
-							objectWaste += chunkSize - size;
-						}
-						else
-						{
-							ASSERT(size <= MaxSmallObjectSize);
-							totalSmallHeapObjects++;
-							totalSmallHeapObjectsSize += size;
-						}
-						break;
-					}
-				}
-			}
-		}
-
-		ASSERT((totalChunks - totalFreeChunks) == totalPoolObjects);
-		size_t wastePercentage = (totalChunks - totalFreeChunks) == 0 
-								? 0 
-								: size_t(double(objectWaste)/
-										double(totalPoolObjects)*100.0);
-
-		TRACESTREAM<< L"===============================================" << std::endl;
-		TRACE(L"Total objects	= %d\n"
-			  "Total pool objs	= %d\n"
-			  "Total small objs = %d (%d bytes)\n"
-			  "Total chunks		= %d\n"
-			  "Total Pages		= %d\n"
-			  "Total Allocs		= %d\n"
-			  "Total allocated	= %d\n"
-			  "Page Waste		= %d bytes\n"
-			  "Object Waste		= %d bytes (avg 0.%d)\n"
-			  "Total Waste		= %d\n"
-			  "Total free chks	= %d\n"
-			  "Total Free		= %d bytes\n",
-				totalObjects,
-				totalPoolObjects,
-				totalSmallHeapObjects, totalSmallHeapObjectsSize,
-				totalChunks,
-				totalPages, 
-				FixedSizePool::m_nAllocations,
-				totalPages*dwPageSize, 
-				pageWaste, 
-				objectWaste, wastePercentage,
-				pageWaste+objectWaste,
-				totalFreeChunks,
-				totalFreeBytes);
-	}
-
-	void ObjectMemory::CheckPoint()
-	{
-		_CrtMemCheckpoint(&CRTMemState);
-	}
-
-	size_t ObjectMemory::FixedSizePool::getFree()
-	{
-		Link* pChunk = m_pFreeChunks; 
-		size_t tally = 0;
-		while (pChunk)
-		{
-			tally++;
-			pChunk = pChunk->next;
-		}
-		return tally;
-	}
-#endif
-
-#if defined(_DEBUG)
-
-	bool ObjectMemory::FixedSizePool::isMyChunk(void* pChunk)
-	{
-		const size_t loopEnd = m_nPages;
-		for (size_t i=0;i<loopEnd;i++)
-		{
-			void* pPage = m_pages[i];
-			if (pChunk >= pPage && static_cast<uint8_t*>(pChunk) <= (static_cast<uint8_t*>(pPage)+dwPageSize))
-				return true;
-		}
-		return false;
-	}
-
-	bool ObjectMemory::FixedSizePool::isValid()
-	{
-		Link* pChunk = m_pFreeChunks; 
-		while (pChunk)
-		{
-			if (!isMyChunk(pChunk))
-				return false;
-			pChunk = pChunk->next;
-		}
-		return true;
-	}
-
-#endif
 

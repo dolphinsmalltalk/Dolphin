@@ -35,13 +35,13 @@ typedef TOTE<ST::Behavior> BehaviorOTE;
 typedef	uint8_t count_t;
 typedef uint16_t hash_t;						// Identity hash value, assigned on object creation
 
-enum class Spaces { Normal, Virtual, Blocks, Contexts, Dwords, Heap, Floats, Pools };
+enum class Spaces { Normal, Virtual, Blocks, Contexts, Dwords, Heap, Floats };
 typedef typename std::underlying_type<Spaces>::type space_t;
 
 union OTEFlags
 {
 	// Object Creation
-	static constexpr space_t NumSpaces = static_cast<space_t>(Spaces::Pools) + 1;
+	static constexpr space_t NumSpaces = static_cast<space_t>(Spaces::Floats) + 1;
 
 	struct
 	{

@@ -14,8 +14,8 @@ void Utf16StringBuf::FromUtf8(const char8_t* psz8, size_t cch8)
 	m_cwch = LengthOfUtf8(psz8, cch8);
 	if (m_cwch >= _countof(m_wcsBuf))
 	{
-		m_pBuf = reinterpret_cast<char16_t*>(malloc((m_cwch + 1) * sizeof(char16_t)));
-		// If malloc returns nullptr, then will fail below with benign AV
+		m_pBuf = new char16_t[m_cwch + 1];
+		// If alloc returns nullptr, then will fail below with benign AV
 	}
 
 	char16_t* pEnd = ConvertUtf8_unsafe(psz8, cch8, m_pBuf);
@@ -197,8 +197,8 @@ void Utf16StringBuf::FromAnsi(const char* psz, size_t cch)
 	m_cwch = LengthOfAnsi(psz, cch);
 	if (m_cwch >= _countof(m_wcsBuf))
 	{
-		m_pBuf = reinterpret_cast<char16_t*>(malloc((m_cwch + 1) * sizeof(char16_t)));
-		// If malloc returns nullptr, then will fail below with benign AV
+		m_pBuf = new char16_t[m_cwch + 1];
+		// If alloc returns nullptr, then will fail below with benign AV
 	}
 
 	char16_t* pEnd = ConvertAnsi_unsafe(psz, cch, m_pBuf);
@@ -210,8 +210,8 @@ void Utf16StringBuf::FromAnsi(const char* psz, size_t cch, UINT codePage)
 {
 	if (cch >= _countof(m_wcsBuf))
 	{
-		m_pBuf = reinterpret_cast<char16_t*>(malloc((cch + 1) * sizeof(char16_t)));
-		// If malloc returns nullptr, then will fail below with benign AV
+		m_pBuf = new char16_t[cch + 1];
+		// If alloc returns nullptr, then will fail below with benign AV
 	}
 
 	m_cwch = static_cast<size_t>(::MultiByteToWideChar(codePage, 0, psz, cch, (LPWSTR)m_pBuf, cch));

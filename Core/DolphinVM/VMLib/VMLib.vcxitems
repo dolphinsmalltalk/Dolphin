@@ -60,9 +60,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SaveImage.cpp">
       <AdditionalIncludeDirectories>$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\SBHEAP.C">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SearchPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SnapshotPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\startApp.cpp" />
@@ -81,6 +78,17 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ExternalBuf.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)heap.cpp">
+      <CallingConvention Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Cdecl</CallingConvention>
+      <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Cdecl</CallingConvention>
+      <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Cdecl</CallingConvention>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)mimalloc\include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)mimalloc\include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)mimalloc\include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />
@@ -108,7 +116,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\PrimitiveFailureCode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\RaiseThreadException.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\rc_vm.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\sbheap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\segdefs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STBehavior.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STBlockClosure.h" />
@@ -152,9 +159,6 @@
       <FileType>Document</FileType>
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\InterprtProc.inl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\ObjMemPriv.inl">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

@@ -56,7 +56,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stddef.h>
-#include <malloc.h>
 #include <stdlib.h>
 
 #pragma warning(disable:4711)	// Function selected for automatic inline expansion

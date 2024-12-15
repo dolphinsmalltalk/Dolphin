@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Natvis Include="Compiler.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="compiler.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CompilerDLL.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CompilerSupport.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="disasm.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="lexer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LexicalScope.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="optimizer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ParseInlinedMessages.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="heap.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lexer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="str.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="compiler.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="bytecode.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bytecdes.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\disassembler.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="textrange.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VMPointers.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilerDLL.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LexicalScope.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="compiler.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Compiler.def" />
+    <None Include="version.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{68ffeb2c-812c-4d78-b39b-2d9db2ff22be}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{446335c9-9b31-4282-8670-86d8064ff18f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

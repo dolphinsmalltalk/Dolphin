@@ -13,7 +13,6 @@
 #pragma code_seg(MEM_SEG)
 
 #include "ObjMem.h"
-#include "ObjMemPriv.inl"
 #include "Interprt.h"
 #include "rc_vm.h"
 #include "RegKey.h"

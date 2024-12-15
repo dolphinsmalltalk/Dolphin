@@ -12,7 +12,6 @@
 #include "binstream.h"
 #include "zbinstream.h"
 #include "objmem.h"
-#include "ObjMemPriv.inl"
 #include "interprt.h"
 #include "rc_vm.h"
 
@@ -344,20 +343,8 @@ template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream& i
 
 ST::Object* ObjectMemory::AllocObj(OTE * ote, size_t allocSize)
 {
-	ST::Object* pObj;
-	if (allocSize <= MaxSmallObjectSize)
-	{
-		// Allocate from one of the memory pools
-		pObj = static_cast<POBJECT>(allocSmallChunk(allocSize));
-		ote->m_flags.m_space = static_cast<space_t>(Spaces::Pools);
-	}
-	else
-	{
-		// Normal space and other spaces allocated from heap (may not be too many)
-		pObj = static_cast<POBJECT>(allocChunk(allocSize));
-		ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
-	}
-
+	ST::Object* pObj = static_cast<POBJECT>(allocChunk(allocSize));
+	ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
 	ote->m_location = pObj;
 	return pObj;
 }
@@ -424,7 +411,7 @@ void ObjectMemory::FixupObject(OTE* ote, uintptr_t* oldLocation, const ImageHead
 		// Look for the special image stamp object
 		else if (classPointer == _Pointers.ClassContext)
 		{
-			ASSERT(ote->heapSpace() == Spaces::Pools || ote->heapSpace() == Spaces::Normal);
+			ASSERT(ote->heapSpace() == Spaces::Normal);
 
 			// Can't deallocate now - must leave for collection later - maybe could go in the Zct though.
 			VERIFY(ote->decRefs());

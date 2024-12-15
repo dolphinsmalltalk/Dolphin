@@ -85,9 +85,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\realloc.cpp">
       <Filter>ObjectMemory</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\SBHEAP.C">
-      <Filter>ObjectMemory</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\sampler.cpp">
       <Filter>Interpreter</Filter>
     </ClCompile>
@@ -163,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Utf32String.cpp">
       <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)heap.cpp">
+      <Filter>ObjectMemory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -258,9 +258,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STVirtualObject.h">
       <Filter>Smalltalk Objects</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\sbheap.h">
-      <Filter>ObjectMemory</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\VMExcept.h">
       <Filter>Interpreter</Filter>
     </ClInclude>
@@ -347,9 +344,6 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\istasm.inc">
       <Filter>Interpreter</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\ObjMemPriv.inl">
-      <Filter>ObjectMemory</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

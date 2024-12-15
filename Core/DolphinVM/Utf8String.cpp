@@ -13,8 +13,8 @@ Utf8StringBuf::Utf8StringBuf(const char* __restrict psz, size_t cch)
 	m_cch8 = LengthOfAnsi(psz, cch);
 	if (m_cch8 >= _countof(m_ch8Buf))
 	{
-		m_pBuf = reinterpret_cast<char8_t*>(malloc((m_cch8 + 1) * sizeof(char8_t)));
-		// If malloc returns nullptr, then will fail below with benign AV
+		m_pBuf = new char8_t[m_cch8 + 1];
+		// If alloc returns nullptr, then will fail below with benign AV
 	}
 
 	*(ConvertAnsi_unsafe(psz, cch, m_pBuf, m_cch8)) = '\0';
@@ -104,8 +104,8 @@ Utf8StringBuf::Utf8StringBuf(const char16_t* __restrict pwch, size_t cwch)
 	m_cch8 = LengthOfUtf16(pwch, cwch);
 	if (m_cch8 >= _countof(m_ch8Buf))
 	{
-		m_pBuf = reinterpret_cast<char8_t*>(malloc((m_cch8 + 1) * sizeof(char8_t)));
-		// If malloc returns nullptr, then will fail below with benign AV
+		m_pBuf = new char8_t[m_cch8 + 1];
+		// If alloc returns nullptr, then will fail below with benign AV
 	}
 
 	*(ConvertUtf16_unsafe(pwch, cwch, m_pBuf, m_cch8)) = '\0';

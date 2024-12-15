@@ -20,7 +20,6 @@
 
 
 #include "ObjMem.h"
-#include "ObjMemPriv.inl"
 #include "Interprt.h"
 #include "rc_vm.h"
 #include "VMExcept.h"
@@ -49,13 +48,6 @@ static HRESULT getSystemInfo()
 	return S_OK;
 }
 
-void ObjectMemory::FixedSizePool::Initialize()
-{
-	m_pFreePages = NULL;
-	m_pAllocations = NULL;
-	m_nAllocations = 0;
-}
-
 HRESULT ObjectMemory::Initialize()
 {
 	// Assembler will need to be modified if these are not the case
@@ -70,8 +62,6 @@ HRESULT ObjectMemory::Initialize()
 	ASSERT(Context::FixedSize == 2);
 	ASSERT(BlockClosure::FixedSize == 5);
 	ASSERT(sizeof(BlockCopyExtension) == sizeof(uint32_t));
-	ASSERT(MinObjectSize >= sizeof(Oop));
-	ASSERT(_ROUND2(MinObjectSize,sizeof(Oop)) == MinObjectSize);
 	//ASSERT(sizeof(Object) == ObjectHeaderSize*sizeof(MWORD));
 	ASSERT(sizeof(VMPointers) == (192*sizeof(Oop)+ObjectByteSize));
 	// Check that the const objects segment is still exactly one page
@@ -105,8 +95,6 @@ HRESULT ObjectMemory::Initialize()
 	if (FAILED(hr))
 		return hr;
 
-	FixedSizePool::Initialize();
-
 	m_nNextIdHash = 1 << 16 | 1;
 	m_nOTSize = OTDefaultSize;
 	m_nOTMax = OTDefaultMax;
@@ -131,37 +119,11 @@ HRESULT ObjectMemory::Initialize()
 	m_spaceOTEBits[static_cast<space_t>(Spaces::Heap)].m_pointer	= FALSE;
 	m_spaceOTEBits[static_cast<space_t>(Spaces::Floats)].m_pointer	= FALSE;
 
-	//MaxSizeOfPoolObject = PoolObjectSizeLimit;
-	//NumPools =  MaxPools;
-
-	//CRegKey rk;
-	//if (OpenDolphinKey(rk, "") == ERROR_SUCCESS)
-	//{
-	//	rk.QueryDWORDValue("PoolThreshold", MaxSizeOfPoolObject);
-	//	if (MaxSizeOfPoolObject > PoolObjectSizeLimit)
-	//		MaxSizeOfPoolObject = PoolObjectSizeLimit;
-	//	NumPools = MaxSizeOfPoolObject < MinObjectSize ? 0 : 
-	//				(MaxSizeOfPoolObject-MinObjectSize)/PoolGranularity + 1;
-	//	ASSERT(NumPools >= 0 && NumPools <= MaxPools);
-	//}
-
- 	for (auto j=0;j<NumPools;j++)
-		m_pools[j].setSize(MinObjectSize << j);
-
 	// Ensure we can write to const space in order to initialie it
 	m_pConstObjs = &_Pointers;
 	ProtectConstSpace(PAGE_READWRITE);
 
-	if (!m_hHeap)
-	{
-		// Reinitialize the heaps each time through as gets deleted on terminate
-		m_hHeap = ::HeapCreate(HEAP_NO_SERIALIZE|HEAP_GENERATE_EXCEPTIONS, HEAPINITPAGES*dwPageSize, 0);
-		if (!m_hHeap)
-			::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, NULL);
-		_crtheap = m_hHeap;
-		// Allocates a header block from the heap for the small block heap
-		__sbh_heap_init(MAX_ALLOC_DATA_SIZE);
-	}
+	InitializeHeap();
 
 	return S_OK;
 }

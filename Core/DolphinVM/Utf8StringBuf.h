@@ -15,7 +15,8 @@ public:
 
 	~Utf8StringBuf()
 	{
-		if (m_pBuf != m_ch8Buf) free(m_pBuf);
+		if (m_pBuf != m_ch8Buf) 
+			delete m_pBuf;
 	}
 
 	operator const char8_t*() const { return m_pBuf; }

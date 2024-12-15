@@ -12,14 +12,9 @@
 #include "Ist.h"
 #include "ObjMem.h"
 #include "Interprt.h"
-#include "ObjMemPriv.inl"
 
 // Smalltalk classes
 #include "STVirtualObject.h"
-
-#ifdef MEMSTATS
-	extern size_t m_nLargeFreed;
-#endif
 
 #pragma code_seg(MEM_SEG)
 
@@ -41,24 +36,6 @@ inline void ObjectMemory::releasePointer(OTE* ote)
 #endif
 
 	//HARDASSERT(m_nFreeOTEs == CountFreeOTEs());
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Low-level memory chunk (not object) management routines
-//
-// These map directly onto C or Win32 heap
-
-void ObjectMemory::freeChunk(POBJECT pObj)
-{
-#ifdef MEMSTATS
-	++m_nLargeFreed;
-#endif
-
-	#ifdef PRIVATE_HEAP
-		::HeapFree(m_hHeap, 0, pObj);
-	#else
-		free(pObj);
-	#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -113,15 +90,6 @@ void ObjectMemory::deallocate(OTE* ote)
 			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Floats)].deallocate(ote);
 			break;
 
-		case Spaces::Pools:
-		{
-			size_t size = ote->sizeOf();
-			HARDASSERT(size <= MaxSmallObjectSize);
-			freeSmallChunk(ote->m_location, size);
-			releasePointer(ote);
-		}
-		break;
-
 		default:
 			ASSERT(false);
 			__assume(false);
@@ -148,9 +116,8 @@ void ObjectMemory::OTEPool::clear()
 
 		ote->beAllocated();
 		
-		// All objects on the free list originated from pool space, so we need to
-		// send them back there
-		ote->m_flags.m_space = static_cast<space_t>(Spaces::Pools);
+		// All objects on the free list originated from the heap, so we need to send them back there
+		ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
 		ote->setSize(ote->isPointers() ? SizeOfPointers(m_size) : m_size);
 
 		ObjectMemory::deallocate(ote);

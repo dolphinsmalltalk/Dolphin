@@ -20,11 +20,10 @@
 
 using namespace ST;
 
-#define PRIVATE_HEAP
-//#undef PRIVATE_HEAP
+#define ObjMemCall __fastcall
 
-// Dolphin Smallblock heap separate from C-runtime sbh
-#include "sbheap.h"
+//#define WIN32_HEAP
+#undef WIN32_HEAP
 
 #if defined(_DEBUG)
 	#define MEMSTATS
@@ -63,9 +62,11 @@ public:
 
 	// Public interface for use of Interpreter
 	static HRESULT Initialize();
+	static void __cdecl InitializeHeap();
 	static HRESULT InitializeImage();
 	static void InitializeMemoryManager();
 	static void Terminate();
+	static void __cdecl UninitializeHeap();
 
 	// Object Pointer access
 	static Oop fetchPointerOfObject(size_t fieldIndex, PointersOTE* ote);
@@ -91,14 +92,6 @@ public:
 	static BehaviorOTE* fetchClassOf(Oop objectPointer);
 
 	static ByteElementSize GetBytesElementSize(BytesOTE* ote);
-
-	// Use CRT Small block heap OR pool if size <= this threshold
-	static constexpr size_t MaxSmallObjectSize = 0x3f8;
-	static constexpr size_t NumPools = 5;
-	static constexpr size_t MinSizeHighBit = 3;
-	static constexpr size_t MinObjectSize = 1 << MinSizeHighBit;
-	static constexpr size_t PoolObjectSizeLimit = MinObjectSize << (NumPools - 1);
-
 
 	static VirtualOTE* __fastcall newVirtualObject(BehaviorOTE* classPointer, size_t initialSize, size_t maxSize);
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer);
@@ -128,7 +121,7 @@ public:
 	static size_t __fastcall OopsUsed();
 	static size_t GetOTSize();
 	static size_t compact(Oop* const sp);
-	static void HeapCompact();
+	static void __cdecl HeapCompact();
 
 	// Used by Interpreter and Compiler to update any Oops they hold following a compact
 	template <class T> static void compactOop(T*& ote)
@@ -228,8 +221,7 @@ public:
 	static void checkReferences(Oop* const sp);
 	static void checkReferences();
 	static void addRefsFrom(OTE* ote);
-	static void checkPools();
-	static void checkOtePools();
+	static void __cdecl checkPools();
 	static void checkStackRefs(Oop* const sp);
 	static bool isValidOop(Oop);
 #endif
@@ -241,8 +233,7 @@ public:
 	}
 
 #ifdef MEMSTATS
-	static void DumpStats();
-	static void CheckPoint();
+	static void __cdecl DumpStats(const wchar_t*);
 #endif
 
 	static _PrimitiveFailureCode __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, size_t nMaxObjects);
@@ -289,7 +280,7 @@ public:
 		size_t	m_nFree;
 		size_t	m_nAllocated;
 
-		void	DumpStats();
+		void	__cdecl DumpStats();
 		void	registerNew(OTE* newOTE, BehaviorOTE* classPointer);
 #endif
 
@@ -410,56 +401,6 @@ public:
 #endif
 
 private:
-	///////////////////////////////////////////////////////////////////////////
-	// Memory Pools
-
-	__declspec(align(8)) class FixedSizePool
-	{
-	public:
-		FixedSizePool(size_t nChunkSize=MinObjectSize);
-
-		POBJECT allocate();
-		void deallocate(POBJECT pChunk);
-		
-		void setSize(size_t nChunkSize);
-		void terminate();
-
-	#ifdef _DEBUG
-		bool isMyChunk(void* pChunk);
-		bool isValid();
-	#endif
-
-	#ifdef MEMSTATS
-		size_t getPages() { return m_nPages; }
-		size_t getFree();
-		void**		m_pages;
-		size_t	m_nPages;
-	#endif
-
-	size_t getSize() { return m_nChunkSize; }
-
-	private:
-		void moreChunks();
-		static void morePages();
-		static uint8_t* allocatePage();
-
-	public:
-		static void Initialize();
-		static void Terminate();
-
-	public:
-		struct		Link	{ Link* next; };
-
-	private:
-
-		Link*		m_pFreeChunks;
-		size_t		m_nChunkSize;
-
-		static	Link*		m_pFreePages;
-		static	void**		m_pAllocations;
-	public:
-		static	size_t		m_nAllocations;
-	};
 
 	static HRESULT __stdcall allocateOT(size_t reserve, size_t commit);
 
@@ -470,20 +411,16 @@ private:
 public:
 	static hash_t nextIdentityHash();
 private:
-	// Memory allocators - these are very thin layers of C/Win32 heap
-	static void freeChunk(POBJECT pChunk);
-	static void freeSmallChunk(POBJECT pObj, size_t size);
-	static POBJECT reallocChunk(POBJECT pChunk, size_t newChunkSize);
+	// Low-level memory allocators - these are very thin layers over mimalloc or Win32 heap
+	static void* ObjMemCall allocChunk(size_t chunkSize);
+	static void ObjMemCall freeChunk(void* pChunk);
+	static void* ObjMemCall reallocChunk(void* pChunk, size_t newChunkSize);
+
 #ifdef _DEBUG
 	static size_t chunkSize(void* pChunk);
 #endif
 
-	static POBJECT allocSmallChunk(size_t chunkSize);
-	static POBJECT allocChunk(size_t chunkSize);
 	static POBJECT allocObject(size_t objectSize, OTE*& ote);
-	static POBJECT allocLargeObject(size_t objectSize, OTE*& ote);
-
-	static FixedSizePool& spacePoolForSize(size_t objectSize);
 
 	static void decRefs(Oop);
 
@@ -578,9 +515,6 @@ public:
 	static OTE*		m_pOT;							// The Object Table itself
 private:
 	static OTE*		m_pFreePointerList;				// Head of list of free Object Table Entries
-
-private:
-	static FixedSizePool	m_pools[NumPools];
 };
 
 // Lower level object creation
@@ -885,70 +819,6 @@ inline size_t ObjectMemory::lastStrongPointerOf(const OTE* ote)
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Memory pool routines
-
-inline ObjectMemory::FixedSizePool& ObjectMemory::spacePoolForSize(size_t objectSize)
-{
-	HARDASSERT(objectSize != 0);
-	HARDASSERT(objectSize <= PoolObjectSizeLimit);
-	unsigned long nPool;
-	if (!_BitScanReverse(&nPool, (objectSize - 1) >> (MinSizeHighBit - 1)))
-	{
-		HARDASSERT(objectSize < MinObjectSize);
-		return m_pools[0];
-	}
-	ASSUME(nPool < NumPools);
-	ObjectMemory::FixedSizePool& pool = m_pools[nPool];
-	HARDASSERT(pool.getSize() >= objectSize);
-	HARDASSERT(nPool == 0 || (m_pools[nPool - 1].getSize() < objectSize));
-	return pool;
-}
-
-inline POBJECT ObjectMemory::FixedSizePool::allocate()
-{
-	if (!m_pFreeChunks)
-	{
-		moreChunks();
-		ASSERT(m_pFreeChunks);
-		_ASSERTE(isValid());
-	}
-	Link* pChunk = m_pFreeChunks;
-	m_pFreeChunks = pChunk->next;
-	
-	#if defined(_DEBUG) //	&& defined(		// JGFoster
-		if (_crtDbgFlag & _CRTDBG_CHECK_ALWAYS_DF)
-			HARDASSERT(isValid());
-		memset(&pChunk->next, 0xCD, sizeof(pChunk->next));
-	#endif
-
-	return reinterpret_cast<POBJECT>(pChunk);
-}
-
-inline void ObjectMemory::FixedSizePool::deallocate(POBJECT p)
-{
-	#ifdef _DEBUG
-		HARDASSERT(isMyChunk(p));
-		if (_crtDbgFlag & _CRTDBG_CHECK_ALWAYS_DF)
-		{
-			HARDASSERT(isValid());
-		}
-		memset(p, 0xCD, m_nChunkSize);
-	#endif
-
-	Link* pChunk = reinterpret_cast<Link*>(p);
-	pChunk->next = m_pFreeChunks;
-	m_pFreeChunks = pChunk;
-}
-
-inline void ObjectMemory::FixedSizePool::terminate()
-{
-	#ifdef _DEBUG
-		free(m_pages);
-		m_pages = 0;
-		m_nPages = 0;
-	#endif
-	m_pFreeChunks = 0;
-}
 
 inline size_t ObjectMemory::OTEPool::FreeCount()
 {
@@ -1019,9 +889,6 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer)
 		#ifdef MEMSTATS
 			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
 		#endif
-
-		// It MUST be the case that all pooled objects can reside in pool space
-		ASSERT(ote->heapSpace() == Spaces::Pools);
 	}
 
 	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(m_space)];
@@ -1052,9 +919,6 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 		#ifdef MEMSTATS
 			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
 		#endif
-
-		// It MUST be the case that all pooled objects can reside in pool space
-		ASSERT(ote->heapSpace() == Spaces::Pools);
 	}
 
 	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(m_space)];

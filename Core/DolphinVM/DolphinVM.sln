@@ -1,8 +1,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VM", "dll.vcxproj", "{382ABBF3-B32D-4D77-B303-346AA146921C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6} = {ABB5EAE7-B3E6-432E-B636-333449892EA6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Dull.vcxproj", "{A8454911-DE25-451D-AC38-1B6B058C050D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -10,6 +13,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Dull.v
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Compiler", "Compiler\Compiler.vcxproj", "{35EB6247-4F53-4605-AA04-A9310AB3235B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6} = {ABB5EAE7-B3E6-432E-B636-333449892EA6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DolphinLib", "DolphinLib.vcxproj", "{241D4E3E-44C0-40B7-BE1B-5249916FE631}"
 EndProject
@@ -21,6 +27,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InProcStub", "InProcStub\In
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InProcToGo", "InProcToGo\InProcToGo.vcxproj", "{90C32F90-C0B1-46FE-BACE-FB6566EB6F3C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6} = {ABB5EAE7-B3E6-432E-B636-333449892EA6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIStub", "GUIStub\Stub.vcxproj", "{47007458-C534-493F-9A4C-936E5E0C91C8}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -28,6 +37,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIStub", "GUIStub\Stub.vcx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleToGo", "ConsoleToGo\ConsoleToGo.vcxproj", "{714480A5-0779-4C59-8A08-856E5C34AC37}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6} = {ABB5EAE7-B3E6-432E-B636-333449892EA6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console", "ConsoleStub\Console.vcxproj", "{F6BBF41C-E4E0-4514-BA19-E248DE206820}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -37,6 +49,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIToGo", "ToGoStub\GuiToGo.vcxproj", "{12B536BA-143E-4F38-BD96-77B35467DB13}"
 	ProjectSection(ProjectDependencies) = postProject
 		{241D4E3E-44C0-40B7-BE1B-5249916FE631} = {241D4E3E-44C0-40B7-BE1B-5249916FE631}
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6} = {ABB5EAE7-B3E6-432E-B636-333449892EA6}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stubs", "Stubs", "{F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}"
@@ -51,19 +64,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMLib", "VMLib\VMLib.vcxite
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.vcxitems", "{1F161730-1E11-4FBD-A4DF-F6E9B5577F5E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mimalloc", "mimalloc\ide\vs2022\mimalloc.vcxproj", "{ABB5EAE7-B3E6-432E-B636-333449892EA6}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		VMLib\VMLib.vcxitems*{12b536ba-143e-4f38-bd96-77b35467db13}*SharedItemsImports = 4
-		zlib\zlib.vcxitems*{12b536ba-143e-4f38-bd96-77b35467db13}*SharedItemsImports = 4
-		zlib\zlib.vcxitems*{1f161730-1e11-4fbd-a4df-f6e9b5577f5e}*SharedItemsImports = 9
-		VMLib\VMLib.vcxitems*{382abbf3-b32d-4d77-b303-346aa146921c}*SharedItemsImports = 4
-		zlib\zlib.vcxitems*{382abbf3-b32d-4d77-b303-346aa146921c}*SharedItemsImports = 4
-		VMLib\VMLib.vcxitems*{714480a5-0779-4c59-8a08-856e5c34ac37}*SharedItemsImports = 4
-		zlib\zlib.vcxitems*{714480a5-0779-4c59-8a08-856e5c34ac37}*SharedItemsImports = 4
-		VMLib\VMLib.vcxitems*{90c32f90-c0b1-46fe-bace-fb6566eb6f3c}*SharedItemsImports = 4
-		zlib\zlib.vcxitems*{90c32f90-c0b1-46fe-bace-fb6566eb6f3c}*SharedItemsImports = 4
-		VMLib\VMLib.vcxitems*{bc5d162d-46bc-42cf-85db-cb715ee8517e}*SharedItemsImports = 9
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
@@ -130,6 +133,12 @@ Global
 		{12B536BA-143E-4F38-BD96-77B35467DB13}.Release|Win32.ActiveCfg = Release|Win32
 		{12B536BA-143E-4F38-BD96-77B35467DB13}.Release|Win32.Build.0 = Release|Win32
 		{12B536BA-143E-4F38-BD96-77B35467DB13}.VM Debug|Win32.ActiveCfg = VM Debug|Win32
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6}.Debug|Win32.Build.0 = Debug|Win32
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6}.Release|Win32.ActiveCfg = Release|Win32
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6}.Release|Win32.Build.0 = Release|Win32
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6}.VM Debug|Win32.ActiveCfg = Debug|Win32
+		{ABB5EAE7-B3E6-432E-B636-333449892EA6}.VM Debug|Win32.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,5 +153,17 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {808FD94F-FA41-4A9A-B2BC-2010D373F582}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		VMLib\VMLib.vcxitems*{12b536ba-143e-4f38-bd96-77b35467db13}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{12b536ba-143e-4f38-bd96-77b35467db13}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{1f161730-1e11-4fbd-a4df-f6e9b5577f5e}*SharedItemsImports = 9
+		VMLib\VMLib.vcxitems*{382abbf3-b32d-4d77-b303-346aa146921c}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{382abbf3-b32d-4d77-b303-346aa146921c}*SharedItemsImports = 4
+		VMLib\VMLib.vcxitems*{714480a5-0779-4c59-8a08-856e5c34ac37}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{714480a5-0779-4c59-8a08-856e5c34ac37}*SharedItemsImports = 4
+		VMLib\VMLib.vcxitems*{90c32f90-c0b1-46fe-bace-fb6566eb6f3c}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{90c32f90-c0b1-46fe-bace-fb6566eb6f3c}*SharedItemsImports = 4
+		VMLib\VMLib.vcxitems*{bc5d162d-46bc-42cf-85db-cb715ee8517e}*SharedItemsImports = 9
 	EndGlobalSection
 EndGlobal

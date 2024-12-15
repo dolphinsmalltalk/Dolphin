@@ -185,7 +185,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 						nMaxUnmarked = 512;
 					else
 						nMaxUnmarked = nMaxUnmarked << 1;
-					pUnmarked = static_cast<OTE**>(realloc(pUnmarked, nMaxUnmarked*sizeof(OTE*)));
+					pUnmarked = static_cast<OTE**>(reallocChunk(pUnmarked, nMaxUnmarked*sizeof(OTE*)));
 					if (pUnmarked == nullptr)
 					{
 						::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, nullptr);
@@ -377,7 +377,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 		}
 	}
 
-	free(pUnmarked);
+	freeChunk(pUnmarked);
 
 	#ifdef VERBOSEGC
 	{
@@ -399,7 +399,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	}
 	#endif
 
-	__sbh_heapmin();
+	//mi_collect(false);
 
 	#ifdef _DEBUG
 		checkReferences();
@@ -447,40 +447,6 @@ size_t ObjectMemory::CountFreeOTEs()
 
 #ifdef _DEBUG
 
-	void ObjectMemory::checkPools()
-	{
-		const size_t loopEnd = m_nOTSize;
-		for (size_t i=OTBase;i<loopEnd;i++)
-		{
-			OTE& ote = m_pOT[i];
-			if (!ote.isFree())
-			{
-				Spaces space = ote.heapSpace();
-				if (space == Spaces::Pools)
-				{
-					size_t size = ote.sizeOf();
-					if (size > MaxSizeOfPoolObject)
-					{
-						if (size <= MaxSmallObjectSize)
-							HARDASSERT(__sbh_find_block(ote.m_location))
-						else
-						{
-							tracelock lock(TRACESTREAM);
-							TRACESTREAM<< L"Found large object (size = " << size 
-								<< L") in space " << (int)space 
-								<< L": " << &ote << std::endl;
-						}
-					}
-					else
-						if (size != 0)
-							HARDASSERT(spacePoolForSize(size).isMyChunk(ote.m_location))
-				}
-			}
-		}
-		for (auto j=0;j<NumPools;j++)
-			HARDASSERT(m_pools[j].isValid());
-	}
-
 	void ObjectMemory::checkStackRefs(Oop* const sp)
 	{
 		size_t zeroCountNotInZct = 0;
@@ -517,13 +483,12 @@ size_t ObjectMemory::CountFreeOTEs()
 		//		earlier (mostly, it seems, in either activating new methods 
 		//		or returnValueTo) in BYTEASM.ASM).
 		//
-		#ifdef PRIVATE_HEAP
+		#ifdef WIN32_HEAP
 			if (Interpreter::executionTrace > 3)
 				HARDASSERT(::HeapValidate(m_hHeap, 0, 0));
 		#endif
 
 //		HARDASSERT(_CrtCheckMemory());
-		HARDASSERT(__sbh_heap_check() >= 0);
 		//checkPools();
 
 		HARDASSERT(m_nFreeOTEs == CountFreeOTEs());
@@ -556,19 +521,6 @@ size_t ObjectMemory::CountFreeOTEs()
 					//errors++;
 				}*/
 				OTE* ote = &m_pOT[i];
-				if (!ote->isFree())
-				{
-					Spaces space = ote->heapSpace();
-					if (space == Spaces::Pools)
-					{
-						HARDASSERT(ote->sizeOf() <= MaxSmallObjectSize);
-					}
-					else if (space == Spaces::Normal)
-					{
-						// Not a valid assertion as objects can be resized down below the threshold
-						//HARDASSERT(ote->sizeOf() > MaxSmallObjectSize);
-					}
-				}
 				currentRefs[i] = ote->m_count;
 				ote->m_count = 0;
 			}

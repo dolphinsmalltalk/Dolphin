@@ -23,64 +23,6 @@ CompileForEval=_PrimCompileForEval@32
 
 compress2
 uncompress
-
-; CRT functions imported by the image
-
-	_chsize_s
-	_clearfp
-	_close
-	_control87
-	_dup
-	_dup2
-	_errno
-	_fdopen
-	_filelengthi64
-	_fileno
-	_fseeki64
-	_ftelli64
-	_get_invalid_parameter_handler
-	_get_osfhandle
-	_isatty
-	_makepath_s
-	_open_osfhandle
-	_setmode
-	_splitpath_s
-	_statusfp
-	_wcserror_s
-	_wcsicmp
-	_wfsopen
-	atoi
-	fclose
-	feof
-	fflush
-	fgetc
-	fgets
-	fgetwc
-	fgetws
-	fputc
-	fputs
-	fputwc
-	fputws
-	fread_s
-	free
-	fwrite
-	memcmp
-	memcpy_s
-	rand
-	setlocale
-	srand
-	strcat_s
-	strcmp
-	strcspn
-	strlen
-	strncmp
-	strncpy_s
-	ungetc
-	ungetwc
-	wcslen
-	wcscspn
-	wcsncpy_s
-
 ; VMLibrary
 
 	_snprintf_s
