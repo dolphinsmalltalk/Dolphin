@@ -14,6 +14,8 @@ Decodes byte codes to stdout
 
 #pragma code_seg(DEBUG_SEG)
 
+#include <sstream>
+
 #include "Interprt.h"
 #include "bytecdes.h"
 

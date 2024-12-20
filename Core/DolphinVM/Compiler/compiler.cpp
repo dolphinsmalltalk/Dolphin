@@ -181,10 +181,10 @@ u8string Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 	if (!(m_piVM->IsBehavior(oopClass)))
 	{
 		char szPrompt[256];
-		::LoadString(GetResLibHandle(), IDS_P_NOTACLASS, szPrompt, sizeof(szPrompt)-1);
+		::LoadStringA(GetResLibHandle(), IDS_P_NOTACLASS, szPrompt, sizeof(szPrompt)-1);
 		u8string actualClassName = recurse ? GetNameOfClass(Oop(m_piVM->FetchClassOf(oopClass)), false) : u8"invalid object"s;
 		char8_t buf[512];
-		VERIFY(wsprintf((LPSTR)buf, szPrompt, actualClassName.c_str())>=0);
+		VERIFY(wsprintfA((LPSTR)buf, szPrompt, actualClassName.c_str())>=0);
 		return buf;
 	}
 	else
@@ -273,7 +273,7 @@ POTE Compiler::CompileForEvaluationHelper(const u8string& source, Oop compiler, 
 }
 
 
-u8string Compiler::GetClassName()
+u8string Compiler::getClassName()
 {
 	return m_class == Nil() ? u8"nil"s : GetNameOfClass(reinterpret_cast<Oop>(m_class));
 }
@@ -4131,16 +4131,9 @@ void Compiler::_CompileErrorV(int code, const TEXTRANGE& range, va_list extras)
 		else
 		{
 			u8string erroneousText = GetTextRange(range);
-			if (IsCompilingExpression)
-			{
-				fprintf_s(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, reinterpret_cast<const char*>(GetClassName().c_str()), reinterpret_cast<const char*>(m_selector.c_str()), LineNo, range.m_start, range.m_stop,
-					reinterpret_cast<const char*>(erroneousText.c_str()));
-			}
-			else
-			{
-				fprintf_s(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, reinterpret_cast<const char*>(GetClassName().c_str()), reinterpret_cast<const char*>(m_selector.c_str()), LineNo, range.m_start, range.m_stop,
-					reinterpret_cast<const char*>(erroneousText.c_str()));
-			}
+			fprintf_s(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, 
+				reinterpret_cast<const char*>(getClassName().c_str()), reinterpret_cast<const char*>(m_selector.c_str()), 
+				LineNo, range.m_start, range.m_stop, reinterpret_cast<const char*>(erroneousText.c_str()));
 			fputs((LPCSTR)Text.c_str(), stdout);
 		}
 	}
@@ -4174,7 +4167,8 @@ void Compiler::_CompileWarningV(int code, const TEXTRANGE& range, va_list extras
 		}
 		else
 		{
-			fprintf_s(stdout, "WARNING %s>>%s line %d: %d\n", (LPCSTR)GetClassName().c_str(), (LPCSTR)Selector.c_str(), LineNo, code);
+			fprintf_s(stdout, "WARNING %s>>%s line %d: %d\n", 
+				(LPCSTR)getClassName().c_str(), (LPCSTR)Selector.c_str(), LineNo, code);
 		}
 	}
 }

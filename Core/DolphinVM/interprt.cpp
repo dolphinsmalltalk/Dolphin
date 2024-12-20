@@ -16,6 +16,8 @@ Implementation of Smalltalk interpreter
 
 #pragma code_seg(INTERPMISC_SEG)
 
+#include <VersionHelpers.h>
+
 #include "Interprt.h"
 #include "InterprtProc.inl"
 #include "thrdcall.h"
@@ -265,11 +267,8 @@ HRESULT Interpreter::initializeCharMaps()
 	// Create the reverse map - it will be very sparse, but as it only consumes 64Kb it isn't worth using a hash table
 	memset(m_unicodeToAnsiCharMap, 0, sizeof(m_unicodeToAnsiCharMap));
 	memset(m_unicodeToBestFitAnsiCharMap, 0, sizeof(m_unicodeToBestFitAnsiCharMap));
-	WCHAR* wideChars = malloca(WCHAR, 65536);
-	if (wideChars == nullptr)
-	{
-		return E_OUTOFMEMORY;
-	}
+
+	std::unique_ptr<WCHAR[]> wideChars(new WCHAR[65536]);
 
 	auto i = 0u;
 	for (; i < 0xd800; i++)
@@ -279,9 +278,8 @@ HRESULT Interpreter::initializeCharMaps()
 	for (; i <= 0xffff; i++)
 		wideChars[i] = static_cast<WCHAR>(i);
 	
-	VERIFY(::WideCharToMultiByte(m_ansiCodePage, WC_NO_BEST_FIT_CHARS, wideChars, 65536, reinterpret_cast<LPSTR>(m_unicodeToAnsiCharMap), 65536, "\0", nullptr) == 65536);
-	VERIFY(::WideCharToMultiByte(m_ansiCodePage, 0, wideChars, 65536, reinterpret_cast<LPSTR>(m_unicodeToBestFitAnsiCharMap), 65536, "\0", nullptr) == 65536);
-	_freea(wideChars);
+	VERIFY(::WideCharToMultiByte(m_ansiCodePage, WC_NO_BEST_FIT_CHARS, wideChars.get(), 65536, reinterpret_cast<LPSTR>(m_unicodeToAnsiCharMap), 65536, "\0", nullptr) == 65536);
+	VERIFY(::WideCharToMultiByte(m_ansiCodePage, 0, wideChars.get(), 65536, reinterpret_cast<LPSTR>(m_unicodeToBestFitAnsiCharMap), 65536, "\0", nullptr) == 65536);
 
 	return S_OK;
 }

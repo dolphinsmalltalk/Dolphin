@@ -9,8 +9,7 @@
 
 ******************************************************************************/
 #pragma once
-
-#include "Ist.h"
+#include "environ.h"
 #include "STObject.h"
 #include "STVirtualObject.h"
 #include "STBehavior.h"
@@ -232,9 +231,7 @@ public:
 			return ote->m_flags.m_mark == m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)].m_mark;
 	}
 
-#ifdef MEMSTATS
 	static void __cdecl DumpStats(const wchar_t*);
-#endif
 
 	static _PrimitiveFailureCode __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, size_t nMaxObjects);
 	static HRESULT __stdcall LoadImage(const wchar_t* szImageName, LPVOID imageData, size_t imageSize, bool bIsDevSys);
@@ -413,6 +410,7 @@ public:
 private:
 	// Low-level memory allocators - these are very thin layers over mimalloc or Win32 heap
 	static void* ObjMemCall allocChunk(size_t chunkSize);
+	static void* ObjMemCall allocSmallChunk(size_t chunkSize);
 	static void ObjMemCall freeChunk(void* pChunk);
 	static void* ObjMemCall reallocChunk(void* pChunk, size_t newChunkSize);
 

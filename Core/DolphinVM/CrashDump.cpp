@@ -7,7 +7,9 @@
 
 #pragma code_seg(DEBUG_SEG)
 
-#include "environ.h"
+#include <Strsafe.h>
+#include <fstream>
+
 #include "rc_vm.h"
 #include "interprt.h"
 #include "VMExcept.h"
@@ -69,7 +71,7 @@ std::wstring GetVmVersion()
 	DWORD dwLen = ::GetFileVersionInfoSizeW(vmFileName, &dwHandle);
 	if (dwLen)
 	{
-		LPVOID lpData = _malloca(dwLen);
+		LPVOID lpData = malloc(dwLen);
 		if (lpData != nullptr)
 		{
 			if (::GetFileVersionInfoW(vmFileName, 0, dwLen, lpData))
@@ -78,7 +80,7 @@ std::wstring GetVmVersion()
 				UINT len = 0;
 				VerQueryValue(lpData, L"\\StringFileInfo\\040904e4\\ProductVersion", reinterpret_cast<void**>(&szProductVersion), &len);
 				std::wstring productVersion(szProductVersion, len);
-				_freea(lpData);
+				free(lpData);
 				return productVersion;
 			}
 		}

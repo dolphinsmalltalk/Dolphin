@@ -2316,9 +2316,9 @@ POTE Compiler::NewMethod()
 #if defined(_DEBUG)
 	{
 		char buf[512];
-		wsprintf(buf, "Compiling %s>>%s for %s, %s\n", GetClassName().c_str(), m_selector.c_str(), 
+		wsprintfA(buf, "Compiling %s>>%s for %s, %s\n", getClassName().data(), m_selector.data(), 
 			WantDebugMethod ? "debug" : "release", m_ok ? "succeeded" : "failed");
-		OutputDebugString(buf);
+		OutputDebugStringA(buf);
 		
 		if (m_ok && compilationTrace > 0)
 		{

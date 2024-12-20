@@ -55,7 +55,7 @@ class ATL_NO_VTABLE Compiler : public Lexer,
 {
 public:
 
-DECLARE_REGISTRY(Compiler, "Dolphin.Compiler.7", "Dolphin.Compiler", IDR_COMPILER, THREADFLAGS_APARTMENT)
+DECLARE_REGISTRY(Compiler, L"Dolphin.Compiler.7", L"Dolphin.Compiler", IDR_COMPILER, THREADFLAGS_APARTMENT)
 
 DECLARE_NOT_AGGREGATABLE(Compiler)
 
@@ -162,7 +162,7 @@ private:
 	Oop Notification(int errorCode, const TEXTRANGE& range, va_list extras);
 	void InternalError(const char* szFile, int line, const TEXTRANGE&, const char* szMsg, ...);
 	
-	u8string  GetClassName();
+	u8string  getClassName();
 	u8string GetNameOfClass(Oop oopClass, bool recurse=true);
 
 	// Moved from Interpreter as compiler specific (to ease removal of compiler)
