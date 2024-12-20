@@ -16,6 +16,8 @@ Implementation of Smalltalk interpreter
 
 #pragma code_seg(INTERPMISC_SEG)
 
+#include <VersionHelpers.h>
+
 #include "Interprt.h"
 #include "InterprtProc.inl"
 #include "thrdcall.h"

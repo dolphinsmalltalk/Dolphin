@@ -21,6 +21,13 @@
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
 #define _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES 1 
 
+#include <limits.h>
+#include <stdarg.h>
+#include <locale.h>
+#include <Strsafe.h>
+#include <stdlib.h>
+#include "heap.h"
+
 #define _ATL_APARTMENT_THREADED
 
 #define _ATL_ALL_WARNINGS
@@ -29,11 +36,6 @@
 
 #include "..\DolphinSmalltalk_i.h"
 
-#include <limits.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <locale.h>
-#include <Strsafe.h>
 #include <icu.h>
 
 #define TODO(s)

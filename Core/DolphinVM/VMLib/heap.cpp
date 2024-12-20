@@ -3,7 +3,11 @@
 //
 // These map directly onto a heap
 
-#include "Ist.h"
+#define UMDF_USING_NTSTATUS
+
+#include <stdio.h>
+#include <intrin.h>
+#include <wtypes.h>
 #include "objmem.h"
 
 #ifdef WIN32_HEAP
@@ -16,10 +20,8 @@ extern "C" { HANDLE _crtheap; }
 #else
 
 // Use mimalloc
-
 #include "mimalloc.h"
 #include "mimalloc-new-delete.h"
-#pragma comment(lib, "mimalloc-static.lib")
 
 static mi_heap_t* objectHeap;
 
@@ -38,6 +40,22 @@ void* ObjMemCall ObjectMemory::allocChunk(size_t chunkSize)
 	void* pChunk = ::HeapAlloc(m_hHeap, 0, chunkSize);
 #else
 	void* pChunk = mi_heap_malloc(objectHeap, chunkSize);
+#endif
+
+#ifdef _DEBUG
+	memset(pChunk, 0xCD, chunkSize);
+#endif
+
+	return pChunk;
+}
+
+void* ObjMemCall ObjectMemory::allocSmallChunk(size_t chunkSize)
+{
+#ifdef WIN32_HEAP
+	return allocChunk(chunkSize);
+#else
+	ASSUME(chunkSize <= MI_SMALL_SIZE_MAX);
+	void* pChunk = mi_heap_malloc_small(objectHeap, chunkSize);
 #endif
 
 #ifdef _DEBUG
@@ -75,14 +93,15 @@ void ObjectMemory::HeapCompact()
 	// Minimize space occuppied by the heap
 #ifdef WIN32_HEAP
 	::HeapCompact(m_hHeap, 0);
+	_heapmin();
 #else
 	mi_heap_collect(objectHeap, true);
 #endif
-
-	_heapmin();
 }
 
+#ifndef WIN32_HEAP
 
+// Translate mimalloc heap errors to Win32 exceptions
 static void heapError(int err, void* arg)
 {
 	ULONG_PTR args[1];
@@ -90,20 +109,33 @@ static void heapError(int err, void* arg)
 
 	switch (err)
 	{
-	case EFAULT: // Corrupted free list or meta - data was detected(only in debug and secure mode).
-	case EAGAIN: // Double free was detected(only in debug and secure mode).
-		::RaiseException(static_cast<DWORD>(VMExceptions::CrtFault), EXCEPTION_NONCONTINUABLE, 1, (CONST ULONG_PTR*)args);
-		break;
+	// Potentially continuable errors in heap calls
 	case EOVERFLOW: // Too large a request, for example in mi_calloc(), the count and size parameters are too large.
 	case EINVAL: // Trying to free or re - allocate an invalid pointer.
 		::RaiseException(static_cast<DWORD>(VMExceptions::CrtFault), 0, 1, (CONST ULONG_PTR*)args);
-
+		break;
+		
 	case ENOMEM:	// Not enough memory available to satisfy the request.
 		::RaiseException(STATUS_NO_MEMORY, 0, 0, nullptr);
+		break;
+
+	// Non-continuable errors, e.g. heap corruption
+	case EFAULT: // Corrupted free list or meta - data was detected(only in debug and secure mode).
+	case EAGAIN: // Double free was detected(only in debug and secure mode).
+	default:
+		::RaiseException(static_cast<DWORD>(VMExceptions::CrtFault), EXCEPTION_NONCONTINUABLE, 1, (CONST ULONG_PTR*)args);
 		break;
 	}
 }
 
+static void heapOutput(const char* msg, void* arg)
+{
+	// Dump directly to debug output as mimalloc sends large messages with newlines
+	// This will also work even when the app is shutting down
+	OutputDebugStringA(msg);
+}
+
+#endif
 
 void ObjectMemory::InitializeHeap()
 {
@@ -120,6 +152,7 @@ void ObjectMemory::InitializeHeap()
 	if (!objectHeap)
 	{
 		mi_register_error(heapError, nullptr);
+		mi_register_output(heapOutput, nullptr);
 		objectHeap = mi_heap_new();
 		if (!objectHeap)
 			::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, NULL);
@@ -137,14 +170,17 @@ void ObjectMemory::InitializeHeap()
 
 void ObjectMemory::UninitializeHeap()
 {
+	DumpStats(L"UnitializeHeap");
+
 #ifdef WIN32_HEAP
 	// Leave heap around for use next time?
 	//	::HeapDestroy(m_hHeap);
 	//	m_hHeap = 0;
 	//	_crtheap = 0;
 #else
-	mi_register_error(nullptr, nullptr);
 	mi_heap_destroy(objectHeap);
+	mi_register_error(nullptr, nullptr);
+	mi_register_output(nullptr, nullptr);
 	objectHeap = nullptr;
 #endif
 }
@@ -181,11 +217,8 @@ void ObjectMemory::checkPools()
 
 #endif
 
-#ifdef MEMSTATS
-extern "C" void __cdecl dumpOutput(const char* msg, void* arg)
-{
-	TRACESTREAM << msg;
-}
+#ifdef _DEBUG
+#include <iomanip>
 
 void ObjectMemory::OTEPool::DumpStats()
 {
@@ -193,20 +226,23 @@ void ObjectMemory::OTEPool::DumpStats()
 	TRACESTREAM << L"OTEPool(" << this << L"): total " << std::dec << m_nAllocated << ", free " << m_nFree << std::endl;
 }
 
+#endif
+
 void ObjectMemory::DumpStats(const wchar_t* stage)
 {
+#ifdef _DEBUG
 	tracelock lock(TRACESTREAM);
 
 	TRACESTREAM << std::endl << L"Object Memory Statistics " << stage << L":" << std::endl
 		<< L"------------------------------" << std::endl;
+#endif
 
 #ifdef WIN32_HEAP
 	static _CrtMemState CRTMemState;
 	_CrtMemCheckpoint(&CRTMemState);
 	_CrtMemDumpStatistics(&CRTMemState);
 #else
-	mi_stats_print_out(dumpOutput, nullptr);
+	mi_stats_print_out(heapOutput, nullptr);
 #endif
 }
 
-#endif
