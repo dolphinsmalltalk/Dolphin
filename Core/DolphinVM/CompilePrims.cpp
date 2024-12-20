@@ -6,6 +6,7 @@
 #endif
 
 #pragma code_seg(XIF_SEG)
+#include <comdef.h>
 
 #include "Compiler_i.h"
 #include "DolphinSmalltalk_i.h"

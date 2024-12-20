@@ -12,6 +12,8 @@
 
 #if defined(CANSAVEIMAGE)
 
+#include <fcntl.h>
+
 #include "binstream.h"
 #include "zfbinstream.h"
 #include "objmem.h"

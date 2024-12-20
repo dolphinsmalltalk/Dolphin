@@ -15,6 +15,7 @@
 #include <malloc.h>
 #include <winbase.h>
 #include "RaiseThreadException.h"
+#include "heap.h"
 
 #pragma warning(disable:4200)
 

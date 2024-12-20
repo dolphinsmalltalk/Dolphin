@@ -115,6 +115,7 @@
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <DataExecutionPrevention />
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\out\msvc-$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <MapExports>true</MapExports>
     </Link>
     <PreBuildEvent>
     </PreBuildEvent>

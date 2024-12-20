@@ -55,7 +55,7 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)
 	DWORD dwLen = ::GetFileVersionInfoSizeW(vmFileName, &dwHandle);
 	if (dwLen)
 	{
-		LPVOID lpData = _malloca(dwLen);
+		LPVOID lpData = malloc(dwLen);
 		if (lpData != nullptr)
 		{
 			if (::GetFileVersionInfoW(vmFileName, 0, dwLen, lpData))
@@ -68,7 +68,7 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)
 				bRet = TRUE;
 			}
 
-			_freea(lpData);
+			free(lpData);
 		}
 		else
 			TRACESTREAM << L"Fail to get ver info for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << std::endl;

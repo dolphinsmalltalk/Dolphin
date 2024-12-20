@@ -1,6 +1,8 @@
 #pragma once
 
+#ifdef VM
 #include "STString.h"
+#endif
 
 class Utf16StringBuf
 {
@@ -9,6 +11,8 @@ public:
 	Utf16StringBuf() {}
 	Utf16StringBuf(const Utf16StringBuf&) = delete;
 	Utf16StringBuf(const Utf16StringBuf&&) = delete;
+
+#ifdef VM
 	__forceinline Utf16StringBuf(const Utf8StringOTE* ote)
 	{
 		FromUtf8(ote->m_location->m_characters, ote->Count);
@@ -18,6 +22,7 @@ public:
 		FromAnsi(ote->m_location->m_characters, ote->Count);
 
 	}
+#endif
 
 	__forceinline Utf16StringBuf(const char8_t* psz8, size_t cch8)
 	{

@@ -139,8 +139,6 @@ void ObjectMemory::InitializeMemoryManager()
 	memMan->m_maxObjects = integerObjectOf(ObjectMemory::m_nOTMax);
 }
 
-extern HMODULE GetModuleContaining(LPCVOID pFunc);
-
 // Answer the module handle of the implicitly linked CRT library so that the Smalltalk
 // code can use the correct one (it is stored in the VM shared object registry).
 static HMODULE GetCRTHandle()

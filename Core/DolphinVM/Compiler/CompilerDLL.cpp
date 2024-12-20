@@ -14,10 +14,12 @@ CDolphinCompilerModule _Module;
 
 HMODULE __stdcall GetResLibHandle()
 {
-	return _AtlBaseModule.m_hInst;
+	// See MSJ May 1996
+	MEMORY_BASIC_INFORMATION mbi;
+	::VirtualQuery(GetResLibHandle, &mbi, sizeof(mbi));
+	return HMODULE(mbi.AllocationBase);
 }
 
-/////////////////////////////////////////////////////////////////////////////
 // Common DLL Entry Point and registration implementation
 
 #include "..\DllModule.cpp"

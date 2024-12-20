@@ -29,7 +29,7 @@ CDolphinVMModule _Module;
 
 HRESULT CDolphinVMModule::RegisterAsEventSource() const
 {
-	static constexpr TCHAR szKey[] = _T("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\Dolphin");
+	static constexpr WCHAR szKey[] = L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\Dolphin";
 	HRESULT hr;
 
 	CRegKey rkeyEvSrc;
@@ -37,14 +37,14 @@ HRESULT CDolphinVMModule::RegisterAsEventSource() const
 	LONG ret = rkeyEvSrc.Create(HKEY_LOCAL_MACHINE, szKey);
 	if (ret == ERROR_SUCCESS)
 	{
-		TCHAR szModule[_MAX_PATH];
-		::GetModuleFileName(_AtlBaseModule.GetModuleInstance(), szModule, _MAX_PATH);
-		rkeyEvSrc.SetStringValue(_T("EventMessageFile"), szModule);
-		rkeyEvSrc.SetDWORDValue(_T("TypesSupported"), 7);
+		WCHAR szModule[_MAX_PATH];
+		::GetModuleFileName(GetResLibHandle(), szModule, _MAX_PATH);
+		rkeyEvSrc.SetStringValue(L"EventMessageFile", szModule);
+		rkeyEvSrc.SetDWORDValue(L"TypesSupported", 7);
 		hr = S_OK;
 	}
 	else
-		hr = AtlHresultFromWin32(ret);
+		hr = HRESULT_FROM_WIN32(ret);
 
 	return hr;
 }

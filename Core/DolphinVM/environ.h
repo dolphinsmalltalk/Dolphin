@@ -11,8 +11,9 @@
 
 #define TODO(s)
 
-// TODO: This actuall seems to have no effect in VS2017, and maybe earlier. The result is slow indirect calls when using /MD as we do for the VM.
-#pragma intrinsic(memcpy,memset,strlen)
+#if defined(VMDLL) || defined(TO_GO)
+#define VM 1
+#endif
 
 #ifdef WIN32
 	#pragma warning(push, 3)
@@ -127,6 +128,10 @@
 	constexpr size_t dwPageSize = 0x1000;						// 4Kb
 	constexpr size_t dwAllocationGranularity = 0x10000;			// 64Kb
 
+	// The basic word size of the machine
+	typedef intptr_t 	SmallInteger;	// Optimized SmallInteger; same size as machine word. Known to be representable as a Smalltalk SmallInteger (i.e. 31-bits 2's complement)
+	typedef uintptr_t	SmallUinteger;	// Unsigned optimized SmallInteger; same size as machine word
+	typedef uintptr_t	Oop;
 #else
 	#error "Not implemented for other platforms yet"
 #endif

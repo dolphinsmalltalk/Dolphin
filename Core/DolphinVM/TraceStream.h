@@ -2,6 +2,7 @@
 #include <windows.h>
 #pragma warning(push,3)
 #include "CritSect.h"
+#include <streambuf>
 
 template<class charT, class traits = std::char_traits<charT> >
 	class basic_tracestreambuf : public std::basic_streambuf<charT, traits>

@@ -9,23 +9,8 @@
 ******************************************************************************/
 #pragma once
 
-// Prevent executable bloat caused by aligning all sections on 4k boundaries.
-// Note that this doesn't actually prevent the exe/dll loading on Win9X, but
-// theoretically makes it slightly slower to load. Frankly this is not likely
-// to be noticeable in practice, certainly not for the very small stub files.
-// This means that instead of being bloated to 32Kb, the stubs are a more
-// reasonable 13Kb. For VC.Net this needs to be set as a linker option on the
-// project, as the #pragma comment is not ignored.
-#if _MSC_VER < 1300
-#pragma comment(linker, "/OPT:NOWIN98")
-#endif
-
 #if defined(VMDLL) && defined(TO_GO)
 	#error("Project config is incompatible (TO_GO and VM are mutually exclusive)")
-#endif
-
-#if defined(VMDLL) || defined(TO_GO)
-	#define VM 1
 #endif
 
 #if defined(VMDLL)
@@ -47,16 +32,12 @@
 
 #define UMDF_USING_NTSTATUS
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/timeb.h>
 #include <float.h>
 #include <io.h>
-#include <fcntl.h>
 #include <string.h>
-#include <stddef.h>
 #include <stdlib.h>
+
+#include "heap.h"
 
 #pragma warning(disable:4711)	// Function selected for automatic inline expansion
 #pragma warning(disable:4786)	// Browser identifier truncated to 255 characters
@@ -65,26 +46,14 @@
 // Disable warning about exception handling (we compile with exception handling disabled)
 #pragma warning (disable:4530)
 #include <ppl.h>
-#include <iostream>
 #include <iomanip>
-#include <fstream>
-#include <sstream>
-#include <streambuf>
-#include <unordered_map>
-#include <vector>
 #pragma warning(pop)
-#include <functional>
 
 typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
 #define NTSTATUS_DEFINED
 #define _NTDEF_
 
 #include "Environ.h"
-
-// The basic word size of the machine
-typedef intptr_t 	SmallInteger;	// Optimized SmallInteger; same size as machine word. Known to be representable as a Smalltalk SmallInteger (i.e. 31-bits 2's complement)
-typedef uintptr_t	SmallUinteger;	// Unsigned optimized SmallInteger; same size as machine word
-typedef uintptr_t	Oop;
 
 class ObjectMemory;
 class Interpreter;
@@ -149,26 +118,12 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 #pragma warning(push,3)
 #include <icu.h>
 #include <intrin.h>
-#include <string.h>
-#include <math.h>
-#include <float.h>
-#include <limits.h>
 #include <fpieee.h>
-#include <stdarg.h>
-#include <setjmp.h>
-#include <float.h>
-#include <process.h>
 #include <wtypes.h>
-#include <winbase.h>
-#include <winreg.h>
-#include <winerror.h>
-#include <CommCtrl.h>
-#include <Strsafe.h>
-#include <VersionHelpers.h>
-#include <comdef.h>
-#include <oaidl.h>
-#include <ntstatus.h>
 #pragma warning(pop)
+
+// TODO: This actuall seems to have no effect in VS2017, and maybe earlier. The result is slow indirect calls when using /MD as we do for the VM.
+#pragma intrinsic(memcpy,memset,strlen)
 
 #if defined(_DEBUG)
 #include <crtdbg.h>

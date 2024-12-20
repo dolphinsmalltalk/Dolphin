@@ -6,55 +6,47 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Registration helper functions
 
-HRESULT RegisterProgID(LPCTSTR lpszCLSID, LPCTSTR lpszProgID, LPCTSTR lpszUserDesc)
+HRESULT RegisterProgID(LPCWSTR lpszCLSID, LPCWSTR lpszProgID, LPCWSTR lpszUserDesc)
 {
 	CRegKey keyProgID;
 
 	LONG lRes = keyProgID.Create(HKEY_CLASSES_ROOT, lpszProgID, REG_NONE, REG_OPTION_NON_VOLATILE, KEY_SET_VALUE);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+		return HRESULT_FROM_WIN32(lRes);
 
 	lRes = keyProgID.SetStringValue(NULL, lpszUserDesc);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+		return HRESULT_FROM_WIN32(lRes);
 
-	lRes = keyProgID.SetKeyValue(_T("CLSID"), lpszCLSID);
+	lRes = keyProgID.SetKeyValue(L"CLSID", lpszCLSID);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+		return HRESULT_FROM_WIN32(lRes);
 
 	return S_OK;
 }
 
-HRESULT RegisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpszVerIndProgID, LPCTSTR szDesc, DWORD dwFlags)
+HRESULT RegisterClassHelper(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID, LPCWSTR szDesc, DWORD dwFlags)
 {
-	USES_CONVERSION;
 	UNREFERENCED_PARAMETER(dwFlags);
 
-	static const TCHAR szProgID[] = _T("ProgID");
-	static const TCHAR szVIProgID[] = _T("VersionIndependentProgID");
-	static const TCHAR szIPS32[] = _T("InprocServer32");
-	static const TCHAR szThreadingModel[] = _T("ThreadingModel");
-	static const TCHAR szApartment[] = _T("Apartment");
-
-	TCHAR szModule[_MAX_PATH];
+	WCHAR szModule[_MAX_PATH];
 
 	// If the ModuleFileName's length is equal or greater than the 3rd parameter
 	// (length of the buffer passed),GetModuleFileName fills the buffer (truncates
 	// if neccessary), but doesn't null terminate it. It returns the same value as 
 	// the 3rd parameter passed. So if the return value is the same as the 3rd param
 	// then you have a non null terminated buffer (which may or may not be truncated)
-	DWORD dwLen = GetModuleFileName(_AtlBaseModule.m_hInst, szModule, MAX_PATH);
+	DWORD dwLen = GetModuleFileNameW(GetResLibHandle(), szModule, MAX_PATH);
 	if (dwLen == 0)
-		return AtlHresultFromLastError();
+		return HRESULT_FROM_WIN32(::GetLastError());
 	else if (dwLen == MAX_PATH)
 		return HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER);
 
-	LPOLESTR lpOleStr;
-	HRESULT hRes = StringFromCLSID(clsid, &lpOleStr);
+	LPWSTR szClsid;
+	HRESULT hRes = StringFromCLSID(clsid, &szClsid);
 	if (FAILED(hRes))
 		return hRes;
 
-	LPCTSTR szClsid = OLE2T(lpOleStr);
 	CRegKey key;
 	LONG lRes = 0;
 
@@ -70,68 +62,67 @@ HRESULT RegisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpsz
 		goto end;
 	}
 
-	lRes = key.Open(HKEY_CLASSES_ROOT, _T("CLSID"), KEY_READ | KEY_WRITE);
+	lRes = key.Open(HKEY_CLASSES_ROOT, L"CLSID", KEY_READ | KEY_WRITE);
 	if (lRes != ERROR_SUCCESS)
 	{
-		hRes = AtlHresultFromWin32(lRes);
+		hRes = HRESULT_FROM_WIN32(lRes);
 		goto end;
 	}
 
 	lRes = key.Create(key, szClsid, REG_NONE, REG_OPTION_NON_VOLATILE, KEY_READ | KEY_WRITE);
 	if (lRes != ERROR_SUCCESS)
 	{
-		hRes = AtlHresultFromWin32(lRes);
+		hRes = HRESULT_FROM_WIN32(lRes);
 		goto end;
 	}
 
 	lRes = key.SetStringValue(NULL, szDesc);
 	if (lRes != ERROR_SUCCESS)
 	{
-		hRes = AtlHresultFromWin32(lRes);
+		hRes = HRESULT_FROM_WIN32(lRes);
 		goto end;
 	}
 
-	lRes = key.SetKeyValue(szProgID, lpszProgID);
+	lRes = key.SetKeyValue(L"ProgID", lpszProgID);
 	if (lRes != ERROR_SUCCESS)
 	{
-		hRes = AtlHresultFromWin32(lRes);
+		hRes = HRESULT_FROM_WIN32(lRes);
 		goto end;
 	}
 
-	lRes = key.SetKeyValue(szVIProgID, lpszVerIndProgID);
+	lRes = key.SetKeyValue(L"VersionIndependentProgID", lpszVerIndProgID);
 	if (lRes != ERROR_SUCCESS)
 	{
-		hRes = AtlHresultFromWin32(lRes);
+		hRes = HRESULT_FROM_WIN32(lRes);
 		goto end;
 	}
 
 	// Can't be an EXE
-	_ASSERTE(!((_AtlBaseModule.m_hInst == NULL) || (_AtlBaseModule.m_hInst == GetModuleHandle(NULL))));
+	_ASSERTE(GetResLibHandle() != GetModuleHandle(NULL));
 
 	_ASSERTE(!(dwFlags & AUTPRXFLAG));
-	lRes = key.SetKeyValue(szIPS32, szModule);
+	lRes = key.SetKeyValue(L"InprocServer32", szModule);
 	if (lRes != ERROR_SUCCESS)
 	{
-		hRes = AtlHresultFromWin32(lRes);
+		hRes = HRESULT_FROM_WIN32(lRes);
 		goto end;
 	}
 
 	_ASSERTE(dwFlags & THREADFLAGS_APARTMENT);
-	lRes = key.SetKeyValue(szIPS32, szApartment, szThreadingModel);
+	lRes = key.SetKeyValue(L"InprocServer32", L"Apartment", L"ThreadingModel");
 	if (lRes != ERROR_SUCCESS)
 	{
-		hRes = AtlHresultFromWin32(lRes);
+		hRes = HRESULT_FROM_WIN32(lRes);
 		goto end;
 	}
 
 end:
-	CoTaskMemFree(lpOleStr);
+	CoTaskMemFree(szClsid);
 	return hRes;
 }
 
-HRESULT UnregisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpszVerIndProgID)
+HRESULT UnregisterClassHelper(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID)
 {
-	USES_CONVERSION;
 	CRegKey key;
 	HRESULT hr = S_OK;
 
@@ -141,8 +132,7 @@ HRESULT UnregisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lp
 		LONG lRet = key.RecurseDeleteKey(lpszProgID);
 		if (lRet != ERROR_SUCCESS && lRet != ERROR_FILE_NOT_FOUND && lRet != ERROR_PATH_NOT_FOUND)
 		{
-			ATLTRACE(atlTraceCOM, 0, _T("Failed to Unregister ProgID : %s\n"), lpszProgID);
-			hr = AtlHresultFromWin32(lRet);
+			hr = HRESULT_FROM_WIN32(lRet);
 		}
 	}
 
@@ -151,56 +141,40 @@ HRESULT UnregisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lp
 		LONG lRet = key.RecurseDeleteKey(lpszVerIndProgID);
 		if (lRet != ERROR_SUCCESS && lRet != ERROR_FILE_NOT_FOUND && lRet != ERROR_PATH_NOT_FOUND)
 		{
-			ATLTRACE(atlTraceCOM, 0, _T("Failed to Unregister Version Independent ProgID : %s\n"), lpszVerIndProgID);
-			if (SUCCEEDED(hr)) hr = AtlHresultFromWin32(lRet);
+			if (SUCCEEDED(hr)) hr = HRESULT_FROM_WIN32(lRet);
 		}
 	}
-	LPOLESTR lpOleStr;
-	HRESULT hr2 = StringFromCLSID(clsid, &lpOleStr);
+	LPWSTR lpsz = nullptr;
+	HRESULT hr2 = StringFromCLSID(clsid, &lpsz);
 	if (SUCCEEDED(hr2))
 	{
-		LPTSTR lpsz = OLE2T(lpOleStr);
-		::CoTaskMemFree(lpOleStr);
-		if(lpsz == NULL)
-			return E_OUTOFMEMORY;
-
-		LONG lRet = key.Open(key, _T("CLSID"), KEY_READ | KEY_WRITE);
+		LONG lRet = key.Open(key, L"CLSID", KEY_READ | KEY_WRITE);
 		if (lRet == ERROR_SUCCESS)
 			lRet = key.RecurseDeleteKey(lpsz);
 		if (lRet != ERROR_SUCCESS && lRet != ERROR_FILE_NOT_FOUND && lRet != ERROR_PATH_NOT_FOUND)
 		{
-			ATLTRACE(atlTraceCOM, 0, _T("Failed to delete CLSID : %s\n"), lpsz);
-			if (SUCCEEDED(hr)) hr = AtlHresultFromWin32(lRet);
+			if (SUCCEEDED(hr)) hr = HRESULT_FROM_WIN32(lRet);
 		}
 	}
 	else
 	{
-		ATLTRACE(atlTraceCOM, 0, _T("Failed to delete CLSID : {%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}"),
-			clsid.Data1, 
-			clsid.Data2, 
-			clsid.Data3, 
-			clsid.Data4[0],
-			clsid.Data4[1],
-			clsid.Data4[2],
-			clsid.Data4[3],
-			clsid.Data4[4],
-			clsid.Data4[5],
-			clsid.Data4[6],
-			clsid.Data4[7]
-			);
 		if (SUCCEEDED(hr)) hr = hr2;
+	}
+	if (lpsz)
+	{
+		::CoTaskMemFree(lpsz);
 	}
 	key.Detach();
 	return hr;
 }
 
-HRESULT UpdateRegistryClass(const CLSID& clsid, LPCTSTR lpszProgID,
-	LPCTSTR lpszVerIndProgID, UINT nDescID, DWORD dwFlags, BOOL bRegister)
+HRESULT UpdateRegistryClass(const CLSID& clsid, LPCWSTR lpszProgID,
+	LPCWSTR lpszVerIndProgID, UINT nDescID, DWORD dwFlags, BOOL bRegister)
 {
 	if (bRegister)
 	{
-		TCHAR szDesc[256];
-		LoadString(_AtlBaseModule.m_hInst, nDescID, szDesc, 256);
+		WCHAR szDesc[256];
+		LoadStringW(GetResLibHandle(), nDescID, szDesc, 256);
 		return RegisterClassHelper(clsid, lpszProgID, lpszVerIndProgID, szDesc, dwFlags);
 	}
 	return UnregisterClassHelper(clsid, lpszProgID, lpszVerIndProgID);
@@ -245,7 +219,7 @@ STDAPI DllCanUnloadNow(void)
 }
 
 _Check_return_
-STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
+STDAPI  DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID FAR* ppv)
 {
 #ifdef _MERGE_PROXYSTUB
     if (PrxDllGetClassObject(rclsid, riid, ppv) == S_OK)

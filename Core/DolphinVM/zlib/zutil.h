@@ -26,6 +26,8 @@
 #   include <errno.h>
 #endif
 
+#include "heap.h"
+
 #ifndef local
 #  define local static
 #endif

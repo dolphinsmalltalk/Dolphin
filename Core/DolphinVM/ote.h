@@ -23,6 +23,7 @@
 #define NULLTERMSIZE sizeof(NULLTERMTYPE)
 
 template <class T> class TOTE;
+class ObjectMemory;
 
 // Declare forward references
 namespace ST

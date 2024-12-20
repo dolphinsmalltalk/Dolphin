@@ -12,6 +12,7 @@
 #pragma once
 
 #include "STCollection.h"
+#include <oleauto.h>
 
 // Turn off warning about zero length arrays
 #pragma warning ( disable : 4200)
@@ -30,6 +31,7 @@ typedef TOTE<ST::String> StringOTE;
 typedef TOTE<ST::Symbol> SymbolOTE;
 class Utf16StringOTE;
 class Utf8StringOTE;
+class Interpreter;
 
 class AnsiStringOTE : public TOTE<ST::AnsiString>
 {

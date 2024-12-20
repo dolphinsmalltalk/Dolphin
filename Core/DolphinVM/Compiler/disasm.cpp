@@ -105,9 +105,10 @@ wstring Compiler::DebugPrintString(Oop oop)
 	return result;
 }
 
-
 wostream& __stdcall operator<<(wostream& stream, const string& str)
 {
-	USES_CONVERSION;
-	return stream << static_cast<LPCWSTR>(A2W(str.c_str()));
+	size_t cch = str.size();
+	std::unique_ptr<WCHAR[]> buf(new WCHAR[cch]);
+	::MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, str.data(), cch, buf.get(), cch);
+	return stream << buf;
 }

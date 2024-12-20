@@ -101,6 +101,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ExternalBuf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\FloatPrim.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\heap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImageFileResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\InterpRegisters.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Interprt.h" />
