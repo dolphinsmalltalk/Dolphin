@@ -1234,7 +1234,7 @@ onStartup
 	"The system is starting: Initialize the host window class and register the window message
 	used for communicating with it."
 
-	VM axWinInit.
+	AXHostLibrary default axWinInit.
 	WM_ATLGETHOST := User32 registerWindowMessage: 'WM_ATLGETHOST'!
 
 progId: aString 
@@ -1274,7 +1274,7 @@ stbConvertProxy: aSTBViewProxy
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
-	^'AtlAxWin71'! !
+	^'AtlAxWin80'! !
 
 !UI.AXControlSite class categoriesForMethods!
 chooseControl:!helpers!public! !

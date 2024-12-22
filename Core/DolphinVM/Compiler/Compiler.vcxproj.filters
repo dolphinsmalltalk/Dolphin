@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Natvis Include="Compiler.natvis" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="compiler.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -71,11 +68,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="compiler.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Compiler.def" />
-    <None Include="version.rc2" />
+    <None Include="version.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Compiler.def">
+      <Filter>Sources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -85,5 +83,18 @@
     <Filter Include="Sources">
       <UniqueIdentifier>{446335c9-9b31-4282-8670-86d8064ff18f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{75856aa8-c431-4044-9899-56ee7a364626}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="compiler.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Compiler.natvis">
+      <Filter>Resource Files</Filter>
+    </Natvis>
   </ItemGroup>
 </Project>

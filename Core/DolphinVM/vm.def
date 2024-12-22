@@ -30,10 +30,6 @@ invalidParameterHandler=?invalidParameterHandler@@YAXPB_W00II@Z
 CompileForClass=_PrimCompileForClass@28
 CompileForEval=_PrimCompileForEval@32
 
-; Stuff for ActiveXHost
-AxWinTerm
-AtlAxWinInit=AxWinInit
-
 ; ZLib
 compress2
 uncompress

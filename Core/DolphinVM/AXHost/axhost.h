@@ -9,12 +9,6 @@
 ******************************************************************************/
 #pragma once
 
-#if defined(_CONSOLE)
-#error "Not for use in CONSOLE build
-#endif 
-
-#pragma code_seg(ATL_SEG)
-
 #define _ATL_ALL_WARNINGS
 #include <atlbase.h>
 

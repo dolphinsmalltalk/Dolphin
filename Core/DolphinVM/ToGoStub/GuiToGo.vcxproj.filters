@@ -21,7 +21,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Res\Ist.rc2" />
     <None Include="togo.def" />
   </ItemGroup>
   <ItemGroup>

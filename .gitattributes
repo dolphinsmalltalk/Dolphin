@@ -10,6 +10,7 @@
 *.st  eol=crlf
 *.cls eol=crlf 
 *.svg eol=lf
+*.rc eol=crlf text
 *.cls linguist-language=Smalltalk
 *.st linguist-language=Smalltalk
 *.pax linguist-language=Smalltalk

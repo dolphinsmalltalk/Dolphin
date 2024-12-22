@@ -7,20 +7,33 @@
 /////////////////////////////////////////////////////////////////////////////
 // CDolphinModule
 
+extern HRESULT RegisterEventLogMessageTable(LPCWSTR szSource);
 extern HRESULT UpdateRegistryClass(const CLSID& clsid, LPCTSTR lpszProgID,
 			LPCTSTR lpszVerIndProgID, UINT nDescID, DWORD dwFlags, BOOL bRegister);
 
-template <class T>
-class ATL_NO_VTABLE CDolphinDllModuleT : public CAtlDllModuleT<T>
+template <class T, bool HasTypeLib>
+class ATL_NO_VTABLE CDolphinDllModuleT : public ATL::CAtlDllModuleT<T>
 {
+public:
+	HRESULT RegisterServer(BOOL bRegTypeLib = TRUE) throw()
+	{
+		return __super::RegisterServer(HasTypeLib && bRegTypeLib);
+	}
+
+	HRESULT UnregisterServer(BOOL bRegTypeLib = TRUE) throw()
+	{
+		return __super::UnregisterServer(HasTypeLib && bRegTypeLib);
+	}
+
+
 public :
+
 	HRESULT UpdateRegistryClass(const CLSID& clsid, LPCTSTR lpszProgID,
 			LPCTSTR lpszVerIndProgID, UINT nDescID, DWORD dwFlags, BOOL bRegister)
 	{
 		return ::UpdateRegistryClass(clsid, lpszProgID, lpszVerIndProgID, nDescID, dwFlags, bRegister);
 	}
 
-	
 	bool IsRunningElevated() const
 	{
 		HANDLE token = NULL;

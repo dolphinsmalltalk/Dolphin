@@ -18,7 +18,6 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\alloc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\AnsiString.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\bytecde.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\compact.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CompilePrims.cpp" />
@@ -91,7 +90,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\binstream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\bytecdes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\disassembler.h" />
@@ -170,17 +168,6 @@
     <MASM Include="$(MSBuildThisFileDirectory)..\ExternalCall.asm" />
     <None Include="$(MSBuildThisFileDirectory)..\istasm.inc" />
     <MASM Include="$(MSBuildThisFileDirectory)..\primasm.asm" />
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="$(MSBuildThisFileDirectory)..\ActiveXHost.idl">
-      <AdditionalOptions>/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <WarningLevel>3</WarningLevel>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <TypeLibraryName>ActiveXHost.tlb</TypeLibraryName>
-      <HeaderFileName>ActiveXHost.h</HeaderFileName>
-      <DllDataFileName>axdlldata.c</DllDataFileName>
-      <ProxyFileName>ActiveXHost_p.c</ProxyFileName>
-    </Midl>
   </ItemGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

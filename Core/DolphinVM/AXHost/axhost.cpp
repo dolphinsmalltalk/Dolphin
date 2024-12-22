@@ -1,17 +1,13 @@
-#include "Ist.h"
-
-#if defined (VM) && !defined(_CONSOLE)
+#include "pch.h"
 
 #include "axhost.h"
-#include "rc_vm.h"
-
-#pragma code_seg(ATL_SEG)
+#include "Resource.h"
 
 // We derive our own control site window so that:
 // 1) We can fix some bugs
 // 2) We can improve on the handling of failure to create embedded controls by displaying an HTML message
 // 3) We can use our own window class name and interface to avoid clashing with the ATL versions
-class CDolphinAxHost : public /*virtual*/ CAxHostWindow
+class CDolphinAxHost : public /*virtual*/ ATL::CAxHostWindow
 	, public IDolphinAxHost
 {
 protected:
@@ -35,7 +31,7 @@ public:
 	static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	static LPCTSTR GetWndClassName()
 	{
-		return _T("AtlAxWin71");
+		return _T("AtlAxWin80");
 	}
 
 	HRESULT ActivateAx(
@@ -169,7 +165,7 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 	}
 
 	// Its a valid CLSID/ProgId at least, so lets see if we can find a class factory
-	CComPtr<IClassFactory> piFactory;
+	ATL::CComPtr<IClassFactory> piFactory;
 	hr = ::CoGetClassObject(clsid, (CLSCTX_INPROC_SERVER|CLSCTX_LOCAL_SERVER), NULL, IID_IClassFactory, (void**)&piFactory);
 	if (FAILED(hr))
 	{
@@ -184,7 +180,7 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 	if (bstrLicKey != NULL)
 	{
 		// Licensed create request, so try using IClassFactory2
-		CComQIPtr<IClassFactory2> piFactory2 = (IClassFactory*)piFactory;
+		ATL::CComQIPtr<IClassFactory2> piFactory2 = (IClassFactory*)piFactory;
 		if (piFactory2)
 		{
 			// Supports IClassFactory2, so try licensed create...
@@ -207,12 +203,12 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 		if (hr == CLASS_E_NOTLICENSED)
 		{
 			// OK, so try using IClassFactory2
-			CComQIPtr<IClassFactory2> piFactory2 = (IClassFactory*)piFactory;
+			ATL::CComQIPtr<IClassFactory2> piFactory2 = (IClassFactory*)piFactory;
 			if (piFactory2)
 			{
 				_ASSERTE(bstrLicKey == NULL);
 				// License not supplied (or we would not be here), so try requesting a runtime one
-				CComBSTR bstrRuntimeKey;
+				ATL::CComBSTR bstrRuntimeKey;
 				HRESULT hr2 = piFactory2->RequestLicKey(0, &bstrRuntimeKey);
 				if (SUCCEEDED(hr2))
 				{
@@ -307,13 +303,13 @@ HRESULT CDolphinAxHost::ActivateAx(
 		m_spOleObject->GetMiscStatus(DVASPECT_CONTENT, &m_dwMiscStatus);
 		if (m_dwMiscStatus & OLEMISC_SETCLIENTSITEFIRST)
 		{
-			CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
+			ATL::CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
 			m_spOleObject->SetClientSite(spClientSite);
 		}
 
 		if (!bInited) // If user hasn't initialized the control, initialize/load using IPersistStreamInit or IPersistStream
 		{
-			CComQIPtr<IPersistStreamInit> spPSI(m_spOleObject);
+			ATL::CComQIPtr<IPersistStreamInit> spPSI(m_spOleObject);
 			if (spPSI)
 			{
 				if (pStream)
@@ -323,7 +319,7 @@ HRESULT CDolphinAxHost::ActivateAx(
 			}
 			else if (pStream)
 			{
-				CComQIPtr<IPersistStream> spPS(m_spOleObject);
+				ATL::CComQIPtr<IPersistStream> spPS(m_spOleObject);
 				if (spPS)
 					hr = spPS->Load(pStream);
 			}
@@ -344,7 +340,7 @@ HRESULT CDolphinAxHost::ActivateAx(
 
 		if (0 == (m_dwMiscStatus & OLEMISC_SETCLIENTSITEFIRST))
 		{
-			CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
+			ATL::CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
 			m_spOleObject->SetClientSite(spClientSite);
 		}
 
@@ -365,7 +361,7 @@ HRESULT CDolphinAxHost::ActivateAx(
 			if (SUCCEEDED(hr))
 				m_dwViewObjectType = 1;
 		}
-		CComQIPtr<IAdviseSink> spAdviseSink(GetControllingUnknown());
+		ATL::CComQIPtr<IAdviseSink> spAdviseSink(GetControllingUnknown());
 		m_spOleObject->Advise(spAdviseSink, &m_dwOleObject);
 		if (m_spViewObject)
 			m_spViewObject->SetAdvise(DVASPECT_CONTENT, 0, spAdviseSink);
@@ -376,7 +372,7 @@ HRESULT CDolphinAxHost::ActivateAx(
 			GetClientRect(&m_rcPos);
 			m_pxSize.cx = m_rcPos.right - m_rcPos.left;
 			m_pxSize.cy = m_rcPos.bottom - m_rcPos.top;
-			AtlPixelToHiMetric(&m_pxSize, &m_hmSize);
+			ATL::AtlPixelToHiMetric(&m_pxSize, &m_hmSize);
 			hr = m_spOleObject->SetExtent(DVASPECT_CONTENT, &m_hmSize);
 			// The current atlhost.h implementation fails the entire control creation if the control refuses to set the requested extent.
 			// There is little value in this error check, and it excluded certain controls such as the old Month View control that returns
@@ -386,16 +382,16 @@ HRESULT CDolphinAxHost::ActivateAx(
 			hr = m_spOleObject->GetExtent(DVASPECT_CONTENT, &m_hmSize);
 			if (FAILED(hr))
 				return hr;
-			AtlHiMetricToPixel(&m_hmSize, &m_pxSize);
+			ATL::AtlHiMetricToPixel(&m_hmSize, &m_pxSize);
 			m_rcPos.right = m_rcPos.left + m_pxSize.cx;
 			m_rcPos.bottom = m_rcPos.top + m_pxSize.cy;
 
-			CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
+			ATL::CComQIPtr<IOleClientSite> spClientSite(GetControllingUnknown());
 			hr = m_spOleObject->DoVerb(OLEIVERB_INPLACEACTIVATE, NULL, spClientSite, 0, m_hWnd, &m_rcPos);
 			RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE | RDW_INTERNALPAINT | RDW_FRAME);
 		}
 	}
-	CComPtr<IObjectWithSite> spSite;
+	ATL::CComPtr<IObjectWithSite> spSite;
 	pUnkControl->QueryInterface(__uuidof(IObjectWithSite), (void**)&spSite);
 	if (spSite != NULL)
 		spSite->SetSite(GetControllingUnknown());
@@ -408,7 +404,7 @@ HRESULT CDolphinAxHost::ActivateAx(
 //
 STDMETHODIMP CDolphinAxHost::OnPosRectChange(LPCRECT /*lprcPosRect*/)
 {
-	ATLTRACE2(atlTraceHosting, 0, 	_T("IOleInPlaceSite::OnPosRectChange"));
+	ATLTRACE2(ATL::atlTraceHosting, 0, 	_T("IOleInPlaceSite::OnPosRectChange"));
 
 /*
 	// Hmmmm, if we do this we get an infinite loop in layout manager
@@ -437,7 +433,7 @@ STDMETHODIMP CDolphinAxHost::OnPosRectChange(LPCRECT /*lprcPosRect*/)
 	m_pxSize.cx = m_rcPos.right - m_rcPos.left;
 	m_pxSize.cy = m_rcPos.bottom - m_rcPos.top;
 
-	AtlPixelToHiMetric(&m_pxSize, &m_hmSize);
+	ATL::AtlPixelToHiMetric(&m_pxSize, &m_hmSize);
 
 	if (m_spInPlaceObjectWindowless)
 		m_spInPlaceObjectWindowless->SetObjectRects(&m_rcPos, &m_rcPos);
@@ -499,14 +495,14 @@ LRESULT CALLBACK CDolphinAxHost::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 			IAxWinHostWindowLic* pAxWindow = NULL;
 
-			CComPtr<IUnknown> spUnk;
+			ATL::CComPtr<IUnknown> spUnk;
 			HRESULT hRet = CreateHost(hWnd, &spUnk);
 			if(FAILED(hRet))
 			{
 #ifdef _DEBUG
 				LPTSTR pszMsg = NULL;
 				::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM, NULL, hRet, 0, (LPTSTR)&pszMsg, 0, NULL);
-				ATLTRACE(atlTraceControls, 0, _T("Control host creation failed\n.Error code: 0x%x - %s"), hRet, pszMsg);
+				ATLTRACE(ATL::atlTraceControls, 0, _T("Control host creation failed\n.Error code: 0x%x - %s"), hRet, pszMsg);
 				::LocalFree(pszMsg);
 #endif
 				return -1;	// abort window creation
@@ -557,8 +553,8 @@ HRESULT CDolphinAxHost::CreateHost(HWND hWnd, IUnknown** ppUnkContainer)
 	*ppUnkContainer = NULL;
 
 	HRESULT hr;
-	CComPtr<IUnknown> spUnkContainer;
-	CComPtr<IUnknown> spUnkControl;
+	ATL::CComPtr<IUnknown> spUnkContainer;
+	ATL::CComPtr<IUnknown> spUnkControl;
 
 	hr = CDolphinAxHost::_CreatorClass::CreateInstance(NULL, __uuidof(IUnknown), (void**)&spUnkContainer);
 	if (FAILED(hr))
@@ -567,7 +563,7 @@ HRESULT CDolphinAxHost::CreateHost(HWND hWnd, IUnknown** ppUnkContainer)
 	// Bit of a waste of time calling this just to subclass the window handle, but there doesn't
 	// seem to be any other way to do it short of adding another interface, or instantiating the object
 	// differently.
-	CComPtr<IAxWinHostWindowLic> pAxWindow;
+	ATL::CComPtr<IAxWinHostWindowLic> pAxWindow;
 	spUnkContainer->QueryInterface(__uuidof(IAxWinHostWindowLic), (void**)&pAxWindow);
 	hr = pAxWindow->CreateControlLicEx(L"", hWnd, NULL, &spUnkControl, IID_NULL, NULL, NULL);
 	if (FAILED(hr))
@@ -638,7 +634,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 		m_iidSink = iidAdvise;
 		if (SUCCEEDED(hr) && *ppUnk && punkSink)
 		{
-			AtlAdvise(*ppUnk, punkSink, m_iidSink, &m_dwAdviseSink);
+			ATL::AtlAdvise(*ppUnk, punkSink, m_iidSink, &m_dwAdviseSink);
 		}
 
 		if (SUCCEEDED(hr) && (otCreated != NormalizedObjectType::otOther) && *ppUnk != NULL)
@@ -654,7 +650,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 				SetWindowPos(NULL, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOSIZE | SWP_FRAMECHANGED | SWP_DRAWFRAME);
 			}
 
-			CComPtr<IUnknown> spUnk(*ppUnk);
+			ATL::CComPtr<IUnknown> spUnk(*ppUnk);
 			// Is it just plain HTML?
 			if (otCreated == NormalizedObjectType::otMSHTML)
 			{
@@ -690,14 +686,14 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 				HGLOBAL hGlobal = GlobalAlloc(GHND, nCreateSize);
 				if (hGlobal)
 				{
-					CComPtr<IStream> spStream;
+					ATL::CComPtr<IStream> spStream;
 					BYTE* pBytes = (BYTE*) GlobalLock(hGlobal);
-					Checked::memcpy_s(pBytes, nCreateSize, lpszHTMLText, nCreateSize);
+					ATL::Checked::memcpy_s(pBytes, nCreateSize, lpszHTMLText, nCreateSize);
 					GlobalUnlock(hGlobal);
 					hr = CreateStreamOnHGlobal(hGlobal, TRUE, &spStream);
 					if (SUCCEEDED(hr))
 					{
-						CComPtr<IPersistStreamInit> spPSI;
+						ATL::CComPtr<IPersistStreamInit> spPSI;
 						hr = spUnk->QueryInterface(__uuidof(IPersistStreamInit), (void**)&spPSI);
 						if (SUCCEEDED(hr))
 						{
@@ -717,12 +713,12 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 			}
 			else
 			{
-				CComPtr<IWebBrowser2> spBrowser;
+				ATL::CComPtr<IWebBrowser2> spBrowser;
 				spUnk->QueryInterface(__uuidof(IWebBrowser2), (void**)&spBrowser);
 				if (spBrowser)
 				{
-					CComVariant ve;
-					CComVariant vurl(lpszTricsData);
+					ATL::CComVariant ve;
+					ATL::CComVariant vurl(lpszTricsData);
 					spBrowser->put_Visible(ATL_VARIANT_TRUE);
 					spBrowser->Navigate2(&vurl, &ve, &ve, &ve, &ve);
 				}
@@ -747,7 +743,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 
 STDMETHODIMP CDolphinAxHost::ShowObject()
 {
-	ATLTRACE2(atlTraceHosting, 2, _T("IOleClientSite::ShowObject\r\n"));
+	ATLTRACE2(ATL::atlTraceHosting, 2, _T("IOleClientSite::ShowObject\r\n"));
 
 	HDC hdc = CWindowImpl<CAxHostWindow>::GetDC();
 	if (hdc == NULL)
@@ -771,14 +767,14 @@ STDMETHODIMP CDolphinAxHost::ShowObject()
 // library, this may need to be modified to reflect the changes too
 BOOL __stdcall AxWinInit()
 {
-	WM_ATLGETHOST = RegisterWindowMessage(_T("WM_ATLGETHOST"));
-	WM_ATLGETCONTROL = RegisterWindowMessage(_T("WM_ATLGETCONTROL"));
+	ATL::WM_ATLGETHOST = RegisterWindowMessage(L"WM_ATLGETHOST");
+	ATL::WM_ATLGETCONTROL = RegisterWindowMessage(L"WM_ATLGETCONTROL");
 
 	WNDCLASSEX wc;
 // first check if the class is already registered
 	memset(&wc, 0, sizeof(WNDCLASSEX));
 	wc.cbSize = sizeof(WNDCLASSEX);
-	BOOL bRet = ::GetClassInfoEx(_AtlBaseModule.GetModuleInstance(), CDolphinAxHost::GetWndClassName(), &wc);
+	BOOL bRet = ::GetClassInfoEx(ATL::_AtlBaseModule.GetModuleInstance(), CDolphinAxHost::GetWndClassName(), &wc);
 
 // register class if not
 
@@ -791,7 +787,7 @@ BOOL __stdcall AxWinInit()
 		wc.lpfnWndProc = CDolphinAxHost::WindowProc;
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = 0;
-		wc.hInstance = _AtlBaseModule.GetModuleInstance();
+		wc.hInstance = ATL::_AtlBaseModule.GetModuleInstance();
 		wc.hIcon = NULL;
 		wc.hCursor = ::LoadCursor(NULL, IDC_ARROW);
 		wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -807,8 +803,6 @@ BOOL __stdcall AxWinInit()
 
 BOOL __stdcall AxWinTerm()
 {
-	UnregisterClass(CDolphinAxHost::GetWndClassName(), _AtlBaseModule.GetModuleInstance());
+	UnregisterClass(CDolphinAxHost::GetWndClassName(), ATL::_AtlBaseModule.GetModuleInstance());
 	return TRUE;
 }
-
-#endif

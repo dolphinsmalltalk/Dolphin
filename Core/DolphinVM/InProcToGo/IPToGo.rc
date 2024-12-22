@@ -1,5 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -17,9 +19,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Neutral (Default) resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
-LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
-#pragma code_page(1252)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -49,22 +50,12 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Cursor
-//
-
 #endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
 // English (United States) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -92,7 +83,7 @@ BEGIN
             VALUE "FileDescription", "Dolphin ToGo In-Proc COM Server Stub"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "IPDolphin To Go"
-            VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2024"
+            VALUE "LegalCopyright", "Portions Copyright Â© Object Arts 1997-2024"
             VALUE "OriginalFilename", "IPDolphinToGo.DLL"
             VALUE "ProductName", "A Dolphin COM Component"
             VALUE "ProductVersion", "1, 0, 0, 1"
@@ -104,16 +95,11 @@ BEGIN
     END
 END
 
-#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
 // English (United Kingdom) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
-#pragma code_page(1252)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -150,7 +136,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_APPNAME             "A Dolphin Smalltalk Application"
+    IDS_APPNAME             "A Dolphin Smalltalk DLL"
     IDP_FAILEDTOMARSHALOUTER 
                             "Unable to establish link between calling application and Dolphin image (Error %#d marshalling application interface)"
     IDP_FAILEDTOUNMARSHALOUTER 
@@ -186,19 +172,9 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_INVALIDPROGID       "Invalid or unregistered prog id"
-    IDS_CANTCREATECONTROL   "Unable to create instance of control"
-    IDS_CANTCREATEIE        "Unable to create web browser control"
-    IDS_CANTGETCLASSOBJECT  "Unable to access control's class factory"
-    IDS_AXSITEERRORFMT      "<h2>Dolphin Smalltalk Active-X Host</h2>\n<h3>Error creating control: '%1'</h3>\n<p>%3</p>\n<p>The error was: %2!x! - '%4'</p>"
+    IDS_APP_SHORT_NAME      "DolphinDll"
 END
 
-STRINGTABLE
-BEGIN
-    IDS_APP_SHORT_NAME      "Dolphin"
-END
-
-#endif    // English (United Kingdom) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
