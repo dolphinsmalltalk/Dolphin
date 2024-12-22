@@ -1,10 +1,14 @@
-// Compiler resources Microsoft Visual C++ does not edit directly
+//
+// Version.rc2 - Tokenized version resource that must not be edited by Microsoft Visual C++
 //
 #pragma code_page(65001)
 
 #ifdef APSTUDIO_INVOKED
-#error this file is not editable by Microsoft Visual C++
+	#error this file is not editable by Microsoft Visual C++
 #endif //APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -12,13 +16,13 @@
 //
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION DOLPHIN_VERINFO_VERSION
-PRODUCTVERSION DOLPHIN_VERINFO_VERSION
- FILEFLAGSMASK 0x1fL
+ FILEVERSION DOLPHIN_VERINFO_VERSION
+ PRODUCTVERSION DOLPHIN_VERINFO_VERSION
+ FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
- FILEFLAGS 0x3L
+ FILEFLAGS 0x2bL
 #else
- FILEFLAGS 0x2L
+ FILEFLAGS 0x2aL
 #endif
  FILEOS 0x4L
  FILETYPE 0x1L
@@ -29,17 +33,19 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin Smalltalk Compiler"
+            VALUE "FileDescription", "Dolphin Smalltalk ActiveX Host"
             VALUE "FileVersion", DOLPHIN_FILE_VERSION
             VALUE "InternalName", "Dolphin"
             VALUE "LegalCopyright", DOLPHIN_COPYRIGHT
-            VALUE "OriginalFilename", "DolphinCR8.DLL"
-            VALUE "ProductName", "Dolphin Smalltalk"
+            VALUE "OriginalFilename", "DolphinAX8.DLL"
+            VALUE "ProductName", "Dolphin Smalltalk 8"
             VALUE "ProductVersion", DOLPHIN_PRODUCT_VERSION
-		END
+        END
     END
     BLOCK "VarFileInfo"
     BEGIN
         VALUE "Translation", 0x409, 1252
     END
 END
+
+/////////////////////////////////////////////////////////////////////////////

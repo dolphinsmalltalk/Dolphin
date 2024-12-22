@@ -1,5 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -20,13 +22,6 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
 LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
-#pragma code_page(1252)
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Cursor
-//
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -65,7 +60,6 @@ END
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -92,7 +86,7 @@ BEGIN
             VALUE "Comments", "Powered by Dolphin Smalltalk"
             VALUE "FileDescription", "Dolphin ToGo Application"
             VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2024."
+            VALUE "LegalCopyright", "Portions Copyright Â© Object Arts Ltd 1997-2024."
             VALUE "OriginalFilename", "GUIToGo.exe"
             VALUE "ProductName", "A Dolphin ToGo Application"
             VALUE "ProductVersion", "1, 0, 0, 1"
@@ -104,16 +98,6 @@ BEGIN
     END
 END
 
-#endif    // English (United States) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// English (United Kingdom) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
-#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -155,12 +139,6 @@ BEGIN
 END
 
 #endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -207,19 +185,10 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_INVALIDPROGID       "Invalid or unregistered prog id"
-    IDS_CANTCREATECONTROL   "Unable to create instance of control"
-    IDS_CANTCREATEIE        "Unable to create web browser control"
-    IDS_CANTGETCLASSOBJECT  "Unable to access control's class factory"
-    IDS_AXSITEERRORFMT      "<h2>Dolphin Smalltalk Active-X Host</h2>\n<h3>Error creating control: '%1'</h3>\n<p>%3</p>\n<p>The error was: %2!x! - '%4'</p>"
+    IDS_APP_SHORT_NAME      "GuiToGoApp"
 END
 
-STRINGTABLE
-BEGIN
-    IDS_APP_SHORT_NAME      "Dolphin"
-END
-
-#endif    // English (United Kingdom) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

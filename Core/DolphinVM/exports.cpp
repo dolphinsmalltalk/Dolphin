@@ -107,34 +107,50 @@ extern "C" FILE* __cdecl StdErr()
 
 #include "regkey.h"
 
-extern HMODULE GetVMModule();
+static constexpr wchar_t szEventLogKeyBase[] = L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\";
+
+HRESULT RegisterEventLogMessageTable(LPCWSTR szSource)
+{
+	const wchar_t* szSrc = szSource;
+
+	wchar_t szEventLogKey[256 + 1];
+	szEventLogKey[256] = 0;
+	wcscpy(szEventLogKey, szEventLogKeyBase);
+	wcsncat_s(szEventLogKey, szSource, 256 - wcslen(szEventLogKeyBase));
+
+	RegKey rkeyRegistered;
+	LSTATUS status = rkeyRegistered.Open(HKEY_LOCAL_MACHINE, szEventLogKey, KEY_READ);
+	if (status != ERROR_SUCCESS)
+	{
+		status = rkeyRegistered.Create(HKEY_LOCAL_MACHINE, szEventLogKey, REG_NONE, REG_OPTION_NON_VOLATILE,
+			(KEY_READ | KEY_WRITE));
+		if (status == ERROR_SUCCESS)
+		{
+			wchar_t vmFileName[MAX_PATH + 1];
+			::GetModuleFileNameW(GetVMModule(), vmFileName, _countof(vmFileName) - 1);
+			rkeyRegistered.SetStringValue(L"EventMessageFile", vmFileName);
+			rkeyRegistered.SetDWORDValue(L"TypesSupported", (EVENTLOG_SUCCESS | EVENTLOG_ERROR_TYPE |
+				EVENTLOG_WARNING_TYPE | EVENTLOG_INFORMATION_TYPE));
+		}
+	}
+
+	return HRESULT_FROM_WIN32(status);
+}
+
+HRESULT UnregisterEventLogMessageTable(LPCWSTR szSource)
+{
+	RegKey rkeyRegistered;
+	LSTATUS status = rkeyRegistered.Open(HKEY_LOCAL_MACHINE, szEventLogKeyBase, KEY_READ);
+	if (status == ERROR_SUCCESS)
+	{
+		status = rkeyRegistered.RecurseDeleteKey(szSource);
+	}
+	return HRESULT_FROM_WIN32(status);
+}
+
 
 extern "C" HANDLE __stdcall RegisterAsEventSource(const wchar_t* szSource)
 {
-	const wchar_t* szSrc = szSource;
-	static const wchar_t* szEventLogKeyBase = L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\";
-	
-	wchar_t szEventLogKey[256+1];
-	szEventLogKey[256] = 0;
-	wcscpy(szEventLogKey, szEventLogKeyBase);
-	wcsncat_s(szEventLogKey, szSource, 256-wcslen(szEventLogKeyBase));
-
-	RegKey rkeyRegistered;
-	if (rkeyRegistered.Open(HKEY_LOCAL_MACHINE, szEventLogKey, KEY_READ) != ERROR_SUCCESS)
-	{
-		if (rkeyRegistered.Create(HKEY_LOCAL_MACHINE, szEventLogKey, REG_NONE, REG_OPTION_NON_VOLATILE,
-									(KEY_READ|KEY_WRITE)) == ERROR_SUCCESS)
-		{
-			wchar_t vmFileName[MAX_PATH+1];
-			::GetModuleFileNameW(GetVMModule(), vmFileName, _countof(vmFileName) - 1);
-			rkeyRegistered.SetStringValue(L"EventMessageFile", vmFileName);
-			rkeyRegistered.SetDWORDValue(L"TypesSupported", (EVENTLOG_SUCCESS|EVENTLOG_ERROR_TYPE|
-												EVENTLOG_WARNING_TYPE|EVENTLOG_INFORMATION_TYPE));
-		}
-		else
-			szSrc = L"Dolphin";
-	}
-
-
+	const wchar_t* szSrc = FAILED(RegisterEventLogMessageTable(szSource)) ? L"Dolphin" : szSource;
 	return RegisterEventSource(NULL, szSrc);
 }

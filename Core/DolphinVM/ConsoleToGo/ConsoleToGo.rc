@@ -1,5 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -19,7 +21,6 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -46,7 +47,7 @@ BEGIN
             VALUE "Comments", "Powered by Dolphin Smalltalk"
             VALUE "FileDescription", "Dolphin ToGo Console Application"
             VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2024."
+            VALUE "LegalCopyright", "Portions Copyright Â© Object Arts 1997-2024."
             VALUE "OriginalFilename", "ConsoleToGo.exe"
             VALUE "ProductName", "A Dolphin ToGo Console Application"
             VALUE "ProductVersion", "1, 0, 0, 1"
@@ -58,16 +59,6 @@ BEGIN
     END
 END
 
-#endif    // English (United States) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// English (United Kingdom) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
-#pragma code_page(1252)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -90,7 +81,6 @@ END
 
 3 TEXTINCLUDE 
 BEGIN
-    "\r\n"
     "\0"
 END
 
@@ -140,21 +130,10 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_APP_SHORT_NAME      "Dolphin"
+    IDS_APP_SHORT_NAME      "ConsoleToGoApp"
 END
 
-#endif    // English (United Kingdom) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
-
-
-#ifndef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// Generated from the TEXTINCLUDE 3 resource.
-//
-
-
-/////////////////////////////////////////////////////////////////////////////
-#endif    // not APSTUDIO_INVOKED
 

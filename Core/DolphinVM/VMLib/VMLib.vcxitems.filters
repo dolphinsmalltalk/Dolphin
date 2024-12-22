@@ -130,9 +130,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\startToGoVm.cpp">
       <Filter>App Support</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp">
-      <Filter>FFI</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp">
       <Filter>App Support</Filter>
     </ClCompile>
@@ -171,9 +168,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\rc_vm.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\segdefs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\StdAfx.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h">
-      <Filter>FFI</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\bytecdes.h">
       <Filter>Interpreter</Filter>
     </ClInclude>
@@ -384,8 +378,5 @@
     <MASM Include="$(MSBuildThisFileDirectory)..\ExternalCall.asm">
       <Filter>FFI</Filter>
     </MASM>
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="$(MSBuildThisFileDirectory)..\ActiveXHost.idl" />
   </ItemGroup>
 </Project>
