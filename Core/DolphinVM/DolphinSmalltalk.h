@@ -25,7 +25,7 @@ public:
 	~CDolphinSmalltalk();
 
 #ifdef VMDLL
-DECLARE_REGISTRY(CDolphinSmalltalk, L"DolphinSmalltalk.7", L"DolphinSmalltalk", IDS_APP_TITLE, THREADFLAGS_APARTMENT)
+DECLARE_REGISTRY(CDolphinSmalltalk, L"DolphinSmalltalk.8", L"DolphinSmalltalk", IDS_APP_TITLE, THREADFLAGS_APARTMENT)
 #endif
 
 DECLARE_NOT_AGGREGATABLE(CDolphinSmalltalk)

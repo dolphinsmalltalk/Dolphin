@@ -19,6 +19,19 @@ public :
 	{
 		return E_NOTIMPL;
 	}
+
+	bool IsRunningElevated() const
+	{
+		HANDLE token = NULL;
+		DWORD size;
+		if (!::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY, &token))
+			return false;
+
+		TOKEN_ELEVATION elevation = { 0 };
+		::GetTokenInformation(token, TokenElevation, &elevation, sizeof(elevation), &size);
+		::CloseHandle(token);
+		return elevation.TokenIsElevated;
+	}
 };
 
 extern CDolphinVMModule _Module;

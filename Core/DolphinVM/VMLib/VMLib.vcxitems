@@ -108,6 +108,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IntPrim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ist.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\LargeIntPrim.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\regkey.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Utf16StringBuf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Utf8StringBuf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\VirtualMemoryStats.h" />

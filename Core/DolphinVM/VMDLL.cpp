@@ -10,6 +10,7 @@
 #include "DolphinSmalltalk.h"
 #include "VMDll.h"
 #include "dlldatax.h"
+#include "regkey.h"
 
 #pragma code_seg(ATL_SEG)
 
@@ -29,10 +30,13 @@ CDolphinVMModule _Module;
 
 HRESULT CDolphinVMModule::RegisterAsEventSource() const
 {
+	if (!IsRunningElevated())
+		return S_FALSE;
+
 	static constexpr WCHAR szKey[] = L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\Dolphin";
 	HRESULT hr;
 
-	CRegKey rkeyEvSrc;
+	RegKey rkeyEvSrc;
 	// Register as an event source with message table in this DLL
 	LONG ret = rkeyEvSrc.Create(HKEY_LOCAL_MACHINE, szKey);
 	if (ret == ERROR_SUCCESS)

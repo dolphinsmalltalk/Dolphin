@@ -110,11 +110,11 @@ void OverlappedCall::Initialize()
 {
 	AssertCalledFromInterpreterThread();
 
-	CRegKey rkOverlap;
-	if (OpenDolphinKey(rkOverlap, L"Overlapped")==ERROR_SUCCESS)
+	RegKey rkOverlap;
+	if (rkOverlap.OpenDolphinKey(L"Overlapped") == ERROR_SUCCESS && 
+		rkOverlap.QueryDWORDValue(L"TerminateTimeout", s_dwTerminateTimeout) == ERROR_SUCCESS)
 	{
-		rkOverlap.QueryDWORDValue(L"TerminateTimeout", s_dwTerminateTimeout);
-		s_dwTerminateTimeout = max(s_dwTerminateTimeout, 100);
+			s_dwTerminateTimeout = max(s_dwTerminateTimeout, 100);
 	}
 	else
 	{
