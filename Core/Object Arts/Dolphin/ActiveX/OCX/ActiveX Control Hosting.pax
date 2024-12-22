@@ -57,16 +57,13 @@ package setClassNames: #(
 	#{OS.COM.IPropertyNotifySink}
 	#{OS.COM.OLEVERB}
 	#{UI.AXControlSite}
+	#{UI.AXHostLibrary}
 	#{UI.AXValueConvertingControlSite}
 	#{UI.IAxWinAmbientDispatch}
 	#{UI.IAxWinAmbientDispatchEx}
 	#{UI.IDocHostUIHandlerDispatch}
 	#{UI.IDolphinAxHost}
 	#{UI.IMSControl}
-).
-
-package setMethodNames: #(
-	#(#{Kernel.VMLibrary} #axWinInit)
 ).
 
 package setVariableNames: #(
@@ -101,6 +98,14 @@ package setPrerequisites: #(
 package!
 
 "Class Definitions"!
+
+External.DynamicLinkLibrary
+	subclass: #'UI.AXHostLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 External.Structure
 	subclass: #'OS.COM.OLEVERB'
@@ -262,20 +267,6 @@ UI.AXControlSite
 
 Smalltalk.IAxWinHostWindow := UI.IDolphinAxHost!
 
-
-"Loose Methods"!
-
-!Kernel.VMLibrary methodsFor!
-
-axWinInit
-	"Initialize the AX host window stuff."
-
-	<stdcall: bool AtlAxWinInit>
-	^self invalidCall: _failureCode! !
-
-!Kernel.VMLibrary categoriesForMethods!
-axWinInit!initializing!public! !
-!
 
 "End of package definition"!
 

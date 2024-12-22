@@ -249,7 +249,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Res\Ist.rc2" />
     <None Include="togo.def" />
     <MessageTable Include="..\Res\Messages.mc" />
   </ItemGroup>

@@ -1,0 +1,101 @@
+﻿// Microsoft Visual C++ generated resource script.
+//
+#pragma code_page(65001)
+
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "winres.h"
+#include "verrsrc.h"
+#include "Version.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United Kingdom) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""winres.h""\r\n"
+    "#include ""verrsrc.h""\r\n"
+    "#include ""Version.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""version.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "1 TYPELIB ""ActiveXHost.tlb""\r\n"
+    "\r\n"
+    "\0"
+END
+
+4 TEXTINCLUDE 
+BEGIN
+    "#include ""version.rc2""  // non-Microsoft Visual C++ edited resources\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_INVALIDPROGID       "Invalid or unregistered prog id"
+    IDS_CANTCREATECONTROL   "Unable to create instance of control"
+    IDS_CANTCREATEIE        "Unable to create web browser control"
+    IDS_CANTGETCLASSOBJECT  "Unable to access control's class factory"
+    IDS_AXSITEERRORFMT      "<h2>Dolphin Smalltalk ActiveX Host</h2>\n<h3>Error creating control: '%1'</h3>\n<p>%3</p>\n<p>The error was: %2!x! - '%4'</p>"
+END
+
+STRINGTABLE
+BEGIN
+    IDR_AXHOST              "Dolphin ActiveX Control Host"
+END
+
+#endif    // English (United Kingdom) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "version.rc2"  // non-Microsoft Visual C++ edited resources
+1 TYPELIB "ActiveXHost.tlb"
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

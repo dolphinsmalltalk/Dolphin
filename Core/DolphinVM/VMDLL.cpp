@@ -28,37 +28,28 @@ CDolphinVMModule _Module;
 /////////////////////////////////////////////////////////////////////////////
 // Registration helper
 
-HRESULT CDolphinVMModule::RegisterAsEventSource() const
+extern HRESULT RegisterEventLogMessageTable(LPCWSTR szSource);
+
+static constexpr wchar_t EventLogKeyName[] = L"Dolphin";
+
+HRESULT CDolphinVMModule::RegisterServer(BOOL bRegTypeLib) throw()
 {
-	if (!IsRunningElevated())
-		return S_FALSE;
+	HRESULT hr = __super::RegisterServer(bRegTypeLib);
 
-	static constexpr WCHAR szKey[] = L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\Dolphin";
-	HRESULT hr;
-
-	RegKey rkeyEvSrc;
-	// Register as an event source with message table in this DLL
-	LONG ret = rkeyEvSrc.Create(HKEY_LOCAL_MACHINE, szKey);
-	if (ret == ERROR_SUCCESS)
-	{
-		WCHAR szModule[_MAX_PATH];
-		::GetModuleFileName(GetResLibHandle(), szModule, _MAX_PATH);
-		rkeyEvSrc.SetStringValue(L"EventMessageFile", szModule);
-		rkeyEvSrc.SetDWORDValue(L"TypesSupported", 7);
-		hr = S_OK;
-	}
-	else
-		hr = HRESULT_FROM_WIN32(ret);
+	if (SUCCEEDED(hr) && IsRunningElevated())
+		hr = RegisterEventLogMessageTable(EventLogKeyName);
 
 	return hr;
 }
 
-HRESULT CDolphinVMModule::RegisterServer(BOOL bRegTypeLib) throw()
-{
-	HRESULT hr = CAtlModuleT<CDolphinVMModule>::RegisterServer(bRegTypeLib);
+extern HRESULT UnregisterEventLogMessageTable(LPCWSTR szSource);
 
-	if (SUCCEEDED(hr))
-		hr = RegisterAsEventSource();
+HRESULT CDolphinVMModule::UnregisterServer(BOOL bRegTypeLib) throw()
+{
+	HRESULT hr = __super::RegisterServer(bRegTypeLib);
+
+	if (SUCCEEDED(hr) && IsRunningElevated())
+		hr = UnregisterEventLogMessageTable(EventLogKeyName);
 
 	return hr;
 }
