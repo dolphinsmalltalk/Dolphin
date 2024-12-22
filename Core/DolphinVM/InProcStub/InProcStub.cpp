@@ -6,7 +6,7 @@
 //      run nmake -f InProcStubps.mk in the project directory.
 
 #include "stdafx.h"
-#include "..\ist.h"
+#include "ist.h"
 #include "resource.h"
 #include "..\rc_stub.h"
 #include <initguid.h>

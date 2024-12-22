@@ -21,8 +21,6 @@ Interpreter interface functions
 #include "thrdcall.h"
 #include "VirtualMemoryStats.h"
 
-const wchar_t* SZREGKEYBASE = L"Software\\Object Arts\\Dolphin Smalltalk 7.1";
-
 // Smalltalk classes
 #include "STArray.h"
 #include "STByteArray.h"

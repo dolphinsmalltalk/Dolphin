@@ -105,7 +105,9 @@ extern "C" FILE* __cdecl StdErr()
 // End of CRT exports
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <atlbase.h>
+#include "regkey.h"
+
+extern HMODULE GetVMModule();
 
 extern "C" HANDLE __stdcall RegisterAsEventSource(const wchar_t* szSource)
 {
@@ -117,14 +119,14 @@ extern "C" HANDLE __stdcall RegisterAsEventSource(const wchar_t* szSource)
 	wcscpy(szEventLogKey, szEventLogKeyBase);
 	wcsncat_s(szEventLogKey, szSource, 256-wcslen(szEventLogKeyBase));
 
-	CRegKey rkeyRegistered;
+	RegKey rkeyRegistered;
 	if (rkeyRegistered.Open(HKEY_LOCAL_MACHINE, szEventLogKey, KEY_READ) != ERROR_SUCCESS)
 	{
 		if (rkeyRegistered.Create(HKEY_LOCAL_MACHINE, szEventLogKey, REG_NONE, REG_OPTION_NON_VOLATILE,
 									(KEY_READ|KEY_WRITE)) == ERROR_SUCCESS)
 		{
 			wchar_t vmFileName[MAX_PATH+1];
-			::GetModuleFileNameW(_AtlBaseModule.GetModuleInstance(), vmFileName, _countof(vmFileName) - 1);
+			::GetModuleFileNameW(GetVMModule(), vmFileName, _countof(vmFileName) - 1);
 			rkeyRegistered.SetStringValue(L"EventMessageFile", vmFileName);
 			rkeyRegistered.SetDWORDValue(L"TypesSupported", (EVENTLOG_SUCCESS|EVENTLOG_ERROR_TYPE|
 												EVENTLOG_WARNING_TYPE|EVENTLOG_INFORMATION_TYPE));

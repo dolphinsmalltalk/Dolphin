@@ -332,6 +332,7 @@
       <Filter>Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\heap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\regkey.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">

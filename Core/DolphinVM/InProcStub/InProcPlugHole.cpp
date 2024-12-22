@@ -1,9 +1,10 @@
 // InProcPlugHole.cpp : Implementation of CInProcPlugHole
 #include "stdafx.h"
-#include "..\ist.h"
+#include "ist.h"
 #include "InprocStub.h"
 #include "InProcPlugHole.h"
 #include "..\startVM.h"
+#include "..\regkey.h"
 
 #ifdef _DEBUG
 	const int SecondsToWait = IsDebuggerPresent() ? 300 : 60;
@@ -208,18 +209,18 @@ void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 		HRESULT hr = StringFromCLSID(rclsid, &wszCLSID);
 		if (SUCCEEDED(hr))
 		{
+			CoTaskMemString clsidDeleter(wszCLSID);
 
 			wchar_t szKey[5+1+38+1+5+1] = L"CLSID\\";
 			wcscat(szKey, wszCLSID);
 			wcscat(szKey, L"\\Image");
 			_ASSERTE(wcslen(szKey) < _countof(szKey));
-			CRegKey rKey;
+			RegKey rKey;
 			if (ERROR_SUCCESS == rKey.Open(HKEY_CLASSES_ROOT, szKey))
 			{
 				ULONG nChars = _MAX_PATH;
 				rKey.QueryStringValue(L"", achImagePath, &nChars);
 			}
-			CoTaskMemFree(wszCLSID);
 		}
 	}
 }

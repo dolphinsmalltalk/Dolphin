@@ -3,7 +3,7 @@
 
 #include "..\DllModule.h"
 
-class CDolphinCompilerModule : public CDolphinDllModuleT< CDolphinCompilerModule >
+class CDolphinCompilerModule : public CDolphinDllModuleT<CDolphinCompilerModule>
 {
 private:
 
@@ -12,6 +12,12 @@ public :
 	{
 		// Compiler has no typelib
 		return __super::RegisterServer(FALSE);
+	}
+
+	HRESULT UnregisterServer(BOOL bRegTypeLib = TRUE) throw()
+	{
+		// Compiler has no typelib
+		return __super::UnregisterServer(FALSE);
 	}
 
 	//DECLARE_LIBID(LIBID_CompilerLib)

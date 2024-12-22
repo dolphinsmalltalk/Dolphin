@@ -288,10 +288,10 @@ void CrashDump(const LPEXCEPTION_POINTERS pExceptionInfo, const wchar_t* imagePa
 	size_t nWalkbackDepth = DefaultWalkbackDepth;
 	wostream* pStream = NULL;
 	wofstream fStream;
-	CRegKey rkDump;
+	RegKey rkDump;
 	if (imagePath == nullptr)
 		imagePath = achImagePath;
-	if (OpenDolphinKey(rkDump, L"CrashDump", KEY_READ)==ERROR_SUCCESS)
+	if (rkDump.OpenDolphinKey( L"CrashDump") == ERROR_SUCCESS)
 	{
 		achLogPath[0] = 0;
 		ULONG size = _MAX_PATH;

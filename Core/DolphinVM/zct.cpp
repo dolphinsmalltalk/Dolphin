@@ -48,10 +48,10 @@ bool ObjectMemory::IsInZct(OTE* ote)
 
 HRESULT ObjectMemory::InitializeZct()
 {
-	CRegKey rkDump;
 	ZctReserve = ZCTRESERVE;
 	ZctMinSize = ZCTINITIALSIZE;
-	if (OpenDolphinKey(rkDump, L"ObjMem", KEY_READ) == ERROR_SUCCESS)
+	RegKey rkDump;
+	if (rkDump.OpenDolphinKey(L"ObjMem") == ERROR_SUCCESS)
 	{
 		DWORD dwValue;
 		if (rkDump.QueryDWORDValue(L"ZMax", dwValue) == ERROR_SUCCESS && dwValue > ZCTMINRESERVE)

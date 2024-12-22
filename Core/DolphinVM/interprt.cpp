@@ -521,8 +521,8 @@ void Interpreter::sendExceptionInterrupt(VMInterrupts oopInterrupt, const LPEXCE
 
 static BOOL WantGPFTrap()
 {
-	CRegKey rk;
-	return OpenDolphinKey(rk, L"DisableGPFTrap") != ERROR_SUCCESS;
+	RegKey rk;
+	return rk.OpenDolphinKey( L"DisableGPFTrap") != ERROR_SUCCESS;
 }
 
 static BOOL PleaseTrapGPFs()
