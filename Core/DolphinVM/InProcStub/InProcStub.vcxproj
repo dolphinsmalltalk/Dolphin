@@ -284,8 +284,8 @@
     <ResourceCompile Include="InProcStub.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\InProcPlugHole.h" />
     <ClInclude Include="..\regkey.h" />
-    <ClInclude Include="InProcPlugHole.h" />
     <ClInclude Include="InProcStub.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StdAfx.h" />
