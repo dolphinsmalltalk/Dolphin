@@ -191,7 +191,7 @@ class: aClass name: aString
 		yourself!
 
 class: aClass selector: aSymbol
-	(aSymbol beginsWith: SelectorPrefix)
+	(aSymbol isNil or: [aSymbol beginsWith: SelectorPrefix])
 		ifFalse: [self error: 'Invalid resource selector ' , aSymbol printString].
 	^self newClass: aClass selector: aSymbol!
 

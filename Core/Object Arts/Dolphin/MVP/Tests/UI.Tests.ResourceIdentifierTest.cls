@@ -51,6 +51,23 @@ testAssignResource
 				[self class class removeSelector: #resource_Test_view ifAbsent: nil.
 				self assert: (self class respondsTo: #resource_Test_view) not]!
 
+testCopy
+	| subject copy |
+	subject := ResourceIdentifier class: Shell name: Shell defaultView.
+	copy := subject copy.
+	self assert: copy equals: subject.
+	self deny: copy identicalTo: subject.
+	self assert: copy owningClass identicalTo: subject owningClass.
+	self assert: copy selector identicalTo: subject selector.
+	subject name: nil.
+	self assertIsNil: subject selector.
+	self assert: subject printString equals: 'Shell.untitled'.
+	copy := subject copy.
+	self assert: copy equals: subject.
+	self deny: copy identicalTo: subject.
+	self assert: copy owningClass identicalTo: subject owningClass.
+	self assert: copy selector identicalTo: subject selector!
+
 testDeserializeAll
 	"Test's that all view resources are deserializable. The most common cause of breakage would
 	be changing the layout of a class with serialized instances in resources without adding an
@@ -119,6 +136,7 @@ createResourceNamed:for:on:!helpers!private! !
 setUp!private!unit tests! !
 tempViewResource!private!unit tests! !
 testAssignResource!public!unit tests! !
+testCopy!public!unit tests! !
 testDeserializeAll!public!unit tests! !
 testReferenceToNonExistentView!public!unit tests! !
 testResourceSelector!public!unit tests! !
