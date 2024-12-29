@@ -27,12 +27,7 @@
 #include <Strsafe.h>
 #include <stdlib.h>
 #include "heap.h"
-
-#define _ATL_APARTMENT_THREADED
-
-#define _ATL_ALL_WARNINGS
-#include <atlbase.h>
-#include <atlcom.h>
+#include "comdef.h"
 
 #include "..\DolphinSmalltalk_i.h"
 
@@ -41,7 +36,7 @@
 #define TODO(s)
 
 #ifdef _DEBUG
-	#define _CRTDBG_MAP_ALLOC
+	//#define _CRTDBG_MAP_ALLOC
 	#define DEBUG_ONLY
 	#define TRACE				::DolphinTrace
 	#define VERIFY				_ASSERTE

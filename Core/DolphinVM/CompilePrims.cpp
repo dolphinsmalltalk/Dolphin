@@ -33,7 +33,7 @@ static ICompilerPtr NewCompiler()
 
 	if (!piFactory)
 	{
-		hr = CoGetClassObject(__uuidof(DolphinCompiler), CLSCTX_INPROC_SERVER, NULL, IID_IClassFactory, (void**)&piFactory);
+		hr = CoGetClassObject(__uuidof(Compiler), CLSCTX_INPROC_SERVER, NULL, IID_IClassFactory, (void**)&piFactory);
 		if (FAILED(hr))
 		{
 			HINSTANCE hLib = LoadCompiler();
@@ -44,7 +44,7 @@ static ICompilerPtr NewCompiler()
 				if (pfnFactory)
 				{
 					// Found the entry point, try retrieving the factory
-					hr = (*pfnFactory)(__uuidof(DolphinCompiler), IID_IClassFactory, (void**)&piFactory);
+					hr = (*pfnFactory)(__uuidof(Compiler), IID_IClassFactory, (void**)&piFactory);
 				}
 			}
 		}

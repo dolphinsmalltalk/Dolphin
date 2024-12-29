@@ -176,7 +176,7 @@ library CompilerLib
 		//uuid(F27D15BD-B8EB-488C-9932-C7FA0C598640)	// 7.0
 		uuid(84b13fd5-cd7c-48a6-b8da-bcb5dcfa05ea)		// 8.0
 	]
-	coclass DolphinCompiler
+	coclass Compiler
 	{
 		[default] interface ICompiler;
 	};

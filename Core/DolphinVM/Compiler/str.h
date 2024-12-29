@@ -25,6 +25,8 @@ inline u8string MakeString(IDolphin* piVM, const POTE stringPointer)
 
 inline wostream& operator<<(wostream& stream, const u8string& str)
 {
-	USES_CONVERSION;
-	return stream << static_cast<LPCWSTR>(A2W(reinterpret_cast<const char*>(str.c_str())));
+	size_t cch = str.size();
+	std::unique_ptr<WCHAR[]> buf(new WCHAR[cch]);
+	::MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, reinterpret_cast<LPCCH>(str.data()), cch, buf.get(), cch);
+	return stream << buf;
 }

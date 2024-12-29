@@ -4,11 +4,24 @@
 #include "..\Compiler_i.h"
 #include "..\Compiler_i.c"
 #include "Compiler.h"
+#include "CompilerDLL.h"
 
 //////////////////////////////////////////////////////////////////
 // Global Variables:
 
 CDolphinCompilerModule _Module;
+
+ComModuleBase* ComModuleBase::Instance;
+
+void ComObjectBase::LockModule()
+{
+	ComModuleBase::Instance->Lock();
+}
+
+void ComObjectBase::UnlockModule()
+{
+	ComModuleBase::Instance->Unlock();
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -23,4 +36,3 @@ HMODULE __stdcall GetResLibHandle()
 // Common DLL Entry Point and registration implementation
 
 #include "..\DllModule.cpp"
-

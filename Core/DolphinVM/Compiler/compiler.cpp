@@ -81,9 +81,6 @@ Compiler::LibCallType Compiler::callTypes[4] =
 
 ///////////////////////
 
-Compiler::Compiler()
-{}
-	
 Compiler::~Compiler()
 {
 	// Free scopes
@@ -3522,20 +3519,20 @@ POTE Compiler::ParseByteArray()
 	return arrayPointer;
 }
 
+typedef _com_ptr_t <_com_IIID<ICompiler, &__uuidof(ICompiler)>> ICompilerPtr;
 
 // N.B. Return value has artificially inc'd ref. count
 Oop Compiler::ParseConstExpression()
 {
 	// We have to create a new compiler to compile and evaluate the
 	// subsequent expression in the context of the current class's class.
-	CComObject<Compiler>* pCompiler;
-	HRESULT hr = CComObject<Compiler>::CreateInstance(&pCompiler);
-	if (FAILED(hr))
-	{
-		_ASSERTE(FALSE);
-		return reinterpret_cast<Oop>(Nil());
-	}
-	pCompiler->AddRef();
+	auto pCompiler = new Compiler();
+	ICompilerPtr piCompiler(static_cast<ICompiler*>(pCompiler));
+	return ParseConstExpressionBody(pCompiler);
+}
+
+Oop Compiler::ParseConstExpressionBody(Compiler* pCompiler)
+{
 	pCompiler->SetVMInterface(m_piVM);
 
 	Oop result;
@@ -3588,7 +3585,6 @@ Oop Compiler::ParseConstExpression()
 	__finally
 	{
 		m_ok = pCompiler->Ok;
-		pCompiler->Release();
 	}
 	
 	// Update source pointer

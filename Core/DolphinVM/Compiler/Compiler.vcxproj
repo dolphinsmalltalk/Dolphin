@@ -96,7 +96,6 @@
       <PreprocessorDefinitions>USE_VM_DLL;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -143,7 +142,6 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <SmallerTypeCheck>true</SmallerTypeCheck>
       <SDLCheck>true</SDLCheck>
-      <ExceptionHandling>Sync</ExceptionHandling>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
@@ -199,7 +197,6 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <SmallerTypeCheck>true</SmallerTypeCheck>
       <SDLCheck>true</SDLCheck>
-      <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <ResourceCompile>
@@ -263,6 +260,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\bytecdes.h" />
+    <ClInclude Include="..\ComClassFactory.h" />
+    <ClInclude Include="..\ComModule.h" />
+    <ClInclude Include="..\ComObject.h" />
     <ClInclude Include="..\disassembler.h" />
     <ClInclude Include="..\VMPointers.h" />
     <ClInclude Include="bytecode.h" />

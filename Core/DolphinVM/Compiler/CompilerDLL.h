@@ -1,9 +1,12 @@
 #ifndef __COMPILERDLL_H_
 #define __COMPILERDLL_H_
 
-#include "..\DllModule.h"
+#include "ComModule.h"
+#include "compiler.h"
 
-class CDolphinCompilerModule : public CDolphinDllModuleT<CDolphinCompilerModule, false>
+class Compiler;
+
+class CDolphinCompilerModule : public ComModule<Compiler>
 {
 private:
 

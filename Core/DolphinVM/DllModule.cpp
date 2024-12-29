@@ -5,11 +5,14 @@
 
 #include "regkey.h"
 #include <string>
+#include "ComModule.h"
 
 using namespace std;
 
 static constexpr WCHAR UserClassesRoot[] = L"SOFTWARE\\Classes";
 static constexpr WCHAR RegCLSID[] = L"CLSID";
+
+#define AUTPRXFLAG 0x4
 
 ///////////////////////////////////////////////////////////////////////////////
 // Registration helper functions
@@ -168,8 +171,13 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
     if (!PrxDllMain(hInstance, dwReason, lpReserved))
         return FALSE;
 #endif
+
+#ifdef __ATLBASE_H__
 	hInstance;
     return _Module.DllMain(dwReason, lpReserved); 
+#else
+	return _Module.DllMain(hInstance, dwReason);
+#endif
 }
 
 __control_entrypoint(DllExport)
@@ -188,9 +196,9 @@ STDAPI DllCanUnloadNow(void)
 	#ifdef _DEBUG
 	{
 		if (hr == S_OK)
-			OutputDebugString(_T("DllCanUnloadNow affirmative\n"));
+			OutputDebugString(L"DllCanUnloadNow affirmative\n");
 		else
-			OutputDebugString(_T("DllCanUnloadNow negative\n"));
+			OutputDebugString(L"DllCanUnloadNow negative\n");
 	}
 	#endif
 
@@ -207,19 +215,6 @@ STDAPI  DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOI
     return _Module.DllGetClassObject(rclsid, riid, ppv);
 }
 
-bool IsRunningElevated() 
-{ 
-	HANDLE token = NULL; 
-	DWORD size; 
-	if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &token))
-		return false;
-
-	TOKEN_ELEVATION elevation = { 0 };
-	GetTokenInformation(token, TokenElevation, &elevation, sizeof(elevation), &size);
-	CloseHandle(token); 
-	return elevation.TokenIsElevated; 
-}
-
 // DllRegisterServer - Adds entries to the system registry
 STDAPI DllRegisterServer(void)
 {
@@ -227,8 +222,10 @@ STDAPI DllRegisterServer(void)
 	RegKeyRedirect userClassesRoot;
 	if (!_Module.IsRunningElevated())
 	{
+#ifdef __ATLBASE_H__
 		// We need this so that the typelib registration works
 		ATL::AtlSetPerUserRegistration(true);
+#endif
 
 		LSTATUS status = userClassesRoot.Redirect(HKEY_CLASSES_ROOT, HKEY_CURRENT_USER, UserClassesRoot);
 		if (status != ERROR_SUCCESS)
@@ -257,7 +254,10 @@ STDAPI DllUnregisterServer(void)
 	RegKeyRedirect userClassesRoot;
 	if (!_Module.IsRunningElevated())
 	{
+#ifdef __ATLBASE_H__
+		// We need this so that the typelib registration works
 		ATL::AtlSetPerUserRegistration(true);
+#endif
 		LSTATUS status = userClassesRoot.Redirect(HKEY_CLASSES_ROOT, HKEY_CURRENT_USER, UserClassesRoot);
 		if (status != ERROR_SUCCESS)
 			return HRESULT_FROM_WIN32(status);

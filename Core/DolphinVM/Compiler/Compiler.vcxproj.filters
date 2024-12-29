@@ -66,6 +66,15 @@
     <ClInclude Include="LexicalScope.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\ComClassFactory.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ComModule.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ComObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="version.rc2">

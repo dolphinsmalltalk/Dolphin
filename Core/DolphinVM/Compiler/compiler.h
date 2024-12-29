@@ -6,10 +6,13 @@ Smalltalk compiler
 */
 #pragma once
 
+#include <comdef.h>
+
 ///////////////////////
 #include "..\Compiler_i.h"
+
 #include "resource.h"
-#include "CompilerDLL.h"
+//#include "CompilerDLL.h"
 
 #include "..\DolphinSmalltalk_i.h"
 //typedef STObject Object;
@@ -45,32 +48,27 @@ ENABLE_BITMASK_OPERATORS(CompilerFlags)
 #define TEMPSDELIMITER u8'|'
 
 #include "bytecode.h"
+#include "ComObject.h"
+
+constexpr WCHAR const CompilerProgId[] = L"Dolphin.Compiler.8";
+constexpr WCHAR const CompilerVerIndProgId[] = L"Dolphin.Compiler";
 
 /////////////////////////////////////////////////////////////////////////////
 // CDolphinSmalltalk
-class ATL_NO_VTABLE Compiler : public Lexer,
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<Compiler, &CLSID_DolphinCompiler>,
-	public ICompiler
+class Compiler : 
+	public Lexer,
+	public ComObject<ICompiler, CompilerProgId, CompilerVerIndProgId>
 {
 public:
 
-DECLARE_REGISTRY(Compiler, L"Dolphin.Compiler.8", L"Dolphin.Compiler", IDR_COMPILER, THREADFLAGS_APARTMENT)
-
-DECLARE_NOT_AGGREGATABLE(Compiler)
-
-DECLARE_PROTECT_FINAL_CONSTRUCT()
-
-BEGIN_COM_MAP(Compiler)
-	COM_INTERFACE_ENTRY(ICompiler)
-END_COM_MAP()
+//DECLARE_REGISTRY(Compiler, L"Dolphin.Compiler.8", L"Dolphin.Compiler", IDR_COMPILER, THREADFLAGS_APARTMENT)
 
 public:
 	// Interpreting the primitiveCompile... type argument
 	enum class CompileTo { CompileToCode, CompileToRTF, CompileToTextMap, CompileToTempsMap };
 
 public:
-	Compiler();
+	Compiler() = default;
 	virtual ~Compiler();
 
 	void SetVMInterface(IDolphin* piVM);
@@ -360,6 +358,7 @@ private:
 	POTE ParseArray();
 	POTE ParseByteArray();
 	Oop  ParseConstExpression();
+	Oop  ParseConstExpressionBody(Compiler* pCompiler);
 	
 	static constexpr char8_t RelativeBindingRefIdSuffix = u8'^';
 
@@ -535,8 +534,6 @@ private:
 	NAMEDOBJECTS m_internedSymbols;
 	NAMEDOBJECTS m_literalStrings;
 };
-
-OBJECT_ENTRY_AUTO(__uuidof(DolphinCompiler), Compiler)
 
 ///////////////////////
 
