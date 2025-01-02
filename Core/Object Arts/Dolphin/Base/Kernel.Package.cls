@@ -1580,7 +1580,8 @@ tracePrerequisites: aLookupTable
 		tracePrerequisitesOfMethods: trace;
 		tracePrerequisitesOfImageStripper: trace;
 		tracePrerequisitesOfLiterals: trace packagedVariables: aLookupTable;
-		tracePrerequisitesOfResources: trace packagedVariables: aLookupTable.
+		tracePrerequisitesOfResources: trace packagedVariables: aLookupTable;
+		tracePrerequisitesOfScripts: trace.
 	^trace!
 
 tracePrerequisitesOfClasses: anIdentityDictionary packagedVariables: aLookupTable
@@ -1732,6 +1733,21 @@ tracePrerequisitesOfResources: anIdentityDictionary packagedVariables: aLookupTa
 								from: method
 								to: rid
 								dependency: 'references resource']]]!
+
+tracePrerequisitesOfScripts: anIdentityDictionary
+	| filer |
+	(scripts isNil or: [scripts isEmpty]) ifTrue: [^self].
+	self isLegacySourceFormat ifFalse: [^self].
+	filer := #{LegacyChunkSourceFiler} valueOrNil.
+	filer ifNil: [^self].
+	scripts keysDo: 
+			[:each |
+			self
+				trace: anIdentityDictionary
+				prerequisite: filer owningPackage
+				from: each , ' script'
+				to: filer
+				dependency: 'legacy format script']!
 
 tracePrerequisitesOfVariables: anIdentityDictionary packagedVariables: aLookupTable
 	"Private - Trace the prerequisites of the receiver's shared variables."
@@ -2056,12 +2072,12 @@ packageVersion:!accessing!public! !
 path!accessing!public! !
 paxVersion!accessing!private! !
 paxVersion:!initializing!private! !
-postinstall!private! !
+postinstall!operations!private! !
 postLoadInitialization:!loading!private! !
 preDeclareClassesOnLoad!accessing!public! !
 preDeclareClassesOnLoad:!accessing!public! !
 predeclareClassesSetting!accessing!private! !
-preinstall!private! !
+preinstall!operations!private! !
 prerequisiteNames!accessing!private! !
 prerequisites!accessing!public! !
 printOn:!initializing!public! !
@@ -2098,7 +2114,7 @@ setPackageFileName:!initializing!private! !
 setPrerequisites:!initializing!private! !
 setUntracedVariables:!initializing!private! !
 setVariableNames:!initializing!private! !
-shrink!private! !
+shrink!operations!private! !
 sourceDescriptor!accessing!private! !
 sourceDescriptor:!accessing!private! !
 sourceFilerClass!private!source filing-class definition! !
@@ -2119,6 +2135,7 @@ tracePrerequisitesOfImageStripper:!operations!private! !
 tracePrerequisitesOfLiterals:packagedVariables:!operations!private! !
 tracePrerequisitesOfMethods:!operations!private! !
 tracePrerequisitesOfResources:packagedVariables:!operations!private! !
+tracePrerequisitesOfScripts:!operations!private! !
 tracePrerequisitesOfVariables:packagedVariables:!operations!private! !
 uninstall!public!removing! !
 uninstallClasses!class hierarchy-removing!private!removing! !
@@ -2134,9 +2151,9 @@ upgrade!helpers!private! !
 upgradeToVersion2!helpers!private! !
 validate!operations!private! !
 variableNames!accessing!public! !
-variableNames:!private! !
+variableNames:!accessing!private! !
 variables!private!source filing! !
-versionIfRequired!public! !
+versionIfRequired!operations!private! !
 warnChangingDefaultNamespaceFrom:to:!helpers!private! !
 !
 

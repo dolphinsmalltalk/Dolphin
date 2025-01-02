@@ -89,23 +89,16 @@ argc
 argv
 	"Answer an array of Strings containing the command line arguments."
 
-	argv isNil
-		ifTrue: 
-			[| argc lppstr |
-			argc := VM argc.
-			argv := Array new: argc.
-			"Open code the access to the array of strings to reduce base system dependencies on external struct classes"
+	^argv
+		ifNil: 
+			[| lppstr |
 			lppstr := VM argv.
-			lppstr isNull
-				ifTrue: [argv at: 1 put: (External.DynamicLinkLibrary moduleFileName: nil)]
-				ifFalse: 
-					[1 to: argc
-						do: 
-							[:i |
-							| offset |
-							offset := (i - 1) * VMConstants.IntPtrSize.
-							argv at: i put: (Utf16String fromAddress: (lppstr uintPtrAtOffset: offset))]]].
-	^argv!
+			argv := lppstr isNull
+						ifTrue: [{ External.DynamicLinkLibrary moduleFileName: nil }]
+						ifFalse: 
+							["Open code the access to the array of strings to reduce base system dependencies on external struct classes"
+							(0 to: VM argc - 1)
+								collect: [:i | Utf16String fromAddress: (lppstr uintPtrAtOffset: i * VMConstants.IntPtrSize)]]]!
 
 argvLegacyOptionsRemoved
 	"Private - Answer the argv arguments vector with the old style legacy options removed"

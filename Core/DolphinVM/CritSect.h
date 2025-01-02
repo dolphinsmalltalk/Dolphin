@@ -19,9 +19,11 @@ public:
 	void Unlock() {LeaveCriticalSection(&m_cs);}
 
 private:
-	// Suppress copy constructor and assignment operator
+	// Suppress copy/move constructors and assignment operators
 	const CMonitor& operator=(const CMonitor&) = delete;
+	CMonitor& operator=(CMonitor&&) = delete;
 	CMonitor(const CMonitor&) = delete;
+	CMonitor(CMonitor&&) = delete;
 
 private:
 	CRITICAL_SECTION	m_cs;
@@ -29,23 +31,23 @@ private:
 
 template <class _T> class CAutoLock
 {
-	_T& m_mutex;
+	_T& m_lockable;
 
 private:
-	// Suppress copy constructor and assignment operator
+	// Suppress copy/move constructors and assignment operators
 	const CAutoLock& operator=(const CAutoLock&) = delete;
+	CAutoLock& operator=(CAutoLock&&) = delete;
 	CAutoLock(const CAutoLock&) = delete;
+	CAutoLock(CAutoLock&&) = delete;
 
 public:
-	CAutoLock(_T& mutex) : m_mutex(mutex) 
+	CAutoLock(_T& mutex) : m_lockable(mutex) 
 	{
-		m_mutex.Lock();
+		m_lockable.Lock();
 	}
 
 	~CAutoLock()
 	{
-		m_mutex.Unlock();
+		m_lockable.Unlock();
 	}
 };
-
-typedef CAutoLock<CMonitor> CMonitorLock;

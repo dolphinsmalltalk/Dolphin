@@ -176,6 +176,13 @@ IsName: szNameBuf lHashVal: lHashVal pfName: pfName
 	<virtual stdcall: hresult 11 lpwstr uint32 uint32*>
 	^self invalidCall: _failureCode!
 
+load: aString
+	OleAut32 loadTypeLib: aString pptlib: self!
+
+load: aString register: aBoolean
+	self load: aString.
+	aBoolean ifTrue: [self register: aString]!
+
 nameAt: index
 	"Private - Answer the 'name' of the element with the specified <integer> 
 	index in the receiver."
@@ -203,6 +210,9 @@ nameAt: index ifAbsent: exceptionHandler
 	name := bstrName asString.
 	bstrName free.
 	^name!
+
+register: aString
+	OleAut32 registerTypeLib: self fullPath: aString!
 
 ReleaseTLibAttr: releaseTLibAttr
 	"Private - Invoke the ReleaseTLibAttr() method of the COM object wrapped by the receiver.
@@ -268,8 +278,11 @@ GetTypeInfoOfGuid:ppTInfo:!COM Interfaces-ITypeLib!private! !
 GetTypeInfoType:pTKind:!COM Interfaces-ITypeLib!primitives!public! !
 isName:!accessing!public! !
 IsName:lHashVal:pfName:!COM Interfaces-ITypeLib!primitives!private! !
+load:!instance creation!private! !
+load:register:!instance creation!private! !
 nameAt:!accessing!private! !
 nameAt:ifAbsent:!accessing!private! !
+register:!helpers!public! !
 ReleaseTLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
 typeComp!accessing!public! !
 typeInfoAt:!accessing!public! !
@@ -331,26 +344,14 @@ open: pathName
 	^self open: pathName register: true!
 
 open: aString register: aBoolean
-	"Open the type library at the specified path and answer an instance of the
-	receiver on it. Optionally (re)register the type library."
+	"Open the type library at the specified path and answer an instance of the receiver on it. Optionally (re)register the type library."
 
-	| answer |
-	answer := self newPointer.
-	OleAut32 loadTypeLib: aString pptlib: answer.
-	aBoolean
-		ifTrue: 
-			["Attempt to register system wide first - this will fail if not running elevated"
-			(OleAut32
-				registerTypeLib: answer
-				wszFullPath: aString
-				wszHelpDir: nil) < S_OK
-				ifTrue: 
-					["Fall back on user specific registration, which does not require admin priviledges"
-					OleAut32
-						registerTypeLibForUser: answer
-						szFullPath: aString
-						szHelpDir: nil]].
-	^answer!
+	| tlb |
+	tlb := self newPointer
+				load: aString;
+				yourself.
+	aBoolean ifTrue: [OleAut32 registerTypeLib: tlb fullPath: aString].
+	^tlb!
 
 queryPath: libid major: major minor: minor locale: locale
 	"Answer the path of the type library with attributes exactly as detailed
@@ -377,7 +378,23 @@ queryPath: libid major: major minor: minor locale: locale ifNone: exceptionHandl
 	^hr < 0
 		ifTrue: 
 			[hr = TYPE_E_LIBNOTREGISTERED ifTrue: [exceptionHandler value] ifFalse: [HRESULTError signalWith: hr]]
-		ifFalse: [answer asString trimNulls]! !
+		ifFalse: [answer asString trimNulls]!
+
+register: aString
+	"Open the type library at the specified path and register it."
+
+	(self open: aString register: true) free!
+
+unregister: aString
+	"Unregister the typelib at the specified path."
+
+	| tlb attrib |
+	tlb := self open: aString register: false.
+	attrib := tlb getLibAttr.
+	[attrib unregister] ensure: 
+			[tlb
+				ReleaseTLibAttr: attrib;
+				free]! !
 
 !OS.COM.ITypeLib class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
@@ -387,5 +404,7 @@ open:!instance creation!public! !
 open:register:!instance creation!public! !
 queryPath:major:minor:locale:!enquiries!public! !
 queryPath:major:minor:locale:ifNone:!enquiries!public! !
+register:!public!registering! !
+unregister:!public!registering! !
 !
 

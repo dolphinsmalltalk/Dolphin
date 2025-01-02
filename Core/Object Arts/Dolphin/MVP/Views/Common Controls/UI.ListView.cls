@@ -1265,8 +1265,10 @@ lvmGetOrigin
 
 	| pt |
 	pt := POINTL newBuffer.
-	self
-		sendMessageNz: LVM_GETORIGIN
+	"Deliberate ignore failure and answer 0@0. LVM_GETORIGIN is not available without CommCtrl v6"
+	User32
+		sendMessage: handle
+		msg: LVM_GETORIGIN
 		wParam: 0
 		lpParam: pt.
 	^pt asPoint!

@@ -24,6 +24,7 @@
 #include "rc_vm.h"
 #include "VMExcept.h"
 #include "regkey.h"
+#include "ComModule.h"
 
 // Smalltalk classes
 #include "STContext.h"
@@ -143,7 +144,7 @@ void ObjectMemory::InitializeMemoryManager()
 // code can use the correct one (it is stored in the VM shared object registry).
 static HMODULE GetCRTHandle()
 {
-	return GetModuleContaining(atoi);
+	return Module::GetHModuleContaining(atoi);
 }
 
 HRESULT ObjectMemory::InitializeImage()
@@ -151,7 +152,7 @@ HRESULT ObjectMemory::InitializeImage()
 	DWORD dwOldProtect = ProtectConstSpace(PAGE_READWRITE);
 	_Pointers.KernelHandle = ExternalHandle::New(::GetModuleHandleW(L"KERNEL32"));
 	_Pointers.KernelHandle->beSticky();
-	_Pointers.VMHandle = ExternalHandle::New(GetModuleContaining(InitializeImage));
+	_Pointers.VMHandle = ExternalHandle::New(Module::GetHModuleContaining(InitializeImage));
 	_Pointers.VMHandle->beSticky();
 	_Pointers.DolphinHandle = ExternalHandle::New(GetApplicationInstance());
 	_Pointers.DolphinHandle->beSticky();

@@ -14,6 +14,12 @@ OS.HTMLHelpLibrary comment: ''!
 
 !OS.HTMLHelpLibrary methodsFor!
 
+clear
+	"Private - Reinitialize this dll instance, e.g. on startup."
+
+	super clear.
+	cookie := nil!
+
 close
 	"Release the reference the receiver has to the External Library it represents, but
 	before doing so make sure the HH_UNINITIALIZE command is issued (if
@@ -90,6 +96,7 @@ htmlHelpUrl: url style: styleOrNil
 		dwData: 0! !
 
 !OS.HTMLHelpLibrary categoriesForMethods!
+clear!private!realizing/unrealizing! !
 close!public!realizing/unrealizing! !
 handle:!accessing!private! !
 htmlHelp:pszFile:uCommand:dwData:!operations!public! !

@@ -26,7 +26,7 @@ Class Variables:
 !Kernel.IPDolphin methodsFor!
 
 canUnloadNow
-	"Answer whether it is OK to unload the in-proc. image now."
+	"Private - Answer whether it is OK to unload the in-proc. image now."
 
 	ClassFactory lockCount > 0 ifTrue: [^false].
 	#todo.	"Need a neater way to do this - at the moment need to look for COM objects are not the receiver to decide
@@ -62,6 +62,9 @@ coclasses
 								ifFalse: [coclasses at: clsid put: each]]]].
 	^coclasses!
 
+fileName
+	^self session imageFileName!
+
 GetClassObject: rclsid riid: riid ppv: ppv
 	"Private - The DLLGetClassObject() function of the in-proc component has been called by the OLE/COM
 	system, respond by answering the requested class factory.
@@ -83,7 +86,7 @@ GetClassObject: rclsid riid: riid ppv: ppv
 	^CLASS_E_CLASSNOTAVAILABLE!
 
 initialize
-	SessionManager current 
+	self session
 		when: #sessionStarted
 		send: #onStartup
 		to: self!
@@ -95,8 +98,10 @@ OnInitialize
 		HRESULT __stdcall OnInitialize();
 	"
 
-	"Trace nextPutAll: 'OnInitialize: Started Dolphin image: '; print: SessionManager current imageFileName; cr."
-
+	self traceStream
+		nextPutAll: 'OnInitialize: Started Dolphin image: ';
+		print: self fileName;
+		cr.
 	^S_OK!
 
 OnShutdown
@@ -106,32 +111,30 @@ OnShutdown
 		HRESULT __stdcall OnShutdown();
 	"
 
-	"Trace nextPutAll: 'OnShutdown: Exiting Dolphin image '; print: SessionManager current imageFileName; cr."
-
-	SessionManager current isEmbedded
-		ifFalse: 
-			[| mb |
-			mb := UI.MessageBox new.
-			mb beTaskModal.
-			mb headline: 'Exit Dolphin Smalltalk?'.
-			(mb confirm: 'Do you wish to save the image?') ifTrue: [SessionManager current saveImage]].
+	self traceStream
+		nextPutAll: 'OnShutdown: Exiting Dolphin image ';
+		print: self fileName;
+		cr.
+	self session queryEndSession.
 	self pullPlug.
 
 	"To avoid locking up the calling thread we must perform the actual VM exit after this call has returned,
 	so post a non-cancellable quit (exit codes < 1 do not cause dev. session manager to prompt)."
-	SessionManager current exit: -1.
+	self traceStream
+		nextPutAll: 'OnShutdown: Posting quit message';
+		cr.
+	self session exit: -1.
 	^S_OK!
 
 onStartup
-	"Private - Perform any session startup actions. 
-	Implementation Note: See if the in-proc. plug-hole started us up by querying <IIPPlugHole> off the
-	outer <IUnknown> passed as a startup argument. If it did then pass it back an <IIPDolphin>
-	on the receiver so that it can call in for registration services, class factories, etc."
+	"Private - Perform any session startup actions."
+
+	"Implementation Note: See if the in-proc. plug-hole started us up by querying <IIPPlugHole> off the outer <IUnknown> passed as a startup argument. If it did then pass it back an <IIPDolphin>	on the receiver so that it can call in for registration services, class factories, etc."
 
 	| unkOuter |
 	coclasses := nil.
 	plugHole := nil.
-	(unkOuter := SessionManager current outer) notNull
+	(unkOuter := self session outer) notNull
 		ifTrue: 
 			[plugHole := unkOuter queryInterface: IIPPlugHole.
 			plugHole isNull
@@ -147,6 +150,23 @@ pullPlug
 	plugHole free.
 	plugHole := nil!
 
+registerCoClasses
+	| classes |
+	classes := self coclasses.
+	self traceStream
+		nextPutAll: 'Attempting to register coclasses: ';
+		print: coclasses associations;
+		cr.
+	classes do: [:coclass | coclass registerComServer].
+	self traceStream
+		nextPutAll: 'Successfully registered coclasses';
+		cr!
+
+registerServer
+	self
+		registerTypeLib;
+		registerCoClasses!
+
 RegisterServer
 	"Private - The DLLRegisterServer() function of the in-proc DLL has been called.
 	Register any objects supported by this in-proc component.
@@ -155,49 +175,111 @@ RegisterServer
 	"
 
 	^
-	[self coclasses do: [:coclass | coclass register].
+	[self registerServer.
 	S_OK] on: Error
 			do: 
-				[:e | 
-				e toTrace.
-				e hresult asInteger]!
+				[:ex |
+				self traceStream
+					nextPutAll: 'COM Server registration failed: ';
+					nextPutAll: ex description;
+					cr.
+				ex return: ex hresult asInteger]!
+
+registerTypeLib
+	"Private - Register the type library embedded in the DLL, if any."
+
+	^
+	[(ITypeLib open: self fileName register: true) free.
+	self traceStream
+		nextPutAll: 'Successfully registered type library';
+		cr.
+	S_OK]
+			on: HRESULTError
+			do: 
+				[:ex |
+				self traceStream
+					nextPutAll: 'Failed to register type library: ';
+					nextPutAll: ex description;
+					cr.
+				ex return: ex hresult asInteger]!
+
+session
+	^SessionManager current!
 
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^{ IUnknown. IIPDolphin }!
 
-UnregisterServer 
+traceStream
+	^SessionManager current traceStream!
+
+unregisterCoClasses
+	self coclasses do: [:coclass | coclass unregisterComServer]!
+
+unregisterServer
+	self
+		unregisterTypeLib;
+		unregisterCoClasses!
+
+UnregisterServer
 	"Private - The DLLUnregisterServer() function of the in-proc DLL has been called.
 	Unregister any objects supported by this in-proc component.
 
 		HRESULT __stdcall UnregisterServer();
 	"
-	| hr |
 
-	[
-		self coclasses do: [:coclass | coclass unregisterComServer].
-		hr := S_OK.
-	] on: Error do: [:e |
-		e toTrace.
-		hr := e hresult asInteger].
+	^
+	[self unregisterServer.
+	S_OK] on: Error
+			do: 
+				[:ex |
+				self traceStream
+					nextPutAll: 'COM Server unregistration failed: ';
+					nextPutAll: ex description;
+					cr.
+				ex return: ex hresult asInteger]!
 
-	^hr
-! !
+unregisterTypeLib
+	"Private - Register the type library embedded in the DLL, if any."
+
+	^
+	[ITypeLib unregister: self fileName.
+	self traceStream
+		nextPutAll: 'Successfully unregistered type library';
+		cr.
+	S_OK]
+			on: HRESULTError
+			do: 
+				[:ex |
+				self traceStream
+					nextPutAll: 'Failed to unregister type library: ';
+					nextPutAll: ex description;
+					cr.
+				ex return: ex hresult asInteger]! !
 
 !Kernel.IPDolphin categoriesForMethods!
-canUnloadNow!COM Interfaces-IInProcDolphin!public! !
-CanUnloadNow!COM Interfaces-IInProcDolphin!private! !
+canUnloadNow!private!testing! !
+CanUnloadNow!COM Interfaces-IPDolphin!private! !
 coclasses!enumerating!private! !
-GetClassObject:riid:ppv:!COM Interfaces-IInProcDolphin!private! !
+fileName!accessing!private! !
+GetClassObject:riid:ppv:!COM Interfaces-IPDolphin!private! !
 initialize!initializing!private! !
-OnInitialize!COM Interfaces-IInProcDolphin!private! !
-OnShutdown!COM Interfaces-IInProcDolphin!private! !
+OnInitialize!COM Interfaces-IPDolphin!private! !
+OnShutdown!COM Interfaces-IPDolphin!private! !
 onStartup!events-session!private! !
 pullPlug!operations!private! !
-RegisterServer!COM Interfaces-IInProcDolphin!private! !
+registerCoClasses!private!registering! !
+registerServer!private!registering! !
+RegisterServer!COM Interfaces-IPDolphin!private! !
+registerTypeLib!private!registering! !
+session!accessing!private! !
 supportedInterfaces!constants!public! !
-UnregisterServer!COM Interfaces-IInProcDolphin!private! !
+traceStream!accessing!private! !
+unregisterCoClasses!operations!private! !
+unregisterServer!operations!private! !
+UnregisterServer!COM Interfaces-IPDolphin!private! !
+unregisterTypeLib!private!registering! !
 !
 
 Kernel.IPDolphin methodProtocol: #'IPDolphin.IInProcDolphin' attributes: #(#readOnly) selectors: #(#CanUnloadNow #GetClassObject:riid:ppv: #OnInitialize #OnShutdown #RegisterServer #UnregisterServer)!

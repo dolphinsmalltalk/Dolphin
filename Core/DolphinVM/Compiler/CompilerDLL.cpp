@@ -11,18 +11,6 @@
 
 CDolphinCompilerModule _Module;
 
-ComModuleBase* ComModuleBase::Instance;
-
-void ComObjectBase::LockModule()
-{
-	ComModuleBase::Instance->Lock();
-}
-
-void ComObjectBase::UnlockModule()
-{
-	ComModuleBase::Instance->Unlock();
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 HMODULE __stdcall GetResLibHandle()

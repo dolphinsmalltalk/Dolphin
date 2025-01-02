@@ -10,9 +10,9 @@ UI.GUISessionManager
 
 UI.AXDllGUISessionManager guid: (Core.GUID fromString: '{93d9b74c-09d3-40ca-ba82-1a819bfce625}')!
 
-UI.AXDllGUISessionManager comment: 'AXDllSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed Active-X/COM component DLL with GUI elements.
+UI.AXDllGUISessionManager comment: '`AXDllSessionManager` is a class of `SessionManager`s used to manage the life-cycle of a deployed Active-X/COM component DLL _with_ GUI elements.
 
-Use this class of SessionManager when deploying your Active-X DLL if it opens any windows.'!
+Use this class of `SessionManager` when deploying your Active-X DLL if it opens any windows.'!
 
 !UI.AXDllGUISessionManager categoriesForClass!System-Support! !
 
@@ -21,6 +21,7 @@ Use this class of SessionManager when deploying your Active-X DLL if it opens an
 keepAlive
 	"We stay alive until the host process unloads us."
 
+	IPDolphin.	"Ensure IPDolphin included in any deployed DLL"
 	^self!
 
 openConsoleStreams

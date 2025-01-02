@@ -4,6 +4,7 @@
     <ClCompile Include="dlldatax.c" />
     <ClCompile Include="DolphinSmalltalk_p.c" />
     <ClCompile Include="VMDLL.cpp" />
+    <ClCompile Include="IDolphinStart.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vm.rc" />

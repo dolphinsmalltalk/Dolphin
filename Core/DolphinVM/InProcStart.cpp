@@ -97,9 +97,12 @@ static UINT __stdcall DolphinMain(void* pArgs)
 	trace(L"%#x: DolphinMain\n", GetCurrentThreadId());
 #endif
 
-	::CoInitialize(NULL);
- 	HRESULT hr = VMStart(reinterpret_cast<VMEntryArgs*>(pArgs));
-	::CoUninitialize();
+	HRESULT hr = ::CoInitialize(NULL);
+	if (SUCCEEDED(hr))
+	{
+		hr = VMStart(reinterpret_cast<VMEntryArgs*>(pArgs));
+		::CoUninitialize();
+	}
 	return DecodeHRESULT(hr);
 }
 

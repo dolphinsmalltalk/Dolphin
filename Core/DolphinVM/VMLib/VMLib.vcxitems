@@ -19,6 +19,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\alloc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\AnsiString.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\bytecde.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ComModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ComObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\compact.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CompilePrims.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CrashDump.cpp" />
@@ -36,7 +38,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\GC.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\GCPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphin.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphinStart.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImageFileResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\interfac.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\interprt.cpp" />
@@ -61,8 +62,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SearchPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SnapshotPrim.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\startApp.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\startToGoVm.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\StreamPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\strgprim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\thrdcall.cpp" />
@@ -92,6 +91,9 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\binstream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\bytecdes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ComClassFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ComModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ComObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\disassembler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\dlldatax.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinSmalltalk.h" />

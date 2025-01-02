@@ -5,6 +5,7 @@
 #include "InProcPlugHole.h"
 #include "..\startVM.h"
 #include "..\regkey.h"
+#include "VMModule.h"
 
 #ifdef _DEBUG
 	const int SecondsToWait = IsDebuggerPresent() ? 300 : 60;
@@ -12,8 +13,7 @@
 	const int SecondsToWait = 10;
 #endif
 
-CInProcPlugHole::CInProcPlugHole() : m_hDolphinThread(NULL), m_piMarshalledPeer(NULL), m_dwVMStarterId(0), 
-	m_pImageData(NULL), m_cImageSize(0)
+DolphinIPPlugHole::DolphinIPPlugHole()
 {
 	TRACE(L"%#x: CInProcPlugHole %#x instantiated\n", GetCurrentThreadId(), this);
 
@@ -21,7 +21,7 @@ CInProcPlugHole::CInProcPlugHole() : m_hDolphinThread(NULL), m_piMarshalledPeer(
 	m_hPeerAvailable = ::CreateEvent(NULL, TRUE, FALSE, NULL);
 }
 
-CInProcPlugHole::~CInProcPlugHole()
+DolphinIPPlugHole::~DolphinIPPlugHole()
 {
 	TRACE(L"%#x: ~CInProcPlugHole(%s)\n", GetCurrentThreadId(), GetImagePath());
 	ReleasePeer();
@@ -29,7 +29,7 @@ CInProcPlugHole::~CInProcPlugHole()
 }
 
 // N.B. This expects to be executed within the critical section
-void CInProcPlugHole::WaitForPeerToStart() const
+void DolphinIPPlugHole::WaitForPeerToStart() const
 {
 	_ASSERTE(m_hDolphinThread != NULL);
 	_ASSERTE(m_hPeerAvailable != NULL);
@@ -61,7 +61,7 @@ void CInProcPlugHole::WaitForPeerToStart() const
 }
 
 
-HRESULT CInProcPlugHole::StartVM(CLSCTX ctx)
+HRESULT DolphinIPPlugHole::StartVM(CLSCTX ctx)
 {
 	_ASSERTE(m_dwVMStarterId == 0);
 	_ASSERTE(m_hDolphinThread == 0);
@@ -70,22 +70,17 @@ HRESULT CInProcPlugHole::StartVM(CLSCTX ctx)
 
 	TRACE(L"%#x: StartVM(%s, %d, %#x)\n", GetCurrentThreadId(), achImagePath, m_pImageData, ctx);
 
-	IUnknown* piPlugHole;
-	HRESULT hr = static_cast<CComObject<CInProcPlugHole>*>(this)->QueryInterface(&piPlugHole);
-	if (FAILED(hr))
+	IUnknownPtr piPlugHole = this;
+	if (!piPlugHole)
 	{
-		trace(L"Failed to locate plug hole interface (%#x)\n", hr);
-		return hr;
+		trace(L"Failed to locate plug hole interface\n");
+		return E_NOINTERFACE;
 	}
 
 	// Ref. count resulting from above QI is assumed by the image when it retrieves the pointer
 
-	hr = VMEntry(_AtlBaseModule.GetModuleInstance(), m_pImageData, m_cImageSize, achImagePath, 
+	HRESULT hr = VMEntry(Module::GetHModule(), m_pImageData, m_cImageSize, achImagePath, 
 							piPlugHole, ctx, m_hDolphinThread);
-	
-	// VMEntry must take a reference to the plug-hole, this just releases the pointer resulting from the QI above
-	piPlugHole->Release();
-
 	if (FAILED(hr))
 		return hr;
 
@@ -95,7 +90,7 @@ HRESULT CInProcPlugHole::StartVM(CLSCTX ctx)
 }
 
 // Must only be called from within critical section
-IIPDolphinPtr CInProcPlugHole::GetPeerForCurrentThread()
+IIPDolphinPtr DolphinIPPlugHole::GetPeerForCurrentThread()
 {
 	if (m_piMarshalledPeer == NULL)
 		return NULL;
@@ -119,13 +114,13 @@ IIPDolphinPtr CInProcPlugHole::GetPeerForCurrentThread()
 	return piPeer;
 }
 
-IIPDolphinPtr CInProcPlugHole::GetPeerNoWait()
+IIPDolphinPtr DolphinIPPlugHole::GetPeerNoWait()
 {
-	ObjectLock lock(this);
+	CAutoLock lock(*this);
 	return GetPeerForCurrentThread();
 }
 
-void CInProcPlugHole::ReleasePeer()
+void DolphinIPPlugHole::ReleasePeer()
 {
 	if (m_piMarshalledPeer != NULL)
 	{
@@ -146,9 +141,9 @@ void CInProcPlugHole::ReleasePeer()
 }
 
 // The calling thread is detaching from the Process, so remove any resources associated with it
-void CInProcPlugHole::ThreadDetach()
+void DolphinIPPlugHole::ThreadDetach()
 {
-	ObjectLock lock(this);
+	CAutoLock lock(*this);
 	size_t cRemoved = m_mapPeers.erase(CoGetCurrentProcess());
 
 #ifdef _DEBUG
@@ -161,7 +156,7 @@ void CInProcPlugHole::ThreadDetach()
 }
 
 // Wait for the Dolphin thread to finish
-DWORD CInProcPlugHole::WaitForPeerToTerminate()
+DWORD DolphinIPPlugHole::WaitForPeerToTerminate()
 {
 	DWORD dwExitCode = -1;
 	if (m_hDolphinThread)
@@ -187,16 +182,15 @@ DWORD CInProcPlugHole::WaitForPeerToTerminate()
 	return dwExitCode;
 }
 
-void CInProcPlugHole::SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, size_t imageSize)
+void DolphinIPPlugHole::SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, size_t imageSize)
 {
 	wcscpy(achImagePath, szImagePath);
 	m_pImageData = imageData;
 	m_cImageSize = imageSize;
 }
 
-void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
+void DolphinIPPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 {
-	USES_CONVERSION;
 	_ASSERTE(rclsid != CLSID_NULL);
 
 	// Find a suitable image if one has not already been specified and a CLSID is available 
@@ -219,14 +213,14 @@ void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 			if (ERROR_SUCCESS == rKey.Open(HKEY_CLASSES_ROOT, szKey))
 			{
 				ULONG nChars = _MAX_PATH;
-				rKey.QueryStringValue(L"", achImagePath, &nChars);
+				rKey.QueryStringValue(L"", achImagePath, nChars);
 			}
 		}
 	}
 }
 
 // Start the peer (unless someone has beaten us to it)
-HRESULT CInProcPlugHole::StartPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX ctx)
+HRESULT DolphinIPPlugHole::StartPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX ctx)
 {
 	*ppiPeer = NULL;
 
@@ -235,7 +229,7 @@ HRESULT CInProcPlugHole::StartPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX
 	// otherwise the VM can't call back with its peer interface without a deadlock occurring
 	HRESULT hr = CO_E_ERRORINDLL;
 	{
-		ObjectLock lock(this);
+		CAutoLock lock(*this);
 
 		if (m_piMarshalledPeer == NULL && m_dwVMStarterId == 0)
 		{
@@ -260,7 +254,7 @@ HRESULT CInProcPlugHole::StartPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX
 		{
 			// Reacquire the lock for once off initialization if this is the thread that
 			// started the VM
-			//ObjectLock lock(this);
+			//CAutoLock lock(this);
 			if (m_dwVMStarterId == CoGetCurrentProcess())
 			{
 				// This is the thread that started the VM, so initialize the peer
@@ -283,7 +277,7 @@ HRESULT CInProcPlugHole::StartPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX
 	return hr;
 }
 
-HRESULT CInProcPlugHole::GetPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX ctx)
+HRESULT DolphinIPPlugHole::GetPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX ctx)
 {
 	_ASSERTE(!m_hDolphinThread);
 	
@@ -312,7 +306,7 @@ HRESULT CInProcPlugHole::GetPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX c
 }
 
 
-HRESULT CInProcPlugHole::Shutdown()
+HRESULT DolphinIPPlugHole::Shutdown()
 {
 	// Presumably we only receive this once from one of the threads?
 	// No we actually seem to get it from each, but only the first will be
@@ -322,7 +316,7 @@ HRESULT CInProcPlugHole::Shutdown()
 	
 	IIPDolphinPtr piPeer;
 	{
-		ObjectLock lock(this);
+		CAutoLock lock(*this);
 		piPeer = GetPeerForCurrentThread();
 		if (piPeer != NULL)
 			ReleasePeer();
@@ -345,7 +339,7 @@ HRESULT CInProcPlugHole::Shutdown()
 	return dwExitCode * -1;
 }
 
-HRESULT CInProcPlugHole::RegisterServer()
+HRESULT DolphinIPPlugHole::RegisterServer()
 {
 	TRACE(L"%#x: RegisterServer(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
 
@@ -369,7 +363,7 @@ HRESULT CInProcPlugHole::RegisterServer()
 	return hr;
 }
 
-HRESULT CInProcPlugHole::UnregisterServer()
+HRESULT DolphinIPPlugHole::UnregisterServer()
 {
 	TRACE(L"%#x: UnregisterServer(%s)\n", GetCurrentThreadId(), GetImagePath());
 
@@ -391,7 +385,7 @@ HRESULT CInProcPlugHole::UnregisterServer()
 	return hr;
 }
 
-HRESULT CInProcPlugHole::CanUnloadNow()
+HRESULT DolphinIPPlugHole::CanUnloadNow()
 {
 	TRACE(L"%#x: CanUnloadNow(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
 	
@@ -408,7 +402,7 @@ HRESULT CInProcPlugHole::CanUnloadNow()
 	return hr;
 }
 
-HRESULT CInProcPlugHole::GetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
+HRESULT DolphinIPPlugHole::GetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
 	TRACE(L"%#x: GetClassObject(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
 	
@@ -429,18 +423,18 @@ HRESULT CInProcPlugHole::GetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* pp
 /////////////////////////////////////////////////////////////////////////////
 // IInProcPlugHole
 
-STDMETHODIMP CInProcPlugHole::get_Peer(/*IIPDolphin*/IUnknown **ppiPeer)
+STDMETHODIMP DolphinIPPlugHole::get_Peer(/*IIPDolphin*/IUnknown **ppiPeer)
 {
 	IIPDolphinPtr piPeer = GetPeerNoWait();
 	*ppiPeer = piPeer.Detach();
 	return S_OK;
 }
 
-STDMETHODIMP CInProcPlugHole::put_Peer(/*IIPDolphin*/IUnknown* piPeer)
+STDMETHODIMP DolphinIPPlugHole::put_Peer(/*IIPDolphin*/IUnknown* piPeer)
 {
 	TRACE(L"%#x: CInProcPlugHole(%s)::put_Peer(%#x)\n", GetCurrentThreadId(), GetImagePath(), piPeer);
 
-	ObjectLock lock(this);
+	CAutoLock lock(*this);
 
 	ReleasePeer();
 	HRESULT hr = S_OK;

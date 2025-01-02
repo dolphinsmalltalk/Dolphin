@@ -1,0 +1,33 @@
+﻿| package |
+package := Package name: 'ActiveX DLL Server'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Active-X DLL Server
+Copyright (c) Object Arts Ltd, 2001-2025.
+
+This package provides a base session manager class for in-proc Active-X/COM components that have no GUI elements.'.
+
+
+package setClassNames: #(
+	#{Kernel.AXDllSessionManager}
+).
+
+package setPrerequisites: #(
+	'ActiveX DLL Server Core'
+	'..\System\Trace\Debug Trace Stream'
+	'..\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.SessionManager
+	subclass: #'Kernel.AXDllSessionManager'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

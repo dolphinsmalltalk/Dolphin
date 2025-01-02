@@ -178,6 +178,7 @@ package setMethodNames: #(
 	#(#{OS.COM.IDispatch class} #example3)
 	#(#{OS.COM.IDispatch class} #example4)
 	#(#{OS.COM.IDispatch class} #icon)
+	#(#{OS.COM.Interface class} #compileFunctionsIntoImplementor:)
 	#(#{OS.COM.Interface class} #icon)
 	#(#{OS.COM.Interface class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{OS.COM.Interface class} #printOptionalParameter:on:for:)
@@ -543,10 +544,12 @@ package setMethodNames: #(
 	#(#{OS.COM.VARIANT_BOOL} #printOn:)
 	#(#{OS.COM.VARIANT_BOOL class} #newInstanceAspect:class:)
 	#(#{OS.HRESULT class} #fieldType)
+	#(#{Smalltalk.AXDllImageStripper class} #publishedAspectsOfInstances)
 ).
 
 package setPrerequisites: #(
 	'..\..\ActiveX\Automation\ActiveX Automation'
+	'..\..\Lagoon\ActiveX DLL Server Kit'
 	'..\Base\Development System'
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Dialogs\Dolphin Base Dialogs'
@@ -2575,6 +2578,59 @@ icon!constants!public! !
 
 !OS.COM.Interface class methodsFor!
 
+compileFunctionsIntoImplementor: aClass
+	"Helper to compile a set of method templates for the receiver's interface
+	into the implementing class, aClass. These methods are of the form:
+
+		<selector_arglist>
+			"
+
+	"Implement the <interface_name>::<function_name> function."
+
+	"
+
+			^E_NOTIMPL
+
+		IEnumXXXX compileFunctionsIntoImplementor: EnumRECT
+	"
+
+	| aStream cat |
+	cat := self generatedFunctionCategories first.
+	((aClass includesCategory: cat) and: 
+			[(UI.MessageBox new
+				headline: 'Overwrite existing methods?';
+				confirm: '<1p> already includes the method category ''<2s>''
+The generated template methods may overwrite existing methods in the class.
+Are you sure you want to proceed?'
+							<< {aClass. cat})
+					not])
+		ifTrue: [^self].
+	aStream := (Utf8String new: 256) writeStream.
+	functions
+		from: superclass virtualFunctions size + 1
+		to: functions size
+		do: 
+			[:fn |
+			aStream
+				nextPutAll: fn messageSelectorAndArgumentNames;
+				cr;
+				tab;
+				nextPutAll: '"Implement the ';
+				nextPutAll: self name;
+				nextPutAll: '::';
+				nextPutAll: (fn selector upTo: $:);
+				nextPutAll: '() interface function."';
+				cr;
+				cr;
+				tab;
+				nextPutAll: '^E_NOTIMPL.';
+				cr;
+				tab;
+				nextPutAll: '#todo "Implement me"';
+				cr.
+			aClass compile: aStream contents categories: self generatedFunctionCategories.
+			aStream reset]!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -2601,6 +2657,7 @@ printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
 	(anELEMDESC hasDefaultValue ifTrue: [anELEMDESC defaultValue value]) displayOn: aPuttableStream! !
 
 !OS.COM.Interface class categoriesForMethods!
+compileFunctionsIntoImplementor:!automatic generation!development!public! !
 icon!constants!public! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
 printOptionalParameter:on:for:!helpers!private! !
@@ -7593,6 +7650,23 @@ fieldType
 
 !OS.HRESULT class categoriesForMethods!
 fieldType!constants!private! !
+!
+
+!AXDllImageStripper class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	"N.B. This method must be in the 'must strip' category so that it is removed before
+	package pre-requisites are calculated otherwise the Development System remains
+	a pre-req. of the ADK due to the references to development classes herein."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect fileSave: #typeLibPath);
+		yourself! !
+
+!AXDllImageStripper class categoriesForMethods!
+publishedAspectsOfInstances!constants!development!public! !
 !
 
 "End of package definition"!

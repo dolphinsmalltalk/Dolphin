@@ -21,13 +21,15 @@
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
 #define _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES 1 
 
+#define UMDF_USING_NTSTATUS
+#include <ntstatus.h>
+
 #include <limits.h>
 #include <stdarg.h>
 #include <locale.h>
 #include <Strsafe.h>
 #include <stdlib.h>
 #include "heap.h"
-#include "comdef.h"
 
 #include "..\DolphinSmalltalk_i.h"
 
@@ -37,6 +39,7 @@
 
 #ifdef _DEBUG
 	//#define _CRTDBG_MAP_ALLOC
+	#include <crtdbg.h>
 	#define DEBUG_ONLY
 	#define TRACE				::DolphinTrace
 	#define VERIFY				_ASSERTE

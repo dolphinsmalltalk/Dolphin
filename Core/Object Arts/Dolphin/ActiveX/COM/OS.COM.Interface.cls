@@ -539,59 +539,6 @@ compileFunctions
 	superclass virtualFunctions size + 1 to: functions size do: [:i | self compileFunction: i].
 	self subclassesDo: [:s | s compileFunctions]!
 
-compileFunctionsIntoImplementor: aClass
-	"Helper to compile a set of method templates for the receiver's interface
-	into the implementing class, aClass. These methods are of the form:
-
-		<selector_arglist>
-			"
-
-	"Implement the <interface_name>::<function_name> function."
-
-	"
-
-			^E_NOTIMPL
-
-		IEnumXXXX compileFunctionsIntoImplementor: EnumRECT
-	"
-
-	| aStream cat |
-	cat := self generatedFunctionCategories first.
-	((aClass includesCategory: cat) and: 
-			[(UI.MessageBox new
-				headline: 'Overwrite existing methods?';
-				confirm: '<1p> already includes the method category ''<2s>''
-The generated template methods may overwrite existing methods in the class.
-Are you sure you want to proceed?'
-							<< {aClass. cat})
-					not])
-		ifTrue: [^self].
-	aStream := (Utf8String new: 256) writeStream.
-	functions
-		from: superclass virtualFunctions size + 1
-		to: functions size
-		do: 
-			[:fn |
-			aStream
-				nextPutAll: fn messageSelectorAndArgumentNames;
-				cr;
-				tab;
-				nextPutAll: '"Implement the ';
-				nextPutAll: self name;
-				nextPutAll: '::';
-				nextPutAll: (fn selector upTo: $:);
-				nextPutAll: '() interface function."';
-				cr;
-				cr;
-				tab;
-				nextPutAll: '^E_NOTIMPL.';
-				cr;
-				tab;
-				nextPutAll: '#todo "Implement me"';
-				cr.
-			aClass compile: aStream contents categories: self generatedFunctionCategories.
-			aStream reset]!
-
 createContextFlags
 	"Answer a combination of flags from the CTX_ enumeration which specify the types of servers
 	acceptable when creating COM objects.
@@ -1112,7 +1059,6 @@ clsid!accessing!public! !
 comObjectClass!constants!public! !
 compileFunction:!automatic generation!development!private! !
 compileFunctions!automatic generation!development!public! !
-compileFunctionsIntoImplementor:!automatic generation!development!public! !
 createContextFlags!constants!public! !
 createObject:!instance creation!public! !
 defineFields!automatic generation!public!template definition! !

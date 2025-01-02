@@ -3,19 +3,49 @@ package := Package name: 'COM Random Stream'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Random Stream COM Server Sample
-Copyright (c) Object Arts Ltd, 1997-2000. Portions copyright CGI Group (Europe) Ltd, 1997.
+Copyright (c) Object Arts Ltd, 1997-2025. Portions copyright CGI Group (Europe) Ltd, 1997.
 
-The RandomStream Sample demonstrates Dolphin''s basic COM facilities (i.e. calling and implementation of COM interfaces, Dolphin as an out-of-process server, class factories, automatic reference counting, etc).
+The RandomStream Sample demonstrates Dolphin''s basic COM facilities (i.e. calling and implementation of COM interfaces, class factories, automatic reference counting, etc).
 
-N.B. This package must be distributed with its type library, Random.tlb, if it is to be invoked from another process, e.g. VB.
+N.B. This package must be distributed with its type library, Random.tlb, if it is to be invoked from another process, e.g. VB. The typelib can be built into an in-process DLL (see example below), and then the result registered with `regsvr32.exe` before use.
 
 The package provides client (IRandomStream) and server (COMRandomStream) implementations of a simple Random Number Generator object. The interface is OLE automation compatible, and can therefore be used without a marshalling DLL if the supplied type library is first registered.
 
-This sample is compatible with Visual Basic 5 and later. When VB (or another tool) is used as a client then Dolphin will be started automatically in embedded (headless) mode and will act as the server. Dolphin automatically registers the class factory when this package is installed (see the post install script to see how this is done). When you release the last interface pointer from a client then Dolphin should close down automatically.
+This sample is compatible with Visual Basic 5 and later. When VB (or another tool) is used as a client then for development purposes Dolphin can be started automatically in embedded (headless) mode and will act as the server. Dolphin automatically registers the class factory when this package is installed (see the post install script to see how this is done). When you release the last interface pointer from a client then Dolphin should close down automatically.
 
-You can also use Dolphin as both client and server.
+## Development
 
-Note: This sample is not compatible with the sample of the same name in the 2.1 and earlier releases of Dolphin.'.
+You can use Dolphin as both client and server:
+```
+r := OS.COM.Examples.IRandomStream2 new.
+r next 	"Debug it (F11)"
+```
+
+To debug/test the server from another client, first register the component: `OS.COM.Examples.RandomStream registerComServer`
+
+Now shutdown the development image and start the RandomVBClient.exe found in the package folder. This should launch the Dolphin development image in-proc, i.e. as a DLL (IPDolphin.dll) loaded into the VB process.
+
+## Deployment as DLL:
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+(AXDllImageStripper new)
+	rootPackage: OS.COM.Examples.IRandomStream owningPackage;
+	executableName: ''DRandom.dll'';
+	typeLibPath: OS.COM.Examples.IRandomStream typeLibraryPath;
+	stripDeprecatedMethods: true;
+	"logReferencesToClasses: true;"
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''DRandom.xml''
+"Or view the log"
+UI.Examples.XmlPad openOn: ''DRandom.xml''
+```
+'.
 
 package basicScriptAt: #postinstall put: 'OS.COM.Examples.RandomStream registerClassFactory'.
 package basicScriptAt: #preuninstall put: '"Revoke the class factory registration."
@@ -38,16 +68,11 @@ package setBinaryVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
+	'..\..\..\Dolphin\Lagoon\ActiveX DLL Server'
 	'..\COM Examples'
 	'..\..\..\Dolphin\Base\Dolphin'
-	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
 	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
-	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
-).
-
-package setManualPrerequisites: #(
-	'Windows Shell'
 ).
 
 package!
@@ -62,7 +87,7 @@ OS.COM.DualInterfaceImplementation
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-UI.RuntimeSessionManager
+Kernel.AXDllSessionManager
 	subclass: #'OS.COM.Examples.RandomStreamSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''

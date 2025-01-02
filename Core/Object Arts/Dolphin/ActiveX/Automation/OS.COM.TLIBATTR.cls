@@ -80,12 +80,23 @@ syskind
 	^VMConstants.IsWin64 ifTrue: [SYS_WIN64] ifFalse: [SYS_WIN32]!
 
 unregister
-	OleAut32
-		unRegisterTypeLib: self guid
-		wVerMajor: self wMajorVerNum
-		wVerMinor: self wMinorVerNum
-		lcid: self lcid
-		syskind: self syskind!
+	AdvApi32 isRunningElevated
+		ifTrue: 
+			["Unregister machine wide if admin privileges available"
+			OleAut32
+				unRegisterTypeLib: self guid
+				wVerMajor: self wMajorVerNum
+				wVerMinor: self wMinorVerNum
+				lcid: self lcid
+				syskind: self syskind]
+		ifFalse: 
+			["Unregister for the current user only"
+			OleAut32
+				unRegisterTypeLibForUser: self guid
+				wMajorVerNum: self wMajorVerNum
+				wMinorVerNum: self wMinorVerNum
+				lcid: self lcid
+				syskind: self syskind]!
 
 version
 	"Answer an N.N version string for the receiver."

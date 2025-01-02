@@ -604,9 +604,7 @@ blank
 	^Blank!
 
 cacheSystemMetrics
-	| metrics |
-	metrics := SystemMetrics current.
-	HasScaleDown := metrics hasIconScaleDown!
+	HasScaleDown := (ComCtl32 getProcAddress: 'LoadIconWithScaleDown' ifAbsent: nil) notNil!
 
 clear
 	"Clean up the image manager for all icons. We start with no image representation

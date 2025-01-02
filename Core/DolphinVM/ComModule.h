@@ -1,83 +1,122 @@
 #pragma once
 
 #include <ComClassFactory.h>
+#include <optional>
+#include <regkey.h>
 
-class ComModuleBase
+class Module
 {
 public:
-	ComModuleBase()
+	Module()
 	{
 		Instance = this;
 	}
 
-	HRESULT DllCanUnloadNow(void)
+	bool CanUnloadNow() const
 	{
-		return m_refs = 0 ? S_OK : S_FALSE;
+		return m_nLocks == 0;
 	}
 
 	unsigned int Lock()
 	{
-		return InterlockedIncrement(&m_refs);
+		return InterlockedIncrement(&m_nLocks);
 	}
 
 	unsigned int Unlock()
 	{
-		return InterlockedDecrement(&m_refs);
+		return InterlockedDecrement(&m_nLocks);
 	}
+
+	unsigned int GetLockCount() const
+	{
+		return m_nLocks;
+	}
+
+	BOOL DllMain(HINSTANCE hInstance, DWORD dwReason);
+
+	static HMODULE GetHModule();
+	static HMODULE GetHModuleContaining(LPCVOID pFunc);
 
 public:
-	bool IsRunningElevated()
-	{
-		HANDLE token = NULL;
-		DWORD size;
-		if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &token))
-			return false;
+	bool IsRunningElevated() const;
 
-		TOKEN_ELEVATION elevation = { 0 };
-		GetTokenInformation(token, TokenElevation, &elevation, sizeof(elevation), &size);
-		CloseHandle(token);
-		return elevation.TokenIsElevated;
-	}
 
 protected:
-	//static HRESULT RegisterProgID(LPCWSTR lpszCLSID, LPCWSTR lpszProgID, LPCWSTR lpszUserDesc);
-	//static HRESULT RegisterClassHelper(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID, LPCWSTR szDesc, DWORD dwFlags);
-	//static HRESULT UnregisterClassHelper(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID);
+	virtual BOOL OnProcessAttach(HINSTANCE hInst)	{ return TRUE; }
+	virtual BOOL OnProcessDetach(HINSTANCE hInst)	{ return TRUE; }
+	virtual BOOL OnThreadAttach(HINSTANCE hInst)	{ return TRUE; }
+	virtual BOOL OnThreadDetach(HINSTANCE hInst)	{ return TRUE; }
 
 private:
-	unsigned int m_refs = 0;
+	unsigned int m_nLocks = 0;
+	mutable std::optional<bool> m_isElevated;
 
 public:
-	static ComModuleBase* Instance;
+	static Module* Instance;
 };
 
-extern HRESULT RegisterProgID(LPCWSTR lpszCLSID, LPCWSTR lpszProgID, LPCWSTR lpszUserDesc);
-extern HRESULT RegisterClassHelper(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID, LPCWSTR szDesc, DWORD dwFlags);
-extern HRESULT UnregisterClassHelper(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID);
+__declspec(selectany) Module* Module::Instance;
+constexpr WCHAR UserClassesRoot[] = L"SOFTWARE\\Classes";
+
+class ComModule : public Module
+{
+public:
+	RegKeyRedirect RedirectClassesRootIfNeeded() const;
+	HRESULT RegisterProgID(LPCWSTR lpszCLSID, LPCWSTR lpszProgID, LPCWSTR lpszUserDesc);
+	HRESULT RegisterCoClass(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID, LPCWSTR szDesc, DWORD dwFlags);
+	HRESULT UnregisterCoClass(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID);
+	HRESULT UpdateRegistryClass(const CLSID& clsid, LPCWSTR lpszProgID, LPCWSTR lpszVerIndProgID, UINT nDescID, DWORD dwFlags, BOOL bRegister);
+	HRESULT RegisterTypeLibrary();
+	HRESULT UnregisterTypeLibrary();
+};
+
+HRESULT RegisterEventLogMessageTable(LPCWSTR szSource);
+HRESULT UnregisterEventLogMessageTable(LPCWSTR szSource);
 
 #define THREADFLAGS_APARTMENT 0x1
 
-template<typename T> class ComModule : public ComModuleBase
+template<typename T> class ComModuleT : public ComModule
 {
 public:
-	ComModule() = default;
+	ComModuleT() = default;
 
-	BOOL DllMain(HINSTANCE hInstance, DWORD dwReason)
+	HRESULT RegisterServer()
 	{
-		return TRUE;
+		HRESULT hr;
+		if constexpr (T::RegistrationDetails::ProgId) {
+			HRESULT hr = RegisterCoClass(__uuidof(T), T::RegistrationDetails::ProgId, T::RegistrationDetails::VersionIndependentProgId, L"", THREADFLAGS_APARTMENT);
+			if (FAILED(hr))
+				return hr;
+		}
+
+		hr = RegisterTypeLibrary();
+
+		if constexpr (T::RegistrationDetails::EventLogKey) {
+			if (IsRunningElevated())
+				hr = RegisterEventLogMessageTable(T::RegistrationDetails::EventLogKey);
+		}
+		return hr;
 	}
 
-	HRESULT DllRegisterServer()
+	HRESULT UnregisterServer()
 	{
-		return RegisterClassHelper(__uuidof(T), T::ProgId, T::VersionIndependentProgId, L"", THREADFLAGS_APARTMENT);
+		HRESULT hr;
+		if constexpr (T::RegistrationDetails::ProgId) {
+			hr = UnregisterCoClass(__uuidof(T), T::RegistrationDetails::ProgId, T::RegistrationDetails::VersionIndependentProgId);
+			if (FAILED(hr))
+				return hr;
+		}
+
+		hr = UnregisterTypeLibrary();
+
+		if constexpr (T::RegistrationDetails::EventLogKey) {
+			if (IsRunningElevated())
+				hr = UnregisterEventLogMessageTable(T::RegistrationDetails::EventLogKey);
+		}
+		return hr;
 	}
 
-	HRESULT DllUnregisterServer()
-	{
-		return UnregisterClassHelper(__uuidof(T), T::ProgId, T::VersionIndependentProgId);
-	}
-
-	HRESULT DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
+	HRESULT GetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 	{
 		if (rclsid != __uuidof(T))
 			return CLASS_E_CLASSNOTAVAILABLE;
@@ -88,8 +127,8 @@ public:
 		return hr;
 	}
 
-	static ComModule<T>* GetInstance()
+	static ComModuleT<T>* GetInstance()
 	{
-		return reinterpret_cast<ComModule<T>*>(Instance);
+		return reinterpret_cast<ComModuleT<T>*>(Instance);
 	}
 };

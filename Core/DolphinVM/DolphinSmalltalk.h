@@ -4,42 +4,23 @@
 #include "DolphinSmalltalk_i.h"
 #include "rc_vm.h"
 
-#ifdef VMDLL
-#include "VMDLL.h"
-#endif
+#include <combaseapi.h>
+#include "ComObject.h"
 
-#define _ATL_ALL_WARNINGS
-#include <atlbase.h>
-#include <atlcom.h>
+constexpr WCHAR const DolphinProgId[] = L"Dolphin.Smalltalk.8";
+constexpr WCHAR const DolphinVerIndProgId[] = L"Dolphin.Smalltalk";
+constexpr WCHAR const EventLogKeyName[] = L"Dolphin";
+
+typedef ComRegistrationDetails<DolphinProgId, DolphinVerIndProgId, IDS_APP_TITLE, EventLogKeyName> DolphinRegDetails;
 
 /////////////////////////////////////////////////////////////////////////////
 // CDolphinSmalltalk
-class ATL_NO_VTABLE CDolphinSmalltalk : 
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CDolphinSmalltalk, &CLSID_DolphinSmalltalk>,
-	public IDolphin,
-	public IDolphinStart
+class DolphinSmalltalk : 
+	public ComObject<DolphinRegDetails, ComObjectBase, IDolphin, IDolphinStart >
 {
 public:
-	CDolphinSmalltalk();
-	~CDolphinSmalltalk();
-
-#ifdef VMDLL
-DECLARE_REGISTRY(CDolphinSmalltalk, L"DolphinSmalltalk.8", L"DolphinSmalltalk", IDS_APP_TITLE, THREADFLAGS_APARTMENT)
-#endif
-
-DECLARE_NOT_AGGREGATABLE(CDolphinSmalltalk)
-
-DECLARE_PROTECT_FINAL_CONSTRUCT()
-
-BEGIN_COM_MAP(CDolphinSmalltalk)
-	COM_INTERFACE_ENTRY(IDolphin)
-	COM_INTERFACE_ENTRY(IDolphinStart)
-END_COM_MAP()
-
-private:
-	void Lock();
-	void Unlock();
+	DolphinSmalltalk() = default;
+	~DolphinSmalltalk() = default;
 
 // IDolphinStart
 public:
@@ -180,21 +161,3 @@ public:
 		/* [in] */ int length
 		);
 };
-
-#ifdef VMDLL
-OBJECT_ENTRY_AUTO(__uuidof(DolphinSmalltalk), CDolphinSmalltalk)
-#endif
-
-inline void CDolphinSmalltalk::Lock()
-{
-#ifdef VMDLL
-	_pAtlModule->Lock();
-#endif
-}
-
-inline void CDolphinSmalltalk::Unlock()
-{
-#ifdef VMDLL
-	_pAtlModule->Unlock();
-#endif
-}

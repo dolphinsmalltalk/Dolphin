@@ -116,7 +116,7 @@ lookupReferencedObject: aString
 	subKey := PathCch
 				pathCombine: currentKey pathFromRoot
 				pszMore: aString
-				dwFlags: PATHCCH_NONE.
+				dwFlags: PathCchLibrary.PATHCCH_NONE.
 	^objects at: subKey
 		ifAbsentPutClean: 
 			["Forward reference - this happens because the Registry API enumerates sub-keys in an arbitrary order, and we don't impose one"

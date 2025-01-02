@@ -12,10 +12,6 @@
 
 #pragma code_seg(FFI_SEG)
 
-// Prevent warning of redefinition of WIN32_LEAN_AND_MEAN in atldef.h
-#define ATL_NO_LEAN_AND_MEAN
-#include <atlconv.h>
-
 #include "ObjMem.h"
 #include "Interprt.h"
 #include "DolphinX.h"

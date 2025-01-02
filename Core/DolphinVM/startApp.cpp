@@ -1,8 +1,13 @@
 #include "ist.h"
 
-#ifndef VMDLL
+#ifdef VMDLL
+#error "VM DLL cannot contain an embedded image"
+#endif
 
 #include "startVM.h"
+#include "VMModule.h"
+
+VMModule _Module;
 
 HRESULT __stdcall RunEmbeddedImage(HMODULE hModule, int resId)
 {
@@ -35,5 +40,3 @@ HRESULT __stdcall RunEmbeddedImage(HMODULE hModule, int resId)
 
 	return hr;
 }
-
-#endif

@@ -5,47 +5,25 @@
 //      To build a separate proxy/stub DLL, 
 //      run nmake -f InProcStubps.mk in the project directory.
 
-#include "stdafx.h"
 #include "ist.h"
 #include "resource.h"
 #include "..\rc_stub.h"
 #include <initguid.h>
 #include "InProcStub.h"
 #include "dlldatax.h"
-
+#include "VMModule.h"
 #include "InProcStub_i.c"
-#include "InProcPlugHole.h"
 #include "ImageFileResource.h"
+#include "regkey.h"
+
 #ifndef TO_GO
 #include "..\Launcher\ImageFileMapping.h"
+#include "startvm.h"
 #endif
 
-#if defined(_MERGE_PROXYSTUB) && !defined(TO_GO)
-#error "No proxy/stub marshalling code here, as included in the Dolphin VM"
-#endif
+VMModule _Module;
 
-class CIPDolphinModule : public CAtlDllModuleT< CIPDolphinModule >
-{
-protected:
-	BOOL OnProcessAttach();
-	void OnProcessDetach();
-
-public:
-	BOOL WINAPI DllMain(DWORD dwReason, LPVOID /* lpReserved */) throw();
-	HRESULT DllCanUnloadNow();
-
-public :
-	DECLARE_LIBID(LIBID_DolphinIP)
-	//DECLARE_REGISTRY_APPID_RESOURCEID(IDR_DOLPHINSMALLTALK, "{F797E72A-F7ED-4B65-9FD9-A850ACA48983}")
-};
-
-CIPDolphinModule _Module;
-
-static wchar_t achModulePath[_MAX_PATH+1];
-static CInProcPlugHole* s_pPlugHole = NULL;
-
-#include "..\CritSect.h"
-typedef CAutoLock<CIPDolphinModule> ModuleRef;
+static DolphinIPPlugHole* s_pPlugHole = NULL;
 
 #ifdef TO_GO
 // In TO_GO mode the Dolphin VM object will be holding a lock, but we don't want this to prevent
@@ -57,7 +35,7 @@ typedef CAutoLock<CIPDolphinModule> ModuleRef;
 
 HMODULE __stdcall GetResLibHandle()
 {
-	return _AtlBaseModule.GetResourceInstance();
+	return Module::GetHModule();
 }
 
 HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
@@ -67,7 +45,108 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 	return ret;
 }
 
-#ifndef TO_GO
+static bool GetPlugHoleInProcServerPSKey(RegKey& psKey)
+{
+	constexpr WCHAR szPlugHoleInProcServer[] = L"CLSID\\{7DAC28A4-28F3-4CC9-8BF1-C17FB4CAC8BD}\\InProcServer32";
+	return psKey.Open(HKEY_CLASSES_ROOT, szPlugHoleInProcServer, KEY_READ) == ERROR_SUCCESS;
+}
+
+static bool IsPlugHolePSFactoryRegistered()
+{
+	RegKey psKey;
+	return GetPlugHoleInProcServerPSKey(psKey);
+}
+
+HRESULT RegisterPSFactory()
+{
+#ifdef TO_GO
+
+	// TO_GO in-proc stub has marshalling code embedded, which we can register directly
+	RegKeyRedirect userClassesRoot = _Module.RedirectClassesRootIfNeeded();
+	return PrxDllRegisterServer();
+
+#else
+typedef HRESULT(STDAPICALLTYPE* DLLREGISTERPROC)(void);
+
+// The non-ToGo stub relies on the normal VM to provide marshalling code, so if it is not registered then we
+// must try and register it.
+	HMODULE hVm;
+	wchar_t szLocalVM[_MAX_PATH + 1];
+	if (GetVmLocalPath(VmFilename, szLocalVM, _MAX_PATH)) {
+		hVm = LoadLibrary(szLocalVM);
+	}
+	else {
+		hVm = LoadLibrary(VmFilename);
+	}
+
+	HRESULT hr = REGDB_E_IIDNOTREG;
+	if (hVm) {
+		DLLREGISTERPROC pfnRegister = (DLLREGISTERPROC)::GetProcAddress(HMODULE(hVm), "DllRegisterServer");
+		if (pfnRegister) {
+			hr = (*pfnRegister)();
+		}
+		FreeLibrary(hVm);
+	}
+	return hr;
+#endif
+}
+
+HRESULT UnregisterPSFactory()
+{
+#ifdef TO_GO
+	RegKeyRedirect userClassesRoot = _Module.RedirectClassesRootIfNeeded();
+	return PrxDllUnregisterServer();
+#else
+	// Don't unregister the VM PS, even if we registered it
+	return S_FALSE;
+#endif
+}
+
+
+// In order to load up a Dolphin image, we have to start a thread for it to run in.
+// We then communicate with it through COM interfaces that will need to marshal calls
+// between threads. This then requires that the proxy stub code be registered
+// for these interfaces so that inter-thread marshalling is possible. Although the
+// marshalling code may already be registered by the Dolphin VM, in a greenfield
+// situation this may not be the case and then will will need to register a local copy
+// of the marshalling code before attempting to start the image
+static HRESULT RegisterPSFactoryIfNeeded()
+{
+	return IsPlugHolePSFactoryRegistered() 
+		? S_FALSE 
+		: RegisterPSFactory();
+}
+
+#ifdef TO_GO
+
+static HRESULT UnregisterPSFactoryIfNeeded()
+{
+	RegKey psKey;
+	if (!GetPlugHoleInProcServerPSKey(psKey)) {
+		return S_FALSE;
+	}
+
+	HMODULE hModule = GetResLibHandle();
+	WCHAR szThisDll[_MAX_PATH + 1];
+	// Get the plugin DLL name and split off the directory component
+	::GetModuleFileName(hModule, szThisDll, _countof(szThisDll));
+
+	WCHAR szPSFactory[_MAX_PATH + 1] = { 0 };
+	ULONG nChars = _countof(szPSFactory);
+	if (psKey.QueryStringValue(nullptr, szPSFactory, nChars) != ERROR_SUCCESS) {
+		return S_FALSE;
+	}
+
+	// If this DLL is registered as the PS factory, then unregister it
+	if (_wcsicmp(szThisDll, szPSFactory) == 0) {
+		return UnregisterPSFactory();
+	}
+
+	return S_FALSE;
+}
+
+#else
+
 HRESULT __stdcall ErrorVMNotRegistered(HRESULT hr, LPCWSTR)
 {
 	return ReportWin32Error(IDP_VMNOTREGISTERED, hr);
@@ -79,29 +158,23 @@ HRESULT __stdcall ErrorVMVersionMismatch(ImageHeader* pHeader, VS_FIXEDFILEINFO*
 		HIWORD(pHeader->versionMS), LOWORD(pHeader->versionMS), HIWORD(pHeader->versionLS), LOWORD(pHeader->versionLS),
 		HIWORD(pvi->dwProductVersionMS), LOWORD(pvi->dwProductVersionMS), HIWORD(pvi->dwProductVersionLS), LOWORD(pvi->dwProductVersionLS));
 }
+
 #endif
 
-BOOL CIPDolphinModule::OnProcessAttach()
+BOOL VMModule::OnProcessAttach(HINSTANCE hInst)
 {
 	TRACE(L"%#x: OnProcessAttach: Module lock count %d\n", GetCurrentThreadId(), _Module.GetLockCount());
 
+	HMODULE hModule = GetResLibHandle();
+	static WCHAR szImagePath[_MAX_PATH + 1];
 	// Get the plugin DLL name and split off the directory component
-	::GetModuleFileName(_AtlBaseModule.GetModuleInstance(), achModulePath, sizeof(achModulePath));
+	::GetModuleFileName(hModule, szImagePath, _countof(szImagePath));
 	
-	LPCWSTR szImagePath = achModulePath;
-
-	HMODULE hModule = _AtlBaseModule.GetModuleInstance();
-
 	ImageFileResource imageFile;
 	int ret = imageFile.Open(hModule, 100);
 
 	// Create the PlugHole instance, but as yet we may not know what image to fire up
-	CComObject<CInProcPlugHole>* pPlugHole;
-	HRESULT hr = CComObject<CInProcPlugHole>::CreateInstance(&pPlugHole);
-	if (FAILED(hr))
-		return FALSE;
-
-	s_pPlugHole = pPlugHole;
+	s_pPlugHole = new DolphinIPPlugHole();
 	s_pPlugHole->AddRef();
 
 	if (ret >= 0)
@@ -110,7 +183,7 @@ BOOL CIPDolphinModule::OnProcessAttach()
 	return TRUE;
 }
 
-void CIPDolphinModule::OnProcessDetach()
+BOOL VMModule::OnProcessDetach(HINSTANCE hInst)
 {
 	_ASSERTE(s_pPlugHole != NULL);
 
@@ -118,59 +191,35 @@ void CIPDolphinModule::OnProcessDetach()
 	s_pPlugHole = NULL;
 
 	TRACE(L"%#x: OnProcessDetach: Module lock count %d\n", GetCurrentThreadId(), _Module.GetLockCount());
+	return TRUE;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// DLL Entry Point
-
-BOOL WINAPI CIPDolphinModule::DllMain(DWORD dwReason, LPVOID /* lpReserved */) throw()
+BOOL VMModule::OnThreadAttach(HINSTANCE hInst)
 {
-	BOOL bSuccess = TRUE;
+	TRACE(L"%#x: Thread attached to in-proc stub\n", GetCurrentThreadId());
+	return TRUE;
+}
 
-    switch(dwReason)
-	{
-	case DLL_PROCESS_ATTACH:
-		if (CAtlBaseModule::m_bInitFailed)
-		{
-			ATLASSERT(0);
-			bSuccess = FALSE;
-		}
-		else
-			bSuccess = OnProcessAttach();
-		break;
-
-    case DLL_PROCESS_DETACH:
-		OnProcessDetach();
-		// Prevent false memory leak reporting. ~CAtlWinModule may be too late.
-		_AtlWinModule.Term();		
-		break;
-
-	case DLL_THREAD_ATTACH:
-		TRACE(L"%#x: Thread attached to in-proc stub\n", GetCurrentThreadId());
-		break;
-
-	case DLL_THREAD_DETACH:
-		TRACE(L"%#x: Thread detached from in-proc stub\n", GetCurrentThreadId());
-		if (s_pPlugHole)
-			s_pPlugHole->ThreadDetach();
-		break;
-	}
-	
-    return bSuccess;
+BOOL VMModule::OnThreadDetach(HINSTANCE hInst)
+{
+	TRACE(L"%#x: Thread detached from in-proc stub\n", GetCurrentThreadId());
+	if (s_pPlugHole)
+		s_pPlugHole->ThreadDetach();
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Used to determine whether the DLL can be unloaded by OLE
 
-HRESULT CIPDolphinModule::DllCanUnloadNow()
+HRESULT VMModule::CanUnloadNow()
 {
 	HRESULT hr;
-	LONG moduleLocks = _Module.GetLockCount();
+	unsigned int moduleLocks = _Module.GetLockCount();
     if (moduleLocks <= INTERNALLOCKCOUNT)
 	{
 		// Add a reference to prevent another thread calling this function from
 		// preceeding past the previous test (or the next if racing)
-		ModuleRef lockModule(*this);
+		CAutoLock lockModule(*this);
 
 		if (GetLockCount() > (moduleLocks+1))
 			hr = S_FALSE;
@@ -204,14 +253,15 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
         return FALSE;
 #endif
 	hInstance;
-    return _Module.DllMain(dwReason, lpReserved);
+    return _Module.DllMain(hInstance, dwReason);
 }
 
+__control_entrypoint(DllExport)
 STDAPI DllCanUnloadNow(void)
 {
 	HRESULT hr;
 
-	hr = _Module.DllCanUnloadNow();
+	hr = _Module.CanUnloadNow();
 
 #ifdef _MERGE_PROXYSTUB
     if (hr == S_OK)
@@ -224,16 +274,21 @@ STDAPI DllCanUnloadNow(void)
 /////////////////////////////////////////////////////////////////////////////
 // Returns a class factory to create an object of the requested type
 
-STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
+_Check_return_
+STDAPI  DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID FAR* ppv)
 {
-#ifdef _MERGE_PROXYSTUB
+#ifdef TO_GO
     if (PrxDllGetClassObject(rclsid, riid, ppv) == S_OK)
         return S_OK;
 #endif
 
-	ModuleRef lockModule(_Module);
+	HRESULT hr = RegisterPSFactoryIfNeeded();
+	if (FAILED(hr))
+		return hr;
 
-    HRESULT hr = _Module.GetClassObject(rclsid, riid, ppv);
+	CAutoLock lockModule(_Module);
+
+    hr = _Module.GetClassObject(rclsid, riid, ppv);
 	if (FAILED(hr))
 	{
 		_ASSERTE(s_pPlugHole != NULL);
@@ -243,55 +298,21 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 	return hr;
 }
 
+
 /////////////////////////////////////////////////////////////////////////////
 // DllRegisterServer - Adds entries to the system registry
 
 STDAPI DllRegisterServer(void)
 {
-	//ASSERT(FALSE);
+	HRESULT hr = RegisterPSFactoryIfNeeded();
+	if (FAILED(hr))
+		return hr;
 
-#ifdef _MERGE_PROXYSTUB
-    HRESULT hRes = PrxDllRegisterServer();
-    if (FAILED(hRes))
-        return hRes;
-#endif
+	CAutoLock lockModule(_Module);
 
-	ModuleRef lockModule(_Module);
-
- 	// Note that we register the typelib separately since if this stub is being used as a
-	// proxy, it may not have a typelib bound into it
-    HRESULT hr = _Module.RegisterServer(FALSE);
-	if (SUCCEEDED(hr))
-	{
-		CComBSTR bstrPath;
-		CComPtr<ITypeLib> pTypeLib;
-		hr = AtlLoadTypeLib(_AtlComModule.m_hInstTypeLib, 0, &bstrPath, &pTypeLib);
-		if (SUCCEEDED(hr))
-		{
-			OLECHAR szDir[_MAX_PATH];
-			ocscpy_s(szDir, _MAX_PATH, bstrPath);
-			szDir[AtlGetDirLen(szDir)] = 0;
-			hr = ::RegisterTypeLib(pTypeLib, bstrPath, szDir);
-		}
-		else
-		{
-			// No typelib bound
-			trace(L"Warning: Module does not contain a type library (%#x)\n", hr);
-			hr = S_OK;
-		}
-
-		if (SUCCEEDED(hr))
-		{
-			_ASSERTE(s_pPlugHole != NULL);
-			hr = s_pPlugHole->RegisterServer();
-			s_pPlugHole->Shutdown();
-		}
-		else
-		{
-			trace(L"RegisterTypeLib failed: %#x\n", hr);
-			hr = SELFREG_E_TYPELIB;
-		}
-	}
+	_ASSERTE(s_pPlugHole != NULL);
+	hr = s_pPlugHole->RegisterServer();
+	s_pPlugHole->Shutdown();
 
 	return hr;
 }
@@ -301,51 +322,19 @@ STDAPI DllRegisterServer(void)
 
 STDAPI DllUnregisterServer(void)
 {
-#ifdef _MERGE_PROXYSTUB
-	// Seems odd, but before attempting to unregister through the image, we have
-	// to be sure that we have marshalling code that will allow us to call into 
-	// that image, therefore we take the precaution of registering the proxy/stub
-	// interfaces first.
-    HRESULT hRes = PrxDllRegisterServer();
-    if (FAILED(hRes))
-        return hRes;
+	HRESULT hr = RegisterPSFactoryIfNeeded();
+	if (FAILED(hr))
+		return hr;
+
+	CAutoLock lockModule(_Module);
+
+	_ASSERTE(s_pPlugHole != NULL);
+	hr = s_pPlugHole->UnregisterServer();
+	s_pPlugHole->Shutdown();
+
+#ifdef TO_GO
+	UnregisterPSFactoryIfNeeded();
 #endif
 
-	ModuleRef lockModule(_Module);
-
-	HRESULT hr = _Module.UnregisterServer(TRUE);
-	HRESULT hr2;
-	{
-		_ASSERTE(s_pPlugHole != NULL);
-		hr2 = s_pPlugHole->UnregisterServer();
-		s_pPlugHole->Shutdown();
-	}
-
-#ifdef _MERGE_PROXYSTUB
-    PrxDllUnregisterServer();
-#endif
-
-	return SUCCEEDED(hr) ? hr2 : hr;
+	return hr;
 }
-
-
-HRESULT CInProcPlugHole::FinalConstruct()
-{
-	// This is an internal object, and we don't want it to prevent the DLL being unloaded.
-	// There is a circular reference from the plug hole to the image peer, and we want the
-	// image side to tell us whether the image should be kept up (except for some cases
-	// where we protect the code with a Lock()/Unlock() pair for safety).
-	TRACE(L"%#x: CInProcPlugHole::FinalConstruct() Removing my module lock\n", GetCurrentThreadId());
-
-	_Module.Unlock();
-	return S_OK;
-}
-
-void CInProcPlugHole::FinalRelease()
-{
-	TRACE(L"%#x: CInProcPlugHole::FinalRelease() Replacing my module lock\n", GetCurrentThreadId());
-
-	// Add back in the module lock to balance FinalConstruct
-	_Module.Lock();
-}
-

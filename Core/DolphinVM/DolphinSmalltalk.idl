@@ -166,8 +166,8 @@ typedef enum {
 
 	// uuid(AB93FFD0-2625-11D3-8362-FC91FD000000), // 3.03
 	uuid(744F0DCB-35F6-41B4-96BE-D7F17E1D1455),
-	version(7.0),
-	helpstring("Dolphin Smalltalk VM 7.0")
+	version(8.0),
+	helpstring("Dolphin Smalltalk VM")
 ]
 library DolphinVM
 {

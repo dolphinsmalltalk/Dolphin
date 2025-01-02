@@ -13,6 +13,7 @@
 #include "rc_vm.h"
 #include "interprt.h"
 #include "VMExcept.h"
+#include "ComModule.h"
 
 extern void InitializeVtbl();
 extern void DestroyVtbl();
@@ -33,15 +34,7 @@ static LPTOP_LEVEL_EXCEPTION_FILTER lpTopFilter;
 
 HMODULE GetVMModule()
 {
-	return GetModuleContaining(GetVMModule);
-}
-
-HMODULE GetModuleContaining(LPCVOID pFunc)
-{
-	// See MSJ May 1996
-	MEMORY_BASIC_INFORMATION mbi;
-	::VirtualQuery(pFunc, &mbi, sizeof(mbi));
-	return HMODULE(mbi.AllocationBase);
+	return Module::GetHModuleContaining(GetVMModule);
 }
 
 BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)

@@ -1,4 +1,4 @@
-// InProcPlugHole.h : Declaration of the CInProcPlugHole
+// InProcPlugHole.h : Declaration of the DolphinIPPlugHole
 
 #ifndef __INPROCPLUGHOLE_H_
 #define __INPROCPLUGHOLE_H_
@@ -13,25 +13,31 @@
 
 #include "..\DolphinSmalltalk.h"
 #include <map>
+#include "InProcStub.h"
 
 _COM_SMARTPTR_TYPEDEF(IIPDolphin, __uuidof(IIPDolphin));
 
+// RegDetails should include
+// LIBID_DolphinIP
+
 /////////////////////////////////////////////////////////////////////////////
-// CInProcPlugHole
-class ATL_NO_VTABLE CInProcPlugHole : 
-	public CComObjectRootEx<CComMultiThreadModel>,	// N.B. A free threaded object
-	public CComCoClass<CInProcPlugHole, &CLSID_DolphinIPPlugHole>,
-	public ISupportErrorInfoImpl<&IID_IIPPlugHole>,
-	public IIPPlugHole
+// DolphinIPPlugHole
+// 
+// This is an internal object, and we don't want it to prevent the DLL being unloaded so we use "no lock" base.
+// There is a circular reference from the plug hole to the image peer, and we want the image side to tell us 
+// whether the image should be kept up (except for some cases where we protect the code with a Lock()/Unlock() 
+// pair for safety).
+
+class DolphinIPPlugHole : public ComObject<NullComRegistration, ComObjectBaseNoModuleLock, IIPPlugHole, ISupportErrorInfo >
 {
-	HANDLE m_hDolphinThread;
+	HANDLE m_hDolphinThread = nullptr;
 
 	// The inter-thread marshalled plug-in session object in the image, of which there is 
 	// only a single instance
-	IStream* m_piMarshalledPeer;
+	IStream* m_piMarshalledPeer = nullptr;
 
 	// The id (returned by CoGetCurrentProcess()) of the thread that started the VM
-	DWORD	m_dwVMStarterId;
+	DWORD	m_dwVMStarterId = 0;
 
 	// Map of unmarshalled peer pointers, one for each thread
 	typedef std::map<DWORD, IIPDolphinPtr> PEERMAP;
@@ -41,8 +47,10 @@ class ATL_NO_VTABLE CInProcPlugHole :
 	HANDLE	m_hPeerAvailable;
 
 	wchar_t	achImagePath[_MAX_PATH+1];
-	LPVOID	m_pImageData;
-	size_t	m_cImageSize;
+	LPVOID	m_pImageData = nullptr;
+	size_t	m_cImageSize = 0;
+
+	CMonitor m_critical;
 
 private:
 	void ReleasePeer();
@@ -56,30 +64,19 @@ private:
 	IIPDolphinPtr GetPeerNoWait();
 
 
-protected:
-
-	HRESULT FinalConstruct();
-	void FinalRelease();
-
 public:
-	CInProcPlugHole();
-	~CInProcPlugHole();
+	DolphinIPPlugHole();
+	~DolphinIPPlugHole();
 
 	LPCWSTR GetImagePath() const
 	{
 		return achImagePath;
 	}
 
-//DECLARE_REGISTRY_RESOURCEID(IDR_NPPLUGHOLE)
-
-DECLARE_PROTECT_FINAL_CONSTRUCT()
-
-BEGIN_COM_MAP(CInProcPlugHole)
-	COM_INTERFACE_ENTRY(IIPPlugHole)
-	COM_INTERFACE_ENTRY(ISupportErrorInfo)
-END_COM_MAP()
-
 public:
+	void Lock();
+	void Unlock();
+
 	void SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, size_t imageSize);
 
 	// Handle incoming from Windows/COM - mostly these just forward to the peer object
@@ -100,6 +97,22 @@ public:
 public:
 	STDMETHOD(get_Peer)(/*[out, retval]*/ IUnknown** pVal);
 	STDMETHOD(put_Peer)(/*[in]*/ IUnknown* newVal);
+
+	// Inherited via ComObject
+	STDMETHODIMP InterfaceSupportsErrorInfo(REFIID riid) override
+	{
+		return riid == __uuidof(IIPPlugHole) ? S_OK : S_FALSE;
+	}
 };
+
+inline void DolphinIPPlugHole::Lock()
+{
+	m_critical.Lock();
+}
+
+inline void DolphinIPPlugHole::Unlock()
+{
+	m_critical.Unlock();
+}
 
 #endif //__NPPLUGHOLE_H_

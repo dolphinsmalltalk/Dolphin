@@ -6,13 +6,17 @@
 #endif
 
 #include "ist.h"
+#ifndef _NTDEF_
+	typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
+	#define _NTDEF_
+#endif
 #include <initguid.h>
 #include "DolphinSmalltalk.h"
-#include "VMDll.h"
+#include "VMModule.h"
 #include "dlldatax.h"
 #include "regkey.h"
 
-#pragma code_seg(ATL_SEG)
+//#pragma code_seg(ATL_SEG)
 
 #include "DolphinSmalltalk_i.c"
 
@@ -23,36 +27,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Globals
 
-CDolphinVMModule _Module;
-
-/////////////////////////////////////////////////////////////////////////////
-// Registration helper
-
-extern HRESULT RegisterEventLogMessageTable(LPCWSTR szSource);
-
-static constexpr wchar_t EventLogKeyName[] = L"Dolphin";
-
-HRESULT CDolphinVMModule::RegisterServer(BOOL bRegTypeLib) throw()
-{
-	HRESULT hr = __super::RegisterServer(bRegTypeLib);
-
-	if (SUCCEEDED(hr) && IsRunningElevated())
-		hr = RegisterEventLogMessageTable(EventLogKeyName);
-
-	return hr;
-}
-
-extern HRESULT UnregisterEventLogMessageTable(LPCWSTR szSource);
-
-HRESULT CDolphinVMModule::UnregisterServer(BOOL bRegTypeLib) throw()
-{
-	HRESULT hr = __super::RegisterServer(bRegTypeLib);
-
-	if (SUCCEEDED(hr) && IsRunningElevated())
-		hr = UnregisterEventLogMessageTable(EventLogKeyName);
-
-	return hr;
-}
+VMModule _Module;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Common entry points
@@ -65,7 +40,6 @@ HRESULT CDolphinVMModule::UnregisterServer(BOOL bRegTypeLib) throw()
 HMODULE __stdcall GetResLibHandle()
 {
 	extern HMODULE GetVMModule();
-
 	return GetVMModule();
 }
 

@@ -2,6 +2,8 @@
 
 #include <unknwn.h>
 #include <comdef.h>
+#include <concepts>
+#include <utility>
 
 class ComObjectBase
 {
@@ -12,21 +14,45 @@ public:
 	void UnlockModule();
 };
 
-class ComObjectBaseNoLock
+class ComObjectBaseNoModuleLock
 {
 public:
 	void LockModule() {}
 	void UnlockModule() {}
 };
 
-template<typename T, LPCWSTR PrgId = nullptr, LPCWSTR VerIndProgId = nullptr, typename Base = ComObjectBase>
-class ComObject : protected Base, public T
+template <LPCWSTR PId, LPCWSTR VIPId, int DescId=0, LPCWSTR ELK=nullptr> 
+class ComRegistrationDetails
 {
 public:
-	static constexpr LPCWSTR ProgId = PrgId;
-	static constexpr LPCWSTR VersionIndependentProgId = VerIndProgId;
+	static constexpr LPCWSTR ProgId = PId;
+	static constexpr LPCWSTR VersionIndependentProgId = VIPId;
+	static constexpr int DescriptionResourceId = DescId;
+	static constexpr LPCWSTR EventLogKey = ELK;
+};
 
+typedef ComRegistrationDetails<nullptr, nullptr> NullComRegistration;
+
+template<typename RegDetails = NullComRegistration, typename Base = ComObjectBase, std::derived_from<IUnknown>... Interfaces>
+class ComObject : protected Base, public Interfaces...
+{
+public:
 	ComObject() = default;
+
+	template <typename Ti, typename... Tis> constexpr HRESULT QueryInterfaces(REFIID riid, void** ppvObject)
+	{
+		if (riid == __uuidof(Ti)) {
+			*ppvObject = static_cast<Ti*>(this);
+			AddRef();
+			return S_OK;
+		}
+
+		if constexpr (!sizeof...(Tis))	{
+			return E_NOINTERFACE;
+		} else {
+			return QueryInterfaces<Tis... >(riid, ppvObject);
+		}
+	}
 
 	// IUnknown 
 	virtual HRESULT STDMETHODCALLTYPE QueryInterface(_In_ REFIID riid, _COM_Outptr_ void** ppvObject)
@@ -36,14 +62,16 @@ public:
 			return E_POINTER;
 
 		*ppvObject = nullptr;
-		if (riid == __uuidof(T) || riid == __uuidof(IUnknown))
+		if (riid == __uuidof(IUnknown))
 		{
-			*ppvObject = static_cast<T*>(this);
+			// Need C++26 for direct pack indexing
+			using Ti = std::tuple_element_t<0,std::tuple<Interfaces...>>;
+			*ppvObject = static_cast<Ti*>(this);
 			AddRef();
 			return S_OK;
 		}
 
-		return E_NOINTERFACE;
+		return QueryInterfaces<Interfaces... >(riid, ppvObject);
 	}
 
 	virtual ULONG STDMETHODCALLTYPE AddRef()
@@ -59,8 +87,6 @@ public:
 
 	virtual ULONG STDMETHODCALLTYPE Release()
 	{
-		ASSERT(m_nRefs > 0);
-
 		ULONG nRefs = ::InterlockedDecrement(&m_nRefs);
 		if (nRefs == 0)
 		{
@@ -70,6 +96,9 @@ public:
 
 		return nRefs;
 	}
+
+public:
+	using RegistrationDetails = RegDetails;
 
 private:
 	unsigned int m_nRefs = 0;

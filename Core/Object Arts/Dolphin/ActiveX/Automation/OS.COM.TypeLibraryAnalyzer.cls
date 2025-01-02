@@ -292,13 +292,11 @@ getLibAttr
 	to worry about freeing the structure correctly later with finalization and
 	a back pointer to the receiver."
 
-	| libattr answer lib |
+	| libattr tlb |
 	libattr := TLIBATTR newPointer.
-	lib := self tlbInterface.
-	lib GetLibAttr: libattr.
-	answer := libattr copy.
-	lib ReleaseTLibAttr: libattr.
-	^answer!
+	tlb := self tlbInterface.
+	tlb GetLibAttr: libattr.
+	^[libattr copy] ensure: [tlb ReleaseTLibAttr: libattr]!
 
 hash
 	"Answer the <integer> hash value for the receiver."
@@ -765,7 +763,7 @@ open: pathName
 	"Open the type library at the specified path and answer an instance of the
 	receiver on it."
 
-	^self onTypeLib: (ITypeLib open: pathName)!
+	^self onTypeLib: (ITypeLib open: pathName register: true)!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier binary filed versions."

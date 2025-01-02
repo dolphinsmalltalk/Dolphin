@@ -54,11 +54,17 @@ prepareToStrip
 		ifTrue: 
 			[| mb |
 			mb := MessageBox new.
-			mb buttonStyle: #okCancel.
-			mb caption: 'Deploying <1p>…' << self executableName.
-			mb defaultButton: 2.
+			mb
+				buttonStyle: #okCancel;
+				headline: 'Deploy <1p> without type library?' << self executableName;
+				defaultButton: 2;
+				customButtons: #(#(#ok '&Deploy'));
+				detailsText: 'You may deploy this component, but it may then be necessary to distribute and register the type library separately in order for the component to function. If this component only implements interfaces defined by other components (which themselves supply a type library), or the component is not intended for use with Automation clients (and a separate marshalling DLL is available and registered), then you may not need a type library.';
+				uniqueId: 'DeployNoTypelib ', rootPackageName;
+				isDefaultable: true;
+				beTaskModal.
 			(mb
-				warning: 'There is no type library associated with this component or the type library cannot be found. You may deploy this component, but it may then be necessary to distribute and register the type library separately in order for the component to function. If this component only implements interfaces defined by other components (which themselves supply a type library), or the component is not intended for use with Automation clients (and a separate marshalling DLL is available), then you may not need a type library.<n><n>Are you sure that you want to continue?')
+				warning: 'There is no type library associated with this component or the type library cannot be found, so it may not function as expected.')
 					== #ok ifFalse: [^false]].
 	^super prepareToStrip!
 
@@ -107,21 +113,9 @@ typeLibPath:!accessing!public! !
 defaultOptions
 	"Private - Answer the default set of flags set up in new of converted instances of the receiver."
 
-	^super defaultOptions | KeepImageMask!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	"N.B. This method must be in the 'must strip' category so that it is removed before
-	package pre-requisites are calculated otherwise the Development System remains
-	a pre-req. of the ADK due to the references to development classes herein."
-
-	^super publishedAspectsOfInstances
-		add: (Aspect fileSave: #typeLibPath);
-		yourself! !
+	^super defaultOptions | KeepImageMask! !
 
 !AXDllImageStripper class categoriesForMethods!
 defaultOptions!constants!development!private! !
-publishedAspectsOfInstances!constants!development!public! !
 !
 

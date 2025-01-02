@@ -155,6 +155,11 @@ basicOpen: aString
 	self handle: (self class load: aString flags: self loadFlags).
 	self beFinalizable!
 
+clear
+	"Private - Reinitialize this dll instance, e.g. on startup."
+
+	handle := nil!
+
 close
 	"Release the reference the receiver has to the External Library it represents. This may
 	not cause the library to be unloaded, so it may still function. Answer whether the
@@ -342,6 +347,7 @@ versionString
 asParameter!converting!public! !
 basicFree!private!realizing/unrealizing! !
 basicOpen:!private!realizing/unrealizing! !
+clear!private!realizing/unrealizing! !
 close!public!realizing/unrealizing! !
 fileName!accessing!public! !
 formatMessage:with:!accessing!public! !
@@ -377,7 +383,7 @@ clear
 	on image re-start (ExternalHandles are automatically nulled by the VM on image load).
 	Similary function addresses will be lazily requeried as required."
 
-	default notNil ifTrue: [default handle: nil].
+	default notNil ifTrue: [default clear].
 	self clearProcAddresses!
 
 clearProcAddresses

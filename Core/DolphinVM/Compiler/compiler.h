@@ -12,7 +12,6 @@ Smalltalk compiler
 #include "..\Compiler_i.h"
 
 #include "resource.h"
-//#include "CompilerDLL.h"
 
 #include "..\DolphinSmalltalk_i.h"
 //typedef STObject Object;
@@ -57,11 +56,9 @@ constexpr WCHAR const CompilerVerIndProgId[] = L"Dolphin.Compiler";
 // CDolphinSmalltalk
 class Compiler : 
 	public Lexer,
-	public ComObject<ICompiler, CompilerProgId, CompilerVerIndProgId>
+	public ComObject<ComRegistrationDetails<CompilerProgId, CompilerVerIndProgId, IDR_COMPILER>, ComObjectBase, ICompiler >
 {
 public:
-
-//DECLARE_REGISTRY(Compiler, L"Dolphin.Compiler.8", L"Dolphin.Compiler", IDR_COMPILER, THREADFLAGS_APARTMENT)
 
 public:
 	// Interpreting the primitiveCompile... type argument

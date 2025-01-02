@@ -14,6 +14,7 @@
 
 HMODULE __stdcall GetResLibHandle()
 {
+	// Returns the handle of the process .exe, which will be the Dolphin GUI app .exe
 	return GetModuleHandle(NULL);
 }
 
@@ -37,8 +38,10 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 int APIENTRY 
 wWinMain(HINSTANCE hModule, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
-	::CoInitialize(NULL);
- 	HRESULT hr = RunEmbeddedImage(hModule, IDR_IMAGE);
-	::CoUninitialize();
+	HRESULT hr = ::CoInitialize(NULL);
+	if (SUCCEEDED(hr)) {
+		hr = RunEmbeddedImage(hModule, IDR_IMAGE);
+		::CoUninitialize();
+	}
 	return DecodeHRESULT(hr);
 }

@@ -248,6 +248,7 @@ package setMethodNames: #(
 	#(#{OS.COM.OLEAutLibrary} #loadTypeLibEx:regkind:pptlib:)
 	#(#{OS.COM.OLEAutLibrary} #oleCreateFontIndirect:riid:ppvObj:)
 	#(#{OS.COM.OLEAutLibrary} #queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:)
+	#(#{OS.COM.OLEAutLibrary} #registerTypeLib:fullPath:)
 	#(#{OS.COM.OLEAutLibrary} #registerTypeLib:wszFullPath:wszHelpDir:)
 	#(#{OS.COM.OLEAutLibrary} #registerTypeLibForUser:szFullPath:szHelpDir:)
 	#(#{OS.COM.OLEAutLibrary} #safeArrayAccessData:ppvData:)
@@ -271,6 +272,7 @@ package setMethodNames: #(
 	#(#{OS.COM.OLEAutLibrary} #setErrorInfo:perrinfo:)
 	#(#{OS.COM.OLEAutLibrary} #systemTimeToVariantTime:pvtime:)
 	#(#{OS.COM.OLEAutLibrary} #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:)
+	#(#{OS.COM.OLEAutLibrary} #unRegisterTypeLibForUser:wMajorVerNum:wMinorVerNum:lcid:syskind:)
 	#(#{OS.COM.OLEAutLibrary} #varBstrFromBool:lcid:dwFlags:pbstrOut:)
 	#(#{OS.COM.OLEAutLibrary} #varBstrFromCy:lcid:dwFlags:pbstrOut:)
 	#(#{OS.COM.OLEAutLibrary} #varBstrFromDec:lcid:dwFlags:pbstrOut:)
@@ -2923,6 +2925,21 @@ queryPathOfRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lci
 	<stdcall: int32 QueryPathOfRegTypeLib guid* uint16 uint16 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
+registerTypeLib: anITypeLib fullPath: aString
+	AdvApi32 isRunningElevated
+		ifTrue: 
+			["Register machine wide if admin privileges available"
+			self
+				registerTypeLib: anITypeLib
+				wszFullPath: aString
+				wszHelpDir: nil]
+		ifFalse: 
+			["Register for the current user only"
+			self
+				registerTypeLibForUser: anITypeLib
+				szFullPath: aString
+				szHelpDir: nil]!
+
 registerTypeLib: ptlib wszFullPath: wszFullPath wszHelpDir: wszHelpDir
 	"Invoke the RegisterTypeLib() function of the module wrapped by the receiver.
 	Helpstring: Adds information about a type library to the system registry
@@ -2932,7 +2949,7 @@ registerTypeLib: ptlib wszFullPath: wszFullPath wszHelpDir: wszHelpDir
 			LPWSTR wszFullPath,
 			LPWSTR wszHelpDir);"
 
-	<stdcall: int32 RegisterTypeLib ITypeLib* lpwstr lpwstr>
+	<stdcall: hresult RegisterTypeLib ITypeLib* lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
 registerTypeLibForUser: ptlib szFullPath: szFullPath szHelpDir: szHelpDir
@@ -3152,7 +3169,7 @@ systemTimeToVariantTime: lpSystemTime pvtime: pvtime
 
 unRegisterTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid syskind: syskind
 	"Invoke the UnRegisterTypeLib() function of the module wrapped by the receiver.
-	Helpstring: Removes type library information from the system registry.
+	Helpstring: Removes type library information from the system-wide registry.
 
 		HRESULT __stdcall UnRegisterTypeLib(
 			GUID* rguid,
@@ -3162,6 +3179,20 @@ unRegisterTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid sy
 			SYSKIND syskind);"
 
 	<stdcall: hresult UnRegisterTypeLib guid* uint16 uint16 uint32 int32>
+	^self invalidCall: _failureCode!
+
+unRegisterTypeLibForUser: libID wMajorVerNum: wMajorVerNum wMinorVerNum: wMinorVerNum lcid: lcid syskind: syskind
+	"Invoke the UnRegisterTypeLibForUser() function of the module wrapped by the receiver.
+	Helpstring: Removes type library information from the current user registry.
+
+		HRESULT __stdcall UnRegisterTypeLibForUser(
+			GUID* libID,
+			WORD wMajorVerNum,
+			WORD wMinorVerNum,
+			unsigned long lcid,
+			SYSKIND syskind);"
+
+	<stdcall: hresult UnRegisterTypeLibForUser guid* uint16 uint16 uint32 int32>
 	^self invalidCall: _failureCode!
 
 varBstrFromBool: boolIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
@@ -3282,6 +3313,7 @@ loadTypeLib:pptlib:!Automation Functions-Type Compilation And Library!primitives
 loadTypeLibEx:regkind:pptlib:!Automation Functions-Type Compilation And Library!primitives!public! !
 oleCreateFontIndirect:riid:ppvObj:!OLE Functions-OLE!public! !
 queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:!Automation Functions-Type Compilation And Library!public! !
+registerTypeLib:fullPath:!helpers!public! !
 registerTypeLib:wszFullPath:wszHelpDir:!Automation Functions-Type Compilation And Library!public! !
 registerTypeLibForUser:szFullPath:szHelpDir:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
 safeArrayAccessData:ppvData:!Automation Functions-Array Manipulation!public! !
@@ -3304,7 +3336,8 @@ safeArrayUnaccessData:!Automation Functions-Array Manipulation!public! !
 safeArrayUnlock:!Automation Functions-Array Manipulation!public! !
 setErrorInfo:perrinfo:!Automation Functions-Error Handling API!public! !
 systemTimeToVariantTime:pvtime:!Automation Functions-Variant Manipulation!public! !
-unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
+unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!public! !
+unRegisterTypeLibForUser:wMajorVerNum:wMinorVerNum:lcid:syskind:!**auto generated**!public! !
 varBstrFromBool:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
 varBstrFromCy:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
 varBstrFromDec:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !

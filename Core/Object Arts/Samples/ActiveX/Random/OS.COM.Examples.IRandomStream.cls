@@ -208,19 +208,23 @@ defineFunctions
 !
 
 initialize
-	ITypeLib open: (FileLocator imageRelative: 'Core\Object Arts\Samples\ActiveX\Random\Random.tlb') register: true.
+	ITypeLib open: self typeLibraryPath register: true.
 	^super initialize!
 
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
 		IRandomStream initializeTypeLib"
 
-	typeLib := RANDOMLib! !
+	typeLib := RANDOMLib!
+
+typeLibraryPath
+	^FileLocator imageRelative: 'Core\Object Arts\Samples\ActiveX\Random\Random.tlb'! !
 
 !OS.COM.Examples.IRandomStream class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !
 initialize!development!initializing!private! !
 initializeTypeLib!**auto generated**!initializing!private! !
+typeLibraryPath!constants!development!private! !
 !
 

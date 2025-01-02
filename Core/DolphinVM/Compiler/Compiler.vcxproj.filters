@@ -28,6 +28,12 @@
     <ClCompile Include="heap.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\ComModule.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ComObject.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lexer.h">

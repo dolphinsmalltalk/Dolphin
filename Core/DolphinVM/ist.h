@@ -28,9 +28,7 @@
 #define _WINDNS_INCLUDED_
 
 // Prevent warning of redefinition of WIN32_LEAN_AND_MEAN in atldef.h
-#define ATL_NO_LEAN_AND_MEAN
-
-#define UMDF_USING_NTSTATUS
+//#define ATL_NO_LEAN_AND_MEAN
 
 #include <float.h>
 #include <io.h>
@@ -49,9 +47,12 @@
 #include <iomanip>
 #pragma warning(pop)
 
-typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
-#define NTSTATUS_DEFINED
-#define _NTDEF_
+#define UMDF_USING_NTSTATUS
+#ifndef _NTDEF_
+	typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
+	#define NTSTATUS_DEFINED
+	#define _NTDEF_
+#endif
 
 #include "Environ.h"
 
@@ -78,7 +79,6 @@ class Interpreter;
 HMODULE __stdcall GetResLibHandle();
 HINSTANCE GetApplicationInstance();
 void DolphinExitInstance();
-HMODULE GetModuleContaining(LPCVOID);
 
 #include "CritSect.h"
 extern CMonitor traceMonitor;
@@ -106,13 +106,12 @@ extern wchar_t achLogPath[_MAX_PATH + 1];
 extern wchar_t achImagePath[_MAX_PATH + 1];
 HMODULE GetVMModule();
 BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut);
-HMODULE GetModuleContaining(LPCVOID pFunc);
 
 #include <unknwn.h>
 #include "segdefs.h"
 
 #ifdef _CONSOLE
-#define _ATL_NO_COM_SUPPORT
+//#define _ATL_NO_COM_SUPPORT
 #endif
 
 #pragma warning(push,3)

@@ -43,9 +43,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphin.cpp">
       <Filter>Interpreter</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphinStart.cpp">
-      <Filter>Interpreter</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\interfac.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
@@ -124,12 +121,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SaveImage.cpp">
       <Filter>ObjectMemory</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\startApp.cpp">
-      <Filter>App Support</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\startToGoVm.cpp">
-      <Filter>App Support</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp">
       <Filter>App Support</Filter>
     </ClCompile>
@@ -160,6 +151,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)heap.cpp">
       <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ComModule.cpp">
+      <Filter>App Support</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ComObject.cpp">
+      <Filter>App Support</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -327,6 +324,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\heap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\regkey.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ComClassFactory.h">
+      <Filter>App Support</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ComModule.h">
+      <Filter>App Support</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ComObject.h">
+      <Filter>App Support</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">

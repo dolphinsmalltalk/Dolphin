@@ -7,6 +7,7 @@
 ******************************************************************************/
 #pragma once
 #include <Shlwapi.h>
+#include <memory>
 
 // For deriving a unique_ptr to safely delete memory allocated by, e.g. StringFromCLSID.
 struct CoTaskMemDeleter
@@ -87,7 +88,7 @@ public:
 	LSTATUS SetDWORDValue(LPCWSTR pszValueName, DWORD dwValue) throw();
 	LSTATUS SetStringValue(LPCWSTR pszValueName, LPCWSTR pszValue, DWORD dwType = REG_SZ) throw();
 	LSTATUS QueryDWORDValue(LPCWSTR pszValueName, DWORD& dwValue) throw();
-	LSTATUS QueryStringValue(LPCWSTR pszValueName, LPWSTR pszValue, ULONG* pnChars) throw();
+	LSTATUS QueryStringValue(LPCWSTR pszValueName, LPWSTR pszValue, ULONG& pnChars) throw();
 	LSTATUS SetKeyValue(LPCWSTR lpszKeyName, LPCWSTR lpszValue, LPCWSTR lpszValueName = nullptr) throw();
 
 	// Create a new registry key (or open an existing one).
@@ -131,6 +132,13 @@ class RegKeyRedirect
 	HKEY m_redirected = nullptr;
 public:
 	RegKeyRedirect() = default;
+	RegKeyRedirect(const RegKeyRedirect&) = delete;
+	RegKeyRedirect& operator=(const RegKeyRedirect&) = delete;
+	RegKeyRedirect(RegKeyRedirect&& other) noexcept
+	{
+		m_redirected = other.m_redirected;
+		other.m_redirected = nullptr;
+	}
 	~RegKeyRedirect() { Revert(); }
 
 	LSTATUS Redirect(HKEY keyToRedirect, HKEY targetHive, LPCWSTR targetName, REGSAM samDesired= KEY_ALL_ACCESS)
@@ -165,19 +173,22 @@ public:
 inline LSTATUS RegKey::OpenDolphinKey(LPCWSTR lpszKeyName, REGSAM samDesired)
 {
 	Close();
-	std::wstring key = L"Software\\Object Arts\\Dolphin Smalltalk";
-	;
-	if (*lpszKeyName)
-	{
-		key = key + L"\\" + lpszKeyName;
-	}
+	constexpr WCHAR DolphinKeyRoot[] = L"Software\\Object Arts\\Dolphin Smalltalk";
+	if (!*lpszKeyName)
+		return Open(HKEY_CURRENT_USER, DolphinKeyRoot, samDesired);
 
-	return Open(HKEY_CURRENT_USER, key.c_str(), samDesired);	
+	size_t cch = wcslen(DolphinKeyRoot) + wcslen(lpszKeyName) + 2;
+	std::unique_ptr<WCHAR[]> key(new WCHAR[cch]);
+	wcscpy_s(key.get(), cch, DolphinKeyRoot);
+	wcscat_s(key.get(), cch, L"\\");
+	wcscat_s(key.get(), cch, lpszKeyName);
+
+	return Open(HKEY_CURRENT_USER, key.get(), samDesired);	
 }
 
 inline LSTATUS RegKey::Open(HKEY hKeyParent, LPCWSTR lpszKeyName, REGSAM samDesired) throw()
 {
-	ASSERT(hKeyParent != nullptr);
+	_ASSERTE(hKeyParent != nullptr);
 	Close();
 	return RegOpenKeyEx(hKeyParent, lpszKeyName, 0, samDesired, &m_hKey);
 }
@@ -195,7 +206,7 @@ inline LSTATUS RegKey::RecurseDeleteKey(LPCWSTR lpszKey) throw()
 
 inline LSTATUS RegKey::SetKeyValue(LPCTSTR lpszKeyName, LPCTSTR lpszValue, LPCTSTR lpszValueName) throw()
 {
-	ASSERT(lpszValue != nullptr);
+	_ASSERTE(lpszValue != nullptr);
 	RegKey key;
 	LSTATUS ret = key.Create(m_hKey, lpszKeyName, REG_NONE, REG_OPTION_NON_VOLATILE, KEY_READ | KEY_WRITE);
 	if (ret == ERROR_SUCCESS)
@@ -207,7 +218,7 @@ inline LSTATUS RegKey::SetKeyValue(LPCTSTR lpszKeyName, LPCTSTR lpszValue, LPCTS
 
 inline LSTATUS RegKey::SetStringValue(LPCTSTR pszValueName, LPCTSTR pszValue, DWORD dwType) throw()
 {
-	ASSERT(m_hKey);
+	_ASSERTE(m_hKey);
 	if (pszValue == nullptr || !((dwType == REG_SZ) || (dwType == REG_EXPAND_SZ)))
 	{
 		return ERROR_INVALID_PARAMETER;
@@ -218,7 +229,7 @@ inline LSTATUS RegKey::SetStringValue(LPCTSTR pszValueName, LPCTSTR pszValue, DW
 
 inline LSTATUS RegKey::QueryDWORDValue(LPCTSTR pszValueName, DWORD& dwValue) throw()
 {
-	ASSERT(m_hKey);
+	_ASSERTE(m_hKey);
 
 	ULONG nBytes = sizeof(DWORD);
 	DWORD dwType;
@@ -231,13 +242,12 @@ inline LSTATUS RegKey::QueryDWORDValue(LPCTSTR pszValueName, DWORD& dwValue) thr
 	return ERROR_SUCCESS;
 }
 
-inline LSTATUS RegKey::QueryStringValue(LPCWSTR pszValueName, LPWSTR pszValue, ULONG* pnChars) throw()
+inline LSTATUS RegKey::QueryStringValue(LPCWSTR pszValueName, LPWSTR pszValue, ULONG& nChars) throw()
 {
-	ASSERT(m_hKey);
-	ASSERT(pnChars);
+	_ASSERTE(m_hKey);
 
-	ULONG nBytes = (*pnChars) * sizeof(WCHAR);
-	*pnChars = 0;
+	ULONG nBytes = nChars * sizeof(WCHAR);
+	nChars = 0;
 	DWORD dwType;
 	LSTATUS ret = ::RegQueryValueEx(m_hKey, pszValueName, nullptr, &dwType, reinterpret_cast<LPBYTE>(pszValue), &nBytes);
 
@@ -266,14 +276,14 @@ inline LSTATUS RegKey::QueryStringValue(LPCWSTR pszValueName, LPWSTR pszValue, U
 		}
 	}
 
-	*pnChars = nBytes / sizeof(WCHAR);
+	nChars = nBytes / sizeof(WCHAR);
 
 	return ERROR_SUCCESS;
 }
 
 inline LSTATUS RegKey::SetDWORDValue(LPCWSTR pszValueName, DWORD dwValue) throw()
 {
-	ASSERT(m_hKey);
+	_ASSERTE(m_hKey);
 	return ::RegSetValueEx(m_hKey, pszValueName, 0, REG_DWORD, reinterpret_cast<const BYTE*>(&dwValue), sizeof(DWORD));
 }
 

@@ -24,6 +24,7 @@ Implementation of Smalltalk interpreter
 #include "VMExcept.h"
 #include "regkey.h"
 #include "VirtualMemoryStats.h"
+#include "ComModule.h"
 
 // Smalltalk classes
 #include "STProcess.h"
@@ -156,7 +157,7 @@ HRESULT Interpreter::initializeBeforeLoad()
 	wndClass.lpfnWndProc = VMWndProc;
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
-	wndClass.hInstance = GetModuleContaining(VMWndProc);
+	wndClass.hInstance = Module::GetHModuleContaining(VMWndProc);
 	wndClass.hIcon = NULL;
 	wndClass.hCursor = NULL;
 	wndClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
@@ -303,7 +304,7 @@ void Interpreter::ShutDown()
 	}
 	if (m_atomVMWndClass)
 	{
-		UnregisterClass(VMWNDCLASS, GetModuleContaining(initializeBeforeLoad));
+		UnregisterClass(VMWNDCLASS, Module::GetHModuleContaining(initializeBeforeLoad));
 		m_atomVMWndClass = NULL;
 	}
 

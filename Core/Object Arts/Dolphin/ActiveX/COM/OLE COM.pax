@@ -129,7 +129,6 @@ package setBinaryVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Registry\Dolphin Registry Access'
 ).
 

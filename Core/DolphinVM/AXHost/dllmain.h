@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\DllModule.h"
+#include "DllModule.h"
 
 class CDolphinAXHostModule : public CDolphinDllModuleT<CDolphinAXHostModule, true>
 {

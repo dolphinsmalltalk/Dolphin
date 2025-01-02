@@ -10,9 +10,9 @@ Core.SessionManager
 
 Kernel.AXDllSessionManager guid: (Core.GUID fromString: '{56681788-e7fe-4454-8973-c3d801c5f034}')!
 
-Kernel.AXDllSessionManager comment: 'AXDllSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed Active-X/COM component DLL that has no GUI elements.
+Kernel.AXDllSessionManager comment: '`AXDllSessionManager` is a class of `SessionManager`s used to manage the life-cycle of a deployed Active-X/COM component DLL that has _no_ GUI elements.
 
-Use this class of SessionManager when deploying your Active-X DLL if it is a non-visual component.'!
+Use this class of `SessionManager` when deploying your Active-X DLL if it is a non-visual component.'!
 
 !Kernel.AXDllSessionManager methodsFor!
 
@@ -24,6 +24,7 @@ basicTertiaryStartup
 keepAlive
 	"We stay alive until the host process unloads us."
 
+	IPDolphin.	"Ensure IPDolphin included in any deployed DLL"
 	^self!
 
 openConsoleStreams
@@ -38,6 +39,12 @@ startUI
 	this is a GUI or console session)."
 
 	self inputState consoleStartup!
+
+traceStream
+	"Answer a <puttableStream> onto the session's trace output device."
+
+	DebugTraceStream.	"Ensure that debug output is available as this is pretty much essential for DLLs."
+	^super traceStream!
 
 unhandledException: anException
 	"Private - The unhandled Exception, anException, occurred in the active Process.
@@ -61,6 +68,7 @@ basicTertiaryStartup!operations-startup!public! !
 keepAlive!idling!public! !
 openConsoleStreams!operations!private! !
 startUI!operations-startup!public! !
+traceStream!accessing!operations-logging!public! !
 unhandledException:!exceptions!private! !
 !
 

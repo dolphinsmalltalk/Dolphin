@@ -295,7 +295,7 @@ void CrashDump(const LPEXCEPTION_POINTERS pExceptionInfo, const wchar_t* imagePa
 	{
 		achLogPath[0] = 0;
 		ULONG size = _MAX_PATH;
-		rkDump.QueryStringValue(L"", achLogPath, &size);
+		rkDump.QueryStringValue(L"", achLogPath, size);
 		pStream = OpenLogStream(achLogPath, imagePath, fStream);
 
 		DWORD dwValue;

@@ -1,0 +1,33 @@
+﻿| package |
+package := Package name: 'ActiveX DLL Server (GUI)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Active-X DLL Server (GUI)
+Copyright (c) Object Arts Ltd, 2001-2025.
+
+This package provides a base session manager class for in-proc Active-X/COM components that may have GUI elements. '.
+
+
+package setClassNames: #(
+	#{UI.AXDllGUISessionManager}
+).
+
+package setPrerequisites: #(
+	'ActiveX DLL Server Core'
+	'..\Base\Dolphin'
+	'..\MVP\Base\Dolphin MVP Base'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.GUISessionManager
+	subclass: #'UI.AXDllGUISessionManager'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

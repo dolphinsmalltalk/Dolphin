@@ -1,4 +1,3 @@
-
 #ifndef _DEBUG
 	#pragma optimize("s", on)
 	#pragma auto_inline(off)
@@ -11,6 +10,7 @@
 #include "DolphinSmalltalk.h"
 #include "Utf16StringBuf.h"
 #include "objmem.h"
+#include "VMModule.h"
 
 extern HINSTANCE hApplicationInstance;
 static IDolphin* piVM=NULL;
@@ -22,7 +22,7 @@ IDolphin* GetVM()
 
 /////////////////////////////////////////////////////////////////////
 // IDolphinSmalltalk
-STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance, 
+STDMETHODIMP DolphinSmalltalk::Initialise(HINSTANCE hInstance, 
 									  LPCSTR fileName, LPVOID imageData, UINT imageSize,
 									DWORD dwFlags)
 {
@@ -35,7 +35,7 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 	}
 }
 
-STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
+STDMETHODIMP DolphinSmalltalk::Initialise(HINSTANCE hInstance,
 	LPCWSTR fileName, LPVOID imageData, UINT imageSize,
 	DWORD dwFlags)
 {
@@ -46,31 +46,24 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 
 	piVM = this;
 
-	Lock();
+	CAutoLock lockModule(_Module);
 
 	hApplicationInstance = hInstance;
-	HRESULT hr = VMInit(fileName, imageData, imageSize, dwFlags);
-
-	Unlock();
-
-	return hr;
+	return VMInit(fileName, imageData, imageSize, dwFlags);
 }
-STDMETHODIMP CDolphinSmalltalk::Run(IUnknown* punkOuter)
+
+STDMETHODIMP DolphinSmalltalk::Run(IUnknown* punkOuter)
 {
 	extern int APIENTRY VMRun(uintptr_t);
 
 	piVM = this;
 	
-	Lock();
+	CAutoLock lockModule(_Module);
 
-	HRESULT hr = VMRun(reinterpret_cast<uintptr_t>(punkOuter));
-
-	Unlock();
-
-	return hr;
+	return VMRun(reinterpret_cast<uintptr_t>(punkOuter));
 }
 
-STDMETHODIMP CDolphinSmalltalk::GetVersionInfo(LPVOID pvi)
+STDMETHODIMP DolphinSmalltalk::GetVersionInfo(LPVOID pvi)
 {
 	extern BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut);
 	return ::GetVersionInfo(static_cast<VS_FIXEDFILEINFO*>(pvi)) ? S_OK : E_FAIL;

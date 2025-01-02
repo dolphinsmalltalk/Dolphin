@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager
+Kernel.AXDllSessionManager
 	subclass: #'OS.COM.Examples.RandomStreamSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -17,21 +17,9 @@ OS.COM.Examples.RandomStreamSessionManager comment: ''!
 !OS.COM.Examples.RandomStreamSessionManager methodsFor!
 
 main
-	self mainShellClass show.
 	RandomStream registerClassFactory! !
 
 !OS.COM.Examples.RandomStreamSessionManager categoriesForMethods!
 main!operations!public! !
-!
-
-!OS.COM.Examples.RandomStreamSessionManager class methodsFor!
-
-mainShellClass
-	"Answer the class of the application's main window (a <Shell> presenter)."
-
-	^UI.Shell! !
-
-!OS.COM.Examples.RandomStreamSessionManager class categoriesForMethods!
-mainShellClass!constants!public! !
 !
 

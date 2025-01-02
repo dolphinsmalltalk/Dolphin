@@ -55,26 +55,29 @@ static HRESULT LoadAndCreateVM(const CLSID* pVMCLSID, LPCWSTR pszVM, const IID& 
 
 /////////////////////////////////////////////////////////////////////
 
+bool GetVmLocalPath(_In_ LPCWSTR szVmFilename, _Out_writes_(bufSize) LPWSTR szLocalVM, _In_ size_t bufSize)
+{
+	wchar_t szExe[_MAX_PATH + 1];
+	::GetModuleFileNameW(GetModuleHandle(NULL), szExe, _MAX_PATH);
+
+	wchar_t drive[_MAX_DRIVE];
+	wchar_t dir[_MAX_DIR];
+	_wsplitpath_s(szExe, drive, _MAX_DRIVE, dir, _MAX_DIR, NULL, 0, NULL, 0);
+	_wmakepath_s(szLocalVM, bufSize, drive, dir, szVmFilename, NULL);
+
+	return _waccess(szLocalVM, 0) == 0;
+}
+
 HRESULT __stdcall CreateVM(CLSCTX clsContext, const CLSID* pVMCLSID, LPCWSTR pszVM, const IID& iid, void** ppiDolphin)
 {
 	HRESULT hr;
 
-	LPCWSTR szVMPath = pszVM?pszVM:L"DolphinVM8.DLL";
+	LPCWSTR szVmFilename = pszVM ? pszVM : VmFilename;
 
 	// First attempt to load from current directory
 	{
 		wchar_t szLocalVM[_MAX_PATH+1];
-		{
-			wchar_t szExe[_MAX_PATH+1];
-			::GetModuleFileNameW(GetModuleHandle(NULL), szExe, _MAX_PATH);
-
-			wchar_t drive[_MAX_DRIVE];
-			wchar_t dir[_MAX_DIR];
-			_wsplitpath_s(szExe, drive, _MAX_DRIVE, dir, _MAX_DIR, NULL, 0, NULL, 0);
-			_wmakepath_s(szLocalVM, _MAX_PATH, drive, dir, szVMPath, NULL);
-		}
-
-		if (_waccess(szLocalVM, 0) == 0)
+		if (GetVmLocalPath(szVmFilename, szLocalVM, _MAX_PATH))
 		{
 			hr = LoadAndCreateVM(pVMCLSID, szLocalVM, iid, ppiDolphin);
 			if (SUCCEEDED(hr))
@@ -89,9 +92,9 @@ HRESULT __stdcall CreateVM(CLSCTX clsContext, const CLSID* pVMCLSID, LPCWSTR psz
 
 	if (hr == REGDB_E_CLASSNOTREG)
 	{
-		hr = LoadAndCreateVM(pVMCLSID, szVMPath, iid, ppiDolphin);
+		hr = LoadAndCreateVM(pVMCLSID, szVmFilename, iid, ppiDolphin);
 		if (FAILED(hr))
-			hr = ErrorVMNotRegistered(REGDB_E_CLASSNOTREG, szVMPath);
+			hr = ErrorVMNotRegistered(REGDB_E_CLASSNOTREG, szVmFilename);
 	}
 
 	return hr;

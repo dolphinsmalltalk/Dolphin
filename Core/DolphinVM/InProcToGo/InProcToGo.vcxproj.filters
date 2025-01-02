@@ -2,17 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\InProcStart.cpp" />
-    <ClCompile Include="dlldatax.c" />
-    <ClCompile Include="InProcPlugHole.cpp" />
-    <ClCompile Include="InProcStub.cpp" />
     <ClCompile Include="InProcStub_p.c" />
+    <ClCompile Include="..\InProcStub\InProcPlugHole.cpp" />
+    <ClCompile Include="..\InProcStub\InProcStub.cpp" />
+    <ClCompile Include="InProcStub_i.c" />
+    <ClCompile Include="..\IDolphinStart.cpp" />
+    <ClCompile Include="..\startToGoVm.cpp" />
+    <ClCompile Include="dlldatax.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dlldatax.h" />
-    <ClInclude Include="InProcPlugHole.h" />
     <ClInclude Include="InProcStub.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="..\InProcStub\VMModule.h" />
+    <ClInclude Include="dlldatax.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IPToGo.rc" />

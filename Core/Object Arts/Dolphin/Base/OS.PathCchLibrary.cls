@@ -6,7 +6,17 @@ External.DynamicLinkLibrary
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'PATHCCH_MAX_CCH' -> 16r8000 }!
+	classConstants: {
+			'PATHCCH_ALLOW_LONG_PATHS' -> 16r1.
+			'PATHCCH_CANONICALIZE_SLASHES' -> 16r40.
+			'PATHCCH_DO_NOT_NORMALIZE_SEGMENTS' -> 16r8.
+			'PATHCCH_ENSURE_IS_EXTENDED_LENGTH_PATH' -> 16r10.
+			'PATHCCH_ENSURE_TRAILING_SLASH' -> 16r20.
+			'PATHCCH_FORCE_DISABLE_LONG_NAME_PROCESS' -> 16r4.
+			'PATHCCH_FORCE_ENABLE_LONG_NAME_PROCESS' -> 16r2.
+			'PATHCCH_MAX_CCH' -> 16r8000.
+			'PATHCCH_NONE' -> 16r0
+		}!
 
 OS.PathCchLibrary guid: (Core.GUID fromString: '{fef67ac9-c054-4034-859d-92ec9eae8407}')!
 

@@ -614,7 +614,7 @@ attributesEx: aString
 canonicalizePath: aString
 	"Converts the path <String> argument into a canonical form, removing any embedded '..' and '.' components, and adding a long path prefix if required."
 
-	^PathCch pathCanonicalize: aString dwFlags: PATHCCH_ALLOW_LONG_PATHS!
+	^PathCch pathCanonicalize: aString dwFlags: PathCchLibrary.PATHCCH_ALLOW_LONG_PATHS!
 
 commonPrefixOf: pathString1 and: pathString2
 	"Answer the <readableString> common prefix shared between the two paths.
@@ -647,7 +647,7 @@ composePath: pathString subPath: subpathString
 	^PathCch
 		pathCombine: pathString
 		pszMore: subpathString
-		dwFlags: PATHCCH_ALLOW_LONG_PATHS!
+		dwFlags: PathCchLibrary.PATHCCH_ALLOW_LONG_PATHS!
 
 composeShortStem: aStemString extension: anExtensionString 
 	"Answer a String which is a file name abbreviated from aStemString and anExtensionString.

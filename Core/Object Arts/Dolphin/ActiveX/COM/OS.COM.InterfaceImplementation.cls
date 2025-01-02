@@ -121,6 +121,11 @@ OS.COM.InterfaceImplementation methodProtocol: #COMObject attributes: #(#readOnl
 
 !OS.COM.InterfaceImplementation class methodsFor!
 
+classesRootKey
+	^AdvApi32 isRunningElevated
+		ifTrue: [RegKey classesRoot]
+		ifFalse: [RegKey userRoot at: 'Software\Classes']!
+
 clsid
 	"Answer the CLSID which identifies the receiver's server class in the registry.
 	Valid subclasses can be created which do not implement this method, but they will
@@ -204,10 +209,8 @@ registerClassFactory
 	^ClassFactory on: self!
 
 registerComServer
-	"Make the necessary registry entries to expose the receiver as a COM object which can be used by
-	other applications. Registry entries for both in-process and out-of-process use are created if the 
-	necessary components are present. This (along with #unregister) provides the necessary mechanism 
-	for self-registration."
+	"Make the necessary registry entries to expose the receiver as a COM object which can be used by other applications. Registry entries for both in-process and out-of-process use are created if the 
+	necessary components are present. This (along with #unregisterComServer) provides the necessary mechanism for self-registration."
 
 	| sesh |
 	sesh := SessionManager current.
@@ -222,29 +225,30 @@ registerComServer
 							CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER]])!
 
 registerComServer: anInteger
-	"Make the necessary registry entries to expose the receiver as a COM object which can be used by
-	other applications for serving objects with the specified class creation context flags."
+	"Make the necessary registry entries to expose the receiver as a COM object which can be used by other applications for serving objects with the specified class creation context flags.
+	Note that if the host process is running elevated then the registration is machine wide, otherwise for the current user only."
 
-	| desc clsid pid clsidKey |
+	| desc clsid pid clsidKey classesRoot |
+	classesRoot := self classesRootKey.
 	clsid := self clsid asString.
 	desc := self progDescription.
 	pid := self progID.
 	"First the ProgID to CLSID mappings (if ProgId available)"
-	pid notNil 
+	pid notNil
 		ifTrue: 
 			[| vipid pidKey vipidKey |
 			vipid := self versionIndependentProgID.
-			pidKey := RegKey classesRoot createKey: pid.
+			pidKey := classesRoot createKey: pid.
 			pidKey value: desc.
 			pidKey at: 'CLSID' put: clsid.
-			vipidKey := RegKey classesRoot createKey: vipid.
+			vipidKey := classesRoot createKey: vipid.
 			vipidKey
 				value: desc;
 				at: 'CLSID' put: clsid;
 				at: 'CurVer' put: pid].
 
 	"Then the CLSID to server .EXE/.DLL mappings."
-	clsidKey := (RegKey classesRoot at: 'CLSID') createKey: clsid.
+	clsidKey := (classesRoot at: 'CLSID') createKey: clsid.
 	clsidKey value: desc.
 	pid notNil ifTrue: [clsidKey at: 'ProgID' put: pid].
 	(anInteger allMask: CLSCTX_LOCAL_SERVER) ifTrue: [self registerAsLocalServer: clsidKey].
@@ -281,15 +285,17 @@ unregisterClassFactory
 	^ClassFactory unregister: self!
 
 unregisterComServer
-	"Tidy away the residue of a previous #register from the Windows registration database."
+	"Tidy away the residue of a previous #registerComServer from the Windows Registry."
 
+	| classesRoot |
+	classesRoot := self classesRootKey.
 	self progID
 		ifNotNil: 
 			[:pid |
-			RegKey classesRoot
+			classesRoot
 				removeKey: pid ifAbsent: nil;
 				removeKey: self versionIndependentProgID ifAbsent: nil].
-	(RegKey classesRoot at: 'CLSID') removeKey: self clsid asString ifAbsent: nil!
+	(classesRoot at: 'CLSID') removeKey: self clsid asString ifAbsent: nil!
 
 versionIndependentProgID
 	"Answer the receiver's version independent programmatic ID, typically used from 
@@ -302,6 +308,7 @@ versionIndependentProgID
 	^pid copyFrom: 1 to: (pid lastIndexOf: $.)-1! !
 
 !OS.COM.InterfaceImplementation class categoriesForMethods!
+classesRootKey!helpers!private! !
 clsid!constants!public! !
 inprocSurrogate:!constants!public! !
 new!instance creation!public! !

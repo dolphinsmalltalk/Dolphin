@@ -34,4 +34,4 @@
 #define TERM_SEG	_TEXTSEG2(XTerm)		// Terminating
 #define DEBUG_SEG	_TEXTSEG2(XDebug)	// Debug support
 
-#define ATL_SEG		_TEXTSEG2(AXHOST)	// Use default code seg?
+//#define ATL_SEG		_TEXTSEG2(AXHOST)	// Use default code seg?

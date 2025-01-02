@@ -14,6 +14,7 @@
 IDolphin* GetVM();
 
 _COM_SMARTPTR_TYPEDEF(ICompiler, __uuidof(ICompiler));
+
 typedef HRESULT (STDAPICALLTYPE *GETCLASSOBJPROC)(REFCLSID rclsid, REFIID riid, LPVOID* ppv);
 
 static HINSTANCE LoadCompiler()

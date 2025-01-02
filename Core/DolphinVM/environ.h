@@ -40,12 +40,12 @@
 	#define _WIN32_IE 0x0500	// Target IE 5.0 or later.
 	#endif
 
-	// Define some things for ATL, in case there is any in this project
+	//// Define some things for ATL, in case there is any in this project
 
-	#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
+	//#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
 
-	// turns off ATL's hiding of some common and often safely ignored warning messages
-	#define _ATL_ALL_WARNINGS
+	//// turns off ATL's hiding of some common and often safely ignored warning messages
+	//#define _ATL_ALL_WARNINGS
 
 	//#pragma warning ( disable : 4244 4514 4201 )
 	// 4705 statement has no effect

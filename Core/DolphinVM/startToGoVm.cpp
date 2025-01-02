@@ -7,11 +7,7 @@
 #include "startVM.h"
 #include "DolphinSmalltalk.h"
 #include "VMExcept.h"
-
-/////////////////////////////////////////////////////////////////////////////
-// Globals
-
-CComModule _Module;
+#include "VMModule.h"
 
 /////////////////////////////////////////////////////////////////////
 
@@ -19,12 +15,10 @@ CComModule _Module;
 
 HRESULT __stdcall CreateVM(CLSCTX, const CLSID*, LPCWSTR, const IID& iid, void** ppiDolphin)
 {
-	HRESULT hr;
-
-	CComObject<CDolphinSmalltalk>* pDolphin;
-	hr = CComObject<CDolphinSmalltalk>::CreateInstance(&pDolphin);
-	if (FAILED(hr))
-		return ErrorUnableToCreateVM(hr);
+	DolphinSmalltalk* pDolphin = new DolphinSmalltalk();
+	if (!pDolphin) {
+		return E_OUTOFMEMORY;
+	}
 
 	return pDolphin->QueryInterface(iid, ppiDolphin);
 }
@@ -34,11 +28,9 @@ HRESULT __stdcall CheckVmVersion(IDolphinStart* piDolphin, ImageFileResource ima
 	return S_OK;
 }
 
-extern HMODULE GetModuleContaining(LPCVOID pFunc);
-
 HINSTANCE GetApplicationInstance()
 {
-	return GetModuleContaining(GetApplicationInstance);
+	return Module::GetHModuleContaining(GetApplicationInstance);
 }
 
 #endif

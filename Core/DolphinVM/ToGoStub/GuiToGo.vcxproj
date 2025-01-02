@@ -247,6 +247,9 @@
     <ClCompile Include="..\GUIStub\stub.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\IDolphinStart.cpp" />
+    <ClCompile Include="..\startApp.cpp" />
+    <ClCompile Include="..\startToGoVm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="togo.def" />

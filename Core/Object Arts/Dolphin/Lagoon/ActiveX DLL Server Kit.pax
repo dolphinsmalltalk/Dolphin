@@ -3,34 +3,25 @@ package := Package name: 'ActiveX DLL Server Kit'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X In-Process Server Deployment Kit 
-Copyright (c) Object Arts Ltd, 2001-2002.
+Copyright (c) Object Arts Ltd, 2001-2025.
 
-This package provides the necessary image stripping and session framework to allow Active-X/COM components written in Dolphin to be deployed as DLLs (i.e. in-process servers).
+This package provides the an image stripper for deploying Active-X/COM components written in Dolphin as DLLs (i.e. in-process servers).
 
-In order to deploy an in-process Active-X DLL you will also need the in-proc Dolphin stub, IPDolphin.DLL. Then select your COM component package in the Package Browser and choose to deploy it to an executable. Select the AXDllImageStripper, and choose between AXDllSessionManager for non-visual components, and AXDllGUISessionManager for components with visual elements.
-
-In-proc COM components can be tested in the full Dolphin IDE when hosted by any client executable (e.g. the VB development environment or a compiled VB app). In order to set this up it is necessary to send the #register message to one''s COMInterfaceImp subclass (the one that implements the COM component) whilst running a development session. COMInterfaceImp class>>register will make the necessary entries in the registry to use IPDolphin.DLL as a surrogate component, and adds additional entries so that the surrogate can later identify the development image to load.You should then be able to start the client executable or development environment (such as VB) and when an instance of the component is requested, the surrogate will be loaded by COM and it will in turn load the development image into that process and the normal development tools will appear just as they were when the image was last saved. One can then debug and make changes as normal, but one must be careful to save the image so that changes are not lost should the host executable be terminated abrubtly.
-'.
+In order to deploy an in-process Active-X DLL you will also need the in-proc Dolphin stub, IPDolphin.DLL. Then select your COM component package in the Package Browser and choose to deploy it to an executable. Select the AXDllImageStripper, and choose between AXDllSessionManager for non-visual components, and AXDllGUISessionManager for components with visual elements.'.
 
 package basicPackageVersion: '6.1'.
 
 package basicScriptAt: #preinstall put: 'Win32Errors at: ''CLASS_E_CLASSNOTAVAILABLE'' put: -16r7FFBFEEF!!'.
 
 package setClassNames: #(
-	#{Kernel.AXDllSessionManager}
-	#{Kernel.IIPDolphin}
-	#{Kernel.IIPPlugHole}
-	#{Kernel.IPDolphin}
 	#{Smalltalk.AXDllImageStripper}
-	#{UI.AXDllGUISessionManager}
 ).
 
 package setPrerequisites: #(
 	'..\ActiveX\Automation\ActiveX Automation'
-	'..\IDE\Base\Development System'
+	'ActiveX DLL Server'
 	'..\Base\Dolphin'
 	'..\System\Win32\MessageBox\Dolphin Message Box'
-	'..\MVP\Base\Dolphin MVP Base'
 	'Lagoon Image Stripper'
 	'..\ActiveX\COM\OLE COM'
 ).
@@ -46,46 +37,6 @@ package!
 ImageStripper
 	subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'
-	classVariableNames: ''
-	imports: #(#{OS.COM private})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.COM.InterfaceImplementation
-	subclass: #'Kernel.IPDolphin'
-	instanceVariableNames: 'plugHole coclasses'
-	classVariableNames: 'Current'
-	imports: #(#{OS.COM private})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.SessionManager
-	subclass: #'Kernel.AXDllSessionManager'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.GUISessionManager
-	subclass: #'UI.AXDllGUISessionManager'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.COM.IUnknown
-	subclass: #'Kernel.IIPDolphin'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.COM.IUnknown
-	subclass: #'Kernel.IIPPlugHole'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
