@@ -273,7 +273,7 @@ exit
 	self exit: 0!
 
 exit: anInteger
-	"Request to close down the session with the specified exit code (user may cancel)."
+	"Request to close down the session with the specified exit code. Effectively this sends #onQuit: via the message queue."
 
 	self inputState postQuit: anInteger!
 
@@ -627,13 +627,13 @@ onQueryWindowsShutdown
 
 	self quit: 0!
 
-onQuit: anInteger 
+onQuit: anInteger
 	"Handle a request to exit - the argument is the exit code.
 	This message is normally sent from the InputState message pump.
 	The request may be aborted if #queryEndSession: answers false."
 
 	self trigger: #quitSessionRequested.
-	self queryEndSession ifTrue: [self quit: anInteger]!
+	(self queryEndSession: anInteger >= 0) ifTrue: [self quit: anInteger]!
 
 onStartup: args
 	"Initialize the receiver immediately following system startup.
@@ -826,17 +826,14 @@ productRegistryKey
 
 	^'Software\' , self productName!
 
-queryEndSession
-	"Fire off an event to enquire of observers whether they object to the end of this session.
-	If any observer does, then it must set the boolean value argument to the event to false."
-
-	"Implementation Note: We are using an Association here to avoid creating a base-system
-	dependency on ValueHolder, and therefore the Value Models package."
+queryEndSession: aBoolean
+	"Fire off an event to inform observers that the session is about to end. If the `Boolean` argument is true, then the session termination can be cancelled by any of the observers. An observer wishing to cancel the shutdown should set the boolean value of the `ProceedValue` event argument to false, although this will be ignored if the shutdown is not cancellable."
 
 	| okToQuit |
-	okToQuit := nil -> true.
+	okToQuit := ProceedValue new.
+	okToQuit isCancellable: aBoolean.
 	self trigger: #queryEndSession: with: okToQuit.
-	^okToQuit value!
+	^aBoolean not or: [okToQuit value]!
 
 quit
 	"Force a close down of the session with the default exit code (0)"
@@ -1219,7 +1216,7 @@ primQuit:!operations-shutdown!private! !
 primSnapshot:backup:type:maxObjects:!operations-saving!private! !
 productName!accessing-version!public! !
 productRegistryKey!accessing!product!public! !
-queryEndSession!event handling!public! !
+queryEndSession:!event handling!public! !
 quit!operations-shutdown!public! !
 quit:!operations-shutdown!private! !
 registerConsoleCtrlHandler!operations!private! !

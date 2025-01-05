@@ -115,14 +115,10 @@ OnShutdown
 		nextPutAll: 'OnShutdown: Exiting Dolphin image ';
 		print: self fileName;
 		cr.
-	self session queryEndSession.
 	self pullPlug.
 
-	"To avoid locking up the calling thread we must perform the actual VM exit after this call has returned,
-	so post a non-cancellable quit (exit codes < 1 do not cause dev. session manager to prompt)."
-	self traceStream
-		nextPutAll: 'OnShutdown: Posting quit message';
-		cr.
+	"To avoid locking up the calling thread we must perform the actual VM exit after this call has returned, so post a quit.
+	The negative exit code prevents a development session manager from allowing the user to cancel."
 	self session exit: -1.
 	^S_OK!
 

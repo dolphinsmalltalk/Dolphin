@@ -20,10 +20,16 @@ axWinInit
 	"Initialize the AX host window stuff."
 
 	<stdcall: bool AtlAxWinInit>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+loadFlags
+	"Private - Includes VM folder in search"
+
+	^LOAD_LIBRARY_SEARCH_DEFAULT_DIRS! !
 
 !UI.AXHostLibrary categoriesForMethods!
 axWinInit!initializing!public! !
+loadFlags!constants!private! !
 !
 
 !UI.AXHostLibrary class methodsFor!

@@ -36,6 +36,11 @@ directFunction: sciThis msg: msg wpParam: wParam lpParam: lpParam
 	<stdcall: intptr Scintilla_DirectFunction handle uint32 void* void*>
 	^self invalidCall: _failureCode!
 
+loadFlags
+	"Private - Includes VM folder in search"
+
+	^LOAD_LIBRARY_SEARCH_DEFAULT_DIRS!
+
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver.
 	The arguments than can be inserted into the string are:
@@ -54,6 +59,7 @@ directFunction:msg:wParam:lParam:!operations!private! !
 directFunction:msg:wParam:lpParam:!operations!private! !
 directFunction:msg:wpParam:lParam:!operations!private! !
 directFunction:msg:wpParam:lpParam:!operations!private! !
+loadFlags!constants!private! !
 versionFormatString!constants!private! !
 !
 

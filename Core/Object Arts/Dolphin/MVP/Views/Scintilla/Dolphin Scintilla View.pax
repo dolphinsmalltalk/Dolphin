@@ -1641,6 +1641,7 @@ Core.Object
 								16r997 -> #copyLine.
 								16r9A5 -> #duplicateSelection.
 								16r9D6 -> #deleteToEndOfWord.
+								16r9D7 -> #basicCopySelectionOrLine.
 								16rA3B -> #centerCurrentLine.
 								16rA3C -> #moveSelectedLinesUp.
 								16rA3D -> #moveSelectedLinesDown.
@@ -1648,6 +1649,9 @@ Core.Object
 								16rA45 -> #scrollToEnd.
 								16rA5C -> #moveToVcStartOfDisplayLine.
 								16rA5D -> #extendToStartOfVcDisplayLine.
+								16rAFA -> #basicCutSelectionOrLine.
+								16rAFD -> #indentLines.
+								16rAFE -> #unindentLines.
 								16rBB9 -> #startRecording.
 								16rBBA -> #stopRecording
 							}).

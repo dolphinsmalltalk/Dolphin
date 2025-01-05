@@ -1457,8 +1457,21 @@ Kernel.SharedPool
 			'KLF_SUBSTITUTE_OK' -> 16r2.
 			'LF_FACESIZE' -> 16r20.
 			'LF_FULLFACESIZE' -> 16r40.
+			'LOAD_IGNORE_CODE_AUTHZ_LEVEL' -> 16r10.
 			'LOAD_LIBRARY_AS_DATAFILE' -> 16r2.
+			'LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE' -> 16r40.
 			'LOAD_LIBRARY_AS_IMAGE_RESOURCE' -> 16r20.
+			'LOAD_LIBRARY_OS_INTEGRITY_CONTINUITY' -> 16r8000.
+			'LOAD_LIBRARY_REQUIRE_SIGNED_TARGET' -> 16r80.
+			'LOAD_LIBRARY_SAFE_CURRENT_DIRS' -> 16r2000.
+			'LOAD_LIBRARY_SEARCH_APPLICATION_DIR' -> 16r200.
+			'LOAD_LIBRARY_SEARCH_DEFAULT_DIRS' -> 16r1000.
+			'LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR' -> 16r100.
+			'LOAD_LIBRARY_SEARCH_SYSTEM32' -> 16r800.
+			'LOAD_LIBRARY_SEARCH_SYSTEM32_NO_FORWARDER' -> 16r4000.
+			'LOAD_LIBRARY_SEARCH_USER_DIRS' -> 16r400.
+			'LOAD_PACKAGED_LIBRARY' -> 16r4.
+			'LOAD_WITH_ALTERED_SEARCH_PATH' -> 16r8.
 			'LOGPIXELSX' -> 16r58.
 			'LOGPIXELSY' -> 16r5A.
 			'LPSTR_TEXTCALLBACK' -> -16r1.
@@ -2965,6 +2978,14 @@ Core.Object
 	classConstants: {}!
 
 Core.Object
+	subclass: #'Core.ProceedValue'
+	instanceVariableNames: 'value canCancel'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
 	subclass: #'Kernel.ProcessorScheduler'
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
 	classVariableNames: 'ConstWriteSignal InterruptSelectors'
@@ -4028,6 +4049,14 @@ External.DynamicLinkLibrary
 	classConstants: {}!
 
 External.DynamicLinkLibrary
+	subclass: #'OS.NTLibrary'
+	instanceVariableNames: 'isWine'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.DynamicLinkLibrary
 	subclass: #'OS.PathCchLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4108,14 +4137,6 @@ External.PermanentLibrary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'LongPathPrefix' -> '\\?\' }!
-
-External.PermanentLibrary
-	subclass: #'OS.NTLibrary'
-	instanceVariableNames: 'isWine'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 External.PermanentLibrary
 	subclass: #'OS.UserLibrary'

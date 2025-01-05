@@ -323,7 +323,6 @@
       <Filter>Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\heap.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\regkey.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ComClassFactory.h">
       <Filter>App Support</Filter>
     </ClInclude>
@@ -331,6 +330,9 @@
       <Filter>App Support</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ComObject.h">
+      <Filter>App Support</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\regkey.h">
       <Filter>App Support</Filter>
     </ClInclude>
   </ItemGroup>

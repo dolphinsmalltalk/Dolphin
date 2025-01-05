@@ -14,6 +14,15 @@ Core.Tests.FileTest comment: ''!
 
 !Core.Tests.FileTest methodsFor!
 
+buildTestFilenameOfLength: anInteger
+	| maxPath |
+	maxPath := String writeStream.
+	0 to: anInteger - 5 do: [:i | maxPath nextPut: ('abcdefgh' at: i % 8 + 1)].
+	maxPath := maxPath contents.
+	maxPath := maxPath , '.txt'.
+	self assert: maxPath size equals: anInteger.
+	^maxPath!
+
 buildTestPathOfLength: anInteger
 	| maxPath |
 	maxPath := String writeStream.
@@ -96,6 +105,13 @@ deleteDirectory: aString
 
 deleteTestDirectories
 	File deleteDirectory: 'c:\FileTest1\'!
+
+longFilenamesEnabled
+	"Answer whether long filenames are enabled in the host OS. Note that changes to the reg value do not take effect until after a reboot, so this is not conclusive."
+
+	| fs |
+	fs := OS.RegKey localMachineRoot at: 'SYSTEM\CurrentControlSet\Control\FileSystem'.
+	^(fs valueAt: 'LongPathsEnabled' ifAbsent: [0]) ~~ 0!
 
 maxFname
 	^_MAX_FNAME!
@@ -406,6 +422,16 @@ testCreateDirectoryPath
 	File createDirectoryPath: path.
 	self assert: (File isDirectory: path)]
 			ensure: [File deleteDirectory: tempDir]!
+
+testCreateFileWithLongName
+	<skipUnless: #longFilenamesEnabled>
+	| tempDir tmpFile file |
+	tempDir := File createTemporaryDirectory.
+	tmpFile := tempDir , '\' , (self buildTestFilenameOfLength: MAX_PATH - 5).
+	self assert: tmpFile size > MAX_PATH.
+	file := File open: tmpFile mode: #create.
+	self assert: file pathName equals: '\\?\', tmpFile.
+	file close!
 
 testCreateTemporaryDirectory
 	| tempDir tempDir2 |
@@ -857,10 +883,12 @@ testSplitStemFrom
 	self assert: (File splitStemFrom: path) equals: ((path copyFrom: 4) upTo: $.)! !
 
 !Core.Tests.FileTest categoriesForMethods!
+buildTestFilenameOfLength:!private! !
 buildTestPathOfLength:!helpers!private! !
 createTestDirectories!helpers!private! !
 deleteDirectory:!helpers!public! !
 deleteTestDirectories!private!Running! !
+longFilenamesEnabled!helpers!private! !
 maxFname!constants!private! !
 printFilenameOfLength:on:!helpers!private! !
 relativePathOf:to:!helpers!public! !
@@ -875,6 +903,7 @@ testClassRelativePathOfTo!public!unit tests! !
 testCommonPrefixOfAnd!public!unit tests! !
 testComposePath!public!unit tests! !
 testCreateDirectoryPath!public!unit tests! !
+testCreateFileWithLongName!public!unit tests! !
 testCreateTemporaryDirectory!public!unit tests! !
 testDeleteDirectory!public!unit tests! !
 testFileNotFound!public!unit tests! !

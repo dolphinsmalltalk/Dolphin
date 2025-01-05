@@ -33,6 +33,16 @@ addAtom: aString
 	<stdcall: uint16 AddAtomW lpwstr>
 	^self invalidCall: _failureCode!
 
+addDllDirectory: newDirectory
+	"Invoke the AddDllDirectory() function of the module wrapped by the receiver.
+	Helpstring: Adds a directory to the process DLL search path.
+
+		DLL_DIRECTORY_COOKIE __stdcall AddDllDirectory(
+			LPCWSTR NewDirectory);"
+
+	<stdcall: uintptr AddDllDirectory lpwstr>
+	^self invalidCall: _failureCode!
+
 allocConsole
 	"Invoke the AllocConsole() function of the module wrapped by the receiver.
 	Helpstring: Allocates a new console for the calling process.
@@ -605,7 +615,13 @@ freeConsole
 	<stdcall: bool FreeConsole>
 	^self invalidCall: _failureCode!
 
-freeLibrary: anExternalHandle
+freeLibrary: hLibModule
+	"Invoke the FreeLibrary() function of the module wrapped by the receiver.
+	Helpstring: Free a DLL
+
+		BOOL __stdcall FreeLibrary(
+			HMODULE hLibModule);"
+
 	<stdcall: bool FreeLibrary handle>
 	^self invalidCall: _failureCode!
 
@@ -1005,25 +1021,31 @@ getModuleFilename: aLibOrHandle
 	[buf := Utf16String newFixed: bufSize.
 	ret := self
 				getModuleFileName: aLibOrHandle asParameter
-				lpFilename: buf
+				lpFileName: buf
 				nSize: bufSize + 1.
 	bufSize + 1 == ret and: [self getLastError == ERROR_INSUFFICIENT_BUFFER]]
 			whileTrue: [bufSize := bufSize bitShift: 1].
 	^buf resize: ret!
 
-getModuleFileName: aHandle lpFilename: aString nSize: anInteger
-	"Retrieve the full path and filename for the executable file containing the specified module.
+getModuleFileName: hmodule lpFileName: lpFileName nSize: nSize
+	"Invoke the GetModuleFileName() function of the module wrapped by the receiver.
+	Helpstring: Get full path name of a module from its handle
 
-		DWORD GetModuleFileName(
-  			HMODULE  hModule,		// handle to module to find filename for 
-			LPWSTR  lpFilename,	// pointer to buffer for module path 
-			DWORD  nSize 			// size of buffer, in characters 
-		);"
+		DWORD __stdcall GetModuleFileName(
+			HMODULE HMODULE,
+			LPWSTR lpFileName,
+			DWORD nSize);"
 
 	<stdcall: uint32 GetModuleFileNameW handle lpwstr uint32>
 	^self invalidCall: _failureCode!
 
-getModuleHandle: aString
+getModuleHandle: lpModuleName
+	"Invoke the GetModuleHandle() function of the module wrapped by the receiver.
+	Helpstring: Get the handle of a module from its name
+
+		HMODULE __stdcall GetModuleHandle(
+			LPWSTR lpModuleName);"
+
 	<stdcall: handle GetModuleHandleW lpwstr>
 	^self invalidCall: _failureCode!
 
@@ -1544,18 +1566,14 @@ lcMapString: locale dwMapFlags: dwMapFlags lpScrStr: lpSrcStr cchSrc: cchSrc lpD
 	<stdcall: int32 LCMapStringW int32 uint32 lpwstr int32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
-loadLibraryEx: aString hFile: reserved dwFlags: anInteger
-	"Map the specified executable module into the address space of the calling process, and answer the module
-	handle. If the function fails, the return value is nil.
+loadLibraryEx: lpLibFileName hFile: hFile dwFlags: dwFlags
+	"Invoke the LoadLibraryEx() function of the module wrapped by the receiver.
+	Helpstring: Maps a specified executable module into the address space of the calling process
 
-		HINSTANCE LoadLibraryEx(
-			LPCWSTR lpLibFileName,	// points to name of executable module
-			HANDLE hFile,	// reserved, must be NULL 
-			DWORD dwFlags 	// entry-point execution flag 
-		);
-	
-	The library is loaded from either the directory from which Dolphin was loaded, the current directory, 
-	the Windows system directory, the Windows directory, or a directory on the path (in that order)."
+		HMODULE __stdcall LoadLibraryEx(
+			LPWSTR lpLibFileName,
+			HANDLE hFile,
+			DWORD dwFlags);"
 
 	<stdcall: handle LoadLibraryExW lpwstr handle uint32>
 	^self invalidCall: _failureCode!
@@ -1775,6 +1793,16 @@ releaseMutex: hMutex
 
 removeDirectory: aStringFileName
 	<stdcall: bool RemoveDirectoryW lpwstr>
+	^self invalidCall: _failureCode!
+
+removeDllDirectory: cookie
+	"Invoke the RemoveDllDirectory() function of the module wrapped by the receiver.
+	Helpstring: Removes a directory that was added to the process DLL search path by using AddDllDirectory.
+
+		BOOL __stdcall RemoveDllDirectory(
+			DLL_DIRECTORY_COOKIE Cookie);"
+
+	<stdcall: bool RemoveDllDirectory uintptr>
 	^self invalidCall: _failureCode!
 
 resetEvent: hEvent
@@ -2128,6 +2156,7 @@ zeroMemory: pvDest length: cBytes
 
 !OS.KernelLibrary categoriesForMethods!
 addAtom:!public!win32 functions-atom! !
+addDllDirectory:!**auto generated**!public!win32 functions-library loader! !
 allocConsole!**auto generated**!public!win32 functions-console! !
 attachConsole:!**auto generated**!public!win32 functions-console! !
 beep:dwDuration:!public!win32 functions-error! !
@@ -2173,7 +2202,7 @@ flushFileBuffers:!public!win32 functions-file management! !
 formatMessage:lpSource:dwMessageId:dwLanguageId:lpBuffer:nSize:arguments:!public!win32 functions-error! !
 formatMessage:source:flags:withArguments:!helpers!public! !
 freeConsole!**auto generated**!public!win32 functions-console! !
-freeLibrary:!public!win32 functions-dynamic link library! !
+freeLibrary:!**auto generated**!public!win32 functions-library loader! !
 getACP!**auto generated**!public!win32 functions-national language support! !
 getAtomName:!public!win32 functions-atom! !
 getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
@@ -2208,12 +2237,12 @@ getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language 
 getLocaleInfo:string:!public!win32 functions-national language support! !
 getLocaleInfoEx:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
 getLocalTime:!public!win32 functions-date and time! !
-getModuleFilename:!public!win32 functions-dynamic link library! !
-getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
-getModuleHandle:!public!win32 functions-dynamic link library! !
+getModuleFilename:!public!win32 functions-library loader! !
+getModuleFileName:lpFileName:nSize:!**auto generated**!public!win32 functions-library loader! !
+getModuleHandle:!**auto generated**!public!win32 functions-library loader! !
 getNumberFormat:dwFlags:lpValue:lpFormat:lpNumberStr:cchNumber:!**auto generated**!public!win32 functions-national language support! !
-getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
-getProcAddressUIntPtr:lpProcName:!public!win32 functions-dynamic link library! !
+getProcAddress:lpProcName:!public!win32 functions-library loader! !
+getProcAddressUIntPtr:lpProcName:!public!win32 functions-library loader! !
 getProcessHeap!public!win32 functions-memory management! !
 getShortPathName:!public!win32 functions-file management! !
 getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file management! !
@@ -2264,7 +2293,7 @@ isWindowsXPOrGreater!public!win32 functions-version helpers! !
 isWow64!public!win32 functions-system information! !
 isWow64Process:wow64Process:!public!win32 functions-system information! !
 lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
-loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
+loadLibraryEx:hFile:dwFlags:!**auto generated**!public!win32 functions-library loader! !
 loadResource:hResInfo:!public!win32 functions-resource! !
 localeNameToLCID:dwFlags:!public!win32 functions-national language support! !
 localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
@@ -2284,6 +2313,7 @@ raiseException:dwExceptionFlags:nNumberOfArguments:lpArguments:!**auto generated
 readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file management! !
 releaseMutex:!**auto generated**!public!win32 functions-synchronization! !
 removeDirectory:!public!win32 functions-file management! !
+removeDllDirectory:!**auto generated**!public!win32 functions-library loader! !
 resetEvent:!**auto generated**!public!win32 functions-synchronization! !
 setConsoleCP:!**auto generated**!public!win32 functions-console! !
 setConsoleCtrlHandler:add:!public!win32 functions-console! !

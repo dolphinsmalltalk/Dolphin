@@ -409,7 +409,7 @@ Graphics.VirtualColor
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.PermanentLibrary
+External.DynamicLinkLibrary
 	subclass: #'OS.GDILibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''

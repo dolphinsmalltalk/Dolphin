@@ -120,6 +120,9 @@
       <ProgramDatabaseFile />
       <IgnoreSpecificDefaultLibraries>rpcndr</IgnoreSpecificDefaultLibraries>
     </Link>
+    <Manifest>
+      <AdditionalManifestFiles>IPDolphin.dll.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
     <CustomBuildStep>
@@ -179,6 +182,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <MapExports>true</MapExports>
     </Link>
+    <Manifest>
+      <AdditionalManifestFiles>IPDolphin.dll.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <CustomBuildStep>
@@ -239,6 +245,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <MapExports>true</MapExports>
     </Link>
+    <Manifest>
+      <AdditionalManifestFiles>IPDolphin.dll.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\ComModule.cpp">
@@ -303,12 +312,16 @@
   <ItemGroup>
     <ClInclude Include="..\ComObject.h" />
     <ClInclude Include="..\InProcPlugHole.h" />
+    <ClInclude Include="..\InProcStart.h" />
     <ClInclude Include="..\ist.h" />
     <ClInclude Include="..\regkey.h" />
     <ClInclude Include="dlldatax.h" />
     <ClInclude Include="InProcModule.h" />
     <ClInclude Include="InProcStub.h" />
     <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="IPDolphin.dll.manifest" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

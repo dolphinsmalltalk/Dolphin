@@ -33,6 +33,9 @@ contents
 		add: #('Core\Object Arts\Dolphin\IDE\Professional\Dolphin Professional Tools.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Lagoon Image Stripper.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Application Deployment Kit.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\Lagoon\ActiveX DLL Server Core.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\Lagoon\ActiveX DLL Server.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\Lagoon\ActiveX DLL Server (GUI).pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\ActiveX DLL Server Kit.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Console Application Kit.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Dolphin File System Info.pax' #encrypted #imageBased);

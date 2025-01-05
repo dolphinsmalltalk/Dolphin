@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PermanentLibrary
+External.DynamicLinkLibrary
 	subclass: #'OS.NTLibrary'
 	instanceVariableNames: 'isWine'
 	classVariableNames: ''

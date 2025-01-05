@@ -12,7 +12,7 @@ External.PermanentLibrary guid: (Core.GUID fromString: '{87b4c583-026e-11d3-9fd7
 
 External.PermanentLibrary isNonInstantiable: true!
 
-External.PermanentLibrary comment: 'PermanentLibrary is the class of <ExternalLibrary>s which are expected to remain permanently open in order for the system to continue functioning. The set of permanent libraries includes all of the basic Win32 system DLLs, the C runtime library, and the Virtual Machine itself. In addition these are not opened lazily to avoid the overhead when accessing the default instance.'!
+External.PermanentLibrary comment: '`PermanentLibrary` is the class of `ExternalLibrary`s which are expected to remain permanently open in order for the system to continue functioning, and/or to avoid some sequencing issues initializing the system on system. The set of permanent libraries includes a minimal set of the basic Win32 system DLLs (Kernel32 and User32), the C runtime library, and the Virtual Machine itself.'!
 
 !External.PermanentLibrary categoriesForClass!External-Libraries! !
 
@@ -67,12 +67,13 @@ onStartup
 	self allSubclassesDo: [:s | s == KernelLibrary ifFalse: [s clear]]!
 
 onStartup2
-	"Private - Perform system startup processing for all subclasses.
-	Implementation Note: The permanent libraries must be cleared down
-	before they are re-opened, otherwise invalid function addresses
-	may get called."
+	"Private - Perform system startup processing for all subclasses. PermanentLibrary subclasses have a default instance that is always opened on startup."
 
-	self allSubclassesDo: [:c | c openDefault]! !
+	"Implementation Note: The permanent libraries must be cleared down before they are re-opened, otherwise invalid function addresses may get called."
+
+	self allSubclassesDo: [:c | c openDefault].
+	"Add VM folder to DLL search path for libraries that specify LOAD_LIBRARY_SEARCH_DEFAULT_DIRS/LOAD_LIBRARY_SEARCH_USER_DIRS in #loadFlags"
+	Kernel32 addDllDirectory: (File splitPathFrom: VM fileName)! !
 
 !External.PermanentLibrary class categoriesForMethods!
 clear!initializing!private! !

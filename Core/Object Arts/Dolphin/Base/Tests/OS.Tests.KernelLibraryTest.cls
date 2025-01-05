@@ -79,7 +79,7 @@ testGetModuleFilename
 	lib := ResourceLibrary open: 'notepad.exe'.
 	self assertNotNil: lib asParameter.
 	self assert: (Kernel32 getModuleFilename: lib) equals: ''.
-	lib close.
+	self assert: lib close.
 	"Now test with increasingly long paths including some interesting boundary cases of the APIs. We do this by copying a convenient DLL to a temporary directory and giving it a long name."
 	dir := File createTemporaryDirectory.
 	maxComponent := self maxPathComponentLength: (dir copyFrom: 1 to: 3).
@@ -111,7 +111,7 @@ testGetModuleFilename
 				lib := DynamicLinkLibrary open: path.
 				moduleFilename := Kernel32 getModuleFilename: lib.
 				self assert: moduleFilename equals: path.
-				lib close]]
+				self assert: lib close]]
 			ensure: 
 				[lib isNil ifFalse: [lib free].
 				File deleteDirectory: dir]!

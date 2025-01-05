@@ -24,7 +24,7 @@ _descriptionArguments
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
-	^'''%4'' - %3'!
+	^'%3 - ''%4'''!
 
 file
 	"Answer the receiver's file instance var."

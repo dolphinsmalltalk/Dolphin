@@ -1,11 +1,5 @@
 ﻿OS.COM.TypeLibraryAnalyzer {
 	#generationFlags : 128,
-	#binding : VariableBinding {
-		#key : #Examples,
-		#value : Class [ #OS.COM.Examples ],
-		#environment : Class [ #COM ],
-		#flags : 0
-	},
 	#attributes : OS.COM.TLIBATTR {
 		#bytes : ByteArray [ '2fea2c0ec4e6d211833b0020afab8efe00000000010000000100010008000000' ]
 	},

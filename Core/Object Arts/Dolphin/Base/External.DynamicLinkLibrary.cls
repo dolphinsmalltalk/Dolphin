@@ -10,115 +10,92 @@ Core.Object
 
 External.DynamicLinkLibrary guid: (Core.GUID fromString: '{87b4c488-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-External.DynamicLinkLibrary comment: '`DynamicLinkLibrary` is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of <External.ExternalMethod>) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an InvalidExternalCall exception being raised (assuming the #invalidCall method has not been overridden).
+External.DynamicLinkLibrary comment: '`DynamicLinkLibrary` is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of `External.ExternalMethod`) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an 	`InvalidExternalCall` exception being raised (assuming the `invalidCall:` method has not been overridden).
 
-Dynamic-link library classes are typically singletons, with the instances representing an "open" (usable) instance of the DLL. The singleton instances are accessible through the class #default method. The libraries are loaded lazily, on demand (but see <External.PermanentLibrary>).
+Dynamic-link library classes are typically singletons, with the instances representing an "open" (usable) instance of the DLL. The singleton instances are accessible through the class `default` method. The libraries are loaded lazily, on demand (but see `External.PermanentLibrary`). In Dolphin 8, the default instances are typically assigned a global name, e.g. the default instance of `OS.GDILibrary` is named `OS.Gdi32`, so it is no longer to use the `GDILibrary default` expression to call one of its functions. The framework arranges (via the services of `External.DynamicLinkLibraryStub`) to lazily open the global instance when required.
 
 The external call primitive supports the two most commonly used calling conventions:
 
-	__declspec(cdecl)	- #stdcall
-	__declspec(stdcall)	- #cdecl
+	`__declspec(cdecl)`	- `cdecl:`
+	`__declspec(stdcall)`	- `stdcall:`
 
-The "fastcall" calling convention is not currently supported, but this is rarely (if ever) used for exported functions. The C++ "thiscall" calling convention (which passes the ''this'' pointer in the ECX register) is not supported either, but invoking virtual methods of C++ objects (and therefore COM interface methods) is possible - see IUnknown and its subclasses in the "OLE COM" package.
+The "fastcall" calling convention is not currently supported, but this is rarely (if ever) used for exported functions. The C++ "thiscall" calling convention (which passes the ''this'' pointer in the ECX register) is not supported either, but invoking virtual methods of C++ objects (and therefore COM interface methods) is possible - see `IUnknown` and its subclasses in the "OLE COM" package.
 
 Apart from scalar types, the primitive also supports the passing and returning of structures by value, up to a maximum of 64Kb per structure (though passing such large structures by value is not recommended).
 
 The argument/return types (and coercions) supported are:
 
-	void 	Only valid as a return type - the method answers self
-	lpvoid 	General pointer type, accepts byte objects e.g. Strings (pointer to contents 
-		passed), nil (null pointer), integers (passes as address), or ExternalAddresses
-		(the contained address is passed, not a pointer to the ExternalAddress object). 
-		When used as a return type, the method answers an instance of ExternalAddress.
-	lppvoid	Pointer to pointer. Used for functions which take a parameter into which they write
-		an address. The corresponding argument must be an ExternalAddress (or other indirection
-		object), or an object whose first instance variable is such (e.g. an ExternalStructure).
-		The address of the ExternalAddress itself is passed, so that on return it contains the
-		address written back by the external function. nil is not a valid argument value.
-		As a return type answers a pointer instance of LPVOID (i.e. LPVOID* = void**).
-	char	Signed character. Accepts Characters only.
-	byte	Unsigned byte. Accepts SmallIntegers only. Passes a 32-bit value
-		generated by zero extending the least significant byte. Fails if  not in the
-		range 0..255. Zero extends into a positive SmallInteger when a return value.
-	sbyte	Signed byte. Accepts SmallIntegers only. Passes a 32-bit value generated
-		by sign extending the least significant byte. Fails if not in range -128..127.
-		Sign extends into a positive or negative SmallInteger when a return value.
-	word 	Unsigned word. As #byte, but 16-bit, acceptable range 0..65535.
-		Also accepts a byte object of size 2, which is zero extended to 32-bits.
-	sword 	Signed word. As #sbyte, but 16-bit, acceptable range -32768..32767.
-		Also accepts a byte object of size 2, which is sign extended to 32-bits.
-	dword	Unsigned double word (32-bits), accepts 32-bit Integers. Positive integers
-		are passed as unsigned, and negative integers in their two''s complement
-		representation.  The largest LargeNegativeInteger which can be passsed
-		is -16r80000000 (or -2147483648) because this is the largest negative number 
-		which can be represented in 32-bits in two''s complement notation.
-		Also accepts byte objects of length 4, assumed to be in an unsigned bit representation.
-		nil is passed as 0. As a return type, answers a SmallInteger, or a LargePositiveInteger if the
-		result cannot be represented as a positive SmallInteger (i.e. in 30 bits).
-	sdword	Signed double word, accepts any Integer in the range -16r80000000..16r7FFFFFFF
-		(i.e. Integer''s with a 32-bit two''s complement representation - all SmallIntegers, 
-		some 4-byte LargePositiveIntegers and LargeNegativeIntegers). May also be other
-		byte objects of length 4, which are assumed to contain a 2''s complement 32-bit number.
-		As a return type answers a SmallInteger, or if more than 31-bits are required 
-		to represent the two''s complement result, a LargePositiveInteger or LargeNegativeInteger 
-		depending on sign. Also accepts nil (passed as 0).
-	qword	Unsigned quad word. Similar to dword, but 64-bit (i.e. the range is -16r8000000000000000,
-		the largest 64-bit two''s complement negative integer, up to 16rFFFFFFFFFFFFFFF the largest positive 
-		unsigned 64-bit integer). 8-byte objects are acceptable and assumed to contain the correct unsigned
-		bit representation. nil is passed as 0.
-	sqword	Signed quad word. Accepts any Integer in the range which can be represented as a
-		two''s complement number in 64 bits (i.e. -16r8000000000000000 to 16r7FFFFFFFFFFFFFFF).
-		Also accepts 8 byte objects, which are assumed to contain 64-bit two''s complement numbers. 
-		nil is passed as 0. As a return type answers the smallest Integer form which can contain 
-		the 64-bit two''s complement integer.
-	bool	Boolean. As an argument type, accepts true (translated to 1) or false
-		(translated to 0). Also accepts SmallInteger values, pushing their host
-		machine representation. As a return type, if the result is 0 answers false,
-		if the result is non-zero, answers true.
-	handle	32-bit handle. Accepts 32-bit integers, nil, or a byte object of size 4. 
-		As a return type, answers an ExternalHandle, unless the
-		returned handle is NULL, in which case answers ''nil''.
-	double	64-bit floating point. Accepts instances of class Float (which contains
-		a host machine representation of a double precision floating point number). 
-		SmallIntegers may also be passed (they are promoted to the double precision
-		floating point representation of their integral value). As a return type,
-		answers an instance of class Float.
-	lpstr	Pointer to C (null-terminated) ASCII string type. Accepts null terminated byte 
-		objects (e.g. Strings, Symbols) or nil (null pointer). When used as a return type, 
-		answers a String containing the characters of the C string up to the null terminator. 
-		Unlike lpvoid, does not accept integer values as pointers, or ExternalAddress 
-		(indirection) objects. If the validation is too tight for your requirements, then 
-		use lpvoid. Do not use this return type where an external function is called which 
-		expects the caller to assume ownership of the returned string, and to delete it when 
-		it is no longer required, as a memory leak will result (use lpvoid instead).
-	oop	Object identifier. Any non-SmallInteger can be passed. The value should
-		be treated as an opaque Handle, and should not be stored for later use (it
-		may change during a GC). As a return type, answers the object whose Oop is 
-		the result. At present it is recommended that you do not use this type.
-	float	32-bit floating point. Accepts instances of class Float, or SmallIntegers
-		(as #double). The conversion of Floats (64-bit double precision) to #float 
-		(32-bit single precision) may result in silent loss of precision. As a return
-		type answers an instance of class Float (i.e. promotes to double precision).
-	hresult	32-bit signed integer value. Validation as #sdword. As a return type, if less than
-		0 (i.e. severity is error), causes the external call primitives to fail with a negative 
-		failure reason which is the HRESULT value. This is convenient because it means an
-		exception is automatically generated when an external function returns an HRESULT error.
-	<N>	Where N is the byte size of a pass-by-value structure of unspecified type. Accepts either
-		byte objects (of the correct size) or ExternalStructure instances with the correct byteSize
-		(or other classes with the same shape as ExternalStructures). ExternalStructures passed
-		to such arguments can be reference instances (i.e. ones containing a pointer to the actual
-		structure bytes, rather than the structure bytes themselves). As a return type, the result
-		is a ByteArray of the specified size.
-	<struct>	Where <struct> is an ExternalStructure class name. Structure passed by value. Accepts 
-		only the exact matching structure class. Again, the ExternalStructure arguments may be
-		reference/pointer instances. When used as a return value, an instance of the 
-		ExternalStructure class is answered, with the bytes of the returned structure as its contents
-		(copied into a ByteArray).
-	<struct>*	Where <struct> is an ExternalStructure class name. When used as a return type, a pointer
-		instance of the ExternalStructure is answered, with an ExternalAddress pointing at the
-		externally stored value as its first instance variable.
+  `void` - Nothing
+	Only valid as a return type - the method answers self
+  `lpvoid` - Generic pointer type.
+	Accepts byte objects e.g. Strings (pointer to contents passed), nil (null pointer), integers (passes as address), or ExternalAddresses (the contained address is passed, not a pointer to the `External.Address` object). When used as a return type, the method answers an instance of `External.Address`.
+  `char` - Signed character. 
+	Accepts `Character`s only.
+  `uint8` - Unsigned byte. 
+	Accepts `SmallInteger`s only. Passes a 32-bit value generated by zero extending the least significant byte. Fails if  not in the range 0..255. Zero extends into a positive SmallInteger when a return value.
+  `int8` - Signed byte. 
+	Accepts `SmallInteger`s only. Passes a 32-bit value generated by sign extending the least significant byte. Fails if not in range -128..127. Sign extends into a positive or negative SmallInteger when a return value.
+  `uint16`  - Unsigned 16-bit integer. 
+	As `uint8`, but 16-bit, acceptable range 0..65535. Also accepts a byte object of size 2, which is zero extended to 32-bits.
+  `int16` - Signed 16-bit integer.
+	As `int8`, but 16-bit, acceptable range -32768..32767. Also accepts a byte object of size 2, which is sign extended to 32-bits.
+  `uint32` - Unsigned 32-bit integer.
+	Accepts 32-bit Integers. Positive integers are passed as unsigned, and negative integers in their two''s complement representation.  The largest negative `LargeInteger` which can be passsed is -16r80000000 (or -2147483648) because this is the largest negative number which can be represented in 32-bits in two''s complement notation. Also accepts byte objects of length 4, assumed to be in an unsigned bit representation. nil is passed as 0. As a return type, answers a SmallInteger, or a positive `LargeInteger` if the result cannot be represented as a positive `SmallInteger` (i.e. in 30 bits).
+  `int32` - Signed 32-bit integer
+	Accepts any Integer in the range -16r80000000..16r7FFFFFFF (i.e. `Integer`s with a 32-bit two''s complement representation - all `SmallInteger`s, some 4-byte `LargeInteger`s). May also be other 		byte objects of length 4, which are assumed to contain a 2''s complement 32-bit number. 	As a return type answers a `SmallInteger`, or if more than 31-bits are required to represent the two''s complement result, a `LargeInteger`. Also accepts `nil` (passed as 0).
+  `bool` - Boolean value.
+	As an argument type, accepts `true` (translated to 1) or `false` (translated to 0). Also accepts `SmallInteger` values, pushing their host machine representation. As a return type, if the result is 0 answers `false`, if the result is non-zero, answers `true`.
+  `handle` - uintptr sized handle. 
+	Accepts 32-bit integers, nil, or a byte object of size 4. As a return type, answers an `External.Handle`, unless the returned handle is NULL, in which case answers `nil`.
+  `double`	64-bit IEEE double-precision floating point.
+	Accepts instances of class `Float` (which contain a host machine representation of a double precision floating point number). `SmallInteger`s and a limited range of `LargeInteger`s may also be passed (they are promoted to the double precision floating point representation of their integral value). As a return type, answers an instance of class `Float`.
+  `lpstr` Pointer to C (null-terminated) ASCII string type. 
+	Accepts null terminated byte objects (e.g. `String`s, `Symbol`s) or `nil` (null pointer). When used as a return type, answers a `String` containing the characters of the C string up to the null terminator. Unlike lpvoid, does not accept integer values as pointers, or `External.Address` (indirection) objects. If the validation is too tight for your requirements, then use `lpvoid`. Do not use this return type where an external function is called which expects the caller to assume ownership of the returned string, and to delete it when it is no longer required, as a memory leak will result (use `lpvoid` instead and remember to delete the memory appropriately).
+  `oop` Object identifier. 
+	Any non-SmallInteger can be passed. The value should be treated as an opaque handle, and should not be stored for later use (it may change during a GC). As a return type, answers the object whose Oop is the result. It is recommended that you do not use this type. 
+  `float` - 32-bit floating point. 
+	Accepts instances of class `Float`, or `SmallInteger`s (as `double`). The conversion of `Float`s (64-bit double precision) to `float` (32-bit single precision) may result in silent loss of precision. As a return type answers an instance of class `Float` (i.e. promotes to double precision).
+  `lppvoid` - Pointer to pointer. 
+	Used for functions which take a parameter into which they write an address. The corresponding argument must be an ExternalAddress (or other indirection object), or an object whose first instance variable is such (e.g. an `External.Structure`). The address of the `External.Address` itself is passed, so that on return it contains the address written back by the external function. `nil` is not a valid argument value. As a return type answers a pointer instance of `LPVOID` (i.e. LPVOID* = void**).
+  `hresult` - 32-bit signed integer value. 
+	Validation as `int32`. As a return type, if less than 0 (i.e. severity is error), causes the external call primitives to fail with a negative failure reason which is the HRESULT value. This is convenient because it means an 	exception is automatically generated when an external function returns an HRESULT error.
+  `lpwstr` - Pointer to C null-terminated) Utf-16 string.
+	Similar to `lpstr`, but for strings with `wchar_t` elements. Accepts any type of `String`, coercing as necessary to Utf-16. Returns `Utf16String`s. 
+  `uint64` - Unsigned 64-bit integer. 
+	Similar to `uint32`, but 64-bit (i.e. the range is -16r8000000000000000, the largest 64-bit two''s complement negative integer, up to 16rFFFFFFFFFFFFFFF the largest positive unsigned 64-bit integer). 8-byte objects are acceptable and assumed to contain the correct unsigned bit representation. nil is passed as 0.
+  `int64` - Signed 64-bit integer. 
+	Accepts any `Integer` in the range which can be represented as a two''s complement number in 64 bits (i.e. -16r8000000000000000 to 16r7FFFFFFFFFFFFFFF). Also accepts 8 byte objects, which are assumed to contain 64-bit two''s complement numbers. `nil` is passed as 0. As a return type answers the smallest `Integer` form which can contain the 64-bit two''s complement integer.
+  `ote` - Do not use.
+  `bstr` - OLE Automation strings (BSTRs). 
+	These are counted length strings managed by the OLE Automation library functions. See `BSTR`.
+  `variant` - OLE Automation VARIANT.
+	See `VARIANT`.
+  `date` - OLE Automation DATE (double representation of a timestamp).
+  `varbool` - OLE Automation boolean. Unusual in that the true value is -1, otherwise as `bool`.
+  `guid` - See `GUID`.
+  `uintptr` - Pointer-sized unsigned integer (i.e. 32-bits in 32-bit Dolphin).
+  `intptr` - Pointer-sized signed integer (i.e. 32-bits in 32-bit Dolphin).
+  `nstatus` - Alias for `hresult`.
+  `errno` - 32-bit integer error number
+	Behaves as `uint32`, but intended for use with APIs that return non-zero error indicators. When such a function returns a non-zero value, the FFI call primitive fails _after_ the invocation. The library''s `invalidCall:` implementation is then expected to translate the error to an exception. As with `hresult` this is intended to allow for more fluid use of such APIs without the need to sprinkle error checks everywhere.
+  `bool8` - 8-bit boolean
+	As `bool`, but masks out all but the bottom 8 bits of 32-bit call/return values.
+  `char32` - Utf-32 character
+	Accepts `Character`s only, passing the full Unicode character code point value. Likewise on return the full 32-bit integer return value is used to construct a `Character`.
+  `char16` - Utf-16 code unit
+	Accepts BMP `Character`s only. On return constructs a `Character` from 16-bits of the integer return value, which may create a surrogate character.
+  `char8` - Utf-8 code unit.
+	Accepts single Utf-8 code-unit `Character`s only. On return constructs a `Character` from 8-bits of the integer return value, which may create a surrogate character.
+  `lpstr8` - Pointer to C null-terminated) Utf-8 string.
+	As `lpstr`, but assumes Utf-8 encoded byte strings rather than current ANSI code page.
+`<N>` - Binary data of unspecified type passed by value, where N is the byte size.
+	Accepts either byte objects (of the correct size) or `External.Structure` instances with the correct `byteSize` (or other classes with the same shape as `External.Structure`). `External.Structure`s passed to such arguments can be reference instances (i.e. ones containing a pointer to the actual structure bytes, rather than the structure bytes themselves). As a return type, the result is a `ByteArray` of the specified size.
+`<struct>` - Structure passed  by value, where <struct> is an `External.Structure` class.
+	Accepts only the exact matching structure class. Again, the ExternalStructure arguments may be reference/pointer instances. When used as a return value, an instance of the `External.Structure` class is answered, with the bytes of the returned structure as its contents (copied into a `ByteArray`).
+`<struct>*` - Structure passed by reference, where <struct> is an `External.Structure` class.
+	When used as a return type, a pointer instance of the `External.Structure` is answered, with an `External.Address` pointing at the externally stored value as its first instance variable.
 	
-Note that in general, the UndefinedObject, nil, is interchangeable with 0, or NULL, when interfacing with external library functions. Nullness can be tested with the #isNull message, with the UndefinedObject and SmallInteger zero answering true.'!
+Note that in general, the `UndefinedObject`, `nil`, is interchangeable with `0`, or `NULL`, or `nullptr`, when interfacing with external library functions. Nullness can be tested with the `isNull` message, with the `UndefinedObject` and `SmallInteger` zero answering `true`.'!
 
 !External.DynamicLinkLibrary categoriesForClass!External-Libraries! !
 
@@ -266,6 +243,8 @@ isSelfEvaluating
 	^var notNil and: [self = var valueOrNil]!
 
 loadFlags
+	"Private - Flags passed to [LoadLibraryEx](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexw)."
+
 	^0!
 
 loadString: anIntegerId

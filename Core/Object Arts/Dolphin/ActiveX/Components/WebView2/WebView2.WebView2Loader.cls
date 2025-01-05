@@ -42,7 +42,12 @@ getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder
 
 getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInfo: versionInfo
 	<stdcall: hresult GetAvailableCoreWebView2BrowserVersionString lpwstr lpwstr*>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+loadFlags
+	"Private - Includes VM folder in search"
+
+	^LOAD_LIBRARY_SEARCH_DEFAULT_DIRS! !
 
 !WebView2.WebView2Loader categoriesForMethods!
 compareBrowserVersions:version2:result:!public! !
@@ -50,6 +55,7 @@ createCoreWebView2Environment:!public! !
 createCoreWebView2EnvironmentWithOptions:userDataFolder:environmentOptions:environmentCreatedHandler:!public! !
 getAvailableCoreWebView2BrowserVersionString:!enquiries!public! !
 getAvailableCoreWebView2BrowserVersionString:versionInfo:!public! !
+loadFlags!constants!private! !
 !
 
 !WebView2.WebView2Loader class methodsFor!

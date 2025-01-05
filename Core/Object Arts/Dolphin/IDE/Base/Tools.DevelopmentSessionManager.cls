@@ -292,22 +292,35 @@ onExit
 
 	^super onExit!
 
-onQueryEndSession: aBooleanValue
+onQueryEndSession: aProceedValue
 	"The user has initiated the end of the session, either by shutting down (or logging off of)
 	Window, or by closing the system launcher window. Prompt the user to save the image, and
 	give them the opportunity to abort the shutdown."
 
-	| mb |
+	| mb response |
 	self isEmbedded ifTrue: [^self].
-	mb := MessageBox new.
-	mb beTaskModal.
-	mb
-		headline: 'Exit Dolphin Smalltalk?';
-		customButtons: #(#(#yes '&Save Image') #(#no 'Do&n''t Save'));
-		confirm: 'Saving the image will preserve changes for your next session.'
-			onYes: [self saveImage]
-			onNo: []
-			onCancel: [aBooleanValue value: false]!
+	mb := MessageBox new
+				beTaskModal;
+				headline: 'Exit Dolphin Smalltalk?';
+				customButtons: #(#(#yes '&Save Image') #(#no 'Do&n''t Save'));
+				text: 'Saving the image will preserve changes for your next session.';
+				iconStyle: #prompt;
+				yourself.
+	aProceedValue isCancellable
+		ifTrue: 
+			[mb
+				isCancellable: true;
+				buttonStyle: #yesNoCancel]
+		ifFalse: 
+			[mb
+				isCancellable: false;
+				buttonStyle: #yesNo].
+	response := mb open.
+	response == #cancel
+		ifTrue: [aProceedValue value: false]
+		ifFalse: 
+			[aProceedValue value: true.
+			response == #yes ifTrue: [self saveImage]]!
 
 onQueryWindowsShutdown
 	"The Windows OS is shutting down, save the image and allow shutdown"

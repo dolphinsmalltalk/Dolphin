@@ -21,9 +21,14 @@ r := OS.COM.Examples.IRandomStream2 new.
 r next 	"Debug it (F11)"
 ```
 
-To debug/test the server from another client, first register the component: `OS.COM.Examples.RandomStream registerComServer`
+To debug/test the server from another client, first register the component from your development image:
+ ```
+OS.COM.Examples.RandomStream registerComServer
+```
 
-Now shutdown the development image and start the RandomVBClient.exe found in the package folder. This should launch the Dolphin development image in-proc, i.e. as a DLL (IPDolphin.dll) loaded into the VB process.
+This will register IPDolphin.dll as the in-proc server for the COM component, including an additional regkey that details the path to the development image. IPDolphin uses this to locate and load the standard VM and development image to launch when a client creates an instance of the COM component.
+
+Having registered the sample component for development hosting, shutdown the development image and start the `RandomVBClient.exe` found in the package folder. This should launch the Dolphin development image in-proc into the VB process. Your last saved image state, including any open windows, will be restored as usual. You can now set breakpoints in the methods of the `RandomStream` class (e.g. RandomStream>>#Next:), and debug through the client calls into the component. When you close the VB client, you''ll be prompted to Save the image, but the usual option to cancel will not be available. If you close the development image before the VB client, the latter won''t crash immediately, but pressing any of its buttons will generate an error and it will then shut down.
 
 ## Deployment as DLL:
 
