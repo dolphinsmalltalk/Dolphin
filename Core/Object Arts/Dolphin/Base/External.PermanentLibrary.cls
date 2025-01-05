@@ -27,11 +27,17 @@ close
 	^self ~~ self class default and: [super close]!
 
 isSelfEvaluating
-	^true! !
+	^true!
+
+loadFlags
+	"Private - Only ever load Windows system libraries from %windows%\system32. The VM library is not a system library, but cannot be loaded from the image in any case."
+
+	^LOAD_LIBRARY_SEARCH_SYSTEM32! !
 
 !External.PermanentLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
 isSelfEvaluating!public!testing! !
+loadFlags!constants!private! !
 !
 
 !External.PermanentLibrary class methodsFor!
@@ -57,6 +63,11 @@ default: anExternalLibrary
 	"Set the default instance of the receiver.
 	The 'default' instance of permanent libraries cannot be changed."!
 
+initializeSubclasses
+	"Private - Perform session startup processing for the receiver and its subclasses.
+	The permanent libraries have already been initialized."
+!
+
 onStartup
 	"Private - Perform system startup processing for all subclasses.
 	Implementation Note: The permanent libraries must be cleared down
@@ -80,6 +91,7 @@ clear!initializing!private! !
 closeDefault!private!realizing/unrealizing! !
 default!accessing!public! !
 default:!accessing!public! !
+initializeSubclasses!initializing!private! !
 onStartup!event handling!private! !
 onStartup2!event handling!private! !
 !

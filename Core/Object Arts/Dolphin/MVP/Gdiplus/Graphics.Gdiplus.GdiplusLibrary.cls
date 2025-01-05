@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	instanceVariableNames: 'token'
 	classVariableNames: ''
@@ -7800,7 +7800,7 @@ unmarshalFloats:count:!helpers!private! !
 fileName
 	"Answer the host system file name for the library."
 
-	^'GDIPLUS'
+	^'GdiPlus'
 !
 
 sharedVariableName

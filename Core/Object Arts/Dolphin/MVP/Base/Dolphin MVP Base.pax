@@ -1694,7 +1694,7 @@ UI.DragDropSession
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.DwmApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1702,7 +1702,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: { 'DWMWA_USE_IMMERSIVE_DARK_MODE' -> 16r14 }!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.SHCoreLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1710,7 +1710,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''

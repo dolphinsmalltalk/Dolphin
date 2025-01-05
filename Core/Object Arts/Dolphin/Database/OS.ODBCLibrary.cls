@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ODBCLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -524,10 +524,9 @@ sqlTables:szTableQualifier:cbTableQualifier:szTableOwner:cbTableOwner:szTableNam
 !OS.ODBCLibrary class methodsFor!
 
 fileName
-	"Answer the host system file name of the external library which the 
-	receiver represents"
+	"Answer the host system file name of the external library which the receiver represents"
 
-	^'ODBC32'!
+	^'odbc32'!
 
 onStartup2
 	"Private - Ensure that old external resources are cleared so that they will be re-created."

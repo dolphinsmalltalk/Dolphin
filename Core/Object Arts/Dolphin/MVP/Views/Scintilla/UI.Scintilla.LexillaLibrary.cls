@@ -46,19 +46,13 @@ getLexerNames
 				getLexerName: index
 				name: buf
 				buflength: bufsize.
-			buf trimNulls]!
-
-loadFlags
-	"Private - Includes VM folder in search"
-
-	^LOAD_LIBRARY_SEARCH_DEFAULT_DIRS! !
+			buf trimNulls]! !
 
 !UI.Scintilla.LexillaLibrary categoriesForMethods!
 createLexer:!operations!public! !
 getLexerCount!operations!public! !
 getLexerName:name:buflength:!operations!public! !
 getLexerNames!enquiries!public! !
-loadFlags!constants!private! !
 !
 
 !UI.Scintilla.LexillaLibrary class methodsFor!

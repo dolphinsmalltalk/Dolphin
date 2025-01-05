@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.VersionLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -81,7 +81,7 @@ verQueryValue:lpSubBlock:lplpBuffer:puLen:!private!win32 functions-file installa
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
-	^'Version'
+	^'version'
 ! !
 
 !OS.VersionLibrary class categoriesForMethods!

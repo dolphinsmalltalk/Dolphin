@@ -1276,7 +1276,7 @@ External.UInt32Bytes
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	instanceVariableNames: 'token'
 	classVariableNames: ''

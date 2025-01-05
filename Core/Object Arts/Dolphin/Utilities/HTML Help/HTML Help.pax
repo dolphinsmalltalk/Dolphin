@@ -38,7 +38,7 @@ Kernel.SharedPool
 			'HH_UNINITIALIZE' -> 16r1D
 		}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.HTMLHelpLibrary'
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''

@@ -28,7 +28,7 @@ package!
 
 "Class Definitions"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.BCryptLibrary'
 	instanceVariableNames: 'algorithmHandles'
 	classVariableNames: ''

@@ -180,6 +180,7 @@ package setPrerequisites: #(
 	'..\Views\Common Controls\Dolphin Common Controls'
 	'..\Views\Control Bars\Dolphin Control Bars'
 	'..\Presenters\Prompters\Dolphin In-place Text Editor'
+	'..\..\Base\Deprecated\Dolphin Legacy Package Support'
 	'..\Models\List\Dolphin List Models'
 	'..\Presenters\List\Dolphin List Presenter'
 	'..\Presenters\ListTree\Dolphin List Tree Presenter'
@@ -214,7 +215,7 @@ CommandPolicy subclass: #LegacyCommandPolicy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-ExternalLibrary subclass: #Msimg32Library
+WindowsSystemLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

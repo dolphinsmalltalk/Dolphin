@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.COM.URLMonLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -160,7 +160,7 @@ urlOpenPullStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-inter
 fileName
 	"Answer the host system file name for the library"
 
-	^'URLMON'! !
+	^'urlmon'! !
 
 !OS.COM.URLMonLibrary class categoriesForMethods!
 fileName!constants!public! !

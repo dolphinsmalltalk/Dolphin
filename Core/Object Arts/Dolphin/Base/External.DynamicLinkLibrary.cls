@@ -245,7 +245,7 @@ isSelfEvaluating
 loadFlags
 	"Private - Flags passed to [LoadLibraryEx](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexw)."
 
-	^0!
+	^LOAD_LIBRARY_SEARCH_DEFAULT_DIRS!
 
 loadString: anIntegerId
 	"Answer the string with the specified id from the receiver's resources."
@@ -416,7 +416,10 @@ initializeSubclasses
 	We open the permanent libraries first to make the startup more robust in case of
 	errors opening other libraries."
 
-	self subclassesDo: [:c | c == PermanentLibrary ifFalse: [c onStartup2]]!
+	self subclassesDo: 
+			[:c |
+			c isNonInstantiable ifFalse: [c onStartup2].
+			c initializeSubclasses]!
 
 load: aString flags: anInteger
 	"Private - Open the external library with the external file name, aString,
@@ -448,10 +451,13 @@ onPreStripImage
 onStartup
 	"Private - Perform session startup processing for the receiver and its subclasses."
 
+	"First clear away stale module handles and cached proc addresses from the external methods of all libraries."
 	self allSubclassesBreadthFirstDo: [:each | each clear].
-	"If we don't have a handle for the Kernel32.DLL then we can't open any other libraries"
+	"If we don't have a handle for the Kernel32.DLL then we can't call LoadLibraryEx to open any other libraries."
 	KernelLibrary openDefault.
+	"Now we can open the few other permanent libraries such as the CRT"
 	PermanentLibrary onStartup2.
+	"Initialize all the lazily opened libraries, installing DynamicLinkLibrary stubs for any assigned to shared variables."
 	self initializeSubclasses!
 
 onStartup2

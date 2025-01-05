@@ -268,7 +268,7 @@ Kernel.Namespace
 			'MaxCacheResponseSize' -> 16r0
 		}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'WinHttpServer.HttpApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''

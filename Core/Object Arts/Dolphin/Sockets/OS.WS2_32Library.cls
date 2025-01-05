@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
@@ -980,10 +980,9 @@ wsaStartup:lpWSAData:!public!win32 functions-sockets library! !
 !OS.WS2_32Library class methodsFor!
 
 fileName
-	"Answer the host system file name of the external library which the 
-	receiver represents"
+	"Answer the host system file name of the external library which the receiver represents"
 
-	^'WS2_32'!
+	^'ws2_32'!
 
 sharedVariableName
 	^#{Ws2_32}! !

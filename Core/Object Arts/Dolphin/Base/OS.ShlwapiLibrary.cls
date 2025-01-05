@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ShlwapiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -77,7 +77,7 @@ pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!public!win32 functions-pat
 fileName
 	"Answer the host system file name for the library"
 
-	^'SHLWAPI'!
+	^'shlwapi'!
 
 sharedVariableName
 	^#{OS.Shlwapi}! !

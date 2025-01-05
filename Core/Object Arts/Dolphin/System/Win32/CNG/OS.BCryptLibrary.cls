@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.BCryptLibrary'
 	instanceVariableNames: 'algorithmHandles'
 	classVariableNames: ''

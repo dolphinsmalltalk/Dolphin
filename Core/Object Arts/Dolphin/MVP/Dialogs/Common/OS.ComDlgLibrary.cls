@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ComDlgLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -89,7 +89,7 @@ systemError!exceptions!public! !
 fileName
 	"Answer the host system file name for the library"
 
-	^'COMDLG32'!
+	^'comdlg32'!
 
 sharedVariableName
 	^#{ComDlg32}! !

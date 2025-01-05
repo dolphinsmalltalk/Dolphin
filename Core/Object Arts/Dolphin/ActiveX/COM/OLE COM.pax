@@ -241,7 +241,7 @@ External.Memory
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.COM.OLEAutLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -249,7 +249,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
 	classVariableNames: ''

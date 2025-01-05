@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.CommCtrlLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'InitFlags'
@@ -54,7 +54,7 @@ closeDefault
 fileName
 	"Answer the host system file name for the library."
 
-	^'COMCTL32'!
+	^'comctl32'!
 
 initFlags
 	^InitFlags ifNil: [InitFlags := 0]!

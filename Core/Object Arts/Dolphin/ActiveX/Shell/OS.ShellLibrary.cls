@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ShellLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -229,7 +229,7 @@ shGetStockIconInfo:uFlags:psii:!**auto generated**!public!win32 functions-shell 
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
-	^'Shell32'!
+	^'shell32'!
 
 sharedVariableName
 	^#{Shell32}! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.GDILibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1343,7 +1343,7 @@ fileName
 	"Answer the host system file name of the external library which the 
 	receiver represents"
 
-	^'GDI32'!
+	^'gdi32'!
 
 sharedVariableName
 	^#{Gdi32}! !

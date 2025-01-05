@@ -252,7 +252,7 @@ Core.SequenceableCollection
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ShellLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''

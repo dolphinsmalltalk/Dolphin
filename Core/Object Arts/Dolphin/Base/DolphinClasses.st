@@ -3965,6 +3965,78 @@ Kernel.CompiledMethod
 		}!
 
 External.DynamicLinkLibrary
+	subclass: #'Kernel.CompilerLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.DynamicLinkLibrary
+	subclass: #'External.PermanentLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.DynamicLinkLibrary
+	subclass: #'External.ResourceLibrary'
+	instanceVariableNames: 'fileName loadFlags'
+	classVariableNames: 'Libraries'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.DynamicLinkLibrary
+	subclass: #'External.WindowsSystemLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.PermanentLibrary
+	subclass: #'OS.CRTLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.PermanentLibrary
+	subclass: #'OS.KernelLibrary'
+	instanceVariableNames: ''
+	classVariableNames: 'EnumNamesDescriptor WinVerOrGreaterMask'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'LongPathPrefix' -> '\\?\' }!
+
+External.PermanentLibrary
+	subclass: #'OS.UserLibrary'
+	instanceVariableNames: ''
+	classVariableNames: 'DesiredDpiAwarenessContext SystemDpiAwareness'
+	imports: #(#{OS.MessageBoxConstants private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.PermanentLibrary
+	subclass: #'Kernel.VMLibrary'
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
+	classVariableNames: 'Registry RegistryKeys'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.CRTLibrary
+	subclass: #'OS.CRTLibraryNonBlocking'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
 	subclass: #'OS.AdvApiLibrary'
 	instanceVariableNames: 'isRunningElevated'
 	classVariableNames: ''
@@ -4032,15 +4104,7 @@ External.DynamicLinkLibrary
 			'TokenVirtualizationEnabled' -> 16r18
 		}!
 
-External.DynamicLinkLibrary
-	subclass: #'Kernel.CompilerLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ICULibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4048,7 +4112,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.NTLibrary'
 	instanceVariableNames: 'isWine'
 	classVariableNames: ''
@@ -4056,7 +4120,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.PathCchLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4074,23 +4138,7 @@ External.DynamicLinkLibrary
 			'PATHCCH_NONE' -> 16r0
 		}!
 
-External.DynamicLinkLibrary
-	subclass: #'External.PermanentLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.DynamicLinkLibrary
-	subclass: #'External.ResourceLibrary'
-	instanceVariableNames: 'fileName loadFlags'
-	classVariableNames: 'Libraries'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.RPCLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4098,7 +4146,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ShlwapiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4106,7 +4154,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.VersionLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4114,48 +4162,8 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.WinMMLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.PermanentLibrary
-	subclass: #'OS.CRTLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.PermanentLibrary
-	subclass: #'OS.KernelLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'EnumNamesDescriptor WinVerOrGreaterMask'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { 'LongPathPrefix' -> '\\?\' }!
-
-External.PermanentLibrary
-	subclass: #'OS.UserLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'DesiredDpiAwarenessContext SystemDpiAwareness'
-	imports: #(#{OS.MessageBoxConstants private})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.PermanentLibrary
-	subclass: #'Kernel.VMLibrary'
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
-	classVariableNames: 'Registry RegistryKeys'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.CRTLibrary
-	subclass: #'OS.CRTLibraryNonBlocking'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

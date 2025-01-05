@@ -1948,7 +1948,7 @@ Database.DBVarFieldBuffer
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ODBCLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''

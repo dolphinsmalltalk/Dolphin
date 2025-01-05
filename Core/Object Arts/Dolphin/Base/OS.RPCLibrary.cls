@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.RPCLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -100,7 +100,7 @@ uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
 fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
-	^'RPCRT4'!
+	^'rpcrt4'!
 
 sharedVariableName
 	^#{OS.Rpcrt4}! !

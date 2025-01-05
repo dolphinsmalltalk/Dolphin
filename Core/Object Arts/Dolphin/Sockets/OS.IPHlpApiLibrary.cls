@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.IPHlpApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -269,7 +269,7 @@ parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**
 fileName
 	"Answer the host system file name for the library."
 
-	^'iphlpapi'
+	^'IPHLPAPI'
 ! !
 
 !OS.IPHlpApiLibrary class categoriesForMethods!

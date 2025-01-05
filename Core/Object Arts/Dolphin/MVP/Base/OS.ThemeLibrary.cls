@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1265,7 +1265,7 @@ shouldAppsUseDarkMode!public!undocumented dark mode APIs! !
 fileName
 	"Answer the host system file name for the library."
 
-	^'UXTHEME'
+	^'uxtheme'
 !
 
 new

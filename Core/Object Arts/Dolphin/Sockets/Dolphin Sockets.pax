@@ -272,7 +272,7 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.IPHlpApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -280,7 +280,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''

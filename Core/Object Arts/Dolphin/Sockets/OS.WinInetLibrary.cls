@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.WinInetLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -74,7 +74,7 @@ ping:!operations!public! !
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
-	^'WinInet'! !
+	^'wininet'! !
 
 !OS.WinInetLibrary class categoriesForMethods!
 fileName!constants!public! !

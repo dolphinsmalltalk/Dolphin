@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
 	classVariableNames: ''
@@ -313,10 +313,9 @@ uninitialize!private!realizing/unrealizing! !
 !OS.COM.OLELibrary class methodsFor!
 
 fileName
-	"Answer the host system file name of the external library which
-	the receiver represents."
+	"Answer the host system file name of the external library which the receiver represents."
 
-	^'OLE32'!
+	^'ole32'!
 
 sharedVariableName
 	^#{Ole32}! !

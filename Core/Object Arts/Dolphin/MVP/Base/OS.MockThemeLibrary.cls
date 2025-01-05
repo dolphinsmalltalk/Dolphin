@@ -891,3 +891,12 @@ setThemeAppProperties:!public!win32 functions-visual styles! !
 setWindowTheme:pszSubAppName:pszSubIdList:!public!win32 functions-visual styles! !
 !
 
+!OS.MockThemeLibrary class methodsFor!
+
+sharedVariableName
+	^nil! !
+
+!OS.MockThemeLibrary class categoriesForMethods!
+sharedVariableName!constants!private! !
+!
+

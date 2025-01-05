@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.AdvApiLibrary'
 	instanceVariableNames: 'isRunningElevated'
 	classVariableNames: ''
@@ -277,7 +277,7 @@ reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings
 fileName
 	"Answer the host system file name for the library"
 
-	^'ADVAPI32'!
+	^'advapi32'!
 
 sharedVariableName
 	^#{OS.AdvApi32}! !

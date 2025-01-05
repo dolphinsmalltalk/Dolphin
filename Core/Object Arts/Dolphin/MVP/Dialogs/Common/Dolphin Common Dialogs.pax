@@ -154,7 +154,7 @@ Kernel.SharedPool
 			'OFN_SHOWHELP' -> 16r10
 		}!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.ComDlgLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''

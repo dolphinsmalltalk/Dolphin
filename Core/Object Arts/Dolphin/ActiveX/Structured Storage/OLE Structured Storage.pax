@@ -79,7 +79,7 @@ package!
 
 "Class Definitions"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.COM.URLMonLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''

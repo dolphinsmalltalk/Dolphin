@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.WindowsSystemLibrary
 	subclass: #'OS.COM.OLEAutLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -79,10 +79,9 @@ sysStringLen:!Automation Functions-String Manipulation!primitives!public! !
 !OS.COM.OLEAutLibrary class methodsFor!
 
 fileName
-	"Answer the host system file name of the external library which
-	the receiver represents."
+	"Answer the host system file name of the external library which the receiver represents."
 
-	^'OLEAUT32'!
+	^'oleaut32'!
 
 sharedVariableName
 	^#{OleAut32}! !
