@@ -12,24 +12,27 @@ OS.COM.DualInterfaceImplementation guid: (Core.GUID fromString: '{c06f3b7c-0868-
 
 OS.COM.DualInterfaceImplementation isNonInstantiable: true!
 
-OS.COM.DualInterfaceImplementation comment: 'AXDualImp provides a generic implementation of IDispatch for dual interfaces with type information (i.e. a type library). It makes use of ITypeInfo''s ability to invoke the dual part of a dispatch interface when called via the late-bound IDispatch methods.
+OS.COM.DualInterfaceImplementation comment: '`OS.COM.DualInterfaceImplementation` provides a generic implementation of `IDispatch` for dual interfaces with type information (i.e. a type library). It makes use of `ITypeInfo`''s ability to invoke the dual part of a dispatch interface when called via the late-bound IDispatch methods.
 
-AXDualImp implements IDispatch in a very simple and efficient manner, but cannot be used for dispatch only interfaces (dispinterfaces), such as most connection points, or where no type library is available.
+`DualInterfaceImplementation` implements `IDispatch` in a very simple and efficient manner, but cannot be used for dispatch only interfaces (dispinterfaces), such as most connection points, or where no type library is available.
 '!
 
 !OS.COM.DualInterfaceImplementation categoriesForClass!COM-Implementations! !
 
 !OS.COM.DualInterfaceImplementation methodsFor!
 
-GetIDsOfNames: riid rgszNames: rgszNames 
-		cNames: cNames lcid: lcid rgdispid: rgDispid
-	"Implement the IDispatch::GetIDsOfNames() interface function.
-	Implementation Note: We have to remove a level of indirection from the rgszNames array before
-	forwarding, as the VM implicitly indirects void** args."
+finalRelease
+	"The last reference to the receiver (as a COM object) has been released. This is an opportunity to actively clean up, rather than passively waiting for finalization which might is asynchronous and may never happen if the object doesn't become garbage."
+
+	"The primary dual interface will be invalid now"
+	interface := nil!
+
+GetIDsOfNames: riid rgszNames: rgszNames cNames: cNames lcid: lcid rgdispid: rgDispid
+	"Implement the IDispatch::GetIDsOfNames() interface function by using the type library implementation"
 
 	^self typeInfo asParameter
-		GetIDsOfNames: rgszNames value 
-		cNames: cNames 
+		GetIDsOfNames: rgszNames yourAddress
+		cNames: cNames
 		pMemId: rgDispid!
 
 GetTypeInfoCount: count
@@ -43,15 +46,12 @@ GetTypeInfoCount: count
 !
 
 interface
-	"Answer the value of the receiver's 'interface' instance variable."
+	"Private - Answer the receiver's dual COM interface. For internal use only as does not hold a COM reference."
 
-	interface isNil ifTrue: [interface := self queryInterface: self interfaceClass].
-	^interface!
+	^interface ifNil: [interface := self interfaceClass internalOn: self server implementor: self]!
 
-interface: anObject
-	"Private - Set the value of the receiver's ''interface'' instance variable to the argument, anObject."
-
-	interface := anObject!
+interface: anInterface
+	interface := anInterface!
 
 interfaceClass
 	"Answer the interface class which is implemented by the receiver."
@@ -71,42 +71,37 @@ Invoke: dispid  riid: riid lcid: lcid wFlags: wFlags pdispparams: pdispparams pv
 		pExcepInfo: pExcepInfo 
 		puArgErr: puArgErr!
 
-piTypeInfo: anObject
-	"Private - Set the value of the receiver's ''piTypeInfo'' instance variable to the argument, anObject."
-
-	piTypeInfo := anObject!
+piTypeInfo: anITypeInfo
+	piTypeInfo := anITypeInfo!
 
 supportedInterfaces
-	"Answer the set of interface classes supported by the receiver.
-	This is IDispatch plus the IDispatch subclass of the dual interface."
+	"Answer the sequence of interface classes supported by the receiver. This is IDispatch plus the IDispatch subclass of the dual interface."
 
 	^{ IUnknown. IDispatch. self interfaceClass }!
 
 typeInfo
-	"Private - Answer the ITypeInfo we use to actually implement this IDispatch
-	interface."
+	"Private - Answer the ITypeInfo we use to actually implement this IDispatch interface."
 
 	^self typeInfo: locale ifNone: [HRESULTError signalWith: E_FAIL]!
 
-typeInfo: lcid ifNone: exceptionHandler
-	"Private - Answer the ITypeInfo we use to actually implement this IDispatch
-	interface, or if none is available the result of evaluating the <niladicValuable>,
-	exceptionHandler."
+typeInfo: lcidInteger ifNone: aNiladicValuable
+	"Private - Answer the `ITypeInfo` we use to actually implement this `IDispatch` interface, or if none is available the result of evaluating the `<niladicValuable>` 2nd argument."
 
 	piTypeInfo isNull 
 		ifTrue: [
-			locale := lcid.
+			locale := lcidInteger.
 			#todo "Need to ask for particular type info".
-			piTypeInfo := self interfaceClass typeInfoIfNone: [^exceptionHandler value]]
+			piTypeInfo := self interfaceClass typeInfoIfNone: [^aNiladicValuable value]]
 		ifFalse: [
-			(lcid isNull or: [lcid asParameter = locale asParameter])
-				ifFalse: [^exceptionHandler value]].
+			(lcidInteger isNull or: [lcidInteger asParameter = locale asParameter])
+				ifFalse: [^aNiladicValuable value]].
 	^piTypeInfo! !
 
 !OS.COM.DualInterfaceImplementation categoriesForMethods!
+finalRelease!public!realizing/unrealizing! !
 GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
 GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
-interface!accessing!public! !
+interface!accessing!private! !
 interface:!accessing!private! !
 interfaceClass!accessing!public! !
 Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !

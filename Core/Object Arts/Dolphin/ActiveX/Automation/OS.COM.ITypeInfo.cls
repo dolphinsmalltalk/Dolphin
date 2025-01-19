@@ -10,29 +10,29 @@ OS.COM.IUnknown
 
 OS.COM.ITypeInfo guid: (OS.COM.IID fromString: '{00020401-0000-0000-c000-000000000046}')!
 
-OS.COM.ITypeInfo comment: 'ITypeInfo is a COMInterface class which wraps an OLE Automation ITypeInfo interface pointer.
+OS.COM.ITypeInfo comment: '`ITypeInfo` is a `COM.Interface` class which wraps an OLE Automation ITypeInfo interface pointer.
 
 ITypeInfo contains member functions which allow one to enquire about the structure and attributes of individual elements of a Type Library. Unfortunately it is rather poorly factored (much in need of conditional elimination in fact) in that an ITypeInfo can describe any one of the following automation elements:
-	- an enum		that is, an enumerated type.
-	- a struct		(that is, a structure definition)
-	- a module		(?)
-	- an interface 	(that is, an IUnknown derived custom interface)
-	- a dispinterface	(that is, an IDispatch derived Automation interface)
-	- a coclass		(that is, an instantiable component class with a CLSID)
-	- a typedef	(that is, a C style typedef which defines a name for a type)
-	- a union		(that is, a structure definition with variant fields)
+	- an enum		an enumerated type.
+	- a struct			a structure definition
+	- a module		a library/DLL
+	- an interface 		an IUnknown derived custom interface
+	- a dispinterface	an IDispatch derived Automation interface
+	- a coclass		an instantiable component class with a CLSID
+	- a typedef		a C style typedef which defines a name for a type
+	- a union			a structure definition with variant fields
 	
-These types correspond to the members of the TYPEKIND enumeration, respectively:
-	- TYPEKIND_ENUM
-	- TYPEKIND_RECORD
-	- TYPEKIND_MODULE
-	- TYPEKIND_INTERFACE
-	- TYPEKIND_DISPATCH
-	- TYPEKIND_COCLASS
-	- TYPEKIND_ALIAS
-	- TYPEKIND_UNION
+These types correspond to the members of the `TYPEKIND enumeration`, respectively:
+	- `TYPEKIND_ENUM`
+	- `TYPEKIND_RECORD`
+	- `TYPEKIND_MODULE`
+	- `TYPEKIND_INTERFACE`
+	- `TYPEKIND_DISPATCH`
+	- `TYPEKIND_COCLASS`
+	- `TYPEKIND_ALIAS`
+	- `TYPEKIND_UNION`
 
-As an ITypeInfo can describe any of these quite disparate types, it contains a union of all the necessary methods to access all the possible information for each possible type. This makes it rather a large and complex interface, and also means that a number of the methods may not be relevant any individual ITypeInfo instance - one has to do a switch on type(kind) to determine which are relevant. With this in mind we have chosen to provide a separate hierarchy of classes to wrap ITypeInfo - see AXTypeInfoAnalyzer and subclasses.'!
+As an `ITypeInfo` can describe any of these quite disparate types, it contains a union of all the necessary methods to access all the possible information for each possible type. This makes it rather a large and complex interface, and also means that a number of the methods may not be relevant any individual `ITypeInfo` instance - one has to do a switch on type(kind) to determine which are relevant. With this in mind we have chosen to provide a separate hierarchy of classes to wrap `ITypeInfo` - see `OS.COM.TypeInfoAnalyzer` and subclasses.'!
 
 !OS.COM.ITypeInfo categoriesForClass!COM-Interfaces! !
 
@@ -174,22 +174,21 @@ GetFuncDesc: index ppFuncDesc: ppFuncDesc
 	<virtual stdcall: hresult 6 uint32 FUNCDESC**>
 	^self invalidCall: _failureCode!
 
-getIDsOfNames: names
-	"Answer a <sequencedReadableCollection> of the ids of the named
-	members of the receiver."
+getIDsOfNames: aCollectionOfStrings
+	"Answer a `<sequencedReadableCollection>` of the `<integer>` ids of the named members of the type described by the receiver.
+	Note that when GetIDsOfNames is called with more than one name, the first name (rgszNames[0]) corresponds to the member name, and subsequent names correspond to the names of the member's parameters. In other words you cannot use this method to retrieve the names of multiple distinct properties or methods at once. Given that the id's of parameters are probably (a) not set, and (b) not terribly interesting, #idOfName: is likely to be more useful, and faster."
 
 	| rgszNames uNames cNames pMemId hr |
-	uNames := names collect: [:p | p asUtf16String].
-	cNames := names size.
-	rgszNames := UInt32Array new: cNames.
-	uNames keysAndValuesDo: [:i :n | rgszNames at: i put: n yourAddress].
+	uNames := aCollectionOfStrings collect: [:each | each asUtf16String].
+	rgszNames := PointerArray withAll: uNames elementClass: Utf16String.
+	cNames := rgszNames size.
 	pMemId := Int32Array new: cNames.
 	hr := self
 				GetIDsOfNames: rgszNames
 				cNames: cNames
 				pMemId: pMemId.
 	hr < 0 ifTrue: [self hresultError: hr].
-	^pMemId collect: [:m | m]!
+	^pMemId asArray!
 
 GetIDsOfNames: getIDsOfNames cNames: cNames pMemId: pMemId
 	"Private - Invoke the GetIDsOfNames() method of the COM object wrapped by the receiver.
@@ -383,33 +382,31 @@ guid
 
 	^self attributes guid!
 
-idOfName: name
-	"Answer the <integer> DISPID of the member named by the <readableString>
-	argument, name, in the receiver.
-	Implementation Note: Although implementable in terms of #getIDsOfNames:, this
-	is much faster for the common case of looking up a single name."
+idOfName: aString
+	"Answer the `<integer>` DISPID of the member named by the `<readableString>` argument in the receiver. Throw a NotFoundError if the name is not recognised."
 
-	^self idOfName: name ifAbsent: [self errorNotFound: name]!
+	"Implementation Note: Although implementable in terms of #getIDsOfNames:, this is much faster for the common case of looking up a single name."
 
-idOfName: name ifAbsent: exceptionHandler
-	"Answer the <integer> DISPID of the member named by the <readableString>
-	argument, name, in the receiver.
-	Implementation Note: Although implementable in terms of #getIDsOfNames:, this
-	is much faster for the common case of looking up a single name."
+	^self idOfName: aString ifAbsent: [self errorNotFound: aString]!
+
+idOfName: aString ifAbsent: aNiladicValuable
+	"Answer the `<integer>` DISPID of the member named by the `<readableString>` 1st argument in the receiver, or the result of evaluating the <niladicValuable> 2nd argument if the name is not associated with an id."
+
+	"Implementation Note: Although implementable in terms of #getIDsOfNames:, this is much faster for the common case of looking up a single member name."
 
 	| dispId uName hr |
-	dispId := Int32 new.
-	uName := name asUtf16String.
+	dispId := UInt32Bytes new.
+	uName := aString asUtf16String.
 	hr := self
-				GetIDsOfNames: (UInt32Bytes fromInteger: uName yourAddress)
+				GetIDsOfNames: (PointerArray with: uName)
 				cNames: 1
 				pMemId: dispId.
 	^hr < 0
 		ifTrue: 
 			[(hr = DISP_E_UNKNOWNNAME or: [hr = E_NOTIMPL])
-				ifTrue: [exceptionHandler value]
+				ifTrue: [aNiladicValuable value]
 				ifFalse: [self hresultError: hr]]
-		ifFalse: [dispId asInteger]!
+		ifFalse: [dispId asSignedInteger]!
 
 index
 	"Answer the receiver's index in its owning type library."

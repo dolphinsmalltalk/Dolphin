@@ -9,12 +9,63 @@
 ******************************************************************************/
 #pragma once
 
-#if defined(VMDLL) && defined(TO_GO)
-	#error("Project config is incompatible (TO_GO and VM are mutually exclusive)")
+#if defined(USE_VM_DLL) && defined(TO_GO)
+	#error("Project config is incompatible (ToGo apps do not use the VM DLL)")
 #endif
 
-#if defined(VMDLL)
+#ifdef VMDLL
+	// Building main Dolphin VM
+
+	#if defined(TO_GO) || defined(INPROC) || defined(_CONSOLE) || defined(LAUNCHER)
+		#error("Project config is incompatible (VMDLL is incompatible with building deployment stubs/launcher)")
+	#endif
+
 	#define CANSAVEIMAGE 1
+	#define VMINITFLAGS VmInitFlags::VmInitIsDevSys
+#else
+	#ifdef _CONSOLE
+		// Building console stub
+		#ifdef INPROC
+			#error("Project config is incompatible (Inproc stubs are for console and GUI use)")
+		#endif
+
+		#ifdef TO_GO
+			#define VMINITFLAGS (VmInitFlags::VmInitIsConsole | VmInitFlags::VmInitIsToGo)
+		#else
+			#define USE_VM_DLL 1
+			#define VMINITFLAGS VmInitFlags::VmInitIsConsole
+		#endif
+	#else
+		#ifdef INPROC
+			// Building in-proc stub
+			#ifdef TO_GO
+				#define VMINITFLAGS (VmInitFlags::VmInitIsInProc | VmInitFlags::VmInitIsToGo)
+			#else
+				#define USE_VM_DLL 1
+				#define VMINITFLAGS VmInitFlags::VmInitIsInProc
+			#endif
+		#else
+			#ifdef LAUNCHER
+				#ifdef TO_GO
+					#error("Project config is incompatible (Development launcher is not a To Go stub)")
+				#endif
+				#define USE_VM_DLL 1
+				#define	VMINITFLAGS VmInitFlags::VmInitIsDevSys
+			#else
+				// Building GUI stub
+				#ifdef TO_GO
+					#define VMINITFLAGS VmInitFlags::VmInitIsToGo
+				#else
+					#define USE_VM_DLL 1
+					#define VMINITFLAGS VmInitFlags::VmInitNone
+				#endif
+			#endif
+		#endif
+	#endif
+#endif
+
+#if defined(TO_GO) && defined(CANSAVEIMAGE)
+	#error("Project config is incompatible (To Go stubs cannot save images)")
 #endif
 
 // Enable templated overloads for secure version of old-style CRT functions that manipulate buffers but take no size arguments
@@ -26,9 +77,6 @@
 
 // Prevent redefinition of QWORD type in <windns.h>
 #define _WINDNS_INCLUDED_
-
-// Prevent warning of redefinition of WIN32_LEAN_AND_MEAN in atldef.h
-//#define ATL_NO_LEAN_AND_MEAN
 
 #include <float.h>
 #include <io.h>
@@ -109,10 +157,6 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut);
 
 #include <unknwn.h>
 #include "segdefs.h"
-
-#ifdef _CONSOLE
-//#define _ATL_NO_COM_SUPPORT
-#endif
 
 #pragma warning(push,3)
 #include <icu.h>

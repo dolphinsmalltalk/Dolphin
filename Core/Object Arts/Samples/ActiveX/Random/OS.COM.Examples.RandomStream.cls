@@ -72,7 +72,7 @@ initialize
 	stream := RandomLinearCongruential newANSIC!
 
 interfaceClass
-	"Answer the primary dual interface supported by the receiver."
+	"Answer the primary dual interface class supported by the receiver."
 
 	^IRandomStream!
 
@@ -135,7 +135,7 @@ put_UpperBound: value
 supportedInterfaces
 	"Not strictly necessary to specify IRandomStream and IRandomStream2 since the latter is derived from the former, but we want them to be separate instances for testing purposes."
 
-	^{ IUnknown. IDispatch. IRandomStream. IRandomStream2 }! !
+	^##({ IUnknown. IDispatch. IRandomStream. IRandomStream2 })! !
 
 !OS.COM.Examples.RandomStream categoriesForMethods!
 get_Increment:!COM Interfaces-IRandomStream2!private! !

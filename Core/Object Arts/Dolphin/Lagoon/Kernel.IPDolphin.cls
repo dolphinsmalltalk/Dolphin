@@ -28,12 +28,7 @@ Class Variables:
 canUnloadNow
 	"Private - Answer whether it is OK to unload the in-proc. image now."
 
-	ClassFactory lockCount > 0 ifTrue: [^false].
-	#todo.	"Need a neater way to do this - at the moment need to look for COM objects are not the receiver to decide
-			whether should stay up. Need to maintain a count and let those types of object adjust it so that they are 
-			ignored?"
-	ObjectStub registry keysDo: [:e | e ~~ self ifTrue: [^false]].
-	^true!
+	^SessionManager current canUnloadNow!
 
 CanUnloadNow 
 	"Private - Answer whether it is OK to unload the in-proc. image now.
@@ -88,8 +83,11 @@ GetClassObject: rclsid riid: riid ppv: ppv
 initialize
 	self session
 		when: #sessionStarted
-		send: #onStartup
-		to: self!
+			send: #onStartup
+			to: self;
+		when: #sessionStopped
+			send: #onStopped
+			to: self!
 
 OnInitialize
 	"Private - This in-process COM component has just been loaded and is being informed of that fact.
@@ -99,7 +97,8 @@ OnInitialize
 	"
 
 	self traceStream
-		nextPutAll: 'OnInitialize: Started Dolphin image: ';
+		print: self;
+		nextPutAll: ' OnInitialize - Started Dolphin image: ';
 		print: self fileName;
 		cr.
 	^S_OK!
@@ -112,7 +111,8 @@ OnShutdown
 	"
 
 	self traceStream
-		nextPutAll: 'OnShutdown: Exiting Dolphin image ';
+		print: self; 
+		nextPutAll: ' OnShutdown - Initiating exit of Dolphin image ';
 		print: self fileName;
 		cr.
 	self pullPlug.
@@ -140,9 +140,24 @@ onStartup
 					plugHole put_Peer: if.
 					if free]]!
 
+onStopped
+	"Private - Perform any session shutdown actions."
+
+	self traceStream
+		print: self;
+		nextPutAll: ' onStopped - Exiting Dolphin image ';
+		print: self fileName;
+		cr.
+	self pullPlug!
+
 pullPlug
 	"Private - Break the connection with the host."
 
+	plugHole
+		ifNil: 
+			["Already pulled"
+			^self].
+	[plugHole put_Peer: nil] on: HRESULTError do: [:ex | ex toTrace].
 	plugHole free.
 	plugHole := nil!
 
@@ -205,7 +220,7 @@ session
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^{ IUnknown. IIPDolphin }!
+	^##({ IUnknown. IIPDolphin })!
 
 traceStream
 	^SessionManager current traceStream!
@@ -264,6 +279,7 @@ initialize!initializing!private! !
 OnInitialize!COM Interfaces-IPDolphin!private! !
 OnShutdown!COM Interfaces-IPDolphin!private! !
 onStartup!events-session!private! !
+onStopped!events-session!private! !
 pullPlug!operations!private! !
 registerCoClasses!private!registering! !
 registerServer!private!registering! !
@@ -285,8 +301,7 @@ Kernel.IPDolphin methodProtocol: #'IPDolphin.IInProcDolphin' attributes: #(#read
 current
 	"Answer the singleton instance of the receiver."
 
-	Current isNil ifTrue: [Current := super new initialize].
-	^Current!
+	^Current ifNil: [Current := super new initialize]!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -299,6 +314,10 @@ new
 	"Private - The receiver is a singleton class"
 
 	^self shouldNotImplement!
+
+onExit
+	Current ifNil: [^self].
+	Current pullPlug!
 
 reset
 	"Private - Reset the current instance of the receiver.
@@ -316,6 +335,7 @@ uninitialize
 current!instance creation!public! !
 initialize!initializing!private! !
 new!object creation!private! !
+onExit!instance creation!public! !
 reset!instance creation!private! !
 uninitialize!class hierarchy-removing!private! !
 !

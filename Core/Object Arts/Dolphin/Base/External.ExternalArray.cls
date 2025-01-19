@@ -440,8 +440,7 @@ uncheckedAt: anInteger
 	^bytes uint8AtOffset: anInteger - 1!
 
 uncheckedAt: indexInteger put: valueInteger 
-	"Private - Replace the 8-bit unsigned integer value at the specified index in the receiver
-	with the <integer> argument. No bounds checks are performed on the subscript."
+	"Private - Replace the value at the index specified by the `<integer>` 1st argument with value of the 2nd argument. The types of object acceptable as the 2nd argument vary by subclass, but at this base level `SmallInteger` values in the range 0..255 are expected (i.e. octets). No bounds checks are performed on the subscript. "
 
 	^bytes uint8AtOffset: indexInteger - 1 put: valueInteger!
 

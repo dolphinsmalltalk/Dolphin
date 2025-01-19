@@ -81,7 +81,7 @@ allowedOrigins
 allowedOrigins: aCollection
 	| strings allowedOrigins |
 	strings := aCollection collect: [:each | each asUtf16String].
-	allowedOrigins := PointerArray withAll: strings.
+	allowedOrigins := PointerArray withAll: strings elementClass: Utf16String.
 	self SetAllowedOrigins: strings size allowedOrigins: allowedOrigins!
 
 get_HasAuthorityComponent: hasAuthorityComponent

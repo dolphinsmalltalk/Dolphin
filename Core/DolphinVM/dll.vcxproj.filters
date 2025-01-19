@@ -24,4 +24,7 @@
       <Filter>Resources</Filter>
     </Natvis>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="VMModule.h" />
+  </ItemGroup>
 </Project>

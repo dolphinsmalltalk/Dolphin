@@ -5,7 +5,13 @@
 class ActivationContext
 {
 public:
-	ActivationContext() = default;
+	ActivationContext() = delete;
+
+	ActivationContext(HMODULE hModule) 
+	{
+		m_actctx.hModule = hModule;
+	}
+
 	~ActivationContext()
 	{
 		Release();
@@ -23,11 +29,6 @@ public:
 	HMODULE get_moduleHandle() const throw()
 	{
 		return m_actctx.hModule;
-	}
-	void put_moduleHandle(_In_ HMODULE hModule) throw()
-	{
-		m_actctx.hModule = hModule;
-		SetFlag(ACTCTX_FLAG_HMODULE_VALID, hModule);
 	}
 
 	__declspec(property(get = get_source, put = put_source)) LPCWSTR Source;
@@ -149,8 +150,12 @@ private:
 	}
 
 private:
-	ACTCTXW m_actctx = { sizeof(m_actctx), 0, nullptr, 0, 0, nullptr, nullptr, nullptr };
-	mutable HANDLE m_hCtx;
+	ACTCTXW m_actctx = { 
+		.cbSize = sizeof(m_actctx), 
+		.dwFlags = ACTCTX_FLAG_HMODULE_VALID| ACTCTX_FLAG_RESOURCE_NAME_VALID, 
+		.lpResourceName = ISOLATIONAWARE_MANIFEST_RESOURCE_ID
+	};
+	mutable HANDLE m_hCtx = nullptr;
 	mutable bool m_created = false;
 };
 
@@ -158,19 +163,29 @@ class ActivationContextScope
 {
 public:
 	ActivationContextScope() = delete;
-	ActivationContextScope(const ActivationContextScope&) = delete;
-	ActivationContextScope& operator=(const ActivationContextScope&) = delete;
-	ActivationContextScope(ActivationContextScope&&) = delete;
-	ActivationContextScope& operator=(ActivationContextScope&&) = delete;
-
-	ActivationContextScope(ActivationContext& context) 
-		: m_context(context), m_cookie(Activate(context.Handle)) {
+	ActivationContextScope(const ActivationContext& context)
+		: m_cookie(Activate(context.Handle)) {
 	}
 
 	~ActivationContextScope()
 	{
-		::DeactivateActCtx(0, m_cookie);
+		if (m_cookie) {
+			::DeactivateActCtx(0, m_cookie);
+		}
 	}
+
+	// Not copyable
+	ActivationContextScope(const ActivationContextScope&) = delete;
+	ActivationContextScope& operator=(const ActivationContextScope&) = delete;
+
+	// But can be moved
+	ActivationContextScope(ActivationContextScope&& other) noexcept
+		: m_cookie(other.m_cookie)
+	{
+		other.m_cookie = 0;
+	}
+
+	ActivationContextScope& operator=(ActivationContextScope&& other) noexcept = delete;
 
 private:
 	static ULONG_PTR Activate(HANDLE hContext)
@@ -181,6 +196,5 @@ private:
 	}
 
 private:
-	const ActivationContext& m_context;
-	const ULONG_PTR m_cookie = 0;
+	ULONG_PTR m_cookie = 0;
 };

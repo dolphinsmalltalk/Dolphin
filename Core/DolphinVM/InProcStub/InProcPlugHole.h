@@ -11,9 +11,10 @@
 	#define TRACE				1 ? ((void)0) : ::traceX
 #endif
 
-#include "..\DolphinSmalltalk.h"
 #include <map>
+#include "ComModule.h"
 #include "InProcStub.h"
+#include "DolphinSmalltalk_i.h"
 
 _COM_SMARTPTR_TYPEDEF(IIPDolphin, __uuidof(IIPDolphin));
 

@@ -1,6 +1,8 @@
 // DolphinSmalltalk.h : Declaration of the CDolphinSmalltalk
 #pragma once
 
+#ifndef USE_VM_DLL
+
 #include "DolphinSmalltalk_i.h"
 #include "rc_vm.h"
 
@@ -161,3 +163,5 @@ public:
 		/* [in] */ int length
 		);
 };
+
+#endif

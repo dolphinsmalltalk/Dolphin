@@ -10,7 +10,11 @@
 #include "DolphinSmalltalk.h"
 #include "Utf16StringBuf.h"
 #include "objmem.h"
+#ifdef INPROC
+#include "InProcStub\InProcModule.h"
+#else
 #include "VMModule.h"
+#endif
 
 extern HINSTANCE hApplicationInstance;
 static IDolphin* piVM=NULL;
@@ -46,7 +50,8 @@ STDMETHODIMP DolphinSmalltalk::Initialise(HINSTANCE hInstance,
 
 	piVM = this;
 
-	CAutoLock lockModule(_Module);
+	// We don't need to lock here because the caller must be holding a lock indirectly through the IDolphinStart interface pointer
+	//CAutoLock lockModule(_Module);
 
 	hApplicationInstance = hInstance;
 	return VMInit(fileName, imageData, imageSize, dwFlags);
@@ -58,8 +63,6 @@ STDMETHODIMP DolphinSmalltalk::Run(IUnknown* punkOuter)
 
 	piVM = this;
 	
-	CAutoLock lockModule(_Module);
-
 	return VMRun(reinterpret_cast<uintptr_t>(punkOuter));
 }
 

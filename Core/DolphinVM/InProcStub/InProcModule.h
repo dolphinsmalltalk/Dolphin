@@ -1,9 +1,13 @@
 #include "ComModule.h"
 #include "InProcPlugHole.h"
+#include "ActivationContext.h"
 
-class VMModule : public ComModuleT<DolphinIPPlugHole>
+class IPDolphinModule : public ComModuleT<DolphinIPPlugHole>
 {
-private:
+public:
+	IPDolphinModule() : m_actCtx(GetHModule())
+	{
+	}
 
 protected:
 	virtual BOOL OnProcessAttach(HINSTANCE hInst);
@@ -13,9 +17,17 @@ protected:
 
 public:
 	HRESULT CanUnloadNow();
+
+	ActivationContextScope Activate()
+	{
+		return ActivationContextScope(m_actCtx);
+	}
+
+private:
+	::ActivationContext m_actCtx;
 };
 
-extern VMModule _Module;
+extern IPDolphinModule _Module;
 
 #include "..\CritSect.h"
 

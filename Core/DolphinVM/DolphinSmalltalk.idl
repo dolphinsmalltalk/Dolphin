@@ -153,12 +153,20 @@ typedef struct STBlockClosure
 	Oop			m_copiedValues[];
 } STBlockClosure;
 
-typedef enum {
+typedef [v1_enum] enum BindingReferenceFlags {
 	None = 0,
 	IsMeta = 1,
 	IsPrivate = 2,
 	IsRelative = 4
 } BindingReferenceFlags;
+
+typedef [v1_enum] enum VmInitFlags {
+	VmInitNone = 0,
+	VmInitIsDevSys = 1,
+	VmInitIsInProc = 2,
+	VmInitIsConsole = 4,
+	VmInitIsToGo = 8
+} VmInitFlags;
 
 [
 	// N.B. No need to allocate new uuid when changing LIBRARY version

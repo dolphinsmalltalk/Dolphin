@@ -87,8 +87,8 @@ basicFree
 
 basicInvokeId: id flags: wFlags parms: parms retVal: varRes
 	| err ex hr |
-	err := UInt32 new.
-	ex := EXCEPINFO new.
+	err := UInt32Bytes new.
+	ex := EXCEPINFO newBuffer.
 	hr := self
 				Invoke: id
 				riid: IID null
@@ -237,15 +237,16 @@ downCast
 				ifNotNil: [:derived | ^(self queryInterface: derived) downCast]].
 	^self!
 
-getIDsOfNames: names
-	"Answer a <sequencedReadableCollection> of the ids of the named
-	members of the receiver."
+getIDsOfNames: aCollectionOfStrings
+	"Answer a `<sequencedReadableCollection>` of the `<integer>` ids of the named members of the receiver.
+	Note the comment in the documentation for [IDispatch::GetIdsOfNames](https://learn.microsoft.com/en-us/windows/win32/api/oaidl/nf-oaidl-idispatch-getidsofnames):
+		When GetIDsOfNames is called with more than one name, the first name (rgszNames[0]) corresponds to the member name, and subsequent names correspond to the names of the member's parameters.
+	In other words you cannot use this method to retrieve the names of multiple distinct properties or methods at once. Given that the id's of parameters are probably (a) not set, and (b) not terribly interesting, #idOfName: is likely to be more useful, and faster."
 
 	| rgszNames uNames cNames rgDispId hr |
-	uNames := names collect: [:p | p asUtf16String].
-	cNames := names size.
-	rgszNames := UInt32Array new: cNames.
-	uNames keysAndValuesDo: [:i :n | rgszNames at: i put: n yourAddress].
+	uNames := aCollectionOfStrings collect: [:each | each asUtf16String].
+	rgszNames := PointerArray withAll: uNames elementClass: Utf16String.
+	cNames := rgszNames size.
 	rgDispId := Int32Array new: cNames.
 	hr := self
 				GetIDsOfNames: IID null
@@ -254,26 +255,24 @@ getIDsOfNames: names
 				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				rgdispid: rgDispId.
 	^hr < 0
-		ifTrue: [hr = DISP_E_UNKNOWNNAME ifTrue: [self errorNotFound: names] ifFalse: [self hresultError: hr]]
-		ifFalse: 
-			["Convert to a standard Smalltalk Array"
-			rgDispId collect: [:m | m]]!
+		ifTrue: 
+			[hr = DISP_E_UNKNOWNNAME ifTrue: [self errorNotFound: aCollectionOfStrings] ifFalse: [self hresultError: hr]]
+		ifFalse: [rgDispId asArray]!
 
 GetIDsOfNames: riid rgszNames: rgszNames cNames: cNames lcid: lcid rgdispid: rgdispid
 	"Private - Invoke the GetIDsOfNames() method of the COM object wrapped by the receiver.
 
 		HRESULT __stdcall GetIDsOfNames(
 			[in] GUID* riid,
-			[in] char** rgszNames,
+			[in] LPOLESTR* rgszNames,
 			[in] unsigned int cNames,
 			[in] unsigned long lcid,
 			[out] long* rgdispid);
 
-	Implementation Note: Not finding names not exceptional, so return integer and test
-	rather than auto-raised HRESULT exception.
+	Implementation Note: Not finding names not exceptional, so return integer and test rather than auto-raised HRESULT exception.
 	"
 
-	<virtual stdcall: int32 6 guid* char** uint32 uint32 int32*>
+	<virtual stdcall: int32 6 guid* lpwstr* uint32 uint32 int32*>
 	^self invalidCall: _failureCode!
 
 getProperty: aString
@@ -391,36 +390,33 @@ hasTypeInfo
 
 	^self notNull and: [self getTypeInfoCount > 0]!
 
-idOfName: name
-	"Answer the <integer> DISPID of the member named by the <readableString>
-	argument, name, in the receiver."
+idOfName: aString
+	"Answer the `<integer>` DISPID of the member named by the `<readableString>` argument in the receiver. Throw a NotFoundError if the name is not recognised."
 
-	^self idOfName: name ifAbsent: [self errorNotFound: name]!
+	^self idOfName: aString ifAbsent: [self errorNotFound: aString]!
 
-idOfName: name ifAbsent: exceptionHandler
-	"Answer the <integer> DISPID of the member named by the <readableString>
-	argument, name, in the receiver.
-	Implementation Note: Although implementable in terms of #getIDsOfNames:, this
-	is much faster for the common case of looking up a single name."
+idOfName: aString ifAbsent: exceptionHandler
+	"Answer the <integer> DISPID of the member named by the <readableString>argument, name, in the receiver."
+
+	"Implementation Note: Although implementable in terms of #getIDsOfNames:, this is much faster for the common case of looking up a single name."
 
 	| uName dispId hr |
-	uName := name asUtf16String.
-	dispId := Int32 new.
+	uName := aString asUtf16String.
+	dispId := UInt32Bytes new.
 	hr := self
 				GetIDsOfNames: IID null
-				rgszNames: (UInt32 fromInteger: uName yourAddress)
+				rgszNames: (PointerArray with: uName)
 				cNames: 1
 				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				rgdispid: dispId.
-	^hr < 0
-		ifTrue: [hr = DISP_E_UNKNOWNNAME ifTrue: [exceptionHandler value] ifFalse: [self hresultError: hr]]
-		ifFalse: 
-			[dispId := dispId asInteger.
-			^dispId == DISPID_UNKNOWN
-				ifTrue: 
-					["Control should have returned DISP_E_UNKNOWNNAME, but sometimes they don't"
-					exceptionHandler value]
-				ifFalse: [dispId]]!
+	hr < 0
+		ifTrue: [^hr = DISP_E_UNKNOWNNAME ifTrue: [exceptionHandler value] ifFalse: [self hresultError: hr]].
+	dispId := dispId asSignedInteger.
+	^dispId == DISPID_UNKNOWN
+		ifTrue: 
+			["Control should have returned DISP_E_UNKNOWNNAME, but sometimes they don't"
+			exceptionHandler value]
+		ifFalse: [dispId]!
 
 implementor: anObject
 	"Set the receiver's implementor to anObject."
@@ -793,7 +789,7 @@ defineFunctions
 		defineFunction: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:
 			type: DispatchFunction
 			returnType: 'sdword'
-			argumentTypes: 'GUID* char** dword dword sdword*';
+			argumentTypes: 'GUID* lpwstr* uint32 uint32 int32*';
 		defineFunction: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:
 			type: DispatchFunction
 			returnType: 'sdword'

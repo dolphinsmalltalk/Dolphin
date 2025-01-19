@@ -10,19 +10,21 @@ Core.Object
 
 OS.COM.ObjectStub guid: (Core.GUID fromString: '{87b4c46c-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-OS.COM.ObjectStub comment: 'COMObjectStub is a private class of objects which are used to wrap any object in the system so that they may be exposed as COM objects. COMObjectStub implements most <IUnknown>, functionality, providing reference count based lifetime management, and the basic mechanics for QueryInterface().
+OS.COM.ObjectStub comment: '`OS.COM.ObjectStub` is a private class of objects which are used to wrap any object in the system so that they may be exposed as COM objects. `ObjectStub` implements most `IUnknown`, functionality, providing reference count based lifetime management, and the basic mechanics for `QueryInterface()`.
 
-Note that each COM server objecty should have only one COMObjectStub so that the ref. count is correct, and so that queries for IUnknown always answer the same interface.
+Note that each COM server object should have only one `ObjectStub` so that the ref. count is correct, and so that queries for `IUnknown` always answer the same interface (sometimes referred to as the "controlling unknown").
 
-Instance Variables:
-	cookie		<SmallInteger>. The receiver''s cookie identifying it in the Processor registry.
-	object		<Object>. The actual COM server object implementing the COM interfaces.
-	count		<integer>. COM reference count.
-	interfaces		<Array>. Array of interfaces currently extant against this stub.
-	outerUnknown	<IUnknown> or <UndefinedObject>. Controlling (outer) unknown.
+## Instance Variables:
+  `cookie`			`SmallInteger`. The receiver''s cookie identifying it in the Processor registry.
+  `object`			`<COMObject>`. The actual COM server object implementing the COM interfaces.
+  `count`			`<integer>`. COM reference count maintained by `AddRef`/`Release`
+  `interfaces`		`Array` of interfaces currently extant against this stub.
+  `outerUnknown`	`<IUnknown>` or `nil`. Controlling (outer) unknown if aggregated.
 
-Class Variables:
-	IdentityRegistry	<IdentityDictionary>. Map of objects to their COMObjectStub wrapper.
+## Class Variables:
+  `IdentityRegistry`		`IdentityDictionary`. Map of objects to their `ObjectStub` wrapper instance.
+
+
 
 
 
@@ -96,19 +98,20 @@ disconnect
 			Ole32 coDisconnectObject: interfaces first dwReserved: 0.
 			self free]!
 
-findInterface: interfaceClass ifNoneAdd: operation
-	"Private - Answer a typed pointer to a COMInterface which supports the interface 
-	class, interfaceClass (usually a subclass of IUnknown). If the receiver does 
-	not currently have a suitable interface, then add that which results from 
-	evaluating the niladic valuable, operation, and answer a typedd pointer to 
-	that."
+findInterface: anInterfaceClass ifNoneAdd: aNiladicValuable
+	"Private - Answer a <COM.Interface> pointer sub-instance to an underlying <COM.Interface> object that supports the COM interface class provided as the 1st argument (typically a subclass of <IUnknown>). If the receiver does not currently have a suitable interface, then add that which results from evaluating the <niladicValuable> 2nd argument, and answer a typed pointer to that."
 
 	| actualIf |
-	actualIf := interfaces 
-		detect: [:i | i supportsInterface: interfaceClass] 
-		ifNone: [self addInterface: operation value].
-"	self AddRef.	COMInterface>>fromAddress: sends AddRef to match the finalization Release."
-	^interfaceClass fromAddress: actualIf yourAddress.!
+	actualIf := self findInternalInterface: anInterfaceClass ifNoneAdd: aNiladicValuable.
+	"We return a pointer reference to the internal interface object that is suitable for returning to an external caller. COM.Interface>>#fromAddress: will AddRef the internal interface object ."
+	^anInterfaceClass fromAddress: actualIf yourAddress!
+
+findInternalInterface: anInterfaceClass ifNoneAdd: aNiladicValuable
+	"Private - Find or add an internal interface object for the specified interface class. If there is no matching interface, then the <niladicValuable> 2nd argument is evaluated to create one.
+	No COM reference count adjustment occurs (i.e. no AddRef)."
+
+	^interfaces detect: [:i | i supportsInterface: anInterfaceClass]
+		ifNone: [self addInterface: aNiladicValuable value]!
 
 free
 	"Private - Remove the receiver's permanent registration (permits receiver
@@ -315,13 +318,14 @@ callback:vfn:withArgumentsAt:!debugger-step through!evaluating!private! !
 cookie!accessing!private! !
 disconnect!public!realizing/unrealizing! !
 findInterface:ifNoneAdd:!accessing-interfaces!private! !
+findInternalInterface:ifNoneAdd:!accessing-interfaces!private! !
 free!operations!private! !
 innerAddRef!non delegating unknown!private! !
 innerQueryInterface:ppvObject:!non delegating unknown!private! !
 innerRelease!non delegating unknown!private! !
 onObject:!initializing!private! !
 outerUnknown:!accessing!private! !
-printOn:!development!printing!public! !
+printOn:!printing!public! !
 queryInterface:!accessing-interfaces!public! !
 queryInterface:ifNone:!accessing-interfaces!public! !
 QueryInterface:ppvObject:!COM Interfaces-IUnknown!private! !

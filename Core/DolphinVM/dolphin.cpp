@@ -15,7 +15,7 @@
 #include "VMExcept.h"
 #include "ComModule.h"
 
-extern void InitializeVtbl();
+extern void InitializeVtbl(bool isInProc);
 extern void DestroyVtbl();
 
 //////////////////////////////////////////////////////////////////
@@ -192,14 +192,15 @@ HRESULT InitApplication()
 	return S_OK;
 }
 
-static inline void DolphinInitInstance()
+static inline void DolphinInitInstance(DWORD dwFlags)
 {
 	// Ensure that Dolphin has a message queue, or the box will not appear
 	MSG dummy;
 	::PeekMessage(&dummy, 0, 0, 0, PM_NOREMOVE | PM_NOYIELD);
 
-	InitializeVtbl();
+	InitializeVtbl(dwFlags & VmInitFlags::VmInitIsInProc);
 }
+
 HRESULT APIENTRY VMInit(LPCWSTR szImageName,
 					LPVOID imageData, size_t imageSize,
 					DWORD flags)
@@ -212,7 +213,7 @@ HRESULT APIENTRY VMInit(LPCWSTR szImageName,
 	if (FAILED(hr))
 		return hr;
 
-	DolphinInitInstance();
+	DolphinInitInstance(flags);
 
 	return DolphinInit(szImageName, imageData, imageSize, flags & 1);
 }

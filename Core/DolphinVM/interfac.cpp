@@ -20,6 +20,11 @@ Interpreter interface functions
 #include "VMExcept.h"
 #include "thrdcall.h"
 #include "VirtualMemoryStats.h"
+#ifdef INPROC
+#include "InProcStub\InProcModule.h"
+#else
+#include "VMModule.h"
+#endif
 
 // Smalltalk classes
 #include "STArray.h"
@@ -653,8 +658,13 @@ LRESULT CALLBACK Interpreter::VMWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 		return GenericCallbackMain(static_cast<SmallInteger>(wParam), reinterpret_cast<uint8_t*>(lParam));
 		break;
 	case VmWndMsgs::SyncVirtual:
-		return VirtualCallbackMain(static_cast<SmallInteger>(wParam), reinterpret_cast<COMThunk**>(lParam));
+		return VirtualCallbackBody(static_cast<SmallInteger>(wParam), reinterpret_cast<COMThunk**>(lParam));
 		break;
+#if defined(INPROC) || defined(VMDLL)
+	case VmWndMsgs::SyncVirtualInProc:
+		return VirtualCallbackBodyInProc(static_cast<SmallInteger>(wParam), reinterpret_cast<COMThunk**>(lParam));
+		break;
+#endif
 	default:
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
@@ -816,12 +826,12 @@ LRESULT __fastcall Interpreter::VirtualCallback(SmallInteger offset, COMThunk** 
 		result = SendMessage(m_hWndVM, static_cast<UINT>(VmWndMsgs::SyncVirtual), static_cast<WPARAM>(offset), reinterpret_cast<LPARAM>(args));
 	}
 	else
-		result = VirtualCallbackMain(offset, args);
+		result = VirtualCallbackBody(offset, args);
 
 	return result;
 }
 
-LRESULT __fastcall Interpreter::VirtualCallbackMain(SmallInteger offset, COMThunk** args)
+LRESULT __fastcall Interpreter::VirtualCallbackBody(SmallInteger offset, COMThunk** args)
 {
 	// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
 	// and also to handle unwinds
@@ -849,6 +859,7 @@ LRESULT __fastcall Interpreter::VirtualCallbackMain(SmallInteger offset, COMThun
 
 #ifndef _M_X64
 
+#ifndef INPROC
 __declspec(naked) intptr_t __stdcall _commonVfnEntryPoint()
 {
 	_asm 
@@ -869,9 +880,60 @@ __declspec(naked) intptr_t __stdcall _commonVfnEntryPoint()
 }
 #endif
 
+#if defined(VMDLL) || defined(INPROC)
+
+__declspec(naked) intptr_t __stdcall _commonVfnEntryPointInProc()
+{
+	_asm
+	{
+		mov		eax, [esp + 4]
+		mov		edx, esp
+		add		edx, 4; Edx now points at this pointer in stack(assume stdcall)
+		mov		eax, [eax].argSizes
+		mov		eax, [eax + ecx * 4]
+		push	eax; Save arg size for later
+		call	Interpreter::VirtualCallbackInProc
+		pop		ecx; Account for this pointer in arg size
+		pop		edx; Pop the return address
+		add		esp, ecx
+		mov[esp], edx
+		ret
+	}
+}
+
+#endif
+#endif
+
+#if defined(INPROC) || defined(VMDLL)
+LRESULT __fastcall Interpreter::VirtualCallbackInProc(SmallInteger offset, COMThunk** args)
+{
+	LRESULT result;
+	// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
+	// As we have entered from an external function
+	if (GetCurrentThreadId() != MainThreadId())
+	{
+		result = SendMessage(m_hWndVM, static_cast<UINT>(VmWndMsgs::SyncVirtualInProc), static_cast<WPARAM>(offset), reinterpret_cast<LPARAM>(args));
+	}
+	else
+	{
+		result = VirtualCallbackBodyInProc(offset, args);
+	}
+
+	return result;
+}
+
+LRESULT __fastcall Interpreter::VirtualCallbackBodyInProc(SmallInteger offset, COMThunk** args)
+{
+	ActivationContextScope activation = _Module.Activate();
+	return VirtualCallbackBody(offset, args);
+}
+#endif
+
 #pragma code_seg(INIT_SEG)
 
-void InitializeVtbl()
+typedef intptr_t(__stdcall* VfnEntryPoint)();
+
+void InitializeVtbl(bool isInProc)
 {
 	ASSERT(sizeof(VTblThunk) == 10);
 
@@ -882,6 +944,21 @@ void InitializeVtbl()
 		return;
 	}
 
+	// If running in-proc, then we need to activate an activation context to ensure that any manifest settings are applied,
+	// otherwise we just inherit the settings of the host process, which may not be correct for Dolphin, e.g. we may not get
+	// common controls v6 in a very old application
+#ifdef INPROC
+	ASSERT(isInProc);
+	VfnEntryPoint vfnEntryPoint = _commonVfnEntryPointInProc;
+#else
+	#ifdef VMDLL
+		VfnEntryPoint vfnEntryPoint = isInProc ? _commonVfnEntryPointInProc : _commonVfnEntryPoint;
+	#else
+		ASSERT(!isInProc);
+		VfnEntryPoint vfnEntryPoint = _commonVfnEntryPoint;
+	#endif
+#endif
+
 	for (auto i=0u;i<NUMVTBLENTRIES;i++)
 	{
 		VTable[i] = &aVtblThunks[i];
@@ -891,7 +968,7 @@ void InitializeVtbl()
 		aVtblThunks[i].jmp = 0xE9;	// Near jump to relative location
 		// Offset is relative to next instruction
 		aVtblThunks[i].commonVfnEntryPoint = 
-				reinterpret_cast<uint8_t*>(_commonVfnEntryPoint) 
+				reinterpret_cast<uint8_t*>(vfnEntryPoint)
 					- reinterpret_cast<uint8_t*>(&aVtblThunks[i+1]);
 	}
 

@@ -15,10 +15,10 @@ This sample is compatible with Visual Basic 5 and later. When VB (or another too
 
 ## Development
 
-You can use Dolphin as both client and server:
+You can use Dolphin as both client and server (although note that a deployed Dolphin DLL can only be consumed in Dolphin in To Go form, as the development VM cannot load more than one image):
 ```
 r := OS.COM.Examples.IRandomStream2 new.
-r next 	"Debug it (F11)"
+r next 	"Debug it (F11), to step through the COM callout and call-in stack"
 ```
 
 To debug/test the server from another client, first register the component from your development image:
@@ -28,12 +28,13 @@ OS.COM.Examples.RandomStream registerComServer
 
 This will register IPDolphin.dll as the in-proc server for the COM component, including an additional regkey that details the path to the development image. IPDolphin uses this to locate and load the standard VM and development image to launch when a client creates an instance of the COM component.
 
-Having registered the sample component for development hosting, shutdown the development image and start the `RandomVBClient.exe` found in the package folder. This should launch the Dolphin development image in-proc into the VB process. Your last saved image state, including any open windows, will be restored as usual. You can now set breakpoints in the methods of the `RandomStream` class (e.g. RandomStream>>#Next:), and debug through the client calls into the component. When you close the VB client, you''ll be prompted to Save the image, but the usual option to cancel will not be available. If you close the development image before the VB client, the latter won''t crash immediately, but pressing any of its buttons will generate an error and it will then shut down.
+Having registered the sample component for development hosting, shutdown the development image and start the `RandomVBClient.exe` found in the package folder. This should launch the Dolphin development image in-proc into the VB process. Your last saved image state, including any open windows, will be restored as usual. You can now set breakpoints in the methods of the `RandomStream` class (e.g. `RandomStream>>#Next:`), and debug client calls into the component. When you close the VB client, you''ll be prompted to Save the Image, but the usual option to cancel will not be available. If you close the development image before the VB client, the latter won''t crash immediately, but pressing any of its buttons will generate an error and it will then shut down.
 
 ## Deployment as DLL:
 
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+OS.COM.ClassFactory revokeAll.
 (AXDllImageStripper new)
 	rootPackage: OS.COM.Examples.IRandomStream owningPackage;
 	executableName: ''DRandom.dll'';
@@ -42,6 +43,38 @@ Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to los
 	"logReferencesToClasses: true;"
 	deploy
 ```
+
+Now register the built DLL:
+```
+	regsvr32 drandom.dll
+```
+
+You can now start a new Dolphin development session and test the DLL:
+
+```
+	"Check that drandom.dll is not loaded"
+	Kernel32 getModuleHandle: ''drandom.dll''. "Display-it - should be nil"
+	"First revoke the class factory in the development image (otherwise it will serve requests for the component)"
+	OS.COM.Examples.RandomStream revokeClassFactories.
+	"Now create an instance - this will cause drandom.dll to be loaded. "
+	rand := OS.COM.Examples.IRandomStream2 new.
+	"Check that the DLL loaded"
+	Kernel32 getModuleHandle: ''drandom.dll''. "Display-it - should be non-nil handle"
+	"Check the functionality"
+	(1 to: 6) collect: [:i | rand next]. "Display-it - should be #(26 9 16 27 46 9) off a seed of 1"
+	rand seed. "Display-it"
+	rand seed: 1.	"Evaluate-it to reset the seed"
+	(1 to: 6) collect: [:i | rand next]. "Display-it should show the same sequence of numbers #(26 9 16 27 46 9)"
+	"Free the COM object"
+	rand free.
+	"Unload the library"
+	 OS.COM.Ole32 coFreeUnusedLibrariesEx: 5000 dwReserved: 0.
+	"Check that the library unloaded"
+	Kernel32 getModuleHandle: ''drandom.dll''. "Display-it - should be nil"
+```	
+
+You can also test the DLL in the ancient VB6 client that can be found in the package folder, `RandomVBClient.exe`
+
 
 And to examine the content: 
 
@@ -60,7 +93,6 @@ package setClassNames: #(
 	#{OS.COM.Examples.IRandomStream}
 	#{OS.COM.Examples.IRandomStream2}
 	#{OS.COM.Examples.RandomStream}
-	#{OS.COM.Examples.RandomStreamSessionManager}
 ).
 
 package setVariableNames: #(
@@ -73,7 +105,6 @@ package setBinaryVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
-	'..\..\..\Dolphin\Lagoon\ActiveX DLL Server'
 	'..\COM Examples'
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
@@ -87,14 +118,6 @@ package!
 OS.COM.DualInterfaceImplementation
 	subclass: #'OS.COM.Examples.RandomStream'
 	instanceVariableNames: 'lowerBound upperBound stream'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Kernel.AXDllSessionManager
-	subclass: #'OS.COM.Examples.RandomStreamSessionManager'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

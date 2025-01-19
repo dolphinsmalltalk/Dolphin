@@ -5,7 +5,7 @@
 #include "startVM.h"
 //#import "DolphinSmalltalk.tlb" no_namespace raw_interfaces_only
 #include "DolphinSmalltalk_i.h"
-#include "ActivationContext.h"
+#include "InProcModule.h"
 
 #ifndef TO_GO
 #include "..\Launcher\ImageFileMapping.h"
@@ -52,12 +52,13 @@ static HRESULT LoadImage(IDolphinStartPtr& piDolphin, HMODULE hModule, LPCWSTR f
 		return hr;
 	if (pHeader->versionMS != vi.dwProductVersionMS)
 		return ErrorVMVersionMismatch(pHeader, &vi);
+
 #else
 	// A ToGo image is bound with its VM, and must therefore be of the correct version
 	ASSERT(imageData != nullptr);
 #endif
 
-	return piDolphin->Initialise(hModule, fileName, imageData, imageSize, /*IsDevSys*/0);
+	return piDolphin->Initialise(hModule, fileName, imageData, imageSize, VMINITFLAGS);
 }
 
 // Disable warning about combination of SEH and destructors
@@ -98,15 +99,7 @@ static UINT __stdcall DolphinMain(void* pArgs)
 	// the Task Dialog we use for message boxes), we need an activation context that is 
 	// manifested to specify common controls v6, otherwise a lot of Dolphin API will not
 	// work well.
-	ActivationContext actCtx;
-	actCtx.ModuleHandle = vmArgs->hInstance;
-	actCtx.ResourceName = ISOLATIONAWARE_MANIFEST_RESOURCE_ID;
-	// This is not ideal as it may result in leaking activation context, although empirically 
-	// it doesn't seem to.The alternative is to activate context temporarily on every COM 
-	// call-in, although it needs some though as to how best to achieve that, since we only 
-	// need to do that on COM calls marshalled into the apartment when hosted in-proc.
-	actCtx.IsProcessDefault = true;
-	ActivationContextScope activateContext(actCtx);
+	ActivationContextScope activation = _Module.Activate();
 
 	HRESULT hr = ::CoInitialize(NULL);
 	if (SUCCEEDED(hr))

@@ -2,11 +2,13 @@
 package := Package name: 'ActiveX DLL Server Core'.
 package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Active-X DLL Server Core
-Copyright (c) Object Arts Ltd, 2001-2025.
+Copyright © Object Arts Ltd, 2001-2025.
 
 This package provides a framework to allow Active-X/COM components written in Dolphin to be run as DLLs (i.e. in-process servers).
 
 In-proc COM components can be tested in the full Dolphin IDE when hosted by any client executable (e.g. the VB development environment or a compiled VB app). In order to set this up it is necessary to send the `#registerComServer` message to one''s COMInterfaceImp subclass (the one that implements the COM component) whilst running a development session. COMInterfaceImp class>>register will make the necessary entries in the registry to use IPDolphin.DLL as a surrogate component, and adds additional entries so that the surrogate can later identify the development image to load.You should then be able to start the client executable or development environment (such as VB) and when an instance of the component is requested, the surrogate will be loaded by COM and it will in turn load the development image into that process and the normal development tools will appear just as they were when the image was last saved. One can then debug and make changes as normal, but one must be careful to save the image so that changes are not lost should the host executable be terminated abrubtly.
+
+See the ''COM Random Stream'' package comment for a worked examples of deploying and testing a COM component implemented in Dolphin as an in-proc component.
 '.
 
 
@@ -14,6 +16,10 @@ package setClassNames: #(
 	#{Kernel.IIPDolphin}
 	#{Kernel.IIPPlugHole}
 	#{Kernel.IPDolphin}
+).
+
+package setMethodNames: #(
+	#(#{Core.SessionManager} #canUnloadNow)
 ).
 
 package setPrerequisites: #(
@@ -49,6 +55,45 @@ OS.COM.IUnknown
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Loose Methods"!
+
+!Core.SessionManager methodsFor!
+
+canUnloadNow
+	"Private - Answer whether it is OK to unload an in-proc. image now. By default we take the presense of locked class factories and/or any live COM objects as indicating that the DLL must stay loaded. Specialized AXDllSessionManagers may want to use other criteria to decide whether to keep the DLL in memory."
+
+	<namespace: OS.COM>
+	| plug |
+	ClassFactory lockCount > 0
+		ifTrue: 
+			[self traceStream
+				print: self;
+				nextPutAll: ' canUnloadNow - Cannot unload as ClassFactory lockCount =  ';
+				print: ClassFactory lockCount;
+				cr.
+			^false].
+	"By default we just look for live COM objects other than the IPDolphin instance to decide whether should stay up."
+	plug := IPDolphin current.
+	ObjectStub registry keysAndValuesDo: 
+			[:each :stub |
+			each ~~ plug
+				ifTrue: 
+					[self traceStream
+						print: self;
+						nextPutAll: ' canUnloadNow - Cannot unload because of live object ';
+						print: stub;
+						cr.
+					^false]].
+	self traceStream
+		print: self;
+		nextPutAll: ' canUnloadNow - OK to unload';
+		cr.
+	^true! !
+
+!Core.SessionManager categoriesForMethods!
+canUnloadNow!private!testing! !
+!
 
 "End of package definition"!
 

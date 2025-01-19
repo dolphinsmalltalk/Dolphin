@@ -140,7 +140,7 @@ static HRESULT __stdcall StartDevSys(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 			return MAKE_HRESULT(SEVERITY_ERROR, FACILITY_ITF, IDP_VERSIONMISMATCH);
 	}
 
-	hr = piDolphin->Initialise(hInstance, szImageName, imageFile.GetRawData(), imageFile.GetRawSize(), /*IsDevSys*/1);
+	hr = piDolphin->Initialise(hInstance, szImageName, imageFile.GetRawData(), imageFile.GetRawSize(), VMINITFLAGS);
 	if (FAILED(hr))
 		return hr;
 

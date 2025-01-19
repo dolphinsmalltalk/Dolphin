@@ -97,7 +97,7 @@
     <ClCompile>
       <Optimization>MinSpace</Optimization>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;USE_VM_DLL;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>INPROC;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
       <BrowseInformation />
@@ -141,7 +141,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;USE_VM_DLL;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>INPROC;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -203,7 +203,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;USE_VM_DLL;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>INPROC;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -269,10 +269,6 @@
     <ClCompile Include="..\ImageFileResource.cpp">
       <PrecompiledHeader />
     </ClCompile>
-    <ClCompile Include="..\InProcStart.cpp">
-      <PrecompiledHeader />
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
     <ClCompile Include="..\Launcher\ImageFileMapping.cpp">
       <PrecompiledHeader />
     </ClCompile>
@@ -284,6 +280,7 @@
       <PrecompiledHeader />
     </ClCompile>
     <ClCompile Include="InProcPlugHole.cpp" />
+    <ClCompile Include="InProcStart.cpp" />
     <ClCompile Include="InProcStub.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -311,12 +308,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ComObject.h" />
-    <ClInclude Include="..\InProcPlugHole.h" />
     <ClInclude Include="..\InProcStart.h" />
     <ClInclude Include="..\ist.h" />
     <ClInclude Include="..\regkey.h" />
     <ClInclude Include="dlldatax.h" />
     <ClInclude Include="InProcModule.h" />
+    <ClInclude Include="InProcPlugHole.h" />
     <ClInclude Include="InProcStub.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

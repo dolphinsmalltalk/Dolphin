@@ -141,7 +141,9 @@ public:
 
 	#if defined(_DEBUG) && !defined(BOOT)
 	
-	#define FREEFLAG 0x80000000
+	// OTEs are 16-bytes in size and aligned, so bottom 4 bits are 0. LSB is SmallInteger flag, 
+	// so use 2nd bit as debug marker bit for free OTEs
+	#define FREEFLAG 0x00000002
 
 	static OTE* NextFree(const OTE* ote)
 	{

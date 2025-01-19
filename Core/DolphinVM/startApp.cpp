@@ -1,7 +1,7 @@
 #include "ist.h"
 
-#ifdef VMDLL
-#error "VM DLL cannot contain an embedded image"
+#if defined(VMDLL) || defined(INPROC)
+#error "startApp is only for use in executable stubs"
 #endif
 
 #include "startVM.h"
@@ -29,7 +29,7 @@ HRESULT __stdcall RunEmbeddedImage(HMODULE hModule, int resId)
 	wchar_t fileName[MAX_PATH] = L"";
 	::GetModuleFileName(hModule, fileName, _countof(fileName));
 
-	hr = piDolphin->Initialise(hModule, fileName, imageFile.GetRawData(), imageFile.GetRawSize(), /*IsDevSys*/0);
+	hr = piDolphin->Initialise(hModule, fileName, imageFile.GetRawData(), imageFile.GetRawSize(), VMINITFLAGS);
 	if (FAILED(hr))
 		return hr;
 

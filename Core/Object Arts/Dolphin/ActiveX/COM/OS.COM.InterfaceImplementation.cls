@@ -76,13 +76,14 @@ queryInterface: anInterfaceClass ifNone: exceptionHandler
 	result of evaluating the niladic valuable, exceptionHandler."
 
 	| class |
-	class := self supportedInterfaces 
-				detect: [:ic | ic supportsInterface: anInterfaceClass] 
-				ifNone: [ | aggee |
-					aggee := self aggregatee.
-					^aggee isNil 
-						ifTrue: [exceptionHandler value]
-						ifFalse: [aggee queryInterface: anInterfaceClass ifNone: exceptionHandler]].
+	class := (self supportedInterfaces detect: [:ic | ic supportsInterface: anInterfaceClass]
+				ifNone: nil)
+					ifNil: 
+						[| aggee |
+						aggee := self aggregatee.
+						^aggee isNil
+							ifTrue: [exceptionHandler value]
+							ifFalse: [aggee queryInterface: anInterfaceClass ifNone: exceptionHandler]].
 	^class on: self server implementor: self!
 
 server

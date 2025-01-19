@@ -12,7 +12,7 @@ OS.COM.AbstractDispatchImplementation guid: (Core.GUID fromString: '{10dee4fb-24
 
 OS.COM.AbstractDispatchImplementation isNonInstantiable: true!
 
-OS.COM.AbstractDispatchImplementation comment: ''!
+OS.COM.AbstractDispatchImplementation comment: 'Common implementation of `IDispatch`.'!
 
 !OS.COM.AbstractDispatchImplementation methodsFor!
 
@@ -31,37 +31,35 @@ decodeArgs: aDISPPARAMS
 			i := i - 1].
 	^args!
 
-errorDispatching: dispid exception: anError excepInfo: pExcepInfo
-	"Private - An error occcurred dispatching from Invoke(), handle it by updating the
-	<EXCEPINFO>, pExcepInfo, and returning the appropriate HRESULT code.
-	This is also the point we can produce a walkback in a development session
-	(see #notifyDispatchError:invoking:)."
+errorDispatching: dispidInteger exception: anError excepInfo: anEXCEPINFO
+	"Private - An error occcurred dispatching from Invoke(), handle it by updating the `EXCEPINFO`, anEXCEPINFO, and returning the appropriate `<integer>` HRESULT code.
+	This is also the point we can trap the error in a development session (see `#notifyDispatchError:invoking:`)."
 
 	| hr |
-	self notifyDispatchError: anError invoking: dispid.
+	self notifyDispatchError: anError invoking: dispidInteger.
 	hr := anError hresult.
-	pExcepInfo notNull
+	anEXCEPINFO notNull
 		ifTrue: 
-			[pExcepInfo scode: hr asInteger.
-			pExcepInfo bstrDescription: (BSTR fromString: anError description) detach].
+			[anEXCEPINFO scode: hr asInteger.
+			anEXCEPINFO bstrDescription: (BSTR fromString: anError description) detach].
 	^hr!
 
-GetIDsOfNames: getIDsOfNames rgszNames: rgszNames cNames: cNames lcid: lcid rgdispid: rgdispid 
+GetIDsOfNames: getIDsOfNames rgszNames: rgszNames cNames: cNames lcid: lcid rgdispid: rgdispid
 	"Implement the IDispatch::GetIDsOfNames() interface function.
 
 		HRESULT __stdcall GetIDsOfNames(
 			[in] GUID* riid,
-			[in] char** rgszNames,
+			[in] LPOLESTR* rgszNames,
 			[in] unsigned int cNames,
 			[in] unsigned long lcid,
 			[out] long* rgdispid);
 	"
 
 	| names ids pdispids |
-	names := (StructureArray 
+	names := PointerArray
 				fromAddress: rgszNames yourAddress
 				length: cNames
-				elementClass: LPWSTR) collect: [:e | e asString].
+				elementClass: Utf16String.
 	ids := self idsOfNames: names whenNotKnown: [:name | ^DISP_E_UNKNOWNNAME].
 	pdispids := Int32Array fromAddress: rgdispid yourAddress.
 	ids keysAndValuesDo: [:i :id | pdispids at: i put: id].
@@ -92,9 +90,9 @@ GetTypeInfoCount: count
 	^S_OK	!
 
 idsOfNames: anArray whenNotKnown: aMonadicValuable 
-	"Answer a <sequencedReadableCollection> of <SmallInteger> being the dispatch ids of each of
-	the <readableString> names in the argument <Array>, anArray. Evaluate the <monadicValuable>
-	argument for each of the names which are not recognised."
+	"Answer a `<sequencedReadableCollection>` of `SmallInteger` being the dispatch ids of each of the `<readableString>` names in the argument `Array`, anArray. Evaluate the `<monadicValuable>` argument for each of the names which are not recognised."
+
+	"At this abstract level, we don't know the id's of any names. Will need to be overridden by subclasses that want to provide this metadata."
 
 	^anArray do: aMonadicValuable!
 
@@ -120,17 +118,13 @@ Invoke: dispid riid: riid lcid: lcid wFlags: wFlags pdispparams: pDispParams pva
 					exception: ex
 					excepInfo: pExcepInfo]!
 
-invokeId: dispid flags: callTypeFlags withArguments: argArray
-	"Invoke the receiver's method with <integer> dispatch id, dispid, and the <Array> of
-	<variantCompatible> arguments, argArray."
+invokeId: dispidInteger flags: flagsInteger withArguments: anArray
+	"Invoke the receiver's method with `<integer>` dispatch id, dispid, and the contents of the `Array` of `<variantCompatible>`, anArray, as the arguments."
 
 	^E_NOTIMPL!
 
 notifyDispatchError: anError invoking: dispidInteger
-	"Private - An error occcurred dispatching from Invoke(), notify the session.
-	Can be overridden by subclasses that wish to suppress errors completely so
-	that they are only reported back to the caller, however it is useful for debugging
-	purposes to be able to hook in a walkback here."
+	"Private - An error occcurred dispatching from Invoke(), notify the session. Can be overridden by subclasses that wish to suppress errors completely so that they are only reported back to the caller, however it is useful for debugging purposes to be able to hook in a breakpoint here."
 
 	Notification signal: ('Error dispatching id(%1!!#010x!!):  %3, from %4' 
 					formatWith: dispidInteger 
@@ -140,15 +134,14 @@ notifyDispatchError: anError invoking: dispidInteger
 !
 
 supportedInterfaces
-	"Answer the set of interface classes supported by the receiver."
+	"Answer the sequence of interface classes supported by the receiver."
 
 	^##({ IUnknown. IDispatch })!
 
-typeInfo: lcid ifNone: exceptionHandler
-	"Private - Answer an <ITypeInfo> on the type information for this dispinterface,
-	or if none is available the result of evaluating the <niladicValuable>, exceptionHandler."
+typeInfo: lcidInteger ifNone: aNiladicValuable
+	"Private - Answer an `ITypeInfo` on the type information for this dispinterface, or if none is available the result of evaluating the `<niladicValuable>` 2nd argument."
 
-	^exceptionHandler value!
+	^aNiladicValuable value!
 
 typeInfoCount
 	"Answer 1 if type information is available, else 0."

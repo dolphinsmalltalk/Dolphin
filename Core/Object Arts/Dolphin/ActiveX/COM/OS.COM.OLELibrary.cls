@@ -96,6 +96,16 @@ coFileTimeNow: struct
 	<stdcall: bool CoFileTimeNow FILETIME*>
 	^self invalidCall: _failureCode!
 
+coFreeUnusedLibrariesEx: dwUnloadDelay dwReserved: dwReserved
+	"
+	void CoFreeUnusedLibrariesEx(
+		[in] DWORD dwUnloadDelay,
+		[in] DWORD dwReserved
+	);"
+
+	<stdcall: void CoFreeUnusedLibrariesEx uint32 uint32>
+	^self invalidCall: _failureCode!
+
 coGetClassObject: rclsid dwClsContext: dwClsContext pServerInfo: pServerInfo riid: riid ppv: ppv
 	"Invoke the CoGetClassObject() function of the module wrapped by the receiver.
 	Helpstring: Provides a pointer to an interface on a class object associated with a specified CLSID. CoGetClassObject locates, and if necessary, dynamically loads the executable code required to do this
@@ -287,6 +297,7 @@ coCreateInstance:pUnkOuter:dwClsContext:riid:ppv:!**auto generated**!OLE Functio
 coCreateInstanceEx:pUnkOuter:dwClsContext:pServerInfo:cmq:rgmqResults:!**auto generated**!OLE Functions-COM!public! !
 coDisconnectObject:dwReserved:!OLE Functions-COM!public! !
 coFileTimeNow:!OLE Functions-COM!public! !
+coFreeUnusedLibrariesEx:dwReserved:!OLE Functions-COM!public! !
 coGetClassObject:dwClsContext:pServerInfo:riid:ppv:!**auto generated**!OLE Functions-COM!public! !
 coGetMalloc:ppMalloc:!**auto generated**!OLE Functions-COM!public! !
 coGetObject:pBindOptions:riid:ppv:!OLE Functions-COM!public! !

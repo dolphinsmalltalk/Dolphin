@@ -7,7 +7,7 @@
 #include "startVM.h"
 #include "DolphinSmalltalk.h"
 #include "VMExcept.h"
-#include "VMModule.h"
+#include "COMModule.h"
 
 /////////////////////////////////////////////////////////////////////
 

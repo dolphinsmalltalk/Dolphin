@@ -217,16 +217,12 @@ CreateCoreWebView2PointerInfo: pointerInfo
 createObjectCollection: aCollection
 	"Answer an <ICoreWebView2ObjectCollection> containing the IUknown's of the collection of COM objects in the argument."
 
-	| answer unknowns pointers count stream |
+	| answer unknowns pointers |
+	unknowns := aCollection collect: [:each | each queryInterface: IUnknown].
+	pointers := PointerArray withAll: unknowns elementClass: IUnknown.
 	answer := ICoreWebView2ObjectCollection newPointer.
-	count := aCollection size.
-	unknowns := Array new: count.
-	stream := unknowns writeStream.
-	aCollection do: [:each | stream nextPut: (each queryInterface: IUnknown)].
-	pointers := PointerArray length: count elementClass: IUnknown.
-	1 to: count do: [:i | pointers uncheckedAt: i put: (unknowns at: i)].
 	self
-		CreateObjectCollection: count
+		CreateObjectCollection: pointers size
 		items: pointers
 		objectCollection: answer.
 	unknowns do: [:each | each free].

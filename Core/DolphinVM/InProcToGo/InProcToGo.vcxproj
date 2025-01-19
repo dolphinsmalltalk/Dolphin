@@ -101,7 +101,7 @@
       <MinimumTargetSystem />
     </Midl>
     <ClCompile>
-      <PreprocessorDefinitions>TO_GO;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>INPROC;TO_GO;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation />
       <ExceptionHandling>false</ExceptionHandling>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -138,7 +138,7 @@
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>TO_GO;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>INPROC;TO_GO;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -199,7 +199,7 @@
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>TO_GO;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>INPROC;TO_GO;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -245,11 +245,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\IDolphinStart.cpp" />
-    <ClCompile Include="..\InProcStart.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
+    <ClCompile Include="..\InProcStub\InProcStart.cpp" />
     <ClCompile Include="..\startToGoVm.cpp" />
     <ClCompile Include="dlldatax.c">
       <PrecompiledHeader />
@@ -285,7 +281,8 @@
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\InProcStub\VMModule.h" />
+    <ClInclude Include="..\InProcStub\InProcPlugHole.h" />
+    <ClInclude Include="..\InProcStub\InProcStub.h" />
     <ClInclude Include="dlldatax.h" />
     <ClInclude Include="InProcStub.h" />
     <ClInclude Include="resource.h" />

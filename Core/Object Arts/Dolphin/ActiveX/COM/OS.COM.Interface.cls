@@ -373,7 +373,7 @@ printOn:!development!printing!public! !
 queryInterface:!accessing-interfaces!public! !
 queryInterface:ifNone:!accessing-interfaces!public! !
 QueryInterface:ppvObject:!methods!public! !
-referenceCount!development!private! !
+referenceCount!accessing!private! !
 Release!methods!public! !
 supportsErrorInfo!public!testing! !
 supportsErrorInfo:!public!testing! !
@@ -760,6 +760,12 @@ interfaceClasses
 
 	^InterfaceClasses!
 
+internalOn: serverObject implementor: implementorObject
+	"Private - Answer a (new or existing) non-pointer instance of the that is an internally implemented interface on the 1st <Object> argument, server, (assumed to be an exported server object), but where the interface functions are actually implemented in the 2nd <Object> argument. If one does not already exist, this will result in the creation and registration of a private <ObjectStub> instance which wraps the server object to provide basic support for the Common Object Model, such as reference counting, and the boilerplate of  interface querying. The reference count of the COMObject will be NOT be increased to reflect the existence of the new interface object (contrast with #on:implementor:). This is intended for internal use only."
+
+	^(self comObjectClass on: serverObject) findInternalInterface: self
+		ifNoneAdd: [self implementor: implementorObject]!
+
 isEgressOnly
 	"Answer whether this COM Interface is only ever used for call-out (i.e. never implemented in Dolphin)."
 
@@ -1012,7 +1018,7 @@ stdMethodReturnType
 supportsInterface: anInterfaceClass 
 	"Answer whether instances of the receiver support the requested interface class."
 
-	^self == anInterfaceClass or: [self inheritsFrom: anInterfaceClass]!
+	^self isKindOf: anInterfaceClass class!
 
 uninitialize
 	"Private - Unitialize the receiver as it is about to be removed."
@@ -1084,6 +1090,7 @@ initializeInterface!class initialization!private! !
 initializeRegister!initializing!private! !
 initializeTypeLib!initializing!private! !
 interfaceClasses!accessing!private! !
+internalOn:implementor:!instance creation!private! !
 isEgressOnly!public!testing! !
 isEgressOnly:!public!template definition! !
 latestDerivation!enquiries!public! !

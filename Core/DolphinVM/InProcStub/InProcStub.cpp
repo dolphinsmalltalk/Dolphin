@@ -11,7 +11,8 @@
 #include <initguid.h>
 #include "InProcStub.h"
 #include "dlldatax.h"
-#include "VMModule.h"
+#include "InProcModule.h"
+#include "InProcPlugHole.h"
 #include "InProcStub_i.c"
 #include "ImageFileResource.h"
 #include "regkey.h"
@@ -21,7 +22,7 @@
 #include "startvm.h"
 #endif
 
-VMModule _Module;
+IPDolphinModule _Module;
 
 static DolphinIPPlugHole* s_pPlugHole = NULL;
 
@@ -161,7 +162,7 @@ HRESULT __stdcall ErrorVMVersionMismatch(ImageHeader* pHeader, VS_FIXEDFILEINFO*
 
 #endif
 
-BOOL VMModule::OnProcessAttach(HINSTANCE hInst)
+BOOL IPDolphinModule::OnProcessAttach(HINSTANCE hInst)
 {
 	TRACE(L"%#x: OnProcessAttach: Module lock count %d\n", GetCurrentThreadId(), _Module.GetLockCount());
 
@@ -183,7 +184,7 @@ BOOL VMModule::OnProcessAttach(HINSTANCE hInst)
 	return TRUE;
 }
 
-BOOL VMModule::OnProcessDetach(HINSTANCE hInst)
+BOOL IPDolphinModule::OnProcessDetach(HINSTANCE hInst)
 {
 	_ASSERTE(s_pPlugHole != NULL);
 
@@ -194,13 +195,13 @@ BOOL VMModule::OnProcessDetach(HINSTANCE hInst)
 	return TRUE;
 }
 
-BOOL VMModule::OnThreadAttach(HINSTANCE hInst)
+BOOL IPDolphinModule::OnThreadAttach(HINSTANCE hInst)
 {
 	TRACE(L"%#x: Thread attached to in-proc stub\n", GetCurrentThreadId());
 	return TRUE;
 }
 
-BOOL VMModule::OnThreadDetach(HINSTANCE hInst)
+BOOL IPDolphinModule::OnThreadDetach(HINSTANCE hInst)
 {
 	TRACE(L"%#x: Thread detached from in-proc stub\n", GetCurrentThreadId());
 	if (s_pPlugHole)
@@ -211,7 +212,7 @@ BOOL VMModule::OnThreadDetach(HINSTANCE hInst)
 /////////////////////////////////////////////////////////////////////////////
 // Used to determine whether the DLL can be unloaded by OLE
 
-HRESULT VMModule::CanUnloadNow()
+HRESULT IPDolphinModule::CanUnloadNow()
 {
 	HRESULT hr;
 	unsigned int moduleLocks = _Module.GetLockCount();

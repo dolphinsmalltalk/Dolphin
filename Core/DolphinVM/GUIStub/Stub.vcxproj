@@ -94,7 +94,7 @@
     <ClCompile>
       <Optimization>MinSpace</Optimization>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <PreprocessorDefinitions>USE_VM_DLL;_CTYPE_DISABLE_MACROS;STRICT;WIN32;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_WINDOWS;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CTYPE_DISABLE_MACROS;STRICT;WIN32;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_WINDOWS;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ist.h</PrecompiledHeaderFile>
       <CallingConvention>StdCall</CallingConvention>
@@ -128,7 +128,7 @@
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>USE_VM_DLL;_CTYPE_DISABLE_MACROS;STRICT;WIN32;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_WINDOWS;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CTYPE_DISABLE_MACROS;STRICT;WIN32;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_WINDOWS;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -183,7 +183,7 @@
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>USE_VM_DLL;_CTYPE_DISABLE_MACROS;STRICT;WIN32;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_WINDOWS;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CTYPE_DISABLE_MACROS;STRICT;WIN32;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;_WINDOWS;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

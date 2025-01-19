@@ -162,7 +162,8 @@ public:
 		Timer = WM_TIMER,
 		Sync = WM_USER,
 		SyncCallback,
-		SyncVirtual
+		SyncVirtual,
+		SyncVirtualInProc
 	};
 	static LRESULT __stdcall GenericCallbackMain(SmallInteger id, uint8_t* lpArgs);
 	static LRESULT __stdcall GenericCallback(SmallInteger id, uint8_t* lpArgs);
@@ -176,7 +177,11 @@ public:
 	};
 
 	static LRESULT __fastcall VirtualCallback(SmallInteger offset, COMThunk** thisPtr);
-	static LRESULT __fastcall VirtualCallbackMain(SmallInteger offset, COMThunk** thisPtr);
+	static LRESULT __fastcall VirtualCallbackBody(SmallInteger offset, COMThunk** thisPtr);
+#if defined(INPROC) || defined(VMDLL)
+	static LRESULT __fastcall VirtualCallbackInProc(SmallInteger offset, COMThunk** thisPtr);
+	static LRESULT __fastcall VirtualCallbackBodyInProc(SmallInteger offset, COMThunk** thisPtr);
+#endif
 
 	// CompiledMethod bytecode decoding (in decode.cpp)
 	#if defined(_DEBUG)

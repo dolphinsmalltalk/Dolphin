@@ -68,7 +68,7 @@ customSchemeRegistrations: aCollection
 	| interfaces pointers |
 	interfaces := aCollection
 				collect: [:each | each queryInterface: ICoreWebView2CustomSchemeRegistration].
-	pointers := PointerArray withAll: interfaces.
+	pointers := PointerArray withAll: interfaces elementClass: ICoreWebView2CustomSchemeRegistration.
 	self SetCustomSchemeRegistrations: pointers size schemeRegistrations: pointers.
 	interfaces do: [:each | each free]!
 
