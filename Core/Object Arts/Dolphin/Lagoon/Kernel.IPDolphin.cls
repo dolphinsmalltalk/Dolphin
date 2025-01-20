@@ -10,16 +10,16 @@ OS.COM.InterfaceImplementation
 
 Kernel.IPDolphin guid: (Core.GUID fromString: '{b115d2d8-5a00-4a5e-8615-109a3332690f}')!
 
-Kernel.IPDolphin comment: 'IPDolphin is the singleton class whose instance hosts the main inbound COM interface, <IIPPlugHole> from the Dolphin in-process COM DLL stub. It is responsible for initialization and shutdown of the image, and ultimately for implementing the DllGetClassObject, DllCanUnloadNow, DllRegisterServer and DllUnregisterServer functions that are exported by the stub.
+Kernel.IPDolphin comment: '`IPDolphin` is the singleton class whose instance is responsible for managing communication with the C++ code of the Dolphin in-process COM DLL stubs. IPDolphin implements the `IIPDolphin` COM interface that the stub calls to communicate with the image, and holds the `IIPPlugHole` implemented by the Dolphin in-process COM DLL stubs for calls back to the stub. The instance is responsible for initialization and shutdown of the image, and for implementing the 4 core COM DLL services. ultimately for implementing the `DllGetClassObject`, `DllCanUnloadNow`, `DllRegisterServer` and `DllUnregisterServer` functions that are exported by the stub.
 
 Once a Dolphin in-proc COM DLL has been loaded, inbound calls to the DllXXX functions in the stub are forwarded here.
 
-Instance Variables:
-	plugHole		<IIPPlugHole>
-	coclasses		<LookupTable> of creatable classes below <COMInterfaceImp> for which class factories can be requested.
+## Instance Variables:
+  `plugHole`		`IIPPlugHole`. COM interface used to communicate with the in-proc stub. Implemented in the stub C++ code, and passed in when the stub starts the in-proc image.
+  `coclasses`		`LookupTable` of creatable classes, typically subclasses of `OS.COM.InterfaceImplementation`, for which class factories can be requested.
 
-Class Variables:
-	Current		<IPDolphin>. Singleton instance.
+## Class Variables:
+  `Current`		`IPDolphin`.  Singleton instance.
 
 '!
 
@@ -143,11 +143,6 @@ onStartup
 onStopped
 	"Private - Perform any session shutdown actions."
 
-	self traceStream
-		print: self;
-		nextPutAll: ' onStopped - Exiting Dolphin image ';
-		print: self fileName;
-		cr.
 	self pullPlug!
 
 pullPlug
