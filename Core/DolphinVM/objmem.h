@@ -411,7 +411,6 @@ public:
 private:
 	// Low-level memory allocators - these are very thin layers over mimalloc or Win32 heap
 	static void* ObjMemCall allocChunk(size_t chunkSize);
-	static void* ObjMemCall allocSmallChunk(size_t chunkSize);
 	static void ObjMemCall freeChunk(void* pChunk);
 	static void* ObjMemCall reallocChunk(void* pChunk, size_t newChunkSize);
 

@@ -49,22 +49,6 @@ void* ObjMemCall ObjectMemory::allocChunk(size_t chunkSize)
 	return pChunk;
 }
 
-void* ObjMemCall ObjectMemory::allocSmallChunk(size_t chunkSize)
-{
-#ifdef WIN32_HEAP
-	return allocChunk(chunkSize);
-#else
-	ASSUME(chunkSize <= MI_SMALL_SIZE_MAX);
-	void* pChunk = mi_heap_malloc_small(objectHeap, chunkSize);
-#endif
-
-#ifdef _DEBUG
-	memset(pChunk, 0xCD, chunkSize);
-#endif
-
-	return pChunk;
-}
-
 void ObjMemCall ObjectMemory::freeChunk(void* pChunk)
 {
 #ifdef MEMSTATS
