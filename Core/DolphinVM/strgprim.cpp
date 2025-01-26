@@ -57,29 +57,6 @@ char32_t Character::getCodePoint() const
 ///////////////////////////////////////////////////////////////////////////////
 //	String Primitives
 
-void Interpreter::memmove(uint8_t* dst, const uint8_t* src, size_t count)
-{
-    if (dst <= src || dst >= src + count) 
-		memcpy(dst, src, count);
-    else 
-	{
-        /*
-         * Overlapping Buffers
-         * copy from higher addresses to lower addresses
-         */
-        dst = dst + count - 1;
-        src = src + count - 1;
-
-        while (count) 
-		{
-            *dst = *src;
-            dst--;
-            src--;
-			count--;
-        }
-    }
-}
-
 //	This is a double dispatched primitive which knows that the argument is a byte object (though
 //	we still check this to avoid GPFs), and the receiver is guaranteed to be a byte object. e.g.
 //
