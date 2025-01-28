@@ -323,7 +323,8 @@ Oop* PRIMCALL Interpreter::primitiveNewWithArg(Oop* const sp, primargcount_t arg
 					if (ObjectMemoryIsIntegerObject(oopValue) && (value = ObjectMemoryIntegerValueOf(oopValue)) >= 0 && value <= 255)
 					{
 						BytesOTE* newObj = ObjectMemory::newByteObject<true, false>(oteClass, size);
-						memset(newObj->m_location, value, size);
+						// Beware: FillMemory argument order is different to memset
+						FillMemory(newObj->m_location, size, value);
 						*(sp - argc) = reinterpret_cast<Oop>(newObj);
 						ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
 						return sp - argc;
@@ -516,7 +517,7 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, size_t startingAt, size_t count)
 				auto newBytes = static_cast<VariantByteObject*>(allocObject<false>(objectSize + NULLTERMSIZE, oteSlice));
 				// When copying strings, the slices has the same string class
 				(oteSlice->m_oteClass = oteBytes->m_oteClass)->countUp();
-				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt << elementSizeShift), objectSize);
+				CopyMemory(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt << elementSizeShift), objectSize);
 				*reinterpret_cast<NULLTERMTYPE*>(&newBytes->m_fields[objectSize]) = 0;
 				oteSlice->beNullTerminated();
 				return oteSlice;
@@ -527,7 +528,7 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, size_t startingAt, size_t count)
 				// When copying bytes, the slice is always a ByteArray
 				oteSlice->m_oteClass = Pointers.ClassByteArray;
 				oteSlice->beBytes();
-				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt << elementSizeShift), objectSize);
+				CopyMemory(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt << elementSizeShift), objectSize);
 				return oteSlice;
 			}
 		}
@@ -628,7 +629,7 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 	classPointer->countUp();
 
 	// Copy the entire object over the other one, including any null terminator and object header
-	memcpy(pLocation, &bytes, objectSize);
+	CopyMemory(pLocation, &bytes, objectSize);
 
 	return reinterpret_cast<BytesOTE*>(copyPointer);
 }

@@ -158,7 +158,7 @@ VariantByteObject* ObjectMemory::resize(BytesOTE* ote, size_t newByteSize)
 	if (pByteObj && totalByteSize > oldByteSize)
 	{
 		// The object grew, so ensure it is properly initialized
-		memset(reinterpret_cast<uint8_t*>(pByteObj)+oldByteSize, 0, totalByteSize-oldByteSize);
+		ZeroMemory(reinterpret_cast<uint8_t*>(pByteObj)+oldByteSize, totalByteSize-oldByteSize);
 	}
 
 	return pByteObj;

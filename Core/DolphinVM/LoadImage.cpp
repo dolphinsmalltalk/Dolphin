@@ -225,7 +225,7 @@ template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& 
 	TRACESTREAM << i<< L" permanent objects loaded totalling " << cbPerm<< L" bytes" << std::endl;
 #endif
 
-	memcpy(const_cast<VMPointers*>(&Pointers), &_Pointers, sizeof(Pointers));
+	CopyMemory(const_cast<VMPointers*>(&Pointers), &_Pointers, sizeof(Pointers));
 
 	cbRead += cbPerm;
 	return S_OK;
@@ -568,7 +568,7 @@ DWORD ObjectMemory::ProtectConstSpace(DWORD dwNewProtect)
 	if (dwNewProtect == PAGE_READONLY)
 	{
 		// Pointers have been modified, copy to cache
-		memcpy(const_cast<VMPointers*>(&Pointers), &_Pointers, sizeof(Pointers));
+		CopyMemory(const_cast<VMPointers*>(&Pointers), &_Pointers, sizeof(Pointers));
 	}
 
 #ifdef NO_CONST_SPACE

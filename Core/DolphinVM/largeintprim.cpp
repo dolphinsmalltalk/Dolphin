@@ -417,7 +417,7 @@ Oop __stdcall liRightShift(LargeIntegerOTE* oteLI, SmallUinteger shift)
 		// avoids problems with shifts of more than 31 bits on Intel 
 		// hardware (which are performed modulo 32, i.e. << 32 actually 
 		// results in << 0 and gives the wrong result - the operand and not 0).
-		memcpy(liResult->m_digits, li->m_digits+words, resultSize*sizeof(uint32_t));
+		CopyMemory(liResult->m_digits, li->m_digits+words, resultSize*sizeof(uint32_t));
 	}
 	else
 	{

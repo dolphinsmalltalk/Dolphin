@@ -53,7 +53,8 @@ template <bool zero> void* ObjMemCall ObjectMemory::allocChunk(size_t chunkSize)
 
 #ifdef _DEBUG
 	if (!zero) {
-		memset(pChunk, 0xCD, chunkSize);
+		// Beware: FillMemory argument order is different to memset
+		FillMemory(pChunk, chunkSize, 0xCD);
 	}
 #endif
 

@@ -944,7 +944,7 @@ inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointe
 	ASSERT((OTE*)classPointer != Pointers.Nil);
 	ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
 	BytesOTE* oteBytes = newByteObject<false, false>(classPointer, cBytes);
-	memcpy(oteBytes->m_location->m_fields, pBytes, cBytes);
+	CopyMemory(oteBytes->m_location->m_fields, pBytes, cBytes);
 	return oteBytes;
 }
 

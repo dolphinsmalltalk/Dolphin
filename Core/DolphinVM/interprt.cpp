@@ -266,8 +266,8 @@ HRESULT Interpreter::initializeCharMaps()
 	::MultiByteToWideChar(m_ansiCodePage, MB_PRECOMPOSED, byteCharSet, 256, m_ansiToUnicodeCharMap, 256);
 
 	// Create the reverse map - it will be very sparse, but as it only consumes 64Kb it isn't worth using a hash table
-	memset(m_unicodeToAnsiCharMap, 0, sizeof(m_unicodeToAnsiCharMap));
-	memset(m_unicodeToBestFitAnsiCharMap, 0, sizeof(m_unicodeToBestFitAnsiCharMap));
+	ZeroMemory(m_unicodeToAnsiCharMap, sizeof(m_unicodeToAnsiCharMap));
+	ZeroMemory(m_unicodeToBestFitAnsiCharMap, sizeof(m_unicodeToBestFitAnsiCharMap));
 
 	std::unique_ptr<WCHAR[]> wideChars(new WCHAR[65536]);
 

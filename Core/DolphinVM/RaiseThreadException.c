@@ -35,7 +35,7 @@ static void __stdcall APCFunc(ULONG_PTR param)
 	DWORD nNumberOfArguments = pBlock->nNumberOfArguments;
 	DWORD argsSize = nNumberOfArguments*sizeof(ULONG_PTR);
 	ULONG_PTR* lpArguments = (ULONG_PTR*)alloca(argsSize);
-	memcpy(lpArguments, pBlock->lpArguments, argsSize);
+	CopyMemory(lpArguments, pBlock->lpArguments, argsSize);
 	free(pBlock);
 	RaiseException(dwExceptionCode, dwExceptionFlags, nNumberOfArguments, lpArguments);
 }
@@ -53,6 +53,6 @@ void __stdcall RaiseThreadException(
 	pBlock->dwExceptionCode = dwExceptionCode;
 	pBlock->dwExceptionFlags = dwExceptionFlags;
 	pBlock->nNumberOfArguments = nNumberOfArguments;
-	memcpy((void*)pBlock->lpArguments, lpArguments, argsSize);
+	CopyMemory((void*)pBlock->lpArguments, lpArguments, argsSize);
 	QueueUserAPC(APCFunc, hThread, (ULONG_PTR)pBlock);
 }

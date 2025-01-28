@@ -220,7 +220,7 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 		if (static_cast<int32_t>(dwRet) >= 0)
 		{
 			CONTEXT ctxMain;
-			memset(&ctxMain, 0, sizeof(CONTEXT));
+			ZeroMemory(&ctxMain, sizeof(CONTEXT));
 			ctxMain.ContextFlags = CONTEXT_FULL;
 			if (::GetThreadContext(hMain, &ctxMain))
 			{

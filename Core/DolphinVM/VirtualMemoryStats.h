@@ -9,7 +9,7 @@ class VirtualMemoryStats
 public:
 	VirtualMemoryStats()
 	{
-		memset(&memStats, 0, sizeof(memStats));
+		ZeroMemory(&memStats, sizeof(memStats));
 		memStats.dwLength = sizeof(MEMORYSTATUSEX);
 		::GlobalMemoryStatusEx(&memStats);
 	}

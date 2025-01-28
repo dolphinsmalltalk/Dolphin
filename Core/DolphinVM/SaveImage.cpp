@@ -105,7 +105,7 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 	::GetVersionInfo(&versionInfo);
 
 	ImageHeader header;
-	memset(&header, 0, sizeof(header));
+	ZeroMemory(&header, sizeof(header));
 
 	header.versionMS = versionInfo.dwProductVersionMS;
 	SmallInteger imageVersionMinor = isIntegerObject(_Pointers.ImageVersionMinor) ? integerValueOf(_Pointers.ImageVersionMinor) : 0;

@@ -822,7 +822,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
-						memcpy(oteStringBuf->m_location->m_characters + index, str->m_characters, valueSize);
+						CopyMemory(oteStringBuf->m_location->m_characters + index, str->m_characters, valueSize);
 					}
 					break;
 
@@ -841,7 +841,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
-						memcpy(oteStringBuf->m_location->m_characters + index, str->m_characters, valueSize);
+						CopyMemory(oteStringBuf->m_location->m_characters + index, str->m_characters, valueSize);
 					}
 					break;
 
@@ -960,7 +960,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
-						memcpy(pwsz + index, str->m_characters, valueSize*sizeof(char16_t));
+						CopyMemory(pwsz + index, str->m_characters, valueSize*sizeof(char16_t));
 					}
 					break;
 
@@ -997,7 +997,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 					auto pb = oteBytesBuf->m_location->m_elements;
-					memcpy(pb + index, bytes->m_elements, valueSize);
+					CopyMemory(pb + index, bytes->m_elements, valueSize);
 				}
 				else
 					return primitiveFailure(_PrimitiveFailureCode::NotSupported);
