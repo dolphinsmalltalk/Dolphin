@@ -62,9 +62,9 @@ inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
 ///////////////////////////////////////////////////////////////////////////////
 // Public object allocation routines
 
-POBJECT ObjectMemory::allocObject(size_t objectSize, OTE*& ote)
+template <bool zero> POBJECT ObjectMemory::allocObject(size_t objectSize, OTE*& ote)
 {
-	POBJECT pObj = static_cast<POBJECT>(allocChunk(_ROUND2(objectSize, sizeof(Oop))));
+	POBJECT pObj = static_cast<POBJECT>(allocChunk<zero>(_ROUND2(objectSize, sizeof(Oop))));
 
 	// allocateOop expects crit section to be used
 	ote = allocateOop(pObj);
@@ -376,7 +376,7 @@ PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE*
 	// Don't worry, compiler will not really use multiply instruction here
 	size_t objectSize = SizeOfPointers(oops);
 	OTE* ote;
-	allocObject(objectSize, ote);
+	allocObject<false>(objectSize, ote);
 	ASSERT(ote->heapSpace() == Spaces::Normal);
 
 	// These are stored in the object itself
@@ -400,15 +400,12 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 	{
 		ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
 
-		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(elementCount + SizeOfPointers(0), ote));
+		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject<Initialized>(elementCount + SizeOfPointers(0), ote));
 		ASSERT(ote->heapSpace() == Spaces::Normal);
 		ASSERT(ote->getSize() == elementCount + SizeOfPointers(0));
 
 		if (Initialized)
 		{
-			// Byte objects are initialized to zeros (but not the header)
-			// Note that we round up to initialize to the next machine word
-			ZeroMemory(newBytes->m_fields, _ROUND2(elementCount, sizeof(Oop)));
 			classPointer->countUp();
 		}
 
@@ -441,16 +438,13 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 		// TODO: Allocate the correct number of null term bytes based on the encoding
 		objectSize += NULLTERMSIZE;
 
-		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(objectSize + SizeOfPointers(0), ote));
+		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject<true>(objectSize + SizeOfPointers(0), ote));
 		ASSERT(ote->heapSpace() == Spaces::Normal);
 
 		ASSERT(ote->getSize() == objectSize + SizeOfPointers(0));
 
 		if (Initialized)
 		{
-			// Byte objects are initialized to zeros (but not the header)
-			// Note that we round up to initialize to the next machine word
-			ZeroMemory(newBytes->m_fields, _ROUND2(objectSize, sizeof(Oop)));
 			classPointer->countUp();
 		}
 		else
@@ -519,7 +513,7 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, size_t startingAt, size_t count)
 			if (oteBytes->m_flags.m_weakOrZ)
 			{
 				// TODO: Allocate the correct number of null term bytes based on the encoding
-				auto newBytes = static_cast<VariantByteObject*>(allocObject(objectSize + NULLTERMSIZE, oteSlice));
+				auto newBytes = static_cast<VariantByteObject*>(allocObject<false>(objectSize + NULLTERMSIZE, oteSlice));
 				// When copying strings, the slices has the same string class
 				(oteSlice->m_oteClass = oteBytes->m_oteClass)->countUp();
 				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt << elementSizeShift), objectSize);
@@ -529,7 +523,7 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, size_t startingAt, size_t count)
 			}
 			else
 			{
-				VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(objectSize, oteSlice));
+				VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject<false>(objectSize, oteSlice));
 				// When copying bytes, the slice is always a ByteArray
 				oteSlice->m_oteClass = Pointers.ClassByteArray;
 				oteSlice->beBytes();
@@ -551,7 +545,7 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, size_t startingAt, size_t count)
 			if (count == 0 || (startingAt + count) <= otePointers->pointersSize())
 			{
 				size_t objectSize = SizeOfPointers(count);
-				auto pSlice = static_cast<VariantObject*>(allocObject(objectSize, oteSlice));
+				auto pSlice = static_cast<VariantObject*>(allocObject<false>(objectSize, oteSlice));
 				// When copying pointers, the slice is always an Array
 				oteSlice->m_oteClass = Pointers.ClassArray;
 				VariantObject* pSrc = otePointers->m_location;
@@ -621,7 +615,7 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 
 	OTE* copyPointer;
 	// Allocate an uninitialized object ...
-	VariantByteObject* pLocation = static_cast<VariantByteObject*>(allocObject(objectSize, copyPointer));
+	VariantByteObject* pLocation = static_cast<VariantByteObject*>(allocObject<false>(objectSize, copyPointer));
 	ASSERT(copyPointer->heapSpace() == Spaces::Normal);
 
 	ASSERT(copyPointer->getSize() == objectSize);

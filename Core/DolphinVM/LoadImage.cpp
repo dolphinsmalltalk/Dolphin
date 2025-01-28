@@ -343,7 +343,7 @@ template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream& i
 
 ST::Object* ObjectMemory::AllocObj(OTE * ote, size_t allocSize)
 {
-	ST::Object* pObj = static_cast<POBJECT>(allocChunk(allocSize));
+	ST::Object* pObj = static_cast<POBJECT>(allocChunk<false>(allocSize));
 	ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
 	ote->m_location = pObj;
 	return pObj;

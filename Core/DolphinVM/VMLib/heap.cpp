@@ -34,20 +34,34 @@ extern size_t m_nFreed;
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void* ObjMemCall ObjectMemory::allocChunk(size_t chunkSize)
+template <bool zero> void* ObjMemCall ObjectMemory::allocChunk(size_t chunkSize)
 {
 #ifdef WIN32_HEAP
 	void* pChunk = ::HeapAlloc(m_hHeap, 0, chunkSize);
+	if (zero) {
+		ZeroMemory(pChunk, chunkSize);
+	}
 #else
-	void* pChunk = mi_heap_malloc(objectHeap, chunkSize);
+	void* pChunk;
+	if (zero) {
+		pChunk = mi_heap_zalloc(objectHeap, chunkSize);
+	}
+	else {
+		pChunk = mi_heap_malloc(objectHeap, chunkSize);
+	}
 #endif
 
 #ifdef _DEBUG
-	memset(pChunk, 0xCD, chunkSize);
+	if (!zero) {
+		memset(pChunk, 0xCD, chunkSize);
+	}
 #endif
 
 	return pChunk;
 }
+
+template void* ObjMemCall ObjectMemory::allocChunk<false>(size_t);
+template void* ObjMemCall ObjectMemory::allocChunk<true>(size_t);
 
 void ObjMemCall ObjectMemory::freeChunk(void* pChunk)
 {

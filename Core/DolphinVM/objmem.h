@@ -229,7 +229,7 @@ public:
 	// Does an object have the current GC mark?
 	template <class T> static bool hasCurrentMark(TOTE<T>* const ote)
 	{
-			return ote->m_flags.m_mark == m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)].m_mark;
+		return ote->m_flags.m_mark == m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)].m_mark;
 	}
 
 	static void __cdecl DumpStats(const wchar_t*);
@@ -410,7 +410,7 @@ public:
 	static hash_t nextIdentityHash();
 private:
 	// Low-level memory allocators - these are very thin layers over mimalloc or Win32 heap
-	static void* ObjMemCall allocChunk(size_t chunkSize);
+	template <bool zero> static void* ObjMemCall allocChunk(size_t chunkSize);
 	static void ObjMemCall freeChunk(void* pChunk);
 	static void* ObjMemCall reallocChunk(void* pChunk, size_t newChunkSize);
 
@@ -418,7 +418,7 @@ private:
 	static size_t __cdecl chunkSize(void* pChunk);
 #endif
 
-	static POBJECT allocObject(size_t objectSize, OTE*& ote);
+	template <bool zero> static POBJECT allocObject(size_t objectSize, OTE*& ote);
 
 	static void decRefs(Oop);
 
@@ -932,7 +932,7 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 template <typename T> typename T::MyOTE* __fastcall ObjectMemory::newUninitializedNullTermObject(size_t byteSize)
 {
 	OTE* ote;
-	allocObject(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
+	allocObject<false>(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
 	ote->m_oteClass = reinterpret_cast<BehaviorOTE*>(Pointers.pointers[T::PointersIndex - 1]);
 	ASSERT((OTE*)(ote->m_oteClass) != Pointers.Nil);
 	ote->beNullTerminated();
