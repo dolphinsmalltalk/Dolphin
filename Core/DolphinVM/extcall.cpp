@@ -356,7 +356,7 @@ CharOTE* Character::NewUtf16(char16_t codeUnit)
 		code = (static_cast<SmallInteger>(StringEncoding::Utf16) << 24) | codeUnit;
 	}
 
-	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	CharOTE* character = Character::NewUninitialized();
 	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
 	character->beImmutable();
 
@@ -392,7 +392,7 @@ void Interpreter::push(char16_t utf16CodeUnit)
 		code = (static_cast<SmallInteger>(StringEncoding::Utf16) << 24) | utf16CodeUnit;
 	}
 
-	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	CharOTE* character = Character::NewUninitialized();
 	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
 	character->beImmutable();
 	pushNewObject(reinterpret_cast<OTE*>(character));
@@ -414,7 +414,7 @@ CharOTE* Character::NewUtf8(char8_t codeUnit)
 	// Return a UTF-8 Character for surrogates so it is possible to detect surrogates in the image
 	SmallInteger code = (static_cast<SmallInteger>(StringEncoding::Utf8) << 24) | codeUnit;
 
-	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	CharOTE* character = Character::NewUninitialized();
 	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
 	character->beImmutable();
 
@@ -832,7 +832,7 @@ CharOTE* Character::NewUtf32(char32_t value)
 		}
 	}
 
-	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	CharOTE* character = Character::NewUninitialized();
 	SmallInteger code = (static_cast<char32_t>(StringEncoding::Utf32) << 24) | (value & 0xffffff);
 	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
 	character->beImmutable();

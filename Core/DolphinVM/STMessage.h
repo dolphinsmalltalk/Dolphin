@@ -33,7 +33,7 @@ namespace ST
 
 		static MessageOTE* New()
 		{
-			return reinterpret_cast<MessageOTE*>(ObjectMemory::newPointerObject(Pointers.ClassMessage, FixedSize));
+			return reinterpret_cast<MessageOTE*>(ObjectMemory::newFixedPointerObject<FixedSize>(Pointers.ClassMessage));
 		}
 
 		static MessageOTE* NewUninitialized()

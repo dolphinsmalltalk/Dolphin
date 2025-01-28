@@ -467,6 +467,12 @@ Oop* PRIMCALL Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, prima
 }
 #pragma runtime_checks("c", restore)
 
+// Characters are not reference counted - very important that param is unsigned in order to calculate offset of
+// character object in OTE correctly (otherwise chars > 127 will probably offset off the front of the OTE).
+CharOTE* Character::NewUninitialized()
+{
+	return reinterpret_cast<CharOTE*>(ObjectMemory::newFixedPointerObject<Character::FixedSize>(Pointers.ClassCharacter));
+}
 
 Oop* PRIMCALL Interpreter::primitiveStringAt(Oop* const sp, const primargcount_t argCount)
 {
@@ -497,13 +503,13 @@ Oop* PRIMCALL Interpreter::primitiveStringAt(Oop* const sp, const primargcount_t
 				// We also "fallback" to interpret the content as ANSI if the character is non-ASCII but not a valid UTF-8 surrogate
 				if (U8_IS_SINGLE(codeUnit))
 				{
-					CharOTE* oteResult = ST::Character::NewAnsi(static_cast<AnsiString::CU>(codeUnit));
+					CharOTE* oteResult = Character::NewAnsi(static_cast<AnsiString::CU>(codeUnit));
 					*newSp = reinterpret_cast<Oop>(oteResult);
 				}
 				else
 				{
 					// Otherwise return a UTF-8 surrogate Character
-					CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+					CharOTE* character = Character::NewUninitialized();
 					SmallInteger code = (static_cast<SmallInteger>(StringEncoding::Utf8) << 24) | codeUnit;
 					character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
 					character->beImmutable();
@@ -528,7 +534,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAt(Oop* const sp, const primargcount_t
 					AnsiString::CU ansiCodeUnit = 0;
 					if (codeUnit == 0 || (ansiCodeUnit = m_unicodeToAnsiCharMap[codeUnit]) != 0)
 					{
-						CharOTE* oteResult = ST::Character::NewAnsi(static_cast<unsigned char>(ansiCodeUnit));
+						CharOTE* oteResult = Character::NewAnsi(static_cast<unsigned char>(ansiCodeUnit));
 						*newSp = reinterpret_cast<Oop>(oteResult);
 						return newSp;
 					}
@@ -542,7 +548,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAt(Oop* const sp, const primargcount_t
 					code = (static_cast<SmallInteger>(StringEncoding::Utf16) << 24) | codeUnit;
 				}
 
-				CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+				CharOTE* character = Character::NewUninitialized();;
 				character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
 				character->beImmutable();
 				*newSp = reinterpret_cast<Oop>(character);
@@ -825,7 +831,7 @@ void Interpreter::StoreCharacterToStack(Oop* const sp, char32_t codePoint)
 	}
 
 	// Otherwise represent as new Character with a Utf32 encoding (i.e. as the Unicode code point)
-	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	CharOTE* character = Character::NewUninitialized();;
 	SmallInteger code = (static_cast<SmallInteger>(StringEncoding::Utf32) << 24) | codePoint;
 	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
 	character->beImmutable();

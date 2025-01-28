@@ -361,9 +361,10 @@ PointersOTE* __fastcall ObjectMemory::newPointerObject(BehaviorOTE* classPointer
 	// Initialise the fields to nils
 	const Oop nil = Oop(Pointers.Nil);		// Loop invariant (otherwise compiler reloads each time)
 	VariantObject* pLocation = ote->m_location;
-	const size_t loopEnd = oops;
-	for (size_t i = 0; i<loopEnd; i++)
+	// Compiler generates rep stosd here. Not a good choice if oops is small?
+	for (size_t i = 0; i < oops; i++) {
 		pLocation->m_fields[i] = nil;
+	}
 
 	ASSERT(ote->isPointers());
 

@@ -53,7 +53,7 @@ void Interpreter::initializeVMReferences()
 	// Defensive - if this object is changed, it'll all go horribly wrong, so attempt a repair
 	if (ObjectMemory::fetchClassOf((Oop)_Pointers.MarkedBlock) != _Pointers.ClassBlockClosure)
 	{
-		PointersOTE* markedBlock = ObjectMemory::newPointerObject(_Pointers.ClassBlockClosure, BlockClosure::FixedSize);
+		PointersOTE* markedBlock = ObjectMemory::newFixedPointerObject<BlockClosure::FixedSize>(_Pointers.ClassBlockClosure);
 		_Pointers.MarkedBlock = reinterpret_cast<BlockOTE*>(markedBlock);
 		_Pointers.MarkedBlock->beImmutable();
 	}

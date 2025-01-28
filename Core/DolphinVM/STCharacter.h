@@ -31,6 +31,7 @@ namespace ST
 		static constexpr SmallInteger Utf16Mask = 0x2000000;
 		static constexpr SmallInteger Utf8Mask = 0x1000000;
 
+		static CharOTE* NewUninitialized();
 		static CharOTE* NewAnsi(unsigned char value);
 		static CharOTE* NewUtf8(char8_t value);
 		static CharOTE* NewUtf32(char32_t value);

@@ -98,6 +98,7 @@ public:
 	static VirtualOTE* __fastcall newVirtualObject(BehaviorOTE* classPointer, size_t initialSize, size_t maxSize);
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer);
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer, size_t instanceSize);
+	template <size_t fixedSize> static PointersOTE* __fastcall newFixedPointerObject(BehaviorOTE* classPointer);
 	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, size_t instanceSize);
 	template <bool MaybeZ, bool Initialize> static BytesOTE* newByteObject(BehaviorOTE* classPointer, size_t instanceByteSize);
 	template <typename T> static typename T::MyOTE* __fastcall newUninitializedNullTermObject(size_t instanceByteSize);
@@ -927,6 +928,21 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	ASSERT(ote->m_count == 0);
 
 	return ote;
+}
+
+template <size_t fixedSize> PointersOTE* __fastcall ObjectMemory::newFixedPointerObject(BehaviorOTE* classPointer)
+{
+	PointersOTE* ote = newUninitializedPointerObject(classPointer, fixedSize);
+
+	// Initialise the fields to nils
+	const Oop nil = Oop(Pointers.Nil);		// Loop invariant (otherwise compiler reloads each time)
+	VariantObject* pLocation = ote->m_location;
+	for (size_t i = 0; i < fixedSize; i++)
+		pLocation->m_fields[i] = nil;
+
+	ASSERT(ote->isPointers());
+
+	return reinterpret_cast<PointersOTE*>(ote);
 }
 
 template <typename T> typename T::MyOTE* __fastcall ObjectMemory::newUninitializedNullTermObject(size_t byteSize)
