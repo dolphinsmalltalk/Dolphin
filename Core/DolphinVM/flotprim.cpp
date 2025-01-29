@@ -36,7 +36,7 @@ inline FloatOTE* __stdcall Float::New()
 {
 	ASSERT(sizeof(Float) == sizeof(double) + ObjectHeaderSize);
 
-	FloatOTE* newFloatPointer = reinterpret_cast<FloatOTE*>(Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Floats)].newByteObject(Pointers.ClassFloat));
+	FloatOTE* newFloatPointer = reinterpret_cast<FloatOTE*>(Interpreter::m_floatPool.newByteObject(Pointers.ClassFloat));
 	ASSERT(ObjectMemory::hasCurrentMark(newFloatPointer));
 	ASSERT(newFloatPointer->m_oteClass == Pointers.ClassFloat);
 	newFloatPointer->beImmutable();
@@ -49,7 +49,7 @@ inline FloatOTE* __stdcall Float::New(double fValue)
 {
 	ASSERT(sizeof(Float) == sizeof(double) + ObjectHeaderSize);
 
-	FloatOTE* newFloatPointer = reinterpret_cast<FloatOTE*>(Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Floats)].newByteObject(Pointers.ClassFloat));
+	FloatOTE* newFloatPointer = reinterpret_cast<FloatOTE*>(Interpreter::m_floatPool.newByteObject(Pointers.ClassFloat));
 	ASSERT(ObjectMemory::hasCurrentMark(newFloatPointer));
 	ASSERT(newFloatPointer->m_oteClass == Pointers.ClassFloat);
 	newFloatPointer->beImmutable();

@@ -216,17 +216,6 @@ void ObjectMemory::checkPools()
 
 #endif
 
-#ifdef _DEBUG
-#include <iomanip>
-
-void ObjectMemory::OTEPool::DumpStats()
-{
-	tracelock lock(TRACESTREAM);
-	TRACESTREAM << L"OTEPool(" << this << L"): total " << std::dec << m_nAllocated << ", free " << m_nFree << std::endl;
-}
-
-#endif
-
 void ObjectMemory::DumpStats(const wchar_t* stage)
 {
 #ifdef _DEBUG

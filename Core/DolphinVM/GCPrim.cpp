@@ -78,8 +78,7 @@ void Interpreter::asyncGC(uintptr_t gcFlags)
 #ifdef _DEBUG
 	if (Interpreter::executionTrace != 0)
 	{
-		for (auto i=0u;i<NumOtePools;i++)
-			m_otePools[i].DumpStats();
+		Interpreter::DumpOTEPoolStats();
 	}
 #endif
 
@@ -113,15 +112,20 @@ Oop* PRIMCALL Interpreter::primitiveCoreLeft(Oop* const sp , primargcount_t argC
 #ifdef _DEBUG
 void Interpreter::DumpOTEPoolStats()
 {
-	for (auto i=0u;i<NumOtePools;i++)
-		m_otePools[i].DumpStats();
+	m_blockPool.DumpStats();
+	m_contextPool.DumpStats();
+	m_floatPool.DumpStats();
+	m_dwordPool.DumpStats();
+
 }
 #endif
 
 void Interpreter::FlushPools()
 {
-	for (auto i = 0u; i<NumOtePools; i++)
-		m_otePools[i].clear();
+	m_blockPool.clear();
+	m_contextPool.clear();
+	m_floatPool.clear();
+	m_dwordPool.clear();
 }
 
 Oop* PRIMCALL Interpreter::primitiveOopsLeft(Oop* const sp, primargcount_t)

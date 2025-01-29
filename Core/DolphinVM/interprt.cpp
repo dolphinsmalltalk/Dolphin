@@ -72,13 +72,10 @@ size_t Interpreter::m_nOTOverflows;
 // Pools of reusable objects (just linked list of previously allocated and free'd objects of
 // correct size and class)
 // enum class Pools { Blocks, Contexts, Floats, Dwords };
-ObjectMemory::OTEPool Interpreter::m_otePools[NumOtePools] = {
-	ObjectMemory::OTEPool(Spaces::Blocks, BlockClosure::FixedSize + BlockClosure::MaxCopiedValues),
-	ObjectMemory::OTEPool(Spaces::Contexts, Context::FixedSize + Context::MaxEnvironmentTemps),
-	ObjectMemory::OTEPool(Spaces::Floats, sizeof(double)),
-	ObjectMemory::OTEPool(Spaces::Dwords, sizeof(uint32_t))
-};
-
+OTEPool<BlockClosure::FixedSize + BlockClosure::MaxCopiedValues, Spaces::Blocks, true, BlockOTE> Interpreter::m_blockPool;
+OTEPool<Context::FixedSize + Context::MaxEnvironmentTemps, Spaces::Contexts, true, ContextOTE> Interpreter::m_contextPool;
+OTEPool<sizeof(double), Spaces::Floats, false, FloatOTE> Interpreter::m_floatPool;
+OTEPool<sizeof(uint32_t), Spaces::Dwords, false, BytesOTE> Interpreter::m_dwordPool;
 
 POTE* Interpreter::m_roots[] = {
 	reinterpret_cast<POTE*>(&m_oteNewProcess),

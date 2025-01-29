@@ -69,16 +69,16 @@ void ObjectMemory::deallocate(OTE* ote)
 			break;
 
 		case Spaces::Blocks:
-			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Blocks)].deallocate(ote);
+			Interpreter::m_blockPool.deallocate(ote);
 			break;
 
 		case Spaces::Contexts:
 			// Return it to the interpreter's free list of contexts
-			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Contexts)].deallocate(ote);
+			Interpreter::m_contextPool.deallocate(ote);
 			break;
 
 		case Spaces::Dwords:
-			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Dwords)].deallocate(ote);
+			Interpreter::m_dwordPool.deallocate(ote);
 			break;
 
 		case Spaces::Heap:
@@ -87,7 +87,7 @@ void ObjectMemory::deallocate(OTE* ote)
 			break;
 		
 		case Spaces::Floats:
-			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Floats)].deallocate(ote);
+			Interpreter::m_floatPool.deallocate(ote);
 			break;
 
 		default:
@@ -101,36 +101,3 @@ void ObjectMemory::deallocate(OTE* ote)
 //#pragma auto_inline(on)
 
 #pragma code_seg(GC_SEG)
-
-// Free up a pool of objects maintained by the interpreter on request
-void ObjectMemory::OTEPool::clear()
-{
-	#ifdef MEMSTATS
-	auto nFree = m_nFree;
-	auto nAllocated = m_nAllocated;
-	#endif
-
-	while (m_pFreeList)
-	{
-		OTE* ote = PopFree();
-
-		ote->beAllocated();
-		
-		// All objects on the free list originated from the heap, so we need to send them back there
-		ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
-		ote->setSize(ote->isPointers() ? SizeOfPointers(m_size) : m_size);
-
-		ObjectMemory::deallocate(ote);
-	}
-
-	#ifdef MEMSTATS
-	{
-		ASSERT(m_nFree <= m_nAllocated);
-		m_nAllocated -= nFree;
-		ASSERT(m_nFree == 0);
-		tracelock lock(TRACESTREAM);
-		TRACESTREAM << L"OTEPool(" << static_cast<int>(m_space) << L") before clear, " << std::dec << m_nAllocated << L" allocated, "
-			<< m_nFree << L" free; after clear, " << std::dec << m_nAllocated<< L" allocated" << std::endl;
-	}
-	#endif
-}

@@ -25,6 +25,7 @@ using namespace ST;
 #undef WIN32_HEAP
 
 #if defined(_DEBUG)
+	#include <iomanip>
 	#define MEMSTATS
 	#define TRACKFREEOTEs
 	// OTEs are 16-bytes in size and aligned, so bottom 4 bits are 0. LSB is SmallInteger flag, 
@@ -268,103 +269,8 @@ public:
 
 	static constexpr size_t MinimumVirtualMemoryAvailable = 256 * 1024 * 1024;
 
-	class OTEPool
-	{
-	public:
-		Spaces	m_space;
-		size_t	m_size;
-		OTE*	m_pFreeList;
-
-#ifdef MEMSTATS
-		size_t	m_nFree;
-		size_t	m_nAllocated;
-
-		void	__cdecl DumpStats();
-		void	registerNew(OTE* newOTE, BehaviorOTE* classPointer);
-#endif
-
-		OTEPool(Spaces space, size_t size) : m_space(space), m_size(size), m_pFreeList(nullptr)
-		{
-#ifdef MEMSTATS
-			m_nFree = 0;
-			m_nAllocated = 0;
-#endif
-		}
-
-		size_t FreeCount();
-
-		void clear();
-
-		void deallocate(OTE* ote);
-
-		BytesOTE* newByteObject(BehaviorOTE* classPointer);
-		PointersOTE* newPointerObject(BehaviorOTE* classPointer);
-
-		void terminate()
-		{
-			// We don't actually free the content, as it is released more efficiently by
-			// deleting all the heap pages and OT en-masse.
-			m_pFreeList = nullptr;
-		}
-
-		OTE* PopFree()
-		{
-			OTE* ote = m_pFreeList;
-			if (ote)
-			{
-#ifdef MEMSTATS
-				m_nFree--;
-#endif
-				m_pFreeList = NextFree(ote);
-				UnmarkFree(ote);
-			}
-			return ote;
-		}
-
-#ifdef _DEBUG
-		static OTE* NextFree(const OTE* ote)
-		{
-			HARDASSERT(ote->isFree());
-			HARDASSERT(ote->m_count == 0);
-			HARDASSERT((reinterpret_cast<uintptr_t>(ote->m_location) & FREEFLAG) == FREEFLAG);
-			VariantObject* obj = reinterpret_cast<VariantObject*>(reinterpret_cast<uintptr_t>(ote->m_location) & ~FREEFLAG);
-			OTE* next = reinterpret_cast<OTE*>(obj->m_fields[0]);
-			HARDASSERT(next == nullptr || (next >= m_pOT && next <= (m_pOT + m_nOTSize)));
-			return next;
-		}
-
-		static OTE* MarkFree(OTE* pFree)
-		{
-			reinterpret_cast<uintptr_t&>(pFree->m_location) |= FREEFLAG; 
-			return pFree;
-		}
-
-		static OTE* UnmarkFree(OTE* pFree)
-		{
-			reinterpret_cast<uintptr_t&>(pFree->m_location) &= ~FREEFLAG;
-			return pFree;
-		}
-#else
-		static OTE* NextFree(const OTE* ote)
-		{
-			// The first field of the object body is used for the free list pointer
-			return reinterpret_cast<OTE*>(static_cast<VariantObject*>(ote->m_location)->m_fields[0]);
-		}
-
-		static OTE* MarkFree(OTE* pFree)
-		{
-			return pFree;
-		}
-
-		static OTE* UnmarkFree(OTE* ote)
-		{
-			return ote;
-		}
-#endif
-	};
-
-	friend class OTEPool;
 	friend class BootLoader;
+	template <size_t ObjectSize, Spaces Space, bool IsPointers, class Tote> friend class OTEPool;
 
 private:
 	///////////////////////////////////////////////////////////////////////////
@@ -516,6 +422,241 @@ private:
 	static OTE*		m_pFreePointerList;				// Head of list of free Object Table Entries
 };
 
+// Macro to calculate the byte size of an object with N pointers
+#define SizeOfPointers(N) ((static_cast<size_t>(N)+ObjectHeaderSize)*sizeof(Oop))
+
+template <size_t ObjectSize, Spaces Space, bool IsPointers, class Tote> class OTEPool
+{
+public:
+	OTE* m_pFreeList;
+
+#ifdef MEMSTATS
+	size_t	m_nFree;
+	size_t	m_nAllocated;
+
+	void	__cdecl DumpStats()
+	{
+		tracelock lock(TRACESTREAM);
+		TRACESTREAM << L"OTEPool(" << this << L"): total " << std::dec << m_nAllocated << ", free " << m_nFree << std::endl;
+	}
+
+	void registerNew(OTE* ote, BehaviorOTE* classPointer)
+	{
+		m_nAllocated++;
+#ifdef VERBOSE_MEMSTATS
+		Behavior* cl = classPointer->m_location;
+		TRACESTREAM << L"OTEPool(" << this << L"): Allocated new "
+			<< cl << L", " << LPVOID(ote) << L", total "
+			<< m_nAllocated << L", free " << m_nFree << std::endl;
+#endif
+	}
+#endif
+
+	OTEPool() : m_pFreeList(nullptr)
+	{
+#ifdef MEMSTATS
+		m_nFree = 0;
+		m_nAllocated = 0;
+#endif
+	}
+
+	size_t FreeCount()
+	{
+#if defined(MEMSTATS) && !defined(_DEBUG)
+		return m_nFree;
+#else
+		size_t nFree = 0;
+		OTE* ote = m_pFreeList;
+		while (ote)
+		{
+			HARDASSERT(ote->m_count == 0);
+			nFree++;
+			ote = NextFree(ote);
+		}
+#ifdef MEMSTATS
+		HARDASSERT(m_nFree == nFree);
+#endif
+		return nFree;
+#endif
+	}
+
+	// Free up a pool of objects maintained by the interpreter on request
+	void clear()
+	{
+#ifdef MEMSTATS
+		auto nFree = m_nFree;
+		auto nAllocated = m_nAllocated;
+#endif
+
+		while (m_pFreeList)
+		{
+			OTE* ote = PopFree();
+
+			ote->beAllocated();
+
+			// All objects on the free list originated from the heap, so we need to send them back there
+			ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
+			ote->setSize(IsPointers ? SizeOfPointers(ObjectSize) : ObjectSize);
+
+			ObjectMemory::deallocate(ote);
+		}
+
+#ifdef MEMSTATS
+		{
+			ASSERT(m_nFree <= m_nAllocated);
+			m_nAllocated -= nFree;
+			ASSERT(m_nFree == 0);
+			tracelock lock(TRACESTREAM);
+			TRACESTREAM << L"OTEPool(" << static_cast<int>(Space) << L") before clear, " << std::dec << m_nAllocated << L" allocated, "
+				<< m_nFree << L" free; after clear, " << std::dec << m_nAllocated << L" allocated" << std::endl;
+		}
+#endif
+	}
+
+	void deallocate(OTE* ote)
+	{
+		//	ASSERT(!ObjectMemoryisIntegerObject(Oop(ote)));
+		//	ASSERT(ote->m_oteClass->getCount() == MAXCOUNT);
+		HARDASSERT(ote->m_count == 0);
+
+		VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
+		obj->m_fields[0] = reinterpret_cast<Oop>(m_pFreeList);
+		m_pFreeList = MarkFree(ote);
+
+		// Free blocks are marked as free so ignored by GC, but not put on free list
+		ote->beFree();
+
+#ifdef MEMSTATS
+		/*		if (m_nAllocated == 0)
+				{
+					Class* cl = ote->m_oteClass->m_location;
+					String* st = cl->m_name->m_location;
+					TRACE("OTEPool(%p): WARNING deallocated old %s (%p)\n", this, st->m_characters, ote);
+				}
+				else
+					m_nAllocated--;
+		*/		m_nFree++;
+#endif
+	}
+	
+	Tote* newByteObject(BehaviorOTE* classPointer)
+	{
+		HARDASSERT(!IsPointers);
+
+		Tote* ote = reinterpret_cast<Tote*>(PopFree());
+		if (ote)
+		{
+			// Remove any immutability flag that might have been left by the last user of the OTE
+			ote->beMutable();
+			// N.B. Must be added to Zct if pushed on stack, otherwise no hope of recovery until next mark-sweep
+		}
+		else
+		{
+			// We don't need to ref. count the class, so use the basic instantiation method for byte objects
+			ote = reinterpret_cast<Tote*>(ObjectMemory::newByteObject<false, false>(classPointer, ObjectSize));
+#ifdef MEMSTATS
+			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
+#endif
+		}
+
+		ote->m_flags = ObjectMemory::m_spaceOTEBits[static_cast<space_t>(Space)];
+		HARDASSERT(!ote->isFree());
+		HARDASSERT(!ote->isPointers());
+		HARDASSERT(ote->heapSpace() == Space);
+		HARDASSERT(ObjectMemory::hasCurrentMark(ote));
+		HARDASSERT(ote->m_count == 0);
+		HARDASSERT(!ote->isImmutable());
+
+		return ote;
+	}
+
+	Tote* newPointerObject(BehaviorOTE* classPointer)
+	{
+		HARDASSERT(IsPointers);
+
+		Tote* ote = reinterpret_cast<Tote*>(PopFree());
+		if (!ote)
+		{
+			// We don't need to ref. count the class, so use the basic instantiation method for pointer objects
+			ote = reinterpret_cast<Tote*>(ObjectMemory::newFixedPointerObject<ObjectSize>(classPointer));
+#ifdef MEMSTATS
+			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
+#endif
+		}
+
+		ote->m_flags = ObjectMemory::m_spaceOTEBits[static_cast<space_t>(Space)];
+		HARDASSERT(!ote->isFree());
+		HARDASSERT(ote->isPointers());
+		HARDASSERT(ote->heapSpace() == Space);
+		HARDASSERT(ObjectMemory::hasCurrentMark(ote));
+		HARDASSERT(ote->m_count == 0);
+
+		return ote;
+	}
+
+	void terminate()
+	{
+		// We don't actually free the content, as it is released more efficiently by
+		// deleting all the heap pages and OT en-masse.
+		m_pFreeList = nullptr;
+	}
+
+	OTE* PopFree()
+	{
+		OTE* ote = m_pFreeList;
+		if (ote)
+		{
+#ifdef MEMSTATS
+			m_nFree--;
+#endif
+			m_pFreeList = NextFree(ote);
+			UnmarkFree(ote);
+		}
+		return ote;
+	}
+
+#ifdef _DEBUG
+	static OTE* NextFree(const OTE* ote)
+	{
+		HARDASSERT(ote->isFree());
+		HARDASSERT(ote->m_count == 0);
+		HARDASSERT((reinterpret_cast<uintptr_t>(ote->m_location) & FREEFLAG) == FREEFLAG);
+		VariantObject* obj = reinterpret_cast<VariantObject*>(reinterpret_cast<uintptr_t>(ote->m_location) & ~FREEFLAG);
+		OTE* next = reinterpret_cast<OTE*>(obj->m_fields[0]);
+		HARDASSERT(next == nullptr || (next >= ObjectMemory::m_pOT && next <= (ObjectMemory::m_pOT + ObjectMemory::m_nOTSize)));
+		return next;
+	}
+
+	static OTE* MarkFree(OTE* pFree)
+	{
+		reinterpret_cast<uintptr_t&>(pFree->m_location) |= FREEFLAG;
+		return pFree;
+	}
+
+	static OTE* UnmarkFree(OTE* pFree)
+	{
+		reinterpret_cast<uintptr_t&>(pFree->m_location) &= ~FREEFLAG;
+		return pFree;
+	}
+#else
+	static OTE* NextFree(const OTE* ote)
+	{
+		// The first field of the object body is used for the free list pointer
+		return reinterpret_cast<OTE*>(static_cast<VariantObject*>(ote->m_location)->m_fields[0]);
+	}
+
+	static OTE* MarkFree(OTE* pFree)
+	{
+		return pFree;
+	}
+
+	static OTE* UnmarkFree(OTE* ote)
+	{
+		return ote;
+	}
+#endif
+};
+
 // Lower level object creation
 // Note that we deliberately do not make this a member fn, so that we are sure it is not
 // touching any of the static member vars
@@ -555,9 +696,6 @@ inline bool ObjectMemory::isValidOop(Oop objectPointer)
 #define ot(objectPointer) (*reinterpret_cast<OTE*>(objectPointer))
 
 #define roundUpTo(n, to) ((((n)+(to)-1)/(to)) * (to))
-
-// Macro to calculate the byte size of an object with N pointers
-#define SizeOfPointers(N) ((static_cast<size_t>(N)+ObjectHeaderSize)*sizeof(Oop))
 
 inline void ObjectMemory::decRefs(Oop oop)
 {
@@ -819,115 +957,10 @@ inline size_t ObjectMemory::lastStrongPointerOf(const OTE* ote)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-inline size_t ObjectMemory::OTEPool::FreeCount()
-{
-	#if defined(MEMSTATS) && !defined(_DEBUG)
-		return m_nFree;
-	#else
-		size_t nFree = 0;
-		OTE* ote = m_pFreeList;
-		while (ote)
-		{
-			HARDASSERT(ote->m_count == 0);
-			nFree++;
-			ote = NextFree(ote);
-		}
-#ifdef MEMSTATS
-		HARDASSERT(m_nFree == nFree);
-#endif
-		return nFree;
-	#endif
-}
-
 inline void ObjectMemory::deallocateByteObject(OTE* ote)
 {
 	ASSERT(ote->isBytes());
 	deallocate(ote);
-}
-
-inline void ObjectMemory::OTEPool::deallocate(OTE* ote)
-{
-//	ASSERT(!ObjectMemoryisIntegerObject(Oop(ote)));
-//	ASSERT(ote->m_oteClass->getCount() == MAXCOUNT);
-	HARDASSERT(ote->m_count == 0);
-
-	VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
-	obj->m_fields[0] = reinterpret_cast<Oop>(m_pFreeList);
-	m_pFreeList = MarkFree(ote);
-
-	// Free blocks are marked as free so ignored by GC, but not put on free list
-	ote->beFree();
-
-	#ifdef MEMSTATS
-/*		if (m_nAllocated == 0)
-		{
-			Class* cl = ote->m_oteClass->m_location;
-			String* st = cl->m_name->m_location;
-			TRACE("OTEPool(%p): WARNING deallocated old %s (%p)\n", this, st->m_characters, ote);
-		}
-		else
-			m_nAllocated--;
-*/		m_nFree++;
-	#endif
-}
-
-// Although this looks like a long routine to inline, in fact it is very few machine instructions
-inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer)
-{
-	BytesOTE* ote = reinterpret_cast<BytesOTE*>(PopFree());
-	if (ote)
-	{
-		// Remove any immutability flag that might have been left by the last user of the OTE
-		ote->beMutable();
-		// N.B. Must be added to Zct if pushed on stack, otherwise no hope of recovery until next mark-sweep
-	}
-	else
-	{
-		// We don't need to ref. count the class, so use the basic instantiation method for byte objects
-		ote = ObjectMemory::newByteObject<false, false>(classPointer, m_size);
-		#ifdef MEMSTATS
-			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
-		#endif
-	}
-
-	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(m_space)];
-	ASSERT(!ote->isFree());
-	ASSERT(!ote->isPointers());
-	ASSERT(ote->heapSpace() == m_space);
-	ASSERT(ObjectMemory::hasCurrentMark(ote));
-	ASSERT(ote->m_count == 0);
-	ASSERT(!ote->isImmutable());
-
-	return ote;
-}
-
-// Although this looks like a long routine to inline, in fact it is very few machine instructions
-inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPointer)
-{
-	PointersOTE* ote = reinterpret_cast<PointersOTE*>(PopFree());
-	if (ote)
-	{
-		// New objects are not added to the ZCT until they are pushed on the stack
-		// Note that it is assumed that the class is sticky and does not require ref. counting
-		ote->m_oteClass = classPointer;
-	}
-	else
-	{
-		// We don't need to ref. count the class, so use the basic instantiation method for pointer objects
-		ote = ObjectMemory::newPointerObject(classPointer, m_size);
-		#ifdef MEMSTATS
-			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
-		#endif
-	}
-
-	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(m_space)];
-	ASSERT(!ote->isFree());
-	ASSERT(ote->isPointers());
-	ASSERT(ote->heapSpace() ==m_space);
-	ASSERT(ObjectMemory::hasCurrentMark(ote));
-	ASSERT(ote->m_count == 0);
-
-	return ote;
 }
 
 template <size_t fixedSize> PointersOTE* __fastcall ObjectMemory::newFixedPointerObject(BehaviorOTE* classPointer)

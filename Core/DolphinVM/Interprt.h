@@ -16,12 +16,15 @@
 #include "STBehavior.h"
 #include "STClassDesc.h"
 #include "STBlockClosure.h"
+#include "STContext.h"
+#include "STFloat.h"
 #include "InterpRegisters.h"
 
 #include "DolphinX.h"
 #include "bytecdes.h"
 #include "DolphinSmalltalk_i.h"
 #include "PrimitiveFailureCode.h"
+#include <fpieee.h>
 
 using namespace ST;
 
@@ -832,9 +835,11 @@ private:
 
 public:
 	// Pools
-	enum class Pools { Blocks, Contexts, Floats, Dwords };
-	static constexpr size_t NumOtePools = static_cast<size_t>(Pools::Dwords) + 1;
-	static ObjectMemory::OTEPool m_otePools[NumOtePools];
+	static OTEPool<BlockClosure::FixedSize + BlockClosure::MaxCopiedValues, Spaces::Blocks, true, BlockOTE> m_blockPool;
+	static OTEPool<Context::FixedSize + Context::MaxEnvironmentTemps, Spaces::Contexts, true, ContextOTE> m_contextPool;
+	static OTEPool<sizeof(double), Spaces::Floats, false, FloatOTE> m_floatPool;
+	static OTEPool<sizeof(uint32_t), Spaces::Dwords, false, BytesOTE> m_dwordPool;
+
 private:
 
 	// Process related registers

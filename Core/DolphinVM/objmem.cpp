@@ -642,8 +642,10 @@ size_t ObjectMemory::OopsUsed()
 		ote = NextFree(ote);
 	}
 
-	for (auto i=0u;i<Interpreter::NumOtePools;i++)
-		nFreeOTEs += Interpreter::m_otePools[i].FreeCount();
+	nFreeOTEs += Interpreter::m_blockPool.FreeCount();
+	nFreeOTEs += Interpreter::m_contextPool.FreeCount();
+	nFreeOTEs += Interpreter::m_floatPool.FreeCount();
+	nFreeOTEs += Interpreter::m_dwordPool.FreeCount();
 
 	return m_nOTSize - nFreeOTEs;
 }
@@ -654,22 +656,6 @@ Oop* PRIMCALL Interpreter::primitiveObjectCount(Oop* const sp, primargcount_t)
 	return sp;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-#ifdef MEMSTATS
-	#pragma code_seg(DEBUG_SEG)
-
-	void ObjectMemory::OTEPool::registerNew(OTE* ote, BehaviorOTE* classPointer) 
-	{
-		m_nAllocated++;
-		#ifdef VERBOSE_MEMSTATS
-			Behavior* cl = classPointer->m_location;
-			TRACESTREAM<< L"OTEPool(" << this<< L"): Allocated new " 
-				<< cl<< L", " << LPVOID(ote)<< L", total "
-				<< m_nAllocated<< L", free " << m_nFree << std::endl;
-		#endif
-	}
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 #pragma code_seg(MEM_SEG)
