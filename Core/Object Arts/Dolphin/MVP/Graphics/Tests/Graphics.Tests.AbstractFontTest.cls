@@ -37,6 +37,15 @@ testStbRoundTrip
 testStlRoundTrip
 	self verifyStxRoundTrip: self stlRoundTripBlock!
 
+testTextMetrics
+	| tm subject |
+	subject := self canonicalSubject.
+	tm := subject textMetrics.
+	"This is a bit of a kick-the-tyres test. We are just checking we get back some valid looking metrics really, since the values may obviously vary according to the test font."
+	self assert: tm tmBreakChar isSeparator.
+	self assert: tm tmDigitizedAspectX equals: tm tmDigitizedAspectY.
+	self assert: tm tmHeight equals: tm tmAscent + tm tmDescent!
+
 verifyStxRoundTrip: aMonadicValuable
 	| array deserialized subject150 subject original |
 	subject := self canonicalSubject.
@@ -59,6 +68,7 @@ testAtDpi!public!unit tests! !
 testComparing!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
 testStlRoundTrip!public!unit tests! !
+testTextMetrics!public!unit tests! !
 verifyStxRoundTrip:!helpers!private! !
 !
 
