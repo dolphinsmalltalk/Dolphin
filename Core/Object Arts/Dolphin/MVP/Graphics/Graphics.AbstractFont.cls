@@ -198,14 +198,15 @@ styleChanged
 	series := nil!
 
 textMetrics
-	| tm dc |
+	| dc |
 	dc := User32 getDC: nil.
-	
-	[Gdi32 selectObject: dc hgdiobj: self handle.
+	^
+	[| tm |
+	Gdi32 selectObject: dc hgdiobj: self handle.
 	tm := TEXTMETRICW newBuffer.
-	Gdi32 getTextMetrics: dc lptm: tm]
-			ensure: [User32 releaseDC: nil hDC: dc].
-	^tm!
+	Gdi32 getTextMetrics: dc lptm: tm.
+	tm]
+			ensure: [User32 releaseDC: nil hDC: dc]!
 
 unstyledCopy
 	"Answer a new <Font> that is the same as the receiver, but without any styling (i.e. without italics, bold, or underlining)."
