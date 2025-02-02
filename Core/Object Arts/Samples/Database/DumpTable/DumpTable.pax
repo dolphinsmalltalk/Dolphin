@@ -1,0 +1,61 @@
+﻿| package |
+package := Package name: 'DumpTable'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Dump Table Sample. 
+Copyright © Object Arts Ltd, 2025.
+
+An application using DBConnection. It is intended primarily for testing app deployment rather than to do anything useful.
+
+## Deployment
+
+Note: When working with  ''Database Connection'', always deploy from a freshly started image as finalization of old statements and connections may cause errors during the deployment. If this happens and the crash dump log shows a faulting call into the ODBCLibrary to free a handle, just restart the image and repeat the deployment.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+(ImageStripper new)
+	rootPackage: DumpTable owningPackage;
+	executableName: ''dumptable.exe'';
+	preserveAspectSetters: false;
+	stripDeprecatedMethods: true;
+	deploy
+``````
+
+And to examine the content: 
+
+```
+"Browse the classes and methods in the deployed application"
+Smalltalk developmentSystem browseDeploymentLog: ''dumptable.xml''.
+"Or just view the log"
+UI.Examples.XmlPad filename: ''dumptable.xml''
+```
+'.
+
+
+package classNames
+	add: #DumpTable;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Lagoon\Console Application Kit'
+	'..\..\..\Dolphin\Database\Database Connection'
+	'..\..\..\Dolphin\System\Trace\Debug Trace Stream'
+	'..\..\..\Dolphin\Base\Dolphin').
+
+package!
+
+"Class Definitions"!
+
+ConsoleSessionManager subclass: #DumpTable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"End of package definition"!
+

@@ -20,6 +20,15 @@ consoleAppUnimplemented
 
 	^#(#defineTemplate)!
 
+consoleDbAppUnimplemented
+	"Private - Expected missing selectors in a console app using the Database Connection package:
+		- defaultIcon - referenced from RegKeyAbstract and subclasses class icon methods. Icon is referenced from ResourceIdentifier which is part of the base Dolphin package, but which will be removed by actual deployment of a non-GUI app.
+		- defineTemplate - sent by ExternalStructure class>>ensureDefined, but this caller is replaced by an empty stub on actual deployment
+		- version - referenced from DBAbstractStatement class>>stbConvertFrom:. In practice this will be removed if the app does not use STB.
+	In practice the only unimplemented message in a simple console DB sample after deployment is #rollback. This is implemented by DBTransaction, which is removed in simple apps that are not using transactions."
+
+	^#(#defaultIcon #defineTemplate #version)!
+
 simpleGuiAppUnimplementedMessages
 	"Private - Answer the collection of selectors of methods expected to be missing in a simple GUI app with the image stripper:
 		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
@@ -34,6 +43,13 @@ testCommandLineHelloWorld
 	self verifyPackageClosure: (BrowserEnvironment new
 				forPackagesDeployment: {Smalltalk.CommandLineHelloWorld owningPackage})
 		missing: self consoleAppUnimplemented!
+
+testDumpTable
+	"Tests predicted unimplemented messages of a fairly minimal console application using Database Connection."
+
+	self verifyPackageClosure: (BrowserEnvironment new
+				forPackagesDeployment: {Smalltalk.DumpTable owningPackage})
+		missing: self consoleDbAppUnimplemented!
 
 testEtchASketch
 	"Etch-a-sketch uses STB."
@@ -112,8 +128,10 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 
 !Tools.Tests.PackageClosureTests categoriesForMethods!
 consoleAppUnimplemented!constants!private! !
+consoleDbAppUnimplemented!constants!private! !
 simpleGuiAppUnimplementedMessages!constants!private! !
 testCommandLineHelloWorld!public!unit tests! !
+testDumpTable!public!unit tests! !
 testEtchASketch!public!unit tests! !
 testHelloWorld!public!unit tests! !
 testNotepad!public!unit tests! !
