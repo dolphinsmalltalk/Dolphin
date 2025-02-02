@@ -21,6 +21,15 @@ consoleAppUnimplemented
 
 	^#(#defineTemplate #packages)!
 
+consoleDbAppUnimplemented
+	"Private - Expected missing selectors in a console app using the Database Connection package:
+		- defaultIcon - referenced from RegKeyAbstract and subclasses class icon methods. Icon is referenced from ResourceIdentifier which is part of the base Dolphin package, but which will be removed by actual deployment of a non-GUI app.
+		- defineTemplate - sent by ExternalStructure class>>ensureDefined, but this caller is replaced by an empty stub on actual deployment
+		- packages - sent by PackageRelativeFileLocator>>#package, but class will be removed on actual deployment
+	In practice the only unimplemented message in a simple console DB sample after deployment is #rollback. This is implemented by DBTransaction, which is removed in simple apps that are not using transactions."
+
+	^#(#defaultIcon #defineTemplate #packages)!
+
 environmentForAppDeployment: aCollectionOfPackages
 	| env names devMethods removedClasses |
 	"The in-scope world is drawn from the slice of the classes & methods that are in the requested packages and their pre-reqs"
@@ -78,6 +87,12 @@ testCommandLineHelloWorld
 
 	self verifyPackageClosure: (self environmentForAppDeployment: {CommandLineHelloWorld owningPackage})
 		missing: self consoleAppUnimplemented!
+
+testDumpTable
+	"Tests predicted unimplemented messages of a fairly minimal console application using Database Connection."
+
+	self verifyPackageClosure: (self environmentForAppDeployment: {DumpTable owningPackage})
+		missing: self consoleDbAppUnimplemented!
 
 testEtchASketch
 	"Etch-a-sketch uses STB."
@@ -144,10 +159,12 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 
 !PackageClosureTests categoriesForMethods!
 consoleAppUnimplemented!constants!private! !
+consoleDbAppUnimplemented!constants!private! !
 environmentForAppDeployment:!helpers!private! !
 environmentForPackageClosure:!helpers!private! !
 simpleGuiAppUnimplementedMessages!constants!private! !
 testCommandLineHelloWorld!public!unit tests! !
+testDumpTable!public!unit tests! !
 testEtchASketch!public!unit tests! !
 testHelloWorld!public!unit tests! !
 testNotepad!public!unit tests! !

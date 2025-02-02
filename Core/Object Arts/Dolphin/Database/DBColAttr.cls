@@ -292,7 +292,7 @@ new
 	^super new initialize! !
 
 !DBColAttr class categoriesForMethods!
-initialize!initializing!private! !
+initialize!initializing!must not strip!private! !
 new!instance creation!public! !
 !
 
