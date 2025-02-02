@@ -56,7 +56,12 @@ width
 width: pixelWidth
 	"Set the width of the receiever to pixelWidth. 0 indicates default width."
 
-	width := pixelWidth! !
+	width := pixelWidth!
+
+withLabelsMask
+	"Private - Answer the mask to apply to the receiver's style when shown in a Toolbar which hasLabels"
+
+	^0! !
 
 !ToolbarSeparator categoriesForMethods!
 imageIndexIn:!operations!private! !
@@ -66,6 +71,7 @@ style!private!style! !
 textIndexIn:!operations!private! !
 width!accessing!public! !
 width:!accessing!public! !
+withLabelsMask!accessing!private! !
 !
 
 !ToolbarSeparator class methodsFor!

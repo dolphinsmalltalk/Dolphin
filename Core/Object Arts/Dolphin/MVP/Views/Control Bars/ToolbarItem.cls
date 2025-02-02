@@ -105,7 +105,12 @@ update
 		self toolbar updateAllItems  ]!
 
 validateUserInterface: route
-	"Set the UI state of the receiver. Overridden in subclasses"! !
+	"Set the UI state of the receiver. Overridden in subclasses"!
+
+withLabelsMask
+	"Private - Answer the mask to apply to the receiver's style when shown in a Toolbar which hasLabels"
+
+	^self subclassResponsibility! !
 
 !ToolbarItem categoriesForMethods!
 commandId!commands!private! !
@@ -125,6 +130,7 @@ toolbar!accessing!private! !
 toolbar:!accessing!private! !
 update!accessing!private! !
 validateUserInterface:!operations!public! !
+withLabelsMask!accessing!private! !
 !
 
 !ToolbarItem class methodsFor!

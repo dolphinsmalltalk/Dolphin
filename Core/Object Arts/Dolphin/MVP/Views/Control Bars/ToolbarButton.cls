@@ -257,7 +257,12 @@ validateUserInterface: route
 	mask := 0.
 	query isEnabled ifTrue: [mask := mask bitOr: TBSTATE_ENABLED].
 	query isChecked ifTrue: [mask := mask bitOr: ##(TBSTATE_CHECKED|TBSTATE_PRESSED)].
-	self stateMask: mask! !
+	self stateMask: mask!
+
+withLabelsMask
+	"Private - Answer the mask to apply to the receiver's style when shown in a Toolbar which hasLabels"
+
+	^##(BTNS_AUTOSIZE | BTNS_SHOWTEXT)! !
 
 !ToolbarButton categoriesForMethods!
 checked!public!testing! !
@@ -309,6 +314,7 @@ textcolor:!accessing!public! !
 textIndexIn:!operations!private! !
 toolTipText!operations!public! !
 validateUserInterface:!operations!public! !
+withLabelsMask!accessing!private! !
 !
 
 !ToolbarButton class methodsFor!

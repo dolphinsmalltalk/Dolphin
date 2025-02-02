@@ -754,7 +754,7 @@ PresenterTest subclass: #SysLinkViewTest
 PresenterTest subclass: #ToolbarTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
 
 PresenterTest subclass: #ViewTest

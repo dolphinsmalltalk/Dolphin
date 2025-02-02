@@ -182,7 +182,7 @@ basicAddItems: tools
 								iBitmap: (toolbarItem imageIndexIn: self);
 								idCommand: cmd;
 								fsState: TB_STATEENABLED;
-								fsStyle: (toolbarItem style bitOr: ##(BTNS_AUTOSIZE | BTNS_SHOWTEXT));
+								fsStyle: (toolbarItem style bitOr: toolbarItem withLabelsMask);
 								iString: (toolbarItem textIndexIn: self)]]
 						ifFalse: 
 							[
