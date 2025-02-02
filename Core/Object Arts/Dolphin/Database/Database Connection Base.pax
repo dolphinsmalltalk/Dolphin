@@ -128,8 +128,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Legacy Date & Time'
-	'..\Registry\Dolphin Registry Access'
-).
+	'..\Registry\Dolphin Registry Access').
 
 package!
 
@@ -377,13 +376,13 @@ Error subclass: #DBError
 
 Notification subclass: #DBWarning
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'TraceStream'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 ExternalLibrary subclass: #ODBCLibrary
 	instanceVariableNames: ''
-	classVariableNames: 'TraceStream'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

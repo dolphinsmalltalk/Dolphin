@@ -80,6 +80,7 @@ contents
 		add: #('Core\Object Arts\Samples\MVP\Sliding Ball Demo\SlidingBallDemo.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\IDE\Dolphin IDE Extension Example.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Wordpad\Wordpad.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Samples\Database\DumpTable\DumpTable.pax' #plain #imageBased);
 		yourself.
 
 	"Differences Presenter"
