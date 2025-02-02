@@ -6,7 +6,10 @@ package paxVersion: 2.1;
 
 package setVariableNames: #(
 	#{Smalltalk.DBColAttr}
+	#{Smalltalk.DBConnection}
 	#{Smalltalk.DBError}
+	#{Smalltalk.DBTablesStatement}
+	#{Smalltalk.DBWarning}
 	#{Smalltalk.ODBCDATE}
 	#{Smalltalk.ODBCTIME}
 	#{Smalltalk.ODBCTIMESTAMP}
@@ -14,7 +17,10 @@ package setVariableNames: #(
 
 package setAliasVariableNames: #(
 	#{Smalltalk.DBColAttr}
+	#{Smalltalk.DBConnection}
 	#{Smalltalk.DBError}
+	#{Smalltalk.DBTablesStatement}
+	#{Smalltalk.DBWarning}
 	#{Smalltalk.ODBCDATE}
 	#{Smalltalk.ODBCTIME}
 	#{Smalltalk.ODBCTIMESTAMP}
@@ -30,7 +36,13 @@ package!
 
 Smalltalk.DBColAttr := Database.DBColAttr!
 
+Smalltalk.DBConnection := Database.DBConnection!
+
 Smalltalk.DBError := Database.DBError!
+
+Smalltalk.DBTablesStatement := Database.DBTablesStatement!
+
+Smalltalk.DBWarning := Database.DBWarning!
 
 Smalltalk.ODBCDATE := OS.SQL_DATE_STRUCT!
 

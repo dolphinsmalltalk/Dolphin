@@ -20,6 +20,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
 	'..\System\Filer\Dolphin Binary Filer'
+	'..\..\Samples\Database\DumpTable\DumpTable'
 	'..\..\Samples\MVP\Etch-a-Sketch\Etch-a-Sketch'
 	'..\..\Samples\MVP\Hello World\Hello World'
 	'..\..\Samples\Console\Hello World\Hello World (Console)'
