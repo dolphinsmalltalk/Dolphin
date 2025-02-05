@@ -85,7 +85,7 @@ testPrintDateTimeOnFormat
 				second: 21 + (827 / 1000).
 	subject := self defaultSubject.
 	expected := '6:26 ' , subject pmDesignator
-				, ' (and 21.827 seconds) on Sunday, 7 of April 2019 somewhere'.
+				, ' (and 21.827 seconds) on Sunday, 7 of April 2019 ''somewhere'''.
 	{now. now asParameter. TimeStamp fromDateAndTime: now} do: 
 			[:each |
 			| actual |
@@ -94,7 +94,7 @@ testPrintDateTimeOnFormat
 							subject
 								printDateTime: each
 								on: s
-								format: 'h:mm tt (an\d ssffffff \secon\d\s) on dddd, d ''of'' MMMM yyyy ''somewhere'''].
+								format: 'h:mm tt (an\d ssffffff \secon\d\s) on dddd, d ''of'' MMMM yyyy \''''somewhere''\'''].
 			self assert: actual equals: expected]!
 
 testPrintDurationOnFormat

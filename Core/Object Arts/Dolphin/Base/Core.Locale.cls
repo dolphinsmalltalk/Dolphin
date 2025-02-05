@@ -83,7 +83,7 @@ dateAndTimeFormatters
 			[:locale :date :stream |
 			| year |
 			year := date year.
-			date year
+			year
 				printOn: stream
 				base: 10
 				nDigits: (year negative ifTrue: [5] ifFalse: [4])].
@@ -550,7 +550,7 @@ primary
 
 print: anObject on: aWriteStream format: formatString alphabet: formatChars formatters: aLookupTable
 	| ch formatStream tokenStream |
-	tokenStream := formatString class writeStream: 9.
+	tokenStream := WriteStream on: (formatString class new: 9).
 	formatStream := formatString readStream.
 	ch := formatStream nextAvailable.
 	[ch isNil] whileFalse: 
@@ -568,14 +568,16 @@ print: anObject on: aWriteStream format: formatString alphabet: formatChars form
 						value: anObject
 						value: aWriteStream]
 				ifFalse: 
-					[('''\' includes: ch)
+					[ch == $\
 						ifTrue: 
-							[ch == $\
+							["Quoted single char, e.g. a format char"
+							aWriteStream nextPut: formatStream next]
+						ifFalse: 
+							[ch == $'
 								ifTrue: 
-									[ch := formatStream next.
-									aWriteStream nextPut: ch].
-							ch == $' ifTrue: [aWriteStream nextPutAll: (formatStream upTo: $')]]
-						ifFalse: [aWriteStream nextPut: ch].
+									["Quoted string of chars"
+									aWriteStream nextPutAll: (formatStream upTo: $')]
+								ifFalse: [aWriteStream nextPut: ch]].
 					ch := formatStream nextAvailable]]!
 
 printDate: aDate on: aWriteStream format: aString
