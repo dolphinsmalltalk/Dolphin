@@ -58,9 +58,9 @@ wineGetVersion
 !OS.NTLibrary categoriesForMethods!
 initialize!initializing!public! !
 isWine!public!testing! !
-ntQueryTimerResolution:maximum:actual:!public! !
+ntQueryTimerResolution:maximum:actual:!public!win32 functions-timer! !
 rtlNtStatusToDosError:!public!win32 functions-error handling! !
-setTimerResolution:set:actualResolution:!accessing!public! !
+setTimerResolution:set:actualResolution:!public!win32 functions-timer! !
 wineGetVersion!public! !
 !
 

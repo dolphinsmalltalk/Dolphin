@@ -14,8 +14,24 @@ OS.Tests.StdioFileStreamTest comment: ''!
 
 !OS.Tests.StdioFileStreamTest methodsFor!
 
+assert: aStdioFileStream absolutePositionEquals: anInteger
+	"Buffering is implemented in the CRT. It is a black box to us."
+
+	!
+
+assert: aStdioFileStream bufferPositionEquals: anInteger
+	"Buffering is implemented in the CRT. It is a black box to us."
+
+	!
+
+assertBufferDirty: aStdioFileStream
+	"Buffering is implemented in the CRT. It is a black box to us."!
+
 bufferSize
 	^128!
+
+expectedAnsiProtocolNames
+	^#(#Object #FileStream #gettableStream #puttableStream #readFileStream #sequencedStream #writeFileStream)!
 
 maxPosition
 	^2 ** 63 - 1!
@@ -23,11 +39,12 @@ maxPosition
 sharingError
 	^CRTError matching: [:ex | ex errno = CRTConstants.EACCES]!
 
-streamClass
-	^StdioFileStream!
+streamClassSupportsUtf8Surrogates
+	^false!
 
 streamOnFile: pathString type: aSymbol
-	^StdioFileStream read: pathString type: aSymbol!
+	self filestream: (StdioFileStream read: pathString type: aSymbol).
+	^filestream!
 
 strings
 	| pred |
@@ -47,15 +64,15 @@ subjectCollection: aSequencableCollection
 testCharacterTranslation
 	"This is mainly to remind us of some of the stdio librarys quirks when in text translation mode, etc"
 
-	{AnsiString. Utf8String. Utf16String} do: 
+	{ AnsiString. Utf8String. Utf16String } do: 
 			[:eachClass |
 			| byteCharSet subject actual expected |
 			"Eof"
-			filestream := self streamOn: eachClass empty.
-			filestream nextPut: Character eof.
-			self assert: filestream size equals: 1.
-			self assert: filestream contents equals: ''.
-			self closeTempStream: filestream.
+			subject := self streamOn: eachClass empty.
+			subject nextPut: Character eof.
+			self assert: subject size equals: 1.
+			self assert: subject contents equals: ''.
+			self closeTempStream.
 			self assert: (File readAllText: tempFileName) equals: (eachClass with: Character eof).
 			#($\n $\r) do: 
 					[:each |
@@ -63,7 +80,6 @@ testCharacterTranslation
 					subject nextPut: each.
 					actual := subject contents.
 					self assert: subject atEnd.
-					self closeTempStream: subject.
 					expected := String with: each.
 					self assert: actual equals: expected].
 
@@ -75,8 +91,7 @@ testCharacterTranslation
 			byteCharSet do: 
 					[:each |
 					actual := subject next.
-					self assert: actual equals: each].
-			self closeTempStream: subject]!
+					self assert: actual equals: each]]!
 
 testFileNotFound
 	self
@@ -138,20 +153,6 @@ testFromHandleOnPipe
 			self deny: each isDevice.
 			each close]!
 
-testMarkusKuhnUtf8
-	"The CRT streams use a different decoding algorithm to ICU for UTF-8 (basically it calls WideCharToMultibyte), so the results of reading the test file and converting it into UTF-16 (which happens in the CRT because the Unicode mode streams expect and return Utf16 encoded strings/characters through the APIs, even though the underlying file representation may be UTF-8). The NLS function has different handling of invalid sequences and there will be different numbers of replacement chars in many of the results."
-
-	| stream testFilePath |
-	#todo.	"Investigate whether it is possible to use the byte char APIs over CRT streams with CP_UTF8 in Windows 10/11"
-	testFilePath := FileLocator imageRelative
-				localFileSpecFor: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
-	stream := self streamOnFile: testFilePath type: #utf8.
-	"Should be able to read every character, even if invalid"
-	[stream atEnd] whileFalse: [stream next].
-	stream reset.
-	stream upToEnd.
-	self closeTempStream: stream!
-
 testNextLineCrOnly
 	"Test PositionableStream>>nextLine for text streams with <CR> between lines"
 
@@ -179,6 +180,28 @@ testNextLineUpToEof
 			self assert: actual equals: expected.
 			filestream close]!
 
+testNextPutAllStartingAtUtf16ToUtf8InvalidCount
+	| subject |
+	subject := self tempWriteStream: #utf8.
+	subject
+		next: 2
+		putAll: 'a🐬b' asUtf16String
+		startingAt: 1.
+	self assert: (self streamedContents: subject)
+		equals: (Utf8String with: $a with: Character replacement)!
+
+testNextPutAllStartingAtUtf16ToUtf8InvalidStart
+	"stdio streams implement UTF-8 encoding as a translation. The actual API is UTF-16. If UTF-16 surrogates are passed to the API, no errors are generated. Instead, replacement characters are written to the output."
+
+	| subject |
+	subject := self tempWriteStream: #utf8.
+	subject
+		next: 2
+		putAll: 'a🐬b' asUtf16String
+		startingAt: 3.
+	self assert: (self streamedContents: subject)
+		equals: (Utf8String with: Character replacement with: $b)!
+
 testStdErrWriteable
 	| stderr |
 	stderr := SessionManager current stderr.
@@ -195,10 +218,14 @@ testStdOutWriteable
 	self assert: stdout isWriteable! !
 
 !OS.Tests.StdioFileStreamTest categoriesForMethods!
+assert:absolutePositionEquals:!helpers!private! !
+assert:bufferPositionEquals:!helpers!private! !
+assertBufferDirty:!helpers!private! !
 bufferSize!constants!private! !
+expectedAnsiProtocolNames!constants!private! !
 maxPosition!constants!private! !
 sharingError!constants!private! !
-streamClass!helpers!private! !
+streamClassSupportsUtf8Surrogates!helpers!private! !
 streamOnFile:type:!helpers!private! !
 strings!constants!private! !
 subjectCollection:!helpers!public! !
@@ -207,9 +234,10 @@ testFileNotFound!public!unit tests! !
 testFromHandleOnDevice!public!unit tests! !
 testFromHandleOnFile!public!unit tests! !
 testFromHandleOnPipe!public!unit tests! !
-testMarkusKuhnUtf8!gettableStream only!public! !
 testNextLineCrOnly!public!unit tests! !
 testNextLineUpToEof!public!unit tests! !
+testNextPutAllStartingAtUtf16ToUtf8InvalidCount!public! !
+testNextPutAllStartingAtUtf16ToUtf8InvalidStart!public! !
 testStdErrWriteable!public!unit tests! !
 testStdInNotWriteable!public!unit tests! !
 testStdOutWriteable!public!unit tests! !
@@ -220,9 +248,13 @@ testStdOutWriteable!public!unit tests! !
 allTestSelectors
 	| roCategory |
 	roCategory := 'strict utf8' asMethodCategory.
-	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
+	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]!
+
+streamClass
+	^StdioFileStream! !
 
 !OS.Tests.StdioFileStreamTest class categoriesForMethods!
 allTestSelectors!Accessing!public! !
+streamClass!helpers!private! !
 !
 

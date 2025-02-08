@@ -116,11 +116,11 @@ anyOne
 	^self first!
 
 appendToStream: puttableStream
-	"Private - Append the receiver's elements to the argument, puttableStream.
-	We can be able to do a fast block copy. Answer the receiver.
-	Implementation note: Double dispatched from puttableStream>>nextPutAll:."
+	"Private - Append the receiver's elements to the argument, puttableStream. Answer the receiver."
 
-	puttableStream next: self size putAll: self startingAt: 1!
+	"Double dispatch back to the Stream's sequence put operation, so it knows that it is emitting a sequenceable collection and may therefore be able to perform a block copy"
+	puttableStream next: self size putAll: self startingAt: 1.
+	^self!
 
 approxSize
 	"Private - Answer the approximate size of the receiver.
@@ -543,13 +543,6 @@ decodeAt: anInteger
 
 	^self at: anInteger!
 
-decodeFrom: aReadStream upTo: anObject
-	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
-	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
-	stream, then the remainder of the future sequence is answered and the stream is left at end."
-
-	^aReadStream basicUpTo: anObject!
-
 decodeNextAvailable: anInteger from: aReadStream
 	"Private - Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
 	many as are available before the end of stream."
@@ -572,11 +565,47 @@ do: operation
 	self keysAndValuesDo: [:i :elem | operation value: elem]!
 
 emitEncodingMarkerOn: aPositionableStream
-	"Private - Emit any encoding marker used for the stream encoding this collection represents onto the
-	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
-	typically only relevant to string encodings, so there is nothing to do by default."
+	"Private - Emit any encoding marker used for the stream encoding this collection represents onto the <PositionableStream> argument, which is assumed to be at the start of its sequence."
 
-	!
+	"This typically only relevant to string encodings, so there is nothing to do by default."
+
+	^0!
+
+encodeAsAnsiOn: aWriteStream from: startInteger count: sizeInteger
+	"Private - Encode <integer>, sizeInteger, code units of the receiver starting with that at <integer>, startInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out UTF-8 encoded text. We read characters from the receiver at least sufficient for the requested number of code units to write, and put these to the stream."
+
+	self
+		encodeAsObjectsOn: aWriteStream
+		from: startInteger
+		count: sizeInteger!
+
+encodeAsBytesOn: aWriteStream from: startInteger count: sizeInteger
+	"Private - Encode <integer>, sizeInteger, elements of the receiver starting with that at <integer>, startInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out bytes. If the receiver is not a sequence of integer values in the range 0..255, then this operation will fail."
+	self
+		encodeAsObjectsOn: aWriteStream
+		from: startInteger
+		count: sizeInteger!
+
+encodeAsObjectsOn: aWriteStream from: startInteger count: sizeInteger
+	"Private - Encode <integer>, sizeInteger, elements of the receiver starting with that at <integer>, startInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out objects, so we write a corresponding range of the receiver's object elements (i.e. for Strings, only whole characters)."
+
+	startInteger to: startInteger + sizeInteger - 1 do: [:i | aWriteStream nextPut: (self at: i)]!
+
+encodeAsUtf16On: aWriteStream from: fromInteger count: countInteger
+	"Private - Encode <integer>, countInteger, elements of the receiver starting with that at <integer>, fromInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out UTF-16 encoded text, so we write elements of the receiver onto the stream on the assumption that they are `Character` objects. If the receiver does not contain `Character`s then this will fail."
+
+	self
+		encodeAsObjectsOn: aWriteStream
+		from: fromInteger
+		count: countInteger!
+
+encodeAsUtf8On: aWriteStream from: fromInteger count: countInteger
+	"Private - Encode <integer>, countInteger, code units of the receiver starting with that at <integer>, fromInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out UTF-8 encoded text. We read characters from the receiver, and put these to the stream."
+
+	self
+		encodeAsObjectsOn: aWriteStream
+		from: fromInteger
+		count: countInteger!
 
 encodedAt: anInteger put: anObject
 	"Private - Encoded the specified object beginning at the specified position in the receiver. Answer
@@ -585,19 +614,15 @@ encodedAt: anInteger put: anObject
 	self at: anInteger put: anObject.
 	^anInteger!
 
+encodedSizeAt: anInteger
+	"Private - Answer the <integer> number of basic elements of the receiver occupied by the <Object> whose first basic element is at the specified index in the receiver. For most subinstances this is always 1. The exceptions are UTF encoded strings."
+
+	^1!
+
 encodedSizeOf: anObject
 	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver's encoding."
 
 	^1!
-
-encodeOn: aWriteStream next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
-	^aWriteStream
-		basicNext: sizeInteger
-		putAll: aSequenceableCollection
-		startingAt: startInteger!
-
-encodeOn: aWriteStream nextPutAll: aSequenceableCollection
-	^aWriteStream basicNextPutAll: aSequenceableCollection!
 
 encodeOn: aPuttableStream put: anObject
 	^aPuttableStream basicNextPut: anObject!
@@ -739,10 +764,14 @@ from: startInteger to: stopInteger put: anObject
 			written := written + thisWrite].
 	^anObject!
 
-grow
-	"Private - Increase the capacity of the receiver. Answer the receiver."
+growToAtLeast: anInteger
+	"Private - Increase the capacity of the receiver to at least the <integer> argument. Answer the receiver."
 
-	self resize: self size + self growSize!
+	| s n g |
+	s := self size.
+	g := self growSize.
+	n := anInteger - s + g - 1.
+	self resize: s + (n - (n \\ g))!
 
 hash
 	"Answer the <integer> hash value for the receiver."
@@ -1193,7 +1222,7 @@ select: discriminator
 
 	| aStream |
 	aStream := self copyingClass writeStream: self copySize.
-	self keysAndValuesDo: [:i :elem | (discriminator value: elem) ifTrue: [aStream nextPut: elem]].
+	self do: [:elem | (discriminator value: elem) ifTrue: [aStream nextPut: elem]].
 	^aStream contents!
 
 sixth
@@ -1321,15 +1350,18 @@ copyWith:atIndex:!copying!public! !
 copyWithoutAll:!copying!public! !
 copyWithoutIndex:!copying!public! !
 decodeAt:!encode/decode!private! !
-decodeFrom:upTo:!encode/decode!private! !
 decodeNextAvailable:from:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
 do:!debugger-step through!enumerating!public! !
 emitEncodingMarkerOn:!encode/decode!private! !
+encodeAsAnsiOn:from:count:!private! !
+encodeAsBytesOn:from:count:!encode/decode!private! !
+encodeAsObjectsOn:from:count:!encode/decode!private! !
+encodeAsUtf16On:from:count:!encode/decode!private! !
+encodeAsUtf8On:from:count:!encode/decode!private! !
 encodedAt:put:!accessing!encode/decode!private! !
+encodedSizeAt:!encode/decode!private! !
 encodedSizeOf:!encode/decode!private! !
-encodeOn:next:putAll:startingAt:!encode/decode!private! !
-encodeOn:nextPutAll:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
 encoding!constants!public! !
 endsWith:!comparing!public! !
@@ -1348,7 +1380,7 @@ from:keysAndValuesDo:!enumerating!public! !
 from:to:do:!enumerating!public! !
 from:to:keysAndValuesDo:!enumerating!public! !
 from:to:put:!accessing!public! !
-grow!mutating!private! !
+growToAtLeast:!mutating!private! !
 hash!comparing!public! !
 identityIndexOf:!public!searching! !
 identityIndexOf:ifAbsent:!public!searching! !
@@ -1428,12 +1460,20 @@ binarySearch: aSequenceableCollection for: anObject using: searchBlock
 					ifFalse: [high := index - 1]].
 	^low!
 
-emitEncodingMarkerOn: aPositionableStream
-	"Private - Emit any encoding marker used for the stream encoding this collection represents onto the
-	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
-	typically only relevant to string encodings, so there is nothing to do by default."
+decodeFrom: aReadStream upTo: anObject
+	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
+	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
+	stream, then the remainder of the future sequence is answered and the stream is left at end."
 
-	!
+	^aReadStream basicUpTo: anObject!
+
+encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
+	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be it's underlying collection, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is a collection of object pointers, we double-dispatch to aSequenceableCollection to ask it to write its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream as its binary encoding. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval, but `Character` objects will be written."
+
+	aSequenceableCollection
+		encodeAsObjectsOn: aWriteStream
+		from: fromInteger
+		count: countInteger!
 
 encoding
 	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #binary, #pointers, #ansi, #utf8, #utf16le or #utf32."
@@ -1474,7 +1514,8 @@ writeStream: anInteger
 
 !Core.SequenceableCollection class categoriesForMethods!
 binarySearch:for:using:!public!searching! !
-emitEncodingMarkerOn:!encode/decode!private! !
+decodeFrom:upTo:!private! !
+encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 new:streamContents:!public!stream creation! !
 ofSize:!instance creation!private! !

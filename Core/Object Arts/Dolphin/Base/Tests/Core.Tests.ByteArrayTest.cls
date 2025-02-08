@@ -153,9 +153,9 @@ testMixedConcatenation
 						result := self verifyConcatenation: each with: eachArray.
 						self deny: eachArray identicalTo: result.
 						self assert: result class identicalTo: self collectionClass]].
-	"It doesn't really make sense to catenate strings onto ByteArrays, but for historical reasons this can be done for AnsiStrings. However it doesn't work for UTF-encoded strings (by design)."
-	self should: [#[] , Character dolphin asUtf8String] raise: Error.
-	self should: [#[] , Character dolphin asUtf16String] raise: Error!
+	"It doesn't particularly make sense to catenate strings onto ByteArrays, but as of Dolphin 8.2.3 it will work."
+	self assert: #[] , Character dolphin asUtf8String equals: Character dolphin asUtf8String asByteArray.
+	self assert: #[], Character dolphin asUtf16String equals: Character dolphin asUtf16String asByteArray!
 
 testStbRoundTrip
 	| subject bytes rehydrated |

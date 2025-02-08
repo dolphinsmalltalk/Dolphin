@@ -18,15 +18,6 @@ OS.StdioTextFileStream comment: '`OS.StdioTextFileStream` is the abstract class 
 
 !OS.StdioTextFileStream methodsFor!
 
-cr
-	"Store the line delimiter character sequence (as required by
-	the environment) as the next element(s) of the receiver."
-
-	"Implementation Note: Assumes the receiver is in text mode, and 
-	will translate the single LF character to a CR/LF pair on output."
-
-	self nextPut: $\n!
-
 externalType
 	"Answer a <symbol> which names the external stream type of the receiver."
 
@@ -45,20 +36,7 @@ next
 	"Answer a <Character> being the next of the receiver's future sequence values. Raise an
 	error if at EOF."
 
-	^(self bufferPrototype decodeNextFrom: self) ifNil: [self errorEndOfStream]!
-
-next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
-
-	| block end |
-	end := startInteger + countInteger - 1.
-	block := self bufferClass
-				coerceString: ((startInteger == 1 and: [end == aSequenceableCollection size])
-						ifTrue: [aSequenceableCollection]
-						ifFalse: [aSequenceableCollection copyFrom: startInteger to: end]).
-	self nextPutAll: block.
-	^aSequenceableCollection!
+	^self decodeNext ifNil: [self errorEndOfStream]!
 
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the 
@@ -102,16 +80,6 @@ nextPut: aCharacter
 
 	^self bufferPrototype encodeOn: self put: aCharacter!
 
-peek
-	"Answer the next element in the collection, but do not change the position reference. 
-	Answer nil if the receiver is at its end."
-
-	| pos ch |
-	pos := self position.
-	ch := self nextAvailable.
-	ch notNil ifTrue: [self position: pos].
-	^ch!
-
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
@@ -120,23 +88,31 @@ upToEnd
 	Note however that due to line end translations, the number of characters read will probably be significantly 
 	fewer than the remaining size of the file."
 
-	^self basicNextAvailable: self size - self position + 1! !
+	^self basicNextAvailable: self size - self position + 1!
+
+xnext: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger
+	to the receiver. Answer aSequenceableCollection."
+
+	| block end |
+	end := startInteger + countInteger - 1.
+	block := self bufferClass
+				coerceString: ((startInteger == 1 and: [end == aSequenceableCollection size])
+						ifTrue: [aSequenceableCollection]
+						ifFalse: [aSequenceableCollection copyFrom: startInteger to: end]).
+	self nextPutAll: block.
+	^aSequenceableCollection! !
 
 !OS.StdioTextFileStream categoriesForMethods!
-cr!accessing!public! !
 externalType!accessing!public! !
-getString:!accessing!private! !
+getString:!private!reading! !
 isText!public!testing! !
-next!accessing!public! !
-next:putAll:startingAt:!accessing!public! !
-nextLine!accessing!public! !
-nextPut:!accessing!public! !
-peek!accessing!public! !
-upToEnd!accessing!public! !
+next!public!reading! !
+nextLine!public!reading! !
+nextPut:!public!writing! !
+upToEnd!public!reading! !
+xnext:putAll:startingAt:!public!writing! !
 !
-
-OS.StdioTextFileStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
-OS.StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
 
 !OS.StdioTextFileStream class methodsFor!
 

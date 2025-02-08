@@ -212,22 +212,22 @@ close!operations!public! !
 contentsSpecies!accessing!private! !
 errorEndOfStream!exceptions!public! !
 flush!operations!public! !
-next!accessing!public! !
-next:!accessing!public! !
-next:putAll:startingAt:!accessing!public! !
-nextAvailable:!accessing!public! !
-nextInt32!binary filing!public! !
-nextInt32Put:!binary filing!public! !
-nextMatchFor:!accessing!public! !
-nextPut:!accessing!public! !
-nextPutAll:!accessing!public! !
+next!public!reading! !
+next:!public!writing! !
+next:putAll:startingAt:!public!writing! !
+nextAvailable:!public!reading! !
+nextInt32!public!reading! !
+nextInt32Put:!public!writing! !
+nextMatchFor:!public!reading! !
+nextPut:!public!writing! !
+nextPutAll:!public!writing! !
 Read:cb:pcbRead:!**auto generated**!primitives!public! !
-read:count:!accessing!public! !
+read:count:!public!reading! !
 skipTo:!positioning!public! !
-upTo:!accessing!public! !
-upToEnd!accessing!public! !
+upTo:!public!reading! !
+upToEnd!public!reading! !
 Write:cb:pcbWritten:!**auto generated**!primitives!public! !
-write:count:!accessing!public! !
+write:count:!public!writing! !
 !
 
 OS.COM.ISequentialStream methodProtocol: #ISequentialStream attributes: #(#readOnly) selectors: #(#Read:cb:pcbRead: #Write:cb:pcbWritten:)!

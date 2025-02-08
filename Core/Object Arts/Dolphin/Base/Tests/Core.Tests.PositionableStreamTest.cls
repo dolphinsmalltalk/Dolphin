@@ -22,17 +22,41 @@ arrayedCollections
 arrays
 	^#(#(#()) #(#(#x)) #(#(#x #y)))!
 
+assert: aPositionableStream absolutePositionEquals: anInteger
+	self assert: aPositionableStream absolutePosition equals: anInteger!
+
+assert: aPositionableStream bufferPositionEquals: anInteger
+	self assert: aPositionableStream bufferPosition equals: anInteger!
+
+assertBufferDirty: subject
+	self assert: subject isBufferDirty!
+
+bufferClasses
+	^##(IdentityDictionary withAll: {
+				#utf8 -> Utf8String.
+				#utf16 -> Utf16String.
+				#ansi -> AnsiString.
+				#text -> Utf8String.
+				#pointers -> Array
+			})!
+
+bufferSizeOfStream: subject
+	^subject collection size!
+
 byteArrays
 	^#(#(#[] #()) #(#[1] #(1)) #(#[1 255] #(1 255)))!
 
 collections
 	^self strings , self byteArrays , self arrays, self intervals , self orderedCollections, self runArrays!
 
+expectedAnsiProtocolNames
+	^#(#collectionStream #Object #sequencedStream)!
+
 intervals
 	^{{1 to: 0. #()}. {2 to: 2. #(2)}. {1 to: 5. #(1 2 3 4 5)}. {3 to: 1 by: -1. #(3 2 1)}}!
 
-newStream
-	^self streamOn: String new!
+newStream: aSymbol
+	^self streamClass on: (PositionableStream.ByteBufferClasses at: aSymbol) new!
 
 orderedCollections
 	^{{OrderedCollection new. #()}.
@@ -63,6 +87,12 @@ streamClassSupportsPointers
 streamClassSupportsUtf16
 	^true!
 
+streamClassSupportsUtf8Surrogates
+	^true!
+
+streamedContents: aStream
+	^aStream contents!
+
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -85,21 +115,88 @@ streamWith: aSequenceableCollection
 	^self streamClass with: aSequenceableCollection copy!
 
 strings
-	^{#('' #()).
-		{Utf8String empty. #()}.
-		{Utf16String empty. #()}.
-		#('a' #($a)).
-		#('abc' #($a $b $c)).
-		{'£€1' asAnsiString. #($£ $\x20AC $1)}.
-		{'a£€1' asUtf8String. #($a $£ $\x20AC $1)}.
-		{Character byteCharacterSet. Character byteCharacterSet asArray}.
-		{'a' , Character dolphin asUtf8String , '文'. #($a $\x1F42C $\x6587)}.
-		{'a' , Character dolphin asUtf16String , '文'. #($a $\x1F42C $\x6587)}}!
+	| strings |
+	strings := {
+				#('' #()).
+				{ Utf8String empty. #() }.
+				#('a' #($a)).
+				#('abc' #($a $b $c)).
+				{ '£€1' asAnsiString. #($£ $\x20AC $1) }.
+				{ 'a£€1' asUtf8String. #($a $£ $\x20AC $1) }.
+				{ Character byteCharacterSet. Character byteCharacterSet asArray }.
+				{ 'a' , Character dolphin asUtf8String , '文'. #($a $\x1F42C $\x6587) }
+			}.
+	^self streamClassSupportsUtf16
+		ifTrue: 
+			[strings , {
+						{ Utf16String empty. #() }.
+						{ 'a' , Character dolphin asUtf16String , '文'. #($a $\x1F42C $\x6587) }
+					}]
+		ifFalse: [strings]!
 
 subjectCollection: aSequenceableCollection
 	^aSequenceableCollection!
 
+tempReadStream
+	^self tempReadStream: #text!
+
+tempReadStream: aSymbol
+	"Only applicable for tests of readable streams"
+
+	self streamOn: (self newStream: aSymbol)!
+
+tempWriteStream
+	"Private - Answer a writeable FileStream on a temporary file."
+
+	^self tempWriteStream: #text!
+
+tempWriteStream: aSymbol
+	"Only applicable for write steam test subclasses"
+
+	^self newStream: aSymbol!
+
+test1065
+	<mustConform: #writeFileStream>
+	| filename |
+	#(0 1 512 4095 4096 8191 8192 8193 16383 16384 16385) do: 
+			[:size |
+			| data written subject |
+			data := WriteStream on: (ByteArray new: size).
+			size timesRepeat: [data nextPut: (OS.Ucrt rand bitAnd: 255)].
+			data := data grabContents.
+			subject := self tempWriteStream: #binary.
+			subject
+				next: data size
+				putAll: data
+				startingAt: 1.
+			filename := subject name.
+			subject close.
+			written := File readAllBytes: filename.
+			self assert: data equals: written]!
+
+testAppend
+	<mustConform: #writeFileStream>
+	| actual padding filename subject |
+	subject := self tempWriteStream.
+	padding := String new: (self bufferSizeOfStream: subject) - $\xFEFF utf8Length - 1 withAll: $\x20.
+	subject
+		nextPutAll: padding;
+		nextPut: Character dolphin.
+	filename := subject name.
+	subject close.
+	subject := self streamClass
+				write: filename
+				mode: #append
+				check: false
+				type: #utf8.
+	[subject nextPutAll: ' says hello'] ensure: [subject close].
+	actual := File readAllText: filename.
+	self assert: (actual beginsWith: padding).
+	self assert: (actual copyFrom: padding size + 1)
+		equals: Character dolphin asUtf8String , ' says hello'!
+
 testBasicNext
+	<mustConform: #gettableStream>
 	self arrayedCollections do: 
 			[:pair |
 			| each subject collection |
@@ -114,8 +211,7 @@ testBasicNext
 					actual := subject basicNext.
 					self assert: actual equals: expected].
 			self assert: subject atEnd.
-			self should: [subject basicNext] raise: subject class endOfStreamSignal.
-			self closeTempStream: subject]!
+			self should: [subject basicNext] raise: subject class endOfStreamSignal]!
 
 testContents
 	self collections do: 
@@ -123,8 +219,7 @@ testContents
 			| each stream |
 			each := pair first.
 			stream := self streamWith: each.
-			self assert: stream contents equals: each.
-			self closeTempStream: stream]!
+			self assert: stream contents equals: each]!
 
 testEncodedSizeOf
 	| subject |
@@ -133,63 +228,71 @@ testEncodedSizeOf
 	self assert: (subject encodedSizeOf: $£) equals: 1.
 	"Multi-byte characters will be substituted with the replacement character in ANSI streams"
 	self assert: (subject encodedSizeOf: Character dolphin) equals: 1.
-	self closeTempStream: subject.
 	subject := self streamOn: Utf8String new.
 	self assert: (subject encodedSizeOf: $a) equals: 1.
 	self assert: (subject encodedSizeOf: $£) equals: 2.
 	self assert: (subject encodedSizeOf: Character dolphin) equals: 4.
-	self closeTempStream: subject.
 	self streamClassSupportsUtf16
 		ifTrue: 
 			[subject := self streamOn: Utf16String new.
 			self assert: (subject encodedSizeOf: $a) equals: 1.
 			self assert: (subject encodedSizeOf: $£) equals: 1.
-			self assert: (subject encodedSizeOf: Character dolphin) equals: 2.
-			self closeTempStream: subject]!
+			self assert: (subject encodedSizeOf: Character dolphin) equals: 2]!
 
 testEncoding
+	<mustConform: #gettableStream>
+
 	| subject |
 	subject := self streamOn: AnsiString empty.
 	self assert: subject encoding equals: #ansi.
-	self closeTempStream: subject.
 	subject := self streamOn: Utf8String empty.
 	self assert: subject encoding equals: #utf8.
-	self closeTempStream: subject.
 	self streamClassSupportsUtf16
 		ifTrue: 
 			[subject := self streamOn: Utf16String empty.
-			self assert: subject encoding equals: #utf16le.
-			self closeTempStream: subject].
+			self assert: subject encoding equals: #utf16le].
 	subject := self streamOn: #[1].
 	self assert: subject encoding equals: #binary.
-	self closeTempStream: subject.
 	self streamClassSupportsPointers
 		ifTrue: 
 			[subject := self streamOn: #('abc').
-			self assert: subject encoding equals: #pointers.
-			self closeTempStream: subject]!
+			self assert: subject encoding equals: #pointers]!
 
 testMarkusKuhnUtf8
 	"Tests the decoding of UTF-8 while streaming over test data that contains most possible error and boundary cases"
+	<mustConform: #gettableStream>
 
-	| stream testFilePath bytes utf16 utf8 |
+	| subject testFilePath bytes utf16 utf8 |
 	testFilePath := FileLocator imageRelative
 				localFileSpecFor: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
-	stream := self streamOnFile: testFilePath type: #utf8.
+	subject := self streamOnFile: testFilePath type: #utf8.
 	"Should be able to read every character, even if invalid"
-	[stream atEnd] whileFalse: [stream next].
+	[subject atEnd] whileFalse: [subject next].
 	bytes := File readAllBytes: testFilePath.
 	utf8 := Utf8String fromByteArray: bytes.
 	utf16 := Utf16String fromBytes: bytes codePage: OS.NlsConstants.CP_UTF8.
-	self assert: stream contents equals: utf8.
-	stream reset.
-	self assert: stream upToEnd equals: utf16.
-	self closeTempStream: stream!
+	self assert: subject contents equals: utf8.
+	subject reset.
+	self assert: subject upToEnd equals: utf16!
 
 testNew
 	self should: [self streamClass new] raise: Error!
 
+testNewContents
+	<mustConform: #puttableStream>
+	| stream contents |
+	stream := self streamWith: String new.
+	self assert: (self streamedContents: stream) isEmpty.
+	self assert: stream position equals: 0.
+	stream nextPut: $h.
+	self assert: (self streamedContents: stream) equals: 'h'.
+	stream := self streamWith: 'hel'.
+	stream nextPutAll: 'lo'.
+	contents := self streamedContents: stream.
+	self assert: contents equals: 'hello'!
+
 testNext
+	<mustConform: #gettableStream>
 	self arrayedCollections do: 
 			[:pair |
 			| each subject collection |
@@ -204,10 +307,10 @@ testNext
 					actual := subject next.
 					self assert: actual equals: expected].
 			self assert: subject atEnd.
-			self should: [subject next] raise: subject class endOfStreamSignal.
-			self closeTempStream: subject]!
+			self should: [subject next] raise: subject class endOfStreamSignal]!
 
 testNextAvailable
+	<mustConform: #gettableStream>
 	self collections do: 
 			[:pair |
 			| each subject elems actual expected |
@@ -222,10 +325,10 @@ testNextAvailable
 					expected := elems copyFrom: 1 to: i.
 					self assert: actual asArray equals: expected].
 			self assert: subject atEnd.
-			self assert: (subject nextAvailable) isNil.
-			self closeTempStream: subject]!
+			self assert: (subject nextAvailable) isNil]!
 
 testNextAvailableColon
+	<mustConform: #gettableStream>
 	self collections do: 
 			[:pair |
 			| each subject elems actual expected |
@@ -242,10 +345,10 @@ testNextAvailableColon
 			self assert: subject atEnd.
 			self assert: (subject nextAvailable: 1) isEmpty.
 			subject reset.
-			self assert: (subject nextAvailable: elems size + 1) equals: each.
-			self closeTempStream: subject]!
+			self assert: (subject nextAvailable: elems size + 1) equals: each]!
 
 testNextColon
+	<mustConform: #gettableStream>
 	self collections do: 
 			[:pair |
 			| each subject elems actual expected |
@@ -261,11 +364,22 @@ testNextColon
 					expected := elems copyFrom: 1 to: i.
 					self assert: actual asArray equals: expected].
 			self assert: subject atEnd.
-			self should: [subject next: 1] raise: Stream endOfStreamSignal.
-			self closeTempStream: subject]!
+			self should: [subject next: 1] raise: Stream endOfStreamSignal]!
+
+testNextColonPutColon
+	<mustConform: #puttableStream>
+	| stream |
+	stream := self tempWriteStream: #text.
+	stream next: 0 put: $a.
+	self assert: (self streamedContents: stream) equals: ''.
+	stream next: 1 put: $a.
+	self assert: (self streamedContents: stream) equals: 'a'.
+	stream next: 2 put: $b.
+	self assert: (self streamedContents: stream) equals: 'abb'!
 
 testNextIllegalUtf8CodePositions
 	"Test cases from Kuhn"
+	<mustConform: #gettableStream>
 
 	"5 Illegal code positions
 
@@ -294,6 +408,7 @@ testNextIllegalUtf8CodePositions
 	self assert: (self verifyNonChars:#( 'eda080' 'edb080'  'eda080' 'edbfbf' 'edadbf' 'edb080' 'edadbf' 'edbfbf' 'edae80' 'edb080' 'edae80' 'edbfbf' 'edafbf' 'edb080' 'edafbf' 'edbfbf')) equals: 16 + 1.!
 
 testNextInto
+	<mustConform: #gettableStream>
 	| stream result endOfStream |
 	"Previously-failing tests"
 	stream := self streamOn: #[1 2 3].
@@ -301,40 +416,35 @@ testNextInto
 	endOfStream := stream class endOfStreamSignal.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(1 2).
-	self closeTempStream: stream.
 	stream := self streamOn: #[1 2 3].
 	result := Array new: 3.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(1 2 3).
-	self closeTempStream: stream.
 	stream := self streamOn: #[1 2 3 4 5 6 7 8 9].
 	result := Array new: 4.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(1 2 3 4).
-	self closeTempStream: stream.
 	stream := self streamOn: #[1 2 3 4 5 6 7 8 9].
 	result := Array new: 5.
 	stream next: 2.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(3 4 5 6 7).
-	self closeTempStream: stream.
 
 	"Expected failure"
 	stream := self streamOn: #[1 2 3].
 	result := Array new: 5.
-	self should: [stream nextInto: result] raise: endOfStream.
-	self closeTempStream: stream!
+	self should: [stream nextInto: result] raise: endOfStream!
 
 testNextLine
-	"No line delimiters"
+	<mustConform: #gettableStream>
 
+	"No line delimiters"
 	#('' 'a' 'ab' 'abc') do: 
 			[:each |
 			| stream |
 			stream := self streamOn: each.
 			self assert: stream nextLine equals: each.
-			self assert: stream atEnd.
-			self closeTempStream: stream].
+			self assert: stream atEnd].
 
 	"Empty but for a single line delimiter"
 	{String with: Character lf. String lineDelimiter} do: 
@@ -342,8 +452,7 @@ testNextLine
 			| stream |
 			stream := self streamOn: each.
 			self assert: stream nextLine equals: ''.
-			self assert: stream atEnd.
-			self closeTempStream: stream].
+			self assert: stream atEnd].
 	"Finishes with line delimiter"
 	{String with: Character lf. String lineDelimiter} do: 
 			[:eachDelim |
@@ -352,8 +461,7 @@ testNextLine
 					| stream |
 					stream := self streamOn: each , eachDelim.
 					self assert: stream nextLine equals: each.
-					self assert: stream atEnd.
-					self closeTempStream: stream]].
+					self assert: stream atEnd]].
 	"Finishes with pair of line delimiters"
 	{String with: Character lf. String lineDelimiter} do: 
 			[:eachDelim |
@@ -365,8 +473,7 @@ testNextLine
 					self assert: stream atEnd not.
 					"Empty line"
 					self assert: stream nextLine equals: ''.
-					self assert: stream atEnd.
-					self closeTempStream: stream]].
+					self assert: stream atEnd]].
 	"Starts with line delimiter, delimiter between lines, two delimiters between lines"
 	{String with: Character lf. String lineDelimiter} do: 
 			[:eachDelim |
@@ -383,8 +490,7 @@ testNextLine
 					self assert: stream nextLine equals: ''.
 					self deny: stream atEnd.
 					self assert: stream nextLine equals: each.
-					self assert: stream atEnd.
-					self closeTempStream: stream]].
+					self assert: stream atEnd]].
 
 
 	"Single CR at end of file"
@@ -396,11 +502,11 @@ testNextLine
 			stream reset.
 			line := stream nextLine.
 			self assert: line equals: each.
-			self assert: stream atEnd.
-			self closeTempStream: stream]!
+			self assert: stream atEnd]!
 
 testNextLineCrOnly
 	"Test PositionableStream>>nextLine for text streams with <CR> between lines"
+	<mustConform: #gettableStream>
 
 	#('a' 'ab' 'abc') do: 
 			[:each |
@@ -411,11 +517,11 @@ testNextLineCrOnly
 			self assert: stream nextLine equals: each.
 			self deny: stream atEnd.
 			self assert: stream nextLine equals: each.
-			self assert: stream atEnd.
-			self closeTempStream: stream]!
+			self assert: stream atEnd]!
 
 testNextLongUtf8Encodings
 	"UTF-8 can encode values up to 16rFFFFFFF. In practice these are not required since the maximum Unicode code point is U+10FFFF, which requires only 4 bytes to encode, but in theory they could be encountered, and should be treated as invalid characters (i.e. substituted with the replacement character"
+	<mustConform: #gettableStream>
 
 	| subject |
 	subject := self
@@ -431,11 +537,11 @@ testNextLongUtf8Encodings
 	5 timesRepeat: [self assert: subject next equals: Character replacement].
 	self assert: subject next equals: $\x20AC.
 	6 timesRepeat: [self assert: subject next equals: Character replacement].
-	self assert: subject next equals: $\x4F60.
-	self closeTempStream: subject!
+	self assert: subject next equals: $\x4F60!
 
 testNextOtherNonCharactersUtf16
 	"Other 'noncharacters' from Kuhn"
+	<mustConform: #gettableStream>
 
 	| count |
 	"5.3.1  U+FFFE = ef bf be
@@ -456,6 +562,7 @@ testNextOtherNonCharactersUtf16
 
 testNextOtherNonCharactersUtf8
 	"Other 'noncharacters' from Kuhn"
+	<mustConform: #gettableStream>
 
 	| count |
 	"5.3.1  U+FFFE = ef bf be
@@ -475,6 +582,8 @@ testNextOtherNonCharactersUtf8
 		equals: 2 * 16 + 1!
 
 testNextOverlongUtf8
+	<mustConform: #gettableStream>
+
 	| subject |
 	"4.1 Overlong ASCII character encodings"
 	subject := self
@@ -486,7 +595,6 @@ testNextOverlongUtf8
 			i timesRepeat: [self assert: subject next equals: Character replacement].
 			self assert: subject next equals: $_].
 	self assert: subject atEnd.
-	self closeTempStream: subject.
 
 	"4.2 Maximum overlong sequences"
 	subject := self
@@ -497,7 +605,7 @@ testNextOverlongUtf8
 			[:i |
 			i timesRepeat: [self assert: subject next equals: Character replacement].
 			self assert: subject next equals: Character lf].
-	self closeTempStream: subject.
+
 	"4.3 Overlong representations of NUL"
 	subject := self
 				streamOnBytes: #[16rC0 16r80 10 16rE0 16r80 16r80 10 16rF0 16r80 16r80 16r80 10 16rF8 16r80 16r80 16r80 16r80 10 16rFC 16r80 16r80 16r80 16r80 16r80 10]
@@ -506,8 +614,7 @@ testNextOverlongUtf8
 		do: 
 			[:i |
 			i timesRepeat: [self assert: subject next equals: Character replacement].
-			self assert: subject next equals: Character lf].
-	self closeTempStream: subject!
+			self assert: subject next equals: Character lf]!
 
 testNextPut
 	self writeableCollections do: 
@@ -519,24 +626,400 @@ testNextPut
 			subject isWriteable
 				ifTrue: 
 					[elems do: [:e | subject nextPut: e].
-					actual := subject contents.
+					actual := self streamedContents: subject.
 					self assert: subject atEnd.
-					self closeTempStream: subject.
 					expected := each , each.
 					self assert: actual equals: expected]
 				ifFalse: [elems size > 0 ifTrue: [self writeOperationNotImplemented: [subject nextPut: elems first]]]]!
 
-testNextWord
-	"Single words"
+testNextPutAll
+	<mustConform: #writeFileStream>
+	| string written actual offset bufferSize subject filename |
+	subject := self tempWriteStream.
+	written := ''.
+	offset := $\xFEFF utf8Length.
+	self assert: subject position equals: 0.
+	self assert: subject bufferPositionEquals: offset.
+	self assert: subject absolutePositionEquals: offset.
+	"Write nothing"
+	subject nextPutAll: ''.
+	self assert: subject position equals: 0.
+	self assert: subject bufferPositionEquals: offset.
+	self assert: subject absolutePositionEquals: offset.
+	"Write one byte"
+	subject nextPutAll: 'X'.
+	written := 'X'.
+	self assert: subject position equals: 1.
+	self assert: subject bufferPositionEquals: offset + 1.
+	self assert: subject absolutePositionEquals: offset + 1.
+	"Fill the first page up to the penultimate byte"
+	bufferSize := self bufferSizeOfStream: subject.
+	string := String new: bufferSize - offset - 2 withAll: $X.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: bufferSize - 1.
+	self assert: subject absolutePositionEquals: bufferSize - 1.
+	self assert: subject position equals: bufferSize - 1 - offset.
+	self assertBufferDirty: subject.
+	"Fill the last byte - page full, but not written yet"
+	string := 'Z'.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: bufferSize.
+	self assert: subject absolutePositionEquals: bufferSize.
+	self assert: subject position equals: bufferSize - offset.
+	self assertBufferDirty: subject.
+	"Write another byte to overflow into next page"
+	string := 'A'.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: 1.
+	self assert: subject absolutePositionEquals: bufferSize + 1.
+	self assert: subject position equals: bufferSize + 1 - offset.
+	self assertBufferDirty: subject.
+	"Fill the 2nd page up to the last byte"
+	string := String new: bufferSize - 2 withAll: $X.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: bufferSize - 1.
+	self assert: subject absolutePositionEquals: bufferSize * 2 - 1.
+	self assert: subject position equals: bufferSize * 2 - 1 - offset.
+	self assertBufferDirty: subject.
+	"Write a two byte char causing overflow to next page"
+	string := '£'.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: 1.
+	self assert: subject absolutePositionEquals: bufferSize * 2 + 1.
+	self assert: subject position equals: bufferSize * 2 + 1 - offset.
+	self assertBufferDirty: subject.
+	"Fill the 3nd page up to the 2nd to last byte"
+	string := String new: bufferSize - 3 withAll: $X.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: bufferSize - 2.
+	self assert: subject absolutePositionEquals: bufferSize * 3 - 2.
+	self assert: subject position equals: bufferSize * 3 - 2 - offset.
+	self assertBufferDirty: subject.
+	"Write a three byte char causing 1-byte overflow to next page"
+	string := '€'.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: 1.
+	self assert: subject absolutePositionEquals: bufferSize * 3 + 1.
+	self assert: subject position equals: bufferSize * 3 + 1 - offset.
+	self assertBufferDirty: subject.
+	"Fill the 4th page up to the 2nd to last byte"
+	string := String new: bufferSize - 3 withAll: $X.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: bufferSize - 2.
+	self assert: subject absolutePositionEquals: bufferSize * 4 - 2.
+	self assert: subject position equals: bufferSize * 4 - 2 - offset.
+	self assertBufferDirty: subject.
+	"Write a four byte char causing 2-byte overflow to next page"
+	string := '𐀀'.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: 2.
+	self assert: subject absolutePositionEquals: bufferSize * 4 + 2.
+	self assert: subject position equals: bufferSize * 4 + 2 - offset.
+	self assertBufferDirty: subject.
+	"Fill the 5th page up to allow enough space for a 4-byte char"
+	string := String new: bufferSize - 6 withAll: $X.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: bufferSize - 4.
+	self assert: subject absolutePositionEquals: bufferSize * 5 - 4.
+	self assert: subject position equals: bufferSize * 5 - 4 - offset.
+	self assertBufferDirty: subject.
+	"Write a four byte char to just fill the page"
+	string := '🐬'.
+	subject nextPutAll: string.
+	written := written , string.
+	self assert: subject bufferPositionEquals: bufferSize.
+	self assert: subject absolutePositionEquals: bufferSize * 5.
+	self assert: subject position equals: bufferSize * 5 - offset.
+	self assertBufferDirty: subject.
 
+	"Final sanity check that we actually wrote what we expected"
+	filename := subject name.
+	subject close.
+	actual := File readAllText: filename.
+	self assert: actual equals: written!
+
+testNextPutAllArray
+	<mustConform: #collectionStream>
+	<mustConform: #puttableStream>
+	<mustNotConform: #FileStream>
+	| subject array |
+	subject := self streamOn: Array new.
+	array := #(10 20 30 40 50).
+	subject nextPutAll: array.
+	self assert: (self streamedContents: subject) equals: array!
+
+testNextPutAllStartingAtAnsiToUtf8
+	<mustConform: #writeFileStream>
+	| subject data preamble |
+	subject := self tempWriteStream: #utf8.
+	preamble := AnsiString new: ((self bufferSizeOfStream: subject) - 7 max: 0) withAll: $#.
+	subject nextPutAll: preamble.
+	data := 'ab£cd€e' asAnsiString.
+	self assert: data size equals: 7.
+	subject
+		next: 2
+		putAll: data
+		startingAt: 2.
+	self assert: subject position equals: preamble size + 3.
+	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 3).
+	"Write more data, but still not overflowing the buffer"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 4.
+	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 4).
+	self assert: subject position equals: preamble size + 4.
+	"Cause overflow"
+	subject
+		next: 2
+		putAll: data
+		startingAt: 5.
+	self assert: subject position equals: preamble size + 8.
+	self assert: (self streamedContents: subject) equals: preamble , 'b£cd€'!
+
+testNextPutAllStartingAtBytes
+	<mustConform: #puttableStream>
+	| subject data preamble |
+	subject := self tempWriteStream: #binary.
+	preamble := ByteArray new: ((self bufferSizeOfStream: subject) - 4 max: 0) withAll: 35.
+	subject nextPutAll: preamble.
+	data := #[1 2 3 4 5 6].
+	subject
+		next: 3
+		putAll: data
+		startingAt: 2.
+	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 4).
+	"Write more data, but still not overflowing the buffer"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 5.
+	self assert: (self streamedContents: subject) equals: preamble , #[2 3 4 5].
+	self assert: subject position equals: preamble size + 4.
+	"Write one byte causing buffer overflow"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 6.
+	self assert: (self streamedContents: subject) equals: preamble , #[2 3 4 5 6]!
+
+testNextPutAllStartingAtUtf16ToBytes
+	<mustConform: #writeFileStream>
+	| subject data preamble |
+	subject := self tempWriteStream: #binary.
+	preamble := Utf16String new: ((self bufferSizeOfStream: subject) - 6 max: 0) withAll: $#.
+	subject nextPutAll: preamble.
+	data := 'ab🐬£c' asUtf16String.
+	self assert: data size equals: 6.
+	"Since we are writing bytes, we just copy across the UTF-16 encoding, so we can stop in the middle of a character"
+	subject
+		next: 2
+		putAll: data
+		startingAt: 2.
+	self assert: (self streamedContents: subject)
+		equals: preamble asByteArray , (data asByteArray copyFrom: 3 to: 6).
+	"Write more data, but still not overflowing the buffer - adds the trail surrogate to complete the dolphin code point"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 4.
+	self assert: (self streamedContents: subject)
+		equals: preamble asByteArray , (data asByteArray copyFrom: 3 to: 8).
+	self assert: subject position equals: preamble size * 2 + 6.
+	"Cause overflow"
+	subject
+		next: 2
+		putAll: data
+		startingAt: 5.
+	self assert: (self streamedContents: subject) asUtf16String equals: preamble , 'b🐬£c'!
+
+testNextPutAllStartingAtUtf16ToUtf8
+	"When writing UTF-16 to UTF-8 we can only write complete characters, so must start on the first or only code unit of a code point, and end on the last or only code unit of a code point."
+
+	<mustConform: #writeFileStream>
+	| subject data preamble |
+	subject := self tempWriteStream: #utf8.
+	preamble := Utf16String new: ((self bufferSizeOfStream: subject) - 7 max: 0) withAll: $#.
+	subject nextPutAll: preamble.
+	data := 'ab🐬£c' asUtf16String.
+	self assert: data size equals: 6.
+	subject
+		next: 3
+		putAll: data
+		startingAt: 2.
+	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 4).
+	"Write more data, but still not overflowing the buffer"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 5.
+	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 5).
+	self assert: subject position equals: 7 + preamble size.
+	"Cause overflow"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 1.
+	self assert: (self streamedContents: subject) equals: preamble , 'b🐬£a'!
+
+testNextPutAllStartingAtUtf16ToUtf8InvalidCount
+	"There is no UTF-8 encoding for UTF-16 surrogates, so we can't end on the lead surrogate of a code point outside the BMP that requires two UTF-16 code points (e.g. emoji)"
+
+	<mustConform: #writeFileStream>
+	| subject |
+	subject := self tempWriteStream: #utf8.
+	self
+		should: 
+			[subject
+				next: 2
+				putAll: 'a🐬b' asUtf16String
+				startingAt: 1]
+		raise: InvalidArgumentError
+		matching: [:ex | ex tag = 'countInteger']!
+
+testNextPutAllStartingAtUtf16ToUtf8InvalidStart
+	"There is no UTF-8 encoding for UTF-16 surrogates, so we can't start on the trailing surrogate of a code point outside the BMP that requires two UTF-16 code points (e.g. emoji)"
+
+	<mustConform: #writeFileStream>
+	| subject |
+	subject := self tempWriteStream: #utf8.
+	self
+		should: 
+			[subject
+				next: 2
+				putAll: 'a🐬b' asUtf16String
+				startingAt: 3]
+		raise: InvalidArgumentError
+		matching: [:ex | ex tag = 'fromInteger']!
+
+testNextPutAllStartingAtUtf8ToBytes
+	<mustConform: #writeFileStream>
+	| subject data preamble |
+	subject := self tempWriteStream: #binary.
+	preamble := Utf8String new: ((self bufferSizeOfStream: subject) - 4 max: 0) withAll: $#.
+	subject nextPutAll: preamble.
+	data := 'ab🐬c' asUtf8String.
+	self assert: data size equals: 7.
+	subject
+		next: 3
+		putAll: data
+		startingAt: 2.
+	self assert: (self streamedContents: subject)
+		equals: preamble asByteArray , (data asByteArray copyFrom: 2 to: 4).
+	"Write more data, but still not overflowing the buffer"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 5.
+	self assert: (self streamedContents: subject)
+		equals: preamble asByteArray , (data asByteArray copyFrom: 2 to: 5).
+	self assert: subject position equals: preamble size + 4.
+	"Cause overflow"
+	subject
+		next: 2
+		putAll: data
+		startingAt: 6.
+	self assert: (self streamedContents: subject) asUtf8String equals: preamble , 'b🐬c'!
+
+testNextPutAllStartingAtUtf8ToUtf16
+	<mustConform: #writeFileStream>
+	<skipUnless: #streamClassSupportsUtf16>
+	| subject data preamble |
+	subject := self tempWriteStream: #utf16le.
+	preamble := Utf8String new: ((self bufferSizeOfStream: subject) - 4 max: 0) withAll: $#.
+	subject nextPutAll: preamble.
+	data := 'ab🐬c' asUtf8String.
+	self assert: data size equals: 7.
+	subject
+		next: 5
+		putAll: data
+		startingAt: 2.
+	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 6).
+	self assert: subject position equals: preamble size + 3.
+	"Write more data, but still not overflowing the buffer"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 7.
+	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 7).
+	self assert: subject position equals: preamble size + 4.
+	"Cause overflow"
+	subject
+		next: 2
+		putAll: data
+		startingAt: 1.
+	self assert: subject position equals: preamble size + 6.
+	self assert: (self streamedContents: subject) equals: preamble , 'b🐬cab'!
+
+testNextPutAllStartingAtUtf8ToUtf8
+	<mustConform: #puttableStream>
+	<skipUnless: #streamClassSupportsUtf8Surrogates>
+	| subject data preamble expectedContent |
+	subject := self tempWriteStream: #utf8.
+	preamble := Utf8String new: ((self bufferSizeOfStream: subject) - 4 max: 0) withAll: $#.
+	subject nextPutAll: preamble.
+	data := 'ab🐬c' asUtf8String.
+	self assert: data size equals: 7.
+	subject
+		next: 3
+		putAll: data
+		startingAt: 2.
+	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 4).
+
+	"Write more data, but still not overflowing the buffer"
+	subject
+		next: 1
+		putAll: data
+		startingAt: 5.
+	expectedContent := preamble , (data copyFrom: 2 to: 5).
+	self assert: (self streamedContents: subject) equals: expectedContent.
+	self assert: subject position equals: expectedContent size.
+	"Cause overflow"
+	subject
+		next: 2
+		putAll: data
+		startingAt: 6.
+	self assert: subject position equals: preamble size + 6.
+	self assert: (self streamedContents: subject) equals: preamble , 'b🐬c'!
+
+testNextUtf8Underflow
+	<mustConform: #writeFileStream>
+	<mustConform: #readFileStream>
+	<mustNotConform: #StdioFileStream>
+	| offset string subject |
+	subject := self tempWriteStream: #utf8.
+	offset := $\xFEFF utf8Length.
+	"Fill the first page up to the penultimate byte"
+	string := String new: (self bufferSizeOfStream: subject) - offset - 1 withAll: $X.
+	subject nextPutAll: string.
+	subject nextPut: Character dolphin.
+	subject close.
+	subject := self tempReadStream: #utf8.
+	self assert: (subject next: string size) equals: string.
+	"The emoji straddles the page boundary"
+	self assert: subject next equals: Character dolphin.
+	self assert: subject atEnd!
+
+testNextWord
+	<mustConform: #gettableStream>
+	"Single words"
 	#('a' 'ab' 'abc') do: 
 			[:each |
 			| stream |
 			stream := self streamOn: each.
 			self assert: stream nextWord equals: each.
 			self assert: stream atEnd.
-			self assertIsNil: stream nextWord.
-			self closeTempStream: stream].
+			self assertIsNil: stream nextWord].
 	"Empty of just separators (i.e. no words)"
 	#('' ' ' '	' '  ') , {String with: Character lf. String with: Character cr. String lineDelimiter}
 		do: 
@@ -544,8 +1027,7 @@ testNextWord
 			| stream |
 			stream := self streamOn: each.
 			self assertIsNil: stream nextWord.
-			self assert: stream atEnd.
-			self closeTempStream: stream].
+			self assert: stream atEnd].
 
 	"Two words of one or more characters separated by one or more delimiters"
 	#('a a' 'a  a' ' a a' 'a a ' ' a a ' '  a  a  ')
@@ -560,19 +1042,53 @@ testNextWord
 				self assert: stream nextWord equals: words first.
 				self assert: stream nextWord equals: words second.
 				self assertIsNil: stream nextWord.
-				self assert: stream atEnd.
-				self closeTempStream: stream]!
+				self assert: stream atEnd]!
 
-testPeekFor
-	"Test PositionableStream>>peekFor:"
+testOwnsFile
+	<mustConform: #writeFileStream> 
+	<mustNotConform: #StdioFileStream>
+	| subject file |
+	subject := self tempWriteStream.
+	self assert: subject ownsFile.
+	file := subject file.
+	self assert: file handle isKindOf: External.Handle.
+	subject close.
+	self assertIsNil: file handle.
+	file open.
+	self assert: file handle isKindOf: External.Handle.
+	subject := self streamClass on: file.
+	self deny: subject ownsFile.
+	subject close.
+	self assert: file handle isKindOf: External.Handle.
+	file close!
 
-	"Empty stream (initlially at end)"
+testPeek
+	<mustConform: #gettableStream>
 
 	| stream |
+	"Empty stream (initlially at end)"
+	stream := self streamOn: ''.
+	self assertIsNil: stream peek.
+	self assert: stream atEnd.
+	"Non-empty stream"
+	stream := self streamOn: 'ab'.
+	"Not at end but mismatch"
+	self assert: stream peek equals: $a.
+	self assert: stream peek equals: $a.
+	self assert: stream position equals: 0.
+	stream := self streamOn: '🐬'.
+	self assert: stream peek equals: $🐬.
+	self assert: stream peek equals: $🐬.
+!
+
+testPeekFor
+	<mustConform: #gettableStream>
+
+	| stream |
+	"Empty stream (initlially at end)"
 	stream := self streamOn: ''.
 	self deny: (stream peekFor: $a).
 	self assert: stream atEnd.
-	self closeTempStream: stream.
 	"Non-empty stream"
 	stream := self streamOn: 'ab'.
 	"Not at end but mismatch"
@@ -590,29 +1106,135 @@ testPeekFor
 	self assert: stream atEnd.
 	"Now at end"
 	self deny: (stream peekFor: $a).
-	self assert: stream atEnd.
-	self closeTempStream: stream!
+	self assert: stream atEnd!
+
+testPositionAfterWrite
+	<mustConform: #writeFileStream>
+	| actual subject filename |
+	subject := self tempWriteStream: #ansi.
+	filename := subject name.
+	subject position: 100.
+	subject nextPut: $a.
+	"Reposition to a later point, but don't write anything."
+	subject position: 200.
+	"Only the content up to the last actual write position should be flushed to the file."
+	subject close.
+	actual := File readAllText: filename.
+	self assert: actual size equals: 101.
+	"Note that the stream position is (rather unusually for Smalltalk) zero based"
+	self assert: (actual at: 101) equals: $a.
+	self assert: (actual occurrencesOf: $\0) equals: 100!
+
+testRandomWriteOnePage
+	<mustConform: #writeFileStream>
+	| pos actual bufferSize subject |
+	"Use an ansi stream so no BOM"
+	subject := self tempWriteStream: #ansi.
+	bufferSize := self bufferSizeOfStream: subject.
+	pos := bufferSize - 2.
+	subject position: pos.
+	self assert: subject position equals: pos.
+	self assert: subject size equals: 0.
+	self assert: subject atEnd.
+	subject nextPut: $a.
+	"Reposition behind the point we extended the file to and write something earlier in the page."
+	subject position: pos - 100.
+	subject nextPutAll: 'b'.
+	"We expect the content to be flushed up to the first char we wrote (which is the last positionally)"
+	subject flush.
+	actual := self streamedContents: subject.
+	self assert: actual size equals: bufferSize - 1.
+	"Note that the stream position is (rather unusually for Smalltalk) zero based"
+	self assert: (actual at: pos + 1) equals: $a.
+	self assert: (actual at: pos - 100 + 1) equals: $b.
+	self assert: (actual occurrencesOf: $\0) equals: bufferSize - 1 - 2!
+
+testResetAfterWrite
+	<mustConform: #writeFileStream>
+	| stream |
+	stream := self streamWith: String new.
+	stream nextPut: $a.
+	stream reset.
+	self isReadableStreamClass
+		ifTrue: 
+			[self assert: stream next equals: $a.
+			self assert: stream atEnd]
+		ifFalse: [self assert: (self streamedContents: stream) equals: 'a']!
 
 testReverseContents
 	| stream euro |
 	stream := self streamWith: ''.
 	self assert: stream reverseContents isEmpty.
-	self closeTempStream: stream.
 	euro := String with: $1 with: $\x20AC.
 	stream := self streamWith: euro.
 	self assert: stream reverseContents equals: (String with: $\x20AC with: $1).
-	self closeTempStream: stream.
 	stream := self streamWith: '¡Hola!!'.
 	self assert: stream reverseContents equals: '!!aloH¡'.
-	self closeTempStream: stream.
 	stream := self streamWith: #[].
 	self assert: stream reverseContents isEmpty.
-	self closeTempStream: stream.
 	stream := self streamWith: #[1 2 3].
-	self assert: stream reverseContents equals: #[3 2 1].
-	self closeTempStream: stream!
+	self assert: stream reverseContents equals: #[3 2 1]!
+
+testRewindAfterWrite
+	<mustConform: #writeFileStream>
+	| actual subject |
+	subject := self tempWriteStream.
+	subject nextPutAll: 'Hello'.
+	subject position: 1.
+	subject close.
+	actual := self tempReadStream upToEnd.
+	self assert: actual equals: 'Hello'!
+
+testSetToEnd
+	<sequencedStream>
+	| string stream |
+	string := 'hello'.
+	stream := self streamWith: string.
+	self assert: stream atEnd.
+	stream setToEnd.
+	self assert: stream position equals: string size.
+	self assert: (self streamedContents: stream) equals: string!
+
+testSingleByteOverflow
+	"Test that overflowing the FileStream buffer by a single byte and letting the FileStream be finalized
+	doesn't lose the last byte."
+
+	<mustConform: #writeFileStream>
+	| weak subject gcs bufferSize |
+	subject := self newStream: #text.
+	"Write bufSize-1 characters - buffer should be dirty but not yet flushed"
+	bufferSize := self bufferSizeOfStream: subject.
+	subject next: bufferSize - 1 put: $1.
+	self assertBufferDirty: subject.
+
+	"Write the last byte - buffer should be dirty and full but not yet flushed"
+	subject nextPut: $2.
+	self assertBufferDirty: subject.
+
+	"Write another byte - overflowing buffer by one, but should still be dirty"
+	subject nextPut: $3.
+	self assertBufferDirty: subject.
+	weak := WeakArray with: subject.
+	subject := nil.
+	gcs := 0.
+	[(weak at: 1) isKindOf: DeadObject] whileFalse: 
+			[self assert: gcs < 10.
+			MemoryManager current collectGarbage.
+			gcs := gcs + 1].
+
+	"Forcibly finalize"
+	MemoryManager current administerLastRites.
+	subject := self tempReadStream: #text.
+	self assert: subject size equals: bufferSize + 1.
+	subject next: bufferSize - 2.
+	self assert: subject next equals: $1.
+	self assert: subject next equals: $2.
+	self assert: subject next equals: $3.
+	subject close!
 
 testSkipSeparators
+	<mustConform: #gettableStream>
+
 	| chars stream |
 	chars := '1 2 	3
 4 €£🐬' copyWith: $\f.
@@ -637,10 +1259,11 @@ testSkipSeparators
 	self deny: stream atEnd.
 	self deny: stream skipSeparators.
 	self assert: stream atEnd.
-	self deny: stream skipSeparators.
-	self closeTempStream: stream!
+	self deny: stream skipSeparators!
 
 testSkipToAllColon
+	<mustConform: #gettableStream>
+
 	| chars stream |
 	chars := 'aababcabcdabcde'.
 	stream := self streamOn: chars.
@@ -728,10 +1351,26 @@ testSkipToAllColon
 	"3 chars, last not found at all"
 	stream reset.
 	self assert: (stream skipToAll: 'abf') not.
-	self assert: stream atEnd.
-	self closeTempStream: stream!
+	self assert: stream atEnd!
+
+testTruncate
+	<mustConform: #writeFileStream>
+	| actual subject filename |
+	subject := self tempWriteStream.
+	subject nextPutAll: 'hello'.
+	filename := subject name.
+	subject close.
+	subject := self streamClass
+				write: filename
+				mode: #truncate
+				check: false
+				text: true.
+	[subject nextPutAll: ' world'] ensure: [subject close].
+	actual := self tempReadStream upToEnd.
+	self assert: actual equals: ' world'!
 
 testUpTo
+	<mustConform: #gettableStream>
 	self collections do: 
 			[:pair |
 			| each subject elems |
@@ -747,10 +1386,10 @@ testUpTo
 					subject reset.
 					expected := elems copyFrom: 1 to: (elems indexOf: target) - 1.
 					actual := subject upTo: target.
-					self assert: actual asArray equals: expected].
-			self closeTempStream: subject]!
+					self assert: actual asArray equals: expected]]!
 
 testUpToAllColon
+	<mustConform: #gettableStream>
 	| chars stream |
 	chars := 'aababcabcdabcde'.
 	stream := self streamOn: chars.
@@ -838,10 +1477,11 @@ testUpToAllColon
 	"3 chars, last not found at all"
 	stream reset.
 	self assert: (stream upToAll: 'abf') equals: chars.
-	self assert: stream atEnd.
-	self closeTempStream: stream!
+	self assert: stream atEnd!
 
 testUpToEnd
+	<mustConform: #gettableStream>
+	<mustConform: #sequencedStream>
 	self collections do: 
 			[:pair |
 			| each subject elems |
@@ -860,10 +1500,11 @@ testUpToEnd
 					i < elems size ifTrue: [self deny: subject atEnd].
 					expected := elems copyFrom: i + 1.
 					actual := subject upToEnd.
-					self assert: actual asArray equals: expected].
-			self closeTempStream: subject]!
+					self assert: actual asArray equals: expected]]!
 
 testUpToUtf
+	<mustConform: #gettableStream>
+
 	| pound capitalAwithCircumflex |
 	pound := Character value: 16rA3.
 	"A-with-circumflex is also the lead byte for pound in UTF-8"
@@ -899,8 +1540,47 @@ testUpToUtf
 			"Search for non-existant character"
 			stream reset.
 			self assert: (stream upTo: $z) equals: chars.
-			self assert: stream atEnd.
-			self closeTempStream: stream]	"Utf8String. Utf16String"!
+			self assert: stream atEnd]!
+
+testWriteEmptyString
+	<mustConform: #puttableStream>
+	self verifyWriteString: ''!
+
+testWriteOneCharacter	
+	<mustConform: #puttableStream>
+	self verifyWriteCharacter: $a!
+
+testWriteOneExtendedChar
+	<mustConform: #puttableStream>
+	self verifyWriteCharacter: Character dolphin!
+
+testWritePastEnd
+	"#457: Tests that the page buffer is zero'd out out when writing beyond the end of the file
+	so that previous buffer content is not mirrored into the last page."
+
+	<mustConform: #writeFileStream>
+	| actual expected r bufferSize subject |
+	subject := self tempWriteStream: #ansi.
+	bufferSize := self bufferSizeOfStream: subject.
+	expected := WriteStream with: (AnsiString new: bufferSize * 2).
+	expected reset.
+	r := Random new.
+	bufferSize
+		timesRepeat: [subject nextPut: (expected nextPut: (Character ansiValue: (r next * 97 + 32) asInteger))].
+	subject position: bufferSize - 2.
+	expected position: subject position.
+	subject nextPutAll: (expected nextPutAll: 'abc').
+	"Go back and read the first page."
+	subject reset.
+	"Reposition into the 2nd page beyond the current end."
+	subject position: bufferSize * 2 - 5.
+	expected position: subject position.
+	"Write some more stuff"
+	subject nextPutAll: (expected nextPutAll: 'world').
+	subject flush.
+	actual := self streamedContents: subject.
+	expected := expected contents.
+	self assert: actual equals: expected!
 
 verifyNonChars: anArray
 	| sep stream count bytes |
@@ -921,8 +1601,22 @@ verifyNonChars: anArray
 			[| ch |
 			ch := stream next.
 			ch == $a ifTrue: [count := count + 1] ifFalse: [self assert: ch equals: Character replacement]].
-	self closeTempStream: stream.
 	^count!
+
+verifyWriteCharacter: aCharacter
+	| utf8 subject |
+	utf8 := aCharacter asString.
+	subject := self tempWriteStream: #text.
+	subject nextPut: aCharacter.
+	self assert: (self streamedContents: subject) equals: utf8!
+
+verifyWriteString: aString
+	| subject  |
+	subject := self tempWriteStream: aString encoding.
+	self assert: subject position equals: 0.
+	subject nextPutAll: aString.
+	self assert: subject position equals: aString size.
+	self assert: (self streamedContents: subject) equals: aString!
 
 writeableCollections
 	^self strings , self byteArrays , self arrays , self orderedCollections!
@@ -936,53 +1630,96 @@ writeOperationNotImplemented: aBlock
 		matching: [:ex | ex description = 'The stream is not writeable']! !
 
 !Core.Tests.PositionableStreamTest categoriesForMethods!
-arrayedCollections!private!unit tests! !
-arrays!private!unit tests! !
-byteArrays!private!unit tests! !
-collections!private!unit tests! !
-intervals!private!unit tests! !
-newStream!helpers!private! !
-orderedCollections!private!unit tests! !
-readOperationNotImplemented:!private!unit tests! !
-runArrays!private!unit tests! !
+arrayedCollections!constants!private! !
+arrays!constants!private! !
+assert:absolutePositionEquals:!helpers!private! !
+assert:bufferPositionEquals:!helpers!private! !
+assertBufferDirty:!helpers!private! !
+bufferClasses!helpers!private! !
+bufferSizeOfStream:!helpers!private!unit tests! !
+byteArrays!constants!private! !
+collections!constants!private! !
+expectedAnsiProtocolNames!constants!private! !
+intervals!constants!private! !
+newStream:!helpers!private! !
+orderedCollections!constants!private! !
+readOperationNotImplemented:!helpers!private! !
+runArrays!constants!private! !
 streamClassSupportsPointers!helpers!private! !
 streamClassSupportsUtf16!helpers!private! !
+streamClassSupportsUtf8Surrogates!helpers!private! !
+streamedContents:!helpers!private! !
 streamOn:!helpers!private! !
 streamOnBytes:type:!helpers!private! !
 streamOnFile:type:!helpers!private! !
 streamWith:!helpers!private! !
 strings!constants!private! !
-subjectCollection:!public! !
+subjectCollection:!helpers!public! !
+tempReadStream!helpers!private! !
+tempReadStream:!helpers!private! !
+tempWriteStream!helpers!private! !
+tempWriteStream:!helpers!private! !
+test1065!public!unit tests! !
+testAppend!public!unit tests! !
 testBasicNext!public!unit tests! !
 testContents!public!unit tests! !
 testEncodedSizeOf!public!unit tests! !
-testEncoding!gettableStream only!public!strict utf8!unit tests! !
-testMarkusKuhnUtf8!gettableStream only!public! !
-testNew!public!testing! !
+testEncoding!public!strict utf8!unit tests! !
+testMarkusKuhnUtf8!public!strict utf8!unit tests! !
+testNew!public!unit tests! !
+testNewContents!public!unit tests! !
 testNext!public!unit tests! !
 testNextAvailable!public!unit tests! !
 testNextAvailableColon!public!unit tests! !
 testNextColon!public!unit tests! !
-testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
+testNextColonPutColon!public!unit tests! !
+testNextIllegalUtf8CodePositions!public!unit tests! !
 testNextInto!public!unit tests! !
-testNextLine!gettableStream only!public!unit tests! !
-testNextLineCrOnly!gettableStream only!public!unit tests! !
-testNextLongUtf8Encodings!gettableStream only!public!strict utf8!unit tests! !
-testNextOtherNonCharactersUtf16!gettableStream only!public!unit tests! !
-testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
-testNextOverlongUtf8!gettableStream only!public!strict utf8!unit tests! !
+testNextLine!public!unit tests! !
+testNextLineCrOnly!public!unit tests! !
+testNextLongUtf8Encodings!public!strict utf8!unit tests! !
+testNextOtherNonCharactersUtf16!public!unit tests! !
+testNextOtherNonCharactersUtf8!public!unit tests! !
+testNextOverlongUtf8!public!strict utf8!unit tests! !
 testNextPut!public!unit tests! !
+testNextPutAll!public!unit tests! !
+testNextPutAllArray!public!unit tests! !
+testNextPutAllStartingAtAnsiToUtf8!public!unit tests! !
+testNextPutAllStartingAtBytes!public!unit tests! !
+testNextPutAllStartingAtUtf16ToBytes!public!unit tests! !
+testNextPutAllStartingAtUtf16ToUtf8!public!unit tests! !
+testNextPutAllStartingAtUtf16ToUtf8InvalidCount!public!unit tests! !
+testNextPutAllStartingAtUtf16ToUtf8InvalidStart!public!unit tests! !
+testNextPutAllStartingAtUtf8ToBytes!public!unit tests! !
+testNextPutAllStartingAtUtf8ToUtf16!public!unit tests! !
+testNextPutAllStartingAtUtf8ToUtf8!public!unit tests! !
+testNextUtf8Underflow!public!unit tests! !
 testNextWord!public!unit tests! !
+testOwnsFile!public!unit tests! !
+testPeek!public!unit tests! !
 testPeekFor!public!unit tests! !
+testPositionAfterWrite!public!unit tests! !
+testRandomWriteOnePage!public!unit tests! !
+testResetAfterWrite!public!unit tests! !
 testReverseContents!public!unit tests! !
-testSkipSeparators!gettableStream only!public!unit tests! !
-testSkipToAllColon!gettableStream only!public!unit tests! !
+testRewindAfterWrite!public!unit tests! !
+testSetToEnd!public!unit tests! !
+testSingleByteOverflow!public!unit tests! !
+testSkipSeparators!public!unit tests! !
+testSkipToAllColon!public!unit tests! !
+testTruncate!public!unit tests! !
 testUpTo!public!unit tests! !
 testUpToAllColon!public!unit tests! !
 testUpToEnd!public!unit tests! !
-testUpToUtf!gettableStream only!public! !
-verifyNonChars:!public! !
-writeableCollections!private!unit tests! !
-writeOperationNotImplemented:!private!unit tests! !
+testUpToUtf!public!unit tests! !
+testWriteEmptyString!public!unit tests! !
+testWriteOneCharacter!public!unit tests! !
+testWriteOneExtendedChar!public!unit tests! !
+testWritePastEnd!public!unit tests! !
+verifyNonChars:!constants!helpers!private! !
+verifyWriteCharacter:!helpers!private! !
+verifyWriteString:!helpers!private! !
+writeableCollections!constants!private! !
+writeOperationNotImplemented:!helpers!private! !
 !
 

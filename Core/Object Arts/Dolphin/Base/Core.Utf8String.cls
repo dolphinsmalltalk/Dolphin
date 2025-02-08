@@ -7,7 +7,6 @@ Core.UtfEncodedString
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'Bom' -> #[239 187 191].
 			'LeadByteMask2' -> 16rC0.
 			'LeadByteMask3' -> 16rE0.
 			'LeadByteMask4' -> 16rF0.
@@ -63,40 +62,12 @@ asUtf8StringCopy
 	<primitive: 155>
 	^self shallowCopy!
 
-before: aCharacter ifAbsent: aNiladicValuable
-	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
-
-	| index |
-	index := self indexOf: aCharacter.
-	index == 0 ifTrue: [^aNiladicValuable value].
-	index == 1 ifTrue: [^self errorFirstObject: aCharacter].
-	
-	[index := index - 1.
-	((self basicAt: index) bitAnd: SurrogateMask) == TrailByteMask] whileTrue.
-	^self decodeAt: index!
-
-bom 
-	^Bom!
-
-countElements
-	"Answer the number of Unicode code points in the receiver."
-
-	| i count last |
-	count := 0.
-	i := 1.
-	last := self size.
-	[i > last] whileFalse: 
-			[count := count + 1.
-			i := i + (self encodedSizeAt: i)].
-	^count!
-
-decodeAt: anInteger
+basicDecodeAt: anInteger
 	"Private - Read the <Character> with code point in the receiver's encoding starting with the code unit at the specified index. If the index does not identify the start of a character, or the encoding is invalid or incomplete, return the replacement character."
 
-	"The decoding algorithm is essentially the same as #decodeNextFrom:, where it is explained in more detail. The primitive uses the ICU macro U8_NEXT_OR_FFFD, and is purely for speed of what is a low-level but surprisingly  complex operation."
+	"The decoding algorithm is essentially the same as #decodeNextFrom:, where it is explained in more detail."
 
-	<primitive: 225>
-	| len c c2 |
+	| c2 c len |
 	c := self basicAt: anInteger.
 	c <= 16r7F
 		ifTrue: 
@@ -221,6 +192,30 @@ decodeAt: anInteger
 					["Non-characters - valid sequence, but character needs replacing"
 					Character.Replacement]
 				ifFalse: [Character basicUtf32Value: c]]!
+
+before: aCharacter ifAbsent: aNiladicValuable
+	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
+
+	| index |
+	index := self indexOf: aCharacter.
+	index == 0 ifTrue: [^aNiladicValuable value].
+	index == 1 ifTrue: [^self errorFirstObject: aCharacter].
+	
+	[index := index - 1.
+	((self basicAt: index) bitAnd: SurrogateMask) == TrailByteMask] whileTrue.
+	^self decodeAt: index!
+
+countElements
+	"Answer the number of Unicode code points in the receiver."
+
+	| i count last |
+	count := 0.
+	i := 1.
+	last := self size.
+	[i > last] whileFalse: 
+			[count := count + 1.
+			i := i + (self encodedSizeAt: i)].
+	^count!
 
 decodeNextFrom: aReadStream
 	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
@@ -371,6 +366,46 @@ decodeNextFrom: aReadStream
 					["Non-characters - valid sequence, but character needs replacing"
 					Character.Replacement]
 				ifFalse: [Character basicUtf32Value: c]]!
+
+encodeAsObjectsOn: aWriteStream from: fromInteger count: countInteger
+	"Private - Encode <integer>, countInteger, code units of the receiver starting with that at <integer>, fromInteger, onto the <WriteStream>, aWriteStream. The code-units in the interval are decoded to codepoints, and whole Characters are written to the stream. It is an error to attempt to write partial characters from the receiver, so the interval must start on the first or only code-unit of a codepoint, and end on the last or only code-unit of a codepoint. Consequently it is an error to start on a trail-surrogate or finish on a leading or intermediate surrogate."
+
+	| i to ch |
+	countInteger <= 0 ifTrue: [^self].
+	i := fromInteger.
+	to := i + countInteger - 1.
+	ch := self at: i.
+	ch isUtf8Trail
+		ifTrue: 
+			["Starting on a trailing surrogate is an error"
+			^InvalidArgumentError
+				signal: 'Start position <1d> is in the middle of a UTF-16 encoded character' << { fromInteger }
+				with: 'fromInteger'].
+	
+	[| start |
+	start := i.
+	i := i + (self encodedSizeAt: i).
+	"If we are on a surrogate pair, the interval must include the trailing surrogate so that we can write a complete code point to the UTF-8 stream, since UTF-8 has no representation for UTF-16 surrogates."
+	ch isUtf8Lead
+		ifTrue: 
+			[i <= (to + 1)
+				ifTrue: [ch := self decodeAt: start]
+				ifFalse: 
+					["Ending on a lead surrogate is an error"
+					^InvalidArgumentError signal: 'End position <1d> is in the middle of a UTF-8 encoded character'
+								<< { fromInteger + countInteger - 1 }
+						with: 'countInteger']].
+	aWriteStream nextPut: ch.
+	i <= to]
+			whileTrue: [ch := self at: i]!
+
+encodeAsUtf8On: aWriteStream from: fromInteger count: countInteger
+	"Private - Encode <integer>, countInteger, code units of the receiver starting with that at <integer>, fromInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out UTF-8 encoded text, and as this is the receiver's native encoding, we can just ask the stream to copy bytes directly from the receiver's binary representation."
+
+	aWriteStream
+		basicNext: countInteger
+		putAll: self
+		startingAt: fromInteger!
 
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.
@@ -722,11 +757,12 @@ _beginsString:!comparing!double dispatch!private! !
 _endsString:!comparing!double dispatch!private! !
 asUtf8String!converting!public! !
 asUtf8StringCopy!converting!public! !
+basicDecodeAt:!encode/decode!private! !
 before:ifAbsent:!public!searching! !
-bom!constants!encode/decode!private! !
 countElements!accessing!public! !
-decodeAt:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
+encodeAsObjectsOn:from:count:!double dispatch!encode/decode!private! !
+encodeAsUtf8On:from:count:!encode/decode!private! !
 encodedAt:put:!accessing!encode/decode!private! !
 encodedSizeAt:!encode/decode!private! !
 encodedSizeOf:!encode/decode!private! !
@@ -751,8 +787,16 @@ codePage
 
 	^CP_UTF8!
 
+encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
+	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be it's underlying collection, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is UTF-8 encoded, we double-dispatch to aSequenceableCollection to ask it to encode the interval of its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream as UTF-8. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval."
+
+	aSequenceableCollection
+		encodeAsUtf8On: aWriteStream
+		from: fromInteger
+		count: countInteger!
+
 encoding
-	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
+	"Answer a <Symbol> naming the encoding of instances of the receiver, which in this case will be #utf8."
 
 	^#utf8!
 
@@ -771,6 +815,7 @@ with: aCharacter
 !Core.Utf8String class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 codePage!instance creation!public! !
+encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 initialize!development!initializing!public! !
 with:!instance creation!public! !

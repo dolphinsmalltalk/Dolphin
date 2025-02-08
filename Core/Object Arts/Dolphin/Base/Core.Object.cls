@@ -235,21 +235,21 @@ at: index put: value
 		put: value!
 
 basicAt: aSmallInteger
-	"Private - Answer the receiver's indexed instance variable at the argument index.
-	MUST not be reimplemented (except by classes whose instances have immediate representations such as SmallInteger).
+	"Private - Answer the receiver's indexed element (usually indexed instance variable) at the argument index.
+	MUST not be reimplemented (except by classes whose instances have immediate representations such as SmallInteger, or which are not indexable).
 
 	Primitive Failure Reasons:
 		InvalidParameter1	- aSmallInteger is not a SmallInteger
 		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
 
-	"Implementation Note: This message is inlined by the compiler, and is never sent unless directly performed, or unless the inlined code detects an error (such as an out-of-bounds index). It is not possible to override this message successfully."
+	"Implementation Note: This message is inlined by the compiler, and is never sent unless directly performed, or unless the inlined code detects an error (such as an out-of-bounds index, or a non-indexable receiver). It is not possible to override this message successfully in general, but it will work as expected for non-indexable classes."
 
 	<primitive: 60>
 	^self _primitiveError: _failureCode at: aSmallInteger!
 
 basicAt: aSmallInteger put: value
-	"Private - Replace the receiver's indexed instance variable at the argument, index, with the argument, value. Answer value.
-	MUST not be reimplemented (except by classes whose instances have immediate representations	such as SmallInteger)."
+	"Private - Replace the receiver's indexed element (usually indexed instance variable) at the argument, index, with the argument, value. Answer value.
+	MUST not be reimplemented (except by classes whose instances have immediate representations	such as SmallInteger, or which are not indexable)."
 
 	"Primitive Failure Reasons:
 		InvalidParameter1	- aSmallInteger is not a SmallInteger

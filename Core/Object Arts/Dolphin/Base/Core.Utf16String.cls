@@ -7,7 +7,6 @@ Core.UtfEncodedString
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'Bom' -> #[255 254].
 			'LeadOffset' -> 16rD7C0.
 			'LeadSurrogateMask' -> 16rD800.
 			'SurrogateMask' -> 16rFC00.
@@ -83,33 +82,10 @@ at: anInteger
 	<primitive: 63>
 	^Character utf16Value: (self basicAt: anInteger) ifInvalid: Character.Replacement!
 
-before: aCharacter ifAbsent: aNiladicValuable
-	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
+basicDecodeAt: anInteger
+	"Private - Read the <Character> with code point in the receiver's encoding starting with the code unit at the specified index. If the index does not identify the start of a character, or the encoding is invalid or incomplete, return the replacement character."
 
-	| index ch |
-	index := self indexOf: aCharacter.
-	index == 0 ifTrue: [^aNiladicValuable value].
-	index == 1 ifTrue: [^self errorFirstObject: aCharacter].
-	ch := self at: index - 1.
-	^ch isUtf16Trail ifTrue: [self decodeAt: index - 2] ifFalse: [ch]!
-
-bom
-	^Bom!
-
-byteSize
-	"Private - Answer the size in bytes of this object. For historical reasons this includes the null terminator (which is actually part of the memory allocated for the String by the Dolphin VM)."
-
-	^self basicSize + 1 bitShift: 1!
-
-countElements
-	"Answer the number of Unicode code points in the receiver."
-
-	^OS.ICU u_countChar32: self length: self size!
-
-decodeAt: anInteger
-	"Private - Answer the encoded object beginning at the specified position in the receiver."
-
-	| leading surrogateBits |
+	| surrogateBits leading |
 	leading := self basicAt: anInteger.
 	surrogateBits := leading bitAnd: SurrogateMask.
 	^surrogateBits == LeadSurrogateMask
@@ -130,6 +106,26 @@ decodeAt: anInteger
 			[surrogateBits == TrailSurrogateMask
 				ifTrue: [Character.Replacement]
 				ifFalse: [Character utf16Value: leading ifInvalid: Character.Replacement]]!
+
+before: aCharacter ifAbsent: aNiladicValuable
+	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
+
+	| index ch |
+	index := self indexOf: aCharacter.
+	index == 0 ifTrue: [^aNiladicValuable value].
+	index == 1 ifTrue: [^self errorFirstObject: aCharacter].
+	ch := self at: index - 1.
+	^ch isUtf16Trail ifTrue: [self decodeAt: index - 2] ifFalse: [ch]!
+
+byteSize
+	"Private - Answer the size in bytes of this object. For historical reasons this includes the null terminator (which is actually part of the memory allocated for the String by the Dolphin VM)."
+
+	^self basicSize + 1 bitShift: 1!
+
+countElements
+	"Answer the number of Unicode code points in the receiver."
+
+	^OS.ICU u_countChar32: self length: self size!
 
 decodeNextFrom: aReadStream
 	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument, which
@@ -157,6 +153,58 @@ decodeNextFrom: aReadStream
 									Character.Replacement]]]
 				ifFalse: [Character utf16Value: c ifInvalid: Character.Replacement]]!
 
+encodeAsBytesOn: aWriteStream from: startInteger count: sizeInteger
+	"Private - Write <integer>, sizeInteger, code-units of the receiver starting with that at <integer>, startInteger, onto the binary <WriteStream>, aWriteStream. As the stream is binary, we just write the UTF-16 encoded bytes directly. We allow partial characters to be copied in this case. It is the responsibility of the application to either ensure that complete characters are eventually written, or that occurrences of the replacement character are acceptable."
+
+	startInteger to: startInteger + sizeInteger - 1
+		do: 
+			[:i |
+			| codeUnit |
+			codeUnit := self basicAt: i.
+			aWriteStream
+				nextPut: (codeUnit bitAnd: 16rFF);
+				nextPut: (codeUnit bitShift: -8)]!
+
+encodeAsObjectsOn: aWriteStream from: fromInteger count: countInteger
+	"Private - Encode <integer>, countInteger, code units of the receiver starting with that at <integer>, fromInteger, onto the <WriteStream>, aWriteStream. The code-units in the interval are decoded to codepoints, and whole Characters are written to the stream. It is an error to attempt to write partial characters from the receiver, so the interval must start on the first or only code unit of a code point, and end on the last or only code unit of a code point. Consequently it is an error to start on a trail-surrogate or finish on a lead-surrogate."
+
+	| i to ch |
+	countInteger <= 0 ifTrue: [^self].
+	i := fromInteger.
+	to := i + countInteger - 1.
+	ch := self at: i.
+	ch isUtf16Trail
+		ifTrue: 
+			["Starting on a trailing surrogate is an error"
+			^InvalidArgumentError
+				signal: 'Start position <1d> is in the middle of a UTF-16 encoded character' << { fromInteger }
+				with: 'fromInteger'].
+	
+	[i := i + 1.
+	"If we are on a surrogate pair, the interval must include the trailing surrogate so that we can write a complete code point to the UTF-8 stream, since UTF-8 has no representation for UTF-16 surrogates."
+	ch isUtf16Lead
+		ifTrue: 
+			[i <= to
+				ifTrue: 
+					[ch := self decodeAt: i - 1.
+					i := i + 1]
+				ifFalse: 
+					["Ending on a lead surrogate is an error"
+					^InvalidArgumentError
+						signal: 'End position <1d> is in the middle of a UTF-16 encoded character' << { i }
+						with: 'countInteger']].
+	aWriteStream nextPut: ch.
+	i <= to]
+			whileTrue: [ch := self at: i]!
+
+encodeAsUtf16On: aWriteStream from: fromInteger count: countInteger
+	"Private - Encode <integer>, countInteger, elements of the receiver starting with that at <integer>, fromInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out UTF-16 encoded text, and as this is the receiver's native encoding, we can just ask the stream to copy bytes directly from the receiver's binary representation. We allow partial characters to be copied in this case. It is the responsibility of the application to either ensure that complete characters are eventually written, or that occurrences of the replacement character are acceptable."
+
+	aWriteStream
+		basicNext: countInteger
+		putAll: self
+		startingAt: fromInteger!
+
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.
 	Answer the <integer> index of the last code unit updated."
@@ -180,6 +228,7 @@ encodedAt: anInteger put: aCharacter
 encodedSizeAt: anInteger
 	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver."
 
+	<primitive: 226>
 	^(((self basicAt: anInteger) bitAnd: SurrogateMask) == LeadSurrogateMask and: 
 			[anInteger < self size
 				and: [((self basicAt: anInteger + 1) bitAnd: SurrogateMask) == TrailSurrogateMask]])
@@ -196,10 +245,8 @@ encodedSizeOf: aCharacter
 	^aCharacter codePoint <= 16rFFFF ifTrue: [1] ifFalse: [2]!
 
 encodeOn: aPuttableStream put: aCharacter
-	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-16
-	encoding. This requires either one or two 2-byte code units be written to the stream, depending
-	on whether the code point is in the basic multi-lingual plane (one code unit), or beyond the BMP
-	(two code units). An error is raised if the <Character> has an invalid code point."
+	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-16 encoding. This requires either one or two 2-byte code units be written to the stream, depending
+	on whether the code point is in the basic multi-lingual plane (one code unit), or beyond the BMP (two code units). An error is raised if the <Character> has an invalid code point."
 
 	| codePoint |
 	codePoint := aCharacter codePoint.
@@ -338,12 +385,14 @@ asUtf16String!converting!public! !
 asUtf16StringCopy!converting!public! !
 asUtf8String!converting!public! !
 at:!accessing!public! !
+basicDecodeAt:!encode/decode!private! !
 before:ifAbsent:!public!searching! !
-bom!constants!encode/decode!private! !
 byteSize!accessing!private! !
 countElements!accessing!public! !
-decodeAt:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
+encodeAsBytesOn:from:count:!encode/decode!private! !
+encodeAsObjectsOn:from:count:!encode/decode!private! !
+encodeAsUtf16On:from:count:!encode/decode!private! !
 encodedAt:put:!accessing!encode/decode!private! !
 encodedSizeAt:!encode/decode!private! !
 encodedSizeOf:!encode/decode!private! !
@@ -383,6 +432,14 @@ elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
 	^2!
+
+encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
+	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be of it's underlying collection class, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is UTF-16 encoded, we double-dispatch back to aSequenceableCollection to ask it to encode the interval of its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval."
+
+	aSequenceableCollection
+		encodeAsUtf16On: aWriteStream
+		from: fromInteger
+		count: countInteger!
 
 encoding
 	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
@@ -445,7 +502,8 @@ with: aCharacter
 characterForCodeUnit:!enquiries!public! !
 codePage!constants!public! !
 coerceString:!instance creation!public! !
-elementSize!constants!public! !
+elementSize!constants!encode/decode!public! !
+encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !

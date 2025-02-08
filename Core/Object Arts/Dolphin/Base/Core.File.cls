@@ -164,6 +164,11 @@ handle
 
 	^handle!
 
+isOpen
+	"Answer true if the file is open."
+
+	^handle notNull!
+
 isReadable
 	"Answer true if the file is readable."
 
@@ -327,8 +332,8 @@ read: aByteObject
 		count: aByteObject basicSize
 !
 
-read: anAddress count: bytesToReadInteger
-	"Read a maximum of bytesToReadInteger bytes into anAddress from the file.
+read: aByteObject count: bytesToReadInteger
+	"Read a maximum of bytesToReadInteger bytes into the byte object first argument from the file.
 
 	It is not an error to read zero bytes.
 	Answer the number of bytes read or signal a <FileException> if the operation fails."
@@ -336,27 +341,26 @@ read: anAddress count: bytesToReadInteger
 	bytesToReadInteger == 0 ifTrue: [^0].
 	^(Kernel32
 		readFile: handle
-		lpBuffer: anAddress
+		lpBuffer: aByteObject
 		nNumberOfBytesToRead: bytesToReadInteger
 		lpNumberOfBytesRead: intBuffer
 		lpOverlapped: nil) ifTrue: [intBuffer uint32AtOffset: 0] ifFalse: [self signalOsError: false]!
 
 read: aStringOrByteArray startingAt: startIndex count: bytesToReadInteger
-	"Read a maximum of bytesToReadInteger bytes from the file starting with aStringOrByteArray at: startIndex.
+	"Read a maximum of bytesToReadInteger bytes from the file into aStringOrByteArray starting at startIndex.
 
 	It is not an error to read zero bytes.
 	It is an error if aStringOrByteArray is shorter than startIndex + bytesToReadInteger - 1.
-	Answer the number of bytes read or signal a FileException if the operaion fails."
+	Answer the number of bytes read or signal a FileException if the operation fails."
 
-	^self
-		checkBoundsOf: aStringOrByteArray
-		startingAt: startIndex
-		for: bytesToReadInteger;
-
-		read: aStringOrByteArray yourAddress + startIndex - 1
-		count: bytesToReadInteger.
-
-!
+	| offset |
+	bytesToReadInteger == 0 ifTrue: [^0].
+	(startIndex < 1 or: [startIndex > aStringOrByteArray basicSize])
+		ifTrue: [aStringOrByteArray errorSubscriptBounds: startIndex].
+	offset := startIndex - 1.
+	offset + bytesToReadInteger > aStringOrByteArray basicSize
+		ifTrue: [aStringOrByteArray errorSubscriptBounds: offset + bytesToReadInteger].
+	^self read: aStringOrByteArray yourAddress + offset count: bytesToReadInteger!
 
 readByte
 	"Answer the Integer value of the next byte from the file or nil if the receiver
@@ -546,6 +550,7 @@ flush!operations!public! !
 free!private!realizing/unrealizing! !
 getTimes:atime:mtime:!accessing!private! !
 handle!accessing!public! !
+isOpen!public!testing! !
 isReadable!public!testing! !
 isWriteable!public!testing! !
 lastAccessTime!accessing!public! !
@@ -582,7 +587,8 @@ write:startingAt:count:!operations!public! !
 writeByte:!operations!public! !
 !
 
-Core.File methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #flush #isReadable #isWriteable #position: #read:count: #reset #size #write:count:)!
+Core.File methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #fileType #flush #isReadable #isWriteable #position: #read:count: #reset #setToEnd #size #write:count:)!
+Core.File methodProtocol: #writeableMedium attributes: #(#readOnly) selectors: #(#close #isOpen #position #position: #write:count:)!
 
 !Core.File class methodsFor!
 
@@ -1166,15 +1172,19 @@ pathDelimiters
 	^PathDelimiters!
 
 readAllBytes: aString
-	"Open the file at the specified path, read and answer all of the binary data it contains.
-	The file is guaranteed to be closed, even if an exception occurs."
+	"Open the file at the specified path, read and answer all of the binary data it contains. The file is guaranteed to be closed, even if an exception occurs. The file can be open for reading, but not writing."
+
+	^self readAllBytes: aString share: #read!
+
+readAllBytes: aString share: aSymbol
+	"Open the file at the specified path, read and answer all of the binary data it contains. The file is guaranteed to be closed, even if an exception occurs. The file is opened with the sharing mode named by the symbolic 2nd argument."
 
 	| file |
 	file := self
 				open: aString
 				mode: #read
 				check: true
-				share: #read.
+				share: aSymbol.
 	^
 	[| size buffer |
 	size := file size.
@@ -1184,18 +1194,22 @@ readAllBytes: aString
 			ensure: [file close]!
 
 readAllText: aString
-	"Open the file at the specified path, read and answer all of the text it contains. The file
-	is guaranteed to be closed, even if an exception occurs."
+	"Open the file at the specified path, read and answer all of the text it contains. The file is guaranteed to be closed, even if an exception occurs. Any leading BoM is trimmed from the text returned. The file can be open for reading, but not writing."
+
+	^self readAllText: aString share: #read!
+
+readAllText: aString share: aSymbol
+	"Open the file at the specified path, read and answer all of the text it contains. The file is guaranteed to be closed, even if an exception occurs. Any leading BoM is trimmed from the text returned.  The file is opened with the sharing mode named by the symbolic 2nd argument."
 
 	| file |
 	file := self
 				open: aString
 				mode: #read
 				check: true
-				share: #read.
+				share: aSymbol.
 	^
 	[| size buffer bufferClass |
-	bufferClass := {AnsiString. Utf8String. Utf16String} at: file sniffEncoding + 1.
+	bufferClass := { AnsiString. Utf8String. Utf16String } at: file sniffEncoding + 1.
 	size := file size - file position.
 	buffer := bufferClass newFixed: size / bufferClass elementSize.
 	file read: buffer count: size.
@@ -1543,7 +1557,9 @@ path:extension:!filename manipulation!public! !
 pathDelimiter!constants!public! !
 pathDelimiters!constants!public! !
 readAllBytes:!file operations!public! !
+readAllBytes:share:!file operations!public! !
 readAllText:!file operations!public! !
+readAllText:share:!file operations!public! !
 relativePathOf:to:!filename manipulation!public! !
 removeDirectory:!file operations!public! !
 removeExtension:!filename manipulation!public! !

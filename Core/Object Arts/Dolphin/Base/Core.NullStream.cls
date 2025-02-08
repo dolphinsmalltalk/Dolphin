@@ -21,10 +21,24 @@ atEnd
 
 	^true!
 
+basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Private - Append countInteger elements of aSequenceableCollection from startInteger
+	to the receiver. Answer aSequenceableCollection."
+
+	^self
+		next: countInteger
+		putAll: aSequenceableCollection
+		startingAt: startInteger!
+
 close
 	"Relinquish any external resources associated with the receiver, and put the receiver into a 'closed' state (as appropriate to the subclass). Answer the receiver."
 
 	^self!
+
+contents
+	"Answer a <sequencedReadableCollection> that contains the complete contents of the stream."
+
+	^self contentsSpecies empty!
 
 contentsSpecies
 	"Private - Answer the class of Object to be used when answering collections of elements from the receiver."
@@ -33,11 +47,6 @@ contentsSpecies
 
 contentsSpecies: aClass
 	contentsSpecies := aClass!
-
-flush
-	"Flush any buffered output."
-
-	^self!
 
 isEmpty
 	"Answer whether the sets of both past and future sequence values are empty."
@@ -55,6 +64,22 @@ next
 	"Answer the next object accessible by the receiver. A null stream is always at its end, so this is always an end of stream error."
 
 	^self errorEndOfStream!
+
+next: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection."
+
+	countInteger > 0
+		ifTrue: 
+			[startInteger < 1
+				ifTrue: 
+					[^InvalidArgumentError signal: 'Start position <1d> is out of bounds' << { startInteger }
+						with: 'startInteger'].
+			startInteger + countInteger - 1 > aSequenceableCollection size
+				ifTrue: 
+					[^InvalidArgumentError
+						signal: 'End position <1d> is out of bounds' << { startInteger + countInteger - 1 }
+						with: 'countInteger']].
+	^aSequenceableCollection!
 
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the next line delimiter. If there are no further line delimiters in the receiver, then the rest of the receiver's contents are answered. If the receiver is at its end, then an empty collection is answered."
@@ -86,23 +111,59 @@ peekFor: anObject
 position
 	"Answer the current <integer> position in the stream of values."
 
-	^0! !
+	^0!
+
+position: anInteger
+	"Set the current position in the stream of values to the <integer> argument."
+
+	"Ignored"!
+
+reset
+	"Reset the position of the receiver to be at the beginning of the stream of past sequence values."
+
+	"Nothing to do"!
+
+setToEnd
+	"Reset the position of the receiver to be at end of the stream of sequence values."
+
+	"Nothing to do"!
+
+upTo: anObject
+	"Answer a collection of elements starting with the next element accessed by the receiver,
+	and up to, not inclusive of, the next element that is equal to anObject. Positions the
+	stream after anObject if found. If anObject is not in the collection, answer the entire rest
+	of the collection. If the receiver is at its end, answer an empty Collection."
+
+	^self upToEnd!
+
+upToEnd
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from the
+	current position to the end)."
+
+	^self contentsSpecies empty! !
 
 !Core.NullStream categoriesForMethods!
 atEnd!public!testing! !
+basicNext:putAll:startingAt:!private!writing! !
 close!operations!public! !
+contents!public!reading! !
 contentsSpecies!accessing!private! !
 contentsSpecies:!accessing!private! !
-flush!operations!public! !
-isEmpty!public! !
+isEmpty!public!testing! !
 isWriteable!public!testing! !
-next!accessing!public! !
-nextLine!accessing!public! !
-nextPut:!adding!public! !
-nextPutAll:!adding!public! !
-peek!accessing!public! !
-peekFor:!accessing!public! !
+next!public!reading! !
+next:putAll:startingAt:!public!writing! !
+nextLine!public!reading! !
+nextPut:!public!writing! !
+nextPutAll:!public!writing! !
+peek!public!reading! !
+peekFor:!public!reading! !
 position!positioning!public! !
+position:!positioning!public! !
+reset!positioning!public! !
+setToEnd!positioning!public! !
+upTo:!public!reading! !
+upToEnd!public!reading! !
 !
 
 Core.NullStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!

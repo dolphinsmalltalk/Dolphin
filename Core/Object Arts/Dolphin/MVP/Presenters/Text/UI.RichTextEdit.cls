@@ -846,11 +846,12 @@ streamOutOn: aWriteStream format: anInteger
 
 	| result callback |
 	callback := External.Callback block: 
-					[:dwCookie :pbBuff :cb :pcb |
+					[:dwCookie :pbBuff :cb :pcb | | buf |
 					"We don't want the null terminator, if present. Note that this implies there cannot be any embedded nulls in the text."
+					buf := ExternalArray fromAddress: pbBuff length: ((pbBuff at: cb) == 0 ifTrue: [cb - 1] ifFalse: [cb]).
 					aWriteStream
-						basicNext: ((pbBuff at: cb) == 0 ifTrue: [cb - 1] ifFalse: [cb])
-						putAll: pbBuff
+						basicNext: buf size
+						putAll: buf
 						startingAt: 1.
 					pcb value: cb.
 					0	"Continue streaming"]

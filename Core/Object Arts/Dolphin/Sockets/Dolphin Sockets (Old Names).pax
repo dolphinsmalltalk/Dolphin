@@ -25,6 +25,7 @@ package setAliasVariableNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\Base\Dolphin'
 	'Dolphin Sockets'
 ).
 
@@ -38,11 +39,11 @@ Smalltalk.SocketClosed := Net.SocketClosed!
 
 Smalltalk.SocketError := Net.SocketError!
 
-Smalltalk.SocketReadStream := Net.SocketReadStream!
+Smalltalk.SocketReadStream := Core.ExternalReadStream!
 
 Smalltalk.SocketWaitCancelled := Net.SocketWaitCancelled!
 
-Smalltalk.SocketWriteStream := Net.SocketWriteStream!
+Smalltalk.SocketWriteStream := Core.ExternalWriteStream!
 
 Smalltalk.WinSocketConstants := OS.WinSocketConstants!
 

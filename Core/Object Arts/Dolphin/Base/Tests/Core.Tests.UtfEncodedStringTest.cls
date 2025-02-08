@@ -549,7 +549,7 @@ testEndsWithExtended
 	string := string copyFrom: 1 to: string size - 1.
 	self assert: (string endsWith: $🐬).
 	self deny: (string endsWith: $🐭).
-	self deny: (string endsWith: $? asAnsiString)!
+	self deny: (string endsWith: '?' asAnsiString)!
 
 testFindFirst
 	| subject index |

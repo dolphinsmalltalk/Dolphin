@@ -317,15 +317,15 @@ clear!initializing!public! !
 clearAll!commands-actions!public! !
 close!operations!public! !
 contents!accessing!public! !
-cr!adding!public! !
+cr!public!writing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-crtab!adding!public! !
-crtab:!adding!public! !
+crtab!public!writing! !
+crtab:!public!writing! !
 defaultHelpId!public! !
 display:!printing!public! !
 encodedSizeOf:!public! !
-flush!buffer!public! !
+flush!public!writing! !
 forgetSize!commands-actions!public! !
 hasOutput!commands-queries!private! !
 hasOutputWindow!accessing!private! !
@@ -335,8 +335,8 @@ isEmpty!public!testing! !
 locale!accessing!public! !
 next:put:!operations!public! !
 next:putAll:startingAt:!accessing!public! !
-nextPut:!adding!public! !
-nextPutAll:!adding!public! !
+nextPut:!public!writing! !
+nextPutAll:!public!writing! !
 notEmpty!public!testing! !
 onCloseRequested:!event handling!public! !
 onViewOpened!event handling!private! !
@@ -349,7 +349,7 @@ setToEnd!operations!public! !
 show!operations!public! !
 show:!printing!public! !
 smalltalkFilesType!constants!private! !
-space!adding!public! !
+space!public!writing! !
 stackTrace:!binary filing!public! !
 stbSaveOn:!binary filing!public! !
 tab!accessing!public! !

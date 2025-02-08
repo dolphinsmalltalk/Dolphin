@@ -109,13 +109,11 @@ asArray
 	[(ch := stream nextAvailable) isNil] whileFalse: [chars nextPut: ch].
 	^chars grabContents!
 
-before: aCharacter ifAbsent: aNiladicValuable
-	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
-
+basicDecodeAt: anInteger 
 	^self subclassResponsibility!
 
-bom
-	"Answer a <ByteArray> which is the byte-order mark for the receiver's encoding."
+before: aCharacter ifAbsent: aNiladicValuable
+	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
 
 	^self subclassResponsibility!
 
@@ -192,21 +190,13 @@ copyWithoutIndex: anInteger
 			startingAt: anInteger + len;
 		yourself!
 
-decodeFrom: aReadStream upTo: anObject
-	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
-	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
-	stream, then the remainder of the future sequence is answered and the stream is left at end."
+decodeAt: anInteger
+	"Private - Read the <Character> with code point in the receiver's encoding starting with the code unit at the specified index. If the index does not identify the start of a character, or the encoding is invalid or incomplete, return the replacement character."
 
-	^anObject isCharacter
-		ifTrue: 
-			[anObject isAscii
-				ifTrue: [aReadStream basicUpTo: anObject]
-				ifFalse: 
-					[| newStream ch |
-					newStream := self class writeStream: 128.
-					[(ch := aReadStream nextAvailable) isNil or: [ch = anObject]] whileFalse: [newStream nextPut: ch].
-					^newStream contents]]
-		ifFalse: [aReadStream upToEnd]!
+	"The primitive uses the ICU macros, e.g. U8_NEXT, and is purely for speed of what is a low-level but (for UTF-8 at least) surprisingly complex operation."
+
+	<primitive: 225>
+	^self basicDecodeAt: anInteger!
 
 detect: discriminator ifNone: exceptionHandler
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's 
@@ -239,12 +229,16 @@ do: aMonadicValuable separatedBy: aNiladicValuable
 	(ch := stream nextAvailable) isNil]
 			whileFalse: [aNiladicValuable value]!
 
-emitEncodingMarkerOn: aPositionableStream
-	"Emit any encoding marker used for the stream encoding this collection represents onto the
-	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
-	typically only relevant to string encodings, so there is nothing to do by default."
+emitEncodingMarkerOn: aWriteStream 
+	"Private - Emit any encoding marker used for the stream encoding this collection represents onto the `<positionableStream>` argument, which is assumed to be at the start of its sequence."
 
-	self bom do: [:each | aPositionableStream basicNextPut: each]!
+	"For all UTF-encoded streams, codepoint U+FEFF, the Zero-Width No Break Space character, is used."
+	aWriteStream nextPut: $\xFEFF!
+
+encodeAsObjectsOn: aWriteStream from: fromInteger count: countInteger
+	"Private - Encode <integer>, countInteger, code units of the receiver starting with that at <integer>, fromInteger, onto the <WriteStream>, aWriteStream. The code-units in the interval are decoded to codepoints, and whole Characters are written to the output stream. It is an error to attempt to write partial characters from the receiver, so the interval must start on the first or only code-unit of a codepoint, and end on the last or only code-unit of a codepoint."
+
+	self subclassResponsibility!
 
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.
@@ -252,22 +246,15 @@ encodedAt: anInteger put: aCharacter
 
 	^self subclassResponsibility!
 
+encodedSizeAt: anInteger
+	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver."
+
+	^self subclassResponsibility!
+
 encodedSizeOf: aCharacter
 	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver's encoding."
 
 	^self subclassResponsibility!
-
-encodeOn: aWriteStream next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
-	aSequenceableCollection class == self class
-		ifTrue: 
-			[aWriteStream
-				basicNext: sizeInteger
-				putAll: aSequenceableCollection
-				startingAt: startInteger]
-		ifFalse: 
-			[startInteger to: startInteger + sizeInteger - 1
-				do: [:i | self encodeOn: aWriteStream put: (aSequenceableCollection at: i)]].
-	^aSequenceableCollection!
 
 errorIntraCharacterIndex: anInteger
 	^self error: 'The specified index is not for the first code unit of a character: '
@@ -451,21 +438,11 @@ sixth
 	^self codePointAt: 6!
 
 skipEncodingMarkerFrom: aPositionableStream
-	"Private - Skip over any encoding marker used for the stream encoding this collection represents on the <PositionableStream> argument, which 
-	is assumed to be at the start of its sequence."
+	"Private - Skip over any encoding marker in this collection which is that of the <PositionableStream> argument."
 
-	"For UTF-8, we advance over the BOM, if present"
+	"For UTF encoded strings we advance over the BOM, if present"
 
-	| len bom preamble |
-	bom := self bom.
-	len := bom size.
-	aPositionableStream size >= len ifFalse: [^self].
-	preamble := bom class new: len.
-	aPositionableStream
-		basicNext: len
-		into: preamble
-		startingAt: 1.
-	preamble = bom ifFalse: [aPositionableStream position: 0]!
+	aPositionableStream peekFor: $\xFEFF!
 
 third
 	"Answer a <Character> representing the third code point of the receiver. Raise an exception if there are fewer than three code points in the receiver."
@@ -502,8 +479,8 @@ allButLast:!copying!public! !
 allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
 asArray!converting!public! !
+basicDecodeAt:!encode/decode!private! !
 before:ifAbsent:!public!searching! !
-bom!constants!encode/decode!private! !
 codePointAt:!debugger-step through!enumerating!public! !
 codePointsDo:!enumerating!public! !
 codeUnitsDo:!debugger-step through!enumerating!public! !
@@ -511,14 +488,15 @@ collect:!enumerating!public! !
 copyWith:!copying!public! !
 copyWith:atIndex:!copying!public! !
 copyWithoutIndex:!copying!public! !
-decodeFrom:upTo:!encode/decode!private! !
+decodeAt:!encode/decode!private! !
 detect:ifNone:!public!searching! !
 do:!debugger-step through!enumerating!public! !
 do:separatedBy:!enumerating!public! !
-emitEncodingMarkerOn:!accessing!public! !
+emitEncodingMarkerOn:!encode/decode!private! !
+encodeAsObjectsOn:from:count:!encode/decode!private! !
 encodedAt:put:!accessing!encode/decode!private! !
+encodedSizeAt:!encode/decode!private! !
 encodedSizeOf:!encode/decode!private! !
-encodeOn:next:putAll:startingAt:!encode/decode!private! !
 errorIntraCharacterIndex:!encode/decode!private! !
 fifth!accessing!public! !
 findFirst:!public!searching! !
@@ -557,9 +535,26 @@ with:do:!enumerating!public! !
 codePage
 	"Answer the Windows code page constant for the receiver's encoding."
 
-	^self subclassResponsibility! !
+	^self subclassResponsibility!
+
+decodeFrom: aReadStream upTo: anObject
+	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
+	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
+	stream, then the remainder of the future sequence is answered and the stream is left at end."
+
+	^anObject isCharacter
+		ifTrue: 
+			[anObject isAscii
+				ifTrue: [aReadStream basicUpTo: anObject]
+				ifFalse: 
+					[| newStream ch |
+					newStream := self writeStream: 128.
+					[(ch := aReadStream nextAvailable) isNil or: [ch = anObject]] whileFalse: [newStream nextPut: ch].
+					^newStream contents]]
+		ifFalse: [aReadStream upToEnd]! !
 
 !Core.UtfEncodedString class categoriesForMethods!
 codePage!constants!public! !
+decodeFrom:upTo:!private! !
 !
 

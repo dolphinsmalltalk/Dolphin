@@ -29,6 +29,28 @@ atEnd
 
 	^stream atEnd!
 
+basicNext: countInteger putAll: aSequencedReadableCollection startingAt: startInteger
+	"Private - Append countInteger elements of aSequencedReadableCollection from startInteger to the receiver. Answer aSequencedReadableCollection."
+
+	| pos |
+	pos := stream position.
+	pos + countInteger > limit
+		ifTrue: 
+			[stream
+				basicNext: (limit - pos max: 0)
+				putAll: aSequencedReadableCollection
+				startingAt: startInteger.
+			limitBlock cull: self]
+		ifFalse: 
+			[stream
+				basicNext: countInteger
+				putAll: aSequencedReadableCollection
+				startingAt: startInteger].
+	^aSequencedReadableCollection!
+
+bufferPosition
+	^stream position!
+
 contents
 	"Answer the contents of the streamed over collection up to the current position or the limit, whichever is less."
 
@@ -111,14 +133,9 @@ nextPutAll: aSequencedReadableCollection
 originalContents
 	^stream originalContents!
 
-peekFor: anObject
-	"Determine the response to the message peek. If it is the same as the argument, anObject,
-	then advance the current position and answer true. Otherwise answer false and do not change
-	the current position."
-
-	^self errorNotReadable!
-
 position
+	"Answer the current <integer> position in the stream of  values."
+
 	^stream position min: limit!
 
 position: anInteger 
@@ -127,6 +144,8 @@ position: anInteger
 	stream position: anInteger!
 
 reset
+	"Reset the position of the receiver to be at the beginning of the stream of past sequence values. It is an error if the underlying stream is not a <sequencedStream>."
+
 	stream reset!
 
 setStream: aCollection limit: anInteger limitBlock: aLimitBlock
@@ -166,7 +185,9 @@ visitedBlock: anObject
 !Core.LimitedWriteStream categoriesForMethods!
 alreadyVisited:!private! !
 atEnd!public!testing! !
-contents!accessing!public! !
+basicNext:putAll:startingAt:!private! !
+bufferPosition!private! !
+contents!public!reading! !
 contentsSpecies!constants!private! !
 encodedSizeOf:!encode/decode!public! !
 isWriteable!public!testing! !
@@ -178,10 +199,9 @@ locale!accessing!public! !
 locale:!accessing!public! !
 moveToEnd!public! !
 next:put:!public! !
-nextPut:!accessing!public! !
-nextPutAll:!accessing!public! !
+nextPut:!public!writing! !
+nextPutAll:!public!writing! !
 originalContents!accessing!public! !
-peekFor:!accessing!public! !
 position!public! !
 position:!positioning!public! !
 reset!public! !
@@ -192,6 +212,9 @@ visit:do:!public! !
 visitedBlock!public! !
 visitedBlock:!public! !
 !
+
+Core.LimitedWriteStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+Core.LimitedWriteStream methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
 !Core.LimitedWriteStream class methodsFor!
 

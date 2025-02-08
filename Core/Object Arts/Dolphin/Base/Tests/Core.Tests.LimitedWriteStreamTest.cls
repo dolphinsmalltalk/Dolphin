@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.WriteStreamTest
+Core.Tests.AbstractWriteStreamTest
 	subclass: #'Core.Tests.LimitedWriteStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -14,8 +14,14 @@ Core.Tests.LimitedWriteStreamTest comment: ''!
 
 !Core.Tests.LimitedWriteStreamTest methodsFor!
 
-streamClass
-	^LimitedWriteStream!
+bufferSizeOfStream: subject
+	^subject originalContents size!
+
+expectedAnsiProtocolNames
+	^#(#Object #puttableStream #sequencedStream)!
+
+newStream
+	^self streamOn: String new!
 
 testLimit
 	| stream overLimit |
@@ -259,7 +265,9 @@ testWithFromTo
 				assert: overLimit]! !
 
 !Core.Tests.LimitedWriteStreamTest categoriesForMethods!
-streamClass!helpers!private! !
+bufferSizeOfStream:!helpers!private!unit tests! !
+expectedAnsiProtocolNames!constants!private! !
+newStream!helpers!private! !
 testLimit!public!unit tests! !
 testLimitBlock!public!unit tests! !
 testNextColonPut!public!unit tests! !
@@ -274,5 +282,14 @@ testRecursionDetection!public!unit tests! !
 testSetPosition!public! !
 testWith!public! !
 testWithFromTo!public! !
+!
+
+!Core.Tests.LimitedWriteStreamTest class methodsFor!
+
+streamClass
+	^LimitedWriteStream! !
+
+!Core.Tests.LimitedWriteStreamTest class categoriesForMethods!
+streamClass!helpers!private! !
 !
 

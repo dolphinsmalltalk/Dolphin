@@ -382,8 +382,8 @@ Write: pv cb: cb pcbWritten: pcbWritten
 	"
 
 	self 
-		next: cb
-		putAll: pv
+		basicNext: cb
+		putAll: (ExternalArray fromAddress: pv length: cb)
 		startingAt: 1.
 	pcbWritten bytes isNull ifFalse: [pcbWritten value: cb].
 	^S_OK! !

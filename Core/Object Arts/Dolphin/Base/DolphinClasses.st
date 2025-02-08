@@ -3708,7 +3708,6 @@ Core.UtfEncodedString
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'Bom' -> #[255 254].
 			'LeadOffset' -> 16rD7C0.
 			'LeadSurrogateMask' -> 16rD800.
 			'SurrogateMask' -> 16rFC00.
@@ -3723,7 +3722,6 @@ Core.UtfEncodedString
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'Bom' -> #[239 187 191].
 			'LeadByteMask2' -> 16rC0.
 			'LeadByteMask3' -> 16rE0.
 			'LeadByteMask4' -> 16rF0.
@@ -5107,7 +5105,16 @@ Core.SequencedStream
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ByteBufferClasses'
+				-> (IdentityDictionary withAll: {
+								#ansi -> AnsiString.
+								#binary -> ByteArray.
+								#text -> Utf8String.
+								#utf16le -> Utf16String.
+								#utf8 -> Utf8String
+							})
+		}!
 
 Core.SequencedStream
 	subclass: #'OS.StdioFileStream'
@@ -5131,7 +5138,7 @@ Core.SequencedStream
 		}!
 
 Core.PositionableStream
-	subclass: #'Core.ReadStream'
+	subclass: #'Core.AbstractReadStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -5139,12 +5146,52 @@ Core.PositionableStream
 	classConstants: {}!
 
 Core.PositionableStream
-	subclass: #'Core.WriteStream'
+	subclass: #'Core.AbstractWriteStream'
 	instanceVariableNames: 'writeLimit'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+Core.AbstractReadStream
+	subclass: #'Core.ExternalReadStream'
+	instanceVariableNames: 'medium fallback'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'BufferSize' -> 16r1000 }!
+
+Core.AbstractReadStream
+	subclass: #'Core.ReadStream'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.AbstractWriteStream
+	subclass: #'Core.ExternalWriteStream'
+	instanceVariableNames: 'medium flags elementSize'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: 'bufferSize'
+	classConstants: { 'OwnsMedium' -> 16r100 }!
+
+Core.AbstractWriteStream
+	subclass: #'Core.WriteStream'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.ExternalWriteStream
+	subclass: #'Core.FileWriteStream'
+	instanceVariableNames: 'offset'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'NoBom' -> 16r200. 'OwnsFile' -> 16r100 }!
 
 Core.WriteStream
 	subclass: #'Core.ReadWriteStream'
@@ -5161,12 +5208,10 @@ Core.ReadWriteStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'BufferClasses'
-				-> (IdentityDictionary withAll: { #ansi -> AnsiString. #binary -> ByteArray. #utf8 -> Utf8String }).
 			'BufferUpdatedMask' -> 16r3.
 			'DirtyBufferMask' -> 16r2.
 			'LimitsChangedMask' -> 16r1.
-			'OwnsFileMask' -> 16r100.
+			'OwnsFile' -> 16r100.
 			'PageSize' -> 16r2000
 		}!
 

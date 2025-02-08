@@ -82,14 +82,14 @@ nextPutAll: insertString
 !Kernel.DebugTraceStream categoriesForMethods!
 atEnd!public!testing! !
 close!operations!public! !
-cr!adding!public! !
-flush!accessing!public! !
+cr!public!writing! !
+flush!public!writing! !
 initialize!initializing!private! !
 isEmpty!public! !
 isWriteable!public!testing! !
 locale!accessing!public! !
-nextPut:!adding!public! !
-nextPutAll:!adding!public! !
+nextPut:!public!writing! !
+nextPutAll:!public!writing! !
 !
 
 Kernel.DebugTraceStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!

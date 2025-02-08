@@ -6,19 +6,35 @@ Core.SequencedStream
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ByteBufferClasses'
+				-> (IdentityDictionary withAll: {
+								#ansi -> AnsiString.
+								#binary -> ByteArray.
+								#text -> Utf8String.
+								#utf16le -> Utf16String.
+								#utf8 -> Utf8String
+							})
+		}!
 
 Core.PositionableStream guid: (Core.GUID fromString: '{87b4c6f8-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-Core.PositionableStream comment: 'PositionableStream is the abstract class of <SequencedStream>s for which stream over sequence values from a Smalltalk sequenceable collection. Sub-instances of PositionableStream conform to the ANSI <collectionStream> protocol.
+Core.PositionableStream isNonInstantiable: true!
 
-Note that some inconsistencies arise when streaming over multi-byte string encodings, such as UTF-8. The position reported by the stream, and that to which it can be set, is always expressed as a code unit position. This has a number of consequences to be aware of:
-- Reading a single character may advance the position by more than one code unit position. In the case of UTF-8 characters are represented by 1 to 4 code units, so ReadStream>>next will increment the position between 1 and 4 bytes.
-- The stream position can be set to be in the middle of a character if chosen without consideration. For example adjusting the position by using #skip: should generally be avoided - it is better to remember a position, and reset to that. 
+Core.PositionableStream comment: '`PositionableStream` is an abstract class of `SequencedStream`s that stream over sequence values from a Smalltalk sequenceable collection. Sub-instances of `PositionableStream` may conform to the ANSI `<collectionStream>` protocol, or they may be using the collection as a buffer for reading from or writing to some external data source.
 
-Instance Variables
-	position		<Integer> 0 based offset of the current code unit position in the stream
-	readLimit		<Integer> Either the maximum read position in the stream, or the position up to which the stream has previously been read (depends on subclass).'!
+Note that some inconsistencies arise when streaming over multi-byte string encodings, such as UTF-8. The position reported by the stream, and that to which it can be set, is always expressed as a code-unit position. This has a number of consequences to be aware of:
+ - Reading a single character may advance the position by more than one code-unit position. In the case of UTF-8 characters are represented by 1 to 4 code-units, so `#next` will increment the position between 1 and 4 bytes.
+ - The stream position can be set to be in the middle of a character if chosen without consideration. For example adjusting the position by using `#skip:` should generally be avoided - it is better to remember a position, and reset to that. 
+
+## Instance Variables:
+  `collection`		`<sequencedCollection>`. Streamed over collection (or in some sub-instances a buffer representing part of the data in some underlying store).
+  `position`		Zero-based `<integer>` offset of the current code-unit position in the stream
+  `readLimit`		`<integer>`. Either the maximum read position in the stream, or the position up to which the stream has previously been read (depends on subclass).
+  `locale`			`Locale` of textual data
+
+## Class Variables:
+  `ByteBufferClasses`	`IdentityDictionary` mapping encoding `Symbol`s to `Class`es for buffering external byte-encoded streams.'!
 
 !Core.PositionableStream categoriesForClass!Collections-Streams! !
 
@@ -78,14 +94,24 @@ basicUpTo: anObject
 				nextIdentityIndexOf: anObject
 				from: startIndex
 				to: readLimit.
-	position == 0
-		ifTrue: 
-			["Not found. Result is equivalent of #upToEnd"
-			endIndex := position := readLimit]
-		ifFalse: 
-			["Found. Answer the elements before anObject, and leave the stream positioned immediately after it."
-			endIndex := position - 1].
+	endIndex := position == 0
+				ifTrue: 
+					["Not found. Result is equivalent of #upToEnd"
+					position := readLimit]
+				ifFalse: 
+					["Found. Answer the elements before anObject, and leave the stream positioned immediately after it."
+					position - 1].
 	^collection copyFrom: startIndex to: endIndex!
+
+bufferClass
+	"Private - Answer the class of the receiver's I/O buffer."
+
+	^collection class!
+
+bufferPosition
+	"Private - Answer the current <integer> position in the buffer."
+
+	^position!
 
 collection
 	"Private - Answer the collection over which the receiver is streaming."
@@ -93,15 +119,13 @@ collection
 	^collection
 !
 
-contents
-	"Answer a <sequencedReadableCollection> that contains the complete contents of the stream."
-
-	^collection copyFrom: 1 to: self size!
-
 contentsSpecies
 	"Private - Answer the class of Object to be used when answering collections of elements from the receiver."
 
 	^collection copyingClass!
+
+decodeNext
+	^collection decodeNextFrom: self!
 
 encodedSizeOf: anObject
 	"Answer the number of units that would be occupied by anObject if it were present in this stream."
@@ -120,7 +144,7 @@ locale
 	^locale!
 
 locale: aLocale
-"Set the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+	"Set the <Locale> to be used when emitting or reading localisable data to/from this stream."
 
 	locale := aLocale!
 
@@ -173,6 +197,21 @@ nextInt32
 	<primitive: 144>
 	^(self basicNext: 4) int32AtOffset: 0!
 
+nextLine
+	"Answer a Collection consisting of the receiver's contents up to (but not including) the next line delimiter. If there are no further line delimiters in the receiver, then the rest of the receiver's contents are answered. If the receiver is at its end, then an empty collection is answered. "
+
+	"N.B. This method works for CR, LF and CR/LF line delimiters."
+
+	| newStream nextObject |
+	newStream := self contentsSpecies writeStream: 128.
+	
+	[(nextObject := self nextAvailable) isNil
+		or: [nextObject == $\n or: [nextObject == $\r and: 
+							[self peekFor: $\n.
+							true]]]]
+			whileFalse: [newStream nextPut: nextObject].
+	^newStream contents!
+
 nextUInt16
 	"Answer a 16-bit unsigned integer constructed from the host system representation contained
 	in the next 2 bytes on the receiver."
@@ -212,15 +251,6 @@ position: anInteger
 		ifTrue: [position := anInteger]
 		ifFalse: [^self errorSubscriptBounds: anInteger]!
 
-positionAfterNext: anInteger 
-	"Private - Answer the new position which the receiver would be in if a further anInteger are
-	read from the receiver."
-
-	| stop |
-	stop := position + anInteger.
-	stop > self lastPosition ifTrue: [^self errorEndOfStream].
-	^stop!
-
 readLimit: anInteger
 	(anInteger >= 0 and: [anInteger <= collection size])
 		ifTrue: 
@@ -231,16 +261,6 @@ readLimit: anInteger
 reset
 	position := 0!
 
-reverseContents
-	"Answer a <sequencedReadableCollection> that contains the complete contents of the stream, but in reverse order."
-
-	^collection reversedFrom: 1 to: self size!
-
-setToEnd
-	"Set the position of the receiver to be past the last value in the stream."
-
-	position := readLimit!
-
 size
 	"Answer the number of values in the stream."
 
@@ -249,59 +269,67 @@ size
 	readLimit < position ifTrue: [readLimit := position].
 	^self lastPosition!
 
-upTo: anObject
-	"Answer a collection of elements starting with the next element accessed by the receiver,
-	and up to, not inclusive of, the next element that is equal to anObject. Positions the
-	stream after anObject if found. If anObject is not in the collection, answer the entire rest
-	of the collection. If the receiver is at its end, answer an empty Collection."
+skip: anInteger
+	"Set the receiver's position to be the current position plus the argument, anInteger,
+	possibly adjusting the result so as to remain within the bounds of the collection."
 
-	^collection decodeFrom: self upTo: anObject!
+	"Note this adjusts the raw position. It should not be used when streaming over UTF encoded strings."
 
-upToEnd
-	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
-	the current position to the end)."
+	self position: self position + anInteger!
 
-	"Implementation Note: We implement this in terms of #basicNext:, which is optimized for
-	 particular streams, and which counts by raw elements regardless of encoding."
+skipToAll: aCollection 
+	"Set the receiver's current position to be past the next occurrence of the sequence of
+	objects which are the elements of the <collection> argument. Answer whether such any such
+	sequence was found."
 
-	^self basicNext: self lastPosition - self position! !
+	| sequence partialStart |
+	sequence := aCollection readStream.
+	[sequence atEnd] whileFalse: 
+			[self atEnd ifTrue: [^false].
+			self next = sequence next 
+				ifTrue: [partialStart isNil ifTrue: [partialStart := self position]]
+				ifFalse: 
+					[sequence reset.
+					partialStart isNil 
+						ifFalse: 
+							[self position: partialStart.
+							partialStart := nil]]].
+	^true! !
 
 !Core.PositionableStream categoriesForMethods!
 advancePosition!positioning!private! !
 atEnd!public!testing! !
-basicNext:!accessing!private! !
-basicNextAvailable!accessing!private! !
+basicNext:!private!reading! !
+basicNextAvailable!private!reading! !
 basicNextAvailable:!private! !
-basicUpTo:!accessing!private! !
+basicUpTo:!private!reading! !
+bufferClass!constants!private! !
+bufferPosition!private! !
 collection!accessing!private! !
-contents!accessing!public! !
 contentsSpecies!accessing!private! !
+decodeNext!encode/decode!private!reading! !
 encodedSizeOf:!encode/decode!public! !
 lastPosition!accessing!private! !
 locale!accessing!public! !
 locale:!accessing!public! !
-nextAvailable:!accessing!public! !
-nextDOUBLE!binary filing!public! !
-nextFLOAT!binary filing!public! !
-nextInt16!binary filing!public! !
-nextInt32!binary filing!public! !
-nextUInt16!binary filing!public! !
-nextUInt32!binary filing!public! !
+nextAvailable:!public!reading! !
+nextDOUBLE!public!reading! !
+nextFLOAT!public!reading! !
+nextInt16!public!reading! !
+nextInt32!public!reading! !
+nextLine!public!reading! !
+nextUInt16!public!reading! !
+nextUInt32!public!reading! !
 on:!initializing!private! !
 originalContents!accessing!public! !
 position!positioning!public! !
 position:!positioning!public! !
-positionAfterNext:!positioning!private! !
 readLimit:!accessing!public! !
 reset!positioning!public! !
-reverseContents!accessing!public! !
-setToEnd!positioning!public! !
 size!accessing!public! !
-upTo:!accessing!public! !
-upToEnd!accessing!public! !
+skip:!positioning!public! !
+skipToAll:!positioning!public! !
 !
-
-Core.PositionableStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
 !Core.PositionableStream class methodsFor!
 

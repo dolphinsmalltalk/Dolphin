@@ -62,13 +62,13 @@ upToEnd
 	^super upToEnd asUtf8String! !
 
 !OS.StdioUtf8FileStream categoriesForMethods!
-basicNext:!accessing!private! !
+basicNext:!private!reading! !
 contentsSpecies!constants!private! !
 modeModifiers!constants!private! !
 position!accessing!public! !
 position:!positioning!public! !
 size!accessing!public! !
-upToEnd!accessing!public! !
+upToEnd!public!reading! !
 !
 
 !OS.StdioUtf8FileStream class methodsFor!

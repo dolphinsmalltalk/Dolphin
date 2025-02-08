@@ -226,6 +226,14 @@ doubleAtOffset: anInteger put: aFloat
 			^aFloat].	"coerce to float and retry"
 	^self updatePrimitiveFailed: _failureCode atOffset: anInteger!
 
+encodeAsBytesOn: aWriteStream from: startInteger count: sizeInteger
+	"Private - Encode <integer>, sizeInteger, elements of the receiver starting with that at <integer>, startInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out bytes, which is of course the receiver's native encoding too."
+
+	aWriteStream
+		basicNext: sizeInteger
+		putAll: self
+		startingAt: startInteger!
+
 floatAtOffset: anInteger
 	"Answer the single precision floating point value at offset (i.e. zero relative) anInteger in the receiver, as a Smalltalk Float object (double precision).
 	N.B. To access a double precision value (e.g. a C double) use #doubleAtOffset:"
@@ -733,6 +741,7 @@ copy:from:to:!copying!private! !
 copyStringFrom:to:!copying!public! !
 doubleAtOffset:!accessing!public! !
 doubleAtOffset:put:!accessing!public! !
+encodeAsBytesOn:from:count:!double dispatch!encode/decode!private! !
 floatAtOffset:!accessing!public! !
 floatAtOffset:put:!accessing!public! !
 hash!comparing!public! !
@@ -792,6 +801,14 @@ empty
 
 	^#[]!
 
+encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
+	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be it's underlying collection, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is raw bytes, we double-dispatch to aSequenceableCollection to ask it to encode the interval of its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream as its binary encoding. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval."
+
+	aSequenceableCollection
+		encodeAsBytesOn: aWriteStream
+		from: fromInteger
+		count: countInteger!
+
 encoding
 	^#binary!
 
@@ -836,6 +853,7 @@ fromHexString: aString
 !Core.ByteArray class categoriesForMethods!
 elementSize!constants!private! !
 empty!instance creation!public! !
+encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 fromAddress:length:!instance creation!public! !
 fromGlobalHandle:!instance creation!public! !

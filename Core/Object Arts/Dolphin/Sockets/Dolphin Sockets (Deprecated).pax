@@ -1,0 +1,63 @@
+﻿| package |
+package := Package name: 'Dolphin Sockets (Deprecated)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.HOSTENT}
+).
+
+package setMethodNames: #(
+	#(#{Net.Socket} #send:count:)
+	#(#{Net.Socket} #send:count:startingAt:)
+).
+
+package setVariableNames: #(
+	#{Net.SocketReadStream}
+	#{Net.SocketWriteStream}
+).
+
+package setAliasVariableNames: #(
+	#{Net.SocketReadStream}
+	#{Net.SocketWriteStream}
+).
+
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+	'Dolphin Sockets'
+).
+
+package!
+
+"Class Definitions"!
+
+"Variable Aliases"!
+
+Net.SocketReadStream := Core.ExternalReadStream!
+
+Net.SocketWriteStream := Core.ExternalWriteStream!
+
+
+"Loose Methods"!
+
+!Net.Socket methodsFor!
+
+send: aByteObject count: anInteger
+	#deprecated. "Use write:count:"
+	self write: aByteObject count: anInteger!
+
+send: aByteObject count: countInteger startingAt: startInteger
+	#deprecated. "Use write:count:startingAt:"
+	self
+		write: aByteObject
+		count: countInteger
+		startingAt: startInteger! !
+
+!Net.Socket categoriesForMethods!
+send:count:!operations!public! !
+send:count:startingAt:!operations!public! !
+!
+
+"End of package definition"!
+

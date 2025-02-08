@@ -14,9 +14,6 @@ Core.Tests.ReadWriteStreamTest comment: ''!
 
 !Core.Tests.ReadWriteStreamTest methodsFor!
 
-streamClass
-	^ReadWriteStream!
-
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -33,8 +30,7 @@ testIsEmpty
 	self deny: stream isEmpty.
 	"This test would fail on Squeak because it uses the position to implement #isEmpty (?)"
 	stream reset.
-	self deny: stream isEmpty.
-	self closeTempStream: stream!
+	self deny: stream isEmpty!
 
 testNextColon
 	super testNextColon.
@@ -48,23 +44,21 @@ testNextColon
 			subject reset.
 			actual := subject next: elems size * 2.
 			self assert: subject atEnd.
-			self closeTempStream: subject.
 			expected := each , each.
-			self assert: actual equals: expected]!
-
-testResetAfterWrite
-	| stream |
-	stream := self streamWith: String new.
-	stream nextPut: $a.
-	stream reset.
-	self assert: stream next equals: $a.
-	self closeTempStream: stream! !
+			self assert: actual equals: expected]! !
 
 !Core.Tests.ReadWriteStreamTest categoriesForMethods!
-streamClass!helpers!private! !
 streamOn:!helpers!private! !
 testIsEmpty!public!unit tests! !
 testNextColon!public!unit tests! !
-testResetAfterWrite!public!unit tests! !
+!
+
+!Core.Tests.ReadWriteStreamTest class methodsFor!
+
+streamClass
+	^ReadWriteStream! !
+
+!Core.Tests.ReadWriteStreamTest class categoriesForMethods!
+streamClass!helpers!private! !
 !
 

@@ -27,9 +27,8 @@ asParameter
 close
 	"Close the socket."
 
-	descriptor isNull ifTrue: [^self].
-	Ws2_32 closesocket: descriptor.
-	descriptor := nil!
+	self beUnfinalizable.
+	self free!
 
 create
 	"Private - Create a new socket."
@@ -43,17 +42,19 @@ create
 	descriptor := sd.
 	self beFinalizable!
 
-descriptor: anIntege 
-	descriptor := anIntege asExternalHandle!
+descriptor: anInteger 
+	descriptor := anInteger asExternalHandle!
 
 errorSocketClosed
 	^SocketClosed signal!
 
-finalize
-	"Private - Sent when the object no longer has any strong references to it.
+free
+	"Sent when the object no longer has any strong references to it.
 	Frees the external resources by closing the socket."
 
-	self close!
+	descriptor isNull ifTrue: [^self].
+	Ws2_32 closesocket: descriptor.
+	descriptor := nil!
 
 initialize
 	"Private - Initialize the receiver."
@@ -110,7 +111,7 @@ socketError
 socketErrorOverlap
 	"Private - Raise a <SocketError> in response to an error in an overlapped socket library call."
 
-	SocketError signalWith: Processor activeProcess lastError! !
+	SocketError signalWith: Ws2_32 threadWsaGetLastError! !
 
 !Net.SocketAbstract categoriesForMethods!
 asParameter!converting!public! !
@@ -118,7 +119,7 @@ close!operations!public! !
 create!operations!private! !
 descriptor:!initializing!private! !
 errorSocketClosed!operations!private! !
-finalize!finalizing!private! !
+free!operations!public! !
 initialize!initializing!private! !
 isOpen!public!testing! !
 port!accessing!public! !

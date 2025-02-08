@@ -14,8 +14,8 @@ Core.Tests.ReadStreamTest comment: ''!
 
 !Core.Tests.ReadStreamTest methodsFor!
 
-streamClass
-	^ReadStream!
+expectedAnsiProtocolNames
+	^#(#collectionStream #gettableStream #Object #ReadStream #sequencedStream)!
 
 streamWith: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
@@ -23,6 +23,41 @@ streamWith: aString
 	^(self streamOn: aString)
 		setToEnd;
 		yourself!
+
+testPeekForOverArray
+	"Test AbstractReadStream>>peekFor: over an Array, which can contain nils"
+	<mustConform: #gettableStream>
+	<mustConform: #collectionStream>
+
+	| stream |
+	"Empty stream (initlially at end)"
+	stream := self streamOn: #().
+	self deny: (stream peekFor: $a).
+	self assert: stream atEnd.
+	"Non-empty stream"
+	stream := self streamOn: #(1 nil 2).
+	"Not at end but mismatch"
+	self deny: (stream peekFor: 2).
+	self deny: (stream peekFor: nil).
+	self assert: stream position equals: 0.
+	"Successful match of first element"
+	self assert: (stream peekFor: 1).
+	self assert: stream position equals: 1.
+	"Mismatch - currently on nil"
+	self deny: (stream peekFor: 2).
+	self deny: (stream peekFor: 3).
+	self assert: stream position equals: 1.
+	"Successful match of nil"
+	self deny: stream atEnd.
+	self assert: (stream peekFor: nil).
+	self deny: stream atEnd.
+	self deny: (stream peekFor: 3).
+	"Match last"
+	self assert: (stream peekFor: 2).
+	"Now at end"
+	self deny: (stream peekFor: 1).
+	self deny: (stream peekFor: nil).
+	self assert: stream atEnd!
 
 testPositionBoundsError
 	| stream pos |
@@ -34,8 +69,18 @@ testPositionBoundsError
 		matching: [:e | e receiver == stream and: [e tag == 5]]! !
 
 !Core.Tests.ReadStreamTest categoriesForMethods!
-streamClass!helpers!private! !
+expectedAnsiProtocolNames!constants!private! !
 streamWith:!helpers!private! !
+testPeekForOverArray!public!unit tests! !
 testPositionBoundsError!public!unit tests! !
+!
+
+!Core.Tests.ReadStreamTest class methodsFor!
+
+streamClass
+	^ReadStream! !
+
+!Core.Tests.ReadStreamTest class categoriesForMethods!
+streamClass!private! !
 !
 

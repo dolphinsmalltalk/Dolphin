@@ -56,10 +56,13 @@ decodeNextFrom: aReadStream
 
 	^aReadStream basicNextAvailable ifNotNil: [:ch | Character ansiValue: ch]!
 
-encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver. Always 1 in the case of an ANSI string (multi-byte code pages are not supported)."
+encodeAsAnsiOn: aWriteStream from: startInteger count: sizeInteger
+	"Private - Encode <integer>, sizeInteger, code units of the receiver starting with that at <integer>, startInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out Ansi encoded text, and as this is the receiver's native encoding, we can just ask the stream to copy bytes directly from the receiver's binary representation."
 
-	^1!
+	aWriteStream
+		basicNext: sizeInteger
+		putAll: self
+		startingAt: startInteger!
 
 encodeOn: aWriteStream put: aCharacter
 	"Private - Encode the <Character> argument onto the <WriteStream> argument as a single byte ANSI code unit.
@@ -132,7 +135,7 @@ asAnsiString!converting!public! !
 codePointsDo:!enumerating!public! !
 decodeAt:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
-encodedSizeAt:!encode/decode!private! !
+encodeAsAnsiOn:from:count:!private! !
 encodeOn:put:!encode/decode!private! !
 first:!copying!public! !
 nextIndexOfCharacter:from:to:!private!searching! !
@@ -150,6 +153,14 @@ coerceString: aString
 	Any characters of aString that are not representable on the current ANSI code page are replaced with the ANSI replacement character, $?"
 
 	^aString asAnsiString!
+
+encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
+	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be it's underlying collection, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is ANSI encoded, we double-dispatch to aSequenceableCollection to ask it to encode the interval of its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream as ANSI characters. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval."
+
+	aSequenceableCollection
+		encodeAsAnsiOn: aWriteStream
+		from: fromInteger
+		count: countInteger!
 
 encoding
 	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
@@ -201,6 +212,7 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 !Core.AnsiString class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 coerceString:!instance creation!public! !
+encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 initialize!class initialization!development!public! !
 with:!instance creation!public! !

@@ -112,6 +112,14 @@ allMethodsDo: operation
 
 	self withAllSubclassesDo: [:behavior | behavior methodsDo: operation]!
 
+allProtocolNames
+	"Answer a <collection> of the `Symbol` names of all the `MethodProtocol`s implemented by the receiver's instances, including those inherited from superclasses."
+
+	| answer |
+	answer := IdentitySet new.
+	self withAllSuperclassesDo: [:c | answer addAll: c protocolNames].
+	^answer!
+
 allProtocols
 	"Answer a <collection> of all the <MethodProtocol>s implemented by the receiver's
 	instances, including those inherited from superclasses."
@@ -1061,6 +1069,7 @@ allClassVarNames!class variables!public! !
 allGettersDo:!accessing!private! !
 allInstances!instances!public! !
 allMethodsDo:!enumerating!public! !
+allProtocolNames!protocols!public! !
 allProtocols!protocols!public! !
 allSelectors!methods-accessing!public! !
 allSubclasses!class hierarchy-accessing!public! !

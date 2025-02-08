@@ -231,8 +231,7 @@ emitComment: aString
 	stream
 		nextPut: $";
 		nextPut: $!!;
-		cr;
-		flush!
+		cr!
 
 emitCommentOfClass: aClass
 	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to the <puttableStream>
@@ -456,18 +455,20 @@ saveImageTo:!operations-saving!private! !
 
 !Kernel.ChunkSourceFiler methodsFor!
 
-storeSource: aString for: aSourceObject 
+storeSource: aString for: aSourceObject
 	"Private - Store the <readableString>, aString, as the source text for the <sourceObject>,
 	aSourceObject. If the receiver has been associated with a source file (i.e. the
 	sourceFileIndex is set) then update aSourceObject's source descriptor so that in future it
 	retrieves the source text from the receiver's source stream."
 
-	| position |
-	position := stream position.
-	self nextChunkPut: aString.
-	sourceFileIndex notNil 
-		ifTrue: 
-			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]! !
+	sourceFileIndex
+		ifNil: [self nextChunkPut: aString]
+		ifNotNil: 
+			[| position |
+			position := stream position.
+			self nextChunkPut: aString.
+			aSourceObject sourceDescriptor: (aString isEmpty
+						ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]! !
 
 !Kernel.ChunkSourceFiler categoriesForMethods!
 storeSource:for:!private!source filing-file out! !
@@ -818,7 +819,7 @@ fileOut: anObject to: aFileName
 
 	| filer |
 	self createDirectoryPath: aFileName.
-	filer := anObject sourceFilerClass on: (FileStream write: aFileName).
+	filer := anObject sourceFilerClass on: (FileWriteStream write: aFileName).
 	self emitFileOutHeaderOn: filer.
 	anObject fileOutOn: filer.
 	filer close!
@@ -838,7 +839,11 @@ logComment: aString
 	"Record aString to the change log as a comment. All comments logged are prefixed with a timestamp.
 	N.B. Logging requests should be directed through the SessionManager."
 
-	self changesFiler ifNotNil: [:logger | self logComment: aString to: logger]!
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			self logComment: aString to: logger.
+			logger flush]!
 
 logComment: aString to: aSourceFiler
 	"Private - Record aString to the specified source file as a comment. All comments	logged are prefixed with a timestamp, and then a full width colon character."

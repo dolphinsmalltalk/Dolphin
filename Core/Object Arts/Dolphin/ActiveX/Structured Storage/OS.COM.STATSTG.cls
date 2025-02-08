@@ -23,24 +23,24 @@ External.FinalizableStructure
 
 OS.COM.STATSTG guid: (Core.GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-OS.COM.STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
+OS.COM.STATSTG comment: '`STATSTG` is an `External.Structure` class to represent the OLE Structured Storage structure of the same name.
 
-STATSTG contains directory type information about a structured storage object (storage, stream, or lock bytes)
+`STATSTG` contains directory or file type information about a structured storage object (storage, stream, or lock bytes)
 
-N.B. The pwcsName member is a pointer to a UnicodeString that has been allocated from the COM task heap, and which must be free''d back to that heap. This is managed using finalization.
+N.B. The pwcsName member is a pointer to a `Utf16String` that has been allocated from the COM task heap, and which must be free''d back to that heap. This is managed using finalization.
 
-Member variables:
-	pwcsName		<UnicodeString> "file" name
-	type			<integer> from STGTY enumeration - the type of storage object
-	cbSize			<integer> size in bytes
-	mtime			<FILETIME> when last modified
-	ctime			<FILETIME> when created
-	atime			<FILETIME> when last accessed
-	grfMode			<integer> access mode
-	grfLocksSupported		<integer> from LOCKTYPES enumeration - the types of lock supported
-	clsid			<CLSID> of storage object
-	grfStateBits		<integer> bit mask last set by IStorage>>SetStateBits
-	dwStgFmt			<integer> from STGFMT enumeration - the format of the storage object.'!
+##Member fields:
+  pwcsName			`Utf16String` "file" name
+  type				`<integer>` from STGTY enumeration - the type of storage object
+  cbSize				`<integer>` size in bytes of the underlying storage object (not the structure)
+  mtime				`FILETIME` when last modified
+  ctime				`FILETIME` when created
+  atime				`FILETIME` when last accessed
+  grfMode			`<integer>` access mode
+  grfLocksSupported	`<integer>` from LOCKTYPES enumeration - the types of lock supported
+  clsid				`CLSID` of storage object
+  grfStateBits			`<integer>` bit mask last set by IStorage>>SetStateBits
+  dwStgFmt			`<integer>` from STGFMT enumeration - the format of the storage object.'!
 
 !OS.COM.STATSTG categoriesForClass!External-Data-Structured-COM! !
 
@@ -115,15 +115,13 @@ grfStateBits
 	^bytes uint32AtOffset: _OffsetOf_grfStateBits!
 
 isOLEStorage
-	"Answer whether the receiver contains status information for a Storage element
-	(as opposed to a Stream element).
+	"Answer whether the receiver contains status information for a Storage element (as opposed to a Stream element).
 	To avoid confusion with a class testing method, we include the 'OLE' infix."
 
 	^self type == STGTY_STORAGE!
 
 isOLEStream
-	"Answer whether the receiver contains status information for a Storage element
-	(as opposed to a Stream element).
+	"Answer whether the receiver contains status information for a Stream element (as opposed to a Storage element).
 	To avoid confusion with a class testing method, we include the 'OLE' infix."
 
 	^self type == STGTY_STREAM!
@@ -215,10 +213,8 @@ byteSize
 	^_STATSTG_Size!
 
 clear: addressOrBytes
-	"Free external resources referenced by STATSTG
-	structure at the specified address. 	
-	We must check that the name is non-null because it may be
-	even after a successful call with STATFLAG_NONAME specified."
+	"Free external resources referenced by STATSTG structure at the specified address.
+	We must check that the name is non-null because it may be even after a successful call with STATFLAG_NONAME specified."
 
 	| addr |
 	addr := addressOrBytes uintPtrAtOffset: 0.

@@ -14,12 +14,15 @@ Core.Tests.NullStreamTest comment: ''!
 
 !Core.Tests.NullStreamTest methodsFor!
 
-streamClass
-	^NullStream!
+expectedAnsiProtocolNames
+	^#(#gettableStream #Object #puttableStream)!
+
+isReadableStreamClass
+	^false!
 
 testAtEnd
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self assert: subject atEnd!
 
 testContentSpecies
@@ -27,31 +30,33 @@ testContentSpecies
 
 testIsEmpty
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self assert: subject isEmpty!
-
-testIsWriteable
-	self assert: NullStream new isWriteable!
 
 testNext
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self should: [subject next] raise: Stream endOfStreamSignal.
 	self should: [subject next: 2] raise: Stream endOfStreamSignal.
-	self should: [subject next: 2 into: (String new: 2) startingAt: 1] raise: Stream endOfStreamSignal!
+	self should: 
+			[subject
+				next: 2
+				into: (String new: 2)
+				startingAt: 1]
+		raise: Stream endOfStreamSignal!
 
 testNextAvailable
 	| subject |
-	subject := NullStream on: #(1 2 3).
+	subject := self streamOn: #(1 2 3).
 	self assert: subject nextAvailable isNil.
 	self assert: (subject nextAvailable: 3) equals: #()!
 
 testNextLine
 	| subject |
-	subject := NullStream on: 'abc
+	subject := self streamOn: 'abc
 def'.
 	self assert: subject nextLine equals: ''.
-	subject := NullStream on: #(1 2 3).
+	subject := self streamOn: #(1 2 3).
 	self assert: subject nextLine equals: #()!
 
 testNextPut
@@ -79,55 +84,55 @@ testNextPutAll
 
 testPeek
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self assertIsNil: subject peek!
 
 testPeekFor
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self deny: (subject peekFor: $a)!
 
 testPosition
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self assert: subject position equals: 0!
 
 testSkip
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self should: [subject skip: 1] raise: Stream endOfStreamSignal!
 
 testSkipThrough
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self assertIsNil: (subject skipThrough: $b)!
 
 testSkipTo
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self deny: (subject skipTo: $b).
 	self deny: (subject skipTo: $d)!
 
 testUpTo
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self assert: (subject upTo: $b) equals: ''.
-	subject := NullStream on: #(1 2 3).
+	subject := self streamOn: #(1 2 3).
 	self assert: (subject upTo: 4) equals: #()!
 
 testUpToEnd
 	| subject |
-	subject := NullStream on: 'abc'.
+	subject := self streamOn: 'abc'.
 	self assert: subject upToEnd equals: ''.
-	subject := NullStream on: #(1 2 3).
+	subject := self streamOn: #(1 2 3).
 	self assert: subject upToEnd equals: #()! !
 
 !Core.Tests.NullStreamTest categoriesForMethods!
-streamClass!helpers!private! !
+expectedAnsiProtocolNames!constants!private! !
+isReadableStreamClass!public!testing! !
 testAtEnd!public!unit tests! !
 testContentSpecies!public!unit tests! !
 testIsEmpty!public!unit tests! !
-testIsWriteable!public!unit tests! !
 testNext!public!unit tests! !
 testNextAvailable!public!unit tests! !
 testNextLine!public!unit tests! !
@@ -141,5 +146,14 @@ testSkipThrough!public!unit tests! !
 testSkipTo!public!unit tests! !
 testUpTo!public!unit tests! !
 testUpToEnd!public!unit tests! !
+!
+
+!Core.Tests.NullStreamTest class methodsFor!
+
+streamClass
+	^NullStream! !
+
+!Core.Tests.NullStreamTest class categoriesForMethods!
+streamClass!helpers!private! !
 !
 

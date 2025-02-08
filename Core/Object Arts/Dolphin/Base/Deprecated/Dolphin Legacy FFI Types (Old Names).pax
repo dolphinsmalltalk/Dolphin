@@ -310,10 +310,10 @@ nextWORD
 	^self nextUInt16! !
 
 !Core.PositionableStream categoriesForMethods!
-nextDWORD!binary filing!public! !
-nextSDWORD!binary filing!public! !
-nextSWORD!binary filing!public! !
-nextWORD!binary filing!public! !
+nextDWORD!public!reading! !
+nextSDWORD!public!reading! !
+nextSWORD!public!reading! !
+nextWORD!public!reading! !
 !
 
 !Core.Stream methodsFor!
@@ -327,8 +327,8 @@ nextSDWORDPut: anInteger
 	self nextInt32Put: anInteger! !
 
 !Core.Stream categoriesForMethods!
-nextDWORDPut:!binary filing!public! !
-nextSDWORDPut:!binary filing!public! !
+nextDWORDPut:!public!writing! !
+nextSDWORDPut:!public!writing! !
 !
 
 !External.UInt32Bytes methodsFor!

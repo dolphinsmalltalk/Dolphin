@@ -31,13 +31,20 @@ blockWriteIntervals
 bufferSize
 	^self subclassResponsibility!
 
-closeTempStream: aStream 
-	"Private - Clean up the temporary stream argument."
+bufferSizeOfStream: aStream
+	^self bufferSize!
 
-	aStream close!
+closeTempStream
+	filestream ifNil: [^self].
+	filestream close.
+	filestream := nil!
 
 collections
 	^self arrayedCollections!
+
+filestream: aFileWriteStream
+	self closeTempStream.
+	filestream := aFileWriteStream!
 
 initializeRandomTestData
 	| r bytes |
@@ -52,6 +59,13 @@ initializeRandomTestData
 maxPosition
 	^self subclassResponsibility!
 
+newStream: aSymbol
+	^self streamClass
+		write: tempFileName
+		mode: #truncate
+		check: false
+		type: aSymbol!
+
 randomData1
 	RandomData1 isNil ifTrue: [self initializeRandomTestData].
 	^RandomData1!
@@ -60,11 +74,11 @@ randomData2
 	RandomData2 isNil ifTrue: [self initializeRandomTestData].
 	^RandomData2!
 
-readWriteStreamOnString: aString 
+readWriteStreamOnString: aString
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
 	| stream |
-	stream := self streamClass write: tempFileName type: aString encoding.
+	stream := self tempWriteStream: aString encoding.
 	stream nextPutAll: aString.
 	^stream!
 
@@ -100,7 +114,7 @@ strings
 	^super strings reject: [:each | each first isKindOf: Utf16String]!
 
 tearDown
-	filestream notNil ifTrue: [self tearDownTempStream].
+	self tearDownTempStream.
 	(tempFileName isNil or: [(File exists: tempFileName) not]) ifTrue: [^self].
 	[File delete: tempFileName] on: Error
 		do: 
@@ -115,51 +129,30 @@ tearDown
 	super tearDown!
 
 tearDownTempStream
-	filestream close!
+	"Private - Clean up the test subject. Don't do this by closing the FileStream, but directly close the File to which it is attached as this avoids the FileStream>>flush and so is more likely to work in case of test error"
 
-tempReadStream
-	^self tempReadStream: #text!
+	self closeTempStream!
 
 tempReadStream: aSymbol
-	^self streamClass read: tempFileName type: aSymbol!
+	self closeTempStream.
+	^filestream := self streamClass read: tempFileName type: aSymbol!
 
 tempReadWriteStream
-	| answer |
-	answer := self streamClass 
+	^self tempReadWriteStream: #binary!
+
+tempReadWriteStream: aSymbol
+	self closeTempStream.
+	filestream := self streamClass
 				write: tempFileName
 				mode: #append
 				check: false
-				text: false.
-	answer reset.
-	^answer!
-
-tempWriteStream
-	"Private - Answer a writeable FileStream on a temporary file."
-
-	^self tempWriteStream: #text!
+				type: aSymbol.
+	filestream reset.
+	^filestream!
 
 tempWriteStream: aSymbol
-	^self streamClass
-		write: tempFileName
-		mode: #truncate
-		check: false
-		type: aSymbol!
-
-test1065
-	#(0 1 512 4095 4096 8191 8192 8193 16383 16384 16385) do: 
-			[:size |
-			| data written |
-			data := WriteStream on: (ByteArray new: size).
-			size timesRepeat: [data nextPut: (OS.Ucrt rand bitAnd: 255)].
-			data := data grabContents.
-			filestream := self streamClass write: tempFileName text: false.
-			filestream
-				next: data size
-				putAll: data
-				startingAt: 1.
-			filestream close.
-			written := File readAllBytes: tempFileName.
-			self assert: data equals: written]!
+	self closeTempStream.
+	^filestream := self newStream: aSymbol!
 
 test64BitPosition
 	filestream := self tempWriteStream: #binary.
@@ -168,25 +161,14 @@ test64BitPosition
 			filestream position: position.
 			self assert: filestream position equals: position]!
 
-testAppend
-	| actual padding |
-	filestream := self tempWriteStream: #utf8.
-	padding := String new: self bufferSize - Utf8String.Bom size - 1 withAll: $\x20.
-	filestream
-		nextPutAll: padding;
-		nextPut: Character dolphin.
-	filestream close.
-	filestream := self streamClass
-				write: tempFileName
-				mode: #append
-				check: false
-				type: #utf8.
-	filestream nextPutAll: ' says hello'.
-	filestream close.
-	actual := File readAllText: tempFileName.
-	self assert: (actual beginsWith: padding).
-	self assert: (actual copyFrom: padding size + 1)
-		equals: Character dolphin asUtf8String , ' says hello'!
+testIsReadable
+	self assert: self tempReadStream isReadable.
+	"Writeable FileStreams must also be readable"
+	self assert: self tempWriteStream isReadable!
+
+testIsWriteable
+	self deny: self tempReadStream isWriteable.
+	self assert: self tempWriteStream isWriteable!
 
 testNextPutAllStartingAt
 	| initialData dataToWrite file |
@@ -286,21 +268,6 @@ testNextPutAllStartingAt2
 			self assert: actual equals: expected].
 	file close!
 
-testPositionAfterWrite
-	| actual |
-	filestream := self tempWriteStream: #ansi.
-	filestream position: 100.
-	filestream nextPut: $a.
-	"Reposition to a later point, but don't write anything."
-	filestream position: 200.
-	"Only the content up to the last actual write position should be flushed to the file."
-	filestream close.
-	actual := File readAllText: tempFileName.
-	self assert: actual size equals: 101.
-	"Note that the stream position is (rather unusually for Smalltalk) zero based"
-	self assert: (actual at: 101) equals: $a.
-	self assert: (actual occurrencesOf: $\0) equals: 100!
-
 testPositionPastEnd
 	| pos1 pos2 expected actual pos3 |
 	filestream := self tempWriteStream: #ansi.
@@ -343,27 +310,6 @@ testPositionPastEnd
 	self assert: actual equals: expected.
 	self assert: filestream size equals: expected size!
 
-testRandomWriteOnePage
-	| pos actual |
-	filestream := self tempWriteStream: #ansi.
-	pos := FileStream.PageSize - 2.
-	filestream position: pos.
-	self assert: filestream position equals: pos.
-	self assert: filestream size equals: 0.
-	self assert: filestream atEnd.
-	filestream nextPut: $a.
-	"Reposition behind the point we extended the file to and write something earlier in the page."
-	filestream position: pos - 100.
-	filestream nextPutAll: 'b'.
-	"We expect the content to be flushed up to the first char we wrote (which is the last positionally)"
-	filestream close.
-	actual := File readAllText: tempFileName.
-	self assert: actual size equals: FileStream.PageSize - 1.
-	"Note that the stream position is (rather unusually for Smalltalk) zero based"
-	self assert: (actual at: pos + 1) equals: $a.
-	self assert: (actual at: pos - 100 + 1) equals: $b.
-	self assert: (actual occurrencesOf: $\0) equals: FileStream.PageSize - 1 - 2!
-
 testReset
 	"#1724"
 
@@ -383,15 +329,6 @@ testReset
 	self assert: filestream atEnd.
 	filestream close!
 
-testRewindAfterWrite
-	| actual |
-	filestream := self tempWriteStream.
-	filestream nextPutAll: 'Hello'.
-	filestream position: 1.
-	filestream close.
-	actual := File readAllText: tempFileName.
-	self assert: actual equals: 'Hello'!
-
 testSharing
 	| read sharingError |
 	filestream := self tempWriteStream.
@@ -399,12 +336,12 @@ testSharing
 		nextPutAll: 'Hello 🐬 world';
 		flush.
 	sharingError := self sharingError.
-	self should: [self tempWriteStream: #binary] raise: sharingError.
+	self should: [self streamClass write: tempFileName type: #binary] raise: sharingError.
 	"By default read streams are opened with #read sharing, so won't open a stream being written"
-	self should: [self tempReadStream: #binary] raise: sharingError.
+	self should: [self streamClass read: tempFileName type: #binary] raise: sharingError.
 	"If we open in #text mode the File must be  opened to sniff it, so we'll always get a Win32Error"
 	self
-		should: [self tempReadStream: #text]
+		should: [self streamClass read: tempFileName type: #text]
 		raise: OS.Win32Error
 		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_SHARING_VIOLATION].
 	"But we should be able to open with read/write sharing - the mode specifies that we are allowed to share with others that have opened the file for reading or writing"
@@ -424,37 +361,25 @@ testSharing
 	filestream close.
 	read close.
 	read := self tempReadStream.
-	self should: [self tempWriteStream: #binary] raise: sharingError.
-	self should: [self tempWriteStream: #text] raise: sharingError!
-
-testTruncate
-	| actual |
-	filestream := self tempWriteStream.
-	filestream nextPutAll: 'hello'.
-	filestream close.
-	filestream := self streamClass
-				write: tempFileName
-				mode: #truncate
-				check: false
-				text: true.
-	filestream nextPutAll: ' world'.
-	filestream close.
-	actual := File readAllText: tempFileName.
-	self assert: actual equals: ' world'!
+	self should: [self streamClass write: tempFileName type: #binary] raise: sharingError.
+	self should: [self streamClass write: tempFileName type: #text] raise: sharingError!
 
 writeableCollections
 	^self strings , self byteArrays! !
 
 !Core.Tests.AbstractFileStreamTest categoriesForMethods!
-arrayedCollections!private! !
+arrayedCollections!constants!private! !
 assertBufferEmptyOrDirty:!helpers!private! !
 assertBufferEmptyOrDirty:size:!helpers!private! !
 blockWriteIntervals!constants!private! !
 bufferSize!constants!private! !
-closeTempStream:!helpers!private! !
+bufferSizeOfStream:!helpers!private!unit tests! !
+closeTempStream!helpers!private! !
 collections!private!unit tests! !
+filestream:!accessing!private! !
 initializeRandomTestData!initializing!private! !
-maxPosition!constants!public! !
+maxPosition!constants!private! !
+newStream:!helpers!private! !
 randomData1!constants!private! !
 randomData2!constants!private! !
 readWriteStreamOnString:!helpers!private! !
@@ -466,23 +391,18 @@ streamWith:!helpers!private! !
 strings!constants!private! !
 tearDown!public!running! !
 tearDownTempStream!helpers!private! !
-tempReadStream!helpers!private! !
 tempReadStream:!helpers!private! !
 tempReadWriteStream!helpers!private! !
-tempWriteStream!helpers!private! !
+tempReadWriteStream:!helpers!private! !
 tempWriteStream:!helpers!private! !
-test1065!public!unit tests! !
 test64BitPosition!public!unit tests! !
-testAppend!public!unit tests! !
+testIsReadable!public!unit tests! !
+testIsWriteable!public!unit tests! !
 testNextPutAllStartingAt!public!unit tests! !
 testNextPutAllStartingAt2!public!unit tests! !
-testPositionAfterWrite!public!unit tests! !
 testPositionPastEnd!public!unit tests! !
-testRandomWriteOnePage!public!unit tests! !
 testReset!public!unit tests! !
-testRewindAfterWrite!public!unit tests! !
 testSharing!public!unit tests! !
-testTruncate!public!unit tests! !
 writeableCollections!constants!private! !
 !
 

@@ -10,6 +10,7 @@ package setClassNames: #(
 	#{Core.Tests.AbstractDictionaryTest}
 	#{Core.Tests.AbstractFileStreamTest}
 	#{Core.Tests.AbstractSetTest}
+	#{Core.Tests.AbstractWriteStreamTest}
 	#{Core.Tests.AnsiStringTest}
 	#{Core.Tests.ArrayedCollectionTest}
 	#{Core.Tests.ArrayTest}
@@ -41,6 +42,7 @@ package setClassNames: #(
 	#{Core.Tests.FileLocatorTest}
 	#{Core.Tests.FileStreamTest}
 	#{Core.Tests.FileTest}
+	#{Core.Tests.FileWriteStreamTest}
 	#{Core.Tests.FloatTest}
 	#{Core.Tests.FractionTest}
 	#{Core.Tests.GUIDTest}
@@ -180,6 +182,11 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.ExternalWriteStream} #bufferContents)
+	#(#{Core.FileStream} #bufferContents)
+	#(#{Core.FileStream} #bufferStartPosition)
+	#(#{Core.FileWriteStream} #bufferContents)
+	#(#{Core.FileWriteStream} #filePosition)
 	#(#{OS.CRTLibrary} #_chmod:pmode:)
 	#(#{OS.CRTLibrary} #strcat_s:bufferSize:strSource:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
@@ -1495,6 +1502,14 @@ Core.Tests.StreamTest
 	classConstants: {}!
 
 Core.Tests.PositionableStreamTest
+	subclass: #'Core.Tests.AbstractWriteStreamTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.PositionableStreamTest
 	subclass: #'Core.Tests.ReadStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1510,7 +1525,23 @@ Core.Tests.PositionableStreamTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-Core.Tests.PositionableStreamTest
+Core.Tests.AbstractWriteStreamTest
+	subclass: #'Core.Tests.FileWriteStreamTest'
+	instanceVariableNames: 'tempFileName filestream'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.AbstractWriteStreamTest
+	subclass: #'Core.Tests.LimitedWriteStreamTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.AbstractWriteStreamTest
 	subclass: #'Core.Tests.WriteStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1536,14 +1567,6 @@ Core.Tests.AbstractFileStreamTest
 
 Core.Tests.AbstractFileStreamTest
 	subclass: #'OS.Tests.StdioFileStreamTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Tests.WriteStreamTest
-	subclass: #'Core.Tests.LimitedWriteStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1612,6 +1635,52 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 
 
 "Loose Methods"!
+
+!Core.ExternalWriteStream methodsFor!
+
+bufferContents
+	"Private - Answer the buffer content that is not yet written to the underlying file. This is intended for testing purposes only."
+
+	readLimit < position ifTrue: [readLimit := position].
+	^collection copyFrom: 1 to: readLimit! !
+
+!Core.ExternalWriteStream categoriesForMethods!
+bufferContents!accessing!private! !
+!
+
+!Core.FileStream methodsFor!
+
+bufferContents
+	"Private - Answer the buffer content that is not yet written to the underlying file. This is intended for testing purposes only."
+
+	self updateLimits.
+	"If at the beginning of the file, then we exclude the BOM, if any"
+	^collection copyFrom: (pageBase == 1 ifTrue: [offset + 1] ifFalse: [1]) to: readLimit!
+
+bufferStartPosition
+	^pageBase == 1 ifTrue: [1] ifFalse: [pageBase - offset]! !
+
+!Core.FileStream categoriesForMethods!
+bufferContents!accessing!private! !
+bufferStartPosition!accessing!private! !
+!
+
+!Core.FileWriteStream methodsFor!
+
+bufferContents
+	"Private - Answer the buffer content that is not yet written to the underlying file. This is intended for testing purposes only."
+
+	readLimit < position ifTrue: [readLimit := position].
+	"If at the beginning of the file, then we exclude the BOM, if any"
+	^collection copyFrom: (medium position == 0 ifTrue: [offset + 1] ifFalse: [1]) to: readLimit!
+
+filePosition
+	^medium position! !
+
+!Core.FileWriteStream categoriesForMethods!
+bufferContents!accessing!private! !
+filePosition!accessing!private! !
+!
 
 !OS.CRTLibrary methodsFor!
 

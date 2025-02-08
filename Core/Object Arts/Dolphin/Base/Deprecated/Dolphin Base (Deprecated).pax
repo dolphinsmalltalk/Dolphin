@@ -140,6 +140,7 @@ package setPrerequisites: #(
 	'..\Dolphin'
 	'..\Dolphin Conformant Array Fields'
 	'..\Dolphin Legacy Date & Time'
+	'Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base').
 
 package!
@@ -907,7 +908,7 @@ nextOrNil
 	^self nextAvailable! !
 
 !Stream categoriesForMethods!
-nextOrNil!accessing!public! !
+nextOrNil!public!reading! !
 !
 
 !String methodsFor!

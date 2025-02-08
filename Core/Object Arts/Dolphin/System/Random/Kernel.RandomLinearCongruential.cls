@@ -71,8 +71,8 @@ modulus!accessing!public! !
 modulus:!initializing!private! !
 multiplier!accessing!public! !
 multiplier:!initializing!private! !
-next!accessing!public! !
-peek!accessing!public! !
+next!public!reading! !
+peek!public!reading! !
 setModulus:multiplier:increment:!initializing!private! !
 !
 

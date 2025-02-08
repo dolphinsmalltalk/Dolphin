@@ -61,6 +61,28 @@ open: pathString mode: modeString flags: anInteger
 		flags: anInteger.
 	offset := crtlib _ftelli64: stream!
 
+peek
+	"Answer the next element in the collection, but do not change the position reference. 
+	Answer nil if the receiver is at its end."
+
+	| pos ch |
+	pos := self position.
+	ch := self nextAvailable.
+	ch notNil ifTrue: [self position: pos].
+	^ch!
+
+peekFor: anObject
+	"Determine the response to the message peek. If it is the same as the argument, anObject,
+	then advance the current position and answer true. Otherwise answer false and do not change
+	the current position."
+
+	| pos next |
+	pos := self position.
+	^(next := self nextAvailable) notNil
+		and: [next = anObject or: 
+					[self position: pos.
+					false]]!
+
 setStream: anExternalAddress name: aString flags: anInteger
 	offset := 0.
 	^super
@@ -73,15 +95,17 @@ ungetchar: aCodeUnit
 	^aCodeUnit! !
 
 !OS.StdioUnicodeFileStream categoriesForMethods!
-basicNextPut:!accessing!private! !
+basicNextPut:!private!writing! !
 bufferClass!constants!private! !
-getchar!accessing!private! !
-getString:!accessing!private! !
+getchar!private!reading! !
+getString:!private!reading! !
 modeModifiers!constants!private! !
-nextPutAll:!accessing!public! !
+nextPutAll:!public!writing! !
 open:mode:flags:!instance creation!private! !
+peek!public!reading! !
+peekFor:!public!reading! !
 setStream:name:flags:!initializing!private! !
-ungetchar:!accessing!private! !
+ungetchar:!private!reading! !
 !
 
 !OS.StdioUnicodeFileStream class methodsFor!

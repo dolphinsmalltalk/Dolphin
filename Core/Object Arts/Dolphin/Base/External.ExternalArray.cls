@@ -118,6 +118,22 @@ atAllPut: anObject
 
 	1 to: self length do: [:i | self uncheckedAt: i put: anObject]!
 
+basicAt: anInteger 
+	"Private - Answer the element of the receiver at the specified index. Raise an error if the index if out of bounds."
+
+	"Implementation Note: The receiver is not an indexable class, so we can override this message successfully, and we need to do so to create an object that behaves as if it is a ByteArray."
+
+	(anInteger < 1 or: [anInteger > self length]) 
+		ifTrue: [^self errorSubscriptBounds: anInteger].
+	^self uncheckedAt: anInteger!
+
+basicAt: indexInteger put: valueInteger
+	"Private - Replace the receiver's indexed element at the argument, index, with the argument, value. Answer value."
+
+	(indexInteger < 1 or: [indexInteger > self length])
+		ifTrue: [self errorSubscriptBounds: indexInteger].
+	^self uncheckedAt: indexInteger put: valueInteger!
+
 basicLength: anInteger
 	"Private - Set the length (in elements, not bytes) of the receiver."
 	
@@ -237,6 +253,17 @@ elementSize
 	elements in bytes."
 
 	^self elementClass elementSize!
+
+encodeAsBytesOn: aWriteStream from: startInteger count: sizeInteger
+	"Private - Encode <integer>, sizeInteger, bytes of the receiver starting with that at <integer>, startInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out bytes, which is of course the receiver's native encoding too."
+
+	aWriteStream
+		basicNext: sizeInteger
+		putAll: self
+		startingAt: startInteger!
+
+encoding
+	^#binary!
 
 first
 	^self at: 1!
@@ -473,6 +500,8 @@ at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
 atAllPut:!public! !
+basicAt:!accessing!private! !
+basicAt:put:!accessing!private! !
 basicLength:!initializing!private! !
 binarySearchFor:using:!public!searching! !
 byteSize!accessing!public! !
@@ -486,6 +515,8 @@ do:!enumerating!public! !
 do:separatedBy:!enumerating!public! !
 elementClass!constants!public! !
 elementSize!instance creation!private! !
+encodeAsBytesOn:from:count:!double dispatch!encode/decode!private! !
+encoding!constants!public! !
 first!accessing!public! !
 fourth!accessing!public! !
 from:do:!enumerating!public! !

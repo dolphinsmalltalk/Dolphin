@@ -132,9 +132,9 @@ versionFromParts: versionNumbers
 	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
 
 !Core.Tests.DolphinTest categoriesForMethods!
-allDeepCopiedInstVarsOf:!private!unit tests! !
-assertIs:deepCopyOf:!private!unit tests! !
-assertIs:deepCopyOf:visited:!private!unit tests! !
+allDeepCopiedInstVarsOf:!helpers!private! !
+assertIs:deepCopyOf:!helpers!private! !
+assertIs:deepCopyOf:visited:!helpers!private! !
 compare:to:epsilon:!comparing!public! !
 createPackage:!helpers!public! !
 createTestPackage!helpers!public! !
@@ -142,13 +142,13 @@ isAtLeastVmVersion:!private!testing! !
 isDolphin8OrLater!private!testing! !
 isInForeground!helpers!public! !
 isLogging!Accessing!public! !
-isOnline!public!unit tests! !
+isOnline!public!testing! !
 methodContextClass!constants!private! !
 resourceFilename:!helpers!public! !
 resourceStream:text:!helpers!public! !
-runKnownBug:test:!public!unit tests! !
+runKnownBug:test:!helpers!public! !
 shouldRaiseZeroDivide:!Accessing!public! !
 verifyPropertyManagerOf:!helpers!private! !
-versionFromParts:!public!unit tests! !
+versionFromParts:!helpers!public! !
 !
 

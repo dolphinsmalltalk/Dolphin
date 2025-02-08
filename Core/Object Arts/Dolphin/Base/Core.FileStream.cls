@@ -7,40 +7,39 @@ Core.ReadWriteStream
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'BufferClasses'
-				-> (IdentityDictionary withAll: { #ansi -> AnsiString. #binary -> ByteArray. #utf8 -> Utf8String }).
 			'BufferUpdatedMask' -> 16r3.
 			'DirtyBufferMask' -> 16r2.
 			'LimitsChangedMask' -> 16r1.
-			'OwnsFileMask' -> 16r100.
+			'OwnsFile' -> 16r100.
 			'PageSize' -> 16r2000
 		}!
 
 Core.FileStream guid: (Core.GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-Core.FileStream comment: '`FileStream` is a specialized `ReadWriteStream` for streaming over binary and text files.
+Core.FileStream comment: '`FileStream` is a specialized `ReadWriteStream` for streaming over binary and text files. It is designed to support random access, so expects that the underlying file is always readable and positionable. It will not work over file handles that support only serial access, such as pipes, sockets, or standard i/o handles.
 
-The collection instance variable inherited from `Stream` is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by `flush` or `fullFlush`. The `readLimit` and `writeLimit` instance variables inherited from `PositionableStream` and `WriteStream` respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The `readLimit` will always be equal to the page size, except on the last page of the file. The `writeLimit` is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for every efficient access within the current page, which means that even single character I/O is reasonably fast..
+The `collection` instance variable inherited from `Stream` is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by `flush` or `fullFlush`. The `readLimit` and `writeLimit` instance variables inherited from `PositionableStream` and `WriteStream` respectively have a different usage in this class than in their defining classes; they are the limits for the current page rather than the whole stream. The `readLimit` will always be equal to the page size, except on the last page of the file. The `writeLimit` is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for very efficient access within the current page, which means that even single character I/O is reasonably fast..
 
-FileStream can read and write files as binary or text. It supports a number of import text encodings, as follows:
-	`#text`		- Default text encoding. When reading will attempt to deduce the encoding of the underlying file. When writing a new file, will write UTF-8 with a BOM.
-	`#utf8`		- UTF-8 encoded text
-	`#utf16`		- UTF-16 encoded text		(not yet implemented)
-	`#utf32`		- UTF-32 encoded text		(not yet implemented)
+FileStream can read and write files as binary or text. It support the following encodings:
+	`#ansi`		- Text encoded using the current ANSI code page (not that DBCS code pages are not properly supported because `AnsiString` does not support multi-byte characters)
+	`#binary`		- Raw binary i/o.
+	`#text`		- Default text encoding. When reading will attempt to deduce the encoding of the underlying file. When writing a new file, this is equivalent to `#utf8`.
+	`#utf8`		- UTF-8 encoded text. When writing a new file, will write UTF-8 with a BOM.
+
+Reading and writing of UTF-16 format text files is not supported (i.e. `#utf16le` and `#utf16be` encodings are not supported).
 
 ## Instance Variables:
-  `file`			The `File` being streamed over.
+  `file`			The `File` being streamed over. Must be readable and support random access.
   `flags`			`<integer>` flags such as whether the page buffer is dirty.
   `pageBase`		`<integer>` offset of the page currently in the buffer. Always a multiple of the page size, plus 1.
   `logicalFileSize`	`<integer>` size of the file. This is cached because it is expensive to determine dynamically.
-  `offset`			`<integer>`
+  `offset`			`<integer>` offset from the start of the file at which the actual data begins. This is used to allow the presence of a BOM to be invisible to applications.
 
 ## Class Variables:
-  `BufferClasses`		`IdentityDictionary`
   `BufferUpdatedMask`	`<integer>` flags set when a write to the buffer occurs (both of the following two flags)
   `DirtyBufferMask`		`<integer>` flag set when the buffer contains updated data that has not yet been written to disk
   `LimitsChangedMask`	`<integer>` flag set when a write to the buffer has occurred that has not yet been reflected in the lastPosition and/or read limit.
-  `OwnsFileMask`		`<integer>` flag set if the file is owned by a FileStream and should be closed by it.
+  `OwnsFile`			`<integer>` flag set if the file is owned by a FileStream and should be closed by it.
   `PageSize`			`<integer>` size of the buffer used to hold part of the file contents in memory - chosen to be a reasonably efficient compromise for serial and random I/O.
 
 
@@ -63,16 +62,22 @@ atEnd
 			[self updateLimits.
 			pageBase + position > logicalFileSize]!
 
+basicContentsSpecies
+	"Private - Answer the class of Object to be used when answering collections of undecoded
+	elements from the receiver."
+
+	^ByteArray!
+
 basicNext
 	"Answer the next integer element accessible by the receiver. For a text stream this will be 
 	the code unit for the next character or partial character based on the underlying encoding.
 	It may not necessarily be a full code point unless the encoding is fixed width (i.e. #ansi, or #utf32)."
 
-	"Primitive failure reasons:
-		AssertionFailure	- The receivers index or readLimit are not SmallInteger values
-		OutOfBounds	- The next index is beyond the readLimit.
-		OutOfBounds	- The next index is off the end of the stream buffer.
-		NotSupported	- The buffer is not a supported type (i.e. ByteArray or String)."
+	"Primitive failure codes:
+		AssertionFailure		The receivers position or readLimit are not SmallInteger values
+		NotSupported			The receiver's collection is not an Array, String or ByteArray.
+		OutOfBounds			position not in range 0<position<readLimit, or 
+							the next position is beyond the end of the streamed over collection."
 
 	<primitive: 221>
 	^self atEnd
@@ -82,7 +87,7 @@ basicNext
 			collection basicAt: (position := position + 1)]!
 
 basicNext: count into: aSequenceableCollection startingAt: startAt
-	"Destructively replace the elements of the argument, aSequenceableCollection,
+	"Private - Destructively replace the elements of the argument, aSequenceableCollection,
 	in the interval (startAt..startAt+count-1) with the next, count, elements of
 	the receiver. Answer aSequenceableCollection.
 	Implementation Note: For efficiency we implement this as a loop which
@@ -125,49 +130,10 @@ basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 					position := stop.
 					flags := flags bitOr: BufferUpdatedMask]]
 		ifFalse: 
-			[| lastPos lastPageStart startNextPage wholePagesSize writeOffset |
-			lastPos := pageBase + position + sizeInteger - 1.
-			writeOffset := PageSize - position.
-			"Update and write current page"
-			position < PageSize
-				ifTrue: 
-					[collection
-						replaceFrom: position + 1
-						to: PageSize
-						with: aSequenceableCollection
-						startingAt: startInteger.
-					position := PageSize.
-					flags := flags bitOr: BufferUpdatedMask].
-			self flush.
-			"Next write any whole pages"
-			startNextPage := pageBase + PageSize.
-			lastPageStart := (lastPos truncateTo: PageSize) + 1.
-			wholePagesSize := lastPageStart - startNextPage.
-			wholePagesSize > 0
-				ifTrue: 
-					[file position: startNextPage - 1.
-					0 to: wholePagesSize // PageSize - 1
-						do: 
-							[:i |
-							collection
-								replaceFrom: 1
-								to: PageSize
-								with: aSequenceableCollection
-								startingAt: startInteger + writeOffset + (i * PageSize).
-							file write: collection count: PageSize].
-					self assert: [file position = (lastPageStart - 1)]].
-
-			"And finally buffer any trailing data having repositioned to the correct page"
-			self readPageFor: lastPageStart.
-			position := lastPos - lastPageStart + 1.
-			position > 0
-				ifTrue: 
-					[collection
-						replaceFrom: 1
-						to: position
-						with: aSequenceableCollection
-						startingAt: startInteger + writeOffset + wholePagesSize.
-					flags := flags bitOr: BufferUpdatedMask]].
+			[self
+				overflowBasicNext: sizeInteger
+				putAll: aSequenceableCollection
+				startingAt: startInteger].
 	^aSequenceableCollection!
 
 basicNextPut: anObject
@@ -204,13 +170,14 @@ basicUpTo: anObject
 			answer := answer , (collection copyFrom: startIndex to: endIndex)].
 	^answer!
 
-bufferClassFor: aFile mode: modeSymbol type: encSymbol
+bufferClassFor: aFile type: encSymbol
 	| bufClass encoding |
 	encoding := encSymbol == #text
 				ifTrue: [aFile size == 0 ifTrue: [#utf8] ifFalse: [String encodingName: aFile sniffEncoding]]
 				ifFalse: [encSymbol].
-	bufClass := BufferClasses lookup: encoding.
-	bufClass isNil ifTrue: [self error: 'Unsupported encoding ' , encoding printString].
+	bufClass := ByteBufferClasses lookup: encoding.
+	(bufClass isNil or: [bufClass == Utf16String])
+		ifTrue: [self error: 'Unsupported encoding ' , encoding printString].
 	^bufClass!
 
 close
@@ -236,7 +203,7 @@ contents
 	^contents!
 
 externalType
-	"Answer a <symbol> which represents the external stream type of the receiver."
+	"Answer a <symbol> which represents the external stream type of the receiver. This is an ANSI method and deliberately limited to the defined values (although the standard allows additional ones), but see also #encoding."
 
 	^self isBinary ifTrue: [#binary] ifFalse: [#text]!
 
@@ -245,19 +212,18 @@ file
 
 	^file!
 
-file: aFile mode: modeSymbol type: encSymbol
-	| bufClass buffer |
-	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
-	bufClass := self
-				bufferClassFor: aFile
-				mode: modeSymbol
-				type: encSymbol.
-	buffer := bufClass new: PageSize / bufClass elementSize.
-	self
-		on: buffer file: aFile;
-		initialRead;
-		yourself.
-	(logicalFileSize == 0 and: [modeSymbol ~~ #read]) ifTrue: [buffer emitEncodingMarkerOn: self].
+file: aFile mode: modeSymbol buffer: aSequenceableCollection flags: anInteger
+	"Private - Initialize the receiver."
+
+	self on: aSequenceableCollection.
+	flags := anInteger.
+	file := aFile.
+	self beFinalizable.
+	offset := 0.
+	self readPageFor: 0.
+	logicalFileSize := file size.
+	collection skipEncodingMarkerFrom: self.
+	(logicalFileSize == 0 and: [modeSymbol ~~ #read]) ifTrue: [collection emitEncodingMarkerOn: self].
 	offset := position.
 	modeSymbol == #append ifTrue: [self setToEnd]!
 
@@ -280,19 +246,6 @@ fullFlush
 
 	self flush.
 	file flush.!
-
-growCollection
-	"Private - The buffer of a FileStream is fixed at the page size. The collection is effectively a fixed size buffer, 
-	and the writeLimit is always the page size."
-
-	^self shouldNotImplement!
-
-initialRead
-	"Private - Initialise the new instance's buffer and establish the file size."
-
-	self readPageFor: 0.
-	logicalFileSize := file size.
-	collection skipEncodingMarkerFrom: self!
 
 isBinary
 	"Answer whether the receiver's data is binary (i.e. consisting of Integers in the range 0..255)."
@@ -331,99 +284,21 @@ makeBufferOfSize: anInteger
 	^self contentsSpecies new: anInteger!
 
 name
-	"Private - Answer the name of the file to which the receiver is attached."
+	"Answer the name of the file to which the receiver is attached."
 	
 	^file name!
 
-next
-	"Answer the receiver's next element, a <Character> if #isText is
-	true otherwise an <integer>. Signal an exception if we are atEnd."
-	
-	<primitive: 65>
-	^self atEnd
-		ifTrue: [self errorEndOfStream]
-		ifFalse: [
-			self position: self position.
-			collection decodeNextFrom: self]!
-
-next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
-
-	| stop |
-	stop := position + sizeInteger.
-	stop <= PageSize
-		ifTrue: 
-			["The block fits into the current page and can be written directly to the buffer"
-			sizeInteger > 0
-				ifTrue: 
-					[collection
-						replaceFrom: position + 1
-						to: stop
-						with: aSequenceableCollection
-						startingAt: startInteger.
-					position := stop.
-					flags := flags bitOr: BufferUpdatedMask]]
-		ifFalse: 
-			[| lastPos lastPageStart startNextPage wholePagesSize writeOffset |
-			lastPos := pageBase + position + sizeInteger - 1.
-			writeOffset := PageSize - position + startInteger.
-			"Update and write current page"
-			position < PageSize
-				ifTrue: 
-					[collection
-						replaceFrom: position + 1
-						to: PageSize
-						with: aSequenceableCollection
-						startingAt: startInteger.
-					position := PageSize.
-					flags := flags bitOr: BufferUpdatedMask].
-			self flush.
-			"Next write any whole pages"
-			startNextPage := pageBase + PageSize.
-			lastPageStart := (lastPos truncateTo: PageSize) + 1.
-			wholePagesSize := lastPageStart - startNextPage.
-			wholePagesSize > 0
-				ifTrue: 
-					[file position: startNextPage - 1.
-					0 to: wholePagesSize // PageSize - 1
-						do: 
-							[:i |
-							collection
-								replaceFrom: 1
-								to: PageSize
-								with: aSequenceableCollection
-								startingAt: writeOffset + (i * PageSize).
-							file write: collection count: PageSize].
-					self assert: [file position = (lastPageStart - 1)]].
-
-			"And finally buffer any trailing data having repositioned to the correct page"
-			self readPageFor: lastPageStart.
-			position := lastPos - lastPageStart + 1.
-			position > 0
-				ifTrue: 
-					[collection
-						replaceFrom: 1
-						to: position
-						with: aSequenceableCollection
-						startingAt: writeOffset + wholePagesSize.
-					flags := flags bitOr: BufferUpdatedMask]].
-	^aSequenceableCollection!
-
 nextAvailable
-	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
-	receiver's future sequence values. Answer nil if at EOF."
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the receiver's future sequence values. Answer nil if at EOF."
 
 	<primitive: 65>
 	^self atEnd
 		ifFalse: 
 			[self position: self position.
-			collection decodeNextFrom: self]!
+			self decodeNext]!
 
 nextPut: anIntegerOrCharacter
 	"Write anIntegerOrCharacter to the receiver and answer the argument."
-
-	"Implementation Note: Inline the #beDirty operation as a performance optimization."
 
 	self primitiveNextPut: anIntegerOrCharacter.
 	flags := flags bitOr: BufferUpdatedMask.
@@ -438,22 +313,62 @@ nextPutAll: aCollection
 	^aCollection
 !
 
-on: aCollection file: aFile
-	super on: aCollection.
-	file := aFile.
-	self beFinalizable.
-	flags := offset := 0!
+overflow: anInteger
+	"Private - The buffer of a FileStream is fixed at the page size. The collection is effectively a fixed size buffer, 
+	and the writeLimit is always the page size."
+
+	^self shouldNotImplement!
+
+overflowBasicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
+	| startNextPage writeOffset lastPos lastPageStart wholePagesSize |
+	lastPos := pageBase + position + sizeInteger - 1.
+	writeOffset := PageSize - position.
+	"Update and write current page"
+	position < PageSize
+		ifTrue: 
+			[collection
+				replaceFrom: position + 1
+				to: PageSize
+				with: aSequenceableCollection
+				startingAt: startInteger.
+			position := PageSize.
+			flags := flags bitOr: BufferUpdatedMask].
+	self flush.
+	"Next write any whole pages"
+	startNextPage := pageBase + PageSize.
+	lastPageStart := (lastPos truncateTo: PageSize) + 1.
+	wholePagesSize := lastPageStart - startNextPage.
+	wholePagesSize > 0
+		ifTrue: 
+			[file position: startNextPage - 1.
+			0 to: wholePagesSize // PageSize - 1
+				do: 
+					[:i |
+					collection
+						replaceFrom: 1
+						to: PageSize
+						with: aSequenceableCollection
+						startingAt: startInteger + writeOffset + (i * PageSize).
+					file write: collection count: PageSize].
+			self assert: [file position = (lastPageStart - 1)]].
+
+	"And finally buffer any trailing data having repositioned to the correct page"
+	self readPageFor: lastPageStart.
+	position := lastPos - lastPageStart + 1.
+	position > 0
+		ifTrue: 
+			[collection
+				replaceFrom: 1
+				to: position
+				with: aSequenceableCollection
+				startingAt: startInteger + writeOffset + wholePagesSize.
+			flags := flags bitOr: BufferUpdatedMask]!
 
 ownsFile
-	^flags anyMask: OwnsFileMask!
+	^flags anyMask: OwnsFile!
 
 ownsFile: aBoolean
-	flags := flags mask: OwnsFileMask set: aBoolean!
-
-pagePosition
-	"Private - Answer the current <integer> position in the buffer."
-
-	^position!
+	flags := flags mask: OwnsFile set: aBoolean!
 
 position
 	"Answer the zero-based position of the stream pointer. Note that position zero is after an
@@ -506,12 +421,6 @@ readPageFor: anInteger
 reset
 	self position: 0!
 
-reverseContents
-	"Answer a copy of the receiver's contents in reverse order.
-	Override back to the SequencedStream implementation because the receiver's collection is not necessarily the entire file content."
-
-	^self contents reverse!
-
 setToEnd
 	"Set the file pointer to the end of the file. The current page is flushed and the last page in the file
 	will be read, unless already on the last page."
@@ -530,17 +439,21 @@ skip: anInteger
 
 	self position: ((self position + anInteger max: 0) min: self size - 1)!
 
+underflow
+	"Private - An attempt has been made to read off the end of the current page. If at the end of file, then this is an error. If not yet at end of file, then read the next page from the file so that the stream read can be tried again."
+
+	self atEnd ifTrue: [^self errorEndOfStream].
+	"Load the required page"
+	self position: self position!
+
 updateLimits
 	"Private - Reconcile the stream position and read limit to include any data written since the last update."
 
-	"The DataWritten flag indicates that some data has been written since the last update to the limits"
-
-	(flags anyMask: LimitsChangedMask)
-		ifTrue: 
-			[| absolute |
-			flags := flags bitAnd: ##(LimitsChangedMask bitInvert).
-			readLimit < position ifTrue: [readLimit := position].
-			logicalFileSize < (absolute := self absolutePosition) ifTrue: [logicalFileSize := absolute]]!
+	| absolute |
+	(flags anyMask: LimitsChangedMask) ifFalse: [^self].
+	flags := flags bitAnd: ##(LimitsChangedMask bitInvert).
+	readLimit < position ifTrue: [readLimit := position].
+	logicalFileSize < (absolute := self absolutePosition) ifTrue: [logicalFileSize := absolute]!
 
 writePage
 	self updateLimits.
@@ -552,49 +465,46 @@ writePage
 !Core.FileStream categoriesForMethods!
 absolutePosition!accessing!private! !
 atEnd!public!testing! !
-basicNext!accessing!public! !
-basicNext:into:startingAt:!accessing!public! !
-basicNext:putAll:startingAt:!accessing!private! !
-basicNextPut:!accessing!private! !
-basicUpTo:!accessing!private! !
-bufferClassFor:mode:type:!instance creation!private! !
+basicContentsSpecies!accessing!private! !
+basicNext!public!reading! !
+basicNext:into:startingAt:!private!reading! !
+basicNext:putAll:startingAt:!private!writing! !
+basicNextPut:!private!writing! !
+basicUpTo:!private!reading! !
+bufferClassFor:type:!instance creation!private! !
 close!operations!public! !
 contents!accessing!public! !
 externalType!accessing!public! !
 file!accessing!public! !
-file:mode:type:!instance creation!private! !
-flush!buffer!public! !
+file:mode:buffer:flags:!initialization!private! !
+flush!public!writing! !
 free!operations!public! !
-fullFlush!buffer!public! !
-growCollection!operations!private! !
-initialRead!buffer!private! !
+fullFlush!public!writing! !
 isBinary!public!testing! !
-isBufferDirty!buffer!private! !
+isBufferDirty!private!testing! !
 isText!public!testing! !
 isWriteable!public!testing! !
 lastPosition!accessing!private! !
-makeBufferOfSize:!buffer!private! !
-name!accessing!private! !
-next!accessing!public! !
-next:putAll:startingAt:!accessing!public! !
-nextAvailable!accessing!public! !
-nextPut:!accessing!public! !
-nextPutAll:!accessing!public! !
-on:file:!initializing!private! !
+makeBufferOfSize:!helpers!private! !
+name!accessing!public! !
+nextAvailable!public!reading! !
+nextPut:!public!writing! !
+nextPutAll:!public!writing! !
+overflow:!private!writing! !
+overflowBasicNext:putAll:startingAt:!private!writing! !
 ownsFile!accessing!public! !
 ownsFile:!accessing!public! !
-pagePosition!accessing!private! !
 position!accessing!public! !
 position:!accessing!positioning!public! !
-primitiveBasicNextPut:!accessing!private! !
-primitiveNextPut:!accessing!private! !
-readPageFor:!buffer!private! !
+primitiveBasicNextPut:!private!writing! !
+primitiveNextPut:!private!writing! !
+readPageFor:!private!reading! !
 reset!positioning!public! !
-reverseContents!accessing!public! !
 setToEnd!positioning!public! !
 size!accessing!public! !
 skip:!positioning!public! !
-updateLimits!accessing!positioning!private! !
+underflow!private!reading! !
+updateLimits!positioning!private! !
 writePage!helpers!private! !
 !
 
@@ -604,25 +514,38 @@ Core.FileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) 
 
 !Core.FileStream class methodsFor!
 
+bufferClassFor: aFile type: encSymbol
+	| bufClass encoding |
+	encoding := encSymbol == #text
+				ifTrue: [aFile size == 0 ifTrue: [#utf8] ifFalse: [String encodingName: aFile sniffEncoding]]
+				ifFalse: [encSymbol].
+	bufClass := ByteBufferClasses lookup: encoding.
+	(bufClass isNil or: [bufClass == Utf16String])
+		ifTrue: [self error: 'Unsupported encoding ' , encoding printString].
+	^bufClass!
+
 bufferSize
 	"Answer the size of the buffer to be used."
 
 	^PageSize!
 
-file: aFile mode: modeSymbol type: encSymbol
+file: aFile mode: modeSymbol type: encSymbol flags: anInteger
+	| bufClass |
+	aFile isReadable ifFalse: [self error: 'FileStreams can only be attached to readable files'].
+	bufClass := self bufferClassFor: aFile type: encSymbol.
 	^self basicNew
 		file: aFile
 		mode: modeSymbol
-		type: encSymbol!
+		buffer: (bufClass newFixed: PageSize / bufClass elementSize)
+		flags: anInteger!
 
 on: aFile
-	"Answer an instance of the receiver attached to the open file aFile."
+	"Answer an instance of the receiver attached to the open file aFile, for reading/writing UTF-8 encoded text."
 
 	^self on: aFile text: true!
 
 on: aFile text: aBoolean
-	"Answer an instance of the receiver attached to the open file aFile, in
-	binary or text mode depending on the argument, aBoolean."
+	"Answer an instance of the receiver attached to the open file aFile, in binary or UTF-8 text mode depending on the argument, aBoolean."
 
 	^self on: aFile type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
@@ -634,7 +557,8 @@ on: aFile type: aSymbol
 	^self
 		file: aFile
 		mode: #create
-		type: aSymbol!
+		type: aSymbol
+		flags: 0!
 
 open: aString mode: modeSymbol check: checkBoolean type: encodingSymbol share: shareSymbol
 	"Answer an instance of the receiver opened on aString for modeSymbol access with encoding specified by the <Symbol>, encodingSymbol , reporting errors if the file can't be opened (though file exist/file does not exist error notifications depend on the value of checkBoolean). 
@@ -644,18 +568,15 @@ open: aString mode: modeSymbol check: checkBoolean type: encodingSymbol share: s
 		#readWrite - others are permitted to open (or have opened) for reading and writing
 		#none - others are not permitted to open (or have opened) the file"
 
-	| file |
-	file := File
+	^self
+		file: (File
 				open: aString
 				mode: modeSymbol
 				check: checkBoolean
-				share: shareSymbol.
-	^(self
-		file: file
+				share: shareSymbol)
 		mode: modeSymbol
-		type: encodingSymbol)
-		ownsFile: true;
-		yourself!
+		type: encodingSymbol
+		flags: OwnsFile!
 
 read: aString
 	"Answer a new instance of the receiver whose future sequence values consist of the textual contents of the file at the path specified by the <readableString> argument.
@@ -736,7 +657,7 @@ readWrite: aString text: aBoolean
 
 write: aString
 	"Answer a new instance of the receiver for writing a file at the path specified by the <readableString> argument.
-		- The file will contain text.
+		- The file will contain UTF-8 encoded text.
 		- It is an error for the folder path to not exist. 
 		- If the file already exists, it is truncated, otherwise a new file is created.
 		- Others are permitted to open the file for reading. An error is raised if the file is aready open for writing."
@@ -744,7 +665,7 @@ write: aString
 	^self write: aString mode: #truncate!
 
 write: aString mode: aSymbol
-	"Answer a new instance of the receiver for writing a file at the path specified by the <readableString> argument.
+	"Answer a new instance of the receiver for writing UTF-8 text to a file at the path specified by the <readableString> argument.
 		- The content is encoded per the <Symbol> argument. See #write:mode:check:type: for a description of the encoding options.
 		- It is an error for the directory in which the file is to be written not to exist. 
 		- If the file already exists, it is truncated, otherwise a new file is created.
@@ -757,14 +678,10 @@ write: aString mode: aSymbol
 		type: #text!
 
 write: aString mode: aSymbol check: checkBoolean text: textBoolean
-	"Open a file for write access (in fact our filestreams required read/write
-	access for buffering, so the result is actually a read/write file stream).
-	The mode symbol, modeSymbol, determines what file opening mode to use when 
-	opening the file (see File for further details).
-	The check flag, checkBoolean, determines whether or not errors are reported 
-	if the file does or does not exist (depending on the mode). The text flag,
-	textBoolean, determines whether or not the new instance is initially configured
-	to read the file as if it contains Characters or bytes."
+	"Open a file for write access (in fact Filestreams required read/write access for buffering, so the result is actually a read/write file stream).
+	- The mode symbol, modeSymbol, determines what file opening mode to use when opening the file (see File for further details).
+	- The check flag, checkBoolean, determines whether or not errors are reported if the file does or does not exist (depending on the mode). 
+	- The text flag, textBoolean, determines whether or not the new instance is initially configured to read the file as if it contains Characters or bytes."
 
 	^self
 		write: aString
@@ -783,7 +700,7 @@ write: aString mode: modeSymbol check: aBoolean type: encodingSymbol
 	- The <symbol>, encodingSymbol, specifies the data encoding (binary or text) for which the new instance is configured.
 	- Others are permitted to open the file for reading (or have already done so). An error is raised if the file is aready open for writing."
 
-	"Implementation Note: Dolphin's FileStreams require read access for buffering, so result is actually a read/write file stream."
+	"Note: FileStreams require read access for buffering, so result is actually a read/write file stream. For write-only files, use FileWriteStream."
 
 	^self
 		open: aString
@@ -793,8 +710,7 @@ write: aString mode: modeSymbol check: aBoolean type: encodingSymbol
 		share: #read!
 
 write: fileId mode: mode type: type
-	"Answer a new instance of the receiver open on the textual contents of
-	the file identified by the <readableString> path, fileId.
+	"Answer a new instance of the receiver open on the textual contents of the file identified by the <readableString> path, fileId.
 	See #write:mode:check:type: for a description of the mode and type arguments."
 
 	^self
@@ -804,7 +720,7 @@ write: fileId mode: mode type: type
 		type: type!
 
 write: aString text: aBoolean
-	"Create a new file/truncate an existing file for write access (in fact our filestreams require read/write access for buffering, so the result is actually a read/write file stream) through the receiver. The stream will write text or binary depending on the value of aBoolean."
+	"Create a new file/truncate an existing file for write access (in fact Filestreams require read/write access for buffering, so the result is actually a read/write file stream) through the receiver. The stream will write UTF-8 text or binary depending on the value of aBoolean."
 
 	^self write: aString 
 		mode: #truncate
@@ -812,11 +728,7 @@ write: aString text: aBoolean
 		text: aBoolean!
 
 write: aString type: aSymbol
-	"Create a new file/truncate an existing file identified by the <readableString>, aString,
-	for write access (in fact our filestreams require read/write access for buffering, so the
-	result is actually a read/write file stream) through the receiver. The sequence value type
-	is determined by the <symbol> argument, fileType (i.e. one of #binary, #text, #utf8, #utf16le,
-	or #utf32)."
+	"Create a new file/truncate an existing file identified by the <readableString>, aString, for write access (in fact Filestreams require read/write access for buffering, so the result is actually a read/write file stream) through the receiver. The encoding is determined by the <symbol> argument, fileType (i.e. one of #binary, #text, #utf8, #utf16le, or #utf32)."
 
 	^self
 		write: aString
@@ -825,8 +737,9 @@ write: aString type: aSymbol
 		type: aSymbol! !
 
 !Core.FileStream class categoriesForMethods!
+bufferClassFor:type:!instance creation!private! !
 bufferSize!constants!public! !
-file:mode:type:!instance creation!private! !
+file:mode:type:flags:!instance creation!private! !
 on:!instance creation!public! !
 on:text:!instance creation!public! !
 on:type:!instance creation!public! !

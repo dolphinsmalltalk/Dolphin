@@ -257,7 +257,7 @@ logError: anException
 			^self].
 	
 	[| f |
-	f := FileStream
+	f := FileWriteStream
 				write: self errorLogName
 				mode: #append
 				type: #utf8.

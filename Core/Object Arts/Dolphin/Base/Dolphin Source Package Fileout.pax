@@ -517,7 +517,7 @@ fileOutBinaryVariables
 					| stem stream |
 					stem := each shortName.
 					(BindingReference isQualifiedName: stem) ifTrue: [^SourceFormatNotSupportedError signalWith: each].
-					stream := FileStream write: (File
+					stream := FileWriteStream write: (File
 										composePath: self path
 										stem: stem
 										extension: 'stb')
@@ -529,7 +529,7 @@ fileOutBinaryVariables
 					
 					[:each |
 					| stream |
-					stream := FileStream write: (File
+					stream := FileWriteStream write: (File
 										composePath: self path
 										stem: each asString
 										extension: 'ston')
@@ -548,7 +548,7 @@ fileOutBootDefinitions
 	srcmgr := self sourceManager.
 	filename := self classDefinitionsFileName.
 	srcmgr createDirectoryPath: filename.
-	filer := self sourceFilerOn: (FileStream write: filename).
+	filer := self sourceFilerOn: (FileWriteStream write: filename).
 	srcmgr emitFileOutHeaderOn: filer.
 	[filer fileOutPackageClassDefinitions: self] ensure: [filer close]!
 
@@ -643,7 +643,7 @@ savePAC
 	self createPackagePath.
 	"This event can be hooked to backup the old package before it is overwritten, etc"
 	self manager trigger: #aboutToSave: with: self.
-	filer := self sourceFilerOn: (FileStream write: self dotPacPath).
+	filer := self sourceFilerOn: (FileWriteStream write: self dotPacPath).
 	[filer fileOutPackage: self] ensure: [filer close]!
 
 savePAX
@@ -656,7 +656,7 @@ savePAX
 
 	| filer |
 	self createPackagePath.
-	filer := self sourceFilerOn: (FileStream write: self fileOutName).
+	filer := self sourceFilerOn: (FileWriteStream write: self fileOutName).
 	[self fileOutOn: filer] ensure: [filer close].
 
 	"We must also file out the binary globals at this stage, as they are not <sourceObject>s."
@@ -896,11 +896,11 @@ fileOutPackagedClass: aClass to: aFileName
 			self fileOut: aClass to: aFileName]
 		ifNotNil: 
 			[:package |
-			| answer |
+			| sourceFiler |
 			self createDirectoryPath: aFileName.
-			answer := package sourceFilerOn: (FileStream write: aFileName).
-			self emitFileOutHeaderOn: answer.
-			answer
+			sourceFiler := package sourceFilerOn: (FileWriteStream write: aFileName).
+			self emitFileOutHeaderOn: sourceFiler.
+			sourceFiler
 				fileOutClass: aClass ofPackage: package;
 				close].
 

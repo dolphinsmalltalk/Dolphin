@@ -104,7 +104,7 @@ nextPutObject: unkObj
 		ifFalse: [Ole32 oleSaveToStream: ips pStm: self]! !
 
 !OS.COM.IStream categoriesForMethods!
-nextPutObject:!accessing!public! !
+nextPutObject:!public!writing! !
 !
 
 !OS.COM.OLELibrary methodsFor!

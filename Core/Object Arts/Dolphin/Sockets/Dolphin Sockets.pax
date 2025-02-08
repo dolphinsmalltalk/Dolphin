@@ -21,9 +21,7 @@ package setClassNames: #(
 	#{Net.SocketAbstract}
 	#{Net.SocketClosed}
 	#{Net.SocketError}
-	#{Net.SocketReadStream}
 	#{Net.SocketWaitCancelled}
-	#{Net.SocketWriteStream}
 	#{OS.AbstractIN_ADDR}
 	#{OS.FD_SET}
 	#{OS.HOSTENT}
@@ -323,22 +321,6 @@ Net.SocketAbstract
 Net.SocketAbstract
 	subclass: #'Net.Socket'
 	instanceVariableNames: 'address readStream writeStream isText'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.ReadStream
-	subclass: #'Net.SocketReadStream'
-	instanceVariableNames: 'socket'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.WriteStream
-	subclass: #'Net.SocketWriteStream'
-	instanceVariableNames: 'socket dirty'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -115,7 +115,7 @@ OS.Tests.AbstractIN_ADDRTest
 
 AbstractSocketTest
 	subclass: #'Net.Tests.SocketTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'readStream writeStream'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

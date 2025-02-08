@@ -36,22 +36,6 @@ next
 
 	^self basicNext!
 
-next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
-
-	| bytes |
-	bytes := startInteger == 1
-				ifTrue: [aSequenceableCollection]
-				ifFalse: [aSequenceableCollection copyFrom: startInteger to: startInteger + countInteger - 1].
-	self prepareToWrite.
-	crtlib
-		fwrite: bytes
-		size: 1
-		count: countInteger
-		stream: stream.
-	^aSequenceableCollection!
-
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the 
 	next line delimiter. If there are no further line delimiters in the receiver, then the 
@@ -89,18 +73,34 @@ upToEnd
 
 	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block."
 
-	^self basicNext: self size - self position! !
+	^self basicNext: self size - self position!
+
+xnext: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger
+	to the receiver. Answer aSequenceableCollection."
+
+	| bytes |
+	bytes := startInteger == 1
+				ifTrue: [aSequenceableCollection]
+				ifFalse: [aSequenceableCollection copyFrom: startInteger to: startInteger + countInteger - 1].
+	self prepareToWrite.
+	crtlib
+		fwrite: bytes
+		size: 1
+		count: countInteger
+		stream: stream.
+	^aSequenceableCollection! !
 
 !OS.StdioBinaryFileStream categoriesForMethods!
 contentsSpecies!constants!private! !
 externalType!accessing!public! !
 modeModifiers!constants!private! !
-next!accessing!public! !
-next:putAll:startingAt:!accessing!public! !
-nextLine!accessing!public! !
-peek!accessing!public! !
-peekFor:!accessing!public! !
-upToEnd!accessing!public! !
+next!public!reading! !
+nextLine!public!reading! !
+peek!public!reading! !
+peekFor:!public!reading! !
+upToEnd!public!reading! !
+xnext:putAll:startingAt:!public!writing! !
 !
 
 !OS.StdioBinaryFileStream class methodsFor!

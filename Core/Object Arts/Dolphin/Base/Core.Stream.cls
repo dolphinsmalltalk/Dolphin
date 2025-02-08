@@ -68,15 +68,6 @@ basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
 		do: [:i | aSequenceableCollection basicAt: i put: self basicNext].
 	^aSequenceableCollection!
 
-basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Private - Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
-
-	^self
-		next: countInteger
-		putAll: aSequenceableCollection
-		startingAt: startInteger!
-
 basicNextAvailable: anInteger
 	"Private - Answer up to anInteger undecoded elements of the receiver's collection. Generally, the
 	answer will be a collection of the same class as the one accessed by the receiver (though
@@ -115,12 +106,14 @@ contentsSpecies
 	"Private - Answer the class of Object to be used when answering collections of elements
 	from the receiver."
 
-	^Array!
+	^self basicContentsSpecies!
 
 cr
 	"Store the line delimiter character sequence (as required by the environment) as the next element(s) of the receiver."
 
-	self nextPutAll: String.LineDelimiter!
+	self
+		nextPut: $\r;
+		nextPut: $\n!
 
 crtab
 	"Append a line-delimiter and a tab to the receiver."
@@ -185,6 +178,11 @@ errorNotWriteable
 
 	^self error: 'The stream is not writeable'!
 
+flush
+	"Flush any buffered output."
+
+	^self!
+
 isPositionable
 	"Answer whether the receiver supports the #position[:] messages for querying and setting its position in the data stream."
 
@@ -203,7 +201,7 @@ isWriteable
 	^false!
 
 locale
-	"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+	"Answer the <Locale> to be used when emitting or reading localisable data to/from this stream."
 
 	^Locale.UserDefault!
 
@@ -241,14 +239,6 @@ next: anInteger put: anObject
 
 	anInteger timesRepeat: [self nextPut: anObject].
 	^anObject!
-
-next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection."
-
-	self nextPutAll: ((startInteger == 1 and: [countInteger == aSequenceableCollection size])
-				ifTrue: [aSequenceableCollection]
-				ifFalse: [aSequenceableCollection copyFrom: startInteger to: startInteger + countInteger - 1]).
-	^aSequenceableCollection!
 
 nextAvailable
 	"Answer the next of the receiver's future sequence values, or nil if at the end of the stream."
@@ -359,46 +349,25 @@ tab: tabCount
 
 	tabCount timesRepeat: [self tab]!
 
-upTo: anObject
-	"Answer a collection of elements starting with the next element accessed by the receiver,
-	and up to, not inclusive of, the next element that is equal to anObject. Positions the
-	stream after anObject if found. If anObject is not in the collection, answer the entire rest
-	of the collection. If the receiver is at its end, answer an empty Collection."
-
-	| newStream nextObject |
-	newStream := self contentsSpecies writeStream: 128.
-	[self atEnd or: [(nextObject := self next) = anObject]] whileFalse: [newStream nextPut: nextObject].
-	^newStream contents!
-
-upToEnd
-	"Answer a collection consisting of the future sequence values of the receiver (i.e. from the
-	current position to the end)."
-
-	| remainder |
-	remainder := self contentsSpecies writeStream: 128.
-	[self atEnd] whileFalse: [remainder nextPut: self next].
-	^remainder contents!
-
 visit: anObject do: aNiladicValue
 	aNiladicValue value! !
 
 !Core.Stream categoriesForMethods!
-<<!accessing!public! !
+<<!public!writing! !
 atEnd!public!testing! !
 basicContentsSpecies!accessing!private! !
-basicNext!accessing!public! !
-basicNext:!accessing!private! !
-basicNext:into:startingAt:!accessing!private! !
-basicNext:putAll:startingAt:!accessing!private! !
-basicNextAvailable:!accessing!private! !
-basicNextPut:!accessing!private! !
-basicNextPutAll:!accessing!private! !
-basicPrint:!public! !
+basicNext!public!reading! !
+basicNext:!private!reading! !
+basicNext:into:startingAt:!private!reading! !
+basicNextAvailable:!private!reading! !
+basicNextPut:!private!writing! !
+basicNextPutAll:!private!writing! !
+basicPrint:!printing!public! !
 close!operations!public! !
 contentsSpecies!constants!private! !
-cr!accessing!public! !
-crtab!accessing!public! !
-crtab:!accessing!public! !
+cr!public!writing! !
+crtab!public!writing! !
+crtab:!public!writing! !
 display:!printing!public! !
 do:!enumerating!public! !
 elementSize!constants!public! !
@@ -408,34 +377,32 @@ errorEndOfStream!exceptions!public! !
 errorNotPositionable!exceptions!private! !
 errorNotReadable!exceptions!private! !
 errorNotWriteable!exceptions!private! !
+flush!operations!public! !
 isPositionable!public!testing! !
 isReadable!public!testing! !
 isWriteable!public!testing! !
 locale!accessing!public! !
-next!accessing!public! !
-next:!accessing!public! !
-next:into:startingAt:!accessing!public! !
-next:put:!accessing!public! !
-next:putAll:startingAt:!accessing!public! !
-nextAvailable!accessing!public! !
-nextAvailable:!accessing!public! !
-nextInt32Put:!binary filing!public! !
-nextInto:!accessing!public! !
-nextMatchFor:!accessing!public! !
-nextPut:!accessing!public! !
-nextPutAll:!accessing!public! !
-nextUInt32Put:!binary filing!public! !
+next!public!reading! !
+next:!public!reading! !
+next:into:startingAt:!public!reading! !
+next:put:!public!writing! !
+nextAvailable!public!reading! !
+nextAvailable:!public!reading! !
+nextInt32Put:!public!writing! !
+nextInto:!public!reading! !
+nextMatchFor:!public!reading! !
+nextPut:!public!writing! !
+nextPutAll:!public!writing! !
+nextUInt32Put:!public!writing! !
 print:!printing!public! !
 skip:!positioning!public! !
 skipThrough:!positioning!public! !
 skipTo:!positioning!public! !
-space!constants!public! !
+space!public!writing! !
 store:!printing!public! !
-tab!accessing!public! !
-tab:!accessing!public! !
-upTo:!accessing!public! !
-upToEnd!accessing!public! !
-visit:do:!public! !
+tab!public!writing! !
+tab:!public!writing! !
+visit:do:!operations!public! !
 !
 
 !Core.Stream class methodsFor!

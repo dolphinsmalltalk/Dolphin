@@ -282,8 +282,8 @@ testForwardRefLoadPac
 
 	| pacName notifications |
 	pacName := self resourceFilename: 'D5LoadTest.pac'.
-	(FileStream write: pacName)
-		nextPutAll: self d5ForwardRefTestPacContents;
+	(File write: pacName)
+		write: self d5ForwardRefTestPacContents;
 		close.
 	notifications := OrderedCollection new.
 	[[loadedPackages := Package manager install: pacName]

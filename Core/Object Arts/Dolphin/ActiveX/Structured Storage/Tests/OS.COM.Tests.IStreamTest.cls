@@ -43,8 +43,8 @@ testAppendToNonExistantFile
 testContentsOfFile
 	| stream text |
 	text := BlockClosure comment asByteArray.
-	(FileStream write: temp text: false)
-		nextPutAll: text;
+	(File write: temp)
+		write: text;
 		close.
 	stream := IStream read: temp.
 	self assert: stream contents equals: text.
@@ -105,8 +105,8 @@ testTruncateFile
 testUpToEndOfFile
 	| stream text |
 	text := BlockClosure comment asByteArray.
-	(FileStream write: temp text: false)
-		nextPutAll: text;
+	(File write: temp)
+		write: text;
 		close.
 	stream := IStream read: temp.
 	self assert: (stream next: 99) equals: (text copyFrom: 1 to: 99).
@@ -142,10 +142,10 @@ testWriteReadFile
 	stream close!
 
 writeHelloWorldFile
-	"Don't want a Bom in the file, so write as binary. IStreams do not have a text mode."
+	"Don't want a Bom in the file. IStreams do not have a text mode."
 
-	(FileStream write: temp text: false)
-		nextPutAll: self helloWorld asByteArray;
+	(File write: temp)
+		write: self helloWorld;
 		close! !
 
 !OS.COM.Tests.IStreamTest categoriesForMethods!

@@ -221,14 +221,14 @@ testISO8601ParsingBasic
 testISO8601ParsingExtraInput
 	"Invalid IS08601 - Extraneous input at end"
 
-	{ 'PDT1S2'. 1 seconds. 'P4D '. 4 days. 'P0.75DS'. 0.75 days } pairsDo: 
+	{ 'PDT1S2'. 1 seconds. 'P4D🐬'. 4 days. 'P0.75DS'. 0.75 days } pairsDo: 
 			[:string :expected |
 			| stream actual |
 			self shouldRaiseInvalidFormat: [Duration fromString: string].
 			stream := string readStream.
 			actual := Duration readFrom: stream.
 			self assert: actual equals: expected.
-			self assert: stream next equals: string last.
+			self assert: stream next equals: string asArray last.
 			self assert: stream atEnd]!
 
 testISO8601ParsingFractions

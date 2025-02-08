@@ -145,16 +145,6 @@ _sameAsString: aString
 
 	^self <=> aString >= 0!
 
-appendToStream: puttableStream
-	"Private - Append the receiver's elements to the argument, puttableStream.
-	We can be able to do a fast block copy. Answer the receiver.
-	Implementation note: Double dispatched from puttableStream>>nextPutAll:."
-
-	| chars ch |
-	#todo.	"This works but is sub-optimal. Need to coerce the receiver to the encoding of the target stream so we can do a block write through next:putAll:startingAt:. The stream probably needs to forward the request to its contents class, not directly to the collection arg of #nextPutAll:, similarly to #nextPut: sending #encode:on:"
-	chars := ReadStream on: self.
-	[(ch := chars nextAvailable) isNil] whileFalse: [puttableStream nextPut: ch]!
-
 asAnsiString
 	"Answer an ANSI encoded string representation of the receiver."
 
@@ -480,10 +470,10 @@ displayString
 
 	^self!
 
-encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver."
+encodeAsBytesOn: aWriteStream from: startInteger count: sizeInteger
+	"Private - Encode <integer>, sizeInteger, elements of the receiver starting with that at <integer>, startInteger, onto the <WriteStream>, aWriteStream. The stream is known to be streaming out bytes. This implementation is appropriate for byte-encoded strings, e.g. UTF-8 and ANSI."
 
-	^self subclassResponsibility!
+	startInteger to: startInteger + sizeInteger - 1 do: [:i | aWriteStream nextPut: (self basicAt: i)]!
 
 encodeOn: aWriteStream put: aCharacter
 	"Private - Encode the <Character> argument onto the <WriteStream> argument using the character
@@ -965,11 +955,14 @@ printOn: aStream
 	the Unicode Null symbol to avoid them being treated as null terminators by C api's."
 
 	aStream nextPut: $'.
-	self codePointsDo: 
-			[:ch |
-			ch == $\0
-				ifTrue: [aStream nextPut: $\x2400]
-				ifFalse: [(aStream nextPut: ch) == $' ifTrue: [aStream nextPut: $']]].
+	((self identityIncludes: $\0) or: [self identityIncludes: $'])
+		ifTrue: 
+			[self readStream do: 
+					[:ch |
+					ch == $\0
+						ifTrue: [aStream nextPut: $\x2400]
+						ifFalse: [(aStream nextPut: ch) == $' ifTrue: [aStream nextPut: $']]]]
+		ifFalse: [aStream nextPutAll: self].
 	aStream nextPut: $'!
 
 refersToLiteral: anObject
@@ -1258,7 +1251,6 @@ _sameAsString:!comparing!private! !
 =!comparing!public! !
 >!comparing!public! !
 >=!comparing!public! !
-appendToStream:!double dispatch!private! !
 asAnsiString!converting!public! !
 asByteArray!converting!public! !
 asLowercase!converting!public! !
@@ -1300,7 +1292,7 @@ decodeNextAvailable:from:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
 displayOn:!printing!public! !
 displayString!printing!public! !
-encodedSizeAt:!encode/decode!private! !
+encodeAsBytesOn:from:count:!double dispatch!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
 endsWith:!comparing!public! !
 expandMacros!printing!public! !

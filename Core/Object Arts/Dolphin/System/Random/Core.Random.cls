@@ -66,6 +66,14 @@ peek
 
 	^self subclassResponsibility!
 
+peekFor: anObject
+	"Determine the response to the message peek. If it is the same as the argument, anObject, then advance the current position and answer true. Otherwise answer false and do not change
+	the current position."
+
+	^anObject isNumber and: [(self peek equals: anObject) and: 
+					[self next.
+					true]]!
+
 seed
 	"Answer the receiver's seed."
 
@@ -74,16 +82,27 @@ seed
 seed: aNumber
 	"Set the seed of the Random stream to aNumber (or 1 if zero)."
 
-	seed := aNumber max: 1! !
+	seed := aNumber max: 1!
+
+upToEnd
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from the
+	current position to the end)."
+
+	| remainder |
+	remainder := self contentsSpecies writeStream: 128.
+	[self atEnd] whileFalse: [remainder nextPut: self next].
+	^remainder contents! !
 
 !Core.Random categoriesForMethods!
 atEnd!public!testing! !
 chiSquareTest:max:!examples!private! !
 isReadable!public!testing! !
-next!accessing!public! !
-peek!accessing!public! !
+next!public!reading! !
+peek!public!reading! !
+peekFor:!public!reading! !
 seed!accessing!public! !
 seed:!accessing!public! !
+upToEnd!public!reading! !
 !
 
 !Core.Random class methodsFor!

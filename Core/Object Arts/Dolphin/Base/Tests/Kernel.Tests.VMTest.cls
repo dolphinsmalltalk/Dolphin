@@ -2490,7 +2490,7 @@ testPrimitiveNewVirtualFailure
 
 testPrimitiveNextPut
 	| method subject pound euro |
-	method := self createPrimitiveMethodLike: WriteStream >> #nextPut:.
+	method := self createPrimitiveMethodLike: AbstractWriteStream >> #nextPut:.
 	subject := AnsiString writeStream.
 	self assert: subject collection isKindOf: AnsiString.
 	"Past limit"
@@ -2594,7 +2594,7 @@ testPrimitiveNextPut
 
 testPrimitiveNextPutAll
 	| method |
-	method := self createPrimitiveMethodLike: WriteStream >> #nextPutAll:.
+	method := self createPrimitiveMethodLike: AbstractWriteStream >> #nextPutAll:.
 	self verifyPrimitiveNextPutAllOnAnsiString: method.
 	self verifyPrimitiveNextPutAllOnUtfStrings: method.
 	self verifyPrimitiveNextPutAllOnByteArray: method.

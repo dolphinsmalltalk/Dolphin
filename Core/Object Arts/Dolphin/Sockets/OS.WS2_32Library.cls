@@ -548,7 +548,7 @@ accept: s addr: addr addrlen: addrlen
 			int* addrlen);"
 
 	<overlap stdcall: handle accept handle void* int32*>
-	^self invalidCall: _failureCode!
+	^self invalidOverlappedCall: _failureCode!
 
 basicFree
 	"Private - We've finished using the socket system."
@@ -746,7 +746,7 @@ invalidCall: anInteger
 		ifTrue: [Net.SocketError signal]
 		ifFalse: 
 			[anInteger >= 0
-				ifTrue: [self primitiveFailed: anInteger]
+				ifTrue: [Net.SocketError signalWith: anInteger]
 				ifFalse: [self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender]]!
 
 invalidOverlappedCall: anInteger
@@ -754,7 +754,10 @@ invalidOverlappedCall: anInteger
 
 	^anInteger == SOCKET_ERROR
 		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
-		ifFalse: [super invalidCall: anInteger]!
+		ifFalse: 
+			[anInteger >= 0
+				ifTrue: [Net.SocketError signalWith: anInteger]
+				ifFalse: [self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender]]!
 
 ioctlsocket: s cmd: cmd argp: argp
 	"Invoke the ioctlsocket() function of the module wrapped by the receiver.
@@ -894,13 +897,19 @@ socket: af type: type protocol: protocol
 	<stdcall: handle socket int32 int32 int32>
 	^self invalidCall: _failureCode!
 
-wsaAddressToStringW: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo: lpProtocolInfo lpszAddressString: lpszAddressString lpdwAddressStringLength: lpdwAddressStringLength
-	"Invoke the WSAAddressToStringW() function of the module wrapped by the receiver.
+threadWsaGetLastError
+	"Answer the last WSA error code which last occurred in the overlapped call thread associated with the current <Process>."
 
-		int __stdcall WSAAddressToStringA(
+	<overlap stdcall: int32 WSAGetLastError>
+	^self invalidCall: _failureCode!
+
+wsaAddressToString: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo: lpProtocolInfo lpszAddressString: lpszAddressString lpdwAddressStringLength: lpdwAddressStringLength
+	"Invoke the WSAAddressToString() function of the module wrapped by the receiver.
+
+		WSAErrno __stdcall WSAAddressToString(
 			[in]SOCKADDR* lpsaAddress,
-			[in]unsigned long dwAddressLength,
-			[in]void* lpProtocolInfo,
+			[in]DWORD dwAddressLength,
+			[in]WSAPROTOCOL_INFOW* lpProtocolInfo,
 			[in, out]LPWSTR lpszAddressString,
 			[in, out]unsigned long* lpdwAddressStringLength);"
 
@@ -971,7 +980,7 @@ sendto:buf:len:flags:to:tolen:!public!win32 functions-sockets library! !
 setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
 shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
 socket:type:protocol:!public!win32 functions-sockets library! !
-wsaAddressToStringW:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public!win32 functions-sockets library! !
+threadWsaGetLastError!public!win32 functions-windows sockets 2! !
 wsaCleanup!**auto generated**!public!win32 functions-sockets library! !
 wsaGetLastError!**auto generated**!public!win32 functions-sockets library! !
 wsaStartup:lpWSAData:!public!win32 functions-sockets library! !

@@ -127,7 +127,7 @@ verifyIStreamStat
 !Core.Tests.AbstractFileStreamTest categoriesForMethods!
 testIStream!public!unit tests! !
 testIStreamStat!public!unit tests! !
-verifyIStreamStat!helpers!public! !
+verifyIStreamStat!helpers!private! !
 !
 
 "End of package definition"!

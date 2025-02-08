@@ -129,13 +129,14 @@ basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Private - Append countInteger elements of aSequenceableCollection from startInteger
 	to the receiver. Answer aSequenceableCollection."
 
-	| end |
-	(end := startInteger + countInteger - 1) > aSequenceableCollection size
-		ifTrue: [self errorSubscriptBounds: end].
+	| elementSize |
+	startInteger + countInteger - 1 > aSequenceableCollection size
+		ifTrue: [self errorSubscriptBounds: startInteger + countInteger - 1].
 	self prepareToWrite.
+	elementSize := aSequenceableCollection class elementSize.
 	crtlib
-		fwrite: aSequenceableCollection yourAddress + startInteger - 1
-		size: aSequenceableCollection class elementSize
+		fwrite: aSequenceableCollection yourAddress + ((startInteger - 1) * elementSize)
+		size: elementSize
 		count: countInteger
 		stream: stream.
 	^aSequenceableCollection!
@@ -177,22 +178,6 @@ basicNextPut: anInteger
 basicPeek
 	^self getchar ifNotNil: [:ch | self ungetchar: ch]!
 
-basicUpTo: anObject
-	"Private - Answer a collection of elements starting with the next element accessed by the receiver,
-	and up to, not inclusive of, the next element that is equal to anObject. Positions the
-	stream after anObject if found. If anObject is not in the collection, answer the entire rest
-	of the collection. If the receiver is at its end, answer an empty Collection."
-
-	| newStream elem |
-	newStream := self contentsSpecies writeStream: 32.
-	[(elem := self nextAvailable) isNil or: [elem = anObject]] whileFalse: [newStream nextPut: elem].
-	^newStream contents!
-
-bufferClass
-	"Answer the class used to encode the stdio buffer."
-
-	^self contentsSpecies!
-
 bufferPrototype
 	"Private - Answer a prototypical instance of the type of collection over which this class streams."
 
@@ -229,8 +214,20 @@ contentsSpecies
 
 	^self subclassResponsibility!
 
+cr
+	"Store the line delimiter character sequence (as required by
+	the environment) as the next element(s) of the receiver."
+
+	"Implementation Note: Assumes the receiver is in text mode, and 
+	will translate the single LF character to a CR/LF pair on output."
+
+	self nextPut: $\n!
+
 creationMode
 	^flags bitAnd: CreationModeMask!
+
+decodeNext
+	^self bufferPrototype decodeNextFrom: self!
 
 do: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's future sequence values, terminating only when there are no more future sequence values (i.e. the stream is at an	end)."
@@ -335,17 +332,11 @@ next
 
 	^self subclassResponsibility!
 
-next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
-
-	^self subclassResponsibility!
-
 nextAvailable
 	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
 	an ANSI code point. Answer nil if at EOF."
 
-	^self bufferPrototype decodeNextFrom: self!
+	^self decodeNext!
 
 nextAvailable: anInteger
 	"Answer up to anInteger elements of the receiver's collection. Generally, the answer will be
@@ -354,6 +345,9 @@ nextAvailable: anInteger
 	the receiver's collection."
 
 	^self bufferPrototype decodeNextAvailable: anInteger from: self!
+
+nextLine
+	^self subclassResponsibility!
 
 nextPut: anObject
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
@@ -385,9 +379,15 @@ peek
 
 	^self subclassResponsibility!
 
+peekFor: anObject
+	"Determine the response to the message peek. If it is the same as the argument, anObject, then advance the current position and answer true. Otherwise answer false and do not change the current position."
+
+	^self subclassResponsibility!
+
 position
 	"Answer the absolute (zero-based) position of the file pointer."
 
+	self prepareToRead.
 	^crtlib _ftelli64: stream!
 
 position: anInteger
@@ -491,6 +491,25 @@ skip: anInteger
 
 	self seek: SEEK_CUR offset: anInteger!
 
+skipToAll: aCollection 
+	"Set the receiver's current position to be past the next occurrence of the sequence of
+	objects which are the elements of the <collection> argument. Answer whether such any such
+	sequence was found."
+
+	| sequence partialStart |
+	sequence := aCollection readStream.
+	[sequence atEnd] whileFalse: 
+			[self atEnd ifTrue: [^false].
+			self next = sequence next 
+				ifTrue: [partialStart isNil ifTrue: [partialStart := self position]]
+				ifFalse: 
+					[sequence reset.
+					partialStart isNil 
+						ifFalse: 
+							[self position: partialStart.
+							partialStart := nil]]].
+	^true!
+
 translationMode
 	^flags bitAnd: TranslationModeMask!
 
@@ -504,36 +523,69 @@ upTo: anObject
 	stream after anObject if found. If anObject is not in the collection, answer the entire rest
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
-	^self bufferPrototype decodeFrom: self upTo: anObject! !
+	| newStream elem |
+	newStream := self contentsSpecies writeStream: 32.
+	[(elem := self nextAvailable) isNil or: [elem = anObject]] whileFalse: [newStream nextPut: elem].
+	^newStream contents!
+
+upToAll: aCollection 
+	"Answer a collection of the receiver's future sequence values starting with the next value
+	accessed by the receiver, and up to, not inclusive of, the sequence of values that match the
+	elements of the <collection> argument, or the remaining contents of the stream up to its end
+	if the sequence is not found. The stream is left positioned after the last matching element,
+	or at the end if the sequence is not found."
+
+	| start |
+	start := self position.
+	^(self skipToAll: aCollection) 
+		ifTrue: 
+			[| end answer |
+			end := self position.
+			self position: start.
+			answer := self basicNext: end - start - aCollection size.
+			self position: end.
+			answer]
+		ifFalse: 
+			[self position: start.
+			self upToEnd]!
+
+upToEnd
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from the
+	current position to the end)."
+
+	| remainder |
+	remainder := self contentsSpecies writeStream: 128.
+	[self atEnd] whileFalse: [remainder nextPut: self next].
+	^remainder contents! !
 
 !OS.StdioFileStream categoriesForMethods!
-accessMode!public!testing! !
+accessMode!accessing!public! !
 asParameter!converting!public! !
 atEnd!public!testing! !
 attach:toFd:mode:!initializing!private! !
-basicNext!accessing!private! !
-basicNext:!accessing!private! !
-basicNext:into:startingAt:!accessing!private! !
-basicNext:putAll:startingAt:!accessing!private! !
-basicNextAvailable!accessing!private! !
-basicNextAvailable:!accessing!private! !
-basicNextPut:!accessing!private! !
-basicPeek!accessing!private! !
-basicUpTo:!accessing!private! !
-bufferClass!constants!private! !
+basicNext!private!reading! !
+basicNext:!private!reading! !
+basicNext:into:startingAt:!private!reading! !
+basicNext:putAll:startingAt:!private!writing! !
+basicNextAvailable!private!reading! !
+basicNextAvailable:!private!reading! !
+basicNextPut:!private!writing! !
+basicPeek!private!reading! !
 bufferPrototype!constants!private! !
 close!operations!public! !
-contents!accessing!public! !
+contents!public!reading! !
 contentsSpecies!constants!private! !
+cr!public!writing! !
 creationMode!accessing!private! !
+decodeNext!encode/decode!private! !
 do:!enumerating!public! !
 externalType!accessing!public! !
 fileno!accessing!private! !
 fileSize!accessing!public! !
 finalize!finalizing!private! !
 flagsFromMode:!helpers!private! !
-flush!buffer!public! !
-getchar!accessing!private! !
+flush!public!writing! !
+getchar!private!reading! !
 isBinary!public!testing! !
 isDevice!public!testing! !
 isNonBlocking!public!testing! !
@@ -544,14 +596,15 @@ locale!accessing!public! !
 locale:!accessing!public! !
 modeModifiers!constants!private! !
 name!accessing!public! !
-next!accessing!public! !
-next:putAll:startingAt:!accessing!public! !
-nextAvailable!accessing!public! !
-nextAvailable:!accessing!public! !
-nextPut:!accessing!public! !
-nextPutAll:!accessing!public! !
+next!public!reading! !
+nextAvailable!public!reading! !
+nextAvailable:!public!reading! !
+nextLine!public!reading! !
+nextPut:!public!writing! !
+nextPutAll:!public!writing! !
 open:mode:flags:!instance creation!private! !
-peek!accessing!public! !
+peek!public!reading! !
+peekFor:!public! !
 position!accessing!public! !
 position:!positioning!public! !
 prepareToRead!helpers!private! !
@@ -561,17 +614,24 @@ seek:offset:!helpers!positioning!private! !
 setStream:name:flags:!initializing!private! !
 setToEnd!positioning!public! !
 shareFlags!accessing!private! !
-shareMode!accessing!private! !
+shareMode!accessing!public! !
 size!accessing!public! !
 skip:!positioning!public! !
-translationMode!accessing!private! !
-ungetchar:!accessing!private! !
-upTo:!accessing!public! !
+skipToAll:!positioning!public! !
+translationMode!accessing!public! !
+ungetchar:!private!reading! !
+upTo:!public!reading! !
+upToAll:!public!reading! !
+upToEnd!public!reading! !
 !
 
-OS.StdioFileStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 OS.StdioFileStream methodProtocol: #FileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #externalType #isBinary #isEmpty #isText #position #position: #reset #setToEnd)!
+OS.StdioFileStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
+OS.StdioFileStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 OS.StdioFileStream methodProtocol: #readFileStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #externalType #isBinary #isEmpty #isText #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
+OS.StdioFileStream methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
+OS.StdioFileStream methodProtocol: #StdioFileStream attributes: #(#readOnly) selectors: #(#close #contents #externalType #fileno #isBinary #isDevice #isEmpty #isNonBlocking #isText #position #position: #reset #setToEnd #shareMode #translationMode)!
+OS.StdioFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
 
 !OS.StdioFileStream class methodsFor!
 

@@ -144,6 +144,9 @@ fastFlush
 
 	self Commit: STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE!
 
+fileType
+	^#unknown!
+
 flush
 	"Perform a safe flush which is guaranteed to make it to the file if
 	the Commit() call returns. The system provided compound file implementation
@@ -447,22 +450,23 @@ upToEnd
 	^self next: self size - self position! !
 
 !OS.COM.IStream categoriesForMethods!
-at:!accessing!public! !
-at:put:!accessing!public! !
+at:!public!reading! !
+at:put:!public!writing! !
 atEnd!public!testing! !
 cacheStats!helpers!private! !
 Clone:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 Commit:!**auto generated**!COM Interfaces-IStream!primitives!public! !
-contents!accessing!public! !
+contents!public!reading! !
 copy!copying!public! !
 copyFrom:to:!copying!public! !
 CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 copyTo:count:!copying!public! !
-cr!accessing!public! !
+cr!public!writing! !
 do:!public! !
 fastFlush!operations!public! !
+fileType!accessing!public! !
 flush!operations!public! !
-grow!accessing!private! !
+grow!helpers!private! !
 handle!accessing!public! !
 isEmpty!public!testing! !
 isReadable!public!testing! !
@@ -472,15 +476,15 @@ lockFrom:to:type:!operations!public! !
 LockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 mode!accessing!public! !
 name!accessing!public! !
-nextCLSID!accessing!public! !
-nextLine!accessing!public! !
-nextPutCLSID:!accessing!public! !
+nextCLSID!public!reading! !
+nextLine!public!reading! !
+nextPutCLSID:!public!writing! !
 notEmpty!public!testing! !
-peek!accessing!public! !
-peekFor:!accessing!public! !
-position!accessing!public! !
-position:!accessing!public! !
-reset!accessing!public! !
+peek!public!reading! !
+peekFor:!public!reading! !
+position!positioning!public! !
+position:!positioning!public! !
+reset!positioning!public! !
 resize:!accessing!public! !
 Revert!**auto generated**!COM Interfaces-IStream!primitives!public! !
 rollback!operations!public! !
@@ -489,20 +493,20 @@ SetSize:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 setToEnd!positioning!public! !
 size!accessing!public! !
 skip:!positioning!public! !
-space!accessing!public! !
+space!public!writing! !
 stat!accessing!public! !
 Stat:grfStatFlag:!**auto generated**!COM Interfaces-IStream!primitives!public! !
-tab!accessing!public! !
+tab!public!writing! !
 unlockFrom:to:!operations!public! !
 unlockFrom:to:type:!operations!public! !
 UnlockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-IStream!primitives!public! !
-upToEnd!accessing!public! !
+upToEnd!public!reading! !
 !
 
 OS.COM.IStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
 OS.COM.IStream methodProtocol: #IStream attributes: #(#readOnly) selectors: #(#Commit: #CopyTo:cb:pcbRead:pcbWritten: #LockRegion:cb:dwLockType: #Read:cb:pcbRead: #Revert #Seek:dwOrigin:plibNewPosition: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #Write:cb:pcbWritten:)!
 OS.COM.IStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
-OS.COM.IStream methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #flush #isReadable #isWriteable #position: #read:count: #reset #size #write:count:)!
+OS.COM.IStream methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #fileType #flush #isReadable #isWriteable #position: #read:count: #reset #setToEnd #size #write:count:)!
 
 !OS.COM.IStream class methodsFor!
 

@@ -45,8 +45,8 @@ seed: anInteger
 	super seed: anInteger! !
 
 !OS.RandomCRT categoriesForMethods!
-next!accessing!public! !
-peek!accessing!public! !
+next!public!reading! !
+peek!public!reading! !
 seed:!accessing!public! !
 !
 

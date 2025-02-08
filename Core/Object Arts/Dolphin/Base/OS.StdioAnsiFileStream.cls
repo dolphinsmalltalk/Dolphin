@@ -65,12 +65,12 @@ peekFor: anObject
 
 !OS.StdioAnsiFileStream categoriesForMethods!
 contentsSpecies!accessing!private! !
-getString:!accessing!private! !
+getString:!private!reading! !
 modeModifiers!constants!private! !
-next!accessing!public! !
-nextPutAll:!accessing!public! !
-peek!accessing!public! !
-peekFor:!accessing!public! !
+next!public!reading! !
+nextPutAll:!public!writing! !
+peek!public!reading! !
+peekFor:!public!reading! !
 !
 
 !OS.StdioAnsiFileStream class methodsFor!

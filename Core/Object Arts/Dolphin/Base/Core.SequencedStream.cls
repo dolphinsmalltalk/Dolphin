@@ -18,6 +18,16 @@ Core.SequencedStream comment: 'SequencedStream is an class of <Stream>s that str
 
 !Core.SequencedStream methodsFor!
 
+basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Private - Append countInteger elements of aSequenceableCollection (assumed to be of the same encoding as the receiver), starting with that at startInteger, to the receiver. Answer aSequenceableCollection."
+
+	self errorNotWriteable!
+
+bufferClass
+	"Private - Answer the class of the receiver's I/O buffer."
+
+	^self contentsSpecies!
+
 contents
 	"Answer a <sequencedReadableCollection> that contains the receiver's past and future
 	sequence values, in order, i.e. the complete contents of the stream."
@@ -37,11 +47,6 @@ copyFrom: startInteger to: stopInteger
 	self position: mark.
 	^answer!
 
-flush
-	"No-op to allow non-FileStreams to be used interchangeably with FileStream."
-
-	^self!
-
 isEmpty
 	"Answer whether the sets of both past and future sequence values are empty."
 
@@ -55,23 +60,19 @@ isPositionable
 locale: aLocale
 	self subclassResponsibility!
 
-nextLine
-	"Answer a Collection consisting of the receiver contents up to (but not including) the next
-	line delimiter. If there are no further line delimiters in the receiver, then the rest of
-	the receiver's contents are answered. If the receiver is at its end, then an empty
-	collection is answered. "
+next: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection.
 
-	"N.B. This method works for CR, LF and CR/LF line delimiters."
+	Note that the element count is the number of elements written from the <sequencedReadableCollection> argument. Depending on the receiver's encoding, this may not necessarily result in the receiver's position advancing by the same count."
 
-	| newStream nextObject |
-	newStream := self contentsSpecies writeStream: 128.
-	
-	[(nextObject := self nextAvailable) isNil
-		or: [nextObject == $\n or: [nextObject == $\r and: 
-							[self peekFor: $\n.
-							true]]]]
-			whileFalse: [newStream nextPut: nextObject].
-	^newStream contents!
+	"Implementation Note: The receiver's encoding is that of the streamed over collection. We ask that collection to dispatch an appropriate message to the SequenceableCollection being written such that it can  convert as necessary from its own encoding to the encoding of this stream."
+
+	self bufferClass
+		encodeElementsOf: aSequenceableCollection
+		from: startInteger
+		count: countInteger
+		on: self.
+	^aSequenceableCollection!
 
 nextWord
 	"Answer the next 'word' in the receiver's element stream, where a word is defined as a
@@ -90,30 +91,6 @@ notEmpty
 	"Answer whether there are any sequence values in the receiver."
 
 	^self isEmpty not!
-
-peek
-	"Answer the next element in the collection, but do not change the current position. Answer
-	nil if the receiver is at its end."
-
-	^self atEnd
-		ifFalse: 
-			[| anObject pos |
-			pos := self position.
-			anObject := self next.
-			self position: pos.
-			anObject]!
-
-peekFor: anObject
-	"Determine the response to the message peek. If it is the same as the argument, anObject,
-	then advance the current position and answer true. Otherwise answer false and do not change
-	the current position."
-
-	| pos next |
-	pos := self position.
-	^(next := self nextAvailable) notNil
-		and: [next = anObject or: 
-					[self position: pos.
-					false]]!
 
 pop
 	"Move back one position in the stream."
@@ -141,24 +118,10 @@ reverseContents
 
 	^self contents reverse!
 
-setToEnd
-	"Set the position of the receiver to be past the last value (i.e. the stream will have no
-	future sequence values), and will answer true in response to the #atEnd message."
-
-	^self subclassResponsibility!
-
 size
 	"Answer the number of values in the stream."
 
 	^self subclassResponsibility!
-
-skip: anInteger
-	"Set the receiver's position to be the current position plus the argument, anInteger,
-	possibly adjusting the result so as to remain within the bounds of the collection."
-
-	"Note this adjusts the raw position. It should not be used when streaming over UTF encoded strings."
-
-	self position: self position + anInteger!
 
 skipSeparators
 	"Advance the receiver's position over any leading whitespace. Answer whether their are more
@@ -176,25 +139,6 @@ skipSeparators
 						[self position: pos.
 						^true]].
 	^false!
-
-skipToAll: aCollection 
-	"Set the receiver's current position to be past the next occurrence of the sequence of
-	objects which are the elements of the <collection> argument. Answer whether such any such
-	sequence was found."
-
-	| sequence partialStart |
-	sequence := aCollection readStream.
-	[sequence atEnd] whileFalse: 
-			[self atEnd ifTrue: [^false].
-			self next = sequence next 
-				ifTrue: [partialStart isNil ifTrue: [partialStart := self position]]
-				ifFalse: 
-					[sequence reset.
-					partialStart isNil 
-						ifFalse: 
-							[self position: partialStart.
-							partialStart := nil]]].
-	^true!
 
 skipWhile: aMonadicValuable
 	"Advance the receiver's current position to be past the sequence of future values for which
@@ -218,56 +162,27 @@ skipWhileMatchAll: aCollection
 	elements are matched against the receiver's future sequence values in the same order as they
 	would be enumerated by the collection's implementation of the #do: message."
 
-	^aCollection skipOver: self!
-
-upToAll: aCollection 
-	"Answer a collection of the receiver's future sequence values starting with the next value
-	accessed by the receiver, and up to, not inclusive of, the sequence of values that match the
-	elements of the <collection> argument, or the remaining contents of the stream up to its end
-	if the sequence is not found. The stream is left positioned after the last matching element,
-	or at the end if the sequence is not found."
-
-	| start |
-	start := self position.
-	^(self skipToAll: aCollection) 
-		ifTrue: 
-			[| end answer |
-			end := self position.
-			self position: start.
-			answer := self basicNext: end - start - aCollection size.
-			self position: end.
-			answer]
-		ifFalse: 
-			[self position: start.
-			self upToEnd]! !
+	^aCollection skipOver: self! !
 
 !Core.SequencedStream categoriesForMethods!
-contents!accessing!public! !
-copyFrom:to:!copying!public! !
-flush!accessing!public! !
+basicNext:putAll:startingAt:!private!writing! !
+bufferClass!constants!private! !
+contents!public!reading! !
+copyFrom:to:!public!reading! !
 isEmpty!public!testing! !
 isPositionable!public!testing! !
 locale:!accessing!public! !
-nextLine!accessing!public! !
-nextWord!accessing!public! !
+next:putAll:startingAt:!public! !
+nextWord!public!reading! !
 notEmpty!public!testing! !
-peek!accessing!public! !
-peekFor:!accessing!public! !
 pop!positioning!public! !
 position!positioning!public! !
 position:!positioning!public! !
 reset!positioning!public! !
-reverseContents!accessing!public! !
-setToEnd!positioning!public! !
+reverseContents!public!reading! !
 size!accessing!public! !
-skip:!positioning!public! !
 skipSeparators!positioning!public! !
-skipToAll:!positioning!public! !
 skipWhile:!positioning!public! !
 skipWhileMatchAll:!positioning!public! !
-upToAll:!positioning!public! !
 !
-
-Core.SequencedStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
-Core.SequencedStream methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 

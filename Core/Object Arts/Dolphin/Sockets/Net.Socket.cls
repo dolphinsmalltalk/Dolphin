@@ -40,6 +40,9 @@ connect
 		name: socketAddress
 		namelen: socketAddress byteSize!
 
+errorNotPositionable
+	^self error: 'Sockets are not positionable'!
+
 hasInput
 	"Private - Answer whether there is any data ready for reading from the socket,
 	Answer false if socket is closed or has no data available to read."
@@ -97,51 +100,31 @@ port: anIntegerPort address: anInternetAddress
 	port := anIntegerPort.
 	address := anInternetAddress!
 
-readStream
-	"Answer (lazily) the readStream instance variable."
+position
+	"Part of the <writeableMedium> protocol used by <ExternalWriteStream>, but sockets cannot be positioned."
 
-	readStream isNil ifTrue: [readStream := SocketReadStream on: self text: self isText].
-	^readStream!
+	self errorNotPositionable!
 
-receive: buffer 
-	"Receive anInteger bytes from the socket and answer this data as a ByteArray
-	of exactly this length. The current process is blocked until the operation has completed."
+position: anInteger
+	"Part of the <writeableMedium> protocol used by <ExternalWriteStream>, but sockets cannot be positioned."
 
-	^self receive: buffer count: buffer size!
+	self errorNotPositionable!
 
-receive: aByteObject count: anInteger 
+read: aByteObject 
+	"Read some data from the socket into byte object argument. The current process is blocked until the some data is available to read, but the method will return as soon as some data has been read. Answer the actual number of bytes read, which may be fewer than the number requested. If the socket is closed, or becomes closed, signal a <SocketClosed>  exception. Any other error will result in a <SocketError> exception being raised."
+
+	^self read: aByteObject count: aByteObject size!
+
+read: aByteObject count: anInteger 
+	"Read data from the socket up to a maxiumum of <integer> lengthInteger bytes into the buffer, aByteObject. The buffer must be large enough to accommodate the data, or a buffer overrun may occur. The current process is blocked until the some data is available to read. Answer the actual number of bytes read, which may be fewer than the number requested. If the socket is closed, or becomes closed, signal a <SocketClosed>  exception. Any other error will result in a <SocketError> exception being raised."
+
 	^self 
-		receive: aByteObject
+		read: aByteObject
 		count: anInteger
 		startingAt: 1!
 
-receive: aByteObject count: countInteger startingAt: startInteger 
-	| received |
-	received := 0.
-	[received < countInteger] whileTrue: 
-			[received := received + (self 
-								receiveSome: aByteObject
-								count: countInteger
-								startingAt: received + startInteger)].
-	^aByteObject!
-
-receiveByte
-	"Receive and answer a single byte from the socket. The current process is blocked until
-	the operation has completed."
-
-	| buffer |
-	buffer := ByteArray new: 1.
-	self receive: buffer.
-	^buffer first!
-
-receiveSome: aByteObject count: lengthInteger startingAt: startInteger
-	"Private - Receive bytes from the socket up to a maxiumum of lengthInteger bytes
-	into the buffer, aByteObject. Note that the buffer must be large enough	
-	to accommodate the data, or memory corruption may occur.
-	The current process is blocked until the some data is available to read. 
-	Answer the actual number of bytes read, which may be fewer than the 
-	number requested. If the socket is closed, or becomes closed, signal a <SocketClosed> 
-	exception. Any other error will result in a <SocketError> exception being raised."
+read: aByteObject count: lengthInteger startingAt: startInteger
+	"Read data from the socket up to a maxiumum of <integer> lengthInteger bytes into the buffer, aByteObject, starting at <integer> position, startInteger. The buffer must be large enough to accommodate the data, or a buffer overrun may occur. The current process is blocked until the some data is available to read. Answer the actual number of bytes read, which may be fewer than the number requested. If the socket is closed, or becomes closed, then zero bytes may be read. Any other error condition will result in a <SocketError> exception being raised."
 
 	| bytesReceived |
 	bytesReceived := Ws2_32
@@ -149,30 +132,55 @@ receiveSome: aByteObject count: lengthInteger startingAt: startInteger
 				buf: aByteObject yourAddress + startInteger - 1
 				len: lengthInteger
 				flags: 0.
-	bytesReceived > 0 ifTrue: [^bytesReceived].
-	bytesReceived = 0 ifTrue: [^self errorSocketClosed].
+	bytesReceived >= 0 ifTrue: [^bytesReceived].
 	^self socketErrorOverlap!
+
+readStream
+	"Answer an `ExternalReadStream` for streaming data from the receiver."
+
+	^readStream ifNil: [readStream := ExternalReadStream on: self text: self isText]!
+
+receive: buffer 
+	"Receive anInteger bytes from the socket and answer this data as a ByteArray of exactly this length. The current process is blocked until the operation has completed."
+
+	^self receive: buffer count: buffer size!
+
+receive: aByteObject count: anInteger 
+	"Read data from the socket of <integer> byte length, lengthInteger, into the buffer, aByteObject. The buffer must be large enough to accommodate the data, or a buffer overrun will occur. The current process is blocked until sufficient data is available to satisfy the request. If the socket is closed, or becomes closed, signal a <SocketClosed>  exception. Any other error will result in a <SocketError> exception being raised."
+
+	^self 
+		receive: aByteObject
+		count: anInteger
+		startingAt: 1!
+
+receive: aByteObject count: countInteger startingAt: startInteger
+	"Read data from the socket of <integer> byte length, lengthInteger, into the buffer, aByteObject, starting at <integer> position, startInteger. The buffer must be large enough to accommodate the data, or a buffer overrun will occur. The current process is blocked until sufficient data is available to satisfy the request. If the socket is closed, or becomes closed, signal a <SocketClosed>  exception. Any other error will result in a <SocketError> exception being raised."
+
+	| received |
+	received := 0.
+	[received < countInteger] whileTrue: 
+			[| read |
+			read := self
+						read: aByteObject
+						count: countInteger
+						startingAt: received + startInteger.
+			read == 0 ifTrue: [self errorSocketClosed].
+			received := received + read].
+	^aByteObject!
+
+receiveByte
+	"Receive and answer a single byte from the socket. The current process is blocked until the operation has completed."
+
+	| buffer |
+	buffer := ByteArray new: 1.
+	self receive: buffer.
+	^buffer first!
 
 send: aByteObject 
 	"Write aByteObject to the receiver. The current process is blocked until
 	the operation has completed."
 
 	self send: aByteObject count: aByteObject size!
-
-send: aByteObject count: anInteger 
-	self 
-		send: aByteObject
-		count: anInteger
-		startingAt: 1!
-
-send: aByteObject count: countInteger startingAt: startInteger 
-	| sent |
-	sent := 0.
-	[sent < countInteger] whileTrue: 
-			[sent := sent + (self 
-								sendSome: aByteObject
-								count: countInteger - sent
-								startingAt: sent + startInteger)]!
 
 sendByte: anInteger 
 	"Write a single byte with value anInteger to the socket. The current process is blocked until
@@ -195,34 +203,59 @@ sendSome: aByteObject count: lengthInteger startingAt: startInteger
 	result = SOCKET_ERROR ifTrue: [^self socketErrorOverlap].
 	^result!
 
-writeStream
-	"Answer (lazily) the writeStream instance variable."
+write: aByteObject count: anInteger 
+	self 
+		send: aByteObject
+		count: anInteger
+		startingAt: 1!
 
-	writeStream isNil ifTrue: [writeStream := SocketWriteStream on: self text: self isText].
-	^writeStream! !
+write: aByteObject count: countInteger startingAt: startInteger 
+	| sent |
+	sent := 0.
+	[sent < countInteger] whileTrue: 
+			[sent := sent + (self 
+								sendSome: aByteObject
+								count: countInteger - sent
+								startingAt: sent + startInteger)]!
+
+writeStream
+	"Answer an `ExternalWriteStream` for streaming data to the receiver. Note that if stream is explicitly closed, the socket will be closed."
+
+	^writeStream
+		ifNil: 
+			[writeStream := (ExternalWriteStream on: self text: self isText)
+						ownsMedium: true;
+						yourself]! !
 
 !Net.Socket categoriesForMethods!
 address!accessing!public! !
 connect!operations!public! !
+errorNotPositionable!exceptions!private! !
 hasInput!private!testing! !
 initialize!initializing!private! !
 isText!public! !
 isText:!accessing!public! !
 peerAddress!accessing!public! !
 port:address:!initializing!private! !
+position!public! !
+position:!public! !
+read:!operations!public! !
+read:count:!operations!public! !
+read:count:startingAt:!operations!public! !
 readStream!accessing!public! !
 receive:!operations!public! !
 receive:count:!operations!public! !
 receive:count:startingAt:!operations!public! !
 receiveByte!operations!public! !
-receiveSome:count:startingAt:!operations!private! !
 send:!operations!public! !
-send:count:!operations!public! !
-send:count:startingAt:!operations!public! !
 sendByte:!operations!public! !
 sendSome:count:startingAt:!operations!private! !
+write:count:!operations!public! !
+write:count:startingAt:!operations!public! !
 writeStream!accessing!public! !
 !
+
+Net.Socket methodProtocol: #writeableMedium attributes: #(#readOnly) selectors: #(#close #isOpen #position #position: #write:count:)!
 
 !Net.Socket class methodsFor!
 
