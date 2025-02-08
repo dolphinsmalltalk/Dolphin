@@ -4,7 +4,7 @@ UI.Tests.PresenterTest
 	subclass: #'UI.Tests.ToolbarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -16,6 +16,31 @@ UI.Tests.ToolbarTest comment: ''!
 
 classToTest
 	^Toolbar!
+
+testLabelAutoSizing
+	"#1320 - ToolbarSeparators should not be given the BTNS_AUTOSIZE style in a a labelled Toolbar"
+
+	presenter 
+		addItem: 
+			(ToolbarBitmapButton new 
+				text: 'One';
+				yourself);
+		addSeparator;
+		addItem: 
+			(ToolbarIconButton new 
+				text: 'Two';
+				yourself);
+		addItem: 
+			(ToolbarTextButton new 
+				text: 'Two';
+				yourself);
+		hasLabels: true;
+		hasListAppearance: true.
+
+	self assert: ((presenter tbGetButton: 0) fsStyle anyMask: BTNS_AUTOSIZE) description: 'ToolbarBitmapButton in Toolbar with labels should be autosized'.
+	self deny: ((presenter tbGetButton: 1) fsStyle anyMask: BTNS_AUTOSIZE) description: 'ToolbarSeparator in Toolbar with labels should not be autosized'.
+	self assert: ((presenter tbGetButton: 2) fsStyle anyMask: BTNS_AUTOSIZE) description: 'ToolbarIconButton in Toolbar with labels should be autosized'.
+	self assert: ((presenter tbGetButton: 3) fsStyle anyMask: BTNS_AUTOSIZE) description: 'ToolbarTextButton in Toolbar with labels should be autosized'.!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view hasBitmapButtons |
@@ -41,11 +66,12 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: (view forecolor == Color default or: [view forecolor isNil]).
 	self assert: view isTransparent.
 	self deny: view hasLabels.
-	self assert: (view baseStyleAllMask: OS.CommCtrlConstants.CCS_NOPARENTALIGN).
+	self assert: (view baseStyleAllMask: CommCtrlConstants.CCS_NOPARENTALIGN).
 	self assertIsNil: view textcolor! !
 
 !UI.Tests.ToolbarTest categoriesForMethods!
 classToTest!helpers!private! !
+testLabelAutoSizing!public! !
 verifyUpgradedView:identifier:!helpers!private! !
 !
 

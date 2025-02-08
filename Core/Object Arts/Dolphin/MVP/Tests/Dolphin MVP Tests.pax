@@ -906,7 +906,7 @@ UI.Tests.PresenterTest
 	subclass: #'UI.Tests.ToolbarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
