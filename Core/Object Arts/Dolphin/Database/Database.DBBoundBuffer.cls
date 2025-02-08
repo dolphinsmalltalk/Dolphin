@@ -20,19 +20,19 @@ This is the normal type of buffer used by the Database Connection as it is more 
 
 !Database.DBBoundBuffer methodsFor!
 
-bind: aDBStatement
+bindColumnsOf: aDBStatement
 	"Private - Bind the receiver's field buffers to columns in the result table."
 
 	| hStmt |
-	hStmt := super bind: aDBStatement.
-	self contents do: [:eachField | eachField bind: aDBStatement].
+	hStmt := super bindColumnsOf: aDBStatement.
+	self contents do: [:eachField | eachField bindColumnOf: aDBStatement].
 	^hStmt!
 
 newFieldForColumn: aDBColAttr
 	^aDBColAttr newBoundField! !
 
 !Database.DBBoundBuffer categoriesForMethods!
-bind:!operations!private! !
+bindColumnsOf:!operations!private! !
 newFieldForColumn:!helpers!private! !
 !
 

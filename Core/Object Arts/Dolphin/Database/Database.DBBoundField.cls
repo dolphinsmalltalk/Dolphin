@@ -16,10 +16,10 @@ Database.DBBoundField comment: '`DBBoundField` is the class of `DBField`s that p
 
 !Database.DBBoundField methodsFor!
 
-bind: aDBStatement
+bindColumnOf: aDBStatement
 	"Private - Bind the receiver's buffers (data and length) for the <DBStatement> argument, which is assumed to have been executed already."
 
-	^aDBStatement dbCheckException: (OS.ODBCLibrary default
+	^aDBStatement dbCheckException: (OS.Odbc32
 				sqlBindCol: aDBStatement handle
 				columnNumber: column columnNumber
 				targetType: buffer dbInterchangeType
@@ -36,7 +36,7 @@ getData: aDBStatement
 	! !
 
 !Database.DBBoundField categoriesForMethods!
-bind:!operations!private! !
+bindColumnOf:!operations!private! !
 getData:!accessing!private! !
 !
 

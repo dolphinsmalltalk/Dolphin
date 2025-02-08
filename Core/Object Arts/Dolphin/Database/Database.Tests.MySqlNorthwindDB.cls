@@ -69,7 +69,7 @@ options
 prereqsAvailable
 	"The MySQL80 service needs to be installed with ODBC driver, and running. Note that it must also be explicitly configured to utf8mb4 character set, or tests that attempt to insert non-BMP characters will error."
 
-	^super prereqsAvailable and: [OS.AdvApiLibrary default isServiceRunning: 'MySQL80']!
+	^super prereqsAvailable and: [OS.AdvApi32 isServiceRunning: 'MySQL80']!
 
 uid
 	^'root'!

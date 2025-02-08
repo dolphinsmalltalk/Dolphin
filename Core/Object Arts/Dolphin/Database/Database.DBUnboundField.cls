@@ -19,7 +19,7 @@ Database.DBUnboundField comment: '`DBBoundField` is the class of `DBField`s that
 getData: aDBStatement
 	"Private - Retrieve the receiver's associated column data from the ODBC result set immediately following a fetch (into the receiver's buffer)."
 
-	aDBStatement dbCheckException: (OS.ODBCLibrary default
+	aDBStatement dbCheckException: (OS.Odbc32
 				sqlGetData: aDBStatement executedHandle
 				columnNumber: column columnNumber
 				targetType: buffer dbInterchangeType
@@ -33,7 +33,7 @@ putData: aDBStatement
 
 	| data |
 	data := buffer bytes.
-	aDBStatement dbCheckException: (OS.ODBCLibrary default
+	aDBStatement dbCheckException: (OS.Odbc32
 				sqlPutData: aDBStatement allocatedHandle
 				dataPtr: data
 				strLenOrInd: data dbOctetTransferSize)

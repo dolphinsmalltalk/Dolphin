@@ -97,19 +97,17 @@ atIndex: anInteger
 
 	^self at: anInteger ifAbsent: nil!
 
-bind
-	"Private - Create and 'bind' (an unbound buffer will not
-	actually do any SQLBindCols, though a bound buffer will)
-	a buffer to hold the all the columns in the result set"
+bindColumns
+	"Private - Create and 'bind' (an unbound buffer will not	actually do any SQLBindCols, though a bound buffer will) a buffer to hold the all the columns in the result set"
 
-	self bind: #()!
+	self bindColumns: #()!
 
-bind: anArrayOfColNums
+bindColumns: anArrayOfColNums
 	"Private - Create and bind a buffer to hold the
 	specified columns (or #() for all columns)
 	as they are fetched from the result set"
 
-	(self allocBuffer: (self describeColumns: anArrayOfColNums)) bind: statement!
+	(self allocBuffer: (self describeColumns: anArrayOfColNums)) bindColumnsOf: statement!
 
 buffer
 	^buffer!
@@ -236,7 +234,7 @@ fetchScroll: orientationInteger offset: offsetInteger
 	DBError exception if an error occurs"
 
 	| ret |
-	buffer ifNil: [self bind].
+	buffer ifNil: [self bindColumns].
 	ret := OS.Odbc32
 				sqlFetchScroll: self statementHandle
 				fetchOrientation: orientationInteger
@@ -458,7 +456,7 @@ rawDo: aZeroArgBlock
 realize
 	"Private - Recreate the result set."
 
-	self bind
+	self bindColumns
 !
 
 resize: anInteger
@@ -568,8 +566,8 @@ at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
 atIndex:!accessing!public! !
-bind!binding!private! !
-bind:!binding!private! !
+bindColumns!binding!private! !
+bindColumns:!binding!private! !
 buffer!accessing!private! !
 buffer:!accessing!private! !
 bufferClass!constants!private! !
