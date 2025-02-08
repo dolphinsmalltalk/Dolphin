@@ -18,6 +18,9 @@ setUp
 	super setUp.
 	savedLocale := Locale userDefault!
 
+shouldRaiseInvalidFormat: aNiladicValuable
+	self should: aNiladicValuable raise: InvalidFormat matching: [:ex | ex tag == Duration]!
+
 tearDown
 	savedLocale
 		ifNotNil: 
@@ -221,7 +224,7 @@ testISO8601ParsingExtraInput
 	{ 'PDT1S2'. 1 seconds. 'P4D '. 4 days. 'P0.75DS'. 0.75 days } pairsDo: 
 			[:string :expected |
 			| stream actual |
-			self should: [Duration fromString: string] raise: InvalidFormat.
+			self shouldRaiseInvalidFormat: [Duration fromString: string].
 			stream := string readStream.
 			actual := Duration readFrom: stream.
 			self assert: actual equals: expected.
@@ -240,8 +243,7 @@ testISO8601ParsingFractions
 	self assert: (Duration fromString: 'PT1,0S') equals: 1 seconds.
 	self assert: (Duration fromString: '-P0,5D') equals: -12 hours.
 	self assert: (Duration fromString: 'PT0.5H') equals: 30 minutes.
-	self assert: 1 nanoseconds asUtf16String
-		equals: 'PT0<s>000000001S' << Locale userDefault decimalSeparator.
+	self assert: (Duration fromString: 'PT0.000000001S') equals: 1 nanoseconds.
 	self assert: (Duration fromString: 'PT1M0.0S') equals: 1 minutes.
 	self assert: (Duration fromString: 'PT1H0,0M') equals: 1 hours!
 
@@ -249,35 +251,34 @@ testISO8601ParsingIncomplete
 	"Invalid IS08601 - Incomplete"
 
 	#('P' 'PT' 'P1' 'T' '1S' 'P2DT' 'P1D2')
-		do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+		do: [:each | self shouldRaiseInvalidFormat: [Duration fromString: each]]!
 
 testISO8601ParsingInvalidQualifiers
 	"Invalid IS08601 - Invalid components"
 
-	#('P4Q' 'PT4D' 'P4T')
-		do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+	#('P4Q' 'PT4D' 'P4T') do: [:each | self shouldRaiseInvalidFormat: [Duration fromString: each]]!
 
 testISO8601ParsingMisplacedFractions
 	"Invalid IS08601 - Only the last component can have fractional amount"
 
 	#('P0.5DT1S' 'PT0.5H1S' 'PT0.0H0.1S')
-		do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+		do: [:each | self shouldRaiseInvalidFormat: [Duration fromString: each]]!
 
 testISO8601ParsingNegativeElements
 	"Invalid IS08601 - The elements must be positive"
 
-	#('P-1D' '-PT-1S') do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+	#('P-1D' '-PT-1S') do: [:each | self shouldRaiseInvalidFormat: [Duration fromString: each]]!
 
 testISO8601ParsingRepeatedElements
 	"Invalid IS08601 - Repeated components"
 
-	#('PT3M4M' 'PT3H2M5H') do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+	#('PT3M4M' 'PT3H2M5H') do: [:each | self shouldRaiseInvalidFormat: [Duration fromString: each]]!
 
 testISO8601ParsingUnsupported
 	"Valid ISO8601, but not supported by Duration"
 
 	#('P3Y' 'P2W' 'P4M' 'P3Y6M4DT12H30M5S' 'P0,5Y' 'P0003-06-04T12:30:05')
-		do: [:each | self should: [Duration fromString: each] raise: InvalidFormat]!
+		do: [:each | self shouldRaiseInvalidFormat: [Duration fromString: each]]!
 
 testISO8601ParsingZeroes
 	"Zeroes"
@@ -510,6 +511,7 @@ testSubtract
 
 !Core.Tests.DurationTest categoriesForMethods!
 setUp!public!running! !
+shouldRaiseInvalidFormat:!helpers!private! !
 tearDown!public!running! !
 testAbs!public!unit tests! !
 testAdd!public!unit tests! !

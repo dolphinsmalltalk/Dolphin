@@ -320,7 +320,7 @@ printISO8601On: aPuttableStream
 				ifFalse: 
 					[| digits count |
 					"Any fractional part is truncated to 9 decimal places."
-					digits := (fractionPart * 1000000000) truncated printStringBase: 10 nDigits: 9.
+					digits := (fractionPart * 1e9) truncated printStringBase: 10 nDigits: 9.
 					count := digits size.
 					[count > 1 and: [(digits at: count) = $0]] whileTrue: [count := count - 1].
 					"The decimal separator can be $., or $, depending on the stream locale."
@@ -329,7 +329,6 @@ printISO8601On: aPuttableStream
 						next: count
 							putAll: digits
 							startingAt: 1].
-			aPuttableStream locale.
 			aPuttableStream nextPut: $S]!
 
 printOn: aStream
@@ -551,7 +550,6 @@ readFrom: aStream
 readFrom: aStream sign: sign withDays: aBoolean ifInvalid: aNiladicValuable
 	| ch mm hh ss days |
 	ch := aStream peek.
-	ch = $P ifTrue: [].
 	ch isDigit ifFalse: [^aNiladicValuable value].
 	aBoolean
 		ifTrue: 
@@ -656,7 +654,7 @@ readUnsignedIntegerFrom: aStream
 			((digit := char digitValue) < 10 and: [digit >= 0])
 				ifTrue: [value := value * 10 + digit]
 				ifFalse: 
-					[aStream pop.
+					[aStream skip: -1.
 					^value]].
 	^value!
 
