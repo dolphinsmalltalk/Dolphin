@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Database.DBColAttr'
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special bufferClass'
-	classVariableNames: 'BufferClasses'
+	classVariableNames: ''
 	imports: #(#{Database.DBColFlags} #{OS.ODBCTypes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -37,6 +37,49 @@ bufferClass
 bufferClass: aClass
 	bufferClass := aClass.
 	length := bufferClass dbTransferOctetLengthForColumn: self!
+
+bufferClasses
+	^##((IdentityDictionary withAll: {SQL_CHAR -> DBCharBuffer.
+						SQL_VARCHAR -> DBVarCharBuffer.
+						SQL_LONGVARCHAR -> DBVarCharBuffer.
+						SQL_WCHAR -> DBWCharBuffer.
+						SQL_WVARCHAR -> DBVarWCharBuffer.
+						SQL_WLONGVARCHAR -> DBVarWCharBuffer.
+						SQL_BINARY -> DBBinaryBuffer.
+						SQL_VARBINARY -> DBVarBinaryBuffer.
+						SQL_LONGVARBINARY -> DBVarBinaryBuffer.
+						SQL_BIT -> External.BOOLEAN.
+						SQL_TINYINT -> External.UInt8.
+						SQL_SMALLINT -> External.Int16.
+						SQL_INTEGER -> External.Int32.
+						SQL_BIGINT -> External.Int64.
+						SQL_NUMERIC -> DBNumericFieldBuffer.
+						SQL_DECIMAL -> DBNumericFieldBuffer.
+						SQL_FLOAT -> External.DOUBLE.
+						SQL_REAL -> External.FLOAT.
+						SQL_DOUBLE -> External.DOUBLE.
+						SQL_TYPE_DATE -> OS.SQL_DATE_STRUCT.
+						SQL_INTERVAL -> OS.SQL_TIME_STRUCT.
+						SQL_TYPE_TIME -> OS.SQL_TIME_STRUCT.
+						SQL_TIMESTAMP -> OS.SQL_TIMESTAMP_STRUCT.
+						SQL_TYPE_TIMESTAMP -> OS.SQL_TIMESTAMP_STRUCT.
+						SQL_GUID -> GUID.
+						SQL_TYPE_NULL -> nil.
+						SQL_INTERVAL_DAY -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_DAY_TO_HOUR -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_DAY_TO_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_DAY_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_HOUR -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_HOUR_TO_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_HOUR_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_MINUTE_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
+						SQL_INTERVAL_MONTH -> OS.SQL_YEAR_MONTH_STRUCT.
+						SQL_INTERVAL_YEAR -> OS.SQL_YEAR_MONTH_STRUCT.
+						SQL_INTERVAL_YEAR_TO_MONTH -> OS.SQL_YEAR_MONTH_STRUCT.
+						SQL_SS_TIMESTAMPOFFSET -> OS.SQL_SS_TIMESTAMPOFFSET_STRUCT.
+						SQL_SS_TIME2 -> OS.DBTIME2}))!
 
 columnNumber
 	"Answer the instance variable columnNumber"
@@ -190,7 +233,7 @@ type: anInteger
 	"Private - Set the sqlType instance variable to anInteger."
 
 	sqlType := anInteger.
-	self bufferClass: (BufferClasses at: anInteger
+	self bufferClass: (self bufferClasses at: anInteger
 				ifAbsent: [self error: 'Unmarshallable column: ' , self printString])!
 
 updateRuleMask
@@ -209,6 +252,7 @@ updateRuleMask: anInteger
 !Database.DBColAttr categoriesForMethods!
 bufferClass!accessing!public! !
 bufferClass:!initializing!private! !
+bufferClasses!accessing!public! !
 columnNumber!accessing!public! !
 columnNumber:!accessing!private! !
 deleteRuleMask!accessing!public! !
@@ -241,60 +285,12 @@ updateRuleMask:!accessing!private! !
 
 !Database.DBColAttr class methodsFor!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	BufferClasses := (IdentityDictionary withAll: {SQL_CHAR -> DBCharBuffer.
-						SQL_VARCHAR -> DBVarCharBuffer.
-						SQL_LONGVARCHAR -> DBVarCharBuffer.
-						SQL_WCHAR -> DBWCharBuffer.
-						SQL_WVARCHAR -> DBVarWCharBuffer.
-						SQL_WLONGVARCHAR -> DBVarWCharBuffer.
-						SQL_BINARY -> DBBinaryBuffer.
-						SQL_VARBINARY -> DBVarBinaryBuffer.
-						SQL_LONGVARBINARY -> DBVarBinaryBuffer.
-						SQL_BIT -> External.BOOLEAN.
-						SQL_TINYINT -> External.UInt8.
-						SQL_SMALLINT -> External.Int16.
-						SQL_INTEGER -> External.Int32.
-						SQL_BIGINT -> External.Int64.
-						SQL_NUMERIC -> DBNumericFieldBuffer.
-						SQL_DECIMAL -> DBNumericFieldBuffer.
-						SQL_FLOAT -> External.DOUBLE.
-						SQL_REAL -> External.FLOAT.
-						SQL_DOUBLE -> External.DOUBLE.
-						SQL_TYPE_DATE -> OS.SQL_DATE_STRUCT.
-						SQL_INTERVAL -> OS.SQL_TIME_STRUCT.
-						SQL_TYPE_TIME -> OS.SQL_TIME_STRUCT.
-						SQL_TIMESTAMP -> OS.SQL_TIMESTAMP_STRUCT.
-						SQL_TYPE_TIMESTAMP -> OS.SQL_TIMESTAMP_STRUCT.
-						SQL_GUID -> GUID.
-						SQL_TYPE_NULL -> nil.
-						SQL_INTERVAL_DAY -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_DAY_TO_HOUR -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_DAY_TO_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_DAY_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_HOUR -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_HOUR_TO_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_HOUR_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_MINUTE -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_MINUTE_TO_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_SECOND -> OS.SQL_DAY_SECOND_STRUCT.
-						SQL_INTERVAL_MONTH -> OS.SQL_YEAR_MONTH_STRUCT.
-						SQL_INTERVAL_YEAR -> OS.SQL_YEAR_MONTH_STRUCT.
-						SQL_INTERVAL_YEAR_TO_MONTH -> OS.SQL_YEAR_MONTH_STRUCT.
-						SQL_SS_TIMESTAMPOFFSET -> OS.SQL_SS_TIMESTAMPOFFSET_STRUCT.
-						SQL_SS_TIME2 -> OS.DBTIME2})!
-
 new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
 
 !Database.DBColAttr class categoriesForMethods!
-initialize!initializing!must not strip!private! !
 new!instance creation!public! !
 !
 

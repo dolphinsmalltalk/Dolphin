@@ -37,7 +37,7 @@ getOdbcDriver
 	^'MIMER'!
 
 prereqsAvailable
-	^super prereqsAvailable and: [OS.AdvApiLibrary default isServiceRunning: 'MIMER-Mimer']!
+	^super prereqsAvailable and: [OS.AdvApi32 isServiceRunning: 'MIMER-Mimer']!
 
 uid
 	^'SYSADM'! !

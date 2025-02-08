@@ -40,7 +40,7 @@ getOdbcDriver
 prereqsAvailable
 	"Private - Answer whether the pre-reqs for the database resource, e.g. the ODBC driver, are available."
 
-	^OS.AdvApiLibrary default isServiceRunning: 'OracleServiceFREE'!
+	^OS.AdvApi32 isServiceRunning: 'OracleServiceFREE'!
 
 uid
 	^'system'! !

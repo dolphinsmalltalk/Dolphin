@@ -35,17 +35,17 @@ beNull
 
 	self length: OS.ODBCConstants.SQL_NULL_DATA!
 
-bind: aDBStatement
+bindAsParameter: anInteger of: aDBParameterizedStatement
+	"Private - Bind the receiver as the supplier of data for the parameter numbered, anInteger, of aDBParameterizedStatement."
+
+	self subclassResponsibility!
+
+bindColumnOf: aDBStatement
 	"Private - Bind the receiver's buffers (data and length) for the <DBStatement> argument, which is assumed to have been executed already."
 
 	"Unbound by default, so do nothing"
 
 	!
-
-bindAsParameter: anInteger of: aDBParameterizedStatement
-	"Private - Bind the receiver as the supplier of data for the parameter numbered, anInteger, of aDBParameterizedStatement."
-
-	self subclassResponsibility!
 
 bufferClass
 	^column bufferClass!
@@ -134,8 +134,8 @@ value: anObject
 =!comparing!public! !
 allocateBuffer!accessing!private! !
 beNull!accessing!public! !
-bind:!operations!private! !
 bindAsParameter:of:!operations!private! !
+bindColumnOf:!operations!private! !
 bufferClass!accessing!public! !
 column!accessing!private! !
 dbInterchangeType!constants!public! !

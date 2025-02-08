@@ -19,7 +19,7 @@ Database.DBFixedSizeField comment: ''!
 bindAsParameter: anInteger of: aDBParameterizedStatement
 	"Private - Bind the receiver as the supplier of data for the parameter numbered, anInteger, of aDBParameterizedStatement. For fixed-sized fields, the buffer is bound directly so that data transfer occurs on exec without the need for SQLPutData calls."
 
-	aDBParameterizedStatement dbCheckException: (OS.ODBCLibrary default
+	aDBParameterizedStatement dbCheckException: (OS.Odbc32
 				sqlBindParameter: aDBParameterizedStatement allocatedHandle
 				parameterNumber: anInteger
 				inputOutputType: column parameterType

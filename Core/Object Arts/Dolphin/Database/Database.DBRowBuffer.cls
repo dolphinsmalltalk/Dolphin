@@ -21,12 +21,12 @@ asObject
 
 	^DBRow fromBuffer: self!
 
-bind: aDBStatement 
+bindColumnsOf: aDBStatement
 	"Private - Bind the receiver's field buffers to columns in the result table."
 
 	| hStmt |
 	hStmt := aDBStatement executedHandle.
-	#todo "Will need an array of status values if to fetch a block of rows at a time".
+	#todo.	"Will need an array of status values if to fetch a block of rows at a time"
 	status := ByteArray newFixed: 2.
 	aDBStatement statusArray: status.
 	^hStmt!
@@ -58,7 +58,7 @@ status
 
 !Database.DBRowBuffer categoriesForMethods!
 asObject!converting!private! !
-bind:!operations!private! !
+bindColumnsOf:!operations!private! !
 contents!accessing!public! !
 getContents!helpers!private! !
 getData:!data retrieval!private! !
