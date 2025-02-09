@@ -457,7 +457,7 @@ UI.ToolbarItem
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'LabelledButtonStyles' -> 16r50 }!
 
 UI.ToolbarItem
 	subclass: #'UI.ToolbarSeparator'

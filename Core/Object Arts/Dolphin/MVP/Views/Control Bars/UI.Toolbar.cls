@@ -114,10 +114,16 @@ addSeparator
 	^self addItem: ToolbarSeparator new!
 
 addString: aString
-	"Private - Add aString to the list of strings registered for the receiver.
-	Answers the index of the string within the registry."
+	"Private - Add aString to the list of strings registered for the receiver. Answers the index of the string within the registry."
 
-	^self tbAddString: aString!
+	| utf16 index |
+	utf16 := aString asUtf16String copyWith: $\0.	"Extra null delimits a potential list of strings, although we only ever add one at a time"
+	^(index := self
+				sendMessage: TB_ADDSTRINGW
+				wParam: 0
+				lpParam: utf16) == -1
+		ifTrue: [self errorInCommonControlCall]
+		ifFalse: [index]!
 
 addSystemBitmap: systemBitmapId index: anIntegerIndex
 	"Private - Add the system defined sub-bitmap identified by anIntegerIndex within the bitmap identified by systemBitmapId"
@@ -156,36 +162,20 @@ basicAddItems: tools
 	positioning them beyond the present right most item. The tools are NOT added to the tools 
 	collection but they are added to the Id map. Answers the argument."
 
-	| buttons |
+	| buttons hasLabels |
 	tools isEmpty ifTrue: [^tools	"It is an error to set zero buttons on IE5/NT5"].
+	hasLabels := self hasLabels.
 	buttons := StructureArray
 				withAll: tools
 				elementClass: TBBUTTON
-				initializer: (self hasLabels
-						ifTrue: 
-							[
-							[:tbButton :toolbarItem |
-							| cmd |
-							cmd := toolbarItem getCommandId.
-							cmd == 0 ifFalse: [idMap at: cmd put: toolbarItem].
-							tbButton
-								iBitmap: (toolbarItem imageIndexIn: self);
-								idCommand: cmd;
-								fsState: TB_STATEENABLED;
-								fsStyle: (toolbarItem style bitOr: toolbarItem withLabelsMask);
-								iString: (toolbarItem textIndexIn: self)]]
-						ifFalse: 
-							[
-							[:tbButton :toolbarItem |
-							| cmd |
-							cmd := toolbarItem getCommandId.
-							cmd == 0 ifFalse: [idMap at: cmd put: toolbarItem].
-							tbButton
-								iBitmap: (toolbarItem imageIndexIn: self);
-								idCommand: cmd;
-								fsState: TB_STATEENABLED;
-								fsStyle: toolbarItem style;
-								iString: (toolbarItem isTextOnly ifTrue: [toolbarItem textIndexIn: self] ifFalse: [-1])]]).
+				initializer: 
+					[:tbButton :toolbarItem |
+					| cmd |
+					cmd := toolbarItem
+								populateTbButton: tbButton
+								for: self
+								withLabels: hasLabels.
+					cmd == 0 ifFalse: [idMap at: cmd put: toolbarItem]].
 	buttons beUnfinalizable.	"Nothing to free here"
 	self
 		sendMessageNz: TB_ADDBUTTONSW
@@ -835,18 +825,6 @@ tbAddBitmap: aBitmap
 				uintPtrAtOffset: TBADDBITMAP._OffsetOf_nID put: gdiBitmap asParameter;
 				yourself)!
 
-tbAddString: aString
-	"Private - Add aString to the receiver. Answer the index of the new string."
-
-	| buffer index |
-
-	buffer := aString asUtf16String copyWith: $\0.	"Last string must have extra null"
-	^(index := self sendMessage: TB_ADDSTRINGW wParam: 0 lpParam: buffer) == -1
-		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [index]
-
-!
-
 tbAutoSize
 	"Private - Cause the receiver to be resized."
 
@@ -1377,7 +1355,6 @@ setButtonSize!operations!private! !
 setFluentIconMetrics!geometry!private! !
 size!geometry!public! !
 tbAddBitmap:!helpers!private! !
-tbAddString:!adding!private! !
 tbAutoSize!operations!private! !
 tbCheckButton:state:!operations!private! !
 tbCustomize!operations!private! !

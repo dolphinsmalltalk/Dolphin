@@ -30,24 +30,28 @@ imageIndexIn: aToolbar
 isTextOnly
 	^true!
 
+populateTbButton: aTBBUTTON for: aToolbar withLabels: aBoolean
+	"Private - For text buttons, style must always include BTNS_SHOWTEXT and BTNS_AUTOSIZE, which are set by the initializer"
+
+	^aTBBUTTON
+		idCommand: self getCommandId
+		iBitmap: CommCtrlConstants.I_IMAGENONE
+		iString: (aToolbar addString: buttonText)
+		fsStyle: style!
+
 setCommandDescription: aCommandDescription buttonText: aString
-	style := ##(BTNS_SHOWTEXT | BTNS_AUTOSIZE).
+	style := LabelledButtonStyles.
 	commandDescription := aCommandDescription.
 	buttonText := aString.
-	^self!
-
-textIndexIn: aToolbar
-	"Private - Answer the text for the receiver to aToolbar and answer the index of this text"
-
-	^aToolbar addString: self buttonText! !
+	^self! !
 
 !UI.ToolbarTextButton categoriesForMethods!
 buttonText!accessing!public! !
 buttonText:!accessing!public! !
 imageIndexIn:!operations!private! !
 isTextOnly!public! !
+populateTbButton:for:withLabels:!adding!private! !
 setCommandDescription:buttonText:!private! !
-textIndexIn:!operations!private! !
 !
 
 !UI.ToolbarTextButton class methodsFor!
