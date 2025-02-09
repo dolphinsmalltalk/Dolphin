@@ -164,7 +164,7 @@ queryChangesCommand: aCommandQuery
 	changes isEmpty ifTrue: [^self].
 	aCommandQuery
 		beEnabled;
-		text: aCommandQuery description << changes size = 1!
+		text: aCommandQuery description << (changes size = 1)!
 
 refresh
 	self createChangesTree.
