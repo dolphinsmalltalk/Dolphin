@@ -58,7 +58,7 @@ imageIndexIn: aToolbar
 	"Private - Add the bitmap for the receiver to aToolbar.
 	Answer the index of the bitmap within aToolbar's registered bitmaps"
 
-	^aToolbar addBitmap: self bitmap index: self bitmapIndex
+	^aToolbar addBitmap: bitmap index: bitmapIndex
 !
 
 isScalable

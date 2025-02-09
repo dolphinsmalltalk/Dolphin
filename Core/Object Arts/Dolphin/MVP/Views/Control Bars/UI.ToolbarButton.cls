@@ -6,7 +6,7 @@ UI.ToolbarItem
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'LabelledButtonStyles' -> 16r50 }!
 
 UI.ToolbarButton guid: (Core.GUID fromString: '{5a6ae0df-57b0-4ba0-be4a-c1cd1ccc6def}')!
 
@@ -70,12 +70,17 @@ font: aFont
 getCommandId
 	"Private - Determine and answer the Integer command identifier for the receiver"
 
-	commandId := self commandDescription id.
-	^commandId!
+	^commandId := commandDescription id!
 
 hide: aBoolean
 	#deprecated.
 	self isHidden: aBoolean!
+
+imageIndexIn: aToolbar
+	"Private - Add the bitmap for the receiver to aToolbar.
+	Answer the index of the bitmap within aToolbar's registered bitmaps"
+
+	^self subclassResponsibility!
 
 indeterminate: aBoolean
 	#deprecated.
@@ -179,6 +184,21 @@ onTipTextRequired
 		ifTrue: [query receiver onTipTextRequired: self query: query]
 		ifFalse: [self toolTipText]!
 
+populateTbButton: aTBBUTTON for: aToolbar withLabels: aBoolean
+	^aBoolean
+		ifTrue: 
+			[aTBBUTTON
+				idCommand: self getCommandId
+				iBitmap: (self imageIndexIn: aToolbar)
+				iString: (aToolbar addString: self text)
+				fsStyle: (style bitOr: LabelledButtonStyles)]
+		ifFalse: 
+			[aTBBUTTON
+				idCommand: self getCommandId
+				iBitmap: (self imageIndexIn: aToolbar)
+				iString: -1
+				fsStyle: style]!
+
 pressed
 	#deprecated.
 	^self isPressed!
@@ -245,12 +265,6 @@ textcolor
 textcolor: aColor
 	textcolor := aColor!
 
-textIndexIn: aToolbar
-	"Private - Answer the text for the receiver to aToolbar and answer the
-	index of this text"
-
-	^aToolbar addString: self text!
-
 toolTipText
 	"Answer a String suitable for displaying in a Tool tip control."
 
@@ -264,12 +278,7 @@ validateUserInterface: route
 	"Set the state all at once to improve performance"
 	mask := query isEnabled ifTrue: [TBSTATE_ENABLED] ifFalse: [0].
 	query isChecked ifTrue: [mask := mask bitOr: ##(TBSTATE_CHECKED|TBSTATE_PRESSED)].
-	self stateMask: mask!
-
-withLabelsMask
-	"Private - Answer the mask to apply to the receiver's style when shown in a Toolbar which hasLabels"
-
-	^##(BTNS_AUTOSIZE | BTNS_SHOWTEXT)! !
+	self stateMask: mask! !
 
 !UI.ToolbarButton categoriesForMethods!
 checked!public!testing! !
@@ -285,6 +294,7 @@ font!accessing!public! !
 font:!accessing!public! !
 getCommandId!commands!private! !
 hide:!public!state! !
+imageIndexIn:!operations!private! !
 indeterminate:!public!state! !
 initialize!initializing!private! !
 isChecked!public!testing! !
@@ -306,6 +316,7 @@ isIndeterminate:!public!state! !
 isPressed!public!testing! !
 isPressed:!public!state! !
 onTipTextRequired!event handling!public! !
+populateTbButton:for:withLabels:!adding!private! !
 pressed!public!testing! !
 pressed:!public!state! !
 printOn:!development!printing!public! !
@@ -319,10 +330,8 @@ text!accessing!public! !
 text:!accessing!public! !
 textcolor!accessing!public! !
 textcolor:!accessing!public! !
-textIndexIn:!operations!private! !
 toolTipText!operations!public! !
 validateUserInterface:!operations!public! !
-withLabelsMask!accessing!private! !
 !
 
 !UI.ToolbarButton class methodsFor!
@@ -455,6 +464,9 @@ historyForward
 
 icon
 	^PushButton icon!
+
+initialize
+	self addClassConstant: 'LabelledButtonStyles' value: BTNS_AUTOSIZE | BTNS_SHOWTEXT!
 
 largeIconMode
 	"Answer a sub-instance of the receiver for the #largeIcons command"
@@ -695,6 +707,7 @@ histImage:command:description:!instance creation-system buttons!private! !
 historyBack!instance creation-system buttons!public! !
 historyForward!instance creation-system buttons!public! !
 icon!public! !
+initialize!class initialization!public! !
 largeIconMode!instance creation-system buttons!public! !
 listMode!instance creation-system buttons!public! !
 listToolsBitmap!constants!public! !

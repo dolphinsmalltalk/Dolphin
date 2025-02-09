@@ -74,6 +74,15 @@ idCommand: anInteger
 
 	bytes int32AtOffset: _OffsetOf_idCommand put: anInteger!
 
+idCommand: cmdInteger iBitmap: imageIndexInteger iString: textIndexInteger fsStyle: styleInteger
+	bytes
+		int32AtOffset: _OffsetOf_iBitmap put: imageIndexInteger;
+		int32AtOffset: _OffsetOf_idCommand put: cmdInteger;
+		uint8AtOffset: _OffsetOf_fsState put: ToolbarConstants.TB_STATEENABLED;
+		uint8AtOffset: _OffsetOf_fsStyle put: styleInteger;
+		intPtrAtOffset: _OffsetOf_iString put: textIndexInteger.
+	^cmdInteger!
+
 iString
 	"Answer the <Integer> value of the receiver's 'iString' field."
 
@@ -95,6 +104,7 @@ iBitmap!**compiled accessors**!public! !
 iBitmap:!**compiled accessors**!public! !
 idCommand!**compiled accessors**!public! !
 idCommand:!**compiled accessors**!public! !
+idCommand:iBitmap:iString:fsStyle:!initializing!public! !
 iString!**compiled accessors**!public! !
 iString:!**compiled accessors**!public! !
 !

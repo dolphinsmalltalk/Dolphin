@@ -23,17 +23,17 @@ UI.ToolbarSeparator comment: '`ToolbarSeparator` represents a separator item wit
 
 !UI.ToolbarSeparator methodsFor!
 
-imageIndexIn: aToolbar
-	"Private - Answer the index of the image for the receiver. Note that in the case
-	of separator toolbar items the image index is used for the separator's
-	width."
-
-	^self width!
-
 isDivider
 	"Answer whether the receiver is a toolbar separator (similar in function to a menu divider item)."
 
 	^true!
+
+populateTbButton: aTBBUTTON for: aToolbar withLabels: aBoolean
+	^aTBBUTTON
+		idCommand: 0
+		iBitmap: width
+		iString: -1
+		fsStyle: BTNS_SEP!
 
 setWidth: anInteger
 	width := anInteger.
@@ -44,12 +44,6 @@ style
 
 	^BTNS_SEP!
 
-textIndexIn: aToolbar
-	"Private - Answer the index of the String label for the receiver in aToolbar.
-	Answer -1 as separators do not have a text label."
-
-	^ -1!
-
 width
 	"Answer the width of the receiver in pixels. 0 indicates the default width."
 
@@ -58,22 +52,15 @@ width
 width: pixelWidth
 	"Set the width of the receiever to pixelWidth. 0 indicates default width."
 
-	width := pixelWidth!
-
-withLabelsMask
-	"Private - Answer the mask to apply to the receiver's style when shown in a Toolbar which hasLabels"
-
-	^0! !
+	width := pixelWidth! !
 
 !UI.ToolbarSeparator categoriesForMethods!
-imageIndexIn:!operations!private! !
 isDivider!public!testing! !
+populateTbButton:for:withLabels:!adding!private! !
 setWidth:!accessing!initializing!private! !
 style!private!style! !
-textIndexIn:!operations!private! !
 width!accessing!public! !
 width:!accessing!public! !
-withLabelsMask!accessing!private! !
 !
 
 !UI.ToolbarSeparator class methodsFor!

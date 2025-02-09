@@ -34,12 +34,6 @@ getCommandId
 
 	^0!
 
-imageIndexIn: aWindow
-	"Private - Answer the index of the bitmap from aWindows registered bitmaps
-	which will be used for the receiver on the toolbar." 
-
-	^self subclassResponsibility!
-
 isDivider
 	"Answer whether the receiver is a toolbar separator (similar in function to a menu divider item)."
 
@@ -79,14 +73,11 @@ parent
 
 	^self toolbar view!
 
-style
-	"Private - Answer the style of the receiver."
-
+populateTbButton: aTBBUTTON for: aToolbar withLabels: aBoolean
 	^self subclassResponsibility!
 
-textIndexIn: aToolbar
-	"Private - Answer the index of the text which will be shown on the toolbar for the
-	receiver."
+style
+	"Private - Answer the style of the receiver."
 
 	^self subclassResponsibility!
 
@@ -107,17 +98,11 @@ update
 		self toolbar updateAllItems  ]!
 
 validateUserInterface: route
-	"Set the UI state of the receiver. Overridden in subclasses"!
-
-withLabelsMask
-	"Private - Answer the mask to apply to the receiver's style when shown in a Toolbar which hasLabels"
-
-	^self subclassResponsibility! !
+	"Set the UI state of the receiver. Overridden in subclasses"! !
 
 !UI.ToolbarItem categoriesForMethods!
 commandId!commands!private! !
 getCommandId!commands!private! !
-imageIndexIn:!operations!private! !
 isDivider!public!testing! !
 isDropdownStyle!public!style! !
 isScalable!public!testing! !
@@ -126,13 +111,12 @@ onClick:!event handling!public! !
 onDoubleClick:!event handling!public! !
 onRightClick:!event handling!public! !
 parent!operations!public! !
+populateTbButton:for:withLabels:!adding!private! !
 style!private!style! !
-textIndexIn:!operations!private! !
 toolbar!accessing!private! !
 toolbar:!accessing!private! !
 update!accessing!private! !
 validateUserInterface:!operations!public! !
-withLabelsMask!accessing!private! !
 !
 
 !UI.ToolbarItem class methodsFor!
