@@ -603,6 +603,9 @@ observePropertyNotifications
 
 	^self firesPropertyNotifications!
 
+onAboutToCreate
+	WM_ATLGETHOST ifNil: [self class initializeAxHost]!
+
 OnChanged: dispid
 	"Private - Implement the IPropertyNotifySink::OnChanged() method.
 	The property with <integer> id, dispid, has changed, trigger an event
@@ -958,6 +961,7 @@ isWindowless!public!testing! !
 licenseKey!accessing!public! !
 licenseKey:!accessing!public! !
 observePropertyNotifications!helpers!private! !
+onAboutToCreate!event handling!public! !
 OnChanged:!event handling!private! !
 onDestroyed!event handling!private! !
 OnRequestEdit:!event handling!private! !
@@ -1230,12 +1234,14 @@ initialize
 				shrink;
 				yourself)!
 
-onStartup
-	"The system is starting: Initialize the host window class and register the window message
-	used for communicating with it."
-
+initializeAxHost
 	AXHostLibrary default axWinInit.
 	WM_ATLGETHOST := User32 registerWindowMessage: 'WM_ATLGETHOST'!
+
+onStartup
+	"Private - In a new session we will need to reinitialize the AX host and register the message for fetching its IUnknown, but we do that lazily."
+
+	WM_ATLGETHOST := nil!
 
 progId: aString 
 	"Answer a new instance of the receiver hosting the OCX with the specified prog id (which may also be 
@@ -1284,6 +1290,7 @@ example3!examples!public! !
 getHostMsg!initializing!public! !
 icon!constants!public! !
 initialize!initializing!public! !
+initializeAxHost!initializing!private! !
 onStartup!events-session!public! !
 progId:!accessing!instance creation!public! !
 resource_Default_view!public!resources-views! !
