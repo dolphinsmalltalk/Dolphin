@@ -171,6 +171,12 @@ applyImageLists
 	self lvmSetImageList: smallImList type: LVSIL_SMALL. 
 	self lvmSetImageList: largeImList type: LVSIL_NORMAL!
 
+basicRefreshContents
+
+	self resetHotItemAndColumn.
+
+	^super basicRefreshContents!
+
 canMoveActiveEditor
 
 	^self hasActiveEditor and: [self requestDeactivateEditor]!
@@ -197,7 +203,7 @@ columnUnderPoint: aPoint
 
 	itemStruct := self fullItemFromPoint: aPoint.
 
-	^self allColumns at: (itemStruct iSubItem + 1)!
+	^self allColumns at: (itemStruct iSubItem + 1) ifAbsent: [nil]!
 
 defaultOffsetForEditor: aColumnEditor
 
@@ -220,26 +226,6 @@ disconnectFromModel
 	self hideActiveEditor.
 
 	^super disconnectFromModel!
-
-drawHorizontalGridlinesOn: aCanvas from: top to: bottom by: height
-
-	"Private - Special handling in case a line overlaps an active editor"
-
-	| ed edRect |
-
-	ed := self activeEditor.
-	ed isNil ifTrue: [^super drawHorizontalGridlinesOn: aCanvas from: top to: bottom by: height].
-	
-	edRect := ed rectangle.
-	top to: bottom by: height do:
-		[ :i |
-		(i between: edRect top and: edRect bottom)
-		ifTrue: 
-			[aCanvas 
-				lineFrom: (0@i) to: (edRect left@i);
-				lineFrom: (edRect right@i) to: (self rectangle width@i)]
-		ifFalse:
-			[aCanvas lineFrom: (0@i) to: (self rectangle width@i)]]!
 
 drawSubItem: context
 
@@ -359,14 +345,16 @@ hotItemTipText
 	"Request tip text from the hot column for the hot item"
 
 	^self hotItemAndColumn ifNotNil: 
-		[ :pt || item column prefixText infoText |
-		item := self list at: pt x.
-		column := self allColumns at: pt y.
-		prefixText := column infoTipPrefixTextFor: item on: self getDC.
-		infoText := column infoTipFromRow: item withPrefix: prefixText.
-		infoText isEmpty
-			ifTrue: [prefixText]
-			ifFalse: [infoText]]!
+		[ :pt |
+		(self list at: pt x ifAbsent: [nil]) ifNotNil: 
+			[ :item | 
+			(self allColumns at: pt y ifAbsent: [nil]) ifNotNil: 
+				[ :column || prefixText infoText |
+				prefixText := column infoTipPrefixTextFor: item on: self getDC.
+				infoText := column infoTipFromRow: item withPrefix: prefixText.
+				infoText isEmpty
+					ifTrue: [prefixText]
+					ifFalse: [infoText]]]]!
 
 imageFromRow: anObject
 
@@ -383,20 +371,32 @@ isDisplayContextSelectedOrHot: aContext
 
 isDisplayIndexSelectedOrHot: anIndex
 
-	^(self selectionsByIndex includes: anIndex) or: 
-		["Use LVM_GETHOTITEM in addition to our own hot tracking, since the system call also takes into account visibility of the hot item"
-		(self isHotIndex: anIndex) and: [anIndex = ((self sendMessage: LVM_GETHOTITEM) + 1)]]!
+	"#1330: Query the control to ensure display reflects current state of the control, not our potentially slightly-out-of-date cached state"
+
+	^(self isSelectedIndex: anIndex) or: [self isHotIndex: anIndex]!
 
 isHotIndex: anIndex
 
-	"Range check to handle list changing underneath us"
-	^self hotItemAndColumn 
-		ifNil: [false] 
-		ifNotNil: [ :point | point x = anIndex and: [anIndex <= self list size]]!
+	^((self sendMessage: LVM_GETHOTITEM) + 1) = anIndex!
 
 isMultiline
 
 	^self rowHeight > 1!
+
+isSelectedIndex: anIndex
+
+	| item |
+
+	item := LVITEMW new
+		iItem: anIndex -1;
+		iSubItem: 0;
+		mask: LVIF_STATE;
+		stateMask: LVIS_SELECTED;
+		yourself.
+
+	self lvmGetItem: item.
+	^item dwState = LVIS_SELECTED
+!
 
 itemAndColumnAt: aPoint
 
@@ -565,7 +565,9 @@ onItem: anObject addedAtIndex: anInteger
 			ifTrue: [self activeEditorModelIndex: 0]
 			ifFalse: [self activeEditorModelIndex: self activeEditorModelIndex + 1]].
 
-	self hideActiveEditor.
+	self 
+		hideActiveEditor; 
+		resetHotItemAndColumn.
 
 	^super onItem: anObject addedAtIndex: anInteger !
 
@@ -577,7 +579,9 @@ onItem: anObject removedAtIndex: anInteger
 			ifTrue: [self activeEditorModelIndex: 0]
 			ifFalse: [self activeEditorModelIndex: self activeEditorModelIndex - 1]].
 
-	self hideActiveEditor.
+	self 
+		hideActiveEditor; 
+		resetHotItemAndColumn.
 
 	^super onItem: anObject removedAtIndex: anInteger !
 
@@ -638,7 +642,11 @@ onMouseMoved: aMouseEvent
 	^super onMouseMoved: aMouseEvent!
 
 onMouseWheeled: aMouseWheelEvent
-	self hideActiveEditor.
+	
+	self 
+		hideActiveEditor; 
+		resetHotItemAndColumn.
+
 	^super onMouseWheeled: aMouseWheelEvent!
 
 onPositionChanging: aPositionEvent
@@ -726,16 +734,25 @@ preTranslateKeyboardInput: aMSG
 
 removeColumn: aColumn
 
+	self resetHotItemAndColumn.
+
 	super removeColumn: aColumn.
 
-	self autoResizeColumns
-!
+	self autoResizeColumns!
 
 requestDeactivateEditor
 
 	^(self hasActiveEditor not or: [self activeEditor onRequestDeactivate])
 		ifTrue: [true]
 		ifFalse: [self activeEditor ifNotNil: [ :editor | editor show; tabFocus]. false]!
+
+resetHotItemAndColumn
+
+	"#1331, #1332 - Clear tooltip following a change to the receiver"
+
+	self 
+		hotItemAndColumn: nil;
+		hideToolTipWindow!
 
 rowBackcolor
 	^rowBackcolor!
@@ -754,8 +771,14 @@ rowHeight
 	^rowHeight ifNil: [1]!
 
 rowHeight: anObject
+
 	rowHeight := anObject.
-	self isOpen ifTrue: [self hideActiveEditor; applyImageLists]!
+
+	self isOpen ifTrue: 
+		[self 
+			hideActiveEditor; 
+			resetHotItemAndColumn;
+			applyImageLists]!
 
 rowPixelHeight
 
@@ -811,8 +834,10 @@ singleSelect: anInteger
 	hadMultipleSelections := self hasMultipleSelections.		
 	(hadMultipleSelections not and: [self selectionByIndex = anInteger]) ifFalse:
 		[hadMultipleSelections ifTrue: [self selectionByIndex: self noSelection "Clear the selections"].
-		self selectionByIndex: anInteger.
-		self onSelChanged]!
+		self 
+			selectionByIndex: anInteger;
+			anchorIndex: anInteger; "#1329 - set the anchor for any future multi-select operation"
+			onSelChanged]!
 
 smallImageExtent
 	"Private - Answer the value of the receiver's 'smallImageExtent' instance variable."
@@ -864,6 +889,14 @@ ttnGetDispInfo: aNMTTDISPINFOW
 	tipText := aNMTTDISPINFOW text.
 	^1!
 
+updateAll
+
+	self 
+		hideActiveEditor;
+		resetHotItemAndColumn.
+
+	^super updateAll!
+
 updateHotItem: nowHot
 
 	| wasHot | 
@@ -874,11 +907,11 @@ updateHotItem: nowHot
 	self hotItemAndColumn: nowHot.
 
 	(Array with: wasHot with: nowHot) do: 
-		[ :each | 
+		[ :each |
 		each ifNotNil: 
 			[ :pt |
-			"Take account of a column hidden whilst it was hot"
-			((self allColumns size >= pt y) and: [(self allColumns at: pt y) hasHotTracking]) ifTrue: 
+			"Take account of a column hidden whilst it was hot / item removed whilst hot"
+			(pt y <= columns size and: [(columns at: pt y) hasHotTracking and: [pt x <= self itemCount]]) ifTrue: 
 				[self invalidateRect: 
 					(self 
 						lvmGetSubItemRect: pt x - 1 "0-based indexing"
@@ -932,6 +965,7 @@ activeEditorModelIndex!accessing!public! !
 activeEditorModelIndex:!accessing!public! !
 activeEditorNeedsHighlight!public!testing! !
 applyImageLists!image management!private! !
+basicRefreshContents!helpers!private! !
 canMoveActiveEditor!public!testing! !
 columnImagePadding!accessing!public! !
 columnImageSpacing!accessing!public! !
@@ -940,7 +974,6 @@ columnNamed:ifNone:!accessing!public! !
 columnUnderPoint:!accessing!public! !
 defaultOffsetForEditor:!accessing!public! !
 disconnectFromModel!operations!private! !
-drawHorizontalGridlinesOn:from:to:by:!drawing!private! !
 drawSubItem:!drawing!public! !
 ensureIndexSelected:cause:!private!selection! !
 fieldExitDown!operations!public! !
@@ -965,6 +998,7 @@ isDisplayContextSelectedOrHot:!public!testing! !
 isDisplayIndexSelectedOrHot:!public!testing! !
 isHotIndex:!public!testing! !
 isMultiline!public!testing! !
+isSelectedIndex:!public! !
 itemAndColumnAt:!accessing!private! !
 lastEditableCoordsOnOrBefore:!helpers!private! !
 lvmSetColumn:at:!columns!private! !
@@ -995,6 +1029,7 @@ postDraw:columnIndex:!drawing!private! !
 preTranslateKeyboardInput:!event handling!public! !
 removeColumn:!columns!private! !
 requestDeactivateEditor!operations!private! !
+resetHotItemAndColumn!operations!private! !
 rowBackcolor!accessing!private! !
 rowBackcolor:!accessing!private! !
 rowForecolor!accessing!private! !
@@ -1016,6 +1051,7 @@ sortColumnIndex:!private!sorting! !
 sortOnColumn:!public!sorting! !
 stbSaveOn:!binary filing!public! !
 ttnGetDispInfo:!event handling!public! !
+updateAll!public!updating! !
 updateHotItem:!helpers!public! !
 visibleColumns!accessing!public! !
 wmHScroll:wParam:lParam:!event handling!private! !
