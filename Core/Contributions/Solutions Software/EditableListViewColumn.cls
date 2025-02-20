@@ -395,7 +395,7 @@ rectangle
 		[iconRectangle := self parent lvmGetSubItemRect: 0 subitem: zeroIndex bounding: LVIR_ICON.
 		itemRectangle left: iconRectangle left].
 
-	^(itemRectangle left@self parent rectangle top) extent: (itemRectangle width@self parent height)!
+	^itemRectangle left@0 extent: (itemRectangle width@self parent height)!
 
 rowSortBlock
 

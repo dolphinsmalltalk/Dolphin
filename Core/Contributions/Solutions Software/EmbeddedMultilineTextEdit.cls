@@ -56,7 +56,7 @@ display: aValue in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor e
 	| color myRect formatRect text displayRect commonFlags horzAlignmentFlag |
 
 	text := self typeconverter convertFromLeftToRight: aValue.
-	color := fColor ifNil: [Color black].
+	color := fColor ifNil: [Color windowText].
 	(text isEmpty and: [self hasCueBanner]) ifTrue: 
 		[text := self cueBanner.
 		color := Color grayText].
