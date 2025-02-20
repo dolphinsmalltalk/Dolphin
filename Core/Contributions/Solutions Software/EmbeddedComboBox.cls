@@ -77,7 +77,7 @@ display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor
 	| text color actualOffset |
 
 	text := self displayStringFor: anObject.
-	color := fColor.
+	color := fColor ifNil: [Color windowText].
 	(text isEmpty and: [self hasCueBanner]) ifTrue: 
 		[text := self cueBanner.
 		color := Color grayText].
