@@ -19,17 +19,20 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
+	'..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Object Arts\Dolphin\MVP\Tests\Dolphin MVP Tests'
 	'..\..\..\Object Arts\Dolphin\Lagoon\Lagoon Tests'
 	'..\SSW EditableListView'
-	'..\SSW EditableListView Demo'
-	'..\..\Camp Smalltalk\SUnit\SUnit').
+	'..\SSW EditableListView Demo').
 
 package!
 
 "Class Definitions"!
 
-TestCase subclass: #EditableListViewTest
+PresenterTest subclass: #EditableListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
