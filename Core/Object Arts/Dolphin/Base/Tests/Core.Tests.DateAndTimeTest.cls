@@ -531,6 +531,12 @@ testMonthAbbreviation
 testMonthName
 	self assert: self canonicalInstance monthName equals: (Locale default monthName: 2)!
 
+testNew
+	self
+		should: [DateAndTime new]
+		raise: Error
+		matching: [:ex | ex description = 'DateAndTime class should not implement #new']!
+
 testNowUtc
 	| now nowUtc |
 	now := DateAndTime now.
@@ -571,6 +577,42 @@ testOffsetBy
 testPrintOn
 	| subject |
 	self assert: self canonicalInstance printString equals: ' 2000-02-29T12:59:59.666666666-12:30'.
+	self
+		assert: (DateAndTime
+				year: 0
+				day: 1
+				hour: 0
+				minute: 0
+				second: 0
+				offset: 0 seconds) printString
+		equals: ' 0000-01-01T00:00:00+00:00'.
+	self
+		assert: (DateAndTime
+				year: 0
+				day: 366
+				hour: 0
+				minute: 0
+				second: 0
+				offset: 0 seconds) printString
+		equals: ' 0000-12-31T00:00:00+00:00'.
+	self
+		assert: (DateAndTime
+				year: -1
+				day: 365
+				hour: 0
+				minute: 0
+				second: 0
+				offset: 0 seconds) printString
+		equals: '-0001-12-31T00:00:00+00:00'.
+	self
+		assert: (DateAndTime
+				year: 1
+				day: 1
+				hour: 0
+				minute: 0
+				second: 0
+				offset: 0 seconds) printString
+		equals: ' 0001-01-01T00:00:00+00:00'.
 	self
 		assert: (DateAndTime
 				year: -1
@@ -620,6 +662,10 @@ testRataDie
 				year: 0
 				month: 12
 				day: 31) rataDie equals: 0.
+	self assert: (DateAndTime
+				year: -1
+				month: 12
+				day: 31) rataDie equals: -366.
 	"A routine example in a leap year, but before the end of feb"
 	self assert: (DateAndTime
 				year: 2010
@@ -870,6 +916,7 @@ testMinute!public!unit tests! !
 testMonth!public!unit tests! !
 testMonthAbbreviation!public!unit tests! !
 testMonthName!public!unit tests! !
+testNew!public!unit tests! !
 testNowUtc!public!unit tests! !
 testOffset!public!unit tests! !
 testOffsetBy!public!unit tests! !

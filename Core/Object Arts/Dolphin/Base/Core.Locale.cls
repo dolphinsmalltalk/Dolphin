@@ -151,11 +151,7 @@ dateAndTimeFormatters
 						printOn: stream
 						base: 10
 						nDigits: i]].
-	formatters)
-	"Date formats"
-	"Time formats"
-	"Date formats"
-	"Time formats"!
+	formatters)!
 
 dateFormat
 	"Answer the default date format for the receiver locale.
@@ -549,36 +545,31 @@ primary
 	^self class named: (self tag copyFrom: 1 to: 2)!
 
 print: anObject on: aWriteStream format: formatString alphabet: formatChars formatters: aLookupTable
-	| ch formatStream tokenStream |
-	tokenStream := WriteStream on: (formatString class new: 9).
+	| ch formatStream |
 	formatStream := formatString readStream.
-	ch := formatStream nextAvailable.
-	[ch isNil] whileFalse: 
-			[(formatChars includes: ch)
-				ifTrue: 
-					[| start |
-					tokenStream reset.
-					start := ch.
-					
-					[tokenStream nextPut: ch.
-					ch := formatStream nextAvailable.
-					ch = start] whileTrue.
-					(aLookupTable at: tokenStream contents)
-						value: self
-						value: anObject
-						value: aWriteStream]
-				ifFalse: 
-					[ch == $\
-						ifTrue: 
-							["Quoted single char, e.g. a format char"
-							aWriteStream nextPut: formatStream next]
-						ifFalse: 
-							[ch == $'
-								ifTrue: 
-									["Quoted string of chars"
-									aWriteStream nextPutAll: (formatStream upTo: $')]
-								ifFalse: [aWriteStream nextPut: ch]].
-					ch := formatStream nextAvailable]]!
+	
+	[ch := formatStream nextAvailable.
+	ch isNil] whileFalse: 
+				[(formatChars includes: ch)
+					ifTrue: 
+						[| start |
+						start := formatStream position.
+						[formatStream peekFor: ch] whileTrue.
+						(aLookupTable at: (formatString copyFrom: start to: formatStream position))
+							value: self
+							value: anObject
+							value: aWriteStream]
+					ifFalse: 
+						[ch == $\
+							ifTrue: 
+								["Quoted single char, e.g. a format char"
+								aWriteStream nextPut: formatStream next]
+							ifFalse: 
+								[ch == $'
+									ifTrue: 
+										["Quoted string of chars"
+										aWriteStream nextPutAll: (formatStream upTo: $')]
+									ifFalse: [aWriteStream nextPut: ch]]]]!
 
 printDate: aDate on: aWriteStream format: aString
 	"Append to the <puttableStream>, aWriteStream, a <String> whose characters are a representation of the <Date> argument, aDate, formatted according to the format characters listed in the <String>, aString.

@@ -8,6 +8,7 @@ Core.Magnitude
 	classInstanceVariableNames: ''
 	classConstants: {
 			'FiletimeEpochSeconds' -> -16r234474600.
+			'IsoEpochRD' -> -16r16D.
 			'JulianDateOffset' -> 16r22A11020C0.
 			'LilianDayOffset' -> -16r8D0C7.
 			'SmalltalkEpochRD' -> 16rA96C9.
@@ -322,19 +323,18 @@ printOn: aWriteStream withLeadingSpace: aBoolean
 		(DateAndTime fromString: '-1199-01-05T20:33:14.321-05:00')
 	"
 
-	| offsetFormat tzo |
-	(aBoolean and: [rataDie >= 0]) ifTrue: [aWriteStream space].
-	offsetFormat := '+hh:mm'.
-	"It doesn't really make sense to have TZ offsets with seconds components, but the ANSI spec allows this and expects the printed format to include seconds and even fractions of a second."
-	tzo := self offset.
-	tzo seconds = 0 ifFalse: [offsetFormat := offsetFormat , ':sfffffffff'].
+	(aBoolean and: [rataDie >= IsoEpochRD]) ifTrue: [aWriteStream space].
 	Locale invariant
 		printDateTime: self
 			on: aWriteStream
 			format: 'yyyy\-MM\-dd\THH:mm:ssfffffffff';
-		printDuration: tzo
+		printDuration: self offset
 			on: aWriteStream
-			format: offsetFormat!
+			format: (offset \\ 60 = 0
+					ifTrue: ['+hh:mm']
+					ifFalse: 
+						["It doesn't really make sense to have TZ offsets with seconds components, but the ANSI spec allows this and expects the printed format to include seconds and even fractions of a second."
+						'+hh:mm:sfffffffff'])!
 
 printStringFormat: aString
 	"Answer a short textual description of the receiver in a format is defined by the <readableString> argument, aString, the format characters of which are as described Locale>>#dateFormat and Locale>>#timeFormat methods. If the format argument is nil then the receiver is printed in the currently configured default date and time formats of the host OS."
@@ -631,6 +631,16 @@ isLeapYear: anInteger
 midnight
 	^self now midnight!
 
+new
+	^self shouldNotImplement!
+
+newRataDie: anInteger seconds: aNumber offset: secondsInteger
+	<primitive: 157>
+	^self basicNew
+		setRataDie: anInteger
+		seconds: aNumber
+		offset: secondsInteger!
+
 now
 	"Answer the current <DateAndTime> in local time.
 		self now
@@ -741,8 +751,8 @@ utcSeconds: aNumber offset: anInteger
 	| localSeconds daysSinceEpoch |
 	localSeconds := aNumber + anInteger.
 	daysSinceEpoch := localSeconds // Duration.SecondsPerDay.
-	^self new
-		setRataDie: daysSinceEpoch + SmalltalkEpochRD
+	^self
+		newRataDie: daysSinceEpoch + SmalltalkEpochRD
 		seconds: localSeconds - (daysSinceEpoch * Duration.SecondsPerDay)
 		offset: anInteger!
 
@@ -814,8 +824,8 @@ year: year day: dayOfYear hour: hour minute: minute second: second offsetSeconds
 		minute: minute
 		second: second.
 	self validateOffset: offset.
-	^self new
-		setRataDie: (self
+	^self
+		newRataDie: (self
 				encodeRataDieYear: year
 				month: 1
 				day: 1) + dayOfYear - 1
@@ -836,8 +846,8 @@ year: yearInteger day: ordinalDateInteger seconds: seconds offset: aDuration
 			[InvalidArgumentError signal: ordinalDateInteger printString , ' is outside [1, 366]' with: 'seconds'].
 	offset := aDuration asSeconds.
 	self validateOffset: offset.
-	^self new
-		setRataDie: (self
+	^self
+		newRataDie: (self
 				encodeRataDieYear: yearInteger
 				month: 1
 				day: 1) + ordinalDateInteger
@@ -901,8 +911,8 @@ year: year month: month day: dayOfMonth hour: hour minute: minute second: second
 		minute: minute
 		second: second.
 	self validateOffset: offset.
-	^self new
-		setRataDie: (self
+	^self
+		newRataDie: (self
 				encodeRataDieYear: year
 				month: month
 				day: dayOfMonth)
@@ -936,7 +946,7 @@ clockPrecision!constants!public! !
 daysInMonth:forYear:!enquiries!public! !
 daysToMonth:forYear:!enquiries!public! !
 encodeRataDieYear:month:day:!helpers!private! !
-errorInvalidFormat!exceptions!public! !
+errorInvalidFormat!exceptions!private! !
 fromDate:time:!instance creation!public! !
 fromFILETIME:!instance creation!public! !
 fromString:!instance creation!public! !
@@ -946,6 +956,8 @@ fromUnixTime:!instance creation!public! !
 initialize!class initialization!public! !
 isLeapYear:!public!testing! !
 midnight!instance creation!public! !
+new!instance creation!public! !
+newRataDie:seconds:offset:!instance creation!private! !
 now!instance creation!public! !
 nowUTC!instance creation!public! !
 readFrom:!instance creation!public! !
