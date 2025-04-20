@@ -444,6 +444,11 @@ sniffEncoding
 	count := self
 				reset;
 				read: buf.
+	"If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
+	((buf at: 1) == 16rEF and: [(buf at: 2) == 16rBB and: [(buf at: 3) == 16rBF]])
+		ifTrue: 
+			[self position: 3.
+			^String.EncodingUtf8].
 	ituResult := (ByteArray newFixed: 4)
 				sdwordAtOffset: 0 put: -1;
 				yourself.
@@ -460,19 +465,13 @@ sniffEncoding
 			[self position: ((ituResult allMask: IS_TEXT_UNICODE_SIGNATURE) ifTrue: [2] ifFalse: [0]).
 			String.EncodingUtf16]
 		ifFalse: 
-			["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
-			(buf beginsWith: Utf8String.Bom)
-				ifTrue: 
-					[self position: 3.
-					String.EncodingUtf8]
-				ifFalse: 
-					[| utf8Stream |
-					self reset.
-					"Do a minimal evaluation of the unknown encoding. If the first 1k reads as UTF-8 (allowing for that fact that we may have truncated the final character) then assume it is UTF-8, otherwise some ANSI code page."
-					utf8Stream := (Utf8String fromByteArray: buf) readStream.
-					((utf8Stream skipTo: Character.Utf8Default) not or: [utf8Stream atEnd])
-						ifTrue: [String.EncodingUtf8]
-						ifFalse: [String.EncodingAnsi]]]!
+			[| utf8Stream |
+			self reset.
+			"Do a minimal evaluation of the unknown encoding. If the first 1k reads as UTF-8 (allowing for that fact that we may have truncated the final character) then assume it is UTF-8, otherwise some ANSI code page."
+			utf8Stream := (Utf8String fromByteArray: buf) readStream.
+			((utf8Stream skipTo: Character.Utf8Default) not or: [utf8Stream atEnd])
+				ifTrue: [String.EncodingUtf8]
+				ifFalse: [String.EncodingAnsi]]!
 
 spec: aString
 	"Private - Set the file path to the <readableString> argument."
