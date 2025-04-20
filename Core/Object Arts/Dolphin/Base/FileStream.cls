@@ -14,22 +14,31 @@ FileStream addClassConstant: 'LimitsChangedMask' value: 16r1!
 FileStream addClassConstant: 'OwnsFileMask' value: 16r100!
 FileStream addClassConstant: 'PageSize' value: 16r2000!
 
-FileStream comment: 'FileStream is a specialized <ReadWriteStream> for streaming over binary and text files.
+FileStream comment: '`FileStream` is a specialized `ReadWriteStream` for streaming over binary and text files.
 
-The collection instance variable inherited from <Stream> is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by #flush or #fullFlush. The readLimit and writeLimit instance variables inherited from <PositionableStream> and <WriteStream> respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The readLimit will always be equal to the page size, except on the last page of the file. The writeLimit is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for every efficient access within the current page, which means that even single character I/O is reasonably fast..
+The collection instance variable inherited from `Stream` is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by `flush` or `fullFlush`. The `readLimit` and `writeLimit` instance variables inherited from `PositionableStream` and `WriteStream` respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The `readLimit` will always be equal to the page size, except on the last page of the file. The `writeLimit` is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for very efficient access within the current page, which means that even single character I/O is reasonably fast.
 
-FileStream can read and write files as binary or text. It supports a number of import text encodings, as follows:
-	#text		- Default text encoding. When reading will attempt to deduce the encoding of the underlying file. When writing a new file, will write UTF-8 with a BOM.
-	#utf8		- UTF-8 encoded text
-	#utf16		- UTF-16 encoded text		(not yet implemented)
-	#utf32		- UTF-32 encoded text		(not yet implemented)
+`FileStream` can read and write files as binary or text. It supports a number of important text encodings, as follows:
+	`#text`		- Default text encoding. When reading will attempt to deduce the encoding of the underlying file. When writing a new file, will write UTF-8 with a BOM.
+	`#ansi`		- ANSI text, assumed encoded per the default Dolphin code page
+	`#utf8`		- UTF-8 encoded text
+	`#utf16le`		- UTF-16 encoded text		(not yet implemented)
+	`#utf32`		- UTF-32 encoded text		(not yet implemented)
 
-Instance Variables:
-	file				The <File> being streamed over.
-	flags			<integer> flags such as whether the page buffer is dirty.
-	pageBase		<integer> offset of the page currently in the buffer. Always a multiple of the page size, plus 1.
-	logicalFileSize	<integer> size of the file. This is cached because it is expensive to determine dynamically.
-'!
+## Instance Variables:
+  `file`			The `File` being streamed over.
+  `flags`			`<integer>` flags such as whether the page buffer is dirty.
+  `pageBase`		`<integer>` offset of the page currently in the buffer. Always a multiple of the page size, plus 1.
+  `logicalFileSize`	`<integer>` size of the file. This is cached because it is expensive to determine dynamically.
+  `offset`			`<integer>` offset of start of text data in a file if it has a BOM
+
+## Class Variables:
+  `BufferClasses`		`IdentityDictionary` mapping from symbolic encodings to the class of byte-object to be used for the page buffer with that encoding
+  `BufferUpdatedMask`	`<integer>` flags set when a write to the page buffer occurs (combines the following two flags)
+  `DirtyBufferMask`		`<integer>` flag set when the page buffer contains updated data that has not yet been written to disk
+  `LimitsChangedMask`	`<integer>` flag set when a write to the page buffer has occurred that has not yet been reflected in the `lastPosition` and/or `readLimit`.
+  `OwnsFileMask`		`<integer>` flag set if the file is owned by a `FileStream` and should be closed by it.
+  `PageSize`			`<integer>` size of the page buffer used to hold part of the file contents in memory - chosen to be a reasonably efficient compromise for serial and random I/O.'!
 
 !FileStream categoriesForClass!Collections-Streams!I/O-Streams! !
 
@@ -44,9 +53,9 @@ absolutePosition
 atEnd
 	"Answer true if the receiver is positioned at its logical end."
 
-	^position >= readLimit and: [pageBase + position > self lastPosition]
-
-!
+	^position >= readLimit and: 
+			[self updateLimits.
+			pageBase + position > logicalFileSize]!
 
 basicNext
 	"Answer the next integer element accessible by the receiver. For a text stream this will be 
@@ -534,14 +543,11 @@ skip: anInteger
 updateLimits
 	"Private - Reconcile the stream position and read limit to include any data written since the last update."
 
-	"The DataWritten flag indicates that some data has been written since the last update to the limits"
-
-	(flags anyMask: LimitsChangedMask)
-		ifTrue: 
-			[| absolute |
-			flags := flags bitAnd: ##(LimitsChangedMask bitInvert).
-			readLimit < position ifTrue: [readLimit := position].
-			logicalFileSize < (absolute := self absolutePosition) ifTrue: [logicalFileSize := absolute]]!
+	| absolute |
+	(flags anyMask: LimitsChangedMask) ifFalse: [^self].
+	flags := flags bitAnd: ##(LimitsChangedMask bitInvert).
+	readLimit < position ifTrue: [readLimit := position].
+	logicalFileSize < (absolute := self absolutePosition) ifTrue: [logicalFileSize := absolute]!
 
 writePage
 	self updateLimits.
