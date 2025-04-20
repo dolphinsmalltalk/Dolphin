@@ -77,7 +77,7 @@ execSqlCmd: cmdString stdin: stdinStream
 				nextPutAll: err;
 				close].
 	process processExitCode = 0]
-			on: ExternalProcessExecuteError
+			on: Error
 			do: 
 				[:ex |
 				ex toTrace.
@@ -122,7 +122,6 @@ connect!helpers!private! !
 connection!accessing!private! !
 connectionStringAttributes!constants!private! !
 connectString!accessing!private! !
-createConnection!operations!public! !
 createDatabase!operations!private! !
 dropDatabase!helpers!private! !
 execSqlCmd:stdin:!helpers!private! !
