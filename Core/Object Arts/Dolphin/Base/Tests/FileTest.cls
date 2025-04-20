@@ -594,13 +594,12 @@ testSniffEncodingUtf8
 	"The sniffing will regard short sequences as most likely to be UTF-8 if they can be decoded as UTF-8, even if they in fact ANSI text. If the content is pure ASCII, then it makes no difference anyway as both UTF-8 and ANSI encodings (with any code page) are the same for this case."
 
 	tempFile := File temporary.
-	{
-		Utf8String.Bom.
+	{Utf8String.Bom.
 		Utf8String.Bom , $£ asAnsiString asByteArray.
 		'a b c ' asByteArray.
 		$£ asUtf8String asByteArray.
-		'a 🐬' asUtf8String asByteArray
-	} do: 
+		'a 🐬' asUtf8String asByteArray.
+		Utf8String.Bom, #[0 194 163]} do: 
 				[:each |
 				tempFile
 					size: 0;
