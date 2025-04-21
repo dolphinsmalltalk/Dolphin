@@ -59,9 +59,9 @@ absolutePosition
 atEnd
 	"Answer true if the receiver is positioned at its logical end."
 
-	^position >= readLimit and: [pageBase + position > self lastPosition]
-
-!
+	^position >= readLimit and: 
+			[self updateLimits.
+			pageBase + position > logicalFileSize]!
 
 basicNext
 	"Answer the next integer element accessible by the receiver. For a text stream this will be 

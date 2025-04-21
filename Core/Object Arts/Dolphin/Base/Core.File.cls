@@ -66,11 +66,9 @@ asParameter
 	^handle!
 
 atEnd
-	"Answer a Boolean indicating whether we are at the file's end
-	or signal a FileException if the operation fails."
+	"Answer a Boolean indicating whether we are at the file's end or signal a FileException if the operation fails."
 
-	^self position = (self size - 1)
-!
+	^self position >= self size!
 
 basicFree
 	"Private - Close the file and nil the handle.

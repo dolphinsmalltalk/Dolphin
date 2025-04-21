@@ -191,6 +191,37 @@ test64BitSeek
 	pointer := tempFile seek: dist negated sense: FILE_CURRENT.
 	self assert: pointer equals: 0!
 
+testAtEnd
+	tempFile := File temporary.
+	self assert: tempFile size equals: 0.
+	self assert: tempFile position equals: 0.
+	self assert: tempFile atEnd.
+	tempFile write: 'a'.
+	self assert: tempFile size equals: 1.
+	self assert: tempFile position equals: 1.
+	self assert: tempFile atEnd.
+	tempFile write: 'bc'.
+	self assert: tempFile size equals: 3.
+	self assert: tempFile position equals: 3.
+	self assert: tempFile atEnd.
+	tempFile position: 0.
+	self assert: tempFile size equals: 3.
+	self assert: tempFile position equals: 0.
+	self deny: tempFile atEnd.
+	tempFile write: 'A'.
+	self assert: tempFile size equals: 3.
+	self assert: tempFile position equals: 1.
+	self deny: tempFile atEnd.
+	tempFile write: 'BC'.
+	self assert: tempFile size equals: 3.
+	self assert: tempFile position equals: 3.
+	self assert: tempFile atEnd.
+	tempFile write: 'D'.
+	self assert: tempFile size equals: 4.
+	self assert: tempFile position equals: 4.
+	self assert: tempFile atEnd.
+!
+
 testCanonicalizePath
 	"Test File class>>composePath:subPath:"
 
@@ -895,6 +926,7 @@ relativePathOf:to:!helpers!public! !
 removeDirectory:!helpers!private! !
 tearDown!private!Running! !
 test64BitSeek!public!unit tests! !
+testAtEnd!public!unit tests! !
 testCanonicalizePath!public!unit tests! !
 testClassAppendPathSeparator!public!unit tests! !
 testClassDefaultExtension!public!unit tests! !
