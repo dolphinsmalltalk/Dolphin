@@ -406,7 +406,7 @@ update: anObject
 		ifTrue: [self displayRunning: 'Running']
 		ifFalse: [(anObject isKindOf: TestResource class) ifFalse: [^super update: anObject]].
 	self displayDetails: anObject printString.
-	SessionManager inputState pumpMessages!
+	SessionManager inputState dispatchQueuedMessages!
 
 updateDefects
 	self displayDefects: (result defects asSortedArray , result skipped asSortedArray

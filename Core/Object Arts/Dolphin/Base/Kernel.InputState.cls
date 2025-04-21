@@ -91,6 +91,17 @@ createPostedActionWindow
 deferredActions
 	^deferredActions!
 
+dispatchQueuedMessages
+	"Read and dispatch any pending host system messages that are currently waiting in the input queue. If a WM_QUIT is received, then exit Smalltalk. Unlike #pumpMessages, this will not keep looping until the queue is empty, so it will not process any messages that arrived after it starts."
+
+	Processor isActiveMain
+		ifTrue: 
+			[| continue |
+			continue := true.
+			[continue := false] postToMessageQueue.
+			self loopWhile: [continue]]
+		ifFalse: [self prod]!
+
 ensureIdlerRunning
 	"Private - Ensure that the idle process is still running, and if not restart it."
 
@@ -652,6 +663,7 @@ createAndRegisterInputSemaphore!initializing!private! !
 createAndRegisterWakeupEvent!initializing!private! !
 createPostedActionWindow!initializing!private! !
 deferredActions!accessing!private! !
+dispatchQueuedMessages!message dispatching!public! !
 ensureIdlerRunning!idling!private! !
 ensureMainRunning!idling!private! !
 enterIdle!idling!private! !
