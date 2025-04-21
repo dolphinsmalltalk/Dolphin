@@ -64,6 +64,7 @@ package setClassNames: #(
 	#{Core.Tests.NumberTest}
 	#{Core.Tests.ObjectTest}
 	#{Core.Tests.OrderedCollectionTest}
+	#{Core.Tests.OrderedDictionaryTest}
 	#{Core.Tests.PairTest}
 	#{Core.Tests.PluggableSetTest}
 	#{Core.Tests.PositionableStreamTest}
@@ -1031,6 +1032,14 @@ Core.Tests.AbstractDictionaryTest
 
 Core.Tests.AbstractDictionaryTest
 	subclass: #'Kernel.Tests.MethodDictionaryTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.AbstractDictionaryTest
+	subclass: #'Core.Tests.OrderedDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

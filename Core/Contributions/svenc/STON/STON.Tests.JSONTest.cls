@@ -16,6 +16,14 @@ STON.Tests.JSONTest comment: 'STONJSONTests contains unit tests for the JSON fun
 
 !STON.Tests.JSONTest methodsFor!
 
+hasOrderedDictionary
+
+	^self orderedDictionaryClass notNil!
+
+orderedDictionaryClass
+
+	^#{Core.OrderedDictionary} valueOrNil!
+
 testBooleans
 	self assert: (JSON toString: true) equals: 'true'.
 	self assert: (JSON toString: false) equals: 'false'.
@@ -73,25 +81,23 @@ testNull
 	self assert: (JSON fromString: 'null') equals: nil!
 
 testOrderedDictionary
+	<skipUnless: #hasOrderedDictionary>
 	| odictClass odict json dict |
-	odictClass := Smalltalk at: #OrderedDictionary ifAbsent: [^self skip].
-	odict := odictClass newFrom: {'a' -> 42. 'b' -> 1. 'aa' -> 4. 'c' -> 23}.
+	odictClass := self orderedDictionaryClass.
+	odict := odictClass withAll: { 'a' -> 42. 'b' -> 1. 'aa' -> 4. 'c' -> 23 }.
 
 	"assert that the order is not equal in the dictionary hash table"
-	self
-		assertCollection: odict asArray hasSameElements: odict dictionary asArray;
-		deny: odict asArray equals: odict dictionary asArray.
+	self deny: odict asArray equals: (Dictionary withAll: odict associations) asArray.
 
 	"ordered presevered when encoding:"
 	json := JSON toString: odict.
 	self assert: json equals: '{"a":42,"b":1,"aa":4,"c":23}'.
 
-	"lost when decoding"
+	"lost when decoding because gets loaded into a normal Dictionary"
 	dict := JSON fromString: json.
-	self
-		assertCollection: dict asArray hasSameElements: odict asArray;
-		assert: dict equals: odict dictionary;
-		deny: dict asArray equals: odict asArray!
+	self assert: dict class equals: Dictionary.
+	self assert: dict asSet equals: odict asSet.
+	self deny: dict asArray equals: odict asArray!
 
 testShared
 	"Structure sharing cannot be encoded using JSON"
@@ -123,6 +129,8 @@ testUnknown
 	self should: [JSON toString: #(1 2 3) asOrderedCollection] raise: WriterError! !
 
 !STON.Tests.JSONTest categoriesForMethods!
+hasOrderedDictionary!helpers!private! !
+orderedDictionaryClass!helpers!private! !
 testBooleans!public!tests! !
 testCircular!public!tests! !
 testFloats!public!tests! !

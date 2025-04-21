@@ -114,6 +114,7 @@ package setMethodNames: #(
 	#(#{Core.Object class} #fromSton:)
 	#(#{Core.Object class} #stonAllInstVarNames)
 	#(#{Core.Object class} #stonName)
+	#(#{Core.OrderedDictionary} #stonOn:)
 	#(#{Core.RunArray} #fromSton:)
 	#(#{Core.RunArray} #stonOn:)
 	#(#{Core.RunArray class} #fromSton:)
@@ -741,6 +742,20 @@ stonName
 fromSton:!public!ston! !
 stonAllInstVarNames!public!ston! !
 stonName!public!ston! !
+!
+
+!Core.OrderedDictionary methodsFor!
+
+stonOn: stonWriter
+	"I store my instances as maps. When in JSON mode,
+	encode me directly, without a class tag, keeping the order."
+
+	stonWriter jsonMode
+		ifTrue: [stonWriter encodeMap: self]
+		ifFalse: [stonWriter writeObject: self do: [stonWriter encodeMap: self]]! !
+
+!Core.OrderedDictionary categoriesForMethods!
+stonOn:!public!ston! !
 !
 
 !Core.RunArray methodsFor!

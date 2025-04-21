@@ -3821,6 +3821,14 @@ Core.Dictionary
 	classConstants: {}!
 
 Core.Dictionary
+	variableSubclass: #'Core.OrderedDictionary'
+	instanceVariableNames: 'order'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Dictionary
 	variableSubclass: #'Kernel.PoolDictionary'
 	instanceVariableNames: ''
 	classVariableNames: ''
