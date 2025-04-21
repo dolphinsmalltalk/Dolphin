@@ -234,61 +234,153 @@ Oop* Interpreter::primitiveStringAsUtf8String(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* PRIMCALL Interpreter::primitiveUtf8StringDecodeAt(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringDecodeAt(Oop* const sp, primargcount_t)
 {
-	Oop oopArg = *sp;
-	const Utf8StringOTE* oteReceiver = reinterpret_cast<const Utf8StringOTE*>(*(sp - 1));
-	if (ObjectMemoryIsIntegerObject(oopArg))
+	SmallInteger oopIndex = *sp;
+	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
-		SmallUinteger i = ObjectMemoryIntegerValueOf(oopArg) - 1;
-		size_t length = oteReceiver->Count;
-		if (i < length)
+		SmallUinteger i = ObjectMemoryIntegerValueOf(oopIndex) - 1;
+		auto oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
+		switch (oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 		{
-			char32_t c;
-			char8_t* utf8 = oteReceiver->m_location->m_characters;
-			U8_NEXT_OR_FFFD(utf8, i, length, c);
-			StoreCharacterToStack(sp - 1, U_IS_UNICODE_NONCHAR(c) ? Interpreter::UnicodeReplacementChar : c);
-			return sp - 1;
-		}
-		else
+		case StringEncoding::Ansi:
 		{
-			return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
+			size_t length = oteReceiver->bytesSize();
+			if (i < length)
+			{
+				auto codeUnit = reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters[i];
+				StoreCharacterToStack(sp - 1, static_cast<char32_t>(m_ansiToUnicodeCharMap[codeUnit]));
+				return sp - 1;
+			}
+			break;
 		}
+
+		case StringEncoding::Utf8:
+		{
+			size_t length = oteReceiver->bytesSize();
+			if (i < length)
+			{
+				auto pUtf8 = reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters;
+				char32_t codePoint;
+				U8_NEXT_OR_FFFD(pUtf8, i, length, codePoint);
+				StoreCharacterToStack(sp - 1, U_IS_UNICODE_NONCHAR(codePoint) ? Interpreter::UnicodeReplacementChar : codePoint);
+				return sp - 1;
+			}
+			break;
+		}
+
+		case StringEncoding::Utf16:
+		{
+			size_t length = (oteReceiver->bytesSize() / sizeof(Utf16String::CU));
+			if (i < length)
+			{
+				auto pwsz = reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters;
+				char32_t codePoint;
+				// The macro (from icu.h) advances the index as well as calculating the code point
+				U16_NEXT_OR_FFFD(pwsz, i, length, codePoint);
+				StoreCharacterToStack(sp - 1, U_IS_UNICODE_NONCHAR(codePoint) ? Interpreter::UnicodeReplacementChar : codePoint);
+				return sp - 1;
+			}
+			break;
+		}
+
+		case StringEncoding::Utf32:
+		{
+			size_t length = oteReceiver->bytesSize() / sizeof(Utf32String::CU);
+			if (i < length)
+			{
+				auto codePoint = reinterpret_cast<Utf32String*>(oteReceiver->m_location)->m_characters[i];
+				StoreCharacterToStack(sp - 1, codePoint);
+				return sp - 1;
+			}
+			break;
+		}
+
+		default:
+			// Unrecognised encoding
+			__assume(false);
+			return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
+		}
+
+		// Index out of range
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 	}
-	else
-	{
-		// Arg not a SmallInteger
-		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
-	}
+
+	// Index argument not a SmallInteger
+	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
-Oop* PRIMCALL Interpreter::primitiveUtf8StringEncodedSizeAt(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringEncodedSizeAt(Oop* const sp, primargcount_t)
 {
-	Oop oopArg = *sp;
-	const Utf8StringOTE* oteReceiver = reinterpret_cast<const Utf8StringOTE*>(*(sp - 1));
-	if (ObjectMemoryIsIntegerObject(oopArg))
+	SmallInteger oopIndex = *sp;
+	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
-		SmallUinteger i = ObjectMemoryIntegerValueOf(oopArg) - 1;
-		size_t length = oteReceiver->Count;
-		if (i < length)
+		SmallUinteger i = ObjectMemoryIntegerValueOf(oopIndex) - 1;
+		auto oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
+		switch (oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 		{
-			char32_t c;
-			SmallUinteger j = i;
-			char8_t* utf8 = oteReceiver->m_location->m_characters;
-			U8_NEXT_OR_FFFD(utf8, j, length, c);
-			*(sp - 1) = ObjectMemoryIntegerObjectOf(j - i);
-			return sp - 1;
-		}
-		else
+		case StringEncoding::Ansi:
+			if (i < oteReceiver->bytesSize())
+			{
+				*(sp - 1) = OnePointer;
+				return sp - 1;
+			}
+			break;
+
+		case StringEncoding::Utf8:
 		{
-			return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
+			size_t length = oteReceiver->bytesSize();
+			if (i < length)
+			{
+				auto pUtf8 = static_cast<char8_t*>(reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters);
+				char32_t codePoint;
+				SmallUinteger j = i;
+				U8_NEXT_OR_FFFD(pUtf8, j, length, codePoint);
+				*(sp - 1) = ObjectMemoryIntegerObjectOf(j - i);
+				return sp - 1;
+			}
+			break;
 		}
+
+		case StringEncoding::Utf16:
+		{
+			size_t length = oteReceiver->bytesSize() / sizeof(Utf16String::CU);
+			if (i < length)
+			{
+				auto pwsz = static_cast<char16_t*>(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters);
+				char32_t codePoint;
+				SmallUinteger j = i;
+				// The macro (from icu.h) advances the index as well as calculating the code point
+				U16_NEXT_OR_FFFD(pwsz, j, length, codePoint);
+				*(sp - 1) = ObjectMemoryIntegerObjectOf(j - i);
+				return sp - 1;
+			}
+			break;
+		}
+
+		case StringEncoding::Utf32:
+		{
+			size_t length = oteReceiver->bytesSize() / sizeof(Utf32String::CU);
+			if (i < length)
+			{
+				*(sp - 1) = ObjectMemoryIntegerObjectOf(4);
+				return sp - 1;
+			}
+			break;
+		}
+
+		default:
+			// Unrecognised encoding
+			__assume(false);
+			return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
+		}
+
+		// Index out of range
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 	}
-	else
-	{
-		// Arg not a SmallInteger
-		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
-	}
+
+	// Index argument not a SmallInteger
+	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
 bool Utf8StringOTE::OrdinalEquals(const AnsiStringOTE* __restrict oteAnsi) const

@@ -630,8 +630,8 @@ public:
 	static Oop* PRIMCALL primitiveStringAtPut(Oop* const sp, primargcount_t argCount);
 	
 	// UTF-8 decoding
-	static Oop* PRIMCALL primitiveUtf8StringDecodeAt(Oop* const sp, primargcount_t);
-	static Oop* PRIMCALL primitiveUtf8StringEncodedSizeAt(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveStringDecodeAt(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveStringEncodedSizeAt(Oop* const sp, primargcount_t);
 
 	// Helper for memory moves
 	static Oop* PRIMCALL primitiveReplaceBytes(Oop* const sp, primargcount_t argCount);
