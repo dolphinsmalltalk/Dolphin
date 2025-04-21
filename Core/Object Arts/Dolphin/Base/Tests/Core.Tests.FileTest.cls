@@ -737,7 +737,7 @@ testShortPath
 testSniffEncodingAnsi
 	tempFile := File temporary.
 	{
-		AnsiString fromByteArray: Utf16String.Bom , 'odd' asByteArray.
+		AnsiString fromByteArray: $\xFEFF asUtf16String asByteArray , 'odd' asByteArray.
 		'£' asAnsiString.
 		' informações'.
 		'süß«'.
@@ -751,11 +751,13 @@ testSniffEncodingAnsi
 				self assert: tempFile position equals: 0]!
 
 testSniffEncodingUtf16
+	| utf16Bom |
 	tempFile := File temporary.
+	utf16Bom := $\xFEFF asUtf16String asByteArray.
 	{
-		Utf16String.Bom.
-		Utf16String.Bom , 'even' asAnsiString asByteArray.
-		Utf16String.Bom , Character dolphin asUtf8String asByteArray.
+		utf16Bom.
+		utf16Bom , 'even' asAnsiString asByteArray.
+		utf16Bom , Character dolphin asUtf8String asByteArray.
 		('a ' asAnsiString , Character dolphin asUtf16String) asByteArray.
 		'a £' asUtf16String asByteArray
 	} do: 
@@ -765,15 +767,17 @@ testSniffEncodingUtf16
 					write: each.
 				self assert: tempFile sniffEncoding equals: String.EncodingUtf16.
 				self assert: tempFile position
-					equals: ((each beginsWith: Utf16String.Bom) ifTrue: [Utf16String.Bom size] ifFalse: [0])]!
+					equals: ((each beginsWith: utf16Bom) ifTrue: [utf16Bom size] ifFalse: [0])]!
 
 testSniffEncodingUtf8
 	"The sniffing will regard short sequences as most likely to be UTF-8 if they can be decoded as UTF-8, even if they in fact ANSI text. If the content is pure ASCII, then it makes no difference anyway as both UTF-8 and ANSI encodings (with any code page) are the same for this case."
 
+	| utf8Bom |
 	tempFile := File temporary.
+	utf8Bom := $\xFEFF asUtf8String asByteArray.
 	{
-		Utf8String.Bom.
-		Utf8String.Bom , '£' asAnsiString asByteArray.
+		utf8Bom.
+		utf8Bom , '£' asAnsiString asByteArray.
 		'a b c ' asByteArray.
 		$£ asUtf8String asByteArray.
 		'a 🐬' asUtf8String asByteArray
@@ -784,7 +788,7 @@ testSniffEncodingUtf8
 					write: each.
 				self assert: tempFile sniffEncoding equals: String.EncodingUtf8.
 				self assert: tempFile position
-					equals: ((each beginsWith: Utf8String.Bom) ifTrue: [Utf8String.Bom size] ifFalse: [0])]!
+					equals: ((each beginsWith: utf8Bom) ifTrue: [utf8Bom size] ifFalse: [0])]!
 
 testSplitDriveFrom
 	self should: [File splitDriveFrom: nil] raise: Error.

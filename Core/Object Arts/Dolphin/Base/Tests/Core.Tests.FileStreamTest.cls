@@ -73,6 +73,47 @@ tearDownTempStream
 
 	filestream file free!
 
+testAtEndWithUtf8Bom
+	(0 to: 1) , (FileStream.PageSize - $\xFEFF utf8Length - 3 to: FileStream.PageSize + 1)
+		, (FileStream.PageSize * 2 - $\xFEFF utf8Length - 3 to: FileStream.PageSize * 2 + 1) do: 
+				[:each |
+				| subject |
+				subject := self tempWriteStream: #utf8.
+				subject
+					position: each;
+					nextPut: $£.
+				self assert: subject position equals: each + 2.
+				self assert: subject atEnd.
+				subject position: each.
+				self assert: subject position equals: each.
+				self deny: subject atEnd.
+				self assert: subject basicNext equals: 194.
+				self assert: subject position equals: each + 1.
+				self deny: subject atEnd.
+				self assert: subject basicNext equals: 163.
+				self assert: subject position equals: each + 2.
+				self assert: subject atEnd.
+				subject position: each.
+				self deny: subject atEnd.
+				self assert: subject next equals: $£.
+				self assert: subject atEnd.
+				subject close.
+				subject := self tempReadStream.
+				subject position: each.
+				self assert: subject position equals: each.
+				self deny: subject atEnd.
+				self assert: subject basicNext equals: 194.
+				self assert: subject position equals: each + 1.
+				self deny: subject atEnd.
+				self assert: subject basicNext equals: 163.
+				self assert: subject position equals: each + 2.
+				self assert: subject atEnd.
+				subject position: each.
+				self deny: subject atEnd.
+				self assert: subject next equals: $£.
+				self assert: subject atEnd.
+				subject close]!
+
 testNextAvailableColonWithPaging
 	"#640"
 
@@ -227,6 +268,46 @@ testSingleByteOverflow
 	self assert: filestream next equals: $3.
 	filestream close!
 
+testUtf8StraddlingPageBoundary
+	"Test writing and then reading a multi-byte UTF-8 character that is straddling a page boundary"
+
+	| offset string subject allText |
+	subject := self tempWriteStream: #utf8.
+	self assert: subject atEnd.
+	offset := $\xFEFF utf8Length.
+	"Fill the first page up to the penultimate byte"
+	string := String new: FileStream.PageSize - offset - 1 withAll: $X.
+	subject nextPutAll: string.
+	self assert: subject atEnd.
+	subject nextPut: Character dolphin.
+	self assert: subject atEnd.
+	subject close.
+	allText := string copyWith: Character dolphin.
+	self assert: (File readAllText: tempFileName) equals: allText.
+	subject := self tempReadStream.
+	self deny: subject atEnd.
+	self assert: subject encoding equals: #utf8.
+	self assert: subject upToEnd equals: allText.
+	subject reset.
+	self assert: (subject next: string size) equals: string.
+	subject reset.
+	string size timesRepeat: 
+			[self assert: subject next equals: $X.
+			self deny: subject atEnd].
+	"The emoji straddles the page boundary"
+	self assert: subject next equals: Character dolphin.
+	self assert: subject atEnd.
+	subject reset.
+	subject position: string size.
+	self deny: subject atEnd.
+	self assert: subject nextAvailable equals: Character dolphin.
+	subject position: string size.
+	Character dolphin asUtf8String asByteArray do: 
+			[:each |
+			self deny: subject atEnd.
+			self assert: subject basicNext equals: each].
+	self assert: subject atEnd!
+
 testVeryLargeSparseFile
 	| empty max |
 	filestream := self tempWriteStream.
@@ -291,10 +372,12 @@ streamClassSupportsUtf16!helpers!private! !
 streamOn:!helpers!private! !
 streamOnFile:type:!helpers!private! !
 tearDownTempStream!helpers!private! !
+testAtEndWithUtf8Bom!public!unit tests! !
 testNextAvailableColonWithPaging!public!unit tests! !
 testNextPutAll!public!unit tests! !
 testOwnsFile!public! !
 testSingleByteOverflow!public!unit tests! !
+testUtf8StraddlingPageBoundary!public!unit tests! !
 testVeryLargeSparseFile!public!unit tests! !
 testWritePastEnd!public!unit tests! !
 !
