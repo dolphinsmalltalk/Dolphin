@@ -1895,7 +1895,7 @@ printReturnType: aFUNCDESC on: aPuttableStream
 	(returnType isUserDefined and: 
 			[| realType |
 			realType := returnType realTypeInfo.
-			realType isEnum and: [realType customAttributes includesKey: #__errno]])
+			realType isInt32 and: [realType customAttributes includesKey: #__errno]])
 		ifTrue: [aPuttableStream nextPutAll: 'errno']
 		ifFalse: [self printType: returnType on: aPuttableStream]!
 

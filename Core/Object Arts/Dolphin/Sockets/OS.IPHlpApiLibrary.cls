@@ -244,26 +244,6 @@ module IPHlpApi
 
 !OS.IPHlpApiLibrary categoriesForClass!Win32-Modules! !
 
-!OS.IPHlpApiLibrary methodsFor!
-
-parseNetworkString: networkString types: types addressInfo: addressInfo portNumber: portNumber prefixLength: prefixLength
-	"Invoke the ParseNetworkString() function of the module wrapped by the receiver.
-	Helpstring: Parses the input network string and checks whether it is a legal representation of the specified IP network string type. If the string matches a type and its specification, the function can optionally return the parsed result.
-
-		unsigned long __stdcall ParseNetworkString(
-			LPCWSTR NetworkString,
-			unsigned long Types,
-			PNET_ADDRESS_INFO AddressInfo,
-			unsigned short* PortNumber,
-			BYTE* PrefixLength);"
-
-	<stdcall: uint32 ParseNetworkString lpwstr uint32 NET_ADDRESS_INFO* uint16* uint8*>
-	^self invalidCall: _failureCode! !
-
-!OS.IPHlpApiLibrary categoriesForMethods!
-parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !
-!
-
 !OS.IPHlpApiLibrary class methodsFor!
 
 fileName

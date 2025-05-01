@@ -34,6 +34,11 @@ isAnonymous
 
 	^(BaseTypes lookup: self name) isNil and: [self tdesc isAnonymous]!
 
+isInt32
+	| vt |
+	vt := self vt.
+	^vt == VT_I4 or: [vt == VT_INT]!
+
 isStructure
 	"Answer whether the receiver describes a structure."
 
@@ -45,7 +50,9 @@ isUnion
 	^self tdesc isUnion!
 
 realTypeInfo
-	^self tdesc realTypeInfo!
+	| tdesc |
+	tdesc := self tdesc.
+	^tdesc isUserDefined ifTrue: [tdesc realTypeInfo] ifFalse: [self]!
 
 targetOfType: aTYPEDESC
 	^self tdesc targetType!
@@ -60,6 +67,7 @@ vt
 baseClass!constants!private! !
 classDesc!accessing!constants!private! !
 isAnonymous!public!testing! !
+isInt32!public!testing! !
 isStructure!public!testing! !
 isUnion!public!testing! !
 realTypeInfo!accessing!public! !

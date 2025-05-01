@@ -19,6 +19,9 @@ Since conversion from IP address to host name and vice versa requires a DNS or H
 
 !Net.InternetAddress methodsFor!
 
+addressFamily
+	^self sockaddrClass addressFamily!
+
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function."
 
@@ -40,15 +43,7 @@ host
 	This may be lazily evaluated if the receiver was initialized from an IP address and
 	in such cases will require a DNS lookup"
 
-	(host isNil and: [ipAddress notNil])
-		ifTrue: 
-			[| hostent |
-			hostent := Ws2_32
-						gethostbyaddr: ipAddress
-						len: ipAddress size
-						type: AF_INET.
-			hostent isNull ifTrue: [^SocketError signalWith: Processor activeProcess lastError].
-			host := hostent host].
+	(host isNil and: [ipAddress notNil]) ifTrue: [host := self sockaddr host].
 	^host!
 
 host: aStringHostName 
@@ -62,7 +57,8 @@ ipAddress
 	This may be lazily evaluated if the receiver was initialized from a host name and in
 	such cases will require a DNS or HOSTS reverse lookup"
 
-	ipAddress isNil ifTrue: [ipAddress := (HOSTENT host: self host) address ipAddress].
+	ipAddress isNil
+		ifTrue: [ipAddress := (Ws2_32 getAddrInfo: self host family: AF_INET) address ipAddress].
 	^ipAddress!
 
 ipAddress: bytes 
@@ -86,9 +82,16 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(;
 		display: self;
-		nextPut: $)! !
+		nextPut: $)!
+
+sockaddr
+	^self sockaddrClass address: self!
+
+sockaddrClass
+	^SOCKADDR_IN! !
 
 !Net.InternetAddress categoriesForMethods!
+addressFamily!operations!public! !
 asParameter!accessing!public! !
 displayIPOn:!displaying!public! !
 displayOn:!displaying!public! !
@@ -98,6 +101,8 @@ ipAddress!accessing!public! !
 ipAddress:!accessing!private! !
 ipString!accessing!public! !
 printOn:!printing!public! !
+sockaddr!accessing!public! !
+sockaddrClass!constants!public! !
 !
 
 !Net.InternetAddress class methodsFor!
@@ -106,16 +111,16 @@ allForHost: aStringHostName
 	"Answer an Array of instances of the receiver for all the addresses of the host with
 	aStringHostName.
 
-		InternetAddress allForHost: SessionManager current computerName
+		InternetAddress allForHost: ''
 	"
 
-	^(HOSTENT host: aStringHostName) allAddresses!
+	^(ADDRINFOW host: aStringHostName) allAddresses!
 
 fromIPString: aString
 	"Instantiate a new instance of the receiver from aString representing the textual
 	form of the IP address.
 
-		InternetAddress fromIPString: '192.169.0.1'
+		(InternetAddress fromIPString: '127.0.0.1') host
 	"
 
 	^(IN_ADDR fromString: aString) address!
@@ -126,15 +131,14 @@ fromString: aString
 
 	^(self isIPString: aString) ifTrue: [self fromIPString: aString] ifFalse: [self host: aString]!
 
-host: aStringHostName 
-	"Answer a new instance of the receiver containing the address of host with
-	aStringHostName.
+host: aString
+	"Answer a new instance of the receiver containing the address of host with specified <String> name.
 
 		InternetAddress host: 'www.microsoft.com'
 	"
 
-	^(self new)
-		host: aStringHostName;
+	^self new
+		host: aString;
 		yourself!
 
 ipAddress: aByteArray 
@@ -159,11 +163,7 @@ isIPString: aString
 localHost
 	"Answer a new instance of the receiver containing the address of the local host."
 
-	| hostName |
-	"256 is 'always adequate' for any host name, apparently"
-	hostName := Utf16String new: MaxHostName.
-	Ws2_32 gethostname: hostName namelen: hostName size.
-	^self host: hostName trimNulls! !
+	^self host: Ws2_32 gethostname! !
 
 !Net.InternetAddress class categoriesForMethods!
 allForHost:!accessing!public! !

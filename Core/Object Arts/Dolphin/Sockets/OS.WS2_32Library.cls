@@ -590,25 +590,53 @@ connect: s name: name namelen: namelen
 	<overlap stdcall: errno connect handle void* int32>
 	^self invalidOverlappedCall: _failureCode!
 
-gethostbyaddr: addr len: len type: type
-	"Invoke the gethostbyaddr() function of the module wrapped by the receiver.
+freeAddrInfoW: pAddrInfo
+	"Invoke the FreeAddrInfoW() function of the module wrapped by the receiver.
+	Helpstring: Frees address information that the GetAddrInfoW function dynamically allocates in addrinfoW structures.
 
-		hostent* __stdcall gethostbyaddr(
-			CHAR* addr,
-			int len,
-			int Type);"
+		void __stdcall FreeAddrInfoW(
+			PADDRINFOW pAddrInfo);"
 
-	<overlap stdcall: HOSTENT* gethostbyaddr lpvoid int32 int32>
+	<stdcall: void FreeAddrInfoW ADDRINFOW*>
 	^self invalidCall: _failureCode!
 
-gethostbyname: name
-	"Answer host information corresponding to a host name from the host database.
+getAddrInfo: aString family: anInteger
+	| result hints |
+	result := ADDRINFOW newPointer.
+	anInteger isNil
+		ifFalse: 
+			[hints := ADDRINFOW newBuffer.
+			hints ai_family: anInteger].
+	self
+		getAddrInfo: aString asUtf16String
+		pServiceName: nil
+		pHints: hints
+		ppResult: result.
+	^result
+		beFinalizable;
+		yourself!
 
-		hostent* __stdcall gethostbyname(
-			CHAR* name);"
+getAddrInfo: pNodeName pServiceName: pServiceName pHints: pHints ppResult: ppResult
+	"Invoke the GetAddrInfo() function of the module wrapped by the receiver.
+	Helpstring: Provides protocol-independent translation from a Unicode host name to an address.
 
-	<overlap stdcall: HOSTENT* gethostbyname lpstr>
-	^self invalidCall: _failureCode!
+		WSAErrno __stdcall GetAddrInfo(
+			LPCWSTR pNodeName,
+			LPCWSTR pServiceName,
+			ADDRINFOW* pHints,
+			PADDRINFOW* ppResult);"
+
+	<overlap stdcall: errno GetAddrInfoW lpwstr lpwstr ADDRINFOW* ADDRINFOW**>
+	^self invalidOverlappedCall: _failureCode!
+
+gethostname
+	"Answer the <String> standard host name for the local computer."
+
+	| name |
+	"256 is 'always adequate' for any host name, apparently"
+	name := Utf16String new: 256.
+	self gethostname: name namelen: name size.
+	^name trimNulls!
 
 gethostname: name namelen: namelen
 	"Invoke the gethostname() function of the module wrapped by the receiver.
@@ -618,6 +646,35 @@ gethostname: name namelen: namelen
 			int namelen);"
 
 	<stdcall: errno GetHostNameW lpwstr int32>
+	^self invalidCall: _failureCode!
+
+getNameInfo: aSOCKADDR
+	| name |
+	name := Utf16String newFixed: ##(NI_MAXHOST - 1).
+	self
+		getNameInfo: aSOCKADDR
+		sockaddrLength: aSOCKADDR byteSize
+		pNodeBuffer: name
+		nodeBufferSize: NI_MAXHOST
+		pServiceBuffer: nil
+		serviceBufferSize: 0
+		flags: NI_NAMEREQD.
+	^name trimNulls!
+
+getNameInfo: pSockaddr sockaddrLength: sockaddrLength pNodeBuffer: pNodeBuffer nodeBufferSize: nodeBufferSize pServiceBuffer: pServiceBuffer serviceBufferSize: serviceBufferSize flags: flags
+	"Invoke the GetNameInfo() function of the module wrapped by the receiver.
+	Helpstring: Provides protocol-independent name resolution from an address to a Unicode host name and from a port number to the Unicode service name.
+
+		WSAErrno __stdcall GetNameInfo(
+			SOCKADDR* pSockaddr,
+			int SockaddrLength,
+			PWCHAR pNodeBuffer,
+			DWORD NodeBufferSize,
+			PWCHAR pServiceBuffer,
+			DWORD ServiceBufferSize,
+			int flags);"
+
+	<overlap stdcall: errno GetNameInfoW SOCKADDR* int32 uint16* uint32 uint16* uint32 int32>
 	^self invalidCall: _failureCode!
 
 getpeername: s name: name namelen: namelen
@@ -913,7 +970,7 @@ wsaAddressToString: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo:
 			[in, out]LPWSTR lpszAddressString,
 			[in, out]unsigned long* lpdwAddressStringLength);"
 
-	<stdcall: errno WSAAddressToStringW SOCKADDR* uint32 void* lpwstr uint32*>
+	<stdcall: errno WSAAddressToStringW SOCKADDR* uint32 WSAPROTOCOL_INFOW* lpwstr uint32*>
 	^self invalidCall: _failureCode!
 
 wsaCleanup
@@ -942,48 +999,67 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 	<stdcall: errno WSAStartup uint16 WSADATA*>
 	^_failureCode > 0
 		ifTrue: [Net.SocketError signalWith: _failureCode]
-		ifFalse: [super invalidCall: _failureCode]! !
+		ifFalse: [super invalidCall: _failureCode]!
+
+wsaStringToAddress: addressString addressfamily: addressfamily lpProtocolInfo: lpProtocolInfo lpAddress: lpAddress lpAddressLength: lpAddressLength
+	"Invoke the WSAStringToAddress() function of the module wrapped by the receiver.
+
+		WSAErrno __stdcall WSAStringToAddress(
+			[in]LPWSTR AddressString,
+			[in]int ADDRESSFAMILY,
+			[in]WSAPROTOCOL_INFOW* lpProtocolInfo,
+			[out]SOCKADDR* lpAddress,
+			[in, out]int* lpAddressLength);"
+
+	<stdcall: errno WSAStringToAddressW lpwstr int32 WSAPROTOCOL_INFOW* SOCKADDR* int32*>
+	^self invalidCall: _failureCode! !
 
 !OS.WS2_32Library categoriesForMethods!
-accept:addr:addrlen:!public!win32 functions-sockets library! !
+accept:addr:addrlen:!public!win32 functions-windows sockets 2! !
 basicFree!private! !
-bind:name:namelen:!public!win32 functions-sockets library! !
-closesocket:!public!win32 functions-sockets library! !
-connect:name:namelen:!public!win32 functions-sockets library! !
-gethostbyaddr:len:type:!public!win32 functions-sockets library! !
-gethostbyname:!public!win32 functions-sockets library! !
-gethostname:namelen:!public!win32 functions-sockets library! !
-getpeername:name:namelen:!public!win32 functions-sockets library! !
-getprotobyname:!public!win32 functions-sockets library! !
-getprotobynumber:!public!win32 functions-sockets library! !
-getservbyname:proto:!public!win32 functions-sockets library! !
-getservbyport:proto:!public!win32 functions-sockets library! !
-getsockname:name:namelen:!public!win32 functions-sockets library! !
-getsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
-htonl:!**auto generated**!public!win32 functions-sockets library! !
-htons:!**auto generated**!public!win32 functions-sockets library! !
-inet_addr:!public!win32 functions-sockets library! !
-inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-sockets library! !
-inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-sockets library! !
+bind:name:namelen:!public!win32 functions-windows sockets 2! !
+closesocket:!public!win32 functions-windows sockets 2! !
+connect:name:namelen:!public!win32 functions-windows sockets 2! !
+freeAddrInfoW:!**auto generated**!public!win32 functions-windows sockets 2! !
+getAddrInfo:family:!instance creation!public! !
+getAddrInfo:pServiceName:pHints:ppResult:!public! !
+gethostname!public!win32 functions-windows sockets 2! !
+gethostname:namelen:!public!win32 functions-windows sockets 2! !
+getNameInfo:!public!win32 functions-windows sockets 2! !
+getNameInfo:sockaddrLength:pNodeBuffer:nodeBufferSize:pServiceBuffer:serviceBufferSize:flags:!public! !
+getpeername:name:namelen:!public!win32 functions-windows sockets 2! !
+getprotobyname:!public!win32 functions-windows sockets 2! !
+getprotobynumber:!public!win32 functions-windows sockets 2! !
+getservbyname:proto:!public!win32 functions-windows sockets 2! !
+getservbyport:proto:!public!win32 functions-windows sockets 2! !
+getsockname:name:namelen:!public!win32 functions-windows sockets 2! !
+getsockopt:level:optname:optval:optlen:!public!win32 functions-windows sockets 2! !
+htonl:!**auto generated**!public!win32 functions-windows sockets 2! !
+htons:!**auto generated**!public!win32 functions-windows sockets 2! !
+inet_addr:!public!win32 functions-windows sockets 2! !
+inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-windows sockets 2! !
+inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-windows sockets 2! !
 initialize!initializing!private! !
 invalidCall:!exceptions!private! !
 invalidOverlappedCall:!exceptions!private! !
-ioctlsocket:cmd:argp:!public!win32 functions-sockets library! !
-listen:backlog:!public!win32 functions-sockets library! !
-ntohl:!**auto generated**!public!win32 functions-sockets library! !
-ntohs:!**auto generated**!public!win32 functions-sockets library! !
-recv:buf:len:flags:!public!win32 functions-sockets library! !
-recvfrom:buf:len:flags:from:fromlen:!public!win32 functions-sockets library! !
-select:readfds:writefds:exceptfds:timeout:!public!win32 functions-sockets library! !
-send:buf:len:flags:!public!win32 functions-sockets library! !
-sendto:buf:len:flags:to:tolen:!public!win32 functions-sockets library! !
-setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
-shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
-socket:type:protocol:!public!win32 functions-sockets library! !
+ioctlsocket:cmd:argp:!public!win32 functions-windows sockets 2! !
+listen:backlog:!public!win32 functions-windows sockets 2! !
+ntohl:!**auto generated**!public!win32 functions-windows sockets 2! !
+ntohs:!**auto generated**!public!win32 functions-windows sockets 2! !
+recv:buf:len:flags:!public!win32 functions-windows sockets 2! !
+recvfrom:buf:len:flags:from:fromlen:!public!win32 functions-windows sockets 2! !
+select:readfds:writefds:exceptfds:timeout:!public!win32 functions-windows sockets 2! !
+send:buf:len:flags:!public!win32 functions-windows sockets 2! !
+sendto:buf:len:flags:to:tolen:!public!win32 functions-windows sockets 2! !
+setsockopt:level:optname:optval:optlen:!public!win32 functions-windows sockets 2! !
+shutdown:how:!**auto generated**!public!win32 functions-windows sockets 2! !
+socket:type:protocol:!public!win32 functions-windows sockets 2! !
 threadWsaGetLastError!public!win32 functions-windows sockets 2! !
-wsaCleanup!**auto generated**!public!win32 functions-sockets library! !
-wsaGetLastError!**auto generated**!public!win32 functions-sockets library! !
-wsaStartup:lpWSAData:!public!win32 functions-sockets library! !
+wsaAddressToString:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public! !
+wsaCleanup!**auto generated**!public!win32 functions-windows sockets 2! !
+wsaGetLastError!**auto generated**!public!win32 functions-windows sockets 2! !
+wsaStartup:lpWSAData:!public!win32 functions-windows sockets 2! !
+wsaStringToAddress:addressfamily:lpProtocolInfo:lpAddress:lpAddressLength:!**auto generated**!public! !
 !
 
 !OS.WS2_32Library class methodsFor!

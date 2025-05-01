@@ -34,16 +34,22 @@ struct tagSOCKADDR {
 
 !OS.SOCKADDR methodsFor!
 
+address
+	^self sin_addr address!
+
+addressFamily
+	^bytes uint16AtOffset: _OffsetOf_sa_family!
+
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	In this case we print the address in the standard IPv4 or IPv6 format."
 
 	| buf len |
 	(self isNull or: [self sa_family == 0]) ifTrue: [^self].
-	buf := Utf16String newFixed: INET6_ADDRSTRLEN.
-	len := UInt32Bytes fromInteger: buf size.
+	buf := Utf16String newFixed: ##(INET6_ADDRSTRLEN - 1).
+	len := UInt32Bytes fromInteger: INET6_ADDRSTRLEN.
 	Ws2_32
-		wsaAddressToStringW: bytes
+		wsaAddressToString: bytes
 		dwAddressLength: self byteSize
 		lpProtocolInfo: nil
 		lpszAddressString: buf
@@ -52,6 +58,11 @@ displayOn: aPuttableStream
 		next: len value - 1
 		putAll: buf
 		startingAt: 1!
+
+host
+	"Answer the <String> name of the host defined whose IP address is held by the receiver. Note this is a reverse DNS lookup, so the result is not considered reliable."
+
+	^Ws2_32 getNameInfo: self!
 
 initialize
 	self sa_family: self class addressFamily!
@@ -67,20 +78,44 @@ sa_family
 sa_family: anInteger
 	"Set the receiver's 'sa_family' field to the value of the argument, anInteger"
 
-	bytes uint16AtOffset: _OffsetOf_sa_family put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_sa_family put: anInteger!
+
+sin_addr
+	^self subclassResponsibility! !
 
 !OS.SOCKADDR categoriesForMethods!
+address!accessing!public! !
+addressFamily!operations!public! !
 displayOn:!displaying!public! !
+host!accessing!public! !
 initialize!initializing!private! !
 printFieldsOn:!development!printing!private! !
 sa_family!**compiled accessors**!public! !
 sa_family:!**compiled accessors**!public! !
+sin_addr!accessing!public! !
 !
 
 !OS.SOCKADDR class methodsFor!
 
 addressFamily
 	^AF_INET!
+
+basicFromString: aString
+	"Answer a new sub-instance of the correct type to describe the IP address represented by the <String> argument.
+		self fromString: '192.168.1.6:80'.
+		(self fromString: '[fe80::a221:b7ff:fe70:6185%7]:443') 
+	"
+
+	| sockaddr pLen |
+	sockaddr := self newBuffer.
+	pLen := UInt32Bytes fromInteger: self byteSize.
+	Ws2_32
+		wsaStringToAddress: aString
+		addressfamily: self addressFamily
+		lpProtocolInfo: nil
+		lpAddress: sockaddr
+		lpAddressLength: pLen.
+	^sockaddr!
 
 byteSize
 	^_SOCKADDR_Size!
@@ -121,33 +156,19 @@ fromString: aString
 		(self fromString: '[fe80::a221:b7ff:fe70:6185%7]:443') 
 	"
 
-	| buf ret family |
-	buf := NET_ADDRESS_INFO newBuffer.
-	ret := IPHlpApiLibrary default
-				parseNetworkString: aString
-				types: ##(NET_STRING_IP_ADDRESS | NET_STRING_IP_SERVICE)
-				addressInfo: buf
-				portNumber: nil
-				prefixLength: nil.
-	ret == 0
-		ifFalse: 
-			[^ret == Win32Errors.ERROR_INVALID_PARAMETER
-				ifTrue: [InvalidFormat signalWith: self]
-				ifFalse: [Win32Error signalWith: ret]].
-	family := buf Format.
-	^(family == NET_ADDRESS_IPV6
-		ifTrue: [buf Ipv6Address]
-		ifFalse: [family == NET_ADDRESS_IPV4 ifTrue: [buf Ipv4Address] ifFalse: [buf IpAddress]]) copy!
+	^(aString size >= INET_ADDRSTRLEN ifTrue: [SOCKADDR_IN6] ifFalse: [SOCKADDR_IN])
+		basicFromString: aString!
 
 getFieldNames
 	^#(#sa_family)! !
 
 !OS.SOCKADDR class categoriesForMethods!
 addressFamily!constants!public! !
+basicFromString:!instance creation!public! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 fromAddress:!instance creation!public! !
-fromString:!public! !
+fromString:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

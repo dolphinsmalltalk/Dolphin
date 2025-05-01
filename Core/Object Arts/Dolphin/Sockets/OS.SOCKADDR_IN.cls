@@ -38,6 +38,11 @@ struct tagSOCKADDR_IN {
 
 !OS.SOCKADDR_IN methodsFor!
 
+address: anInternetAddress
+	"Sets the address for the receiver to anInternetAddress"
+
+	self sin_addr: anInternetAddress ipAddress!
+
 port
 	"Answer the <integer> port number."
 
@@ -83,6 +88,7 @@ sin_port: anInteger
 	bytes uint16AtOffset: _OffsetOf_sin_port put: anInteger! !
 
 !OS.SOCKADDR_IN categoriesForMethods!
+address:!accessing!public! !
 port!accessing!public! !
 port:!accessing!public! !
 sin_addr!**compiled accessors**!public! !
@@ -94,6 +100,11 @@ sin_port:!**compiled accessors**!public! !
 !
 
 !OS.SOCKADDR_IN class methodsFor!
+
+address: anInternetAddress
+	^self new
+		sin_addr: anInternetAddress ipAddress;
+		yourself!
 
 byteSize
 	^_SOCKADDR_IN_Size!
@@ -120,11 +131,18 @@ defineFields
 	self byteSize: 16!
 
 getFieldNames
-	^#(#sin_family #sin_port #sin_addr)! !
+	^#(#sin_family #sin_port #sin_addr)!
+
+ipAddress: aByteArray
+	^self new
+		sin_addr: aByteArray;
+		yourself! !
 
 !OS.SOCKADDR_IN class categoriesForMethods!
+address:!instance creation!public! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+ipAddress:!instance creation!public! !
 !
 

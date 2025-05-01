@@ -28,13 +28,11 @@ address
 connect
 	"Connect to a server socket."
 
-	| socketAddress |
+	| socketAddress anInternetAddress |
 	self isOpen ifFalse: [self create].
-	socketAddress := SOCKADDR_IN new
-				sin_family: AF_INET;
-				port: self port;
-				sin_addr: (IN_ADDR address: self address);
-				yourself.
+	anInternetAddress := self address.
+	socketAddress := anInternetAddress sockaddr.
+	socketAddress port: self port.
 	Ws2_32
 		connect: self asParameter
 		name: socketAddress

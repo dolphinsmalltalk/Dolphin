@@ -7,10 +7,10 @@ OS.SOCKADDR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_sin6_addr' -> 16r8.
-			'_OffsetOf_sin6_family' -> 16r0.
+			'_OffsetOf_sin_addr' -> 16r8.
+			'_OffsetOf_sin_family' -> 16r0.
+			'_OffsetOf_sin_port' -> 16r2.
 			'_OffsetOf_sin6_flowinfo' -> 16r4.
-			'_OffsetOf_sin6_port' -> 16r2.
 			'_OffsetOf_sin6_scope_id' -> 16r18.
 			'_OffsetOf_sin6_scope_struct' -> 16r18.
 			'_SOCKADDR_IN6_Size' -> 16r1C
@@ -64,29 +64,39 @@ port: anInteger
 
 	self sin6_port: (Ws2_32 htons: anInteger)!
 
-sin6_addr
-	"Answer the <IN6_ADDR> value of the receiver's 'sin6_addr' field."
+sin_addr
+	"Answer the <IN6_ADDR> value of the receiver's 'sin_addr' field."
 
-	^IN6_ADDR fromAddress: bytes yourAddress + _OffsetOf_sin6_addr!
+	^IN6_ADDR fromAddress: bytes yourAddress + _OffsetOf_sin_addr!
 
-sin6_addr: anIN6_ADDR
-	"Set the receiver's 'sin6_addr' field to the value of the argument, anIN6_ADDR"
+sin_addr: anIN6_ADDR
+	"Set the receiver's 'sin_addr' field to the value of the argument, anIN6_ADDR"
 
 	anIN6_ADDR
 		replaceBytesOf: bytes
-		from: ##(_OffsetOf_sin6_addr + 1)
-		to: ##(_OffsetOf_sin6_addr + IN6_ADDR._IN6_ADDR_Size)
+		from: ##(_OffsetOf_sin_addr + 1)
+		to: ##(_OffsetOf_sin_addr + IN6_ADDR._IN6_ADDR_Size)
 		startingAt: 1!
 
-sin6_family
-	"Answer the <Integer> value of the receiver's 'sin6_family' field."
+sin_family
+	"Answer the <Integer> value of the receiver's 'sin_family' field."
 
-	^bytes uint16AtOffset: _OffsetOf_sin6_family!
+	^bytes uint16AtOffset: _OffsetOf_sin_family!
 
-sin6_family: anInteger
-	"Set the receiver's 'sin6_family' field to the value of the argument, anInteger"
+sin_family: anInteger
+	"Set the receiver's 'sin_family' field to the value of the argument, anInteger"
 
-	bytes uint16AtOffset: _OffsetOf_sin6_family put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_sin_family put: anInteger!
+
+sin_port
+	"Answer the <Integer> value of the receiver's 'sin_port' field."
+
+	^bytes uint16AtOffset: _OffsetOf_sin_port!
+
+sin_port: anInteger
+	"Set the receiver's 'sin_port' field to the value of the argument, anInteger"
+
+	bytes uint16AtOffset: _OffsetOf_sin_port put: anInteger!
 
 sin6_flowinfo
 	"Answer the <Integer> value of the receiver's 'sin6_flowinfo' field."
@@ -97,16 +107,6 @@ sin6_flowinfo: anInteger
 	"Set the receiver's 'sin6_flowinfo' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_sin6_flowinfo put: anInteger!
-
-sin6_port
-	"Answer the <Integer> value of the receiver's 'sin6_port' field."
-
-	^bytes uint16AtOffset: _OffsetOf_sin6_port!
-
-sin6_port: anInteger
-	"Set the receiver's 'sin6_port' field to the value of the argument, anInteger"
-
-	bytes uint16AtOffset: _OffsetOf_sin6_port put: anInteger!
 
 sin6_scope_id
 	"Answer the <Integer> value of the receiver's 'sin6_scope_id' field."
@@ -123,14 +123,14 @@ flowInfo!accessing!public! !
 flowInfo:!accessing!public! !
 port!accessing!public! !
 port:!accessing!public! !
-sin6_addr!**compiled accessors**!public! !
-sin6_addr:!**compiled accessors**!public! !
-sin6_family!**compiled accessors**!public! !
-sin6_family:!**compiled accessors**!public! !
+sin_addr!**compiled accessors**!public! !
+sin_addr:!**compiled accessors**!public! !
+sin_family!**compiled accessors**!public! !
+sin_family:!**compiled accessors**!public! !
+sin_port!**compiled accessors**!public! !
+sin_port:!**compiled accessors**!public! !
 sin6_flowinfo!**compiled accessors**!public! !
 sin6_flowinfo:!**compiled accessors**!public! !
-sin6_port!**compiled accessors**!public! !
-sin6_port:!**compiled accessors**!public! !
 sin6_scope_id!**compiled accessors**!public! !
 sin6_scope_id:!**compiled accessors**!public! !
 !
@@ -144,7 +144,7 @@ byteSize
 	^_SOCKADDR_IN6_Size!
 
 defineFields
-	"Define the fields of the SOCKADDR_IN6 structure.
+	"Define the fields of the SOCKADDR_IN6 structure. Note that we rename some fields for polymorphism with SOCKADDR_IN.
 
 	SOCKADDR_IN6 compileDefinition
 
@@ -162,16 +162,16 @@ defineFields
 "
 
 	self
-		defineField: #sin6_family type: UInt16Field new offset: 0;
-		defineField: #sin6_port type: UInt16Field new offset: 2;
+		defineField: #sin_family type: UInt16Field new offset: 0;
+		defineField: #sin_port type: UInt16Field new offset: 2;
 		defineField: #sin6_flowinfo type: UInt32Field new offset: 4;
-		defineField: #sin6_addr type: (StructureField type: IN6_ADDR) offset: 8;
+		defineField: #sin_addr type: (StructureField type: IN6_ADDR) offset: 8;
 		defineField: #sin6_scope_id type: UInt32Field new offset: 24;
 		defineField: #sin6_scope_struct type: UInt32Field new beFiller offset: 24.
 	self byteSize: 28!
 
 getFieldNames
-	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
+	^#(#sin_family #sin_port #sin6_flowinfo #sin_addr #sin6_scope_id)! !
 
 !OS.SOCKADDR_IN6 class categoriesForMethods!
 addressFamily!constants!public! !

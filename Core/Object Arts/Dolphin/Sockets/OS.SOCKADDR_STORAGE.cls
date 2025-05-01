@@ -36,7 +36,39 @@ struct tagSOCKADDR_STORAGE {
 
 !OS.SOCKADDR_STORAGE categoriesForClass!Win32-Structs! !
 
+!OS.SOCKADDR_STORAGE methodsFor!
+
+address
+	| family |
+	family := self addressFamily.
+	family == AF_INET6
+		ifTrue: [^IN6_ADDR fromAddress: bytes yourAddress + SOCKADDR_IN6._OffsetOf_sin_addr].
+	family == AF_INET
+		ifTrue: [^IN_ADDR fromAddress: bytes yourAddress + SOCKADDR_IN._OffsetOf_sin_addr].
+	^self error: 'Unknown address family: ' , family printString!
+
+addressFamily
+	^bytes uint16AtOffset: _OffsetOf_ss_family!
+
+sin_addr
+	| family |
+	family := self addressFamily.
+	family == AF_INET6
+		ifTrue: [^IN6_ADDR fromAddress: bytes yourAddress + SOCKADDR_IN6._OffsetOf_sin_addr].
+	family == AF_INET
+		ifTrue: [^IN_ADDR fromAddress: bytes yourAddress + SOCKADDR_IN._OffsetOf_sin_addr].
+	^self error: 'Unknown address family: ' , family printString! !
+
+!OS.SOCKADDR_STORAGE categoriesForMethods!
+address!accessing!public! !
+addressFamily!accessing!public! !
+sin_addr!accessing!public! !
+!
+
 !OS.SOCKADDR_STORAGE class methodsFor!
+
+addressFamily
+	^self shouldNotImplement!
 
 byteSize
 	^_SOCKADDR_STORAGE_Size!
@@ -66,6 +98,7 @@ getFieldNames
 	^#()! !
 
 !OS.SOCKADDR_STORAGE class categoriesForMethods!
+addressFamily!constants!public! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

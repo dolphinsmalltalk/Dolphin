@@ -23,8 +23,8 @@ package setClassNames: #(
 	#{Net.SocketError}
 	#{Net.SocketWaitCancelled}
 	#{OS.AbstractIN_ADDR}
+	#{OS.ADDRINFOW}
 	#{OS.FD_SET}
-	#{OS.HOSTENT}
 	#{OS.IN_ADDR}
 	#{OS.IN6_ADDR}
 	#{OS.IPHlpApiLibrary}
@@ -40,6 +40,8 @@ package setClassNames: #(
 	#{OS.WinSocketErrors}
 	#{OS.WS2_32Library}
 	#{OS.WSADATA}
+	#{OS.WSAPROTOCOL_INFOW}
+	#{OS.WSAPROTOCOLCHAIN}
 ).
 
 package setVariableNames: #(
@@ -150,6 +152,13 @@ Kernel.SharedPool
 			'NET_STRING_IPV6_SERVICE_NO_SCOPE' -> 16r40.
 			'NET_STRING_NAMED_ADDRESS' -> 16r100.
 			'NET_STRING_NAMED_SERVICE' -> 16r200.
+			'NI_DGRAM' -> 16r10.
+			'NI_MAXHOST' -> 16r401.
+			'NI_MAXSERV' -> 16r20.
+			'NI_NAMEREQD' -> 16r4.
+			'NI_NOFQDN' -> 16r1.
+			'NI_NUMERICHOST' -> 16r2.
+			'NI_NUMERICSERV' -> 16r8.
 			'SO_ACCEPTCONN' -> 16r2.
 			'SO_BROADCAST' -> 16r20.
 			'SO_DEBUG' -> 16r1.
@@ -347,21 +356,6 @@ External.Structure
 		}!
 
 External.Structure
-	subclass: #'OS.HOSTENT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_HOSTENT_Size' -> 16r10.
-			'_OffsetOf_h_addr_list' -> 16rC.
-			'_OffsetOf_h_addrtype' -> 16r8.
-			'_OffsetOf_h_aliases' -> 16r4.
-			'_OffsetOf_h_length' -> 16rA.
-			'_OffsetOf_h_name' -> 16r0
-		}!
-
-External.Structure
 	subclass: #'OS.NET_ADDRESS_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -441,6 +435,48 @@ External.Structure
 			'_WSADATA_Size' -> 16r190
 		}!
 
+External.Structure
+	subclass: #'OS.WSAPROTOCOL_INFOW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_dwCatalogEntryId' -> 16r24.
+			'_OffsetOf_dwMessageSize' -> 16r6C.
+			'_OffsetOf_dwProviderFlags' -> 16r10.
+			'_OffsetOf_dwProviderReserved' -> 16r70.
+			'_OffsetOf_dwServiceFlags1' -> 16r0.
+			'_OffsetOf_dwServiceFlags2' -> 16r4.
+			'_OffsetOf_dwServiceFlags3' -> 16r8.
+			'_OffsetOf_dwServiceFlags4' -> 16rC.
+			'_OffsetOf_iAddressFamily' -> 16r4C.
+			'_OffsetOf_iMaxSockAddr' -> 16r50.
+			'_OffsetOf_iMinSockAddr' -> 16r54.
+			'_OffsetOf_iNetworkByteOrder' -> 16r64.
+			'_OffsetOf_iProtocol' -> 16r5C.
+			'_OffsetOf_iProtocolMaxOffset' -> 16r60.
+			'_OffsetOf_iSecurityScheme' -> 16r68.
+			'_OffsetOf_iSocketType' -> 16r58.
+			'_OffsetOf_iVersion' -> 16r48.
+			'_OffsetOf_ProtocolChain' -> 16r28.
+			'_OffsetOf_ProviderId' -> 16r14.
+			'_OffsetOf_szProtocol' -> 16r74.
+			'_WSAPROTOCOL_INFOW_Size' -> 16r274
+		}!
+
+External.Structure
+	subclass: #'OS.WSAPROTOCOLCHAIN'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_ChainEntries' -> 16r4.
+			'_OffsetOf_ChainLen' -> 16r0.
+			'_WSAPROTOCOLCHAIN_Size' -> 16r20
+		}!
+
 OS.AbstractIN_ADDR
 	subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''
@@ -466,6 +502,24 @@ OS.AbstractIN_ADDR
 	classInstanceVariableNames: ''
 	classConstants: { '_IN6_ADDR_Size' -> 16r10. '_OffsetOf_Bytes' -> 16r0. '_OffsetOf_Words' -> 16r0 }!
 
+External.FinalizableStructure
+	subclass: #'OS.ADDRINFOW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.WinSocketConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_ADDRINFOW_Size' -> 16r20.
+			'_OffsetOf_ai_addr' -> 16r18.
+			'_OffsetOf_ai_addrlen' -> 16r10.
+			'_OffsetOf_ai_canonname' -> 16r14.
+			'_OffsetOf_ai_family' -> 16r4.
+			'_OffsetOf_ai_flags' -> 16r0.
+			'_OffsetOf_ai_next' -> 16r1C.
+			'_OffsetOf_ai_protocol' -> 16rC.
+			'_OffsetOf_ai_socktype' -> 16r8
+		}!
+
 OS.SOCKADDR
 	subclass: #'OS.SOCKADDR_IN'
 	instanceVariableNames: ''
@@ -487,10 +541,10 @@ OS.SOCKADDR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_sin6_addr' -> 16r8.
-			'_OffsetOf_sin6_family' -> 16r0.
+			'_OffsetOf_sin_addr' -> 16r8.
+			'_OffsetOf_sin_family' -> 16r0.
+			'_OffsetOf_sin_port' -> 16r2.
 			'_OffsetOf_sin6_flowinfo' -> 16r4.
-			'_OffsetOf_sin6_port' -> 16r2.
 			'_OffsetOf_sin6_scope_id' -> 16r18.
 			'_OffsetOf_sin6_scope_struct' -> 16r18.
 			'_SOCKADDR_IN6_Size' -> 16r1C

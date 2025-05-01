@@ -36,7 +36,7 @@ struct tagHOSTENT {
 } HOSTENT;
 '!
 
-!OS.HOSTENT categoriesForClass!Win32-Structs! !
+!OS.HOSTENT categoriesForClass!Deprecated! !
 
 !OS.HOSTENT methodsFor!
 
@@ -163,12 +163,18 @@ host: aStringHostName
 	answer := Ws2_32 gethostbyname: aStringHostName asAnsiString.
 	^answer isNull
 		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
-		ifFalse: [answer]! !
+		ifFalse: [answer]!
+
+localhost
+	"Answer a new instance of the receiver describing the local host."
+
+	^self host: SessionManager current computerName! !
 
 !OS.HOSTENT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 host:!instance creation!public! !
+localhost!instance creation!public! !
 !
 
