@@ -350,7 +350,7 @@ annotationStyles
 	change annotation styles the entire collection must be replaced."
 
 	self ensureHasAnnotationStyles.
-	^annotationStyles values asSortedArray: Attribute sortByIdBlock!
+	^annotationStyles values sort: Attribute sortByIdBlock!
 
 annotationStyles: aCollection 
 	"Set the collection of <ScintillaTextStyle>s configured for annotations in the receiver to
@@ -9757,7 +9757,7 @@ textStyles
 	addition/removal/replacement of elements, will not result in the view being updated. To
 	change text styles the entire collection must be replaced."
 
-	^currentTextStyles values asSortedArray: Attribute sortByIdBlock!
+	^currentTextStyles values sort: Attribute sortByIdBlock!
 
 textStyles: aCollection 
 	"Set the collection of <ScintillaTextStyle>s configured for the receiver to be those

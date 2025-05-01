@@ -561,10 +561,10 @@ storeOn: aStream
 values
 	"Answer a <collection> containing the receiver's values (includes any duplicates)."
 
-	| answer |
-	answer := OrderedCollection new: self size.
-	self do: [:value | answer addLast: value].
-	^answer! !
+	| values |
+	values := (Array new: self size) writeStream.
+	self do: [:value | values nextPut: value].
+	^values collection! !
 
 !Core.Dictionary categoriesForMethods!
 _deepCopyElementsInto:trail:!copying!private! !
