@@ -530,6 +530,7 @@ depth: anInteger
 		ifTrue: [stackPresenter view selectionByIndex: selectionIndex]!
 
 descriptionOfVariable: aStVariable
+	aStVariable ifNil: [^'undefined'].
 	^aStVariable description!
 
 displayFrame
