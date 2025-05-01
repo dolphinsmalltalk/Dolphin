@@ -2406,28 +2406,29 @@ updateSourceEnablement
 updateVariables
 	"Private - Update the list of instance variables in this class and its superclasses."
 
-	| class count vars |
+	| class |
 	variablesPresenter hasView ifFalse: [^self].
-	((class := self actualClass) isNil or: [(count := class instSize) = 0])
-		ifTrue: 
-			[variablesPresenter clear.
-			^self].
-	"Construct a list associating each class with each of its instance variables"
-	vars := OrderedCollection new: count.
-	class withAllSuperclasses reverseDo: 
-			[:eachClass |
-			eachClass instanceVariableNames do: [:eachInstVar | vars addLast: eachClass -> eachInstVar]].
-	variablesPresenter model list = vars
+	class := self actualClass.
+	(class isNil or: [class instSize == 0])
+		ifTrue: [variablesPresenter clear]
 		ifFalse: 
-			[| selectedVars |
-			selectedVars := variablesPresenter selections.
-			variablesPresenter model list: vars.
-			selectedVars := selectedVars intersection: vars.
-			selectedVars notEmpty
-				ifTrue: 
-					[variablesPresenter selections: selectedVars.
-					^self]].
-	"If there will be no selection, or the variables list has not changed, then the list view won't issue a selection change event, so we must forcibly refresh the methods list"
+			[| vars |
+			"Construct a list associating each class with each of its instance variables"
+			vars := OrderedCollection new: class instSize.
+			class withAllSuperclasses reverseDo: 
+					[:eachClass |
+					eachClass instanceVariableNames do: [:eachInstVar | vars addLast: eachClass -> eachInstVar]].
+			variablesPresenter model list = vars
+				ifFalse: 
+					[| selectedVars |
+					selectedVars := variablesPresenter selections.
+					variablesPresenter model list: vars.
+					selectedVars := selectedVars intersection: vars.
+					selectedVars notEmpty
+						ifTrue: 
+							[variablesPresenter selections: selectedVars.
+							^self]]].
+	"If there will be no inst var selection, or the variables list has not changed (and therefore the selections can remain the same), then the list view won't issue a selection change event, so we must forcibly refresh the methods list"
 	self onVariableSelected!
 
 validateProtocol: targetProtocol renameTo: newName
