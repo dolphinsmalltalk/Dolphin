@@ -493,7 +493,6 @@ package setMethodNames: #(
 	#(#{Kernel.StBlockScope} #category)
 	#(#{Kernel.StCascadeNode} #displayOn:)
 	#(#{Kernel.StClassScope} #category)
-	#(#{Kernel.StClassScope} #isVisibleSelector:)
 	#(#{Kernel.StEvalScope} #category)
 	#(#{Kernel.StGeneratedTempVariable} #category)
 	#(#{Kernel.StGeneratedTempVariable class} #icon)
@@ -6094,14 +6093,10 @@ displayOn:!printing!public! !
 category
 	"Answer a descriptive category name for this scope."
 
-	^'class'!
-
-isVisibleSelector: aSymbol
-	^SmalltalkSystem current allSelectors includes: aSymbol! !
+	^'class'! !
 
 !Kernel.StClassScope categoriesForMethods!
 category!constants!public! !
-isVisibleSelector:!helpers!private! !
 !
 
 !Kernel.StEvalScope methodsFor!
