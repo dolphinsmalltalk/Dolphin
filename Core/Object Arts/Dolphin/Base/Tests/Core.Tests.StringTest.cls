@@ -870,6 +870,21 @@ testOrdinalCaseInsensitiveEquality
 					self assert: i <=> j equals: 0.
 					self assert: (i compareOrdinals: j ignoringCase: true) == 0 equals: i == j]]!
 
+testReadFrom
+	| stream |
+	self assert: (self collectionClass readFrom: (self assimilateString: '') readStream) isEmpty.
+	self assert: (self collectionClass readFrom: (self assimilateString: '''a') readStream) equals: 'a'.
+	self assert: (self collectionClass readFrom: (self assimilateString: '''a''') readStream)
+		equals: 'a'.
+	self assert: (self collectionClass readFrom: (self assimilateString: '''''a''') readStream)
+		equals: ''.
+	stream := (self assimilateString: '''''''a''b') readStream.
+	self assert: (self collectionClass readFrom: stream) equals: '''a'.
+	self assert: stream next equals: $b.
+	stream := (self assimilateString: '''''''a''''b''£') readStream.
+	self assert: (self collectionClass readFrom: stream) equals: '''a''b'.
+	self assert: stream next equals: $£!
+
 testRefersToLiteral
 	"Test that string literals in a method do not count as referring to a Symbol with the same contents, now that they are #= to said Symbol.
 
@@ -1440,6 +1455,7 @@ testMatch!public! !
 testMutableCopy!public!unit tests! !
 testOrdinalCaseInsensitiveComparison!public!unit tests! !
 testOrdinalCaseInsensitiveEquality!public!unit tests! !
+testReadFrom!public!unit tests! !
 testRefersToLiteral!public!unit tests! !
 testReverse!public!unit tests! !
 testReversedFromTo!public!unit tests! !

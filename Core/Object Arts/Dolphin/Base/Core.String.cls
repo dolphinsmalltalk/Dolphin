@@ -1619,27 +1619,19 @@ newFixed: aSmallInteger
 			^Utf8String newFixed: aSmallInteger].
 	^self primitiveFailed: _failureCode!
 
-readFrom: aStream 
+readFrom: aStream
 	"Answer a <String> read from the <gettableStream>, aStream
 	Note that the string is expected to be in Smalltalk literal form, i.e.
 	single quoted and with embedded quotes doubled."
 
-	| answer |
+	| answer ch |
 	answer := self writeStream: 16.
 	aStream skipTo: $'.	"Skip any leading chars up to just after the first quote"
-	[aStream atEnd] whileFalse: 
-			[| ch |
-			ch := aStream next.
-			ch == $' 
+	[(ch := aStream nextAvailable) isNil] whileFalse: 
+			[ch == $'
 				ifTrue: 
-					[aStream atEnd ifTrue: [^answer contents].
-					ch := aStream next.
-					ch == $' 
-						ifFalse: 
-							["Single quote terminates string (else gobble the doubled quote)"
-
-							aStream pop.
-							^answer contents]].
+					["Single quote terminates string (else gobble the doubled quote)"
+					(aStream peekFor: $') ifFalse: [^answer contents]].
 			answer nextPut: ch].
 	^answer contents!
 
