@@ -175,6 +175,7 @@ package setClassNames: #(
 	#{OS.Tests.KernelLibraryTest}
 	#{OS.Tests.ShlwapiLibraryTest}
 	#{OS.Tests.StdioFileStreamTest}
+	#{OS.Tests.VersionInfoTest}
 	#{OS.Tests.WindowsLocaleTest}
 ).
 
@@ -847,6 +848,14 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.UndefinedObjectTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.VersionInfoTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

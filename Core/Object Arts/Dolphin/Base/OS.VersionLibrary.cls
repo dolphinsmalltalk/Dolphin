@@ -22,14 +22,13 @@ The version libraries API is somewhat esoteric and best accessed via the service
 getFileVersionInfo: lpstrFilename
 	"Private - Answer file version info for the specified file."
 
-	| dwHandle size buf |
-	dwHandle := UInt32Bytes new.
-	size := self getFileVersionInfoSize: lpstrFilename lpdwHandle: dwHandle.
+	| size buf |
+	size := self getFileVersionInfoSize: lpstrFilename lpdwHandle: nil.
 	size == 0 ifTrue: [^self systemError].
 	buf := ByteArray newFixed: size.
 	(self
 		getFileVersionInfo: lpstrFilename
-		dwHandle: dwHandle asParameter
+		dwHandle: nil
 		dwLen: size
 		lpData: buf) ifFalse: [^self systemError].
 	^buf!
