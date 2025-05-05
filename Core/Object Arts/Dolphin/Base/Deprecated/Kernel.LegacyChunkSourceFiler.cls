@@ -493,12 +493,6 @@ printBasicDefinitionOfClass: aClass on: aPuttableStream
 		string: 'classInstanceVariableNames:'
 		on: stream!
 
-sharedPoolNames: aClass
-	^aClass imports collect: 
-			[:each |
-			(each valueOrNil ifNotNil: [:sharedPoolClass | Smalltalk oldNames lookup: sharedPoolClass])
-				ifNil: [each unqualifiedName]]!
-
 shortNameForClass: aClass
 	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
 
@@ -506,42 +500,41 @@ specialBehaviorAttributesOfClass: aClass
 	^aClass specialBehaviorAttributes copyReplacing: #isNonInstantiable withObject: #isAbstract! !
 
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
-collateClass:against:!private!source filing! !
+collateClass:against:!helpers!private! !
 emitBinaryVariableDefinition:!public!source filing-file out! !
 emitClassName:on:!private!source filing-file out! !
 emitClassPoolOfClass:!private!source filing-file out! !
 emitDeclarationForClass:variable:!private!source filing-file out! !
-emitFileOutHeader!private!source filing! !
+emitFileOutHeader!private!source filing-file out! !
 emitPackageAboutBlock:!private!source filing-pax! !
-emitPackageBinaryVariables:!private!source filing! !
+emitPackageBinaryVariables:!private!source filing-file out! !
 emitPackageClassNames:!accessing!private!source filing-pax! !
 emitPackageManualPrerequisites:!private!source filing-pax! !
 emitPackageMethodNames:!private!source filing-pax! !
 emitPackageNameSet:initializer:!private!source filing-pax! !
-emitPackagePrerequisiteNames:!private! !
+emitPackagePrerequisiteNames:!private!source filing-file out! !
 emitPackageUntracedVariables:!private!source filing-pax! !
 emitPackageVariableNames:!private!source filing-pax! !
 emitPackageVariableNameSubsets:!private!source filing-pax! !
-emitPackageVariableReference:!accessing!private!source filing! !
+emitPackageVariableReference:!private!source filing-file out! !
 emitPaxNames:!private!source filing-pax! !
 emitPaxVariableNames:accessor:!private!source filing-pax! !
 environment!accessing!public! !
 environment:!accessing!public! !
 equivalentLegacyPrerequisites!constants!private! !
-fileOutAttributesOfClass:!public!source filing! !
-fileOutClass:ofPackage:!public!source filing! !
-fileOutPackageMethods:!private!source filing! !
-fileOutPackageSourceVariables:!private! !
-fileOutPackageVariableAliases:!private!source filing! !
-fileOutPoolDictionary:!private!source filing! !
+fileOutAttributesOfClass:!public!source filing-file out! !
+fileOutClass:ofPackage:!public!source filing-file out! !
+fileOutPackageMethods:!private!source filing-file out! !
+fileOutPackageSourceVariables:!private!source filing-file out! !
+fileOutPackageVariableAliases:!private!source filing-file out! !
+fileOutPoolDictionary:!private!source filing-file out! !
 getShortName:!helpers!private! !
 getSmalltalkVariableName:!helpers!private! !
 legacyPackagePaths!constants!private! !
 makePoolConstsFromSharedPool:!helpers!private! !
 packageClassesInFileoutOrder:!helpers!private! !
 printBasicDefinitionOfClass:on:!private!source filing-file out! !
-sharedPoolNames:!public!source filing-file out! !
-shortNameForClass:!public!source filing-file out! !
+shortNameForClass:!helpers!private! !
 specialBehaviorAttributesOfClass:!constants!public! !
 !
 

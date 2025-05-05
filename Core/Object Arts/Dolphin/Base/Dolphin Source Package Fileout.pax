@@ -75,9 +75,9 @@ package setMethodNames: #(
 	#(#{Kernel.SourceFiler} #fileOutClass:ofPackage:)
 	#(#{Kernel.SourceFiler} #fileOutDefinitionOfPackage:)
 	#(#{Kernel.SourceFiler} #fileOutPackage:)
+	#(#{Kernel.SourceFiler} #fileOutPackage:classes:)
 	#(#{Kernel.SourceFiler} #fileOutPackage:methodsOfClass:)
 	#(#{Kernel.SourceFiler} #fileOutPackageClassDefinitions:)
-	#(#{Kernel.SourceFiler} #fileOutPackageClasses:)
 	#(#{Kernel.SourceFiler} #fileOutPackageMethods:)
 	#(#{Kernel.SourceFiler} #fileOutPackageSourceVariables:)
 	#(#{Kernel.SourceFiler} #fileOutPackageVariableAliases:)
@@ -275,7 +275,7 @@ emitPackageStripperBytes:!private!source filing-pax! !
 emitPackageUntracedVariables:!private!source filing-pax! !
 emitPackageVariableNames:!private!source filing-pax! !
 emitPackageVariableNameSubsets:!private!source filing-pax! !
-emitPackageVariableReference:!accessing!private!source filing! !
+emitPackageVariableReference:!private!source filing-file out! !
 emitPackageVersion:!private!source filing-pax! !
 emitPaxAttributes:!private!source filing-pax! !
 emitPaxPackage:!private!source filing-pax! !
@@ -375,7 +375,7 @@ emitPaxAttributes: aPackage
 
 !Kernel.ChunkSourceFiler categoriesForMethods!
 emitPackageAboutBlock:!private!source filing-pax! !
-emitPackageBinaryVariables:!private!source filing! !
+emitPackageBinaryVariables:!private!source filing-file out! !
 emitPackageClassNames:!accessing!private!source filing-pax! !
 emitPackageCollection:initializer:!private!source filing-pax! !
 emitPackageManualPrerequisites:!private!source filing-pax! !
@@ -724,20 +724,34 @@ fileOutClass: aClass ofPackage: package
 		fileOutPackage: package methodsOfClass: aClass class!
 
 fileOutDefinitionOfPackage: aPackage
+	| classes |
 	self emitPackageDescription: aPackage.
-	self fileOutPackageClassDefinitions: aPackage.
+	classes := self fileOutPackageClassDefinitions: aPackage.
 	self fileOutPackageVariableAliases: aPackage.
 	self fileOutPackageMethods: aPackage.
 	self
 		emitComment: 'End of package definition';
-		cr!
+		cr.
+	^classes!
 
 fileOutPackage: aPackage
+	| classes |
+	classes := self fileOutDefinitionOfPackage: aPackage.
 	self
-		fileOutDefinitionOfPackage: aPackage;
 		fileOutPackageSourceVariables: aPackage;
-		fileOutPackageClasses: aPackage;
+		fileOutPackage: aPackage classes: classes;
 		emitPackageBinaryVariables: aPackage!
+
+fileOutPackage: aPackage classes: aSequenceableCollection
+	aSequenceableCollection isEmpty ifTrue: [^self].
+	self emitComment: 'Classes'.
+	aSequenceableCollection do: 
+			[:aClass |
+			self
+				fileOutAttributesOfClass: aClass;
+				cr;
+				fileOutPackage: aPackage methodsOfClass: aClass;
+				fileOutPackage: aPackage methodsOfClass: aClass class]!
 
 fileOutPackage: aPackage methodsOfClass: aClass
 	"Private - Append any definitions of the classes methods which are owned by the specified Package to the receiver's stream."
@@ -749,9 +763,11 @@ fileOutPackage: aPackage methodsOfClass: aClass
 			["The common case is that all methods of the class also belong to the this package..."
 			self fileOutAllMethodsOfBehavior: aClass]
 		ifFalse: 
-			[| selectors prereqs addBlock |
+			[| selectors prereqs accumulateSelectors |
 			"...but if some methods are not owned by this package we have more work to do"
-			selectors := methods collect: [:m | m selector].
+			selectors := IdentitySet new: methods size.
+			accumulateSelectors := [:m | selectors add: m selector].
+			methods do: accumulateSelectors.
 			self fileOutMessages: selectors ofBehavior: aClass.
 
 			"File out the intersection of the immediate protocols of the class and those of this
@@ -760,12 +776,11 @@ fileOutPackage: aPackage methodsOfClass: aClass
 			"First add all selectors in the superclass chain which are in this package or one of its
 			pre-requisites into the set of available selectors."
 			prereqs := aPackage prerequisites.
-			addBlock := [:e :p | selectors addAll: ((p methodsOfClass: e) collect: [:m | m selector])].
-			prereqs do: [:p | addBlock value: aClass value: p].
+			prereqs do: [:p | ((p methodsOfClass: aClass) do: accumulateSelectors)].
 			aClass allSuperclassesDo: 
 					[:e |
-					addBlock value: e value: aPackage.
-					prereqs do: [:p | addBlock value: e value: p]].
+					(aPackage methodsOfClass: e) do: accumulateSelectors.
+					prereqs do: [:p | (p methodsOfClass: e) do: accumulateSelectors]].
 			#todo.	"File out partial protocols, although tools should prevent protocols being split across packages really"
 			self fileOutProtocols: (aClass protocols select: [:p | (p selectors difference: selectors) isEmpty])
 				ofBehavior: aClass]!
@@ -773,7 +788,7 @@ fileOutPackage: aPackage methodsOfClass: aClass
 fileOutPackageClassDefinitions: aPackage
 	| classes |
 	classes := self packageClassesInFileoutOrder: aPackage.
-	classes isEmpty ifTrue: [^self].
+	classes isEmpty ifTrue: [^classes].
 	self
 		emitComment: 'Class Definitions';
 		cr.	"The namespaces should be defined first as these may be referenced by other class definitions, then SharedPools, then all other classes."
@@ -797,20 +812,8 @@ fileOutPackageClassDefinitions: aPackage
 				ifFalse: 
 					[self
 						fileOutBasicDefinitionOfClass: each;
-						cr]]!
-
-fileOutPackageClasses: aPackage
-	| classes |
-	classes := self packageClassesInFileoutOrder: aPackage.
-	classes isEmpty ifTrue: [^self].
-	self emitComment: 'Classes'.
-	classes do: 
-			[:aClass |
-			self
-				fileOutAttributesOfClass: aClass;
-				cr;
-				fileOutPackage: aPackage methodsOfClass: aClass;
-				fileOutPackage: aPackage methodsOfClass: aClass class]!
+						cr]].
+	^classes!
 
 fileOutPackageMethods: aPackage
 	"Private - File out the loose methods owned by the specified package to the receiver's stream."
@@ -860,19 +863,19 @@ storeCommentString: aString forPackage: aPackage
 	^self subclassResponsibility! !
 
 !Kernel.SourceFiler categoriesForMethods!
-emitPackageBinaryVariables:!private!source filing! !
-emitPackageDescription:!private!source filing-pax! !
-fileOutClass:ofPackage:!public!source filing! !
-fileOutDefinitionOfPackage:!public! !
-fileOutPackage:!public! !
-fileOutPackage:methodsOfClass:!private! !
-fileOutPackageClassDefinitions:!private! !
-fileOutPackageClasses:!private! !
-fileOutPackageMethods:!private! !
-fileOutPackageSourceVariables:!private! !
-fileOutPackageVariableAliases:!private! !
-packageClassesInFileoutOrder:!private! !
-storeCommentString:forPackage:!public!source filing! !
+emitPackageBinaryVariables:!private!source filing-file out! !
+emitPackageDescription:!private!source filing-file out!source filing-pax! !
+fileOutClass:ofPackage:!public!source filing-file out! !
+fileOutDefinitionOfPackage:!public!source filing-file out! !
+fileOutPackage:!public!source filing-file out! !
+fileOutPackage:classes:!private!source filing-file out! !
+fileOutPackage:methodsOfClass:!private!source filing-file out! !
+fileOutPackageClassDefinitions:!private!source filing-file out! !
+fileOutPackageMethods:!private!source filing-file out! !
+fileOutPackageSourceVariables:!private!source filing-file out! !
+fileOutPackageVariableAliases:!private!source filing-file out! !
+packageClassesInFileoutOrder:!helpers!private! !
+storeCommentString:forPackage:!public!source access! !
 !
 
 !Kernel.SourceManager methodsFor!

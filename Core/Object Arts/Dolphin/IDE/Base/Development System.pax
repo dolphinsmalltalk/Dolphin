@@ -5931,8 +5931,8 @@ emitResourceMethodHeader: aResourceIdentifier
 		cr! !
 
 !Kernel.SourceFiler categoriesForMethods!
-emitResourceMethod:literals:!private!source filing! !
-emitResourceMethodHeader:!private!source filing! !
+emitResourceMethod:literals:!private!source filing-file out! !
+emitResourceMethodHeader:!private!source filing-file out! !
 !
 
 !Kernel.StackFrame methodsFor!

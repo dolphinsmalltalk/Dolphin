@@ -119,20 +119,20 @@ atEnd!public!testing! !
 close!operations!public! !
 cr!accessing!public! !
 emitClassName:on:!private!source filing-file out! !
-emitGUIDOfClass:!private!source filing! !
+emitGUIDOfClass:!private!source filing-file out! !
 evaluationContext!accessing!public! !
 evaluationContext:!accessing!public! !
-fileIn!public!source filing! !
-fileOutBasicDefinitionOfClass:!public!source filing! !
+fileIn!public!source filing-file in! !
+fileOutBasicDefinitionOfClass:!public!source filing-file out! !
 flush!operations!public! !
-getSourceFromDescriptor:!public!source filing! !
+getSourceFromDescriptor:!public!source access! !
 isSourceOnly!accessing!public! !
 isSourceOnly:!accessing!public! !
 setStream:!initializing!private! !
 setToEnd!positioning!public! !
-sourcePositionFromDescriptor:!private!source filing! !
-storeSource:for:!private!source filing! !
-storeSourceString:forMethod:!public!source filing! !
+sourcePositionFromDescriptor:!helpers!private! !
+storeSource:for:!private!source access! !
+storeSourceString:forMethod:!public!source access! !
 stream!accessing!public! !
 !
 

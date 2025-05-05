@@ -157,29 +157,30 @@ getSourceFromDescriptor: sourceDescriptor
 	^self nextChunk!
 
 nextChunk
-	"Private - Answer a <String> containing the text up to the next chunk marker in the receiver's source stream,
-	undoubling embedded chunk markers. Leading white space is skipped. 
-	Implementation Note: String concatenation is more efficient here in the loop body because most 
-	chunks do not include embedded chunk markers."
+	"Private - Answer a <String> containing the text up to the next chunk marker in the receiver's source stream, undoubling embedded chunk markers. Leading white space is skipped."
 
-	| chunk |
+	"Implementation Note: String concatenation is more efficient here in the loop body because most chunks do not include embedded chunk markers."
+
 	stream skipSeparators.
 	^self normalizeLineEndings
-		ifTrue: 
-			[| next |
-			chunk := String writeStream: 512.
-			[(next := stream nextAvailable) isNil or: [next == $!! and: [(stream peekFor: $!!) not]]] whileFalse: 
-					[((next == $\r and: 
-							[stream peekFor: $\n.
-							true]) or: [next == $\n])
-						ifTrue: [chunk nextPutAll: String.LineDelimiter]
-						ifFalse: [chunk nextPut: next]].
-			chunk contents]
+		ifTrue: [self nextChunkNormalizeEols]
 		ifFalse: 
-			["Much faster, as we don't need to read and compare each character individually"
+			[| chunk |
+			"Much faster, as we don't need to read and compare each character individually"
 			chunk := stream upTo: $!!.
 			[stream atEnd or: [(stream peekFor: $!!) not]] whileFalse: [chunk := chunk , '!!' , (stream upTo: $!!)].
 			chunk]!
+
+nextChunkNormalizeEols
+	| chunk next |
+	chunk := String writeStream: 512.
+	[(next := stream nextAvailable) isNil or: [next == $!! and: [(stream peekFor: $!!) not]]] whileFalse: 
+			[((next == $\r and: 
+					[stream peekFor: $\n.
+					true]) or: [next == $\n])
+				ifTrue: [chunk nextPutAll: String.LineDelimiter]
+				ifFalse: [chunk nextPut: next]].
+	^chunk contents!
 
 nextChunkPut: aString 
 	"Private - Print the string, aString, to the <puttableStream> aWriteStream as a chunk. 
@@ -290,17 +291,18 @@ environment:!accessing!public! !
 fileIn!public!source filing-file in! !
 fileOutBasicDefinitionOfClass:!public!source filing-file out! !
 fileOutExpression:!public!source filing-file out! !
-getSourceFromDescriptor:!public!source filing-file in! !
+getSourceFromDescriptor:!public!source access! !
 nextChunk!private!source filing-file in! !
+nextChunkNormalizeEols!private!source filing-file in! !
 nextChunkPut:!private!source filing-file out! !
 normalizeLineEndings!accessing!public! !
 normalizeLineEndings:!accessing!public! !
 printBasicDefinitionOfClass:!public!source filing-file out! !
 printBasicDefinitionOfClass:on:!private!source filing-file out! !
-printVariables:string:on:!private!source filing-file out! !
-sourceDescriptorForIndex:position:!private!source filing-file in! !
-specialBehaviorAttributesOfClass:!constants!public!source filing! !
-storeSourceString:forMethod:!private!source filing-file out! !
+printVariables:string:on:!helpers!private! !
+sourceDescriptorForIndex:position:!helpers!private! !
+specialBehaviorAttributesOfClass:!helpers!private! !
+storeSourceString:forMethod:!private!source access! !
 !
 
 !Kernel.AbstractChunkSourceFiler class methodsFor!

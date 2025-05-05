@@ -325,7 +325,10 @@ classDefinitionsFileName
 classes
 	"Answer a Set of the Classes owned by the receiver."
 
-	^classNames collect: [:className | self classFromName: className]!
+	| classes |
+	classes := IdentitySet new: classNames size.
+	classNames do: [:className | classes add: className value].
+	^classes!
 
 classesDo: operation 
 	"Evaluate the <monadicValuable>, operation, for each of the classes owned by the receiver. 
@@ -334,11 +337,12 @@ classesDo: operation
 	^classNames do: [:each | operation value: each value]!
 
 classesInHierarchyOrder
-	"Private - Answer an <sequencedReadableCollection> of the
-	receiver's ownded classes in the order that they would be
-	visited by a depth-first traversal of the class hierarchy."
+	"Private - Answer an <sequencedReadableCollection> of the receiver's owned classes in the order that they would be visited by a depth-first traversal of the class hierarchy."
 
-	^self hierarchyOrderOfClasses: self classes!
+	| classes |
+	classes := self classes.
+	classes size < 2 ifTrue: [^classes].
+	^Smalltalk allClasses select: [:each | classes includes: each]!
 
 classFromName: className
 	"Private - Answer the Class object which className encodes.
@@ -649,14 +653,6 @@ hasUncommittedPrerequisites
 	as it will not be reloadable into an image without the uncommitted objects."
 
 	^self allPrerequisites includes: _Uncommitted.!
-
-hierarchyOrderOfClasses: aCollection
-	"Private - Answer an OrderedCollection of all the Classes owned
-	by the receiver intersected with the collection in classes. 
-	The classes are ordered by their depth in the class hierarchy, with Object
-	being first if it is owned by the receiver."
-
-	^Smalltalk allClasses intersection: aCollection!
 
 imageStripperBytes
 	^imageStripperBytes!
@@ -2014,7 +2010,6 @@ globalNames!legacy package loading!public! !
 hasCyclicPrerequisites!private!testing! !
 hasCyclicPrerequisites:safe:!private!testing! !
 hasUncommittedPrerequisites!private!testing! !
-hierarchyOrderOfClasses:!helpers!private! !
 imageStripperBytes!accessing!private! !
 imageStripperBytes:!accessing!private! !
 includesClass:!public!testing! !

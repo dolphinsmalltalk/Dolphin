@@ -385,23 +385,23 @@ storeSource: aString for: aSourceObject
 !Kernel.AbstractChunkSourceFiler categoriesForMethods!
 emitBinaryVariableDefinition:!public!source filing-file out! !
 emitCategories:for:in:!private!source filing-pax! !
-emitCategoriesForMethods:of:!public!source filing! !
+emitCategoriesForMethods:of:!public!source filing-file out! !
 emitCategoriesOfClass:!private!source filing-file out! !
 emitCategoriesOfMethod:!private!source filing-file out! !
 emitComment:!private!source filing-file out! !
-emitCommentOfClass:!public!source filing! !
-emitFileOutHeader!private!source filing! !
+emitCommentOfClass:!public!source filing-file out! !
+emitFileOutHeader!private!source filing-file out! !
 emitMethod:!private!source filing-file out! !
-emitSpecialBehaviorAttributesOfClass:!public!source filing! !
-fileOutAttributesOfClass:!public!source filing! !
-fileOutMessages:ofBehavior:!public!source filing! !
+emitSpecialBehaviorAttributesOfClass:!public!source filing-file out! !
+fileOutAttributesOfClass:!public!source filing-file out! !
+fileOutMessages:ofBehavior:!public!source filing-file out! !
 fileOutProtocols:ofBehavior:!public!source filing-file out! !
-logEvaluation:!private!source filing-file out! !
-logRemoveSelector:of:!development!helpers!public! !
-logRemoveSelectors:of:!development!helpers!public! !
-storeCommentString:forClass:!public!source filing-file out! !
-storeCommentString:forPackage:!public!source filing-file out! !
-storeSource:for:!private!source filing-file out! !
+logEvaluation:!development!operations-logging!private! !
+logRemoveSelector:of:!development!operations-logging!public! !
+logRemoveSelectors:of:!development!operations-logging!public! !
+storeCommentString:forClass:!public!source access! !
+storeCommentString:forPackage:!public!source access! !
+storeSource:for:!private!source access! !
 !
 
 !Kernel.BootSessionManager methodsFor!
@@ -506,18 +506,15 @@ emitFileOutHeader
 	self subclassResponsibility!
 
 emitMessages: aCollection ofBehavior: aClass
-	| methods sortedSelectors |
-	sortedSelectors := aCollection asSortedArray: SortedCollection caseSensitiveSortBlock.
-	methods := sortedSelectors collect: 
-					[:selector |
-					| method |
-					self
-						cr;
-						cr.
-					method := aClass compiledMethodAt: selector.
-					self emitMethod: method.
-					method].
-	^methods!
+	^(aCollection asSortedArray: SortedCollection caseSensitiveSortBlock) collect: 
+			[:selector |
+			| method |
+			self
+				cr;
+				cr.
+			method := aClass compiledMethodAt: selector.
+			self emitMethod: method.
+			method]!
 
 emitMethod: aCompiledMethod 
 	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, to the source stream."
@@ -608,25 +605,25 @@ storeCommentString: aString forClass: aClass
 	^self subclassResponsibility! !
 
 !Kernel.SourceFiler categoriesForMethods!
-collateClass:against:!private!source filing! !
+collateClass:against:!helpers!private! !
 emitCategoriesOfClass:!private!source filing-file out! !
 emitCategoriesOfMethod:!private!source filing-file out! !
-emitComment:!operations-logging!private! !
-emitFileOutHeader!private!source filing! !
-emitMessages:ofBehavior:!private!source filing! !
-emitMethod:!private!source filing! !
-fileOutAllMethodsOfBehavior:!public!source filing! !
-fileOutAttributesOfClass:!public!source filing! !
-fileOutClass:!public!source filing! !
-fileOutDefinitionOfClass:!public! !
-fileOutExpression:!public! !
-fileOutMessages:ofBehavior:!public! !
-fileOutMethods:!public! !
-fileOutProtocols:ofBehavior:!public! !
-fileOutResource:!public! !
-logRemoveSelector:of:!development!helpers!public! !
-logRemoveSelectors:of:!development!helpers!public! !
-storeCommentString:forClass:!public!source filing! !
+emitComment:!private!source filing-file out! !
+emitFileOutHeader!private!source filing-file out! !
+emitMessages:ofBehavior:!private!source filing-file out! !
+emitMethod:!private!source filing-file out! !
+fileOutAllMethodsOfBehavior:!public!source filing-file out! !
+fileOutAttributesOfClass:!public!source filing-file out! !
+fileOutClass:!public!source filing-file out! !
+fileOutDefinitionOfClass:!public!source filing-file out! !
+fileOutExpression:!public!source filing-file out! !
+fileOutMessages:ofBehavior:!public!source filing-file out! !
+fileOutMethods:!public!source filing-file out! !
+fileOutProtocols:ofBehavior:!public!source filing-file out! !
+fileOutResource:!public!source filing-file out! !
+logRemoveSelector:of:!development!operations-logging!public! !
+logRemoveSelectors:of:!development!operations-logging!public! !
+storeCommentString:forClass:!public!source access! !
 !
 
 !Kernel.SourceManager methodsFor!
