@@ -897,6 +897,18 @@ testRefersToLiteral
 	self deny: (str refersToLiteral: #abc).
 	self deny: (str refersToLiteral: 'ab')!
 
+testResize
+	| subject |
+	super testResize.
+	subject := self assimilateString: 'a£b'.
+	self assert: (subject copy resize: subject size) equals: subject.
+	self assert: (subject copy resize: 1) equals: 'a'.
+	self assert: (subject copy resize: (self assimilateString: 'a£') size) equals: 'a£'.
+	self assert: (subject copy resize: (self assimilateString: 'a£bd') size)
+		equals: (subject copyWith: $\0).
+	subject beImmutableObject.
+	self should: [subject resize: 1] raise: Processor constWriteSignal!
+
 testReverse
 	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings, and with embedded nulls"
 
@@ -1457,6 +1469,7 @@ testOrdinalCaseInsensitiveComparison!public!unit tests! !
 testOrdinalCaseInsensitiveEquality!public!unit tests! !
 testReadFrom!public!unit tests! !
 testRefersToLiteral!public!unit tests! !
+testResize!public!unit tests! !
 testReverse!public!unit tests! !
 testReversedFromTo!public!unit tests! !
 testReverseDo!public!unit tests! !

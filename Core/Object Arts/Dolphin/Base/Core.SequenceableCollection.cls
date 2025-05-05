@@ -1154,12 +1154,14 @@ replaceFrom: start to: stop withObject: replacementElement
 	^replacementElement!
 
 resize: anInteger
-	"Private - Resize the receiver to accommodate anInteger elements.
-	Answer the receiver."
+	"Private - Resize the receiver to accommodate anInteger elements. Answer the receiver."
 
 	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	(self copyEmpty: anInteger)
-		replaceFrom: 1 to: self size with: self startingAt: 1;
+		replaceFrom: 1
+			to: (self size min: anInteger)
+			with: self
+			startingAt: 1;
 		become: self!
 
 reverse

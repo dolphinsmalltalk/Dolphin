@@ -320,8 +320,9 @@ Oop __fastcall LargeInteger::Normalize(LargeIntegerOTE* oteLI)
 		}
 		// else More than one digit required, so cannot possibly be SmallInteger
 
+		// If we get here, then we are shrinking the object
 		ASSERT(last+1 < size);
-		ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteLI), (last+1)*sizeof(uint32_t));
+		ObjectMemory::basicResize<0>(reinterpret_cast<POTE>(oteLI), (last + 1) * sizeof(uint32_t) + SizeOfPointers(0));
 		// Drop through to return the shrunken object
 	}
 	else
@@ -553,7 +554,7 @@ LargeIntegerOTE* LargeInteger::Add(const LargeIntegerOTE* oteLI, const SmallInte
 	if (sumSign != requiredSign)
 	{
 		// Add extra digit necessary to represent the sign
-		sumDigits = reinterpret_cast<LargeInteger*>(ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteSum), (numLimbs + 1) << 2))->m_digits;
+		sumDigits = reinterpret_cast<LargeInteger*>(ObjectMemory::resize<false>(reinterpret_cast<BytesOTE*>(oteSum), (numLimbs + 1) << 2))->m_digits;
 		sumDigits[numLimbs] = requiredSign;
 	}
 
@@ -617,7 +618,7 @@ LargeIntegerOTE* LargeInteger::Add(const LargeIntegerOTE* oteOp1, const LargeInt
 	if (sumSign != requiredSign)
 	{
 		// Add extra digit necessary to represent the sign
-		sumDigits = reinterpret_cast<LargeInteger*>(ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteSum), (size1 + 1) << 2))->m_digits;
+		sumDigits = reinterpret_cast<LargeInteger*>(ObjectMemory::resize<false>(reinterpret_cast<BytesOTE*>(oteSum), (size1 + 1) << 2))->m_digits;
 		sumDigits[size1] = requiredSign;
 	}
 
@@ -665,7 +666,7 @@ LargeIntegerOTE* LargeInteger::Sub(const LargeIntegerOTE* oteLI, SmallInteger op
 		// Not at 32-bit two's complement number, so there must be a remaining borrow...
 
 		// Add extra digit necessary to represent the sign
-		difference = reinterpret_cast<LargeInteger*>(ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteDifference), (differenceSize + 1) << 2))->m_digits;
+		difference = reinterpret_cast<LargeInteger*>(ObjectMemory::resize<false>(reinterpret_cast<BytesOTE*>(oteDifference), (differenceSize + 1) << 2))->m_digits;
 		difference[differenceSize] = HighSLimb(accum);
 	}
 
@@ -714,7 +715,7 @@ LargeIntegerOTE* LargeInteger::Sub(const LargeIntegerOTE* oteLI, const LargeInte
 		// Not at 32-bit two's complement number, so there must be a remaining borrow...
 
 		// Add extra digit necessary to represent the sign
-		difference = reinterpret_cast<LargeInteger*>(ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteDifference), (differenceSize + 1) << 2))->m_digits;
+		difference = reinterpret_cast<LargeInteger*>(ObjectMemory::resize<false>(reinterpret_cast<BytesOTE*>(oteDifference), (differenceSize + 1) << 2))->m_digits;
 		difference[differenceSize] = carry;
 	}
 

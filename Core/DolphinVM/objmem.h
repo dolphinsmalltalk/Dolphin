@@ -112,7 +112,7 @@ public:
 
 	// More useful (and safe) entry points from Interpreter
 	static VariantObject* resize(PointersOTE* objectPointer, size_t newPointers, bool bRefCount);
-	static VariantByteObject* resize(BytesOTE* objectPointer, size_t newBytes);
+	template <bool nullTerminated>static VariantByteObject* resize(BytesOTE* objectPointer, size_t newBytes);
 
 	static BytesOTE* __fastcall shallowCopy(BytesOTE* ote);
 	static PointersOTE* __fastcall shallowCopy(PointersOTE* ote);
@@ -1037,12 +1037,8 @@ __forceinline ByteElementSize ObjectMemory::GetBytesElementSize(BytesOTE * ote)
 {
 	ASSERT(ote->isBytes());
 
-	int shift = 0;
 	// Null-terminated classes (strings) have an encoding size
-	// TODO: Should be using revised InstanceSpec here, not string encoding
-	if (ote->m_flags.m_weakOrZ)
-	{
-		shift = (int)reinterpret_cast<const StringClass*>(ote->m_oteClass->m_location)->Encoding << 1;
-	}
-	return static_cast<ByteElementSize>((0x90 >> shift) & 0x3);
+	return ote->m_flags.m_weakOrZ
+		? static_cast<ByteElementSize>((0x90 >> ((int)reinterpret_cast<const StringClass*>(ote->m_oteClass->m_location)->Encoding << 1)) & 0x3)
+		: ByteElementSize::Bytes;
 }

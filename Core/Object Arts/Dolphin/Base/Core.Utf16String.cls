@@ -311,9 +311,6 @@ replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: star
 				do: [:i | self at: i put: (aReadableString at: offset + i)]]
 		ifFalse: [startInteger to: stopInteger do: [:i | self at: i put: (aReadableString at: offset + i)]]!
 
-resize: anInteger
-	^super resize: anInteger * 2!
-
 reversedFrom: startInteger to: stopInteger
 	"Answer a copy of the receiver but with its elements in reverse order."
 
@@ -402,7 +399,6 @@ isTrailSurrogate:!public! !
 maxEncoding!constants!private! !
 nextIndexOfCharacter:from:to:!private!searching! !
 replaceFrom:to:with:startingAt:!public!replacing! !
-resize:!mutating!public! !
 reversedFrom:to:!copying!public! !
 skipEncodingMarkerFrom:!encode/decode!private! !
 strlen!accessing!private! !

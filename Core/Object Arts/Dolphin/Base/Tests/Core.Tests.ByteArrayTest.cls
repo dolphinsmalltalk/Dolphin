@@ -157,6 +157,27 @@ testMixedConcatenation
 	self assert: #[] , Character dolphin asUtf8String equals: Character dolphin asUtf8String asByteArray.
 	self assert: #[], Character dolphin asUtf16String equals: Character dolphin asUtf16String asByteArray!
 
+testResize
+	super testResize.
+	self assert: (#[] copy resize: 0) equals: #[].
+	self assert: (#[] copy resize: 1) equals: #[0].
+	self assert: (#[] copy resize: 2) equals: #[0 0].
+	self assert: (#[1] copy resize: 1) equals: #[1].
+	self assert: (#[1] copy resize: 0) equals: #[].
+	self assert: (#[1] copy resize: 2) equals: #[1 0].
+	self assert: (#[1] copy resize: 3) equals: #[1 0 0].
+	self assert: (#[1 2] copy resize: 1) equals: #[1].
+	self assert: (#[1 2] copy resize: 2) equals: #[1 2].
+	self assert: (#[1 2] copy resize: 3) equals: #[1 2 0].
+	self assert: (#[1 2] copy resize: 4) equals: #[1 2 0 0].
+	self assert: (#[1 2 3] copy resize: 0) equals: #[].
+	self assert: (#[1 2 3] copy resize: 1) equals: #[1].
+	self assert: (#[1 2 3] copy resize: 2) equals: #[1 2].
+	self assert: (#[1 2 3] copy resize: 3) equals: #[1 2 3].
+	self assert: (#[1 2 3] copy resize: 4) equals: #[1 2 3 0].
+	self assert: (#[1 2 3] copy resize: 5) equals: #[1 2 3 0 0].
+	self should: [#[1 2] resize: 1] raise: Processor constWriteSignal!
+
 testStbRoundTrip
 	| subject bytes rehydrated |
 	subject := (0 to: 255) asByteArray.
@@ -229,6 +250,7 @@ testInt32AtOffsetPut!public!unit tests! !
 testInt8AtOffset!public!unit tests! !
 testInt8AtOffsetPut!public!unit tests! !
 testMixedConcatenation!public! !
+testResize!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
 testStlRoundTrip!public!unit tests! !
 testUInt16AtOffsetPut!public!unit tests! !

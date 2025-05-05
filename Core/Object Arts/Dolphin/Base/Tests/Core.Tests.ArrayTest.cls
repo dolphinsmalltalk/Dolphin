@@ -100,6 +100,27 @@ testMixedConcatenation
 						self deny: eachArray identicalTo: result.
 						self assert: result class identicalTo: Array]]!
 
+testResize
+	super testResize.
+	self assert: (#() copy resize: 0) equals: #().
+	self assert: (#() copy resize: 1) equals: #(nil).
+	self assert: (#() copy resize: 2) equals: #(nil nil).
+	self assert: (#(1) copy resize: 1) equals: #(1).
+	self assert: (#(1) copy resize: 0) equals: #().
+	self assert: (#(1) copy resize: 2) equals: #(1 nil).
+	self assert: (#(1) copy resize: 3) equals: #(1 nil nil).
+	self assert: (#(1 2) copy resize: 1) equals: #(1).
+	self assert: (#(1 2) copy resize: 2) equals: #(1 2).
+	self assert: (#(1 2) copy resize: 3) equals: #(1 2 nil).
+	self assert: (#(1 2) copy resize: 4) equals: #(1 2 nil nil).
+	self assert: (#(1 2 3) copy resize: 0) equals: #().
+	self assert: (#(1 2 3) copy resize: 1) equals: #(1).
+	self assert: (#(1 2 3) copy resize: 2) equals: #(1 2).
+	self assert: (#(1 2 3) copy resize: 3) equals: #(1 2 3).
+	self assert: (#(1 2 3) copy resize: 4) equals: #(1 2 3 nil).
+	self assert: (#(1 2 3) copy resize: 5) equals: #(1 2 3 nil nil).
+	self should: [#(1 2) resize: 1] raise: Processor constWriteSignal!
+
 testStoreOnLiteral
 	| stream storeString rehydrated array |
 	stream := String writeStream.
@@ -207,6 +228,7 @@ testCyclicRefPrinting!public! !
 testIsLiteral!public!unit tests! !
 testIsSelfEvaluating!public!unit tests! !
 testMixedConcatenation!public! !
+testResize!public!unit tests! !
 testStoreOnLiteral!public!unit tests! !
 testStoreOnNonLiteral!public!unit tests! !
 testWith!public!unit tests! !

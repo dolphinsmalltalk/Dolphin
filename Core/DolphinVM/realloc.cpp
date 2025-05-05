@@ -134,35 +134,82 @@ POBJECT ObjectMemory::resizeVirtual(OTE* ote, size_t newByteSize)
 ///////////////////////////////////////////////////////////////////////////////
 // Safe public resizing functions.
 
-VariantByteObject* ObjectMemory::resize(BytesOTE* ote, size_t newByteSize)
+template <bool IsNullTerminated>VariantByteObject* ObjectMemory::resize(BytesOTE* ote, size_t newSize)
 {
 	ASSERT(!ObjectMemoryIsIntegerObject(ote) && ote->isBytes());
 
-	auto totalByteSize = newByteSize + SizeOfPointers(0);	// Add header size
+	auto oldByteSize = ote->bytesSizeForUpdate();
 
-	auto pByteObj = ote->m_location;
-	auto oldByteSize = ote->getSize();
-
-	if (ote->isNullTerminated())
+	if (oldByteSize >= 0)
 	{
-		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<NULLTERMSIZE>(reinterpret_cast<POTE>(ote), totalByteSize));
-		ASSERT(pByteObj != nullptr);	// Null-terminated objects should always be resizeable
-		__assume(pByteObj != nullptr);
+		auto pByteObj = ote->m_location;
+		size_t newByteSize;
+		if (IsNullTerminated)
+		{
+			switch (reinterpret_cast<StringClass*>(ote->m_oteClass->m_location)->Encoding)
+			{
+			case StringEncoding::Ansi:
+			case StringEncoding::Utf8:
+				newByteSize = newSize + SizeOfPointers(0);
+				if (newByteSize != static_cast<ptrdiff_t>(oldByteSize))
+				{
+					pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<NULLTERMSIZE>(reinterpret_cast<POTE>(ote), newByteSize));
+					pByteObj->m_fields[newByteSize] = 0;
+				}
+				break;
 
-		// Ensure we have a null-terminator
-		*reinterpret_cast<NULLTERMTYPE*>(&pByteObj->m_fields[totalByteSize]) = 0;
+			case StringEncoding::Utf16:
+				newByteSize = (newSize << 1) + SizeOfPointers(0);
+				if (newByteSize != static_cast<ptrdiff_t>(oldByteSize))
+				{
+					pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<sizeof(char16_t)>(reinterpret_cast<POTE>(ote), newByteSize));
+					*reinterpret_cast<char16_t*>(&pByteObj->m_fields[newByteSize]) = 0;
+				}
+				break;
+
+			case StringEncoding::Utf32:
+				newByteSize = (newSize << 2) + SizeOfPointers(0);
+				if (newByteSize != static_cast<ptrdiff_t>(oldByteSize))
+				{
+					pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<sizeof(char32_t)>(reinterpret_cast<POTE>(ote), newByteSize));
+					*reinterpret_cast<char32_t*>(&pByteObj->m_fields[newByteSize]) = 0;
+				}
+				break;
+
+			default:
+				__assume(false);
+				break;
+			}
+
+			ASSERT(pByteObj != nullptr);	// Null-terminated objects should always be resizeable
+			__assume(pByteObj != nullptr);
+		}
+		else
+		{
+			newByteSize = newSize + SizeOfPointers(0);
+			if (newByteSize != static_cast<ptrdiff_t>(oldByteSize))
+			{
+				pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<0>(reinterpret_cast<POTE>(ote), newByteSize));
+			}
+		}
+
+		if (pByteObj && newByteSize > oldByteSize)
+		{
+			// The object grew, so ensure the new bytes are initialized to zero
+			ZeroMemory(reinterpret_cast<uint8_t*>(pByteObj) + oldByteSize, newByteSize - oldByteSize);
+		}
+
+		return pByteObj;
 	}
 	else
-		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<0>(reinterpret_cast<POTE>(ote), totalByteSize));
-
-	if (pByteObj && totalByteSize > oldByteSize)
 	{
-		// The object grew, so ensure it is properly initialized
-		ZeroMemory(reinterpret_cast<uint8_t*>(pByteObj)+oldByteSize, totalByteSize-oldByteSize);
+		// Immutable
+		return nullptr;
 	}
-
-	return pByteObj;
 }
+
+template VariantByteObject* ObjectMemory::resize<true>(BytesOTE* ote, size_t newSize);
+template VariantByteObject* ObjectMemory::resize<false>(BytesOTE* ote, size_t newSize);
 
 VariantObject* ObjectMemory::resize(PointersOTE* ote, size_t newPointers, bool bRefCount)
 {

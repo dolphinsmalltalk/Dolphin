@@ -107,7 +107,6 @@ Oop* PRIMCALL Interpreter::primitiveSize(Oop* const sp, primargcount_t)
 	{
 		size_t shift = static_cast<size_t>(ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)));
 		*sp = integerObjectOf(bytesSize >> shift);
-
 		return sp;
 	}
 }
@@ -197,24 +196,23 @@ Oop* PRIMCALL Interpreter::primitiveResize(Oop* const sp, primargcount_t)
 	}
 	else
 	{
-		ptrdiff_t currentByteSize = oteReceiver->bytesSizeForUpdate();
-		if (currentByteSize == static_cast<ptrdiff_t>(newSize))
-		{
-			// No change, succeed
-			return sp - 1;
-		}
-		
-		if (currentByteSize < 0)
-		{
-			// Immutable
-			return primitiveFailure(_PrimitiveFailureCode::AccessViolation);
-		}
-
 		// Changing size of mutable byte object
-		VariantByteObject* pNew = ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteReceiver), newSize);
-		if (pNew == nullptr && newSize != 0)
+		VariantByteObject* pNew = oteReceiver->isNullTerminated()
+			? ObjectMemory::resize<true>(reinterpret_cast<BytesOTE*>(oteReceiver), newSize)
+			: ObjectMemory::resize<false>(reinterpret_cast<BytesOTE*>(oteReceiver), newSize);
+
+		if (pNew == nullptr)
 		{
-			return primitiveFailure(_PrimitiveFailureCode::NoMemory);
+			if (oteReceiver->bytesSizeForUpdate() < 0)
+			{
+				// Immutable
+				return primitiveFailure(_PrimitiveFailureCode::AccessViolation);
+			}
+
+			if (newSize != 0)
+			{
+				return primitiveFailure(_PrimitiveFailureCode::NoMemory);
+			}
 		}
 	}
 

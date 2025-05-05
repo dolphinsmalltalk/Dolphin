@@ -360,15 +360,17 @@ basicResize: anInteger
 	"Private - Resize the receiver to accommodate anInteger indexable instance variables.
 	As #resize:, but not to be overridden.
 
-	Primitive failure reason:
-		0 -	anInteger is not a positive SmallInteger
-		1 -	the receiver is not of an indexable (variable sized) class."
+	Primitive failure codes:
+		InvalidParameter1 		- anInteger is not a positive SmallInteger
+		ObjectTypeMismatch 	- the receiver is not of an indexable (variable sized) class.
+		AccessViolation		- the receiver is immutable
+		NoMemory			- insufficient memory to allocate new object body of the requested size"
 
 	<primitive: 101>
 	| answer |
 	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	answer := self class new: anInteger.
-	1 to: anInteger do: [:i | answer basicAt: i put: (self basicAt: i)].
+	1 to: (anInteger min: self size) do: [:i | answer basicAt: i put: (self basicAt: i)].
 	self become: answer!
 
 basicShallowCopy
@@ -1188,28 +1190,23 @@ removePropertyAt: aSymbol ifAbsent: aBlock
 	^self propertyManager removePropertyOf: self at: aSymbol ifAbsent: aBlock.!
 
 resize: anInteger
-	"Resize the receiver to accommodate anInteger indexable instance variables. If anInteger
-	is greater than the current size of the receiver, then new, safely initialized, elements are 
-	added to the end of the receiver. If anInteger is less that the current size of the receiver, 
-	then elements are removed from the end of the receiver.
+	"Resize the receiver to accommodate anInteger indexable instance variables. If anInteger is greater than the current size of the receiver, then new, safely initialized, elements are added to the end of the receiver. If anInteger is less that the current size of the receiver, then elements are removed from the end of the receiver.
 
-	This is one of the relatively rare Dolphin methods that 'internally' modifies its receiver, 
-	not a copy of it, so all objects referencing the receiver will see the change - i.e. it has 
-	potential side effects.
+	This is one of the relatively rare Dolphin methods that 'internally' modifies its receiver, not a copy of it, so all objects referencing the receiver will see the change - i.e. it has potential side effects.
 
-	Note also that this implementation is too simple for many objects (e.g. Sets) which will need
-	to override it.
+	Note also that this implementation is too simple for many objects (e.g. Sets), which will need to override it.
 
-	Primitive failure reason:
-		InvalidParameter1	- anInteger is not a positive SmallInteger
+	Primitive failure codes:
+		InvalidParameter1		- anInteger is not a positive SmallInteger
 		ObjectTypeMismatch	- the receiver is not of an indexable (variable sized) class.
-		AccessViolation		- the receiver is immutable."
+		AccessViolation		- the receiver is immutable.
+		NoMemory			- insufficient memory to allocate new object body of the requested size."
 
 	<primitive: 101>
 	| answer |
 	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	answer := self class new: anInteger.
-	1 to: anInteger do: [:i | answer at: i put: (self at: i)].
+	1 to: (anInteger min: self size) do: [:i | answer at: i put: (self at: i)].
 	self become: answer!
 
 respondsTo: selector
