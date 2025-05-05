@@ -17,19 +17,24 @@ Core.IdentitySet comment: ''!
 !Core.IdentitySet methodsFor!
 
 findElementOrNil: anObject
-	"Private - Answer the index of the given object in the receiver, or, if not found,
-	the index of the first empty slot including and after that to which the object hashes.
-	Implementation Note: This is a clone of Set>>findElementOrNil: except for the comparison of the elements
-	which use identity (#identityHash and #==) instead of equality (#hash and #=). 
+	"Private - Answer the index of the given object in the receiver, or, if not found, the index of the first empty slot including and after that to which the object hashes."
+
+	"Implementation Note: This is a clone of Set>>findElementOrNil:, except for the comparison of the elements which use identity (#identityHash and #==) instead of equality (#hash and #=). 
 	The entire method is copied for performance reasons."
 
-	| capacity index |
-	index := anObject identityHash \\ (capacity := self basicSize) + 1.
+	| index element capacity start |
+	start := index := anObject identityHash \\ (capacity := self basicSize) + 1.
+	
+	[((element := self basicAt: index) isNil or: [anObject == element]) ifTrue: [^index].
+	(index := index + 1) > capacity]
+			whileFalse.
+	"Wraparound"
+	index := 0.
+	[(index := index + 1) == start]
+		whileFalse: [((element := self basicAt: index) isNil or: [anObject == element]) ifTrue: [^index]].
 
-	[| element |
-	(element := self basicAt: index) isNil or: [anObject == element]]
-			whileFalse: [index := index \\ capacity + 1].
-	^index!
+	"Not found and no spare capacity slots - this should not happen"
+	^0!
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1!

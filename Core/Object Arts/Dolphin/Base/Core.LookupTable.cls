@@ -146,21 +146,23 @@ findElementOrNil: anObject
 	^self findKeyOrNil: anObject!
 
 findKeyOrNil: anObject
-	"Private - Answer the index of the given key in the receiver, or, if not found,
-	the index of the first empty slot including and after that to which 
-	the key hashes."
+	"Private - Answer the index of the given key in the receiver, or, if not found, the index of the first empty slot including and after that to which the key hashes."
 
-	"Implementation Note: Similar to Dictionary>>findKeyOrNil:, except that the 
-	private elements of the receiver are not associations, but the keys themselves.
-	Subclasses which use identity for key comparison and hashing MUST override this method."
+	"Implementation Note: Similar to Dictionary>>findKeyOrNil:, except that the private elements of the receiver are not associations, but the keys themselves. Subclasses which use identity for key comparison and hashing must override this method."
 
-	| capacity index |
-	index := anObject hash \\ (capacity := self basicSize) + 1.
+	| index key capacity start |
+	start := index := anObject hash \\ (capacity := self basicSize) + 1.
+	
+	[((key := self basicAt: index) isNil or: [key = anObject]) ifTrue: [^index].
+	(index := index + 1) > capacity]
+			whileFalse.
+	"Wraparound"
+	index := 0.
+	[(index := index + 1) == start]
+		whileFalse: [((key := self basicAt: index) isNil or: [key = anObject]) ifTrue: [^index]].
 
-	[| key |
-	(key := self basicAt: index) isNil or: [key = anObject]]
-			whileFalse: [index := index \\ capacity + 1].
-	^index!
+	"Not found and no spare capacity slots - this should not happen"
+	^0!
 
 identityIncludes: comperand
 	"Answer whether the <Object> argument, comperand, is one of the receiver's elements.

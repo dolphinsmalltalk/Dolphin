@@ -36,17 +36,21 @@ copyingClass
 	^LookupTable!
 
 findKeyOrNil: anObject
-	"Private - Answer the <integer> index of the given key in the receiver, or, if not found,
-	the index of the first empty slot including and after that to which 
-	the key hashes. A pluggable <searchPolicy> is used for key comparisons and hashing."
+	"Private - Answer the <integer> index of the given key in the receiver, or, if not found, the index of the first empty slot including and after that to which the key hashes. A pluggable <searchPolicy> is used for key comparisons and hashing."
 
-	| index policy capacity  |
-	index := (policy := self searchPolicy) hash: anObject max: (capacity := self basicSize).
+	| index key policy capacity start |
+	start := index := (policy := self searchPolicy) hash: anObject max: (capacity := self basicSize).
 	
-	[| key |
-	(key := self basicAt: index) isNil or: [policy compare: key with: anObject]]
-			whileFalse: [index := index \\ capacity + 1].
-	^index!
+	[((key := self basicAt: index) isNil or: [policy compare: key with: anObject]) ifTrue: [^index].
+	(index := index + 1) > capacity]
+			whileFalse.
+	"Wraparound"
+	index := 0.
+	[(index := index + 1) == start]
+		whileFalse: [((key := self basicAt: index) isNil or: [policy compare: key with: anObject]) ifTrue: [^index]].
+
+	"Not found and no spare capacity slots - this should not happen"
+	^0!
 
 hash: anObject max: anInteger
 	^self searchPolicy hash: anObject max: anInteger!

@@ -19,13 +19,19 @@ Core.SharedIdentityDictionary comment: ''!
 findKeyOrNil: anObject
 	"Private - This method is a copy of IdentityDictionary>>findKeyOrNil:"
 
-	| capacity index |
-	index := anObject identityHash \\ (capacity := self basicSize) + 1.
+	| index key capacity start |
+	start := index := anObject identityHash \\ (capacity := self basicSize) + 1.
+	
+	[((key := self basicAt: index) isNil or: [key == anObject]) ifTrue: [^index].
+	(index := index + 1) > capacity]
+			whileFalse.
+	"Wraparound"
+	index := 0.
+	[(index := index + 1) == start]
+		whileFalse: [((key := self basicAt: index) isNil or: [key == anObject]) ifTrue: [^index]].
 
-	[| key |
-	(key := self basicAt: index) isNil or: [key == anObject]]
-			whileFalse: [index := index \\ capacity + 1].
-	^index!
+	"Not found and no spare capacity slots - this should not happen"
+	^0!
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1!

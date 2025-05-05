@@ -304,16 +304,21 @@ findElementOrNil: anAssociation
 	^self findKeyOrNil: anAssociation key!
 
 findKeyOrNil: anObject
-	"Private - Answer the index of the given key in the receiver, or, if not found,
-	the index of the first empty slot including and after that to which the key hashes"
+	"Private - Answer the index of the given key in the receiver, or, if not found, the index of the first empty slot including and after that to which the key hashes"
 
-	| capacity index |
-	index := anObject hash \\ (capacity := self basicSize) + 1.
+	| index element capacity start |
+	start := index := anObject hash \\ (capacity := self basicSize) + 1.
 	
-	[| element |
-	(element := self basicAt: index) isNil or: [anObject = element key]]
-			whileFalse: [index := index \\ capacity + 1].
-	^index!
+	[((element := self basicAt: index) isNil or: [anObject = element key]) ifTrue: [^index].
+	(index := index + 1) > capacity]
+			whileFalse.
+	"Wraparound"
+	index := 0.
+	[(index := index + 1) == start]
+		whileFalse: [((element := self basicAt: index) isNil or: [anObject = element key]) ifTrue: [^index]].
+
+	"Not found and no spare capacity slots - this should not happen"
+	^0!
 
 identityIncludes: anObject 
 	"Answer whether the argument, anObject, is one of the receiver's elements."

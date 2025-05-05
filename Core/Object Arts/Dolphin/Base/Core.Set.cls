@@ -184,20 +184,21 @@ find: target ifAbsent: exceptionHandler
 	^(self basicAt: (self findElementOrNil: target)) ifNil: [exceptionHandler value]!
 
 findElementOrNil: anObject
-	"Private - Answer the index of the given object in the receiver, or, if not found,
-	the index of the first empty slot including and after that to which the object hashes.
-	Implementation Note: This implementation is tuned to give the best performance on the
-	current VM. Although it might seem worthwhile unrolling the loop to avoid performing
-	a division operation inside the loop, in practice that operation is rarely taken and
-	average performance suffers from the extra temporaries used."
+	"Private - Answer the index of the given object in the receiver, or, if not found, the index of the first empty slot including and after that to which the object hashes."
 
-	| capacity index |
-	index := anObject hash \\ (capacity := self basicSize) + 1.
+	| index element capacity start |
+	start := index := anObject hash \\ (capacity := self basicSize) + 1.
+	
+	[((element := self basicAt: index) isNil or: [anObject = element]) ifTrue: [^index].
+	(index := index + 1) > capacity]
+			whileFalse.
+	"Wraparound"
+	index := 0.
+	[(index := index + 1) == start]
+		whileFalse: [((element := self basicAt: index) isNil or: [anObject = element]) ifTrue: [^index]].
 
-	[| element |
-	(element := self basicAt: index) isNil or: [anObject = element]]
-			whileFalse: [index := index \\ capacity + 1].
-	^index!
+	"Not found and no spare capacity slots - this should not happen"
+	^0!
 
 fixCollisionsFrom: index
 	"Private - Rehashes objects in the collection after index to see if any of them hash to index.  If so, that object is copied to index, and the algorithm repeats with that object's index, until a nil is encountered."
