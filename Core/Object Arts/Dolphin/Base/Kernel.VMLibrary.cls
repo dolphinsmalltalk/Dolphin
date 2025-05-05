@@ -2,7 +2,7 @@
 
 External.PermanentLibrary
 	subclass: #'Kernel.VMLibrary'
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart versionInfo'
 	classVariableNames: 'Registry RegistryKeys'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -338,13 +338,16 @@ makeLargeUnsigned: lowDWORD highPart: highDWORD
 	<stdcall: uint64 AnswerQWORD uint32 uint32>
 	^self invalidCall: _failureCode!
 
+onPreStripImage
+	versionInfo := nil!
+
 onStartup
 	"Initialize the receiver immediately following system startup.
 	THIS MUST BE DONE FIRST."
 
 	handle := Registry at: 122.
 	specialSelectorStart := RegistryKeys at: #arithmeticSelectors.
-	wndProc := dlgProc := vtable := genericCallback := nil!
+	versionInfo := wndProc := dlgProc := vtable := genericCallback := nil!
 
 productName
 	"Answer the localised name for Dolphin."
@@ -452,7 +455,12 @@ utf16StringFromAddress: pointer
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
-	^'%2!!d!!.%3!!d!!.%4!!d!!.%5!!d!!'! !
+	^'%2!!d!!.%3!!d!!.%4!!d!!.%5!!d!!'!
+
+versionInfo
+	"Answer a <VersionInfo> containing the version details from the receiver."
+
+	^versionInfo ifNil: [versionInfo := super versionInfo]! !
 
 !Kernel.VMLibrary categoriesForMethods!
 _snprintf_s:bufferSize:count:format:with:!helpers!private! !
@@ -490,6 +498,7 @@ makeLargeSigned:!helpers!private! !
 makeLargeSigned:highPart:!helpers!private! !
 makeLargeUnsigned:!helpers!private! !
 makeLargeUnsigned:highPart:!helpers!private! !
+onPreStripImage!class hierarchy-removing!private! !
 onStartup!event handling!public! !
 productName!accessing!public! !
 registerEventSource:!arithmetic!public! !
@@ -507,6 +516,7 @@ unregisterObject:!accessing-registry!private! !
 unsignedFromSigned:!helpers!private! !
 utf16StringFromAddress:!helpers!private! !
 versionFormatString!constants!private! !
+versionInfo!accessing-version!public! !
 !
 
 !Kernel.VMLibrary class methodsFor!
@@ -620,6 +630,9 @@ maxMessageArguments
 maxTemps
 	^VMConstants.MaxTemps!
 
+onPreStripImage
+	default onPreStripImage!
+
 open
 	"Answer the singleton instance of the receiver (it cannot be re-opened)"
 
@@ -641,6 +654,7 @@ maxBlockNesting!limits!public! !
 maxLiterals!limits!public! !
 maxMessageArguments!limits!public! !
 maxTemps!limits!public! !
+onPreStripImage!class hierarchy-removing!private! !
 open!instance creation!public! !
 registryKeys!constants!private! !
 sharedVariableName!constants!private! !

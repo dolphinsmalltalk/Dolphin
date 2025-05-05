@@ -3,10 +3,10 @@
 External.PermanentLibrary
 	subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'EnumNamesDescriptor WinVerOrGreaterMask'
+	classVariableNames: 'EnumNamesDescriptor LongPathPrefix WinVerOrGreaterMask'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'LongPathPrefix' -> '\\?\' }!
+	classConstants: {}!
 
 OS.KernelLibrary guid: (Core.GUID fromString: '{64674048-3a82-101b-8181-00aa003743d3}')!
 

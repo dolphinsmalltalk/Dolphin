@@ -4013,14 +4013,14 @@ External.PermanentLibrary
 External.PermanentLibrary
 	subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'EnumNamesDescriptor WinVerOrGreaterMask'
+	classVariableNames: 'EnumNamesDescriptor LongPathPrefix WinVerOrGreaterMask'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'LongPathPrefix' -> '\\?\' }!
+	classConstants: {}!
 
 External.PermanentLibrary
 	subclass: #'Kernel.VMLibrary'
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart versionInfo'
 	classVariableNames: 'Registry RegistryKeys'
 	imports: #()
 	classInstanceVariableNames: ''
