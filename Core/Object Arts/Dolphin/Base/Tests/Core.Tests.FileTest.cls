@@ -420,6 +420,14 @@ testComposePath
 
 testCreateDirectoryPath
 	| tempDir |
+	"It is not an error to attempt to create directory paths that already exist"
+	#('c:' 'c:\' 'c:\windows' 'c:\windows\' 'c:\windows\system32' 'c:\windows\system32\')
+		do: [:each | self deny: (File createDirectoryPath: each)].
+	"We want the operation to fail if the path refers to an existing file, as obviously we can't use this as a directory."
+	self
+		should: [File createDirectoryPath: VM fileName]
+		raise: OS.Win32Error
+		matching: [:ex | ex statusCode == OS.Win32Errors.ERROR_FILE_EXISTS].
 	tempDir := File createTemporaryDirectory asUtf16String.
 	
 	[| path |

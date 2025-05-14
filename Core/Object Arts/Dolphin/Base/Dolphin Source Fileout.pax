@@ -779,9 +779,7 @@ copyAndReopenSources: aString
 	self openSources: aString!
 
 createDirectoryPath: aString
-	| dir |
-	dir := File splitPathFrom: aString.
-	(File isDirectory: dir) ifFalse: [File createDirectoryPath: dir]!
+	File createDirectoryPath: (File splitPathFrom: aString)!
 
 createSources: filePath
 	"Private - This will create a sources and changes file for the current image. Does not

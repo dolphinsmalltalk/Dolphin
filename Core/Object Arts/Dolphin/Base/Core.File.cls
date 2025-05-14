@@ -679,39 +679,41 @@ createDirectory: path
 
 	^Kernel32 createDirectory: path!
 
-createDirectoryPath: path
-	"Create a directory tree with the specified path - i.e. this will create a nested set of directories
-	to any depth. Answer true if the final directory 	was actually created, or false if it already existed. 
-	Raise a Win32Error if the call fails for any other reason than that the directory already exists.
-	Implementation Note: This may attempt more directory creation operations than are necessary,
-	(e.g. to create the root directory if a drive is specified) but such requests are ignored."
+createDirectoryPath: aString
+	"Create a directory tree with the specified path - i.e. this will create a nested set of directories to any depth. Answer true if the final directory was actually created, or false if it already existed. 
+	Raise a Win32Error if the call fails for any other reason than that a directory with the specified path already exists."
 
-	| delims pos created len |
-	created := false.
-	len := path size.
-	delims := self pathDelimiters.
+	"Implementation Note: This may attempt more directory creation operations than are necessary, (e.g. to create the root directory if a drive is specified) but such requests are ignored."
+
+	| pos result len path |
+	path := aString asUtf16String.
+	result := Kernel32 getFileAttributes: path.
+	result == -1
+		ifFalse: 
+			[(result allMask: FILE_ATTRIBUTE_DIRECTORY)
+				ifFalse: [Win32Error signalWith: Win32Errors.ERROR_FILE_EXISTS].
+			^false].
+	result := false.
 	(path beginsWith: '\\')
 		ifTrue: 
 			[pos := 3.
 			2 timesRepeat: 
 					["Skip UNC machine name and share, or long path prefix"
-					pos := path indexOfAnyOf: delims startingAt: pos.
+					pos := path indexOfAnyOf: PathDelimiters startingAt: pos.
 					pos == 0 ifTrue: [^Win32Error signalWith: Win32Errors.ERROR_INVALID_NAME].
 					pos := pos + 1]]
 		ifFalse: [pos := 1].
+	len := path size.
 	[pos <= len] whileTrue: 
 			[| end |
-			end := path indexOfAnyOf: delims startingAt: pos.
+			end := path indexOfAnyOf: PathDelimiters startingAt: pos.
 			end == 0 ifTrue: [end := len + 1].
-			end == 1
-				ifFalse: 
-					[| part |
-					(part := path copyFrom: 1 to: end - 1) lastCodeUnit == $:
-						ifFalse: 
-							["Don't attempt to create the drive!!"
-							created := self createDirectory: part]].
+			(end == 1 or: 
+					["Don't attempt to create the drive!!"
+					(path at: end - 1) == $:])
+				ifFalse: [result := self createDirectory: (path copyFrom: 1 to: end - 1)].
 			pos := end + 1].
-	^created!
+	^result!
 
 createTemporaryDirectory
 	"Create a new, unique, temporary directory, and answer it's <readableString> path. It is the caller's responsibility to delete the directory when done."
