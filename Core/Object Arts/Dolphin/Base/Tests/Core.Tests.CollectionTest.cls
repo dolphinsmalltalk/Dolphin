@@ -259,6 +259,40 @@ testFold
 			result := (1 to: i) fold: [:product :each | product * each].
 			self assert: result equals: i factorial]!
 
+testIsSubsetOf
+	| empty twoThree oneTwoThree oneTwo one |
+	empty := self newCollection: #().
+	one := self newCollection: #(1).
+	oneTwo := self newCollection: #(1 2).
+	twoThree := self newCollection: #(2 3).
+	oneTwoThree := self newCollection: #(1 2 3).
+	self assert: (empty isSubsetOf: empty).
+	self assert: (empty isSubsetOf: (self newCollection: empty)).
+	{ one. oneTwo. twoThree. oneTwoThree } do: 
+			[:each |
+			self assert: (each isSubsetOf: each).
+			self assert: (each isSubsetOf: each copy).
+			self assert: (empty isSubsetOf: each).
+			self deny: (each isSubsetOf: empty)].
+
+	self assert: (one isSubsetOf: oneTwo).
+	self assert: (one isSubsetOf: oneTwoThree).
+	self deny: (one isSubsetOf: twoThree).
+
+	self assert: (oneTwo isSubsetOf: oneTwoThree).
+	self deny: (oneTwo isSubsetOf: one).
+	self deny: (oneTwo isSubsetOf: twoThree).
+
+	self assert: (twoThree isSubsetOf: oneTwoThree).
+	self deny: (twoThree isSubsetOf: oneTwo).
+	self deny: (twoThree  isSubsetOf: one).
+
+	self deny: (oneTwoThree isSubsetOf: oneTwo).
+	self deny: (oneTwoThree isSubsetOf: twoThree).
+	self deny: (oneTwo isSubsetOf: one).
+	
+!
+
 testSingle
 	| subject |
 	subject := self newCollection: #().
@@ -296,6 +330,7 @@ testDifference!public!unit tests! !
 testDistinct!public!unit tests! !
 testDoSeparatedBy!public!unit tests! !
 testFold!public!unit tests! !
+testIsSubsetOf!public!unit tests! !
 testSingle!public!unit tests! !
 testStoreOn!public!unit tests! !
 !

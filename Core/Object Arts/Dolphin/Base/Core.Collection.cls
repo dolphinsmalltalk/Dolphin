@@ -407,6 +407,11 @@ isEmpty
 	^self size == 0
 !
 
+isSubsetOf: aCollection
+	"Answer whether the receiver is a subset of the <collection>, argument, i.e. all elements of the receiver are also elements of the argument."
+
+	^self allSatisfy: [:each | aCollection includes: each]!
+
 newSelection
 	"Private - Answer a new empty collection like the receiver to 	contain a selection of the receiver's elements."
 
@@ -635,6 +640,7 @@ includes:!public!searching! !
 inject:into:!enumerating!public! !
 intersection:!public!set operations! !
 isEmpty!public!testing! !
+isSubsetOf:!public!set operations! !
 newSelection!enumerating!private! !
 noDifference:!public!set operations! !
 notEmpty!public!testing! !
