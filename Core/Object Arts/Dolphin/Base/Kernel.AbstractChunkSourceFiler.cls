@@ -61,22 +61,39 @@ emitHeaderForMethodsOf: aClass
 		nextPutAll: #methodsFor;
 		nextPut: $!!!
 
-emitString: aString 
-	"Private - Print the <readableString>, aString, to the source stream, quoting any 
-	embedded meta-characters so that it can be re-read as the exact same string when filed-in. 
-	Answer aString.
-	In this case we need only double embedded chunk markers, there being no other meta-characters."
+emitString: aString
+	"Private - Print the <readableString>, aString, to the source stream, quoting any embedded meta-characters so that it can be re-read as the exact same string when filed-in. 	Answer aString. In this case we need only double embedded chunk markers, there being no other meta-characters."
 
-	"Source will very rarely include the chunk terminator character so perform a fast search first...."
-
-	(aString identityIncludes: $!!) 
+	| j i end |
+	"Source will very rarely include the chunk terminator character so optimize for that...."
+	j := aString
+				nextIdentityIndexOf: $!!
+				from: 1
+				to: (end := aString size).
+	j == 0
 		ifTrue: 
-			[aString do: 
-					[:character | 
-					stream nextPut: character.
-					"Double up embedded chunk markers"
-					character == $!! ifTrue: [stream nextPut: $!!]]]
-		ifFalse: [stream nextPutAll: aString].
+			[
+			stream nextPutAll: aString.
+			^aString].
+	"Double up embedded chunk markers"
+	i := 1.
+	
+	[stream
+		next: j - i + 1
+			putAll: aString
+			startingAt: i;
+		nextPut: $!!.
+	j := aString
+				nextIdentityIndexOf: $!!
+				from: (i := j + 1)
+				to: end.
+	j == 0]
+			whileFalse.
+	"Usually the text won't finish on a !!"
+	stream
+		next: end - i + 1
+		putAll: aString
+		startingAt: i.
 	^aString!
 
 endChunk
@@ -168,7 +185,7 @@ nextChunk
 			[| chunk |
 			"Much faster, as we don't need to read and compare each character individually"
 			chunk := stream upTo: $!!.
-			[stream atEnd or: [(stream peekFor: $!!) not]] whileFalse: [chunk := chunk , '!!' , (stream upTo: $!!)].
+			[stream peekFor: $!!] whileTrue: [chunk := chunk , '!!' , (stream upTo: $!!)].
 			chunk]!
 
 nextChunkNormalizeEols
@@ -208,11 +225,15 @@ printBasicDefinitionOfClass: aClass on: aPuttableStream
 	aPuttableStream
 		space;
 		nextPutAll: aClass kindOfSubclass;
-		space;
-		print: (aClass isInBaseEnvironment
-					ifTrue: [aClass unqualifiedName]
-					ifFalse: [aClass fullName asSymbol]);
-		crtab.
+		space.
+	aClass isInBaseEnvironment
+		ifTrue: [aPuttableStream print: aClass unqualifiedName]
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: '#''';
+				nextPutAll: aClass fullName;
+				nextPut: $'].
+	aPuttableStream crtab.
 	self
 		printVariables: aClass instanceVariableNames
 		string: 'instanceVariableNames:'

@@ -37,7 +37,7 @@ package setMethodNames: #(
 	#(#{Kernel.BootSessionManager} #saveImageTo:)
 	#(#{Kernel.ChunkSourceFiler} #storeSource:for:)
 	#(#{Kernel.CompiledMethod} #storeCategories)
-	#(#{Kernel.SourceFiler} #collateClass:against:)
+	#(#{Kernel.SourceFiler} #classAssocationsSortBlock)
 	#(#{Kernel.SourceFiler} #emitCategoriesOfClass:)
 	#(#{Kernel.SourceFiler} #emitCategoriesOfMethod:)
 	#(#{Kernel.SourceFiler} #emitComment:)
@@ -250,11 +250,10 @@ emitFileOutHeader
 		cr!
 
 emitMethod: aCompiledMethod 
-	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, 
-	to the source stream, updating the method's source descriptor if configured with a 
-	source file index."
+	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, to the source stream, updating the method's source descriptor if configured with a source file index. Answer the argument."
 
-	self storeSource: aCompiledMethod getSource for: aCompiledMethod!
+	self storeSource: aCompiledMethod getSource for: aCompiledMethod.
+	^aCompiledMethod!
 
 emitSpecialBehaviorAttributesOfClass: aClass
 	(self specialBehaviorAttributesOfClass: aClass) do: 
@@ -481,8 +480,8 @@ storeCategories!private!source filing-methods! !
 
 !Kernel.SourceFiler methodsFor!
 
-collateClass: aClass1 against: aClass2
-	^aClass1 fullName <==> aClass2 fullName!
+classAssocationsSortBlock
+	^[:a :b | a key fullName <==> b key fullName <= 0]!
 
 emitCategoriesOfClass: aClass
 	"Private - Emit a chunk to source stream to reclassify the <Class>, aClass, in all its existing categories."
@@ -508,16 +507,13 @@ emitFileOutHeader
 emitMessages: aCollection ofBehavior: aClass
 	^(aCollection asSortedArray: SortedCollection caseSensitiveSortBlock) collect: 
 			[:selector |
-			| method |
 			self
 				cr;
 				cr.
-			method := aClass compiledMethodAt: selector.
-			self emitMethod: method.
-			method]!
+			self emitMethod: (aClass compiledMethodAt: selector)]!
 
 emitMethod: aCompiledMethod 
-	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, to the source stream."
+	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, to the source stream. Answer the argument."
 
 	^self subclassResponsibility!
 
@@ -576,7 +572,7 @@ fileOutMethods: aCollection
 			[:each |
 			"Note that the selectors will be filed out in sorted order, so we don't need to sort them"
 			(methodsByClass at: each methodClass ifAbsentPutClean: [OrderedCollection new]) add: each selector].
-	(methodsByClass associations sort: [:a :b | (self collateClass: a key against: b key) <= 0])
+	(methodsByClass associations sort: self classAssocationsSortBlock)
 		do: [:each | self fileOutMessages: each value ofBehavior: each key]!
 
 fileOutProtocols: aCollection ofBehavior: aClassDescription 
@@ -605,7 +601,7 @@ storeCommentString: aString forClass: aClass
 	^self subclassResponsibility! !
 
 !Kernel.SourceFiler categoriesForMethods!
-collateClass:against:!helpers!private! !
+classAssocationsSortBlock!public!source filing-file out! !
 emitCategoriesOfClass:!private!source filing-file out! !
 emitCategoriesOfMethod:!private!source filing-file out! !
 emitComment:!private!source filing-file out! !

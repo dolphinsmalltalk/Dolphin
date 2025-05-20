@@ -611,6 +611,11 @@ timeToRun
 
 	^((self ticksToRun - [self] ticksToRun) * Delay.TicksToNanos) nanoseconds!
 
+timeToRun: anInteger
+	"Evaluate the receiver anInteger times and answer the average <Duration> taken to do so."
+
+	^(self timeToRepeat: anInteger) / anInteger!
+
 value
 	"Answer the result of evaluating the receiver. Fail if the receiver is not  a niladic (zero argument) block.
 	
@@ -823,6 +828,7 @@ tempCount!accessing!public! !
 ticksToRun!operations!private! !
 timeToRepeat:!event handling!public! !
 timeToRun!evaluating!public! !
+timeToRun:!evaluating!public! !
 value!evaluating!public! !
 value:!evaluating!public! !
 value:value:!evaluating!public! !

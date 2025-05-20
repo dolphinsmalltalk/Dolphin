@@ -2683,11 +2683,14 @@ printSelfEvaluatingOn: aStream
 				print: self associations single;
 				nextPut: $)]
 		ifFalse: 
-			[aStream
+			["We already know the array of associations is self evaluating and cannot be of literal form, so bypass repeat check performed by Array>>printOn:"
+			aStream
 				nextPutAll: #withAll:;
-				space;
-				print: (self sortSelfEvaluatingElements: self associations locale: aStream locale);
-				nextPut: $)]!
+				nextPutAll: ' {'.
+			(self sortSelfEvaluatingElements: self associations locale: aStream locale)
+				do: [:each | each printOn: aStream]
+				separatedBy: [aStream nextPutAll: '. '].
+			aStream nextPutAll: '})']!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

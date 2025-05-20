@@ -76,6 +76,7 @@ package setMethodNames: #(
 	#(#{Kernel.SourceFiler} #fileOutDefinitionOfPackage:)
 	#(#{Kernel.SourceFiler} #fileOutPackage:)
 	#(#{Kernel.SourceFiler} #fileOutPackage:classes:)
+	#(#{Kernel.SourceFiler} #fileOutPackage:methods:ofClass:)
 	#(#{Kernel.SourceFiler} #fileOutPackage:methodsOfClass:)
 	#(#{Kernel.SourceFiler} #fileOutPackageClassDefinitions:)
 	#(#{Kernel.SourceFiler} #fileOutPackageMethods:)
@@ -474,11 +475,10 @@ fileModificationTime
 	<integer> number of 100-nanosecond intervals since 12:00 A.M. January 1, 1601 UTC (i.e. a
 	Win32 FILETIME), or 0 if it does not currently exist."
 
-	| fileName |
-	fileName := self isSystemPackage
-				ifTrue: [self classDefinitionsFileName]
-				ifFalse: [self isUsingPAX ifTrue: [self fileOutName] ifFalse: [self packageFileName]].
-	^(File lastWriteTime: fileName) ifNil: [0] ifNotNil: [:filetime | filetime asInteger]!
+	^((self isSystemPackage
+		ifTrue: [File lastWriteTime: self classDefinitionsFileName]
+		ifFalse: [(File lastWriteTime: self fileOutName) ifNil: [File lastWriteTime: self packageFileName]])
+			?? 0) asInteger!
 
 fileOut
 	"Private - File out a definition of the receiver to source files. Normally this
@@ -753,6 +753,30 @@ fileOutPackage: aPackage classes: aSequenceableCollection
 				fileOutPackage: aPackage methodsOfClass: aClass;
 				fileOutPackage: aPackage methodsOfClass: aClass class]!
 
+fileOutPackage: aPackage methods: aCollection ofClass: aClass
+	| prereqs accumulateSelectors selectors protocols |
+	"...but if some methods are not owned by this package we have more work to do"
+	selectors := IdentitySet new: aCollection size * 2.
+	accumulateSelectors := [:method | selectors add: method selector].
+	aCollection do: accumulateSelectors.
+	self fileOutMessages: selectors ofBehavior: aClass.
+
+	"File out the intersection of the immediate protocols of the class and those of this and prerequisite packages' methods"
+	protocols := aClass protocols.
+	protocols isEmpty ifTrue: [^self].
+
+	"First add all selectors in the superclass chain which are in this package or one of its pre-requisites into the set of available selectors."
+	prereqs := aPackage prerequisites.
+	prereqs do: [:prereq | (prereq methodsOfClass: aClass) do: accumulateSelectors].
+	aClass allSuperclassesDo: 
+			[:class |
+			(aPackage methodsOfClass: class) do: accumulateSelectors.
+			prereqs do: [:prereq | (prereq methodsOfClass: class) do: accumulateSelectors]].
+	#todo.	"File out partial protocols, although tools should prevent protocols being split across packages really"
+
+	self fileOutProtocols: (protocols select: [:protocol | protocol selectors isSubsetOf: selectors])
+		ofBehavior: aClass!
+
 fileOutPackage: aPackage methodsOfClass: aClass
 	"Private - Append any definitions of the classes methods which are owned by the specified Package to the receiver's stream."
 
@@ -763,27 +787,12 @@ fileOutPackage: aPackage methodsOfClass: aClass
 			["The common case is that all methods of the class also belong to the this package..."
 			self fileOutAllMethodsOfBehavior: aClass]
 		ifFalse: 
-			[| selectors prereqs accumulateSelectors |
-			"...but if some methods are not owned by this package we have more work to do"
-			selectors := IdentitySet new: methods size.
-			accumulateSelectors := [:m | selectors add: m selector].
-			methods do: accumulateSelectors.
-			self fileOutMessages: selectors ofBehavior: aClass.
+			["...but if some methods are not owned by this package we have more work to do"
 
-			"File out the intersection of the immediate protocols of the class and those of this
-			and prerequisite packages' methods"
-
-			"First add all selectors in the superclass chain which are in this package or one of its
-			pre-requisites into the set of available selectors."
-			prereqs := aPackage prerequisites.
-			prereqs do: [:p | ((p methodsOfClass: aClass) do: accumulateSelectors)].
-			aClass allSuperclassesDo: 
-					[:e |
-					(aPackage methodsOfClass: e) do: accumulateSelectors.
-					prereqs do: [:p | (p methodsOfClass: e) do: accumulateSelectors]].
-			#todo.	"File out partial protocols, although tools should prevent protocols being split across packages really"
-			self fileOutProtocols: (aClass protocols select: [:p | (p selectors difference: selectors) isEmpty])
-				ofBehavior: aClass]!
+			self
+				fileOutPackage: aPackage
+				methods: methods
+				ofClass: aClass]!
 
 fileOutPackageClassDefinitions: aPackage
 	| classes |
@@ -869,6 +878,7 @@ fileOutClass:ofPackage:!public!source filing-file out! !
 fileOutDefinitionOfPackage:!public!source filing-file out! !
 fileOutPackage:!public!source filing-file out! !
 fileOutPackage:classes:!private!source filing-file out! !
+fileOutPackage:methods:ofClass:!private!source filing-file out! !
 fileOutPackage:methodsOfClass:!private!source filing-file out! !
 fileOutPackageClassDefinitions:!private!source filing-file out! !
 fileOutPackageMethods:!private!source filing-file out! !

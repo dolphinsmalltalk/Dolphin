@@ -40,12 +40,12 @@ acceptBlockNode: aBlockNode startBlockString: startBlockString
 firstLineLength
 	^firstLineLength isNil ifTrue: [codeStream position] ifFalse: [firstLineLength]!
 
-formatArray: anArrayNode
-	| formattedArgs multiline length statements count |
-	statements := anArrayNode statements.
+formatArray: aBraceArrayNode
+	| formattedStmts multiline length statements count |
+	statements := aBraceArrayNode statements.
 	count := statements size.
 	count == 0 ifTrue: [^self].
-	formattedArgs := Array writeStream: count.
+	formattedStmts := Array writeStream: count.
 	multiline := false.
 	length := 0.
 	indent := indent + 1.
@@ -54,15 +54,22 @@ formatArray: anArrayNode
 			| formatter string |
 			formatter := self copy.
 			string := formatter format: each.
-			formattedArgs nextPut: string.
+			formattedStmts nextPut: string.
 			length := length + string size + 2.
 			multiline := multiline or: [formatter isMultiLine]].
-	formattedArgs := formattedArgs collection.
 	multiline := multiline or: [length + 1 + self currentLineLength > MaxLineLength].
-	formattedArgs do: 
-			[:each |
-			multiline ifTrue: [self newLine] ifFalse: [self space].
-			codeStream nextPutAll: each]
+	formattedStmts collection do: (multiline
+				ifTrue: 
+					[
+					[:each |
+					self newLine.
+					codeStream nextPutAll: each]]
+				ifFalse: 
+					[
+					[:each |
+					codeStream
+						space;
+						nextPutAll: each]])
 		separatedBy: [codeStream nextPut: $.].
 	indent := indent - 1.
 	multiline ifTrue: [self newLine] ifFalse: [self space]!

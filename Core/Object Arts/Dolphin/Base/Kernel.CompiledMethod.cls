@@ -179,7 +179,7 @@ printOn: aPuttableStream
 		print: self selector!
 
 privacyCategory
-	^(self isPrivate ifTrue: ['private'] ifFalse: ['public']) asMethodCategory!
+	^self isPrivate ifTrue: [MethodCategory private] ifFalse: [MethodCategory public]!
 
 protocols
 	"Answer a <Collection> of all the method protocols in which the receiver is included."

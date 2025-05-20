@@ -18,8 +18,8 @@ Bear in mind that filing out a package/class in D7 format does not guarantee tha
 
 !Kernel.LegacyChunkSourceFiler methodsFor!
 
-collateClass: aClass1 against: aClass2
-	^aClass1 name <==> aClass2 name!
+classAssocationsSortBlock
+	^[:a :b | a key name <==> b key name <= 0]!
 
 emitBinaryVariableDefinition: aBindingReference
 	"File out the text representation of the non-<sourceObject> which is the target of the
@@ -500,7 +500,7 @@ specialBehaviorAttributesOfClass: aClass
 	^aClass specialBehaviorAttributes copyReplacing: #isNonInstantiable withObject: #isAbstract! !
 
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
-collateClass:against:!helpers!private! !
+classAssocationsSortBlock!private!source filing-file out! !
 emitBinaryVariableDefinition:!public!source filing-file out! !
 emitClassName:on:!private!source filing-file out! !
 emitClassPoolOfClass:!private!source filing-file out! !

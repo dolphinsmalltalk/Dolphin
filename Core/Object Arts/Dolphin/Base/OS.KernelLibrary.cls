@@ -930,7 +930,7 @@ getFullPathName: aPathnameString
 				lpFilePart: nil) + 1
 		== bufferSize
 			ifTrue: [buffer]
-			ifFalse: [pathLength == 0 ifTrue: [self systemError] ifFalse: [buffer copyFrom: 1 to: pathLength]]!
+			ifFalse: [pathLength == 0 ifTrue: [self systemError] ifFalse: [buffer resize: pathLength]]!
 
 getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
 	"Retrieves the full path and filename of the file with name fname, into the buffer, path.

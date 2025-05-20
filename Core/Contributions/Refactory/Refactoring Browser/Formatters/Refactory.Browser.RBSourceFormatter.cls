@@ -64,7 +64,7 @@ indent: anInteger
 initialize
 	super initialize.
 	indent := lineStart := 0.
-	codeStream := WriteStream on: (Utf8String new: 256)!
+	codeStream := WriteStream on: (Utf8String new: 384)!
 
 isLineTooLong: aString
 	^self currentLineLength + aString size >= MaxLineLength!

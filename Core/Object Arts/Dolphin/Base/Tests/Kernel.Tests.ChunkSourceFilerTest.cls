@@ -14,6 +14,66 @@ Kernel.Tests.ChunkSourceFilerTest comment: ''!
 
 !Kernel.Tests.ChunkSourceFilerTest methodsFor!
 
+testEmitString
+	| subject actual stream |
+	stream := String smalltalkWriteStream.
+	subject := ChunkSourceFiler on: stream.
+	"Empty string"
+	subject emitString: ''.
+	actual := stream contents.
+	self assert: actual equals: ''.
+	"Single bang"
+	stream reset.
+	subject emitString: '!!'.
+	actual := stream contents.
+	self assert: actual equals: '!!!!'.
+	"Pair of bangs"
+	stream reset.
+	subject emitString: '!!!!'.
+	actual := stream contents.
+	self assert: actual equals: '!!!!!!!!'.
+	"Bang at end"
+	stream reset.
+	subject emitString: 'X!!'.
+	actual := stream contents.
+	self assert: actual equals: 'X!!!!'.
+	stream reset.
+	subject emitString: 'X£!!'.
+	actual := stream contents.
+	self assert: actual equals: 'X£!!!!'.
+	"Bang at start"
+	stream reset.
+	subject emitString: '!!X'.
+	actual := stream contents.
+	self assert: actual equals: '!!!!X'.
+	stream reset.
+	subject emitString: '!!X£'.
+	actual := stream contents.
+	self assert: actual equals: '!!!!X£'.
+	"Bang at start and end"
+	stream reset.
+	subject emitString: '!!X!!'.
+	actual := stream contents.
+	self assert: actual equals: '!!!!X!!!!'.
+	stream reset.
+	subject emitString: '!!X£!!'.
+	actual := stream contents.
+	self assert: actual equals: '!!!!X£!!!!'.
+	"Embedded bang"
+	stream reset.
+	subject emitString: 'X!!Y'.
+	actual := stream contents.
+	self assert: actual equals: 'X!!!!Y'.
+	stream reset.
+	subject emitString: 'X£!!Y'.
+	actual := stream contents.
+	self assert: actual equals: 'X£!!!!Y'.
+	stream reset.
+	subject emitString: 'X!!Y£'.
+	actual := stream contents.
+	self assert: actual equals: 'X!!!!Y£'.
+!
+
 testPrintDefinitionOfClassInSmalltalk
 	"Environment makes no different for classes with superclasses that are not in Smalltalk"
 
@@ -117,6 +177,7 @@ verifyClass: aClass environment: aNamespaceOrNil definitionPrefix: aString
 	self assert: (actual beginsWith: aString)! !
 
 !Kernel.Tests.ChunkSourceFilerTest categoriesForMethods!
+testEmitString!public!unit tests! !
 testPrintDefinitionOfClassInSmalltalk!public!unit tests! !
 testPrintDefinitionOfClassWithSuperclassInSmalltalk!public!unit tests! !
 testPrintDefinitionOfNamespace!public!unit tests! !

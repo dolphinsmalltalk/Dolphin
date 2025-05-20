@@ -337,12 +337,12 @@ classesDo: operation
 	^classNames do: [:each | operation value: each value]!
 
 classesInHierarchyOrder
-	"Private - Answer an <sequencedReadableCollection> of the receiver's owned classes in the order that they would be visited by a depth-first traversal of the class hierarchy."
+	"Private - Answer a <sequencedReadableCollection> of the receiver's owned classes in the order that they would be visited by a depth-first traversal of the class hierarchy."
 
 	| classes |
 	classes := self classes.
-	classes size < 2 ifTrue: [^classes].
-	^Smalltalk allClasses select: [:each | classes includes: each]!
+	classes size < 2 ifTrue: [^classes asArray].
+	^Smalltalk allClasses intersection: classes!
 
 classFromName: className
 	"Private - Answer the Class object which className encodes.
@@ -590,10 +590,7 @@ fileNameForSourceVariable: aBindingReference
 fileOutName
 	"Answer the pathname used to store the PAX file for the sources of the receiver"
 
-	^File
-		composePath: self path
-		stem: self name
-		extension: self class sourcePackageExtension!
+	^File path: self packageFileName extension: self class sourcePackageExtension!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -1002,24 +999,34 @@ methodsOfClass: aClass
 	className := aClass fullyQualifiedReference.
 	^(self includesClassNamed: className)
 		ifTrue: 
-			[(self manager looseMethods lookup: aClass)
-				ifNil: [aClass methodDictionary values]
-				ifNotNil: 
-					[:loose |
-					| all owned |
-					"We own the class, so we own all of its methods that are not loose (those belong to other packages)"
-					all := aClass methodDictionary.
-					owned := IdentitySet new: all size.
-					all
-						keysAndValuesDo: [:eachSelector :eachMethod | (loose includesKey: eachSelector) ifFalse: [owned add: eachMethod]].
-					owned]]
+			["We own the class, so we own all of its methods that are not loose (those belong to other packages)"
+			self methodsOfOwnedClass: aClass]
 		ifFalse: 
-			[| ownedExtensions |
-			"Just pick out any loose methods we own in the class"
-			ownedExtensions := IdentitySet new.
-			self methodNames
-				do: [:each | each className = className ifTrue: [ownedExtensions add: each valueOrNil]].
-			ownedExtensions]!
+			["Just pick out any loose methods we own in the class"
+			self methodsOfExtendedClassNamed: className]!
+
+methodsOfExtendedClassNamed: aBindingReference
+	| extensions |
+	extensions := (Array new: 4) writeStream.
+	self methodNames
+		do: [:each | each className = aBindingReference ifTrue: [extensions nextPut: each valueOrNil]].
+	^extensions contents!
+
+methodsOfOwnedClass: aClass
+	| all |
+	all := aClass methodDictionary.
+	^(self manager looseMethods lookup: aClass)
+		ifNil: [
+			"There are no loose methods in the class, so we own all the methods"
+			all values]
+		ifNotNil: 
+			[:loose |
+			| owned |
+			"We own the class, so we own all of its methods that are not loose (those belong to other packages)"
+			owned := Array writeStream: all size - loose size.
+			all
+				keysAndValuesDo: [:eachSelector :eachMethod | (loose includesKey: eachSelector) ifFalse: [owned nextPut: eachMethod]].
+			owned grabContents]!
 
 name
 	"Answer the name of the receiver. This must always be the same as the stem of the package's
@@ -2049,6 +2056,8 @@ methodNames!accessing!public! !
 methods!accessing!public! !
 methodsDo:!enumerating!public! !
 methodsOfClass:!accessing!public! !
+methodsOfExtendedClassNamed:!accessing!private! !
+methodsOfOwnedClass:!accessing!private! !
 name!accessing!public! !
 nameForResourceIdentifier:!helpers!private! !
 okToSaveOrDeploy!private!testing! !

@@ -222,8 +222,9 @@ do: aMonadicValuable separatedBy: aNiladicValuable
 	"Implementation Note: We have to override the superclass in order to enumerate code points rather than code units."
 
 	| stream ch |
+	self size == 0 ifTrue: [^self].
 	stream := ReadStream on: self.
-	(ch := stream nextAvailable) ifNil: [^self].
+	ch := stream next.
 	
 	[aMonadicValuable value: ch.
 	(ch := stream nextAvailable) isNil]
