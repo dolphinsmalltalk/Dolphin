@@ -107,6 +107,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Base\Development System (Deprecated).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Deprecated).pax' #plain #imageBased);
 		yourself.
 
 	"Add-ons"

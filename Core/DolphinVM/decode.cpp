@@ -1036,7 +1036,7 @@ public:
 			AppendAllInstVarNames(reinterpret_cast<ClassDescriptionOTE*>(method->m_methodClass), instVarNames);
 			instVarNamesInitialized = true;
 		}
-		return instVarNames[index]; 
+		return index < instVarNames.size() ? instVarNames[index] : "instvar-" + std::to_string(index);
 	}
 
 	std::wstring GetLiteralAsString(size_t index) {

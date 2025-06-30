@@ -84,9 +84,6 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #stonContainSubObjects)
 	#(#{Core.Collection} #stonOn:)
 	#(#{Core.Collection class} #fromSton:)
-	#(#{Core.Date} #stonContainSubObjects)
-	#(#{Core.Date} #stonOn:)
-	#(#{Core.Date class} #fromSton:)
 	#(#{Core.DateAndTime} #stonContainSubObjects)
 	#(#{Core.DateAndTime} #stonOn:)
 	#(#{Core.DateAndTime class} #fromSton:)
@@ -133,9 +130,6 @@ package setMethodNames: #(
 	#(#{Core.String} #stonOn:)
 	#(#{Core.String class} #findFirstInString:inSet:startingAt:)
 	#(#{Core.Symbol} #stonOn:)
-	#(#{Core.Time} #stonContainSubObjects)
-	#(#{Core.Time} #stonOn:)
-	#(#{Core.Time class} #fromSton:)
 	#(#{Core.UndefinedObject} #stonContainSubObjects)
 	#(#{Core.UndefinedObject} #stonOn:)
 	#(#{External.DynamicLinkLibrary} #stonOn:)
@@ -155,7 +149,6 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Legacy Date & Time'
 ).
 
 package!
@@ -448,57 +441,6 @@ fromSton: stonReader
 
 !Core.Collection class categoriesForMethods!
 fromSton:!public!ston! !
-!
-
-!Core.Date methodsFor!
-
-stonContainSubObjects 
-	^ false!
-
-stonOn: stonWriter
-	"Use an ISO style YYYY-MM-DD representation.
-	Since my current implementation is time zone offset sensitive, the offset has to be included."
-
-	"Custom implementation for Dolphin replacing the Pharo implementation in STON-Core"
-
-	| stream offset |
-	stream := String writeStream: 15.
-	stream locale: Locale invariant.
-	self printOn: stream format: 'yyyy-MM-dd'.
-	offset := Locale timeZoneInformation offsetSeconds.
-	offset = 0 ifTrue: [stream nextPut: $Z] ifFalse: [offset seconds printOn: stream format: '+hh:mm'].
-	stonWriter writeObject: self listSingleton: stream grabContents! !
-
-!Core.Date categoriesForMethods!
-stonContainSubObjects!accessing!public!ston! !
-stonOn:!public!ston! !
-!
-
-!Core.Date class methodsFor!
-
-fromSton: stonReader
-	"Read a ISO YYYY-MM-DD format.
-	Since my current implementation is time zone offset sensitive, the offset has to be taken into account.
-	A missing offset results in the local timezone offset to be used"
-
-	"Customised for Dolphin from the STON-Core original"
-
-	| readStream date |
-	readStream := stonReader parseListSingleton readStream.
-	date := self readFrom: readStream format: 'ymd'.
-	readStream atEnd
-		ifFalse: 
-			[| offset dt |
-			offset := DateAndTime readOffsetFrom: readStream sign: readStream next.
-			dt := DateAndTime
-						year: date year
-						day: date dayOfYear
-						offset: offset.
-			date := dt asLocal asDate].
-	^date! !
-
-!Core.Date class categoriesForMethods!
-fromSton:!instance creation!public! !
 !
 
 !Core.DateAndTime methodsFor!
@@ -965,36 +907,6 @@ stonOn: stonWriter
 
 !Core.Symbol categoriesForMethods!
 stonOn:!public!ston! !
-!
-
-!Core.Time methodsFor!
-
-stonContainSubObjects 
-	^ false!
-
-stonOn: stonWriter
-	"Use an ISO style HH:MM:SS.N representation (with optional nanoseconds)"
-
-	stonWriter writeObject: self
-		listSingleton: (String streamContents: 
-					[:stream |
-					self
-						print24: true
-						showSeconds: true
-						on: stream])! !
-
-!Core.Time categoriesForMethods!
-stonContainSubObjects!public!ston! !
-stonOn:!public!ston! !
-!
-
-!Core.Time class methodsFor!
-
-fromSton: stonReader
-	^ self readFrom: stonReader parseListSingleton readStream! !
-
-!Core.Time class categoriesForMethods!
-fromSton:!public!ston! !
 !
 
 !Core.UndefinedObject methodsFor!

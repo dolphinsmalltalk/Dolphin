@@ -30,9 +30,11 @@ Package manager install: 'Core\Object Arts\Dolphin\Installation Manager\Dolphin 
 
 productName := SessionManager current argv at: 3 ifAbsent: [ | p |
 	"We'll need MVP bits in order to be able to display the choice prompter for the image version to boot"
-	Package manager install: 'Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax'.
-	p := (Smalltalk at: #ChoicePrompter)
-		choices: (Tools.DolphinProduct allSubclasses reject: [:each | each isAbstract]) 
+	Package manager 
+		install: 'Core\Object Arts\Dolphin\System\STON\Dolphin STON-Core.pax';
+		install: 'Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax'.
+	p := #{UI.ChoicePrompter} value
+		choices: (Tools.DolphinProduct allSubclasses reject: [:each | each isNonInstantiable]) 
 		caption: 'Product to boot...'.
 	p isNil ifTrue: [SessionManager current quit: -1].
 	isPrompted := true.

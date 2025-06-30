@@ -81,7 +81,6 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'Dolphin'
 	'..\System\Base64\Dolphin Base64'
-	'..\System\Win32\MessageBox\Dolphin Message Box'
 ).
 
 package setManualPrerequisites: #(
@@ -424,14 +423,8 @@ saveImageTo: aString
 	
 	[self imagePath: aString.
 	self createSentinel
-		ifTrue: 
-			[| mb |
-			mb := UI.MessageBox new.
-			mb beTaskModal.
-			mb
-				errorMsg: ('The image <1p> is open in another Dolphin instance.<n><n>Close that instance and try again should you still wish to save this image to that name.<n><n>The image has not been saved!!'
-						expandMacrosWith: self imageFileName).
-			^self].
+		ifTrue: [self error: 'The image <3p> is open in another Dolphin instance.<n>Close that instance and try again should you still wish to save this image to that name.<n>The image has not been saved!!'
+						<< { aString. self imageFileName. self sentinelName }].
 	self class sourceManager copyAndReopenSources: self imagePath.
 	self
 		snapshot: self imageFileName;
