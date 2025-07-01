@@ -72,7 +72,13 @@ testFromSystemId
 	cursor1 free!
 
 testHotspot
-	self assert: self canonicalInstance hotspot equals: 0 @ 0!
+	"We need to test a cursor that won't change (i.e. not one of the system cursors) so the hotspot is constant."
+
+	self
+		assert: (Cursor fromFile: (FileLocator installRelative
+						localFileSpecFor: 'Core\Contributions\IDB\Resources\ImageEditor.cur'))
+				hotspot
+		equals: 15 @ 15!
 
 testStbConvertFromVersion1_resource
 	| bytes cursor |
