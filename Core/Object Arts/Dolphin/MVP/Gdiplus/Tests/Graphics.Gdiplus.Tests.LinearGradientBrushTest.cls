@@ -128,7 +128,8 @@ testPrintString
 	self assert: (Compiler evaluate: expr) equals: model.
 	model rotate: 45.
 	self assert: model printString
-		equals: 'a Gdiplus.LinearGradientBrush(point1: (0@0) point2: (255@0) color1: Color red color2: Color blue wrapMode: Gdiplus.WrapModeTileFlipXY; transform: (Gdiplus.Matrix fromArray: #(0.707106709 0.70710665 -0.707106709 0.707106709 -0.0 -0.0)))'!
+		equals: 'a Gdiplus.LinearGradientBrush(point1: (0@0) point2: (255@0) color1: Color red color2: Color blue wrapMode: Gdiplus.WrapModeTileFlipXY; transform: <1p>)'
+				<< model transform!
 
 testStlUpgradeFromD7
 	| brushes |

@@ -116,10 +116,10 @@ testPrintString
 	self assert: model printString equals: 'Gdiplus.Matrix identity'.
 	model
 		translate: 15 @ 25;
-		rotate: 45.
+		scale: 2 @ 4.
 	expr := model printString.
 	self assert: expr
-		equals: '(Gdiplus.Matrix fromArray: #(0.707106769 0.707106709 -0.707106709 0.707106769 15.0 25.0))'.
+		equals: '(Gdiplus.Matrix fromArray: #(2.0 0.0 0.0 4.0 15.0 25.0))'.
 	self assert: (Compiler evaluate: expr) equals: model!
 
 testRotate
