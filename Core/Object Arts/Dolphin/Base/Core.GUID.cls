@@ -3,9 +3,9 @@
 Core.Object
 	variableByteSubclass: #'Core.GUID'
 	instanceVariableNames: ''
-	classVariableNames: 'Null'
+	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
+	classInstanceVariableNames: 'null'
 	classConstants: { '_GUID_Size' -> 16r10. 'StringSize' -> 16r26 }!
 
 Core.GUID guid: (Core.GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -371,7 +371,11 @@ newUnique
 null
 	"Answer a null instance of the receiver."
 
-	^Null ifNil: [Null := self newNull]!
+	^null
+		ifNil: 
+			[null := self newNull
+						isImmutable: true;
+						yourself]!
 
 onPreStripImage
 	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
@@ -381,7 +385,7 @@ onPreStripImage
 uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
-	Null := nil.
+	null := nil.
 	VM registryAt: self name put: nil.
 	"Allow the RPCLibrary to be removed as it is probably no longer required"
 	OS.RPCLibrary closeDefault! !

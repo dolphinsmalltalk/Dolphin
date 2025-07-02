@@ -18,6 +18,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\System\Random\Dolphin Random Stream'
+	'..\..\..\Registry\Dolphin Registry Access'
 	'..\OLE COM'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 ).

@@ -16,16 +16,20 @@ OS.COM.Tests.IIDTest comment: ''!
 
 !OS.COM.Tests.IIDTest methodsFor!
 
+nullDisplayString
+	^(RegKey classesRoot at: 'Interface\{00000000-0000-0000-0000-000000000000}'
+		ifAbsent: ['{00000000-0000-0000-0000-000000000000}']) value!
+
 subjectClass
 	^IID!
 
 testDisplayStringIUknown
 	| subject |
 	subject := IUnknown iid.
-	self assert: subject displayString equals: 'IUnknown'.
-	super testDisplayString! !
+	self assert: subject displayString equals: 'IUnknown'! !
 
 !OS.COM.Tests.IIDTest categoriesForMethods!
+nullDisplayString!constants!private! !
 subjectClass!constants!private! !
 testDisplayStringIUknown!constants!public! !
 !

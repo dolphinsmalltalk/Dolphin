@@ -2812,9 +2812,9 @@ Core.Object
 Core.Object
 	variableByteSubclass: #'Core.GUID'
 	instanceVariableNames: ''
-	classVariableNames: 'Null'
+	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
+	classInstanceVariableNames: 'null'
 	classConstants: { '_GUID_Size' -> 16r10. 'StringSize' -> 16r26 }!
 
 Core.Object

@@ -23,6 +23,9 @@ assertNull: guid
 	self assert: guid asString size equals: 38.
 	self assert: (guid asByteArray allSatisfy: [:each | each = 0])!
 
+nullDisplayString
+	^'{00000000-0000-0000-0000-000000000000}'!
+
 subjectClass
 	^GUID!
 
@@ -72,7 +75,7 @@ testComparison
 testDisplayString
 	| subject |
 	subject := self subjectClass null.
-	self assert: subject displayString equals: '{00000000-0000-0000-0000-000000000000}'.
+	self assert: subject displayString equals: self nullDisplayString.
 	subject := self subjectClass fromString: '{7EB5AF34-D3AB-4790-827D-1E61D5A00984}'.
 	self assert: subject displayString equals: '{7eb5af34-d3ab-4790-827d-1e61d5a00984}'!
 
@@ -104,7 +107,10 @@ testNewUnique
 	self assert: uuid asString size equals: 38!
 
 testNull
-	self assertNull: self subjectClass null!
+	| null |
+	null := self subjectClass null.
+	self assertNull: null.
+	self assert: null isImmutable!
 
 testOrder
 	100 timesRepeat: 
@@ -147,11 +153,12 @@ testUniqueness
 
 !Core.Tests.GUIDTest categoriesForMethods!
 assertNull:!helpers!private! !
+nullDisplayString!constants!private! !
 subjectClass!constants!private! !
 testAsByteArray!public!unit tests! !
 testAsInteger!public!unit tests! !
 testComparison!public!unit tests! !
-testDisplayString!constants!public! !
+testDisplayString!public!unit tests! !
 testFromString!public!unit tests! !
 testFromStringNull!public!unit tests! !
 testIsSelfEvaluating!public!unit tests! !
