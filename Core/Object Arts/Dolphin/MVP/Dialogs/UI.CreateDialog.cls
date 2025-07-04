@@ -28,7 +28,7 @@ create: aDialogView
 	aDialogView dpi: nil.
 	self scaleToDpi: aDialogView dpi.
 	"Position and size the dialog as requested."
-	aDialogView setInitialPosition: rectangle.
+	aDialogView setInitialPosition: rectangle truncated.
 	^hDlg!
 
 resolveShellGeometry: aDialogView
