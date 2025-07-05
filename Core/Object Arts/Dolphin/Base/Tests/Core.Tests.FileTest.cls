@@ -39,16 +39,16 @@ createTestDirectories
 	File createDirectoryPath: 'c:\FileTest1\EmptyLeaf'.
 	dir := 'c:\FileTest1\LeafWithFile\'.
 	File createDirectoryPath: dir.
-	(FileStream write: dir , 'Blah.txt')
-		nextPutAll: 'Blah';
+	(File write: dir , 'Blah.txt')
+		write: 'Blah';
 		close.
 	dir := 'c:\FileTest1\LeafWithFiles\'.
 	File createDirectoryPath: dir.
-	(FileStream write: dir , 'Blah1.txt')
-		nextPutAll: 'Blah';
+	(File write: dir , 'Blah1.txt')
+		write: 'Blah';
 		close.
-	(FileStream write: dir , 'Blah2.txt')
-		nextPutAll: 'Blah blah';
+	(File write: dir , 'Blah2.txt')
+		write: 'Blah blah';
 		close.
 	File createDirectoryPath: 'c:\FileTest1\BranchWithEmptyLeaf\EmptyLeaf1'.
 	dir := 'c:\FileTest1\BranchWithEmptyLeaves\'.
@@ -56,46 +56,46 @@ createTestDirectories
 	File createDirectoryPath: dir , 'EmptyLeaf2'.
 	dir := 'c:\FileTest1\BranchWithEmptyLeafAndFile\'.
 	File createDirectoryPath: dir , '\EmptyLeaf1'.
-	(FileStream write: dir , 'blah.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , 'blah.txt')
+		write: 'Blah blah blah';
 		close.
 	dir := 'c:\FileTest1\BranchWithEmptyLeafAndFiles\'.
 	File createDirectoryPath: dir , 'EmptyLeaf1'.
-	(FileStream write: dir , 'blah1.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , 'blah1.txt')
+		write: 'Blah blah blah';
 		close.
-	(FileStream write: dir , 'blah2.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , 'blah2.txt')
+		write: 'Blah blah blah';
 		close.
 	dir := 'c:\FileTest1\BranchWithEmptyLeavesAndFile\'.
 	File createDirectoryPath: dir , 'EmptyLeaf1'.
 	File createDirectoryPath: dir , 'EmptyLeaf2'.
-	(FileStream write: dir , 'blah.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , 'blah.txt')
+		write: 'Blah blah blah';
 		close.
 	dir := 'c:\FileTest1\BranchWithEmptyLeavesAndFiles\'.
 	File createDirectoryPath: dir , 'EmptyLeaf1'.
 	File createDirectoryPath: dir , 'EmptyLeaf2'.
-	(FileStream write: dir , 'blah1.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , 'blah1.txt')
+		write: 'Blah blah blah';
 		close.
-	(FileStream write: dir , 'blah2.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , 'blah2.txt')
+		write: 'Blah blah blah';
 		close.
 	dir := 'c:\FileTest1\BranchWithLeafWithFile\'.
 	File createDirectoryPath: dir.
 	File createDirectoryPath: dir , 'LeafWithFile'.
-	(FileStream write: dir , '\LeafWithFile\blah.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , '\LeafWithFile\blah.txt')
+		write: 'Blah blah blah';
 		close.
 	dir := 'c:\FileTest1\BranchWithLeafWithFiles🐬\'.
 	File createDirectoryPath: dir.
 	File createDirectoryPath: dir , 'LeafWithFiles'.
-	(FileStream write: dir , '\LeafWithFiles\a🐬b.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , '\LeafWithFiles\a🐬b.txt')
+		write: 'Blah blah blah';
 		close.
-	(FileStream write: dir , '\LeafWithFiles\a£b.txt')
-		nextPutAll: 'Blah blah blah';
+	(File write: dir , '\LeafWithFiles\a£b.txt')
+		write: 'Blah blah blah';
 		close!
 
 deleteDirectory: aString
@@ -109,9 +109,10 @@ deleteTestDirectories
 longFilenamesEnabled
 	"Answer whether long filenames are enabled in the host OS. Note that changes to the reg value do not take effect until after a reboot, so this is not conclusive."
 
-	| fs |
-	fs := OS.RegKey localMachineRoot at: 'SYSTEM\CurrentControlSet\Control\FileSystem'.
-	^(fs valueAt: 'LongPathsEnabled' ifAbsent: [0]) ~~ 0!
+	^OS.NtDll rtlAreLongPathsEnabled and: [OS.Kernel32 isWindows11OrGreater]!
+
+longPathPrefix
+	^self longFilenamesEnabled ifTrue: [''] ifFalse: ['\\?\']!
 
 maxFname
 	^_MAX_FNAME!
@@ -246,9 +247,9 @@ testCanonicalizePath
 
 	"> MAX_PATH"
 	self assert: (File canonicalizePath: 'c:\' , (String new: MAX_PATH - 3 withAll: $a))
-		equals: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a).
+		equals: self longPathPrefix , 'c:\' , (String new: MAX_PATH - 3 withAll: $a).
 	self assert: (File canonicalizePath: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a))
-		equals: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a)!
+		equals: self longPathPrefix, 'c:\' , (String new: MAX_PATH - 3 withAll: $a)!
 
 testClassAppendPathSeparator
 	"N.B. To path is assumed to be a directory only if it has a trailing slash, *otherwise the last portion is ignored*"
@@ -413,9 +414,9 @@ testComposePath
 
 	"MAX_PATH+1 - Path*Combine prepends the long path prefix, \\?\"
 	self assert: (File composePath: 'c:' subPath: (String new: MAX_PATH - 3 withAll: $a))
-		equals: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a).
+		equals: self longPathPrefix, 'c:\' , (String new: MAX_PATH - 3 withAll: $a).
 	self assert: (File composePath: '\\?\c:' subPath: (String new: MAX_PATH - 3 withAll: $a))
-		equals: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a)!
+		equals: self longPathPrefix, 'c:\' , (String new: MAX_PATH - 3 withAll: $a)!
 
 testCreateDirectoryPath
 	| tempDir |
@@ -449,7 +450,7 @@ testCreateDirectoryPath
 	File createDirectoryPath: path.
 	self assert: (File isDirectory: path).
 	path := File composePath: tempDir subPath: 'long\' , (String new: 250 withAll: $£).
-	self assert: (path beginsWith: '\\?\').
+	self assert: (path beginsWith: self longPathPrefix).
 	File createDirectoryPath: path.
 	self assert: (File isDirectory: path)]
 			ensure: [File deleteDirectory: tempDir]!
@@ -547,6 +548,7 @@ testForDirectoriesIn
 testFullPathOf
 	| longPath longFilename |
 	self assert: (File fullPathOf: 'Dolphin') equals: File workingDirectory , 'Dolphin'.
+	self assert: (File fullPathOf: '.\Dolphin') equals: File workingDirectory , 'Dolphin'.
 	"With extended characters"
 	self assert: (File fullPathOf: 'a🐬.£b') equals: File workingDirectory , 'a🐬.£b'.
 	"An odd case where the first call to GetFullPath (to request the buffer size) returns space for two extra chars, presumably the '.\', but returns the correct size when actually invoked with a buffer."
@@ -705,8 +707,8 @@ testSetReadOnly
 		String new: MAX_PATH - tempDir asUtf16String size - 1 withAll: $c} do: 
 				[:each |
 				temp := File composePath: tempDir subPath: each.
-				(FileStream write: temp)
-					nextPutAll: 'Hello world';
+				(File write: temp)
+					write: 'Hello world';
 					close.
 				self assert: (File isWriteable: temp).
 				File isWriteable: temp set: false.
@@ -924,6 +926,7 @@ createTestDirectories!helpers!private! !
 deleteDirectory:!helpers!public! !
 deleteTestDirectories!private!Running! !
 longFilenamesEnabled!helpers!private! !
+longPathPrefix!helpers!private! !
 maxFname!constants!private! !
 printFilenameOfLength:on:!helpers!private! !
 relativePathOf:to:!helpers!public! !

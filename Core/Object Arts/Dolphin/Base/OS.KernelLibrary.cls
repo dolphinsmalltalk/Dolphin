@@ -1467,6 +1467,20 @@ isWindows10OrGreater
 		wMinorVersion: 0
 		wServicePackMajor: 0!
 
+isWindows11OrGreater
+	| osvi |
+	osvi := OSVERSIONINFOEXW newBuffer
+				dwMajorVersion: 10;
+				dwBuildNumber: 21996;
+				yourself.
+	^self
+		verifyVersionInfo: osvi
+		dwTypeMask: ##(VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR | VER_BUILDNUMBER)
+		dwlConditionMask: (self
+				verSetConditionMask: self winVerOrGreaterMask
+				typeMask: VER_BUILDNUMBER
+				condition: VER_GREATER)!
+
 isWindows7OrGreater
 	^self
 		isWindowsVersionOrGreater: 6
@@ -2280,6 +2294,7 @@ heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
 inputQueueMask!constants!private! !
 isValidLocale:dwFlags:!public!win32 functions-national language support! !
 isWindows10OrGreater!public!win32 functions-version helpers! !
+isWindows11OrGreater!public!win32 functions-version helpers! !
 isWindows7OrGreater!public!win32 functions-version helpers! !
 isWindows7SP1OrGreater!public!win32 functions-version helpers! !
 isWindows8OrGreater!public!win32 functions-version helpers! !

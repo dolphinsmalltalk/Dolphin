@@ -1485,7 +1485,12 @@ workingDirectory
 workingDirectory: aString
 	"Set the current working directory."
 
-	^Kernel32 setCurrentDirectory: aString! !
+	^Kernel32 setCurrentDirectory: aString!
+
+write: aString
+	"Create or open a file for exclusive write access."
+
+	^self open: aString mode: #create check: false! !
 
 !Core.File class categoriesForMethods!
 appendPathDelimiter:!filename manipulation!public!testing! !
@@ -1559,5 +1564,6 @@ tempPath!enquiries!public! !
 windowsDirectory!enquiries!public! !
 workingDirectory!enquiries!public! !
 workingDirectory:!file operations!public! !
+write:!instance creation!public! !
 !
 

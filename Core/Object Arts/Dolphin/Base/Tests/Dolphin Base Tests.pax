@@ -182,6 +182,7 @@ package setMethodNames: #(
 	#(#{OS.CRTLibrary} #_chmod:pmode:)
 	#(#{OS.CRTLibrary} #strcat_s:bufferSize:strSource:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
+	#(#{OS.NTLibrary} #rtlAreLongPathsEnabled)
 	#(#{Tools.SmalltalkSystem} #regressionTestsLogFilename)
 	#(#{Tools.SmalltalkSystem} #regressionTestSuite)
 	#(#{Tools.SmalltalkSystem} #runRegressionTests)
@@ -1630,6 +1631,18 @@ _chmod: aFilenameString pmode: aModeInteger
 
 !OS.CRTLibraryNonBlocking categoriesForMethods!
 _chmod:pmode:!CRT functions-file handling!public! !
+!
+
+!OS.NTLibrary methodsFor!
+
+rtlAreLongPathsEnabled
+	"Note that this is undocumented."
+
+	<stdcall: bool RtlAreLongPathsEnabled>
+	^self invalidCall: _failureCode! !
+
+!OS.NTLibrary categoriesForMethods!
+rtlAreLongPathsEnabled!public!win32 functions-file system! !
 !
 
 !Tools.SmalltalkSystem methodsFor!
