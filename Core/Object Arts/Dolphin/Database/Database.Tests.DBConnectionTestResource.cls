@@ -112,7 +112,10 @@ requiredOdbcVersion
 	^OS.ODBCConstants.SQL_OV_ODBC3!
 
 setUp
-	isAvailable := self prereqsAvailable and: [self createDatabase]!
+	(isAvailable := self prereqsAvailable and: [self createDatabase])
+		ifTrue: 
+			[Notification signal: '<1p> successfully created test Northwind database. ODBC driver version <2s>'
+						<< { self class. self connection driverVersion }]!
 
 tearDown
 	[self dropDatabase] on: DBWarning do: [:ex | 

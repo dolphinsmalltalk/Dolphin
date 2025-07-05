@@ -163,9 +163,6 @@ ordersColumns
 ordersRowVersionColumns
 	^#('xmin')!
 
-orderTableRowIds
-	^#()!
-
 scaleOfTimeColumns
 	^6!
 
@@ -218,7 +215,6 @@ intervalLiteralsQuery!constants!private! !
 invalidDates!private! !
 ordersColumns!constants!private! !
 ordersRowVersionColumns!constants!private! !
-orderTableRowIds!constants!private! !
 scaleOfTimeColumns!constants!private! !
 sqlDataTypeVarChar!constants!private! !
 supportsIntervalStructs!private!testing! !
