@@ -22,6 +22,8 @@ dumpForNonExistentClass
 End of 3 object(s)'!
 
 expectedDump0
+	| sortBlockMethod |
+	sortBlockMethod := SortedCollection class >> #defaultSortBlock.
 	^'STB version 0:
 000007 [Array;][31]
 000020     [%<0: nil>]
@@ -91,44 +93,40 @@ expectedDump0
 000816         [MergesortAlgorithm;]
 000842             [BlockClosure;][0]
 000866                 [%<0: nil>]
-000870                 [CompiledMethod;][5]
-000892                     [0]
+000870                 [CompiledMethod;][2]
+000892                     [<2p>]
 000896                     [STBMetaclassProxy]
 000904                         [String] 70: ''Dolphin''
-000919                         [String] 71: ''PluggableSortAlgorithm''
-000949                     [STBSymbolProxy]
-000957                         [String] 73: ''new''
-000968                     [<1p>]
-000972                     [ByteArray][10] 74: #[171 100 31 177 97 105 233 1 130 106]
-000990                     [STBSymbolProxy]
-000998                         [String] 76: ''basicNew''
-001014                     [STBSymbolProxy]
-001022                         [String] 78: ''setSortBlock:''
-001043                     [%<66: [] in nil>]
-001047                     [STBSymbolProxy]
-001055                         [String] 80: ''%<=''
-001065                     [STBSymbolProxy]
-001073                         [String] 82: ''yourself''
-001089                 [7]
-001093                 [256]
-001097                 [%<0: nil>]
-001101     [STBIdentityDictionaryProxy;]
-001135         [STBClassProxy]
-001143             [String] 86: ''Dolphin''
-001158             [String] 87: ''LookupTable''
-001177         [Array][4]
-001185             [String] 89: ''origin''
-001199             [Point;]
-001212                 [10]
-001216                 [20]
-001220             [2]
-001224             [Point]
-001232                 [100]
-001236                 [200]
-End of 92 objects'
-		<< (PluggableSortAlgorithm class >> #new) sourceDescriptor!
+000919                         [String] 71: ''SortedCollection''
+000943                     [STBSymbolProxy]
+000951                         [String] 73: ''defaultSortBlock''
+000975                     [<1p>]
+000979                     [ByteArray][6] 74: #[29 105 233 1 130 106]
+000993                     [%<66: [] in nil>]
+000997                     [STBSymbolProxy]
+001005                         [String] 76: ''%<=''
+001015                 [3]
+001019                 [256]
+001023                 [%<0: nil>]
+001027     [STBIdentityDictionaryProxy;]
+001061         [STBClassProxy]
+001069             [String] 80: ''Dolphin''
+001084             [String] 81: ''LookupTable''
+001103         [Array][4]
+001111             [String] 83: ''origin''
+001125             [Point;]
+001138                 [10]
+001142                 [20]
+001146             [2]
+001150             [Point]
+001158                 [100]
+001162                 [200]
+End of 86 objects'
+		<< { sortBlockMethod sourceDescriptor. sortBlockMethod header }!
 
 expectedDump1
+	| sortBlockMethod |
+	sortBlockMethod := SortedCollection class >> #defaultSortBlock.
 	^'STB version 1:
 000007 [Array][31]
 000015     [%<0: nil>]
@@ -196,42 +194,38 @@ expectedDump1
 000670         [MergesortAlgorithm;]
 000696             [BlockClosure;][0]
 000720                 [%<0: nil>]
-000724                 [CompiledMethod;][5]
-000746                     [0]
+000724                 [CompiledMethod;][2]
+000746                     [<2p>]
 000750                     [STBMetaclassProxy]
 000758                         [String] 79: ''Dolphin''
-000773                         [String] 80: ''PluggableSortAlgorithm''
-000803                     [STBSymbolProxy]
-000811                         [String] 82: ''new''
-000822                     [<1p>]
-000826                     [ByteArray][10] 83: #[171 100 31 177 97 105 233 1 130 106]
-000844                     [STBSymbolProxy]
-000852                         [String] 85: ''basicNew''
-000868                     [STBSymbolProxy]
-000876                         [String] 87: ''setSortBlock:''
-000897                     [%<75: [] in nil>]
-000901                     [STBSymbolProxy]
-000909                         [String] 89: ''%<=''
-000919                     [STBSymbolProxy]
-000927                         [String] 91: ''yourself''
-000943                 [7]
-000947                 [256]
-000951                 [%<0: nil>]
-000955     [STBIdentityDictionaryProxy]
-000963         [%<15: LookupTable>]
-000967         [Array][4]
-000975             [String] 94: ''origin''
-000989             [Point;]
-001002                 [10]
-001006                 [20]
-001010             [2]
-001014             [Point]
-001022                 [100]
-001026                 [200]
-End of 86 objects'
-		<< (PluggableSortAlgorithm class >> #new) sourceDescriptor!
+000773                         [String] 80: ''SortedCollection''
+000797                     [STBSymbolProxy]
+000805                         [String] 82: ''defaultSortBlock''
+000829                     [<1p>]
+000833                     [ByteArray][6] 83: #[29 105 233 1 130 106]
+000847                     [%<75: [] in nil>]
+000851                     [STBSymbolProxy]
+000859                         [String] 85: ''%<=''
+000869                 [3]
+000873                 [256]
+000877                 [%<0: nil>]
+000881     [STBIdentityDictionaryProxy]
+000889         [%<15: LookupTable>]
+000893         [Array][4]
+000901             [String] 88: ''origin''
+000915             [Point;]
+000928                 [10]
+000932                 [20]
+000936             [2]
+000940             [Point]
+000948                 [100]
+000952                 [200]
+End of 80 objects'
+		<< { sortBlockMethod sourceDescriptor. sortBlockMethod header }!
 
 expectedDump2
+	| sortBlockMethod |
+	sortBlockMethod := SortedCollection class >> #defaultSortBlock.
 	^'STB version 2:
 000007 [Array][31]
 000015     [%<0: nil>]
@@ -296,37 +290,36 @@ expectedDump2
 000646         [MergesortAlgorithm;]
 000672             [BlockClosure;][0]
 000696                 [%<0: nil>]
-000700                 [CompiledMethod;][5]
-000722                     [0]
+000700                 [CompiledMethod;][2]
+000722                     [<2p>]
 000726                     [STBMetaclassProxy]
 000734                         [String] 76: ''Dolphin''
-000749                         [String] 77: ''PluggableSortAlgorithm''
-000779                     [Symbol] 78: #new
-000790                     [<1p>]
-000794                     [ByteArray][10] 79: #[171 100 31 177 97 105 233 1 130 106]
-000812                     [Symbol] 80: #basicNew
-000828                     [Symbol] 81: #setSortBlock:
-000849                     [%<72: [] in nil>]
-000853                     [Symbol] 82: #%<=
-000863                     [Symbol] 83: #yourself
-000879                 [7]
-000883                 [256]
-000887                 [%<0: nil>]
-000891     [STBIdentityDictionaryProxy]
-000899         [%<15: LookupTable>]
-000903         [Array][4]
-000911             [String] 86: ''origin''
-000925             [Point;]
-000938                 [10]
-000942                 [20]
-000946             [2]
-000950             [Point]
-000958                 [100]
-000962                 [200]
-End of 78 objects'
-		<< (PluggableSortAlgorithm class >> #new) sourceDescriptor!
+000749                         [String] 77: ''SortedCollection''
+000773                     [Symbol] 78: #defaultSortBlock
+000797                     [<1p>]
+000801                     [ByteArray][6] 79: #[29 105 233 1 130 106]
+000815                     [%<72: [] in nil>]
+000819                     [Symbol] 80: #%<=
+000829                 [3]
+000833                 [256]
+000837                 [%<0: nil>]
+000841     [STBIdentityDictionaryProxy]
+000849         [%<15: LookupTable>]
+000853         [Array][4]
+000861             [String] 83: ''origin''
+000875             [Point;]
+000888                 [10]
+000892                 [20]
+000896             [2]
+000900             [Point]
+000908                 [100]
+000912                 [200]
+End of 75 objects'
+		<< { sortBlockMethod sourceDescriptor. sortBlockMethod header }!
 
 expectedDump3
+	| sortBlockMethod |
+	sortBlockMethod := SortedCollection class >> #defaultSortBlock.
 	^'STB version 3:
 000007 [Array][31]
 000015     [%<0: nil>]
@@ -391,36 +384,36 @@ expectedDump3
 000602         [MergesortAlgorithm;]
 000624             [BlockClosure;][0]
 000648                 [%<0: nil>]
-000652                 [CompiledMethod;][5]
-000674                     [0]
+000652                 [CompiledMethod;][2]
+000674                     [<2p>]
 000678                     [STBMetaclassProxy]
 000682                         [String] 76: ''Dolphin''
-000697                         [String] 77: ''PluggableSortAlgorithm''
-000727                     [Symbol] 78: #new
-000738                     [<1p>]
-000742                     [ByteArray][10] 79: #[171 100 31 177 97 105 233 1 130 106]
-000760                     [Symbol] 80: #basicNew
-000776                     [Symbol] 81: #setSortBlock:
-000797                     [%<72: [] in nil>]
-000801                     [Symbol] 82: #%<=
-000811                     [Symbol] 83: #yourself
-000827                 [7]
-000831                 [256]
-000835                 [%<0: nil>]
-000839     [STBIdentityDictionaryProxy]
-000843         [%<15: LookupTable>]
-000847         [Array][4]
-000855             [String] 86: ''origin''
-000869             [Point;]
-000878                 [10]
-000882                 [20]
-000886             [2]
-000890             [Point]
-000894                 [100]
-000898                 [200]
-End of 78 objects' << (PluggableSortAlgorithm class >> #new) sourceDescriptor!
+000697                         [String] 77: ''SortedCollection''
+000721                     [Symbol] 78: #defaultSortBlock
+000745                     [<1p>]
+000749                     [ByteArray][6] 79: #[29 105 233 1 130 106]
+000763                     [%<72: [] in nil>]
+000767                     [Symbol] 80: #%<=
+000777                 [3]
+000781                 [256]
+000785                 [%<0: nil>]
+000789     [STBIdentityDictionaryProxy]
+000793         [%<15: LookupTable>]
+000797         [Array][4]
+000805             [String] 83: ''origin''
+000819             [Point;]
+000828                 [10]
+000832                 [20]
+000836             [2]
+000840             [Point]
+000844                 [100]
+000848                 [200]
+End of 75 objects'
+		<< { sortBlockMethod sourceDescriptor. sortBlockMethod header }!
 
 expectedDump4
+	| sortBlockMethod |
+	sortBlockMethod := SortedCollection class >> #defaultSortBlock.
 	^'STB version 4:
 000007 [Array][34]
 000015     [%<0: nil>]
@@ -429,96 +422,95 @@ expectedDump4
 000027     [Symbol] 26: #testVersion0
 000047     [Symbol] 27: #''†Symbol''
 000064     [Utf8String] 28: ''a␀b''
-000075     [AnsiString] 29: ''a␀b''
-000086     [Utf8String] 30: ''a␀b''
-000097     [Utf8String] 31: ''文字化け''
-000117     [$a]
-000121     [$\x80]
-000125     [$£]
-000129     [$ÿ]
-000133     [$€]
-000137     [$🐬]
-000141     [0]
-000145     [-1073741824]
-000149     [LargeInteger][12] 32: 18446744073709551616
-000169     [Float;][8] 34: 1.25
-000190     [Float][8] 35: Float.Infinity
-000206     [Float][8] 36: Float.NaN
-000222     [ScaledDecimal;]
-000239         [Fraction;]
-000251             [5]
-000255             [4]
-000259         [2]
-000263     [ScaledDecimal]
-000267         [Fraction]
-000271             [2]
-000275             [3]
-000279         [2]
-000283     [STBClassProxy]
-000287         [Utf8String] 44: ''Dolphin''
-000302         [Utf8String] 45: ''Object''
-000316     [STBMetaclassProxy]
-000320         [Utf8String] 47: ''Dolphin''
-000335         [Utf8String] 48: ''Object''
-000349     [%<4: a ProcessorScheduler>]
-000353     [STBSingletonProxy;]
-000374         [STBClassProxy]
-000378             [Utf8String] 52: ''Dolphin Transcript''
-000404             [Utf8String] 53: ''TranscriptShell''
-000427         [Symbol] 54: #current
-000442     [%<3: Smalltalk>]
-000446     [ByteArray][0] 55: #[]
-000454     [ByteArray][1] 56: #[255]
-000463     [ByteArray][5] 57: #[1 2 3 4 5]
-000476     [STBCollectionProxy]
-000480         [%<13: OrderedCollection>]
-000484         [Array][3]
-000492             [%<28: ''a␀b''>]
-000496             [%<26: #testVersion0>]
-000500             [$d]
-000504     [STBSortedCollectionProxy;]
-000536         [STBClassProxy]
-000540             [Utf8String] 63: ''Dolphin''
-000555             [Utf8String] 64: ''SortedCollection''
-000579         [Array][4]
-000587             [Utf8String] 66: ''a''
-000596             [Utf8String] 67: ''B''
-000605             [Utf8String] 68: ''b''
-000614             [Utf8String] 69: ''B''
-000623         [MergesortAlgorithm;]
-000645             [BlockClosure;][0]
-000669                 [%<0: nil>]
-000673                 [CompiledMethod;][5]
-000695                     [0]
-000699                     [STBMetaclassProxy]
-000703                         [Utf8String] 77: ''Dolphin''
-000718                         [Utf8String] 78: ''PluggableSortAlgorithm''
-000748                     [Symbol] 79: #new
-000759                     [<1p>]
-000763                     [ByteArray][10] 80: #[171 100 31 177 97 105 233 1 130 106]
-000781                     [Symbol] 81: #basicNew
-000797                     [Symbol] 82: #setSortBlock:
-000818                     [%<73: [] in nil>]
-000822                     [Symbol] 83: #%<=
-000832                     [Symbol] 84: #yourself
-000848                 [7]
-000852                 [256]
-000856                 [%<0: nil>]
-000860     [STBIdentityDictionaryProxy]
-000864         [%<15: LookupTable>]
-000868         [Array][4]
-000876             [Utf8String] 87: ''origin''
-000890             [Point;]
-000899                 [10]
-000903                 [20]
-000907             [2]
-000911             [Point]
-000915                 [100]
-000919                 [200]
-End of 81 objects'
-		<< (PluggableSortAlgorithm class >> #new) sourceDescriptor!
+000075     [Utf8String] 29: ''a␀b''
+000086     [$a]
+000090     [$\x80]
+000094     [$£]
+000098     [$ÿ]
+000102     [$€]
+000106     [0]
+000110     [-1073741824]
+000114     [LargeInteger][12] 30: 18446744073709551616
+000134     [Float;][8] 32: 1.25
+000155     [Float][8] 33: Float.Infinity
+000171     [Float][8] 34: Float.NaN
+000187     [ScaledDecimal;]
+000204         [Fraction;]
+000216             [5]
+000220             [4]
+000224         [2]
+000228     [ScaledDecimal]
+000232         [Fraction]
+000236             [2]
+000240             [3]
+000244         [2]
+000248     [STBClassProxy]
+000252         [Utf8String] 42: ''Dolphin''
+000267         [Utf8String] 43: ''Object''
+000281     [STBMetaclassProxy]
+000285         [Utf8String] 45: ''Dolphin''
+000300         [Utf8String] 46: ''Object''
+000314     [%<4: a ProcessorScheduler>]
+000318     [STBSingletonProxy;]
+000339         [STBClassProxy]
+000343             [Utf8String] 50: ''Dolphin Transcript''
+000369             [Utf8String] 51: ''TranscriptShell''
+000392         [Symbol] 52: #current
+000407     [%<3: Smalltalk>]
+000411     [ByteArray][0] 53: #[]
+000419     [ByteArray][1] 54: #[255]
+000428     [ByteArray][5] 55: #[1 2 3 4 5]
+000441     [STBCollectionProxy]
+000445         [%<13: OrderedCollection>]
+000449         [Array][3]
+000457             [%<28: ''a␀b''>]
+000461             [%<26: #testVersion0>]
+000465             [$d]
+000469     [STBSortedCollectionProxy;]
+000501         [STBClassProxy]
+000505             [Utf8String] 61: ''Dolphin''
+000520             [Utf8String] 62: ''SortedCollection''
+000544         [Array][4]
+000552             [Utf8String] 64: ''a''
+000561             [Utf8String] 65: ''B''
+000570             [Utf8String] 66: ''b''
+000579             [Utf8String] 67: ''B''
+000588         [MergesortAlgorithm;]
+000610             [BlockClosure;][0]
+000634                 [%<0: nil>]
+000638                 [CompiledMethod;][2]
+000660                     [<2p>]
+000664                     [STBMetaclassProxy]
+000668                         [Utf8String] 75: ''Dolphin''
+000683                         [Utf8String] 76: ''SortedCollection''
+000707                     [Symbol] 77: #defaultSortBlock
+000731                     [<1p>]
+000735                     [ByteArray][6] 78: #[29 105 233 1 130 106]
+000749                     [%<71: [] in nil>]
+000753                     [Symbol] 79: #%<=
+000763                 [3]
+000767                 [256]
+000771                 [%<0: nil>]
+000775     [STBIdentityDictionaryProxy]
+000779         [%<15: LookupTable>]
+000783         [Array][4]
+000791             [Utf8String] 82: ''origin''
+000805             [Point;]
+000814                 [10]
+000818                 [20]
+000822             [2]
+000826             [Point]
+000830                 [100]
+000834                 [200]
+000838     [AnsiString] 86: ''a␀b''
+000849     [Utf8String] 87: ''文字化け''
+000869     [$🐬]
+End of 78 objects'
+		<< { sortBlockMethod sourceDescriptor. sortBlockMethod header}!
 
 expectedDump5
+	| sortBlockMethod |
+	sortBlockMethod := SortedCollection class >> #defaultSortBlock.
 	^'STB version 5:
 000007 [Core.Array][35]
 000015     [%<0: nil>]
@@ -528,102 +520,101 @@ expectedDump5
 000047     [Core.Symbol] 27: #''†Symbol''
 000064     [Core.Utf8String] 28: ''a␀b''
 000075     [Core.Utf8String] 29: ''a␀b''
-000086     [Core.Utf8String] 30: ''a␀b''
-000097     [Core.Utf8String] 31: ''文字化け''
-000117     [$a]
-000121     [$\x80]
-000125     [$£]
-000129     [$ÿ]
-000133     [$€]
-000137     [$🐬]
-000141     [0]
-000145     [-1073741824]
-000149     [Core.LargeInteger][12] 32: 18446744073709551616
-000169     [Core.Float;][8] 34: 1.25
-000195     [Core.Float][8] 35: Float.Infinity
-000211     [Core.Float][8] 36: Float.NaN
-000227     [Core.ScaledDecimal;]
-000249         [Core.Fraction;]
-000266             [5]
-000270             [4]
-000274         [2]
-000278     [Core.ScaledDecimal]
-000282         [Core.Fraction]
-000286             [2]
-000290             [3]
-000294         [2]
-000298     [Kernel.STBClassProxy]
-000302         [Core.Utf8String] 44: ''Dolphin''
-000317         [Core.Utf8String] 45: ''Core.Object''
-000336     [Kernel.STBMetaclassProxy]
-000340         [Core.Utf8String] 47: ''Dolphin''
-000355         [%<45: ''Core.Object''>]
-000359     [%<4: a ProcessorScheduler>]
-000363     [Kernel.STBSingletonProxy;]
-000391         [Kernel.STBClassProxy]
-000395             [Core.Utf8String] 51: ''Dolphin Transcript''
-000421             [Core.Utf8String] 52: ''UI.TranscriptShell''
-000447         [Core.Symbol] 53: #current
-000462     [%<3: Smalltalk>]
-000466     [Core.ByteArray][0] 54: #[]
-000474     [Core.ByteArray][1] 55: #[255]
-000483     [Core.ByteArray][5] 56: #[1 2 3 4 5]
-000496     [Kernel.STBCollectionProxy]
-000500         [%<13: OrderedCollection>]
-000504         [Core.Array][3]
-000512             [%<28: ''a␀b''>]
-000516             [%<26: #testVersion0>]
-000520             [$d]
-000524     [Kernel.STBSortedCollectionProxy;]
-000563         [Kernel.STBClassProxy]
-000567             [Core.Utf8String] 62: ''Dolphin''
-000582             [Core.Utf8String] 63: ''Core.SortedCollection''
-000611         [Core.Array][4]
-000619             [Core.Utf8String] 65: ''a''
-000628             [Core.Utf8String] 66: ''B''
-000637             [Core.Utf8String] 67: ''b''
-000646             [Core.Utf8String] 68: ''B''
-000655         [Kernel.MergesortAlgorithm;]
-000684             [Kernel.BlockClosure;][0]
-000715                 [%<0: nil>]
-000719                 [Kernel.CompiledMethod;][5]
-000748                     [0]
-000752                     [Kernel.STBMetaclassProxy]
-000756                         [Core.Utf8String] 76: ''Dolphin''
-000771                         [Core.Utf8String] 77: ''Kernel.PluggableSortAlgorithm''
-000808                     [Core.Symbol] 78: #new
-000819                     [<1p>]
-000823                     [Core.ByteArray][10] 79: #[171 100 31 177 97 105 233 1 130 106]
-000841                     [Core.Symbol] 80: #basicNew
-000857                     [Core.Symbol] 81: #setSortBlock:
-000878                     [%<72: [] in nil>]
-000882                     [Core.Symbol] 82: #%<=
-000892                     [Core.Symbol] 83: #yourself
-000908                 [7]
-000912                 [256]
-000916                 [%<0: nil>]
-000920     [Kernel.STBIdentityDictionaryProxy]
-000924         [%<15: LookupTable>]
-000928         [Core.Array][4]
-000936             [Core.Utf8String] 86: ''origin''
-000950             [Graphics.Point;]
-000968                 [10]
-000972                 [20]
-000976             [2]
-000980             [Graphics.Point]
-000984                 [100]
-000988                 [200]
-000992     [Kernel.FullBindingReference;]
-001027         [Core.Utf8String] 92: ''Core.Object''
-001046         [Core.Array][2]
-001054             [Core.Utf8String] 94: ''Core''
-001066             [Core.Utf8String] 95: ''Object''
-001080         [%<2: false>]
-001084         [%<0: nil>]
-001088         [%<0: nil>]
-End of 85 objects'  << (PluggableSortAlgorithm class >> #new) sourceDescriptor!
+000086     [$a]
+000090     [$\x80]
+000094     [$£]
+000098     [$ÿ]
+000102     [$€]
+000106     [0]
+000110     [-1073741824]
+000114     [Core.LargeInteger][12] 30: 18446744073709551616
+000134     [Core.Float;][8] 32: 1.25
+000160     [Core.Float][8] 33: Float.Infinity
+000176     [Core.Float][8] 34: Float.NaN
+000192     [Core.ScaledDecimal;]
+000214         [Core.Fraction;]
+000231             [5]
+000235             [4]
+000239         [2]
+000243     [Core.ScaledDecimal]
+000247         [Core.Fraction]
+000251             [2]
+000255             [3]
+000259         [2]
+000263     [Kernel.STBClassProxy]
+000267         [Core.Utf8String] 42: ''Dolphin''
+000282         [Core.Utf8String] 43: ''Core.Object''
+000301     [Kernel.STBMetaclassProxy]
+000305         [Core.Utf8String] 45: ''Dolphin''
+000320         [%<43: ''Core.Object''>]
+000324     [%<4: a ProcessorScheduler>]
+000328     [Kernel.STBSingletonProxy;]
+000356         [Kernel.STBClassProxy]
+000360             [Core.Utf8String] 49: ''Dolphin Transcript''
+000386             [Core.Utf8String] 50: ''UI.TranscriptShell''
+000412         [Core.Symbol] 51: #current
+000427     [%<3: Smalltalk>]
+000431     [Core.ByteArray][0] 52: #[]
+000439     [Core.ByteArray][1] 53: #[255]
+000448     [Core.ByteArray][5] 54: #[1 2 3 4 5]
+000461     [Kernel.STBCollectionProxy]
+000465         [%<13: OrderedCollection>]
+000469         [Core.Array][3]
+000477             [%<28: ''a␀b''>]
+000481             [%<26: #testVersion0>]
+000485             [$d]
+000489     [Kernel.STBSortedCollectionProxy;]
+000528         [Kernel.STBClassProxy]
+000532             [Core.Utf8String] 60: ''Dolphin''
+000547             [Core.Utf8String] 61: ''Core.SortedCollection''
+000576         [Core.Array][4]
+000584             [Core.Utf8String] 63: ''a''
+000593             [Core.Utf8String] 64: ''B''
+000602             [Core.Utf8String] 65: ''b''
+000611             [Core.Utf8String] 66: ''B''
+000620         [Kernel.MergesortAlgorithm;]
+000649             [Kernel.BlockClosure;][0]
+000680                 [%<0: nil>]
+000684                 [Kernel.CompiledMethod;][2]
+000713                     [<2p>]
+000717                     [Kernel.STBMetaclassProxy]
+000721                         [Core.Utf8String] 74: ''Dolphin''
+000736                         [%<61: ''Core.SortedCollection''>]
+000740                     [Core.Symbol] 75: #defaultSortBlock
+000764                     [<1p>]
+000768                     [Core.ByteArray][6] 76: #[29 105 233 1 130 106]
+000782                     [%<70: [] in nil>]
+000786                     [Core.Symbol] 77: #%<=
+000796                 [3]
+000800                 [256]
+000804                 [%<0: nil>]
+000808     [Kernel.STBIdentityDictionaryProxy]
+000812         [%<15: LookupTable>]
+000816         [Core.Array][4]
+000824             [Core.Utf8String] 80: ''origin''
+000838             [Graphics.Point;]
+000856                 [10]
+000860                 [20]
+000864             [2]
+000868             [Graphics.Point]
+000872                 [100]
+000876                 [200]
+000880     [Core.Utf8String] 84: ''a␀b''
+000891     [Core.Utf8String] 85: ''文字化け''
+000911     [$🐬]
+000915     [Kernel.FullBindingReference;]
+000950         [Core.Utf8String] 88: ''Core.Object''
+000969         [Core.Array][2]
+000977             [Core.Utf8String] 90: ''Core''
+000989             [Core.Utf8String] 91: ''Object''
+001003         [%<2: false>]
+001007         [%<0: nil>]
+001011         [%<0: nil>]
+End of 81 objects' << { sortBlockMethod sourceDescriptor. sortBlockMethod header}!
 
 expectedDump6
+	| sortBlockMethod |
+	sortBlockMethod := SortedCollection class >> #defaultSortBlock.
 	^'STB version 6:
 000007 [Core.Array][35]
 000015     [%<0: nil>]
@@ -633,100 +624,98 @@ expectedDump6
 000047     [Core.Symbol] 27: #''†Symbol''
 000064     [Core.Utf8String] 28: ''a␀b''
 000075     [Core.Utf8String] 29: ''a␀b''
-000086     [Core.Utf8String] 30: ''a␀b''
-000097     [Core.Utf8String] 31: ''文字化け''
-000117     [$a]
-000121     [$\x80]
-000125     [$£]
-000129     [$ÿ]
-000133     [$€]
-000137     [$🐬]
-000141     [0]
-000145     [-1073741824]
-000149     [Core.LargeInteger][12] 32: 18446744073709551616
-000169     [Core.Float;][8] 34: 1.25
-000195     [Core.Float][8] 35: Float.Infinity
-000211     [Core.Float][8] 36: Float.NaN
-000227     [Core.ScaledDecimal;]
-000249         [Core.Fraction;]
-000266             [5]
-000270             [4]
-000274         [2]
-000278     [Core.ScaledDecimal]
-000282         [Core.Fraction]
-000286             [2]
-000290             [3]
-000294         [2]
-000298     [Kernel.STBClassProxy]
-000302         [Core.Utf8String] 44: ''Dolphin''
-000317         [Core.Utf8String] 45: ''Core.Object''
-000336     [Kernel.STBMetaclassProxy]
-000340         [Core.Utf8String] 47: ''Dolphin''
-000355         [%<45: ''Core.Object''>]
-000359     [%<4: a ProcessorScheduler>]
-000363     [Kernel.STBStaticVariableProxy;]
-000396         [Kernel.FullBindingReference;]
-000431             [Core.Utf8String] 52: ''Core.Transcript''
-000454             [Core.Array][2]
-000462                 [Core.Utf8String] 54: ''Core''
-000474                 [Core.Utf8String] 55: ''Transcript''
-000492             [%<2: false>]
-000496             [%<0: nil>]
-000500             [%<0: nil>]
-000504     [%<3: Smalltalk>]
-000508     [Core.ByteArray][0] 56: #[]
-000516     [Core.ByteArray][1] 57: #[255]
-000525     [Core.ByteArray][5] 58: #[1 2 3 4 5]
-000538     [Core.OrderedCollection][3]
-000546         [%<28: ''a␀b''>]
-000550         [%<26: #testVersion0>]
-000554         [$d]
-000558     [Kernel.STBSortedCollectionProxy;]
-000597         [Kernel.STBClassProxy]
-000601             [Core.Utf8String] 63: ''Dolphin''
-000616             [Core.Utf8String] 64: ''Core.SortedCollection''
-000645         [Core.Array][4]
-000653             [Core.Utf8String] 66: ''a''
-000662             [Core.Utf8String] 67: ''B''
-000671             [Core.Utf8String] 68: ''b''
-000680             [Core.Utf8String] 69: ''B''
-000689         [Kernel.MergesortAlgorithm;]
-000718             [Kernel.BlockClosure;][0]
-000749                 [%<0: nil>]
-000753                 [Kernel.CompiledMethod;][5]
-000782                     [0]
-000786                     [Kernel.STBMetaclassProxy]
-000790                         [Core.Utf8String] 77: ''Dolphin''
-000805                         [Core.Utf8String] 78: ''Kernel.PluggableSortAlgorithm''
-000842                     [Core.Symbol] 79: #new
-000853                     [<1p>]
-000857                     [Core.ByteArray][10] 80: #[171 100 31 177 97 105 233 1 130 106]
-000875                     [Core.Symbol] 81: #basicNew
-000891                     [Core.Symbol] 82: #setSortBlock:
-000912                     [%<73: [] in nil>]
-000916                     [Core.Symbol] 83: #%<=
-000926                     [Core.Symbol] 84: #yourself
-000942                 [7]
-000946                 [256]
-000950                 [%<0: nil>]
-000954     [Core.LookupTable][2]
-000962         [Core.Utf8String] 86: ''origin''
-000976         [Graphics.Point;]
-000994             [10]
-000998             [20]
-001002         [2]
-001006         [Graphics.Point]
-001010             [100]
-001014             [200]
-001018     [Kernel.FullBindingReference]
-001022         [Core.Utf8String] 91: ''Core.Object''
-001041         [Core.Array][2]
-001049             [Core.Utf8String] 93: ''Core''
-001061             [Core.Utf8String] 94: ''Object''
-001075         [%<2: false>]
-001079         [%<0: nil>]
-001083         [%<0: nil>]
-End of 84 objects' << (PluggableSortAlgorithm class >> #new) sourceDescriptor!
+000086     [$a]
+000090     [$\x80]
+000094     [$£]
+000098     [$ÿ]
+000102     [$€]
+000106     [0]
+000110     [-1073741824]
+000114     [Core.LargeInteger][12] 30: 18446744073709551616
+000134     [Core.Float;][8] 32: 1.25
+000160     [Core.Float][8] 33: Float.Infinity
+000176     [Core.Float][8] 34: Float.NaN
+000192     [Core.ScaledDecimal;]
+000214         [Core.Fraction;]
+000231             [5]
+000235             [4]
+000239         [2]
+000243     [Core.ScaledDecimal]
+000247         [Core.Fraction]
+000251             [2]
+000255             [3]
+000259         [2]
+000263     [Kernel.STBClassProxy]
+000267         [Core.Utf8String] 42: ''Dolphin''
+000282         [Core.Utf8String] 43: ''Core.Object''
+000301     [Kernel.STBMetaclassProxy]
+000305         [Core.Utf8String] 45: ''Dolphin''
+000320         [%<43: ''Core.Object''>]
+000324     [%<4: a ProcessorScheduler>]
+000328     [Kernel.STBStaticVariableProxy;]
+000361         [Kernel.FullBindingReference;]
+000396             [Core.Utf8String] 50: ''Core.Transcript''
+000419             [Core.Array][2]
+000427                 [Core.Utf8String] 52: ''Core''
+000439                 [Core.Utf8String] 53: ''Transcript''
+000457             [%<2: false>]
+000461             [%<0: nil>]
+000465             [%<0: nil>]
+000469     [%<3: Smalltalk>]
+000473     [Core.ByteArray][0] 54: #[]
+000481     [Core.ByteArray][1] 55: #[255]
+000490     [Core.ByteArray][5] 56: #[1 2 3 4 5]
+000503     [Core.OrderedCollection][3]
+000511         [%<28: ''a␀b''>]
+000515         [%<26: #testVersion0>]
+000519         [$d]
+000523     [Kernel.STBSortedCollectionProxy;]
+000562         [Kernel.STBClassProxy]
+000566             [Core.Utf8String] 61: ''Dolphin''
+000581             [Core.Utf8String] 62: ''Core.SortedCollection''
+000610         [Core.Array][4]
+000618             [Core.Utf8String] 64: ''a''
+000627             [Core.Utf8String] 65: ''B''
+000636             [Core.Utf8String] 66: ''b''
+000645             [Core.Utf8String] 67: ''B''
+000654         [Kernel.MergesortAlgorithm;]
+000683             [Kernel.BlockClosure;][0]
+000714                 [%<0: nil>]
+000718                 [Kernel.CompiledMethod;][2]
+000747                     [<2p>]
+000751                     [Kernel.STBMetaclassProxy]
+000755                         [Core.Utf8String] 75: ''Dolphin''
+000770                         [%<62: ''Core.SortedCollection''>]
+000774                     [Core.Symbol] 76: #defaultSortBlock
+000798                     [<1p>]
+000802                     [Core.ByteArray][6] 77: #[29 105 233 1 130 106]
+000816                     [%<71: [] in nil>]
+000820                     [Core.Symbol] 78: #%<=
+000830                 [3]
+000834                 [256]
+000838                 [%<0: nil>]
+000842     [Core.LookupTable][2]
+000850         [Core.Utf8String] 80: ''origin''
+000864         [Graphics.Point;]
+000882             [10]
+000886             [20]
+000890         [2]
+000894         [Graphics.Point]
+000898             [100]
+000902             [200]
+000906     [Core.Utf8String] 84: ''a␀b''
+000917     [Core.Utf8String] 85: ''文字化け''
+000937     [$🐬]
+000941     [Kernel.FullBindingReference]
+000945         [Core.Utf8String] 87: ''Core.Object''
+000964         [Core.Array][2]
+000972             [Core.Utf8String] 89: ''Core''
+000984             [Core.Utf8String] 90: ''Object''
+000998         [%<2: false>]
+001002         [%<0: nil>]
+001006         [%<0: nil>]
+End of 80 objects'
+		<< { sortBlockMethod sourceDescriptor. sortBlockMethod header }!
 
 minimumFilerVersion
 	^0!
@@ -776,122 +765,20 @@ End of 3 objects'.
 			ensure: [#{STBTest_TestClass} ifDefined: [:c | c removeFromSystem]]!
 
 testVersion0
-	| dump dessicated stringWithNull |
-	stringWithNull := #($a $\0 $b) asString.
-	dessicated := self serialize: {
-						nil.
-						true.
-						false.
-						#testVersion0.
-						#'†Symbol'.
-						stringWithNull.
-						stringWithNull asUtf16String.
-						$a.
-						Character value: 128.
-						Character value: 163.
-						Character value: 255.
-						$€.
-						0.
-						SmallInteger minimum.
-						2 ** 64.
-						1.25.
-						Float infinity.
-						Float nan.
-						1.25s.
-						2 / 3 asScaledDecimal: 2.
-						Object.
-						Object class.
-						Processor.
-						Transcript.
-						Smalltalk.
-						#[].
-						#[255].
-						#[1 2 3 4 5].
-						{ stringWithNull. #testVersion0. $d } asOrderedCollection.
-						#('a' 'B' 'b' 'B') asSortedCollectionUsing: MergesortAlgorithm new.
-						LookupTable with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200)
-					}
-				version: 0.
+	| dump dessicated |
+	dessicated := self serialize: self objectsToSerializeVersion0 version: 0.
 	dump := self dump: dessicated withOffsets: true.
 	self assert: dump equals: self expectedDump0!
 
 testVersion1
-	| dump dessicated stringWithNull |
-	stringWithNull := #($a $\0 $b) asString.
-	dessicated := self serialize: {
-						nil.
-						true.
-						false.
-						#testVersion0.
-						#'†Symbol'.
-						stringWithNull.
-						stringWithNull asUtf16String.
-						$a.
-						Character value: 128.
-						Character value: 163.
-						Character value: 255.
-						$€.
-						0.
-						SmallInteger minimum.
-						2 ** 64.
-						1.25.
-						Float infinity.
-						Float nan.
-						1.25s.
-						2 / 3 asScaledDecimal: 2.
-						Object.
-						Object class.
-						Processor.
-						Transcript.
-						Smalltalk.
-						#[].
-						#[255].
-						#[1 2 3 4 5].
-						{ stringWithNull. #testVersion0. $d } asOrderedCollection.
-						#('a' 'B' 'b' 'B') asSortedCollectionUsing: MergesortAlgorithm new.
-						LookupTable with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200)
-					}
-				version: 1.
+	| dump dessicated |
+	dessicated := self serialize: self objectsToSerializeVersion0 version: 1.
 	dump := self dump: dessicated withOffsets: true.
 	self assert: dump equals: self expectedDump1!
 
 testVersion2
-	| dump dessicated stringWithNull |
-	stringWithNull := #($a $\0 $b) asString.
-	dessicated := self serialize: {
-						nil.
-						true.
-						false.
-						#testVersion0.
-						#'†Symbol'.
-						stringWithNull.
-						stringWithNull asUtf16String.
-						$a.
-						Character value: 128.
-						Character value: 163.
-						Character value: 255.
-						$€.
-						0.
-						SmallInteger minimum.
-						2 ** 64.
-						1.25.
-						Float infinity.
-						Float nan.
-						1.25s.
-						2 / 3 asScaledDecimal: 2.
-						Object.
-						Object class.
-						Processor.
-						Transcript.
-						Smalltalk.
-						#[].
-						#[255].
-						#[1 2 3 4 5].
-						{ stringWithNull. #testVersion0. $d } asOrderedCollection.
-						#('a' 'B' 'b' 'B') asSortedCollectionUsing: MergesortAlgorithm new.
-						LookupTable with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200)
-					}
-				version: 2.
+	| dump dessicated |
+	dessicated := self serialize: self objectsToSerializeVersion0 version: 2.
 	dump := self dump: dessicated withOffsets: true.
 	self assert: dump equals: self expectedDump2! !
 
@@ -900,7 +787,7 @@ dumpForNonExistentClass!constants!private! !
 expectedDump0!constants!private! !
 expectedDump1!constants!private! !
 expectedDump2!constants!private! !
-expectedDump3!constants!private!unit tests! !
+expectedDump3!constants!private! !
 expectedDump4!constants!private! !
 expectedDump5!constants!private! !
 expectedDump6!constants!private! !

@@ -37,6 +37,75 @@ expectedDump6
 minimumFilerVersion
 	^self subclassResponsibility!
 
+objectsToSerializeVersion0
+	| stringWithNull |
+	stringWithNull := #($a $\0 $b) asString.
+	^{
+		nil.
+		true.
+		false.
+		#testVersion0.
+		#'†Symbol'.
+		stringWithNull.
+		stringWithNull asUtf16String.
+		$a.
+		Character value: 128.
+		Character value: 163.
+		Character value: 255.
+		$€.
+		0.
+		SmallInteger minimum.
+		2 ** 64.
+		1.25.
+		Float infinity.
+		Float nan.
+		1.25s.
+		2 / 3 asScaledDecimal: 2.
+		Object.
+		Object class.
+		Processor.
+		Transcript.
+		Smalltalk.
+		#[].
+		#[255].
+		#[1 2 3 4 5].
+		{ stringWithNull. #testVersion0. $d } asOrderedCollection.
+		#('a' 'B' 'b' 'B')
+			asSortedCollectionUsing: (MergesortAlgorithm newSortBlock: SortedCollection defaultSortBlock).
+		LookupTable with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200)
+	}!
+
+objectsToSerializeVersion1
+	^self objectsToSerializeVersion0!
+
+objectsToSerializeVersion2
+	^self objectsToSerializeVersion1!
+
+objectsToSerializeVersion3
+	^self objectsToSerializeVersion2!
+
+objectsToSerializeVersion4
+	"Version 4 has UTF-encoded strings"
+
+	| objects extraObjects |
+	objects := self objectsToSerializeVersion3.
+	extraObjects := { (objects at: 6) asAnsiString. '文字化け'. Character dolphin }.
+	^objects , extraObjects!
+
+objectsToSerializeVersion5
+	| objects extraObjects |
+	objects := self objectsToSerializeVersion4.
+	extraObjects := {
+				(BindingReference path: #('Core' 'Object'))
+					pathString;
+					value;
+					yourself
+			}.
+	^objects , extraObjects!
+
+objectsToSerializeVersion6
+	^self objectsToSerializeVersion5!
+
 outfilerClass
 	^self subclassResponsibility!
 
@@ -73,189 +142,50 @@ testSaveStaticVariableReference
 				equals: self saveStaticVariableDumpFormat << ver]!
 
 testVersion3
-	| dump dessicated stringWithNull |
-	stringWithNull := #($a $\0 $b) asString.
-	dessicated := self serialize: {
-						nil.
-						true.
-						false.
-						#testVersion0.
-						#'†Symbol'.
-						stringWithNull.
-						stringWithNull asUtf16String.
-						$a.
-						Character value: 128.
-						Character value: 163.
-						Character value: 255.
-						$€.
-						0.
-						SmallInteger minimum.
-						2 ** 64.
-						1.25.
-						Float infinity.
-						Float nan.
-						1.25s.
-						2 / 3 asScaledDecimal: 2.
-						Object.
-						Object class.
-						Processor.
-						Transcript.
-						Smalltalk.
-						#[].
-						#[255].
-						#[1 2 3 4 5].
-						{ stringWithNull. #testVersion0. $d } asOrderedCollection.
-						#('a' 'B' 'b' 'B') asSortedCollectionUsing: MergesortAlgorithm new.
-						LookupTable with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200)
-					}
-				version: 3.
+	| dump dessicated |
+	dessicated := self serialize: self objectsToSerializeVersion0 version: 3.
 	dump := self dump: dessicated withOffsets: true.
 	self assert: dump equals: self expectedDump3!
 
 testVersion4
 	"Version 4 has UTF-encoded strings"
 
-	| dump dessicated stringWithNull |
-	stringWithNull := #($a $\0 $b) asString.
-	dessicated := self serialize: {
-						nil.
-						true.
-						false.
-						#testVersion0.
-						#'†Symbol'.
-						stringWithNull.
-						stringWithNull asAnsiString.
-						stringWithNull asUtf16String.
-						'文字化け'.
-						$a.
-						Character value: 128.
-						Character value: 163.
-						Character value: 255.
-						$€.
-						Character dolphin.
-						0.
-						SmallInteger minimum.
-						2 ** 64.
-						1.25.
-						Float infinity.
-						Float nan.
-						1.25s.
-						2 / 3 asScaledDecimal: 2.
-						Object.
-						Object class.
-						Processor.
-						Transcript.
-						Smalltalk.
-						#[].
-						#[255].
-						#[1 2 3 4 5].
-						{ stringWithNull. #testVersion0. $d } asOrderedCollection.
-						#('a' 'B' 'b' 'B') asSortedCollectionUsing: MergesortAlgorithm new.
-						LookupTable with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200)
-					}
-				version: 4.
+	| dump dessicated |
+	dessicated := self serialize: self objectsToSerializeVersion4 version: 4.
 	dump := self dump: dessicated withOffsets: true.
 	self assert: dump equals: self expectedDump4!
 
 testVersion5
 	"Version 5 has qualified class names, binding references, and writes all strings as UTF-8"
 
-	| dump dessicated stringWithNull |
-	stringWithNull := #($a $\0 $b) asString.
-	dessicated := self serialize: {
-						nil.
-						true.
-						false.
-						#testVersion0.
-						#'†Symbol'.
-						stringWithNull.
-						stringWithNull asAnsiString.
-						stringWithNull asUtf16String.
-						'文字化け'.
-						$a.
-						Character value: 128.
-						Character value: 163.
-						Character value: 255.
-						$€.
-						Character dolphin.
-						0.
-						SmallInteger minimum.
-						2 ** 64.
-						1.25.
-						Float infinity.
-						Float nan.
-						1.25s.
-						2 / 3 asScaledDecimal: 2.
-						Object.
-						Object class.
-						Processor.
-						Transcript.
-						Smalltalk.
-						#[].
-						#[255].
-						#[1 2 3 4 5].
-						{ stringWithNull. #testVersion0. $d } asOrderedCollection.
-						#('a' 'B' 'b' 'B') asSortedCollectionUsing: MergesortAlgorithm new.
-						LookupTable with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200).
-						(BindingReference path: #('Core' 'Object')) pathString; value; yourself
-					}
-				version: 5.
+	| dump dessicated objects |
+	objects := self objectsToSerializeVersion5.
+	dessicated := self serialize: objects version: 5.
 	dump := self dump: dessicated withOffsets: true.
 	self assert: dump equals: self expectedDump5!
 
 testVersion6
 	"Version 6 has proxyless collections"
 
-	| dump dessicated stringWithNull |
-	stringWithNull := #($a $\0 $b) asString.
-	dessicated := self serialize: {
-						nil.
-						true.
-						false.
-						#testVersion0.
-						#'†Symbol'.
-						stringWithNull.
-						stringWithNull asAnsiString.
-						stringWithNull asUtf16String.
-						'文字化け'.
-						$a.
-						Character value: 128.
-						Character value: 163.
-						Character value: 255.
-						$€.
-						Character dolphin.
-						0.
-						SmallInteger minimum.
-						2 ** 64.
-						1.25.
-						Float infinity.
-						Float nan.
-						1.25s.
-						2 / 3 asScaledDecimal: 2.
-						Object.
-						Object class.
-						Processor.
-						Transcript.
-						Smalltalk.
-						#[].
-						#[255].
-						#[1 2 3 4 5].
-						{ stringWithNull. #testVersion0. $d } asOrderedCollection.
-						#('a' 'B' 'b' 'B') asSortedCollectionUsing: MergesortAlgorithm new.
-						LookupTable with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200).
-						(BindingReference path: #('Core' 'Object')) pathString; value; yourself
-					}
-				version: 6.
+	| dump dessicated |
+	dessicated := self serialize: self objectsToSerializeVersion6 version: 6.
 	dump := self dump: dessicated withOffsets: true.
 	self assert: dump equals: self expectedDump6! !
 
 !Tools.Tests.STxDebuggerTest categoriesForMethods!
 dump:withOffsets:!helpers!private! !
-expectedDump3!constants!private!unit tests! !
+expectedDump3!constants!private! !
 expectedDump4!constants!private! !
 expectedDump5!constants!private! !
 expectedDump6!constants!private! !
 minimumFilerVersion!constants!private! !
+objectsToSerializeVersion0!constants!private! !
+objectsToSerializeVersion1!constants!private! !
+objectsToSerializeVersion2!constants!private! !
+objectsToSerializeVersion3!constants!private! !
+objectsToSerializeVersion4!constants!private! !
+objectsToSerializeVersion5!constants!private! !
+objectsToSerializeVersion6!constants!private! !
 outfilerClass!constants!public! !
 saveStaticVariableDumpFormat!constants!private! !
 serialize:!helpers!private! !
