@@ -151,7 +151,7 @@ template <bool IsNullTerminated>VariantByteObject* ObjectMemory::resize(BytesOTE
 			case StringEncoding::Ansi:
 			case StringEncoding::Utf8:
 				newByteSize = newSize + SizeOfPointers(0);
-				if (newByteSize != static_cast<ptrdiff_t>(oldByteSize))
+				if (newByteSize != static_cast<size_t>(oldByteSize))
 				{
 					pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<NULLTERMSIZE>(reinterpret_cast<POTE>(ote), newByteSize));
 					pByteObj->m_fields[newByteSize] = 0;
@@ -160,7 +160,7 @@ template <bool IsNullTerminated>VariantByteObject* ObjectMemory::resize(BytesOTE
 
 			case StringEncoding::Utf16:
 				newByteSize = (newSize << 1) + SizeOfPointers(0);
-				if (newByteSize != static_cast<ptrdiff_t>(oldByteSize))
+				if (newByteSize != static_cast<size_t>(oldByteSize))
 				{
 					pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<sizeof(char16_t)>(reinterpret_cast<POTE>(ote), newByteSize));
 					*reinterpret_cast<char16_t*>(&pByteObj->m_fields[newByteSize]) = 0;
@@ -169,7 +169,7 @@ template <bool IsNullTerminated>VariantByteObject* ObjectMemory::resize(BytesOTE
 
 			case StringEncoding::Utf32:
 				newByteSize = (newSize << 2) + SizeOfPointers(0);
-				if (newByteSize != static_cast<ptrdiff_t>(oldByteSize))
+				if (newByteSize != static_cast<size_t>(oldByteSize))
 				{
 					pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<sizeof(char32_t)>(reinterpret_cast<POTE>(ote), newByteSize));
 					*reinterpret_cast<char32_t*>(&pByteObj->m_fields[newByteSize]) = 0;
@@ -187,13 +187,13 @@ template <bool IsNullTerminated>VariantByteObject* ObjectMemory::resize(BytesOTE
 		else
 		{
 			newByteSize = newSize + SizeOfPointers(0);
-			if (newByteSize != static_cast<ptrdiff_t>(oldByteSize))
+			if (newByteSize != static_cast<size_t>(oldByteSize))
 			{
 				pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<0>(reinterpret_cast<POTE>(ote), newByteSize));
 			}
 		}
 
-		if (pByteObj && newByteSize > oldByteSize)
+		if (pByteObj && newByteSize > static_cast<size_t>(oldByteSize))
 		{
 			// The object grew, so ensure the new bytes are initialized to zero
 			ZeroMemory(reinterpret_cast<uint8_t*>(pByteObj) + oldByteSize, newByteSize - oldByteSize);
