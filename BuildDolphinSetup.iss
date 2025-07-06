@@ -48,6 +48,7 @@ Source: "ConsoleToGo.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DolphinCR8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DolphinDR8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DolphinVM8.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DolphinAX8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DPRO.chg"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
 Source: "DPRO.img8"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
 Source: "DPRO.sml"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
