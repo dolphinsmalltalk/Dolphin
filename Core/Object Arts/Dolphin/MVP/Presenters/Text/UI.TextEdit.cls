@@ -279,9 +279,6 @@ cutSelection
 	<commandQuery: #canCut>
 	self basicCutSelection!
 
-defaultSelectionRange
-	^1 to: 0!
-
 defaultTextLimit
 	^30000!
 
@@ -1062,6 +1059,18 @@ selectionStart: start length: length
 	^self basicSelectionStart: start-1 end: start-1+length
 !
 
+selectionState
+	"Private - Answer a <niladicValuable> which, when replayed, will restore the receiver's selection to its current state, or nil if there is no selection to restore."
+
+	| range |
+	range := self selectionRange.
+	^range = (1 to: 0)
+		ifFalse: 
+			[MessageSend
+				receiver: self
+				selector: #selectionRange:
+				argument: range]!
+
 selectLine: anInteger
 	"Selects a complete line of text in the receiver indicated by anInteger
 	line number. Answers the selected range."
@@ -1105,13 +1114,9 @@ state
 						receiver: self
 						selector: #text:
 						argument: attrib)].
-	attrib := self selectionRange.
-	attrib = self defaultSelectionRange
-		ifFalse: 
-			[state add: (MessageSend
-						receiver: self
-						selector: #selectionRange:
-						argument: attrib)].
+	attrib := self selectionState.
+	attrib ifNotNil:
+			[state add: attrib].
 	self isTextModified
 		ifTrue: 
 			[state add: (MessageSend
@@ -1362,7 +1367,6 @@ copySelection!clipboard operations!commands-actions!public! !
 cueBanner!accessing!public! !
 cueBanner:!accessing!public! !
 cutSelection!clipboard operations!commands-actions!public! !
-defaultSelectionRange!constants!private! !
 defaultTextLimit!constants!private! !
 defaultWindowExStyle!constants!private! !
 dispatchRegistered:wParam:lParam:!dispatching!private! !
@@ -1460,6 +1464,7 @@ selectionRange!public!selection! !
 selectionRange:!public!selection! !
 selectionStart:end:!public!selection! !
 selectionStart:length:!public!selection! !
+selectionState!accessing!private! !
 selectLine:!public!selection! !
 setAlignment:!modes!private! !
 setMarginWidths:!accessing!private!wine fix! !

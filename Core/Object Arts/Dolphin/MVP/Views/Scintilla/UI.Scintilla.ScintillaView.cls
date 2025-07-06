@@ -5231,6 +5231,15 @@ sciAutoCGetCurrent
 		wParam: 0
 		lParam: 0!
 
+sciAutoCGetImageScale
+	"Private - Get the scale factor in percent for auto-completion list images."
+
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETIMAGESCALE
+		wParam: 0
+		lParam: 0!
+
 sciAutoCGetMulti
 	"Private - Retrieve the effect of autocompleting when there are multiple selections."
 
@@ -5302,6 +5311,15 @@ sciAutoCSetFillUps: characterSetString
 		msg: SCI_AUTOCSETFILLUPS
 		wParam: 0
 		lpParam: characterSetString!
+
+sciAutoCSetImageScale: scalePercentInteger
+	"Private - Set the scale factor in percent for auto-completion list images."
+
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETIMAGESCALE
+		wParam: scalePercentInteger
+		lParam: 0!
 
 sciAutoCSetMulti: multiInteger
 	"Private - Change the effect of autocompleting when there are multiple selections."
@@ -6737,6 +6755,15 @@ sciGetUndoSavePoint
 		wParam: 0
 		lParam: 0!
 
+sciGetUndoSelectionHistory
+	"Private - Report undo selection history status."
+
+	^library
+		directFunction: this
+		msg: SCI_GETUNDOSELECTIONHISTORY
+		wParam: 0
+		lParam: 0!
+
 sciGetUndoTentative
 	"Private - Which action is the tentative point?"
 
@@ -8141,6 +8168,15 @@ sciSetUndoSavePoint: actionInteger
 		wParam: actionInteger
 		lParam: 0!
 
+sciSetUndoSelectionHistory: undoSelectionHistoryInteger
+	"Private - Enable or disable undo selection history."
+
+	library
+		directFunction: this
+		msg: SCI_SETUNDOSELECTIONHISTORY
+		wParam: undoSelectionHistoryInteger
+		lParam: 0!
+
 sciSetUndoTentative: actionInteger
 	"Private - Set action as the tentative point"
 
@@ -8825,6 +8861,15 @@ scrollUp
 		wParam: 0
 		lParam: 0!
 
+scrollVertical: docLineInteger subLine: subLineInteger
+	"Scroll vertically with allowance for wrapping."
+
+	library
+		directFunction: this
+		msg: SCI_SCROLLVERTICAL
+		wParam: docLineInteger - 1
+		lParam: subLineInteger - 1!
+
 scrollWidth
 	"Retrieve the document width assumed for scrolling."
 
@@ -9029,6 +9074,13 @@ selectionStart
 		wParam: 0
 		lParam: 0) + 1!
 
+selectionState
+	"Private - Answer a <niladicValuable> which, when replayed, will restore the receiver's selection to its current state, or nil if there is no selection to restore."
+
+	"Implementation Note: We save/restore this later."
+
+	^nil!
+
 sendMessage: anInteger
 	"Private - Send the Win32 message, anInteger, to the receiver's real window with wParam and
 	lParam set to 0."
@@ -9082,6 +9134,36 @@ sendMessage: anIntegerMessageID wParam: wParam lpParam: lpParam
 		msg: anIntegerMessageID
 		wParam: wParam
 		lpParam: lpParam yourAddress!
+
+serializedSelection
+	"Retrieve serialized form of selection."
+
+	| len |
+	len := library
+				directFunction: this
+				msg: SCI_GETSELECTIONSERIALIZED
+				wParam: 0
+				lpParam: nil.
+	^len == 0
+		ifTrue: [stringClass empty]
+		ifFalse: 
+			[| result |
+			result := stringClass newFixed: len.
+			library
+				directFunction: this
+				msg: SCI_GETSELECTIONSERIALIZED
+				wParam: 0
+				lpParam: result.
+			result]!
+
+serializedSelection: selectionStringString
+	"Set selection from serialized form."
+
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONSERIALIZED
+		wParam: 0
+		lpParam: selectionStringString!
 
 setCallTipHighlightColor
 	self sciCallTipSetForeHlt: (callTipHighlightColor
@@ -9428,7 +9510,7 @@ state
 	answer := super state.
 	#(#(#sciSetChangeHistory: #sciGetChangeHistory ##(SC_CHANGE_HISTORY_DISABLED)) #(#sciSetMouseDwellTime: #sciGetMouseDwellTime ##(SC_TIME_FOREVER)) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins nil) #(#markers: #markers ##(IdentitySet
 		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#sciSetHScrollBar: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#tabMinimumWidth: #tabMinimumWidth 2) #(#targetRange: #targetRange ##(0
-		to: -1)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#edgeColumn: #edgeColumn 1) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#positionCacheSize: #positionCacheSize 1024) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations #()) #(#sciEOLAnnotationSetVisible: #sciEOLAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setEolAnnotations: #getEolAnnotations #()) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetTechnology: #sciGetTechnology ##(SC_TECHNOLOGY_DEFAULT)) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false) #(#sciSetSelectionLayer: #sciGetSelectionLayer ##(SC_LAYER_BASE)) #(#sciSetCaretLineLayer: #sciGetCaretLineLayer ##(SC_LAYER_BASE)) #(#isOnlyUnwrappedLineHighlighted: #isOnlyUnwrappedLineHighlighted false) #(#maxLayoutThreads: #maxLayoutThreads 1) #(#isUndoEnabled: #isUndoEnabled true) #(#sciAutoCSetOptions: #sciAutoCGetOptions 0) #(#copySeparator: #copySeparator '') #(#sciAutoCSetStyle: sciAutoCGetStyle ##(STYLE_DEFAULT)))
+		to: -1)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#edgeColumn: #edgeColumn 1) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#positionCacheSize: #positionCacheSize 1024) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations #()) #(#sciEOLAnnotationSetVisible: #sciEOLAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setEolAnnotations: #getEolAnnotations #()) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetTechnology: #sciGetTechnology ##(SC_TECHNOLOGY_DEFAULT)) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false) #(#sciSetSelectionLayer: #sciGetSelectionLayer ##(SC_LAYER_BASE)) #(#sciSetCaretLineLayer: #sciGetCaretLineLayer ##(SC_LAYER_BASE)) #(#isOnlyUnwrappedLineHighlighted: #isOnlyUnwrappedLineHighlighted false) #(#maxLayoutThreads: #maxLayoutThreads 1) #(#isUndoEnabled: #isUndoEnabled true) #(#sciAutoCSetOptions: #sciAutoCGetOptions 0) #(#copySeparator: #copySeparator '') #(#sciAutoCSetStyle: #sciAutoCGetStyle ##(STYLE_DEFAULT)) #(#sciSetUndoSelectionHistory: #sciGetUndoSelectionHistory ##(SC_UNDO_SELECTION_HISTORY_DISABLED)) #(sciAutoCSetImageScale: #sciAutoCGetImageScale 100) #(serializedSelection: serializedSelection '0'))
 			do: 
 				[:each |
 				| attrib |
@@ -9862,6 +9944,16 @@ undo
 			[self cancelModes.
 			self basicUndo.
 			true]!
+
+undoSelectionHistoryMode
+	"Answer the mode <Symbol> for the setting controlling whether selection is saved and restored with each action in the undo history."
+
+	^self class undoSelectionHistoryModes at: self sciGetUndoSelectionHistory + 1!
+
+undoSelectionHistoryMode: aSymbol
+	self sciSetUndoSelectionHistory: (aSymbol
+				ifNil: [SC_UNDO_SELECTION_HISTORY_DISABLED]
+				ifNotNil: [(self class undoSelectionHistoryModes keyAtValue: aSymbol) - 1])!
 
 undoSequenceDepth
 	"Is an undo sequence active?"
@@ -10866,6 +10958,7 @@ sciAppendText:text:!**auto generated**!private!scintilla interface-text retrieva
 sciAssignCmdKey:sciCommand:!**auto generated**!private!scintilla interface-key bindings! !
 sciAutoCGetCaseInsensitiveBehaviour!**auto generated**!private!scintilla interface-autocompletion! !
 sciAutoCGetCurrent!**auto generated**!private!scintilla interface-autocompletion! !
+sciAutoCGetImageScale!**auto generated**!autocompletion!private! !
 sciAutoCGetMulti!**auto generated**!private!scintilla interface-autocompletion! !
 sciAutoCGetOptions!**auto generated**!private!scintilla interface-autocompletion! !
 sciAutoCGetOrder!**auto generated**!private!scintilla interface-autocompletion! !
@@ -10874,6 +10967,7 @@ sciAutoCGetStyle!**auto generated**!private!scintilla interface-autocompletion! 
 sciAutoCGetTypeSeparator!**auto generated**!private!scintilla interface-autocompletion! !
 sciAutoCSetCaseInsensitiveBehaviour:!**auto generated**!private!scintilla interface-autocompletion! !
 sciAutoCSetFillUps:!**auto generated**!private!scintilla interface-autocompletion! !
+sciAutoCSetImageScale:!**auto generated**!autocompletion!private! !
 sciAutoCSetMulti:!**auto generated**!private!scintilla interface-autocompletion! !
 sciAutoCSetOptions:!**auto generated**!private!scintilla interface-autocompletion! !
 sciAutoCSetOrder:!**auto generated**!private!scintilla interface-autocompletion! !
@@ -11017,6 +11111,7 @@ sciGetUndoActionType:!**auto generated**!private!scintilla interface-undo save a
 sciGetUndoCurrent!**auto generated**!private!scintilla interface-undo save and restore! !
 sciGetUndoDetach!**auto generated**!private!scintilla interface-undo save and restore! !
 sciGetUndoSavePoint!**auto generated**!private!scintilla interface-undo save and restore! !
+sciGetUndoSelectionHistory!**auto generated**!private! !
 sciGetUndoTentative!**auto generated**!private!scintilla interface-undo save and restore! !
 sciGetViewWS!**auto generated**!private!scintilla interface-white space! !
 sciGetVirtualSpaceOptions!**auto generated**!private!scintilla interface-multiple selection and virtual space! !
@@ -11165,6 +11260,7 @@ sciSetText:!**auto generated**!private!scintilla interface-text retrieval and mo
 sciSetUndoCurrent:!**auto generated**!private!scintilla interface-undo save and restore! !
 sciSetUndoDetach:!**auto generated**!private!scintilla interface-undo save and restore! !
 sciSetUndoSavePoint:!**auto generated**!private!scintilla interface-undo save and restore! !
+sciSetUndoSelectionHistory:!**auto generated**!private! !
 sciSetUndoTentative:!**auto generated**!private!scintilla interface-undo save and restore! !
 sciSetViewWS:!**auto generated**!private!scintilla interface-white space! !
 sciSetVirtualSpaceOptions:!**auto generated**!private!scintilla interface-multiple selection and virtual space! !
@@ -11225,6 +11321,7 @@ scrollDown!**auto generated**!commands-actions!public!scintilla interface-keyboa
 scrollToEnd!**auto generated**!commands-actions!public!scintilla interface-keyboard commands!scrolling! !
 scrollToStart!**auto generated**!commands-actions!public!scintilla interface-keyboard commands!scrolling! !
 scrollUp!**auto generated**!commands-actions!public!scintilla interface-keyboard commands!scrolling! !
+scrollVertical:subLine:!**auto generated**!public!scrolling! !
 scrollWidth!**auto generated**!public!scintilla interface-scrolling and automatic scrolling!scrolling! !
 scrollWidth:!**auto generated**!public!scintilla interface-scrolling and automatic scrolling!scrolling! !
 searchNext:text:!**auto generated**!public!scintilla interface-searching!searching & replacing! !
@@ -11251,10 +11348,13 @@ selectionRanges!public!selection! !
 selectionRanges:!public!selection! !
 selections!public!selection! !
 selectionStart!**auto generated**!public!scintilla interface-selection!selection! !
+selectionState!accessing!private! !
 sendMessage:!operations!private! !
 sendMessage:wParam:!operations!private! !
 sendMessage:wParam:lParam:!operations!private! !
 sendMessage:wParam:lpParam:!operations!private! !
+serializedSelection!**auto generated**!public!selection! !
+serializedSelection:!**auto generated**!public!selection! !
 setCallTipHighlightColor!call tips!private! !
 setCaretBlinkTime!private!selection, caret, and hotspot styles! !
 setCurrentTextStyles:!private!style definition! !
@@ -11346,6 +11446,8 @@ toggleWhitespace!commands-actions!margins!public! !
 toggleWordWrap!commands-actions!public! !
 twiddleLines!**auto generated**!commands-actions!public!scintilla interface-keyboard commands! !
 undo!commands-actions!public!undo & redo! !
+undoSelectionHistoryMode!public!undo & redo! !
+undoSelectionHistoryMode:!public!undo & redo! !
 undoSequenceDepth!**auto generated**!public!scintilla interface-undo save and restore!undo & redo! !
 unfoldAll!commands-actions!folding!public! !
 unindent!**auto generated**!commands-actions!public!scintilla interface-keyboard commands! !
@@ -11547,7 +11649,7 @@ drawingPhases
 	^#(#one #two #multiple)!
 
 drawingTechnologies
-	^#(#default #directWrite #directWriteRetain #directWriteDC)!
+	^#(#default #directWrite #directWriteRetain #directWriteDC #directWrite1)!
 
 edgeModes
 	"Answer the symbolic names of the long-line edge marking modes supported by Scintilla."
@@ -12107,6 +12209,16 @@ txtTextStyles
 				yourself).
 	^styles!
 
+undoSelectionHistoryModes
+	"Answer the symbolic names of the undo selection history modes.
+
+		#disabled 	(SC_UNDO_SELECTION_HISTORY_DISABLED, 0)	The default: undo selection history turned off.
+		#enabled		(SC_UNDO_SELECTION_HISTORY_ENABLED, 1)	Restore selection for each undo/redo.
+		#enabledWithScroll		(SC_UNDO_SELECTION_HISTORY_ENABLED|SC_UNDO_SELECTION_HISTORY_ENABLED, 3)	Restore selection and vertical scroll position. for each undo/redo 
+	"
+
+	^#(#disabled #enabled #enabledWithScroll)!
+
 unmergeKeyBindings: aCollectionOfScintillaKeyBindings
 	"Answer just those key bindings in aCollectionOfScintillaKeyBindings that are different from the defaults, including null bindings for any default accelerator keys that are not used in aCollectionOfScintillaKeyBindings"
 
@@ -12338,6 +12450,7 @@ stbConvertFromVersion17:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 tabDrawModes!constants!public! !
 txtTextStyles!constants!public!style definition! !
+undoSelectionHistoryModes!constants!public! !
 unmergeKeyBindings:!key bindings!public! !
 whitespaceVisibilityLevels!constants!public! !
 winClassName!constants!private! !
