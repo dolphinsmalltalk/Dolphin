@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2FrameEventHandler
 	subclass: #'WebView2.ICoreWebView2FrameContentLoadingEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2FrameContentLoadingEventHandler : IUnknown
 
 !WebView2.ICoreWebView2FrameContentLoadingEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_ContentLoading: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Frame2
+	anICoreWebView2Frame2 Add_ContentLoading: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_ContentLoading: anInteger!
+basicUnregister: anInteger from: anICoreWebView2Frame2
+	anICoreWebView2Frame2 Remove_ContentLoading: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.
@@ -75,7 +75,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#frameContentLoading:! !
+	^#frame:contentLoading:! !
 
 !WebView2.ICoreWebView2FrameContentLoadingEventHandler class categoriesForMethods!
 argsClass!constants!public! !

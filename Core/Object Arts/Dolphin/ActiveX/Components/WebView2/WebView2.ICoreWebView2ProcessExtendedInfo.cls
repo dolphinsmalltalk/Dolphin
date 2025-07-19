@@ -66,6 +66,9 @@ get_processInfo: processInfo
 	<virtual stdcall: hresult 4 ICoreWebView2ProcessInfo**>
 	^self invalidCall: _failureCode!
 
+hasPrintableProperties
+	^true!
+
 kindName
 	^self processInfo kindName!
 
@@ -93,6 +96,7 @@ processInfo
 associatedFrameInfos!**auto generated**!properties!public! !
 get_AssociatedFrameInfos:!**auto generated**!COM Interfaces-ICoreWebView2ProcessExtendedInfo!private! !
 get_processInfo:!**auto generated**!COM Interfaces-ICoreWebView2ProcessExtendedInfo!private! !
+hasPrintableProperties!printing!private!testing! !
 kindName!properties!public! !
 printableProperties!printing!private! !
 processId!properties!public! !

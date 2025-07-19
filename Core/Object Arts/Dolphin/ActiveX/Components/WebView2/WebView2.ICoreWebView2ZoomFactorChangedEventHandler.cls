@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ControllerEventHandler
 	subclass: #'WebView2.ICoreWebView2ZoomFactorChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2ZoomFactorChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2ZoomFactorChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_ZoomFactorChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Controller
+	anICoreWebView2Controller Add_ZoomFactorChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_ZoomFactorChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Controller* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Controller* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2Controller
+	anICoreWebView2Controller Remove_ZoomFactorChanged: anInteger! !
 
 !WebView2.ICoreWebView2ZoomFactorChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2ZoomFactorChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2ZoomFactorChangedEventHandler class methodsFor!

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2NavigationCompletedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2NavigationCompletedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2NavigationCompletedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_NavigationCompleted: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2
+	anICoreWebView2 Add_NavigationCompleted: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_NavigationCompleted: anInteger!
+basicUnregister: anInteger from: anICoreWebView2
+	anICoreWebView2 Remove_NavigationCompleted: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

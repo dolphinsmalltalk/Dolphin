@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2FrameEventHandler
 	subclass: #'WebView2.ICoreWebView2FrameDestroyedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2FrameDestroyedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2FrameDestroyedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_Destroyed: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Frame
+	anICoreWebView2Frame Add_Destroyed: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_Destroyed: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Frame* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Frame* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2Frame
+	anICoreWebView2Frame Remove_Destroyed: anInteger! !
 
 !WebView2.ICoreWebView2FrameDestroyedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2FrameDestroyedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2FrameDestroyedEventHandler class methodsFor!
@@ -72,7 +61,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#frameDestroyed! !
+	^#frameDestroyed:! !
 
 !WebView2.ICoreWebView2FrameDestroyedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ProfileEventHandler
 	subclass: #'WebView2.ICoreWebView2ProfileDeletedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2ProfileDeletedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2ProfileDeletedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_Deleted: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Profile8
+	anICoreWebView2Profile8 Add_Deleted: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_Deleted: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Profile* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Profile* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2Profile8
+	anICoreWebView2Profile8 Remove_Deleted: anInteger! !
 
 !WebView2.ICoreWebView2ProfileDeletedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2ProfileDeletedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2ProfileDeletedEventHandler class methodsFor!
@@ -72,7 +61,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#profileDeleted! !
+	^#profileDeleted:! !
 
 !WebView2.ICoreWebView2ProfileDeletedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !

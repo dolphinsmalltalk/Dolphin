@@ -15,6 +15,8 @@ WebView2.Tests.ICoreWebView2Environment13Test comment: ''!
 !WebView2.Tests.ICoreWebView2Environment13Test methodsFor!
 
 minimumEnvironmentVersion
+	"From 1.0.2210.55"
+
 	^ICoreWebView2Environment13!
 
 testProcessExtendedInfos

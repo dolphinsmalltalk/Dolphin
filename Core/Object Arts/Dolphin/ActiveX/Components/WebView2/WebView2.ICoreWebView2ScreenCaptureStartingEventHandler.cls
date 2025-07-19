@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2ScreenCaptureStartingEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2ScreenCaptureStartingEventHandler : IUnknown
 
 !WebView2.ICoreWebView2ScreenCaptureStartingEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_ScreenCaptureStarting: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2_27
+	anICoreWebView2_27 Add_ScreenCaptureStarting: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_ScreenCaptureStarting: anInteger!
+basicUnregister: anInteger from: anICoreWebView2_27
+	anICoreWebView2_27 Remove_ScreenCaptureStarting: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

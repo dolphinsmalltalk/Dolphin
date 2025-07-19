@@ -15,7 +15,18 @@ WebView2.Tests.ICoreWebView2Environment12Test comment: ''!
 !WebView2.Tests.ICoreWebView2Environment12Test methodsFor!
 
 minimumEnvironmentVersion
+	"From 1.0.1661.34"
+
 	^ICoreWebView2Environment12!
+
+testControllerOptions2
+	| controllerOptions |
+	"From 1.0.1661.34"
+	controllerOptions := (webviewEnvironment createCoreWebView2ControllerOptions) queryInterface: ICoreWebView2ControllerOptions2 ifNone: [self skip].
+	"Script local"
+	self assert: controllerOptions scriptLocale equals: ''.
+	controllerOptions scriptLocale: 'fr-FR'.
+	self assert: controllerOptions scriptLocale equals: 'fr-FR'!
 
 testCreateAndMapSharedBuffer
 	| buf testBytes bytes fv |
@@ -53,6 +64,7 @@ testCreateEmptySharedBuffer
 
 !WebView2.Tests.ICoreWebView2Environment12Test categoriesForMethods!
 minimumEnvironmentVersion!constants!private! !
+testControllerOptions2!public! !
 testCreateAndMapSharedBuffer!public! !
 testCreateEmptySharedBuffer!public! !
 !

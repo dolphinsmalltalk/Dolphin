@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2CompositionControllerEventHandler
 	subclass: #'WebView2.ICoreWebView2CursorChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2CursorChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2CursorChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_CursorChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2CompositionController
+	anICoreWebView2CompositionController Add_CursorChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_CursorChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2CompositionController* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2CompositionController* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2CompositionController
+	anICoreWebView2CompositionController Remove_CursorChanged: anInteger! !
 
 !WebView2.ICoreWebView2CursorChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2CursorChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2CursorChangedEventHandler class methodsFor!

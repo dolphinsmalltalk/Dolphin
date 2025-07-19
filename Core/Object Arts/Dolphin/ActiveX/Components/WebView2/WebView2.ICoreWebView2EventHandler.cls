@@ -12,7 +12,7 @@ WebView2.ICoreWebView2EventHandler guid: (OS.COM.IID fromString: '{f3b5c8b4-bce0
 
 WebView2.ICoreWebView2EventHandler isNonInstantiable: true!
 
-WebView2.ICoreWebView2EventHandler comment: '`ICoreWebView2EventHandler` is not defined in the WebView2 IDL, but is defined here to group all the similar event handler interfaces in an attempt to make the large API easier to navigate and understand.
+WebView2.ICoreWebView2EventHandler comment: '`ICoreWebView2EventHandler` is not defined in the WebView2 IDL, but is defined here to group all the similar event handler interfaces in an attempt to make the large API easier to navigate and understand. The subclasses are further grouped under additional abstract interface classes, that are also not defined in IDL, according to the type of WebView2 object that publishes the event. 
 
 There are a large number of event handler interfaces that have essentially the same definition of single Invoke() method with two parameters, the first of which is the source interface for the event (e.g. `ICoreWebView2Controller`) and the 2nd of which is an interface of a type specific to the event and from which details about the event can be queried, and in some cases mutated. For example the `ICoreWebVie2NavigationStartingEventHandler` has a `Cancel` property which can be set to 1 (true) to prevent the navigation taking place.'!
 
@@ -20,7 +20,7 @@ There are a large number of event handler interfaces that have essentially the s
 
 !WebView2.ICoreWebView2EventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anObject
+basicRegister: tokenBuffer with: anICoreWebView2Interface
 	^self subclassResponsibility!
 
 basicUnregister: anInteger from: anICoreWebView2Interface
@@ -42,7 +42,7 @@ unregister: anInteger from: anICoreWebView2Interface
 !WebView2.ICoreWebView2EventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!public! !
+Invoke:args:!event handling!public! !
 register:!public!realizing/unrealizing! !
 unregister:from:!public!realizing/unrealizing! !
 !
@@ -63,11 +63,24 @@ hasArgs
 	^self argsClass ~~ IUnknown!
 
 triggerBlockFor: aUrlPresenter
-	| event |
+	| event argc |
 	event := self eventName.
-	^self hasArgs
-		ifTrue: [[:source :args | aUrlPresenter trigger: event with: args]]
-		ifFalse: [[aUrlPresenter trigger: event]]! !
+	argc := event argumentCount.
+	^argc == 2
+		ifTrue: 
+			[
+			[:source :args |
+			aUrlPresenter
+				trigger: event
+				with: source
+				with: args]]
+		ifFalse: 
+			[self hasArgs
+				ifTrue: [[:source :args | aUrlPresenter trigger: event with: args]]
+				ifFalse: 
+					[argc == 1
+						ifTrue: [[:source :args | aUrlPresenter trigger: event with: source]]
+						ifFalse: [[aUrlPresenter trigger: event]]]]! !
 
 !WebView2.ICoreWebView2EventHandler class categoriesForMethods!
 argsClass!constants!public! !

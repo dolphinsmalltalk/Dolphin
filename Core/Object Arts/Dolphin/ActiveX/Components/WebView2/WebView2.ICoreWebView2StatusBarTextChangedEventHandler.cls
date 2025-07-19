@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2StatusBarTextChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2StatusBarTextChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2StatusBarTextChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_StatusBarTextChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2_12
+	anICoreWebView2_12 Add_StatusBarTextChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_StatusBarTextChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2_12
+	anICoreWebView2_12 Remove_StatusBarTextChanged: anInteger! !
 
 !WebView2.ICoreWebView2StatusBarTextChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2StatusBarTextChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2StatusBarTextChangedEventHandler class methodsFor!

@@ -32,7 +32,8 @@ testCreateWebResourceRequest
 	self assert: headers size equals: 1.
 	self assert: headers associations equals: { 'Foo' -> 'Bar' }.
 	self assert: subject printString
-		equals: 'a WebView2.ICoreWebView2WebResourceRequest(method: ''GET'', uri: ''https://github.com/dolphinsmalltalk/Dolphin/blob/master/Boot.st'', headers: a WebView2.ICoreWebView2HttpRequestHeaders(Foo))'! !
+		equals: 'a WebView2.ICoreWebView2WebResourceRequest(<1s>: method: ''GET'', uri: ''https://github.com/dolphinsmalltalk/Dolphin/blob/master/Boot.st'', headers: a WebView2.ICoreWebView2HttpRequestHeaders(<2s>: Foo))'
+				<< { subject yourAddress printStringBase: 16. subject headers yourAddress printStringBase: 16 }! !
 
 !WebView2.Tests.ICoreWebView2Environment2Test categoriesForMethods!
 minimumEnvironmentVersion!constants!private! !

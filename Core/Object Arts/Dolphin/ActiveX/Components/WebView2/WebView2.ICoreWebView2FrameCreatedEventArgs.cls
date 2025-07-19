@@ -43,7 +43,7 @@ frame
 	| answer |
 	answer := ICoreWebView2Frame newPointer.
 	self get_Frame: answer.
-	^answer asObject!
+	^answer downCast!
 
 get_Frame: frame
 	"Private - Get the value of the 'Frame' property of the receiver.
@@ -52,11 +52,15 @@ get_Frame: frame
 			[out, retval]ICoreWebView2Frame** Frame);"
 
 	<virtual stdcall: hresult 4 ICoreWebView2Frame**>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+printableProperties
+	^#(#frame)! !
 
 !WebView2.ICoreWebView2FrameCreatedEventArgs categoriesForMethods!
-frame!**auto generated**!properties!public! !
+frame!properties!public! !
 get_Frame:!**auto generated**!COM Interfaces-ICoreWebView2FrameCreatedEventArgs!private! !
+printableProperties!printing!private! !
 !
 
 !WebView2.ICoreWebView2FrameCreatedEventArgs class methodsFor!

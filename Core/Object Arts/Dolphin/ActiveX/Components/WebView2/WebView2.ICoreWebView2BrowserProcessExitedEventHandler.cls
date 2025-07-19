@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2EnvironmentEventHandler
 	subclass: #'WebView2.ICoreWebView2BrowserProcessExitedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2BrowserProcessExitedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2BrowserProcessExitedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_BrowserProcessExited: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Environment5
+	anICoreWebView2Environment5 Add_BrowserProcessExited: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_BrowserProcessExited: anInteger!
+basicUnregister: anInteger from: anICoreWebView2Environment5
+	anICoreWebView2Environment5 Remove_BrowserProcessExited: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

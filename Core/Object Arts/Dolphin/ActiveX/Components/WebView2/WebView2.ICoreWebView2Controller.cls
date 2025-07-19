@@ -229,9 +229,10 @@ defaultBackgroundColor
 	^Graphics.Color fromArray: buf!
 
 defaultBackgroundColor: backgroundColor
-	"Set the 'DefaultBackgroundColor' property of the receiver to the <COREWEBVIEW2_COLOR> value of the argument."
+	"Set the 'DefaultBackgroundColor' property of the receiver to the <COREWEBVIEW2_COLOR> value of the argument.
+	Note from WebView2 docs: 'Semi-transparent colors are not currently supported by this API and setting DefaultBackgroundColor to a semi-transparent color will fail with E_INVALIDARG. The only supported alpha values are 0 and 255, all other values will result in E_INVALIDARG. DefaultBackgroundColor can only be an opaque color or transparent.'"
 
-	self put_DefaultBackgroundColor: backgroundColor argb asByteArray!
+	self put_DefaultBackgroundColor: backgroundColor argb!
 
 get_AllowExternalDrop: value
 	"Private - Get the value of the 'AllowExternalDrop' property of the receiver.
@@ -276,7 +277,7 @@ get_DefaultBackgroundColor: backgroundColor
 		HRESULT __stdcall DefaultBackgroundColor(
 			[out, retval]COREWEBVIEW2_COLOR* backgroundColor);"
 
-	backgroundColor value: Graphics.Color white argbCode.
+	backgroundColor value: Graphics.Color white argb.
 	^S_OK!
 
 get_IsVisible: isVisible

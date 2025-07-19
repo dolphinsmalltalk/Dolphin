@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2SaveAsUIShowingEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2SaveAsUIShowingEventHandler : IUnknown
 
 !WebView2.ICoreWebView2SaveAsUIShowingEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_SaveAsUIShowing: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2_25
+	anICoreWebView2_25 Add_SaveAsUIShowing: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_SaveAsUIShowing: anInteger!
+basicUnregister: anInteger from: anICoreWebView2_25
+	anICoreWebView2_25 Remove_SaveAsUIShowing: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2LaunchingExternalUriSchemeEventHandler : IUnknown
 
 !WebView2.ICoreWebView2LaunchingExternalUriSchemeEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_LaunchingExternalUriScheme: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2_18
+	anICoreWebView2_18 Add_LaunchingExternalUriScheme: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_LaunchingExternalUriScheme: anInteger!
+basicUnregister: anInteger from: anICoreWebView2_18
+	anICoreWebView2_18 Remove_LaunchingExternalUriScheme: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

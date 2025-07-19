@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ControllerEventHandler
 	subclass: #'WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2AcceleratorKeyPressedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_AcceleratorKeyPressed: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Controller
+	anICoreWebView2Controller Add_AcceleratorKeyPressed: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_AcceleratorKeyPressed: anInteger!
+basicUnregister: anInteger from: anICoreWebView2Controller
+	anICoreWebView2Controller Remove_AcceleratorKeyPressed: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

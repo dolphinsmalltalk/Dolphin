@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2SaveFileSecurityCheckStartingEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2SaveFileSecurityCheckStartingEventHandler : IUnknown
 
 !WebView2.ICoreWebView2SaveFileSecurityCheckStartingEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_SaveFileSecurityCheckStarting: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2_26
+	anICoreWebView2_26 Add_SaveFileSecurityCheckStarting: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_SaveFileSecurityCheckStarting: anInteger!
+basicUnregister: anInteger from: anICoreWebView2_26
+	anICoreWebView2_26 Remove_SaveFileSecurityCheckStarting: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

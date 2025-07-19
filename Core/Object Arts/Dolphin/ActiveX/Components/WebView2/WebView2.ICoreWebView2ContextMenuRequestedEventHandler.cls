@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2ContextMenuRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2ContextMenuRequestedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2ContextMenuRequestedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_ContextMenuRequested: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2_11
+	anICoreWebView2_11 Add_ContextMenuRequested: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_ContextMenuRequested: anInteger!
+basicUnregister: anInteger from: anICoreWebView2_11
+	anICoreWebView2_11 Remove_ContextMenuRequested: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

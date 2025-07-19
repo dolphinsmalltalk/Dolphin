@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2ServerCertificateErrorDetectedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_ServerCertificateErrorDetected: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2_14
+	anICoreWebView2_14 Add_ServerCertificateErrorDetected: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_ServerCertificateErrorDetected: anInteger!
+basicUnregister: anInteger from: anICoreWebView2_14
+	anICoreWebView2_14 Remove_ServerCertificateErrorDetected: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

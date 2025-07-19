@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2FrameEventHandler
 	subclass: #'WebView2.ICoreWebView2FramePermissionRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2FramePermissionRequestedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2FramePermissionRequestedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_PermissionRequested: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Frame3
+	anICoreWebView2Frame3 Add_PermissionRequested: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_PermissionRequested: anInteger!
+basicUnregister: anInteger from: anICoreWebView2Frame3
+	anICoreWebView2Frame3 Remove_PermissionRequested: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.
@@ -75,7 +75,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#framePermissionRequested:! !
+	^#frame:permissionRequested:! !
 
 !WebView2.ICoreWebView2FramePermissionRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !

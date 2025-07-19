@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2EnvironmentEventHandler
 	subclass: #'WebView2.ICoreWebView2ProcessInfosChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2ProcessInfosChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2ProcessInfosChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_ProcessInfosChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Environment8
+	anICoreWebView2Environment8 Add_ProcessInfosChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_ProcessInfosChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Environment* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Environment* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2Environment8
+	anICoreWebView2Environment8 Remove_ProcessInfosChanged: anInteger! !
 
 !WebView2.ICoreWebView2ProcessInfosChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfosChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2ProcessInfosChangedEventHandler class methodsFor!

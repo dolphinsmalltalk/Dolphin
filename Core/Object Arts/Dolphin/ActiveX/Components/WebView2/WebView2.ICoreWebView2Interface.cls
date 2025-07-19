@@ -19,6 +19,15 @@ WebView2.ICoreWebView2Interface comment: '`ICoreWebView2Interface` is not define
 
 !WebView2.ICoreWebView2Interface methodsFor!
 
+hasPrintableProperties
+	^self printableProperties notEmpty!
+
+newEventSink: anICoreWebView2EventHandlerClass handler: aDyadicValuable
+	^WebView2EventSink
+		source: self
+		interfaceClass: anICoreWebView2EventHandlerClass
+		handler: aDyadicValuable!
+
 printableProperties
 	^#()!
 
@@ -26,7 +35,17 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(.
-	self isNull ifTrue: [aStream print: bytes] ifFalse: [self printPropertiesOn: aStream].
+	self isNull
+		ifTrue: [aStream print: bytes]
+		ifFalse: 
+			[self identity
+				printOn: aStream
+				base: 16
+				showRadix: false.
+			self hasPrintableProperties
+				ifTrue: 
+					[aStream nextPutAll: ': '.
+					self printPropertiesOn: aStream]].
 	aStream nextPut: $).
 	^self!
 
@@ -42,6 +61,8 @@ printPropertiesOn: aStream
 		separatedBy: [aStream nextPutAll: ', ']! !
 
 !WebView2.ICoreWebView2Interface categoriesForMethods!
+hasPrintableProperties!printing!private!testing! !
+newEventSink:handler:!event handling!private! !
 printableProperties!printing!private! !
 printOn:!printing!public! !
 printPropertiesOn:!printing!private! !

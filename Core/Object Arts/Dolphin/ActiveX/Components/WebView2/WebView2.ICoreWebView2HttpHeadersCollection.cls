@@ -116,6 +116,9 @@ getHeaders: name
 GetHeaders: name iterator: iterator
 	self subclassResponsibility!
 
+hasPrintableProperties
+	^true!
+
 includesKey: aString
 	| answer |
 	answer := BOOL newBuffer.
@@ -224,6 +227,7 @@ getHeader:!methods!public! !
 GetHeader:value:!private! !
 getHeaders:!methods!public! !
 GetHeaders:iterator:!private! !
+hasPrintableProperties!printing!private!testing! !
 includesKey:!public!searching! !
 iteratorClass!methods!private! !
 keyAtValue:!accessing!public! !

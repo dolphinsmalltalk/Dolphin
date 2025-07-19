@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2DownloadOperationEventHandler
 	subclass: #'WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2EstimatedEndTimeChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_EstimatedEndTimeChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2DownloadOperation
+	anICoreWebView2DownloadOperation Add_EstimatedEndTimeChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_EstimatedEndTimeChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2DownloadOperation* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2DownloadOperation* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2DownloadOperation
+	anICoreWebView2DownloadOperation Remove_EstimatedEndTimeChanged: anInteger! !
 
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2EstimatedEndTimeChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler class methodsFor!
@@ -72,7 +61,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#estimatedEndTimeChanged! !
+	^#downloadEtcChanged:! !
 
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !

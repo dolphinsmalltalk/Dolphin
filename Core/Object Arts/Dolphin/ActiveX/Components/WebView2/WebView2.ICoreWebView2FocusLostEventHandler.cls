@@ -16,11 +16,11 @@ WebView2.ICoreWebView2FocusLostEventHandler comment: ''!
 
 !WebView2.ICoreWebView2FocusLostEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_LostFocus: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Controller
+	anICoreWebView2Controller Add_LostFocus: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_LostFocus: anInteger! !
+basicUnregister: anInteger from: anICoreWebView2Controller
+	anICoreWebView2Controller Remove_LostFocus: anInteger! !
 
 !WebView2.ICoreWebView2FocusLostEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !

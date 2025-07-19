@@ -152,8 +152,9 @@ createWebView
 	| controllerOptions |
 	controllerOptions := webviewEnvironment createCoreWebView2ControllerOptions.
 	self isInPrivateModeEnabled ifTrue: [controllerOptions isInPrivateModeEnabled: true].
-	profileName isNil ifFalse: [controllerOptions profileName: profileName].
-	scriptLocale isNil ifFalse: [controllerOptions scriptLocale: scriptLocale tag].
+	profileName ifNotNil: [controllerOptions profileName: profileName].
+	scriptLocale ifNotNil: [controllerOptions scriptLocale: scriptLocale tag].
+	backcolor ifNotNil: [controllerOptions defaultBackgroundColor: backcolor].
 	webviewEnvironment
 		createCoreWebView2Controller: handle
 		withOptions: controllerOptions
@@ -230,6 +231,10 @@ documentTitle
 
 environmentOptions
 	^environmentOptions!
+
+eventSinkFor: anICoreWebView2EventHandlerClass from: anICoreWebView2EventSource
+	^anICoreWebView2EventSource newEventSink: anICoreWebView2EventHandlerClass
+		handler: (anICoreWebView2EventHandlerClass triggerBlockFor: self presenter)!
 
 filerProxyIn: anSTxOutFiler
 	| proxy |
@@ -377,11 +382,11 @@ observeBrowserProcessExit
 observeControllerEvents
 	##({
 		ICoreWebView2AcceleratorKeyPressedEventHandler.
-		ICoreWebView2FocusLostEventHandler.
 		ICoreWebView2FocusGainedEventHandler.
+		ICoreWebView2FocusLostEventHandler.
+		ICoreWebView2MoveFocusRequestedEventHandler.
 		ICoreWebView2RasterizationScaleChangedEventHandler.
 		ICoreWebView2ZoomFactorChangedEventHandler.
-		ICoreWebView2MoveFocusRequestedEventHandler
 	}) do: [:each | self observeEvent: each from: webviewController].
 	(webviewController queryInterface: ICoreWebView2CompositionController ifNone: [])
 		ifNotNil: 
@@ -390,7 +395,6 @@ observeControllerEvents
 				do: [:each | self observeEvent: each from: webviewComposition]]!
 
 observeEnvironmentEvents
-	"Process exit is a special case as we don't want to unregister this immediately when closing the browser view, or we will never get the event!!"
 
 	environmentEventHandlers
 		ifNil: 
@@ -399,36 +403,46 @@ observeEnvironmentEvents
 						ICoreWebView2ProcessInfosChangedEventHandler
 					}) collect: 
 								[:each |
-								(WebView2EventSink
-									source: webviewEnvironment
-									interfaceClass: each
-									handler: (each triggerBlockFor: self presenter))
+								(self eventSinkFor: each from: webviewEnvironment)
 									register;
 									yourself]].
+	"Process exit is a special case as we don't want to unregister this immediately when closing the browser view, or we will never get the event!!"
 	self observeBrowserProcessExit!
 
 observeEvent: anICoreWebView2EventHandlerClass from: anICoreWebView2EventSource
-	^self registerEventSink: (WebView2EventSink
-				source: anICoreWebView2EventSource
-				interfaceClass: anICoreWebView2EventHandlerClass
-				handler: (anICoreWebView2EventHandlerClass triggerBlockFor: self presenter))!
+	^self registerEventSink: (self eventSinkFor: anICoreWebView2EventHandlerClass
+				from: anICoreWebView2EventSource)!
+
+observeEvent: anICoreWebView2EventHandlerClass from: anICoreWebView2Interface handler: aDyadicValuable
+	^self registerEventSink: (anICoreWebView2Interface newEventSink: anICoreWebView2EventHandlerClass
+				handler: aDyadicValuable)!
 
 observeWindowEvents
 	"For some events we want to do more than just trigger a Smalltalk event, so these have custom handlers"
 
-	self registerEventSink: (WebView2EventSink
-				source: webview
-				interfaceClass: ICoreWebView2ProcessFailedEventHandler
-				handler: [:source :args | self onProcessFailed: args]).
-	self registerEventSink: (WebView2EventSink
-				source: webview
-				interfaceClass: ICoreWebView2SourceChangedEventHandler
-				handler: [:source :args | self onSourceChanged: args]).
-	self registerEventSink: (WebView2EventSink
-				source: webview
-				interfaceClass: ICoreWebView2HistoryChangedEventHandler
-				handler: [:source :args | self onHistoryChanged]).
-	"For all other events we just trigger a Smalltalk event, so we can follow a generic pattern to set up the handler"
+	self
+		observeEvent: ICoreWebView2ProcessFailedEventHandler
+		from: webview
+		handler: [:source :args | self onProcessFailed: args].
+	self
+		observeEvent: ICoreWebView2SourceChangedEventHandler
+		from: webview
+		handler: [:source :args | self onSourceChanged: args].
+	self
+		observeEvent: ICoreWebView2HistoryChangedEventHandler
+		from: webview
+		handler: [:source :args | self onHistoryChanged].
+	self
+		observeEvent: ICoreWebView2FrameCreatedEventHandler
+		from: webview
+		handler: 
+			[:source :args |
+			self onFrameCreated: args.
+			self presenter trigger: ICoreWebView2FrameCreatedEventHandler eventName with: args].
+	self
+		observeEvent: ICoreWebView2DownloadStartingEventHandler
+		from: webview
+		handler: [:source :args | self onDownloadStarting: args].
 	##({
 		ICoreWebView2BasicAuthenticationRequestedEventHandler.
 		ICoreWebView2ClientCertificateRequestedEventHandler.
@@ -437,12 +451,7 @@ observeWindowEvents
 		ICoreWebView2ContextMenuRequestedEventHandler.
 		ICoreWebView2DocumentTitleChangedEventHandler.
 		ICoreWebView2DOMContentLoadedEventHandler.
-		ICoreWebView2DownloadStartingEventHandler.
 		ICoreWebView2FaviconChangedEventHandler.
-		ICoreWebView2FrameCreatedEventHandler.
-		ICoreWebView2FrameNavigationCompletedEventHandler.
-		ICoreWebView2FrameNavigationStartingEventHandler.
-		ICoreWebView2FramePermissionRequestedEventHandler.
 		ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler.
 		ICoreWebView2IsDocumentPlayingAudioChangedEventHandler.
 		ICoreWebView2IsMutedChangedEventHandler.
@@ -482,15 +491,78 @@ onDestroyed
 	self releaseWebViewEnvironment.
 	^super onDestroyed!
 
+onDownloadStarting: anICoreWebView2DownloadStartingEventArgs
+	| download eventSinks |
+	download := anICoreWebView2DownloadStartingEventArgs downloadOperation.
+	eventSinks := ##({
+				ICoreWebView2BytesReceivedChangedEventHandler.
+				ICoreWebView2EstimatedEndTimeChangedEventHandler
+			} asOrderedCollection)
+				collect: [:each | self eventSinkFor: each from: download].
+	"Register the StateChanged handler separately so we can use this to unhook on completion/interruption"
+	eventSinks addLast: (download newEventSink: ICoreWebView2StateChangedEventHandler
+				handler: 
+					[:source :args |
+					[self presenter trigger: ICoreWebView2StateChangedEventHandler eventName with: source]
+						ensure: [source isFinished ifTrue: [eventSinks do: [:each | self unregisterEventSink: each]]]]).
+	"Now register all the sinks with the download, and also store them in the receiver's register to ensure they are cleared up regardless, although normally we would expect that to happen when the download completes or is interrupted."
+	eventSinks do: [:each | self registerEventSink: each].
+
+	"Inform observers"
+	self presenter trigger: ICoreWebView2DownloadStartingEventHandler eventName
+		with: anICoreWebView2DownloadStartingEventArgs!
+
 onEnvironmentCreated: anICoreWebView2Environment
 	webviewEnvironment := anICoreWebView2Environment downCast.
 	"Note that the presenter has not been set this point"
 	self trigger: #environmentAvailable.
 	self createWebView!
 
+onEraseRequired: aColorEvent
+	"The hosted webview will completely cover the receiver, so we don't want to erase as this can cause flashing, and also prevents a transparent default background colour in the WebView2 from showing through the parent background)."
+
+	^true!
+
+onFrameCreated: anICoreWebView2FrameCreatedEventArgs
+	| frame frameSinks childFrameCreated |
+	frame := anICoreWebView2FrameCreatedEventArgs frame.
+	frameSinks := ##({
+				ICoreWebView2FrameContentLoadingEventHandler.
+				ICoreWebView2FrameDOMContentLoadedEventHandler.
+				ICoreWebView2FrameNameChangedEventHandler.
+				ICoreWebView2FrameNavigationCompletedEventHandler.
+				ICoreWebView2FrameNavigationStartingEventHandler.
+				ICoreWebView2FramePermissionRequestedEventHandler.
+				ICoreWebView2FrameScreenCaptureStartingEventHandler.
+				ICoreWebView2FrameWebMessageReceivedEventHandler
+			} asOrderedCollection)
+				collect: [:each | self eventSinkFor: each from: frame].
+	"FrameCreated is a special case since we need to recurse to add event handlers for the new child frame. "
+	childFrameCreated := frame newEventSink: ICoreWebView2FrameChildFrameCreatedEventHandler
+				handler: 
+					[:source :args |
+					self onFrameCreated: args.
+					self presenter
+						trigger: ICoreWebView2FrameChildFrameCreatedEventHandler eventName
+						with: source
+						with: args].
+	frameSinks addLast: childFrameCreated.
+
+	"The FrameDestroyed event is sent from the frame being destroyed, making it asymmetric with respect to FrameCreated that is sent to the parent view or frame. It requires special handling in that on its receipt we want to destroy everything we might have associated with the frame."
+	frameSinks addLast: (frame newEventSink: ICoreWebView2FrameDestroyedEventHandler
+				handler: 
+					[:source :args |
+					[self presenter trigger: ICoreWebView2FrameDestroyedEventHandler eventName with: source]
+						ensure: [frameSinks do: [:each | self unregisterEventSink: each]]]).
+	"Now register all the sinks with the frame, and also store them in the receiver's register to ensure they are cleared up regardless, although normally we would expect that to happen when the frame is destroyed and receives the FrameDestroyed event."
+	frameSinks do: [:each | self registerEventSink: each].
+
+	"Prevent the child FrameCreated handler being unregistered on destroy as this causes a crash in the embedded browser DLL. Judging from the disassembly it looks like a bug in the control. No such issue occurs with any of the other events, and this one is newly defined. It seems that unregistering is not necessary anyway, as the destroyed frame releases the event sink interfaces."
+	childFrameCreated token: nil!
+
 onHistoryChanged
 	self invalidateUserInterface.
-	self presenter trigger: #historyChanged!
+	self presenter trigger: ICoreWebView2HistoryChangedEventHandler eventName!
 
 onPositionChanged: aPositionEvent
 	aPositionEvent isResize ifTrue: [self resizeContentToFit].
@@ -508,7 +580,7 @@ onProcessFailed: anICoreWebView2ProcessFailedEventArgs
 	isDead := failedArgs isBrowserProcessExit.
 	isDead ifTrue: [self destroyDeadWebView].
 	"Give observers a chance to handle the failure and recover appropriately. If an observer does attempt recovery, it should set the If the `handled` flag in the event args to suppress default recover. If the flag is not set, then the default recovery is to proceed and create a new browser view and navigate to the crash page (to avoid going into a death spiral by reopening the page that caused the crash)."
-	self presenter trigger: #processFailed: with: failedArgs.
+	self presenter trigger: ICoreWebView2ProcessFailedEventHandler eventName with: failedArgs.
 	wasHandled := failedArgs handled.
 	failedArgs free.
 	(isDead and: [wasHandled not])
@@ -523,7 +595,8 @@ onSourceChanged: anICoreWebView2SourceChangedEventArgs
 	"Private - The 'Source Changed' event is an ideal point to synchronise the model with the current URI."
 
 	self updateModel.
-	self presenter trigger: #sourceChanged: with: anICoreWebView2SourceChangedEventArgs!
+	self presenter trigger: ICoreWebView2SourceChangedEventHandler eventName
+		with: anICoreWebView2SourceChangedEventArgs!
 
 onUnavailableLinkClicked: aLITEM 
 	Shell32 shellOpen: aLITEM url!
@@ -713,6 +786,7 @@ displayValue!private!updating! !
 displayValue:!private!updating! !
 documentTitle!accessing!public! !
 environmentOptions!accessing!public! !
+eventSinkFor:from:!helpers!private! !
 filerProxyIn:!binary filing!private! !
 goBack!commands!public! !
 goForward!commands!public! !
@@ -747,10 +821,14 @@ observeBrowserProcessExit!private!realizing/unrealizing! !
 observeControllerEvents!private!realizing/unrealizing! !
 observeEnvironmentEvents!private!realizing/unrealizing! !
 observeEvent:from:!helpers!private! !
+observeEvent:from:handler:!private!realizing/unrealizing! !
 observeWindowEvents!private!realizing/unrealizing! !
 onControllerCreated:!event handling!private! !
 onDestroyed!event handling!private! !
+onDownloadStarting:!event handling!private! !
 onEnvironmentCreated:!event handling!private! !
+onEraseRequired:!event handling!public! !
+onFrameCreated:!event handling!private! !
 onHistoryChanged!event handling!private! !
 onPositionChanged:!event handling!public! !
 onProcessFailed:!event handling!private! !
@@ -850,7 +928,7 @@ stbVersion
 webview2Events
 	"This is the full set of events. Not all are actually published currently; for example the frame and download events are not."
 
-	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #dowloadStateChanged #downloadStarting: #favIconChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #launchingExternalUriScheme: #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #notificationReceived: #permissionRequested: #processExited: #processFailed: #processInfosChanged #rasterizationScaleChanged #safeFileSecurityCheckStarting: #saveAsUIShowing: #screenCaptureStarting: #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
+	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #dowloadStateChanged: #downloadBytesReceivedChanged: #downloadEtcChanged: #downloadStarting: #favIconChanged #focusGained #focusLost #frame:childFrameCreated: #frame:contentLoading: #frame:domContentLoaded: #frame:navigationCompleted: #frame:navigationStarting: #frame:permissionRequested: #frame:webMessageReceived: #frameCreated: #frameDestroyed: #frameNameChanged: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #launchingExternalUriScheme: #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #notificationReceived: #permissionRequested: #processExited: #processFailed: #processInfosChanged #rasterizationScaleChanged #safeFileSecurityCheckStarting: #saveAsUIShowing: #screenCaptureStarting: #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
 
 winClassName
 	"Private - Answer the Windows class name, or atom, to be used when creating Windows attached
