@@ -376,7 +376,8 @@ onColorSchemeChanged
 	self view
 		invalidate;
 		hasDarkWindowFrame: CurrentColorScheme = COREWEBVIEW2_PREFERRED_COLOR_SCHEME_DARK.
-	"We have to rebuild the toolbar to repopulate it with new icons rendered from the TextTileIcons with the foreground/background colours of the new scheme"
+	browser view backcolorChanged.
+	"Webhave to rebuild the toolbar to repopulate it with new icons rendered from the TextTileIcons with the foreground/background colours of the new scheme"
 	(self view viewNamed: 'toolbar') recreate!
 
 onDocumentTitleChanged
