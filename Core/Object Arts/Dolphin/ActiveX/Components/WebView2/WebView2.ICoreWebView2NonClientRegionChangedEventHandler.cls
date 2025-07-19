@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2CompositionControllerEventHandler
 	subclass: #'WebView2.ICoreWebView2NonClientRegionChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2NonClientRegionChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2NonClientRegionChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_NonClientRegionChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2CompositionController4
+	anICoreWebView2CompositionController4 Add_NonClientRegionChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_NonClientRegionChanged: anInteger!
+basicUnregister: anInteger from: anICoreWebView2CompositionController4
+	anICoreWebView2CompositionController4 Remove_NonClientRegionChanged: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

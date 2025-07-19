@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2ContainsFullScreenElementChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_ContainsFullScreenElementChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2
+	anICoreWebView2 Add_ContainsFullScreenElementChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_ContainsFullScreenElementChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2
+	anICoreWebView2 Remove_ContainsFullScreenElementChanged: anInteger! !
 
 !WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2ContainsFullScreenElementChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler class methodsFor!

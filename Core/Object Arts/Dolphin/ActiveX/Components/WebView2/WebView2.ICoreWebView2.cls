@@ -2024,45 +2024,45 @@ defineFunctions
 		defineFunction: #NavigateToString:
 			argumentTypes: 'lpwstr';
 		defineFunction: #Add_NavigationStarting:token:
-			argumentTypes: 'ICoreWebView2NavigationStartingEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2NavigationStartingEventHandler* int64*';
 		defineFunction: #Remove_NavigationStarting:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_ContentLoading:token:
-			argumentTypes: 'ICoreWebView2ContentLoadingEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2ContentLoadingEventHandler* int64*';
 		defineFunction: #Remove_ContentLoading:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_SourceChanged:token:
-			argumentTypes: 'ICoreWebView2SourceChangedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2SourceChangedEventHandler* int64*';
 		defineFunction: #Remove_SourceChanged:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_HistoryChanged:token:
-			argumentTypes: 'ICoreWebView2HistoryChangedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2HistoryChangedEventHandler* int64*';
 		defineFunction: #Remove_HistoryChanged:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_NavigationCompleted:token:
-			argumentTypes: 'ICoreWebView2NavigationCompletedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2NavigationCompletedEventHandler* int64*';
 		defineFunction: #Remove_NavigationCompleted:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_FrameNavigationStarting:token:
-			argumentTypes: 'ICoreWebView2NavigationStartingEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2NavigationStartingEventHandler* int64*';
 		defineFunction: #Remove_FrameNavigationStarting:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_FrameNavigationCompleted:token:
-			argumentTypes: 'ICoreWebView2NavigationCompletedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2NavigationCompletedEventHandler* int64*';
 		defineFunction: #Remove_FrameNavigationCompleted:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_ScriptDialogOpening:token:
-			argumentTypes: 'ICoreWebView2ScriptDialogOpeningEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2ScriptDialogOpeningEventHandler* int64*';
 		defineFunction: #Remove_ScriptDialogOpening:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_PermissionRequested:token:
-			argumentTypes: 'ICoreWebView2PermissionRequestedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2PermissionRequestedEventHandler* int64*';
 		defineFunction: #Remove_PermissionRequested:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_ProcessFailed:token:
-			argumentTypes: 'ICoreWebView2ProcessFailedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2ProcessFailedEventHandler* int64*';
 		defineFunction: #Remove_ProcessFailed:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #AddScriptToExecuteOnDocumentCreated:handler:
 			argumentTypes: 'lpwstr ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler*';
 		defineFunction: #RemoveScriptToExecuteOnDocumentCreated:
@@ -2070,20 +2070,20 @@ defineFunctions
 		defineFunction: #ExecuteScript:handler:
 			argumentTypes: 'lpwstr ICoreWebView2ExecuteScriptCompletedHandler*';
 		defineFunction: #CapturePreview:imageStream:handler:
-			argumentTypes: 'sdword IStream* ICoreWebView2CapturePreviewCompletedHandler*';
+			argumentTypes: 'int32 IStream* ICoreWebView2CapturePreviewCompletedHandler*';
 		defineFunction: #Reload;
 		defineFunction: #PostWebMessageAsJson:
 			argumentTypes: 'lpwstr';
 		defineFunction: #PostWebMessageAsString:
 			argumentTypes: 'lpwstr';
 		defineFunction: #Add_WebMessageReceived:token:
-			argumentTypes: 'ICoreWebView2WebMessageReceivedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2WebMessageReceivedEventHandler* int64*';
 		defineFunction: #Remove_WebMessageReceived:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #CallDevToolsProtocolMethod:parametersAsJson:handler:
 			argumentTypes: 'lpwstr lpwstr ICoreWebView2CallDevToolsProtocolMethodCompletedHandler*';
 		defineFunction: #get_BrowserProcessId:
-			argumentTypes: 'dword*';
+			argumentTypes: 'uint32*';
 		defineFunction: #get_CanGoBack:
 			argumentTypes: 'bool*';
 		defineFunction: #get_CanGoForward:
@@ -2094,13 +2094,13 @@ defineFunctions
 			argumentTypes: 'lpwstr ICoreWebView2DevToolsProtocolEventReceiver**';
 		defineFunction: #Stop;
 		defineFunction: #Add_NewWindowRequested:token:
-			argumentTypes: 'ICoreWebView2NewWindowRequestedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2NewWindowRequestedEventHandler* int64*';
 		defineFunction: #Remove_NewWindowRequested:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #Add_DocumentTitleChanged:token:
-			argumentTypes: 'ICoreWebView2DocumentTitleChangedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2DocumentTitleChangedEventHandler* int64*';
 		defineFunction: #Remove_DocumentTitleChanged:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #get_DocumentTitle:
 			argumentTypes: 'lpwstr*';
 		defineFunction: #AddHostObjectToScript:object:
@@ -2109,23 +2109,23 @@ defineFunctions
 			argumentTypes: 'lpwstr';
 		defineFunction: #OpenDevToolsWindow;
 		defineFunction: #Add_ContainsFullScreenElementChanged:token:
-			argumentTypes: 'ICoreWebView2ContainsFullScreenElementChangedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2ContainsFullScreenElementChangedEventHandler* int64*';
 		defineFunction: #Remove_ContainsFullScreenElementChanged:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #get_ContainsFullScreenElement:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'int32*';
 		defineFunction: #Add_WebResourceRequested:token:
-			argumentTypes: 'ICoreWebView2WebResourceRequestedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2WebResourceRequestedEventHandler* int64*';
 		defineFunction: #Remove_WebResourceRequested:
-			argumentTypes: 'sqword';
+			argumentTypes: 'int64';
 		defineFunction: #AddWebResourceRequestedFilter:resourceContext:
-			argumentTypes: 'lpwstr sdword';
+			argumentTypes: 'lpwstr int32';
 		defineFunction: #RemoveWebResourceRequestedFilter:resourceContext:
-			argumentTypes: 'lpwstr sdword';
+			argumentTypes: 'lpwstr int32';
 		defineFunction: #Add_WindowCloseRequested:token:
-			argumentTypes: 'ICoreWebView2WindowCloseRequestedEventHandler* sqword*';
+			argumentTypes: 'ICoreWebView2WindowCloseRequestedEventHandler* int64*';
 		defineFunction: #Remove_WindowCloseRequested:
-			argumentTypes: 'sqword'
+			argumentTypes: 'int64'
 !
 
 latestDerivation

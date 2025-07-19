@@ -210,9 +210,14 @@ verifyWebViewControllerProperties
 	"ICoreWebView2Controller2: defaultBackgroundColor"
 	self assert: baseController defaultBackgroundColor equals: Color white.
 	self assert: controller defaultBackgroundColor equals: Color white.
-	controller defaultBackgroundColor: Color face3d.
+	controller defaultBackgroundColor: Color menuHilight.
 	self assert: baseController defaultBackgroundColor equals: Color white.
-	self assert: controller defaultBackgroundColor equals: Color face3d.
+	self assert: controller defaultBackgroundColor equals: Color menuHilight.
+	self should: [controller defaultBackgroundColor: (Color yellow alpha: 128)] raise: HRESULTError matching: [:ex | ex hresult = E_INVALIDARG].
+	controller defaultBackgroundColor: (Color yellow alpha: 0).
+	self assert: baseController defaultBackgroundColor equals: Color white.
+	self assert: controller defaultBackgroundColor equals: (Color yellow alpha: 0).
+
 	"ICoreWebView2Controller3: boundsMode, rasterizationScale, shouldDetectMonitorScaleChanges"
 	self assert: baseController boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
 	self assert: controller boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.

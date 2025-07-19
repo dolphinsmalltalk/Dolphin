@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2NotificationEventHandler
 	subclass: #'WebView2.ICoreWebView2NotificationCloseRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2NotificationCloseRequestedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2NotificationCloseRequestedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_CloseRequested: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Notification
+	anICoreWebView2Notification Add_CloseRequested: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_CloseRequested: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Notification* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Notification* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2Notification
+	anICoreWebView2Notification Remove_CloseRequested: anInteger! !
 
 !WebView2.ICoreWebView2NotificationCloseRequestedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2NotificationCloseRequestedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2NotificationCloseRequestedEventHandler class methodsFor!
@@ -72,7 +61,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#notificationCloseRequested! !
+	^#notificationCloseRequested:! !
 
 !WebView2.ICoreWebView2NotificationCloseRequestedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2FrameEventHandler
 	subclass: #'WebView2.ICoreWebView2FrameNavigationStartingEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2FrameNavigationStartingEventHandler : IUnknown
 
 !WebView2.ICoreWebView2FrameNavigationStartingEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_FrameNavigationStarting: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Frame2
+	anICoreWebView2Frame2 Add_NavigationStarting: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_FrameNavigationStarting: anInteger!
+basicUnregister: anInteger from: anICoreWebView2Frame2
+	anICoreWebView2Frame2 Remove_NavigationStarting: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.
@@ -75,7 +75,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#frameNavigationStarting:! !
+	^#frame:navigationStarting:! !
 
 !WebView2.ICoreWebView2FrameNavigationStartingEventHandler class categoriesForMethods!
 argsClass!constants!public! !

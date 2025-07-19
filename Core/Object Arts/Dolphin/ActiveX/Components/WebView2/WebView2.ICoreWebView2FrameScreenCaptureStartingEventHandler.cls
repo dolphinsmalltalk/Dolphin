@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2FrameEventHandler
 	subclass: #'WebView2.ICoreWebView2FrameScreenCaptureStartingEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2FrameScreenCaptureStartingEventHandler : IUnknown
 
 !WebView2.ICoreWebView2FrameScreenCaptureStartingEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_ScreenCaptureStarting: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Frame6
+	anICoreWebView2Frame6 Add_ScreenCaptureStarting: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_ScreenCaptureStarting: anInteger!
+basicUnregister: anInteger from: anICoreWebView2Frame6
+	anICoreWebView2Frame6 Remove_ScreenCaptureStarting: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.
@@ -75,7 +75,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#screenCaptureStarting:! !
+	^#frame:screenCaptureStarting:! !
 
 !WebView2.ICoreWebView2FrameScreenCaptureStartingEventHandler class categoriesForMethods!
 argsClass!constants!public! !

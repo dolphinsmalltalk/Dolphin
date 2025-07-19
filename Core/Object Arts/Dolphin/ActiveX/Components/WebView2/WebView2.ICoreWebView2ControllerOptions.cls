@@ -46,6 +46,52 @@ interface ICoreWebView2ControllerOptions : IUnknown
 
 !WebView2.ICoreWebView2ControllerOptions methodsFor!
 
+allowHostInputProcessing
+	"Answer the <int32> value of the 'AllowHostInputProcessing' property of the receiver."
+
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AllowHostInputProcessing: buf.
+	^buf asBoolean!
+
+allowHostInputProcessing: aBoolean
+	"Set the 'AllowHostInputProcessing' property of the receiver to the <int32> value of the argument."
+
+	self put_AllowHostInputProcessing: aBoolean asParameter!
+
+defaultBackgroundColor
+	"Answer the <Color> value of the 'DefaultBackgroundColor' property of the receiver."
+
+	| buf |
+	buf := UInt32Bytes new.
+	self get_DefaultBackgroundColor: buf.
+	^Graphics.Color fromArray: buf!
+
+defaultBackgroundColor: backgroundColor
+	"Set the 'DefaultBackgroundColor' property of the receiver to the <COREWEBVIEW2_COLOR> value of the argument.
+	Note from WebView2 docs: 'This API only supports opaque colors and full transparency. It will fail for colors with alpha values that don't equal 0 or 255. When WebView2 is set to be fully transparent, it does not render a background, allowing the content from windows behind it to be visible'"
+
+	self put_DefaultBackgroundColor: backgroundColor argb!
+
+get_AllowHostInputProcessing: value
+	"Private - Get the value of the 'AllowHostInputProcessing' property of the receiver.
+
+		HRESULT __stdcall AllowHostInputProcessing(
+			[out, retval]long* value);"
+
+	value value: false.
+	^S_OK
+!
+
+get_DefaultBackgroundColor: value
+	"Private - Get the value of the 'DefaultBackgroundColor' property of the receiver.
+
+		HRESULT __stdcall DefaultBackgroundColor(
+			[out, retval]COREWEBVIEW2_COLOR* value);"
+
+	value value: Graphics.Color white argb.
+	^S_OK!
+
 get_IsInPrivateModeEnabled: value
 	"Private - Get the value of the 'IsInPrivateModeEnabled' property of the receiver.
 
@@ -87,7 +133,7 @@ isInPrivateModeEnabled: value
 	self put_IsInPrivateModeEnabled: value asParameter!
 
 printableProperties
-	^#(#profileName #isInPrivateModeEnabled #scriptLocale)!
+	^#(#profileName #isInPrivateModeEnabled #scriptLocale #defaultBackgroundColor)!
 
 profileName
 	"Answer the <lpwstr> value of the 'ProfileName' property of the receiver."
@@ -105,6 +151,24 @@ profileName: value
 	"Set the 'ProfileName' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_ProfileName: value asUtf16String!
+
+put_AllowHostInputProcessing: value
+	"Private - Set the value of the 'AllowHostInputProcessing' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall AllowHostInputProcessing(
+			[in]long value);"
+
+	^E_NOTIMPL!
+
+put_DefaultBackgroundColor: value
+	"Private - Set the value of the 'DefaultBackgroundColor' property of the object wrapped by the 
+	 receiver to the <COREWEBVIEW2_COLOR> argument, value.
+
+		HRESULT __stdcall DefaultBackgroundColor(
+			[in]COREWEBVIEW2_COLOR value);"
+
+	^E_NOTIMPL!
 
 put_IsInPrivateModeEnabled: value
 	"Private - Set the value of the 'IsInPrivateModeEnabled' property of the object wrapped by the 
@@ -152,6 +216,12 @@ scriptLocale: locale
 	self put_ScriptLocale: locale asUtf16String! !
 
 !WebView2.ICoreWebView2ControllerOptions categoriesForMethods!
+allowHostInputProcessing!properties!public! !
+allowHostInputProcessing:!properties!public! !
+defaultBackgroundColor!properties!public! !
+defaultBackgroundColor:!properties!public! !
+get_AllowHostInputProcessing:!COM Interfaces-ICoreWebView2ControllerOptions4!private! !
+get_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2ControllerOptions3!private! !
 get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 get_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 get_ScriptLocale:!COM Interfaces-ICoreWebView2ControllerOptions2!private! !
@@ -160,6 +230,8 @@ isInPrivateModeEnabled:!properties!public! !
 printableProperties!printing!private! !
 profileName!properties!public! !
 profileName:!**auto generated**!properties!public! !
+put_AllowHostInputProcessing:!COM Interfaces-ICoreWebView2ControllerOptions4!private! !
+put_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2ControllerOptions3!private! !
 put_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 put_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 put_ScriptLocale:!COM Interfaces-ICoreWebView2ControllerOptions2!private! !

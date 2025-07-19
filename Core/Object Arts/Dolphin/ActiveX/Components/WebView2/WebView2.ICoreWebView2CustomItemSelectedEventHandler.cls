@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ContextMenuItemEventHandler
 	subclass: #'WebView2.ICoreWebView2CustomItemSelectedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2CustomItemSelectedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2CustomItemSelectedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_CustomItemSelected: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2ContextMenuItem
+	anICoreWebView2ContextMenuItem Add_CustomItemSelected: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_CustomItemSelected: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2ContextMenuItem* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2ContextMenuItem* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2ContextMenuItem
+	anICoreWebView2ContextMenuItem Remove_CustomItemSelected: anInteger! !
 
 !WebView2.ICoreWebView2CustomItemSelectedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2CustomItemSelectedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2CustomItemSelectedEventHandler class methodsFor!
@@ -72,16 +61,10 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#customItemSelected:!
-
-triggerBlockFor: aUrlPresenter
-	| event |
-	event := self eventName.
-	^[:source :args | aUrlPresenter trigger: event with: source]! !
+	^#contextMenuCustomItemSelected:! !
 
 !WebView2.ICoreWebView2CustomItemSelectedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
-triggerBlockFor:!helpers!private! !
 !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ControllerEventHandler
 	subclass: #'WebView2.ICoreWebView2FocusChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -35,22 +35,6 @@ interface ICoreWebView2FocusChangedEventHandler : IUnknown
 '!
 
 !WebView2.ICoreWebView2FocusChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-
-!WebView2.ICoreWebView2FocusChangedEventHandler methodsFor!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Controller* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Controller* IUnknown*>
-	^self invalidCall: _failureCode! !
-
-!WebView2.ICoreWebView2FocusChangedEventHandler categoriesForMethods!
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2FocusChangedEventHandler!public! !
-!
 
 !WebView2.ICoreWebView2FocusChangedEventHandler class methodsFor!
 

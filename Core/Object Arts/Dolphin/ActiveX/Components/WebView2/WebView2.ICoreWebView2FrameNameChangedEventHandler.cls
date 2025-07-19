@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2FrameEventHandler
 	subclass: #'WebView2.ICoreWebView2FrameNameChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2FrameNameChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2FrameNameChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_NameChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Frame
+	anICoreWebView2Frame Add_NameChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_NameChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Frame* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Frame* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2Frame
+	anICoreWebView2Frame Remove_NameChanged: anInteger! !
 
 !WebView2.ICoreWebView2FrameNameChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2FrameNameChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2FrameNameChangedEventHandler class methodsFor!
@@ -72,7 +61,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#frameNameChanged! !
+	^#frameNameChanged:! !
 
 !WebView2.ICoreWebView2FrameNameChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !

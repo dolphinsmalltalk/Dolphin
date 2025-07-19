@@ -91,6 +91,15 @@ Add_DOMContentLoaded: eventHandler token: token
 
 	^E_NOTIMPL!
 
+Add_FrameCreated: eventHandler token: token
+	"Private - Invoke the add_FrameCreated() method of the COM object.
+
+		HRESULT __stdcall add_FrameCreated(
+			[in]ICoreWebView2FrameChildFrameCreatedEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
+
 Add_NameChanged: eventHandler token: token
 	"Private - Invoke the add_NameChanged() method of the COM object.
 
@@ -301,6 +310,14 @@ Remove_DOMContentLoaded: token
 
 	^E_NOTIMPL!
 
+Remove_FrameCreated: token
+	"Private - Invoke the remove_FrameCreated() method of the COM object.
+
+		HRESULT __stdcall remove_FrameCreated(
+			[in]EventRegistrationToken token);"
+
+	^E_NOTIMPL!
+
 Remove_NameChanged: token
 	"Private - Invoke the remove_NameChanged() method of the COM object.
 
@@ -368,6 +385,7 @@ RemoveHostObjectFromScript: name
 Add_ContentLoading:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_Destroyed:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Add_DOMContentLoaded:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
+Add_FrameCreated:token:!COM Interfaces-ICoreWebView2Frame7!private! !
 Add_NameChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Add_NavigationCompleted:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_NavigationStarting:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
@@ -393,6 +411,7 @@ printableProperties!printing!private! !
 Remove_ContentLoading:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Remove_Destroyed:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Remove_DOMContentLoaded:!COM Interfaces-ICoreWebView2Frame2!events!private! !
+Remove_FrameCreated:!COM Interfaces-ICoreWebView2Frame7!private! !
 Remove_NameChanged:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Remove_NavigationCompleted:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Remove_NavigationStarting:!COM Interfaces-ICoreWebView2Frame2!events!private! !

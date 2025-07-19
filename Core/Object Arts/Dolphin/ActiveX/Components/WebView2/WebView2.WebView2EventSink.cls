@@ -45,6 +45,8 @@ printOn: aPuttableStream
 	self basicPrintOn: aPuttableStream.
 	aPuttableStream
 		nextPut: $(;
+		print: token;
+		space;
 		print: interfaceClass eventName;
 		nextPut: $)!
 
@@ -77,6 +79,12 @@ supportedInterfaces
 
 	^{ IUnknown. interfaceClass }!
 
+token
+	^token!
+
+token: anInteger
+	token := anInteger!
+
 unregister
 	self unregister: source.
 	source := nil!
@@ -100,6 +108,8 @@ register:!initializing!public! !
 source!accessing!private! !
 source:interfaceClass:handler:!initializing!private! !
 supportedInterfaces!constants!public! !
+token!accessing!private! !
+token:!accessing!private! !
 unregister!public!realizing/unrealizing! !
 unregister:!public!realizing/unrealizing! !
 !

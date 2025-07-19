@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2EnvironmentEventHandler
 	subclass: #'WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2NewBrowserVersionAvailableEventHandler : IUnknown
 
 !WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_NewBrowserVersionAvailable: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Environment
+	anICoreWebView2Environment Add_NewBrowserVersionAvailable: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_NewBrowserVersionAvailable: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Environment* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Environment* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2Environment
+	anICoreWebView2Environment Remove_NewBrowserVersionAvailable: anInteger! !
 
 !WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2NewBrowserVersionAvailableEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler class methodsFor!

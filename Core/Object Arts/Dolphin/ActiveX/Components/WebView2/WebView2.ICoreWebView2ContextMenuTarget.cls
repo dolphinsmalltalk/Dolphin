@@ -216,6 +216,9 @@ hasLinkUri
 	self get_HasLinkUri: buf.
 	^buf asBoolean!
 
+hasPrintableProperties
+	^true!
+
 hasSelection
 	"Answer the <Boolean> value of the 'HasSelection' property of the receiver."
 
@@ -333,6 +336,7 @@ get_SelectionText:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuTar
 get_SourceUri:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuTarget!private! !
 hasLinkText!properties!public! !
 hasLinkUri!properties!public! !
+hasPrintableProperties!printing!private!testing! !
 hasSelection!properties!public! !
 hasSourceUri!properties!public! !
 isEditable!properties!public! !

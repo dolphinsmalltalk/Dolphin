@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2SourceChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2SourceChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2SourceChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_SourceChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2
+	anICoreWebView2 Add_SourceChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_SourceChanged: anInteger!
+basicUnregister: anInteger from: anICoreWebView2
+	anICoreWebView2 Remove_SourceChanged: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

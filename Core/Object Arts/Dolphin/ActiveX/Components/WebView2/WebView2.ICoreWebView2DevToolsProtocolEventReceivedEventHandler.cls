@@ -36,11 +36,11 @@ interface ICoreWebView2DevToolsProtocolEventReceivedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_DevToolsProtocolEventReceived: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2DevToolsProtocolEventReceiver
+	anICoreWebView2DevToolsProtocolEventReceiver Add_DevToolsProtocolEventReceived: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_DevToolsProtocolEventReceived: anInteger!
+basicUnregister: anInteger from: anICoreWebView2DevToolsProtocolEventReceiver
+	anICoreWebView2DevToolsProtocolEventReceiver Remove_DevToolsProtocolEventReceived: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

@@ -183,6 +183,9 @@ get_value: value
 	<virtual stdcall: hresult 5 lpwstr*>
 	^self invalidCall: _failureCode!
 
+hasPrintableProperties
+	^true!
+
 isHttpOnly
 	"Answer the <Boolean> value of the 'IsHttpOnly' property of the receiver."
 
@@ -338,6 +341,7 @@ get_name:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 get_Path:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 get_SameSite:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 get_value:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
+hasPrintableProperties!printing!private!testing! !
 isHttpOnly!properties!public! !
 isHttpOnly:!properties!public! !
 isSecure!properties!public! !

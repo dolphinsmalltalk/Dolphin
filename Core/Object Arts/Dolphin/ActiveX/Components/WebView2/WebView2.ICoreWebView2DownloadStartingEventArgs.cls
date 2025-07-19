@@ -111,6 +111,9 @@ GetDeferral: deferral
 	<virtual stdcall: hresult 11 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
+printableProperties
+	^#(#downloadOperation resultFilePath)!
+
 put_Cancel: cancel
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 
 	 receiver to the <sdword> argument, cancel.
@@ -163,6 +166,7 @@ get_DownloadOperation:!**auto generated**!COM Interfaces-ICoreWebView2DownloadSt
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 get_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
+printableProperties!printing!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 put_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !

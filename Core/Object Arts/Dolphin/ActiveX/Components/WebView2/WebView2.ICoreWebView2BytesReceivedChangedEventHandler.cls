@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2DownloadOperationEventHandler
 	subclass: #'WebView2.ICoreWebView2BytesReceivedChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,32 +36,18 @@ interface ICoreWebView2BytesReceivedChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2BytesReceivedChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_BytesReceivedChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2DownloadOperation
+	anICoreWebView2DownloadOperation Add_BytesReceivedChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_BytesReceivedChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2DownloadOperation* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2DownloadOperation* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2DownloadOperation
+	anICoreWebView2DownloadOperation Remove_BytesReceivedChanged: anInteger! !
 
 !WebView2.ICoreWebView2BytesReceivedChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2BytesReceivedChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2BytesReceivedChangedEventHandler class methodsFor!
-
-argsClass
-	^ICoreWebView2BytesReceivedChangedEventHandler!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2BytesReceivedChangedEventHandler'
@@ -75,10 +61,9 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#bytesReceivedChanged! !
+	^#bytesReceivedChanged:! !
 
 !WebView2.ICoreWebView2BytesReceivedChangedEventHandler class categoriesForMethods!
-argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !

@@ -165,6 +165,9 @@ hasPosition
 	self get_HasPosition: buf.
 	^buf asBoolean!
 
+hasPrintableProperties
+	^true!
+
 hasSize
 	"Answer the <Boolean> value of the 'HasSize' property of the receiver."
 
@@ -262,6 +265,7 @@ get_ShouldDisplayToolbar:!**auto generated**!COM Interfaces-ICoreWebView2WindowF
 get_top:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
 get_Width:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
 hasPosition!properties!public! !
+hasPrintableProperties!printing!private!testing! !
 hasSize!properties!public! !
 height!properties!public! !
 left!properties!public! !

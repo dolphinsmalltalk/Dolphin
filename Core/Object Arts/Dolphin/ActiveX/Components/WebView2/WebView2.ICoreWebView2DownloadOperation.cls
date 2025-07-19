@@ -161,14 +161,14 @@ contentDisposition
 	^answer!
 
 estimatedEndTime
-	"Answer the <lpwstr> value of the 'EstimatedEndTime' property of the receiver."
+	"Answer the <DateAndTime> value of the 'EstimatedEndTime' property of the receiver."
 
-	| ptr answer |
+	| ptr etc |
 	ptr := TaskMemory new.
 	self get_EstimatedEndTime: ptr.
-	answer := Utf16String fromAddress: ptr.
+	etc := Utf16String fromAddress: ptr.
 	ptr free.
-	^answer!
+	^DateAndTime fromString: etc!
 
 get_BytesReceived: bytesReceived
 	"Private - Get the value of the 'BytesReceived' property of the receiver.
@@ -260,6 +260,9 @@ get_uri: uri
 	<virtual stdcall: hresult 10 lpwstr*>
 	^self invalidCall: _failureCode!
 
+hasPrintableProperties
+	^true!
+
 interruptReason
 	"Answer the COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON enum value of the 'InterruptReason' property of the receiver."
 
@@ -267,6 +270,16 @@ interruptReason
 	buf := UInt32Bytes new.
 	self get_InterruptReason: buf.
 	^buf asSignedInteger!
+
+interruptReasonName
+	^(#('None' 'FileFailed' 'FileAccessDenied' 'FileNoSpace' 'FileNameTooLong' 'FileTooLarge' 'FileMalicious' 'FileTransientError' 'FileBlockedByPolicy' 'FileSecurityCheckFailed' 'FileTooShort' 'FileHashMismatch' 'NetworkFailed' 'NetworkTimeout' 'NetworkDisconnected' 'NetworkServerDown' 'NetworkInvalidRequest' 'ServerFailed' 'ServerNoRange' 'ServerBadContent' 'ServerUnauthorized' 'ServerCertificateProblem' 'ServerForbidden' 'ServerUnexpectedResponse' 'ServerContentLengthMismatch' 'ServerCrossOriginRedirect' 'UserCanceled' 'UserShutdown' 'UserPaused' 'DownloadProcessCrashed')
+		lookup: self interruptReason + 1) ?? 'Unknown'!
+
+isFinished
+	| state |
+	state := self state.
+	^state == COREWEBVIEW2_DOWNLOAD_STATE_COMPLETED
+		or: [state == COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED and: [self canResume not]]!
 
 mimeType
 	"Answer the <lpwstr> value of the 'MimeType' property of the receiver."
@@ -290,6 +303,28 @@ Pause
 
 	<virtual stdcall: hresult 20>
 	^self invalidCall: _failureCode!
+
+percentComplete
+	| total |
+	total := self totalBytesToReceive.
+	^total == 0 ifTrue: [0] ifFalse: [(self bytesReceived / total * 100) rounded]!
+
+printableProperties
+	| propertyNames state |
+	propertyNames := OrderedCollection
+				withAll: #(#stateName #mimeType #contentDisposition #bytesReceived).
+	state := self state.
+	state == COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED
+		ifTrue: 
+			[self totalBytesToReceive = 0 ifFalse: [propertyNames add: #percentComplete].
+			propertyNames addAll: #(#interruptReasonName #canResume)]
+		ifFalse: 
+			[state == COREWEBVIEW2_DOWNLOAD_STATE_COMPLETED
+				ifTrue: [propertyNames addAll: #(#resultFilePath)]
+				ifFalse: 
+					[self totalBytesToReceive = 0 ifFalse: [propertyNames add: #percentComplete].
+					propertyNames add: #estimatedEndTime]].
+	^propertyNames!
 
 Remove_BytesReceivedChanged: token
 	"Private - Invoke the remove_BytesReceivedChanged() method of the COM object.
@@ -349,6 +384,9 @@ state
 	self get_State: buf.
 	^buf asSignedInteger!
 
+stateName
+	^(#('In-progress' 'Interrupted' 'Completed') lookup: self state + 1) ?? 'Unknown'!
+
 totalBytesToReceive
 	"Answer the <integer> value of the 'TotalBytesToReceive' property of the receiver."
 
@@ -387,10 +425,15 @@ get_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOpera
 get_State:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 get_TotalBytesToReceive:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
+hasPrintableProperties!printing!private!testing! !
 interruptReason!properties!public! !
+interruptReasonName!accessing!public! !
+isFinished!public!testing! !
 mimeType!properties!public! !
 pause!**auto generated**!methods!public! !
 Pause!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
+percentComplete!accessing!public! !
+printableProperties!printing!private! !
 Remove_BytesReceivedChanged:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 Remove_EstimatedEndTimeChanged:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 Remove_StateChanged:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
@@ -398,6 +441,7 @@ resultFilePath!properties!public! !
 resume!**auto generated**!methods!public! !
 Resume!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 state!properties!public! !
+stateName!accessing!public! !
 totalBytesToReceive!properties!public! !
 uri!properties!public! !
 !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ViewEventHandler
 	subclass: #'WebView2.ICoreWebView2NotificationReceivedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2NotificationReceivedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2NotificationReceivedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_NotificationReceived: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2_24
+	anICoreWebView2_24 Add_NotificationReceived: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_NotificationReceived: anInteger!
+basicUnregister: anInteger from: anICoreWebView2_24
+	anICoreWebView2_24 Remove_NotificationReceived: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

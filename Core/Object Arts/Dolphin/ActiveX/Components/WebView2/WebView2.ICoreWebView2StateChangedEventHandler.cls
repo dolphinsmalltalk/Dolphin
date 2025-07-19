@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2DownloadOperationEventHandler
 	subclass: #'WebView2.ICoreWebView2StateChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2StateChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2StateChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_StateChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2DownloadOperation
+	anICoreWebView2DownloadOperation Add_StateChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_StateChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2DownloadOperation* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2DownloadOperation* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2DownloadOperation
+	anICoreWebView2DownloadOperation Remove_StateChanged: anInteger! !
 
 !WebView2.ICoreWebView2StateChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2StateChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2StateChangedEventHandler class methodsFor!
@@ -72,7 +61,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#dowloadStateChanged! !
+	^#dowloadStateChanged:! !
 
 !WebView2.ICoreWebView2StateChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !

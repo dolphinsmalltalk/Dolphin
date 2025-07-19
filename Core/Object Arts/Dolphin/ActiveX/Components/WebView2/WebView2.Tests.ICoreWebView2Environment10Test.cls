@@ -19,7 +19,7 @@ minimumEnvironmentVersion
 
 testControllerOptions
 	| controllerOptions |
-	controllerOptions := webviewEnvironment createCoreWebView2ControllerOptions.
+	controllerOptions := (webviewEnvironment createCoreWebView2ControllerOptions) queryInterface: ICoreWebView2ControllerOptions.
 	"In-private mode"
 	self deny: controllerOptions isInPrivateModeEnabled.
 	controllerOptions isInPrivateModeEnabled: true.
@@ -28,10 +28,20 @@ testControllerOptions
 	self assert: controllerOptions profileName equals: ''.
 	controllerOptions profileName: 'Foo'.
 	self assert: controllerOptions profileName equals: 'Foo'.
-	"Script local"
-	self assert: controllerOptions scriptLocale equals: ''.
-	controllerOptions scriptLocale: 'en-GB'.
-	self assert: controllerOptions scriptLocale equals: 'en-GB'! !
+	"Script locale - not implemented at this version, so not settable"
+	self assert: controllerOptions scriptLocale equals: Locale default name.
+	controllerOptions scriptLocale: 'fr-FR'.
+	self assert: controllerOptions scriptLocale equals: Locale default name.
+	"Default background colour - not implemented at this version"
+	self assert: controllerOptions defaultBackgroundColor equals: Graphics.Color window.
+	controllerOptions defaultBackgroundColor: Graphics.Color gray.
+	self assert: controllerOptions defaultBackgroundColor equals: Graphics.Color window.
+	"AllowHostInputProcessing - not implemented at this version"
+	self deny: controllerOptions allowHostInputProcessing.
+	controllerOptions allowHostInputProcessing: true.
+	self deny: controllerOptions allowHostInputProcessing
+	
+	! !
 
 !WebView2.Tests.ICoreWebView2Environment10Test categoriesForMethods!
 minimumEnvironmentVersion!constants!private! !

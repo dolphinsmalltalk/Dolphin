@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ControllerEventHandler
 	subclass: #'WebView2.ICoreWebView2MoveFocusRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,11 +36,11 @@ interface ICoreWebView2MoveFocusRequestedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2MoveFocusRequestedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_MoveFocusRequested: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Controller
+	anICoreWebView2Controller Add_MoveFocusRequested: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_MoveFocusRequested: anInteger!
+basicUnregister: anInteger from: anICoreWebView2Controller
+	anICoreWebView2Controller Remove_MoveFocusRequested: anInteger!
 
 Invoke: sender args: args
 	"Invoke the Invoke() method of the COM object.

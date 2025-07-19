@@ -75,7 +75,12 @@ alphaMask
 argb
 	"Answer a four-element <Array> containing alpha, red, green, and blue components of the receiver expressed as integer in the range [0,255]."
 
-	^{self alpha. self red. self green. self blue}!
+	^(ByteArray new: 4)
+		at: 1 put: self alpha;
+		at: 2 put: self red;
+		at: 3 put: self green;
+		at: 4 put: self blue;
+		yourself!
 
 argbCode
 	"Answer the receiver's colour value in 32-bit ARGB encoding with 8-bits per component in alpha, red, green, blue order."

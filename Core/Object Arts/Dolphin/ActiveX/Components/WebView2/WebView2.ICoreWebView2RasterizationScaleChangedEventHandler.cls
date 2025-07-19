@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler
+WebView2.ICoreWebView2ControllerEventHandler
 	subclass: #'WebView2.ICoreWebView2RasterizationScaleChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -36,26 +36,15 @@ interface ICoreWebView2RasterizationScaleChangedEventHandler : IUnknown
 
 !WebView2.ICoreWebView2RasterizationScaleChangedEventHandler methodsFor!
 
-basicRegister: tokenBuffer with: anICoreWebView2Interface
-	anICoreWebView2Interface Add_RasterizationScaleChanged: self token: tokenBuffer!
+basicRegister: tokenBuffer with: anICoreWebView2Controller3
+	anICoreWebView2Controller3 Add_RasterizationScaleChanged: self token: tokenBuffer!
 
-basicUnregister: anInteger from: anICoreWebView2Interface
-	anICoreWebView2Interface Remove_RasterizationScaleChanged: anInteger!
-
-Invoke: sender args: args
-	"Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Controller* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Controller* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister: anInteger from: anICoreWebView2Controller3
+	anICoreWebView2Controller3 Remove_RasterizationScaleChanged: anInteger! !
 
 !WebView2.ICoreWebView2RasterizationScaleChangedEventHandler categoriesForMethods!
 basicRegister:with:!private!realizing/unrealizing! !
 basicUnregister:from:!private!realizing/unrealizing! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2RasterizationScaleChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2RasterizationScaleChangedEventHandler class methodsFor!
