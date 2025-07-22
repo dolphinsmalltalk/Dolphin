@@ -103,11 +103,24 @@ asArray
 	"Answer an <Array> whose elements are <Character>s representing the code point sequence of the receiver.
 	Note that this may not be of the same `size` as the receiver as any Characters of the receiver represented by multiple code-unit elements of the receiver will be decoded, including replacing invalid sequences with one or more replacement characters."
 
-	| ch stream chars |
-	chars := Array writeStream: self size.
-	stream := ReadStream on: self.
-	[(ch := stream nextAvailable) isNil] whileFalse: [chars nextPut: ch].
+	| i chars last |
+	chars := Array writeStream: (last := self size).
+	i := 1.
+	[i > last] whileFalse: 
+			[chars nextPut: (self decodeAt: i).
+			i := i + (self encodedSizeAt: i)].
 	^chars grabContents!
+
+asOrderedCollection
+	"Answer an <OrderedCollection> whose elements are <Character>s representing the code point sequence of the receiver."
+
+	| answer i last |
+	answer := OrderedCollection new: (last := self size).
+	i := 1.
+	[i > last] whileFalse: [
+			answer addLast: (self decodeAt: i).
+			i := i + (self encodedSizeAt: i)].
+	^answer!
 
 basicDecodeAt: anInteger 
 	^self subclassResponsibility!
@@ -480,6 +493,7 @@ allButLast:!copying!public! !
 allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
 asArray!converting!public! !
+asOrderedCollection!converting!public! !
 basicDecodeAt:!encode/decode!private! !
 before:ifAbsent:!public!searching! !
 codePointAt:!debugger-step through!enumerating!public! !

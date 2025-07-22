@@ -37,6 +37,10 @@ caseInsensitiveEqualCases
 caseInsensitiveLessThanCases
 	^#(#('' 'i') #('i' 'j') #('i' 'J') #('i' 'ij') #('ij' 'j') #('I' 'j') #('i$' 'i£') #('I$' 'i£') #('i$' 'I£') #('I$' 'I£') #('£' '€'))!
 
+conversionTestCases
+	^#(#('' #()) #('a' #($a)) #('ab' #($a $b)) #('oña' #($o $ñ $a)) #('£€' #($£ $€)))
+		collect: [:each | { self assimilateString: each first. each second }]!
+
 copyClass
 	^self collectionClass!
 
@@ -1417,6 +1421,7 @@ beforeTestCases!constants!private! !
 caseConversionCases!constants!private! !
 caseInsensitiveEqualCases!constants!private! !
 caseInsensitiveLessThanCases!constants!private! !
+conversionTestCases!constants!private! !
 copyClass!constants!private! !
 equalityTestCases!constants!private! !
 findActualIndicesOf:in:!helpers!private! !
