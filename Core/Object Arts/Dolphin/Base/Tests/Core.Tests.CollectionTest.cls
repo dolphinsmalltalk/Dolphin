@@ -25,6 +25,10 @@ assimilateElements: aCollection
 collectionClass
 	^self subclassResponsibility!
 
+conversionTestCases
+	^(0 to: 3) collect: [:i |
+		{ self newCollection: (1 to: i). (1 to: i) collect: [:j | self assimilate: j]}]!
+
 newCollection: aCollection
 	^self collectionClass withAll: (self assimilateElements: aCollection)!
 
@@ -110,39 +114,24 @@ testAnySatisfy
 					self assert: visited asArray equals: (subject asArray copyFrom: 1 to: k)]]!
 
 testAsArray
-	| subject ordered |
-	subject := self newCollection: #().
-	ordered := subject asArray.
-	self assert: ordered equals: #().
-	"Test with one, two, more than two elements"
-	1 to: 3
-		do: 
-			[:i |
-			| elems expected |
-			elems := 1 to: i.
-			subject := self newCollection: elems.
-			expected := Array new: i.
-			subject inject: 1 into: [:j :each | expected at: j put: each. j + 1].
-			ordered := subject asArray.
-			self assert: ordered equals: expected]!
+	self conversionTestCases do: 
+			[:each |
+			| array |
+			array := each first asArray.
+			self assert: array class equals: Array.
+			self assert: array size equals: each second size.
+			"For collections in general, the result may not have the same order"
+			self assert: (array noDifference: (each second collect: [:elem | elem value]))]!
 
 testAsOrderedCollection
-	| subject ordered |
-	subject := self newCollection: #().
-	ordered := subject asOrderedCollection.
-	self assert: ordered equals: OrderedCollection new.
-	"Test with one, two, more than two elements"
-	1 to: 3
-		do: 
-			[:i |
-			| elems expected |
-			elems := 1 to: i.
-			subject := self newCollection: elems.
-			expected := OrderedCollection new.
-			subject do: [:each | expected addLast: each].
-			ordered := subject asOrderedCollection.
-			self assert: ordered size equals: i.
-			self assert: ordered equals: expected]!
+	self conversionTestCases do: 
+			[:each |
+			| ordered |
+			ordered := each first asOrderedCollection.
+			self assert: ordered class equals: OrderedCollection.
+			self assert: ordered size equals: each second size.
+			"For collections in general, the result may not have the same order"
+			self assert: (ordered noDifference: (each second collect: [:elem | elem value]))]!
 
 testCopyWith
 	#(#() #($a) #($a $a) #($a $b) #($a $b $a)) do: 
@@ -315,6 +304,7 @@ testStoreOn
 assimilate:!private!unit tests! !
 assimilateElements:!helpers!private! !
 collectionClass!constants!private! !
+conversionTestCases!constants!public! !
 newCollection:!helpers!private! !
 shouldnt:implement:!helpers!private! !
 testAllSatisfy!public!unit tests! !

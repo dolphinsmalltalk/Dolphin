@@ -37,6 +37,15 @@ newNumericArray: anInteger
 newUnsortedCollection: aCollection
 	^self unsortedCollectionClass withAll: (self assimilateElements: aCollection)!
 
+testAsArray
+	self conversionTestCases do: 
+			[:each |
+			| ordered |
+			ordered := each first asArray.
+			self assert: ordered class equals: Array.
+			"For sequenceable collections the order should be maintained"
+			self assert: ordered equals: each second]!
+
 testAsByteArray
 	| sequence |
 	sequence := #().
@@ -54,6 +63,15 @@ testAsByteArray
 	sequence := #(65 66 67 68).
 	self assert: (self newCollection: sequence) asByteArray
 		equals: (self byteArrayForSequence: sequence)!
+
+testAsOrderedCollection
+	self conversionTestCases do: 
+			[:each |
+			| ordered |
+			ordered := each first asOrderedCollection.
+			self assert: ordered class equals: OrderedCollection.
+			"For sequenceable collections the order should be maintained"
+			self assert: ordered equals: (OrderedCollection withAll: each second)]!
 
 testAssociations
 	#(#() #(65) #(65 66) #(65 66 67) #(65 66 67 68)) do: 
@@ -892,7 +910,9 @@ newCopy:!helpers!private! !
 newEmptyCollection:!helpers!private! !
 newNumericArray:!helpers!private! !
 newUnsortedCollection:!helpers!private! !
+testAsArray!public!unit tests! !
 testAsByteArray!public!unit tests! !
+testAsOrderedCollection!public!unit tests! !
 testAssociations!public!unit tests! !
 testAt!public!unit tests! !
 testBeginsWith!public!unit tests! !

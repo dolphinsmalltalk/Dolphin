@@ -36,6 +36,11 @@ caseInsensitiveLessThanCases
 	^super caseInsensitiveLessThanCases
 		, #(#('' '🐬') #('🐬' '🐬a') #('a🐬' 'b🐬') #('a' '🐬') #('A' '🐬'))!
 
+conversionTestCases
+	^super conversionTestCases
+		, (#(#('a 🍺' #($a $\x20 $🍺)) #('文字化け' #($文 $字 $化 $け)) #('aáeéñ' #($a $á $e $é $ñ)) #('ᚠ' #($ᚠ)) #('Приве́т' #($П $р $и $в $е $́ $т)) #('नमस्ते' #($न $म $स $् $त $े)) #('🐬🍺ö' #($🐬 $🍺 $o $̈)) #('👨🏻‍🍳' #($👨 $🏻 $\x200D $🍳)))
+				collect: [:each | { self assimilateString: each first. each second }])!
+
 decodeIncompleteContinuations
 	^self subclassResponsibility!
 
@@ -1027,6 +1032,7 @@ beforeTestCases!constants!private! !
 caseConversionCases!constants!private! !
 caseInsensitiveEqualCases!constants!private! !
 caseInsensitiveLessThanCases!constants!private! !
+conversionTestCases!constants!private! !
 decodeIncompleteContinuations!constants!private! !
 decodeInvalidCharacters!constants!private! !
 decodeInvalidContinuations!constants!private! !
