@@ -71,11 +71,6 @@ isSelfEvaluating: visitedSet
 	^(visitedSet addNewElement: self)
 		and: [self class == ##(self) and: [self allSatisfy: [:element | element isSelfEvaluating: visitedSet]]]!
 
-printOn: aStream
-	"Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
-
-	self printOn: aStream do: [:each | each printOn: aStream]!
-
 printOn: aStream do: aMonadicValuable
 	"Private - Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
 
@@ -173,7 +168,6 @@ isLiteral!public!testing! !
 isLiteral:!public!testing! !
 isSelfEvaluating!public!testing! !
 isSelfEvaluating:!private!testing! !
-printOn:!printing!public! !
 printOn:do:!printing!private! !
 refersToLiteral:!private!testing! !
 replaceElementsOf:from:to:startingAt:!private!replacing! !

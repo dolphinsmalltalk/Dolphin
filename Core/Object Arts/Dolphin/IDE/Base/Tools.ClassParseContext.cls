@@ -52,14 +52,10 @@ scope!accessing!public! !
 
 !Tools.ClassParseContext class methodsFor!
 
-methodClass: aClass
-	^self methodClass: aClass environment: aClass environment!
-
 methodClass: aClass environment: aNamespace
 	^self new methodClass: aClass environment: aNamespace! !
 
 !Tools.ClassParseContext class categoriesForMethods!
-methodClass:!instance creation!public! !
 methodClass:environment:!instance creation!public! !
 !
 

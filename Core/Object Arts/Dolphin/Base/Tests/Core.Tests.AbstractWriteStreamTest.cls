@@ -19,9 +19,6 @@ Core.Tests.AbstractWriteStreamTest comment: ''!
 newUtf8StreamBufferSize: anInteger
 	^self streamOnBuffer: (Utf8String new: anInteger)!
 
-streamClassSupportsPointers
-	^true!
-
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -82,7 +79,6 @@ testNextWord
 
 !Core.Tests.AbstractWriteStreamTest categoriesForMethods!
 newUtf8StreamBufferSize:!helpers!private!unit tests! !
-streamClassSupportsPointers!private!testing! !
 streamOn:!helpers!private! !
 streamOnBuffer:!helpers!private! !
 string!constants!private! !

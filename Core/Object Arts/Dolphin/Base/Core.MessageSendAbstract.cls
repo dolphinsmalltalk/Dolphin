@@ -107,12 +107,6 @@ receiver: anObject selector: aSymbol arguments: argArray
 
 	self subclassResponsibility!
 
-selector: aSymbol arguments: argArray
-	"Private - Initialize the receiver's instance variables."
-
-	selector := aSymbol.
-	args := argArray!
-
 value
 	"Evaluates the receiver send the message identified by the 
 	receiver's selector to the receiver's receiver, with the 
@@ -170,7 +164,6 @@ hash!comparing!public! !
 printOn:!printing!public! !
 receiver!accessing!public! !
 receiver:selector:arguments:!initializing!private! !
-selector:arguments:!initializing!private! !
 value!evaluating!public! !
 value:!evaluating!public! !
 value:value:!evaluating!public! !

@@ -203,9 +203,6 @@ translate:order:!public!transformations! !
 
 !Graphics.Gdiplus.Matrix class methodsFor!
 
-dashed
-	^self withStyleName: #dashed!
-
 fromArray: anArray
 	^self fromInitializer: (MatrixInitializer fromArray: anArray)!
 
@@ -231,7 +228,6 @@ rectangle: aRectangle point: aPoint
 		dy: aPoint y! !
 
 !Graphics.Gdiplus.Matrix class categoriesForMethods!
-dashed!instance creation!public! !
 fromArray:!instance creation!public! !
 identity!instance creation!public! !
 m11:m12:m21:m22:dx:dy:!instance creation!public! !

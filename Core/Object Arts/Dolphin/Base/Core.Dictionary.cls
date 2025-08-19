@@ -96,12 +96,6 @@ anyKeysSatisfy: aMonadicValuable
 
 	^self anyKeysAndValuesSatisfy: [:eachKey :eachValue | aMonadicValuable value: eachKey]!
 
-anySatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
-
-	self do: [:eachValue | (aMonadicValuable value: eachValue) ifTrue: [^true]].
-	^false!
-
 asSet
 	"Answer a Set whose elements are the values stored in the receiver (any 
 	duplicates are therefore eliminated).
@@ -581,7 +575,6 @@ allKeysSatisfy:!enumerating!public! !
 allSatisfy:!enumerating!public! !
 anyKeysAndValuesSatisfy:!enumerating!public! !
 anyKeysSatisfy:!enumerating!public! !
-anySatisfy:!enumerating!public! !
 asSet!converting!public! !
 associationAt:!accessing!public! !
 associationAt:ifAbsent:!accessing!public! !

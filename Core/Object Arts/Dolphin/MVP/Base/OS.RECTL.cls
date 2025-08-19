@@ -98,17 +98,6 @@ right: aNumber
 
 	bytes int32AtOffset: _OffsetOf_right put: aNumber asInteger!
 
-rightCenter
-	"Answer a <Point> specifying the position of the centre of the receiver's right edge."
-
-	^self right @ self centerY!
-
-scaledBy: anArithmeticValue
-	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
-
-	^self species vertex: (self topLeft * anArithmeticValue) truncated
-		vertex: (self bottomRight * anArithmeticValue) truncated!
-
 scaleToDpi: desiredInteger from: currentInteger
 	"Scale the receiver in-place by from the DPI represented by the first <integer> argument to that represented by the second integer argument."
 
@@ -170,8 +159,6 @@ left!**compiled accessors**!public! !
 left:!**compiled accessors**!public! !
 right!**compiled accessors**!public! !
 right:!**compiled accessors**!public! !
-rightCenter!accessing!public! !
-scaledBy:!accessing!public! !
 scaleToDpi:from:!public!transforming! !
 subtract:!public! !
 top!**compiled accessors**!public! !

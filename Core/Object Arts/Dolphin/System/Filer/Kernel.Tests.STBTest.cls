@@ -377,9 +377,6 @@ testStringsVersion1
 testStringsVersion2
 	self verifyStringsAtPreUnicodeVersion: 2!
 
-testStringsVersion3
-	self verifyStringsAtPreUnicodeVersion: 3!
-
 testStringsVersion4
 	| expectedBytes ansi utf8 utf16 array actualBytes rehydrated |
 	expectedBytes := #[33 83 84 66 32 52 32 98 0 0 0 6 0 0 0 82 0 0 0 3 0 0 0 97 134 98 18 1 0 0 5 0 0 0 97 226 128 160 98 18 1 0 0 5 0 0 0 97 226 128 160 98 160 1 0 0 176 1 0 0 18 1 0 0 5 0 0 0 97 226 128 160 98].
@@ -613,7 +610,6 @@ testSmallInteger!public!unit tests! !
 testStringsVersion0!public!unit tests! !
 testStringsVersion1!public!unit tests! !
 testStringsVersion2!public!unit tests! !
-testStringsVersion3!public!unit tests! !
 testStringsVersion4!public!unit tests! !
 testSymbolsVersion0!public!unit tests! !
 testSymbolsVersion1!public!unit tests! !

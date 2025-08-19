@@ -77,11 +77,6 @@ keysAndValuesDo: aDyadicValuable
 			each := order at: i.
 			aDyadicValuable value: each key value: each value]!
 
-last: anInteger
-	"Answer a copy of the receiver comprising the rightmost anInteger elements."
-
-	^self copyFrom: tally - anInteger + 1 to: tally!
-
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy does not share any state with the original, apart from the elements."
 
@@ -166,7 +161,6 @@ indexOfKey:!public! !
 initialize!private! !
 keys!accessing!public! !
 keysAndValuesDo:!public! !
-last:!public! !
 postCopy!public! !
 privateAt:put:!public! !
 removeKey:ifAbsent:!public! !

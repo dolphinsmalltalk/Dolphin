@@ -72,10 +72,7 @@ onViewOpened
 
 validateModel
 	classNamePresenter value.
-	^super validateModel!
-
-validationResult: aValidationResult
-	validationResultPresenter value: aValidationResult! !
+	^super validateModel! !
 
 !Tools.ConvertToSiblingDialog categoriesForMethods!
 chooseNamespace!commands!private! !
@@ -86,7 +83,6 @@ onClassNameChanged!event handling!private! !
 onSelectionChanged!private! !
 onViewOpened!event handling!public! !
 validateModel!commands-queries!private! !
-validationResult:!accessing!public! !
 !
 
 !Tools.ConvertToSiblingDialog class methodsFor!

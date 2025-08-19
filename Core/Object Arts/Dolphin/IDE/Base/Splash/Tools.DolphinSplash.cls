@@ -56,9 +56,6 @@ onCreated: anEvent
 	self addSubView: self objectsInside.
 	super onCreated: anEvent!
 
-onPaintRequired: aPaintEvent
-	"Private - Handler for paint event."!
-
 showWindow
 	"Private - Display the view (if the display has sufficient resolution and colour depth)."
 
@@ -75,7 +72,6 @@ defaultWindowStyle!constants!private! !
 give256ColorDisplayWarning!operations!private! !
 objectsInside!accessing!private! !
 onCreated:!event handling!private! !
-onPaintRequired:!event handling!private! !
 showWindow!operations!private! !
 !
 

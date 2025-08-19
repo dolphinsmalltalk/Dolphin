@@ -33,13 +33,6 @@ struct tagRectF {
 
 !Graphics.Gdiplus.RectF methodsFor!
 
-extent: aPoint
-	"Set the extent of the receiver to aPoint. (The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined)."
-
-	self
-		width: aPoint x;
-		height: aPoint y!
-
 height
 	"Answer the <Float> value of the receiver's 'height' field."
 
@@ -97,7 +90,6 @@ y: aFloat
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
 
 !Graphics.Gdiplus.RectF categoriesForMethods!
-extent:!accessing!public! !
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
 scaledBy:!public! !

@@ -93,11 +93,6 @@ streamClassSupportsUtf8Surrogates
 streamedContents: aStream
 	^aStream contents!
 
-streamOn: aString 
-	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
-
-	^self streamClass on: aString!
-
 streamOnBytes: aByteArray type: aSymbol
 	^aSymbol == #utf8
 		ifTrue: [self streamOn: (Utf8String fromByteArray: aByteArray)]
@@ -1649,7 +1644,6 @@ streamClassSupportsPointers!helpers!private! !
 streamClassSupportsUtf16!helpers!private! !
 streamClassSupportsUtf8Surrogates!helpers!private! !
 streamedContents:!helpers!private! !
-streamOn:!helpers!private! !
 streamOnBytes:type:!helpers!private! !
 streamOnFile:type:!helpers!private! !
 streamWith:!helpers!private! !

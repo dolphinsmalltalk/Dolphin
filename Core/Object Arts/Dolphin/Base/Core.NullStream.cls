@@ -30,11 +30,6 @@ basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
 		putAll: aSequenceableCollection
 		startingAt: startInteger!
 
-close
-	"Relinquish any external resources associated with the receiver, and put the receiver into a 'closed' state (as appropriate to the subclass). Answer the receiver."
-
-	^self!
-
 contents
 	"Answer a <sequencedReadableCollection> that contains the complete contents of the stream."
 
@@ -145,7 +140,6 @@ upToEnd
 !Core.NullStream categoriesForMethods!
 atEnd!public!testing! !
 basicNext:putAll:startingAt:!private!writing! !
-close!operations!public! !
 contents!public!reading! !
 contentsSpecies!accessing!private! !
 contentsSpecies:!accessing!private! !

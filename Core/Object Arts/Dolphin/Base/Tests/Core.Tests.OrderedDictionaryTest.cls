@@ -19,9 +19,6 @@ Core.Tests.OrderedDictionaryTest comment: ''!
 collectionClass
 	^OrderedDictionary!
 
-newEmpty
-	^self collectionClass new!
-
 testAssociations
 	| subject actual expected |
 	subject := self newCollection: (1 to: 5).
@@ -29,22 +26,6 @@ testAssociations
 	actual := subject associations.
 	self assert: actual class identicalTo: Array.
 	self assert: actual sort equals: expected sort!
-
-testAssociationsDo
-	| subject actual expected |
-	subject := self newEmpty.
-	subject associationsDo: [:assoc | self fail: 'empty collection should not be enumerated'].
-	expected := Set new.
-	(1 to: 5) do: 
-			[:each |
-			| key value |
-			key := self makeKey: each.
-			value := self assimilate: each.
-			expected add: (subject associationClass key: key value: value value).
-			subject at: key put: value].
-	actual := Set new.
-	subject associationsDo: [:each | actual add: each].
-	self assert: actual equals: expected!
 
 testCompact
 	| subject |
@@ -123,9 +104,7 @@ testOverwriteValue
 
 !Core.Tests.OrderedDictionaryTest categoriesForMethods!
 collectionClass!public! !
-newEmpty!public! !
 testAssociations!public! !
-testAssociationsDo!public! !
 testCompact!public! !
 testCompare!public! !
 testCopy!public! !
