@@ -73,23 +73,19 @@ return: anObject
 	returnContinuation value: anObject!
 
 try: niladicBlock
-	"Private - Answer the result of evaluating niladicBlock within an exception environment
-	established by pushing the receiver onto the active processes exception environment.
-	Should an exception be generated, directly or indirectly, by niladicBlock, which is 
-	caught by the receiver, then the corresponding handler block in the receiver will be 
-	will be evaluated to handle it. If the receiver does not handle a raised exception then 
-	that exception will propagate up the handler chain in the process' exception environment."
+	"Private - Answer the result of evaluating niladicBlock within an exception environment established by pushing the receiver onto the active processes exception environment. Should an exception be generated, directly or indirectly, by niladicBlock, which is caught by the receiver, then the corresponding handler block in the receiver will be will be evaluated to handle it. If the receiver does not handle a raised exception then that exception will propagate up the handler chain in the process' exception environment."
 
-	| old answer process |
+	| process old |
 	protectedBlock := niladicBlock.
 	process := Processor activeProcess.
 	outer := old := process exceptionEnvironment.
-	
-	[process exceptionEnvironment: self.
-	[(answer := self markAndTry) == RetryCookie] whileTrue] 
-			ensure: [process exceptionEnvironment: old].
+	^
+	[| result |
+	process exceptionEnvironment: self.
+	[(result := self markAndTry) == RetryCookie] whileTrue.
 	returnContinuation := nil.
-	^answer! !
+	result]
+			ensure: [process exceptionEnvironment: old]! !
 
 !Kernel.ExceptionHandlerAbstract categoriesForMethods!
 actionFor:!helpers!private! !
