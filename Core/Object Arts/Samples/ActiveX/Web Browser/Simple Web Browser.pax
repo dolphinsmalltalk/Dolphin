@@ -35,6 +35,7 @@ UI.Examples.XmlPad openOn: ''WebBrowser.xml''
 
 
 package setClassNames: #(
+	#{OS.COM.Examples.EventNotification}
 	#{OS.COM.Examples.WebBrowserSessionManager}
 	#{OS.COM.Examples.WebBrowserShell}
 ).
@@ -67,6 +68,14 @@ package setManualPrerequisites: #(
 package!
 
 "Class Definitions"!
+
+Core.Notification
+	subclass: #'OS.COM.Examples.EventNotification'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 UI.Shell
 	subclass: #'OS.COM.Examples.WebBrowserShell'

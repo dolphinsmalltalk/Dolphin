@@ -108,7 +108,7 @@ CreateContextMenuItem: label iconStream: iconStream kind: kind item: item
 
 	^E_NOTIMPL!
 
-CreateCoreWebView2CompositionController: parentWindow handler: handler
+CreateCoreWebView2CompositionController: aWindowHandle handler: anICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
 	"Private - Invoke the CreateCoreWebView2CompositionController() method of the COM object.
 
 		HRESULT __stdcall CreateCoreWebView2CompositionController(
@@ -117,7 +117,7 @@ CreateCoreWebView2CompositionController: parentWindow handler: handler
 
 	"Not implemented in this version"
 
-	^E_NOTIMPL!
+	^anICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler notImplemented!
 
 createCoreWebView2CompositionController: parentWindow thenDo: aDyadicValuable
 	"Invoke the CreateCoreWebView2CompositionController() method of the COM object."
@@ -139,7 +139,7 @@ createCoreWebView2CompositionController: parentWindow withOptions: anICoreWebVie
 		options: anICoreWebView2ControllerOptions
 		handler: handler , handler free!
 
-CreateCoreWebView2CompositionControllerWithOptions: parentWindow options: options handler: handler
+CreateCoreWebView2CompositionControllerWithOptions: aWindowHandle options: anICoreWebView2ControllerOptions handler: anICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
 	"Private - Invoke the CreateCoreWebView2CompositionControllerWithOptions() method of the COM object.
 
 		HRESULT __stdcall CreateCoreWebView2CompositionControllerWithOptions(
@@ -147,7 +147,7 @@ CreateCoreWebView2CompositionControllerWithOptions: parentWindow options: option
 			[in]ICoreWebView2ControllerOptions* options,
 			[in]ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler* handler);"
 
-	^self CreateCoreWebView2CompositionController: parentWindow handler: handler!
+	^self CreateCoreWebView2CompositionController: aWindowHandle handler: anICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler!
 
 CreateCoreWebView2Controller: parentWindow handler: handler
 	"Private - Invoke the CreateCoreWebView2Controller() method of the COM object.
@@ -193,7 +193,7 @@ CreateCoreWebView2ControllerOptions: options
 
 	^E_NOTIMPL!
 
-CreateCoreWebView2ControllerWithOptions: parentWindow options: options handler: handler
+CreateCoreWebView2ControllerWithOptions: aWindowHandle options: anICoreWebView2ControllerOptions handler: anICoreWebView2CreateCoreWebView2ControllerCompletedHandler
 	"Private - Invoke the CreateCoreWebView2ControllerWithOptions() method of the COM object.
 
 		HRESULT __stdcall CreateCoreWebView2ControllerWithOptions(
@@ -202,7 +202,7 @@ CreateCoreWebView2ControllerWithOptions: parentWindow options: options handler: 
 			[in]ICoreWebView2CreateCoreWebView2ControllerCompletedHandler* handler);"
 
 	"The options are ignored at this level"
-	^self CreateCoreWebView2Controller: parentWindow handler: handler!
+	^self CreateCoreWebView2Controller: aWindowHandle handler: anICoreWebView2CreateCoreWebView2ControllerCompletedHandler!
 
 CreateCoreWebView2PointerInfo: pointerInfo
 	"Private - Invoke the CreateCoreWebView2PointerInfo() method of the COM object.
@@ -211,6 +211,34 @@ CreateCoreWebView2PointerInfo: pointerInfo
 			[out, retval]ICoreWebView2PointerInfo** pointerInfo);"
 
 	"Not implemented in this version"
+
+	^E_NOTIMPL!
+
+createFindOptions
+	"Answer the <ICoreWebView2FindOptions> result of invoking the CreateFindOptions() method of the COM object."
+
+	| answer |
+	answer := ICoreWebView2FindOptions newPointer.
+	self CreateFindOptions: answer.
+	^answer asObject!
+
+createFindOptions: aFindDetails
+	"Answer an <ICoreWebView2FindOptions> configured with options from the <FindDetails> argument."
+
+	^self createFindOptions
+		ifNotNil: 
+			[:options |
+			options
+				isCaseSensitive: aFindDetails isCaseSensitive;
+				shouldMatchWord: aFindDetails isWholeWord;
+				findTerm: aFindDetails pattern;
+				yourself]!
+
+CreateFindOptions: value
+	"Private - Invoke the CreateFindOptions() method of the COM object.
+
+		HRESULT __stdcall CreateFindOptions(
+			[out, retval]ICoreWebView2FindOptions** value);"
 
 	^E_NOTIMPL!
 
@@ -419,13 +447,13 @@ get_UserDataFolder: value
 
 	^E_NOTIMPL!
 
-GetProcessExtendedInfos: handler
+GetProcessExtendedInfos: anICoreWebView2GetProcessExtendedInfosCompletedHandler
 	"Invoke the GetProcessExtendedInfos() method of the COM object.
 
 		HRESULT __stdcall GetProcessExtendedInfos(
 			[in]ICoreWebView2GetProcessExtendedInfosCompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2GetProcessExtendedInfosCompletedHandler notImplemented!
 
 getProcessExtendedInfosThenDo: aDyadicValuable
 	"Invoke the CreateCoreWebView2ControllerWithOptions() method of the COM object."
@@ -517,6 +545,9 @@ createCoreWebView2ControllerOptions!methods!public! !
 CreateCoreWebView2ControllerOptions:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2ControllerWithOptions:options:handler:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2PointerInfo:!COM Interfaces-ICoreWebView2Environment3!methods!private! !
+createFindOptions!methods!public! !
+createFindOptions:!methods!public! !
+CreateFindOptions:!COM Interfaces-ICoreWebView2Environment15!private! !
 createObjectCollection:!methods!public! !
 CreateObjectCollection:items:objectCollection:!COM Interfaces-ICoreWebView2Environment14!private! !
 createPointerInfo!methods!public! !

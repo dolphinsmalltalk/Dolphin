@@ -42,10 +42,14 @@ Invoke: invoke arg: arg
 	the vtable defined in ICoreWebView2PrintCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
 
 	<virtual stdcall: hresult 4 hresult int32>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+notImplemented
+	^self Invoke: E_NOTIMPL arg: COREWEBVIEW2_PRINT_STATUS_OTHER_ERROR! !
 
 !WebView2.ICoreWebView2PrintCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2PrintCompletedHandler!public! !
+notImplemented!exceptions!public! !
 !
 
 !WebView2.ICoreWebView2PrintCompletedHandler class methodsFor!

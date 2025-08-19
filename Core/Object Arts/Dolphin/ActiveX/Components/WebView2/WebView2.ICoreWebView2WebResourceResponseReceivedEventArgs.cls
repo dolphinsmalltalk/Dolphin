@@ -58,6 +58,9 @@ get_Response: response
 	<virtual stdcall: hresult 5 ICoreWebView2WebResourceResponseView**>
 	^self invalidCall: _failureCode!
 
+hasPrintableProperties
+	^true!
+
 printPropertiesOn: aStream
 	"Print any properties of the receiver that might be useful for debugging, and which are not too verbose. Emit nothing by default."
 
@@ -84,6 +87,7 @@ response
 !WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs categoriesForMethods!
 get_Request:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseReceivedEventArgs!private! !
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseReceivedEventArgs!private! !
+hasPrintableProperties!printing!private!testing! !
 printPropertiesOn:!printing!private! !
 request!**auto generated**!properties!public! !
 response!**auto generated**!properties!public! !

@@ -100,6 +100,9 @@ get_ToJson: value
 	<virtual stdcall: hresult 8 lpwstr*>
 	^self invalidCall: _failureCode!
 
+hasPrintableProperties
+	^true!
+
 lineNumber
 	"Answer the <uint32> value of the 'LineNumber' property of the receiver."
 
@@ -157,6 +160,7 @@ get_LineNumber:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!p
 get_Message:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!private! !
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!private! !
 get_ToJson:!**auto generated**!COM Interfaces-ICoreWebView2ScriptException!private! !
+hasPrintableProperties!printing!private!testing! !
 lineNumber!properties!public! !
 message!properties!public! !
 name!properties!public! !

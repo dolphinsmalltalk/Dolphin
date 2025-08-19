@@ -115,6 +115,9 @@ basicShowWithStyle: anInteger
 browserVersion
 	^self webviewEnvironment browserVersionString!
 
+canFind
+	^(webviewEnvironment isKindOf: ICoreWebView2Environment15) and: [presenter isBlank not]!
+
 canGoBack
 	^webview notNull and: [webview canGoBack]!
 
@@ -130,6 +133,14 @@ canNavigateToStrings: aBoolean
 	"Set whether the receiver will display any model value that is not a URL as text. When not set (the default) the model value is always passed to the WebView2 control for navigation to a URI."
 
 	settingsFlags := settingsFlags mask: CanNavigateToStrings set: aBoolean!
+
+channelSearchKind
+	^environmentOptions channelSearchKind!
+
+channelSearchKind: anInteger
+
+	self channelSearchKind = anInteger ifTrue: [^self].
+	self recreateAround: [environmentOptions channelSearchKind: anInteger]!
 
 content
 	^(webviewController ?? unavailableLink) ifNil: [DeafObject current]!
@@ -247,6 +258,24 @@ filerProxyIn: anSTxOutFiler
 		at: ##(self indexOfInstVar: 'unavailableLink') put: nil;
 		at: ##(self indexOfInstVar: 'eventHandlers') put: nil.
 	^proxy!
+
+find
+	"Launch the FindText dialog in response to a generic toolbar find command."
+
+	<commandQuery: #queryFind:>
+	self findPrompt: self suggestedFindText!
+
+findPrompt: aString
+	"Private - Launch the modeless Find dialog.
+	Pre-populate the dialog with aString."
+
+	webviewEnvironment createFindOptions
+		ifNotNil: 
+			[:options |
+			| find |
+			options findTerm: aString.
+			find := webview find.
+			find start: options thenDo: [:hr | ]]!
 
 goBack
 	<commandQuery: #canGoBack>
@@ -625,6 +654,12 @@ profileName: aString
 	profileName := aString.
 	webviewController notNull ifTrue: [self recreate]!
 
+queryFind: aCommandQuery
+	self canFind ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: 'text'!
+
 registerEventSink: aWebView2EventSink
 	aWebView2EventSink register.
 	^eventHandlers add: aWebView2EventSink!
@@ -661,7 +696,7 @@ scrollBarStyle: anInteger
 	| style |
 	style := anInteger ?? COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
 	self scrollBarStyle = style ifTrue: [^self].
-	self recreateAround: ["self halt. "environmentOptions scrollBarStyle: style]!
+	self recreateAround: [environmentOptions scrollBarStyle: style]!
 
 setControlBackcolor: aColor
 	self webviewController defaultBackgroundColor: aColor!
@@ -685,6 +720,11 @@ subclassWindow: hWnd
 
 subViews
 	^#()!
+
+suggestedFindText
+	"Private - Answer the text which will be used to pre-populate the find/replace dialog."
+
+	^Clipboard current getTextIfNone: ['']!
 
 trackingPreventionLevel
 	^environmentOptions isTrackingPreventionEnabled
@@ -771,10 +811,13 @@ areHostObjectsAllowed!public!settings! !
 areHostObjectsAllowed:!public!settings! !
 basicShowWithStyle:!operations!private! !
 browserVersion!accessing!public! !
+canFind!private!testing! !
 canGoBack!commands!public! !
 canGoForward!commands!public! !
 canNavigateToStrings!public!settings! !
 canNavigateToStrings:!public!settings! !
+channelSearchKind!public!settings! !
+channelSearchKind:!public!settings! !
 content!accessing!private! !
 createUnavailableLink!private!realizing/unrealizing! !
 createWebView!private!realizing/unrealizing! !
@@ -788,6 +831,8 @@ documentTitle!accessing!public! !
 environmentOptions!accessing!public! !
 eventSinkFor:from:!helpers!private! !
 filerProxyIn:!binary filing!private! !
+find!commands-actions!public!searching & replacing! !
+findPrompt:!private!searching & replacing! !
 goBack!commands!public! !
 goForward!commands!public! !
 initialize!initializing!private! !
@@ -839,6 +884,7 @@ onViewCreated!event handling!public! !
 profile!commands!public! !
 profileName!accessing!public! !
 profileName:!accessing!public! !
+queryFind:!commands-queries!private! !
 registerEventSink:!helpers!public! !
 releaseWebView!operations!private!realizing/unrealizing! !
 releaseWebViewEnvironment!operations!private!realizing/unrealizing! !
@@ -852,6 +898,7 @@ setFocus!operations!public! !
 stop!commands!public! !
 subclassWindow:!operations!private! !
 subViews!hierarchy!public!sub views! !
+suggestedFindText!helpers!private! !
 trackingPreventionLevel!public!settings! !
 trackingPreventionLevel:!public!settings! !
 unregisterEvents!private!realizing/unrealizing! !

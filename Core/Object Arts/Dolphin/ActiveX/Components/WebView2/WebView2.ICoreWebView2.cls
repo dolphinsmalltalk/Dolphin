@@ -598,10 +598,16 @@ callDevToolsProtocolMethod: nameString parametersAsJson: jsonString thenDo: aDya
 		handler: handler.
 	handler free!
 
-CallDevToolsProtocolMethodForSession: sessionId methodName: methodName parametersAsJson: parametersAsJson handler: handler
-	"Not supported at this level"
+CallDevToolsProtocolMethodForSession: sessionIdString methodName: methodNameString parametersAsJson: jsonString handler: anICoreWebView2CallDevToolsProtocolMethodCompletedHandler
+	"Private - Invoke the CallDevToolsProtocolMethodForSession() method of the COM object.
 
-	^E_NOTIMPL!
+		HRESULT __stdcall CallDevToolsProtocolMethodForSession(
+			[in]LPWSTR sessionId,
+			[in]LPWSTR methodName,
+			[in]LPWSTR parametersAsJson,
+			[in]ICoreWebView2CallDevToolsProtocolMethodCompletedHandler* handler);"
+
+	^anICoreWebView2CallDevToolsProtocolMethodCompletedHandler notImplemented!
 
 callDevToolsProtocolMethodForSession: sessionId methodName: methodName parametersAsJson: parametersAsJson thenDo: aDyadicValuable
 	"Invoke the CallDevToolsProtocolMethodForSession() method of the COM object."
@@ -669,13 +675,13 @@ capturePreview: anInteger imageStream: anIStream thenDo: aMonadicValuable
 		handler: handler.
 	handler free!
 
-ClearServerCertificateErrorActions: handler
+ClearServerCertificateErrorActions: anICoreWebView2ClearServerCertificateErrorActionsCompletedHandler
 	"Private - Invoke the ClearServerCertificateErrorActions() method of the COM object.
 
 		HRESULT __stdcall ClearServerCertificateErrorActions(
 			[in]ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2ClearServerCertificateErrorActionsCompletedHandler notImplemented!
 
 clearServerCertificateErrorActionsThenDo: aMonadicValuable
 	"Invoke the ClearServerCertificateErrorActions() method of the COM object."
@@ -804,14 +810,14 @@ executeScript: javaScript thenDo: aDyadicValuable
 	self ExecuteScript: javaScript asUtf16String handler: handler.
 	handler free!
 
-ExecuteScriptWithResult: javaScript handler: handler
+ExecuteScriptWithResult: jsString handler: anICoreWebView2ExecuteScriptWithResultCompletedHandler
 	"Private - Invoke the ExecuteScriptWithResult() method of the COM object.
 
 		HRESULT __stdcall ExecuteScriptWithResult(
 			[in]LPWSTR javaScript,
 			[in]ICoreWebView2ExecuteScriptWithResultCompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2ExecuteScriptWithResultCompletedHandler notImplemented!
 
 executeScriptWithResult: javaScript thenDo: aDyadicValuable
 	"Request the execution of some javascript in the browser, evaluating the <dyadicValuable> second argument when the script has finished running, passing it an HRESULT status code and a result object described by an `ICoreWebView2ExecuteScriptResult`."
@@ -831,6 +837,14 @@ faviconUri
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer!
+
+find
+	"Answer the <ICoreWebView2Find> value of the 'Find' property of the receiver."
+
+	| answer |
+	answer := ICoreWebView2Find newPointer.
+	self get_Find: answer.
+	^answer asObject!
 
 frameId
 	"Answer the <uint32> value of the 'FrameId' property of the receiver."
@@ -935,6 +949,14 @@ get_FaviconUri: value
 	"Not really implemented in this version of WebView2"
 	value value: ('' asUtf16String copyToCOMTaskMemory detach).
 	^S_FALSE!
+
+get_Find: value
+	"Private - Get the value of the 'Find' property of the receiver.
+
+		HRESULT __stdcall Find(
+			[out, retval]ICoreWebView2Find** value);"
+
+	^E_NOTIMPL!
 
 get_FrameId: id
 	"Private - Get the value of the 'FrameId' property of the receiver.
@@ -1042,10 +1064,15 @@ GetDevToolsProtocolEventReceiver: eventName receiver: receiver
 	<virtual stdcall: hresult 43 lpwstr ICoreWebView2DevToolsProtocolEventReceiver**>
 	^self invalidCall: _failureCode!
 
-GetFavicon: format completedHandler: completedHandler
-	"Not supported by this version"
+GetFavicon: formatInteger completedHandler: anICoreWebView2GetFaviconCompletedHandler
+	"Private - Invoke the GetFavicon() method of the COM object.
 
-	^E_NOTIMPL!
+		HRESULT __stdcall GetFavicon(
+			[in]COREWEBVIEW2_FAVICON_IMAGE_FORMAT format,
+			[in]ICoreWebView2GetFaviconCompletedHandler* completedHandler);"
+
+
+	^anICoreWebView2GetFaviconCompletedHandler notImplemented!
 
 getFavIcon: formatInteger thenDo: aDyadicValuable
 	"Invoke the CallDevToolsProtocolMethod() method of the COM object."
@@ -1255,14 +1282,14 @@ PostWebMessageAsString: webMessageAsString
 	<virtual stdcall: hresult 34 lpwstr>
 	^self invalidCall: _failureCode!
 
-Print: printSettings handler: handler
+Print: anICoreWebView2PrintSettings handler: anICoreWebView2PrintCompletedHandler
 	"Invoke the Print() method of the COM object.
 
 		HRESULT __stdcall Print(
 			[in]ICoreWebView2PrintSettings* printSettings,
 			[in]ICoreWebView2PrintCompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2PrintCompletedHandler notImplemented!
 
 print: anICoreWebView2PrintSettings thenDo: aDyadicValuable
 	"Request asynchronous print with the specified settings. On completion invoke the <dyadicValuable> argument passing an HRESULT code as the 1st argument, and an integer from the COREWEBVIEW2_PRINT_STATUS enumeration as the 2nd argument."
@@ -1283,8 +1310,7 @@ PrintToPdf: resultFilePath printSettings: printSettings handler: anICoreWebView2
 			[in]ICoreWebView2PrintSettings* printSettings,
 			[in]ICoreWebView2PrintToPdfCompletedHandler* handler);"
 
-	anICoreWebView2PrintToPdfCompletedHandler Invoke: E_NOTIMPL arg: 0.
-	^E_NOTIMPL!
+	^anICoreWebView2PrintToPdfCompletedHandler notImplemented!
 
 printToPdf: resultFilePath settings: printSettings thenDo: aDyadicValuable
 	"Request asynchronous print to PDF. On completion invoke the <dyadicValuable> argument passing an HRESULT code and boolean success flag."
@@ -1298,14 +1324,14 @@ printToPdf: resultFilePath settings: printSettings thenDo: aDyadicValuable
 		handler: handler.
 	handler free!
 
-PrintToPdfStream: printSettings handler: handler
+PrintToPdfStream: anICoreWebView2PrintSettings handler: anICoreWebView2PrintToPdfStreamCompletedHandler
 	"Invoke the PrintToPdfStream() method of the COM object.
 
 		HRESULT __stdcall PrintToPdfStream(
 			[in]ICoreWebView2PrintSettings* printSettings,
 			[in]ICoreWebView2PrintToPdfStreamCompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2PrintToPdfStreamCompletedHandler notImplemented!
 
 printToPdfStream: anICoreWebView2PrintSettings thenDo: aDyadicValuable
 	"Request asynchronous print of PDF to a stream with the specified settings. On completion invoke the <dyadicValuable> argument passing an HRESULT code as the 1st argument, and an IStream of the PDF as the 2nd argument."
@@ -1735,13 +1761,13 @@ ShowPrintUI: printDialogKind
 
 	^E_NOTIMPL!
 
-ShowSaveAsUI: handler
+ShowSaveAsUI: anICoreWebView2ShowSaveAsUICompletedHandler
 	"Private - Invoke the ShowSaveAsUI() method of the COM object.
 
 		HRESULT __stdcall ShowSaveAsUI(
 			[in]ICoreWebView2ShowSaveAsUICompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2ShowSaveAsUICompletedHandler notImplemented!
 
 showSaveAsUIThenDo: aDyadicValuable
 	"Trigger a Save As action for the currently loaded document. When complete the <dyadicValuable> argument is evaluated passing an HRESULT code and a member of the COREWEBVIEW2_SAVE_AS_UI_RESULT enumeration as the arguments."
@@ -1799,13 +1825,13 @@ trySuspend: aDyadicValuable
 	self TrySuspend: handler.
 	handler free!
 
-TrySuspend: handler
+TrySuspend: anICoreWebView2TrySuspendCompletedHandler
 	"Private - Invoke the TrySuspend() method of the COM object.
 
 		HRESULT __stdcall TrySuspend(
 			[in]ICoreWebView2TrySuspendCompletedHandler* handler);"
 
-	handler Invoke: E_NOTIMPL arg: 0.
+	anICoreWebView2TrySuspendCompletedHandler notImplemented.
 	^S_OK! !
 
 !WebView2.ICoreWebView2 categoriesForMethods!
@@ -1881,6 +1907,7 @@ executeScript:thenDo:!async requests!public! !
 ExecuteScriptWithResult:handler:!COM Interfaces-ICoreWebView2_21!private! !
 executeScriptWithResult:thenDo:!async requests!public! !
 faviconUri!properties!public! !
+find!properties!public! !
 frameId!properties!public! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoBack:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1892,6 +1919,7 @@ get_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 get_DocumentTitle:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Environment:!COM Interfaces-ICoreWebView2_2!private!properties! !
 get_FaviconUri:!COM Interfaces-ICoreWebView2_15!private! !
+get_Find:!COM Interfaces-ICoreWebView2_28!private! !
 get_FrameId:!COM Interfaces-ICoreWebView2_20!private! !
 get_IsDefaultDownloadDialogOpen:!COM Interfaces-ICoreWebView2_9!private! !
 get_IsDocumentPlayingAudio:!COM Interfaces-ICoreWebView2_8!private! !

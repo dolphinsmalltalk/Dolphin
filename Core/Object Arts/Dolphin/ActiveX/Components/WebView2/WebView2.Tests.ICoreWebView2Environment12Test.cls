@@ -23,7 +23,7 @@ testControllerOptions2
 	| controllerOptions |
 	"From 1.0.1661.34"
 	controllerOptions := (webviewEnvironment createCoreWebView2ControllerOptions) queryInterface: ICoreWebView2ControllerOptions2 ifNone: [self skip].
-	"Script local"
+	"Script locale"
 	self assert: controllerOptions scriptLocale equals: ''.
 	controllerOptions scriptLocale: 'fr-FR'.
 	self assert: controllerOptions scriptLocale equals: 'fr-FR'!

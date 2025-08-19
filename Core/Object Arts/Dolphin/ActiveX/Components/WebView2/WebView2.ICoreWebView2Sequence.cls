@@ -146,7 +146,10 @@ before: anObject ifAbsent: exceptionHandler
 	index := self indexOf: anObject.
 	^index == 0
 		ifTrue: [exceptionHandler value]
-		ifFalse: [index == 1 ifTrue: [self errorFirstObject: anObject] ifFalse: [self at: index - 1]]!
+		ifFalse: 
+			[index == 1
+				ifTrue: [self error: ('<1p> is my first object' expandMacrosWith: anObject)]
+				ifFalse: [self at: index - 1]]!
 
 copyReplaceAll: oldSequencedReadableCollection with: newSequencedReadableCollection
 	^self asArray copyReplaceAll: oldSequencedReadableCollection with: newSequencedReadableCollection!

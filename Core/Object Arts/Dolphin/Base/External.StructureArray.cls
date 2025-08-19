@@ -170,10 +170,9 @@ withAll: newElements
 withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadicValuable
 	"Answer a new <StructureArray> containing all of the elements of the <collection> argument, converted to the format of the <ExternalStructure> class argument by the <dyadicValuable> initializer block, aDyadicValuable."
 
-	| answer |
-	answer := self length: aCollection size elementClass: anExternalStructureClass.
-	answer with: aCollection do: aDyadicValuable.
-	^answer! !
+	^(self length: aCollection size elementClass: anExternalStructureClass)
+		with: aCollection do: aDyadicValuable;
+		yourself! !
 
 !External.StructureArray class categoriesForMethods!
 fromAddress:length:elementClass:!instance creation!public! !
