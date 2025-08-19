@@ -202,14 +202,6 @@ testPrintFloatSeparators
 		groupSeparator: $^.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '123^456^7890@123'!
 
-testStbRoundTrip
-	| rehydrated bytes subject |
-	subject := self defaultSubject.
-	bytes := {subject. {subject}} binaryStoreBytes.
-	rehydrated := Object fromBinaryStoreBytes: bytes.
-	self assert: rehydrated first identicalTo: subject.
-	self assert: rehydrated second first identicalTo: subject.!
-
 verifyEnglishDayOfWeek: aLocale
 	"Note that this test is not sensitive to the configured first day of the week, because Locale>>dayOfWeek: always uses the US convention that Sunday is day 1. This is for interoperability with `Core.Date`."
 
@@ -257,7 +249,6 @@ testPrintDurationOnFormat!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatNumDigits!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
-testStbRoundTrip!public!unit tests! !
 verifyEnglishDayOfWeek:!helpers!private! !
 verifyEnglishDayOfWeekNames:!helpers!private! !
 verifyEnglishMonthAbbreviations:!helpers!private! !

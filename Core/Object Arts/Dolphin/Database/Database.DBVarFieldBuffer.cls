@@ -66,13 +66,6 @@ dbHasVariableTransferOctetLength
 
 	^true!
 
-dbTransferOctetLengthForColumn: aDBColAttr
-	"Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) based on the column type, if fixed, else 0 for variable width columns.
-		The transfer octet length of a column is the maximum number of bytes returned to the application when data is transferred to its default C data type. For character data, the transfer octet length does not include space for the null-termination character. The transfer octet length of a column may be different than the number of bytes required to store the data on the data source.
-	From https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/transfer-octet-length"
-
-	^aDBColAttr precision ?? 0!
-
 defaultBlockTransferOctetLength
 	"The default block size for unbound data transfers. This is a performance vs memory usage trade-off, and needs to be a balance between allocating an excessively large buffer for reading data and the number of SQLGetData calls that will be required in the read loop. There isn't really an ideal choice, as the best trade-off will depend on the application. If a lot of large blobs are being transferred, you may want to set a larger value for #blockTransferOctetLength than 256Kb. Note that this does not affect data transfer to the DB as SQLPutData is called once to transfer the entire data value."
 
@@ -107,7 +100,6 @@ blockTransferOctetLength!accessing!public! !
 blockTransferOctetLength:!accessing!public! !
 dbBoundFieldClassForColumn:!helpers!private! !
 dbHasVariableTransferOctetLength!private!testing! !
-dbTransferOctetLengthForColumn:!enquiries!public! !
 defaultBlockTransferOctetLength!constants!public! !
 defaultMaxBoundOctetLength!constants!public! !
 initialize!class initialization!public! !

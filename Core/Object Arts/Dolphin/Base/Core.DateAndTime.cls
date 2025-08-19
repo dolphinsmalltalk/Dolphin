@@ -351,11 +351,6 @@ rataDie
 
 	^rataDie!
 
-roundTo: factor
-	"Answer the multiple of the <number> argument, factor, that is nearest the receiver"
-
-	^factor * (self / factor) rounded!
-
 second
 	"Answer a <rational> in the range [0, 60), representing the second of the minute of the local time of the receiver, including any fractional part."
 
@@ -473,7 +468,6 @@ printOn:format:!printing!public! !
 printOn:withLeadingSpace:!printing!public! !
 printStringFormat:!printing!public! !
 rataDie!accessing!public! !
-roundTo:!public!truncation and round off! !
 second!accessing!public! !
 seconds!accessing!public! !
 setRataDie:seconds:offset:!initializing!private! !

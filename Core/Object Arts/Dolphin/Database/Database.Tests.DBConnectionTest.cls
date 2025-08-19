@@ -182,9 +182,6 @@ execShouldRaiseTypeMismatch: aDBParameterizedStatement
 		raise: OS.HRESULTError
 		matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]!
 
-field: aString fromRow: aDBRow 
-	^aDBRow at: aString!
-
 hasDateTimeOffsetDataType
 	^true!
 
@@ -1562,7 +1559,6 @@ execShouldRaiseSqlInvalidDouble:!private! !
 execShouldRaiseSqlNumberOutOfRange:!private! !
 execShouldRaiseSqlTruncatedString:!helpers!private! !
 execShouldRaiseTypeMismatch:!helpers!private! !
-field:fromRow:!helpers!private! !
 hasDateTimeOffsetDataType!private!testing! !
 hasFixedWidthBinaryDataType!private!testing! !
 hasIntervalDataType!private!testing! !

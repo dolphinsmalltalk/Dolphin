@@ -175,12 +175,6 @@ quality: aSymbol
 	logfont lfQuality: (Qualities identityIndexOf: aSymbol) - 1.
 	self styleChanged!
 
-styleChanged
-	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
-
-	self free.
-	series := nil!
-
 weight: anInteger 
 	"Set the receiver's 'weight' (thickness)."
 
@@ -208,7 +202,6 @@ pointSize:!accessing!public! !
 printOn:!development!printing!public! !
 quality!accessing!public! !
 quality:!accessing!public! !
-styleChanged!helpers!private! !
 weight:!accessing!public! !
 !
 

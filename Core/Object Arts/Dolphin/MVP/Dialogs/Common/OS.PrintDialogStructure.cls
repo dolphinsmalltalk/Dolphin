@@ -44,11 +44,6 @@ devNames: aDEVNAMESW
 driverName
 	^self devNames driverName!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 hDevMode
 	"Answer the <Handle> value of the receiver's 'hDevMode' field."
 
@@ -105,7 +100,6 @@ devMode:!operations!public! !
 devNames!operations!public! !
 devNames:!operations!public! !
 driverName!accessing!public! !
-dwSize:!**compiled accessors**!public! !
 hDevMode!**compiled accessors**!public! !
 hDevMode:!**compiled accessors**!public! !
 hDevNames!**compiled accessors**!public! !

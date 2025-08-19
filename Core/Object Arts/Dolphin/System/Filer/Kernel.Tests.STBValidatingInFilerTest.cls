@@ -303,12 +303,6 @@ verifyResourceLibraryAtVersion: anInteger
 		ifFalse: [locator includeClass: ResourceLibrary].
 	super verifyResourceLibraryAtVersion: anInteger!
 
-verifyRoundTripSingleton: anObject version: anInteger
-	self
-		verifyRoundTripSingleton: anObject
-		version: anInteger
-		expected: (self serialize: { anObject. anObject } version: anInteger)!
-
 verifyRoundTripSingleton: anObject version: anInteger expected: aByteArray
 	self initializeLocator: anInteger.
 	locator includeClass: anObject class.
@@ -417,7 +411,6 @@ verifyLargeIntegersAtVersion:!helpers!private! !
 verifyLookupTablesAtVersion:!helpers!private! !
 verifyOrderedCollectionsAtVersion:!helpers!private! !
 verifyResourceLibraryAtVersion:!helpers!private! !
-verifyRoundTripSingleton:version:!helpers!private! !
 verifyRoundTripSingleton:version:expected:!helpers!private! !
 verifySaveStaticVariableReferenceAtVersion:!helpers!private! !
 verifyScaledDecimalsAtVersion:!helpers!private! !

@@ -59,13 +59,6 @@ add: anAssociation
 	self at: anAssociation key put: anAssociation value.
 	^anAssociation!
 
-allKeysAndValuesSatisfy: aDyadicValuable
-	"Answer whether the <dyadicValuable> argument evaluates to true for all of the receiver's key and value pairs."
-
-	self
-		keysAndValuesDo: [:eachKey :eachValue | (aDyadicValuable value: eachKey value: eachValue) ifFalse: [^false]].
-	^true!
-
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function primitive method (see ExternalLibrary and subclasses)."
 
@@ -775,7 +768,6 @@ writeCollection: aCollection at: aString
 !OS.RegKeyAbstract categoriesForMethods!
 =!comparing!public! !
 add:!adding!public! !
-allKeysAndValuesSatisfy:!enumerating!public! !
 asParameter!converting!public! !
 associationAt:ifAbsent:!accessing!public! !
 associationsDo:!enumerating!public! !

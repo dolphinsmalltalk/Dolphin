@@ -164,25 +164,6 @@ invalidateOnResize
 
 	^self viewMode ~~ #normal!
 
-invalidateRect: aRectangle erase: aBoolean
-	"Invalidates the specified client rectangle (a RECTL, Rectangle, or nil for the whole client window).
-	Set whether to erase the receiver's background before repainting. Answer whether the function succeeds."
-
-	"There is a possibility that this may be called before the receiver has been created so check for this to avoid accidentally redrawing the entire desktop"
-
-	handle isNull ifTrue: [^false].
-	^self hasTransparentBackground
-		ifTrue: 
-			[self parentView invalidateRect: (aRectangle isNil
-						ifTrue: [self getRect]
-						ifFalse: [self mapRectangle: aRectangle to: self parentView])
-				erase: aBoolean]
-		ifFalse: 
-			[User32
-				invalidate: handle
-				lpRect: aRectangle asParameter
-				bErase: aBoolean asParameter]!
-
 isDoubleBuffered
 	"Answer whether erase/paint is double-buffered."
 
@@ -339,7 +320,6 @@ initialize!initializing!private! !
 insets!accessing!public! !
 insets:!accessing!public! !
 invalidateOnResize!private!testing! !
-invalidateRect:erase:!drawing!public! !
 isDoubleBuffered!public!testing! !
 isDoubleBuffered:!accessing!public! !
 isWholeBackgroundErased!public!testing! !

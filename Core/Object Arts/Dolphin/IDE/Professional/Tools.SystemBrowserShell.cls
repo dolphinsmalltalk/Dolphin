@@ -30,9 +30,6 @@ canSaveMethod
 		ifTrue: [self isEditableMethod: self method]
 		ifFalse: [self hasClassSelected or: [self packages size = 1]]!
 
-canShowLocalHierarchy
-	^false!
-
 createComponents
 	"Create the presenters contained by the receiver"
 
@@ -133,7 +130,6 @@ slideyPinNames
 
 !Tools.SystemBrowserShell categoriesForMethods!
 canSaveMethod!private!testing! !
-canShowLocalHierarchy!private!testing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 hasPackageSelected!public!testing! !

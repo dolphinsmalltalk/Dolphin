@@ -45,10 +45,6 @@ flags: anInteger
 hookFlag
 	^PSD_ENABLEPAGEPAINTHOOK!
 
-initialize
-	super initialize.
-	self beFinalizable!
-
 lpfnHook: anAddress
 	"Set the receiver's 'lpfnHook' field to the value of the argument, anAddress"
 
@@ -69,11 +65,6 @@ minMargins: aRectangle
 	self
 		rtMinMargin: aRectangle;
 		maskIn: PSD_MINMARGINS!
-
-needsFree
-	"Private - Answer whether the receiver requires freeing of any external resources."
-
-	^(self isNull or: [self isPointer]) not!
 
 paperSize
 	^self ptPaperSize asPoint!
@@ -127,13 +118,11 @@ rtMinMargin: aRECTL
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hookFlag!constants!private! !
-initialize!initializing!public! !
 lpfnHook:!**compiled accessors**!public! !
 margins!accessing!public! !
 margins:!accessing!public! !
 minMargins!accessing!public! !
 minMargins:!accessing!public! !
-needsFree!public!realizing/unrealizing! !
 paperSize!accessing!public! !
 ptPaperSize!**compiled accessors**!public! !
 ptPaperSize:!**compiled accessors**!public! !
@@ -148,15 +137,6 @@ rtMinMargin:!**compiled accessors**!public! !
 
 byteSize
 	^_PAGESETUPDLGW_Size!
-
-clear: bytesOrAddress
-	"Free external resources referenced by the structure of the receiver's element type at the specified address."
-
-	##({ _OffsetOf_hDevMode. _OffsetOf_hDevNames }) do: 
-			[:offset |
-			| globalHandle |
-			globalHandle := bytesOrAddress uintPtrAtOffset: offset.
-			globalHandle == 0 ifFalse: [Kernel32 globalFree: globalHandle]]!
 
 defineFields
 	"Define the fields of the Win32 PAGESETUPDLG structure.
@@ -208,7 +188,6 @@ packing
 
 !OS.PAGESETUPDLGW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-clear:!public!realizing/unrealizing! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 packing!constants!public! !

@@ -51,20 +51,7 @@ testStbConvertFromVersion3
 	self assert: bitmap initializer module equals: SessionManager current defaultResourceLibrary.
 	self assert: bitmap initializer isLoadMap3dColors.
 	self assert: bitmap extent y equals: 16.
-	bitmap free!
-
-testStlConvertFromVersion3_file
-	| rehydrated comparand |
-	rehydrated := Object fromLiteralStoreArray: self stlVersion3_file.
-	self assert: rehydrated isPersistent.
-	self assert: rehydrated printString
-		equals: '<1p> fromFile: ''resources\Beach Ball.bmp''' << self subjectClass.
-	comparand := self subjectClass fromFile: 'Resources\beach ball.bmp'.
-	self assert: rehydrated equals: comparand.
-	"Icon's loaded from files are not shared, so the handles will be different"
-	self deny: rehydrated initializer isLoadShared.
-	self deny: rehydrated handle equals: comparand handle.
-	self assert: rehydrated extent equals: comparand extent! !
+	bitmap free! !
 
 !Graphics.Tests.BitmapTest categoriesForMethods!
 stlVersion3_file!constants!private! !
@@ -72,6 +59,5 @@ stlVersion3_resource!constants!private! !
 subjectClass!constants!private! !
 testStbConvertFromVersion1!public!unit tests! !
 testStbConvertFromVersion3!public!unit tests! !
-testStlConvertFromVersion3_file!public! !
 !
 

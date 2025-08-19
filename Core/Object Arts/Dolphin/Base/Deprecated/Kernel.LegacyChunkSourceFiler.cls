@@ -317,17 +317,6 @@ fileOutClass: aClass ofPackage: aPackage
 		ifTrue: [self fileOutPoolDictionary: (self makePoolConstsFromSharedPool: aClass)]
 		ifFalse: [super fileOutClass: aClass ofPackage: aPackage]!
 
-fileOutPackageMethods: aPackage
-	"Private - File out the loose methods owned by the specified package to the receiver's stream."
-
-	| methods |
-	methods := aPackage methods.
-	methods isEmpty ifTrue: [^self].
-	self
-		emitComment: 'Loose Methods';
-		cr.
-	self fileOutMethods: methods!
-
 fileOutPackageSourceVariables: aPackage
 	"Private - File out the text representation of the specified packages 'source' object variables onto the receiver's stream. This is used in the single-file .PAC format."
 
@@ -524,7 +513,6 @@ environment:!accessing!public! !
 equivalentLegacyPrerequisites!constants!private! !
 fileOutAttributesOfClass:!public!source filing-file out! !
 fileOutClass:ofPackage:!public!source filing-file out! !
-fileOutPackageMethods:!private!source filing-file out! !
 fileOutPackageSourceVariables:!private!source filing-file out! !
 fileOutPackageVariableAliases:!private!source filing-file out! !
 fileOutPoolDictionary:!private!source filing-file out! !
