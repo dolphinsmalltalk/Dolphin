@@ -54,6 +54,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2_25}
 	#{WebView2.ICoreWebView2_26}
 	#{WebView2.ICoreWebView2_27}
+	#{WebView2.ICoreWebView2_28}
 	#{WebView2.ICoreWebView2_3}
 	#{WebView2.ICoreWebView2_4}
 	#{WebView2.ICoreWebView2_5}
@@ -136,6 +137,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Environment12}
 	#{WebView2.ICoreWebView2Environment13}
 	#{WebView2.ICoreWebView2Environment14}
+	#{WebView2.ICoreWebView2Environment15}
 	#{WebView2.ICoreWebView2Environment2}
 	#{WebView2.ICoreWebView2Environment3}
 	#{WebView2.ICoreWebView2Environment4}
@@ -162,6 +164,12 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2FaviconChangedEventHandler}
 	#{WebView2.ICoreWebView2File}
 	#{WebView2.ICoreWebView2FileSystemHandle}
+	#{WebView2.ICoreWebView2Find}
+	#{WebView2.ICoreWebView2FindActiveMatchIndexChangedEventHandler}
+	#{WebView2.ICoreWebView2FindEventHandler}
+	#{WebView2.ICoreWebView2FindMatchCountChangedEventHandler}
+	#{WebView2.ICoreWebView2FindOptions}
+	#{WebView2.ICoreWebView2FindStartCompletedHandler}
 	#{WebView2.ICoreWebView2FocusChangedEventHandler}
 	#{WebView2.ICoreWebView2FocusGainedEventHandler}
 	#{WebView2.ICoreWebView2FocusLostEventHandler}
@@ -569,6 +577,7 @@ Kernel.Namespace
 			'COREWEBVIEW2_RELEASE_CHANNELS_BETA' -> 16r2.
 			'COREWEBVIEW2_RELEASE_CHANNELS_CANARY' -> 16r8.
 			'COREWEBVIEW2_RELEASE_CHANNELS_DEV' -> 16r4.
+			'COREWEBVIEW2_RELEASE_CHANNELS_INTERNAL' -> 16r16.
 			'COREWEBVIEW2_RELEASE_CHANNELS_NONE' -> 16r0.
 			'COREWEBVIEW2_RELEASE_CHANNELS_STABLE' -> 16r1.
 			'COREWEBVIEW2_SAVE_AS_KIND_COMPLETE' -> 16r3.
@@ -976,6 +985,22 @@ WebView2.ICoreWebView2Interface
 	classConstants: {}!
 
 WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2Find'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2FindOptions'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2Frame'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1340,6 +1365,14 @@ WebView2.ICoreWebView2_26
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+WebView2.ICoreWebView2_27
+	subclass: #'WebView2.ICoreWebView2_28'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 WebView2.ICoreWebView2Certificate
 	subclass: #'WebView2.ICoreWebView2ClientCertificate'
 	instanceVariableNames: ''
@@ -1574,6 +1607,14 @@ WebView2.ICoreWebView2CompletedHandler
 
 WebView2.ICoreWebView2CompletedHandler
 	subclass: #'WebView2.ICoreWebView2ExecuteScriptWithResultCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2FindStartCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1854,6 +1895,14 @@ WebView2.ICoreWebView2Environment12
 
 WebView2.ICoreWebView2Environment13
 	subclass: #'WebView2.ICoreWebView2Environment14'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2Environment14
+	subclass: #'WebView2.ICoreWebView2Environment15'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2241,6 +2290,14 @@ WebView2.ICoreWebView2EventHandler
 	classConstants: {}!
 
 WebView2.ICoreWebView2EventHandler
+	subclass: #'WebView2.ICoreWebView2FindEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2EventHandler
 	subclass: #'WebView2.ICoreWebView2FrameEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2394,6 +2451,22 @@ WebView2.ICoreWebView2EnvironmentEventHandler
 
 WebView2.ICoreWebView2EnvironmentEventHandler
 	subclass: #'WebView2.ICoreWebView2ProcessInfosChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2FindEventHandler
+	subclass: #'WebView2.ICoreWebView2FindActiveMatchIndexChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.ICoreWebView2FindEventHandler
+	subclass: #'WebView2.ICoreWebView2FindMatchCountChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

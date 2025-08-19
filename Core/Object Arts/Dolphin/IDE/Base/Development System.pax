@@ -10682,6 +10682,16 @@ publishedAspectsOfInstances
 								'Strict' -> COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT
 							}]
 				nullValue: nil).
+	aspects add: ((Aspect
+				choice: #channelSearchKind
+				fromMap: 
+					[LookupTable withAll: {
+								'Most Stable' -> COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
+								'Least Stable' -> COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE
+							}]
+				nullValue: nil)
+				defaultValue: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE;
+				yourself).
 	^aspects!
 
 publishedEventsOfInstances

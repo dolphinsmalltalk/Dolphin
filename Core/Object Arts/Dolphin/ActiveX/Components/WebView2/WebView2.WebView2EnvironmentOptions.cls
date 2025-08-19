@@ -246,7 +246,7 @@ initialize
 	flags := ##(AllowSSOMask | ExclusiveUserDataFolderAccessMask).
 	browserVersion := CORE_WEBVIEW_TARGET_PRODUCT_VERSION.
 	channelSearchKind := COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
-	releaseChannels := COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+	releaseChannels := COREWEBVIEW2_RELEASE_CHANNELS_NONE.
 	scrollBarStyle := COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.
 	customSchemeRegistrations := #()!
 

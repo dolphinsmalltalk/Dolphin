@@ -160,8 +160,8 @@ testReleaseChannels
 	| subject interface |
 	subject := WebView2EnvironmentOptions new.
 	interface := subject queryInterface: ICoreWebView2EnvironmentOptions7.
-	self assert: subject releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
-	self assert: interface releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_STABLE.
+	self assert: subject releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_NONE.
+	self assert: interface releaseChannels equals: COREWEBVIEW2_RELEASE_CHANNELS_NONE.
 	interface
 		releaseChannels: COREWEBVIEW2_RELEASE_CHANNELS_STABLE | COREWEBVIEW2_RELEASE_CHANNELS_DEV.
 	self assert: subject releaseChannels

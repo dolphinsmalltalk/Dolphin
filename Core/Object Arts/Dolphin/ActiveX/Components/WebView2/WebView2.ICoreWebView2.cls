@@ -832,6 +832,14 @@ faviconUri
 	ptr free.
 	^answer!
 
+find
+	"Answer the <ICoreWebView2Find> value of the 'Find' property of the receiver."
+
+	| answer |
+	answer := ICoreWebView2Find newPointer.
+	self get_Find: answer.
+	^answer asObject!
+
 frameId
 	"Answer the <uint32> value of the 'FrameId' property of the receiver."
 
@@ -935,6 +943,14 @@ get_FaviconUri: value
 	"Not really implemented in this version of WebView2"
 	value value: ('' asUtf16String copyToCOMTaskMemory detach).
 	^S_FALSE!
+
+get_Find: value
+	"Private - Get the value of the 'Find' property of the receiver.
+
+		HRESULT __stdcall Find(
+			[out, retval]ICoreWebView2Find** value);"
+
+	^E_NOTIMPL!
 
 get_FrameId: id
 	"Private - Get the value of the 'FrameId' property of the receiver.
@@ -1881,6 +1897,7 @@ executeScript:thenDo:!async requests!public! !
 ExecuteScriptWithResult:handler:!COM Interfaces-ICoreWebView2_21!private! !
 executeScriptWithResult:thenDo:!async requests!public! !
 faviconUri!properties!public! !
+find!properties!public! !
 frameId!properties!public! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoBack:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1892,6 +1909,7 @@ get_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 get_DocumentTitle:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Environment:!COM Interfaces-ICoreWebView2_2!private!properties! !
 get_FaviconUri:!COM Interfaces-ICoreWebView2_15!private! !
+get_Find:!COM Interfaces-ICoreWebView2_28!private! !
 get_FrameId:!COM Interfaces-ICoreWebView2_20!private! !
 get_IsDefaultDownloadDialogOpen:!COM Interfaces-ICoreWebView2_9!private! !
 get_IsDocumentPlayingAudio:!COM Interfaces-ICoreWebView2_8!private! !
