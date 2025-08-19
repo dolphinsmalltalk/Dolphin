@@ -11,6 +11,7 @@ package setClassNames: #(
 	#{WebView2.Tests.ICoreWebView2Environment12Test}
 	#{WebView2.Tests.ICoreWebView2Environment13Test}
 	#{WebView2.Tests.ICoreWebView2Environment14Test}
+	#{WebView2.Tests.ICoreWebView2Environment15Test}
 	#{WebView2.Tests.ICoreWebView2Environment2Test}
 	#{WebView2.Tests.ICoreWebView2Environment3Test}
 	#{WebView2.Tests.ICoreWebView2Environment6Test}
@@ -133,6 +134,14 @@ WebView2.Tests.WebViewEnvironmentTest
 
 WebView2.Tests.WebViewEnvironmentTest
 	subclass: #'WebView2.Tests.ICoreWebView2Environment14Test'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+WebView2.Tests.WebViewEnvironmentTest
+	subclass: #'WebView2.Tests.ICoreWebView2Environment15Test'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

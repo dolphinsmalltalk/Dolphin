@@ -14,13 +14,25 @@ UI.URLPresenter comment: ''!
 
 !UI.URLPresenter categoriesForClass!MVP-Presenters! !
 
+!UI.URLPresenter methodsFor!
+
+isBlank
+	^self value = self class defaultValue! !
+
+!UI.URLPresenter categoriesForMethods!
+isBlank!public!testing! !
+!
+
 !UI.URLPresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^'about:blank' copy asValue!
+	^self defaultValue copy asValue!
+
+defaultValue
+	^'about:blank'!
 
 defaultView
 	"Answer the resource name of the default view for the receiver."
@@ -39,6 +51,7 @@ resource_WebView2
 
 !UI.URLPresenter class categoriesForMethods!
 defaultModel!models!public! !
+defaultValue!constants!public! !
 defaultView!constants!public! !
 resource_WebView2!public!resources-views! !
 !

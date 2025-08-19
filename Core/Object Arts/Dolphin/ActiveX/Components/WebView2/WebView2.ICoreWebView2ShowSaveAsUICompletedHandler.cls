@@ -44,10 +44,14 @@ Invoke: errorCode arg: result
 			[in]COREWEBVIEW2_SAVE_AS_UI_RESULT result);"
 
 	<virtual stdcall: hresult 4 hresult int32>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+notImplemented
+	^self Invoke: E_NOTIMPL arg: COREWEBVIEW2_SAVE_AS_UI_RESULT_CANCELLED! !
 
 !WebView2.ICoreWebView2ShowSaveAsUICompletedHandler categoriesForMethods!
 Invoke:arg:!**auto generated**!COM Interfaces-ICoreWebView2ShowSaveAsUICompletedHandler!public! !
+notImplemented!exceptions!public! !
 !
 
 !WebView2.ICoreWebView2ShowSaveAsUICompletedHandler class methodsFor!
