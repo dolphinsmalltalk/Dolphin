@@ -287,6 +287,7 @@ testStyleRunTextAt
 	self should: [subject styleRunTextAt: self text size + 1] raise: BoundsError!
 
 testWcsICmp
+	<nocreate>
 	| upper |
 	upper := 'A🐬£'.
 	self assert: (Ucrt _wcsicmp: upper string2: upper) equals: 0.

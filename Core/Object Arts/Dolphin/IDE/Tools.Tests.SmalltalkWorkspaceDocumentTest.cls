@@ -19,9 +19,9 @@ classToTest
 
 testDefaultPositioning
 	"Test that newly opened workspaces, which usually have a saved default extent, open with expected extent and in a cascade."
+	<nocreate>
 
 	| workspaces |
-	#nocreate.
 	workspaces := OrderedCollection new.
 	
 	[| shell monitor i defaultExtent nextShell |
