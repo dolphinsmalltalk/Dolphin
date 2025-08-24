@@ -64,22 +64,19 @@ initializePresenter
 	presenter model: (ListModel on: (1 to: 5) asOrderedCollection)!
 
 testColumnInvalidation
-
 	"#1328 The column invalidation rectangle was wrong when the ELV was not at y=0 in its parent"
 
+	<nocreate>
 	| shell elv rect |
-
-	#nocreate.
-
 	shell := ShellView new create.
 	shell rectangle: (100 @ 100 extent: 300 @ 400).
+	
 	[shell show.
-
-	elv := ListPresenter loadViewResource: 'Editable list view' inContext: shell. 
-	elv 
+	elv := ListPresenter loadViewResource: 'Editable list view' inContext: shell.
+	elv
 		getImageBlock: nil;
 		model: (ListModel withAll: (1 to: 10));
-		position: 0@100;
+		position: 0 @ 100;
 		show;
 		onViewOpened.
 
@@ -88,22 +85,20 @@ testColumnInvalidation
 
 	"Set a custom background color and invalidate only column 1"
 	elv rowBackcolor: Color red.
-
 	elv primaryColumn invalidate.
 	SessionManager current inputState pumpMessages.
 
 	"Previously the column invalidation rectangle was incorrect preventing upper items in the list from being invalidated"
 	rect := elv subItemRectRow: 1 column: 1.
-	self assert: (elv canvas pixelAt: rect center) equals: Color red] ensure: [shell exit]!
+	self assert: (elv canvas pixelAt: rect center) equals: Color red]
+			ensure: [shell exit]!
 
 testEmbeddedComboBoxStbConversion20
-
 	"#1030 Ensure legacy EmbeddedComboBoxes are valid when opened (specifically lastSelIndices)"
 
+	<nocreate>
 	| elv |
-
 	elv := Object fromBinaryStoreBytes: self elvWithEmbeddedComboBoxBytes20 context: View desktop.
-
 	[self assert: elv allColumns first editor lastSelIndices equals: #()] ensure: [elv close]!
 
 testMultiSelectAnchor
@@ -206,12 +201,13 @@ testPackageClosure
 	"Tests predicted unimplemented messages in EditableListViewDemo
 		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps."
-
+	<nocreate>
 	| missing aBrowserEnvironment expected |
 	aBrowserEnvironment := BrowserEnvironment new
 				forPackagesDeployment: { EditableListViewDemo owningPackage }.
-	missing := Smalltalk developmentSystem unimplementedSelectorsIn: aBrowserEnvironment.	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
+	missing := Smalltalk developmentSystem unimplementedSelectorsIn: aBrowserEnvironment.
 	expected := #(#defineTemplate).
+	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
 	self assert: (missing symmetricDifference: expected) asArray sort equals: #()
 	"To debug this, open an env browser on the deployment scope as follows:
 		EnvironmentBrowserShell onEnvironment: aBrowserEnvironment.
@@ -256,16 +252,17 @@ testSelectionColorOverridesRowBackcolor
 	self assert: (elv canvas pixelAt: rect4 center) equals: selectionColor!
 
 testStbConversion15
-
 	"#1024: Ensure repurposed inst var slots from version 15 are cleared out"
 
+	<nocreate>
 	| instVarNames elv |
-
 	instVarNames := EditableListView allInstanceVariableNames.
 	elv := Object fromBinaryStoreBytes: self editableListViewBytes15 context: View desktop.
 	self assert: elv lvFlags equals: 0.
+	
 	[self assert: (elv instVarAt: (instVarNames indexOf: 'originalColumns')) equals: nil.
-	self assert: (elv instVarAt: (instVarNames indexOf: 'headerControl')) equals: nil] ensure: [elv close]!
+	self assert: (elv instVarAt: (instVarNames indexOf: 'headerControl')) equals: nil]
+			ensure: [elv close]!
 
 testTooltipTextResetWhenColumnAdded
 
