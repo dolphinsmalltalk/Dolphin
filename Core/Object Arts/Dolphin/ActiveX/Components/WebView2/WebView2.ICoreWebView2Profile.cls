@@ -64,14 +64,14 @@ Add_Deleted: eventHandler token: token
 
 	^E_NOTIMPL!
 
-AddBrowserExtension: extensionFolderPath handler: handler
+AddBrowserExtension: extensionFolderPathString handler: anICoreWebView2ProfileAddBrowserExtensionCompletedHandler
 	"Invoke the AddBrowserExtension() method of the COM object.
 
 		HRESULT __stdcall AddBrowserExtension(
 			[in]LPWSTR extensionFolderPath,
 			[in]ICoreWebView2ProfileAddBrowserExtensionCompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2ProfileAddBrowserExtensionCompletedHandler notImplemented!
 
 addBrowserExtension: extensionFolderPath thenDo: aDyadicValuable
 	"Add a browser extension to be loaded from the specified path. When done, invoke the completion handler passing an hresult success/failure code as the first argument, and an <ICoreWebView2BrowserExtension> on the new extension, if successfully loaded."
@@ -95,15 +95,14 @@ clearBrowsingData: dataKinds from: startTime to: endTime thenDo: aMonadicValuabl
 		handler: handler.
 	handler free!
 
-ClearBrowsingData: dataKinds handler: handler
+ClearBrowsingData: dataKindsInteger handler: anICoreWebView2ClearBrowsingDataCompletedHandler
 	"Private - Invoke the ClearBrowsingData() method of the COM object.
 
 		HRESULT __stdcall ClearBrowsingData(
 			[in]COREWEBVIEW2_BROWSING_DATA_KINDS dataKinds,
 			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
 
-	handler Invoke: E_NOTIMPL.
-	^E_NOTIMPL!
+	^anICoreWebView2ClearBrowsingDataCompletedHandler notImplemented!
 
 clearBrowsingData: dataKinds startTime: startTime endTime: endTime handler: aMonadicValuable
 	| handler |
@@ -121,14 +120,13 @@ clearBrowsingData: dataKinds thenDo: aMonadicValuable
 	self ClearBrowsingData: dataKinds handler: handler.
 	handler free!
 
-ClearBrowsingDataAll: handler
+ClearBrowsingDataAll: anICoreWebView2ClearBrowsingDataCompletedHandler
 	"Private - Invoke the ClearBrowsingDataAll() method of the COM object.
 
 		HRESULT __stdcall ClearBrowsingDataAll(
 			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
 
-	handler Invoke: E_NOTIMPL.
-	^E_NOTIMPL!
+	^anICoreWebView2ClearBrowsingDataCompletedHandler notImplemented!
 
 clearBrowsingDataAllThenDo: aMonadicValuable
 	| handler |
@@ -137,7 +135,7 @@ clearBrowsingDataAllThenDo: aMonadicValuable
 	self ClearBrowsingDataAll: handler.
 	handler free!
 
-ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime handler: handler
+ClearBrowsingDataInTimeRange: dataKindsInteger startTime: startTimeDouble endTime: endTimeDouble handler: anICoreWebView2ClearBrowsingDataCompletedHandler
 	"Private - Invoke the ClearBrowsingDataInTimeRange() method of the COM object.
 
 		HRESULT __stdcall ClearBrowsingDataInTimeRange(
@@ -146,8 +144,7 @@ ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime ha
 			[in]double endTime,
 			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
 
-	handler Invoke: E_NOTIMPL.
-	^E_NOTIMPL!
+	^anICoreWebView2ClearBrowsingDataCompletedHandler notImplemented!
 
 clearBrowsingDataThenDo: aMonadicValuable
 	"Clear all browsing data (history, cookies, etc) and when done invoke the <monadicValuable> argument passing an integer HRESULT indicating success/failure."
@@ -277,13 +274,13 @@ get_ProfilePath: value
 	<virtual stdcall: hresult 6 lpwstr*>
 	^self invalidCall: _failureCode!
 
-GetBrowserExtensions: handler
+GetBrowserExtensions: anICoreWebView2ProfileGetBrowserExtensionsCompletedHandler
 	"Invoke the GetBrowserExtensions() method of the COM object.
 
 		HRESULT __stdcall GetBrowserExtensions(
 			[in]ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2ProfileGetBrowserExtensionsCompletedHandler notImplemented!
 
 getBrowserExtensionsThenDo: aDyadicValuable
 	| handler |
@@ -292,14 +289,13 @@ getBrowserExtensionsThenDo: aDyadicValuable
 	self GetBrowserExtensions: handler.
 	handler free!
 
-GetNonDefaultPermissionSettings: completedHandler
+GetNonDefaultPermissionSettings: anICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler
 	"Invoke the GetNonDefaultPermissionSettings() method of the COM object.
 
 		HRESULT __stdcall GetNonDefaultPermissionSettings(
 			[in]ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler* completedHandler);"
 
-	completedHandler Invoke: E_NOTIMPL arg: nil.
-	^E_NOTIMPL!
+	^anICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler notImplemented!
 
 getNonDefaultPermissionSettingsThenDo: aDyadicValuable
 	| handler |
@@ -460,7 +456,7 @@ Remove_Deleted: token
 
 	^E_NOTIMPL!
 
-SetPermissionState: permissionKind origin: origin state: state completedHandler: completedHandler
+SetPermissionState: permissionKindInteger origin: originString state: stateInteger completedHandler: anICoreWebView2SetPermissionStateCompletedHandler
 	"Invoke the SetPermissionState() method of the COM object.
 
 		HRESULT __stdcall SetPermissionState(
@@ -469,8 +465,7 @@ SetPermissionState: permissionKind origin: origin state: state completedHandler:
 			[in]COREWEBVIEW2_PERMISSION_STATE State,
 			[in]ICoreWebView2SetPermissionStateCompletedHandler* completedHandler);"
 
-	completedHandler invoke: E_NOTIMPL.
-	^E_NOTIMPL!
+	^anICoreWebView2SetPermissionStateCompletedHandler notImplemented!
 
 setPermissionState: permissionKindInteger origin: originString state: stateInteger thenDo: aMonadicValuable
 	| handler |

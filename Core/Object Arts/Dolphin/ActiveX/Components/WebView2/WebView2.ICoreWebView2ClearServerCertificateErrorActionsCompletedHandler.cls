@@ -42,10 +42,14 @@ Invoke: errorCode
 			[in]HRESULT errorCode);"
 
 	<virtual stdcall: hresult 4 hresult>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+notImplemented
+	^self Invoke: E_NOTIMPL! !
 
 !WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler categoriesForMethods!
 Invoke:!**auto generated**!COM Interfaces-ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler!public! !
+notImplemented!exceptions!public! !
 !
 
 !WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class methodsFor!

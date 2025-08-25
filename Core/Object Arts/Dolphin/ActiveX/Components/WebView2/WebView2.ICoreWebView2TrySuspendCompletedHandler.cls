@@ -42,10 +42,14 @@ Invoke: invoke arg: arg
 	the vtable defined in ICoreWebView2TrySuspendCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
 
 	<virtual stdcall: hresult 4 hresult int32>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+notImplemented
+	^self Invoke: E_NOTIMPL arg: 0! !
 
 !WebView2.ICoreWebView2TrySuspendCompletedHandler categoriesForMethods!
 Invoke:arg:!COM Interfaces-ICoreWebView2TrySuspendCompletedHandler!public! !
+notImplemented!exceptions!public! !
 !
 
 !WebView2.ICoreWebView2TrySuspendCompletedHandler class methodsFor!

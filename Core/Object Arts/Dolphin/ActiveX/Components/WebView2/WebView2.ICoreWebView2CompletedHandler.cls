@@ -23,3 +23,16 @@ There are 10 or more completion handler interfaces defined that are all similar 
 
 !WebView2.ICoreWebView2CompletedHandler categoriesForClass!COM-Interfaces! !
 
+!WebView2.ICoreWebView2CompletedHandler methodsFor!
+
+Invoke: hrInteger arg: argObject
+	^E_NOTIMPL!
+
+notImplemented
+	^self Invoke: E_NOTIMPL arg: nil! !
+
+!WebView2.ICoreWebView2CompletedHandler categoriesForMethods!
+Invoke:arg:!operations!public! !
+notImplemented!exceptions!public! !
+!
+

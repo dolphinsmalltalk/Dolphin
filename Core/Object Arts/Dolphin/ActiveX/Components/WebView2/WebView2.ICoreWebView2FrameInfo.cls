@@ -70,6 +70,7 @@ get_FrameKind: kind
 		HRESULT __stdcall FrameKind(
 			[out, retval]COREWEBVIEW2_FRAME_KIND* Kind);"
 
+	kind value: COREWEBVIEW2_FRAME_KIND_UNKNOWN.
 	^E_NOTIMPL!
 
 get_name: name

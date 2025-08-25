@@ -176,14 +176,14 @@ AddHostObjectToScriptWithOrigins: name object: object originsCount: originsCount
 	<virtual stdcall: hresult 7 lpwstr variant* uint32 lpwstr*>
 	^self invalidCall: _failureCode!
 
-ExecuteScript: javaScript handler: handler
+ExecuteScript: jsString handler: anICoreWebView2ExecuteScriptCompletedHandler
 	"Private - Invoke the ExecuteScript() method of the COM object.
 
 		HRESULT __stdcall ExecuteScript(
 			[in]LPWSTR javaScript,
 			[in]ICoreWebView2ExecuteScriptCompletedHandler* handler);"
 
-	^E_NOTIMPL!
+	^anICoreWebView2ExecuteScriptCompletedHandler notImplemented!
 
 executeScript: aString thenDo: aDyadicValuable
 	"See the same method of ICoreWebView2"
