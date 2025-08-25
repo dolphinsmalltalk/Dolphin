@@ -338,6 +338,9 @@ errorNotKeyed
 
 	^self error: ('<1p>s do not respond to keyed accessing messages' expandMacrosWith: self class)!
 
+errorNotSingleton
+	self error: 'Collection is not of a single element'!
+
 errorValueNotFound: aValue
 	"Private - Report that an attempt was made to look up the key for a value which was not
 	in receiver"
@@ -526,7 +529,7 @@ single
 	"Answer the <Object> which is the only element of the receiver. 
 	Raise an exception if the receiver does not contain exactly one element."
 
-	self size == 1 ifFalse: [self error: 'Collection is not of a single element'].
+	self size == 1 ifFalse: [self errorNotSingleton].
 	^self anyOne!
 
 size
@@ -632,6 +635,7 @@ do:!enumerating!public! !
 do:separatedBy:!enumerating!public! !
 errorEmptyCollection!exceptions!private! !
 errorNotKeyed!exceptions!private! !
+errorNotSingleton!exceptions!private! !
 errorValueNotFound:!exceptions!private! !
 fold:!enumerating!public! !
 growSize!accessing!private! !
