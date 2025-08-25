@@ -368,8 +368,10 @@ testIsControl
 	self assert: $\xFEFF isControl!
 
 testIsDigit
-	self assert: ((0 to: 255) select: [:each | (Character codePoint: each) isDigit])
-		equals: ($0 asciiValue to: $9 asciiValue).
+	| digits |
+	digits := ($0 to: $9).
+	digits do: [:each | self assert: each isDigit].
+	(digits difference: Character byteCharacterSet) do: [:each | self deny: each isDigit].
 
 	"Arabic indic digits - are decimal digits, but not by the ANSI isDigit definition"
 	($٠ to: $٩) do: [:each | self deny: each isDigit].
@@ -383,10 +385,11 @@ testIsDigit
 testIsEnglishLetter
 	"Ascii only"
 
-	self assert: ((0 to: 255) select: [:each | (Character codePoint: each) isEnglishLetter])
-		equals: ($A asciiValue to: $Z asciiValue) , ($a asciiValue to: $z asciiValue).
-	#($\x40 $\x16 $\x5B $\x60 $\x16 $\x7B $ñ $\x3B2 $\x1F42C $\x6D3 $\x2A77F)
-		do: [:each | self deny: each isEnglishLetter]!
+	| letters |
+	letters := ($A to: $Z) , ($a to: $z).
+	letters do: [:each | self assert: each isEnglishLetter].
+	(letters difference: Character byteCharacterSet) do: [:each | self deny: each isEnglishLetter].
+	#($\x3B2 $\x1F42C $\x6D3 $\x2A77F) do: [:each | self deny: each isEnglishLetter]!
 
 testIsGraph
 	"Graph characters are non-blank printable characters."
@@ -433,7 +436,8 @@ testIsGraph
 
 testIsHexDigit
 	| dolphin |
-	#($0 $1 $2 $3 $4 $5 $6 $7 $8 $9 $A $B $C $D $E $F) do: [:each | self assert: each isHexDigit].
+	'0123456789ABCDEF' do: [:each | self assert: each isHexDigit].
+	"Must be uppercase"
 	self deny: $a isHexDigit.
 	self deny: $G isHexDigit.
 	self deny: Character null isHexDigit.
@@ -445,9 +449,25 @@ testIsHexDigit
 	dolphin := dolphin asUtf16String.
 	1 to: 2 do: [:each | self deny: (dolphin at: each) isHexDigit]!
 
+testIsIdentifierFirst
+	| valid |
+	valid := ($a to: $z) , ($A to: $Z) , #($_).
+	valid do: [:each | self assert: each isIdentifierFirst].
+	(Character byteCharacterSet difference: valid) do: [:each | self deny: each isIdentifierFirst].
+	self deny: $Ā isIdentifierFirst.
+	self deny: Character dolphin isIdentifierFirst!
+
+testIsIdentifierSecondary
+	| valid |
+	valid := ($a to: $z) , ($A to: $Z) , #($_), ($0 to: $9).
+	valid do: [:each | self assert: each isIdentifierSecondary].
+	(Character byteCharacterSet difference: valid) do: [:each | self deny: each isIdentifierSecondary].
+	self deny: $Ā isIdentifierSecondary.
+	self deny: Character dolphin isIdentifierSecondary!
+
 testIsLetter
-	self assert: ((0 to: 255) select: [:each | (Character codePoint: each) isEnglishLetter])
-		equals: ($A asciiValue to: $Z asciiValue) , ($a asciiValue to: $z asciiValue).
+	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzƒˆŠŒŽšœžŸªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ' do: [:each |
+		self assert: each isLetter].
 	#($_ $\x20 $\t $\r $0) do: [:each | self deny: each isLetter].
 	#($ñ $β $ۓ $𪝿 $ꟹ) do: [:each | self assert: each isLetter].
 	"Some Arabic letters"
@@ -575,6 +595,17 @@ testIsPunctuation
 	self assert: $࠰ isPunctuation.
 	"Emoji"
 	self deny: $🐬 isPunctuation!
+
+testIsSeparator
+	| asciiSeparators |
+	asciiSeparators := #($\x20 $\t $\n $\v $\f $\r).
+	asciiSeparators do: [:each | self assert: each isSeparator].
+	(Character byteCharacterSet difference: asciiSeparators) do: [:each | self deny: each isSeparator].
+	self deny: $\x100 isSeparator.
+	self deny: $\xA0 isSeparator.
+	self deny: $\x0 isSeparator.
+	self deny: $\x2007 isSeparator.
+	self deny: Character dolphin isSeparator!
 
 testIsUppercase
 	($A to: $Z) do: [:each | self assert: each isUppercase].
@@ -756,6 +787,15 @@ testIsUtf8SurrogateTests
 			self deny: ch isUtf8Trail.
 			self assert: ch utf8Length equals: 1]!
 
+testIsVowel
+	"Ascii only"
+
+	| vowels |
+	vowels := 'aAeEiIoOuU'.
+	vowels do: [:each | self assert: each isVowel].
+	(vowels difference: Character byteCharacterSet) do: [:each | self deny: each isVowel].
+	#($\x3B1 $\x1F42C $\x6D3 $\x2A77F) do: [:each | self deny: each isVowel]!
+
 testIsWhitespace
 	"Graph characters are non-blank printable characters."
 
@@ -935,13 +975,17 @@ testIsDigit!public!unit tests! !
 testIsEnglishLetter!public!unit tests! !
 testIsGraph!public!unit tests! !
 testIsHexDigit!public!unit tests! !
+testIsIdentifierFirst!public!unit tests! !
+testIsIdentifierSecondary!public!unit tests! !
 testIsLetter!public!unit tests! !
 testIsLowercase!public!unit tests! !
 testIsPrintable!public!unit tests! !
 testIsPunctuation!public!unit tests! !
+testIsSeparator!public!unit tests! !
 testIsUppercase!public!unit tests! !
 testIsUtf16SurrogateTests!public!unit tests! !
 testIsUtf8SurrogateTests!public!unit tests! !
+testIsVowel!public!unit tests! !
 testIsWhitespace!public!unit tests! !
 testJoin!public!unit tests! !
 testLiterals!public!unit tests! !

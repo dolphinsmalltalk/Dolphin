@@ -7,8 +7,16 @@ Core.Magnitude
 	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
+			'AsciiClassifications'
+				-> #[0 0 0 0 0 0 0 0 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 18 18 18 18 18 18 18 18 18 18 0 0 0 0 0 0 0 57 25 25 25 57 25 9 9 41 9 9 9 9 9 41 9 9 9 9 9 41 9 9 9 9 9 0 0 0 0 8 0 41 9 9 9 41 9 9 9 41 9 9 9 9 9 41 9 9 9 9 9 41 9 9 9 9 9 0 0 0 0 0].
+			'AsciiDigitMask' -> 16r2.
+			'AsciiLetterMask' -> 16r1.
+			'AsciiSeparatorMask' -> 16r4.
+			'AsciiVowelMask' -> 16r20.
 			'EncodingMask' -> 16r3F000000.
 			'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
+			'HexDigitMask' -> 16r10.
+			'IdentifierFirstMask' -> 16r8.
 			'Replacement' -> $\xFFFD.
 			'Utf16Mask' -> 16r2000000.
 			'Utf32Mask' -> 16r3000000.
@@ -305,12 +313,12 @@ isControl
 isDigit
 	"Answer whether the receiver is one of the ASCII representations of a decimal-digit character (i.e. it is one of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9). This is as defined in ANSI NCITS 319-1998. Unlike #isLetter, the implementation cannot define additional characters for which #isDigit is true, so this does not correspond to the Unicode Decimal Number general category, and will not include any decimal digits except the ASCII decimals."
 
-	^code <= ##($9 code) and: [code >= ##($0 code)]!
+	^(AsciiClassifications lookup: code) ?? 0 allMask: AsciiDigitMask!
 
 isEnglishLetter
 	"Answer whether the receiver is a letter from the English alphabet, i.e. [a-zA-Z]."
 
-	^code <= ##($z code) and: [code >= ##($a code) or: [code >= ##($A code) and: [code <= ##($Z code)]]]!
+	^(AsciiClassifications lookup: code) ?? 0 allMask: AsciiLetterMask!
 
 isGraph
 	"Answer whether the receiver is a printable character, other than blanks. See also #isPrintable"
@@ -321,7 +329,13 @@ isGraph
 isHexDigit
 	"Answer whether the receiver is a valid Smalltalk hexadecimal digit (i.e. digits and the uppercase characters A through F)."
 
-	^code >= $A codePoint ifTrue: [code <= $F codePoint] ifFalse: [self isDigit]!
+	^(AsciiClassifications lookup: code) ?? 0 allMask: HexDigitMask!
+
+isIdentifierFirst
+	^(AsciiClassifications lookup: code) ?? 0 allMask: IdentifierFirstMask!
+
+isIdentifierSecondary
+	^(AsciiClassifications lookup: code) ?? 0 anyMask: ##(IdentifierFirstMask | AsciiDigitMask)!
 
 isLetter
 	"Answer whether the receiver is an alphabetic character."
@@ -381,7 +395,7 @@ isPunctuation
 isSeparator
 	"Answer whether the receiver is an ASCII separator character (i.e. whitespace)."
 
-	^code == 32 or: [code <= 13 and: [code >= 9]]!
+	^(AsciiClassifications lookup: code) ?? 0 allMask: AsciiSeparatorMask!
 
 isSurrogate
 	"Answer whether the receiver is a leading or trailing code unit of a multi-code unit code-point in it's encoding."
@@ -447,7 +461,7 @@ isUtf8Trail
 isVowel
 	"Answer whether the receiver is an English vowel (a, e, i, o, or u), upper or lowercase."
 
-	^'aAeEiIoOuU' identityIncludes: self!
+	^(AsciiClassifications lookup: code) ?? 0 allMask: AsciiVowelMask!
 
 isWhitespace
 	"Answer whether the receiver represents a Unicode codepoint classified in one of the Separator (Z) general categories. See also #isSeparator, which for reasons of backwards compatibility only acknowledges the ASCII whitespace characters."
@@ -630,6 +644,8 @@ isDigit!public!testing! !
 isEnglishLetter!public!testing! !
 isGraph!public!testing! !
 isHexDigit!public!testing! !
+isIdentifierFirst!private!testing! !
+isIdentifierSecondary!private!testing! !
 isLetter!public!testing! !
 isLinefeed!public!testing! !
 isLiteral!public!testing! !
@@ -769,6 +785,7 @@ euro
 	^$\x20AC!
 
 initialize
+	| asciiClassifications |
 	self addClassConstant: 'CharacterSet' value: (AnsiString fromByteArray: (0 to: 255) asByteArray).
 	self addClassConstant: 'EscapeChars'
 		value: ((Array new: 14)
@@ -784,7 +801,19 @@ initialize
 	self addClassConstant: 'Utf8Mask' value: String.EncodingUtf8 << 24.
 	self addClassConstant: 'Utf16Mask' value: String.EncodingUtf16 << 24.
 	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf32 << 24.
-	self addClassConstant: 'EncodingMask' value: 2r111111 << 24!
+	self addClassConstant: 'EncodingMask' value: 2r111111 << 24.
+	asciiClassifications := ByteArray new: 127 withAll: 0.
+	asciiClassifications atAll: ($A code to: $F code)
+		put: AsciiLetterMask | IdentifierFirstMask | HexDigitMask.
+	asciiClassifications atAll: ($a code to: $z code) , ($G code to: $Z code)
+		put: AsciiLetterMask | IdentifierFirstMask.
+	asciiClassifications at: $_ code put: IdentifierFirstMask.
+	asciiClassifications atAll: ($0 code to: $9 code) put: AsciiDigitMask | HexDigitMask.
+	asciiClassifications at: 32 put: AsciiSeparatorMask.
+	asciiClassifications atAll: (9 to: 13) put: AsciiSeparatorMask.
+	'aAeEiIoOuU'
+		do: [:each | asciiClassifications at: each code put: (asciiClassifications at: each code) | AsciiVowelMask].
+	self addClassConstant: 'AsciiClassifications' value: asciiClassifications!
 
 isNonCharCodePoint: anInteger
 	"Answer whether the <integer> argument represents a non-character Unicode code point"
