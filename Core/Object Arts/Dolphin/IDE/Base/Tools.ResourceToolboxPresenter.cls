@@ -224,7 +224,7 @@ resourceCategoryPrefix
 	^'MVP-Resources-'!
 
 resourceClasses
-	^(self resourceIdentifiers collect: [:each | each owningClass]) asSet asSortedCollection !
+	^(self resourceIdentifiers collect: [:each | each owningClass]) asSet !
 
 resourceClassesWithCategories: anArrayOfCategories 
 	^self resourceClasses 
