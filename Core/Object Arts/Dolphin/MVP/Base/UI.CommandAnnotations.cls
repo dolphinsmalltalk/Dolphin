@@ -62,7 +62,7 @@ findAcceleratorKeys
 					map at: each selector put: keyStrings grabContents]
 				ifFalse: 
 					["If we've inherited any accelerator keys for a command but none are defined in the target class method, we remove the inherited key(s)"
-					map at: each selector put: #()]].
+					map removeKey: each selector ifAbsent: []]].
 	^map!
 
 findCommandQueries
