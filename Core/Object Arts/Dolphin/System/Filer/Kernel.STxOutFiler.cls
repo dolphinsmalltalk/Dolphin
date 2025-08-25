@@ -28,6 +28,9 @@ Note that whilst the writing of the historic formats is supported, the format of
 beStable
 	flags := flags bitOr: StableMask!
 
+beUnstable
+	flags := flags bitAnd: ##(StableMask bitInvert)!
+
 contents
 	"Answer the contents of the serialized object stream."
 
@@ -345,6 +348,7 @@ writeSignatureAndVersion
 
 !Kernel.STxOutFiler categoriesForMethods!
 beStable!accessing!public! !
+beUnstable!accessing!public! !
 contents!accessing!public! !
 inFilerClass!constants!private! !
 isStable!public!testing! !
