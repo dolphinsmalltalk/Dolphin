@@ -219,8 +219,7 @@ stonOn:!public!ston! !
 !UI.FramingCalculation class methodsFor!
 
 fromSton: stonReader
-	#todo. "Perform is a security risk - provide a lookup table."
-	^self perform: stonReader parseListSingleton! !
+	^self named: stonReader parseListSingleton! !
 
 !UI.FramingCalculation class categoriesForMethods!
 fromSton:!public!ston! !

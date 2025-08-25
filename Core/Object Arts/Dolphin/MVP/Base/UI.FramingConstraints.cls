@@ -10,67 +10,69 @@ Core.Object
 
 UI.FramingConstraints guid: (Core.GUID fromString: '{87b4c48b-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-UI.FramingConstraints comment: 'FramingConstraints are used to describe the constraints to be placed on the various edges of a <view> that is to be laid out under the jurisdiction of a <FramingLayout> manager. When a view is under the control of a FramingLayout it is given an arrangement aspect that consists of a FramingConstraints instance. It is this that describes the relationships for computing the locations of the various edges of the view and the offsets to be applied from these locations. 
+UI.FramingConstraints comment: '`FramingConstraint`s are used to describe the constraints to be placed on the various edges of a `<view>` that is to be laid out under the jurisdiction of a `FramingLayout` manager. When a view is under the control of a `FramingLayout` it is given an arrangement aspect that consists of a `FramingConstraint`s instance. It is this that describes the relationships for computing the locations of the various edges of the view and the offsets to be applied from these locations. 
 
-For each of the edges of the view, a FramingConstraints holds a framing relationship and an offset for the edge position relative to the computed location of this. The framing parameters can be set for each edge using the following pairs of aspects.
+For each of the edges of the view, a `FramingConstraint`s holds a framing relationship and an offset for the edge position relative to the computed location of this. The framing parameters can be set for each edge using the following pairs of aspects.
 
-#bottomFraming,	#bottomOffset 
-#leftFraming,	#leftOffset
-#rightFraming,	#rightOffset
-#topFraming,	#topOffset
+`#bottomFraming`,	`#bottomOffset`
+`#leftFraming`,		`#leftOffset`
+`#rightFraming`,	`#rightOffset`
+`#topFraming`,	`#topOffset`
 
-The #xxxFraming aspects may be set to any of the following symbols:
+The `#xxxFraming` aspects may be set to any of the following symbols:
 
-#fixedParentBottom 
-#fixedParentLeft 
-#fixedParentRight 
-#fixedParentTop 
+`#fixedParentBottom`
+`#fixedParentLeft`
+`#fixedParentRight`
+`#fixedParentTop`
 
-Using the above relationships, the appropriate view edge will be positioned a fixed number of pixels from the specified edge of its parent. The distance is determined by the corresponding offset aspect, which must be an <integer> value.
+Using the above relationships, the appropriate view edge will be positioned a fixed number of pixels from the specified edge of its parent. The distance is determined by the corresponding offset aspect, which must be an `<integer>` value.
 
-#fixedViewBottom 
-#fixedViewLeft 
-#fixedViewRight 
-#fixedViewTop 
+`#fixedViewBottom`
+`#fixedViewLeft`
+`#fixedViewRight`
+`#fixedViewTop`
 
-Here, the view edge will be positioned a fixed number of pixels from the specified edge of itself. The distance is determined by the corresponding offset aspect, which must be an <integer> value.
+Here, the view edge will be positioned a fixed number of pixels from the specified edge of itself. The distance is determined by the corresponding offset aspect, which must be an `<integer>` value.
 
-#fixedPreviousBottom 
-#fixedPreviousLeft 
-#fixedPreviousRight 
-#fixedPreviousTop 
+`fixedPreviousBottom`
+`fixedPreviousLeft`
+`fixedPreviousRight`
+`fixedPreviousTop`
 
-Here, the view edge will be positioned a fixed number of pixels from the specified edge of the previous view in the z-order sequence. Once again, the distance is determined by the corresponding offset aspect, an <integer> value.
+Here, the view edge will be positioned a fixed number of pixels from the specified edge of the previous view in the z-order sequence. Once again, the distance is determined by the corresponding offset aspect, an `<integer>` value.
 
-#relativeParentHeight
-#relativeParentWidth
+`relativeParentHeight`
+`relativeParentWidth`
 
-With these relationships, the edge is positioned within the view''s parent at a distance computed relative to the parent''s height or width. In these cases the offset must be set to a <number> in the range 0..1.
+With these relationships, the edge is positioned within the view''s parent at a distance computed relative to the parent''s height or width. In these cases the offset must be set to a `<number>` in the range 0..1.
 
-#centerRelativeParentHeight
-#centerRelativeParentWidth
+`centerRelativeParentHeight`
+`centerRelativeParentWidth`
 
 With these relationships, the centre of each view is positioned within the view''s parent at a distance computed relative to the parent''s height or width. Thanks to Ian Bartholomew for supplying the code for these particular constraints. He says: "This works best if all the subviews are the same size. It does still work if this isn''t true but the gaps between subviews are not then identical, although the position of the centre of the button still corresponds to the buttons offset." Also, "The #offset fields need to be structured in a fixed way. If you have three buttons then the offsets, left to right, need to be specified as 1/4, 2/4 (or 1/2) and 3/4 (Floats will not work)."
 
-Note that in all cases a positive offset implies a position down or to the right of the computed location. Negative offsets can be used if the postion is required to be up or to the left.
+Note that in all cases a positive offset implies a position below or to the right of the computed location. Negative offsets can be used if the postion is required to be above or to the left.
 
-For example: Position a view so that it''s left edge is 5 pixels in from the left of it''s parent; it''s width is 200 pixels; it''s bottom is at 50% of the parent height and it''s top is 10 pixels below the bottom of the previous view. Use the following FramingConstraints:
+For example, position a view so that it''s left edge is 5 pixels in from the left of it''s parent; it''s width is 200 pixels; it''s bottom is at 50% of the parent height and it''s top is 10 pixels below the bottom of the previous view, as follows:
 
+```
 FramingConstraints new
 	leftFraming: #fixedParentLeft; leftOffset: 5;
 	rightFraming: #fixedViewLeft; rightOffset: 200;
 	bottomFraming: #relativeParentHeight; bottomOffset: 0.5;
 	topFraming: #fixedPreviousBottom; topOffset: 10.
+```
 
-Instance Variables:
-	leftFraming		<FramingCalculation> describing the relationship for the left edge of the view.
-	leftOffset		<number> offset of the left edge from the described location.
-	rightFraming		<FramingCalculation> describing the relationship for the right edge of the view
-	rightOffset		<number> offset of the right edge from the described location
-	topFraming		<FramingCalculation> describing the relationship for the top edge of the view
-	topOffset		<number> offset of the top edge from the described location
-	bottomFraming	<FramingCalculation> describing the relationship for the bottom edge of the view
-	bottomOffset	<number> offset of the bottom edge from the described location
+## Instance Variables:
+  `leftFraming`		`FramingCalculation` describing the relationship for the left edge of the view.
+  `leftOffset`		`<number>` offset of the left edge from the described location.
+  `rightFraming`	`FramingCalculation` describing the relationship for the right edge of the view
+  `rightOffset`		`<number>` offset of the right edge from the described location
+  `topFraming`		`FramingCalculation` describing the relationship for the top edge of the view
+  `topOffset`		`<number>` offset of the top edge from the described location
+  `bottomFraming`	`FramingCalculation` describing the relationship for the bottom edge of the view
+  `bottomOffset`	`<number>` offset of the bottom edge from the described location
 
 
 '!
@@ -355,7 +357,7 @@ stbConvertFromVersion1: anArray
 	"Version 2 uses objects for framing calc's rather than holding symbolic names and looking up methods indirectly."
 
 	^anArray
-		collect: [:each | (each isKindOf: Symbol) ifTrue: [FramingCalculation perform: each] ifFalse: [each]]!
+		collect: [:each | (each isKindOf: Symbol) ifTrue: [FramingCalculation named: each] ifFalse: [each]]!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
