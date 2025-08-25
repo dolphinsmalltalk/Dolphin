@@ -430,6 +430,11 @@ inheritsFrom: aBehavior
 	current isNil] whileFalse: [current := current superclass].
 	^false!
 
+instanceClass
+	"Answer the receiver's singleton instance (the actual class object)."
+
+	^self!
+
 instanceCount
 	"Answer the number of instances of the receiver that currently exist.
 	This is a rather expensive method, but it is an original Smalltalk-80 method
@@ -598,7 +603,7 @@ methodDictionary: aMethodDictionary
 methodRemoved: aCompiledMethod 
 	"React to the removal of the specified method from this class. This is before the system update event with selector #methodRemoved: is triggered."
 
-	aCompiledMethod isAnnotated ifTrue: [self annotatedMethodRemoved: aCompiledMethod]
+	aCompiledMethod isAnnotated ifTrue: [self instanceClass annotatedMethodRemoved: aCompiledMethod]
 	"Do nothing at this level - this is an override point for classes"!
 
 methodsDo: aMonadicValuable
@@ -1053,6 +1058,7 @@ includesSelector:!methods-testing!public! !
 indexOfInstVar:!instance variables!public! !
 indexOfInstVar:ifAbsent:!instance variables!public! !
 inheritsFrom:!class hierarchy-testing!public! !
+instanceClass!accessing!public! !
 instanceCount!accessing!public! !
 instanceSpec!instance specification-accessing!private! !
 instanceSpec:!instance specification-accessing!private! !

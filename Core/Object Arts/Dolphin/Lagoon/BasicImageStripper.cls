@@ -63,8 +63,12 @@ _basicDeleteClass: aClass
 	self _detachClass: aClass!
 
 _basicDeleteMethod: aCompiledMethod
+	| behavior |
 	self _logMethod: aCompiledMethod.
-	aCompiledMethod methodClass methodDictionary removeKey: aCompiledMethod selector ifAbsent: nil	"Could be in a weakly held development class which has evaporated"!
+	behavior := aCompiledMethod methodClass.
+	"Could be in a weakly held development class which has evaporated"
+	(behavior methodDictionary removeKey: aCompiledMethod selector ifAbsent: nil)
+		ifNotNil: [behavior methodRemoved: aCompiledMethod]!
 
 _collectGarbage: iterations
 	"Private - Perform a few GC's to clear away old stuff.

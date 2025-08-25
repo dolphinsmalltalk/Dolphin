@@ -678,7 +678,6 @@ package setMethodNames: #(
 	#(#{UI.DateToText class} #publishedAspectsOfInstances)
 	#(#{UI.FlowLayout class} #publishedAspectsOfInstances)
 	#(#{UI.FontView class} #publishedAspectsOfInstances)
-	#(#{UI.FramingCalculation class} #allCalculations)
 	#(#{UI.FramingConstraints class} #calculationNames:except:)
 	#(#{UI.FramingConstraints class} #publishedAspectsOfInstances)
 	#(#{UI.FramingLayout} #arrangementAspect)
@@ -8285,25 +8284,6 @@ publishedAspectsOfInstances
 
 !UI.FontView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
-!
-
-!UI.FramingCalculation class methodsFor!
-
-allCalculations
-	"This is a design-time method for accessing the complete set of available framing
-	calculations so that the user may choose between them. A refelective means of determing the
-	set of calculations is used in order to allow the set of available calculations to be lazily
-	created at runtime (i.e. after image stripping) , and also to allow for user-extensibility
-	without the need to modify a system (class #initialize) method. To add new framing
-	calculations follow the pattern of the existing calcs and ensure that the lazy accessor
-	method is placed in the 'instance creation' category in order for the calculation to be
-	offered as a choice in the view composer."
-
-	^(('instance creation' asMethodCategory methodsInBehavior: self class)
-		select: [:each | each argumentCount = 0]) collect: [:each | each value: self withArguments: #()]! !
-
-!UI.FramingCalculation class categoriesForMethods!
-allCalculations!accessing!public! !
 !
 
 !UI.FramingConstraints class methodsFor!

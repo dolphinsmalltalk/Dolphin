@@ -568,11 +568,6 @@ includeSelector: aSelector inCategory: categoryObject
 		ifFalse: [catalogue at: category put: (selectors copyWith: aSelector)].
 	self methodsCatalogue: catalogue!
 
-instanceClass
-	"Answer the receiver's singleton instance (the actual class object)."
-
-	^self subclassResponsibility!
-
 instanceVariableNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable names."
 
@@ -1120,7 +1115,6 @@ hierarchyBindingFor:!bindings!public! !
 imports!pool variables!public! !
 includesCategory:!categories-testing!public! !
 includeSelector:inCategory:!categories-testing!public! !
-instanceClass!accessing!public! !
 instanceVariableNames!instance variables!public! !
 instanceVariableString!accessing!public! !
 instanceVariableString:!accessing!private! !
