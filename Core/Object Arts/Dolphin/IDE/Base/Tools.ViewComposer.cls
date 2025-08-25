@@ -735,8 +735,14 @@ forceLayoutFor: aContainerView
 	self validateLayout!
 
 getUndoState
-	^self
-		inDesignDpiContextDo: [{self composingView. selections. self aspectAccessor} literalStoreArray]!
+	^self inDesignDpiContextDo: 
+			[| stream |
+			stream := Array writeStream: 256.
+			"We don't need the undo state to have a stable ordering, so turn that off since it can be expensive"
+			{ self composingView. selections. self aspectAccessor } binaryStoreUsing: ((STLOutFiler on: stream)
+						beUnstable;
+						yourself).
+			stream contents]!
 
 grabbers
 	"Private - Answers the collection of grabbers currently in operation"
