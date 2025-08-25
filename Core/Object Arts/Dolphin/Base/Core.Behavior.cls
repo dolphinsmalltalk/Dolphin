@@ -433,7 +433,7 @@ inheritsFrom: aBehavior
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
 
-	^self subclassResponsibility!
+	^self!
 
 instanceCount
 	"Answer the number of instances of the receiver that currently exist.
