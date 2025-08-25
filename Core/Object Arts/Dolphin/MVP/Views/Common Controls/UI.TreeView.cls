@@ -2,7 +2,7 @@
 
 UI.IconicListAbstract
 	subclass: #'UI.TreeView'
-	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle updateMode _unused29 _unused30 _unused31 _unused32 _unused33 _unused34'
+	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle updateMode noRedrawCount _unused30 _unused31 _unused32 _unused33 _unused34'
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
@@ -318,6 +318,9 @@ getItemText: itemHandle
 		wParam: 0
 		lpParam: tvItem.
 	^tvItem pszText!
+
+getNoRedrawCount
+	^noRedrawCount!
 
 getSelectionsByIndex
 	"Private - Query the control for the current selection"
@@ -889,6 +892,7 @@ onViewCreated
 	held in instance variables"
 
 	super onViewCreated.
+	noRedrawCount := 0.
 	self newMaps.
 	"Some vagary of the TreeView causes the font to be incorrectly restored during ControlView>>onCreated. We force it again here"
 	self applyFont.
@@ -1008,6 +1012,9 @@ setControlBackcolor: aColor
 		sendMessage: TVM_SETBKCOLOR
 		wParam: 0
 		lParam: aColor asCOLORREF!
+
+setNoRedrawCount: anInteger
+	noRedrawCount := anInteger max: 0!
 
 setSingleSelection: itemHandle 
 	^(self 
@@ -1255,6 +1262,7 @@ forecolor:!accessing!public! !
 getEditControl!accessing!private! !
 getItemState:!helpers!private! !
 getItemText:!accessing!private! !
+getNoRedrawCount!accessing!private! !
 getSelectionsByIndex!private!selection! !
 getSingleSelection!private!selection! !
 handleFromObject:!accessing!private! !
@@ -1333,6 +1341,7 @@ selectionFromPoint:!event handling!private! !
 selectionIfNone:!public!selection! !
 selectionState!binary filing!private!selection! !
 setControlBackcolor:!accessing!private! !
+setNoRedrawCount:!accessing!private! !
 setSingleSelection:!public!selection! !
 setViewMode:!accessing!private! !
 showDropHighlight:!drag & drop!private! !

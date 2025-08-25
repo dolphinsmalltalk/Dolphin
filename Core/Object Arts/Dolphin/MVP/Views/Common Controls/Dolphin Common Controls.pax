@@ -1019,7 +1019,7 @@ UI.IconicListAbstract
 
 UI.IconicListAbstract
 	subclass: #'UI.TreeView'
-	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle updateMode _unused29 _unused30 _unused31 _unused32 _unused33 _unused34'
+	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle updateMode noRedrawCount _unused30 _unused31 _unused32 _unused33 _unused34'
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
