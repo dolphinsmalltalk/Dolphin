@@ -4784,8 +4784,16 @@ Core.Magnitude
 	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
+			'AsciiClassifications'
+				-> #[0 0 0 0 0 0 0 0 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 18 18 18 18 18 18 18 18 18 18 0 0 0 0 0 0 0 57 25 25 25 57 25 9 9 41 9 9 9 9 9 41 9 9 9 9 9 41 9 9 9 9 9 0 0 0 0 8 0 41 9 9 9 41 9 9 9 41 9 9 9 9 9 41 9 9 9 9 9 41 9 9 9 9 9 0 0 0 0 0].
+			'AsciiDigitMask' -> 16r2.
+			'AsciiLetterMask' -> 16r1.
+			'AsciiSeparatorMask' -> 16r4.
+			'AsciiVowelMask' -> 16r20.
 			'EncodingMask' -> 16r3F000000.
 			'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
+			'HexDigitMask' -> 16r10.
+			'IdentifierFirstMask' -> 16r8.
 			'Replacement' -> $\xFFFD.
 			'Utf16Mask' -> 16r2000000.
 			'Utf32Mask' -> 16r3000000.

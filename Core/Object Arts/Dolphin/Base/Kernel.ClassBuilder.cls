@@ -1483,12 +1483,12 @@ isValidClassName: aString
 isValidIdentifier: aString
 	"Would be nice to use the Scanner here, but for boot order dependency reasons we cannot rely on the parser package being available to the ClassBuilder."
 
-	| count ch |
+	| count |
 	aString isString ifFalse: [^false].
 	count := aString size.
-	(count > 0 and: [(ch := aString at: 1) == $_ or: [ch isEnglishLetter]]) ifFalse: [^false].
-	2 to: count
-		do: [:i | ((ch := aString at: i) == $_ or: [ch isEnglishLetter or: [ch isDigit]]) ifFalse: [^false]].
+	count > 0 ifFalse: [^false].
+	(aString at: 1) isIdentifierFirst ifFalse: [^false].
+	2 to: count do: [:i | (aString at: i) isIdentifierSecondary ifFalse: [^false]].
 	^(##(Set withAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext' '_')) includes: aString) not!
 
 moveClass: aClass toSuperclass: aSuperclass
