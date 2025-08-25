@@ -967,7 +967,8 @@ validateClassInstanceVars
 				againstSuperclass: (self classOf: superclass).
 	currentClass class allSubclassesDo: 
 			[:each |
-			each instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
+			each instanceVariableNames
+				do: [:name | (instVarSet includes: name) ifTrue: [self error: ErrorInstVarAlreadyDefined << name]]]!
 
 validateClassName
 	"Private - Ensure that the proposed class name is valid."
@@ -1014,10 +1015,8 @@ validateClassVarsForModify
 			fullName := each fullName.
 			each classBindingNames do: 
 					[:name |
-					self
-						validateClass: fullName
-						varName: name
-						inherited: classVarSet]]!
+					(classVarSet includes: name)
+						ifTrue: [self error: ErrorClassVarAlreadyDefined << { fullName. name }]]]!
 
 validateForCreate
 	"Private - Ensure that the proposed class creation would result in a valid new class."
@@ -1141,7 +1140,8 @@ validateInstanceVars: instVarsArray againstSuperclass: aClass
 	instVarSet := aClass ifNil: [Set new] ifNotNil: [aClass allInstanceVariableNames asSet].
 	instVarsArray do: 
 			[:instVar |
-			self validateInstVarName: instVar using: instVarSet.
+			(self class isValidIdentifier: instVar) ifFalse: [self error: ErrorInvalidInstVarName << instVar].
+			(instVarSet includes: instVar) ifTrue: [self error: ErrorInstVarAlreadyDefined << instVar].
 			instVarSet add: instVar].
 	^instVarSet!
 
@@ -1174,13 +1174,8 @@ validateInstanceVarsForModify
 				ifTrue: [self error: ErrorFixedInitialLayout << currentClass]].
 	currentClass allSubclassesDo: 
 			[:each |
-			each instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
-
-validateInstVarName: aString using: aCollection
-	"Private - Ensure that the proposed instance variable name is not a reserved word and does not duplicate a name defined in aCollecton."
-
-	(self class isValidIdentifier: aString) ifFalse: [self error: ErrorInvalidInstVarName << aString].
-	(aCollection includes: aString) ifTrue: [self error: ErrorInstVarAlreadyDefined << aString]!
+			each instanceVariableNames
+				do: [:name | (instVarSet includes: name) ifTrue: [self error: ErrorInstVarAlreadyDefined << name]]]!
 
 validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass
 	"Private - Answer a validated instance spec. Signal an exception if spec is
@@ -1395,7 +1390,6 @@ validateInstanceSpecForModify!private!validation! !
 validateInstanceVars:againstSuperclass:!private!validation! !
 validateInstanceVarsForCreate!private!validation! !
 validateInstanceVarsForModify!private!validation! !
-validateInstVarName:using:!private!validation! !
 validateSpecAsFixedPointers:size:superclass:!private!validation! !
 validateSpecAsVariableBytes:size:superclass:!private!validation! !
 validateSpecAsVariablePointers:size:superclass:!private!validation! !
