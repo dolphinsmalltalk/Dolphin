@@ -162,30 +162,36 @@ autoResizeColumns
 autoResizeColumns: anInteger
 	"Private - Attempt to share the specified <integer> width (which must be the client width of the view, after subtracting for borders and such) between all automagically resizeable columns in the receiver. This only has a visible effect in #report mode."
 
-	| width autoCols count |
+	| width autoColumnIndices n |
 	width := anInteger.
-	count := columns size.
-	autoCols := OrderedCollection new: count.
-	1 to: count
+	n := columns size.
+	autoColumnIndices := OrderedCollection new: n.
+	1 to: n
 		do: 
 			[:i |
 			(columns at: i) isAutoResize
-				ifTrue: [autoCols addLast: i]
+				ifTrue: [autoColumnIndices addLast: i]
 				ifFalse: [width := width - (self lvmGetColumnWidth: i - 1)]].
-	count := autoCols size.
-	(count == 0 or: [width <= 0]) ifTrue: [^self].
+	n := autoColumnIndices size.
+	(n == 0 or: [width <= 0]) ifTrue: [^self].
+	"Optimize for common case of only one auto-sizing column"
+	n == 1 ifTrue: [
+		n := autoColumnIndices single.
+		(columns at: n) basicWidth: width.
+		self lvmSetColumnWidth: n - 1 to: width.
+		^self].
 	"Split the available width between the auto columns - note the use of fractional arithmetic to avoid accumulating a rounding error"
-	width := width / count.
+	width := width / n.
 	"Suppress painting while changing the columns widths as, if there are multiple auto-resize columns, there is no point repainting the intermediate states"
 	self noRedrawDo: 
 			[| accum |
 			accum := 0.
-			1 to: count
+			1 to: n
 				do: 
 					[:i |
 					| thisWidth j |
 					thisWidth := (width * i - accum) rounded.
-					j := autoCols at: i.
+					j := autoColumnIndices at: i.
 					(columns at: j) basicWidth: thisWidth.
 					self lvmSetColumnWidth: j - 1 to: thisWidth.
 					accum := accum + thisWidth]]!

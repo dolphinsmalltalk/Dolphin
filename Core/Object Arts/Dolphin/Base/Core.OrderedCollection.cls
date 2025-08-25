@@ -503,6 +503,13 @@ setSize: anInteger
 	"Making room may have shifted elements down so must recalc."
 	lastIndex := firstIndex + anInteger - 1.!
 
+single
+	"Answer the <Object> which is the only element of the receiver. 
+	Raise an exception if the receiver does not contain exactly one element."
+
+	firstIndex = lastIndex ifFalse: [^self errorNotSingleton].
+	^self basicAt: firstIndex!
+
 size
 	"Answer the number of elements in the receiver."
 
@@ -580,6 +587,7 @@ reversedFrom:to:!copying!public! !
 reverseDo:!enumerating!public! !
 select:!enumerating!public! !
 setSize:!accessing!public! !
+single!accessing!public! !
 size!accessing!public! !
 sort!public!sorting! !
 sort:!public!sorting! !
