@@ -759,25 +759,6 @@ recompileReferencesToLiteral: aVariableBinding
 					[Notification signal: 'Recompiling ' , each printString.
 					each recompile]]!
 
-referenceFilterFor: anObject
-	"Private - Answer a <monadicValuable> that when evaluated for a <CompiledMethod> answers
-	true if the method references anObject, or false if not."
-
-	anObject isSymbol
-		ifTrue: 
-			[| index |
-			index := VM indexOfSpecialSelector: anObject ifAbsent: nil.
-			index notNil
-				ifTrue: 
-					[| dispatcher |
-					dispatcher := ByteCodeDispatcher new.
-					^
-					[:eachMethod |
-					(eachMethod refersToLiteral: anObject) or: 
-							[dispatcher method: eachMethod.
-							dispatcher sendsSpecialSelector: index]]]].
-	^[:eachMethod | eachMethod refersToLiteral: anObject]!
-
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection and answer the old superclass.
 	Root classes will have a superclass of nil - we do not put such classes into any subclass collection."
@@ -955,8 +936,8 @@ whichMethodsAssign: aString
 	"Answer a <collection> of <CompiledMethod>s that write to the instance variable
 	named by the <readableString> argument."
 
-	^self whichMethodsAssign: aString
-		at: (self allInstanceVariableNames indexOf: aString)!
+	^self whichMethodsAssign: aString 
+		at: (self indexOfInstVar: aString ifAbsent: 0)!
 
 whichMethodsAssign: aString at: anInteger
 	^self 
@@ -966,7 +947,7 @@ whichMethodsRead: aString
 	"Answer a <collection> of <CompiledMethod>s that read the instance variable
 	named by the <readableString> argument."
 
-	^self whichMethodsRead: aString at: (self allInstanceVariableNames indexOf: aString)!
+	^self whichMethodsRead: aString at: (self indexOfInstVar: aString ifAbsent: 0)!
 
 whichMethodsRead: aString at: anInteger
 	^self 
@@ -995,10 +976,7 @@ whichSelectorsWrite: aString
 	"Answer a <Set> of selectors whose methods write to the instance variable
 	named by the <readableString> argument."
 
-	| index |
-	index := self allInstanceVariableNames indexOf: aString.
-	^(self selectMethods: [:each | each writesInstVar: aString at: index]) 
-		collect: [:each | each selector]!
+	^self whichSelectorsAssign: aString!
 
 withAllSuperclasses
 	"Answer an <sequencedReadableCollection> starting with the receiver, and then all of the receiver''s superclasses in sequence up to a root class."
@@ -1098,7 +1076,6 @@ recompile:!compiling!development!public! !
 recompileMethod:environment:!compiling!development!private! !
 recompileMethod:environment:flags:!compiling!development!private! !
 recompileReferencesToLiteral:!development!private! !
-referenceFilterFor:!development!methods-testing!private! !
 removeFromSuper!operations!private! !
 removeFromSystem!class hierarchy-removing!private! !
 removeSelector:!methods-removing!public! !

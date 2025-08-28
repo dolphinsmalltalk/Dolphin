@@ -882,7 +882,7 @@ recompileReferences
 	the structure length), AND any External.Structure methods that might be using static
 	expressions to get the byte-size."
 
-	| pred binding |
+	| binding |
 	binding := self bindingOrNil.
 	binding isNil
 		ifTrue: 
@@ -890,12 +890,12 @@ recompileReferences
 			^self].
 	Notification signal: ('Recompiling references to <1p> (size <2p>)...' expandMacrosWith: self
 				with: self basicByteSize).
-	pred := self referenceFilterFor: binding.
 	DynamicLinkLibrary
-		allMethodsDo: [:each | (each isExternalCall and: [pred value: each]) ifTrue: [each recompile]].
+		allMethodsDo: [:each | (each isExternalCall and: [each refersToLiteral: binding]) ifTrue: [each recompile]].
 	Structure allMethodsDo: 
 			[:each |
-			((each refersToLiteral: #basicByteSize) and: [pred value: each]) ifTrue: [each recompile]]!
+			((each refersToLiteral: #basicByteSize) and: [each refersToLiteral: binding])
+				ifTrue: [each recompile]]!
 
 register
 	"(Re)Register the receiver's as the Record class for its GUID.

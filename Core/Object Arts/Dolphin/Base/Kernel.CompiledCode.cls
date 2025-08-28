@@ -490,18 +490,22 @@ localScope
 	^methodClass localScope
 !
 
+maySendMessages
+	| idx |
+	^(idx := self extraIndex) == Normal or: [idx > ReturnLiteralStatic0]!
+
 messages
 	"Answer a <collection> of the messages sent by the receiver."
 
-	(self extraIndex between: ReturnSelf and: ReturnLiteralStatic0) ifTrue: [^##(IdentitySet new)].
-	^(MessageSendCollector dispatcher: self byteCodeDispatcher) messages!
+	^self maySendMessages
+		ifTrue: [(MessageSendCollector dispatcher: self byteCodeDispatcher) messages]
+		ifFalse: [^##(IdentitySet new)]!
 
 messagesDo: aBlock
 	"Evaluate the <monadicValuable> argument, aBlock, for each of the messages 
 	actually sent by the receiver, including any special selectors."
 
-	| idx |
-	((idx := self extraIndex) == Normal or: [idx > ReturnLiteralStatic0])
+	self maySendMessages
 		ifTrue: [(MessageSendEnumerator dispatcher: self byteCodeDispatcher) messagesDo: aBlock]!
 
 methodClass
@@ -779,6 +783,7 @@ literalsDo:!enumerating!private! !
 localCount!accessing!method header!private! !
 localEnvironment!accessing!private! !
 localScope!accessing!public! !
+maySendMessages!private!testing! !
 messages!accessing!development!public! !
 messagesDo:!development!enumerating!public! !
 methodClass!accessing!public! !

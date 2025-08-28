@@ -2203,7 +2203,7 @@ whichMethodsOnlySelfSend: aSymbol
 whichMethodsReferTo: anObject
 	"Answer a <Set> of methods in the receiver whose literal frames include the argument, anObject."
 
-	^self selectMethods: (self referenceFilterFor: anObject)!
+	^self selectMethods: [:eachMethod | eachMethod refersToLiteral: anObject]!
 
 whichSelectorsReferTo: anObject
 	"Answer a Set of selectors whose methods access the argument, anObject.
@@ -7374,15 +7374,17 @@ allSelectorsSent
 		(PackageEnvironment onEnvironment: BrowserEnvironment new packageNames: #('ActiveX Automation')) allSelectorsSent
 	"
 
-	| selectors excluded |
-	selectors := (IdentitySet new: 512)
-				addAll: VM specialSelectors;
-				yourself.
+	| excluded collector |
 	excluded := 'examples' asMethodCategory methods.
+	collector := MessageSendCollector new.
+	collector messages: (IdentitySet new: 512).
 	self methodsDo: 
 			[:each |
-			(excluded includes: each) ifFalse: [each messagesDo: [:selector | selectors add: selector]]].
-	^selectors!
+			(each maySendMessages and: [(excluded includes: each) not])
+				ifTrue: 
+					[collector dispatcher: each byteCodeDispatcher.
+					collector interpret]].
+	^collector messages!
 
 browse
 	^self openEditor!

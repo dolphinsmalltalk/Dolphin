@@ -142,7 +142,7 @@ binding!public!testing! !
 numberSelectors
 	"Answer the number of selectors in the receiver's method dictionary."
 
-	^methodDictionary ifNil: [0] ifNotNil: [methodDictionary size]!
+	^methodDictionary size!
 
 selectorsAndMethodsDo: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument for each of the selector/method pairs in 

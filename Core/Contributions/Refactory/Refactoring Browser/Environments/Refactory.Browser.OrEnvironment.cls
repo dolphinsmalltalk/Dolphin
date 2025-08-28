@@ -16,6 +16,9 @@ Refactory.Browser.OrEnvironment comment: ''!
 
 !Refactory.Browser.OrEnvironment methodsFor!
 
+approximateNumberOfClasses
+	^environment approximateNumberOfClasses + oredEnvironment approximateNumberOfClasses!
+
 classesDo: aBlock
 	| enumerated |
 	enumerated := IdentitySet new.
@@ -64,6 +67,7 @@ storeOn: aStream
 	aStream nextPut: $)! !
 
 !Refactory.Browser.OrEnvironment categoriesForMethods!
+approximateNumberOfClasses!accessing!private! !
 classesDo:!accessing!public! !
 definesClass:!public!testing! !
 includesCategory:!public!testing! !

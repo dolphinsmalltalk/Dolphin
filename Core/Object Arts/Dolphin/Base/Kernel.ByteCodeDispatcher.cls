@@ -245,8 +245,7 @@ method
 
 method: aCompiledMethod
 	ip := 1.
-	method := aCompiledMethod.
-	byteCodes := aCompiledMethod byteCodes.
+	byteCodes := (method := aCompiledMethod) byteCodes.
 	instructions := Instructions.
 	^self!
 

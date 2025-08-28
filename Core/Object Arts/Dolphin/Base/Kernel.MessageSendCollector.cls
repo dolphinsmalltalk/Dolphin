@@ -25,9 +25,12 @@ Kernel.MessageSendCollector comment: '`MessageSendCollector` is an `InstructionI
 messages
 	^messages
 		ifNil: 
-			[messages := IdentitySet new: method size.
+			[self messages: (IdentitySet new: method size).
 			self interpret.
 			messages]!
+
+messages: anIdentitySet
+	messages := anIdentitySet!
 
 send: extensionByte
 	messages add: (method basicAt: (extensionByte bitAnd: 31) + 1)!
@@ -66,6 +69,7 @@ supersend: literalIndex args: argumentCount
 
 !Kernel.MessageSendCollector categoriesForMethods!
 messages!accessing!public! !
+messages:!accessing!public! !
 send:!instructions-sending!public! !
 sendSelector:args:!private! !
 shortSendOneArg:!instructions-sending!public! !

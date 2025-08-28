@@ -26,7 +26,8 @@ classesDo: aBlock
 	environment (#1324)."
 
 	| seen |
-	seen := Set new: 20.
+	"Average number of classes included in a package is about 15. Assume we visit both class and metaclass."
+	seen := Set new: 30 * packages size.
 	packages do: 
 			[:eachPackage |
 			eachPackage classNames do: 
@@ -49,14 +50,17 @@ classesDo: aBlock
 					className := each className.
 					(seen includes: className)
 						ifFalse: 
-							[| class |
-							class := className valueOrNil ifNotNil: [:behavior | behavior instanceClass].
-							(class notNil and: [environment includesClass: class])
-								ifTrue: 
-									["Both class and metaclass must be in the environment, regardless of where the loose methods reside."
-									aBlock
-										value: class;
-										value: class class].
+							[className valueOrNil
+								ifNotNil: 
+									[:behavior |
+									| class |
+									class := behavior instanceClass.
+									(environment includesClass: class)
+										ifTrue: 
+											["Both class and metaclass must be in the environment, regardless of where the loose methods reside."
+											aBlock
+												value: class;
+												value: class class]].
 							seen
 								add: className instance;
 								add: className meta]]]!

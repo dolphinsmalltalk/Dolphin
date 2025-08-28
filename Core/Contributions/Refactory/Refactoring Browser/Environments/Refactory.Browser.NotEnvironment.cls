@@ -18,6 +18,9 @@ Note that a NotEnvironment may include classes that are also included in the env
 
 !Refactory.Browser.NotEnvironment methodsFor!
 
+approximateNumberOfClasses
+	^Smalltalk allClasses size - environment approximateNumberOfClasses!
+
 defaultLabel
 	^'!!(' , environment label , ')'!
 
@@ -54,6 +57,7 @@ storeOn: aStream
 	aStream nextPutAll: ' not'! !
 
 !Refactory.Browser.NotEnvironment categoriesForMethods!
+approximateNumberOfClasses!accessing!private! !
 defaultLabel!constants!private! !
 definesClass:!public!testing! !
 includesCategory:!public!testing! !
