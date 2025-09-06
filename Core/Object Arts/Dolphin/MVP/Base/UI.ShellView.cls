@@ -992,15 +992,16 @@ updateCaption
 updateIcons
 	"Private - Update the large and small icons of the receiver"
 
-	| large small |
+	| large small metrics |
 	self isTopView ifFalse: [^self].
-	large := (largeIcon ifNil: [self presenter icon]) withExtent: self metrics largeIconExtent.
+	metrics := self metrics.
+	large := (largeIcon ifNil: [self presenter icon]) withExtent: metrics largeIconExtent.
 	self
 		sendMessage: WM_SETICON
 		wParam: ICON_BIG
 		lParam: large asParameter.
 	"Ensure that the small icon is rendered at the right size"
-	small := smallIcon ?? large withExtent: self metrics smallIconExtent.
+	small := smallIcon ?? large withExtent: metrics smallIconExtent.
 	self
 		sendMessage: WM_SETICON
 		wParam: ICON_SMALL

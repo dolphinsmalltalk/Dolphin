@@ -87,7 +87,8 @@ commandMenuItem: aCommandMenuItem metrics: aSystemMetrics
 				ifNil: [##(MIIM_STRING | MIIM_ID)]
 				ifNotNil: 
 					[:img |
-					self setImage: img metrics: aSystemMetrics.
+					bitmap := img asSharedBitmap: aSystemMetrics menuImageExtent.
+					bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: bitmap handle.
 					##(MIIM_STRING | MIIM_ID | MIIM_BITMAP)].
 	fType := aCommandMenuItem styleFlags.
 	fType == 0
@@ -177,6 +178,20 @@ setImage: anIcon metrics: aSystemMetrics
 			[bitmap := anIcon asSharedBitmap: aSystemMetrics menuImageExtent.
 			self hbmpItem: bitmap handle]!
 
+subMenu: aMenu
+	self basicText: aMenu text.
+	bytes
+		uint32AtOffset: _OffsetOf_wID put: aMenu id;
+		uintPtrAtOffset: _OffsetOf_hSubMenu put: aMenu asParameter;
+		uint32AtOffset: _OffsetOf_fMask
+			put: (aMenu image
+					ifNil: [##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID)]
+					ifNotNil: 
+						[:image |
+						bitmap := image asSharedBitmap: aMenu metrics menuImageExtent.
+						bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: bitmap handle.
+						##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID | MIIM_BITMAP)])!
+
 text: aString
 	self basicText: aString!
 
@@ -235,7 +250,8 @@ hbmpChecked:!**compiled accessors**!public! !
 hbmpItem:!**compiled accessors**!public! !
 hbmpUnchecked:!**compiled accessors**!public! !
 hSubMenu:!**compiled accessors**!public! !
-setImage:metrics:!helpers!public! !
+setImage:metrics:!helpers!private! !
+subMenu:!initializing!private! !
 text:!accessing!public! !
 type:!accessing!private! !
 updateQuery:to:metrics:!operations!private! !

@@ -372,15 +372,7 @@ insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 			self metrics: parentMenu metrics].
 	self realize.
 	hParent isNull ifTrue: [^self].
-	aMENUITEMINFO
-		basicText: self text;
-		wID: self id;
-		hSubMenu: self asParameter;
-		fMask: (image
-					ifNil: [##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID)]
-					ifNotNil: 
-						[aMENUITEMINFO setImage: image metrics: self metrics.
-						##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID | MIIM_BITMAP)]).
+	aMENUITEMINFO subMenu: self.
 	(User32
 		insertMenuItem: hParent
 		uItem: position

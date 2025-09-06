@@ -115,6 +115,14 @@ getIconTitleFont
 				lf beImmutableObject.
 				Graphics.Font fromLogFont: lf dpi: dpi]!
 
+getMenuImageExtent
+	"Private - The menu bitmap image must be the correct (usually odd) size for the menu font and scale. If we do not generate the correct size bitmap, then windows will stretch/shrink it, which often results in a poor quality image. Unfortunately there is no reliable metric from the system that tells us the correct size. The menu check button extent system metric is usually assumed to be the correct size, but empirical testing revelas that for some scales this results in undesirable bitmap scaling, e.g. the menu check extent at 200% may be 31@31 but the correct menu bitmap extent is 32@32. It seems there is no alternative but to calculate the correct bitmap size ourselves from the menu font height. Note that we will still draw icons into the menu bitmaps using the nearest standard size that fits within the bitmap extent. For example at 350% the bitmap image extent is 57@57, into which we draw a centered 48@48 icon. This provides a best effort to avoid image scaling, although if the icon does not provide a complete set of standard image sizes then scaling for some sizes may be unavoidable."
+
+	| size |
+	size := self menuFont textMetrics tmHeight.
+	size <= 20 ifTrue: [size := 16].
+	^size @ size!
+
 getMetric: anInteger 
 	^User32 getSystemMetricsForDpi: anInteger dpi: dpi!
 
@@ -261,14 +269,7 @@ menuHeight
 menuImageExtent
 	"Answer a <Point>, being the width and height of the images displayed on menus."
 
-	"The menu bitmap image must be the correct (usually odd) size for the menu font and scale. If we do not generate the correct size bitmap, then windows will stretch/shrink it, which often results in a poor quality image. Unfortunately there is no reliable metric from the system that tells us the correct size. The menu check button extent system metric is usually assumed to be the correct size, but empirical testing demonstrates that for some scales this results in undesirable bitmap scaling, e.g. the menu check extent at 200% may be 31@31 but the correct menu bitmap extent is 32@32. It seems there is no alternative but to calculate the correct bitmap size ourselves from the menu font height. Note that we will still draw icons into the menu bitmaps using the nearest standard size that fits within the bitmap extent. For example at 350% the bitmap image extent is 57@57, into which we draw a centered 48@48 icon. This provides a best effort to avoid image scaling, although if the icon does not provide a complete set of standard image sizes then scaling for some sizes may be unavoidable."
-
-	^menuImageExtent
-		ifNil: 
-			[| size |
-			size := self menuFont textMetrics tmHeight.
-			size <= 20 ifTrue: [size := 16].
-			menuImageExtent := size @ size]!
+	^menuImageExtent ifNil: [menuImageExtent := self getMenuImageExtent]!
 
 menuImageTextGap
 	"The gap between the text in a menu item and the image. It doesn't seem to be possible to determine this from system metrics, and it doesn't appear to scale with DPI either."
@@ -425,8 +426,9 @@ dragHysteresis!constants!public! !
 edgeExtent!constants!public! !
 extraLargeIconExtent!constants!public! !
 frameWidths:!constants!public! !
-getDefaultColorDepth!accessing!helpers!private! !
-getIconTitleFont!geometry!private! !
+getDefaultColorDepth!helpers!private! !
+getIconTitleFont!helpers!private! !
+getMenuImageExtent!helpers!private! !
 getMetric:!helpers!private! !
 getMetric:pair:!helpers!private! !
 getNonClientMetrics!constants!private! !
@@ -441,8 +443,8 @@ hasSmoothScrollingLists!capability enquiries!public! !
 hasTextBoxMargins!capability enquiries!public! !
 hasThemes!capability enquiries!public! !
 hasWebView!capability enquiries!public! !
-iconTitleFont!geometry!public! !
-iconTitleFont:!geometry!private! !
+iconTitleFont!accessing!public! !
+iconTitleFont:!accessing!private! !
 isSlowMachine!public!testing! !
 largeIconExtent!constants!public! !
 menuBarHeight!constants!public! !

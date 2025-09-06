@@ -297,16 +297,16 @@ testResizeDoesNotMove
 	self assert: (presenter constrainPoint: static extent) = static extent!
 
 testWidenSelection
-	| shell browser |
-	self openTestSubjectOn: (ResourceIdentifier class: Smalltalk.MethodHistoryBrowser name: 'Default view').
+	| shell view |
+	self openTestSubjectOn: (ResourceIdentifier class: UI.Examples.RegEdit name: 'Default view').
 	shell := presenter composingView.
-	browser := shell viewNamed: 'slider'.
-	presenter selection: browser.
-	self assert: presenter primarySelection identicalTo: browser.
+	view := shell viewNamed: 'values'.
+	presenter selection: view.
+	self assert: presenter primarySelection identicalTo: view.
 	presenter widenSelection.
-	self assert: presenter primarySelection identicalTo: browser parentView.
+	self assert: presenter primarySelection identicalTo: view parentView.
 	presenter widenSelection.
-	self assert: presenter primarySelection identicalTo: browser parentView parentView.
+	self assert: presenter primarySelection identicalTo: view parentView parentView.
 	presenter widenSelection.
 	self assert: presenter primarySelection identicalTo: shell.
 	presenter widenSelection.
