@@ -220,7 +220,7 @@ testAbs
 	self assert: 0.0 abs equals: 0.0.
 	self assert: 1.0 abs equals: 1.0.
 	self assert: -2.5 abs equals: 2.5.
-	self assert: -0.0 abs equals: 0.0.
+	self deny: -0.0 abs negative.
 	self assert: Float fmax negated abs equals: Float fmax.
 	self assert: Float fmin negated abs equals: Float fmin.
 	self assert: Float.NaN abs isNaN.
