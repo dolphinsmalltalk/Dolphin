@@ -64,22 +64,15 @@ topLevelWindowHandlesDo: aMonadicValuable
 	^answer!
 
 topLevelWindows
-	"Answer an unordered <Collection> containing all top level windows belonging to the Dolphin
-	process. Note that this will include windows which are not frame windows (e.g. tool tips),
-	and in a random order."
+	"Answer a <Collection> containing all top level windows belonging to the Dolphin process. Note that this will include windows which are not frame windows (e.g. tool tips, child views being edited in a view composer, etc), and in no particular order. See also #topLevelWindowsInZOrder."
 
 	| shells bEnabled desktop |
 	shells := Array writeStream: 20.
-	desktop := View desktop.
+	desktop := User32 getDesktopWindow asInteger.
 	bEnabled := Processor enableAsyncEvents: false.
 	windows do: 
 			[:each |
-			"This selection filter has been re-written for bug fix #2261. Previously
-			WS_CHILD views that were children of the desktop were not being included in
-			the answered collection. This resulted in the View Composer not having any
-			non-shell views it was editing being saved and restored across an image
-			restart."
-			(each isView and: [each parentView == desktop]) ifTrue: [shells nextPut: each]].
+			(User32 getAncestor: each asParameter gaFlags: GA_PARENT) = desktop ifTrue: [shells nextPut: each]].
 	Processor enableAsyncEvents: bEnabled.
 	^shells contents!
 
@@ -104,13 +97,16 @@ uiIdle
 	can do other processing from their idle notification handlers, but it should be of very
 	short duration, or the responsiveness of the UI will be adversely affected."
 
-	self topLevelWindows do: 
-			[:each | 
-			self isInputAvailable 
+	| shells |
+	shells := self topLevelWindows.
+	1 to: shells size
+		do: 
+			[:i |
+			self isInputAvailable
 				ifTrue: 
 					[self inputSemaphore set.
-					^false	"stop enumerating"]
-				ifFalse: [self uiIdle: each]].
+					^false]
+				ifFalse: [self uiIdle: (shells at: i)]].
 	^true!
 
 uiIdle: aShellWindow

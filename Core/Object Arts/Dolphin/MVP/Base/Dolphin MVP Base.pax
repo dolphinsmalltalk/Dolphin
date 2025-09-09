@@ -3140,11 +3140,11 @@ flashWindowEx: pfwi
 
 getAncestor: hwnd gaFlags: gaFlags
 	"Invoke the GetAncestor() function of the module wrapped by the receiver.
-	Helpstring: Retrieves a handle to an ancestor of the specified window.
+	Helpstring: Retrieves the handle to the ancestor of the specified window.
 
-		HWND __stdcall GetAncestor(
-			[in]HWND HWND,
-			[in]UINT gaFlags);"
+		wireHWND __stdcall GetAncestor(
+			wireHWND hwnd,
+			unsigned int gaFlags);"
 
 	<stdcall: handle GetAncestor handle uint32>
 	^self invalidCall: _failureCode!
@@ -4559,7 +4559,7 @@ enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
 enumWindows:lParam:!**auto generated**!public! !
 findWindow:lpWindowName:!public!win32 functions-filled shape! !
 flashWindowEx:!public!win32 functions-error handling! !
-getAncestor:gaFlags:!**auto generated**!public! !
+getAncestor:gaFlags:!**auto generated**!public!win32 functions-window! !
 getAwarenessFromDpiAwarenessContext:!**auto generated**!public!win32 functions-high DPI! !
 getCapture!public!win32 functions-mouse input! !
 getClassAtom:!public!win32 functions-window class! !

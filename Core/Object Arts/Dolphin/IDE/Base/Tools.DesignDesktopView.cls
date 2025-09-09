@@ -126,6 +126,20 @@ onStartup
 perMonitor
 	^self current!
 
+reset
+	Default
+		ifNotNil: 
+			[Default destroy.
+			Default := nil].
+	System
+		ifNotNil: 
+			[System destroy.
+			System := nil].
+	Unaware
+		ifNotNil: 
+			[Unaware destroy.
+			Unaware := nil]!
+
 system
 	"Answer an instance of the receiver configured for the current primary monitor DPI."
 
@@ -143,6 +157,7 @@ gdiScaled!instance creation!public! !
 icon!constants!public! !
 onStartup!event handling!public! !
 perMonitor!instance creation!public! !
+reset!initializing!public! !
 system!instance creation!public! !
 unaware!instance creation!public! !
 !
