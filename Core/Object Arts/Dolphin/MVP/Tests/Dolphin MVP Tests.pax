@@ -67,6 +67,7 @@ package setClassNames: #(
 	#{UI.Tests.FramingLayoutTest}
 	#{UI.Tests.GridLayoutTest}
 	#{UI.Tests.GroupBoxTest}
+	#{UI.Tests.GuiInputStateTests}
 	#{UI.Tests.HotKeyTest}
 	#{UI.Tests.ImageViewAbstractTest}
 	#{UI.Tests.ImageViewTest}
@@ -360,6 +361,14 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.FramingConstraintsTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.GuiInputStateTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -5587,7 +5587,7 @@ fromHandle: aHandle
 	^SessionManager.Current inputState windowAt: aHandle
 		ifAbsent: 
 			[(self newUnregistered: aHandle)
-				parentView: (View fromHandle: (User32 getParent: aHandle));
+				parentView: (View fromHandle: (User32 getAncestor: aHandle gaFlags: GA_PARENT));
 				yourself]!
 
 fromPoint: aPoint

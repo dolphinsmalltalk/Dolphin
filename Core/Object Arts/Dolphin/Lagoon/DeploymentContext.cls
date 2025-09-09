@@ -143,6 +143,9 @@ _logStrippingError: anError
 		value: anError description.
 	logStream flush!
 
+_notifier
+	^notifier!
+
 _notifier: anObject
 	notifier := anObject!
 
@@ -271,6 +274,7 @@ _hiddenSendsInResourceMethod:!helpers!private! !
 _logComment:!logging!private! !
 _logElement:attributes:value:!logging!private! !
 _logStrippingError:!logging!private! !
+_notifier!accessing!private! !
 _notifier:!accessing!private! !
 _notify:!logging!private! !
 _openLogFile:!logging!private! !

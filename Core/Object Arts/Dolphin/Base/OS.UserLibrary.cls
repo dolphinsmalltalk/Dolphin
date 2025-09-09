@@ -10,9 +10,9 @@ External.WindowsSystemLibrary
 
 OS.UserLibrary guid: (Core.GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
 
-OS.UserLibrary comment: 'UserLibrary is the <ExternalLibrary> class to represent the Windows system DLL, User32.DLL.
+OS.UserLibrary comment: '`UserLibrary` is the `DynamicLinkLibrary` class to represent the Windows system DLL, User32.DLL.
 
-The default instance of this class provides access to most of the Win32 window management API. New functions may be added as required, but the external function naming convention should be followed.
+The default instance of this class (which is stored in the OS.User32 global) provides access to most of the Win32 window management API. New functions may be added as required, but the external function naming convention should be followed.
 
 All functions in this library use the stdcall calling convention.'!
 
@@ -192,10 +192,7 @@ getMessage: aMSG hWnd: aWindowHandle wMsgFilterMin: anIntFilterMin wMsgFilterMax
 	^self invalidCall: _failureCode!
 
 getParent: hWnd
-	"Answer the handle of the parent window of the specified window.
-	If the window is a top level window (whose parent is really the Desktop
-	window) then answer 0 (which is not the handle of the real Desktop window, but
-	is the handle of the Dolphin Desktop window). Confused? Me too."
+	"Answer the handle of the parent window of the specified window. Note that if the window is a top level window (whose parent is really the Desktop window) then the function answers the handle of the owner. For a typical ShellView this will mean the result is 0.  To retrieve the actual parent, use #getAncestor:gaFlags:"
 
 	<stdcall: uint32 GetParent handle>
 	^self invalidCall: _failureCode!

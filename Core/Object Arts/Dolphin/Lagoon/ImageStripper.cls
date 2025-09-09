@@ -1602,7 +1602,7 @@ The following packages were missing: ';
 
 _viewsToClose
 	| topViews shellClasses packagedClasses |
-	topViews := SessionManager inputState topLevelWindows.
+	topViews := SessionManager inputState topLevelWindows copyWithout: deploymentContext _notifier.
 	self isConsoleApplication ifTrue: [^topViews].
 	shellClasses := Set new.
 	#(#{SmalltalkToolShell} #{SmalltalkWorkspaceDocument} #{TestRunner}) do: 
