@@ -964,7 +964,7 @@ browserEnvFromDom: anIXMLDOMDocument
 			toDelete isEmpty ifFalse: [deletedSharedVars at: each put: toDelete]].
 	deletedSharedVars
 		keysAndValuesDo: [:eachClass :deadVars | deadVars do: [:each | eachClass removeBindingFor: each key]].
-	unbound do: [:each | (each environment classInModel: model) removeBindingFor: each name].
+	unbound do: [:each | (each environment classInModel: model) ifNotNil: [:env | env removeBindingFor: each name]].
 	^model!
 
 browserEnvironment
