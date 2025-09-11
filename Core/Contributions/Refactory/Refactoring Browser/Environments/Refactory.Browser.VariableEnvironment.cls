@@ -51,7 +51,7 @@ addClass: aClass instanceVariableWriter: aString
 	self addSearchString: aString!
 
 allClassesDo: aBlock
-	| classes instVarBlock numClasses i progress |
+	| classes instVarBlock |
 	classes := IdentitySet new.
 	instVarBlock := 
 			[:each |
@@ -71,15 +71,19 @@ allClassesDo: aBlock
 					class allSubclassesDo: [:eachSub | classes add: eachSub].
 					classes add: class class.
 					class class allSubclassesDo: [:eachSub | classes add: eachSub]]].
-	numClasses := classes size.
-	progress := self progressBlock.
-	i := 0.0.
-	progress value: i.
-	classes do: 
-			[:class |
-			aBlock value: class.
-			i := i + 1.
-			progress value: i * 100 // numClasses]!
+	progressBlock
+		ifNil: [classes do: aBlock]
+		ifNotNil: [self classes: classes doWithProgress: aBlock]!
+
+classes: aCollection doWithProgress: aBlock
+	| numClasses i |
+	numClasses := aCollection size.
+	i := 1.
+	progressBlock value: i.
+	aCollection do: 
+			[:each |
+			aBlock value: each.
+			progressBlock value: (i := i + 1) * 100 // numClasses]!
 
 classNamesWithVariables
 	| classNames |
@@ -127,42 +131,36 @@ copyDictionary: aDictionary
 	^aDictionary copy!
 
 environmentForClassVariable: aSymbol in: aClass
-	| selectorEnvironment assoc block |
+	| selectorEnvironment assoc |
 	selectorEnvironment := SelectorEnvironment onEnvironment: self.
 	selectorEnvironment addSearchString: aSymbol.
 	((classVariables at: aClass fullyQualifiedReference ifAbsent: #()) includes: aSymbol)
 		ifFalse: [^selectorEnvironment].
 	assoc := aClass bindingFor: aSymbol.
-	block := 
-			[:each |
-			(each whichSelectorsReferTo: assoc) do: [:sel | selectorEnvironment addClass: each selector: sel]].
 	aClass withAllSubclasses do: 
 			[:each |
-			block
-				value: each;
-				value: each class].
+			selectorEnvironment
+				addClass: each selectors: (each whichSelectorsReferTo: assoc);
+				addClass: each class selectors: (each class whichSelectorsReferTo: assoc)].
 	^selectorEnvironment!
 
 environmentForInstanceVariable: aString in: aClass
 	| selectorEnvironment isReader isWriter ref |
 	selectorEnvironment := SelectorEnvironment onEnvironment: self.
 	selectorEnvironment addSearchString: aString.
-	isReader := isWriter := false.
 	ref := aClass fullyQualifiedReference.
 	((instanceVariables at: ref ifAbsent: #()) includes: aString)
 		ifTrue: 
 			[isReader := true.
-			isWriter := true].
-	((instanceVariableWriters at: ref ifAbsent: #()) includes: aString) ifTrue: [isWriter := true].
-	((instanceVariableReaders at: ref ifAbsent: #()) includes: aString) ifTrue: [isReader := true].
+			isWriter := true]
+		ifFalse: 
+			[isReader := (instanceVariableReaders at: ref ifAbsent: #()) includes: aString.
+			isWriter := (instanceVariableWriters at: ref ifAbsent: #()) includes: aString].
 	aClass withAllSubclasses do: 
 			[:each |
 			isWriter
-				ifTrue: 
-					[(each whichSelectorsAssign: aString) do: [:sel | selectorEnvironment addClass: each selector: sel]].
-			isReader
-				ifTrue: 
-					[(each whichSelectorsRead: aString) do: [:sel | selectorEnvironment addClass: each selector: sel]]].
+				ifTrue: [selectorEnvironment addClass: each selectors: (each whichSelectorsAssign: aString)].
+			isReader ifTrue: [selectorEnvironment addClass: each selectors: (each whichSelectorsRead: aString)]].
 	^selectorEnvironment!
 
 flushCachesFor: aClass
@@ -178,7 +176,7 @@ includesCategory: aCategory
 
 includesClass: aClass
 	| ref |
-	(super includesClass: aClass) ifFalse: [^false].
+	(environment includesClass: aClass) ifFalse: [^false].
 	ref := aClass fullyQualifiedReference.
 	(instanceVariables includesKey: ref) ifTrue: [^true].
 	(classVariables includesKey: ref) ifTrue: [^true].
@@ -335,6 +333,7 @@ addClass:instanceVariable:!accessing!public! !
 addClass:instanceVariableReader:!accessing!public! !
 addClass:instanceVariableWriter:!accessing!public! !
 allClassesDo:!enumerating!private! !
+classes:doWithProgress:!enumerating!private! !
 classNamesWithVariables!accessing!public! !
 classVariables:!accessing!private! !
 classVariableSelectorsFor:!helpers!private! !

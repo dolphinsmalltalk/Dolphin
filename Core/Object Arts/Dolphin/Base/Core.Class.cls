@@ -457,7 +457,10 @@ fullPath
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to the Root namespace. Classes in the legacy 'flat' Smalltalk namespace will have Smalltalk as the first element of the binding path."
 
-	^BindingReference fullPathString: fullName!
+	^FullBindingReference
+		pathString: fullName
+		path: nil
+		private: false!
 
 getFullName
 	| stream |

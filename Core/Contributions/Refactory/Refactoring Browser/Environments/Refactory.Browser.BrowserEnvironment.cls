@@ -21,19 +21,14 @@ Instance Variables:
 !Refactory.Browser.BrowserEnvironment methodsFor!
 
 & anEnvironment
-	"If we or anEnvironment includes everything, then just include the other environment (optimization)"
+	"As we contain everything, conjuction would be equivalent to the argument."
 
-	self isSystem ifTrue: [^anEnvironment].
-	anEnvironment isSystem ifTrue: [^self].
-	^AndEnvironment onEnvironment: self and: anEnvironment!
+	^anEnvironment!
 
 | anEnvironment
-	"If we or anEnvironment includes everything, then return it instead of creating 
-	an or that will include everything."
+	"We include everything, so disjunction is equivalent to the receiver."
 
-	self isSystem ifTrue: [^self].
-	anEnvironment isSystem ifTrue: [^anEnvironment].
-	^OrEnvironment onEnvironment: self or: anEnvironment!
+	^self!
 
 addSearchString: aString
 	searchStrings isNil
@@ -215,7 +210,7 @@ includesClass: aClass
 includesClassOrMetaclass: aClass
 	"Answer whether this environment includes any part of the class, even a single method."
 
-	^(self includesClass: aClass) or: [self includesClass: aClass class]!
+	^true!
 
 includesProtocol: aProtocol in: aClass
 	^true!
@@ -293,6 +288,7 @@ labelFormats
 				#containing-> 'All methods containing <3s>: <1p>'.
 				#bytecode -> 'All methods with bytecode <1p>'.
 				#thisContext -> 'All methods referencing thisContext'.
+				#snapshot -> 'Snapshot of <2p>'
 			})!
 
 matches: aString
@@ -305,14 +301,15 @@ methodsDo: aBlock
 		classesAndSelectorsDo: [:class :selector | aBlock value: (class compiledMethodAt: selector)]!
 
 not
-	self isSystem ifTrue: [^SelectorEnvironment onEnvironment: self].
-	^NotEnvironment onEnvironment: self!
+	"We contain everything, so inverse is nothing."
+
+	^ClassEnvironment onEnvironment: self!
 
 notEmpty
 	^self isEmpty not!
 
 numberClasses
-	^self classNames size!
+	^Smalltalk allClasses size!
 
 numberSelectors
 	| total classes |
@@ -367,9 +364,7 @@ searchStrings: aCollection
 selectMethods: aBlock
 	| env |
 	env := SelectorEnvironment onEnvironment: self.
-	self classesAndSelectorsDo: 
-			[:each :sel |
-			(aBlock value: (each compiledMethodAt: sel)) ifTrue: [env addClass: each selector: sel]].
+	self methodsDo: [:each | (aBlock value: each) ifTrue: [env addMethod: each]].
 	^env!
 
 selectorsDo: aMonadicValuable
@@ -379,8 +374,8 @@ selectorsDo: aMonadicValuable
 selectorsFor: aProtocol in: aClass
 	#rbFix. "Category system incompatible. aProtocol can be a <String> or <MethodCategory>"
 	"^(aClass organization listAtCategoryNamed: aProtocol)"
-	^(aProtocol asMethodCategory methodsInBehavior: aClass)
-		select: [:each | self includesSelector: each selector in: aClass] thenCollect: [:each | each selector]!
+	^(aProtocol asMethodCategory selectorsInBehavior: aClass)
+		select: [:each | self includesSelector: each in: aClass]!
 
 selectorsForClass: aClass
 	| selectors |
@@ -390,6 +385,11 @@ selectorsForClass: aClass
 
 selectorsForClass: aClass do: aBlock
 	aClass selectorsDo: [:each | (self includesSelector: each in: aClass) ifTrue: [aBlock value: each]]!
+
+snapshot
+	"Answer a static snapshot of this (potentially) dynamic environment. This can be useful to reify a complex environment description that may be slow to enumerate, but needs to be enumerated multiple times, or to capture the current membership at a point in time."
+
+	^SelectorEnvironment snapshotOf: self!
 
 storeOn: aStream
 	aStream
@@ -478,6 +478,7 @@ selectorsDo:!enumerating!public! !
 selectorsFor:in:!accessing!public! !
 selectorsForClass:!accessing!public! !
 selectorsForClass:do:!accessing!public! !
+snapshot!environments!public! !
 storeOn:!printing!public! !
 whichCategoriesInclude:!accessing!public! !
 whichProtocolIncludes:in:!accessing!public! !

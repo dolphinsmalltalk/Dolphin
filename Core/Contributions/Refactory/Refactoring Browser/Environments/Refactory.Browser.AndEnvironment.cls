@@ -29,20 +29,22 @@ classesDo: aBlock
 definesClass: aClass
 	^(environment definesClass: aClass) and: [andedEnvironment definesClass: aClass]!
 
-includesCategory: aCategory 
-	^(self classNamesFor: aCategory) notEmpty!
-
-includesClass: aClass 
+includesAnySelectorsOfClass: aClass
 	| doesntHaveSelectors |
-	(environment includesClass: aClass) ifFalse: [^false].
-	(andedEnvironment includesClass: aClass) ifFalse: [^false].
 	doesntHaveSelectors := true.
 	environment selectorsForClass: aClass
 		do: 
-			[:each | 
+			[:each |
 			doesntHaveSelectors := false.
 			(andedEnvironment includesSelector: each in: aClass) ifTrue: [^true]].
 	^doesntHaveSelectors!
+
+includesCategory: aCategory 
+	^(self classNamesFor: aCategory) notEmpty!
+
+includesClass: aClass
+	^(environment includesClass: aClass)
+		and: [(andedEnvironment includesClass: aClass) and: [self includesAnySelectorsOfClass: aClass]]!
 
 includesProtocol: aProtocol in: aClass 
 	^(self selectorsFor: aProtocol in: aClass) notEmpty!
@@ -84,6 +86,7 @@ andedEnvironment!accessing!private! !
 andedEnvironment:!initialize/release!public! !
 classesDo:!accessing!public! !
 definesClass:!public!testing! !
+includesAnySelectorsOfClass:!private!testing! !
 includesCategory:!public! !
 includesClass:!public!testing! !
 includesProtocol:in:!public! !

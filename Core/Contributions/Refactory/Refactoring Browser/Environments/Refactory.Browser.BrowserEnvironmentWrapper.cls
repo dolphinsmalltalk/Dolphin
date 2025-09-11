@@ -19,6 +19,20 @@ Instance Variables:
 
 !Refactory.Browser.BrowserEnvironmentWrapper methodsFor!
 
+& anEnvironment
+	anEnvironment isSystem ifTrue: [
+		"&'d environment includes everything, so conjunection would be no different to self"
+		^self].
+	^AndEnvironment onEnvironment: self and: anEnvironment!
+
+| anEnvironment
+	"If anEnvironment includes everything, then return it instead of creating an Or that will include everything."
+
+	anEnvironment isSystem ifTrue: [
+		"Or'd environment contains everything, so disjunction would also contain everything"
+		^anEnvironment].
+	^OrEnvironment onEnvironment: self or: anEnvironment!
+
 allClasses
 	"Answer all the unique non-metaclasses of all the classes and metaclasses in this environment."
 
@@ -32,32 +46,25 @@ allClasses
 allClassesDo: aBlock
 	"Private - Evaluate the <monadicValuable> argument, aBlock, for every class that could possibly be included in the receiver."
 
-	| allClasses |
-	allClasses := Smalltalk allClasses.
 	progressBlock
-		ifNil: 
-			[1 to: allClasses size
-				do: 
-					[:i |
-					| class |
-					aBlock
-						value: (class := allClasses at: i);
-						value: class class]]
-		ifNotNil: 
-			[:progress |
-			| numClasses step |
-			numClasses := allClasses size.
-			step := numClasses // 100.
-			progress value: 0.
-			1 to: numClasses
-				do: 
-					[:i |
-					| class |
-					aBlock
-						value: (class := allClasses at: i);
-						value: class class.
-					i \\ step == 0 ifTrue: [progress value: i * 100 // numClasses]].
-			progress value: 100]!
+		ifNil: [Smalltalk allBehaviorsDo: aBlock]
+		ifNotNil: [self allClassesWithProgressDo: aBlock]!
+
+allClassesWithProgressDo: aBlock
+	| step allClasses numClasses |
+	allClasses := Smalltalk allClasses.
+	numClasses := allClasses size.
+	step := numClasses // 100.
+	progressBlock value: 0.
+	1 to: numClasses
+		do: 
+			[:i |
+			| class |
+			aBlock
+				value: (class := allClasses at: i);
+				value: class class.
+			i \\ step == 0 ifTrue: [progressBlock value: i * 100 // numClasses]].
+	^progressBlock value: 100!
 
 approximateNumberOfClasses
 	^8!
@@ -87,6 +94,11 @@ includesCategory: aCategory
 
 includesClass: aClass 
 	^environment includesClass: aClass!
+
+includesClassOrMetaclass: aClass
+	"Answer whether this environment includes any part of the class, even a single method."
+
+	^(self includesClass: aClass) or: [self includesClass: aClass class]!
 
 includesProtocol: aProtocol in: aClass
 	^(self includesClass: aClass)
@@ -126,8 +138,15 @@ labelFormats
 				#annotated -> 'Methods annotated with <1d> in <2p>'.
 				#containing -> 'Methods containing <3s>: <1p> in <2p>'.
 				#bytecode -> 'Methods with bytecode <1p> in <2p>'.
-				#thisContext -> 'Methods referencing thisContext in <2p>'
+				#thisContext -> 'Methods referencing thisContext in <2p>'.
+				#snapshot -> 'Snapshot of <2p>'
 			})!
+
+not
+	^NotEnvironment onEnvironment: self!
+
+numberClasses
+	^self classNames size!
 
 numberSelectors
 	| total |
@@ -153,8 +172,11 @@ storeOn: aStream
 	aStream nextPut: $)! !
 
 !Refactory.Browser.BrowserEnvironmentWrapper categoriesForMethods!
+&!environments!public! !
+|!environments!public! !
 allClasses!enumerating!public! !
 allClassesDo:!enumerating!private! !
+allClassesWithProgressDo:!enumerating!private! !
 approximateNumberOfClasses!accessing!private! !
 classesDo:!accessing/classes!public! !
 classNames!accessing/classes!public! !
@@ -162,11 +184,14 @@ definesClass:!public!testing! !
 environment!accessing!public! !
 includesCategory:!public!testing! !
 includesClass:!public!testing! !
+includesClassOrMetaclass:!public!testing! !
 includesProtocol:in:!public!testing! !
 includesSelector:in:!public!testing! !
 isEmpty!public!testing! !
 isSystem!public!testing! !
 labelFormats!constants!public! !
+not!environments!public! !
+numberClasses!accessing!public! !
 numberSelectors!accessing!public! !
 onEnvironment:!initialize/release!public! !
 progressBlock!accessing!public! !

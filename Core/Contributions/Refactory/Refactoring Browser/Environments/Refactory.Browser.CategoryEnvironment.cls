@@ -44,9 +44,8 @@ includesCategory: aCategory
 		and: [super includesCategory: aCategory]!
 
 includesClass: aClass
-	^(super includesClass: aClass) and: 
-			[#rbFix.	"Support Dolphin's multi-category system."
-			aClass instanceClass categories anySatisfy: [:each | categories includes: each name]]!
+	^(environment includesClass: aClass)
+		and: [aClass instanceClass categories anySatisfy: [:each | categories includes: each name]]!
 
 initialize
 	super initialize.

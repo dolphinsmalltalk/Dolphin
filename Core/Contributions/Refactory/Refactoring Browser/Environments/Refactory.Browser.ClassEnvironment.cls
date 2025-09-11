@@ -26,8 +26,8 @@ addClass: aClass
 approximateNumberOfClasses
 	^classes size!
 
-classes: aCollection 
-	aCollection do: [:each | self addClass: each]!
+classes: aCollection
+	self classReferences: (aCollection collect: [:each | each fullyQualifiedReference])!
 
 classes: classArray metaClasses: metaArray
 	"Private - Used to recreate an environment from a legacy storeString"
@@ -56,10 +56,8 @@ classNames
 
 	^classes collect: [:each | each instance asString]!
 
-classReferences: anArray
-	"Private - Used to recreate an environment from a storeString"
-
-	classes := anArray asSet!
+classReferences: aCollectionOfBindingReferences
+	classes := aCollectionOfBindingReferences asSet!
 
 defaultLabel
 	^$\x20 join: self classNames!
@@ -105,9 +103,10 @@ selectorsForClass: aClass do: aBlock
 storeOn: aStream
 	aStream nextPut: $(.
 	super storeOn: aStream.
-	aStream nextPutAll: ' classReferences: '.
-	classes asArray storeOn: aStream.
-	aStream nextPut: $)! !
+	aStream
+		nextPutAll: ' classReferences: ';
+		store: classes asSortedArray;
+		nextPut: $)! !
 
 !Refactory.Browser.ClassEnvironment categoriesForMethods!
 addClass:!adding!public! !
@@ -135,8 +134,10 @@ storeOn:!printing!public! !
 !Refactory.Browser.ClassEnvironment class methodsFor!
 
 onEnvironment: anEnvironment classes: aCollection
-	^(self onEnvironment: anEnvironment)
-		classes: aCollection; yourself! !
+	^self basicNew
+		onEnvironment: anEnvironment;
+		classReferences: (aCollection collect: [:each | each fullyQualifiedReference]);
+		yourself! !
 
 !Refactory.Browser.ClassEnvironment class categoriesForMethods!
 onEnvironment:classes:!instance creation!public! !

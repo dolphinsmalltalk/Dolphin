@@ -80,8 +80,8 @@ definesLooseMethodsInClass: aClass
 	^packages
 		anySatisfy: [:eachPackage | eachPackage methodNames anySatisfy: [:each | each className instance = className]]!
 
-includesClass: aClass 
-	^(super includesClass: aClass) 
+includesClass: aClass
+	^(environment includesClass: aClass)
 		and: [(self definesClass: aClass) or: [self definesLooseMethodsInClass: aClass]]!
 
 includesResource: aResourceIdentifier 

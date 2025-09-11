@@ -26,6 +26,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.ClassCategoryChangeTest}
 	#{Refactory.Browser.Tests.ClassCommentChangeTest}
 	#{Refactory.Browser.Tests.ClassDetailsTest}
+	#{Refactory.Browser.Tests.ClassEnvironmentTest}
 	#{Refactory.Browser.Tests.ClassGuidChangeTest}
 	#{Refactory.Browser.Tests.ClassImportsChangeTest}
 	#{Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest}
@@ -77,6 +78,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.RenameInstanceVariableRefactoringTest}
 	#{Refactory.Browser.Tests.RenameMethodRefactoringTest}
 	#{Refactory.Browser.Tests.RenameTemporaryRefactoringTest}
+	#{Refactory.Browser.Tests.SelectorEnvironmentTest}
 	#{Refactory.Browser.Tests.SmalllintTest}
 	#{Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest}
 	#{Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest}
@@ -291,7 +293,23 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	classConstants: {}!
 
 Refactory.Browser.Tests.BrowserEnvironmentTest
+	subclass: #'Refactory.Browser.Tests.ClassEnvironmentTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Refactory.Browser.Tests.BrowserEnvironmentTest
 	subclass: #'Refactory.Browser.Tests.PluggableEnvironmentTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Refactory.Browser.Tests.BrowserEnvironmentTest
+	subclass: #'Refactory.Browser.Tests.SelectorEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

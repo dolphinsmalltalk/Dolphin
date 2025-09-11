@@ -624,6 +624,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.BrowserEnvironment} #search:)
 	#(#{Refactory.Browser.BrowserEnvironment} #subEnvironmentLabel:for:)
 	#(#{Refactory.Browser.BrowserEnvironment} #unimplementedSelectors)
+	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #includesMethod:)
 	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #includesResource:)
 	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #openEditor)
 	#(#{Refactory.Browser.ClassDetails class} #icon)
@@ -636,7 +637,6 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RBModel} #defaultParseContext)
 	#(#{Refactory.Browser.RBSourceFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RefactoryChange} #displayOn:)
-	#(#{Refactory.Browser.SelectorEnvironment} #addMethods:)
 	#(#{Refactory.Browser.SelectorEnvironment} #openEditor)
 	#(#{Refactory.Browser.VariableEnvironment} #includesMethodUncached:)
 	#(#{Refactory.Browser.VariableEnvironment} #updateCachesForMethod:)
@@ -7432,7 +7432,7 @@ forPackagesClosure: aCollectionOfPackages
 includesMethod: aCompiledMethod
 	"Answer whether this environment includes aCompiledMethod"
 
-	^self includesSelector: aCompiledMethod selector in: aCompiledMethod methodClass!
+	^true!
 
 includesMethodUncached: aCompiledMethod 
 	"Answer whether this environment includes aCompiledMethod. If the environment uses any sort
@@ -7493,7 +7493,7 @@ definitionsOf:!enquiries!public! !
 forClassHierarchyFrom:!environments!public! !
 forClassHierarchyTo:!environments!public! !
 forMethodCategories:!environments!public! !
-forPackagesClosure:!helpers!public! !
+forPackagesClosure:!environments!public! !
 includesMethod:!public!testing! !
 includesMethodUncached:!public!testing! !
 liveReferencesTo:!enquiries!public! !
@@ -7508,6 +7508,11 @@ unimplementedSelectors!enquiries!public! !
 
 !Refactory.Browser.BrowserEnvironmentWrapper methodsFor!
 
+includesMethod: aCompiledMethod
+	"Answer whether this environment includes aCompiledMethod"
+
+	^self includesSelector: aCompiledMethod selector in: aCompiledMethod methodClass!
+
 includesResource: aResourceIdentifier
 	^self includesSelector: aResourceIdentifier selector in: aResourceIdentifier owningClass class!
 
@@ -7517,6 +7522,7 @@ openEditor
 	^SmalltalkSystem current browseEnvironment: self! !
 
 !Refactory.Browser.BrowserEnvironmentWrapper categoriesForMethods!
+includesMethod:!public!testing! !
 includesResource:!public!testing! !
 openEditor!browsing!public! !
 !
@@ -7683,16 +7689,12 @@ displayOn:!printing!public! !
 
 !Refactory.Browser.SelectorEnvironment methodsFor!
 
-addMethods: methodCollection 
-	methodCollection do: [:each | self addClass: each methodClass selector: each selector]!
-
 openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
 	^SmalltalkSystem current browseMethodsIn: self! !
 
 !Refactory.Browser.SelectorEnvironment categoriesForMethods!
-addMethods:!adding!public! !
 openEditor!browsing!public! !
 !
 

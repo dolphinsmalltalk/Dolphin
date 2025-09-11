@@ -37,8 +37,8 @@ defaultLabel
 			protocols do: [:p | stream display: p] separatedBy: [stream nextPutAll: ', ']].
 	^stream contents!
 
-includesClass: aClass 
-	^(super includesClass: aClass) 
+includesClass: aClass
+	^(environment includesClass: aClass)
 		and: [protocols anySatisfy: [:each | aClass conformsToProtocol: each]]!
 
 includesSelector: aSelector in: aClass 

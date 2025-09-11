@@ -47,7 +47,7 @@ includesCategory: aCategory
 							aClass == class or: [aClass class == class]]]]!
 
 includesClass: aClass
-	^aClass == class and: [super includesClass: aClass]!
+	^aClass == class and: [environment includesClass: aClass]!
 
 includesProtocol: aProtocol in: aClass
 	^aClass == class and: [(super includesProtocol: aProtocol in: aClass)
