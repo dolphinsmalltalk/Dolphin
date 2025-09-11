@@ -65,7 +65,7 @@ forPackagesDeployment: aCollectionOfPackages
 	deployed := deployed & (self forCategories: #('Development' 'System-Compiler')) not.
 	"Assume configured to remove ClassBuilder and Compiler"
 	removedClasses := Set new.
-	{ClassBuilder. MethodProtocol. Category} do: 
+	{ ClassBuilder. MethodProtocol. Category } do: 
 			[:each |
 			removedClasses
 				addAll: each withAllSubclasses;
@@ -76,23 +76,23 @@ forPackagesDeployment: aCollectionOfPackages
 				forMethodCategories: Smalltalk.ImageStripper developmentMethodCategoryNames
 						, Smalltalk.ImageStripper classBuildingMethodCategoryNames
 							, Smalltalk.ImageStripper classRemovingMethodCategoryNames
-							, #('class initialization' 'template definition' 'source filing' 'source filing-methods' 'compiling' 'categories-accessing' 'categories-removing' 'categories-adding' 'categories-testing' 'source filing-class definition').
-	devMethods := devMethods
-				| (self selectMethods: [:each | each selector == #initialize and: [each methodClass isMeta]])
-					& (self forMethodCategories: #('must not strip')) not.
+							, #('class initialization' 'template definition' 'source filing' 'source filing-methods' 'compiling' 'categories-accessing' 'categories-removing' 'categories-adding' 'categories-testing' 'source filing-class definition' 'must strip').
+	devMethods := devMethods | (self implementorsOf: #initialize) classMethods
+				& (self forMethodCategories: #('must not strip')) not.
+	devMethods label: 'Development methods'.
 	"We can speed things up a bit by taking a snapshot of the devMethods environment."
-	devMethods := self forMethodsIn: devMethods.
+	devMethods := devMethods snapshot.
 	"Custom handling for class initialize methods"
 	deployed := deployed & devMethods not.
 	"As before, reify the environment to speed things up as we will enumerate it more than once."
-	deployed := self forMethodsIn: deployed.
+	deployed := deployed snapshot.
 	names := (aCollectionOfPackages collect: [:each | each name]) asSortedArray.
 	deployed
 		label: 'App deployed from ' , (names size = 1 ifTrue: [names first] ifFalse: [names]) printString.
 	^deployed! !
 
 !Refactory.Browser.BrowserEnvironment categoriesForMethods!
-forPackagesDeployment:!helpers!public! !
+forPackagesDeployment:!environments!public! !
 !
 
 !ImageStripper class methodsFor!

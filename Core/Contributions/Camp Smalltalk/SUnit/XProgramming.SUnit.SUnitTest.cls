@@ -44,6 +44,14 @@ setUp
 	super setUp.
 	hasSetup := true!
 
+skipAlways
+	<skip>
+	self fail!
+
+skipAlwaysWithComment
+	<skip: 'Boo hoo'>
+	self fail!
+
 skipIfNil
 	<skipIf: #isNil>!
 
@@ -203,14 +211,14 @@ testSkip
 testSkipAnnotations
 	| suite result |
 	suite := TestSuite new.
-	#(#skipIfNil #skipIfNotNil #skipUnlessNil #skipUnlessNotNil)
+	#(#skipIfNil #skipIfNotNil #skipUnlessNil #skipUnlessNotNil #skipAlways #skipAlwaysWithComment)
 		do: [:each | suite addTest: (self class selector: each)].
 	result := suite run.
-	self assert: result runCount equals: 4.
+	self assert: result runCount equals: 6.
 	self assert: (result passed collect: [:each | each selector]) asSortedArray
 		equals: #(#skipIfNil #skipUnlessNotNil).
 	self assert: (result skipped collect: [:each | each selector]) asSortedArray
-		equals: #(#skipIfNotNil #skipUnlessNil)!
+		equals: #(#skipAlways #skipAlwaysWithComment #skipIfNotNil #skipUnlessNil)!
 
 testSuite
 	| suite result |
@@ -236,6 +244,8 @@ hasSetup!Accessing!public! !
 noop!private!test methods! !
 setRun!private!test methods! !
 setUp!public!Running! !
+skipAlways!private!test methods! !
+skipAlwaysWithComment!private!test methods! !
 skipIfNil!private!test methods! !
 skipIfNotNil!private!test methods! !
 skipped!private!test methods! !

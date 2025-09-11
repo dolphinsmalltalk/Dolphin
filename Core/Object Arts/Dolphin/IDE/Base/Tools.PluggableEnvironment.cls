@@ -39,8 +39,8 @@ includesAnyMethodsOf: aClass
 				ifTrue: [(filter value: eachMethod) ifTrue: [^true]]].
 	^false!
 
-includesClass: aClass 
-	^(super includesClass: aClass) and: [self includesAnyMethodsOf: aClass]!
+includesClass: aClass
+	^(environment includesClass: aClass) and: [self includesAnyMethodsOf: aClass]!
 
 includesSelector: aSelector in: aClass
 	^(super includesSelector: aSelector in: aClass) and: 
@@ -56,13 +56,6 @@ selectorsForClass: aClass do: aBlock
 			((environment includesSelector: each selector in: aClass) and: [filter value: each]) 
 				ifTrue: [aBlock value: each selector]]!
 
-snapshot
-	"Answer a static snapshot of this dynamic method environment."
-
-	^(Refactory.Browser.SelectorEnvironment onMethods: self allMethods in: environment)
-		label: self label;
-		yourself!
-
 storeOn: aStream 
 	self snapshot storeOn: aStream! !
 
@@ -74,7 +67,6 @@ includesAnyMethodsOf:!private!testing! !
 includesClass:!public!testing! !
 includesSelector:in:!public!testing! !
 selectorsForClass:do:!enumerating!public! !
-snapshot!accessing!private! !
 storeOn:!printing!public! !
 !
 

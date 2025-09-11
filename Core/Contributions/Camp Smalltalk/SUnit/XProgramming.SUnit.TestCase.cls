@@ -90,10 +90,18 @@ evaluatePreconditions
 	| annotations |
 	annotations := self thisTestMethod annotations.
 	annotations ifNil: [^self].
+	annotations withSelector: #skip do: [:each | self skip].
+	annotations withSelector: #skip: do: [:each | self skip: each single].
 	annotations withSelector: #skipIf:
-		do: [:each | (self perform: each single) ifTrue: [TestSkip signal: '<1p> skipIf: <2p>']].
+		do: 
+			[:each |
+			(self perform: each single)
+				ifTrue: [self skip: 'Skipped <1p> on precondition skipIf: <2p>' << { self. each single }]].
 	annotations withSelector: #skipUnless:
-		do: [:each | (self perform: each single) ifFalse: [TestSkip signal: '<1p> skipUnless: <2p>']]!
+		do: 
+			[:each |
+			(self perform: each single)
+				ifFalse: [self skip: 'Skipped <1p> on precondition skipUnless: <2p>' << { self. each single }]]!
 
 fail: aString
 	self logFailure: aString.
@@ -240,7 +248,7 @@ signalFailure: aString
 skip
 	"Don't run this test, and don't mark it as failure"
 
-	TestSkip signal!
+	self skip: 'Skipped <1p>' << self !
 
 skip: aComment
 	"Don't run this test, and don't mark it as failure"

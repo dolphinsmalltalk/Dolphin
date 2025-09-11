@@ -31,11 +31,12 @@ includesCategory: aCategory
 	^(self classNamesFor: aCategory) notEmpty!
 
 includesClass: aClass
-	"A <NotEnvironment> includes a class if its wrapped environment does not include the class,
-	or only partially includes it."
+	"A <NotEnvironment> includes a class if its wrapped environment does not include the class, or only partially includes it."
 
-	(environment includesClass: aClass) ifFalse: [^true].
-	#rbFix.	"If the inverse environment does not include the whole class, then we must include some of it"
+	^(environment includesClass: aClass) not or: [self includesPartOfClass: aClass]!
+
+includesPartOfClass: aClass
+	"If the inverse environment does not include the whole class, then we must include some of it"
 	aClass selectorsDo: [:each | (environment includesSelector: each in: aClass) ifFalse: [^true]].
 	^false!
 
@@ -62,6 +63,7 @@ defaultLabel!constants!private! !
 definesClass:!public!testing! !
 includesCategory:!public!testing! !
 includesClass:!public!testing! !
+includesPartOfClass:!private!testing! !
 includesProtocol:in:!public!testing! !
 includesSelector:in:!public!testing! !
 not!environments!public! !

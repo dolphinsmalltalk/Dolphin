@@ -58,7 +58,7 @@ defaultLabel
 	^stream contents!
 
 includesClass: aClass
-	(super includesClass: aClass)
+	(environment includesClass: aClass)
 		ifTrue: 
 			[1 to: categories size do: [:i | ((categories at: i) includesBehavior: aClass) ifTrue: [^true]]].
 	^false!
@@ -79,14 +79,12 @@ postCopy
 	categories := categories copy.
 	^super postCopy!
 
-selectorsForClass: aClass do: aBlock 
+selectorsForClass: aClass do: aBlock
 	(super includesClass: aClass) ifFalse: [^self].
 	categories do: 
-			[:each | 
-			(each methodsInBehavior: aClass) do: 
-					[:eachMethod | 
-					(environment includesSelector: eachMethod selector in: aClass) 
-						ifTrue: [aBlock value: eachMethod selector]]]!
+			[:eachCategory |
+			(eachCategory selectorsInBehavior: aClass)
+				do: [:eachSelector | (environment includesSelector: eachSelector in: aClass) ifTrue: [aBlock value: eachSelector]]]!
 
 storeOn: aStream 
 	aStream nextPut: $(.

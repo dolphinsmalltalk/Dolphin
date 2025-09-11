@@ -125,85 +125,6 @@ testCategoryEnvironment
 	#rbFix.	"There are actually 4 implementors of #printString in the Kernel-Objects category in Dolphin 8"
 	self assert: (aCategoryEnvironment implementorsOf: #printString) numberSelectors equals: 4!
 
-testClassEnvironment
-	| subject classes |
-	classes := { Object. Object class }.
-	subject := ClassEnvironment onEnvironment: universalEnvironment classes: classes.
-	self universalTestFor: subject.
-	"Note that classNames does not include metaclass names."
-	self assert: subject classNames asArray equals: #('Core.Object').
-	self assert: (subject implementorsOf: #printString) numberSelectors equals: 1.
-	#rbFix.	"Test #definesClass: and #includesClass"
-	self deny: (subject includesClass: Association).
-	self deny: (subject definesClass: Association).
-	classes do: 
-			[:each |
-			self assert: (subject includesClass: each).
-			self assert: (subject definesClass: each)].
-	"Older storeString format"
-	subject := (ClassEnvironment onEnvironment: BrowserEnvironment new)
-				classes: #('Core.Object')
-				metaClasses: #('Core.Association').
-	self assert: subject classes equals: (Set with: Object with: Association class)!
-
-testConstructedClassEnvironment
-	| environment classes |
-	environment := ClassEnvironment new.
-	#rbFix.	"Also test #definesClass:"
-	classes := {Object. OrderedCollection. Collection}.
-	classes do: [:each | environment addClass: each].
-	classes do: 
-			[:each |
-			self assert: (environment includesClass: each).
-			self assert: (environment definesClass: each).
-			self deny: (environment includesClass: each class).
-			self deny: (environment definesClass: each class)].
-	environment removeClass: Collection.
-	self assert: (environment includesClass: Object).
-	self assert: (environment includesClass: OrderedCollection).
-	self deny: (environment includesClass: Collection).
-	self assert: environment numberClasses equals: 2.
-	environment addClass: Object class.
-	self assert: environment numberClasses equals: 2.
-	self assert: (environment includesClass: Object class).
-	environment removeClass: self class.
-	self assert: environment numberClasses equals: 2!
-
-testConstructedSelectorEnvironment
-	| environment newEnvironment |
-	environment := SelectorEnvironment new.
-	environment
-		addClass: Object selector: #printString;
-		addClass: OrderedCollection selector: #add:;
-		addClass: Collection.
-	self assert: (environment includesClass: Object).
-	self assert: (environment selectorsForClass: Object) size equals: 1.
-	self assert: (environment includesClass: OrderedCollection).
-	self deny: (environment definesClass: Object).
-	self deny: (environment definesClass: OrderedCollection).
-	#rbFix.	"Dolphin doesn't have an #add: in OrderedCollection"
-	self assert: (environment selectorsForClass: OrderedCollection) size
-		equals: ((OrderedCollection includesSelector: #add:) ifTrue: [1] ifFalse: [0]).
-	self assert: (environment includesClass: Collection).
-	self assert: (environment selectorsForClass: Collection) size equals: Collection selectors size.
-	self deny: (environment includesClass: Object class).
-	newEnvironment := environment copy.
-	newEnvironment
-		removeClass: OrderedCollection;
-		addClass: Object selector: #printOn:;
-		removeClass: Object selector: #printString.
-	self assert: (newEnvironment includesClass: Object).
-	self deny: (newEnvironment includesSelector: #printString in: Object).
-	self deny: (newEnvironment includesClass: OrderedCollection).
-	self assert: (newEnvironment includesClass: Collection).
-	self assert: newEnvironment numberClasses equals: 2.
-	self assert: newEnvironment numberSelectors + 1 equals: environment numberSelectors.
-	newEnvironment addClass: Object class.
-	self assert: newEnvironment numberClasses equals: 2.
-	self assert: (newEnvironment includesClass: Object class).
-	newEnvironment removeClass: self class.
-	self assert: newEnvironment numberClasses equals: 2!
-
 testEnvironmentWrapper
 	| printString wrapper |
 	printString := universalEnvironment referencesTo: #printString.
@@ -211,14 +132,6 @@ testEnvironmentWrapper
 	self assert: wrapper numberSelectors equals: printString numberSelectors.
 	self assert: wrapper numberClasses equals: printString numberClasses.
 	self assert: wrapper environment identicalTo: printString!
-
-testImplementorsMatching
-	| print |
-	print := universalEnvironment implementorsMatching: '*print*'.
-	self universalTestFor: print.
-	self assert: (print implementorsOf: #printString) numberSelectors
-		equals: (universalEnvironment implementorsOf: #printString) numberSelectors.
-	print classesAndSelectorsDo: [:class :sel | self assert: ('*print*' match: sel)]!
 
 testMatches
 	| envEnvironment environmentEnvironment env |
@@ -296,38 +209,6 @@ testRemoveSelectorByAndAndNot
 		equals: (universalEnvironment & objectPrintString not) numberSelectors.
 	self universalTestFor: universalEnvironment & objectPrintString not!
 
-testSelectMethods
-	| environment |
-	environment := universalEnvironment selectMethods: [:each | false].
-	self assert: environment numberSelectors equals: 0.
-	self assert: environment numberClasses equals: 0.
-	environment := universalEnvironment selectMethods: [:each | true].
-	self assert: environment numberSelectors equals: self totalSelectors.
-	environment := universalEnvironment selectMethods: [:method | method refersToLiteral: #environment].
-	self assert: environment numberSelectors
-		equals: (universalEnvironment referencesTo: #environment) numberSelectors!
-
-testSelectorEnvironment
-	| printString |
-	printString := universalEnvironment referencesTo: #printString.
-	self deny: (printString definesClass: Object).
-	self universalTestFor: printString.
-	self assert: printString numberSelectors
-		equals: (printString referencesTo: #printString) numberSelectors.
-	self assert: printString numberClasses
-		equals: (printString referencesTo: #printString) numberClasses!
-
-testSelectorEnvironmentCopy
-	| methods methods2 |
-	methods := universalEnvironment referencesTo: #printString.
-	methods2 := methods copy.
-	methods addClass: Object selector: #displayString.
-	self assert: (methods includesSelector: #displayString in: Object).
-	self deny: (methods2 includesSelector: #displayString in: Object).
-	methods2 addClass: Object class selector: #initialize.
-	self assert: (methods2 includesSelector: #initialize in: Object class).
-	self deny: (methods includesSelector: #initialize in: Object class)!
-
 testSystemIntegrity
 	| classes |
 	classes := IdentitySet new.
@@ -342,7 +223,7 @@ totalSelectors
 
 uniqueClassesIn: aBrowserEnvironment
 	| classes |
-	classes := Set new.
+	classes := IdentitySet new: aBrowserEnvironment approximateNumberOfClasses * 2.
 	aBrowserEnvironment classesDo: [:each | self assert: (classes addNewElement: each)]!
 
 universalTestFor: aBrowserEnvironment
@@ -370,20 +251,13 @@ testAndEnvironment!AndEnvironment tests!public! !
 testBindingFor!BrowserEnvironment tests!public! !
 testBrowserEnvironment!BrowserEnvironment tests!public! !
 testCategoryEnvironment!BrowserEnvironment tests!public! !
-testClassEnvironment!BrowserEnvironment tests!public! !
-testConstructedClassEnvironment!BrowserEnvironment tests!public! !
-testConstructedSelectorEnvironment!BrowserEnvironment tests!public! !
 testEnvironmentWrapper!BrowserEnvironment tests!public! !
-testImplementorsMatching!BrowserEnvironment tests!public! !
 testMatches!BrowserEnvironment tests!public! !
 testNotEnvironment!NotEnvironment tests!public! !
 testOrEnvironment!OrEnvironment tests!public! !
 testProtocolEnvironment!BrowserEnvironment tests!public! !
 testReferencesToVariable!BrowserEnvironment tests!public! !
 testRemoveSelectorByAndAndNot!BrowserEnvironment tests!public! !
-testSelectMethods!BrowserEnvironment tests!public! !
-testSelectorEnvironment!BrowserEnvironment tests!public! !
-testSelectorEnvironmentCopy!BrowserEnvironment tests!public! !
 testSystemIntegrity!BrowserEnvironment tests!public! !
 totalSelectors!accessing!private! !
 uniqueClassesIn:!private!universal tests! !

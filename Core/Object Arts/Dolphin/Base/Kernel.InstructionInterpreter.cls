@@ -391,13 +391,13 @@ pushTemp: offset
 
 !
 
-pushTempPair: anInteger 
+pushTempPair: anInteger
 	"Interpret a Push Pair of Temporary Variables instruction.
 	Commonly used when pushing the arguments to muli-keyword messages,
 	or in sends of one-argument messages to a temporary."
 
 	self
-		pushTemp: anInteger >> 4;
+		pushTemp: (anInteger bitShift: -4);
 		macroInstructionPart2;
 		pushTemp: (anInteger bitAnd: 16rF)!
 

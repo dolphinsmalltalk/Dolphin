@@ -33,7 +33,13 @@ addClass: aClass selector: aSymbol
 addClass: aClass selectors: aCollection
 	((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
 		at: aClass instanceClass fullName
-		ifAbsentPutClean: [IdentitySet new: 8]) addAll: aCollection!
+		ifAbsentPutClean: [IdentitySet new: aCollection size]) addAll: aCollection!
+
+addMethod: aCompiledMethod
+	self addClass: aCompiledMethod methodClass selector: aCompiledMethod selector!
+
+addMethods: methodCollection 
+	methodCollection do: [:each | self addClass: each methodClass selector: each selector]!
 
 classes: classArray metaClasses: metaArray
 	"Used to recreate an environment from its storeString"
@@ -85,6 +91,11 @@ classesDo: aBlock
 					meta := binding value class.
 					(environment includesClass: meta) ifTrue: [aBlock value: meta]]]!
 
+classMethods
+	^(self class onEnvironment: environment)
+		metaClassSelectors: (metaClassSelectors collect: [:each | each copy]);
+		yourself!
+
 classNames
 	| names collectNames |
 	names := Set new: classSelectors size + metaClassSelectors size.
@@ -92,6 +103,9 @@ classNames
 	classSelectors keysDo: collectNames.
 	metaClassSelectors keysDo: collectNames.
 	^names!
+
+classSelectors: aLookupTable
+	classSelectors := aLookupTable!
 
 classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary 
 	classSelectors := classSelectorDictionary.
@@ -109,7 +123,7 @@ includesCategory: aCategory
 
 includesClass: aClass
 	^((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
-		includesKey: aClass instanceClass fullName) and: [super includesClass: aClass]!
+		includesKey: aClass instanceClass fullName) and: [environment includesClass: aClass]!
 
 includesProtocol: aProtocol in: aClass
 	^(super includesProtocol: aProtocol in: aClass) and: 
@@ -132,11 +146,19 @@ initialize
 	classSelectors := LookupTable new.
 	metaClassSelectors := LookupTable new!
 
+instanceMethods
+	^(self class onEnvironment: environment)
+		classSelectors: (classSelectors collect: [:each | each copy]);
+		yourself!
+
 isEmpty
 	^classSelectors isEmpty and: [metaClassSelectors isEmpty]!
 
 isSelectorEnvironment
 	^true!
+
+metaClassSelectors: aLookupTable
+	metaClassSelectors := aLookupTable!
 
 numberSelectors
 	"This doesn't compute the correct result when a method that is included in our method list is not in the
@@ -172,6 +194,11 @@ selectorsForClass: aClass do: aBlock
 		lookup: aClass instanceClass fullName)
 			ifNotNil: [:selectors | selectors do: [:each | (aClass includesSelector: each) ifTrue: [aBlock value: each]]]!
 
+snapshot
+	"Answer a static snapshot of this (potentially) dynamic environment."
+
+	^self!
+
 storeOn: aStream
 	| classBlock |
 	aStream
@@ -205,10 +232,14 @@ storeOn: aStream
 addClass:!adding!public! !
 addClass:selector:!adding!public! !
 addClass:selectors:!adding!public! !
+addMethod:!adding!public! !
+addMethods:!adding!public! !
 classes:metaClasses:!initialize/release!public! !
 classesAndSelectorsDo:!accessing!public! !
 classesDo:!accessing/classes!public! !
+classMethods!environments!public! !
 classNames!accessing/classes!public! !
+classSelectors:!accessing!private! !
 classSelectors:metaClassSelectors:!initialize/release!public! !
 defaultLabel!constants!private! !
 includesCategory:!public!testing! !
@@ -216,14 +247,17 @@ includesClass:!public!testing! !
 includesProtocol:in:!public!testing! !
 includesSelector:in:!public!testing! !
 initialize!initialize/release!public! !
+instanceMethods!environments!public! !
 isEmpty!public!testing! !
 isSelectorEnvironment!public!testing! !
+metaClassSelectors:!accessing!private! !
 numberSelectors!accessing!public! !
 on:!initialize/release!public! !
 postCopy!copying!public! !
 removeClass:!public!removing! !
 removeClass:selector:!public!removing! !
 selectorsForClass:do:!accessing!public! !
+snapshot!environments!public! !
 storeOn:!printing!public! !
 !
 
@@ -236,7 +270,7 @@ implementorsMatching: aString in: anEnvironment
 	anEnvironment classesDo: 
 			[:class |
 			| selectors |
-			selectors := Set new.
+			selectors := IdentitySet new.
 			anEnvironment selectorsForClass: class
 				do: [:each | (aString match: each) ifTrue: [selectors add: each]].
 			selectors notEmpty
@@ -252,13 +286,13 @@ implementorsOf: aSelector in: anEnvironment
 	| classDict metaDict selectors |
 	classDict := LookupTable new.
 	metaDict := LookupTable new.
-	selectors := {aSelector}.
+	selectors := IdentitySet with: aSelector.
 	anEnvironment classesDo: 
 			[:class |
 			((class includesSelector: aSelector) and: [anEnvironment includesSelector: aSelector in: class])
 				ifTrue: 
 					[(class isMeta ifTrue: [metaDict] ifFalse: [classDict]) at: class instanceClass fullName
-						put: selectors]].
+						put: selectors copy]].
 	^(self onEnvironment: anEnvironment)
 		classSelectors: classDict metaClassSelectors: metaDict;
 		label: (anEnvironment subEnvironmentLabel: #definitions for: aSelector);
@@ -268,24 +302,21 @@ matches: aString in: anEnvironment
 	| newEnvironment |
 	newEnvironment := (self onEnvironment: anEnvironment)
 				label: 'Matching: ' , aString;
-				searchStrings: {aString};
+				searchStrings: { aString };
 				yourself.
-	anEnvironment classesAndSelectorsDo: 
-			[:each :sel |
-			| method |
-			method := each compiledMethodAt: sel.
-			method allLiterals
-				do: [:lit | lit isString ifTrue: [(aString match: lit) ifTrue: [newEnvironment addClass: each selector: sel]]]].
+	anEnvironment methodsDo: 
+			[:each |
+			(each allLiterals anySatisfy: [:lit | lit isString and: [aString match: lit]])
+				ifTrue: [newEnvironment addMethod: each]].
 	^newEnvironment!
 
 onMethods: selectorCollection forClass: aClass in: anEnvironment
-	| env |
-	env := self onEnvironment: anEnvironment.
-	selectorCollection do: [:each | env addClass: aClass selector: each].
-	env label: (selectorCollection size = 1
-				ifTrue: [(anEnvironment labelFormats at: #method) << {aClass. selectorCollection single}]
-				ifFalse: [anEnvironment subEnvironmentLabel: #someMethodsOf: for: aClass]).
-	^env!
+	^(self onEnvironment: anEnvironment)
+		label: (selectorCollection size = 1
+					ifTrue: [(anEnvironment labelFormats at: #method) << { aClass. selectorCollection single }]
+					ifFalse: [anEnvironment subEnvironmentLabel: #someMethodsOf: for: aClass]);
+		addClass: aClass selectors: selectorCollection;
+		yourself!
 
 onMethods: methodCollection in: anEnvironment 
 	^(self onEnvironment: anEnvironment)
@@ -293,20 +324,34 @@ onMethods: methodCollection in: anEnvironment
 		yourself!
 
 referencesTo: aLiteral in: aBrowserEnvironment
-	| classDict |
+	| classSelectors metaClassSelectors |
 	#rbFix.	"Change the label"
-	classDict := LookupTable new.
+	classSelectors := LookupTable new.
+	metaClassSelectors := LookupTable new.
 	aBrowserEnvironment classesDo: 
 			[:class |
 			| selectors |
 			selectors := (class whichSelectorsReferTo: aLiteral)
 						select: [:aSelector | aBrowserEnvironment includesSelector: aSelector in: class].
-			selectors notEmpty ifTrue: [classDict at: class put: selectors]].
+			selectors isEmpty
+				ifFalse: 
+					[(class isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+						at: class instanceClass fullName
+						put: selectors]].
 	^(self onEnvironment: aBrowserEnvironment)
-		on: classDict;
 		label: (aBrowserEnvironment subEnvironmentLabel: #references for: aLiteral);
-		searchStrings: {aLiteral printString};
-		yourself! !
+		classSelectors: classSelectors metaClassSelectors: metaClassSelectors;
+		searchStrings: { aLiteral printString };
+		yourself!
+
+snapshotOf: aBrowserEnvironment
+	| snapshot |
+	snapshot := SelectorEnvironment new
+				label: (aBrowserEnvironment subEnvironmentLabel: #snapshot for: aBrowserEnvironment);
+				yourself.
+	aBrowserEnvironment
+		classesAndSelectorsDo: [:class :selector | snapshot addClass: class selector: selector].
+	^snapshot! !
 
 !Refactory.Browser.SelectorEnvironment class categoriesForMethods!
 implementorsMatching:in:!instance creation!public! !
@@ -315,5 +360,6 @@ matches:in:!instance creation!public! !
 onMethods:forClass:in:!instance creation!public! !
 onMethods:in:!instance creation!public! !
 referencesTo:in:!instance creation!public! !
+snapshotOf:!instance creation!public! !
 !
 
