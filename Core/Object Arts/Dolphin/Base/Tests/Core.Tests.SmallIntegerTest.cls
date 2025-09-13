@@ -22,7 +22,12 @@ test1234
 	self deny: 2 >= (2@3)!
 
 testAbs
-	self assert: -4 abs identicalTo: 4!
+	self assert: 0 abs identicalTo: 0.
+	self assert: 1 abs identicalTo: 1.
+	self assert: -1 abs identicalTo: 1.
+	self assert: SmallInteger maximum abs identicalTo: SmallInteger maximum.
+	"Overflows into large integer"
+	self assert: SmallInteger minimum abs equals: SmallInteger minimum * -1!
 
 testAllMask
 

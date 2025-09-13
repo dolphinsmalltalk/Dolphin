@@ -89,6 +89,12 @@ Core.Integer comment: ''!
 
 	^self bitShift: anInteger negated!
 
+abs
+	"Answer a <number> that is the absolute value (positive magnitude) of the receiver."
+
+	<primitive: 108>
+	^self < 0 ifTrue: [self negated] ifFalse: [self]!
+
 addToFloat: aFloat
 	"Private - Add the receiver from the known Float, aFloat."
 
@@ -879,6 +885,7 @@ yourAddress
 <!comparing!public! !
 <<!bit manipulation!public! !
 >>!bit manipulation!public! !
+abs!arithmetic!public! !
 addToFloat:!double dispatch!private! !
 addToFraction:!double dispatch!private! !
 allMask:!bit manipulation!public! !

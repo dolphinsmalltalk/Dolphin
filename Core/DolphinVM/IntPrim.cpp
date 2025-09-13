@@ -697,6 +697,29 @@ Oop* PRIMCALL Interpreter::primitiveQuo(Oop* const sp, primargcount_t)
 	}
 }
 
+Oop* PRIMCALL Interpreter::primitiveIntegerAbs(Oop* const sp, primargcount_t)
+{
+	Oop receiver = *sp;
+	if (ObjectMemoryIsIntegerObject(receiver))
+	{
+		if (static_cast<SmallInteger>(receiver) < 0) 
+		{
+			StoreUnsigned32()(sp, -ObjectMemoryIntegerValueOf(receiver));
+		}
+		return sp;
+	}
+	else
+	{
+		LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(receiver);
+		if (oteReceiver->m_location->signBit(oteReceiver))
+		{
+			Oop oopResult = LargeInteger::Negate(oteReceiver);
+			*sp = oopResult;
+			ObjectMemory::AddOopToZct(oopResult);
+		}
+		return sp;
+	}
+}
 
 Oop* PRIMCALL Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, primargcount_t)
 {

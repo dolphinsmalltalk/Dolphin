@@ -535,6 +535,8 @@ public:
 	static Oop* PRIMCALL primitiveDiv(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
 	static Oop* PRIMCALL primitiveMod(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
 	static Oop* PRIMCALL primitiveQuo(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
+	static Oop* PRIMCALL primitiveIntegerAbs(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
+
 
 	// SmallInteger relational ops
 	template <typename Cmp, bool Lt> static Oop* PRIMCALL primitiveIntegerCmp(Oop* const sp, primargcount_t);
