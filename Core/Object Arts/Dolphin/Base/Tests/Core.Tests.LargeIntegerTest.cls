@@ -69,6 +69,27 @@ largePositive
 smallIntegerComparisons
 	^{SmallInteger minimum. -1. 0. 1. SmallInteger maximum}!
 
+testAbs
+	{
+		SmallInteger maximum + 1.
+		SmallInteger minimum - 1.
+		16r7FFFFFFF.
+		16r80000000.
+		-16r7FFFFFFF.
+		-16r80000000.
+		16rFFFFFFFF.
+		-16rFFFFFFFF.
+		16r7FFFFFFFFFFFFFFF.
+		-16r7FFFFFFFFFFFFFFF.
+		16r8000000000000000.
+		-16r8000000000000000.
+		-16r8000000000000001
+	} do: 
+				[:subject |
+				subject negative
+					ifTrue: [self assert: subject abs equals: subject * -1]
+					ifFalse: [self assert: subject abs identicalTo: subject]]!
+
 testAddDoubleToDoubleNeg
 	"Test adding double limb addend to a double-limbed large negative integer."
 
@@ -1569,6 +1590,7 @@ largeComparisonPairs!constants!private! !
 largeNegative!constants!private! !
 largePositive!constants!private! !
 smallIntegerComparisons!constants!private! !
+testAbs!public!unit tests! !
 testAddDoubleToDoubleNeg!public!unit tests! !
 testAddDoubleToDoublePos!public!unit tests! !
 testAddDoubleToTripleNeg!public!unit tests! !
