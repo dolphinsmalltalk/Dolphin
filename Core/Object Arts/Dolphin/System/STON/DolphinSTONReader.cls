@@ -2,12 +2,14 @@
 
 STONReader subclass: #DolphinSTONReader
 	instanceVariableNames: 'classInstVarMaps currentCharacter objectProperties renamedClasses'
-	classVariableNames: 'EscapeChars HexDigitValues'
+	classVariableNames: 'ClassChars ClassStartChars EscapeChars HexDigitValues'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 DolphinSTONReader guid: (GUID fromString: '{a8dab6bc-8e16-483a-adee-741c2aa9f0f7}')!
 
+DolphinSTONReader addClassConstant: 'ClassChars' value: '._ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890'!
+DolphinSTONReader addClassConstant: 'ClassStartChars' value: '_ABCDEFGHIJKLMNOPQRSTUVWXYZ'!
 DolphinSTONReader addClassConstant: 'HexDigitValues' value: #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15)!
 
 DolphinSTONReader comment: ''!
@@ -54,12 +56,18 @@ instVarMapFor: aClass
 			map]!
 
 isClassChar: aCharacter
-	| charClass |
-	charClass := SmalltalkScanner classify: aCharacter.
-	^charClass == #alphabetic or: [charClass == #digit]!
+	^(ClassChars
+		nextIdentityIndexOf: aCharacter
+		from: 1
+		to: ##(ClassChars size)) ~~ 0!
 
 isClassStartChar: aCharacter
-	^(SmalltalkScanner classify: aCharacter) == #alphabetic and: [aCharacter code < ##($a code)]!
+	"Would be nice to use the Scanner classification table here, but that creates an undesirable dependency."
+
+	^(ClassStartChars
+		nextIdentityIndexOf: aCharacter
+		from: 1
+		to: ##(ClassStartChars size)) ~~ 0!
 
 isList
 	^currentCharacter == $[!
@@ -225,6 +233,20 @@ parseMapOrListRepresentation
 			^stream grabContents].
 	self error: 'invalid input'!
 
+parseMapOrListSingleton
+	"Parse either a map or single item list to be used as a representation, not considering it as a referenceable object"
+
+	self atEnd
+		ifFalse: 
+			[currentCharacter == ${
+				ifTrue: 
+					[| map |
+					map := STON mapClass new.
+					self parseMapDo: [:key :value | map at: key put: value].
+					^map].
+			^self parseListSingleton].
+	self error: 'invalid input'!
+
 parseNamedInstVarsFor: anObject
 	| instVars |
 	instVars := self instVarMapFor: anObject class.
@@ -246,11 +268,17 @@ parseNumber
 			(self peekFor: $s)
 				ifTrue: [number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger]]
 		ifFalse: 
-			[(self peekFor: $.) ifTrue: [number := number + self parseNumberFraction].
+			[| isFloat |
+			isFloat := false.
+			(self peekFor: $.)
+				ifTrue: 
+					[number := number + self parseNumberFraction.
+					isFloat := true].
 			(currentCharacter == $e or: [currentCharacter == $E])
 				ifTrue: 
 					[currentCharacter := readStream nextAvailable.
-					number := number * self parseNumberExponent]].
+					number := number * self parseNumberExponent].
+			isFloat ifTrue: [number := number asFloat]].
 	negated ifTrue: [number := number negated].
 	self consumeWhitespace.
 	^number!
@@ -272,7 +300,7 @@ parseNumberFraction
 			[number := 10 * number + digit.
 			power := power * 10.
 			currentCharacter := readStream nextAvailable].
-	^number / power asFloat!
+	^number / power!
 
 parseNumberInteger
 	| number digit |
@@ -446,6 +474,7 @@ parseListDo:!parsing!private! !
 parseListSingleton!parsing!private! !
 parseMapDo:!parsing!private! !
 parseMapOrListRepresentation!parsing!private! !
+parseMapOrListSingleton!parsing!private! !
 parseNamedInstVarsFor:!parsing!private! !
 parseNumber!parsing!private! !
 parseNumberExponent!parsing!private! !

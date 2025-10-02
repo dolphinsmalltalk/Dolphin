@@ -155,6 +155,9 @@ contents
 		add: #('Core\Contributions\svenc\STON\STON-Core.pax' #plain #imageBased);
 		add: #('Core\Contributions\svenc\STON\STON-Text support.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-Core.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-MVP.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-Legacy Date & Time.pax' #plain #imageBased);
 		yourself.
 
 	^contents!

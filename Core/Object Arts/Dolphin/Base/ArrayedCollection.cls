@@ -104,6 +104,20 @@ do: operation
 
 	1 to: self size do: [:i | operation value: (self at: i)]!
 
+do: aMonadicValuable separatedBy: aNiladicValuable
+	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
+
+	"Implementation Note: As elegant as the <Collection> implementation is, it is not particularly efficient as it requires two full blocks. Therefore we override here for efficiency, as this is a very useful operation for printing and joining."
+
+	| count |
+	(count := self size) == 0 ifTrue: [^self].
+	aMonadicValuable value: (self at: 1).
+	2 to: count
+		do: 
+			[:i |
+			aNiladicValuable value.
+			aMonadicValuable value: (self at: i)]!
+
 findFirst: discriminator
 	"Answer the index of the first element of the receiver for which the monadic
 	valuable argument, discriminator, evaluates to true. If there are no such elements,
@@ -236,6 +250,7 @@ copyFrom:to:!public! !
 decodeAt:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
 do:!debugger-step through!enumerating!public! !
+do:separatedBy:!enumerating!public! !
 findFirst:!public!searching! !
 identityIncludes:!public!searching! !
 includes:!public!searching! !

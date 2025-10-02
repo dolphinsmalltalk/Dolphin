@@ -44,12 +44,16 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Collection Arithmetic'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Object Arts\Dolphin\System\STON\Dolphin STON-Legacy Date & Time'
+	'..\..\..\Object Arts\Dolphin\System\STON\Dolphin STON-MVP'
 	'STON-Core'
 	'..\..\Camp Smalltalk\SUnit\SUnit').
 
 package setManualPrerequisites: #(
 	'Dolphin Anonymous Classes'
-	'Dolphin Collection Arithmetic').
+	'Dolphin Collection Arithmetic'
+	'Dolphin STON-Legacy Date & Time'
+	'Dolphin STON-MVP').
 
 package!
 
