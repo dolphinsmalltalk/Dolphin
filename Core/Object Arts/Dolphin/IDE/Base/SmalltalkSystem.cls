@@ -3995,6 +3995,9 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self as: (STBSingletonProxy forClass: self class)!
 
+stonOn: stonWriter
+	stonWriter writeObject: self listSingleton: #current!
+
 suggestedWord: aString 
 	| start stream suggestion |
 	suggestion := aString isEmpty 
@@ -4633,6 +4636,7 @@ sourceManager!commands!public! !
 splashShowAtStartup!accessing!public! !
 splashShowAtStartup:!accessing!public! !
 stbSaveOn:!binary filing!public! !
+stonOn:!public!ston! !
 suggestedWord:!helpers!private! !
 systemEnvironment!commands!private! !
 systemFolder!accessing!public! !

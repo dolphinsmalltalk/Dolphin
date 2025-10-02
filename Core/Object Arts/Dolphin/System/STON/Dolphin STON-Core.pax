@@ -1,0 +1,519 @@
+﻿| package |
+package := Package name: 'Dolphin STON-Core'.
+package paxVersion: 1;
+	basicComment: 'Dolphin STON support
+Copyright (c) Object Arts Ltd, 2019'.
+
+package classNames
+	add: #DolphinSTONCStyleCommentsSkipStream;
+	add: #DolphinSTONReader;
+	add: #DolphinSTONReaderError;
+	add: #DolphinSTONReference;
+	add: #DolphinSTONWriter;
+	yourself.
+
+package methodNames
+	add: #BlockClosure -> #fromSton:;
+	add: #BlockClosure -> #stonOn:;
+	add: #ByteArray -> #hex;
+	add: #CompiledCode -> #fromSton:;
+	add: #CompiledCode -> #stonOn:;
+	add: #ExternalLibrary -> #stonOn:;
+	add: #GUID -> #stonOn:;
+	add: #MessageSequence -> #stonOn:;
+	add: #ProcessorScheduler -> #stonOn:;
+	add: #SingletonSearchPolicy -> #stonOn:;
+	add: #SortedCollection -> #fromSton:;
+	add: #SortedCollection -> #stonOn:;
+	add: #STONCStyleCommentsSkipStream -> #skipSeparators;
+	add: #SystemDictionary -> #stonOn:;
+	add: 'ByteArray class' -> #readHexFrom:;
+	add: 'ExternalLibrary class' -> #fromSton:;
+	add: 'Float class' -> #fromSton:;
+	add: 'GUID class' -> #fromSton:;
+	add: 'MessageSequence class' -> #fromSton:;
+	add: 'Model class' -> #stonAllInstVarNames;
+	add: 'Object class' -> #fromSton:;
+	add: 'ProcessorScheduler class' -> #fromSton:;
+	add: 'SearchPolicy class' -> #fromSton:;
+	add: 'SingletonSearchPolicy class' -> #stonName;
+	add: 'SortedCollection class' -> #fromSton:;
+	add: 'SortedCollection class' -> #stonAllInstVarNames;
+	add: 'STON class' -> #icon;
+	add: 'STONCStyleCommentsSkipStream class' -> #icon;
+	add: 'STONCStyleCommentsSkipStream class' -> #new;
+	add: 'STONJSON class' -> #icon;
+	add: 'STONReader class' -> #icon;
+	add: 'STONReader class' -> #new;
+	add: 'STONReference class' -> #icon;
+	add: 'STONStreamWriter class' -> #icon;
+	add: 'STONWriter class' -> #icon;
+	add: 'STONWriter class' -> #new;
+	add: 'SystemDictionary class' -> #fromSton:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\..\..\Contributions\svenc\STON\STON-Core').
+
+package!
+
+"Class Definitions"!
+
+STONReaderError subclass: #DolphinSTONReaderError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+STONCStyleCommentsSkipStream subclass: #DolphinSTONCStyleCommentsSkipStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+STONReader subclass: #DolphinSTONReader
+	instanceVariableNames: 'classInstVarMaps currentCharacter objectProperties renamedClasses'
+	classVariableNames: 'ClassChars ClassStartChars EscapeChars HexDigitValues'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+STONReference subclass: #DolphinSTONReference
+	instanceVariableNames: 'refCount'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+STONWriter subclass: #DolphinSTONWriter
+	instanceVariableNames: 'classInstVarMaps stringQuote'
+	classVariableNames: 'ExtendedCharacters'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Loose Methods"!
+
+!BlockClosure methodsFor!
+
+fromSton: stonReader
+	| instVars |
+	instVars := stonReader instVarMapFor: BlockClosure.
+	stonReader parseMapDo: 
+			[:name :value |
+			name == #copiedValues
+				ifTrue: 
+					[| count |
+					count := value size.
+					self resize: count.
+					value
+						replaceElementsOf: self
+						from: 1
+						to: count
+						startingAt: 1]
+				ifFalse: [self instVarAt: (instVars at: name) put: value]]!
+
+stonOn: stonWriter
+	stonWriter writeObject: self
+		streamMap: 
+			[:dictionary |
+			"BlockClosures have a fixed set of inst vars that cannot be changed"
+			BlockClosure instVarNames
+				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
+			dictionary at: #copiedValues put: self copiedValues]! !
+
+!BlockClosure categoriesForMethods!
+fromSton:!public! !
+stonOn:!public!ston! !
+!
+
+!ByteArray methodsFor!
+
+hex
+	"Answer a hexadecimal representation of the receiver"
+
+	^self asHexString! !
+
+!ByteArray categoriesForMethods!
+hex!public! !
+!
+
+!ByteArray class methodsFor!
+
+readHexFrom: aString
+	^self fromHexString: aString! !
+
+!ByteArray class categoriesForMethods!
+readHexFrom:!public!ston! !
+!
+
+!CompiledCode methodsFor!
+
+fromSton: stonReader
+	| instVars |
+	instVars := stonReader instVarMapFor: CompiledCode.
+	stonReader parseMapDo: 
+			[:name :value |
+			name == #literals
+				ifTrue: 
+					[| count |
+					count := value size.
+					self resize: count.
+					value
+						replaceElementsOf: self
+						from: 1
+						to: count
+						startingAt: 1]
+				ifFalse: [self instVarAt: (instVars at: name) put: value]]!
+
+stonOn: stonWriter
+	stonWriter writeObject: self
+		streamMap: 
+			[:dictionary |
+			"CompiledMethods have a fixed set of inst vars that cannot be changed"
+			CompiledCode instVarNames
+				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
+			"Store the indexable fields as a literals list"
+			dictionary at: #literals put: self literals]! !
+
+!CompiledCode categoriesForMethods!
+fromSton:!public! !
+stonOn:!public!ston! !
+!
+
+!ExternalLibrary methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self listSingleton: #default! !
+
+!ExternalLibrary categoriesForMethods!
+stonOn:!public!ston! !
+!
+
+!ExternalLibrary class methodsFor!
+
+fromSton: stonReader
+	stonReader parseListSingleton.
+	^self default! !
+
+!ExternalLibrary class categoriesForMethods!
+fromSton:!public!ston! !
+!
+
+!Float class methodsFor!
+
+fromSton: stonReader
+	| argument |
+	argument := stonReader parseListSingleton.
+	argument isNumber ifTrue: [^argument].
+	"Replace #perform: in standard STON code with a dictionary lookup. Although guarded, #perform: is best avoided in a deserializer for security reasons."
+	^(##(IdentityDictionary withAll: {
+				#nan -> Float.NaN.
+				#infinity -> Float.Infinity.
+				#negativeInfinity -> Float.NegativeInfinity
+			})
+		lookup: argument) ifNil: [stonReader error: 'special Float not recognized']! !
+
+!Float class categoriesForMethods!
+fromSton:!public!ston! !
+!
+
+!GUID methodsFor!
+
+stonOn: stonWriter
+	"Use a hex representation"
+	
+	stonWriter writeObject: self listSingleton: self idlString! !
+
+!GUID categoriesForMethods!
+stonOn:!public!ston! !
+!
+
+!GUID class methodsFor!
+
+fromSton: stonReader
+	^ self fromIdlString: stonReader parseListSingleton! !
+
+!GUID class categoriesForMethods!
+fromSton:!public!ston! !
+!
+
+!MessageSequence methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self do: [stonWriter encodeList: list]! !
+
+!MessageSequence categoriesForMethods!
+stonOn:!public!ston! !
+!
+
+!MessageSequence class methodsFor!
+
+fromSton: stonReader
+	"MessageSequences are like OrderedCollections of Messages."
+
+	| collection |
+	collection := self new.
+	stonReader parseListDo: [:each | collection add: each].
+	^collection! !
+
+!MessageSequence class categoriesForMethods!
+fromSton:!public!ston! !
+!
+
+!Model class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the events instance variable as we never want to serialize these."
+
+	^superclass == Object ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
+
+!Model class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+!
+
+!Object class methodsFor!
+
+fromSton: stonReader
+	"Create a new instance and delegate decoding to instance side.
+	Override only when new instance should be created directly (see implementors). "
+
+	| instance |
+	"Divergence from standard STON in using #basicNew. As we are trying to restore an Object, we don't want it to run its normal initialization."
+	instance := self basicNew.
+	"We also call back to the reader to inform it of the new instance, as it can then use this to resolve any internal references. This is only really necessary if the receiving class creates external references as it is being materialized."
+	stonReader registerNewObject: instance.
+	^instance
+		fromSton: stonReader;
+		yourself! !
+
+!Object class categoriesForMethods!
+fromSton:!public!ston! !
+!
+
+!ProcessorScheduler methodsFor!
+
+stonOn: aSTONWriter 
+	aSTONWriter 
+		writeObject: self 
+		do: []! !
+
+!ProcessorScheduler categoriesForMethods!
+stonOn:!public!ston! !
+!
+
+!ProcessorScheduler class methodsFor!
+
+fromSton: stonReader
+	^Processor! !
+
+!ProcessorScheduler class categoriesForMethods!
+fromSton:!public!ston! !
+!
+
+!SearchPolicy class methodsFor!
+
+fromSton: stonReader
+	^stonReader isList
+		ifTrue: [self perform: stonReader parseListSingleton]
+		ifFalse: [super fromSton: stonReader]! !
+
+!SearchPolicy class categoriesForMethods!
+fromSton:!public!ston! !
+!
+
+!SingletonSearchPolicy methodsFor!
+
+stonOn: stonWriter
+	self name
+		ifNil: [stonWriter writeObject: self]
+		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
+
+!SingletonSearchPolicy categoriesForMethods!
+stonOn:!public!ston! !
+!
+
+!SingletonSearchPolicy class methodsFor!
+
+stonName
+	^#SearchPolicy! !
+
+!SingletonSearchPolicy class categoriesForMethods!
+stonName!public!ston! !
+!
+
+!SortedCollection methodsFor!
+
+fromSton: stonReader
+	"Overridden to get back the standard object behavior"
+
+	stonReader parseMapDo: 
+			[:name :value |
+			name == #algorithm
+				ifTrue: [self algorithm: value]
+				ifFalse: 
+					[name == #array
+						ifTrue: 
+							[| size |
+							size := value size.
+							self basicResize: size.
+							self firstIndex: 1 lastIndex: size.
+							1 to: size do: [:i | self basicAt: i put: (value at: i)]]
+						ifFalse: [stonReader error: 'Unexpected SortedCollection variable ' , name]]]!
+
+stonOn: stonWriter
+	"Overridden to ensure the sort block, etc, is preserved"
+
+	stonWriter writeObject: self extra: {#array -> self asArray}! !
+
+!SortedCollection categoriesForMethods!
+fromSton:!public!ston! !
+stonOn:!public!ston! !
+!
+
+!SortedCollection class methodsFor!
+
+fromSton: stonReader
+	"Overwritten to get back the standard object behavior"
+
+	^ self new
+		fromSton: stonReader;
+		yourself!
+
+stonAllInstVarNames
+	"Override to encode my instances using a custom set of instance variables or to define their order."
+	
+	^#('algorithm')! !
+
+!SortedCollection class categoriesForMethods!
+fromSton:!public!ston! !
+stonAllInstVarNames!public!ston! !
+!
+
+!STON class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^self defaultIcon! !
+
+!STON class categoriesForMethods!
+icon!constants!public! !
+!
+
+!STONCStyleCommentsSkipStream methodsFor!
+
+skipSeparators
+	^stream skipSeparators! !
+
+!STONCStyleCommentsSkipStream categoriesForMethods!
+skipSeparators!public! !
+!
+
+!STONCStyleCommentsSkipStream class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon!
+
+new
+	^DolphinSTONCStyleCommentsSkipStream basicNew! !
+
+!STONCStyleCommentsSkipStream class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+!
+
+!STONJSON class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon! !
+
+!STONJSON class categoriesForMethods!
+icon!constants!public! !
+!
+
+!STONReader class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon!
+
+new
+	^DolphinSTONReader basicNew initialize! !
+
+!STONReader class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!private! !
+!
+
+!STONReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon! !
+
+!STONReference class categoriesForMethods!
+icon!constants!public! !
+!
+
+!STONStreamWriter class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon! !
+
+!STONStreamWriter class categoriesForMethods!
+icon!constants!public! !
+!
+
+!STONWriter class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon!
+
+new
+	^DolphinSTONWriter basicNew initialize! !
+
+!STONWriter class categoriesForMethods!
+icon!constants!public! !
+new!public! !
+!
+
+!SystemDictionary methodsFor!
+
+stonOn: aSTONWriter 
+	aSTONWriter 
+		writeObject: self 
+		listSingleton: #Smalltalk! !
+
+!SystemDictionary categoriesForMethods!
+stonOn:!public! !
+!
+
+!SystemDictionary class methodsFor!
+
+fromSton: stonReader
+	| globalName theClass |
+	globalName := stonReader parseListSingleton.
+	theClass := self environment at: globalName.
+	^theClass! !
+
+!SystemDictionary class categoriesForMethods!
+fromSton:!public! !
+!
+
+"End of package definition"!
+

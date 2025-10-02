@@ -62,6 +62,30 @@ jsonMode: aBoolean
 stonCharacters
 	^stonCharacters!
 
+with: object do: block
+	referencePolicy == #ignore ifTrue: [^block value].
+	(objects lookup: object)
+		ifNotNil: 
+			[:index |
+			referencePolicy == #error ifTrue: [^self error: 'shared reference detected'].
+			self writeReference: index]
+		ifNil: 
+			[objects at: object put: objects size + 1.
+			block value]!
+
+writeFloat: aFloat
+	aFloat isFinite
+		ifTrue: [aFloat printOn: writeStream]
+		ifFalse: 
+			[| argument |
+			argument := aFloat isNaN
+						ifTrue: [#nan]
+						ifFalse: [aFloat negative ifTrue: [#negativeInfinity] ifFalse: [#infinity]].
+			self
+				writeObject: aFloat
+				named: #Float
+				listSingleton: argument]!
+
 writeObject: anObject
 	"Override to use cached instance variable names"
 
@@ -98,6 +122,8 @@ instVarMapFor:!private! !
 isSimpleSymbol:!private! !
 jsonMode:!initialize/release!public! !
 stonCharacters!accessing!private! !
+with:do:!helpers!private! !
+writeFloat:!public!writing! !
 writeObject:!public!writing! !
 writeObject:extra:!public!writing! !
 !

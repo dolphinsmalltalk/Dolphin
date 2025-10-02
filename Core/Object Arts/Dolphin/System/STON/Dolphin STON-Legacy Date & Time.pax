@@ -1,0 +1,124 @@
+﻿| package |
+package := Package name: 'Dolphin STON-Legacy Date & Time'.
+package paxVersion: 1;
+	basicComment: 'Dolphin STON Legacy Date/Time support
+Copyright (c) Object Arts Ltd, 2019'.
+
+package methodNames
+	add: #Date -> #stonContainSubObjects;
+	add: #Date -> #stonOn:;
+	add: #Time -> #print24:showSeconds:on:;
+	add: #Time -> #stonContainSubObjects;
+	add: #Time -> #stonOn:;
+	add: 'Date class' -> #fromSton:;
+	add: 'Time class' -> #fromSton:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Legacy Date & Time').
+
+package!
+
+"Loose Methods"!
+
+!Date methodsFor!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	"Use an ISO style YYYY-MM-DD representation.
+	Since my current implementation is time zone offset sensitive, the offset has to be included."
+
+	"Custom implementation for Dolphin replacing the Pharo implementation in STON-Core"
+
+	| stream offset |
+	stream := String writeStream: 15.
+	Locale invariant
+		printDate: self
+		on: stream
+		format: 'yyyy-MM-dd'.
+	offset := Locale timeZoneInformation offsetSeconds.
+	offset = 0
+		ifTrue: [stream nextPut: $Z]
+		ifFalse: 
+			[Locale invariant
+				printDuration: offset seconds
+				on: stream
+				format: '+hh:mm'].
+	stonWriter writeObject: self listSingleton: stream grabContents! !
+
+!Date categoriesForMethods!
+stonContainSubObjects!accessing!public!ston! !
+stonOn:!public!ston! !
+!
+
+!Date class methodsFor!
+
+fromSton: stonReader
+	"Read a ISO YYYY-MM-DD format.
+	Since my current implementation is time zone offset sensitive, the offset has to be taken into account.
+	A missing offset results in the local timezone offset to be used"
+
+	"Customised for Dolphin from the STON-Core original"
+
+	| readStream date |
+	readStream := stonReader parseListSingleton readStream.
+	date := self readFrom: readStream format: 'ymd'.
+	readStream atEnd
+		ifFalse: 
+			[| offset dt |
+			offset := DateAndTime readOffsetFrom: readStream sign: readStream next.
+			dt := DateAndTime year: date year day: date dayOfYear offset: offset.
+			date := dt asLocal asDate].
+	^date! !
+
+!Date class categoriesForMethods!
+fromSton:!instance creation!public! !
+!
+
+!Time methodsFor!
+
+print24: hr24Boolean showSeconds: secsBoolean on: aWriteStream
+	| format |
+	format := hr24Boolean ifTrue: ['HH:mm'] ifFalse: ['hh:mm'].
+	secsBoolean ifTrue: [format := format , ':ssfffffffff'].
+	^Locale smalltalk
+		printTime: self
+		on: aWriteStream
+		format: format!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	"Use an ISO style HH:MM:SS.N representation (with optional nanoseconds)"
+	 
+	stonWriter writeObject: self listSingleton: 
+		(String streamContents: [ :stream |
+			self print24: true showSeconds: true on: stream ])! !
+
+!Time categoriesForMethods!
+print24:showSeconds:on:!public!ston! !
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
+
+!Time class methodsFor!
+
+fromSton: stonReader
+	^ self readFrom: stonReader parseListSingleton readStream! !
+
+!Time class categoriesForMethods!
+fromSton:!public!ston! !
+!
+
+"End of package definition"!
+

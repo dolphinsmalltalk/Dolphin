@@ -16,17 +16,27 @@ package methodNames
 	add: #SequenceableCollection -> #asIntegerArray;
 	add: #SequenceableCollection -> #atRandom;
 	add: #SequenceableCollection -> #doWithIndex:;
+	add: #STONReaderTest -> #testColorBackwardsCompatibility;
 	add: #STONReaderTest -> #testColorInvalid;
+	add: #STONReaderTest -> #testFloatsNonFinite;
 	add: #STONReaderTest -> #testReferenceCycle2;
 	add: #STONReaderTest -> #testSymbolMultiByte;
+	add: #STONWriteReadTest -> #testColorReferences;
 	add: #STONWriteReadTest -> #testCompiledMethodsAndBlocks;
+	add: #STONWriteReadTest -> #testDynamicLinkLibraries;
 	add: #STONWriteReadTest -> #testExtendedCharacters;
+	add: #STONWriteReadTest -> #testFloats2;
+	add: #STONWriteReadTest -> #testFloatsNonFinite;
 	add: #STONWriteReadTest -> #testFramingCalculation;
 	add: #STONWriteReadTest -> #testNamedColors;
 	add: #STONWriteReadTest -> #testPluggableColors;
 	add: #STONWriteReadTest -> #testProcessor;
 	add: #STONWriteReadTest -> #testSearchPolicy;
+	add: #STONWriteReadTest -> #testSortedCollections;
+	add: #STONWriteReadTest -> #testSymbols2;
 	add: #STONWriteReadTest -> #testSystemDictionary;
+	add: #STONWriterTest -> #testColorReferences;
+	add: #STONWriterTest -> #testFloatsNonFinite;
 	add: #STONWriterTest -> #testFramingCalculation;
 	add: #STONWriterTest -> #testIsSimpleSymbol2;
 	add: #STONWriterTest -> #testLegacyDate;
@@ -140,11 +150,23 @@ doWithIndex:!public! !
 
 !STONReaderTest methodsFor!
 
+testColorBackwardsCompatibility
+	"ensure the older Color representation still works"
+
+	self assert: (self materialize: 'Color{#rgb:1072693248}') equals: Color red.
+	self assert: (self materialize: 'Color{#rgb:1072693248}') equals: (self materialize: 'Color[#red]')
+!
+
 testColorInvalid
 	"This is a handy test of DolphinSTONReader>>parseListSingleton"
 	self should: [self materialize: 'Color[#red,#blue]'] raise: STONReaderError matching: [:ex | ex description = 'At character 11: ] expected'].
 	self should: [self materialize: 'Color[]'] raise: STONReaderError matching: [:ex | ex description = 'At character 7: invalid input']
 !
+
+testFloatsNonFinite
+	self assert: (self materialize: 'Float[#nan]') isNaN.
+	self assert: (self materialize: 'Float[#infinity]') equals: Float infinity.
+	self assert: (self materialize: 'Float[#negativeInfinity]') equals: Float negativeInfinity!
 
 testReferenceCycle2
 	| object |
@@ -162,7 +184,9 @@ testSymbolMultiByte
 	self assert: (self materialize: '#''🐬''') equals: #'🐬'! !
 
 !STONReaderTest categoriesForMethods!
+testColorBackwardsCompatibility!public!tests! !
 testColorInvalid!public!tests! !
+testFloatsNonFinite!public!tests! !
 testReferenceCycle2!public!tests! !
 testSymbolMultiByte!public!tests! !
 !
@@ -202,13 +226,46 @@ icon!constants!public! !
 
 !STONWriteReadTest methodsFor!
 
+testColorReferences
+	| light lighter |
+	light := Color red lighter lighter.
+	lighter := light lighter.
+	self serializeAndMaterialize: {Color red. light. lighter. light. Color red. lighter}!
+
 testCompiledMethodsAndBlocks
 	self serializeAndMaterialize: self class methodDictionary!
+
+testDynamicLinkLibraries
+	| libs |
+	libs := STON listClass withAll: {KernelLibrary default.
+						{KernelLibrary default}.
+						CompilerLibrary default.
+						VMLibrary default.
+						CRTLibrary default.
+						CRTLibrary nonblocking}.
+	self serializeAndMaterialize: libs!
 
 testExtendedCharacters
 	| characters |
 	characters := {$£. $\x6587. $\x1F37A. $£. $\x394}.
 	self serializeAndMaterialize: characters!
+
+testFloats2
+	{0.022999999999999854.
+		4.999999999999996.
+		-4.999999999999996.
+		0.333333333333.
+		Float zero.
+		Float negativeZero.
+		Float fmin.
+		Float fmax.
+		Float pi.
+		Float e.
+		0.00001} do: [:each | self serializeAndMaterialize: {each. each}]!
+
+testFloatsNonFinite
+	self serializeAndMaterialize: {Float infinity. Float negativeInfinity}.
+	self assert: (self materialize: (self serialize: Float nan)) isNaN!
 
 testFramingCalculation
 	| objects |
@@ -236,21 +293,74 @@ testSearchPolicy
 	objects := { SearchPolicy always. SearchPolicy association. SearchPolicy method}.
 	self serializeAndMaterialize: objects!
 
+testSortedCollections
+	| collections materialized |
+	collections := STON listClass withAll: {SortedCollection new.
+						SortedCollection new: 0.
+						#(5 3 7 2 1 4 10 9 8 6) asSortedCollection.
+						#(5 3 7 2 1 4 10 9 8 6) asSortedCollection: [:a :b | a < b].
+						#(5 3 7 2 1 4 10 9 8 6) asSortedCollection: [:a :b | a > b].
+						#('****' '*' '*****' '**' '***') asSortedCollection: [:a :b | a size < b size].
+						#('****' '*' '*****' '**' '***') asSortedCollection: [:a :b | a size > b size].
+						(#(nil 5 3 7 2 1 4 10 nil 9 8 6)
+							asSortedCollection: [:a :b | a isNil or: [b notNil and: [a < b]]])
+							removeFirst;
+							yourself.
+						(#(5 3 7 2 1 4 10 nil 9 8 nil 6)
+							asSortedCollection: [:a :b | a isNil or: [b notNil and: [a > b]]])
+							removeLast;
+							yourself}.
+	materialized := self serializeAndMaterialize: collections.
+	"Verify the sort algo was restored correctly."
+	materialized do: 
+			[:each |
+			| before sorted |
+			before := each asArray.
+			sorted := each reSort asArray.
+			self assert: before equals: sorted]!
+
+testSymbols2
+	| symbols |
+	"simple symbols"
+	symbols := #( #foo123 #'123foo' #'punctuation-_./' #'_Foo' #'/root' #'---' #'.st' ).
+	self serializeAndMaterialize: symbols.
+	"non-simple symbols"
+	symbols := #( #'les-élèves-français' #'euro-€' #'ångström' ).
+	self serializeAndMaterialize: symbols.!
+
 testSystemDictionary
 	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
 
 !STONWriteReadTest categoriesForMethods!
+testColorReferences!public!tests! !
 testCompiledMethodsAndBlocks!public!tests! !
+testDynamicLinkLibraries!public!tests! !
 testExtendedCharacters!public!tests! !
+testFloats2!public!tests! !
+testFloatsNonFinite!public!tests! !
 testFramingCalculation!public!tests! !
 testNamedColors!public!tests! !
 testPluggableColors!public!tests! !
 testProcessor!public!tests! !
 testSearchPolicy!public!tests! !
+testSortedCollections!public!tests! !
+testSymbols2!public!tests! !
 testSystemDictionary!public!tests! !
 !
 
 !STONWriterTest methodsFor!
+
+testColorReferences
+	| serialized light |
+	light := Color red lighter lighter.
+	serialized := self serialize: {Color red. light. light. light. Color red. light}.
+	self assert: serialized
+		equals: '[Color[#red],Color{#red:1.0,#green:0.063,#blue:0.063,#alpha:1.0},@3,@3,@2,@3]'!
+
+testFloatsNonFinite
+	self assert: (self serialize: Float nan) equals: 'Float[#nan]'.
+	self assert: (self serialize: Float infinity) equals: 'Float[#infinity]'.
+	self assert: (self serialize: Float negativeInfinity) equals: 'Float[#negativeInfinity]'!
 
 testFramingCalculation
 	self assert: (self serialize: FramingCalculation fixedParentLeft) equals: 'FramingCalculation[#fixedParentLeft]'!
@@ -286,6 +396,8 @@ testSymbolMultiByte
 	self assert: (self serialize: #'🐬') equals: '#''🐬'''! !
 
 !STONWriterTest categoriesForMethods!
+testColorReferences!public!tests! !
+testFloatsNonFinite!public!tests! !
 testFramingCalculation!public!tests! !
 testIsSimpleSymbol2!public!tests! !
 testLegacyDate!public!tests! !

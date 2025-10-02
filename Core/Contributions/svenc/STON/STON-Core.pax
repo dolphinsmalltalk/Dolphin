@@ -66,8 +66,6 @@ package methodNames
 	add: #Class -> #stonOn:;
 	add: #ClassDescription -> #stonContainSubObjects;
 	add: #Collection -> #stonOn:;
-	add: #Color -> #stonContainSubObjects;
-	add: #Date -> #stonContainSubObjects;
 	add: #DateAndTime -> #stonContainSubObjects;
 	add: #DateAndTime -> #stonOn:;
 	add: #Dictionary -> #stonOn:;
@@ -87,16 +85,12 @@ package methodNames
 	add: #Object -> #stonPostReferenceResolution;
 	add: #Object -> #stonProcessSubObjects:;
 	add: #Object -> #stonShouldWriteNilInstVars;
-	add: #Point -> #stonOn:;
 	add: #ScaledDecimal -> #stonOn:;
 	add: #SequenceableCollection -> #stonOn:;
 	add: #Set -> #stonPostReferenceResolution;
 	add: #String -> #stonContainSubObjects;
 	add: #String -> #stonOn:;
 	add: #Symbol -> #stonOn:;
-	add: #Time -> #print24:showSeconds:on:;
-	add: #Time -> #stonContainSubObjects;
-	add: #Time -> #stonOn:;
 	add: #UndefinedObject -> #stonContainSubObjects;
 	add: #UndefinedObject -> #stonOn:;
 	add: 'Bag class' -> #fromSton:;
@@ -110,10 +104,8 @@ package methodNames
 	add: 'Metaclass class' -> #fromSton:;
 	add: 'Object class' -> #stonAllInstVarNames;
 	add: 'Object class' -> #stonName;
-	add: 'Point class' -> #fromSton:;
 	add: 'SequenceableCollection class' -> #fromSton:;
 	add: 'String class' -> #findFirstInString:inSet:startingAt:;
-	add: 'Time class' -> #fromSton:;
 	yourself.
 
 package globalNames
@@ -128,10 +120,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
-	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base').
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
 
 package!
 
@@ -379,24 +368,6 @@ fromSton: stonReader
 fromSton:!public!ston! !
 !
 
-!Color methodsFor!
-
-stonContainSubObjects
-	^ false! !
-
-!Color categoriesForMethods!
-stonContainSubObjects!public!ston! !
-!
-
-!Date methodsFor!
-
-stonContainSubObjects 
-	^ false! !
-
-!Date categoriesForMethods!
-stonContainSubObjects!accessing!public!ston! !
-!
-
 !DateAndTime methodsFor!
 
 stonContainSubObjects 
@@ -635,33 +606,6 @@ stonAllInstVarNames!public!ston! !
 stonName!public!ston! !
 !
 
-!Point methodsFor!
-
-stonOn: stonWriter
-	stonWriter writeObject: self streamShortList: [ :array |
-		array add: x; add: y ]! !
-
-!Point categoriesForMethods!
-stonOn:!public!ston! !
-!
-
-!Point class methodsFor!
-
-fromSton: stonReader
-	"Point class>>new in Dolphin answers the immutable singleton zero instance, so we need to special case."
-
-	| answer |
-	answer := self basicNew.
-	stonReader parseListDo: 
-			[:each :index |
-			index == 1 ifTrue: [answer x: each].
-			index == 2 ifTrue: [answer y: each]].
-	^answer! !
-
-!Point class categoriesForMethods!
-fromSton:!public! !
-!
-
 !ScaledDecimal methodsFor!
 
 stonOn: stonWriter
@@ -739,42 +683,6 @@ stonOn: stonWriter
 
 !Symbol categoriesForMethods!
 stonOn:!public!ston! !
-!
-
-!Time methodsFor!
-
-print24: hr24Boolean showSeconds: secsBoolean on: aWriteStream
-	| format |
-	format := hr24Boolean ifTrue: ['HH:mm'] ifFalse: ['hh:mm'].
-	secsBoolean ifTrue: [format := format , ':ssfffffffff'].
-	^Locale smalltalk
-		printTime: self
-		on: aWriteStream
-		format: format!
-
-stonContainSubObjects 
-	^ false!
-
-stonOn: stonWriter
-	"Use an ISO style HH:MM:SS.N representation (with optional nanoseconds)"
-	 
-	stonWriter writeObject: self listSingleton: 
-		(String streamContents: [ :stream |
-			self print24: true showSeconds: true on: stream ])! !
-
-!Time categoriesForMethods!
-print24:showSeconds:on:!public!ston! !
-stonContainSubObjects!public!ston! !
-stonOn:!public!ston! !
-!
-
-!Time class methodsFor!
-
-fromSton: stonReader
-	^ self readFrom: stonReader parseListSingleton readStream! !
-
-!Time class categoriesForMethods!
-fromSton:!public!ston! !
 !
 
 !UndefinedObject methodsFor!

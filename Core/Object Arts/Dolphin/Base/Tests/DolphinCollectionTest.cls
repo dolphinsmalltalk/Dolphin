@@ -137,6 +137,17 @@ testDistinct
 					["Order should be preserved"
 					self assert: testSubject asSet asSortedCollection asArray equals: result asArray]]!
 
+testDoSeparatedBy
+	#(#() #($a) #($a $b) #($a $b $c $d $e)) do: 
+			[:each |
+			| subject enumerated separations |
+			subject := self newCollection: each.
+			enumerated := OrderedCollection new.
+			separations := 0.
+			subject do: [:element | enumerated add: element] separatedBy: [separations := separations + 1].
+			self assert: enumerated asArray equals: subject asArray.
+			self assert: separations equals: (subject size - 1 max: 0)]!
+
 testFold
 	| result |
 	#(#($c) #($c $e) #($e $c) #($c $b $e) #($e $b $c) #($b $e $c) #($b $c $e)) do: 
@@ -173,6 +184,7 @@ testAnyone!public!unit tests! !
 testAnySatisfy!public!unit tests! !
 testCount!public!unit tests! !
 testDistinct!public!unit tests! !
+testDoSeparatedBy!public!unit tests! !
 testFold!public!unit tests! !
 testSingle!public!unit tests! !
 !
