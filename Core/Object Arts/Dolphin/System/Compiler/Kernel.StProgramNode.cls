@@ -235,7 +235,15 @@ isImmediateNode
 	^false!
 
 isInStaticExpression
-	^self scope methodScope node isStaticExpressionNode!
+	scope
+		ifNil: 
+			[| current next |
+			current := self.
+			[(next := current parent) isNil] whileFalse: 
+					[next isStaticExpressionNode ifTrue: [^true].
+					current := next].
+			^false].
+	^scope methodScope node isStaticExpressionNode!
 
 isLast: aNode 
 	| children |
@@ -502,7 +510,7 @@ isDirectlyUsed!public!testing! !
 isDynamicArray!public!testing! !
 isEvaluatedFirst!public!testing! !
 isImmediateNode!public!testing! !
-isInStaticExpression!private!transforming! !
+isInStaticExpression!private!testing! !
 isLast:!public!testing! !
 isList!public!testing/matching! !
 isLiteralArray!public!testing! !
