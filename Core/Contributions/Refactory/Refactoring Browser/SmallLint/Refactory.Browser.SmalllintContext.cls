@@ -62,7 +62,8 @@ computeMessages
 	messages := Set new.
 	searcher := ParseTreeSearcher new.
 	searcher
-		matches: 'self `@message: ``@args' do: [:aNode :answer | selfMessages add: aNode selector];
+		matches: 'self `@message: ``@args'
+			do: [:aNode :answer | aNode isInStaticExpression ifFalse: [selfMessages add: aNode selector]];
 		matches: 'super `@message: ``@args' do: [:aNode :answer | superMessages add: aNode selector];
 		matches: '``@receiver `@message: ``@args' do: [:aNode :answer | messages add: aNode selector].
 	searcher executeTree: self parseTree initialAnswer: nil!
