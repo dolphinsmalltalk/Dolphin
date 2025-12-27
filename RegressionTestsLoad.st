@@ -11,6 +11,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests.pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Gdiplus\Tests\Gdiplus Tests.pax';
 	install: 'Core\Contributions\Camp Smalltalk\SUnit\SUnitTests.pax';
+	install: 'Core\Contributions\Camp Smalltalk\SUnit\SUnit-MockObjects-Tests.pax';
 	install: 'Core\Contributions\Camp Smalltalk\ANSI\Tests\CS ANSI Tests.pax';
 	install: 'Core\Contributions\IDB\Tests\IDB Method History Tests.pax';
 	install: 'Core\Contributions\Solutions Software\Tests\SSW Widget Enhancements Tests.pax';

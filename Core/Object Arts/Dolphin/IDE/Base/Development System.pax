@@ -188,6 +188,7 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #isVisiblyAbstract)
 	#(#{Core.ClassDescription} #methodsFor:)
 	#(#{Core.ClassDescription} #methodsFor:stamp:)
+	#(#{Core.ClassDescription} #methodsFor:stamp:prior:)
 	#(#{Core.ClassDescription} #model)
 	#(#{Core.ClassDescription} #newInstanceAspect:class:)
 	#(#{Core.ClassDescription} #parseContext)
@@ -2469,23 +2470,23 @@ methodsFor: categoryName
 	first that the category name doesn''t, falsely, appear hierarchical."
 
 	| useName |
-	useName := categoryName copyReplacing: #{Category.Separator} value withObject: $/.
+	useName := categoryName copyReplacing: #{Core.Category.Separator} value withObject: $/.
 	^ChunkReader
 		do: [:chunkString :filer | self compile: chunkString classified: useName]
 		inContext: self
 		atEnd: []!
 
-methodsFor: name stamp: aString
-	"Answer a chunk reader to read and compile method chunks for the receiver
-	to be classified into the method category with the specified <readableString> name.
-	The stamp is ignored. This method is for compatibility with the Pharo fileout format."
+methodsFor: categoryName stamp: iso8601String
+	"Answer a chunk reader to read and compile method chunks for the receiver to be classified into the method category with the specified <readableString> name.
+	The timestamp is ignored. This method is for compatibility with a Pharo fileout format."
 
-	| useName |
-	useName := name copyReplacing: #{Category.Separator} value withObject: $/.
-	^ChunkReader
-		do: [:chunkString :filer | self compile: chunkString classified: useName]
-		inContext: self
-		atEnd: []!
+	^self methodsFor: categoryName!
+
+methodsFor: name stamp: iso8601String prior: anInteger
+	"Answer a chunk reader to read and compile method chunks for the receiver to be classified into the method category with the specified <readableString> name.
+	The timestamp and prior change position are ignored. This method is for compatibility with a Pharo fileout format."
+
+	^self methodsFor: name stamp: iso8601String!
 
 model
 	^SmalltalkSystem current!
@@ -2541,6 +2542,7 @@ isDeprecated!public!source filing! !
 isVisiblyAbstract!private!testing! !
 methodsFor:!public!source filing-methods! !
 methodsFor:stamp:!public!source filing-methods!squeak! !
+methodsFor:stamp:prior:!public!source filing-methods!squeak! !
 model!public!source filing-methods! !
 newInstanceAspect:class:!adapters!private! !
 parseContext!public!source filing-methods! !

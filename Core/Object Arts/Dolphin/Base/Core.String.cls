@@ -748,6 +748,11 @@ hashOrdinalsIgnoringCase
 	<primitive: 227>
 	^(self asUtf8String collect: [:each | each caseFolded]) hash!
 
+includesSubstring: aString
+	"Answer whether the receiver contains the `String` argument."
+
+	^aString isEmpty or: [(self findString: aString startingAt: 1) > 0]!
+
 indexOfSubCollection: aSequencedReadableCollection startingAt: startInteger
 	"Answer the <integer> index of the next occurrence within the receiver of the <sequencedReadableCollection> sub-sequence, starting at the specified <integer> index. If there are no such occurrences (or the search sequence is empty), answer 0."
 
@@ -1314,6 +1319,7 @@ formatWith:with:with:with:!printing!public! !
 formatWithArguments:!printing!public! !
 hash!comparing!public! !
 hashOrdinalsIgnoringCase!comparing!public! !
+includesSubstring:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 isString!public!testing! !
 join:!printing!public! !

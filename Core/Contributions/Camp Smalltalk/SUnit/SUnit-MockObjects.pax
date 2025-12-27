@@ -1,0 +1,104 @@
+﻿| package |
+package := Package name: 'SUnit-MockObjects'.
+package paxVersion: 2.1;
+	basicComment: 'A package providing simple mock objects for testing. Derived from Giovanni Corriga''s SUnit-MockObjects in Pharo.'.
+
+
+package setClassNames: #(
+	#{XProgramming.SUnit.MockBasicObject}
+	#{XProgramming.SUnit.MockMessageSend}
+	#{XProgramming.SUnit.MockObject}
+	#{XProgramming.SUnit.MockUnorderedObject}
+).
+
+package setMethodNames: #(
+	#(#{Kernel.BlockClosure} #valueWithPossibleArgs:)
+	#(#{XProgramming.SUnit.TestCase} #verify:)
+).
+
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'SUnit'
+	'SUnitPreload'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Object
+	subclass: #'XProgramming.SUnit.MockMessageSend'
+	instanceVariableNames: 'selector arguments argc behavior'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Kernel.ProtoObject
+	subclass: #'XProgramming.SUnit.MockBasicObject'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+XProgramming.SUnit.MockBasicObject
+	subclass: #'XProgramming.SUnit.MockObject'
+	instanceVariableNames: 'messages'
+	classVariableNames: 'Any'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+XProgramming.SUnit.MockBasicObject
+	subclass: #'XProgramming.SUnit.MockUnorderedObject'
+	instanceVariableNames: 'vocabularyDictionary'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Kernel.BlockClosure methodsFor!
+
+valueWithPossibleArgs: anArray
+	"Execute the receiver with the correct number of arguments taken from the argument."
+	"([:x | x + 1] valueWithPossibleArgs: #( 13 12 15)) >>> 14
+	"
+	"([:x :y | x + y] valueWithPossibleArgs: #( 13 12 15)) >>> 25
+	"
+	"([:x :y :z | x + y + z] valueWithPossibleArgs: #( 13 12 15)) >>> 40
+	"
+	"([:x :y :z | x + y + z] valueWithPossibleArgs: #( 13 12 15)) >>> 40
+	"
+	| numArgs |
+	numArgs := self argumentCount.
+	^numArgs == 0
+		ifTrue: [self value]
+		ifFalse:
+			[self valueWithArguments:
+				(numArgs == anArray size
+					ifTrue: [anArray]
+					ifFalse:
+						[numArgs > anArray size
+							ifTrue: [anArray, (Array new: numArgs - anArray size)]
+							ifFalse: [anArray copyFrom: 1 to: numArgs]])]! !
+
+!Kernel.BlockClosure categoriesForMethods!
+valueWithPossibleArgs:!public! !
+!
+
+!XProgramming.SUnit.TestCase methodsFor!
+
+verify: aMockObject
+	"Verify that all the messages have been consumed and that the test did not failed."
+
+	^aMockObject verifyIn: self! !
+
+!XProgramming.SUnit.TestCase categoriesForMethods!
+verify:!asserting!public! !
+!
+
+"End of package definition"!
+
