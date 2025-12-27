@@ -2,14 +2,13 @@
 
 MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
-	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Library MarginStylesOffset'
+	classVariableNames: 'AnnotationStylesOffset BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Library MarginStylesOffset'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
 
 ScintillaView guid: (GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
 
 ScintillaView addClassConstant: 'AnnotationStylesOffset' value: 16r200!
-ScintillaView addClassConstant: 'BackgroundDwellEvents' value: 16r4!
 ScintillaView addClassConstant: 'BraceHilightingMask' value: 16r1!
 ScintillaView addClassConstant: 'DefaultCallTipTabWidth' value: 16r20!
 ScintillaView addClassConstant: 'FoldingMask' value: 16r2!
@@ -2533,12 +2532,6 @@ findStyleStart: aSymbol before: anInteger
 	[start > 0 and: [(self styleIdAt: start) == id]] whileTrue: [start := start - 1].
 	^start + 1!
 
-firstVisibleLine: anInteger
-	"Scroll so that a display line is at the top of the display."
-
-	Notification deprecated.
-	self lineScroll: anInteger!
-
 foldAll
 	"Collapse the document at the fold points identified by the language lexer."
 
@@ -3210,12 +3203,6 @@ indexOfLine: lineInteger column: columnInteger
 				wParam: lineInteger - 1
 				lParam: columnInteger - 1) + 1]!
 
-indicatorCount
-	"Answer the number of indicators configured for the receiver. With the advent of 'modern'
-	indicators, this is now fixed at 32 and not related to the number of style bits used."
-
-	^INDICATOR_IME!
-
 indicatorIdFromName: anIntegerOrSymbol
 	^anIntegerOrSymbol isInteger
 		ifTrue: 
@@ -3500,18 +3487,6 @@ isAutoCompletionTruncating: dropRestOfWordBoolean
 				wParam: dropRestOfWordBoolean asParameter
 				lParam: 0]!
 
-isBackgroundDwellEnabled
-	"Answer whether dwell (hover) events are generated even when the control does not have focus.
-	There is some overhead in supporting this, so it is disabled by default."
-
-	^scFlags allMask: BackgroundDwellEvents!
-
-isBackgroundDwellEnabled: aBoolean 
-	"Set whether dwell (hover) events are generated even when the control does not have focus."
-
-	scFlags := scFlags mask: BackgroundDwellEvents set: aBoolean.
-	(aBoolean and: [self isOpen]) ifTrue: [self startDwellTimer]!
-
 isBraceAt: anInteger
 	| style |
 	style := (self styleAt: anInteger) name.
@@ -3636,32 +3611,6 @@ isDrawingBuffered: bufferedBoolean
 				directFunction: this
 				msg: SCI_SETBUFFEREDDRAW
 				wParam: bufferedBoolean asParameter
-				lParam: 0]!
-
-isDrawingTwoPhase
-	"Is drawing done in two phases with backgrounds drawn before foregrounds?"
-
-	#deprecated.
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETTWOPHASEDRAW
-				wParam: 0
-				lParam: 0) asBoolean]!
-
-isDrawingTwoPhase: twoPhaseBoolean
-	"In twoPhaseDraw mode, drawing is performed in two phases, first the background and then the
-	foreground. This avoids chopping off characters that overlap the next run."
-
-	#deprecated.
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTWOPHASEDRAW
-				wParam: twoPhaseBoolean asParameter
 				lParam: 0]!
 
 isFoldingEnabled
@@ -4844,27 +4793,9 @@ onEraseRequired: aColorEvent
 
 	^nil!
 
-onKillFocus
-	"Handler for loss of focus"
-
-	"Implementation Note: Scintilla does not stop its caret/dwell timer when it loses focus,
-	causing needless consumption of CPU (and network bandwidth if using RDC) when in the
-	background. The timer is needed, however, if background dwell events are wanted."
-
-	self isBackgroundDwellEnabled ifFalse: [self stopDwellTimer].
-	^super onKillFocus!
-
 onRestoredFromProxy
 	styleIdMap := Array new: (STYLE_LASTPREDEFINED max: 255) + 1.
 	currentTextStyles do: [:each | styleIdMap at: each basicId + 1 put: each]!
-
-onSetFocus
-	"Handler for set focus event"
-
-	"See #onKillFocus"
-
-	self isBackgroundDwellEnabled ifFalse: [self startDwellTimer].
-	^super onSetFocus!
 
 onViewCreated
 	"The receiver window has just been created. Populate the control with any non-default state
@@ -8363,10 +8294,6 @@ sciSetEdgeColour: edgeColourColor
 				wParam: edgeColourColor rgbCode
 				lParam: 0]!
 
-sciSetEdgeColumn: columnInteger
-	#deprecated. "For reading old view resources"
-	self edgeColumn: columnInteger + 1!
-
 sciSetEdgeMode: edgeModeInteger
 	"Private - The edge may be displayed by a line (EDGE_LINE/EDGE_MULTILINE) or by highlighting
 	text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE)."
@@ -10400,9 +10327,6 @@ splitTarget: pixelWidthInteger
 				wParam: pixelWidthInteger
 				lParam: 0]!
 
-startDwellTimer
-	self setTimer: 1 interval: 100!
-
 startRecording
 	"Start notifying the container of all key presses and commands."
 
@@ -10451,9 +10375,6 @@ state
 									argument: attrib.
 						answer add: msg]].
 	^answer!
-
-stopDwellTimer
-	self killTimer: 1!
 
 stopRecording
 	"Stop notifying the container of all key presses and commands."
@@ -11586,7 +11507,6 @@ findAutoCompletionEntry:!**auto generated**!autocompletion!public!scintilla inte
 findMatchingBrace:!brace highlighting!public! !
 findString:startingAt:!public!searching & replacing! !
 findStyleStart:before:!brace highlighting!public! !
-firstVisibleLine:!public!scrolling! !
 foldAll!commands!folding!public! !
 foldChildren:action:!**auto generated**!folding!public!scintilla interface! !
 foldFlags!folding!public! !
@@ -11658,7 +11578,6 @@ indentationGuides!public!tabs & indentation guides! !
 indentationGuides:!public!tabs & indentation guides! !
 indentationOfLine:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 indexOfLine:column:!**auto generated**!enquiries!private!scintilla interface!selection! !
-indicatorCount!constants!indicators!public! !
 indicatorIdFromName:!indicators!private! !
 indicatorMaskAt:!**auto generated**!indicators!public!scintilla interface! !
 indicators!indicators!public! !
@@ -11689,8 +11608,6 @@ isAutoCompletionSingleMatchChosen!**auto generated**!autocompletion!public!scint
 isAutoCompletionSingleMatchChosen:!**auto generated**!autocompletion!public!scintilla interface! !
 isAutoCompletionTruncating!**auto generated**!autocompletion!public!scintilla interface!testing! !
 isAutoCompletionTruncating:!**auto generated**!autocompletion!public!scintilla interface! !
-isBackgroundDwellEnabled!brace highlighting!public! !
-isBackgroundDwellEnabled:!brace highlighting!public! !
 isBraceAt:!brace highlighting!private!testing! !
 isBraceHighlightingEnabled!brace highlighting!public! !
 isBraceHighlightingEnabled:!brace highlighting!public! !
@@ -11705,8 +11622,6 @@ isCurrentLineHighlightedAlways:!**auto generated**!caret, selection, and hotspot
 isCurrentLineMarkedWith:!markers!public!testing! !
 isDrawingBuffered!**auto generated**!other settings!public!scintilla interface!testing! !
 isDrawingBuffered:!**auto generated**!other settings!public!scintilla interface! !
-isDrawingTwoPhase!**auto generated**!public!scintilla interface! !
-isDrawingTwoPhase:!**auto generated**!public!scintilla interface! !
 isFoldingEnabled!folding!public!testing! !
 isFoldingEnabled:!folding!public! !
 isIndicator:setAt:!indicators!public! !
@@ -11816,9 +11731,7 @@ newNotification:!autocompletion!event handling-scintilla!helpers!notifications!p
 newTextBuffer:!helpers!private! !
 nmNotify:!**auto generated**!event handling-win32!private!scintilla interface! !
 onEraseRequired:!event handling!public! !
-onKillFocus!event handling!public! !
 onRestoredFromProxy!binary filing!private! !
-onSetFocus!event handling!public! !
 onViewCreated!event handling!public! !
 parentOfFoldedLine:!**auto generated**!public!scintilla interface! !
 passwordCharacter!accessing!public! !
@@ -12105,7 +12018,6 @@ sciSetCodePage:!**auto generated**!other settings!private!scintilla interface! !
 sciSetControlCharSymbol:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 sciSetDocPointer:!**auto generated**!multiple views!private!scintilla interface! !
 sciSetEdgeColour:!**auto generated**!private!scintilla interface! !
-sciSetEdgeColumn:!long lines!private!scintilla interface! !
 sciSetEdgeMode:!**auto generated**!long lines!private!scintilla interface! !
 sciSetEOLMode:!**auto generated**!line endings!private!scintilla interface! !
 sciSetFoldFlags:!**auto generated**!folding!private!scintilla interface! !
@@ -12294,11 +12206,9 @@ showLinesFrom:to:!**auto generated**!public!scintilla interface! !
 showUserList:id:!autocompletion!public!scintilla interface! !
 showVerticalScrollBar:!**auto generated**!public!scintilla interface!scrolling! !
 splitTarget:!**auto generated**!commands!line wrapping!public!scintilla interface! !
-startDwellTimer!notifications!private! !
 startRecording!**auto generated**!macro recording!public!scintilla interface! !
 startStylingFrom:!**auto generated**!public!scintilla interface!styling! !
 state!accessing!private! !
-stopDwellTimer!notifications!private! !
 stopRecording!**auto generated**!macro recording!public!scintilla interface! !
 stopStyling!public!styling! !
 stringClass!helpers!private! !
@@ -12593,7 +12503,6 @@ initialize
 				yourself).
 	self addClassConstant: 'BraceHilightingMask' value: 1.
 	self addClassConstant: 'FoldingMask' value: 2.
-	self addClassConstant: 'BackgroundDwellEvents' value: 4.
 	self addClassConstant: 'DefaultTextStyles'
 		value: (IdentityDictionary new
 				at: #container put: (self immutableCopyOfCollection: self defaultTextStyles);
