@@ -119,6 +119,11 @@ padTo: anInteger put: anObject
 	delta := anInteger - (self position \\ anInteger).
 	^delta = anInteger ifTrue: [0] ifFalse: [self next: delta put: anObject]!
 
+peekFor: anObject
+	"Determine the response to the message peek. If it is the same as the argument, anObject, then advance the current position and answer true. Otherwise answer false and do not change the current position."
+
+	self errorNotReadable!
+
 position: anInteger
 	"Set the receiver's current position reference for accessing the collection
 	to the argument, anInteger. If the argument is not within the bounds of
@@ -159,6 +164,7 @@ overflowBasicNextPut:!private!writing! !
 overflowNextPut:!private!writing! !
 overflowNextPutAll:!private!writing! !
 padTo:put:!public!writing! !
+peekFor:!public!reading! !
 position:!positioning!public! !
 primitiveBasicNextPut:!private!writing! !
 primitiveNextPut:!private!writing! !

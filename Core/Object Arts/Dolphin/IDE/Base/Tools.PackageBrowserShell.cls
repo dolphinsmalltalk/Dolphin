@@ -226,7 +226,7 @@ browseSystem
 	<commandQuery: #queryBrowseSystem:>
 	| pkgs method class browser |
 	pkgs := self packages.
-	pkgs isEmpty ifTrue: [^super browseSystem].
+	pkgs isEmpty ifTrue: [^self developmentSystem browseSystem].
 	browser := self developmentSystem browseSystemPackages: pkgs.
 	browser isNil ifTrue: [^nil].
 	(currentCard == #methods and: [(method := self selectedMethod) notNil])

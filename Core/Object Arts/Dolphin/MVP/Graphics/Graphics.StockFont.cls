@@ -87,13 +87,6 @@ printOn: aStream
 							ifNotNil: [:const | self class classPool associationAt: const]) displayString;
 				nextPut: $)]!
 
-resolution: aPoint
-	"Sets the logical pixels per inch of the receiver"
-
-	"Ignored"
-
-	!
-
 setId: anInteger
 	id := anInteger.
 	ownsHandle := false.
@@ -120,7 +113,6 @@ createHandle!private!realizing/unrealizing! !
 getLogFont!initializing!private! !
 ownedHandle:!accessing!private! !
 printOn:!development!printing!public! !
-resolution:!accessing!public! !
 setId:!initializing!private! !
 stbFixup:at:!binary filing!public! !
 stbSaveOn:!binary filing!public! !

@@ -81,6 +81,13 @@ findAvailableClass: aBindingReference
 	^(self findResidentClass: aBindingReference)
 		ifNil: [ImportedClasses ifNotNil: [ImportedClasses lookup: (self fullClassKey: aBindingReference)]]!
 
+findOrImportForeignClass: aBindingReference
+	"An attempt is being made by a <ClassLocator> to load a class when the dynamic loading
+	capability is not installed. This is normally available as part of the Web Deployment Kit.
+	Raise an error to the effect that the class cannot be found."
+
+	^self errorClassNotFound: aBindingReference!
+
 findResidentClass
 	"Private - Answer the class referred to by the receiver if it is
 	fully resident in the image."
@@ -193,6 +200,7 @@ errorClassCircularityDetected!exceptions!private! !
 errorClassNotFound:!exceptions!private! !
 findAvailableClass!operations!public! !
 findAvailableClass:!operations!public! !
+findOrImportForeignClass:!operations!private! !
 findResidentClass!operations!private! !
 findResidentClass:!operations!private! !
 fullClassKey!accessing!private! !

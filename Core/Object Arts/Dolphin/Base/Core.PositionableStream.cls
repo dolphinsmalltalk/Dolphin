@@ -238,6 +238,11 @@ on: aCollection
 originalContents
 	^collection!
 
+peekFor: anObject
+	"Determine the response to the message peek. If it is the same as the argument, anObject, then advance the current position and answer true. Otherwise answer false and do not change the current position."
+
+	self subclassResponsibility!
+
 position
 	"Answer the current <integer> position in the stream of  values."
 
@@ -322,6 +327,7 @@ nextUInt16!public!reading! !
 nextUInt32!public!reading! !
 on:!initializing!private! !
 originalContents!accessing!public! !
+peekFor:!public!reading! !
 position!positioning!public! !
 position:!positioning!public! !
 readLimit:!accessing!public! !
