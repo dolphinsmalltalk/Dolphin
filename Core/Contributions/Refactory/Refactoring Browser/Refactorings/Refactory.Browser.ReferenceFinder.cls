@@ -109,12 +109,11 @@ searchForObject
 	objectsLeft isEmpty]
 			whileFalse!
 
-searchIndicesIn: anObject 
-	#rbFix.	"Ignore weak pointers - in Dolphin only indexable instance variables can be weak"
-	anObject isWeak ifTrue: [^nil].
+searchIndicesIn: anObject
+	(anObject getSpecialBehavior allMask: Behavior._IsWeakMask) ifTrue: [^nil].
 	1 to: anObject basicSize
 		do: 
-			[:i | 
+			[:i |
 			| path |
 			(path := self processLinkTo: (anObject basicAt: i) from: anObject) notNil ifTrue: [^path]].
 	^nil!

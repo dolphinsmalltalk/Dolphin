@@ -243,7 +243,7 @@ browseHierarchy
 	method."
 
 	self selectedMethod selector == #doesNotUnderstand: 
-		ifTrue: [self developmentSystem browseHierarchy: self frame receiver class]
+		ifTrue: [self developmentSystem browseHierarchy: self frame receiver basicClass]
 		ifFalse: [self developmentSystem browseClassHierarchyOfMethod: self selectedMethod]!
 
 browseIt
@@ -820,8 +820,10 @@ newLocalsTreeWithRoots: anOrderedCollection
 			[:each |
 			| inspectee |
 			inspectee := [each value] on: Error do: [:ex | ex].
-			(1 to: inspectee class instSize)
-				collect: [:i | ((inspectee instVarAt: i) newAspect: i class: InstVarAspect) accessorFor: inspectee]].
+			(1 to: inspectee basicClass instSize) collect: 
+					[:i |
+					([(inspectee instVarAt: i) newAspect: i class: InstVarAspect] on: Error
+						do: [:ex | InstVarAspect name: i]) accessorFor: inspectee]].
 	^treeModel!
 
 nilVariable

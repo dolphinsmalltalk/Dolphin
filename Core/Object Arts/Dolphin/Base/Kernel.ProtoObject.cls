@@ -111,6 +111,12 @@ error: signalerText
 
 	^Error signal: signalerText!
 
+getSpecialBehavior
+	"Private - Answer the receiver's complete special behavior mask,
+	useful for transferring to copies, etc."
+
+	^self setSpecialBehavior: Behavior._GetSpecialMask!
+
 identityHash
 	"Answer the <integer> identity hash value for the receiver. Be aware that this is based on a
 	16-bit integer randomly generated for each object on first request, so there are only 65536
@@ -143,7 +149,7 @@ isKindOf: candidateClass
 	protocol (if necessary) rather than testing for a particular class."
 
 	<primitive: 57>
-	^self class includesBehavior: candidateClass!
+	^self basicClass includesBehavior: candidateClass!
 
 oneWayBecome: anObject
 	"Make all references to the receiver be references to the argument (i.e. anObject replaces all uses of the receiver, and the receiver's identity and contents are lost). This is the  only form of #become: available in some Smalltalk systems. Can follow a two
@@ -160,7 +166,23 @@ oneWayBecome: anObject
 primitiveFailed: anInteger
 	"Generate an error to the effect that a primitive has failed, including the failure code specified by the primitive."
 
-	^HRESULTError signal: 'Primitive failed' withFailureCode: anInteger! !
+	^HRESULTError signal: 'Primitive failed' withFailureCode: anInteger!
+
+setSpecialBehavior: anInteger
+	"Private - Set the special behavior bits of the receiver according to the low order word of
+	the argument, anInteger. The high order byte of that word specifies the AND (or 'keep')
+	mask, used to specify what bits to leave as they are, and the low order byte of that word
+	specifies the OR (or 'add') mask, used to specify what bits to set. To query the current
+	value, use the mask 16rFF00."
+
+	"Note: Using this operations requires knowledge and care to avoid corrupting object state."
+
+	"Primitive failure reasons: 
+		InvalidParameter1 	- anInteger is not a SmallInteger 
+		ObjectTypeMismatch	- the receiver is an immediate object."
+
+	<primitive: 69>
+	^self primitiveFailed: _failureCode! !
 
 !Kernel.ProtoObject categoriesForMethods!
 ~~!comparing!public! !
@@ -174,10 +196,12 @@ basicSize!accessing!private! !
 become:!mutating!public! !
 doesNotUnderstand:!exceptions!public! !
 error:!exceptions!public! !
+getSpecialBehavior!accessing!private! !
 identityHash!comparing!public! !
 instVarAt:!accessing!private! !
 isKindOf:!public!testing! !
 oneWayBecome:!mutating!public! !
 primitiveFailed:!exceptions!public! !
+setSpecialBehavior:!accessing!private! !
 !
 

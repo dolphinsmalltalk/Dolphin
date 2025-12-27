@@ -39,11 +39,15 @@ getBatchAccessors
 			item == absentCookie
 				ifFalse: 
 					[accessors
-						nextPut: (((item newAspect: eachKey class: self aspectClass)
+						nextPut: (((self newAspect: eachKey ofItem: item)
 								type: nil;
 								yourself) accessorFor: subj)]].
 	(self nextBatch: end + 1) ifNotNil: [:nextBatch | accessors nextPut: nextBatch].
 	^accessors grabContents!
+
+newAspect: aSymbol ofItem: anObject
+	^[anObject newAspect: aSymbol class: self aspectClass] on: Error do: [:each |
+		self aspectClass name: aSymbol]!
 
 publishedAspects
     	"Answer a <LookupTable> of the <Aspect>s published by the receiver.
@@ -55,6 +59,7 @@ publishedAspects
 !Tools.KeyedAspectBatchAccessor categoriesForMethods!
 aspectClass!public! !
 getBatchAccessors!accessing!public! !
+newAspect:ofItem:!accessing!public! !
 publishedAspects!constants!public! !
 !
 
