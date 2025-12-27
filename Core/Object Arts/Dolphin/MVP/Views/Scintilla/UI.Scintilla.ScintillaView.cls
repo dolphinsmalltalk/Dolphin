@@ -8,7 +8,6 @@ UI.MultilineTextEdit
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AnnotationStylesOffset' -> 16r200.
-			'BackgroundDwellEvents' -> 16r4.
 			'BraceHilightingMask' -> 16r1.
 			'CodePages' -> (IdentityDictionary withAll: { 16r0 -> #ansi. 16rFDE9 -> #utf8 }).
 			'DefaultCallTipTabWidth' -> 16r20.
@@ -3292,18 +3291,6 @@ isAutoCompletionTruncating: dropRestOfWordBoolean
 		wParam: dropRestOfWordBoolean asParameter
 		lParam: 0!
 
-isBackgroundDwellEnabled
-	"Answer whether dwell (hover) events are generated even when the control does not have focus.
-	There is some overhead in supporting this, so it is disabled by default."
-
-	^scFlags allMask: BackgroundDwellEvents!
-
-isBackgroundDwellEnabled: aBoolean 
-	"Set whether dwell (hover) events are generated even when the control does not have focus."
-
-	scFlags := scFlags mask: BackgroundDwellEvents set: aBoolean.
-	(aBoolean and: [self isOpen]) ifTrue: [self startDwellTimer]!
-
 isBraceAt: anInteger
 	| style |
 	style := (self styleAt: anInteger) name.
@@ -4503,27 +4490,9 @@ onEraseRequired: aColorEvent
 
 	^nil!
 
-onKillFocus
-	"Handler for loss of focus"
-
-	"Implementation Note: Scintilla does not stop its caret/dwell timer when it loses focus,
-	causing needless consumption of CPU (and network bandwidth if using RDC) when in the
-	background. The timer is needed, however, if background dwell events are wanted."
-
-	self isBackgroundDwellEnabled ifFalse: [self stopDwellTimer].
-	^super onKillFocus!
-
 onRestoredFromProxy
 	styleIdMap := Array new: (STYLE_LASTPREDEFINED max: 255) + 1.
 	currentTextStyles do: [:each | styleIdMap at: each basicId + 1 put: each]!
-
-onSetFocus
-	"Handler for set focus event"
-
-	"See #onKillFocus"
-
-	self isBackgroundDwellEnabled ifFalse: [self startDwellTimer].
-	^super onSetFocus!
 
 onViewCreated
 	"The receiver window has just been created. Populate the control with any non-default state
@@ -9478,9 +9447,6 @@ splitTarget: pixelWidthInteger
 		wParam: pixelWidthInteger
 		lParam: 0!
 
-startDwellTimer
-	self setTimer: 1 interval: 100!
-
 startRecording
 	"Start notifying the container of all key presses and commands."
 
@@ -9522,9 +9488,6 @@ state
 									selector: each first
 									argument: attrib)]].
 	^answer!
-
-stopDwellTimer
-	self killTimer: 1!
 
 stopRecording
 	"Stop notifying the container of all key presses and commands."
@@ -10735,8 +10698,6 @@ isAutoCompletionSingleMatchChosen!**auto generated**!autocompletion!public!scint
 isAutoCompletionSingleMatchChosen:!**auto generated**!autocompletion!public!scintilla interface-autocompletion! !
 isAutoCompletionTruncating!**auto generated**!autocompletion!public!scintilla interface-autocompletion!testing! !
 isAutoCompletionTruncating:!**auto generated**!autocompletion!public!scintilla interface-autocompletion! !
-isBackgroundDwellEnabled!brace highlighting!public!testing! !
-isBackgroundDwellEnabled:!accessing!brace highlighting!public! !
 isBraceAt:!brace highlighting!enquiries!private! !
 isBraceHighlightingEnabled!brace highlighting!public!testing! !
 isBraceHighlightingEnabled:!accessing!brace highlighting!public! !
@@ -10870,9 +10831,7 @@ newLine!**auto generated**!commands-actions!public!scintilla interface-keyboard 
 newNotification:!autocompletion!event handling-scintilla!notifications!private! !
 nmNotify:!**auto generated**!event handling-win32!private! !
 onEraseRequired:!event handling!public! !
-onKillFocus!event handling!public! !
 onRestoredFromProxy!binary filing!private! !
-onSetFocus!event handling!public! !
 onViewCreated!event handling!public! !
 parentOfFoldedLine:!**auto generated**!folding!public!scintilla interface-folding! !
 passwordCharacter!accessing!public! !
@@ -11390,11 +11349,9 @@ showLinesFrom:to:!**auto generated**!folding!public!scintilla interface-folding!
 showUserList:id:!autocompletion!public! !
 showVerticalScrollBar:!**auto generated**!public!scintilla interface-scrolling and automatic scrolling!scrolling! !
 splitTarget:!**auto generated**!line wrapping!public!scintilla interface-line wrapping! !
-startDwellTimer!notifications!private! !
 startRecording!**auto generated**!macro recording!public!scintilla interface-macro recording! !
 startStylingFrom:!**auto generated**!public!scintilla interface-styling!styling! !
 state!accessing!private! !
-stopDwellTimer!notifications!private! !
 stopRecording!**auto generated**!macro recording!public!scintilla interface-macro recording! !
 stopStyling!public!styling! !
 stringClass!constants!private! !
