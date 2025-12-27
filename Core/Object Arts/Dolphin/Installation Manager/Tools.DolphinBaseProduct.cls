@@ -44,6 +44,7 @@ contents
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnit.pax' #plain #imageBased);
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitUI.pax' #plain #imageBased);
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnit (Old Names).pax' #plain #imageBased);
+		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnit-MockObjects.pax' #plain #imageBased);
 		yourself.
 
 	contents

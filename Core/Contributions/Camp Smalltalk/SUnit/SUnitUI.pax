@@ -12,6 +12,8 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{XProgramming class} #icon)
 	#(#{XProgramming.SUnit class} #icon)
+	#(#{XProgramming.SUnit.MockBasicObject class} #icon)
+	#(#{XProgramming.SUnit.MockMessageSend class} #icon)
 	#(#{XProgramming.SUnit.TestCase class} #icon)
 	#(#{XProgramming.SUnit.TestCaseResult class} #icon)
 	#(#{XProgramming.SUnit.TestResource class} #icon)
@@ -36,6 +38,7 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'OA SUnit Extensions'
 	'SUnit'
+	'SUnit-MockObjects'
 	'SUnitPreload'
 ).
 
@@ -72,6 +75,34 @@ icon
 	^TestCase icon! !
 
 !XProgramming.SUnit class categoriesForMethods!
+icon!constants!public! !
+!
+
+!XProgramming.SUnit.MockBasicObject class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	<namespace: Graphics>
+	^##((TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
+		tilecolor: Color lightSeaGreen;
+		yourself)! !
+
+!XProgramming.SUnit.MockBasicObject class categoriesForMethods!
+icon!constants!public! !
+!
+
+!XProgramming.SUnit.MockMessageSend class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	<namespace: Graphics>
+	^##((TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
+		tilecolor: Color lightSeaGreen;
+		yourself)! !
+
+!XProgramming.SUnit.MockMessageSend class categoriesForMethods!
 icon!constants!public! !
 !
 

@@ -1,0 +1,76 @@
+﻿| package |
+package := Package name: 'SUnit-MockObjects-Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{XProgramming.SUnit.MockBasicAPITest}
+	#{XProgramming.SUnit.MockMessageArgumentTest}
+	#{XProgramming.SUnit.MockMessageSendTest}
+	#{XProgramming.SUnit.MockMessageSequenceTest}
+	#{XProgramming.SUnit.MockUnorderedObjectTest}
+	#{XProgramming.SUnit.MockVerifyMessageTest}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'SUnit'
+	'SUnit-MockObjects'
+	'SUnitPreload'
+).
+
+package!
+
+"Class Definitions"!
+
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.MockBasicAPITest'
+	instanceVariableNames: 'mock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.MockMessageArgumentTest'
+	instanceVariableNames: 'mock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.MockMessageSendTest'
+	instanceVariableNames: 'mockMessage testStream'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.MockMessageSequenceTest'
+	instanceVariableNames: 'mock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.MockUnorderedObjectTest'
+	instanceVariableNames: 'mock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.MockVerifyMessageTest'
+	instanceVariableNames: 'mock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

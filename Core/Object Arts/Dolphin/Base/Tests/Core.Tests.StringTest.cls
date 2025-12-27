@@ -685,6 +685,22 @@ testHash
 	abc := self assimilateString: 'abc'.
 	self assert: #abc hash equals: abc hash!
 
+testIncludesSubstring
+
+	self assert: ('testing this string' includesSubstring: 'ring').
+	self assert: ('éèàôüößäóñíá' includesSubstring: '').
+	self assert: ('' includesSubstring: '').
+	self deny: ('éèàôüößäóñíá' includesSubstring: 'a').
+	self assert: ('éèàôüößäóñíá' includesSubstring: 'ßä').
+	self deny: ('kjdsnlksjdf' includesSubstring: 'K').
+	self assert: ('a🐬b' includesSubstring: 'a🐬').
+	self assert: ('a🐬b' includesSubstring: '🐬b').
+	self assert: ('a🐬b' includesSubstring: 'a🐬b').
+	self assert: ('a🐬b' includesSubstring: '🐬').
+	self assert: ('a🐬b' includesSubstring: 'a').
+	self assert: ('a🐬b' includesSubstring: 'b').
+!
+
 testIndexOfStartingAt
 	self indexOfTestCases pairsDo: 
 			[:each :char |
@@ -1460,6 +1476,7 @@ testFormatWith!public!unit tests! !
 testFromAddress!public!unit tests! !
 testFromAtomId!public!unit tests! !
 testHash!public!unit tests! !
+testIncludesSubstring!public!unit tests! !
 testIndexOfStartingAt!public!unit tests! !
 testInvalidComparisons!public!unit tests! !
 testJoin!public!unit tests! !
