@@ -148,7 +148,7 @@ owningPackage: aPackageOrNil
 
 refersToLiteral: anObject
 	^(self = anObject or: [value == anObject and: [self isClassBinding]])
-		or: [environment includesEnvironment: anObject]!
+		or: [anObject class isMeta and: [environment includesEnvironment: anObject]]!
 
 setFlags: anInteger
 	<mutable>

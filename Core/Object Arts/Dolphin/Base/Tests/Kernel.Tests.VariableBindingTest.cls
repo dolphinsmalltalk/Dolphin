@@ -69,7 +69,10 @@ testRefersToLiteral
 	self assert: (method refersToLiteral: subject).
 	self assert: (method refersToLiteral: subject environment).
 	self assert: (method refersToLiteral: subject environment environment).
-	self assert: (method refersToLiteral: subject environment environment environment)!
+	self assert: (method refersToLiteral: subject environment environment environment).
+
+	"Non-Class/VariableBinding literals"
+	self assert: (method refersToLiteral: #refersToBinding:)!
 
 testShortName
 	self assert: (Smalltalk bindings select: [:each | BindingReference isQualifiedName: each shortName])
