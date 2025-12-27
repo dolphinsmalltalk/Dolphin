@@ -20,6 +20,7 @@ tearDown
 	super tearDown!
 
 testDefaultArgs
+	<ignoreNotImplementedSelectors: #(testDefaultBool testDefaultBstr testDefaultDate testDefaultCy testDefaultI1 testDefaultI2 testDefaultI4 testDefaultI8 testDefaultIDispatch testDefaultIUnknown testDefaultUI1 testDefaultUI2 testDefaultUI4 testDefaultR4 testDefaultR8 testDefaultVariant)>
 	| obj tlb |
 	tlb := self tlaTestTypelib.
 	#{TLATESTLib.ITestDefaultArgs} ifDefined: [:class | class comment: nil].

@@ -53,6 +53,9 @@ allDefinedVariableNodesDo: aMonadicValuable
 	self arguments do: aMonadicValuable.
 	super allDefinedVariableNodesDo: aMonadicValuable!
 
+annotations
+	^self tags select: [:each | each isAnnotation]!
+
 argumentCount
 	^arguments size!
 
@@ -274,6 +277,7 @@ acceptVisitor:!public!visitor! !
 actualScope!accessing!public! !
 allArgumentVariableNodesDo:!accessing!public! !
 allDefinedVariableNodesDo:!accessing!public! !
+annotations!accessing!public! !
 argumentCount!accessing!public! !
 argumentNames!accessing!public! !
 arguments!accessing!public! !

@@ -15,6 +15,8 @@ External.Tests.StructureArrayPointerFieldTest comment: ''!
 !External.Tests.StructureArrayPointerFieldTest methodsFor!
 
 testGenerateAccessorsForSizedArray
+	<ignoreNotImplementedSelectors: #(Test Test: Size)>
+
 	| structClass actual expected data struct |
 	structClass := Structure newAnonymousSubclass.
 	structClass class

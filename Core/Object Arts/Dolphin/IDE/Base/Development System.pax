@@ -1457,7 +1457,7 @@ Kernel.ParseNodeVisitor
 
 Kernel.StSemanticAnalyser
 	subclass: #'Tools.BrowserSemanticAnalyser'
-	instanceVariableNames: 'isStub'
+	instanceVariableNames: 'isStub ignoredNotImplementedSelectors'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

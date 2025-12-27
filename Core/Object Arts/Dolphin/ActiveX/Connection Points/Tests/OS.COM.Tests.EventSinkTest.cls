@@ -53,6 +53,7 @@ testNoArgs
 	self assert: received first value = #()!
 
 testOneArgs
+	<ignoreNotImplementedSelectors: #(fire_OneVariant)>
 	| repeat |
 	self assert: received isEmpty.
 	repeat := 5000.
