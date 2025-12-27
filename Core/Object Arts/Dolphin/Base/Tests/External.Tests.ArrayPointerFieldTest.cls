@@ -15,6 +15,7 @@ External.Tests.ArrayPointerFieldTest comment: ''!
 !External.Tests.ArrayPointerFieldTest methodsFor!
 
 testGenerateAccessorsForSizedString
+	<ignoreNotImplementedSelectors: #(Test Test: Size)>
 	| structClass actual expected string struct |
 	structClass := Structure newAnonymousSubclass.
 	structClass class
@@ -47,6 +48,7 @@ testGenerateAccessorsForSizedString
 	self assert: struct Test equals: string!
 
 testGenerateAccessorsForSizeIsExpression
+	<ignoreNotImplementedSelectors: #(Test Test: Size)>
 	| structClass actual expected string struct |
 	structClass := Structure newAnonymousSubclass.
 	structClass class

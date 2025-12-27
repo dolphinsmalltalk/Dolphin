@@ -72,6 +72,7 @@ testCompileDefinition
 		- set selector for write-only fields
 		- get and set selectors for normal fields
 		- no selectors for filler fields."
+	<ignoreNotImplementedSelectors: #(c: e:)>
 
 	| subject inst |
 	subject := Structure newAnonymousSubclass.
@@ -98,6 +99,8 @@ testCompileDefinition
 	self assert: inst e equals: 65537!
 
 testDynamicSelectors
+	<ignoreNotImplementedSelectors: #(writeOnly: readWrite)>
+
 	| subject expected inst |
 	self assert: MSGBOXPARAMSW dynamicSelectors single equals: #dwLanguageId:.
 	self assert: _FPIEEE_RECORD dynamicSelectors single equals: #status.

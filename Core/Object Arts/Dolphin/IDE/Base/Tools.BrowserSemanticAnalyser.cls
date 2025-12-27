@@ -2,7 +2,7 @@
 
 Kernel.StSemanticAnalyser
 	subclass: #'Tools.BrowserSemanticAnalyser'
-	instanceVariableNames: 'isStub'
+	instanceVariableNames: 'isStub ignoredNotImplementedSelectors'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -36,6 +36,7 @@ checkSupersend: aMessageNode
 checkUnimplemented: aStMessageNode
 	| selector |
 	selector := aStMessageNode selector.
+	(ignoredNotImplementedSelectors includes: selector) ifTrue: [^self].
 	(self targetOfMessage: aStMessageNode)
 		ifNotNil: 
 			[:receiverClass |
@@ -50,7 +51,7 @@ checkUnimplemented: aStMessageNode
 							[self
 								signalError: CWarnMsgUnimplemented
 								forNode: aStMessageNode
-								extras: {selector. receiver isVariable ifTrue: [receiver name] ifFalse: ['literal']. receiverClass}]].
+								extras: { selector. receiver isVariable ifTrue: [receiver name] ifFalse: ['literal']. receiverClass }]].
 			^self].
 	(self methodClass model includesImplementorsOf: selector)
 		ifFalse: 
@@ -80,6 +81,7 @@ contextBindingFor: aStVariableNode
 
 initialize
 	isStub := false.
+	ignoredNotImplementedSelectors := IdentitySet new.
 	^super initialize!
 
 readStaticVariable: aStVariableNode
@@ -99,6 +101,13 @@ targetOfMessage: aStMessageNode
 	receiver isVariable ifTrue: [^receiver variable ifNotNil: [:var | var staticValueClass]].
 	receiver isLiteralNode ifTrue: [^receiver valueClass].
 	^nil!
+
+visitAnnotationNode: aStAnnotationNode
+	super visitAnnotationNode: aStAnnotationNode.
+	aStAnnotationNode selector == #ignoreNotImplementedSelectors: ifTrue: [
+		(aStAnnotationNode arguments lookup: 1) ifNotNil: [:arg |
+			arg isLiteralArray ifTrue: [
+				ignoredNotImplementedSelectors addAll: arg value]]]!
 
 visitMessageNode: aMessageNode
 	"Process a message send (check for unimplemented selectors)"
@@ -128,6 +137,7 @@ contextBindingFor:!helpers!private! !
 initialize!initializing!public! !
 readStaticVariable:!helpers!private! !
 targetOfMessage:!commands!private!refactoring! !
+visitAnnotationNode:!public!visiting! !
 visitMessageNode:!public!visitor/double dispatching! !
 visitSequenceNode:!public!visitor/double dispatching! !
 !

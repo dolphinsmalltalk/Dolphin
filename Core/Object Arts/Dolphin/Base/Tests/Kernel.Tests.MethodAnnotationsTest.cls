@@ -70,6 +70,8 @@ testAtPut
 		matching: [:ex | ex messageText = 'MethodAnnotations should not implement #at:put:']!
 
 testCollect
+	<ignoreNotImplementedSelectors: #(wibble)>
+	
 	| actual |
 	actual := self canonicalSubject collect: [:each | each selector].
 	self assert: actual equals: #(#namespace: #mutable #a:b:c: #selector: #notSelector: #selector:).
@@ -162,6 +164,8 @@ testResize
 	self should: [subject resize: 2] raise: Processor constWriteSignal!
 
 testSelect
+	<ignoreNotImplementedSelectors: #(wibble)>
+
 	| actual |
 	actual := self canonicalSubject select: [:each | each selector ~~ #mutable].
 	self assert: actual

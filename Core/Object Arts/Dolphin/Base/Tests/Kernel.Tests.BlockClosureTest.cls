@@ -239,6 +239,7 @@ testEqualityOfBlocksFromSameMethod
 	self deny: [temp] equals: [temp]!
 
 testExceptionInEnsure
+	<ignoreNotImplementedSelectors: #(blah)>
 	| result |
 	result := [[1+2] ensure: [Object new blah. self fail: 'Should not get here']. self fail: 'Should not get here either'] on: MessageNotUnderstood do: [:ex | ex return: 'success']. 
 	self assert: result equals: 'success'!

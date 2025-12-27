@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Refactory.Browser.SmalllintContext'
-	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
+	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages ignoredUnimplementedMessages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -56,20 +56,31 @@ computeLiteralsForClass: aClass
 			eachMethod allLiteralsDo: [:literal | self checkLiteral: literal]]!
 
 computeMessages
-	| searcher |
+	| searcher ast |
 	selfMessages := Set new.
 	superMessages := Set new.
 	messages := Set new.
+	ast := self parseTree.
+	ignoredUnimplementedMessages := IdentitySet new.
+	ast annotations do: 
+			[:each |
+			each selector == #ignoreNotImplementedSelectors:
+				ifTrue: 
+					[(each arguments lookup: 1)
+						ifNotNil: [:arg | arg isLiteralArray ifTrue: [ignoredUnimplementedMessages addAll: arg value]]]].
 	searcher := ParseTreeSearcher new.
 	searcher
 		matches: 'self `@message: ``@args'
 			do: [:aNode :answer | aNode isInStaticExpression ifFalse: [selfMessages add: aNode selector]];
 		matches: 'super `@message: ``@args' do: [:aNode :answer | superMessages add: aNode selector];
 		matches: '``@receiver `@message: ``@args' do: [:aNode :answer | messages add: aNode selector].
-	searcher executeTree: self parseTree initialAnswer: nil!
+	searcher executeTree: ast initialAnswer: nil!
+
+ignoredUnimplementedMessages
+	^ignoredUnimplementedMessages!
 
 implements: aSelector 
-	^self selectors includes: aSelector!
+	^(ignoredUnimplementedMessages includes: aSelector) or: [self selectors includes: aSelector]!
 
 initialize
 	self computeLiterals!
@@ -152,6 +163,10 @@ selectors
 		ifFalse: [literalSemaphore wait].
 	^selectors!
 
+selfImplements: aSelector
+	^(ignoredUnimplementedMessages includes: aSelector)
+		or: [self selectedClass canUnderstand: aSelector]!
+
 selfMessages
 	selfMessages isNil ifTrue: [self computeMessages].
 	^selfMessages!
@@ -164,6 +179,12 @@ specialSelectors
 	#rbFix.
 	"	^(OpcodePool at: #SpecialSelectorDictionary) keys"
 	^VM specialSelectors!
+
+superImplements: aSelector
+	^(ignoredUnimplementedMessages includes: aSelector) or: 
+			[| superc |
+			superc := self selectedClass superclass.
+			superc notNil and: [superc canUnderstand: aSelector]]!
 
 superMessages
 	superMessages isNil ifTrue: [self computeMessages].
@@ -180,6 +201,7 @@ compiledMethod!accessing!public! !
 computeLiterals!helpers!private! !
 computeLiteralsForClass:!helpers!private! !
 computeMessages!helpers!private! !
+ignoredUnimplementedMessages!accessing!private! !
 implements:!public!testing! !
 initialize!initialize/release!public! !
 instanceVariableNames!accessing!public! !
@@ -197,9 +219,11 @@ selectedClass:!accessing!public! !
 selector!accessing!public! !
 selector:!accessing!public! !
 selectors!accessing!public! !
+selfImplements:!public!testing! !
 selfMessages!accessing!public! !
 signalProcesses:!helpers!private! !
 specialSelectors!helpers!private! !
+superImplements:!public!testing! !
 superMessages!accessing!public! !
 uses:!public!testing! !
 !

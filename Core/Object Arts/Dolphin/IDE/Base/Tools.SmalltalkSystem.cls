@@ -1348,8 +1348,6 @@ compile: aString in: class environment: aNamespace categories: anArray package: 
 	flags := class defaultCompilationFlags bitOr: anInteger.
 	change compilationFlags: flags.
 	self changeManager performChange: change.
-	(change method notNil and: [flags allMask: Interactive])
-		ifTrue: [self warnOfUndefinedSelectorsSentBy: change method].
 	^change!
 
 compilerNotification: aCompilerNotification
@@ -4179,37 +4177,6 @@ viewResourcesMatching: matchBlock do: doBlock
 				administerLastRites].
 	vc exit!
 
-warnOfUndefinedSelectorsSentBy: aCompiledMethod
-	(aCompiledMethod messages difference: self allSelectors) do: 
-			[:each |
-			| source |
-			source := aCompiledMethod getSource.
-			aCompiledMethod parseTreeNoError
-				ifNil: 
-					[(self compilationWarningClass
-						code: CWarnUndefinedSelector
-						in: source
-						for: aCompiledMethod methodClass
-						selector: aCompiledMethod selector
-						position: 1
-						line: 1
-						range: (1 to: source size)
-						extras: {each}) signal]
-				ifNotNil: 
-					[:ast |
-					| range |
-					((MessageNodeCollector messagesSentBy: ast) detect: [:eachMsg | eachMsg selector == each]
-						ifNone: nil) ifNil: [range := 1 to: 1] ifNotNil: [:value | range := value sourceInterval].
-					(self compilationWarningClass
-						code: CWarnUndefinedSelector
-						in: source
-						for: aCompiledMethod methodClass
-						selector: aCompiledMethod selector
-						position: 1
-						line: 1
-						range: range
-						extras: {each}) signal]]!
-
 windowMenu
 	<menuPopulator: #populateWindowMenu:>
 	!
@@ -4729,7 +4696,6 @@ validateRenameInstVar:to:in:!helpers!private! !
 viewComposerClass!constants!public! !
 viewComposerClass:!options!public! !
 viewResourcesMatching:do:!private!utilities! !
-warnOfUndefinedSelectorsSentBy:!helpers!private! !
 windowMenu!commands-menus!public! !
 workspaceClass!options!public! !
 workspaceClass:!options!public! !

@@ -15,10 +15,12 @@ OS.COM.Tests.IDispatchTest comment: ''!
 !OS.COM.Tests.IDispatchTest methodsFor!
 
 testDisplayOn
+	<ignoreNotImplementedSelectors: #(drives)>
 	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') displayString = 'a FileSystemObject').
 	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') drives displayString beginsWith: 'an Array(C:').!
 
 testDNU
+	<ignoreNotImplementedSelectors: #(drives item:value: key:newKey: add:_: writeLine: createTextFile:overwrite:unicode: buildPath:name: counts count:_: count:_:_:)>
 	| fs dict path ts |
 	fs := IDispatch createObject: 'Scripting.FileSystemObject'.
 	"propget and indexed propget"

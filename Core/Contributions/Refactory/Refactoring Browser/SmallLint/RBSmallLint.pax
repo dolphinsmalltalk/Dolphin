@@ -63,7 +63,7 @@ Core.Object
 
 Core.Object
 	subclass: #'Refactory.Browser.SmalllintContext'
-	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
+	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages ignoredUnimplementedMessages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

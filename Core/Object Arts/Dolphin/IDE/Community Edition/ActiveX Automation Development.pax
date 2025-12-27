@@ -2401,6 +2401,7 @@ publishedAspects!constants!public! !
 !OS.COM.IDispatch class methodsFor!
 
 example1
+	<ignoreNotImplementedSelectors: #(TextPopup:_:_:_:_:_:)>
 	"
 		IDispatch example1
 	"
@@ -2417,6 +2418,7 @@ example1
 		_: -1	"Font face,point size,char set,format options"	"Default foreground colour"	"Default background colour"!
 
 example2
+	<ignoreNotImplementedSelectors: #(#Speak: #LexiconDlg:_:)>
 	"The Microsoft Direct Text-to-Speech control (if you have it installed).
 		IDispatch example2
 	"
@@ -7221,6 +7223,7 @@ example2
 	system model, and we exercise a very small part of its capabilities here.
 		TypeLibraryAnalyzer example2
 	"
+	<ignoreNotImplementedSelectors: #(drives subFolders getSpecialFolder:)>
 
 	"First lets get the FileSystem object, we might need to generate some wrappers to do so"
 
@@ -7253,7 +7256,7 @@ example3
 	This code should ideally be run line-by-line from a workspace.
 		TypeLibraryAnalyzer example3
 	"
-
+	<ignoreNotImplementedSelectors: #(workbooks add:lcid: visible:rhs: range:cell2: formula: autoFormat:number:font:alignment:border:pattern:width: activeWorkbook)>
 	| excel books book range font arry caption |
 	#{Xl.ExcelLib} isDefined
 		ifFalse: 

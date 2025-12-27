@@ -336,6 +336,7 @@ testPoolVariablePrecedence
 		equals: 'ClassBuilderTestPool3.PoolVar6'!
 
 testReparentSubClassWithSameAllInstVars
+	<ignoreNotImplementedSelectors: #(var1: var2: var3 var3: var4 var4:)>
 	| testClass testInstance |
 	testClass := self classBuilderTestSubclass1.
 	testInstance := testClass new.
@@ -364,6 +365,7 @@ testReparentSubClassWithSameAllInstVars
 	dirtiedClasses := true!
 
 testReshapeClass
+	<ignoreNotImplementedSelectors: #(var1 var1: var2 var2:)>
 	"see if reshaping classes works"
 
 	| testInstance testClass testMeta newClass newMeta |
@@ -424,7 +426,8 @@ testReshapeClassWithJugglingInstVars
 
 testReshapeSubClass
 	"see if reshaping a class updates the instances of its subclass correctly"
-
+	<ignoreNotImplementedSelectors: #(var1 var1: var2 var2: var3 var3: var4 var4:)>
+	
 	| testInstance testClass testMeta |
 	testClass := self classBuilderTestSubclass1.
 	testMeta := testClass class.
