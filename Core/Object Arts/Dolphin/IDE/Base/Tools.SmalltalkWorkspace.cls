@@ -172,7 +172,6 @@ applyOptions
 	view maxCompletionListHeight: self class maxAutoCompletionListHeight.
 	view maxCompletionListWidth: self class maxAutoCompletionListWidth.
 	view autoCompletionSeparator: $\x7F.
-	self areVariableTipsEnabled ifTrue: [view isBackgroundDwellEnabled: true].
 	"#2137"
 	view annotationMode: self class annotationMode.
 	view wrapIndentMode: self class wrapIndentMode.

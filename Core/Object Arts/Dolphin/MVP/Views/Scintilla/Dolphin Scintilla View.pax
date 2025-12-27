@@ -2083,7 +2083,6 @@ UI.MultilineTextEdit
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AnnotationStylesOffset' -> 16r200.
-			'BackgroundDwellEvents' -> 16r4.
 			'BraceHilightingMask' -> 16r1.
 			'CodePages' -> (IdentityDictionary withAll: { 16r0 -> #ansi. 16rFDE9 -> #utf8 }).
 			'DefaultCallTipTabWidth' -> 16r20.
