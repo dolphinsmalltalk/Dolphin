@@ -177,6 +177,11 @@ supportsIntervalStructs
 supportsReadOnlyMode
 	^false!
 
+testColumnTypeBlob
+	self skipUnless: [connection driverVersion ~= '17.00.0007'].
+	super testColumnTypeBlob
+!
+
 timeToShipQuery
 	^'SELECT "OrderID", "RequiredDate", "ShippedDate", CAST("ShippedDate" - "RequiredDate" as INTERVAL DAY)  as "TimeToShip" from "Orders"'!
 
@@ -219,6 +224,7 @@ scaleOfTimeColumns!constants!private! !
 sqlDataTypeVarChar!constants!private! !
 supportsIntervalStructs!private!testing! !
 supportsReadOnlyMode!private!testing! !
+testColumnTypeBlob!public!unit tests! !
 timeToShipQuery!constants!private! !
 verifyInvalidDates:!helpers!private! !
 verifyInvalidFloatValues:!helpers!private! !
