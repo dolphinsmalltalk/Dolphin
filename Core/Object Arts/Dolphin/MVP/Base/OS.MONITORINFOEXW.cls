@@ -50,6 +50,11 @@ isPrimary
 
 	^self dwFlags allMask: MONITORINFOF_PRIMARY!
 
+rcWork
+	"Answer the <RECTL> value of the receiver's 'rcWork' field."
+
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcWork!
+
 rectangle
 	"Answer a <Rectangle> representing the total area of the monitor."
 
@@ -76,6 +81,7 @@ workArea
 !OS.MONITORINFOEXW categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 isPrimary!public!testing! !
+rcWork!**compiled accessors**!public! !
 rectangle!accessing!public! !
 szDevice!**compiled accessors**!public! !
 workArea!accessing!public! !
@@ -104,7 +110,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rcMonitor type: (StructureField type: RECTL) beUncompiled offset: 4;
-		defineField: #rcWork type: (StructureField type: RECTL) beUncompiled offset: 20;
+		defineField: #rcWork type: (StructureField type: RECTL) beReadOnly offset: 20;
 		defineField: #dwFlags type: UInt32Field new beReadOnly offset: 36;
 		defineField: #szDevice type: (StringField type: Utf16String length: 32) beReadOnly offset: 40.
 	self byteSize: 104!

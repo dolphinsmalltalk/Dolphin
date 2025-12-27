@@ -57,12 +57,12 @@ flowInfo: anInteger
 port
 	"Answer the <integer> port number."
 
-	^Ws2_32 ntohs: self sin6_port!
+	^Ws2_32 ntohs: self sin_port!
 
 port: anInteger
 	"Set the <integer> port number."
 
-	self sin6_port: (Ws2_32 htons: anInteger)!
+	self sin_port: (Ws2_32 htons: anInteger)!
 
 sin_addr
 	"Answer the <IN6_ADDR> value of the receiver's 'sin_addr' field."

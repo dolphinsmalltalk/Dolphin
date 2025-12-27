@@ -36,6 +36,13 @@ copy
 	lf lfHeight: self pixelSize negated.
 	^Font fromLogFont: lf dpi: dpi!
 
+dpi: anInteger
+	"Sets the logical pixels per inch of the receiver."
+
+	"The dpi cannot be changed, so just ignore"
+
+	!
+
 id
 	"Private - Answer the stock font id of the receiver"
 
@@ -52,6 +59,7 @@ initialize
 actualFont!accessing!public! !
 clearCached!private!realizing/unrealizing! !
 copy!copying!public! !
+dpi:!accessing!public!scaling! !
 id!accessing!private! !
 initialize!initializing!public! !
 !

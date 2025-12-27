@@ -265,6 +265,14 @@ browseDefinitionsMatching: aMethodSearch
 		routeCommand: (CommandDescription command: (Message selector: #browseDefinitionsMatching:in:
 						arguments: { aMethodSearch. self searchEnvironment }))!
 
+browseEnvironments: aSequenceOfBrowserEnvironment
+	"Private - Open a method browser on the methods in the specified sequence of <BrowserEnvironment>s"
+
+	"Route a command message to avoid requiring that the parent presenter implement #browseMethodsInEnvironments:. Ultimately this can be handled by the development system model, but is also intercepted by <MethodExplorer> in order to add to its search history tree."
+
+	self routeCommand: (CommandDescription
+				command: (Message selector: #browseMethodsInEnvironments: argument: aSequenceOfBrowserEnvironment))!
+
 browseIt
 	"Evaluate currently selected text (or the current line if there is no selection) in the
 	receiver and browse the result."
@@ -2017,6 +2025,7 @@ browseClassReferences:!browsing!private! !
 browseDefinitions!commands-actions!public! !
 browseDefinitionsCommand!commands-mappings!private! !
 browseDefinitionsMatching:!browsing!private! !
+browseEnvironments:!browsing!private! !
 browseIt!commands-actions!public! !
 browseLiteralReferences!commands-actions!public! !
 browseMessageDefinitions!commands-actions!private! !

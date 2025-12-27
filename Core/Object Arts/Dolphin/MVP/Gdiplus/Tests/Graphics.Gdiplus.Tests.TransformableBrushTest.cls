@@ -16,6 +16,9 @@ Graphics.Gdiplus.Tests.TransformableBrushTest comment: ''!
 
 !Graphics.Gdiplus.Tests.TransformableBrushTest methodsFor!
 
+gdipGetTransform: aHandle matrix: matrix
+	self subclassResponsibility!
+
 getTransform: aGdiplusTransformableBrush
 	| transform |
 	transform := Matrix new.
@@ -72,6 +75,7 @@ verifyEqualToModel: aGdiplusObject
 	self assert: aGdiplusObject transform equals: model transform! !
 
 !Graphics.Gdiplus.Tests.TransformableBrushTest categoriesForMethods!
+gdipGetTransform:matrix:!private!transformations! !
 getTransform:!helpers!private! !
 testMultiplyTransform!public!unit tests! !
 testResetTransform!public!unit tests! !

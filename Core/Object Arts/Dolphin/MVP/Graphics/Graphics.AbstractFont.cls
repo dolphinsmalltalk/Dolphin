@@ -64,6 +64,13 @@ dpi
 
 	^dpi!
 
+dpi: anInteger
+	"Sets the logical pixels per inch of the receiver."
+
+	self subclassResponsibility
+
+	!
+
 getLogFont
 	^self subclassResponsibility!
 
@@ -226,6 +233,7 @@ characterSet!accessing!public! !
 createHandle!private!realizing/unrealizing! !
 displayOn:!displaying!public! !
 dpi!accessing!public!scaling! !
+dpi:!accessing!public!scaling! !
 getLogFont!initializing!private! !
 hash!comparing!public! !
 initialize!initializing!public! !

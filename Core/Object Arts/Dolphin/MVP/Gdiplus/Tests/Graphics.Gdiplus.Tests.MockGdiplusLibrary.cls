@@ -1790,10 +1790,10 @@ gdipGetLineWrapMode: brush wrapMode: wrapMode
 	messages addLast: (Message selector: #gdipGetLineWrapMode:wrapMode: arguments: activeProc topFrame arguments).
 	^S_OK!
 
-gdipGetLogFontW: font graphics: graphics logfonta: logfonta
+gdipGetLogFontW: font graphics: graphics logfontw: logfontw
 	| activeProc |
-	(activeProc := Processor activeProcess) == process ifFalse: [^super gdipGetLogFontW: font graphics: graphics logfonta: logfonta].
-	messages addLast: (Message selector: #gdipGetLogFontW:graphics:logfonta: arguments: activeProc topFrame arguments).
+	(activeProc := Processor activeProcess) == process ifFalse: [^super gdipGetLogFontW: font graphics: graphics logfontw: logfontw].
+	messages addLast: (Message selector: #gdipGetLogFontW:graphics:logfontw: arguments: activeProc topFrame arguments).
 	^S_OK!
 
 gdipGetMatrixElements: matrix matrixOut: matrixOut
@@ -3969,7 +3969,7 @@ gdipGetLineRectI:rect:!**auto generated**!GDI+ Flat API-LinearGradientBrush Func
 gdipGetLineSpacing:style:lineSpacing:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
 gdipGetLineTransform:matrix:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
 gdipGetLineWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
-gdipGetLogFontW:graphics:logfonta:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetLogFontW:graphics:logfontw:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipGetMatrixElements:matrixOut:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
 gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
 gdipGetMetafileHeaderFromEmf:header:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !

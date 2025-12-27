@@ -129,14 +129,6 @@ browseDefinitionsCommand
 				lookup: (self variableClassification: node)].
 	^nil!
 
-browseEnvironments: aSequenceOfBrowserEnvironment
-	"Private - Open a method browser on the methods in the specified sequence of <BrowserEnvironment>s"
-
-	"Route a command message to avoid requiring that the parent presenter implement #browseMethodsInEnvironments:. Ultimately this can be handled by the development system model, but is also intercepted by <MethodExplorer> in order to add to its search history tree."
-
-	self routeCommand: (CommandDescription
-				command: (Message selector: #browseMethodsInEnvironments: argument: aSequenceOfBrowserEnvironment))!
-
 browseInstanceVariableDefinition
 	<commandQuery: #queryBrowseInstanceVariableDefinition:>
 	self browseClassDefinition: (self parseContext methodClass
@@ -767,7 +759,6 @@ browseClassReferences!commands-actions!public! !
 browseClassVariableDefinition!commands-actions!public! !
 browseClassVariableReferences!commands-actions!public! !
 browseDefinitionsCommand!commands-mappings!private! !
-browseEnvironments:!browsing!private! !
 browseInstanceVariableDefinition!commands-actions!public! !
 browseInstanceVariableReferences!commands-actions!public! !
 browseMessageDefinitions!commands-actions!public! !

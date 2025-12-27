@@ -535,11 +535,6 @@ initializeAfterLoad
 	"Flag as not changed"
 	self isChanged: false!
 
-instanceClass
-	"Answer the receiver's singleton instance (the actual class object)."
-
-	^self!
-
 isAbstract: aBoolean
 	"Set/reset the receiver's status as an abstract class. Note that a class may still answer
 	true to #isAbstract even after setting this to false if it contains abstract methods (see
@@ -1191,7 +1186,6 @@ includeInCategory:!categories-adding!public! !
 includesEnvironment:!public!testing! !
 includesNamespace:!public!testing! !
 initializeAfterLoad!class initialization!public! !
-instanceClass!accessing!public! !
 isAbstract:!instance specification-accessing!public! !
 isAnonymous!public!testing! !
 isSelfEvaluating!public!testing! !

@@ -12,7 +12,6 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Refactory.Browser.BrowserEnvironment} #forPackagesDeployment:)
-	#(#{Smalltalk.ImageStripper class} #newForTests)
 ).
 
 package setPrerequisites: #(
@@ -93,16 +92,6 @@ forPackagesDeployment: aCollectionOfPackages
 
 !Refactory.Browser.BrowserEnvironment categoriesForMethods!
 forPackagesDeployment:!environments!public! !
-!
-
-!ImageStripper class methodsFor!
-
-newForTests
-
-	^self new initializeForTests! !
-
-!ImageStripper class categoriesForMethods!
-newForTests!public! !
 !
 
 "End of package definition"!

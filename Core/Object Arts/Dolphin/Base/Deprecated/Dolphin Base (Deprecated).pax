@@ -61,6 +61,7 @@ package methodNames
 	add: #Integer -> #digitSize;
 	add: #Integer -> #printStringRadix:showRadix:;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
+	add: #Locale -> #dateOrder;
 	add: #Locale -> #isMonthBeforeDay;
 	add: #MessageNotUnderstood -> #receiver:;
 	add: #MessageSend -> #receiver:;
@@ -76,6 +77,7 @@ package methodNames
 	add: #PackageManager -> #addGlobalNamed:to:;
 	add: #PackageManager -> #allGlobalAliases;
 	add: #PackageManager -> #packageOfGlobalNamed:;
+	add: #SmalltalkLocale -> #dateOrder;
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #String -> #equals:;
@@ -742,6 +744,15 @@ getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-n
 
 !Locale methodsFor!
 
+dateOrder
+	"Answer the date ordering used in the receiver locale.
+		0	Month - Day - Year
+		1	Day - Month - Year
+		2	Year - Month - Day."
+
+	Notification deprecated.	"Use dateFormat"
+	^self subclassResponsibility!
+
 isMonthBeforeDay
 	"Answer true if the format for the receiver is expecting a month before a day"
 
@@ -749,6 +760,7 @@ isMonthBeforeDay
 	^self dateOrder ~= 1! !
 
 !Locale categoriesForMethods!
+dateOrder!constants!public! !
 isMonthBeforeDay!helpers!public! !
 !
 
@@ -875,6 +887,21 @@ packageOfGlobalNamed: globalName
 addGlobalNamed:to:!adding!public! !
 allGlobalAliases!enquiries!public! !
 packageOfGlobalNamed:!public!searching! !
+!
+
+!SmalltalkLocale methodsFor!
+
+dateOrder
+	"Answer the date ordering used in the receiver locale.
+		0	Month - Day - Year
+		1	Day - Month - Year
+		2	Year - Month - Day."
+
+	Notification deprecated.	"Use dateFormat"
+	^2! !
+
+!SmalltalkLocale categoriesForMethods!
+dateOrder!constants!public! !
 !
 
 !SortAlgorithm class methodsFor!

@@ -55,14 +55,6 @@ scanNumber: aString valueClass: valueClass
 	self assert: token value equals: expected.
 	^token!
 
-scanScaledDecimal: each
-	| result1 expected |
-	expected := Number readFrom: each readStream.
-	result1 := self evaluateExpression: each.
-	self assert: result1 class identicalTo: ScaledDecimal.
-	self assert: result1 scale equals: expected scale.
-	^self assert: result1 equals: expected!
-
 testCharacterScanning
 	| subject tok |
 	subject := self scannerClass on: '$a$b$\t$\$  $c' readStream.
@@ -359,7 +351,6 @@ scan:tokenClass:valueClass:!helpers!private! !
 scannerClass!constants!private! !
 scanNonNumericEnd:class:!helpers!private! !
 scanNumber:valueClass:!helpers!private! !
-scanScaledDecimal:!helpers!private! !
 testCharacterScanning!public!unit tests! !
 testFloatScanning!public!unit tests! !
 testIntegerScanning!public!unit tests! !
