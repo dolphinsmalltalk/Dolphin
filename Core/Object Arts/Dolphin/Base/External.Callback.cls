@@ -83,11 +83,11 @@ free
 	thunk := nil!
 
 makeProcInstance
-	"Private - Allocate a callback thunk for the receiver from the block in fixed, executable,
-	memory."
+	"Private - Allocate a callback thunk for the receiver from the block in fixed, executable, memory."
 
 	thunk := (ThunkBase asInteger + ((cookie - 1) * ThunkSize)) asExternalAddress.
-	descriptor calleeCleans ifTrue: [thunk uint16AtOffset: ArgSizeOffset put: self argumentsSize]!
+	thunk uint16AtOffset: ArgSizeOffset
+		put: (descriptor calleeCleans ifTrue: [self argumentsSize] ifFalse: [0])!
 
 thunk
 	"Private - Answer the receiver's assembler thunk."
