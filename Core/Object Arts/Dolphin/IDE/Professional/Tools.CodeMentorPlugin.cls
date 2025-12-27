@@ -238,32 +238,36 @@ htmlDescriptionFor: aLintRule
 
 	"#2139"
 
-	| stream node |
+	| stream node preambleEnd linkText |
 	aLintRule isNil ifTrue: [^''].
-	stream := String writeStream.
+	"The WebView2 control will only accept 2Mb of string data, i.e. 1M UTF-16 chars"
+	stream := Utf16String writeStream.
 	stream nextPutAll: self htmlStyle.
+	linkText := '<H4>' , aLintRule name , '</H4>'.
 	aLintRule isComposite
-		ifFalse: 
-			[stream
-				nextPutAll: '<A href="';
-				nextPutAll: self smalltalkUrlTag;
-				nextPutAll: 'self%20';
-				display: #browseAllFailedMethods;
-				nextPutAll: '">'].
-	stream
-		nextPutAll: '<H4>';
-		nextPutAll: aLintRule name;
-		nextPutAll: '</H4>'.
-	aLintRule isComposite ifFalse: [stream nextPutAll: '</A>'].
-	stream nextPutAll: '<P>'.
+		ifTrue: [stream nextPutAll: linkText]
+		ifFalse: [self printBrowseAllMethodsLink: linkText on: stream].
 	node := self getRuleInfo: aLintRule.
 	self printTransformationRuleHtmlFor: node on: stream.
 	(node selectSingleNode: 'description') ifNotNil: [:ruleNode | stream nextPutAll: ruleNode innerXML].
-	stream nextPutAll: '</P><P>'.
-	self printClassFailuresHtmlFor: aLintRule on: stream.
-	stream nextPutAll: '</P><P>'.
-	self printMethodFailuresHtmlFor: aLintRule on: stream.
 	stream nextPutAll: '</P>'.
+	preambleEnd := stream position.
+	stream := LimitedWriteStream
+				over: stream
+				limit: 1024 * 1024 - 1
+				limitBlock: 
+					[:s |
+					s position: preambleEnd.
+					aLintRule isComposite
+						ifFalse: 
+							[s nextPutAll: 'There are too many matches to list individually. '.
+							self printBrowseAllMethodsLinkFor: aLintRule on: s].
+					^s
+						nextPutAll: '</font>';
+						contents].
+	self printClassFailuresHtmlFor: aLintRule on: stream.
+	self printMethodFailuresHtmlFor: aLintRule on: stream.
+	stream nextPutAll: '</font>'.
 	^stream contents!
 
 htmlStyle
@@ -313,12 +317,10 @@ infoBrowserPresenter
 
 	^infoBrowserPresenter
 		ifNil: 
-			[infoBrowserPresenter := URLPresenter create: 'WebView2' in: infoSitePresenter.
-			"Attempt to suppress the standard context menu"
-			infoBrowserPresenter view
-				canNavigateToStrings: true;
-				allowContextMenu: false;
-				areBrowserAcceleratorKeysEnabled: false.
+			[ | webview |
+			infoBrowserPresenter := URLPresenter create: 'CodeMentorInfoBrowser' in: infoSitePresenter.
+			webview := infoBrowserPresenter view.
+			webview profile colorScheme: #light.
 			infoBrowserPresenter
 				when: #navigationStarting:
 				send: #onNavigationStarting:
@@ -437,6 +439,27 @@ parentRuleOf: rule
 		ifFalse: [self error: 'Should have found parent'].
 	^nil!
 
+printBrowseAllMethodsLink: aString on: aStream
+	aStream
+		nextPutAll: '<a href="';
+		nextPutAll: self smalltalkUrlTag;
+		nextPutAll: 'self%20';
+		display: #browseAllFailedMethods;
+		nextPutAll: '">';
+		nextPutAll: aString;
+		nextPutAll: '</a>'!
+
+printBrowseAllMethodsLinkFor: aLintRule on: aStream
+	| count |
+	count := aLintRule failedMethods size.
+	count > 0 ifFalse: [^self].
+	aStream nextPutAll: 'Click '.
+	self printBrowseAllMethodsLink: 'here' on: aStream.
+	aStream
+		nextPutAll: ' to browse all ';
+		print: count;
+		nextPutAll: ' methods.'!
+
 printClassFailuresHtmlFor: aLintRule on: aStream
 	| failuresList |
 	failuresList := self failedClassesFor: aLintRule.
@@ -462,7 +485,7 @@ printClassFailuresHtmlFor: aLintRule on: aStream
 				nextPutAll: '</a><BR>';
 				cr].
 	aStream
-		nextPutAll: '</BLOCKQUOTE></I>';
+		nextPutAll: '</I></BLOCKQUOTE>';
 		cr!
 
 printMethodFailuresHtmlFor: aLintRule on: aStream
@@ -490,15 +513,8 @@ printMethodFailuresHtmlFor: aLintRule on: aStream
 				display: each;
 				nextPutAll: '</a><BR>';
 				cr].
-	aStream
-		nextPutAll: '</BLOCKQUOTE></I>';
-		cr.
-	aStream
-		nextPutAll: '<p>Click <a href="';
-		nextPutAll: self smalltalkUrlTag;
-		nextPutAll: 'self%20';
-		display: #browseAllFailedMethods;
-		nextPutAll: '">here</a> to browse all.</p>'!
+	aStream nextPutAll: '</I></BLOCKQUOTE>'.
+	self printBrowseAllMethodsLinkFor: aLintRule on: aStream!
 
 printTransformationRuleHtmlFor: anIXMLDOMElement on: aStream
 	(anIXMLDOMElement selectSingleNode: 'transformationRuleSelector')
@@ -509,7 +525,7 @@ printTransformationRuleHtmlFor: anIXMLDOMElement on: aStream
 				nextPutAll: self smalltalkUrlTag;
 				nextPutAll: 'self%20';
 				display: #applyTransform:;
-				display: '%20';
+				nextPutAll: '%20';
 				print: node innerXML;
 				nextPutAll: '"> automatic transformation</a> available to address this issue.</i></p>']!
 
@@ -708,6 +724,8 @@ onStartup2!event handling!private! !
 onViewClosed!event handling!public! !
 onViewDestroyed!event handling!public! !
 parentRuleOf:!helpers!private! !
+printBrowseAllMethodsLink:on:!helpers!printing!private! !
+printBrowseAllMethodsLinkFor:on:!helpers!printing!private! !
 printClassFailuresHtmlFor:on:!helpers!printing!private! !
 printMethodFailuresHtmlFor:on:!helpers!printing!private! !
 printTransformationRuleHtmlFor:on:!helpers!printing!private! !
@@ -893,7 +911,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 144 nil nil nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 144 114 11 1 nil nil 18 #{UI.ComboBox} 50 17 nil 144 50 2 8 1144063491 1025 304 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 304 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() 401 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[70 1 0 0 4 0 0 0 255 1 0 0 225 0 0 0] 193 336 8 '' 304 3 8 #() 518 #{Graphics.Point} 193 193 nil 27 18 #{UI.PushButton} 50 20 nil 144 50 2 8 1140924416 1 800 nil 480 nil 517 nil nil nil 800 nil nil 1350 4 #{UI.CommandDescription} #refresh 8 '&Update Now' 1 1 nil nil false nil nil nil 562 50 2 610 #createWindow: 50 1 658 690 8 #[5 0 0 0 4 0 0 0 79 0 0 0 27 0 0 0] 193 832 8 '&Update Now' 800 610 #isEnabled: 8 #(false) 800 3 8 #() 770 193 193 nil 29 18 #{UI.ProgressBar} 50 15 nil 144 50 2 8 1140850688 1 1104 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} 1 480 nil 5 nil nil nil 1104 nil nil 518 #{UI.NullConverter} nil nil 562 50 2 610 #createWindow: 50 1 658 690 8 #[84 0 0 0 4 0 0 0 65 1 0 0 27 0 0 0] 193 1136 8 '' 1104 610 #range: 50 1 774 #{Core.Interval} 1 201 3 1104 3 8 #() 770 193 193 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 4 1104 8 'progress' 304 8 'refreshMode' 518 #{Graphics.Rectangle} 770 11 9 770 9 7 562 50 1 610 #createWindow: 50 1 658 690 8 #[0 0 0 0 9 1 0 0 3 2 0 0 39 1 0 0] 193 176 8 '' 144 3 50 3 1104 304 800 770 193 193 nil 27 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 1792 nil nil nil 5 nil nil nil 1792 518 #{UI.ProportionalLayout} 550 #{Core.LookupTable} 0 false 1490 #{Core.IdentityDictionary} 50 4 18 #{UI.TreeView} 50 35 nil 1792 50 2 8 1140918818 1 1952 1094 3 #{UI.TreeModel} nil 448 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 480 nil 5 2886 4 #{UI.Menu} nil true 50 7 1094 2 #{UI.CommandMenuItem} 1 866 #filterOutRule 8 'Ignore this rule failure' 1 1 nil nil nil 2162 1 866 #selectFilteredRules 8 'Show ignored rules…' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 2162 1 866 #exportIgnoredRules 8 'Export all ignored rules…' 1 1 nil nil nil 2162 1 866 #importIgnoredRules 8 'Import all ignored rules…' 1 1 nil nil nil 2274 4097 2162 1 866 #clearIgnoredRules 8 'Clear all ignored rules' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1952 nil nil 512 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 2480 8 'doIt' 8 '[:x | (Tools.CodeMentorPlugin lintIconOfRule: x) imageIndex]' 8 #[32 105 45 17 177 160 106] 1094 2 #{Kernel.VariableBinding} #CodeMentorPlugin #{Tools.CodeMentorPlugin} #{Tools} 1 #lintIconOfRule: #imageIndex 2496 7 257 nil 1350 1 #{Graphics.IconImageManager} nil nil nil 770 65 65 nil 1890 0 nil #smallIcons 1 2082 0 1 262 #{UI.TreeViewDynamicUpdateMode} 1952 nil nil nil nil nil nil 562 50 2 610 #createWindow: 50 1 658 690 8 #[0 0 0 0 0 0 0 0 255 0 0 0 9 1 0 0] 193 1984 8 '' 1952 610 #contextMenu: 50 1 2128 1952 3 8 #() 770 193 193 nil 29 8 'failures' 18 #{UI.ContainerView} 50 15 nil 1792 50 2 8 1140850688 131073 2944 nil 480 nil 5 nil nil nil 2944 1030 #{UI.GridLayout} 3 1 1 1 2082 0 nil 562 50 1 610 #createWindow: 50 1 658 690 8 #[4 1 0 0 0 0 0 0 3 2 0 0 9 1 0 0] 193 2976 8 '' 2944 3 8 #() 770 193 193 nil 27 8 'infoSite' nil 562 50 1 610 #createWindow: 50 1 658 690 8 #[0 0 0 0 0 0 0 0 3 2 0 0 9 1 0 0] 193 1824 8 '' 1792 3 50 3 1952 18 #{UI.Splitter} 50 12 nil 1792 50 2 8 1140850688 1 3376 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 3376 nil 1 #left nil nil nil 770 1 1 770 9 9 nil 3472 nil 562 50 1 610 #createWindow: 50 1 658 690 8 #[255 0 0 0 0 0 0 0 4 1 0 0 9 1 0 0] 193 3408 8 '' 3376 3 8 #() 770 193 193 nil 27 2944 770 193 193 nil 27 2082 0 nil 562 50 1 610 #createWindow: 50 1 658 690 8 #[255 14 0 0 10 0 0 0 2 17 0 0 49 1 0 0] 193 80 8 '' 32 1 50 2 1792 144 770 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 144 nil nil nil 5 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 144 114 11 1 nil nil 18 #{UI.ComboBox} 50 17 nil 144 50 2 8 1144063491 1025 304 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 304 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() 401 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[70 1 0 0 4 0 0 0 255 1 0 0 228 0 0 0] 193 336 8 '' 304 3 8 #() 518 #{Graphics.Point} 193 193 nil 27 18 #{UI.PushButton} 50 20 nil 144 50 2 8 1140924416 1 800 nil 480 nil 517 nil nil nil 800 nil nil 1350 4 #{UI.CommandDescription} #refresh 8 '&Update Now' 1 1 nil nil false nil nil nil 562 50 2 610 #createWindow: 50 1 658 690 8 #[5 0 0 0 4 0 0 0 78 0 0 0 27 0 0 0] 193 832 8 '&Update Now' 800 610 #isEnabled: 8 #(false) 800 3 8 #() 770 193 193 nil 29 18 #{UI.ProgressBar} 50 15 nil 144 50 2 8 1140850688 1 1104 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} 1 480 nil 5 nil nil nil 1104 nil nil 518 #{UI.NullConverter} nil nil 562 50 2 610 #createWindow: 50 1 658 690 8 #[83 0 0 0 4 0 0 0 65 1 0 0 27 0 0 0] 193 1136 8 '' 1104 610 #range: 50 1 774 #{Core.Interval} 1 201 3 1104 3 8 #() 770 193 193 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 4 1104 8 'progress' 304 8 'refreshMode' 518 #{Graphics.Rectangle} 770 11 9 770 9 7 562 50 1 610 #createWindow: 50 1 658 690 8 #[0 0 0 0 9 1 0 0 3 2 0 0 39 1 0 0] 193 176 8 '' 144 3 50 3 1104 304 800 770 193 193 nil 27 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 1792 nil nil nil 5 nil nil nil 1792 518 #{UI.ProportionalLayout} 550 #{Core.LookupTable} 0 false 1490 #{Core.IdentityDictionary} 50 4 18 #{UI.TreeView} 50 35 nil 1792 50 2 8 1140918818 1 1952 1094 3 #{UI.TreeModel} nil 448 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 480 nil 5 2886 4 #{UI.Menu} nil true 50 7 1094 2 #{UI.CommandMenuItem} 1 866 #filterOutRule 8 'Ignore this rule failure' 1 1 nil nil nil 2162 1 866 #selectFilteredRules 8 'Show ignored rules…' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 2162 1 866 #exportIgnoredRules 8 'Export all ignored rules…' 1 1 nil nil nil 2162 1 866 #importIgnoredRules 8 'Import all ignored rules…' 1 1 nil nil nil 2274 4097 2162 1 866 #clearIgnoredRules 8 'Clear all ignored rules' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1952 nil nil 512 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 2480 8 'doIt' 8 '[:x | (Tools.CodeMentorPlugin lintIconOfRule: x) imageIndex]' 8 #[32 105 45 17 177 160 106] 1094 2 #{Kernel.VariableBinding} #CodeMentorPlugin #{Tools.CodeMentorPlugin} #{Tools} 1 #lintIconOfRule: #imageIndex 2496 7 257 nil 1350 1 #{Graphics.IconImageManager} nil nil nil 770 65 65 nil 1890 0 nil #smallIcons 1 2082 0 1 262 #{UI.TreeViewDynamicUpdateMode} 1952 1 nil nil nil nil nil 562 50 2 610 #createWindow: 50 1 658 690 8 #[0 0 0 0 0 0 0 0 255 0 0 0 9 1 0 0] 193 1984 8 '' 1952 610 #contextMenu: 50 1 2128 1952 3 8 #() 770 193 193 nil 29 8 'failures' 18 #{UI.ContainerView} 50 15 nil 1792 50 2 8 1140850688 131073 2944 nil 466 #window nil 5 nil nil nil 2944 1030 #{UI.GridLayout} 3 1 1 1 2082 0 nil 562 50 1 610 #createWindow: 50 1 658 690 8 #[4 1 0 0 0 0 0 0 3 2 0 0 9 1 0 0] 193 2976 8 '' 2944 3 8 #() 770 193 193 nil 27 8 'infoSite' nil 562 50 1 610 #createWindow: 50 1 658 690 8 #[0 0 0 0 0 0 0 0 3 2 0 0 9 1 0 0] 193 1824 8 '' 1792 3 50 3 1952 18 #{UI.Splitter} 50 12 nil 1792 50 2 8 1140850688 1 3392 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 3392 nil 1 #left nil nil nil 770 1 1 770 9 9 nil 3488 nil 562 50 1 610 #createWindow: 50 1 658 690 8 #[255 0 0 0 0 0 0 0 4 1 0 0 9 1 0 0] 193 3424 8 '' 3392 3 8 #() 770 193 193 nil 27 2944 770 193 193 nil 27 2082 0 nil 562 50 1 610 #createWindow: 50 1 658 690 8 #[255 11 0 0 10 0 0 0 2 14 0 0 49 1 0 0] 193 80 8 '' 32 1 50 2 1792 144 770 193 193 nil 27)!
 
 sleepIcon
 	^Icon fromId: 'LintSleep.ico'! !

@@ -41,7 +41,7 @@ areBrowserExtensionsEnabled: aBoolean
 	flags := flags mask: BrowseExtensionsEnabledMask set: aBoolean!
 
 browserVersion
-	^browserVersion!
+	^browserVersion ?? CORE_WEBVIEW_TARGET_PRODUCT_VERSION!
 
 browserVersion: aString
 	browserVersion := aString!
@@ -217,7 +217,7 @@ get_TargetCompatibleBrowserVersion: value
 		HRESULT __stdcall TargetCompatibleBrowserVersion(
 			[out, retval]LPWSTR* value);"
 
-	value value: (browserVersion ?? '') asUtf16String copyToCOMTaskMemory detach.
+	value value: self browserVersion asUtf16String copyToCOMTaskMemory detach.
 	^S_OK!
 
 GetCustomSchemeRegistrations: pCount schemeRegistrations: ppSchemeRegistrations
@@ -244,7 +244,6 @@ GetCustomSchemeRegistrations: pCount schemeRegistrations: ppSchemeRegistrations
 initialize
 	super initialize.
 	flags := ##(AllowSSOMask | ExclusiveUserDataFolderAccessMask).
-	browserVersion := CORE_WEBVIEW_TARGET_PRODUCT_VERSION.
 	channelSearchKind := COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
 	releaseChannels := COREWEBVIEW2_RELEASE_CHANNELS_NONE.
 	scrollBarStyle := COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT.

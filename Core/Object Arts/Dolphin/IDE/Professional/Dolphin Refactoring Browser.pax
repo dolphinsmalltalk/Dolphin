@@ -389,6 +389,7 @@ package setMethodNames: #(
 	#(#{UI.ChoicePrompter class} #refactoringChoices:caption:)
 	#(#{UI.ChoicePrompter class} #resource_Refactoring_view)
 	#(#{UI.Presenter class} #resource_Refactoring_OK_Cancel_button_block)
+	#(#{UI.URLPresenter class} #resource_CodeMentorInfoBrowser)
 ).
 
 package setPrerequisites: #(
@@ -4643,6 +4644,22 @@ resource_Refactoring_OK_Cancel_button_block
 
 !UI.Presenter class categoriesForMethods!
 resource_Refactoring_OK_Cancel_button_block!public!resources-views! !
+!
+
+!UI.URLPresenter class methodsFor!
+
+resource_CodeMentorInfoBrowser
+	"Answer the literal data from which the 'CodeMentorInfoBrowser' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_CodeMentorInfoBrowser)
+	"
+
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.WebView2View} 38 #{Core.Array} 26 nil nil 50 2 8 1140916224 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 311359 nil nil nil nil nil 2374 3 #{WebView2.WebView2EnvironmentOptions} nil 15 nil nil nil 1 1 1 8 #() nil 8 'DolphinCodeMentor' nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 11 0 0 10 0 0 0 76 14 0 0 154 0 0 0] 193 80 8 '' 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 29)! !
+
+!UI.URLPresenter class categoriesForMethods!
+resource_CodeMentorInfoBrowser!public!resources-views! !
 !
 
 "End of package definition"!

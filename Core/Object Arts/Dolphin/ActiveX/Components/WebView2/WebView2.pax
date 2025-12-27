@@ -1099,7 +1099,7 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'PreferredColorSchemeNames' -> #(#auto #light #dark) }!
 
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2ScriptException'

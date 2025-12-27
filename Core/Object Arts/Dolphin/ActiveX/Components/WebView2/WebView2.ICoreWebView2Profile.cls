@@ -6,7 +6,7 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'PreferredColorSchemeNames' -> #(#auto #light #dark) }!
 
 WebView2.ICoreWebView2Profile guid: (OS.COM.IID fromString: '{79110ad3-cd5d-4373-8bc3-c60658f17a5f}')!
 
@@ -154,6 +154,24 @@ clearBrowsingDataThenDo: aMonadicValuable
 				queryInterface: ICoreWebView2ClearBrowsingDataCompletedHandler.
 	self ClearBrowsingDataAll: handler.
 	handler free!
+
+colorScheme
+	"Answer the symbolic name of the preferred colour scheme for this profile.
+		#auto		- follows desktop display settings
+		#light
+		#dark
+	"
+
+	^PreferredColorSchemeNames at: self preferredColorScheme + 1!
+
+colorScheme: aSymbol
+	"Set the preferred colour scheme for this profile to that named by the argument.
+		#auto		- follows desktop display settings
+		#light
+		#dark
+	"
+
+	self preferredColorScheme: (PreferredColorSchemeNames identityIndexOf: aSymbol) - 1!
 
 cookieManager
 	"Answer the <ICoreWebView2CookieManager> value of the 'CookieManager' property of the receiver."
@@ -374,7 +392,7 @@ printableProperties
 	| propertyNames |
 	propertyNames := OrderedCollection new.
 	self profileName isEmpty ifFalse: [propertyNames addLast: #profileName].
-	self preferredColorScheme isZero ifFalse: [propertyNames addLast: #preferredColorScheme].
+	self preferredColorScheme isZero ifFalse: [propertyNames addLast: #colorScheme].
 	self isInPrivateModeEnabled ifTrue: [propertyNames addLast: #isInPrivateModeEnabled].
 	self preferredTrackingPreventionLevel = self defaultTrackingPreventionLevel
 		ifFalse: [propertyNames add: #preferredTrackingPreventionLevel].
@@ -490,6 +508,8 @@ ClearBrowsingDataAll:!COM Interfaces-ICoreWebView2Profile2!private! !
 clearBrowsingDataAllThenDo:!async requests!public! !
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
 clearBrowsingDataThenDo:!async requests!public! !
+colorScheme!properties!public! !
+colorScheme:!properties!public! !
 cookieManager!properties!public! !
 defaultDownloadFolderPath!properties!public! !
 defaultDownloadFolderPath:!**auto generated**!properties!public! !
