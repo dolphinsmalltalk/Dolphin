@@ -58,17 +58,6 @@ package methodNames
 	add: #Menu -> #replace:with:;
 	add: #MoenTreeView -> #updateItem:andChildren:imagesOnly:;
 	add: #RGB -> #asIndexedColorUsingPalette:;
-	add: #ScintillaIndicator -> #type;
-	add: #ScintillaIndicatorStyle -> #alphaPercent;
-	add: #ScintillaIndicatorStyle -> #alphaPercent:;
-	add: #ScintillaIndicatorStyle -> #hoverStyleName;
-	add: #ScintillaIndicatorStyle -> #hoverStyleName:;
-	add: #ScintillaIndicatorStyle -> #styleName;
-	add: #ScintillaIndicatorStyle -> #styleName:;
-	add: #ScintillaView -> #highlightRange:withIndicator:;
-	add: #ScintillaView -> #indicatorDefinitions:;
-	add: #ScintillaView -> #isKeyboardInputUnicode;
-	add: #ScintillaView -> #isKeyboardInputUnicode:;
 	add: #ScrollingDecorator -> #continuousTracking;
 	add: #ScrollingDecorator -> #continuousTracking:;
 	add: #ShellView -> #hasThickFrame;
@@ -137,7 +126,6 @@ package methodNames
 	add: 'MouseTracker class' -> #defaultHysteresis;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
 	add: 'RGB class' -> #stdColor:;
-	add: 'ScintillaIndicatorStyle class' -> #styleNames;
 	add: 'STBViewProxy class' -> #for:;
 	add: 'SystemColor class' -> #fromId:;
 	add: 'TextTileIcon class' -> #text:font:color:;
@@ -179,7 +167,6 @@ package setPrerequisites: #(
 	'..\Presenters\ListTree\Dolphin List Tree Presenter'
 	'..\Views\MoenTree\Dolphin MoenTree View'
 	'..\Base\Dolphin MVP Base'
-	'..\Views\Scintilla\Dolphin Scintilla View'
 	'..\Views\Scrollbars\Dolphin Scrollbars'
 	'..\Views\Slider\Dolphin Slider Control'
 	'..\Presenters\Text\Dolphin Text Presenter'
@@ -811,117 +798,6 @@ stdColor: aSymbol
 
 !RGB class categoriesForMethods!
 stdColor:!instance creation!public! !
-!
-
-!ScintillaIndicator methodsFor!
-
-type
-	Notification deprecated.
-	^self styleName! !
-
-!ScintillaIndicator categoriesForMethods!
-type!accessing!public! !
-!
-
-!ScintillaIndicatorStyle methodsFor!
-
-alphaPercent
-	"Answer an <integer> representing the percentage alpha (transparency) for the indicator.
-	Note that this is a percentage (hence the name), and not the usual 0..255 range. Zero
-	represents completely transparent, 100 completely opaque. Note that this is currently only
-	relevant for the #roundBox indicator style."
-
-	#deprecated.
-	^self alpha ifNil: [30] ifNotNil: [:a | a * 100 // SC_ALPHA_OPAQUE]!
-
-alphaPercent: anInteger 
-	"Set the percentage alpha (transparency) for the indicator to the <integer> argument. Note
-	that this is a percentage (hence the name), and not the usual 0..255 range. Zero represents
-	completely transparent, 100 completely opaque. Note that this is currently only relevant for
-	the #roundBox indicator style."
-
-	#deprecated.
-	self alpha: SC_ALPHA_OPAQUE * anInteger // 100!
-
-hoverStyleName
-	Notification deprecated.
-	^self hoverStyle!
-
-hoverStyleName: aSymbol
-	Notification deprecated.
-	self hoverStyle: aSymbol!
-
-styleName
-	Notification deprecated.
-	^self style!
-
-styleName: aSymbol
-	Notification deprecated.
-	self style: aSymbol
-! !
-
-!ScintillaIndicatorStyle categoriesForMethods!
-alphaPercent!accessing!public! !
-alphaPercent:!accessing!public! !
-hoverStyleName!accessing!public! !
-hoverStyleName:!accessing!public! !
-styleName!accessing!public! !
-styleName:!accessing!public! !
-!
-
-!ScintillaIndicatorStyle class methodsFor!
-
-styleNames
-	Notification deprecated.
-	^IndicatorStyles! !
-
-!ScintillaIndicatorStyle class categoriesForMethods!
-styleNames!initializing!public! !
-!
-
-!ScintillaView methodsFor!
-
-highlightRange: anInterval withIndicator: idInteger 
-	"Apply the indicator identified by the <integer> argument to the range of text
-	specified by the <Interval> argument."
-
-	#deprecated.
-	self setIndicator: idInteger range: anInterval!
-
-indicatorDefinitions: aSequenceableCollection 
-	#deprecated.
-	self indicatorStyles: aSequenceableCollection!
-
-isKeyboardInputUnicode
-	"Are keys always interpreted as Unicode?"
-
-	#deprecated.
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETKEYSUNICODE
-				wParam: 0
-				lParam: 0) asBoolean]!
-
-isKeyboardInputUnicode: keysUnicodeBoolean
-	"Deprecated in 3.5.5 Always interpret keyboard input as Unicode"
-
-	#deprecated.
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETKEYSUNICODE
-				wParam: keysUnicodeBoolean asParameter
-				lParam: 0]! !
-
-!ScintillaView categoriesForMethods!
-highlightRange:withIndicator:!indicators!public! !
-indicatorDefinitions:!indicators!public! !
-isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
-isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
 !
 
 !ScrollingDecorator methodsFor!
