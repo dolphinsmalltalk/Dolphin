@@ -47,7 +47,7 @@ resource_WebView2
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_WebView2)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.WebView2View} 38 #{Core.Array} 26 nil nil 50 2 8 1140916224 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 262145 nil nil nil nil nil 1286 #{WebView2.WebView2EnvironmentOptions} nil 15 nil 8 '110.0.1549.0' 5 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 14 0 0 10 0 0 0 76 17 0 0 154 0 0 0] 193 80 8 '' 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 29)! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.WebView2View} 38 #{Core.Array} 26 nil nil 50 2 8 1140916224 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 262145 nil nil nil nil nil 2374 3 #{WebView2.WebView2EnvironmentOptions} nil 15 nil nil nil 1 1 1 8 #() nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 11 0 0 10 0 0 0 76 14 0 0 154 0 0 0] 193 80 8 '' 32 3 8 #() 518 #{Graphics.Point} 193 193 nil 29)! !
 
 !UI.URLPresenter class categoriesForMethods!
 defaultModel!models!public! !

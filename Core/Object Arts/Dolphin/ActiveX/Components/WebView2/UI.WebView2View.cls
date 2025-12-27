@@ -169,7 +169,9 @@ createWebView
 	webviewEnvironment
 		createCoreWebView2Controller: handle
 		withOptions: controllerOptions
-		thenDo: [:hr :controller | hr < 0 ifFalse: [self onControllerCreated: controller]].	"We could create a composition controller here, but there is no point as we don't have any integration with Direct Composition"
+		thenDo: [:hr :controller | hr < 0 
+			ifTrue: [hr = E_ABORT ifFalse: [HRESULTError signalWith: hr]]
+			ifFalse: [self onControllerCreated: controller]].	"We could create a composition controller here, but there is no point as we don't have any integration with Direct Composition"
 	controllerOptions free!
 
 createWebViewEnvironment

@@ -10676,6 +10676,7 @@ publishedAspectsOfInstances
 				nullValue: nil)
 				defaultValue: COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE;
 				yourself).
+	aspects add: (Aspect string: #profileName).
 	^aspects!
 
 publishedEventsOfInstances
