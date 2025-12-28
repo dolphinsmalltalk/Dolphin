@@ -279,22 +279,6 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.WindowsSystemLibrary
-	subclass: #'OS.IPHlpApiLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.WS2_32Library'
-	instanceVariableNames: 'wsaData'
-	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 OS.Win32Error
 	subclass: #'Net.SocketError'
 	instanceVariableNames: ''
@@ -316,6 +300,22 @@ Net.SocketError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.IPHlpApiLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.WS2_32Library'
+	instanceVariableNames: 'wsaData'
+	classVariableNames: ''
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

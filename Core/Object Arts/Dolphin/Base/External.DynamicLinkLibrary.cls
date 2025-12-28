@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object
+External.Module
 	subclass: #'External.DynamicLinkLibrary'
-	instanceVariableNames: 'handle'
+	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})
+	imports: #()
 	classInstanceVariableNames: 'default'
 	classConstants: {}!
 
 External.DynamicLinkLibrary guid: (Core.GUID fromString: '{87b4c488-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-External.DynamicLinkLibrary comment: '`DynamicLinkLibrary` is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of `External.ExternalMethod`) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an 	`InvalidExternalCall` exception being raised (assuming the `invalidCall:` method has not been overridden).
+External.DynamicLinkLibrary comment: '`DynamicLinkLibrary` is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of `External.ExternalMethod`) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM marshals the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an `InvalidExternalCall` exception being raised (assuming the `invalidCall:` method has not been overridden).
 
-Dynamic-link library classes are typically singletons, with the instances representing an "open" (usable) instance of the DLL. The singleton instances are accessible through the class `default` method. The libraries are loaded lazily, on demand (but see `External.PermanentLibrary`). In Dolphin 8, the default instances are typically assigned a global name, e.g. the default instance of `OS.GDILibrary` is named `OS.Gdi32`, so it is no longer to use the `GDILibrary default` expression to call one of its functions. The framework arranges (via the services of `External.DynamicLinkLibraryStub`) to lazily open the global instance when required.
+Dynamic-link library classes are singletons, with the instances representing an "open" (usable) instance of the DLL. The singleton instances are accessible through the class `default` method. The libraries are loaded lazily on demand (but see `External.PermanentLibrary`). In Dolphin 8, the default instances are typically assigned a global name, e.g. the default instance of `OS.GDILibrary` is named `OS.Gdi32`, so it is no longer necessary to use the `GDILibrary default` expression to call one of its functions. The framework arranges (via the services of `External.DynamicLinkLibraryStub`) to lazily open the global instance when required. When creating a new `DynamicLinkLibrary` for which you wish to set up a global, you will need to add a class side `#sharedVariableName` method answering a binding reference for the variable. The variable will be created and initialized when the library is first opened. The global variable should be added to the same package as that of the library class.
 
 The external call primitive supports the two most commonly used calling conventions:
 
@@ -23,14 +23,20 @@ The "fastcall" calling convention is not currently supported, but this is rarely
 
 Apart from scalar types, the primitive also supports the passing and returning of structures by value, up to a maximum of 64Kb per structure (though passing such large structures by value is not recommended).
 
-The argument/return types (and coercions) supported are:
+The native argument/return types supported are:
 
   `void` - Nothing
 	Only valid as a return type - the method answers self
   `lpvoid` - Generic pointer type.
 	Accepts byte objects e.g. Strings (pointer to contents passed), nil (null pointer), integers (passes as address), or ExternalAddresses (the contained address is passed, not a pointer to the `External.Address` object). When used as a return type, the method answers an instance of `External.Address`.
   `char` - Signed character. 
-	Accepts `Character`s only.
+	Accepts `Character`s only. Pass and return of byte character code unit.
+  `char32` - Utf-32 character
+	Accepts `Character`s only, passing the full Unicode character code point value. Likewise on return the full 32-bit integer return value is used to construct a `Character`.
+  `char16` - Utf-16 code unit
+	Accepts BMP `Character`s only. On return constructs a `Character` from 16-bits of the integer return value, which may create a UTF-16 surrogate character.
+  `char8` - Utf-8 code unit.
+	Accepts single Utf-8 code-unit `Character`s only. On return constructs a `Character` from 8-bits of the integer return value, which may create a UTF-8 surrogate character.
   `uint8` - Unsigned byte. 
 	Accepts `SmallInteger`s only. Passes a 32-bit value generated by zero extending the least significant byte. Fails if  not in the range 0..255. Zero extends into a positive SmallInteger when a return value.
   `int8` - Signed byte. 
@@ -42,15 +48,21 @@ The argument/return types (and coercions) supported are:
   `uint32` - Unsigned 32-bit integer.
 	Accepts 32-bit Integers. Positive integers are passed as unsigned, and negative integers in their two''s complement representation.  The largest negative `LargeInteger` which can be passsed is -16r80000000 (or -2147483648) because this is the largest negative number which can be represented in 32-bits in two''s complement notation. Also accepts byte objects of length 4, assumed to be in an unsigned bit representation. nil is passed as 0. As a return type, answers a SmallInteger, or a positive `LargeInteger` if the result cannot be represented as a positive `SmallInteger` (i.e. in 30 bits).
   `int32` - Signed 32-bit integer
-	Accepts any Integer in the range -16r80000000..16r7FFFFFFF (i.e. `Integer`s with a 32-bit two''s complement representation - all `SmallInteger`s, some 4-byte `LargeInteger`s). May also be other 		byte objects of length 4, which are assumed to contain a 2''s complement 32-bit number. 	As a return type answers a `SmallInteger`, or if more than 31-bits are required to represent the two''s complement result, a `LargeInteger`. Also accepts `nil` (passed as 0).
+	Accepts any Integer in the range -16r80000000..16r7FFFFFFF (i.e. `Integer`s with a 32-bit two''s complement representation - all `SmallInteger`s, some 4-byte `LargeInteger`s). May also be other byte objects of length 4, which are assumed to contain a 2''s complement 32-bit number. 	As a return type answers a `SmallInteger`, or if more than 31-bits are required to represent the two''s complement result, a `LargeInteger`. Also accepts `nil` (passed as 0).
   `bool` - Boolean value.
 	As an argument type, accepts `true` (translated to 1) or `false` (translated to 0). Also accepts `SmallInteger` values, pushing their host machine representation. As a return type, if the result is 0 answers `false`, if the result is non-zero, answers `true`.
+  `bool8` - 8-bit boolean
+	As `bool`, but masks out all but the bottom 8 bits of 32-bit call/return values.
   `handle` - uintptr sized handle. 
 	Accepts 32-bit integers, nil, or a byte object of size 4. As a return type, answers an `External.Handle`, unless the returned handle is NULL, in which case answers `nil`.
   `double`	64-bit IEEE double-precision floating point.
 	Accepts instances of class `Float` (which contain a host machine representation of a double precision floating point number). `SmallInteger`s and a limited range of `LargeInteger`s may also be passed (they are promoted to the double precision floating point representation of their integral value). As a return type, answers an instance of class `Float`.
-  `lpstr` Pointer to C (null-terminated) ASCII string type. 
-	Accepts null terminated byte objects (e.g. `String`s, `Symbol`s) or `nil` (null pointer). When used as a return type, answers a `String` containing the characters of the C string up to the null terminator. Unlike lpvoid, does not accept integer values as pointers, or `External.Address` (indirection) objects. If the validation is too tight for your requirements, then use `lpvoid`. Do not use this return type where an external function is called which expects the caller to assume ownership of the returned string, and to delete it when it is no longer required, as a memory leak will result (use `lpvoid` instead and remember to delete the memory appropriately).
+  `lpstr` Pointer to C (null-terminated) ANSI string type (e.g. `AnsiString` instance). 
+	Accepts null terminated byte objects (e.g. `String`s, `Symbol`s) or `nil` (null pointer). When used as a return type, answers an `AnsiString` containing the characters of the C string up to the null terminator. Unlike lpvoid, does not accept integer values as pointers, or `External.Address` (indirection) objects. If the validation is too tight for your requirements, then use `lpvoid`. Do not use this return type where an external function is called which expects the caller to assume ownership of the returned string, and to delete it when it is no longer required, as a memory leak will result (use `lpvoid` instead and remember to delete the memory appropriately).
+  `lpstr8` - Pointer to C null-terminated) Utf-8 string
+	Similar to `lpstr`, but assumes Utf-8 encoded byte strings rather than the current ANSI code page. Accepts any type of `String` as an argument, converting to a `Utf8String` as required. Returns `Utf8String`s.
+  `lpwstr` - Pointer to C null-terminated) Utf-16 string (e.g. `Utf16String` instance)
+	Similar to `lpstr`, but for strings with `wchar_t` elements. Accepts any type of `String`, coercing as necessary to Utf-16. Returns `Utf16String`s. 
   `oop` Object identifier. 
 	Any non-SmallInteger can be passed. The value should be treated as an opaque handle, and should not be stored for later use (it may change during a GC). As a return type, answers the object whose Oop is the result. It is recommended that you do not use this type. 
   `float` - 32-bit floating point. 
@@ -58,9 +70,7 @@ The argument/return types (and coercions) supported are:
   `lppvoid` - Pointer to pointer. 
 	Used for functions which take a parameter into which they write an address. The corresponding argument must be an ExternalAddress (or other indirection object), or an object whose first instance variable is such (e.g. an `External.Structure`). The address of the `External.Address` itself is passed, so that on return it contains the address written back by the external function. `nil` is not a valid argument value. As a return type answers a pointer instance of `LPVOID` (i.e. LPVOID* = void**).
   `hresult` - 32-bit signed integer value. 
-	Validation as `int32`. As a return type, if less than 0 (i.e. severity is error), causes the external call primitives to fail with a negative failure reason which is the HRESULT value. This is convenient because it means an 	exception is automatically generated when an external function returns an HRESULT error.
-  `lpwstr` - Pointer to C null-terminated) Utf-16 string.
-	Similar to `lpstr`, but for strings with `wchar_t` elements. Accepts any type of `String`, coercing as necessary to Utf-16. Returns `Utf16String`s. 
+	Validation as `int32`. As a return type, if less than 0 (i.e. severity is error), causes the external call primitives to fail with a negative failure reason which is the HRESULT value. This is convenient because it means an exception is automatically generated when an external function returns an HRESULT error.
   `uint64` - Unsigned 64-bit integer. 
 	Similar to `uint32`, but 64-bit (i.e. the range is -16r8000000000000000, the largest 64-bit two''s complement negative integer, up to 16rFFFFFFFFFFFFFFF the largest positive unsigned 64-bit integer). 8-byte objects are acceptable and assumed to contain the correct unsigned bit representation. nil is passed as 0.
   `int64` - Signed 64-bit integer. 
@@ -70,7 +80,7 @@ The argument/return types (and coercions) supported are:
 	These are counted length strings managed by the OLE Automation library functions. See `BSTR`.
   `variant` - OLE Automation VARIANT.
 	See `VARIANT`.
-  `date` - OLE Automation DATE (double representation of a timestamp).
+  `date` - OLE Automation DATE (floating point double representation of a timestamp).
   `varbool` - OLE Automation boolean. Unusual in that the true value is -1, otherwise as `bool`.
   `guid` - See `GUID`.
   `uintptr` - Pointer-sized unsigned integer (i.e. 32-bits in 32-bit Dolphin).
@@ -78,95 +88,24 @@ The argument/return types (and coercions) supported are:
   `nstatus` - Alias for `hresult`.
   `errno` - 32-bit integer error number
 	Behaves as `uint32`, but intended for use with APIs that return non-zero error indicators. When such a function returns a non-zero value, the FFI call primitive fails _after_ the invocation. The library''s `invalidCall:` implementation is then expected to translate the error to an exception. As with `hresult` this is intended to allow for more fluid use of such APIs without the need to sprinkle error checks everywhere.
-  `bool8` - 8-bit boolean
-	As `bool`, but masks out all but the bottom 8 bits of 32-bit call/return values.
-  `char32` - Utf-32 character
-	Accepts `Character`s only, passing the full Unicode character code point value. Likewise on return the full 32-bit integer return value is used to construct a `Character`.
-  `char16` - Utf-16 code unit
-	Accepts BMP `Character`s only. On return constructs a `Character` from 16-bits of the integer return value, which may create a surrogate character.
-  `char8` - Utf-8 code unit.
-	Accepts single Utf-8 code-unit `Character`s only. On return constructs a `Character` from 8-bits of the integer return value, which may create a surrogate character.
-  `lpstr8` - Pointer to C null-terminated) Utf-8 string.
-	As `lpstr`, but assumes Utf-8 encoded byte strings rather than current ANSI code page.
-`<N>` - Binary data of unspecified type passed by value, where N is the byte size.
+  `<N>` - Binary data of unspecified type passed by value, where N is the byte size.
 	Accepts either byte objects (of the correct size) or `External.Structure` instances with the correct `byteSize` (or other classes with the same shape as `External.Structure`). `External.Structure`s passed to such arguments can be reference instances (i.e. ones containing a pointer to the actual structure bytes, rather than the structure bytes themselves). As a return type, the result is a `ByteArray` of the specified size.
-`<struct>` - Structure passed  by value, where <struct> is an `External.Structure` class.
+  `<struct>` - Structure passed  by value, where <struct> is an `External.Structure` class.
 	Accepts only the exact matching structure class. Again, the ExternalStructure arguments may be reference/pointer instances. When used as a return value, an instance of the `External.Structure` class is answered, with the bytes of the returned structure as its contents (copied into a `ByteArray`).
-`<struct>*` - Structure passed by reference, where <struct> is an `External.Structure` class.
+  `<struct>*` - Structure passed by reference, where <struct> is an `External.Structure` class.
 	When used as a return type, a pointer instance of the `External.Structure` is answered, with an `External.Address` pointing at the externally stored value as its first instance variable.
-	
+
 Note that in general, the `UndefinedObject`, `nil`, is interchangeable with `0`, or `NULL`, or `nullptr`, when interfacing with external library functions. Nullness can be tested with the `isNull` message, with the `UndefinedObject` and `SmallInteger` zero answering `true`.'!
 
 !External.DynamicLinkLibrary categoriesForClass!External-Libraries! !
 
 !External.DynamicLinkLibrary methodsFor!
 
-= anObject
-	"Answer whether the receiver and anObject are equivalent.
-	Two DynamicLinkLibrary instances are considered equal if they are of the same species, and have (or would have if opened) the same module handle."
+comparisonName
+	^self class fileName!
 
-	^self == anObject or: 
-			[self species == anObject species and: 
-					[(self isOpen and: [anObject isOpen])
-						ifTrue: [handle = anObject handle]
-						ifFalse: 
-							["Filenames should be compared using an ordinal case-insensitive comparison"
-							(self class fileName compareOrdinals: anObject class fileName ignoringCase: true) == 0]]]!
-
-asParameter
-	"Answer the receiver in a form appropriate for passing to an external
-	library procedure."
-
-	handle isNull ifTrue: [self open].
-	^handle!
-
-basicFree
-	^Kernel32 freeLibrary: handle!
-
-basicOpen: aString
-	"Private - Open the external library with the external file name, aString,
-	as the library referenced by the receiver. Answer the receiver.
-	The library is NOT initialized."
-
-	handle := nil.
-	self handle: (self class load: aString flags: self loadFlags).
-	self beFinalizable!
-
-clear
-	"Private - Reinitialize this dll instance, e.g. on startup."
-
-	handle := nil!
-
-close
-	"Release the reference the receiver has to the External Library it represents. This may
-	not cause the library to be unloaded, so it may still function. Answer whether the
-	library was successfully closed."
-
-	| success |
-	self beUnfinalizable.
-	success := handle notNull and: [self basicFree].
-	handle := nil.
-	^success!
-
-fileName
-	"Answer the host system file name for the external library the 
-	receiver represents."
-
-	^handle isNull
-		ifTrue: [self class fileName]
-		ifFalse: [self moduleFileName]!
-
-formatMessage: anIntegerId with: arguments
-	"Answer a message formatted from the Win32 format string with the specified
-	id in the receiver, with substitutions from the collection, arguments."
-
-	^String
-		formatMessage: anIntegerId
-		in: self asParameter
-		withArguments: arguments!
-
-free
-	self close!
+defaultFileName
+	^self class fileName!
 
 getProcAddress: aStringOrWord
 	"Private - Answer the address of the receiver's procedure identified by the <AnsiString> name or <integer> ordinal parameter."
@@ -181,18 +120,6 @@ getProcAddress: nameOrOrdinal ifAbsent: exceptionHandler
 	| address |
 	address := Kernel32 getProcAddress: self asParameter lpProcName: nameOrOrdinal.
 	^address = 0 ifTrue: [exceptionHandler value] ifFalse: [address]!
-
-handle
-	^handle!
-
-handle: aHandle
-	"Private - Set the handle of the external library which the receiver represents.
-	Answer the receiver."
-
-	handle := aHandle ifNotNil: [aHandle asExternalHandle]!
-
-hash
-	^self class fileName hashOrdinalsIgnoringCase!
 
 invalidArgErrorClass
 	"Private - Answer the class of Error to be signalled when an invalid argument is passed to one of 
@@ -232,43 +159,10 @@ invalidCall: anInteger fromFrame: aStackFrame
 						signalWith: ((HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT)]
 				ifFalse: [HRESULTError signalFailureCode: anInteger]]!
 
-isOpen
-	"Answer whether the external library represented by the receiver is open."
-
-	^handle isNull not!
-
 isSelfEvaluating
 	| var |
 	var := self class sharedVariableName.
 	^var notNil and: [self = var valueOrNil]!
-
-loadFlags
-	"Private - Flags passed to [LoadLibraryEx](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexw)."
-
-	^LOAD_LIBRARY_SEARCH_DEFAULT_DIRS!
-
-loadString: anIntegerId
-	"Answer the string with the specified id from the receiver's resources."
-
-	^String fromId: anIntegerId in: self!
-
-moduleFileName
-	"Private - Answer the file name of the receiver's loaded module."
-
-	^self class moduleFileName: self!
-
-open
-	"Private - Open the external library referenced by the receiver. 
-	Answer the receiver. The library is NOT initialized."
-
-	self open: self fileName!
-
-open: aString
-	"Private - Open the external library with the external file name, aString,
-	as the library referenced by the receiver. Answer the receiver.
-	The library is initialized."
-
-	(self basicOpen: aString) initialize!
 
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
@@ -280,13 +174,7 @@ printOn: aStream
 				ifTrue: 
 					[aStream display: var.
 					^self]].
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		nextPutAll: (handle isNil ifTrue: ['NULL'] ifFalse: [handle asInteger printStringRadix: 16]);
-		nextPutAll: ' - ';
-		print: self fileName;
-		nextPut: $)!
+	super printOn: aStream!
 
 systemError
 	"Generate an error based on the last recorded host system error"
@@ -296,71 +184,26 @@ systemError
 systemError: anInteger
 	"Generate an error for the host system error, anInteger"
 
-	^Win32Error signalWith: anInteger!
-
-versionFormatString
-	"Private - Answer a String containing the version format used by the receiver.
-	The arguments than can be inserted into the string are:
-		1) Product name
-		2) Product major high word
-		3) Product major low word
-		4) Product minor high word
-		5) Product minor low word
-	"
-
-	^'%2!!d!!.%3!!d!! build %4!!d!!'!
-
-versionInfo
-	"Answer a <VersionInfo> containing the version details from the receiver."
-
-	^VersionInfo forPath: self moduleFileName!
-
-versionString
-	"Answer a version number String in the format used by the receiver,
-	(typically N.N Build N, but see #versionFormatString)."
-
-	^self versionInfo formatVersionString: self versionFormatString! !
+	^Win32Error signalWith: anInteger! !
 
 !External.DynamicLinkLibrary categoriesForMethods!
-=!comparing!public! !
-asParameter!converting!public! !
-basicFree!private!realizing/unrealizing! !
-basicOpen:!private!realizing/unrealizing! !
-clear!private!realizing/unrealizing! !
-close!public!realizing/unrealizing! !
-fileName!accessing!public! !
-formatMessage:with:!accessing!public! !
-free!finalizing!public! !
+comparisonName!comparing!private! !
+defaultFileName!constants!private! !
 getProcAddress:!accessing!private! !
 getProcAddress:ifAbsent:!accessing!private! !
-handle!accessing!private! !
-handle:!accessing!private! !
-hash!comparing!public! !
 invalidArgErrorClass!constants!private! !
 invalidCall:!exceptions!public! !
 invalidCall:fromFrame:!exceptions!private! !
-isOpen!public!testing! !
 isSelfEvaluating!public!testing! !
-loadFlags!constants!private! !
-loadString:!accessing!public! !
-moduleFileName!accessing!private! !
-open!private!realizing/unrealizing! !
-open:!private!realizing/unrealizing! !
 printOn:!printing!public! !
 systemError!exceptions!public! !
 systemError:!exceptions!public! !
-versionFormatString!constants!private! !
-versionInfo!accessing-version!public! !
-versionString!accessing-version!public! !
 !
 
 !External.DynamicLinkLibrary class methodsFor!
 
 clear
-	"Private - Clear down cached external function addresses from previous runs. 
-	The default instances will be lazily re-opened because their handles will be null
-	on image re-start (ExternalHandles are automatically nulled by the VM on image load).
-	Similary function addresses will be lazily requeried as required."
+	"Private - Clear down cached external function addresses from previous runs. The default instances will be lazily re-opened because they will have been substitued with `DynamicLinkLibraryStub`s on image re-start. Similary function addresses will be lazily requeried as required."
 
 	default notNil ifTrue: [default clear].
 	self clearProcAddresses!
@@ -375,67 +218,31 @@ closeAllDefaults
 
 closeDefault
 	"Private - Close the default instance of the receiver (if there is one).
-	Having closed it, clear down the default inst var so that any subsequent accesses
-	will cause the library to be reopened."
+	Having closed it, clear down the default inst var so that any subsequent accesses will cause the library to be reopened."
 
-	(default notNil and: [default handle notNull]) 
+	(default notNil and: [default isOpen])
 		ifTrue: 
 			[default close.
-			self setDefault: nil]!
+			self stubDefault]!
 
 default
 	"Answer the default, opened, instance of the receiver."
 
-	default isNil 
-		ifTrue: [self openDefault]
-		ifFalse: [default asParameter].
+	default ifNil: [self stubDefault].
 	^default!
-
-default: anExternalLibrary
-	"Set the default instance of the receiver."
-
-	self setDefault: anExternalLibrary!
 
 fileName
 	"Answer the host system file name for the external library the receiver represents."
 
 	^nil!
 
-fromHandle: aHandle
-	"Answers an instance of ExternalLibrary attached to aHandle."
-
-	^self new handle: aHandle!
-
-initializeAfterBinaryLoad
-	"Private - Perform any post-binary load initialisation for the class. "
-
-	self clear!
-
 initializeSubclasses
-	"Private - Perform session startup processing for the receiver and its subclasses.
-	We open the permanent libraries first to make the startup more robust in case of
-	errors opening other libraries."
+	"Private - Perform session startup processing for the receiver and its subclasses."
 
 	self subclassesDo: 
 			[:c |
 			c isNonInstantiable ifFalse: [c onStartup2].
 			c initializeSubclasses]!
-
-load: aString flags: anInteger
-	"Private - Open the external library with the external file name, aString,
-	and answer the handle."
-
-	| hLibrary |
-	hLibrary := Kernel32
-				loadLibraryEx: aString
-				hFile: nil
-				dwFlags: anInteger.
-	^hLibrary ifNil: [Win32Error signal]!
-
-moduleFileName: aLibOrHandle
-	"Private - Answer the `Utf16String` file name of the receiver's loaded module."
-
-	^Kernel32 getModuleFilename: aLibOrHandle!
 
 onExit
 	"Private - Perform shut down processing."
@@ -443,70 +250,66 @@ onExit
 	self closeAllDefaults!
 
 onPreStripImage
-	"Private - The image is about to be stripped, close down defaults to allow unused
-	subclasses to be stripped."
+	"Private - The image is about to be stripped, close down defaults to allow unused subclasses to be stripped."
 
 	self closeAllDefaults!
 
 onStartup
-	"Private - Perform session startup processing for the receiver and its subclasses."
+	"Private - Perform session startup processing for the receiver and its subclasses.
+	We open the permanent libraries first to make the startup more robust in case of errors opening other libraries."
 
 	"First clear away stale module handles and cached proc addresses from the external methods of all libraries."
+
 	self allSubclassesBreadthFirstDo: [:each | each clear].
 	"If we don't have a handle for the Kernel32.DLL then we can't call LoadLibraryEx to open any other libraries."
 	KernelLibrary openDefault.
-	"Now we can open the few other permanent libraries such as the CRT"
-	PermanentLibrary onStartup2.
 	"Initialize all the lazily opened libraries, installing DynamicLinkLibrary stubs for any assigned to shared variables."
-	self initializeSubclasses!
+	self initializeSubclasses.
+	"Add VM folder to DLL search path for libraries that specify LOAD_LIBRARY_SEARCH_DEFAULT_DIRS/LOAD_LIBRARY_SEARCH_USER_DIRS in #loadFlags"
+	Kernel32 addDllDirectory: (File splitPathFrom: (Kernel32 getModuleFilename: VMLibrary moduleHandle))!
 
 onStartup2
-	"Private - Perform session startup processing for the receiver and its subclasses.
-	We open the permanent libraries first to make the startup more robust in case of
-	errors opening other libraries."
+	"Private - Perform session startup processing for the receiver."
 
-	self setDefault: nil!
+	self stubDefault!
 
 open
-	"Answer a new instance of the receiver to represent the receiver's ExternalLibrary. The 
-	instance can be used to invoke the functions of the external library specified as instance
-	methods"
+	"Answer a new instance of the receiver to represent an external DLL. The instance can be used to invoke the functions of the external library specified as instance methods"
 
 	^self open: self fileName!
 
-open: aString
-	"Answer an instance of the receiver which references the external
-	library with the external file name, aString. The library is
-	initialized (most libraries don't need any initializing, but you
-	get the option)."
-
-	^self new open: aString!
-
 openDefault
-	"Private - Open and record the default instance of the receiver.
-	Answer the new instance."
+	"Private - Open and record the default instance of the receiver. Answer the new instance."
 
 	self setDefault: self open.
 	^default!
 
 setDefault: anExternalLibrary
-	"Private - Set the default instance of the receiver, updating the shared variable normally used to reference it (if there is one)."
+	"Private - Set the default instance of the receiver, ensuring that the shared variable normally used to access it (if there is one) refers to the same instance."
 
-	default := anExternalLibrary.
-	self sharedVariableName
+	default ifNil: [default := anExternalLibrary] ifNotNil: [default become: anExternalLibrary].
+	"Normally the become will have updated the shared variable implicitly, but in case it has not been created or has been set to something else, ensure it tracks the default."
+	self sharedVariable ifNotNil: [:var | var setValue: default]!
+
+sharedVariable
+	"Private - Answer the shared variable binding for the receiver's default instance, if any."
+
+	^self sharedVariableName
 		ifNotNil: 
 			[:ref |
 			ref bindingOrNil
-				ifNotNil: 
-					[:binding |
-					binding
-						setValue: (default ifNil: [DynamicLinkLibraryStub libraryClass: self]);
-						beImmutableObject]]!
+				ifNil: 
+					[ref declare
+						beImmutableObject;
+						yourself]]!
 
 sharedVariableName
 	"Private - Answer a <BindingReference> that refers to the shared variable holding the default instance of the receiver, or nil if there is no variable."
 
 	^nil!
+
+stubDefault
+	self setDefault: (DynamicLinkLibraryStub libraryClass: self)!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
@@ -517,17 +320,14 @@ uninitialize
 		ref undeclare]!
 
 uninitializeBeforeRemove
-	"Perform any pre-removal uninitialisation for the class. This includes any specific #uninitialize
-	implementation (but note that #uninitialize is only sent to classes which directly implement
-	#uninitialize, otherwise we'd probably end up damaging superclasses which are not being
-	removed).
-	Implementation Note: This is one of those cases where we want subclasses to inherit the
-	uninitialize, so override to always call it."
+	"Perform any pre-removal uninitialisation for the class. This includes any specific #uninitialize implementation (but note that #uninitialize is only sent to classes which directly implement
+	#uninitialize, otherwise we'd probably end up damaging superclasses which are not being removed).
+	Implementation Note: This is one of those cases where we want subclasses to inherit the uninitialize, so override to always call it."
 
 	self uninitialize!
 
 versionInfo
-	"Answer a <VersionInfo> containing the version details from the receiver."
+	"Answer a <VersionInfo> containing the version details from the receiver's DLL."
 
 	^VersionInfo forPath: self fileName! !
 
@@ -537,22 +337,18 @@ clearProcAddresses!helpers!private! !
 closeAllDefaults!finalizing!private! !
 closeDefault!private!realizing/unrealizing! !
 default!accessing!instance creation!public! !
-default:!accessing!public! !
 fileName!constants!public! !
-fromHandle:!instance creation!public! !
-initializeAfterBinaryLoad!initializing!private! !
 initializeSubclasses!initializing!private! !
-load:flags:!private!realizing/unrealizing! !
-moduleFileName:!helpers!private! !
 onExit!finalizing!private! !
 onPreStripImage!class hierarchy-removing!private! !
 onStartup!event handling!private! !
 onStartup2!event handling!private! !
 open!instance creation!public! !
-open:!instance creation!public! !
 openDefault!instance creation!private!realizing/unrealizing! !
 setDefault:!initializing!private! !
+sharedVariable!accessing!private! !
 sharedVariableName!constants!private! !
+stubDefault!event handling!private! !
 uninitialize!class hierarchy-removing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!private! !
 versionInfo!accessing-version!public! !

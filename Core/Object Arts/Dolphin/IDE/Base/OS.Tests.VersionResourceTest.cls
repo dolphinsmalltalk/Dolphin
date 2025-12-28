@@ -43,7 +43,7 @@ setUp
 	super setUp.
 	updatePath := File temporaryFilename.
 	File copy: self sourcePath to: updatePath.
-	sourceModule := DynamicLinkLibrary open: self sourcePath.
+	sourceModule := Module open: self sourcePath.
 	pVer := VersionResource getVersionResourceOfModule: sourceModule.
 	header := VS_VERSION_INFO_HEADER fromAddress: pVer.
 	sourceSize := header wLength.

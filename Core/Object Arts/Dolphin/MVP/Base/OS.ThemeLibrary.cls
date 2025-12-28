@@ -1272,7 +1272,7 @@ new
 	^(SystemMetrics current hasThemes ifTrue: [self] ifFalse: [MockThemeLibrary]) basicNew!
 
 sharedVariableName
-	^#{UxTheme}! !
+	^#{OS.UxTheme}! !
 
 !OS.ThemeLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !

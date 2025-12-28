@@ -1697,38 +1697,6 @@ UI.DragDropSession
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.WindowsSystemLibrary
-	subclass: #'OS.DwmApiLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { 'DWMWA_USE_IMMERSIVE_DARK_MODE' -> 16r14 }!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.SHCoreLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.ThemeLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.ThemeConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.ThemeLibrary
-	subclass: #'OS.MockThemeLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 UI.Event
 	subclass: #'UI.SelectionChangeEvent'
 	instanceVariableNames: 'newSelections oldSelections cause'
@@ -2014,6 +1982,38 @@ UI.MenuItem
 			'DividerLookup'
 				-> (IdentityDictionary withAll: { 16r20 -> #barBreak. 16r40 -> #break. 16r800 -> #separator })
 		}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.DwmApiLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'DWMWA_USE_IMMERSIVE_DARK_MODE' -> 16r14 }!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.SHCoreLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.ThemeLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ThemeConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.ThemeLibrary
+	subclass: #'OS.MockThemeLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 UI.Presenter
 	subclass: #'UI.SelectableItemsPresenter'
@@ -2708,7 +2708,7 @@ copyToClipboard!copying!public! !
 !OS.CommCtrlLibrary class methodsFor!
 
 sharedVariableName
-	^#{ComCtl32}! !
+	^#{OS.ComCtl32}! !
 
 !OS.CommCtrlLibrary class categoriesForMethods!
 sharedVariableName!constants!private! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary
+External.Module
 	subclass: #'External.ResourceLibrary'
 	instanceVariableNames: 'fileName loadFlags'
 	classVariableNames: 'Libraries'
@@ -10,23 +10,13 @@ External.DynamicLinkLibrary
 
 External.ResourceLibrary guid: (Core.GUID fromString: '{87b4c57f-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-External.ResourceLibrary comment: 'ExternalResourceLibrary is a generic type of <ExternalLibrary>, instance of which can be used to access resources (e.g. icons, bitmaps, strings) from arbitrary modules (DLLs and EXES). A registry of open resource libraries is maintained so that each module is represented by a single instance, and aliasing of the library names is supported to map old Dolphin resources to new libraries should the latter be renamed.'!
+External.ResourceLibrary comment: '`External.ResourceLibrary` is a specialized type of `External.Module`, instances of which are intended for accessing resources (e.g. icons, bitmaps, strings) from arbitrary binary modules (DLLs and EXEs). By default the modules are loaded for data only, and so any code they may contain is not mapped into the Dolphin process and any exported functions cannot be invoked.
+
+A registry of open resource libraries is maintained so that each module is represented by a single instance, and aliasing of the library names is supported to map old resources to new libraries should they be renamed.'!
 
 !External.ResourceLibrary categoriesForClass!External-Libraries! !
 
 !External.ResourceLibrary methodsFor!
-
-= anObject
-	"Answer whether the receiver and anObject are equivalent.
-	Two DynamicLinkLibrary instances are considered equal if they are of the same species, and have (or would have if opened) the same module handle."
-
-	^self == anObject or: 
-			[self species == anObject species and: 
-					[(self isOpen and: [anObject isOpen])
-						ifTrue: [handle = anObject handle]
-						ifFalse: 
-							["Filenames should be compared using an ordinal case-insensitive comparison"
-							(fileName compareOrdinals: anObject fileName ignoringCase: true) == 0]]]!
 
 attemptToOpen: aString
 	^
@@ -34,18 +24,12 @@ attemptToOpen: aString
 	true] on: Win32Error do: [:ex | false]!
 
 fileName
-	"Answer the host system file name for the external library the 
-	receiver represents."
+	"Answer the host system file name for the external resource library the receiver represents."
 
 	^fileName!
 
 fileName: aString 
 	fileName := aString!
-
-hash
-	"Answer whether the receiver and anObject are equivalent."
-
-	^fileName hashOrdinalsIgnoringCase!
 
 isSelfEvaluating
 	^true!
@@ -57,12 +41,8 @@ loadFlags: anInteger
 	loadFlags := anInteger!
 
 open: aString
-	"Private - Open the external library with the external file name, aString,
-	as the library referenced by the receiver. Answer the receiver.
-	Implementation Note: Any errors are suppressed, although a notification
-	is written to the log device. If the resource library cannot be found at
-	the specified path, then a number of attempts are made to open the
-	lib in the order - working directory, image relative, install relative."
+	"Private - Open the external module with the file name, aString, as the resource library referenced by the receiver. Answer the receiver.
+	Implementation Note: Any errors are suppressed, although a notification is written to the log device. If the resource library cannot be found at the specified path, then a number of attempts are made to open the lib in the order - working directory, image relative, install relative."
 
 	| name |
 	fileName := aString.
@@ -97,32 +77,27 @@ printOn: aWriteStream
 		nextPut: $)! !
 
 !External.ResourceLibrary categoriesForMethods!
-=!comparing!public! !
-attemptToOpen:!helpers!instance creation!private! !
+attemptToOpen:!helpers!private! !
 fileName!accessing!public! !
-fileName:!public! !
-hash!comparing!public! !
+fileName:!initializing!public! !
 isSelfEvaluating!public!testing! !
-loadFlags!constants!private! !
+loadFlags!accessing!private! !
 loadFlags:!accessing!private! !
 open:!helpers!private! !
-printOn:!public! !
+printOn:!printing!public! !
 !
 
 !External.ResourceLibrary class methodsFor!
 
-aliasFor: libraryNameString
-	"Answer the name of the resource file which should actually be opened in place
-	of the named library. Generally the argument will be answered, but on occasion, e.g
-	after a product upgrade, the resource file name has changed and so we can use
-	this facility to remap old resources to the new resource file."
+aliasFor: aString
+	"Answer the name of the resource file which should actually be opened in place of the named library. Generally the argument will be answered, but on occasion, e.g after a product upgrade, the resource file name has changed and so we can use this facility to remap old resources to the new resource file."
 
 	| libName |
-	libName := libraryNameString asLowercase.
+	libName := aString asLowercase.
 	^(Libraries at: (File splitStemFrom: libName) ifAbsent: [^libName]) fileName!
 
 defaultLoadFlags
-	"Private - Answer the default LoadLibraryEx() flags to be used when loading	instances of the receiver."
+	"Private - Answer the default LoadLibraryEx() flags to be used when loading	instances of the receiver. For resource libraries we only want access to the data/resources in the library, not any code."
 
 	^##(LOAD_LIBRARY_AS_IMAGE_RESOURCE bitOr: LOAD_LIBRARY_AS_DATAFILE)!
 
@@ -134,32 +109,24 @@ initialize
 	Libraries := WeakLookupTable new!
 
 onPreStripImage
-	"Private - The image is about to be stripped, close down defaults to allow unused
-	subclasses to be stripped."
+	"Private - The image is about to be stripped, close down defaults to allow unused subclasses to be stripped."
 
 	self initialize!
 
 open: aString
-	"Answer an instance of the receiver which references the external
-	library with the <readableString> external file path argument."
+	"Answer an instance of the receiver which references the external library with the <readableString> external file path argument."
 
 	^self open: aString withAliases: #()!
 
 open: pathString withAlias: aliasString
-	"Register the <readableString>, aliasString, as an alias for the external resource
-	library with the <readableString> path, pathString. Answer the aliased external
-	resource library instance.
-	N.B. The register of instances is weak. If the library instance is not referenced
-	from elsewhere, then the alias will be lost and will need to be re-registered."
+	"Register the <readableString>, aliasString, as an alias for the external resource library with the <readableString> path, pathString. Answer the aliased external resource library instance.
+	N.B. The register of instances is weak. If the library instance is not referenced from elsewhere, then the alias will be lost and will need to be re-registered."
 
 	^self open: pathString withAliases: {aliasString}!
 
 open: aString withAliases: aCollection
-	"Register the <collection> of <readableString>s, aCollection, as aliases for the 
-	external resource library with the <readableString> path, aString. Answer the 
-	new (or existing) external resource library instance.
-	N.B. The register of instances is weak. If the library instance is not referenced
-	from elsewhere, then the alias will be lost and will need to be re-registered."
+	"Register the <collection> of <readableString>s, aCollection, as aliases for the  external resource library with the <readableString> path, aString. Answer the  new (or existing) external resource library instance.
+	N.B. The register of instances is weak. If the library instance is not referenced from elsewhere, then the alias will be lost and will need to be re-registered."
 
 	^self 
 		open: aString
@@ -167,12 +134,8 @@ open: aString withAliases: aCollection
 		flags: self defaultLoadFlags!
 
 open: aString withAliases: aCollection flags: anInteger
-	"Register the <collection> of <readableString>s, aCollection, as aliases for the 
-	external resource library with the <readableString> path, aString, using the
-	LoadLibraryEx() flags in the <integer> argument if a new library needs to be
-	opened. Answer the new (or existing) external resource library instance.
-	N.B. The register of instances is weak. If the library instance is not referenced
-	from elsewhere, then the alias will be lost and will need to be re-registered."
+	"Register the <collection> of <readableString>s, aCollection, as aliases for the  external resource library with the <readableString> path, aString, using the LoadLibraryEx() flags in the <integer> argument if a new library needs to be opened. Answer the new (or existing) external resource library instance.
+	N.B. The register of instances is weak. If the library instance is not referenced from elsewhere, then the alias will be lost and will need to be re-registered."
 
 	| lib path aliases |
 	path := File default: aString asLowercase extension: 'dll'.

@@ -641,7 +641,7 @@ initialize
 					})!
 
 sharedVariableName
-	^#{BCrypt}! !
+	^#{OS.BCrypt}! !
 
 !OS.BCryptLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !

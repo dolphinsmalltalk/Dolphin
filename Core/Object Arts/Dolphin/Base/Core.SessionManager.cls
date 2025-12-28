@@ -94,7 +94,7 @@ argv
 			[| lppstr |
 			lppstr := VM argv.
 			argv := lppstr isNull
-						ifTrue: [{ External.DynamicLinkLibrary moduleFileName: nil }]
+						ifTrue: [{ External.Module moduleFileName: nil }]
 						ifFalse: 
 							["Open code the access to the array of strings to reduce base system dependencies on external struct classes"
 							(0 to: VM argc - 1)
@@ -1102,7 +1102,7 @@ userName
 versionInfo
 	"Answer the <VersionInfo> for this session, extracted from the host executable."
 
-	^VersionInfo forPath: (External.DynamicLinkLibrary moduleFileName: nil)!
+	^VersionInfo forPath: (External.Module moduleFileName: nil)!
 
 warning: aString
 	^Warning signal: aString!

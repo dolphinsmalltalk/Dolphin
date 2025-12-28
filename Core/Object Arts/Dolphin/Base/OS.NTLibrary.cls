@@ -73,7 +73,7 @@ fileName
 	^'ntdll'!
 
 sharedVariableName
-	^#{NtDll}! !
+	^#{OS.NtDll}! !
 
 !OS.NTLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !

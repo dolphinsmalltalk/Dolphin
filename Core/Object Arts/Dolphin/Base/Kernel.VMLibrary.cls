@@ -345,7 +345,7 @@ onStartup
 	"Initialize the receiver immediately following system startup.
 	THIS MUST BE DONE FIRST."
 
-	handle := Registry at: 122.
+	handle := self class moduleHandle.
 	specialSelectorStart := RegistryKeys at: #arithmeticSelectors.
 	versionInfo := wndProc := dlgProc := vtable := genericCallback := nil!
 
@@ -522,9 +522,9 @@ versionInfo!accessing-version!public! !
 !Kernel.VMLibrary class methodsFor!
 
 fileName
-	"Answer the host system file name of the library. This may vary."
+	"Answer the host system file name for the external library the receiver represents."
 
-	^self shouldNotImplement!
+	^File splitStemFrom: (self moduleFileName: self moduleHandle)!
 
 hasBytecodeRepresentation: anObject
 	"Private - Answer whether the specified object has a special instruction or instructions that when
@@ -630,13 +630,11 @@ maxMessageArguments
 maxTemps
 	^VMConstants.MaxTemps!
 
+moduleHandle
+	^Registry at: 122!
+
 onPreStripImage
 	default onPreStripImage!
-
-open
-	"Answer the singleton instance of the receiver (it cannot be re-opened)"
-
-	^default!
 
 registryKeys
 	"Private - Answer the map between symbolic names and VM registry indices."
@@ -644,7 +642,7 @@ registryKeys
 	^RegistryKeys!
 
 sharedVariableName
-	^#{VM}! !
+	^#{Kernel.VM}! !
 
 !Kernel.VMLibrary class categoriesForMethods!
 fileName!constants!public! !
@@ -654,8 +652,8 @@ maxBlockNesting!limits!public! !
 maxLiterals!limits!public! !
 maxMessageArguments!limits!public! !
 maxTemps!limits!public! !
+moduleHandle!public! !
 onPreStripImage!class hierarchy-removing!private! !
-open!instance creation!public! !
 registryKeys!constants!private! !
 sharedVariableName!constants!private! !
 !

@@ -21,7 +21,7 @@ close
 		ifNotNil: 
 			[:original |
 			handle := user32 := nil.
-			UserLibrary setDefault: original]!
+			UserLibrary sharedVariable setValue: original]!
 
 getActiveWindow
 	^(getActiveWindowBlock notNil and: [Processor activeProcess == process])
@@ -68,7 +68,7 @@ open
 	user32 := User32.
 	handle := user32 handle.
 	self beFinalizable.
-	UserLibrary setDefault: self.
+	UserLibrary sharedVariable setValue: self.
 	messages := OrderedCollection new! !
 
 !UI.Tests.FakeUserLibrary categoriesForMethods!

@@ -1276,18 +1276,6 @@ External.UInt32Bytes
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.WindowsSystemLibrary
-	subclass: #'Graphics.Gdiplus.GdiplusLibrary'
-	instanceVariableNames: 'token'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'FlatnessDefault' -> 0.25.
-			'PixelFormatMax' -> 16rF.
-			'PixelFormatUndefined' -> 16r0
-		}!
-
 Core.Error
 	subclass: #'Graphics.Gdiplus.GdiplusError'
 	instanceVariableNames: 'win32Error'
@@ -2070,6 +2058,18 @@ Graphics.Gdiplus.StringFormatGenericInitializer
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'Graphics.Gdiplus.GdiplusLibrary'
+	instanceVariableNames: 'token'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'FlatnessDefault' -> 0.25.
+			'PixelFormatMax' -> 16rF.
+			'PixelFormatUndefined' -> 16r0
+		}!
 
 External.Structure
 	subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'

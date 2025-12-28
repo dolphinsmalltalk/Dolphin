@@ -93,12 +93,12 @@ productVersion: versionString
 
 	self setProductVersions: (self decodeVersionString: versionString)!
 
-readFromModule: anExternalResourceLibrary 
+readFromModule: anExternalModule 
 	"Private - Read and unpack the version resource from the specified module.
 	Answer the receiver if the library contained a version resource, else nil."
 
 	| address |
-	address := self class getVersionResourceOfModule: anExternalResourceLibrary.
+	address := self class getVersionResourceOfModule: anExternalModule.
 	"If address is null then module does not contain a version resource"
 	^address notNull 
 		ifTrue: 
@@ -420,11 +420,10 @@ writeVersionInfoTo:!helpers!private! !
 
 !OS.VersionResource class methodsFor!
 
-forModule: anExternalResourceLibrary 
-	"Answer a new instance of the receiver which can be used to query the version
-	information of the specified module."
+forModule: anExternalModule 
+	"Answer a new instance of the receiver which can be used to query the version information of the specified module."
 
-	^self new readFromModule: anExternalResourceLibrary!
+	^self new readFromModule: anExternalModule!
 
 forPath: path
 	"Answer a new instance of the receiver which can be used to query the version
@@ -433,27 +432,27 @@ forPath: path
 	which does not have an extension, so must use ExternalLibrary"
 
 	| lib answer |
-	lib := DynamicLinkLibrary open: path.
+	lib := Module open: path.
 	answer := self forModule: lib.
 	lib close.
 	^answer!
 
-getVersionResourceOfModule: anExternalResourceLibrary
+getVersionResourceOfModule: anExternalModule
 	"Private - Answer a pointer to the version resource in the specified module, or null if it doesn't have one.
 	Note that there is no explicit call to unlock version resources."
 
 	| hFind hRes address |
 	(hFind := Kernel32
-				findResource: anExternalResourceLibrary asParameter
+				findResource: anExternalModule asParameter
 				lpName: 1
 				lpType: RT_VERSION) isNull
 		ifTrue: [^nil].
-	(hRes := Kernel32 loadResource: anExternalResourceLibrary asParameter hResInfo: hFind) isNull
+	(hRes := Kernel32 loadResource: anExternalModule asParameter hResInfo: hFind) isNull
 		ifTrue: 
-			[self error: 'Unable to load version resource from module: ' , anExternalResourceLibrary printString].
+			[self error: 'Unable to load version resource from module: ' , anExternalModule printString].
 	(address := (Kernel32 lockResource: hRes) asExternalAddress) isNull
 		ifTrue: 
-			[self error: 'Unable to lock version resource from module: ' , anExternalResourceLibrary printString].
+			[self error: 'Unable to lock version resource from module: ' , anExternalModule printString].
 	^address!
 
 new

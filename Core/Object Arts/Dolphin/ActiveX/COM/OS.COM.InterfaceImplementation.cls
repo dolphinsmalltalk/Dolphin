@@ -193,7 +193,7 @@ registerAsInProcServer: aRegKey
 registerAsLocalServer: aRegKey
 	| commandLine sesh |
 	commandLine := String writeStream.
-	commandLine nextPutAll: (External.DynamicLinkLibrary moduleFileName: nil).
+	commandLine nextPutAll: (External.Module moduleFileName: nil).
 	sesh := SessionManager current.
 	sesh isRuntime
 		ifFalse: 

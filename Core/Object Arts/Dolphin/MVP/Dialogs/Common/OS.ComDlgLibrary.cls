@@ -92,7 +92,7 @@ fileName
 	^'comdlg32'!
 
 sharedVariableName
-	^#{ComDlg32}! !
+	^#{OS.ComDlg32}! !
 
 !OS.ComDlgLibrary class categoriesForMethods!
 fileName!constants!public! !

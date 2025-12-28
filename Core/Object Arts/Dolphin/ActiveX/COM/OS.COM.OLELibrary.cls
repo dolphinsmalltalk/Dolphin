@@ -329,7 +329,7 @@ fileName
 	^'ole32'!
 
 sharedVariableName
-	^#{Ole32}! !
+	^#{OS.COM.Ole32}! !
 
 !OS.COM.OLELibrary class categoriesForMethods!
 fileName!constants!public! !

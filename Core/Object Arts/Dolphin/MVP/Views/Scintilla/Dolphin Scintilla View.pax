@@ -1855,6 +1855,22 @@ UI.Scintilla.TextStyle
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+UI.Scintilla.LexerMetadata
+	subclass: #'UI.Scintilla.LexerNamedStyle'
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.Scintilla.LexerMetadata
+	subclass: #'UI.Scintilla.LexerProperty'
+	instanceVariableNames: 'type'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 External.DynamicLinkLibrary
 	subclass: #'UI.Scintilla.LexillaLibrary'
 	instanceVariableNames: ''
@@ -1874,22 +1890,6 @@ External.DynamicLinkLibrary
 UI.Scintilla.ScintillaLibrary
 	subclass: #'UI.Scintilla.NullScintillaLibrary'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.Scintilla.LexerMetadata
-	subclass: #'UI.Scintilla.LexerNamedStyle'
-	instanceVariableNames: 'name'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.Scintilla.LexerMetadata
-	subclass: #'UI.Scintilla.LexerProperty'
-	instanceVariableNames: 'type'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

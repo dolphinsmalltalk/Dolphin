@@ -17,6 +17,14 @@ package setClassNames: #(
 	#{OS.CRYPTPROTECT_PROMPTSTRUCT}
 ).
 
+package setVariableNames: #(
+	#{OS.Crypt32}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.Crypt32}
+).
+
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Dolphin Conformant Array Fields'

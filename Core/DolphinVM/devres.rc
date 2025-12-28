@@ -164,8 +164,6 @@ DOWNARROW.ICO           ICON                    "Res\\DownArrow.ico"
 
 DURATION.ICO            ICON                    "Res\\Duration.ico"
 
-DYNAMICLINKLIBRARY.ICO  ICON                    "Res\\ExternalLibrary.ico"
-
 EDITCLEAR.ICO           ICON                    "Res\\EditDelete.ico"
 
 EDITCOPY.ICO            ICON                    "Res\\EditCopy.ico"
@@ -345,6 +343,8 @@ METHODPROTOCOL_READONLY.ICO ICON                    "Res\\methodprotocolro.ico"
 METHODSOURCE.ICO        ICON                    "Res\\MethodSource.ico"
 
 MODEL.ICO               ICON                    "Res\\Model.ico"
+
+MODULE.ICO				ICON                    "Res\\ExternalLibrary.ico"
 
 MOENTREEVIEW.ICO        ICON                    "Res\\MoenTreeView.ico"
 

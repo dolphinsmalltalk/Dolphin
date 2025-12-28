@@ -7804,7 +7804,7 @@ fileName
 !
 
 sharedVariableName
-	^#{Gdip}! !
+	^#{Graphics.Gdiplus.Gdip}! !
 
 !Graphics.Gdiplus.GdiplusLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !
