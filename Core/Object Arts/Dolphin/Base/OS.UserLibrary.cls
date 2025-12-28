@@ -697,7 +697,7 @@ initialize
 	DesiredDpiAwarenessContext := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2!
 
 sharedVariableName
-	^#{User32}! !
+	^#{OS.User32}! !
 
 !OS.UserLibrary class categoriesForMethods!
 clear!initializing!private! !

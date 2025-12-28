@@ -241,22 +241,6 @@ External.Memory
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.WindowsSystemLibrary
-	subclass: #'OS.COM.OLEAutLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.COM.OLELibrary'
-	instanceVariableNames: 'comOnly'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 Core.GUID
 	variableByteSubclass: #'OS.COM.CLSID'
 	instanceVariableNames: ''
@@ -300,6 +284,22 @@ OS.COM.ClassFactory
 OS.COM.Enumerator
 	subclass: #'OS.COM.InterfaceEnumerator'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.COM.OLEAutLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.COM.OLELibrary'
+	instanceVariableNames: 'comOnly'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

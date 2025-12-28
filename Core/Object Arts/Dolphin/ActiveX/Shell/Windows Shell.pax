@@ -252,19 +252,19 @@ Core.SequenceableCollection
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.WindowsSystemLibrary
-	subclass: #'OS.ShellLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.ShellConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 Graphics.IconFromSystemInitializer
 	subclass: #'Graphics.IconFromShellStockInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ShellConstants private} #{OS.SHSTOCKICONINFO private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.ShellLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

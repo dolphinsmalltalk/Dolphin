@@ -192,7 +192,7 @@ declareVariable: aString
 			[| var |
 			var := VariableBinding key: aString value: nil.
 			self addBinding: var.
-			^var]!
+			var]!
 
 detect: aMonadicValuable
 	^classPool detect: aMonadicValuable!

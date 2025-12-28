@@ -2378,22 +2378,20 @@ initialize
 		value: (FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	self addClassConstant: 'LongPathPrefix' value: '\\?\' asUtf16String!
 
-open
-	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
-	is required for this library because opening a library is normally done through the 
-	receiver's singleton instance. The VM stores the current Kernel32 handle into the 
-	VM object registry on startup."
+openDefault
+	"Private - Open and record the default instance of the receiver. Answer the new instance."
 
 	WinVerOrGreaterMask := nil.
-	^self fromHandle: VM kernelHandle!
+	default handle: VM kernelHandle.
+	^default!
 
 sharedVariableName
-	^#{Kernel32}! !
+	^#{OS.Kernel32}! !
 
 !OS.KernelLibrary class categoriesForMethods!
 fileName!constants!public! !
 initialize!class initialization!development!public! !
-open!instance creation!public! !
+openDefault!instance creation!private!realizing/unrealizing! !
 sharedVariableName!constants!initializing!private! !
 !
 

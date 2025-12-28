@@ -2627,14 +2627,6 @@ Core.Object
 	classConstants: { 'DefaultResolution' -> 16r3D09 }!
 
 Core.Object
-	subclass: #'External.DynamicLinkLibrary'
-	instanceVariableNames: 'handle'
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})
-	classInstanceVariableNames: 'default'
-	classConstants: {}!
-
-Core.Object
 	subclass: #'Core.Exception'
 	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
 	classVariableNames: ''
@@ -2910,6 +2902,14 @@ Core.Object
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'External.Module'
+	instanceVariableNames: 'handle'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -3970,212 +3970,6 @@ Kernel.CompiledMethod
 			'ReturnTypeIndex' -> 16r8
 		}!
 
-External.DynamicLinkLibrary
-	subclass: #'Kernel.CompilerLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.DynamicLinkLibrary
-	subclass: #'External.PermanentLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.DynamicLinkLibrary
-	subclass: #'External.ResourceLibrary'
-	instanceVariableNames: 'fileName loadFlags'
-	classVariableNames: 'Libraries'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.DynamicLinkLibrary
-	subclass: #'External.WindowsSystemLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.PermanentLibrary
-	subclass: #'OS.CRTLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.PermanentLibrary
-	subclass: #'OS.KernelLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'EnumNamesDescriptor LongPathPrefix WinVerOrGreaterMask'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.PermanentLibrary
-	subclass: #'Kernel.VMLibrary'
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart versionInfo'
-	classVariableNames: 'Registry RegistryKeys'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.CRTLibrary
-	subclass: #'OS.CRTLibraryNonBlocking'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.AdvApiLibrary'
-	instanceVariableNames: 'isRunningElevated'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'MaxTokenInfoClass' -> 16r32.
-			'TOKEN_ADJUST_DEFAULT' -> 16r80.
-			'TOKEN_ADJUST_GROUPS' -> 16r40.
-			'TOKEN_ADJUST_PRIVILEGES' -> 16r20.
-			'TOKEN_ADJUST_SESSIONID' -> 16r100.
-			'TOKEN_ASSIGN_PRIMARY' -> 16r1.
-			'TOKEN_DUPLICATE' -> 16r2.
-			'TOKEN_IMPERSONATE' -> 16r4.
-			'TOKEN_QUERY' -> 16r8.
-			'TOKEN_QUERY_SOURCE' -> 16r10.
-			'TokenAccessInformation' -> 16r16.
-			'TokenAppContainerNumber' -> 16r20.
-			'TokenAppContainerSid' -> 16r1F.
-			'TokenAuditPolicy' -> 16r10.
-			'TokenBnoIsolation' -> 16r2C.
-			'TokenCapabilities' -> 16r1E.
-			'TokenChildProcessFlags' -> 16r2D.
-			'TokenDefaultDacl' -> 16r6.
-			'TokenDeviceClaimAttributes' -> 16r22.
-			'TokenDeviceGroups' -> 16r25.
-			'TokenElevation' -> 16r14.
-			'TokenElevationType' -> 16r12.
-			'TokenGroups' -> 16r2.
-			'TokenGroupsAndPrivileges' -> 16rD.
-			'TokenHasRestrictions' -> 16r15.
-			'TokenImpersonationLevel' -> 16r9.
-			'TokenIntegrityLevel' -> 16r19.
-			'TokenIsAppContainer' -> 16r1D.
-			'TokenIsAppSilo' -> 16r30.
-			'TokenIsLessPrivilegedAppContainer' -> 16r2E.
-			'TokenIsRestricted' -> 16r28.
-			'TokenIsSandboxed' -> 16r2F.
-			'TokenLinkedToken' -> 16r13.
-			'TokenLoggingInformation' -> 16r31.
-			'TokenLogonSid' -> 16r1C.
-			'TokenMandatoryPolicy' -> 16r1B.
-			'TokenOrigin' -> 16r11.
-			'TokenOwner' -> 16r4.
-			'TokenPrimaryGroup' -> 16r5.
-			'TokenPrivateNameSpace' -> 16r2A.
-			'TokenPrivileges' -> 16r3.
-			'TokenProcessTrustLevel' -> 16r29.
-			'TokenRestrictedDeviceClaimAttributes' -> 16r24.
-			'TokenRestrictedDeviceGroups' -> 16r26.
-			'TokenRestrictedSids' -> 16rB.
-			'TokenRestrictedUserClaimAttributes' -> 16r23.
-			'TokenSandBoxInert' -> 16rF.
-			'TokenSecurityAttributes' -> 16r27.
-			'TokenSessionId' -> 16rC.
-			'TokenSessionReference' -> 16rE.
-			'TokenSingletonAttributes' -> 16r2B.
-			'TokenSource' -> 16r7.
-			'TokenStatistics' -> 16rA.
-			'TokenType' -> 16r8.
-			'TokenUIAccess' -> 16r1A.
-			'TokenUser' -> 16r1.
-			'TokenUserClaimAttributes' -> 16r21.
-			'TokenVirtualizationAllowed' -> 16r17.
-			'TokenVirtualizationEnabled' -> 16r18
-		}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.ICULibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.ICUConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.NTLibrary'
-	instanceVariableNames: 'isWine'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.PathCchLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'PATHCCH_ALLOW_LONG_PATHS' -> 16r1.
-			'PATHCCH_CANONICALIZE_SLASHES' -> 16r40.
-			'PATHCCH_DO_NOT_NORMALIZE_SEGMENTS' -> 16r8.
-			'PATHCCH_ENSURE_IS_EXTENDED_LENGTH_PATH' -> 16r10.
-			'PATHCCH_ENSURE_TRAILING_SLASH' -> 16r20.
-			'PATHCCH_FORCE_DISABLE_LONG_NAME_PROCESS' -> 16r4.
-			'PATHCCH_FORCE_ENABLE_LONG_NAME_PROCESS' -> 16r2.
-			'PATHCCH_MAX_CCH' -> 16r8000.
-			'PATHCCH_NONE' -> 16r0
-		}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.RPCLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.ShlwapiLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.UserLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'DesiredDpiAwarenessContext DpiAwarenessContext'
-	imports: #(#{OS.MessageBoxConstants private})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.VersionLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.WinMMLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 Core.Exception
 	subclass: #'Core.Error'
 	instanceVariableNames: ''
@@ -4942,6 +4736,220 @@ Core.MessageSequenceAbstract
 Core.MessageSequenceAbstract
 	subclass: #'Core.MessageSequence'
 	instanceVariableNames: 'messages'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Module
+	subclass: #'External.DynamicLinkLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: 'default'
+	classConstants: {}!
+
+External.Module
+	subclass: #'External.ResourceLibrary'
+	instanceVariableNames: 'fileName loadFlags'
+	classVariableNames: 'Libraries'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.DynamicLinkLibrary
+	subclass: #'Kernel.CompilerLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.DynamicLinkLibrary
+	subclass: #'OS.CRTLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.DynamicLinkLibrary
+	subclass: #'External.PermanentLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.DynamicLinkLibrary
+	subclass: #'External.WindowsSystemLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.CRTLibrary
+	subclass: #'OS.CRTLibraryNonBlocking'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.PermanentLibrary
+	subclass: #'OS.KernelLibrary'
+	instanceVariableNames: ''
+	classVariableNames: 'EnumNamesDescriptor LongPathPrefix WinVerOrGreaterMask'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.PermanentLibrary
+	subclass: #'Kernel.VMLibrary'
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart versionInfo'
+	classVariableNames: 'Registry RegistryKeys'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.AdvApiLibrary'
+	instanceVariableNames: 'isRunningElevated'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'MaxTokenInfoClass' -> 16r32.
+			'TOKEN_ADJUST_DEFAULT' -> 16r80.
+			'TOKEN_ADJUST_GROUPS' -> 16r40.
+			'TOKEN_ADJUST_PRIVILEGES' -> 16r20.
+			'TOKEN_ADJUST_SESSIONID' -> 16r100.
+			'TOKEN_ASSIGN_PRIMARY' -> 16r1.
+			'TOKEN_DUPLICATE' -> 16r2.
+			'TOKEN_IMPERSONATE' -> 16r4.
+			'TOKEN_QUERY' -> 16r8.
+			'TOKEN_QUERY_SOURCE' -> 16r10.
+			'TokenAccessInformation' -> 16r16.
+			'TokenAppContainerNumber' -> 16r20.
+			'TokenAppContainerSid' -> 16r1F.
+			'TokenAuditPolicy' -> 16r10.
+			'TokenBnoIsolation' -> 16r2C.
+			'TokenCapabilities' -> 16r1E.
+			'TokenChildProcessFlags' -> 16r2D.
+			'TokenDefaultDacl' -> 16r6.
+			'TokenDeviceClaimAttributes' -> 16r22.
+			'TokenDeviceGroups' -> 16r25.
+			'TokenElevation' -> 16r14.
+			'TokenElevationType' -> 16r12.
+			'TokenGroups' -> 16r2.
+			'TokenGroupsAndPrivileges' -> 16rD.
+			'TokenHasRestrictions' -> 16r15.
+			'TokenImpersonationLevel' -> 16r9.
+			'TokenIntegrityLevel' -> 16r19.
+			'TokenIsAppContainer' -> 16r1D.
+			'TokenIsAppSilo' -> 16r30.
+			'TokenIsLessPrivilegedAppContainer' -> 16r2E.
+			'TokenIsRestricted' -> 16r28.
+			'TokenIsSandboxed' -> 16r2F.
+			'TokenLinkedToken' -> 16r13.
+			'TokenLoggingInformation' -> 16r31.
+			'TokenLogonSid' -> 16r1C.
+			'TokenMandatoryPolicy' -> 16r1B.
+			'TokenOrigin' -> 16r11.
+			'TokenOwner' -> 16r4.
+			'TokenPrimaryGroup' -> 16r5.
+			'TokenPrivateNameSpace' -> 16r2A.
+			'TokenPrivileges' -> 16r3.
+			'TokenProcessTrustLevel' -> 16r29.
+			'TokenRestrictedDeviceClaimAttributes' -> 16r24.
+			'TokenRestrictedDeviceGroups' -> 16r26.
+			'TokenRestrictedSids' -> 16rB.
+			'TokenRestrictedUserClaimAttributes' -> 16r23.
+			'TokenSandBoxInert' -> 16rF.
+			'TokenSecurityAttributes' -> 16r27.
+			'TokenSessionId' -> 16rC.
+			'TokenSessionReference' -> 16rE.
+			'TokenSingletonAttributes' -> 16r2B.
+			'TokenSource' -> 16r7.
+			'TokenStatistics' -> 16rA.
+			'TokenType' -> 16r8.
+			'TokenUIAccess' -> 16r1A.
+			'TokenUser' -> 16r1.
+			'TokenUserClaimAttributes' -> 16r21.
+			'TokenVirtualizationAllowed' -> 16r17.
+			'TokenVirtualizationEnabled' -> 16r18
+		}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.ICULibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ICUConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.NTLibrary'
+	instanceVariableNames: 'isWine'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.PathCchLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'PATHCCH_ALLOW_LONG_PATHS' -> 16r1.
+			'PATHCCH_CANONICALIZE_SLASHES' -> 16r40.
+			'PATHCCH_DO_NOT_NORMALIZE_SEGMENTS' -> 16r8.
+			'PATHCCH_ENSURE_IS_EXTENDED_LENGTH_PATH' -> 16r10.
+			'PATHCCH_ENSURE_TRAILING_SLASH' -> 16r20.
+			'PATHCCH_FORCE_DISABLE_LONG_NAME_PROCESS' -> 16r4.
+			'PATHCCH_FORCE_ENABLE_LONG_NAME_PROCESS' -> 16r2.
+			'PATHCCH_MAX_CCH' -> 16r8000.
+			'PATHCCH_NONE' -> 16r0
+		}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.RPCLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.ShlwapiLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.UserLibrary'
+	instanceVariableNames: ''
+	classVariableNames: 'DesiredDpiAwarenessContext DpiAwarenessContext'
+	imports: #(#{OS.MessageBoxConstants private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.VersionLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.WinMMLibrary'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

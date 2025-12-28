@@ -1099,7 +1099,7 @@ registerClass
 	"Private - Ensure the rich edit window class is registered by loading the relevant library."
 
 	(Library isNil or: [Library isOpen not])
-		ifTrue: [Library := External.DynamicLinkLibrary open: self richEditDllName]!
+		ifTrue: [Library := External.Module open: self richEditDllName]!
 
 richEditDllName
 	^'riched20.dll'

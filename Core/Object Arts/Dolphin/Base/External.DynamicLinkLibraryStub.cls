@@ -16,14 +16,22 @@ External.DynamicLinkLibraryStub comment: ''!
 
 !External.DynamicLinkLibraryStub methodsFor!
 
+clear
+	"Private - Reinitialize this module instance, e.g. on startup."!
+
 doesNotUnderstand: failedMessage
-	^failedMessage forwardTo: libraryClass default!
+	^failedMessage forwardTo: libraryClass openDefault!
+
+isOpen
+	^false!
 
 libraryClass: aClass
 	libraryClass := aClass! !
 
 !External.DynamicLinkLibraryStub categoriesForMethods!
+clear!private!realizing/unrealizing! !
 doesNotUnderstand:!exceptions!public! !
+isOpen!public!testing! !
 libraryClass:!initializing!private! !
 !
 

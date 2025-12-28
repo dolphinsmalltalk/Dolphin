@@ -150,7 +150,7 @@ testStlConvertFromVersion3_resource
 	rehydrated := Object
 				fromLiteralStoreArray: #(#'!!STL' 4 394566 3 ##(Smalltalk.Cursor) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HSPLIT' 591366 ##(Smalltalk.VMLibrary)).
 	self assert: rehydrated isPersistent.
-	self assert: rehydrated printString equals: 'Cursor fromId: ''HSPLIT'' in: VM'.
+	self assert: rehydrated printString equals: 'Cursor fromId: ''HSPLIT'' in: Kernel.VM'.
 	self assert: rehydrated initializer isLoadShared.
 	self assert: rehydrated initializer isKindOf: ImageFromStringResourceInitializer.
 	self assert: rehydrated initializer identifier equals: 'HSPLIT'.

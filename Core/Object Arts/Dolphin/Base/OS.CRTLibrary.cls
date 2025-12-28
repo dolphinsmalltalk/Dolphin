@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PermanentLibrary
+External.DynamicLinkLibrary
 	subclass: #'OS.CRTLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -334,10 +334,12 @@ wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! 
 !OS.CRTLibrary class methodsFor!
 
 fileName
-	"Answer the host system file name for the external library the 
-	receiver represents."
+	"Answer the host system file name for the external library the receiver represents."
 
-	^File splitStemFrom: self default fileName!
+	^File splitStemFrom: (self moduleFileName: self moduleHandle)!
+
+moduleHandle
+	^VM crtHandle!
 
 nonblocking
 	"Answer the instance of the receiver to use for overlapped invocations of CRT library functions."
@@ -347,13 +349,14 @@ nonblocking
 open
 	"Answer a new instance of the receiver to represent the CRT DLL."
 
-	^(self fromHandle: VM crtHandle) initialize!
+	^(self fromHandle: self moduleHandle) initialize!
 
 sharedVariableName
-	^#{Ucrt}! !
+	^#{OS.Ucrt}! !
 
 !OS.CRTLibrary class categoriesForMethods!
 fileName!constants!public! !
+moduleHandle!constants!public! !
 nonblocking!accessing!public! !
 open!instance creation!public! !
 sharedVariableName!constants!private! !

@@ -1070,7 +1070,7 @@ fileName
 	^'ws2_32'!
 
 sharedVariableName
-	^#{Ws2_32}! !
+	^#{OS.Ws2_32}! !
 
 !OS.WS2_32Library class categoriesForMethods!
 fileName!constants!public! !

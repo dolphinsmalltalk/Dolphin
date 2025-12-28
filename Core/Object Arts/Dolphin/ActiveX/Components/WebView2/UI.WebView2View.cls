@@ -201,7 +201,7 @@ defaultUserDataFolder
 
 	^File composePath: (SessionManager current getenv: 'LocalAppData')
 		subPath: '<1s>-<2s>.WebView2' << {
-						File splitStemFrom: (DynamicLinkLibrary moduleFileName: nil).
+						File splitStemFrom: (Module moduleFileName: nil).
 						self environmentOptions thumbprint
 					}!
 

@@ -1346,7 +1346,7 @@ fileName
 	^'gdi32'!
 
 sharedVariableName
-	^#{Gdi32}! !
+	^#{OS.Gdi32}! !
 
 !OS.GDILibrary class categoriesForMethods!
 fileName!constants!public! !

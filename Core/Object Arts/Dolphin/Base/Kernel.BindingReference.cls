@@ -130,7 +130,7 @@ bindingScope
 	^self subclassResponsibility!
 
 declare
-	"Create a binding in the target namespace that would be resolved by the receiver, if none currently exists."
+	"Create a binding in the target namespace that would be resolved by the receiver, if none currently exists. Answer the declared or existing <VariableBinding>."
 
 	^self environment
 		ifNil: 

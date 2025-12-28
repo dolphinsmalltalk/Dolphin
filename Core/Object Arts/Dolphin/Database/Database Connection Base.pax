@@ -1948,14 +1948,6 @@ Database.DBVarFieldBuffer
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.WindowsSystemLibrary
-	subclass: #'OS.ODBCLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 Core.Error
 	subclass: #'Database.DBError'
 	instanceVariableNames: ''
@@ -1968,6 +1960,14 @@ Core.Notification
 	subclass: #'Database.DBWarning'
 	instanceVariableNames: ''
 	classVariableNames: 'TraceStream'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.ODBCLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

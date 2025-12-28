@@ -535,7 +535,7 @@ onStartup2
 	Database.DBResultSet onStartup!
 
 sharedVariableName
-	^#{Odbc32}! !
+	^#{OS.Odbc32}! !
 
 !OS.ODBCLibrary class categoriesForMethods!
 fileName!constants!public! !

@@ -232,7 +232,7 @@ fileName
 	^'shell32'!
 
 sharedVariableName
-	^#{Shell32}! !
+	^#{OS.Shell32}! !
 
 !OS.ShellLibrary class categoriesForMethods!
 fileName!constants!public! !

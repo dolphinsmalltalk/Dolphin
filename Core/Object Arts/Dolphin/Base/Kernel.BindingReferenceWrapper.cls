@@ -62,6 +62,11 @@ bindingScope
 
 	^reference bindingScope!
 
+declare
+	"Create a binding in the target namespace that would be resolved by the receiver, if none currently exists."
+
+	^reference declare!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -158,6 +163,7 @@ asString!converting!public! !
 baseClass!accessing!public! !
 bindingOrNil!accessing!public! !
 bindingScope!accessing!public! !
+declare!operations!public! !
 displayOn:!displaying!public! !
 environmentName!accessing!public! !
 hash!comparing!public! !

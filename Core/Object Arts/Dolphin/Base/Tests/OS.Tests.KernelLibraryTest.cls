@@ -108,7 +108,7 @@ testGetModuleFilename
 				"LoadLibrary won't open a short path longer than 251 chars"
 				path size >= (Win32Constants.MAX_PATH - 9) ifTrue: [path := '\\?\' , path].
 				Kernel32 copyFile: testDll to: path.
-				lib := DynamicLinkLibrary open: path.
+				lib := Module open: path.
 				moduleFilename := Kernel32 getModuleFilename: lib.
 				self assert: moduleFilename equals: path.
 				self assert: lib close]]

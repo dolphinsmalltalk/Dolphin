@@ -81,7 +81,7 @@ struct tagLOGFONTW {
 
 equalExcludingSize: aLOGFONTW
 	^self lfFaceName = aLOGFONTW lfFaceName and: 
-			[(CRTLibrary default
+			[(Ucrt
 				memcmp: bytes yourAddress + _OffsetOf_lfEscapement
 				buf2: aLOGFONTW bytes yourAddress + _OffsetOf_lfEscapement
 				count: ##(_OffsetOf_lfFaceName - _OffsetOf_lfEscapement)) == 0]!

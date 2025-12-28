@@ -84,7 +84,7 @@ fileName
 	^'oleaut32'!
 
 sharedVariableName
-	^#{OleAut32}! !
+	^#{OS.COM.OleAut32}! !
 
 !OS.COM.OLEAutLibrary class categoriesForMethods!
 fileName!constants!public! !

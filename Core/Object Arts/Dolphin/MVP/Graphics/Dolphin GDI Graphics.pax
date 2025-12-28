@@ -409,14 +409,6 @@ Graphics.VirtualColor
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.WindowsSystemLibrary
-	subclass: #'OS.GDILibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
 	instanceVariableNames: 'logfont dpi series'
@@ -988,6 +980,14 @@ Graphics.ImageManager
 	subclass: #'Graphics.IconImageManager'
 	instanceVariableNames: 'bitmaps'
 	classVariableNames: 'Current'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.GDILibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

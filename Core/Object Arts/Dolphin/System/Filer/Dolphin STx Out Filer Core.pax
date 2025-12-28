@@ -373,7 +373,7 @@ stbSaveOn: anSTxOutFiler
 	anSTxOutFiler saveResourceLibrary: self! !
 
 !External.ResourceLibrary categoriesForMethods!
-stbSaveOn:!binary filing!instance creation!public! !
+stbSaveOn:!binary filing!public! !
 !
 
 !Kernel.AbsoluteFileLocator methodsFor!
