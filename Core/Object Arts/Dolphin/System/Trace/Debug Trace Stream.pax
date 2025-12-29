@@ -42,7 +42,7 @@ package!
 
 Core.Stream
 	subclass: #'Kernel.DebugTraceStream'
-	instanceVariableNames: 'buffer'
+	instanceVariableNames: 'buffer kernel32'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -1,0 +1,71 @@
+﻿| package |
+package := Package name: 'Debug Trace Stream Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{Kernel.Tests.DebugTraceStreamTest}
+).
+
+package setMethodNames: #(
+	#(#{Kernel.DebugTraceStream} #kernel32:)
+	#(#{Kernel.DebugTraceStream class} #on:)
+	#(#{Kernel.DebugTraceStream class} #with:)
+).
+
+package setPrerequisites: #(
+	'Debug Trace Stream'
+	'..\..\Base\Dolphin'
+	'..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit-MockObjects'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Tests.AbstractWriteStreamTest
+	subclass: #'Kernel.Tests.DebugTraceStreamTest'
+	instanceVariableNames: 'mockKernel outputDebugStrings'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Kernel.DebugTraceStream methodsFor!
+
+kernel32: anObject
+	"For testing purposes"
+
+	kernel32 := anObject! !
+
+!Kernel.DebugTraceStream categoriesForMethods!
+kernel32:!accessing!private! !
+!
+
+!Kernel.DebugTraceStream class methodsFor!
+
+on: aCollection
+	"Answer an instance of a kind of the receiver that streams over the 
+	argument aCollection. If the new stream is writeable, the initial position
+	is at the beginning of the collection (i.e. overwrite). See also 
+	WriteStream>>#with:"
+
+	^self over: aCollection writeStream!
+
+with: aCollection
+	"Answer a new instance of the receiver accessing the <collection>, aCollection,
+	but positioned to store the next element at the end of it, i.e. an APPEND stream."
+
+	^self over: (WriteStream with: aCollection)! !
+
+!Kernel.DebugTraceStream class categoriesForMethods!
+on:!instance creation!public! !
+with:!instance creation!public! !
+!
+
+"End of package definition"!
+

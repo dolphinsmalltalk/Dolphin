@@ -60,22 +60,6 @@ next
 
 	^self errorEndOfStream!
 
-next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection."
-
-	countInteger > 0
-		ifTrue: 
-			[startInteger < 1
-				ifTrue: 
-					[^InvalidArgumentError signal: 'Start position <1d> is out of bounds' << { startInteger }
-						with: 'startInteger'].
-			startInteger + countInteger - 1 > aSequenceableCollection size
-				ifTrue: 
-					[^InvalidArgumentError
-						signal: 'End position <1d> is out of bounds' << { startInteger + countInteger - 1 }
-						with: 'countInteger']].
-	^aSequenceableCollection!
-
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the next line delimiter. If there are no further line delimiters in the receiver, then the rest of the receiver's contents are answered. If the receiver is at its end, then an empty collection is answered."
 
@@ -146,7 +130,6 @@ contentsSpecies:!accessing!private! !
 isEmpty!public!testing! !
 isWriteable!public!testing! !
 next!public!reading! !
-next:putAll:startingAt:!public!writing! !
 nextLine!public!reading! !
 nextPut:!public!writing! !
 nextPutAll:!public!writing! !
@@ -162,6 +145,7 @@ upToEnd!public!reading! !
 
 Core.NullStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
 Core.NullStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+Core.NullStream methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
 !Core.NullStream class methodsFor!
 

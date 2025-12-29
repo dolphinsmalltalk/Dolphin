@@ -72,6 +72,7 @@ testNextInto
 	self readOperationNotImplemented: [stream nextInto: (Array new: 3)]!
 
 testNextWord
+	<mustConform: #sequencedStream>
 	| stream |
 	stream := self streamWith: 'abc'.
 	stream reset.
