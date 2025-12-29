@@ -24,12 +24,14 @@ initializePresenter
 	presenter := self classToTest default!
 
 systemFolderPresenter
-	^presenter instVarNamed: 'systemFolderPresenter'!
+	^presenter systemFolderPresenter!
 
 testIconOrdering
 	| initialContents sampleApps finalContents |
 	"1782"
-	initialContents := self systemFolderPresenter contents asArray.
+	initialContents := (self systemFolderPresenter
+				expand: nil;
+				contents) asArray.
 	sampleApps := initialContents detect: [:each | each description = 'Sample Applications'].
 	self systemFolderPresenter selection: sampleApps.
 	self systemFolderPresenter onActionPerformed.
