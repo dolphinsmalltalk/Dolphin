@@ -23,11 +23,6 @@ basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
 
 	self errorNotWriteable!
 
-bufferClass
-	"Private - Answer the class of the receiver's I/O buffer."
-
-	^self contentsSpecies!
-
 contents
 	"Answer a <sequencedReadableCollection> that contains the receiver's past and future
 	sequence values, in order, i.e. the complete contents of the stream."
@@ -59,20 +54,6 @@ isPositionable
 
 locale: aLocale
 	self subclassResponsibility!
-
-next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection.
-
-	Note that the element count is the number of elements written from the <sequencedReadableCollection> argument. Depending on the receiver's encoding, this may not necessarily result in the receiver's position advancing by the same count."
-
-	"Implementation Note: The receiver's encoding is that of the streamed over collection. We ask that collection to dispatch an appropriate message to the SequenceableCollection being written such that it can  convert as necessary from its own encoding to the encoding of this stream."
-
-	self bufferClass
-		encodeElementsOf: aSequenceableCollection
-		from: startInteger
-		count: countInteger
-		on: self.
-	^aSequenceableCollection!
 
 nextWord
 	"Answer the next 'word' in the receiver's element stream, where a word is defined as a
@@ -166,13 +147,11 @@ skipWhileMatchAll: aCollection
 
 !Core.SequencedStream categoriesForMethods!
 basicNext:putAll:startingAt:!private!writing! !
-bufferClass!constants!private! !
 contents!public!reading! !
 copyFrom:to:!public!reading! !
 isEmpty!public!testing! !
 isPositionable!public!testing! !
 locale:!accessing!public! !
-next:putAll:startingAt:!public! !
 nextWord!public!reading! !
 notEmpty!public!testing! !
 pop!positioning!public! !

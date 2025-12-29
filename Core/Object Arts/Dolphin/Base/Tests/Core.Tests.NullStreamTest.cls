@@ -80,7 +80,9 @@ testNextPutAll
 	self assert: subject atEnd.
 	self assert: (subject next: 3 putAll: 'def' startingAt: 1) equals: 'def'.
 	self assert: subject position equals: 0.
-	self assert: subject atEnd.!
+	self assert: subject atEnd.
+	self should: [subject next: 3 putAll: 'def' startingAt: 0] raise: BoundsError.
+	self should: [subject next: 3 putAll: 'def' startingAt: 2] raise: BoundsError!
 
 testPeek
 	| subject |

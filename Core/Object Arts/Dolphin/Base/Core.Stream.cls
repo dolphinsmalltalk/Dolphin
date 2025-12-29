@@ -68,6 +68,12 @@ basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
 		do: [:i | aSequenceableCollection basicAt: i put: self basicNext].
 	^aSequenceableCollection!
 
+basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Private - Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection."
+
+	startInteger to: startInteger + countInteger - 1
+		do: [:i | self basicNextPut: (aSequenceableCollection basicAt: i)]!
+
 basicNextAvailable: anInteger
 	"Private - Answer up to anInteger undecoded elements of the receiver's collection. Generally, the
 	answer will be a collection of the same class as the one accessed by the receiver (though
@@ -95,6 +101,11 @@ basicNextPutAll: aCollection
 
 basicPrint: anObject
 	anObject basicPrintOn: self!
+
+bufferClass
+	"Private - Answer the class of the receiver's I/O buffer."
+
+	^self contentsSpecies!
 
 close
 	"Relinquish any external resources associated with the receiver, and put the
@@ -240,6 +251,20 @@ next: anInteger put: anObject
 	anInteger timesRepeat: [self nextPut: anObject].
 	^anObject!
 
+next: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection.
+
+	Note that the element count is the number of elements written from the <sequencedReadableCollection> argument. Depending on the receiver's encoding, this may not necessarily result in the receiver's position advancing by the same count."
+
+	"Implementation Note: The receiver's encoding is that of the streamed over collection. We ask that collection to dispatch an appropriate message to the SequenceableCollection being written such that it can  convert as necessary from its own encoding to the encoding of this stream."
+
+	self bufferClass
+		encodeElementsOf: aSequenceableCollection
+		from: startInteger
+		count: countInteger
+		on: self.
+	^aSequenceableCollection!
+
 nextAvailable
 	"Answer the next of the receiver's future sequence values, or nil if at the end of the stream."
 
@@ -359,10 +384,12 @@ basicContentsSpecies!accessing!private! !
 basicNext!public!reading! !
 basicNext:!private!reading! !
 basicNext:into:startingAt:!private!reading! !
+basicNext:putAll:startingAt:!private!writing! !
 basicNextAvailable:!private!reading! !
 basicNextPut:!private!writing! !
 basicNextPutAll:!private!writing! !
 basicPrint:!printing!public! !
+bufferClass!constants!private! !
 close!operations!public! !
 contentsSpecies!constants!private! !
 cr!public!writing! !
@@ -386,6 +413,7 @@ next!public!reading! !
 next:!public!reading! !
 next:into:startingAt:!public!reading! !
 next:put:!public!writing! !
+next:putAll:startingAt:!public! !
 nextAvailable!public!reading! !
 nextAvailable:!public!reading! !
 nextInt32Put:!public!writing! !

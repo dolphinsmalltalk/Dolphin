@@ -31,6 +31,10 @@ assert: aPositionableStream bufferPositionEquals: anInteger
 assertBufferDirty: subject
 	self assert: subject isBufferDirty!
 
+assertStream: subject hasPosition: anInteger
+	(subject class conformsToProtocol: #positionableStream)
+		ifTrue: [self assert: subject position equals: anInteger]!
+
 bufferClasses
 	^##(IdentityDictionary withAll: {
 				#utf8 -> Utf8String.
@@ -209,6 +213,7 @@ testBasicNext
 			self should: [subject basicNext] raise: subject class endOfStreamSignal]!
 
 testContents
+	<mustConform: #sequencedStream>
 	self collections do: 
 			[:pair |
 			| each stream |
@@ -278,7 +283,6 @@ testNewContents
 	| stream contents |
 	stream := self streamWith: String new.
 	self assert: (self streamedContents: stream) isEmpty.
-	self assert: stream position equals: 0.
 	stream nextPut: $h.
 	self assert: (self streamedContents: stream) equals: 'h'.
 	stream := self streamWith: 'hel'.
@@ -633,18 +637,18 @@ testNextPutAll
 	subject := self tempWriteStream.
 	written := ''.
 	offset := $\xFEFF utf8Length.
-	self assert: subject position equals: 0.
+	self assertStream: subject hasPosition: 0.
 	self assert: subject bufferPositionEquals: offset.
 	self assert: subject absolutePositionEquals: offset.
 	"Write nothing"
 	subject nextPutAll: ''.
-	self assert: subject position equals: 0.
+	self assertStream: subject hasPosition: 0.
 	self assert: subject bufferPositionEquals: offset.
 	self assert: subject absolutePositionEquals: offset.
 	"Write one byte"
 	subject nextPutAll: 'X'.
 	written := 'X'.
-	self assert: subject position equals: 1.
+	self assertStream: subject hasPosition: 1.
 	self assert: subject bufferPositionEquals: offset + 1.
 	self assert: subject absolutePositionEquals: offset + 1.
 	"Fill the first page up to the penultimate byte"
@@ -654,7 +658,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: bufferSize - 1.
 	self assert: subject absolutePositionEquals: bufferSize - 1.
-	self assert: subject position equals: bufferSize - 1 - offset.
+	self assertStream: subject hasPosition: bufferSize - 1 - offset.
 	self assertBufferDirty: subject.
 	"Fill the last byte - page full, but not written yet"
 	string := 'Z'.
@@ -662,7 +666,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: bufferSize.
 	self assert: subject absolutePositionEquals: bufferSize.
-	self assert: subject position equals: bufferSize - offset.
+	self assertStream: subject hasPosition: bufferSize - offset.
 	self assertBufferDirty: subject.
 	"Write another byte to overflow into next page"
 	string := 'A'.
@@ -670,7 +674,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: 1.
 	self assert: subject absolutePositionEquals: bufferSize + 1.
-	self assert: subject position equals: bufferSize + 1 - offset.
+	self assertStream: subject hasPosition: bufferSize + 1 - offset.
 	self assertBufferDirty: subject.
 	"Fill the 2nd page up to the last byte"
 	string := String new: bufferSize - 2 withAll: $X.
@@ -678,7 +682,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: bufferSize - 1.
 	self assert: subject absolutePositionEquals: bufferSize * 2 - 1.
-	self assert: subject position equals: bufferSize * 2 - 1 - offset.
+	self assertStream: subject hasPosition: bufferSize * 2 - 1 - offset.
 	self assertBufferDirty: subject.
 	"Write a two byte char causing overflow to next page"
 	string := '£'.
@@ -686,7 +690,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: 1.
 	self assert: subject absolutePositionEquals: bufferSize * 2 + 1.
-	self assert: subject position equals: bufferSize * 2 + 1 - offset.
+	self assertStream: subject hasPosition: bufferSize * 2 + 1 - offset.
 	self assertBufferDirty: subject.
 	"Fill the 3nd page up to the 2nd to last byte"
 	string := String new: bufferSize - 3 withAll: $X.
@@ -694,7 +698,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: bufferSize - 2.
 	self assert: subject absolutePositionEquals: bufferSize * 3 - 2.
-	self assert: subject position equals: bufferSize * 3 - 2 - offset.
+	self assertStream: subject hasPosition: bufferSize * 3 - 2 - offset.
 	self assertBufferDirty: subject.
 	"Write a three byte char causing 1-byte overflow to next page"
 	string := '€'.
@@ -702,7 +706,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: 1.
 	self assert: subject absolutePositionEquals: bufferSize * 3 + 1.
-	self assert: subject position equals: bufferSize * 3 + 1 - offset.
+	self assertStream: subject hasPosition: bufferSize * 3 + 1 - offset.
 	self assertBufferDirty: subject.
 	"Fill the 4th page up to the 2nd to last byte"
 	string := String new: bufferSize - 3 withAll: $X.
@@ -710,7 +714,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: bufferSize - 2.
 	self assert: subject absolutePositionEquals: bufferSize * 4 - 2.
-	self assert: subject position equals: bufferSize * 4 - 2 - offset.
+	self assertStream: subject hasPosition: bufferSize * 4 - 2 - offset.
 	self assertBufferDirty: subject.
 	"Write a four byte char causing 2-byte overflow to next page"
 	string := '𐀀'.
@@ -718,7 +722,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: 2.
 	self assert: subject absolutePositionEquals: bufferSize * 4 + 2.
-	self assert: subject position equals: bufferSize * 4 + 2 - offset.
+	self assertStream: subject hasPosition: bufferSize * 4 + 2 - offset.
 	self assertBufferDirty: subject.
 	"Fill the 5th page up to allow enough space for a 4-byte char"
 	string := String new: bufferSize - 6 withAll: $X.
@@ -726,7 +730,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: bufferSize - 4.
 	self assert: subject absolutePositionEquals: bufferSize * 5 - 4.
-	self assert: subject position equals: bufferSize * 5 - 4 - offset.
+	self assertStream: subject hasPosition: bufferSize * 5 - 4 - offset.
 	self assertBufferDirty: subject.
 	"Write a four byte char to just fill the page"
 	string := '🐬'.
@@ -734,7 +738,7 @@ testNextPutAll
 	written := written , string.
 	self assert: subject bufferPositionEquals: bufferSize.
 	self assert: subject absolutePositionEquals: bufferSize * 5.
-	self assert: subject position equals: bufferSize * 5 - offset.
+	self assertStream: subject hasPosition: bufferSize * 5 - offset.
 	self assertBufferDirty: subject.
 
 	"Final sanity check that we actually wrote what we expected"
@@ -754,7 +758,7 @@ testNextPutAllArray
 	self assert: (self streamedContents: subject) equals: array!
 
 testNextPutAllStartingAtAnsiToUtf8
-	<mustConform: #writeFileStream>
+	<mustConform: #puttableStream>
 	| subject data preamble |
 	subject := self tempWriteStream: #utf8.
 	preamble := AnsiString new: ((self bufferSizeOfStream: subject) - 7 max: 0) withAll: $#.
@@ -765,7 +769,7 @@ testNextPutAllStartingAtAnsiToUtf8
 		next: 2
 		putAll: data
 		startingAt: 2.
-	self assert: subject position equals: preamble size + 3.
+	self assertStream: subject hasPosition: preamble size + 3.
 	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 3).
 	"Write more data, but still not overflowing the buffer"
 	subject
@@ -773,13 +777,13 @@ testNextPutAllStartingAtAnsiToUtf8
 		putAll: data
 		startingAt: 4.
 	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 4).
-	self assert: subject position equals: preamble size + 4.
+	self assertStream: subject hasPosition: preamble size + 4.
 	"Cause overflow"
 	subject
 		next: 2
 		putAll: data
 		startingAt: 5.
-	self assert: subject position equals: preamble size + 8.
+	self assertStream: subject hasPosition: preamble size + 8.
 	self assert: (self streamedContents: subject) equals: preamble , 'b£cd€'!
 
 testNextPutAllStartingAtBytes
@@ -800,7 +804,7 @@ testNextPutAllStartingAtBytes
 		putAll: data
 		startingAt: 5.
 	self assert: (self streamedContents: subject) equals: preamble , #[2 3 4 5].
-	self assert: subject position equals: preamble size + 4.
+	self assertStream: subject hasPosition: preamble size + 4.
 	"Write one byte causing buffer overflow"
 	subject
 		next: 1
@@ -809,7 +813,7 @@ testNextPutAllStartingAtBytes
 	self assert: (self streamedContents: subject) equals: preamble , #[2 3 4 5 6]!
 
 testNextPutAllStartingAtUtf16ToBytes
-	<mustConform: #writeFileStream>
+	<mustConform: #puttableStream>
 	| subject data preamble |
 	subject := self tempWriteStream: #binary.
 	preamble := Utf16String new: ((self bufferSizeOfStream: subject) - 6 max: 0) withAll: $#.
@@ -830,7 +834,7 @@ testNextPutAllStartingAtUtf16ToBytes
 		startingAt: 4.
 	self assert: (self streamedContents: subject)
 		equals: preamble asByteArray , (data asByteArray copyFrom: 3 to: 8).
-	self assert: subject position equals: preamble size * 2 + 6.
+	self assertStream: subject hasPosition: preamble size * 2 + 6.
 	"Cause overflow"
 	subject
 		next: 2
@@ -841,7 +845,7 @@ testNextPutAllStartingAtUtf16ToBytes
 testNextPutAllStartingAtUtf16ToUtf8
 	"When writing UTF-16 to UTF-8 we can only write complete characters, so must start on the first or only code unit of a code point, and end on the last or only code unit of a code point."
 
-	<mustConform: #writeFileStream>
+	<mustConform: #puttableStream>
 	| subject data preamble |
 	subject := self tempWriteStream: #utf8.
 	preamble := Utf16String new: ((self bufferSizeOfStream: subject) - 7 max: 0) withAll: $#.
@@ -859,7 +863,7 @@ testNextPutAllStartingAtUtf16ToUtf8
 		putAll: data
 		startingAt: 5.
 	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 5).
-	self assert: subject position equals: 7 + preamble size.
+	self assertStream: subject hasPosition: 7 + preamble size.
 	"Cause overflow"
 	subject
 		next: 1
@@ -870,7 +874,7 @@ testNextPutAllStartingAtUtf16ToUtf8
 testNextPutAllStartingAtUtf16ToUtf8InvalidCount
 	"There is no UTF-8 encoding for UTF-16 surrogates, so we can't end on the lead surrogate of a code point outside the BMP that requires two UTF-16 code points (e.g. emoji)"
 
-	<mustConform: #writeFileStream>
+	<mustConform: #puttableStream>
 	| subject |
 	subject := self tempWriteStream: #utf8.
 	self
@@ -885,7 +889,7 @@ testNextPutAllStartingAtUtf16ToUtf8InvalidCount
 testNextPutAllStartingAtUtf16ToUtf8InvalidStart
 	"There is no UTF-8 encoding for UTF-16 surrogates, so we can't start on the trailing surrogate of a code point outside the BMP that requires two UTF-16 code points (e.g. emoji)"
 
-	<mustConform: #writeFileStream>
+	<mustConform: #puttableStream>
 	| subject |
 	subject := self tempWriteStream: #utf8.
 	self
@@ -898,7 +902,7 @@ testNextPutAllStartingAtUtf16ToUtf8InvalidStart
 		matching: [:ex | ex tag = 'fromInteger']!
 
 testNextPutAllStartingAtUtf8ToBytes
-	<mustConform: #writeFileStream>
+	<mustConform: #puttableStream>
 	| subject data preamble |
 	subject := self tempWriteStream: #binary.
 	preamble := Utf8String new: ((self bufferSizeOfStream: subject) - 4 max: 0) withAll: $#.
@@ -918,7 +922,7 @@ testNextPutAllStartingAtUtf8ToBytes
 		startingAt: 5.
 	self assert: (self streamedContents: subject)
 		equals: preamble asByteArray , (data asByteArray copyFrom: 2 to: 5).
-	self assert: subject position equals: preamble size + 4.
+	self assertStream: subject hasPosition: preamble size + 4.
 	"Cause overflow"
 	subject
 		next: 2
@@ -927,7 +931,7 @@ testNextPutAllStartingAtUtf8ToBytes
 	self assert: (self streamedContents: subject) asUtf8String equals: preamble , 'b🐬c'!
 
 testNextPutAllStartingAtUtf8ToUtf16
-	<mustConform: #writeFileStream>
+	<mustConform: #puttableStream>
 	<skipUnless: #streamClassSupportsUtf16>
 	| subject data preamble |
 	subject := self tempWriteStream: #utf16le.
@@ -940,20 +944,20 @@ testNextPutAllStartingAtUtf8ToUtf16
 		putAll: data
 		startingAt: 2.
 	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 6).
-	self assert: subject position equals: preamble size + 3.
+	self assertStream: subject hasPosition: preamble size + 3.
 	"Write more data, but still not overflowing the buffer"
 	subject
 		next: 1
 		putAll: data
 		startingAt: 7.
 	self assert: (self streamedContents: subject) equals: preamble , (data copyFrom: 2 to: 7).
-	self assert: subject position equals: preamble size + 4.
+	self assertStream: subject hasPosition: preamble size + 4.
 	"Cause overflow"
 	subject
 		next: 2
 		putAll: data
 		startingAt: 1.
-	self assert: subject position equals: preamble size + 6.
+	self assertStream: subject hasPosition: preamble size + 6.
 	self assert: (self streamedContents: subject) equals: preamble , 'b🐬cab'!
 
 testNextPutAllStartingAtUtf8ToUtf8
@@ -978,14 +982,27 @@ testNextPutAllStartingAtUtf8ToUtf8
 		startingAt: 5.
 	expectedContent := preamble , (data copyFrom: 2 to: 5).
 	self assert: (self streamedContents: subject) equals: expectedContent.
-	self assert: subject position equals: expectedContent size.
+	self assertStream: subject hasPosition: expectedContent size.
 	"Cause overflow"
 	subject
 		next: 2
 		putAll: data
 		startingAt: 6.
-	self assert: subject position equals: preamble size + 6.
-	self assert: (self streamedContents: subject) equals: preamble , 'b🐬c'!
+	self assertStream: subject hasPosition: preamble size + 6.
+	self assert: (self streamedContents: subject) equals: preamble , 'b🐬c'.
+	"Out of bounds of source collection error cases"
+	self should: 
+			[subject
+				next: 3
+				putAll: 'def'
+				startingAt: 0]
+		raise: BoundsError.
+	self should: 
+			[subject
+				next: 3
+				putAll: 'def'
+				startingAt: 2]
+		raise: BoundsError!
 
 testNextUtf8Underflow
 	<mustConform: #writeFileStream>
@@ -1128,7 +1145,7 @@ testRandomWriteOnePage
 	bufferSize := self bufferSizeOfStream: subject.
 	pos := bufferSize - 2.
 	subject position: pos.
-	self assert: subject position equals: pos.
+	self assertStream: subject hasPosition: pos.
 	self assert: subject size equals: 0.
 	self assert: subject atEnd.
 	subject nextPut: $a.
@@ -1157,6 +1174,7 @@ testResetAfterWrite
 		ifFalse: [self assert: (self streamedContents: stream) equals: 'a']!
 
 testReverseContents
+	<mustConform: #sequencedStream>
 	| stream euro |
 	stream := self streamWith: ''.
 	self assert: stream reverseContents isEmpty.
@@ -1181,7 +1199,7 @@ testRewindAfterWrite
 	self assert: actual equals: 'Hello'!
 
 testSetToEnd
-	<sequencedStream>
+	<mustConform: #sequencedStream>
 	| string stream |
 	string := 'hello'.
 	stream := self streamWith: string.
@@ -1606,11 +1624,11 @@ verifyWriteCharacter: aCharacter
 	self assert: (self streamedContents: subject) equals: utf8!
 
 verifyWriteString: aString
-	| subject  |
+	| subject |
 	subject := self tempWriteStream: aString encoding.
-	self assert: subject position equals: 0.
+	self assertStream: subject hasPosition: 0.
 	subject nextPutAll: aString.
-	self assert: subject position equals: aString size.
+	self assertStream: subject hasPosition: aString size.
 	self assert: (self streamedContents: subject) equals: aString!
 
 writeableCollections
@@ -1630,6 +1648,7 @@ arrays!constants!private! !
 assert:absolutePositionEquals:!helpers!private! !
 assert:bufferPositionEquals:!helpers!private! !
 assertBufferDirty:!helpers!private! !
+assertStream:hasPosition:!helpers!private! !
 bufferClasses!helpers!private! !
 bufferSizeOfStream:!helpers!private!unit tests! !
 byteArrays!constants!private! !

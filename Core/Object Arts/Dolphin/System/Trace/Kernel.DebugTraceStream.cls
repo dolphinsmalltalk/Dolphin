@@ -2,7 +2,7 @@
 
 Core.Stream
 	subclass: #'Kernel.DebugTraceStream'
-	instanceVariableNames: 'buffer'
+	instanceVariableNames: 'buffer kernel32'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -26,10 +26,26 @@ Class Variables:
 atEnd
 	"Answer whether the receiver cannot access any more objects"
 
-	^self shouldNotImplement!
+	^buffer atEnd!
+
+basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Private - Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection."
+
+	^buffer
+		basicNext: countInteger
+		putAll: aSequenceableCollection
+		startingAt: startInteger!
+
+buffer
+	^buffer!
 
 close
 	self flush!
+
+contentsSpecies
+	"Private - Answer the class of Object to be used when answering collections of elements from the receiver."
+
+	^buffer contentsSpecies!
 
 cr
 	"Append a line delimiter to the receiver (N.B. For Windows this is a CR-LF sequence)."
@@ -42,16 +58,8 @@ flush
 
 	buffer position == 0
 		ifFalse: 
-			[Kernel32 outputDebugString: buffer contents.
+			[kernel32 outputDebugString: buffer contents.
 			buffer reset]!
-
-initialize
-	"Private - Initialize the receiver."
-
-	"On the assumption that we print to the buffer stream more often than we flush to the OutputDebugString API, it is better to buffer in UTF-8 than UTF-16"
-
-	buffer := String smalltalkWriteStream: 128.
-	^self!
 
 isEmpty
 	"Answer whether the sets of both past and future sequence values are empty."
@@ -65,7 +73,7 @@ isWriteable
 	^true!
 
 locale
-	"Answer the <Locale> to be used when emitting localisable data to/from this stream."
+	"Answer the <Locale> to be used when writing localisable data to this stream."
 
 	^buffer locale!
 
@@ -77,19 +85,31 @@ nextPut: newElem
 nextPutAll: insertString
 	"Append the <readableString>, insertString, to the text of the receiver."
 
-	^buffer nextPutAll: insertString! !
+	^buffer nextPutAll: insertString!
+
+reset
+	buffer reset!
+
+setBuffer: aWriteStream
+	buffer := aWriteStream.
+	kernel32 := Kernel32.
+	^self! !
 
 !Kernel.DebugTraceStream categoriesForMethods!
 atEnd!public!testing! !
+basicNext:putAll:startingAt:!public!writing! !
+buffer!accessing!public! !
 close!operations!public! !
+contentsSpecies!constants!private! !
 cr!public!writing! !
 flush!public!writing! !
-initialize!initializing!private! !
-isEmpty!public! !
+isEmpty!public!testing! !
 isWriteable!public!testing! !
 locale!accessing!public! !
 nextPut:!public!writing! !
 nextPutAll:!public!writing! !
+reset!positioning!public! !
+setBuffer:!initializing!private! !
 !
 
 Kernel.DebugTraceStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
@@ -100,12 +120,16 @@ current
 	^Processor activeProcess debugStream!
 
 new
-	"Streams must be instantiated onto something."
+	"On the assumption that we print to the buffer stream more often than we flush to the OutputDebugString API, it is better to buffer in UTF-8 than UTF-16"
 
-	^self basicNew initialize! !
+	^self over: (String smalltalkWriteStream: 128)!
+
+over: aPuttableStream
+	^self basicNew setBuffer: aPuttableStream! !
 
 !Kernel.DebugTraceStream class categoriesForMethods!
 current!instance creation!public! !
 new!public! !
+over:!instance creation!public! !
 !
 
