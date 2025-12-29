@@ -228,6 +228,23 @@ testOverrideDefaultKeyBindings
 	"But only the diffs should be stored"
 	self assert: presenter basicKeyBindings asSet equals: expectedDiffs!
 
+testSerializedSelection
+	self assert: presenter selection isEmpty.
+	self assert: presenter serializedSelection equals: '0'.
+	presenter serializedSelection: '179-187'.
+	self assert: presenter selection equals: 'Instance'.
+	presenter serializedSelection: 'R236-324#2'.
+	presenter serializedSelection: 'R237-417#2'.
+	self assert: presenter selection equals: 'As
+De
+Ev
+'.
+	"New format as of 5.5.8"
+	presenter serializedSelection: 'R#1,1494-1502'.
+	self assert: presenter selection equals: '#==
+#ba
+'!
+
 testSetGetAnnotations
 	| annotations |
 	presenter annotationMode: #boxed.
@@ -403,6 +420,7 @@ testImmersiveColorSetChange!public!unit tests! !
 testLanguages!public!unit tests! !
 testLexerIndicatorStateRestoral!public!unit tests! !
 testOverrideDefaultKeyBindings!public!unit tests! !
+testSerializedSelection!public!unit tests! !
 testSetGetAnnotations!public!unit tests! !
 testSetGetEndOfLineAnnotations!public!unit tests! !
 testStrCmp!public! !
