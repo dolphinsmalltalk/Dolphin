@@ -24,12 +24,24 @@ addEvent: aSymbol action: aValuable
 	self shouldNotImplement!
 
 asMinimumRepresentation
-	"Answers nil if the receiver is empty, otherwise self."
+	"Private - Answers nil if the receiver is empty, otherwise self."
 
-	^nil!
+	^self isEmpty ifFalse: [self]!
 
-hasActionsForEvent: aSymbol 
+do: operation
+	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's message sequences"
+
+	^self!
+
+hasActionsForEvent: aSymbol
+	"Answer whether there are any registered actions for the named event."
+
 	^false!
+
+isEmpty
+	"Answer whether the receiver contains no elements."
+
+	^true!
 
 removeActionsForEvent: aSymbol
 	"Implementation Note: It is not an error to attempt to remove an event from an <eventsCollection> when that event doesn't exist in the collection."
@@ -74,8 +86,10 @@ triggerEvent: aSymbol withArguments: anArray
 
 !Kernel.NullEventsCollection categoriesForMethods!
 addEvent:action:!public! !
-asMinimumRepresentation!converting!public! !
+asMinimumRepresentation!converting!private! !
+do:!enumerating!public! !
 hasActionsForEvent:!public!testing! !
+isEmpty!public!testing! !
 removeActionsForEvent:!adding!public! !
 removeEventsTriggeredFor:!public!removing! !
 shrink!public!removing! !
@@ -85,7 +99,7 @@ triggerEvent:with:with:!public!triggering! !
 triggerEvent:withArguments:!public!triggering! !
 !
 
-Kernel.NullEventsCollection methodProtocol: #eventsCollection attributes: #(#readOnly) selectors: #(#addEvent:action: #asMinimumRepresentation #hasActionsForEvent: #removeActionsForEvent: #removeEventsTriggeredFor: #shrink #triggerEvent: #triggerEvent:with: #triggerEvent:with:with: #triggerEvent:withArguments:)!
+Kernel.NullEventsCollection methodProtocol: #eventsCollection attributes: #(#readOnly) selectors: #(#addEvent:action: #asMinimumRepresentation #do: #hasActionsForEvent: #isEmpty #removeActionsForEvent: #removeEventsTriggeredFor: #shrink #triggerEvent: #triggerEvent:with: #triggerEvent:with:with: #triggerEvent:withArguments:)!
 
 !Kernel.NullEventsCollection class methodsFor!
 

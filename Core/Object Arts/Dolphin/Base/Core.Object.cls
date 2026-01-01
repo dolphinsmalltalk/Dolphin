@@ -1410,9 +1410,9 @@ when: aSymbol perform: aValuable
 	self getEvents
 		ifNil: 
 			[| events |
-			events := EventsCollection new.
-			events addEvent: aSymbol action: aValuable.
-			self setEvents: events]
+			events := EventsCollection withEvent: aSymbol action: aValuable.
+			self setEvents: events.
+			events]
 		ifNotNil: [:events | events addEvent: aSymbol action: aValuable]!
 
 when: anEventSymbol send: aSelector to: anObject
