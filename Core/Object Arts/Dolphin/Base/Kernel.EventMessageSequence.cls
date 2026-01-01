@@ -81,6 +81,14 @@ initialize
 	messages := Array new: 1.
 	tally := 0!
 
+initializeWith: aMessageSend
+	receivers := (MourningWeakArray with: aMessageSend receiver)
+				pathologist: self;
+				yourself.
+	messages := { aMessageSend }.
+	tally := 1.
+	^self!
+
 messages
 	| answer |
 	answer := OrderedCollection new: receivers basicSize.
@@ -152,10 +160,20 @@ elementsExpired:of:!finalizing!private! !
 forwardTo:!operations!public! !
 includes:!public!searching! !
 initialize!initializing!private! !
+initializeWith:!initializing!private! !
 messages!accessing!public! !
 removeMessagesFor:!public!removing! !
 size!accessing!public! !
 value!evaluating!public! !
 valueWithArguments:!evaluating!public! !
+!
+
+!Kernel.EventMessageSequence class methodsFor!
+
+with: aMessageSend
+	^self basicNew initializeWith: aMessageSend! !
+
+!Kernel.EventMessageSequence class categoriesForMethods!
+with:!instance creation!public! !
 !
 

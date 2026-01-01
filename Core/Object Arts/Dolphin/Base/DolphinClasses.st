@@ -3892,14 +3892,6 @@ Core.SharedLookupTable
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-Core.SharedIdentityDictionary
-	variableSubclass: #'Kernel.EventsCollection'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 Core.WeakLookupTable
 	variableSubclass: #'Core.WeakIdentityDictionary'
 	instanceVariableNames: ''
@@ -4950,6 +4942,14 @@ External.WindowsSystemLibrary
 External.WindowsSystemLibrary
 	subclass: #'OS.WinMMLibrary'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Kernel.NullEventsCollection
+	variableSubclass: #'Kernel.EventsCollection'
+	instanceVariableNames: 'mutex register'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

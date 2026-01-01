@@ -176,7 +176,24 @@ testRemoveEventsTriggeredFor
 	objectA removeEventsTriggeredFor: objectB.
 	self assert: objectA events size equals: 25.
 	objectA removeEventsTriggeredFor: objectC.
-	self assert: objectA events size equals: 0!
+	self assert: objectA events isEmpty.
+	self assertIsNil: objectA getEvents!
+
+testSetEvents
+	| source events |
+	source := self newEventSource.
+	self assertIsNil: source getEvents.
+	self assert: source events class equals: NullEventsCollection.
+	events := EventsCollection new.
+	source setEvents: events.
+	self assertIsNil: source getEvents.
+	events addEvent: #foo action: (EventMessageSend receiver: self selector: #bar).
+	source setEvents: events.
+	self assertNotNil: source getEvents.
+	self assert: source events identicalTo: events.
+	source setEvents: nil.
+	self assert: source events class equals: NullEventsCollection.
+!
 
 testThreeArgEvent
 	| source |
@@ -355,6 +372,7 @@ testObjectPropertyManager!public!unit tests! !
 testOneArgEvent!public!unit tests! !
 testPropertyManager!public!unit tests! !
 testRemoveEventsTriggeredFor!public!unit tests! !
+testSetEvents!public!unit tests! !
 testThreeArgEvent!public!unit tests! !
 testTwoArgEvent!public!unit tests! !
 testValue!public!unit tests! !
