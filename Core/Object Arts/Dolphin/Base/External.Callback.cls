@@ -6,7 +6,7 @@ Core.Object
 	classVariableNames: 'Registry ThunkBase'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: { 'ArgSizeOffset' -> 16rE. 'MaxThunks' -> 16r100. 'ThunkSize' -> 16r10 }!
+	classConstants: { 'MaxThunks' -> 16r100. 'RetOffset' -> 16rD. 'ThunkSize' -> 16r10 }!
 
 External.Callback guid: (Core.GUID fromString: '{87b4c486-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -86,8 +86,12 @@ makeProcInstance
 	"Private - Allocate a callback thunk for the receiver from the block in fixed, executable, memory."
 
 	thunk := (ThunkBase asInteger + ((cookie - 1) * ThunkSize)) asExternalAddress.
-	thunk uint16AtOffset: ArgSizeOffset
-		put: (descriptor calleeCleans ifTrue: [self argumentsSize] ifFalse: [0])!
+	descriptor calleeCleans
+		ifTrue: 
+			[thunk
+				uint8AtOffset: RetOffset put: 16rC2;
+				uint16AtOffset: RetOffset + 1 put: self argumentsSize]
+		ifFalse: [thunk uint8AtOffset: RetOffset put: 16rC3]!
 
 thunk
 	"Private - Answer the receiver's assembler thunk."
@@ -157,7 +161,7 @@ allocateThunks
 				uint8AtOffset: (offset := offset + 4) put: 16rFF;
 				uint8AtOffset: (offset := offset + 1) put: 16rD0.
 			"ret <argsSize>; argument size will be substituted when thunk allocated to
-			particular callback"
+			particular stdcall callback, or replaced with RET (C3) for cdecl."
 			ThunkBase
 				uint8AtOffset: (offset := offset + 1) put: 16rC2;
 				uint16AtOffset: (offset := offset + 1) put: 0]!
@@ -229,7 +233,7 @@ initialize
 	self addClassConstant: 'MaxThunks' value: 256.
 	self assert: [(ThunkSize * MaxThunks rem: 4096) = 0].
 	Registry isNil ifTrue: [self clear].
-	self addClassConstant: 'ArgSizeOffset' value: ThunkSize - 2!
+	self addClassConstant: 'RetOffset' value: ThunkSize - 3!
 
 new
 	"Answer a new registered instance of the receiver with a unique magic cookie."
