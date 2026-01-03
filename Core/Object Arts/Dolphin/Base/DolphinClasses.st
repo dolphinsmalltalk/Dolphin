@@ -2453,7 +2453,7 @@ Core.Object
 	classVariableNames: 'Registry ThunkBase'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: { 'ArgSizeOffset' -> 16rE. 'MaxThunks' -> 16r100. 'ThunkSize' -> 16r10 }!
+	classConstants: { 'MaxThunks' -> 16r100. 'RetOffset' -> 16rD. 'ThunkSize' -> 16r10 }!
 
 Core.Object
 	subclass: #'Core.Category'
