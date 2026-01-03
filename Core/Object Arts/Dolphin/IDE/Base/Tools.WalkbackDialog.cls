@@ -2,7 +2,7 @@
 
 UI.DialogView
 	subclass: #'Tools.WalkbackDialog'
-	instanceVariableNames: 'callStack resumable caption debuggable'
+	instanceVariableNames: 'callStack resumable caption debuggable clientExtent'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -10,7 +10,9 @@ UI.DialogView
 			'CallStackId' -> 16r3E9.
 			'Commands'
 				-> (LookupTable withAll: { 16r1 -> #debug. 16r2 -> #terminate. 16r3 -> #resume. 16r4 -> #copy }).
-			'IconId' -> 16r3F1
+			'CopyId' -> 16r4.
+			'IconId' -> 16r3F1.
+			'ResumeId' -> 16r3
 		}!
 
 Tools.WalkbackDialog guid: (Core.GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -42,6 +44,14 @@ actualBackcolor
 
 	^Color.Face3d!
 
+cacheExtents
+	| rect |
+	clientExtent := self clientRectangle extent.
+	"We set the minimum extent to be the designed dialog size. As that is expressed in dialog units we need to map to pels at the dialog's current DPI."
+	rect := OS.RECTL extent: self dialogExtent.
+	OS.User32 mapDialog: self handle rectangle: rect.
+	minExtent := (self calcRectangleFromClientRectangle: rect) extent!
+
 callStack: aString
 	"Set the call stack to be displayed by the receiver."
 
@@ -68,33 +78,40 @@ debuggable: aBoolean
 
 	debuggable := aBoolean!
 
+dialogExtent
+	"Answer the extent of the walkback dialog in dialog units. This is a designed in the IDD_BACKTRACE dialog template stored in the VM."
+
+	^252 @ 126!
+
 errorCreateWindowFailed
 	Notification signal: 'Failed to open walkback dialog'!
 
 onDpiChanged: aDpiChangedEvent
 	| lresult |
+	"We must clear the cached extents interfering with DefDlgProc DPI scaling"
+	minExtent := clientExtent := nil.
 	"In this case the controls are from a template, so we let DefDlgProc do the scaling."
 	lresult := super defaultWindowProcessing: aDpiChangedEvent.
 	"Save down the new DPI as in the superclass implementation we are replacing"
 	dpi := aDpiChangedEvent newDpi.
 	"We must rescale the error/warning image or Windows will just bitmap scale it with unpleasing results"
 	self setImage.
+	self cacheExtents.
 	^lresult!
 
 onInitDialog
 	"Private - The walkback is opening and all controls have been created.
 	Initialize as necessary."
 
-	
-	[self class releaseCapture.
+	[ self class releaseCapture.
 	self
 		setImage;
 		parp;
 		text: caption;
 		setItem: CallStackId text: callStack;
-		enableItem: (Commands keyAtValue: #resume) state: resumable;
+		enableItem: ResumeId state: resumable;
 		enableItem: IDOK state: debuggable.
-
+	self cacheExtents.
 	"Set default answer used if window closed rather than button pressed"
 	self answer: #terminate]
 			on: Error
@@ -150,11 +167,9 @@ wmCommand: message wParam: wParam lParam: lParam
 	wmCommand: handler. We set the answer to the command name so that the caller can decide what
 	to do with the process."
 
-	| copyid |
 	self answer: (Commands lookup: wParam).
-	copyid := Commands keyAtValue: #copy.
-	wParam > copyid ifTrue: [^false].
-	wParam == copyid
+	wParam > CopyId ifTrue: [^false].
+	wParam == CopyId
 		ifTrue: 
 			[self copyWalkbackToClipboard.
 			^false].
@@ -163,16 +178,31 @@ wmCommand: message wParam: wParam lParam: lParam
 wmSize: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_SIZE (window resized) message."
 
-	#todo "Resize the controls".
-	^nil
-! !
+	| control offset rect |
+	clientExtent ifNil: [^nil].
+	"Resize the controls (except initially or if undergoing a DPI change)"
+	rect := self clientRectangle.
+	offset := rect extent - clientExtent.
+	clientExtent := rect extent.
+	control := self getItem: CallStackId.
+	rect := control rectangle.
+	control rectangle: (rect origin corner: rect corner + offset).
+	offset x: 0.
+	IDOK to: CopyId
+		do: 
+			[:i |
+			control := self getItem: i.
+			control rectangle: (control rectangle translatedBy: offset)].
+	^nil! !
 
 !Tools.WalkbackDialog categoriesForMethods!
 actualBackcolor!accessing!private! !
+cacheExtents!helpers!private! !
 callStack:!accessing!public! !
 caption:!accessing!public! !
 copyWalkbackToClipboard!commands!public! !
 debuggable:!accessing!public! !
+dialogExtent!constants!private! !
 errorCreateWindowFailed!operations!private! !
 onDpiChanged:!event handling!public! !
 onInitDialog!event handling!private! !
