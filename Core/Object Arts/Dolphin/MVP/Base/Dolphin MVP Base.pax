@@ -280,6 +280,8 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #logicalToPhysicalPoint:lpPoint:)
 	#(#{OS.UserLibrary} #logicalToPhysicalPointForPerMonitorDPI:lpPoint:)
 	#(#{OS.UserLibrary} #makeDragList:)
+	#(#{OS.UserLibrary} #mapDialog:rectangle:)
+	#(#{OS.UserLibrary} #mapDialogRect:lpRect:)
 	#(#{OS.UserLibrary} #mapRectangle:from:to:)
 	#(#{OS.UserLibrary} #mapWindowPoints:hWndTo:lpPoints:cPoints:)
 	#(#{OS.UserLibrary} #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:)
@@ -3845,6 +3847,23 @@ makeDragList: aWindowHandle
 	<stdcall: bool MakeDragList handle>
 	^self invalidCall: _failureCode!
 
+mapDialog: dlgHandle rectangle: aRectangle
+	| rect |
+	rect := RECTL marshal: aRectangle.
+	(self mapDialogRect: dlgHandle lpRect: rect) ifFalse: [self systemError].
+	^rect!
+
+mapDialogRect: hDlg lpRect: lpRect
+	"Invoke the MapDialogRect() function of the module wrapped by the receiver.
+	Helpstring: Converts dialog box units to screen units
+
+		BOOL __stdcall MapDialogRect(
+			[in]wireHWND hDlg,
+			[in, out]RECT* lpRect);"
+
+	<stdcall: bool MapDialogRect handle RECTL*>
+	^self invalidCall: _failureCode!
+
 mapRectangle: aRectangle from: hwndSrc to: hwndDest
 	| rect |
 	rect := RECTL marshal: aRectangle.
@@ -4632,6 +4651,8 @@ lockWindowUpdate:!public!win32 functions-painting and drawing! !
 logicalToPhysicalPoint:lpPoint:!**auto generated**!public!win32 functions-high DPI! !
 logicalToPhysicalPointForPerMonitorDPI:lpPoint:!**auto generated**!public!win32 functions-high DPI! !
 makeDragList:!public!win32 functions-list box! !
+mapDialog:rectangle:!public!win32 functions-dialog box! !
+mapDialogRect:lpRect:!**auto generated**!public!win32 functions-dialog box! !
 mapRectangle:from:to:!geometry!public! !
 mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
 modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:!public!win32 functions-menu! !

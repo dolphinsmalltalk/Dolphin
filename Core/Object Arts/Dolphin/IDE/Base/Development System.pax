@@ -2060,7 +2060,7 @@ UI.ContainerView
 
 UI.DialogView
 	subclass: #'Tools.WalkbackDialog'
-	instanceVariableNames: 'callStack resumable caption debuggable'
+	instanceVariableNames: 'callStack resumable caption debuggable clientExtent'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -2068,7 +2068,9 @@ UI.DialogView
 			'CallStackId' -> 16r3E9.
 			'Commands'
 				-> (LookupTable withAll: { 16r1 -> #debug. 16r2 -> #terminate. 16r3 -> #resume. 16r4 -> #copy }).
-			'IconId' -> 16r3F1
+			'CopyId' -> 16r4.
+			'IconId' -> 16r3F1.
+			'ResumeId' -> 16r3
 		}!
 
 UI.ImageViewAbstract
