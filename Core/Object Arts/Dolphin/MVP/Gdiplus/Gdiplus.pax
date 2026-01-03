@@ -2480,10 +2480,10 @@ createGpPen: aFloat
 		pen: gpHandle.
 	^gpHandle!
 
-gdiplusBrush: aPoint
-	"Answer a Gdiplus.Brush configured for painting of the receiver's color at the specified extent, although the extent is irrelevant for solid colours and can be ignored."
+gdiplusBrush: aRectangle
+	"Answer a Gdiplus.Brush configured for painting of the receiver's color in the specified rectangle, although the rectangle is irrelevant for solid colours and can be ignored."
 
-	^Gdiplus.Brush color: self!
+	^Gdiplus.SolidBrush color: self!
 
 gdiplusPen
 	"Answer a Gdiplus.Pen configured for drawing in the receiver's color."

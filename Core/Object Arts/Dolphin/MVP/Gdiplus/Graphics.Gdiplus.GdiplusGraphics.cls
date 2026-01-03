@@ -478,6 +478,24 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 		stringFormat: aStringFormat asParameter
 		brush: brush asParameter!
 
+drawString: aString font: aFont rect: aRectangle format: aStringFormat color: aColor
+	"Draw aString on the receiver inside aRectangle, using font attributes (family name, size, and style) specified by aFont, text format information (layout and display manipulations) specified by aStringFormat, and a solid brush of the specified `Color` to fill the string."
+
+	| font brush text |
+	font := aFont ifNil: [Font genericSansSerif].
+	brush := aColor gdiplusBrush: aRectangle.
+	"Note that we must convert to UTF-16 explicitly to ensure we pass the correct string length."
+	text := aString asUtf16String.
+	Gdip
+		gdipDrawString: self handle
+		str: text
+		length: text size
+		font: font asParameter
+		layoutRect: (RectF marshal: aRectangle)
+		stringFormat: aStringFormat asParameter
+		brush: brush handle.
+	brush free!
+
 drawString: aString layoutRect: aRectangle
 	"Draw aString on the receiver within aRectangle."
 
@@ -581,7 +599,7 @@ fillRectangle: aRectangle brush: aGdiplusBrush
 
 fillRectangle: aRectangle color: aColor
 	| fillBrush |
-	fillBrush := SolidBrush color: aColor.
+	fillBrush := aColor gdiplusBrush: aRectangle.
 	self fillRectangle: aRectangle brush: fillBrush.
 	fillBrush free!
 
@@ -681,7 +699,7 @@ measureString: aString font: aFont rect: aRectangle format: aStringFormat
 	"Answer a Rectangle that is the bounds of aString inside aRectangle as specified by aFont and aStringFormat."
 
 	| boundRect text |
-	boundRect := RectF new.
+	boundRect := RectF newBuffer.
 	"Note that we must conver to UTF-16 explicitly to ensure we pass the correct string length."
 	text := aString asUtf16String.
 	Gdip
@@ -939,6 +957,7 @@ drawString:font:at:!drawing-strings!public! !
 drawString:font:at:brush:!drawing-strings!public! !
 drawString:font:at:format:brush:!drawing-strings!public! !
 drawString:font:rect:format:brush:!drawing-strings!public! !
+drawString:font:rect:format:color:!drawing-strings!public! !
 drawString:layoutRect:!drawing-strings!public! !
 endContainer:!operations!public! !
 erase!operations!public! !

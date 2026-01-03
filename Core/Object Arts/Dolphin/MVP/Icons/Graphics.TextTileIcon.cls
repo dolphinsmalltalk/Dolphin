@@ -199,58 +199,41 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 	graphics free!
 
 drawOnGraphics: graphics at: originPoint extent: extentPoint
-	| scale height faceName utf16 font rect textExtent width style format textBrush |
+	| scale height utf16 font rect textExtent format |
 	extentPoint isZero ifTrue: [^self].
 	rect := originPoint extent: extentPoint.
-	tilecolor
-		ifNotNil: 
-			[| backbrush |
-			backbrush := tilecolor gdiplusBrush: rect.
-			graphics fillRectangle: rect brush: backbrush.
-			backbrush free].
+	tilecolor ifNotNil: [graphics fillRectangle: rect color: tilecolor].
 	margin ifNotNil: [rect := rect insetBy: extentPoint * margin // 16].
 	utf16 := self text asUtf16String.
 	"TextTileIcon can be used to render empty tiles efficiently if no text is provided."
 	utf16 isEmpty ifTrue: [^self].
 	"The text can be rotated in 90° increments"
 	self applyTransforms: graphics rect: rect.
-	width := rect width.
-	height := rect height.
 	"Work out a suitable font size to best fit the space"
-	faceName := self actualFontName.
-	style := self actualFontStyle.
 	font := Gdiplus.Font
-				name: faceName
-				pixelSize: height
-				style: style.
-	graphics textRenderingHint: TextRenderingHintAntiAlias.
+				name: self actualFontName
+				pixelSize: (height := rect height)
+				style: self actualFontStyle.
 	format := StringFormat genericTypographic.
 	format flags: (format flags maskClear: StringFormatFlagsLineLimit).
 	textExtent := (graphics
+				textRenderingHint: TextRenderingHintAntiAlias;
 				measureString: utf16
-				font: font
-				rect: RectF new
-				format: format) extent.
-	scale := width asFloat / textExtent x.
+					font: font
+					rect: RectF newBuffer
+					format: format) extent.
+	scale := rect width asFloat / textExtent x.
 	scale * textExtent y > height ifTrue: [scale := height asFloat / textExtent y].
-	scale = 1
-		ifFalse: 
-			[font free.
-			font := Gdiplus.Font
-						name: faceName
-						pixelSize: (height * scale max: 1)
-						style: style].
-	textBrush := Gdiplus.Brush color: self actualTextcolor.
-	format centered.
+	scale = 1 ifFalse: [font := font ofSize: (height * scale max: 1) unit: UnitPixel].
 	graphics
 		drawString: utf16
-		font: font
-		rect: rect
-		format: format
-		brush: textBrush.
+			font: font
+			rect: rect
+			format: format centered
+			color: self actualTextcolor;
+		resetTransform.
 	font free.
-	textBrush free.
-	graphics resetTransform!
+	format free!
 
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt 
 	"For compatibility with GdiplusImageView. The source origin, source extent, unit and attributes arguments are ignored."
