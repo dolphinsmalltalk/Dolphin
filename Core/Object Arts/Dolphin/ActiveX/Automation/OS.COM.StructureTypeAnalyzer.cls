@@ -40,6 +40,9 @@ isAnonymous
 
 	^self name beginsWith: '_MIDL_'!
 
+isInt32
+	^false!
+
 isStructure
 	"Answer whether the receiver describes a struct or union type."
 
@@ -89,6 +92,7 @@ baseClass!constants!private! !
 byteSize!accessing!public! !
 classDesc!constants!private! !
 isAnonymous!public!testing! !
+isInt32!public!testing! !
 isStructure!public!testing! !
 members!enumerating!public! !
 name!accessing!public! !
