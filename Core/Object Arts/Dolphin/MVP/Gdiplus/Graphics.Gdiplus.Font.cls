@@ -89,6 +89,15 @@ name
 
 	^self family name!
 
+ofSize: sizeInteger unit: unitInteger
+	"Answer a font like the receiver, but of the specified height."
+
+	^self class
+		fontFamily: self family
+		emSize: sizeInteger
+		style: self style
+		unit: unitInteger!
+
 style
 	^self initializer style!
 
@@ -107,6 +116,7 @@ heightAtDpi:!accessing!public! !
 heightFromGraphics:!accessing!public! !
 initializerClass!constants!private! !
 name!accessing!public! !
+ofSize:unit:!copying!public! !
 style!accessing!public! !
 unit!accessing!public! !
 !

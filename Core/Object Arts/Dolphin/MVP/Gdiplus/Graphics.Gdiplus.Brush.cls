@@ -31,8 +31,8 @@ createGpPen: aFloat
 		pen: gpHandle.
 	^gpHandle!
 
-gdiplusBrush: aPoint
-	"Answer a Gdiplus.Brush configured for painting with a brush like the receiver but with the specified extent."
+gdiplusBrush: aRectangle
+	"Answer a Gdiplus.Brush configured for painting with a brush like the receiver in the specified rectangle."
 
 	^self!
 
