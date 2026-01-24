@@ -310,17 +310,22 @@ boolean Interpreter::hasCompatibleShape(OTE* oteReceiver, ST::Behavior* argClass
 	
 	if (diff == 0) return true;	// Exact match (ignoring indirection bit)
 
-	diff &= ~(InstanceSpecification::FixedFieldsMask| InstanceSpecification::IndexableMask);
-	if (diff == 0)
+	// For byte object classes, we don't allow any other differences
+	if (sourceClassShape.m_pointers && targetClassShape.m_pointers)
 	{
-		// Only the number of fixed fields or indexability is being changed. This is OK if:
-		//	- target class is fixed size and that size is the same as the current size
-		//	- target class is indexable, and the current size is sufficient to at least cover all its fixed fields
-		// Whether the source is indexable or fixed not does not actually matter
-		size_t pointerSize = oteReceiver->pointersSize();
-		return targetClassShape.m_indexable
-			? pointerSize >= targetClassShape.m_fixedFields
-			: pointerSize == targetClassShape.m_fixedFields;
+		diff &= ~(InstanceSpecification::FixedFieldsMask | InstanceSpecification::IndexableMask | InstanceSpecification::ExtraSpecMask);
+		if (diff == 0)
+		{
+			// Only the extra spec is different (which is ignored for pointer objects) or the 
+			// number of fixed fields or indexability is being changed. This is OK if:
+			//	- target class is fixed size and that size is the same as the current size
+			//	- target class is indexable, and the current size is sufficient to at least cover all its fixed fields
+			// Whether the source is indexable or fixed not does not actually matter
+			size_t pointerSize = oteReceiver->pointersSize();
+			return targetClassShape.m_indexable
+				? pointerSize >= targetClassShape.m_fixedFields
+				: pointerSize == targetClassShape.m_fixedFields;
+		}
 	}
 
 	return false;

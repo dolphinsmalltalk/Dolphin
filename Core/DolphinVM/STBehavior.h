@@ -52,7 +52,8 @@ union InstanceSpecification
 		IndexableMask = 1 << 13,
 		PointersMask = 1 << 14,
 		NullTermMask = 1 << 15,
-		FixedFieldsMask = 0xFF << 1
+		FixedFieldsMask = 0xFF << 1,
+		ExtraSpecMask = 0xFFFF << 16
 	};
 };
 
