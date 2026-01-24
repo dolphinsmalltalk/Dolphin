@@ -71,13 +71,11 @@ needsFree
 	^self notNull and: [self isPointer not]!
 
 onStartup
-	"Private - The system is starting. Modify the state of the receiver to account for the fact
-	than any external memory allocated for the receiver during the previous session is no 
-	longer accessible."
+	"Private - The system is starting. Modify the state of the receiver to account for the fact than any external memory allocated for the receiver during the previous session is no longer accessible."
 
 	self beUnfinalizable.
-	self isPointer ifTrue: [
-		bytes := nil]!
+	"Since the array of elements is allocated on an external heap, if the CountedArray buffer itself is held in a byte array, we'll get access violations trying to read through the pElems pointer, so we always nil it out."
+	bytes := nil!
 
 pElems
 	"Answer the <Address> value of the receiver's 'pElems' field."

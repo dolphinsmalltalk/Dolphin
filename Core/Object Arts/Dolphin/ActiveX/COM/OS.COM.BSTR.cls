@@ -113,14 +113,6 @@ free
 	self isNull ifFalse: [self basicFree].
 	self beUnfinalizable!
 
-onStartup
-	"Private - The system is starting. Modify the state of the receiver to account for the fact
-	than any external memory allocated for the receiver during the previous session is no 
-	longer accessible."
-
-	self beUnfinalizable.
-	super value: 0!
-
 printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
 
@@ -173,7 +165,6 @@ copyingClass!copying!private! !
 deepCopy!copying!public! !
 displayOn:!printing!public! !
 free!private!realizing/unrealizing! !
-onStartup!event handling!private! !
 printOn:!development!printing!public! !
 size!accessing!public! !
 species!constants!public! !
@@ -253,8 +244,7 @@ onStartup
 uninitialize
 	"Private - Uninitialize the receiver immediately prior to its removal from the system."
 
-	VM registryAt: #BSTR put: nil.
-	SessionManager current removeEventsTriggeredFor: self! !
+	VM registryAt: #BSTR put: nil! !
 
 !OS.COM.BSTR class categoriesForMethods!
 basicNew!instance creation!private! !

@@ -536,6 +536,14 @@ void ObjectMemory::PostLoadFix()
 					ASSERT(behavior->m_instanceSpec.m_nullTerminated == ote->isNullTerminated());
 				}
 #endif
+				if (ObjectMemory::inheritsFrom(ote->m_oteClass, _Pointers.ClassExternalAddress))
+				{
+					// In Dolphin 8.0, all ExternalAddresses are automatically nulled on image load as they
+					// are very unlikely to be valid on image restart so will likely cause a fault if/when
+					// dereferenced.
+					ExternalAddress* address = static_cast<ExternalAddress*>(ote->m_location);
+					address->m_pointer = nullptr;
+				}
 			}
 			else if (ote->m_oteClass == _Pointers.ClassProcess)
 			{

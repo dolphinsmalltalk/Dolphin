@@ -318,7 +318,8 @@ onSettingChanged: anArray
 	| code |
 	(##(#('Policy' 'intl' 'Environment' 'ImmersiveColorSet') asSet) includes: anArray first)
 		ifTrue: [^self].
-	menuCheckExtent := smallIconExtent := largeIconExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil.
+	"Note that we don't bother to clear the tileIconExtent because it is DPI-scaled from a constant, so won't change with system setting changes."
+	menuCheckExtent := smallIconExtent := largeIconExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := defaultColorDepth := nil.
 	code := anArray second.
 	code == SPI_SETICONTITLELOGFONT
 		ifTrue: 
@@ -326,7 +327,7 @@ onSettingChanged: anArray
 			^self].
 	code == SPI_SETNONCLIENTMETRICS
 		ifTrue: 
-			[menuFont := nonClientMetrics := nil.
+			[menuFont := nonClientMetrics := menuImageExtent := nil.
 			^self]!
 
 paddedBorderThickness
@@ -338,6 +339,11 @@ printOn: aStream
 		nextPut: $(;
 		print: dpi;
 		nextPutAll: ' dpi)'!
+
+reset
+	"Discard all cached settings (apart from tileIconExtent, which is fixed for a particular DPI)."
+
+	menuCheckExtent := smallIconExtent := largeIconExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := nonClientMetrics := menuFont := edgeExtent := iconTitleFont := defaultColorDepth := menuImageExtent := nil!
 
 resolution
 	^dpi @ dpi!
@@ -391,7 +397,7 @@ statusFont
 	^Graphics.Font fromLogFont: self nonClientMetrics lfStatusFont dpi: self dpi!
 
 tileIconExtent
-	"Answer a <Point> that gives the dimensions of an icon tile."
+	"Answer a <Point> that gives the dimensions of an icon tile. Note that this is a constant scaled to the DPI. It does not depend on system settings."
 
 	^tileIconExtent ifNil: [tileIconExtent := ##(48 @ 48) * dpi // USER_DEFAULT_SCREEN_DPI]!
 
@@ -465,6 +471,7 @@ nonClientMetrics!constants!public! !
 onSettingChanged:!event handling-win32!private! !
 paddedBorderThickness!constants!public! !
 printOn:!printing!public! !
+reset!initializing!public! !
 resolution!public! !
 scaleFactor!accessing!public! !
 scrollbarHeight!constants!public! !
@@ -501,10 +508,7 @@ default
 forDpi: anInteger
 	"Answer an instance of the receiver to query metrics at the specified DPI."
 
-	^(Instances lookup: anInteger)
-		ifNil: 
-			[IsNotWine ifNil: [self cacheDpiIndependentSettings].
-			Instances at: anInteger put: (self newForDpi: anInteger)]!
+	^(Instances lookup: anInteger) ifNil: [Instances at: anInteger put: (self newForDpi: anInteger)]!
 
 initialize
 	| sysParamVars |
@@ -520,6 +524,7 @@ initialize
 		'WheelScrollLines'
 	} pairsDo: [:setting :varName | sysParamVars at: setting put: (self bindingFor: varName)].
 	self addClassConstant: 'SysParamVariables' value: sysParamVars.
+	Instances := IdentityDictionary new.
 	self reset.
 	SessionManager current
 		when: #settingChanged:
@@ -546,9 +551,10 @@ onSettingChanged: anArray
 reset
 	"Reinitialize the receiver. This is done on startup (see UserLibrary class>>clear) or when system settings are changed."
 
-	Default := Current := IsNotWine := nil.
+	Default := Current := nil.
+	self cacheDpiIndependentSettings.
 	SysParamVariables do: [:each | each value: nil].
-	Instances := IdentityDictionary new!
+	Instances do: [:each | each reset]!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
