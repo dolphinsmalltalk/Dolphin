@@ -90,6 +90,11 @@ value:!**compiled accessors**!public! !
 
 !OS.COM.DATE class methodsFor!
 
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^DATEArray!
+
 fromFloat: aFloat
 	^self new
 		value: aFloat;
@@ -163,6 +168,7 @@ vt
 	^VT_DATE! !
 
 !OS.COM.DATE class categoriesForMethods!
+arrayType!constants!public! !
 fromFloat:!instance creation!public! !
 fromObject:!instance creation!public! !
 fromString:!instance creation!public! !

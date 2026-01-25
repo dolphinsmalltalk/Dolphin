@@ -32,6 +32,7 @@ package setClassNames: #(
 	#{OS.COM.CY}
 	#{OS.COM.CYArray}
 	#{OS.COM.DATE}
+	#{OS.COM.DATEArray}
 	#{OS.COM.DECIMAL}
 	#{OS.COM.DispatchFunction}
 	#{OS.COM.DISPPARAMS}
@@ -832,6 +833,14 @@ External.ExternalArray
 
 External.ExternalArray
 	subclass: #'OS.COM.CYArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.ExternalArray
+	subclass: #'OS.COM.DATEArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
