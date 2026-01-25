@@ -57,6 +57,13 @@ accessData
 	self beFinalizable.
 	^pvData!
 
+asExternalArray
+	^self asExternalArray: self elementClass!
+
+asExternalArray: aStructureClass
+	self elementClass == aStructureClass ifFalse: [^self typeMismatch].
+	^aStructureClass arrayType fromSAFEARRAY: self!
+
 asObject
 	"Answer the <Object> value represented by the receiver
 	(an <Array> of <Objects>)."
@@ -228,6 +235,11 @@ hasRecordInfo
 
 	^recordInfo notNull or: [self fFeatures allMask: FADF_RECORD]!
 
+hasVarType
+	"Answer whether the receiver has a queryable vartype."
+
+	^self fFeatures anyMask: ##(FADF_HAVEVARTYPE | FADF_UNKNOWN | FADF_DISPATCH)!
+
 iid
 	"Answer the IID of the interface pointers stored in the receiver - only valid
 	if the receiver is constructed to contain interface pointers."
@@ -359,6 +371,9 @@ start
 	start isNil ifTrue: [start := self lowerBound: self dimensions].
 	^start!
 
+typeMismatch
+	^HRESULTError signalWith: DISP_E_TYPEMISMATCH!
+
 unaccessData
 	"Private - Reverse a previous #accessData if necessary."
 
@@ -414,6 +429,8 @@ with: otherCollection do: operation
 !OS.COM.SAFEARRAY categoriesForMethods!
 _deepenShallowCopy:trail:!copying!private! !
 accessData!helpers!private! !
+asExternalArray!converting!public! !
+asExternalArray:!converting!private! !
 asObject!converting!public! !
 asSAFEARRAY!converting!public! !
 asVariant!converting!public! !
@@ -435,6 +452,7 @@ fFeatures!**compiled accessors**!public! !
 free!public!realizing/unrealizing! !
 genericRecordClass!constants!private! !
 hasRecordInfo!private!testing! !
+hasVarType!private!testing! !
 iid!accessing!public! !
 initializePointer!initializing!private! !
 length!accessing!public! !
@@ -450,6 +468,7 @@ redim:!operations!public! !
 rgsabound!**compiled accessors**!public! !
 sizeOfDimension:!accessing!public! !
 start!accessing!private! !
+typeMismatch!exceptions!private! !
 unaccessData!helpers!private! !
 uncheckedAt:put:!accessing!private! !
 upperBound:!accessing!public! !
@@ -653,7 +672,7 @@ newBuffer
 	"Answer a new instance of the receiver.
 	Implementation Note: SAFEARRAYs are reference only."
 
-	^self newPointer!
+	^self new: 0!
 
 onStartup
 	"Private - Ensure all the receiver's subinstances are in their clean state on startup

@@ -54,7 +54,7 @@ buffer
 	| answer |
 	answer := External.Address new.
 	self get_Buffer: answer.
-	^ExternalArray fromAddress: answer length: self size!
+	^UInt8Array fromAddress: answer length: self size!
 
 Close
 	"Invoke the Close() method of the COM object.

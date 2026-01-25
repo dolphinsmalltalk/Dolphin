@@ -134,7 +134,7 @@ defineFields
 
 	self
 		defineField: #sa_family type: UInt16Field new offset: 0;
-		defineField: #sa_data type: (ArrayField type: ExternalArray length: 14) beFiller offset: 2.
+		defineField: #sa_data type: (ArrayField type: UInt8Array length: 14) beFiller offset: 2.
 	self byteSize: 16!
 
 fromAddress: anAddress
@@ -166,7 +166,7 @@ getFieldNames
 addressFamily!constants!public! !
 basicFromString:!instance creation!public! !
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 fromAddress:!instance creation!public! !
 fromString:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

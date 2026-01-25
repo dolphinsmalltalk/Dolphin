@@ -32,16 +32,16 @@ struct tagIN6_ADDR {
 !OS.IN6_ADDR methodsFor!
 
 Bytes
-	"Answer the <ExternalArray> value of the receiver's 'Bytes' field."
+	"Answer the <UInt8Array> value of the receiver's 'Bytes' field."
 
-	^ExternalArray fromAddress: bytes yourAddress length: 16!
+	^UInt8Array fromAddress: bytes yourAddress length: 16!
 
-Bytes: anExternalArray
-	"Set the receiver's 'Bytes' field to the value of the argument, anExternalArray"
+Bytes: anUInt8Array
+	"Set the receiver's 'Bytes' field to the value of the argument, anUInt8Array"
 
 	| size |
-	size := anExternalArray byteSize min: ##(16 * ExternalArray elementSize).
-	anExternalArray
+	size := anUInt8Array byteSize min: ##(16 * UInt8Array elementSize).
+	anUInt8Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Bytes + 1)
 		to: size
@@ -75,7 +75,7 @@ defineFields
 "
 
 	self
-		defineField: #Bytes type: (ArrayField type: ExternalArray length: 16) offset: 0;
+		defineField: #Bytes type: (ArrayField type: UInt8Array length: 16) offset: 0;
 		defineField: #Words type: (ArrayField type: UInt16Array length: 8) beFiller offset: 0.
 	self byteSize: 16!
 
@@ -85,7 +85,7 @@ getFieldNames
 !OS.IN6_ADDR class categoriesForMethods!
 addressFamily!constants!public! !
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

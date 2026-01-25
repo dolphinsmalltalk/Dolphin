@@ -68,15 +68,15 @@ InfoType: anInteger
 	bytes int32AtOffset: _OffsetOf_InfoType put: anInteger!
 
 pInfo
-	"Private - Answer the <ExternalArray> value of the receiver's 'pInfo' field."
+	"Private - Answer the <UInt8Array> value of the receiver's 'pInfo' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pInfo) length: self InfoLength!
+	^UInt8Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_pInfo) length: self InfoLength!
 
-pInfo: anExternalArray
-	"Set the receiver's 'pInfo' field to the value of the argument, anExternalArray"
+pInfo: anUInt8Array
+	"Set the receiver's 'pInfo' field to the value of the argument, anUInt8Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_pInfo put: anExternalArray yourAddress.
-	self InfoLength: anExternalArray size!
+	bytes uintPtrAtOffset: _OffsetOf_pInfo put: anUInt8Array yourAddress.
+	self InfoLength: anUInt8Array size!
 
 printFields: aCollection on: aStream
 	aStream print: self info! !
@@ -113,7 +113,7 @@ defineFields
 	self
 		defineField: #InfoType type: Int32Field new beNonBrowsable offset: 0;
 		defineField: #InfoLength type: UInt32Field new beNonBrowsable offset: 4;
-		defineField: #pInfo type: (ArrayPointerField type: ExternalArray lengthField: #InfoLength) beNonBrowsable offset: 8.
+		defineField: #pInfo type: (ArrayPointerField type: UInt8Array lengthField: #InfoLength) beNonBrowsable offset: 8.
 	self byteSize: 12!
 
 getFieldNames
@@ -121,7 +121,7 @@ getFieldNames
 
 !WinHttpServer.HTTP_REQUEST_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

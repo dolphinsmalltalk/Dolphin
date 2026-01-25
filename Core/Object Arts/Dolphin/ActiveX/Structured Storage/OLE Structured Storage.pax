@@ -79,14 +79,6 @@ package!
 
 "Class Definitions"!
 
-External.WindowsSystemLibrary
-	subclass: #'OS.COM.URLMonLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.LockBytesAbstract'
 	instanceVariableNames: ''
@@ -98,6 +90,14 @@ OS.COM.InterfaceImplementation
 OS.COM.LockBytesAbstract
 	subclass: #'OS.COM.LockBytes'
 	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.COM.URLMonLibrary'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -383,7 +383,7 @@ Write: pv cb: cb pcbWritten: pcbWritten
 
 	self 
 		basicNext: cb
-		putAll: (ExternalArray fromAddress: pv length: cb)
+		putAll: (UInt8Array fromAddress: pv length: cb)
 		startingAt: 1.
 	pcbWritten bytes isNull ifFalse: [pcbWritten value: cb].
 	^S_OK! !

@@ -132,16 +132,16 @@ elfStyleSize: anInteger
 	bytes uint32AtOffset: _OffsetOf_elfStyleSize put: anInteger!
 
 elfVendorId
-	"Answer the <ExternalArray> value of the receiver's 'elfVendorId' field."
+	"Answer the <UInt8Array> value of the receiver's 'elfVendorId' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_elfVendorId length: 4!
+	^UInt8Array fromAddress: bytes yourAddress + _OffsetOf_elfVendorId length: 4!
 
-elfVendorId: anExternalArray
-	"Set the receiver's 'elfVendorId' field to the value of the argument, anExternalArray"
+elfVendorId: anUInt8Array
+	"Set the receiver's 'elfVendorId' field to the value of the argument, anUInt8Array"
 
 	| size |
-	size := anExternalArray byteSize min: ##(4 * ExternalArray elementSize).
-	anExternalArray
+	size := anUInt8Array byteSize min: ##(4 * UInt8Array elementSize).
+	anUInt8Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_elfVendorId + 1)
 		to: _OffsetOf_elfVendorId + size
@@ -190,36 +190,16 @@ defineFields
 "
 
 	self
-		defineField: #elfLogFont
-			type: (StructureField type: LOGFONTW)
-			offset: 0;
-		defineField: #elfFullName
-			type: (StringField type: Utf16String length: 64)
-			offset: 92;
-		defineField: #elfStyle
-			type: (StringField type: Utf16String length: 32)
-			offset: 220;
-		defineField: #elfVersion
-			type: UInt32Field new beFiller
-			offset: 284;
-		defineField: #elfStyleSize
-			type: UInt32Field new
-			offset: 288;
-		defineField: #elfMatch
-			type: UInt32Field new
-			offset: 292;
-		defineField: #elfReserved
-			type: UInt32Field new beFiller
-			offset: 296;
-		defineField: #elfVendorId
-			type: (ArrayField type: ExternalArray length: 4)
-			offset: 300;
-		defineField: #elfCulture
-			type: UInt32Field new beFiller
-			offset: 304;
-		defineField: #elfPanose
-			type: (StructureField type: PANOSE)
-			offset: 308.
+		defineField: #elfLogFont type: (StructureField type: LOGFONTW) offset: 0;
+		defineField: #elfFullName type: (StringField type: Utf16String length: 64) offset: 92;
+		defineField: #elfStyle type: (StringField type: Utf16String length: 32) offset: 220;
+		defineField: #elfVersion type: UInt32Field new beFiller offset: 284;
+		defineField: #elfStyleSize type: UInt32Field new offset: 288;
+		defineField: #elfMatch type: UInt32Field new offset: 292;
+		defineField: #elfReserved type: UInt32Field new beFiller offset: 296;
+		defineField: #elfVendorId type: (ArrayField type: UInt8Array length: 4) offset: 300;
+		defineField: #elfCulture type: UInt32Field new beFiller offset: 304;
+		defineField: #elfPanose type: (StructureField type: PANOSE) offset: 308.
 	self byteSize: 320!
 
 getFieldNames

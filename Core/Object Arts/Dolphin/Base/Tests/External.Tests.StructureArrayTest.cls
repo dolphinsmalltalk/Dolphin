@@ -14,12 +14,9 @@ External.Tests.StructureArrayTest comment: ''!
 
 !External.Tests.StructureArrayTest methodsFor!
 
-arrayClass
-	^StructureArray!
-
-newArrayOfIntegers: anArray
-	^self arrayClass withAll: (anArray collect: [:each | self elementFromValue: each])
-		elementClass: self numericElementClass!
+newTestSubjectOfSize: anInteger
+	^self arrayClass withAll: ((1 to: anInteger) collect: [:each | self elementFromIndex: each])
+		elementClass: self class numericElementClass!
 
 testCollectGuids
 	| guids strings |
@@ -45,10 +42,18 @@ testStbConvertFromVersion0
 	self assert: array asArray equals: ((1 to: 3) collect: [:i | i * i])! !
 
 !External.Tests.StructureArrayTest categoriesForMethods!
-arrayClass!constants!private! !
-newArrayOfIntegers:!helpers!private! !
+newTestSubjectOfSize:!helpers!private! !
 testCollectGuids!public!unit tests! !
 testMarshal!public!unit tests! !
 testStbConvertFromVersion0!public!unit tests! !
+!
+
+!External.Tests.StructureArrayTest class methodsFor!
+
+arrayClass
+	^StructureArray! !
+
+!External.Tests.StructureArrayTest class categoriesForMethods!
+arrayClass!constants!private! !
 !
 

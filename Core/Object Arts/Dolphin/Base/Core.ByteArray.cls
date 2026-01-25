@@ -366,7 +366,8 @@ int64AtOffset: anInteger put: anObject
 
 	self
 		uint32AtOffset: anInteger put: (16rFFFFFFFF bitAnd: anObject);
-		int32AtOffset: anInteger + 4 put: (anObject bitShift: -32)!
+		int32AtOffset: anInteger + 4 put: (anObject bitShift: -32).
+	^anObject!
 
 int8AtOffset: anInteger
 	"Answer the 8-bit signed integer value at the specified zero-relative <integer> offset in the receiver's bytes."
@@ -667,7 +668,8 @@ uint64AtOffset: anIntegerOffset put: anIntegerValue
 
 	self
 		uint32AtOffset: anIntegerOffset put: (16rFFFFFFFF bitAnd: anIntegerValue);
-		uint32AtOffset: anIntegerOffset + 4 put: (anIntegerValue bitShift: -32)!
+		uint32AtOffset: anIntegerOffset + 4 put: (anIntegerValue bitShift: -32).
+	^anIntegerValue!
 
 uint8AtOffset: anInteger
 	"Answer the 8-bit unsigned integer at the specified zero-relative <integer> offset in the receiver."
@@ -727,8 +729,8 @@ _sameAsString:!comparing!private! !
 addressAtOffset:!accessing!public! !
 asByteArray!converting!public! !
 asHexString!converting!public! !
-asUtf16String!public! !
-asUtf8String!public! !
+asUtf16String!converting!public! !
+asUtf8String!converting!public! !
 basicUInt32AtOffset:!accessing!public! !
 basicUInt32AtOffset:put:!accessing!private! !
 basicUIntPtrAtOffset:!accessing!public! !

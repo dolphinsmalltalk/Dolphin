@@ -47,9 +47,6 @@ back: anITEMIDLIST
 
 	back := anITEMIDLIST!
 
-bufferClass
-	^WindowsShellMemory!
-
 cb
 	"Answer the receiver's mkid.cb field as a Smalltalk object.
 	This avoids creating the SHITEMID structure and directly accesses the mkid.cb field "
@@ -143,7 +140,6 @@ onStartup
 append:!operations!public! !
 back!accessing!private! !
 back:!accessing!private! !
-bufferClass!constants!private! !
 cb!accessing!public! !
 cb:!accessing!public! !
 getSize!operations!public! !
@@ -158,6 +154,9 @@ onStartup!event handling!public! !
 !
 
 !OS.ITEMIDLIST class methodsFor!
+
+bufferClass
+	^WindowsShellMemory!
 
 byteSize
 	^_ITEMIDLIST_Size!
@@ -253,6 +252,7 @@ uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
 
 !OS.ITEMIDLIST class categoriesForMethods!
+bufferClass!constants!private! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 exampleCopying!examples!public! !

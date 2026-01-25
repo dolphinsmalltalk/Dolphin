@@ -31,6 +31,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\..\Samples\ActiveX\EnumRECT\EnumRECT'
 	'..\..\COM\OLE COM'
 	'..\..\COM\Tests\OLE COM Tests'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
@@ -100,7 +101,7 @@ External.Tests.GenericExternalArrayTest
 	subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
+	imports: #(#{OS.Win32Errors} #{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

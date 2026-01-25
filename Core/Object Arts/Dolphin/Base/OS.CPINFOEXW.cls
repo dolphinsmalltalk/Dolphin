@@ -18,15 +18,15 @@ External.Structure
 
 OS.CPINFOEXW guid: (Core.GUID fromString: '{daee0d37-37b6-4a47-a208-c12409c7f158}')!
 
-OS.CPINFOEXW comment: '<CPINFOEXW> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFOEXW'' from type information in the ''Win32 API'' library.
+OS.CPINFOEXW comment: '`CPINFOEXW` is an `External.Structure` class to wrap the struct ''Win32.CPINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Contains information about a code page. This structure is used by the GetCPInfoExW function."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(daee0d37-37b6-4a47-a208-c12409c7f158), helpstring("Contains information about a code page. This structure is used by the GetCPInfoExW function.")]
 struct tagCPINFOEXW {
 	[readonly, helpstring("max length (in bytes) of a char")] unsigned int MaxCharSize;
@@ -36,6 +36,7 @@ struct tagCPINFOEXW {
 	[readonly, helpstring("code page id")] unsigned int codepage;
 	[readonly, helpstring("code page name (Unicode)"), string] unsigned short CodePageName[260];
 } CPINFOEXW;
+```
 '!
 
 !OS.CPINFOEXW categoriesForClass!Win32-Structs! !
@@ -53,9 +54,9 @@ CodePageName
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_CodePageName!
 
 DefaultChar
-	"Answer the <ExternalArray> value of the receiver's 'DefaultChar' field."
+	"Answer the <UInt8Array> value of the receiver's 'DefaultChar' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_DefaultChar length: 2!
+	^UInt8Array fromAddress: bytes yourAddress + _OffsetOf_DefaultChar length: 2!
 
 defaultCharacter
 	"The character used for code points that cannot be represented on the code page described by the receiver."
@@ -73,9 +74,9 @@ defaultCharacter
 	^utf16 at: 1!
 
 LeadByte
-	"Answer the <ExternalArray> value of the receiver's 'LeadByte' field."
+	"Answer the <UInt8Array> value of the receiver's 'LeadByte' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_LeadByte length: 12!
+	^UInt8Array fromAddress: bytes yourAddress + _OffsetOf_LeadByte length: 12!
 
 MaxCharSize
 	"Answer the <Integer> value of the receiver's 'MaxCharSize' field."
@@ -134,24 +135,12 @@ defineFields
 "
 
 	self
-		defineField: #MaxCharSize
-			type: UInt32Field new beReadOnly
-			offset: 0;
-		defineField: #DefaultChar
-			type: (ArrayField type: ExternalArray length: 2) beReadOnly
-			offset: 4;
-		defineField: #LeadByte
-			type: (ArrayField type: ExternalArray length: 12) beReadOnly
-			offset: 6;
-		defineField: #UnicodeDefaultChar
-			type: UInt16Field new beReadOnly
-			offset: 18;
-		defineField: #codepage
-			type: UInt32Field new beReadOnly
-			offset: 20;
-		defineField: #CodePageName
-			type: (StringField type: Utf16String length: 260) beReadOnly
-			offset: 24.
+		defineField: #MaxCharSize type: UInt32Field new beReadOnly offset: 0;
+		defineField: #DefaultChar type: (ArrayField type: UInt8Array length: 2) beReadOnly offset: 4;
+		defineField: #LeadByte type: (ArrayField type: UInt8Array length: 12) beReadOnly offset: 6;
+		defineField: #UnicodeDefaultChar type: UInt16Field new beReadOnly offset: 18;
+		defineField: #codepage type: UInt32Field new beReadOnly offset: 20;
+		defineField: #CodePageName type: (StringField type: Utf16String length: 260) beReadOnly offset: 24.
 	self byteSize: 544!
 
 getFieldNames

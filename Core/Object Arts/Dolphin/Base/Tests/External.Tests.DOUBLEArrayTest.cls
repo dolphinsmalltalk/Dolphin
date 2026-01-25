@@ -12,20 +12,16 @@ External.Tests.DOUBLEArrayTest guid: (Core.GUID fromString: '{d4fa7f6e-7be8-407b
 
 External.Tests.DOUBLEArrayTest comment: ''!
 
-!External.Tests.DOUBLEArrayTest methodsFor!
+!External.Tests.DOUBLEArrayTest class methodsFor!
 
 arrayClass
 	^DOUBLEArray!
 
-elementFromValue: anObject 
-	^anObject asFloat!
+elementFromIndex: anInteger
+	^{ 0.0. 1.25. Float infinity. Float negativeInfinity. Float fmax. Float fmin } at: anInteger! !
 
-numericElementClass
-	^DOUBLE! !
-
-!External.Tests.DOUBLEArrayTest categoriesForMethods!
+!External.Tests.DOUBLEArrayTest class categoriesForMethods!
 arrayClass!constants!private! !
-elementFromValue:!private!unit tests! !
-numericElementClass!constants!private! !
+elementFromIndex:!private!unit tests! !
 !
 

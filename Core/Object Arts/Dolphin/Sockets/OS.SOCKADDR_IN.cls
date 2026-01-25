@@ -127,7 +127,7 @@ defineFields
 		defineField: #sin_family type: UInt16Field new offset: 0;
 		defineField: #sin_port type: UInt16Field new offset: 2;
 		defineField: #sin_addr type: (StructureField type: IN_ADDR) offset: 4;
-		defineField: #sin_zero type: (ArrayField type: ExternalArray length: 8) beFiller offset: 8.
+		defineField: #sin_zero type: (ArrayField type: UInt8Array length: 8) beFiller offset: 8.
 	self byteSize: 16!
 
 getFieldNames
@@ -141,7 +141,7 @@ ipAddress: aByteArray
 !OS.SOCKADDR_IN class categoriesForMethods!
 address:!instance creation!public! !
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 ipAddress:!instance creation!public! !
 !

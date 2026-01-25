@@ -105,7 +105,6 @@ package setMethodNames: #(
 	#(#{Core.ScaledDecimal} #asVariant)
 	#(#{Core.SmallInteger} #asVariant)
 	#(#{Core.String} #asVariant)
-	#(#{Core.String class} #arrayType)
 	#(#{Core.String class} #arrayType:)
 	#(#{Core.String class} #pointerType)
 	#(#{Core.String class} #typeName)
@@ -120,41 +119,35 @@ package setMethodNames: #(
 	#(#{External.Address class} #vt)
 	#(#{External.BOOL class} #typeName)
 	#(#{External.BOOLEAN class} #typeName)
-	#(#{External.DOUBLE class} #arrayType)
 	#(#{External.DOUBLE class} #typeName)
 	#(#{External.DOUBLE class} #vt)
 	#(#{External.ExternalArray} #asSAFEARRAY)
 	#(#{External.ExternalArray} #asVariant)
-	#(#{External.ExternalArray class} #arrayType)
+	#(#{External.ExternalArray class} #fromSAFEARRAY:)
 	#(#{External.ExternalArray class} #vt)
-	#(#{External.FLOAT class} #arrayType)
 	#(#{External.FLOAT class} #typeName)
 	#(#{External.FLOAT class} #vt)
 	#(#{External.Handle class} #arrayType:)
 	#(#{External.Handle class} #typeName)
-	#(#{External.Int16 class} #arrayType)
 	#(#{External.Int16 class} #typeName)
 	#(#{External.Int16 class} #vt)
-	#(#{External.Int32 class} #arrayType)
 	#(#{External.Int32 class} #typeName)
 	#(#{External.Int32 class} #vt)
 	#(#{External.Int64 class} #typeName)
 	#(#{External.Int64 class} #vt)
-	#(#{External.Int8 class} #arrayType)
 	#(#{External.Int8 class} #typeName)
 	#(#{External.Int8 class} #vt)
 	#(#{External.INTEGER class} #typeName)
 	#(#{External.INTEGER class} #vt)
-	#(#{External.IntPtr class} #arrayType)
 	#(#{External.IntPtr class} #typeName)
 	#(#{External.IntPtr class} #vt)
+	#(#{External.LPVOID class} #newSAFEARRAY:)
 	#(#{External.LPVOID class} #typeName)
 	#(#{External.LPVOID class} #vt)
 	#(#{External.SCALAR} #asVariant)
 	#(#{External.Structure} #asVariant)
 	#(#{External.Structure} #recordInfo)
 	#(#{External.Structure} #vt)
-	#(#{External.Structure class} #arrayType)
 	#(#{External.Structure class} #arrayType:)
 	#(#{External.Structure class} #classForGUID:ifNone:)
 	#(#{External.Structure class} #clearGuid)
@@ -190,21 +183,17 @@ package setMethodNames: #(
 	#(#{External.Structure class} #typeLib)
 	#(#{External.Structure class} #typeName)
 	#(#{External.Structure class} #vt)
-	#(#{External.UInt16 class} #arrayType)
 	#(#{External.UInt16 class} #typeName)
 	#(#{External.UInt16 class} #vt)
-	#(#{External.UInt32 class} #arrayType)
 	#(#{External.UInt32 class} #typeName)
 	#(#{External.UInt32 class} #vt)
 	#(#{External.UInt64 class} #typeName)
 	#(#{External.UInt64 class} #vt)
-	#(#{External.UInt8 class} #arrayType)
 	#(#{External.UInt8 class} #typeName)
 	#(#{External.UInt8 class} #vt)
-	#(#{External.UIntPtr class} #arrayType)
 	#(#{External.UIntPtr class} #typeName)
 	#(#{External.UIntPtr class} #vt)
-	#(#{External.VOID class} #arrayType)
+	#(#{External.VOID class} #newSAFEARRAY:)
 	#(#{External.VOID class} #typeName)
 	#(#{External.VOID class} #vt)
 	#(#{Kernel.SmalltalkLocale} #displayCURRENCY:on:)
@@ -221,7 +210,6 @@ package setMethodNames: #(
 	#(#{OS.COM.BSTR class} #newSAFEARRAY:)
 	#(#{OS.COM.BSTR class} #typeName)
 	#(#{OS.COM.BSTR class} #vt)
-	#(#{OS.COM.CLSID class} #newSAFEARRAY:)
 	#(#{OS.COM.CLSID class} #vt)
 	#(#{OS.COM.IErrorInfo class} #fromEXCEPINFO:guid:)
 	#(#{OS.COM.IErrorInfo class} #source:description:helpContext:helpFile:guid:)
@@ -284,6 +272,8 @@ package setMethodNames: #(
 	#(#{OS.COM.OLEAutLibrary} #variantCopyInd:pvargSrc:)
 	#(#{OS.COM.OLEAutLibrary} #variantInit:)
 	#(#{OS.COM.OLEAutLibrary} #variantTimeToSystemTime:lpSystemTime:)
+	#(#{OS.FILETIME} #asDATE)
+	#(#{OS.FILETIME class} #newSAFEARRAY:)
 	#(#{OS.FILETIME class} #vt)
 	#(#{OS.HRESULT class} #typeName)
 	#(#{OS.HRESULT class} #vt)
@@ -1463,9 +1453,6 @@ asVariant!converting!public! !
 
 !Core.String class methodsFor!
 
-arrayType
-	^self!
-
 arrayType: indirs
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type with the specified number of indirections.
@@ -1493,7 +1480,6 @@ vt
 	^OS.COM.AutomationConstants.VT_LPSTR! !
 
 !Core.String class categoriesForMethods!
-arrayType!constants!private! !
 arrayType:!constants!private! !
 pointerType!constants!private! !
 typeName!constants!private! !
@@ -1603,12 +1589,6 @@ typeName!constants!private! !
 
 !External.DOUBLE class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^DOUBLEArray!
-
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -1622,7 +1602,6 @@ vt
 	^COM.AutomationConstants.VT_R8! !
 
 !External.DOUBLE class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1646,8 +1625,9 @@ asVariant!converting!public! !
 
 !External.ExternalArray class methodsFor!
 
-arrayType
-	^self!
+fromSAFEARRAY: aSAFEARRAY
+	^self
+		withBytes: (ByteArray fromAddress: aSAFEARRAY base length: aSAFEARRAY elementCount * self elementSize)!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
@@ -1656,17 +1636,11 @@ vt
 	^COM.AutomationConstants.VT_CARRAY! !
 
 !External.ExternalArray class categoriesForMethods!
-arrayType!constants!private! !
+fromSAFEARRAY:!instance creation!public! !
 vt!constants!public! !
 !
 
 !External.FLOAT class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^FLOATArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1681,7 +1655,6 @@ vt
 	^COM.AutomationConstants.VT_R4! !
 
 !External.FLOAT class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1707,12 +1680,6 @@ typeName!constants!private! !
 
 !External.Int16 class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^Int16Array!
-
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -1726,18 +1693,11 @@ vt
 	^COM.AutomationConstants.VT_I2! !
 
 !External.Int16 class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.Int32 class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^Int32Array!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1752,7 +1712,6 @@ vt
 	^COM.AutomationConstants.VT_I4! !
 
 !External.Int32 class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1778,12 +1737,6 @@ vt!constants!public! !
 
 !External.Int8 class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^Int8Array!
-
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -1797,7 +1750,6 @@ vt
 	^COM.AutomationConstants.VT_I1! !
 
 !External.Int8 class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1822,12 +1774,6 @@ vt!constants!private! !
 
 !External.IntPtr class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^IntPtrArray!
-
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -1843,12 +1789,16 @@ vt
 	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_I8] ifFalse: [COM.AutomationConstants.VT_I4]! !
 
 !External.IntPtr class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.LPVOID class methodsFor!
+
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver. An array of VT_VOID would make no sense."
+
+	^self shouldNotImplement!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1865,6 +1815,7 @@ vt
 	^COM.AutomationConstants.VT_VOID! !
 
 !External.LPVOID class categoriesForMethods!
+newSAFEARRAY:!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1909,13 +1860,6 @@ vt!constants!private! !
 !
 
 !External.Structure class methodsFor!
-
-arrayType
-	"Private - Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type.
-	The generic <StructureArray> can actually handle most types, but this may be overridden
-	for increased efficiency."
-
-	^StructureArray!
 
 arrayType: indirs
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
@@ -2322,7 +2266,6 @@ vt
 	^COM.AutomationConstants.VT_RECORD! !
 
 !External.Structure class categoriesForMethods!
-arrayType!constants!private! !
 arrayType:!constants!private! !
 classForGUID:ifNone:!enquiries!private! !
 clearGuid!accessing!private! !
@@ -2362,12 +2305,6 @@ vt!constants!public! !
 
 !External.UInt16 class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^UInt16Array!
-
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -2381,18 +2318,11 @@ vt
 	^COM.AutomationConstants.VT_UI2! !
 
 !External.UInt16 class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.UInt32 class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^UInt32Array!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -2407,7 +2337,6 @@ vt
 	^COM.AutomationConstants.VT_UI4! !
 
 !External.UInt32 class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -2433,12 +2362,6 @@ vt!constants!public! !
 
 !External.UInt8 class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^ExternalArray!
-
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -2452,18 +2375,11 @@ vt
 	^COM.AutomationConstants.VT_UI1! !
 
 !External.UInt8 class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.UIntPtr class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^UIntPtrArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -2480,21 +2396,16 @@ vt
 	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_UI8] ifFalse: [COM.AutomationConstants.VT_UI4]! !
 
 !External.UIntPtr class categoriesForMethods!
-arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.VOID class methodsFor!
 
-arrayType
-	"Private - Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type."
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver. An array of VT_VOID would make no sense."
 
-	"Implementation Note: Embedded arrays of <VOID> are not valid, since no size is known,
-	however where a field is a void* pointer to a conformant array, we assume it is pointing at
-	bytes."
-
-	^ExternalArray!
+	^self shouldNotImplement!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -2509,7 +2420,7 @@ vt
 	^COM.AutomationConstants.VT_VOID! !
 
 !External.VOID class categoriesForMethods!
-arrayType!constants!private! !
+newSAFEARRAY:!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -2652,15 +2563,6 @@ vt!constants!public! !
 
 !OS.COM.CLSID class methodsFor!
 
-newSAFEARRAY: length
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver.
-	Part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:"
-
-	^SAFEARRAY
-		length: length
-		vt: self vt
-		elementClass: self!
-
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
@@ -2669,7 +2571,6 @@ vt
 ! !
 
 !OS.COM.CLSID class categoriesForMethods!
-newSAFEARRAY:!double dispatch!public! !
 vt!constants!public! !
 !
 
@@ -3353,6 +3254,15 @@ variantTimeToSystemTime:lpSystemTime:!Automation Functions-Variant Manipulation!
 
 !OS.FILETIME class methodsFor!
 
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, FILETIMEs. The SAFEARRAY will be of type VT_DATE, even though that loses precision, because this is consistent with the behaviour of the Win32 InitVariantFromFileTimeArray API. If you want to preserve the original format, use `SAFEARRAY length: <anInteger> recordClass: FILETIME` to create a VT_RECORD form SAFEARRAY."
+
+	<namespace: OS.COM>
+	^SAFEARRAY
+		length: anInteger
+		vt: AutomationConstants.VT_DATE
+		elementClass: DATE!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
@@ -3360,6 +3270,7 @@ vt
 	^COM.AutomationConstants.VT_FILETIME! !
 
 !OS.FILETIME class categoriesForMethods!
+newSAFEARRAY:!constants!public! !
 vt!constants!public! !
 !
 

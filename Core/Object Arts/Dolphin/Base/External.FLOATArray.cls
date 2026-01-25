@@ -10,7 +10,7 @@ External.ExternalArray
 
 External.FLOATArray guid: (Core.GUID fromString: '{87b4c5a3-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-External.FLOATArray comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
+External.FLOATArray comment: '`FLOATArray` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
 
 !External.FLOATArray categoriesForClass!External-Data-Structured! !
 
@@ -49,13 +49,13 @@ uncheckedAt: anInteger
 	IEEE float at the specified <integer> index in the receiver. No bounds 
 	checks are performed on the subscript."
 
-	^bytes floatAtOffset: (anInteger - 1) * VMConstants.FloatSize!
+	^bytes floatAtOffset: (anInteger - 1) * FLOAT._FLOAT_Size!
 
-uncheckedAt: anInteger put: aFloat 
+uncheckedAt: anInteger put: aFloat
 	"Private - Replace the single-precision floating point value at the specified index in the receiver
 	with the Float argument."
 
-	^bytes floatAtOffset: (anInteger - 1) * VMConstants.FloatSize put: aFloat! !
+	^bytes floatAtOffset: (anInteger - 1) * FLOAT._FLOAT_Size put: aFloat! !
 
 !External.FLOATArray categoriesForMethods!
 closeTo:!comparing!public! !

@@ -12,16 +12,16 @@ External.Tests.Int8ArrayTest guid: (Core.GUID fromString: '{d8be7b81-23ce-4e26-b
 
 External.Tests.Int8ArrayTest comment: ''!
 
-!External.Tests.Int8ArrayTest methodsFor!
+!External.Tests.Int8ArrayTest class methodsFor!
 
 arrayClass
 	^Int8Array!
 
-numericElementClass
-	^Int8! !
+elementFromIndex: anInteger
+	^#(0 1 -128 -127 127 -1) at: anInteger! !
 
-!External.Tests.Int8ArrayTest categoriesForMethods!
+!External.Tests.Int8ArrayTest class categoriesForMethods!
 arrayClass!constants!private! !
-numericElementClass!constants!private! !
+elementFromIndex:!helpers!private! !
 !
 

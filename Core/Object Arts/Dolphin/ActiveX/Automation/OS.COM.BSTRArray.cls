@@ -10,7 +10,9 @@ External.ExternalArray
 
 OS.COM.BSTRArray guid: (Core.GUID fromString: '{13665806-953e-4961-9da4-4e39f83f5050}')!
 
-OS.COM.BSTRArray comment: ''!
+OS.COM.BSTRArray comment: '`BSTRArray` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of `BSTR` pointer. `BSTR`s are allocated and free''d using the relevant OLE Automation APIs. The body of the array is expected to be allocated from the COM task heap.
+
+As neither the array body of an `BSTRArray`, nor the strings it references are allocated from Dolphin memory, instances can be handed off to external consumers that understand the relevant memory models.'!
 
 !OS.COM.BSTRArray methodsFor!
 

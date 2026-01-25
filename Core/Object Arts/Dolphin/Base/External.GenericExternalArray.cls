@@ -12,11 +12,11 @@ External.GenericExternalArray guid: (Core.GUID fromString: '{a784c4d3-dd39-4844-
 
 External.GenericExternalArray isNonInstantiable: true!
 
-External.GenericExternalArray comment: '`GenericExternalArray` is an abstract class of  `ExternalArray`s that can be used to represent single-dimensioned arrays of more than one type.
+External.GenericExternalArray comment: '`GenericExternalArray` is an abstract class of  `ExternalArray`s that can be parameterised to represent external arrays of a chosen element type, rather than supporting only a fixed element type.
 
 ## Instance Variables:
-  `elementClass`	`Class` of element, typically an `External.Structure`.
-  `owner`			`Object` responsible for freeing the underlying array. Typically `nil`, in which case the receiver is responsible.
+  `elementClass`	`Class` of elements in the array, typically an `External.Structure` subclass.
+  `owner`			`Object` responsible for freeing the underlying array. Typically `nil`, in which case the array itself is considered responsible.
 '!
 
 !External.GenericExternalArray categoriesForClass!External-Data-Structured! !
@@ -52,13 +52,6 @@ elementClass: aClass
 	"Private - Set the class of Smalltalk object used to represent the elements of the receiver."
 
 	elementClass := aClass!
-
-hash
-	"Answer the SmallInteger hash value for the receiver.
-	In order for internal structure to have the same value as pointer structures
-	we use the VM export here."
-
-	^VM hashBytes: self base count: self comparisonSize!
 
 isSelfEvaluating
 	^false!
@@ -122,7 +115,6 @@ asArray!converting!public! !
 base!accessing!private! !
 elementClass!accessing!public! !
 elementClass:!accessing!private! !
-hash!comparing!public! !
 isSelfEvaluating!public!testing! !
 needsFree!initializing!private!realizing/unrealizing! !
 newElementAt:!helpers!private! !

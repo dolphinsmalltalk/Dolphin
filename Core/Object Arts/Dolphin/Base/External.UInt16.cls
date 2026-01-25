@@ -22,13 +22,13 @@ The range of integer values that can be represented by instances of this class i
 asSignedInteger
 	"Answer the signed 16-bit <Integer> value of the receiver."
 
-	^bytes int16AtOffset: 0!
+	^bytes int16AtOffset: _OffsetOf_value!
 
 asUnsignedInteger
 	"Answer the unsigned 16-bit <Integer> value of the receiver.
 	This can be useful where unsigned values are stored in signed values."
 
-	^bytes uint16AtOffset: 0!
+	^bytes uint16AtOffset: _OffsetOf_value!
 
 unsignedValue: anInteger
 	"Set the receiver's value field to the value of the unsigned positive integer argument."

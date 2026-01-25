@@ -62,16 +62,15 @@ CertFlags: anInteger
 	bytes uint32AtOffset: _OffsetOf_CertFlags put: anInteger!
 
 pCertEncoded
-	"Answer the <ExternalArray> value of the receiver's 'pCertEncoded' field."
+	"Answer the <UInt8Array> value of the receiver's 'pCertEncoded' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pCertEncoded)
-		length: self CertEncodedSize!
+	^UInt8Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_pCertEncoded) length: self CertEncodedSize!
 
-pCertEncoded: anExternalArray
-	"Set the receiver's 'pCertEncoded' field to the value of the argument, anExternalArray"
+pCertEncoded: anUInt8Array
+	"Set the receiver's 'pCertEncoded' field to the value of the argument, anUInt8Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_pCertEncoded put: anExternalArray yourAddress.
-	self CertEncodedSize: anExternalArray size!
+	bytes uintPtrAtOffset: _OffsetOf_pCertEncoded put: anUInt8Array yourAddress.
+	self CertEncodedSize: anUInt8Array size!
 
 Token
 	"Answer the <Handle> value of the receiver's 'Token' field."
@@ -117,7 +116,7 @@ defineFields
 	self
 		defineField: #CertFlags type: UInt32Field new offset: 0;
 		defineField: #CertEncodedSize type: UInt32Field new beNonBrowsable offset: 4;
-		defineField: #pCertEncoded type: (ArrayPointerField type: ExternalArray lengthField: #CertEncodedSize) offset: 8;
+		defineField: #pCertEncoded type: (ArrayPointerField type: UInt8Array lengthField: #CertEncodedSize) offset: 8;
 		defineField: #Token type: HANDLEField new offset: 12;
 		defineField: #CertDeniedByMapper type: BOOLEANField new beFiller offset: 16.
 	self byteSize: 20!
@@ -127,7 +126,7 @@ getFieldNames
 
 !WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

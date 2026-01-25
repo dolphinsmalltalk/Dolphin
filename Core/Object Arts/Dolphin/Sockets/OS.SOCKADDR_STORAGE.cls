@@ -89,9 +89,9 @@ defineFields
 
 	self
 		defineField: #ss_family type: UInt16Field new beFiller offset: 0;
-		defineField: #__ss_pad1 type: (ArrayField type: ExternalArray length: 6) beFiller offset: 2;
+		defineField: #__ss_pad1 type: (ArrayField type: UInt8Array length: 6) beFiller offset: 2;
 		defineField: #__ss_align type: Int64Field new beFiller offset: 8;
-		defineField: #__ss_pad2 type: (ArrayField type: ExternalArray length: 112) beFiller offset: 16.
+		defineField: #__ss_pad2 type: (ArrayField type: UInt8Array length: 112) beFiller offset: 16.
 	self byteSize: 128!
 
 getFieldNames
@@ -100,7 +100,7 @@ getFieldNames
 !OS.SOCKADDR_STORAGE class categoriesForMethods!
 addressFamily!constants!public! !
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

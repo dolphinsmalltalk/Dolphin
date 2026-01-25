@@ -10,7 +10,7 @@ External.ExternalArray
 
 External.DOUBLEArray guid: (Core.GUID fromString: '{c0413e69-b874-4e6b-a120-709d0c760f0f}')!
 
-External.DOUBLEArray comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of double-precision (64-bit) floating point numbers.'!
+External.DOUBLEArray comment: '`DOUBLEArray` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of double-precision (64-bit) floating point numbers.'!
 
 !External.DOUBLEArray categoriesForClass!External-Data-Structured! !
 
@@ -21,13 +21,13 @@ uncheckedAt: anInteger
 	IEEE float at the specified <integer> index in the receiver. No bounds 
 	checks are performed on the subscript."
 
-	^bytes doubleAtOffset: (anInteger - 1) * VMConstants.DoubleSize!
+	^bytes doubleAtOffset: (anInteger - 1) * DOUBLE._DOUBLE_Size!
 
 uncheckedAt: anInteger put: aFloat 
 	"Private - Replace the double-precision floating point value at the specified index in the receiver
 	with the <Float> argument."
 
-	^bytes doubleAtOffset: (anInteger - 1) * VMConstants.DoubleSize put: aFloat! !
+	^bytes doubleAtOffset: (anInteger - 1) * DOUBLE._DOUBLE_Size put: aFloat! !
 
 !External.DOUBLEArray categoriesForMethods!
 uncheckedAt:!accessing!private! !

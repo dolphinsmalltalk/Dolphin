@@ -136,15 +136,15 @@ pSslCertStoreName: anUtf16String
 	bytes uintPtrAtOffset: _OffsetOf_pSslCertStoreName put: anUtf16String yourAddress!
 
 pSslHash
-	"Answer the <ExternalArray> value of the receiver's 'pSslHash' field."
+	"Answer the <UInt8Array> value of the receiver's 'pSslHash' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pSslHash) length: self SslHashLength!
+	^UInt8Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_pSslHash) length: self SslHashLength!
 
-pSslHash: anExternalArray
-	"Set the receiver's 'pSslHash' field to the value of the argument, anExternalArray"
+pSslHash: anUInt8Array
+	"Set the receiver's 'pSslHash' field to the value of the argument, anUInt8Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_pSslHash put: anExternalArray yourAddress.
-	self SslHashLength: anExternalArray size!
+	bytes uintPtrAtOffset: _OffsetOf_pSslHash put: anUInt8Array yourAddress.
+	self SslHashLength: anUInt8Array size!
 
 SslHashLength
 	"Private - Answer the <Integer> value of the receiver's 'SslHashLength' field."
@@ -206,7 +206,7 @@ defineFields
 
 	self
 		defineField: #SslHashLength type: UInt32Field new beNonBrowsable offset: 0;
-		defineField: #pSslHash type: (ArrayPointerField type: ExternalArray lengthField: #SslHashLength) offset: 4;
+		defineField: #pSslHash type: (ArrayPointerField type: UInt8Array lengthField: #SslHashLength) offset: 4;
 		defineField: #AppId type: (StructureField type: GUID) offset: 8;
 		defineField: #pSslCertStoreName type: (PointerField type: Utf16String) offset: 24;
 		defineField: #DefaultCertCheckMode type: UInt32Field new offset: 28;
@@ -222,7 +222,7 @@ getFieldNames
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

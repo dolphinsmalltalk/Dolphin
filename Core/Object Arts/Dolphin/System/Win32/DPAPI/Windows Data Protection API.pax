@@ -27,7 +27,6 @@ package setBinaryVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Dolphin Conformant Array Fields'
 ).
 
 package!

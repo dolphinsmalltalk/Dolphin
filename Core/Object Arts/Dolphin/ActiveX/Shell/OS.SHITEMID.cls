@@ -29,9 +29,9 @@ typedef struct tagSHITEMID {
 !OS.SHITEMID methodsFor!
 
 abID
-	"Answer the <ExternalArray> value of the receiver's 'abID' field."
+	"Answer the <UInt8Array> value of the receiver's 'abID' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_abID length: self cb!
+	^UInt8Array fromAddress: bytes yourAddress + _OffsetOf_abID length: self cb!
 
 cb
 	"Private - Answer the <Integer> value of the receiver's 'cb' field."
@@ -61,13 +61,8 @@ defineFields
 "
 
 	self
-		defineField: #cb
-			type: UInt16Field new beReadOnly beNonBrowsable
-			offset: 0;
-		defineField: #abID
-			type: (ArrayField type: ExternalArray arrayLength: (ConformantArrayFieldLength lengthField: #cb))
-					beReadOnly
-			offset: 2.
+		defineField: #cb type: UInt16Field new beReadOnly beNonBrowsable offset: 0;
+		defineField: #abID type: (ArrayField type: UInt8Array lengthField: #cb) beReadOnly offset: 2.
 	self byteSize: 4!
 
 getFieldNames

@@ -5707,6 +5707,14 @@ External.ExternalArray
 	classConstants: {}!
 
 External.ExternalArray
+	subclass: #'External.Int64Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.ExternalArray
 	subclass: #'External.Int8Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -5732,6 +5740,22 @@ External.ExternalArray
 
 External.ExternalArray
 	subclass: #'External.UInt32Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.ExternalArray
+	subclass: #'External.UInt64Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.ExternalArray
+	subclass: #'External.UInt8Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

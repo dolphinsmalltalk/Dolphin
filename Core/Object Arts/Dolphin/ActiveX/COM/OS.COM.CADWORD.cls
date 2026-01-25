@@ -10,20 +10,21 @@ OS.COM.CountedArray
 
 OS.COM.CADWORD guid: (Core.GUID fromString: '{60f684dc-b3e2-4700-8e9c-d1a18764ed84}')!
 
-OS.COM.CADWORD comment: '<CADWORD> is an <ExternalStructure> class to wrap the struct ''OCIDL.CADWORD'' from type information in the ''OCIDL Library'' library.
+OS.COM.CADWORD comment: '`CADWORD` is an `External.Structure` class to wrap the OLE structure of the same name.
 
-CADWORD is a counted array of 32-bit unsigned integers. For an example usage see IPerPropertyBrowsing.'!
+CADWORD represents a counted array of 32-bit unsigned integers. For an example usage see IPerPropertyBrowsing.
 
-!OS.COM.CADWORD categoriesForClass!OCIDL-Structs! !
+The CAUL structure defined in COM Property Storage is a duplicate definition, defined in PropIdlBase.idl as follows:
 
-!OS.COM.CADWORD methodsFor!
+```
+typedef 
+struct tagCAUL {
+	ULONG cElems;
+	[size_is("cElems")] ULONG* pElems;
+} CAUL;
+```'!
 
-getElements
-	^UInt32Array fromAddress: self pElems length: self cElems! !
-
-!OS.COM.CADWORD categoriesForMethods!
-getElements!accessing!private! !
-!
+!OS.COM.CADWORD categoriesForClass!External-Data-Structured-COM! !
 
 !OS.COM.CADWORD class methodsFor!
 
@@ -35,14 +36,16 @@ defineFields
 		CADWORD compileDefinition
 	
 		typedef 		struct tagCADWORD {
-			unsigned long cElems;
-			unsigned long* pElems;
+			ULONG cElems;
+			[size_is('cElems')] ULONG* pElems;
 		} CADWORD;
 
 	"
 
-	"Nothing more to add to superclass template"
-	super defineFields.
+	self
+		defineField: #cElems type: UInt32Field new offset: 0;
+		defineField: #pElems type: (ArrayPointerField type: UInt32Array lengthField: #cElems) offset: 4.
+	self byteSize: 8
 
 !
 

@@ -10,7 +10,7 @@ External.ExternalArray
 
 External.Int16Array guid: (Core.GUID fromString: '{87b4c5a8-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-External.Int16Array comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 16-bit signed integers.'!
+External.Int16Array comment: '`Int16Array` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 16-bit signed integers.'!
 
 !External.Int16Array categoriesForClass!External-Data-Structured! !
 

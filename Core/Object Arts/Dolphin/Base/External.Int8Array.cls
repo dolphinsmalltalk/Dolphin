@@ -10,7 +10,7 @@ External.ExternalArray
 
 External.Int8Array guid: (Core.GUID fromString: '{8bfb3d84-076e-4c1c-b62f-d0d7e6258c10}')!
 
-External.Int8Array comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 8-bit signed integers.'!
+External.Int8Array comment: '`Int8Array` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 8-bit signed integers.'!
 
 !External.Int8Array categoriesForClass!External-Data-Structured! !
 
@@ -26,7 +26,8 @@ uncheckedAt: indexInteger put: valueInteger
 	"Private - Replace the 8-bit signed integer value at the specified index in the receiver
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
-	^bytes int8AtOffset: indexInteger - 1 put: valueInteger! !
+	bytes int8AtOffset: indexInteger - 1 put: valueInteger.
+	^valueInteger! !
 
 !External.Int8Array categoriesForMethods!
 uncheckedAt:!accessing!private! !

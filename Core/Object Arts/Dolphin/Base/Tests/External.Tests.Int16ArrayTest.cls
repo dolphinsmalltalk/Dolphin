@@ -12,16 +12,16 @@ External.Tests.Int16ArrayTest guid: (Core.GUID fromString: '{899ffc53-86db-45b3-
 
 External.Tests.Int16ArrayTest comment: ''!
 
-!External.Tests.Int16ArrayTest methodsFor!
+!External.Tests.Int16ArrayTest class methodsFor!
 
 arrayClass
 	^Int16Array!
 
-numericElementClass
-	^Int16! !
+elementFromIndex: anInteger
+	^#(0 1 -32768 -32767 32767 -1) at: anInteger! !
 
-!External.Tests.Int16ArrayTest categoriesForMethods!
+!External.Tests.Int16ArrayTest class categoriesForMethods!
 arrayClass!constants!private! !
-numericElementClass!constants!private! !
+elementFromIndex:!helpers!private! !
 !
 

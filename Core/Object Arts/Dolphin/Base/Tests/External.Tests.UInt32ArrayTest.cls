@@ -12,16 +12,16 @@ External.Tests.UInt32ArrayTest guid: (Core.GUID fromString: '{4cf3a550-fd9e-46c2
 
 External.Tests.UInt32ArrayTest comment: ''!
 
-!External.Tests.UInt32ArrayTest methodsFor!
+!External.Tests.UInt32ArrayTest class methodsFor!
 
 arrayClass
 	^UInt32Array!
 
-numericElementClass
-	^UInt32! !
+elementFromIndex: anInteger
+	^#(0 16r3FFFFFFF 16r40000000 16r7FFFFFFF 16rFFFFFFFF 1) at: anInteger! !
 
-!External.Tests.UInt32ArrayTest categoriesForMethods!
+!External.Tests.UInt32ArrayTest class categoriesForMethods!
 arrayClass!constants!private! !
-numericElementClass!constants!private! !
+elementFromIndex:!helpers!private! !
 !
 

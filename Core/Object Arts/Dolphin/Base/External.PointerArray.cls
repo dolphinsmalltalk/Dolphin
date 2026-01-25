@@ -10,10 +10,10 @@ External.UIntPtrArray
 
 External.PointerArray guid: (Core.GUID fromString: '{fac953e0-dfd2-4e68-8c31-879bba4c50c4}')!
 
-External.PointerArray comment: 'Specialized `External.Array` to represent contiguous single-dimensioned arrays of pointers to arbitrary `External.Structure`s or byte objects such as strings.
+External.PointerArray comment: '`PointerArray` is a specialized `External.Array` to represent contiguous single-dimensioned arrays of pointers to arbitrary `External.Structure`s or byte objects.
 
 ## Instance Variables:
-  `elementClass`	`External.Structure` or byte object class. Class to represent elements of the array.
+  `elementClass`	`External.Structure` or byte object class to represent elements of the array.
 
 '!
 

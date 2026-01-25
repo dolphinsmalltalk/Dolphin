@@ -57,21 +57,21 @@ iMode: anInteger
 	bytes uint32AtOffset: _OffsetOf_iMode put: anInteger!
 
 RGNDATA
-	"Answer the <ExternalArray> value of the receiver's 'RGNDATA' field."
+	"Answer the <UInt8Array> value of the receiver's 'RGNDATA' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_RGNDATA length: self cbRgnData!
+	^UInt8Array fromAddress: bytes yourAddress + _OffsetOf_RGNDATA length: self cbRgnData!
 
-RGNDATA: anExternalArray
-	"Set the receiver's 'RGNDATA' field to the value of the argument, anExternalArray"
+RGNDATA: anUInt8Array
+	"Set the receiver's 'RGNDATA' field to the value of the argument, anUInt8Array"
 
 	| size |
-	size := anExternalArray byteSize.
-	anExternalArray
+	size := anUInt8Array byteSize.
+	anUInt8Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_RGNDATA + 1)
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
-	self cbRgnData: anExternalArray size! !
+	self cbRgnData: anUInt8Array size! !
 
 !OS.EMREXTSELECTCLIPRGN categoriesForMethods!
 cbRgnData!**compiled accessors**!public! !
@@ -110,7 +110,7 @@ defineFields
 			type: UInt32Field new
 			offset: 12;
 		defineField: #RGNDATA
-			type: (ArrayField type: ExternalArray lengthField: #cbRgnData)
+			type: (ArrayField type: UInt8Array lengthField: #cbRgnData)
 			offset: 16!
 
 getFieldNames

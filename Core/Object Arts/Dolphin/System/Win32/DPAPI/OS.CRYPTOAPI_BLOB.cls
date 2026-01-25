@@ -78,15 +78,15 @@ needsFree
 	^localData isNil and: [bytes notNull and: [self basicPbData ~~ 0]]!
 
 pbData
-	"Answer the <ExternalArray> value of the receiver's 'pbData' field."
+	"Answer the <UInt8Array> value of the receiver's 'pbData' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pbData) length: self cbData!
+	^UInt8Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_pbData) length: self cbData!
 
-pbData: anExternalArray
-	"Set the receiver's 'pbData' field to the value of the argument, anExternalArray"
+pbData: anUInt8Array
+	"Set the receiver's 'pbData' field to the value of the argument, anUInt8Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_pbData put: anExternalArray yourAddress.
-	self cbData: anExternalArray size! !
+	bytes uintPtrAtOffset: _OffsetOf_pbData put: anUInt8Array yourAddress.
+	self cbData: anUInt8Array size! !
 
 !OS.CRYPTOAPI_BLOB categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
@@ -123,8 +123,7 @@ defineFields
 			type: UInt32Field new beNonBrowsable
 			offset: 0;
 		defineField: #pbData
-			type: (ArrayPointerField type: ExternalArray
-					arrayLength: (ConformantArrayFieldLength lengthField: #cbData))
+			type: (ArrayPointerField type: UInt8Array lengthField: #cbData)
 			offset: 4.
 	self byteSize: 8!
 

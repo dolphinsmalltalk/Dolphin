@@ -10,7 +10,7 @@ External.ExternalArray
 
 External.UIntPtrArray guid: (Core.GUID fromString: '{685f8656-e2d9-4365-8469-efaeb39fb86c}')!
 
-External.UIntPtrArray comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of pointer-sized unsigned integers.'!
+External.UIntPtrArray comment: '`UIntPtrArray` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of pointer-sized unsigned integers.'!
 
 !External.UIntPtrArray categoriesForClass!External-Data-Structured! !
 

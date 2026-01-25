@@ -14,20 +14,6 @@ OS.COM.Tests.BSTRArrayTest comment: ''!
 
 !OS.COM.Tests.BSTRArrayTest methodsFor!
 
-arrayClass
-	^BSTRArray!
-
-elementFromValue: anInteger
-	^anInteger printString!
-
-newArrayOfIntegers: anArray
-	^self arrayClass withAll: (anArray collect: [:each | self elementFromValue: each])!
-
-numericElementClass
-	^BSTR
-
-!
-
 testFinalizable
 	| bstrs pbstrs |
 	bstrs := BSTRArray withAll: #('foo' 'bar').
@@ -38,10 +24,19 @@ testFinalizable
 	bstrs free! !
 
 !OS.COM.Tests.BSTRArrayTest categoriesForMethods!
-arrayClass!private! !
-elementFromValue:!public!unit tests! !
-newArrayOfIntegers:!private! !
-numericElementClass!private! !
 testFinalizable!public! !
+!
+
+!OS.COM.Tests.BSTRArrayTest class methodsFor!
+
+arrayClass
+	^BSTRArray!
+
+elementFromIndex: anInteger
+	^anInteger printString! !
+
+!OS.COM.Tests.BSTRArrayTest class categoriesForMethods!
+arrayClass!private! !
+elementFromIndex:!helpers!private! !
 !
 

@@ -39,16 +39,16 @@ struct tagHTTP_REQUEST_CHANNEL_BIND_STATUS {
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS methodsFor!
 
 ChannelToken
-	"Answer the <ExternalArray> value of the receiver's 'ChannelToken' field."
+	"Answer the <UInt8Array> value of the receiver's 'ChannelToken' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_ChannelToken)
+	^UInt8Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_ChannelToken)
 		length: self ChannelTokenSize!
 
-ChannelToken: anExternalArray
-	"Set the receiver's 'ChannelToken' field to the value of the argument, anExternalArray"
+ChannelToken: anUInt8Array
+	"Set the receiver's 'ChannelToken' field to the value of the argument, anUInt8Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_ChannelToken put: anExternalArray yourAddress.
-	self ChannelTokenSize: anExternalArray size!
+	bytes uintPtrAtOffset: _OffsetOf_ChannelToken put: anUInt8Array yourAddress.
+	self ChannelTokenSize: anUInt8Array size!
 
 ChannelTokenSize
 	"Private - Answer the <Integer> value of the receiver's 'ChannelTokenSize' field."
@@ -100,7 +100,7 @@ defineFields
 
 	self
 		defineField: #ServiceName type: (PointerField type: HTTP_SERVICE_BINDING_BASE) offset: 0;
-		defineField: #ChannelToken type: (ArrayPointerField type: ExternalArray lengthField: #ChannelTokenSize) offset: 4;
+		defineField: #ChannelToken type: (ArrayPointerField type: UInt8Array lengthField: #ChannelTokenSize) offset: 4;
 		defineField: #ChannelTokenSize type: UInt32Field new beNonBrowsable offset: 8;
 		defineField: #Flags type: UInt32Field new beFiller offset: 12.
 	self byteSize: 16!
@@ -110,7 +110,7 @@ getFieldNames
 
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

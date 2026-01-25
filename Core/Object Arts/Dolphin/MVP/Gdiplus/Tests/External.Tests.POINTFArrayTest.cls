@@ -14,37 +14,32 @@ External.Tests.POINTFArrayTest comment: ''!
 
 !External.Tests.POINTFArrayTest methodsFor!
 
-arrayClass
-	^POINTFArray!
-
 canonicalizeValue: anObject
-	^self elementFromValue: anObject!
-
-elementFromValue: anObject
-	^anObject asFloat @ (anObject + 1) asFloat!
-
-newArrayOfIntegers: anArray
-	^self arrayClass withAll: (anArray collect: [:each | each @ (each + 1)])!
-
-numericElementClass
-	^POINTF
-
-!
+	^self elementFromIndex: anObject!
 
 testSelfEvaluating
 	| subject |
-	subject := self newNumericArray: 3.
+	subject := self newTestSubjectOfSize: 3.
 	self assert: subject isSelfEvaluating.
 	self assert: subject printString
 		equals: '(<1p> withAll: {<2p>. <3p>. <4p>})'
-				<< ({self arrayClass} , ((1 to: 3) collect: [:i | self elementFromValue: i]))! !
+				<< ({self arrayClass} , ((1 to: 3) collect: [:i | self elementFromIndex: i]))! !
 
 !External.Tests.POINTFArrayTest categoriesForMethods!
-arrayClass!constants!private! !
 canonicalizeValue:!private!unit tests! !
-elementFromValue:!private!unit tests! !
-newArrayOfIntegers:!helpers!private! !
-numericElementClass!constants!private! !
 testSelfEvaluating!public!unit tests! !
+!
+
+!External.Tests.POINTFArrayTest class methodsFor!
+
+arrayClass
+	^POINTFArray!
+
+elementFromIndex: anInteger
+	^(1.25 * (anInteger - 1)) @ (2.75 * (anInteger - 1))! !
+
+!External.Tests.POINTFArrayTest class categoriesForMethods!
+arrayClass!constants!private! !
+elementFromIndex:!private!unit tests! !
 !
 

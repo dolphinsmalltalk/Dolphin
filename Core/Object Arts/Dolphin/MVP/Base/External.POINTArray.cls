@@ -12,5 +12,5 @@ External.POINTArray guid: (Core.GUID fromString: '{c1350f8a-5e5c-4a80-960d-57982
 
 External.POINTArray isNonInstantiable: true!
 
-External.POINTArray comment: ''!
+External.POINTArray comment: '`POINTArray` is an abstract `ExternalArray`, subclasses of which represent contiguous single-dimensioned arrays of cartesian point structures.'!
 

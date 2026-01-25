@@ -14,15 +14,6 @@ External.Tests.FLOATArrayTest comment: ''!
 
 !External.Tests.FLOATArrayTest methodsFor!
 
-arrayClass
-	^FLOATArray!
-
-elementFromValue: anObject 
-	^anObject asFloat!
-
-numericElementClass
-	^FLOAT!
-
 testDisplayString
 	"We expect at most 6 significant figures for the elements because this is the maximum decimal precision that can we round trip to a string."
 
@@ -46,10 +37,20 @@ testPrintString
 	self assert: (Compiler evaluate: expr) equals: subject! !
 
 !External.Tests.FLOATArrayTest categoriesForMethods!
-arrayClass!constants!private! !
-elementFromValue:!private!unit tests! !
-numericElementClass!constants!private! !
 testDisplayString!public! !
 testPrintString!public! !
+!
+
+!External.Tests.FLOATArrayTest class methodsFor!
+
+arrayClass
+	^FLOATArray!
+
+elementFromIndex: anInteger
+	^1.25 * (anInteger-1)! !
+
+!External.Tests.FLOATArrayTest class categoriesForMethods!
+arrayClass!constants!private! !
+elementFromIndex:!private!unit tests! !
 !
 

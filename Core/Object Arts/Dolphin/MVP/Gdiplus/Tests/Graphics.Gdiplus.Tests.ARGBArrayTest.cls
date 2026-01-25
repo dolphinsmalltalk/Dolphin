@@ -12,30 +12,22 @@ Graphics.Gdiplus.Tests.ARGBArrayTest guid: (Core.GUID fromString: '{524a430f-bb1
 
 Graphics.Gdiplus.Tests.ARGBArrayTest comment: ''!
 
-!Graphics.Gdiplus.Tests.ARGBArrayTest methodsFor!
+!Graphics.Gdiplus.Tests.ARGBArrayTest class methodsFor!
 
 arrayClass
 	^ARGBArray!
 
-elementFromValue: anInteger
+elementFromIndex: anInteger
+	| base |
+	base := anInteger - 1.
 	^Color
-		a: (255.0 / (anInteger max: 1.0)) asInteger
-		r: anInteger
-		g: anInteger * 2
-		b: anInteger * 3!
+		a: (255.0 / (base max: 1.0)) asInteger
+		r: base
+		g: base * 2
+		b: base * 3! !
 
-newArrayOfIntegers: anArray
-	^self arrayClass withAll: (anArray collect: [:each | self elementFromValue: each])!
-
-numericElementClass
-	^ARGBBytes
-
-! !
-
-!Graphics.Gdiplus.Tests.ARGBArrayTest categoriesForMethods!
+!Graphics.Gdiplus.Tests.ARGBArrayTest class categoriesForMethods!
 arrayClass!constants!private! !
-elementFromValue:!public!unit tests! !
-newArrayOfIntegers:!helpers!private! !
-numericElementClass!constants!private! !
+elementFromIndex:!helpers!private! !
 !
 

@@ -27,19 +27,10 @@ basicFree
 	pElems := self pElems.
 	0 to: self length - 1
 		do: [:i | allocator Free: (pElems uintPtrAtOffset: i * VMConstants.IntPtrSize)].
-	super basicFree!
-
-getElements
-	"Private - Answer the receiver's <ExternalArray> of elements."
-
-	^StructureArray 
-		fromAddress: self pElems
-		length: self cElems
-		elementClass: self elementClass! !
+	super basicFree! !
 
 !OS.COM.CALPOLESTR categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
-getElements!accessing!private! !
 !
 
 !OS.COM.CALPOLESTR class methodsFor!

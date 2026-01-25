@@ -107,6 +107,7 @@ package setClassNames: #(
 	#{External.Tests.GenericExternalArrayTest}
 	#{External.Tests.Int16ArrayTest}
 	#{External.Tests.Int32ArrayTest}
+	#{External.Tests.Int64ArrayTest}
 	#{External.Tests.Int8ArrayTest}
 	#{External.Tests.IntegerBytesTest}
 	#{External.Tests.INTEGERTest}
@@ -118,7 +119,9 @@ package setClassNames: #(
 	#{External.Tests.UInt16ArrayTest}
 	#{External.Tests.UInt32ArrayTest}
 	#{External.Tests.UInt32BytesTest}
+	#{External.Tests.UInt64ArrayTest}
 	#{External.Tests.UInt64BytesTest}
+	#{External.Tests.UInt8ArrayTest}
 	#{External.Tests.WCHARFieldTest}
 	#{Graphics.Tests}
 	#{Kernel.Tests}
@@ -1247,6 +1250,14 @@ External.Tests.ExternalArrayTest
 	classConstants: {}!
 
 External.Tests.ExternalArrayTest
+	subclass: #'External.Tests.Int64ArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.Int8ArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1264,6 +1275,22 @@ External.Tests.ExternalArrayTest
 
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.UInt32ArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'External.Tests.UInt64ArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'External.Tests.UInt8ArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

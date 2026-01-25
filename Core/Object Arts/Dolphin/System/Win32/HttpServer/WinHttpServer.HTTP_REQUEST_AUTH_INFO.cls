@@ -46,9 +46,9 @@ struct tagHTTP_REQUEST_AUTH_INFO {
 	[helpstring("The type of context in the PackedContext member.")] ULONG PackedContextType;
 	[helpstring("The security context for the authentication type."), size_is("PackedContextLength")] PVOID PackedContext;
 	[nonbrowsable, helpstring("The length, in bytes, of the pMutualAuthData member.")] ULONG MutualAuthDataLength;
-	[helpstring("The Base64 encoded mutual authentication data used in the WWW-Authenticate header."), size_is("MutualAuthDataLength"), string] PCHAR pMutualAuthData;
+	[helpstring("The Base64 encoded mutual authentication data used in the WWW-Authenticate header."), string, size_is("MutualAuthDataLength")] PCHAR pMutualAuthData;
 	[nonbrowsable, helpstring("For SSPI based schemes the package name is returned. Length does not include the terminating null and it is in bytes.")] USHORT PackageNameLength;
-	[size_is("PackageNameLength>>1"), string] LPWSTR pPackageName;
+	[string, size_is("PackageNameLength>>1")] LPWSTR pPackageName;
 } HTTP_REQUEST_AUTH_INFO;
 ```
 '!
@@ -128,16 +128,16 @@ PackageNameLength: anInteger
 	bytes uint16AtOffset: _OffsetOf_PackageNameLength put: anInteger!
 
 PackedContext
-	"Answer the <ExternalArray> value of the receiver's 'PackedContext' field."
+	"Answer the <UInt8Array> value of the receiver's 'PackedContext' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_PackedContext)
+	^UInt8Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_PackedContext)
 		length: self PackedContextLength!
 
-PackedContext: anExternalArray
-	"Set the receiver's 'PackedContext' field to the value of the argument, anExternalArray"
+PackedContext: anUInt8Array
+	"Set the receiver's 'PackedContext' field to the value of the argument, anUInt8Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_PackedContext put: anExternalArray yourAddress.
-	self PackedContextLength: anExternalArray size!
+	bytes uintPtrAtOffset: _OffsetOf_PackedContext put: anUInt8Array yourAddress.
+	self PackedContextLength: anUInt8Array size!
 
 PackedContextLength
 	"Private - Answer the <Integer> value of the receiver's 'PackedContextLength' field."
@@ -244,9 +244,9 @@ defineFields
 			[helpstring('The type of context in the PackedContext member.')] ULONG PackedContextType;
 			[helpstring('The security context for the authentication type.'), size_is('PackedContextLength')] PVOID PackedContext;
 			[nonbrowsable, helpstring('The length, in bytes, of the pMutualAuthData member.')] ULONG MutualAuthDataLength;
-			[helpstring('The Base64 encoded mutual authentication data used in the WWW-Authenticate header.'), size_is('MutualAuthDataLength'), string] PCHAR pMutualAuthData;
+			[helpstring('The Base64 encoded mutual authentication data used in the WWW-Authenticate header.'), string, size_is('MutualAuthDataLength')] PCHAR pMutualAuthData;
 			[nonbrowsable, helpstring('For SSPI based schemes the package name is returned. Length does not include the terminating null and it is in bytes.')] USHORT PackageNameLength;
-			[size_is('PackageNameLength>>1'), string] LPWSTR pPackageName;
+			[string, size_is('PackageNameLength>>1')] LPWSTR pPackageName;
 		} HTTP_REQUEST_AUTH_INFO;
 "
 
@@ -259,7 +259,7 @@ defineFields
 		defineField: #ContextAttributes type: UInt32Field new offset: 20;
 		defineField: #PackedContextLength type: UInt32Field new beNonBrowsable offset: 24;
 		defineField: #PackedContextType type: UInt32Field new offset: 28;
-		defineField: #PackedContext type: (ArrayPointerField type: ExternalArray lengthField: #PackedContextLength) offset: 32;
+		defineField: #PackedContext type: (ArrayPointerField type: UInt8Array lengthField: #PackedContextLength) offset: 32;
 		defineField: #MutualAuthDataLength type: UInt32Field new beNonBrowsable offset: 36;
 		defineField: #pMutualAuthData type: (ArrayPointerField type: AnsiString lengthField: #MutualAuthDataLength) offset: 40;
 		defineField: #PackageNameLength type: UInt16Field new beNonBrowsable offset: 44;
@@ -271,7 +271,7 @@ getFieldNames
 
 !WinHttpServer.HTTP_REQUEST_AUTH_INFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

@@ -10,7 +10,7 @@ External.POINTArray
 
 External.POINTLArray guid: (Core.GUID fromString: '{7870a66a-14c6-4a6c-9953-6114f3fc1662}')!
 
-External.POINTLArray comment: ''!
+External.POINTLArray comment: '`POINTLArray` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of `POINTL`s.'!
 
 !External.POINTLArray methodsFor!
 
@@ -19,17 +19,17 @@ uncheckedAt: anInteger
 	No bounds checks are performed on the subscript."
 
 	| offset |
-	offset := anInteger - 1 bitShift: 3.
-	^Graphics.Point x: (bytes int32AtOffset: offset) y: (bytes int32AtOffset: offset + 4)!
+	offset := anInteger - 1 * POINTL._POINTL_Size.
+	^Graphics.Point x: (bytes int32AtOffset: offset) y: (bytes int32AtOffset: offset + POINTL._OffsetOf_y)!
 
 uncheckedAt: anInteger put: aPoint
 	"Private - Replace the <POINTL> value at the specified index in the receiver with the x and y co-ordindates of the <Point> argument.
 	The co-ordinates are limited to 32-bit signed integer range."
 
 	| offset |
-	offset := anInteger - 1 bitShift: 3.
+	offset := anInteger - 1 * POINTL._POINTL_Size.
 	^Graphics.Point x: (bytes int32AtOffset: offset put: aPoint x)
-		y: (bytes int32AtOffset: offset + 4 put: aPoint y)! !
+		y: (bytes int32AtOffset: offset + POINTL._OffsetOf_y put: aPoint y)! !
 
 !External.POINTLArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
@@ -57,8 +57,8 @@ withAll: newElements
 			[:offset :elem |
 			bytes
 				int32AtOffset: offset put: elem x;
-				int32AtOffset: offset + 4 put: elem y.
-			offset + 8].
+				int32AtOffset: offset + POINTL._OffsetOf_y put: elem y.
+			offset + POINTL._POINTL_Size].
 	^answer! !
 
 !External.POINTLArray class categoriesForMethods!

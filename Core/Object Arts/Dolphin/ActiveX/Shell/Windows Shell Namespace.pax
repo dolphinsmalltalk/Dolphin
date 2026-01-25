@@ -34,7 +34,6 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
-	'..\..\Base\Dolphin Conformant Array Fields'
 	'..\COM\OLE COM'
 	'Windows Shell'
 ).

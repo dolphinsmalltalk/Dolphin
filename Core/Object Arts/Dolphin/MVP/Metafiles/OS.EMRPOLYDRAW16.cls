@@ -41,7 +41,7 @@ struct tagEMRPOLYDRAW16 {
 abTypes
 	"Answer the receiver's abTypes field as a Smalltalk object."
 
-	^ExternalArray fromAddress: bytes yourAddress + self abTypesOffset length: self cpts!
+	^UInt8Array fromAddress: bytes yourAddress + self abTypesOffset length: self cpts!
 
 abTypes: anObject 
 	"Set the receiver's abTypes field to the value of anObject."
@@ -146,7 +146,7 @@ defineFields
 			type: (StructureArrayField type: POINTS lengthField: #cpts)
 			offset: 28;
 		defineField: #abTypes
-			type: (ArrayField type: ExternalArray lengthField: #cpts)
+			type: (ArrayField type: UInt8Array lengthField: #cpts)
 			offset: 32.
 	self byteSize: 36!
 

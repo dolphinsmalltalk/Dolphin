@@ -10,7 +10,7 @@ External.ExternalArray
 
 Graphics.Gdiplus.ARGBArray guid: (Core.GUID fromString: '{9f452cba-88f5-40e0-a63a-91d669071868}')!
 
-Graphics.Gdiplus.ARGBArray comment: ''!
+Graphics.Gdiplus.ARGBArray comment: '`ARGArray` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 32-bit `ARGB` values.'!
 
 !Graphics.Gdiplus.ARGBArray methodsFor!
 

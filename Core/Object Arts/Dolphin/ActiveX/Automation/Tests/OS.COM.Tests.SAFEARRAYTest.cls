@@ -4,7 +4,7 @@ External.Tests.GenericExternalArrayTest
 	subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
+	imports: #(#{OS.Win32Errors} #{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -14,14 +14,11 @@ OS.COM.Tests.SAFEARRAYTest comment: ''!
 
 !OS.COM.Tests.SAFEARRAYTest methodsFor!
 
-arrayClass
-	^SAFEARRAY!
-
 elementClassNames
 	^super elementClassNames , #(#IUnknown #IDispatch)!
 
-newArrayOfIntegers: anArray
-	^SAFEARRAY withAll: anArray elementClass: Int32!
+newTestSubjectOfSize: anInteger
+	^SAFEARRAY withAll: (1 to: anInteger) elementClass: self class numericElementClass!
 
 testAXRecords
 	"Create a dummy class that is unregistered and which will therefore be represented by an AXRecord"
@@ -73,25 +70,34 @@ testBounds
 	self assert: (subject lowerBound: 1) equals: 0.
 	self assert: (subject upperBound: 1) equals: 2!
 
+testDoubles
+	| floats subject ext |
+	floats := DOUBLEArray withAll: { Float negativeInfinity. Float fmin. -0.0. 0.0. 1.25. Float fmax. Float infinity }.
+	subject := floats asSAFEARRAY.
+	self assert: subject asExternalArray  equals: floats.
+	ext := subject asExternalArray.
+	self assert: ext isKindOf: DOUBLEArray.
+	self assert: ext equals: floats!
+
 testElementAt
 	"Test SAFEARRAY>>elementAt:, but only with vectors. Our wrapper doesn't have a way to create multi-dimensioned SAFEARRAYs at present."
 
 	| subject subjectRef invalidIndex |
 	invalidIndex := HRESULT fromUnsignedInteger: 16r8002000B.
-	subject := self newArrayOfIntegers: #(-123 123).
-	self assert: (subject elementAt: {0}) equals: (Int32 fromInteger: -123).
-	self assert: (subject elementAt: {1}) equals: (Int32 fromInteger: 123).
+	subject := SAFEARRAY withAll: #(-123 123) elementClass: Int32.
+	self assert: (subject elementAt: #(0)) equals: (Int32 fromInteger: -123).
+	self assert: (subject elementAt: #(1)) equals: (Int32 fromInteger: 123).
 	self
-		should: [subject elementAt: {2}]
+		should: [subject elementAt: #(2)]
 		raise: HRESULTError
 		matching: [:ex | ex tag = invalidIndex].
 	subjectRef := SAFEARRAY fromAddress: subject yourAddress owner: subject.
 	"Should be able to deduce the correct element class"
 	self assert: subjectRef elementClass identicalTo: Int32.
-	self assert: (subjectRef elementAt: {0}) equals: (Int32 fromInteger: -123).
-	self assert: (subjectRef elementAt: {1}) equals: (Int32 fromInteger: 123).
+	self assert: (subjectRef elementAt: #(0)) equals: (Int32 fromInteger: -123).
+	self assert: (subjectRef elementAt: #(1)) equals: (Int32 fromInteger: 123).
 	self
-		should: [subjectRef elementAt: {2}]
+		should: [subjectRef elementAt: #(2)]
 		raise: HRESULTError
 		matching: [:ex | ex tag = invalidIndex]!
 
@@ -143,14 +149,124 @@ testElementClasses
 				should: [SAFEARRAY length: 1 elementClass: each value]
 				raise: MessageNotUnderstood
 				matching: [:ex | ex selector == #newSAFEARRAY:]].
-	#(#{VOID} #{FILETIME}) do: 
+	#(#{VOID}) do: 
+			[:each |
+			self
+				should: [SAFEARRAY length: 1 elementClass: each value]
+				raise: Error]
+
+	"	IUnknown ExternalArray )"!
+
+testFILETIME
+	"FILETIMEs are represented as VT_DATE for compatibility with Win32 APIs such as `InitVariantFromFileTime()`"
+
+	| dt ft subject date |
+	dt := DateAndTime fromString: '2026-01-14T08:05:29+00:00'.
+	ft := FILETIME fromDateAndTime: dt.
+	self assert: ft asDateAndTime equals: dt.
+	subject := SAFEARRAY withAll: { ft } elementClass: FILETIME.
+	self deny: subject hasRecordInfo.
+	self assert: subject hasVarType.
+	self assert: subject vartype equals: VT_DATE.
+	self assert: subject vt equals: VT_ARRAY | VT_DATE.
+	date := subject at: 1.
+	self assert: (VARIANT fromFILETIME: ft) value equals: date.
+	self assert: date isKindOf: DATE.
+	self assert: date asDateAndTime equals: dt.
+	"Precision will be lost"
+	ft := FILETIME now.
+	subject at: 1 put: ft.
+	date := subject at: 1.
+	self assert: (VARIANT fromFILETIME: ft) value equals: date.
+	self assert: (ft asSYSTEMTIME
+				wMilliseconds: 0;
+				yourself)
+		equals: date asSYSTEMTIME!
+
+testFloats
+	| floats subject ext |
+	floats := FLOATArray withAll: { Float negativeInfinity. Float fmin. -0.0. 0.0. 1.25. Float fmax. Float infinity }.
+	subject := floats asSAFEARRAY.
+	self assert: subject asExternalArray equals: floats.
+	ext := subject asExternalArray.
+	self assert: ext isKindOf: FLOATArray.
+	self assert: ext equals: floats!
+
+testIDispatch
+	"Test array containing IDispatch interface pointer"
+
+	| subject random irand |
+	subject := SAFEARRAY length: 1 elementClass: Examples.IRandomStream.
+	self assert: subject hasVarType.
+	self assert: subject vartype equals: VT_DISPATCH.
+	self assert: subject vt equals: VT_ARRAY | VT_DISPATCH.
+	random := Examples.RandomStream new.
+	random put_Seed: 12345.
+	subject at: 1 put: random.
+	irand := subject at: 1.
+	self assert: irand class identicalTo: Examples.IRandomStream.
+	self assert: subject iid equals: Examples.IRandomStream iid.
+	self assert: irand referenceCount >= 2.
+	self assert: irand seed equals: 12345.
+	self assert: (irand isSameCOMObject: random interface)!
+
+testInt16s
+	| ints subject ext |
+	ints := Int16Array withAll: #(-32768 0 32767).
+	subject := ints asSAFEARRAY.
+	ext := subject asExternalArray.
+	self assert: ext isKindOf: Int16Array.
+	self assert: ext equals: ints!
+
+testInt32s
+	| ints subject ext |
+	ints := Int32Array withAll: #(-16r80000000 0 16r7FFFFFFF).
+	subject := ints asSAFEARRAY.
+	ext := subject asExternalArray.
+	self assert: ext isKindOf: Int32Array.
+	self assert: ext equals: ints!
+
+testInt64s
+	| ints subject ext |
+	ints := Int64Array withAll: #(-16r80000001 0 16r80000000).
+	subject := ints asSAFEARRAY.
+	ext := subject asExternalArray.
+	self assert: ext isKindOf: Int64Array.
+	self assert: ext equals: ints!
+
+testInvalidElementClasses
+	"Test some invalid safe array types in the VTClasses map"
+
+	#(#{String} #{Utf16String} #{Address} #{CLSID}) do: 
+			[:each |
+			self
+				should: [SAFEARRAY length: 1 elementClass: each value]
+				raise: MessageNotUnderstood
+				matching: [:ex | ex selector == #newSAFEARRAY:]].
+	#(#{VOID} #{LPSTR}) do: 
 			[:each |
 			self
 				should: [SAFEARRAY length: 1 elementClass: each value]
 				raise: Error
-				matching: [:ex | ex messageText = 'Failed to create vector']]
+				matching: [:ex | ex messageText = ('<1p> class should not implement #newSAFEARRAY:' << { each value })]]
 
-	"	IUnknown ExternalArray )"!
+	"	ExternalArray )"!
+
+testIUnknown
+	"Test array containing IUnknown interface pointer"
+
+	| subject enumRect ienum |
+	subject := SAFEARRAY length: 1 elementClass: Examples.IEnumRECT.
+	self assert: subject hasVarType.
+	self assert: subject vartype equals: VT_UNKNOWN.
+	self assert: subject vt equals: VT_ARRAY | VT_UNKNOWN.
+	enumRect := Examples.EnumRECT new.
+	subject at: 1 put: enumRect.
+	self assert: subject iid equals: Examples.IEnumRECT iid.
+	ienum := subject at: 1.
+	self assert: ienum isKindOf: Examples.IEnumRECT.
+	self assert: ienum referenceCount >= 2.
+	self assert: (ienum isSameCOMObject: (enumRect queryInterface: IUnknown))!
 
 testMarshal
 	| subject |
@@ -158,21 +274,72 @@ testMarshal
 	self assert: subject equals: (self arrayClass withAll: (1 to: 3)).
 	self assert: (self arrayClass marshal: subject) identicalTo: subject!
 
+testNew
+	"The default element class of SAFEARRAY is VARIANT"
+
+	| subject |
+	subject := SAFEARRAY new.
+	self assert: subject hasVarType.
+	self assert: subject vartype equals: VT_VARIANT.
+	self assert: subject elementClass equals: VARIANT.
+	self assert: subject vt equals: VT_ARRAY | VT_VARIANT.
+	self assert: subject asArray equals: #()!
+
+testNewColon
+	"The default element class of SAFEARRAY is VARIANT"
+
+	#(0 1 3) do: 
+			[:i |
+			| subject |
+			subject := SAFEARRAY new: i.
+			self assert: subject hasVarType.
+			self assert: subject vartype equals: VT_VARIANT.
+			self assert: subject elementClass equals: VARIANT.
+			self assert: subject vt equals: VT_ARRAY | VT_VARIANT.
+			self assert: subject asArray equals: (Array new: i)]!
+
+testRecord
+	"Test array containing user defined type"
+
+	| subject |
+	subject := SAFEARRAY length: 1 elementClass: POINTL.
+	self assert: subject hasRecordInfo.
+	self assert: subject vartype equals: VT_RECORD.
+	self assert: subject vt equals: VT_ARRAY | VT_RECORD.
+	subject at: 1 put: (3 @ 4) asParameter.
+	self assert: (subject at: 1) isKindOf: POINTL.
+	self assert: (subject at: 1) asPoint equals: 3 @ 4.
+	self should: [subject at: 1 put: 1] raise: Error.
+	self assert: subject recordInfo getFieldNames equals: #('x' 'y')!
+
 testRecordInfo
-	| sa recinfo fieldNames ordered |
-	sa := self threePoints: POINTL.
-	self assert: sa elementClass equals: POINTL.
-	self assert: sa asObject equals: ((1 to: 3) collect: [:each | each @ each]).
-	recinfo := sa recordInfo.
-	self assert: recinfo name equals: sa elementClass name asString.
-	self assert: recinfo byteSize equals: sa elementClass byteSize.
-	fieldNames := sa elementClass template keys collect: [:each | each asString].
+	| subject recinfo fieldNames ordered |
+	subject := self threePoints: POINTL.
+	self assert: subject hasRecordInfo.
+	self assert: subject elementClass equals: POINTL.
+	self assert: subject asObject equals: ((1 to: 3) collect: [:each | each @ each]).
+	recinfo := subject recordInfo.
+	self assert: recinfo name equals: subject elementClass name asString.
+	self assert: recinfo byteSize equals: subject elementClass byteSize.
+	fieldNames := subject elementClass template keys collect: [:each | each asString].
 	self assert: recinfo getFieldNames asSet equals: fieldNames.
-	self assert: recinfo guid equals: sa elementClass guid.
+	self assert: recinfo guid equals: subject elementClass guid.
 	"Make sure enumeration of records is working"
 	ordered := OrderedCollection new.
-	sa do: [:each | ordered add: each].
+	subject do: [:each | ordered add: each].
 	self assert: ordered asArray equals: ((1 to: 3) collect: [:each | (each @ each) asParameter])!
+
+testWithAll
+	"The default element class of SAFEARRAY is VARIANT"
+
+	| subject objects |
+	objects := #(1 1.25 'abc' 1s2).
+	subject := SAFEARRAY withAll: objects.
+	self assert: subject hasVarType.
+	self assert: subject vartype equals: VT_VARIANT.
+	self assert: subject elementClass equals: VARIANT.
+	self assert: subject vt equals: VT_ARRAY | VT_VARIANT.
+	self assert: subject asArray equals: objects!
 
 threePoints: recordClass
 	| sa |
@@ -186,16 +353,37 @@ threePoints: recordClass
 	^sa! !
 
 !OS.COM.Tests.SAFEARRAYTest categoriesForMethods!
-arrayClass!constants!private! !
 elementClassNames!constants!private! !
-newArrayOfIntegers:!helpers!private! !
+newTestSubjectOfSize:!helpers!private! !
 testAXRecords!public!unit tests! !
 testBoolDisplayString!public! !
 testBounds!public!unit tests! !
+testDoubles!public! !
 testElementAt!public!unit tests! !
 testElementClasses!public!unit tests! !
+testFILETIME!public!unit tests! !
+testFloats!public! !
+testIDispatch!public!unit tests! !
+testInt16s!public! !
+testInt32s!public! !
+testInt64s!public! !
+testInvalidElementClasses!public! !
+testIUnknown!public!unit tests! !
 testMarshal!public!unit tests! !
+testNew!public!unit tests! !
+testNewColon!public!unit tests! !
+testRecord!public!unit tests! !
 testRecordInfo!public!unit tests! !
-threePoints:!public!unit tests! !
+testWithAll!public!unit tests! !
+threePoints:!constants!public! !
+!
+
+!OS.COM.Tests.SAFEARRAYTest class methodsFor!
+
+arrayClass
+	^SAFEARRAY! !
+
+!OS.COM.Tests.SAFEARRAYTest class categoriesForMethods!
+arrayClass!constants!private! !
 !
 

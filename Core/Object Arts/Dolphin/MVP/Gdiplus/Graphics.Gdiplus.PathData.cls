@@ -57,15 +57,15 @@ Points: aPOINTFArray
 	self Count: aPOINTFArray size!
 
 Types
-	"Answer the <ExternalArray> value of the receiver's 'Types' field."
+	"Answer the <UInt8Array> value of the receiver's 'Types' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_Types) length: self Count!
+	^UInt8Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_Types) length: self Count!
 
-Types: anExternalArray
-	"Set the receiver's 'Types' field to the value of the argument, anExternalArray"
+Types: anUInt8Array
+	"Set the receiver's 'Types' field to the value of the argument, anUInt8Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_Types put: anExternalArray yourAddress.
-	self Count: anExternalArray size! !
+	bytes uintPtrAtOffset: _OffsetOf_Types put: anUInt8Array yourAddress.
+	self Count: anUInt8Array size! !
 
 !Graphics.Gdiplus.PathData categoriesForMethods!
 Count!**compiled accessors**!public! !
@@ -97,7 +97,7 @@ defineFields
 	self
 		defineField: #Count type: Int32Field new offset: 0;
 		defineField: #Points type: (ArrayPointerField type: POINTFArray lengthField: #Count) offset: 4;
-		defineField: #Types type: (ArrayPointerField type: ExternalArray lengthField: #Count) offset: 8.
+		defineField: #Types type: (ArrayPointerField type: UInt8Array lengthField: #Count) offset: 8.
 	self byteSize: 12!
 
 getFieldNames

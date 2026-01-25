@@ -10,7 +10,7 @@ External.POINTArray
 
 External.POINTFArray guid: (Core.GUID fromString: '{db21ef86-a19c-470e-93c7-fd0c4546148c}')!
 
-External.POINTFArray comment: ''!
+External.POINTFArray comment: '`POINTFArray` is a specialized `ExternalArray` to represent contiguous single-dimensioned arrays of `POINTF`s.'!
 
 !External.POINTFArray methodsFor!
 
@@ -26,17 +26,18 @@ uncheckedAt: anInteger
 	No bounds checks are performed on the subscript."
 
 	| offset |
-	offset := anInteger - 1 bitShift: 3.
-	^Graphics.Point x: (bytes floatAtOffset: offset) y: (bytes floatAtOffset: offset + 4)!
+	offset := (anInteger - 1) * POINTF._POINTF_Size.
+	^Graphics.Point x: (bytes floatAtOffset: offset)
+		y: (bytes floatAtOffset: offset + POINTF._OffsetOf_y)!
 
 uncheckedAt: anInteger put: aPoint
 	"Private - Replace the <POINTF> value at the specified index in the receiver with the x and y co-ordindates of the <Point> argument.
 	The co-ordinates are limited to 32-bit float range and precision."
 
 	| offset |
-	offset := anInteger - 1 bitShift: 3.
+	offset := (anInteger - 1) * POINTF._POINTF_Size.
 	^Graphics.Point x: (bytes floatAtOffset: offset put: aPoint x)
-		y: (bytes floatAtOffset: offset + 4 put: aPoint y)! !
+		y: (bytes floatAtOffset: offset + POINTF._OffsetOf_y put: aPoint y)! !
 
 !External.POINTFArray categoriesForMethods!
 printElement:on:!printing!private! !

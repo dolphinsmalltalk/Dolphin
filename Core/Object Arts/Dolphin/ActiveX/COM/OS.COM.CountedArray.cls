@@ -12,7 +12,21 @@ OS.COM.CountedArray guid: (Core.GUID fromString: '{44a86404-b2fe-11d3-b376-08004
 
 OS.COM.CountedArray isNonInstantiable: true!
 
-OS.COM.CountedArray comment: 'OLECountedArray is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.'!
+OS.COM.CountedArray comment: '`OS.COM.CountedArray` is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.
+
+The various structures for counted arrays all have a common layout where the first structure member is an unsigned 32-bit count of the number of elements, and the 2nd is a pointer to the memory block holding the array data. The element block is expected to be allocated from COM task memory. 
+* Array elements can be accessed in reference form by sending `#elements`. This accessor will return an `ExternalArray` that points at the unmanaged array in memory, and which itself is an array over the unmanaged elements.
+* To obtain the array by value (i.e. an independent copy of the array with elements unmarshalled to appropriate Smalltalk values) send `#value`. 
+* The unmanaged array contents can be replaced entirely with `#elements:`, the argument being an appropriate type of `ExternalArray`, or with `#value:`, the argument being a Smalltalk collection of Smalltalk objects that are marshalled to the array''s unmanaged element type. In either case the COM task memory for the original elements must be free''d. This will involve at least freeing the block of task memory allocated for the array itself. For some subtypes (e.g. CALPWSTR) the array elements are themselves allocated from the task heap, and so must be individually free''d. 
+* Individual elements of the unmanaged array can be accessed by 1-based integer index with `#at:`. The values returned will be unmarshalled for all scalar element types, updated with `#at:put:`.
+* When individual array elements are updated with #at:put:, in cases where the elements are heap allocated these are free''d and reallocated appropriately.
+
+## Instance Variables:
+  `elements`	`ExternalArray` subinstance pointing at the elements.
+
+'!
+
+!OS.COM.CountedArray categoriesForClass!External-Data-Structured-COM! !
 
 !OS.COM.CountedArray methodsFor!
 
@@ -43,7 +57,12 @@ elements
 	^elements!
 
 getElements
-	^self subclassResponsibility!
+	"Private - Answer the receiver's <ExternalArray> of elements."
+
+	^StructureArray 
+		fromAddress: self pElems
+		length: self cElems
+		elementClass: self elementClass!
 
 initialize
 	"Private - Initialize the receiver (common to internal [value] and
@@ -119,10 +138,9 @@ uncheckedAt:put:!accessing!private! !
 !OS.COM.CountedArray class methodsFor!
 
 clear: addressOrBytes
-	"Free an instance of the structure which instances of the receiver wrap
-	which resides at the specified address."
+	"Free the counted array body pointed at by the receiver."
 
-	Ole32 coTaskMemFree: (addressOrBytes uintPtrAtOffset: 4)!
+	Ole32 coTaskMemFree: (addressOrBytes uintPtrAtOffset: _OffsetOf_pElems)!
 
 defineFields
 	"Define the count field common to OLE counted array structures.

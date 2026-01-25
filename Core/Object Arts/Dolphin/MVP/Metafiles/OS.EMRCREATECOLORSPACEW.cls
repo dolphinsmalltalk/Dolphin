@@ -51,21 +51,21 @@ cbData: anInteger
 	bytes uint32AtOffset: _OffsetOf_cbData put: anInteger!
 
 Data
-	"Answer the <ExternalArray> value of the receiver's 'Data' field."
+	"Answer the <UInt8Array> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self cbData!
+	^UInt8Array fromAddress: bytes yourAddress + _OffsetOf_Data length: self cbData!
 
-Data: anExternalArray
-	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
+Data: anUInt8Array
+	"Set the receiver's 'Data' field to the value of the argument, anUInt8Array"
 
 	| size |
-	size := anExternalArray byteSize.
-	anExternalArray
+	size := anUInt8Array byteSize.
+	anUInt8Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Data + 1)
 		to: _OffsetOf_Data + size
 		startingAt: 1.
-	self cbData: anExternalArray size!
+	self cbData: anUInt8Array size!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
@@ -150,7 +150,7 @@ defineFields
 			type: UInt32Field new
 			offset: 344;
 		defineField: #Data
-			type: (ArrayField type: ExternalArray lengthField: #cbData)
+			type: (ArrayField type: UInt8Array lengthField: #cbData)
 			offset: 348!
 
 getFieldNames

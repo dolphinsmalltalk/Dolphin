@@ -110,8 +110,24 @@ package setMethodNames: #(
 	#(#{Core.SessionManager} #comStartup)
 	#(#{Core.String} #asBSTR)
 	#(#{Core.String} #copyToCOMTaskMemory)
+	#(#{Core.String class} #arrayType)
+	#(#{External.DOUBLE class} #arrayType)
+	#(#{External.ExternalArray class} #arrayType)
+	#(#{External.FLOAT class} #arrayType)
+	#(#{External.Int16 class} #arrayType)
+	#(#{External.Int32 class} #arrayType)
+	#(#{External.Int64 class} #arrayType)
+	#(#{External.Int8 class} #arrayType)
+	#(#{External.IntPtr class} #arrayType)
 	#(#{External.Memory class} #queryInterface:ifNone:)
 	#(#{External.Structure} #copyToCOMTaskMemory)
+	#(#{External.Structure class} #arrayType)
+	#(#{External.UInt16 class} #arrayType)
+	#(#{External.UInt32 class} #arrayType)
+	#(#{External.UInt64 class} #arrayType)
+	#(#{External.UInt8 class} #arrayType)
+	#(#{External.UIntPtr class} #arrayType)
+	#(#{External.VOID class} #arrayType)
 	#(#{Kernel.ProcessorScheduler} #comCallback:id:subId:withArgumentsAt:cookie:)
 	#(#{Kernel.ProcessorScheduler} #registerCOMStub:)
 	#(#{Kernel.ProcessorScheduler} #unregisterCOMStub:)
@@ -600,6 +616,105 @@ asBSTR!converting!public! !
 copyToCOMTaskMemory!copying!public! !
 !
 
+!Core.String class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^self! !
+
+!Core.String class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.DOUBLE class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^DOUBLEArray! !
+
+!External.DOUBLE class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.ExternalArray class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^self! !
+
+!External.ExternalArray class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.FLOAT class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^FLOATArray! !
+
+!External.FLOAT class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.Int16 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^Int16Array! !
+
+!External.Int16 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.Int32 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^Int32Array! !
+
+!External.Int32 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.Int64 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^Int64Array! !
+
+!External.Int64 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.Int8 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^Int8Array! !
+
+!External.Int8 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.IntPtr class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^IntPtrArray! !
+
+!External.IntPtr class categoriesForMethods!
+arrayType!constants!public! !
+!
+
 !External.Memory class methodsFor!
 
 queryInterface: interfaceClass ifNone: exceptionHandler
@@ -631,6 +746,86 @@ copyToCOMTaskMemory
 
 !External.Structure categoriesForMethods!
 copyToCOMTaskMemory!copying!public! !
+!
+
+!External.Structure class methodsFor!
+
+arrayType
+	"Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type.
+	The generic <StructureArray> can actually handle most types, but this may be overridden for increased efficiency."
+
+	^StructureArray! !
+
+!External.Structure class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.UInt16 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^UInt16Array! !
+
+!External.UInt16 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.UInt32 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^UInt32Array! !
+
+!External.UInt32 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.UInt64 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^UInt64Array! !
+
+!External.UInt64 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.UInt8 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^UInt8Array! !
+
+!External.UInt8 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.UIntPtr class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^UIntPtrArray! !
+
+!External.UIntPtr class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!External.VOID class methodsFor!
+
+arrayType
+	"Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type."
+
+	"Implementation Note: Embedded arrays of <VOID> are not valid, since no size is known, however where a field is a void* pointer to a conformant array, we assume it is pointing at bytes."
+
+	^UInt8Array! !
+
+!External.VOID class categoriesForMethods!
+arrayType!constants!public! !
 !
 
 !Kernel.ProcessorScheduler methodsFor!

@@ -10,14 +10,16 @@ External.Structure
 
 External.ExternalArray guid: (Core.GUID fromString: '{87b4c593-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-External.ExternalArray comment: 'ExternalArray is a specialized class of <ExternalStructure> to represent contiguous heterogeneous arrays of external types, be they scalar of structured. ExternalArray itself can be used to represent arrays of unsigned 8-bit integers (i.e. bytes). It and its various subclasses can be used for external interfacing tasks, such as where C arrays are expected.
+External.ExternalArray comment: '`ExternalArray` is an abstract class of `External.Structure` to represent contiguous heterogeneous arrays of external types, be they scalar of structured. Its various concrete subclasses can be used for external interfacing tasks, typically where C-style arrays are expected.
 
-StructureArray is the most general of the subclasses in that it supports arbitrary element types (represented by other ExternalStructures), and can in fact perform the task of the other subclasses such as DWORDArray. The more specialized subclasses do, however, offer much greater efficiency where they are applicable.
+`StructureArray` is the most general of the subclasses in that it supports arbitrary element types (represented by other `Structure` classes), and can in fact perform the task of the other subclasses such as `UInt32Array`. The more specialized subclasses do, however, offer much greater efficiency where they are applicable. However, note the important difference that `StructureArray>>#at:` will typically return an instance of its element class that is a reference to (i.e. points at) the underlying external data in the array. Mutating the returned element will therefore update the the array in place. The specialised external arrays will usually marshal directly to an appropriate Smalltalk value for the array element, rather than return a reference. This means that mutating the returned value will not update the array, but rather to update the value one must send `#at:put:` back to the array to overwrite the external data at the same index.
 
-Specialized subclasses are provided for most standard intrinsic types; signed and unsigned integers of 16 and 32-bits, single and double precision floating point numbers, etc.
+Specialized subclasses are provided for most standard intrinsic types; signed and unsigned integers of 8, 16, 32-bits, and 64-bits, single and double precision floating point numbers, etc.
 
-Instance Variables:
-	length		<integer>. Number of elements in the instance.
+Note that for backwards compatibility `ExternalArray` itself can be used to represent arrays of unsigned 8-bit integers (i.e. bytes), however this is soft-deprecated. UInt8Array should be used in preference.
+
+## Instance Variables:
+  `length`		`<integer>` number of elements in the array.
 
 '!
 
@@ -450,6 +452,10 @@ select: discriminator
 	self keysAndValuesDo: [:i :elem | (discriminator value: elem) ifTrue: [aStream nextPut: elem]].
 	^aStream contents!
 
+single
+	self length == 1 ifFalse: [self errorNotSingleton].
+	^self uncheckedAt: 1!
+
 size
 	"Answer the number of elements in the receiver."
 	
@@ -499,7 +505,7 @@ asOrderedCollection!converting!public! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
-atAllPut:!public! !
+atAllPut:!accessing!public! !
 basicAt:!accessing!private! !
 basicAt:put:!accessing!private! !
 basicLength:!initializing!private! !
@@ -543,6 +549,7 @@ replaceElementsOf:from:to:startingAt:!private!replacing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 second!accessing!public! !
 select:!enumerating!public! !
+single!accessing!public! !
 size!accessing!public! !
 species!constants!public! !
 uncheckedAt:!accessing!private! !
@@ -559,9 +566,16 @@ alignment
 
 	^self elementSize!
 
+clear: addressOrBytes
+	"Finalize an instance of the structure which instances of the receiver wrap which resides at the specified address. Note that this is not about freeing the specified memory block, but any resources which it references."
+
+	"In general we need to know the number of elements to enumerate in order to be able to clear the array, so cannot implement this."
+	self shouldNotImplement!
+
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
+	Notification deprecated.
 	^UInt8!
 
 elementSize
@@ -642,10 +656,18 @@ withAll: newElements
 			[:i :elem |
 			answer uncheckedAt: i put: elem.
 			i + 1].
-	^answer! !
+	^answer!
+
+withBytes: aByteArray 
+	| count |
+	count := aByteArray size / self elementSize.
+	count isInteger ifFalse: [self error: 'The buffer does not hold an integral number of elements of type ', self elementClass printString].
+	^(super withBytes: aByteArray)
+		basicLength: count! !
 
 !External.ExternalArray class categoriesForMethods!
 alignment!constants!public! !
+clear:!public!realizing/unrealizing! !
 elementClass!constants!public! !
 elementSize!instance creation!private! !
 fromAddress:!instance creation!public! !
@@ -658,5 +680,6 @@ new:bufferClass:!instance creation!public! !
 new:withAll:!public! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !
+withBytes:!instance creation!public! !
 !
 
