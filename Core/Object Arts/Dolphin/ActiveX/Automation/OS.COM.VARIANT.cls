@@ -269,11 +269,11 @@ cy: aNumber
 		uint16AtOffset: _OffsetOf_vt put: VT_CY!
 
 date
-	"Answer a <DATE> corresponding to the Variant Date from the receiver. Assumes the receiver is of type VT_DATE."
+	"Private - Answer a date and time object corresponding to the Variant DATE from the receiver. Assumes the receiver is of type VT_DATE."
 
 	^self isByRef
 		ifTrue: [DATE fromAddress: self refAddress]
-		ifFalse: [DATE new value: (bytes doubleAtOffset: _OffsetOf_date)]!
+		ifFalse: [DateAndTime fromDATE: (bytes doubleAtOffset: _OffsetOf_date)]!
 
 date: aNumberOrDATE
 	"Set the DATE value, newValue, into the receiver."
@@ -1020,6 +1020,13 @@ fromDispatch: piDisp
 		yourself
 		!
 
+fromFILETIME: aFILETIME
+	"Answer a new instance of the receiver of type which is the best representation for the <FILETIME> argument. Note that for VARIANTs, this will be a VT_DATE and there will be some loss of precision and range."
+
+	^self new
+		date: aFILETIME asDATE;
+		yourself!
+
 fromFloat: aFloat 
 	"Answer a new instance of the receiver of type VT_DOUBLE containing
 	the <Float> value, fValue."
@@ -1249,6 +1256,7 @@ fromBoolean:!instance creation!public! !
 fromCollection:!instance creation!public! !
 fromDATE:!instance creation!public! !
 fromDispatch:!instance creation!public! !
+fromFILETIME:!instance creation!public! !
 fromFloat:!instance creation!public! !
 fromInteger:!instance creation!public! !
 fromLargeInteger:!instance creation!public! !

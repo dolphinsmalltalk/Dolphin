@@ -125,14 +125,6 @@ asString
 	self printISO8601On: stream.
 	^stream contents!
 
-asUtf16String
-	"Answer the ISO8601 representation of the receiver as a UTF-16 encoded string."
-
-	| stream |
-	stream := Utf16String writeStream: 22.
-	self printISO8601On: stream.
-	^stream contents!
-
 closeTo: otherDuration precision: precisionDuration
 	^(self - otherDuration) abs <= precisionDuration!
 
@@ -414,7 +406,6 @@ asNanoseconds!converting!public! !
 asParameter!converting!public! !
 asSeconds!converting!public! !
 asString!printing!public! !
-asUtf16String!printing!public! !
 closeTo:precision:!comparing!public! !
 days!accessing!public! !
 displayOn:!printing!public! !

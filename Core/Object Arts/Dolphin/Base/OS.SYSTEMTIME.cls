@@ -29,7 +29,7 @@ OS.SYSTEMTIME comment: ''!
 asDateAndTime
 	"Answer a <DateAndTime> corresponding to the receiver."
 
-	^DateAndTime fromSYSTEMTIME: self offset: Locale timeZoneInformation offset!
+	^DateAndTime fromSYSTEMTIME: self!
 
 asFILETIME
 	"Answer a FILETIME corresponding to the receiver."

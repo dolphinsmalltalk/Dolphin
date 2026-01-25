@@ -82,7 +82,7 @@ testFromSeconds
 	current := self currentTimeStamp.
 	self assert: current equals: (TimeStamp fromSeconds: current asSeconds).
 	self assert: (current date addDays: 1)
-		equals: (TimeStamp fromSeconds: current asSeconds + 86400) date.
+		equals: (TimeStamp fromSeconds: current asSeconds + Duration.SecondsPerDay) date.
 	self assert: -1 equals: (TimeStamp fromSeconds: -1) asSeconds!
 
 testFromSYSTEMTIME

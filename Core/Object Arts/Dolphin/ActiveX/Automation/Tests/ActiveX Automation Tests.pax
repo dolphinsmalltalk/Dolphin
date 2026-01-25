@@ -10,6 +10,7 @@ package setClassNames: #(
 	#{OS.COM.Tests.BSTRTest}
 	#{OS.COM.Tests.CYArrayTest}
 	#{OS.COM.Tests.CYTest}
+	#{OS.COM.Tests.DATETest}
 	#{OS.COM.Tests.DECIMALTest}
 	#{OS.COM.Tests.IDispatchTest}
 	#{OS.COM.Tests.SAFEARRAYTest}
@@ -55,6 +56,14 @@ Core.Tests.DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.DATETest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

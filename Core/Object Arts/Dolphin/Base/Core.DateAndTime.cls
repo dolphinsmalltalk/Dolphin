@@ -10,7 +10,7 @@ Core.Magnitude
 			'FiletimeEpochSeconds' -> -16r234474600.
 			'IsoEpochRD' -> -16r16D.
 			'JulianDateOffset' -> 16r22A11020C0.
-			'LilianDayOffset' -> -16r8D0C7.
+			'LilianDayRD' -> 16r8D0C8.
 			'SmalltalkEpochRD' -> 16rA96C9.
 			'UnixEpochSeconds' -> 16r81C94B00
 		}!
@@ -20,6 +20,10 @@ Core.DateAndTime guid: (Core.GUID fromString: '{87b4c653-026e-11d3-9fd7-00a0cc3e
 Core.DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk protocols `<DateAndTime>` (instance side) and `<DateAndTime factory>` (class side).
 
 *Derived from original work copyright © 2005 Ian Bartholomew, with additions by Richard Harmon, however the internal representation has been changed.*
+
+The implementation can represent any moment in time with infinite precision using an integer Rata Die, and a rational number representing the number of seconds (and fractions of a second) since the beginning of the day. The value is expressed in some local time, so an integer seconds offset from UTC is also stored. If the time is in UTC, then the offset will be zero.
+
+Note that in practice the precision of expressed moments is going to be limited by the source. For example if the current time is requested, then the result will be limited by the precision of the [GetSystemTimePreciseAsFileTime](https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getsystemtimepreciseasfiletime) API, which is at best 100nS. Of course the local computer time is very unlikely to be set as accurately as this anyway, but for relative times it should be assumed that the duration has at best 100nS accuracy, and probably closer to 1µS. More precise measurement of the passing of time is possible using the system performance counter.
 
 ## Examples
 ```
@@ -32,11 +36,18 @@ Core.DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smallt
 ## Instance Variables:
   `rataDie`			`<integer>` count of days based on an epoch of 1st Jan 0001 (Rata Die).
   `seconds`		`<rational>` number of seconds since beginning of the day in local time (i.e. at the time zone `offset`)
-  `offset`			`<integer>` that is the seconds offset from UTC of the local time of the `DateAndTime`
+  `offset`			`<integer>` seconds offset from UTC of the stored moment.
 
-## Class Variables
+## Class Constants
 
-  `SmalltalkEpochRD`	`<integer>` Rata Die of the traditional Smalltalk epoch (1st Jan 1901)'!
+  `FiletimeEpochSeconds`	`<integer>` seconds offset of FILETIME epoch from RD epoch.
+  `IsoEpochRD`				`<integer>` Rata Die of the ISO8601 epoch (1st Jan 0000)
+  `JulianDateOffset`			`<integer>` seconds offset of Julian date epoch from RD epoch
+  `LilianDayRD`				`<integer>` Rata Die of Lilian date date epoch (15 Oct 1582)
+  `SmalltalkEpochRD`		`<integer>` Rata Die of the traditional Smalltalk epoch (1st Jan 1901)
+  `UnixEpochSeconds`		`<integer>` seconds offset of Unix epoch (1 Jan 1970) from RD epoch
+
+'!
 
 !Core.DateAndTime categoriesForClass!IDB Goodies!Magnitude-General! !
 
@@ -86,10 +97,10 @@ asSeconds
 	^self localSeconds - offset!
 
 asSYSTEMTIME
-	"Answer a <SYSTEMTIME> representing the same point in time as the receiver. This is a lossy conversion:
+	"Answer a <SYSTEMTIME> representing approximately the same moment as the receiver. This is a lossy conversion:
 		- Not all <DateAndTime>s can be represented as <SYSTEMTIME>; the earliest SYSTEMTIME is 1/1/1601 can represent only a limited range of possible <DateAndTime>s. If the DateAndTime is outside the SYSTEMTIME range, the structure returned may not be valid for passing to a Windows API.
 		- <SYSTEMTIME> has no timezone offset, so may be a local time or a UTC time. Dolphin follows a convention of assuming that SYSTEMTIMEs are local times where the offset is not otherwise specified.
-		- The may be loss of precision: <SYSTEMTIME> has millisecond precision, whereas <DateAndTime>s have essentially infinite precision, although in practice the precision is likely to be 100nS ticks."
+		- The may well be loss of precision: <SYSTEMTIME> has millisecond precision, whereas <DateAndTime>s have essentially infinite precision, although in practice the precision is likely to be 100nS ticks."
 
 	| local secs |
 	local := self asLocal.
@@ -223,11 +234,11 @@ julianDayNumber
 	^(self class utcSeconds: utc asSeconds + JulianDateOffset offset: 0) rataDie!
 
 lilianDayNumber
-	"Answer the receiver's Lilian Day Number (see https://en.wikipedia.org/wiki/Lilian_date)."
+	"Answer the receiver's [Lilian Day Number](https://en.wikipedia.org/wiki/Lilian_date)."
 
-	"We must convert from Rata Die - see https://en.wikipedia.org/wiki/Rata_Die"
+	"We must convert from [Rata Die](https://en.wikipedia.org/wiki/Rata_Die)"
 
-	^self rataDie + LilianDayOffset!
+	^rataDie - LilianDayRD + 1!
 
 localSeconds
 	"Answer a <rational> that is the number of seconds (including fractional part) that the receiver is past the traditional Smalltalk Epoch (i.e. 1901-01-01T00:00:00+00:00) in local time.
@@ -351,6 +362,11 @@ rataDie
 
 	^rataDie!
 
+roundTo: aDuration
+	"Round the receiver to be a multiple of the <Duration> argument"
+
+	^self class utcSeconds: (self asSeconds roundTo: aDuration asSeconds) offset: self offsetSeconds!
+
 second
 	"Answer a <rational> in the range [0, 60), representing the second of the minute of the local time of the receiver, including any fractional part."
 
@@ -468,6 +484,7 @@ printOn:format:!printing!public! !
 printOn:withLeadingSpace:!printing!public! !
 printStringFormat:!printing!public! !
 rataDie!accessing!public! !
+roundTo:!public!truncation and round off! !
 second!accessing!public! !
 seconds!accessing!public! !
 setRataDie:seconds:offset:!initializing!private! !
@@ -601,13 +618,12 @@ initialize
 				minute: 0
 				second: 0
 				offset: 0 hours) asSeconds.
-	self addClassConstant: 'LilianDayOffset'
-		value: ((DateAndTime
+	self addClassConstant: 'LilianDayRD'
+		value: (DateAndTime
 				year: 1582
 				month: 10
 				day: 15
-				offset: 0 hours) rataDie - 1)
-				* -1.
+				offset: 0 hours) rataDie.
 	self addClassConstant: 'UnixEpochSeconds'
 		value: (DateAndTime
 				year: 1970

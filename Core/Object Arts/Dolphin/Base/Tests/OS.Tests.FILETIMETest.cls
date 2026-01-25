@@ -31,6 +31,35 @@ testAsDateAndTime
 	dt := DateAndTime now.
 	self assert: dt - subject asDateAndTime < 1 minutes!
 
+testComparing
+	| examples |
+	examples := {
+				FILETIME new.
+				FILETIME fromInteger: FILETIME.SmalltalkEpoch.
+				FILETIME fromInteger: FILETIME.SmalltalkEpoch - 1.
+				FILETIME fromInteger: FILETIME.SmalltalkEpoch + 1.
+				FILETIME fromInteger: 134138194971234567.
+				FILETIME fromInteger: 16rFFFFFFFFFFFFFFFF
+			}.
+	1 to: examples size
+		do: 
+			[:i |
+			1 to: examples size
+				do: 
+					[:j |
+					| ft2 ft1 |
+					ft1 := examples at: i.
+					ft2 := examples at: j.
+					i == j
+						ifTrue: 
+							[self assert: ft1 equals: ft2.
+							self assert: ft2 equals: ft1.
+							self assert: ft1 hash equals: ft2 hash]
+						ifFalse: 
+							[self deny: ft1 equals: ft2.
+							self deny: ft2 equals: ft1.
+							self deny: ft1 hash equals: ft2 hash]]]!
+
 testDisplayString
 	| now |
 	now := DateAndTime now.
@@ -88,6 +117,7 @@ testPrintString
 !OS.Tests.FILETIMETest categoriesForMethods!
 assertFromIntegerInvertible:!helpers!private! !
 testAsDateAndTime!public!unit tests! !
+testComparing!public!unit tests! !
 testDisplayString!public!unit tests! !
 testFromDateAndTime!public!unit tests! !
 testFromInteger!public!unit tests! !

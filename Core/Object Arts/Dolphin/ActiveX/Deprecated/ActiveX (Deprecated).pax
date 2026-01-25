@@ -90,7 +90,7 @@ fromDATE: aDATE
 	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, aDATE, which
 	is assumed to be an AX Automation format Date."
 
-	^self fromSYSTEMTIME: (OS.SYSTEMTIME fromDATE: aDATE)! !
+	^self fromDateAndTime: aDATE asDateAndTime! !
 
 !Core.TimeStamp class categoriesForMethods!
 fromDATE:!instance creation!private! !
@@ -125,7 +125,7 @@ asTimeStamp
 
 !OS.COM.DATE categoriesForMethods!
 asDate!converting!public! !
-asTimeStamp!accessing!public! !
+asTimeStamp!converting!public! !
 !
 
 !OS.COM.DATE class methodsFor!

@@ -4596,7 +4596,7 @@ Core.Magnitude
 			'FiletimeEpochSeconds' -> -16r234474600.
 			'IsoEpochRD' -> -16r16D.
 			'JulianDateOffset' -> 16r22A11020C0.
-			'LilianDayOffset' -> -16r8D0C7.
+			'LilianDayRD' -> 16r8D0C8.
 			'SmalltalkEpochRD' -> 16rA96C9.
 			'UnixEpochSeconds' -> 16r81C94B00
 		}!

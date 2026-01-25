@@ -314,7 +314,7 @@ testISO8601Printing
 			self assert: 59.1234567891 seconds asString equals: 'PT59<s>123456789S' << decimalSeparator.
 			self assert: (1 days + 2 hours + 3 minutes + 4.1 seconds) asString
 				equals: 'P1DT2H3M4<s>1S' << decimalSeparator.
-			self assert: 1 nanoseconds asUtf16String equals: 'PT0<s>000000001S' << decimalSeparator].
+			self assert: (Utf16String streamContents: [:strm | 1 nanoseconds printISO8601On: strm]) equals: 'PT0<s>000000001S' << decimalSeparator].
 	"Note that we truncate the fractional seconds to nanoseconds when printing, although internally the precision is unlimited."
 	self assert: (123456789654321 / 1e15) seconds asString equals: 'PT0,123456789S'!
 

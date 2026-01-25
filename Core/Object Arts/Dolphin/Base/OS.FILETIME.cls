@@ -26,6 +26,13 @@ FILETIMEs are typically used to mark file creation/modification/access times wit
 
 !OS.FILETIME methodsFor!
 
+= anObject
+	^self == anObject or: 
+			[self species == anObject species and: 
+					[| isNull |
+					(isNull := self isNull) == anObject isNull
+						and: [isNull or: [self asUTC asInteger = anObject asUTC asInteger]]]]!
+
 asDateAndTime
 	"A Windows FILETIME expresses the number of 100nS intervals that have elapsed since 1601-01-01T00:00:00+00:00
 
@@ -108,9 +115,13 @@ localSeconds
 offsetSeconds
 	"Answer the <number> of seconds this <FILETIME> is offset from UTC."
 
-	^0! !
+	^0!
+
+species
+	^FILETIME! !
 
 !OS.FILETIME categoriesForMethods!
+=!comparing!public! !
 asDateAndTime!converting!public! !
 asFILETIME!converting!public! !
 asInteger!converting!public! !
@@ -123,6 +134,7 @@ displayOn:!printing!public! !
 integerValue:!accessing!public! !
 localSeconds!converting!public! !
 offsetSeconds!converting!public! !
+species!accessing!public! !
 !
 
 !OS.FILETIME class methodsFor!

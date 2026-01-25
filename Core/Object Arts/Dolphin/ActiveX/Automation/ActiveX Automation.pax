@@ -92,8 +92,10 @@ package setMethodNames: #(
 	#(#{Core.Character} #asVariant)
 	#(#{Core.Collection} #asSAFEARRAY)
 	#(#{Core.Collection} #asVariant)
+	#(#{Core.DateAndTime} #asDATE)
 	#(#{Core.DateAndTime} #asFloat)
 	#(#{Core.DateAndTime} #asVariant)
+	#(#{Core.DateAndTime class} #fromDATE:)
 	#(#{Core.Float} #asVariant)
 	#(#{Core.Fraction} #asVariant)
 	#(#{Core.GUID class} #arrayType:)
@@ -102,8 +104,12 @@ package setMethodNames: #(
 	#(#{Core.Locale} #defaultVarStrApiFlags)
 	#(#{Core.Locale} #displayCY:flags:on:)
 	#(#{Core.Locale} #displayCY:on:)
+	#(#{Core.Locale} #displayDATE:flags:on:)
+	#(#{Core.Locale} #displayDATE:on:)
 	#(#{Core.Locale} #displayDECIMAL:flags:on:)
 	#(#{Core.Locale} #displayDECIMAL:on:)
+	#(#{Core.Locale} #parseDATE:)
+	#(#{Core.Locale} #parseDATE:flags:)
 	#(#{Core.Locale} #variantBool:)
 	#(#{Core.Number} #asVariant)
 	#(#{Core.ScaledDecimal} #asVariant)
@@ -201,12 +207,12 @@ package setMethodNames: #(
 	#(#{External.VOID class} #typeName)
 	#(#{External.VOID class} #vt)
 	#(#{Kernel.SmalltalkLocale} #displayCY:flags:on:)
-	#(#{Kernel.SmalltalkLocale} #displayDECIMAL:on:)
+	#(#{Kernel.SmalltalkLocale} #displayDATE:flags:on:)
 	#(#{Kernel.SmalltalkLocale} #displayDECIMAL:flags:on:)
 	#(#{Kernel.SmalltalkLocale} #variantBool:)
 	#(#{OS.AbstractWindowsLocale} #boolFormat)
 	#(#{OS.AbstractWindowsLocale} #displayCY:flags:on:)
-	#(#{OS.AbstractWindowsLocale} #displayDECIMAL:on:)
+	#(#{OS.AbstractWindowsLocale} #displayDATE:flags:on:)
 	#(#{OS.AbstractWindowsLocale} #displayDECIMAL:flags:on:)
 	#(#{OS.AbstractWindowsLocale} #getVariantBoolString:)
 	#(#{OS.AbstractWindowsLocale} #variantBool:)
@@ -269,6 +275,7 @@ package setMethodNames: #(
 	#(#{OS.COM.OLEAutLibrary} #unRegisterTypeLibForUser:wMajorVerNum:wMinorVerNum:lcid:syskind:)
 	#(#{OS.COM.OLEAutLibrary} #varBstrFromBool:lcid:dwFlags:pbstrOut:)
 	#(#{OS.COM.OLEAutLibrary} #varBstrFromCy:lcid:dwFlags:pbstrOut:)
+	#(#{OS.COM.OLEAutLibrary} #varBstrFromDate:lcid:dwFlags:pbstrOut:)
 	#(#{OS.COM.OLEAutLibrary} #varBstrFromDec:lcid:dwFlags:pbstrOut:)
 	#(#{OS.COM.OLEAutLibrary} #varCmp:pvarRight:lcid:dwFlags:)
 	#(#{OS.COM.OLEAutLibrary} #varDateFromStr:lcid:dwFlags:pdateOut:)
@@ -284,6 +291,7 @@ package setMethodNames: #(
 	#(#{OS.HRESULT class} #typeName)
 	#(#{OS.HRESULT class} #vt)
 	#(#{OS.InvariantLocale} #defaultVarStrApiFlags)
+	#(#{OS.SYSTEMTIME} #asDATE)
 	#(#{OS.SYSTEMTIME} #asFloat)
 	#(#{OS.SYSTEMTIME} #asVariant)
 	#(#{OS.SYSTEMTIME class} #fromDATE:)
@@ -1113,7 +1121,14 @@ External.DOUBLE
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'EpochRD' -> 16rA955A.
+			'EpochSeconds' -> -16r1E3D680.
+			'MaxBound' -> 16r2D2482.
+			'MaxValue' -> 2.958465999988426e6.
+			'MinBound' -> -16rA081B.
+			'MinValue' -> -657434.9999884259
+		}!
 
 External.Int16
 	subclass: #'OS.COM.VARIANT_BOOL'
@@ -1326,10 +1341,21 @@ asVariant!converting!public! !
 
 !Core.DateAndTime methodsFor!
 
-asFloat
-	"Answer the OLEDATE representation of the receiver."
+asDATE
+	"Answer the OLE Automation <DATE> that is the nearest equivalent of the receiver. Note that this may to lose some precision, although we preserve as much as possible. OLE Automation APIs that work with dates may discard (e.g. SystemTimeToVariantTime) or round (e.g. VariantTimeToSystemTime) sub-second precision, and this behaviour may not be documented. The receiver can also be out of range of dates that are representable as a DATE, in which case an error will be thrown from DATE class>>fromFloat:"
 
-	^self asParameter asFloat!
+	<namespace: OS.COM>
+	| local day fraction |
+	local := self asLocal.	"DATEs are assumed to be in local time"
+	day := local rataDie - DATE.EpochRD.
+	fraction := local seconds / Duration.SecondsPerDay.
+	"We need conditional logic to handle the weird day fraction representation"
+	^DATE fromFloat: (day < 0 ifTrue: [day - fraction] ifFalse: [day + fraction])!
+
+asFloat
+	"Answer the OLEDATE representation of the receiver as a double-precision floating point number."
+
+	^self asDATE asFloat!
 
 asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
@@ -1337,8 +1363,36 @@ asVariant
 	^self asSYSTEMTIME asVariant! !
 
 !Core.DateAndTime categoriesForMethods!
+asDATE!converting!public! !
 asFloat!converting!public! !
 asVariant!converting!public! !
+!
+
+!Core.DateAndTime class methodsFor!
+
+fromDATE: aDATE
+	"Answer a new instance of the receiver that represents the moment as the <DATE> (variant time) argument."
+
+	"From [VariantTimeToSystemTime function (oleauto.h)](https://learn.microsoft.com/en-us/windows/win32/api/oleauto/nf-oleauto-varianttimetosystemtime):
+
+		A variant time is stored as an 8-byte real value (double), representing a date between January 1, 100 and December 31, 9999, inclusive. The value 2.0 represents January 1, 1900; 3.0 represents January 2, 1900, and so on. Adding 1 to the value increments the date by a day. The fractional part of the value represents the time of day. Therefore, 2.5 represents noon on January 1, 1900; 3.25 represents 6:00 A.M. on January 2, 1900, and so on. Negative numbers represent the dates prior to December 30, 1899.
+
+	The conversion is relatively simple - the integer part represents a day number offset from 30/12/1899 that we just need to adjust to the Rata Die epoch. The fraction part can then be multiplied by the number of seconds in a day to yield the 
+	There is an important subtlety here that is not immediately apparent: The fraction part always represents a positive offset into the day, so it doesn't necessary have the same sign as the day count. This is odd, and appears to create some complexity in conversions in either direction, but in this case it just boils down to using the absolute value of the fraction to calculate the seconds. It can only be this simple because we retain the full precision - if we were to round the value, the logic would have to be more complex to handle the asymmetry. See also DateAndTime>>#asDATE for the reverse conversion, where we do unfortunately need a branch to handle it."
+
+	<namespace: OS.COM>
+	| date day |
+	date := aDATE asFloat.
+	(date > DATE.MinBound and: [date < DATE.MaxBound])
+		ifFalse: [^HRESULTError signalWith: E_INVALIDARG].
+	day := date truncated.
+	^self
+		newRataDie: day + DATE.EpochRD
+		seconds: (date - day) abs * Duration.SecondsPerDay
+		offset: Locale timeZoneInformation offsetSeconds! !
+
+!Core.DateAndTime class categoriesForMethods!
+fromDATE:!accessing!public! !
 !
 
 !Core.Float methodsFor!
@@ -1409,6 +1463,19 @@ displayCY: aCY on: aWriteStream
 
 	self displayCY: aCY flags: self defaultVarStrApiFlags on: aWriteStream!
 
+displayDATE: aDATE flags: anInteger on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DATE> argument that a user in this <Locale> might expect to see."
+
+	self subclassResponsibility!
+
+displayDATE: aDATE on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DATE> argument that a user in this <Locale> might expect to see."
+
+	self
+		displayDATE: aDATE
+		flags: self defaultVarStrApiFlags
+		on: aWriteStream!
+
 displayDECIMAL: aDECIMAL flags: anInteger on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
 
@@ -1422,6 +1489,24 @@ displayDECIMAL: aDECIMAL on: anInteger
 		flags: self defaultVarStrApiFlags
 		on: anInteger!
 
+parseDATE: aString
+	"Parse a <DATE> from the <String> argument, which is assumed to represent the printed representation of a variant date/time in the format used in this locale."
+
+	^self parseDATE: aString flags: self defaultVarStrApiFlags!
+
+parseDATE: aString flags: anInteger
+	"Parse a <DATE> from the <String> argument, which is assumed to represent the printed representation of a variant date/time in the format used in this locale. The <integer> 2nd argument specifies flags accepted by the [VarDateFromStr() API](https://learn.microsoft.com/en-us/windows/win32/api/oleauto/nf-oleauto-vardatefromstr)."
+
+	<namespace: OS.COM>
+	| answer |
+	answer := DATE new.
+	OleAut32
+		varDateFromStr: aString
+		lcid: self asParameter
+		dwFlags: anInteger
+		pdateOut: answer.
+	^answer!
+
 variantBool: aBoolean
 	^self subclassResponsibility! !
 
@@ -1429,8 +1514,12 @@ variantBool: aBoolean
 defaultVarStrApiFlags!constants!private! !
 displayCY:flags:on:!displaying!public! !
 displayCY:on:!displaying!public! !
+displayDATE:flags:on:!displaying!public! !
+displayDATE:on:!displaying!public! !
 displayDECIMAL:flags:on:!displaying!public! !
 displayDECIMAL:on:!displaying!public! !
+parseDATE:!displaying!public! !
+parseDATE:flags:!displaying!public! !
 variantBool:!constants!public! !
 !
 
@@ -2466,8 +2555,10 @@ displayCY: aCY flags: anInteger on: aWriteStream
 
 	aCY value displayOn: aWriteStream!
 
+displayDATE: aDATE flags: anInteger on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DATE> argument that a user in this locale might expect to see."
 
-	aCURRENCY value displayOn: aWriteStream!
+	aDATE value displayOn: aWriteStream!
 
 displayDECIMAL: aDECIMAL flags: anInteger on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
@@ -2479,7 +2570,7 @@ variantBool: aBoolean
 
 !Kernel.SmalltalkLocale categoriesForMethods!
 displayCY:flags:on:!displaying!public! !
-displayDECIMAL:on:!displaying!public! !
+displayDATE:flags:on:!displaying!public! !
 displayDECIMAL:flags:on:!displaying!public! !
 variantBool:!constants!public! !
 !
@@ -2506,13 +2597,16 @@ displayCY: aCY flags: anInteger on: aWriteStream
 		displayOn: aWriteStream;
 		free!
 
+displayDATE: aDATE flags: anInteger on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DATE> argument that a user in this <Locale> might expect to see."
 
+	<namespace: OS.COM>
 	| bstr |
-	bstr := COM.BSTR new.
-	COM.OleAut32
-		varBstrFromCy: aCURRENCY
+	bstr := BSTR new.
+	OleAut32
+		varBstrFromDate: aDATE
 		lcid: self lcid
-		dwFlags: 0
+		dwFlags: anInteger
 		pbstrOut: bstr.
 	bstr
 		displayOn: aWriteStream;
@@ -2554,7 +2648,7 @@ variantBool: aBoolean
 !OS.AbstractWindowsLocale categoriesForMethods!
 boolFormat!constants!public! !
 displayCY:flags:on:!displaying!public! !
-displayDECIMAL:on:!displaying!public! !
+displayDATE:flags:on:!displaying!public! !
 displayDECIMAL:flags:on:!displaying!public! !
 getVariantBoolString:!constants!public! !
 variantBool:!constants!public! !
@@ -3173,8 +3267,17 @@ varBstrFromCy: cyIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
 	<stdcall: hresult VarBstrFromCy CY uint32 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
-varBstrFromCy: pcyIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
-	<stdcall: hresult VarBstrFromCy CURRENCY uint32 uint32 bstr*>
+varBstrFromDate: dateIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
+	"Invoke the VarBstrFromDate() function of the module wrapped by the receiver.
+	Helpstring: Converts a date value to a BSTR value.
+
+		HRESULT __stdcall VarBstrFromDate(
+			[in]DATE dateIn,
+			[in]unsigned long lcid,
+			[in]ULONG dwFlags,
+			[out]BSTR* pbstrOut);"
+
+	<stdcall: hresult VarBstrFromDate date uint32 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
 varBstrFromDec: pdecIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
@@ -3199,13 +3302,17 @@ varCmp: pvarLeft pvarRight: pvarRight lcid: lcid dwFlags: dwFlags
 	<stdcall: hresult VarCmp variant* variant* uint32 uint32>
 	^self invalidCall: _failureCode!
 
-varDateFromStr: strIn lcid: lcid dwFlags: dwFlags pdateOut: aFloat
-	"Convert from a string date representation to the OLE Automation date type,
-	according to the users regional settings.
+varDateFromStr: strIn lcid: lcid dwFlags: dwFlags pdateOut: pdateOut
+	"Invoke the VarDateFromStr() function of the module wrapped by the receiver.
+	Helpstring: Converts an OLECHAR string to a date value.
 
-		HRESULT VarDateFromStr(OLECHAR* strIn, LCID lcid, DWORD dwFlags, DATE* pdateOut);"
+		HRESULT __stdcall VarDateFromStr(
+			[in]LPWSTR strIn,
+			[in]unsigned long lcid,
+			[in]ULONG dwFlags,
+			[out]DATE* pdateOut);"
 
-	<stdcall: hresult VarDateFromStr lpwstr uint32 uint32 lpvoid>
+	<stdcall: hresult VarDateFromStr lpwstr uint32 uint32 date*>
 	^self invalidCall: _failureCode!
 
 variantChangeTypeEx: pvargDest pvarSrc: pvarSrc lcid: lcid wFlags: wFlags vt: vt
@@ -3315,16 +3422,27 @@ unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!public! !
 unRegisterTypeLibForUser:wMajorVerNum:wMinorVerNum:lcid:syskind:!**auto generated**!public! !
 varBstrFromBool:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
 varBstrFromCy:lcid:dwFlags:pbstrOut:!**auto generated**!public! !
-varBstrFromDec:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
+varBstrFromDate:lcid:dwFlags:pbstrOut:!**auto generated**!public! !
 varBstrFromDec:lcid:dwFlags:pbstrOut:!**auto generated**!Automation Functions-Variant Manipulation!public! !
 varCmp:pvarRight:lcid:dwFlags:!Automation Functions-Variant Manipulation!public! !
-varDateFromStr:lcid:dwFlags:pdateOut:!Automation Functions-Variant Manipulation!public! !
+varDateFromStr:lcid:dwFlags:pdateOut:!**auto generated**!Automation Functions-Variant Manipulation!public! !
 variantChangeTypeEx:pvarSrc:lcid:wFlags:vt:!Automation Functions-Variant Manipulation!public! !
 variantClear:!Automation Functions-Variant Manipulation!public! !
 variantCopy:pvargSrc:!Automation Functions-Variant Manipulation!public! !
 variantCopyInd:pvargSrc:!Automation Functions-Variant Manipulation!public! !
 variantInit:!Automation Functions-Variant Manipulation!public! !
 variantTimeToSystemTime:lpSystemTime:!Automation Functions-Variant Manipulation!public! !
+!
+
+!OS.FILETIME methodsFor!
+
+asDATE
+	"Answer the OLE Automation <DATE> that is the nearest equivalent of the receiver. Note that this is likely to lose some precision and the receiver may also be out of range of dates that are representable as a DATE."
+
+	^self asSYSTEMTIME asDATE! !
+
+!OS.FILETIME categoriesForMethods!
+asDATE!converting!public! !
 !
 
 !OS.FILETIME class methodsFor!
@@ -3367,15 +3485,30 @@ typeName!constants!private! !
 vt!constants!private! !
 !
 
+!OS.InvariantLocale methodsFor!
+
+defaultVarStrApiFlags
+	^LOCALE_NOUSEROVERRIDE! !
+
+!OS.InvariantLocale categoriesForMethods!
+defaultVarStrApiFlags!constants!private! !
+!
+
 !OS.SYSTEMTIME methodsFor!
 
-asFloat
-	"Answer the OLEDATE representation of the receiver."
+asDATE
+	"Answer the OLE `DATE` representation of the receiver. Note that any milliseconds are rounded rather than preserved in the fractional part of the ole date."
 
+	<namespace: OS.COM>
 	| vtime |
-	vtime := COM.DATE new.
-	COM.OleAut32 systemTimeToVariantTime: self pvtime: vtime.
+	vtime := DATE newBuffer.
+	(OleAut32 systemTimeToVariantTime: self pvtime: vtime) ifFalse: [InvalidArgumentError signal].
 	^vtime!
+
+asFloat
+	"Answer a `Float` value that is the equivalent to the OLE `DATE` representation of the receiver."
+
+	^self asDATE asFloat!
 
 asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)"
@@ -3383,16 +3516,21 @@ asVariant
 	^COM.VARIANT fromDATE: self asFloat! !
 
 !OS.SYSTEMTIME categoriesForMethods!
+asDATE!converting!public! !
 asFloat!converting!public! !
 asVariant!converting!public! !
 !
 
 !OS.SYSTEMTIME class methodsFor!
 
-fromDATE: aFloat
+fromDATE: aDATE
+	"Answer a new instance of the receiver representing approximately the same moment as the receiver. The ole DATE representation is a double precision floating point number where the integer part represents a day offset from 30/12/1899, and the fractional part is the fraction of the day. Note that the fractional part always specifies a positive fraction of the day, regardless of whether the date is negative. In other words DATE fromFloat: -2.25 specifies 1899-12-28T06:00:00, and not 1899-12-27T18:00:00. Also note that the VariantTimeToSystemTime API will round (not discard) any fractional seconds, which is not consistent with the reverse translation SystemTimeToVariantTime, as that discards the milliseconds of the SYSTEMTIME."
+
+	<namespace: OS.COM>
 	| systime |
 	systime := self new.
-	COM.OleAut32 variantTimeToSystemTime: aFloat lpSystemTime: systime.
+	(OleAut32 variantTimeToSystemTime: aDATE asFloat lpSystemTime: systime)
+		ifFalse: [HRESULTError signalWith: E_FAIL].
 	^systime! !
 
 !OS.SYSTEMTIME class categoriesForMethods!
