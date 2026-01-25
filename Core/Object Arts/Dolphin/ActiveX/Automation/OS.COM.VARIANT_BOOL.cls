@@ -31,13 +31,13 @@ displayOn: aPuttableStream
 value
 	"Answer the receiver's value field as a Smalltalk <Boolean>."
 
-	^super value ~= 0!
+	^(bytes int16AtOffset: _OffsetOf_value) ~= 0!
 
 value: anObject 
 	"Set the receiver's value field to the VARIANT_BOOL equivalent
 	(-1 for true, 0 for false)."
 
-	super value: (anObject asBoolean ifTrue: [-1] ifFalse: [0])! !
+	bytes int16AtOffset: _OffsetOf_value put: (anObject asBoolean ifTrue: [-1] ifFalse: [0])! !
 
 !OS.COM.VARIANT_BOOL categoriesForMethods!
 asBoolean!converting!public! !
@@ -47,6 +47,11 @@ value:!accessing!public! !
 !
 
 !OS.COM.VARIANT_BOOL class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^VARIANT_BOOLArray!
 
 icon
 	"Answer a suitable iconic representation for the receiver."
@@ -77,6 +82,7 @@ vt
 	^AutomationConstants.VT_BOOL! !
 
 !OS.COM.VARIANT_BOOL class categoriesForMethods!
+arrayType!constants!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
 typeName!constants!private! !

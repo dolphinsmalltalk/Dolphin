@@ -18,6 +18,7 @@ package setClassNames: #(
 	#{OS.COM.Tests.SAFEARRAYTest}
 	#{OS.COM.Tests.TestTypelib}
 	#{OS.COM.Tests.TypeLibraryAnalyzerTest}
+	#{OS.COM.Tests.VARIANT_BOOLArrayTest}
 	#{OS.COM.Tests.VARIANTTest}
 ).
 
@@ -127,6 +128,14 @@ External.Tests.ExternalArrayTest
 
 External.Tests.ExternalArrayTest
 	subclass: #'OS.COM.Tests.DECIMALArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.COM.Tests.VARIANT_BOOLArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

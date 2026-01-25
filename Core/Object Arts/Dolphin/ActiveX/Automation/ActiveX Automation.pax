@@ -84,6 +84,7 @@ package setClassNames: #(
 	#{OS.COM.VARDESC}
 	#{OS.COM.VARIANT}
 	#{OS.COM.VARIANT_BOOL}
+	#{OS.COM.VARIANT_BOOLArray}
 	#{OS.COM.VariantEnumerator}
 ).
 
@@ -842,6 +843,22 @@ External.ExternalArray
 
 External.ExternalArray
 	subclass: #'OS.COM.DATEArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.ExternalArray
+	subclass: #'OS.COM.DECIMALArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.DECIMAL private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.ExternalArray
+	subclass: #'OS.COM.VARIANT_BOOLArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
