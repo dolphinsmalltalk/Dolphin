@@ -7,6 +7,7 @@ package paxVersion: 2.1;
 package setVariableNames: #(
 	#{Smalltalk.AXDualImp}
 	#{Smalltalk.AXTypeLibraryAnalyzer}
+	#{Smalltalk.CURRENCY}
 	#{Smalltalk.DATE}
 	#{Smalltalk.DISPPARAMS}
 	#{Smalltalk.FUNCDESC}
@@ -28,6 +29,7 @@ package setVariableNames: #(
 package setAliasVariableNames: #(
 	#{Smalltalk.AXDualImp}
 	#{Smalltalk.AXTypeLibraryAnalyzer}
+	#{Smalltalk.CURRENCY}
 	#{Smalltalk.DATE}
 	#{Smalltalk.DISPPARAMS}
 	#{Smalltalk.FUNCDESC}
@@ -57,6 +59,8 @@ package!
 Smalltalk.AXDualImp := OS.COM.DualInterfaceImplementation!
 
 Smalltalk.AXTypeLibraryAnalyzer := OS.COM.TypeLibraryAnalyzer!
+
+Smalltalk.CURRENCY := OS.COM.CY!
 
 Smalltalk.DATE := OS.COM.DATE!
 

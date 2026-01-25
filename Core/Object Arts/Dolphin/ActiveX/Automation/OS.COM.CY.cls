@@ -1,39 +1,38 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure
-	subclass: #'OS.COM.CURRENCY'
+	subclass: #'OS.COM.CY'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.AutomationConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_CURRENCY_Size' -> 16r8.
+			'_CY_Size' -> 16r8.
 			'_OffsetOf_cy' -> 16r0.
 			'MaxValue' -> 922337203685477.5807s.
 			'MinValue' -> -922337203685477.5808s
 		}!
 
-OS.COM.CURRENCY guid: (Core.GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
+OS.COM.CY guid: (Core.GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
 
-OS.COM.CURRENCY comment: '`CURRENCY` is an `External.Structure` class to represent the Automation structure of the same name.
+OS.COM.CY comment: '`CURRENCY` is an `External.Structure` class to represent the Automation structure of the same name.
 
 `CURRENCY` is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB. It corresponds to the variant type `VT_CY`.
 
-`CURRENCY`s are mapped to/from Dolphin''s `ScaledDecimal` objects, although of course the latter has unlimited  range and precision, and therefore many `ScaledDecimal`s cannot be represented in a `CURRENCY`.
+`CURRENCY`s are mapped to/from Dolphin''s `ScaledDecimal` objects, although of course the latter has unlimited range and precision, and therefore many `ScaledDecimal`s cannot be represented in a `CURRENCY`.
 
-See also `DECIMAL`'!
+See also `DECIMAL`.'!
 
-!OS.COM.CURRENCY categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.CY categoriesForClass!External-Data-Structured-COM! !
 
-!OS.COM.CURRENCY methodsFor!
+!OS.COM.CY methodsFor!
 
 asVariant
 	"Answer the <VARIANT> representation of the receiver."
 
-	^VARIANT new
+	^(VARIANT new)
 		vt: (self vt bitOr: VT_BYREF);
-		reference: self;
-		yourself!
+		reference: self!
 
 cy
 	"Answer the <Integer> value of the receiver's 'cy' field."
@@ -46,7 +45,7 @@ cy: anInteger
 	bytes int64AtOffset: _OffsetOf_cy put: anInteger!
 
 displayOn: aPuttableStream
-	aPuttableStream locale displayCURRENCY: self on: aPuttableStream!
+	aPuttableStream locale displayCY: self on: aPuttableStream!
 
 scale
 	"The number of fractional digits is fixed."
@@ -63,8 +62,8 @@ value: newValue
 
 	self cy: (newValue * 10000) asInteger! !
 
-!OS.COM.CURRENCY categoriesForMethods!
-asVariant!converting!public! !
+!OS.COM.CY categoriesForMethods!
+asVariant!public! !
 cy!**compiled accessors**!public! !
 cy:!**compiled accessors**!public! !
 displayOn:!displaying!public! !
@@ -73,15 +72,13 @@ value!accessing!public! !
 value:!accessing!public! !
 !
 
-OS.COM.CURRENCY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
-
-!OS.COM.CURRENCY class methodsFor!
+!OS.COM.CY class methodsFor!
 
 byteSize
-	^_CURRENCY_Size!
+	^_CY_Size!
 
 defineFields
-	"Define the fields of the CURRENCY 'structure'.
+	"Define the fields of the CY (aka CURRENCY) 'structure'.
 
 		self compileDefinition
 	"
@@ -90,8 +87,7 @@ defineFields
 !
 
 epsilon
-	"Answer a <Float> representing the minimum relative spacing
-	in the receiver's representation."
+	"Answer a <Float> representing the minimum relative spacing in the receiver's representation."
 
 	^0.0001
 !
@@ -114,6 +110,14 @@ maximum
 minimum
 	^MinValue!
 
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver. SAFEARRAY has vartype representations for most SCALARs."
+
+	^SAFEARRAY
+		length: anInteger
+		vt: self vt
+		elementClass: self!
+
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
@@ -125,7 +129,7 @@ vt
 
 	^VT_CY! !
 
-!OS.COM.CURRENCY class categoriesForMethods!
+!OS.COM.CY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 epsilon!constants!public! !
@@ -133,6 +137,7 @@ getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!initializing!private! !
 maximum!constants!public! !
 minimum!constants!public! !
+newSAFEARRAY:!double dispatch!instance creation!public! !
 uninitialize!class hierarchy-removing!private! !
 vt!constants!public! !
 !

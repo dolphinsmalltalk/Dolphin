@@ -163,7 +163,7 @@ Oop* PRIMCALL Interpreter::primitiveVariantValue(Oop* const sp, primargcount_t)
 			break;
 
 		case VT_CY:
-			oteStructClass = Pointers.ClassCURRENCY;
+			oteStructClass = Pointers.ClassCY;
 			pRef = V_CYREF(pVar);
 			break;
 

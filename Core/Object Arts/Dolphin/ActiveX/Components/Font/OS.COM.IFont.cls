@@ -216,9 +216,9 @@ get_Size: psize
 	"Private - Get the value of the 'Size' property of the receiver.
 
 		HRESULT __stdcall Size(
-			[out, retval]CURRENCY* psize);"
+			[out, retval]CY* psize);"
 
-	<virtual stdcall: hresult 6 CURRENCY*>
+	<virtual stdcall: hresult 6 CY*>
 	^self invalidCall: _failureCode!
 
 get_Strikethrough: pstrikethrough
@@ -339,12 +339,12 @@ put_Name: pname
 
 put_Size: psize
 	"Private - Set the value of the 'Size' property of the object wrapped by the 
-	 receiver to the <CURRENCY> argument, psize.
+	 receiver to the <CY> argument, psize.
 
 		HRESULT __stdcall Size(
-			[in]CURRENCY psize);"
+			[in]CY psize);"
 
-	<virtual stdcall: hresult 7 CURRENCY>
+	<virtual stdcall: hresult 7 CY>
 	^self invalidCall: _failureCode!
 
 put_Strikethrough: pstrikethrough
@@ -409,17 +409,17 @@ SetRatio: cyLogical cyHimetric: cyHimetric
 	^self invalidCall: _failureCode!
 
 size
-	"Answer the <CURRENCY> value of the 'Size' property of the receiver."
+	"Answer the <CY> value of the 'Size' property of the receiver."
 
 	| answer |
-	answer := CURRENCY new.
+	answer := CY new.
 	self get_Size: answer.
 	^answer asObject!
 
 size: psize
-	"Set the 'Size' property of the receiver to the <CURRENCY> value of the argument."
+	"Set the 'Size' property of the receiver to the <CY> value of the argument."
 
-	self put_Size: (CURRENCY new value: psize)!
+	self put_Size: (CY new value: psize)!
 
 strikethrough
 	"Answer the <varbool> value of the 'Strikethrough' property of the receiver."

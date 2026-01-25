@@ -27,9 +27,10 @@ package setClassNames: #(
 	#{OS.COM.AutomationConstants}
 	#{OS.COM.AutomationErrors}
 	#{OS.COM.BSTRArray}
-	#{OS.COM.CURRENCY}
 	#{OS.COM.CUSTDATA}
 	#{OS.COM.CUSTDATAITEM}
+	#{OS.COM.CY}
+	#{OS.COM.CYArray}
 	#{OS.COM.DATE}
 	#{OS.COM.DECIMAL}
 	#{OS.COM.DispatchFunction}
@@ -98,7 +99,10 @@ package setMethodNames: #(
 	#(#{Core.GUID class} #arrayType:)
 	#(#{Core.GUID class} #typeName)
 	#(#{Core.LargeInteger} #asVariant)
-	#(#{Core.Locale} #displayCURRENCY:on:)
+	#(#{Core.Locale} #defaultVarStrApiFlags)
+	#(#{Core.Locale} #displayCY:flags:on:)
+	#(#{Core.Locale} #displayCY:on:)
+	#(#{Core.Locale} #displayDECIMAL:flags:on:)
 	#(#{Core.Locale} #displayDECIMAL:on:)
 	#(#{Core.Locale} #variantBool:)
 	#(#{Core.Number} #asVariant)
@@ -196,12 +200,14 @@ package setMethodNames: #(
 	#(#{External.VOID class} #newSAFEARRAY:)
 	#(#{External.VOID class} #typeName)
 	#(#{External.VOID class} #vt)
-	#(#{Kernel.SmalltalkLocale} #displayCURRENCY:on:)
+	#(#{Kernel.SmalltalkLocale} #displayCY:flags:on:)
 	#(#{Kernel.SmalltalkLocale} #displayDECIMAL:on:)
+	#(#{Kernel.SmalltalkLocale} #displayDECIMAL:flags:on:)
 	#(#{Kernel.SmalltalkLocale} #variantBool:)
 	#(#{OS.AbstractWindowsLocale} #boolFormat)
-	#(#{OS.AbstractWindowsLocale} #displayCURRENCY:on:)
+	#(#{OS.AbstractWindowsLocale} #displayCY:flags:on:)
 	#(#{OS.AbstractWindowsLocale} #displayDECIMAL:on:)
+	#(#{OS.AbstractWindowsLocale} #displayDECIMAL:flags:on:)
 	#(#{OS.AbstractWindowsLocale} #getVariantBoolString:)
 	#(#{OS.AbstractWindowsLocale} #variantBool:)
 	#(#{OS.COM.BSTR} #asSAFEARRAY)
@@ -277,6 +283,7 @@ package setMethodNames: #(
 	#(#{OS.FILETIME class} #vt)
 	#(#{OS.HRESULT class} #typeName)
 	#(#{OS.HRESULT class} #vt)
+	#(#{OS.InvariantLocale} #defaultVarStrApiFlags)
 	#(#{OS.SYSTEMTIME} #asFloat)
 	#(#{OS.SYSTEMTIME} #asVariant)
 	#(#{OS.SYSTEMTIME class} #fromDATE:)
@@ -651,19 +658,6 @@ External.Structure
 	classConstants: { '_OffsetOf_tdescElem' -> 16r0 }!
 
 External.Structure
-	subclass: #'OS.COM.CURRENCY'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_CURRENCY_Size' -> 16r8.
-			'_OffsetOf_cy' -> 16r0.
-			'MaxValue' -> 922337203685477.5807s.
-			'MinValue' -> -922337203685477.5808s
-		}!
-
-External.Structure
 	subclass: #'OS.COM.CUSTDATAITEM'
 	instanceVariableNames: 'key value'
 	classVariableNames: ''
@@ -673,6 +667,19 @@ External.Structure
 			'_CUSTDATAITEM_Size' -> 16r20.
 			'_OffsetOf_guid' -> 16r0.
 			'_OffsetOf_varValue' -> 16r10
+		}!
+
+External.Structure
+	subclass: #'OS.COM.CY'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.AutomationConstants private})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_CY_Size' -> 16r8.
+			'_OffsetOf_cy' -> 16r0.
+			'MaxValue' -> 922337203685477.5807s.
+			'MinValue' -> -922337203685477.5808s
 		}!
 
 External.Structure
@@ -815,6 +822,14 @@ External.ExternalArray
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+External.ExternalArray
+	subclass: #'OS.COM.CYArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 External.GenericExternalArray
 	subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
@@ -918,7 +933,7 @@ External.FinalizableStructure
 			'_OffsetOf_wReserved3' -> 16r6.
 			'_VARIANT_Size' -> 16r10.
 			'VTClasses'
-				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
+				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
 			'VTNames'
 				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 		}!
@@ -1141,7 +1156,7 @@ OS.COM.TypeInfoObject
 	classInstanceVariableNames: ''
 	classConstants: {
 			'VTtoIDLTypeMap'
-				-> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
+				-> #(nil 'short' 'long' 'float' 'double' 'CY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
 		}!
 
 OS.COM.TypeInfoObject
@@ -1381,21 +1396,40 @@ asVariant!converting!public! !
 
 !Core.Locale methodsFor!
 
-displayCURRENCY: aCURRENCY on: aWriteStream
-	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CURRENCY> argument that a user in this <Locale> might expect to see."
+defaultVarStrApiFlags
+	^0!
+
+displayCY: aCY flags: anInteger on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CY> argument that a user in this <Locale> might expect to see."
 
 	self subclassResponsibility!
 
-displayDECIMAL: aDECIMAL on: aWriteStream
+displayCY: aCY on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CY> argument that a user in this <Locale> might expect to see."
+
+	self displayCY: aCY flags: self defaultVarStrApiFlags on: aWriteStream!
+
+displayDECIMAL: aDECIMAL flags: anInteger on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
 
 	self subclassResponsibility!
+
+displayDECIMAL: aDECIMAL on: anInteger
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
+
+	self
+		displayDECIMAL: aDECIMAL
+		flags: self defaultVarStrApiFlags
+		on: anInteger!
 
 variantBool: aBoolean
 	^self subclassResponsibility! !
 
 !Core.Locale categoriesForMethods!
-displayCURRENCY:on:!displaying!public! !
+defaultVarStrApiFlags!constants!private! !
+displayCY:flags:on:!displaying!public! !
+displayCY:on:!displaying!public! !
+displayDECIMAL:flags:on:!displaying!public! !
 displayDECIMAL:on:!displaying!public! !
 variantBool:!constants!public! !
 !
@@ -2427,12 +2461,15 @@ vt!constants!public! !
 
 !Kernel.SmalltalkLocale methodsFor!
 
-displayCURRENCY: aCURRENCY on: aWriteStream
-	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CURRENCY> argument that a user in this <Locale> might expect to see."
+displayCY: aCY flags: anInteger on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CY> argument that a user in this <Locale> might expect to see."
+
+	aCY value displayOn: aWriteStream!
+
 
 	aCURRENCY value displayOn: aWriteStream!
 
-displayDECIMAL: aDECIMAL on: aWriteStream
+displayDECIMAL: aDECIMAL flags: anInteger on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
 
 	aDECIMAL value displayOn: aWriteStream!
@@ -2441,8 +2478,9 @@ variantBool: aBoolean
 	^aBoolean class name! !
 
 !Kernel.SmalltalkLocale categoriesForMethods!
-displayCURRENCY:on:!displaying!public! !
+displayCY:flags:on:!displaying!public! !
 displayDECIMAL:on:!displaying!public! !
+displayDECIMAL:flags:on:!displaying!public! !
 variantBool:!constants!public! !
 !
 
@@ -2453,8 +2491,21 @@ boolFormat
 
 	^{self variantBool: false. self variantBool: true}!
 
-displayCURRENCY: aCURRENCY on: aWriteStream
-	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CURRENCY> argument that a user in this <Locale> might expect to see."
+displayCY: aCY flags: anInteger on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CY> argument that a user in this <Locale> might expect to see."
+
+	<namespace: OS.COM>
+	| bstr |
+	bstr := BSTR new.
+	OleAut32
+		varBstrFromCy: aCY
+		lcid: self lcid
+		dwFlags: anInteger
+		pbstrOut: bstr.
+	bstr
+		displayOn: aWriteStream;
+		free!
+
 
 	| bstr |
 	bstr := COM.BSTR new.
@@ -2467,7 +2518,7 @@ displayCURRENCY: aCURRENCY on: aWriteStream
 		displayOn: aWriteStream;
 		free!
 
-displayDECIMAL: aDECIMAL on: aWriteStream
+displayDECIMAL: aDECIMAL flags: anInteger on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
 
 	| bstr |
@@ -2502,8 +2553,9 @@ variantBool: aBoolean
 
 !OS.AbstractWindowsLocale categoriesForMethods!
 boolFormat!constants!public! !
-displayCURRENCY:on:!displaying!public! !
+displayCY:flags:on:!displaying!public! !
 displayDECIMAL:on:!displaying!public! !
+displayDECIMAL:flags:on:!displaying!public! !
 getVariantBoolString:!constants!public! !
 variantBool:!constants!public! !
 !
@@ -3108,11 +3160,33 @@ varBstrFromBool: boolIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
 	<stdcall: hresult VarBstrFromBool int16 uint32 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
+varBstrFromCy: cyIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
+	"Invoke the VarBstrFromCy() function of the module wrapped by the receiver.
+	Helpstring: Converts a currency value to a BSTR value.
+
+		HRESULT __stdcall VarBstrFromCy(
+			[in]CY cyIn,
+			[in]unsigned long lcid,
+			[in]ULONG dwFlags,
+			[out]BSTR* pbstrOut);"
+
+	<stdcall: hresult VarBstrFromCy CY uint32 uint32 bstr*>
+	^self invalidCall: _failureCode!
+
 varBstrFromCy: pcyIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
 	<stdcall: hresult VarBstrFromCy CURRENCY uint32 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
 varBstrFromDec: pdecIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
+	"Invoke the VarBstrFromDec() function of the module wrapped by the receiver.
+	Helpstring: Converts a decimal value to a BSTR value.
+
+		HRESULT __stdcall VarBstrFromDec(
+			[in]DECIMAL* pdecIn,
+			[in]unsigned long lcid,
+			[in]ULONG dwFlags,
+			[out]BSTR* pbstrOut);"
+
 	<stdcall: hresult VarBstrFromDec DECIMAL* uint32 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
@@ -3240,8 +3314,9 @@ systemTimeToVariantTime:pvtime:!Automation Functions-Variant Manipulation!public
 unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!public! !
 unRegisterTypeLibForUser:wMajorVerNum:wMinorVerNum:lcid:syskind:!**auto generated**!public! !
 varBstrFromBool:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
-varBstrFromCy:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
+varBstrFromCy:lcid:dwFlags:pbstrOut:!**auto generated**!public! !
 varBstrFromDec:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
+varBstrFromDec:lcid:dwFlags:pbstrOut:!**auto generated**!Automation Functions-Variant Manipulation!public! !
 varCmp:pvarRight:lcid:dwFlags:!Automation Functions-Variant Manipulation!public! !
 varDateFromStr:lcid:dwFlags:pdateOut:!Automation Functions-Variant Manipulation!public! !
 variantChangeTypeEx:pvarSrc:lcid:wFlags:vt:!Automation Functions-Variant Manipulation!public! !

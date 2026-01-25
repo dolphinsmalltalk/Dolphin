@@ -8,7 +8,8 @@ package paxVersion: 2.1;
 package setClassNames: #(
 	#{OS.COM.Tests.BSTRArrayTest}
 	#{OS.COM.Tests.BSTRTest}
-	#{OS.COM.Tests.CURRENCYTest}
+	#{OS.COM.Tests.CYArrayTest}
+	#{OS.COM.Tests.CYTest}
 	#{OS.COM.Tests.DECIMALTest}
 	#{OS.COM.Tests.IDispatchTest}
 	#{OS.COM.Tests.SAFEARRAYTest}
@@ -50,7 +51,7 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 
 Core.Tests.DolphinTest
-	subclass: #'OS.COM.Tests.CURRENCYTest'
+	subclass: #'OS.COM.Tests.CYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
@@ -86,6 +87,14 @@ Core.Tests.DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.COM.Tests.CYArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

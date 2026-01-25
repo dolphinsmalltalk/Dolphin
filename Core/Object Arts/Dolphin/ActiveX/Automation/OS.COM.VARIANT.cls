@@ -59,7 +59,7 @@ External.FinalizableStructure
 			'_OffsetOf_wReserved3' -> 16r6.
 			'_VARIANT_Size' -> 16r10.
 			'VTClasses'
-				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
+				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
 			'VTNames'
 				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 		}!
@@ -258,7 +258,7 @@ cy
 	"The VT_CY format is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB."
 
 	^self isByRef
-		ifTrue: [CURRENCY fromAddress: self refAddress]
+		ifTrue: [CY fromAddress: self refAddress]
 		ifFalse: [ScaledDecimal newFromNumber: (bytes int64AtOffset: _OffsetOf_cyVal) / 10000 scale: 4]!
 
 cy: aNumber
@@ -942,7 +942,7 @@ defineFields
 		defineField: #dblVal type: DOUBLEField filler offset: 8;
 		defineField: #boolVal type: Int16Field filler offset: 8;
 		defineField: #scode type: Int32Field filler offset: 8;
-		defineField: #cyVal type: (StructureField type: CURRENCY) beFiller offset: 8;
+		defineField: #cyVal type: (StructureField type: CY) beFiller offset: 8;
 		defineField: #date type: (StructureField type: DATE) beFiller offset: 8;
 		defineField: #bstrVal type: (PointerField type: BSTR) beFiller offset: 8;
 		defineField: #punkVal type: (PointerField type: IUnknown) beFiller offset: 8;
@@ -956,7 +956,7 @@ defineFields
 		defineField: #pdblVal type: (PointerField type: DOUBLE) beFiller offset: 8;
 		defineField: #pboolVal type: (PointerField type: VARIANT_BOOL) beFiller offset: 8;
 		defineField: #pscode type: (PointerField type: HRESULT) beFiller offset: 8;
-		defineField: #pcyVal type: (PointerField type: CURRENCY) beFiller offset: 8;
+		defineField: #pcyVal type: (PointerField type: CY) beFiller offset: 8;
 		defineField: #pdate type: (PointerField type: DATE) beFiller offset: 8;
 		defineField: #pbstrVal type: LPVOIDField filler offset: 8;
 		defineField: #ppunkVal type: LPVOIDField filler offset: 8;
@@ -1154,7 +1154,7 @@ vtClasses
 		at: VT_CARRAY+1			put: #{External.Array};			"C-style array - TYPEDESC only"
 		at: VT_CF+1				put: #{External.UInt32};			"Clipboard format - OLE Property sets only"
 		at: VT_CLSID+1			put: #{OS.COM.CLSID};			"Class ID - OLE Property sets only"
-		at: VT_CY+1				put: #{OS.COM.CURRENCY};		"Automation Currency - 64-bit fixed point, 4 decimal places"
+		at: VT_CY+1				put: #{OS.COM.CY};		"Automation Currency - 64-bit fixed point, 4 decimal places"
 		at: VT_DATE+1				put: #{OS.COM.DATE};			"Automation (double) date"
 		at: VT_DECIMAL+1			put: #{OS.COM.DECIMAL};		"16-byte fixed point"
 		at: VT_DISPATCH+1			put: #{OS.COM.IDispatch};		"IDispatch pointer"

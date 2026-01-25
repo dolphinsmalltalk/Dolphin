@@ -8,7 +8,7 @@ OS.COM.TypeInfoObject
 	classInstanceVariableNames: ''
 	classConstants: {
 			'VTtoIDLTypeMap'
-				-> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
+				-> #(nil 'short' 'long' 'float' 'double' 'CY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
 		}!
 
 OS.COM.TypeInfoAnalyzer guid: (Core.GUID fromString: '{c06f3b64-0868-11d3-93af-00a024ca708a}')!

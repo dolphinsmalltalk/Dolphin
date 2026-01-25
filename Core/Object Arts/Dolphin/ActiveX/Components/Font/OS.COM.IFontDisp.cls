@@ -113,14 +113,12 @@ name: newVal
 	self setPropertyId: 0 value: newVal!
 
 size
-	"Answer the <CURRENCY> value of the 'Size' property of the receiver.
-		CURRENCY Size"
+	"Answer the <CY> value of the 'Size' property of the receiver."
 
 	^self getPropertyId: 2!
 
 size: newVal
-	"Set the 'Size' property of the receiver to the <CURRENCY> value of the argument.
-		CURRENCY Size"
+	"Set the 'Size' property of the receiver to the <CY> value of the argument."
 
 	self setPropertyId: 2 value: newVal!
 

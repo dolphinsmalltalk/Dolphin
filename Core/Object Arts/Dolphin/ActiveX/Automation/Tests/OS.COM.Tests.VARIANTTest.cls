@@ -94,7 +94,7 @@ testCollectionConversions
 			self assert: var value asArray equals: array]!
 
 testCY
-	{ 0s. 1234.456s. 1234.4567s. CURRENCY.MaxValue. CURRENCY.MinValue } do: 
+	{ 0s. 1234.456s. 1234.4567s. CY.MaxValue. CY.MinValue } do: 
 			[:each |
 			| var stream |
 			var := VARIANT new.
@@ -107,7 +107,7 @@ testCY
 testCYREF
 	| var cy |
 	var := VARIANT new.
-	cy := CURRENCY new value: 1234.1234s.
+	cy := CY new value: 1234.1234s.
 	var := cy asVariant.
 	self assert: var vt identicalTo: VT_CY | VT_BYREF.
 	self assert: var value equals: cy.

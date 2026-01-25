@@ -20,7 +20,7 @@ arrayValueString: eachValue
 	^eachValue displayString!
 
 elementClassNames
-	^#(#Int16 #Int32 #FLOAT #DOUBLE #'COM.CURRENCY' #'COM.BSTR' #HRESULT #'COM.VARIANT_BOOL' #'COM.VARIANT' #'COM.DECIMAL' #Int8 #UInt8)!
+	^#(#Int16 #Int32 #FLOAT #DOUBLE #'COM.CY' #'COM.BSTR' #HRESULT #'COM.VARIANT_BOOL' #'COM.VARIANT' #'COM.DECIMAL' #Int8 #UInt8)!
 
 elementToValue: element 
 	^element value!

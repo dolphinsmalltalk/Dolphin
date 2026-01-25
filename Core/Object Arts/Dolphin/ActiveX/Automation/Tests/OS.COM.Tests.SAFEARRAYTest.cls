@@ -103,7 +103,7 @@ testElementAt
 
 testElementClasses
 	| array random irand triplets |
-	triplets := #(#(#{Int16} -32768 32767) #(#{Int32} -2147483648 2147483647) #(#{FLOAT} -1.25 1.25) #(#{DOUBLE} -1.23456789 1.23456789) #(#{BSTR} '' 'abc') #(#{HRESULT} ##(S_OK) ##(E_NOTIMPL)) #(#{VARIANT_BOOL} false true) #(#{CURRENCY} 99.99s2) #(#{Int8} -128 127) #(#{UInt8} 0 255) #(#{UInt16} 0 65535) #(#{UInt32} 0 4294967295) #(#{VARIANT} 1 1.0 'abc' nil true 1.2s2 ##(DATE
+	triplets := #(#(#{Int16} -32768 32767) #(#{Int32} -2147483648 2147483647) #(#{FLOAT} -1.25 1.25) #(#{DOUBLE} -1.23456789 1.23456789) #(#{BSTR} '' 'abc') #(#{HRESULT} ##(S_OK) ##(E_NOTIMPL)) #(#{VARIANT_BOOL} false true) #(#{CY} 99.99s2) #(#{Int8} -128 127) #(#{UInt8} 0 255) #(#{UInt16} 0 65535) #(#{UInt32} 0 4294967295) #(#{VARIANT} 1 1.0 'abc' nil true 1.2s2 ##(DATE
 				now) 0.6) #(#{DECIMAL} 12345.12345s) #(#{Int64} -9223372036854775808 9223372036854775807)).
 	triplets do: 
 			[:each |

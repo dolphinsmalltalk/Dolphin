@@ -208,7 +208,7 @@ struct VMPointers //: public Object
 			BehaviorOTE* ClassFLOAT;							// 140
 			BehaviorOTE* ClassDOUBLE;							// 141
 			BehaviorOTE* ClassVARBOOL;							// 142
-			BehaviorOTE* ClassCURRENCY;							// 143
+			BehaviorOTE* ClassCY;								// 143
 			BehaviorOTE* ClassDECIMAL;							// 144
 			BehaviorOTE* ClassLPBSTR;							// 145
 			BehaviorOTE* ClassUInt64;							// 146

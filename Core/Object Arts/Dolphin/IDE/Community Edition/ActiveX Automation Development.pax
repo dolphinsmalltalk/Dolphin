@@ -145,11 +145,11 @@ package setMethodNames: #(
 	#(#{OS.COM.BSTR class} #unspecifiedParameterValue)
 	#(#{OS.COM.CountedArray class} #fieldType)
 	#(#{OS.COM.CountedArray class} #pointerFieldType)
-	#(#{OS.COM.CURRENCY} #printOn:)
-	#(#{OS.COM.CURRENCY class} #mustWrapOptionalArgument:)
-	#(#{OS.COM.CURRENCY class} #newInstanceAspect:class:)
 	#(#{OS.COM.CUSTDATA} #idlAttributes)
 	#(#{OS.COM.CUSTDATAITEM} #printIDLOn:)
+	#(#{OS.COM.CY} #printOn:)
+	#(#{OS.COM.CY class} #mustWrapOptionalArgument:)
+	#(#{OS.COM.CY class} #newInstanceAspect:class:)
 	#(#{OS.COM.DATE class} #newInstanceAspect:class:)
 	#(#{OS.COM.DATE class} #printDefaultValue:on:)
 	#(#{OS.COM.DECIMAL} #printOn:)
@@ -2060,37 +2060,6 @@ fieldType!constants!private! !
 pointerFieldType!constants!private! !
 !
 
-!OS.COM.CURRENCY methodsFor!
-
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream print: self value].
-	aStream nextPut: $)! !
-
-!OS.COM.CURRENCY categoriesForMethods!
-printOn:!printing!public! !
-!
-
-!OS.COM.CURRENCY class methodsFor!
-
-mustWrapOptionalArgument: anELEMDESC 
-	^anELEMDESC isOut not!
-
-newInstanceAspect: aSymbol class: aspectClass 
-	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
-	which is appropriate for representing aspects of the receiver's type."
-
-	^aspectClass number: aSymbol! !
-
-!OS.COM.CURRENCY class categoriesForMethods!
-mustWrapOptionalArgument:!private!testing! !
-newInstanceAspect:class:!adapters!private! !
-!
-
 !OS.COM.CUSTDATA methodsFor!
 
 idlAttributes
@@ -2144,6 +2113,37 @@ printIDLOn: target
 
 !OS.COM.CUSTDATAITEM categoriesForMethods!
 printIDLOn:!printing-IDL!private! !
+!
+
+!OS.COM.CY methodsFor!
+
+printOn: aStream
+	"Append a textual representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(.
+	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream print: self value].
+	aStream nextPut: $)! !
+
+!OS.COM.CY categoriesForMethods!
+printOn:!printing!public! !
+!
+
+!OS.COM.CY class methodsFor!
+
+mustWrapOptionalArgument: anELEMDESC 
+	^anELEMDESC isOut not!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass number: aSymbol! !
+
+!OS.COM.CY class categoriesForMethods!
+mustWrapOptionalArgument:!private!testing! !
+newInstanceAspect:class:!adapters!private! !
 !
 
 !OS.COM.DATE class methodsFor!

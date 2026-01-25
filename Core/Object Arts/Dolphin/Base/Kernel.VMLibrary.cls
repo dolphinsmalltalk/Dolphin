@@ -607,7 +607,7 @@ initialize
 				at: #FLOAT put: 140;
 				at: #DOUBLE put: 141;
 				at: #VARIANT_BOOL put: 142;
-				at: #CURRENCY put: 143;
+				at: #CY put: 143;
 				at: #DECIMAL put: 144;
 				at: #LPBSTR put: 145;
 				at: #UInt64 put: 146;
