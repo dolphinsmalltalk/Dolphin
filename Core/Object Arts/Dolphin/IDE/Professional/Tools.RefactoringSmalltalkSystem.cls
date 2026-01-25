@@ -1503,7 +1503,7 @@ stubTextFor: aSymbol arguments: anArray inClass: aClass
 							[source
 								nextPutAll: aSymbol;
 								space;
-								nextPutAll: anArray single name]
+								nextPutAll: anArray single]
 						ifFalse: 
 							[| name |
 							self
