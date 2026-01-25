@@ -30,9 +30,7 @@ testAsVariant
 testDisplayString
 	| subject stream actual |
 	subject := DECIMAL new value: DECIMAL.MaxValue.
-	stream := String writeStream
-				locale: (Locale named: 'fr-FR');
-				yourself.
+	stream := (Locale named: 'fr-FR') writeStream.
 	actual := stream
 				display: subject;
 				contents.

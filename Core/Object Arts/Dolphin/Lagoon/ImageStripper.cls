@@ -211,8 +211,7 @@ _buildManifest: assemblyNameString description: assemblyDescriptionString versio
 	"GUI apps need common controls, console apps do not."
 
 	| manifest |
-	manifest := String writeStream.
-	manifest locale: Locale invariant.
+	manifest := Locale invariant writeStream.
 	manifest nextPutAll: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.
 	'%<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">%<assemblyIdentity name="<1s>" version="<3s>" processorArchitecture="X86" type="win32" />%<description><2s>%</description>'
 		expandMacrosWithArguments: {assemblyNameString.

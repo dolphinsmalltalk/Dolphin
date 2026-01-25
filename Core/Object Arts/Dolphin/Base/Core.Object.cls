@@ -584,10 +584,9 @@ displayStringLimitedTo: anInteger locale: aLocale
 
 	| stream |
 	stream := LimitedWriteStream
-				over: (String writeStream: 32)
+				over: (aLocale writeStream: 32)
 				limit: anInteger
 				limitBlock: [:s | ^s contents , ' ... etc ...'].
-	stream locale: aLocale.
 	self displayOn: stream.
 	^stream contents!
 
@@ -1544,7 +1543,7 @@ dependents!dependency!public! !
 displayOn:!displaying!public! !
 displayString!displaying!public! !
 displayString:!displaying!public! !
-displayStringLimitedTo:locale:!public! !
+displayStringLimitedTo:locale:!displaying!public! !
 doesNotUnderstand:!exceptions!public!vm entry points! !
 error:!exceptions!public! !
 errorNotFound:!exceptions!public! !

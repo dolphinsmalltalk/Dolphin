@@ -353,8 +353,7 @@ yyyymmdd
 	"
 
 	| stream |
-	stream := String writeStream: 10.
-	stream locale: Locale invariant.
+	stream := Locale invariant writeStream: 10.
 	self printOn: stream format: 'yyyy-MM-dd'.
 	^stream grabContents! !
 

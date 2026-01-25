@@ -3352,9 +3352,7 @@ sortSelfEvaluatingElements: anArray locale: aLocale
 			[:ex |
 			| stream |
 			"Very unlikely we'll get here, but if the elements are heterogenous or don't respond to #<==>, sort them according to their printString representation"
-			stream := String writeStream
-						locale: aLocale;
-						yourself.
+			stream := aLocale writeStream.
 			anArray sort: 
 					[:a :b |
 					| ap bp |
@@ -5133,9 +5131,7 @@ mapInitialIpFrom:to:!private! !
 
 printBasicDefinitionOfClass: aClass
 	| definitionStream |
-	definitionStream := (String writeStream: 384)
-				locale: stream locale;
-				yourself.
+	definitionStream := stream locale writeStream: 384.
 	self printBasicDefinitionOfClass: aClass on: definitionStream.
 	definitionStream := definitionStream contents.
 	self emitString: (Parser parseExpression: definitionStream) formattedCode! !
@@ -6826,9 +6822,7 @@ description
 
 	| stream |
 	stream := LimitedWriteStream
-				over: ((WriteStream on: (String new: 32))
-						locale: SmalltalkLocale.Hex;
-						yourself)
+				over: (SmalltalkLocale.Hex writeStream: 32)
 				limit: 120
 				limitBlock: [:s | ^s contents , ' … etc …'].
 	self printDescriptionOn: stream.
@@ -6847,9 +6841,7 @@ infoTip
 
 	| stream |
 	stream := LimitedWriteStream
-				over: ((WriteStream on: (String new: 32))
-						locale: SmalltalkLocale.Hex;
-						yourself)
+				over: (SmalltalkLocale.Hex writeStream: 32)
 				limit: 120
 				limitBlock: [:s | ^s contents , ' … etc …'].
 	self printInfoTipOn: stream.
@@ -6860,9 +6852,7 @@ infoTip: aStackFrame
 
 	| stream |
 	stream := LimitedWriteStream
-				over: ((WriteStream on: (String new: 32))
-						locale: SmalltalkLocale.Hex;
-						yourself)
+				over: (SmalltalkLocale.Hex writeStream: 32)
 				limit: 120
 				limitBlock: [:s | ^s contents , ' … etc …'].
 	self printInfoTipOn: stream frame: aStackFrame.

@@ -628,9 +628,7 @@ testPrintString
 	| subject stream |
 	subject := 100000000000 / 3 asScaledDecimal: 4.
 	"We don't want the integer part to print in hex."
-	stream := String writeStream
-				locale: SmalltalkLocale.Hex;
-				yourself.
+	stream := SmalltalkLocale.Hex writeStream.
 	subject printOn: stream.
 	self assert: stream contents equals: '33333333333.3333s'.
 	"The printed representation of a ScaledDecimal is rounded.

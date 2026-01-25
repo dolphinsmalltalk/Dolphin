@@ -225,10 +225,9 @@ valueTextOnly
 
 	| stream |
 	stream := LimitedWriteStream
-				over: (String writeStream: 32)
+				over: (Locale smalltalk writeStream: 32)
 				limit: 3000
 				limitBlock: [:s | ^s contents , ' … etc …'].
-	stream locale: Locale smalltalk.
 	[self aspectDescriptor displayAspectValueOf: self subject on: stream] on: Error
 		do: [:ex | stream basicPrint: ex].
 	^stream contents!

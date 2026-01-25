@@ -34,8 +34,7 @@ stonOn: stonWriter
 	"Custom implementation for Dolphin replacing the Pharo implementation in STON-Core"
 
 	| stream offset |
-	stream := String writeStream: 15.
-	stream locale: Locale invariant.
+	stream := Locale invariant writeStream: 15.
 	self printOn: stream format: 'yyyy-MM-dd'.
 	offset := Locale timeZoneInformation offsetSeconds.
 	offset = 0 ifTrue: [stream nextPut: $Z] ifFalse: [offset seconds printOn: stream format: '+hh:mm'].

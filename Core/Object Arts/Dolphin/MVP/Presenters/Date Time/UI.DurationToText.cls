@@ -34,8 +34,7 @@ format: aStringOrNil
 leftToRight: aDuration
 	| fmt stream |
 	fmt := self actualFormat.
-	stream := String writeStream: fmt size.
-	stream locale: self actualLocale.
+	stream := self actualLocale writeStream: fmt size.
 	aDuration printOn: stream format: fmt.
 	^stream grabContents!
 

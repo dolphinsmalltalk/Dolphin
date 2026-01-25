@@ -749,6 +749,14 @@ uppercaseString: aString
 
 	^OS.ICU u_strToUpper: aString locale: self tag!
 
+writeStream
+	^self writeStream: 32!
+
+writeStream: anInteger
+	^(WriteStream on: (Utf8String new: anInteger))
+		locale: self;
+		yourself!
+
 yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
@@ -841,6 +849,8 @@ thousandSeparator!constants!public! !
 timeFormat!constants!public! !
 titlecaseString:!converting!public! !
 uppercaseString:!converting!public! !
+writeStream!public!streaming! !
+writeStream:!public!streaming! !
 yearMonthFormat!constants!public! !
 !
 

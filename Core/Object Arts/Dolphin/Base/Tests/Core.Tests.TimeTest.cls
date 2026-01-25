@@ -227,14 +227,14 @@ testPrintNegativeTime
 		expected: '21:00.00'!
 
 testPrintOnFormat
+	| stream |
 	#(#(45000 'h:mm tt' '12:30 PM')) do: 
 			[:each |
 			| time actual |
 			time := Time fromSeconds: each first.
-			actual := String streamContents: 
-							[:s |
-							s locale: Locale invariant.
-							time printOn: s format: each second].
+			stream := Locale invariant writeStream.
+			time printOn: stream format: each second.
+			actual := stream contents.
 			self assert: actual equals: each last]!
 
 testPrintPositiveTime

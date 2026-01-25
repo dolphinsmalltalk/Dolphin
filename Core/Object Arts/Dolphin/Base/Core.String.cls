@@ -560,8 +560,7 @@ expandMacrosWithArguments: anArray locale: aLocale
 	"
 
 	| stream |
-	stream := String writeStream: self size.
-	stream locale: aLocale.
+	stream := aLocale writeStream: self size.
 	self expandMacrosWithArguments: anArray on: stream.
 	^stream grabContents!
 
@@ -1641,9 +1640,7 @@ smalltalkWriteStream
 smalltalkWriteStream: anInteger
 	"Answer a <WriteStream> on the a new sub-instance of the receiver with initialize size, anInteger, configured to display objects using <SmalltalkLocale> settings."
 
-	^(WriteStream on: (Utf8String new: anInteger))
-		locale: Locale smalltalk;
-		yourself!
+	^Locale smalltalk writeStream: anInteger!
 
 supportedCodePages
 	"Answer details of all code pages installed on the host system.

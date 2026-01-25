@@ -520,8 +520,7 @@ displayStringForValue: anObject
 	anObject isEmpty ifTrue: [^'(zero-length binary value)'].
 	n := anObject size.
 	max := 64 min: n.
-	s := String writeStream: (max + 1) * 3.
-	s locale: Locale invariant.
+	s := Locale invariant writeStream: (max + 1) * 3.
 	(1 to: max) do: [:i | s nextPutAll: ('%02x' sprintfWith: (anObject basicAt: i))]
 		separatedBy: [s space].
 	max < n ifTrue: [s nextPutAll: '…'].

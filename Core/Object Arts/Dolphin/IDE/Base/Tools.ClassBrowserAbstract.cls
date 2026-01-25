@@ -657,9 +657,7 @@ definitionCardName
 
 definitionOfClass: aClass
 	| strm filer |
-	strm := (WriteStream on: (Utf8String new: 256))
-				locale: SmalltalkLocale.Hex;
-				yourself.
+	strm := SmalltalkLocale.Hex writeStream: 256.
 	filer := aClass sourceFilerClass on: strm.
 	filer environment: aClass environment.
 	filer printBasicDefinitionOfClass: aClass on: strm.

@@ -160,9 +160,7 @@ defaultInstanceSpec
 
 definition
 	| definitionStream |
-	definitionStream := (String writeStream: 256)
-				locale: SmalltalkLocale.Hex;
-				yourself.
+	definitionStream := SmalltalkLocale.Hex writeStream: 256.
 	self printDefinitionOn: definitionStream.
 	^definitionStream contents!
 

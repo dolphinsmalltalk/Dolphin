@@ -494,9 +494,7 @@ definition
 	receiver."
 
 	| strm |
-	strm := (WriteStream on: (Utf8String new: 256))
-				locale: SmalltalkLocale.Hex;
-				yourself.
+	strm := SmalltalkLocale.Hex writeStream: 256.
 	self printDefinitionOn: strm.
 	^strm contents!
 
