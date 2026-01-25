@@ -34,6 +34,7 @@ package setClassNames: #(
 	#{OS.COM.DATE}
 	#{OS.COM.DATEArray}
 	#{OS.COM.DECIMAL}
+	#{OS.COM.DECIMALArray}
 	#{OS.COM.DispatchFunction}
 	#{OS.COM.DISPPARAMS}
 	#{OS.COM.DualInterfaceImplementation}

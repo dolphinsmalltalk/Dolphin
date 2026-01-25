@@ -12,6 +12,7 @@ package setClassNames: #(
 	#{OS.COM.Tests.CYTest}
 	#{OS.COM.Tests.DATEArrayTest}
 	#{OS.COM.Tests.DATETest}
+	#{OS.COM.Tests.DECIMALArrayTest}
 	#{OS.COM.Tests.DECIMALTest}
 	#{OS.COM.Tests.IDispatchTest}
 	#{OS.COM.Tests.SAFEARRAYTest}
@@ -118,6 +119,14 @@ External.Tests.ExternalArrayTest
 
 External.Tests.ExternalArrayTest
 	subclass: #'OS.COM.Tests.DATEArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.COM.Tests.DECIMALArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

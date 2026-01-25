@@ -69,7 +69,7 @@ scale
 scale: anInteger
 	"Set the receiver's 'scale' field to the value of the argument, anInteger"
 
-	(anInteger < 0 or: [anInteger > 28])
+	(anInteger < 0 or: [anInteger > MaxScale])
 		ifTrue: 
 			[InvalidArgumentError
 				signal: ('Scale <1p> is outside permitted range 0..<2p>' expandMacrosWith: anInteger with: MaxScale)
@@ -90,10 +90,11 @@ value
 	"Answer the receiver's value as a Smalltalk <ScaledDecimal>."
 
 	| scale |
-	scale := self scale.
+	scale := bytes uint8AtOffset: _OffsetOf_scale.
 	^ScaledDecimal
-		newFromNumber: ((self hi32 bitShift: 64) + self lo64) * (self sign == 0 ifTrue: [1] ifFalse: [-1])
-				/ scale exp10
+		newFromNumber: (((bytes uint32AtOffset: _OffsetOf_hi32) bitShift: 64)
+				+ (bytes uint64AtOffset: _OffsetOf_lo64))
+					* ((bytes int8AtOffset: _OffsetOf_sign) == 0 ifTrue: [1] ifFalse: [-1]) / scale exp10
 		scale: scale!
 
 value: aScaledDecimalOrInteger
@@ -102,13 +103,15 @@ value: aScaledDecimalOrInteger
 	| scale intVal |
 	self scale: (scale := aScaledDecimalOrInteger scale).
 	intVal := (aScaledDecimalOrInteger * scale exp10) asInteger.
-	self sign: (intVal negative
+	bytes int8AtOffset: _OffsetOf_sign
+		put: (intVal negative
 				ifTrue: 
 					[intVal := intVal negated.
 					-1]
 				ifFalse: [0]).
-	self hi32: (intVal bitShift: -64).
-	self lo64: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF)! !
+	bytes
+		uint32AtOffset: _OffsetOf_hi32 put: (intVal bitShift: -64);
+		uint64AtOffset: _OffsetOf_lo64 put: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF)! !
 
 !OS.COM.DECIMAL categoriesForMethods!
 asVariant!converting!public! !
@@ -126,6 +129,11 @@ value:!accessing!public! !
 !
 
 !OS.COM.DECIMAL class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^DECIMALArray!
 
 byteSize
 	^_DECIMAL_Size!
@@ -170,6 +178,7 @@ vt
 	^VT_DECIMAL! !
 
 !OS.COM.DECIMAL class categoriesForMethods!
+arrayType!constants!public! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
