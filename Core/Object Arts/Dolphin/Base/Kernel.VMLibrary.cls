@@ -268,6 +268,12 @@ int32FromUInt32: anInteger
 		ifTrue: [self errorIntegerMoreThan32Bits: anInteger]
 		ifFalse: [(16r80000000 + anInteger bitAnd: 16rFFFFFFFF) - 16r80000000]!
 
+isDebugBuild
+	"Answer whether the VM is a debug build."
+
+	<stdcall: bool IsDebugBuild>
+	^false!
+
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
 
@@ -489,6 +495,7 @@ hashBytes:count:!hash algorithms!helpers!private! !
 highBit:!arithmetic!public! !
 indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
 int32FromUInt32:!helpers!private! !
+isDebugBuild!environment!public! !
 isSlowMachine!environment!public! !
 isUserBreakRequested!accessing!helpers!private! !
 kernelHandle!accessing-handles!private! !

@@ -33,7 +33,9 @@ package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase} #denyIsNil:)
 	#(#{XProgramming.SUnit.TestCase} #hash)
 	#(#{XProgramming.SUnit.TestCase} #isCiBuild)
+	#(#{XProgramming.SUnit.TestCase} #isDebugVM)
 	#(#{XProgramming.SUnit.TestCase} #isKnownSlowTest)
+	#(#{XProgramming.SUnit.TestCase} #isNativeDebuggerPresent)
 	#(#{XProgramming.SUnit.TestCase} #should:raise:matching:)
 	#(#{XProgramming.SUnit.TestCase} #should:trigger:against:)
 	#(#{XProgramming.SUnit.TestCase} #should:trigger:butNot:against:)
@@ -196,8 +198,18 @@ hash
 isCiBuild
 	^(SessionManager current getenv: 'APPVEYOR') notNil!
 
+isDebugVM
+	"Answer whether the VM running the image is a debug build."
+
+	^Kernel.VM isDebugBuild!
+
 isKnownSlowTest
 	^self thisTestMethod hasAnnotation: #knownSlowTest!
+
+isNativeDebuggerPresent
+	"Answer whether the host OS process is being debugged, e.g. Dolphin is being debugged with the Visual Studio debugger, or WinDbg."
+
+	^OS.Kernel32 isDebuggerPresent!
 
 should: aNiladicValuable raise: anExceptionSelector matching: aMonadicValuable
 	"Example usage:
@@ -350,7 +362,9 @@ deny:sameAs:!public! !
 denyIsNil:!asserting!public! !
 hash!comparing!public! !
 isCiBuild!helpers!public! !
+isDebugVM!public!testing! !
 isKnownSlowTest!accessing!public! !
+isNativeDebuggerPresent!public!testing! !
 should:raise:matching:!asserting!public! !
 should:trigger:against:!asserting!public! !
 should:trigger:butNot:against:!asserting!public! !

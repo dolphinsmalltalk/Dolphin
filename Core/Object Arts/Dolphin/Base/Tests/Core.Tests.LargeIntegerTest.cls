@@ -1221,7 +1221,6 @@ testModulo
 		maximum + 2) 16rFFFFFFFF 16rFFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFFFFFFFFFF)
 		do: 
 			[:dividend |
-			self should: [dividend \\ 0] raise: ZeroDivide.
 			#(-16r7FFFFFFFFFFFFFFFFFFFFFFF -16r7FFFFFFFFFFFFFFF ##(SmallInteger minimum * 2 - 1) ##(SmallInteger
 				minimum / 2) -3 -2 -1 2 3 ##(SmallInteger maximum) ##(SmallInteger maximum + 1) 16r7FFFFFFF 16r7FFFFFFFFFFFFFFF 16r7FFFFFFFFFFFFFFFFFFFFFFF)
 				do: 
@@ -1233,6 +1232,12 @@ testModulo
 					self assert: actual equals: expected.
 					"Sanity check"
 					self assert: quotient * divisor + actual equals: dividend]]!
+
+testModuloDivideByZero
+	<skipIf: #isNativeDebuggerPresent>
+	#(-16rFFFFFFFFFFFFFFFFFFFFFFFF -16rFFFFFFFFFFFFFFF -16rFFFFFFFF ##(SmallInteger maximum + 1) ##(SmallInteger
+		maximum + 2) 16rFFFFFFFF 16rFFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFFFFFFFFFF)
+		do: [:dividend | self should: [dividend \\ 0] raise: ZeroDivide]!
 
 testMulSmall
 	| res a |
@@ -1634,6 +1639,7 @@ testLessThanFloat!public!unit tests! !
 testLowBit!public!unit tests! !
 testMod!public!unit tests! !
 testModulo!public!unit tests! !
+testModuloDivideByZero!public!unit tests! !
 testMulSmall!public!unit tests! !
 testNegate!public!unit tests! !
 testOdd!public! !

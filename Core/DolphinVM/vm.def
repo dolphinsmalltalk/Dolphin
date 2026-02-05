@@ -24,6 +24,7 @@ StdOut
 StdErr
 _snprintf_s
 IsUserBreakRequested
+IsDebugBuild
 AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
 invalidParameterHandler=?invalidParameterHandler@@YAXPB_W00II@Z
 

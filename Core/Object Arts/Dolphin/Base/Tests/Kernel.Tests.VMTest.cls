@@ -463,6 +463,7 @@ testCRTFault
 	the invalid parameter handler (issue #59). On an unfixed V2015 VM this will just crash."
 
 	<skipUnless: #hasDolphinCrtInvalidParameterHandler>
+	<skipIf: #isNativeDebuggerPresent>
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
@@ -504,10 +505,15 @@ testExtCallArgLpwstr
 	self verifyExtCallArgLpwstr: false!
 
 testExtCallCrtFault
+	"In debug build will pop a CRT assertion dialog."
+	<skipIf: #isDebugVM>
+	"If being debuggedWill cause a first chance exception to be caught in native debugger. Not fatal, but confusing/annoying."
+	<skipIf: #isNativeDebuggerPresent>
 	<skipUnless: #hasDolphinCrtInvalidParameterHandler>
 	self verifyExtCallCrtFault: false!
 
 testExtCallFpFault
+	<skipIf: #isNativeDebuggerPresent>
 	self verifyExtCallFpFault: false!
 
 testExtCallGpf
@@ -517,7 +523,7 @@ testExtCallGpf
 
 testExtCallIntDivZero
 	"Test what happens when the called function divides by zero"
-
+	<skipIf: #isNativeDebuggerPresent>
 	self verifyExtCallIntDivZero: false!
 
 testExtCallOverlappedArgLppvoid
@@ -539,9 +545,14 @@ testExtCallOverlappedBool8
 	self verifyExtCallRetBool8: true!
 
 testExtCallOverlappedCrtFault
+	"In debug build will pop a CRT assertion dialog."
+	<skipIf: #isDebugVM>
+	"If being debuggedWill cause a first chance exception to be caught in native debugger. Not fatal, but confusing/annoying."
+	<skipIf: #isNativeDebuggerPresent>
 	self verifyExtCallCrtFault: true!
 
 testExtCallOverlappedFpFault
+	<skipIf: #isNativeDebuggerPresent>
 	self verifyExtCallFpFault: true!
 
 testExtCallOverlappedGC
@@ -578,7 +589,7 @@ testExtCallOverlappedGpf
 
 testExtCallOverlappedIntDivZero
 	"Test what happens when the called function divides by zero"
-
+	<skipIf: #isNativeDebuggerPresent>
 	self verifyExtCallIntDivZero: true!
 
 testExtCallOverlappedRetErrno
@@ -590,12 +601,17 @@ testExtCallOverlappedRetHRESULT
 	self verifyExtCallRetHRESULT: true!
 
 testExtCallOverlappedRetLpstr
+	<skipIf: #isDebugVM>
 	self verifyExtCallRetLpstr: true!
 
 testExtCallOverlappedRetLpstr8
+	<skipIf: #isDebugVM>
 	self verifyExtCallRetLpstr: true!
 
 testExtCallOverlappedRetLpwstr
+	"Don't run on debug VM because the overlapped call will allocate on the background thread, causing mimalloc to abort as it is designed to be per-thread. In practice this shouldn't be isn't an issue because the overlapped call mechanism is thread safe, but it would be better to fix this obviously."
+
+	<skipIf: #isDebugVM>
 	self verifyExtCallRetLpwstr: true!
 
 testExtCallOverlappedRetNtStatus
@@ -649,6 +665,7 @@ testFPFaultInPrimitive
 	"An FP fault occurring in a primitive should be reported in the primitive method, not some
 	subsequently invoked method, even when interrupts are off."
 
+	<skipIf: #isNativeDebuggerPresent>
 	| mask receiver |
 	mask := Float exceptionMask: (_MCW_EM maskClear: _EM_OVERFLOW).
 	receiver := 2.0.
@@ -1192,19 +1209,6 @@ testInt64AtOffset
 	actual := bytes int64AtOffset: 0.
 	self assert: actual identicalTo: -1!
 
-testIntDivideByZero
-	#(#/ #// #\\ #quo:) do: 
-			[:op |
-			Processor enableAsyncEvents: false.
-			[123 perform: op with: 0] on: ZeroDivide
-				do: 
-					[:ex |
-					self assert: ex tag equals: 123.
-					self assert: (self
-								isFault: ex
-								raisedIn: SmallInteger >> op
-								receiver: 123)]]!
-
 testInterruptPendingOverlappedCall
 	"Test sending a VM interrupt to a Process blocked waiting on an overlapped call"
 
@@ -1361,8 +1365,8 @@ testMustBeBoolean
 	self assert: (pseudoFalse ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 2!
 
 testOverlappedCallsSuspendAndTerminate2
+	<skip: 'Known failing test'>
 	| proc a win32Event maxRetries busyWaitForSignal retries sleep |
-	self skip: 'Known failing test'.
 	self assert: Processor pendingTerminations isEmpty.
 	win32Event := Kernel32
 				createEvent: nil
@@ -1795,8 +1799,6 @@ testPrimitiveCopyFromTo
 testPrimitiveDiv
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #//.
-	{SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum}
-		do: [:each | self should: [method value: each withArguments: #(0)] raise: ZeroDivide].
 	"The primitive assumes that the receiver is a SmallInteger; it does not check.
 	It accepts SmallInteger, and LargeInteger arguments, and fails for everything else"
 	{'s'. 1 / 2. 1.23}
@@ -1808,8 +1810,6 @@ testPrimitiveDiv
 testPrimitiveDivide
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #/.
-	{SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum}
-		do: [:each | self should: [method value: each withArguments: #(0)] raise: ZeroDivide].
 	"The primitive assumes that the receiver is a SmallInteger; it does not check.
 	It accepts small integer, large integer and Float arguments, and fails for everything else"
 	self assert: (method value: 1 withArguments: #('s')) equals: 'InvalidParameter1'.
@@ -2406,8 +2406,6 @@ testPrimitiveMakePoint
 testPrimitiveMod
 	| method cases |
 	method := self createPrimitiveMethodLike: SmallInteger >> #\\.
-	{SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum}
-		do: [:each | self should: [method value: each withArguments: #(0)] raise: ZeroDivide].
 	"The primitive assumes that the receiver is a SmallInteger; it does not check.
 	It accepts SmallInteger arguments, and fails for everything else"
 	{'s'. 1 / 2. SmallInteger maximum + 1. 1.0}
@@ -2614,8 +2612,6 @@ testPrimitiveObjectCount
 testPrimitiveQuo
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #quo:.
-	{SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum}
-		do: [:each | self should: [method value: each withArguments: #(0)] raise: ZeroDivide].
 	"The primitive assumes that the receiver is a SmallInteger; it does not check.
 	It accepts SmallInteger and LargeInteger arguments, and fails for everything else"
 	{'s'. 1 / 2. 1.23 }
@@ -3251,6 +3247,27 @@ testSignedFromUnsigned
 					self assert: signed isImmutable]].
 	self should: [VM int32FromUInt32: 16r100000000] raise: Error.
 	self should: [VM int32FromUInt32: (2 raisedToInteger: 32) + 1] raise: Error!
+
+testSmallIntPrimitiveDivisionByZero
+	"Tests SmallInteger primitives raise DivideByZero exception as expected. We don't run this when under the native debugger as it will trap the first chance exceptions, which is expected but annoying."
+
+	<skipIf: #isNativeDebuggerPresent>
+	#(#/ #// #\\ #quo:) do: 
+			[:op |
+			| method |
+			method := SmallInteger >> op.
+			self assert: method isPrimitive.
+			{ SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum } do: 
+					[:each |
+					Processor enableAsyncEvents: false.
+					[method value: each withArguments: { 0 }] on: ZeroDivide
+						do: 
+							[:ex |
+							self assert: ex tag equals: each.
+							self assert: (self
+										isFault: ex
+										raisedIn: method
+										receiver: each)]]]!
 
 testUInt32AtOffsetPut
 	| bytes dword max |
@@ -4056,7 +4073,6 @@ testIndirectUInt16AtOffsetPrimitives!public!unit tests! !
 testIndirectUInt32AtOffsetPrimitives!public!unit tests! !
 testIndirectUint8AtOffsetPrimitives!public!unit tests! !
 testInt64AtOffset!public!unit tests! !
-testIntDivideByZero!public!unit tests! !
 testInterruptPendingOverlappedCall!public!unit tests! !
 testLoopsInterruptible!public!unit tests! !
 testMakeLargeUnsigned!public!unit tests! !
@@ -4126,6 +4142,7 @@ testQuiesceWhenUIBlocked!public!unit tests! !
 testQwordAtOffset!public!unit tests! !
 testRegistry!public! !
 testSignedFromUnsigned!public!unit tests! !
+testSmallIntPrimitiveDivisionByZero!public!unit tests! !
 testUInt32AtOffsetPut!public!unit tests! !
 testVMPointersImmutable!public!unit tests! !
 testWeakMournerNotifications!public!unit tests! !

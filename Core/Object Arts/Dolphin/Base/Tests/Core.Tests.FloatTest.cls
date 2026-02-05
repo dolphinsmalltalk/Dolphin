@@ -21,9 +21,6 @@ assertNegativeZero: aFloat
 	self assert: aFloat equals: -0.0.
 	self assert: aFloat negative!
 
-continuationValues
-	^self infinities , {Float nan}!
-
 finiteSignificand: aNormalFloat
 	^(aNormalFloat timesTwoPower: Float.Precision - 1 - (aNormalFloat exponent max: Float.EMin))
 		truncated abs!
@@ -253,9 +250,13 @@ testArcCos
 	self assert: -1 arcCos equals: Float pi.
 	self assert: Float fminNormalized arcCos * 2 equals: Float pi.
 	Float denormalized ifTrue: [self assert: Float fminDenormalized arcCos * 2 equals: Float pi].
-	{-1.1. 1.1. Float fmax} do: [:each | self shouldRaiseInvalidOperation: [each arcCos]].
 	self zeroes do: [:each | self assert: each arcCos * 2 equals: Float pi].
-	self continuationValues do: [:each | self assert: each arcCos isNaN]!
+	self assert: Float nan arcCos isNaN!
+
+testArcCosExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	{ -1.1. 1.1. Float fmax } do: [:each | self shouldRaiseInvalidOperation: [each arcCos]].
+	self infinities do: [:each | self assert: each arcCos isNaN]!
 
 testArcSin
 	self assert: 1 arcSin * 2 equals: Float pi.
@@ -265,9 +266,13 @@ testArcSin
 	self assert: Float fminNormalized arcSin equals: Float fminNormalized.
 	Float denormalized
 		ifTrue: [self assert: Float fminDenormalized arcSin equals: Float fminDenormalized].
-	{-1.1. 1.1. Float fmax} do: [:each | self shouldRaiseInvalidOperation: [each arcSin]].
 	self zeroes do: [:each | self assert: each arcSin equals: each].
-	self continuationValues do: [:each | self assert: each arcSin isNaN]!
+	self assert: Float nan arcSin isNaN!
+
+testArcSinExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	{ -1.1. 1.1. Float fmax } do: [:each | self shouldRaiseInvalidOperation: [each arcSin]].
+	self infinities do: [:each | self assert: each arcSin isNaN]!
 
 testArcTan
 	self assert: 1 arcTan radiansToDegrees equals: 45.
@@ -316,8 +321,12 @@ testAsInteger
 	self assert: (self successor: -0.5) asInteger equals: 0.
 	self assert: Float fmax asInteger
 		equals: (Float.MantissaHighBit | Float.MantissaMask bitShift: Float emax - Float precision + 1).
-	{0.0. -0.0. Float fminNormalized} do: [:each | self assert: each asInteger equals: 0].
-	self continuationValues do: [:each | self should: [each asInteger] raise: ArithmeticError]!
+	{ 0.0. -0.0. Float fminNormalized } do: [:each | self assert: each asInteger equals: 0].
+	self infinities do: [:each | self should: [each asInteger] raise: ArithmeticError]!
+
+testAsIntegerExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	{ Float nan } do: [:each | self should: [each asInteger] raise: ArithmeticError]!
 
 testAsTrueFraction
 	self assert: 0.1 asTrueFraction equals: 16rCCCCCCCCCCCCD / 16r80000000000000.
@@ -326,7 +335,8 @@ testAsTrueFraction
 		equals: 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.
 	self assert: Float fmax negated asTrueFraction
 		equals: -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.
-	self continuationValues do: [:each | self should: [each asTrueFraction] raise: ArithmeticError]!
+	self infinities , { Float nan }
+		do: [:each | self should: [each asTrueFraction] raise: ArithmeticError]!
 
 testCeiling
 	self assert: 1.0 ceiling equals: 1.
@@ -343,11 +353,15 @@ testCeiling
 		ifTrue: 
 			[self assert: Float fminDenormalized ceiling equals: 1.
 			self assert: Float fminDenormalized negated ceiling equals: 0].
-	{SmallInteger maximum. SmallInteger minimum. SmallInteger maximum + 1. 2 ** 63 - 1024}
+	{ SmallInteger maximum. SmallInteger minimum. SmallInteger maximum + 1. 2 ** 63 - 1024 }
 		do: [:each | self assert: each asFloat ceiling equals: each].
 	self assert: Float fmax ceiling equals: Float fmax asInteger.
 	self assert: Float fmax negated ceiling equals: Float fmax negated asInteger.
-	self continuationValues do: [:each | self should: [each ceiling] raise: ArithmeticError]!
+	self infinities do: [:each | self should: [each ceiling] raise: ArithmeticError]!
+
+testCeilingExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	{ Float nan } do: [:each | self should: [each ceiling] raise: ArithmeticError]!
 
 testCopy
 	self assert: Float nan copy isNaN.
@@ -368,8 +382,11 @@ testCos
 	"Note that the result is not precise"
 	self assert: (sixty cos roundTo: Float.SignificantDifference) equals: 0.5.
 	self assert: (sixty cos * -1 roundTo: Float.SignificantDifference) equals: -0.5.
-	self infinities do: [:each | self shouldRaiseInvalidOperation: [each cos]].
 	self assert: Float nan cos isNaN!
+
+testCosExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	self infinities do: [:each | self shouldRaiseInvalidOperation: [each cos]]!
 
 testDenormalsAsTrueFraction
 	"check if gradual underflow is correctly handled"
@@ -383,6 +400,7 @@ testDenormalsAsTrueFraction
 	self assert: fminDenorm asFloat equals: Float fminDenormalized!
 
 testDivideByZero
+	<skipIf: #isNativeDebuggerPresent>
 	| cases |
 	cases := self normals reject: [:each | each isZero].
 	Float denormalized ifTrue: [cases := cases copyWith: Float fminDenormalized].
@@ -539,11 +557,15 @@ testFloor
 		ifTrue: 
 			[self assert: Float fminDenormalized floor equals: 0.
 			self assert: Float fminDenormalized negated floor equals: -1].
-	{SmallInteger maximum. SmallInteger minimum. 2 ** 63 - 1024}
+	{ SmallInteger maximum. SmallInteger minimum. 2 ** 63 - 1024 }
 		do: [:each | self assert: each asFloat floor equals: each].
 	self assert: Float fmax floor equals: Float fmax asInteger.
 	self assert: Float fmax negated floor equals: Float fmax negated asInteger.
-	self continuationValues do: [:each | self should: [each floor] raise: ArithmeticError]!
+	self infinities do: [:each | self should: [each floor] raise: ArithmeticError]!
+
+testFloorExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	{ Float nan } do: [:each | self should: [each floor] raise: ArithmeticError]!
 
 testFloorLog2
 	| aBitLess aBitMore |
@@ -923,21 +945,27 @@ testLn
 	self assert: Float fmax ln equals: 709.782712893384.
 	self assert: Float fminNormalized ln equals: -708.3964185322641.
 	self assert: Float infinity ln equals: Float infinity.
+	self assert: Float nan ln isNaN!
+
+testLnExceptions
+	<skipIf: #isNativeDebuggerPresent>
 	self zeroes
 		do: [:each | self shouldRaiseZeroDivide: [each ln] withContinuation: Float negativeInfinity].
 	{-1.0. Float negativeInfinity}
-		do: [:each | self shouldRaiseZeroDivide: [each ln] withContinuation: Float nan].
-	self assert: Float nan ln isNaN!
+		do: [:each | self shouldRaiseZeroDivide: [each ln] withContinuation: Float nan]!
 
 testLog
 	self assert: (10.0 raisedTo: 2.0) log equals: 2.0.
 	self assert: 1000.0 log truncated equals: 3.
 	self assert: Float infinity log equals: Float infinity.
+	self assert: Float nan log isNaN!
+
+testLogExceptions
+	<skipIf: #isNativeDebuggerPresent>
 	self zeroes
 		do: [:each | self shouldRaiseZeroDivide: [each log] withContinuation: Float negativeInfinity].
-	{-10.0. Float negativeInfinity}
-		do: [:each | self shouldRaiseZeroDivide: [each log] withContinuation: Float nan].
-	self assert: Float nan log isNaN!
+	{ -10.0. Float negativeInfinity }
+		do: [:each | self shouldRaiseZeroDivide: [each log] withContinuation: Float nan]!
 
 testNaNComparisons
 	| comparisons subject comparands |
@@ -997,6 +1025,7 @@ testNegative
 		do: [:each | self deny: each negative description: each printString , ' is not negative']!
 
 testOverflow
+	<skipIf: #isNativeDebuggerPresent>
 	self shouldRaiseOverflow: [Float fmax * 2].
 	self shouldRaiseOverflow: [Float fmax * -2] withContinuation: Float negativeInfinity.
 	self shouldRaiseOverflow: [Float fmax * 2.0].
@@ -1218,7 +1247,6 @@ testRaisedTo
 	self assert: ((0.5 raisedTo: 0.25) squared squared roundTo: 1.0e-15) equals: 0.5.
 	self assert: (0.0 raisedTo: 0.5) equals: 0.0.
 	self assert: (0.0 raisedTo: 0.25) equals: 0.0.
-	self shouldRaiseInvalidOperation: [-3.0 raisedTo: 0.5].
 	"Negative powers"
 	self assert: (4.0 raisedTo: -1) equals: 0.25.
 	self assert: (4.0 raisedTo: -2) equals: 1 / 16.0.
@@ -1232,15 +1260,19 @@ testRaisedTo
 	self assert: (-0.5 raisedTo: -1.0) equals: -2.0.
 	self assert: (-0.5 raisedTo: -2) equals: 4.0.
 	self assert: (-0.5 raisedTo: -3.0) equals: -8.0.
-	self shouldRaiseZeroDivide: [0.0 raisedTo: -1.0].
 	"Negative fractional powers"
 	self assert: (0.5 raisedTo: -0.5) equals: 2.0 sqrt.
 	self assert: (4 raisedTo: -0.25) equals: 0.25 sqrt sqrt.
 	self assert: (0.5 raisedTo: -0.25) equals: 2.0 sqrt sqrt.
-	self shouldRaiseInvalidOperation: [-3 raisedTo: -0.5].
 	"Overflow"
-	self shouldRaiseOverflow: [Float fmax raisedTo: 2].
 	self assert: (Float nan raisedTo: 2) isNaN!
+
+testRaisedToExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	self shouldRaiseInvalidOperation: [-3.0 raisedTo: 0.5].
+	self shouldRaiseZeroDivide: [0.0 raisedTo: -1.0].
+	self shouldRaiseInvalidOperation: [-3 raisedTo: -0.5].
+	self shouldRaiseOverflow: [Float fmax raisedTo: 2]!
 
 testRaisedToInteger
 	| extremes |
@@ -1249,13 +1281,11 @@ testRaisedToInteger
 	self assert: (2.0 raisedToInteger: 4) equals: 16.0.
 	self assert: (0.0 raisedToInteger: 0) equals: 1.0.
 	self assert: (0.0 raisedToInteger: 2) equals: 0.0.
-	self shouldRaiseZeroDivide: [0.0 raisedToInteger: -1].
 	self assert: (2.0 raisedToInteger: -1) equals: 0.5.
 	self assert: (2.0 raisedToInteger: -4) equals: 0.0625.
 	self assert: (-0.0 raisedToInteger: 0) equals: 1.0.
 	self assert: (-0.0 raisedToInteger: 3) equals: 0.0.
 	self assert: (-0.0 raisedToInteger: 2) equals: 0.0.
-	self shouldRaiseZeroDivide: [-0.0 raisedToInteger: -1] withContinuation: Float negativeInfinity.
 	self assert: (-2.0 raisedToInteger: 0) equals: 1.0.
 	self assert: (-2.0 raisedToInteger: 1) equals: -2.0.
 	self assert: (-2.0 raisedToInteger: 4) equals: 16.0.
@@ -1266,6 +1296,11 @@ testRaisedToInteger
 	Float denormalized ifTrue: [extremes := extremes copyWith: Float fminDenormalized].
 	extremes do: [:each | self assert: (each raisedToInteger: 0) equals: 1.0].
 	#(1 2 -1 -2) do: [:each | self assert: (Float nan raisedToInteger: each) isNaN]!
+
+testRaisedToIntegerExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	self shouldRaiseZeroDivide: [0.0 raisedToInteger: -1].
+	self shouldRaiseZeroDivide: [-0.0 raisedToInteger: -1] withContinuation: Float negativeInfinity!
 
 testReadFrom
 	308 to: -316
@@ -1283,12 +1318,15 @@ testReciprocal
 	self assert: -1.0 reciprocal equals: -1.0.
 	self assert: 0.5 reciprocal equals: 2.0.
 	self assert: 4.0 reciprocal equals: 0.25.
-	self shouldRaiseZeroDivide: [0.0 reciprocal] withContinuation: Float infinity.
-	self shouldRaiseZeroDivide: [-0.0 reciprocal] withContinuation: Float negativeInfinity.
 	self assert: Float fmax reciprocal bitRepresentation equals: 16r4000000000000.
 	self assert: Float fminNormalized reciprocal bitRepresentation equals: 16r7FD0000000000000.
-	Float denormalized ifTrue: [self shouldRaiseOverflow: [Float fminDenormalized reciprocal]].
 	self assert: Float pi reciprocal reciprocal equals: Float pi!
+
+testReciprocalExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	self shouldRaiseZeroDivide: [0.0 reciprocal] withContinuation: Float infinity.
+	self shouldRaiseZeroDivide: [-0.0 reciprocal] withContinuation: Float negativeInfinity.
+	Float denormalized ifTrue: [self shouldRaiseOverflow: [Float fminDenormalized reciprocal]]!
 
 testRounded
 	| x y int |
@@ -1317,11 +1355,15 @@ testRounded
 	self assert: -0.0 rounded equals: 0.
 	Float denormalized ifTrue: [self assert: Float fminDenormalized rounded equals: 0].
 	self assert: Float fminNormalized rounded equals: 0.
-	self continuationValues do: [:each | self should: [each rounded] raise: ArithmeticError].
+	self infinities do: [:each | self should: [each rounded] raise: ArithmeticError].
 	self assert: Float fmax rounded
 		equals: 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.
 	self assert: Float fmax negated rounded
 		equals: -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368!
+
+testRoundedExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	{ Float nan } do: [:each | self should: [each rounded] raise: ArithmeticError]!
 
 testSign
 	self assert: 0.0 sign equals: 0.
@@ -1400,8 +1442,11 @@ testSin
 	self assert: 0.0 sin equals: 0.0.
 	self assertNegativeZero: -0.0 sin.
 	self assert: ((Float pi / 6) sin roundTo: Float.SignificantDifference) equals: 0.5.
-	self infinities do: [:each | self shouldRaiseInvalidOperation: [each sin]].
 	self assert: Float nan sin isNaN!
+
+testSinExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	self infinities do: [:each | self shouldRaiseInvalidOperation: [each sin]]!
 
 testSqrt
 	| actual |
@@ -1409,7 +1454,6 @@ testSqrt
 	self assert: 1.0 sqrt equals: 1.0.
 	self assert: 0.0 sqrt equals: 0.0.
 	self assertNegativeZero: -0.0 sqrt.
-	self shouldRaiseInvalidOperation: [-1.0 sqrt].
 	actual := Float fminNormalized sqrt.
 	self assert: actual * actual equals: Float fminNormalized.
 	Float denormalized
@@ -1417,8 +1461,12 @@ testSqrt
 			[actual := Float fminDenormalized sqrt.
 			self assert: actual * actual equals: Float fminDenormalized].
 	self assert: Float infinity sqrt equals: Float infinity.
-	self shouldRaiseInvalidOperation: [Float negativeInfinity sqrt].
 	self assert: Float nan sqrt isNaN!
+
+testSqrtExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	self shouldRaiseInvalidOperation: [-1.0 sqrt].
+	self shouldRaiseInvalidOperation: [Float negativeInfinity sqrt]!
 
 testStoreOn
 	| cases |
@@ -1475,8 +1523,11 @@ testTimesTwoPower
 	self assertNegativeZero: (-0.0 timesTwoPower: 10).
 	self assertNegativeZero: (-0.0 timesTwoPower: 10s).
 	self assert: (Float nan timesTwoPower: 10) isNaN.
-	self assert: (Float nan timesTwoPower: 10s) isNaN.
-	self shouldRaiseOverflow: [1.0 timesTwoPower: emax + 1]!
+	self assert: (Float nan timesTwoPower: 10s) isNaN!
+
+testTimesTwoPowerExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	self shouldRaiseOverflow: [1.0 timesTwoPower: Float emax + 1]!
 
 testTruncated
 	| subject y int |
@@ -1492,13 +1543,18 @@ testTruncated
 	self assert: -0.0 truncated equals: 0.
 	Float denormalized ifTrue: [self assert: Float fminDenormalized truncated equals: 0].
 	self assert: Float fminNormalized truncated equals: 0.
-	self continuationValues do: [:each | self should: [each truncated] raise: ArithmeticError].
+	self infinities do: [:each | self should: [each truncated] raise: ArithmeticError].
 	self assert: Float fmax truncated
 		equals: 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.
 	self assert: Float fmax negated truncated
 		equals: -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368!
 
+testTruncatedExceptions
+	<skipIf: #isNativeDebuggerPresent>
+	{ Float nan } do: [:each | self should: [each truncated] raise: ArithmeticError]!
+
 testUnderflow
+	<skipIf: #isNativeDebuggerPresent>
 	self shouldRaiseUnderflow: [Float fmin * 0.1]!
 
 zeroes
@@ -1507,7 +1563,6 @@ zeroes
 !Core.Tests.FloatTest categoriesForMethods!
 assertFloat:equals:!helpers!private! !
 assertNegativeZero:!helpers!private! !
-continuationValues!constants!private! !
 finiteSignificand:!helpers!private! !
 hasDenormalizedFloats!public!unit tests! !
 infinities!constants!private! !
@@ -1529,14 +1584,19 @@ tearDown!private!Running! !
 testAbs!public!unit tests! !
 testAdd!public!unit tests! !
 testArcCos!public!unit tests! !
+testArcCosExceptions!public!unit tests! !
 testArcSin!public!unit tests! !
+testArcSinExceptions!public!unit tests! !
 testArcTan!public!unit tests! !
 testArcTan2!public!unit tests! !
 testAsInteger!public!unit tests! !
+testAsIntegerExceptions!public!unit tests! !
 testAsTrueFraction!public!unit tests! !
 testCeiling!public!unit tests! !
+testCeilingExceptions!public!unit tests! !
 testCopy!public!unit tests! !
 testCos!public!unit tests! !
+testCosExceptions!public!unit tests! !
 testDenormalsAsTrueFraction!public!unit tests! !
 testDivideByZero!public!Testing!unit tests! !
 testEqualsColon!public!unit tests! !
@@ -1545,6 +1605,7 @@ testExp!public!unit tests! !
 testExponent!public!unit tests! !
 testFloatCharacterization!public!unit tests! !
 testFloor!public!unit tests! !
+testFloorExceptions!public!unit tests! !
 testFloorLog2!public!unit tests! !
 testFractionAsFloat!public!Testing!unit tests! !
 testFractionComparisons!public!unit tests! !
@@ -1565,7 +1626,9 @@ testIsZero!public!unit tests! !
 testLessThanFraction!public!unit tests! !
 testLessThanInteger!public!unit tests! !
 testLn!public!unit tests! !
+testLnExceptions!public!unit tests! !
 testLog!public!unit tests! !
+testLogExceptions!public!unit tests! !
 testNaNComparisons!public!unit tests! !
 testNegated!public!unit tests! !
 testNegative!public!unit tests! !
@@ -1581,17 +1644,25 @@ testPrintOnSignificantFigures!public!unit tests! !
 testPrintString!public!unit tests! !
 testPrintStringAndReadBack!public!unit tests! !
 testRaisedTo!public!unit tests! !
+testRaisedToExceptions!public!unit tests! !
 testRaisedToInteger!public!unit tests! !
+testRaisedToIntegerExceptions!public!unit tests! !
 testReadFrom!public!unit tests! !
 testReciprocal!public!unit tests! !
+testReciprocalExceptions!public!unit tests! !
 testRounded!public!unit tests! !
+testRoundedExceptions!public!unit tests! !
 testSign!public!unit tests! !
 testSignificandAsInteger!public!unit tests! !
 testSin!public!unit tests! !
+testSinExceptions!public!unit tests! !
 testSqrt!public!unit tests! !
+testSqrtExceptions!public!unit tests! !
 testStoreOn!public!unit tests! !
 testTimesTwoPower!public!Testing!unit tests! !
+testTimesTwoPowerExceptions!public!Testing!unit tests! !
 testTruncated!public!unit tests! !
+testTruncatedExceptions!public!unit tests! !
 testUnderflow!public!unit tests! !
 zeroes!constants!private! !
 !

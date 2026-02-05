@@ -154,3 +154,12 @@ extern "C" HANDLE __stdcall RegisterAsEventSource(const wchar_t* szSource)
 	const wchar_t* szSrc = FAILED(RegisterEventLogMessageTable(szSource)) ? L"Dolphin" : szSource;
 	return RegisterEventSource(NULL, szSrc);
 }
+
+extern "C" BOOL __stdcall IsDebugBuild()
+{
+#ifdef _DEBUG
+	return TRUE;
+#else
+	return FALSE;
+#endif
+}

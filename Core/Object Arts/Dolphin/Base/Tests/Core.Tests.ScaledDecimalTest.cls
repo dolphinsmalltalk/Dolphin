@@ -718,13 +718,17 @@ testSubtractionFromInteger
 testZeroRaisedToInteger
 	"Zero might be handle specially"
 
-	self should: [0.0s1 raisedToInteger: -1] raise: Error.
 	self assert: (0.0s1 raisedToInteger: 0) equals: 1.
 	self assert: (0.0s1 raisedToInteger: 0) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 1) equals: 0.
 	self assert: (0.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 2) equals: 0.
-	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1! !
+	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1!
+
+testZeroRaisedToNegativeInteger
+	<skipIf: #isNativeDebuggerPresent>
+	self should: [0.0s1 raisedToInteger: -1] raise: ZeroDivide.
+! !
 
 !Core.Tests.ScaledDecimalTest categoriesForMethods!
 floatTestValues!constants!private! !
@@ -777,5 +781,6 @@ testScaleExtension!public!unit tests! !
 testStoreOnRoundTrip!public!unit tests! !
 testSubtractionFromInteger!public!unit tests! !
 testZeroRaisedToInteger!public!unit tests! !
+testZeroRaisedToNegativeInteger!public!unit tests! !
 !
 

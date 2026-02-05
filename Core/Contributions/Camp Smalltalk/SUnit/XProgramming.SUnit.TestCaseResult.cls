@@ -58,15 +58,27 @@ displayOn: aPuttableStream
 	aPuttableStream
 		print: self case;
 		nextPutAll: ' (';
-		nextPutAll: self outcome;
-		nextPutAll: ' in '.
-	self outcome == #passed
+		nextPutAll: outcome.
+	outcome == #passed
 		ifTrue: 
-			[self duration printHumanReadableOn: aPuttableStream.
-			aPuttableStream nextPut: $)]
+			[aPuttableStream nextPutAll: ' in '.
+			self duration printHumanReadableOn: aPuttableStream]
 		ifFalse: 
-			[self printSourceOn: aPuttableStream.
-			aPuttableStream nextPut: $)]!
+			[outcome == #skipped
+				ifTrue: 
+					[| i message |
+					message := signal description ?? ''.
+					i := message ?? '' indexOfSubCollection: 'precondition'.
+					i == 0
+						ifTrue: [aPuttableStream nextPutAll: message]
+						ifFalse: 
+							[aPuttableStream
+								nextPutAll: ' by ';
+								nextPutAll: (message copyFrom: i)]]
+				ifFalse: 
+					[aPuttableStream nextPutAll: ' in '.
+					self printSourceOn: aPuttableStream]].
+	aPuttableStream nextPut: $)!
 
 duration
 	"Answer the <Duration> of the test execution. If the test didn't pass, the value is undefined."

@@ -263,7 +263,6 @@ testCloseToPrecision
 	self assert: 22 / 7 closeTo: Float pi precision: 0.002!
 
 testRoundUpTo
-	self should: [1 roundUpTo: 0] raise: ZeroDivide.
 	self assert: (1 roundUpTo: 1) equals: 1.
 	self assert: (1 roundUpTo: 2) equals: 2.
 	self assert: (21.5 roundUpTo: 1) equals: 22.
@@ -275,7 +274,11 @@ testRoundUpTo
 	self assert: (21.5 roundUpTo: 8) equals: 24.
 	self assert: (21.5 roundUpTo: 9) equals: 27.
 	self assert: (21.5 roundUpTo: 10) equals: 30.
-	self assert: (1.4 @ 2.6 roundUpTo: 1 @ 2) equals: 2 @ 4! !
+	self assert: (1.4 @ 2.6 roundUpTo: 1 @ 2) equals: 2 @ 4!
+
+testRoundUpToZero
+	<skipIf: #isNativeDebuggerPresent>
+	self should: [1 roundUpTo: 0] raise: ZeroDivide! !
 
 !Core.Tests.NumberTest categoriesForMethods!
 scan:value:class:!helpers!private! !
@@ -286,5 +289,6 @@ testClassReadFromColonIntegers!public!unit tests! !
 testClassReadFromColonScaledDecimals!public!unit tests! !
 testCloseToPrecision!public!unit tests! !
 testRoundUpTo!public!unit tests! !
+testRoundUpToZero!public!unit tests! !
 !
 

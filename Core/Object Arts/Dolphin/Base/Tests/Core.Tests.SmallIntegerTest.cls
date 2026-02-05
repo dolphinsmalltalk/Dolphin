@@ -209,7 +209,11 @@ testIntegerDivide
 	"Note that divide by -1 can overflow SmallInteger to LargeInteger if dividing SmallInteger minimum"
 
 	self class integerDivideTestCases
-		do: [:each | self assert: each first // each second equals: each third].
+		do: [:each | self assert: each first // each second equals: each third]!
+
+testIntegerDivideByZero
+	"Note that divide by -1 can overflow SmallInteger to LargeInteger if dividing SmallInteger minimum"
+	<skipIf: #isNativeDebuggerPresent>
 	{1. -1. SmallInteger maximum. SmallInteger minimum} do: 
 			[:each |
 			self should: [each // 0] raise: ZeroDivide.
@@ -386,9 +390,12 @@ testMinVal
 	self should: [SmallInteger minimum = (1 bitShift: VMConstants.IntPtrBits - 2) negated]!
 
 testModulo
-	{1. -1. 0. SmallInteger maximum. SmallInteger minimum}
-		do: [:each | self should: [each \\ 0] raise: ZeroDivide].
 	self class moduloTestCases do: [:each | self assert: each first \\ each second equals: each third]!
+
+testModuloZeroDivide
+	<skipIf: #isNativeDebuggerPresent>
+	{1. -1. 0. SmallInteger maximum. SmallInteger minimum}
+		do: [:each | self should: [each \\ 0] raise: ZeroDivide]!
 
 testNew
 	self should: [SmallInteger new] raise: TestResult error!
@@ -476,8 +483,11 @@ testPrintStringRadix
 	self assert: (1295 printStringRadix: 36) equals: '36rZZ'.
 	self assert: (SmallInteger maximum printStringRadix: 36) equals: '36rHRA0HR'.
 	self assert: (SmallInteger minimum printStringRadix: 36) equals: '-36rHRA0HS'.
-	self should: [1 printStringRadix: 1] raise: Error.
 	self should: [36 printStringRadix: 37] raise: Error!
+
+testPrintStringRadixDivisionByZero
+	<skipIf: #isNativeDebuggerPresent>
+	self should: [1 printStringRadix: 1] raise: ZeroDivide!
 
 testQuo
 	self class quoTestCases do: [:each | self assert: (each first quo: each second) equals: each third]!
@@ -495,7 +505,6 @@ testRaisedToInteger
 	self assert: (0 raisedToInteger: 0) equals: 1.
 	self assert: (0 raisedToInteger: 1) equals: 0.
 	self assert: (0 raisedToInteger: 2) equals: 0.
-	self should: [0 raisedToInteger: -1] raise: ZeroDivide.
 	self assert: (2 raisedToInteger: -1) equals: 1 / 2.
 	self assert: (2 raisedToInteger: -4) equals: 1 / 16.
 	self assert: (-3 raisedToInteger: 0) equals: 1.
@@ -512,6 +521,10 @@ testRaisedToInteger
 		equals: SmallInteger minimum * SmallInteger minimum.
 	self assert: (SmallInteger minimum raisedToInteger: -2)
 		equals: 1 / (SmallInteger minimum * SmallInteger minimum)!
+
+testRaisedToIntegerZeroDivide
+	<skipIf: #isNativeDebuggerPresent>
+	self should: [0 raisedToInteger: -1] raise: ZeroDivide!
 
 testReciprocal
 	self assert: 7 reciprocal equals: (Fraction numerator: 1 denominator: 7)!
@@ -546,6 +559,7 @@ testGreaterOrEqualToFloat!public! !
 testGreaterThanFloat!public! !
 testHighBit!public!unit tests! !
 testIntegerDivide!public!unit tests! !
+testIntegerDivideByZero!public!unit tests! !
 testIsInt16!public!unit tests! !
 testIsInt32!public!unit tests! !
 testIsInt64!public!unit tests! !
@@ -560,6 +574,7 @@ testMaxVal!public!unit tests! !
 testMinMax!public!unit tests! !
 testMinVal!public!unit tests! !
 testModulo!public!unit tests! !
+testModuloZeroDivide!public!unit tests! !
 testNew!public!unit tests! !
 testNoMask!public!unit tests! !
 testNumberOfDigitsInBase!public!unit tests! !
@@ -568,8 +583,10 @@ testOverflow!public!unit tests! !
 testPrimesUpTo!public!unit tests! !
 testPrintString!public!unit tests! !
 testPrintStringRadix!public!unit tests! !
+testPrintStringRadixDivisionByZero!public!unit tests! !
 testQuo!public!unit tests! !
 testRaisedToInteger!public!unit tests! !
+testRaisedToIntegerZeroDivide!public!unit tests! !
 testReciprocal!public!unit tests! !
 testRem!public!unit tests! !
 testSubtract!public!unit tests! !

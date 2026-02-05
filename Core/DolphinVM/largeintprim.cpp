@@ -47,6 +47,13 @@
 #else
 	#define MASK_DWORD(op) (op)
 #endif
+
+#ifdef VERBOSE_DIVISION_TRACE
+	#define DIVISION_TRACE ::trace
+#else
+	#define DIVISION_TRACE 1 ? ((void)0) : ::trace
+#endif
+
 // This cast sequence can allow the compiler to generate more efficient code (avoids the need for an arithmetic shift)
 #define /*int32_t*/ HighSLimb(/*int64_t*/ op) (((LARGE_INTEGER*)&op)->HighPart)
 #define /*uint32_t*/ HighULimb(/*int64_t*/ op) (((ULARGE_INTEGER*)&op)->HighPart)
@@ -1126,10 +1133,11 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	LargeInteger* liEwe = oteEwe->m_location;
 	LargeInteger* liVee = oteVee->m_location;
 
-#ifdef _DEBUG
-	TRACESTREAM<< L"liDivUnsigned:\n	" << oteEwe << 
-					"\nby	" << oteVee<< L"\n\n";
-#endif
+	#ifdef VERBOSE_DIVISION_TRACE
+	{
+		TRACESTREAM << L"liDivUnsigned:\n	" << oteEwe << "\nby	" << oteVee << L"\n\n";
+	}
+	#endif
 
 	ptrdiff_t eweSize = oteEwe->getWordSize();
 
@@ -1146,7 +1154,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	const ptrdiff_t n = veeSize;
 	const ptrdiff_t m = eweSize - n + 1;
 
-	TRACE(L"n=%d, eweSize= %d, m=%d\n", n, eweSize, m);
+	DIVISION_TRACE(L"n=%d, eweSize= %d, m=%d\n", n, eweSize, m);
 
 	if (m <= 0)
 	{
@@ -1180,10 +1188,11 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	LargeInteger* liV = oteV->m_location;
 	ASSERT(oteV->getWordSize() == oteVee->getWordSize()+1);
 
-#if 0 //def _DEBUG
-	TRACESTREAM<< L"Shifted:\n	U=" << oteU << 
-			"\n	V=" << oteV<< L"\n";
-#endif
+	#ifdef VERBOSE_DIVISION_TRACE
+	{
+		TRACESTREAM << L"Shifted:\n	U=" << oteU << "\n	V=" << oteV << L"\n";
+	}
+	#endif
 
 	// Allow one extra digit for sign as otherwise might get negative result
 	// (could do more intelligently or at end?)
@@ -1203,7 +1212,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	uint32_t v2 = liV->m_digits[n-2];
 #endif
 
-	TRACE(L"d=%d, v1=%X, v2=%X, entering loop 1...\n", d, v1, v2);
+	DIVISION_TRACE(L"d=%d, v1=%X, v2=%X, entering loop 1...\n", d, v1, v2);
 
 	for (ptrdiff_t k=1;k<=m;k++)
 	{
@@ -1248,22 +1257,22 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 
 			// r^ = ujb + uj1 - v1.q^
 			rHatb.HighPart = static_cast<uint32_t>(rHat);
-			TRACE(L"	%d: j=%d, uj=%X, uj1=%X, ujb=%I64X, uj2=%X, trial q^=%X, r^=%X\n", k, j, uj, uj1, ujb, uj2, qHat, rHatb.HighPart);
+			DIVISION_TRACE(L"	%d: j=%d, uj=%X, uj1=%X, ujb=%I64X, uj2=%X, trial q^=%X, r^=%X\n", k, j, uj, uj1, ujb, uj2, qHat, rHatb.HighPart);
 
 			while ((static_cast<uint64_t>(v2)*qHat > (rHatb.QuadPart + uj2)))
 			{
 				qHat--;
-				TRACE(L"	Adjusting trial q^ to %X, ",qHat);
+				DIVISION_TRACE(L"	Adjusting trial q^ to %X, ",qHat);
 				if (rHatb.HighPart + v1 < rHatb.HighPart)
 				{
 					// overflowed - If rHat is >= b, then v2.q^ will be < b.r^
-					TRACE(L"\nWARNING: rHat overflow (%I64X)\n", static_cast<uint64_t>(rHatb.HighPart)+v1);
+					DIVISION_TRACE(L"\nWARNING: rHat overflow (%I64X)\n", static_cast<uint64_t>(rHatb.HighPart) + v1);
 					break;
 				}
 				else
 					rHatb.HighPart += v1;
 
-				TRACE(L"rHat=%X\n",rHatb.HighPart);
+				DIVISION_TRACE(L"rHat=%X\n", rHatb.HighPart);
 			}
 		}
 
@@ -1275,7 +1284,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 
 		// Our digits are in reverse order to Knuth
 		ptrdiff_t l = j - n;
-		TRACE(L"	Final qHat %X\n	Entering inner loop with l=%d\n", qHat, l);
+		DIVISION_TRACE(L"	Final qHat %X\n	Entering inner loop with l=%d\n", qHat, l);
 
 		LARGE_INTEGER carry;
 		carry.QuadPart = 0;
@@ -1342,7 +1351,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			// i.e. -16rFFFFFFFF..16r1, which is not trivially representable 
 			// as 32-bit 2's complement!
 			ASSERT(carry.QuadPart >= static_cast<int64_t>(1-b) && carry.QuadPart <= 1);
-			TRACE(L"		i=%d,l=%d: uij=%X, vi=%X, result=%08X %08X %08X (carry %I64d), liU->m_digits[%d]=%X\n",
+			DIVISION_TRACE(L"		i=%d,l=%d: uij=%X, vi=%X, result=%08X %08X %08X (carry %I64d), liU->m_digits[%d]=%X\n",
 						i, l, uij, vi, carry.HighPart, carry.LowPart, accum, carry.QuadPart, l, liU->m_digits[l]);
 			l++;
 		}
@@ -1352,7 +1361,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			/*
 				Step D6: Add back
 			*/
-			TRACE(L"	Add back (carry %I64d)!\n", carry);
+			DIVISION_TRACE(L"	Add back (carry %I64d)!\n", carry);
 			
 			qHat--;
 			l = j - n;
@@ -1375,11 +1384,13 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 		ptrdiff_t qi = m - k;
 		ASSERT(qi >= 0 && qi < m);
 		liQuo->m_digits[qi] = qHat;
-#ifdef _DEBUG
-		TRACESTREAM<< L"\tliQuo->m_digits[" << std::dec << qi<< L"] = " 
-			<< std::hex << qHat << std::endl;
-		TRACESTREAM<< L"Remainder: " << oteU << std::endl << std::endl;
-#endif
+		#ifdef VERBOSE_DIVISION_TRACE
+		{
+			TRACESTREAM << L"\tliQuo->m_digits[" << std::dec << qi << L"] = "
+				<< std::hex << qHat << std::endl;
+			TRACESTREAM << L"Remainder: " << oteU << std::endl << std::endl;
+		}
+		#endif
 	}
 
 	// Don't need shifted divisor any more

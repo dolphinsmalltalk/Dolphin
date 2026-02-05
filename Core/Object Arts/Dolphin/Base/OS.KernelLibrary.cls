@@ -1457,6 +1457,15 @@ inputQueueMask
 				ifFalse: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT)].
 	^qs_Input | ##(QS_POSTMESSAGE | QS_TIMER | QS_PAINT | QS_HOTKEY | QS_SENDMESSAGE)!
 
+isDebuggerPresent
+	"Invoke the IsDebuggerPresent() function of the module wrapped by the receiver.
+	Helpstring: Determines whether the calling process is being debugged by a user-mode debugger.
+
+		bool __stdcall IsDebuggerPresent();"
+
+	<stdcall: bool IsDebuggerPresent>
+	^self invalidCall: _failureCode!
+
 isValidLocale: locale dwFlags: dwFlags
 	<stdcall: bool IsValidLocale uint32 uint32>
 	^self invalidCall: _failureCode!
@@ -2292,6 +2301,7 @@ heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
 heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
 heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
 inputQueueMask!constants!private! !
+isDebuggerPresent!**auto generated**!public!win32 functions-debugging! !
 isValidLocale:dwFlags:!public!win32 functions-national language support! !
 isWindows10OrGreater!public!win32 functions-version helpers! !
 isWindows11OrGreater!public!win32 functions-version helpers! !

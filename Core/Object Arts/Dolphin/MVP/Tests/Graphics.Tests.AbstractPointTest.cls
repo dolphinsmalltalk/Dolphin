@@ -174,7 +174,10 @@ testDivide
 	self assert: subject1 / (1 / 2) equals: 20 @ 200.
 	self assert: 5 / 2 / subject2 equals: (5 / 4) @ (5 / 8).
 	large := SmallInteger maximum + 1.
-	self assert: subject2 / large equals: (2 / large) @ (4 / large).
+	self assert: subject2 / large equals: (2 / large) @ (4 / large)!
+
+testDivideByZero
+	<skipIf: #isNativeDebuggerPresent>
 	"Because coercing a point to a Point3D always results in zero 'z' dimension, we will always get a zero divide error here"
 	self
 		should: [1 @ 2 @ 3 / (self subjectClass x: 4 y: 5)]
@@ -416,6 +419,7 @@ testComparing!public!unit tests! !
 testCorner!public!unit tests! !
 testDisplayString!public!unit tests! !
 testDivide!public!unit tests! !
+testDivideByZero!public!unit tests! !
 testFractionPart!public!unit tests! !
 testGreaterOrEqual!public!unit tests! !
 testGreaterThan!public!unit tests! !
