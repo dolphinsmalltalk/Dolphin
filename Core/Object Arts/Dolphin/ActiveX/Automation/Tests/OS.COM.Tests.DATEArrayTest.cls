@@ -14,6 +14,9 @@ OS.COM.Tests.DATEArrayTest comment: ''!
 
 !OS.COM.Tests.DATEArrayTest methodsFor!
 
+elementToValue: element 
+	^element asLocal!
+
 testSelfEvaluating
 	| subject |
 	subject := self newTestSubjectOfSize: 6.
@@ -24,6 +27,7 @@ testSelfEvaluating
 	^self! !
 
 !OS.COM.Tests.DATEArrayTest categoriesForMethods!
+elementToValue:!helpers!private! !
 testSelfEvaluating!public!unit tests! !
 !
 
@@ -34,12 +38,37 @@ arrayClass
 
 elementFromIndex: anInteger
 	^##({
-		DATE new asDateAndTime.
-		DATE minimum asDateAndTime.
-		DATE maximum asDateAndTime.
-		DATE now asDateAndTime.
-		SYSTEMTIME new asDATE asDateAndTime.
-		FILETIME new asDateAndTime
+		DateAndTime
+			rataDie: DATE.EpochRD
+			seconds: 0
+			offsetSeconds: 0.
+		DateAndTime
+			rataDie: DATE.MinValue truncated + DATE.EpochRD
+			seconds: DATE.MinValue fractionPart negated * 86400
+			offsetSeconds: 0.
+		DateAndTime
+			year: 100
+			month: 1
+			day: 1
+			offset: 0 seconds.
+		DateAndTime
+			rataDie: DATE.MaxValue truncated + DATE.EpochRD
+			seconds: DATE.MaxValue fractionPart * 86400
+			offsetSeconds: 0.
+		DateAndTime
+			year: 1899
+			month: 12
+			day: 30
+			offset: 0 seconds.
+		DateAndTime
+			rataDie: 730179
+			seconds: 86399.99995976686
+			offsetSeconds: 0.
+		DateAndTime
+			year: 1601
+			month: 1
+			day: 1
+			offset: 0 seconds
 	}) at: anInteger! !
 
 !OS.COM.Tests.DATEArrayTest class categoriesForMethods!

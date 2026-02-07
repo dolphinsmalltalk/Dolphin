@@ -73,7 +73,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.DATETest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM.DATE private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

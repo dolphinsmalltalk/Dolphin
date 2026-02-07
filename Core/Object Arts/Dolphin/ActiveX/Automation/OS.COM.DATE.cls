@@ -8,11 +8,12 @@ External.DOUBLE
 	classInstanceVariableNames: ''
 	classConstants: {
 			'EpochRD' -> 16rA955A.
-			'EpochSeconds' -> -16r1E3D680.
-			'MaxBound' -> 16r2D2482.
-			'MaxValue' -> 2.958465999988426e6.
-			'MinBound' -> -16rA081B.
-			'MinValue' -> -657434.9999884259
+			'LowerBound' -> -16rA081B.
+			'MaxValue' -> 2.9584659999999995e6.
+			'MaxYear' -> 16r270F.
+			'MinValue' -> -657434.9999942129.
+			'MinYear' -> 16r64.
+			'UpperBound' -> 16r2D2482
 		}!
 
 OS.COM.DATE guid: (Core.GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
@@ -35,7 +36,7 @@ asDATE
 asDateAndTime
 	"Answer a <DateAndTime> converted from the receiver's Active-X Automation date (an 8-byte floating point day number and fraction of a day), which is assumed to in the local time."
 
-	^self value!
+	^DateAndTime fromDATE: self!
 
 asFloat
 	^bytes doubleAtOffset: _OffsetOf_value!
@@ -65,14 +66,14 @@ printOn: aStream
 value
 	"Answer a <DateAndTime> equivalent to the the receiver's Active-X Automation date (an 8-byte floating point day number and fraction of a day)."
 
-	^DateAndTime fromDATE: self!
+	^self asDateAndTime!
 
 value: anObject
 	"Set the receiver's ole date value to the nearest equivalent of the argument, assumed to be some supported date/time representation, e.g. a <DateAndTime>."
 
 	| oledate |
-	oledate := anObject asFloat.
-	(oledate > MinBound and: [oledate < MaxBound])
+	oledate := anObject.
+	(oledate > LowerBound and: [oledate < UpperBound])
 		ifFalse: [InvalidArgumentError signal: 'Out of representable range of DATEs' with: 'anObject'].
 	bytes doubleAtOffset: _OffsetOf_value put: oledate! !
 
@@ -123,14 +124,23 @@ initialize
 		self initialize
 	"
 
-	self addClassConstant: 'EpochSeconds'
-		value: (DateAndTime
-				year: 1899
-				month: 12
-				day: 30) asSeconds.
-	self addClassConstant: 'MaxValue' value: (DATE fromString: '9999-12-31 23:59:59') asFloat.
-	self addClassConstant: 'MinValue' value: (DATE fromString: '0100-01-01 23:59:59') asFloat.
-	VM registryAt: self name put: self!
+	| upperBound lowerBound min |
+	VM registryAt: self name put: self.
+	"The upper bounds is the day number for 10000-01-01, since the maximum representable moment is between 9999-12-31T23:59:59 and the start of the next day."
+	upperBound := 2958466.
+	self addClassConstant: 'UpperBound' value: upperBound.
+	"The maximum DATE is one ULP below the upper bound"
+	self addClassConstant: 'MaxValue' value: (upperBound asFloat bitRepresentation - 1 becomeA: Float).
+	"The lower bound is the day number for 100-01-01"
+	lowerBound := -657435.
+	"DATE always stores the fraction of the day as a positive value, even for negative dates, so the minimum DATE (which is negative) has a larger numeric value than the minimum representable value. The minimum representation value describes the end of the minimum day, which is a later moment in time. Also, the floating point representation has insufficient precision to describe the end of the day even to millisecond accuracy, but the related APIs tend to round to seconds suggesting that sub-second accuracy is not expected."
+	self addClassConstant: 'LowerBound' value: lowerBound.
+	"Any value that is at most half a second away from the end of the first day will be rounded by APIs such as VariantTimeToSystemTime to the next later day, so the minimum DATE value (not moment) is one ULP smaller than this."
+	min := (lowerBound + 1.0 - ((Duration.SecondsPerDay - 0.5) / Duration.SecondsPerDay))
+				bitRepresentation - 1
+				becomeA: Float.
+	self addClassConstant: 'MinValue' value: min!
+
 
 marshal: anObject
 	^anObject asDATE!
@@ -141,8 +151,10 @@ maximum
 		yourself!
 
 minimum
-	^(self new)
-		value: MinValue;
+	"The minimum value is the largest valid negative value, not the minimum date (because the fractional part is always treated as a positive offset)."
+
+	^self new
+		value: LowerBound + 1;
 		yourself!
 
 now

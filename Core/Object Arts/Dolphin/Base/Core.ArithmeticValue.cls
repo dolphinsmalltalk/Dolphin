@@ -389,6 +389,13 @@ sign
 				ifTrue: [0]
 				ifFalse: [1]]!
 
+signum
+	"Answer the non-zero <integer> sign of the receiver (i.e. -1 if the receiver is negative, else 1)"
+
+	^self negative 
+		ifTrue: [-1]
+		ifFalse: [1]!
+
 squared
 	"Answer a <arithmeticValue> that is the receiver multiplied by itself."
 
@@ -506,6 +513,7 @@ rounded!public!truncation and round off! !
 roundTo:!public!truncation and round off! !
 roundUpTo:!public!truncation and round off! !
 sign!public!testing! !
+signum!public!testing! !
 squared!mathematical!public! !
 strictlyPositive!public!testing! !
 subtractFromFloat:!double dispatch!private! !
