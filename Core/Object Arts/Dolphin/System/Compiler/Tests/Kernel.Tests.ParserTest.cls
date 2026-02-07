@@ -555,6 +555,51 @@ testExternalCalls
 			self assert: eachArg indirections equals: 0.
 			self assertIsNil: eachArg structClass]!
 
+testExternalCallTypeAliases
+	{
+		{ ExtCallArgInt8. #('Int8' 'sbyte') }.
+		{ ExtCallArgUInt8. #('UInt8' 'BYTE' 'byte') }.
+		{ ExtCallArgInt16. #('Int16' 'SWORD' 'sword') }.
+		{ ExtCallArgUInt16. #('UInt16' 'WORD' 'word') }.
+		{ ExtCallArgInt32. #('Int32' 'SDWORD' 'sdword') }.
+		{ ExtCallArgUInt32. #('UInt32' 'DWORD' 'dword' 'UInt32Bytes') }.
+		{ ExtCallArgInt64. #('Int64' 'SQWORD' 'sqword' 'LARGE_INTEGER') }.
+		{ ExtCallArgUInt64. #('UInt64' 'QWORD' 'qword' 'UInt64Bytes' 'ULARGE_INTEGER') }.
+		{ ExtCallArgUIntPtr. #('UIntPtr' 'UINT_PTR' 'UIntPtrBytes') }.
+		{ ExtCallArgIntPtr. #('IntPtr' 'INT_PTR') }.
+		{ ExtCallArgBOOL. #('BOOL') }.
+		{ ExtCallArgHRESULT. #('HRESULT') }.
+		{ ExtCallArgNTSTATUS. #('NTSTATUS') }.
+		{ ExtCallArgLPWSTR. #('LPWSTR') }.
+		{ ExtCallArgLPVOID. #('LPVOID' 'Address') }.
+		{ ExtCallArgFLOAT. #('FLOAT') }.
+		{ ExtCallArgDOUBLE. #('DOUBLE') }.
+		{ ExtCallArgGUID. #('GUID') }.
+		{ ExtCallArgDATE. #('DATE') }.
+		{ ExtCallArgBSTR. #('BSTR') }.
+		{ ExtCallArgVARIANT. #('VARIANT') }.
+		{ ExtCallArgVARBOOL. #('varbool' 'VARIANT_BOOL') }
+	} do: 
+				[:each |
+				| arg tree ffiCall aliases typeOrdinal typeName |
+				typeOrdinal := each first.
+				aliases := each second.
+				typeName := aliases first asLowercase.
+				aliases do: 
+						[:typeAlias |
+						tree := self parseMethod: 'blah: x %<cdecl: <1s> blah <1s>>' << typeAlias.
+						self assert: tree formattedCode trimBlanks equals: 'blah: x
+	%<cdecl: <1s> blah <1s>>' << typeName.
+						ffiCall := tree tags first.
+						self assert: ffiCall returnType typeOrdinal equals: typeOrdinal.
+						self assert: ffiCall returnType indirections equals: 0.
+						self assertIsNil: ffiCall returnType structClass.
+						self assert: ffiCall selector identicalTo: #cdecl:.
+						arg := ffiCall argumentTypes single.
+						self assert: arg typeOrdinal equals: typeOrdinal.
+						self assert: arg indirections equals: 0.
+						self assertIsNil: arg structClass]]!
+
 testGeneralBlockIntervalsArray
 	"This tests that all types of nodes in a method are well made."
 
@@ -1559,6 +1604,7 @@ testExpressionSolver!public!unit tests! !
 testExternalCallChildren!public!unit tests! !
 testExternalCallEquality!public!unit tests! !
 testExternalCalls!public!unit tests! !
+testExternalCallTypeAliases!public!unit tests! !
 testGeneralBlockIntervalsArray!public!unit tests! !
 testGeneralBlockIntervalsAssignement!public!unit tests! !
 testGeneralBlockIntervalsBlock!public!unit tests! !

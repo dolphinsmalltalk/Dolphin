@@ -2764,6 +2764,7 @@ Core.Object
 								'lpwstr' -> 16r11.
 								'LPWSTR' -> 16r11.
 								'ntstatus' -> 16r1C.
+								'NTSTATUS' -> 16r1C.
 								'oop' -> 16rD.
 								'ote' -> 16r14.
 								'qword' -> 16r12.

@@ -67,6 +67,7 @@ Core.Object
 								'lpwstr' -> 16r11.
 								'LPWSTR' -> 16r11.
 								'ntstatus' -> 16r1C.
+								'NTSTATUS' -> 16r1C.
 								'oop' -> 16rD.
 								'ote' -> 16r14.
 								'qword' -> 16r12.
@@ -528,6 +529,7 @@ initializeExternalTypes
 		at: 'VARIANT' put: ExtCallArgVARIANT;
 		at: 'VARIANT_BOOL' put: ExtCallArgVARBOOL;
 		at: 'DATE' put: ExtCallArgDATE;
+		at: 'NTSTATUS' put: ExtCallArgNTSTATUS;
 		shrink.
 	"The ValueTypes variable is assigned for testing purposes"
 	self addClassConstant: 'ValueTypes' value: valueTypes.
