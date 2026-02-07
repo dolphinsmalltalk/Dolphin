@@ -47,37 +47,37 @@ aPolyCounts
 
 	^UInt32Array fromAddress: bytes yourAddress + 32 length: self nPolys!
 
-aPolyCounts: aUInt32Array
-	"Set the receiver's 'aPolyCounts' field to the value of the argument, aUInt32Array"
+aPolyCounts: anUInt32Array
+	"Set the receiver's 'aPolyCounts' field to the value of the argument, anUInt32Array"
 
 	| size |
-	size := aUInt32Array byteSize.
-	aUInt32Array
+	size := anUInt32Array byteSize.
+	anUInt32Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_aPolyCounts + 1)
 		to: _OffsetOf_aPolyCounts + size
 		startingAt: 1.
-	self nPolys: aUInt32Array size!
+	self nPolys: anUInt32Array size!
 
 apts
 	"Answer the receiver's apts field as a Smalltalk object."
 
 	"Implementation Note: Custom accessor needed because the offset will vary depending on the number of elements in aPolyCounts"
 
-	^StructureArray
+	^POINTSArray
 		fromAddress: bytes yourAddress + self aptsOffset
-		length: self cpts
-		elementClass: POINTS!
+		owner: self
+		length: self cpts!
 
-apts: anObject
-	"Set the receiver's apts field to the value of anObject."
+apts: aPOINTSArray
+	"Set the receiver's apts field to the value of aPOINTSArray."
 
 	"Implementation Note: Custom accessor needed because the offset will vary depending on the number of elements in aPolyCounts"
 
 	| size offset |
-	size := anObject byteSize min: self cpts * ##(POINTS basicSize).
+	size := aPOINTSArray byteSize min: self cpts * POINTS._POINTS_Size.
 	offset := self aptsOffset.
-	anObject
+	aPOINTSArray
 		replaceBytesOf: bytes
 		from: offset + 1
 		to: offset + size
@@ -109,7 +109,7 @@ nPolys: anInteger
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds owner: self fieldOwner!
 
 rclBounds: aRECTL
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
@@ -169,7 +169,7 @@ defineFields
 		defineField: #aPolyCounts
 			type: (ArrayField type: UInt32Array lengthField: #nPolys)
 			offset: 32;
-		defineField: #apts type: (StructureArrayField type: POINTS lengthField: #cpts)!
+		defineField: #apts type: (ArrayField type: POINTSArray lengthField: #cpts)!
 
 getFieldNames
 	^#(#iType #nSize #rclBounds #nPolys #cpts #aPolyCounts #apts)!

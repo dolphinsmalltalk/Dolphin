@@ -59,24 +59,24 @@ abTypesOffset
 	^28 + (4 * self cpts)	"4 = POINTS byteSize"!
 
 apts
-	"Answer the <StructureArray> value of the receiver's 'apts' field."
+	"Answer the <POINTSArray> value of the receiver's 'apts' field."
 
-	^StructureArray
+	^POINTSArray
 		fromAddress: bytes yourAddress + _OffsetOf_apts
-		length: self cpts
-		elementClass: POINTS!
+		owner: self fieldOwner
+		length: self cpts!
 
-apts: aStructureArrayOfPOINTS
-	"Set the receiver's 'apts' field to the value of the argument, aStructureArrayOfPOINTS"
+apts: aPOINTSArray
+	"Set the receiver's 'apts' field to the value of the argument, aPOINTSArray"
 
 	| size |
-	size := aStructureArrayOfPOINTS byteSize.
-	aStructureArrayOfPOINTS
+	size := aPOINTSArray byteSize.
+	aPOINTSArray
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_apts + 1)
 		to: _OffsetOf_apts + size
 		startingAt: 1.
-	self cpts: aStructureArrayOfPOINTS size!
+	self cpts: aPOINTSArray size!
 
 cpts
 	"Answer the <Integer> value of the receiver's 'cpts' field."
@@ -91,7 +91,7 @@ cpts: anInteger
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds owner: self fieldOwner!
 
 rclBounds: aRECTL
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
@@ -143,7 +143,7 @@ defineFields
 			type: UInt32Field new
 			offset: 24;
 		defineField: #apts
-			type: (StructureArrayField type: POINTS lengthField: #cpts)
+			type: (ArrayField type: POINTSArray lengthField: #cpts)
 			offset: 28;
 		defineField: #abTypes
 			type: (ArrayField type: UInt8Array lengthField: #cpts)

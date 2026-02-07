@@ -86,6 +86,7 @@ package setClassNames: #(
 	#{OS.LOGCOLORSPACEW}
 	#{OS.PIXELFORMATDESCRIPTOR}
 	#{OS.POINTS}
+	#{OS.POINTSArray}
 	#{OS.XFORM}
 ).
 
@@ -1198,6 +1199,14 @@ OS.EMREXTTEXTOUT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_EMREXTTEXTOUTW_Size' -> 16r50. '_OffsetOf_text' -> 16r4C }!
+
+External.POINTArray
+	subclass: #'OS.POINTSArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 External.POINT
 	subclass: #'OS.POINTS'

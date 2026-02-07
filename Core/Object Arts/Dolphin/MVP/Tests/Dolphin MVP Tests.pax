@@ -22,6 +22,7 @@ package setClassNames: #(
 	#{OS.Tests.NMLVGETINFOTIPWTest}
 	#{OS.Tests.NMTVGETINFOTIPWTest}
 	#{OS.Tests.POINTLTest}
+	#{OS.Tests.POINTSArrayTest}
 	#{OS.Tests.POINTSTest}
 	#{OS.Tests.RECTLTest}
 	#{OS.Tests.TCITEMWTest}
@@ -625,6 +626,14 @@ Core.Tests.SequencedGrowableCollectionTest
 
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.POINTLArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.Tests.POINTSArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
