@@ -84,6 +84,7 @@ prefixCategories
 	#('compare' 'comparing') 
 	#('refresh' 'updating') 
 	#('test' 'unit tests')
+	#('copy' 'copying')
 	)!
 
 suffixCategories
