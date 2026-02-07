@@ -246,6 +246,10 @@ testBinarySelectorExpandMacrosWithCollection
 	self assert: (self assimilateString: 'test <1s> asString') << {'hello world'}
 		equals: 'test hello world asString'.
 
+	"Likewise a ByteArray"
+	self assert: (self assimilateString: 'test <1p> printString') << #[0 1 255]
+		equals: 'test #[0 1 255] printString'.
+
 	"Similarly any non-sequenceable collection"
 	self assert: (self assimilateString: 'test <1d> displayString') << (Set with: Object new)
 		equals: 'test a Set(an Object) displayString'.

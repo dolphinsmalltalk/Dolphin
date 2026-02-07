@@ -237,6 +237,11 @@ encodeAsBytesOn: aWriteStream from: startInteger count: sizeInteger
 		putAll: self
 		startingAt: startInteger!
 
+expandMacrosIn: aString
+	"Private - Expand aString with the replaceable argument represented by the receiver."
+
+	^aString expandMacrosWith: self!
+
 floatAtOffset: anInteger
 	"Answer the single precision floating point value at offset (i.e. zero relative) anInteger in the receiver, as a Smalltalk Float object (double precision).
 	N.B. To access a double precision value (e.g. a C double) use #doubleAtOffset:"
@@ -748,6 +753,7 @@ detach!public!realizing/unrealizing! !
 doubleAtOffset:!accessing!public! !
 doubleAtOffset:put:!accessing!public! !
 encodeAsBytesOn:from:count:!double dispatch!encode/decode!private! !
+expandMacrosIn:!double dispatch!private! !
 floatAtOffset:!accessing!public! !
 floatAtOffset:put:!accessing!public! !
 hash!comparing!public! !
