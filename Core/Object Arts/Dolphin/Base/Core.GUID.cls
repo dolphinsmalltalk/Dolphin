@@ -228,21 +228,23 @@ value:!accessing!public! !
 
 alignment
 	"Answer the alignment requirements for the receiver.
-	Implementation Note: The receiver is actually defined as a structure
-	of the following form:
+	Implementation Note: The receiver is actually defined as a structure of the following form:
 		typedef struct _GUID {
 		    unsigned long  Data1;
 		    unsigned short Data2;
 		    unsigned short Data3;
 		    unsigned char  Data4[ 8 ];
 		} GUID;
-	This means it's maximum alignment requirement is for a 32-bit integer,
-	i.e. 4 rather than 16.
+	This means it's maximum alignment requirement is for a 32-bit integer, i.e. 4 rather than 16.
 	"
 
 	^4!
 
 atAddress: anAddress
+	#deprecated.
+	^self atAddress: anAddress owner: nil!
+
+atAddress: anAddress owner: anObject
 	"Answer a new instance of the receiver instantiated from the
 	data at the specified address. Normally  this will be a 'reference' 
 	instance, that points at the data embedded	at the specified address. 
@@ -251,7 +253,7 @@ atAddress: anAddress
 	of the pointer at that address. This is particularly useful for accessing
 	elements of arrays."
 
-	^self fromAddress: anAddress!
+	^self fromAddress: anAddress owner: anObject!
 
 basicByteSize
 	^_GUID_Size!
@@ -292,20 +294,23 @@ defineFields
 !
 
 elementSize
-	"Private - Answer the size (in bytes) of the structure the receiver represents
-	when used as an array element."
+	"Answer the size (in bytes) of the structure the receiver represents when used as an array element."
 
 	^_GUID_Size!
 
-fromAddress: ptr
-	"Answer a new instance of the receiver with contents copied from
-	the  GUID pointed at by ptr"
+fromAddress: anAddress
+	"Answer a new instance of the receiver with contents copied from the GUID in native binary format in memory pointed at by the argument."
 
-	^ptr asExternalAddress
-		replaceBytesOf: (self new: _GUID_Size)
+	^anAddress asExternalAddress
+		replaceBytesOf: (self basicNew: _GUID_Size)
 		from: 1
 		to: _GUID_Size
 		startingAt: 1!
+
+fromAddress: anAddress owner: anObject
+	"Answer a new instance of the receiver with contents copied from the GUID in native binary format in memory pointed at by the argument. The owner is ignored."
+
+	^self fromAddress: anAddress!
 
 fromBytes: guidBytes
 	"Answer a new instance of the receiver which is a copy of the specified bytes."
@@ -347,7 +352,7 @@ initialize
 new
 	"Answer a new, null, instance of the receiver."
 
-	^self new: _GUID_Size!
+	^self newNull!
 
 newBuffer
 	"Answer a new instance containing its own buffer."
@@ -357,14 +362,13 @@ newBuffer
 newNull
 	"Answer a new, null, instance of the receiver."
 
-	^self new: _GUID_Size!
+	^self basicNew: _GUID_Size!
 
 newUnique
-	"Answer a new instance of the receiver generated using the standard
-	algorithm (i.e. the answer should be unique)."
+	"Answer a new instance of the receiver generated using the standard algorithm (i.e. the answer should be unique)."
 
 	| answer |
-	answer := self new: _GUID_Size.
+	answer := self newNull.
 	OS.Rpcrt4 uuidCreate: answer.
 	^answer!
 
@@ -382,6 +386,11 @@ onPreStripImage
 
 	self uninitialize!
 
+requiresFinalization
+	"Answer whether instances of the receiver require free'ing either explicitly or by finalization"
+
+	^false!
+
 uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
@@ -391,14 +400,16 @@ uninitialize
 	OS.RPCLibrary closeDefault! !
 
 !Core.GUID class categoriesForMethods!
-alignment!constants!private! !
+alignment!constants!public! !
 atAddress:!instance creation!public! !
+atAddress:owner:!public! !
 basicByteSize!public! !
 byteSize!constants!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
-elementSize!accessing!private! !
+elementSize!accessing!public! !
 fromAddress:!instance creation!public! !
+fromAddress:owner:!instance creation!public! !
 fromBytes:!instance creation!public! !
 fromIdlString:!instance creation!public! !
 fromString:!instance creation!public! !
@@ -410,8 +421,9 @@ newNull!instance creation!public! !
 newUnique!instance creation!public! !
 null!constants!public! !
 onPreStripImage!class hierarchy-removing!private! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 uninitialize!class hierarchy-removing!private! !
 !
 
-Core.GUID class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
+Core.GUID class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #atAddress:owner: #byteSize #clear: #elementSize #fromAddress: #fromAddress:owner: #fromBytes: #guid #init: #name #newBuffer #requiresFinalization)!
 

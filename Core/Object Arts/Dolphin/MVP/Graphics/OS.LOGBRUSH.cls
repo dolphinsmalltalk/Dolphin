@@ -127,17 +127,33 @@ defineFields
 getFieldNames
 	^#(#lbStyle #lbColor #lbHatch)!
 
-stbConvertFrom: anSTBClassFormat
-	"Version 1 adds hatch instance variables to hold Bitmap preventing it being GC'd (#1052)."
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 Structure.
 
-	^
-	[:data |
-	LOGBRUSH basicNew
-		bytes: (data at: 1);
-		yourself]!
+	Version 1 adds hatch instance variables to hold Bitmap preventing it being GC'd (#1052).
+
+	Version 0: bytes
+	Version 1: bytes hatch
+	Version 2: bytes hatch owner"
+
+
+	^LOGBRUSH basicNew
+		bytes: (anArray at: 1);
+		yourself!
+
+stbConvertFromVersion1: anArray
+	"Private - Convert from version 1 Structure.
+
+	Version 1: bytes hatch
+	Version 2: bytes owner hatch"
+
+	^{ anArray at: 1. nil. anArray at: 2 } becomeA: LOGBRUSH!
 
 stbVersion
-	^1!
+	"Version 1: Adds hatch instance variables to hold Bitmap preventing it being GC'd (#1052).
+	Version 2: 'owner' added to Structure base class"
+
+	^2!
 
 style: styleFlags color: aColour hatch: hatchObject
 	^self newBuffer
@@ -155,7 +171,8 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
-stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!public! !
+stbConvertFromVersion1:!binary filing!public! !
 stbVersion!binary filing!public! !
 style:color:hatch:!instance creation!public! !
 withStyle:color:hatch:!instance creation!public! !

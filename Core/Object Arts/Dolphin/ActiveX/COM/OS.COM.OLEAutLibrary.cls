@@ -38,6 +38,17 @@ sysAllocString: aUtf16String
 	<stdcall: bstr SysAllocString lpvoid>
 	^self invalidCall: _failureCode!
 
+sysAllocStringLen: sz len: len
+	"Invoke the SysAllocStringLen() function of the module wrapped by the receiver.
+	Helpstring: Allocates and returns a BSTR using the given number of characters from a given LPSTR
+
+		BSTR __stdcall SysAllocStringLen(
+			LPWSTR sz,
+			unsigned int len);"
+
+	<stdcall: bstr SysAllocStringLen lpvoid uint32>
+	^self invalidCall: _failureCode!
+
 sysFreeString: aBSTR
 	"Free a Basic string previously allocated with 
 	SysAllocString, etc.
@@ -71,6 +82,7 @@ sysStringLen: aBSTR
 !OS.COM.OLEAutLibrary categoriesForMethods!
 getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
 sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
+sysAllocStringLen:len:!**auto generated**!public! !
 sysFreeString:!Automation Functions-String Manipulation!primitives!public! !
 sysStringByteLen:!Automation Functions-String Manipulation!primitives!public! !
 sysStringLen:!Automation Functions-String Manipulation!primitives!public! !

@@ -1623,7 +1623,7 @@ exampleGdipIEncoderParameters
 	encoderParameters := image encoderParameterList: encoderClsid.
 	encoder := encoderParameters Parameter at: 2.
 	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) key.
-	valueType := UInt64 atAddress: encoder Value.
+	valueType := UInt64 fromAddress: encoder Value.
 	^String writeStream
 		display: 'Parameters supported by mime type <s><n><n>' << mimeType;
 		display: 'The parameter list requires <d> bytes.<n>' << listSize;

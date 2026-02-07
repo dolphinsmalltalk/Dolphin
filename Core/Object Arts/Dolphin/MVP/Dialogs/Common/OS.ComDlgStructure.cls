@@ -24,16 +24,16 @@ dwSize: anInteger
 hwndOwnerOffset
 	^_OffsetOf_hwndOwner!
 
-initialize: anInteger
-	"Private - Initialize the state of the receiver."
+initializeBuffer: bufferClass size: anInteger
+	"Private - Create a buffer to hold unmanaged data in the receiver of the specified size and initialize it by setting the size field."
 
-	super initialize: anInteger.
+	super initializeBuffer: bufferClass size: anInteger.
 	self dwSize: anInteger! !
 
 !OS.ComDlgStructure categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 hwndOwnerOffset!constants!private! !
-initialize:!initializing!private! !
+initializeBuffer:size:!initializing!private! !
 !
 
 !OS.ComDlgStructure class methodsFor!

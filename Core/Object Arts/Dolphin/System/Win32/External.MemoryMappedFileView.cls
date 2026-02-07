@@ -52,9 +52,15 @@ free!public!realizing/unrealizing! !
 fromInteger: anInteger
 	^self new
 		basicUIntPtrAtOffset: 0 put: anInteger;
-		yourself! !
+		yourself!
+
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization."
+
+	^true! !
 
 !External.MemoryMappedFileView class categoriesForMethods!
 fromInteger:!public! !
+requiresFinalization!public!testing! !
 !
 

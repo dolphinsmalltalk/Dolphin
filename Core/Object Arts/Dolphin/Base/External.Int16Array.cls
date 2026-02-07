@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.IntegerArray
 	subclass: #'External.Int16Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -16,21 +16,21 @@ External.Int16Array comment: '`Int16Array` is a specialized `ExternalArray` to r
 
 !External.Int16Array methodsFor!
 
-uncheckedAt: anInteger 
+basicUncheckedAt: anInteger 
 	"Private - Answer an 16-bit signed <SmallInteger> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
 	^bytes int16AtOffset: anInteger + anInteger - 2!
 
-uncheckedAt: indexInteger put: valueInteger 
+basicUncheckedAt: indexInteger put: valueInteger 
 	"Private - Replace the 16-bit signed integer value at the specified index in the receiver
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes int16AtOffset: indexInteger + indexInteger - 2 put: valueInteger! !
 
 !External.Int16Array categoriesForMethods!
-uncheckedAt:!accessing!private! !
-uncheckedAt:put:!accessing!private! !
+basicUncheckedAt:!accessing!private! !
+basicUncheckedAt:put:!accessing!private! !
 !
 
 !External.Int16Array class methodsFor!

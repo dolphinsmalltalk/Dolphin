@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.IntegerArray
 	subclass: #'External.UInt8Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -16,11 +16,15 @@ External.UInt8Array comment: '`UInt8Array` is a specialized `ExternalArray` to r
 
 !External.UInt8Array methodsFor!
 
+printElementArrayOn: aStream
+	aStream print: self value!
+
 value
 	^bytes isNull ifFalse: [
 		bytes copyFrom: 1 to: self size]! !
 
 !External.UInt8Array categoriesForMethods!
+printElementArrayOn:!printing!private! !
 value!public! !
 !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.Int64Array
 	subclass: #'OS.COM.CYArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -17,12 +17,10 @@ OS.COM.CYArray comment: '`CYArray` is a specialized `ExternalArray` to represent
 !OS.COM.CYArray methodsFor!
 
 uncheckedAt: anInteger
-	^ScaledDecimal
-		newFromNumber: (bytes int64AtOffset: (anInteger - 1) * CY._CY_Size) / 10000
-		scale: 4!
+	^ScaledDecimal newFromNumber: (self basicUncheckedAt: anInteger) / 10000 scale: 4!
 
 uncheckedAt: anInteger put: aNumber
-	bytes int64AtOffset: (anInteger - 1) * CY._CY_Size put: (aNumber * 10000) asInteger.
+	self basicUncheckedAt: anInteger put: aNumber * 10000.
 	^aNumber! !
 
 !OS.COM.CYArray categoriesForMethods!

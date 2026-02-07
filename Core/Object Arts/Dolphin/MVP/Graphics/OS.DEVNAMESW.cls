@@ -29,7 +29,7 @@ Public Domain Freeware'!
 
 byteSize
 	self isNull ifTrue: [^super byteSize].
-	self isPointer
+	self isPointerStruct
 		ifTrue: 
 			[| last |
 			"Unfortunately the way the structure is designed, there is no 100% reliable way of determining the size. What we can do is to work out the minimum size required to hold the current data."

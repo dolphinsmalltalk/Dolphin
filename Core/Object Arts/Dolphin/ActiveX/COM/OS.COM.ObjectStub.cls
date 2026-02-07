@@ -211,7 +211,7 @@ onObject: anObject
 
 	object := anObject.
 	count := 0.
-	interfaces := Array new!
+	interfaces := {}!
 
 outerUnknown: pUnkOuter
 	"Private - Set the outer IUnknown of the receiver to the <IUnknown> argument, pUnkOuter."

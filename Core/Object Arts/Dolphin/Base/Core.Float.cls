@@ -1048,7 +1048,7 @@ asApproximateFraction!converting!public! !
 asFloat!converting!public! !
 asFraction!converting!public! !
 asTrueFraction!converting!public! !
-bitRepresentation!accessing!private! !
+bitRepresentation!accessing!public! !
 byteSize!constants!public! !
 ceiling!public!truncation and round off! !
 coerce:!coercing!private! !
@@ -1254,9 +1254,9 @@ initialize
 	
 	[| infinity |
 	infinity := fmax * fmax.
-	self addClassConstant: 'Infinity' value: infinity.
-	self addClassConstant: 'NegativeInfinity' value: infinity * -1.
-	self addClassConstant: 'NaN' value: infinity - infinity]
+	self addClassVariable: 'Infinity' value: infinity.
+	self addClassVariable: 'NegativeInfinity' value: infinity * -1.
+	self addClassVariable: 'NaN' value: infinity - infinity]
 			ensure: [self exceptionMask: fpeMask].
 	"Classification groups"
 	self addClassConstant: 'FpClassInfinite'

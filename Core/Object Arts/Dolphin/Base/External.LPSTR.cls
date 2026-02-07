@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.LPVOID
+External.LPSZ
 	subclass: #'External.LPSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -18,19 +18,12 @@ LPSTR implicitly converts to the referenced string when asked for its value, rat
 
 !External.LPSTR methodsFor!
 
-asString
-	"Answer a String composed of the characters of the receiver, or
-	the empty string if the receiver is a null pointer."
-	
-	^self value!
-
 value
 	"Answer the String pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
-	^AnsiString fromAddress: super value! !
+	^AnsiString fromAddress: (bytes uintPtrAtOffset: _OffsetOf_value)! !
 
 !External.LPSTR categoriesForMethods!
-asString!converting!public! !
 value!accessing!public! !
 !
 

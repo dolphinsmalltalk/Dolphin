@@ -41,7 +41,9 @@ defaultValue
 	^self param defaultValue!
 
 getAllCustData
-	^owner analyzer tlbInterface getAllParamCustData: owner index indexParam: index!
+	| typeInfoAnalyzer |
+	typeInfoAnalyzer := self analyzer.
+	^typeInfoAnalyzer tlbInterface getAllParamCustData: typeInfoAnalyzer index indexParam: index!
 
 getCustData
 	^custData ifNil: [custData := self getAllCustData]!
@@ -123,11 +125,38 @@ defineFields
 	self defineField: #paramdesc type: (StructureField type: PARAMDESC) beReadOnly!
 
 getFieldNames
-	^#(#tdescElem #paramdesc)! !
+	^#(#tdescElem #paramdesc)!
+
+stbConvertFromVersion0: anArray
+	"Convert from a version 0 STB format ELEMDESC. The format was changed from the original in the D6/7 timeframe, but unfortunately the STB version was not incremented.
+	
+		Version 0:				bytes owner param
+		Version 0 (D6/7+):		bytes owner tdesc param
+		Version 1 (D8.2.4): 		bytes owner tdesc param index custData
+
+	Note that the owner inst var added in Structure replaces the analyzer inst var of AXTypeInfoStructure, so the format remains unchanged in version 1 vs the later version 0 format."
+
+	^(anArray size == 3
+		ifTrue: 
+			["Original v0 format"
+			(Array new: self instSize)
+				replaceFrom: 1
+					to: 2
+					with: anArray
+					startingAt: 1;
+				at: 4 put: (anArray at: 3);
+				yourself]
+		ifFalse: 
+			[(anArray resize: self instSize)
+				at: 5 put: -1;
+				yourself])
+		at: 5 put: -1;
+		becomeA: self! !
 
 !OS.COM.ELEMDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+stbConvertFromVersion0:!public! !
 !
 

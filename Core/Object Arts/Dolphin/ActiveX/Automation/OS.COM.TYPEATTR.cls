@@ -103,15 +103,26 @@ cVars
 
 	^bytes uint16AtOffset: _OffsetOf_cVars!
 
+fieldOwner
+	"Answer the object that should be considered the owner of any external resources associated with the receiver's fields. This is used to set the owner of any sub-structures created to reference fields in the receiver."
+
+	^self!
+
 guid
 	"Answer the <GUID> value of the receiver's 'guid' field."
 
-	^GUID fromAddress: bytes yourAddress!
+	^GUID fromAddress: bytes yourAddress owner: self fieldOwner!
 
 idldescType
 	"Answer the <IDLDESC> value of the receiver's 'idldescType' field."
 
-	^IDLDESC fromAddress: bytes yourAddress + _OffsetOf_idldescType!
+	^IDLDESC fromAddress: bytes yourAddress + _OffsetOf_idldescType owner: self fieldOwner!
+
+initializeAtAddress: anAddress owner: anObject
+	"Private - Initialize the receiver to be a reference to an unmanaged structure of the receiver's type at the specified address. Any modifications to the receiver will be reflected back into the structure/object at anAddress."
+	
+	"self halt."
+	^super initializeAtAddress: anAddress owner: anObject!
 
 isAggregatable
 	"Answer whether the receiver is describing a coclass which
@@ -196,13 +207,12 @@ piTypeInfo: anITypeInfo
 tdesc
 	"Answer a TYPEDESC describing the type for which the receiver describes an alias (typedef)."
 
-	^self tdescAlias
-		owner: self!
+	^self tdescAlias!
 
 tdescAlias
 	"Answer the <TYPEDESC> value of the receiver's 'tdescAlias' field."
 
-	^TYPEDESC fromAddress: bytes yourAddress + _OffsetOf_tdescAlias!
+	^TYPEDESC fromAddress: bytes yourAddress + _OffsetOf_tdescAlias owner: self fieldOwner!
 
 typekind
 	"Answer the <Integer> value of the receiver's 'typekind' field."
@@ -233,8 +243,10 @@ cFuncs!**compiled accessors**!public! !
 cImplTypes!**compiled accessors**!public! !
 classDesc!accessing!private! !
 cVars!**compiled accessors**!public! !
+fieldOwner!accessing!public! !
 guid!**compiled accessors**!public! !
 idldescType!**compiled accessors**!public! !
+initializeAtAddress:owner:!initializing!private! !
 isAggregatable!public!testing! !
 isAppObject!public!testing! !
 isAutomationCompatible!public!testing! !
@@ -311,11 +323,29 @@ defineFields
 		defineField: #idldescType type: (StructureField type: IDLDESC) beReadOnly	"MEMBERID = DISPID = LONG"	"MEMBERID"	"enumerated type TYPEKIND"!
 
 getFieldNames
-	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
+	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)!
+
+stbConvertFromVersion0: anArray
+	"Convert from a version 0 STB format TYPEATTR. The format was changed from the original in the D6/7 timeframe, but unfortunately the STB version was not incremented.
+	
+		Version 0:				bytes piTypeInfo analyzer
+		Version 0 (D6/7+):		bytes analyzer piTypeInfo
+		Version 1 (D8.2.4): 		bytes owner piTypeInfo
+
+	Note that the owner inst var added in Structure replaces the analyzer inst var of AXTypeInfoStructure, so the format remains unchanged in version 1 vs the later version 0 format."
+
+	^(((anArray at: 3) isKindOf: COM.TypeInfoAnalyzer)
+		ifTrue: 
+			["Original format, D5 and earlier"
+			{ anArray at: 1. anArray at: 3. anArray at: 2 }]
+		ifFalse: [
+			"Later format - no conversion required"
+			anArray]) becomeA: self! !
 
 !OS.COM.TYPEATTR class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+stbConvertFromVersion0:!binary filing!private! !
 !
 

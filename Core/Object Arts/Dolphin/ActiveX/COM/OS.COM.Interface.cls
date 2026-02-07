@@ -70,13 +70,7 @@ attach: interfaceAddress
 basicFree
 	"Private - Free the receiver's external resources by releasing the interface."
 
-	| refs |
-	refs := self Release.
-	"Notification signal: 'Releasing ', self printString, ' ref count=', refs printString."
-	(self isPointer or: [refs == 0]) ifTrue: [bytes := nil]
-		
-
-	!
+	self Release!
 
 callback: stub vfn: vfnIndex withArgumentsAt: pArgs
 	"Private - On behalf of the <COMObjectStub>, stub, invoke the 
@@ -87,17 +81,12 @@ callback: stub vfn: vfnIndex withArgumentsAt: pArgs
 	^(self class virtualFunctions basicAt: vfnIndex)
 		callback: stub interface: self withArgumentsAt: pArgs!
 
-copy
-	"Answer a suitable copy of the receiver, which does not share the same byte data."
-
-	^self shallowCopy postCopy!
-
 detach
 	"Detach the receiver from the interface at which it is pointing, answering the address
 	of that interface. This is useful where one wishes to take-over an interface
 	reference (e.g. to pass it to some external party), and to assume the reference count."
 
-	^self isPointer 
+	^self isPointerStruct 
 		ifTrue: 
 			[| pInterface |
 			pInterface := self bytes.
@@ -121,17 +110,13 @@ downCast
 	^self!
 
 free
-	"Private - Frees the receiver's external resources by releasing the interface. 
-	Normally inside Smalltalk we have no need to call #AddRef and #Release explicitly 
-	since we can rely on the internal garbage collection and finalization to do the same job.
-	We can rely on the reference count of internally implemented interfaces being correct,
-	but not those we access via pointers."
+	"Private - Frees the receiver's external resources by releasing the interface."
 
-	(bytes notNil and: [(bytes basicUInt32AtOffset: 0) ~~ 0])
-		ifTrue: [self basicFree].
-	self beUnfinalizable		
-
-	!
+	self needsFree
+		ifTrue: 
+			[self basicFree.
+			bytes := nil].
+	self beUnfinalizable!
 
 getExtendedErrorInfo: excep
 	"Private - Add extended error information to the <HRESULTError> argument, if available."
@@ -182,27 +167,24 @@ implementor: anObject
 
 	implementor := anObject!
 
-initialize: anInteger
-	"Private - Create an external buffer in the receiver of the specified size.
-	The receiver (which is being created as an interface on a Dolphin COMObject)
-	contains an instance thunk which starts with a pointer to the generic
-	virtual function table. The id/subId fields are filled out later when the 
-	interface is registered."
+initialize
+	"Private - Initialize the receiver (which is being created as an interface on a Dolphin COMObject) contains an instance thunk which starts with a pointer to the generic virtual function table. The id/subId fields are filled out later when the  interface is registered."
 
-	super initialize: anInteger.
+	super initialize.
 	self vtbl: VM getVTable.
 	self argSizes: self class argSizes yourAddress!
 
-initializeAtAddress: anAddress
+initializeAtAddress: anAddress owner: anObject
 	"Private - Initialize the receiver to be a reference to a COMInterface at 
 	the specified address i.e. as a pointer to some interface which is probably
 	implemented outside Dolphin (though not necessarily).
 	Note that an OLE reference is added, which will be removed by finalization
 	if the receiver is not explicitly freed."
 
-	super initializeAtAddress: anAddress.
+	super initializeAtAddress: anAddress owner: anObject.
 	self beFinalizable.
-	self _addRef!
+	self _addRef.
+	^self!
 
 interfaceCookie: anInteger
 	"Set the receiver's 'interfaceCookie' field to the value of the argument, anInteger"
@@ -214,6 +196,13 @@ isSameCOMObject: aCOMInterface
 
 	^self identity = aCOMInterface identity!
 
+needsFree
+	"Private - Answer whether the receiver requires freeing of any external resources."
+
+ 	"Internal instances, i.e. those implementing an interface on an object stub, do not need free'ing as they do not AddRef themselves. We must Release pointer instances as these will be associated with a prior AddRef. This is true of pointers to externally or internally implemented interfaces. We can distinguish internal instances as they will store the vtable pointer, etc, in a ByteArray. Pointers to interfaces will hold an ExternalAddress, so any non-null pointer interface must be freed"
+
+	^self isReferenceStruct!
+
 objectCookie: anInteger
 	"Set the receiver's 'objectCookie' field to the value of the argument, anInteger"
 
@@ -222,13 +211,13 @@ objectCookie: anInteger
 onExit
 	"Clean up the external interface pointer on image exit to free external resources"
 
-	(self isPointer and: [self isFinalizable]) ifTrue: [self free]!
+	(self isPointerStruct and: [self isFinalizable]) ifTrue: [self free]!
 
 onStartup
 	"Clean up the external interface pointer on image startup so that it isn't left
 	pointing at an invalid object."
 
-	self isPointer
+	self isPointerStruct
 		ifTrue: [
 			self beUnfinalizable.
 			bytes := nil]
@@ -239,7 +228,9 @@ postCopy
 	"Apply any final flourish to the copy that may be required.
 	In this case we may need to AddRef()."
 
-	self isPointer ifTrue: [
+	bytes := bytes copy.
+	owner := nil.
+	self isPointerStruct ifTrue: [
 		self _addRef.
  		self beFinalizable].
 	^self!
@@ -350,10 +341,9 @@ asParameter!converting!public! !
 attach:!initializing!public! !
 basicFree!private!realizing/unrealizing! !
 callback:vfn:withArgumentsAt:!debugger-step through!evaluating!private! !
-copy!copying!public! !
 detach!public!realizing/unrealizing! !
 downCast!converting!public! !
-free!private!realizing/unrealizing! !
+free!public! !
 getExtendedErrorInfo:!exceptions!private! !
 hash!comparing!public! !
 hresultError:!exceptions!public! !
@@ -361,10 +351,11 @@ identity!accessing!public! !
 iid!constants!public! !
 implementor!accessing!debugger-step over!public! !
 implementor:!accessing!public! !
-initialize:!initializing!private! !
-initializeAtAddress:!initializing!private! !
+initialize!initializing!private! !
+initializeAtAddress:owner:!initializing!private! !
 interfaceCookie:!**compiled accessors**!public! !
 isSameCOMObject:!comparing!public!testing! !
+needsFree!private!realizing/unrealizing! !
 objectCookie:!**compiled accessors**!public! !
 onExit!event handling!public! !
 onStartup!event handling!public! !
@@ -397,6 +388,10 @@ argSizes
 	^argSizes!
 
 atAddress: anAddress
+	#deprecated.
+	^self atAddress: anAddress owner: nil!
+
+atAddress: anAddress owner: anObject
 	"Answer a new instance of the receiver instantiated from the
 	data at the specified address. 
 	Implementation Note: Since COMInterfaces always have reference
@@ -405,7 +400,7 @@ atAddress: anAddress
 	contains an interface pointer, so the address is dereferenced to get
 	the actual address."
 
-	^self fromAddress: (anAddress asExternalAddress uintPtrAtOffset: 0)!
+	^self fromAddress: (anAddress asExternalAddress uintPtrAtOffset: 0) owner: anObject!
 
 attach: interfaceAddress
 	"Attach the a new pointer instance of the receiver to the interface at 
@@ -798,18 +793,11 @@ newBuffer
 	^self newPointer!
 
 newInternal
-	"Answer a new instance of the receiver suitable for use as a interface
-	to some Dolphin object (the 'implementor'). The receiver (in conjunction
-	with a COMObject instance) takes care of the boilerplate implementation
-	of the Common Object Model, but it is generally up to the implementor to
-	implement the rest of a particular interface.
-	Implementation Note: The answered interface instance is not finalizable
-	since it is strongly referenced from a COMObject, which is strongly referenced
-	from a PermanentRegistry. The COMObject will not become a candidate for GC
-	until it is sent #release sufficient times to reduce its ref. count to zero, 
-	at which point all outstanding interfaces registered with it will be GC'd."
+	"Answer a new instance of the receiver suitable for use as a interface to some Dolphin object (the 'implementor'). The receiver (in conjunction with a COMObject instance) takes care of the boilerplate implementation of the Common Object Model, but it is generally up to the implementor to implement the rest of a particular interface."
 
-	^super newBuffer!
+	"Implementation Note: The answered interface instance is not finalizable since it is strongly referenced from a COMObject, which is strongly referenced from a PermanentRegistry. The COMObject will not become a candidate for GC until it is sent #release sufficient times to reduce its ref. count to zero, at which point all outstanding interfaces registered with it will be GC'd."
+
+	^self new: self byteSize bufferClass: ByteArray!
 
 on: server
 	"Answer an instance (new or existing) of the receiver suitable for use 
@@ -929,11 +917,8 @@ onExit
 	!
 
 onStartup
-	"Ensure all the receiver's subinstances are in their clean state on startup
-	rather than attempting to use an old interface hanging around from the sesssion 
-	when the image was saved."
+	"Private - Initialize the COM subsystem on image startup. Note that interface instances will have already received onStartup by virtue of sitting in the External.Structure hierarchy, but that is intended only to cleanup old invalid instances."
 
-	self primAllSubinstances do: [:i | i onStartup].
 	Processor unregisterCOMStubs.					"remove old COM stubs (now invalid)"
 	ObjectStub onStartup.						"clear down any old registy entries"
 	#{ClassFactory} valueOrNil ifNotNil: [:classFactory | classFactory onStartup]					"now safe to register class factories"!
@@ -989,6 +974,12 @@ removeCompiledFunctions
 	"Remove the functions generated automatically from the receiver's function table."
 
 	[self removeCategory: self generatedFunctionCategories first] on: NotFoundError do: [:e | e notify]!
+
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization."
+
+	"Interfaces must be `Release`d"
+	^true!
 
 requiresSizeConstant
 	^self definesNewFields!
@@ -1053,6 +1044,7 @@ virtualFunctions
 addFunction:selector:descriptor:!automatic generation!public! !
 argSizes!initializing!private! !
 atAddress:!instance creation!public! !
+atAddress:owner:!public! !
 attach:!instance creation!public! !
 attachInterface:!instance creation!public! !
 byteSize!**compiled accessors**!constants!public! !
@@ -1106,13 +1098,14 @@ onCLSID:outerIUnknown:!instance creation!public! !
 onCLSID:outerIUnknown:hostName:!instance creation!public! !
 onCLSID:outerIUnknown:hostName:licenseKey:!instance creation!public! !
 onExit!event handling!public! !
-onStartup!drawing!public! !
+onStartup!drawing!private! !
 queryOn:!instance creation!public! !
 recompileReferences!development!private! !
 register!adding!public! !
 registerClass:forIID:!adding!public! !
 registerSubclasses!initializing!public! !
 removeCompiledFunctions!automatic generation!development!public! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 requiresSizeConstant!private!template definition! !
 setGuid:!accessing!private! !
 specialBehaviorAttributes!constants!public!source filing! !

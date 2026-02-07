@@ -4,7 +4,7 @@ OS.COM.TypeInfoObject
 	subclass: #'OS.COM.TypeInfoAnalyzer'
 	instanceVariableNames: 'typeLib guid index documentation'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'VTtoIDLTypeMap'
@@ -53,6 +53,9 @@ Instance Variables:
 			comparand guid = self guid and: [
 				self guid notNull or:  [
 					comparand typeLib = self typeLib and: [comparand index = self index]]]]]!
+
+analyzer
+	^self!
 
 asImplType
 	"Answer the actual implementing type for the receiver (some are pseuds!!)"
@@ -161,7 +164,7 @@ environment
 	^self typeLib environment!
 
 ephemeralFunctionsDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the functions described by the receiver, passing a FUNCDESC for each. The valuable must not capture the <FUNDESC>s it is passed, because they are only valid for the duration of the evaluation, being explicitly free'd as soon as the valuable returns. This is for the purpose of avoiding the creation of finalizable garbage. If there is a need to capture the <FUNCDESC>s, use either #functionsDo: or #functions."
+	"Evaluate the <monadicValuable> argument for each of the functions described by the receiver, passing a FUNCDESC for each. The valuable must not capture the <FUNDESC>s it is passed, because they are only valid for the duration of the evaluation, being explicitly freed as soon as the valuable returns. This is for the purpose of avoiding the creation of finalizable garbage. If there is a need to capture the <FUNCDESC>s, use either #functionsDo: or #functions."
 
 	| itypeinfo |
 	itypeinfo := self tlbInterface.
@@ -475,6 +478,7 @@ vt
 
 !OS.COM.TypeInfoAnalyzer categoriesForMethods!
 =!comparing!public! !
+analyzer!public! !
 asImplType!converting!public! !
 attributes!accessing!public! !
 baseClass!constants!private! !
@@ -584,33 +588,59 @@ onTypeInfo: piTypeInfo typeLib: anAXTypeLibraryAnalyzer index: anInteger
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier binary filed versions."
 
-	^
-	[:data | 
-	| converted ver newInstance |
-	converted := data.
+	| ver |
 	ver := anSTBClassFormat version.
-	ver < 1 ifTrue: [converted := self stbConvertToVersion1: converted].
-	newInstance := self basicNew.
-	1 to: converted size do: [:i | newInstance instVarAt: i put: (converted at: i)].
-	newInstance]!
+	ver == 0 ifTrue: [^[:data | self stbConvertFromVersion0: data]].
+	ver == 1 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
+	^super stbConvertFrom: anSTBClassFormat!
 
-stbConvertToVersion1: anArray 
+stbConvertFromVersion0: anArray
 	"Convert from version 0 instance.
-	Version 1 refactored to share a common superclass with AXTypeLibraryAnalyzer, and some inst. vars pushed up
-	causing some inst. var reordering to take place."
 
-	| answer |
-	answer := anArray copy.
-	answer at: 2 put: (anArray at: 4).
-	answer 
-		replaceFrom: 3
-		to: 4
-		with: anArray
-		startingAt: 2.
-	^answer!
+	0: piTypeInfo typeLib globalBinding generationFlags guid index basicName [protocol isSource]
+	2: tlbInterface generationFlags binding typeLib guid index documentation [protocol isSource]
+	"
+
+	| vars |
+	"v1 of subclass AXInterfaceTypeAnalyzer added two further lazily initialized variables. Since they can be nil after conversion, we can handle that here by allocating a sufficiently large inst var array."
+	vars := Array new: self instSize.
+	"piTypeInfo will be a null ITypeInfo, but we need to retain it to maintain the object graph correctly. It will be requeried from the typelib when accessed."
+	vars at: 1 put: (anArray at: 1).	"piTypeInfo -> tlbInterface"
+	vars at: 2 put: (anArray at: 4).	"generationFlags"
+	vars at: 3 put: (anArray at: 3).	"globalBinding -> binding"
+	vars at: 4 put: (anArray at: 2).	"typeLib"
+	vars at: 5 put: (anArray at: 5).	"guid"
+	vars at: 6 put: (anArray at: 6).	"index"
+	vars at: 7
+		put: (TypeLibDocumentation new
+				name: (anArray at: 7)
+					helpstring: ''
+					helpcontext: 0
+					helpfile: '';
+				yourself).	"basicName -> documentation"
+	vars replaceFrom: 8 to: vars size with: anArray startingAt: 8.
+	^vars becomeA: self!
+
+stbConvertFromVersion1: anArray
+	"Convert from version 1 instance. Unfortunately a layout change was made without a new STB version and conversion sometime in D8.
+
+	1 (D7): 		tlbInterface generationFlags typeLib globalBinding guid index documentation protocol isSource
+	1a (D8): 		tlbInterface generationFlags binding typeLib guid index documentation protocol isSource
+	2 (D8.2.4):	No change in layout or semantics - Introduced to be able to convert from original v1 format as v1a should have been v2.
+	"
+
+	| third |
+	third := anArray at: 3.
+	(third isKindOf: TypeLibraryAnalyzer)
+		ifTrue: 
+			["v1"
+			anArray
+				at: 3 put: (anArray at: 4);
+				at: 4 put: third].
+	^anArray becomeA: self!
 
 stbVersion
-	^1!
+	^2!
 
 typekind
 	"Answer the Automation TYPEKIND associated with the receiver."
@@ -637,7 +667,7 @@ vtToIDLTypeMap
 		at: VT_BOOL put: 'VARIANT_BOOL';
 		at: VT_BSTR put: 'BSTR';
 		at: VT_CARRAY put: '[]';
-		at: VT_CY put: 'CURRENCY';
+		at: VT_CY put: 'CY';
 		at: VT_DATE put: 'DATE';
 		at: VT_DECIMAL put: 'DECIMAL';
 		at: VT_DISPATCH put: 'IDispatch*';
@@ -671,7 +701,8 @@ onTypeInfo:!instance creation!public! !
 onTypeInfo:typeLib:!instance creation!private! !
 onTypeInfo:typeLib:index:!instance creation!private! !
 stbConvertFrom:!binary filing!public! !
-stbConvertToVersion1:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!public! !
+stbConvertFromVersion1:!binary filing!public! !
 stbVersion!binary filing!constants!public! !
 typekind!constants!public! !
 typeKindToClassMap!constants!private! !

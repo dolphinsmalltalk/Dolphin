@@ -243,6 +243,11 @@ integerPart
 
 	^self truncated!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 isZero
 	"Answer whether the receiver is zero."
 
@@ -479,6 +484,7 @@ greaterThanFraction:!double dispatch!private! !
 greaterThanInteger:!double dispatch!private! !
 greaterThanScaledDecimal:!double dispatch!private! !
 integerPart!accessing!public! !
+isSelfEvaluating!public!testing! !
 isZero!public!testing! !
 multiplyByFloat:!double dispatch!private! !
 multiplyByFraction:!double dispatch!private! !

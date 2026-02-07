@@ -704,12 +704,7 @@ polygon: collectionOfPoints
 
 	^Gdi32
 		polygon: handle
-		lpPoints: ((StructureArray
-				withAll: collectionOfPoints
-				elementClass: POINTL
-				initializer: [:pointl :point | pointl x: point x y: point y])
-				beUnfinalizable;
-				yourself)
+		lpPoints: (POINTLArray withAll: collectionOfPoints)
 		nCount: collectionOfPoints size!
 
 realizePalette

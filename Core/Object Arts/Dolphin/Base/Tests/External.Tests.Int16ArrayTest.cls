@@ -18,7 +18,7 @@ arrayClass
 	^Int16Array!
 
 elementFromIndex: anInteger
-	^#(0 1 -32768 -32767 32767 -1) at: anInteger! !
+	^##({ 0. 1. Int16.MinValue. Int16.MinValue + 1. Int16.MaxValue. -1 }) at: anInteger! !
 
 !External.Tests.Int16ArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

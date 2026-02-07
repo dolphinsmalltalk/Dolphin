@@ -14,6 +14,38 @@ External.Tests.ArrayPointerFieldTest comment: ''!
 
 !External.Tests.ArrayPointerFieldTest methodsFor!
 
+testGenerateAccessorsForSizedByteArray
+	<ignoreNotImplementedSelectors: #(Test Test: Size)>
+	| structClass actual expected bytes struct |
+	structClass := Structure newAnonymousSubclass.
+	structClass class
+		basicCompile: 'defineFields
+		self defineField: #Test
+			type: (<1d> type: <2d> lengthField: #Size)
+			offset: 0;
+		defineField: #Size
+			type: <3d> new
+			offset: 4'
+				<< { ArrayPointerField. ByteArray. UInt32Field }.
+	structClass compileDefinition.
+	actual := (structClass compiledMethodAt: #Test:) parseTree.
+	expected := Parser
+				parseMethod: 'Test: aByteArray bytes uintPtrAtOffset: _OffsetOf_Test put: aByteArray yourAddress. self Size: aByteArray size'.
+	self assert: actual equals: expected.
+	"Write a ByteArray"
+	bytes := #[0 1 255].
+	struct := structClass new.
+	struct Test: bytes.
+	self assert: struct Size equals: bytes size.
+	actual := struct Test.
+	self assert: actual equals: bytes.
+	"Test uncompiled write/read while we are here."
+	self makeStructUncompiled: structClass.
+	bytes := #[1 2 3 4 5].
+	struct Test: bytes.
+	self assert: struct Size equals: bytes size.
+	self assert: struct Test equals: bytes!
+
 testGenerateAccessorsForSizedString
 	<ignoreNotImplementedSelectors: #(Test Test: Size)>
 	| structClass actual expected string struct |
@@ -81,6 +113,7 @@ testGenerateAccessorsForSizeIsExpression
 	self assert: struct Test equals: string! !
 
 !External.Tests.ArrayPointerFieldTest categoriesForMethods!
+testGenerateAccessorsForSizedByteArray!public! !
 testGenerateAccessorsForSizedString!public! !
 testGenerateAccessorsForSizeIsExpression!public! !
 !

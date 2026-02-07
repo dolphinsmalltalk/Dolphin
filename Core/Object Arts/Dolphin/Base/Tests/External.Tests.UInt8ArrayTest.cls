@@ -12,13 +12,25 @@ External.Tests.UInt8ArrayTest guid: (Core.GUID fromString: '{a04998d8-28b3-46e0-
 
 External.Tests.UInt8ArrayTest comment: ''!
 
+!External.Tests.UInt8ArrayTest methodsFor!
+
+testSelfEvaluating
+	| subject |
+	subject := self newTestSubjectOfSize: 6.
+	self assert: subject isSelfEvaluating.
+	self assert: subject printString equals: '(UInt8Array withAll: <1p>)' << subject value! !
+
+!External.Tests.UInt8ArrayTest categoriesForMethods!
+testSelfEvaluating!public!unit tests! !
+!
+
 !External.Tests.UInt8ArrayTest class methodsFor!
 
 arrayClass
 	^UInt8Array!
 
 elementFromIndex: anInteger
-	^#(0 127 128 255 1 2) at: anInteger! !
+	^##({ 0. Int8.MaxValue. Int8.MaxValue + 1. UInt8.MaxValue. 1. UInt8.MaxValue - 1 }) at: anInteger! !
 
 !External.Tests.UInt8ArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

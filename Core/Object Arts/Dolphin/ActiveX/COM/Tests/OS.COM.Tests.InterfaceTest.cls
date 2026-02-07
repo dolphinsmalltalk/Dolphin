@@ -94,6 +94,28 @@ testDowncastNull
 	f2 := f1 downCast.
 	self assertIsNil: f2!
 
+testFinalization
+	| object interface stub internalInterface |
+	object := Examples.RandomStream new.
+	interface := object queryInterface: Examples.IRandomStream.
+	self assert: interface isPointerStruct.
+	self assert: interface needsFree.
+	self assert: interface isFinalizable.
+	stub := ObjectStub registry at: object.
+	internalInterface := stub findInternalInterface: Examples.IRandomStream ifNoneAdd: [self fail: 'Stub must implement interface'].
+	self deny: internalInterface isPointerStruct.
+	self deny: internalInterface isFinalizable.
+	self deny: internalInterface needsFree.
+	self assert: stub referenceCount equals: 1.
+	internalInterface free.
+	self assert: stub referenceCount equals: 1.
+	interface free.
+	self assert: interface isNull.
+	self deny: interface isFinalizable.
+	self assert: stub referenceCount equals: 0.
+
+!
+
 testGetObject
 	| factory font |
 	self should: [IUnknown getObject: 'bad'] raise: HRESULTError.
@@ -132,6 +154,7 @@ testCopy!public!unit tests! !
 testDowncast!public!unit tests! !
 testDowncastNotImplemented!public!unit tests! !
 testDowncastNull!public!unit tests! !
+testFinalization!public!unit tests! !
 testGetObject!public!unit tests! !
 testIsSameCOMObject!public!unit tests! !
 testLatestDerivation!public!unit tests! !

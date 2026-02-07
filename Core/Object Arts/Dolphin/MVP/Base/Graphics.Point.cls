@@ -209,11 +209,6 @@ hash
 
 	^(x hash bitShift: 2) bitXor: y hash!
 
-isSelfEvaluating
-	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
-
-	^true!
-
 isZero
 	^x = 0 and: [y = 0]!
 
@@ -352,7 +347,6 @@ extent:!converting!public! !
 floor!public!truncation and round off! !
 generality!coercing!private! !
 hash!comparing!public! !
-isSelfEvaluating!public!testing! !
 isZero!public! !
 max!comparing!public! !
 max:!comparing!public! !

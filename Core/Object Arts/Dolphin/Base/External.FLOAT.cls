@@ -23,6 +23,9 @@ asFloat
 
 	^(bytes floatAtOffset: 0)!
 
+printValueOn: aStream
+	self value printOn: aStream significantFigures: 9!
+
 value
 	"Answer the <Float> value of the receiver's 'value' field."
 
@@ -35,6 +38,7 @@ value: aFloat
 
 !External.FLOAT categoriesForMethods!
 asFloat!converting!public! !
+printValueOn:!printing!private! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !

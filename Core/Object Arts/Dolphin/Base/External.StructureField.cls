@@ -20,7 +20,7 @@ readFrom: anExternalStructure
 	"Private - Answer an <ExternalStructure> of the receiver's field class that is a reference
 	to the data in the <ExternalStructure> argument at the receiver's offset."
 
-	^self fieldClass fromAddress: anExternalStructure yourAddress + offset!
+	^self fieldClass fromAddress: anExternalStructure yourAddress + offset owner: anExternalStructure!
 
 writeInto: anExternal value: anExternalStructure
 	"Private - Write the bytes of anExternalStructure into anExternal."

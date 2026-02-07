@@ -72,9 +72,11 @@ package setClassNames: #(
 	#{OS.COM.COAUTHINFO}
 	#{OS.COM.COSERVERINFO}
 	#{OS.COM.CountedArray}
+	#{OS.COM.CountedArrayOfHeapPointers}
 	#{OS.COM.Enumerable}
 	#{OS.COM.Enumerator}
 	#{OS.COM.EXCEPINFO}
+	#{OS.COM.HeapPointerArray}
 	#{OS.COM.IClassFactory}
 	#{OS.COM.IClassFactory2}
 	#{OS.COM.IEnumString}
@@ -93,6 +95,8 @@ package setClassNames: #(
 	#{OS.COM.ISupportErrorInfo}
 	#{OS.COM.IUnknown}
 	#{OS.COM.LICINFO}
+	#{OS.COM.LPSTRArray}
+	#{OS.COM.LPWSTRArray}
 	#{OS.COM.MULTI_QI}
 	#{OS.COM.ObjectStub}
 	#{OS.COM.OLEAutLibrary}
@@ -101,6 +105,7 @@ package setClassNames: #(
 	#{OS.COM.QueryInterfaceFunction}
 	#{OS.COM.ReleaseFunction}
 	#{OS.COM.SingletonClassFactory}
+	#{OS.COM.TaskHeapPointerArray}
 	#{OS.COM.TaskMemory}
 ).
 
@@ -111,6 +116,7 @@ package setMethodNames: #(
 	#(#{Core.String} #asBSTR)
 	#(#{Core.String} #copyToCOMTaskMemory)
 	#(#{Core.String class} #arrayType)
+	#(#{External.AbstractInt8 class} #arrayType)
 	#(#{External.DOUBLE class} #arrayType)
 	#(#{External.ExternalArray class} #arrayType)
 	#(#{External.FLOAT class} #arrayType)
@@ -119,13 +125,19 @@ package setMethodNames: #(
 	#(#{External.Int64 class} #arrayType)
 	#(#{External.Int8 class} #arrayType)
 	#(#{External.IntPtr class} #arrayType)
+	#(#{External.LPSTR class} #allocHeapObject:)
+	#(#{External.LPSTR class} #arrayType)
+	#(#{External.LPSTR class} #copyHeapObject:)
+	#(#{External.LPSZ class} #freeHeapObject:)
+	#(#{External.LPWSTR class} #allocHeapObject:)
+	#(#{External.LPWSTR class} #arrayType)
+	#(#{External.LPWSTR class} #copyHeapObject:)
 	#(#{External.Memory class} #queryInterface:ifNone:)
 	#(#{External.Structure} #copyToCOMTaskMemory)
 	#(#{External.Structure class} #arrayType)
 	#(#{External.UInt16 class} #arrayType)
 	#(#{External.UInt32 class} #arrayType)
 	#(#{External.UInt64 class} #arrayType)
-	#(#{External.UInt8 class} #arrayType)
 	#(#{External.UIntPtr class} #arrayType)
 	#(#{External.VOID class} #arrayType)
 	#(#{Kernel.ProcessorScheduler} #comCallback:id:subId:withArgumentsAt:cookie:)
@@ -401,12 +413,52 @@ OS.COM.CountedArray
 	classConstants: { '_CADWORD_Size' -> 16r8 }!
 
 OS.COM.CountedArray
+	subclass: #'OS.COM.CountedArrayOfHeapPointers'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.CountedArrayOfHeapPointers
 	subclass: #'OS.COM.CALPOLESTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_CALPOLESTR_Size' -> 16r8 }!
+
+External.UIntPtrArray
+	subclass: #'OS.COM.HeapPointerArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.HeapPointerArray
+	subclass: #'OS.COM.TaskHeapPointerArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.TaskHeapPointerArray
+	subclass: #'OS.COM.LPSTRArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.TaskHeapPointerArray
+	subclass: #'OS.COM.LPWSTRArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 External.FinalizableStructure
 	subclass: #'OS.COM.EXCEPINFO'
@@ -627,6 +679,17 @@ arrayType
 arrayType!constants!public! !
 !
 
+!External.AbstractInt8 class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^UInt8Array! !
+
+!External.AbstractInt8 class categoriesForMethods!
+arrayType!constants!public! !
+!
+
 !External.DOUBLE class methodsFor!
 
 arrayType
@@ -715,6 +778,80 @@ arrayType
 arrayType!constants!public! !
 !
 
+!External.LPSTR class methodsFor!
+
+allocHeapObject: aString
+	"Private - Allocate and initialize a null-terminated ANSI representation of <String> argument in COM Task heap. Answer a pointer to the heap string.
+	Note that the conversion from a native Dolphin unicode string may be lossy."
+
+	^aString asAnsiString copyToCOMTaskMemory!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^COM.LPSTRArray!
+
+copyHeapObject: anAddress
+	"Private - Allocate a new heap object that is a copy of that pointed at by the argument."
+
+	| cb psz |
+	cb := (Ucrt strlen: anAddress) + 1.
+	psz := OS.COM.Ole32 coTaskMemAlloc: cb.
+	Ucrt
+		memcpy_s: psz
+		destSize: cb
+		src: anAddress
+		count: cb.
+	^psz! !
+
+!External.LPSTR class categoriesForMethods!
+allocHeapObject:!instance creation!private! !
+arrayType!constants!public! !
+copyHeapObject:!copying!private! !
+!
+
+!External.LPSZ class methodsFor!
+
+freeHeapObject: pStr
+	"Private - Free one of the strings from the buffer back to the external heap from which it came."
+
+	OS.COM.Ole32 coTaskMemFree: pStr! !
+
+!External.LPSZ class categoriesForMethods!
+freeHeapObject:!initialize/release!private! !
+!
+
+!External.LPWSTR class methodsFor!
+
+allocHeapObject: aString
+	"Private - Allocate and initialize a null-terminated UTF-16 string representation of <String> argument in COM Task heap. Answer a pointer to the heap string."
+
+	^aString asUtf16String copyToCOMTaskMemory!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^COM.LPWSTRArray!
+
+copyHeapObject: anAddress
+	"Private - Allocate a new heap object that is a copy of that pointed at by the argument."
+
+	| cb psz |
+	cb := (Ucrt wcslen: anAddress) + 1 bitShift: 1.
+	psz := OS.COM.Ole32 coTaskMemAlloc: cb.
+	Ucrt
+		memcpy_s: psz
+		destSize: cb
+		src: anAddress
+		count: cb.
+	^psz! !
+
+!External.LPWSTR class categoriesForMethods!
+allocHeapObject:!instance creation!private! !
+arrayType!constants!public! !
+copyHeapObject:!copying!private! !
+!
+
 !External.Memory class methodsFor!
 
 queryInterface: interfaceClass ifNone: exceptionHandler
@@ -790,17 +927,6 @@ arrayType
 	^UInt64Array! !
 
 !External.UInt64 class categoriesForMethods!
-arrayType!constants!public! !
-!
-
-!External.UInt8 class methodsFor!
-
-arrayType
-	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
-
-	^UInt8Array! !
-
-!External.UInt8 class categoriesForMethods!
 arrayType!constants!public! !
 !
 

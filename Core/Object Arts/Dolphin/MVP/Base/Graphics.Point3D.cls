@@ -145,11 +145,6 @@ hash
 
 	^((x hash bitShift: 2) bitXor: (y hash bitShift: 1)) bitXor: (z hash)!
 
-isSelfEvaluating
-	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
-
-	^true!
-
 max: aPoint3D
 	"Answer a new Point3D with the maximum of the x coordinates,
 	 y coordinates and z coordinates of the receiver and aPoint3D"
@@ -278,7 +273,6 @@ dotProduct:!operations!public! !
 floor!public!truncation and round off! !
 generality!coercing!private! !
 hash!comparing!public! !
-isSelfEvaluating!public!testing! !
 max:!comparing!public! !
 min:!comparing!public! !
 multiplyByPoint3D:!double dispatch!private! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UInt8
+External.AbstractInt8
 	subclass: #'External.BOOLEAN'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -49,8 +49,9 @@ byteSize
 	^_BOOLEAN_Size!
 
 defineFields
-	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
-	have a single value."
+	"Define the fields of the BOOLEAN structure.
+		BOOLEAN compileDefinition
+	"
 
 	self defineField: #value type: BOOLEANField new beOverride! !
 

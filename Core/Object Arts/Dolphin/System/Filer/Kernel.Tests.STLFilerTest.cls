@@ -193,10 +193,12 @@ testExternalStructure
 				equals: {
 						#'!!STL'.
 						ver.
-						STxFiler.PrefixClassMask bitOr: (POINTL instSize bitShift: STxFiler.PrefixInstSizeShift).
+						STxFiler.PrefixClassMask | (POINTL instSize bitShift: STxFiler.PrefixInstSizeShift) | STxFiler.PrefixNonZeroVersionMask.
+						POINTL stbVersion.
 						POINTL.
 						STxFiler.PrefixLiteralMask.
-						#[123 0 0 0 200 1 0 0]
+						#[123 0 0 0 200 1 0 0].
+						nil
 					}]!
 
 testExternalStructure3to4
@@ -211,10 +213,12 @@ testExternalStructure3to4
 						#'!!STL'.
 						ver.
 						STxFiler.PrefixClassMask | (POINTL instSize bitShift: STxFiler.PrefixInstSizeShift)
-							| (#POINT size bitShift: STxFiler.PrefixLocatorLenShift).
+							| (#POINT size bitShift: STxFiler.PrefixLocatorLenShift) | STxFiler.PrefixNonZeroVersionMask.
+						1.
 						POINTL.
 						STxFiler.PrefixLiteralMask.
-						#[123 0 0 0 200 1 0 0]
+						#[123 0 0 0 200 1 0 0].
+						ver = 3 ifTrue: [0]
 					}]!
 
 testGlobalProxyingVersion3

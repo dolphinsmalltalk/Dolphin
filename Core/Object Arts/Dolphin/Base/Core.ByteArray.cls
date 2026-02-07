@@ -199,6 +199,9 @@ copyStringFrom: start to: stop
 		from: start
 		to: stop!
 
+detach
+	^self!
+
 doubleAtOffset: anInteger
 	"Answer the double precision floating point value at offset (i.e. zero relative) anInteger in the receiver, as a Smalltalk Float object (double precision)."
 
@@ -741,6 +744,7 @@ bytesAtOffset:put:!accessing!public! !
 byteSize!accessing!private! !
 copy:from:to:!copying!private! !
 copyStringFrom:to:!copying!public! !
+detach!public!realizing/unrealizing! !
 doubleAtOffset:!accessing!public! !
 doubleAtOffset:put:!accessing!public! !
 encodeAsBytesOn:from:count:!double dispatch!encode/decode!private! !
@@ -823,6 +827,11 @@ fromAddress: anAddress length: anInteger
 		from: 1 to: anInteger startingAt: 1
 !
 
+fromAddress: anAddress owner: anObject length: anInteger
+	"Answer a new instance of the receiver copied from the first anInteger bytes at the specified address. We ignore the owner since we answer a copy."
+
+	^self fromAddress: anAddress length: anInteger!
+
 fromGlobalHandle: anExternalHandle
 	"Answer a new <ByteArray> instantiated from the contents of the global heap block with the specified handle."
 
@@ -858,6 +867,7 @@ empty!instance creation!public! !
 encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 fromAddress:length:!instance creation!public! !
+fromAddress:owner:length:!instance creation!public! !
 fromGlobalHandle:!instance creation!public! !
 fromHexString:!instance creation!public! !
 !

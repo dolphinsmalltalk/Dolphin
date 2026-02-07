@@ -120,18 +120,25 @@ value:!accessing!public! !
 
 !External.IntegerBytes class methodsFor!
 
-atAddress: anAddress 
-	"Answer a new instance of the receiver with contents copied from
-	the external integer pointed at by anAddress."
+atAddress: anAddress
+	#deprecated.
+	^self atAddress: anAddress owner: nil!
+
+atAddress: anAddress owner: anObject
+	"Answer a new instance of the receiver with contents copied from the external integer pointed at by anAddress. The owner is ignored."
 
 	^self fromInteger: (self valueAtAddress: anAddress)!
 
 fromAddress: anAddress 
-	"Answer a new instance of the receiver with contents *copied* from
-	the external integer pointed at by anAddress (this is not a reference object
-	and so must copy in response to #fromAddress:)"
+	"Answer a new instance of the receiver with contents *copied* from the external integer pointed at by anAddress (this is not a reference object and so must copy in response to #fromAddress:)"
 
-	^self atAddress: anAddress!
+	^self fromAddress: anAddress owner: anAddress!
+
+fromAddress: anAddress owner: anObject
+	"Answer a new instance of the receiver with contents *copied* from the external integer pointed at by anAddress (this is not a reference object and so must copy in response to #fromAddress:).
+	The owner is ignored."
+
+	^self atAddress: anAddress owner: anObject!
 
 fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
@@ -153,16 +160,24 @@ new
 pointerFieldType
 	^PointerField!
 
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization."
+
+	^false!
+
 valueAtAddress: anAddress 
 	^self subclassResponsibility! !
 
 !External.IntegerBytes class categoriesForMethods!
 atAddress:!instance creation!public! !
+atAddress:owner:!public! !
 fromAddress:!instance creation!public! !
+fromAddress:owner:!public! !
 fromInteger:!instance creation!public! !
 initialize!development!initializing!private! !
 new!instance creation!public! !
 pointerFieldType!constants!private! !
+requiresFinalization!public!testing! !
 valueAtAddress:!helpers!private! !
 !
 

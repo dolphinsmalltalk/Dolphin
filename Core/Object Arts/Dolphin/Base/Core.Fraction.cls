@@ -285,11 +285,6 @@ isLiteral
 
 	^false!
 
-isSelfEvaluating
-	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
-
-	^true!
-
 isZero
 	"Answer whether the receiver is equal to its class' zero"
 
@@ -441,7 +436,6 @@ greaterThanInteger:!double dispatch!private! !
 hash!comparing!public! !
 isFraction!public!testing! !
 isLiteral!public!testing! !
-isSelfEvaluating!public!testing! !
 isZero!public!testing! !
 multiplyByFloat:!double dispatch!private! !
 multiplyByFraction:!double dispatch!private! !

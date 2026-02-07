@@ -59,15 +59,6 @@ initialize
 
 	self owner: nil!
 
-initializePointer
-	"Private - Perform any initialization required for the receiver
-	which is specific to the reference form. Answer the receiver.
-	Implementation Note: Set up the address object as the owner (even
-	if it isn't) to suppress the receiver's desire to free its elements
-	on finalization."
-
-	self owner: bytes!
-
 length: anInteger elementClass: aStructureClass
 	length := anInteger.
 	elementSpacing := (elementClass := aStructureClass) elementSize roundUpTo: aStructureClass alignment!
@@ -104,7 +95,7 @@ with: aCollection do: aDyadicValuable
 	aCollection inject: self yourAddress
 		into: 
 			[:addr :each |
-			elem initializeAtAddress: addr.
+			elem initializeAtAddress: addr owner: self.
 			aDyadicValuable value: elem value: each.
 			addr + spacing]! !
 
@@ -113,7 +104,6 @@ alignment!constants!public! !
 basicFree!private!realizing/unrealizing! !
 elementClass:!initializing!private! !
 initialize!initializing!private! !
-initializePointer!initializing!private! !
 length:elementClass:!initializing!private! !
 packing!constants!private! !
 uncheckedAt:put:!accessing!private! !
@@ -122,11 +112,15 @@ with:do:!enumerating!public! !
 
 !External.StructureArray class methodsFor!
 
-fromAddress: anAddress length: anInteger elementClass: elementClass
-	"Answer a new instance of the receiver that points at an
-	array of anInteger elements of type elementClass at anAddress.
-	Implementation Note: If the length is zero, then we ignore the address (even if invalid).
-	If the length is non-zero then we answer nil if the address is the Null pointer."
+fromAddress: anAddress length: anInteger
+	"StructureArray's need to know the Structure class of the elements, so we cannot implement this. #fromAddress:length:elementClass: can be used instead."
+
+	^self shouldNotImplement!
+
+fromAddress: anAddress owner: anObject length: anInteger elementClass: elementClass
+	"Answer a new instance of the receiver that points at an array of elements of length, anInteger, and type, elementClass, at the specified address, which is owned by anObject."
+
+	"Implementation Note: If the length is zero, then we ignore the address (even if invalid). If the length is non-zero then we answer nil if the address is the Null pointer."
 
 	^anInteger == 0
 		ifTrue: [self basicNew length: 0 elementClass: elementClass]
@@ -134,15 +128,16 @@ fromAddress: anAddress length: anInteger elementClass: elementClass
 			[anAddress isNull
 				ifFalse: 
 					[self basicNew
-						initializeAtAddress: anAddress;
+						initializeAtAddress: anAddress owner: anObject;
 						length: anInteger elementClass: elementClass]]!
 
-length: anInteger elementClass: elementClass
+length: anInteger elementClass: elementClass bufferClass: bufferClass
 	"Answer a new instance of the receiver that contains a buffer	of sufficient size to contain anInteger elements of type, elementClass."
 
 	^self basicNew
-		initialize: anInteger * elementClass elementSize;
-		length: anInteger elementClass: elementClass!
+		length: anInteger elementClass: elementClass;
+		initializeBuffer: bufferClass size: anInteger * elementClass elementSize;
+		yourself!
 
 length: anInteger elementClass: anExternalStructureClass initializer: aDyadicValuable
 	^self
@@ -150,20 +145,8 @@ length: anInteger elementClass: anExternalStructureClass initializer: aDyadicVal
 		elementClass: anExternalStructureClass
 		initializer: aDyadicValuable!
 
-length: countInteger elementSize: sizeInteger
-	"StructureArrays must know the element class."
-
-	^self shouldNotImplement!
-
-with: anExternalStructure
-	^(self length: 1 elementClass: anExternalStructure class)
-		at: 1 put: anExternalStructure;
-		yourself!
-
-withAll: newElements
-	"Answer a new instance of the receiver containing all of the elements of the <collection> newElements."
-
-	"We need to know the class of structured element - use #withAll:elementClass:"
+length: countInteger elementSize: sizeInteger bufferClass: anObject
+	"Private - StructureArrays must know the element class."
 
 	^self shouldNotImplement!
 
@@ -175,12 +158,11 @@ withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadic
 		yourself! !
 
 !External.StructureArray class categoriesForMethods!
-fromAddress:length:elementClass:!instance creation!public! !
-length:elementClass:!instance creation!public! !
+fromAddress:length:!instance creation!public! !
+fromAddress:owner:length:elementClass:!instance creation!public! !
+length:elementClass:bufferClass:!instance creation!public! !
 length:elementClass:initializer:!instance creation!public! !
-length:elementSize:!public! !
-with:!instance creation!public! !
-withAll:!instance creation!public! !
+length:elementSize:bufferClass:!private! !
 withAll:elementClass:initializer:!instance creation!public! !
 !
 

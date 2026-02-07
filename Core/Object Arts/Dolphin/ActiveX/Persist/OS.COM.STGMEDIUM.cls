@@ -64,7 +64,7 @@ free
 	"Free external resources referenced by the receiver. This is relevant
 	only if those resources were obtained from an external party."
 
-	(self isPointer and: [self handle notNull]) ifTrue: [
+	(self isPointerStruct and: [self handle notNull]) ifTrue: [
 		self basicFree.
 		self null: nil]!
 

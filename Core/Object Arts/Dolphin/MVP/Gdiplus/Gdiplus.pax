@@ -2121,7 +2121,7 @@ External.Structure
 			'_OffsetOf_mtVersion' -> 16r4
 		}!
 
-External.ExternalArray
+External.UInt32Array
 	subclass: #'Graphics.Gdiplus.ARGBArray'
 	instanceVariableNames: ''
 	classVariableNames: ''

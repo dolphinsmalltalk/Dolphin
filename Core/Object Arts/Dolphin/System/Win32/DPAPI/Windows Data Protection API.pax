@@ -60,7 +60,7 @@ External.WindowsSystemLibrary
 			'CRYPTPROTECTMEMORY_SAME_PROCESS' -> 16r0
 		}!
 
-External.Structure
+External.FinalizableStructure
 	subclass: #'OS.CRYPTOAPI_BLOB'
 	instanceVariableNames: 'localData'
 	classVariableNames: ''

@@ -21,15 +21,15 @@ dwSize: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
-initialize: anInteger
-	"Private - Initialize the state of the receiver."
+initializeBuffer: bufferClass size: anInteger
+	"Private - Create a buffer to hold unmanaged data in the receiver of the specified size and initialize it by setting the size field."
 
-	super initialize: anInteger.
+	super initializeBuffer: bufferClass size: anInteger.
 	self dwSize: anInteger! !
 
 !OS.SizedStructure categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
-initialize:!initializing!private! !
+initializeBuffer:size:!initializing!private! !
 !
 
 !OS.SizedStructure class methodsFor!

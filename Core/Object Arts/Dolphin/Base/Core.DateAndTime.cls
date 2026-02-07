@@ -63,7 +63,7 @@ Note that in practice the precision of expressed moments is going to be limited 
 + operand
 	"Answer the result of adding the <Duration> argument, operand to the receiver. More specifically: Answer a <DateAndTime> that represents the UTC time that is the <Duration> argument, operand, after the receiver, and whose local time is the same as the receiver's. If the argument is a negative <Duration>, then the result is a <DateAndTime> prior to the receiver."
 
-	^self class utcSeconds: self asSeconds + operand asSeconds offset: offset!
+	^self class utcSeconds: self asSeconds + operand asSeconds offsetSeconds: offset!
 
 < operand 
 	"Answer whether the receiver is less than the <DateAndTime> argument, operand, i.e. answer whether the receiver is prior to UTC time represented by the argument."
@@ -82,6 +82,11 @@ asFILETIME
 	"Answer a <FILETIME> representing the same point in time as the receiver. This is a fairly accurate conversion as FILETIME's have a precision of 100nS."
 
 	^OS.FILETIME fromDateAndTime: self!
+
+asInteger
+	"Answer a 64-bit integer specifying the number of 100 nanosecond intervals since the FILETIME epoch (01:00:00, 01 January 1601 UTC)."
+
+	^(OS.FILETIME.SmalltalkEpoch + (self asSeconds * 1e7)) truncated!
 
 asLocal
 	"Answer a <DateAndTime> that represents the same UTC time as the receiver, but in the local time of the host OS."
@@ -223,7 +228,7 @@ julianDate
 
 	| utc jd |
 	utc := self asUTC.
-	jd := self class utcSeconds: utc asSeconds + JulianDateOffset offset: utc offsetSeconds.
+	jd := self class utcSeconds: utc asSeconds + JulianDateOffset offsetSeconds: utc offsetSeconds.
 	^jd rataDie + (jd seconds / Duration.SecondsPerDay)!
 
 julianDayNumber
@@ -231,7 +236,7 @@ julianDayNumber
 
 	| utc |
 	utc := self asUTC.
-	^(self class utcSeconds: utc asSeconds + JulianDateOffset offset: 0) rataDie!
+	^(self class utcSeconds: utc asSeconds + JulianDateOffset) rataDie!
 
 lilianDayNumber
 	"Answer the receiver's [Lilian Day Number](https://en.wikipedia.org/wiki/Lilian_date)."
@@ -307,7 +312,7 @@ offsetSeconds: offsetSeconds
 		ifTrue: [self]
 		ifFalse: 
 			[self class validateOffset: offsetSeconds.
-			self class utcSeconds: self asSeconds offset: offsetSeconds]!
+			self class utcSeconds: self asSeconds offsetSeconds: offsetSeconds]!
 
 printOn: aStream
 	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. This will be in the format as defined in ANSI Smalltalk for the DateAndTime>>printString message (5.8.1.24). See #printOn:withLeadingSpace: for a description of this format."
@@ -338,7 +343,7 @@ printOn: aWriteStream withLeadingSpace: aBoolean
 	Locale invariant
 		printDateTime: self
 			on: aWriteStream
-			format: 'yyyy\-MM\-dd\THH:mm:ssfffffffff';
+			format: 'yyyy-MM-dd\THH:mm:ssfffffffff';
 		printDuration: self offset
 			on: aWriteStream
 			format: (offset \\ 60 = 0
@@ -365,7 +370,7 @@ rataDie
 roundTo: aDuration
 	"Round the receiver to be a multiple of the <Duration> argument"
 
-	^self class utcSeconds: (self asSeconds roundTo: aDuration asSeconds) offset: self offsetSeconds!
+	^self class utcSeconds: (self asSeconds roundTo: aDuration asSeconds) offsetSeconds: offset!
 
 second
 	"Answer a <rational> in the range [0, 60), representing the second of the minute of the local time of the receiver, including any fractional part."
@@ -445,6 +450,7 @@ year
 =!comparing!public! !
 asDateAndTime!converting!public! !
 asFILETIME!converting!public! !
+asInteger!converting!public! !
 asLocal!comparing!public! !
 asSeconds!converting!public! !
 asSYSTEMTIME!converting!public! !
@@ -571,7 +577,7 @@ fromFILETIME: aFILETIME
 		(DateAndTime year: 1601 day: 1 offset: 0 seconds) asSeconds = -9467020800
 	"
 
-	^self utcSeconds: aFILETIME asSeconds offset: aFILETIME offsetSeconds!
+	^self utcSeconds: aFILETIME asSeconds offsetSeconds: aFILETIME offsetSeconds!
 
 fromString: aString 
 	"Answer a new <DateAndTime> constructed from aString <String> in the Reg. Ex. format:
@@ -601,7 +607,7 @@ fromSYSTEMTIME: aSYSTEMTIME offset: aDuration
 fromUnixTime: time_t_Integer
 	"Answer a <DateAndTime> which is the specified number of seconds past the Unix epoch, assumed to be in UTC."
 
-	^self utcSeconds: time_t_Integer + UnixEpochSeconds offset: 0!
+	^self utcSeconds: time_t_Integer + UnixEpochSeconds!
 
 initialize
 	self addClassConstant: 'SmalltalkEpochRD'
@@ -644,26 +650,26 @@ midnight
 new
 	^self shouldNotImplement!
 
-newRataDie: anInteger seconds: aNumber offset: secondsInteger
-	<primitive: 157>
-	^self basicNew
-		setRataDie: anInteger
-		seconds: aNumber
-		offset: secondsInteger!
-
 now
 	"Answer the current <DateAndTime> in local time.
 		self now
 	"
 
-	^self utcSeconds: self utcSecondsNow offset: Locale timeZoneInformation offsetSeconds!
+	^self utcSeconds: self utcSecondsNow offsetSeconds: Locale timeZoneInformation offsetSeconds!
 
 nowUTC
 	"Answer the current <DateAndTime> in UTC.
 		self nowUTC
 	"
 
-	^self utcSeconds: self utcSecondsNow offset: 0!
+	^self utcSeconds: self utcSecondsNow!
+
+rataDie: anInteger seconds: aNumber offsetSeconds: secondsInteger
+	<primitive: 157>
+	^self basicNew
+		setRataDie: anInteger
+		seconds: aNumber
+		offset: secondsInteger!
 
 readFrom: aStream
 	"Answers a new instance of the receiver read from aStream <gettableStream> in the Reg. Ex. format:
@@ -754,17 +760,22 @@ tomorrow
 
 	^self today + 1 days!
 
-utcSeconds: aNumber offset: anInteger
-	"Private - Answer a new <DateAndTime> representing aNumber of (UTC) seconds since 1/1/1901 (UTC), but at the time zone offset specified by <integer> number of seconds, anInteger. 
+utcSeconds: aNumber
+	"Answer a new UTC <DateAndTime> representing aNumber of (UTC) seconds since 1/1/1901 (UTC). aNumber may be negative in which case the answer will be a <DateAndTime> prior to 1/1/1901."
+
+	^self utcSeconds: aNumber offsetSeconds: 0!
+
+utcSeconds: aNumber offsetSeconds: anInteger
+	"Answer a new <DateAndTime> representing aNumber of (UTC) seconds since 1/1/1901 (UTC), but at the time zone offset specified by <integer> number of seconds, anInteger. 
 	aNumber may be negative in which case the answer will be a <DateAndTime> prior to 1/1/1901."
 
 	| localSeconds daysSinceEpoch |
 	localSeconds := aNumber + anInteger.
 	daysSinceEpoch := localSeconds // Duration.SecondsPerDay.
 	^self
-		newRataDie: daysSinceEpoch + SmalltalkEpochRD
+		rataDie: daysSinceEpoch + SmalltalkEpochRD
 		seconds: localSeconds - (daysSinceEpoch * Duration.SecondsPerDay)
-		offset: anInteger!
+		offsetSeconds: anInteger!
 
 utcSecondsNow
 	| filetime |
@@ -835,12 +846,12 @@ year: year day: dayOfYear hour: hour minute: minute second: second offsetSeconds
 		second: second.
 	self validateOffset: offset.
 	^self
-		newRataDie: (self
+		rataDie: (self
 				encodeRataDieYear: year
 				month: 1
 				day: 1) + dayOfYear - 1
 		seconds: (hour * 60 + minute) * 60 + second asTrueFraction
-		offset: offset!
+		offsetSeconds: offset!
 
 year: yearInteger day: ordinalDateInteger offset: aDuration
 	^self year: yearInteger day: ordinalDateInteger hour: 0 minute: 0 second: 0 offset: aDuration!
@@ -857,13 +868,13 @@ year: yearInteger day: ordinalDateInteger seconds: seconds offset: aDuration
 	offset := aDuration asSeconds.
 	self validateOffset: offset.
 	^self
-		newRataDie: (self
+		rataDie: (self
 				encodeRataDieYear: yearInteger
 				month: 1
 				day: 1) + ordinalDateInteger
 				- 1
 		seconds: seconds asTrueFraction
-		offset: offset!
+		offsetSeconds: offset!
 
 year: yearInteger month: monthInteger day: dayInteger
 	"Answer a new <DateAndTime> representing midnight local time on the specified day of the specified month of the specified year."
@@ -922,12 +933,12 @@ year: year month: month day: dayOfMonth hour: hour minute: minute second: second
 		second: second.
 	self validateOffset: offset.
 	^self
-		newRataDie: (self
+		rataDie: (self
 				encodeRataDieYear: year
 				month: month
 				day: dayOfMonth)
 		seconds: (hour * 60 + minute) * 60 + second asTrueFraction
-		offset: offset!
+		offsetSeconds: offset!
 
 year: yearInteger month: monthInteger day: dayInteger offset: aDuration
 	"Answer a <DateAndTime> which is midnight on the <integer> day, dayInteger, of the <integer> month, monthInteger, of the <integer> year, yearInteger, of the astronomical Gregorian 
@@ -967,16 +978,17 @@ initialize!class initialization!public! !
 isLeapYear:!public!testing! !
 midnight!instance creation!public! !
 new!instance creation!public! !
-newRataDie:seconds:offset:!instance creation!private! !
 now!instance creation!public! !
 nowUTC!instance creation!public! !
+rataDie:seconds:offsetSeconds:!instance creation!public! !
 readFrom:!instance creation!public! !
 readFrom:ifInvalid:!instance creation!public! !
 readOffsetFrom:sign:!helpers!private! !
 readOffsetFrom:sign:ifInvalid:!helpers!private! !
 today!instance creation!public! !
 tomorrow!instance creation!public! !
-utcSeconds:offset:!instance creation!private! !
+utcSeconds:!instance creation!public! !
+utcSeconds:offsetSeconds:!instance creation!public! !
 utcSecondsNow!helpers!private! !
 validateHour:minute:second:!instance creation!private! !
 validateOffset:!helpers!private! !

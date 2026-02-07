@@ -147,12 +147,10 @@ package setMethodNames: #(
 	#(#{OS.COM.CountedArray class} #pointerFieldType)
 	#(#{OS.COM.CUSTDATA} #idlAttributes)
 	#(#{OS.COM.CUSTDATAITEM} #printIDLOn:)
-	#(#{OS.COM.CY} #printOn:)
 	#(#{OS.COM.CY class} #mustWrapOptionalArgument:)
 	#(#{OS.COM.CY class} #newInstanceAspect:class:)
 	#(#{OS.COM.DATE class} #newInstanceAspect:class:)
 	#(#{OS.COM.DATE class} #printDefaultValue:on:)
-	#(#{OS.COM.DECIMAL} #printOn:)
 	#(#{OS.COM.ELEMDESC} #idlAttributes)
 	#(#{OS.COM.FUNCDESC} #buildMethodName)
 	#(#{OS.COM.FUNCDESC} #displayOn:)
@@ -260,7 +258,9 @@ package setMethodNames: #(
 	#(#{OS.COM.MemberDesc} #printIDLOn:indent:)
 	#(#{OS.COM.MemberDesc class} #publishedAspectsOfInstances)
 	#(#{OS.COM.PARAMDESC} #idlAttributes)
+	#(#{OS.COM.Record} #printFieldsOn:)
 	#(#{OS.COM.Record} #publishedAspects)
+	#(#{OS.COM.RecordClass class} #icon)
 	#(#{OS.COM.SAFEARRAY} #printOn:)
 	#(#{OS.COM.SAFEARRAY class} #fieldType)
 	#(#{OS.COM.SAFEARRAY class} #pointerFieldType)
@@ -2115,21 +2115,6 @@ printIDLOn: target
 printIDLOn:!printing-IDL!private! !
 !
 
-!OS.COM.CY methodsFor!
-
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream print: self value].
-	aStream nextPut: $)! !
-
-!OS.COM.CY categoriesForMethods!
-printOn:!printing!public! !
-!
-
 !OS.COM.CY class methodsFor!
 
 mustWrapOptionalArgument: anELEMDESC 
@@ -2161,21 +2146,6 @@ printDefaultValue: aVARIANT on: aPuttableStream
 !OS.COM.DATE class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 printDefaultValue:on:!helpers!private! !
-!
-
-!OS.COM.DECIMAL methodsFor!
-
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream print: self value].
-	aStream nextPut: $)! !
-
-!OS.COM.DECIMAL categoriesForMethods!
-printOn:!printing!public! !
 !
 
 !OS.COM.ELEMDESC methodsFor!
@@ -3505,9 +3475,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(.
-	self isNull 
-		ifTrue: [aStream display: 'NULL']
-		ifFalse: [aStream print: (self nameOfID: MEMBERID_NIL)].
+	self isNull ifTrue: [aStream display: 'NULL'] ifFalse: [aStream print: self name].
 	aStream nextPut: $)! !
 
 !OS.COM.ITypeInfo categoriesForMethods!
@@ -3623,6 +3591,10 @@ idlAttributes!accessing!private! !
 
 !OS.COM.Record methodsFor!
 
+printFieldsOn: aStream
+	aStream nextPutAll: recordInfo name; nextPutAll: ': '.
+	super printFieldsOn: aStream!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
@@ -3636,7 +3608,19 @@ publishedAspects
 	^aspects! !
 
 !OS.COM.Record categoriesForMethods!
+printFieldsOn:!printing!private! !
 publishedAspects!accessing!public! !
+!
+
+!OS.COM.RecordClass class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Structure icon! !
+
+!OS.COM.RecordClass class categoriesForMethods!
+icon!constants!public! !
 !
 
 !OS.COM.SAFEARRAY methodsFor!
@@ -7555,13 +7539,13 @@ example1
 	var := VARIANT new.
 	bstr := 'Wibble' asBSTR.
 	"Must use #basicYourAddress, because BSTRs are indirection objects"
-	var uint32: bstr basicYourAddress.
+	var reference: bstr basicYourAddress.
 	var vt: VT_BSTR | VT_BYREF.
 
-	"Extract the by-ref value."
+	"Extract the by-ref value. We should get an LPBSTR pointing at the underlying BSTR."
 	lpbstr := var value.
 
-	"Update the by-ref value - the original BSTR is free'd"
+	"Update the by-ref value - the original BSTR is freed"
 	lpbstr value: 'Wobble'.
 
 	"Note that the original BSTR has been updated, and the by-ref VARIANT"

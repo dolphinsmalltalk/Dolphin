@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.INTEGER
+External.AbstractInt32
 	subclass: #'OS.HRESULT'
 	instanceVariableNames: ''
 	classVariableNames: 'Facilities Fail'
@@ -15,16 +15,6 @@ OS.HRESULT comment: ''!
 !OS.HRESULT categoriesForClass!External-Data-Unstructured! !
 
 !OS.HRESULT methodsFor!
-
-asSignedInteger
-	"Answer the signed 32-bit <Integer> value of the receiver."
-
-	^bytes int32AtOffset: 0!
-
-asUnsignedInteger
-	"Answer the unsigned 32-bit <Integer> value of the receiver."
-
-	^bytes uint32AtOffset: 0!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -126,6 +116,11 @@ severity
 
 	^(bytes at: 4) bitShift: -7!
 
+signal
+	"Signal the occurrence of the exceptional condition that this HRESULT code describes."
+
+	^HRESULTError signalHRESULT: self!
+
 statusCode
 	"Answer the Win32 status code extracted from the receiver.
 
@@ -139,12 +134,6 @@ succeeded
 
 	^self failed not!
 
-unsignedValue: anUnsigned
-	"Set the receiver's value field to the value of the unsigned positive
-	integer, anUnsigned."
-
-	bytes uint32AtOffset: 0 put: anUnsigned!
-
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -156,8 +145,6 @@ value: anInteger
 	bytes int32AtOffset: _OffsetOf_value put: anInteger! !
 
 !OS.HRESULT categoriesForMethods!
-asSignedInteger!converting!public! !
-asUnsignedInteger!converting!public! !
 displayOn:!displaying!public! !
 errorCode!accessing!public! !
 facility!accessing!public! !
@@ -168,9 +155,9 @@ isSeverityError!public!testing! !
 isSigned!public!testing! !
 printOn:!displaying!public! !
 severity!accessing!public! !
+signal!public!raising! !
 statusCode!accessing!public! !
 succeeded!public!testing! !
-unsignedValue:!accessing!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !

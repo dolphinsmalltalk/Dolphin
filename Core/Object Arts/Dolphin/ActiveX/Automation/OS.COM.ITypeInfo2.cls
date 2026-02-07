@@ -82,14 +82,19 @@ GetAllImplTypeCustData: index pCustData: pCustData
 	^self invalidCall: _failureCode!
 
 getAllParamCustData: indexFunc indexParam: indexParam
-	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllParamCustData() method."
+	"Answer the <CUSTDATA> for a specific parameter (identified by <integer> index, indexParam) of a specific function (identified by <integer> index, indexFunc) in the interface or module that the receiver describes."
 
-	| pCustData |
+	| pCustData hr |
 	pCustData := CUSTDATA newBuffer.
-	self
-		GetAllParamCustData: indexFunc
-		indexParam: indexParam
-		pCustData: pCustData.
+	hr := self
+				GetAllParamCustData: indexFunc
+				indexParam: indexParam
+				pCustData: pCustData.
+	hr < 0
+		ifTrue: 
+			[pCustData beUnfinalizable.
+			"If there is no custdata for the parameter, the API may return TYPE_E_ELEMENTNOTFOUND, for which we just want to return the null data"
+			hr ~= TYPE_E_ELEMENTNOTFOUND ifTrue: [(HRESULT fromInteger: hr) signal]].
 	^pCustData value!
 
 GetAllParamCustData: indexFunc indexParam: indexParam pCustData: pCustData
@@ -101,7 +106,8 @@ GetAllParamCustData: indexFunc indexParam: indexParam pCustData: pCustData
 			[out] CUSTDATA* pCustData);
 	"
 
-	<virtual stdcall: hresult 35 uint32 uint32 CUSTDATA*>
+	"We return the hresult code as an integer, because absence of the data is not really an exceptional condition. The caller is expected to check the return code."
+	<virtual stdcall: int32 35 uint32 uint32 CUSTDATA*>
 	^self invalidCall: _failureCode!
 
 getAllVarCustData: index
@@ -360,7 +366,7 @@ getAllFuncCustData:!**auto generated**!public! !
 GetAllFuncCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
 getAllImplTypeCustData:!**auto generated**!public! !
 GetAllImplTypeCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-getAllParamCustData:indexParam:!**auto generated**!public! !
+getAllParamCustData:indexParam:!public! !
 GetAllParamCustData:indexParam:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
 getAllVarCustData:!**auto generated**!accessing!public! !
 GetAllVarCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
@@ -420,6 +426,7 @@ defineFunctions
 		defineFunction: #GetAllFuncCustData:pCustData:
 			argumentTypes: 'uint32 CUSTDATA*';
 		defineFunction: #GetAllParamCustData:indexParam:pCustData:
+			returnType: 'int32'
 			argumentTypes: 'uint32 uint32 CUSTDATA*';
 		defineFunction: #GetAllVarCustData:pCustData:
 			argumentTypes: 'uint32 CUSTDATA*';
@@ -428,6 +435,6 @@ defineFunctions
 ! !
 
 !OS.COM.ITypeInfo2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public!template definition! !
+defineFunctions!initializing!public!template definition! !
 !
 

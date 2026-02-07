@@ -18,7 +18,7 @@ arrayClass
 	^DOUBLEArray!
 
 elementFromIndex: anInteger
-	^{ 0.0. 1.25. Float infinity. Float negativeInfinity. Float fmax. Float fmin } at: anInteger! !
+	^##({ 0.0. 1.25. Float fmax. Float fmin. Float infinity. Float negativeInfinity }) at: anInteger! !
 
 !External.Tests.DOUBLEArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

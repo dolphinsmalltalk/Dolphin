@@ -33,6 +33,7 @@ readFrom: aStructure
 
 	^self pointerClass
 		fromAddress: (aStructure bytes int32AtOffset: offset)
+		owner: aStructure fieldOwner
 		length: (arrayLength getElementCountOf: self in: aStructure)
 		elementClass: self elementClass! !
 

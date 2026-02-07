@@ -36,7 +36,7 @@ displayOn: aPuttableStream
 
 	| offset |
 	offset := self offsetSeconds.
-	(DateAndTime utcSeconds: self localSeconds - offset offset: offset) displayOn: aPuttableStream!
+	(DateAndTime utcSeconds: self localSeconds - offset offsetSeconds: offset) displayOn: aPuttableStream!
 
 offsetSeconds
 	"Answer the <number> of seconds this <FILETIME> is offset from UTC. It is assumed that the receiver expresses a time in the current platform timezone."

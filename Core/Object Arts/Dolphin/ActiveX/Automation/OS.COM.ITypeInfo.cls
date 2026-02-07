@@ -71,9 +71,11 @@ attributes
 	a back pointer to the receiver, and will initiate the ReleaseTypeAttr() call via
 	the receiver when finalized."
 
-	attributes isNull ifTrue: [
-		attributes := self getTypeAttr.
-		attributes piTypeInfo: self].
+	attributes isNull
+		ifTrue: 
+			[attributes := self getTypeAttr.
+			attributes
+				piTypeInfo: self].
 	^attributes!
 
 basicFree
@@ -460,6 +462,9 @@ libraryAndIndex
 			lib free.
 			lib2]) -> (myIndex asInteger + 1)!
 
+name
+	^self nameOfID: MEMBERID_NIL!
+
 nameOfID: anInteger
 	"Answer a <readableString> name for the member of the 
 	receiver identified by the <integer> member id argument. Note that this
@@ -617,6 +622,7 @@ Invoke:memid:wFlags:pDispParams:pVarResult:pExcepInfo:puArgErr:!COM Interfaces-O
 isDual!public!testing! !
 isHidden!public!testing! !
 libraryAndIndex!accessing!public! !
+name!printing!public! !
 nameOfID:!accessing!public! !
 nameOfID:ifAbsent:!accessing!public! !
 nullCustData!accessing!public! !
@@ -686,25 +692,38 @@ defineFunctions
 			argumentTypes: 'VARDESC*'
 !
 
-stbConvertFrom: anSTBClassFormat
-	"Version 1 adds allCustData instance variable, initially nil."
+stbConvertFromVersion0: anArray
+	"Convert from version 0 ITypeInfo.
 
-	anSTBClassFormat version == 0
-		ifTrue: 
-			[^
-			[:data |
-			| newInstance |
-			newInstance := self basicNew.
-			1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-			newInstance]].
-	^super stbConvertFrom: anSTBClassFormat!
+		Version 0:			bytes implementor attributes
+		Version 2: (D8.2.4+)	bytes owner implementor attributes allCustData
+	"
+
+	^((Array new: self instSize)
+		at: 1 put: (anArray at: 1);
+		at: 3 put: (anArray at: 2);
+		at: 4 put: (anArray at: 3);
+		yourself) becomeA: self!
+
+stbConvertFromVersion1: anArray
+	"Convert from version 1 ITypeInfo.
+
+		Version 1:	 (D8)	bytes implementor attributes allCustData
+		Version 2: (D8.2.4+)	bytes owner implementor attributes allCustData
+	"
+
+	^((Array new: self instSize)
+		at: 1 put: (anArray at: 1);
+		replaceFrom: 3 to: 5 with: anArray startingAt: 2;
+		yourself) becomeA: self!
 
 stbVersion
-	^1! !
+	^2! !
 
 !OS.COM.ITypeInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
-stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!development!public! !
+stbConvertFromVersion1:!binary filing!development!public! !
 stbVersion!binary filing!public! !
 !
 

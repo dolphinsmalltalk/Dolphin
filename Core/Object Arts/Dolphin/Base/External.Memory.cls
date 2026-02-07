@@ -138,6 +138,9 @@ copyBytesToGlobalHeap: aByteObject size: len
 	Kernel32 globalUnlock: hMem.
 	^hMem!
 
+didAlloc: anAddress
+	^(self allocator DidAlloc: anAddress) ~~ 0!
+
 DidAlloc: anAddress
 	"Private - Answer whether the specified memory block was allocated from the
 	process heap (0 = no, 1 = yes, -1 = don't know).
@@ -207,19 +210,14 @@ new
 		yourself!
 
 new: anInteger
-	"Answer a new instance of the receiver of the 
-	pointing at a block of memory of size anInteger bytes,
-	allocated from a COM IMalloc allocator."
+	"Answer a new instance of the receiver of the pointing at a block of memory of size, anInteger, bytes allocated from an external heap."
 
-	^self new 
-		allocate: anInteger!
+	^self newFixed: anInteger!
 
 newFixed: anInteger
-	"Answer a new instance of the receiver of the 
-	pointing at an immovable block of memory of size anInteger bytes,
-	allocated from an external heap."
+	"Answer a new instance of the receiver of the pointing at an immovable block of memory of size, anInteger, bytes allocated from an external heap."
 
-	^self new: anInteger!
+	^self new allocate: anInteger!
 
 processHeap
 	"Private - Answer an object representing the process heap which
@@ -235,7 +233,12 @@ Realloc: anAddress cb: anInteger
 		heapReAlloc: self processHeap asParameter
 		dwFlags: 0
 		lpMem: anAddress
-		dwBytes: anInteger) asInteger! !
+		dwBytes: anInteger) asInteger!
+
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization."
+
+	^true! !
 
 !External.Memory class categoriesForMethods!
 Alloc:!operations!private! !
@@ -243,6 +246,7 @@ allocator!accessing!private! !
 clear:!public!realizing/unrealizing! !
 copyBytesToGlobalHeap:!operations!public! !
 copyBytesToGlobalHeap:size:!operations!public! !
+didAlloc:!public!testing! !
 DidAlloc:!COM Interfaces-OBJIDL.IMalloc!private! !
 free:!operations!public! !
 Free:!COM Interfaces-OBJIDL.IMalloc!private! !
@@ -255,6 +259,7 @@ new:!instance creation!public! !
 newFixed:!instance creation!public! !
 processHeap!accessing!private! !
 Realloc:cb:!COM Interfaces-OBJIDL.IMalloc!private! !
+requiresFinalization!public!testing! !
 !
 
 External.Memory class methodProtocol: #IMalloc attributes: #(#readOnly) selectors: #(#Alloc: #DidAlloc: #GetSize: #HeapMinimize #Realloc:cb:)!

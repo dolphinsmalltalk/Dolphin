@@ -600,9 +600,6 @@ isPrime
 			i := i + 6].
 	^true!
 
-isSelfEvaluating
-	^true!
-
 isUInt16
 	"Answer whether the receiver can be represented as a 16-bit unsigned integer."
 
@@ -958,7 +955,6 @@ isInteger!public!testing! !
 isNull!public!testing! !
 isPowerOfTwo!public!testing! !
 isPrime!public!testing! !
-isSelfEvaluating!public!testing! !
 isUInt16!public!testing! !
 isUInt32!public!testing! !
 isUInt64!public!testing! !

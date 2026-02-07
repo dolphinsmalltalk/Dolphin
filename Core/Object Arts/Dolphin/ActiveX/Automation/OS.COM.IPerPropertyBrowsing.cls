@@ -117,10 +117,13 @@ getStringsAndValues: anInteger
 	and the <VARIANT> values associated with those display names for the property with the
 	specified <integer> dispatch id."
 
-	| stringsAndCookies answer strings cookies var count |
-	stringsAndCookies := self getPredefinedStrings: anInteger.
-	strings := stringsAndCookies first.
-	cookies := stringsAndCookies last.
+	| answer strings cookies var count |
+	strings := CALPOLESTR new.
+	cookies := CADWORD new.
+	self
+		GetPredefinedStrings: anInteger
+		pCaStringsOut: strings
+		pCaCookiesOut: cookies.
 	count := cookies size.
 	answer := Array new: count.
 	count == 0
@@ -134,8 +137,9 @@ getStringsAndValues: anInteger
 						GetPredefinedValue: anInteger
 						dwCookie: (cookies at: i)
 						pVarOut: var.
-					answer at: i put: string asString -> var value.
+					answer at: i put: string value -> var value.
 					var basicFree]].
+	"Avoid accumulating finalizable garbage"
 	strings free.
 	cookies free.
 	^answer!
@@ -159,9 +163,7 @@ MapPropertyToPage: dispID pclsid: pclsid
 	^self invalidCall: _failureCode!
 
 stringsToValues: dispid
-	"Answer an <LookupTable> mapping between <readableString> value display names 
-	and the <VARIANT> values associated with those display names for the property with 
-	<integer> dispatch id, dispid."
+	"Answer an <Dictionary> mapping between <readableString> value display names and the <VARIANT> values associated with those display names for the property with <integer> dispatch id, dispid."
 
 	^Dictionary withAll: (self getStringsAndValues: dispid)
 ! !

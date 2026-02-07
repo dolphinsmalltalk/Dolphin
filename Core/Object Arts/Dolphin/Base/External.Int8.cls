@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UInt8
+External.AbstractInt8
 	subclass: #'External.Int8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_Int8_Size' -> 16r1 }!
+	classConstants: { '_Int8_Size' -> 16r1. 'MaxValue' -> 16r7F. 'MinValue' -> -16r80 }!
 
 External.Int8 guid: (Core.GUID fromString: '{8f5bcc94-0245-4d91-a473-acc6bdb8f294}')!
 
@@ -49,8 +49,9 @@ byteSize
 	^_Int8_Size!
 
 defineFields
-	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
-	have a single value."
+	"Define the fields of the UInt8 structure.
+		Int8 compileDefinition
+	"
 
 	self defineField: #value type: Int8Field new beOverride!
 

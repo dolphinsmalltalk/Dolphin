@@ -18,6 +18,22 @@ OS.COM.DECIMALArray comment: '`DECIMALArray` is a specialized `ExternalArray` to
 
 !OS.COM.DECIMALArray methodsFor!
 
+basicUncheckedAt: anInteger
+	"Private - Answer a <POINT> representing the pair of co-ordinates at the specified one-based index in the receiver.
+	No bounds checks are performed on the subscript."
+
+	^DECIMAL fromAddress: (bytes yourAddress + (anInteger - 1)) * _DECIMAL_Size owner: self!
+
+basicUncheckedAt: anInteger put: aDECIMAL
+	"Private - Replace the <DECIMAL> value at the specified index in the receiver with a copy of the argument."
+
+	aDECIMAL
+		replaceBytesOf: bytes
+		from: (anInteger - 1) * _DECIMAL_Size + 1
+		to: anInteger * _DECIMAL_Size
+		startingAt: 1.
+	^aDECIMAL!
+
 uncheckedAt: anInteger
 	| base scale |
 	base := (anInteger - 1) * _DECIMAL_Size.
@@ -52,6 +68,8 @@ uncheckedAt: anInteger put: aScaledDecimalOrInteger
 	^aScaledDecimalOrInteger! !
 
 !OS.COM.DECIMALArray categoriesForMethods!
+basicUncheckedAt:!accessing!private! !
+basicUncheckedAt:put:!accessing!private! !
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
 !

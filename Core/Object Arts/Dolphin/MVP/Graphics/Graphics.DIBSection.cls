@@ -193,7 +193,6 @@ fromGlobalHandle: anExternalHandle
 						fromAddress: (pBitmap yourAddress + header byteSize) asExternalAddress
 						length: (2 bitShift: header biBitCount - 1)
 						elementClass: RGBQUAD.
-			colorTable beUnfinalizable.
 			dibSection setColorTable: colorTable.
 			offset := offset + colorTable size].
 	dibSection imageBits

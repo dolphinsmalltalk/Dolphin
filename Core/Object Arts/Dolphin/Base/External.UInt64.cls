@@ -1,12 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.INTEGER
+External.AbstractInt64
 	subclass: #'External.UInt64'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_highPart' -> 16r4. '_OffsetOf_lowPart' -> 16r0. '_UInt64_Size' -> 16r8 }!
+	classConstants: {
+			'_OffsetOf_highPart' -> 16r4.
+			'_OffsetOf_lowPart' -> 16r0.
+			'_UInt64_Size' -> 16r8.
+			'MaxValue' -> 16rFFFFFFFFFFFFFFFF
+		}!
 
 External.UInt64 guid: (Core.GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -17,22 +22,6 @@ This class of structures is useful for communication with Win32 services that re
 !External.UInt64 categoriesForClass!External-Data-Unstructured! !
 
 !External.UInt64 methodsFor!
-
-asSignedInteger
-	"Answer the signed 64-bit <Integer> value of the receiver."
-
-	^bytes int64AtOffset: 0!
-
-asUnsignedInteger
-	"Answer the unsigned 64-bit <Integer> value of the receiver.
-	This can be useful where unsigned values are stored in signed values."
-
-	^bytes uint64AtOffset: 0!
-
-displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
-
-	self value displayOn: aPuttableStream!
 
 highPart
 	"Answer the <Integer> value of the receiver's 'highPart' field."
@@ -65,9 +54,6 @@ value: anInteger
 	bytes uint64AtOffset: _OffsetOf_value put: anInteger! !
 
 !External.UInt64 categoriesForMethods!
-asSignedInteger!converting!public! !
-asUnsignedInteger!converting!public! !
-displayOn:!displaying!public! !
 highPart!**compiled accessors**!public! !
 highPart:!**compiled accessors**!public! !
 lowPart!**compiled accessors**!public! !

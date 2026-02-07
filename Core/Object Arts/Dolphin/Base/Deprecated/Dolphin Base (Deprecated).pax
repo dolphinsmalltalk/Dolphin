@@ -57,7 +57,9 @@ package methodNames
 	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
+	add: #ExternalStructure -> #isPointer;
 	add: #File -> #readCharacter;
+	add: #FILETIME -> #integerValue:;
 	add: #Integer -> #digitSize;
 	add: #Integer -> #printStringRadix:showRadix:;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
@@ -326,7 +328,7 @@ byteAtOffset: anInteger put: aByte
 	^self uint8AtOffset: anInteger put: aByte! !
 
 !ByteArray categoriesForMethods!
-asAnsiString!public! !
+asAnsiString!converting!public! !
 asString!converting!public! !
 byteAtOffset:!accessing!public! !
 byteAtOffset:put:!accessing!public! !
@@ -699,6 +701,16 @@ maxPath!constants!public! !
 pathBuffer!helpers!public! !
 !
 
+!FILETIME methodsFor!
+
+integerValue: anInteger
+	#deprecated.
+	self value: anInteger! !
+
+!FILETIME categoriesForMethods!
+integerValue:!accessing!public! !
+!
+
 !FunctionDescriptor class methodsFor!
 
 fromString: aString
@@ -991,11 +1003,16 @@ do: aOneArgumentBlock
 
 do: operation separatedBy: separator 
 	#deprecated.
-	self fieldsDo: operation separatedBy: separator! !
+	self fieldsDo: operation separatedBy: separator!
+
+isPointer
+	#deprecated.
+	^self isPointerStruct! !
 
 !ExternalStructure categoriesForMethods!
 do:!enumerating!public! !
 do:separatedBy:!enumerating!public! !
+isPointer!public!testing! !
 !
 
 !Time class methodsFor!

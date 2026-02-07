@@ -87,7 +87,7 @@ documentation
 	"Answer a four element array containing the documentation for the receiver itself.
 	See #documentationAt: for more details."
 
-	documentation isNil ifTrue: [documentation := analyzer documentationForMember: self memid].
+	documentation isNil ifTrue: [documentation := self analyzer documentationForMember: self memid].
 	^documentation!
 
 elemDesc
@@ -97,6 +97,16 @@ elemDesc
 
 flags
 	^self subclassResponsibility!
+
+free
+	"Free external resources owned by the receiver.
+	N.B. Explicitly freeing an AXTypeInfoStructure may invalidate any of its
+	sub-structures, so we clear down the analyzer and typeinfo pointers.
+	Implementation Note: Generally speaking we only need to free
+	externally owned (i.e. non-null pointer) instances of the receiver."
+
+	super free.
+	owner := nil!
 
 getAllCustData
 	^self subclassResponsibility!
@@ -213,7 +223,7 @@ name
 	^self documentation name!
 
 setAnalyzer: anAXTypeInfoAnalyzer index: anInteger
-	analyzer := anAXTypeInfoAnalyzer.
+	owner := anAXTypeInfoAnalyzer.
 	index := anInteger!
 
 tdesc
@@ -237,6 +247,7 @@ customAttributes!accessing!public! !
 documentation!accessing!public! !
 elemDesc!accessing!private! !
 flags!accessing!private! !
+free!public!realizing/unrealizing! !
 getAllCustData!accessing!private! !
 getCustData!accessing!private! !
 hash!comparing!public! !

@@ -43,14 +43,14 @@ elementClass
 
 	^POINTL!
 
-withAll: newElements
-	"Answer a new instance of the receiver containing all of the 
-	elements of the <collection> newElements.
-	An error will be raised if any of the elements of newElements
-	cannot be stored in instances of the receiver."
+withAll: newElements bufferClass: bufferClass
+	"Answer a new instance of the receiver containing all of the elements of the <collection> newElements.
+	An error will be raised if any of the elements of newElements	cannot be stored in instances of the receiver."
+
+	"Override for optimisation only"
 
 	| answer bytes |
-	answer := self new: newElements size.
+	answer := self new: newElements size bufferClass: bufferClass.
 	bytes := answer bytes.
 	newElements inject: 0
 		into: 
@@ -63,6 +63,6 @@ withAll: newElements
 
 !External.POINTLArray class categoriesForMethods!
 elementClass!constants!public! !
-withAll:!instance creation!public! !
+withAll:bufferClass:!instance creation!public! !
 !
 

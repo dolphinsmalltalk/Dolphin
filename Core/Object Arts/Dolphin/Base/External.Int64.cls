@@ -1,12 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UInt64
+External.AbstractInt64
 	subclass: #'External.Int64'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_Int64_Size' -> 16r8 }!
+	classConstants: {
+			'_Int64_Size' -> 16r8.
+			'_OffsetOf_highPart' -> 16r4.
+			'_OffsetOf_lowPart' -> 16r0.
+			'MaxValue' -> 16r7FFFFFFFFFFFFFFF.
+			'MinValue' -> -16r8000000000000000
+		}!
 
 External.Int64 guid: (Core.GUID fromString: '{87b4c630-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -36,6 +42,16 @@ isSigned
 
 	^true!
 
+lowPart
+	"Answer the <Integer> value of the receiver's 'lowPart' field."
+
+	^bytes uint32AtOffset: _OffsetOf_lowPart!
+
+lowPart: anInteger
+	"Set the receiver's 'lowPart' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_lowPart put: anInteger!
+
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -50,6 +66,8 @@ value: anInteger
 highPart!**compiled accessors**!public! !
 highPart:!**compiled accessors**!public! !
 isSigned!public!testing! !
+lowPart!**compiled accessors**!public! !
+lowPart:!**compiled accessors**!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !
@@ -70,10 +88,12 @@ defineFields
 		Int64 compileDefinition
 	"
 
-	super defineFields.
 	self
 		defineField: #value
 			type: Int64Field new beOverride
+			offset: 0;
+		defineField: #lowPart
+			type: UInt32Field new
 			offset: 0;
 		defineField: #highPart
 			type: Int32Field new beOverride

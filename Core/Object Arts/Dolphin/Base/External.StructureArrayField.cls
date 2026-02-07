@@ -44,6 +44,7 @@ readFrom: aStructure
 
 	^self arrayClass
 		fromAddress: aStructure yourAddress + offset
+		owner: aStructure fieldOwner
 		length: (arrayLength getElementCountOf: self in: aStructure)
 		elementClass: self fieldClass!
 

@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'External.Structure'
-	instanceVariableNames: 'bytes'
+	instanceVariableNames: 'bytes owner'
 	classVariableNames: 'RecordClasses'
 	imports: #()
 	classInstanceVariableNames: 'template flags alignment'
@@ -32,15 +32,8 @@ _deepenShallowCopy: clone trail: copiesDictionary
 	variable which might be an external address - if so we copy the data pointed
 	at, so that the clone is a true deep copy, and does not reference any of the
 	same data as the receiver."
-
-	self isNull 
-		ifFalse: 
-			["Create a new copy of the internal/referenced data"
-
-			clone
-				initialize: self byteSize;
-				copyBytes: bytes].
-	"Use the standard implementation for the rest of the object"
+	
+	"postCopy has already copied the bytes - use the standard implementation for the rest of the object"
 	2 to: self class instSize + self basicSize
 		do: [:i | clone instVarAt: i put: ((clone instVarAt: i) _deepCopy: copiesDictionary)].
 	^clone!
@@ -102,17 +95,17 @@ beImmutableObject
 beNullHeapPointer
 	"Private - Set the receiver's contents to be a NULL heap pointer."
 
-	self initializeAtAddress: self heapPointerClass new!
+	self initializeAtAddress: self heapPointerClass new owner: nil!
 
 beNullPointer
 	"Private - Set the receiver's contents to be a NULL pointer."
 
-	self initializeAtAddress: self pointerClass new!
+	self initializeAtAddress: self pointerClass new owner: nil!
 
 bufferClass
 	"Private - Answer the default class to use as a contents buffer"
 
-	^ByteArray!
+	^self class bufferClass!
 
 bytes
 	"Answer the byte buffer which the receiver represents (a (sub)instance of ExternalBytes)."
@@ -147,14 +140,6 @@ comparisonSize
 
 	^self byteSize!
 
-copy
-	"Answer a suitable copy of the receiver, which does not share the same byte data."
-
-	^super copy
-		initialize: self byteSize;
-		copyBytes: bytes;
-		yourself!
-
 copy: aByteClass from: start to: stop 
 	"Private - Answer a copy of the bytes of the receiver starting at index start, 
 	until index stop, inclusive, as an instance of the argument, aByteClass."
@@ -167,11 +152,16 @@ copy: aByteClass from: start to: stop
 		to: len
 		startingAt: start!
 
+copyBuffer: aByteObject size: anInteger
+	self
+		initializeBuffer: self bufferClass size: anInteger.
+	aByteObject ifNotNil: [self copyBytes: aByteObject]!
+
 copyBytes: aByteObject
 	"Private - Set the contents of the receiver (as appropriate for the subclass).
 	Answer the receiver."
 
-	aByteObject replaceBytesOf: self bytes from: 1 to: self byteSize startingAt: 1!
+	aByteObject replaceBytesOf: bytes from: 1 to: self byteSize startingAt: 1!
 
 copyFrom: start to: stop
 	"Answer a copy of the bytes of the receiver starting at index start, 
@@ -200,7 +190,8 @@ detach
 	which would otherwise be cleaned up when the receiver is finalized."
 
 	| detached |
-	detached := self bytes.
+	bytes ifNil: [^nil].
+	detached := bytes detach.
 	bytes := nil. 
 	self beUnfinalizable.	"reduce Memory Manager load"
 	^detached!
@@ -227,6 +218,11 @@ doesNotUnderstand: aMessage
 						ifTrue: [field isReadable ifTrue: [^field readFrom: self]]
 						ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]]]].
 	^super doesNotUnderstand: aMessage!
+
+fieldOwner
+	"Answer the object that should be considered the owner of any external resources associated with the receiver's fields. This is used to set the owner of any sub-structures created to reference fields in the receiver."
+
+	^owner ?? self!
 
 fieldsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's fields."
@@ -284,30 +280,26 @@ hresultError: anInteger
 	^HRESULTError signalWith: anInteger!
 
 initialize
-	"Private - Perform any initialization required for the receiver
-	which is specific to the value form. Answer the receiver.
+	"Private - Perform any initialization required for the receiver which is specific to the value form. Answer the receiver.
 	To perform reference specific initialization, override #initializePointer."
 !
 
-initialize: anInteger
-	"Private - Create an external buffer in the receiver of the specified size.
-	Some subclasses, particularly for Win32 structures, may want to override
-	to set their first member to their size."
-
-	bytes := self bufferClass newFixed: anInteger.
-	self initialize!
-
-initializeAtAddress: anAddress 
-	"Private - Initialize the receiver to be a reference to an ExternalStructure
-	of the receiver's type at the specified address. Any modifications to the 
-	receiver will be reflected back into the structure/object at anAddress."
+initializeAtAddress: anAddress owner: anObject
+	"Private - Initialize the receiver to be a reference to an unmanaged structure of the receiver's type at the specified address. Any modifications to the receiver will be reflected back into the structure/object at anAddress."
 
 	bytes := anAddress asExternalAddress.
-	self initializePointer!
+	owner := anObject.
+	self initializePointer.
+	^self!
+
+initializeBuffer: bufferClass size: anInteger
+	"Private - Allocate an unmanaged buffer in the receiver of the specified size and class to hold unmanaged data in this structure's format. Usually the buffer class will be ByteArray, in which case the buffer is allocated from the Smalltalk heap, but in some circumstances, e.g. when intending to pass ownership of the structure to some external API, for the buffer to be allocated from an external heap. This is achieved by using some alternate buffer class, e.g. TaskMemory, corresponding to the COM task memory heap."
+
+	bytes := bufferClass newFixed: anInteger.
+	self initialize!
 
 initializePointer
-	"Private - Perform any initialization required for the receiver
-	which is specific to the reference form. Answer the receiver.
+	"Private - Perform any initialization required for the receiver	which is specific to the reference form. Answer the receiver.
 	To perform value specific initialization, override #initialize."!
 
 invalidArgErrorClass
@@ -350,10 +342,18 @@ isNull
 	<primitive: 170>
 	^bytes isNull!
 
-isPointer
-	"Answer whether the receiver is a pointer to an external data item."
+isPointerStruct
+	"Answer whether the receiver is a (possibly null) pointer to an external data item."
 
 	^bytes class isIndirection!
+
+isReferenceStruct
+	"Answer whether the receiver is a non-null pointer (reference) to an external structure in memory owned by another object, or possibly even allocated from an external heap."
+
+	^self isNull not and: [self isPointerStruct]!
+
+isValueStruct
+	^(self isNull or: [self isPointerStruct]) not!
 
 maxPrint
 	"Private - Answer the maximum number of characters to output when appending the 
@@ -362,7 +362,7 @@ maxPrint
 	^500!
 
 needsFree
-	"Private - Answer whether the receiver requires freeing of any external resources."
+	"Private - Answer whether the receiver requires freeing of any external resources. In most cases we don't want to free if this object is a reference to a structure embedded in an buffer, since that would damage the buffer. In other cases where the buffer is owned, the subclasses may require free'ing, but at an abstract level we assume not."
 
 	^false!
 
@@ -371,10 +371,38 @@ notNull
 
 	^self isNull not!
 
+onStartup
+	"The system is starting. Finalizable subclasses should modify the state of the receiver to account for the fact than any external memory allocated for the receiver during the previous session is no longer accessible. In general we don't need to do anything, however, because the VM nulls out External.Address subinstances on image load, so any reference instances will be null on startup."
+!
+
+owner
+	"Answer the object considered to own the data in the receiver structure, or nil if self-owned."
+
+	^owner!
+
+owner: anObject
+	"Set the object responsible for managing the storage allocated for the underlying elements.
+	This is used both to keep that object alive while the receiver is alive, and to determine who should free the elements. If nil then the receiver frees the elements by passing them back to their class' #free: method, otherwise it is assumed that the owner will free them when it no longer requires them."
+
+	(anObject isNil or: [anObject == self])
+		ifTrue: 
+			[owner := nil.
+			self requiresFinalization ifTrue: [self beFinalizable]]
+		ifFalse: 
+			[owner := anObject.
+			self beUnfinalizable]!
+
 pointerClass
 	"Private - Answer the default class to use as a pointer"
 
 	^self class pointerClass!
+
+postCopy
+	"Apply any final flourish to the copy that may be required. For Structures the copy must not share the same byte data. If a reference instance the referenced data is dereferenced."
+
+	self copyBuffer: bytes size: self byteSize.
+	self owner: nil.
+	^self!
 
 printString
 	"Answer a <readableString> whose characters are a description of the receiver 
@@ -393,6 +421,11 @@ replaceFrom: start to: stop  with: aByteObject startingAt: fromStart
 	byte object to another. See String>>replaceFrom:to:with:startingAt:"
 
 	aByteObject replaceBytesOf: self bytes from: start to: stop startingAt: fromStart!
+
+requiresFinalization
+	"Answer whether objects like the receiver may hold external resources that need to be freed. Unknowned structures requiring finalization are marked as finalizable."
+
+	^self class requiresFinalization!
 
 setField: fieldNameString value: anObject
 	"Set the value of the named field of the receiver,
@@ -440,14 +473,15 @@ bytes:!initializing!private! !
 bytesAtOffset:put:!accessing!public! !
 byteSize!accessing!public! !
 comparisonSize!accessing!private! !
-copy!copying!public! !
 copy:from:to:!copying!private! !
-copyBytes:!accessing!private! !
+copyBuffer:size:!copying!private! !
+copyBytes:!copying!private! !
 copyFrom:to:!copying!public! !
 copyStringFrom:to:!copying!public! !
 copyToGlobalHeap!public! !
 detach!public!realizing/unrealizing! !
 doesNotUnderstand:!exceptions!public! !
+fieldOwner!accessing!public! !
 fieldsDo:!enumerating!public! !
 fieldsDo:separatedBy:!enumerating!public! !
 free!public!realizing/unrealizing! !
@@ -457,21 +491,28 @@ hash!comparing!public! !
 heapPointerClass!constants!private! !
 hresultError:!exceptions!public! !
 initialize!initializing!private! !
-initialize:!initializing!private! !
-initializeAtAddress:!initializing!private! !
+initializeAtAddress:owner:!initializing!private! !
+initializeBuffer:size:!initializing!private! !
 initializePointer!initializing!private! !
 invalidArgErrorClass!constants!private! !
 invalidCall:!exceptions!public! !
 isFieldBrowsable:!printing!private! !
 isNull!public!testing! !
-isPointer!public!testing! !
+isPointerStruct!public!testing! !
+isReferenceStruct!public!testing! !
+isValueStruct!public!testing! !
 maxPrint!constants!private! !
 needsFree!private!realizing/unrealizing! !
 notNull!public!testing! !
+onStartup!event handling!public! !
+owner!accessing!initializing!public! !
+owner:!accessing!public! !
 pointerClass!constants!private! !
+postCopy!copying!public! !
 printString!printing!public! !
 replaceBytesOf:from:to:startingAt:!double dispatch!private!replacing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 setField:value:!accessing!public! !
 size!accessing!public! !
 template!constants!private! !
@@ -490,6 +531,10 @@ alignment
 	^alignment!
 
 atAddress: anAddress
+	#deprecated.
+	^self fromAddress: anAddress!
+
+atAddress: anAddress owner: anObject
 	"Answer a new instance of the receiver instantiated from the
 	data at the specified address. Normally  this will be a 'reference' 
 	instance, that points at the data embedded	at the specified address. 
@@ -498,7 +543,7 @@ atAddress: anAddress
 	of the pointer at that address. This is particularly useful for accessing
 	elements of arrays."
 
-	^self fromAddress: anAddress!
+	^self fromAddress: anAddress owner: anObject!
 
 baseAlignment
 	^self == ##(self) ifTrue: [1] ifFalse: [self superclass alignment]!
@@ -519,6 +564,11 @@ beUncompiled
 
 	flags := flags maskClear: CompileNewFieldsMask
 !
+
+bufferClass
+	"Private - Answer the default class to use as a contents buffer"
+
+	^ByteArray!
 
 byteSize
 	"Answer the size (in bytes) of the structure the receiver represents"
@@ -555,9 +605,7 @@ changedByteSizeFrom: anInteger
 	self recompileReferences!
 
 clear: addressOrBytes
-	"Finalize an instance of the structure which instances of the receiver wrap
-	which resides at the specified address. Note that this is not about freeing
-	the specified memory block, but any resources which it references."!
+	"Finalize an instance of the structure which instances of the receiver wrap which resides at the specified address. Note that this is typically not about freeing the specified memory block, but any resources which it references."!
 
 defineField: fieldName type: anExternalField
 	"Add the argument anExternalField as the next field of the receiver's template, 
@@ -677,18 +725,18 @@ flags
 	^flags ?? DefaultFlags!
 
 fromAddress: anAddress
-	"Answer a new instance that points to the ExternalAddress 
-	respresented by anAddress (which responds to the protocol
-	#isNull and #asExternalAddress).
-	Implementation Note: If anAddress is the null pointer then 
-	the answer is nil. This behaviour is useful when referencing
-	an ExternalStructure from a PointerField, since such pointers
-	are commonly Null."
+	"Answer a new instance that points to the ExternalAddress respresented by anAddress (which responds to the protocol #isNull and #asExternalAddress). The new instance will NOT be considered to own the referenced memory. If anAddress is the null pointer then the answer is nil. This behaviour is useful when referencing an ExternalStructure from a PointerField, since such pointers are commonly Null."
+	
+	^self fromAddress: anAddress owner: anAddress!
+
+fromAddress: anAddress owner: anObject
+	"Answer a new instance that points to the ExternalAddress respresented by anAddress (which responds to the protocol #isNull and #asExternalAddress), with the specified 'owner'. The owner is considered the owner of the memory block at which the new instance points. If the owner is nil, then the new instance is considered to own the memory. 
+	If anArray is null, then the answer will be nil. This behaviour is useful when referencing an ExternalStructure from a PointerField, since such pointers are commonly Null."
 
 	^anAddress isNull
 		ifFalse: 
 			[self ensureDefined.
-			self basicNew initializeAtAddress: anAddress]!
+			self basicNew initializeAtAddress: anAddress owner: anObject]!
 
 fromBytes: aByteObject
 	"Answer a new instance of the receiver with contents copied from aByteObject"
@@ -705,7 +753,7 @@ getFieldNames
 hasUncompiledFields
 	"Private - Answer whether the receiver contains any fields which do not have compiled accessors."
 
-	^flags allMask: UncompiledFieldsMask!
+	^self flags allMask: UncompiledFieldsMask!
 
 hasUncompiledFields: aBoolean
 	flags := self flags mask: UncompiledFieldsMask set: aBoolean!
@@ -718,11 +766,10 @@ inheritTemplate
 	self byteSize: ancestor byteSize.
 	alignment := ancestor alignment!
 
-init: buffer
-	"Initialize a buffer (or buffer at the specified address) to hold an instance of the record type
-	described by the receiver. Assumes that the memory is completely uninitialized."
+init: addressOrBytes
+	"Initialize a buffer (or buffer at the specified address) to hold an instance of the record type described by the receiver. Assumes that the memory is completely uninitialized."
 
-	Kernel32 zeroMemory: buffer length: self byteSize!
+	Kernel32 zeroMemory: addressOrBytes length: self byteSize!
 
 initializeAfterLoad
 	"Private - Ensure the template is removed. This could have been incorrectly initialised
@@ -752,6 +799,14 @@ libraryAndIndex
 
 	^nil!
 
+marshal: anObject 
+	"Answer an instance of the receiver whose value is the argument."
+
+	self == anObject class ifTrue: [^anObject].
+	^(self newBuffer)
+		value: anObject;
+		yourself!
+
 new
 	"Answer a instance of the receiver. This may be either an internal buffer
 	(containing a <ByteArray>) or a reference to an external buffer (containing
@@ -761,27 +816,20 @@ new
 	^self newBuffer!
 
 new: anInteger
-	"Answer a new instance of the receiver containing a buffer of the specified size.
-	N.B. It is not normally necessary to specify the size of an ExternalStructure, because
-	the subclasses normally know. However some structures may be of variable length."
+	"Answer a new instance of the receiver containing a buffer for unmanaged data of the specified size.
+	N.B. It is not normally necessary to specify the size of an ExternalStructure, because the concrete subclasses are normally of a fixed length and know their unmanaged size, however some structures may be of variable length."
 
-	^super new
-		initialize: anInteger!
+	^self new: anInteger bufferClass: self bufferClass!
 
 new: anInteger bufferClass: bufferClass
-	"Answer a new instance of the receiver containing a buffer of the specified size
-	allocated by the specified buffer class."
+	"Answer a new instance of the receiver containing a buffer for unmanaged data of the specified byte size, allocated by the specified buffer class."
 
-	^super new
-		bytes: (bufferClass newFixed: anInteger);
-		initialize;
-		yourself
-!
+	^self basicNew initializeBuffer: bufferClass size: anInteger!
 
 newBuffer
 	"Answer a new instance containing its own buffer."
 
-	^self new: self byteSize!
+	^self new: self byteSize bufferClass: self bufferClass!
 
 newBufferClass: bufferClass
 	"Answer a new instance of the receiver containing a buffer of the receiver's size
@@ -800,16 +848,14 @@ newPointer
 	"Answer a new instance of the receiver suitable for use as a reference
 	to an externally allocated object."
 
-	^self basicNew
-		initializeAtAddress: self pointerClass new;
-		yourself!
+	^self newPointer: self pointerClass!
 
 newPointer: pointerClass
 	"Answer a new instance of the receiver suitable for use as a reference
 	to an externally allocated object, using the specified pointer class (e.g.
 	OS.COM.TaskMemory)"
 
-	^self basicNew initializeAtAddress: pointerClass new!
+	^self basicNew initializeAtAddress: pointerClass new owner: nil!
 
 newTemplate
 	"Private - Reset the template instance variable of the receiver in preparation for loading a
@@ -831,6 +877,11 @@ offsetOf: aSymbol
 
 	self template ifNotNil: [:dict | (dict lookup: aSymbol) ifNotNil: [:field | ^field offset]].
 	^-1!
+
+onStartup
+	"Private - Notify all the receiver's sub-instances of system startup. Subclasses that reference external resources need to override #onStartup on the instance side and clean up their state to remove any potential dangling references from the previous session."
+
+	self primAllSubinstances do: [:i | i onStartup].!
 
 packing
 	"Answer the default packing for instances of the receiver. N.B. This corresponds to the C
@@ -935,6 +986,11 @@ removeRedundantOffsetConstants
 				ifTrue: [redundant add: varName]].
 	redundant do: [:each | self removeClassVarName: each]!
 
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization."
+
+	^false!
+
 requiresSizeConstant
 	^self isNonInstantiable not and: [self definesNewFields]!
 
@@ -1004,10 +1060,12 @@ withBytes: aByteObject
 !External.Structure class categoriesForMethods!
 alignment!constants!public! !
 atAddress:!instance creation!public! !
+atAddress:owner:!public! !
 baseAlignment!private!template definition! !
 basicByteSize!accessing!public! !
 beCompiled!modes!public!template definition! !
 beUncompiled!modes!public!template definition! !
+bufferClass!constants!private! !
 byteSize!constants!public! !
 byteSize:!initializing!private! !
 canUnderstand:!methods-testing!public! !
@@ -1027,6 +1085,7 @@ fieldNamesFromTemplate!accessing!private! !
 fieldOffsetConstantPrefix!constants!private!template definition! !
 flags!accessing!private! !
 fromAddress:!instance creation!public! !
+fromAddress:owner:!instance creation!public! !
 fromBytes:!instance creation!public! !
 getFieldNames!accessing!private! !
 hasUncompiledFields!private!testing! !
@@ -1037,6 +1096,7 @@ initializeAfterLoad!development!initializing!private! !
 initializeTemplate!private!template definition! !
 isFieldBrowsable:!printing!private! !
 libraryAndIndex!constants!public! !
+marshal:!instance creation!public! !
 new!instance creation!public! !
 new:!instance creation!public! !
 new:bufferClass:!instance creation!public! !
@@ -1048,6 +1108,7 @@ newPointer:!instance creation!public! !
 newTemplate!private!template definition! !
 offsetFor:base:!public!template definition! !
 offsetOf:!accessing!public! !
+onStartup!event handling!private! !
 packing!constants!public! !
 paddedSizeFor:!public!template definition! !
 pointerClass!constants!private! !
@@ -1055,6 +1116,7 @@ recompileReferences!private!template definition! !
 register!adding!public! !
 registerClass:forGUID:!adding!public! !
 removeRedundantOffsetConstants!private!template definition! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 requiresSizeConstant!private!template definition! !
 resetTemplate!public!template definition! !
 setGuid:!accessing!private! !
@@ -1066,4 +1128,6 @@ uninitializeBeforeRemove!class hierarchy-removing!public! !
 unregister!public!removing! !
 withBytes:!instance creation!public! !
 !
+
+External.Structure class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #atAddress:owner: #byteSize #clear: #elementSize #fromAddress: #fromAddress:owner: #fromBytes: #guid #init: #name #newBuffer #requiresFinalization)!
 

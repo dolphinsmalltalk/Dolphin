@@ -68,12 +68,16 @@ initialize
 		CLSID initialize
 	"
 
-	self extraInstanceSpec: _GUID_Size! !
+	self extraInstanceSpec: _GUID_Size!
+
+marshal: aGUID 
+	^aGUID! !
 
 !OS.COM.CLSID class categoriesForMethods!
 arrayType!constants!public! !
 fromProgID:!instance creation!public! !
 fromString:!instance creation!public! !
 initialize!development!initializing!private! !
+marshal:!instance creation!public! !
 !
 

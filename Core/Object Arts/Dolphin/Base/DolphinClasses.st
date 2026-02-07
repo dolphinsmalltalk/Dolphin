@@ -3099,7 +3099,7 @@ Core.Object
 
 Core.Object
 	subclass: #'External.Structure'
-	instanceVariableNames: 'bytes'
+	instanceVariableNames: 'bytes owner'
 	classVariableNames: 'RecordClasses'
 	imports: #()
 	classInstanceVariableNames: 'template flags alignment'
@@ -5503,20 +5503,6 @@ External.Structure
 	classConstants: {}!
 
 External.Structure
-	subclass: #'OS.FILETIME'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_FILETIME_Size' -> 16r8.
-			'_OffsetOf_dwHighDateTime' -> 16r4.
-			'_OffsetOf_dwLowDateTime' -> 16r0.
-			'SmalltalkEpoch' -> 16r150560D76A70000.
-			'UnixEpoch' -> 16r19DB1DED53E8000
-		}!
-
-External.Structure
 	subclass: #'External.FinalizableStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -5596,7 +5582,8 @@ External.Structure
 			'_OffsetOf_wMonth' -> 16r2.
 			'_OffsetOf_wSecond' -> 16rC.
 			'_OffsetOf_wYear' -> 16r0.
-			'_SYSTEMTIME_Size' -> 16r10
+			'_SYSTEMTIME_Size' -> 16r10.
+			'MaxYear' -> 16r786B
 		}!
 
 External.Structure
@@ -5684,14 +5671,14 @@ External.ExternalArray
 
 External.ExternalArray
 	subclass: #'External.GenericExternalArray'
-	instanceVariableNames: 'elementClass owner'
+	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 External.ExternalArray
-	subclass: #'External.Int16Array'
+	subclass: #'External.GUIDArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -5699,71 +5686,7 @@ External.ExternalArray
 	classConstants: {}!
 
 External.ExternalArray
-	subclass: #'External.Int32Array'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'External.Int64Array'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'External.Int8Array'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'External.IntPtrArray'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'External.UInt16Array'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'External.UInt32Array'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'External.UInt64Array'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'External.UInt8Array'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'External.UIntPtrArray'
+	subclass: #'External.IntegerArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -5773,6 +5696,86 @@ External.ExternalArray
 External.GenericExternalArray
 	subclass: #'External.StructureArray'
 	instanceVariableNames: 'elementSpacing'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.Int16Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.Int32Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.Int64Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.Int8Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.IntPtrArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.UInt16Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.UInt32Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.UInt64Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.UInt8Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.IntegerArray
+	subclass: #'External.UIntPtrArray'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -5794,8 +5797,32 @@ External.UIntPtrArray
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-OS.FILETIME
-	subclass: #'OS.LocalFILETIME'
+External.UIntPtrArray
+	subclass: #'External.StringPointerArray'
+	instanceVariableNames: 'strings'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.StringPointerArray
+	subclass: #'External.AnsiStringArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.StringPointerArray
+	subclass: #'External.Utf16StringArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.StringPointerArray
+	subclass: #'External.Utf8StringArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -5809,6 +5836,23 @@ External.SCALAR
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_DOUBLE_Size' -> 16r8 }!
+
+External.SCALAR
+	subclass: #'OS.FILETIME'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_FILETIME_Size' -> 16r8.
+			'_OffsetOf_dwHighDateTime' -> 16r4.
+			'_OffsetOf_dwLowDateTime' -> 16r0.
+			'MaxSystemTime' -> 16r7FFF35F4F06C58F0.
+			'MaxValue' -> 16r7FFFFFFFFFFFFFFF.
+			'MinValue' -> 16r0.
+			'SmalltalkEpoch' -> 16r150560D76A70000.
+			'UnixEpoch' -> 16r19DB1DED53E8000
+		}!
 
 External.SCALAR
 	subclass: #'External.FLOAT'
@@ -5834,71 +5878,71 @@ External.SCALAR
 	classInstanceVariableNames: ''
 	classConstants: { '_LPVOID_Size' -> 16r4 }!
 
-External.INTEGER
-	subclass: #'OS.HRESULT'
-	instanceVariableNames: ''
-	classVariableNames: 'Facilities Fail'
-	imports: #(#{OS.Win32Constants} #{OS.Win32Errors} #{OS.FacilityCodes})
-	classInstanceVariableNames: ''
-	classConstants: { '_HRESULT_Size' -> 16r4. 'FACILITY_NT_BIT' -> 16r10000000 }!
-
-External.INTEGER
-	subclass: #'External.UInt16'
+OS.FILETIME
+	subclass: #'OS.LocalFILETIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_UInt16_Size' -> 16r2 }!
+	classConstants: {}!
 
 External.INTEGER
-	subclass: #'External.UInt32'
+	subclass: #'External.AbstractInt16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_UInt32_Size' -> 16r4 }!
+	classConstants: {}!
 
 External.INTEGER
-	subclass: #'External.UInt64'
+	subclass: #'External.AbstractInt32'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_highPart' -> 16r4. '_OffsetOf_lowPart' -> 16r0. '_UInt64_Size' -> 16r8 }!
+	classConstants: {}!
 
 External.INTEGER
-	subclass: #'External.UInt8'
+	subclass: #'External.AbstractInt64'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_UInt8_Size' -> 16r1 }!
+	classConstants: {}!
 
 External.INTEGER
-	subclass: #'External.UIntPtr'
+	subclass: #'External.AbstractInt8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_UIntPtr_Size' -> 16r4 }!
+	classConstants: {}!
 
-External.UInt16
+External.INTEGER
+	subclass: #'External.AbstractIntPtr'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.AbstractInt16
 	subclass: #'External.Int16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_Int16_Size' -> 16r2 }!
+	classConstants: { '_Int16_Size' -> 16r2. 'MaxValue' -> 16r7FFF. 'MinValue' -> -16r8000 }!
 
-External.UInt32
-	subclass: #'External.Int32'
+External.AbstractInt16
+	subclass: #'External.UInt16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_Int32_Size' -> 16r4 }!
+	classConstants: { '_UInt16_Size' -> 16r2. 'MaxValue' -> 16rFFFF }!
 
-External.Int32
+External.AbstractInt32
 	subclass: #'External.BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -5906,15 +5950,58 @@ External.Int32
 	classInstanceVariableNames: ''
 	classConstants: { '_BOOL_Size' -> 16r4 }!
 
-External.UInt64
+External.AbstractInt32
+	subclass: #'OS.HRESULT'
+	instanceVariableNames: ''
+	classVariableNames: 'Facilities Fail'
+	imports: #(#{OS.Win32Constants} #{OS.Win32Errors} #{OS.FacilityCodes})
+	classInstanceVariableNames: ''
+	classConstants: { '_HRESULT_Size' -> 16r4. 'FACILITY_NT_BIT' -> 16r10000000 }!
+
+External.AbstractInt32
+	subclass: #'External.Int32'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_Int32_Size' -> 16r4. 'MaxValue' -> 16r7FFFFFFF. 'MinValue' -> -16r80000000 }!
+
+External.AbstractInt32
+	subclass: #'External.UInt32'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_UInt32_Size' -> 16r4. 'MaxValue' -> 16rFFFFFFFF }!
+
+External.AbstractInt64
 	subclass: #'External.Int64'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_Int64_Size' -> 16r8 }!
+	classConstants: {
+			'_Int64_Size' -> 16r8.
+			'_OffsetOf_highPart' -> 16r4.
+			'_OffsetOf_lowPart' -> 16r0.
+			'MaxValue' -> 16r7FFFFFFFFFFFFFFF.
+			'MinValue' -> -16r8000000000000000
+		}!
 
-External.UInt8
+External.AbstractInt64
+	subclass: #'External.UInt64'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_highPart' -> 16r4.
+			'_OffsetOf_lowPart' -> 16r0.
+			'_UInt64_Size' -> 16r8.
+			'MaxValue' -> 16rFFFFFFFFFFFFFFFF
+		}!
+
+External.AbstractInt8
 	subclass: #'External.BOOLEAN'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -5922,15 +6009,23 @@ External.UInt8
 	classInstanceVariableNames: ''
 	classConstants: { '_BOOLEAN_Size' -> 16r1 }!
 
-External.UInt8
+External.AbstractInt8
 	subclass: #'External.Int8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_Int8_Size' -> 16r1 }!
+	classConstants: { '_Int8_Size' -> 16r1. 'MaxValue' -> 16r7F. 'MinValue' -> -16r80 }!
 
-External.UIntPtr
+External.AbstractInt8
+	subclass: #'External.UInt8'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_UInt8_Size' -> 16r1. 'MaxValue' -> 16rFF }!
+
+External.AbstractIntPtr
 	subclass: #'External.IntPtr'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -5938,16 +6033,16 @@ External.UIntPtr
 	classInstanceVariableNames: ''
 	classConstants: { '_IntPtr_Size' -> 16r4 }!
 
-External.LPVOID
-	subclass: #'External.LPSTR'
+External.AbstractIntPtr
+	subclass: #'External.UIntPtr'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { '_UIntPtr_Size' -> 16r4 }!
 
 External.LPVOID
-	subclass: #'External.LPWSTR'
+	subclass: #'External.LPSZ'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -5957,6 +6052,22 @@ External.LPVOID
 External.LPVOID
 	subclass: #'External.Pointer'
 	instanceVariableNames: 'byteSize'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.LPSZ
+	subclass: #'External.LPSTR'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.LPSZ
+	subclass: #'External.LPWSTR'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

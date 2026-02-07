@@ -16,19 +16,14 @@ External.HandleArray comment: '`HandleArray` is a specialized `ExternalArray` to
 
 !External.HandleArray methodsFor!
 
-uncheckedAt: anInteger 
+uncheckedAt: anInteger
 	"Private - Answer a machine-word sized handle representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
-	^(super uncheckedAt: anInteger) asExternalHandle!
-
-uncheckedAt: indexInteger put: anExternalHandle 
-	super uncheckedAt: indexInteger put: anExternalHandle asInteger.
-	^anExternalHandle! !
+	^(self basicUncheckedAt: anInteger) asExternalHandle! !
 
 !External.HandleArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
-uncheckedAt:put:!accessing!private! !
 !
 
 !External.HandleArray class methodsFor!

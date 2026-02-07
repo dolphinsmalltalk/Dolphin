@@ -18,14 +18,14 @@ dwSize: anInteger
 	"Store the size of the structure into itself (a common feature of Win32 structures,
 	but unfortunately not all, so the default is to do nothing)" !
 
-initialize: anInteger
+initializeBuffer: bufferClass size: anInteger
 	"Private - Initialize the state of the receiver."
 
-	super initialize: anInteger.
+	super initializeBuffer: bufferClass size: anInteger.
 	self dwSize: anInteger! !
 
 !Win32Structure categoriesForMethods!
 dwSize:!initializing!public! !
-initialize:!initializing!public! !
+initializeBuffer:size:!initializing!private! !
 !
 

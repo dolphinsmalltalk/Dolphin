@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.Int16Array
 	subclass: #'OS.COM.VARIANT_BOOLArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -19,10 +19,10 @@ OS.COM.VARIANT_BOOLArray comment: '`VARIANT_BOOLArray` is a specialized `Externa
 uncheckedAt: anInteger
 	"Private - Answer true if the 16-bit <integer> representing the element of the receiver at the specified <integer> index is non-zero, of false otherwise. No bounds checks are performed on the subscript."
 
-	^(bytes int16AtOffset: (anInteger - 1) * VARIANT_BOOL._VARIANT_BOOL_Size) ~~ 0!
+	^(self basicUncheckedAt: anInteger) ~~ 0!
 
-uncheckedAt: indexInteger put: aBoolean 
-	bytes int16AtOffset: (indexInteger - 1) * VARIANT_BOOL._VARIANT_BOOL_Size put: (aBoolean ifTrue: [-1] ifFalse: [0]).
+uncheckedAt: anInteger put: aBoolean
+	self basicUncheckedAt: anInteger put: (aBoolean ifTrue: [-1] ifFalse: [0]).
 	^aBoolean! !
 
 !OS.COM.VARIANT_BOOLArray categoriesForMethods!

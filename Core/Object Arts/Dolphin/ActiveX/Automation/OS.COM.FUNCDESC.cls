@@ -92,7 +92,7 @@ basicFree
 	"Private - Free external resources owned by the receiver."
 
 	super basicFree.
-	analyzer releaseFuncDesc: self!
+	self analyzer releaseFuncDesc: self!
 
 basicIdlAttributes
 	"Private - Answer a <sequencedReadableCollection> of the string names
@@ -133,9 +133,6 @@ callingConvention
 		yourself) 
 	at: self callconv!
 
-clearMethodName
-	methodName := nil!
-
 cParams
 	"Private - Answer the <Integer> value of the receiver's 'cParams' field."
 
@@ -160,7 +157,7 @@ elemDesc
 elemdescFunc
 	"Answer the <ELEMDESC> value of the receiver's 'elemdescFunc' field."
 
-	^ELEMDESC fromAddress: bytes yourAddress + _OffsetOf_elemdescFunc!
+	^ELEMDESC fromAddress: bytes yourAddress + _OffsetOf_elemdescFunc owner: self fieldOwner!
 
 elemDescFunc
 	^(self elemdescFunc)
@@ -176,7 +173,7 @@ funckind
 	^bytes int32AtOffset: _OffsetOf_funckind!
 
 getAllCustData
-	^analyzer tlbInterface getAllFuncCustData: index!
+	^self analyzer tlbInterface getAllFuncCustData: index!
 
 hasRetval
 	"Answer whether the receiver has retval argument."
@@ -260,6 +257,7 @@ lprgelemdescParam
 
 	^StructureArray
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_lprgelemdescParam)
+		owner: self fieldOwner
 		length: self cParams
 		elementClass: ELEMDESC!
 
@@ -268,6 +266,7 @@ lprgscode
 
 	^StructureArray
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_lprgscode)
+		owner: self fieldOwner
 		length: self cScodes
 		elementClass: HRESULT!
 
@@ -280,7 +279,7 @@ names
 	"Private -  Answer a <sequencedReadableCollection> of <String>, consisting of the 
 	the function described by the receiver, and subsequently the names of its parameters."
 
-	^names ifNil: [names := analyzer getNamesOfMember: self memid count: self cParams + 1]!
+	^names ifNil: [names := self analyzer getNamesOfMember: self memid count: self cParams + 1]!
 
 optionalInputs
 	"Private - Answer the indices of the input arguments of the receiver which are optional."
@@ -387,7 +386,6 @@ basicIdlAttributes!printing-IDL!private! !
 buildArguments!helpers!private! !
 callconv!**compiled accessors**!public! !
 callingConvention!accessing!public! !
-clearMethodName!development!initializing!private! !
 cParams!**compiled accessors**!private! !
 cParamsOpt!**compiled accessors**!public! !
 cScodes!**compiled accessors**!private! !
@@ -472,26 +470,60 @@ defineFields
 getFieldNames
 	^#(#memid #lprgscode #lprgelemdescParam #funckind #invkind #callconv #cParams #cParamsOpt #oVft #cScodes #elemdescFunc #wFuncFlags)!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from version 0 FUNCDESC.
-		1) Change of use, and name, of former keywordsAndArgs instance variable."
+stbConvertFromVersion0: anArray
+	"Convert from version 0 FUNCDESC. Note that we can't restore these in a usable form since we don't know the index in the typelib of the typeinfo. This is here just to premit loading of old format STB.
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance clearMethodName.
-	newInstance]!
+		Version 0:			bytes piTypeInfo analyzer names arguments outputIndices retvalIndex keywordsAndArgs
+		Version 2: (D8.2.4+)	bytes owner index custData documentation names arguments outputIndices retvalIndex methodName
+	"
+
+	^((Array new: self instSize)
+		at: 1 put: (anArray at: 1);
+		at: 2 put: (anArray at: 3);
+		at: 3 put: -1;
+		replaceFrom: 6
+			to: 9
+			with: anArray
+			startingAt: 4;
+		yourself) becomeA: self!
+
+stbConvertFromVersion1: anArray
+	"Convert from version 1 FUNCDESC.
+	Version 1 was introduced in D5, changed the use of the final instance variable. The class format was then changed again subsequently, in D6 or 7, but unfortunately the STB version was not incremented. Therefore we have to try and handle both forms in the version 1 converter.
+
+		Version 0:			bytes piTypeInfo analyzer names arguments outputIndices retvalIndex keywordsAndArgs
+		Version 1 (D5+): 	bytes piTypeInfo analyzer names arguments outputIndices retvalIndex methodName
+		Version 1 (D6/7+):	bytes analyzer index customAttributes documentation names arguments outputIndices retvalIndex methodName.
+		Version 2: (D8.2.4+)	bytes owner index custData documentation names arguments outputIndices retvalIndex methodName
+
+	Note that the D8.2.4 inst var names have changed, but the layout is unchanged.
+	"
+
+	^(anArray size < 10
+		ifTrue: 
+			["D5 format"
+			(Array new: self instSize)
+				at: 1 put: (anArray at: 1);
+				at: 2 put: (anArray at: 3);
+				at: 3 put: -1;
+				replaceFrom: 6
+					to: 10
+					with: anArray
+					startingAt: 4;
+				yourself]
+		ifFalse: 
+			["D7 format"
+			anArray]) becomeA: self!
 
 stbVersion
-	^1! !
+	^2! !
 
 !OS.COM.FUNCDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
-stbConvertFrom:!binary filing!development!public! !
+stbConvertFromVersion0:!binary filing!development!public! !
+stbConvertFromVersion1:!binary filing!development!public! !
 stbVersion!binary filing!development!public! !
 !
 

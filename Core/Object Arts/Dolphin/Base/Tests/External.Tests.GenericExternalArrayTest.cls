@@ -22,8 +22,8 @@ arrayValueString: eachValue
 elementClassNames
 	^#(#Int16 #Int32 #FLOAT #DOUBLE #'COM.CY' #'COM.BSTR' #HRESULT #'COM.VARIANT_BOOL' #'COM.VARIANT' #'COM.DECIMAL' #Int8 #UInt8)!
 
-elementToValue: element 
-	^element value!
+elementToValue: anObject 
+	^anObject value!
 
 testAsArray
 	"GenericExternalArrays do not compare equal to Arrays of equivalent values (or indeed ExternalArrays of the same value type) because the elements as enumerated are structures, not values."
@@ -101,7 +101,7 @@ elementClassNames!constants!private! !
 elementToValue:!private!unit tests! !
 testAsArray!public!unit tests! !
 testComparing!public!unit tests! !
-testElementClass!public! !
+testElementClass!public!unit tests! !
 testElementSize!public!unit tests! !
 testInvalidLength!public!unit tests! !
 testSelfEvaluating!public!unit tests! !
@@ -111,7 +111,7 @@ testWithDo!public!unit tests! !
 !External.Tests.GenericExternalArrayTest class methodsFor!
 
 elementFromIndex: anObject
-	^self numericElementClass fromObject: anObject!
+	^self numericElementClass marshal: anObject!
 
 numericElementClass
 	^Int32! !

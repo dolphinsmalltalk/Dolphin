@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure
+External.SCALAR
 	subclass: #'OS.COM.DECIMAL'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -166,6 +166,14 @@ initialize
 	self addClassConstant: 'SmallestValue' value: (1 / maxScale exp10 asScaledDecimal: maxScale).
 	VM registryAt: self name put: self!
 
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, DECIMAL values."
+
+	^SAFEARRAY
+		length: anInteger
+		vt: VT_DECIMAL
+		elementClass: self!
+
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
@@ -183,6 +191,7 @@ byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!initializing!private! !
+newSAFEARRAY:!double dispatch!public! !
 uninitialize!class hierarchy-removing!private! !
 vt!constants!public! !
 !

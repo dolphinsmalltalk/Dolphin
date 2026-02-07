@@ -132,7 +132,43 @@ initialize
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		at: (GUID fromString: '{8e229a94-5e3f-45bd-88bd-06d9f8fef430}') put: #__errno;
 		at: (GUID fromString: '{905342e6-276b-4ca5-84cf-9e714b8e40e3}') put: #__category;
-		shrink! !
+		shrink!
+
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 Structure.
+
+	Version 0a(D5): 		bytes
+	Version 0b (D6/7+): 	bytes contents
+	Version 0c (D8): 		bytes associations table 
+	Version 1: 			bytes owner associations table"
+
+	| vars count |
+	vars := Array new: self instSize.
+	count := anArray size.
+	vars at: 1 put: (anArray at: 1).
+	count > 1
+		ifTrue: 
+			[count > 2
+				ifTrue: 
+					["v0c: Same format as now except for addition of owner at Structure base class level"
+					vars
+						replaceFrom: 3
+						to: 4
+						with: anArray
+						startingAt: 2]
+				ifFalse: 
+					[| custdataitems |
+					"v0b - contents is a LookupTable mapping the GUIDs of some well-known attributes to values"
+					custdataitems := (anArray at: 2) associations collect: 
+									[:each |
+									CUSTDATAITEM new
+										guid: each key;
+										value: each value;
+										yourself].
+					vars
+						at: 3 put: custdataitems;
+						at: 4 put: (Dictionary withAll: custdataitems)]].
+	^vars becomeA: self! !
 
 !OS.COM.CUSTDATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
@@ -140,5 +176,6 @@ clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!public! !
+stbConvertFromVersion0:!binary filing!private! !
 !
 

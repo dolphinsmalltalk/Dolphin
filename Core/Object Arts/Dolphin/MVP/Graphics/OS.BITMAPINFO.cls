@@ -69,8 +69,8 @@ colors
 
 	^self bmiColors!
 
-initialize: anInteger
-	super initialize: anInteger.
+initialize
+	super initialize.
 	self bmiHeader dwSize: BITMAPINFOHEADER._BITMAPINFOHEADER_Size!
 
 numQuads
@@ -85,7 +85,7 @@ bmiHeader!**compiled accessors**!public! !
 bmiHeader:!**compiled accessors**!public! !
 byteSize!accessing!public! !
 colors!accessing!public! !
-initialize:!initializing!private! !
+initialize!initializing!private! !
 numQuads!accessing!private! !
 !
 

@@ -15,19 +15,10 @@ External.Tests.POINTLArrayTest comment: ''!
 !External.Tests.POINTLArrayTest methodsFor!
 
 canonicalizeValue: anObject
-	^self elementFromIndex: anObject!
-
-testSelfEvaluating
-	| subject |
-	subject := self newTestSubjectOfSize: 3.
-	self assert: subject isSelfEvaluating.
-	self assert: subject printString
-		equals: '(<1p> withAll: {<2p>. <3p>. <4p>})'
-				<< ({self arrayClass} , ((1 to: 3) collect: [:i | self elementFromIndex: i]))! !
+	^self elementFromIndex: anObject! !
 
 !External.Tests.POINTLArrayTest categoriesForMethods!
 canonicalizeValue:!private!unit tests! !
-testSelfEvaluating!public!unit tests! !
 !
 
 !External.Tests.POINTLArrayTest class methodsFor!

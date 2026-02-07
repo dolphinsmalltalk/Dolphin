@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.INTEGER
+External.AbstractInt8
 	subclass: #'External.UInt8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_UInt8_Size' -> 16r1 }!
+	classConstants: { '_UInt8_Size' -> 16r1. 'MaxValue' -> 16rFF }!
 
 External.UInt8 guid: (Core.GUID fromString: '{87b4c5a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -21,21 +21,6 @@ The range of integer values that can be represented by instances of this class i
 
 !External.UInt8 methodsFor!
 
-asSignedInteger
-	"Answer the signed 8-bit <Integer> value of the receiver."
-
-	^bytes int8AtOffset: 0!
-
-asUnsignedInteger
-	"Answer the unsigned 8-bit <Integer> value of the receiver."
-
-	^bytes uint8AtOffset: 0!
-
-unsignedValue: anInteger
-	"Set the receiver's value field to the value of the unsigned positive integer argument."
-
-	bytes uint8AtOffset: 0 put: anInteger!
-
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -47,9 +32,6 @@ value: anInteger
 	bytes uint8AtOffset: _OffsetOf_value put: anInteger! !
 
 !External.UInt8 categoriesForMethods!
-asSignedInteger!converting!public! !
-asUnsignedInteger!converting!public! !
-unsignedValue:!accessing!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !
@@ -60,8 +42,9 @@ byteSize
 	^_UInt8_Size!
 
 defineFields
-	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
-	have a single value."
+	"Define the fields of the UInt8 structure.
+		UInt8 compileDefinition
+	"
 
 	self defineField: #value type: UInt8Field new beOverride!
 

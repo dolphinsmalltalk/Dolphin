@@ -332,7 +332,6 @@ testClassReadFrom
 				self assert: remainder equals: each last]!
 
 testCopyToComTaskMemory
-	| subject |
 	self lengthTestCases do: 
 			[:each |
 			| subject heapBlock copy |

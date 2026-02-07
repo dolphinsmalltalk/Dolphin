@@ -15,12 +15,15 @@ External.Structure
 			'_OffsetOf_wMonth' -> 16r2.
 			'_OffsetOf_wSecond' -> 16rC.
 			'_OffsetOf_wYear' -> 16r0.
-			'_SYSTEMTIME_Size' -> 16r10
+			'_SYSTEMTIME_Size' -> 16r10.
+			'MaxYear' -> 16r786B
 		}!
 
 OS.SYSTEMTIME guid: (Core.GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-OS.SYSTEMTIME comment: ''!
+OS.SYSTEMTIME comment: '`OS.SYSTEMTIME` is an `External.Structure` class to represent the Win32 SYSTEMTIME structure.
+
+SYSTEMTIME describes moments as individual date and time elements down to millisecond precision. The earliest valid system time is 1601-01-01T00:00:00, corresponding to the FILETIME epoch. The latest valid system time is 30827-12-31T23:59:59.999, corresponding to FILETIME 0x7FFF35F4F06C58F0. This means that SYSTEMTIME cannot (validly) represent the maximum FILETIME value.'!
 
 !OS.SYSTEMTIME categoriesForClass!Win32-Structs! !
 

@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.INTEGER
+External.AbstractInt16
 	subclass: #'External.UInt16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_UInt16_Size' -> 16r2 }!
+	classConstants: { '_UInt16_Size' -> 16r2. 'MaxValue' -> 16rFFFF }!
 
 External.UInt16 guid: (Core.GUID fromString: '{87b4c5ad-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -19,22 +19,6 @@ The range of integer values that can be represented by instances of this class i
 
 !External.UInt16 methodsFor!
 
-asSignedInteger
-	"Answer the signed 16-bit <Integer> value of the receiver."
-
-	^bytes int16AtOffset: _OffsetOf_value!
-
-asUnsignedInteger
-	"Answer the unsigned 16-bit <Integer> value of the receiver.
-	This can be useful where unsigned values are stored in signed values."
-
-	^bytes uint16AtOffset: _OffsetOf_value!
-
-unsignedValue: anInteger
-	"Set the receiver's value field to the value of the unsigned positive integer argument."
-
-	bytes uint16AtOffset: 0 put: anInteger!
-
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -46,9 +30,6 @@ value: anInteger
 	bytes uint16AtOffset: _OffsetOf_value put: anInteger! !
 
 !External.UInt16 categoriesForMethods!
-asSignedInteger!converting!public! !
-asUnsignedInteger!converting!public! !
-unsignedValue:!accessing!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !

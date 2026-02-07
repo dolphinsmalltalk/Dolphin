@@ -2,7 +2,7 @@
 
 External.Structure
 	subclass: #'OS.COM.TYPEDESC'
-	instanceVariableNames: 'owner classDesc typeInfo'
+	instanceVariableNames: 'classDesc typeInfo'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -38,6 +38,11 @@ Instance Variables:
 !OS.COM.TYPEDESC categoriesForClass!External-Data-Structured-COM! !
 
 !OS.COM.TYPEDESC methodsFor!
+
+analyzer
+	"Private - Answer the <AXTypeInfoAnalyzer> from which the receiver originated."
+
+	^owner analyzer!
 
 arrayDesc
 	"Private - Recurse down through any typedefs to the underlying ARRAYDESC. Anwer nil if the type does not describe an array."
@@ -78,7 +83,7 @@ classDesc
 	^classDesc ifNil: [classDesc := self buildClassDesc]!
 
 getRefType
-	^owner analyzer getRefType: self hreftype!
+	^self analyzer getRefType: self hreftype!
 
 hreftype
 	"Answer the <Integer> value of the receiver's 'hreftype' field."
@@ -114,18 +119,12 @@ isUserDefined
 lpadesc
 	"Answer the <ARRAYDESC> value of the receiver's 'lpadesc' field."
 
-	^ARRAYDESC fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpadesc)!
+	^ARRAYDESC fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpadesc) owner: self fieldOwner!
 
 lptdesc
 	"Answer the <TYPEDESC> value of the receiver's 'lptdesc' field."
 
-	^TYPEDESC fromAddress: (bytes intPtrAtOffset: _OffsetOf_lptdesc)!
-
-owner: struct
-	"Private - Set the value of the receiver's 'owner' instance variable to the <AXTypeInfoStructure> 
-	argument, struct. Answer the receiver."
-
-	owner := struct!
+	^TYPEDESC fromAddress: (bytes intPtrAtOffset: _OffsetOf_lptdesc) owner: self fieldOwner!
 
 realTypeInfo
 	"Answer an <AXTypeInfoAnalyzer> on the underlying type described by the receiver."
@@ -150,7 +149,7 @@ tdesc
 	is the destruction of the <AXTypeInfoStructure> which we wish to postpone for the
 	lifetime of the TYPEDESC."
 
-	^self lptdesc owner: owner!
+	^self lptdesc!
 
 tdescArray
 	"Answer a <TYPEDESC> which is the type of the array described by the receiver.
@@ -158,8 +157,7 @@ tdescArray
 	is the destruction of the <AXTypeInfoStructure> which we wish to postpone for the
 	lifetime of the TYPEDESC."
 
-	^self lpadesc
-		owner: owner!
+	^self lpadesc!
 
 typeDesc
 	"Recurse down through any typedefs to resolve the actual element type."
@@ -211,6 +209,7 @@ vtName
 	^VARIANT nameOfVT: self vartype! !
 
 !OS.COM.TYPEDESC categoriesForMethods!
+analyzer!accessing!private! !
 arrayDesc!development!private! !
 buildClassDesc!helpers!private! !
 classDesc!accessing!private! !
@@ -223,7 +222,6 @@ isUnion!public!testing! !
 isUserDefined!public!testing! !
 lpadesc!**compiled accessors**!public! !
 lptdesc!**compiled accessors**!public! !
-owner:!accessing!private! !
 realTypeInfo!accessing!public! !
 targetType!private! !
 tdesc!accessing!public! !
@@ -284,12 +282,22 @@ initialize
 				at: VT_DISPATCH + 1 put: 1;
 				at: VT_UNKNOWN + 1 put: 1;
 				at: VT_SAFEARRAY + 1 put: 1;
-				yourself)! !
+				yourself)!
+
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 Structure.
+
+	Version 0a(D5): 		bytes owner
+	Version 0b (D6/7+): 	bytes owner classDesc typeInfo
+	Version 1 (D8.2.4): 		As above, but owner pushed up"
+
+	^(anArray resize: self instSize) becomeA: self! !
 
 !OS.COM.TYPEDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!class initialization!development!public! !
+stbConvertFromVersion0:!binary filing!private! !
 !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.LPVOID
+External.LPSZ
 	subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -26,13 +26,23 @@ Note that because BSTR is an indirection class (BSTRs are pointers to strings), 
 
 !OS.COM.LPBSTR methodsFor!
 
-asString
-	"Answer a `String` composed of the characters of the receiver, or the empty string if the receiver is a null pointer."
+deepCopy
+	"Answer a 'deep copy' of the receiver, in this case a copy of the dereferenced <BSTR>."
 
-	^self asUtf16String!
+	| bstr copy |
+	bstr := bytes uintPtrAtOffset: 0.
+	^bstr == 0
+		ifTrue: [BSTR new]
+		ifFalse: 
+			[
+			"We use `SysAllocStringLen` as the BSTR may contain null characters"
+			copy := OleAut32 sysAllocStringLen: bstr len: (OleAut32 sysStringLen: bstr).
+			copy
+				beFinalizable;
+				yourself]!
 
-asUtf16String
-	"Answer a `Utf16String` composed of the characters of the BSTR pointed at by the receiver (assumed itself to be UTF-16 encoded), or the empty string if the referenced BSTR is a null pointer (by convention a null BSTR is treated the same as an empty string)."
+value
+	"Answer the <String> pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
 	| bstr |
 	bstr := bytes uintPtrAtOffset: 0.
@@ -40,21 +50,9 @@ asUtf16String
 		ifTrue: [Utf16String empty]
 		ifFalse: [Utf16String fromAddress: bstr length: (OleAut32 sysStringLen: bstr)]!
 
-asUtf8String
-	"Answer a `Utf8String` containing the same code points as the UTF-16 encoded BSTR pointed at by the receiver, or the empty string if the referenced BSTR is a null pointer (by convention a null BSTR is treated the same as an empty string)."
-
-	^self asUtf16String asUtf8String!
-
-value
-	"Answer the <String> pointed at by the receiver (N.B. it is copied into Smalltalk space)"
-
-	^self asString!
-
 value: aString
-	"Replace the <BSTR> at which the receiver points with the <BSTR> representation of the <readableString>
-	argument.
-	Note that unless the original owner of the BSTR frees the new BSTR, a memory leak will result, since
-	this object assumes it does not own the BSTR at which it points, even if it has overwritten it."
+	"Replace the <BSTR> at which the receiver points with the <BSTR> representation of the <readableString> argument.
+	Note that unless the original owner of the BSTR frees the new BSTR, a memory leak will result, since this object assumes it does not own the BSTR at which it points, even if it has overwritten it."
 
 	| bstr |
 	bstr := bytes uintPtrAtOffset: 0.
@@ -65,14 +63,22 @@ value: aString
 	super value: bstr detach! !
 
 !OS.COM.LPBSTR categoriesForMethods!
-asString!converting!public! !
-asUtf16String!converting!public! !
-asUtf8String!converting!public! !
+deepCopy!copying!public! !
 value!accessing!public! !
 value:!accessing!public! !
 !
 
 !OS.COM.LPBSTR class methodsFor!
+
+allocHeapObject: aString
+	"Private - Allocate and initialize an external representation (in this case a BSTR) of the characters of the <String> argument."
+
+	| bstr |
+	bstr := aString asBSTR.
+	^bstr == aString ifTrue: [bstr copy] ifFalse: [bstr]!
+
+freeHeapObject: aBSTR
+	aBSTR isNull ifFalse: [OleAut32 sysFreeString: aBSTR]!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -84,10 +90,18 @@ initialize
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VM registryAt: self name put: nil! !
+	VM registryAt: self name put: nil!
+
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#bstrVector! !
 
 !OS.COM.LPBSTR class categoriesForMethods!
+allocHeapObject:!instance creation!private! !
+freeHeapObject:!initialize/release!private! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !
+variantVectorName!constants!private! !
 !
 

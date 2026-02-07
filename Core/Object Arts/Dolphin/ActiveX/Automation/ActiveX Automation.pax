@@ -61,6 +61,7 @@ package setClassNames: #(
 	#{OS.COM.PARAMDESC}
 	#{OS.COM.PARAMDESCEX}
 	#{OS.COM.Record}
+	#{OS.COM.RecordClass}
 	#{OS.COM.SAFEARRAY}
 	#{OS.COM.SAFEARRAYBOUND}
 	#{OS.COM.StructureTypeAnalyzer}
@@ -128,9 +129,12 @@ package setMethodNames: #(
 	#(#{Core.Utf16String class} #pointerType)
 	#(#{Core.Utf16String class} #typeName)
 	#(#{Core.Utf16String class} #vt)
+	#(#{External.AbstractInt8 class} #vt)
 	#(#{External.Address class} #typeName)
 	#(#{External.Address class} #vt)
+	#(#{External.BOOL class} #newSAFEARRAY:)
 	#(#{External.BOOL class} #typeName)
+	#(#{External.BOOL class} #vt)
 	#(#{External.BOOLEAN class} #typeName)
 	#(#{External.DOUBLE class} #typeName)
 	#(#{External.DOUBLE class} #vt)
@@ -154,10 +158,12 @@ package setMethodNames: #(
 	#(#{External.INTEGER class} #vt)
 	#(#{External.IntPtr class} #typeName)
 	#(#{External.IntPtr class} #vt)
+	#(#{External.LPSZ class} #newSAFEARRAY:)
 	#(#{External.LPVOID class} #newSAFEARRAY:)
 	#(#{External.LPVOID class} #typeName)
 	#(#{External.LPVOID class} #vt)
 	#(#{External.SCALAR} #asVariant)
+	#(#{External.SCALAR class} #newSAFEARRAY:)
 	#(#{External.Structure} #asVariant)
 	#(#{External.Structure} #recordInfo)
 	#(#{External.Structure} #vt)
@@ -166,7 +172,6 @@ package setMethodNames: #(
 	#(#{External.Structure class} #clearGuid)
 	#(#{External.Structure class} #finalRelease)
 	#(#{External.Structure class} #fromAddress:recordInfo:owner:)
-	#(#{External.Structure class} #fromObject:)
 	#(#{External.Structure class} #GetField:szFieldName:pvarField:)
 	#(#{External.Structure class} #GetFieldNames:rgBstrNames:)
 	#(#{External.Structure class} #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:)
@@ -203,7 +208,6 @@ package setMethodNames: #(
 	#(#{External.UInt64 class} #typeName)
 	#(#{External.UInt64 class} #vt)
 	#(#{External.UInt8 class} #typeName)
-	#(#{External.UInt8 class} #vt)
 	#(#{External.UIntPtr class} #typeName)
 	#(#{External.UIntPtr class} #vt)
 	#(#{External.VOID class} #newSAFEARRAY:)
@@ -221,7 +225,7 @@ package setMethodNames: #(
 	#(#{OS.AbstractWindowsLocale} #variantBool:)
 	#(#{OS.COM.BSTR} #asSAFEARRAY)
 	#(#{OS.COM.BSTR} #asVariant)
-	#(#{OS.COM.BSTR class} #fromObject:)
+	#(#{OS.COM.BSTR class} #arrayType)
 	#(#{OS.COM.BSTR class} #newSAFEARRAY:)
 	#(#{OS.COM.BSTR class} #typeName)
 	#(#{OS.COM.BSTR class} #vt)
@@ -235,7 +239,7 @@ package setMethodNames: #(
 	#(#{OS.COM.Interface class} #coclassTypeInfo)
 	#(#{OS.COM.Interface class} #coclassTypeInfoIfNone:)
 	#(#{OS.COM.Interface class} #errorNoTypeInfo)
-	#(#{OS.COM.Interface class} #fromObject:)
+	#(#{OS.COM.Interface class} #marshal:)
 	#(#{OS.COM.Interface class} #newSAFEARRAY:)
 	#(#{OS.COM.Interface class} #registerDispinterface:)
 	#(#{OS.COM.Interface class} #typeInfoIfNone:)
@@ -605,6 +609,14 @@ Kernel.SharedPool
 		}!
 
 Core.Object
+	subclass: #'OS.COM.RecordClass'
+	instanceVariableNames: 'recordInfo'
+	classVariableNames: ''
+	imports: #(#{OS.COM.AutomationConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
 	subclass: #'OS.COM.TypeInfoObject'
 	instanceVariableNames: 'tlbInterface generationFlags binding'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap NamespaceClash SuperclassClash TracingStyleMap'
@@ -662,7 +674,7 @@ OS.COM.Enumerator
 
 External.Structure
 	subclass: #'OS.COM.AbstractELEMDESC'
-	instanceVariableNames: 'owner tdesc'
+	instanceVariableNames: 'tdesc'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -678,37 +690,6 @@ External.Structure
 			'_CUSTDATAITEM_Size' -> 16r20.
 			'_OffsetOf_guid' -> 16r0.
 			'_OffsetOf_varValue' -> 16r10
-		}!
-
-External.Structure
-	subclass: #'OS.COM.CY'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants private})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_CY_Size' -> 16r8.
-			'_OffsetOf_cy' -> 16r0.
-			'MaxValue' -> 922337203685477.5807s.
-			'MinValue' -> -922337203685477.5808s
-		}!
-
-External.Structure
-	subclass: #'OS.COM.DECIMAL'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_DECIMAL_Size' -> 16r10.
-			'_OffsetOf_hi32' -> 16r4.
-			'_OffsetOf_lo64' -> 16r8.
-			'_OffsetOf_scale' -> 16r2.
-			'_OffsetOf_sign' -> 16r3.
-			'_OffsetOf_wReserved' -> 16r0.
-			'MaxScale' -> 16r1C.
-			'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
-			'SmallestValue' -> 0.0000000000000000000000000001s
 		}!
 
 External.Structure
@@ -791,7 +772,7 @@ External.Structure
 
 External.Structure
 	subclass: #'OS.COM.TYPEDESC'
-	instanceVariableNames: 'owner classDesc typeInfo'
+	instanceVariableNames: 'classDesc typeInfo'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -826,30 +807,6 @@ OS.COM.AbstractELEMDESC
 	classConstants: { '_ELEMDESC_Size' -> 16r10. '_OffsetOf_paramdesc' -> 16r8 }!
 
 External.ExternalArray
-	subclass: #'OS.COM.BSTRArray'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'OS.COM.CYArray'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
-	subclass: #'OS.COM.DATEArray'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.ExternalArray
 	subclass: #'OS.COM.DECIMALArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -857,8 +814,8 @@ External.ExternalArray
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.ExternalArray
-	subclass: #'OS.COM.VARIANT_BOOLArray'
+External.DOUBLEArray
+	subclass: #'OS.COM.DATEArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -881,6 +838,30 @@ External.GenericExternalArray
 			'_SAFEARRAY_Size' -> 16r18
 		}!
 
+External.Int16Array
+	subclass: #'OS.COM.VARIANT_BOOLArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Int64Array
+	subclass: #'OS.COM.CYArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.HeapPointerArray
+	subclass: #'OS.COM.BSTRArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.CUSTDATA'
 	instanceVariableNames: 'associations table'
@@ -895,7 +876,7 @@ External.FinalizableStructure
 
 External.FinalizableStructure
 	subclass: #'OS.COM.Record'
-	instanceVariableNames: 'recordInfo owner'
+	instanceVariableNames: 'recordInfo'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
@@ -903,7 +884,7 @@ External.FinalizableStructure
 
 External.FinalizableStructure
 	subclass: #'OS.COM.TypeInfoStructure'
-	instanceVariableNames: 'analyzer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -1142,6 +1123,37 @@ OS.COM.ITypeLib
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+External.SCALAR
+	subclass: #'OS.COM.CY'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.AutomationConstants private})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_CY_Size' -> 16r8.
+			'_OffsetOf_cy' -> 16r0.
+			'MaxValue' -> 922337203685477.5807s.
+			'MinValue' -> -922337203685477.5808s
+		}!
+
+External.SCALAR
+	subclass: #'OS.COM.DECIMAL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.AutomationConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_DECIMAL_Size' -> 16r10.
+			'_OffsetOf_hi32' -> 16r4.
+			'_OffsetOf_lo64' -> 16r8.
+			'_OffsetOf_scale' -> 16r2.
+			'_OffsetOf_sign' -> 16r3.
+			'_OffsetOf_wReserved' -> 16r0.
+			'MaxScale' -> 16r1C.
+			'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
+			'SmallestValue' -> 0.0000000000000000000000000001s
+		}!
+
 External.DOUBLE
 	subclass: #'OS.COM.DATE'
 	instanceVariableNames: ''
@@ -1157,7 +1169,7 @@ External.DOUBLE
 			'MinValue' -> -657434.9999884259
 		}!
 
-External.Int16
+External.AbstractInt16
 	subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1165,7 +1177,7 @@ External.Int16
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-External.LPVOID
+External.LPSZ
 	subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1194,7 +1206,7 @@ OS.COM.TypeInfoObject
 	subclass: #'OS.COM.TypeInfoAnalyzer'
 	instanceVariableNames: 'typeLib guid index documentation'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'VTtoIDLTypeMap'
@@ -1414,9 +1426,9 @@ fromDATE: aDATE
 		ifFalse: [^HRESULTError signalWith: E_INVALIDARG].
 	day := date truncated.
 	^self
-		newRataDie: day + DATE.EpochRD
+		rataDie: day + DATE.EpochRD
 		seconds: (date - day) abs * Duration.SecondsPerDay
-		offset: Locale timeZoneInformation offsetSeconds! !
+		offsetSeconds: Locale timeZoneInformation offsetSeconds! !
 
 !Core.DateAndTime class categoriesForMethods!
 fromDATE:!accessing!public! !
@@ -1451,7 +1463,7 @@ arrayType: indirs
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type with the specified number of indirections."
 
-	^indirs == 0 ifTrue: [External.StructureArray] ifFalse: [External.PointerArray]!
+	^indirs == 0 ifTrue: [External.GUIDArray] ifFalse: [External.PointerArray]!
 
 typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
@@ -1694,6 +1706,18 @@ typeName!constants!private! !
 vt!constants!public! !
 !
 
+!External.AbstractInt8 class methodsFor!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^COM.AutomationConstants.VT_UI1! !
+
+!External.AbstractInt8 class categoriesForMethods!
+vt!constants!public! !
+!
+
 !External.Address class methodsFor!
 
 typeName
@@ -1715,14 +1739,30 @@ vt!constants!public! !
 
 !External.BOOL class methodsFor!
 
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, length, VARIANT_BOOL values."
+
+	<namespace: OS.COM>
+	^SAFEARRAY
+		length: anInteger
+		vt: VARIANT.VT_BOOL
+		elementClass: VARIANT_BOOL!
+
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
 
-	^#bool! !
+	^#bool!
+
+vt
+	"Private - Answer the VARIANT type required to represent the receiver."
+
+	^COM.VARIANT.VT_BOOL! !
 
 !External.BOOL class categoriesForMethods!
+newSAFEARRAY:!double dispatch!public! !
 typeName!constants!private! !
+vt!constants!private! !
 !
 
 !External.BOOLEAN class methodsFor!
@@ -1931,8 +1971,8 @@ typeName
 	^#intptr!
 
 vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's type when represented in a <VARIANT>.
+	VT_INT_PTR is used in TYPEDESCs only, so we map to a suitably sized integer type."
 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
@@ -1941,6 +1981,21 @@ vt
 !External.IntPtr class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
+!
+
+!External.LPSZ class methodsFor!
+
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, BSTRs. The SAFEARRAY will be of type VT_BSTR, because this is consistent with the behaviour of the Win32 InitVariantFromString API and can represent the same values (BSTRs are a form of UTF-16 string)."
+
+	<namespace: OS.COM>
+	^SAFEARRAY
+		length: anInteger
+		vt: VARIANT.VT_BSTR
+		elementClass: BSTR! !
+
+!External.LPSZ class categoriesForMethods!
+newSAFEARRAY:!double dispatch!public! !
 !
 
 !External.LPVOID class methodsFor!
@@ -1965,7 +2020,7 @@ vt
 	^COM.AutomationConstants.VT_VOID! !
 
 !External.LPVOID class categoriesForMethods!
-newSAFEARRAY:!constants!private! !
+newSAFEARRAY:!double dispatch!public! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1981,6 +2036,20 @@ asVariant
 
 !External.SCALAR categoriesForMethods!
 asVariant!converting!public! !
+!
+
+!External.SCALAR class methodsFor!
+
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, values of the receiver's variant type. SAFEARRAY has vartype representations for most SCALAR values."
+
+	^COM.SAFEARRAY
+		length: anInteger
+		vt: self vt
+		elementClass: self! !
+
+!External.SCALAR class categoriesForMethods!
+newSAFEARRAY:!double dispatch!public! !
 !
 
 !External.Structure methodsFor!
@@ -2042,25 +2111,12 @@ finalRelease
 
 	"Override as necessary"!
 
-fromAddress: address recordInfo: recInfo owner: owner
-	"Answer a new subinstance of the receiver which references the structure
-	described by the <IRecordInfo>, recInfo, at the specified address,
-	which is owned by the Object, owner."
+fromAddress: anAddress recordInfo: anIRecordInfo owner: anObject
+	"Answer a new subinstance of the receiver which references the structure in memory at the <Address> 1st argument, with format described by the <IRecordInfo> 2nd argument, and which is owned by the <Object> 3rd argument."
 
-	^(self classForGUID: recInfo guid
-		ifNone: 
-			[^COM.Record
-				fromAddress: address
-				recordInfo: recInfo
-				owner: owner])
-			fromAddress: address!
-
-fromObject: anObject 
-	"Answer an instance of the receiver whose value is the argument."
-
-	^(self newBuffer)
-		value: anObject;
-		yourself!
+	^(self classForGUID: anIRecordInfo guid ifNone: [COM.RecordClass recordInfo: anIRecordInfo])
+		fromAddress: anAddress
+		owner: anObject!
 
 GetField: pvData szFieldName: szFieldName pvarField: pvarField
 	"Implement the IRecordInfo::GetField() method for the UDT described by the receiver.
@@ -2072,15 +2128,15 @@ GetField: pvData szFieldName: szFieldName pvarField: pvarField
 
 	"
 
-	| refInst hr |
+	<namespace: OS.COM>
+	| refInst selector |
 	refInst := self fromAddress: pvData.
-	"Help specifies that VariantClear is call on pvarField before copying, normally but just VariantInit, but ..."
+	"[IRecordInfo::GetField method](https://learn.microsoft.com/en-us/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getfield) specifies that VariantClear is called on pvarField before copying, rather than just the normal VariantInit that one would expect for an output argument. Not sure if this is a documentation bug, or is correct, so do as instructed..."
 	pvarField class clear: pvarField yourAddress.
-	
-	[pvarField value: (refInst getField: szFieldName).
-	hr := 0	"S_OK"] on: MessageNotUnderstood
-			do: [:x | hr := Win32Errors.E_INVALIDARG].
-	^hr!
+	selector := szFieldName asSymbol.
+	(refInst getValidFields identityIncludes: selector) ifFalse: [^AutomationErrors.TYPE_E_FIELDNOTFOUND].
+	pvarField value: (refInst getField: selector).
+	^S_OK!
 
 GetFieldNames: pcNames rgBstrNames: rgBstrNames
 	"Implement the IRecordInfo::GetFieldNames() method for the UDT described by the receiver.
@@ -2181,18 +2237,10 @@ IsMatchingType: pRecordInfo
 
 	^(self guid = pRecordInfo guid) asParameter!
 
-newSAFEARRAY: length 
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver.
-	Part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:"
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver structure. This is part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:. In the most general case the SAFEARRAY will be of type VT_RECORD, but may also be of more specialised and efficient types for certain subclasses, e.g. for Uint32 the type will be VT_UI4."
 
-	| vt |
-	^(vt := self vt) == COM.AutomationConstants.VT_RECORD 
-		ifTrue: [COM.SAFEARRAY length: length recordClass: self]
-		ifFalse: 
-			[COM.SAFEARRAY 
-				length: length
-				vt: vt
-				elementClass: self]!
+	^COM.SAFEARRAY length: anInteger recordClass: self!
 
 pointerFieldType
 	"Answer the <ExternalField> class to represent pointers to this external type with the
@@ -2210,27 +2258,33 @@ PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 			[in] VARIANT* pvarField);
 	"
 
-	| refInst value |
+	<namespace: OS.COM>
+	^
+	[| refInst value fieldName |
 	refInst := self fromAddress: pvData.
-	wFlags = COM.AutomationConstants.INVOKE_PROPERTYPUT
+	fieldName := szFieldName asSymbol.
+	(refInst getValidFields identityIncludes: fieldName)
+		ifFalse: [HRESULTError signalWith: AutomationErrors.TYPE_E_FIELDNOTFOUND].
+	wFlags = AutomationConstants.INVOKE_PROPERTYPUT
 		ifTrue: 
 			[| fieldValue |
-			fieldValue := [refInst getField: szFieldName] on: MessageNotUnderstood
-						do: [:x | ^Win32Errors.E_INVALIDARG].
+			fieldValue := refInst getField: fieldName.
 			value := pvarField isDispatch ifTrue: [pvarField dispatch value] ifFalse: [pvarField value].
-			(fieldValue isKindOf: COM.IDispatch)
+			(fieldValue isKindOf: IDispatch)
 				ifTrue: 
-					[fieldValue isNull ifTrue: [^Win32Errors.E_POINTER].
+					[fieldValue isNull ifTrue: [HRESULTError signalWith: E_POINTER].
 					fieldValue value: value]
-				ifFalse: [refInst setField: szFieldName value: value]]
+				ifFalse: [refInst setField: fieldName value: value]]
 		ifFalse: 
-			[wFlags = COM.AutomationConstants.INVOKE_PROPERTYPUTREF
-				ifTrue: [value := pvarField value]
-				ifFalse: [^Win32Errors.E_INVALIDARG]].
-	^
-	[refInst setField: szFieldName value: value.
-	0	"S_OK"] on: MessageNotUnderstood
-			do: [:x | Win32Errors.E_INVALIDARG]!
+			[wFlags = AutomationConstants.INVOKE_PROPERTYPUTREF
+				ifFalse: [InvalidArgumentError signalWith: 'wFlags'].
+			value := pvarField value.
+			refInst setField: fieldName value: value].
+	S_OK]
+			on: MessageNotUnderstood
+			do: [:ex | AutomationErrors.DISP_E_TYPEMISMATCH]
+			on: Error
+			do: [:ex | ex hresult asInteger]!
 
 PutFieldNoCopy: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 	"Implement the IRecordInfo::PutFieldNoCopy() method for the UDT described by the receiver.
@@ -2279,9 +2333,7 @@ RecordClear: pvExisting
 
 RecordCopy: pvExisting pvNew: pvNew
 	"Implement IRecordInfo::RecordCopy() method for the UDT described by the receiver.
-	Copy an existing area of memory occupied by a record of the receiver's type to a new
-	location. Relies on a correct implementation of #copy which copies any pointed at
-	structures which should not be shared.
+	Copy an existing area of memory occupied by a record of the receiver's type to a new location. Relies on a correct implementation of #copy, which must create an independent copy with separate copies of any owned resource such as references to owned sub-structures.
 
 		HRESULT __stdcall RecordCopy(
 			[in] void* pvExisting,
@@ -2295,7 +2347,7 @@ RecordCopy: pvExisting pvNew: pvNew
 		to: ref byteSize
 		with: ref copy detach
 		startingAt: 1.
-	^0 "S_OK"!
+	^Win32Errors.S_OK!
 
 RecordCreate
 	"Implement the IRecordInfo::RecordCreate() method for the UDT described by the receiver
@@ -2304,7 +2356,14 @@ RecordCreate
 		void* __stdcall RecordCreate();
 	"
 	
-	^COM.Ole32 coTaskMemAlloc: self byteSize!
+	"From [IRecordInfo::RecordCreate method](https://learn.microsoft.com/en-us/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordcreate)
+		- The memory is set to zeros before it is returned.
+		- The records created must be freed by calling RecordDestroy."
+
+	| pRecord |
+	pRecord := COM.Ole32 coTaskMemAlloc: self byteSize.
+	self init: pRecord.
+	^pRecord!
 
 RecordCreateCopy: pvSource ppvDest: ppvDest
 	"Implement the IRecordInfo::RecordCreate() method for the UDT described by the receiver
@@ -2328,9 +2387,10 @@ RecordDestroy: pvRecord
 			[in] void* pvRecord);
 	"
 
-	self RecordClear: pvRecord.
-	COM.Ole32 coTaskMemFree: pvRecord.
-	^0	"S_OK"!
+	| hr |
+	hr := self RecordClear: pvRecord.
+	hr < 0 ifFalse: [COM.Ole32 coTaskMemFree: pvRecord].
+	^hr!
 
 recordInfo
 	"Answer an <IRecordInfo> describing the receiver's structure class.
@@ -2421,7 +2481,6 @@ classForGUID:ifNone:!enquiries!private! !
 clearGuid!accessing!private! !
 finalRelease!public!realizing/unrealizing! !
 fromAddress:recordInfo:owner:!instance creation!public! !
-fromObject:!instance creation!public! !
 GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
 GetFieldNames:rgBstrNames:!COM Interfaces-IRecordInfo!public! !
 GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!COM Interfaces-IRecordInfo!public! !
@@ -2516,17 +2575,10 @@ typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
 
-	^#uint8!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^COM.AutomationConstants.VT_UI1! !
+	^#uint8! !
 
 !External.UInt8 class categoriesForMethods!
 typeName!constants!private! !
-vt!constants!public! !
 !
 
 !External.UIntPtr class methodsFor!
@@ -2538,8 +2590,8 @@ typeName
 	^#uintptr!
 
 vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's type when represented in a <VARIANT>.
+	VT_UINT_PTR is used in TYPEDESCs only, so we map to a suitably sized integer type."
 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
@@ -2553,7 +2605,9 @@ vt!constants!public! !
 !External.VOID class methodsFor!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver. An array of VT_VOID would make no sense."
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver."
+
+	"An array of VT_VOID would make no sense."
 
 	^self shouldNotImplement!
 
@@ -2564,13 +2618,12 @@ typeName
 	^#void!
 
 vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_VOID! !
 
 !External.VOID class categoriesForMethods!
-newSAFEARRAY:!constants!private! !
+newSAFEARRAY:!double dispatch!public! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -2583,7 +2636,8 @@ displayCY: aCY flags: anInteger on: aWriteStream
 	aCY value displayOn: aWriteStream!
 
 displayDATE: aDATE flags: anInteger on: aWriteStream
-	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DATE> argument that a user in this locale might expect to see."
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DATE> argument that a user in this locale might expect to see.
+	Since this is the Smalltalk locale, we convert to a DateAndTime and display that. This avoids the vagaries of the VarBstrFromDate conversion such as omitting the time if there is no fractional part, or omitting the date (!!) if there is no integer part."
 
 	aDATE value displayOn: aWriteStream!
 
@@ -2642,24 +2696,26 @@ displayDATE: aDATE flags: anInteger on: aWriteStream
 displayDECIMAL: aDECIMAL flags: anInteger on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
 
+	<namespace: OS.COM>
 	| bstr |
-	bstr := COM.BSTR new.
-	COM.OleAut32
+	bstr := BSTR new.
+	OleAut32
 		varBstrFromDec: aDECIMAL
 		lcid: self lcid
-		dwFlags: 0
+		dwFlags: anInteger
 		pbstrOut: bstr.
 	bstr
 		displayOn: aWriteStream;
 		free!
 
 getVariantBoolString: anInteger
+	<namespace: OS.COM>
 	| bstr str |
-	bstr := COM.BSTR new.
-	COM.OleAut32
+	bstr := BSTR new.
+	OleAut32
 		varBstrFromBool: anInteger
 		lcid: self lcid
-		dwFlags: COM.AutomationConstants.VARIANT_LOCALBOOL
+		dwFlags: AutomationConstants.VARIANT_LOCALBOOL
 		pbstrOut: bstr.
 	str := bstr asUtf8String.
 	bstr free.
@@ -2703,16 +2759,17 @@ asVariant!converting!public! !
 
 !OS.COM.BSTR class methodsFor!
 
-fromObject: anObject
-	^self fromString: anObject!
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
 
-newSAFEARRAY: length
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver.
-	Part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:"
+	^BSTRArray!
+
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, length, BSTR values."
 
 	^SAFEARRAY
-		length: length
-		vt: self vt
+		length: anInteger
+		vt: VARIANT.VT_BSTR
 		elementClass: self!
 
 typeName
@@ -2728,7 +2785,7 @@ vt
 	^COM.AutomationConstants.VT_BSTR! !
 
 !OS.COM.BSTR class categoriesForMethods!
-fromObject:!instance creation!public! !
+arrayType!constants!public! !
 newSAFEARRAY:!double dispatch!public! !
 typeName!constants!private! !
 vt!constants!public! !
@@ -2833,13 +2890,13 @@ errorNoTypeInfo
 
 	^self error: 'No type information available.'!
 
-fromObject: anObject 
+marshal: anObject
 	"Answer an instance of the receiver whose value is the argument."
 
-	^anObject queryInterface: self!
+	^anObject class == self ifTrue: [anObject] ifFalse: [anObject queryInterface: self]!
 
 newSAFEARRAY: length
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver."
+	"Answer a new SAFEARRAY initialized to hold <integer>, length, interface pointers of the receiver's type."
 
 	^SAFEARRAY length: length interfaceClass: self!
 
@@ -2868,7 +2925,7 @@ typeLib
 coclassTypeInfo!accessing!public! !
 coclassTypeInfoIfNone:!accessing!public! !
 errorNoTypeInfo!exceptions!private! !
-fromObject:!instance creation!public! !
+marshal:!instance creation!public! !
 newSAFEARRAY:!double dispatch!public! !
 registerDispinterface:!adding!public! !
 typeInfoIfNone:!accessing!public! !
@@ -3226,7 +3283,7 @@ setErrorInfo: dwReserved perrinfo: perrinfo
 			IErrorInfo*		perrinfo
 		)"
 
-	<stdcall: hresult GetErrorInfo uint32 IErrorInfo*>
+	<stdcall: hresult SetErrorInfo uint32 IErrorInfo*>
 	^self invalidCall: _failureCode!
 
 systemTimeToVariantTime: lpSystemTime pvtime: pvtime
@@ -3464,7 +3521,7 @@ variantTimeToSystemTime:lpSystemTime:!Automation Functions-Variant Manipulation!
 !OS.FILETIME methodsFor!
 
 asDATE
-	"Answer the OLE Automation <DATE> that is the nearest equivalent of the receiver. Note that this is likely to lose some precision and the receiver may also be out of range of dates that are representable as a DATE."
+	"Answer the OLE Automation <DATE> that is the nearest equivalent of the receiver. Note that this is likely to lose some precision. FILETIMEs beyond the year 9999 are not representable as DATEs and will generate an error. DATE can represent the earliest possible FILETIME, however."
 
 	^self asSYSTEMTIME asDATE! !
 
@@ -3475,12 +3532,14 @@ asDATE!converting!public! !
 !OS.FILETIME class methodsFor!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, FILETIMEs. The SAFEARRAY will be of type VT_DATE, even though that loses precision, because this is consistent with the behaviour of the Win32 InitVariantFromFileTimeArray API. If you want to preserve the original format, use `SAFEARRAY length: <anInteger> recordClass: FILETIME` to create a VT_RECORD form SAFEARRAY."
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, DATE values."
+
+	"The SAFEARRAY will be of type VT_DATE, even though that loses precision, because this is consistent with the behaviour of the Win32 InitVariantFromFileTimeArray API. If you want to preserve the original format, use e.g. `SAFEARRAY length: <anInteger> recordClass: FILETIME` to create a SAFEARRAY holding FILETIMEs as VT_RECORDs."
 
 	<namespace: OS.COM>
 	^SAFEARRAY
 		length: anInteger
-		vt: AutomationConstants.VT_DATE
+		vt: VARIANT.VT_DATE
 		elementClass: DATE!
 
 vt
@@ -3490,7 +3549,7 @@ vt
 	^COM.AutomationConstants.VT_FILETIME! !
 
 !OS.FILETIME class categoriesForMethods!
-newSAFEARRAY:!constants!public! !
+newSAFEARRAY:!double dispatch!public! !
 vt!constants!public! !
 !
 

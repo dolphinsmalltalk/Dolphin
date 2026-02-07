@@ -2,7 +2,7 @@
 
 External.Structure
 	subclass: #'OS.COM.AbstractELEMDESC'
-	instanceVariableNames: 'owner tdesc'
+	instanceVariableNames: 'tdesc'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -46,33 +46,18 @@ objectClass
 
 	^self classDesc key!
 
-owner
-	"Private - Answer the value of the receiver's ''owner'' instance variable."
-
-	^owner!
-
-owner: struct
-	"Private - Set the value of the receiver's 'owner' instance variable to the <AXTypeInfoStructure> 
-	argument, struct. Answer the receiver."
-
-	owner := struct!
-
 tdesc
 	"Answer a <TYPEDESC> which is the type of the elmement described by the receiver.
 	Implementation Note: Set the back-pointer to be the same as the receiver's, since it
 	is the destruction of the <AXTypeInfoStructure> which we wish to postpone for the
 	lifetime of the TYPEDESC."
 
-	^tdesc
-		ifNil: 
-			[tdesc := self tdescElem
-						owner: owner;
-						yourself]!
+	^tdesc ifNil: [tdesc := self tdescElem]!
 
 tdescElem
 	"Private - Answer the <TYPEDESC> value of the receiver's 'tdescElem' field."
 
-	^TYPEDESC fromAddress: bytes yourAddress!
+	^TYPEDESC fromAddress: bytes yourAddress owner: self fieldOwner!
 
 typeName
 	"Answer the Dolphin external type name for the type described by the receiver."
@@ -85,8 +70,6 @@ classDesc!accessing!private! !
 indirections!accessing!public! !
 isVariant!private!testing! !
 objectClass!accessing!public! !
-owner!accessing!private! !
-owner:!accessing!private! !
 tdesc!accessing!public! !
 tdescElem!**compiled accessors**!private! !
 typeName!accessing!public! !

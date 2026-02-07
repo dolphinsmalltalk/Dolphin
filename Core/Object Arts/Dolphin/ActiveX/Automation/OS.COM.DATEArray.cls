@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.DOUBLEArray
 	subclass: #'OS.COM.DATEArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -16,14 +16,20 @@ OS.COM.DATEArray comment: '`DATEArray` is a specialized `ExternalArray` to repre
 
 !OS.COM.DATEArray methodsFor!
 
-uncheckedAt: anInteger
-	^DateAndTime fromDATE: (bytes doubleAtOffset: (anInteger - 1) * DOUBLE._DOUBLE_Size)!
+isSelfEvaluating
+	"Could be, but would be very verbose, so eschew for now."
 
-uncheckedAt: anInteger put: aDateAndTime
-	bytes doubleAtOffset: (anInteger - 1) * DOUBLE._DOUBLE_Size put: aDateAndTime asFloat.
-	^aDateAndTime! !
+	^false!
+
+uncheckedAt: anInteger
+	^DateAndTime fromDATE: (self basicUncheckedAt: anInteger)!
+
+uncheckedAt: anInteger put: aDateAndTimeObject
+	self basicUncheckedAt: anInteger put: aDateAndTimeObject asDATE.
+	^aDateAndTimeObject! !
 
 !OS.COM.DATEArray categoriesForMethods!
+isSelfEvaluating!public!testing! !
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
 !

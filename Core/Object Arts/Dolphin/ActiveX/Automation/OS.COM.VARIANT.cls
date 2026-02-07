@@ -1118,6 +1118,14 @@ nameOfVT: vartype
 	vtName := VTNames at: vartype + 1.
 	^vtName == #badVarType ifTrue: [VTNames errorNotFound: vartype] ifFalse: [vtName]!
 
+newSAFEARRAY: anInteger
+	"Answer a new SAFEARRAY initialized to hold <integer>, length, VARIANT values."
+
+	^SAFEARRAY
+		length: anInteger
+		vt: VT_VARIANT
+		elementClass: self!
+
 null
 	"Answer a null (VT_NULL) instance of the receiver. This is not the same
 	as a nil, (VT_EMPTY) instance."
@@ -1267,6 +1275,7 @@ getFieldNames!**compiled accessors**!constants!private! !
 init:!initializing!public! !
 initialize!development!initializing!private! !
 nameOfVT:!enquiries!public! !
+newSAFEARRAY:!public! !
 null!instance creation!public! !
 typeName!constants!private! !
 uninitialize!class hierarchy-removing!private! !

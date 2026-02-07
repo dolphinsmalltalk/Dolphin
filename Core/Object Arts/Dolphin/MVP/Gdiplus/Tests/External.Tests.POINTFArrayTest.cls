@@ -23,7 +23,7 @@ testSelfEvaluating
 	self assert: subject isSelfEvaluating.
 	self assert: subject printString
 		equals: '(<1p> withAll: {<2p>. <3p>. <4p>})'
-				<< ({self arrayClass} , ((1 to: 3) collect: [:i | self elementFromIndex: i]))! !
+				<< ({ self arrayClass } , (self exampleElements: subject size))! !
 
 !External.Tests.POINTFArrayTest categoriesForMethods!
 canonicalizeValue:!private!unit tests! !

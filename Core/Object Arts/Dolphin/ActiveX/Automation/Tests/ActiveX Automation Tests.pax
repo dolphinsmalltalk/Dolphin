@@ -14,7 +14,10 @@ package setClassNames: #(
 	#{OS.COM.Tests.DATETest}
 	#{OS.COM.Tests.DECIMALArrayTest}
 	#{OS.COM.Tests.DECIMALTest}
+	#{OS.COM.Tests.FUNCDESCTest}
 	#{OS.COM.Tests.IDispatchTest}
+	#{OS.COM.Tests.LPBSTRTest}
+	#{OS.COM.Tests.RecordTest}
 	#{OS.COM.Tests.SAFEARRAYTest}
 	#{OS.COM.Tests.TestTypelib}
 	#{OS.COM.Tests.TypeLibraryAnalyzerTest}
@@ -24,6 +27,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{External.Tests.AddressTest} #testBSTRFromAddress)
+	#(#{External.Tests.DOUBLEArrayTest} #testAsVariant)
 	#(#{External.Tests.FunctionDescriptorTest} #testComPtrs)
 	#(#{External.Tests.StructureTest} #testExtendedErrorInfo)
 	#(#{Kernel.Tests.VMTest} #testExtCallArgBstr)
@@ -31,11 +35,14 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\ActiveX Automation'
+	'..\ActiveX Automation (Old Names)'
+	'..\..\..\IDE\Community Edition\ActiveX Automation Development'
 	'..\..\Components\Scripting\ActiveX Scripting'
 	'..\..\..\..\Samples\ActiveX\Random\COM Random Stream'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Base\Deprecated\Dolphin Legacy FFI Types (Old Names)'
 	'..\..\..\..\Samples\ActiveX\EnumRECT\EnumRECT'
 	'..\..\COM\OLE COM'
 	'..\..\COM\Tests\OLE COM Tests'
@@ -58,7 +65,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.CYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.CY private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -74,7 +81,15 @@ Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.DECIMALTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.DECIMAL})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.FUNCDESCTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -83,6 +98,22 @@ Core.Tests.DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.LPBSTRTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.RecordTest'
+	instanceVariableNames: 'anonRect'
+	classVariableNames: ''
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -99,14 +130,6 @@ Core.Tests.DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.Tests.ExternalArrayTest
-	subclass: #'OS.COM.Tests.BSTRArrayTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -150,6 +173,14 @@ External.Tests.GenericExternalArrayTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+OS.COM.Tests.StringPointerArrayTest
+	subclass: #'OS.COM.Tests.BSTRArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 XProgramming.SUnit.TestResource
 	subclass: #'OS.COM.Tests.TestTypelib'
 	instanceVariableNames: 'analyzer'
@@ -172,6 +203,20 @@ testBSTRFromAddress
 
 !External.Tests.AddressTest categoriesForMethods!
 testBSTRFromAddress!public!unit tests! !
+!
+
+!External.Tests.DOUBLEArrayTest methodsFor!
+
+testAsVariant
+	| var subject values |
+	values := #(-1.5 0 1 1.25).
+	subject := DOUBLEArray withAll: values.
+	var := subject asVariant.
+	self assert: var isArray.
+	self assert: var value asArray equals: values! !
+
+!External.Tests.DOUBLEArrayTest categoriesForMethods!
+testAsVariant!public!unit tests! !
 !
 
 !External.Tests.FunctionDescriptorTest methodsFor!

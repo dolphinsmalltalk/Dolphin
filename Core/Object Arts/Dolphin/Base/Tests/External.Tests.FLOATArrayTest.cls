@@ -23,22 +23,10 @@ testDisplayString
 	expr := subject displayString.
 	expected := Locale default listSeparator , ' '
 				join: #('(0.1' '1.2' '1.23' '12.34' '123.456' '1234.57' '12345.7' '123457.0' '1234570.0)').
-	self assert: expr equals: expected!
-
-testPrintString
-	"We expect at most 9 significant figures for the elements because this is the number we have to print to get a self-evaluable result"
-
-	| subject expr |
-	subject := FLOATArray
-				withAll: #(0.1 1.2 1.23 12.34 123.456 1234.567 12345.678 123456.789 1234567.089).
-	expr := subject printString.
-	self assert: expr
-		equals: '(FLOATArray withAll: #(0.100000001 1.20000005 1.23000002 12.3400002 123.456001 1234.56702 12345.6777 123456.789 1234567.13))'.
-	self assert: (Compiler evaluate: expr) equals: subject! !
+	self assert: expr equals: expected! !
 
 !External.Tests.FLOATArrayTest categoriesForMethods!
-testDisplayString!public! !
-testPrintString!public! !
+testDisplayString!public!unit tests! !
 !
 
 !External.Tests.FLOATArrayTest class methodsFor!
@@ -47,7 +35,7 @@ arrayClass
 	^FLOATArray!
 
 elementFromIndex: anInteger
-	^1.25 * (anInteger-1)! !
+	^##({ 0.0. 1.25. Float infinity. Float negativeInfinity. FLOAT maximum value. FLOAT minimum value}) at: anInteger! !
 
 !External.Tests.FLOATArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

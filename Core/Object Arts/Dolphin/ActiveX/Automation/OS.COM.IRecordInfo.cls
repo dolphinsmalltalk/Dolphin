@@ -23,10 +23,10 @@ Warning: This comment was automatically generated from the interface''s type inf
 byteSize
 	"Answer the <integer> size in bytes of the structure described by the receiver."
 
-	| answer |
-	answer := UInt32 new.
-	self GetSize: answer.
-	^answer asObject!
+	| cbSize |
+	cbSize := ByteArray newFixed: 4.
+	self GetSize: cbSize.
+	^cbSize uint32AtOffset: 0!
 
 getField: fieldNameString from: data ifAbsent: exceptionHandler
 	"Answer the value of the named field of the instance of 
@@ -152,7 +152,7 @@ IsMatchingType: pRecordInfo
 			[in] IRecordInfo* pRecordInfo);
 	"
 
-	<virtual stdcall: int32 16 IRecordInfo*>
+	<virtual stdcall: bool 16 IRecordInfo*>
 	^self invalidCall: _failureCode!
 
 name
@@ -344,7 +344,7 @@ defineFunctions
 		defineFunction: #GetFieldNames:rgBstrNames:
 			argumentTypes: 'uint32* bstr*';
 		defineFunction: #IsMatchingType:
-			returnType: 'int32'
+			returnType: 'bool'
 			argumentTypes: 'IRecordInfo*';
 		defineFunction: #RecordCreate
 			returnType: 'void*';

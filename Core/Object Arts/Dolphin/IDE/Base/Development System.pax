@@ -298,10 +298,12 @@ package setMethodNames: #(
 	#(#{External.CHARField} #accessorMessage)
 	#(#{External.CHARField} #characterCreationMessage)
 	#(#{External.DOUBLE class} #newInstanceAspect:class:)
+	#(#{External.DOUBLEArray} #printElementArrayOn:)
 	#(#{External.DOUBLEField} #newAspect:class:)
 	#(#{External.EmbeddedField} #printAccessorExpression:on:)
 	#(#{External.EmbeddedField} #printStructClassSize:on:)
 	#(#{External.ExternalArray} #printElement:on:)
+	#(#{External.ExternalArray} #printElementArrayOn:)
 	#(#{External.ExternalArray} #printElementsOn:)
 	#(#{External.ExternalArray} #printEvaluationOn:)
 	#(#{External.ExternalArray} #printOn:)
@@ -329,8 +331,11 @@ package setMethodNames: #(
 	#(#{External.FillerField} #printMutatorBody:on:)
 	#(#{External.FLOAT class} #newInstanceAspect:class:)
 	#(#{External.FLOATArray} #printElement:on:)
+	#(#{External.FLOATArray} #printElementArrayOn:)
 	#(#{External.FLOATField} #newAspect:class:)
+	#(#{External.GUIDArray} #printElementArrayOn:)
 	#(#{External.HANDLEField} #printAccessorExpressionSuffixOn:)
+	#(#{External.INTEGER} #printingLocale)
 	#(#{External.INTEGER} #printOn:)
 	#(#{External.INTEGER class} #newInstanceAspect:class:)
 	#(#{External.IntegerBytes} #debugPrintOn:)
@@ -382,13 +387,18 @@ package setMethodNames: #(
 	#(#{External.StructureArrayPointerField} #printAccessorExpressionSuffixOn:)
 	#(#{External.StructureField} #printMutatorBody:on:)
 	#(#{External.StructurePointer} #printOn:)
-	#(#{External.UInt64} #printOn:)
+	#(#{External.UInt16} #printingLocale)
+	#(#{External.UInt32} #printingLocale)
+	#(#{External.UInt64} #printingLocale)
+	#(#{External.UInt8} #printingLocale)
+	#(#{External.UIntPtr} #printingLocale)
 	#(#{External.WCHARField} #accessorMessage)
 	#(#{External.WCHARField} #characterCreationMessage)
 	#(#{Graphics.AbstractFont class} #newInstanceAspect:class:)
 	#(#{Graphics.AbstractPen class} #publishedAspectsOfInstances)
 	#(#{Graphics.Bitmap class} #newInstanceAspect:class:)
 	#(#{Graphics.Color class} #newInstanceAspect:class:)
+	#(#{Graphics.Gdiplus.ARGBArray} #printElementArrayOn:)
 	#(#{Graphics.Gdiplus.Image class} #newInstanceAspect:class:)
 	#(#{Graphics.Gdiplus.ImageView class} #publishedAspectsOfInstances)
 	#(#{Graphics.Icon class} #newInstanceAspect:class:)
@@ -589,7 +599,7 @@ package setMethodNames: #(
 	#(#{OS.COLORREFField} #newAspect:class:)
 	#(#{OS.COLORREFField} #printAccessorExpression:on:)
 	#(#{OS.COLORREFField} #printMutatorValueOn:parameter:)
-	#(#{OS.FILETIME} #printOn:)
+	#(#{OS.COM.CountedArray} #printElementArrayOn:)
 	#(#{OS.KernelLibrary} #queryThreadCycleTime:cycleTime:)
 	#(#{OS.LOGBRUSH} #printFieldsOn:)
 	#(#{OS.LOGPEN} #printFieldsOn:)
@@ -927,6 +937,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Gdiplus\Gdiplus'
 	'..\..\MVP\Gdiplus\Gdiplus ImageView'
 	'..\..\Utilities\HTML Help\HTML Help'
+	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
@@ -3764,6 +3775,15 @@ newInstanceAspect: aSymbol class: aspectClass
 newInstanceAspect:class:!adapters!private! !
 !
 
+!External.DOUBLEArray methodsFor!
+
+printElementArrayOn: aStream
+	self value printOn: aStream! !
+
+!External.DOUBLEArray categoriesForMethods!
+printElementArrayOn:!printing!private! !
+!
+
 !External.DOUBLEField methodsFor!
 
 newAspect: aSymbol class: aspectClass 
@@ -3787,9 +3807,7 @@ printAccessorExpression: aSymbol on: aCodeGenerationContext
 	stream := aCodeGenerationContext writeStream.
 	aCodeGenerationContext printClass: self valueType.
 	stream
-		nextPutAll: ' fromAddress: (';
-		nextPutAll: 'bytes';
-		nextPutAll: ' yourAddress'.
+		nextPutAll: ' fromAddress: (bytes yourAddress'.
 	self offset = 0
 		ifFalse: 
 			[stream
@@ -3797,7 +3815,7 @@ printAccessorExpression: aSymbol on: aCodeGenerationContext
 				display: #+;
 				space.
 			self printOffsetExpression: aSymbol on: aCodeGenerationContext].
-	stream nextPut: $)!
+	stream nextPutAll: ') owner: self fieldOwner'!
 
 printStructClassSize: aStructureClass on: aCodeGenerationContext
 	aCodeGenerationContext printClass: aStructureClass.
@@ -3816,6 +3834,11 @@ printStructClassSize:on:!automatic generation!private! !
 printElement: anObject on: aStream
 	anObject printOn: aStream!
 
+printElementArrayOn: aStream
+	aStream nextPutAll: '#('.
+	self printElementsOn: aStream.
+	aStream nextPut: $)!
+
 printElementsOn: aStream
 	self do: [:each | self printElement: each on: aStream] separatedBy: [aStream space]!
 
@@ -3823,9 +3846,9 @@ printEvaluationOn: aStream
 	aStream
 		nextPut: $(;
 		print: self class;
-		nextPutAll: ' withAll: #('.
-	self printElementsOn: aStream.
-	aStream nextPutAll: '))'!
+		nextPutAll: ' withAll: '.
+	self printElementArrayOn: aStream.
+	aStream nextPut: $)!
 
 printOn: aStream
 	"Print a string representation of self on aStream."
@@ -3869,6 +3892,7 @@ publishedKeyedAspectsBatchSize
 
 !External.ExternalArray categoriesForMethods!
 printElement:on:!printing!private! !
+printElementArrayOn:!printing!private! !
 printElementsOn:!printing!private! !
 printEvaluationOn:!printing!private! !
 printOn:!printing!public! !
@@ -4089,14 +4113,29 @@ newInstanceAspect:class:!adapters!private! !
 
 !External.FLOATArray methodsFor!
 
-printElement: each on: aStream
+printElement: aFloat on: aStream
 	"Private - Print the <Float> argument as if an element of the receiver (i.e. a single-precision float), in a format appropriate for a developer. In this case we want to print the number as it is represented, not necessarily as originally expressed. There is very limited definite decimal precision in a 32-bit float (6 digits only), but some numbers (e.g. binary fractions) can be represented precisely up to nine significant figures.
 	If an IEEE 754 single-precision number is converted to a decimal string with at least 9 significant digits, and then converted back to single-precision representation, the final result will match the original number."
 
-	^each printOn: aStream significantFigures: 9! !
+	^aFloat printOn: aStream significantFigures: 9!
+
+printElementArrayOn: aStream
+	| floats |
+	floats := self value.
+	(floats allSatisfy: [:each | each isLiteral])
+		ifTrue: 
+			[aStream nextPutAll: '#('.
+			floats do: [:each | each printOn: aStream significantFigures: 9] separatedBy: [aStream space].
+			aStream nextPut: $)]
+		ifFalse: 
+			[aStream nextPut: ${.
+			floats do: [:each | each printOn: aStream significantFigures: 9]
+				separatedBy: [aStream nextPutAll: '. '].
+			aStream nextPut: $}]! !
 
 !External.FLOATArray categoriesForMethods!
 printElement:on:!printing!private! !
+printElementArrayOn:!printing!private! !
 !
 
 !External.FLOATField methodsFor!
@@ -4109,6 +4148,17 @@ newAspect: aSymbol class: aspectClass
 
 !External.FLOATField categoriesForMethods!
 newAspect:class:!adapters!private! !
+!
+
+!External.GUIDArray methodsFor!
+
+printElementArrayOn: aStream
+	aStream nextPut: ${.
+	self do: [:each | self printElement: each on: aStream] separatedBy: [aStream nextPutAll: '. '].
+	aStream nextPut: $}! !
+
+!External.GUIDArray categoriesForMethods!
+printElementArrayOn:!printing!private! !
 !
 
 !External.HANDLEField methodsFor!
@@ -4127,6 +4177,9 @@ printAccessorExpressionSuffixOn:!automatic generation!private! !
 
 !External.INTEGER methodsFor!
 
+printingLocale
+	^SmalltalkLocale.Current!
+
 printOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
@@ -4135,17 +4188,11 @@ printOn: aStream
 		nextPut: $(.
 	self isNull
 		ifTrue: [aStream nextPut: $0]
-		ifFalse: 
-			[self isSigned
-				ifTrue: [aStream print: self value]
-				ifFalse: 
-					[self value
-						printOn: aStream
-						base: 16
-						showRadix: true]].
+		ifFalse: [self printingLocale displayInteger: self value on: aStream].
 	aStream nextPut: $)! !
 
 !External.INTEGER categoriesForMethods!
+printingLocale!printing!public! !
 printOn:!printing!public! !
 !
 
@@ -4237,7 +4284,7 @@ printAccessorExpression: aSymbol on: aCodeGenerationContext
 		display: #intPtrAtOffset:;
 		space.
 	self printOffsetExpression: aSymbol on: aCodeGenerationContext.
-	stream nextPut: $)!
+	stream nextPutAll: ') owner: self fieldOwner'!
 
 printMutatorBody: aSymbol on: aCodeGenerationContext
 	"Private - Print a suitable statement or statements onto the specified <CodeGenerationContest> which will write the value of this field into an instance of the structure."
@@ -4753,18 +4800,49 @@ printOn: aStream
 printOn:!printing!public! !
 !
 
+!External.UInt16 methodsFor!
+
+printingLocale
+	^SmalltalkLocale.Hex! !
+
+!External.UInt16 categoriesForMethods!
+printingLocale!printing!public! !
+!
+
+!External.UInt32 methodsFor!
+
+printingLocale
+	^SmalltalkLocale.Hex! !
+
+!External.UInt32 categoriesForMethods!
+printingLocale!printing!public! !
+!
+
 !External.UInt64 methodsFor!
 
-printOn: aStream
-	"Append a debug text representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(; display: self; nextPut: $)
-! !
+printingLocale
+	^SmalltalkLocale.Hex! !
 
 !External.UInt64 categoriesForMethods!
-printOn:!printing!public! !
+printingLocale!printing!public! !
+!
+
+!External.UInt8 methodsFor!
+
+printingLocale
+	^SmalltalkLocale.Hex! !
+
+!External.UInt8 categoriesForMethods!
+printingLocale!printing!public! !
+!
+
+!External.UIntPtr methodsFor!
+
+printingLocale
+	^SmalltalkLocale.Hex! !
+
+!External.UIntPtr categoriesForMethods!
+printingLocale!printing!public! !
 !
 
 !External.WCHARField methodsFor!
@@ -4831,6 +4909,17 @@ newInstanceAspect: aSymbol class: aspectClass
 
 !Graphics.Color class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
+!
+
+!Graphics.Gdiplus.ARGBArray methodsFor!
+
+printElementArrayOn: aStream
+	aStream nextPut: ${.
+	self do: [:each | self printElement: each on: aStream] separatedBy: [aStream nextPutAll: '. '].
+	aStream nextPut: $}! !
+
+!Graphics.Gdiplus.ARGBArray categoriesForMethods!
+printElementArrayOn:!printing!private! !
 !
 
 !Graphics.Gdiplus.Image class methodsFor!
@@ -7071,19 +7160,13 @@ printAccessorExpression:on:!automatic generation!private! !
 printMutatorValueOn:parameter:!automatic generation!development!private! !
 !
 
-!OS.FILETIME methodsFor!
+!OS.COM.CountedArray methodsFor!
 
-printOn: aStream
-	"Append a debug representation of the receiver to aStream, which will be a UTC date/time."
+printElementArrayOn: aStream
+	^self elements printElementArrayOn: aStream! !
 
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		print: self asDateAndTime;
-		nextPut: $)! !
-
-!OS.FILETIME categoriesForMethods!
-printOn:!printing!public! !
+!OS.COM.CountedArray categoriesForMethods!
+printElementArrayOn:!printing!private! !
 !
 
 !OS.KernelLibrary methodsFor!

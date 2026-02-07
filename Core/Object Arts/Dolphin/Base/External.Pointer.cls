@@ -28,10 +28,10 @@ byteSize: anInteger
 	byteSize := anInteger
 	!
 
-initialize: anInteger
-	"Initialize the receiver to be a pointer to the specified size of memory block."
+initializeBuffer: bufferClass size: anInteger
+	"Private - Initialize the receiver to be a pointer to the specified size of memory block."
 
-	super initialize: anInteger.
+	super initializeBuffer: bufferClass size: anInteger.
 	byteSize := anInteger!
 
 size
@@ -43,7 +43,7 @@ size
 !External.Pointer categoriesForMethods!
 byteSize!accessing!public! !
 byteSize:!accessing!public! !
-initialize:!initializing!public! !
+initializeBuffer:size:!initializing!private! !
 size!accessing!public! !
 !
 

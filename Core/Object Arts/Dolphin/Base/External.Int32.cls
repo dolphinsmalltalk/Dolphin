@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UInt32
+External.AbstractInt32
 	subclass: #'External.Int32'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_Int32_Size' -> 16r4 }!
+	classConstants: { '_Int32_Size' -> 16r4. 'MaxValue' -> 16r7FFFFFFF. 'MinValue' -> -16r80000000 }!
 
 External.Int32 guid: (Core.GUID fromString: '{87b4c5ab-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -27,12 +27,6 @@ isSigned
 
 	^true!
 
-unsignedValue: anUnsigned
-	"Set the receiver's value field to the value of the unsigned positive
-	integer, anUnsigned."
-
-	bytes uint32AtOffset: 0 put: anUnsigned!
-
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -45,7 +39,6 @@ value: anInteger
 
 !External.Int32 categoriesForMethods!
 isSigned!public!testing! !
-unsignedValue:!accessing!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !

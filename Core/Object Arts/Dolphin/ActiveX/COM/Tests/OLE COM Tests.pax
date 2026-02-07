@@ -6,10 +6,15 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{OS.COM.Tests}
+	#{OS.COM.Tests.CADWORDTest}
 	#{OS.COM.Tests.CLSIDTest}
+	#{OS.COM.Tests.CountedArrayTest}
 	#{OS.COM.Tests.EXCEPINFOTest}
 	#{OS.COM.Tests.IIDTest}
 	#{OS.COM.Tests.InterfaceTest}
+	#{OS.COM.Tests.IPerPropertyBrowsingTest}
+	#{OS.COM.Tests.LPWSTRArrayTest}
+	#{OS.COM.Tests.StringPointerArrayTest}
 ).
 
 package setPrerequisites: #(
@@ -45,6 +50,46 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.InterfaceTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.IPerPropertyBrowsingTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.COM.Tests.CountedArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.COM.Tests.StringPointerArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CADWORDTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.StringPointerArrayTest
+	subclass: #'OS.COM.Tests.LPWSTRArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

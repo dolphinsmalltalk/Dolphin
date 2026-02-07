@@ -217,7 +217,7 @@ clear: addressOrBytes
 	We must check that the name is non-null because it may be even after a successful call with STATFLAG_NONAME specified."
 
 	| addr |
-	addr := addressOrBytes uintPtrAtOffset: 0.
+	addr := addressOrBytes uintPtrAtOffset: _OffsetOf_pwcsName.
 	addr isNull ifFalse: [Ole32 coTaskMemFree: addr]!
 
 defineFields

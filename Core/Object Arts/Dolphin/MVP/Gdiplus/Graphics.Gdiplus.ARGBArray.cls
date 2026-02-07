@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.UInt32Array
 	subclass: #'Graphics.Gdiplus.ARGBArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -17,10 +17,10 @@ Graphics.Gdiplus.ARGBArray comment: '`ARGArray` is a specialized `ExternalArray`
 uncheckedAt: anInteger
 	"Private - Answer a <Color> representing the 32-bit ARGB value at the specified <integer> index in the receiver. No bounds checks are performed on the subscript."
 
-	^Color fromArgbCode: (bytes uint32AtOffset: (anInteger - 1) * 4)!
+	^Color fromArgbCode: (self basicUncheckedAt: anInteger)!
 
 uncheckedAt: indexInteger put: aColor
-	bytes uint32AtOffset: (indexInteger - 1) * 4 put: aColor argbCode.
+	self basicUncheckedAt: indexInteger put: aColor argbCode.
 	^aColor! !
 
 !Graphics.Gdiplus.ARGBArray categoriesForMethods!

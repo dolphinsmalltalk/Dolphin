@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.IntegerArray
 	subclass: #'External.UInt64Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -14,18 +14,18 @@ External.UInt64Array comment: '`UInt64Array` is a specialized `ExternalArray` to
 
 !External.UInt64Array methodsFor!
 
-uncheckedAt: anInteger 
+basicUncheckedAt: anInteger 
 	"Private - Answer an 64-bit signed <integer> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
 	^bytes uint64AtOffset: (anInteger - 1) * UInt64._UInt64_Size!
 
-uncheckedAt: indexInteger put: valueInteger 
-	^bytes uint64AtOffset: (indexInteger - 1) * UInt64._UInt64_Size put: valueInteger! !
+basicUncheckedAt: indexInteger put: valueInteger
+	bytes uint64AtOffset: (indexInteger - 1) * UInt64._UInt64_Size put: valueInteger! !
 
 !External.UInt64Array categoriesForMethods!
-uncheckedAt:!accessing!private! !
-uncheckedAt:put:!accessing!private! !
+basicUncheckedAt:!accessing!private! !
+basicUncheckedAt:put:!accessing!private! !
 !
 
 !External.UInt64Array class methodsFor!

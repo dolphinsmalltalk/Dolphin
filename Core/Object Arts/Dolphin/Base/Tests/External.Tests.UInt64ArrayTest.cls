@@ -18,8 +18,14 @@ arrayClass
 	^UInt64Array!
 
 elementFromIndex: anInteger
-	^#(0 16r3FFFFFFF 16r80000000 16r7FFFFFFFFFFFFFFF 16r8000000000000000 16rFFFFFFFFFFFFFFFF)
-		at: anInteger! !
+	^##({
+		0.
+		SmallInteger maximum.
+		Int32.MaxValue + 1.
+		Int64.MaxValue.
+		Int64.MaxValue + 1.
+		UInt64.MaxValue
+	}) at: anInteger! !
 
 !External.Tests.UInt64ArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

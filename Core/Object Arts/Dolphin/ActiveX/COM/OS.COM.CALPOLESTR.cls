@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.CountedArray
+OS.COM.CountedArrayOfHeapPointers
 	subclass: #'OS.COM.CALPOLESTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -10,28 +10,22 @@ OS.COM.CountedArray
 
 OS.COM.CALPOLESTR guid: (Core.GUID fromString: '{b4cb3d32-bc0e-4c28-8f52-10f224f37e2f}')!
 
-OS.COM.CALPOLESTR comment: '<CALPOLESTR> is an <ExternalStructure> class to wrap the struct ''OCIDL.CALPOLESTR'' from type information in the ''OCIDL Library'' library.
+OS.COM.CALPOLESTR comment: '`CALPOLESTR` is an `External.Structure` class to wrap the Win32/OLE structure of the same name.
 
-CALPOLESTR is a counted array of Unicode strings. For an example usage see IPerPropertyBrowsing.'!
+CALPOLESTR represents a counted array of Unicode strings. For an example usage see IPerPropertyBrowsing.
 
-!OS.COM.CALPOLESTR categoriesForClass!OCIDL-Structs! !
+The CALPWSTR structure defined in COM Property Storage is a duplicate definition, defined in PropIdlBase.idl as follows:
 
-!OS.COM.CALPOLESTR methodsFor!
+```
+typedef 
+struct tagCALPWSTR {
+	ULONG cElems;
+	[size_is("cElems")] LPWSTR* pElems;
+} CALPWSTR;
+```
+'!
 
-basicFree
-	"Private - Free external resources owned by the receiver.
-	Not only is the array allocated from the task heap, but also each of the individual strings in it."
-
-	| allocator pElems |
-	allocator := TaskMemory allocator.
-	pElems := self pElems.
-	0 to: self length - 1
-		do: [:i | allocator Free: (pElems uintPtrAtOffset: i * VMConstants.IntPtrSize)].
-	super basicFree! !
-
-!OS.COM.CALPOLESTR categoriesForMethods!
-basicFree!private!realizing/unrealizing! !
-!
+!OS.COM.CALPOLESTR categoriesForClass!External-Data-Structured-COM! !
 
 !OS.COM.CALPOLESTR class methodsFor!
 
@@ -43,14 +37,16 @@ defineFields
 		CALPOLESTR compileDefinition
 	
 		typedef 		struct tagCALPOLESTR {
-			unsigned long cElems;
-			LPWSTR* pElems;
+			ULONG cElems;
+			[size_is('cElems')] LPWSTR* pElems;
 		} CALPOLESTR;
 
 	"
 
-	"Element type is different, but override with hand-coded accessor"
-	super defineFields.!
+	self
+		defineField: #cElems type: UInt32Field new offset: 0;
+		defineField: #pElems type: (ArrayPointerField type: LPWSTRArray lengthField: #cElems) offset: 4.
+	self byteSize: 8!
 
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
@@ -60,7 +56,7 @@ elementClass
 
 !OS.COM.CALPOLESTR class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!public!template definition! !
+defineFields!**auto generated**!public!template definition! !
 elementClass!constants!public! !
 !
 

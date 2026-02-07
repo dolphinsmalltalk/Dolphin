@@ -50,7 +50,7 @@ arguments
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	analyzer releaseVarDesc: self.!
+	self analyzer releaseVarDesc: self.!
 
 basicIdlAttributes
 	"Private - Answer a <sequencedReadableCollection> of the string names
@@ -75,7 +75,7 @@ flags
 	^self wVarFlags!
 
 getAllCustData
-	^analyzer tlbInterface getAllVarCustData: index!
+	^self analyzer tlbInterface getAllVarCustData: index!
 
 getValidFields
 	"Private - Answer a <sequencedReadableCollection> of <Symbol>, being the fields defined in
@@ -233,11 +233,21 @@ defineFields
 		offset: (self offsetOf: #lpvarValue)!
 
 getFieldNames
-	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
+	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)!
+
+stbConvertFromVersion0: anArray
+	"Convert from version 0 VARDESC. Note that we can't restore these in a usable form since we don't know the index in the typelib of the typeinfo. This is here just to premit loading of old format STB.
+
+		Version 0:			bytes piTypeInfo analyzer
+		Version 1: (D6/7+)	bytes owner index custData documentation
+	"
+
+	^{ anArray at: 1. anArray at: 3. -1. nil. nil } becomeA: self! !
 
 !OS.COM.VARDESC class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+stbConvertFromVersion0:!binary filing!private! !
 !
 

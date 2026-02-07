@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Tests.ExternalArrayTest
+OS.COM.Tests.StringPointerArrayTest
 	subclass: #'OS.COM.Tests.BSTRArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -14,17 +14,26 @@ OS.COM.Tests.BSTRArrayTest comment: ''!
 
 !OS.COM.Tests.BSTRArrayTest methodsFor!
 
-testFinalizable
-	| bstrs pbstrs |
-	bstrs := BSTRArray withAll: #('foo' 'bar').
-	self assert: bstrs isFinalizable.
-	pbstrs := BSTRArray fromAddress: bstrs yourAddress length: 2.
-	self assert: pbstrs asArray equals: #('foo' 'bar').
-	self deny: pbstrs isFinalizable.
-	bstrs free! !
+isValidHeapString: anAddress
+	^anAddress isNull or: [
+		"BSTRs are allocated from the task heap, but SysAllocString stores the uint length in the first 4 bytes and returns a pointer to the memory beyond that"
+		super isValidHeapString: anAddress - 4]!
+
+testSelfEvaluating
+	| subject expr |
+	subject := self newTestSubjectOfSize: 5.
+	self assert: subject isSelfEvaluating.
+	expr := subject printString.
+	self assert: (Compiler evaluate: expr) equals: subject.
+	"The final element contains a null, so is not self evaluating."
+	subject := self newTestSubjectOfSize: 6.
+	self deny: (subject at: 6) isSelfEvaluating.
+	self deny: subject isSelfEvaluating.
+	self assert: subject printString equals: 'a COM.BSTRArray('''' ''a'' ''£'' ''a£🍺ö'' ''Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ'' ''a🐬␀b'')'! !
 
 !OS.COM.Tests.BSTRArrayTest categoriesForMethods!
-testFinalizable!public! !
+isValidHeapString:!helpers!private! !
+testSelfEvaluating!public! !
 !
 
 !OS.COM.Tests.BSTRArrayTest class methodsFor!
@@ -33,10 +42,17 @@ arrayClass
 	^BSTRArray!
 
 elementFromIndex: anInteger
-	^anInteger printString! !
+	^##({
+		''.
+		'a'.
+		'£'.
+		'a£🍺ö'.
+		'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ'.
+		'a🐬' , (String with: $\x0 with: $b)
+	}) at: anInteger! !
 
 !OS.COM.Tests.BSTRArrayTest class categoriesForMethods!
-arrayClass!private! !
+arrayClass!constants!private! !
 elementFromIndex:!helpers!private! !
 !
 

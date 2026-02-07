@@ -30,6 +30,12 @@ testExternalAddressAtAddress
 testExternalAddressFromAddress
 	self assert: (External.Address fromAddress: 1) asInteger equals: 1!
 
+testIsNonNullPointer
+	self assert: nil isNull.
+	self deny: #[1 2 3 4] isNull.
+	self assert: 0 asExternalAddress isNull.
+	self deny: 1 asExternalAddress isNull!
+
 testREFGUIDfromAddress
 	| g ref |
 	g := GUID newUnique.
@@ -57,6 +63,7 @@ testStringsFromAddress
 stringFromAddressTestClass:!helpers!public! !
 testExternalAddressAtAddress!public!unit tests! !
 testExternalAddressFromAddress!public!unit tests! !
+testIsNonNullPointer!public! !
 testREFGUIDfromAddress!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
 testStringsFromAddress!public!unit tests! !

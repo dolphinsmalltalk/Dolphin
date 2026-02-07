@@ -53,7 +53,6 @@ createHandle
 	cmds := self commands.
 	count := cmds size.
 	accels := StructureArray length: count elementClass: ACCEL.
-	accels beUnfinalizable.	"Nothing to free here"
 	struct := accels uncheckedAt: 1.
 	cmds keysAndValuesDo: 
 			[:vkey :command |
@@ -61,7 +60,7 @@ createHandle
 				fVirt: ((vkey bitShift: -9) bitOr: FVIRTKEY);
 				key: (vkey bitAnd: 16rFF);
 				cmd: command id.	"Always add virtual key flag, or modifiers ignored"
-			struct initializeAtAddress: struct yourAddress + ACCEL._ACCEL_Size].
+			struct initializeAtAddress: struct yourAddress + ACCEL._ACCEL_Size owner: accels].
 	^User32 createAcceleratorTable: accels cEntries: count!
 
 includes: commandSymbol 

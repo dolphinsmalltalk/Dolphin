@@ -122,7 +122,8 @@ basicPrimaryStartup
 	VM onStartup.	"The VMLibrary must be initialized before we do anything else."
 	self openLibraries.	"Now we can open the permanent libraries"
 	self imagePath: imagePath.	"Split off the extension now can use lib functions."
-	#{External.Callback} ifDefined: [:ec | ec onStartup	"Old callbacks will be invalid"].
+	"Old callbacks and structures may contain invalid memory addresses that need to be discarded"
+	#(#{External.Callback} #{External.Structure}) do: [:each | each  ifDefined: [:ec | ec onStartup]].
 	Character onStartup.
 	self createInputState.	"Register input semaphore, etc, kill previous idler in case on a different host OS"
 	#{Delay} ifDefined: [:d | d onStartup].	"Reschedule delays etc."

@@ -31,11 +31,20 @@ elementFromIndex: anInteger
 elementToValue: element 
 	^element!
 
+exampleElements: anInteger
+	^(1 to: anInteger) collect: [:i | self elementFromIndex: i]!
+
+instancesNeedFree
+	^false!
+
 newMultiElementSubject
 	^self newTestSubjectOfSize: 6!
 
 newTestSubjectOfSize: anInteger
-	^self arrayClass withAll: ((1 to: anInteger) collect: [:each | self elementFromIndex: each])!
+	^self newTestSubjectWithElements: (self exampleElements: anInteger)!
+
+newTestSubjectWithElements: anArray
+	^self arrayClass withAll: anArray!
 
 testAllSatisfy
 	0 to: 4
@@ -138,6 +147,9 @@ testComparing
 	self assert: subject equals: array.
 	self assert: array equals: subject!
 
+testCopy
+	0 to: 6 do: [:i | self verifyCopy: (self exampleElements: i)]!
+
 testCopyFromTo
 	| array |
 	array := self newTestSubjectOfSize: 0.
@@ -201,7 +213,7 @@ testDoSeparatedBy
 			elements := Array writeStream.
 			interstices := 0.
 			array do: [:each | elements nextPut: each] separatedBy: [interstices := interstices + 1].
-			self assert: elements contents equals: ((1 to: count) collect: [:i | self elementFromIndex: i]).
+			self assert: elements contents equals: (self exampleElements: count).
 			self assert: interstices equals: (count - 1 max: 0)]!
 
 testElementClass
@@ -315,9 +327,10 @@ testFromToKeysAndValuesDo
 				raise: BoundsError]!
 
 testMarshal
-	| subject expected |
+	| subject expected count |
 	expected := self newMultiElementSubject.
-	subject := self arrayClass marshal: ((1 to: expected size) collect: [:each | self canonicalizeValue: each]).
+	count := expected size.
+	subject := self arrayClass marshal: (self exampleElements: count).
 	self assert: subject equals: expected.
 	self assert: (self arrayClass marshal: subject) identicalTo: subject!
 
@@ -327,12 +340,11 @@ testMaxEncoding
 	self assert: subject maxEncoding equals: 1!
 
 testSelfEvaluating
-	| subject |
-	subject := self newTestSubjectOfSize: 3.
+	| subject expr |
+	subject := self newTestSubjectOfSize: 6.
 	self assert: subject isSelfEvaluating.
-	self assert: subject printString
-		equals: '(<1p> withAll: #(<2p> <3p> <4p>))'
-				<< ({self arrayClass} , ((1 to: 3) collect: [:i | self elementFromIndex: i]))!
+	expr := subject printString.
+	self assert: (Compiler evaluate: expr) equals: subject!
 
 testWithDo
 	| count validationBlock subject |
@@ -355,7 +367,41 @@ testWithDo
 				raise: Error
 				matching: [:ex | ex description = 'collections are of different sizes']].
 	subject := self newTestSubjectOfSize: 0.
-	subject with: (1 to: 0) do: [:a :b | self assert: false]! !
+	subject with: (1 to: 0) do: [:a :b | self assert: false]!
+
+verifyCopy: anArray
+	| subject copy count copy2 ref |
+	subject := self newTestSubjectWithElements: anArray.
+	count := subject size.
+	copy := subject copy.
+	self assert: copy size equals: count.
+	self assert: copy equals: subject.
+	self deny: copy bytes identicalTo: subject bytes.
+	self assert: copy isFinalizable equals: subject class requiresFinalization.
+	ref := subject class
+				fromAddress: subject bytes yourAddress
+				length: count
+				elementClass: subject elementClass.
+	#todo.	"Only true for SAFEARRAY?
+	self assert: ref isFinalizable equals: array class requiresFinalization."
+	self deny: ref needsFree.
+	self assert: ref size equals: count.
+	self assert: ref equals: subject.
+	copy2 := ref copy.
+	self assert: copy2 size equals: count.
+	self assert: copy2 equals: subject.
+	self deny: copy2 bytes identicalTo: ref bytes.
+	ref free.
+	subject free.
+	self deny: copy isNull.
+	1 to: count
+		do: 
+			[:i |
+			| elem |
+			elem := self elementFromIndex: i.
+			self assert: (copy at: i) equals: elem.
+			self assert: (copy2 at: i) equals: elem].
+	^copy! !
 
 !External.Tests.ExternalArrayTest categoriesForMethods!
 arrayClass!constants!private! !
@@ -363,22 +409,27 @@ arrayValueString:!helpers!private! !
 canonicalizeValue:!helpers!private! !
 elementFromIndex:!helpers!private! !
 elementToValue:!helpers!private! !
+exampleElements:!helpers!private! !
+instancesNeedFree!constants!private! !
 newMultiElementSubject!helpers!private! !
 newTestSubjectOfSize:!helpers!private! !
+newTestSubjectWithElements:!helpers!private! !
 testAllSatisfy!public! !
 testAsArray!public!unit tests! !
 testAtAllPut!public! !
 testAtAndAtPut!public!unit tests! !
 testCollect!public!unit tests! !
 testComparing!public!unit tests! !
+testCopy!public!unit tests! !
 testCopyFromTo!public!unit tests! !
 testDoSeparatedBy!public!unit tests! !
 testElementClass!public!unit tests! !
 testFromToKeysAndValuesDo!public!unit tests! !
 testMarshal!public!unit tests! !
 testMaxEncoding!public!unit tests! !
-testSelfEvaluating!public!unit tests! !
+testSelfEvaluating!public! !
 testWithDo!public!unit tests! !
+verifyCopy:!helpers!private!unit tests! !
 !
 
 !External.Tests.ExternalArrayTest class methodsFor!

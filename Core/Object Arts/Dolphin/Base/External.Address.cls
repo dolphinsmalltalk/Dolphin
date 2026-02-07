@@ -12,7 +12,13 @@ External.Address guid: (Core.GUID fromString: '{87b4c517-026e-11d3-9fd7-00a0cc3e
 
 External.Address isIndirection: true!
 
-External.Address comment: ''!
+External.Address comment: '`External.Address` is an abstraction to represent pointers to arbitrary memory, primarily for interfacing with external systems and APIs. Very often instances will point into the bodies of byte objects (typically `ByteArray`s) in the Dolphin heap. This mechanism is used extensively by classes in the `External.Structure` hierarchy to implement ''reference'' instances, e.g. for a structure nested within another. Modifying memory through pointers requires great care to avoid buffer overruns. The system will quickly crash if the object memory heap is corrupted, generally on the next GC sweep. If access violations occur during GC this is very likely the cause, although it can be difficult to track down the source of the corruption.
+
+Address instances can also point to memory allocated externally. Where that memory allocation needs to track the lifetime of a Dolphin object, there are various finalizable subclasses that can be used, e.g. `OS.COM.TaskMemory` is for automatically managing COM task memory allocations. When such memory instances are GC''d they are queued for finalization, which will then free the external heap block. Again care is required to avoid buffer overruns to avoid corrupting the external heap. It is also necessary to ensure that ownership is correctly modelled. If a memory instance in Dolphin is incorrectly assigned ownership of memory that is allocated and owned externally, then this can lead to dangling pointers in Dolphin (if the external owner deallocates), or in the external component (if Dolphin deallocates), and in the worst case double-freeing which will almost certainly cause heap corruption that will make the application crash.
+
+All `Address` subinstances saved into an image will probably invalid on startup. This applies whether referencing internal or external memory, since even for internal memory the byte object referenced will very likely be relocated on restart. Since derefencing invalid pointers on image restart would be such a common problem, the VM nulls them out while loading the image. This means there is generally no need to add startup code to walk and clean up instances, although finalization code, etc, should be written to be able to handle null pointers safely. Access violations that occur through null pointers will generally be caught and safely by Dolphin as one cannot cause corruption by attempting to read or write through a null pointer. There will be a memory fault exception raised, typically a `OS.GPFault`. These should not be caught and suppressed, but rather one should debug the code to understand the cause and eliminate it.
+
+'!
 
 !External.Address categoriesForClass!External-Data-Unstructured! !
 
@@ -88,7 +94,7 @@ detach
 
 	| address |
 	address := self asInteger.
-	self value: 0. 
+	self basicUIntPtrAtOffset: 0 put: 0.
 	self beUnfinalizable.	"reduce Memory Manager load"
 	^address asExternalAddress!
 

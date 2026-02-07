@@ -664,7 +664,7 @@ printFloat: aFloat on: aStream format: aNUMBERFMT
 printFractionalPart: aFraction on: aStream places: anInteger
 	| fractionPart |
 	fractionPart := aFraction abs fractionPart.
-	fractionPart == 0
+	fractionPart = 0
 		ifFalse: 
 			[| digits count |
 			digits := (fractionPart * anInteger exp10) rounded printStringBase: 10 nDigits: anInteger.

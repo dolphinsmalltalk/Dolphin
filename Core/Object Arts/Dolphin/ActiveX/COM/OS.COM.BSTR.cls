@@ -29,6 +29,11 @@ BSTRs use finalization to safely manage the sys. alloc''d string, but they may b
 
 !OS.COM.BSTR methodsFor!
 
+= anObject
+	"Answer whether the receiver is equivalent to anObject."
+
+	^self == anObject or: [self species == anObject species and: [self asString = anObject asString]]!
+
 asBSTR
 	"Answer the receiver converted to an AX Automation string."
 
@@ -93,14 +98,18 @@ copyingClass
 	^Utf16String!
 
 deepCopy
-	"Answer a 'deep copy' of the receiver. The 'deep copy' is a clone of the receiver,
-	sharing only those parts which cannot be copied (e.g. classes, nil, true, false, 
-	SmallIntegers, Symbols, Characters, etc).
-	Implementation Note: Override #deepCopy rather than #_deepCopy: because this
-	is a byte object and the sole purpose of which is to act as a reference to another
-	object, and there is no point copying its body."
+	"Answer a 'deep copy' of the receiver. The 'deep copy' is a clone of the receiver, sharing only those parts which cannot be copied (e.g. classes, nil, true, false, SmallIntegers, Symbols, Characters, etc)."
 
-	^OleAut32 sysAllocString: self!
+	"Implementation Note: Override #deepCopy rather than #_deepCopy: because this is a byte object and the sole purpose of which is to act as a reference to a native BSTR in memory, and there is no point copying its body."
+
+	| len copy |
+	len := OleAut32 sysStringLen: self.
+	len == 0 ifTrue: [^self class new].
+	copy := OleAut32 sysAllocStringLen: self len: len.
+	copy isNull ifTrue: [^OutOfMemoryError signal].
+	^copy
+		beFinalizable;
+		yourself!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -112,6 +121,9 @@ free
 
 	self isNull ifFalse: [self basicFree].
 	self beUnfinalizable!
+
+hash
+	^self asString hash!
 
 printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
@@ -130,7 +142,7 @@ size
 	^OleAut32 sysStringLen: self!
 
 species
-	^Utf16String!
+	^String!
 
 value
 	"Answer the receiver's value as a Smalltalk <String>."
@@ -151,6 +163,7 @@ value: newValue
 	super value: (bstr beUnfinalizable; yourself)! !
 
 !OS.COM.BSTR categoriesForMethods!
+=!comparing!public! !
 asBSTR!converting!public! !
 asString!converting!public! !
 asUtf16String!converting!public! !
@@ -165,6 +178,7 @@ copyingClass!copying!private! !
 deepCopy!copying!public! !
 displayOn:!printing!public! !
 free!private!realizing/unrealizing! !
+hash!comparing!public! !
 printOn:!development!printing!public! !
 size!accessing!public! !
 species!constants!public! !
@@ -174,11 +188,33 @@ value:!accessing!public! !
 
 !OS.COM.BSTR class methodsFor!
 
+allocHeapObject: aString
+	"Private - Allocate and initialize an external representation (in this case a BSTR) of the characters of the <String> argument."
+
+	| bstr |
+	bstr := aString asBSTR.
+	^bstr == aString ifTrue: [bstr copy] ifFalse: [bstr]!
+
 basicNew
 	^self newFixed: 4!
 
 clear: anExternalAddress
 	OleAut32 sysFreeString: (anExternalAddress uintPtrAtOffset: 0)!
+
+copyHeapObject: anAddress
+	"Private - Allocate a new heap object that is a copy of that pointed at by the argument."
+
+	| len bstr |
+	len := OleAut32 sysStringLen: anAddress.
+	len == 0 ifTrue: [^nil].
+	bstr := OleAut32 sysAllocStringLen: anAddress len: len.
+	bstr isNull ifTrue: [^OutOfMemoryError signal].
+	^bstr
+		beFinalizable;
+		yourself!
+
+freeHeapObject: aBSTR
+	OleAut32 sysFreeString: aBSTR!
 
 fromInteger: anAddress
 	"Answer a new instance of the receiver that points at a copy of the 
@@ -202,10 +238,15 @@ fromInteger: anAddress
 fromString: aString
 	"Answer a new instance of the receiver with the same contents as aString."
 
-	| wstr |
+	| wstr len bstr |
 	wstr := aString asUtf16String.
-	wstr size == 0 ifTrue: [^self new].
-	^self fromInteger: wstr yourAddress!
+	len := wstr size.
+	len == 0 ifTrue: [^self new].
+	bstr := OleAut32 sysAllocStringLen: wstr len: len.
+	bstr isNull ifTrue: [^OutOfMemoryError signal].
+	^bstr
+		beFinalizable;
+		yourself!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -221,6 +262,9 @@ initialize
 
 	SessionManager current 
 		when: #sessionStarted send: #onStartup to: self!
+
+marshal: anObject 
+	^anObject asBSTR!
 
 new
 	"Answer a new instance of the receiver of the initially holding a null pointer."
@@ -241,21 +285,31 @@ onStartup
 
 	self primAllInstances do: [:i | i onStartup]!
 
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization."
+
+	^true!
+
 uninitialize
 	"Private - Uninitialize the receiver immediately prior to its removal from the system."
 
 	VM registryAt: #BSTR put: nil! !
 
 !OS.COM.BSTR class categoriesForMethods!
+allocHeapObject:!instance creation!private! !
 basicNew!instance creation!private! !
 clear:!public!realizing/unrealizing! !
+copyHeapObject:!copying!private! !
+freeHeapObject:!initialize/release!private! !
 fromInteger:!instance creation!public! !
 fromString:!instance creation!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
+marshal:!instance creation!public! !
 new!instance creation!public! !
 newBuffer!instance creation!public! !
 onStartup!event handling!private! !
+requiresFinalization!public!testing! !
 uninitialize!class hierarchy-removing!private! !
 !
 

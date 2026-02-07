@@ -60,10 +60,9 @@ getLogFont
 	^logfont!
 
 ownedHandle: aHandle 
-	"Private - Set the handle of the external graphics's tool object represented and owned by
-	the receiver to be the argument."
+	"Private - Set the handle of the external graphics's tool object represented and owned by the receiver to be the argument."
 
-	"Implementation Note: Stock objects should never be free'd"
+	"Implementation Note: Stock objects should never be freed"
 
 	self handle: aHandle!
 

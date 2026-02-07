@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.IntegerArray
 	subclass: #'External.Int8Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -16,22 +16,21 @@ External.Int8Array comment: '`Int8Array` is a specialized `ExternalArray` to rep
 
 !External.Int8Array methodsFor!
 
-uncheckedAt: anInteger
+basicUncheckedAt: anInteger
 	"Private - Answer an 8-bit signed <SmallInteger> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
 	^bytes int8AtOffset: anInteger - 1!
 
-uncheckedAt: indexInteger put: valueInteger
+basicUncheckedAt: indexInteger put: valueInteger
 	"Private - Replace the 8-bit signed integer value at the specified index in the receiver
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
-	bytes int8AtOffset: indexInteger - 1 put: valueInteger.
-	^valueInteger! !
+	^bytes int8AtOffset: indexInteger - 1 put: valueInteger! !
 
 !External.Int8Array categoriesForMethods!
-uncheckedAt:!accessing!private! !
-uncheckedAt:put:!private! !
+basicUncheckedAt:!accessing!private! !
+basicUncheckedAt:put:!private! !
 !
 
 !External.Int8Array class methodsFor!

@@ -58,7 +58,7 @@ addressClass
 ai_addr
 	"Answer the <SOCKADDR> value of the receiver's 'ai_addr' field."
 
-	^self addressClass fromAddress: (bytes intPtrAtOffset: _OffsetOf_ai_addr)!
+	^self addressClass fromAddress: (bytes intPtrAtOffset: _OffsetOf_ai_addr) owner: self!
 
 ai_addr: aSOCKADDR
 	"Set the receiver's 'ai_addr' field to the value of the argument, aSOCKADDR"
@@ -78,7 +78,7 @@ ai_addrlen: anInteger
 ai_canonname
 	"Answer the <Utf16String> value of the receiver's 'ai_canonname' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_ai_canonname)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_ai_canonname) owner: self fieldOwner!
 
 ai_canonname: anUtf16String
 	"Set the receiver's 'ai_canonname' field to the value of the argument, anUtf16String"
@@ -108,7 +108,7 @@ ai_flags: anInteger
 ai_next
 	"Answer the <ADDRINFOW> value of the receiver's 'ai_next' field."
 
-	^ADDRINFOW fromAddress: (bytes intPtrAtOffset: _OffsetOf_ai_next)!
+	^ADDRINFOW fromAddress: (bytes intPtrAtOffset: _OffsetOf_ai_next) owner: self fieldOwner!
 
 ai_next: anADDRINFOW
 	"Set the receiver's 'ai_next' field to the value of the argument, anADDRINFOW"
@@ -156,7 +156,9 @@ initialize
 	"We don't want buffer instances to be finalizable, only pointer instances that are populated by GetAddrInfo"!
 
 needsFree
-	^self isNull not and: [self isPointer]! !
+	"Private - Answer whether the receiver requires freeing of any external resources. Unusually we only need to free owned pointer instances, as these are assumed to have been allocated by GetAddrInfoW, and must be freed by calling the `FreeAddrInfoW` API."
+
+	^owner isNil and: [self isReferenceStruct]! !
 
 !OS.ADDRINFOW categoriesForMethods!
 address!accessing!public! !
@@ -235,7 +237,13 @@ host: aString
 localhost
 	"Answer a new instance of the receiver describing the local host."
 
-	^self host: ''! !
+	^self host: ''!
+
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization. 
+	In this case instances must be freed by calling `FreeAddrInfoW`"
+
+	^true! !
 
 !OS.ADDRINFOW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
@@ -244,5 +252,6 @@ defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 host:!instance creation!public! !
 localhost!instance creation!public! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 !
 

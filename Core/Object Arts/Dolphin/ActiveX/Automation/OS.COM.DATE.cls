@@ -100,9 +100,6 @@ fromFloat: aFloat
 		value: aFloat;
 		yourself!
 
-fromObject: anObject
-	^anObject asDATE!
-
 fromString: aString
 	"Answer a new instance of the receiver parsed from the <String> argument, which is assumed to represent the printed representation of a variant date/time in the format used in the user's default locale.
 
@@ -134,6 +131,9 @@ initialize
 	self addClassConstant: 'MaxValue' value: (DATE fromString: '9999-12-31 23:59:59') asFloat.
 	self addClassConstant: 'MinValue' value: (DATE fromString: '0100-01-01 23:59:59') asFloat.
 	VM registryAt: self name put: self!
+
+marshal: anObject
+	^anObject asDATE!
 
 maximum
 	^(self new)
@@ -170,11 +170,11 @@ vt
 !OS.COM.DATE class categoriesForMethods!
 arrayType!constants!public! !
 fromFloat:!instance creation!public! !
-fromObject:!instance creation!public! !
 fromString:!instance creation!public! !
 fromString:locale:!instance creation!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
+marshal:!instance creation!public! !
 maximum!constants!public! !
 minimum!constants!public! !
 now!instance creation!public! !

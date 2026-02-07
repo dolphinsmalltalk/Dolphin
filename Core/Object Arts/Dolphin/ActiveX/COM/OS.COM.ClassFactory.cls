@@ -72,7 +72,7 @@ CreateInstance: pUnkOuter riid: riid ppvObject: ppvObject
 	ppvObject value: 0.
 	interfaceClass := Interface classForIID: riid ifNone: [^E_NOINTERFACE].
 	inst := [self createInstance: pUnkOuter] on: Error do: [:e | ^e hresult asInteger].
-	pUnk := pUnkOuter yourAddress isNull
+	pUnk := pUnkOuter isNull
 				ifTrue: [inst queryInterface: interfaceClass ifNone: [^E_NOINTERFACE]]
 				ifFalse: 
 					["Aggregation request"

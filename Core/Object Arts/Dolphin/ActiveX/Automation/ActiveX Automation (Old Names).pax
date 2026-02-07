@@ -6,50 +6,65 @@ package paxVersion: 2.1;
 
 package setVariableNames: #(
 	#{Smalltalk.AXDualImp}
+	#{Smalltalk.AXMethodName}
+	#{Smalltalk.AXTypeLibDocumentation}
 	#{Smalltalk.AXTypeLibraryAnalyzer}
 	#{Smalltalk.CURRENCY}
+	#{Smalltalk.CUSTDATA}
 	#{Smalltalk.DATE}
 	#{Smalltalk.DISPPARAMS}
+	#{Smalltalk.ELEMDESC}
 	#{Smalltalk.FUNCDESC}
 	#{Smalltalk.IDispatch}
 	#{Smalltalk.ITypeInfo}
 	#{Smalltalk.ITypeInfo2}
+	#{Smalltalk.ITypeLib}
 	#{Smalltalk.ITypeLib2}
 	#{Smalltalk.LPBSTR}
 	#{Smalltalk.MemberDesc}
+	#{Smalltalk.PARAMDESC}
 	#{Smalltalk.SAFEARRAY}
 	#{Smalltalk.TKindDispatchAnalyzer}
 	#{Smalltalk.TKindInterfaceAnalyzer}
 	#{Smalltalk.TLIBATTR}
 	#{Smalltalk.TYPEATTR}
+	#{Smalltalk.TYPEDESC}
 	#{Smalltalk.VARIANT}
 	#{Smalltalk.VARIANT_BOOL}
 ).
 
 package setAliasVariableNames: #(
 	#{Smalltalk.AXDualImp}
+	#{Smalltalk.AXMethodName}
+	#{Smalltalk.AXTypeLibDocumentation}
 	#{Smalltalk.AXTypeLibraryAnalyzer}
 	#{Smalltalk.CURRENCY}
+	#{Smalltalk.CUSTDATA}
 	#{Smalltalk.DATE}
 	#{Smalltalk.DISPPARAMS}
+	#{Smalltalk.ELEMDESC}
 	#{Smalltalk.FUNCDESC}
 	#{Smalltalk.IDispatch}
 	#{Smalltalk.ITypeInfo}
 	#{Smalltalk.ITypeInfo2}
+	#{Smalltalk.ITypeLib}
 	#{Smalltalk.ITypeLib2}
 	#{Smalltalk.LPBSTR}
 	#{Smalltalk.MemberDesc}
+	#{Smalltalk.PARAMDESC}
 	#{Smalltalk.SAFEARRAY}
 	#{Smalltalk.TKindDispatchAnalyzer}
 	#{Smalltalk.TKindInterfaceAnalyzer}
 	#{Smalltalk.TLIBATTR}
 	#{Smalltalk.TYPEATTR}
+	#{Smalltalk.TYPEDESC}
 	#{Smalltalk.VARIANT}
 	#{Smalltalk.VARIANT_BOOL}
 ).
 
 package setPrerequisites: #(
 	'ActiveX Automation'
+	'..\..\IDE\Community Edition\ActiveX Automation Development'
 ).
 
 package!
@@ -58,13 +73,21 @@ package!
 
 Smalltalk.AXDualImp := OS.COM.DualInterfaceImplementation!
 
+Smalltalk.AXMethodName := Tools.AXMethodName!
+
+Smalltalk.AXTypeLibDocumentation := OS.COM.TypeLibDocumentation!
+
 Smalltalk.AXTypeLibraryAnalyzer := OS.COM.TypeLibraryAnalyzer!
 
 Smalltalk.CURRENCY := OS.COM.CY!
 
+Smalltalk.CUSTDATA := OS.COM.CUSTDATA!
+
 Smalltalk.DATE := OS.COM.DATE!
 
 Smalltalk.DISPPARAMS := OS.COM.DISPPARAMS!
+
+Smalltalk.ELEMDESC := OS.COM.ELEMDESC!
 
 Smalltalk.FUNCDESC := OS.COM.FUNCDESC!
 
@@ -74,11 +97,15 @@ Smalltalk.ITypeInfo := OS.COM.ITypeInfo!
 
 Smalltalk.ITypeInfo2 := OS.COM.ITypeInfo2!
 
+Smalltalk.ITypeLib := OS.COM.ITypeLib!
+
 Smalltalk.ITypeLib2 := OS.COM.ITypeLib2!
 
 Smalltalk.LPBSTR := OS.COM.LPBSTR!
 
 Smalltalk.MemberDesc := OS.COM.MemberDesc!
+
+Smalltalk.PARAMDESC := OS.COM.PARAMDESC!
 
 Smalltalk.SAFEARRAY := OS.COM.SAFEARRAY!
 
@@ -89,6 +116,8 @@ Smalltalk.TKindInterfaceAnalyzer := OS.COM.TKindInterfaceAnalyzer!
 Smalltalk.TLIBATTR := OS.COM.TLIBATTR!
 
 Smalltalk.TYPEATTR := OS.COM.TYPEATTR!
+
+Smalltalk.TYPEDESC := OS.COM.TYPEDESC!
 
 Smalltalk.VARIANT := OS.COM.VARIANT!
 

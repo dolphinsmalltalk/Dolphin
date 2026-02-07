@@ -142,6 +142,17 @@ basicLength: anInteger
 	length := anInteger.
 	^self!
 
+basicUncheckedAt: anInteger 
+	"Private - Answer an 8-bit unsigned <SmallInteger> representing the element of the 
+	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
+
+	^bytes uint8AtOffset: anInteger - 1!
+
+basicUncheckedAt: indexInteger put: valueInteger 
+	"Private - Replace the value at the index specified by the `<integer>` 1st argument with value of the 2nd argument. The types of object acceptable as the 2nd argument vary by subclass, but at this base level `SmallInteger` values in the range 0..255 are expected (i.e. octets). No bounds checks are performed on the subscript. "
+
+	^bytes uint8AtOffset: indexInteger - 1 put: valueInteger!
+
 binarySearchFor: anObject using: searchBlock
 	"Private - Answer the index at which anObject is located using a binary chop search based on searchBlock"
 
@@ -151,7 +162,7 @@ binarySearchFor: anObject using: searchBlock
 		using: searchBlock!
 
 byteSize
-	"Answer the total size in bytes of this array."
+	"Answer the total size in bytes of this array. We assume the array is a contiguous block with no padding between elements."
 
 	^self elementSize * self length!
 
@@ -348,7 +359,7 @@ isEmpty
 !
 
 isSelfEvaluating
-	^bytes class == ByteArray!
+	^self notNull!
 
 keys
 	"Answer a <collection> containing the receiver's keys."
@@ -439,6 +450,11 @@ replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtI
 		to: stopInteger * elemSize
 		startingAt: startAtInteger!
 
+requiresFinalization
+	"Answer may hold external resources that need to be freed. Unknowned structures requiring finalization are marked as finalizable."
+
+	^self elementClass requiresFinalization!
+
 second
 	^self at: 2!
 
@@ -466,16 +482,17 @@ species
 
 	^Array!
 
-uncheckedAt: anInteger 
+uncheckedAt: anInteger
 	"Private - Answer an 8-bit unsigned <SmallInteger> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
-	^bytes uint8AtOffset: anInteger - 1!
+	^self basicUncheckedAt: anInteger!
 
-uncheckedAt: indexInteger put: valueInteger 
+uncheckedAt: indexInteger put: anObject
 	"Private - Replace the value at the index specified by the `<integer>` 1st argument with value of the 2nd argument. The types of object acceptable as the 2nd argument vary by subclass, but at this base level `SmallInteger` values in the range 0..255 are expected (i.e. octets). No bounds checks are performed on the subscript. "
 
-	^bytes uint8AtOffset: indexInteger - 1 put: valueInteger!
+	self basicUncheckedAt: indexInteger put: anObject.
+	^anObject!
 
 uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation 
 	"Private - Evaluate the <dyadicValuable>, operation, for each element of the receiver
@@ -487,6 +504,9 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 	(#do:, #keysAndValuesDo:, #from:to:do:, and,	of course, #from:to:keysAndValuesDo:)."
 
 	startInteger to: stopInteger do: [:i | operation value: i value: (self uncheckedAt: i)]!
+
+value
+	^self collect: [:each | each value]!
 
 with: aCollection do: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument with each of the receiver's element values along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
@@ -509,6 +529,8 @@ atAllPut:!accessing!public! !
 basicAt:!accessing!private! !
 basicAt:put:!accessing!private! !
 basicLength:!initializing!private! !
+basicUncheckedAt:!accessing!private! !
+basicUncheckedAt:put:!accessing!private! !
 binarySearchFor:using:!public!searching! !
 byteSize!accessing!public! !
 collect:!enumerating!public! !
@@ -547,6 +569,7 @@ packing!constants!private! !
 replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 replaceElementsOf:from:to:startingAt:!private!replacing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 second!accessing!public! !
 select:!enumerating!public! !
 single!accessing!public! !
@@ -555,6 +578,7 @@ species!constants!public! !
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
 uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+value!accessing!public! !
 with:do:!enumerating!public! !
 !
 
@@ -575,7 +599,6 @@ clear: addressOrBytes
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
-	Notification deprecated.
 	^UInt8!
 
 elementSize
@@ -584,13 +607,27 @@ elementSize
 
 	^self elementClass elementSize!
 
-fromAddress: anAddress
-	"The receiver needs to know how long the array is to avoid
-	reading or writing off its end."
+fromAddress: anAddress length: anInteger
+	"Answer a new instance of the receiver that points at an array of anInteger elements of type elementClass at anAddress."
+
+	"Note:
+		- If the length is zero, then we ignore the address (even if invalid). 
+		- If the length is non-zero then we answer nil if the address is the Null pointer.
+		- It is assumed that the new instance will not own the underlying data at anAddress. Passing the address itself as the owner suppresses any finalization that the instance might otherwise perform if it owned the data."
+
+	^self fromAddress: anAddress owner: anAddress length: anInteger!
+
+fromAddress: anAddress length: anInteger elementClass: elementClass
+	"Answer a new instance of the receiver that points at an array of anInteger elements of type elementClass at anAddress."
+
+	^self fromAddress: anAddress owner: anAddress length: anInteger elementClass: elementClass!
+
+fromAddress: anAddress owner: anObject
+	"The receiver needs to know how long the array is to avoid reading or writing off its end."
 
 	^self shouldNotImplement !
 
-fromAddress: anAddress length: anInteger
+fromAddress: anAddress owner: anObject length: anInteger
 	"Answer a new instance of the receiver that points at an
 	array of anInteger elements of type elementClass at anAddress.
 	Implementation Note: If the length is zero, then we ignore the address (even if invalid).
@@ -598,35 +635,38 @@ fromAddress: anAddress length: anInteger
 
 	^anAddress isNull
 		ifFalse: 
-			[(self basicNew)
-				initializeAtAddress: anAddress;
+			[self basicNew
+				initializeAtAddress: anAddress owner: anObject;
 				basicLength: anInteger]!
+
+fromAddress: anAddress owner: anObject length: anInteger elementClass: elementClass
+	"Answer a new instance of the receiver that points at an
+	array of anInteger elements of type elementClass at anAddress.
+	Implementation Note: If the length is zero, then we ignore the address (even if invalid).
+	If the length is non-zero then we answer nil if the address is the Null pointer."
+
+	elementClass == self elementClass ifFalse: [self error: 'Mismatched element class: <1p>' << elementClass].
+	^self fromAddress: anAddress owner: anObject length: anInteger!
 
 getFieldNames
 	^#()!
 
-length: count elementSize: bytes
-	"Private - Answer a new instance of the receiver allocated 
-	with space for count elements of bytes size."
+length: countInteger elementSize: sizeInteger bufferClass: bufferClass
+	"Private - Answer a new instance of the receiver allocated with space for countInteger elements of sizeInteger bytes."
 
-	^(super new: count*bytes)
-		basicLength: count!
+	^(self basicNew initializeBuffer: bufferClass size: countInteger * sizeInteger) basicLength: countInteger!
 
 marshal: aCollection
 	aCollection class == self ifTrue: [^aCollection].
 	^self withAll: aCollection!
 
-new: anInteger
-	"Answer a new instance of the receiver allocated at an immovable location."
-
-	^self length: anInteger elementSize: self elementSize!
-
 new: anInteger bufferClass: bufferClass
 	"Answer a new instance of the receiver allocated at an immovable location."
 
-	^(super new: anInteger * self elementSize bufferClass: bufferClass)
-		basicLength: anInteger;
-		yourself!
+	^self
+		length: anInteger
+		elementSize: self elementSize
+		bufferClass: bufferClass!
 
 new: elementCount withAll: elementValue
 	"Answer a new instance of the receiver with <integer>, anInteger, elements, each of which is initialized to the <Object>, anObject."
@@ -634,6 +674,9 @@ new: elementCount withAll: elementValue
 	^(self new: elementCount)
 		atAllPut: elementValue;
 		yourself!
+
+newBuffer
+	^self new: 0 bufferClass: self bufferClass!
 
 with: element1
 	"Answer a new instance of the receiver containing the single 
@@ -644,13 +687,19 @@ with: element1
 		yourself!
 
 withAll: newElements
+	"Answer a new instance of the receiver containing all of the elements of the <collection> newElements.
+	An error will be raised if any of the elements of newElements cannot be stored in instances of the receiver."
+
+	^self withAll: newElements bufferClass: self bufferClass!
+
+withAll: newElements bufferClass: bufferClass
 	"Answer a new instance of the receiver containing all of the 
 	elements of the <collection> newElements.
 	An error will be raised if any of the elements of newElements
 	cannot be stored in instances of the receiver."
 
 	| answer |
-	answer := self new: newElements size.
+	answer := self new: newElements size bufferClass: bufferClass.
 	newElements inject: 1
 		into: 
 			[:i :elem |
@@ -670,16 +719,20 @@ alignment!constants!public! !
 clear:!public!realizing/unrealizing! !
 elementClass!constants!public! !
 elementSize!instance creation!private! !
-fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !
+fromAddress:length:elementClass:!instance creation!public! !
+fromAddress:owner:!instance creation!public! !
+fromAddress:owner:length:!instance creation!public! !
+fromAddress:owner:length:elementClass:!instance creation!public! !
 getFieldNames!constants!private! !
-length:elementSize:!instance creation!private! !
+length:elementSize:bufferClass:!instance creation!private! !
 marshal:!instance creation!public! !
-new:!instance creation!public! !
 new:bufferClass:!instance creation!public! !
-new:withAll:!public! !
+new:withAll:!instance creation!public! !
+newBuffer!instance creation!public! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !
+withAll:bufferClass:!instance creation!public! !
 withBytes:!instance creation!public! !
 !
 

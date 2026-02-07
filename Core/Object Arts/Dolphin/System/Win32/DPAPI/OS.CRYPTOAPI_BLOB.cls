@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure
+External.FinalizableStructure
 	subclass: #'OS.CRYPTOAPI_BLOB'
 	instanceVariableNames: 'localData'
 	classVariableNames: ''
@@ -34,11 +34,6 @@ struct tagCRYPTOAPI_BLOB {
 
 !OS.CRYPTOAPI_BLOB methodsFor!
 
-basicFree
-	"Private - Free external resources owned by the receiver."
-
-	Kernel32 localFree: self basicPbData!
-
 basicPbData
 	^bytes intPtrAtOffset:_OffsetOf_pbData!
 
@@ -64,14 +59,6 @@ data: aByteObject
 	self pbData: (localData := aByteObject asParameter).
 	self cbData: localData basicSize!
 
-initialize
-	"Private - Initialize the receiver (common to internal [value] and
-	external [reference] buffers.
-	These objects are finalizable since they may reference owned external
-	resources."
-
-	self beFinalizable!
-
 needsFree
 	"Private - Answer whether the receiver requires freeing of any external resources."
 
@@ -89,13 +76,11 @@ pbData: anUInt8Array
 	self cbData: anUInt8Array size! !
 
 !OS.CRYPTOAPI_BLOB categoriesForMethods!
-basicFree!private!realizing/unrealizing! !
 basicPbData!private!realizing/unrealizing! !
 cbData!**compiled accessors**!private! !
 cbData:!**compiled accessors**!private! !
 data!public! !
 data:!public! !
-initialize!initializing!private! !
 needsFree!private!realizing/unrealizing! !
 pbData!**compiled accessors**!public! !
 pbData:!**compiled accessors**!public! !
@@ -105,6 +90,11 @@ pbData:!**compiled accessors**!public! !
 
 byteSize
 	^_CRYPTOAPI_BLOB_Size!
+
+clear: addressOrBytes
+	"Finalize an instance of the structure which instances of the receiver wrap which resides at the specified address. Note that this is typically not about freeing the specified memory block, but any resources which it references."
+
+	Kernel32 localFree: (addressOrBytes uintPtrAtOffset:_OffsetOf_pbData)!
 
 defineFields
 	"Define the fields of the CRYPTOAPI_BLOB structure.
@@ -135,6 +125,7 @@ getFieldNames
 
 !OS.CRYPTOAPI_BLOB class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
+clear:!public!realizing/unrealizing! !
 defineFields!**auto generated**!public!template definition! !
 fromBytes:!public! !
 getFieldNames!**compiled accessors**!constants!private! !

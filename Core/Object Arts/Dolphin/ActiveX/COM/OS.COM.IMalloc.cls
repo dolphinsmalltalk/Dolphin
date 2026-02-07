@@ -30,6 +30,11 @@ Alloc: cb
 	<virtual stdcall: void* 4 uint32>
 	^self invalidCall: _failureCode!
 
+didAlloc: anAddress
+	"Answer whether the memory block referenced by the <External.Address> argument was allocated from the heap associated with the receiver."
+
+	^(self DidAlloc: anAddress) ~~ 0!
+
 DidAlloc: pv
 	"Invoke the DidAlloc() method of the object wrapped by the receiver.
 	
@@ -87,6 +92,7 @@ Realloc: pv cb: cb
 
 !OS.COM.IMalloc categoriesForMethods!
 Alloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+didAlloc:!public!testing! !
 DidAlloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
 Free:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
 GetSize:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !

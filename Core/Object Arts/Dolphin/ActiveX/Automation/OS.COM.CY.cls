@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure
+External.SCALAR
 	subclass: #'OS.COM.CY'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -74,6 +74,11 @@ value:!accessing!public! !
 
 !OS.COM.CY class methodsFor!
 
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^CYArray!
+
 byteSize
 	^_CY_Size!
 
@@ -105,17 +110,21 @@ initialize
 	VM registryAt: self name put: self!
 
 maximum
-	^MaxValue!
+	^self new
+		value: MaxValue;
+		yourself!
 
 minimum
-	^MinValue!
+	^self new
+		value: MinValue;
+		yourself!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver. SAFEARRAY has vartype representations for most SCALARs."
+	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, CY/CURRENCY values."
 
 	^SAFEARRAY
 		length: anInteger
-		vt: self vt
+		vt: VT_CY
 		elementClass: self!
 
 uninitialize
@@ -130,6 +139,7 @@ vt
 	^VT_CY! !
 
 !OS.COM.CY class categoriesForMethods!
+arrayType!constants!public! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 epsilon!constants!public! !

@@ -97,7 +97,7 @@ testAsDate
 	| subject utcSeconds |
 	subject := self canonicalInstance.
 	utcSeconds := 1564663499833333333 / 500000000.
-	self assert: (DateAndTime utcSeconds: utcSeconds offset: 0) equals: subject.
+	self assert: (DateAndTime utcSeconds: utcSeconds) equals: subject.
 	"#1193: Dates are assumed to be in local time."
 	self assert: subject asDate
 		equals: (Date fromSeconds: utcSeconds + Locale timeZoneInformation offsetSeconds)!
@@ -183,7 +183,7 @@ testAsTime
 	| subject utcSeconds |
 	subject := self canonicalInstance.
 	utcSeconds := 1564663499833333333 / 500000000.
-	self assert: (DateAndTime utcSeconds: utcSeconds offset: 0) equals: subject.
+	self assert: (DateAndTime utcSeconds: utcSeconds) equals: subject.
 	self assert: subject asTime
 		equals: (Time fromSeconds: utcSeconds + Locale timeZoneInformation offsetSeconds)!
 
@@ -592,7 +592,7 @@ testPrintOn
 				day: 366
 				hour: 0
 				minute: 0
-				second: 0
+				second: 0.0
 				offset: 0 seconds) printString
 		equals: ' 0000-12-31T00:00:00+00:00'.
 	self

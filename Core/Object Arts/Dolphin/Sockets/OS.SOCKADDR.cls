@@ -65,6 +65,7 @@ host
 	^Ws2_32 getNameInfo: self!
 
 initialize
+	super initialize.
 	self sa_family: self class addressFamily!
 
 printFieldsOn: aStream
@@ -148,7 +149,8 @@ fromAddress: anAddress
 	^(family == AF_INET
 		ifTrue: [SOCKADDR_IN]
 		ifFalse: [family == AF_INET6 ifTrue: [SOCKADDR_IN6] ifFalse: [SOCKADDR]]) basicNew
-		initializeAtAddress: ptr!
+		initializeAtAddress: ptr
+		owner: nil!
 
 fromString: aString
 	"Answer a new sub-instance of the correct type to describe the IP address represented by the <String> argument.

@@ -46,16 +46,20 @@ _deepenShallowCopy: clone trail: copiesDictionary
 	^clone!
 
 accessData
-	"Private - Answer the address of the data buffer in which the receiver's elements
-	are stored. This entails locking down the buffer."
+	"Private - Answer the address of the data buffer in which the receiver's elements are stored. This entails locking down the buffer."
 
 	| pvData |
 	self assert: [data isNull].
 	pvData := Address new.
 	OleAut32 safeArrayAccessData: self ppvData: pvData.
-	"We'll need finalization to unlock"
+	"We'll need finalization to ensure unlocked"
 	self beFinalizable.
 	^pvData!
+
+asByteArray
+	^self elementClass == UInt8 
+		ifTrue: [ByteArray fromAddress: self base length: self elementCount]
+		ifFalse: [self typeMismatch]!
 
 asExternalArray
 	^self asExternalArray: self elementClass!
@@ -69,7 +73,7 @@ asObject
 	(an <Array> of <Objects>)."
 
 	^self elementClass == UInt8 
-		ifTrue: [ByteArray fromAddress: self base length: self length]
+		ifTrue: [ByteArray fromAddress: self base length: self elementCount]
 		ifFalse: [self asArray]!
 
 asSAFEARRAY
@@ -132,16 +136,12 @@ deduceElementClass
 	(f allMask: FADF_HAVEIID)
 		ifTrue: 
 			[| class |
-			class := Interface classForIID: self iid ifNone: [].
-			class isNil
-				ifTrue: 
-					["Not a recognised interface class so drop through and
-					 return IDispatch or IUnknown depending on remaining flags"
-					]
-				ifFalse: [^class]].
+			class := Interface classForIID: self iid ifNone: nil.
+			class isNil ifFalse: [^class]
+			"Not a recognised interface class so drop through and return IDispatch or IUnknown depending on remaining flags"].
 	(f allMask: FADF_DISPATCH) ifTrue: [^IDispatch].
 	(f allMask: FADF_UNKNOWN) ifTrue: [^IUnknown].
-	(f allMask: FADF_RECORD) ifTrue: [^self recordClass ifNil: [self genericRecordClass]].
+	(f allMask: FADF_RECORD) ifTrue: [^self recordClass].
 	(f allMask: FADF_HAVEVARTYPE) ifTrue: [^VARIANT classForVT: self vartype].
 	^self error: 'Unrecognised safe array element type'!
 
@@ -170,27 +170,20 @@ elementAt: aSequencedReadableCollectionOfInteger
 	1) This is likely to be rather slow because of the nature of the SAFEARRAY API, and if more than a few elements are to be accessed I'd recommend going directly through the pointer to the data accessible via the #data method (e.g. see the #from:to:keysAndValuesDo: method).
 	2) SafeArrayGetElemnt copies the data if it is a BSTR, VARIANT, IDispatch, IUnknown, or UDT (VT_RECORD), and therefore the element will need freeing in those cases, however this will be done automatically by finalization."
 
-	| buf rgIndices sz |
-	buf := self elementClass newBuffer.	"We get ownership"
-	sz := aSequencedReadableCollectionOfInteger size.
-	rgIndices := Int32Array new: sz.
-	1 to: sz do: [:i | rgIndices uncheckedAt: i put: (aSequencedReadableCollectionOfInteger at: i)].
+	| element |
+	element := self elementClass newBuffer.	"We get a copy"
 	OleAut32
 		safeArrayGetElement: self
-		rgIndices: rgIndices
-		pv: buf.
-	^buf!
+		rgIndices: (Int32Array withAll: aSequencedReadableCollectionOfInteger)
+		pv: element.
+	^element!
 
 elementAt: aSequencedReadableCollectionOfInteger put: anExternalObject
 	"Set the value of the  the element of the receiver at the location identified by the <sequencedReadableCollection> of <integer> first argument to the 2nd argument, which must be of the element class of the receiver."
 
-	| rgIndices sz |
-	sz := aSequencedReadableCollectionOfInteger size.
-	rgIndices := Int32Array new: sz.
-	1 to: sz do: [:i | rgIndices uncheckedAt: i put: (aSequencedReadableCollectionOfInteger at: i)].
 	OleAut32
 		safeArrayPutElement: self
-		rgIndices: rgIndices
+		rgIndices: (Int32Array withAll: aSequencedReadableCollectionOfInteger)
 		pv: anExternalObject.
 	^anExternalObject!
 
@@ -202,15 +195,20 @@ elementClass
 	^elementClass!
 
 elementCount
-	"Private - Answer the total number of elements in all dimensions of the receiver."
+	"Answer the total number of elements in all dimensions of the receiver."
 
-	^(1 to: self dimensions) inject: 1 into: [:sz :i | sz * (self sizeOfDimension: i)]
-	!
+	| dim |
+	dim := self dimensions.
+	dim == 1
+		ifTrue: 
+			["Most commonly only 1 dimensional, so use the cached length"
+			^self length].
+	^(1 to: dim) inject: 1 into: [:sz :i | sz * (self sizeOfDimension: i)]!
 
 elementSize
 	"Answer the size in bytes of the indidividual elements of the receiver."
 
-	^self cbElements!
+	^bytes uint32AtOffset: _OffsetOf_cbElements!
 
 fFeatures
 	"Answer the <Integer> value of the receiver's 'fFeatures' field."
@@ -225,9 +223,6 @@ free
 
 	self unaccessData.
 	super free!
-
-genericRecordClass
-	^Record!
 
 hasRecordInfo
 	"Private - Answer whether there an <IRecordInfo> describing the receiver's elements is
@@ -250,10 +245,10 @@ iid
 	^answer!
 
 initializePointer
-	"Private - Perform any initialization required for the receiver
-	which is specific to the reference form. Answer the receiver."
+	"Private - Perform any initialization required for the receiver which is specific to the reference form. Answer the receiver."
 
-	data := owner := nil.
+	"Override because the length should be left nil to be lazily initialized by querying through the safearray API."
+	self assert: [data isNil].
 	self beFinalizable!
 
 length
@@ -280,30 +275,15 @@ lowerBound: anInteger
 	"Answer the lower bound of the specified dimension of the receiver. Typically this will be 1."
 
 	| lBound |
-	lBound := UInt32Bytes new.
+	lBound := ByteArray newFixed: 4.
 	OleAut32
 		safeArrayGetLBound: self
 		nDim: anInteger
 		plLbound: lBound.
-	^lBound asSignedInteger!
-
-newElementAt: anAddress 
-	"Private - Answer a new reference instance of the receiver's element class, pointing at the
-	element at the specified memory address."
-
-	| elemFactory |
-	elemFactory := self elementClass.
-	^elemFactory == self genericRecordClass 
-		ifTrue: 
-			[elemFactory 
-				fromAddress: anAddress
-				recordInfo: self recordInfo
-				owner: self]
-		ifFalse: [elemFactory atAddress: anAddress]!
+	^lBound int32AtOffset: 0!
 
 onStartup
-	"Private - Clear down the receiver as it is pointing at an externally allocated
-	safe array from the session when the image was saved which no longer exists."
+	"Private - Clear down the receiver as it is pointing at an externally allocated safe array from the session when the image was saved which no longer exists."
 
 	self beUnfinalizable.
 	owner := nil.
@@ -323,13 +303,12 @@ queryRecordInfo
 	^recInfo!
 
 recordClass
-	"Private - Answer the <ExternalStructure> class registered for the <GUID> of the receiver's
-	record information, of nil if none is registered. Note that even if no precompiled structure
-	class is registered for the GUID, the array elements can still be accessed using the generic
-	AXRecord class, which implements late bound access to the structure elements using the
-	information supplied by the <IRecordInfo> interrface."
+	"Private - Answer the <ExternalStructure> class registered for the <GUID> of the receiver's record information, or a <RecordClass> instance wrapping the IRecordInfo if there is no Structure class registered.
+	<RecordClass>implements the <externalStructure class> protocol to instantiate appropriately configured <Record> instances that implements late bound access to the structure elements and various lifetime management services via the <IRecordInfo> interface."
 
-	^Structure classForGUID: self recordInfo guid ifNone: []!
+	| recInfo |
+	recInfo := self recordInfo.
+	^Structure classForGUID: recInfo guid ifNone: [RecordClass recordInfo: recInfo]!
 
 recordInfo
 	"Answer the <IRecordInfo> associated with the receiver (if the receiver is of type
@@ -351,6 +330,11 @@ redim: interval
 		lLbound: interval start;
 		cElements: interval size.
 	OleAut32 safeArrayRedim: self psaboundNew: bound!
+
+requiresFinalization
+	"Answer may hold external resources that need to be freed. Unknowned structures requiring finalization are marked as finalizable."
+
+	^true!
 
 rgsabound
 	"Answer the <StructureArray> value of the receiver's 'rgsabound' field."
@@ -386,19 +370,19 @@ uncheckedAt: anInteger put: anObject
 	"Private - Set the value of the element of the receiver at the specified <integer> index to the specified value, which must be representable by the element class of the receiver. Assumes that the receiver is a single-dimensioned array, if not an error will result. 
 	Note: This isn't likely to be terribly fast!!"
 
-	self elementAt: {anInteger + self start - 1} put: (self elementClass fromObject: anObject).
+	self elementAt: {anInteger + self start - 1} put: (self elementClass marshal: anObject).
 	^anObject!
 
 upperBound: anInteger
 	"Answer the upper bound of the specified dimension of the receiver."
 
 	| uBound |
-	uBound := UInt32Bytes new.
+	uBound := ByteArray newFixed: 4.
 	OleAut32
 		safeArrayGetUBound: self
 		nDim: anInteger
 		plUbound: uBound.
-	^uBound asSignedInteger!
+	^uBound int32AtOffset: 0!
 
 vartype
 	"Answer the variant type of the receiver's elements. Note that this also includes various flags, so it is not a raw VT_XXX type number."
@@ -409,9 +393,9 @@ vartype
 	^vt uint16AtOffset: 0!
 
 vt
-	"Answer the receiver's variant type. This will depend on the element type, but always includes the array modifier."
+	"Answer the receiver's variant type. This will depend on the element type, but always includes the VT_ARRAY modifier."
 
-	^self class vt bitOr: self elementClass vt!
+	^VT_ARRAY bitOr: self elementClass vt!
 
 with: otherCollection do: operation
 	"Evaluate the <dyadicValuable> argument, operation, with each of 
@@ -429,6 +413,7 @@ with: otherCollection do: operation
 !OS.COM.SAFEARRAY categoriesForMethods!
 _deepenShallowCopy:trail:!copying!private! !
 accessData!helpers!private! !
+asByteArray!converting!public! !
 asExternalArray!converting!public! !
 asExternalArray:!converting!private! !
 asObject!converting!public! !
@@ -446,11 +431,10 @@ dimensions!accessing!public! !
 elementAt:!accessing!public! !
 elementAt:put:!accessing!public! !
 elementClass!constants!public! !
-elementCount!accessing!private! !
+elementCount!accessing!public! !
 elementSize!accessing!public! !
 fFeatures!**compiled accessors**!public! !
 free!public!realizing/unrealizing! !
-genericRecordClass!constants!private! !
 hasRecordInfo!private!testing! !
 hasVarType!private!testing! !
 iid!accessing!public! !
@@ -458,13 +442,13 @@ initializePointer!initializing!private! !
 length!accessing!public! !
 length:!accessing!public! !
 lowerBound:!accessing!public! !
-newElementAt:!helpers!private! !
 onStartup!event handling!private! !
 pvData!**compiled accessors**!public! !
 queryRecordInfo!helpers!private! !
 recordClass!helpers!private! !
 recordInfo!accessing!public! !
 redim:!operations!public! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 rgsabound!**compiled accessors**!public! !
 sizeOfDimension:!accessing!public! !
 start!accessing!private! !
@@ -546,81 +530,67 @@ defineFields
 			type: (StructureArrayField type: SAFEARRAYBOUND
 					arrayLength: (ConformantArrayFieldLength lengthField: #cDims)) beReadOnly!
 
+elementClass
+	"Answer the class of <External.Structure> used to represent elements of the receiver."
+
+	"SAFEARRAYs support many element types, but the most generic is VARIANT."
+
+	^VARIANT!
+
 elementSize
 	"Answer the size (in bytes) of the structure the receiver represents
 	when used as an array element."
 
 	^_SAFEARRAY_Size!
 
-fromAddress: anAddress
-	"Answer a new SAFEARRAY object referencing and owning the native SAFEARRAY at the specified address.
-	As the array is considered owned, it will be freed by finalization when the new object is finalized."
+fromAddress: anAddress elementClass: varClass owner: anObject
+	"Answer a new instance that points to the SAFEARRAY at the specified memory address, which contains elements of <variantCompatible> class, varClass.  The instance will not free the safe array at anAddress unless the owner, anObject, is nil."
 
-	^self fromAddress: anAddress owner: nil!
-
-fromAddress: psa elementClass: varClass owner: arrayOwner 
-	"Answer a new instance that points to the SAFEARRAY at
-	the address, psa, which contains elements of <variantCompatible>
-	class, varClass.  The instance will not free the safe array at psa
-	unless the arrayOwner is nil."
-
-	^psa isNull 
+	^anAddress isNull
 		ifFalse: 
-			[(self basicNew)
-				initializeAtAddress: psa;
+			[self basicNew
+				initializeAtAddress: anAddress owner: anObject;
 				elementClass: varClass;
-				owner: arrayOwner;
 				yourself]!
 
 fromAddress: anAddress owner: anObject
 	"Answer a new SAFEARRAY object referencing the native SAFEARRAY at the specified address, with the owner, anObject.
-	Unless anObject is nil, the native SAFEARRAY will not be freed when the new SAFEARRAY object goes out of scope. If anObject is nil, then the array is considered owned, it will be freed by finalization when the new object is finalized."
+	Unless the owner object is nil, the native SAFEARRAY will not be freed when the new SAFEARRAY object goes out of scope. If the owner is nil, then the array is considered self-owned, it will be freed by finalization when the new object is finalized."
 
 	^self
 		fromAddress: anAddress
 		elementClass: nil
 		owner: anObject!
 
-fromAddress: psa vt: vartype owner: arrayOwner
-	"Answer a new instance that points to the SAFEARRAY at
-	the address, psa, which contains elements of Variant type,
-	vartype. The instance will not free the safe array at psa
-	unless the arrayOwner is nil."
+fromAddress: anAddress owner: anObject length: anInteger elementClass: elementClass
+	"Assume that the elementClass is representable as a variant, which is the case for all <Structure>s, since they can be stored as VT_RECORD even if there isn't a more specific type."
 
 	^self
-		fromAddress: psa
-		elementClass: (VARIANT classForVT: vartype)
+		fromAddress: anAddress
+		owner: anObject
+		length: anInteger!
+
+fromAddress: anAddress vt: anInteger owner: arrayOwner
+	"Answer a new instance that points to the SAFEARRAY at the address, anAddress, which contains elements of Variant type, anIneger. The instance will not free the safe array unless the arrayOwner is nil."
+	
+	^self
+		fromAddress: anAddress
+		elementClass: (VARIANT classForVT: anInteger)
 		owner: arrayOwner!
 
-initialize
-	"Private - Initialize the receiver.
-	Register with session events to clean up sub-instances on startup and exit.
-	
-		SAFEARRAY initialize
-	"
-
-	SessionManager current 
-		when: #sessionStarted
-		send: #onStartup
-		to: self!
-
-length: length elementClass: elementClass
-	"Answer a new vector (single dimensioned) safe array that 
-	contains <integer>, length, elements of type, elementClass.
+length: length elementClass: elementClass bufferClass: bufferClass
+	"Answer a new vector (single dimensioned) safe array that contains <integer>, length, elements of type, elementClass. The bufferClass is ignored as this must always be externally allocated by.
 	The instance regards itself as the owner of the underlying
 	safe array and will free it on receipt of a #free message, 
 	or upon finalization, unless previously sent a #detach message."
 
 	^elementClass newSAFEARRAY: length!
 
-length: count elementSize: bytes
-	"Private - Answer a new instance of the receiver allocated 
-	with space for <integer>, count, elements of <integer>, bytes,
-	size.
-	Implementation Note: The size is ignored and the new instance
-	holds <VARIANT>s."
+length: countInteger elementSize: sizeInteger bufferClass: bufferClass
+	"Private - Answer a new instance of the receiver allocated with space for <integer>, countInteger, elements of <integer>, sizeInteger, byte size.
+	Implementation Note: The element size is ignored and the new instance holds <VARIANT>s."
 
-	^self length: count elementClass: VARIANT!
+	^self length: countInteger elementClass: VARIANT bufferClass: bufferClass!
 
 length: length interfaceClass: comInterfaceClass
 	"Answer a new instance of the receiver that owns a buffer
@@ -636,16 +606,19 @@ length: length interfaceClass: comInterfaceClass
 	^answer!
 
 length: length recordClass: recordClass
-	"Answer a new instance of the receiver that owns a buffer
-	of sufficient size to contain <integer>, length, interface pointers.
-	The instance regards itself as the owner of the underlying
-	safe array and will free it on receipt of a #free message, 
-	or upon finalization, unless previously sent a #detach message."
+	"Answer a new instance of the receiver that owns a buffer of sufficient size to contain <integer>, anInteger, records of the specified class.
+	The instance regards itself as the owner of the underlying safe array and will free it on receipt of a #free message, or upon finalization, unless previously sent a #detach message."
 
 	| answer |
-	answer := self createVector: length vt: VT_RECORD extra: recordClass recordInfo.
+	answer := self length: length recordInfo: recordClass recordInfo.
 	answer elementClass: recordClass.
 	^answer!
+
+length: anInteger recordInfo: anIRecordInfo
+	"Answer a new instance of the receiver that owns a buffer with sufficient capacity to hold <integer>, anInteger, records described the <IRecordInfo> 2nd argument.
+	The instance regards itself as the owner of the underlying safe array and will free it on receipt of a #free message,  or upon finalization, unless previously sent a #detach message."
+
+	^self createVector: anInteger vt: VT_RECORD extra: anIRecordInfo!
 
 length: length vt: vt
 	"Answer a new instance of the receiver that owns a buffer
@@ -668,21 +641,20 @@ length: length vt: vt elementClass: elementClass
 	answer elementClass: elementClass.
 	^answer!
 
+new: anInteger bufferClass: aClass 
+	^self length: anInteger elementClass: VARIANT bufferClass: aClass!
+
 newBuffer
 	"Answer a new instance of the receiver.
 	Implementation Note: SAFEARRAYs are reference only."
 
 	^self new: 0!
 
-onStartup
-	"Private - Ensure all the receiver's subinstances are in their clean state on startup
-	rather than attempting to use an old safe array hanging around from the sesssion 
-	when the image was saved."
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization.
+	SAFEARRAYs always require finalization to release any lock held on the underlying array data, even if they are reference instances that own that data."
 
-	self primAllSubinstances do: [:i | i onStartup].!
-
-uninitialize
-	SessionManager current removeEventsTriggeredFor: self!
+	^true!
 
 vt
 	"Answer the receiver's variant type. The actual type of instances will 
@@ -695,21 +667,22 @@ byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 createVector:vt:extra:!helpers!private! !
 defineFields!public!template definition! !
+elementClass!constants!public! !
 elementSize!accessing!public! !
-fromAddress:!instance creation!public! !
 fromAddress:elementClass:owner:!instance creation!public! !
 fromAddress:owner:!instance creation!public! !
+fromAddress:owner:length:elementClass:!public! !
 fromAddress:vt:owner:!instance creation!public! !
-initialize!development!initializing!private! !
-length:elementClass:!instance creation!public! !
-length:elementSize:!instance creation!private! !
+length:elementClass:bufferClass:!instance creation!public! !
+length:elementSize:bufferClass:!instance creation!private! !
 length:interfaceClass:!instance creation!public! !
 length:recordClass:!instance creation!public! !
+length:recordInfo:!instance creation!public! !
 length:vt:!instance creation!public! !
 length:vt:elementClass:!instance creation!private! !
+new:bufferClass:!instance creation!public! !
 newBuffer!instance creation!public! !
-onStartup!event handling!private! !
-uninitialize!class hierarchy-removing!private! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 vt!constants!public! !
 !
 

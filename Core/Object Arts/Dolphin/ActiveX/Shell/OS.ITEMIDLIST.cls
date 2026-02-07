@@ -150,7 +150,7 @@ idParent!operations!public! !
 isDesktopID!public!testing! !
 isSingle!public!testing! !
 isValid!public!testing! !
-onStartup!event handling!public! !
+onStartup!event handling!private! !
 !
 
 !OS.ITEMIDLIST class methodsFor!
@@ -217,39 +217,16 @@ exampleWalkPath: aString
 getFieldNames
 	^#()!
 
-initialize
-	"Private - Initialize the receiver.
-	Register with session events to clean up sub-instances on startup.
-	
-		ITEMIDLIST initialize
-	"
-
-	SessionManager current
-		when: #sessionStarted
-		send: #onStartup
-		to: self!
-
 new
 	"Use #newPointer or #newBuffer to create an instance of the receiver."
 	^self shouldNotImplement
 
 "	^self newPointer"!
 
-onStartup
-	"Private - Ensure all the receiver's subinstances are in their clean state on startup
-	rather than attempting to use an old safe array hanging around from the sesssion 
-	when the image was saved."
-
-	self primAllSubinstances do: [:i | i onStartup].
-!
-
 pointerClass
 	"Private - Answer the default class to use as a pointer"
 
-	^WindowsShellMemory!
-
-uninitialize
-	SessionManager current removeEventsTriggeredFor: self! !
+	^WindowsShellMemory! !
 
 !OS.ITEMIDLIST class categoriesForMethods!
 bufferClass!constants!private! !
@@ -260,10 +237,7 @@ exampleWalkID:!examples!public! !
 exampleWalking!examples!public! !
 exampleWalkPath:!examples!public! !
 getFieldNames!**compiled accessors**!constants!private! !
-initialize!development!initializing!private! !
 new!instance creation!public! !
-onStartup!event handling!private! !
 pointerClass!constants!private! !
-uninitialize!class hierarchy-removing!private! !
 !
 

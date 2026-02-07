@@ -23,25 +23,19 @@ initialize
 	These objects are finalizable since they may reference owned external
 	resources."
 
+	super initialize.
 	self beFinalizable!
 
 needsFree
-	"Private - Answer whether the receiver requires freeing of any external resources.
-	In most cases we don't want to free if this object is a reference to a structure
-	embedded in an buffer, since that would damage the buffer.
-	i.e. it is considered that 'reference' structs do not own the underlying structure as
-	this is what is required, for example, in conjunction with StructureArray."
+	"Private - Answer whether the receiver requires freeing of any external resources. Non-reference subinstances are assumed to require finalization."
 
-	^(self isNull or: [self isPointer]) not!
+	^self isValueStruct!
 
 onStartup
-	"Private - The system is starting. Modify the state of the receiver to account for the fact
-	than any external memory allocated for the receiver during the previous session is no 
-	longer accessible."
+	"Private - The system is starting. Modify the state of the receiver to account for the fact than any external memory allocated for the receiver during the previous session is no longer accessible."
 
 	self beUnfinalizable.
-	self isPointer ifTrue: [
-		bytes := nil]! !
+	bytes := nil! !
 
 !External.FinalizableStructure categoriesForMethods!
 initialize!initializing!private! !
@@ -57,29 +51,13 @@ clear: addressOrBytes
 
 	^self subclassResponsibility!
 
-initialize
-	"Private - Initialize the receiver.
-	Register with session events to clean up sub-instances on startup.
-	
-		OLEFinalizableStructure initialize
-	"
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization."
 
-	SessionManager current 
-		when: #sessionStarted send: #onStartup to: self
-!
-
-onStartup
-	"Private - Notify all the receiver's sub-instances of system startup."
-
-	self primAllSubinstances do: [:i | i onStartup].!
-
-uninitialize
-	SessionManager current removeEventsTriggeredFor: self! !
+	^true! !
 
 !External.FinalizableStructure class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
-initialize!development!initializing!private! !
-onStartup!event handling!private! !
-uninitialize!class hierarchy-removing!private! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 !
 

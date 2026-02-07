@@ -886,13 +886,12 @@ testIsNan
 	self normals do: [:each | self deny: each isNaN]!
 
 testIsSelfEvaluating
-	"All values apart from the exception values for infinity and Not-a-Number have literal representations."
+	"All values apart from the exception values for infinity and Not-a-Number have literal representations, but all are self evaluating"
 
 	self normals do: [:each | self assert: each isSelfEvaluating].
 	Float denormalized ifTrue: [self assert: Float fminDenormalized isSelfEvaluating].
-	self deny: Float nan isSelfEvaluating.
-	self deny: Float infinity isSelfEvaluating.
-	self deny: Float negativeInfinity isSelfEvaluating!
+	self infinities do: [:each | self assert: each isSelfEvaluating].
+	self assert: Float nan isSelfEvaluating!
 
 testIsZero
 	self assert: 0.0 isZero.

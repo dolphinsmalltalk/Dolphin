@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Int16
+External.AbstractInt16
 	subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -28,6 +28,11 @@ displayOn: aPuttableStream
 
 	(self isNull ifFalse: [aPuttableStream locale variantBool: self value]) displayOn: aPuttableStream!
 
+isSigned
+	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
+
+	^true!
+
 value
 	"Answer the receiver's value field as a Smalltalk <Boolean>."
 
@@ -42,6 +47,7 @@ value: anObject
 !OS.COM.VARIANT_BOOL categoriesForMethods!
 asBoolean!converting!public! !
 displayOn:!printing!public! !
+isSigned!public!testing! !
 value!accessing!public! !
 value:!accessing!public! !
 !
@@ -77,7 +83,7 @@ uninitialize
 	VM registryAt: self name put: nil!
 
 vt
-	"Private - Answer the VARIANT type required to represent the receiver."
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's type when represented in a <VARIANT>."
 
 	^AutomationConstants.VT_BOOL! !
 
@@ -87,6 +93,6 @@ icon!constants!public! !
 initialize!development!initializing!private! !
 typeName!constants!private! !
 uninitialize!class hierarchy-removing!private! !
-vt!constants!private! !
+vt!constants!public! !
 !
 

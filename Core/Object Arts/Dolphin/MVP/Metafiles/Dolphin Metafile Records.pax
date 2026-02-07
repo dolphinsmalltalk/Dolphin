@@ -1218,7 +1218,7 @@ fromAddress: anAddress
 	| iType recordClass |
 	iType := anAddress uint32AtOffset: 0.
 	recordClass := (RecordTypes lookup: iType) ?? ENHMETARECORD.
-	^anAddress isNull ifFalse: [recordClass basicNew initializeAtAddress: anAddress]! !
+	^anAddress isNull ifFalse: [recordClass basicNew initializeAtAddress: anAddress owner: nil]! !
 
 !OS.ENHMETARECORD class categoriesForMethods!
 fromAddress:!instance creation!public! !

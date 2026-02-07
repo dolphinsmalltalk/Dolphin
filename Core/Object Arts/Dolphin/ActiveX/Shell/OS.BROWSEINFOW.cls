@@ -46,10 +46,10 @@ flags: anInteger
 hwndOwnerOffset
 	^_OffsetOf_hwndOwner!
 
-initialize: anInteger
+initialize
 	"Private - Initialize the state of the receiver."
 
-	super initialize: anInteger.
+	super initialize.
 	#todo.	"Support long filenames? Not sure we can as seems to be an API limitation."
 	displayName := Utf16String newFixed: Win32Constants.MAX_PATH.
 	self pszDisplayName: displayName!
@@ -90,7 +90,7 @@ displayName!accessing!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hwndOwnerOffset!constants!private! !
-initialize:!initializing!private! !
+initialize!initializing!private! !
 lpfnHook:!**compiled accessors**!public! !
 lpszTitle:!**compiled accessors**!public! !
 pidlRoot!**compiled accessors**!public! !

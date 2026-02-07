@@ -385,7 +385,7 @@ subtractFromDateAndTime: aDateAndTime
 	"Private - Part of a double dispatch for <DateAndTime> subtraction. Answers a 
 	<DateAndTime> representing the receiver subtracted from the argument"
 
-	^aDateAndTime class utcSeconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offsetSeconds!
+	^aDateAndTime class utcSeconds: aDateAndTime asSeconds - seconds offsetSeconds: aDateAndTime offsetSeconds!
 
 wait
 	(Delay forDuration: self) wait! !

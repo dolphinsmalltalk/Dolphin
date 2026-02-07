@@ -17,8 +17,10 @@ package setMethodNames: #(
 	#(#{Core.TimeStamp} #asFloat)
 	#(#{Core.TimeStamp} #asVariant)
 	#(#{Core.TimeStamp class} #fromDATE:)
+	#(#{External.Structure class} #fromObject:)
 	#(#{OS.COM.BSTR} #asAnsiString)
 	#(#{OS.COM.BSTR} #asUnicodeString)
+	#(#{OS.COM.BSTR class} #fromObject:)
 	#(#{OS.COM.DATE} #asDate)
 	#(#{OS.COM.DATE} #asTimeStamp)
 	#(#{OS.COM.DATE class} #max)
@@ -26,6 +28,7 @@ package setMethodNames: #(
 	#(#{OS.COM.FUNCDESC} #retTypeName)
 	#(#{OS.COM.LPBSTR} #asUnicodeString)
 	#(#{OS.COM.MemberDesc} #argumentTypeNames)
+	#(#{OS.COM.Record class} #newWithRecordInfo:)
 	#(#{OS.COM.VARIANT} #byte)
 	#(#{OS.COM.VARIANT} #byte:)
 	#(#{OS.COM.VARIANT} #dword)
@@ -96,6 +99,16 @@ fromDATE: aDATE
 fromDATE:!instance creation!private! !
 !
 
+!External.Structure class methodsFor!
+
+fromObject: anObject 
+	#deprecated.
+	^self marshal: anObject! !
+
+!External.Structure class categoriesForMethods!
+fromObject:!instance creation!public! !
+!
+
 !OS.COM.BSTR methodsFor!
 
 asAnsiString
@@ -111,6 +124,16 @@ asUnicodeString
 !OS.COM.BSTR categoriesForMethods!
 asAnsiString!converting!public! !
 asUnicodeString!converting!public! !
+!
+
+!OS.COM.BSTR class methodsFor!
+
+fromObject: anObject
+	#deprecated.
+	^self marshal: anObject! !
+
+!OS.COM.BSTR class categoriesForMethods!
+fromObject:!instance creation!public! !
 !
 
 !OS.COM.DATE methodsFor!
@@ -171,6 +194,16 @@ argumentTypeNames
 
 !OS.COM.MemberDesc categoriesForMethods!
 argumentTypeNames!accessing!public! !
+!
+
+!OS.COM.Record class methodsFor!
+
+newWithRecordInfo: anIRecordInfo
+	#deprecated.
+	^self newWithInfo: anIRecordInfo! !
+
+!OS.COM.Record class categoriesForMethods!
+newWithRecordInfo:!instance creation!public! !
 !
 
 !OS.COM.VARIANT methodsFor!

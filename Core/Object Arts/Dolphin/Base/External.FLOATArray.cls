@@ -16,6 +16,16 @@ External.FLOATArray comment: '`FLOATArray` is a specialized `ExternalArray` to r
 
 !External.FLOATArray methodsFor!
 
+basicUncheckedAt: anInteger
+	"Private - Answer a <Float> representing the 32-bit single-precision IEEE float at the specified <integer> index in the receiver. No bounds checks are performed on the subscript."
+
+	^bytes floatAtOffset: (anInteger - 1) * FLOAT._FLOAT_Size!
+
+basicUncheckedAt: anInteger put: aNumber
+	"Private - Replace the single-precision floating point value at the specified index in the receiver with the <Float> argument."
+
+	^bytes floatAtOffset: (anInteger - 1) * FLOAT._FLOAT_Size put: aNumber asFloat!
+
 closeTo: aNumber
 	^self closeTo: aNumber precision: 0.0000001!
 
@@ -42,27 +52,14 @@ displayOn: aPuttableStream
 					[aPuttableStream
 						nextPutAll: listSep;
 						space]].
-	aPuttableStream nextPut: $)!
-
-uncheckedAt: anInteger 
-	"Private - Answer a <Float> representing the 32-bit single-precision 
-	IEEE float at the specified <integer> index in the receiver. No bounds 
-	checks are performed on the subscript."
-
-	^bytes floatAtOffset: (anInteger - 1) * FLOAT._FLOAT_Size!
-
-uncheckedAt: anInteger put: aFloat
-	"Private - Replace the single-precision floating point value at the specified index in the receiver
-	with the Float argument."
-
-	^bytes floatAtOffset: (anInteger - 1) * FLOAT._FLOAT_Size put: aFloat! !
+	aPuttableStream nextPut: $)! !
 
 !External.FLOATArray categoriesForMethods!
+basicUncheckedAt:!accessing!private! !
+basicUncheckedAt:put:!accessing!private! !
 closeTo:!comparing!public! !
 closeTo:precision:!comparing!public! !
 displayOn:!printing!private! !
-uncheckedAt:!accessing!private! !
-uncheckedAt:put:!accessing!private! !
 !
 
 !External.FLOATArray class methodsFor!

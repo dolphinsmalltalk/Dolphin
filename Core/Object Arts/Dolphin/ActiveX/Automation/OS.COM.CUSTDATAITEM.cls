@@ -37,6 +37,15 @@ guid
 
 	^GUID fromAddress: bytes yourAddress!
 
+guid: aGUID
+	"Set the receiver's 'guid' field to the value of the argument, aGUID"
+
+	aGUID
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_guid + 1)
+		to: ##(_OffsetOf_guid + GUID._GUID_Size)
+		startingAt: 1!
+
 hash
 	"Answer the hash value of the receiver's key."
 
@@ -65,6 +74,7 @@ varValue
 =!comparing!public! !
 asObject!public! !
 guid!**compiled accessors**!public! !
+guid:!**compiled accessors**!public! !
 hash!comparing!public! !
 key!accessing!public! !
 species!accessing!public! !
@@ -89,7 +99,7 @@ defineFields
 	"
 
 	self
-		defineField: #guid type: (StructureField type: GUID) beReadOnly;
+		defineField: #guid type: (StructureField type: GUID);
 		defineField: #varValue type: (StructureField type: VARIANT) beReadOnly!
 
 getFieldNames

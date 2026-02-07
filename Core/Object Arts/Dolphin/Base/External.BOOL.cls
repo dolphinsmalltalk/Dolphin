@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Int32
+External.AbstractInt32
 	subclass: #'External.BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''

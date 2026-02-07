@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+OS.COM.HeapPointerArray
 	subclass: #'OS.COM.BSTRArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -16,50 +16,21 @@ As neither the array body of an `BSTRArray`, nor the strings it references are a
 
 !OS.COM.BSTRArray methodsFor!
 
-basicFree
-	"Private - Free external resources owned by the receiver."
-
-	0 to: bytes size - 1
-		by: VMConstants.IntPtrSize
-		do: 
-			[:offset |
-			| bstr |
-			bstr := bytes uintPtrAtOffset: offset.
-			bstr == 0 ifFalse: [OleAut32 sysFreeString: bstr]]!
-
-initialize
-	self beFinalizable!
-
-needsFree
-	^self isNull not!
+isSelfEvaluating
+	^self notNull and: [self allSatisfy: [:element | element asUtf8String isSelfEvaluating]]!
 
 uncheckedAt: anInteger
-	"Private - Answer an 32-bit unsigned <integer> representing the element of the 
-	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
+	"Private - Answer a <String> copy of the external string element of the receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
 	| bstr |
-	bstr := bytes uintPtrAtOffset: (anInteger - 1) * VMConstants.IntPtrSize.
+	bstr := self basicUncheckedAt: anInteger.
 	^bstr isNull
 		ifTrue: [Utf16String empty]
-		ifFalse: [Utf16String fromAddress: bstr length: (OleAut32 sysStringLen: bstr)]!
-
-uncheckedAt: indexInteger put: aString
-	| offset str |
-	offset := (indexInteger - 1) * VMConstants.IntPtrSize.
-	"We must release any existing value"
-	str := bytes uintPtrAtOffset: offset.
-	str isNull ifFalse: [OleAut32 sysFreeString: str].
-	str := aString asUtf16String.
-	bytes uintPtrAtOffset: offset
-		put: (str size == 0 ifTrue: [0] ifFalse: [OleAut32 sysAllocString: str]).
-	^aString! !
+		ifFalse: [Utf16String fromAddress: bstr length: (OleAut32 sysStringLen: bstr)]! !
 
 !OS.COM.BSTRArray categoriesForMethods!
-basicFree!private!realizing/unrealizing! !
-initialize!initializing!private! !
-needsFree!public! !
+isSelfEvaluating!public! !
 uncheckedAt:!accessing!private! !
-uncheckedAt:put:!accessing!private! !
 !
 
 !OS.COM.BSTRArray class methodsFor!
@@ -67,9 +38,16 @@ uncheckedAt:put:!accessing!private! !
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
-	^BSTR! !
+	^BSTR!
+
+fromSAFEARRAY: aSAFEARRAY
+	^(self
+		fromAddress: aSAFEARRAY base
+		owner: aSAFEARRAY
+		length: aSAFEARRAY elementCount) copy! !
 
 !OS.COM.BSTRArray class categoriesForMethods!
 elementClass!public! !
+fromSAFEARRAY:!public! !
 !
 

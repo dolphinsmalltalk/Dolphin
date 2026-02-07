@@ -69,8 +69,8 @@ fromAddress: anAddress
 	| ptr |
 	anAddress isNull ifTrue: [^nil].
 	ptr := anAddress asExternalAddress.
-	(##({self. HTTP_SERVICE_BINDING_W. HTTP_SERVICE_BINDING_A}) at: (ptr int32AtOffset: 0) + 1)
-		basicNew initializeAtAddress: ptr!
+	(##({ self. HTTP_SERVICE_BINDING_W. HTTP_SERVICE_BINDING_A }) at: (ptr int32AtOffset: 0) + 1)
+		basicNew initializeAtAddress: ptr owner: nil!
 
 getFieldNames
 	^#(#Type)! !

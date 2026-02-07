@@ -47,6 +47,11 @@ deepCopy
 
 	^self!
 
+detach
+	"Detach the receiver from the object at which it is pointing, answering the address of that object."
+
+	^0!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	The default is to do nothing, since, from the end-user perspective, the receiver is a null."!
@@ -212,6 +217,7 @@ yourAddress
 _deepCopy:!copying!private! !
 bindingFor:!bindings!public! !
 deepCopy!copying!public! !
+detach!converting!public! !
 displayOn:!displaying!public! !
 displayString!displaying!public! !
 fullName!accessing!public! !

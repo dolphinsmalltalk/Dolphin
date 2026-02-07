@@ -218,6 +218,11 @@ isLiteral
 
 	^fraction isInteger or: [(10 raisedTo: scale) \\ fraction denominator = 0]!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^self isLiteral!
+
 isZero
 	"Answer whether the receiver is equal to its class' zero"
 
@@ -346,6 +351,7 @@ greaterThanScaledDecimal:!double dispatch!private! !
 hash!comparing!public! !
 integerPart!accessing!public! !
 isLiteral!public!testing! !
+isSelfEvaluating!public!testing! !
 isZero!public!testing! !
 multiplyByScaledDecimal:!double dispatch!private! !
 negated!arithmetic!public! !

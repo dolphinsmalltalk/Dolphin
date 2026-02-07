@@ -49,8 +49,13 @@ package setMethodNames: #(
 	#(#{External.ResourceLibrary class} #stbConvertFrom:)
 	#(#{External.ResourceLibrary class} #stbReadFrom:format:size:)
 	#(#{External.ResourceLibrary class} #stbVersion)
+	#(#{External.Structure class} #stbConvertFrom:)
+	#(#{External.Structure class} #stbConvertFromVersion0:)
+	#(#{External.Structure class} #stbConvertFromVersion1:)
 	#(#{External.Structure class} #stbReadFrom:format:size:)
-	#(#{External.StructureArray class} #stbConvertFrom:)
+	#(#{External.Structure class} #stbVersion)
+	#(#{External.StructureArray class} #stbConvertFromVersion0:)
+	#(#{External.StructureArray class} #stbConvertFromVersion1:)
 	#(#{External.StructureArray class} #stbVersion)
 	#(#{Kernel.AbsoluteFileLocator class} #stbReadFrom:format:size:)
 	#(#{Kernel.BindingReference class} #stbConvertFrom:)
@@ -301,7 +306,7 @@ stbConvertFrom: anSTBClassFormat
 						1: RataDie seconds
 						2: UTC offset as a Duration"
 					t := t asSeconds.
-					self utcSeconds: (data at: 1) - ##(SmalltalkEpochRD * 24 * 60 * 60) - t offset: t]
+					self utcSeconds: (data at: 1) - ##(SmalltalkEpochRD * 24 * 60 * 60) - t offsetSeconds: t]
 				ifFalse: 
 					["DateAndTime was adopted into core based on Ian Bartholomew's original by commit a2d0d522231454fd0c0c39272d152a730e9633b3 on 2019-04-16. However the internal format was changed from the original RataDie seconds and UTC offset Duration to:
 						1: RataDie Days (i.e. days since Sunday, December 31, 0000), rather than seconds. 
@@ -510,43 +515,88 @@ stbVersion!binary filing!public! !
 
 !External.Structure class methodsFor!
 
+stbConvertFrom: anSTBClassFormat
+	"1 (8.2.4): adds owner instance variable"
+
+	| ver |
+	ver := anSTBClassFormat version.
+	ver == 0 ifTrue: [^[:data | self stbConvertFromVersion0: data]].
+	ver == 1 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 Structure.
+
+	Version 0: bytes
+	Version 1: bytes owner"
+
+	^((Array new: anArray size + 1)
+		at: 1 put: (anArray at: 1);
+		replaceFrom: 3
+			to: anArray size + 1
+			with: anArray
+			startingAt: 2;
+		yourself) becomeA: self!
+
+stbConvertFromVersion1: anArray
+	"Private - Convert from version 1 Structure."
+
+	^nil!
+
 stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	self ensureDefined.
 	^anSTBInFiler
 		readObjectOfClass: self
 		format: anSTBClassConversion
-		size: anInteger! !
+		size: anInteger!
+
+stbVersion
+	"1 (8.2.4): adds owner instance variable"
+
+	^1! !
 
 !External.Structure class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
 stbReadFrom:format:size:!binary filing!public! !
+stbVersion!binary filing!public! !
 !
 
 !External.StructureArray class methodsFor!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from earlier version models.
-		1: Added 'owner' instance variable, default to nil.
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 Structure.
 
-		Version 0: bytes length elementClass
-		Version 1: bytes length elementClass owner elementSpacing"
+	Version 0: bytes length elementClass
+	Version 2: bytes owner length elementClass elementSpacing"
 
-	anSTBClassFormat version == 0
-		ifTrue: 
-			[^
-			[:data |
-			(data resize: 5) becomeA: StructureArray.
-			"Ensure the elementSpacing is set correctly in case importing data from 2.1"
-			data elementClass: data elementClass.
-			data]].
-	^super stbConvertFrom: anSTBClassFormat!
+	| inst |
+	inst := { anArray at: 1. nil. anArray at: 2. anArray at: 3. nil } becomeA: StructureArray.
+	inst elementClass: inst elementClass.
+	^inst!
+
+stbConvertFromVersion1: anArray
+	"Private - Convert from version 1 Structure.
+
+	Version 1: bytes length elementClass owner elementSpacing
+	Version 2: bytes owner length elementClass elementSpacing"
+
+	^{ anArray at: 1. anArray at: 4. anArray at: 2. anArray at: 3. anArray at: 5 }
+		becomeA: StructureArray!
 
 stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
+	"Answer the current binary filer version number for instances of the receiver.
 
-	^1! !
+	1: Added 'owner' instance variable, default to nil.
+	2: 'owner' moves to base Structure class.
+	"
+
+	^2! !
 
 !External.StructureArray class categoriesForMethods!
-stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

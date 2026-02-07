@@ -136,9 +136,7 @@ isRealized
 	^handle notNil!
 
 onExit
-	"Private - The session is about to end, ensure any resources held by the receiver are
-	free'd. We use #free (instead of #basicFree) just in case the receiver is
-	already freed."
+	"Private - The session is about to end, ensure any resources held by the receiver are freed. We use #free (instead of #basicFree) just in case the receiver is already freed."
 
 	self free
 !

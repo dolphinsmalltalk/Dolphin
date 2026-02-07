@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure
+External.SCALAR
 	subclass: #'OS.FILETIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -10,6 +10,9 @@ External.Structure
 			'_FILETIME_Size' -> 16r8.
 			'_OffsetOf_dwHighDateTime' -> 16r4.
 			'_OffsetOf_dwLowDateTime' -> 16r0.
+			'MaxSystemTime' -> 16r7FFF35F4F06C58F0.
+			'MaxValue' -> 16r7FFFFFFFFFFFFFFF.
+			'MinValue' -> 16r0.
 			'SmalltalkEpoch' -> 16r150560D76A70000.
 			'UnixEpoch' -> 16r19DB1DED53E8000
 		}!
@@ -39,9 +42,7 @@ asDateAndTime
 		(DateAndTime year: 1601 day: 1 offset: 0 seconds) asSeconds = -9467020800
 	"
 
-	| offset |
-	offset := self offsetSeconds.
-	^DateAndTime utcSeconds: self localSeconds - offset offset: offset!
+	^DateAndTime utcSeconds: self localSeconds - self offsetSeconds offsetSeconds: self offsetSeconds!
 
 asFILETIME
 	"Answer the receiver as a FILETIME (which it is already)."
@@ -52,7 +53,7 @@ asInteger
 	"Answer a 64-bit integer specifying the number of 100 nanosecond intervals since the
 	FILETIME epoch (01:00:00, 01 January 1601 UTC)."
 
-	^bytes uint64AtOffset: 0!
+	^bytes int64AtOffset: 0!
 
 asLocalTime
 	"Answer the receiver converted to a local time (from UTC).
@@ -71,11 +72,9 @@ asSeconds
 	^self localSeconds - self offsetSeconds!
 
 asSYSTEMTIME
-	"Answer the receiver converted to a SYSTEMTIME (first of
-	all converting to local time)."
+	"Answer the receiver converted to a SYSTEMTIME (first of all converting to local time). The conversion is performed using the  [FileTimeToSystemTime](https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-filetimetosystemtime) API."
 
-	"Implementation Note: Reproduce a little code to avoid
-	creating a circular dependency on the subclass."
+	"Implementation Note: Reproduce a little code to avoid creating a circular dependency on the subclass."
 
 	| local |
 	local := self class new.
@@ -88,23 +87,14 @@ asUTC
 	^self!
 
 basicAsSYSTEMTIME
-	"Private - Answer the receiver converted to a <SYSTEMTIME>."
+	"Private - Answer the receiver converted to a <SYSTEMTIME>. Note the upper bound of SYSTEMTIME is 3082-12-31T23:59:59.999Z, so (allowing for truncation from 100nS to mS) any FILETIME beyond 30827-12-31T23:59:59.9999999 cannot be represented as a SYSTEMTIME, and an error will be raised."
 
 	| answer |
+	self asInteger > ##(MaxSystemTime + 9999)
+		ifTrue: [self error: '<1p> is outside the range of SYSTEMTIME' << self].
 	answer := SYSTEMTIME new.
 	(Kernel32 fileTimeToSystemTime: self lpSystemTime: answer) ifFalse: [Kernel32 systemError].
 	^answer!
-
-displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see. This will be in local time."
-
-	self asDateAndTime displayOn: aPuttableStream!
-
-integerValue: anInteger 
-	"Set the number of 100-nanosecond intervals the receiver represents since the
-	FILETIME epoch."
-
-	bytes uint64AtOffset: 0 put: anInteger!
 
 localSeconds
 	"Answer a <rational> that is the number of seconds (including fractional part) that the receiver is past the traditional Smalltalk Epoch (i.e. 1901-01-01T00:00:00+00:00) in local time.
@@ -118,7 +108,23 @@ offsetSeconds
 	^0!
 
 species
-	^FILETIME! !
+	^FILETIME!
+
+value
+	"Answer the receiver's value as a Smalltalk object of the appropriate scalar type for the subclass."
+
+	^DateAndTime utcSeconds: self localSeconds - self offsetSeconds offsetSeconds: self offsetSeconds!
+
+value: anObject
+	"Set the receiver's value to be the best available representation for the argument, which could be a <DateAndTime>, or integer filetime. If the argument is out of the range of representable moments, then throw an error."
+
+	| int64 |
+	int64 := anObject asInteger.
+	(int64 < 0 or: [int64 > Int64.MaxValue])
+		ifTrue: 
+			[InvalidArgumentError signal: '<1p> is outside the permitted range [0, 2**63-1]' << int64
+				with: 'anInteger'].
+	bytes int64AtOffset: 0 put: int64! !
 
 !OS.FILETIME categoriesForMethods!
 =!comparing!public! !
@@ -130,11 +136,11 @@ asSeconds!converting!public! !
 asSYSTEMTIME!converting!public! !
 asUTC!converting!public! !
 basicAsSYSTEMTIME!converting!public! !
-displayOn:!printing!public! !
-integerValue:!accessing!public! !
 localSeconds!converting!public! !
 offsetSeconds!converting!public! !
 species!accessing!public! !
+value!converting!public! !
+value:!public! !
 !
 
 !OS.FILETIME class methodsFor!
@@ -160,13 +166,17 @@ defineFields
 fromDateAndTime: aDateAndTime
 	"Answer a <FILETIME> equivalent to the specified <DateAndTime>"
 
-	^self fromInteger: (SmalltalkEpoch + (aDateAndTime asSeconds * 1e7)) truncated!
+	^self new
+		value: aDateAndTime asInteger;
+		yourself!
 
-fromInteger: anInteger 
+fromInteger: anInteger
 	"Answer an instance of the receiver for the specified <integer> number
 	of 100 nanosecond intervals since 01:00:00, 01 January 1601."
 
-	^self new integerValue: anInteger!
+	^self new
+		value: anInteger;
+		yourself!
 
 fromLocalTime: aLocalFILETIME
 	"Answer a UTC file time from the specified local file time."
@@ -206,7 +216,11 @@ initialize
 	filetimeEpoch := (DateAndTime year: 1601 day: 1 offset: 0 seconds) asSeconds.
 	self addClassConstant: 'UnixEpoch'
 		value: (0 - filetimeEpoch + (DateAndTime year: 1970 day: 1 offset: 0 seconds) asSeconds) * 1e7.
-	self addClassConstant: 'SmalltalkEpoch' value: (0 - filetimeEpoch) * 1e7!
+	self addClassConstant: 'SmalltalkEpoch' value: (0 - filetimeEpoch) * 1e7.
+	"FILETIME is really a signed 64-bit int, not unsigned per the definition, but negative filetimes are not supported by Windows."
+	self addClassConstant: 'MinValue' value: 0.
+	self addClassConstant: 'MaxValue' value: Int64.MaxValue
+!
 
 now
 	"Answer the current FILETIME. 

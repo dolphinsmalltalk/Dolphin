@@ -72,7 +72,7 @@ clear: addressOrBytes
 	of the receiver's element type at the specified address."
 
 	| pi |
-	pi := addressOrBytes int32AtOffset: 4.
+	pi := addressOrBytes intPtrAtOffset: _OffsetOf_pItf.
 	pi notNull ifTrue: [(IUnknown attach: pi) free]!
 
 defineFields

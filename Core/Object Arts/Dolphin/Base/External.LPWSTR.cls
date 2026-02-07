@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.LPVOID
+External.LPSZ
 	subclass: #'External.LPWSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -20,19 +20,12 @@ LPWSTR implicitly converts to the referenced Unicode string when asked for its v
 
 !External.LPWSTR methodsFor!
 
-asString
-	"Answer a String composed of the characters of the receiver, or
-	the empty string if the receiver is a null pointer."
-	
-	^self value asString!
-
 value
 	"Answer the <Utf16String> pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
-	^Utf16String fromAddress: super value! !
+	^Utf16String fromAddress: (bytes uintPtrAtOffset: _OffsetOf_value)! !
 
 !External.LPWSTR categoriesForMethods!
-asString!converting!public! !
 value!accessing!public! !
 !
 

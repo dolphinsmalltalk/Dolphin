@@ -29,6 +29,26 @@ ITypeLib is primarily of use in the construction of programming tools (it is fun
 allCustData
 	^self getAllCustData!
 
+find: memberName count: numToFind
+	"Find up to the <integer> argument, numToFind, member id -> ITypeInfo pairs for the specified name in the receiver."
+
+	| rgMemId ppTInfo pcFound |
+	rgMemId := Int32Array new: numToFind.
+	ppTInfo := UInt32Array new: numToFind.
+	pcFound := UInt32Bytes fromInteger: numToFind.
+	self
+		FindName: memberName
+		lHashVal: 0
+		ppTInfo: ppTInfo
+		rgMemId: rgMemId
+		pcFound: pcFound.	"let system compute hash value"	"arg type not implicitly coercable"
+	^(1 to: pcFound asInteger) collect: 
+			[:i |
+			| piTInfo |
+			piTInfo := ITypeInfo newPointer.
+			piTInfo attach: (ppTInfo at: i).
+			(rgMemId at: i) -> piTInfo]!
+
 FindName: findName lHashVal: lHashVal ppTInfo: ppTInfo rgMemId: rgMemId pcFound: pcFound
 	"Invoke the FindName() method of the COM object wrapped by the receiver.
 
@@ -70,7 +90,7 @@ getLibAttr
 	"Answer a <TLIBATTR> detailing the library attributes for the receiver
 	(its LIBID, version, locale id, some flags, and an enumerator identifying
 	the target OS - which will always be Win32 in our case).
-	Note that the answer MUST be free'd using ReleaseLibAttr()."
+	Note that the answer MUST be freed using ReleaseLibAttr()."
 
 	| libattr |
 	libattr := TLIBATTR newPointer.
@@ -264,6 +284,7 @@ typekindAt: anInteger
 
 !OS.COM.ITypeLib categoriesForMethods!
 allCustData!public! !
+find:count:!methods!public! !
 FindName:lHashVal:ppTInfo:rgMemId:pcFound:!COM Interfaces-ITypeLib!primitives!public! !
 getAllCustData!accessing!public! !
 GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-ITypeLib!primitives!private! !

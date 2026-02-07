@@ -14,10 +14,36 @@ Net.Tests.InternetAddressTest comment: ''!
 
 !Net.Tests.InternetAddressTest methodsFor!
 
+testAddrInfoFinalization
+	<skipUnless: #isOnline>
+	| addrinfo next pAddr pNext |
+	addrinfo := ADDRINFOW host: 'dns.google.com'.
+	self assert: addrinfo isFinalizable.
+	self assert: addrinfo needsFree.
+	pAddr := addrinfo bytes.
+	self assert: (Memory didAlloc: pAddr).
+	next := addrinfo ai_next.
+	self assert: next owner equals: addrinfo.
+	self deny: next isFinalizable.
+	self deny: next needsFree.
+	pNext := next bytes.
+	"ai_next block should not have been freed'"
+	self assert: (Memory didAlloc: pNext).
+	next free.
+	"Shoud be nulled out"
+	self assert: next isNull.
+	"Should not actually have been freed as this is owned by the chain starting with the first ADDRINFOW returned"
+	self assert: (Memory didAlloc: pAddr).
+	addrinfo free.
+	self assert: addrinfo isNull.
+	"Both blocks should have been freed"
+	self deny: (Memory didAlloc: pAddr).
+	self deny: (Memory didAlloc: pAddr).
+!
+
 testAllForHost
 	<skipUnless: #isOnline>
 	| addresses |
-
 	"dns.google has two fixed and well-known IP addresses"
 	addresses := InternetAddress allForHost: 'dns.google.com'.
 	self assert: addresses size equals: 2.
@@ -59,6 +85,7 @@ testLocalHost
 		equals: computerName! !
 
 !Net.Tests.InternetAddressTest categoriesForMethods!
+testAddrInfoFinalization!public!unit tests! !
 testAllForHost!public!unit tests! !
 testHost!public!unit tests! !
 testIsIPString!public!unit tests! !

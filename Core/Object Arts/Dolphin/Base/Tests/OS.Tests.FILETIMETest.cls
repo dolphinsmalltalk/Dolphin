@@ -17,29 +17,15 @@ OS.Tests.FILETIMETest comment: ''!
 assertFromIntegerInvertible: anInteger
 	self assert: (FILETIME fromInteger: anInteger) asInteger equals: (anInteger bitAnd: 2 ** 64 - 1)!
 
-testAsDateAndTime
-	| epoch subject dt |
-	epoch := DateAndTime
-				year: 1601
-				day: 1
-				offset: 0 seconds.
-	subject := FILETIME new.
-	self assert: subject printString equals: 'a FILETIME( 1601-01-01T00:00:00+00:00)'.
-	self assert: subject asDateAndTime equals: epoch.
-	"We are only checking here for TZ issues, so use a fairly coarse comparison."
-	subject := FILETIME now.
-	dt := DateAndTime now.
-	self assert: dt - subject asDateAndTime < 1 minutes!
-
 testComparing
 	| examples |
 	examples := {
-				FILETIME new.
 				FILETIME fromInteger: FILETIME.SmalltalkEpoch.
 				FILETIME fromInteger: FILETIME.SmalltalkEpoch - 1.
 				FILETIME fromInteger: FILETIME.SmalltalkEpoch + 1.
 				FILETIME fromInteger: 134138194971234567.
-				FILETIME fromInteger: 16rFFFFFFFFFFFFFFFF
+				FILETIME fromInteger: FILETIME.MaxValue.
+				FILETIME fromInteger: FILETIME.MinValue
 			}.
 	1 to: examples size
 		do: 
@@ -60,6 +46,33 @@ testComparing
 							self deny: ft2 equals: ft1.
 							self deny: ft1 hash equals: ft2 hash]]]!
 
+testDateAndTimeConversions
+	| epoch subject expected |
+	epoch := DateAndTime
+				year: 1601
+				day: 1
+				offset: 0 seconds.
+	subject := FILETIME new.
+	self assert: subject printString equals: 'a FILETIME( 1601-01-01T00:00:00+00:00)'.
+	self assert: subject asDateAndTime equals: epoch.
+	self assert:  (FILETIME fromDateAndTime: epoch) equals: subject.
+	"Some boundary conditions"
+	subject := FILETIME new value: FILETIME.SmalltalkEpoch.
+	expected := DateAndTime fromString: '1901-01-01T00:00:00Z'.
+	self assert: subject asDateAndTime equals: expected.
+	self assert:  (FILETIME fromDateAndTime: expected) equals: subject.
+	subject := FILETIME new value: FILETIME.MaxValue.
+	expected := DateAndTime
+				rataDie: 11259588
+				seconds: 100854775807 / 1e7
+				offsetSeconds: 0.
+	self assert: subject asDateAndTime equals: expected.
+	self assert: (FILETIME fromDateAndTime: expected) equals: subject.
+	"We are only checking here for TZ issues, so use a fairly coarse comparison."
+	subject := FILETIME now.
+	expected := DateAndTime now.
+	self assert: expected - subject asDateAndTime < 1 minutes!
+
 testDisplayString
 	| now |
 	now := DateAndTime now.
@@ -67,14 +80,14 @@ testDisplayString
 	self assert: (FILETIME fromDateAndTime: now) displayString equals: now displayString.
 	self assert: (LocalFILETIME fromDateAndTime: now) displayString equals: now displayString!
 
-testFromDateAndTime
+testFromDateAndTimeLocal
 	| subject dt local |
 	subject := FILETIME fromDateAndTime: (DateAndTime
 						year: 1601
 						day: 1
 						offset: 0 seconds).
 	self assert: subject asInteger equals: 0.
-	dt := DateAndTime utcSeconds: 3199117153 offset: 3600.
+	dt := DateAndTime utcSeconds: 3199117153 offsetSeconds: 3600.
 	subject := FILETIME fromDateAndTime: dt.
 	self assert: subject asInteger equals: 126661379530000000.
 	local := LocalFILETIME fromDateAndTime: dt.
@@ -87,21 +100,10 @@ testFromInteger
 	self assertFromIntegerInvertible: 2 ** 32 - 1.
 	self assertFromIntegerInvertible: 2 ** 32.
 	self assertFromIntegerInvertible: 2 ** 32 + 1.
-	self assertFromIntegerInvertible: 2 ** 64 - 1.
-	self should: [FILETIME fromInteger: 2 ** 64] raise: Error.
-	self assertFromIntegerInvertible: -1.
-	self assertFromIntegerInvertible: -2 ** 31.
-	self assertFromIntegerInvertible: -2 ** 32.
-	self assertFromIntegerInvertible: -2 ** 63!
-
-testFromSYSTEMTIME
-	| subject sysTime dt |
-	dt := DateAndTime fromString: '2020-02-29T12:01:02.125+01:00'.
-	sysTime := dt asSYSTEMTIME.
-	subject := FILETIME fromSYSTEMTIME: sysTime.
-	self assert: subject asDateAndTime equals: dt.
-	subject := LocalFILETIME fromSYSTEMTIME: sysTime.
-	self assert: subject asDateAndTime equals: dt!
+	self assertFromIntegerInvertible: FILETIME.MaxValue.
+	self should: [FILETIME fromInteger: FILETIME.MaxValue+1] raise: Error.
+	self should: [FILETIME fromInteger: -1] raise: Error.
+	self should: [FILETIME fromInteger: 2 ** 64] raise: Error!
 
 testFromUnixTime
 	| subject |
@@ -112,17 +114,60 @@ testPrintString
 	| now |
 	now := DateAndTime now.
 	self assert: (FILETIME fromDateAndTime: now) printString equals: 'a FILETIME(<1p>)' << now asUTC.
-	self assert: (LocalFILETIME fromDateAndTime: now) printString equals: 'a LocalFILETIME(<1p>)' << now! !
+	self assert: (LocalFILETIME fromDateAndTime: now) printString equals: 'a LocalFILETIME(<1p>)' << now!
+
+testSystemTimeConversions
+	| subject sysTime dt |
+	dt := DateAndTime fromString: '2020-02-29T12:01:02.125+01:00'.
+	sysTime := SYSTEMTIME new
+				wYear: 2020;
+				wMonth: 2;
+				wDay: 29;
+				wDayOfWeek: 6;
+				wHour: 11;
+				wMinute: 1;
+				wSecond: 2;
+				wMilliseconds: 125;
+				yourself.
+	self assert: dt asSYSTEMTIME equals: sysTime.
+	subject := FILETIME fromSYSTEMTIME: sysTime.
+	self assert: subject asDateAndTime equals: dt.
+	self assert: subject asSYSTEMTIME equals: sysTime.
+	subject := LocalFILETIME fromSYSTEMTIME: sysTime.
+	self assert: subject asDateAndTime equals: dt.
+	self assert: subject asSYSTEMTIME equals: sysTime.
+	"Boundary cases"
+	subject := FILETIME new value: 16r7FFFFFFFFFFFFFFF.
+	sysTime := SYSTEMTIME new
+				wYear: 30828;
+				wMonth: 9;
+				wDay: 14;
+				wDayOfWeek: 4;
+				wHour: 2;
+				wMinute: 48;
+				wSecond: 5;
+				wMilliseconds: 477;
+				yourself.
+	self should: [subject asSYSTEMTIME] raise: Error.
+	self should: [FILETIME fromSYSTEMTIME: sysTime] raise: HRESULTError matching: [:ex | ex statusCode = Win32Errors.ERROR_INVALID_PARAMETER].
+	"Actual max system time"
+	subject := FILETIME fromInteger: 16r7FFF35F4F06C58F0.
+	sysTime := subject asSYSTEMTIME.
+	self assert: (FILETIME fromSYSTEMTIME: sysTime) equals: subject.
+	subject value: subject value - 100 nanoseconds.
+	"FileTimeToSystemTime truncates to milliseconds, not rounds"
+	self assert: subject value - subject asSYSTEMTIME asDateAndTime equals: 999900 nanoseconds
+	! !
 
 !OS.Tests.FILETIMETest categoriesForMethods!
 assertFromIntegerInvertible:!helpers!private! !
-testAsDateAndTime!public!unit tests! !
 testComparing!public!unit tests! !
+testDateAndTimeConversions!public!unit tests! !
 testDisplayString!public!unit tests! !
-testFromDateAndTime!public!unit tests! !
+testFromDateAndTimeLocal!public!unit tests! !
 testFromInteger!public!unit tests! !
-testFromSYSTEMTIME!public!unit tests! !
 testFromUnixTime!public!unit tests! !
 testPrintString!public!unit tests! !
+testSystemTimeConversions!public!unit tests! !
 !
 

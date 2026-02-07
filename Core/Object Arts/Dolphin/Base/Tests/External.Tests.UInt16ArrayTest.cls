@@ -18,7 +18,7 @@ arrayClass
 	^UInt16Array!
 
 elementFromIndex: anInteger
-	^#(0 32767 32768 65535 1 2) at: anInteger! !
+	^##({ 0. Int16.MaxValue. Int16.MaxValue + 1. UInt16.MaxValue. 1. UInt8.MaxValue + 1 }) at: anInteger! !
 
 !External.Tests.UInt16ArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

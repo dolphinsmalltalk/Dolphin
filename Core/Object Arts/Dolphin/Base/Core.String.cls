@@ -133,7 +133,7 @@ _sameAsString: aString
 		AssertionFailure	- anObject and/or receiver encoding not recognised."
 
 	<primitive: 219>
-	^self == anObject or: [anObject isString and: [(self compareOrdinals: anObject ignoringCase: false) == 0]]!
+	^self == anObject or: [anObject species == String and: [(self compareOrdinals: anObject ignoringCase: false) == 0]]!
 
 > aString
 	"Answer whether the receiver is lexically greater than the <readableString> argument, ignoring case, according to the implementation defined collation sequence (see <=>)."
@@ -1464,7 +1464,7 @@ fromAddress: anAddress
 		startingAt: 1!
 
 fromAddress: anAddress length: anInteger
-	"Answer a new String of length, anInteger, copied from the first anInteger bytes of, aString."
+	"Answer a new String of length, anInteger, copied from the first anInteger bytes at the specified address."
 
 	anAddress isNull ifTrue: [^nil].
 	^anAddress asExternalAddress
@@ -1472,6 +1472,11 @@ fromAddress: anAddress length: anInteger
 		from: 1
 		to: anInteger
 		startingAt: 1!
+
+fromAddress: anAddress owner: anObject length: anInteger
+	"Answer a new instance of the receiver, of size anInteger, copied from the first anInteger bytes at the specified address. The owner of the memory is ignored as we answer a copy."
+
+	^self fromAddress: anAddress length: anInteger!
 
 fromAtomId: anInteger
 	"Answer a new string which is a copy of the atom with id anInteger."
@@ -1747,6 +1752,7 @@ formatMessage:withArguments:!instance creation!public! !
 formatSystemMessage:withArguments:!instance creation!public! !
 fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !
+fromAddress:owner:length:!instance creation!public! !
 fromAtomId:!instance creation!public! !
 fromByteArray:!instance creation!public! !
 fromByteArray:length:!instance creation!public! !

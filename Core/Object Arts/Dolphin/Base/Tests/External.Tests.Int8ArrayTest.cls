@@ -18,7 +18,7 @@ arrayClass
 	^Int8Array!
 
 elementFromIndex: anInteger
-	^#(0 1 -128 -127 127 -1) at: anInteger! !
+	^##({ 0. 1. Int8.MinValue. Int8.MinValue + 1. Int8.MaxValue. -1 }) at: anInteger! !
 
 !External.Tests.Int8ArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

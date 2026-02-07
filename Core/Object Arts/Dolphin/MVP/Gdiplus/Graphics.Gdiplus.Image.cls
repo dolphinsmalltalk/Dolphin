@@ -274,7 +274,7 @@ frameDimensionsList
 	"Answer a collection of GUIDs that represent the receiver's frame dimensions."
 
 	| guids |
-	guids := StructureArray length: self frameDimensionsCount elementClass: GUID.
+	guids := GUIDArray new: self frameDimensionsCount.
 	Gdip
 		gdipImageGetFrameDimensionsList: self asParameter
 		dimensionIDs: guids

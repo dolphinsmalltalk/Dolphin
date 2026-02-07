@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UIntPtr
+External.AbstractIntPtr
 	subclass: #'External.IntPtr'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -21,12 +21,6 @@ isSigned
 
 	^true!
 
-unsignedValue: anUnsigned 
-	"Set the receiver's value field to the value of the unsigned positive
-	integer, anUnsigned."
-
-	bytes uintPtrAtOffset: 0 put: anUnsigned!
-
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -39,7 +33,6 @@ value: anInteger
 
 !External.IntPtr categoriesForMethods!
 isSigned!public!testing! !
-unsignedValue:!accessing!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !
@@ -50,8 +43,9 @@ byteSize
 	^_IntPtr_Size!
 
 defineFields
-	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
-	have a single value."
+	"Define the fields of the IntPtr structure.
+		IntPtr compileDefinition
+	"
 
 	self defineField: #value type: IntPtrField new beOverride! !
 

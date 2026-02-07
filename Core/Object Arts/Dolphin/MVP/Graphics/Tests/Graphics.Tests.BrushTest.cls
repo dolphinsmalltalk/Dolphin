@@ -58,7 +58,7 @@ testPrintString
 
 !
 
-testStbConversion
+testStbConvertFrom0
 	"Test deserializing Brushes serialized at version 0"
 
 	| brush version0bytes |
@@ -79,7 +79,7 @@ testStbConversion
 	self assert: brush class identicalTo: SysColorBrush.
 	self assert: brush color equals: Color window!
 
-testStbConversion2
+testStlConvertFrom0
 	"
 	brush := Brush withStyle: BS_HATCHED color: (Color red: 50 green: 150 blue: 250) hatch: HS_BDIAGONAL.
 	version0Stl := brush literalStoreArray
@@ -95,12 +95,39 @@ testStbConversion2
 				g: 150
 				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
-	self assert: brush logBrush lbStyle equals: BS_HATCHED! !
+	self assert: brush logBrush lbStyle equals: BS_HATCHED!
+
+testStlConvertFrom1
+	"Uses the example bitmap hatched brush from testBitmapBrush"
+
+	| brush version1Stl logBrush |
+	version1Stl := #(#'!!STL' 6 774 #{Graphics.Brush} nil true 582 1 #{OS.LOGBRUSH} 8 #[3 0 0 0 0 0 0 0 246 78 5 100] 2118 4 #{Graphics.DIBSection} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'xhatch.bmp' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 81925 nil nil 1 518 #{Graphics.Point} 17 17 3 nil).
+	brush := Object fromLiteralStoreArray: version1Stl.
+	self assert: brush class identicalTo: Brush.
+	logBrush := brush logBrush.
+	self assert: logBrush color equals: Color black.
+	self assert: logBrush lbStyle equals: BS_PATTERN.
+	self assert: logBrush hatch equals: (DIBSection fromId: 'xhatch.bmp').!
+
+testStlConvertFrom2
+	"Uses the example bitmap hatched brush from testBitmapBrush"
+
+	| brush version2Stl logBrush |
+	version2Stl := #(#'!!STL' 6 774 #{Graphics.Brush} nil true 838 2 #{OS.LOGBRUSH} 8 #[3 0 0 0 0 0 0 0 121 55 5 129] nil 2118 4 #{Graphics.DIBSection} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'xhatch.bmp' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 81925 nil nil 1 518 #{Graphics.Point} 17 17 3 nil).
+	brush := Object fromLiteralStoreArray: version2Stl.
+	self assert: brush class identicalTo: Brush.
+	logBrush := brush logBrush.
+	self assert: logBrush color equals: Color black.
+	self assert: logBrush lbStyle equals: BS_PATTERN.
+	self assert: logBrush hatch equals: (DIBSection fromId: 'xhatch.bmp').
+! !
 
 !Graphics.Tests.BrushTest categoriesForMethods!
 testBitmapBrush!public!unit tests! !
 testPrintString!public!unit tests! !
-testStbConversion!public!unit tests! !
-testStbConversion2!public!unit tests! !
+testStbConvertFrom0!public!unit tests! !
+testStlConvertFrom0!public!unit tests! !
+testStlConvertFrom1!public!unit tests! !
+testStlConvertFrom2!public!unit tests! !
 !
 

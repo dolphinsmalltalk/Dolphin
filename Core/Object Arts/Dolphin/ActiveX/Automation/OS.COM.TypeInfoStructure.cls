@@ -2,7 +2,7 @@
 
 External.FinalizableStructure
 	subclass: #'OS.COM.TypeInfoStructure'
-	instanceVariableNames: 'analyzer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -26,24 +26,14 @@ Instance variables:
 !OS.COM.TypeInfoStructure methodsFor!
 
 analyzer
-	"Private - Answer the value of the receiver's ''analyzer'' instance variable."
+	"Private - Answer the receiver's owning `TypeInfoAnalyzer`."
 
-	^analyzer!
+	^owner!
 
 analyzer: anObject
-	"Private - Set the value of the receiver's ''analyzer'' instance variable to the argument, anObject."
+	"Private - Set the receiver's owning `TypeInfoAnalyzer`."
 
-	analyzer := anObject!
-
-free
-	"Free external resources owned by the receiver.
-	N.B. Explicitly freeing an AXTypeInfoStructure may invalidate any of its
-	sub-structures, so we clear down the analyzer and typeinfo pointers.
-	Implementation Note: Generally speaking we only need to free
-	externally owned (i.e. non-null pointer) instances of the receiver."
-
-	super free.
-	analyzer := nil!
+	owner := anObject!
 
 fullName
 	"Answer a fully qualified name for the receiver, useful in debug output etc"
@@ -62,11 +52,11 @@ name
 	^self subclassResponsibility!
 
 needsFree
-	"Private - Answer whether the receiver requires freeing of any external resources..
-	Implementation Note: In this case we tend to have references to externally allocated
-	buffers, and these must be free'd by passing them back to the allocating interface."
+	"Private - Answer whether the receiver requires freeing of any external resources."
+	
+	"Implementation Note: In this case we tend to have references to externally allocated buffers, and these must be freed by passing them back to the allocating interface."
 
-	^self notNull and: [analyzer notNil]!
+	^owner notNil and: [self notNull]!
 
 tdesc
 	"Private - Answer a TYPEDESC for the object described by the receiver."
@@ -86,7 +76,6 @@ vtName
 !OS.COM.TypeInfoStructure categoriesForMethods!
 analyzer!accessing!private! !
 analyzer:!accessing!private! !
-free!public!realizing/unrealizing! !
 fullName!accessing!public! !
 initializePointer!initializing!private! !
 name!accessing!public! !

@@ -298,10 +298,7 @@ defaultTransactionIsolation
 	^TxnIsolationLevels at: (self getUInt32Info: SQL_DEFAULT_TXN_ISOLATION)!
 
 disconnect
-	"Private - disconnect without freeing handle. All oustanding
-	statements are free'd (this is necessary because they are
-	about to become invalid). Client objects should send close
-	instead."
+	"Private - disconnect without freeing handle. All oustanding statements are freed (this is necessary because they are about to become invalid). Client objects should send close instead."
 
 	handle isNull
 		ifFalse: 

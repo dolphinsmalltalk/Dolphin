@@ -98,6 +98,36 @@ testCompileDefinition
 	inst e: 65537.
 	self assert: inst e equals: 65537!
 
+testCopyReference
+	| struct copy ref |
+	struct := RECTL origin: 100@200 extent: 50@75.
+	ref := RECTL fromAddress: struct yourAddress.
+	self assert: ref isReferenceStruct.
+	copy := ref copy.
+	self assert: copy isValueStruct.
+	self deny: copy bytes identicalTo: ref bytes.
+	self assertIsNil: copy owner.
+	self assert: copy equals: ref.
+	self assert: copy equals: struct.
+	"Not a finalizable structure"
+	self deny: copy needsFree.
+	self deny: copy isFinalizable.
+!
+
+testCopyValue
+	| struct copy |
+	struct := RECTL origin: 100@200 extent: 50@75.
+	struct owner: struct.
+	copy := struct copy.
+	self deny: copy bytes identicalTo: struct bytes.
+	self assertIsNil: copy owner.
+	self assert: copy equals: struct.
+	self assert: copy isValueStruct.
+	"Not a finalizable structure"
+	self deny: copy needsFree.
+	self deny: copy isFinalizable.
+!
+
 testDynamicSelectors
 	<ignoreNotImplementedSelectors: #(writeOnly: readWrite)>
 
@@ -180,7 +210,6 @@ testHasUncompiledFields
 
 testIsNull
 	| struct |
-	self assert: FILETIME newPointer isNull.
 	struct := FILETIME new.
 	self assert: struct isNull not.
 	struct bytes: 0.
@@ -194,6 +223,33 @@ testIsNull
 	struct bytes: External.Address new.
 	self assert: struct isNull!
 
+testNewBuffer
+	| struct |
+	struct := FILETIME new.
+	self assert: struct isNull not.
+	self assert: struct isValueStruct.
+	self deny: struct isPointerStruct.
+	self deny: struct isReferenceStruct.
+	self deny: struct needsFree.
+	self deny: struct isFinalizable.
+	struct free.
+	self assert: struct isNull.
+	self deny: struct isValueStruct.
+	self deny: struct isPointerStruct.
+	self deny: struct isReferenceStruct.
+	self deny: struct needsFree.
+	self deny: struct isFinalizable!
+
+testNewPointer
+	| struct |
+	struct := FILETIME newPointer.
+	self assert: struct isNull.
+	self deny: struct needsFree.
+	self deny: struct isFinalizable.
+	self assert: struct isPointerStruct.
+	"Not a reference, because it is null"
+	self deny: struct isReferenceStruct!
+
 testUnderstoodSelectors
 	self assert: MSGBOXPARAMSW understoodSelectors asSortedArray
 		equals: #(#caption: #dwLanguageId: #dwStyle: #hInstance: #hwndOwner: #lpszCaption: #lpszIcon: #lpszText: #text:).
@@ -206,11 +262,15 @@ allNonInterfaceStructs!helpers!private! !
 testCanUnderstand!public!unit tests! !
 testCanUnderstandExhaustive!public!unit tests! !
 testCompileDefinition!public!unit tests! !
+testCopyReference!public!unit tests! !
+testCopyValue!public!unit tests! !
 testDynamicSelectors!public!unit tests! !
 testEquals!public!unit tests! !
 testFieldNamesFromTemplateExhaustive!public!unit tests! !
 testHasUncompiledFields!public!unit tests! !
 testIsNull!public!unit tests! !
+testNewBuffer!public!unit tests! !
+testNewPointer!public!unit tests! !
 testUnderstoodSelectors!public!unit tests! !
 !
 

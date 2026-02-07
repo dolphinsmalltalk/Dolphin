@@ -21,12 +21,27 @@ External.SCALAR comment: ''!
 = anObject
 	"Answer whether the receiver is equivalent to anObject."
 
-	^anObject = self value!
+	^anObject value = self value!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	(self isNull ifFalse: [self value]) displayOn: aPuttableStream!
+
+hash
+	^self value hash!
+
+printOn: aStream
+	"Append a textual representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(.
+	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self printValueOn: aStream].
+	aStream nextPut: $)!
+
+printValueOn: aStream
+	aStream print: self value!
 
 value
 	"Answer the receiver's value as a Smalltalk object of the appropriate scalar type for the subclass."
@@ -41,6 +56,9 @@ value: anObject
 !External.SCALAR categoriesForMethods!
 =!comparing!public! !
 displayOn:!printing!public! !
+hash!comparing!public! !
+printOn:!printing!public! !
+printValueOn:!printing!private! !
 value!converting!public! !
 value:!public! !
 !

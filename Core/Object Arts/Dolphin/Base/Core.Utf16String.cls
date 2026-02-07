@@ -457,6 +457,11 @@ fromAddress: anAddress length: anInteger
 		to: anInteger * 2
 		startingAt: 1!
 
+fromAddress: anAddress owner: anObject
+	"Answer a new String instantiated from the null terminated string at anAddress."
+
+	^self fromAddress: anAddress!
+
 fromBytes: aByteArray codePage: anInteger
 	"Answer an instance of the receiver constructed from the specified byte-string assumed to be encoded per the specified code page."
 
@@ -503,6 +508,7 @@ encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !
+fromAddress:owner:!instance creation!public! !
 fromBytes:codePage:!instance creation!public! !
 fromUtf16String:!instance creation!public! !
 initialize!development!initializing!public! !

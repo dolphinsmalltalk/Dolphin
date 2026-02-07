@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray
+External.IntegerArray
 	subclass: #'External.IntPtrArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -16,18 +16,18 @@ External.IntPtrArray comment: '`IntPtrArray` is a specialized `ExternalArray` to
 
 !External.IntPtrArray methodsFor!
 
-uncheckedAt: anInteger 
+basicUncheckedAt: anInteger
 	"Private - Answer an 32-bit unsigned <integer> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
 	^bytes intPtrAtOffset: (anInteger - 1) * VMConstants.IntPtrSize!
 
-uncheckedAt: indexInteger put: valueInteger 
+basicUncheckedAt: indexInteger put: valueInteger
 	^bytes intPtrAtOffset: (indexInteger - 1) * VMConstants.IntPtrSize put: valueInteger! !
 
 !External.IntPtrArray categoriesForMethods!
-uncheckedAt:!accessing!private! !
-uncheckedAt:put:!accessing!private! !
+basicUncheckedAt:!accessing!private! !
+basicUncheckedAt:put:!accessing!private! !
 !
 
 !External.IntPtrArray class methodsFor!

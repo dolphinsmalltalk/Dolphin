@@ -29,7 +29,7 @@ elementClass: anObject
 value
 	"Answer the receiver's value field as a Smalltalk object."
 
-	^self elementClass fromAddress: bytes! !
+	^self elementClass fromAddress: bytes owner: self! !
 
 !External.StructurePointer categoriesForMethods!
 elementClass!accessing!private! !
@@ -54,11 +54,12 @@ fromAddress: anAddress elementClass: elementClass
 	"Answer a new instance of the receiver that contains a pointer to
 	an <ExternalStructure> of the specified type."
 
-	^anAddress isNull ifFalse: [
-		self basicNew
-			initializeAtAddress: anAddress;
-			elementClass: elementClass;
-			yourself]!
+	^anAddress isNull
+		ifFalse: 
+			[self basicNew
+				initializeAtAddress: anAddress owner: nil;
+				elementClass: elementClass;
+				yourself]!
 
 getFieldNames
 	^#(#value)!
@@ -69,7 +70,7 @@ newNull: pointerClass elementClass: elementClass
 	an <ExternalStructure> of the specified type."
 
 	^self basicNew
-		initializeAtAddress: pointerClass new;
+		initializeAtAddress: pointerClass new owner: nil;
 		elementClass: elementClass;
 		yourself! !
 

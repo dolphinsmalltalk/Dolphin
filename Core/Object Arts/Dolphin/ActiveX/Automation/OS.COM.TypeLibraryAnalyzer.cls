@@ -283,14 +283,9 @@ fullNameFor: aString
 	^namespaceName isEmpty ifTrue: [aString] ifFalse: [namespaceName , '.' , aString]!
 
 getLibAttr
-	"Private - Answer a <TLIBATTR> detailing the library attributes for the receiver
-	(its LIBID, version, locale id, some flags, and an enumerator identifying
-	the target OS - which will always be Win32 in our case).
-	Note that the answer MUST NOT be free'd using ReleaseLibAttr() as it
-	is in fact a copy of the TLIBATTR originally supplied by the type lib.
-	As this is a fairly small structure copying is fast and avoids us having
-	to worry about freeing the structure correctly later with finalization and
-	a back pointer to the receiver."
+	"Private - Answer a <TLIBATTR> detailing the library attributes for the receiver (its LIBID, version, locale id, some flags, and an enumerator identifying the target OS - which will always be Win32 in our case)."
+
+	"Note that the answer MUST NOT be freed using ReleaseLibAttr() as it is in fact a copy of the TLIBATTR originally supplied by the type lib. As this is a fairly small structure copying is fast and avoids us having to worry about freeing the structure correctly later with finalization and a back pointer to the receiver."
 
 	| libattr tlb |
 	libattr := TLIBATTR newPointer.

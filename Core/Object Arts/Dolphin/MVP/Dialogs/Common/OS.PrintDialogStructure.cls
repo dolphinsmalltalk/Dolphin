@@ -65,7 +65,10 @@ hDevNames: aHandle
 	bytes uintPtrAtOffset: _OffsetOf_hDevNames put: aHandle!
 
 initialize
+	"Private - Perform any initialization required for the receiver which is specific to the value form. Answer the receiver."
+
 	super initialize.
+	"The structure may contain global memory allocations"
 	self beFinalizable!
 
 isDefault
@@ -74,9 +77,9 @@ isDefault
 	^self devNames isDefault!
 
 needsFree
-	"Private - Answer whether the receiver requires freeing of any external resources."
+	"Private - Answer whether the receiver requires freeing of any external resources. Value instances may need global heap handles to be deallocated."
 
-	^(self isNull or: [self isPointer]) not!
+	^self isValueStruct!
 
 orientation
 	^self devMode dmOrientation!
@@ -106,7 +109,7 @@ hDevNames!**compiled accessors**!public! !
 hDevNames:!**compiled accessors**!public! !
 initialize!initializing!public! !
 isDefault!public!testing! !
-needsFree!public!realizing/unrealizing! !
+needsFree!private!realizing/unrealizing! !
 orientation!accessing!public! !
 outputName!accessing!public! !
 paperSize!accessing!public! !
@@ -132,10 +135,17 @@ defineFields
 	super defineFields.
 	self
 		defineField: #hDevMode type: HANDLEField new;
-		defineField: #hDevNames type: HANDLEField new! !
+		defineField: #hDevNames type: HANDLEField new!
+
+requiresFinalization
+	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization. 
+	The instance may contain global heap handles."
+
+	^true! !
 
 !OS.PrintDialogStructure class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
+requiresFinalization!public!realizing/unrealizing!testing! !
 !
 
