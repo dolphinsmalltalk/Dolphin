@@ -46,15 +46,19 @@ addClass: aClass to: aPackageOrNil
 	source := self packageOfClass: aClass.
 	destination := aPackageOrNil == Package uncommitted ifFalse: [aPackageOrNil].
 	source == destination ifTrue: [^self].
-	(destination notNil and: [looseMethods notNil]) ifTrue: [
-		"Remove any selectors in the loose method cache that currently map to the new package (as these must no longer be loose)"
-		(looseMethods lookup: aClass)
-			ifNotNil: [:selectors | 
-				| toRemove |
-				toRemove := IdentitySet new.
-				selectors keysAndValuesDo: [:eachSelector :eachPackage |
-					eachPackage == destination ifTrue: [toRemove add: eachSelector]].
-				selectors removeAllKeys: toRemove]].
+	(destination notNil and: [looseMethods notNil])
+		ifTrue: 
+			["Remove any selectors in the loose method cache that currently map to the new package (as these must no longer be loose)"
+			{ aClass. aClass class } do: 
+					[:each |
+					(looseMethods lookup: each)
+						ifNotNil: 
+							[:selectors |
+							| toRemove |
+							toRemove := IdentitySet new.
+							selectors
+								keysAndValuesDo: [:eachSelector :eachPackage | eachPackage == destination ifTrue: [toRemove add: eachSelector]].
+							selectors removeAllKeys: toRemove]]].
 	source
 		ifNotNil: 
 			[packagedVariables removeKey: aClass fullyQualifiedReference ifAbsent: nil.
