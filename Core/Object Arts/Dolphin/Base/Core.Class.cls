@@ -238,6 +238,7 @@ allImports
 	^all contents!
 
 basicAddBinding: aVariableBinding
+	aVariableBinding key isString ifFalse: [self error: 'Invalid static variable name: ', aVariableBinding key printString].
 	^((classPool ifNil: [classPool := Dictionary new]) addNewElement: aVariableBinding) and: 
 			[aVariableBinding environment: self.
 			true]!

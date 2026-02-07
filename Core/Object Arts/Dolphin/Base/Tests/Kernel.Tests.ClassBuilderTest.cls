@@ -225,6 +225,7 @@ testClassVars
 	self assert: const value equals: (Set with: 'abc').
 	self assert: const isImmutable.
 	self assert: const value isImmutable.
+	self should: [testClass addClassConstant: 123 value: 456] raise: Error matching: [:ex | ex description = 'Invalid static variable name: 123'].
 	testClass addClassConstant: 'Var1' value: (1 to: 5).
 	self assert: testClass classVariables single key equals: 'Var2'.
 	const := testClass classConstants detect: [:each | each key = 'Var1'].
