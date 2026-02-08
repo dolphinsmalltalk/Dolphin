@@ -570,7 +570,7 @@ size_t ObjectMemory::CountFreeOTEs()
 					else
 						TRACESTREAM<< L"WARNING: ";
 					
-					TRACESTREAM << ote<< L" (Oop " << LPVOID(ote)<< L"/" << i<< L") had refs " << std::dec << (int)currentRefs[i] 
+					TRACESTREAM << ote << L" (Oop " << LPVOID(ote)<< L"/" << i<< L") had refs " << std::dec << (int)currentRefs[i] 
 							<< L" should be " << int(ote->m_count) << std::endl;
 					errors++;
 
@@ -579,10 +579,16 @@ size_t ObjectMemory::CountFreeOTEs()
 						if (!Interpreter::m_bAsyncGCDisabled)
 						{
 							TRACESTREAM<< L" Referenced From:" << std::endl;
+							auto execTrace = Interpreter::executionTrace;
+							Interpreter::executionTrace = 0;
 							ArrayOTE* oteRefs = ObjectMemory::referencesTo(reinterpret_cast<Oop>(ote), true);
+							Interpreter::executionTrace = execTrace;
 							Array* refs = oteRefs->m_location;
-							for (auto i=0u;i<oteRefs->pointersSize();i++)
-								TRACESTREAM<< L"  " << reinterpret_cast<OTE*>(refs->m_elements[i]) << std::endl;
+							for (auto i = 0u; i < oteRefs->pointersSize(); i++) 
+							{
+								Oop ref = refs->m_elements[i];
+								TRACESTREAM << L"  " << std::hex << ref << ": " << reinterpret_cast<OTE*>(ref) << std::endl;
+							}
 							deallocate(reinterpret_cast<OTE*>(oteRefs));
 						}
 					}

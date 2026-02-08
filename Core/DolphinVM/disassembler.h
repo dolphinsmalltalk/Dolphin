@@ -359,10 +359,11 @@ public:
 		case OpCode::ShortSpecialSend+26:
 		case OpCode::ShortSpecialSend+27:
 		case OpCode::ShortSpecialSend+28:
+		case OpCode::ShortSpecialSend+29:
 		case OpCode::ShortSpecialSend+30:
 		case OpCode::ShortSpecialSend+31:
 		{
-			stream << L"Special Send #" << context.GetSpecialSelector(static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortSpecialSend));
+			stream << L"Special Send " << context.GetSpecialSelector(static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortSpecialSend));
 		}
 		break;
 
@@ -704,7 +705,7 @@ public:
 	void PrintSendInstruction(I ip, std::wostream& stream, int index, int argumentCount)
 	{
 		std::wstring selector = context.GetLiteralAsString(index);
-		stream << L"Send[" << std::dec << index << L"]: #" << selector << L" with " << argumentCount << (argumentCount == 1 ? L" arg" : L" args");
+		stream << L"Send[" << std::dec << index << L"]: " << selector << L" with " << argumentCount << (argumentCount == 1 ? L" arg" : L" args");
 	}
 
 	void PrintTempInstruction(I ip, std::wostream& stream, const char* type, size_t index)

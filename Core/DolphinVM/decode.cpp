@@ -227,8 +227,10 @@ wostream& operator<<(wostream& stream, const SymbolOTE* ote)
 		// Expected a Symbol Oop, but got something else
 		return stream << L"**Non-symbol: " << reinterpret_cast<const OTE*>(ote) << L"**";
 	else
-		// Dump without a # prefix
-		return stream << reinterpret_cast<const StringOTE*>(ote);
+	{
+		// Dump with a # prefix
+		return stream << '#' << reinterpret_cast<const StringOTE*>(ote);
+	}
 }
 
 wostream& operator<<(wostream& stream, const BehaviorOTE* ote)
