@@ -41,6 +41,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(SolutionDir)dolphin.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -64,7 +65,6 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Midl>
-      <SuppressStartupBanner>false</SuppressStartupBanner>
       <DllDataFileName>$(ProjectDir)/dlldata.c</DllDataFileName>
       <ValidateAllParameters>false</ValidateAllParameters>
       <MinimumTargetSystem />
@@ -72,14 +72,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Midl Include="Compiler\Compiler.idl">
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>Compiler.tlb</TypeLibraryName>
       <HeaderFileName>Compiler_i.h</HeaderFileName>
     </Midl>
     <Midl Include="DolphinSmalltalk.idl">
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>DolphinSmalltalk.tlb</TypeLibraryName>
       <HeaderFileName>DolphinSmalltalk_i.h</HeaderFileName>
       <ValidateAllParameters>false</ValidateAllParameters>

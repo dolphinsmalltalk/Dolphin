@@ -168,6 +168,10 @@ library CompilerLib
 	};
 
 	[
+		#ifdef _DEBUG
+		// Debug builds have a different UUID to avoid cross contamination (i.e. accidentally using a debug compiler in a non-debug VM, or vice versa)
+		uuid(9b1f8c3b-5e7a-4b9b-bdcd-2f0c6e7f1a9a)		// 8.0 debug
+		#else	
 		//uuid(CF88CAFC-2993-11D3-8366-6E485B000000)	// 3.05
 		//uuid(C47CCC7F-A6B6-401E-8853-F1EC1D20114D)	// 4.x
 		//uuid(77A96CF7-0709-4EE5-ABCD-EF11735CEA0D)	// 5.0
@@ -175,6 +179,7 @@ library CompilerLib
 		//uuid(B1401906-004A-4D84-8A8D-7D7D5F7FEC92)	// 6.0
 		//uuid(F27D15BD-B8EB-488C-9932-C7FA0C598640)	// 7.0
 		uuid(84b13fd5-cd7c-48a6-b8da-bcb5dcfa05ea)		// 8.0
+		#endif
 	]
 	coclass Compiler
 	{

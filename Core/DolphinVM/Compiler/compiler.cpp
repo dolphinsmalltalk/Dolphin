@@ -1931,7 +1931,10 @@ void Compiler::ParseTerm(textpos_t textPosition)
 			textpos_t start = ThisTokenRange.m_start;
 			POTE array=ParseArray();
 			if (m_ok)
+			{
 				GenLiteralConstant(reinterpret_cast<Oop>(array), TEXTRANGE(start, LastTokenRange.m_stop));
+				m_piVM->RemoveReference((Oop)array);
+			}
 		}
 		break;
 
@@ -3419,6 +3422,7 @@ POTE Compiler::ParseArray()
 				// Gather new literals into a new array
 				const size_t elemcount = elems.size();
 				arrayPointer = m_piVM->NewArray(elemcount);
+				m_piVM->AddReference((Oop)arrayPointer);
 				STVarObject& array = *(STVarObject*)GetObj(arrayPointer);
 				for (size_t i=0; i < elemcount; i++)
 				{

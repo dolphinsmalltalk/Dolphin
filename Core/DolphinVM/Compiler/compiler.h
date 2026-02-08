@@ -49,8 +49,13 @@ ENABLE_BITMASK_OPERATORS(CompilerFlags)
 #include "bytecode.h"
 #include "ComObject.h"
 
-constexpr WCHAR const CompilerProgId[] = L"Dolphin.Compiler.8";
-constexpr WCHAR const CompilerVerIndProgId[] = L"Dolphin.Compiler";
+#ifdef _DEBUG
+	constexpr WCHAR const CompilerProgId[] = L"Dolphin.DebugCompiler.8";
+	constexpr WCHAR const CompilerVerIndProgId[] = L"Dolphin.DebugCompiler";
+#else
+	constexpr WCHAR const CompilerProgId[] = L"Dolphin.Compiler.8";
+	constexpr WCHAR const CompilerVerIndProgId[] = L"Dolphin.Compiler";
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CDolphinSmalltalk
