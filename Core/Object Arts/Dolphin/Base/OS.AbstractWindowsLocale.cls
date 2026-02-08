@@ -384,9 +384,7 @@ shortAmDesignator
 	^(info lookup: LOCALE_SSHORTESTAM)
 		ifNil: 
 			[info at: LOCALE_SSHORTESTAM
-				put: (Kernel32 isWindows10OrGreater
-						ifTrue: [self getLocaleInfoString: LOCALE_SSHORTESTAM]
-						ifFalse: [self amDesignator first])]!
+				put: (self getLocaleInfoString: LOCALE_SSHORTESTAM)]!
 
 shortDateFormat
 	"Answer the short date format for the receiver locale."
@@ -405,9 +403,7 @@ shortPmDesignator
 	^(info lookup: LOCALE_SSHORTESTPM)
 		ifNil: 
 			[info at: LOCALE_SSHORTESTPM
-				put: (Kernel32 isWindows10OrGreater
-						ifTrue: [self getLocaleInfoString: LOCALE_SSHORTESTPM]
-						ifFalse: [self pmDesignator first])]!
+				put: (self getLocaleInfoString: LOCALE_SSHORTESTPM)]!
 
 shortTimeFormat
 	"Answer the short time format for the receiver locale."

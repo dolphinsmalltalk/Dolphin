@@ -1451,11 +1451,8 @@ inputQueueMask
 
 	"Implementation Note: See the WinUser.h header file in the Windows SDK"
 
-	| qs_Input |
-	qs_Input := self isWindows8OrGreater
-				ifTrue: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER)]
-				ifFalse: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT)].
-	^qs_Input | ##(QS_POSTMESSAGE | QS_TIMER | QS_PAINT | QS_HOTKEY | QS_SENDMESSAGE)!
+	^##(QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER | QS_POSTMESSAGE | QS_TIMER | QS_PAINT
+		| QS_HOTKEY | QS_SENDMESSAGE)!
 
 isDebuggerPresent
 	"Invoke the IsDebuggerPresent() function of the module wrapped by the receiver.
@@ -1471,10 +1468,9 @@ isValidLocale: locale dwFlags: dwFlags
 	^self invalidCall: _failureCode!
 
 isWindows10OrGreater
-	^self
-		isWindowsVersionOrGreater: 10
-		wMinorVersion: 0
-		wServicePackMajor: 0!
+	"Dolphin 8 and later no longer run on platforms prior to Windows 10."
+
+	^true!
 
 isWindows11OrGreater
 	| osvi |
@@ -1491,28 +1487,24 @@ isWindows11OrGreater
 				condition: VER_GREATER)!
 
 isWindows7OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 1
-		wServicePackMajor: 0!
+	"Dolphin 8 and later no longer run on platforms prior to Windows 10."
+
+	^true!
 
 isWindows7SP1OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 1
-		wServicePackMajor: 1!
+	"Dolphin 8 and later no longer run on platforms prior to Windows 10."
+
+	^true!
 
 isWindows8OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 2
-		wServicePackMajor: 0!
+	"Dolphin 8 and later no longer run on platforms prior to Windows 10."
+
+	^true!
 
 isWindows8Point1OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 3
-		wServicePackMajor: 0!
+	"Dolphin 8 and later no longer run on platforms prior to Windows 10."
+
+	^true!
 
 isWindowsServer
 	"Answers whether the current OS is a Windows Server release."
@@ -1557,16 +1549,10 @@ isWindowsVistaOrGreater
 	^true!
 
 isWindowsVistaSP1OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 1!
+	^true!
 
 isWindowsVistaSP2OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 2!
+	^true!
 
 isWindowsXPOrGreater
 	"Dolphin 7 and later no longer run on platforms prior to Vista."

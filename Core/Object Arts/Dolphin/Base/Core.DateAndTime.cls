@@ -511,13 +511,9 @@ clockPrecision
 	"Answer a <Duration> such that after that period of time passes, #now is guaranteed
 	to answer a different <DateAndTime>."
 
-	^OS.Kernel32 isWindows8OrGreater
-		ifTrue: 
-			["MSDN says that the resolution for GetSystemTimePreciseAsFileTime is <1uS. The resolution of FILETIMEs is 100nS"
-			1 microseconds]
-		ifFalse: 
-			["Otherwise, the best we can achieve is the current system clock resolution, which by default is 15.6mS"
-			Delay.Resolution microseconds]!
+	"MSDN says that the resolution for GetSystemTimePreciseAsFileTime is <1uS. The resolution of FILETIMEs is 100nS"
+
+	^1 microseconds!
 
 daysInMonth: monthInteger forYear: yearInteger 
 	"Answer the number of days in monthInteger for yearInteger. 
