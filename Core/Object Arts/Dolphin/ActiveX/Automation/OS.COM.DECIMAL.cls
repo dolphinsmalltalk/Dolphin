@@ -4,7 +4,7 @@ External.SCALAR
 	subclass: #'OS.COM.DECIMAL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_DECIMAL_Size' -> 16r10.
@@ -29,14 +29,6 @@ OS.COM.DECIMAL comment: '`DECIMAL` is an `External.Structure` class to represent
 !OS.COM.DECIMAL categoriesForClass!External-Data-Structured-COM! !
 
 !OS.COM.DECIMAL methodsFor!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver."
-
-	^VARIANT new
-		vt: (self vt bitOr: VT_BYREF);
-		reference: self;
-		yourself!
 
 displayOn: aPuttableStream
 	aPuttableStream locale displayDECIMAL: self on: aPuttableStream!
@@ -114,7 +106,6 @@ value: aScaledDecimalOrInteger
 		uint64AtOffset: _OffsetOf_lo64 put: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF)! !
 
 !OS.COM.DECIMAL categoriesForMethods!
-asVariant!converting!public! !
 displayOn:!displaying!public! !
 hi32!**compiled accessors**!public! !
 hi32:!**compiled accessors**!public! !
@@ -166,18 +157,15 @@ initialize
 	self addClassConstant: 'SmallestValue' value: (1 / maxScale exp10 asScaledDecimal: maxScale).
 	VM registryAt: self name put: self!
 
-newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, DECIMAL values."
-
-	^SAFEARRAY
-		length: anInteger
-		vt: VT_DECIMAL
-		elementClass: self!
-
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil!
+
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#decimalVector!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
@@ -191,8 +179,8 @@ byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!initializing!private! !
-newSAFEARRAY:!double dispatch!public! !
 uninitialize!class hierarchy-removing!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
 !
 

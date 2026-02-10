@@ -82,10 +82,15 @@ uninitialize
 
 	VM registryAt: self name put: nil!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#boolVector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's type when represented in a <VARIANT>."
 
-	^AutomationConstants.VT_BOOL! !
+	^OleVariant.VT_BOOL! !
 
 !OS.COM.VARIANT_BOOL class categoriesForMethods!
 arrayType!constants!public! !
@@ -93,6 +98,7 @@ icon!constants!public! !
 initialize!development!initializing!private! !
 typeName!constants!private! !
 uninitialize!class hierarchy-removing!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
 !
 

@@ -17,7 +17,13 @@ External.UInt8Array comment: '`UInt8Array` is a specialized `ExternalArray` to r
 !External.UInt8Array methodsFor!
 
 printElementArrayOn: aStream
-	aStream print: self value!
+	| locale |
+	aStream nextPutAll: '#['.
+	locale := aStream locale.
+	aStream locale: SmalltalkLocale.Hex.
+	[self value do: [:each | aStream print: each] separatedBy: [aStream space]]
+		ensure: [aStream locale: locale].
+	aStream nextPut: $]!
 
 value
 	^bytes isNull ifFalse: [

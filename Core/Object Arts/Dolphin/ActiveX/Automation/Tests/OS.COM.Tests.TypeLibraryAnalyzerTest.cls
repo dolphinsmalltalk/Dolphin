@@ -14,12 +14,18 @@ OS.COM.Tests.TypeLibraryAnalyzerTest comment: 'If these tests fail make sure you
 
 !OS.COM.Tests.TypeLibraryAnalyzerTest methodsFor!
 
+hasTestTypelib
+	"The test typelib must be registered by running regsvr32 on Tests\TLATest\Debug\TLATest.dll"
+
+	^Tests.TestTypelib current analyzer notNil!
+
 tearDown
 	Tests.TestTypelib reset.
 	(Package manager packageNamed: 'Excel' ifNone: nil) ifNotNil: [:package | package uninstall].
 	super tearDown!
 
 testDefaultArgs
+	<skipUnless: #hasTestTypelib>
 	<ignoreNotImplementedSelectors: #(testDefaultBool testDefaultBstr testDefaultDate testDefaultCy testDefaultI1 testDefaultI2 testDefaultI4 testDefaultI8 testDefaultIDispatch testDefaultIUnknown testDefaultUI1 testDefaultUI2 testDefaultUI4 testDefaultR4 testDefaultR8 testDefaultVariant)>
 	| obj tlb |
 	tlb := self tlaTestTypelib.
@@ -67,6 +73,7 @@ testDispinterfacePropGetOptionalArguments
 	self assert: (class includesSelector: selector)!
 
 testQuotesInIDL
+	<skipUnless: #hasTestTypelib>
 	| class tlb |
 	tlb := self tlaTestTypelib.
 	#(#ITestQuotesInIDL #TestRect #TestPoint) do: 
@@ -105,6 +112,7 @@ tlaTestTypelib
 	^analyzer! !
 
 !OS.COM.Tests.TypeLibraryAnalyzerTest categoriesForMethods!
+hasTestTypelib!preconditions!private! !
 tearDown!public!unit tests! !
 testDefaultArgs!public!unit tests! !
 testDispinterfacePropGetOptionalArguments!public!unit tests! !

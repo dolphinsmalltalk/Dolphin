@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'OS.COM.RecordClass'
 	instanceVariableNames: 'recordInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -78,7 +78,7 @@ init: addressOrBytes
 	recordInfo RecordInit: addressOrBytes!
 
 marshal: aRecord 
-	aRecord recordInfo guid = self guid ifFalse: [HRESULTError signalWith: AutomationErrors.DISP_E_TYPEMISMATCH].
+	aRecord recordInfo guid = self guid ifFalse: [HRESULTError signalWith: DISP_E_TYPEMISMATCH].
 	^aRecord!
 
 name

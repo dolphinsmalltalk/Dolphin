@@ -1,0 +1,432 @@
+﻿| package |
+package := Package name: 'ActiveX Property Sets Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.COM.Tests.CABOOLTest}
+	#{OS.COM.Tests.CABSTRTest}
+	#{OS.COM.Tests.CACLSIDTest}
+	#{OS.COM.Tests.CACTest}
+	#{OS.COM.Tests.CACYTest}
+	#{OS.COM.Tests.CADATETest}
+	#{OS.COM.Tests.CADBLTest}
+	#{OS.COM.Tests.CAFILETIMETest}
+	#{OS.COM.Tests.CAFLTTest}
+	#{OS.COM.Tests.CAHTest}
+	#{OS.COM.Tests.CAITest}
+	#{OS.COM.Tests.CALPSTRTest}
+	#{OS.COM.Tests.CALPWSTRTest}
+	#{OS.COM.Tests.CALTest}
+	#{OS.COM.Tests.CAPROPVARIANTTest}
+	#{OS.COM.Tests.CASCODETest}
+	#{OS.COM.Tests.CAUBTest}
+	#{OS.COM.Tests.CAUHTest}
+	#{OS.COM.Tests.CAUITest}
+	#{OS.COM.Tests.CLSIDArrayTest}
+	#{OS.COM.Tests.LPSTRArrayTest}
+	#{OS.COM.Tests.PROPVARIANTArrayTest}
+	#{OS.COM.Tests.PROPVARIANTTest}
+	#{OS.Tests.FILETIMEArrayTest}
+	#{OS.Tests.HRESULTArrayTest}
+).
+
+package setMethodNames: #(
+	#(#{External.Tests.DOUBLEArrayTest} #testAsPropVariant)
+	#(#{OS.COM.Tests.OleVariantTest} #testCLSIDArrayEmpty)
+	#(#{OS.COM.Tests.OleVariantTest} #testCLSIDArrayMany)
+	#(#{OS.COM.Tests.OleVariantTest} #testCLSIDOne)
+	#(#{OS.COM.Tests.OleVariantTest} #testFiletimeArrayEmpty)
+	#(#{OS.COM.Tests.OleVariantTest} #testFiletimeArrayMany)
+	#(#{OS.COM.Tests.OleVariantTest} #testFiletimeArrayOne)
+	#(#{OS.COM.Tests.OleVariantTest} #testHRESULTArrayEmpty)
+	#(#{OS.COM.Tests.OleVariantTest} #testHRESULTArrayMany)
+	#(#{OS.COM.Tests.OleVariantTest} #testHRESULTArrayOne)
+	#(#{OS.COM.Tests.OleVariantTest} #verifyCLSIDArray:)
+	#(#{OS.COM.Tests.OleVariantTest} #verifyHRESULTArray:)
+	#(#{OS.COM.Tests.VARIANTTest} #testConvertToPropVariant)
+	#(#{OS.COM.Tests.VARIANTTest} #verifyCLSIDArray:)
+	#(#{OS.COM.Tests.VARIANTTest} #verifyFileTimeArray:)
+	#(#{OS.COM.Tests.VARIANTTest} #verifyHRESULTArray:)
+).
+
+package setPrerequisites: #(
+	'..\..\Automation\ActiveX Automation'
+	'..\..\Automation\Tests\ActiveX Automation Tests'
+	'..\ActiveX Property Sets'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\COM\OLE COM'
+	'..\..\COM\Tests\OLE COM Tests'
+).
+
+package!
+
+"Class Definitions"!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.COM.Tests.CLSIDArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.Tests.FILETIMEArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'OS.Tests.HRESULTArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CABOOLTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CABSTRTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CACLSIDTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CACTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CACYTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CADATETest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CADBLTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CAFILETIMETest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CAFLTTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CAHTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CAITest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CALPSTRTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CALPWSTRTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CALTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CAPROPVARIANTTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CASCODETest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CAUBTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CAUHTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.CountedArrayTest
+	subclass: #'OS.COM.Tests.CAUITest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.OleVariantArrayTest
+	subclass: #'OS.COM.Tests.PROPVARIANTArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.StringPointerArrayTest
+	subclass: #'OS.COM.Tests.LPSTRArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.OleVariantTest
+	subclass: #'OS.COM.Tests.PROPVARIANTTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!External.Tests.DOUBLEArrayTest methodsFor!
+
+testAsPropVariant
+	<namespace: OS.COM.Tests>
+	| var subject values cadbl |
+	values := #(-1.5 0 1 1.25).
+	subject := DOUBLEArray withAll: values.
+	var := subject asVariant: PROPVARIANT.
+	self assert: var vt equals: OleVariant.VT_VECTOR | OleVariant.VT_R8.
+	cadbl := var value.
+	self assert: cadbl equals: subject.
+	self assert: subject equals: cadbl.
+	var free! !
+
+!External.Tests.DOUBLEArrayTest categoriesForMethods!
+testAsPropVariant!public!unit tests! !
+!
+
+!OS.COM.Tests.OleVariantTest methodsFor!
+
+testCLSIDArrayEmpty
+	self verifyCLSIDArray: CLSIDArray new!
+
+testCLSIDArrayMany
+	| clsids |
+	clsids := CLSIDArray
+				withAll: { CLSID null. CLSID fromString: '{0002E005-0000-0000-C000-000000000046}' }.
+	self verifyCLSIDArray: clsids!
+
+testCLSIDOne
+	self
+		verifyCLSIDArray: (CLSIDArray with: (CLSID fromString: '{0002E005-0000-0000-C000-000000000046}'))!
+
+testFiletimeArrayEmpty
+	self verifyFileTimeArray: FILETIMEArray new!
+
+testFiletimeArrayMany
+	self verifyFileTimeArray: (FILETIMEArray withAll: self exampleFileTimes)!
+
+testFiletimeArrayOne
+	self verifyFileTimeArray: (FILETIMEArray with: self exampleFileTimes first)!
+
+testHRESULTArrayEmpty
+	self verifyHRESULTArray: HRESULTArray new!
+
+testHRESULTArrayMany
+	self verifyHRESULTArray: (HRESULTArray withAll: { E_FAIL. S_OK. S_FALSE. E_UNEXPECTED })!
+
+testHRESULTArrayOne
+	self verifyHRESULTArray: (HRESULTArray with: E_FAIL)!
+
+verifyCLSIDArray: aCLSIDArray
+	self subclassResponsibility!
+
+verifyHRESULTArray: anHRESULTArray
+	self subclassResponsibility! !
+
+!OS.COM.Tests.OleVariantTest categoriesForMethods!
+testCLSIDArrayEmpty!public!unit tests! !
+testCLSIDArrayMany!public!unit tests! !
+testCLSIDOne!public!unit tests! !
+testFiletimeArrayEmpty!public!unit tests! !
+testFiletimeArrayMany!public!unit tests! !
+testFiletimeArrayOne!public!unit tests! !
+testHRESULTArrayEmpty!public!unit tests! !
+testHRESULTArrayMany!public!unit tests! !
+testHRESULTArrayOne!public!unit tests! !
+verifyCLSIDArray:!helpers!private! !
+verifyHRESULTArray:!helpers!private! !
+!
+
+!OS.COM.Tests.VARIANTTest methodsFor!
+
+testConvertToPropVariant
+	| propvar sa1 sa2 |
+	subject := 'abc' asVariant.
+	self assert: subject vt equals: VT_BSTR.
+	propvar := subject asVariant: PROPVARIANT.
+	self assert: propvar isKindOf: PROPVARIANT.
+	"Conversion doesn't convert BSTR to LPWSTR unfortunately"
+	self assert: propvar vt equals: VT_BSTR.
+	sa1 := propvar value.
+	self assert: sa1 equals: 'abc'.
+	self assert: propvar isValueStruct.
+	self assert: propvar isFinalizable.
+	self assert: propvar needsFree.
+	self deny: propvar refAddress equals: subject refAddress.
+	sa1 free.
+	self freeSubject.
+	"Similarly, SAFEARRAY doesn't become a VT_VECTOR."
+	subject := (Utf16StringArray withAll: #('abc' 'def')) asVariant.
+	propvar := subject asVariant: PROPVARIANT.
+	self assert: propvar vt equals: subject vt.
+	sa1 := propvar value.
+	sa2 := subject value.
+	self assert: sa1 equals: sa2.
+	sa1 free.
+	sa2 free.
+	propvar free!
+
+verifyCLSIDArray: aCLSIDArray
+	| value |
+	subject := aCLSIDArray asVariant: self subjectClass.
+	self assert: subject vt equals: VT_ARRAY | VT_RECORD.
+	self assert: subject asExternalArray equals: aCLSIDArray.
+	value := subject value.
+	self assert: value isKindOf: SAFEARRAY.
+	self assert: value isReferenceStruct.
+	self assert: value owner equals: subject.
+	self assert: value isFinalizable.
+	self deny: value needsFree.
+	"self assert: value elementClass equals: varElementClass."
+	self assert: value size equals: aCLSIDArray length.
+	self assert: value asArray equals: aCLSIDArray asArray.
+	self assert: subject clsidVector equals: aCLSIDArray.
+	"Note that we must free any reference safearrays first, or as here, remove its lock."
+	value unaccessData!
+
+verifyFileTimeArray: aFILETIMEArray
+	| value varElementClass |
+	subject := aFILETIMEArray asVariant: self subjectClass.
+	varElementClass := self elementClassFor: aFILETIMEArray elementClass.
+	self assert: subject vt equals: VT_ARRAY | varElementClass vt.
+	subject asExternalArray with: aFILETIMEArray do: [:actual :expected |
+		self assert: actual closeTo: expected precision: 100 microseconds].
+	value := subject value.
+	self assert: value isKindOf: SAFEARRAY.
+	self assert: value isReferenceStruct.
+	self assert: value owner equals: subject.
+	self deny: value needsFree.
+	self assert: value isFinalizable.
+	self assert: value elementClass equals: varElementClass.
+	self assert: value size equals: aFILETIMEArray length.
+	value asArray with: aFILETIMEArray do: [:actual :expected |
+		self assert: actual closeTo: expected precision: 100 microseconds].
+	value free!
+
+verifyHRESULTArray: anHRESULTArray
+	| value |
+	subject := anHRESULTArray asVariant: self subjectClass.
+	self assert: subject vt equals: VT_ARRAY | VT_ERROR.
+	self assert: subject asExternalArray equals: anHRESULTArray.
+	value := subject value.
+	self assert: value isKindOf: SAFEARRAY.
+	self assert: value isReferenceStruct.
+	self assert: value owner equals: subject.
+	self deny: value needsFree.
+	self assert: value isFinalizable.
+	"self assert: value elementClass equals: varElementClass."
+	self assert: value size equals: anHRESULTArray length.
+	self assert: value asArray equals: anHRESULTArray asArray.
+	self assert: subject clsidVector equals: anHRESULTArray.
+	value free! !
+
+!OS.COM.Tests.VARIANTTest categoriesForMethods!
+testConvertToPropVariant!public!unit tests! !
+verifyCLSIDArray:!helpers!private! !
+verifyFileTimeArray:!helpers!private! !
+verifyHRESULTArray:!helpers!private! !
+!
+
+"End of package definition"!
+

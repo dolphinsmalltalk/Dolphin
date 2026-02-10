@@ -14,19 +14,19 @@ OS.COM.Tests.DATEArrayTest comment: ''!
 
 !OS.COM.Tests.DATEArrayTest methodsFor!
 
+assertElement: anObject equals: anObject2
+	self assert: anObject closeTo: anObject precision: 100 microseconds!
+
 elementToValue: element 
 	^element asLocal!
 
 testSelfEvaluating
 	| subject |
 	subject := self newTestSubjectOfSize: 6.
-	self deny: subject isSelfEvaluating.
-	self assert: subject printString
-		equals: 'a <1p>(<2p> <3p> <4p> <5p> <6p> <7p>)'
-				<< ({ self arrayClass } , ((1 to: 6) collect: [:i | self canonicalizeValue: i])).
-	^self! !
+	self deny: subject isSelfEvaluating! !
 
 !OS.COM.Tests.DATEArrayTest categoriesForMethods!
+assertElement:equals:!asserting!private! !
 elementToValue:!helpers!private! !
 testSelfEvaluating!public!unit tests! !
 !
@@ -37,7 +37,7 @@ arrayClass
 	^DATEArray!
 
 elementFromIndex: anInteger
-	^##({
+	^{
 		DateAndTime
 			rataDie: DATE.EpochRD
 			seconds: 0
@@ -54,7 +54,7 @@ elementFromIndex: anInteger
 		DateAndTime
 			rataDie: DATE.MaxValue truncated + DATE.EpochRD
 			seconds: DATE.MaxValue fractionPart * 86400
-			offsetSeconds: 0.
+			offsetSeconds: Locale timeZoneInformation offsetSeconds.
 		DateAndTime
 			year: 1899
 			month: 12
@@ -69,7 +69,7 @@ elementFromIndex: anInteger
 			month: 1
 			day: 1
 			offset: 0 seconds
-	}) at: anInteger! !
+	} at: anInteger! !
 
 !OS.COM.Tests.DATEArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

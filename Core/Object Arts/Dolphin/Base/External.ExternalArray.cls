@@ -107,12 +107,12 @@ at: index ifAbsent: exceptionBlock
 		ifTrue: [self uncheckedAt: index]
 		ifFalse: [exceptionBlock value]!
 
-at: anInteger put: newValue
+at: anInteger put: anObject
 	"Set the element of the receiver at the specified index.
 	Raise an error if the index is out of bounds."
 
 	(anInteger < 1 or: [anInteger > self length]) ifTrue: [self errorSubscriptBounds: anInteger].
-	^self uncheckedAt: anInteger put: newValue!
+	^self uncheckedAt: anInteger put: anObject!
 
 atAllPut: anObject
 	"Replace all the elements of the receiver with the native representation of the <Object> argument.
@@ -127,14 +127,14 @@ basicAt: anInteger
 
 	(anInteger < 1 or: [anInteger > self length]) 
 		ifTrue: [^self errorSubscriptBounds: anInteger].
-	^self uncheckedAt: anInteger!
+	^self basicUncheckedAt: anInteger!
 
-basicAt: indexInteger put: valueInteger
+basicAt: indexInteger put: anObject
 	"Private - Replace the receiver's indexed element at the argument, index, with the argument, value. Answer value."
 
 	(indexInteger < 1 or: [indexInteger > self length])
 		ifTrue: [self errorSubscriptBounds: indexInteger].
-	^self uncheckedAt: indexInteger put: valueInteger!
+	^self basicUncheckedAt: indexInteger put: anObject!
 
 basicLength: anInteger
 	"Private - Set the length (in elements, not bytes) of the receiver."

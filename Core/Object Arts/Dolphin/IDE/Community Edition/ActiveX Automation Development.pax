@@ -257,6 +257,11 @@ package setMethodNames: #(
 	#(#{OS.COM.MemberDesc} #printIDLOn:)
 	#(#{OS.COM.MemberDesc} #printIDLOn:indent:)
 	#(#{OS.COM.MemberDesc class} #publishedAspectsOfInstances)
+	#(#{OS.COM.OleVariant} #debugPrintOn:)
+	#(#{OS.COM.OleVariant} #printIDLOn:)
+	#(#{OS.COM.OleVariant} #printOn:)
+	#(#{OS.COM.OleVariant class} #printMethodArgument:elemdesc:indirections:on:for:)
+	#(#{OS.COM.OleVariant class} #printOptionalParameter:on:for:)
 	#(#{OS.COM.PARAMDESC} #idlAttributes)
 	#(#{OS.COM.Record} #printFieldsOn:)
 	#(#{OS.COM.Record} #publishedAspects)
@@ -535,12 +540,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer class} #typeLibRegistrations)
 	#(#{OS.COM.VARDESC} #printIDLOn:indent:)
 	#(#{OS.COM.VARDESC} #printOn:)
-	#(#{OS.COM.VARIANT} #debugPrintOn:)
-	#(#{OS.COM.VARIANT} #printIDLOn:)
-	#(#{OS.COM.VARIANT} #printOn:)
 	#(#{OS.COM.VARIANT class} #example1)
-	#(#{OS.COM.VARIANT class} #printMethodArgument:elemdesc:indirections:on:for:)
-	#(#{OS.COM.VARIANT class} #printOptionalParameter:on:for:)
 	#(#{OS.COM.VARIANT_BOOL} #printOn:)
 	#(#{OS.COM.VARIANT_BOOL class} #newInstanceAspect:class:)
 	#(#{OS.HRESULT class} #fieldType)
@@ -1104,8 +1104,8 @@ fieldType
 
 	^FLOATField!
 
-printDefaultValue: aVARIANT on: aPuttableStream 
-	self assert: [aVARIANT vt == self vt].
+printDefaultValue: aVARIANT on: aPuttableStream
+	self assert: [aVARIANT vt == COM.OleVariant.VT_R4].
 	aVARIANT value printOn: aPuttableStream significantFigures: 8! !
 
 !External.FLOAT class categoriesForMethods!
@@ -1996,7 +1996,7 @@ newInstanceAspect: aSymbol class: aspectClass
 
 	^(aspectClass string: aSymbol) beImmutable!
 
-printDefaultValue: aVARIANT on: aPuttableStream 
+printDefaultValue: aVARIANT on: aPuttableStream
 	self assert: [aVARIANT vartype == self vt].
 	aPuttableStream print: aVARIANT bstr!
 
@@ -3469,7 +3469,7 @@ reservedUnkSelectors!accessing!public! !
 
 !OS.COM.ITypeInfo methodsFor!
 
-printOn: aStream 
+printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
 
 	aStream
@@ -3557,6 +3557,111 @@ publishedAspectsOfInstances
 
 !OS.COM.MemberDesc class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
+!
+
+!OS.COM.OleVariant methodsFor!
+
+debugPrintOn: aStream
+	"For VARIANTs we want to be careful not to have any side effects when displayed in the debugger."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(.
+	self isNull
+		ifTrue: [aStream nextPutAll: 'NULL']
+		ifFalse: 
+			[aStream nextPutAll: self typeName.
+			self isArray ifTrue: [aStream nextPutAll: '[]'].
+			self isByRef ifTrue: [aStream nextPut: $*]].
+	aStream nextPut: $)!
+
+printIDLOn: aPuttableStream
+	"Append, to the <puttableStream>, target, a string whose characters are a 
+	the same as those which would be needed to represent the receiver as a literal
+	in an IDL file."
+
+	| vt |
+	vt := self vartype.
+	vt == VT_BSTR
+		ifTrue: 
+			[aPuttableStream
+				nextPut: $";
+				display: self bstr;
+				nextPut: $"]
+		ifFalse: 
+			[vt == VT_DATE
+				ifTrue: [self date asFloat printOn: aPuttableStream]
+				ifFalse: 
+					[vt == VT_R4
+						ifTrue: [FLOAT printDefaultValue: self on: aPuttableStream]
+						ifFalse: [self value displayOn: aPuttableStream]]]!
+
+printOn: aPuttableStream
+	"Append, to the <puttableStream> argument a string whose characters are a the same as those which would result from sending a #printString message to the receiver.
+	N.B. This is really intended for development use. #displayOn: and #displayString are complementary methods for generating strings for presentation to an end-user."
+
+	aPuttableStream
+		basicPrint: self;
+		nextPut: $(.
+	self isNull
+		ifTrue: [aPuttableStream nextPutAll: 'NULL']
+		ifFalse: 
+			[aPuttableStream nextPutAll: self typeName.
+			self isByRef ifTrue: [aPuttableStream nextPut: $*].
+			aPuttableStream
+				nextPutAll: ': ';
+				print: self value].
+	aPuttableStream nextPut: $)! !
+
+!OS.COM.OleVariant categoriesForMethods!
+debugPrintOn:!printing!public! !
+printIDLOn:!printing-IDL!public! !
+printOn:!development!printing!public! !
+!
+
+!OS.COM.OleVariant class methodsFor!
+
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
+
+	anELEMDESC isIn
+		ifTrue: 
+			["If in or in-out then just pass a converted object"
+			anInteger > 1
+				ifTrue: 
+					[Notification signal: 'Warning: Parameter ''' , aString , ''' of ' , anELEMDESC owner fullName
+								, ' is input VARIANT**, may need hand coded wrapper.'].
+			aPuttableStream
+				nextPutAll: aString;
+				space;
+				display: #asVariant]
+		ifFalse: 
+			["If an output only argument, need an instance of the receiver to buffer the result"
+			anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+			aPuttableStream
+				space;
+				display: (anInteger > 1 ifTrue: [#newPointer] ifFalse: [#new])]!
+
+printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
+	anELEMDESC hasDefaultValue
+		ifTrue: 
+			[| default |
+			aPuttableStream nextPut: $(.
+			default := anELEMDESC defaultValue.
+			(VARIANT classForVT: default vartype) printDefaultValue: default on: aPuttableStream.
+			aPuttableStream
+				nextPut: $);
+				space;
+				display: #asVariant]
+		ifFalse: 
+			[anAPIInfoAnalyzer printClass: VARIANT on: aPuttableStream.
+			aPuttableStream
+				space;
+				display: #unspecified]! !
+
+!OS.COM.OleVariant class categoriesForMethods!
+printMethodArgument:elemdesc:indirections:on:for:!private! !
+printOptionalParameter:on:for:!helpers!private! !
 !
 
 !OS.COM.PARAMDESC methodsFor!
@@ -6723,7 +6828,7 @@ generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
 								, aTypeInfoObject fullyQualifiedName].
 			"Need to re-generate, but try and preserved existing details"
 			imports := (existingClass imports union: imports) asArray.
-			classVars := existingClass classVariableString.
+			classVars := $\x20 join: existingClass classVariableNames.
 			instVars := existingClass instanceVariableString.
 			baseClass := aTypeInfoObject determineNewBase: baseClass forExistingWrapper: existingClass.
 			classInstVars := existingClass class instanceVariableString.
@@ -7469,66 +7574,6 @@ printIDLOn:indent:!printing-IDL!public! !
 printOn:!printing!public! !
 !
 
-!OS.COM.VARIANT methodsFor!
-
-debugPrintOn: aStream
-	"For VARIANTs we want to be careful not to have any side effects when displayed in the debugger."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self isNull
-		ifTrue: [aStream nextPutAll: 'NULL']
-		ifFalse: 
-			[aStream nextPutAll: self typeName.
-			self isArray ifTrue: [aStream nextPutAll: '[]'].
-			self isByRef ifTrue: [aStream nextPut: $*]].
-	aStream nextPut: $)!
-
-printIDLOn: aPuttableStream
-	"Append, to the <puttableStream>, target, a string whose characters are a 
-	the same as those which would be needed to represent the receiver as a literal
-	in an IDL file."
-
-	| vt |
-	vt := self vartype.
-	vt == VT_BSTR
-		ifTrue: 
-			[aPuttableStream
-				nextPut: $";
-				display: self bstr;
-				nextPut: $"]
-		ifFalse: 
-			[vt == VT_DATE
-				ifTrue: [self date asFloat printOn: aPuttableStream]
-				ifFalse: 
-					[vt == VT_R4
-						ifTrue: [FLOAT printDefaultValue: self on: aPuttableStream]
-						ifFalse: [self value displayOn: aPuttableStream]]]!
-
-printOn: aPuttableStream
-	"Append, to the <puttableStream> argument a string whose characters are a the same as those which would result from sending a #printString message to the receiver.
-	N.B. This is really intended for development use. #displayOn: and #displayString are complementary methods for generating strings for presentation to an end-user."
-
-	aPuttableStream
-		basicPrint: self;
-		nextPut: $(.
-	self isNull
-		ifTrue: [aPuttableStream nextPutAll: 'NULL']
-		ifFalse: 
-			[aPuttableStream nextPutAll: self typeName.
-			self isByRef ifTrue: [aPuttableStream nextPut: $*].
-			aPuttableStream
-				nextPutAll: ': ';
-				print: self value].
-	aPuttableStream nextPut: $)! !
-
-!OS.COM.VARIANT categoriesForMethods!
-debugPrintOn:!printing!public! !
-printIDLOn:!printing-IDL!public! !
-printOn:!development!printing!public! !
-!
-
 !OS.COM.VARIANT class methodsFor!
 
 example1
@@ -7553,50 +7598,10 @@ example1
 	"Show the updated by-ref value"
 	bstr.	"Ctrl+D"
 	var.	"Ctrl+D"
-	var value	"Ctrl+D"!
-
-printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
-	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
-
-	anELEMDESC isIn
-		ifTrue: 
-			["If in or in-out then just pass a converted object"
-			anInteger > 1
-				ifTrue: 
-					[Notification signal: 'Warning: Parameter ''' , aString , ''' of ' , anELEMDESC owner fullName
-								, ' is input VARIANT**, may need hand coded wrapper.'].
-			aPuttableStream
-				nextPutAll: aString;
-				space;
-				display: #asVariant]
-		ifFalse: 
-			["If an output only argument, need an instance of the receiver to buffer the result"
-			anAPIInfoAnalyzer printClass: self on: aPuttableStream.
-			aPuttableStream
-				space;
-				display: (anInteger > 1 ifTrue: [#newPointer] ifFalse: [#new])]!
-
-printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
-	anELEMDESC hasDefaultValue
-		ifTrue: 
-			[| default |
-			aPuttableStream nextPut: $(.
-			default := anELEMDESC defaultValue.
-			(VARIANT classForVT: default vartype) printDefaultValue: default on: aPuttableStream.
-			aPuttableStream
-				nextPut: $);
-				space;
-				display: #asVariant]
-		ifFalse: 
-			[anAPIInfoAnalyzer printClass: VARIANT on: aPuttableStream.
-			aPuttableStream
-				space;
-				display: #unspecified]! !
+	var value	"Ctrl+D"! !
 
 !OS.COM.VARIANT class categoriesForMethods!
 example1!examples!public! !
-printMethodArgument:elemdesc:indirections:on:for:!private! !
-printOptionalParameter:on:for:!helpers!private! !
 !
 
 !OS.COM.VARIANT_BOOL methodsFor!

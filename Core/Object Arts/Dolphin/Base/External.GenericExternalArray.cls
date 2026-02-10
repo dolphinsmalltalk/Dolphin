@@ -143,7 +143,7 @@ withAll: aCollection bufferClass: bufferClass elementClass: structClass
 	aCollection inject: 1
 		into: 
 			[:i :elem | 
-			answer at: i put: elem.
+			answer uncheckedAt: i put: elem.
 			i + 1].
 	^answer!
 

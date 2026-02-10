@@ -322,7 +322,7 @@ printValueOn: aStream
 	aStream
 		nextPutAll: '=';
 		print: value] 
-			on: OS.HRESULTError
+			on: HRESULTError
 			do: [:ex | ]!
 
 put_Attributes: pl

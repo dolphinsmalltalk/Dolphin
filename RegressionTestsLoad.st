@@ -27,6 +27,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\ActiveX\Structured Storage\Tests\OLE Structured Storage Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Persist\Tests\OLE Persistence and Data Transfer Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Automation\Tests\ActiveX Automation Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Property Sets\Tests\ActiveX Property Sets Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Connection Points\Tests\ActiveX Connection Points Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Compiler\Tests\Smalltalk Compiler Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Base\Development System Tests.pax';

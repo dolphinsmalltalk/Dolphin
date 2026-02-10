@@ -103,7 +103,7 @@ enumDAdvise
 	"Answer the <IEnumSTATDATA> result of invoking the EnumDAdvise() method of the COM object."
 
 	| answer |
-	answer := IEnumSTATDATA newPointer.
+	answer := IEnumStruct elementClass: STATDATA.
 	self EnumDAdvise: answer.
 	^answer asObject!
 
@@ -113,14 +113,14 @@ EnumDAdvise: ppenumAdvise
 		HRESULT __stdcall EnumDAdvise(
 			[out]IEnumSTATDATA** ppenumAdvise);"
 
-	<virtual stdcall: hresult 12 IEnumSTATDATA**>
+	<virtual stdcall: hresult 12 IEnumStruct**>
 	^self invalidCall: _failureCode!
 
 enumFormatEtc: dwDirection
 	"Answer the <IEnumFORMATETC> result of invoking the EnumFormatEtc() method of the COM object."
 
 	| answer |
-	answer := IEnumFORMATETC newPointer.
+	answer := IEnumStruct elementClass: FORMATETC.
 	self EnumFormatEtc: dwDirection ppenumFormatEtc: answer.
 	^answer asObject!
 
@@ -131,7 +131,7 @@ EnumFormatEtc: dwDirection ppenumFormatEtc: ppenumFormatEtc
 			[in]unsigned long dwDirection,
 			[out]IEnumFORMATETC** ppenumFormatEtc);"
 
-	<virtual stdcall: hresult 9 uint32 IEnumFORMATETC**>
+	<virtual stdcall: hresult 9 uint32 IEnumStruct**>
 	^self invalidCall: _failureCode!
 
 getCanonicalFormatEtc: pformatectIn
@@ -210,10 +210,10 @@ SetData: pformatetc pmedium: pmedium fRelease: fRelease
 dAdvise:advf:pAdvSink:!**auto generated**!methods!public! !
 DAdvise:advf:pAdvSink:pdwConnection:!**auto generated**!COM Interfaces-IDataObject!private! !
 DUnadvise:!**auto generated**!COM Interfaces-IDataObject!public! !
-enumDAdvise!**auto generated**!methods!public! !
-EnumDAdvise:!**auto generated**!COM Interfaces-IDataObject!private! !
-enumFormatEtc:!**auto generated**!methods!public! !
-EnumFormatEtc:ppenumFormatEtc:!**auto generated**!COM Interfaces-IDataObject!private! !
+enumDAdvise!methods!public! !
+EnumDAdvise:!COM Interfaces-IDataObject!private! !
+enumFormatEtc:!methods!public! !
+EnumFormatEtc:ppenumFormatEtc:!COM Interfaces-IDataObject!private! !
 getCanonicalFormatEtc:!**auto generated**!methods!public! !
 GetCanonicalFormatEtc:pformatetcOut:!**auto generated**!COM Interfaces-IDataObject!private! !
 getData:!methods!public! !
@@ -242,13 +242,13 @@ defineFunctions
 		defineFunction: #SetData:pmedium:fRelease:
 			argumentTypes: 'FORMATETC* STGMEDIUM* int32';
 		defineFunction: #EnumFormatEtc:ppenumFormatEtc:
-			argumentTypes: 'uint32 IEnumFORMATETC**';
+			argumentTypes: 'uint32 IEnumStruct**';
 		defineFunction: #DAdvise:advf:pAdvSink:pdwConnection:
 			argumentTypes: 'FORMATETC* uint32 IAdviseSink* uint32*';
 		defineFunction: #DUnadvise:
 			argumentTypes: 'uint32';
 		defineFunction: #EnumDAdvise:
-			argumentTypes: 'IEnumSTATDATA**'
+			argumentTypes: 'IEnumStruct**'
 ! !
 
 !OS.COM.IDataObject class categoriesForMethods!

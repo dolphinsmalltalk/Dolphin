@@ -16,8 +16,8 @@ External.Tests.GenericExternalArrayTest comment: ''!
 
 !External.Tests.GenericExternalArrayTest methodsFor!
 
-arrayValueString: eachValue
-	^eachValue displayString!
+assertElement: anObject equals: anObject2 
+	self assert: anObject value equals: anObject2!
 
 elementClassNames
 	^#(#Int16 #Int32 #FLOAT #DOUBLE #'COM.CY' #'COM.BSTR' #HRESULT #'COM.VARIANT_BOOL' #'COM.VARIANT' #'COM.DECIMAL' #Int8 #UInt8)!
@@ -96,7 +96,7 @@ testWithDo
 	subject with: (1 to: 0) do: [:a :b | self assert: false]! !
 
 !External.Tests.GenericExternalArrayTest categoriesForMethods!
-arrayValueString:!private!unit tests! !
+assertElement:equals:!asserting!private! !
 elementClassNames!constants!private! !
 elementToValue:!private!unit tests! !
 testAsArray!public!unit tests! !

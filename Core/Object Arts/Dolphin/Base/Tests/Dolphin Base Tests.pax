@@ -98,6 +98,7 @@ package setClassNames: #(
 	#{External.Tests.AddressTest}
 	#{External.Tests.ArrayFieldTest}
 	#{External.Tests.ArrayPointerFieldTest}
+	#{External.Tests.BOOLArrayTest}
 	#{External.Tests.DOUBLEArrayTest}
 	#{External.Tests.DynamicLinkLibraryTest}
 	#{External.Tests.ExternalArrayTest}
@@ -1203,6 +1204,14 @@ Core.Tests.SequencedGrowableCollectionTest
 
 Core.Tests.OrderedCollectionTest
 	subclass: #'Core.Tests.SortedCollectionTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
+	subclass: #'External.Tests.BOOLArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -28,6 +28,12 @@ _descriptionFormat
 
 	^'%1 does not understand %2'!
 
+hresult
+	"Answer the <HRESULT> error code associated with the receiver.
+	Overridden by subclasses to answer more specified HRESULT codes."
+
+	^OS.HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.ObjectTypeMismatch!
+
 isResumable
 	"Answer whether the receiver represents a resumable error. Message not understood errors are
 	considered resumable, as there are a number of circumstances in which we might want to
@@ -59,6 +65,7 @@ selector
 !Core.MessageNotUnderstood categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
+hresult!accessing!public! !
 isResumable!public!testing! !
 message!accessing!public! !
 receiver!accessing!public! !

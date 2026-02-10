@@ -51,8 +51,9 @@ testByteSize
 	self assert: DATE new byteSize equals: 8!
 
 testDateAndTimeConversions
-	| onesec |
+	| onesec tzo |
 	onesec := 1.0 / Duration.SecondsPerDay.
+				tzo := Locale timeZoneInformation offset.
 	{
 		#('1899-12-30T00:00:00.0Z' 0.0).
 		#('1899-12-30T06:00:00.0Z' 0.25).
@@ -85,11 +86,12 @@ testDateAndTimeConversions
 		{ '1899-12-28T23:59:59.6Z'. -2.0 - (86399.6 / Duration.SecondsPerDay) }.
 		#('1900-01-01T12:00:10.6665984Z' 2.500123456).
 		#('1899-12-28T12:01:25.3333056Z' -2.500987654).
-		#('1900-01-09T00:00:00.000000009' 10.0000000000001)
+		#('1900-01-09T00:00:00.000000009Z' 10.0000000000001)
 	} do: 
 				[:pair |
 				| each value oledate rounded local actual |
-				each := DateAndTime fromString: pair first.
+
+				each := (DateAndTime fromString: pair first) - tzo.
 				value := pair second.
 				local := each asLocal.
 				"DATE>>fromString: uses VarDateFromStr(), so it should be correct"
@@ -107,15 +109,18 @@ testDateAndTimeConversions
 				rounded year <= MaxYear ifTrue: [self assert: oledate asSYSTEMTIME equals: rounded asSYSTEMTIME].
 				actual := (DATE fromFloat: value) asDateAndTime.
 				self assert: (actual closeTo: local precision: 1 milliseconds).
-				self assert: actual asDATE asFloat closeTo: oledate asFloat precision: 1e-12.
+				self
+					assert: actual asDATE asFloat
+					closeTo: oledate asFloat
+					precision: 1e-12.
 				"DATEs are considered to be in local time"
 				self assert: actual offset equals: Locale timeZoneInformation offset].
 
 	"Out of range. OLE DATEs are limited to a documented range more restrictive than the representation would allow."
 	{
-		(DateAndTime fromString: ' 9999-12-31T23:59:59Z') + 1 seconds.
-		(DateAndTime fromString: ' 0100-01-01T00:00:00Z') - 1 days.
-		(DateAndTime fromString: ' 0100-01-01T00:00:00Z') - 1 seconds
+		(DateAndTime fromString: ' 9999-12-31T23:59:59Z') + 1 seconds - tzo.
+		(DateAndTime fromString: ' 0100-01-01T00:00:00Z') - 1 days - tzo.
+		(DateAndTime fromString: ' 0100-01-01T00:00:00Z') - 1 seconds - tzo
 	} do: [:each | self should: [each asDATE] raise: InvalidArgumentError]!
 
 testDisplayString
@@ -170,7 +175,7 @@ testMaximum
 		equals: (DateAndTime
 				rataDie: 3652059
 				seconds: 86399.99995976686
-				offsetSeconds: 0).
+				offsetSeconds: Locale timeZoneInformation offsetSeconds).
 	"Even one ULP larger, the minimum should be invalid"
 	next := (MaxValue bitRepresentation + 1) becomeA: Float.
 	self assert: next equals: UpperBound.
@@ -187,16 +192,23 @@ testMinimum
 		closeTo: 24 hours
 		precision: 1 seconds.
 	"Even one ULP larger, the minimum should roll to the next day"
-	next := DATE fromFloat: ((MinValue bitRepresentation + 1) becomeA: Float).
+	next := DATE fromFloat: (MinValue bitRepresentation + 1 becomeA: Float).
 	self assert: next asString equals: '01/02/100'.
 	"But note that in the more accurate DateAndTime representation it hasn't rolled yet. This is due to the design of the DATE representation."
-	self assert: next value equals: (DateAndTime rataDie: 36160 seconds: 86399.50000271201 offsetSeconds: 0).
+	self assert: next value
+		equals: (DateAndTime
+				rataDie: 36160
+				seconds: 86399.50000271201
+				offsetSeconds: Locale timeZoneInformation offsetSeconds).
 	"Due to the DATE representation of fractional days, where the offset is always positive, the real minimum DATE is a smaller magnitude."
 	realMin := DATE minimum.
 	self assert: realMin asString equals: '01/01/100'.
-	self assert: realMin value equals: (DateAndTime year: 100 day: 1 offset: 0 seconds).
-	self should: [DATE fromFloat: LowerBound] raise: InvalidArgumentError
-	! !
+	self assert: realMin value
+		equals: (DateAndTime
+				year: 100
+				day: 1
+				offset: Locale timeZoneInformation offset).
+	self should: [DATE fromFloat: LowerBound] raise: InvalidArgumentError! !
 
 !OS.COM.Tests.DATETest categoriesForMethods!
 exampleValueAndUkStringPairs!constants!private! !

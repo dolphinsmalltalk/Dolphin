@@ -27,10 +27,11 @@ basicFree
 	bytes free!
 
 copyBytes: aByteObject
-	| ptrType |
-	ptrType := self elementClass.
-	0 to: self byteSize - 1 by: VMConstants.IntPtrSize do: [:offset |
-		bytes uintPtrAtOffset: offset put: (ptrType copyHeapObject: (aByteObject uintPtrAtOffset: offset)) detach]!
+	self class
+		copyBytes: aByteObject
+		from: 1
+		to: self byteSize
+		into: bytes!
 
 initialize
 	super initialize.
@@ -77,6 +78,18 @@ uncheckedAt:put:!accessing!private! !
 
 !OS.COM.HeapPointerArray class methodsFor!
 
+copyBytes: srcByteObject from: startInteger to: stopInteger into: destByteObject
+	| ptrType pDest |
+	ptrType := self elementClass.
+	pDest := (destByteObject yourAddress - (startInteger - 1)) asExternalAddress.
+	startInteger - 1 to: stopInteger - 1
+		by: VMConstants.IntPtrSize
+		do: 
+			[:offset |
+			pDest uintPtrAtOffset: offset
+				put: (ptrType copyHeapObject: (srcByteObject uintPtrAtOffset: offset)) detach].
+	^destByteObject!
+
 requiresFinalization
 	"Answer whether instances of the receiver that own their own resources will require free'ing either explicitly or by finalization.
 	HeapPointerArrays contain pointers to independently allocated heap blocks. They require finalization to free those blocks one-by-one."
@@ -84,6 +97,7 @@ requiresFinalization
 	^true! !
 
 !OS.COM.HeapPointerArray class categoriesForMethods!
+copyBytes:from:to:into:!copying!private! !
 requiresFinalization!public!realizing/unrealizing!testing! !
 !
 

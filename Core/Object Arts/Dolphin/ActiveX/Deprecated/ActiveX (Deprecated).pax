@@ -14,8 +14,9 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.Date} #initializeVariant:)
 	#(#{Core.TimeStamp} #asFloat)
-	#(#{Core.TimeStamp} #asVariant)
+	#(#{Core.TimeStamp} #initializeVariant:)
 	#(#{Core.TimeStamp class} #fromDATE:)
 	#(#{External.Structure class} #fromObject:)
 	#(#{OS.COM.BSTR} #asAnsiString)
@@ -70,6 +71,17 @@ OS.COM.LockBytesAbstract
 
 "Loose Methods"!
 
+!Core.Date methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a VT_DATE representation of the receiver."
+
+	self asSYSTEMTIME initializeVariant: anOleVariant! !
+
+!Core.Date categoriesForMethods!
+initializeVariant:!converting!private! !
+!
+
 !Core.TimeStamp methodsFor!
 
 asFloat
@@ -77,14 +89,12 @@ asFloat
 
 	^self asParameter asFloat!
 
-asVariant
-	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
-
-	^self asParameter asVariant! !
+initializeVariant: anOleVariant
+	self asDateAndTime initializeVariant: anOleVariant! !
 
 !Core.TimeStamp categoriesForMethods!
 asFloat!converting!public! !
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.TimeStamp class methodsFor!

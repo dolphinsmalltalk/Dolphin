@@ -19,11 +19,13 @@ External.SCALAR
 
 OS.FILETIME guid: (Core.GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-OS.FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
+OS.FILETIME comment: '`OS.FILETIME` is an `External.Structure` class to represent the Win32 structure of the same name.
 
-A FILETIME is a 64-bit integer count of the number of 100 nanosecond intervals since 01:00:00, 01 January 1601 UTC (i.e. not local time).
+A `FILETIME` is a 64-bit integer count of the number of 100 nanosecond intervals since 1601-01-01T00:00:00+00:00 (i.e. UTC, not local time).
 
-FILETIMEs are typically used to mark file creation/modification/access times with very high accurracy in a time zone independent manner.'!
+`FILETIME`s are typically used to mark file creation/modification/access times with very high accurracy in a time zone independent manner.
+
+Note that although the FILETIME structure is defined to hold an unsigned 64-bit integer, the value is really a signed 64-bit integer where negative values are not supported. Valid Windows FILETIMEs are in the range `[0, 2**63-1]`.'!
 
 !OS.FILETIME categoriesForClass!External-Data-Structured-Win32! !
 
@@ -222,6 +224,14 @@ initialize
 	self addClassConstant: 'MaxValue' value: Int64.MaxValue
 !
 
+maximum
+	^self fromInteger: MaxValue!
+
+minimum
+	"Although theoretically FILETIME could support earlier dates using negative values, in practice Windows does not."
+
+	^self fromInteger: MinValue!
+
 now
 	"Answer the current FILETIME. 
 		FILETIME now
@@ -243,6 +253,8 @@ fromSYSTEMTIME:!instance creation!public! !
 fromUnixTime:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!initializing!private! !
+maximum!instance creation!public! !
+minimum!instance creation!public! !
 now!instance creation!public! !
 !
 

@@ -23,9 +23,7 @@ package setClassNames: #(
 	#{OS.COM.IAdviseSinkEx}
 	#{OS.COM.IBindCtx}
 	#{OS.COM.IDataObject}
-	#{OS.COM.IEnumFORMATETC}
 	#{OS.COM.IEnumMoniker}
-	#{OS.COM.IEnumSTATDATA}
 	#{OS.COM.IMoniker}
 	#{OS.COM.IRunningObjectTable}
 	#{OS.COM.PersistConstants}
@@ -183,22 +181,6 @@ OS.COM.IAdviseSink
 
 OS.COM.IAdviseSink
 	subclass: #'OS.COM.IAdviseSinkEx'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.COM.IEnumXXXX
-	subclass: #'OS.COM.IEnumFORMATETC'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.COM.IEnumXXXX
-	subclass: #'OS.COM.IEnumSTATDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -34,6 +34,11 @@ basicUncheckedAt: anInteger put: aDECIMAL
 		startingAt: 1.
 	^aDECIMAL!
 
+initializeVariant: aVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be either a (VT_ARRAY|VT_DECIMAL), or (VT_VECTOR|VT_DECIMAL)."
+
+	aVariant decimalVector: self!
+
 uncheckedAt: anInteger
 	| base scale |
 	base := (anInteger - 1) * _DECIMAL_Size.
@@ -70,6 +75,7 @@ uncheckedAt: anInteger put: aScaledDecimalOrInteger
 !OS.COM.DECIMALArray categoriesForMethods!
 basicUncheckedAt:!accessing!private! !
 basicUncheckedAt:put:!accessing!private! !
+initializeVariant:!converting!private! !
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
 !

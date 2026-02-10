@@ -19,8 +19,8 @@ External.Tests.ExternalArrayTest comment: ''!
 arrayClass
 	^self class arrayClass!
 
-arrayValueString: eachValue
-	^eachValue printString!
+assertElement: anObject equals: anObject2
+	self assert: anObject equals: anObject2!
 
 canonicalizeValue: anObject 
 	^self elementToValue: (self elementFromIndex: anObject)!
@@ -231,17 +231,15 @@ testFromToKeysAndValuesDo
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
-			self assert: pairs isEmpty].
+				keysAndValuesDo: [:eachKey :eachValue | self fail: 'Should not enumerate empty interval.']].
 	#(#(0 -1) #(-1 0) #(0 1) #(1 1) #(2 2) #(2 1) #(3 2)) do: 
 			[:each |
 			self should: 
 					[array
 						from: each first
 						to: each last
-						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue]]
-				raise: BoundsError.
-			self assert: pairs isEmpty].
+						keysAndValuesDo: [:eachKey :eachValue | self fail: 'Should not enumerate empty interval.']]
+				raise: BoundsError].
 	"Array of 1 element"
 	array := self newTestSubjectOfSize: 1.
 	#(#(1 0) #(2 1)) do: 
@@ -249,25 +247,26 @@ testFromToKeysAndValuesDo
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
-			self assert: pairs isEmpty].
+				keysAndValuesDo: [:eachKey :eachValue | self fail: 'Should not enumerate empty interval.']].
 	#(#(1 1)) do: 
 			[:each |
-			| expected |
 			pairs := OrderedCollection new.
 			array
 				from: 1
 				to: 1
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
-			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
-			self assert: pairs asArray equals: expected].
+				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
+			pairs with: (each first to: each last)
+				do: 
+					[:pair :i |
+					self assert: pair key equals: i.
+					self assertElement: pair value equals: (self canonicalizeValue: i)]].
 	#(#(1 2) #(2 2) #(3 2)) do: 
 			[:each |
 			self should: 
 					[array
 						from: each first
 						to: each last
-						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)]]
+						keysAndValuesDo: [:eachKey :eachValue | ]]
 				raise: BoundsError].
 	pairs := OrderedCollection new.
 	"Array of two elements"
@@ -277,25 +276,26 @@ testFromToKeysAndValuesDo
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
-			self assert: pairs isEmpty].
+				keysAndValuesDo: [:eachKey :eachValue | self fail: 'Should not enumerate empty interval.']].
 	#(#(1 1) #(1 2) #(2 2)) do: 
 			[:each |
-			| expected |
 			pairs := OrderedCollection new.
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
-			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
-			self assert: pairs asArray equals: expected].
+				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
+			pairs with: (each first to: each last)
+				do: 
+					[:pair :i |
+					self assert: pair key equals: i.
+					self assertElement: pair value equals: (self canonicalizeValue: i)]].
 	#(#(1 3) #(2 3) #(3 3)) do: 
 			[:each |
 			self should: 
 					[array
 						from: each first
 						to: each last
-						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)]]
+						keysAndValuesDo: [:eachKey :eachValue | ]]
 				raise: BoundsError].
 	"Array of three elements"
 	pairs := OrderedCollection new.
@@ -305,18 +305,19 @@ testFromToKeysAndValuesDo
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
-			self assert: pairs isEmpty].
+				keysAndValuesDo: [:eachKey :eachValue | self fail: 'Should not enumerate empty interval.']].
 	#(#(1 1) #(1 2) #(2 2) #(1 3) #(2 3) #(3 3)) do: 
 			[:each |
-			| expected |
 			pairs := OrderedCollection new.
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
-			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
-			self assert: pairs asArray equals: expected].
+				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
+			pairs with: (each first to: each last)
+				do: 
+					[:pair :i |
+					self assert: pair key equals: i.
+					self assertElement: pair value equals: (self canonicalizeValue: i)]].
 	#(#(1 4) #(2 4) #(3 4) #(4 4)) do: 
 			[:each |
 			self should: 
@@ -399,13 +400,13 @@ verifyCopy: anArray
 			[:i |
 			| elem |
 			elem := self elementFromIndex: i.
-			self assert: (copy at: i) equals: elem.
-			self assert: (copy2 at: i) equals: elem].
+			self assertElement: (copy at: i) equals: elem.
+			self assertElement: (copy2 at: i) equals: elem].
 	^copy! !
 
 !External.Tests.ExternalArrayTest categoriesForMethods!
 arrayClass!constants!private! !
-arrayValueString:!helpers!private! !
+assertElement:equals:!private! !
 canonicalizeValue:!helpers!private! !
 elementFromIndex:!helpers!private! !
 elementToValue:!helpers!private! !

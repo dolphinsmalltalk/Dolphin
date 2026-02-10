@@ -24,7 +24,8 @@ allocate: anInteger
 
 	self isNull
 		ifFalse: [self basicFree].
-	self basicAllocate: anInteger!
+	self basicAllocate: anInteger.
+	Kernel32 zeroMemory: self length: anInteger.!
 
 allocator
 	"Private - Answer the appropriate allocator for the receiver.
@@ -37,14 +38,12 @@ allocator
 
 basicAllocate: anInteger
 	"Private - Allocate anInteger bytes of memory through the receiver's
-	IMalloc interface. Answer the receiver. The memory is initialized with zeros.
-	N.B. Does not free any existing allocation."
+	IMalloc interface. Answer the receiver. The memory is uninitialized."
 
 	| pBlock |
 	pBlock := self allocator Alloc: anInteger.
 	pBlock isNull ifTrue: [^OutOfMemoryError signal].
-	Kernel32 zeroMemory: pBlock length: anInteger.
-	self value: pBlock!
+	self basicUIntPtrAtOffset: 0 put: pBlock!
 
 basicFree
 	"Private - Free external resources held by the receiver."
@@ -219,6 +218,13 @@ newFixed: anInteger
 
 	^self new allocate: anInteger!
 
+newUninitialized: anInteger
+	"Answer a new instance of the receiver of the pointing at an immovable block of memory of size, anInteger, bytes allocated from an external heap. The memory block is not zeroed."
+
+	^self new
+		basicAllocate: anInteger;
+		yourself!
+
 processHeap
 	"Private - Answer an object representing the process heap which
 	can be passed to a Win32 HeapXXX() API call."
@@ -257,6 +263,7 @@ HeapMinimize!COM Interfaces-OBJIDL.IMalloc!private! !
 new!instance creation!public! !
 new:!instance creation!public! !
 newFixed:!instance creation!public! !
+newUninitialized:!instance creation!public! !
 processHeap!accessing!private! !
 Realloc:cb:!COM Interfaces-OBJIDL.IMalloc!private! !
 requiresFinalization!public!testing! !

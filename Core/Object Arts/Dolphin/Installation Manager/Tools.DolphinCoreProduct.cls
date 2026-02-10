@@ -43,6 +43,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Structured Storage\OLE Streams.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Structured Storage\OLE Structured Storage.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Structured Storage\OLE Structured Storage (Old Names).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Property Sets\ActiveX Property Sets.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation (Old Names).pax' #plain #imageBased);

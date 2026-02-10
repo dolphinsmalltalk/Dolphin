@@ -42,11 +42,6 @@ progID!displaying!public! !
 
 !OS.COM.CLSID class methodsFor!
 
-arrayType
-	"Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type."
-
-	^StructureArray!
-
 fromProgID: aString
 	"Answer a new instance of the receiver instantiated from the argument, aString,
 	which contains a ProgID which is expected to be in the registry."
@@ -74,7 +69,6 @@ marshal: aGUID
 	^aGUID! !
 
 !OS.COM.CLSID class categoriesForMethods!
-arrayType!constants!public! !
 fromProgID:!instance creation!public! !
 fromString:!instance creation!public! !
 initialize!development!initializing!private! !

@@ -17,15 +17,19 @@ package setClassNames: #(
 	#{OS.COM.Tests.FUNCDESCTest}
 	#{OS.COM.Tests.IDispatchTest}
 	#{OS.COM.Tests.LPBSTRTest}
+	#{OS.COM.Tests.OleVariantArrayTest}
+	#{OS.COM.Tests.OleVariantTest}
 	#{OS.COM.Tests.RecordTest}
 	#{OS.COM.Tests.SAFEARRAYTest}
 	#{OS.COM.Tests.TestTypelib}
 	#{OS.COM.Tests.TypeLibraryAnalyzerTest}
 	#{OS.COM.Tests.VARIANT_BOOLArrayTest}
+	#{OS.COM.Tests.VARIANTArrayTest}
 	#{OS.COM.Tests.VARIANTTest}
 ).
 
 package setMethodNames: #(
+	#(#{Core.Tests.GUIDTest} #testRecordInfo)
 	#(#{External.Tests.AddressTest} #testBSTRFromAddress)
 	#(#{External.Tests.DOUBLEArrayTest} #testAsVariant)
 	#(#{External.Tests.FunctionDescriptorTest} #testComPtrs)
@@ -81,7 +85,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.DECIMALTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.DECIMAL})
+	imports: #(#{OS.COM.DECIMAL private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -110,10 +114,18 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 
 Core.Tests.DolphinTest
-	subclass: #'OS.COM.Tests.RecordTest'
-	instanceVariableNames: 'anonRect'
+	subclass: #'OS.COM.Tests.OleVariantTest'
+	instanceVariableNames: 'subject'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.RecordTest'
+	instanceVariableNames: 'trackingRecordInfo anonRect recordInfo'
+	classVariableNames: ''
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -122,14 +134,6 @@ Core.Tests.DolphinTest
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Tests.DolphinTest
-	subclass: #'OS.COM.Tests.VARIANTTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -158,6 +162,14 @@ External.Tests.ExternalArrayTest
 	classConstants: {}!
 
 External.Tests.ExternalArrayTest
+	subclass: #'OS.COM.Tests.OleVariantArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Tests.ExternalArrayTest
 	subclass: #'OS.COM.Tests.VARIANT_BOOLArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -169,12 +181,28 @@ External.Tests.GenericExternalArrayTest
 	subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors} #{OS.COM.AutomationConstants})
+	imports: #(#{OS.Win32Errors} #{OS.COM.OleVariant})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.OleVariantArrayTest
+	subclass: #'OS.COM.Tests.VARIANTArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 OS.COM.Tests.StringPointerArrayTest
 	subclass: #'OS.COM.Tests.BSTRArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.Tests.OleVariantTest
+	subclass: #'OS.COM.Tests.VARIANTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -190,6 +218,73 @@ XProgramming.SUnit.TestResource
 	classConstants: {}!
 
 "Loose Methods"!
+
+!Core.Tests.GUIDTest methodsFor!
+
+testRecordInfo
+	"Tests the implementation of IRecordInfo on GUID"
+
+	<namespace: OS.COM.Tests>
+	| subject recordInfo data recordInfo2 pGuid |
+	subject := self subjectClass fromString: '{d04f83eb-af94-4b01-b93d-bda6c89c6e41}'.
+	recordInfo := subject recordInfo.
+	self assert: recordInfo guid equals: self subjectClass guid.
+	self assert: recordInfo name equals: self subjectClass name.
+	self assert: recordInfo getFieldNames equals: #('Data1' 'Data2' 'Data3' 'Data4').
+	data := recordInfo
+				getField: 'Data1'
+				from: subject
+				ifAbsent: [self fail: 'Missing Data1'].
+	self assert: data equals: 16rD04F83EB.
+	data := recordInfo
+				getField: 'Data2'
+				from: subject
+				ifAbsent: [self fail: 'Missing Data1'].
+	self assert: data equals: 16rAF94.
+	data := recordInfo
+				getField: 'Data3'
+				from: subject
+				ifAbsent: [self fail: 'Missing Data1'].
+	self assert: data equals: 16r4B01.
+	data := recordInfo
+				getField: 'Data4'
+				from: subject
+				ifAbsent: [self fail: 'Missing Data1'].
+	self assert: data value value equals: #[16rB9 16r3D 16rBD 16rA6 16rC8 16r9C 16r6E 16r41].
+	self
+		should: 
+			[recordInfo
+				setField: 'Data1'
+				value: 1234
+				into: subject
+				ifAbsent: [self fail: 'Data1 missing']]
+		raise: HRESULTError
+		matching: [:ex | ex statusCode = 36].
+	self assertIsNil: recordInfo typeInfo.
+	recordInfo2 := GUID recordInfo.
+	self assert: (recordInfo IsMatchingType: recordInfo2).
+	self assert: (recordInfo2 IsMatchingType: recordInfo).
+	recordInfo2 free.
+	recordInfo2 := RECTL recordInfo.
+	self deny: (recordInfo IsMatchingType: recordInfo2).
+	self deny: (recordInfo2 IsMatchingType: recordInfo).
+	recordInfo2 free.
+	pGuid := recordInfo RecordCreate.
+	self assert: (TaskMemory didAlloc: pGuid).
+	self assert: (pGuid copyFrom: 1 to: 16) equals: (ByteArray new: 16).
+	self assert: (recordInfo RecordCopy: subject pvNew: pGuid) equals: S_OK.
+	self assert: (pGuid copyFrom: 1 to: 16) equals: subject asByteArray.
+	self assert: (recordInfo RecordDestroy: pGuid) equals: S_OK.
+	pGuid := TaskMemory new.
+	self assert: (recordInfo RecordCreateCopy: subject ppvDest: pGuid) equals: S_OK.
+	self assert: (TaskMemory didAlloc: pGuid).
+	self assert: (pGuid copyFrom: 1 to: 16) equals: subject asByteArray.
+	self assert: (recordInfo RecordDestroy: pGuid detach) equals: S_OK.
+	recordInfo free! !
+
+!Core.Tests.GUIDTest categoriesForMethods!
+testRecordInfo!public!unit tests! !
+!
 
 !External.Tests.AddressTest methodsFor!
 

@@ -4,7 +4,7 @@ External.SCALAR
 	subclass: #'OS.COM.CY'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants private})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_CY_Size' -> 16r8.
@@ -26,13 +26,6 @@ See also `DECIMAL`.'!
 !OS.COM.CY categoriesForClass!External-Data-Structured-COM! !
 
 !OS.COM.CY methodsFor!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver."
-
-	^(VARIANT new)
-		vt: (self vt bitOr: VT_BYREF);
-		reference: self!
 
 cy
 	"Answer the <Integer> value of the receiver's 'cy' field."
@@ -63,7 +56,6 @@ value: newValue
 	self cy: (newValue * 10000) asInteger! !
 
 !OS.COM.CY categoriesForMethods!
-asVariant!public! !
 cy!**compiled accessors**!public! !
 cy:!**compiled accessors**!public! !
 displayOn:!displaying!public! !
@@ -119,18 +111,15 @@ minimum
 		value: MinValue;
 		yourself!
 
-newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, CY/CURRENCY values."
-
-	^SAFEARRAY
-		length: anInteger
-		vt: VT_CY
-		elementClass: self!
-
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil!
+
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#cyVector!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
@@ -147,8 +136,8 @@ getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!initializing!private! !
 maximum!constants!public! !
 minimum!constants!public! !
-newSAFEARRAY:!double dispatch!instance creation!public! !
 uninitialize!class hierarchy-removing!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
 !
 

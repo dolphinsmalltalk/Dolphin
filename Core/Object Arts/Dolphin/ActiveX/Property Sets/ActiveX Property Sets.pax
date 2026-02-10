@@ -2,7 +2,7 @@
 package := Package name: 'ActiveX Property Sets'.
 package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk OLE Property Sets Support. 
-Copyright (c) Object Arts Ltd 1997-2001.
+Copyright (c) Object Arts Ltd 1997-2026.
 
 Example:
 
@@ -15,11 +15,117 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
+	#{OS.COM.BLOB}
+	#{OS.COM.CABOOL}
+	#{OS.COM.CABSTR}
+	#{OS.COM.CAC}
+	#{OS.COM.CACLSID}
+	#{OS.COM.CACY}
+	#{OS.COM.CADATE}
+	#{OS.COM.CADBL}
+	#{OS.COM.CAFILETIME}
+	#{OS.COM.CAFLT}
+	#{OS.COM.CAH}
+	#{OS.COM.CAI}
+	#{OS.COM.CAL}
+	#{OS.COM.CALPSTR}
+	#{OS.COM.CAPROPVARIANT}
+	#{OS.COM.CASCODE}
+	#{OS.COM.CAUB}
+	#{OS.COM.CAUH}
+	#{OS.COM.CAUI}
+	#{OS.COM.CLSIDArray}
 	#{OS.COM.IPropertySetStorage}
 	#{OS.COM.IPropertyStorage}
+	#{OS.COM.PropertySetConstants}
 	#{OS.COM.PROPSPEC}
+	#{OS.COM.PROPVARIANT}
+	#{OS.COM.PROPVARIANTArray}
 	#{OS.COM.STATPROPSETSTG}
 	#{OS.COM.STATPROPSTG}
+	#{OS.COM.VersionedStream}
+	#{OS.FILETIMEArray}
+	#{OS.HRESULTArray}
+).
+
+package setMethodNames: #(
+	#(#{External.LPSTR class} #vt)
+	#(#{External.LPWSTR class} #vt)
+	#(#{OS.COM.CLSID class} #arrayType)
+	#(#{OS.COM.OLELibrary} #freePropVariantArray:rgvars:)
+	#(#{OS.COM.OLELibrary} #propVariantClear:)
+	#(#{OS.COM.OLELibrary} #propVariantCopy:pvarSrc:)
+	#(#{OS.COM.OLELibrary} #propVariantInit:)
+	#(#{OS.COM.OLELibrary} #stgCreatePropSetStg:dwReserved:ppPropSetStg:)
+	#(#{OS.COM.OLELibrary} #stgOpenPropStg:fmtid:grfFlags:dwReserved:ppPropStg:)
+	#(#{OS.COM.OleVariant} #filetimeVector)
+	#(#{OS.COM.OleVariant} #filetimeVector:)
+	#(#{OS.COM.OleVariant} #hresultVector)
+	#(#{OS.COM.OleVariant} #storage)
+	#(#{OS.COM.OleVariant} #storage:)
+	#(#{OS.COM.OleVariant} #stored_object)
+	#(#{OS.COM.OleVariant} #stored_object:)
+	#(#{OS.COM.OleVariant} #stream)
+	#(#{OS.COM.OleVariant} #stream:)
+	#(#{OS.COM.OleVariant} #streamed_object)
+	#(#{OS.COM.OleVariant} #streamed_object:)
+	#(#{OS.COM.OleVariant} #versioned_stream)
+	#(#{OS.COM.OleVariant} #versioned_stream:)
+	#(#{OS.COM.PropsysLibrary} #clearPropVariantArray:cVars:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromBooleanVector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromBuffer:cb:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromCLSID:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromDoubleVector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromFileTime:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromFileTimeVector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromInt16Vector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromInt32Vector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromInt64Vector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromString:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromStringVector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromUInt16Vector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromUInt32Vector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #initPropVariantFromUInt64Vector:cElems:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #propVariantChangeType:propvarSrc:flags:vt:)
+	#(#{OS.COM.PropsysLibrary} #propVariantCompareEx:propvar2:unit:flags:)
+	#(#{OS.COM.PropsysLibrary} #propVariantGetElementCount:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToBooleanVector:prgf:crgf:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToBuffer:pv:cb:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToDoubleVector:prgn:crgn:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToFileTime:pstfOut:pftOut:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToFileTimeVector:prgft:crgft:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToInt16Vector:prgn:crgn:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToInt32Vector:prgn:crgn:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToInt64Vector:prgn:crgn:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToStringVector:prgsz:crgsz:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToUInt16Vector:prgn:crgn:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToUInt32Vector:prgn:crgn:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToUInt64Vector:prgn:crgn:pcElem:)
+	#(#{OS.COM.PropsysLibrary} #propVariantToVariant:pVar:)
+	#(#{OS.COM.PropsysLibrary} #stgDeserializePropVariant:cbMax:ppropvar:)
+	#(#{OS.COM.PropsysLibrary} #stgSerializePropVariant:ppProp:pcb:)
+	#(#{OS.COM.PropsysLibrary} #variantToPropVariant:pPropVar:)
+	#(#{OS.COM.VARIANT} #filetimeVector)
+	#(#{OS.COM.VARIANT} #filetimeVector:)
+	#(#{OS.COM.VARIANT} #initializeFromPropVariant:)
+	#(#{OS.COM.VARIANT} #storage)
+	#(#{OS.COM.VARIANT} #storage:)
+	#(#{OS.COM.VARIANT} #stream)
+	#(#{OS.COM.VARIANT} #stream:)
+	#(#{OS.FILETIME class} #arrayType)
+	#(#{OS.FILETIME class} #variantVectorName)
+	#(#{OS.HRESULT class} #arrayType)
+	#(#{OS.HRESULT class} #variantVectorName)
+).
+
+package setVariableNames: #(
+	#{OS.COM.CALPWSTR}
+	#{OS.COM.CAUL}
+).
+
+package setAliasVariableNames: #(
+	#{OS.COM.CALPWSTR}
+	#{OS.COM.CAUL}
 ).
 
 package setPrerequisites: #(
@@ -27,11 +133,20 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\COM\OLE COM'
 	'..\Structured Storage\OLE Streams'
+	'..\Structured Storage\OLE Structured Storage'
 ).
 
 package!
 
 "Class Definitions"!
+
+Kernel.SharedPool
+	subclass: #'OS.COM.PropertySetConstants'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 External.Structure
 	subclass: #'OS.COM.PROPSPEC'
@@ -63,7 +178,191 @@ External.Structure
 			'_STATPROPSETSTG_Size' -> 16r40
 		}!
 
-External.Structure
+OS.COM.CountedArray
+	subclass: #'OS.COM.BLOB'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_BLOB_Size' -> 16r8. '_OffsetOf_cbSize' -> 16r0. '_OffsetOf_pBlobData' -> 16r4 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CABOOL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CABOOL_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAC'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAC_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CACLSID'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CACLSID_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CACY'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CACY_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CADATE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CADATE_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CADBL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CADBL_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAFILETIME'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAFILETIME_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAFLT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAFLT_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAH'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAH_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAI'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAI_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAL_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAPROPVARIANT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAPROPVARIANT_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CASCODE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CASCODE_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAUB'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAUB_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAUH'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAUH_Size' -> 16r8 }!
+
+OS.COM.CountedArray
+	subclass: #'OS.COM.CAUI'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CAUI_Size' -> 16r8 }!
+
+OS.COM.CountedArrayOfHeapPointers
+	subclass: #'OS.COM.CABSTR'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CABSTR_Size' -> 16r8 }!
+
+OS.COM.CountedArrayOfHeapPointers
+	subclass: #'OS.COM.CALPSTR'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_CALPSTR_Size' -> 16r8 }!
+
+External.GUIDArray
+	subclass: #'OS.COM.CLSIDArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Int32Array
+	subclass: #'OS.HRESULTArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.Int64Array
+	subclass: #'OS.FILETIMEArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.OleVariantArray
+	subclass: #'OS.COM.PROPVARIANTArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.FinalizableStructure
 	subclass: #'OS.COM.STATPROPSTG'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -74,6 +373,81 @@ External.Structure
 			'_OffsetOf_propid' -> 16r4.
 			'_OffsetOf_vt' -> 16r8.
 			'_STATPROPSTG_Size' -> 16rC
+		}!
+
+External.FinalizableStructure
+	subclass: #'OS.COM.VersionedStream'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_guidVersion' -> 16r0.
+			'_OffsetOf_pStream' -> 16r10.
+			'_VersionedStream_Size' -> 16r14
+		}!
+
+OS.COM.OleVariant
+	subclass: #'OS.COM.PROPVARIANT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf___OBSOLETE__VARIANT_BOOL' -> 16r8.
+			'_OffsetOf_blob' -> 16r8.
+			'_OffsetOf_bstrblobVal' -> 16r8.
+			'_OffsetOf_cabool' -> 16r8.
+			'_OffsetOf_cabstr' -> 16r8.
+			'_OffsetOf_cac' -> 16r8.
+			'_OffsetOf_cacy' -> 16r8.
+			'_OffsetOf_cadate' -> 16r8.
+			'_OffsetOf_cadbl' -> 16r8.
+			'_OffsetOf_cafiletime' -> 16r8.
+			'_OffsetOf_caflt' -> 16r8.
+			'_OffsetOf_cah' -> 16r8.
+			'_OffsetOf_cai' -> 16r8.
+			'_OffsetOf_cal' -> 16r8.
+			'_OffsetOf_calpstr' -> 16r8.
+			'_OffsetOf_calpwstr' -> 16r8.
+			'_OffsetOf_capropvar' -> 16r8.
+			'_OffsetOf_cascode' -> 16r8.
+			'_OffsetOf_caub' -> 16r8.
+			'_OffsetOf_cauh' -> 16r8.
+			'_OffsetOf_caui' -> 16r8.
+			'_OffsetOf_caul' -> 16r8.
+			'_OffsetOf_cauuid' -> 16r8.
+			'_OffsetOf_filetime' -> 16r8.
+			'_OffsetOf_hVal' -> 16r8.
+			'_OffsetOf_pStorage' -> 16r8.
+			'_OffsetOf_pStream' -> 16r8.
+			'_OffsetOf_pszVal' -> 16r8.
+			'_OffsetOf_puuid' -> 16r8.
+			'_OffsetOf_pVersionedStream' -> 16r8.
+			'_OffsetOf_pwszVal' -> 16r8.
+			'_OffsetOf_uhVal' -> 16r8.
+			'_PROPVARIANT_Size' -> 16r10.
+			'CountedArrayNames'
+				-> #(#badVectorType #badVectorType #cai #cal #caflt #cadbl #cacy #cadate #cabstr #badVectorType #cascode #cabool #capropvar #badVectorType #badVectorType #badVectorType #cac #caub #caui #caul #cah #cauh #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #calpstr #calpwstr #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #cafiletime #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #badVectorType #caclipdata #cauuid #badVectorType).
+			'PVCF_DEFAULT' -> 16r0.
+			'PVCF_DIGITSASNUMBERS_CASESENSITIVE' -> 16r20.
+			'PVCF_TREATEMPTYASGREATERTHAN' -> 16r1.
+			'PVCF_USESTRCMP' -> 16r2.
+			'PVCF_USESTRCMPC' -> 16r4.
+			'PVCF_USESTRCMPI' -> 16r8.
+			'PVCF_USESTRCMPIC' -> 16r10.
+			'PVCHF_ALPHABOOL' -> 16r2.
+			'PVCHF_DEFAULT' -> 16r0.
+			'PVCHF_LOCALBOOL' -> 16r8.
+			'PVCHF_NOHEXSTRING' -> 16r10.
+			'PVCHF_NOUSEROVERRIDE' -> 16r4.
+			'PVCU_DAY' -> 16r4.
+			'PVCU_DEFAULT' -> 16r0.
+			'PVCU_HOUR' -> 16r3.
+			'PVCU_MINUTE' -> 16r2.
+			'PVCU_MONTH' -> 16r5.
+			'PVCU_SECOND' -> 16r1.
+			'PVCU_YEAR' -> 16r6
 		}!
 
 OS.COM.IUnknown
@@ -91,6 +465,717 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Variable Aliases"!
+
+OS.COM.CALPWSTR := OS.COM.CALPOLESTR!
+
+OS.COM.CAUL := OS.COM.CADWORD!
+
+
+"Loose Methods"!
+
+!External.LPSTR class methodsFor!
+
+vt
+	^OS.COM.VARIANT.VT_LPSTR! !
+
+!External.LPSTR class categoriesForMethods!
+vt!public! !
+!
+
+!External.LPWSTR class methodsFor!
+
+vt
+	^OS.COM.VARIANT.VT_LPWSTR! !
+
+!External.LPWSTR class categoriesForMethods!
+vt!public! !
+!
+
+!OS.COM.CLSID class methodsFor!
+
+arrayType
+	"Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type."
+
+	^CLSIDArray! !
+
+!OS.COM.CLSID class categoriesForMethods!
+arrayType!constants!public! !
+!
+
+!OS.COM.OLELibrary methodsFor!
+
+freePropVariantArray: cVariants rgvars: rgvars
+	"
+		HRESULT FreePropVariantArray(
+			_In_ ULONG cVariants,
+			_Inout_updates_(cVariants) PROPVARIANT* rgvars
+		);
+	"
+
+	<stdcall: hresult FreePropVariantArray uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+propVariantClear: pvar
+	"The PropVariantClear function frees all elements that can be freed in a given PROPVARIANT structure. For complex elements with known element pointers, the underlying elements are freed prior to freeing the containing element.
+
+		HRESULT PropVariantClear(_Inout_ PROPVARIANT* pvar)
+	"
+
+	<stdcall: int32 PropVariantClear PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+propVariantCopy: pvargDesc pvarSrc: pvargSrc
+	"Create a copy of the <VARIANT>, pvargSrc, in the <VARIANT>, pvargDest.
+
+		HRESULT PropVariantCopy(
+			[out] PROPVARIANT* pvarDest,
+			[in] const PROPVARIANT* pvarSrc );
+	"
+
+	<stdcall: hresult PropVariantCopy PROPVARIANT* PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+propVariantInit: pvar
+	"The PropVariantClear function frees all elements that can be freed in a given PROPVARIANT structure. For complex elements with known element pointers, the underlying elements are freed prior to freeing the containing element.
+
+		void PropVariantInit(_out_ PROPVARIANT* pvar)
+	"
+
+	"Implemented as a macro in a header file, so no export from the DLL to call"
+	Kernel32 zeroMemory: pvar length:  PROPVARIANT._PROPVARIANT_Size!
+
+stgCreatePropSetStg: pStorage dwReserved: dwReserved ppPropSetStg: ppPropSetStg
+	"Invoke the StgCreatePropSetStg() function of the module wrapped by the receiver.
+	Helpstring: Creates a property set storage object from a specified storage object
+
+		HRESULT __stdcall StgCreatePropSetStg(
+			[in]IStorage* pStorage,
+			[in]DWORD dwReserved,
+			[out, retval]IPropertySetStorage** ppPropSetStg);"
+
+	<stdcall: hresult StgCreatePropSetStg IStorage* uint32 IPropertySetStorage**>
+	^self invalidCall: _failureCode!
+
+stgOpenPropStg: pUnk fmtid: fmtid grfFlags: grfFlags dwReserved: dwReserved ppPropStg: ppPropStg
+	"Invoke the StgOpenPropStg() function of the module wrapped by the receiver.
+	Helpstring: Opens a specified property set in a specified storage or stream object
+
+		HRESULT __stdcall StgOpenPropStg(
+			[in]IUnknown* pUnk,
+			[in]GUID* fmtid,
+			[in]DWORD grfFlags,
+			[in]DWORD dwReserved,
+			[out, retval]IPropertyStorage** ppPropStg);"
+
+	<stdcall: hresult StgOpenPropStg IUnknown* guid* uint32 uint32 IPropertyStorage**>
+	^self invalidCall: _failureCode! !
+
+!OS.COM.OLELibrary categoriesForMethods!
+freePropVariantArray:rgvars:!OLE Functions-Property Storage!public! !
+propVariantClear:!OLE Functions-Property Storage!public! !
+propVariantCopy:pvarSrc:!OLE Functions-Property Storage!public! !
+propVariantInit:!OLE Functions-Property Storage!public! !
+stgCreatePropSetStg:dwReserved:ppPropSetStg:!**auto generated**!OLE Functions-Property Storage!public! !
+stgOpenPropStg:fmtid:grfFlags:dwReserved:ppPropStg:!**auto generated**!OLE Functions-Property Storage!public! !
+!
+
+!OS.COM.OleVariant methodsFor!
+
+filetimeVector
+	^self subclassResponsibility!
+
+filetimeVector: aFILETIMEArray
+	self subclassResponsibility!
+
+hresultVector
+	"Private - Answer an <HRESULTArray> containing the signed 32-bit integer error code values held by the receiver, assumed to be a VT_VECTOR|VT_ERROR or VT_ARRAY|VT_RECORD of HRESULT."
+
+	^self getVector!
+
+storage
+	"Private - Answer the <IStorage> value from the receiver."
+
+	^self subclassResponsibility!
+
+storage: anIStorage
+	"Private - Initialize the receiver to hold the <IStorage> interface pointer argument."
+
+	self subclassResponsibility!
+
+stored_object
+	^Error notYetImplemented!
+
+stored_object: newValue
+	^Error notYetImplemented!
+
+stream
+	"Private - Answer the <IStream> value from the receiver."
+
+	^self subclassResponsibility!
+
+stream: anIStream
+	"Private - Initialize the receiver to hold the <IStream> interface pointer argument."
+
+	self subclassResponsibility!
+
+streamed_object
+	^Error notYetImplemented!
+
+streamed_object: newValue
+	^Error notYetImplemented!
+
+versioned_stream
+	^Error notYetImplemented!
+
+versioned_stream: newValue
+	^Error notYetImplemented! !
+
+!OS.COM.OleVariant categoriesForMethods!
+filetimeVector!accessing!private! !
+filetimeVector:!initializing!private! !
+hresultVector!accessing!private! !
+storage!accessing!private! !
+storage:!initializing!private! !
+stored_object!accessing!private! !
+stored_object:!accessing!private! !
+stream!accessing!private! !
+stream:!initializing!private! !
+streamed_object!accessing!private! !
+streamed_object:!accessing!private! !
+versioned_stream!accessing!private! !
+versioned_stream:!accessing!private! !
+!
+
+!OS.COM.PropsysLibrary methodsFor!
+
+clearPropVariantArray: rgPropVar cVars: cVars
+	"Frees the memory and references used by an array of PROPVARIANT structures stored in an array.
+
+	void ClearPropVariantArray(
+		_Inout_updates_(cVars) PROPVARIANT *rgPropVar, 
+		_In_ UINT cVars)
+	);"
+
+	<stdcall: void ClearPropVariantArray PROPVARIANT* uint32>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromBooleanVector: prgf cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromBooleanVector(
+		[in]  const BOOL *prgf,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromBooleanVector VARIANT_BOOL* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromBuffer: pv cb: cb ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromBuffer(
+		[in]  const void  *pv,
+		[in]  UINT        cb,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromBuffer lpvoid uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromCLSID: clsid ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure based on a class identifier (CLSID).
+
+	HRESULT InitPropVariantFromCLSID(
+		[in]  REFCLSID    clsid,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromCLSID guid* PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromDoubleVector: prgn cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromDoubleVector(
+		[in]  const DOUBLE *prgn,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromDoubleVector double* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromFileTime: pftIn ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure based on information stored in a FILETIME structure.
+
+	HRESULT InitPropVariantFromFileTime(
+		[in]  const FILETIME *pftIn,
+		[out] PROPVARIANT    *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromFileTime FILETIME* PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromFileTimeVector: prgft cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromFileTimeVector(
+		[in]  const FILETIME *prgft,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromFileTimeVector FILETIME* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromInt16Vector: prgn cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromInt16Vector(
+		[in]  const SHORT *prgn,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromInt16Vector int16* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromInt32Vector: prgn cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromInt32Vector(
+		[in]  const LONG *prgn,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromInt32Vector int32* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromInt64Vector: prgn cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromInt64Vector(
+		[in]  const LONGLONG *prgn,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromInt64Vector int64* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromString: aString ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure based on a specified string.
+
+	HRESULT InitPropVariantFromString(
+		[in]  PCWSTR      psz,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	"Implemented inline in the propvarutil.h header file."
+
+	aPROPVARIANT bytes
+		uintPtrAtOffset: PROPVARIANT._OffsetOf_pwszVal
+			put: aString asUtf16String copyToCOMTaskMemory detach;
+		uintPtrAtOffset: _OffsetOf_vt put: VT_LPWSTR.
+	^S_OK!
+
+initPropVariantFromStringVector: prgsz cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromStringVector(
+		[in]  PCWSTR *prgsz,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromStringVector lpwstr* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromUInt16Vector: prgn cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromUInt16Vector(
+		[in]  const USHORT *prgn,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromUInt16Vector uint16* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromUInt32Vector: prgn cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromUInt32Vector(
+		[in]  const ULONG *prgn,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromUInt32Vector uint32* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+initPropVariantFromUInt64Vector: prgn cElems: cElems ppropvar: aPROPVARIANT
+	"Initializes a PROPVARIANT structure using the contents of a buffer.
+
+	HRESULT InitPropVariantFromUInt64Vector(
+		[in]  const ULONGLONG *prgn,
+		[in]  ULONG        cElems,
+		[out] PROPVARIANT *ppropvar
+	);"
+
+	<stdcall: hresult InitPropVariantFromUInt64Vector uint64* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+propVariantChangeType: ppropvarDest propvarSrc: propvarSrc flags: wFlags vt: vt
+	"Coerces a value stored as a PROPVARIANT structure to an equivalent value of a different variant type.
+
+		HRESULT PropVariantChangeType(
+			_Out_ PROPVARIANT *ppropvarDest, 
+			_In_ REFPROPVARIANT propvarSrc, 
+			_In_ PROPVAR_CHANGE_FLAGS flags, 
+			_In_ VARTYPE vt);"
+
+	<stdcall: hresult PropVariantChangeType PROPVARIANT* PROPVARIANT* uint32 uint16>
+	^self invalidCall: _failureCode!
+
+propVariantCompareEx: propvar1 propvar2: propvar2 unit: unit flags: flags
+	"
+		int PropVariantCompareEx(
+			_In_ REFPROPVARIANT propvar1, 
+			_In_ REFPROPVARIANT propvar2, 
+			_In_ PROPVAR_COMPARE_UNIT unit, 
+			_In_ PROPVAR_COMPARE_FLAGS flags)
+	"
+
+	<stdcall: int32 PropVariantCompareEx PROPVARIANT* PROPVARIANT* int32 uint32>
+	^self invalidCall: _failureCode!
+
+propVariantGetElementCount: propvar
+	"Get the element count of a PROPVARIANT.  Returns number of elements for values of type VT_ARRAY; returns 1 otherwise.
+
+	ULONG PropVariantGetElementCount(_In_ REFPROPVARIANT propvar);"
+
+	<stdcall: uint32 PropVariantGetElementCount PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+propVariantToBooleanVector: propvar prgf: prgf crgf: crgf pcElem: pcElem
+	"Extracts a Boolean vector from a PROPVARIANT structure of type (VT_VECTOR | VT_BOOL) or (VT_ARRAY | VT_BOOL).
+
+	HRESULT PropVariantToBooleanVector(
+		_In_ REFPROPVARIANT propvar,
+		_Out_writes_to_(crgf, *pcElem) BOOL *prgf, 
+		_In_ ULONG crgf, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToBooleanVector PROPVARIANT* BOOL* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToBuffer: propvar pv: pv cb: cb
+	"
+	HRESULT PropVariantToBuffer(
+		_In_ REFPROPVARIANT propvar, 
+		_Out_writes_bytes_(cb) void *pv, 
+		_In_ UINT cb);"
+
+	<stdcall: hresult PropVariantToBuffer PROPVARIANT* uint8* uint32>
+	^self invalidCall: _failureCode!
+
+propVariantToDoubleVector: pvar prgn: prgn crgn: crgn pcElem: pcElem
+	"Extracts an array of double precision floating point values from a PROPVARIANT structure of type (VT_VECTOR | VT_R8).
+
+	HRESULT PropVariantToDoubleVector(
+		_In_ REFVARIANT propvar,
+		_Out_writes_to_(crgn, *pcElem) DOUBLE *prgn, 
+		_In_ ULONG crgn, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToDoubleVector PROPVARIANT* double* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToFileTime: propVar pstfOut: pstfOut pftOut: pftOut
+	"Extracts the FILETIME structure from a PROPVARIANT structure.
+
+	HRESULT PropVariantToFileTime(
+		[in]  REFPROPVARIANT propvar,
+		[in]  PSTIME_FLAGS   pstfOut,
+		[out] FILETIME       *pftOut
+	);"
+
+	<stdcall: hresult PropVariantToFileTime PROPVARIANT* uint32 FILETIME*>
+	^self invalidCall: _failureCode!
+
+propVariantToFileTimeVector: pvar prgft: prgft crgft: crgft pcElem: pcElem
+	"Extracts an array of FILETIME values from a PROPVARIANT structure of type (VT_VECTOR | VT_FILETIME).
+
+	HRESULT PropVariantToFileTimeVector(
+		_In_ REFVARIANT propvar,
+		_Out_writes_to_(crgft, *pcElem) FILETIME *prgft, 
+		_In_ ULONG crgft, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToFileTimeVector PROPVARIANT* FILETIME* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToInt16Vector: pvar prgn: prgn crgn: crgn pcElem: pcElem
+	"Extracts an array of signed 16-bit integer values from a PROPVARIANT structure of type (VT_VECTOR | VT_I2).
+
+	HRESULT PropVariantToInt16Vector(
+		_In_ REFVARIANT propvar,
+		_Out_writes_to_(crgn, *pcElem) SHORT *prgn, 
+		_In_ ULONG crgn, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToInt16Vector PROPVARIANT* int16* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToInt32Vector: pvar prgn: prgn crgn: crgn pcElem: pcElem
+	"Extracts an array of signed 32-bit integer values from a PROPVARIANT structure of type (VT_VECTOR | VT_I4).
+
+	HRESULT PropVariantToInt32Vector(
+		_In_ REFVARIANT propvar,
+		_Out_writes_to_(crgn, *pcElem) LONG *prgn, 
+		_In_ ULONG crgn, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToInt32Vector PROPVARIANT* int32* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToInt64Vector: pvar prgn: prgn crgn: crgn pcElem: pcElem
+	"Extracts an array of signed 64-bit integer values from a PROPVARIANT structure of type (VT_VECTOR | VT_I8).
+
+	HRESULT PropVariantToInt64Vector(
+		_In_ REFVARIANT propvar,
+		_Out_writes_to_(crgn, *pcElem) LONGLONG *prgn, 
+		_In_ ULONG crgn, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToInt64Vector PROPVARIANT* int64* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToStringVector: propvar prgsz: prgsz crgsz: crgsz pcElem: pcElem
+	"Extracts a vector of strings from a PROPVARIANT structure. of type (VT_VECTOR | VT_LPWSTR), or (VT_VECTOR | VT_BSTR), or (VT_ARRAY | VT_BSTR).
+
+	HRESULT PropVariantToStringVector(
+		[in]  REFPROPVARIANT propvar,
+		[out] PWSTR          *prgsz,
+		[in]  ULONG          crgsz,
+		[out] ULONG          *pcElem);"
+
+	<stdcall: hresult PropVariantToStringVector PROPVARIANT* lpwstr* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToUInt16Vector: pvar prgn: prgn crgn: crgn pcElem: pcElem
+	"Extracts an array of unsigned 16-bit integer values from a PROPVARIANT structure of type (VT_VECTOR | VT_UI2).
+
+	HRESULT PropVariantToUInt16Vector(
+		_In_ REFVARIANT propvar,
+		_Out_writes_to_(crgn, *pcElem) USHORT *prgn, 
+		_In_ ULONG crgn, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToUInt16Vector PROPVARIANT* uint16* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToUInt32Vector: pvar prgn: prgn crgn: crgn pcElem: pcElem
+	"Extracts an array of unsigned 32-bit integer values from a PROPVARIANT structure of type (VT_VECTOR | VT_UI4).
+
+	HRESULT PropVariantToUInt32Vector(
+		_In_ REFVARIANT propvar,
+		_Out_writes_to_(crgn, *pcElem) ULONG *prgn, 
+		_In_ ULONG crgn, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToUInt32Vector PROPVARIANT* uint32* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToUInt64Vector: pvar prgn: prgn crgn: crgn pcElem: pcElem
+	"Extracts an array of unsigned 64-bit integer values from a PROPVARIANT structure of type (VT_VECTOR | VT_UI8).
+
+	HRESULT PropVariantToUInt64Vector(
+		_In_ REFVARIANT propvar,
+		_Out_writes_to_(crgn, *pcElem) ULONGLONG *prgn, 
+		_In_ ULONG crgn, 
+		_Out_ ULONG *pcElem);"
+
+	<stdcall: hresult PropVariantToUInt64Vector PROPVARIANT* uint64* uint32 uint32*>
+	^self invalidCall: _failureCode!
+
+propVariantToVariant: pPropVar pVar: pVar
+	"Converts the contents of a PROPVARIANT structure to a VARIANT structure..
+
+		HRESULT PropVariantToVariant(
+			_In_ const PROPVARIANT *pPropVar, 
+			_Out_ VARIANT *pVar);
+	"
+
+	<stdcall: hresult PropVariantToVariant PROPVARIANT* variant*>
+	^self invalidCall: _failureCode!
+
+stgDeserializePropVariant: pprop cbMax: cbMax ppropvar: ppropvar
+	"
+		HRESULT StgDeserializePropVariant(
+			_In_ const SERIALIZEDPROPERTYVALUE* pprop,
+			_In_ ULONG cbMax,
+			_Out_ PROPVARIANT* ppropvar);
+	"
+
+	<stdcall: hresult StgDeserializePropVariant byte* uint32 PROPVARIANT*>
+	^self invalidCall: _failureCode!
+
+stgSerializePropVariant: ppropvar ppProp: ppProp pcb: pcb
+	"
+		HRESULT StgSerializePropVariant(
+			_In_ const PROPVARIANT* ppropvar,
+			_Outptr_result_bytebuffer_(*pcb) SERIALIZEDPROPERTYVALUE** ppProp,
+			_Out_ ULONG* pcb);"
+
+	<stdcall: hresult StgSerializePropVariant PROPVARIANT* byte* uint32*>
+	^self invalidCall: _failureCode!
+
+variantToPropVariant: pVar pPropVar: pPropVar
+	"Converts the contents of a VARIANT structure to a PROPVARIANT structure..
+
+		HRESULT VariantToPropVariant(
+			_In_ const VARIANT *pVar, 
+			_Out_ PROPVARIANT *pPropVar);"
+
+	<stdcall: hresult VariantToPropVariant variant* PROPVARIANT*>
+	^self invalidCall: _failureCode! !
+
+!OS.COM.PropsysLibrary categoriesForMethods!
+clearPropVariantArray:cVars:!OLE Functions-Property Sets!public! !
+initPropVariantFromBooleanVector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromBuffer:cb:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromCLSID:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromDoubleVector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromFileTime:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromFileTimeVector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromInt16Vector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromInt32Vector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromInt64Vector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromString:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromStringVector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromUInt16Vector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromUInt32Vector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+initPropVariantFromUInt64Vector:cElems:ppropvar:!OLE Functions-Property Sets!public! !
+propVariantChangeType:propvarSrc:flags:vt:!OLE Functions-Property Sets!public! !
+propVariantCompareEx:propvar2:unit:flags:!OLE Functions-Property Sets!public! !
+propVariantGetElementCount:!OLE Functions-Property Sets!public! !
+propVariantToBooleanVector:prgf:crgf:pcElem:!OLE Functions-Property Sets!public! !
+propVariantToBuffer:pv:cb:!OLE Functions-Property Sets!public! !
+propVariantToDoubleVector:prgn:crgn:pcElem:!public! !
+propVariantToFileTime:pstfOut:pftOut:!OLE Functions-Property Sets!public! !
+propVariantToFileTimeVector:prgft:crgft:pcElem:!public! !
+propVariantToInt16Vector:prgn:crgn:pcElem:!public! !
+propVariantToInt32Vector:prgn:crgn:pcElem:!public! !
+propVariantToInt64Vector:prgn:crgn:pcElem:!public! !
+propVariantToStringVector:prgsz:crgsz:pcElem:!public! !
+propVariantToUInt16Vector:prgn:crgn:pcElem:!public! !
+propVariantToUInt32Vector:prgn:crgn:pcElem:!public! !
+propVariantToUInt64Vector:prgn:crgn:pcElem:!public! !
+propVariantToVariant:pVar:!OLE Functions-Property Sets!public! !
+stgDeserializePropVariant:cbMax:ppropvar:!OLE Functions-Property Sets!public! !
+stgSerializePropVariant:ppProp:pcb:!OLE Functions-Property Sets!public! !
+variantToPropVariant:pPropVar:!OLE Functions-Property Sets!public! !
+!
+
+!OS.COM.VARIANT methodsFor!
+
+filetimeVector
+	"Private - Answer a <FILETIMEArray> representation of the array of DATE values in the receiver, assumed to contain a SAFEARRAY of VT_DATE."
+
+	"Note the API asymmetry: A Propsys DLL function exists to initialize a VARIANT from FILETIME[], but not to access the array. Consequently we need to access the SAFEARRAY and convert it."
+
+	^self getVector!
+
+filetimeVector: aFILETIMEArray
+	"We don't use Propsys.InitVariantFromFileTimeArray because it has bugs, e.g. doesn't handle FILETIME(0), and also truncates unnecessarily."
+
+	self array: (SAFEARRAY withAll: aFILETIMEArray elementClass: DATE)!
+
+initializeFromPropVariant: aPROPVARIANT
+	"Private - Narrowing conversion PROPVARIANT -> VARIANT"
+
+	Propsys propVariantToVariant: aPROPVARIANT pVar: self.
+	"Workaround bug that PropVariantToVariant does not adjust for conversion from UTC FILETIME to local time DATE."
+	aPROPVARIANT vt == VT_FILETIME
+		ifTrue: 
+			[bytes doubleAtOffset: _OffsetOf_date
+				put: (bytes doubleAtOffset: _OffsetOf_date)
+						+ (Locale timeZoneInformation offsetSeconds / Duration.SecondsPerDay)]!
+
+storage
+	"Private - Answer the <IStorage> value from the receiver.
+	Assumes the receiver is of type VT_UNKNOWN/VT_DISPATCH but the stored object implements IStorage."
+
+	| unk |
+	unk := self unknown.
+	^self isByRef ifTrue: [unk ifFalse: [unk queryInterface: IStorage]]!
+
+storage: anIStorage
+	"Private - Initialize the receiver to be a VT_UNKNOWN containing the <IUnknown> of the interface pointer argument."
+
+	self unknown: anIStorage!
+
+stream
+	"Private - Answer the <IStream> value from the receiver.
+	Assumes the receiver is of type VT_UNKNOWN/VT_DISPATCH but the stored object implements IStream."
+
+	| unk |
+	unk := self unknown.
+	^self isByRef ifTrue: [unk ifFalse: [unk queryInterface: IStream]]!
+
+stream: anIStream
+	"Private - Initialize the receiver to be a VT_UNKNOWN containing the <IUnknown> of the interface pointer argument."
+
+	self unknown: anIStream! !
+
+!OS.COM.VARIANT categoriesForMethods!
+filetimeVector!accessing!private! !
+filetimeVector:!initializing!private! !
+initializeFromPropVariant:!converting!double dispatch!private! !
+storage!accessing!private! !
+storage:!initializing!private! !
+stream!accessing!private! !
+stream:!initializing!private! !
+!
+
+!OS.FILETIME class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^FILETIMEArray!
+
+variantVectorName
+	^#filetimeVector! !
+
+!OS.FILETIME class categoriesForMethods!
+arrayType!constants!public! !
+variantVectorName!public! !
+!
+
+!OS.HRESULT class methodsFor!
+
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
+
+	^HRESULTArray!
+
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#hresultVector! !
+
+!OS.HRESULT class categoriesForMethods!
+arrayType!constants!public! !
+variantVectorName!constants!private! !
+!
 
 "End of package definition"!
 

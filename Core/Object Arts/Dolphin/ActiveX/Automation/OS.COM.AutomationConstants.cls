@@ -195,54 +195,7 @@ Kernel.SharedPool
 			'VARIANT_NOUSEROVERRIDE' -> 16r4.
 			'VARIANT_NOVALUEPROP' -> 16r1.
 			'VARIANT_TRUE' -> -16r1.
-			'VARIANT_USE_NLS' -> 16r80.
-			'VT_ARRAY' -> 16r2000.
-			'VT_BLOB' -> 16r41.
-			'VT_BLOB_OBJECT' -> 16r46.
-			'VT_BOOL' -> 16rB.
-			'VT_BSTR' -> 16r8.
-			'VT_BYREF' -> 16r4000.
-			'VT_CARRAY' -> 16r1C.
-			'VT_CF' -> 16r47.
-			'VT_CLSID' -> 16r48.
-			'VT_CY' -> 16r6.
-			'VT_DATE' -> 16r7.
-			'VT_DECIMAL' -> 16rE.
-			'VT_DISPATCH' -> 16r9.
-			'VT_EMPTY' -> 16r0.
-			'VT_ERROR' -> 16rA.
-			'VT_FILETIME' -> 16r40.
-			'VT_HRESULT' -> 16r19.
-			'VT_I1' -> 16r10.
-			'VT_I2' -> 16r2.
-			'VT_I4' -> 16r3.
-			'VT_I8' -> 16r14.
-			'VT_INT' -> 16r16.
-			'VT_INT_PTR' -> 16r25.
-			'VT_LPSTR' -> 16r1E.
-			'VT_LPWSTR' -> 16r1F.
-			'VT_NULL' -> 16r1.
-			'VT_PTR' -> 16r1A.
-			'VT_R4' -> 16r4.
-			'VT_R8' -> 16r5.
-			'VT_RECORD' -> 16r24.
-			'VT_SAFEARRAY' -> 16r1B.
-			'VT_STORAGE' -> 16r43.
-			'VT_STORED_OBJECT' -> 16r45.
-			'VT_STREAM' -> 16r42.
-			'VT_STREAMED_OBJECT' -> 16r44.
-			'VT_TYPEMASK' -> 16rFFF.
-			'VT_UI1' -> 16r11.
-			'VT_UI2' -> 16r12.
-			'VT_UI4' -> 16r13.
-			'VT_UI8' -> 16r15.
-			'VT_UINT' -> 16r17.
-			'VT_UINT_PTR' -> 16r26.
-			'VT_UNKNOWN' -> 16rD.
-			'VT_USERDEFINED' -> 16r1D.
-			'VT_VARIANT' -> 16rC.
-			'VT_VECTOR' -> 16r1000.
-			'VT_VOID' -> 16r18
+			'VARIANT_USE_NLS' -> 16r80
 		}!
 
 OS.COM.AutomationConstants guid: (Core.GUID fromString: '{e4e5f374-c852-48e6-9a06-8e05b8ae6578}')!

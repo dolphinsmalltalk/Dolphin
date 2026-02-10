@@ -24,8 +24,8 @@ testComparing
 				FILETIME fromInteger: FILETIME.SmalltalkEpoch - 1.
 				FILETIME fromInteger: FILETIME.SmalltalkEpoch + 1.
 				FILETIME fromInteger: 134138194971234567.
-				FILETIME fromInteger: FILETIME.MaxValue.
-				FILETIME fromInteger: FILETIME.MinValue
+				FILETIME maximum.
+				FILETIME minimum
 			}.
 	1 to: examples size
 		do: 
@@ -61,7 +61,7 @@ testDateAndTimeConversions
 	expected := DateAndTime fromString: '1901-01-01T00:00:00Z'.
 	self assert: subject asDateAndTime equals: expected.
 	self assert:  (FILETIME fromDateAndTime: expected) equals: subject.
-	subject := FILETIME new value: FILETIME.MaxValue.
+	subject := FILETIME maximum.
 	expected := DateAndTime
 				rataDie: 11259588
 				seconds: 100854775807 / 1e7
@@ -101,9 +101,9 @@ testFromInteger
 	self assertFromIntegerInvertible: 2 ** 32.
 	self assertFromIntegerInvertible: 2 ** 32 + 1.
 	self assertFromIntegerInvertible: FILETIME.MaxValue.
-	self should: [FILETIME fromInteger: FILETIME.MaxValue+1] raise: Error.
-	self should: [FILETIME fromInteger: -1] raise: Error.
-	self should: [FILETIME fromInteger: 2 ** 64] raise: Error!
+	self should: [FILETIME fromInteger: FILETIME.MaxValue+1] raise: InvalidArgumentError.
+	self should: [FILETIME fromInteger: -1] raise: InvalidArgumentError.
+	self should: [FILETIME fromInteger: 2 ** 64] raise: InvalidArgumentError!
 
 testFromUnixTime
 	| subject |
@@ -118,7 +118,8 @@ testPrintString
 
 testSystemTimeConversions
 	| subject sysTime dt |
-	dt := DateAndTime fromString: '2020-02-29T12:01:02.125+01:00'.
+	dt := (DateAndTime fromString: '2020-02-29T11:01:02.125Z') - Locale timeZoneInformation offset.
+	"Note that in Dolphin we assume SYSTEMTIMEs are local time by default"
 	sysTime := SYSTEMTIME new
 				wYear: 2020;
 				wMonth: 2;
@@ -136,28 +137,43 @@ testSystemTimeConversions
 	subject := LocalFILETIME fromSYSTEMTIME: sysTime.
 	self assert: subject asDateAndTime equals: dt.
 	self assert: subject asSYSTEMTIME equals: sysTime.
-	"Boundary cases"
+	"Out of range cases"
 	subject := FILETIME new value: 16r7FFFFFFFFFFFFFFF.
-	sysTime := SYSTEMTIME new
-				wYear: 30828;
-				wMonth: 9;
-				wDay: 14;
-				wDayOfWeek: 4;
-				wHour: 2;
-				wMinute: 48;
-				wSecond: 5;
-				wMilliseconds: 477;
-				yourself.
 	self should: [subject asSYSTEMTIME] raise: Error.
-	self should: [FILETIME fromSYSTEMTIME: sysTime] raise: HRESULTError matching: [:ex | ex statusCode = Win32Errors.ERROR_INVALID_PARAMETER].
+	{
+		SYSTEMTIME new
+			wYear: 30828;
+			wMonth: 9;
+			wDay: 14;
+			wDayOfWeek: 4;
+			wHour: 2;
+			wMinute: 48;
+			wSecond: 5;
+			wMilliseconds: 477;
+			yourself.
+		SYSTEMTIME new
+			wYear: 1600;
+			wMonth: 12;
+			wDay: 31;
+			wHour: 23;
+			wMinute: 59;
+			wSecond: 59;
+			wMilliseconds: 999;
+			yourself
+	} do: 
+				[:each |
+				self
+					should: [FILETIME fromSYSTEMTIME: each]
+					raise: HRESULTError
+					matching: [:ex | ex statusCode = Win32Errors.ERROR_INVALID_PARAMETER]].
+
 	"Actual max system time"
-	subject := FILETIME fromInteger: 16r7FFF35F4F06C58F0.
+	subject := FILETIME fromInteger: 16r7FFF35F4F06C58F0 - (Locale timeZoneInformation offsetSeconds * 1e9).
 	sysTime := subject asSYSTEMTIME.
 	self assert: (FILETIME fromSYSTEMTIME: sysTime) equals: subject.
 	subject value: subject value - 100 nanoseconds.
 	"FileTimeToSystemTime truncates to milliseconds, not rounds"
-	self assert: subject value - subject asSYSTEMTIME asDateAndTime equals: 999900 nanoseconds
-	! !
+	self assert: subject value - subject asSYSTEMTIME asDateAndTime equals: 999900 nanoseconds! !
 
 !OS.Tests.FILETIMETest categoriesForMethods!
 assertFromIntegerInvertible:!helpers!private! !

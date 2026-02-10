@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.COM.TYPEDESC'
 	instanceVariableNames: 'classDesc typeInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_hreftype' -> 16r0.

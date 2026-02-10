@@ -4,7 +4,7 @@ External.FinalizableStructure
 	subclass: #'OS.COM.Record'
 	instanceVariableNames: 'recordInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -219,7 +219,10 @@ newWithInfo: anIRecordInfo
 	^self basicNew
 		setRecordInfo: anIRecordInfo;
 		initializeBuffer: self bufferClass size: 0;
-		yourself! !
+		yourself!
+
+shouldRegister
+	^false! !
 
 !OS.COM.Record class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
@@ -230,5 +233,6 @@ fromBytes:!instance creation!public! !
 fromBytes:recordInfo:!instance creation!public! !
 newBuffer!instance creation!public! !
 newWithInfo:!instance creation!public! !
+shouldRegister!private!testing! !
 !
 

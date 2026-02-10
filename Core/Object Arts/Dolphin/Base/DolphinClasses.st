@@ -5782,6 +5782,14 @@ External.IntegerArray
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+External.Int32Array
+	subclass: #'External.BOOLArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 External.UIntPtrArray
 	subclass: #'External.HandleArray'
 	instanceVariableNames: ''

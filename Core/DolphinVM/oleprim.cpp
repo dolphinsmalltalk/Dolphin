@@ -239,10 +239,6 @@ Oop* PRIMCALL Interpreter::primitiveVariantValue(Oop* const sp, primargcount_t)
 			value = reinterpret_cast<Oop>(Utf16String::NewFromBSTR(V_BSTR(pVar)));
 			break;
 
-		case VT_DATE:
-			return AnswerNewStructure(Pointers.ClassDATE, &(V_DATE(pVar)));
-			break;
-
 		case VT_DISPATCH:
 			{
 				IDispatch* pdisp = V_DISPATCH(pVar);
@@ -284,16 +280,26 @@ Oop* PRIMCALL Interpreter::primitiveVariantValue(Oop* const sp, primargcount_t)
 			value = LargeInteger::NewUnsigned64(V_UI8(pVar));
 			break;
 
+		case VT_LPSTR:
+			value = reinterpret_cast<Oop>(AnsiString::New(reinterpret_cast<const PROPVARIANT*>(pVar)->pszVal));
+			break;
+
+		case VT_LPWSTR:
+			value = reinterpret_cast<Oop>(Utf16String::New(reinterpret_cast<const PROPVARIANT*>(pVar)->pwszVal));
+			break;
+
+		case VT_FILETIME:
+		case VT_DATE: 
 		case VT_CY:
 		case VT_DECIMAL:
-			// These are represented as ScaledDecimals, the format of which is subject to change, so
-			// we'll let the Smalltalk code handle it.
+			// These are represented as Smalltalk objects with non-trivial translations or representations
+			// that we don't want to fix into the VM, so we fail and let the Smalltalk code handle it.
 
 		case VT_ERROR:
 			// Needs to be an HRESULT, and we don't ref. that class from the VM's pointer table
 
 		default:
-			// Anything else, we'll leave the error handling to the image
+			// Anything else, we'll leave the handling to the image, including invalid VT_xxx and arrays/vectors
 			return primitiveFailure(_PrimitiveFailureCode::InvalidVariant);
 			break;
 		}

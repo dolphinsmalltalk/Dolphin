@@ -2,7 +2,7 @@
 
 External.Structure
 	subclass: #'OS.COM.DISPPARAMS'
-	instanceVariableNames: 'args vargs dispids'
+	instanceVariableNames: 'vargs dispids'
 	classVariableNames: 'ZeroArgs'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -16,48 +16,44 @@ External.Structure
 
 OS.COM.DISPPARAMS guid: (Core.GUID fromString: '{c06f3b6f-0868-11d3-93af-00a024ca708a}')!
 
-OS.COM.DISPPARAMS comment: 'DISPPARAMS is an <ExternalStructure> to represent the OLE Automation structure DISPPARAMS.
+OS.COM.DISPPARAMS comment: '`DISPPARAMS` is an `ExternalStructure` to represent the OLE Automation structure `DISPPARAMS`.
 
-DISPPARAMS is the parameter block used in calls to IDispatch::Invoke. It contains an array of VARIANTARG structures (which are actually represented by the identical <VARIANT> structure in Dolphin), a count of the total number of arguments, an array of the <integer> DISPIDs of the so called "named" arguments, and a count of the number of named arguments in that array. The named arguments are assumed to appear first in the rgvarg array.
+`DISPPARAMS` is the parameter block used in calls to `IDispatch::Invoke`. It contains an array of `VARIANTARG` structures (which is really just a typedef/alias to `VARIANT`), a count of the total number of arguments, an array of the `integer` DISPIDs of the so called "named" arguments, and a count of the number of named arguments in that array. The named arguments are assumed to appear first in the `rgvarg` array field.
 
 In general Dolphin does not use named arguments since these are not terribly well supported by Smalltalk syntax. The exception is for property put invocations, where their use is required.
 
 Apart from the generated accessors for the structure members this class implements convenience methods to make it easy to set up late-bound calls of common types.
 
-Fields:
-	rgvarg		<VARIANT*> Array of arguments
-	rgdispidNamedArgs	<SDWORD*> Array of ids of named arguments
-	cArgs		<DWORD> Total number of named and unnamed arguments (size of rgvarg).
-	cNamedArgs	<DWORD> Number of named arguments (size of rgdispidNamedArgs)'!
+## Fields
+  `rgvarg`				`VARIANTArray` Array of arguments
+  `rgdispidNamedArgs`	`Int32Array` Array of ids of named arguments
+  `cArgs`				`UInt32` Total number of named and unnamed arguments (size of `rgvarg`).
+  `cNamedArgs`		`UInt32` Number of named arguments (size of `rgdispidNamedArgs`)'!
 
 !OS.COM.DISPPARAMS categoriesForClass!External-Data-Structured-COM! !
 
 !OS.COM.DISPPARAMS methodsFor!
 
-arg: argument
-	"Set the receiver's single argument to be the <VARIANT> representation 
-	of the <Object>, argument. If the argument is not representable as a VARIANT
-	then raise an error."
+arg: anObject
+	"Set the receiver's single argument to be the <VARIANT> representation of the <Object>, argument. If the argument is not representable as a <VARIANT> then raise an error."
 
-	args := argument asVariant. 		"Prevent premature GC of VARIANT"
-	self rgvarg: args.
-	self cArgs: 1!
+	vargs := anObject asVariant.
+	bytes
+		uintPtrAtOffset: _OffsetOf_rgvarg put: vargs yourAddress;
+		uint32AtOffset: _OffsetOf_cArgs put: 1!
 
-args: arguments
+args: anArray
 	"Set the receiver's arguments to be <Array> of <Object> arguments."
 
 	| argc |
-	argc := arguments size.
-	args := Array new: argc.
-	vargs := StructureArray length: argc elementClass: VARIANT.
-	"We don't want the StructureArray to free the variants, so set the owner to the array"
-	vargs owner: args.
+	argc := anArray size.
+	vargs := VARIANTArray new: argc.
 	1 to: argc
 		do: 
 			[:i |
 			| j |
 			j := argc - i + 1.
-			vargs uncheckedAt: j put: (args at: j put: (arguments at: i) asVariant)].
+			vargs uncheckedAt: j put: (anArray at: i)].
 	self rgvarg: vargs!
 
 cArgs
@@ -80,69 +76,62 @@ cNamedArgs: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_cNamedArgs put: anInteger!
 
-names: names named: namedArgs args: unnamedArgs
+names: dispidArray named: namedArgArray args: unnamedArgArray
 	"Set the receiver's arguments to be the <sequencedReadableCollection> of named arguments,
-	namedArgs, the names (ids) of which are specified in the corresponding positions of the
-	<sequencedReadableCollection>, dispids, and the <sequencedReadableCollection> of unnamed
-	<Object> arguments, args."
+	namedArgArray, the 'names' (actually integer ids) of which are specified in the corresponding positions of the
+	<sequencedReadableCollection>, dispidArray, and the <sequencedReadableCollection> of unnamed
+	<Object> arguments, unnamedArgArray."
 
 	| argc cNamed cUnnamed |
-	cNamed := namedArgs size.
+	cNamed := namedArgArray size.
 	dispids := Int32Array new: cNamed.
-	cUnnamed := unnamedArgs size.
+	cUnnamed := unnamedArgArray size.
 	argc := cNamed + cUnnamed.
-	args := Array new: argc.
-	vargs := StructureArray length: argc elementClass: VARIANT.
-	"#2084: Suppress structure array finalization which would double-free the variants"
-	vargs owner: args.
+	vargs := VARIANTArray new: argc.
 
 	"Named args can appear in normal order"
 	1 to: cNamed
 		do: 
 			[:i |
-			| v |
-			dispids at: i put: (names at: i).
-			v := (namedArgs at: i) asVariant.
-			vargs at: i put: (args at: i put: v)].
+			dispids at: i put: (dispidArray at: i).
+			vargs at: i put: (namedArgArray at: i)].
 
 	"Unnamed args must appear in reverse order"
 	1 to: cUnnamed
 		do: 
 			[:i |
-			| v j |
-			v := (unnamedArgs at: i) asVariant.
+			| j |
 			j := argc - i + 1.
-			vargs at: j put: (args at: j put: v)].
+			vargs at: j put: (unnamedArgArray at: i)].
 	self rgdispidNamedArgs: dispids.
 	self rgvarg: vargs!
 
-propertyPut: item value: argument
-	"Set up the receiver for a subscripted property put operation, with the specified <VARIANT> 
-	subscript item and the VARIANT representation of the <Object>, value.
-	There is some slight trickiness here as for some reason the property put argument must 
-	always be 'named'. As the argument count includes the named arguments it is set to two."
+propertyPut: subscriptObject value: valueObject
+	"Set up the receiver for a subscripted property put operation, with the specified `VARIANT` subscript, subscriptObject, and the `VARIANT` representation of the `Object`, valueObject.
+	There is some slight trickiness here as for some reason the property put argument must  always be 'named'. As the argument count includes the named arguments it is set to two."
 
-	self args: {item. argument}.
+	self args: { subscriptObject. valueObject }.
 	dispids := Int32 fromInteger: DISPID_PROPERTYPUT.
-	self rgdispidNamedArgs: dispids.
-	self cNamedArgs: 1!
+	self
+		rgdispidNamedArgs: dispids;
+		cNamedArgs: 1!
 
-propertyPutValue: argument
-	"Set up the receiver for an unsubscripted property put operation to set the value of a property
-	to the VARIANT representation of the <Object>, argument.
-	There is some slight trickiness here as for some reason the property put argument must always be
-	'named'. Note also that the argument count includes the named arguments, so in this case both
-	should be one."
+propertyPutValue: anObject
+	"Set up the receiver for an unsubscripted property put operation to set the value of a property to the `VARIANT` representation of the <Object> argument.
+	There is some slight trickiness here as for some reason the property put argument must always be 'named'. Note also that the argument count includes the named arguments, so in this case both should be one."
 
-	self arg: argument.
+	self arg: anObject.
 	dispids := Int32 fromInteger: DISPID_PROPERTYPUT.
-	self rgdispidNamedArgs: dispids.
-	self cNamedArgs: 1!
+	self
+		rgdispidNamedArgs: dispids;
+		cNamedArgs: 1!
 
 rgdispidNamedArgs
 	"Answer the <Int32Array> value of the receiver's 'rgdispidNamedArgs' field."
 
-	^Int32Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgdispidNamedArgs)
+	^Int32Array
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgdispidNamedArgs)
+		owner: self fieldOwner
 		length: self cNamedArgs!
 
 rgdispidNamedArgs: anInt32Array
@@ -152,23 +141,23 @@ rgdispidNamedArgs: anInt32Array
 	self cNamedArgs: anInt32Array size!
 
 rgvarg
-	"Answer the <StructureArray> value of the receiver's 'rgvarg' field."
+	"Answer the <VARIANTArray> value of the receiver's 'rgvarg' field."
 
-	^StructureArray
+	^VARIANTArray
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgvarg)
-		length: self cArgs
-		elementClass: VARIANT!
+		owner: self fieldOwner
+		length: self cArgs!
 
-rgvarg: aStructureArray
-	"Set the receiver's 'rgvarg' field to the value of the argument, aStructureArray"
+rgvarg: aVARIANTArray
+	"Set the receiver's 'rgvarg' field to the value of the argument, aVARIANTArray"
 
-	bytes uintPtrAtOffset: _OffsetOf_rgvarg put: aStructureArray yourAddress.
-	self cArgs: aStructureArray size!
+	bytes uintPtrAtOffset: _OffsetOf_rgvarg put: aVARIANTArray yourAddress.
+	self cArgs: aVARIANTArray size!
 
 singleArg
 	"Answer the single VARIANT parameter - assumes cArgs == 1"
 
-	^VARIANT fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgvarg)! !
+	^self rgvarg single! !
 
 !OS.COM.DISPPARAMS categoriesForMethods!
 arg:!accessing!public! !
@@ -208,8 +197,7 @@ defineFields
 
 	self
 		defineField: #rgvarg
-			type: (StructureArrayPointerField type: VARIANT
-					arrayLength: (ConformantArrayFieldLength lengthField: #cArgs));
+			type: (ArrayPointerField type: VARIANTArray arrayLength: (ConformantArrayFieldLength lengthField: #cArgs));
 		defineField: #rgdispidNamedArgs
 			type: (ArrayPointerField type: Int32Array
 					arrayLength: (ConformantArrayFieldLength lengthField: #cNamedArgs));

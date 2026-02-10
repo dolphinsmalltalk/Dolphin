@@ -178,17 +178,17 @@ byteSize
 
 	^self basicSize!
 
-copy: aByteClass from: start to: stop 
+copy: aByteClass from: startInteger to: stopInteger 
 	"Private - Answer a copy of the bytes of the receiver starting at index start, 
 	until index stop, inclusive, as an instance of the argument, aByteClass."
 
-	| len |
-	len := stop - start + 1.
+	| count |
+	count := stopInteger - startInteger + 1.
 	^self 
-		replaceBytesOf: (aByteClass new: len)
+		replaceBytesOf: (aByteClass new: count)
 		from: 1
-		to: len
-		startingAt: start!
+		to: count
+		startingAt: startInteger!
 
 copyStringFrom: start to: stop
 	"Answer a copy of the bytes of the receiver starting at index start, 

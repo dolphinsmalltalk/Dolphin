@@ -83,11 +83,9 @@ basicUncheckedAt: anInteger put: anObject
 byteSize
 	"Answer the size in bytes of this structure. In a CountedArray the array elements are out of line in an independently allocated task memory block, so they are not included in the byte size. In fact the byte size of a CountedArray is fixed as they must only ever contain a 32-bit element count, and pointer to the element array."
 
-	^VMConstants.IsWin64
-		ifTrue: 
-			["So that pElems is aligned there there are 4 bytes of padding"
-			16]
-		ifFalse: [8]!
+	"So that pElems is aligned there there are 4 bytes of padding on Win64"
+
+	^##(VMConstants.IntPtrSize * 2)!
 
 cElems
 	"Answer the <Integer> value of the receiver's 'cElems' field."
@@ -100,30 +98,12 @@ cElems: anInteger
 	bytes uint32AtOffset: _OffsetOf_cElems put: anInteger!
 
 copyBytes: aByteObject
-	| count |
-	count := aByteObject uint32AtOffset: _OffsetOf_cElems.
-	count == 0
-		ifTrue: [bytes uintPtrAtOffset: _OffsetOf_pElems put: 0]
-		ifFalse: 
-			[| pElems |
-			pElems := Ole32 coTaskMemAlloc: count * self elementSize.
-			self
-				copyElements: (aByteObject uintPtrAtOffset: _OffsetOf_pElems) asExternalAddress
-				to: pElems
-				count: count.
-			bytes
-				uintPtrAtOffset: _OffsetOf_pElems put: pElems;
-				uintPtrAtOffset: _OffsetOf_cElems put: count].
+	self class
+		copyBytes: aByteObject
+		from: 1
+		to: (aByteObject uint32AtOffset: _OffsetOf_cElems) * self elementSize
+		into: bytes.
 	elements := nil!
-
-copyElements: srcAddress to: destAddress count: anInteger
-	| cb |
-	cb := anInteger * self elementSize.
-	Ucrt
-		memcpy_s: destAddress
-		destSize: cb
-		src: srcAddress
-		count: cb!
 
 elements
 	"Answer the receiver's <ExternalArray> of elements."
@@ -225,7 +205,6 @@ byteSize!accessing!public! !
 cElems!**compiled accessors**!public! !
 cElems:!**compiled accessors**!public! !
 copyBytes:!copying!private! !
-copyElements:to:count:!copying!private! !
 elements!accessing!private! !
 getElements!accessing!private! !
 initialize!private! !
@@ -260,6 +239,22 @@ clear: addressOrBytes
 	"Free the counted array body pointed at by the receiver."
 
 	Ole32 coTaskMemFree: (addressOrBytes uintPtrAtOffset: _OffsetOf_pElems)!
+
+copyBytes: srcByteObject from: startInteger to: stopInteger into: destByteObject
+	| byteSize |
+	byteSize := stopInteger - startInteger + 1.
+	byteSize == 0
+		ifTrue: [destByteObject uintPtrAtOffset: _OffsetOf_pElems put: 0]
+		ifFalse: 
+			[| pElems elementClass |
+			pElems := Ole32 coTaskMemAlloc: byteSize.
+			elementClass := self elementClass.
+			elementClass arrayType
+				copyBytes: (srcByteObject uintPtrAtOffset: _OffsetOf_pElems) asExternalAddress from: startInteger to: stopInteger into: pElems.
+			destByteObject
+				uintPtrAtOffset: _OffsetOf_pElems put: pElems;
+				uintPtrAtOffset: _OffsetOf_cElems put: byteSize / elementClass elementSize].
+	^destByteObject!
 
 defineFields
 	"Define the count field common to OLE counted array structures.
@@ -303,6 +298,7 @@ requiresFinalization
 alignment!constants!public! !
 baseAlignment!constants!public! !
 clear:!public!realizing/unrealizing! !
+copyBytes:from:to:into:!copying!private! !
 defineFields!public!template definition! !
 elementClass!constants!public! !
 fromAddress:owner:!instance creation!public! !

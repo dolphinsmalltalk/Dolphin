@@ -158,11 +158,6 @@ asTimeStamp
 	^self asDateAndTime asTimeStamp
 !
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_DATE)."
-
-	^self asSYSTEMTIME asVariant!
-
 day
 	"Answer the day of the year represented by the receiver."
 
@@ -375,7 +370,6 @@ asSeconds!converting!public! !
 asSYSTEMTIME!converting!public! !
 asTime!converting!public! !
 asTimeStamp!converting!public! !
-asVariant!converting!public! !
 day!accessing!public! !
 dayMonthYearDo:!accessing!public! !
 dayOfMonth!accessing!public! !

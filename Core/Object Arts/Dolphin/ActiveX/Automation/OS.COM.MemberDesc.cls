@@ -4,7 +4,7 @@ OS.COM.TypeInfoStructure
 	subclass: #'OS.COM.MemberDesc'
 	instanceVariableNames: 'index custData documentation'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_memid' -> 16r0 }!
 

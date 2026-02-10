@@ -16,6 +16,11 @@ OS.COM.VARIANT_BOOLArray comment: '`VARIANT_BOOLArray` is a specialized `Externa
 
 !OS.COM.VARIANT_BOOLArray methodsFor!
 
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_BOOL), or a (VT_VECTOR|VT_BOOL)."
+
+	anOleVariant varBoolVector: self!
+
 uncheckedAt: anInteger
 	"Private - Answer true if the 16-bit <integer> representing the element of the receiver at the specified <integer> index is non-zero, of false otherwise. No bounds checks are performed on the subscript."
 
@@ -26,6 +31,7 @@ uncheckedAt: anInteger put: aBoolean
 	^aBoolean! !
 
 !OS.COM.VARIANT_BOOLArray categoriesForMethods!
+initializeVariant:!converting!private! !
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
 !

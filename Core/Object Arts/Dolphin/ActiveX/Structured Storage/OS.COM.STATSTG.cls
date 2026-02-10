@@ -216,9 +216,7 @@ clear: addressOrBytes
 	"Free external resources referenced by STATSTG structure at the specified address.
 	We must check that the name is non-null because it may be even after a successful call with STATFLAG_NONAME specified."
 
-	| addr |
-	addr := addressOrBytes uintPtrAtOffset: _OffsetOf_pwcsName.
-	addr isNull ifFalse: [Ole32 coTaskMemFree: addr]!
+	Ole32 coTaskMemFree: (addressOrBytes uintPtrAtOffset: _OffsetOf_pwcsName)!
 
 defineFields
 	"Define the fields of the STATSTG structure.

@@ -16,6 +16,11 @@ As neither the array body of an `BSTRArray`, nor the strings it references are a
 
 !OS.COM.BSTRArray methodsFor!
 
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be either a (VT_ARRAY|VT_BSTR), or a (VT_VECTOR|VT_BSTR)."
+	
+	anOleVariant bstrVector: self!
+
 isSelfEvaluating
 	^self notNull and: [self allSatisfy: [:element | element asUtf8String isSelfEvaluating]]!
 
@@ -29,6 +34,7 @@ uncheckedAt: anInteger
 		ifFalse: [Utf16String fromAddress: bstr length: (OleAut32 sysStringLen: bstr)]! !
 
 !OS.COM.BSTRArray categoriesForMethods!
+initializeVariant:!converting!private! !
 isSelfEvaluating!public! !
 uncheckedAt:!accessing!private! !
 !

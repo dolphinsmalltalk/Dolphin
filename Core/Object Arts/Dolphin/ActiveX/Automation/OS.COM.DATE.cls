@@ -4,7 +4,7 @@ External.DOUBLE
 	subclass: #'OS.COM.DATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'EpochRD' -> 16rA955A.
@@ -141,7 +141,6 @@ initialize
 				becomeA: Float.
 	self addClassConstant: 'MinValue' value: min!
 
-
 marshal: anObject
 	^anObject asDATE!
 
@@ -173,6 +172,11 @@ uninitialize
 
 	VM registryAt: self name put: nil!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#dateVector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
@@ -192,6 +196,7 @@ minimum!constants!public! !
 now!instance creation!public! !
 typeName!constants!private! !
 uninitialize!class hierarchy-removing!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
 !
 

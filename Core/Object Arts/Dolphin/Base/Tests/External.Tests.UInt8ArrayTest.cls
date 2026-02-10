@@ -15,10 +15,14 @@ External.Tests.UInt8ArrayTest comment: ''!
 !External.Tests.UInt8ArrayTest methodsFor!
 
 testSelfEvaluating
-	| subject |
+	| subject stream |
 	subject := self newTestSubjectOfSize: 6.
 	self assert: subject isSelfEvaluating.
-	self assert: subject printString equals: '(UInt8Array withAll: <1p>)' << subject value! !
+	stream := SmalltalkLocale.Hex writeStream.
+	stream nextPutAll: '(UInt8Array withAll: #['.
+	subject value do: [:each | stream print: each] separatedBy: [stream space].
+	stream nextPutAll: '])'.
+	self assert: subject printString equals: stream contents! !
 
 !External.Tests.UInt8ArrayTest categoriesForMethods!
 testSelfEvaluating!public!unit tests! !

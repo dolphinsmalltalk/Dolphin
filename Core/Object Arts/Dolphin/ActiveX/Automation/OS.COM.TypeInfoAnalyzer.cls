@@ -4,7 +4,7 @@ OS.COM.TypeInfoObject
 	subclass: #'OS.COM.TypeInfoAnalyzer'
 	instanceVariableNames: 'typeLib guid index documentation'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'VTtoIDLTypeMap'

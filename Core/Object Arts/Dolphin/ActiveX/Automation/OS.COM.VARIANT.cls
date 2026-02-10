@@ -1,230 +1,80 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.FinalizableStructure
+OS.COM.OleVariant
 	subclass: #'OS.COM.VARIANT'
-	instanceVariableNames: 'data'
-	classVariableNames: 'Unspecified'
-	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_boolVal' -> 16r8.
-			'_OffsetOf_bstrVal' -> 16r8.
-			'_OffsetOf_bVal' -> 16r8.
-			'_OffsetOf_byref' -> 16r8.
-			'_OffsetOf_cVal' -> 16r8.
-			'_OffsetOf_cyVal' -> 16r8.
-			'_OffsetOf_date' -> 16r8.
-			'_OffsetOf_dblVal' -> 16r8.
-			'_OffsetOf_decVal' -> 16r0.
-			'_OffsetOf_fltVal' -> 16r8.
-			'_OffsetOf_intVal' -> 16r8.
-			'_OffsetOf_iVal' -> 16r8.
-			'_OffsetOf_llVal' -> 16r8.
-			'_OffsetOf_lVal' -> 16r8.
-			'_OffsetOf_parray' -> 16r8.
-			'_OffsetOf_pboolVal' -> 16r8.
-			'_OffsetOf_pbstrVal' -> 16r8.
-			'_OffsetOf_pbVal' -> 16r8.
-			'_OffsetOf_pcVal' -> 16r8.
-			'_OffsetOf_pcyVal' -> 16r8.
-			'_OffsetOf_pdate' -> 16r8.
-			'_OffsetOf_pdblVal' -> 16r8.
-			'_OffsetOf_pdecVal' -> 16r8.
-			'_OffsetOf_pdispVal' -> 16r8.
-			'_OffsetOf_pfltVal' -> 16r8.
-			'_OffsetOf_pintVal' -> 16r8.
-			'_OffsetOf_piVal' -> 16r8.
-			'_OffsetOf_pllVal' -> 16r8.
-			'_OffsetOf_plVal' -> 16r8.
-			'_OffsetOf_pparray' -> 16r8.
-			'_OffsetOf_ppdispVal' -> 16r8.
-			'_OffsetOf_ppunkVal' -> 16r8.
-			'_OffsetOf_pRecInfo' -> 16rC.
-			'_OffsetOf_pscode' -> 16r8.
-			'_OffsetOf_puintVal' -> 16r8.
-			'_OffsetOf_puiVal' -> 16r8.
-			'_OffsetOf_pullVal' -> 16r8.
-			'_OffsetOf_pulVal' -> 16r8.
-			'_OffsetOf_punkVal' -> 16r8.
-			'_OffsetOf_pvarVal' -> 16r8.
-			'_OffsetOf_pvRecord' -> 16r8.
-			'_OffsetOf_scode' -> 16r8.
-			'_OffsetOf_uintVal' -> 16r8.
-			'_OffsetOf_uiVal' -> 16r8.
-			'_OffsetOf_ullVal' -> 16r8.
-			'_OffsetOf_ulVal' -> 16r8.
-			'_OffsetOf_vt' -> 16r0.
-			'_OffsetOf_wReserved1' -> 16r2.
-			'_OffsetOf_wReserved2' -> 16r4.
-			'_OffsetOf_wReserved3' -> 16r6.
-			'_VARIANT_Size' -> 16r10.
-			'VTClasses'
-				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
-			'VTNames'
-				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
-		}!
+	classConstants: {}!
 
 OS.COM.VARIANT guid: (Core.GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
 
-OS.COM.VARIANT comment: 'VARIANT is an <ExternalStructure> to represent the OLE Automation VARIANT and VARIANTARG types.
+OS.COM.VARIANT comment: '`VARIANT` is an `External.Structure` to represent the OLE Automation VARIANT and VARIANTARG types.
 
-A VARIANT is basically a discriminated union which can represent all the parameter types which can be passed to and returned from member functions of Automation compatible (oleautomation) interfaces by Automation controllers and servers. These types are constrained by those which VB can handle, and hence there are no unsigned integers. A VARIANT''s type tag is stored as a 16-bit <integer> at the start of the structure, and is accessing with the #vt/vt: methods. Note that not all of the VT_XXX types are actually supported by the various variant manipulation functions provided by the Automation library, e.g. VT_LPSTR, as some are intended for type description and other purposes.
+A VARIANT is basically a discriminated union which can represent all the parameter types which can be passed to and returned from member functions of Automation compatible (oleautomation) interfaces by Automation controllers and servers. These types are constrained by those which VB can handle, and hence there are no unsigned integers. A VARIANT''s type tag is stored as a 16-bit <integer> at the start of the structure, and is accessing with the #vt/vt: methods. Note that not all of the VT_XXX types are actually supported by the various variant manipulation functions provided by the Automation library, e.g. VT_LPSTR, as some are intended for the Property Storage form (PROPVARIANT), type description and other purposes.
 
 One complexity of VARIANTs worth noting is that they may, when used as arguments (i.e. VARIANTARGs) be used to pass parameters by reference. In this case they contain a pointer to the actual data, and the flag VT_BYREF is bitOr''d with the basic VT_XX data type tag. Dolphin handles this usage transparently such that no difference is perceived by users of this class.
 
 It is worth noting that with the default Win32 packing (Zp8), VARIANT aligns on 8 byte boundaries, and may therefore make structures in which it is embedded larger than expected (this is handled correctly by Dolphin''s structure packing algorithm).
 
 Class Variables:
-	Accessors		<LookupTable> mapping variant type codes to accessor methods for extracting an object of that type.
+	VTNames		<LookupTable> mapping variant type codes to selectors extracting an object of that type.
 '!
 
 !OS.COM.VARIANT categoriesForClass!External-Data-Structured-COM! !
 
 !OS.COM.VARIANT methodsFor!
 
-_deepCopy: copiesDictionary
-	"Private - Answer a 'deep copy' of the receiver, cloning only those parts not already included in the IdentityDictionary argument, copiesDictionary.
-	Implementation Note: We have no copiable instance variables, and so just create a new instance	and use an appropriate API call to copy the receiver into it."
+blob: aByteObject
+	self uint8Vector: aByteObject asByteArray!
 
-	| copy |
-	copy := VARIANT new.
-	OleAut32 variantCopyInd: copy pvargSrc: self.
-	^copy!
+blobVector
+	"Private - Answer a <UInt8Array> containing the receiver's byte data held by the receiver, assumed to be of (VT_ARRAY | VT_I1)."
 
-< aVARIANT
-	"Answer whether the receiver is less than the <VARIANT> argument."
+	^self getVector!
 
-	^(self cmp: aVARIANT) < 0!
+boolVector
+	"Private - Answer a <BOOLArray> representing the VARIANT_BOOL elements of the receiver. An error will be thrown if the receiver is not of type VT_VECTOR or VT_ARRAY of VT_BOOL.
+	Note that BOOLArray's hold 32-bit BOOL (0/1) values, not 16-bit VARIANT_BOOL (0/-1) values."
 
-<= aVARIANT
-	"Answer whether the receiver is less than or equal to the <VARIANT> argument."
+	| array count |
+	array := BOOLArray new: (count := self elementCount).
+	Propsys
+		variantToBooleanArray: self
+		prgf: array
+		crgn: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-	^(self cmp: aVARIANT) <= 0!
+boolVector: aVarBoolArray
+	"Private - Initialize the receiver from the array of `BOOL` argument. Note that the `BOOL` is a 32-bit 0/1 representation of boolean values, but that the resulting variant will contain a VT_ARRAY (SAFEARRAY) of VT_BOOL, which uses the 16-bit VARIANT_BOOL (0/-1) representation. This inconsistency is inherent in the API."
 
-= anObject
-	"Answer whether the receiver is equivalent to argument."
+	Propsys
+		initVariantFromBooleanArray: aVarBoolArray
+		cElems: aVarBoolArray length
+		pvar: self!
 
-	^self == anObject or: [
-		self species == anObject species and: [(self cmp: anObject) == 0]]!
+bstrVector: anArrayOfStrings
+	"Private - Initialize the receiver to contain a (VT_ARRAY | VT_BSTR), i.e. <SAFEARRAY> of <BSTR>, holding copies of the strings in the argument."
 
-> aVARIANT
-	"Answer whether the receiver is greater than the <VARIANT> argument."
+	self lpwstrVector:  (Utf16StringArray withAll: anArrayOfStrings)!
 
-	^(self cmp: aVARIANT) > 0!
+clsid
+	"Private - Answer the CLSID value from the receiver.
+	Assumes the receiver is of type VT_RECORD and the record is a _CLSID."
 
->= aVARIANT
-	"Answer whether the receiver is greater than or equal to the <VARIANT> argument."
+	^self record value!
 
-	^(self cmp: aVARIANT) >= 0!
+clsid: aCLSID
+	"Private - Set the CLSID value from the receiver."
 
-array
-	"Answer a <SAFEARRAY> from the receiver. Assumes that the receiver actually references an array."
+	self record: aCLSID!
 
-	^SAFEARRAY
-		fromAddress: (self isByRef
-				ifTrue: [self refAddress uintPtrAtOffset: 0]
-				ifFalse: [bytes uintPtrAtOffset: _OffsetOf_parray])
-		vt: self vartype
-		owner: self!
+clsidVector: aGUIDArray
+	"Private - Initialize the receiver to be hold a single-dimensioned array of CLSIDs copied from the argument."
 
-array: aSAFEARRAY
-	"Detach the <SAFEARRAY> argument into the receiver."
-
-	bytes
-		uint16AtOffset: _OffsetOf_vt put: aSAFEARRAY vt;
-		uintPtrAtOffset: _OffsetOf_parray put: aSAFEARRAY detach!
-
-arrayRef: newValue
-	"Store a reference to the <SAFEARRAY> representation of the argument, newValue, into the receiver, i.e. the receiver will be of type VT_xx|VT_ARRAY|VT_BYREF."
-
-	data := newValue asSAFEARRAY.
-	bytes
-		uint16AtOffset: _OffsetOf_vt put: (data vt bitOr: VT_BYREF);
-		uintPtrAtOffset: _OffsetOf_pparray put: data bytes basicYourAddress!
-
-asString
-	"Answer the receiver coerced to a String (if possible)."
-
-	| varBstr string |
-	self vt == VT_BSTR ifTrue: [^self value].
-	varBstr := self changeType: VT_BSTR.
-	string := varBstr value.
-	"Avoid generating finalizable garbage"
-	varBstr free.
-	^string!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver."
-
-	^self!
-
-badVarType
-	^HRESULTError signalWith: DISP_E_BADVARTYPE!
-
-basicFree
-	"Private - Free external resources owned by the receiver."
-
-	super basicFree.
-	data := nil.
-!
-
-bstr
-	"Answer the <String> value from the receiver. Assumes the receiver is of type VT_BSTR."
-
-	^self isByRef
-		ifTrue: 
-			["See class example1 for more info on by-ref BSTRs"
-			LPBSTR fromAddress: (bytes uintPtrAtOffset: _OffsetOf_bstrVal)]
-		ifFalse: 
-			[| addr |
-			addr := bytes uintPtrAtOffset: _OffsetOf_bstrVal.
-			addr == 0
-				ifTrue: 
-					["By convention a null BSTR represents the empty string"
-					'']
-				ifFalse: 
-					["Get down to bare metal for speed"
-					Utf16String fromAddress: addr length: (OleAut32 sysStringLen: addr)]]!
-
-bstr: aString
-	"Set the BSTR value of the receiver to the <String> argument."
-
-	"Implementation Note: If #asBSTR does not create a new BSTR then we must copy the <BSTR> argument to avoid having a side effect on the argument."
-
-	| bstr |
-	(bstr := aString asBSTR) == aString ifTrue: [bstr := bstr copy].
-	bytes
-		uintPtrAtOffset: _OffsetOf_bstrVal put: bstr detach;
-		uint16AtOffset: _OffsetOf_vt put: VT_BSTR!
-
-changeType: anInteger
-	"Answer a <VARIANT> containing the receiver's value coerced to a new type as specified by the argument, an <integer> member of the VARTYPE enumeration. If the coercion is not possible, then raise an HRESULTError."
-
-	^self changeType: anInteger locale: Locale.UserDefault!
-
-changeType: anInteger locale: aLocale
-	"Answer a <VARIANT> containing the receiver's value coerced to a new type as specified by the <integer> first argument, a member of the VARTYPE enumeration. The conversion is that appropriate for the specified target <Locale>. If the coercion is not possible, then raise an HRESULTError."
-
-	| answer |
-	anInteger == self vt ifTrue: [^self].	"Already requested type"
-	answer := self class new.
-	OleAut32
-		variantChangeTypeEx: answer
-		pvarSrc: self
-		lcid: aLocale lcid
-		wFlags: (aLocale noUserOverrides
-				ifTrue: [##(VARIANT_NOUSEROVERRIDE | VARIANT_LOCALBOOL)]
-				ifFalse: [VARIANT_LOCALBOOL])
-		vt: anInteger.
-	^answer!
-
-char
-	"Answer the ANSI (8-bit) character from the receiver.
-	N.B. Assumes that the receiver is of type VT_UI1."
-
-	^Character value: self uint8
-
-	!
+	self externalArray: aGUIDArray!
 
 cmp: anObject
 	"Private - Answer a comparison value indicating the relationship between the receiver and the <VARIANT> value of the argument."
@@ -252,80 +102,18 @@ copy
 	OleAut32 variantCopy: copy pvargSrc: self.
 	^copy!
 
-cy
-	"Answer a Variant 'Currency' value from the receiver. N.B. Assumes that the receiver is of type VT_CY."
+cyVector: aCYArray
+	"Private - Initialize the receiver to contain a VT_VECTOR (CACY) or VT_ARRAY (SAFEARRAY of VT_CY)>, holding copies of the <CY> values in the <ExternalArray> argument."
 
-	"The VT_CY format is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB."
+	self externalArray: aCYArray!
 
-	^self isByRef
-		ifTrue: [CY fromAddress: self refAddress]
-		ifFalse: [ScaledDecimal newFromNumber: (bytes int64AtOffset: _OffsetOf_cyVal) / 10000 scale: 4]!
+dateVector: aDATEArray
+	"Private - Initialize the receiver to be hold a single-dimensioned array of DATEs copied from the argument."
 
-cy: aNumber
-	"Set the receiver's value to the closest possible Variant Currency (VT_CY) value to the <Number> argument."
-
-	bytes
-		int64AtOffset: _OffsetOf_cyVal put: (aNumber * 10000) asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_CY!
-
-date
-	"Private - Answer a date and time object corresponding to the Variant DATE from the receiver. Assumes the receiver is of type VT_DATE."
-
-	^self isByRef
-		ifTrue: [DATE fromAddress: self refAddress]
-		ifFalse: [DateAndTime fromDATE: (bytes doubleAtOffset: _OffsetOf_date)]!
-
-date: aNumberOrDATE
-	"Set the DATE value, newValue, into the receiver."
-
-	bytes
-		doubleAtOffset: _OffsetOf_date put: aNumberOrDATE asFloat;
-		uint16AtOffset: _OffsetOf_vt put: VT_DATE!
-
-decimal
-	"Answer a <ScaledDecimal> which is the Variant DECIMAL value from the receiver. N.B. Assumes that the receiver is of type VT_DECIMAL."
-
-	"The VT_DECIMAL format is a rather complex 16-byte fixed point value with 12-bytes to represent the absolute value, and a byte each for scale and sign, with the top two bytes unused because these overlap the vartype field of a VARIANT."
-
-	^self isByRef
-		ifTrue: [^DECIMAL fromAddress: self refAddress]
-		ifFalse: 
-			[| sign scale hi32 lo64 |
-			scale := bytes uint8AtOffset: DECIMAL._OffsetOf_scale.
-			sign := (bytes uint8AtOffset: DECIMAL._OffsetOf_sign) == 0 ifTrue: [1] ifFalse: [-1].
-			hi32 := bytes uint32AtOffset: DECIMAL._OffsetOf_hi32.
-			lo64 := bytes uint64AtOffset: DECIMAL._OffsetOf_lo64.
-			ScaledDecimal newFromNumber: ((hi32 bitShift: 64) + lo64) * sign / scale exp10 scale: scale]!
-
-decimal: aScaledDecimalOrInteger
-	"Set the Variant Decimal value of the receiver to be as close as possible to the <ScaledDecimal> or <Integer> argument. The argument must be a <ScaledDecimal> or <Integer>, rather than another type of <Number>, since the scale must be known."
-
-	| scale intVal |
-	scale := aScaledDecimalOrInteger scale.
-	bytes uint8AtOffset: DECIMAL._OffsetOf_scale put: scale.
-	intVal := aScaledDecimalOrInteger * scale exp10.
-	aScaledDecimalOrInteger positive
-		ifTrue: [bytes uint8AtOffset: DECIMAL._OffsetOf_sign put: 0]
-		ifFalse: 
-			[bytes uint8AtOffset: DECIMAL._OffsetOf_sign put: 128.
-			intVal := intVal negated].
-	intVal := intVal asInteger.
-	bytes uint32AtOffset: DECIMAL._OffsetOf_hi32 put: (intVal bitShift: -64).
-	bytes uint64AtOffset: DECIMAL._OffsetOf_lo64 put: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF).
-	bytes uint16AtOffset: _OffsetOf_vt put: VT_DECIMAL!
-
-detach
-	"Detach the receiver from the underlying VARIANT (useful for passing
-	ownership)."
-
-	| var |
-	var := bytes.
-	bytes := nil.
-	self beUnfinalizable.
-	^var!
+	self externalArray: aDATEArray!
 
 dispatch
-	"Answer an IDispatch pointer from the receiver, or nil if empty. 
+	"Private - Answer an IDispatch pointer from the receiver, or nil if empty. 
 	Assumes that the receiver is of type VT_DISPATCH.
 	Note that if the receiver is a by-reference variant then the answer
 	is an untyped doubly-indirected pointer (i.e. its value is the address
@@ -335,761 +123,360 @@ dispatch
 	^(self isByRef ifTrue: [LPVOID] ifFalse: [IDispatch])
 		fromAddress: (bytes uintPtrAtOffset: _OffsetOf_pdispVal)!
 
-dispatch: newValue
-	"Set the IDispatch pointer, newValue, into the receiver."
+doubleVector
+	| array count |
+	array := DOUBLEArray new: (count := self elementCount).
+	Propsys
+		variantToDoubleArray: self
+		prgn: array
+		crgn: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-	newValue _addRef.
-	bytes
-		uint16AtOffset: _OffsetOf_vt put: VT_DISPATCH;
-		uintPtrAtOffset: _OffsetOf_pdispVal put: newValue yourAddress!
+doubleVector: aDOUBLEArray
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_R8), containing a SAFEARRAY holding double-precision floating-point values copied from the <DOUBLEArray> argument."
 
-displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	Propsys
+		initVariantFromDoubleArray: aDOUBLEArray
+		cElems: aDOUBLEArray length
+		pvar: self!
 
-	self isArray
-		ifTrue: 
-			[| array |
-			array := self array.
-			array displayOn: aPuttableStream.
-			array free]
-		ifFalse: 
-			[| asBstr |
-			asBstr := self changeType: VT_BSTR locale: aPuttableStream locale.
-			aPuttableStream nextPutAll: asBstr value.
-			asBstr == self ifFalse: [asBstr free]]!
+elementCount
+	"Answer the <integer> element count of a VT_ARRAY value; or 1 otherwise."
 
-double
-	"Answer the double precision floating point value from the receiver.
-	Assumes the receiver is of type VT_R8 (or VT_DATE)."
+	^Propsys variantGetElementCount: self!
 
-	^self isByRef
-		ifTrue: [DOUBLE fromAddress: self refAddress]
-		ifFalse: [bytes doubleAtOffset: _OffsetOf_dblVal]!
+externalArray: anExternalArray
+	"Private - Initialize the receiver to hold a SAFEARRAY of appropriate vartype containing the elements copied from the <ExternalArray> argument."
 
-double: newValue
-	"Set the double-precision floating point value of the receiver to the
-	<Float>, newValue."
+	| sa |
+	sa := anExternalArray asSAFEARRAY.
+	sa == anExternalArray ifTrue: [sa := sa copy].
+	self array: sa!
 
-	bytes
-		doubleAtOffset: _OffsetOf_dblVal put: newValue;
-		uint16AtOffset: _OffsetOf_vt put: VT_R8!
+filetime
+	"Private - Answer the FILETIME value from the receiver.
+	Assumes the receiver is of type VT_FILETIME."
 
-float
-	"Answer the single precision floating point value from the receiver.
-	Assumes the receiver is of type VT_R4."
+	| answer |
+	answer := FILETIME new.
+	Propsys variantToFileTime: self pstfOut: PSTF_UTC pftOut: answer.
+	^answer!
 
-	^self isByRef
-		ifTrue: [FLOAT fromAddress: self refAddress]
-		ifFalse: [bytes floatAtOffset: _OffsetOf_fltVal]!
+filetime: aDateAndTimeObject
+	"Private - Initialize the receiver to hold the best available VARIANT representation of a <DateAndTime>, which in this case is VT_DATE. As variant timestamps have quite limited range and precision down to seconds only, precise round-tripping of Smalltalk <DateAndTime> objects, or even Win32 <FILETIME>s, is not possible."
 
-float: newValue
-	"Set the single precision floating point value of the receiver to the
-	<Float>, newValue."
+	"We don't use InitVariantFromFileTime because it throws away sub-second precision, which is not necessary."
+	self date: aDateAndTimeObject asDATE!
 
-	bytes
-		floatAtOffset: _OffsetOf_fltVal put: newValue;
-		uint16AtOffset: _OffsetOf_vt put: VT_R4!
+floatVector: aFLOATArray
+	"Private - Initialize the receiver to be a VT_ARRAY (SAFEARRAY) of VT_R4, containing single-precision floating-point values copied from the <FLOATArray> argument."
 
-hresult
-	"Answer the status code (SCODE) from the receiver.
-	N.B. Assumes that the receiver is of type VT_ERROR."
+	"There is no propvarutil API to initialize a VARIANT with a native arrays of FLOATs, even though one exists for PROPVARIANT. We can just use our general purpose conversion to SAFEARRAY and detach the result into the variant."
 
-	^self isByRef
-		ifTrue: [HRESULT fromAddress: self refAddress]
-		ifFalse: [HRESULT fromInteger: (bytes int32AtOffset: _OffsetOf_lVal)]!
+	self array: aFLOATArray asSAFEARRAY!
 
-hresult: newValue
-	"Set the ERROR value, newValue, into the receiver."
+getArray: anInteger
+	^self getSafeArray: anInteger!
 
-	bytes
-		int32AtOffset: _OffsetOf_lVal put: newValue asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_ERROR!
+getVector
+	^self getSafeArrayAsVector: (bytes uint16AtOffset: _OffsetOf_vt)!
 
-initialize
-	"Private - Initialize the receiver.
-	Note that this does not null out the data area of the variant, it just sets
-	the type to VT_EMPTY."
+hresultVector: anHRESULTArray
+	"Private - Initialize the receiver to be hold a single-dimensioned array of HRESULTs copied from the argument."
 
-	super initialize.
-	self class init: bytes!
+	self externalArray: anHRESULTArray!
 
-int16
-	"Answer the signed 16-bit integer value from the receiver.
-	Assumes the receiver is of type VT_I2."
+initializeFromVariant: aVARIANT
+	"Private - Source and dest same type, so just a copy"
 
-	^self isByRef
-		ifTrue: [Int16 fromAddress: self refAddress]
-		ifFalse: [bytes int16AtOffset: _OffsetOf_iVal]!
+	OleAut32 variantCopy: self pvargSrc: aVARIANT!
 
-int16: newValue
-	"Set the signed 16-bit <integer> value, newValue, into the receiver."
+initializeVariant: anOleVariant
+	"Private - Initialize another VARIANT or PROPVARIANT from this VARIANT. If the target is a VARIANT, we want to just copy to it. If a PROPVARIANT, we want to widen to the richer type system."
 
-	bytes
-		int16AtOffset: _OffsetOf_iVal put: newValue asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_I2!
+	anOleVariant initializeFromVariant: self!
 
-int32
-	"Answer the signed 32-bit integer value from the receiver.
-	Assumes the receiver is of type VT_I4."
+int16Vector
+	"Private - Answer an <Int16Array> containing the signed 16-bit integer values held by the receiver, assumed to be of type (VT_ARRAY | VT_I2)."
 
-	^self isByRef
-		ifTrue: [Int32 fromAddress: self refAddress]
-		ifFalse: [bytes int32AtOffset: _OffsetOf_lVal]!
+	| array count |
+	array := Int16Array new: (count := self elementCount).
+	Propsys
+		variantToInt16Array: self
+		prgn: array
+		crgn: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-int32: newValue
-	"Set the signed 32-bit integer value from the receiver."
+int16Vector: anInt16Array
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_I2), containing a SAFEARRAY holding 16-bit signed integer values copied from the <Int16Array> argument."
 
-	bytes
-		int32AtOffset: _OffsetOf_lVal put: newValue asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_I4!
+	Propsys
+		initVariantFromInt16Array: anInt16Array
+		cElems: anInt16Array length
+		pvar: self!
 
-int64
-	"Answer the signed 64-bit integer value from the receiver.
-	Assumes the receiver is of type VT_I8 (note that this is
-	not currently a generally supported variant type but
-	we implement for completeness)."
+int32Vector
+	"Private - Answer an <Int32Array> containing the signed 32-bit integer values held by the receiver, assumed to be of type (VT_ARRAY | VT_I4)."
 
-	^self isByRef 
-		ifTrue: [Int64 fromAddress: self refAddress]
-		ifFalse: [bytes int64AtOffset: _OffsetOf_llVal]!
+	| array count |
+	array := Int32Array new: (count := self elementCount).
+	Propsys
+		variantToInt32Array: self
+		prgn: array
+		crgn: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-int64: aLargeInteger
-	bytes
-		int64AtOffset: _OffsetOf_llVal put: aLargeInteger asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_I8!
+int32Vector: anInt32Array
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_I4), containing a SAFEARRAY holding 32-bit signed integer values copied from the <Int32Array> argument."
 
-int8
-	"Answer the signed 8-bit <integer> value from the receiver.
-	N.B. Assumes that the receiver is of type VT_I1."
+	Propsys
+		initVariantFromInt32Array: anInt32Array
+		cElems: anInt32Array length
+		pvar: self!
 
-	^self isByRef 
-		ifTrue: [Int8 fromAddress: self refAddress]
-		ifFalse: [bytes int8AtOffset: _OffsetOf_bVal]!
+int64Vector
+	"Private - Answer an <Int64Array> containing the signed 64-bit integer values held by the receiver, assumed to be of type (VT_ARRAY | VT_I8)."
 
-int8: newValue
-	"Set the VT_I1 value, newValue, into the receiver."
+	| array count |
+	array := Int64Array new: (count := self elementCount).
+	Propsys
+		variantToInt64Array: self
+		prgn: array
+		crgn: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-	| intVal |
-	intVal := newValue asInteger.
-	(newValue < -128 or: [newValue > 127]) ifTrue: [self errorSubscriptBounds: intVal].
-	bytes
-		int8AtOffset: _OffsetOf_bVal put: newValue asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_I1!
+int64Vector: anInt64Array
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_I8), containing a SAFEARRAY holding 64-bit signed integer values copied from the <Int64Array> argument."
 
-intPtr: newValue
-	"Set the signed integer value of the receiver."
+	Propsys
+		initVariantFromInt64Array: anInt64Array
+		cElems: anInt64Array length
+		pvar: self!
 
-	newValue isInt32 ifTrue: [self int32: newValue] ifFalse: [self uint64: newValue]!
+int8Vector: anInt8Array
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_I1), containing a SAFEARRAY holding 8-bit signed integer values (i.e. signed bytes) copied from the <Int8Array> argument."
 
-isArray
-	"Answer whether the receiver points at a SAFEARRAY."
+	Propsys
+		initVariantFromBuffer: anInt8Array
+		cb: anInt8Array size
+		pvar: self.
+	self vt: ##(VT_ARRAY | VT_I1)!
 
-	^self vt allMask: VT_ARRAY!
+isVtString
+	^(bytes uint16AtOffset: _OffsetOf_vt) == VT_BSTR!
 
-isByRef
-	"Private - Answer whether the receiver is a by-reference parameter."
-
-	^self vt allMask: VT_BYREF!
-
-isDispatch
-	"Answer whether the receiver wraps an <IDispatch> interface on a COM object."
-
-	^self vt == VT_DISPATCH
-!
-
-isEmpty
-	^self vt == VT_EMPTY!
-
-isObject
-	"Answer whether the receiver wraps a COM object."
-
-	| vt |
-	vt := self vt.
-	^vt == VT_UNKNOWN or: [vt == VT_DISPATCH]
-!
-
-lpvoid
-	"Answer an <ExternalAddress> corresponding to the VT_PTR value of the receiver."
-
-	^self refAddress!
-
-nil
-	"Answer the nil value.
-	N.B. Assumes that the receiver is of type VT_EMPTY."
-
-	^nil!
-
-nil: newValue
-	"Clear the receiver."
+lpstr: anAnsiString
+	"Private - Initialize the receiver to contain a VT_BSTR, i.e. <BSTR>, copy of the <AnsiString> argument."
 
 	bytes
-		intPtrAtOffset: _OffsetOf_byref put: 0;
-		uint16AtOffset: _OffsetOf_vt put: VT_EMPTY!
+		uintPtrAtOffset: _OffsetOf_bstrVal put: anAnsiString asAnsiString asBSTR detach;
+		uint16AtOffset: _OffsetOf_vt put: VT_BSTR!
 
-null
-	"Answer the null value.
-	N.B. Assumes that the receiver is of type VT_NULL."
+lpstrVector
+	"Private - Answer a <AnsiStringArray> containing ANSI string encodings of the <BSTR> elements of the <SAFEARRAY> held by the receiver. An error will be thrown if the receiver is not of type VT_ARRAY | VT_BSTR."
 
-	^nil!
+	| wideStrings count ansiStrings |
+	wideStrings := self lpwstrVector.
+	count := wideStrings size.
+	ansiStrings := AnsiStringArray new: count.
+	1 to: count do: [:i | ansiStrings uncheckedAt: i put: (wideStrings uncheckedAt: i) asAnsiString].
+	wideStrings free.
+	^ansiStrings!
 
-null: newValue
-	"Null the receiver."
+lpstrVector: anExternalArrayOfStrings
+	"Private - Initialize the receiver to contain a (VT_ARRAY | VT_BSTR), i.e. <SAFEARRAY> of <BSTR>, holding copies of the ANSI strings in the <ExternalArray> argument."
 
-	bytes
-		intPtrAtOffset: _OffsetOf_byref put: 0;
-		uint16AtOffset: _OffsetOf_vt put: VT_NULL!
+	self externalArray: anExternalArrayOfStrings!
 
-recordInfo
-	"Private - Answer the <IRecordInfo> stored in the receiver.
-	Assumes the receiver is of type VT_RECORD."
+lpwstr: aString
+	"Private - Initialize the receiver to contain a VT_BSTR, i.e. <BSTR>, copy of the <String> argument."
 
-	^IRecordInfo fromAddress: (bytes uintPtrAtOffset: _OffsetOf_pRecInfo)!
+	Propsys initVariantFromString: aString pvar: self!
 
-refAddress
-	"Private - Answer the reference address from the receiver (assumes receiver is a VT_BYREF)."
+lpwstrVector
+	"Private - Answer a <LPWSTRArray> representing the wide string elements of the receiver. An error will be thrown if the receiver is not of type VT_ARRAY | VT_BSTR."
 
-	^Address fromInteger: (bytes uintPtrAtOffset: _OffsetOf_byref)!
+	| array count |
+	array := LPWSTRArray new: (count := self elementCount).
+	Propsys
+		variantToStringArray: self
+		prgsz: array
+		crgsz: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-reference: anObject
-	"Private - Set the receiver up to be a reference to the specified object (assumes
-	receiver is a VT_BYREF)."
+lpwstrVector: anExternalArrayOfWideStrings
+	"Private - Initialize the receiver to contain a (VT_ARRAY | VT_BSTR), i.e. <SAFEARRAY> of <BSTR>, holding copies of the strings in the <LPWSTRArray> argument."
 
-	data := anObject.
-	bytes uintPtrAtOffset: _OffsetOf_byref put: anObject yourAddress.
-	^self!
+	Propsys
+		initVariantFromStringArray: anExternalArrayOfWideStrings
+		cElems: anExternalArrayOfWideStrings length
+		pvar: self!
 
-struct
-	"Answer the structure value from the receiver.
-	Assumes the receiver is of type VT_RECORD."
+preferredVtString
+	^VT_BSTR!
 
-	data isNil
-		ifTrue: 
-			[data := Structure
-						fromAddress: (bytes uintPtrAtOffset: _OffsetOf_byref)
-						recordInfo: self recordInfo
-						owner: self].
-	^data!
+uint16Vector
+	"Private - Answer an <Int16Array> containing the unsigned 16-bit integer values held by the receiver, assumed to be of (VT_ARRAY | VT_UI2)."
 
-struct: newValue
-	"Private - Set the UDT value of the receiver to be the <ExternalStructure>, newValue.
-	Note that what we actually do is to create a reference to the structure."
+	| array count |
+	array := UInt16Array new: (count := self elementCount).
+	Propsys
+		variantToUInt16Array: self
+		prgn: array
+		crgn: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-	| piRecInfo |
-	piRecInfo := newValue recordInfo.
-	piRecInfo addRef.
-	bytes uint32AtOffset: _OffsetOf_pRecInfo put: piRecInfo yourAddress.
-	self reference: newValue.
-	bytes uint16AtOffset: _OffsetOf_vt put: ##(VT_RECORD | VT_BYREF)!
+uint16Vector: aUInt16Array
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_UI2), containing a SAFEARRAY holding 16-bit unsigned integer values copied from the <UInt16Array> argument."
 
-systemTime
-	"Answer a SYSTEMTIME converted from the receiver's OLE
-	Automation date (an 8-byte floating point day number and fraction of a day).
-	Assumes the receiver is of type VT_DATE."
+	Propsys
+		initVariantFromUInt16Array: aUInt16Array
+		cElems: aUInt16Array length
+		pvar: self!
 
-	| systime |
-	systime := SYSTEMTIME new.
-	OleAut32 variantTimeToSystemTime: self double lpSystemTime: systime.
-	^systime!
+uint32Vector
+	"Private - Answer an <Int32Array> containing the unsigned 32-bit integer values held by the receiver, assumed to be of (VT_ARRAY | VT_UI4)."
 
-typeName
-	"Answer the symbolic name of the receiver's basic variant type code 
-	without modifiers such as VT_BYREF."
+	| array count |
+	array := UInt32Array new: (count := self elementCount).
+	Propsys
+		variantToUInt32Array: self
+		prgn: array
+		crgn: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-	^self class nameOfVT: self vartype!
+uint32Vector: aUInt32Array
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_UI4), containing a SAFEARRAY holding 32-bit unsigned integer values copied from the <UInt32Array> argument."
 
-uint16
-	"Answer the unsigned 16-bit <integer> value from the receiver.
-	Assumes the receiver is of type VT_UI2."
+	Propsys
+		initVariantFromUInt32Array: aUInt32Array
+		cElems: aUInt32Array length
+		pvar: self!
 
-	^self isByRef
-		ifTrue: [UInt16 fromAddress: self refAddress]
-		ifFalse: [bytes uint16AtOffset: _OffsetOf_uiVal]!
+uint64Vector
+	"Private - Answer an <Int64Array> containing the unsigned 64-bit integer values held by the receiver, assumed to be of (VT_ARRAY | VT_UI8)."
 
-uint16: newValue
-	"Set the unsigned 16-bit integer value of the receiver to the <integer> newValue, and tag as type VT_UI2."
+	| array count |
+	array := UInt64Array new: (count := self elementCount).
+	Propsys
+		variantToUInt64Array: self
+		prgn: array
+		crgn: count
+		pcElem: (ByteArray newFixed: 4).
+	^array!
 
-	bytes
-		uint16AtOffset: _OffsetOf_uiVal put: newValue asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_UI2!
+uint64Vector: aUInt64Array
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_UI8), containing a SAFEARRAY holding 64-bit unsigned integer values copied from the <UInt64Array> argument."
 
-uint32
-	"Answer the unsigned 32-bit <integer> value from the receiver.
-	Assumes the receiver is of type VT_UI4 (or at least of some unsigned
-	32-bit integer type)."
+	Propsys
+		initVariantFromUInt64Array: aUInt64Array
+		cElems: aUInt64Array length
+		pvar: self!
 
-	^self isByRef
-		ifTrue: [UInt32 fromAddress: self refAddress]
-		ifFalse: [bytes uint32AtOffset: _OffsetOf_ulVal]!
+uint8Vector
+	"Private - Answer an <Int64Array> containing the unsigned 8-bit integer values (i.e. bytes) held by the receiver, assumed to be of (VT_ARRAY | VT_UI1)."
 
-uint32: newValue
-	"Set the unsigned 32-bit integer value of the receiver
-	to the <integer>, newValue."
+	| array count |
+	array := UInt8Array new: (count := self elementCount).
+	Propsys
+		variantToBuffer: self
+		pv: array
+		cb: count.
+	^array!
 
-	bytes
-		uint32AtOffset: _OffsetOf_ulVal put: newValue asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_UI4!
+uint8Vector: aUInt8Array
+	"Private - Initialize the receiver to be of type (VT_ARRAY | VT_UI1), containing a SAFEARRAY holding 8-bit unsigned integer values (i.e. bytes) copied from the <UInt8Array> argument."
 
-uint64
-	"Answer the unsigned 64-bit integer value from the receiver.
-	Assumes the receiver is of type VT_I8 (note that this is
-	not currently a generally supported variant type but
-	we implement for completeness)."
+	Propsys
+		initVariantFromBuffer: aUInt8Array
+		cb: aUInt8Array size
+		pvar: self!
 
-	^self isByRef
-		ifTrue: [UInt64 fromAddress: self refAddress]
-		ifFalse: [bytes uint64AtOffset: _OffsetOf_ullVal]!
+varBoolVector: aVARIANT_BOOLArray
+	"Private - Initialize the receiver from the array of `VARIANT_BOOL` argument, resulting in a (VT_ARRAY | VT_BOOL) containing copies of the VARIANT_BOOL values in the argument."
 
-uint64: aLargeInteger
-	bytes
-		uint64AtOffset: _OffsetOf_ullVal put: aLargeInteger asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_UI8!
+	self array: aVARIANT_BOOLArray asSAFEARRAY!
 
-uint8
-	"Answer the unsigned 8-bit <integer> value from the receiver.
-	N.B. Assumes that the receiver is of type VT_UI1."
+variantVector: anOleVariantArray
+	"Private - Initialize the receiver to be hold a single-dimensioned array of variants copied from the argument."
 
-	^self isByRef 
-		ifTrue: [UInt8 fromAddress: self refAddress]
-		ifFalse: [bytes uint8AtOffset: _OffsetOf_bVal]!
+	self externalArray: anOleVariantArray!
 
-uint8: newValue
-	"Set the unsigned 8-bit integer value of the receiver and tag as type VT_UI1"
-
-	bytes
-		uint8AtOffset: _OffsetOf_bVal put: newValue asInteger;
-		uint16AtOffset: _OffsetOf_vt put: VT_UI1!
-
-unknown
-	"Answer the IUnknown pointer in the receiver.
-	Assumes that the receiver is of type VT_UNKNOWN.
-	Note that if the receiver is a by-reference variant then the answer
-	is an untyped doubly-indirected pointer (i.e. its value is the address
-	of the IDispatch pointer). If the reference is overwritten then the old
-	interface pointer must be Release()d."
-
-	^(self isByRef ifTrue: [LPVOID] ifFalse: [IUnknown])
-		fromAddress: (bytes uintPtrAtOffset: _OffsetOf_punkVal)!
-
-unknown: newValue
-	"Set the <IUnknown> value, newValue, into the receiver."
-
-	newValue _addRef.
-	bytes
-		uintPtrAtOffset: _OffsetOf_punkVal put: newValue yourAddress;
-		uint16AtOffset: _OffsetOf_vt put: VT_UNKNOWN!
-
-value
-	"Answer a Smalltalk <Object> of a suitable type and of the same value (well as close as possible) to the receiver. If the receiver's type is not recognised, then raise a NotFoundError."
-
-	"Implementation Note: The primitive will instantiate Smalltalk objects for types that are well known to the VM, anything else goes through the Smalltalk back up code."
-
-	"Primitive Failure Codes:
-		ClassNotRegistered	- The value would be of a class that is not registered with the VM, DATE for a VT_DATE, or IDispatch for a VT_DISPATCH.
-		InvalidVariant		- The variant type (vt field) is not recognised.
-		InvalidPointer		- The VARIANT object points at the actual VARIANT struct, but the address is null.
-		AssertionFailure	- The VARIANT object is a malformed External.Structure."
-
-	<primitive: 172>
-	| vt |
-	^((vt := self vt) allMask: VT_ARRAY)
-		ifTrue: [self array]
-		ifFalse: [self perform: (VTNames at: (vt bitAnd: VT_TYPEMASK) + 1)]!
-
-value: newValue
-	"Set the receiver's value to the <variantCompatible>, newValue."
-
-	| varNew |
-	varNew := newValue asVariant.
-	varNew == newValue ifTrue: [varNew := varNew copy].
-	"Although we may not own the underlying data if we are a reference (pointer) instance, because we are going to overwrite it we must free it regardless. #basicFree can be repeated add infinitum on a VARIANT."
-	self basicFree.
-	self copyBytes: varNew detach!
-
-varbool
-	"Answer a Boolean corresponding to the VARIANT_BOOL value of the receiver (assumes the receiver is of type VT_BOOL)."
-
-	^self isByRef
-		ifTrue: [VARIANT_BOOL fromAddress: self refAddress]
-		ifFalse: [(bytes int16AtOffset: _OffsetOf_boolVal) ~~ VARIANT_FALSE]!
-
-varbool: newValue
-	"Set the VARIANT_BOOL value of the receiver to the <boolean> or <integer>, newValue."
-
-	bytes
-		int16AtOffset: _OffsetOf_boolVal
-			put: (newValue asParameter == 0 ifTrue: [VARIANT_FALSE] ifFalse: [VARIANT_TRUE]);
-		uint16AtOffset: _OffsetOf_vt put: VT_BOOL!
-
-variant
-	"Answer a <VARIANT> at the address specified in the receiver.
-	N.B. Assumes that the receiver is of type VT_VARIANT|VT_BYREF."
-
-	self assert: [self isByRef].
-	^VARIANT fromAddress: (bytes uintPtrAtOffset: _OffsetOf_pvarVal)!
-
-variant: newValue
-	"Set the <VARIANT> value, newValue, into the receiver."
-
-	self reference: newValue.
-	bytes uint16AtOffset: _OffsetOf_vt put: ##(VT_VARIANT | VT_BYREF)!
-
-vartype
-	"Answer the receiver's basic variant type code without modifies such as VT_BYREF."
-
-	^self vt bitAnd: VT_TYPEMASK!
-
-void
-	"Answer the void value from the receiver, which is nil unless the receiver is VT_BYREF, in which case it is treated as a void* pointer. Assumes the receiver is of type VT_VOID."
-
-	^self isByRef ifTrue: [VOID fromAddress: self refAddress]!
-
-vt
-	"Answer the <Integer> value of the receiver's 'vt' field."
-
-	^bytes uint16AtOffset: _OffsetOf_vt!
-
-vt: anInteger
-	"Set the receiver's 'vt' field to the value of the argument, anInteger"
-
-	bytes uint16AtOffset: _OffsetOf_vt put: anInteger! !
+vectorMask
+	^VT_ARRAY! !
 
 !OS.COM.VARIANT categoriesForMethods!
-_deepCopy:!copying!private! !
-<!comparing!public! !
-<=!comparing!public! !
-=!comparing!public! !
->!comparing!public! !
->=!comparing!public! !
-array!accessing!public! !
-array:!accessing!public! !
-arrayRef:!accessing!public! !
-asString!converting!public! !
-asVariant!converting!public! !
-badVarType!exceptions!private! !
-basicFree!private!realizing/unrealizing! !
-bstr!accessing!public! !
-bstr:!accessing!public! !
-changeType:!converting!public! !
-changeType:locale:!converting!public! !
-char!accessing!public! !
+blob:!initializing!private! !
+blobVector!accessing!private! !
+boolVector!accessing!private! !
+boolVector:!initializing!private! !
+bstrVector:!initializing!private! !
+clsid!accessing!private! !
+clsid:!initializing!private! !
+clsidVector:!initializing!private! !
 cmp:!comparing!private! !
 copy!copying!public! !
-cy!accessing!public! !
-cy:!accessing!public! !
-date!accessing!public! !
-date:!accessing!public! !
-decimal!accessing!public! !
-decimal:!accessing!public! !
-detach!public!realizing/unrealizing! !
-dispatch!accessing!public! !
-dispatch:!accessing!public! !
-displayOn:!printing!public! !
-double!accessing!public! !
-double:!accessing!public! !
-float!accessing!public! !
-float:!accessing!public! !
-hresult!accessing!public! !
-hresult:!accessing!public! !
-initialize!initializing!private! !
-int16!accessing!public! !
-int16:!accessing!public! !
-int32!accessing!public! !
-int32:!accessing!public! !
-int64!accessing!public! !
-int64:!accessing!public! !
-int8!accessing!public! !
-int8:!accessing!public! !
-intPtr:!accessing!public! !
-isArray!public!testing! !
-isByRef!private!testing! !
-isDispatch!public!testing! !
-isEmpty!public!testing! !
-isObject!public!testing! !
-lpvoid!accessing!public! !
-nil!accessing!public! !
-nil:!accessing!public! !
-null!accessing!public! !
-null:!accessing!public! !
-recordInfo!accessing!private! !
-refAddress!accessing!private! !
-reference:!accessing!private! !
-struct!accessing!public! !
-struct:!accessing!public! !
-systemTime!accessing!public! !
-typeName!accessing!public! !
-uint16!accessing!public! !
-uint16:!accessing!public! !
-uint32!accessing!public! !
-uint32:!accessing!public! !
-uint64!accessing!public! !
-uint64:!accessing!public! !
-uint8!accessing!public! !
-uint8:!accessing!public! !
-unknown!accessing!public! !
-unknown:!accessing!public! !
-value!accessing!public! !
-value:!accessing!public! !
-varbool!accessing!public! !
-varbool:!accessing!public! !
-variant!accessing!public! !
-variant:!accessing!public! !
-vartype!accessing!public! !
-void!accessing!public! !
-vt!**compiled accessors**!public! !
-vt:!**compiled accessors**!public! !
+cyVector:!initializing!private! !
+dateVector:!initializing!private! !
+dispatch!accessing!private! !
+doubleVector!accessing!private! !
+doubleVector:!initializing!private! !
+elementCount!accessing!public! !
+externalArray:!initializing!private! !
+filetime!accessing!private! !
+filetime:!initializing!private! !
+floatVector:!initializing!private! !
+getArray:!accessing!private! !
+getVector!accessing!private! !
+hresultVector:!initializing!private! !
+initializeFromVariant:!converting!double dispatch!private! !
+initializeVariant:!converting!private! !
+int16Vector!accessing!private! !
+int16Vector:!initializing!private! !
+int32Vector!accessing!private! !
+int32Vector:!initializing!private! !
+int64Vector!accessing!private! !
+int64Vector:!initializing!private! !
+int8Vector:!initializing!private! !
+isVtString!public!testing! !
+lpstr:!initializing!private! !
+lpstrVector!accessing!private! !
+lpstrVector:!initializing!private! !
+lpwstr:!initializing!private! !
+lpwstrVector!accessing!private! !
+lpwstrVector:!initializing!private! !
+preferredVtString!constants!private! !
+uint16Vector!accessing!private! !
+uint16Vector:!initializing!private! !
+uint32Vector!accessing!private! !
+uint32Vector:!initializing!private! !
+uint64Vector!accessing!private! !
+uint64Vector:!initializing!private! !
+uint8Vector!accessing!private! !
+uint8Vector:!initializing!private! !
+varBoolVector:!initializing!private! !
+variantVector:!initializing!private! !
+vectorMask!constants!private! !
 !
-
-OS.COM.VARIANT methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
 
 !OS.COM.VARIANT class methodsFor!
 
-byteSize
-	^_VARIANT_Size!
+arrayType
+	"Answer the class of object (typically an <ExternalArray> subclass) to be used to represent arrays of the receiver's field type in other structures."
 
-classForVT: anInteger
-	"Answer a class of object suitable for representing values of the specified Variant type (i.e. a value from the VT_XXX enumeration which describes a scalar type)."
-
-	^(VTClasses at: anInteger + 1)
-		ifNil: [self error: 'Unmapped var type ' , anInteger printString]
-		ifNotNil: [:bindingRef | bindingRef value]!
+	^VARIANTArray!
 
 clear: addressOrBytes
-	"Free an instance of the structure which instances of the receiver wrap
-	which resides at the specified address."
+	"Free a VARIANT at the specified address."
 
 	OleAut32 variantClear: addressOrBytes!
-
-defineFields
-	"Define the fields of the VARIANT structure.
-	As this is a large and complex union, we define only the 16-bit type type, and a DWORD field
-	to simplify the common case of accessing the first 32-bits of data stored in a VARIANT.
-
-		VARIANT compileDefinition.
-
-		struct  tagVARIANT
-		{
-			union 
-			{
-				struct  __tagVARIANT
-				{
-					VARTYPE vt;
-					WORD wReserved1;
-					WORD wReserved2;
-					WORD wReserved3;
-					union 
-					{
-						LONG lVal;
-						BYTE bVal;
-						SHORT iVal;
-						FLOAT fltVal;
-						DOUBLE dblVal;
-						VARIANT_BOOL boolVal;
-						_VARIANT_BOOL bool;
-						SCODE scode;
-						CY cyVal;
-						DATE date;
-						BSTR bstrVal;
-						IUnknown __RPC_FAR *punkVal;
-						IDispatch __RPC_FAR *pdispVal;
-						SAFEARRAY __RPC_FAR *parray;
-						BYTE __RPC_FAR *pbVal;
-						SHORT __RPC_FAR *piVal;
-						LONG __RPC_FAR *plVal;
-						FLOAT __RPC_FAR *pfltVal;
-						DOUBLE __RPC_FAR *pdblVal;
-						VARIANT_BOOL __RPC_FAR *pboolVal;
-						_VARIANT_BOOL __RPC_FAR *pbool;
-						SCODE __RPC_FAR *pscode;
-						CY __RPC_FAR *pcyVal;
-						DATE __RPC_FAR *pdate;
-						BSTR __RPC_FAR *pbstrVal;
-						IUnknown __RPC_FAR *__RPC_FAR *ppunkVal;
-						IDispatch __RPC_FAR *__RPC_FAR *ppdispVal;
-						SAFEARRAY __RPC_FAR *__RPC_FAR *pparray;
-						VARIANT __RPC_FAR *pvarVal;
-						PVOID byref;
-						CHAR cVal;
-						USHORT uiVal;
-						ULONG ulVal;
-						INT intVal;
-						UINT uintVal;
-						DECIMAL __RPC_FAR *pdecVal;
-						CHAR __RPC_FAR *pcVal;
-						USHORT __RPC_FAR *puiVal;
-						ULONG __RPC_FAR *pulVal;
-						INT __RPC_FAR *pintVal;
-						UINT __RPC_FAR *puintVal;
-						struct {
-							PVOID       pvRecord;
-							IRecordInfo *pRecInfo;
-						} __VARIANT_NAME_4;
-					} __VARIANT_NAME_3;
-				} __VARIANT_NAME_2;
-				DECIMAL decVal;
-			} __VARIANT_NAME_1;
-		};"
-
-	self
-		defineField: #vt type: UInt16Field new offset: 0;
-		defineField: #wReserved1 type: UInt16Field filler offset: 2;
-		defineField: #wReserved2 type: UInt16Field filler offset: 4;
-		defineField: #wReserved3 type: UInt16Field filler offset: 6;
-		defineField: #llVal type: Int64Field filler offset: 8;
-		defineField: #lVal type: Int32Field filler offset: 8;
-		defineField: #bVal type: UInt8Field filler offset: 8;
-		defineField: #iVal type: Int16Field filler offset: 8;
-		defineField: #fltVal type: FLOATField filler offset: 8;
-		defineField: #dblVal type: DOUBLEField filler offset: 8;
-		defineField: #boolVal type: Int16Field filler offset: 8;
-		defineField: #scode type: Int32Field filler offset: 8;
-		defineField: #cyVal type: (StructureField type: CY) beFiller offset: 8;
-		defineField: #date type: (StructureField type: DATE) beFiller offset: 8;
-		defineField: #bstrVal type: (PointerField type: BSTR) beFiller offset: 8;
-		defineField: #punkVal type: (PointerField type: IUnknown) beFiller offset: 8;
-		defineField: #pdispVal type: (PointerField type: IDispatch) beFiller offset: 8;
-		defineField: #parray type: LPVOIDField filler offset: 8;
-		defineField: #pbVal type: (PointerField type: UInt8) beFiller offset: 8;
-		defineField: #piVal type: (PointerField type: Int16) beFiller offset: 8;
-		defineField: #plVal type: (PointerField type: Int32) beFiller offset: 8;
-		defineField: #pllVal type: (PointerField type: Int64) beFiller offset: 8;
-		defineField: #pfltVal type: (PointerField type: FLOAT) beFiller offset: 8;
-		defineField: #pdblVal type: (PointerField type: DOUBLE) beFiller offset: 8;
-		defineField: #pboolVal type: (PointerField type: VARIANT_BOOL) beFiller offset: 8;
-		defineField: #pscode type: (PointerField type: HRESULT) beFiller offset: 8;
-		defineField: #pcyVal type: (PointerField type: CY) beFiller offset: 8;
-		defineField: #pdate type: (PointerField type: DATE) beFiller offset: 8;
-		defineField: #pbstrVal type: LPVOIDField filler offset: 8;
-		defineField: #ppunkVal type: LPVOIDField filler offset: 8;
-		defineField: #ppdispVal type: LPVOIDField filler offset: 8;
-		defineField: #pparray type: LPVOIDField filler offset: 8;
-		defineField: #pvarVal type: (PointerField type: VARIANT) beFiller offset: 8;
-		defineField: #byref type: LPVOIDField filler offset: 8;
-		defineField: #cVal type: UInt8Field filler offset: 8;
-		defineField: #uiVal type: UInt16Field filler offset: 8;
-		defineField: #ulVal type: UInt32Field filler offset: 8;
-		defineField: #ullVal type: UInt64Field filler offset: 8;
-		defineField: #intVal type: Int32Field filler offset: 8;
-		defineField: #uintVal type: UInt32Field filler offset: 8;
-		defineField: #decVal type: (StructureField type: DECIMAL) beFiller offset: 0;
-		defineField: #pdecVal type: (PointerField type: DECIMAL) beFiller offset: 8;
-		defineField: #pcVal type: (PointerField type: UInt8) beFiller offset: 8;
-		defineField: #puiVal type: (PointerField type: UInt16) beFiller offset: 8;
-		defineField: #pulVal type: (PointerField type: UInt32) beFiller offset: 8;
-		defineField: #pullVal type: (PointerField type: UInt64) beFiller offset: 8;
-		defineField: #pintVal type: (PointerField type: Int32) beFiller offset: 8;
-		defineField: #puintVal type: (PointerField type: UInt32) beFiller offset: 8;
-		defineField: #pvRecord type: LPVOIDField filler offset: 8;
-		defineField: #pRecInfo type: (PointerField type: IRecordInfo) beFiller offset: (8+VMConstants.IntPtrSize).
-	self assert: [self basicByteSize = (8 + (2 * VMConstants.IntPtrSize))]!
-
-externalTypeNames
-	^#(#{UInt8} #{Int8} #{UInt16} #{Int16} #{FLOAT} #{DOUBLE} #{UInt32} #{Int32} #{Int64} #{UInt64})!
-
-fromBoolean: bool
-	"Answer a new instance of the receiver of type VT_BOOL containing
-	the VARIANT_BOOL equivalent of the <Boolean> value, bool."
-
-	^self new
-		varbool: bool;
-		yourself
-		!
-
-fromCollection: objects 
-	"Answer a new instance of the receiver of type VT_ARRAY|VT_XX containing
-	the <VARIANT> representations of the elements of the <collection>, objects."
-
-	^(self new)
-		array: objects asSAFEARRAY;
-		yourself!
-
-fromDATE: aDATE
-	"Answer a new instance of the receiver of type VT_DATE containing
-	the <DATE> equivalent of the argument."
-
-	^self new
-		date: aDATE;
-		yourself
-		!
-
-fromDispatch: piDisp
-	"Answer a new instance of the receiver of type VT_DISPATCH containing
-	the <IDispatch> pointer, piDisp."
-
-	^self new
-		dispatch: piDisp;
-		yourself
-		!
-
-fromFILETIME: aFILETIME
-	"Answer a new instance of the receiver of type which is the best representation for the <FILETIME> argument. Note that for VARIANTs, this will be a VT_DATE and there will be some loss of precision and range."
-
-	^self new
-		date: aFILETIME asDATE;
-		yourself!
-
-fromFloat: aFloat 
-	"Answer a new instance of the receiver of type VT_DOUBLE containing
-	the <Float> value, fValue."
-
-	^(self new)
-		double: aFloat;
-		yourself!
-
-fromInteger: anInteger 
-	"Answer a new instance of the receiver holding the specified <integer> value. The VT
-	will be VT_I4 if the integer is in the 32-bit 2's complemente range, or a VT_I8 for
-	the 64-bit 2's complement range, or VT_UI8 for 64-bit positive numbers that are
-	greater than 2^63-1. It is an error if the argument is too large to be represented in 
-	64 bits."
-
-	^anInteger asInteger asVariant!
-
-fromLargeInteger: aLargeInteger
-	"Answer a new instance of the receiver holding the specified <LargeInteger> value.
-	 The VT will be VT_I8 for the 64-bit 2's complement range, or VT_UI8 for 64-bit positive 
-	numbers that are greater than 2^63-1. It is an error if the argument is too large to be 
-	represented in 64 bits."
-
-	| answer words |
-	answer := self new.
-	words := aLargeInteger limbSize.
-	words <= 1
-		ifTrue: [answer int32: aLargeInteger]
-		ifFalse: 
-			[words > 2
-				ifTrue: 
-					["Might error if too large (or negative)"
-					answer uint64: aLargeInteger]
-				ifFalse: [answer int64: aLargeInteger]].
-	^answer!
-
-fromSmallInteger: aSmallInteger
-	"Answer a new VT_I4/VT_I8 instance of the receiver holding the specified <SmallInteger> value.
-	It is an error if the argument is too large to be represented in 32/64 bits."
-
-	^self new
-		int32: aSmallInteger;
-		yourself!
-
-fromString: aString
-	"Answer a new BSTR instance of the receiver pointing at a copy of the 
-	<readableString> argument."
-
-	^self new 
-		bstr: aString;
-		yourself!
-
-fromUnknown: piUnk
-	"Answer a new instance of the receiver of type VT_UNKNOWN containing
-	the <IUnknown> pointer, piUnk."
-
-	^self new
-		unknown: piUnk;
-		yourself
-		!
-
-getFieldNames
-	^#(#vt)!
 
 init: buffer
 	"Initialize a buffer (or buffer at the specified address) to hold an instance of the record type
@@ -1106,182 +493,25 @@ initialize
 				hresult: DISP_E_PARAMNOTFOUND;
 				beUnfinalizable;
 				yourself.
-	self addClassConstant: 'VTNames' value: self vtNames.
-	self addClassConstant: 'VTClasses' value: self vtClasses.
-	self externalTypeNames do: [:each | VM registryAt: each asSymbol put: each value].
 	VM registryAt: self name put: self!
-
-nameOfVT: vartype
-	"Answer the symbolic name of the specified variant type code."
-
-	| vtName |
-	vtName := VTNames at: vartype + 1.
-	^vtName == #badVarType ifTrue: [VTNames errorNotFound: vartype] ifFalse: [vtName]!
-
-newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, VARIANT values."
-
-	^SAFEARRAY
-		length: anInteger
-		vt: VT_VARIANT
-		elementClass: self!
-
-null
-	"Answer a null (VT_NULL) instance of the receiver. This is not the same
-	as a nil, (VT_EMPTY) instance."
-
-	^self new
-		vt: VT_NULL;
-		yourself!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#variant!
 
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	Unspecified := nil.
-	"The VM only needs a ref to certain classes to implement the VARIANT>>value primitive, so these can be
-	 cleared out if this class is removed."
-	self externalTypeNames do: [:each | VM registryAt: each asSymbol put: nil].
 	VM registryAt: self name put: nil!
 
 unspecified
 	"Answer an instance of the receiver appropriate to use as an unspecified optional argument."
 
-	^Unspecified!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^VT_VARIANT!
-
-vtClasses 
-	^(Array new: VT_CLSID + 1)
-		at: VT_BLOB+1			put: #{Core.ByteArray};			"Blob - OLE Property sets only"
-		at: VT_BLOB_OBJECT+1		put: #{Core.ByteArray};			"Blob containing an object - OLE Property sets only"
-		at: VT_BOOL+1			put: #{OS.COM.VARIANT_BOOL};	"Automation (Basic) boolean"
-		at: VT_BSTR+1				put: #{OS.COM.BSTR};			"Automation (Basic) String"
-		at: VT_CARRAY+1			put: #{External.Array};			"C-style array - TYPEDESC only"
-		at: VT_CF+1				put: #{External.UInt32};			"Clipboard format - OLE Property sets only"
-		at: VT_CLSID+1			put: #{OS.COM.CLSID};			"Class ID - OLE Property sets only"
-		at: VT_CY+1				put: #{OS.COM.CY};		"Automation Currency - 64-bit fixed point, 4 decimal places"
-		at: VT_DATE+1				put: #{OS.COM.DATE};			"Automation (double) date"
-		at: VT_DECIMAL+1			put: #{OS.COM.DECIMAL};		"16-byte fixed point"
-		at: VT_DISPATCH+1			put: #{OS.COM.IDispatch};		"IDispatch pointer"
-		at: VT_EMPTY+1			put: #{Core.UndefinedObject};		"nil (in ST) or Nothing (in VB)"
-		at: VT_ERROR+1			put: #{OS.HRESULT};			"Status code (SCODE)"
-		at: VT_FILETIME+1			put: #{OS.FILETIME};			"FILETIME - OLE Property sets only"
-		at: VT_I1+1				put: #{External.Int8};			"Signed 8-bit integer"
-		at: VT_I2+1				put: #{External.Int16};			"16-bit signed integer"
-		at: VT_I4+1				put: #{External.Int32};			"32-bit signed integer"
-		at: VT_I8+1				put: #{External.Int64};			"64-bit signed integer"
-		at: VT_INT+1				put: #{External.Int32};			"signed machine dependent integer - TYPEDESC only"
-		at: VT_LPSTR+1			put: #{Core.AnsiString};			"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
-		at: VT_LPWSTR+1			put: #{Core.Utf16String};			"Null-terminated UTF16 string - OLE Property Sets and TYPEDESC only"
-		at: VT_NULL+1			put: #{Core.UndefinedObject};		"SQL Null (i.e. nil)"
-		at: VT_PTR+1				put: #{External.Address};			"Pointer type - TYPEDESC only"
-		at: VT_R4+1				put: #{External.FLOAT};			"Single precision floating point"
-		at: VT_R8+1				put: #{External.DOUBLE};			"Double precision floating point"
-		at: VT_SAFEARRAY+1		put: #{OS.COM.SAFEARRAY};		"As VT_ARRAY, but TYPEDESC only"
-		at: VT_STORAGE+1			put: #{OS.COM.IStorage};		"Name of storage - OLE Property Sets only"
-		at: VT_STORED_OBJECT+1	put: #{OS.COM.IStorage};		"Storage containing object - OLE Property Sets only"
-		at: VT_STREAM+1			put: #{OS.COM.IStream};			"Name of storage - OLE Property Sets only"
-		at: VT_STREAMED_OBJECT+1	put: #{OS.COM.IStream};			"Stream containing object - OLE Property Sets only"
-		at: VT_UINT+1				put: #{External.UInt32};			"unsigned machine dependent integer - TYPEDESC only"
-		at: VT_UI1+1				put: #{External.UInt8};			"8-bit unsigned integer"
-		at: VT_UI2+1				put: #{External.UInt16};			"16-bit unsigned integer"
-		at: VT_UI4+1				put: #{External.UInt32};			"32-bit unsigned integer"
-		at: VT_UI8+1				put: #{External.UInt64};				"64-bit unsigned integer - OLE Prop Sets, TYPEDESC only"
-		at: VT_UNKNOWN+1		put: #{OS.COM.IUnknown};		"IUnknown pointer"
-		at: VT_USERDEFINED+1		put: #{OS.COM.Record};			"user defined type, a typedef in face - TYPEDESC only"
-		at: VT_RECORD+1			put: #{External.Structure};
-		at: VT_VARIANT+1			put: #{OS.COM.VARIANT};		"Reference to another VARIANT"
-		at: VT_VOID+1			put: #{External.VOID};			"C void - TYPEDESC only, for generic pointer outputs"
-		at: VT_HRESULT+1			put: #{OS.HRESULT}; 			"HRESULT return code - TYPEDESC only"
-		at: VT_INT_PTR+1			put: #{External.IntPtr};			"signed machine register size width - TYPEDESC only"
-		at: VT_UINT_PTR+1			put: #{External.UIntPtr};		"unsigned machine register size width - TYPEDESC only"
-		yourself!
-
-vtNames 
-	^(Array new: VT_CLSID+1 withAll: #badVarType)
-		at: VT_BLOB+1			put: #blob;			"Blob - OLE Property sets only"
-		at: VT_BLOB_OBJECT+1		put: #blob_object;		"Blob containing an object - OLE Property sets only"
-		at: VT_BOOL+1			put: #varbool;			"VARIANT_BOOL - i.e. True=-1, False=0"
-		at: VT_BSTR+1				put: #bstr;			"Automation (Basic) String"
-		at: VT_CARRAY+1			put: #carray;			"C-style array - TYPEDESC only"
-		at: VT_CF+1				put: #cf;				"Clipboard format - OLE Property sets only"
-		at: VT_CLSID+1			put: #clsid;			"Class ID - OLE Property sets only"
-		at: VT_CY+1				put: #cy;				"Automation Currency"
-		at: VT_DATE+1				put: #date;			"Automation (double) date"
-		at: VT_DECIMAL+1			put: #decimal;			"14-byte fixed point"
-		at: VT_DISPATCH+1			put: #dispatch;		"IDispatch pointer"
-		at: VT_EMPTY+1			put: #nil;				"nil (in ST) or Nothing (in VB)"
-		at: VT_ERROR+1			put: #hresult;			"Status code (SCODE)"
-		at: VT_FILETIME+1			put: #filetime;			"FILETIME - OLE Property sets only"
-		at: VT_HRESULT+1			put: #hresult;			"HRESULT return code - TYPEDESC only"
-		at: VT_I1+1				put: #int8;
-		at: VT_I2+1				put: #int16;
-		at: VT_I4+1				put: #int32;
-		at: VT_I8+1				put: #int64;			"OLE Property Sets and TYPEDESC only"
-		at: VT_INT+1				put: #int32;			"signed machine dependent integer - TYPEDESC only"
-		at: VT_LPSTR+1			put: #lpstr;			"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
-		at: VT_LPWSTR+1			put: #lpwstr;			"Null-terminated UTF-16 string - OLE Property Sets and TYPEDESC only"
-		at: VT_NULL+1			put: #null;			"SQL Null (i.e. nil)"
-		at: VT_PTR+1				put: #lpvoid;			"Pointer type - TYPEDESC only"
-		at: VT_R4+1				put: #float;			"Single precision floating point"
-		at: VT_R8+1				put: #double;			"Double precision floating point"
-		at: VT_SAFEARRAY+1		put: #safearray;		"As VT_ARRAY, but TYPEDESC only"
-		at: VT_STORAGE+1			put: #storage;			"Name of storage - OLE Property Sets only"
-		at: VT_STORED_OBJECT+1	put: #stored_object;	"Storage containing object - OLE Property Sets only"
-		at: VT_STREAM+1			put: #stream;			"Name of storage - OLE Property Sets only"
-		at: VT_STREAMED_OBJECT+1	put: #streamed_object;	"Stream containing object - OLE Property Sets only"
-		at: VT_UINT+1				put: #uint32;			"unsigned machine dependent integer - TYPEDESC only"
-		at: VT_UI1+1				put: #uint8;
-		at: VT_UI2+1				put: #uint16;
-		at: VT_UI4+1				put: #uint32;
-		at: VT_UI8+1				put: #uint64;			"OLE Property Sets and TYPEDESC only"
-		at: VT_UNKNOWN+1		put: #unknown;		"IUnknown pointer"
-		at: VT_USERDEFINED+1		put: #typedef;			"user defined type - TYPEDESC only"
-		at: VT_RECORD+1			put: #struct;
-		at: VT_VARIANT+1			put: #variant;			"Reference to another VARIANT"
-		at: VT_VOID+1			put: #void;			"C void - TYPEDESC only"
-		at: VT_INT_PTR+1			put: #intptr;			"signed machine register size width - TYPEDESC only"
-		at: VT_UINT_PTR+1			put: #uintptr;			"unsigned machine register size width - TYPEDESC only"
-		yourself! !
+	^Unspecified! !
 
 !OS.COM.VARIANT class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
-classForVT:!enquiries!public! !
+arrayType!constants!public! !
 clear:!public!realizing/unrealizing! !
-defineFields!public!template definition! !
-externalTypeNames!constants!private! !
-fromBoolean:!instance creation!public! !
-fromCollection:!instance creation!public! !
-fromDATE:!instance creation!public! !
-fromDispatch:!instance creation!public! !
-fromFILETIME:!instance creation!public! !
-fromFloat:!instance creation!public! !
-fromInteger:!instance creation!public! !
-fromLargeInteger:!instance creation!public! !
-fromSmallInteger:!instance creation!public! !
-fromString:!instance creation!public! !
-fromUnknown:!instance creation!public! !
-getFieldNames!**compiled accessors**!constants!private! !
 init:!initializing!public! !
 initialize!development!initializing!private! !
-nameOfVT:!enquiries!public! !
-newSAFEARRAY:!public! !
-null!instance creation!public! !
-typeName!constants!private! !
 uninitialize!class hierarchy-removing!private! !
 unspecified!instance creation!public! !
-vt!constants!public! !
-vtClasses!constants!private! !
-vtNames!constants!must not strip!private! !
 !
 

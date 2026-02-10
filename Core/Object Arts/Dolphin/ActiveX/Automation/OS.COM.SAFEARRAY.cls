@@ -4,7 +4,7 @@ External.GenericExternalArray
 	subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #(#{OS.COM.AutomationErrors} #{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cbElements' -> 16r4.
@@ -80,13 +80,6 @@ asSAFEARRAY
 	"Answer the SAFEARRAY representation of the receiver."
 
 	^self!
-
-asVariant
-	"Answer the VARIANT representation of the receiver."
-
-	^VARIANT new
-		array: self copy;
-		yourself!
 
 base
 	data isNull ifTrue: [data := self accessData asInteger].
@@ -251,6 +244,9 @@ initializePointer
 	self assert: [data isNil].
 	self beFinalizable!
 
+initializeVariant: anOleVariant
+	anOleVariant array: self copy!
+
 length
 	"Answer the number of elements in the least significant (rightmost) bound 
 	of the receiver. This really only makes sense for single-dimensioned vectors."
@@ -370,7 +366,10 @@ uncheckedAt: anInteger put: anObject
 	"Private - Set the value of the element of the receiver at the specified <integer> index to the specified value, which must be representable by the element class of the receiver. Assumes that the receiver is a single-dimensioned array, if not an error will result. 
 	Note: This isn't likely to be terribly fast!!"
 
-	self elementAt: {anInteger + self start - 1} put: (self elementClass marshal: anObject).
+	OleAut32
+		safeArrayPutElement: self
+		rgIndices: (Int32 fromInteger: anInteger + self start - 1)
+		pv: (self elementClass marshal: anObject).
 	^anObject!
 
 upperBound: anInteger
@@ -384,6 +383,9 @@ upperBound: anInteger
 		plUbound: uBound.
 	^uBound int32AtOffset: 0!
 
+value
+	^self asExternalArray!
+
 vartype
 	"Answer the variant type of the receiver's elements. Note that this also includes various flags, so it is not a raw VT_XXX type number."
 
@@ -395,7 +397,7 @@ vartype
 vt
 	"Answer the receiver's variant type. This will depend on the element type, but always includes the VT_ARRAY modifier."
 
-	^VT_ARRAY bitOr: self elementClass vt!
+	^VT_ARRAY bitOr: self vartype!
 
 with: otherCollection do: operation
 	"Evaluate the <dyadicValuable> argument, operation, with each of 
@@ -418,7 +420,6 @@ asExternalArray!converting!public! !
 asExternalArray:!converting!private! !
 asObject!converting!public! !
 asSAFEARRAY!converting!public! !
-asVariant!converting!public! !
 base!accessing!private! !
 cbElements!**compiled accessors**!public! !
 cDims!**compiled accessors**!private! !
@@ -439,6 +440,7 @@ hasRecordInfo!private!testing! !
 hasVarType!private!testing! !
 iid!accessing!public! !
 initializePointer!initializing!private! !
+initializeVariant:!converting!private! !
 length!accessing!public! !
 length:!accessing!public! !
 lowerBound:!accessing!public! !
@@ -456,6 +458,7 @@ typeMismatch!exceptions!private! !
 unaccessData!helpers!private! !
 uncheckedAt:put:!accessing!private! !
 upperBound:!accessing!public! !
+value!accessing!public! !
 vartype!accessing!public! !
 vt!constants!public! !
 with:do:!enumerating!public! !
@@ -572,10 +575,10 @@ fromAddress: anAddress owner: anObject length: anInteger elementClass: elementCl
 
 fromAddress: anAddress vt: anInteger owner: arrayOwner
 	"Answer a new instance that points to the SAFEARRAY at the address, anAddress, which contains elements of Variant type, anIneger. The instance will not free the safe array unless the arrayOwner is nil."
-	
+
 	^self
 		fromAddress: anAddress
-		elementClass: (VARIANT classForVT: anInteger)
+		elementClass: (VARIANT classForVT: anInteger ifNone: nil)
 		owner: arrayOwner!
 
 length: length elementClass: elementClass bufferClass: bufferClass
@@ -660,7 +663,22 @@ vt
 	"Answer the receiver's variant type. The actual type of instances will 
 	depend on the element type, but it will always include this array modifier."
 
-	^VT_ARRAY! !
+	^VT_ARRAY!
+
+withAll: aCollection recordClass: structClass
+	"Answer a new instance of the receiver containing all of the elements of the <collection> argument, represented in the format of the <ExternalStructure> class argument.  
+	An error will be raised if any of the elements cannot be represented as instances of the element class."
+
+	| answer |
+	answer := self
+				length: aCollection size
+				recordClass: structClass.
+	aCollection inject: 1
+		into: 
+			[:i :elem |
+			answer uncheckedAt: i put: elem.
+			i + 1].
+	^answer! !
 
 !OS.COM.SAFEARRAY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
@@ -684,5 +702,6 @@ new:bufferClass:!instance creation!public! !
 newBuffer!instance creation!public! !
 requiresFinalization!public!realizing/unrealizing!testing! !
 vt!constants!public! !
+withAll:recordClass:!instance creation!public! !
 !
 

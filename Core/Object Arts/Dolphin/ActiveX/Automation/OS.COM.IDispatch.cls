@@ -4,7 +4,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #(#{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -73,11 +73,6 @@ asImplType
 			ifTrue: [self downCast]
 			ifFalse: [self]]
 !
-
-asVariant
-	"Answer the VARIANT representation of the receiver."
-
-	^VARIANT fromDispatch: self!
 
 basicFree
 	"Private - Free the receiver's external resources."
@@ -157,10 +152,8 @@ doesNotUnderstand: aMessage
 	late-bound message, so we try invoking it in whatever ways might make sense for the number
 	of arguments."
 
-	| argc hr |
 	self isExtensible ifFalse: [^super doesNotUnderstand: aMessage].
-	argc := aMessage argumentCount.
-	argc == 0
+	aMessage argumentCount == 0
 		ifTrue: 
 			[(self idOfName: aMessage selector ifAbsent: [])
 				ifNotNil: 
@@ -169,60 +162,7 @@ doesNotUnderstand: aMessage
 					^self getPropertyId: dispid]]
 		ifFalse: 
 			[(self idOfName: (aMessage selector upTo: $:) ifAbsent: [])
-				ifNotNil: 
-					[:dispid |
-					| args |
-					args := aMessage arguments.
-					argc == 1
-						ifTrue: 
-							[| parms var |
-							"One arg message could be a propset,
-							 indexed propget, or a method call "
-							var := args first asVariant.
-							parms := DISPPARAMS new.
-							parms propertyPutValue: var.
-							hr := self
-										basicInvokeId: dispid
-										flags: (var vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
-										parms: parms
-										retVal: nil.
-							hr >= 0 ifTrue: [^self].
-							"Failed - try an indexed propget/method call (can do in one hit as flag combination is allowed by automation spec)"
-							^self
-								invokeId: dispid
-								flags: ##(DISPATCH_PROPERTYGET | DISPATCH_METHOD)
-								parms: (DISPPARAMS with: var)]
-						ifFalse: 
-							[argc == 2
-								ifTrue: 
-									[| parms var value item |
-									"If two args, could be indexed propset or method call"
-									value := args second.
-									var := value asVariant.
-									parms := DISPPARAMS new.
-									item := args first.
-									parms propertyPut: item value: var.
-									hr := self
-												basicInvokeId: dispid
-												flags: (var vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
-												parms: parms
-												retVal: nil.
-									hr >= 0 ifTrue: [^self].
-									"Failed, try method call"
-									^self
-										invokeId: dispid
-										with: item
-										with: value]
-								ifFalse: 
-									[| retVal |
-									">2 args, must be method call"
-									retVal := VARIANT new.
-									self
-										invokeId: dispid
-										flags: DISPATCH_METHOD
-										parms: (DISPPARAMS withArguments: aMessage arguments)
-										retVal: retVal.
-									^retVal value]]]].
+				ifNotNil: [:dispid | ^self dynamicInvokeId: dispid message: aMessage]].
 	^self basicDoesNotUnderstand: aMessage!
 
 downCast
@@ -236,6 +176,61 @@ downCast
 			(self class classForIID: ti guid ifNone: nil)
 				ifNotNil: [:derived | ^(self queryInterface: derived) downCast]].
 	^self!
+
+dynamicInvokeId: dispid message: aMessage
+	| argc args hr |
+	args := aMessage arguments.
+	argc := args size.
+	^argc == 1
+		ifTrue: 
+			[| parms arg |
+			"One arg message could be a propset, indexed propget, or a method call "
+			arg := args first asVariant.
+			parms := DISPPARAMS new.
+			parms propertyPutValue: arg.
+			hr := self
+						basicInvokeId: dispid
+						flags: (arg vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
+						parms: parms
+						retVal: nil.
+			hr >= 0 ifTrue: [^self].
+			"Failed - try an indexed propget/method call (can do in one hit as flag combination is allowed by automation spec)"
+			parms cNamedArgs: 0.
+			^self
+				invokeId: dispid
+				flags: ##(DISPATCH_PROPERTYGET | DISPATCH_METHOD)
+				parms: parms]
+		ifFalse: 
+			[argc == 2
+				ifTrue: 
+					[| parms var value item |
+					"If two args, could be indexed propset or method call"
+					value := args second.
+					var := value asVariant.
+					parms := DISPPARAMS new.
+					item := args first.
+					parms propertyPut: item value: var.
+					hr := self
+								basicInvokeId: dispid
+								flags: (var vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
+								parms: parms
+								retVal: nil.
+					hr >= 0 ifTrue: [^self].
+					"Failed, try method call"
+					^self
+						invokeId: dispid
+						with: item
+						with: value]
+				ifFalse: 
+					[| retVal |
+					">2 args, must be method call"
+					retVal := VARIANT new.
+					self
+						invokeId: dispid
+						flags: DISPATCH_METHOD
+						parms: (DISPPARAMS withArguments: aMessage arguments)
+						retVal: retVal.
+					^retVal value]]!
 
 getIDsOfNames: aCollectionOfStrings
 	"Answer a `<sequencedReadableCollection>` of the `<integer>` ids of the named members of the receiver.
@@ -423,6 +418,9 @@ implementor: anObject
 
 	super implementor: anObject.
 	dispatchImplementor isNil ifTrue: [self dispatchImplementor: anObject]!
+
+initializeVariant: anOleVariant
+	anOleVariant dispatch: self!
 
 invoke: methodName
 	"Invoke the method with <Integer> DISPID, id, with no arguments."
@@ -708,7 +706,6 @@ value: value
 !OS.COM.IDispatch categoriesForMethods!
 _newEnum!enumerating!private! !
 asImplType!converting!public! !
-asVariant!converting!public! !
 basicFree!private!realizing/unrealizing! !
 basicInvokeId:flags:parms:retVal:!dispatching!private! !
 contents!accessing!public! !
@@ -718,6 +715,7 @@ displayOn:!printing!public! !
 displayValueOn:!printing!private! !
 doesNotUnderstand:!exceptions!public! !
 downCast!converting!public! !
+dynamicInvokeId:message:!exceptions!private! !
 getIDsOfNames:!accessing!public! !
 GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!methods!private! !
 getProperty:!accessing!properties!public! !
@@ -736,6 +734,7 @@ hasTypeInfo!public!testing! !
 idOfName:!accessing!public! !
 idOfName:ifAbsent:!accessing!public! !
 implementor:!accessing!public! !
+initializeVariant:!converting!private! !
 invoke:!dispatching!public! !
 Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!methods!private! !
 invoke:with:!dispatching!public! !

@@ -4,7 +4,7 @@ External.Tests.GenericExternalArrayTest
 	subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors} #{OS.COM.AutomationConstants})
+	imports: #(#{OS.Win32Errors} #{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -36,6 +36,7 @@ testBoolDisplayString
 testBounds
 	| subject |
 	subject := SAFEARRAY length: 3 elementClass: Int32.
+	self assert: subject vartype equals: VT_I4.
 	self assert: (subject lowerBound: 1) equals: 0.
 	self assert: (subject upperBound: 1) equals: 2!
 
@@ -43,8 +44,9 @@ testDoubles
 	| floats subject ext |
 	floats := DOUBLEArray withAll: { Float negativeInfinity. Float fmin. -0.0. 0.0. 1.25. Float fmax. Float infinity }.
 	subject := floats asSAFEARRAY.
+	self assert: subject vartype equals: VT_R8.
 	self assert: subject asExternalArray  equals: floats.
-	ext := subject asExternalArray.
+	ext := subject value.
 	self assert: ext isKindOf: DOUBLEArray.
 	self assert: ext equals: floats!
 
@@ -68,6 +70,7 @@ testElementAt
 	self assert: subjectRef isFinalizable.
 	self deny: subjectRef needsFree.
 	"Should be able to deduce the correct element class"
+	self assert: subject vartype equals: VT_I4.
 	self assert: subjectRef elementClass identicalTo: Int32.
 	self assert: (subjectRef elementAt: #(0)) equals: (Int32 fromInteger: -123).
 	self assert: (subjectRef elementAt: #(1)) equals: (Int32 fromInteger: 123).
@@ -81,7 +84,7 @@ testElementAt
 testFILETIME
 	"FILETIMEs are represented as VT_DATE for compatibility with Win32 APIs such as `InitVariantFromFileTime()`"
 
-	| dt ft subject date |
+	| dt ft subject date copy dateref |
 	dt := DateAndTime fromString: '2026-01-14T08:05:29+00:00'.
 	ft := FILETIME fromDateAndTime: dt.
 	self assert: ft asDateAndTime equals: dt.
@@ -93,17 +96,25 @@ testFILETIME
 	self assert: subject hasVarType.
 	self assert: subject vartype equals: VT_DATE.
 	self assert: subject vt equals: VT_ARRAY | VT_DATE.
-	date := subject at: 1.
-	self assert: (VARIANT fromFILETIME: ft) value equals: date.
-	self assert: date isKindOf: DATE.
-	self assert: date asDateAndTime equals: dt.
+	dateref := subject at: 1.
+	self assert: dateref isReferenceStruct.
+	self assert: dateref isKindOf: DATE.
+	self assert: dateref equals: ft asDATE.
+	date := dateref copy.
+	self assert: date isValueStruct.
+	copy := subject copy.
+	self assert: copy vartype equals: VT_DATE.
+	self assert: copy value equals: { date }.
 	"Precision will be lost"
 	ft := FILETIME fromInteger: 13414160038639999.
 	subject at: 1 put: ft.
-	date := subject at: 1.
-	self assert: (VARIANT fromFILETIME: ft) value equals: date.
-	self assert: ft asDateAndTime closeTo: date asDateAndTime precision: 1 seconds.
-	subject free!
+	self assert: dateref equals: ft asDATE.
+	self assert: (subject at: 1) equals: ft asDATE.
+	self assert: (ft asDateAndTime - dateref asDateAndTime) closeTo: 0 seconds precision: 1 microseconds.
+	self assert: copy value equals: { date }.
+	subject free.
+	self assert: copy value equals: { date }.
+	copy free!
 
 testFinalizable
 	| subject pSubject |
@@ -126,8 +137,9 @@ testFloats
 	self assert: subject isReferenceStruct.
 	self assert: subject isFinalizable.
 	self assert: subject needsFree.
+	self assert: subject vartype equals: VT_R4.
 	self assert: subject asExternalArray equals: floats.
-	ext := subject asExternalArray.
+	ext := subject value.
 	self assert: ext isKindOf: FLOATArray.
 	self assert: ext equals: floats.
 	subject free.
@@ -162,6 +174,7 @@ testInt16s
 	self assert: subject isReferenceStruct.
 	self assert: subject isFinalizable.
 	self assert: subject needsFree.
+	self assert: subject vartype equals: VT_I2.
 	ext := subject asExternalArray.
 	self assert: ext isKindOf: Int16Array.
 	self assert: ext equals: ints!
@@ -173,6 +186,7 @@ testInt32s
 	self assert: subject isReferenceStruct.
 	self assert: subject isFinalizable.
 	self assert: subject needsFree.
+	self assert: subject vartype equals: VT_I4.
 	ext := subject asExternalArray.
 	self assert: ext isKindOf: Int32Array.
 	self assert: ext equals: ints!
@@ -184,6 +198,7 @@ testInt64s
 	self assert: subject isReferenceStruct.
 	self assert: subject isFinalizable.
 	self assert: subject needsFree.
+	self assert: subject vartype equals: VT_I8.
 	ext := subject asExternalArray.
 	self assert: ext isKindOf: Int64Array.
 	self assert: ext equals: ints!
@@ -191,7 +206,7 @@ testInt64s
 testInvalidElementClasses
 	"Test some invalid safe array types in the VTClasses map"
 
-	#(#{String} #{Utf16String} #{Address} #{CLSID}) do: 
+	#(#{String} #{Utf16String} #{Address}) do: 
 			[:each |
 			self
 				should: [SAFEARRAY length: 1 elementClass: each value]
@@ -228,6 +243,7 @@ testIUnknown
 testMarshal
 	| subject |
 	subject := self arrayClass marshal: (1 to: 3).
+	self assert: subject vartype equals: VT_VARIANT.
 	self assert: subject equals: (self arrayClass withAll: (1 to: 3)).
 	self assert: (self arrayClass marshal: subject) identicalTo: subject!
 
@@ -292,6 +308,8 @@ testRecordInfo
 	self assert: subject needsFree.
 	self assert: subject hasRecordInfo.
 	self assert: subject elementClass equals: POINTL.
+	self assert: subject vartype equals: VT_RECORD.
+	self assert: subject vt equals: VT_ARRAY | VT_RECORD.
 	self assert: subject asObject equals: ((1 to: 3) collect: [:each | each @ each]).
 	recinfo := subject recordInfo.
 	self assert: recinfo name equals: subject elementClass name asString.
@@ -319,6 +337,8 @@ testRecordsGeneric
 	self assert: sa needsFree.
 	self assert: sa isFinalizable.
 	self assertIsNil: sa owner.
+	self assert: sa vartype equals: VT_RECORD.
+	self assert: sa vt equals: VT_RECORD | VT_ARRAY.
 	"Now attach a SAFEARRAY reference to it that has to deduce the content"
 	sa2 := SAFEARRAY fromAddress: sa yourAddress owner: sa.
 	"A reference to the actual SA, so must not free the data."
@@ -329,6 +349,8 @@ testRecordsGeneric
 	self assert: sa2 isFinalizable.
 	self assert: sa2 size equals: 3.
 	self assert: sa2 hasRecordInfo.
+	self assert: sa2 vartype equals: VT_RECORD.
+	self assert: sa2 vt equals: VT_RECORD | VT_ARRAY.
 	recordClass := sa2 recordClass.
 	self assert: recordClass guid equals: pointl2 guid.
 	self assert: recordClass name equals: pointl2 name.
@@ -337,6 +359,8 @@ testRecordsGeneric
 	sa elementClass: nil.
 	elems := sa asArray.
 	self assert: sa recordClass equals: recordClass.
+	self assert: sa vartype equals: VT_RECORD.
+	self assert: sa vt equals: VT_RECORD | VT_ARRAY.
 	"Elements should be equal because they reference the same underlying data"
 	self assert: sa2elems equals: elems.
 	1 to: 3
@@ -384,6 +408,8 @@ testVarTypes
 				subjectRef := SAFEARRAY fromAddress: subject yourAddress owner: subject.
 				self assert: subjectRef isReferenceStruct.
 				self deny: subjectRef needsFree.
+				self assert: subject hasVarType.
+				self assert: subject vartype equals: elementClass vt.
 				"Even ref instances require finalization to unlock the safe array."
 				self assert: subjectRef isFinalizable.
 				self assert: subjectRef size equals: subject size.
@@ -409,7 +435,9 @@ testWithAll
 	self assert: subject vartype equals: VT_VARIANT.
 	self assert: subject elementClass equals: VARIANT.
 	self assert: subject vt equals: VT_ARRAY | VT_VARIANT.
-	self assert: subject asArray equals: objects!
+	self assert: subject asArray equals: objects.
+	subject at: 2 put: 2.5.
+	self assert: subject asArray equals: (objects copyReplacing: 1.25 withObject: 2.5)!
 
 threePoints: recordClass
 	| sa |

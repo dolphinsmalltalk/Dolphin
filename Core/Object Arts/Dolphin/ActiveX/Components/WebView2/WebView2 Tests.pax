@@ -37,6 +37,7 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\Automation\ActiveX Automation'
 	'..\..\..\..\Samples\ActiveX\Random\COM Random Stream'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'

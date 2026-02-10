@@ -14,10 +14,10 @@ OS.COM.PropertyBag comment: ''!
 
 !OS.COM.PropertyBag methodsFor!
 
-asVariant
-	"Answer the object value of the receiver wrapped as an <IUnknown> pointer in a <VARIANT>."
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to wrap an <IUnknown> pointer on the receiver."
 
-	^VARIANT fromUnknown: self load!
+	self load initializeVariant: anOleVariant !
 
 inStream: inputStream
 	"Private - Read a property bag (previously persisted by this class) from the <gettableStream> argument, 
@@ -83,7 +83,7 @@ Read: pszPropName pVar: pVar pErrorLog: pErrorLog
 	"Implement the IPropertyBag::Read() method.
 	Note that the pVar argument is really an in-out parameter, since the 'vt' member is expected to
 	be set to the type of variant desired, or VT_EMPTY for don't care. This means it should not
-	be initialized, and should not be free'd either.
+	be initialized, and should not be freed either.
 
 		HRESULT __stdcall Read(
 			[in] LPWSTR pszPropName,
@@ -96,7 +96,7 @@ Read: pszPropName pVar: pVar pErrorLog: pErrorLog
 	propName := pszPropName asString.
 	prop := propertyTable at: propName ifAbsent: [^E_INVALIDARG	"Unrecognised property name"].
 	val := prop asVariant.
-	(vt := pVar vt) == VT_EMPTY ifFalse: [val := val changeType: vt].
+	(vt := pVar vt) == OleVariant.VT_EMPTY ifFalse: [val := val changeType: vt].
 	"VARIANT>>value: method frees existing content, which we don't want as may not be valid"
 	pVar copyBytes: val detach.
 	S_OK]
@@ -219,7 +219,7 @@ Write: pszPropName pVar: pVar
 	^hr! !
 
 !OS.COM.PropertyBag categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 inStream:!accessing!public! !
 load!operations!public! !
 printOn:indent:!printing!public! !

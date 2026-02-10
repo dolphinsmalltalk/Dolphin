@@ -93,6 +93,16 @@ asString
 byteSize
 	^_GUID_Size!
 
+copyBytes: aByteObject
+	"Private - Set the contents of the receiver (as appropriate for the subclass).
+	Answer the receiver."
+
+	aByteObject
+		replaceBytesOf: self
+		from: 1
+		to: _GUID_Size
+		startingAt: 1!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	GUIDs are a fairly technical concept, but they do appear in the registry in a certain format, which we use here."
@@ -211,6 +221,7 @@ asInteger!converting!public! !
 asObject!converting!public! !
 asString!converting!public! !
 byteSize!accessing!public! !
+copyBytes:!copying!private! !
 displayOn:!printing!public! !
 hash!comparing!public! !
 idlString!converting!public! !
@@ -267,6 +278,14 @@ clear: addressOrBytes
 	"Finalize an instance of the structure which instances of the receiver wrap
 	which resides at the specified address. Note that this is not about freeing
 	the specified memory block, but any resources which it references."!
+
+copyBytes: srcByteObject from: startInteger to: stopInteger into: destByteObject
+	srcByteObject
+		replaceBytesOf: destByteObject
+		from: 1
+		to: stopInteger - startInteger + 1
+		startingAt: startInteger.
+	^destByteObject!
 
 defineFields
 	"Define the fields of the GUID structure.
@@ -338,8 +357,9 @@ fromString: aString
 	^answer!
 
 init: addressOrBytes
-	"Initialize an instance of the structure which instances of the receiver wrap
-	which resides at the specified address."!
+	"Initialize a buffer (or buffer at the specified address) to hold an instance of the record type described by the receiver. Assumes that the memory is completely uninitialized."
+
+	OS.Kernel32 zeroMemory: addressOrBytes length: _GUID_Size!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -391,6 +411,9 @@ requiresFinalization
 
 	^false!
 
+typeInfoIfNone: aNiladicValuable 
+	^aNiladicValuable value!
+
 uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
@@ -402,10 +425,11 @@ uninitialize
 !Core.GUID class categoriesForMethods!
 alignment!constants!public! !
 atAddress:!instance creation!public! !
-atAddress:owner:!public! !
-basicByteSize!public! !
+atAddress:owner:!instance creation!public! !
+basicByteSize!accessing!public! !
 byteSize!constants!public! !
 clear:!public!realizing/unrealizing! !
+copyBytes:from:to:into:!copying!private! !
 defineFields!public!template definition! !
 elementSize!accessing!public! !
 fromAddress:!instance creation!public! !
@@ -422,6 +446,7 @@ newUnique!instance creation!public! !
 null!constants!public! !
 onPreStripImage!class hierarchy-removing!private! !
 requiresFinalization!public!realizing/unrealizing!testing! !
+typeInfoIfNone:!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

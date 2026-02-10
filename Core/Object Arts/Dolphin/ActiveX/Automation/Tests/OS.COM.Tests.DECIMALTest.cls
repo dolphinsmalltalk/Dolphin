@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.DECIMALTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.DECIMAL})
+	imports: #(#{OS.COM.DECIMAL private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

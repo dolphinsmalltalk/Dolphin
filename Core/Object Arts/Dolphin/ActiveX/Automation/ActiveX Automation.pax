@@ -16,7 +16,8 @@ package basicScriptAt: #postinstall put: 'VM
 	registryAt: #IDispatch put: COM.IDispatch.
 
 "Register all the existing ExternalStructures so that they can support IRecordInfo"
-External.Structure registerSubclasses.'.
+External.Structure registerSubclasses.
+Core.GUID registerRecordClasses.'.
 package basicScriptAt: #postuninstall put: 'External.Structure classPool at: ''RecordClasses'' put: nil.'.
 
 package setClassNames: #(
@@ -58,10 +59,14 @@ package setClassNames: #(
 	#{OS.COM.ITypeLib2}
 	#{OS.COM.LPBSTR}
 	#{OS.COM.MemberDesc}
+	#{OS.COM.OleVariant}
+	#{OS.COM.OleVariantArray}
 	#{OS.COM.PARAMDESC}
 	#{OS.COM.PARAMDESCEX}
+	#{OS.COM.PropsysLibrary}
 	#{OS.COM.Record}
 	#{OS.COM.RecordClass}
+	#{OS.COM.RecordInfo}
 	#{OS.COM.SAFEARRAY}
 	#{OS.COM.SAFEARRAYBOUND}
 	#{OS.COM.StructureTypeAnalyzer}
@@ -86,25 +91,38 @@ package setClassNames: #(
 	#{OS.COM.VARIANT}
 	#{OS.COM.VARIANT_BOOL}
 	#{OS.COM.VARIANT_BOOLArray}
+	#{OS.COM.VARIANTArray}
 	#{OS.COM.VariantEnumerator}
 ).
 
 package setMethodNames: #(
-	#(#{Core.Boolean} #asVariant)
+	#(#{Core.AnsiString} #initializeVariant:)
+	#(#{Core.AnsiString class} #variantVectorName)
+	#(#{Core.Boolean} #initializeVariant:)
 	#(#{Core.ByteArray} #asSAFEARRAY)
+	#(#{Core.ByteArray} #initializeVariant:)
 	#(#{Core.ByteArray class} #typeName)
-	#(#{Core.Character} #asVariant)
+	#(#{Core.Character} #initializeVariant:)
 	#(#{Core.Collection} #asSAFEARRAY)
-	#(#{Core.Collection} #asVariant)
+	#(#{Core.Collection} #initializeVariant:)
 	#(#{Core.DateAndTime} #asDATE)
-	#(#{Core.DateAndTime} #asFloat)
-	#(#{Core.DateAndTime} #asVariant)
+	#(#{Core.DateAndTime} #initializeVariant:)
 	#(#{Core.DateAndTime class} #fromDATE:)
-	#(#{Core.Float} #asVariant)
-	#(#{Core.Fraction} #asVariant)
+	#(#{Core.Float} #initializeVariant:)
+	#(#{Core.Fraction} #initializeVariant:)
+	#(#{Core.GUID} #getField:ifAbsent:)
+	#(#{Core.GUID} #recordInfo)
 	#(#{Core.GUID class} #arrayType:)
+	#(#{Core.GUID class} #fieldAccessors)
+	#(#{Core.GUID class} #finalRelease)
+	#(#{Core.GUID class} #getFieldNames)
+	#(#{Core.GUID class} #isMatchingType:)
+	#(#{Core.GUID class} #newSAFEARRAY:)
+	#(#{Core.GUID class} #newVariant:array:)
+	#(#{Core.GUID class} #recordInfo)
+	#(#{Core.GUID class} #registerRecordClasses)
 	#(#{Core.GUID class} #typeName)
-	#(#{Core.LargeInteger} #asVariant)
+	#(#{Core.LargeInteger} #initializeVariant:)
 	#(#{Core.Locale} #defaultVarStrApiFlags)
 	#(#{Core.Locale} #displayCY:flags:on:)
 	#(#{Core.Locale} #displayCY:on:)
@@ -115,56 +133,80 @@ package setMethodNames: #(
 	#(#{Core.Locale} #parseDATE:)
 	#(#{Core.Locale} #parseDATE:flags:)
 	#(#{Core.Locale} #variantBool:)
-	#(#{Core.Number} #asVariant)
-	#(#{Core.ScaledDecimal} #asVariant)
-	#(#{Core.SmallInteger} #asVariant)
-	#(#{Core.String} #asVariant)
+	#(#{Core.Object} #asVariant)
+	#(#{Core.Object} #asVariant:)
+	#(#{Core.Object} #initializeVariant:)
+	#(#{Core.ScaledDecimal} #initializeVariant:)
+	#(#{Core.SmallInteger} #initializeVariant:)
 	#(#{Core.String class} #arrayType:)
 	#(#{Core.String class} #pointerType)
 	#(#{Core.String class} #typeName)
 	#(#{Core.String class} #vt)
-	#(#{Core.UndefinedObject} #asVariant)
+	#(#{Core.UndefinedObject} #initializeVariant:)
 	#(#{Core.UndefinedObject class} #typeName)
 	#(#{Core.UndefinedObject class} #vt)
 	#(#{Core.Utf16String class} #pointerType)
 	#(#{Core.Utf16String class} #typeName)
+	#(#{Core.Utf16String class} #variantVectorName)
 	#(#{Core.Utf16String class} #vt)
+	#(#{Core.UtfEncodedString} #initializeVariant:)
+	#(#{External.AbstractInt8 class} #variantVectorName)
 	#(#{External.AbstractInt8 class} #vt)
 	#(#{External.Address class} #typeName)
 	#(#{External.Address class} #vt)
+	#(#{External.AnsiStringArray} #initializeVariant:)
 	#(#{External.BOOL class} #newSAFEARRAY:)
 	#(#{External.BOOL class} #typeName)
+	#(#{External.BOOL class} #variantVectorName)
 	#(#{External.BOOL class} #vt)
+	#(#{External.BOOLArray} #initializeVariant:)
 	#(#{External.BOOLEAN class} #typeName)
 	#(#{External.DOUBLE class} #typeName)
+	#(#{External.DOUBLE class} #variantVectorName)
 	#(#{External.DOUBLE class} #vt)
+	#(#{External.DOUBLEArray} #initializeVariant:)
 	#(#{External.ExternalArray} #asSAFEARRAY)
-	#(#{External.ExternalArray} #asVariant)
+	#(#{External.ExternalArray} #initializeVariant:)
 	#(#{External.ExternalArray class} #fromSAFEARRAY:)
 	#(#{External.ExternalArray class} #vt)
 	#(#{External.FLOAT class} #typeName)
+	#(#{External.FLOAT class} #variantVectorName)
 	#(#{External.FLOAT class} #vt)
+	#(#{External.FLOATArray} #initializeVariant:)
 	#(#{External.Handle class} #arrayType:)
 	#(#{External.Handle class} #typeName)
 	#(#{External.Int16 class} #typeName)
+	#(#{External.Int16 class} #variantVectorName)
 	#(#{External.Int16 class} #vt)
+	#(#{External.Int16Array} #initializeVariant:)
 	#(#{External.Int32 class} #typeName)
+	#(#{External.Int32 class} #variantVectorName)
 	#(#{External.Int32 class} #vt)
+	#(#{External.Int32Array} #initializeVariant:)
 	#(#{External.Int64 class} #typeName)
+	#(#{External.Int64 class} #variantVectorName)
 	#(#{External.Int64 class} #vt)
+	#(#{External.Int64Array} #initializeVariant:)
 	#(#{External.Int8 class} #typeName)
+	#(#{External.Int8 class} #variantVectorName)
 	#(#{External.Int8 class} #vt)
+	#(#{External.Int8Array} #initializeVariant:)
 	#(#{External.INTEGER class} #typeName)
 	#(#{External.INTEGER class} #vt)
 	#(#{External.IntPtr class} #typeName)
 	#(#{External.IntPtr class} #vt)
+	#(#{External.IntPtrArray} #initializeVariant:)
+	#(#{External.LPSTR class} #variantVectorName)
 	#(#{External.LPSZ class} #newSAFEARRAY:)
+	#(#{External.LPVOID} #initializeVariant:)
 	#(#{External.LPVOID class} #newSAFEARRAY:)
 	#(#{External.LPVOID class} #typeName)
 	#(#{External.LPVOID class} #vt)
-	#(#{External.SCALAR} #asVariant)
+	#(#{External.LPWSTR class} #variantVectorName)
+	#(#{External.SCALAR} #initializeVariant:)
 	#(#{External.SCALAR class} #newSAFEARRAY:)
-	#(#{External.Structure} #asVariant)
+	#(#{External.StringPointerArray} #initializeVariant:)
+	#(#{External.Structure} #initializeVariant:)
 	#(#{External.Structure} #recordInfo)
 	#(#{External.Structure} #vt)
 	#(#{External.Structure class} #arrayType:)
@@ -172,47 +214,38 @@ package setMethodNames: #(
 	#(#{External.Structure class} #clearGuid)
 	#(#{External.Structure class} #finalRelease)
 	#(#{External.Structure class} #fromAddress:recordInfo:owner:)
-	#(#{External.Structure class} #GetField:szFieldName:pvarField:)
-	#(#{External.Structure class} #GetFieldNames:rgBstrNames:)
-	#(#{External.Structure class} #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:)
-	#(#{External.Structure class} #GetGuid:)
-	#(#{External.Structure class} #GetName:)
-	#(#{External.Structure class} #GetSize:)
-	#(#{External.Structure class} #GetTypeInfo:)
 	#(#{External.Structure class} #initializeRegister)
-	#(#{External.Structure class} #IsMatchingType:)
+	#(#{External.Structure class} #isMatchingType:)
 	#(#{External.Structure class} #newSAFEARRAY:)
 	#(#{External.Structure class} #pointerFieldType)
-	#(#{External.Structure class} #PutField:pvData:szFieldName:pvarField:)
-	#(#{External.Structure class} #PutFieldNoCopy:pvData:szFieldName:pvarField:)
-	#(#{External.Structure class} #queryInterface:)
-	#(#{External.Structure class} #queryInterface:ifNone:)
-	#(#{External.Structure class} #RecordClear:)
-	#(#{External.Structure class} #RecordCopy:pvNew:)
-	#(#{External.Structure class} #RecordCreate)
-	#(#{External.Structure class} #RecordCreateCopy:ppvDest:)
-	#(#{External.Structure class} #RecordDestroy:)
 	#(#{External.Structure class} #recordInfo)
-	#(#{External.Structure class} #RecordInit:)
 	#(#{External.Structure class} #registerSubclasses)
-	#(#{External.Structure class} #supportedInterfaces)
 	#(#{External.Structure class} #typeInfo)
 	#(#{External.Structure class} #typeInfoIfNone:)
 	#(#{External.Structure class} #typeLib)
 	#(#{External.Structure class} #typeName)
 	#(#{External.Structure class} #vt)
 	#(#{External.UInt16 class} #typeName)
+	#(#{External.UInt16 class} #variantVectorName)
 	#(#{External.UInt16 class} #vt)
+	#(#{External.UInt16Array} #initializeVariant:)
 	#(#{External.UInt32 class} #typeName)
+	#(#{External.UInt32 class} #variantVectorName)
 	#(#{External.UInt32 class} #vt)
+	#(#{External.UInt32Array} #initializeVariant:)
 	#(#{External.UInt64 class} #typeName)
+	#(#{External.UInt64 class} #variantVectorName)
 	#(#{External.UInt64 class} #vt)
+	#(#{External.UInt64Array} #initializeVariant:)
 	#(#{External.UInt8 class} #typeName)
+	#(#{External.UInt8Array} #initializeVariant:)
 	#(#{External.UIntPtr class} #typeName)
 	#(#{External.UIntPtr class} #vt)
+	#(#{External.UIntPtrArray} #initializeVariant:)
 	#(#{External.VOID class} #newSAFEARRAY:)
 	#(#{External.VOID class} #typeName)
 	#(#{External.VOID class} #vt)
+	#(#{Graphics.Point} #initializeVariant:)
 	#(#{Kernel.SmalltalkLocale} #displayCY:flags:on:)
 	#(#{Kernel.SmalltalkLocale} #displayDATE:flags:on:)
 	#(#{Kernel.SmalltalkLocale} #displayDECIMAL:flags:on:)
@@ -224,11 +257,14 @@ package setMethodNames: #(
 	#(#{OS.AbstractWindowsLocale} #getVariantBoolString:)
 	#(#{OS.AbstractWindowsLocale} #variantBool:)
 	#(#{OS.COM.BSTR} #asSAFEARRAY)
-	#(#{OS.COM.BSTR} #asVariant)
+	#(#{OS.COM.BSTR} #initializeVariant:)
 	#(#{OS.COM.BSTR class} #arrayType)
 	#(#{OS.COM.BSTR class} #newSAFEARRAY:)
 	#(#{OS.COM.BSTR class} #typeName)
+	#(#{OS.COM.BSTR class} #variantVectorName)
 	#(#{OS.COM.BSTR class} #vt)
+	#(#{OS.COM.CLSID} #initializeVariant:)
+	#(#{OS.COM.CLSID class} #variantVectorName)
 	#(#{OS.COM.CLSID class} #vt)
 	#(#{OS.COM.IErrorInfo class} #fromEXCEPINFO:guid:)
 	#(#{OS.COM.IErrorInfo class} #source:description:helpContext:helpFile:guid:)
@@ -244,8 +280,10 @@ package setMethodNames: #(
 	#(#{OS.COM.Interface class} #registerDispinterface:)
 	#(#{OS.COM.Interface class} #typeInfoIfNone:)
 	#(#{OS.COM.Interface class} #typeLib)
-	#(#{OS.COM.IUnknown} #asVariant)
+	#(#{OS.COM.IUnknown} #initializeVariant:)
 	#(#{OS.COM.IUnknown class} #vt)
+	#(#{OS.COM.LPSTRArray} #initializeVariant:)
+	#(#{OS.COM.LPWSTRArray} #initializeVariant:)
 	#(#{OS.COM.OLEAutLibrary} #clearCustData:)
 	#(#{OS.COM.OLEAutLibrary} #createErrorInfo:)
 	#(#{OS.COM.OLEAutLibrary} #getRecordInfoFromTypeInfo:ppRecInfo:)
@@ -293,6 +331,7 @@ package setMethodNames: #(
 	#(#{OS.COM.OLEAutLibrary} #variantInit:)
 	#(#{OS.COM.OLEAutLibrary} #variantTimeToSystemTime:lpSystemTime:)
 	#(#{OS.FILETIME} #asDATE)
+	#(#{OS.FILETIME} #initializeVariant:)
 	#(#{OS.FILETIME class} #newSAFEARRAY:)
 	#(#{OS.FILETIME class} #vt)
 	#(#{OS.HRESULT class} #typeName)
@@ -300,12 +339,21 @@ package setMethodNames: #(
 	#(#{OS.InvariantLocale} #defaultVarStrApiFlags)
 	#(#{OS.SYSTEMTIME} #asDATE)
 	#(#{OS.SYSTEMTIME} #asFloat)
-	#(#{OS.SYSTEMTIME} #asVariant)
+	#(#{OS.SYSTEMTIME} #initializeVariant:)
 	#(#{OS.SYSTEMTIME class} #fromDATE:)
+).
+
+package setVariableNames: #(
+	#{OS.COM.Propsys}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.COM.Propsys}
 ).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin Conformant Array Fields'
 	'..\COM\OLE COM'
 ).
@@ -509,54 +557,7 @@ Kernel.SharedPool
 			'VARIANT_NOUSEROVERRIDE' -> 16r4.
 			'VARIANT_NOVALUEPROP' -> 16r1.
 			'VARIANT_TRUE' -> -16r1.
-			'VARIANT_USE_NLS' -> 16r80.
-			'VT_ARRAY' -> 16r2000.
-			'VT_BLOB' -> 16r41.
-			'VT_BLOB_OBJECT' -> 16r46.
-			'VT_BOOL' -> 16rB.
-			'VT_BSTR' -> 16r8.
-			'VT_BYREF' -> 16r4000.
-			'VT_CARRAY' -> 16r1C.
-			'VT_CF' -> 16r47.
-			'VT_CLSID' -> 16r48.
-			'VT_CY' -> 16r6.
-			'VT_DATE' -> 16r7.
-			'VT_DECIMAL' -> 16rE.
-			'VT_DISPATCH' -> 16r9.
-			'VT_EMPTY' -> 16r0.
-			'VT_ERROR' -> 16rA.
-			'VT_FILETIME' -> 16r40.
-			'VT_HRESULT' -> 16r19.
-			'VT_I1' -> 16r10.
-			'VT_I2' -> 16r2.
-			'VT_I4' -> 16r3.
-			'VT_I8' -> 16r14.
-			'VT_INT' -> 16r16.
-			'VT_INT_PTR' -> 16r25.
-			'VT_LPSTR' -> 16r1E.
-			'VT_LPWSTR' -> 16r1F.
-			'VT_NULL' -> 16r1.
-			'VT_PTR' -> 16r1A.
-			'VT_R4' -> 16r4.
-			'VT_R8' -> 16r5.
-			'VT_RECORD' -> 16r24.
-			'VT_SAFEARRAY' -> 16r1B.
-			'VT_STORAGE' -> 16r43.
-			'VT_STORED_OBJECT' -> 16r45.
-			'VT_STREAM' -> 16r42.
-			'VT_STREAMED_OBJECT' -> 16r44.
-			'VT_TYPEMASK' -> 16rFFF.
-			'VT_UI1' -> 16r11.
-			'VT_UI2' -> 16r12.
-			'VT_UI4' -> 16r13.
-			'VT_UI8' -> 16r15.
-			'VT_UINT' -> 16r17.
-			'VT_UINT_PTR' -> 16r26.
-			'VT_UNKNOWN' -> 16rD.
-			'VT_USERDEFINED' -> 16r1D.
-			'VT_VARIANT' -> 16rC.
-			'VT_VECTOR' -> 16r1000.
-			'VT_VOID' -> 16r18
+			'VARIANT_USE_NLS' -> 16r80
 		}!
 
 Kernel.SharedPool
@@ -612,7 +613,7 @@ Core.Object
 	subclass: #'OS.COM.RecordClass'
 	instanceVariableNames: 'recordInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -648,6 +649,14 @@ OS.COM.InterfaceImplementation
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.RecordInfo'
+	instanceVariableNames: 'recordClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 OS.COM.AbstractDispatchImplementation
 	subclass: #'OS.COM.DualInterfaceImplementation'
 	instanceVariableNames: 'interface piTypeInfo locale'
@@ -672,11 +681,19 @@ OS.COM.Enumerator
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+External.WindowsSystemLibrary
+	subclass: #'OS.COM.PropsysLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.OleVariant private})
+	classInstanceVariableNames: ''
+	classConstants: { 'PSTF_LOCAL' -> 16r1. 'PSTF_UTC' -> 16r0 }!
+
 External.Structure
 	subclass: #'OS.COM.AbstractELEMDESC'
 	instanceVariableNames: 'tdesc'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_tdescElem' -> 16r0 }!
 
@@ -694,7 +711,7 @@ External.Structure
 
 External.Structure
 	subclass: #'OS.COM.DISPPARAMS'
-	instanceVariableNames: 'args vargs dispids'
+	instanceVariableNames: 'vargs dispids'
 	classVariableNames: 'ZeroArgs'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -774,7 +791,7 @@ External.Structure
 	subclass: #'OS.COM.TYPEDESC'
 	instanceVariableNames: 'classDesc typeInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_hreftype' -> 16r0.
@@ -814,6 +831,14 @@ External.ExternalArray
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+External.ExternalArray
+	subclass: #'OS.COM.OleVariantArray'
+	instanceVariableNames: 'objects'
+	classVariableNames: ''
+	imports: #(#{OS.COM.OleVariant})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 External.DOUBLEArray
 	subclass: #'OS.COM.DATEArray'
 	instanceVariableNames: ''
@@ -826,7 +851,7 @@ External.GenericExternalArray
 	subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #(#{OS.COM.AutomationErrors} #{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cbElements' -> 16r4.
@@ -862,6 +887,14 @@ OS.COM.HeapPointerArray
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+OS.COM.OleVariantArray
+	subclass: #'OS.COM.VARIANTArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 External.FinalizableStructure
 	subclass: #'OS.COM.CUSTDATA'
 	instanceVariableNames: 'associations table'
@@ -875,26 +908,10 @@ External.FinalizableStructure
 		}!
 
 External.FinalizableStructure
-	subclass: #'OS.COM.Record'
-	instanceVariableNames: 'recordInfo'
-	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.FinalizableStructure
-	subclass: #'OS.COM.TypeInfoStructure'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.FinalizableStructure
-	subclass: #'OS.COM.VARIANT'
+	subclass: #'OS.COM.OleVariant'
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified'
-	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors} #{OS.COM.PropsysLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_boolVal' -> 16r8.
@@ -948,17 +965,89 @@ External.FinalizableStructure
 			'_OffsetOf_wReserved2' -> 16r4.
 			'_OffsetOf_wReserved3' -> 16r6.
 			'_VARIANT_Size' -> 16r10.
+			'VT_ARRAY' -> 16r2000.
+			'VT_BLOB' -> 16r41.
+			'VT_BLOB_OBJECT' -> 16r46.
+			'VT_BOOL' -> 16rB.
+			'VT_BSTR' -> 16r8.
+			'VT_BYREF' -> 16r4000.
+			'VT_CARRAY' -> 16r1C.
+			'VT_CF' -> 16r47.
+			'VT_CLSID' -> 16r48.
+			'VT_CY' -> 16r6.
+			'VT_DATE' -> 16r7.
+			'VT_DECIMAL' -> 16rE.
+			'VT_DISPATCH' -> 16r9.
+			'VT_EMPTY' -> 16r0.
+			'VT_ERROR' -> 16rA.
+			'VT_FILETIME' -> 16r40.
+			'VT_HRESULT' -> 16r19.
+			'VT_I1' -> 16r10.
+			'VT_I2' -> 16r2.
+			'VT_I4' -> 16r3.
+			'VT_I8' -> 16r14.
+			'VT_INT' -> 16r16.
+			'VT_INT_PTR' -> 16r25.
+			'VT_LPSTR' -> 16r1E.
+			'VT_LPWSTR' -> 16r1F.
+			'VT_NULL' -> 16r1.
+			'VT_PTR' -> 16r1A.
+			'VT_R4' -> 16r4.
+			'VT_R8' -> 16r5.
+			'VT_RECORD' -> 16r24.
+			'VT_SAFEARRAY' -> 16r1B.
+			'VT_STORAGE' -> 16r43.
+			'VT_STORED_OBJECT' -> 16r45.
+			'VT_STREAM' -> 16r42.
+			'VT_STREAMED_OBJECT' -> 16r44.
+			'VT_TYPEMASK' -> 16rFFF.
+			'VT_UI1' -> 16r11.
+			'VT_UI2' -> 16r12.
+			'VT_UI4' -> 16r13.
+			'VT_UI8' -> 16r15.
+			'VT_UINT' -> 16r17.
+			'VT_UINT_PTR' -> 16r26.
+			'VT_UNKNOWN' -> 16rD.
+			'VT_USERDEFINED' -> 16r1D.
+			'VT_VARIANT' -> 16rC.
+			'VT_VECTOR' -> 16r1000.
+			'VT_VERSIONED_STREAM' -> 16r49.
+			'VT_VOID' -> 16r18.
 			'VTClasses'
-				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
+				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil nil #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{OS.COM.BLOB} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID} #{OS.COM.IStream}).
 			'VTNames'
-				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
+				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #array #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #record #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #clipdata #clsid #versioned_stream)
 		}!
+
+External.FinalizableStructure
+	subclass: #'OS.COM.Record'
+	instanceVariableNames: 'recordInfo'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.FinalizableStructure
+	subclass: #'OS.COM.TypeInfoStructure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.AutomationConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.COM.OleVariant
+	subclass: #'OS.COM.VARIANT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 OS.COM.TypeInfoStructure
 	subclass: #'OS.COM.MemberDesc'
 	instanceVariableNames: 'index custData documentation'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_memid' -> 16r0 }!
 
@@ -1039,7 +1128,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #(#{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1127,7 +1216,7 @@ External.SCALAR
 	subclass: #'OS.COM.CY'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants private})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_CY_Size' -> 16r8.
@@ -1140,7 +1229,7 @@ External.SCALAR
 	subclass: #'OS.COM.DECIMAL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_DECIMAL_Size' -> 16r10.
@@ -1158,15 +1247,16 @@ External.DOUBLE
 	subclass: #'OS.COM.DATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'EpochRD' -> 16rA955A.
-			'EpochSeconds' -> -16r1E3D680.
-			'MaxBound' -> 16r2D2482.
-			'MaxValue' -> 2.958465999988426e6.
-			'MinBound' -> -16rA081B.
-			'MinValue' -> -657434.9999884259
+			'LowerBound' -> -16rA081B.
+			'MaxValue' -> 2.9584659999999995e6.
+			'MaxYear' -> 16r270F.
+			'MinValue' -> -657434.9999942129.
+			'MinYear' -> 16r64.
+			'UpperBound' -> 16r2D2482
 		}!
 
 External.AbstractInt16
@@ -1181,7 +1271,7 @@ External.LPSZ
 	subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1206,7 +1296,7 @@ OS.COM.TypeInfoObject
 	subclass: #'OS.COM.TypeInfoAnalyzer'
 	instanceVariableNames: 'typeLib guid index documentation'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #(#{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'VTtoIDLTypeMap'
@@ -1311,15 +1401,33 @@ OS.COM.StructureTypeAnalyzer
 
 "Loose Methods"!
 
+!Core.AnsiString methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to hold a copy of this string. The vartype will depend on the type of variant being initialized: For VARIANT, it will be a VT_BSTR, but for PROPVARIANT it will be a VT_LPSTR."
+
+	anOleVariant lpstr: self! !
+
+!Core.AnsiString categoriesForMethods!
+initializeVariant:!private! !
+!
+
+!Core.AnsiString class methodsFor!
+
+variantVectorName
+	^#lpstrVector! !
+
+!Core.AnsiString class categoriesForMethods!
+variantVectorName!constants!private! !
+!
+
 !Core.Boolean methodsFor!
 
-asVariant
-	"Answer the <VARIANT> representation of the receiver."
-
-	^OS.COM.VARIANT fromBoolean: self! !
+initializeVariant: anOleVariant
+	anOleVariant varbool: self! !
 
 !Core.Boolean categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.ByteArray methodsFor!
@@ -1329,10 +1437,14 @@ asSAFEARRAY
 	N.B. The result will be a single-dimensioed array of the variant representations
 	of the receiver's elements, assuming that such a representation is possible."
 
-	^OS.COM.SAFEARRAY withAll: self elementClass: External.UInt8! !
+	^OS.COM.SAFEARRAY withAll: self elementClass: External.UInt8!
+
+initializeVariant: anOleVariant
+	anOleVariant uint8Vector: self! !
 
 !Core.ByteArray categoriesForMethods!
 asSAFEARRAY!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.ByteArray class methodsFor!
@@ -1348,15 +1460,13 @@ typeName!constants!private! !
 
 !Core.Character methodsFor!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_I2). This will fail for code points not in the BMP."
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument with a suitable representation of the receiver (a VT_I2). This will fail for code points not in the BMP."
 
-	^OS.COM.VARIANT new
-		int16: self codePoint;
-		yourself! !
+	anOleVariant int16: self codePoint! !
 
 !Core.Character categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.Collection methodsFor!
@@ -1368,14 +1478,14 @@ asSAFEARRAY
 
 	^OS.COM.SAFEARRAY withAll: self!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a SAFEARRAY of VARIANT)."
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to hold a SAFEARRAY of variants representing the receiver's elements."
 
-	^OS.COM.VARIANT fromCollection: self! !
+	anOleVariant array: self asSAFEARRAY! !
 
 !Core.Collection categoriesForMethods!
 asSAFEARRAY!converting!public! !
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.DateAndTime methodsFor!
@@ -1388,23 +1498,14 @@ asDATE
 	local := self asLocal.	"DATEs are assumed to be in local time"
 	day := local rataDie - DATE.EpochRD.
 	fraction := local seconds / Duration.SecondsPerDay.
-	"We need conditional logic to handle the weird day fraction representation"
-	^DATE fromFloat: (day < 0 ifTrue: [day - fraction] ifFalse: [day + fraction])!
+	^DATE fromFloat: (day + (fraction * day signum)) asFloat!
 
-asFloat
-	"Answer the OLEDATE representation of the receiver as a double-precision floating point number."
-
-	^self asDATE asFloat!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
-
-	^self asSYSTEMTIME asVariant! !
+initializeVariant: anOleVariant
+	self asFILETIME initializeVariant: anOleVariant! !
 
 !Core.DateAndTime categoriesForMethods!
 asDATE!converting!public! !
-asFloat!converting!public! !
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.DateAndTime class methodsFor!
@@ -1422,7 +1523,7 @@ fromDATE: aDATE
 	<namespace: OS.COM>
 	| date day |
 	date := aDATE asFloat.
-	(date > DATE.MinBound and: [date < DATE.MaxBound])
+	(date > DATE.LowerBound and: [date < DATE.UpperBound])
 		ifFalse: [^HRESULTError signalWith: E_INVALIDARG].
 	day := date truncated.
 	^self
@@ -1436,25 +1537,42 @@ fromDATE:!accessing!public! !
 
 !Core.Float methodsFor!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_R8)."
-
-	^OS.COM.VARIANT fromFloat: self! !
+initializeVariant: anOleVariant
+	anOleVariant double: self! !
 
 !Core.Float categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.Fraction methodsFor!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_R8).
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to represent the value of the receiver after converstion to double-precision floating point (VT_R8).
 	Note that precision may be lost."
 
-	^self asFloat asVariant! !
+	self asFloat initializeVariant: anOleVariant! !
 
 !Core.Fraction categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
+!
+
+!Core.GUID methodsFor!
+
+getField: aString ifAbsent: aNiladicValuable
+	"Answer the value of the field of the receiver named by the <String> 1st argument, or if there is no such field then the result of evaluating the <niladicValuable> 2nd argument."
+
+	^(self class fieldAccessors lookup: aString)
+		ifNil: [aNiladicValuable value]
+		ifNotNil: [:accessor | accessor value: self yourAddress asExternalAddress]!
+
+recordInfo
+	"Answer an <IRecordInfo> describing the receiver's structure class."
+
+	^self class recordInfo! !
+
+!Core.GUID categoriesForMethods!
+getField:ifAbsent:!accessing!public! !
+recordInfo!accessing!public! !
 !
 
 !Core.GUID class methodsFor!
@@ -1465,6 +1583,51 @@ arrayType: indirs
 
 	^indirs == 0 ifTrue: [External.GUIDArray] ifFalse: [External.PointerArray]!
 
+fieldAccessors
+	^##(LookupTable withAll: {
+				'Data1' -> [:pvData | pvData uint32AtOffset: 0].
+				'Data2' -> [:pvData | pvData uint16AtOffset: 4].
+				'Data3' -> [:pvData | pvData uint16AtOffset: 6].
+				'Data4' -> [:pvData | pvData copyFrom: 9 to: 16]
+			})!
+
+finalRelease
+	"The last reference to the receiver (as a COM object) has been released.
+	This is an opportunity to actively clean up, rather than passively waiting 
+	for finalization which might is asynchronous and may never happen if the 
+	object doesn't become garbage."
+
+	"Override as necessary"!
+
+getFieldNames
+	^self fieldAccessors keys asSortedArray!
+
+isMatchingType: anIRecordInfo
+	^(GUID withAllSubclasses collect: [:each | each guid]) includes: anIRecordInfo guid!
+
+newSAFEARRAY: anInteger 
+	^OS.COM.SAFEARRAY length: anInteger recordClass: self!
+
+newVariant: aVariantClass array: anExternalArray 
+	| variantArray |
+	variantArray := aVariantClass new.
+	variantArray clsidVector: anExternalArray.
+	^variantArray!
+
+recordInfo
+	"Answer an <IRecordInfo> describing the receiver's structure class."
+
+	<namespace: OS.COM>
+	^IRecordInfo on: self implementor: (RecordInfo recordClass: self)!
+
+registerRecordClasses
+	"(Re)Register the receiver and subclasses as record classes with their appropriate GUIDs.
+
+		self registerRecordClasses
+	"
+
+	self withAllSubclassesDo: [:c | 	External.Structure registerClass: c forGUID: c guid]!
+
 typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
@@ -1472,19 +1635,26 @@ typeName
 
 !Core.GUID class categoriesForMethods!
 arrayType:!constants!private! !
+fieldAccessors!constants!private! !
+finalRelease!public!realizing/unrealizing! !
+getFieldNames!constants!private! !
+isMatchingType:!public!testing! !
+newSAFEARRAY:!double dispatch!private! !
+newVariant:array:!double dispatch!public! !
+recordInfo!accessing!public! !
+registerRecordClasses!initializing!public! !
 typeName!constants!private! !
 !
 
 !Core.LargeInteger methodsFor!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_I8).
-	It is an error if the receiver is too large to be represented in 64-bits."
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be the best representation of the receiver's value. This will be an VT_I4 or VT_I8, depending on the receiver's magnitude. It is an error if the receiver is too large to be represented in 64-bits."
 
-	^OS.COM.VARIANT fromLargeInteger: self! !
+	anOleVariant largeInteger: self! !
 
 !Core.LargeInteger categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.Locale methodsFor!
@@ -1562,55 +1732,51 @@ parseDATE:flags:!displaying!public! !
 variantBool:!constants!public! !
 !
 
-!Core.Number methodsFor!
+!Core.Object methodsFor!
 
 asVariant
+	"Answer the VARIANT representation of the receiver, if there is one."
+
+	^self asVariant: OS.COM.VARIANT!
+
+asVariant: aClass
 	"Answer the <VARIANT> representation of the receiver."
 
-	^self subclassResponsibility! !
+	| anOleVariant |
+	anOleVariant := aClass newBuffer.
+	self initializeVariant: anOleVariant.
+	^anOleVariant!
 
-!Core.Number categoriesForMethods!
+initializeVariant: anOleVariant 
+	self shouldNotImplement! !
+
+!Core.Object categoriesForMethods!
 asVariant!converting!public! !
+asVariant:!converting!public! !
+initializeVariant:!initializing!private! !
 !
 
 !Core.ScaledDecimal methodsFor!
 
-asVariant
-	"Answer the <VARIANT> representation of the receiver.
-	Both VT_CY (currency) and VT_DECIMAL types convert to ScaledDecimals
-	but the latter has a wider (64-bit unsigned) range and a variable scale, so it
-	is more likely to suit."
+initializeVariant: anOleVariant
+	"Private - Initialize the receiver to hold the best available representation of the receiver's value, which is as a VT_DECIMAL.
+	Both VT_CY (currency) and VT_DECIMAL types convert to ScaledDecimals but the latter has a wider (64-bit unsigned) range and a variable scale, so it is more likely to suit."
 
-	^OS.COM.VARIANT new
-		decimal: self;
-		yourself! !
+	anOleVariant decimal: self! !
 
 !Core.ScaledDecimal categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.SmallInteger methodsFor!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_I4 or VT_I8, depending on the
-	bitness of the host machine)."
+initializeVariant: anOleVariant
+	"Private - Answer the VARIANT representation of the receiver (a VT_I4 or VT_I8, depending on the bitness of the host machine)."
 
-	^OS.COM.VARIANT fromSmallInteger: self! !
+	anOleVariant intptr: self! !
 
 !Core.SmallInteger categoriesForMethods!
-asVariant!converting!public! !
-!
-
-!Core.String methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_BSTR).
-	This will also work fine for Utf16String."
-
-	^OS.COM.VARIANT fromString: self! !
-
-!Core.String categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.String class methodsFor!
@@ -1639,7 +1805,7 @@ vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^OS.COM.AutomationConstants.VT_LPSTR! !
+	^OS.COM.OleVariant.VT_LPSTR! !
 
 !Core.String class categoriesForMethods!
 arrayType:!constants!private! !
@@ -1650,16 +1816,14 @@ vt!constants!public! !
 
 !Core.UndefinedObject methodsFor!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_EMPTY).
-	Implementation Note: VT_EMPTY is chosen for compatibility with VB which
-	uses VT_EMPTY for null object references, even though VT_NULL might
-	appear more appropriate at first glance."
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a suitable representation of the receiver (a VT_EMPTY).
+	Implementation Note: We leave the variant with its default initialization to VT_EMPTY. This is chosen for compatibility with VB which uses VT_EMPTY for null object references, even though VT_NULL might appear more appropriate at first glance."
 
-	^OS.COM.VARIANT new! !
+	"Nothing to do"! !
 
 !Core.UndefinedObject categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !Core.UndefinedObject class methodsFor!
@@ -1673,7 +1837,7 @@ vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^OS.COM.AutomationConstants.VT_EMPTY! !
+	^OS.COM.OleVariant.VT_EMPTY! !
 
 !Core.UndefinedObject class categoriesForMethods!
 typeName!constants!private! !
@@ -1694,27 +1858,48 @@ typeName
 
 	^#lpwstr!
 
+variantVectorName
+	^#lpwstrVector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^OS.COM.AutomationConstants.VT_LPWSTR! !
+	^OS.COM.OleVariant.VT_LPWSTR! !
 
 !Core.Utf16String class categoriesForMethods!
 pointerType!constants!private! !
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
 !
 
+!Core.UtfEncodedString methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to hold a copy of this string. The vartype will depend on the variantClass specified: For VARIANT, it will be a VT_BSTR, but for PROPVARIANT it will be a VT_LPWSTR."
+
+	anOleVariant lpwstr: self! !
+
+!Core.UtfEncodedString categoriesForMethods!
+initializeVariant:!converting!private! !
+!
+
 !External.AbstractInt8 class methodsFor!
+
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#uint8Vector!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_UI1! !
+	^COM.OleVariant.VT_UI1! !
 
 !External.AbstractInt8 class categoriesForMethods!
+variantVectorName!constants!private! !
 vt!constants!public! !
 !
 
@@ -1730,22 +1915,33 @@ vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_PTR! !
+	^COM.OleVariant.VT_PTR! !
 
 !External.Address class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
 !
 
+!External.AnsiStringArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be either a (VT_ARRAY|VT_BSTR), or a (VT_VECTOR|VT_LPSTR)."
+	
+	anOleVariant lpstrVector: self! !
+
+!External.AnsiStringArray categoriesForMethods!
+initializeVariant:!converting!private! !
+!
+
 !External.BOOL class methodsFor!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, VARIANT_BOOL values."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, length, VARIANT_BOOL values."
 
-	<namespace: OS.COM>
+	<namespace: OS.COM.OleVariant>
 	^SAFEARRAY
 		length: anInteger
-		vt: VARIANT.VT_BOOL
+		vt: VT_BOOL
 		elementClass: VARIANT_BOOL!
 
 typeName
@@ -1754,15 +1950,30 @@ typeName
 
 	^#bool!
 
+variantVectorName
+	^OS.COM.OleVariant.VT_BOOL!
+
 vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^COM.VARIANT.VT_BOOL! !
 
 !External.BOOL class categoriesForMethods!
-newSAFEARRAY:!double dispatch!public! !
+newSAFEARRAY:!double dispatch!private! !
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!private! !
+!
+
+!External.BOOLArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_BOOL), or a (VT_VECTOR|VT_BOOL)."
+
+	anOleVariant boolVector: self! !
+
+!External.BOOLArray categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.BOOLEAN class methodsFor!
@@ -1785,15 +1996,32 @@ typeName
 
 	^#double!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#doubleVector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_R8! !
+	^COM.OleVariant.VT_R8! !
 
 !External.DOUBLE class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.DOUBLEArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_R8), or a (VT_VECTOR|R8)."
+
+	anOleVariant doubleVector: self! !
+
+!External.DOUBLEArray categoriesForMethods!
+initializeVariant:!private! !
 !
 
 !External.ExternalArray methodsFor!
@@ -1803,30 +2031,32 @@ asSAFEARRAY
 
 	^COM.SAFEARRAY withAll: self elementClass: self elementClass!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_ARRAY|VT_XX)."
+initializeVariant: aVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This might be (VT_ARRAY|VT_XX), i.e. a SAFEARRAY, or if the argument is a PROPVARIANT and the receiver is one of the supported vector types, it could be a (VT_VECTOR|VT_XX) representation."
 
-	^COM.VARIANT fromCollection: self! !
+	"In general, the result is a variant holding a SAFEARRAY"
+	aVariant externalArray: self! !
 
 !External.ExternalArray categoriesForMethods!
 asSAFEARRAY!converting!public! !
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !External.ExternalArray class methodsFor!
 
 fromSAFEARRAY: aSAFEARRAY
-	^self
-		withBytes: (ByteArray fromAddress: aSAFEARRAY base length: aSAFEARRAY elementCount * self elementSize)!
+	^(self new: aSAFEARRAY elementCount)
+		copyBytes: aSAFEARRAY base asExternalAddress;
+		yourself!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_CARRAY! !
+	^COM.OleVariant.VT_CARRAY! !
 
 !External.ExternalArray class categoriesForMethods!
-fromSAFEARRAY:!instance creation!public! !
+fromSAFEARRAY:!instance creation!private! !
 vt!constants!public! !
 !
 
@@ -1838,15 +2068,32 @@ typeName
 
 	^#float!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#floatVector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_R4! !
+	^COM.OleVariant.VT_R4! !
 
 !External.FLOAT class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.FLOATArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_R4), or a (VT_VECTOR|R4)."
+
+	anOleVariant floatVector: self! !
+
+!External.FLOATArray categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.Handle class methodsFor!
@@ -1876,15 +2123,32 @@ typeName
 
 	^#int16!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#int16Vector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_I2! !
+	^COM.OleVariant.VT_I2! !
 
 !External.Int16 class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.Int16Array methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_I2), or a (VT_VECTOR|VT_I2)."
+
+	anOleVariant int16Vector: self! !
+
+!External.Int16Array categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.Int32 class methodsFor!
@@ -1895,15 +2159,32 @@ typeName
 
 	^#int32!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#int32Vector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_I4! !
+	^COM.VARIANT.VT_I4! !
 
 !External.Int32 class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.Int32Array methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_I4), or a (VT_VECTOR|VT_I4)."
+
+	anOleVariant int32Vector: self! !
+
+!External.Int32Array categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.Int64 class methodsFor!
@@ -1914,15 +2195,32 @@ typeName
 
 	^#int64!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#int64Vector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_I8! !
+	^COM.VARIANT.VT_I8! !
 
 !External.Int64 class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.Int64Array methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_I8), or a (VT_VECTOR|VT_I8)."
+
+	anOleVariant int64Vector: self! !
+
+!External.Int64Array categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.Int8 class methodsFor!
@@ -1933,15 +2231,32 @@ typeName
 
 	^#int8!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#int8Vector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_I1! !
+	^COM.VARIANT.VT_I1! !
 
 !External.Int8 class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.Int8Array methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_I1), or a (VT_VECTOR|VT_I1)."
+
+	anOleVariant int8Vector: self! !
+
+!External.Int8Array categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.INTEGER class methodsFor!
@@ -1976,32 +2291,67 @@ vt
 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_I8] ifFalse: [COM.AutomationConstants.VT_I4]! !
+	^VMConstants.IsWin64 ifTrue: [COM.VARIANT.VT_I8] ifFalse: [COM.VARIANT.VT_I4]! !
 
 !External.IntPtr class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
 !
 
+!External.IntPtrArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. On a 32-bit host this will be a (VT_ARRAY|VT_I4), or a (VT_VECTOR|VT_I4). On a 64-bit host this will be a (VT_ARRAY|VT_I8), or a (VT_VECTOR|VT_I8)."
+
+	VMConstants.IsWin64
+		ifTrue: [anOleVariant int64Vector: self]
+		ifFalse: [anOleVariant int32Vector: self]! !
+
+!External.IntPtrArray categoriesForMethods!
+initializeVariant:!converting!private! !
+!
+
+!External.LPSTR class methodsFor!
+
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#lpstrVector! !
+
+!External.LPSTR class categoriesForMethods!
+variantVectorName!constants!private! !
+!
+
 !External.LPSZ class methodsFor!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, BSTRs. The SAFEARRAY will be of type VT_BSTR, because this is consistent with the behaviour of the Win32 InitVariantFromString API and can represent the same values (BSTRs are a form of UTF-16 string)."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, anInteger, BSTRs. The SAFEARRAY will be of type VT_BSTR, because this is consistent with the behaviour of the Win32 InitVariantFromString API and can represent the same values (BSTRs are a form of UTF-16 string)."
 
-	<namespace: OS.COM>
+	<namespace: OS.COM.OleVariant>
 	^SAFEARRAY
 		length: anInteger
-		vt: VARIANT.VT_BSTR
+		vt: VT_BSTR
 		elementClass: BSTR! !
 
 !External.LPSZ class categoriesForMethods!
-newSAFEARRAY:!double dispatch!public! !
+newSAFEARRAY:!double dispatch!private! !
+!
+
+!External.LPVOID methodsFor!
+
+initializeVariant: anOleVariant
+	anOleVariant
+		vt: self vt;
+		reference: self! !
+
+!External.LPVOID categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.LPVOID class methodsFor!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver. An array of VT_VOID would make no sense."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver. An array of VT_VOID would make no sense."
 
 	^self shouldNotImplement!
 
@@ -2017,31 +2367,40 @@ vt
 	type when represented in a <VARIANT>."
 
 	#todo "Is this right?".
-	^COM.AutomationConstants.VT_VOID! !
+	^COM.OleVariant.VT_VOID! !
 
 !External.LPVOID class categoriesForMethods!
-newSAFEARRAY:!double dispatch!public! !
+newSAFEARRAY:!double dispatch!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
+!External.LPWSTR class methodsFor!
+
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#lpwstrVector! !
+
+!External.LPWSTR class categoriesForMethods!
+variantVectorName!constants!private! !
+!
+
 !External.SCALAR methodsFor!
 
-asVariant
-	"Answer the <VARIANT> representation of the receiver."
-
-	^(COM.VARIANT new)
-		vt: (self vt bitOr: COM.AutomationConstants.VT_BYREF);
+initializeVariant: anOleVariant
+	anOleVariant
+		vt: (self vt bitOr: COM.OleVariant.VT_BYREF);
 		reference: self! !
 
 !External.SCALAR categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !External.SCALAR class methodsFor!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, values of the receiver's variant type. SAFEARRAY has vartype representations for most SCALAR values."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, anInteger, values of the receiver's variant type. SAFEARRAY has vartype representations for most SCALAR values."
 
 	^COM.SAFEARRAY
 		length: anInteger
@@ -2049,18 +2408,26 @@ newSAFEARRAY: anInteger
 		elementClass: self! !
 
 !External.SCALAR class categoriesForMethods!
-newSAFEARRAY:!double dispatch!public! !
+newSAFEARRAY:!double dispatch!private! !
+!
+
+!External.StringPointerArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be either a (VT_ARRAY|VT_BSTR), or a (VT_VECTOR|VT_LPWSTR)."
+	
+	anOleVariant lpwstrVector: self! !
+
+!External.StringPointerArray categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.Structure methodsFor!
 
-asVariant
-	"Answer the <VARIANT> representation of the receiver.
-	Note that shis will be a reference to the receiver not a copy."
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to wrap the receiver. This will be a VT_RECORD holding a task memory copy of the receiver's data."
 
-	^COM.VARIANT new
-		struct: self;
-		yourself!
+	anOleVariant record: self!
 
 recordInfo
 	"Answer an <IRecordInfo> on the receiver's type information."
@@ -2073,7 +2440,7 @@ vt
 	^self class vt! !
 
 !External.Structure categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 recordInfo!accessing!public! !
 vt!constants!private! !
 !
@@ -2118,127 +2485,17 @@ fromAddress: anAddress recordInfo: anIRecordInfo owner: anObject
 		fromAddress: anAddress
 		owner: anObject!
 
-GetField: pvData szFieldName: szFieldName pvarField: pvarField
-	"Implement the IRecordInfo::GetField() method for the UDT described by the receiver.
-
-		HRESULT __stdcall GetField(
-			[in] void* pvData,
-			[in] LPWSTR szFieldName,
-			[out] VARIANT* pvarField);
-
-	"
-
-	<namespace: OS.COM>
-	| refInst selector |
-	refInst := self fromAddress: pvData.
-	"[IRecordInfo::GetField method](https://learn.microsoft.com/en-us/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getfield) specifies that VariantClear is called on pvarField before copying, rather than just the normal VariantInit that one would expect for an output argument. Not sure if this is a documentation bug, or is correct, so do as instructed..."
-	pvarField class clear: pvarField yourAddress.
-	selector := szFieldName asSymbol.
-	(refInst getValidFields identityIncludes: selector) ifFalse: [^AutomationErrors.TYPE_E_FIELDNOTFOUND].
-	pvarField value: (refInst getField: selector).
-	^S_OK!
-
-GetFieldNames: pcNames rgBstrNames: rgBstrNames
-	"Implement the IRecordInfo::GetFieldNames() method for the UDT described by the receiver.
-
-		HRESULT __stdcall GetFieldNames(
-			[in, out] unsigned long* pcNames,
-			[out] BSTR* rgBstrNames);
-	"
-
-	| names |
-	names := self getFieldNames.
-	rgBstrNames isNull
-		ifTrue: [pcNames value: names size]
-		ifFalse: 
-			[| namesArray maxNames end |
-			maxNames := pcNames value.
-			"rgBstrNames will be an LPVOID holding the address of the buffer, which is a sufficiently sized array of BSTR pointers"
-			namesArray := OS.COM.BSTRArray fromAddress: rgBstrNames yourAddress length: maxNames.
-			end := names size min: maxNames.
-			1 to: end do: [:i | namesArray at: i put: (names at: i)].
-			end + 1 to: maxNames do: [:i | namesArray at: i put: 0].
-			pcNames value: end].
-	^0	"S_OK"!
-
-GetFieldNoCopy: pvData szFieldName: szFieldName pvarField: pvarField ppvDataCArray: ppvDataCArray
-	"Implement the IRecordInfo::GetFieldNoCopy() method for the UDT described by the receiver.
-
-		HRESULT __stdcall GetFieldNoCopy(
-			[in] void* pvData,
-			[in] LPWSTR szFieldName,
-			[out] VARIANT* pvarField,
-			[out] void** ppvDataCArray);
-	"
-
-	^Win32Errors.E_NOTIMPL
-!
-
-GetGuid: pguid
-	"Implement the IRecordInfo::GetGuid() method for the UDT described by the receiver.
-
-		HRESULT __stdcall GetGuid(
-			[out] GUID* pguid);
-	"
-
-	pguid value: self guid.
-	^0 "S_OK"
-!
-
-GetName: pbstrName
-	"Implement the IRecordInfo::GetName() method for the UDT described by the receiver,
-	i.e. answer the name of the record via the <BSTR>* output parameter.
-
-		HRESULT __stdcall GetName(
-			[out] BSTR* pbstrName);
-	"
-
-	pbstrName value: self name asBSTR detach.
-	^0 "S_OK"
-!
-
-GetSize: pcbSize
-	"Implement the IRecordInfo::GetSize() method for the UDT described by the receiver.
-
-		HRESULT __stdcall GetSize(
-			[out] unsigned long* pcbSize);
-	"
-	
-	pcbSize value: self byteSize.
-	^0 "S_OK"!
-
-GetTypeInfo: ppTypeInfo
-	"Implement the IRecordInfo::GetTypeInfo() method for the UDT described by the receiver.
-
-		HRESULT __stdcall GetTypeInfo(
-			[out] ITypeInfo** ppTypeInfo);
-	"
-
-	| ti |
-	ppTypeInfo value: 0.
-	ti := self typeInfoIfNone: [^1 "S_FALSE"].
-	ti addRef.
-	ppTypeInfo value: ti yourAddress.
-	^0 "S_OK"
-!
-
 initializeRegister
 	"Private - Initialize the register of GUIDs to record classes."
 
 	RecordClasses := WeakLookupTable new
 !
 
-IsMatchingType: pRecordInfo
-	"Implement the IRecordInfo::IsMatchingType() method for the UDT described by the receiver.
-
-		long __stdcall IsMatchingType(
-			[in] IRecordInfo* pRecordInfo);
-	"
-
-	^(self guid = pRecordInfo guid) asParameter!
+isMatchingType: anIRecordInfo
+	^self guid = anIRecordInfo guid!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver structure. This is part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:. In the most general case the SAFEARRAY will be of type VT_RECORD, but may also be of more specialised and efficient types for certain subclasses, e.g. for Uint32 the type will be VT_UI4."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver structure. This is part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:. In the most general case the SAFEARRAY will be of type VT_RECORD, but may also be of more specialised and efficient types for certain subclasses, e.g. for Uint32 the type will be VT_UI4."
 
 	^COM.SAFEARRAY length: anInteger recordClass: self!
 
@@ -2248,173 +2505,17 @@ pointerFieldType
 
 	^PointerField!
 
-PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
-	"Implement the IRecordInfo::PutField() method for the UDT described by the receiver.
-
-		HRESULT __stdcall PutField(
-			[in] unsigned long wFlags,
-			[in, out] void* pvData,
-			[in] LPWSTR szFieldName,
-			[in] VARIANT* pvarField);
-	"
-
-	<namespace: OS.COM>
-	^
-	[| refInst value fieldName |
-	refInst := self fromAddress: pvData.
-	fieldName := szFieldName asSymbol.
-	(refInst getValidFields identityIncludes: fieldName)
-		ifFalse: [HRESULTError signalWith: AutomationErrors.TYPE_E_FIELDNOTFOUND].
-	wFlags = AutomationConstants.INVOKE_PROPERTYPUT
-		ifTrue: 
-			[| fieldValue |
-			fieldValue := refInst getField: fieldName.
-			value := pvarField isDispatch ifTrue: [pvarField dispatch value] ifFalse: [pvarField value].
-			(fieldValue isKindOf: IDispatch)
-				ifTrue: 
-					[fieldValue isNull ifTrue: [HRESULTError signalWith: E_POINTER].
-					fieldValue value: value]
-				ifFalse: [refInst setField: fieldName value: value]]
-		ifFalse: 
-			[wFlags = AutomationConstants.INVOKE_PROPERTYPUTREF
-				ifFalse: [InvalidArgumentError signalWith: 'wFlags'].
-			value := pvarField value.
-			refInst setField: fieldName value: value].
-	S_OK]
-			on: MessageNotUnderstood
-			do: [:ex | AutomationErrors.DISP_E_TYPEMISMATCH]
-			on: Error
-			do: [:ex | ex hresult asInteger]!
-
-PutFieldNoCopy: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
-	"Implement the IRecordInfo::PutFieldNoCopy() method for the UDT described by the receiver.
-
-		HRESULT __stdcall PutFieldNoCopy(
-			[in] unsigned long wFlags,
-			[in, out] void* pvData,
-			[in] LPWSTR szFieldName,
-			[in] VARIANT* pvarField);
-	"
-
-	^Win32Errors.E_NOTIMPL
-!
-
-queryInterface: anInterfaceClass
-	"Answer a new interface which supports the specified interface protocol
-	(usually a class), or nil if the receiver does not support the interface."
-
-	^self queryInterface: anInterfaceClass ifNone: []
-!
-
-queryInterface: anInterfaceClass ifNone: exceptionHandler
-	"Answer a new interface pointer which supports the specified interface protocol
-	(usually a class). If the receiver does not support the interface, answer the
-	result of evaluating the niladic valuable, exceptionHandler."
-
-	| class |
-	class := self supportedInterfaces 
-		detect: [:ic | ic supportsInterface: anInterfaceClass] 
-		ifNone: [^exceptionHandler value].
-	^class on: self implementor: self
-!
-
-RecordClear: pvExisting
-	"Implement the IRecordInfo::RecordClear() method for the UDT described by the receiver.
-	Clearing down a record involves freeing any of the fields that need to be finalized, it does
-	not include releasing the memory owned by the record.
-
-		HRESULT __stdcall RecordClear(
-			[in] void* pvExisting);
-	"
-
-	self clear: pvExisting.
-	^0 "S_OK"
-!
-
-RecordCopy: pvExisting pvNew: pvNew
-	"Implement IRecordInfo::RecordCopy() method for the UDT described by the receiver.
-	Copy an existing area of memory occupied by a record of the receiver's type to a new location. Relies on a correct implementation of #copy, which must create an independent copy with separate copies of any owned resource such as references to owned sub-structures.
-
-		HRESULT __stdcall RecordCopy(
-			[in] void* pvExisting,
-			[out] void* pvNew);
-	"
-
-	| ref |
-	ref := self fromAddress: pvExisting.
-	pvNew 
-		replaceFrom: 1
-		to: ref byteSize
-		with: ref copy detach
-		startingAt: 1.
-	^Win32Errors.S_OK!
-
-RecordCreate
-	"Implement the IRecordInfo::RecordCreate() method for the UDT described by the receiver
-	Create a new record of the receiver's type in COM task memory.
-
-		void* __stdcall RecordCreate();
-	"
-	
-	"From [IRecordInfo::RecordCreate method](https://learn.microsoft.com/en-us/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordcreate)
-		- The memory is set to zeros before it is returned.
-		- The records created must be freed by calling RecordDestroy."
-
-	| pRecord |
-	pRecord := COM.Ole32 coTaskMemAlloc: self byteSize.
-	self init: pRecord.
-	^pRecord!
-
-RecordCreateCopy: pvSource ppvDest: ppvDest
-	"Implement the IRecordInfo::RecordCreate() method for the UDT described by the receiver
-
-		HRESULT __stdcall RecordCreateCopy(
-			[in] void* pvSource,
-			[out] void** ppvDest);
-	"
-
-	| pv |
-	pv := self RecordCreate.
-	ppvDest value: pv.
-	pv isNull ifTrue: [^Win32Errors.E_OUTOFMEMORY].
-	^self RecordCopy: pvSource pvNew: pv!
-
-RecordDestroy: pvRecord
-	"Implement the RecordDestroy() method for the UDT described by the receiver.
-	Free up a record of the receiver's type previously created with RecordCreate().
-
-		HRESULT __stdcall RecordDestroy(
-			[in] void* pvRecord);
-	"
-
-	| hr |
-	hr := self RecordClear: pvRecord.
-	hr < 0 ifFalse: [COM.Ole32 coTaskMemFree: pvRecord].
-	^hr!
-
 recordInfo
 	"Answer an <IRecordInfo> describing the receiver's structure class.
 	Note that we attempt to use the system provided implementation, but as this is frequently 
 	unavailable (even for the DX-7 libraries which require extensive use of IRecordInfo)
 	we must also be able to implement it ourselves."
 
+	<namespace: OS.COM>
 	| ti ri |
-	ti := self typeInfoIfNone: [].
+	ti := self typeInfoIfNone: nil.
 	ri := ti notNil ifTrue: [ti recordInfoIfNone: []].
-	^ri ifNil: [COM.IRecordInfo on: self]!
-
-RecordInit: pvNew
-	"Implement the IRecordInfo::RecordInit() method for the UDT described by the receiver.
-	Initialize a new empty buffer for a record of the receiver's type. This implementation is the
-	simplest possible - it just zeros the whole area.
-
-		HRESULT __stdcall RecordInit(
-			[out] void* pvNew);
-	"
-
-	self init: pvNew.
-	^0 "S_OK"
-!
+	^ri ifNil: [IRecordInfo on: self implementor: (RecordInfo recordClass: self)]!
 
 registerSubclasses
 	"(Re)Register the receiver's subclasses as record classes with
@@ -2426,19 +2527,6 @@ registerSubclasses
 
 	self initializeRegister.
 	self allSubclassesDo: [:c | c register]!
-
-supportedInterfaces
-	"Private - Answer the set of interface classes supported by the receiver.
-	Implementation Note: We aren't expecting that the implementation of IRecordInfo we provide will actually
-	be used for getting and setting the values of fields in UDTs, but mainly provide it to make up for the 
-	fact that the one type library we've so far experienced which makes heavy use of UDTs (i.e. the DX-7 VB
-	library) does not contain sufficient information (mainly GUIDs) to allow the system implementation of
-	IRecordInfo to be constructed on the ITypeInfo's of the various structures defined therein. This suggests
-	that VB doesn't use the system implementation itself, as otherwise the type library would be useless. Also
-	it seems that DX-7 actually ignores the IRecordInfo (perhaps not surprisingly for a C library), so it is only 
-	really needed in order to create VT_RECORD SAFEARRAYs and VARIANTs."
-
-	^##({COM.IUnknown. COM.IRecordInfo})!
 
 typeInfo
 	"Answer an <ITypeInfo> on the receiver's type information."
@@ -2470,10 +2558,9 @@ typeName
 	^self fullName!
 
 vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_RECORD! !
+	^COM.VARIANT.VT_RECORD! !
 
 !External.Structure class categoriesForMethods!
 arrayType:!constants!private! !
@@ -2481,30 +2568,12 @@ classForGUID:ifNone:!enquiries!private! !
 clearGuid!accessing!private! !
 finalRelease!public!realizing/unrealizing! !
 fromAddress:recordInfo:owner:!instance creation!public! !
-GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-GetFieldNames:rgBstrNames:!COM Interfaces-IRecordInfo!public! !
-GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!COM Interfaces-IRecordInfo!public! !
-GetGuid:!COM Interfaces-IRecordInfo!public! !
-GetName:!COM Interfaces-IRecordInfo!public! !
-GetSize:!COM Interfaces-IRecordInfo!public! !
-GetTypeInfo:!COM Interfaces-IRecordInfo!public! !
 initializeRegister!initializing!private! !
-IsMatchingType:!COM Interfaces-IRecordInfo!public! !
-newSAFEARRAY:!double dispatch!public! !
+isMatchingType:!public!testing! !
+newSAFEARRAY:!double dispatch!private! !
 pointerFieldType!constants!private! !
-PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-PutFieldNoCopy:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-queryInterface:!accessing-interfaces!public! !
-queryInterface:ifNone:!accessing!accessing-interfaces!public! !
-RecordClear:!COM Interfaces-IRecordInfo!public! !
-RecordCopy:pvNew:!COM Interfaces-IRecordInfo!public! !
-RecordCreate!COM Interfaces-IRecordInfo!public! !
-RecordCreateCopy:ppvDest:!COM Interfaces-IRecordInfo!public! !
-RecordDestroy:!COM Interfaces-IRecordInfo!public! !
 recordInfo!accessing!public! !
-RecordInit:!COM Interfaces-IRecordInfo!public! !
 registerSubclasses!initializing!public! !
-supportedInterfaces!constants!private! !
 typeInfo!accessing!public! !
 typeInfoIfNone:!accessing!public! !
 typeLib!accessing!public! !
@@ -2520,15 +2589,32 @@ typeName
 
 	^#uint16!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#uint16Vector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_UI2! !
+	^COM.OleVariant.VT_UI2! !
 
 !External.UInt16 class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.UInt16Array methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_UI2), or a (VT_VECTOR|VT_UI2)."
+
+	anOleVariant uint16Vector: self! !
+
+!External.UInt16Array categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.UInt32 class methodsFor!
@@ -2539,15 +2625,32 @@ typeName
 
 	^#uint32!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#uint32Vector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_UI4! !
+	^COM.VARIANT.VT_UI4! !
 
 !External.UInt32 class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.UInt32Array methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_UI4), or a (VT_VECTOR|VT_UI4)."
+
+	anOleVariant uint32Vector: self! !
+
+!External.UInt32Array categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.UInt64 class methodsFor!
@@ -2558,15 +2661,32 @@ typeName
 
 	^#uint64!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#uint64Vector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_UI8! !
+	^COM.VARIANT.VT_UI8! !
 
 !External.UInt64 class categoriesForMethods!
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!External.UInt64Array methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_UI8), or a (VT_VECTOR|VT_UI8)."
+
+	anOleVariant uint64Vector: self! !
+
+!External.UInt64Array categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.UInt8 class methodsFor!
@@ -2579,6 +2699,17 @@ typeName
 
 !External.UInt8 class categoriesForMethods!
 typeName!constants!private! !
+!
+
+!External.UInt8Array methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_UI1), or a (VT_VECTOR|VT_UI1)."
+
+	anOleVariant uint8Vector: self! !
+
+!External.UInt8Array categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !External.UIntPtr class methodsFor!
@@ -2595,17 +2726,30 @@ vt
 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_UI8] ifFalse: [COM.AutomationConstants.VT_UI4]! !
+	^VMConstants.IsWin64 ifTrue: [COM.VARIANT.VT_UI8] ifFalse: [COM.VARIANT.VT_UI4]! !
 
 !External.UIntPtr class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
 !
 
+!External.UIntPtrArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. On a 32-bit host this will be a (VT_ARRAY|VT_UI4), or a (VT_VECTOR|VT_UI4). On a 64-bit host this will be a (VT_ARRAY|VT_UI8), or a (VT_VECTOR|VT_UI8)."
+
+	VMConstants.IsWin64
+		ifTrue: [anOleVariant uint64Vector: self]
+		ifFalse: [anOleVariant uint32Vector: self]! !
+
+!External.UIntPtrArray categoriesForMethods!
+initializeVariant:!converting!private! !
+!
+
 !External.VOID class methodsFor!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, anInteger, instances of the receiver."
 
 	"An array of VT_VOID would make no sense."
 
@@ -2620,12 +2764,21 @@ typeName
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_VOID! !
+	^COM.OleVariant.VT_VOID! !
 
 !External.VOID class categoriesForMethods!
-newSAFEARRAY:!double dispatch!public! !
+newSAFEARRAY:!double dispatch!private! !
 typeName!constants!private! !
 vt!constants!public! !
+!
+
+!Graphics.Point methodsFor!
+
+initializeVariant: anOleVariant
+	anOleVariant record: self asParameter! !
+
+!Graphics.Point categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !Kernel.SmalltalkLocale methodsFor!
@@ -2746,15 +2899,14 @@ asSAFEARRAY
 
 	^SAFEARRAY withAll: self elementClass: Int16!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_BSTR).
-	This will also work fine for Utf16String."
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a VT_BSTR holding a copy of the receiver."
 
-	^VARIANT fromString: self! !
+	anOleVariant bstr: self! !
 
 !OS.COM.BSTR categoriesForMethods!
 asSAFEARRAY!converting!public! !
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !OS.COM.BSTR class methodsFor!
@@ -2765,11 +2917,11 @@ arrayType
 	^BSTRArray!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, BSTR values."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, length, BSTR values."
 
 	^SAFEARRAY
 		length: anInteger
-		vt: VARIANT.VT_BSTR
+		vt: self vt
 		elementClass: self!
 
 typeName
@@ -2778,29 +2930,50 @@ typeName
 
 	^#bstr!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#bstrVector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_BSTR! !
+	^VARIANT.VT_BSTR! !
 
 !OS.COM.BSTR class categoriesForMethods!
 arrayType!constants!public! !
-newSAFEARRAY:!double dispatch!public! !
+newSAFEARRAY:!double dispatch!private! !
 typeName!constants!private! !
+variantVectorName!constants!private! !
 vt!constants!public! !
+!
+
+!OS.COM.CLSID methodsFor!
+
+initializeVariant: anOleVariant
+	anOleVariant clsid: self! !
+
+!OS.COM.CLSID categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !OS.COM.CLSID class methodsFor!
 
+variantVectorName
+	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
+
+	^#clsidVector!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^AutomationConstants.VT_CLSID
+	^OleVariant.VT_CLSID
 ! !
 
 !OS.COM.CLSID class categoriesForMethods!
+variantVectorName!constants!private! !
 vt!constants!public! !
 !
 
@@ -2896,7 +3069,7 @@ marshal: anObject
 	^anObject class == self ifTrue: [anObject] ifFalse: [anObject queryInterface: self]!
 
 newSAFEARRAY: length
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, interface pointers of the receiver's type."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, length, interface pointers of the receiver's type."
 
 	^SAFEARRAY length: length interfaceClass: self!
 
@@ -2926,7 +3099,7 @@ coclassTypeInfo!accessing!public! !
 coclassTypeInfoIfNone:!accessing!public! !
 errorNoTypeInfo!exceptions!private! !
 marshal:!instance creation!public! !
-newSAFEARRAY:!double dispatch!public! !
+newSAFEARRAY:!double dispatch!private! !
 registerDispinterface:!adding!public! !
 typeInfoIfNone:!accessing!public! !
 typeLib!accessing!public! !
@@ -2934,13 +3107,11 @@ typeLib!accessing!public! !
 
 !OS.COM.IUnknown methodsFor!
 
-asVariant
-	"Answer the VARIANT representation of the receiver."
-
-	^VARIANT fromUnknown: self! !
+initializeVariant: anOleVariant
+	anOleVariant unknown: self! !
 
 !OS.COM.IUnknown categoriesForMethods!
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !OS.COM.IUnknown class methodsFor!
@@ -2949,10 +3120,32 @@ vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^AutomationConstants.VT_UNKNOWN! !
+	^OleVariant.VT_UNKNOWN! !
 
 !OS.COM.IUnknown class categoriesForMethods!
 vt!constants!public! !
+!
+
+!OS.COM.LPSTRArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be either a (VT_ARRAY|VT_BSTR), or a (VT_VECTOR|VT_LPSTR)."
+	
+	anOleVariant lpstrVector: self! !
+
+!OS.COM.LPSTRArray categoriesForMethods!
+initializeVariant:!converting!private! !
+!
+
+!OS.COM.LPWSTRArray methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be either a (VT_ARRAY|VT_BSTR), or a (VT_VECTOR|VT_LPWSTR)."
+	
+	anOleVariant lpwstrVector: self! !
+
+!OS.COM.LPWSTRArray categoriesForMethods!
+initializeVariant:!converting!private! !
 !
 
 !OS.COM.OLEAutLibrary methodsFor!
@@ -3414,15 +3607,11 @@ variantChangeTypeEx: pvargDest pvarSrc: pvarSrc lcid: lcid wFlags: wFlags vt: vt
 	^self invalidCall: _failureCode!
 
 variantClear: pvarg
-	"Free a VARIANT, performing any special clean up  required (such as 
-	Release()ing an IUnknown/IDispatch).
-	Implementation Note: As this is used to finalize VARIANTs and there
-	is little we can do about a failure, we return an integer error code
-	rather than automatically raising an exception.
+	"Free a VARIANT, performing any special clean up  required (such as Release()ing an IUnknown/IDispatch).
 
 		HRESULT VariantClear(VARIANTARG FAR* pvarg)"
 
-	<stdcall: int32 VariantClear variant*>
+	<stdcall: hresult VariantClear variant*>
 	^self invalidCall: _failureCode!
 
 variantCopy: pvargDesc pvargSrc: pvargSrc
@@ -3523,33 +3712,36 @@ variantTimeToSystemTime:lpSystemTime:!Automation Functions-Variant Manipulation!
 asDATE
 	"Answer the OLE Automation <DATE> that is the nearest equivalent of the receiver. Note that this is likely to lose some precision. FILETIMEs beyond the year 9999 are not representable as DATEs and will generate an error. DATE can represent the earliest possible FILETIME, however."
 
-	^self asSYSTEMTIME asDATE! !
+	^self asDateAndTime asDATE!
+
+initializeVariant: anOleVariant
+	anOleVariant filetime: self! !
 
 !OS.FILETIME categoriesForMethods!
 asDATE!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !OS.FILETIME class methodsFor!
 
 newSAFEARRAY: anInteger
-	"Answer a new SAFEARRAY initialized to hold <integer>, anInteger, DATE values."
+	"Private - Answer a new SAFEARRAY initialized to hold <integer>, anInteger, DATE values."
 
 	"The SAFEARRAY will be of type VT_DATE, even though that loses precision, because this is consistent with the behaviour of the Win32 InitVariantFromFileTimeArray API. If you want to preserve the original format, use e.g. `SAFEARRAY length: <anInteger> recordClass: FILETIME` to create a SAFEARRAY holding FILETIMEs as VT_RECORDs."
 
-	<namespace: OS.COM>
+	<namespace: OS.COM.OleVariant>
 	^SAFEARRAY
 		length: anInteger
-		vt: VARIANT.VT_DATE
+		vt: VT_DATE
 		elementClass: DATE!
 
 vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_FILETIME! !
+	^COM.VARIANT.VT_FILETIME! !
 
 !OS.FILETIME class categoriesForMethods!
-newSAFEARRAY:!double dispatch!public! !
+newSAFEARRAY:!double dispatch!private! !
 vt!constants!public! !
 !
 
@@ -3564,7 +3756,7 @@ typeName
 vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
-	^COM.AutomationConstants.VT_ERROR! !
+	^COM.VARIANT.VT_ERROR! !
 
 !OS.HRESULT class categoriesForMethods!
 typeName!constants!private! !
@@ -3596,15 +3788,13 @@ asFloat
 
 	^self asDATE asFloat!
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_DATE)"
-
-	^COM.VARIANT fromDATE: self asFloat! !
+initializeVariant: anOleVariant
+	anOleVariant date: self asDATE! !
 
 !OS.SYSTEMTIME categoriesForMethods!
 asDATE!converting!public! !
 asFloat!converting!public! !
-asVariant!converting!public! !
+initializeVariant:!converting!private! !
 !
 
 !OS.SYSTEMTIME class methodsFor!

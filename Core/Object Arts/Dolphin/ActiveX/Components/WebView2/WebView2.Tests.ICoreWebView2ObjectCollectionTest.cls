@@ -22,18 +22,19 @@ minimumEnvironmentVersion
 
 setUp
 	super setUp.
-	objects := { Examples.RandomStream new. #[1 2 3] readStream. LOGFONTW }!
+	objects := { Examples.RandomStream new. #[1 2 3] readStream. Memory }!
 
 testAdd
-	| subject view |
+	| subject view rectl |
 	subject := self createCollection.
 	view := subject queryInterface: ICoreWebView2ObjectCollectionView.
 	self assert: subject size equals: objects size.
 	self assert: view size equals: objects size.
-	self assert: (subject add: RECTL) equals: (RECTL queryInterface: IUnknown).
+	rectl := RecordInfo recordClass: RECTL. 
+	self assert: (subject add: rectl) equals: (rectl queryInterface: IUnknown).
 	self assert: subject size equals: objects size + 1.
 	self assert: view size equals: objects size + 1.
-	objects := objects , { RECTL }.
+	objects := objects , { rectl }.
 	1 to: subject size
 		do: 
 			[:i |
@@ -46,7 +47,7 @@ testAddAll
 	| subject extras |
 	subject := self createCollection.
 	self assert: subject size equals: objects size.
-	extras := { RECTL. POINTL }.
+	extras := { RecordInfo recordClass: RECTL. RecordInfo recordClass: POINTL }.
 	self assert: (subject addAll: extras)
 		equals: (extras collect: [:each | each queryInterface: IUnknown]).
 	self assert: subject size equals: objects size + extras size.
@@ -75,28 +76,31 @@ testAt
 		matching: [:ex | ex tag = offEnd]!
 
 testAtAllPut
-	| subject unk |
+	| subject unk rectl |
 	subject := self createCollection.
 	self assert: subject size equals: objects size.
-	unk := RECTL queryInterface: IUnknown.
-	self assert: (subject atAllPut: RECTL) equals: unk.
+	rectl := RecordInfo recordClass: RECTL.
+	unk := rectl queryInterface: IUnknown.
+	self assert: (subject atAllPut: rectl) equals: unk.
 	self assert: subject size equals: objects size.
 	1 to: objects size do: [:i | self assert: (subject at: i) equals: unk].
 	self assert: unk referenceCount > objects size!
 
 testAtPut
-	| subject offEnd |
+	| subject offEnd rectl pointl |
 	subject := self createCollection.
-	self assert: (subject at: 1 put: RECTL) equals: (RECTL queryInterface: IUnknown).
+	rectl := RecordInfo recordClass: RECTL.
+	self assert: (subject at: 1 put: rectl) equals: (rectl queryInterface: IUnknown).
 	self assert: subject size equals: 3.
-	self assert: (subject at: 1) equals: (RECTL queryInterface: IUnknown).
+	self assert: (subject at: 1) equals: (rectl queryInterface: IUnknown).
 	2 to: 3
 		do: [:i | self assert: ((subject at: i) isSameCOMObject: ((objects at: i) queryInterface: IUnknown))].
-	self assert: (subject at: 3 put: POINTL) equals: (POINTL queryInterface: IUnknown).
+	pointl := RecordInfo recordClass: POINTL.
+	self assert: (subject at: 3 put: pointl) equals: (pointl queryInterface: IUnknown).
 	self assert: subject size equals: 3.
-	self assert: (subject at: 1) equals: (RECTL queryInterface: IUnknown).
+	self assert: (subject at: 1) equals: (rectl queryInterface: IUnknown).
 	self assert: (subject at: 2) equals: ((objects at: 2) queryInterface: IUnknown).
-	self assert: (subject at: 3) equals: (POINTL queryInterface: IUnknown).
+	self assert: (subject at: 3) equals: (pointl queryInterface: IUnknown).
 	offEnd := subject size + 1.
 	self
 		should: [subject at: offEnd put: (subject at: 1)]

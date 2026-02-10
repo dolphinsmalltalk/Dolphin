@@ -61,7 +61,7 @@ AddRef
 asObject
 	"Answer a suitable Smalltalk object to represent the receiver's value."
 
-	^self notNull ifTrue: [self]!
+	^self isNull ifFalse: [self]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."

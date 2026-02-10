@@ -4,7 +4,7 @@ External.LPSZ
 	subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -95,7 +95,10 @@ uninitialize
 variantVectorName
 	"Private - Answer the symbolic name of the accessor for a variant holding a vector of the receiver's element type."
 
-	^#bstrVector! !
+	^#bstrVector!
+
+vt
+	^VT_BSTR! !
 
 !OS.COM.LPBSTR class categoriesForMethods!
 allocHeapObject:!instance creation!private! !
@@ -103,5 +106,6 @@ freeHeapObject:!initialize/release!private! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !
 variantVectorName!constants!private! !
+vt!public! !
 !
 

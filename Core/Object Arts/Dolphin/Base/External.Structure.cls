@@ -140,17 +140,14 @@ comparisonSize
 
 	^self byteSize!
 
-copy: aByteClass from: start to: stop 
-	"Private - Answer a copy of the bytes of the receiver starting at index start, 
-	until index stop, inclusive, as an instance of the argument, aByteClass."
+copy: aByteClass from: startInteger to: stopInteger
+	"Private - Answer an instance of the byte-object class, aByteClass, holding a copy of the bytes of the receiver starting at <integer> byte index startInteger, until <integer> byte index, stopInteger, inclusive. Note that the indices are byte positions, not element positions. They should specify a whole number of elements or the result is undefined."
 
-	| len |
-	len := stop - start + 1.
-	^self 
-		replaceBytesOf: (aByteClass new: len)
-		from: 1
-		to: len
-		startingAt: start!
+	^self class
+		copyBytes: bytes
+		from: startInteger
+		to: stopInteger
+		into: (aByteClass new: stopInteger - startInteger + 1)!
 
 copyBuffer: aByteObject size: anInteger
 	self
@@ -161,7 +158,11 @@ copyBytes: aByteObject
 	"Private - Set the contents of the receiver (as appropriate for the subclass).
 	Answer the receiver."
 
-	aByteObject replaceBytesOf: bytes from: 1 to: self byteSize startingAt: 1!
+	self class
+		copyBytes: aByteObject
+		from: 1
+		to: self byteSize
+		into: bytes!
 
 copyFrom: start to: stop
 	"Answer a copy of the bytes of the receiver starting at index start, 
@@ -246,11 +247,18 @@ free
 	self needsFree ifTrue: [self basicFree].
 	bytes := nil!
 
-getField: fieldNameString
-	"Answer the value of the named field of the receiver,
-	or if there is no such field then raise an exception."
+getField: aString
+	"Answer the value of the named field of the receiver, or if there is no such field then raise an exception."
 
-	^self perform: fieldNameString asSymbol!
+	^self perform: aString asSymbol!
+
+getField: aString ifAbsent: aNiladicValuable
+	"Answer the value of the field of the receiver named by the <String> 1st argument, or if there is no such field then the result of evaluating the <niladicValuable> 2nd argument."
+
+	| selector |
+	selector := aString asSymbol.
+	(self getValidFields identityIncludes: selector) ifFalse: [^aNiladicValuable value].
+	^self getField: selector!
 
 getValidFields
 	"Private - Answer a <sequencedReadableCollection> of the fields defined 
@@ -427,11 +435,18 @@ requiresFinalization
 
 	^self class requiresFinalization!
 
-setField: fieldNameString value: anObject
-	"Set the value of the named field of the receiver,
-	or if there is no such field then raise an exception."
+setField: aString value: anObject
+	"Set the value of the field of the receiver named by the <String> 1st argument to the <Object> 2nd argument, or if there is no such field then raise an exception."
 
-	^self perform: (fieldNameString, ':') asSymbol with: anObject!
+	^self perform: (aString, ':') asSymbol with: anObject!
+
+setField: aString value: anObject ifAbsent: aNiladicValuable
+	"Set the value of the field of the receiver named by the <String> 1st argument, to the variant value of the <variantCompatible> 2nd argument, or if there is no such field then evaluate the <niladicValuable> 3rd argument."
+
+	| selector |
+	selector := aString asSymbol.
+	(self getValidFields identityIncludes: selector) ifFalse: [^aNiladicValuable value].
+	self setField: aString value: anObject!
 
 size
 	"Answer the size of the receiver's contents (more useful)."
@@ -486,6 +501,7 @@ fieldsDo:!enumerating!public! !
 fieldsDo:separatedBy:!enumerating!public! !
 free!public!realizing/unrealizing! !
 getField:!accessing!public! !
+getField:ifAbsent:!accessing!public! !
 getValidFields!accessing!private! !
 hash!comparing!public! !
 heapPointerClass!constants!private! !
@@ -514,6 +530,7 @@ replaceBytesOf:from:to:startingAt:!double dispatch!private!replacing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 requiresFinalization!public!realizing/unrealizing!testing! !
 setField:value:!accessing!public! !
+setField:value:ifAbsent:!accessing!public! !
 size!accessing!public! !
 template!constants!private! !
 value:!accessing!public! !
@@ -605,7 +622,17 @@ changedByteSizeFrom: anInteger
 	self recompileReferences!
 
 clear: addressOrBytes
-	"Finalize an instance of the structure which instances of the receiver wrap which resides at the specified address. Note that this is typically not about freeing the specified memory block, but any resources which it references."!
+	"Finalize an instance of the structure which instances of the receiver wrap which resides at the specified address. Note that 'clearing' is not about freeing the specified memory block itself, but instead is intended to free any resources that it may reference. For example a structure holding pointers to owned heap objects would be expected to free those allocations."!
+
+copyBytes: srcByteObject from: startInteger to: stopInteger into: destByteObject
+	"Private - Copy bytes from the byte object, srcByteObject, starting at <integer> byte index startInteger, until <integer> byte index, stopInteger, inclusive into the byte-object, destByteObject. Note that the indices are byte positions. The source and destination bytes are assumed to be buffers for structures of the receiver's type."
+
+	srcByteObject
+		replaceBytesOf: destByteObject
+		from: 1
+		to: stopInteger - startInteger + 1
+		startingAt: startInteger.
+	^destByteObject!
 
 defineField: fieldName type: anExternalField
 	"Add the argument anExternalField as the next field of the receiver's template, 
@@ -953,7 +980,7 @@ register
 	This is used to map VT_RECORD <VARIANT>s and <SAFEARRAY>s
 	back to the appropriate <ExternalStructure> class."
 
-	self registerClass: self forGUID: _guid!
+	self shouldRegister ifTrue: [self registerClass: self forGUID: _guid]!
 
 registerClass: structureClass forGUID: aGUID
 	"Register the specified <External.Structure> class as the Record class
@@ -1017,6 +1044,9 @@ shouldCompileNewFields
 
 	^flags anyMask: CompileNewFieldsMask!
 
+shouldRegister
+	^self isNonInstantiable not!
+
 sizeConstantName
 	^'_<1s>_Size' << (self unqualifiedName ?? '')!
 
@@ -1071,6 +1101,7 @@ byteSize:!initializing!private! !
 canUnderstand:!methods-testing!public! !
 changedByteSizeFrom:!private!template definition! !
 clear:!public!realizing/unrealizing! !
+copyBytes:from:to:into:!copying!private! !
 defineField:type:!public!template definition! !
 defineField:type:offset:!public!template definition! !
 defineFields!public!template definition! !
@@ -1121,6 +1152,7 @@ requiresSizeConstant!private!template definition! !
 resetTemplate!public!template definition! !
 setGuid:!accessing!private! !
 shouldCompileNewFields!private!testing! !
+shouldRegister!private!testing! !
 sizeConstantName!private!template definition! !
 structurePacker!public!template definition! !
 template!accessing!private! !

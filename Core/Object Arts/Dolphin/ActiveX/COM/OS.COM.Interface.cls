@@ -947,7 +947,7 @@ register
 	the appropriate GUIDs. This is intended as a helper function when
 	developing, and has no run-time significance."
 
-	self isNonInstantiable ifFalse: [self registerClass: self forIID: self iid]!
+	self shouldRegister ifTrue: [self registerClass: self forIID: self iid]!
 
 registerClass: anInterfaceClass forIID: aGUID
 	"Register the specified interface class, which must support the COM interface protocol

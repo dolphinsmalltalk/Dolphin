@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.COM.AbstractELEMDESC'
 	instanceVariableNames: 'tdesc'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_tdescElem' -> 16r0 }!
 
@@ -39,7 +39,7 @@ indirections
 isVariant
 	"Private - Answer whether the receiver is describing an element of VARIANT type."
 
-	^self tdesc vartype == VT_VARIANT!
+	^self tdesc vartype == OleVariant.VT_VARIANT!
 
 objectClass
 	"Answer the class of Smalltalk object used to wrap the type of this element."

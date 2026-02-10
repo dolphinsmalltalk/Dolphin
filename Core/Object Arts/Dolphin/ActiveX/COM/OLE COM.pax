@@ -111,6 +111,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Core.ByteArray} #copyToCOMTaskMemory)
+	#(#{Core.GUID} #copyToCOMTaskMemory)
 	#(#{Core.InvalidArgumentError} #hresult)
 	#(#{Core.SessionManager} #comStartup)
 	#(#{Core.String} #asBSTR)
@@ -132,7 +133,10 @@ package setMethodNames: #(
 	#(#{External.LPWSTR class} #allocHeapObject:)
 	#(#{External.LPWSTR class} #arrayType)
 	#(#{External.LPWSTR class} #copyHeapObject:)
+	#(#{External.Memory class} #finalRelease)
+	#(#{External.Memory class} #queryInterface:)
 	#(#{External.Memory class} #queryInterface:ifNone:)
+	#(#{External.StringPointerArray} #copyToCOMTaskMemory)
 	#(#{External.Structure} #copyToCOMTaskMemory)
 	#(#{External.Structure class} #arrayType)
 	#(#{External.UInt16 class} #arrayType)
@@ -610,13 +614,28 @@ copyToCOMTaskMemory
 
 	| size |
 	size := self byteSize.
-	^(OS.COM.TaskMemory new: size)
+	^(OS.COM.TaskMemory newUninitialized: size)
 		replaceFrom: 1
 		to: size
 		with: self
 		startingAt: 1! !
 
 !Core.ByteArray categoriesForMethods!
+copyToCOMTaskMemory!copying!public! !
+!
+
+!Core.GUID methodsFor!
+
+copyToCOMTaskMemory
+	"Answer a COM.TaskMemory object containing a copy of the receiver's bytes."
+
+	^(OS.COM.TaskMemory newUninitialized: _GUID_Size)
+		replaceFrom: 1
+		to: _GUID_Size
+		with: self
+		startingAt: 1! !
+
+!Core.GUID categoriesForMethods!
 copyToCOMTaskMemory!copying!public! !
 !
 
@@ -854,6 +873,19 @@ copyHeapObject:!copying!private! !
 
 !External.Memory class methodsFor!
 
+finalRelease
+	"The last reference to the receiver (as a COM object) has been released."
+
+	"Nothing to do - we receive this because we implement IMalloc, but there are no external resources to release"
+	!
+
+queryInterface: anInterfaceClass
+	"Answer a new interface which supports the specified interface protocol
+	(usually a class), or nil if the receiver does not support the interface."
+
+	^self queryInterface: anInterfaceClass ifNone: []
+!
+
 queryInterface: interfaceClass ifNone: exceptionHandler
 	"Answer a new interface which supports the specified interface protocol
 	(usually a class). If the receiver does not support the interface,
@@ -862,12 +894,35 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	a subinstance will do, or even a completely different class, as long as the
 	protocol of the requested class is supported.."
 
-	^interfaceClass == COM.IMalloc
+	^(interfaceClass == COM.IMalloc or: [interfaceClass == COM.IUnknown])
 		ifTrue: [interfaceClass on: self]
 		ifFalse: [exceptionHandler value]! !
 
 !External.Memory class categoriesForMethods!
+finalRelease!public! !
+queryInterface:!accessing-interfaces!public! !
 queryInterface:ifNone:!accessing-interfaces!public! !
+!
+
+!External.StringPointerArray methodsFor!
+
+copyToCOMTaskMemory
+	"Answer a block of COM Task Memory into which the bytes of the receiver have been copied."
+
+	| pDest stringType size |
+	size := VMConstants.IntPtrSize * self length.
+	pDest := COM.TaskMemory new: size.
+	stringType := self stringClass.
+	0 to: size - 1
+		by: VMConstants.IntPtrSize
+		do: 
+			[:i |
+			pDest uintPtrAtOffset: i
+				put: (stringType fromAddress: (bytes uintPtrAtOffset: i)) copyToCOMTaskMemory detach].
+	^pDest! !
+
+!External.StringPointerArray categoriesForMethods!
+copyToCOMTaskMemory!public! !
 !
 
 !External.Structure methodsFor!

@@ -16,6 +16,11 @@ OS.COM.DATEArray comment: '`DATEArray` is a specialized `ExternalArray` to repre
 
 !OS.COM.DATEArray methodsFor!
 
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. This will be a (VT_ARRAY|VT_DATE), or a (VT_VECTOR|VT_DATE)."
+
+	anOleVariant dateVector: self!
+
 isSelfEvaluating
 	"Could be, but would be very verbose, so eschew for now."
 
@@ -29,6 +34,7 @@ uncheckedAt: anInteger put: aDateAndTimeObject
 	^aDateAndTimeObject! !
 
 !OS.COM.DATEArray categoriesForMethods!
+initializeVariant:!converting!private! !
 isSelfEvaluating!public!testing! !
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
