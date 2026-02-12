@@ -85,7 +85,7 @@ confirmMoveObjects: aCollection toPackage: aPackage
 							<< { object. object owningPackage name. aPackage name }]
 		ifFalse: 
 			[| stream max sorted |
-			mb headline: 'Repackage <1d> source objects?'.
+			mb headline: 'Repackage <1d> source objects?' << aCollection size.
 			stream := String writeStream.
 			stream
 				nextPutAll: 'The following source objects will be moved to the package ';
