@@ -3,7 +3,7 @@
 UI.View
 	subclass: #'UI.ControlView'
 	instanceVariableNames: 'forecolor oldWndProc'
-	classVariableNames: 'CommonControlCallError'
+	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -121,9 +121,7 @@ errorInCommonControlCall
 	"A call to one of the common control has failed, raise an exception.
 	If this is because the view is closed then raise a ViewClosedError"
 
-	^(self isOpen 
-		ifTrue: [self class commonControlCallError]
-		ifFalse: [self class viewClosedError]) signalWith: self!
+	^(self isOpen ifTrue: [CommonControlFailure] ifFalse: [ViewClosedError]) signalWith: self!
 
 errorOutOfMemory
 	"Raise a OutOfMemoryError indicating that the receiver has run out of space"
@@ -504,10 +502,9 @@ wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
 !UI.ControlView class methodsFor!
 
 commonControlCallError
-	"Answer the exceptionSignaler/exceptionSelector used to signal/catch common
-	control message errors."
+	"Answer the exceptionSignaler/exceptionSelector used to signal/catch common control message errors."
 
-	^CommonControlCallError!
+	^CommonControlFailure!
 
 controlColorMessages
 	^{WM_CTLCOLORMSGBOX. WM_CTLCOLORBTN. WM_CTLCOLORDLG. WM_CTLCOLORSTATIC}!
@@ -520,7 +517,6 @@ initialize
 	"
 
 	CommCtrlLibrary addInitFlag: ICC_STANDARD_CLASSES.
-	CommonControlCallError := Signal description: 'Common control call failed'.
 	View registerMessageMappings: self messageMappings!
 
 maxTextLimit

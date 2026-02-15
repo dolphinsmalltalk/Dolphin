@@ -16,19 +16,17 @@ Kernel.SubclassResponsibilityError comment: ''!
 
 !Kernel.SubclassResponsibilityError methodsFor!
 
+defaultMessageText
+	^'Not implemented'!
+
 hresult
 	"Answer the <HRESULT> error code associated with the receiver.
 	Overridden by subclasses to answer more specified HRESULT codes."
 
-	^HRESULT notImplemented!
-
-initialize
-	"Private - Initialize the receiver's instance variables"
-
-	messageText := 'Not implemented'! !
+	^HRESULT notImplemented! !
 
 !Kernel.SubclassResponsibilityError categoriesForMethods!
+defaultMessageText!accessing!private! !
 hresult!accessing!public! !
-initialize!initializing!private! !
 !
 

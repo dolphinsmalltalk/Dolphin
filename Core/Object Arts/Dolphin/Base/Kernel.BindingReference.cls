@@ -500,7 +500,6 @@ newFull: aString private: aBoolean
 		private: aBoolean!
 
 newFullPath: anArray private: aBoolean
-	anArray do: [:each | self assert: [each isString]].
 	^FullBindingReference
 		pathString: nil
 		path: anArray

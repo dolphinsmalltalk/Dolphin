@@ -930,7 +930,7 @@ testResize
 	self assert: (subject copy resize: (self assimilateString: 'a£bd') size)
 		equals: (subject copyWith: $\0).
 	subject beImmutableObject.
-	self should: [subject resize: 1] raise: Processor constWriteSignal!
+	self should: [subject resize: 1] raise: ConstWriteError!
 
 testReverse
 	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings, and with embedded nulls"

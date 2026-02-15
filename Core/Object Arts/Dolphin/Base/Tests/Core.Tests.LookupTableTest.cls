@@ -36,9 +36,9 @@ testImmutability
 	subject := self newDictionary.
 	subject beImmutableObject.
 	"Attempt to add new key"
-	self should: [subject at: #key2 put: (self assimilate: 2)] raise: Processor constWriteSignal.
+	self should: [subject at: #key2 put: (self assimilate: 2)] raise: ConstWriteError.
 	"Attempt to modify value associated with existing key - checks that the values are immutable too"
-	self should: [subject at: #key put: (self assimilate: 1.2)] raise: Processor constWriteSignal.
+	self should: [subject at: #key put: (self assimilate: 1.2)] raise: ConstWriteError.
 	self deny: (subject includesKey: #key2).
 	self assert: (subject at: #key) equals: 1.
 	subject isImmutable: false.

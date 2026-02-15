@@ -60,6 +60,7 @@ package methodNames
 	add: #ExternalStructure -> #isPointer;
 	add: #File -> #readCharacter;
 	add: #FILETIME -> #integerValue:;
+	add: #InputState -> #userInterruptSignal;
 	add: #Integer -> #digitSize;
 	add: #Integer -> #printStringRadix:showRadix:;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
@@ -884,6 +885,16 @@ fromString: aString
 
 !FunctionDescriptor class categoriesForMethods!
 fromString:!instance creation!public! !
+!
+
+!InputState methodsFor!
+
+userInterruptSignal
+	#deprecated.
+	^UserInterrupt! !
+
+!InputState categoriesForMethods!
+userInterruptSignal!constants!public! !
 !
 
 !Integer methodsFor!

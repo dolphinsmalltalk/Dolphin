@@ -6,6 +6,7 @@ Copyright © Object Arts Ltd. 1997-2023.  Portions Copyright (c) CGI Group (Euro
 
 
 package setClassNames: #(
+	#{UI.CommonControlFailure}
 	#{UI.ControlView}
 	#{UI.StaticControlView}
 	#{UI.StaticView}
@@ -24,10 +25,18 @@ package!
 
 "Class Definitions"!
 
+Core.Error
+	subclass: #'UI.CommonControlFailure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 UI.View
 	subclass: #'UI.ControlView'
 	instanceVariableNames: 'forecolor oldWndProc'
-	classVariableNames: 'CommonControlCallError'
+	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!

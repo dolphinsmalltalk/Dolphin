@@ -144,7 +144,7 @@ testNextAvailableColonWithPaging
 	writeStream := ByteArray writeStream: bytes size.
 	self
 		shouldnt: [[filestream atEnd] whileFalse: [writeStream nextPutAll: (filestream nextAvailable: 64)]]
-		raise: self streamClass endOfStreamSignal.
+		raise: EndOfStream.
 	self assert: writeStream contents equals: bytes!
 
 testUtf8StraddlingPageBoundary

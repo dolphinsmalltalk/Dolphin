@@ -722,8 +722,7 @@ updatePrimitiveFailed: failureCode atOffset: anInteger
 	"Private - Primitive failure checking code for validating an offset argument to be called immediately after a buffer accessing primitive has failed.
 	Raises an appropriate error."
 
-	failureCode == _PrimitiveFailureCode.AccessViolation
-		ifTrue: [^Processor constWriteSignal signalWith: self].
+	failureCode == _PrimitiveFailureCode.AccessViolation ifTrue: [^ConstWriteError signalWith: self].
 	^(self validOffset: anInteger failureCode: failureCode) ifNil: [self primitiveFailed: failureCode]!
 
 validOffset: anInteger failureCode: failureCode

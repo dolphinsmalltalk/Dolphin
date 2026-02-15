@@ -515,7 +515,7 @@ uint32AtOffset: anInteger put: anObject
 	_failureCode == _PrimitiveFailureCode.OutOfBounds
 		ifTrue: 
 			[^self isImmutable
-				ifTrue: [Processor constWriteSignal signalWith: self]
+				ifTrue: [ConstWriteError signalWith: self]
 				ifFalse: [self errorSubscriptBounds: anInteger]].
 	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
 	^self primitiveFailed: _failureCode! !

@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Core.Stream'
 	instanceVariableNames: ''
-	classVariableNames: 'EndOfStreamSignal'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -174,7 +174,7 @@ errorEndOfStream
 	"Raise an error to the effect that an attempt was made to read off the end of the collection
 	over which the receiver is streaming."
 
-	^self class endOfStreamSignal signalWith: self!
+	^EndOfStream signalWith: self!
 
 errorNotPositionable
 	^self error: 'The stream is not positionable'!
@@ -436,20 +436,10 @@ visit:do:!operations!public! !
 !Core.Stream class methodsFor!
 
 endOfStreamSignal
-	"Answer an exceptionSignaler/exceptionSelector object raised when an attempt is 
-	made to read off the end of the stream. Those interested in catching end of 
-	Stream exceptions should use this accessor to get the exceptionSelector to pass
-	as the first parameter to an #on:do: message. Current the answer is a Signal
-	instance, but it could be an Exception subclass in future."
+	"Answer an exceptionSignaler/exceptionSelector object raised when an attempt is made to read off the end of the stream. Those interested in catching end of Stream exceptions should use this accessor to get the exceptionSelector to pass as the first parameter to an #on:do: message."
 
-	^EndOfStreamSignal!
-
-initialize
-	"Private - Initialize the receiver's class variables.
-		Stream initialize
-	"
-
-	EndOfStreamSignal := Signal description: 'End of stream'!
+	#deprecated.
+	^EndOfStream!
 
 new
 	"Streams must be instantiated onto something."
@@ -458,7 +448,6 @@ new
 
 !Core.Stream class categoriesForMethods!
 endOfStreamSignal!constants!public! !
-initialize!development!initializing!private! !
 new!instance creation!public! !
 !
 

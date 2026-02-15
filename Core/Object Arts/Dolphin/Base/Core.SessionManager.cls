@@ -710,12 +710,9 @@ onUnhandledWarning: aWarning
 	^self unhandledException: aWarning!
 
 onUserBreak
-	"Private - The user interrupted the currect active process by pressing the
-	interrupt key combination (usually CTRL+BREAK). Take appropriate action
-	according to the session requirements."
+	"Private - The user interrupted the currect active process by pressing the interrupt key combination (usually CTRL+BREAK). Take appropriate action according to the session requirements."
 
-	self inputState userInterruptSignal signal
-!
+	UserInterrupt signal!
 
 openConsole
 	"Open and a console for this session and connect standard input and output streams.

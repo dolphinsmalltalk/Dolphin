@@ -439,7 +439,7 @@ stbReadFrom:format:size:!binary filing!public! !
 stbConvertFrom: aSTBClassConversion
 	"As of version 1, String is abstract and non-instantiable. We want to create AnsiString instances instead, but this will be done by the STBVersion0Policy.  We have to supply a conversion block because the String stbVersion was incremented, but we don't expect it to be called."
 
-	^[:data | _AssertionFailureSignal signal]!
+	^[:data | AssertionFailure signal: 'String is abstract']!
 
 stbReadFrom: anSTxInFiler format: anSTxClassConversion
 	"Note that although this is primarily used by STB, since STL stores the majority of Strings as literals, some unprintable strings do not have a literal form, so may be saved as raw UTF-8 bytes even in STL."

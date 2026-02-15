@@ -68,8 +68,7 @@ testAtPut
 	| literal |
 	literal := #abc.
 	self should: [literal at: 0 put: $x] raise: BoundsError.
-	1 to: literal size + 1
-		do: [:each | self should: [literal at: each put: $x] raise: Processor constWriteSignal]!
+	1 to: literal size + 1 do: [:each | self should: [literal at: each put: $x] raise: ConstWriteError]!
 
 testCopyWith
 	| copy |
@@ -90,7 +89,7 @@ testInstVarAtPut
 	literal := #abc.
 	self should: [literal instVarAt: 0 put: $x codePoint] raise: BoundsError.
 	1 to: literal size + 1
-		do: [:each | self should: [literal instVarAt: each put: $x codePoint] raise: Processor constWriteSignal]!
+		do: [:each | self should: [literal instVarAt: each put: $x codePoint] raise: ConstWriteError]!
 
 testKeywords
 	self assert: #a keywords equals: #(#a).
@@ -155,10 +154,10 @@ testReplaceFromToWithStartingAt
 		matching: [:ex | ex messageText = 'Symbol should not implement #replaceFrom:to:with:startingAt:']!
 
 testReplaceIdentityWith
-	self should: [super testReplaceIdentityWith] raise: Processor constWriteSignal!
+	self should: [super testReplaceIdentityWith] raise: ConstWriteError!
 
 testResize
-	self should: [super testResize] raise: Processor constWriteSignal!
+	self should: [super testResize] raise: ConstWriteError!
 
 testSortColon
 	self

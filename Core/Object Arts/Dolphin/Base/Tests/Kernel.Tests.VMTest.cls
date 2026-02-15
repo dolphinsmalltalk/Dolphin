@@ -22,7 +22,7 @@ assertImmutableAtPut: anObject
 	value := anObject at: 1.
 	self should: [anObject at: 0 put: value] raise: BoundsError.
 	1 to: anObject size + 1
-		do: [:each | self should: [anObject at: each put: value] raise: Processor constWriteSignal]!
+		do: [:each | self should: [anObject at: each put: value] raise: ConstWriteError]!
 
 assertImmutableBasicAtPut: anObject
 	| value |
@@ -30,7 +30,7 @@ assertImmutableBasicAtPut: anObject
 	value := anObject basicAt: 1.
 	self should: [anObject basicAt: 0 put: value] raise: BoundsError.
 	1 to: anObject size + 1
-		do: [:each | self should: [anObject basicAt: each put: value] raise: Processor constWriteSignal]!
+		do: [:each | self should: [anObject basicAt: each put: value] raise: ConstWriteError]!
 
 assertImmutableInstVarAtPut: anObject
 	| size value |
@@ -39,13 +39,12 @@ assertImmutableInstVarAtPut: anObject
 	self should: [anObject instVarAt: 0 put: value] raise: BoundsError.
 	size := anObject class instSize + anObject basicSize.
 	1 to: size + 1
-		do: [:each | self should: [anObject instVarAt: each put: value] raise: Processor constWriteSignal]!
+		do: [:each | self should: [anObject instVarAt: each put: value] raise: ConstWriteError]!
 
 assertImmutableResize: anObject
 	self assert: anObject isImmutable.
 	"Should get an error on any resize attempt, whether doesn't change size, grows or shrinks"
-	#(0 1 -1)
-		do: [:i | self should: [anObject resize: anObject size + i] raise: Processor constWriteSignal]!
+	#(0 1 -1) do: [:i | self should: [anObject resize: anObject size + i] raise: ConstWriteError]!
 
 assertLoopInterruptible: aBlock
 	| interruptTimes start intervals execTime sampleInterval go finished |
@@ -194,7 +193,7 @@ exerciseReplaceElementsOf: targetCollection with: sourceCollection
 				from: 1
 				to: targetCollection size
 				startingAt: 1]
-		raise: Processor constWriteSignal.
+		raise: ConstWriteError.
 
 	"Move first of source to first of target"
 	self
@@ -781,16 +780,16 @@ testImmutableBasicAtPut
 testImmutableBufferAtPuts
 	| b |
 	b := #[0 0 0 0 0 0 0 0 0 0 0 0].
-	self should: [b uint8AtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b int8AtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b uint16AtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b int16AtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b uint32AtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b int32AtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b uint64AtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b int64AtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b floatAtOffset: 0 put: 1.23] raise: Processor constWriteSignal.
-	self should: [b doubleAtOffset: 0 put: 1.23] raise: Processor constWriteSignal!
+	self should: [b uint8AtOffset: 0 put: 1] raise: ConstWriteError.
+	self should: [b int8AtOffset: 0 put: 1] raise: ConstWriteError.
+	self should: [b uint16AtOffset: 0 put: 1] raise: ConstWriteError.
+	self should: [b int16AtOffset: 0 put: 1] raise: ConstWriteError.
+	self should: [b uint32AtOffset: 0 put: 1] raise: ConstWriteError.
+	self should: [b int32AtOffset: 0 put: 1] raise: ConstWriteError.
+	self should: [b uint64AtOffset: 0 put: 1] raise: ConstWriteError.
+	self should: [b int64AtOffset: 0 put: 1] raise: ConstWriteError.
+	self should: [b floatAtOffset: 0 put: 1.23] raise: ConstWriteError.
+	self should: [b doubleAtOffset: 0 put: 1.23] raise: ConstWriteError!
 
 testImmutableInstVarAtPut
 	| instances |
@@ -823,7 +822,7 @@ testImmutableNextPut
 			| strm |
 			self assertImmutableAtPut: s.
 			strm := WriteStream on: s.
-			self should: [strm nextPut: s last] raise: Processor constWriteSignal]!
+			self should: [strm nextPut: s last] raise: ConstWriteError]!
 
 testImmutableNextPutAll
 	{ #[1 2 3]. 'abc'. #(1 2 3). 'abc' asUtf8String. 'abc' asUtf16String. #abc } do: 
@@ -832,7 +831,7 @@ testImmutableNextPutAll
 			each beImmutableObject.
 			self assertImmutableAtPut: each.
 			strm := WriteStream on: each.
-			self should: [strm nextPutAll: (each copyFrom: 2 to: 3)] raise: Processor constWriteSignal].
+			self should: [strm nextPutAll: (each copyFrom: 2 to: 3)] raise: ConstWriteError].
 	{ Utf8String. Utf16String } do: 
 			[:eachTarget |
 			{ AnsiString. Utf8String. Utf16String } do: 
@@ -842,18 +841,18 @@ testImmutableNextPutAll
 								beImmutableObject;
 								yourself) writeStream
 								nextPutAll: (each with: $£)]
-						raise: Processor constWriteSignal]]!
+						raise: ConstWriteError]]!
 
 testImmutableReplacePrimitives
 	#(#[1 2 3] 'abc' #(1 2 3)) do: 
-			[:s | 
+			[:s |
 			self assertImmutableAtPut: s.
 			self should: 
-					[s 
+					[s
 						replaceFrom: 1
 						to: 2
 						with: (s copyFrom: 2 to: 3)]
-				raise: Processor constWriteSignal]!
+				raise: ConstWriteError]!
 
 testImmutableResize
 	#(#(1 2 3) #[1 2 3] 'abcd') do: [:each | self assertImmutableResize: each]!
@@ -880,10 +879,8 @@ testImmutableWriteAccessors
 	vars keysAndValuesDo: [:i :each | self assert: (inst instVarAt: i) equals: i].
 	inst beImmutableObject.
 	"Note that the primitive write accessor will fail and fall back on executing the method bytecodes, which will fail sending #errorInstVarAt:put:"
-	vars do: 
-			[:each |
-			self should: [inst perform: (each copyWith: $:) asSymbol with: each]
-				raise: Processor constWriteSignal].
+	vars
+		do: [:each | self should: [inst perform: (each copyWith: $:) asSymbol with: each] raise: ConstWriteError].
 	"The values should not have been changed"
 	vars keysAndValuesDo: [:i :each | self assert: (inst instVarAt: i) equals: i]!
 
@@ -2702,7 +2699,7 @@ testPrimitiveSetMutableInstVar
 	method value: assoc withArguments: #(3).
 	self assert: assoc value identicalTo: 3.
 	assoc beImmutableObject.
-	self should: [assoc value: 4] raise: Processor constWriteSignal.
+	self should: [assoc value: 4] raise: ConstWriteError.
 	self assert: assoc value identicalTo: 3.
 	method value: assoc withArguments: #(4).
 	self assert: assoc value identicalTo: 4!
@@ -3311,19 +3308,19 @@ testUInt32AtOffsetPut
 			self assert: (bytes uint32AtOffset: each - 4) equals: 16r11223344.
 			bytes := ByteArray new: each.
 			bytes beImmutableObject.
-			self should: [bytes uint32AtOffset: each - 4 put: 1] raise: Processor constWriteSignal]!
+			self should: [bytes uint32AtOffset: each - 4 put: 1] raise: ConstWriteError]!
 
 testVMPointersImmutable
 	| vmPointers |
 	vmPointers := VM registry yourAddress asExternalAddress.
 	self
 		should: [vmPointers uint32AtOffset: 0 put: 1]
-		raise: Processor constWriteSignal
+		raise: ConstWriteError
 		matching: 
 			[:ex |
 			self
 				isFault: ex
-				raisedIn: External.Address >> #uint32AtOffset:put:
+				raisedIn: Address >> #uint32AtOffset:put:
 				receiver: vmPointers]!
 
 testWeakMournerNotifications

@@ -210,7 +210,7 @@ testBasicNext
 					actual := subject basicNext.
 					self assert: actual equals: expected].
 			self assert: subject atEnd.
-			self should: [subject basicNext] raise: subject class endOfStreamSignal]!
+			self should: [subject basicNext] raise: EndOfStream]!
 
 testContents
 	<mustConform: #sequencedStream>
@@ -306,7 +306,7 @@ testNext
 					actual := subject next.
 					self assert: actual equals: expected].
 			self assert: subject atEnd.
-			self should: [subject next] raise: subject class endOfStreamSignal]!
+			self should: [subject next] raise: EndOfStream]!
 
 testNextAvailable
 	<mustConform: #gettableStream>
@@ -354,7 +354,7 @@ testNextColon
 			each := pair first.
 			subject := self streamOn: each.
 			elems := each asArray.
-			self should: [subject next: elems size + 1] raise: Stream endOfStreamSignal.
+			self should: [subject next: elems size + 1] raise: EndOfStream.
 			0 to: elems size
 				do: 
 					[:i |
@@ -363,7 +363,7 @@ testNextColon
 					expected := elems copyFrom: 1 to: i.
 					self assert: actual asArray equals: expected].
 			self assert: subject atEnd.
-			self should: [subject next: 1] raise: Stream endOfStreamSignal]!
+			self should: [subject next: 1] raise: EndOfStream]!
 
 testNextColonPutColon
 	<mustConform: #puttableStream>
@@ -408,31 +408,30 @@ testNextIllegalUtf8CodePositions
 
 testNextInto
 	<mustConform: #gettableStream>
-	| stream result endOfStream |
+	| stream result |
 	"Previously-failing tests"
 	stream := self streamOn: #[1 2 3].
 	result := Array new: 2.
-	endOfStream := stream class endOfStreamSignal.
-	self shouldnt: [stream nextInto: result] raise: endOfStream.
+	self shouldnt: [stream nextInto: result] raise: EndOfStream.
 	self assert: result equals: #(1 2).
 	stream := self streamOn: #[1 2 3].
 	result := Array new: 3.
-	self shouldnt: [stream nextInto: result] raise: endOfStream.
+	self shouldnt: [stream nextInto: result] raise: EndOfStream.
 	self assert: result equals: #(1 2 3).
 	stream := self streamOn: #[1 2 3 4 5 6 7 8 9].
 	result := Array new: 4.
-	self shouldnt: [stream nextInto: result] raise: endOfStream.
+	self shouldnt: [stream nextInto: result] raise: EndOfStream.
 	self assert: result equals: #(1 2 3 4).
 	stream := self streamOn: #[1 2 3 4 5 6 7 8 9].
 	result := Array new: 5.
 	stream next: 2.
-	self shouldnt: [stream nextInto: result] raise: endOfStream.
+	self shouldnt: [stream nextInto: result] raise: EndOfStream.
 	self assert: result equals: #(3 4 5 6 7).
 
 	"Expected failure"
 	stream := self streamOn: #[1 2 3].
 	result := Array new: 5.
-	self should: [stream nextInto: result] raise: endOfStream!
+	self should: [stream nextInto: result] raise: EndOfStream!
 
 testNextLine
 	<mustConform: #gettableStream>

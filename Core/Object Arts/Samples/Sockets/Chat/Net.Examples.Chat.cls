@@ -324,7 +324,7 @@ receiveMessagesOn: aStream
 			whileFalse: [filer reset]]
 			on: Kernel.STBError
 			do: [:ex | self enqueueInboundMessage: 'Chat' -> ex description]
-			on: Stream endOfStreamSignal
+			on: EndOfStream
 			do: [:ex | self enqueueInboundMessage: 'Chat' -> 'Disconnected']!
 
 send

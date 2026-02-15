@@ -154,8 +154,7 @@ testNextPutAll
 	self deny: readStream hasInput.
 	writeStream close.
 	self assert: readStream next equals: $£.
-	
-	self should: [readStream next] raise: Stream endOfStreamSignal!
+	self should: [readStream next] raise: EndOfStream!
 
 testNextPutAllStartingAtAsBytes
 	"SocketWriteStream>>next:putAll:startingAt:, with byte buffer (i.e transmitting bytes)"

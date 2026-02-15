@@ -2328,7 +2328,7 @@ Kernel.SharedPool
 nil
 	subclass: #'Core.Object'
 	instanceVariableNames: ''
-	classVariableNames: '_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister'
+	classVariableNames: '_DependentsRegister _EventsRegister _PropertyRegister'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -2820,7 +2820,7 @@ Core.Object
 Core.Object
 	subclass: #'Kernel.InputState'
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
-	classVariableNames: 'MaxIdleSleep SamplingInterval UserInterruptSignal'
+	classVariableNames: 'MaxIdleSleep SamplingInterval'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -2996,7 +2996,7 @@ Core.Object
 Core.Object
 	subclass: #'Kernel.ProcessorScheduler'
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
-	classVariableNames: 'ConstWriteSignal InterruptSelectors'
+	classVariableNames: 'InterruptSelectors'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -3100,7 +3100,7 @@ Core.Object
 Core.Object
 	subclass: #'Core.Stream'
 	instanceVariableNames: ''
-	classVariableNames: 'EndOfStreamSignal'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -4011,6 +4011,14 @@ Core.Error
 	classConstants: {}!
 
 Core.Error
+	subclass: #'Core.AssertionFailure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Error
 	subclass: #'Core.BoundsError'
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
@@ -4035,7 +4043,23 @@ Core.Error
 	classConstants: {}!
 
 Core.Error
+	subclass: #'Core.ConstWriteError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Error
 	subclass: #'OS.CRTError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Error
+	subclass: #'Core.EndOfStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -4108,6 +4132,14 @@ Core.Error
 
 Core.Error
 	subclass: #'Kernel.SubclassResponsibilityError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Error
+	subclass: #'Core.UserInterrupt'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

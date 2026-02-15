@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyles presenter model backcolor preferredExtent flags contextMenu font events interactor'
-	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
+	classVariableNames: 'MessageMap NextId WndClassAtom'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
 	classInstanceVariableNames: 'theme'
 	classConstants: {
@@ -5608,7 +5608,6 @@ initialize
 	"
 
 	NextId := 0.
-	ViewClosedError := Signal description: 'View closed'.
 	"Note that the message map is not const variable, since view packages may add new messages they want to receive, although must do so by sending #registerMessageMappings:"
 	MessageMap isNil
 		ifTrue: 
@@ -5920,8 +5919,7 @@ unregisterMessageMappings: aCollectionOfIntegers
 	MessageMap whileMutableDo: [aCollectionOfIntegers do: [:each | MessageMap at: each + 1 put: nil]]!
 
 viewClosedError
-	"Answer the exceptionSignaler/exceptionSelector used to signal/catch common
-	control message errors."
+	"Answer the exceptionSignaler/exceptionSelector used to signal/catch common control message errors."
 
 	^ViewClosedError!
 

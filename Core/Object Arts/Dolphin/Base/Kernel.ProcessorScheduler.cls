@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Kernel.ProcessorScheduler'
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
-	classVariableNames: 'ConstWriteSignal InterruptSelectors'
+	classVariableNames: 'InterruptSelectors'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -172,10 +172,7 @@ constWrite: exceptionRecordBytes
 	| exceptionRecord |
 	self enableInterrupts.
 	exceptionRecord := EXCEPTION_RECORD fromBytes: exceptionRecordBytes.
-	^self constWriteSignal signalWith: exceptionRecord!
-
-constWriteSignal
-	^ConstWriteSignal!
+	^ConstWriteError signalWith: exceptionRecord!
 
 crtFault: aByteArray
 	"Private - The VM generated a CRT Fault interrupt. The argument is the relevant exception
@@ -645,7 +642,6 @@ callback:return:!callbacks!private! !
 callback:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
 cannotReturn:!exceptions!not restartable!private! !
 constWrite:!interrupts-handling!private! !
-constWriteSignal!accessing!private! !
 crtFault:!interrupts-handling!private! !
 enableAsyncEvents:!interrupts-status!private! !
 enableInterrupts!interrupts-status!private! !
@@ -711,7 +707,6 @@ initialize
 		ProcessorScheduler initialize
 	"
 
-	ConstWriteSignal := Signal description: 'Attempt to update read-only object'.
 	self initializeInterruptSelectors!
 
 initializeInterruptSelectors

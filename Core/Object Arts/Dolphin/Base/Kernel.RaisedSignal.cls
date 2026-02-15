@@ -28,13 +28,13 @@ defaultAction
 
 	^self signalType defaultAction: self!
 
+defaultMessageText
+	^signalType description!
+
 isResumable
 	"Answer whether the receiver represents a resumable error. This depends on the originating Signal."
 
 	^self signalType isResumable!
-
-messageText
-	^messageText ifNil: [signalType description]!
 
 signalType
 	"Private - Answer the instance of Signal for which the receiver is representing
@@ -51,8 +51,8 @@ signalType: aSignal
 !Kernel.RaisedSignal categoriesForMethods!
 _descriptionFormat!displaying!public! !
 defaultAction!handling!public! !
+defaultMessageText!accessing!private! !
 isResumable!public!testing! !
-messageText!accessing!public! !
 signalType!accessing!private! !
 signalType:!accessing!private! !
 !

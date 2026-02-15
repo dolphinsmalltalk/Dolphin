@@ -3,7 +3,7 @@
 nil
 	subclass: #'Core.Object'
 	instanceVariableNames: ''
-	classVariableNames: '_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister'
+	classVariableNames: '_DependentsRegister _EventsRegister _PropertyRegister'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -92,8 +92,7 @@ _primitiveError: anInteger at: index
 _primitiveError: anInteger at: index put: value
 	"Private - An at:put: operation on the receiver failed. Determine the cause of the error, and raise an appropriate error."
 
-	anInteger == _PrimitiveFailureCode.AccessViolation
-		ifTrue: [^Processor constWriteSignal signalWith: self].
+	anInteger == _PrimitiveFailureCode.AccessViolation ifTrue: [^ConstWriteError signalWith: self].
 	anInteger == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
 	anInteger == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: index].
 	anInteger == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
@@ -197,7 +196,7 @@ assert: aBlock
 	"Evaluates aBlock and signals an error if the result is not true. The default action is to bring up a
 	resumable walkback."
 
-	aBlock value ifFalse: [_AssertionFailureSignal signal]!
+	aBlock value ifFalse: [AssertionFailure signal]!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
@@ -368,7 +367,7 @@ basicResize: anInteger
 
 	<primitive: 101>
 	| answer |
-	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
+	self isImmutable ifTrue: [ConstWriteError signalWith: self].
 	answer := self class new: anInteger.
 	1 to: (anInteger min: self size) do: [:i | answer basicAt: i put: (self basicAt: i)].
 	self become: answer!
@@ -1203,7 +1202,7 @@ resize: anInteger
 
 	<primitive: 101>
 	| answer |
-	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
+	self isImmutable ifTrue: [ConstWriteError signalWith: self].
 	answer := self class new: anInteger.
 	1 to: (anInteger min: self size) do: [:i | answer at: i put: (self at: i)].
 	self become: answer!
@@ -1662,9 +1661,7 @@ initialize
 	self
 		initializeDependencyMechanism;
 		initializePropertyRegister;
-		initializeEventsRegister.
-	_AssertionFailureSignal isNil
-		ifTrue: [_AssertionFailureSignal := Signal resumableDescription: 'assertion failure']!
+		initializeEventsRegister!
 
 initializeDependencyMechanism
 	"Private - Initialize the dependency register provided for all objects which do not have their own dependency register."

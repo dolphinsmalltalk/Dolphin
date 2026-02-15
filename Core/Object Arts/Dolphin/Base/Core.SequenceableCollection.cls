@@ -1156,7 +1156,7 @@ replaceFrom: start to: stop withObject: replacementElement
 resize: anInteger
 	"Private - Resize the receiver to accommodate anInteger elements. Answer the receiver."
 
-	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
+	self isImmutable ifTrue: [ConstWriteError signalWith: self].
 	(self copyEmpty: anInteger)
 		replaceFrom: 1
 			to: (self size min: anInteger)

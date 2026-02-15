@@ -25,7 +25,7 @@ testAllRoots
 
 testClassBindingNames
 	self assert: Object classBindingNames asSortedArray
-		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
+		equals: #('_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
 
 testClassPoolsWellFormed
 	"https://github.com/dolphinsmalltalk/Dolphin/issues/562"
@@ -42,7 +42,7 @@ testClassPoolsWellFormed
 
 testClassVariableNames
 	self assert: Object classVariableNames asSortedArray
-		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister').
+		equals: #('_DependentsRegister' '_EventsRegister' '_PropertyRegister').
 	self assert: Kernel classVariableNames equals: #()!
 
 testComparing

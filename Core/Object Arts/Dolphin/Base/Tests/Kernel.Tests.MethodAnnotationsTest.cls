@@ -161,7 +161,7 @@ testRefersToLiteral
 testResize
 	| subject |
 	subject := self canonicalSubject.
-	self should: [subject resize: 2] raise: Processor constWriteSignal!
+	self should: [subject resize: 2] raise: ConstWriteError!
 
 testSelect
 	<ignoreNotImplementedSelectors: #(wibble)>

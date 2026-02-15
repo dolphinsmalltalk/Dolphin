@@ -80,7 +80,7 @@ testBindings
 	self assert: (bindings allSatisfy: [:each | each isVariableBinding]).
 	self assert: (bindings allSatisfy: [:each | each environment == objectClass]).
 	self assert: (bindings collect: [:each | each key]) sort
-		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister' 'ModelOnlyClassVariable')!
+		equals: #('_DependentsRegister' '_EventsRegister' '_PropertyRegister' 'ModelOnlyClassVariable')!
 
 testCategories
 	self assert: objectClass categoryNames equals: #('Kernel-Objects').
@@ -156,7 +156,7 @@ testDefinitionString
 		equals: 'nil
 	subclass: #''Core.Object''
 	instanceVariableNames: ''''
-	classVariableNames: ''_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister ModelOnlyClassVariable''
+	classVariableNames: ''_DependentsRegister _EventsRegister _PropertyRegister ModelOnlyClassVariable''
 	imports: #()
 	classInstanceVariableNames: ''''
 	classConstants: {}'.

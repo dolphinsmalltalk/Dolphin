@@ -16,12 +16,10 @@ Core.OperationAborted comment: 'Generic exception that can be signalled when the
 
 !Core.OperationAborted methodsFor!
 
-messageText
-	"Answer the <readableString> message text for the receiver."
-
-	^messageText ?? 'Operation aborted'! !
+defaultMessageText
+	^'Operation aborted'! !
 
 !Core.OperationAborted categoriesForMethods!
-messageText!accessing!public! !
+defaultMessageText!accessing!private! !
 !
 

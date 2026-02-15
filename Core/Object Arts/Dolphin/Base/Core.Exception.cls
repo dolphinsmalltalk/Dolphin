@@ -168,6 +168,9 @@ defaultAction
 
 	^self subclassResponsibility!
 
+defaultMessageText
+	^nil!
+
 description
 	"Answer a <readableString> describing the exception which the receiver represents. Note that
 	if 'an explicit message text was provided by the signaler of the exception, that text should
@@ -260,7 +263,7 @@ messageText
 	"Answer the <readableString> message text supplied when the receiver was signalled,
 	or <nil> if none was provided."
 
-	^messageText!
+	^messageText ifNil: [messageText := self defaultMessageText]!
 
 messageText: signalerText
 	"Set the exceptions message text to the readableString argument, <signalerText>."
@@ -542,6 +545,7 @@ abortRetryIgnore!handler responses!public! !
 abortRetryOrIgnore!handling!public! !
 beep!parping!public! !
 defaultAction!handling!public! !
+defaultMessageText!accessing!private! !
 description!displaying!public! !
 displayOn:!printing!public! !
 exit:!handler responses!public! !

@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Kernel.InputState'
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
-	classVariableNames: 'MaxIdleSleep SamplingInterval UserInterruptSignal'
+	classVariableNames: 'MaxIdleSleep SamplingInterval'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -150,16 +150,16 @@ forkIdler
 	idler := (
 			["Notification signal: self class name, ': Starting Idler process...'."
 			
-			[[self idleLoop] on: self userInterruptSignal
+			[[self idleLoop] on: UserInterrupt
 				do: 
-					[:s | 
+					[:s |
 					"Assume user really wants to interrupt main UI process"
 					self main queueInterrupt: Processor userBreakInterrupt.
 					"Must explicitly resume to continue idle loop"
-					s resume]] 
+					s resume]]
 					ifCurtailed: 
 						["If the idler terminates for some reason, start another"
-						Processor activeProcess == idler ifTrue: [self forkIdler]]] 
+						Processor activeProcess == idler ifTrue: [self forkIdler]]]
 					forkAt: Processor systemBasePriority
 					maxStack: 16384)
 				name: 'Idler';
@@ -565,13 +565,6 @@ uiIdle
 
 	^true!
 
-userInterruptSignal
-	"Answer the user interrupt <Signal>."
-
-	UserInterruptSignal isNil
-		ifTrue: [UserInterruptSignal := Signal resumableDescription: 'User Interrupt'].
-	^UserInterruptSignal!
-
 waitForInput: aBoolean 
 	"Private - The input queues are empty, so quiesce the main process to avoid consuming CPU
 	cycles unecessarily, and to provide an opportunity for background processes to run. Before
@@ -705,7 +698,6 @@ startIdleTimer!idling!private! !
 stopIdleTimer!idling!private! !
 topLevelWindows!enumerating!public! !
 uiIdle!idling!private! !
-userInterruptSignal!constants!public! !
 waitForInput:!idling!private! !
 windowAt:ifAbsent:!accessing!public! !
 windowAt:put:!accessing!public! !

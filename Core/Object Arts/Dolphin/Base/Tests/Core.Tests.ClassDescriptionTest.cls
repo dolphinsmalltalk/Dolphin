@@ -68,7 +68,7 @@ testSubclasses
 			self assert: each subclasses equals: each subclasses distinct]!
 
 testWhichClassDefinesClassVar
-	self assert: (self canonicalInstance whichClassDefinesClassVar: '_AssertionFailureSignal')
+	self assert: (self canonicalInstance whichClassDefinesClassVar: '_DependentsRegister')
 		identicalTo: Object! !
 
 !Core.Tests.ClassDescriptionTest categoriesForMethods!

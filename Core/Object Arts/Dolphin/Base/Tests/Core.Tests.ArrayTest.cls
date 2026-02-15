@@ -119,7 +119,7 @@ testResize
 	self assert: (#(1 2 3) copy resize: 3) equals: #(1 2 3).
 	self assert: (#(1 2 3) copy resize: 4) equals: #(1 2 3 nil).
 	self assert: (#(1 2 3) copy resize: 5) equals: #(1 2 3 nil nil).
-	self should: [#(1 2) resize: 1] raise: Processor constWriteSignal!
+	self should: [#(1 2) resize: 1] raise: ConstWriteError!
 
 testStoreOnLiteral
 	| stream storeString rehydrated array |

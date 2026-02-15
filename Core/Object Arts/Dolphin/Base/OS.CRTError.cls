@@ -26,6 +26,11 @@ _descriptionFormat
 
 	^'%2 (16r%1!!X!!: %3)'!
 
+defaultMessageText
+	"Private - Answer the standard error message text for the errno stored in the tag."
+
+	^self strerror!
+
 errno
 	"Answer the <integer> C-runtime library error number."
 
@@ -36,13 +41,6 @@ initialize
 	code reported by a C runtime function library (i.e. that returned by CRTLibrary>>errno)."
 
 	self tag: Ucrt errno!
-
-messageText
-	"Answer the <readableString> message text supplied when the receiver was signalled, or, if
-	none was specified, the standard error message text for the errno stored in the tag."
-
-	(messageText isNil or: [messageText isEmpty]) ifTrue: [messageText := self strerror].
-	^messageText!
 
 strerror
 	"Answer a <readableString> description of the receiver's error number."
@@ -59,9 +57,9 @@ strerror
 !OS.CRTError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
+defaultMessageText!accessing!private! !
 errno!accessing!public! !
 initialize!initializing!private! !
-messageText!accessing!public! !
 strerror!accessing!public! !
 !
 

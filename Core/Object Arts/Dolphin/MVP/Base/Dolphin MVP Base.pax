@@ -149,6 +149,7 @@ package setClassNames: #(
 	#{UI.STBViewProxy}
 	#{UI.ValuePresenter}
 	#{UI.View}
+	#{UI.ViewClosedError}
 	#{UI.ViewState}
 	#{UI.WindowsEvent}
 ).
@@ -1599,7 +1600,7 @@ Core.Object
 Core.Object
 	subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyles presenter model backcolor preferredExtent flags contextMenu font events interactor'
-	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
+	classVariableNames: 'MessageMap NextId WndClassAtom'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
 	classInstanceVariableNames: 'theme'
 	classConstants: {
@@ -1813,6 +1814,14 @@ UI.PointEvent
 
 UI.MouseEvent
 	subclass: #'UI.MouseWheelEvent'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Error
+	subclass: #'UI.ViewClosedError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

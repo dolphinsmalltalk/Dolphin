@@ -81,7 +81,7 @@ errorEndOfStream
 	"Raise an error to the effect that an attempt was made to read off the
 	end of the collection over which the receiver is streaming."
 
-	^Stream endOfStreamSignal signal: self!
+	^EndOfStream signal: self!
 
 newElement
 	"Private - Answer a new, empty, object to hold an element enumerated from the receiver."

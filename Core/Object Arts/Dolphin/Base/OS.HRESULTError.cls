@@ -30,6 +30,9 @@ _descriptionFormat
 		ifTrue: ['%2: %4']
 		ifFalse: ['HRESULT Error 0x%1!!X!!: %4 (%3)']!
 
+defaultMessageText
+	^self osErrorMessage!
+
 errorInfo
 	"Private - Answer the IErrorInfo/EXCEPINFO associated with the receiver."
 
@@ -58,12 +61,6 @@ hresult: hr
 
 	^self tag: (HRESULT fromInteger: hr)!
 
-messageText
-	"Answer the <readableString> message text supplied when the receiver was signalled,
-	or nil if none was provided."
-
-	^self hasMessageText ifTrue: [messageText] ifFalse: [self osErrorMessage]!
-
 osErrorMessage
 	"Answer a <String> representation of the HRESULT error code."
 
@@ -83,12 +80,12 @@ statusCode
 !OS.HRESULTError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
+defaultMessageText!accessing!private! !
 errorInfo!accessing!private! !
 errorInfo:!accessing!private! !
 hasMessageText!private!testing! !
 hresult!accessing!public! !
 hresult:!accessing!public! !
-messageText!accessing!public! !
 osErrorMessage!displaying!public! !
 source!accessing!public! !
 statusCode!accessing!public! !

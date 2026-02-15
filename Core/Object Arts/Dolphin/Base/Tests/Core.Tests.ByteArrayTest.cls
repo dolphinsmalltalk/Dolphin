@@ -176,7 +176,7 @@ testResize
 	self assert: (#[1 2 3] copy resize: 3) equals: #[1 2 3].
 	self assert: (#[1 2 3] copy resize: 4) equals: #[1 2 3 0].
 	self assert: (#[1 2 3] copy resize: 5) equals: #[1 2 3 0 0].
-	self should: [#[1 2] resize: 1] raise: Processor constWriteSignal!
+	self should: [#[1 2] resize: 1] raise: ConstWriteError!
 
 testStbRoundTrip
 	| subject bytes rehydrated |

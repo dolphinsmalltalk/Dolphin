@@ -38,7 +38,7 @@ errorEndOfStream
 	"Raise an error to the effect that an attempt was made to read off the
 	end of the collection over which the receiver is streaming."
 
-	^Stream endOfStreamSignal signalWith: self!
+	^EndOfStream signalWith: self!
 
 flush
 	"Flush the stream to its backing store."

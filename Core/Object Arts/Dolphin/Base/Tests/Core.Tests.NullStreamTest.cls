@@ -36,14 +36,14 @@ testIsEmpty
 testNext
 	| subject |
 	subject := self streamOn: 'abc'.
-	self should: [subject next] raise: Stream endOfStreamSignal.
-	self should: [subject next: 2] raise: Stream endOfStreamSignal.
+	self should: [subject next] raise: EndOfStream.
+	self should: [subject next: 2] raise: EndOfStream.
 	self should: 
 			[subject
 				next: 2
 				into: (String new: 2)
 				startingAt: 1]
-		raise: Stream endOfStreamSignal!
+		raise: EndOfStream!
 
 testNextAvailable
 	| subject |
@@ -102,7 +102,7 @@ testPosition
 testSkip
 	| subject |
 	subject := self streamOn: 'abc'.
-	self should: [subject skip: 1] raise: Stream endOfStreamSignal!
+	self should: [subject skip: 1] raise: EndOfStream!
 
 testSkipThrough
 	| subject |

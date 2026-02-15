@@ -62,6 +62,7 @@ package setMethodNames: #(
 	#(#{Core.Time class} #icon)
 	#(#{Core.True class} #icon)
 	#(#{Core.UndefinedObject class} #icon)
+	#(#{Core.UserInterrupt class} #icon)
 	#(#{Core.Utf16String class} #icon)
 	#(#{Core.Utf8String class} #icon)
 	#(#{Core.UtfEncodedString class} #icon)
@@ -820,6 +821,17 @@ icon
 		yourself)! !
 
 !Core.UndefinedObject class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Core.UserInterrupt class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Graphics.Icon warning! !
+
+!Core.UserInterrupt class categoriesForMethods!
 icon!constants!public! !
 !
 
