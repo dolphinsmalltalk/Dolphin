@@ -40,7 +40,7 @@ exceptionName
 	"Answer the <readableString> name of the Win32 exception code associated with the receiver."
 
 	^ExceptionNames
-		at: self exceptionCode ifAbsent: [self exceptionCode hex]!
+		at: self exceptionCode ifAbsent: ['0x', (self exceptionCode printStringBase: 16)]!
 
 exceptionRecord
 	"Answer an <EXCEPTION_RECORD> detailing the original Win32 structured exception."

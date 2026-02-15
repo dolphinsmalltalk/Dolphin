@@ -57,7 +57,7 @@ isLiteral: visitedSet
 	representation which can be directly understood by the compiler)."
 
 	^(visitedSet addNewElement: self)
-		and: [self class == ##(self) and: [self allSatisfy: [:element | element isLiteral: visitedSet]]]!
+		and: [self class == Array and: [self allSatisfy: [:element | element isLiteral: visitedSet]]]!
 
 isSelfEvaluating
 	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
@@ -69,7 +69,7 @@ isSelfEvaluating: visitedSet
 	representation which can be directly understood by the compiler)."
 
 	^(visitedSet addNewElement: self)
-		and: [self class == ##(self) and: [self allSatisfy: [:element | element isSelfEvaluating: visitedSet]]]!
+		and: [self class == Array and: [self allSatisfy: [:element | element isSelfEvaluating: visitedSet]]]!
 
 printOn: aStream do: aMonadicValuable
 	"Private - Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."

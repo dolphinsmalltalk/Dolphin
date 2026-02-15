@@ -144,7 +144,7 @@ isUnbound
 	"Answer whether the receiver is unbound (i.e. not linked into a class' method dictionary)."
 
 	| installed |
-	installed := self methodClass compiledMethodAt: self selector ifAbsent: nil.
+	installed := methodClass methodDictionary at: self selector ifAbsent: nil.
 	^installed isNil or: [installed sourceDescriptor ~= self sourceDescriptor]!
 
 loseSource

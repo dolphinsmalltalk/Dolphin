@@ -26,12 +26,11 @@ allClasses
 	"Answer a <sequencedReadableCollection> of all of the classes in the system, in breadth-first order.
 	There is no particular ordering at a particular depth."
 
-	allClasses isNil
-		ifTrue: 
+	^allClasses
+		ifNil: 
 			[allClasses := Class allClasses
 						beImmutableObject;
-						yourself].
-	^allClasses!
+						yourself]!
 
 allClassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the <Class>es that are values of bindings in the receiver, including aliases, and recursively in any of the nested namespaces."

@@ -125,8 +125,9 @@ printOn: aStream
 
 	aStream
 		basicPrint: self;
-		nextPut: $(;
-		nextPutAll: (handle isNil ifTrue: ['NULL'] ifFalse: [handle asInteger printStringRadix: 16]);
+		nextPut: $(.
+	handle isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream display: handle].
+	aStream
 		nextPutAll: ' - ';
 		print: self fileName;
 		nextPut: $)!

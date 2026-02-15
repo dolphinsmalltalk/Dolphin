@@ -34,7 +34,9 @@ icuCaseFoldingOptions
 isTurkic
 	"Answer whether the receiver is a turkic locale (tr or az language)."
 
-	^(self tag beginsWith: 'tr') or: [tag beginsWith: 'az']!
+	| primary2 |
+	primary2 := self tag copyFrom: 1 to: 2.
+	^primary2 = 'tr' or: [primary2 = 'az']!
 
 lcid: anLCID
 	lcid := anLCID.

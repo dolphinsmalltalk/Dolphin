@@ -23,6 +23,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.MessageSend class} #onPreStripImage)
 	#(#{Core.Object class} #onPreStripImage)
 	#(#{External.Structure class} #fullyCompileDefinition)
 	#(#{External.Structure class} #removeTemplate)
@@ -141,13 +142,24 @@ External.Structure
 
 "Loose Methods"!
 
+!Core.MessageSend class methodsFor!
+
+onPreStripImage
+	EmptySend := nil! !
+
+!Core.MessageSend class categoriesForMethods!
+onPreStripImage!public! !
+!
+
 !Core.Object class methodsFor!
 
 onPreStripImage
 	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
 
-	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
-	classPool removeKey: '_PropertyRegister' ifAbsent: nil! !
+	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding. Similarly WeakIdentityDictionary is used for the dependents and events registers, but may not be required."
+
+	#('_PropertyRegister' '_DependentsRegister' '_EventsRegister')
+		do: [:each | classPool removeKey: each ifAbsent: nil]! !
 
 !Core.Object class categoriesForMethods!
 onPreStripImage!class hierarchy-removing!private! !

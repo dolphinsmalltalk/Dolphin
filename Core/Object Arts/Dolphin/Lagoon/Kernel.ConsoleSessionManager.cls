@@ -105,8 +105,8 @@ quit: anInteger
 	^false	"cancelled"!
 
 registerConsoleCtrlHandler
-	#todo "Rather ironically, registering a console ctrl handler does not work very well in a console app any more.  The signal is delivered on a background thread, which the Dolphin VM will marshal across the to main 	thread by sending it via the message queue. In a typical console application that is not going idle, the  signal will not be received.
-	One way to solve this would be to add a console control handler to the VM and send through the events to the image using the interrupt mechanism. In the meantime, don't register a handler so that Ctrl+C will perform the default action and above the app."
+	#todo "Rather ironically, registering a console ctrl handler does not work very well in a console app any more.  The signal is delivered on a background thread, which the Dolphin VM will marshal across the to main thread by sending it via the message queue. In a typical console application that is not going idle, the  signal will not be received.
+	One way to solve this would be to add a console control handler to the VM and send through the events to the image using the interrupt mechanism. In the meantime, don't register a handler so that Ctrl+C will perform the default action and abort the app."
 !
 
 startUI

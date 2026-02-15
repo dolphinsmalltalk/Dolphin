@@ -28,14 +28,14 @@ asExternalAddress
 	^self value!
 
 value
-	"Answer the <External.Address> value of the receiver's 'value' field."
+	"Answer the <Address> value of the receiver's 'value' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_value) asExternalAddress!
 
-value: anExternalAddress
-	"Set the receiver's 'value' field to the value of the argument, anExternalAddress"
+value: anAddress
+	"Set the receiver's 'value' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_value put: anExternalAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_value put: anAddress! !
 
 !External.LPVOID categoriesForMethods!
 asExternalAddress!converting!public! !
@@ -46,7 +46,7 @@ value:!**compiled accessors**!public! !
 !External.LPVOID class methodsFor!
 
 byteSize
-	^_LPVOID_Size!
+	^VMConstants.IntPtrSize!
 
 defineFields
 	"Define the fields of the LPVOID 'structure'.
@@ -75,7 +75,7 @@ uninitialize
 	VM registryAt: self name put: nil! !
 
 !External.LPVOID class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
+byteSize!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 new!instance creation!public! !

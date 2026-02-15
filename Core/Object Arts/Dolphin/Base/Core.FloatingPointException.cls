@@ -53,18 +53,13 @@ _descriptionArguments
 	format string."
 
 	| record |
-	record := self _ieeeRecord.
+	record := self tag.
 	^super _descriptionArguments , {record causeDescription. record operationName}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
 	^'Floating point error: %3 in %4'!
-
-_ieeeRecord
-	"Private - Answer the IEEE exception record associated with the receiver."
-
-	^self tag!
 
 isOverflow
 	"Answer whether receiver represents a floating point overflow error."
@@ -81,7 +76,6 @@ isUnderflow
 !Core.FloatingPointException categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
-_ieeeRecord!accessing!private! !
 isOverflow!public!testing! !
 isUnderflow!public!testing! !
 !

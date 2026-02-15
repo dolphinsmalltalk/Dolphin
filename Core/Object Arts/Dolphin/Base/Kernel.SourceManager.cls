@@ -350,11 +350,6 @@ openSourcesFile: filePath
 				sourceFileIndex: SourcesIndex;
 				yourself)!
 
-packageManager
-	"Private - Answer the package manager to be used by the receiver."
-
-	^Package manager!
-
 sourceFileFromDescriptor: sourceDescriptor
 	"Private - Answer the <SourceFiler> corresponding to the <integer> source descriptor,
 	sourceDescriptor, which encodes the index of the filer in its first 4 bits. The remaining
@@ -513,7 +508,6 @@ openNewChangesFile:!helpers!private! !
 openSources!operations-source files!private! !
 openSources:!operations-source files!private! !
 openSourcesFile:!operations-source files!private! !
-packageManager!accessing!must strip!private! !
 sourceFileFromDescriptor:!private!source filing! !
 sourceFilerClass!constants!public! !
 sourceIndexFromDescriptor:!private!source filing! !

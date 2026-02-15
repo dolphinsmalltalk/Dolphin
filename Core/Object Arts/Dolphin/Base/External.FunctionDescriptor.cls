@@ -225,17 +225,12 @@ convention
 descriptor
 	^descriptor!
 
-descriptor: aByteArray
-	"Private - Set the descriptor byte array for the external function described by the receiver."
+descriptor: aByteArray literals: aSequenceableCollection
+	"Private - Initialize the receiver."
 
-	descriptor := aByteArray!
-
-literals: args
-	"Set the literal argument parameters to those in the SequenceableCollection argument, args.
-	Answer the receiver."
-
-	args keysAndValuesDo: [:i :e | self at: i put: e]
-	!
+	descriptor := aByteArray.
+	aSequenceableCollection keysAndValuesDo: [:i :e | self at: i put: e].
+	^self!
 
 name
 	"Answer the 'name' of the external function described by the receiver."
@@ -303,13 +298,12 @@ calleeCleans!public!testing! !
 callingConvention!accessing!private! !
 convention!accessing!private! !
 descriptor!accessing!private! !
-descriptor:!accessing!private! !
-literals:!accessing!public! !
+descriptor:literals:!accessing!private! !
 name!accessing!public! !
 name:!accessing!public! !
 printDescription!printing!public! !
 printDescriptionOn:!printing!private! !
-printOn:!printing!public! !
+printOn:!development!printing!public! !
 retType!accessing!private! !
 returnType!accessing!private! !
 !
@@ -346,8 +340,7 @@ descriptor: aByteArray literals: aSequenceableCollection
 	"Private - Answer an instance of the receiver instantiated from the arguments."
 
 	^(self new: aSequenceableCollection size)
-		descriptor: aByteArray;
-		literals: aSequenceableCollection;
+		descriptor: aByteArray literals: aSequenceableCollection;
 		yourself!
 
 fromString: aString environment: aNamespace

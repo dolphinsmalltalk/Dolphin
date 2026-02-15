@@ -112,7 +112,7 @@ testFromHandleOnFile
 	| handle written read |
 	filestream := self tempWriteStream.
 	self deny: filestream isNonBlocking.
-	written := 'Hello world'.
+	written := 'Hello🐬world'.
 	filestream nextPutAll: written.
 	filestream close.
 	handle := Ucrt

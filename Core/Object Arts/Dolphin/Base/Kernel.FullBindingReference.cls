@@ -207,6 +207,12 @@ setPathString: aString
 	<mutable>
 	pathString := aString!
 
+setPathString: aString path: anArray private: aBoolean
+	pathString := aString.
+	path := anArray.
+	private := aBoolean.
+	^self!
+
 setScope: aBindingScope
 	self shouldNotImplement!
 
@@ -255,6 +261,7 @@ setBinding:!initializing!private! !
 setGeneration:!initializing!private! !
 setPath:!initializing!private! !
 setPathString:!initializing!private! !
+setPathString:path:private:!initializing!private! !
 setScope:!initializing!private! !
 undeclare!operations!public! !
 unqualifiedPathLiteralPrefix!constants!private! !
@@ -266,10 +273,9 @@ valueOrNil!accessing!public! !
 newPathString: aString path: anArray private: aBoolean
 	<primitive: 157>
 	^self basicNew
-		setPathString: aString;
-		setPath: anArray;
-		isPrivate: aBoolean;
-		yourself!
+		setPathString: aString
+		path: anArray
+		private: aBoolean!
 
 path: aSequencedReadableCollection private: aBoolean
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."

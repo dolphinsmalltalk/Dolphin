@@ -21,11 +21,12 @@ displayOn: aPuttableStream
 
 	"Implementation note: We have to reduce the provided Locale to its primary because the system message text is only available in a limited range of languages, and for most locale's the FormatMessage from system operation will fail."
 
-	| buf len flags hModule code lcid |
+	| buf len flags hModule code lcid isNt |
 	buf := Utf16String newFixed: 255.
 	flags := ##(FORMAT_MESSAGE_FROM_SYSTEM bitOr: FORMAT_MESSAGE_IGNORE_INSERTS).
 	code := self asInteger.
-	hModule := (code allMask: FACILITY_NT_BIT)
+	isNt := code allMask: FACILITY_NT_BIT.
+	hModule := isNt
 				ifTrue: 
 					[flags := flags bitOr: FORMAT_MESSAGE_FROM_HMODULE.
 					code := code bitAnd: ##(FACILITY_NT_BIT bitInvert).
@@ -48,9 +49,9 @@ displayOn: aPuttableStream
 		ifTrue: 
 			[aPuttableStream
 				nextPutAll: 'Unrecognised ';
-				nextPutAll: (self isNtStatus ifTrue: ['NTSTATUS'] ifFalse: ['HRESULT']);
-				nextPutAll: ' - ';
-				nextPutAll: (self asUnsignedInteger printStringRadix: 16)]
+				nextPutAll: (isNt ifTrue: ['NTSTATUS'] ifFalse: ['HRESULT']);
+				nextPutAll: ' - 0x'.
+			self asUnsignedInteger printOn: aPuttableStream base: 16]
 		ifFalse: 
 			["Windows appends trailing line delimiter, and breaks up the text into lines too, 
 			so we remove them."
@@ -105,7 +106,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPutAll: '(0x'.
-	self asUnsignedInteger printOn: aStream base: 16 showRadix: false.
+	self asUnsignedInteger printOn: aStream base: 16.
 	aStream
 		nextPutAll: ' - ';
 		display: self;

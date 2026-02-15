@@ -22,7 +22,7 @@ annotationsFor: aClass
 	^(register lookup: aClass) ifNil: [self addAnnotationsFor: aClass]!
 
 initialize
-	register := IdentityDictionary new.
+	self reset.
 	Smalltalk
 		when: #methodAdded:
 			send: #onMethodAdded:
@@ -63,7 +63,10 @@ onMethodUpdated: aCompilationResult
 			ifNotNil: 
 				[:annotations |
 				"Any method update, whether annotated or not, may have an impact on the command annotations. For example annotations may be removed."
-				annotations onMethodUpdated: aCompilationResult]! !
+				annotations onMethodUpdated: aCompilationResult]!
+
+reset
+	register := IdentityDictionary new! !
 
 !UI.CommandAnnotationsRegister categoriesForMethods!
 addAnnotationsFor:!helpers!private! !
@@ -73,6 +76,7 @@ onClassRemoved:!event handling!private! !
 onMethodAdded:!event handling!private! !
 onMethodRemoved:!private! !
 onMethodUpdated:!event handling!private! !
+reset!initializing!public! !
 !
 
 !UI.CommandAnnotationsRegister class methodsFor!
@@ -82,11 +86,15 @@ initialize
 
 	Current := self new initialize!
 
+onPreStripImage
+	Current reset!
+
 uninitialize
 	Smalltalk removeEventsTriggeredFor: Current! !
 
 !UI.CommandAnnotationsRegister class categoriesForMethods!
 initialize!class initialization!public! !
+onPreStripImage!public! !
 uninitialize!class hierarchy-removing!public! !
 !
 

@@ -132,11 +132,13 @@ bindingScope
 declare
 	"Create a binding in the target namespace that would be resolved by the receiver, if none currently exists. Answer the declared or existing <VariableBinding>."
 
+	| parts |
+	parts := self path.
 	^self environment
 		ifNil: 
 			[self bindingScope localScope
-				errorNotFound: (BindingReference path: self path allButLast scope: self scope)]
-		ifNotNil: [:env | env declareVariable: self path last]!
+				errorNotFound: (BindingReference path: (parts copyFrom: 1 to: parts size - 1) scope: self scope)]
+		ifNotNil: [:env | env declareVariable: parts last]!
 
 declare: anObject
 	"Create a binding in the target namespace that would be resolved by the receiver, if none currently exists.
@@ -273,11 +275,14 @@ meta
 namespaceBinding
 	"Answer a <VariableBinding> for the namespace (a Class, which may be a Namespace) in which the referenced binding should be found (if it exists). If any of the namespaces on the binding path do not exist, an error will be thrown."
 
-	| parts scope |
+	| parts scope length |
 	scope := self bindingScope.
 	parts := self path.
-	^parts size > 1
-		ifTrue: [scope localScope resolveBindingPath: parts allButLast environment: scope environment]
+	length := parts size.
+	^length > 1
+		ifTrue: 
+			[scope localScope resolveBindingPath: (parts copyFrom: 1 to: length - 1)
+				environment: scope environment]
 		ifFalse: [scope localScope binding]!
 
 owningPackage: aPackage 

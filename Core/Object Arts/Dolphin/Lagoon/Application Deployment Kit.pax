@@ -299,7 +299,7 @@ defaultSessionManagerClass
 
 deploy
 	self canDeploy ifFalse: [self error: 'Deployment configuration incomplete'].
-	SessionManager inputState queueDeferredAction: (MessageSend receiver: self selector: #stripAndSaveWithProgress) !
+	SessionManager inputState queueDeferredAction: [self stripAndSaveWithProgress]!
 
 dpiAwareness
 	^DpiAwareness fromHandle: self dpiAwarenessContext!

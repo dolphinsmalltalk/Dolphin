@@ -209,7 +209,7 @@ clear
 	self clearProcAddresses!
 
 clearProcAddresses
-	self methodsDo: [:m | m clear]!
+	self methodDictionary do: [:each | each clear]!
 
 closeAllDefaults
 	"Private - Close all open default libraries."

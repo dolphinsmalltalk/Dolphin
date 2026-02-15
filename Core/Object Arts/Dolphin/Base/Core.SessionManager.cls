@@ -224,8 +224,9 @@ createInputState
 
 createSentinel
 	sentry := Kernel32
-				createMutex: nil
-				bInitialOwner: false
+				createEvent: nil
+				bManualReset: false
+				bInitialState: false
 				lpName: self sentinelName.
 	^Kernel32 getLastError == ERROR_ALREADY_EXISTS!
 
@@ -740,7 +741,7 @@ openEventLog
 	^eventLogHandle!
 
 openFd: anInteger mode: aSymbol
-	^(Ucrt _get_osfhandle: anInteger) asSignedInteger < 0
+	^((Ucrt _get_osfhandle: anInteger) intPtrAtOffset: 0) < 0
 		ifTrue: 
 			["stdio file descriptor is not currently established, attach to the console handle"
 			self consoleStreamClass
@@ -1108,7 +1109,7 @@ warning: aString
 windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session."
 
-	^File windowsDirectory! !
+	^Kernel32 getSystemWindowsDirectory! !
 
 !Core.SessionManager categoriesForMethods!
 allocConsole!operations!private! !

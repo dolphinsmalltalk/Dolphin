@@ -951,7 +951,7 @@ browserEnvFromDom: anIXMLDOMDocument
 					env addClass: class class
 						selectors: (classMethods collect: [:eachMethod | eachMethod text asSymbol])]].
 	model := RBModel onEnvironment: env.
-	retainedSharedVars := (manifest selectNodes: 'RemainingSharedVariables/VariableBinding')
+	retainedSharedVars := (manifest selectNodes: 'SharedVariables/VariableBinding')
 				collect: [:each | each text].
 	deletedSharedVars := LookupTable new.
 	model rootNamespace allClassesDo: 

@@ -110,7 +110,7 @@ fromInteger: anInteger
 
 !External.INTEGER class categoriesForMethods!
 decompileDefinition!public! !
-defineTemplate!public!template definition! !
+defineTemplate!development!public!template definition! !
 fromInteger:!instance creation!public! !
 !
 

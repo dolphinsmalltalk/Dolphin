@@ -161,8 +161,8 @@ _basicDeleteMethod: aCompiledMethod
 			[:setSelector |
 			aCompiledMethod methodClass withAllSubclassesDo: 
 					[:each |
-					(each canUnderstand: getSelector)
-						ifFalse: 
+					(each lookupMethod: getSelector) isNil
+						ifTrue: 
 							[(each compiledMethodAt: setSelector ifAbsent: nil)
 								ifNotNil: [:setter | deploymentContext _aspectSetters remove: setter ifAbsent: nil]]]].
 	deploymentContext _basicDeleteMethod: aCompiledMethod.
@@ -183,7 +183,8 @@ _buildApplication
 	self _logSentMessages: messageMap.
 	messageMap := nil.
 	self _finishedWithStripping.
-	self _shrinkSymbolTable]
+	[Symbol resizeTable: 20] forkAt: Processor timingPriority.
+	self]
 			on: Notification
 			do: 
 				[:ex |
@@ -283,7 +284,7 @@ _classReferencesToIgnore
 
 	^Set new
 		addAll: self notRequiredClasses;
-		addAll: self developmentClasses;
+		addAll: deploymentContext developmentClasses;
 		yourself!
 
 _classRemovingMethods
@@ -384,7 +385,7 @@ _finalActions
 			on: Error
 			do: [:ex | self _onError: ex].
 	self
-		_finishedWithAll: #(#stripRedundantMethods #_removeRedundantMethods #_removeRedundantMethodsOnceFrom: #_logSentMessages: #_allMethodsInClasses:do: #_allResourcesStripped #_basicDeleteMethod: #_messagesSentByClasses: #_resourcesForClasses: #_deleteMethods: #_removeMethods:reason:force: #_logMethod: #_preservedMessages #_speciallySentMessages #_finishedWithStripping #stripRedundantMethods #_removeRedundantMethods #_removeRedundantMethodsOnceFrom: #_saveBlock #_logSentMessages: #_finishedWithStripping #_shrinkSymbolTable #_buildApplication).
+		_finishedWithAll: #(#stripRedundantMethods #_removeRedundantMethods #_removeRedundantMethodsOnceFrom: #_logSentMessages: #_allMethodsInClasses:do: #_allResourcesStripped #_basicDeleteMethod: #_messagesSentByClasses: #_resourcesForClasses: #_deleteMethods: #_removeMethods:reason:force: #_logMethod: #_preservedMessages #_speciallySentMessages #_finishedWithStripping #stripRedundantMethods #_removeRedundantMethods #_removeRedundantMethodsOnceFrom: #_saveBlock #_logSentMessages: #_finishedWithStripping #_buildApplication).
 	self
 		_finishedWithAll: #(#_removeMyClass #_finalActions #_saveExecutable #_logManifest #_startElement:attributes: #_startElement:attributes:close: #_endElement: #_notify: #_onError: #_finishedWithAll:).
 	deploymentContext := nil!
@@ -472,11 +473,12 @@ _foldDuplicateConstants
 		_finishedWithAll: #(#stripDuplicateBytecodes #stripDuplicateStrings #_foldDuplicateLiterals #_foldDuplicateBytecodes #_logFold:folded:total:)!
 
 _getClassInstanceStats
-	| stats classes totalInstances totalMemory |
+	| stats classes metaInstances metaMemory |
+	self _collectGarbage: 1.
 	stats := MemoryManager current primInstanceStats: nil.
 	classes := IdentityDictionary new: stats size // 6.
-	totalInstances := 0.
-	totalMemory := 0.
+	metaInstances := 0.
+	metaMemory := 0.
 	1 to: stats size
 		by: 3
 		do: 
@@ -484,12 +486,13 @@ _getClassInstanceStats
 			(stats at: i) isMeta
 				ifTrue: 
 					[| instClass |
-					totalInstances := totalInstances + (stats at: i + 1).
-					totalMemory := totalMemory + (stats at: i + 2).
+					metaInstances := metaInstances + (stats at: i + 1).
+					metaMemory := metaMemory + (stats at: i + 2).
 					instClass := (stats at: i) instanceClass.
 					(classes includesKey: instClass) ifFalse: [classes at: instClass put: #(0 0)]]
 				ifFalse: [classes at: (stats at: i) put: {stats at: i + 1. stats at: i + 2}]].
-	classes at: Class put: {totalInstances. totalMemory}.
+	"Not really instances of Class, rather instances of the metaclasses, but we need to account for them somewhere"
+	classes at: Class put: {metaInstances. metaMemory}.
 	^classes!
 
 _getExecutablePath
@@ -583,6 +586,7 @@ _logImageStats
 	"Private - Dump some stats about the image to the log file to help determine
 	the effectiveness of the stripping process."
 
+	MemoryManager current primCompact.
 	self
 		_startElement: 'ImageStatistics' attributes: #();
 		_logElement: 'ObjectCount'
@@ -609,7 +613,24 @@ _logManifest
 	(deploymentContext _runFlags allMask: AllResourcesStripped) ifFalse: [self _logRemainingResources].
 	self _endElement: true.
 	self
-		_finishedWithAll: #(#_logImageStats #_logRemainingClasses #_logRemainingSharedVariables #_logRemainingResources #_resourceIdentifiers)!
+		_finishedWithAll: #(#_getClassInstanceStats #_logImageStats #_logMethodsOfClass: #_logRemainingClasses #_logRemainingSharedVariables #_logRemainingResources #_resourceIdentifiers)!
+
+_logMethodsOfClass: aClass
+	| methodDict count selectors |
+	methodDict := aClass methodDictionary.
+	count := methodDict size.
+	self _startElement: (aClass isMeta ifTrue: ['ClassMethods'] ifFalse: ['Methods'])
+		attributes: { 'count' -> count }.
+	selectors := IdentitySet new: count.
+	methodDict do: [:m | selectors add: m selector].
+	selectors asArray sort do: 
+			[:selector |
+			self
+				_logElement: 'Method'
+				attributes: #()
+				value: selector].
+	self _endElement: true.
+	^count!
 
 _logPreservedClasses
 	"Private - Logs a list of the classes that form the root set for the application."
@@ -621,10 +642,10 @@ _logPreservedClasses
 	classes asSortedArray do: 
 			[:each |
 			| attributes |
-			attributes := (self developmentClasses includes: each)
+			attributes := (deploymentContext developmentClasses includes: each)
 						ifTrue: 
 							[developmentRoots add: each.
-							{'development' -> true}]
+							{ 'development' -> true }]
 						ifFalse: [#()].
 			self
 				_logElement: 'RootClass'
@@ -696,64 +717,37 @@ _logRemainingClasses
 
 	"N.B. This method is deliberately constructed not to use any full blocks to simplify debug reference tracing to the classes. It also uses some verbose code constructs to minimize the amount of code it adds to the referenced set."
 
-	| stats statsForClass totalInstances totalMemory totalMethods totalClassMethods classes selectors devClasses |
-	stats := self _getClassInstanceStats.
-	statsForClass := stats at: Class.
-	totalInstances := statsForClass at: 1.
-	totalMemory := statsForClass at: 2.
-	totalMethods := 0.
+	| stats totalInstances totalMemory totalMethods totalClassMethods devClasses |
+	stats := self _getClassInstanceStats associations sort.
+	totalInstances := totalMemory := totalMethods := 0.
 	totalClassMethods := 0.
 	self _startElement: 'Classes' attributes: { 'count' -> stats size }.
-	classes := Array writeStream: stats size.
-	stats associationsDo: [:each | classes nextPut: each].
-	stats := classes contents sort.
 	(flags allMask: LogReferencesMask) ifTrue: [self _collectGarbage: 2].
-	devClasses := self developmentClasses.
+	devClasses := deploymentContext developmentClasses.
 	1 to: stats size
 		do: 
 			[:i |
-			| each classStats attributes name count memory |
+			| each classStats class attributes count |
 			each := stats at: i.
+			class := each key.
 			classStats := each value.
-			attributes := Array writeStream: 2.
-			name := each key fullName.
-			attributes nextPut: 'name' -> name.
+			attributes := Array writeStream: 3.
+			attributes nextPut: 'name' -> class fullName.
 			count := classStats at: 1.
 			attributes nextPut: 'count' -> count.
-			memory := classStats at: 2.
-			attributes nextPut: 'memoryUsage' -> memory.
-			each key bindingOrNil ifNil: [attributes nextPut: 'unbound' -> true].
-			(devClasses includes: each key) ifTrue: [attributes nextPut: 'development' -> true].
-			self
-				_startElement: 'Class' attributes: attributes contents;
-				_startElement: 'Methods' attributes: { 'count' -> each key methodDictionary size }.
-			selectors := WriteStream on: {}.
-			each key methodDictionary do: [:m | selectors nextPut: m selector].
-			selectors contents sort do: 
-					[:selector |
-					self
-						_logElement: 'Method'
-						attributes: #()
-						value: selector].
-			self _endElement: true.
-			self _startElement: 'ClassMethods' attributes: { 'count' -> each key class methodDictionary size }.
-			selectors reset.
-			each key class methodDictionary do: [:m | selectors nextPut: m selector].
-			selectors contents sort do: 
-					[:selector |
-					self
-						_logElement: 'Method'
-						attributes: #()
-						value: selector].
-			self _endElement: true.
-			(flags allMask: LogReferencesMask) ifTrue: [self _logReferencesToClass: each].
-			self _endElement: true.
 			totalInstances := totalInstances + count.
-			totalMemory := totalMemory + memory.
-			totalMethods := totalMethods + each key methodDictionary size.
-			totalClassMethods := totalClassMethods + each key class methodDictionary size].
+			count := classStats at: 2.
+			attributes nextPut: 'memoryUsage' -> count.
+			totalMemory := totalMemory + count.
+			class bindingOrNil ifNil: [attributes nextPut: 'unbound' -> true].
+			(devClasses includes: class) ifTrue: [attributes nextPut: 'development' -> true].
+			self _startElement: 'Class' attributes: attributes grabContents.
+			totalMethods := totalMethods + (self _logMethodsOfClass: class).
+			totalClassMethods := totalClassMethods + (self _logMethodsOfClass: class class).
+			(flags allMask: LogReferencesMask) ifTrue: [self _logReferencesToClass: each].
+			self _endElement: true].
+	self _endElement: true.
 	self
-		_endElement: true;
 		_logElement: 'TotalInstances'
 			attributes: #()
 			value: totalInstances;
@@ -801,7 +795,7 @@ _logRemainingResources
 		_endElement: true!
 
 _logRemainingSharedVariables
-	self _startElement: 'RemainingSharedVariables' attributes: #().
+	self _startElement: 'SharedVariables' attributes: #().
 	Root allBindingsDo: 
 			[:each |
 			each isClassBinding
@@ -830,7 +824,7 @@ _logSentMessages: aWeakIdentityDictionary
 	| remainingClasses implemented originallySent allRefs diff sent |
 	self _startElement: 'SentMessages' attributes: #().
 	originallySent := Set new.
-	aWeakIdentityDictionary do: [:each | originallySent addAll: each].
+	aWeakIdentityDictionary do: [:each | each do: [:selector | originallySent add: selector]].
 	remainingClasses := Class allClasses reject: [:each | each includesBehavior: BasicImageStripper].
 	allRefs := self _messagesSentByClasses: remainingClasses.
 	sent := allRefs select: [:each | originallySent includes: each].
@@ -853,12 +847,18 @@ _logSentMessages: aWeakIdentityDictionary
 				attributes: #()
 				value: each].
 	self _endElement: true.
-	deploymentContext _aspectSetters isEmpty ifTrue: [^self].
-	self _startElement: 'PreservedAspectSetters' attributes: #().
-	deploymentContext _aspectSetters asArray sort
-		do: [:each | (sent identityIncludes: each selector) ifFalse: [self _logMethod: each]].
-	self _endElement: true.
-	self _finishedWithAll: #(#_shouldPreserveMethod: #_aspectSetters)!
+	deploymentContext _aspectSetters isEmpty
+		ifFalse: 
+			[self _startElement: 'PreservedAspectSetters' attributes: #().
+			deploymentContext _aspectSetters asArray sort
+				do: [:each | (sent identityIncludes: each selector) ifFalse: [self _logMethod: each]].
+			self _endElement: true.
+			self _finishedWithAll: #(#_shouldPreserveMethod: #_aspectSetters)].
+	self _startElement: 'UnboundMethods' attributes: #().
+	(CompiledMethod primAllSubinstances
+		select: [:each | (each methodClass methodDictionary at: each selector ifAbsent: nil) ~~ each]) sort
+		do: [:each | each isUnbound ifTrue: [self _logMethod: each]].
+	self _endElement: true!
 
 _manifestResourceId
 	^self runtimeSessionManagerClass asSessionManagerClass isDLL
@@ -869,6 +869,7 @@ _messageSendsFromClasses: aCollection
 	"Private - Build a dictionary that maps code objects in the collection of classes, aCollection, to the symbols and classes that they references. This is used to construct an initial picture of true (or probably true) message sends in the image so that later we can compare this against the symbolic references remaining and therefore distinguish between actual (or probable) message sends, and ordinary symbol literals."
 
 	| messageMap |
+	"Here we create a dependency on WeakIdentityDictionary, but as this is used for the global Object events register, it can't be removed anyway."
 	messageMap := WeakIdentityDictionary newWithWeakKeys: aCollection size * 20.
 	messageMap at: VMLibrary put: self _speciallySentMessages.
 	self _allMethodsInClasses: aCollection
@@ -894,10 +895,11 @@ _messageSendsFromClasses: aCollection
 _messagesSentByClasses: aCollectionOfClasses
 	| sent |
 	sent := super _messagesSentByClasses: aCollectionOfClasses.
-	sent addAll: deploymentContext _preservedMessages.
-	"Add all COM interface functions on the assumption that the interface may be implemented in Dolphin (i.e. as a callback)."
-	aCollectionOfClasses
-		do: [:each | (deploymentContext _comInterfaceSelectors lookup: each) ifNotNil: [:selectors | sent addAll: selectors]].
+	deploymentContext _preservedMessages do: [:each | sent add: each].
+	aCollectionOfClasses do: 
+			[:each |
+			(deploymentContext _comInterfaceSelectors lookup: each)
+				ifNotNil: [:selectors | selectors do: [:selector | sent add: selector]]].
 	^sent!
 
 _notifyClassesOfCompletedStrip
@@ -1067,6 +1069,7 @@ _preStripCheck
 	pre-requisites.
 	Answer whether the checks passed and it is OK to continue with the deployment."
 
+	self _systemPackageManager packages allSatisfy: [:each | each okToSaveOrDeploy].
 	^true!
 
 _preStripTidy
@@ -1076,7 +1079,7 @@ _preStripTidy
 	"We have have done the resource updating."
 	versionResource := nil.
 	self
-		_finishedWithAll: #(#_appendManifestContent: #_buildComInterfaceSelectorMap #_buildManifest:description:version: #_buildMessageMap #_buildSupersentMessageMap #_classBuildingMethods #_classRemovingMethods #_closeAllDevelopmentTools #_closeChangeLog #_copyAndUpdateStub:to: #_defaultStubFilePath #_findPotentialAspectAccessors: #_findPotentialAspectAccessorsIn:excluding: #_getExecutablePath #_hiddenReferencesInResources #_logConfiguration: #_logDevelopmentCategories #_logRequiredMethodCategories #_manifestResourceId #_notifyClassesOfImminentStrip #_openLogFile #_preStripCheck #_preStripTidy #_messageSendsFromClasses: #_removeNotRequiredMethods #_removeUnreferencedMethodLiterals #_snapshotDevelopmentClasses #_updateIconResource: #_updateStringTableResource: #_updateStubResources: #_updateVersionResource: #_updateXPManifestResource: #_viewsToClose #behaviorsWithIgnoredAspectSetters #binaryStoreOn: #classCategoriesToIgnoreAspectSetters #developmentMethodCategoryNames #developmentMethods #executableName #executablePath #exeFileExtension #ignoreViewReferences: #includeManifestResource #isResourceUpdatingRequired #isToGo #isUnattended #keepImageFile #logFileExtension #logFileName #logLiveClasses #logPackagePrerequisites #logReferencesToClasses: #nonAspectSetterCategories #prepareToStrip #preserveAspectSetters #preStripScript #preStripScript: #retainInstVarNames: #rootPackage: #runPreStripScript #snapshotType #stripAndSave #stripAndSaveWithProgress #stripClassInitializers #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stubFile #stubFilePath #versionResource #versionResource: #writeLogFile)!
+		_finishedWithAll: #(#_appendManifestContent: #_buildComInterfaceSelectorMap #_buildManifest:description:version: #_buildMessageMap #_buildSupersentMessageMap #_classBuildingMethods #_classRemovingMethods #_closeAllDevelopmentTools #_closeChangeLog #_copyAndUpdateStub:to: #_defaultStubFilePath #_findPotentialAspectAccessors: #_findPotentialAspectAccessorsIn:excluding: #_getExecutablePath #_hiddenReferencesInResources #_logConfiguration: #_logDevelopmentCategories #_logRequiredMethodCategories #_manifestResourceId #_notifyClassesOfImminentStrip #_openLogFile #_preStripCheck #_preStripTidy #_messageSendsFromClasses: #_removeNotRequiredMethods #_removeUnreferencedMethodLiterals #_snapshotDevelopmentClasses #_updateIconResource: #_updateStringTableResource: #_updateStubResources: #_updateVersionResource: #_updateXPManifestResource: #_viewsToClose #behaviorsWithIgnoredAspectSetters #binaryStoreOn: #classCategoriesToIgnoreAspectSetters #deploy #developmentMethodCategoryNames #developmentMethods #executableName #executablePath #exeFileExtension #ignoreViewReferences: #includeManifestResource #isResourceUpdatingRequired #isToGo #isUnattended #keepImageFile #logFileExtension #logFileName #logLiveClasses #logPackagePrerequisites #logReferencesToClasses: #nonAspectSetterCategories #prepareToStrip #preserveAspectSetters #preStripScript #preStripScript: #retainInstVarNames: #rootPackage: #runPreStripScript #snapshotType #stripAndSave #stripAndSaveWithProgress #stripClassInitializers #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stubFile #stubFilePath #versionResource #versionResource: #writeLogFile)!
 
 _purgeIcons
 	"Private - If there are no open windows, then we can safely purge the icon image manager."
@@ -1151,10 +1154,12 @@ _removeDevelopmentObjects: devMethods
 	self stripDevelopmentClasses
 		ifTrue: 
 			[| removed |
-			[(removed := self _deleteClasses: self developmentClasses sort reason: 'development') > 0]
-				whileTrue: 
-					[self _collectGarbage: 2.
-					totalRemoved := totalRemoved + removed]].
+			
+			[(removed := self _deleteClasses: deploymentContext developmentClasses sort reason: 'development')
+				> 0]
+					whileTrue: 
+						[self _collectGarbage: 2.
+						totalRemoved := totalRemoved + removed]].
 	self _endElement: totalRemoved > 0.
 	self _finishedWithAll: #(#stripDevelopmentClasses #stripDevelopmentMethods).
 	"developmentClasses inst. var. must be nilled later as still needed for reporting purposes"
@@ -1298,11 +1303,9 @@ _removeTemplateDefinition: structClass
 				force: true]!
 
 _removeUnreferencedMethodLiterals
-	"Private - Build a dictionary that maps code objects in the collection of classes, aCollection, to the symbols and classes that they references. This is used to construct an initial picture of true (or probably true) message sends in the image so that later we can compare this against the symbolic references remaining and therefore distinguish between actual (or probable) message sends, and ordinary symbol literals."
+	"Private - Scan all methods in the required packages identifying any that have reference-only literals. The compiler places reference-only literals at the end of the literal frame so that reference queries in the development environment match the source, however these literals are not required for runtime purposes so can be removed. Methods with reference-only literals can be identified by interpreting their bytecodes to find the last referenced literals. Methods with reference-only literals are trimmed to remove any beyond the last used by bytecodes. In addition to minimizing the size of the methods, the effect of this is to prune the reference graph for the application so that only those dependencies that are actually required are in scope."
 
-	| methodsToRecompile |
 	self stripUnreferencedLiterals ifFalse: [^self].
-	methodsToRecompile := OrderedCollection new.
 	self _actualRequiredPackages do: 
 			[:eachPackage |
 			eachPackage allMethodsDo: 
@@ -1310,16 +1313,7 @@ _removeUnreferencedMethodLiterals
 					| literalRefs last |
 					literalRefs := LiteralReferenceCollector countLiteralReferencesIn: each.
 					last := literalRefs lastReferenced.
-					last < each size ifTrue: [methodsToRecompile add: each]]].
-	methodsToRecompile do: 
-			[:each |
-			
-			[(each methodClass
-				recompileMethod: each
-				environment: each environment
-				flags: CompilerFlags.NoRefOnlyLiterals) method]
-					on: CompilerErrorNotification
-					do: [:ex | Error signal: 'Error compiling <1p>: <2p>' << { each. ex }]].
+					last < each size ifTrue: [each whileMutableDo: [each resize: last]]]].
 	Package manager resetPrerequisites!
 
 _removeVtblDefinitions: structureClasses
@@ -1441,12 +1435,6 @@ _shouldPreserveMethod: aCompiledMethod
 _shouldRemoveResources
 	^(flags allMask: StripResourcesMask)
 		and: [(deploymentContext _runFlags allMask: AllResourcesStripped) not]!
-
-_shrinkSymbolTable
-	"Private - Resize symbol table. Must be performed at a very high priority to be
-	safe."
-
-	[Symbol resizeTable: 20] forkAt: Processor timingPriority!
 
 _snapshotDevelopmentClasses
 	"Use a WeakArray to remove dependency on WeakSet"
@@ -1664,12 +1652,6 @@ compileExternalStructures
 	ExternalStructures so that the template definitions may be removed"
 
 	^flags allMask: CompileStructsMask!
-
-developmentClasses
-	"Answers a weak <collection> of all the classes that are in the basic development system.
-	These are marked by being in the 'Development' category"
-
-	^deploymentContext developmentClasses!
 
 developmentMethods
 	"Answer a <dictionary> mapping the names of development categories to <CompiledMethod>s in those categories, for all categories which are considered part of the development system, and which, therefore, are not normally required in a deployed application. The methods are stored in WeakArrays to allow them to be GC'd if they are removed for other reasons."
@@ -2118,6 +2100,7 @@ _logConfiguration:!logging!private! !
 _logDevelopmentCategories!logging!private! !
 _logImageStats!logging!private! !
 _logManifest!logging!private! !
+_logMethodsOfClass:!logging!private! !
 _logPreservedClasses!logging!private! !
 _logPreservedMessages!logging!private! !
 _logReference:!helpers!private! !
@@ -2169,7 +2152,6 @@ _saveExecutable!operations!private! !
 _scanResourcesForViewReferences:!helpers!private! !
 _shouldPreserveMethod:!private!removing! !
 _shouldRemoveResources!private!removing! !
-_shrinkSymbolTable!operations!private! !
 _snapshotDevelopmentClasses!configuration!private! !
 _snapshotImage:!operations!private! !
 _snapshotRootClasses!helpers!private! !
@@ -2186,7 +2168,6 @@ behaviorsWithIgnoredAspectSetters!configuration!public! !
 binaryStoreOn:!binary filing!public! !
 classCategoriesToIgnoreAspectSetters!configuration!public! !
 compileExternalStructures!accessing!public! !
-developmentClasses!configuration!public! !
 developmentMethods!accessing!public! !
 developmentResources!configuration!public! !
 dpiAwarenessContext!accessing!private! !

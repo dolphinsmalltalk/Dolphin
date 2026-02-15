@@ -63,12 +63,14 @@ _basicDeleteClass: aClass
 	self _detachClass: aClass!
 
 _basicDeleteMethod: aCompiledMethod
-	| behavior |
+	| behavior dict |
 	self _logMethod: aCompiledMethod.
 	behavior := aCompiledMethod methodClass.
 	"Could be in a weakly held development class which has evaporated"
-	(behavior methodDictionary removeKey: aCompiledMethod selector ifAbsent: nil)
-		ifNotNil: [behavior methodRemoved: aCompiledMethod]!
+	dict := behavior methodDictionary.
+	(dict removeKey: aCompiledMethod selector ifAbsent: nil)
+		ifNotNil: [behavior methodRemoved: aCompiledMethod].
+	behavior methodDictionary: dict!
 
 _collectGarbage: iterations
 	"Private - Perform a few GC's to clear away old stuff.
@@ -279,9 +281,9 @@ _logMethod: aCompiledMethod
 
 _messagesSentByClasses: aCollectionOfClasses
 	| sent |
-	sent := (Set new: aCollectionOfClasses size * 10)
-				addAll: self _speciallySentMessages;
-				yourself.	"presize for an average of 10 unique sends per class"
+	"presize for an average of 10 unique sends per class"
+	sent := Set new: aCollectionOfClasses size * 10.
+	self _speciallySentMessages do: [:each | sent add: each].
 	self _allMethodsInClasses: aCollectionOfClasses
 		do: 
 			[:eachMethod |
@@ -589,9 +591,9 @@ _removeRedundantMethodsOnceFrom: aCollectionOfClasses
 	self _allMethodsInClasses: aCollectionOfClasses do: [:each | implemented add: each selector].
 	redundantMessages := implemented reject: [:each | sent includes: each].
 	redundantMessages isEmpty ifTrue: [^0].
-	redundantMethods := OrderedCollection new.
+	redundantMethods := IdentitySet new.
 	self _allMethodsInClasses: aCollectionOfClasses
-		do: [:each | (redundantMessages includes: each selector) ifTrue: [redundantMethods addLast: each]].
+		do: [:each | (redundantMessages includes: each selector) ifTrue: [redundantMethods add: each]].
 	^self
 		_removeMethods: redundantMethods
 		reason: 'unsent'

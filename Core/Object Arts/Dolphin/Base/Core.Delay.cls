@@ -276,6 +276,7 @@ forkTimingProcess
 	A separate timing Process is used with a single semaphore because the VM can maintain 
 	only a single timer, and because this allows for better management of Delays."
 
+	Notification signal: self class name , ': Restarting Timing process…'.
 	AccessProtect critical: 
 			[self cancelTimer.
 			self initializeTimingSemaphore.
@@ -496,6 +497,11 @@ timingProcess
 
 	^TimingProcess!
 
+uninitialize
+	self cancelTimer.
+	TimingProcess ifNotNil: [TimingProcess terminate].
+	VM registryAt: #TimingSemaphore put: nil!
+
 untilMilliseconds: millisecondTime
 	"Answer a new instance of the receiver that will make the active Process
 	wait until the millisecond clock reaches the value millisecondTime."
@@ -539,6 +545,7 @@ signalTimerAfter:!private!processes-synchronising! !
 timerResolution!constants!public! !
 timerResolution:set:!helpers!public! !
 timingProcess!initializing!private! !
+uninitialize!initializing!private! !
 untilMilliseconds:!instance creation!public! !
 withTimerResolution:do:!operations!public! !
 !

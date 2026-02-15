@@ -217,14 +217,11 @@ progress: anInteger
 	SessionManager inputState pumpMessages!
 
 progressRange
-	"Private - Answer the range for the progress monitoring. We use a count of the number of
-	objects in the image to mark the progress of the strip"
+	"Private - Answer the range for the progress monitoring. We use a count of the number of objects in the image to mark the progress of the strip"
 
-	"The best we can get is the number of objects left in the image after stripping a minimal
-	console application. This figure was taken from the Hello World (Console) strip log"
+	"The best we can get is the number of objects left in the image after stripping a minimal console application. This figure was taken from the Hello World (Console) deployment manifest."
 
-	progressRange isNil ifTrue: [
-		progressRange := 7742 to: self currentProgress ].
+	progressRange isNil ifTrue: [progressRange := 8992 to: self currentProgress].
 	^progressRange!
 
 resourceLib

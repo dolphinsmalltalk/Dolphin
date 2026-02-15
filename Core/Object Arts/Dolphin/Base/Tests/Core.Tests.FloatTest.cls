@@ -78,7 +78,7 @@ shouldRaiseInvalidOperation: aBlock
 	invalid := exceptions anySatisfy: 
 					[:e |
 					"We map InvalidOperation with divide operation and operand2 = 0, to ZeroDivide"
-					(e isKindOf: ZeroDivide) or: [e _ieeeRecord causeNames includes: #InvalidOperation]].
+					(e isKindOf: ZeroDivide) or: [e tag causeNames includes: #InvalidOperation]].
 	self assert: invalid
 		description: 'Test operation did not raise expected FP Invalid Operation exception'.
 	self assert: result isNaN.

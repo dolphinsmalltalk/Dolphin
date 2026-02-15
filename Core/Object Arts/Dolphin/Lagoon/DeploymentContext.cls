@@ -29,12 +29,13 @@ _aspectSetters: aCollection
 	aspectSetters := aCollection!
 
 _basicDeleteMethod: aCompiledMethod
-	| refs class |
-	aCompiledMethod isResourceMethod ifFalse: [^self].
+	| class |
 	class := aCompiledMethod methodClass instanceClass.
-	refs := resourceReferences at: class.
-	refs removeKey: aCompiledMethod selector.
-	refs isEmpty ifTrue: [resourceReferences removeKey: class]!
+	(resourceReferences lookup: class)
+		ifNotNil: 
+			[:refs |
+			refs removeKey: aCompiledMethod selector ifAbsent: [].
+			refs isEmpty ifTrue: [resourceReferences removeKey: class]]!
 
 _basicDevelopmentClasses
 	^developmentClasses!
@@ -103,6 +104,7 @@ _endTag
 		flush!
 
 _finalActions
+	self _endElement: true.
 	developmentClasses := resourceIdentifiers := nil.
 	self _closeLog!
 

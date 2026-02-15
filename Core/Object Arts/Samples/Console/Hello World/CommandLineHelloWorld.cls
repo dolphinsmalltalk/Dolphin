@@ -29,9 +29,13 @@ main
 		nextPutAll: 'Hello World!! 你好'; cr; flush.
 	self stderr
 		nextPutAll: 'Press <Enter> to exit:'; flush.
-	self stdin nextLine! !
+	self stdin nextLine!
+
+registerRunning
+	"Private - Not required"! !
 
 !CommandLineHelloWorld categoriesForMethods!
 main!operations-startup!public! !
+registerRunning!operations-startup!private! !
 !
 

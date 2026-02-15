@@ -351,7 +351,7 @@ extraInstanceSpec
 	"Private - Answer the user class instance specification of the receiver (a 16-Bit Integer)."
 
 	<primitive: 151>
-	^(self instanceSpec bitShift: -15) bitAnd: 16rFFFF!
+	^(instanceSpec bitShift: -15) bitAnd: 16rFFFF!
 
 extraInstanceSpec: aSmallInteger
 	"Private - Set the user class instance specification of the receiver to the <SmallInteger> argument."
