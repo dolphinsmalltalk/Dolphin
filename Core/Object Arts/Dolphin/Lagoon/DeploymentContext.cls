@@ -43,15 +43,24 @@ _closeLog
 	[elementStack isEmpty] whileFalse: [self _endElement: true].
 	logFilename
 		ifNotNil: 
-			[| log |
+			[| log handle buf |
 			log := logStream contents.
-			(File
-				open: logFilename
-				mode: #truncate
-				check: false
-				share: #exclusive)
-				write: log count: log size;
-				close].
+			handle := Kernel32
+						createFile: logFilename
+						dwDesiredAccess: OS.Win32Constants.GENERIC_WRITE
+						dwSharedMode: 0
+						lpSecurityAttributes: nil
+						dwCreationDistribution: OS.Win32Constants.CREATE_ALWAYS
+						dwFlagsAndAttributes: OS.Win32Constants.FILE_ATTRIBUTE_NORMAL
+						hTemplateFile: nil.
+			buf := ByteArray newFixed: 4.
+			Kernel32
+				writeFile: handle
+				lpBuffer: log
+				nNumberOfBytesToWrite: log size
+				lpNumberOfBytesWritten: buf
+				lpOverlapped: nil.
+			Kernel32 closeHandle: handle].
 	logStream := logFilename := nil!
 
 _comInterfaceSelectors

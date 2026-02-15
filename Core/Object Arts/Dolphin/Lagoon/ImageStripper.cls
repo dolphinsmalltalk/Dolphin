@@ -1364,8 +1364,7 @@ _saveBlock
 	^[self _saveExecutable]!
 
 _saveExecutable
-	"Private - Save a snapshot of the current image to an executable. This is appended to the
-	executable stub at the <readableString> path, exePath.
+	"Private - Save a snapshot of the current image to an executable. This is appended to the executable stub at the <readableString> path, exePath.
 	Following the completion of this process the development system MUST exit"
 
 	| image imageFile unattended retainImage |
@@ -1375,14 +1374,29 @@ _saveExecutable
 	image := exePath , '.tmp'.
 	self _snapshotImage: image.
 
-	"We can't send any more messages to the receiver after this point as its method dictionary
-	 has been removed."
-	imageFile := File open: image mode: #read.
+	"We can't send any more messages to the receiver after this point as its method dictionary has been removed."
+
+	"Use raw Windows APIs to avoid dependency on File class"
+	imageFile := Kernel32
+				createFile: image
+				dwDesiredAccess: Win32Constants.GENERIC_READ
+				dwSharedMode: 0
+				lpSecurityAttributes: nil
+				dwCreationDistribution: Win32Constants.OPEN_EXISTING
+				dwFlagsAndAttributes: Win32Constants.FILE_ATTRIBUTE_NORMAL
+				hTemplateFile: nil.
 	
-	[| imageData size |
-	size := imageFile size.
+	[| imageData size intBuf |
+	intBuf := ByteArray newFixed: 8.
+	Kernel32 getFileSizeEx: imageFile lpFileSize: intBuf.
+	size := intBuf uint64AtOffset: 0.
 	imageData := ByteArray new: size.
-	imageFile read: imageData count: size.
+	Kernel32
+		readFile: imageFile
+		lpBuffer: imageData
+		nNumberOfBytesToRead: size
+		lpNumberOfBytesRead: intBuf
+		lpOverlapped: nil.
 	OS.Kernel32 updateResourcesOf: exePath
 		do: 
 			[:hUpdate |
@@ -1394,7 +1408,7 @@ _saveExecutable
 				lpData: imageData
 				cbData: size) ifFalse: [OS.Kernel32 systemError]]]
 			ensure: 
-				[imageFile close.
+				[Kernel32 closeHandle: imageFile.
 				retainImage ifFalse: [Kernel32 deleteFile: image]].
 	unattended
 		ifFalse: 
