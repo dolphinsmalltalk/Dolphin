@@ -270,21 +270,21 @@ printHumanReadableOn: aWriteStream
 printISO8601On: aPuttableStream
 	"Print the ISO8601 representation of the receiver onto the <puttableStream> argument."
 
-	| element timePrefix |
-	self negative
-		ifTrue: 
-			[aPuttableStream nextPut: $-.
-			self negated printISO8601On: aPuttableStream.
-			^self].
+	| element timePrefix totalSeconds fractionPart |
+	totalSeconds := (self negative
+				ifTrue: 
+					[aPuttableStream nextPut: $-.
+					self negated]
+				ifFalse: [self]) asSeconds.
 	aPuttableStream nextPut: $P.
-	element := self days.
+	element := totalSeconds quo: SecondsPerDay.
 	element == 0
 		ifFalse: 
 			[aPuttableStream
 				print: element;
 				nextPut: $D].
 	timePrefix := $T.
-	element := self hours.
+	element := (totalSeconds rem: SecondsPerDay) quo: SecondsPerHour.
 	element == 0
 		ifFalse: 
 			[aPuttableStream
@@ -292,7 +292,7 @@ printISO8601On: aPuttableStream
 				print: element;
 				nextPut: $H.
 			timePrefix := nil].
-	element := self minutes.
+	element := (totalSeconds rem: SecondsPerHour) quo: 60.
 	element == 0
 		ifFalse: 
 			[aPuttableStream
@@ -300,28 +300,26 @@ printISO8601On: aPuttableStream
 				print: element;
 				nextPut: $M.
 			timePrefix := nil].
-	element := self seconds.
-	(element ~~ 0 or: [seconds == 0])
-		ifTrue: 
-			[| fractionPart |
+	element := totalSeconds rem: 60.
+	(element ~~ 0 or: [totalSeconds == 0]) ifFalse: [^self].
+	aPuttableStream
+		display: timePrefix;
+		print: element truncated.
+	fractionPart := element abs fractionPart.
+	fractionPart == 0
+		ifFalse: 
+			[| digits count |
+			"Any fractional part is truncated to 9 decimal places."
+			digits := (fractionPart * 1e9) truncated printStringBase: 10 nDigits: 9.
+			count := digits size.
+			[count > 1 and: [(digits at: count) = $0]] whileTrue: [count := count - 1].
+			"The decimal separator can be $., or $, depending on the stream locale."
 			aPuttableStream
-				display: timePrefix;
-				print: element truncated.
-			fractionPart := element abs fractionPart.
-			fractionPart == 0
-				ifFalse: 
-					[| digits count |
-					"Any fractional part is truncated to 9 decimal places."
-					digits := (fractionPart * 1e9) truncated printStringBase: 10 nDigits: 9.
-					count := digits size.
-					[count > 1 and: [(digits at: count) = $0]] whileTrue: [count := count - 1].
-					"The decimal separator can be $., or $, depending on the stream locale."
-					aPuttableStream
-						nextPutAll: aPuttableStream locale decimalSeparator;
-						next: count
-							putAll: digits
-							startingAt: 1].
-			aPuttableStream nextPut: $S]!
+				nextPutAll: aPuttableStream locale decimalSeparator;
+				next: count
+					putAll: digits
+					startingAt: 1].
+	aPuttableStream nextPut: $S!
 
 printOn: aStream
 	"Append a default string representation of the receiver to the <puttableStream>, aStream.
