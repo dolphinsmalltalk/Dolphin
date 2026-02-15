@@ -35,11 +35,6 @@ current
 	^current ifNil: [current := self new]
 !
 
-onPreStripImage
-	"Private - Tidy up the receiver's lazily initialized subinstances in preparation for image stripping."
-
-	self allSubclassesDo: [:each | each uninitialize]!
-
 uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
@@ -47,7 +42,6 @@ uninitialize
 
 !Kernel.SingletonSearchPolicy class categoriesForMethods!
 current!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 

@@ -26,6 +26,8 @@ package setMethodNames: #(
 	#(#{Core.Object class} #onPreStripImage)
 	#(#{External.Structure class} #fullyCompileDefinition)
 	#(#{External.Structure class} #removeTemplate)
+	#(#{Kernel.SingletonSearchPolicy class} #onPostStripImage)
+	#(#{Kernel.SingletonSearchPolicy class} #onPreStripImage)
 	#(#{OS.UserLibrary} #messageBox:lpText:lpCaption:uType:)
 ).
 
@@ -145,7 +147,7 @@ onPreStripImage
 	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
 
 	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
-	classPool removeKey: '_PropertyRegister'! !
+	classPool removeKey: '_PropertyRegister' ifAbsent: nil! !
 
 !Core.Object class categoriesForMethods!
 onPreStripImage!class hierarchy-removing!private! !
@@ -168,6 +170,27 @@ removeTemplate
 !External.Structure class categoriesForMethods!
 fullyCompileDefinition!compiling!public! !
 removeTemplate!private!template definition! !
+!
+
+!Kernel.SingletonSearchPolicy class methodsFor!
+
+onPostStripImage
+	"Private - Image stripping is complete, and the receiver has survived it. Restore the lazy accessor method for the singleton instance."
+
+	self class methodDictionary at: #current put: current.
+	current := nil!
+
+onPreStripImage
+	"Private - Tidy up the receiver's lazily initialized subinstances in preparation for image stripping."
+
+	self allSubclassesDo: [:each | each uninitialize].
+	"Replace the current lazy accessor while stripping to prevent resource scanning when tracing package pre-reqs from recreating instances that would preserve these classes unnecessarily."
+	current := self class compiledMethodAt: #current.
+	self class basicCompile: 'current ^self new'! !
+
+!Kernel.SingletonSearchPolicy class categoriesForMethods!
+onPostStripImage!class hierarchy-removing!private! !
+onPreStripImage!class hierarchy-removing!private! !
 !
 
 !OS.UserLibrary methodsFor!
