@@ -927,7 +927,7 @@ sentinelName
 	"Answer the name of the Win32 Event object created to uniquely identify this session
 	so that attempts to run additional instances can be detected."
 
-	^(self imageFileName copyReplacing: $\ withObject: $/) asLowercase.!
+	^(self imageFileName copyReplacing: $\ withObject: $/) caseFolded.!
 
 servers
 	"Private - Answer the registry of servers registered with this session."

@@ -927,10 +927,9 @@ named: aString
 named: aString withOverrides: aBoolean
 	"Private - Answer a sub-instance of the receiver to represent the Locale with the specified name."
 
-	| lcid lower |
-	lower := aString asLowercase.
-	lower = 'smalltalk' ifTrue: [^self smalltalk].
-	lower = 'invariant' ifTrue: [^self invariant].
+	| lcid |
+	aString <=> 'smalltalk' == 0 ifTrue: [^self smalltalk].
+	aString <=> 'invariant' == 0 ifTrue: [^self invariant].
 	lcid := OS.Kernel32 localeNameToLCID: aString dwFlags: 0.
 	lcid == 0 ifTrue: [OS.Kernel32 systemError].
 	^OS.WindowsLocale lcid: lcid withOverrides: aBoolean!

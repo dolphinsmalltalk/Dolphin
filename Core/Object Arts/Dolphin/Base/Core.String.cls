@@ -596,7 +596,7 @@ expandMacrosWithArguments: anArray on: aPuttableStream
 	[(char := readStream nextAvailable) isNil] whileFalse: 
 			[char == $<
 				ifTrue: 
-					[char := readStream next asLowercase.
+					[char := readStream next caseFolded.
 					char == $n
 						ifTrue: 
 							[aPuttableStream cr.
@@ -610,7 +610,7 @@ expandMacrosWithArguments: anArray on: aPuttableStream
 									[char isDigit
 										ifTrue: 
 											[index := char digitValue.
-											[readStream atEnd or: [(char := readStream next asLowercase) isDigit not]]
+											[readStream atEnd or: [(char := readStream next caseFolded) isDigit not]]
 												whileFalse: [index := index * 10 + char digitValue]].
 									char == $?
 										ifTrue: 
