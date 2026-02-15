@@ -5313,7 +5313,7 @@ generateClassFilename
 
 	| name target |
 	(self canGenerateClassMessage: #fileName) ifFalse: [^nil].
-	name := File splitStemFrom: (self dllNameIfNone: [^nil]).
+	name := Filename splitStemFrom: (self dllNameIfNone: [^nil]).
 	target := String smalltalkWriteStream: 256.
 	target
 		nextPutAll: 'fileName';
@@ -7033,7 +7033,7 @@ package
 	packageName isNil ifTrue: [packageName := self name].
 	pm := Package manager.
 	^pm packageNamed: self packageName
-		ifNone: [pm newPackage: (File composePath: self defaultPackageFolder subPath: self packageName)]!
+		ifNone: [pm newPackage: (Filename composePath: self defaultPackageFolder subPath: self packageName)]!
 
 package: parcel
 	"Set the package into which wrapper classes for the receiver should be generated to
@@ -7345,7 +7345,8 @@ example3
 	This code should ideally be run line-by-line from a workspace.
 		TypeLibraryAnalyzer example3
 	"
-	<ignoreNotImplementedSelectors: #(workbooks add:lcid: visible:rhs: range:cell2: formula: autoFormat:number:font:alignment:border:pattern:width: activeWorkbook)>
+
+	<ignoreNotImplementedSelectors: #(#workbooks #add:lcid: #visible:rhs: #range:cell2: #formula: #autoFormat:number:font:alignment:border:pattern:width: #activeWorkbook)>
 	| excel books book range font arry caption |
 	#{Xl.ExcelLib} isDefined
 		ifFalse: 
@@ -7387,12 +7388,12 @@ example3
 	range := excel range: 'A5' cell2: 'A14'.
 	arry := range value.
 	#('Towers Of Hanoi' 'Alloc.' 'Array Write' 'Dictionary Write' 'Floating Math' 'Integer Math' 'OrderedCollection Iterate' 'OrderedCollection Write' 'String Compare' 'String Compare 2')
-		keysAndValuesDo: [:i :s | arry elementAt: {i. 1} put: s asVariant].
+		keysAndValuesDo: [:i :s | arry elementAt: { i. 1 } put: s asVariant].
 	range value: arry.
 	range := excel range: 'B5' cell2: 'D14'.
 	arry := range value.
 	#(#(4715 10990 72791 7980 75870 14639 12617 21946 3981 7738) #(4615 11973 70180 8074 84630 14501 8709 20262 10964 18355) #(678 8936 20520 3153 90170 14720 5090 8694 18659 18653))
-		keysAndValuesDo: [:j :a | a keysAndValuesDo: [:i :n | arry elementAt: {i. j} put: n asVariant]].	"Dolphin 2.1"	"Dolphin 3.0"	"VWNC 3.0"
+		keysAndValuesDo: [:j :a | a keysAndValuesDo: [:i :n | arry elementAt: { i. j } put: n asVariant]].	"Dolphin 2.1"	"Dolphin 3.0"	"VWNC 3.0"
 	range value: arry.
 
 	"Add formulas for ratios; and format"
@@ -7419,7 +7420,7 @@ example3
 	"Save the active workbook."
 	book := excel activeWorkbook.
 	book invokeId: (book idOfName: 'SaveAs')
-		with: (File
+		with: (Filename
 				composePath: ''
 				stem: caption
 				extension: 'xls').

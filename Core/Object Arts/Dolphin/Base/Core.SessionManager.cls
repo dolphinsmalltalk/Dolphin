@@ -74,7 +74,7 @@ appIdString
 applicationName
 	"Answer the application name. Use the applications executable name."
 
-	^self argc > 0 ifTrue: [File splitStemFrom: self argv first] ifFalse: ['Application']!
+	^self argc > 0 ifTrue: [Filename splitStemFrom: self argv first] ifFalse: ['Application']!
 
 applicationShortName
 	"Answer the abbreviated application name."
@@ -259,7 +259,7 @@ errorLogExtension
 errorLogName
 	"Answer the name of the error log file used to record error information (e.g. unhandled exceptions)."
 
-	^File default: self imagePath extension: self errorLogExtension!
+	^Filename default: self imagePath extension: self errorLogExtension!
 
 eventLogSource
 	"Answer the 'source' that should be passed to the ReportEvent() API when logging events
@@ -333,7 +333,7 @@ hasActiveServers
 imageBase
 	"Answer the base directory in which the image resides"
 
-	^File splitPathFrom: self imagePath!
+	^Filename splitPathFrom: self imagePath!
 
 imageExtension
 	"Private - Answer the suffix for an executable image file"
@@ -343,7 +343,7 @@ imageExtension
 imageFileName
 	"Answer the file name of the current image."
 
-	^File default: self imagePath extension: self imageExtension!
+	^Filename default: self imagePath extension: self imageExtension!
 
 imagePath
 	"Answer the base file path on which the image, source and changes
@@ -354,7 +354,7 @@ imagePath
 imagePath: aPathString
 	"Private - used only after loading an image to set up path to the image and sources."
 
-	imagePath := File removeExtension: (File fullPathOf: aPathString)!
+	imagePath := Filename removeExtension: (Filename fullPathOf: aPathString)!
 
 imageVersion
 	"Answer a String in the form N.N.N.N which specifies the version number of the image."
@@ -874,7 +874,7 @@ registerServer: server
 
 resourcesLocatorForClass: aClass
 	^FolderRelativeFileLocator
-		basePath: (File composePath: self installationDirectory subPath: 'Resources')!
+		basePath: (Filename composePath: self installationDirectory subPath: 'Resources')!
 
 retire
 	"This SessionManager instance is stepping down in favour of a new boy. Perform any

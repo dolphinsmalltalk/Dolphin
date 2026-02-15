@@ -557,7 +557,7 @@ testLoad70Pax
 	filer fileOutPackage: scribbleTestPackage.
 	actual := filer stream contents.
 	expected := File
-				readAllText: (File change: (self resourceFilename: testPackagePath) extension: 'pac').
+				readAllText: (Filename path: (self resourceFilename: testPackagePath) extension: 'pac').
 	"
 	Smalltalk.DiffBrowser compare: actual with: expected
 	"

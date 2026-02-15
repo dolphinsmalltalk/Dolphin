@@ -139,8 +139,8 @@ getInstallationDirectory
 	folder isNil
 		ifTrue: 
 			["Otherwise try the path to the VM"
-			folder := File splitPathFrom: VM fileName].
-	^File appendPathDelimiter: folder!
+			folder := Filename splitPathFrom: VM fileName].
+	^Filename appendPathDelimiter: folder!
 
 imageStamp
 	"Answer the <DateAndTime> at which the image was last saved."
@@ -396,17 +396,15 @@ open: filename
 	the development environment"
 
 	| openMsg ext |
-	ext := (File splitExtensionFrom: filename) asUppercase.
+	ext := (Filename splitExtensionFrom: filename) asUppercase.
 	openMsg := ##(LookupTable new
-		at: 'PAC' put: #openPackage:;
-		at: 'PAX' put: #openPackage:;
-		at: 'CLS' put: #openWorkspace:;
-		at: 'ST' put: #openWorkspace:;
-		at: 'XML' put: #openXmlFile:;
-		yourself) at: ext ifAbsent: [
-			^MessageBox notify: 'Unable to open <1s>' << filename ].
-	self perform: openMsg with: filename 
-!
+				at: 'PAC' put: #openPackage:;
+				at: 'PAX' put: #openPackage:;
+				at: 'CLS' put: #openWorkspace:;
+				at: 'ST' put: #openWorkspace:;
+				at: 'XML' put: #openXmlFile:;
+				yourself) at: ext ifAbsent: [^MessageBox notify: 'Unable to open <1s>' << filename].
+	self perform: openMsg with: filename!
 
 openFd: anInteger mode: aSymbol
 	^(super openFd: anInteger mode: aSymbol)
@@ -418,7 +416,7 @@ openPackage: filename
 
 	| package name devsys |
 	devsys := SmalltalkSystem current.
-	name := File splitStemFrom: filename.
+	name := Filename splitStemFrom: filename.
 	package := devsys packageManager packageNamed: name
 				ifNone: 
 					[| loaded |

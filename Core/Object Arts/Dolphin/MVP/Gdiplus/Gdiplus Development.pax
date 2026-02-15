@@ -1804,13 +1804,13 @@ exampleGdipIJPEGCompression
 			image saveToFile: toFile encoderParams: encoderParameters.
 			images add: (Image fromFile: toFile)].
 	bitmap := Bitmap extent: 810 @ 610.
-	points := {0 @ 0. 410 @ 0. 0 @ 310. 410 @ 310}.
+	points := { 0 @ 0. 410 @ 0. 0 @ 310. 410 @ 310 }.
 	images keysAndValuesDo: 
 			[:i :e |
 			| point fileSize text |
 			fileSize := ((File find: e filename) first fileSize / 1024) rounded.
 			point := points at: i.
-			text := (File splitFilenameFrom: e filename) , ' (' , fileSize displayString , ' kb)'.
+			text := (Filename splitFilenameFrom: e filename) , ' (' , fileSize displayString , ' kb)'.
 			bitmap graphics
 				drawImage: e
 					at: point
@@ -2087,7 +2087,7 @@ exampleGdipIPrinting4LabeledToAPage
 			[:i |
 			image := Image prompt.
 			images at: i put: image.
-			labels at: i put: (File splitStemFrom: image filename).
+			labels at: i put: (Filename splitStemFrom: image filename).
 			image isLandscape = isPrinterPortrait
 				ifTrue: 
 					[rotate at: i put: true.
@@ -2189,7 +2189,7 @@ exampleGdipIPropertyItems
 	(directory := #{UI.BrowseFolderDialog} value new
 				value: #{Shell32} value myPictures;
 				showModal) ifNil: [^nil].
-	filenames := (File find: (File composePath: directory subPath: '*.jpg')) collect: [:e | e path].
+	filenames := (File find: (Filename composePath: directory subPath: '*.jpg')) collect: [:e | e path].
 	strm := String writeStream.
 	filenames do: 
 			[:filename |

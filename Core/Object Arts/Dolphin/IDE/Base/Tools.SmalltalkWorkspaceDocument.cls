@@ -272,7 +272,7 @@ setInitialFocus
 	workspacePresenter view setFocus!
 
 setLexer
-	self language: (LanguageExtensions at: (File splitExtensionFrom: self filename) ifAbsent: #null)!
+	self language: (LanguageExtensions at: (Filename splitExtensionFrom: self filename) ifAbsent: #null)!
 
 show
 	"Shows the view of the receiver.
@@ -512,7 +512,8 @@ isLoadingOptions
 	^self optionFlags allMask: LoadingMask!
 
 isRichTextFile: aString
-	^aString notNil and: [((File splitExtensionFrom: aString) compareOrdinals: 'rtf' ignoringCase: true) == 0]!
+	^aString notNil
+		and: [((Filename splitExtensionFrom: aString) compareOrdinals: 'rtf' ignoringCase: true) == 0]!
 
 loadOptions
 	SmalltalkToolShell loadOptionsFor: self!

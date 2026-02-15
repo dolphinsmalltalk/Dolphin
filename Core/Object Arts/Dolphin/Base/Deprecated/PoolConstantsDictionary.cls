@@ -49,9 +49,9 @@ fileOutName
 	"Answer the receiver's default file name for file outs (<name>.st)."
 
 	| path package |
-	path := File composeStem: self name extension: 'st'.
+	path := Filename composeStem: self name extension: 'st'.
 	package := Package manager packageOfVariableNamed: self name asQualifiedReference.
-	package notNil ifTrue: [path := File replacePath: path with: package path].
+	package notNil ifTrue: [path := Filename replacePath: path with: package path].
 	^path!
 
 fileOutOn: aSourceFiler

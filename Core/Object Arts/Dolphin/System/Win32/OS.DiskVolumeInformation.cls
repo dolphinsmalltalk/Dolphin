@@ -218,7 +218,7 @@ rootPath
 	"Answer the value of the receiver's ''rootPath'' instance variable."
 
 	rootPath isNil
-		ifTrue: [rootPath := (File splitDriveFrom: path) asUppercase copyWith: File pathDelimiter].
+		ifTrue: [rootPath := (Filename splitDriveFrom: path) asUppercase copyWith: Filename pathDelimiter].
 	^rootPath!
 
 sectorsPerCluster

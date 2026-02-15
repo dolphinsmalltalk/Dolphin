@@ -51,7 +51,8 @@ informObservers: aSequencedReadableCollection
 	aSequencedReadableCollection do: 
 			[:each |
 			self trigger: each action
-				withArguments: (each fileNames collect: [:eachPath | File composePath: directory subPath: eachPath])]!
+				withArguments: (each fileNames
+						collect: [:eachPath | Filename composePath: directory subPath: eachPath])]!
 
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy

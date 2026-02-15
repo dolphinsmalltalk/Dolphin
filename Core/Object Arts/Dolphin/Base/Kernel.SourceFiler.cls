@@ -145,10 +145,10 @@ fileOutNameForClass: aClass
 	"Answer the default file name for the class to file out on."
 
 	| path |
-	path := File composeStem: aClass fileOutStem extension: (self fileOutExtensionForClass: aClass).
+	path := Filename composeStem: aClass fileOutStem extension: (self fileOutExtensionForClass: aClass).
 	aClass owningPackage
 		ifNil: [Notification signal: 'Warning: ' , aClass printString , ' is unpackaged']
-		ifNotNil: [:package | path := File replacePath: path with: package path].
+		ifNotNil: [:package | path := Filename replacePath: path with: package path].
 	^path!
 
 on: aWriteStream 

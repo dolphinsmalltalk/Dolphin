@@ -334,7 +334,7 @@ _copyAndUpdateStub: stubFile to: exeFile
 	new stub file."
 
 	self _logComment: 'Creating executable stub: ' , exeFile.
-	File createDirectoryPath: (File splitPathFrom: exeFile).
+	File createDirectoryPath: (Filename splitPathFrom: exeFile).
 	File copy: stubFile to: exeFile.
 	File isWriteable: exeFile set: true.
 	self isResourceUpdatingRequired
@@ -963,7 +963,7 @@ _openLogFile
 	| path |
 	path := self writeLogFile
 				ifTrue: 
-					[File createDirectoryPath: (File splitPathFrom: self logFileName).
+					[File createDirectoryPath: (Filename splitPathFrom: self logFileName).
 					self logFileName].
 	deploymentContext _openLogFile: path!
 
@@ -1559,7 +1559,7 @@ _updateXPManifestResource: anExternalHandle
 						nextPutAll: (string copyWithout: $.);
 						nextPut: $.]].
 	file := (strings at: 'InternalName' ifAbsent: '') copyWithout: $..
-	file isEmpty ifTrue: [file := File splitStemFrom: self executableName].
+	file isEmpty ifTrue: [file := Filename splitStemFrom: self executableName].
 	assemblyName nextPutAll: file.
 	manifest := self
 				_buildManifest: assemblyName contents
@@ -1749,7 +1749,7 @@ logFileExtension
 logFileName
 	"Answers the file name to use for logging strip info"
 
-	^File path: self executablePath extension: self logFileExtension!
+	^Filename path: self executablePath extension: self logFileExtension!
 
 logLiveClasses
 	"Answer true if the stripping process will emit a list of live classes to the log before each strip cycle. 
@@ -2035,7 +2035,7 @@ versionResource
 			[versionResource := OS.VersionResource forPath: self stubFilePath.
 			"Stub might not contain a version resource"
 			versionResource isNil ifTrue: [^nil]].
-	originalFilename := File splitFilenameFrom: self executableName.
+	originalFilename := Filename splitFilenameFrom: self executableName.
 	versionResource stringTables do: 
 			[:each |
 			(each includesKey: 'OriginalFilename') ifTrue: [each at: 'OriginalFilename' put: originalFilename]].

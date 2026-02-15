@@ -238,12 +238,12 @@ isPointInDolphin: aPoint
 
 loadTextureMap: mapName
 	| texture map textureMap |
-	texture := Gdiplus.Bitmap fromFile: 'Resources\' , (File default: mapName extension: 'png')
+	texture := Gdiplus.Bitmap fromFile: 'Resources\' , (Filename default: mapName extension: 'png')
 				usingLocator: FileLocator installRelative.
 	"Drawing the images individually from the texture goes a lot faster if we force Gdiplus to load the whole thing now."
 	texture forceValidation.
 	map := FileStream read: (FileLocator installRelative
-						localFileSpecFor: 'Resources\' , (File default: mapName extension: 'txt'))
+						localFileSpecFor: 'Resources\' , (Filename default: mapName extension: 'txt'))
 				text: true.
 	textureMap := LookupTable new.
 	[map atEnd] whileFalse: 

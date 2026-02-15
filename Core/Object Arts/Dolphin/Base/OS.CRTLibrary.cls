@@ -336,7 +336,7 @@ wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! 
 fileName
 	"Answer the host system file name for the external library the receiver represents."
 
-	^File splitStemFrom: (self moduleFileName: self moduleHandle)!
+	^Filename splitStemFrom: (self moduleFileName: self moduleHandle)!
 
 moduleHandle
 	^VM crtHandle!

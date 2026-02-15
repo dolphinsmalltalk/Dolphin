@@ -38,7 +38,7 @@ createDatabase
 dropDatabase
 	| cmdString process dropdb |
 	super dropDatabase.
-	dropdb := File composePath: self installationFolder subPath: 'bin\dropdb.exe'.
+	dropdb := Filename composePath: self installationFolder subPath: 'bin\dropdb.exe'.
 	(File exists: dropdb)
 		ifFalse: 
 			[Notification signal: dropdb , ' not found'.

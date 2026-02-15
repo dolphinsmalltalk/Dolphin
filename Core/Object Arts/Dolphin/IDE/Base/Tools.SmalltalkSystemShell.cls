@@ -241,7 +241,7 @@ updateCaption
 	title
 		nextPutAll: sesh applicationName;
 		nextPutAll: ' - ';
-		nextPutAll: (File splitFilenameFrom: sesh imageFileName).
+		nextPutAll: (Filename splitFilenameFrom: sesh imageFileName).
 	SessionManager current bootInfo
 		ifNotNil: 
 			[:bootInfo |

@@ -56,7 +56,7 @@ localFileSpecFor: aString
 	the rules of this particular file locator. This is the reverse operation to
 	#relativePathTo:, and is performed when the file needs to be located."
 
-	^File fullPathOf: aString relativeTo: self basePath!
+	^Filename fullPathOf: aString relativeTo: self basePath!
 
 relativePathIfSubPath: aFilename
 	"Private - Answer a minimal <readableString> relative path to the resource with the
@@ -65,7 +65,7 @@ relativePathIfSubPath: aFilename
 
 	| relative |
 	relative := self relativeToBase: aFilename.
-	^(relative beginsWith: '..') ifTrue: [File fullPathOf: aFilename] ifFalse: [relative]!
+	^(relative beginsWith: '..') ifTrue: [Filename fullPathOf: aFilename] ifFalse: [relative]!
 
 relativePathTo: aString 
 	"Answer a minimal <readableString> relative path to the resource with the specified
@@ -74,7 +74,7 @@ relativePathTo: aString
 	^self relativeToBase: aString!
 
 relativeToBase: aFilename
-	^File relativePathOf: aFilename to: self basePath! !
+	^Filename relativePathOf: aFilename to: self basePath! !
 
 !Core.FileLocator categoriesForMethods!
 basePath!accessing!public! !

@@ -425,7 +425,7 @@ mimeType
 	"Answer the <readableString> mimeType of the filename associated with the receiver.
 	NB:  Problem with this is that a GdiplusBitmap doesn't have a filename."
 
-	^self class encoderMimeTypeForExtension: (File splitExtensionFrom: self filename)!
+	^self class encoderMimeTypeForExtension: (Filename splitExtensionFrom: self filename)!
 
 palette
 	"Answer the receiver's color palette, a <ColorPalette>."
@@ -606,7 +606,7 @@ saveFramesToFiles
 	"Save the receiver's frames to files with names constructed from the receiver's filename and the frame 
 	index (e.g., file00.gif, file01.gif, etc)."
 
-	self saveFramesToFiles: (File splitPathFrom: self filename)!
+	self saveFramesToFiles: (Filename splitPathFrom: self filename)!
 
 saveFramesToFiles: directoryString
 	"Save the receiver's frames to files in the specified directory with names constructed 
@@ -615,13 +615,13 @@ saveFramesToFiles: directoryString
 
 	| frameCount stem digits toFile ext |
 	(frameCount := self frameCount) = 1 ifTrue: [^nil].
-	stem := File splitStemFrom: self filename.
-	ext := File splitExtensionFrom: self filename.
+	stem := Filename splitStemFrom: self filename.
+	ext := Filename splitExtensionFrom: self filename.
 	digits := frameCount numberOfDigitsInBase: 10.
 	0 to: frameCount - 1
 		do: 
 			[:i |
-			toFile := File
+			toFile := Filename
 						composePath: directoryString
 						stem: (String writeStream
 								nextPutAll: stem;
@@ -662,7 +662,7 @@ saveToFile: pathString encoderParams: aGpEncoderParameters
 
 	self
 		saveToFile: pathString
-		clsidEncoder: (self class encoderClsidForExtension: (File splitExtensionFrom: pathString))
+		clsidEncoder: (self class encoderClsidForExtension: (Filename splitExtensionFrom: pathString))
 		encoderParams: aGpEncoderParameters!
 
 saveToIStream: pStream mimeType: mimeString 

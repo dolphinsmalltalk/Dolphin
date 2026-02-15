@@ -40,7 +40,7 @@ basicLoad
 	self packagePaths do: 
 			[:each |
 			| name |
-			name := File splitStemFrom: each.
+			name := Filename splitStemFrom: each.
 			packageManager packageNamed: name
 				ifNone: 
 					[[packageManager install: each] on: packageManager prerequisiteNotFoundSignal
@@ -202,7 +202,7 @@ diskBasedPackages
 
 	| paths |
 	paths := self contents reject: [:each | (each at: 3) == #imageBased].
-	^paths collect: [:each | File splitStemFrom: (each at: 1)]!
+	^paths collect: [:each | Filename splitStemFrom: (each at: 1)]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -239,7 +239,7 @@ encryptedPackageNames
 
 	| encrypted |
 	encrypted := self contents select: [:each | (each at: 2) == #encrypted].
-	^encrypted collect: [:each | File splitStemFrom: (each at: 1)]!
+	^encrypted collect: [:each | Filename splitStemFrom: (each at: 1)]!
 
 foldLiterals
 	Class foldLiterals!
@@ -324,7 +324,7 @@ name
 packageNames
 	"Answer the list of package names associated with the receiver"
 
-	^self packagePaths collect: [:each | File splitStemFrom: each]!
+	^self packagePaths collect: [:each | Filename splitStemFrom: each]!
 
 packagePaths
 	"Answer the list of package path names associated with the receiver"
@@ -536,12 +536,14 @@ packages: wildcard under: directory encrypted: aBoolean
 	base := SessionManager current imageBase.
 	File
 		forAll: wildcard
-		in: (File composePath: base subPath: directory)
+		in: (Filename composePath: base subPath: directory)
 		do: 
 			[:each |
-			answer add: {File relativePathOf: each path to: base.
+			answer add: {
+						Filename relativePathOf: each path to: base.
 						aBoolean ifTrue: [#encrypted] ifFalse: [#plain].
-						#imageBased}].
+						#imageBased
+					}].
 	^answer!
 
 pacsUnder: directory encrypted: aBoolean 

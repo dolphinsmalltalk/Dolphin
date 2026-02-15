@@ -37,7 +37,7 @@ defaultFileExtension
 	"Answer a default extension that will be used for files saved from
 	instances the receiver"
 
-	^(File splitExtensionFrom: self scriptFileTypes first last)!
+	^Filename splitExtensionFrom: self scriptFileTypes first last!
 
 defaultLanguage
 	"Answer the <readableString> name of the default scripting language used in the receiver."

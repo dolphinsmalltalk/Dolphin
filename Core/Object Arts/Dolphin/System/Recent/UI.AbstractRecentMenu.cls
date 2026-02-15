@@ -58,7 +58,7 @@ onAboutToDisplayMenu: recentMenu
 	recentMenu name == self recentMenuName ifFalse: [^self].
 	recentMenu clear.
 	recentList := self getRecentList.
-	basePath := File splitPathFrom: recentList first.
+	basePath := Filename splitPathFrom: recentList first.
 	recentList do: 
 			[:each |
 			| nameToDisplay |

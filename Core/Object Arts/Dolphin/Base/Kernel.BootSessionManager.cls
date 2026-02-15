@@ -191,12 +191,12 @@ reloadBootPackages
 	"First load the constants pools to ensure all constants ref'd in new code are defined"
 	Notification signal: 'Reloading BCL constants pools...'.
 	basePackage sourceVariableNames
-		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
+		collect: [:each | srcMgr fileIn: (Filename relativePathOf: each value fileOutName to: imageDir)].
 	Notification signal: 'Updating ClassBuilder...'.
 	self fileInClass: ClassBuilder.
 	classesBefore := (Package manager allPackagedClasses collect: [:each | each name]) asSet.
 	Notification signal: 'Reloading BCL class definitions...'.
-	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
+	srcMgr fileIn: (Filename relativePathOf: basePackage classDefinitionsFileName to: imageDir).
 	Class subclasses: #().
 	"Ensure all base classes (including any defined after the boot image was created) are packaged"
 	newBaseClasses := OrderedCollection new.
@@ -226,7 +226,7 @@ reloadBootPackages
 			(#(#BootSessionManager #ClassBuilder) identityIncludes: each name)
 				ifFalse: 
 					[| relativePath |
-					relativePath := File relativePathOf: each fileOutName to: imageDir.
+					relativePath := Filename relativePathOf: each fileOutName to: imageDir.
 					(File exists: relativePath)
 						ifTrue: [srcMgr fileIn: relativePath]
 						ifFalse: [missingClasses add: each]]].

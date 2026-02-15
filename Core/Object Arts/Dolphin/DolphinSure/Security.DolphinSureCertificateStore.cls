@@ -78,9 +78,7 @@ includesSerial: aStringSerialNo
 name
 	"Answers the <readableString> name of the receiver"
 
-	^File splitStemFrom: regKey name
-
-	!
+	^Filename splitStemFrom: regKey name!
 
 name: aStringName
 	"Private - Initializes the receiver with aStringName"
@@ -108,7 +106,7 @@ removeAllCertificates
 	"Removes all certificates from the receiver"
 
 	| name |
-	name := File splitStemFrom: regKey name.
+	name := Filename splitStemFrom: regKey name.
 	regKey parentKey removeKey: regKey name.
 	self name: name!
 

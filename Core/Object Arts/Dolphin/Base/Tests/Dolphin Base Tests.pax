@@ -40,6 +40,7 @@ package setClassNames: #(
 	#{Core.Tests.ExceptionTesterClasses}
 	#{Core.Tests.FalseTest}
 	#{Core.Tests.FileLocatorTest}
+	#{Core.Tests.FilenameTest}
 	#{Core.Tests.FileStreamTest}
 	#{Core.Tests.FileTest}
 	#{Core.Tests.FileWriteStreamTest}
@@ -543,6 +544,14 @@ Core.Tests.DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'Core.Tests.FilenameTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1927,7 +1936,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 		skipped: classSkipped.
 	suiteNode free.
 	suitesNode free.
-	doc save: (File
+	doc save: (Filename
 				composePath: SessionManager current imageBase
 				stem: suiteName
 				extension: 'xml').

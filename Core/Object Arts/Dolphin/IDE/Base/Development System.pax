@@ -5727,10 +5727,10 @@ defaultAboutBitmap
 	#{Graphics.Gdiplus.Image} ifDefined: 
 			[:gdiplusImage |
 			| dir imageFile |
-			dir := File composePath: self path subPath: 'Resources'.
+			dir := Filename composePath: self path subPath: 'Resources'.
 			#('jpg' 'png') do: 
 					[:each |
-					imageFile := File
+					imageFile := Filename
 								composePath: dir
 								stem: self name
 								extension: each.

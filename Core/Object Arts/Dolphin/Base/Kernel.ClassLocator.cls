@@ -154,7 +154,7 @@ localFileSpecFor: aStringFilename
 
 	| filename |
 	filename := aStringFilename.
-	self codeBase notNil ifTrue: [filename := File composePath: codeBase subPath: filename].
+	self codeBase notNil ifTrue: [filename := Filename composePath: codeBase subPath: filename].
 	^super localFileSpecFor: filename!
 
 locateClass

@@ -46,7 +46,7 @@ buildRecentFilesMenu: aMenyu
 			nameToDisplay := each.
 			self hasFilename
 				ifTrue: 
-					[nameToDisplay := (FolderRelativeFileLocator basePath: (File splitPathFrom: self filename))
+					[nameToDisplay := (FolderRelativeFileLocator basePath: (Filename splitPathFrom: self filename))
 								relativePathTo: each].
 			aMenyu addCommand: (Message selector: #openOn: argument: each) description: nameToDisplay].
 	aMenyu
@@ -292,7 +292,7 @@ shortCaption
 		ifTrue: 
 			[| stream |
 			stream := String writeStream: 32.
-			stream nextPutAll: (File splitFilenameFrom: self filename).
+			stream nextPutAll: (Filename splitFilenameFrom: self filename).
 			self isModified ifTrue: [stream nextPut: $*].
 			stream contents]
 		ifFalse: [super shortCaption]!

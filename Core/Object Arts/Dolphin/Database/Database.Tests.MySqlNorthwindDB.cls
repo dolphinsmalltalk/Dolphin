@@ -27,7 +27,7 @@ createDatabase
 	installFolder := self installationFolder.
 	installFolder ifNil: [^false].
 	^self execSqlCmd: '"<1s>" -u <2s> -p<3s>'
-				<< { File composePath: installFolder subPath: 'bin\mysql.exe'. self uid. self pwd }
+				<< { Filename composePath: installFolder subPath: 'bin\mysql.exe'. self uid. self pwd }
 		stdin: (FileStream read: ((Kernel.PackageRelativeFileLocator package: self class owningPackage)
 						localFileSpecFor: 'NorthwindMySql.sql')
 				text: true)!
@@ -47,7 +47,8 @@ installationFolder
 	^((OS.RegKey localMachineRoot64 lookup: 'SOFTWARE\MySQL AB\MySQL Server 8.0')
 		ifNotNil: [:regkey | regkey valueAt: 'Location' ifAbsent: nil])
 			ifNil: 
-				[File composePath: (SessionManager current getenv: 'ProgramW6432') subPath: 'MySQL\MySQL Server 8.0\']!
+				[Filename composePath: (SessionManager current getenv: 'ProgramW6432')
+					subPath: 'MySQL\MySQL Server 8.0\']!
 
 newConnection
 	^super newConnection

@@ -172,7 +172,7 @@ testPixelAfterSave
 	extensions with: supportsAlpha
 		do: 
 			[:ext :supported |
-			toFile := File path: baseFile extension: ext.
+			toFile := Filename path: baseFile extension: ext.
 			bitmap saveToFile: toFile.
 			image := self subjectClass fromFile: toFile.
 			self assert: (image pixelAt: 1 @ 1) = transparentBlack equals: supported.

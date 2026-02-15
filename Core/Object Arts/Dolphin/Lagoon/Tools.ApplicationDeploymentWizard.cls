@@ -79,7 +79,7 @@ browseForExecutableName
 		ifTrue: 
 			["Suggest a sensible default name"
 			defaultExtension := self value exeFileExtension.
-			filename := File path: rootPackage value packageFileName extension: defaultExtension].
+			filename := Filename path: rootPackage value packageFileName extension: defaultExtension].
 	filename := (FileSaveDialog on: filename)
 				fileTypes: (self exeFileTypes copyWith: FileDialog allFilesType);
 				defaultExtension: defaultExtension;

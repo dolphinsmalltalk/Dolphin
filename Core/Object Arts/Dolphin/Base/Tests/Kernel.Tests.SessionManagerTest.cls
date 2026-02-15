@@ -28,7 +28,7 @@ testGetEnv
 	| actual |
 	actual := SessionManager current getenv: 'SystemRoot'.
 	self assert: (File isDirectory: actual).
-	self assert: (File exists: (File composePath: actual subPath: 'win.ini'))!
+	self assert: (File exists: (Filename composePath: actual subPath: 'win.ini'))!
 
 testUsername
 	"Assumes that getenv: is working"

@@ -934,7 +934,7 @@ browserEnvFromDom: anIXMLDOMDocument
 	manifest := anIXMLDOMDocument selectSingleNode: './/Manifest'.
 	classes := manifest selectNodes: 'Classes/Class'.
 	env := SelectorEnvironment new.
-	exeName := File splitFilenameFrom: (anIXMLDOMDocument selectSingleNode: './/Target') text.
+	exeName := Filename splitFilenameFrom: (anIXMLDOMDocument selectSingleNode: './/Target') text.
 	time := (anIXMLDOMDocument selectSingleNode: './/TimeStamp') text.
 	env label: ('<1s> (<2s>)' expandMacrosWith: exeName with: time).
 	unbound := Set new.
@@ -964,7 +964,8 @@ browserEnvFromDom: anIXMLDOMDocument
 			toDelete isEmpty ifFalse: [deletedSharedVars at: each put: toDelete]].
 	deletedSharedVars
 		keysAndValuesDo: [:eachClass :deadVars | deadVars do: [:each | eachClass removeBindingFor: each key]].
-	unbound do: [:each | (each environment classInModel: model) ifNotNil: [:env | env removeBindingFor: each name]].
+	unbound
+		do: [:each | (each environment classInModel: model) ifNotNil: [:env | env removeBindingFor: each name]].
 	^model!
 
 browserEnvironment
@@ -1365,7 +1366,7 @@ compressChanges
 		caption: 'Compress Changes…';
 		headline: 'Compact change log?';
 		text: 'The change log <1p> will be compacted, removing all but the latest sources.'
-					<< (File splitFilenameFrom: srcmgr changesFileName);
+					<< (Filename splitFilenameFrom: srcmgr changesFileName);
 		detailsText: 'Compressing changes removes superseded method source, and all expression evaluations from the change log.<n><n>Compressing changes can be useful when you want to collapse a very large log that you may have been working with for an extended period. Be aware, however, that you will lose the ability to browse method histories other than the original and latest source for changed methods. You will also be unable to refer back to the log to see the history of evaluations.'
 					expandMacros;
 		expandLabel: 'Show &Help';
@@ -1384,8 +1385,10 @@ compressSources
 	(MessageBox new
 		caption: 'Compress Sources…';
 		headline: 'Compact changes into sources file?';
-		text: 'The change log <1p> will be compacted into the source files <2p>'
-					<< {File splitFilenameFrom: srcmgr changesFileName. File splitFilenameFrom: srcmgr sourcesFileName};
+		text: 'The change log <1p> will be compacted into the source files <2p>' << {
+							Filename splitFilenameFrom: srcmgr changesFileName.
+							Filename splitFilenameFrom: srcmgr sourcesFileName
+						};
 		detailsText: 'Compressing sources combines the latest method source from the the change log and/or sources (.sml) file for all source objects (e.g,. methods) in the system, and writes the result into a replacement sources file.<n><n>After compaction all record of what has changed will be lost and the change log will be empty. <n><n>Compressing sources is useful when you want to consolidate your work into a a new baseline image, but should otherwise be avoided as you will lose the ability to browse method histories, or to refer back to the log to see the history of evaluations.'
 					expandMacros;
 		expandLabel: 'Show &Help';
@@ -2294,7 +2297,7 @@ okToInstallPatchLevel: anInteger
 	self patchLevel >= anInteger
 		ifTrue: [self error: 'Image is already at Patch Level ' , anInteger displayString].
 	patchFiles := (self patchLevel + 1 to: anInteger - 1)
-				collect: [:level | File composeStem: 'Patch Level ' , level displayString extension: 'st'].
+				collect: [:level | Filename composeStem: 'Patch Level ' , level displayString extension: 'st'].
 
 	"Check patch files exist and then file them in"
 	patchFiles do: [:filename | (File exists: filename) ifFalse: [self errorNotFound: filename]].
@@ -2420,7 +2423,7 @@ onDropOverProtocol: session
 
 onFileDropped: aString over: aPresenter
 	| selector |
-	selector := FileDrops at: (File splitExtensionFrom: aString) ifAbsent: #dropFile:.
+	selector := FileDrops at: (Filename splitExtensionFrom: aString) ifAbsent: #dropFile:.
 	aPresenter routeCommand: (CommandDescription command: (Message selector: selector argument: aString)
 				description: ('Drop <1s>' expandMacrosWith: aString))!
 
@@ -2498,7 +2501,7 @@ onVariableRenamed: aVariableBinding from: aBindingReference
 openHelpTopic: topic
 	"Open the <readableString> Education Centre topic"
 
-	^self openHelpUrl: (File
+	^self openHelpUrl: (Filename
 				composePath: self helpRootUrl
 				stem: topic
 				extension: 'htm')!
@@ -3794,10 +3797,10 @@ requestPackageFileName: aString
 	user input is not available)."
 
 	| stem |
-	stem := File splitStemFrom: aString.
+	stem := Filename splitStemFrom: aString.
 	^FileOpenDialog new
 		fileTypes: self packageOpenFileDialogTypes;
-		defaultExtension: (File splitExtensionFrom: aString);
+		defaultExtension: (Filename splitExtensionFrom: aString);
 		value: stem;
 		caption: ('Open prerequisite Package: <1p>' expandMacrosWith: stem);
 		showModal!

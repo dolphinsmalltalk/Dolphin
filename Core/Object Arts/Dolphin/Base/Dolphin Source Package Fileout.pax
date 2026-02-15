@@ -349,7 +349,7 @@ emitPackagePrerequisiteNames: aPackage
 	basePath := aPackage path.
 	self
 		emitPackageCollection: ((aPackage prerequisites asSortedArray: [:a :b | a name <==> b name < 0])
-				collect: [:each | File removeExtension: (File relativePathOf: each packageFileName to: basePath)])
+				collect: [:each | Filename removeExtension: (Filename relativePathOf: each packageFileName to: basePath)])
 		initializer: #setPrerequisites:!
 
 emitPackageUntracedVariables: aPackage
@@ -465,10 +465,10 @@ Alternatively you can proceed and overwrite any changes on disk. You can also ch
 createPackagePath
 	"Private - Create the directory where the receiver resides on disk"
 
-	File createDirectoryPath: (File splitPathFrom: self fileOutName)!
+	File createDirectoryPath: (Filename splitPathFrom: self fileOutName)!
 
 dotPacPath
-	^File path: self packageFileName extension: self class packageExtension!
+	^Filename path: self packageFileName extension: self class packageExtension!
 
 fileModificationTime
 	"Private - Answer the modification time of the receiver's package file on disk as the
@@ -517,7 +517,7 @@ fileOutBinaryVariables
 					| stem stream |
 					stem := each shortName.
 					(BindingReference isQualifiedName: stem) ifTrue: [^SourceFormatNotSupportedError signalWith: each].
-					stream := FileWriteStream write: (File
+					stream := FileWriteStream write: (Filename
 										composePath: self path
 										stem: stem
 										extension: 'stb')
@@ -529,7 +529,7 @@ fileOutBinaryVariables
 					
 					[:each |
 					| stream |
-					stream := FileWriteStream write: (File
+					stream := FileWriteStream write: (Filename
 										composePath: self path
 										stem: each asString
 										extension: 'ston')
@@ -565,7 +565,7 @@ fileOutNames
 		add: self fileOutName;
 		addAll: (self binaryVariableNames collect: 
 						[:each |
-						File
+						Filename
 							composePath: self path
 							stem: each path last
 							extension: fileExtension]);

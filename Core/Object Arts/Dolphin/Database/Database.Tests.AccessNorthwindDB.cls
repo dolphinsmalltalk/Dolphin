@@ -29,7 +29,7 @@ dropDatabase
 	(filename notNil and: [File exists: filename]) ifTrue: [File delete: filename]!
 
 filename
-	^filename ifNil: [filename := File composePath: File tempPath subPath: 'Northwind.mdb']!
+	^filename ifNil: [filename := Filename composePath: File tempPath subPath: 'Northwind.mdb']!
 
 getOdbcDriver
 	^'Microsoft Access Driver (*.mdb)'! !

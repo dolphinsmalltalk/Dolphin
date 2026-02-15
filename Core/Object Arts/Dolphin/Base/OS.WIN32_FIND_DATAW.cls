@@ -49,7 +49,7 @@ path
 	"Answer the path of the file described by the receiver (assuming the 
 	directory has been set correctly)."
 
-	^File composePath: self directory subPath: self fileName!
+	^Filename composePath: self directory subPath: self fileName!
 
 shortFileName
 	"Answer the 8.3 filename from the receiver."
@@ -62,7 +62,7 @@ shortFileName
 stem
 	"Answer the stem (name sans extension) of the file described by the receiver."
 
-	^File splitStemFrom: self fileName! !
+	^Filename splitStemFrom: self fileName! !
 
 !OS.WIN32_FIND_DATAW categoriesForMethods!
 cAlternateFileName!**compiled accessors**!public! !

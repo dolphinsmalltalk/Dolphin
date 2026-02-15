@@ -319,10 +319,10 @@ executableName: aString
 	be saved"
 
 	executableName := FileLocator imageRelative relativePathTo: aString.
-	executableName notEmpty ifTrue: [
-		"Default the file extension and save the path relative to the installation directory"
-		executableName := File default: executableName extension: self exeFileExtension ].
-!
+	executableName notEmpty
+		ifTrue: 
+			["Default the file extension and save the path relative to the installation directory"
+			executableName := Filename default: executableName extension: self exeFileExtension]!
 
 ignoreViewReferences: aBoolean
 	"Set whether view resources should NOT be scanned for references to other

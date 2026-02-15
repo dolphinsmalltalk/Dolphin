@@ -84,7 +84,7 @@ testStat
 	self writeHelloWorldFile.
 	subject := IStream read: temp.
 	stat := subject stat.
-	self assert: stat pwcsName equals: (File splitFilenameFrom: temp).
+	self assert: stat pwcsName equals: (Filename splitFilenameFrom: temp).
 	self assert: stat mtime equals: (File lastWriteTime: temp).
 	self assert: stat grfMode equals: STGM_READ | STGM_SHARE_DENY_WRITE.
 	self assert: stat isOLEStream.

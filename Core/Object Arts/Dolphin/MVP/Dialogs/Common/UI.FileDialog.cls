@@ -128,7 +128,7 @@ extractPathNames: aString
 			strings
 				from: 2
 				to: count
-				do: [:each | pathNames nextPut: (File composePath: folder subPath: each)].
+				do: [:each | pathNames nextPut: (Filename composePath: folder subPath: each)].
 			pathNames collection]!
 
 extractResult: result

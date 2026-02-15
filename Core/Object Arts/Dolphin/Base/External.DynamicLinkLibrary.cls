@@ -266,7 +266,8 @@ onStartup
 	"Initialize all the lazily opened libraries, installing DynamicLinkLibrary stubs for any assigned to shared variables."
 	self initializeSubclasses.
 	"Add VM folder to DLL search path for libraries that specify LOAD_LIBRARY_SEARCH_DEFAULT_DIRS/LOAD_LIBRARY_SEARCH_USER_DIRS in #loadFlags"
-	Kernel32 addDllDirectory: (File splitPathFrom: (Kernel32 getModuleFilename: VMLibrary moduleHandle))!
+	Kernel32
+		addDllDirectory: (Filename splitPathFrom: (Kernel32 getModuleFilename: VMLibrary moduleHandle))!
 
 onStartup2
 	"Private - Perform session startup processing for the receiver."

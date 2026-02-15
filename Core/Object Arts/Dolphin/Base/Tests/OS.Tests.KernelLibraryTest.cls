@@ -32,16 +32,18 @@ maxPathComponentLength: aString
 
 testCreateDirectory
 	| tmpDir subDir |
-	tmpDir := File composePath: File tempPath
+	tmpDir := Filename composePath: File tempPath
 				subPath: Character dolphin asString , GUID newUnique idlString.
 	self assert: (Kernel32 createDirectory: tmpDir).
 	
 	[self assert: (File isDirectory: tmpDir).
-	{String new: 248 - tmpDir size - 2 withAll: $a.
+	{
+		String new: 248 - tmpDir size - 2 withAll: $a.
 		String new: 248 withAll: $b.
-		String new: 248 - tmpDir size - 1 withAll: $c} do: 
+		String new: 248 - tmpDir size - 1 withAll: $c
+	} do: 
 				[:each |
-				subDir := File composePath: tmpDir subPath: each.
+				subDir := Filename composePath: tmpDir subPath: each.
 				self assert: (Kernel32 createDirectory: subDir).
 				self assert: (File isDirectory: subDir)]]
 			ensure: [File deleteDirectory: tmpDir]!
@@ -72,7 +74,8 @@ testGetEnvironmentVariable
 testGetModuleFilename
 	| dir lib testDll maxDllFilestem maxComponent |
 	self assert: ((Kernel32 getModuleFilename: Kernel32)
-				compareOrdinals: (File composePath: SessionManager current systemDirectory subPath: 'KERNEL32.DLL')
+				compareOrdinals: (Filename composePath: SessionManager current systemDirectory
+						subPath: 'KERNEL32.DLL')
 				ignoringCase: true)
 		equals: 0.
 	"GetModuleFilename is documented to fail for libraries opened only to read resources, but historically we have returned an empty string in this case rather than raising an error"
@@ -101,7 +104,7 @@ testGetModuleFilename
 		subDir , '\' , (String new: maxDllFilestem withAll: $f)
 	} do: 
 				[:each |
-				path := File
+				path := Filename
 							composePath: dir
 							stem: each
 							extension: 'dll'.
@@ -131,17 +134,17 @@ testGetSystemWindowsDirectory
 	self assert: (actual compareOrdinals: expected ignoringCase: true) equals: 0!
 
 testGetTempPath
-	self assert: (File appendPathDelimiter: Kernel32 getTempPath)
-		equals: (File appendPathDelimiter: (Kernel32 getEnvironmentVariable: 'TMP'))!
+	self assert: (Filename appendPathDelimiter: Kernel32 getTempPath)
+		equals: (Filename appendPathDelimiter: (Kernel32 getEnvironmentVariable: 'TMP'))!
 
 testSetCurrentDirectory
 	| tmpDir path |
-	tmpDir := File composePath: File tempPath
+	tmpDir := Filename composePath: File tempPath
 				subPath: Character dolphin asString , GUID newUnique idlString.
 	
 	[| wd |
 	self assert: (Kernel32 createDirectory: tmpDir).
-	path := File composePath: tmpDir
+	path := Filename composePath: tmpDir
 				subPath: (String new: Win32Constants.MAX_PATH - tmpDir asUtf16String size - 3 withAll: $£).
 	"SetCurrentDirectoryW is documented as supporting long paths, but empirically it doesn't seem to. As soon as we hit MAX_PATH - 1, the SetCurrentDirectory call will fail complaining the filename or extension is too long (although in fact only 221 code-units long, well within the typical component limit)."
 	self assert: path asUtf16String size equals: Win32Constants.MAX_PATH - 2.

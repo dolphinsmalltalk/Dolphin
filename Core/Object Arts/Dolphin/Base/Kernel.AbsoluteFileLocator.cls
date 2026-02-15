@@ -46,7 +46,7 @@ relativePathTo: aFilename
 	specified <readableString> path, which the receiver can map back to a full
 	path via its #localFileSpecFor: method. In this case we need an absolute path."
 
-	^File fullPathOf: aFilename! !
+	^Filename fullPathOf: aFilename! !
 
 !Kernel.AbsoluteFileLocator categoriesForMethods!
 isSelfEvaluating!public!testing! !

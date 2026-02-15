@@ -153,7 +153,7 @@ testStlUpgradesFromLiteralResources
 
 verifyStbUpgrade: pathString
 	| filename stbVersion stream filer version notifications viewProxy parts |
-	filename := File splitStemFrom: pathString.
+	filename := Filename splitStemFrom: pathString.
 	parts := $; split: filename.
 	stbVersion := Integer fromString: parts last.
 	stream := FileStream read: pathString text: false.

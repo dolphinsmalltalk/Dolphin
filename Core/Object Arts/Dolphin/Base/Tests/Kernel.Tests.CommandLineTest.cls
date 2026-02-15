@@ -20,7 +20,7 @@ dolphinLauncherExe
 	^SessionManager current argv first!
 
 dproImageName
-	^File splitFilenameFrom: SessionManager current imageFileName!
+	^Filename splitFilenameFrom: SessionManager current imageFileName!
 
 expectError: aString parsing: commandLine
 	| filter |

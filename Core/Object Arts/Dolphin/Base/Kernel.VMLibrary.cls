@@ -531,7 +531,7 @@ versionInfo!accessing-version!public! !
 fileName
 	"Answer the host system file name for the external library the receiver represents."
 
-	^File splitStemFrom: (self moduleFileName: self moduleHandle)!
+	^Filename splitStemFrom: (self moduleFileName: self moduleHandle)!
 
 hasBytecodeRepresentation: anObject
 	"Private - Answer whether the specified object has a special instruction or instructions that when

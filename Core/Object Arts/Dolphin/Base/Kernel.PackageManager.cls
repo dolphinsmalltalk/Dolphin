@@ -479,7 +479,7 @@ install: aString
 	newPackages := self
 				loadPrereqsForPackage: startPackage
 				relativeTo: startPackage path
-				extension: (File splitExtensionFrom: filename)
+				extension: (Filename splitExtensionFrom: filename)
 				loaded: (PluggableSet searchPolicy: SearchPolicy ordinalCaseInsensitive)
 				trail: OrderedCollection new]
 			on: PackageNotFoundSignal
@@ -507,7 +507,7 @@ installHere: aString
 	"Same as #install: except that aString is seen as being relative to the current directory
 	rather than the image base."
 
-	^self install: (File fullPathOf: aString)!
+	^self install: (Filename fullPathOf: aString)!
 
 isLooseMethod: aCompiledMethod
 	"Answer whether the argument is a loose method (i.e. one owned by a package other
@@ -575,19 +575,20 @@ loadPrereq: prereqPathString relativeTo: basePathString extension: extensionStri
 	loadedCollection."
 
 	| package expectedPathname actualPathname prereqName |
-	prereqName := File splitFilenameFrom: prereqPathString.
+	prereqName := Filename splitFilenameFrom: prereqPathString.
 	"Already installed or already visited?"
 	((self includesPackageNamed: prereqName) or: [loadedCollection includes: prereqName])
 		ifTrue: [^trailCollection].
 	"First look using relative path from base"
-	expectedPathname := File default: (File fullPathOf: prereqPathString relativeTo: basePathString)
+	expectedPathname := Filename
+				default: (Filename fullPathOf: prereqPathString relativeTo: basePathString)
 				extension: extensionString.
 	actualPathname := (File exists: expectedPathname)
 				ifTrue: [expectedPathname]
 				ifFalse: 
 					[| localPathname |
 					"Try directly in the base folder"
-					localPathname := File
+					localPathname := Filename
 								composePath: basePathString
 								stem: prereqName
 								extension: extensionString.
@@ -1096,7 +1097,7 @@ renamePackage: aPackage to: aStringPathname
 	"Attempts to rename aPackage held by the receiver to aStringName."
 
 	| existing newName |
-	newName := File splitStemFrom: aStringPathname.
+	newName := Filename splitStemFrom: aStringPathname.
 	existing := self packageNamed: newName ifNone: nil.
 	(existing isNil or: [existing == aPackage]) ifFalse: [^self error: 'Package already exists'].
 	self packages

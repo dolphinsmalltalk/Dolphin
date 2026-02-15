@@ -52,7 +52,7 @@ changesFileName
 changesFileNameFromPath: filePath
 	"Answer the file name for a change log with the specified image path."
 
-	^File path: filePath extension: self changesExtension!
+	^Filename path: filePath extension: self changesExtension!
 
 changesFiler
 	^SourceFiles at: ChangesIndex!
@@ -151,8 +151,8 @@ fileInHere: aFileName
 
 	| cwd |
 	cwd := File workingDirectory.
-	File workingDirectory: (File splitPathFrom: aFileName).
-	[self fileIn: (File splitFilenameFrom: aFileName)] ensure: [File workingDirectory: cwd]!
+	File workingDirectory: (Filename splitPathFrom: aFileName).
+	[self fileIn: (Filename splitFilenameFrom: aFileName)] ensure: [File workingDirectory: cwd]!
 
 fileInPackagedClass: aClass
 	"File in aClass via the package mechanism. The class is filed in from the same directory as the
@@ -390,7 +390,7 @@ sourcesFileName
 sourcesFileNameFromPath: filePath
 	"Private - Answer a file name for a source file at the specified path."
 
-	^File path: filePath extension: self sourcesExtension!
+	^Filename path: filePath extension: self sourcesExtension!
 
 sourcesFileStream
 	"Private - Answer the FileStream open on the big sources file."

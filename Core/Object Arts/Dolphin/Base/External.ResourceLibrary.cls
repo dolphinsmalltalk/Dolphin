@@ -52,11 +52,11 @@ open: aString
 			[:e1 |
 			| filename |
 			"Supplied path didn't work"
-			((File splitPathFrom: name) notEmpty and: 
+			((Filename splitPathFrom: name) notEmpty and: 
 					["previously pathed, so try stem only"
-					self attemptToOpen: (File splitStemFrom: name)])
+					self attemptToOpen: (Filename splitStemFrom: name)])
 				ifTrue: [^self].
-			filename := File splitFilenameFrom: name.
+			filename := Filename splitFilenameFrom: name.
 			"Try the current image path"
 			(self attemptToOpen: (FileLocator imageRelative localFileSpecFor: filename)) ifTrue: [^self].
 			"Finally try the installation path"
@@ -94,7 +94,7 @@ aliasFor: aString
 
 	| libName |
 	libName := aString asLowercase.
-	^(Libraries at: (File splitStemFrom: libName) ifAbsent: [^libName]) fileName!
+	^(Libraries at: (Filename splitStemFrom: libName) ifAbsent: [^libName]) fileName!
 
 defaultLoadFlags
 	"Private - Answer the default LoadLibraryEx() flags to be used when loading	instances of the receiver. For resource libraries we only want access to the data/resources in the library, not any code."
@@ -138,7 +138,7 @@ open: aString withAliases: aCollection flags: anInteger
 	N.B. The register of instances is weak. If the library instance is not referenced from elsewhere, then the alias will be lost and will need to be re-registered."
 
 	| lib path aliases |
-	path := File default: aString asLowercase extension: 'dll'.
+	path := Filename default: aString asLowercase extension: 'dll'.
 	aliases := aCollection.
 	lib := (Libraries lookup: path)
 				ifNil: 
@@ -161,7 +161,7 @@ open: aString withAliases: aCollection flags: anInteger
 									[:existing |
 									newLib close.
 									Libraries at: path put: existing]]].
-	aliases do: [:alias | Libraries at: (File default: alias extension: 'dll') put: lib].
+	aliases do: [:alias | Libraries at: (Filename default: alias extension: 'dll') put: lib].
 	^lib! !
 
 !External.ResourceLibrary class categoriesForMethods!

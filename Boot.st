@@ -44,7 +44,7 @@ productName := SessionManager current argv at: 3 ifAbsent: [ | p |
 	path := SessionManager current argv at: 4.
 	Package manager install: path.
 	Tools at: productName asSymbol].
-SessionManager current saveImage: (File fullPathOf: product shortProductName).
+SessionManager current saveImage: (Filename fullPathOf: product shortProductName).
 Notification signal: 'Booting ', product name.
 product boot] on: Error do: [:ex | 
 	"isPrompted==true ifFalse: [SessionManager current quit: -2]."

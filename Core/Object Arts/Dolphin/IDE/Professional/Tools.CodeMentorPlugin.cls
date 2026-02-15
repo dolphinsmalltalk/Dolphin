@@ -754,7 +754,7 @@ busyIcon
 defaultFilterFilename
 	"Private - Answer a default filename for the receiver's ignored rules"
 
-	^File default: SessionManager current imagePath extension: self defaultFilterFileType!
+	^Filename default: SessionManager current imagePath extension: self defaultFilterFileType!
 
 defaultFilterFileType
 	"Private - Answer the extension for the receiver's ignored rules file"

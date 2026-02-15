@@ -50,7 +50,7 @@ columnTypeNameWideVarChar
 	^'VARCHAR'!
 
 databaseName
-	^File removeExtension: self databaseResource filename!
+	^Filename removeExtension: self databaseResource filename!
 
 databaseResource
 	^AccessNorthwindDB current!

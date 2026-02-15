@@ -34,9 +34,9 @@ displayOn: aPuttableStream
 folderName
 	"Answer the folder name of the receiver"
 
-	^(File isRootPath: self pathname)
+	^(Filename isRootPath: self pathname)
 		ifTrue: [self volumeName]
-		ifFalse: [File composePath: self rootName subPath: self pathname]!
+		ifFalse: [Filename composePath: self rootName subPath: self pathname]!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver"
@@ -49,9 +49,9 @@ name
 	^self pathname isEmpty
 		ifTrue: [self rootName]
 		ifFalse: 
-			[(File isRootPath: self pathname)
+			[(Filename isRootPath: self pathname)
 				ifTrue: [self volumeName]
-				ifFalse: [File splitFilenameFrom: (File removePathDelimiter: self pathname)]]!
+				ifFalse: [Filename splitFilenameFrom: (Filename removePathDelimiter: self pathname)]]!
 
 parent
 	"Answer a <Folder> representing the receiver's parent, or nil if a root.
@@ -60,8 +60,8 @@ parent
 
 	| path |
 	path := self pathname.
-	^(path isEmpty or: [File isRootPath: path])
-		ifFalse: [self class pathname: (File splitPathFrom: (File removePathDelimiter: path))]!
+	^(path isEmpty or: [Filename isRootPath: path])
+		ifFalse: [self class pathname: (Filename splitPathFrom: (Filename removePathDelimiter: path))]!
 
 pathname
 	"Answer the folder pathname of the receiver"
@@ -94,7 +94,7 @@ volumeName
 	would display it."
 
 	^[(DiskVolumeInformation forPath: self pathname) explorerName] on: Win32Error
-		do: [:ex | File removePathDelimiter: self pathname]! !
+		do: [:ex | Filename removePathDelimiter: self pathname]! !
 
 !UI.Folder categoriesForMethods!
 <=!comparing!public! !

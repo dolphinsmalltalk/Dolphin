@@ -152,11 +152,11 @@ commonFolder: aCollectionOfPackages
 				into: 
 					[:prefix :each |
 					prefix
-						ifNil: [File splitPathFrom: each packagePathname]
-						ifNotNil: [File commonPrefixOf: prefix and: each packagePathname]].
+						ifNil: [Filename splitPathFrom: each packagePathname]
+						ifNotNil: [Filename commonPrefixOf: prefix and: each packagePathname]].
 	^commonPrefix isEmpty
 		ifTrue: [self folderClass root]
-		ifFalse: [self folderClass pathname: (File appendPathDelimiter: commonPrefix)]!
+		ifFalse: [self folderClass pathname: (Filename appendPathDelimiter: commonPrefix)]!
 
 confirmUninstall: aPackage
 	"Private - If the <Package> argument has any dependents, then prompt the user to confirm
@@ -302,10 +302,10 @@ filteredPackages
 		ifNotNil: 
 			[:filter |
 			filter isEmpty
-				ifTrue: [allPackages select: [:each | File isRelativePath: each packagePathname]]
+				ifTrue: [allPackages select: [:each | Filename isRelativePath: each packagePathname]]
 				ifFalse: 
 					[| searchPrefix |
-					searchPrefix := File appendPathDelimiter: filter.
+					searchPrefix := Filename appendPathDelimiter: filter.
 					allPackages select: [:each | each packagePathname beginsWith: searchPrefix ignoreCase: true]]]!
 
 filterPresenter
@@ -382,7 +382,7 @@ newPackage
 	"Request the name of a new Package to add to the PackageManager."
 
 	| pathname dialog directory |
-	directory := File fullPathOf: self filter relativeTo: SessionManager current imageBase.
+	directory := Filename fullPathOf: self filter relativeTo: SessionManager current imageBase.
 	[File createDirectoryPath: directory] on: OS.Win32Error
 		do: 
 			[:ex |
@@ -390,14 +390,14 @@ newPackage
 			].
 	dialog := FileSaveDialog new
 				initialDirectory: directory;
-				fileTypes: {self developmentSystem pacFileDialogType};
+				fileTypes: { self developmentSystem pacFileDialogType };
 				defaultExtension: Package packageExtension;
 				caption: 'New Package'.
 	pathname := dialog showModal.
 	pathname notNil
 		ifTrue: 
 			[| packageName |
-			packageName := File splitStemFrom: pathname.
+			packageName := Filename splitStemFrom: pathname.
 			packageName notEmpty
 				ifTrue: 
 					[| packMan |
@@ -405,7 +405,7 @@ newPackage
 					
 					[| package |
 					package := packMan newPackage: pathname.
-					self packages: {package}]
+					self packages: { package }]
 							on: packMan duplicatePackageSignal
 							do: [:e | e okCancel]]]!
 
@@ -769,7 +769,7 @@ savePackageAs
 	pathname := FileSaveDialog new
 				fileTypes: self saveFileDialogTypes;
 				defaultExtension: Package packageExtension;
-				value: (File removeExtension: package packageFileName);
+				value: (Filename removeExtension: package packageFileName);
 				caption: 'Save Package <1p> As…' << package name;
 				showModal.
 	pathname notNil
@@ -834,8 +834,8 @@ savePackages: aCollection toFolder: aPackageFolder
 	mb beTaskModal.
 	mb headline: 'Move packages to <1p>?' << aPackageFolder folderName.
 	(mb confirm: msg contents) ifFalse: [^self].
-	dir := File fullPathOf: aPackageFolder pathname relativeTo: SessionManager current imageBase.
-	aCollection do: [:each | each saveAs: (File composePath: dir subPath: each name)]!
+	dir := Filename fullPathOf: aPackageFolder pathname relativeTo: SessionManager current imageBase.
+	aCollection do: [:each | each saveAs: (Filename composePath: dir subPath: each name)]!
 
 selectableItems
 	"Private - Answer the name of the <selectableItems> component that actually handles the selectable items in the receiver"

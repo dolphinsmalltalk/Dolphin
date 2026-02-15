@@ -275,7 +275,7 @@ fromFile: aString usingLocator: aFileLocator
 	"Answer an instance loaded from the file aString by using aFileLocator."
 
 	| relativeFilename |
-	relativeFilename := (aFileLocator isNil or: [File isRelativePath: aString])
+	relativeFilename := (aFileLocator isNil or: [Filename isRelativePath: aString])
 				ifTrue: [aString]
 				ifFalse: [aFileLocator relativePathTo: aString].
 	^self initializer: (self newFileInitializer: relativeFilename locator: aFileLocator)!

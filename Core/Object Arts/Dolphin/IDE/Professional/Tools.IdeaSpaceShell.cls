@@ -267,7 +267,7 @@ The error reported was: "<2s>".
 As as result the new IdeaSpace may only be partially complete. Please bear in mind that you
 can only reload an IdeaSpace into an equivalent image to the one that was used to save the
 original template. Missing Packages, Classes or Methods may give rise to errors.'
-								expandMacrosWith: (File splitFilenameFrom: self filename)
+								expandMacrosWith: (Filename splitFilenameFrom: self filename)
 								with: (self loadErrorDescriptionFrom: x))
 						caption: 'Problem Loading IdeaSpace'].
 			stream close]!

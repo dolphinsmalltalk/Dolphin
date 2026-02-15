@@ -413,12 +413,11 @@ stbConvertFromVersion3: anArray
 
 	"Copy over adding a nil imageStripperBytes slot"
 
-	| v4vars  |
+	| v4vars |
 	v4vars := anArray copyWith: nil.
 
 	"Convert the imagePathName to a relative path"
-	v4vars at: 2 put: (File relativePathOf: (anArray at: 2) to: SessionManager current imageBase).
-
+	v4vars at: 2 put: (Filename relativePathOf: (anArray at: 2) to: SessionManager current imageBase).
 	^self stbConvertFromVersion4: v4vars!
 
 stbConvertFromVersion4: anArray

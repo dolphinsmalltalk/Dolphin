@@ -2683,7 +2683,6 @@ Core.Object
 								#truncate -> 16rC0000002
 							}).
 			'OpenFlagsMask' -> 16r7.
-			'PathDelimiters' -> '/\'.
 			'ShareModes' -> (IdentityDictionary
 						withAll: { #exclusive -> 16r0. #read -> 16r1. #readWrite -> 16r3. #write -> 16r2 }).
 			'SniffSize' -> 16r1000
@@ -2696,6 +2695,14 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+Core.Object
+	subclass: #'Core.Filename'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants private} #{OS private})
+	classInstanceVariableNames: ''
+	classConstants: { 'PathDelimiter' -> $\. 'PathDelimiters' -> '/\' }!
 
 Core.Object
 	variableSubclass: #'External.FunctionDescriptor'
