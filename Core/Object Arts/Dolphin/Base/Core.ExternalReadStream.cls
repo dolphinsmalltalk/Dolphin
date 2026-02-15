@@ -30,7 +30,7 @@ anchor
 atEnd
 	"Answer whether the receiver cannot access any more objects."
 
-	"Implementation Note: If there is any input available in the buffer, then we know we are not at end. Otherwise we need to attempt to read some more input from the socket to find out whether it has been closed or not. This could, of course, cause the stream to block, but this is correct since we can't truthfully answer whether we are at end until either more input arrives, or the socket is closed."
+	"Implementation Note: If there is any input available in the buffer, then we know we are not at end. Otherwise we need to attempt to read some more input from the medium to find out whether it has been closed or not. This could, of course, cause the stream to block, but this is correct since we can't truthfully answer whether we are at end until either more input arrives, or the medium is closed."
 
 	self isBufferEmpty ifFalse: [^false].
 	^medium isOpen not or: 
@@ -99,9 +99,6 @@ isText: aBoolean
 	"Set whether the elements of the receiver should be treated as bytes (Integers) or characters.."
 
 	self encoding: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
-
-medium
-	^medium!
 
 medium: aReadableMedium buffer: byteCollection
 	"Private - Initialize the receiver."
@@ -190,7 +187,6 @@ isBinary!public!testing! !
 isBufferEmpty!private!testing! !
 isText!public!testing! !
 isText:!modes!public! !
-medium!accessing!private! !
 medium:buffer:!initializing!private! !
 on:!initializing!private! !
 readPage!operations!private! !
@@ -209,22 +205,21 @@ bufferSize
 
 	^4096!
 
-on: aSocket
-	"Answers a new instance of the receiver for buffered reading of binary data from the <Socket> argument."
+on: aReadableMedium
+	"Answers a new instance of the receiver for buffered reading of binary data from the <readableMedium> argument."
 
-	^self on: aSocket type: #binary!
+	^self on: aReadableMedium type: #binary!
 
-on: aSocket text: aBoolean
-	"Answer a new instance of the receiver on the specified <Socket>, to be used for buffered writing of text (UTF-8) or binary data to that socket depending on the value of <boolean> argument."
+on: aReadableMedium text: aBoolean
+	"Answer a new instance of the receiver on the specified <readableMedium>, to be used for buffered reading of text (assumed UTF-8) or binary data from that medium depending on the value of <boolean> argument."
 
-	^self on: aSocket type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
+	^self on: aReadableMedium type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
-on: aSocket type: aSymbol
-	"Answer a new instance of the receiver on the specified <Socket>, to be used for buffered writing of data in the encoding specified by the <Symbol> argument. See the class comment for more details on
-	possible the encodings."
+on: aReadableMedium type: aSymbol
+	"Answer a new instance of the receiver on the specified <readableMedium>, to be used for buffered reading of data in the encoding specified by the <Symbol> argument. See the class comment for more details on possible the encodings."
 
 	^self basicNew
-		medium: aSocket buffer: ((ByteBufferClasses at: aSymbol) newFixed: BufferSize);
+		medium: aReadableMedium buffer: ((ByteBufferClasses at: aSymbol) newFixed: BufferSize);
 		yourself! !
 
 !Core.ExternalReadStream class categoriesForMethods!

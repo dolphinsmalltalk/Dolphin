@@ -42,7 +42,7 @@ errorNotPositionable
 	^self error: 'Sockets are not positionable'!
 
 hasInput
-	"Private - Answer whether there is any data ready for reading from the socket,
+	"Answer whether there is any data ready for reading from the socket,
 	Answer false if socket is closed or has no data available to read."
 
 	| fdSet result timeOut |
@@ -229,7 +229,7 @@ writeStream
 address!accessing!public! !
 connect!operations!public! !
 errorNotPositionable!exceptions!private! !
-hasInput!private!testing! !
+hasInput!public!testing! !
 initialize!initializing!private! !
 isText!public! !
 isText:!accessing!public! !
@@ -253,6 +253,7 @@ write:count:startingAt:!operations!public! !
 writeStream!accessing!public! !
 !
 
+Net.Socket methodProtocol: #readableMedium attributes: #(#readOnly) selectors: #(#close #hasInput #isOpen #read:count:)!
 Net.Socket methodProtocol: #writeableMedium attributes: #(#readOnly) selectors: #(#close #isOpen #position #position: #write:count:)!
 
 !Net.Socket class methodsFor!

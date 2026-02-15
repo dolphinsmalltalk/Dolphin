@@ -108,9 +108,6 @@ isText: aBoolean
 
 	self encoding: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
-medium
-	^medium!
-
 medium: anExternalMedium buffer: byteCollection flags: anInteger
 	"Private - Initialize the receiver."
 
@@ -190,7 +187,6 @@ isBinary!public!testing! !
 isBufferDirty!operations!private!testing! !
 isText!public!testing! !
 isText:!modes!public! !
-medium!accessing!private! !
 medium:buffer:flags:!initializing!private! !
 mediumPosition!positioning!private! !
 mediumPosition:!positioning!private! !

@@ -163,6 +163,11 @@ handle
 
 	^handle!
 
+hasInput
+	"Answer whether there is further data available to read from the file."
+
+	^self atEnd not!
+
 isOpen
 	"Answer true if the file is open."
 
@@ -549,6 +554,7 @@ flush!operations!public! !
 free!private!realizing/unrealizing! !
 getTimes:atime:mtime:!accessing!private! !
 handle!accessing!public! !
+hasInput!public!testing! !
 isOpen!public!testing! !
 isReadable!public!testing! !
 isWriteable!public!testing! !
@@ -586,6 +592,7 @@ write:startingAt:count:!operations!public! !
 writeByte:!operations!public! !
 !
 
+Core.File methodProtocol: #readableMedium attributes: #(#readOnly) selectors: #(#close #hasInput #isOpen #read:count:)!
 Core.File methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #fileType #flush #isReadable #isWriteable #position: #read:count: #reset #setToEnd #size #write:count:)!
 Core.File methodProtocol: #writeableMedium attributes: #(#readOnly) selectors: #(#close #isOpen #position #position: #write:count:)!
 
