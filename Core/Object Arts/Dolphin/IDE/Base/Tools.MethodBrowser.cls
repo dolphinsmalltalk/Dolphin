@@ -103,7 +103,7 @@ browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 			class := context methodClass.
 			(aBrowserEnvironment label beginsWith: 'Local hierarchy of <1p>' << class)
 				ifFalse: 
-					[definitions addLast: (aMethodSearch definitionsIn: (aBrowserEnvironment forClassHierarchyOf: class))]].
+					[definitions addLast: (aMethodSearch definitionsIn: (aBrowserEnvironment forClassHierarchyOf: class realClass))]].
 	aBrowserEnvironment isSystem
 		ifFalse: 
 			[definitions addLast: (aMethodSearch definitionsIn: self developmentSystem browserEnvironment)].
