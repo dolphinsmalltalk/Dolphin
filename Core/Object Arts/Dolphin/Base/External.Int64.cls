@@ -74,9 +74,6 @@ value:!**compiled accessors**!public! !
 
 !External.Int64 class methodsFor!
 
-byteSize
-	^_Int64_Size!
-
 defineFields
 	"Define the fields of the Int64 'structure'.
 
@@ -100,7 +97,6 @@ defineFields
 			offset: 4! !
 
 !External.Int64 class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

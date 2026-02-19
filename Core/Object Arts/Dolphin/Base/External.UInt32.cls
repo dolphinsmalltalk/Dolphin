@@ -38,9 +38,6 @@ value:!**compiled accessors**!public! !
 
 !External.UInt32 class methodsFor!
 
-byteSize
-	^_UInt32_Size!
-
 defineFields
 	"Define the fields of the UInt32 'structure'. ExternalInteger subclasses have a single value.
 		UInt32 compileDefinition
@@ -61,7 +58,6 @@ uninitialize
 	VM registryAt: self name put: nil! !
 
 !External.UInt32 class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

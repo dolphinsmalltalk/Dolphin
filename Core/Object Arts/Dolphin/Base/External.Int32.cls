@@ -45,9 +45,6 @@ value:!**compiled accessors**!public! !
 
 !External.Int32 class methodsFor!
 
-byteSize
-	^_Int32_Size!
-
 defineFields
 	"Define the fields of the Int32 external type.
 		Int32 compileDefinition
@@ -76,7 +73,6 @@ uninitialize
 	VM registryAt: self name put: nil! !
 
 !External.Int32 class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromUnsignedInteger:!instance creation!public! !
 initialize!development!initializing!private! !

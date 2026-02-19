@@ -39,9 +39,6 @@ value:!**compiled accessors**!public! !
 
 !External.IntPtr class methodsFor!
 
-byteSize
-	^_IntPtr_Size!
-
 defineFields
 	"Define the fields of the IntPtr structure.
 		IntPtr compileDefinition
@@ -50,7 +47,6 @@ defineFields
 	self defineField: #value type: IntPtrField new beOverride! !
 
 !External.IntPtr class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

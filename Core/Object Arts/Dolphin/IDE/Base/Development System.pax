@@ -4557,6 +4557,7 @@ compileByteSize
 	| methodText constName |
 	constName := self sizeConstantName.
 	(self definesClassVariable: constName) ifFalse: [^self].
+	(self hierarchyBindingFor: constName) value = superclass byteSize ifTrue: [^self].
 	methodText := String smalltalkWriteStream: 256.
 	methodText
 		nextPutAll: #byteSize;

@@ -33,9 +33,6 @@ value:!**compiled accessors**!public! !
 
 !External.UIntPtr class methodsFor!
 
-byteSize
-	^_UIntPtr_Size!
-
 defineFields
 	"Define the fields of the UIntPtr structure.
 		UIntPtr compileDefinition
@@ -44,7 +41,6 @@ defineFields
 	self defineField: #value type: UIntPtrField new beOverride! !
 
 !External.UIntPtr class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

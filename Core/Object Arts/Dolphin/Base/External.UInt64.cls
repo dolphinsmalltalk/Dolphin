@@ -64,9 +64,6 @@ value:!**compiled accessors**!public! !
 
 !External.UInt64 class methodsFor!
 
-byteSize
-	^_UInt64_Size!
-
 defineFields
 	"Define the fields of the UInt64 'structure'.
 
@@ -90,7 +87,6 @@ defineFields
 			offset: 4! !
 
 !External.UInt64 class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

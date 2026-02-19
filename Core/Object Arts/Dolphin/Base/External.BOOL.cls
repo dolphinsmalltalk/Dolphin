@@ -37,9 +37,6 @@ value:!**compiled accessors**!public! !
 
 !External.BOOL class methodsFor!
 
-byteSize
-	^_BOOL_Size!
-
 defineFields
 	"Define the fields of the BOOL structure.
 		BOOL compileDefinition
@@ -57,7 +54,6 @@ defineFields
 				yourself)! !
 
 !External.BOOL class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

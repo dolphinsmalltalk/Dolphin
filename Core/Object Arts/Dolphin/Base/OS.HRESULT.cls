@@ -165,9 +165,6 @@ value:!**compiled accessors**!public! !
 
 !OS.HRESULT class methodsFor!
 
-byteSize
-	^_HRESULT_Size!
-
 decodePrimitiveFailureCode: anInteger
 	"Private - Answer an <integer> instantiated from the NTSTATUS/HRESULT code packed into a primitive failure code.
 	The VM packs such codes into a SmallInteger primitive failure code by stripping out bit 27, which is not used."
@@ -251,7 +248,6 @@ win32Error: anInteger
 		code: anInteger! !
 
 !OS.HRESULT class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 decodePrimitiveFailureCode:!private!utilities! !
 defineFields!public!template definition! !
 fail!constants!instance creation!public! !

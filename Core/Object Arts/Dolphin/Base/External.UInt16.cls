@@ -36,9 +36,6 @@ value:!**compiled accessors**!public! !
 
 !External.UInt16 class methodsFor!
 
-byteSize
-	^_UInt16_Size!
-
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
@@ -58,7 +55,6 @@ uninitialize
 	VM registryAt: self name put: nil! !
 
 !External.UInt16 class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

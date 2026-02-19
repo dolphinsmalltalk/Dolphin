@@ -45,9 +45,6 @@ value:!**compiled accessors**!public! !
 
 !External.BOOLEAN class methodsFor!
 
-byteSize
-	^_BOOLEAN_Size!
-
 defineFields
 	"Define the fields of the BOOLEAN structure.
 		BOOLEAN compileDefinition
@@ -56,7 +53,6 @@ defineFields
 	self defineField: #value type: BOOLEANField new beOverride! !
 
 !External.BOOLEAN class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

@@ -45,9 +45,6 @@ value:!**compiled accessors**!public! !
 
 !External.Int8 class methodsFor!
 
-byteSize
-	^_Int8_Size!
-
 defineFields
 	"Define the fields of the UInt8 structure.
 		Int8 compileDefinition
@@ -68,7 +65,6 @@ uninitialize
 	VM registryAt: self name put: nil! !
 
 !External.Int8 class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !
