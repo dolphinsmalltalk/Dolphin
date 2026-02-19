@@ -14,9 +14,6 @@ Core.Tests.BagTest comment: ''!
 
 !Core.Tests.BagTest methodsFor!
 
-collectionClass
-	^Bag!
-
 testDeepCopy
 	| bag |
 	bag := Bag with: Object new with: Object new.
@@ -52,9 +49,17 @@ testSortedCounts
 	self assert: self collectionClass new sortedCounts equals: #()! !
 
 !Core.Tests.BagTest categoriesForMethods!
-collectionClass!constants!private! !
 testDeepCopy!public! !
 testRemoveIfAbsent!public! !
 testSortedCounts!public!unit tests! !
+!
+
+!Core.Tests.BagTest class methodsFor!
+
+subjectClass
+	^Bag! !
+
+!Core.Tests.BagTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

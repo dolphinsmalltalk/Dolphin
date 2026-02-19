@@ -17,9 +17,6 @@ Core.Tests.ByteArrayTest comment: ''!
 assimilate: anObject 
 	^anObject asInteger!
 
-collectionClass
-	^ByteArray!
-
 int32Values
 	^#(-16r7FFFFFFF -16r8000 -16r7FFF -16r80 -16r7F -16r1 16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16r7FFFFFFF)!
 
@@ -238,7 +235,6 @@ uint32Values
 
 !Core.Tests.ByteArrayTest categoriesForMethods!
 assimilate:!public!unit tests! !
-collectionClass!helpers!private! !
 int32Values!constants!private! !
 testAsHexString!public! !
 testAsUtf16String!public!unit tests! !
@@ -257,5 +253,14 @@ testUInt16AtOffsetPut!public!unit tests! !
 testUInt32AtOffsetPut!public!unit tests! !
 uint16Values!constants!private! !
 uint32Values!constants!private! !
+!
+
+!Core.Tests.ByteArrayTest class methodsFor!
+
+subjectClass
+	^ByteArray! !
+
+!Core.Tests.ByteArrayTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

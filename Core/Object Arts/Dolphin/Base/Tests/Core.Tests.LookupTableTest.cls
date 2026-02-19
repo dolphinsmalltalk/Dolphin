@@ -28,9 +28,6 @@ assertIs: copyDictionary deepCopyOf: sourceDictionary
 		deepCopyOf: sourceDictionary values asSortedArray
 		visited: visited!
 
-collectionClass
-	^LookupTable!
-
 testImmutability
 	| subject |
 	subject := self newDictionary.
@@ -49,7 +46,15 @@ testImmutability
 
 !Core.Tests.LookupTableTest categoriesForMethods!
 assertIs:deepCopyOf:!private!unit tests! !
-collectionClass!helpers!private! !
 testImmutability!public! !
+!
+
+!Core.Tests.LookupTableTest class methodsFor!
+
+subjectClass
+	^LookupTable! !
+
+!Core.Tests.LookupTableTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

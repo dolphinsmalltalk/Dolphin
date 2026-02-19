@@ -226,9 +226,7 @@ codePoint
 codePointString
 	"Answer the Unicode code string for the receiver as typically shown in tables of Unicode characters, e.g. [U+0061](https://codepoints.net/U+0061) for $a"
 
-	| codePoint |
-	codePoint := self codePoint.
-	^'U+' , (codePoint printStringBase: 16 nDigits: ((codePoint numberOfDigitsInBase: 16) max: 4))!
+	^self class codePointString: self codePoint!
 
 codeUnit
 	"Answer the <integer> character code for the character in its native encoding. This can
@@ -499,8 +497,7 @@ printEscapedOn: aStream
 			[aStream nextPut: $x.
 			codePoint
 				printOn: aStream
-				base: 16
-				showRadix: false]
+				base: 16]
 		ifNotNil: [:char | aStream nextPut: char]!
 
 printOn: aStream
@@ -747,6 +744,11 @@ codePoint: anInteger ifInvalid: exceptionHandler
 								yourself]
 						ifFalse: [exceptionHandler value]]]!
 
+codePointString: anInteger
+	"Answer the Unicode code string for the specified codepoint as typically shown in tables of Unicode characters, e.g. [U+0061](https://codepoints.net/U+0061) for $a"
+
+	^'U+' , (anInteger printStringBase: 16 nDigits: ((anInteger numberOfDigitsInBase: 16) max: 4))!
+
 cr
 	"Answer the carriage return control <Character>."
 
@@ -964,6 +966,7 @@ basicUtf32Value:!instance creation!private! !
 byteCharacterSet!constants!public! !
 codePoint:!instance creation!public! !
 codePoint:ifInvalid:!instance creation!public! !
+codePointString:!enquiries!public! !
 cr!constants!public! !
 digitValue:!instance creation!public! !
 dolphin!constants!public! !

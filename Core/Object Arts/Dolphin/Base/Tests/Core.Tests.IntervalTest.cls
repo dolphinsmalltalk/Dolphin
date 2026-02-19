@@ -252,7 +252,7 @@ verifyIntervalConsistency: anInterval
 !Core.Tests.IntervalTest categoriesForMethods!
 assimilate:!public!unit tests! !
 assimilateResultElement:!helpers!private! !
-collectionClass!helpers!private! !
+collectionClass!constants!private! !
 newCollection:!private!unit tests! !
 testCollect!public!unit tests! !
 testEquals!public!testing! !
@@ -272,5 +272,14 @@ testReplaceFromToWithStartingAt!public!unit tests! !
 testResize!public!unit tests! !
 testStoreOn!public!unit tests! !
 verifyIntervalConsistency:!helpers!private! !
+!
+
+!Core.Tests.IntervalTest class methodsFor!
+
+subjectClass
+	^Interval! !
+
+!Core.Tests.IntervalTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

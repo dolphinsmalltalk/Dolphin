@@ -34,9 +34,6 @@ assertInvalidSequence: aUtf8String length: anInteger
 assimilateString: aString
 	^aString asUtf8String!
 
-collectionClass
-	^Utf8String!
-
 decodeIncompleteContinuations
 	^#(#[16rC0] #[16rE0] #[16rE0 16r80] #[16rF0 16r80 16r80])!
 
@@ -809,7 +806,6 @@ testUnicodeBestPracticeDecodingExamplesWellFormed
 assertAsUtf16String:equals:!helpers!private! !
 assertInvalidSequence:length:!helpers!private! !
 assimilateString:!helpers!private! !
-collectionClass!helpers!private! !
 decodeIncompleteContinuations!constants!private! !
 decodeInvalidCharacters!constants!private! !
 decodeInvalidContinuations!constants!private! !
@@ -841,5 +837,14 @@ testUnicodeBestPracticeDecodingExamplesOtherIllFormed!public! !
 testUnicodeBestPracticeDecodingExamplesOverlong!public! !
 testUnicodeBestPracticeDecodingExamplesTruncated!public! !
 testUnicodeBestPracticeDecodingExamplesWellFormed!public! !
+!
+
+!Core.Tests.Utf8StringTest class methodsFor!
+
+subjectClass
+	^Utf8String! !
+
+!Core.Tests.Utf8StringTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

@@ -23,7 +23,7 @@ assimilateElements: aCollection
 	^aCollection asArray collect: [:each | self assimilate: each]!
 
 collectionClass
-	^self subclassResponsibility!
+	^self class subjectClass!
 
 conversionTestCases
 	^(0 to: 3) collect: [:i |
@@ -323,5 +323,18 @@ testFold!public!unit tests! !
 testIsSubsetOf!public!unit tests! !
 testSingle!public!unit tests! !
 testStoreOn!public!unit tests! !
+!
+
+!Core.Tests.CollectionTest class methodsFor!
+
+allTestSelectors
+	^self allTestSelectorsFor: self subjectClass!
+
+subjectClass
+	^Collection! !
+
+!Core.Tests.CollectionTest class categoriesForMethods!
+allTestSelectors!Accessing!public! !
+subjectClass!constants!private! !
 !
 

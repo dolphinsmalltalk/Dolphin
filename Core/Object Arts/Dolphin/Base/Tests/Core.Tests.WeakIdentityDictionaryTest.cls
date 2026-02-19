@@ -14,9 +14,6 @@ Core.Tests.WeakIdentityDictionaryTest comment: ''!
 
 !Core.Tests.WeakIdentityDictionaryTest methodsFor!
 
-collectionClass
-	^WeakIdentityDictionary!
-
 testIsMourner
 	| subject |
 	self assert: self collectionClass isMourner.
@@ -28,7 +25,15 @@ testIsMourner
 ! !
 
 !Core.Tests.WeakIdentityDictionaryTest categoriesForMethods!
-collectionClass!helpers!private! !
 testIsMourner!public! !
+!
+
+!Core.Tests.WeakIdentityDictionaryTest class methodsFor!
+
+subjectClass
+	^WeakIdentityDictionary! !
+
+!Core.Tests.WeakIdentityDictionaryTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

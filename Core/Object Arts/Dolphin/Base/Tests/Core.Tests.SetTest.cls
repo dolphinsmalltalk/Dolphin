@@ -14,9 +14,6 @@ Core.Tests.SetTest comment: ''!
 
 !Core.Tests.SetTest methodsFor!
 
-collectionClass
-	^Set!
-
 testAddIfAbsent
 	| subject element1 element2 |
 	subject := self newEmpty.
@@ -47,9 +44,17 @@ testEquals
 	self assertCommutativelyEqual: set other: setb! !
 
 !Core.Tests.SetTest categoriesForMethods!
-collectionClass!helpers!private! !
 testAddIfAbsent!public! !
 testAllHealthy!public! !
 testEquals!public!unit tests! !
+!
+
+!Core.Tests.SetTest class methodsFor!
+
+subjectClass
+	^Set! !
+
+!Core.Tests.SetTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

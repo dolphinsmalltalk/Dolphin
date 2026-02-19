@@ -14,9 +14,6 @@ UI.Tests.ListModelTest comment: ''!
 
 !UI.Tests.ListModelTest methodsFor!
 
-collectionClass
-	^ListModel!
-
 testStbConvertFromVersion0
 	| bytes subject |
 	bytes := #[33 83 84 66 32 48 32 6 1 9 0 76 105 115 116 77 111 100 101 108 0 0 0 0 14 2 18 0 83 84 66 67 111 108 108 101 99 116 105 111 110 80 114 111 120 121 0 0 0 0 14 1 13 0 83 84 66 67 108 97 115 115 80 114 111 120 121 0 0 0 0 54 0 6 0 83 116 114 105 110 103 17 0 0 0 79 114 100 101 114 101 100 67 111 108 108 101 99 116 105 111 110 38 0 5 0 65 114 114 97 121 3 0 0 0 3 0 0 0 178 0 0 0 1 0 0 0 50 54 0 5 0 70 108 111 97 116 8 0 0 0 0 0 0 0 0 0 8 64].
@@ -47,9 +44,17 @@ testStbConvertFromVersion2
 	self assert: subject searchPolicy identicalTo: SearchPolicy identity! !
 
 !UI.Tests.ListModelTest categoriesForMethods!
-collectionClass!constants!private! !
 testStbConvertFromVersion0!public! !
 testStbConvertFromVersion1!public! !
 testStbConvertFromVersion2!public! !
+!
+
+!UI.Tests.ListModelTest class methodsFor!
+
+subjectClass
+	^ListModel! !
+
+!UI.Tests.ListModelTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

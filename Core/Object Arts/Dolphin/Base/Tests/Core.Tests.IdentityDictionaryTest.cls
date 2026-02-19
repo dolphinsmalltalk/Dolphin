@@ -12,12 +12,12 @@ Core.Tests.IdentityDictionaryTest guid: (Core.GUID fromString: '{89184496-00fe-4
 
 Core.Tests.IdentityDictionaryTest comment: ''!
 
-!Core.Tests.IdentityDictionaryTest methodsFor!
+!Core.Tests.IdentityDictionaryTest class methodsFor!
 
-collectionClass
+subjectClass
 	^IdentityDictionary! !
 
-!Core.Tests.IdentityDictionaryTest categoriesForMethods!
-collectionClass!helpers!private! !
+!Core.Tests.IdentityDictionaryTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

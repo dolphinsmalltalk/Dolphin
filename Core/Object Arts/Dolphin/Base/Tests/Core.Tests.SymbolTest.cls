@@ -20,9 +20,6 @@ Core.Tests.SymbolTest comment: 'This is the unit test for the class Symbol. Unit
 assimilateString: aString
 	^aString asSymbol!
 
-collectionClass
-	^Symbol!
-
 copyClass
 	^Utf8String!
 
@@ -173,7 +170,6 @@ testSymbolTable
 
 !Core.Tests.SymbolTest categoriesForMethods!
 assimilateString:!helpers!private! !
-collectionClass!constants!private! !
 copyClass!constants!private! !
 newCollection:!helpers!private! !
 newCopy:!helpers!private! !
@@ -195,5 +191,14 @@ testResize!public!unit tests! !
 testSortColon!public!unit tests! !
 testSpecies!public!unit tests! !
 testSymbolTable!public!unit tests! !
+!
+
+!Core.Tests.SymbolTest class methodsFor!
+
+subjectClass
+	^Symbol! !
+
+!Core.Tests.SymbolTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

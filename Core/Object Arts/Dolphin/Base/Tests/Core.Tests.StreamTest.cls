@@ -56,24 +56,13 @@ testIsWriteable!public!unit tests! !
 !Core.Tests.StreamTest class methodsFor!
 
 allTestSelectors
-	| subjectClass |
-	subjectClass := self streamClass.
-	^super allTestSelectors select: 
-			[:each |
-			| annotations |
-			annotations := (self lookupMethod: each) annotations.
-			annotations isNil or: 
-					[((annotations withSelector: #mustNotConform:)
-						anySatisfy: [:eachAnnotation | subjectClass conformsToProtocol: eachAnnotation argument]) not
-						and: 
-							[(annotations withSelector: #mustConform:)
-								allSatisfy: [:eachAnnotation | subjectClass conformsToProtocol: eachAnnotation argument]]]]!
+	^self allTestSelectorsFor: self streamClass!
 
 streamClass
 	^self subclassResponsibility! !
 
 !Core.Tests.StreamTest class categoriesForMethods!
-allTestSelectors!public! !
+allTestSelectors!Accessing!public! !
 streamClass!helpers!private! !
 !
 

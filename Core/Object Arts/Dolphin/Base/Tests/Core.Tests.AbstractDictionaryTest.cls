@@ -24,9 +24,6 @@ checkValidity: aDictionary
 	#todo.	"Import the Dictionary>>checkValidity method from StrongTalk"
 	aDictionary	"checkValidity"!
 
-collectionClass
-	self subclassResponsibility!
-
 denyCommutativelyEqual: aDictionary other: anotherDictionary
 	self deny: aDictionary equals: anotherDictionary.
 	self deny: anotherDictionary equals: aDictionary!
@@ -412,7 +409,6 @@ testStrongTalkTests
 !Core.Tests.AbstractDictionaryTest categoriesForMethods!
 assertCommutativelyEqual:other:!helpers!private! !
 checkValidity:!benchmarking!private! !
-collectionClass!helpers!private! !
 denyCommutativelyEqual:other:!helpers!private! !
 key3Value!private! !
 makeKey:!helpers!private! !
@@ -442,5 +438,14 @@ testPrintString!public!unit tests! !
 testRemoveAssociationAt!public!unit tests! !
 testRemoveKey!public!unit tests! !
 testStrongTalkTests!benchmarking!public! !
+!
+
+!Core.Tests.AbstractDictionaryTest class methodsFor!
+
+subjectClass
+	self subclassResponsibility! !
+
+!Core.Tests.AbstractDictionaryTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

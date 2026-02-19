@@ -16,9 +16,6 @@ Core.Tests.OrderedDictionaryTest comment: ''!
 
 !Core.Tests.OrderedDictionaryTest methodsFor!
 
-collectionClass
-	^OrderedDictionary!
-
 testAssociations
 	| subject actual expected |
 	subject := self newCollection: (1 to: 5).
@@ -103,7 +100,6 @@ testOverwriteValue
 ! !
 
 !Core.Tests.OrderedDictionaryTest categoriesForMethods!
-collectionClass!public! !
 testAssociations!public! !
 testCompact!public! !
 testCompare!public! !
@@ -112,5 +108,14 @@ testGrow!public! !
 testOrder!public! !
 testOverflow!public! !
 testOverwriteValue!public! !
+!
+
+!Core.Tests.OrderedDictionaryTest class methodsFor!
+
+subjectClass
+	^OrderedDictionary! !
+
+!Core.Tests.OrderedDictionaryTest class categoriesForMethods!
+subjectClass!constants!public! !
 !
 

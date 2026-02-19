@@ -14,9 +14,6 @@ Core.Tests.RunArrayTest comment: ''!
 
 !Core.Tests.RunArrayTest methodsFor!
 
-collectionClass
-	^RunArray!
-
 testReplaceFromToWithStartingAt
 	self should: [super testReplaceFromToWithStartingAt] raise: Error!
 
@@ -35,10 +32,18 @@ testSortColon
 		matching: [:ex | ex messageText = 'RunArray should not implement #sortUsing:']! !
 
 !Core.Tests.RunArrayTest categoriesForMethods!
-collectionClass!helpers!private! !
 testReplaceFromToWithStartingAt!public! !
 testReplaceIdentityWith!public! !
 testResize!public!unit tests! !
 testSortColon!public!unit tests! !
+!
+
+!Core.Tests.RunArrayTest class methodsFor!
+
+subjectClass
+	^RunArray! !
+
+!Core.Tests.RunArrayTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

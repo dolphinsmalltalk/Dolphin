@@ -27,9 +27,6 @@ byteArrayForSequence: aCollection
 		do: [:each | answer at: (each - 1) * 2 + 1 put: (aCollection at: each) asInteger].
 	^answer!
 
-collectionClass
-	^Utf16String!
-
 decodeIncompleteContinuations
 	^#(#(16rD800))!
 
@@ -72,6 +69,17 @@ testCopyWithAtIndex
 	string := self assimilateString: 'a£🍺文1'.
 	self assert: (string copyWith: Character dolphin atIndex: 5) equals: 'a£🍺🐬文1'.
 	self should: [string copyWith: Character dolphin atIndex: 4] raise: Error!
+
+testEncodedAPutUtf8Surrogate
+	<skip: 'Attempting to write a UTF-8 surrogate into a UTF-16 string should be an error, but this is not detected currently.'>
+	| utf8 |
+	utf8 := Character dolphin asUtf8String.
+	1 to: 5
+		do: 
+			[:i |
+			| subject |
+			subject := self collectionClass new: 1.
+			self should: [subject encodedAt: 1 put: (utf8 at: i)] raise: Error]!
 
 testIncludesAnyOf2
 	| subject |
@@ -188,7 +196,6 @@ testUtf8StringConversion
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !
 byteArrayForSequence:!helpers!private! !
-collectionClass!helpers!private! !
 decodeIncompleteContinuations!constants!private! !
 decodeInvalidContinuations!constants!private! !
 decodeTestCases!constants!private! !
@@ -196,6 +203,7 @@ testAssociations!public!unit tests! !
 testConcatenateInvalidUtf16!public!unit tests! !
 testConcatenateInvalidUtf8!public!unit tests! !
 testCopyWithAtIndex!public!unit tests! !
+testEncodedAPutUtf8Surrogate!public!unit tests! !
 testIncludesAnyOf2!public! !
 testIndexOfAnyOfStartingAt2!public! !
 testIndexOfStartingAtSurrogates!public!unit tests! !
@@ -203,5 +211,14 @@ testKeys!public!unit tests! !
 testLastCodeUnit!public!unit tests! !
 testMixedConcatenation!public! !
 testUtf8StringConversion!public!unit tests! !
+!
+
+!Core.Tests.Utf16StringTest class methodsFor!
+
+subjectClass
+	^Utf16String! !
+
+!Core.Tests.Utf16StringTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

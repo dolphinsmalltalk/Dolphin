@@ -14,9 +14,6 @@ Core.Tests.DictionaryTest comment: ''!
 
 !Core.Tests.DictionaryTest methodsFor!
 
-collectionClass
-	^Dictionary!
-
 testAdd
 	| subject assoc1 assoc2 assoc3 |
 	subject := self newDictionary.
@@ -65,10 +62,18 @@ testAtIfAbsentPutValue
 	self assert: dictionary size identicalTo: initialSize + 1! !
 
 !Core.Tests.DictionaryTest categoriesForMethods!
-collectionClass!helpers!private! !
 testAdd!public!unit tests! !
 testAllInstancesValid!public!unit tests! !
 testAtIfAbsentPutClean!public!unit tests! !
 testAtIfAbsentPutValue!public!unit tests! !
+!
+
+!Core.Tests.DictionaryTest class methodsFor!
+
+subjectClass
+	^Dictionary! !
+
+!Core.Tests.DictionaryTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

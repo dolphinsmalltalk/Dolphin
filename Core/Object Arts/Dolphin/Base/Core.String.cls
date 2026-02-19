@@ -1420,8 +1420,8 @@ encodingName: anInteger
 encodings
 	^Encodings!
 
-errorInvalidCodePoint: codePoint
-	^self error: 'Invalid code point ' , codePoint hex!
+errorInvalidCodePoint: anInteger
+	^self error: 'Invalid code point ' , (Character codePointString: anInteger)!
 
 formatMessage: anIntegerId in: hModule withArguments: arguments
 	"Answer a String which is a message formatted from the format String with the

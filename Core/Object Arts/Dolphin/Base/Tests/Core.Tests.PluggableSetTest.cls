@@ -19,9 +19,6 @@ assertIs: copySet deepCopyOf: sourceSet
 	"Identity of search policy is preserved"
 	self assert: copySet searchPolicy identicalTo: sourceSet searchPolicy!
 
-collectionClass
-	^PluggableSet!
-
 testAddIfAbsent
 	| subject element1 element2 |
 	subject := self newEmpty.
@@ -36,7 +33,15 @@ testAddIfAbsent
 
 !Core.Tests.PluggableSetTest categoriesForMethods!
 assertIs:deepCopyOf:!private!unit tests! !
-collectionClass!helpers!private! !
 testAddIfAbsent!public! !
+!
+
+!Core.Tests.PluggableSetTest class methodsFor!
+
+subjectClass
+	^PluggableSet! !
+
+!Core.Tests.PluggableSetTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

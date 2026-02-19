@@ -152,3 +152,21 @@ verifyPropertyManagerOf:!helpers!private! !
 versionFromParts:!helpers!public! !
 !
 
+!Core.Tests.DolphinTest class methodsFor!
+
+allTestSelectorsFor: subjectClass
+	^super allTestSelectors select: 
+			[:each |
+			| annotations |
+			annotations := (self lookupMethod: each) annotations.
+			annotations isNil or: 
+					[((annotations withSelector: #mustNotConform:)
+						anySatisfy: [:eachAnnotation | subjectClass conformsToProtocol: eachAnnotation argument]) not
+						and: 
+							[(annotations withSelector: #mustConform:)
+								allSatisfy: [:eachAnnotation | subjectClass conformsToProtocol: eachAnnotation argument]]]]! !
+
+!Core.Tests.DolphinTest class categoriesForMethods!
+allTestSelectorsFor:!helpers!private! !
+!
+

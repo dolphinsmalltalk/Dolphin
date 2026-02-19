@@ -14,9 +14,6 @@ Core.Tests.ArrayTest comment: ''!
 
 !Core.Tests.ArrayTest methodsFor!
 
-collectionClass
-	^Array!
-
 testCyclicRefPrinting
 	| array |
 	array := Array new: 1.
@@ -223,7 +220,6 @@ testWithWithWithWithWith
 	self assert: array2 equals: array! !
 
 !Core.Tests.ArrayTest categoriesForMethods!
-collectionClass!helpers!private! !
 testCyclicRefPrinting!public! !
 testIsLiteral!public!unit tests! !
 testIsSelfEvaluating!public!unit tests! !
@@ -236,5 +232,14 @@ testWithWith!public!unit tests! !
 testWithWithWith!public!unit tests! !
 testWithWithWithWith!public!unit tests! !
 testWithWithWithWithWith!public!unit tests! !
+!
+
+!Core.Tests.ArrayTest class methodsFor!
+
+subjectClass
+	^Array! !
+
+!Core.Tests.ArrayTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

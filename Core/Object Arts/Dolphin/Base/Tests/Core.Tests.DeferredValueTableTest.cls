@@ -17,9 +17,6 @@ Core.Tests.DeferredValueTableTest comment: ''!
 assimilate: anObject
 	^[anObject]!
 
-collectionClass
-	^DeferredValueTable!
-
 testAdd
 	| subject assoc1 assoc2 |
 	subject := self newDictionary.
@@ -32,7 +29,6 @@ testAdd
 
 !Core.Tests.DeferredValueTableTest categoriesForMethods!
 assimilate:!private!unit tests! !
-collectionClass!helpers!private! !
 testAdd!public!unit tests! !
 !
 
@@ -41,9 +37,13 @@ testAdd!public!unit tests! !
 allTestSelectors
 	^super allTestSelectors
 		remove: #testStrongTalkTests;
-		yourself! !
+		yourself!
+
+subjectClass
+	^DeferredValueTable! !
 
 !Core.Tests.DeferredValueTableTest class categoriesForMethods!
 allTestSelectors!Accessing!public! !
+subjectClass!constants!private! !
 !
 

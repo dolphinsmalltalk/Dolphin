@@ -14,9 +14,6 @@ Core.Tests.IdentitySetTest comment: ''!
 
 !Core.Tests.IdentitySetTest methodsFor!
 
-collectionClass
-	^IdentitySet!
-
 testAddIfAbsent
 	| subject element1 element2 |
 	subject := self newEmpty.
@@ -30,7 +27,15 @@ testAddIfAbsent
 	self assert: subject asArray equals: {element1. element2}! !
 
 !Core.Tests.IdentitySetTest categoriesForMethods!
-collectionClass!helpers!private! !
 testAddIfAbsent!public! !
+!
+
+!Core.Tests.IdentitySetTest class methodsFor!
+
+subjectClass
+	^IdentitySet! !
+
+!Core.Tests.IdentitySetTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

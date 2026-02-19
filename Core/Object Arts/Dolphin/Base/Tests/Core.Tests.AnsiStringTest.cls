@@ -20,9 +20,6 @@ assimilate: each
 assimilateString: aString
 	^aString asAnsiString!
 
-collectionClass
-	^AnsiString!
-
 testAsPhrase
 	self assert: #'' asPhrase equals: ''.
 	self assert: #= asPhrase equals: '='.
@@ -190,7 +187,6 @@ testIndexOfSubCollectionStartingAtGPF
 !Core.Tests.AnsiStringTest categoriesForMethods!
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !
-collectionClass!helpers!private! !
 testAsPhrase!public!unit tests! !
 testClassWith!public! !
 testConcatenateInvalidUtf16!public!unit tests! !
@@ -200,5 +196,14 @@ testCopyReplaceAllWith!public!unit tests! !
 testFindUtfStringStartingAt!public!unit tests! !
 testIncludesAnyOfMixedEncoding!public! !
 testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
+!
+
+!Core.Tests.AnsiStringTest class methodsFor!
+
+subjectClass
+	^AnsiString! !
+
+!Core.Tests.AnsiStringTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

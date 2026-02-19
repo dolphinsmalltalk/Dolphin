@@ -14,9 +14,6 @@ Kernel.Tests.MethodDictionaryTest comment: ''!
 
 !Kernel.Tests.MethodDictionaryTest methodsFor!
 
-collectionClass
-	^MethodDictionary!
-
 key3Value
 	^$c!
 
@@ -61,10 +58,18 @@ testMaintainsLoadFactor
 			self assert: actualSlots equals: expectedSlots]! !
 
 !Kernel.Tests.MethodDictionaryTest categoriesForMethods!
-collectionClass!helpers!private! !
 key3Value!private! !
 loadFactor!constants!private! !
 testClassSizeFor!public!unit tests! !
 testMaintainsLoadFactor!public!unit tests! !
+!
+
+!Kernel.Tests.MethodDictionaryTest class methodsFor!
+
+subjectClass
+	^MethodDictionary! !
+
+!Kernel.Tests.MethodDictionaryTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

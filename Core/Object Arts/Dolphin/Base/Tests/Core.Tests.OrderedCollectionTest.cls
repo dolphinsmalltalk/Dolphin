@@ -14,9 +14,6 @@ Core.Tests.OrderedCollectionTest comment: ''!
 
 !Core.Tests.OrderedCollectionTest methodsFor!
 
-collectionClass
-	^OrderedCollection!
-
 newCollection: aCollection
 	"Create a test subject that has a firstIndex that is not 1, as this then causes inherited tests to excercise the OrderedCollection offsetting logic."
 
@@ -346,7 +343,6 @@ testStrongTalkTests
 				yourself)! !
 
 !Core.Tests.OrderedCollectionTest categoriesForMethods!
-collectionClass!constants!private! !
 newCollection:!helpers!private! !
 testFindFirst2!public!unit tests! !
 testFirst2!public!unit tests! !
@@ -355,5 +351,14 @@ testLast2!public!unit tests! !
 testResize!public!unit tests! !
 testSetSize!public!unit tests! !
 testStrongTalkTests!public!testing! !
+!
+
+!Core.Tests.OrderedCollectionTest class methodsFor!
+
+subjectClass
+	^OrderedCollection! !
+
+!Core.Tests.OrderedCollectionTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 

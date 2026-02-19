@@ -492,6 +492,18 @@ testDetectIfNoneExtended
 			self assert: enumerated asArray equals: (chars copyFrom: 1 to: key).
 			self assert: (subject detect: [:each | each = $🍻] ifNone: [absent]) identicalTo: absent]!
 
+testEncodedAtPutInvalidCodePoint
+	<mustNotConform: #symbol>
+	| subject invalid |
+	invalid := Character basicNew
+				setCode: (Character.Utf32Mask | OS.ICUConstants.UCHAR_MAX_VALUE) + 1;
+				yourself.
+	subject := self collectionClass new: 1.
+	self
+		should: [subject encodedAt: 1 put: invalid]
+		raise: Error
+		matching: [:ex | ex description = 'Invalid code point U+110000']!
+
 testEncodeOnPut
 	{Character dolphin.
 		Character codePoint: 16r10FFFD.
@@ -1068,6 +1080,7 @@ testCountElements!public!unit tests! !
 testDecodeAt!public!unit tests! !
 testDecodeNextFrom!public!unit tests! !
 testDetectIfNoneExtended!public!unit tests! !
+testEncodedAtPutInvalidCodePoint!public!unit tests! !
 testEncodeOnPut!public!unit tests! !
 testEndsWithExtended!public!unit tests! !
 testFindFirst!public!unit tests! !

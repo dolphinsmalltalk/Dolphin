@@ -14,9 +14,6 @@ Core.Tests.SortedCollectionTest comment: ''!
 
 !Core.Tests.SortedCollectionTest methodsFor!
 
-collectionClass
-	^SortedCollection!
-
 testAddAfterIndex
 	self shouldnt: [super testAddAfterIndex] implement: #add:afterIndex:!
 
@@ -78,7 +75,6 @@ verifyConcatenation: b with: a
 	^result! !
 
 !Core.Tests.SortedCollectionTest categoriesForMethods!
-collectionClass!constants!private! !
 testAddAfterIndex!public!unit tests! !
 testAddAllFirst!public!unit tests! !
 testAddAllFirst2!public!unit tests! !
@@ -92,5 +88,14 @@ testResize!public!unit tests! !
 testStrongTalkTests!public!unit tests! !
 unsortedCollectionClass!constants!private! !
 verifyConcatenation:with:!helpers!public! !
+!
+
+!Core.Tests.SortedCollectionTest class methodsFor!
+
+subjectClass
+	^SortedCollection! !
+
+!Core.Tests.SortedCollectionTest class categoriesForMethods!
+subjectClass!constants!private! !
 !
 
