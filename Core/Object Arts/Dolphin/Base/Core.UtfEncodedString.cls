@@ -329,8 +329,8 @@ indexOfLast: anInteger
 	| index count |
 	count := anInteger.
 	index := self size + 1.
-	[count ~~ 0]
-		whileTrue: [(self isLeadCodeUnit: (self basicAt: (index := index - 1))) ifTrue: [count := count - 1]].
+	[count ~~ 0 and: [(index := index - 1) > 0]]
+		whileTrue: [(self isLeadCodeUnit: (self basicAt: index)) ifTrue: [count := count - 1]].
 	^index!
 
 indexOfNth: anInteger

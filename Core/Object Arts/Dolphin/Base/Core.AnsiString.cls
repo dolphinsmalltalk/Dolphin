@@ -83,6 +83,11 @@ first: anInteger
 		to: anInteger
 		startingAt: 1!
 
+indexOfLast: anInteger
+	"Private - Answer the <integer> index of the first code unit of the <Character> of the receiver that is (anInteger - 1) positions before the receiver's end. For example if the argument is one, then the code unit index of the last <Character> is returned. If two, then the code unit index of the penultimate <Character> is returned, and so on."
+
+	^self size - anInteger + 1!
+
 nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
 	aCharacter encoding ~~ #ansi ifTrue: [^0].
 	^self
@@ -138,6 +143,7 @@ decodeNextFrom:!encode/decode!private! !
 encodeAsAnsiOn:from:count:!private! !
 encodeOn:put:!encode/decode!private! !
 first:!copying!public! !
+indexOfLast:!accessing!encode/decode!private! !
 nextIndexOfCharacter:from:to:!private!searching! !
 trimNulls!copying!public! !
 urlDecoded!operations!public! !

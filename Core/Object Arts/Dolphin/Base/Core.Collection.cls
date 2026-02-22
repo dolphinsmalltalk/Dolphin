@@ -22,7 +22,12 @@ _beginsString: aString
 	^aString basicBeginsWith: self!
 
 _endsString: aString
-	^aString asArray endsWith: self!
+	| stream i |
+	i := aString indexOfLast: self size.
+	i < 1 ifTrue: [^false].
+	stream := ReadStream on: aString.
+	stream position: i - 1.
+	^self allSatisfy: [:each | stream next = each]!
 
 add: newElement
 	"Include the <Object> argument, newElement, as one of the receiver's 

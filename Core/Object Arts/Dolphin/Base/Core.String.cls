@@ -745,6 +745,11 @@ includesSubstring: aString
 
 	^aString isEmpty or: [(self findString: aString startingAt: 1) > 0]!
 
+indexOfLast: anInteger
+	"Private - Answer the <integer> index of the first code unit of the <Character> of the receiver that is (anInteger - 1) positions before the receiver's end. For example if the argument is one, then the code unit index of the last <Character> is returned. If two, then the code unit index of the penultimate <Character> is returned, and so on."
+
+	^self subclassResponsibility!
+
 indexOfSubCollection: aSequencedReadableCollection startingAt: startInteger
 	"Answer the <integer> index of the next occurrence within the receiver of the <sequencedReadableCollection> sub-sequence, starting at the specified <integer> index. If there are no such occurrences (or the search sequence is empty), answer 0."
 
@@ -1312,6 +1317,7 @@ formatWithArguments:!printing!public! !
 hash!comparing!public! !
 hashOrdinalsIgnoringCase!comparing!public! !
 includesSubstring:!public!searching! !
+indexOfLast:!accessing!encode/decode!private! !
 indexOfSubCollection:startingAt:!public!searching! !
 isString!public!testing! !
 join:!printing!public! !
