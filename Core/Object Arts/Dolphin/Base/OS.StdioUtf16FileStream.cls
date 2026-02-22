@@ -40,7 +40,10 @@ position: anInteger
 size
 	"Answer the size of the file in wide characters, excluding the BOM."
 
-	^super size - offset bitShift: -1! !
+	^super size - offset bitShift: -1!
+
+translationMode
+	^CRTConstants._O_U16TEXT! !
 
 !OS.StdioUtf16FileStream categoriesForMethods!
 contentsSpecies!constants!private! !
@@ -48,14 +51,22 @@ modeModifiers!constants!private! !
 position!accessing!public! !
 position:!positioning!public! !
 size!accessing!public! !
+translationMode!constants!private! !
 !
 
 !OS.StdioUtf16FileStream class methodsFor!
 
-translationMode
-	^CRTConstants._O_U16TEXT! !
+fromHandle: aFILE
+	"Answer a new sub-instance of the receiver on the specified stdio FILE pointer, assumed to be for RW access and connected to a device or pipe."
+
+	"This method will likely be deprecated in future because the name is unclear as to the type of handle expected as an argument. In this case the 'handle' is actually a CRT FILE pointer, and not an OS file handle."
+
+	^self basicNew
+		setStream: aFILE
+		name: nil
+		flags: ##(DefaultReadWriteFlags | _O_U16TEXT)! !
 
 !OS.StdioUtf16FileStream class categoriesForMethods!
-translationMode!constants!private! !
+fromHandle:!instance creation!public! !
 !
 

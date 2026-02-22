@@ -61,7 +61,10 @@ peekFor: anObject
 	^(ch := self basicNextAvailable) notNil
 		and: [ch == anObject ansiValue or: 
 					[crtlib ungetc: ch stream: stream.
-					false]]! !
+					false]]!
+
+translationMode
+	^CRTConstants._O_TEXT! !
 
 !OS.StdioAnsiFileStream categoriesForMethods!
 contentsSpecies!accessing!private! !
@@ -71,14 +74,22 @@ next!public!reading! !
 nextPutAll:!public!writing! !
 peek!public!reading! !
 peekFor:!public!reading! !
+translationMode!constants!private! !
 !
 
 !OS.StdioAnsiFileStream class methodsFor!
 
-translationMode
-	^CRTConstants._O_TEXT! !
+fromHandle: aFILE
+	"Answer a new sub-instance of the receiver on the specified stdio FILE pointer, assumed to be for RW access and connected to a device or pipe."
+
+	"This method will likely be deprecated in future because the name is unclear as to the type of handle expected as an argument. In this case the 'handle' is actually a CRT FILE pointer, and not an OS file handle."
+
+	^self basicNew
+		setStream: aFILE
+		name: nil
+		flags: ##(DefaultReadWriteFlags | _O_TEXT)! !
 
 !OS.StdioAnsiFileStream class categoriesForMethods!
-translationMode!constants!private! !
+fromHandle:!instance creation!public! !
 !
 

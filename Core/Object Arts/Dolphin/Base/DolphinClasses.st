@@ -5183,21 +5183,30 @@ Core.SequencedStream
 Core.SequencedStream
 	subclass: #'OS.StdioFileStream'
 	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
-	classVariableNames: ''
+	classVariableNames: 'EncodingClasses'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AccessModeMask' -> 16r3.
+			'AccessModes'
+				-> (IdentityDictionary withAll: { #append -> 'r+'. #read -> 'r'. #readWrite -> 'r+'. #write -> 'w' }).
 			'CreationModeMask' -> 16r700.
 			'DefaultReadFlags' -> 16r40.
 			'DefaultReadWriteFlags' -> 16r22.
 			'DeviceMask' -> 16r400000.
+			'ModeEncodings'
+				-> (IdentityDictionary withAll: {
+								16r4000 -> #text.
+								16r8000 -> #binary.
+								16r10000 -> #utf16le.
+								16r20000 -> #utf16le.
+								16r40000 -> #utf8
+							}).
 			'NonBlockingMask' -> 16r800000.
 			'ReadingMask' -> 16r2000000.
 			'ShareModeMask' -> 16rF0.
 			'ShareModes' -> (IdentityDictionary
 						withAll: { #exclusive -> 16r10. #read -> 16r20. #readWrite -> 16r40. #write -> 16r30 }).
-			'TranslationModeMask' -> 16r7C000.
 			'WritingMask' -> 16r1000000
 		}!
 
@@ -5499,7 +5508,9 @@ External.Structure
 				-> #('_FpFormatFp32' '_FpFormatFp64' '_FpFormatFp80' '_FpFormatFp128' '_FpFormatI16' '_FpFormatI32' '_FpFormatI64' '_FpFormatU16' '_FpFormatU32' '_FpFormatU64' '_FpFormatBcd80' '_FpFormatCompare' '_FpFormatString').
 			'_OffsetOf_filler' -> 16r14.
 			'_OffsetOf_flags' -> 16r10.
-			'_OffsetOf_value' -> 16r0
+			'_OffsetOf_value' -> 16r0.
+			'OperandFormatMask' -> 16r1E.
+			'OperandValidMask' -> 16r1
 		}!
 
 External.Structure

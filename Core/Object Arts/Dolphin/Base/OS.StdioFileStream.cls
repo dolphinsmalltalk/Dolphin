@@ -3,21 +3,30 @@
 Core.SequencedStream
 	subclass: #'OS.StdioFileStream'
 	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
-	classVariableNames: ''
+	classVariableNames: 'EncodingClasses'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AccessModeMask' -> 16r3.
+			'AccessModes'
+				-> (IdentityDictionary withAll: { #append -> 'r+'. #read -> 'r'. #readWrite -> 'r+'. #write -> 'w' }).
 			'CreationModeMask' -> 16r700.
 			'DefaultReadFlags' -> 16r40.
 			'DefaultReadWriteFlags' -> 16r22.
 			'DeviceMask' -> 16r400000.
+			'ModeEncodings'
+				-> (IdentityDictionary withAll: {
+								16r4000 -> #text.
+								16r8000 -> #binary.
+								16r10000 -> #utf16le.
+								16r20000 -> #utf16le.
+								16r40000 -> #utf8
+							}).
 			'NonBlockingMask' -> 16r800000.
 			'ReadingMask' -> 16r2000000.
 			'ShareModeMask' -> 16rF0.
 			'ShareModes' -> (IdentityDictionary
 						withAll: { #exclusive -> 16r10. #read -> 16r20. #readWrite -> 16r40. #write -> 16r30 }).
-			'TranslationModeMask' -> 16r7C000.
 			'WritingMask' -> 16r1000000
 		}!
 
@@ -73,7 +82,7 @@ attach: anExternalHandle toFd: fdInteger mode: aString
 	1=stdout, or 2-stderr) to the specified OS file, and open a stdio stream onto it in the
 	specified stdio mode."
 
-	| handle newFd |
+	| newFd |
 	crtlib := Ucrt.
 	"1. dup the existing use of fdInteger"
 	oldFd := crtlib _dup: fdInteger.
@@ -86,11 +95,14 @@ attach: anExternalHandle toFd: fdInteger mode: aString
 	"4: Dispose of the fd created in step 2 and dup'd in step 3 so we don't leak it and the duplicate OS handle it contains"
 	(crtlib _close: newFd) < 0 ifTrue: [CRTError signal].
 	"5: Finally open a stdio stream onto the fd"
-	(handle := crtlib _fdopen: fdInteger mode: aString) isNil ifTrue: [CRTError signal].
-	self
-		setStream: handle
-		name: nil
-		flags: (self flagsFromMode: aString) | self class translationMode!
+	(crtlib _fdopen: fdInteger mode: aString)
+		ifNil: [CRTError signal]
+		ifNotNil: 
+			[:handle |
+			self
+				setStream: handle
+				name: nil
+				flags: (self flagsFromMode: aString)]!
 
 basicNext
 	"Private - Answer an <integer> in the range 0..255, being the next of the receiver's future sequence
@@ -302,7 +314,9 @@ isText
 isWriteable
 	"Answer whether the receiver can be written to (i.e. it implements the <puttableStream> protocol)."
 
-	^self accessMode ~~ _O_RDONLY!
+	"_O_RDONLY is zero"
+
+	^flags anyMask: AccessModeMask!
 
 locale
 	"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
@@ -511,7 +525,7 @@ skipToAll: aCollection
 	^true!
 
 translationMode
-	^flags bitAnd: TranslationModeMask!
+	^self subclassResponsibility!
 
 ungetchar: aCodeUnit
 	crtlib ungetc: aCodeUnit stream: stream.
@@ -618,7 +632,7 @@ shareMode!accessing!public! !
 size!accessing!public! !
 skip:!positioning!public! !
 skipToAll:!positioning!public! !
-translationMode!accessing!public! !
+translationMode!constants!private! !
 ungetchar:!private!reading! !
 upTo:!public!reading! !
 upToAll:!public!reading! !
@@ -658,19 +672,27 @@ attachMode: modeSymbol
 	^String with: (modeSymbol == #read ifTrue: [$r] ifFalse: [$w]) with: self encodingMode!
 
 classForEncoding: aSymbol
-	^(self encodingClasses lookup: aSymbol) ifNil: [self error: 'Unsupported encoding ' , aSymbol]!
+	^((EncodingClasses lookup: aSymbol) ifNotNil: [:ref | ref valueOrNil])
+		ifNil: [self error: 'Unsupported encoding ' , aSymbol]!
 
 encodingClasses
-	^##(IdentityDictionary new
+	^IdentityDictionary new
 		at: #binary put: StdioBinaryFileStream;
 		at: #ansi put: StdioAnsiFileStream;
 		at: #text put: StdioAnsiFileStream;
 		at: #utf8 put: StdioUtf8FileStream;
 		at: #utf16le put: StdioUtf16FileStream;
-		yourself)!
+		yourself!
 
 encodingMode
 	^self subclassResponsibility!
+
+encodingOfFILE: aFILE
+	| fd mode |
+	fd := Ucrt _fileno: aFILE.
+	mode := Ucrt _setmode: fd mode: _O_BINARY.
+	Ucrt _setmode: fd mode: mode.
+	^ModeEncodings at: mode!
 
 encodingType
 	"Answer the standard encoding to use when attaching streams of this class. 
@@ -683,11 +705,7 @@ fromHandle: aFILE
 
 	"This method will likely be deprecated in future because the name is unclear as to the type of handle expected as an argument. In this case the 'handle' is actually a CRT FILE pointer, and not an OS file handle."
 
-	^self
-		newForEncoding: self encodingType
-		iostream: aFILE
-		name: nil
-		flags: DefaultReadWriteFlags!
+	^(self classForEncoding: (self encodingOfFILE: aFILE)) fromHandle: aFILE!
 
 initialize
 	"
@@ -695,8 +713,8 @@ initialize
 	"
 
 	self addClassConstant: 'AccessModeMask' value: _O_RDONLY | _O_WRONLY | _O_RDWR.
-	self addClassConstant: 'TranslationModeMask'
-		value: _O_TEXT | _O_BINARY | _O_WTEXT | _O_U16TEXT | _O_U8TEXT.
+	self addClassConstant: 'AccessModes'
+		value: (IdentityDictionary withAll: { #read -> 'r'. #write -> 'w'. #readWrite -> 'r+'. #append -> 'r+' }).
 	self addClassConstant: 'CreationModeMask' value: _O_CREAT | _O_TRUNC | _O_EXCL.
 	self addClassConstant: 'ShareModeMask'
 		value: _SH_DENYRW | _SH_DENYWR | _SH_DENYRD | _SH_DENYNO | _SH_SECURE.
@@ -707,21 +725,29 @@ initialize
 						#write -> _SH_DENYRD.
 						#exclusive -> _SH_DENYRW
 					}).
+	self addClassConstant: 'ModeEncodings'
+		value: (IdentityDictionary withAll: {
+						_O_BINARY -> #binary.
+						_O_TEXT -> #text.
+						_O_U16TEXT -> #utf16le.
+						_O_U8TEXT -> #utf8.
+						_O_WTEXT -> #utf16le
+					}).
 	self addClassConstant: 'DefaultReadWriteFlags' value: _O_RDWR | _SH_DENYWR.
-	self addClassConstant: 'DefaultReadFlags' value: _O_RDONLY | _SH_DENYNO!
-
-newForEncoding: aSymbol iostream: aHandle name: aString flags: anInteger
-	| concreteClass |
-	concreteClass := self classForEncoding: aSymbol.
-	^concreteClass basicNew
-		setStream: aHandle
-		name: aString
-		flags: anInteger | concreteClass translationMode!
+	self addClassConstant: 'DefaultReadFlags' value: _O_RDONLY | _SH_DENYNO.
+	self addClassConstant: 'EncodingClasses'
+		value: (IdentityDictionary withAll: {
+						#binary -> #{StdioBinaryFileStream}.
+						#ansi -> #{StdioAnsiFileStream}.
+						#text -> #{StdioAnsiFileStream}.
+						#utf8 -> #{StdioUtf8FileStream}.
+						#utf16le -> #{StdioUtf16FileStream}
+					})!
 
 on: aFile
 	"Answer an instance of the receiver attached to the open <File>, aFile."
 
-	^self on: aFile text: true!
+	^self on: aFile type: #text!
 
 on: aFile text: aBoolean
 	"Answer a new instance of the receiver attached to the open file <File>, aFile, in binary or text mode depending on the <Boolean> argument, aBoolean."
@@ -732,36 +758,23 @@ on: aFile type: aSymbol
 	"Answer a new concrete sub-instance of the receiver attached to the open <File>, aFile, with content type named by the <Symbol>, aSymbol.
 	Valid content types are #binary, to read/write raw bytes, #text (for text translation mode - sniffing the current encoding) or one of the valid String encodings - see String.Encodings."
 
-	| oshandle proc fd mode encoding flags |
+	| oshandle proc fd encoding |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
 	encoding := aSymbol == #text ifTrue: [String encodingName: aFile sniffEncoding] ifFalse: [aSymbol].
-	oshandle := External.Handle new.
+	oshandle := Handle new.
 	proc := Kernel32 getCurrentProcess.
 	(Kernel32
 		duplicateHandle: proc
-		hSourceHandle: aFile asParameter
+		hSourceHandle: aFile handle
 		hTargetProcessHandle: proc
 		lpTargetHandle: oshandle
 		dwDesiredAccess: 0
 		bInheritHandle: false
 		dwOptions: Win32Constants.DUPLICATE_SAME_ACCESS) ifFalse: [Kernel32 systemError].
 	fd := Ucrt _open_osfhandle: oshandle flags: 0.
-	mode := aFile isWriteable
-				ifTrue: 
-					[flags := DefaultReadWriteFlags.
-					'r+']
-				ifFalse: 
-					[flags := DefaultReadFlags.
-					'r'].
-	^(Ucrt _fdopen: fd mode: mode , (encoding == #binary ifTrue: ['b'] ifFalse: ['t']))
-		ifNil: [CRTError signal]
-		ifNotNil: 
-			[:handle |
-			self
-				newForEncoding: encoding
-				iostream: handle
-				name: aFile name
-				flags: flags]!
+	fd < 0 ifTrue: [CRTError signal].
+	^(self classForEncoding: encoding) openFd: fd
+		mode: (aFile isWriteable ifTrue: [#readWrite] ifFalse: [#read])!
 
 open: aString mode: modeSymbol check: aBoolean type: encodingSymbol share: shareSymbol
 	"Private - Open a file with _wfsopen"
@@ -802,25 +815,22 @@ open: aString mode: modeSymbol check: aBoolean type: encodingSymbol share: share
 	instance := concreteClass basicNew
 				open: path
 					mode: mode
-					flags: ((flags bitOr: (ShareModes at: shareSymbol)) bitOr: concreteClass translationMode);
+					flags: (flags bitOr: (ShareModes at: shareSymbol));
 				yourself.
 	modeSymbol == #append ifTrue: [instance setToEnd].
 	^instance!
 
 openFd: fdInteger mode: modeSymbol
-	| flags mode |
-	mode := modeSymbol == #read
-				ifTrue: 
-					[flags := DefaultReadFlags.
-					'r']
-				ifFalse: 
-					[flags := DefaultReadWriteFlags.
-					'w'].
-	^self
-		newForEncoding: self encodingType
-		iostream: (Ucrt _fdopen: fdInteger mode: (mode copyWith: self encodingMode))
-		name: nil
-		flags: flags!
+	| flags |
+	flags := modeSymbol == #read ifTrue: [DefaultReadFlags] ifFalse: [DefaultReadWriteFlags].
+	^(Ucrt _fdopen: fdInteger mode: ((AccessModes at: modeSymbol) copyWith: self encodingMode))
+		ifNil: [CRTError signal]
+		ifNotNil: 
+			[:handle |
+			self basicNew
+				setStream: handle
+				name: nil
+				flags: flags]!
 
 read: aString
 	"Answer a new instance of the receiver whose future sequence values consist of the textual contents of the file at the path specified by the <readableString> argument.
@@ -873,9 +883,6 @@ read: aString type: encodingSymbol share: shareSymbol
 		check: true
 		type: encodingSymbol
 		share: shareSymbol!
-
-translationMode
-	^self subclassResponsibility!
 
 write: aString
 	"Answer a new instance of the receiver for writing a file at the path specified by the <readableString> argument.
@@ -960,14 +967,14 @@ write: aString type: aSymbol
 !OS.StdioFileStream class categoriesForMethods!
 attach:toFd:mode:!instance creation!public! !
 attach:toFd:mode:type:!instance creation!public! !
-attachMode:!helpers!private! !
-classForEncoding:!helpers!private! !
+attachMode:!enquiries!private! !
+classForEncoding:!enquiries!private! !
 encodingClasses!constants!private! !
 encodingMode!constants!private! !
+encodingOfFILE:!enquiries!private! !
 encodingType!constants!public! !
 fromHandle:!instance creation!public! !
 initialize!class initialization!development!public! !
-newForEncoding:iostream:name:flags:!instance creation!private! !
 on:!instance creation!public! !
 on:text:!instance creation!public! !
 on:type:!instance creation!public! !
@@ -978,7 +985,6 @@ read:text:!instance creation!public! !
 read:text:share:!instance creation!public! !
 read:type:!instance creation!public! !
 read:type:share:!instance creation!public! !
-translationMode!constants!private! !
 write:!instance creation!public! !
 write:mode:!instance creation!public! !
 write:mode:check:text:!instance creation!public! !

@@ -81,6 +81,7 @@ convertWinStdHandle: stdHandle toCRTFileMode: modeString
 	| fd2 hFile |
 	fd2 := CRTLibrary default _open_osfhandle: stdHandle flags: 0.
 	fd2 < 0 ifTrue: [CRTError signal].
+	modeString last = $t ifTrue: [CRTLibrary default _setmode: fd2 mode: _O_TEXT].
 	hFile := CRTLibrary default _fdopen: fd2 mode: modeString.
 	^hFile! !
 

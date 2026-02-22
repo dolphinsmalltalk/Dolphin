@@ -67,6 +67,9 @@ peekFor: anObject
 					[crtlib ungetc: ch stream: stream.
 					false]]!
 
+translationMode
+	^CRTConstants._O_BINARY!
+
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
@@ -99,6 +102,7 @@ next!public!reading! !
 nextLine!public!reading! !
 peek!public!reading! !
 peekFor:!public!reading! !
+translationMode!constants!private! !
 upToEnd!public!reading! !
 xnext:putAll:startingAt:!public!writing! !
 !
@@ -114,12 +118,19 @@ encodingType
 
 	^#binary!
 
-translationMode
-	^CRTConstants._O_BINARY! !
+fromHandle: aFILE
+	"Answer a new sub-instance of the receiver on the specified stdio FILE pointer, assumed to be for RW access and connected to a device or pipe."
+
+	"This method will likely be deprecated in future because the name is unclear as to the type of handle expected as an argument. In this case the 'handle' is actually a CRT FILE pointer, and not an OS file handle."
+
+	^self basicNew
+		setStream: aFILE
+		name: nil
+		flags: ##(DefaultReadWriteFlags | _O_BINARY)! !
 
 !OS.StdioBinaryFileStream class categoriesForMethods!
 encodingMode!constants!private! !
 encodingType!constants!public! !
-translationMode!constants!private! !
+fromHandle:!instance creation!public! !
 !
 
