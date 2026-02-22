@@ -580,15 +580,16 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 						ifTrue: [a]
 						ifFalse: 
 							[a isString ifTrue: [(wideStrings nextPut: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
+	"To enable us to distinguish the error case from the empty string case we reset the last error"
 	len := self
 				setLastError: 0;
-				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER bitOr: FORMAT_MESSAGE_ARGUMENT_ARRAY))
+				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))
 					lpSource: aHandleOrString asUtf16String
 					dwMessageId: messageId
 					dwLanguageId: 0
 					lpBuffer: ptr basicYourAddress
 					nSize: 0
-					arguments: args.	"To enable us to distinguish the error case from the empty string case"
+					arguments: args.
 
 	"FormatMessage() unhelpfully treats the empty string result as an error, so we must handle specially."
 	^len == 0
@@ -600,10 +601,9 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 		ifFalse: 
 			[| msg |
 			msg := Utf16String fromAddress: ptr length: len.
-			self
-				heapFree: self getProcessHeap
-				dwFlags: 0
-				lpMem: ptr.
+			"As specified in the docs for the [FormatMessage function](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-formatmessage),
+			LocalFree should be used to free the buffer allocated by FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER, ...)"
+			self localFree: ptr.
 			msg]!
 
 freeConsole
