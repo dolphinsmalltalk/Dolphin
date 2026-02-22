@@ -645,7 +645,7 @@ fromAddress: anAddress owner: anObject length: anInteger elementClass: elementCl
 	Implementation Note: If the length is zero, then we ignore the address (even if invalid).
 	If the length is non-zero then we answer nil if the address is the Null pointer."
 
-	elementClass == self elementClass ifFalse: [self error: 'Mismatched element class: <1p>' << elementClass].
+	elementClass == self elementClass ifFalse: [self error: 'Mismatched element class: ', elementClass printString].
 	^self fromAddress: anAddress owner: anObject length: anInteger!
 
 getFieldNames

@@ -47,7 +47,7 @@ asNamespaceImport
 		ifNotNil: 
 			[:imported |
 			(imported class conformsToProtocol: #importableNamespace)
-				ifFalse: [self error: 'Invalid import: <1p>' << self].
+				ifFalse: [self error: 'Invalid import: ', self printString].
 			NamespaceImport newFull: imported fullName private: private]!
 
 asString

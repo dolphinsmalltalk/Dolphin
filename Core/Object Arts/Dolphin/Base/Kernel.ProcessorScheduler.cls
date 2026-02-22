@@ -524,7 +524,7 @@ unusedInterrupt: interruptArg
 	"Private - The current active process has been sent an unknown interrupt, raise an error."
 
 	self enableInterrupts.
-	self error: ('Unknown interrupt with <1p>' expandMacrosWith: interruptArg)!
+	self error: ('Unknown interrupt with ', interruptArg printString)!
 
 unwindCallback: cookie 
 	"Private - Unwind (i.e. abnormally terminate) the most recent callback of the current

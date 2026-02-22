@@ -177,7 +177,7 @@ encodeAsObjectsOn: aWriteStream from: fromInteger count: countInteger
 		ifTrue: 
 			["Starting on a trailing surrogate is an error"
 			^InvalidArgumentError
-				signal: 'Start position <1d> is in the middle of a UTF-16 encoded character' << { fromInteger }
+				signal: 'Start position ', fromInteger printString, '  is in the middle of a UTF-16 encoded character'
 				with: 'fromInteger'].
 	
 	[i := i + 1.
@@ -191,7 +191,7 @@ encodeAsObjectsOn: aWriteStream from: fromInteger count: countInteger
 				ifFalse: 
 					["Ending on a lead surrogate is an error"
 					^InvalidArgumentError
-						signal: 'End position <1d> is in the middle of a UTF-16 encoded character' << { i }
+						signal: 'End position ', i printString, ' is in the middle of a UTF-16 encoded character'
 						with: 'countInteger']].
 	aWriteStream nextPut: ch.
 	i <= to]

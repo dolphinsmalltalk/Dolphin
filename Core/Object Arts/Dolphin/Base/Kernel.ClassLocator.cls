@@ -57,14 +57,13 @@ errorClassCircularityDetected
 	"Private - Signal an error indicating there exists a circular class dependency
 	in involving the class identified by the receiver."
 
-	self
-		error: ('A circular class dependency has been encountered involving class <1s>' expandMacrosWith: key)!
+	self error: 'A circular class dependency has been encountered involving class ' , key!
 
 errorClassNotFound: aBindingReference
 	"Private - Signal an error indicating that a particular was not found in the image and could not be dynamically loaded"
 
 	NotFoundError
-		signal: ('The class <1p> could not be found in the image' expandMacrosWith: aBindingReference)!
+		signal: 'The class ' , aBindingReference printString , ' could not be found in the image'!
 
 findAvailableClass
 	"Answer the class referred to by the receiver if the class is either resident or a loaded foreign

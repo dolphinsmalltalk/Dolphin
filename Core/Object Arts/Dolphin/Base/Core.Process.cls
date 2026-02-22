@@ -392,7 +392,7 @@ priority: anInteger
 	<primitive: 92>
 	^(_failureCode == _PrimitiveFailureCode.InvalidParameter1
 		or: [_failureCode == _PrimitiveFailureCode.IntegerOutOfRange])
-			ifTrue: [self error: ('Invalid Process priority <1p>' expandMacrosWith: anInteger)]
+			ifTrue: [self error: ('Invalid Process priority ', anInteger printString)]
 			ifFalse: [self primitiveFailed: _failureCode]!
 
 queueInterrupt: anInteger

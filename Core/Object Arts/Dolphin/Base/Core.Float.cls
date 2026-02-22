@@ -469,7 +469,7 @@ asTrueFraction
 
 	| shifty sign expPart exp fraction fractionPart |
 	(self fpClass anyMask: FpClassFinite)
-		ifFalse: [ArithmeticError signal: ('Cannot represent <1p> as a fraction' expandMacrosWith: self)].
+		ifFalse: [ArithmeticError signal: ('Cannot represent ', self printString, ' as a fraction')].
 	shifty := self uint64AtOffset: 0.
 	" Extract the sign and the biased exponent "
 	sign := (shifty bitShift: -63) == 0 ifTrue: [1] ifFalse: [-1].

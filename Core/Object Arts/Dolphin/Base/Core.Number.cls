@@ -353,7 +353,7 @@ Core.Number methodProtocol: #rational attributes: #(#ansi #readOnly) selectors: 
 !Core.Number class methodsFor!
 
 errorExponentTooLarge: anInteger
-	^InvalidFormat signal: ('Exponent <1p> is too large' expandMacrosWith: anInteger) with: self!
+	^InvalidFormat signal: ('Exponent ', anInteger printString, ' is too large') with: self!
 
 errorInvalidFormat
 	"Private - Raise an error that some attempt to create an instance of the receiver failed

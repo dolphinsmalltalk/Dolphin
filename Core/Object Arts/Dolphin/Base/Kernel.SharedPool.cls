@@ -59,7 +59,7 @@ isValidKey: aString
 keyString: anObject
 	| answer |
 	answer := anObject asString.
-	(self isValidKey: answer) ifFalse: [^self error: ('Invalid key: <1p>' expandMacrosWith: answer)].
+	(self isValidKey: answer) ifFalse: [^self error: 'Invalid key: ' , answer printString].
 	^answer!
 
 subclass: aSymbol

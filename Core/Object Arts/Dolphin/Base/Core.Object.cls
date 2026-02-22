@@ -1267,7 +1267,7 @@ shouldNotImplement
 
 	| method |
 	method := Processor activeProcess topFrame sender method.
-	^self error: ('<1p> should not implement <2p>' expandMacrosWith: self class with: method selector)!
+	^self error: self class shortName , ' should not implement ' , method selector printString!
 
 size
 	"Answer the number of indexed variables in the receiver (0 for non-indexable objects,

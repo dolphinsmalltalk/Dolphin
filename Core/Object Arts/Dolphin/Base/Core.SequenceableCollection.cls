@@ -647,13 +647,13 @@ errorFirstObject: target
 	"Private - Report an error to the effect that an attempt was made to access the object
 	before the argument, target, where the latter is the last element of the receiver."
 
-	^self error: ('<1p> is my first object' expandMacrosWith: target)!
+	^self error: target printString , ' is my first object'!
 
 errorLastObject: target
 	"Private - Report an error to the effect that an attempt was made to access the object
 	after the argument, target, where the latter is the last element of the receiver."
 
-	^self error: ('<1p> is my last object' expandMacrosWith: target)!
+	^self error: target printString , ' is my last object'!
 
 expandMacrosIn: aString
 	"Private - Expand aString with the collection of replaceable arguments represented by the receiver."

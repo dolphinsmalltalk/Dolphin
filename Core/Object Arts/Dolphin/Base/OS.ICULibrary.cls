@@ -14,6 +14,9 @@ OS.ICULibrary comment: ''!
 
 !OS.ICULibrary methodsFor!
 
+icuError: errInteger in: nameString
+	^self error: 'ICU error ' , errInteger printString , ' in ' , nameString!
+
 u_charAge: aCharacter
 	| buf |
 	buf := ByteArray newFixed: U_MAX_VERSION_LENGTH.
@@ -58,8 +61,7 @@ u_charName: aCharacter nameChoice: anInteger
 		buffer: name
 		bufferLength: len + 1
 		pErrorCode: error.
-	(error int32AtOffset: 0) > 0
-		ifTrue: [self error: 'ICU error <p> in u_charName' << (error int32AtOffset: 0)].
+	(error int32AtOffset: 0) > 0 ifTrue: [^self icuError: (error int32AtOffset: 0) in: 'u_charName'].
 	^name!
 
 u_charName: aCharacter nameChoice: choiceInteger buffer: anAnsiString bufferLength: lengthInteger pErrorCode: aUInt32
@@ -164,8 +166,7 @@ u_getDataVersion
 	buf := ByteArray newFixed: ##(U_MAX_VERSION_LENGTH + 4).
 	self u_getDataVersion: buf status: buf yourAddress + U_MAX_VERSION_LENGTH.
 	(buf int32AtOffset: U_MAX_VERSION_LENGTH) > 0
-		ifTrue: 
-			[self error: 'ICU error <p> from u_getDataVersion' << (buf int32AtOffset: U_MAX_VERSION_LENGTH)].
+		ifTrue: [^self icuError: (buf int32AtOffset: U_MAX_VERSION_LENGTH) in: 'u_getDataVersion'].
 	^buf!
 
 u_getDataVersion: dataVersionFillin status: status
@@ -394,7 +395,7 @@ u_strFoldCase: aString options: anInteger
 		options: anInteger
 		pErrorCode: errorCode.
 	(errorCode int32AtOffset: 0) > 0
-		ifTrue: [self error: 'ICU error <p> in u_strFoldCase' << (errorCode int32AtOffset: 0)].
+		ifTrue: [^self icuError: (errorCode int32AtOffset: 0) in: 'u_strFoldCase'].
 	^dest!
 
 u_strFromUTF8WithSub: aUtf8String
@@ -420,7 +421,8 @@ u_strFromUTF8WithSub: aUtf8String
 		subchar: 16rFFFD
 		pNumSubstitutions: nil
 		pErrorCode: buf yourAddress + 4.
-	(buf int32AtOffset: 4) > 0 ifTrue: [self error: 'Error <p> in u_strFromUTF8WithSub' << (buf int32AtOffset: 4)].
+	(buf int32AtOffset: 4) > 0
+		ifTrue: [^self icuError: (buf int32AtOffset: 4) in: 'u_strFromUTF8WithSub'].
 	^dest!
 
 u_strFromUTF8WithSub: dest destCapacity: destInteger pDestLength: anInt32 src: aUtf8String srcLength: srcInteger subchar: aCharacter pNumSubstitutions: substInst32 pErrorCode: errInt32
@@ -453,7 +455,7 @@ u_strToLower: aString locale: isoString
 		locale: isoString
 		pErrorCode: errorCode.
 	(errorCode int32AtOffset: 0) > 0
-		ifTrue: [self error: 'ICU error <p> in u_strToLower' << (errorCode int32AtOffset: 0)].
+		ifTrue: [^self icuError: (errorCode int32AtOffset: 0) in: 'u_strToLower'].
 	^dest!
 
 u_strToTitle: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger titleIter: aCallback locale: localeString pErrorCode: anInt32
@@ -521,7 +523,7 @@ u_strToTitle: aString locale: isoString
 		locale: isoString
 		pErrorCode: errorCode.
 	(errorCode int32AtOffset: 0) > 0
-		ifTrue: [self error: 'ICU error <p> in u_ustToTitle' << (errorCode int32AtOffset: 0)].
+		ifTrue: [^self icuError: (errorCode int32AtOffset: 0) in: 'u_strToTitle'].
 	^dest!
 
 u_strToUpper: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger locale: localeString pErrorCode: anInt32
@@ -549,7 +551,7 @@ u_strToUpper: aString locale: isoString
 		locale: isoString
 		pErrorCode: errorCode.
 	(errorCode int32AtOffset: 0) > 0
-		ifTrue: [self error: 'ICU error <p> in u_strToUpper' << (errorCode int32AtOffset: 0)].
+		ifTrue: [^self icuError: (errorCode int32AtOffset: 0) in: 'u_strToUpper'].
 	^dest!
 
 u_tolower: aCharacter
@@ -625,6 +627,7 @@ u_versionToString(const UVersionInfo versionArray, char *versionString);"
 	^self invalidCall: _failureCode! !
 
 !OS.ICULibrary categoriesForMethods!
+icuError:in:!error handling!private! !
 u_charAge:!character properties!public!version information! !
 u_charAge:versionArray:!character properties!public!version information! !
 u_charName:nameChoice:!character properties!public! !

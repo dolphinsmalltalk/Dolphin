@@ -672,8 +672,9 @@ valueFailed: failureCode argumentCount: anInteger
 
 	^failureCode == _PrimitiveFailureCode.WrongNumberOfArgs
 		ifTrue: 
-			[self error: ('Block expects <1p> argument(s), <2p> given' expandMacrosWith: self argumentCount
-						with: anInteger)]
+			[self
+				error: 'Block expects ' , self argumentCount printString , ' argument(s), ' , anInteger printString
+						, ' given']
 		ifFalse: [self primitiveFailed: failureCode]!
 
 valueOnUnwind: aTwoArgBlock

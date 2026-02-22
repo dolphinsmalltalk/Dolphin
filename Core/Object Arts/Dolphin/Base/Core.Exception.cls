@@ -191,7 +191,7 @@ description
 	desc := format = '%1' 
 				ifTrue: [self _descriptionArguments first]
 				ifFalse: [format formatWithArguments: self _descriptionArguments].
-	^desc isEmpty ifTrue: ['An unknown <1p> has occurred' expandMacrosWith: self class] ifFalse: [desc]!
+	^desc isEmpty ifTrue: ['An unknown ', self class shortName, ' has occurred'] ifFalse: [desc]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."

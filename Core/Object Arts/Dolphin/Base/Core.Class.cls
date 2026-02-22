@@ -163,9 +163,9 @@ addImport: aBindingReference
 addSubclass: aClass
 	"Private - Include the argument, aClass, as a subclass of the receiver."
 
-	aClass class isMeta ifFalse: [^self error: '<1p> is not a Class' << aClass].
+	aClass class isMeta ifFalse: [^self error: aClass printString , ' is not a Class'].
 	aClass superclass == self
-		ifFalse: [^self error: ('I am not <1p>''s superclass' expandMacrosWith: aClass)].
+		ifFalse: [^self error: 'I am not ' , aClass printString , '''s superclass'].
 	"With the advent of namespaces there may be multiple subclasses with the same unqualified name, so we no longer maintain the array in sorted order."
 	(subclasses identityIndexOf: aClass) == 0 ifTrue: [subclasses := subclasses copyWith: aClass]!
 
@@ -263,7 +263,7 @@ binding
 	^self bindingOrNil
 		ifNil: 
 			[self
-				error: ('Binding for <1p> not found in <2p>' expandMacrosWith: self unqualifiedName with: environment)]!
+				error: 'Binding for ' , self unqualifiedName printString , ' not found in ' , environment printString]!
 
 bindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class (not including imports). If there is no such variable, then answer nil."

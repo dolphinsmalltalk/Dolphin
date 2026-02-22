@@ -341,7 +341,7 @@ errorEmptyCollection
 errorNotKeyed
 	"Private - Generate an error to the effect that the receiver is not a keyed Collection"
 
-	^self error: ('<1p>s do not respond to keyed accessing messages' expandMacrosWith: self class)!
+	^self error: self class shortName , 's do not respond to keyed accessing messages'!
 
 errorNotSingleton
 	self error: 'Collection is not of a single element'!
@@ -350,7 +350,7 @@ errorValueNotFound: aValue
 	"Private - Report that an attempt was made to look up the key for a value which was not
 	in receiver"
 
-	^self error: ('value not found: <1p>' expandMacrosWith: aValue)
+	^self error: ('value not found: ', aValue printString)
 !
 
 fold: aDyadicValuable 

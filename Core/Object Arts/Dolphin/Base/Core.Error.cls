@@ -102,11 +102,10 @@ performFailed: anInteger of: selector for: receiver withArgs: arguments
 		ifTrue: [^receiver error: 'Arguments not Array: ' , arguments printString].
 	anInteger == _PrimitiveFailureCode.WrongNumberOfArgs
 		ifTrue: 
-			[^receiver
-				error: ('Incorrect number of arguments: <1p>, expected <2p>' expandMacrosWith: arguments size
-						with: selector argumentCount)].
+			[^receiver error: 'Incorrect number of arguments: ' , arguments size printString , ', expected '
+						, selector argumentCount printString].
 	receiver
-		error: ('Primitive perform of <1p> failed (<2p>)' expandMacrosWith: selector with: anInteger)!
+		error: 'Primitive perform of ' , selector printString , ' failed (' , anInteger printString , ')'!
 
 subclassResponsibility: selector
 	"Private - Raise an error that some message was sent to an abstract class."
