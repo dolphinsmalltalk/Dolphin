@@ -200,7 +200,7 @@ windowSystemShutdown
 	"Private - Terminate the window system to release resources prior to exit. Much of this
 	isn't strictly necessary in a 32-bit application, but it's nice to wipe."
 
-	#(#{View} #{Canvas} #{GraphicsTool}) do: [:s | s ifDefined: [:c | c onExit]]!
+	#(#{View} #{Canvas} #{GraphicsTool}) do: [:s | s ifDefined: [:c | c onExit: self]]!
 
 windowSystemStartup
 	"Private - Perform window system startup operations."

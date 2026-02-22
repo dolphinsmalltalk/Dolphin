@@ -679,7 +679,7 @@ shutdown
 snapshot
 	"Private - Performs a snapshot of the current image."
 	
-	self snapshot: self imageFileName!
+	^self snapshot: self imageFileName!
 
 snapshot: fileName
 	"Save the current image to fileName. Advance the minor component of

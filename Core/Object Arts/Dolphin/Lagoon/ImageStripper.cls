@@ -1361,50 +1361,43 @@ _saveExecutable
 	"Private - Save a snapshot of the current image to an executable. This is appended to the executable stub at the <readableString> path, exePath.
 	Following the completion of this process the development system MUST exit"
 
-	| image imageFile unattended retainImage |
-	unattended := flags allMask: UnattendedMask.
-	retainImage := flags allMask: KeepImageMask.
+	| image imageFile size imageData intBuf hUpdate |
 	self _finalActions.
 	image := exePath , '.tmp'.
-	self _snapshotImage: image.
+	size := self _snapshotImage: image.
 
 	"We can't send any more messages to the receiver after this point as its method dictionary has been removed."
+	intBuf := ByteArray newFixed: 8.
+	imageData := ByteArray new: size.
 
 	"Use raw Windows APIs to avoid dependency on File class"
 	imageFile := Kernel32
 				createFile: image
-				dwDesiredAccess: Win32Constants.GENERIC_READ
+				dwDesiredAccess: GENERIC_READ
 				dwSharedMode: 0
 				lpSecurityAttributes: nil
-				dwCreationDistribution: Win32Constants.OPEN_EXISTING
-				dwFlagsAndAttributes: Win32Constants.FILE_ATTRIBUTE_NORMAL
+				dwCreationDistribution: OPEN_EXISTING
+				dwFlagsAndAttributes: FILE_ATTRIBUTE_NORMAL
 				hTemplateFile: nil.
-	
-	[| imageData size intBuf |
-	intBuf := ByteArray newFixed: 8.
-	Kernel32 getFileSizeEx: imageFile lpFileSize: intBuf.
-	size := intBuf uint64AtOffset: 0.
-	imageData := ByteArray new: size.
 	Kernel32
 		readFile: imageFile
-		lpBuffer: imageData
-		nNumberOfBytesToRead: size
-		lpNumberOfBytesRead: intBuf
-		lpOverlapped: nil.
-	OS.Kernel32 updateResourcesOf: exePath
-		do: 
-			[:hUpdate |
-			(OS.Kernel32
+			lpBuffer: imageData
+			nNumberOfBytesToRead: size
+			lpNumberOfBytesRead: intBuf
+			lpOverlapped: nil;
+		closeHandle: imageFile.
+	hUpdate := Kernel32 beginUpdateResource: exePath bDeleteExistingResources: false.
+	(hUpdate notNil and: 
+			[(Kernel32
 				updateResource: hUpdate
 				lpType: RT_RCDATA
 				lpName: 100
 				wLanguage: 0
 				lpData: imageData
-				cbData: size) ifFalse: [OS.Kernel32 systemError]]]
-			ensure: 
-				[Kernel32 closeHandle: imageFile.
-				retainImage ifFalse: [Kernel32 deleteFile: image]].
-	unattended
+				cbData: size) and: [Kernel32 endUpdateResource: hUpdate fDiscard: false]])
+		ifFalse: [Kernel32 systemError].
+	(flags allMask: KeepImageMask) ifFalse: [Kernel32 deleteFile: image].
+	(flags allMask: UnattendedMask)
 		ifFalse: 
 			[User32
 				messageBox: nil
@@ -1445,19 +1438,21 @@ _snapshotDevelopmentClasses
 _snapshotImage: anImageFilename
 	"Private - Save the current stripped image out to anImageFilename"
 
+	| sesh size |
 	"We can now empty the method dictionary as every method still required
 	 is on the stack."
-
 	self class methodDictionary: nil.
 	"Flush out the garbage again"
 	self _collectGarbage: 2.
-	SessionManager current
-		onPreSaveImage;
-		primSnapshot: anImageFilename
-			backup: false
-			type: snapshotType ?? 6
-			maxObjects: nil;
-		onPostSaveImage!
+	sesh := SessionManager current.
+	sesh onPreSaveImage.
+	size := sesh
+				primSnapshot: anImageFilename
+				backup: false
+				type: snapshotType ?? 6
+				maxObjects: nil.
+	sesh onPostSaveImage.
+	^size!
 
 _snapshotRootClasses
 	"Private - Build the <IdentitySet> of <Class>es that are considered the roots of the 

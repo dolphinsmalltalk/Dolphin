@@ -107,7 +107,19 @@ Oop* PRIMCALL Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
 	TRACESTREAM<< L"Time to save image: " << (timeEnd - timeStart)<< L" mS" << std::endl;
 #endif
 
-	return saveResult == _PrimitiveFailureCode::NoError ? primitiveSuccess(4) : primitiveFailure(saveResult);
+	if (saveResult == _PrimitiveFailureCode::NoError)
+	{
+		WIN32_FILE_ATTRIBUTE_DATA attributes;
+		::GetFileAttributesEx(szFileName, GET_FILEEX_INFO_LEVELS::GetFileExInfoStandard, &attributes);
+		Oop imageFileSize = Integer::NewUnsigned64((static_cast<uint64_t>(attributes.nFileSizeHigh) << 32) + attributes.nFileSizeLow);
+		*(sp-4) = imageFileSize;
+		ObjectMemory::AddOopToZct(imageFileSize);
+		return primitiveSuccess(4);
+	}
+	else
+	{
+		return primitiveFailure(saveResult);
+	}
 }
 
 #elif defined(TO_GO)

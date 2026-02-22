@@ -801,7 +801,7 @@ primQuit: anInteger
 	^self primitiveFailed: _failureCode!
 
 primSnapshot: fileName backup: aBoolean type: typeInteger maxObjects: maxInteger
-	"Private - Save the current image to fileName, optionally creating a backup of the existing file.
+	"Private - Save the current image to fileName, optionally creating a backup of the existing file. Answers the size of the saved image file.
 
 	Primitive failure codes:
 		InvalidParameter1	- fileName not a String
