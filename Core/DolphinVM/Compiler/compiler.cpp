@@ -1105,21 +1105,8 @@ ip_t Compiler::GenMessage(const u8string& pattern, argcount_t argCount, textpos_
 	if (symbolIndex == -1)
 		return ip_t::npos;
 
-	if (m_sendType == SendType::Super)
+	if (m_sendType != SendType::Super)
 	{
-		// Warn if supersends a message which is not implemented - be sure not to wrongly flag 
-		// recursive self send first time the method is compiled
-		POTE superclass = ((STBehavior*)GetObj(MethodClass))->superclass;
-		if (IsInteractive && !CanUnderstand(superclass, oteSelector))
-			WarningV(errRange, CWarnMsgUnimplemented, reinterpret_cast<Oop>(oteSelector), m_piVM->NewString("super"), superclass, 0);
-	}
-	else
-	{
-		// Warn if self-sends a message which is not implemented
-		if (m_sendType == SendType::Self && IsInteractive
-				&& pattern != m_selector && !CanUnderstand(MethodClass,  oteSelector))
-			WarningV(errRange, CWarnMsgUnimplemented, reinterpret_cast<Oop>(oteSelector), m_piVM->NewString("self"), MethodClass, 0);
-
 		// A short send may be possible (sends to super are always long as there is no short
 		// version), but only if 0..2 args, and within literal index ranges
 		

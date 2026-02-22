@@ -1778,57 +1778,6 @@ testWarningRedefiningTemp
 		range: range
 		code: CWarnRedefiningTemp!
 
-testWarningSelfSendNotImplemented
-	| source range |
-	source := 'x ^self blah'.
-	range := (source findString: 'self') to: source size.
-	self
-		parseMethodWarning: source
-		in: self class
-		range: range
-		code: CWarnMsgUnimplemented.
-	self
-		parseMethodWarning: source
-		in: self class class
-		range: range
-		code: CWarnMsgUnimplemented.
-
-	"Now compile some sends which are implemented"
-
-	"Self referential - shouldn't get a warning"
-	self shouldnt: [self parseMethod: 'blah ^self blah' in: self class]
-		raise: self compilationWarningClass.
-
-	"Pre-existing method that we know will exist"
-	self shouldnt: [self parseMethod: 'x ^self isAbstract' in: self class class]
-		raise: self compilationWarningClass!
-
-testWarningSupersendNotImplemented
-	| source range |
-	source := 'blah ^super blah'.
-	range := (source findString: 'super') to: source size.
-	self
-		parseMethodWarning: source
-		in: self class
-		range: range
-		code: CWarnMsgUnimplemented.
-	self
-		parseMethodWarning: source
-		in: self class class
-		range: range
-		code: CWarnMsgUnimplemented.
-	"Now compile some supersends which are implemented"
-	self shouldnt: 
-			[self parseMethod: 'run ^super run' in: self class]
-		raise: self compilationWarningClass.
-	self shouldnt: 
-			[self parseMethod: 'isAbstract ^super isAbstract' in: self class class]
-		raise: self compilationWarningClass.
-	"Finally a class side supersend that is a send to the instance side"
-	self shouldnt: 
-			[self parseMethod: 'class ^super class' in: self class class]
-		raise: self compilationWarningClass!
-
 testWarningUnoptimizedConditionNonEmptyBlock
 	| source |
 	#(#and: #or:) do: 
@@ -2166,8 +2115,6 @@ testWarningRedefiningArg!public!unit tests! !
 testWarningRedefiningInstVar!public!unit tests! !
 testWarningRedefiningStatic!public!unit tests! !
 testWarningRedefiningTemp!public!unit tests! !
-testWarningSelfSendNotImplemented!public!unit tests! !
-testWarningSupersendNotImplemented!public!unit tests! !
 testWarningUnoptimizedConditionNonEmptyBlock!public!unit tests! !
 testWarningUnoptimizedConditionNonNiladicArg!public!unit tests! !
 testWarningUnoptimizedIfNil!public!unit tests! !

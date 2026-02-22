@@ -107,16 +107,16 @@ struct VMPointers //: public Object
 			SymbolOTE* instVarAtPutSymbol;						// 55
 
 			// 56..65
-			SymbolOTE* lookupKeySymbol;							// 56
+			SymbolOTE* bindingForSymbol;						// 56
 			SymbolOTE* wndProcSelector;							// 57
 
 			SymbolOTE* asNumberSymbol;							// 58
 			// TODO - Remove these when compiler no longer uses them.
 			SymbolOTE* fullBindingForSelector;					// 59
 			SymbolOTE* allInstVarNamesSelector;					// 60
-			SymbolOTE* understandsArithmeticSelector;				// 61
-			SymbolOTE* canUnderstandSelector;						// 62
-			SymbolOTE* negativeSelector;							// 63
+			SymbolOTE* understandsArithmeticSelector;			// 61
+			Oop _unused62;										// 62
+			SymbolOTE* negativeSelector;						// 63
 			SymbolOTE* evaluateExpressionSelector;				// 64
 			SymbolOTE* newBindingRefSelector;					// 65
 

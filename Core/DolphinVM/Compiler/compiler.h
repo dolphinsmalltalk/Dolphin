@@ -458,7 +458,6 @@ public:
 	POTE FindDictVariable(POTE dict, const u8string&)/* throws SE_VMCALLBACKUNWIND */;
 	POTE FindGlobal(const u8string&)/* throws SE_VMCALLBACKUNWIND */;
 	POTE DictAtPut(POTE dict, const u8string&, Oop value)/* throws SE_VMCALLBACKUNWIND */;
-	bool CanUnderstand(POTE oteBehavior, POTE oteSelector);
 	u8string GetString(POTE oopString);
 
 	// Special names for compiler and decoder

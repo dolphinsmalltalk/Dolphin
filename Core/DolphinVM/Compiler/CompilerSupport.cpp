@@ -70,7 +70,7 @@ POTE Compiler::FindDictVariable(POTE dict, const u8string& name)// throws SE_VMC
 	//
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
 	Oop stringPointer = Oop(NewUtf8String(name));
-	return (POTE)m_piVM->PerformWith(Oop(dict), GetVMPointers().lookupKeySymbol, stringPointer);
+	return (POTE)m_piVM->PerformWith(Oop(dict), GetVMPointers().bindingForSymbol, stringPointer);
 }
 
 // Ditto on the ref. count front **?**
@@ -82,12 +82,6 @@ POTE Compiler::DictAtPut(POTE dict, const u8string& name, Oop value)// throws SE
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
 	POTE symbolPointer = NewUtf8String(name);
 	return (POTE)m_piVM->PerformWithWith(Oop(dict), atPutSelector, Oop(symbolPointer), value);
-}
-
-bool Compiler::CanUnderstand(POTE oteBehavior, POTE oteSelector)
-{
-	return ((POTE)m_piVM->PerformWith(Oop(oteBehavior), GetVMPointers().canUnderstandSelector, Oop(oteSelector)))
-		== GetVMPointers().True;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

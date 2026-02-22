@@ -137,20 +137,32 @@ notificationCallback: anArray
 uninitialize
 	"Clean up VM references that are only required if the compiler DLL is in use."
 
-	"Uses:
-		notificationCallback:		Sent with compilation errors/warnings
-		allInstVarNames			To query the instance variable names of the method class
-		evaluate:for:evaluationPools:	To evaluate ##(...) expressions
-		bindingFor:				To lookup variables in the evaluation pools.
-		fullBindingFor:environment:	Sent to a class to resolve static variables
+	"Symbol uses:
+		allInstanceVariableNames	To query the instance variable names of the method class
 		asNumber				Sent to parse numeric literals
-		understandsArithmetic		Sent to verify the type of literals when parsing some messages with inline forms, e.g. #to:by:do:
-		negative					Similarly to above, but to check for negative 'step'
+		bindingFor:				To lookup variables in the evaluation pools.
+		evaluate:for:evaluationPools:	To evaluate ##(...) expressions
+		fullBindingFor:environment:	Sent to a class to resolve static variables
+		intern:cookie:				Interning symbols
+		namespace:				For implicit namespace: annotations when compiling methods with a specific environment (usually Smalltalk)
+		negative					Sent to check for negative 'step' when compiling #to:by:do:
+		notificationCallback:		Sent with compilation errors/warnings
 		pathString:context:meta:		Sent to instantiate BindingReference objects for literal binding references
-		namespace:				For implicit namespace: annotations when compiling methods with a specific environment (usually Smalltalk)"
+		setScope:					Sent to patch scope of relative literal BindingReference objects
+		understandsArithmetic		Sent to verify the type of literals when parsing some messages with inline forms, e.g. #to:by:do:
 
-	#(#notificationCallback: #allInstanceVariableNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor:environment: #asNumber #understandsArithmetic #negative #pathString:scope:flags: #namespace: #setScope:)
-		, { BindingReference. Smalltalk } do: [:each | VM unregisterObject: each].
+	Class uses:
+		BindingReference			For creating literal binding references
+		MethodAnnotations			For creating literals for annotations
+		Smalltalk					Used to identify <namespace: Smalltalk> annotations
+		
+	Other:
+		<namespace: Smalltalk>		152: Shared MethodAnnotations instance to save space compiling code from legacy packages
+	"
+
+	#(#allInstanceVariableNames #asNumber #bindingFor: #evaluate:for:evaluationPools: #fullBindingFor:environment: #intern:cookie: #namespace: #negative #notificationCallback: #pathString:scope:flags: #setScope: #understandsArithmetic)
+		, { BindingReference. Smalltalk. MethodAnnotations } do: [:each | VM unregisterObject: each].
+	VM registryAtIndex: 152 put: nil.
 	super uninitialize! !
 
 !Kernel.CompilerLibrary class categoriesForMethods!
