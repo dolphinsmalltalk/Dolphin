@@ -6,7 +6,7 @@ Core.Number
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'MaxPrecision' -> 16r270F }!
 
 Core.ScaledDecimal guid: (Core.GUID fromString: '{f44c914b-2b3f-11d3-8368-7a8b5a000000}')!
 
@@ -379,13 +379,9 @@ basicNewFromFraction: aFraction scale: scaleInteger
 	^self basicNew setFraction: aFraction asFraction scale: scaleInteger!
 
 maxPrecision
-	"Private - The maximum allowed precision for <ScaledDecimal>s parsed from literal string format. The
-	theoretical limit of the implementation is unbounded, but we impose an arbitrary limit to
-	prevent accidentally causing pathologically long computations. The ANSI standard specifies a
-	minimum upper on bound on the precision of ScaledDecimals of 30, so 9999 ought to be
-	sufficient for most purposes."
+	"Private - The maximum allowed precision for <ScaledDecimal>s parsed from literal string format. The theoretical limit of the implementation is unbounded, but we impose an arbitrary limit to prevent accidentally causing pathologically long computations. The ANSI standard specifies a minimum upper on bound on the precision of ScaledDecimals of 30, so 9999 ought to be sufficient for most purposes."
 
-	^9999!
+	^MaxPrecision!
 
 newFromNumber: aNumber scale: scaleInteger
 	"Answer a new instance of me."
@@ -401,6 +397,14 @@ one
 		newFromNumber: 1
 		scale: 0!
 
+readFrom: aStream mantissa: aNumber precision: anInteger
+	| scale |
+	"If there is no explicit scale, then it is implied by the precision of the fractional part, .e.g. 2.50s"
+	scale := (self readIntegerFrom: aStream radix: 10) ?? anInteger.
+	scale > MaxPrecision
+		ifTrue: [InvalidFormat signal: 'Scale ' , scale printString , ' is too large' with: self class].
+	^self newFromNumber: aNumber scale: scale!
+
 zero
 	"Answer the receiver's representation of zero."
 
@@ -414,6 +418,7 @@ basicNewFromFraction:scale:!instance creation!private! !
 maxPrecision!accessing!private! !
 newFromNumber:scale:!instance creation!public! !
 one!instance creation!public! !
+readFrom:mantissa:precision:!parsing!private! !
 zero!instance creation!public! !
 !
 

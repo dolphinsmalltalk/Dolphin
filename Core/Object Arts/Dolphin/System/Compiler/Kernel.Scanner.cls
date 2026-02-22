@@ -558,7 +558,7 @@ scanScaledDecimal: aNumber precision: precisionInteger defaultScale: scaleIntege
 	buffer nextPut: $s.
 	self step.
 	scale := self readDecimalInteger ?? scaleInteger.
-	value := scale <= ScaledDecimal maxPrecision
+	value := scale <= ScaledDecimal.MaxPrecision
 				ifTrue: [ScaledDecimal newFromNumber: aNumber / precisionInteger exp10 scale: scale]
 				ifFalse: 
 					[self illegalNumber.

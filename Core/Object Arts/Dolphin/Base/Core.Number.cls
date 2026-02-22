@@ -486,23 +486,6 @@ readRadixIntegerFrom: aStream initialInteger: anInteger
 				ifTrue: [self readExponentIntegerFrom: aStream initialInteger: radixInteger]
 				ifFalse: [radixInteger]]!
 
-readScaledDecimalFrom: aStream mantissa: aNumber precision: anInteger
-	"Private - A partially recognised ScaledDecimal has been read from the <gettableStream>, aStream,
-	which is positioned immediate after the $s. Read the rest of the ScaledDecimal (which will just
-	be the explict scale, if there is one) and answer it."
-
-	| scale |
-	(scale := self readIntegerFrom: aStream radix: 10) isNil
-		ifTrue: 
-			["Implied scale based on the precision specified for the fractional part, .e.g. 2.50s"
-			scale := anInteger].
-	scale > ScaledDecimal maxPrecision
-		ifTrue: 
-			[| message |
-			message := 'Scale <1p> is too large' expandMacrosWith: scale.
-			InvalidFormat signal: message with: self].
-	^ScaledDecimal newFromNumber: aNumber scale: scale!
-
 readSmalltalkRealFrom: aStream initialInteger: anInteger
 	"Private - Answer a new, positive, <Float> or <ScaledDecimal>, read from the
 	<gettableStream>, aStream. The <integer>, integerPart, has already been read from the stream
@@ -551,8 +534,8 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 			[nextChar == $s
 				ifTrue: 
 					[aStream next.	"Skip the $s"
-					^self
-						readScaledDecimalFrom: aStream
+					^ScaledDecimal
+						readFrom: aStream
 						mantissa: significand / precision exp10
 						precision: impliedScale]].
 
@@ -601,8 +584,8 @@ readSmalltalkSyntaxFrom: aStream
 								ifFalse: 
 									[nextChar == $s
 										ifTrue: 
-											[self
-												readScaledDecimalFrom: aStream
+											[ScaledDecimal
+												readFrom: aStream
 												mantissa: integerPart
 												precision: 0]
 										ifFalse: 
@@ -633,7 +616,6 @@ readFractionFrom:initialInteger:!parsing!private! !
 readFrom:!instance creation!public! !
 readIntegerFrom:radix:!parsing!private! !
 readRadixIntegerFrom:initialInteger:!parsing!private! !
-readScaledDecimalFrom:mantissa:precision:!parsing!private! !
 readSmalltalkRealFrom:initialInteger:!parsing!public! !
 readSmalltalkSyntaxFrom:!parsing!private! !
 zero!instance creation!public! !

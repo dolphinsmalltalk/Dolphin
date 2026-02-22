@@ -4707,7 +4707,7 @@ Core.Number
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'MaxPrecision' -> 16r270F }!
 
 Core.Integer
 	variableByteSubclass: #'Core.LargeInteger'
