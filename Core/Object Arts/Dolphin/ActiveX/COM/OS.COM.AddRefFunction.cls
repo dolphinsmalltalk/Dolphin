@@ -51,7 +51,7 @@ initialize
 		self initialize
 	"
 
-	Descriptor := IUnknown descriptorClass
+	Descriptor := FunctionDescriptor
 				callingConvention: IUnknown stdMethodCallType
 				returnType: 'dword'
 				argumentTypes: ''!

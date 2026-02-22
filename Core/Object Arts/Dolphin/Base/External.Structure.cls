@@ -310,12 +310,6 @@ initializePointer
 	"Private - Perform any initialization required for the receiver	which is specific to the reference form. Answer the receiver.
 	To perform value specific initialization, override #initialize."!
 
-invalidArgErrorClass
-	"Private - Answer the class of Error to be signalled when an argument to one of the receiver's
-	external calls is invalid."
-
-	^InvalidExternalCall!
-
 invalidCall: anInteger
 	"An invalid virtual call was attempted through one of the receiver's methods."
 
@@ -332,7 +326,7 @@ invalidCall: anInteger
 				[| arg i |
 				i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
 				arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-				self invalidArgErrorClass
+				InvalidExternalCall
 					invalidArgument: arg
 					got: (frame arguments at: arg)
 					expected: (descriptor argumentTypes at: i)]
@@ -510,7 +504,6 @@ initialize!initializing!private! !
 initializeAtAddress:owner:!initializing!private! !
 initializeBuffer:size:!initializing!private! !
 initializePointer!initializing!private! !
-invalidArgErrorClass!constants!private! !
 invalidCall:!exceptions!public! !
 isFieldBrowsable:!printing!private! !
 isNull!public!testing! !
@@ -703,12 +696,6 @@ defineTemplate
 	template ifNotNil: [self changedByteSizeFrom: oldByteSize].
 	template beImmutableObject.
 	^template!
-
-descriptorClass
-	"Private - Return the class of external function descriptor associated with
-	the receiver."
-
-	^FunctionDescriptor!
 
 dynamicSelectorsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the extra message selectors understood by the receiver at run time that might not have an associated method."
@@ -1108,7 +1095,6 @@ defineFields!public!template definition! !
 defineSizeConstant:!private!template definition! !
 definesNewFields!private!template definition!testing! !
 defineTemplate!public!template definition! !
-descriptorClass!constants!private! !
 dynamicSelectorsDo:!compiling!methods-accessing!public! !
 elementSize!accessing!public! !
 ensureDefined!instance creation!private! !

@@ -172,7 +172,7 @@ block: aBlockClosure argumentTypes: aString
 
 	^BlockCallback new
 		block: aBlockClosure;
-		descriptor: (self descriptorClass argumentTypes: aString);
+		descriptor: (FunctionDescriptor argumentTypes: aString);
 		yourself!
 
 block: aBlockClosure descriptor: aFunctionDescriptor
@@ -204,11 +204,6 @@ deallocateThunks
 		dwSize: 0
 		dwFreeType: MEM_RELEASE.
 	ThunkBase := nil!
-
-descriptorClass
-	"Private - Answer the class used to build and represent function descriptors."
-
-	^FunctionDescriptor!
 
 fromCookie: anInteger
 	"Answer the receiver's registered instance with the cookie, anInteger. If there is no such
@@ -297,7 +292,6 @@ block:descriptor:!instance creation!public! !
 callback:withArgumentsAt:!operations!private! !
 clear!initializing!private! !
 deallocateThunks!initializing!private! !
-descriptorClass!constants!private! !
 fromCookie:!accessing!public! !
 initialize!development!initializing!public! !
 new!instance creation!public! !

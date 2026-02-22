@@ -121,12 +121,6 @@ getProcAddress: nameOrOrdinal ifAbsent: exceptionHandler
 	address := Kernel32 getProcAddress: self asParameter lpProcName: nameOrOrdinal.
 	^address = 0 ifTrue: [exceptionHandler value] ifFalse: [address]!
 
-invalidArgErrorClass
-	"Private - Answer the class of Error to be signalled when an invalid argument is passed to one of 
-	the receiver external functions."
-
-	^InvalidExternalCall!
-
 invalidCall: anInteger
 	"An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."
 
@@ -148,7 +142,7 @@ invalidCall: anInteger fromFrame: aStackFrame
 			[| arg i |
 			i := descriptor argumentIndexFromOffset: anInteger - InvalidParameter1.
 			arg := method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-			self invalidArgErrorClass
+			InvalidExternalCall
 				invalidArgument: arg
 				got: (aStackFrame arguments at: arg)
 				expected: (descriptor argumentTypes at: i)]
@@ -191,7 +185,6 @@ comparisonName!comparing!private! !
 defaultFileName!constants!private! !
 getProcAddress:!accessing!private! !
 getProcAddress:ifAbsent:!accessing!private! !
-invalidArgErrorClass!constants!private! !
 invalidCall:!exceptions!public! !
 invalidCall:fromFrame:!exceptions!private! !
 isSelfEvaluating!public!testing! !

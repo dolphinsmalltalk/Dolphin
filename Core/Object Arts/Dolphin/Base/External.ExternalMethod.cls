@@ -60,7 +60,7 @@ descriptor
 			to: size
 			with: descriptor
 			startingAt: ArgumentStartIndex.
-	descriptorClass := self descriptorClass.
+	descriptorClass := FunctionDescriptor.
 	i := size.
 	[i > 4] whileTrue: 
 			[| type |
@@ -72,11 +72,6 @@ descriptor
 					typeinfo at: i put: type.
 					i := i - 1]].
 	^descriptorClass descriptor: typeinfo literals: self literals!
-
-descriptorClass
-	"Private - Answer the class of descriptor to use for the receiver."
-
-	^FunctionDescriptor!
 
 descriptorLiteral
 	"Private - Answer the argument type descriptor literal from the receiver's 'literal frame'.
@@ -129,7 +124,6 @@ argsLen!accessing!private! !
 argumentTypes!accessing!private! !
 clear!operations!private! !
 descriptor!accessing!private! !
-descriptorClass!constants!private! !
 descriptorLiteral!accessing!private! !
 functionName!accessing!private! !
 isExternalCall!private!testing! !

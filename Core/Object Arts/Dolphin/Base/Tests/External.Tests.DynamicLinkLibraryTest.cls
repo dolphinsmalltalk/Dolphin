@@ -44,13 +44,12 @@ testSingletonSerialisationToStb
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty!
 
 verifyInvalidCallArguments: aBoolean
-	| apiCall errorClass obj gdiLibrary |
+	| apiCall obj gdiLibrary |
 	obj := Object new.
-	errorClass := Kernel32 invalidArgErrorClass.
 	apiCall := self makeTestMethodFrom: KernelLibrary >> #outputDebugString: overlapped: aBoolean.
 	self
-		should: [apiCall value: Kernel32 withArguments: {obj}]
-		raise: errorClass
+		should: [apiCall value: Kernel32 withArguments: { obj }]
+		raise: InvalidExternalCall
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter1)
@@ -58,30 +57,30 @@ verifyInvalidCallArguments: aBoolean
 	apiCall := self makeTestMethodFrom: KernelLibrary >> #findFirstFile:lpFindFileData:
 				overlapped: aBoolean.
 	self
-		should: [apiCall value: Kernel32 withArguments: {'*.*' asUtf16String. obj}]
-		raise: errorClass
+		should: [apiCall value: Kernel32 withArguments: { '*.*' asUtf16String. obj }]
+		raise: InvalidExternalCall
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)
 				and: [ex argument == obj and: [ex type = (WIN32_FIND_DATAW fullName , '*')]]].
 	apiCall := self makeTestMethodFrom: UserLibrary >> #fillRect:lprc:hbr: overlapped: aBoolean.
 	self
-		should: [apiCall value: User32 withArguments: {obj. ByteArray newFixed: 16. nil}]
-		raise: errorClass
+		should: [apiCall value: User32 withArguments: { obj. ByteArray newFixed: 16. nil }]
+		raise: InvalidExternalCall
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter1)
 				and: [ex argument == obj and: [ex type = 'handle']]].
 	self
-		should: [apiCall value: User32 withArguments: {nil. obj. nil}]
-		raise: errorClass
+		should: [apiCall value: User32 withArguments: { nil. obj. nil }]
+		raise: InvalidExternalCall
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)
 				and: [ex argument == obj and: [ex type = 'OS.RECTL*']]].
 	self
-		should: [apiCall value: User32 withArguments: {nil. ByteArray newFixed: 16. obj}]
-		raise: errorClass
+		should: [apiCall value: User32 withArguments: { nil. ByteArray newFixed: 16. obj }]
+		raise: InvalidExternalCall
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter3)

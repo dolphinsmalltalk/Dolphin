@@ -619,14 +619,12 @@ defineFunction: aSymbol type: functionClass returnType: retString argumentTypes:
 
 	self
 		addFunction: functionClass
-		selector: aSymbol 
-		descriptor: 
-			(self descriptorClass
+		selector: aSymbol
+		descriptor: (FunctionDescriptor
 				callingConvention: self stdMethodCallType
 				returnType: retString
 				argumentTypes: argString
-				environment: self)
-!
+				environment: self)!
 
 defineFunctions
 	"Declare the virtual functions supported by the receiver.

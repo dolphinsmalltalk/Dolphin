@@ -65,7 +65,7 @@ initialize
 	HRESULTs by declaring QueryInterface as returing a signed integer. This must then be tested explicitly.
 	"
 
-	Descriptor := IUnknown descriptorClass
+	Descriptor := FunctionDescriptor
 				callingConvention: IUnknown stdMethodCallType
 				returnType: 'int32'
 				argumentTypes: '<1p>* void**' << GUID!
