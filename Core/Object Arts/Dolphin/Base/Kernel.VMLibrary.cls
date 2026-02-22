@@ -51,6 +51,14 @@ addressFromInteger: anInteger
 	<stdcall: lpvoid AnswerIntPtr uint32>
 	^self invalidCall: _failureCode!
 
+ansiStringFromAddress: pointer
+	"Private - Answer a new <AnsiString> instantiated from the null-terminated Ansi encoded string pointed at by the argument."
+
+	"The VM function does nothing but return the argument, but we can leverage its FFI marshalling to provide a fast and simple way to instantiate a string from a pointer."
+
+	<stdcall: lpstr AnswerIntPtr lpvoid>
+	^self invalidCall: _failureCode!
+
 applicationHandle
 	"Answer the handle of the Dolphin application instance."
 
@@ -176,8 +184,7 @@ errorIntegerMoreThan32Bits: anInteger
 	"Private - Raise an exception to the effect that anInteger cannot be represented
 	as a 32-bit two's complement integer (it's too 'large')."
 
-	^self
-		error: ('<1p> is too large for 32-bit two''s complement representation.' expandMacrosWith: anInteger)!
+	^self error: anInteger printString , ' is too large for 32-bit two''s complement representation.'!
 
 fullVersion
 	"Answer a String which describes the full name and version number of the VM."
@@ -453,10 +460,18 @@ unsignedFromSigned: anInteger
 		ifFalse: [self invalidCall: _failureCode]!
 
 utf16StringFromAddress: pointer
-	"Private - Answer a new <Utf16String> instantiated from the null-terminated string pointed at by the argument."
+	"Private - Answer a new <Utf16String> instantiated from the null-terminated UTF-16 encoded string pointed at by the argument."
 
 	<stdcall: lpwstr AnswerIntPtr lpvoid>
-	^Utf16String fromAddress: pointer length: (Ucrt wcslen: pointer)!
+	^self invalidCall: _failureCode!
+
+utf8StringFromAddress: pointer
+	"Private - Answer a new <Utf8String> instantiated from the null-terminated UTF-8 encoded string pointed at by the argument."
+
+	"The VM function does nothing but return the argument, but we can leverage its FFI marshalling to provide a fast and simple way to instantiate a string from a pointer."
+
+	<stdcall: lpstr8 AnswerIntPtr lpvoid>
+	^self invalidCall: _failureCode!
 
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
@@ -472,6 +487,7 @@ versionInfo
 _snprintf_s:bufferSize:count:format:with:!helpers!private! !
 _snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
 addressFromInteger:!helpers!private! !
+ansiStringFromAddress:!helpers!private! !
 applicationHandle!accessing-handles!public! !
 argc!accessing!private! !
 argv!accessing!private! !
@@ -522,6 +538,7 @@ stdout!accessing-handles!private! !
 unregisterObject:!accessing-registry!private! !
 unsignedFromSigned:!helpers!private! !
 utf16StringFromAddress:!helpers!private! !
+utf8StringFromAddress:!helpers!private! !
 versionFormatString!constants!private! !
 versionInfo!accessing-version!public! !
 !

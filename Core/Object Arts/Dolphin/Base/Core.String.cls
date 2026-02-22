@@ -1447,14 +1447,7 @@ formatSystemMessage: anIntegerId withArguments: arguments
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	| cch |
-	anAddress isNull ifTrue: [^nil].
-	cch := OS.Ucrt strlen: anAddress.
-	^anAddress asExternalAddress
-		replaceBytesOf: (self new: cch)
-		from: 1
-		to: cch
-		startingAt: 1!
+	^self subclassResponsibility!
 
 fromAddress: anAddress length: anInteger
 	"Answer a new String of length, anInteger, copied from the first anInteger bytes at the specified address."

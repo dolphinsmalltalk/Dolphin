@@ -800,6 +800,11 @@ encoding
 
 	^#utf8!
 
+fromAddress: anAddress
+	"Answer a new <Utf8String> instantiated from the null terminated UTF-8 encoded string at anAddress."
+
+	^VM utf8StringFromAddress: anAddress!
+
 initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
@@ -817,6 +822,7 @@ characterForCodeUnit:!enquiries!public! !
 codePage!instance creation!public! !
 encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
+fromAddress:!instance creation!public! !
 initialize!development!initializing!public! !
 with:!instance creation!public! !
 !

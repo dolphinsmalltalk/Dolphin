@@ -167,6 +167,11 @@ encoding
 
 	^#ansi!
 
+fromAddress: anAddress
+	"Answer a new String instantiated from the null terminated string at anAddress."
+
+	^VM ansiStringFromAddress: anAddress!
+
 initialize
 	empty := self new
 				beImmutableObject;
@@ -214,6 +219,7 @@ characterForCodeUnit:!enquiries!public! !
 coerceString:!instance creation!public! !
 encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
+fromAddress:!instance creation!public! !
 initialize!class initialization!development!public! !
 with:!instance creation!public! !
 with:with:!instance creation!public! !
