@@ -254,7 +254,7 @@ testUnderstoodSelectors
 	self assert: MSGBOXPARAMSW understoodSelectors asSortedArray
 		equals: #(#caption: #dwLanguageId: #dwStyle: #hInstance: #hwndOwner: #lpszCaption: #lpszIcon: #lpszText: #text:).
 	self assert: _FPIEEE_RECORD understoodSelectors asSortedArray
-		equals: #(#cause #causeCode #causeDescription #causeName #causeNames #enabled #exceptionFlags:do: #flags #isDivide #isOverflow #isUnderflow #isZeroDivide #operand1 #operand2 #operation #operationName #precision #precisionName #printFieldsOn: #printFlags:on: #roundingMode #roundingModeName #status).
+		equals: #(#cause #causeCode #causeDescription #causeName #causeNames #decodeExceptionFlags: #enabled #flags #isDivide #isOverflow #isUnderflow #isZeroDivide #operand1 #operand1Value #operand2 #operation #operationName #precision #precisionName #printFieldsOn: #printFlags:on: #roundingMode #roundingModeName #status).
 	self assert: _FPIEEE_VALUE understoodSelectors equals: _FPIEEE_VALUE selectors! !
 
 !External.Tests.StructureTest categoriesForMethods!

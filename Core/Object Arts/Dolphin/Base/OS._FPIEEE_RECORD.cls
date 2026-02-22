@@ -163,33 +163,27 @@ cause
 causeDescription
 	"Answer the symbolic names of the type of floating point exception the receiver represents."
 
-	| stream |
-	stream := String writeStream: 16.
-	self printFlags: self cause on: stream.
-	^stream contents!
+	^$| join: self causeNames!
 
 causeNames
-	"Answer the symbolic names of the type of floating point exception the receiver represents."
+	"Answer the <String> names of the types of floating point exception the receiver represents."
 
+	^self decodeExceptionFlags: self cause!
+
+decodeExceptionFlags: anInteger
 	| stream |
+	(anInteger anyMask: ExceptionFlagsMask) ifFalse: [^#('Denormal')].
 	stream := Array writeStream: 4.
-	self exceptionFlags: self cause do: [:each | stream nextPut: each].
+	0 to: 4
+		do: 
+			[:i |
+			(anInteger anyMask: (1 bitShift: i)) ifTrue: [stream nextPut: (_FPIEEE_EXCEPTION_FLAGS at: i + 1)]].
 	^stream contents!
 
 enabled
 	"Answer the <Integer> value of the receiver's 'enabled' field."
 
 	^bytes uint32AtOffset: _OffsetOf_enabled!
-
-exceptionFlags: anInteger do: aMonadicValuable
-	(anInteger anyMask: ExceptionFlagsMask)
-		ifFalse: 
-			["Assume that if no cause bits are set, it must be for a denormal operand exception.
-		This is not one of the standard IEEE causes, but can occur on Windows if unmasked."
-			aMonadicValuable value: 'Denormal'.
-			^self].
-	1 to: _FPIEEE_EXCEPTION_FLAGS size
-		do: [:i | (anInteger isBitSet: i) ifTrue: [aMonadicValuable value: (_FPIEEE_EXCEPTION_FLAGS at: i)]]!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -223,12 +217,17 @@ isZeroDivide
 	operand is not reliably set up, so we assume that any invalid divide
 	of zero must be a division by zero."
 
-	^(self cause anyMask: ZeroDivide) or: [self isDivide and: [self operand1 value isZero]]!
+	^(self cause anyMask: ZeroDivide) or: [self isDivide and: [self operand1Value isZero]]!
 
 operand1
 	"Answer the <_FPIEEE_VALUE> value of the receiver's 'operand1' field."
 
 	^_FPIEEE_VALUE fromAddress: bytes yourAddress + _OffsetOf_operand1!
+
+operand1Value
+	"Answer the <Number> value of the receiver's 'operand1' field."
+
+	^self class operandValueFrom: bytes atOffset: _OffsetOf_operand1!
 
 operand2
 	"Answer the <_FPIEEE_VALUE> value of the receiver's 'operand2' field."
@@ -239,7 +238,7 @@ operation
 	"Answer an <integer> which identifies the type of operation being attemped when the exception
 	occurred. See fpieee.h in the MS Win32 SDK for further information."
 
-	^(self flags bitShift: -5) bitAnd: 16rFFF!
+	^((bytes uint32AtOffset: _OffsetOf_flags) bitShift: -5) bitAnd: 16rFFF!
 
 operationName
 	"Answer the symbolic name of the operation being attemped when the exception
@@ -252,7 +251,7 @@ operationName
 precision
 	"Answer an <integer> which identifies the precision configured at the time of the exception."
 
-	^(self flags bitShift: -2) bitAnd: 2r111!
+	^((bytes uint32AtOffset: _OffsetOf_flags) bitShift: -2) bitAnd: 2r111!
 
 precisionName
 	"Answer a the symbolic name of the precision setting at the time of the exception."
@@ -260,20 +259,12 @@ precisionName
 	^_FPIEEE_PRECISION at: self precision + 1 ifAbsent: 'Unknown'!
 
 printFlags: anInteger on: aStream
-	| separator |
 	anInteger == 0
 		ifTrue: 
 			[aStream nextPut: $0.
 			^self].
-	separator := 
-			[separator := '|'.
-			''].
-	self exceptionFlags: anInteger
-		do: 
-			[:flag |
-			aStream
-				nextPutAll: separator value;
-				display: flag]!
+	(self decodeExceptionFlags: anInteger) do: [:each | aStream nextPutAll: each]
+		separatedBy: [aStream nextPut: $|]!
 
 roundingMode
 	"Answer an <integer> which identifies the rounding mode configured at the time of the exception."
@@ -289,14 +280,15 @@ roundingModeName
 cause!**compiled accessors**!public! !
 causeDescription!accessing!public! !
 causeNames!accessing!public! !
+decodeExceptionFlags:!helpers!private! !
 enabled!**compiled accessors**!public! !
-exceptionFlags:do:!helpers!private! !
 flags!**compiled accessors**!public! !
 isDivide!public!testing! !
 isOverflow!public!testing! !
 isUnderflow!public!testing! !
 isZeroDivide!public!testing! !
 operand1!**compiled accessors**!public! !
+operand1Value!accessing!public! !
 operand2!**compiled accessors**!public! !
 operation!accessing!public! !
 operationName!accessing!public! !
@@ -333,12 +325,36 @@ getFieldNames
 
 initialize
 	self addClassConstant: 'ExceptionFlagsMask'
-		value: Inexact | Underflow | Overflow | ZeroDivide | InvalidOperation! !
+		value: Inexact | Underflow | Overflow | ZeroDivide | InvalidOperation!
+
+operandValueFrom: bytes atOffset: anInteger
+	| valueFlags |
+	valueFlags := bytes uint32AtOffset: anInteger + OS._FPIEEE_VALUE._OffsetOf_flags.
+	^(valueFlags allMask: OS._FPIEEE_VALUE.OperandValidMask)
+		ifTrue: 
+			[bytes
+				perform: (#(
+					#floatAtOffset: 
+					#doubleAtOffset:
+					#longDoubleAtOffset:	"80-bit float"
+					#uint32AtOffset:		"128-bit float - not supported on Intel h/w"
+					#int16AtOffset:
+					#int32AtOffset:
+					#int64AtOffset:
+					#uint16AtOffset:
+					#uint32AtOffset:
+					#uint64AtOffset:
+					#uint32AtOffset: "BCD"
+					#uint32AtOffset: "compare?"
+					#uint32AtOffset: "string?")
+						at: ((valueFlags bitAnd: OS._FPIEEE_VALUE.OperandFormatMask) bitShift: -1) + 1)
+				with: anInteger]! !
 
 !OS._FPIEEE_RECORD class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!class initialization!public! !
+operandValueFrom:atOffset:!helpers!private! !
 !
 

@@ -25,7 +25,9 @@ External.Structure
 				-> #('_FpFormatFp32' '_FpFormatFp64' '_FpFormatFp80' '_FpFormatFp128' '_FpFormatI16' '_FpFormatI32' '_FpFormatI64' '_FpFormatU16' '_FpFormatU32' '_FpFormatU64' '_FpFormatBcd80' '_FpFormatCompare' '_FpFormatString').
 			'_OffsetOf_filler' -> 16r14.
 			'_OffsetOf_flags' -> 16r10.
-			'_OffsetOf_value' -> 16r0
+			'_OffsetOf_value' -> 16r0.
+			'OperandFormatMask' -> 16r1E.
+			'OperandValidMask' -> 16r1
 		}!
 
 OS._FPIEEE_VALUE guid: (Core.GUID fromString: '{836cb53c-b7d3-492c-ad33-8574c49bed82}')!
@@ -56,27 +58,9 @@ isValid
 	^(self flags allMask: 1)!
 
 value
-	"Answer the <Number> value stored in the receiver, of nil if the receiver is not a valid value
-	or is of an unsupported format."
+	"Answer the <Number> value stored in the receiver, of nil if the receiver is not a valid value or is of an unsupported format."
 
-	^self isValid ifTrue: [
-	    bytes 
-		perform: (#(
-			#floatAtOffset: 
-			#doubleAtOffset:
-			#longDoubleAtOffset:	"80-bit float"
-			#uint32AtOffset:		"128-bit float - not supported on Intel h/w"
-			#int16AtOffset:
-			#int32AtOffset:
-			#int64AtOffset:
-			#uint16AtOffset:
-			#uint32AtOffset:
-			#uint64AtOffset:
-			#uint32AtOffset: "BCD"
-			#uint32AtOffset: "compare?"
-			#uint32AtOffset: "string?")
-				at: (self format + 1))
-		with: 0]! !
+	^_FPIEEE_RECORD operandValueFrom: bytes atOffset: 0! !
 
 !OS._FPIEEE_VALUE categoriesForMethods!
 flags!**compiled accessors**!public! !

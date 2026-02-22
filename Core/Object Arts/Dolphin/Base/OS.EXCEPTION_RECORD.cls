@@ -69,7 +69,7 @@ information
 		ifNil: 
 			[| count |
 			"Open coded to avoid a base system dependency on UIntPtr and associated array type"
-			count := self NumberParameters.
+			count := bytes uint32AtOffset: _OffsetOf_NumberParameters.
 			info := Array new: count.
 			1 to: count
 				do: 
@@ -89,7 +89,7 @@ moduleFileName
 		virtualQuery: self ExceptionAddress
 		lpBuffer: buf
 		dwLength: buf size) == 0
-		ifFalse: [Module moduleFileName: (buf uintPtrAtOffset: VMConstants.IntPtrSize)]!
+		ifFalse: [Kernel32 getModuleFilename: (buf uintPtrAtOffset: VMConstants.IntPtrSize)]!
 
 NumberParameters
 	"Answer the <Integer> value of the receiver's 'NumberParameters' field."

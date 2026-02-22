@@ -233,7 +233,7 @@ fpException: ieeeExceptionBytes
 	self enableInterrupts.
 	ieeeRecord := _FPIEEE_RECORD fromBytes: ieeeExceptionBytes.
 	ieeeRecord isZeroDivide
-		ifTrue: [ZeroDivide dividend: ieeeRecord operand1 value]
+		ifTrue: [ZeroDivide dividend: ieeeRecord operand1Value]
 		ifFalse: [FloatingPointException signalWith: ieeeRecord]!
 
 fpStackFault: exceptionRecordBytes
