@@ -273,7 +273,7 @@ fromAddress: anAddress owner: anObject
 
 	^anAddress isNull
 		ifFalse: 
-			[self ensureDefined.
+			[self template.
 			self basicNew initializeAtAddress: anAddress owner: anObject]!
 
 length: countInteger elementSize: sizeInteger bufferClass: bufferClass

@@ -544,7 +544,7 @@ stbConvertFromVersion1: anArray
 	^nil!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	self ensureDefined.
+	self template.
 	^anSTBInFiler
 		readObjectOfClass: self
 		format: anSTBClassConversion

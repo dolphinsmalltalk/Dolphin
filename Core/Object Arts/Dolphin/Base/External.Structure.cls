@@ -537,7 +537,7 @@ alignment
 	structures. This is the natural alignment of the largest field in the receiver. The actual
 	alignment used may be different if the structure packing overrides it."
 
-	self ensureDefined.
+	self template.
 	^alignment!
 
 atAddress: anAddress
@@ -583,14 +583,14 @@ bufferClass
 byteSize
 	"Answer the size (in bytes) of the structure the receiver represents"
 
-	template ifNil: [self defineTemplate].
+	self template.
 	^self basicByteSize!
 
 byteSize: anInteger
 	"Private - Set the size (in bytes) of the structure the receiver represents"
 
 	(anInteger between: 0 and: ##(2 ** 15 - 1))
-		ifFalse: [self error: ('Invalid structure size <p>' expandMacrosWith: anInteger)].
+		ifFalse: [self error: 'Invalid structure size ' , anInteger printString].
 	self extraInstanceSpec: anInteger!
 
 canUnderstand: aSymbol
@@ -716,9 +716,6 @@ elementSize
 
 	^self byteSize!
 
-ensureDefined
-	^template ifNil: [self defineTemplate]!
-
 fieldNamesFromTemplate
 	| answer pairs |
 	pairs := self template associations.
@@ -749,7 +746,7 @@ fromAddress: anAddress owner: anObject
 
 	^anAddress isNull
 		ifFalse: 
-			[self ensureDefined.
+			[self template.
 			self basicNew initializeAtAddress: anAddress owner: anObject]!
 
 fromBytes: aByteObject
@@ -1048,7 +1045,7 @@ template
 	"Private - Answer the receiver's structure template (defines the types and 
 	offsets of the fields)"
 
-	^self ensureDefined!
+	^template ifNil: [self defineTemplate]!
 
 uninitializeBeforeRemove
 	"Perform any pre-removal uninitialisation for the class.
@@ -1065,11 +1062,11 @@ unregister
 
 	(_guid notNil and: [RecordClasses notNil]) ifTrue: [RecordClasses removeKey: _guid ifAbsent: nil]!
 
-withBytes: aByteObject 
+withBytes: aByteObject
 	"Answer a new instance of the receiver with the arguments as its contents"
 
-	self ensureDefined.
-	^(self basicNew)
+	self template.
+	^self basicNew
 		bytes: aByteObject;
 		initialize;
 		yourself! !
@@ -1097,7 +1094,6 @@ definesNewFields!private!template definition!testing! !
 defineTemplate!public!template definition! !
 dynamicSelectorsDo:!compiling!methods-accessing!public! !
 elementSize!accessing!public! !
-ensureDefined!instance creation!private! !
 fieldNamesFromTemplate!accessing!private! !
 fieldOffsetConstantPrefix!constants!private!template definition! !
 flags!accessing!private! !

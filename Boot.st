@@ -51,7 +51,7 @@ product boot] on: Error do: [:ex |
 	ex pass ] !
 
 "Ensure all structures have calculated size to avoid recompilation messages later"
-ExternalStructure allSubclasses do: [:e | e ensureDefined]!
+External.Structure allSubclasses do: [:each | each template]!
 
 SessionManager current bootFinished!
 

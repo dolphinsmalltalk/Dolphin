@@ -97,7 +97,7 @@ _compileExternalStructuresNow: aCollection
 	self _systemPackageManager noEventsDo: 
 			[aCollection do: [:each | each fullyCompileDefinition].
 			"Lazy template definition is not required (or possible), so stub it out"
-			External.Structure class compile: 'ensureDefined ^nil'.
+			External.Structure class compile: 'template ^nil'.
 			External.Structure removeTemplate.
 			aCollection do: [:each | each removeTemplate].
 			"ExternalStructure DNU processing is no longer needed since fully compiled"
@@ -118,7 +118,7 @@ _defineExternalStructures: aCollection
 		_logElement: 'DefineExternalStructures'
 		attributes: #()
 		value: nil.
-	self _systemPackageManager noEventsDo: [aCollection do: [:each | each ensureDefined]]!
+	self _systemPackageManager noEventsDo: [aCollection do: [:each | each template]]!
 
 _deleteClass: aClass
 	"Private - Removes aClass from the image. Answer the number of classes that
