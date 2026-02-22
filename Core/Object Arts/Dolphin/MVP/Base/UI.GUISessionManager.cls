@@ -2,7 +2,7 @@
 
 Core.SessionManager
 	subclass: #'UI.GUISessionManager'
-	instanceVariableNames: 'savedWindows'
+	instanceVariableNames: 'savedWindows hConsole'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -25,21 +25,24 @@ Instance Variables:
 
 !UI.GUISessionManager methodsFor!
 
-allocConsole
+allocateConsole
 	"Private - Open a console window for this session."
 
-	(self isUnattended and: [Kernel32 attachConsole: ATTACH_PARENT_PROCESS])
-		ifFalse: 
-			[| hMenu |
-			Kernel32 allocConsole.
-			"Remove the close button from the console window as otherwise if the user
+	| hMenu |
+	(self isUnattended and: [Kernel32 attachConsole: ATTACH_PARENT_PROCESS]) ifTrue: [^self].
+	Kernel32
+		allocConsole;
+		setConsoleTitle: self applicationName;
+		setConsoleOutputCP: NlsConstants.CP_UTF8;
+		setConsoleCP: NlsConstants.CP_UTF8.
+	"Remove the close button from the console window as otherwise if the user
 			closes it Windows will kill this process with no way to intercept."
-			hConsole := Kernel32 getConsoleWindow.
-			hMenu := User32 getSystemMenu: hConsole bRevert: false.
-			User32
-				deleteMenu: hMenu
-				uPosition: SC_CLOSE
-				uFlags: MENUITEMINFOW.MF_BYCOMMAND]!
+	hConsole := Kernel32 getConsoleWindow.
+	hMenu := User32 getSystemMenu: hConsole bRevert: false.
+	User32
+		deleteMenu: hMenu
+		uPosition: SC_CLOSE
+		uFlags: MENUITEMINFOW.MF_BYCOMMAND!
 
 basicShutdown
 	"Private - Perform basic system shutdown operations, just prior to the VM putting
@@ -69,6 +72,13 @@ clearWindowState
 
 	savedWindows := nil!
 
+closeConsole
+	"Disconnect from and close any open console, including the standard input and output
+	streams."
+
+	super closeConsole.
+	hConsole isNull ifFalse: [self freeConsole]!
+
 commandLineParser
 	"
 	-h - headless (embedded) mode
@@ -83,6 +93,15 @@ disableWindowGhosting
 	"Disable the Windows feature where if the process stops processing messages from the message queue for 5 seconds, it replaces all the top-level windows with so-called 'ghost' windows. For general applications this is probably not appropriate, but in some cases, such as a development system, the window ghosting is undesirable as it prevents the application receiving any asynchronous keyboard interrupt, and therefore prevents the Dolphin interrupt key sequence from being recognised, making runaway operations uninterruptable."
 
 	User32 disableProcessWindowsGhosting!
+
+freeConsole
+	"Private - Close (actually detach from) the console for this session.
+		SessionManager current freeConsole
+	"
+
+	Kernel32 closeHandle: hConsole.
+	hConsole := nil.
+	Kernel32 freeConsole!
 
 inputStateClass
 	^GuiInputState!
@@ -209,13 +228,15 @@ windowSystemStartup
 		do: [:s | s ifDefined: [:c | c onStartup]]! !
 
 !UI.GUISessionManager categoriesForMethods!
-allocConsole!operations!private! !
+allocateConsole!operations!private! !
 basicShutdown!operations-shutdown!private! !
 basicTertiaryStartup!operations-startup!public! !
 clearSessionState!operations!public! !
 clearWindowState!operations-saving!private! !
+closeConsole!operations!public! !
 commandLineParser!helpers!private! !
 disableWindowGhosting!helpers!public! !
+freeConsole!operations!private! !
 inputStateClass!constants!private! !
 isForegroundProcess!public!testing! !
 isUnattended!public!testing! !

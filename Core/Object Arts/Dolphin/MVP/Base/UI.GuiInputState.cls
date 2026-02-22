@@ -47,6 +47,23 @@ guiStartup
 	oldWindows ifNotNil: [oldWindows do: [:w | w onStartup]].
 	self createPostedActionWindow!
 
+hasVisibleWindows
+	"Private - Answer whether there are any visible windows belonging to the current session
+	still open."
+
+	"Implementation Note: We use the bare metal UserLibrary functions to avoid any dependency on
+	the existing View classes. This might be important to those wanting to implement their own
+	window class hierarchy."
+
+	| hDesktop |
+	hDesktop := User32 getDesktopWindow.
+	^windows anySatisfy: 
+			[:each |
+			| hWnd |
+			hWnd := each asParameter.
+			hWnd notNil
+				and: [hWnd ~= hDesktop and: [(User32 isWindow: hWnd) and: [User32 isWindowVisible: hWnd]]]]!
+
 isDolphinWindow: hWnd
 	"Answer whether the window with handle, hWnd, is a Dolphin window or not."
 
@@ -104,7 +121,7 @@ uiIdle
 			[:i |
 			self isInputAvailable
 				ifTrue: 
-					[self inputSemaphore set.
+					[inputSemaphore set.
 					^false]
 				ifFalse: [self uiIdle: (shells at: i)]].
 	^true!
@@ -163,6 +180,7 @@ aboutToForkUI!idling!private! !
 allTopLevelWindowHandlesDo:!enumerating!private! !
 getLastInputInfo!helpers!private! !
 guiStartup!operations-startup!private! !
+hasVisibleWindows!private!testing! !
 isDolphinWindow:!private!testing! !
 topLevelWindowHandlesDo:!enumerating!private! !
 topLevelWindows!enumerating!public! !

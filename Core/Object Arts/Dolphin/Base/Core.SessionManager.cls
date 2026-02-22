@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Core.SessionManager'
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole settingsChanged events'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId settingsChanged events'
 	classVariableNames: 'Current PreStartFile'
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS private})
 	classInstanceVariableNames: ''
@@ -44,14 +44,8 @@ Class Variables:
 
 !Core.SessionManager methodsFor!
 
-allocConsole
-	"Private - Open a console window for this session."
-
-	Kernel32
-		allocConsole;
-		setConsoleTitle: self applicationName;
-		setConsoleOutputCP: NlsConstants.CP_UTF8;
-		setConsoleCP: NlsConstants.CP_UTF8!
+allocateConsole
+	"Private - Open a new console window for this session. Only appropriate in GUI apps."!
 
 allowDuplicate
 	"It would appear that the image associated with this session is already open. Take action
@@ -174,8 +168,7 @@ closeConsole
 
 	self
 		closeConsoleStreams;
-		unregisterConsoleCtrlHandler.
-	hConsole isNull ifFalse: [self freeConsole]!
+		unregisterConsoleCtrlHandler!
 
 closeConsoleStreams
 	"Private - Close the standard console I/O streams."
@@ -287,15 +280,6 @@ free
 	"Free up any artifacts belonging to relevant to the current Session."
 
 	^self!
-
-freeConsole
-	"Private - Close (actually detach from) the console for this session.
-		SessionManager current freeConsole
-	"
-
-	Kernel32 closeHandle: hConsole.
-	hConsole := nil.
-	Kernel32 freeConsole!
 
 getCommandLine
 	"Private - Answer the command line String used to start Dolphin."
@@ -711,7 +695,7 @@ openConsole
 	| wasOpen |
 	wasOpen := consoleHandler notNil.
 	self 
-		allocConsole;
+		allocateConsole;
 		registerConsoleCtrlHandler;
 		openConsoleStreams.
 	^wasOpen!
@@ -1101,7 +1085,7 @@ windowsDirectory
 	^Kernel32 getSystemWindowsDirectory! !
 
 !Core.SessionManager categoriesForMethods!
-allocConsole!operations!private! !
+allocateConsole!operations!private! !
 allowDuplicate!operations-startup!public! !
 appIdString!constants!public! !
 applicationName!constants!public! !
@@ -1134,7 +1118,6 @@ exit:!operations-shutdown!public! !
 fileStreamClass!constants!private! !
 forkMain!operations!public! !
 free!public!realizing/unrealizing! !
-freeConsole!operations!private! !
 getCommandLine!accessing!private! !
 getenv:!accessing!public! !
 getEvents!events!private! !

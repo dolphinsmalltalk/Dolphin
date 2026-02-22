@@ -124,7 +124,7 @@ enterIdle
 	"Private - Put the current active process to sleep on the inputSemaphore. This is intended
 	to provide an opportunity for background processes to run. Use with care."
 
-	self inputSemaphore wait!
+	inputSemaphore wait!
 
 evaluateDeferredAction
 	^deferredActions nextNoWait
@@ -178,21 +178,9 @@ forkMain
 		yourself!
 
 hasVisibleWindows
-	"Private - Answer whether there are any visible windows belonging to the current session
-	still open."
+	"Private - Answer whether there are any visible windows belonging to the current session still open."
 
-	"Implementation Note: We use the bare metal UserLibrary functions to avoid any dependency on
-	the existing View classes. This might be important to those wanting to implement their own
-	window class hierarchy."
-
-	| hDesktop |
-	hDesktop := User32 getDesktopWindow.
-	^windows anySatisfy: 
-			[:each |
-			| hWnd |
-			hWnd := each asParameter.
-			hWnd notNil
-				and: [hWnd ~= hDesktop and: [(User32 isWindow: hWnd) and: [User32 isWindowVisible: hWnd]]]]!
+	^false!
 
 idle
 	"Private - Put the VM thread to sleep until there are messages from the host system, or a
@@ -261,7 +249,9 @@ initializeFrom: anInputState
 		registerAsDispatcher;
 		createAndRegisterInputSemaphore;
 		setSamplingInterval: 60.
-	queueStatusMask := Kernel32 inputQueueMask!
+	queueStatusMask := ##(QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER | QS_POSTMESSAGE
+				| QS_TIMER | QS_PAINT
+				| QS_HOTKEY | QS_SENDMESSAGE)!
 
 inputSemaphore
 	"Private - Answer the queue empty/not-empty semaphore"
@@ -443,7 +433,7 @@ prod
 	process does something with visual effect that would not be seen unless the message loop
 	comes to life."
 
-	Processor activeProcess == main ifFalse: [self inputSemaphore signal]!
+	Processor activeProcess == main ifFalse: [inputSemaphore signal]!
 
 pumpMessage: aMSG
 	"Private - Read and dispatch the first pending host system message. If a WM_QUIT is
@@ -574,7 +564,7 @@ waitForInput: aBoolean
 	<boolean> argument."
 
 	aBoolean ifTrue: [self aboutToIdle].
-	self inputSemaphore wait!
+	inputSemaphore wait!
 
 windowAt: aHandle ifAbsent: exceptionHandler
 	"Answers an open window that has a handle of aHandle (an Integer or ExternalHandle). If the

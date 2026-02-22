@@ -16,7 +16,7 @@ Kernel.BootSessionManager comment: 'BootSessionManager is the class of <SessionM
 
 !Kernel.BootSessionManager methodsFor!
 
-allocConsole
+allocateConsole
 	"Private - Open a console window for this session."
 
 	"Attach to the existing console so that the output goes to the build log"
@@ -134,7 +134,7 @@ onUnhandledWarning: aWarning
 
 openConsole
 	self
-		allocConsole;
+		allocateConsole;
 		openConsoleStreams!
 
 openFd: anInteger mode: aSymbol
@@ -343,7 +343,7 @@ updateBootImage
 	self reloadBootPackages! !
 
 !Kernel.BootSessionManager categoriesForMethods!
-allocConsole!operations!private! !
+allocateConsole!operations!private! !
 basicTertiaryStartup!operations-startup!public! !
 bootFinished!event handling!public! !
 bootStarted!event handling!public! !

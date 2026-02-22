@@ -2052,7 +2052,7 @@ UI.Presenter
 
 Core.SessionManager
 	subclass: #'UI.GUISessionManager'
-	instanceVariableNames: 'savedWindows'
+	instanceVariableNames: 'savedWindows hConsole'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -27,11 +27,6 @@ A simple example of a console application is the command line version of the Hel
 
 !Kernel.ConsoleSessionManager methodsFor!
 
-allocConsole
-	"Private - Open a console for this session."
-
-	"We already have one"!
-
 attachFd: anInteger stream: anExternalHandle
 	^((Ucrt _isatty: anInteger) ifTrue: [self consoleStreamClass] ifFalse: [self fileStreamClass])
 		fromHandle: anExternalHandle!
@@ -137,7 +132,6 @@ unhandledException: anException
 	^anException! !
 
 !Kernel.ConsoleSessionManager categoriesForMethods!
-allocConsole!operations!private! !
 attachFd:stream:!helpers!private! !
 basicTertiaryStartup!operations-startup!public! !
 initializeFromSessionManager:!initializing!private! !
