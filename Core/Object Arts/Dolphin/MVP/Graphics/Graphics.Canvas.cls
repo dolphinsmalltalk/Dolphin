@@ -1193,11 +1193,10 @@ on: aDCSource
 
 	^self withDC: aDCSource getDC ownedBy: aDCSource!
 
-onExit
-	"Ensure all the receiver's instances are in their 'invalidated' state on exit
-	so that they have released any external resources they are holding."
+onExit: aSessionManager
+	"Ensure all the receiver's instances are in their 'invalidated' state on exit so that they have released any external resources they are holding."
 
-	self primAllInstances do: [ :i | i onExit ]!
+	self primAllInstances do: [:i | i onExit]!
 
 releaseDC: hDC
 	"Delete the specified hDC.
@@ -1251,7 +1250,7 @@ icon!constants!public! !
 initialize!class initialization!public! !
 new!instance creation!private! !
 on:!instance creation!public! !
-onExit!event handling!public! !
+onExit:!event handling!public! !
 releaseDC:!operations!public! !
 withDC:ownedBy:!instance creation!public! !
 withNonOwnedDC:!instance creation!public! !

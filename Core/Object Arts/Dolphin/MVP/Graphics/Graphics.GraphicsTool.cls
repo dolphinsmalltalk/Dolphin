@@ -250,9 +250,8 @@ new
 
 	^super new initialize!
 
-onExit
-	"Ensure all the receiver's subinstances are in their 'invalidated' state on exit
-	so that they have released any external resources they are holding."
+onExit: aSessionManager
+	"Ensure all the receiver's subinstances are in their 'invalidated' state on exit so that they have released any external resources they are holding."
 
 	self primAllSubinstances do: [:i | i onExit]!
 
@@ -274,7 +273,7 @@ fromHandle:!instance creation!public! !
 fromOwnedHandle:!instance creation!public! !
 icon!constants!public! !
 new!instance creation!public! !
-onExit!event handling!public! !
+onExit:!event handling!public! !
 onStartup!event handling!public! !
 onStartup2!event handling!private! !
 !

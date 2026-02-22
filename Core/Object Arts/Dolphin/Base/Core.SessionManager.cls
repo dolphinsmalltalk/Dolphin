@@ -145,10 +145,10 @@ basicShutdown
 	out the lights."
 
 	self closeConsole.
-	self comShutdown.
-	#{Delay} ifDefined: [:d | d onExit].
-	inputState onExit.
-	External.DynamicLinkLibrary onExit.
+	#{OS.COM.Interface} ifDefined: [:c | c onExit: self].
+	#{Delay} ifDefined: [:d | d onExit: self].
+	inputState onExit: self.
+	DynamicLinkLibrary onExit: self.
 	Kernel32 closeHandle: sentry!
 
 basicStdioStreams
@@ -201,17 +201,6 @@ computerName
 	Signals an exception if the request fails."
 
 	^Kernel32 getComputerName!
-
-comShutdown
-	"Private - The system is about to shut down, so clear up any COM hangers on.
-	Note: This used to be done by hanging of the shutdown trigger, but with the
-	advent of control hosting there are sequencing issues, in particular it is important
-	that the window system be closed before any COM object stubs in the receiver
-	are destroyed. As the COM package may not be loaded, we can't use a hard
-	reference to <COMInterface>"
-
-	self outer notNull ifTrue: [self outer free].
-	#{OS.COM.Interface} ifDefined: [:c | c onExit]!
 
 consoleStreamClass
 	"Answer the class of stdio stream to use for stdin, stdout, and/or stderr when connected to the console.
@@ -922,7 +911,7 @@ secondaryStartup
 
 	self basicSecondaryStartup.
 	self startUI.
-	(self respondsTo: #comStartup) ifTrue: [self perform: #comStartup]!
+	#{COM.Interface} valueOrNil ifNotNil: [:com | com onStartup: self]!
 
 sentinelName
 	"Answer the name of the Win32 Event object created to uniquely identify this session
@@ -1131,7 +1120,6 @@ closeConsole!operations!public! !
 closeConsoleStreams!operations!public! !
 closeEventLog!operations-logging!private! !
 computerName!accessing!public! !
-comShutdown!operations-shutdown!private! !
 consoleStreamClass!constants!private! !
 createInputState!initializing!private! !
 createSentinel!operations-startup!private! !

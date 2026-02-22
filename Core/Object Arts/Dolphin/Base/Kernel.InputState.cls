@@ -381,7 +381,7 @@ millisecondClockValue
 msgWindow
 	^msgWindow!
 
-onExit
+onExit: aSessionManager
 	"Private - The system is closing down, release system resources."
 
 	Kernel32 closeHandle: wakeupEvent!
@@ -680,7 +680,7 @@ main:!initializing!private! !
 mainLoop!message dispatching!private! !
 millisecondClockValue!enquiries!private! !
 msgWindow!accessing!private! !
-onExit!event handling!private! !
+onExit:!event handling!private! !
 postAction:!message dispatching!public! !
 postQuit:!operations-shutdown!private! !
 preTranslateMessage:!message dispatching!private! !

@@ -674,7 +674,7 @@ shutdown
 	"Perform development system shutdown actions."
 
 	super shutdown.
-	self class sourceManager onExit!
+	self class sourceManager onExit: self!
 
 snapshot
 	"Private - Performs a snapshot of the current image."

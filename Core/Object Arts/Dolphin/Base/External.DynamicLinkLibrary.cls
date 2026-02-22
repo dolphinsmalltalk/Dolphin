@@ -244,7 +244,7 @@ initializeSubclasses
 			c isNonInstantiable ifFalse: [c onStartup2].
 			c initializeSubclasses]!
 
-onExit
+onExit: aSessionManager
 	"Private - Perform shut down processing."
 
 	self closeAllDefaults!
@@ -340,7 +340,7 @@ closeDefault!private!realizing/unrealizing! !
 default!accessing!instance creation!public! !
 fileName!constants!public! !
 initializeSubclasses!initializing!private! !
-onExit!finalizing!private! !
+onExit:!finalizing!private! !
 onPreStripImage!class hierarchy-removing!private! !
 onStartup!event handling!private! !
 onStartup2!event handling!private! !

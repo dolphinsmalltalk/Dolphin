@@ -392,7 +392,7 @@ new
 
 	^super new initialize!
 
-onExit
+onExit: aSessionManager
 	"The system is closing down, release timer related resources."
 
 	self cancelTimer!
@@ -533,7 +533,7 @@ lowestResolution!constants!public! !
 microsecondClockValue!initializing!public! !
 millisecondClockValue!accessing!public! !
 new!instance creation!public! !
-onExit!event handling!public! !
+onExit:!event handling!public! !
 onPreSaveImage!event handling!private! !
 onPreStripImage!event handling!private! !
 onStartup!event handling!public! !

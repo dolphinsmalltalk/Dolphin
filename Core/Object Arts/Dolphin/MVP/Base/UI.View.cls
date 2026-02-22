@@ -5625,7 +5625,7 @@ newUnregistered: aHandle
 	class := self == ##(self) ifTrue: [self classForUnregisteredHandle: aHandle] ifFalse: [self].
 	^class new handle: aHandle!
 
-onExit
+onExit: aSessionManager
 	"Clean up the residue on Dolphin exit."
 
 	self allSubclassesDo: [:c | c freeTheme].
@@ -6001,7 +6001,7 @@ icon!constants!public! !
 initialize!development!initializing!private! !
 new!instance creation!public! !
 newUnregistered:!instance creation!public! !
-onExit!event handling!public! !
+onExit:!event handling!public! !
 onStartup!event handling!public! !
 openTheme!private!theming! !
 registerClass!operations!private! !

@@ -113,7 +113,6 @@ package setMethodNames: #(
 	#(#{Core.ByteArray} #copyToCOMTaskMemory)
 	#(#{Core.GUID} #copyToCOMTaskMemory)
 	#(#{Core.InvalidArgumentError} #hresult)
-	#(#{Core.SessionManager} #comStartup)
 	#(#{Core.String} #asBSTR)
 	#(#{Core.String} #copyToCOMTaskMemory)
 	#(#{Core.String class} #arrayType)
@@ -649,23 +648,6 @@ hresult
 
 !Core.InvalidArgumentError categoriesForMethods!
 hresult!accessing!public! !
-!
-
-!Core.SessionManager methodsFor!
-
-comStartup
-	"Private - Start up the COM sub-system."
-
-	"Implementation Note: This used to be delayed until tertiary startup and hung off the #sessionStarted
-	event, but that relied on COMInterface having registered itself before certain other event targets
-	and was therefore not reliable."
-
-	COM.IUnknown onStartup.
-	"Attach the outer unknown passed by the stub, if any"
-	self outer notNull ifTrue: [startupArgs at: 2 put: (COM.IUnknown attach: self outer)]! !
-
-!Core.SessionManager categoriesForMethods!
-comStartup!operations-startup!private! !
 !
 
 !Core.String methodsFor!

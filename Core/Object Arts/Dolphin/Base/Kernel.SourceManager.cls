@@ -299,7 +299,7 @@ mutex
 mutex: anObject
 	mutex := anObject!
 
-onExit
+onExit: aSessionManager
 	"Private - The system is about to exit, close the source files."
 
 	self closeSources
@@ -502,7 +502,7 @@ logRemoveSelector:of:!development!helpers!public! !
 logRemoveSelectors:of:!development!helpers!public! !
 mutex!accessing!private! !
 mutex:!accessing!private! !
-onExit!event handling!private! !
+onExit:!event handling!private! !
 openChangesFile:!operations-source files!private! !
 openNewChangesFile:!helpers!private! !
 openSources!operations-source files!private! !
