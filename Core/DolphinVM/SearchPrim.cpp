@@ -20,6 +20,7 @@
 
 #include "Utf16StringBuf.h"
 #include "Utf8StringBuf.h"
+#include "AnsiStringBuf.h"
 
 // Uses object identity to locate the next occurrence of the argument in the receiver from
 // the specified index to the specified index
@@ -211,7 +212,27 @@ Oop* PRIMCALL Interpreter::primitiveStringSearch(Oop* const sp, primargcount_t)
 
 					case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf8):
 					{
-						return primitiveFailure(_PrimitiveFailureCode::DataTypeMismatch);
+						auto oteString = reinterpret_cast<AnsiStringOTE*>(oteReceiver);
+						auto oteSubString = reinterpret_cast<Utf8StringOTE*>(oopSubString);
+
+						const size_t M = oteSubString->Count;
+						if (M != 0)
+						{
+							AnsiStringBuf buf;
+							if (buf.StrictConvertUtf8(oteSubString->m_location->m_characters, M))
+							{
+								const size_t N = oteString->Count;
+								if ((startingAt + buf.Count) - 1 <= N)
+								{
+									SmallInteger index = stringSearch(oteString->m_location->m_characters, N, static_cast<const char*>(buf), buf.Count, startingAt - 1) + 1;
+									*(sp - 2) = ObjectMemoryIntegerObjectOf(index);
+									return sp - 2;
+								}
+							}
+							// else the UTF-8 comperand contains characters with no representation on the ANSI code page, so the string is not found
+						}
+						*(sp - 2) = ZeroPointer;
+						return sp - 2;
 					}
 
 					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Ansi):	// Ansi sequence can match same Ansi sequence in UTF-8
@@ -264,7 +285,27 @@ Oop* PRIMCALL Interpreter::primitiveStringSearch(Oop* const sp, primargcount_t)
 
 					case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf16):
 					{
-						return primitiveFailure(_PrimitiveFailureCode::DataTypeMismatch);
+						auto oteString = reinterpret_cast<AnsiStringOTE*>(oteReceiver);
+						auto oteSubString = reinterpret_cast<Utf16StringOTE*>(oopSubString);
+
+						const size_t M = oteSubString->Count;
+						if (M != 0)
+						{
+							AnsiStringBuf buf;
+							if (buf.StrictConvertUtf16(oteSubString->m_location->m_characters, M))
+							{
+								const size_t N = oteString->Count;
+								if ((startingAt + buf.Count) - 1 <= N)
+								{
+									SmallInteger index = stringSearch(oteString->m_location->m_characters, N, static_cast<const char*>(buf), buf.Count, startingAt - 1) + 1;
+									*(sp - 2) = ObjectMemoryIntegerObjectOf(index);
+									return sp - 2;
+								}
+							}
+							// else the UTF-16 comperand contains characters with no representation on the ANSI code page, so the string is not found
+						}
+						*(sp - 2) = ZeroPointer;
+						return sp - 2;
 					}
 
 					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf16):

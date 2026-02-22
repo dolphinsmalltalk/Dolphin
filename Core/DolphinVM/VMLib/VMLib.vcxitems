@@ -89,6 +89,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\AnsiStringBuf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\binstream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\bytecdes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ComClassFactory.h" />

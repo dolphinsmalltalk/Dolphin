@@ -335,6 +335,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\regkey.h">
       <Filter>App Support</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\AnsiStringBuf.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">
