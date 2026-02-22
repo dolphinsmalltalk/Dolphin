@@ -83,7 +83,7 @@ hasLeadingZero
 	^(bytes uint32AtOffset: _OffsetOf_LeadingZero) ~~ 0!
 
 hasLeadingZero: aBoolean
-	bytes uint32AtOffset: _OffsetOf_LeadingZero put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_LeadingZero put: aBoolean asInteger!
 
 negativeOrder
 	"Answer the <Integer> value of the receiver's 'negativeOrder' field."
@@ -114,7 +114,7 @@ numberGrouping: aString
 				into: 
 					[:grouping :each |
 					| group |
-					group := Ucrt atoi: each.
+					group := each first digitValue.
 					grouping * 10 + group])! !
 
 !OS.NUMBERFMTW categoriesForMethods!

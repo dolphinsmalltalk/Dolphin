@@ -198,6 +198,16 @@ displayDuration: aDuration on: aPuttableStream
 	aPuttableStream nextPutAll: '0 s'!
 
 displayFloat: aFloat on: aStream
+	"Append, to aStream, a String whose characters are a decimal representation of the receiver, as a Smalltalk developer would want to see it.
+	The representation used is a valid literal representation for floating point numbers, recognised by the Smalltalk compiler. Inifinity, negative infinity,
+	and not-a-number (NaN) are printed as the names of the corresponding Float constants, so will also evaluate back to the same value."
+
+	self
+		displayFloat: aFloat
+		on: aStream
+		base: 10!
+
+displayFloat: aFloat on: aStream base: anInteger
 	"Append, to aStream, a String whose characters are a representation of the receiver in the base, anInteger, as a Smalltalk developer would want to see it.
 	The representation used is a valid literal representation for floating point numbers, recognised by the Smalltalk compiler. Inifinity, negative infinity,
 	and not-a-number (NaN) are printed as the names of the corresponding Float constants, so will also evaluate back to the same value."
@@ -206,26 +216,56 @@ displayFloat: aFloat on: aStream
 	classification := aFloat fpClass.
 	(classification anyMask: ##(Float.FpClassNaN | Float.FpClassInfinite | Float.FpClassZero))
 		ifTrue: 
-			[(classification anyMask: Float.FpClassZero)
-				ifTrue: 
-					[(classification anyMask: Float.FpClassNegative)
-						ifTrue: [aStream nextPutAll: '-0.0']
-						ifFalse: [aStream nextPutAll: '0.0']]
-				ifFalse: 
-					[(classification anyMask: Float.FpClassInfinite)
-						ifTrue: 
-							[aStream nextPutAll: ((classification anyMask: Float.FpClassNegative)
-										ifTrue: [self negativeInfinity]
-										ifFalse: [self infinity])]
+			[aStream nextPutAll: ((classification anyMask: Float.FpClassZero)
+						ifTrue: [(classification anyMask: Float.FpClassNegative) ifTrue: ['-0.0'] ifFalse: ['0.0']]
 						ifFalse: 
-							["Must be NaN"
-							aStream nextPutAll: self nan]]]
+							[(classification anyMask: Float.FpClassInfinite)
+								ifTrue: 
+									[(classification anyMask: Float.FpClassNegative)
+										ifTrue: [self negativeInfinity]
+										ifFalse: [self infinity]]
+								ifFalse: 
+									["Must be NaN"
+									self nan]])]
 		ifFalse: 
-			[(classification anyMask: Float.FpClassNegative)
+			[((classification anyMask: Float.FpClassNegative)
 				ifTrue: 
 					[aStream nextPut: $-.
-					aFloat abs absPrintExactlyOn: aStream base: 10]
-				ifFalse: [aFloat absPrintExactlyOn: aStream base: 10]]!
+					aFloat negated]
+				ifFalse: [aFloat]) absPrintExactlyOn: aStream base: anInteger]!
+
+displayFloat: aFloat on: aStream base: baseInteger decimalPlaces: placesInteger
+	| classification |
+	classification := aFloat fpClass.
+	(classification anyMask: Float.FpClassNaN)
+		ifTrue: 
+			[aStream nextPutAll: self nan.
+			^self].
+	(classification anyMask: Float.FpClassInfinite)
+		ifTrue: 
+			[aStream nextPutAll: ((classification anyMask: Float.FpClassNegative)
+						ifTrue: [self negativeInfinity]
+						ifFalse: [self infinity]).
+			^self].
+	(classification anyMask: Float.FpClassZero)
+		ifTrue: 
+			[(classification anyMask: Float.FpClassNegative) ifTrue: [aStream nextPut: $-].
+			aStream nextPut: $0.
+			placesInteger > 0
+				ifTrue: 
+					[aStream
+						nextPut: $.;
+						next: placesInteger put: $0].
+			^self].
+	((classification anyMask: Float.FpClassNegative)
+		ifTrue: 
+			[aStream nextPut: $-.
+			aFloat negated]
+		ifFalse: [aFloat])
+			absPrintExactlyOn: aStream
+			base: baseInteger
+			decimalPlaces: placesInteger
+			showTrailingFractionalZeros: true!
 
 displayInteger: anInteger on: aStream
 	"Append, to aStream, a String whose characters are a representation of the <Integer> first argument as a Smalltalk user would want to see it."
@@ -422,8 +462,9 @@ printFloat: aFloat on: aStream format: aNUMBERFMTW
 
 	"Aside from the decimalPlaces, the rest of the format information is ignored so that the Floats are always printed in Smalltalk number syntax."
 
-	aFloat
-		printOn: aStream
+	self
+		displayFloat: aFloat
+		on: aStream
 		base: 10
 		decimalPlaces: aNUMBERFMTW decimalPlaces!
 
@@ -481,6 +522,8 @@ decimalSeparator!constants!public! !
 displayCharacter:on:!displaying!public! !
 displayDuration:on:!displaying!public! !
 displayFloat:on:!displaying!public! !
+displayFloat:on:base:!displaying!public! !
+displayFloat:on:base:decimalPlaces:!printing!public! !
 displayInteger:on:!displaying!public! !
 displayName!displaying!public! !
 displayOn:!displaying!public! !

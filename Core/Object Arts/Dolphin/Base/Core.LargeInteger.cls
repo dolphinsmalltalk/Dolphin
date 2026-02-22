@@ -122,7 +122,7 @@ asFloat
 	<primitive: 167>
 	| result nTruncatedBits |
 	result := self abs.
-	nTruncatedBits := result highBit - Float precision.
+	nTruncatedBits := result highBit - Float.Precision.
 	nTruncatedBits > 0
 		ifTrue: 
 			[| exponent mask trailingBits carry |

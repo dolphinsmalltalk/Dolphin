@@ -104,6 +104,14 @@ decimalSeparator
 
 	^self getStringInfo: LOCALE_SDECIMAL!
 
+displayFloat: aFloat on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <Float>, aFloat, that a user in this <Locale> might expect to see."
+
+	self
+		printFloat: aFloat
+		on: aWriteStream
+		format: self numberFormat!
+
 displayName
 	"The name of the locale in its native language."
 
@@ -378,6 +386,13 @@ primary
 	self lcid == LOCALE_CUSTOM_DEFAULT ifTrue: [^self class userDefault].
 	^self class named: self parentName!
 
+printFloat: aFloat on: aStream format: aNUMBERFMT
+	"Append, to aStream, a String whose characters are a representation of the <Float> argument, aFloat, in <integer> base, baseInteger, using the formatting instructions specified by the <NUMBERFMT>, aNUMBERFMT."
+
+	aStream nextPutAll: (self
+				printFloat: aFloat
+				format: aNUMBERFMT)!
+
 shortAmDesignator
 	"Answer the short <String> used in the receiver locale to designate AM (morning)."
 
@@ -450,6 +465,7 @@ dayOfWeekName:!constants!public! !
 dayOfWeekShortAbbreviation:!constants!public! !
 decimalPlaces!constants!public! !
 decimalSeparator!constants!public! !
+displayFloat:on:!displaying!public! !
 displayName!displaying!public! !
 displayOn:!displaying!public! !
 displayScaledDecimal:on:!displaying!public! !
@@ -493,6 +509,7 @@ parentName!constants!public! !
 percentSymbol!constants!public! !
 pmDesignator!constants!public! !
 primary!printing!public! !
+printFloat:on:format:!printing!public! !
 shortAmDesignator!constants!public! !
 shortDateFormat!constants!public! !
 shortDateFormats!constants!public! !

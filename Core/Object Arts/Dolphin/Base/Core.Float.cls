@@ -791,68 +791,24 @@ negative
 printOn: aPuttableStream
 	"Append the exact Smalltalk literal representation of the receiver to the <puttableStream> argument."
 
-	Locale smalltalk displayFloat: self on: aPuttableStream!
+	Locale smalltalk
+		displayFloat: self
+		on: aPuttableStream
+		base: 10!
 
 printOn: aStream base: anInteger
 	"Print the receiver with the minimal number of digits that describes it unambiguously in the specified base. This way, every two different Float will have a different printed representation. More over, every Float can be reconstructed from its printed representation with #readFrom:."
 
-	| classification |
-	classification := self fpClass.
-	(classification anyMask: FpClassNaN)
-		ifTrue: 
-			[aStream nextPutAll: Locale smalltalk nan.
-			^self].
-	(classification anyMask: FpClassInfinite)
-		ifTrue: 
-			[aStream nextPutAll: ((classification anyMask: FpClassNegative)
-						ifTrue: [Locale smalltalk negativeInfinity]
-						ifFalse: [Locale smalltalk infinity]).
-			^self].
-	(classification anyMask: FpClassZero)
-		ifTrue: 
-			[(classification anyMask: FpClassNegative)
-				ifTrue: [aStream nextPutAll: '-0.0']
-				ifFalse: [aStream nextPutAll: '0.0'].
-			^self].
-	((classification anyMask: FpClassNegative)
-		ifTrue: 
-			[aStream nextPut: $-.
-			self abs]
-		ifFalse: [self]) absPrintExactlyOn: aStream base: anInteger!
+	Locale smalltalk displayFloat: self on: aStream base: anInteger!
 
 printOn: aStream base: baseInteger decimalPlaces: placesInteger
 	"Append the printed representation of the receiver to the <puttableStream>, aStream, in <integer> base, baseInteger, rounded to the <integer> number of decimal places, placeInteger."
 
-	| classification |
-	classification := self fpClass.
-	(classification anyMask: FpClassNaN)
-		ifTrue: 
-			[aStream nextPutAll: Locale smalltalk nan.
-			^self].
-	(classification anyMask: FpClassInfinite)
-		ifTrue: 
-			[aStream nextPutAll: ((classification anyMask: FpClassNegative)
-						ifTrue: [Locale smalltalk negativeInfinity]
-						ifFalse: [Locale smalltalk infinity]).
-			^self].
-	(classification anyMask: FpClassZero)
-		ifTrue: 
-			[(classification anyMask: FpClassNegative) ifTrue: [aStream nextPut: $-].
-			aStream nextPut: $0.
-			placesInteger > 0
-				ifTrue: 
-					[aStream nextPut: $..
-					aStream next: placesInteger put: $0].
-			^self].
-	((classification anyMask: FpClassNegative)
-		ifTrue: 
-			[aStream nextPut: $-.
-			self abs]
-		ifFalse: [self])
-			absPrintExactlyOn: aStream
-			base: baseInteger
-			decimalPlaces: placesInteger
-			showTrailingFractionalZeros: true!
+	Locale smalltalk
+		displayFloat: self
+		on: aStream
+		base: baseInteger
+		decimalPlaces: placesInteger!
 
 printOn: aStream base: baseInteger significantFigures: digitsInteger
 	"Append the printed representation of the receiver to the <puttableStream>, aStream, in <integer> base, baseInteger, with <integer>, digitsInteger, significant figures. Note that there is always a digit following the decimal point, even if zero."
@@ -887,7 +843,7 @@ printOn: aStream base: baseInteger significantFigures: digitsInteger decimalExpo
 	((classification anyMask: FpClassNegative)
 		ifTrue: 
 			[aStream nextPut: $-.
-			self abs]
+			self negated]
 		ifFalse: [self])
 			absPrintOn: aStream
 			base: baseInteger

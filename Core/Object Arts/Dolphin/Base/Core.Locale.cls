@@ -240,10 +240,7 @@ displayDuration: aDuration on: aWriteStream
 displayFloat: aFloat on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <Float>, aFloat, that a user in this <Locale> might expect to see."
 
-	self
-		printFloat: aFloat
-		on: aWriteStream
-		format: self numberFormat!
+	self subclassResponsibility!
 
 displayInteger: anInteger on: aStream
 	"Append, to aStream, a String whose characters are a representation of the <Integer> first argument as a user would want to see it."
@@ -654,13 +651,6 @@ printFloat: aFloat format: aNUMBERFMT
 					stream grabContents])
 		format: aNUMBERFMT!
 
-printFloat: aFloat on: aStream format: aNUMBERFMT
-	"Append, to aStream, a String whose characters are a representation of the <Float> argument, aFloat, in <integer> base, baseInteger, using the formatting instructions specified by the <NUMBERFMT>, aNUMBERFMT."
-
-	aStream nextPutAll: (self
-				printFloat: aFloat
-				format: aNUMBERFMT)!
-
 printFractionalPart: aFraction on: aStream places: anInteger
 	| fractionPart |
 	fractionPart := aFraction abs fractionPart.
@@ -836,7 +826,6 @@ printDateTime:on:format:!printing!public! !
 printDuration:on:format:!printing!public! !
 printFloat:!printing!public! !
 printFloat:format:!printing!public! !
-printFloat:on:format:!printing!public! !
 printFractionalPart:on:places:!printing!private! !
 printTime:on:format:!printing!public! !
 shortAmDesignator!constants!public! !
