@@ -12,6 +12,10 @@ package setClassNames: #(
 	#{Kernel.ConsoleSessionManager}
 ).
 
+package setMethodNames: #(
+	#(#{Kernel.VMLibrary} #getStdioStream:)
+).
+
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 ).
@@ -27,6 +31,20 @@ Core.SessionManager
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Loose Methods"!
+
+!Kernel.VMLibrary methodsFor!
+
+getStdioStream: anInteger
+	"Private - Answer the handle of a CRT stdio standard output stream"
+
+	<cdecl: handle GetStdioStream uint32>
+	^self invalidCall: _failureCode! !
+
+!Kernel.VMLibrary categoriesForMethods!
+getStdioStream:!enquiries!private! !
+!
 
 "End of package definition"!
 

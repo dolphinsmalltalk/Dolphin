@@ -85,13 +85,13 @@ onCloseConsole
 	self quit: -1!
 
 openStdErr
-	^OS.StdioUtf8FileStream fromHandle: VM stderr!
+	^StdioUtf8FileStream fromHandle: (VM getStdioStream: 2)!
 
 openStdIn
-	^self attachFd: 0 stream: VM stdin!
+	^self attachFd: 0 stream: (VM getStdioStream: 0)!
 
 openStdOut
-	^self attachFd: 1 stream: VM stdout!
+	^self attachFd: 1 stream: (VM getStdioStream: 1)!
 
 quit: anInteger
 	"Private - Force a close down of the session with the specified exit code."

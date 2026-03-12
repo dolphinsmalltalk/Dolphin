@@ -19,9 +19,7 @@ DebugDump
 RegisterAsEventSource
 argc
 argv
-StdIn
-StdOut
-StdErr
+GetStdioStream
 _snprintf_s
 IsUserBreakRequested
 IsDebugBuild

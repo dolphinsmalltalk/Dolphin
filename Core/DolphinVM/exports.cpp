@@ -84,22 +84,12 @@ extern "C" wchar_t** __cdecl argv()
 int (__cdecl * reifySnprintf)(char*, size_t, size_t, const char*,...) = &_snprintf_s;
 
 // The old stdio _iob stuff is no longer supported in a compatible way. Rather than introduce
-// an image side dependency on the undocumented _acrt_iob_func export, we add some simple
-// exports to return each of the standard I/O streams
+// an image side dependency on the undocumented _acrt_iob_func export, we add a simple
+// export to return standard I/O streams
 
-extern "C" FILE* __cdecl StdIn()
+extern "C" FILE* __cdecl GetStdioStream(unsigned ix)
 {
-	return stdin;
-}
-
-extern "C" FILE* __cdecl StdOut()
-{
-	return stdout;
-}
-
-extern "C" FILE* __cdecl StdErr()
-{
-	return stderr;
+	return __acrt_iob_func(ix);
 }
 
 // End of CRT exports

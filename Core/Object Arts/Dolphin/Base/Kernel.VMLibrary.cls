@@ -421,24 +421,6 @@ specialSelectors
 	71 to: 74 do: [:i | selectors add: (Registry at: i)].
 	^selectors!
 
-stderr
-	"Private - Answer the handle of the CRT stdio standard error stream"
-
-	<cdecl: handle StdErr>
-	^self invalidCall: _failureCode!
-
-stdin
-	"Private - Answer the handle of the CRT stdio standard input stream"
-
-	<cdecl: handle StdIn>
-	^self invalidCall: _failureCode!
-
-stdout
-	"Private - Answer the handle of the CRT stdio standard output stream"
-
-	<cdecl: handle StdOut>
-	^self invalidCall: _failureCode!
-
 unregisterObject: anObject
 	| i |
 	i := self registry identityIndexOf: anObject.
@@ -532,9 +514,6 @@ registryAtIndex:put:!accessing-registry!private! !
 selectorOfSpecialSend:!enquiries!private! !
 selectorOfSpecialSendEx:!enquiries!private! !
 specialSelectors!accessing-registry!private! !
-stderr!accessing-handles!private! !
-stdin!accessing-handles!private! !
-stdout!accessing-handles!private! !
 unregisterObject:!accessing-registry!private! !
 unsignedFromSigned:!helpers!private! !
 utf16StringFromAddress:!helpers!private! !
