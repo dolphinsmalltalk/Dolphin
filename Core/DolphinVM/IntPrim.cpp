@@ -734,7 +734,7 @@ Oop* PRIMCALL Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, prima
 #endif
 	if (err == 0)
 	{
-		auto oteResult = AnsiString::New(buffer, strlen(buffer));
+		auto oteResult = Utf8String::New(reinterpret_cast<char8_t*>(buffer), strlen(buffer));
 		*sp = reinterpret_cast<Oop>(oteResult);
 		ObjectMemory::AddToZct((OTE*)oteResult);
 		return sp;
