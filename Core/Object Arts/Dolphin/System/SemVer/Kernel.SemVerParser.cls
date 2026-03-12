@@ -48,7 +48,7 @@ parse
 	next == $-
 		ifTrue: 
 			[self step.	"-"
-			prerelease := WriteStream on: (AnsiString new: 4).
+			prerelease := WriteStream on: (String new: 4).
 			
 			[(self parsePrereleaseIdentifier: prerelease) ifFalse: [^nil].
 			next == $.] whileTrue: 
@@ -58,7 +58,7 @@ parse
 	next == $+
 		ifTrue: 
 			[self step.	"+"
-			buildmetadata := WriteStream on: (AnsiString new: 4).
+			buildmetadata := WriteStream on: (String new: 4).
 			
 			[(self parseMetadataIdentifier: buildmetadata) ifFalse: [^nil].
 			next == $.] whileTrue: 

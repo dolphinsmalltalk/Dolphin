@@ -53,7 +53,8 @@ testEqualPrecedence
 			self assert: subject1 <=> subject2 equals: 0]!
 
 testFromGitDescription
-	#('8.0.0-1-gf2bcc911d' '8.0.1-rc.1+gf2bcc911d' 'v2.0.0-61-g2f5ef23' '2.0.1-rc.61+g2f5ef23' 'v2.0.1-0-g2f5ef23' '2.0.1+g2f5ef23')
+	#('8.0.0-1-gf2bcc911d
+' '8.0.1-rc.1+gf2bcc911d' 'v2.0.0-61-g2f5ef23' '2.0.1-rc.61+g2f5ef23' 'v2.0.1-0-g2f5ef23' '2.0.1+g2f5ef23')
 		pairsDo: 
 			[:case :expected |
 			| actual |

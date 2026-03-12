@@ -272,7 +272,7 @@ fromGitDescription: aString
 		minor: minor
 		patch: patch
 		prerelease: prerelease
-		buildmetadata: splits last!
+		buildmetadata: splits last trimBlanks!
 
 fromString: aString
 	"Answer a new instance of the receiver parsed from the SemVer representation in the argument. If the format is invalid, and error will be thrown."

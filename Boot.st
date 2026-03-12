@@ -66,7 +66,7 @@ semver := [ | process outputPipe |
 	outputPipe := process stdoutPipe.
 	process executeSync.
 	[process isTerminated] whileFalse: [].
-	SemVer fromGitDescription: outputPipe readStream contents
+	SemVer fromGitDescription: outputPipe readStream contents asUtf8String
 ] on: ExternalProcessExecuteError do: [:ex | nil].
 DolphinProduct current version: semver.
 sesh := SessionManager current.
