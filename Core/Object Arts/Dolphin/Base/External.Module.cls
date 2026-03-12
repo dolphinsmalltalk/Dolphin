@@ -108,7 +108,7 @@ loadString: anIntegerId
 moduleFileName
 	"Private - Answer the file name of the receiver's loaded module."
 
-	^self class moduleFileName: self!
+	^Kernel32 getModuleFilename: self!
 
 open
 	"Private - Open the external module referenced by the receiver. Answer the receiver. The module is NOT initialized."
@@ -193,15 +193,22 @@ load: aString flags: anInteger
 
 	| hLibrary |
 	hLibrary := Kernel32
-				loadLibraryEx: aString
+				loadLibraryEx: aString asUtf16String
 				hFile: nil
 				dwFlags: anInteger.
 	^hLibrary ifNil: [Win32Error signal]!
 
 moduleFileName: aLibOrHandle
-	"Private - Answer the `Utf16String` file name of the receiver's loaded module."
+	"Answer the `Utf16String` file name of the loaded module with the specified handle."
 
 	^Kernel32 getModuleFilename: aLibOrHandle!
+
+moduleStem: aHandle
+	"Answer the `Utf16String` filename stem of the loaded module with the specified handle."
+
+	| dll |
+	dll := Kernel32 getModuleFilename: aHandle.
+	^dll copyFrom: (dll lastIndexOf: $\) + 1 to: (dll lastIndexOf: $.) - 1!
 
 open: aString
 	"Answer an instance of the receiver which references the external module with the file name, aString. The instance is initialized (most Modules don't need any initializing, but you get the option)."
@@ -211,7 +218,8 @@ open: aString
 !External.Module class categoriesForMethods!
 fromHandle:!instance creation!public! !
 load:flags:!private!realizing/unrealizing! !
-moduleFileName:!helpers!private! !
+moduleFileName:!enquiries!public! !
+moduleStem:!enquiries!public! !
 open:!instance creation!public! !
 !
 

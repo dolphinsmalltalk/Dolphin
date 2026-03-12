@@ -10,8 +10,8 @@ Kernel.RelativeFileLocator
 
 Kernel.FolderRelativeFileLocator guid: (Core.GUID fromString: '{e16e8b7e-eac8-41ed-95f3-742c2fc7264a}')!
 
-Kernel.FolderRelativeFileLocator comment: 'FolderRelativeFileLocator is the class of <FileLocator>s that can be used to map between an absolute path and a path relative to a configurable base directory.
-FolderRelativeFileLocators use absolute paths for files outside the local directory hierarchy below the base directory, and relative paths within their local directory hierarchy.
+Kernel.FolderRelativeFileLocator comment: '`FolderRelativeFileLocator` is the class of `FileLocator`s that can be used to map between an absolute path and a path relative to a configurable base directory.
+`FolderRelativeFileLocator`s use absolute paths for files outside the local directory hierarchy below the base directory, and relative paths within their local directory hierarchy.
 
 Instance Variables:
 	basePath		<String>. Base folder path.
@@ -22,11 +22,19 @@ Instance Variables:
 
 !Kernel.FolderRelativeFileLocator methodsFor!
 
+= anObject
+	"Answer whether the receiver and anObject are equivalent."
+
+	^self == anObject or: [self species == anObject species and: [basePath = anObject basePath]]!
+
 basePath
 	^basePath!
 
 basePath: aString 
-	basePath := aString!
+	basePath := aString asPath!
+
+hash
+	^basePath hash!
 
 printOn: aStream 
 	"Append, to aStream, a String whose characters are a description of the receiver as a developer
@@ -37,21 +45,23 @@ printOn: aStream
 		space;
 		nextPutAll: #basePath:;
 		space;
-		print: self basePath! !
+		display: self basePath! !
 
 !Kernel.FolderRelativeFileLocator categoriesForMethods!
+=!comparing!public! !
 basePath!accessing!public! !
 basePath:!accessing!public! !
+hash!comparing!public! !
 printOn:!development!printing!public! !
 !
 
 !Kernel.FolderRelativeFileLocator class methodsFor!
 
-basePath: aString 
+basePath: aPathOrString
 	"Answer a new instance of the receiver for the specified base path."
 
-	^(self new)
-		basePath: aString;
+	^self basicNew
+		basePath: aPathOrString;
 		yourself! !
 
 !Kernel.FolderRelativeFileLocator class categoriesForMethods!

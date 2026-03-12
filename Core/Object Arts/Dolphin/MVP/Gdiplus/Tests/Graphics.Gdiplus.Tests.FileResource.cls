@@ -40,29 +40,29 @@ Best Practice
 
 fileLocator
 	tempFileLocator
-		ifNil: [tempFileLocator := FileLocator folderRelative: File createTemporaryDirectory].
+		ifNil: [tempFileLocator := FileLocator folderRelative: Path newTemporaryDirectory].
 	^tempFileLocator!
 
 fish32x32pngBytes
 	^File readAllBytes: self pafFish32x32png!
 
 pafEyeJpg
-	^self resourceFileLocator localFileSpecFor: 'eye.jpg'!
+	^self resourceFileLocator resolve: 'eye.jpg'!
 
 pafFish32x32png
-	^self resourceFileLocator localFileSpecFor: 'fish32x32.png'!
+	^self resourceFileLocator resolve: 'fish32x32.png'!
 
 pafMosaic2Bmp
-	^self resourceFileLocator localFileSpecFor: 'mosaic2.bmp'!
+	^self resourceFileLocator resolve: 'mosaic2.bmp'!
 
 pafRgb0000FF_100x100bmp
-	^self resourceFileLocator localFileSpecFor: 'rgb0000FF_100x100.bmp'!
+	^self resourceFileLocator resolve: 'rgb0000FF_100x100.bmp'!
 
 pafSeattleNightJpg
-	^self resourceFileLocator localFileSpecFor: 'seattleNight.JPG'!
+	^self resourceFileLocator resolve: 'seattleNight.JPG'!
 
 pafWinXP32x32ico
-	^self resourceFileLocator localFileSpecFor: 'winXP32x32.ico'!
+	^self resourceFileLocator resolve: 'winXP32x32.ico'!
 
 resourceFileLocator
 	^FileLocator imageFolderRelative: 'Resources\Tests\GdiplusTestImages\'!
@@ -71,9 +71,9 @@ rgb0000FF_100x100bmpBytes
 	^File readAllBytes: self pafRgb0000FF_100x100bmp!
 
 tearDown
-	(tempFileLocator notNil and: [File exists: tempFileLocator basePath])
+	(tempFileLocator notNil and: [tempFileLocator basePath exists])
 		ifTrue: 
-			[[File deleteDirectory: tempFileLocator basePath] on: Error do: [:ex | ].
+			[[tempFileLocator basePath delete] on: Error do: [:ex | ].
 			tempFileLocator := nil].
 	super tearDown! !
 

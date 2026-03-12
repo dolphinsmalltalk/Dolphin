@@ -128,7 +128,7 @@ extractPathNames: aString
 			strings
 				from: 2
 				to: count
-				do: [:each | pathNames nextPut: (Filename composePath: folder subPath: each)].
+				do: [:each | pathNames nextPut: (folder \ each) asString].
 			pathNames collection]!
 
 extractResult: result
@@ -236,10 +236,10 @@ getFileSpec
 		lpParam: buf.
 	^buf asUtf8String!
 
-initialDirectory: aString
+initialDirectory: aPathOrString
 	"Set the initial directory path name to be opened/saved."
 
-	self winStruct initialDirectory: aString!
+	self winStruct initialDirectory: aPathOrString!
 
 initialize
 	"Private - Initialize the receiver"

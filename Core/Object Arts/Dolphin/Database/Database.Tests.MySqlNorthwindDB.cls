@@ -26,10 +26,10 @@ createDatabase
 	"N.B. Obviously storing a password in a method and passing it on a command line is insecure, but this is a test database"
 	installFolder := self installationFolder.
 	installFolder ifNil: [^false].
-	^self execSqlCmd: '"<1s>" -u <2s> -p<3s>'
-				<< { Filename composePath: installFolder subPath: 'bin\mysql.exe'. self uid. self pwd }
+	^self execSqlCmd: '"<1d>" -u <2s> -p<3s>'
+				<< { installFolder \ 'bin\mysql.exe'. self uid. self pwd }
 		stdin: (FileStream read: ((Kernel.PackageRelativeFileLocator package: self class owningPackage)
-						localFileSpecFor: 'NorthwindMySql.sql')
+						resolve: 'NorthwindMySql.sql')
 				text: true)!
 
 dropDatabase
@@ -47,8 +47,7 @@ installationFolder
 	^((OS.RegKey localMachineRoot64 lookup: 'SOFTWARE\MySQL AB\MySQL Server 8.0')
 		ifNotNil: [:regkey | regkey valueAt: 'Location' ifAbsent: nil])
 			ifNil: 
-				[Filename composePath: (SessionManager current getenv: 'ProgramW6432')
-					subPath: 'MySQL\MySQL Server 8.0\']!
+				[(SessionManager current getenv: 'ProgramW6432') \ 'MySQL\MySQL Server 8.0\']!
 
 newConnection
 	^super newConnection

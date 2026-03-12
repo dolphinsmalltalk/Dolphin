@@ -166,18 +166,18 @@ testPixelAfterSave
 	bitmap := self subjectClass extent: 100 @ 100.
 	transparentBlack := Color black alpha: 0.
 	self assert: (bitmap pixelAt: 1 @ 1) equals: transparentBlack.
-	baseFile := self fileResource fileLocator localFileSpecFor: 'testPixelAfterSave'.
+	baseFile := self fileResource fileLocator resolve: 'testPixelAfterSave'.
 	extensions := #('bmp' 'jpeg' 'gif' 'tiff' 'png').
 	supportsAlpha := #(false false false true true).
 	extensions with: supportsAlpha
 		do: 
 			[:ext :supported |
-			toFile := Filename path: baseFile extension: ext.
+			toFile := baseFile withExtension: ext.
 			bitmap saveToFile: toFile.
 			image := self subjectClass fromFile: toFile.
 			self assert: (image pixelAt: 1 @ 1) = transparentBlack equals: supported.
 			image free.
-			File delete: toFile].
+			toFile deleteFile].
 	bitmap free! !
 
 !Graphics.Gdiplus.Tests.BitmapTest categoriesForMethods!

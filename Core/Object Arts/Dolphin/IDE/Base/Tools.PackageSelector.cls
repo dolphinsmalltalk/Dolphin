@@ -84,6 +84,7 @@ autoSelect: aBoolean
 	autoSelect := aBoolean!
 
 browseFolder
+	<commandQuery: #hasDirectory>
 	| folder |
 	folder := self selectedFolder.
 	[self developmentSystem browseFolder: folder] on: OS.Win32Error
@@ -151,12 +152,10 @@ commonFolder: aCollectionOfPackages
 	commonPrefix := aCollectionOfPackages inject: nil
 				into: 
 					[:prefix :each |
-					prefix
-						ifNil: [Filename splitPathFrom: each packagePathname]
-						ifNotNil: [Filename commonPrefixOf: prefix and: each packagePathname]].
+					prefix ifNil: [each packagePath directory] ifNotNil: [prefix commonPrefixWith: each packagePath]].
 	^commonPrefix isEmpty
 		ifTrue: [self folderClass root]
-		ifFalse: [self folderClass pathname: (Filename appendPathDelimiter: commonPrefix)]!
+		ifFalse: [self folderClass pathname: commonPrefix withSeparator asString]!
 
 confirmUninstall: aPackage
 	"Private - If the <Package> argument has any dependents, then prompt the user to confirm
@@ -302,10 +301,10 @@ filteredPackages
 		ifNotNil: 
 			[:filter |
 			filter isEmpty
-				ifTrue: [allPackages select: [:each | Filename isRelativePath: each packagePathname]]
+				ifTrue: [allPackages select: [:each | each packagePathname asPath isRelative]]
 				ifFalse: 
 					[| searchPrefix |
-					searchPrefix := Filename appendPathDelimiter: filter.
+					searchPrefix := filter asPath withSeparator asString.
 					allPackages select: [:each | each packagePathname beginsWith: searchPrefix ignoreCase: true]]]!
 
 filterPresenter
@@ -321,6 +320,13 @@ hasChangedPackages
 	"Private - Answer whether any changed packages are currently selected."
 
 	^self changedPackages notEmpty!
+
+hasDirectory
+	"Private - Answer whether a directory is selected in the package folder tree."
+
+	| folder |
+	folder := self selectedFolder.
+	^folder notNil and: [folder isDirectory]!
 
 hasPackages
 	"Private - Answer whether one or more packages are currently selected."
@@ -381,9 +387,9 @@ model: aPackageHierarchyModel
 newPackage
 	"Request the name of a new Package to add to the PackageManager."
 
-	| pathname dialog directory |
-	directory := Filename fullPathOf: self filter relativeTo: SessionManager current imageBase.
-	[File createDirectoryPath: directory] on: OS.Win32Error
+	| pathname dialog directory packageName packMan |
+	directory := self filter asPath fullPathRelativeTo: SessionManager current imageBase.
+	[directory createDirectoryPath] on: OS.Win32Error
 		do: 
 			[:ex |
 			"User probably doesn't have access rights"
@@ -394,20 +400,13 @@ newPackage
 				defaultExtension: Package packageExtension;
 				caption: 'New Package'.
 	pathname := dialog showModal.
-	pathname notNil
-		ifTrue: 
-			[| packageName |
-			packageName := Filename splitStemFrom: pathname.
-			packageName notEmpty
-				ifTrue: 
-					[| packMan |
-					packMan := self packageManager.
-					
-					[| package |
-					package := packMan newPackage: pathname.
-					self packages: { package }]
-							on: packMan duplicatePackageSignal
-							do: [:e | e okCancel]]]!
+	pathname isNil ifTrue: [^self].
+	pathname := pathname asPath.
+	packageName := pathname stem.
+	packageName isEmpty ifTrue: [^self].
+	packMan := self packageManager.
+	[self packages: { packMan newPackage: pathname }] on: packMan duplicatePackageSignal
+		do: [:e | e okCancel]!
 
 okToSavePackage: aPackage
 	"Private - Verify that the <Package>, aPackage, is in a fit state to save (i.e. that it is reloadable),
@@ -564,7 +563,7 @@ openPackage
 	fileDialog := FileOpenDialog new.
 	fileDialog fileTypes: self developmentSystem packageOpenFileDialogTypes.
 	self filter
-		ifNotNil: [:filter | fileDialog initialDirectory: (FileLocator imageRelative localFileSpecFor: filter)].
+		ifNotNil: [:filter | fileDialog initialDirectory: (FileLocator imageRelative resolve: filter)].
 	fileDialog caption: 'Install Package'.
 	pathname := fileDialog showModal.
 	pathname isNil ifTrue: [^self].
@@ -633,9 +632,6 @@ promptToSavePackageChanges: package
 
 queryAboutPackage: aCommandQuery
 	self singlePackage ifNotNil: [:package | aCommandQuery isEnabled: package canShowAbout]!
-
-queryBrowseFolder: aCommandQuery
-	self selectedFolder ifNotNil: [:folder | aCommandQuery isEnabled: (File isDirectory: folder)]!
 
 queryRemovePackage: aCommandQuery
 	| selected |
@@ -769,7 +765,7 @@ savePackageAs
 	pathname := FileSaveDialog new
 				fileTypes: self saveFileDialogTypes;
 				defaultExtension: Package packageExtension;
-				value: (Filename removeExtension: package packageFileName);
+				value: package packageFullPath withoutExtension;
 				caption: 'Save Package <1p> As…' << package name;
 				showModal.
 	pathname notNil
@@ -834,8 +830,8 @@ savePackages: aCollection toFolder: aPackageFolder
 	mb beTaskModal.
 	mb headline: 'Move packages to <1p>?' << aPackageFolder folderName.
 	(mb confirm: msg contents) ifFalse: [^self].
-	dir := Filename fullPathOf: aPackageFolder pathname relativeTo: SessionManager current imageBase.
-	aCollection do: [:each | each saveAs: (Filename composePath: dir subPath: each name)]!
+	dir := aPackageFolder pathname asPath fullPathRelativeTo: SessionManager current imageBase.
+	aCollection do: [:each | each saveAs: dir \ each name]!
 
 selectableItems
 	"Private - Answer the name of the <selectableItems> component that actually handles the selectable items in the receiver"
@@ -844,7 +840,7 @@ selectableItems
 
 selectedFolder
 	^self filterPresenter selectionOrNil
-		ifNotNil: [:folder | FileLocator imageRelative localFileSpecFor: folder pathname]!
+		ifNotNil: [:folder | FileLocator imageRelative resolve: folder pathname]!
 
 selectedSourceObjects
 	"Private - Answer a collection of all the source objects from the selected packages"
@@ -974,6 +970,7 @@ filterPresenter!accessing!private! !
 folder!accessing!public! !
 folderClass!constants!private! !
 hasChangedPackages!private!testing! !
+hasDirectory!commands-queries!private!testing! !
 hasPackages!private!testing! !
 hasSaveableChangedPackages!commands-queries!private!testing! !
 hasSaveablePackages!commands-queries!private!testing! !
@@ -1007,7 +1004,6 @@ packages:!accessing!private! !
 packagesPresenter!accessing!private! !
 promptToSavePackageChanges:!helpers!private! !
 queryAboutPackage:!commands-queries!private! !
-queryBrowseFolder:!commands-queries!private! !
 queryRemovePackage:!commands-queries!private! !
 querySetDefaultPackage:!commands-queries!private! !
 querySynchronizeFilter:!commands-queries!private! !

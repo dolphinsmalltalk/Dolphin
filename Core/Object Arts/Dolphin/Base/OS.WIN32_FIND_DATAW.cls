@@ -37,19 +37,24 @@ cFileName
 directory
 	^directory!
 
-directory: aString
-	directory := aString!
+directory: aPathOrString
+	directory := aPathOrString asPath withSeparator!
 
 fileName
-	"Answer the full filename from the receiver."
+	"Answer the <String> filename from the receiver."
 
 	^self cFileName!
 
-path
-	"Answer the path of the file described by the receiver (assuming the 
-	directory has been set correctly)."
+fullPath
+	"Answer the <Path> of the file described by the receiver (assuming the directory has been set correctly)."
 
-	^Filename composePath: self directory subPath: self fileName!
+	^directory \ self cFileName!
+
+path
+	"Answer the <String> path of the file described by the receiver (assuming the directory has been set correctly)."
+
+	#deprecated.
+	^self fullPath asString!
 
 shortFileName
 	"Answer the 8.3 filename from the receiver."
@@ -62,7 +67,7 @@ shortFileName
 stem
 	"Answer the stem (name sans extension) of the file described by the receiver."
 
-	^Filename splitStemFrom: self fileName! !
+	^self fileName asPath stem! !
 
 !OS.WIN32_FIND_DATAW categoriesForMethods!
 cAlternateFileName!**compiled accessors**!public! !
@@ -70,6 +75,7 @@ cFileName!**compiled accessors**!public! !
 directory!accessing!public! !
 directory:!accessing!private! !
 fileName!accessing!public! !
+fullPath!accessing!public! !
 path!accessing!public! !
 shortFileName!accessing!public! !
 stem!accessing!public! !

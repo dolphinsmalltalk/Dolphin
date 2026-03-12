@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.FileLocator
+Kernel.RelativeFileLocator
 	subclass: #'Kernel.ClassLocator'
 	instanceVariableNames: 'packageName codeBase key'
 	classVariableNames: 'Aliases DefaultFileLocator ImportedClasses ImportedClassesMutex InstallationFileLocator'
@@ -10,24 +10,37 @@ Core.FileLocator
 
 Kernel.ClassLocator guid: (Core.GUID fromString: '{87b4c462-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-Kernel.ClassLocator comment: 'A ClassLocator is used to find a class for an object being read from an external serialized stream (such as STB). The locator first tries to match an exsiting class already in the image and, if this fails, it is then used to indicate the location of an external binary class that may be loaded into the image. To do this, the locator holds the code base where the external BinaryPackage file resides and a key (usually the class name) that can be used to identify a particular class within the package.  The standard ClassLocator is used when the binary package file can be found on a UNC file system.  If the class is part of an applet and is to be located by a URL then a URLClassLocator should be used instead.
+Kernel.ClassLocator comment: 'A `ClassLocator` is used to find a class for an object being read from an external serialized stream (such as STB). The locator first tries to match an exsiting class already in the image and, if this fails, it is then used to indicate the location of an external binary class that may be loaded into the image. To do this, the locator holds the code base where the external BinaryPackage file resides and a key (usually the class name) that can be used to identify a particular class within the package.  The standard ClassLocator is used when the binary package file can be found on a UNC file system.  If the class is part of an applet and is to be located by a URL then a URLClassLocator should be used instead.
 
-Instance Variables:
-	packageName 	<readableString> indicating the name of the package containing the required class.
-	codeBase		<readableString> indicating the base directory from which a BinaryPackage should be loaded.
-	key		<readableString> indicating the name of a class to load from the package.
+## Instance Variables:
+  `packageName`	`<readableString>` indicating the name of the package containing the required class.
+  `codeBase`		`<readableString>` indicating the base directory from which a BinaryPackage should be loaded.
+  `key`			`<readableString>` indicating the name of a class to load from the package.
 
-Class Variables:
-	ImportedClasses		<WeakLookupTable> holding the imported classes looked up by their full class keys.
-	DefaultFileLocator		<ClassLocator> which is the default locator to use when loading external resource files.
-	ImportedClassesMutex	<Mutex> to use when resolving imported classes.
-	Aliases			<WeakLookupTable> mapping old class names to existing class.
+## Class Variables:
+  `Aliases`					`WeakLookupTable` holding the imported classes looked up by their full class keys.
+  `DefaultFileLocator`		`ClassLocator` which is the default locator to use when loading external resource files.
+  `ImportedClasses`			`IdentityDictionary` holding imported classes, keyed by `BindingReference`
+  `ImportedClassesMutex`	`Mutex` to use when resolving imported classes.
+  `InstallationFileLocator`		`WeakLookupTable` mapping old class names to existing class.
+
+
 
 '!
 
 !Kernel.ClassLocator categoriesForClass!System-Binary class loading! !
 
 !Kernel.ClassLocator methodsFor!
+
+= anObject
+	"Answer whether the receiver and anObject are equivalent."
+
+	^self == anObject or: [self species == anObject species and: [self fullClassKey = anObject fullClassKey]]!
+
+abstract: aString
+	"Answer a <readableString> token for to binary class file resource with the specified <Path> or <readableString> local path argument. The abstract path can later be resolved back to the original class file path via a call to #resolve: on this locator."
+
+	^(self relativeToBase: aString) path!
 
 bindingReference
 	^key asQualifiedReference!
@@ -115,6 +128,9 @@ fullPackageKey
 
 	^self hasPackageName ifTrue: [ self codeBase, self packageName ]!
 
+hash
+	^self fullClassKey hash!
+
 hasPackageName
 	"Private - Answer true if the receiver has a package name specified"
 
@@ -146,15 +162,6 @@ key: aString
 	"Private - Set the receiver's key inst var to aString."
 
 	key := aString!
-
-localFileSpecFor: aStringFilename
-	"Answer a filespec for aStringFilename relative to the current installation
-	directory and codebase."
-
-	| filename |
-	filename := aStringFilename.
-	self codeBase notNil ifTrue: [filename := Filename composePath: codeBase subPath: filename].
-	^super localFileSpecFor: filename!
 
 locateClass
 	"Answer the class referred to by the receiver."
@@ -188,9 +195,17 @@ printOn: aStream
 		print: codeBase;
 		nextPutAll: ', ';
 		print: key;
-		nextPut: $)! !
+		nextPut: $)!
+
+resolve: aString
+	"Answer a full <Path> for the argument, which is expected to be the internal representation of a class file path created be a previous call to #abstract: on this or an equivalent locator. We expect the argument to be a <readableString> path relative to the current installation directory and codebase."
+
+	^(self codeBase ifNil: [aString asPath] ifNotNil: [:base | base \ aString])
+		fullPathRelativeTo: self basePath! !
 
 !Kernel.ClassLocator categoriesForMethods!
+=!comparing!public! !
+abstract:!mapping!public! !
 bindingReference!accessing!private! !
 codeBase!accessing!public! !
 codeBase:!initializing!private! !
@@ -205,18 +220,19 @@ findResidentClass:!operations!private! !
 fullClassKey!accessing!private! !
 fullClassKey:!helpers!private! !
 fullPackageKey!accessing!public! !
+hash!comparing!public! !
 hasPackageName!accessing!private! !
 includesClass:!public!testing! !
 initialize!initializing!private! !
 installImportedClass:!operations!private! !
 key!accessing!public! !
 key:!initializing!private! !
-localFileSpecFor:!accessing!public! !
 locateClass!operations!public! !
 locateClass:!operations!public! !
 packageName!accessing!public! !
 packageName:!initializing!private! !
 printOn:!printing!public! !
+resolve:!mapping!public! !
 !
 
 !Kernel.ClassLocator class methodsFor!
@@ -250,10 +266,10 @@ codeBase: codeBaseString packageName: packageString
 codeBase: codeBaseString packageName: packageString key: keyString
 	"Answer an instance of the receiver with a codeBase of  codeBaseString and  keyString class key."
 
-	^(super new)
-		 codeBase: codeBaseString;
-		 packageName: packageString;
-		 key: keyString!
+	^self basicNew
+		codeBase: codeBaseString;
+		packageName: packageString;
+		key: keyString!
 
 default
 	"Answers an instance of the receiver that can be used to locate external files
@@ -287,7 +303,7 @@ isImportedClass: aClass
 new
 	"Answer a new, initialized, instance of the receiver."
 
-	^super new initialize!
+	^self basicNew initialize!
 
 onStartup
 	"Private - The session has started. Clear down the cached file locators"

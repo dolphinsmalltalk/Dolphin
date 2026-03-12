@@ -131,7 +131,7 @@ getDiskFreeSpaceEx
 	totalNumberOfBytesBuf := UInt64Bytes new.
 	totalNumberOfFreeBytesBuf := UInt64Bytes new.
 	(Kernel32
-		getDiskFreeSpaceEx: path
+		getDiskFreeSpaceEx: path asUtf16String
 		lpFreeBytesAvailable: freeBytesAvailableBuf
 		lpTotalNumberOfBytes: totalNumberOfBytesBuf
 		lpTotalNumberOfFreeBytes: totalNumberOfFreeBytesBuf) ifFalse: [Kernel32 systemError].
@@ -217,8 +217,7 @@ printOn: target
 rootPath
 	"Answer the value of the receiver's ''rootPath'' instance variable."
 
-	rootPath isNil
-		ifTrue: [rootPath := (Filename splitDriveFrom: path) asUppercase copyWith: Filename pathDelimiter].
+	rootPath isNil ifTrue: [rootPath := path drive asUppercase copyWith: Path.Separator].
 	^rootPath!
 
 sectorsPerCluster
@@ -238,7 +237,7 @@ setPath: pathString
 	"Private - Initialize the receiver to retrieve disk volume information for the volume on which
 	the specified path resides."
 
-	path := pathString!
+	path := pathString asPath!
 
 totalBytes
 	"Answer the value of the receiver's ''totalBytes'' instance variable."

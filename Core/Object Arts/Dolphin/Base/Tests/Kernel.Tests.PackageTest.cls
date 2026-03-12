@@ -286,13 +286,18 @@ testForwardRefLoadPac
 		write: self d5ForwardRefTestPacContents;
 		close.
 	notifications := OrderedCollection new.
-	[[loadedPackages := Package manager install: pacName]
-		on: Notification do: [:ex | notifications add: ex. ex resume]] ensure: [File delete: pacName].
+	
+	[[loadedPackages := Package manager install: pacName] on: Notification
+		do: 
+			[:ex |
+			notifications add: ex.
+			ex resume]]
+			ensure: [pacName deleteFile]
 	"self assert: notifications first description equals: "!
 
 testLegacyFormatErrorAliasToQualifiedName
 	| package ref filer filerClass |
-	package := Package new.
+	package := Package name: 'Foo'.
 	package paxVersion: 1.
 	ref := #{Smalltalk.TestCase}.
 	self assert: ref value identicalTo: XProgramming.SUnit.TestCase.
@@ -385,7 +390,7 @@ testLegacyFormatErrorQualifiedSuperclassName
 	"Test that if a class in Smalltalk is defined as a subclass of a class that is not bindable from Smalltalk, that it cannot be a member of a legacy format package (because the superclass will not be bindable without a qualified name)."
 
 	| package filerClass filer testClass |
-	package := Package new.
+	package := Package name: 'Foo'.
 	package paxVersion: 1.
 	testClass := self class
 				subclass: #__Foo__
@@ -407,7 +412,7 @@ testLegacyFormatErrorQualifiedSuperclassName
 
 testLegacyFormatErrorQualifiedUntracedVariable
 	| package filerClass filer ref |
-	package := Package new.
+	package := Package name: 'Foo'.
 	package paxVersion: 1.
 	ref := #{XProgramming.SUnit.ExampleTestResource}.
 	package setUntracedVariables: (Set with: ref).
@@ -556,8 +561,7 @@ testLoad70Pax
 	filer := scribbleTestPackage sourceFilerClass on: String writeStream.
 	filer fileOutPackage: scribbleTestPackage.
 	actual := filer stream contents.
-	expected := File
-				readAllText: (Filename path: (self resourceFilename: testPackagePath) extension: 'pac').
+	expected := File readAllText: ((self resourceFilename: testPackagePath) asPath withExtension: 'pac').
 	"
 	Smalltalk.DiffBrowser compare: actual with: expected
 	"
@@ -653,7 +657,7 @@ testLoadBinaryVersion3MultifilePackage
 	self assert: (pac comment contains: 'JOOP Feb 97').
 	self assert: pac packagePathname equals: 'Resources\Tests\' , relPath.
 	self assertIsNil: (pac instVarNamed: 'doNotReuse').
-	hexBrowser := #{Smalltalk.HexadecimalBrowser} value on: pac packageFileName.
+	hexBrowser := #{Smalltalk.HexadecimalBrowser} value on: pac packageFullPath asString.
 	
 	[hexBrowser createView: hexBrowser class defaultView.
 	hexBrowser view

@@ -188,8 +188,7 @@ destroyCard: cardToRemove
 	self restorePreviousCard: last	!
 
 filename
-	"Answers the name of the file associated with the receiver or nil
-	if there is none"
+	"Answers the name of the file associated with the receiver or nil if there is none"
 
 	^filename!
 
@@ -197,8 +196,7 @@ filename: aStringOrNil
 	"Sets the name of the file associated with the receiver"
 
 	filename := nil.
-	(aStringOrNil notNil and: [ aStringOrNil notEmpty ])
-		ifTrue: [ filename := aStringOrNil ].
+	(aStringOrNil notNil and: [aStringOrNil notEmpty]) ifTrue: [filename := aStringOrNil asPath].
 	self updateCaption!
 
 hasContents
@@ -267,7 +265,7 @@ The error reported was: "<2s>".
 As as result the new IdeaSpace may only be partially complete. Please bear in mind that you
 can only reload an IdeaSpace into an equivalent image to the one that was used to save the
 original template. Missing Packages, Classes or Methods may give rise to errors.'
-								expandMacrosWith: (Filename splitFilenameFrom: self filename)
+								expandMacrosWith: self filename fileName
 								with: (self loadErrorDescriptionFrom: x))
 						caption: 'Problem Loading IdeaSpace'].
 			stream close]!
@@ -438,23 +436,24 @@ saveIdeaSpace
 	^saved!
 
 saveIdeaSpaceAs
-	| proceed newFilename |
+	| newFilename |
 	newFilename := (FileSaveDialog on: self filename asValue)
 				fileTypes: self class fileTypes;
 				defaultExtension: self class defaultFileExtension;
 				caption: 'Save IdeaSpace As…';
 				showModal.
-	(proceed := newFilename notNil and: 
-					[(File exists: newFilename) not or: 
-							[MessageBox new
-								headline: 'Overwrite <1s>?' << newFilename;
-								confirm: 'The file already exists, are you sure you would like to overwrite it?']])
+	newFilename isNil ifTrue: [^false].
+	newFilename := newFilename asPath.
+	(newFilename exists not or: 
+			[MessageBox new
+				headline: 'Overwrite <1d>?' << newFilename;
+				confirm: 'The file already exists, are you sure you would like to overwrite it?'])
 		ifTrue: 
 			["Install the new filename"
 			self
 				filename: newFilename;
 				saveIdeaSpace].
-	^proceed!
+	^true!
 
 saveStateOn: aWriteStream
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class

@@ -1522,7 +1522,7 @@ defaultIcon
 defaultIconName
 	"Answer a filename to use to find an icon for this class."
 
-	^Filename composeStem: self name extension: '.ico'!
+	^Path composeStem: self name extension: '.ico'!
 
 defaultResourceIcon
 	"Answer a suitable default icon resource to use for this class. Note that this method differs
@@ -1533,7 +1533,7 @@ defaultResourceIcon
 defaultResourceIconName
 	"Answer a filename to use for an icon of this class loaded from the class resources location."
 
-	^self instanceClass resourcesLocator localFileSpecFor: self defaultIconName! !
+	^(self instanceClass resourcesLocator resolve: self defaultIconName) asUtf16String! !
 
 !Core.ClassDescription categoriesForMethods!
 defaultIcon!constants!public! !

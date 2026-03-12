@@ -64,6 +64,12 @@ DirectoryName
 	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_DirectoryName)
 		length: self DirectoryNameLength >> 1!
 
+directoryName: aString
+	"Set the receiver's 'DirectoryName' field to the value of the argument, anUtf16String"
+
+	directoryName := aString asUtf16String.
+	self DirectoryName: directoryName!
+
 DirectoryName: anUtf16String
 	"Set the receiver's 'DirectoryName' field to the value of the argument, anUtf16String"
 
@@ -146,6 +152,12 @@ SoftwareName
 	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_SoftwareName)
 		length: self SoftwareNameLength >> 1!
 
+softwareName: aString
+	"Set the receiver's 'SoftwareName' field to the value of the argument, anUtf16String"
+
+	softwareName := aString asUtf16String.
+	self SoftwareName: softwareName!
+
 SoftwareName: anUtf16String
 	"Set the receiver's 'SoftwareName' field to the value of the argument, anUtf16String"
 
@@ -164,6 +176,7 @@ SoftwareNameLength: anInteger
 
 !WinHttpServer.HTTP_LOGGING_INFO categoriesForMethods!
 DirectoryName!**compiled accessors**!public! !
+directoryName:!accessing!public! !
 DirectoryName:!**compiled accessors**!public! !
 DirectoryNameLength!**compiled accessors**!public! !
 DirectoryNameLength:!**compiled accessors**!public! !
@@ -180,6 +193,7 @@ RolloverSize:!**compiled accessors**!public! !
 RolloverType!**compiled accessors**!public! !
 RolloverType:!**compiled accessors**!public! !
 SoftwareName!**compiled accessors**!public! !
+softwareName:!accessing!public! !
 SoftwareName:!**compiled accessors**!public! !
 SoftwareNameLength!**compiled accessors**!public! !
 SoftwareNameLength:!**compiled accessors**!public! !

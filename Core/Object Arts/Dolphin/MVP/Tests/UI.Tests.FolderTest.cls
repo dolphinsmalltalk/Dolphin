@@ -45,7 +45,7 @@ testName
 testParent
 	| subject empty top |
 	top := Folder pathname: 'A\'.
-	#('A\B' 'A\B\' 'A\£' 'A\£\' 'A\🐬' 'A\🐬\') do: 
+	#('A\B' 'A\B\' 'a\£' 'A\£\' 'A\🐬' 'a\🐬\') do: 
 			[:each |
 			subject := (Folder pathname: each) parent.
 			self assert: subject equals: top].
@@ -56,7 +56,13 @@ testParent
 
 testParentOfDriveRoot
 	self assertIsNil: c parent.
-	self assertIsNil: windows parent parent! !
+	self assertIsNil: windows parent parent!
+
+testPath
+	self assert: root path isEmpty.
+	self assert: windows path equals: 'C:\WINDOWS\' asPath.
+	self assert: system path equals: 'C:\WINDOWS\SYSTEM32\' asPath.
+	self assert: oa path equals: 'Object Arts\' asPath! !
 
 !UI.Tests.FolderTest categoriesForMethods!
 folderClass!constants!private! !
@@ -66,5 +72,6 @@ testFolderName!public!unit tests! !
 testName!public!unit tests! !
 testParent!public!unit tests! !
 testParentOfDriveRoot!public!unit tests! !
+testPath!public!unit tests! !
 !
 

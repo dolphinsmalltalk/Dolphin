@@ -22,7 +22,7 @@ connectString
 createDatabase
 	^self execSqlCmd: 'bsql -u <1s> -p <2s> <3s>' << { self uid. self pwd. 'Mimer' }
 		stdin: (FileStream read: ((Kernel.PackageRelativeFileLocator package: self class owningPackage)
-						localFileSpecFor: 'NorthwindMimerSql.sql')
+						resolve: 'NorthwindMimerSql.sql')
 				text: true)!
 
 dropDatabase

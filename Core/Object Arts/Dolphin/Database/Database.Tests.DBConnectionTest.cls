@@ -1357,13 +1357,13 @@ testTablesQuery
 
 testTracing
 	| traceFile |
-	traceFile := Filename composePath: File tempPath subPath: 'BLAH.LOG'.
+	traceFile := Path tempDirectory \ 'BLAH.LOG'.
 	connection traceFile: traceFile.
-	self assert: connection traceFile equals: traceFile.
+	self assert: connection traceFile equals: traceFile asString.
 	self assert: connection isTracing.
 	connection isTracing: false.
 	self assert: connection isTracing not.
-	File delete: traceFile!
+	traceFile deleteFile!
 
 testUpdateBlobSetNull
 	"Test that updating long binary field to NULL through a parameterized query (i.e. using SQLPutData) works."

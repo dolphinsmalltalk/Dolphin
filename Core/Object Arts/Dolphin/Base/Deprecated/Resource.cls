@@ -223,7 +223,7 @@ generateFileNameFrom: aResourceIdentifier
 generateFilenameFrom: aResourceIdentifier inPackage: package
 	| path |
 	path := package isNil ifTrue: [''] ifFalse: [package path].
-	^Filename
+	^File
 		composePath: path
 		stem: aResourceIdentifier displayString
 		extension: self fileExtension!

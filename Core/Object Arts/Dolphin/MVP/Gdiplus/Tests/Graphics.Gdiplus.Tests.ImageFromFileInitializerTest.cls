@@ -23,8 +23,8 @@ testAbsoluteFilename
 	model filename: 'c:\test' fileLocator: FileLocator imageRelative.
 	self assert: model absoluteFilename equals: 'c:\test'.
 	model filename: 'test' fileLocator: FileLocator imageRelative.
-	self assert: model absoluteFilename
-		equals: (FileLocator imageRelative localFileSpecFor: 'test')!
+	self assert: model absolutePath
+		equals: (FileLocator imageRelative resolve: 'test')!
 
 testCreateHandle
 	| constructor |
@@ -32,7 +32,7 @@ testCreateHandle
 	constructor := self createHandle single.
 	self assert: constructor selector identicalTo: #gdipLoadImageFromFile:image:.
 	self assert: constructor arguments size equals: 2.
-	self assert: constructor arguments first equals: self fileResource pafRgb0000FF_100x100bmp.
+	self assert: constructor arguments first equals: self fileResource pafRgb0000FF_100x100bmp asString.
 	self assert: constructor arguments last isKindOf: Handle! !
 
 !Graphics.Gdiplus.Tests.ImageFromFileInitializerTest categoriesForMethods!

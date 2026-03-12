@@ -563,7 +563,7 @@ read: aString
 	| instance |
 	instance := self newPointer.
 	Shlwapi
-		shCreateStreamOnFileEx: aString
+		shCreateStreamOnFileEx: aString asUtf16String
 		grfMode: ##(STGM_READ | STGM_SHARE_DENY_WRITE)
 		dwAttributes: FILE_ATTRIBUTE_NORMAL
 		fCreate: false
@@ -587,7 +587,7 @@ write: aString mode: aSymbol
 	| instance |
 	instance := self newPointer.
 	Shlwapi
-		shCreateStreamOnFileEx: aString
+		shCreateStreamOnFileEx: aString asUtf16String
 		grfMode: (WriteOpenModes at: aSymbol)
 		dwAttributes: FILE_ATTRIBUTE_NORMAL
 		fCreate: aSymbol ~~ #append

@@ -84,7 +84,7 @@ readWriteStreamOnString: aString
 
 setUp
 	super setUp.
-	tempFileName := File temporaryFilename!
+	tempFileName := Path temporary!
 
 sharingError
 	^self subclassResponsibility!
@@ -115,8 +115,8 @@ strings
 
 tearDown
 	self tearDownTempStream.
-	(tempFileName isNil or: [(File exists: tempFileName) not]) ifTrue: [^self].
-	[File delete: tempFileName] on: Error
+	(tempFileName isNil or: [tempFileName exists not]) ifTrue: [^self].
+	[tempFileName deleteFile] on: Error
 		do: 
 			[:ex |
 			SessionManager current traceStream

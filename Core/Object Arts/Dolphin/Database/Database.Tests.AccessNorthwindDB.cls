@@ -15,21 +15,21 @@ Database.Tests.AccessNorthwindDB comment: ''!
 !Database.Tests.AccessNorthwindDB methodsFor!
 
 connectString
-	^'DRIVER={<1s>};DBQ=<2s>' << { self odbcDriver. self filename }!
+	^'DRIVER={<1s>};DBQ=<2s>' << { self odbcDriver. self filename asString }!
 
 createDatabase
 	| mdb |
 	mdb := self filename.
-	File copy: (self class owningPackage fileLocator localFileSpecFor: 'Northwind.mdb') to: mdb.
-	(File isWriteable: mdb) ifFalse: [File isWriteable: mdb set: true].
+	(self class owningPackage fileLocator resolve: 'Northwind.mdb') copyTo: mdb.
+	mdb isWriteable ifFalse: [mdb isWriteable: true].
 	^true!
 
 dropDatabase
 	super dropDatabase.
-	(filename notNil and: [File exists: filename]) ifTrue: [File delete: filename]!
+	(filename notNil and: [filename exists]) ifTrue: [filename delete]!
 
 filename
-	^filename ifNil: [filename := Filename composePath: File tempPath subPath: 'Northwind.mdb']!
+	^filename ifNil: [filename := Path tempDirectory \ 'Northwind.mdb']!
 
 getOdbcDriver
 	^'Microsoft Access Driver (*.mdb)'! !

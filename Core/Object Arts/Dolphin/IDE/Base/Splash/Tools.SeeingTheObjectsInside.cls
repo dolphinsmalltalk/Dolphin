@@ -238,12 +238,12 @@ isPointInDolphin: aPoint
 
 loadTextureMap: mapName
 	| texture map textureMap |
-	texture := Gdiplus.Bitmap fromFile: 'Resources\' , (Filename default: mapName extension: 'png')
+	texture := Gdiplus.Bitmap fromFile: (('Resources' \ mapName) withExtension: 'png')
 				usingLocator: FileLocator installRelative.
 	"Drawing the images individually from the texture goes a lot faster if we force Gdiplus to load the whole thing now."
 	texture forceValidation.
 	map := FileStream read: (FileLocator installRelative
-						localFileSpecFor: 'Resources\' , (Filename default: mapName extension: 'txt'))
+						resolve: ('Resources' \ mapName withExtension: 'txt'))
 				text: true.
 	textureMap := LookupTable new.
 	[map atEnd] whileFalse: 
@@ -385,7 +385,7 @@ registerTitleFont
 	"Private - "
 
 	OS.Gdi32
-		addFontResourceEx: (FileLocator installRelative localFileSpecFor: 'Resources\Mohave-Medium.ttf')
+		addFontResourceEx: (FileLocator installRelative resolve: 'Resources\Mohave-Medium.ttf') asUtf16String
 		fl: ##(FR_PRIVATE | FR_NOT_ENUM)
 		res: 0!
 
@@ -457,7 +457,7 @@ unregisterTitleFont
 	"Private - "
 
 	OS.Gdi32
-		removeFontResource: (FileLocator installRelative localFileSpecFor: 'Resources\Mohave-Regular.ttf')!
+		removeFontResource: (FileLocator installRelative resolve: 'Resources\Mohave-Regular.ttf') asUtf16String!
 
 zoomedInRenderBlock
 	"Private - Answer the rendering logic for painting the splash onto the backsurface when the inside objects have finished expanding. At this point the cached bitmap has been updated to include the final high quality rendering of the inside objects excluding the dolphin and the rotating sun. Therefore all we need to do is draw the dolphin (which will change colour over time to emphasise its position), overlap the background and other objects, and finally draw the sun. This should take only a few milliseconds."

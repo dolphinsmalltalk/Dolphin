@@ -28,7 +28,7 @@ hash
 
 tryLoadFromFile: anImage extent: aPoint
 	^anImage
-		loadFromFile: (FileLocator default localFileSpecFor: identifier)
+		loadFromFile: (FileLocator default resolve: identifier)
 		extent: aPoint
 		flags: (flags bitAnd: ##(LR_SHARED bitInvert))! !
 

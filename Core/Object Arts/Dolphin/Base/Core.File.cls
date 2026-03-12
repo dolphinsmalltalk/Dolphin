@@ -224,7 +224,7 @@ open
 	| fh |
 	
 	[fh := Kernel32
-				createFile: spec
+				createFile: spec asUtf16String
 				dwDesiredAccess: self accessFlags
 				dwSharedMode: shareFlags
 				lpSecurityAttributes: self securityAttributes
@@ -599,17 +599,13 @@ Core.File methodProtocol: #writeableMedium attributes: #(#readOnly) selectors: #
 !Core.File class methodsFor!
 
 attributes: aFileNameString
-	^Kernel32 getFileAttributes: aFileNameString!
+	#deprecated.
+	^Path attributes: aFileNameString!
 
 attributesEx: aString
 	"Answer the <WIN32_FILE_ATTRIBUTE_DATA> for the file with the specified path, or nil if no such file exists."
 
-	| attributes |
-	attributes := WIN32_FILE_ATTRIBUTE_DATA newBuffer.
-	^(Kernel32
-		getFileAttributesEx: aString
-		fInfoLevelId: 0
-		lpFileInformation: attributes) ifTrue: [attributes]!
+	^aString asPath extendedAttributes!
 
 copy: oldFileNameString to: newFileNameString
 	"Copy the file specified by oldFileNameString to newFileNameString.
@@ -617,84 +613,22 @@ copy: oldFileNameString to: newFileNameString
 
 	Kernel32 copyFile: oldFileNameString to: newFileNameString!
 
-createDirectory: path
-	"Create a directory with the specified path. Answer whether the directory was actually created, or already existed.
-	Raise a Win32Error if the call fails for any other reason than that the directory already exists."
-
-	^Kernel32 createDirectory: path!
-
-createDirectoryPath: aString
-	"Create a directory tree with the specified path - i.e. this will create a nested set of directories to any depth. Answer true if the final directory was actually created, or false if it already existed. 
-	Raise a Win32Error if the call fails for any other reason than that a directory with the specified path already exists."
-
-	"Implementation Note: This may attempt more directory creation operations than are necessary, (e.g. to create the root directory if a drive is specified) but such requests are ignored."
-
-	| pos result len path |
-	path := aString asUtf16String.
-	result := Kernel32 getFileAttributes: path.
-	result == -1
-		ifFalse: 
-			[(result allMask: FILE_ATTRIBUTE_DIRECTORY)
-				ifFalse: [Win32Error signalWith: Win32Errors.ERROR_FILE_EXISTS].
-			^false].
-	result := false.
-	(path beginsWith: '\\')
-		ifTrue: 
-			[pos := 3.
-			2 timesRepeat: 
-					["Skip UNC machine name and share, or long path prefix"
-					pos := path indexOfAnyOf: Filename pathDelimiters startingAt: pos.
-					pos == 0 ifTrue: [^Win32Error signalWith: Win32Errors.ERROR_INVALID_NAME].
-					pos := pos + 1]]
-		ifFalse: [pos := 1].
-	len := path size.
-	[pos <= len] whileTrue: 
-			[| end |
-			end := path indexOfAnyOf: Filename pathDelimiters startingAt: pos.
-			end == 0 ifTrue: [end := len + 1].
-			(end == 1 or: 
-					["Don't attempt to create the drive!!"
-					(path at: end - 1) == $:])
-				ifFalse: [result := self createDirectory: (path copyFrom: 1 to: end - 1)].
-			pos := end + 1].
-	^result!
-
-createTemporaryDirectory
-	"Create a new, unique, temporary directory, and answer it's <readableString> path. It is the caller's responsibility to delete the directory when done."
-
-	| path |
-	path := self composePath: self tempPath subPath: GUID newUnique idlString.
-	self createDirectory: path.
-	^path!
-
 delete: aFileNameString
 	"Deletes the file whose name is specified by aFileNameString.
 	Signal a Win32Error if the operation fails."
 
-	(Kernel32 deleteFile: aFileNameString) ifFalse: [Kernel32 systemError]!
+	(Kernel32 deleteFile: aFileNameString asUtf16String) ifFalse: [Kernel32 systemError]!
 
-deleteDirectory: aString
+deleteDirectory: aPathOrString
 	"Recursively delete all files and folders within the specified directory, and
 	remove the directory itself."
 
-	self 
-		forAll: '*.*'
-		in: aString
-		do: 
-			[:each | 
-			each isDirectory 
-				ifTrue: 
-					[| filename |
-					filename := each fileName.
-					(filename = '.' or: [filename = '..']) 
-						ifFalse: [self deleteDirectory: each path]]
-				ifFalse: [self delete: each path]].
-	^self removeDirectory: aString!
+	^aPathOrString asPath withSeparator deleteDirectory!
 
 exists: aFileNameString
 	"Answer true if there is a file whose specification is given by aFileName."
 
-	^(self attributes: aFileNameString) ~= -1!
+	^Path exists: aFileNameString!
 
 extensionDelimiter
 	"Answers the character that delimits a filename from its extension"
@@ -705,127 +639,6 @@ fileSize: aString
 	"Answer the <integer> byte size of the file with the specified path, or nil if no such file exists."
 
 	^(self attributesEx: aString) ifNotNil: [:attributes | attributes fileSize]!
-
-find: fileSpec
-	"Answer a collection of WIN32_FIND_DATA structs for each file matching the 
-	wildcarded path string, fileSpec. e.g:
-
-		| list |
-		list := ListPresenter show.
-		list list: ((File find: '*.*') collect: [:s | s fileName])
-	"
-
-	| answer |
-	answer := OrderedCollection new.
-	self for: fileSpec do: [:s | answer add: s copy].
-	^answer!
-
-for: aString do: operation
-	"For each file/directory matching the wildcarded path string argument, aString, 
-	evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing 
-	the file/directory as the argument."
-
-	^self
-		for: aString
-		in: (Filename splitPathFrom: aString)
-		do: operation!
-
-for: matchString in: dirString do: operation
-	"For each file/directory matching the wildcarded string argument, matchString, in the directory named, dirString, evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing the file/directory as the argument."
-
-	| hFind findStruct pattern |
-	findStruct := WIN32_FIND_DATAW newBuffer.
-	findStruct directory: dirString.
-	pattern := self composePath: dirString subPath: matchString.
-	hFind := Kernel32 findFirstFile: pattern lpFindFileData: findStruct.
-	hFind isInvalid
-		ifTrue: 
-			[| err |
-			err := Kernel32 getLastError.
-			^(err == Win32Errors.ERROR_FILE_NOT_FOUND or: [err == Win32Errors.ERROR_ACCESS_DENIED])
-				ifFalse: [Kernel32 systemError: err]].
-	
-	[| error |
-	
-	[operation value: findStruct.
-	Kernel32 findNextFile: hFind lpFindFileData: findStruct] whileTrue.
-	error := Kernel32 getLastError.
-	error == Win32Errors.ERROR_NO_MORE_FILES ifFalse: [^Kernel32 systemError: error]]
-			ensure: [Kernel32 findClose: hFind]!
-
-forAll: matchString in: dirString do: operation
-	"For each file or directory matching the wildcarded path string, fileSpec, 
-	in and below the directory identified by the <readableString>, dir, evaluate 
-	the <monadicValuable>, operation, with a WIN32_FIND_DATA describing 
-	the file/directory as the argument."
-
-	self 
-		for: matchString
-		in: dirString
-		do: [:each | operation value: each].
-	self forDirectoriesIn: dirString
-		do: 
-			[:each | 
-			self 
-				forAll: matchString
-				in: each path
-				do: operation]!
-
-forAllDirectories: matchString in: pathString do: operation 
-	"For each directory whose name matches the wildcarded <readableString> argument,
-	matchString, in the directory identified by the <readableString> argument, pathString,
-	(and recursively below that), evaluate the monadic valuable, operation, with a 
-	WIN32_FIND_DATA describing the directory as the argument."
-
-	"Implementation Note: The tree traversal is pre-order, depth-first."
-
-	self 
-		forDirectories: matchString
-		in: pathString
-		do: 
-			[:each | 
-			operation value: each.
-			self 
-				forAllDirectories: matchString
-				in: each path
-				do: operation]!
-
-forAllDirectoriesIn: aString do: operation
-	"For each directory in the directory identified by the <readableString> argument,
-	and recursively below that, evaluate the monadic valuable, operation, with a 
-	WIN32_FIND_DATA describing the directory as the argument.
-	Implementation Note: The tree traversal is pre-order, depth-first."
-
-	^self 
-		forAllDirectories: '*.*'
-		in: aString
-		do: operation!
-
-forDirectories: matchString in: dirString do: operation
-	"For each directory in the directory identified by the <readableString> argument, 
-	dir, evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing the 
-	directory as the argument."
-
-	self 
-		for: matchString
-		in: dirString
-		do: 
-			[:each | 
-			(each isDirectory and: 
-					[| fileName |
-					fileName := each fileName.
-					fileName ~= '.' and: [fileName ~= '..']]) 
-				ifTrue: [operation value: each]]!
-
-forDirectoriesIn: aString do: operation
-	"For each directory in the directory identified by the <readableString> argument 
-	evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing the 
-	directory as the argument."
-
-	^self 
-		forDirectories: '*.*'
-		in: aString
-		do: operation!
 
 fromHandle: aHandle
 	"Answer a new instance of the receiver on the specified file handle.
@@ -876,50 +689,21 @@ initialize
 isDirectory: aString
 	"Answer true if there is a directory whose path is given by aString."
 
-	| attribs |
-	attribs := self attributes: aString.
-	^attribs ~= -1 and: [attribs allMask: FILE_ATTRIBUTE_DIRECTORY]!
+	^Path isDirectory: aString!
 
-isWriteable: aString
+isWriteable: aPathOrString
 	"Answer whether the file at the specified path is writeable. If there is no such file, then
 	the answer will be true. If there file exists then the answer is based on file's attributes
 	- i.e. whether or not it has the read-only flag set. Note that file permissions are not
 	taken into account, so even if the answer is true a subsequent attempt to open the file for
 	writing may fail."
 
-	| attributes |
-	attributes := Kernel32 getFileAttributes: aString.
-	^(attributes ~= -1 and: [attributes allMask: FILE_ATTRIBUTE_READONLY]) not!
+	^aPathOrString asPath isWriteable!
 
-isWriteable: aString set: aBoolean
-	"Set the writeable state of the file with path, aString, to aBoolean. Answers true if the operation succeeds"
+isWriteable: aPathOrString set: aBoolean
+	"Set the writeable state of the file with path, aString, to aBoolean."
 
-	| attributes |
-	attributes := Kernel32 getFileAttributes: aString.
-	attributes == -1 ifTrue: [Kernel32 systemError].
-	(Kernel32 setFileAttributes: aString
-		value: (attributes mask: FILE_ATTRIBUTE_READONLY set: aBoolean not))
-			ifFalse: [Kernel32 systemError]!
-
-lastWriteTime: aString
-	"Answer a <FILETIME> representing the time when the file with the specified filename was last modified, or nil if no such file exists."
-
-	^(self attributesEx: aString) ifNotNil: [:attributes | attributes ftLastWriteTime]!
-
-locateFilename: aFilenameString in: searchPath 
-	"Answers the full pathname of aFilenameString searched for in the ordered collection
-	of paths provided in searchPath. If aFilenameString includes a directory then it is
-	answered. Otherwise the file is searched for in the directories in searchPath. If the
-	file is not found in any of these directories then aFilenameString is answered"
-
-	(Filename splitPathFrom: aFilenameString) isEmpty 
-		ifTrue: 
-			[searchPath do: 
-					[:each | 
-					| fullpath |
-					fullpath := Filename composePath: each subPath: aFilenameString.
-					(self exists: fullpath) ifTrue: [^fullpath]]].
-	^aFilenameString!
+	aPathOrString asPath isWriteable: aBoolean!
 
 new
 	"Answer a new initialized instance of the receiver."
@@ -1004,14 +788,14 @@ readAllText: aString share: aSymbol
 	buffer]
 			ensure: [file close]!
 
-removeDirectory: aString
-	(Kernel32 removeDirectory: aString) ifFalse: [Kernel32 systemError]!
+removeDirectory: aPathOrString
+	(Kernel32 removeDirectory: aPathOrString asUtf16String) ifFalse: [Kernel32 systemError]!
 
 rename: oldFileNameString to: newFileNameString
 	"Rename the file specified in oldFileNameString to newFileNameString.
 	Signal a HostSystemError if the operation fails."
 
-	(Kernel32 moveFile: oldFileNameString lpNewFileName: newFileNameString)
+	(Kernel32 moveFile: oldFileNameString asUtf16String lpNewFileName: newFileNameString asUtf16String)
 		ifFalse: [Kernel32 systemError]!
 
 sniffEncoding: aString
@@ -1032,39 +816,14 @@ temporary
 	"Open a temporary file with a unique name generated by the system, for
 	exclusive read/write access."
 
-	^self open: self temporaryFilename!
-
-temporaryFilename
-	"Answer a new unique temporary filename in the logged on user's temp directory (see
-	#tempPath). Note that this must create the file in order to ensure uniqueness. You are
-	responsible for deleting the file when you have finished with it."
-	
-	^self temporaryFilenameWithPrefix: ''
-	!
-
-temporaryFilenameWithPrefix: prefixString
-	"Answer a temporary filename built from prefixString in the user's temporary files directory. Note that this will create the temp file in order to guarantee uniqueness. You are responsible for deleting the file when it is no longer required. Signals a Win32Error if the operation fails, e.g. if the tempPath is longer than MAX_PATH-14 as the API does not support long filenames."
-
-	^Kernel32 getTempFileName: self tempPath lpPrefixString: prefixString!
-
-tempPath
-	"Answer the path of the directory designated for temporary files on the host system."
-
-	^Kernel32 getTempPath!
+	^self open: Path temporary!
 
 windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session. Note
 	that under Terminal Server this will be the shared Windows directory, not the per-user
 	Windows directory. See MSDN KB281316  for further information."
 
-	^Kernel32 getSystemWindowsDirectory!
-
-workingDirectory
-	"Answer the current working directory. The result always has a trailing separator."
-
-	| dir |
-	dir := Kernel32 getCurrentDirectory.
-	^dir lastCodeUnit == $\ ifTrue: [dir] ifFalse: [dir , '\']!
+	^Path windowsDirectory asString!
 
 workingDirectory: aString
 	"Set the current working directory."
@@ -1080,29 +839,16 @@ write: aString
 attributes:!enquiries!public! !
 attributesEx:!enquiries!public! !
 copy:to:!file operations!public! !
-createDirectory:!file operations!public! !
-createDirectoryPath:!file operations!public! !
-createTemporaryDirectory!file operations!public! !
 delete:!file operations!public! !
 deleteDirectory:!file operations!public! !
 exists:!enquiries!public! !
 extensionDelimiter!constants!public! !
 fileSize:!enquiries!public! !
-find:!public!searching! !
-for:do:!enumerating!public! !
-for:in:do:!enumerating!public! !
-forAll:in:do:!enumerating!public! !
-forAllDirectories:in:do:!enumerating!public! !
-forAllDirectoriesIn:do:!enumerating!public! !
-forDirectories:in:do:!enumerating!public! !
-forDirectoriesIn:do:!enumerating!public! !
 fromHandle:!instance creation!public! !
 initialize!development!initializing!public! !
 isDirectory:!enquiries!public! !
 isWriteable:!enquiries!public! !
 isWriteable:set:!file operations!public! !
-lastWriteTime:!enquiries!public! !
-locateFilename:in:!public!searching! !
 new!instance creation!public! !
 open:!instance creation!public! !
 open:mode:!instance creation!public! !
@@ -1116,11 +862,7 @@ removeDirectory:!file operations!public! !
 rename:to:!file operations!public! !
 sniffEncoding:!enquiries!public! !
 temporary!instance creation!public! !
-temporaryFilename!helpers!public! !
-temporaryFilenameWithPrefix:!helpers!public! !
-tempPath!enquiries!public! !
 windowsDirectory!enquiries!public! !
-workingDirectory!enquiries!public! !
 workingDirectory:!file operations!public! !
 write:!instance creation!public! !
 !

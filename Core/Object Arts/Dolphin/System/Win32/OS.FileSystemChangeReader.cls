@@ -264,8 +264,10 @@ removeFilter: aString
 
 shouldNotifyChange: anAssociation
 	^anAssociation fileNames anySatisfy: 
-			[:eachPath |
-			self filters anySatisfy: [:eachFilter | eachFilter match: (Filename splitFilenameFrom: eachPath)]]!
+			[:each |
+			| filename |
+			filename := each asPath fileName.
+			self filters anySatisfy: [:eachFilter | eachFilter match: filename]]!
 
 startMonitoring
 	"Start monitoring directory for changes."

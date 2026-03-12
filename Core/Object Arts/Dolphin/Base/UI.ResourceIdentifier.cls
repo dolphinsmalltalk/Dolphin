@@ -48,8 +48,8 @@ exportedFileName
 	| package path |
 	package := self owningPackage.
 	path := package isNil ifTrue: [''] ifFalse: [package path].
-	^Filename
-		composePath: path
+	^Path
+		compose: path
 		stem: self displayString
 		extension: self class exportFileExtension!
 

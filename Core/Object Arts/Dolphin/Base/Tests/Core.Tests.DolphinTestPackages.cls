@@ -44,11 +44,9 @@ setUp
 
 tearDown
 	| toRemove |
-	toRemove := {a. b. c} select: [:each | each notNil].
-	toRemove do: 
-			[:each |
-			{each packageFileName. each fileOutName}
-				do: [:filename | (File exists: filename) ifTrue: [File delete: filename]]].
+	toRemove := { a. b. c } select: [:each | each notNil].
+	toRemove
+		do: [:each | { each packageFullPath. each fileOutName } do: [:filename | filename delete]].
 	Package manager removePackages: toRemove.
 	a := b := c := nil.
 	super tearDown! !

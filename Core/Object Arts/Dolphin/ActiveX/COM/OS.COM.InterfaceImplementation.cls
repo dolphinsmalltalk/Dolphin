@@ -177,23 +177,23 @@ registerAsInProcServer: aRegKey
 	sesh := SessionManager current.
 	imageFileName := sesh imageFileName.
 	sesh isDLL 
-		ifTrue: [aRegKey at: 'InProcServer32' put: imageFileName]
+		ifTrue: [aRegKey at: 'InProcServer32' put: imageFileName asUtf16String]
 		ifFalse: 
 			["For an executable image we can register the generic in-proc stub for 
 			in-process activation (but only if it is available)."
 
 			| inProcStub |
-			inProcStub := FileLocator installRelative localFileSpecFor: (self inprocSurrogate: false).
-			(File exists: inProcStub) 
+			inProcStub := FileLocator installRelative resolve: (self inprocSurrogate: false).
+			(inProcStub exists) 
 				ifTrue: 
-					[aRegKey at: 'InProcServer32' put: inProcStub.
+					[aRegKey at: 'InProcServer32' put: inProcStub asUtf16String.
 					"The Dolphin specific 'Image' key is needed so the generic stub can find the image to load"
-					aRegKey at: 'Image' put: imageFileName]]!
+					aRegKey at: 'Image' put: imageFileName asUtf16String]]!
 
 registerAsLocalServer: aRegKey
 	| commandLine sesh |
 	commandLine := String writeStream.
-	commandLine nextPutAll: (External.Module moduleFileName: nil).
+	commandLine nextPutAll: (Module moduleFileName: nil).
 	sesh := SessionManager current.
 	sesh isRuntime
 		ifFalse: 

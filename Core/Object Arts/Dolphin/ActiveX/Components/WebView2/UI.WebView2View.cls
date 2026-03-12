@@ -199,9 +199,9 @@ createWebViewEnvironment
 defaultUserDataFolder
 	"Answer a path for the browser data folder that is writable with user privileges. We make this unique for a particular configuration of environment options, because it isn't possible to start webview2 instances with the same data folder that have mismatched environment options."
 
-	^Filename composePath: (SessionManager current getenv: 'LocalAppData')
-		subPath: '<1s>-<2s>.WebView2'
-				<< { Filename splitStemFrom: (Module moduleFileName: nil). self environmentOptions thumbprint }!
+	^((SessionManager current getenv: 'LocalAppData') \ ('<1s>-<2s>.WebView2'
+				<< { (Module moduleFileName: nil) asPath stem. self environmentOptions thumbprint }))
+		asString!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver."

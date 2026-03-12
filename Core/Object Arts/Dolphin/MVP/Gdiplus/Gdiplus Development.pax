@@ -320,7 +320,7 @@ exampleGdipBResize2
 	| image resizedImage toFile |
 	image := self fromFile: self fileResource pafSeattleNightJpg.
 	resizedImage := Bitmap fromImage: image scaledBy: 1 / 3.
-	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.jpg'.
+	toFile := self fileResource fileLocator resolve: 'testResize.jpg'.
 	resizedImage saveToFile: toFile.
 	^self fromFile: toFile!
 
@@ -333,7 +333,7 @@ exampleGdipBResize3
 	| image resizedImage toFile |
 	image := self fromFile: self fileResource pafSeattleNightJpg.
 	resizedImage := Bitmap fromImage: image centeredIn: 400 @ 200.
-	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.png'.
+	toFile := self fileResource fileLocator resolve: 'testResize.png'.
 	resizedImage saveToFile: toFile.
 	^self fromFile: toFile! !
 
@@ -1502,8 +1502,8 @@ icon!constants!public! !
 
 createMultiframeImage
 	| encoderParameters parameter value image1 image2 image3 toFile |
-	toFile := self fileResource fileLocator localFileSpecFor: 'testMultiframeImage.tif'.
-	(File exists: toFile) ifTrue: [^toFile].
+	toFile := self fileResource fileLocator resolve: 'testMultiframeImage.tif'.
+	toFile exists ifTrue: [^toFile].
 	encoderParameters := EncoderParameters new Count: 1.
 	parameter := encoderParameters Parameter first.
 	value := UInt32Bytes new.
@@ -1800,7 +1800,7 @@ exampleGdipIJPEGCompression
 	#(0 30 70 100) do: 
 			[:num |
 			quality value: num.
-			toFile := self fileResource fileLocator localFileSpecFor: 'test' , num displayString , '.jpg'.
+			toFile := self fileResource fileLocator resolve: 'test' , num displayString , '.jpg'.
 			image saveToFile: toFile encoderParams: encoderParameters.
 			images add: (Image fromFile: toFile)].
 	bitmap := Bitmap extent: 810 @ 610.
@@ -1808,9 +1808,9 @@ exampleGdipIJPEGCompression
 	images keysAndValuesDo: 
 			[:i :e |
 			| point fileSize text |
-			fileSize := ((File find: e filename) first fileSize / 1024) rounded.
+			fileSize := ((Path find: e path) first fileSize / 1024) rounded.
 			point := points at: i.
-			text := (Filename splitFilenameFrom: e filename) , ' (' , fileSize displayString , ' kb)'.
+			text := e path fileName , ' (' , fileSize displayString , ' kb)'.
 			bitmap graphics
 				drawImage: e
 					at: point
@@ -1860,7 +1860,7 @@ exampleGdipILosslessRotation
 		Type: EncoderParameterValueTypeLong;
 		NumberOfValues: 1;
 		Value: encValue yourAddress.
-	toFilename := self fileResource fileLocator localFileSpecFor: 'testLosslessRotation.jpg'.
+	toFilename := self fileResource fileLocator resolve: 'testLosslessRotation.jpg'.
 	image saveToFile: toFilename encoderParams: encoderParameters.
 	^Image fromFile: toFilename!
 
@@ -1939,9 +1939,9 @@ exampleGdipIMultiFrame2
 	"
 
 	| image bitmap graphics dstFile0 dstFile1 dstFile2 |
-	dstFile0 := self fileResource fileLocator localFileSpecFor: 'testMultiframe0.png'.
-	dstFile1 := self fileResource fileLocator localFileSpecFor: 'testMultiframe1.png'.
-	dstFile2 := self fileResource fileLocator localFileSpecFor: 'testMultiframe2.png'.
+	dstFile0 := self fileResource fileLocator resolve: 'testMultiframe0.png'.
+	dstFile1 := self fileResource fileLocator resolve: 'testMultiframe1.png'.
+	dstFile2 := self fileResource fileLocator resolve: 'testMultiframe2.png'.
 	image := Image fromFile: self createMultiframeImage.
 	self assert: [image frameCount = 3].
 	image selectActiveFrame: 0.
@@ -2087,7 +2087,7 @@ exampleGdipIPrinting4LabeledToAPage
 			[:i |
 			image := Image prompt.
 			images at: i put: image.
-			labels at: i put: (Filename splitStemFrom: image filename).
+			labels at: i put: image filename asPath stem.
 			image isLandscape = isPrinterPortrait
 				ifTrue: 
 					[rotate at: i put: true.
@@ -2151,7 +2151,7 @@ exampleGdipIPropertiesCopy
 	image := self fromFile: self fileResource pafEyeJpg.
 	resizedImage := Bitmap fromImage: image scaledBy: 1 / 4.
 	resizedImage copyPropertiesFrom: image.
-	toFile := self fileResource fileLocator localFileSpecFor: 'testPropertiesCopy.jpg'.
+	toFile := self fileResource fileLocator resolve: 'testPropertiesCopy.jpg'.
 	resizedImage saveToFile: toFile.
 	^self fromFile: toFile!
 
@@ -2189,7 +2189,7 @@ exampleGdipIPropertyItems
 	(directory := #{UI.BrowseFolderDialog} value new
 				value: #{Shell32} value myPictures;
 				showModal) ifNil: [^nil].
-	filenames := (File find: (Filename composePath: directory subPath: '*.jpg')) collect: [:e | e path].
+	filenames := (directory \ '*.jpg') findMatching.
 	strm := String writeStream.
 	filenames do: 
 			[:filename |
@@ -2202,7 +2202,7 @@ exampleGdipIPropertyItems
 					[strm
 						display: image propertiesCount;
 						nextPutAll: ': ';
-						nextPutAll: filename;
+						nextPutAll: filename asString;
 						nextPutAll: ', extent = ';
 						display: image extent;
 						cr.

@@ -50,7 +50,7 @@ prepareToStrip
 	This is invoked before even the development tools have been closed.
 	Answer whether to proceed with the application deployment."
 
-	(self typeLibPath isNil or: [(File exists: self typeLibPath) not])
+	(self typeLibPath isNil or: [self typeLibPath exists not])
 		ifTrue: 
 			[| mb |
 			mb := MessageBox new.
@@ -88,14 +88,13 @@ typeLibPath
 	"Answer a <readableString>, being the path of the typelibrary file (.tlb) that is to be bound into 
 	the DLL deployed by the receiver. If none then answer nil."
 
-	^typeLibPath isNil ifFalse: [FileLocator imageRelative localFileSpecFor: typeLibPath]
+	^typeLibPath isNil ifFalse: [FileLocator imageRelative resolve: typeLibPath]
 !
 
 typeLibPath: aString
-	"Set the path of the typelib that is to be bound into the application
-	deployed by the receiver."
+	"Set the path of the typelib that is to be bound into the application deployed by the receiver."
 
-	typeLibPath := FileLocator imageRelative relativePathTo: aString.! !
+	typeLibPath := FileLocator imageRelative abstract: aString.! !
 
 !AXDllImageStripper categoriesForMethods!
 _updateStubResources:!operations!private! !

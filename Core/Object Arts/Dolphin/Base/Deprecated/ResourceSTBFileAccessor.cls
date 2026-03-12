@@ -116,7 +116,7 @@ onFileName: aString
 	of the STB file named aString."
 
 	^self new
-		fileName: aString;
+		fileName: aString asString;
 		yourself!
 
 stbConvertFromVersion1: version1Array

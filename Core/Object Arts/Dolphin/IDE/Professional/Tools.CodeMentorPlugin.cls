@@ -754,7 +754,7 @@ busyIcon
 defaultFilterFilename
 	"Private - Answer a default filename for the receiver's ignored rules"
 
-	^Filename default: SessionManager current imagePath extension: self defaultFilterFileType!
+	^SessionManager current imagePath withExtension: self defaultFilterFileType!
 
 defaultFilterFileType
 	"Private - Answer the extension for the receiver's ignored rules file"
@@ -866,7 +866,7 @@ lintRulesDoc
 lintRulesDocURL
 	"Private - Answers the URL for the XML document that describes the lint rules"
 
-	^'file://',(FileLocator installRelative localFileSpecFor: 'Resources\LintRules.xml')!
+	^'file://' , (FileLocator installRelative resolve: 'Resources\LintRules.xml') asString!
 
 lintWarningIcon
 	^Icon fromId: 'LintWarning.ico'!

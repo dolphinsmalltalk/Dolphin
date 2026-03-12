@@ -79,7 +79,7 @@ browseForExecutableName
 		ifTrue: 
 			["Suggest a sensible default name"
 			defaultExtension := self value exeFileExtension.
-			filename := Filename path: rootPackage value packageFileName extension: defaultExtension].
+			filename := rootPackage value packageFullPath withExtension: defaultExtension].
 	filename := (FileSaveDialog on: filename)
 				fileTypes: (self exeFileTypes copyWith: FileDialog allFilesType);
 				defaultExtension: defaultExtension;
@@ -163,7 +163,7 @@ exeFileTypes
 hasExistingLog
 	"Answer true if the receiver has an existing log file"
 
-	^self hasLog and: [ File exists: logFileName value ]!
+	^self hasLog and: [logFileName value asPath exists]!
 
 hasLog
 	"Answer true if the receiver currently has a log file selected"

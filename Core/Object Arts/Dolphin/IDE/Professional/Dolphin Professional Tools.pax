@@ -443,8 +443,7 @@ queryBrowseDeployed: aCommandQuery
 	self singlePackage
 		ifNotNil: 
 			[:package |
-			aCommandQuery
-				isEnabled: (package hasImageStripper and: [File exists: package imageStripper logFileName])]! !
+			aCommandQuery isEnabled: (package hasImageStripper and: [package imageStripper logFileName exists])]! !
 
 !Tools.PackageSelector categoriesForMethods!
 browseDeployed!commands-actions!public! !

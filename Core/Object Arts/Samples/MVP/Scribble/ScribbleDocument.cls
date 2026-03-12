@@ -72,7 +72,7 @@ streamOut:!private!streaming! !
 !ScribbleDocument class methodsFor!
 
 defaultFileExtension
-	^Filename splitExtensionFrom: self fileType last!
+	^self fileType last asPath extension!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it

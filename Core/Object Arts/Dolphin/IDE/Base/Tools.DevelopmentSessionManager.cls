@@ -139,8 +139,9 @@ getInstallationDirectory
 	folder isNil
 		ifTrue: 
 			["Otherwise try the path to the VM"
-			folder := Filename splitPathFrom: VM fileName].
-	^Filename appendPathDelimiter: folder!
+			folder := VM fileName asPath directory]
+		ifFalse: [folder := folder asPath].
+	^folder withSeparator!
 
 imageStamp
 	"Answer the <DateAndTime> at which the image was last saved."
@@ -396,7 +397,7 @@ open: filename
 	the development environment"
 
 	| openMsg ext |
-	ext := (Filename splitExtensionFrom: filename) asUppercase.
+	ext := filename asPath extension asUppercase.
 	openMsg := ##(LookupTable new
 				at: 'PAC' put: #openPackage:;
 				at: 'PAX' put: #openPackage:;
@@ -414,13 +415,14 @@ openFd: anInteger mode: aSymbol
 openPackage: filename
 	"Private - Opens a file identified by the <readableString> filename as a package file"
 
-	| package name devsys |
+	| package name devsys path |
 	devsys := SmalltalkSystem current.
-	name := Filename splitStemFrom: filename.
+	path := filename.
+	name := path stem.
 	package := devsys packageManager packageNamed: name
 				ifNone: 
 					[| loaded |
-					loaded := devsys packageManager install: filename.
+					loaded := devsys packageManager install: path.
 					loaded notEmpty ifTrue: [package := loaded last]].
 	package notNil ifTrue: [package browse]!
 
@@ -465,15 +467,12 @@ playStartupSound
 		ifTrue: 
 			[(Sound fromFile: 'Resources\Startup.wav' usingLocator: FileLocator installRelative) woof]!
 
-popupHelpFile
-	^FileLocator installRelative localFileSpecFor: 'EducationCentrePopups7.hlp'!
-
 preStart
 	"Private - Sent before the secondary level startup code has a chance to run.
 	This allows us to user-defined actions after the system source is available,
 	but before the windowing and process systems, etc, have been started."
 
-	(File exists: PreStartFile) ifFalse: [^self].
+	PreStartFile asPath exists ifFalse: [^self].
 	"We can't use the TaskDialog here, so use the raw MessageBox API"
 	(User32
 		messageBox: nil
@@ -687,7 +686,7 @@ snapshot: fileName
 
 	^self
 		advanceImageVersionMinor;
-		primSnapshot: fileName
+		primSnapshot: fileName asUtf16String
 			backup: self backupOnImageSave
 			type: 0
 			maxObjects: nil!
@@ -757,7 +756,7 @@ versionString
 	^'<1s> <2d>' expandMacrosWith: self applicationShortName with: self productVersion majorMinorPatch!
 
 warning: aString
-	UI.MessageBox warning: aString! !
+	MessageBox warning: aString! !
 
 !Tools.DevelopmentSessionManager categoriesForMethods!
 advanceImageVersionMinor!operations-saving!public! !
@@ -806,7 +805,6 @@ patchLevel!patching!public! !
 patchLevel:!patching!private! !
 playImageSaveSound!operations-sounds!private! !
 playStartupSound!operations-sounds!private! !
-popupHelpFile!constants!public! !
 preStart!operations-startup!private! !
 primaryStartup!operations-startup!private! !
 processCommandLine!helpers!private! !

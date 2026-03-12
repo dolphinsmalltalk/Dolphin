@@ -18,11 +18,15 @@ Graphics.Gdiplus.AbstractImageFromFileInitializer comment: ''!
 
 = anObject
 	^self == anObject or: 
-			[self species = anObject species
-				and: [filename = anObject filename and: [fileLocator = anObject fileLocator]]]!
+			[self species = anObject species and: 
+					[(filename compareOrdinals: anObject filename ignoringCase: true) == 0
+						and: [fileLocator = anObject fileLocator]]]!
 
 absoluteFilename
-	^fileLocator isNil ifTrue: [filename] ifFalse: [fileLocator localFileSpecFor: filename]!
+	^self absolutePath asString!
+
+absolutePath
+	^fileLocator isNil ifTrue: [filename asPath] ifFalse: [fileLocator resolve: filename]!
 
 fileLocator
 	^fileLocator!
@@ -31,7 +35,7 @@ filename
 	^filename!
 
 filename: aFilename fileLocator: aFileLocator
-	filename := aFilename.
+	filename := aFilename asString.
 	fileLocator := aFileLocator.
 	^self!
 
@@ -61,6 +65,7 @@ printImage: aGdiplusImage on: aWriteStream
 !Graphics.Gdiplus.AbstractImageFromFileInitializer categoriesForMethods!
 =!comparing!public! !
 absoluteFilename!enquiries!public! !
+absolutePath!enquiries!public! !
 fileLocator!accessing!private! !
 filename!accessing!private! !
 filename:fileLocator:!initializing!private! !

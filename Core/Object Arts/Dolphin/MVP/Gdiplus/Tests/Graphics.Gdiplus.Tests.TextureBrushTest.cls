@@ -38,22 +38,23 @@ testPrintString
 	| printed model2 imageFilePath |
 	self newCanonicalModel.
 	printed := model printString.
-	imageFilePath := self fileResource resourceFileLocator localFileSpecFor: 'fish32x32.png'.
+	imageFilePath := self fileResource resourceFileLocator resolve: 'fish32x32.png'.
 	self assert: printed
-		equals: '(Gdiplus.TextureBrush image: (Gdiplus.Image fromFile: <1p>))' << imageFilePath.
+		equals: '(Gdiplus.TextureBrush image: (Gdiplus.Image fromFile: <1p>))'
+				<< (FileLocator default abstract: imageFilePath).
 	model2 := Compiler evaluate: printed.
 	self assert: model2 equals: model.
 	model2 free.
 	model translate: 5 @ 10.
 	self assert: model printString
 		equals: 'a Gdiplus.TextureBrush(image: (Gdiplus.Image fromFile: <1p>); transform: (Gdiplus.Matrix fromArray: #(1.0 0.0 0.0 1.0 5.0 10.0)))'
-				<< imageFilePath!
+				<< (FileLocator default abstract: imageFilePath)!
 
 testPrintString2
 	model := self createFullSubject.
 	self assert: model printString
 		equals: 'a Gdiplus.TextureBrush(image: (Gdiplus.Image fromFile: <1p>) wrapMode: Gdiplus.WrapModeClamp; transform: (Gdiplus.Matrix fromArray: #(1.0 0.0 0.0 1.0 5.0 10.0)))'
-				<< (self fileResource resourceFileLocator localFileSpecFor: 'fish32x32.png')!
+				<< (FileLocator default abstract: (self fileResource resourceFileLocator resolve: 'fish32x32.png'))!
 
 verifyEqualToModel: aGdiplusObject
 	super verifyEqualToModel: aGdiplusObject.

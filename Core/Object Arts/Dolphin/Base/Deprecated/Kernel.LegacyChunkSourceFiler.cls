@@ -209,11 +209,11 @@ emitPackagePrerequisiteNames: aPackage
 	(prereqs asSortedArray: [:a :b | a name <==> b name < 0]) do: 
 			[:each |
 			| filename |
-			filename := Filename fullPathOf: ((legacyPaths lookup: each name) ifNil: [each packagePathname])
-						relativeTo: SessionManager current imageBase.
+			filename := ((legacyPaths lookup: each name) ifNil: [each packagePathname]) asPath
+						fullPathRelativeTo: SessionManager current imageBase.
 			stream
 				tab;
-				print: (Filename removeExtension: (Filename relativePathOf: filename to: basePath))]
+				print: (filename asPath relativeTo: basePath) withoutExtension path]
 		separatedBy: [stream cr].
 	stream
 		nextPutAll: ').';

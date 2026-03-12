@@ -648,17 +648,18 @@ testExtCallRetNtStatus
 
 testExtendedCharsInCrashDump
 	| path dumped index |
-	path := File temporaryFilename.
-	VM
+	path := Path temporary.
+	
+	[VM
 		dump: 'abc' , (String with: Character dolphin)
-		path: path
+		path: path asUtf16String
 		stackDepth: 0
 		walkbackDepth: 1.
 	dumped := File readAllText: path.
 	index := dumped indexOf: Character dolphin.
 	self deny: index equals: 0.
-	self assert: dumped size > (index + 4).
-	File delete: path!
+	self assert: dumped size > (index + 4)]
+			ensure: [path deleteFile]!
 
 testFPFaultInPrimitive
 	"An FP fault occurring in a primitive should be reported in the primitive method, not some

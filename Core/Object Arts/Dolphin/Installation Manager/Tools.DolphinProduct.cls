@@ -40,7 +40,7 @@ basicLoad
 	self packagePaths do: 
 			[:each |
 			| name |
-			name := Filename splitStemFrom: each.
+			name := each stem.
 			packageManager packageNamed: name
 				ifNone: 
 					[[packageManager install: each] on: packageManager prerequisiteNotFoundSignal
@@ -102,9 +102,10 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\SemVer\Dolphin SemVer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Conformant Array Fields.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Legacy Package Support.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time.pax' #plain #imageBase);
+		add: #('Core\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-Legacy Date & Time.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Legacy File name API.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Anonymous Classes.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Command-line Parser.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser.pax' #plain #imageBased);
@@ -202,7 +203,7 @@ diskBasedPackages
 
 	| paths |
 	paths := self contents reject: [:each | (each at: 3) == #imageBased].
-	^paths collect: [:each | Filename splitStemFrom: (each at: 1)]!
+	^paths collect: [:each | (each at: 1) asPath stem]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -239,7 +240,7 @@ encryptedPackageNames
 
 	| encrypted |
 	encrypted := self contents select: [:each | (each at: 2) == #encrypted].
-	^encrypted collect: [:each | Filename splitStemFrom: (each at: 1)]!
+	^encrypted collect: [:each | (each at: 1) asPath stem]!
 
 foldLiterals
 	Class foldLiterals!
@@ -324,12 +325,12 @@ name
 packageNames
 	"Answer the list of package names associated with the receiver"
 
-	^self packagePaths collect: [:each | Filename splitStemFrom: each]!
+	^self packagePaths collect: [:each | each stem]!
 
 packagePaths
 	"Answer the list of package path names associated with the receiver"
 
-	^self contents collect: [:each | each at: 1 ]!
+	^self contents collect: [:each | (each at: 1) asPath ]!
 
 packages
 	"Answer the list of package associated with the receiver"
@@ -534,13 +535,11 @@ packages: wildcard under: directory encrypted: aBoolean
 	| base answer |
 	answer := OrderedCollection new.
 	base := SessionManager current imageBase.
-	File
-		forAll: wildcard
-		in: (Filename composePath: base subPath: directory)
+	base \ directory forAll: wildcard
 		do: 
 			[:each |
 			answer add: {
-						Filename relativePathOf: each path to: base.
+						(each fullPath relativeTo: base) asString.
 						aBoolean ifTrue: [#encrypted] ifFalse: [#plain].
 						#imageBased
 					}].

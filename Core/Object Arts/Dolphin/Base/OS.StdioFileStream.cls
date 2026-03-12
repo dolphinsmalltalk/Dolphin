@@ -376,7 +376,7 @@ nextPutAll: aCollection
 
 open: pathString mode: modeString flags: anInteger
 	(Ucrt
-		_wfsopen: pathString
+		_wfsopen: pathString asUtf16String
 		mode: modeString , self modeModifiers
 		shflag: (anInteger bitAnd: ShareModeMask))
 			ifNil: [CRTError signal]
@@ -776,12 +776,12 @@ on: aFile type: aSymbol
 	^(self classForEncoding: encoding) openFd: fd
 		mode: (aFile isWriteable ifTrue: [#readWrite] ifFalse: [#read])!
 
-open: aString mode: modeSymbol check: aBoolean type: encodingSymbol share: shareSymbol
+open: aPathOrString mode: modeSymbol check: aBoolean type: encodingSymbol share: shareSymbol
 	"Private - Open a file with _wfsopen"
 
 	| instance path exists mode flags concreteClass |
-	path := aString asUtf16String.
-	exists := (Kernel32 getFileAttributes: aString) ~= -1.
+	path := aPathOrString asPath.
+	exists := path exists.
 	modeSymbol == #create
 		ifTrue: 
 			["open an existing file, or create a new file, for read/write, positioned at the beginning. "

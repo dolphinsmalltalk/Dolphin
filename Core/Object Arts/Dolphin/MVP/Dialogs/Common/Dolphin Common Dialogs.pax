@@ -27,7 +27,8 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Core.File} #title)
 	#(#{Core.File class} #titleOf:)
-	#(#{Core.Filename class} #titleOf:)
+	#(#{Core.Path} #title)
+	#(#{Core.Path class} #titleOf:)
 ).
 
 package setVariableNames: #(
@@ -274,7 +275,7 @@ OS.NMHDR
 title
 	"Answer the receiver's 'title' (i.e. the display name)."
 
-	^Filename titleOf: self name! !
+	^Path titleOf: self name! !
 
 !Core.File categoriesForMethods!
 title!accessing!public! !
@@ -284,35 +285,48 @@ title!accessing!public! !
 
 titleOf: aString
 	#deprecated.
-	^Filename titleOf: aString! !
+	^Path titleOf: aString! !
 
 !Core.File class categoriesForMethods!
 titleOf:!filename manipulation!public! !
 !
 
-!Core.Filename class methodsFor!
+!Core.Path methodsFor!
+
+title
+	"Answer the 'title' (i.e. the display name) of a file with the specified path name.
+	The file title may or may not include the extension, depending on the user's configuration."
+
+	| buf len utf16 |
+	utf16 := path asUtf16String.
+	(len := ComDlg32
+				getFileTitle: utf16
+				lpszTitle: nil
+				cbBuf: 0) < 0
+		ifTrue: [ComDlg32 systemError: 123].
+	buf := Utf16String newFixed: len - 1.
+	(ComDlg32
+		getFileTitle: utf16
+		lpszTitle: buf
+		cbBuf: len) < 0
+		ifTrue: [ComDlg32 systemError: 123].
+	^buf! !
+
+!Core.Path categoriesForMethods!
+title!accessing!public! !
+!
+
+!Core.Path class methodsFor!
 
 titleOf: aString
 	"Answer the 'title' (i.e. the display name) of a file with the specified path name.
 	The file title may or may not include the extension, depending on the user's
 	configuration."
 
-	| buf len |
-	(len := ComDlg32
-				getFileTitle: aString
-				lpszTitle: nil
-				cbBuf: 0) < 0
-		ifTrue: [ComDlg32 systemError: 123].
-	buf := Utf16String newFixed: len - 1.
-	(ComDlg32
-		getFileTitle: aString
-		lpszTitle: buf
-		cbBuf: len) < 0
-		ifTrue: [ComDlg32 systemError: 123].
-	^buf! !
+	^aString asPath title! !
 
-!Core.Filename class categoriesForMethods!
-titleOf:!filename manipulation!public! !
+!Core.Path class categoriesForMethods!
+titleOf:!legacy File api!public! !
 !
 
 "End of package definition"!

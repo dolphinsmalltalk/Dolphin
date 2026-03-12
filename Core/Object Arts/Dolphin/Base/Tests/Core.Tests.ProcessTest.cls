@@ -516,13 +516,12 @@ testOverlappedLastError
 	self assert: OS.Kernel32 getLastError equals: 0.
 	OS.Kernel32 threadSetLastError: 0.
 	self assert: OS.Kernel32 threadGetLastError equals: 0.
-	temp1 := File temporaryFilename.
-	temp2 := File temporaryFilename.
-	File
-		delete: temp1;
-		delete: temp2.
+	temp1 := Path temporary.
+	temp2 := Path temporary.
+	temp1 deleteFile.
+	temp2 deleteFile.
 	self
-		should: [File copy: temp1 to: temp2]
+		should: [temp1 copyTo: temp2]
 		raise: OS.Win32Error
 		matching: [:ex | ex statusCode = 2].
 	self assert: Processor activeProcess lastError equals: 2.

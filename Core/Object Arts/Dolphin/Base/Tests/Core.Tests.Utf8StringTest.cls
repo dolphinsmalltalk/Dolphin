@@ -452,7 +452,7 @@ testAsUtf16StringMarkusKuhnUtf8Complete
 
 	| testFilePath bytes utf16 utf8 |
 	testFilePath := FileLocator imageRelative
-				localFileSpecFor: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
+				resolve: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
 	bytes := File readAllBytes: testFilePath.
 	utf8 := Utf8String fromByteArray: bytes.
 	utf16 := Utf16String fromBytes: bytes codePage: OS.NlsConstants.CP_UTF8.

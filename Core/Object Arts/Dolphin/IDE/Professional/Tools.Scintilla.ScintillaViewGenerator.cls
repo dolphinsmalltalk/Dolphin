@@ -1632,7 +1632,7 @@ parseEvent: aReadableStream
 parseFile
 	| filename |
 	filename := (FileOpenDialog on: 'scintilla.iface')
-				initialDirectory: (Filename removePathDelimiter: ScintillaView owningPackage path);
+				initialDirectory: ScintillaView owningPackage path withoutSeparator;
 				fileTypes: #(#('Scintilla Interface Files (*.iface)' '*.iface') #('All Files (*.*)' '*.*'));
 				defaultExtension: 'iface';
 				showModal.

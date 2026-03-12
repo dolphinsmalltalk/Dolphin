@@ -7,7 +7,6 @@ This package contains obsolete tools from the IDE and variables aliasing old glo
 
 
 package methodNames
-	add: #DevelopmentSessionManager -> #whatsThis:;
 	add: #SmalltalkSystem -> #classesReferencingPool:;
 	add: #SmalltalkSystem -> #classesReferencingPoolNamed:;
 	yourself.
@@ -20,24 +19,11 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'Development System'
-	'..\..\Base\Dolphin'
-	'..\..\MVP\Base\Dolphin MVP Base').
+	'..\..\Base\Dolphin').
 
 package!
 
 "Loose Methods"!
-
-!DevelopmentSessionManager methodsFor!
-
-whatsThis: object
-	| helpId |
-	#deprecated.	"The Windows Help program is no longer supported on Windows 10 and later."
-	helpId := object helpId.
-	View active winHelpPopup: self popupHelpFile topic: helpId! !
-
-!DevelopmentSessionManager categoriesForMethods!
-whatsThis:!commands!public! !
-!
 
 !SmalltalkSystem methodsFor!
 

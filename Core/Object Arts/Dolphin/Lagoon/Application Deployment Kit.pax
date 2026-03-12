@@ -315,14 +315,13 @@ editCustomOptions
 	inspector topShell caption: self class name , ' Properties'!
 
 executableName: aString
-	"Set the executable name to which the resultant stripped image will
-	be saved"
+	"Set the executable name to which the resultant stripped image will be saved"
 
-	executableName := FileLocator imageRelative relativePathTo: aString.
-	executableName notEmpty
-		ifTrue: 
-			["Default the file extension and save the path relative to the installation directory"
-			executableName := Filename default: executableName extension: self exeFileExtension]!
+	| relative |
+	relative := FileLocator imageRelative abstract: aString.
+	relative isEmpty ifTrue: [^self].
+	"Default the file extension and save the path relative to the installation directory"
+	executableName := (relative asPath withDefaultExtension: self exeFileExtension) asUtf8String!
 
 ignoreViewReferences: aBoolean
 	"Set whether view resources should NOT be scanned for references to other
@@ -498,8 +497,13 @@ stripUnreferencedLiterals: aBoolean
 stubFilePath: aString
 	"Set the path of a custom stub file."
 
-	stubFilePath := (aString isNil or: [aString sameAs: self _defaultStubFilePath]) 
-				ifFalse: [FileLocator imageRelative relativePathTo: aString]!
+	aString isNil
+		ifTrue: [stubFilePath := nil]
+		ifFalse: 
+			[| path |
+			path := aString asPath.
+			path = self _defaultStubFilePath
+				ifFalse: [stubFilePath := FileLocator imageRelative abstract: aString]]!
 
 versionResource: aVersionResource
 	"Set the <VersionResource> describing the version resource to be built into	

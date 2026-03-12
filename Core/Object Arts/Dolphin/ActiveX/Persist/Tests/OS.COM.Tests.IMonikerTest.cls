@@ -136,10 +136,10 @@ testFileMoniker
 	| subject path |
 	path := self class fileOutName.
 	subject := IMoniker forPath: path.
-	self assert: subject asString equals: path.
-	self assert: subject displayName equals: path.
-	self assert: subject displayString equals: path.
-	self assert: subject printString equals: 'an IMoniker(<p>)' << path.
+	self assert: subject asString equals: path asString.
+	self assert: subject displayName equals: path asString.
+	self assert: subject displayString equals: path asString.
+	self assert: subject printString equals: 'an IMoniker(<p>)' << path asString.
 	self deny: subject isRunning.
 	"Not sure why this is the case."
 	self assert: subject inverse asString equals: '\..'.
@@ -212,10 +212,10 @@ testRelativePathTo
 
 testTimeOfLastChange
 	| subject tmp |
-	tmp := File tempPath.
+	tmp := Path tempDirectory.
 	subject := IMoniker forPath: tmp.
 	"1) Time the temp dir was last modified"
-	self assert: subject timeOfLastChange equals: (File lastWriteTime: tmp).
+	self assert: subject timeOfLastChange equals: tmp lastWriteTime.
 	self shouldRaiseNotImplemented: [subject inverse timeOfLastChange].
 	subject free.
 

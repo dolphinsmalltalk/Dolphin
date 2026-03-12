@@ -50,7 +50,7 @@ columnTypeNameWideVarChar
 	^'VARCHAR'!
 
 databaseName
-	^Filename removeExtension: self databaseResource filename!
+	^self databaseResource filename asPath withoutExtension asString!
 
 databaseResource
 	^AccessNorthwindDB current!
@@ -187,8 +187,8 @@ testDSNlessConnection
 	| c connStr locator |
 	c := DBConnection new.
 	locator := Kernel.PackageRelativeFileLocator package: self class owningPackage.
-	connStr := 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' 
-				expandMacrosWith: (locator localFileSpecFor: 'Northwind.mdb')
+	connStr := 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1d>' 
+				expandMacrosWith: (locator resolve: 'Northwind.mdb')
 				with: locator basePath.
 	c connectString: connStr.
 	c connect.

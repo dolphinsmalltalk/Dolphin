@@ -10,29 +10,28 @@ Core.FileLocator
 
 Kernel.AbsoluteFileLocator guid: (Core.GUID fromString: '{0c174885-6aa9-43e4-98c3-a59915f5b3d7}')!
 
-Kernel.AbsoluteFileLocator comment: 'An AbsoluteFileLocator is used to indicate the location of an external file that may be referenced within the image. 
+Kernel.AbsoluteFileLocator comment: 'An `AbsoluteFileLocator` is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files by their full absolute path.
 
 Try the following examples:
-
-relativePath := FileLocator absolute relativePathTo: SessionManager current imageFileName. "Display It"
-FileLocator absolute localFileSpecFor: relativePath. "Display It"'!
+```
+relativePath := FileLocator absolute abstract: SessionManager current imageFileName. "Display It"
+FileLocator absolute resolve: relativePath. "Display It"
+``'!
 
 !Kernel.AbsoluteFileLocator categoriesForClass!System-Support! !
 
 !Kernel.AbsoluteFileLocator methodsFor!
 
+abstract: aPathOrString
+	"Answer a <readableString> token for the resource with the specified <Path> or <readableString> path argument. In the case of the receiver, the answer will be a fully-qualified path."
+
+	^aPathOrString asPath fullPath path!
+
 isSelfEvaluating
 	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
 
 	^true!
-
-localFileSpecFor: aStringFilename
-	"Answer a filespec for aStringFilename, which is expected to be an absolute path already."
-
-	^aStringFilename
-
-!
 
 printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
@@ -41,18 +40,17 @@ printOn: aStream
 		print: self class;
 		nextPutAll: ' current'!
 
-relativePathTo: aFilename
-	"Answer a minimal <readableString> relative path to the resource with the 
-	specified <readableString> path, which the receiver can map back to a full
-	path via its #localFileSpecFor: method. In this case we need an absolute path."
+resolve: aString
+	"Answer a full <Path> for the argument, which is expected to be the internal representation of a Path created be a previous call to #abstract: on this or an equivalent locator. 
+	In this case we expect that the argument will be a fully qualified path because this locator 'abstracts' to such."
 
-	^Filename fullPathOf: aFilename! !
+	^aString asPath! !
 
 !Kernel.AbsoluteFileLocator categoriesForMethods!
+abstract:!mapping!public! !
 isSelfEvaluating!public!testing! !
-localFileSpecFor:!accessing!public! !
 printOn:!printing!public! !
-relativePathTo:!accessing!public! !
+resolve:!mapping!public! !
 !
 
 !Kernel.AbsoluteFileLocator class methodsFor!
@@ -60,7 +58,7 @@ relativePathTo:!accessing!public! !
 current
 	"Answer the singleton instance of the receiver"
 
-	Current isNil ifTrue: [ Current := self new ].
+	Current isNil ifTrue: [Current := self basicNew].
 	^Current!
 
 onPreStripImage

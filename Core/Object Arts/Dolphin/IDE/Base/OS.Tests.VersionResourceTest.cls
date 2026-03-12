@@ -41,8 +41,8 @@ modifyVersionResource: versionResource
 setUp
 	| pVer header |
 	super setUp.
-	updatePath := File temporaryFilename.
-	File copy: self sourcePath to: updatePath.
+	updatePath := Path temporary.
+	self sourcePath copyTo: updatePath.
 	sourceModule := Module open: self sourcePath.
 	pVer := VersionResource getVersionResourceOfModule: sourceModule.
 	header := VS_VERSION_INFO_HEADER fromAddress: pVer.
@@ -51,11 +51,11 @@ setUp
 
 sourcePath
 	^(FolderRelativeFileLocator basePath: SessionManager current installationDirectory)
-		localFileSpecFor: 'GUIToGo.exe'!
+		resolve: 'GUIToGo.exe'!
 
 tearDown
 	sourceModule close.
-	File delete: updatePath.
+	updatePath deleteFile.
 	super tearDown!
 
 testRoundTripUnpackPack

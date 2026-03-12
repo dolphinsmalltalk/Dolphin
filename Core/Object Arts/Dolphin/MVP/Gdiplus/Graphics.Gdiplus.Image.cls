@@ -425,7 +425,7 @@ mimeType
 	"Answer the <readableString> mimeType of the filename associated with the receiver.
 	NB:  Problem with this is that a GdiplusBitmap doesn't have a filename."
 
-	^self class encoderMimeTypeForExtension: (Filename splitExtensionFrom: self filename)!
+	^self class encoderMimeTypeForExtension: self path extension!
 
 palette
 	"Answer the receiver's color palette, a <ColorPalette>."
@@ -451,6 +451,12 @@ paletteSize
 	size := UInt32Bytes new.
 	Gdip gdipGetImagePaletteSize: self asParameter size: size.
 	^size asInteger!
+
+path
+	"Answer the <Path> of the file associated with the receiver.
+	NB:  A GdiplusBitmap doesn't have a filename."
+
+	^self initializer absolutePath!
 
 pixelFormat
 	| flags |
@@ -606,23 +612,24 @@ saveFramesToFiles
 	"Save the receiver's frames to files with names constructed from the receiver's filename and the frame 
 	index (e.g., file00.gif, file01.gif, etc)."
 
-	self saveFramesToFiles: (Filename splitPathFrom: self filename)!
+	self saveFramesToFiles: self path directory!
 
 saveFramesToFiles: directoryString
 	"Save the receiver's frames to files in the specified directory with names constructed 
 	from the receiver's filename and the frame index (e.g., file00.gif, file01.gif, etc).  
 	Use the image encoder associated with the file's extension."
 
-	| frameCount stem digits toFile ext |
+	| frameCount stem digits toFile ext path |
 	(frameCount := self frameCount) = 1 ifTrue: [^nil].
-	stem := Filename splitStemFrom: self filename.
-	ext := Filename splitExtensionFrom: self filename.
+	path := self filename.
+	stem := path stem.
+	ext := path extension.
 	digits := frameCount numberOfDigitsInBase: 10.
 	0 to: frameCount - 1
 		do: 
 			[:i |
-			toFile := Filename
-						composePath: directoryString
+			toFile := Path
+						compose: directoryString
 						stem: (String writeStream
 								nextPutAll: stem;
 								nextPutAll: (i printStringBase: 10 nDigits: digits);
@@ -644,7 +651,7 @@ saveToFile: pathString clsidEncoder: aCLSIDEncoder encoderParams: aGpEncoderPara
 
 	Gdip
 		gdipSaveImageToFile: self asParameter
-		filename: pathString
+		filename: pathString asUtf16String
 		clsidEncoder: aCLSIDEncoder
 		encoderParams: aGpEncoderParameters!
 
@@ -660,9 +667,11 @@ saveToFile: pathString encoderParams: aGpEncoderParameters
 	"Save the receiver to the specified file with parameters specified by aGpEncoderParameters.
 	Use the image encoder associated with the file's extension."
 
+	| path |
+	path := pathString asPath.
 	self
-		saveToFile: pathString
-		clsidEncoder: (self class encoderClsidForExtension: (Filename splitExtensionFrom: pathString))
+		saveToFile: path
+		clsidEncoder: (self class encoderClsidForExtension: pathString extension)
 		encoderParams: aGpEncoderParameters!
 
 saveToIStream: pStream mimeType: mimeString 
@@ -820,6 +829,7 @@ mimeType!accessing!public! !
 palette!accessing!public! !
 palette:!accessing!public! !
 paletteSize!accessing!private! !
+path!accessing!public! !
 pixelFormat!accessing!public! !
 pixelFormatName!accessing!public! !
 printOn:!printing!public! !
@@ -1002,10 +1012,14 @@ fromFile: aFilename
 
 	^self fromFile: aFilename usingLocator: FileLocator default!
 
-fromFile: aFilename usingLocator: aFileLocator
+fromFile: aPathOrString usingLocator: aFileLocator
 	"Answer an instance of the receiver created from data in the specified file."
 
-	^self fromInitializer: (ImageFromFileInitializer filename: aFilename fileLocator: aFileLocator)!
+	| relativeFilename |
+	relativeFilename := (aFileLocator isNil or: [aPathOrString asPath isRelative])
+				ifTrue: [aPathOrString asString]
+				ifFalse: [aFileLocator abstract: aPathOrString].
+	^self fromInitializer: (ImageFromFileInitializer filename: relativeFilename fileLocator: aFileLocator)!
 
 fromIStream: pStream
 	"Answer an instance of the receiver created from data in the specified IStream."

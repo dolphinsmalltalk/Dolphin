@@ -76,7 +76,7 @@ testHotspot
 
 	self
 		assert: (Cursor fromFile: (FileLocator installRelative
-						localFileSpecFor: 'Core\Contributions\IDB\Resources\ImageEditor.cur'))
+						resolve: 'Core\Contributions\IDB\Resources\ImageEditor.cur'))
 				hotspot
 		equals: 15 @ 15!
 

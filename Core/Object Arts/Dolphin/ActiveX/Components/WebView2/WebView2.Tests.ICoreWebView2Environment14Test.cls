@@ -56,22 +56,20 @@ testControllerOptions4
 
 testCreateDirectoryHandle
 	| fileHandle tmp |
-	tmp := File tempPath.
+	tmp := Path tempDirectory asString.
 	fileHandle := webviewEnvironment createWebFileSystemDirectoryHandle: tmp
 				permission: COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_ONLY.
 	self assert: fileHandle path equals: tmp.
-	self assert: fileHandle permission
-		equals: COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_ONLY.
+	self assert: fileHandle permission equals: COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_ONLY.
 	self assert: fileHandle kind equals: COREWEBVIEW2_FILE_SYSTEM_HANDLE_KIND_DIRECTORY!
 
 testCreateFileHandle
 	| fileHandle tmp |
-	tmp := File temporaryFilename.
+	tmp := Path temporaryFilename.
 	fileHandle := webviewEnvironment createWebFileSystemFileHandle: tmp
 				permission: COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_WRITE.
 	self assert: fileHandle path equals: tmp.
-	self assert: fileHandle permission
-		equals: COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_WRITE.
+	self assert: fileHandle permission equals: COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_WRITE.
 	self assert: fileHandle kind equals: COREWEBVIEW2_FILE_SYSTEM_HANDLE_KIND_FILE! !
 
 !WebView2.Tests.ICoreWebView2Environment14Test categoriesForMethods!

@@ -22,7 +22,7 @@ package!
 
 Core.Object
 	subclass: #'UI.Folder'
-	instanceVariableNames: 'pathname'
+	instanceVariableNames: 'path'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

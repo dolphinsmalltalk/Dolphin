@@ -19,10 +19,10 @@ helloWorld
 
 setUp
 	super setUp.
-	temp := File temporaryFilename!
+	temp := Path temporary!
 
 tearDown
-	(File exists: temp) ifTrue: [File delete: temp].
+	temp exists ifTrue: [temp deleteFile].
 	super tearDown!
 
 testAppendToFile
@@ -36,7 +36,7 @@ testAppendToFile
 
 testAppendToNonExistantFile
 	self
-		should: [IStream write: temp , 'x' mode: #append]
+		should: [IStream write: temp asString, 'x' mode: #append]
 		raise: HRESULTError
 		matching: [:ex | ex statusCode = ERROR_FILE_NOT_FOUND]!
 
@@ -59,7 +59,7 @@ testCreateExistingFile
 
 testReadNonExistantFile
 	self
-		should: [IStream read: temp , 'x']
+		should: [IStream read: temp asString, 'x']
 		raise: HRESULTError
 		matching: [:ex | ex statusCode = ERROR_FILE_NOT_FOUND]!
 
@@ -84,8 +84,8 @@ testStat
 	self writeHelloWorldFile.
 	subject := IStream read: temp.
 	stat := subject stat.
-	self assert: stat pwcsName equals: (Filename splitFilenameFrom: temp).
-	self assert: stat mtime equals: (File lastWriteTime: temp).
+	self assert: stat pwcsName equals: temp fileName.
+	self assert: stat mtime equals: temp lastWriteTime.
 	self assert: stat grfMode equals: STGM_READ | STGM_SHARE_DENY_WRITE.
 	self assert: stat isOLEStream.
 	self assert: stat grfLocksSupported equals: 0.

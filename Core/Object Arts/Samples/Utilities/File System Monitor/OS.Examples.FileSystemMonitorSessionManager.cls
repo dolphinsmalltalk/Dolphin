@@ -19,11 +19,11 @@ OS.Examples.FileSystemMonitorSessionManager comment: ''!
 main
 	| fsm |
 	fsm := self mainShellClass show.
-	self argc > 1 
+	self argc > 1
 		ifTrue: 
 			[| path |
 			path := self argv at: 2.
-			(File isDirectory: path) ifTrue: [fsm directory: path]]! !
+			path asPath isDirectory ifTrue: [fsm directory: path]]! !
 
 !OS.Examples.FileSystemMonitorSessionManager categoriesForMethods!
 main!operations!public! !

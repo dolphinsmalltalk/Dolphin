@@ -40,7 +40,6 @@ package setClassNames: #(
 	#{Core.Tests.ExceptionTesterClasses}
 	#{Core.Tests.FalseTest}
 	#{Core.Tests.FileLocatorTest}
-	#{Core.Tests.FilenameTest}
 	#{Core.Tests.FileStreamTest}
 	#{Core.Tests.FileTest}
 	#{Core.Tests.FileWriteStreamTest}
@@ -67,6 +66,7 @@ package setClassNames: #(
 	#{Core.Tests.OrderedCollectionTest}
 	#{Core.Tests.OrderedDictionaryTest}
 	#{Core.Tests.PairTest}
+	#{Core.Tests.PathTest}
 	#{Core.Tests.PluggableSetTest}
 	#{Core.Tests.PositionableStreamTest}
 	#{Core.Tests.ProcessTest}
@@ -548,16 +548,8 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 
 Core.Tests.DolphinTest
-	subclass: #'Core.Tests.FilenameTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FileTest'
-	instanceVariableNames: 'tempFile'
+	instanceVariableNames: 'tempFile tempDir'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})
 	classInstanceVariableNames: ''
@@ -736,6 +728,14 @@ Core.Tests.DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Tests.DolphinTest
+	subclass: #'Core.Tests.PathTest'
+	instanceVariableNames: 'tempDir'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants} #{OS.CRTLibrary} #{OS} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1936,10 +1936,11 @@ writeJunitTestLog: aTestSuite result: aTestResult
 		skipped: classSkipped.
 	suiteNode free.
 	suitesNode free.
-	doc save: (Filename
-				composePath: SessionManager current imageBase
+	doc
+		save: (Path
+				compose: SessionManager current imageBase
 				stem: suiteName
-				extension: 'xml').
+				extension: 'xml') asUtf16String.
 	doc free! !
 
 !Tools.SmalltalkSystem categoriesForMethods!

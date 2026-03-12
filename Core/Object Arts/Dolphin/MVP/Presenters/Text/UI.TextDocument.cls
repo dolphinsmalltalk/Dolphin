@@ -93,7 +93,7 @@ openFile: pathString
 	"Open the file with the <readableString> path, pathString, prompting in the standard Notepad
 	fashion if it doesn't exist."
 
-	(File exists: pathString)
+	pathString asPath exists
 		ifTrue: 
 			[self
 				filename: pathString;

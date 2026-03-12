@@ -48,6 +48,7 @@ package setMethodNames: #(
 	#(#{Core.NotificationSignal class} #icon)
 	#(#{Core.Number class} #icon)
 	#(#{Core.OperationAborted class} #icon)
+	#(#{Core.Path class} #icon)
 	#(#{Core.Process class} #icon)
 	#(#{Core.ScaledDecimal class} #icon)
 	#(#{Core.SearchPolicy class} #icon)
@@ -633,6 +634,19 @@ icon
 	^Graphics.Icon warning! !
 
 !Core.OperationAborted class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Core.Path class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((UI.TextTileIcon text: '‥\f' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		yourself)! !
+
+!Core.Path class categoriesForMethods!
 icon!constants!public! !
 !
 

@@ -38,18 +38,18 @@ basicCaption
 
 	^''!
 
-buildRecentFilesMenu: aMenyu
-	aMenyu clear.
+buildRecentFilesMenu: aMenu
+	| baseDir |
+	aMenu clear.
+	baseDir := self filename asPath directory.
 	self getRecentList do: 
 			[:each |
 			| nameToDisplay |
 			nameToDisplay := each.
 			self hasFilename
-				ifTrue: 
-					[nameToDisplay := (FolderRelativeFileLocator basePath: (Filename splitPathFrom: self filename))
-								relativePathTo: each].
-			aMenyu addCommand: (Message selector: #openOn: argument: each) description: nameToDisplay].
-	aMenyu
+				ifTrue: [nameToDisplay := (FolderRelativeFileLocator basePath: baseDir) abstract: each].
+			aMenu addCommand: (Message selector: #openOn: argument: each) description: nameToDisplay].
+	aMenu
 		addSeparator;
 		addCommand: (Message selector: #fileClearRecentList) description: 'Clear Recent List'!
 
@@ -262,7 +262,7 @@ saveDocumentAs
 				caption: 'Save Document As…';
 				showModal.
 	(proceed := newFilename notNil and: 
-					[(File exists: newFilename) not or: 
+					[newFilename asPath exists not or: 
 							[MessageBox new
 								headline: 'Overwrite <1s>?' << newFilename;
 								iconStyle: #warning;
@@ -292,7 +292,7 @@ shortCaption
 		ifTrue: 
 			[| stream |
 			stream := String writeStream: 32.
-			stream nextPutAll: (Filename splitFilenameFrom: self filename).
+			stream nextPutAll: self filename asPath fileName.
 			self isModified ifTrue: [stream nextPut: $*].
 			stream contents]
 		ifFalse: [super shortCaption]!
@@ -315,7 +315,7 @@ updateCaption
 
 	| stream suffix |
 	stream := String writeStream: 64.
-	stream nextPutAll: (self hasFilename ifTrue: [self filename] ifFalse: ['Untitled']).
+	stream display: (self hasFilename ifTrue: [self filename] ifFalse: ['Untitled']).
 	suffix := self basicCaption.
 	suffix notEmpty
 		ifTrue: 

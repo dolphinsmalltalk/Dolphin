@@ -15,17 +15,17 @@ Core.Tests.FileLocatorTest comment: ''!
 !Core.Tests.FileLocatorTest methodsFor!
 
 testAbsoluteFileLocator
-	| locator workingDir relative absolute |
+	| locator workingDir relative absolute dir |
 	locator := FileLocator absolute.
 	self assert: locator isSelfEvaluating.
 	self assert: (Compiler evaluate: locator printString) equals: locator.
-	workingDir := File workingDirectory.
-	absolute := SessionManager current imageFileName.
-	relative := Filename relativePathOf: absolute to: workingDir.
-	"Rather counterintuitively from an API perspective, the absolute locator will convert a path relative to the working directory to an absolute path when sent #relativePathTo:, but this is because that API is misnamed. Really we are asking the locator to convert a path to the minimal form that it can reverse back to a full path, i.e. translate to locator namespace. For an absolute locator, the minimal form is always a full path."
-	self assert: (locator relativePathTo: relative) equals: absolute.
+	dir := OS.Kernel32 getCurrentDirectory.
+	workingDir := Path fromString: (dir lastCodeUnit == $\ ifTrue: [dir] ifFalse: [dir , '\']).
+	absolute := SessionManager current imageFileName asPath.
+	relative := absolute relativeTo: workingDir.
+	self assert: (locator abstract: relative) equals: absolute asString.
 	"Doesn't perform any translation to local file spec (which is really the request for the locator to map from a path in its minimal form back to the full path of the file, i.e. translate from locator namespace to global namespace)"
-	self assert: (locator localFileSpecFor: absolute) equals: absolute!
+	self assert: (locator resolve: absolute) equals: absolute!
 
 testImageRelativeFileLocator
 	| locator relative fullpath |
@@ -34,41 +34,40 @@ testImageRelativeFileLocator
 	self assert: (Compiler evaluate: locator printString) equals: locator.
 
 	"File in base directory."
-	fullpath := Filename composePath: SessionManager current imageBase subPath: 'dolphin.img'.
-	relative := locator relativePathTo: fullpath.
-	self assert: relative equals: 'dolphin.img'.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath.
+	fullpath := SessionManager current imageBase \ 'dolphin.img'.
+	relative := locator abstract: fullpath.
+	self assert: relative asString equals: 'dolphin.img'.
+	self assert: (locator resolve: relative) equals: fullpath.
 
 	"File in sub-directory"
-	fullpath := Filename composePath: SessionManager current imageBase subPath: 'backup\dolphin.img'.
-	relative := locator relativePathTo: fullpath.
+	fullpath := SessionManager current imageBase \ 'backup\dolphin.img'.
+	relative := locator abstract: fullpath.
 	self assert: relative equals: 'backup\dolphin.img'.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath.
+	self assert: (locator resolve: relative) equals: fullpath.
 
 	"File in parent directory"
-	fullpath := Filename composePath: SessionManager current imageBase subPath: '..\dolphin.img'.
-	relative := locator relativePathTo: fullpath.
-	self assert: relative equals: fullpath.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath.
+	fullpath := SessionManager current imageBase asPath combinedWith: '..\dolphin.img'.
+	relative := locator abstract: fullpath.
+	self assert: relative equals: fullpath asString.
+	self assert: (locator resolve: relative) equals: fullpath.
 
 	"File in sibling directory"
-	fullpath := Filename composePath: SessionManager current imageBase
-				subPath: '..\dolphin4\dolphin.img'.
-	relative := locator relativePathTo: fullpath.
-	self assert: relative equals: fullpath.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath.
+	fullpath := (SessionManager current imageBase \ '..\dolphin4\dolphin.img') canonicalized.
+	relative := locator abstract: fullpath.
+	self assert: relative equals: fullpath asString.
+	self assert: (locator resolve: relative) equals: fullpath.
 
 	"File in different hierarchy - should use absolute path"
 	fullpath := 'd:\blah\blah.txt'.
-	relative := locator relativePathTo: fullpath.
+	relative := locator abstract: fullpath.
 	self assert: relative equals: fullpath.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath.
+	self assert: (locator resolve: relative) path equals: fullpath.
 
 	"File in different drive - should use absolute path"
 	fullpath := 'c:\winnt\system32\user32.dll'.
-	relative := locator relativePathTo: fullpath.
+	relative := locator abstract: fullpath.
 	self assert: relative equals: fullpath.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath!
+	self assert: (locator resolve: relative) path equals: fullpath!
 
 testInstallRelativeFileLocator
 	| locator relative fullpath base |
@@ -78,41 +77,40 @@ testInstallRelativeFileLocator
 
 	"File in base directory."
 	base := SessionManager current installationDirectory.
-	fullpath := Filename composePath: base subPath: 'dolphin.img'.
-	relative := locator relativePathTo: fullpath.
+	fullpath := base \ 'dolphin.img'.
+	relative := locator abstract: fullpath.
 	self assert: relative equals: 'dolphin.img'.
-	self assert: ((locator localFileSpecFor: relative) sameAs: fullpath).
+	self assert: (locator resolve: relative) equals: fullpath.
 
 	"File in sub-directory"
-	fullpath := Filename composePath: base subPath: 'backup\dolphin.img'.
-	relative := locator relativePathTo: fullpath.
+	fullpath := base \ 'backup\dolphin.img'.
+	relative := locator abstract: fullpath.
 	self assert: relative equals: 'backup\dolphin.img'.
-	self assert: ((locator localFileSpecFor: relative) sameAs: fullpath).
+	self assert: (locator resolve: relative) equals: fullpath.
 
 	"File in parent directory"
-	fullpath := Filename composePath: SessionManager current imageBase subPath: '..\dolphin.img'.
-	relative := locator relativePathTo: fullpath.
-	self assert: relative equals: fullpath.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath.
+	fullpath := (SessionManager current imageBase \ '..\dolphin.img') canonicalized.
+	relative := locator abstract: fullpath.
+	self assert: relative asPath equals: fullpath.
+	self assert: (locator resolve: relative) equals: fullpath.
 
 	"File in sibling directory"
-	fullpath := Filename composePath: SessionManager current imageBase
-				subPath: '..\dolphin4\dolphin.img'.
-	relative := locator relativePathTo: fullpath.
-	self assert: relative equals: fullpath.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath.
+	fullpath := SessionManager current imageBase asPath combinedWith: '..\dolphin4\dolphin.img'.
+	relative := locator abstract: fullpath.
+	self assert: relative asPath equals: fullpath.
+	self assert: (locator resolve: relative) equals: fullpath.
 
 	"File in different hierarchy - should use absolute path"
 	fullpath := 'd:\blah\blah.txt'.
-	relative := locator relativePathTo: fullpath.
+	relative := locator abstract: fullpath.
 	self assert: relative equals: fullpath.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath.
+	self assert: (locator resolve: relative) path equals: fullpath.
 
 	"File in different drive - should use absolute path"
 	fullpath := 'c:\winnt\system32\user32.dll'.
-	relative := locator relativePathTo: fullpath.
+	relative := locator abstract: fullpath.
 	self assert: relative equals: fullpath.
-	self assert: (locator localFileSpecFor: relative) equals: fullpath! !
+	self assert: (locator resolve: relative) path equals: fullpath! !
 
 !Core.Tests.FileLocatorTest categoriesForMethods!
 testAbsoluteFileLocator!public!unit tests! !

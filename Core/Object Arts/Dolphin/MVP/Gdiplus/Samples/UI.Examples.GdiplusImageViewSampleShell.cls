@@ -34,7 +34,7 @@ Instance Variables:
 attemptDisplayOABitmap
 	"Try opening an OA bitmap ... will show warning icon in deployed version"
 
-	filename := FileLocator installRelative localFileSpecFor: 'Resources/Splash.jpg'.
+	filename := FileLocator installRelative resolve: 'Resources/Splash.jpg'.
 	[self displayImage] on: Error
 		do: 
 			[:e |
@@ -56,7 +56,7 @@ createSchematicWiring
 
 displayImage
 	| theImage |
-	self caption: filename.
+	self caption: filename asString.
 	theImage := self useImageClass fromFile: filename.
 	theImage handle.
 	image value: theImage!

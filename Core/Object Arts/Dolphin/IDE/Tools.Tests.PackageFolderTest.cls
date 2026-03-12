@@ -25,6 +25,7 @@ testForPackage
 	dolphinPackage := Object owningPackage.
 	dolphinPackageFolder := dolphinPackage packageFolder.
 	dolphin := self folderClass forPackage: dolphinPackage.
+	self assert: dolphin path equals: Object owningPackage packagePath directory.
 	self assert: dolphin name equals: 'Base'.
 	self assert: dolphin folderName equals: '$\' , dolphinPackageFolder! !
 

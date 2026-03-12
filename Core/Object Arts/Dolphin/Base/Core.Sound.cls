@@ -47,7 +47,7 @@ play: anInteger
 	"Private - Play the receiver with the specified flags. Answer whether it succeeded."
 
 	| soundName |
-	soundName := fileLocator ifNotNil: [fileLocator localFileSpecFor: name] ifNil: [name].
+	soundName := fileLocator ifNotNil: [(fileLocator resolve: name) asUtf16String] ifNil: [name].
 	^OS.WinMMLibrary default
 		playSound: soundName asResourceId
 		hmod: location asParameter
@@ -149,12 +149,11 @@ fromFile: aString
 
 	^self fromFile: aString usingLocator: FileLocator default!
 
-fromFile: aString usingLocator: aFileLocator
-	"Answer a new instance of the receiver from the wave file named aString
-	using aFileLocator."
+fromFile: aPathOrString usingLocator: aFileLocator
+	"Answer a new instance of the receiver from the wave file named aPathOrString using aFileLocator."
 
 	^self new
-		name: (aFileLocator relativePathTo: aString);
+		name: (aFileLocator abstract: aPathOrString);
 		fileLocator: aFileLocator;
 		type: SND_FILENAME | SND_ASYNC;
 		yourself!

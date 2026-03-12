@@ -29,7 +29,7 @@ basicCreateHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	Gdip gdipCreateBitmapFromFile: self absoluteFilename bitmap: gpHandle.
+	Gdip gdipCreateBitmapFromFile: self absolutePath asUtf16String bitmap: gpHandle.
 	^gpHandle! !
 
 !Graphics.Gdiplus.BitmapFromFileInitializer categoriesForMethods!

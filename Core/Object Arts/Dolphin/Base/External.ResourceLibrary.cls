@@ -50,17 +50,18 @@ open: aString
 	[self basicOpen: name] on: Win32Error
 		do: 
 			[:e1 |
-			| filename |
+			| path filename |
+			path := name asPath.
 			"Supplied path didn't work"
-			((Filename splitPathFrom: name) notEmpty and: 
+			(path hasDirectory and: 
 					["previously pathed, so try stem only"
-					self attemptToOpen: (Filename splitStemFrom: name)])
+					self attemptToOpen: path stem])
 				ifTrue: [^self].
-			filename := Filename splitFilenameFrom: name.
+			filename := path fileName.
 			"Try the current image path"
-			(self attemptToOpen: (FileLocator imageRelative localFileSpecFor: filename)) ifTrue: [^self].
+			(self attemptToOpen: (FileLocator imageRelative resolve: filename)) ifTrue: [^self].
 			"Finally try the installation path"
-			(self attemptToOpen: (FileLocator installRelative localFileSpecFor: filename)) ifTrue: [^self].
+			(self attemptToOpen: (FileLocator installRelative resolve: filename)) ifTrue: [^self].
 			"No luck, report the original error as a notification"
 			Notification
 				signal: 'Resource library ' , fileName , ' could not be opened (' , e1 description , ')'].
@@ -94,7 +95,7 @@ aliasFor: aString
 
 	| libName |
 	libName := aString asLowercase.
-	^(Libraries at: (Filename splitStemFrom: libName) ifAbsent: [^libName]) fileName!
+	^(Libraries at: libName asPath stem ifAbsent: [^libName]) fileName!
 
 defaultLoadFlags
 	"Private - Answer the default LoadLibraryEx() flags to be used when loading	instances of the receiver. For resource libraries we only want access to the data/resources in the library, not any code."
@@ -137,9 +138,8 @@ open: aString withAliases: aCollection flags: anInteger
 	"Register the <collection> of <readableString>s, aCollection, as aliases for the  external resource library with the <readableString> path, aString, using the LoadLibraryEx() flags in the <integer> argument if a new library needs to be opened. Answer the new (or existing) external resource library instance.
 	N.B. The register of instances is weak. If the library instance is not referenced from elsewhere, then the alias will be lost and will need to be re-registered."
 
-	| lib path aliases |
-	path := Filename default: aString asLowercase extension: 'dll'.
-	aliases := aCollection.
+	| lib path |
+	path := (aString asLowercase asPath withDefaultExtension: 'dll') asString.
 	lib := (Libraries lookup: path)
 				ifNil: 
 					[| newLib fullPath |
@@ -161,7 +161,8 @@ open: aString withAliases: aCollection flags: anInteger
 									[:existing |
 									newLib close.
 									Libraries at: path put: existing]]].
-	aliases do: [:alias | Libraries at: (Filename default: alias extension: 'dll') put: lib].
+	aCollection
+		do: [:alias | Libraries at: (alias asPath withDefaultExtension: 'dll') asString put: lib].
 	^lib! !
 
 !External.ResourceLibrary class categoriesForMethods!

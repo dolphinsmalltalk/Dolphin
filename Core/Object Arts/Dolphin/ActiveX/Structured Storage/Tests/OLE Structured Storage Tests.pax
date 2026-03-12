@@ -100,8 +100,8 @@ verifyIStreamStat
 	istream := subject queryInterface: IStream.
 	stat := istream stat.
 	self assert: stat isFinalizable.
-	self assert: stat name equals: tempFileName.
-	self assert: stat mtime equals: (File lastWriteTime: tempFileName).
+	self assert: stat name asPath equals: tempFileName.
+	self assert: stat mtime equals: tempFileName lastWriteTime.
 	self assert: stat grfMode
 		equals: StorageConstants.STGM_READ | StorageConstants.STGM_SHARE_DENY_WRITE.
 	self assert: stat isOLEStream.

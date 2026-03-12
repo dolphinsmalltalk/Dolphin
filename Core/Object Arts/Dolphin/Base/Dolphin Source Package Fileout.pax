@@ -106,7 +106,7 @@ canFileOut
 	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
 	the file out file is writeable"
 
-	^File isWriteable: self fileOutName!
+	^self fileOutName isWriteable!
 
 fileOut
 	"File out the receiver's definition to a class file in the receiver's
@@ -349,7 +349,7 @@ emitPackagePrerequisiteNames: aPackage
 	basePath := aPackage path.
 	self
 		emitPackageCollection: ((aPackage prerequisites asSortedArray: [:a :b | a name <==> b name < 0])
-				collect: [:each | Filename removeExtension: (Filename relativePathOf: each packageFileName to: basePath)])
+				collect: [:each | (each packageFullPath relativeTo: basePath) withoutExtension asString])
 		initializer: #setPrerequisites:!
 
 emitPackageUntracedVariables: aPackage
@@ -414,8 +414,8 @@ beNotUsingPAX
 		customButtons: #(#(#yes 'Con&vert') #(#no 'Cancel'));
 		isCancellable: true;
 		confirm: 'Placing this package into PAC mode will delete <2p> PAX source files in the directory <3s>'
-					<< {self name. names size. self path})
-			ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
+					<< { self name. names size. self directoryName })
+			ifTrue: [names do: [:each | each exists ifTrue: [each deleteFile]]]!
 
 beUsingPAX
 	"Place the receiver into a mode where it is using PAX source files.
@@ -429,14 +429,14 @@ beUsingPAX
 		customButtons: #(#(#yes 'Con&vert') #(#no 'Cancel'));
 		isCancellable: true;
 		confirm: 'Placing this package into PAX source mode will create <1p> source files in the directory <2s>.'
-					<< {self allSourceObjects size. self path})
+					<< {self allSourceObjects size. self directoryName})
 			ifTrue: [self fileOutAll]!
 
 canFileOut
 	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
 	all the file out names associated with the PAX file are writeable."
 
-	^self fileOutNames allSatisfy: [:each | File isWriteable: each]!
+	^self fileOutNames allSatisfy: [:each | each isWriteable]!
 
 checkTimestamps
 	"Compare the timestamp cached when the package was installed against the timestamp of the
@@ -465,10 +465,10 @@ Alternatively you can proceed and overwrite any changes on disk. You can also ch
 createPackagePath
 	"Private - Create the directory where the receiver resides on disk"
 
-	File createDirectoryPath: (Filename splitPathFrom: self fileOutName)!
+	self fileOutName createDirectoryPath!
 
 dotPacPath
-	^Filename path: self packageFileName extension: self class packageExtension!
+	^(self packageFullPath withExtension: self class packageExtension) asString!
 
 fileModificationTime
 	"Private - Answer the modification time of the receiver's package file on disk as the
@@ -476,8 +476,8 @@ fileModificationTime
 	Win32 FILETIME), or 0 if it does not currently exist."
 
 	^((self isSystemPackage
-		ifTrue: [File lastWriteTime: self classDefinitionsFileName]
-		ifFalse: [(File lastWriteTime: self fileOutName) ifNil: [File lastWriteTime: self packageFileName]])
+		ifTrue: [self classDefinitionsFileName lastWriteTime]
+		ifFalse: [(self fileOutName lastWriteTime) ifNil: [self packageFullPath lastWriteTime]])
 			?? 0) asInteger!
 
 fileOut
@@ -517,8 +517,8 @@ fileOutBinaryVariables
 					| stem stream |
 					stem := each shortName.
 					(BindingReference isQualifiedName: stem) ifTrue: [^SourceFormatNotSupportedError signalWith: each].
-					stream := FileWriteStream write: (Filename
-										composePath: self path
+					stream := FileWriteStream write: (Path
+										compose: self directory
 										stem: stem
 										extension: 'stb')
 								text: false.
@@ -529,8 +529,8 @@ fileOutBinaryVariables
 					
 					[:each |
 					| stream |
-					stream := FileWriteStream write: (Filename
-										composePath: self path
+					stream := FileWriteStream write: (Path
+										compose: self directory
 										stem: each asString
 										extension: 'ston')
 								text: true.
@@ -547,7 +547,7 @@ fileOutBootDefinitions
 	| filer srcmgr filename |
 	srcmgr := self sourceManager.
 	filename := self classDefinitionsFileName.
-	srcmgr createDirectoryPath: filename.
+	filename createDirectoryPath.
 	filer := self sourceFilerOn: (FileWriteStream write: filename).
 	srcmgr emitFileOutHeaderOn: filer.
 	[filer fileOutPackageClassDefinitions: self] ensure: [filer close]!
@@ -558,17 +558,13 @@ fileOutNames
 	binary globals, etc. It does not include the source files for the	<sourceObject>s held by the 
 	receiver."
 
-	| fileExtension |
+	| fileExtension dir |
 	self isSystemPackage ifTrue: [^Set with: self classDefinitionsFileName].
-	fileExtension := self isLegacySourceFormat ifTrue: ['stb'] ifFalse: ['ston'].
+	fileExtension := self isLegacySourceFormat ifTrue: ['.stb'] ifFalse: ['.ston'].
+	dir := self directory.
 	^Set new
 		add: self fileOutName;
-		addAll: (self binaryVariableNames collect: 
-						[:each |
-						Filename
-							composePath: self path
-							stem: each path last
-							extension: fileExtension]);
+		addAll: (self binaryVariableNames collect: [:each | dir \ (each path last , fileExtension)]);
 		yourself!
 
 fileOutOn: aSourceFiler
@@ -596,7 +592,7 @@ isUsingPAX
 	"Answer true if the receiver is using PAX mode. If a PAX file of the same name as the
 	receiver exists on disk then both PAC and PAX files are saved simultaneously."
 
-	^self isSystemPackage or: [File exists: self fileOutName]!
+	^self isSystemPackage or: [self fileOutName exists]!
 
 isUsingPAX: aBoolean
 	"Place the receiver into a mode where it is using PAX source format according to aBoolean."

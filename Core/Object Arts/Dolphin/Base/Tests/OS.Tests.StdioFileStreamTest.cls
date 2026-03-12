@@ -116,7 +116,7 @@ testFromHandleOnFile
 	filestream nextPutAll: written.
 	filestream close.
 	handle := Ucrt
-				_wfsopen: tempFileName
+				_wfsopen: tempFileName asUtf16String
 				mode: 'rt, ccs=UTF-8'
 				shflag: CRTConstants._SH_SECURE.
 	filestream := StdioFileStream fromHandle: handle.

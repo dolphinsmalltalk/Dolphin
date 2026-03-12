@@ -144,12 +144,19 @@ fileOutExtensionForClass: aClass
 fileOutNameForClass: aClass
 	"Answer the default file name for the class to file out on."
 
-	| path |
-	path := Filename composeStem: aClass fileOutStem extension: (self fileOutExtensionForClass: aClass).
-	aClass owningPackage
-		ifNil: [Notification signal: 'Warning: ' , aClass printString , ' is unpackaged']
-		ifNotNil: [:package | path := Filename replacePath: path with: package path].
-	^path!
+	| stem extension |
+	stem := aClass fileOutStem.
+	extension := self fileOutExtensionForClass: aClass.
+	^aClass owningPackage
+		ifNil: 
+			[Notification signal: 'Warning: ' , aClass printString , ' is unpackaged'.
+			Path stem: stem extension: extension]
+		ifNotNil: 
+			[:package |
+			Path
+				compose: package path
+				stem: stem
+				extension: extension]!
 
 on: aWriteStream 
 	"Answer a new instance of the receiver for filing out source code onto the 

@@ -627,8 +627,8 @@ browseEnvironment: aBrowserEnvironment
 
 	^self browseMethodsIn: aBrowserEnvironment!
 
-browseFolder: aString
-	OS.Shell32 shellOpen: aString!
+browseFolder: aPathOrString
+	OS.Shell32 shellOpen: aPathOrString asUtf16String!
 
 browseHierarchy
 	"Open a new hierarchy browser at the root of the standard class hierarchy."
@@ -934,7 +934,7 @@ browserEnvFromDom: anIXMLDOMDocument
 	manifest := anIXMLDOMDocument selectSingleNode: './/Manifest'.
 	classes := manifest selectNodes: 'Classes/Class'.
 	env := SelectorEnvironment new.
-	exeName := Filename splitFilenameFrom: (anIXMLDOMDocument selectSingleNode: './/Target') text.
+	exeName := (anIXMLDOMDocument selectSingleNode: './/Target') text asPath fileName.
 	time := (anIXMLDOMDocument selectSingleNode: './/TimeStamp') text.
 	env label: ('<1s> (<2s>)' expandMacrosWith: exeName with: time).
 	unbound := Set new.
@@ -1366,7 +1366,7 @@ compressChanges
 		caption: 'Compress Changes…';
 		headline: 'Compact change log?';
 		text: 'The change log <1p> will be compacted, removing all but the latest sources.'
-					<< (Filename splitFilenameFrom: srcmgr changesFileName);
+					<< srcmgr changesFileName fileName;
 		detailsText: 'Compressing changes removes superseded method source, and all expression evaluations from the change log.<n><n>Compressing changes can be useful when you want to collapse a very large log that you may have been working with for an extended period. Be aware, however, that you will lose the ability to browse method histories other than the original and latest source for changed methods. You will also be unable to refer back to the log to see the history of evaluations.'
 					expandMacros;
 		expandLabel: 'Show &Help';
@@ -1385,10 +1385,8 @@ compressSources
 	(MessageBox new
 		caption: 'Compress Sources…';
 		headline: 'Compact changes into sources file?';
-		text: 'The change log <1p> will be compacted into the source files <2p>' << {
-							Filename splitFilenameFrom: srcmgr changesFileName.
-							Filename splitFilenameFrom: srcmgr sourcesFileName
-						};
+		text: 'The change log <1p> will be compacted into the source files <2p>'
+					<< { srcmgr changesFileName fileName. srcmgr sourcesFileName fileName };
 		detailsText: 'Compressing sources combines the latest method source from the the change log and/or sources (.sml) file for all source objects (e.g,. methods) in the system, and writes the result into a replacement sources file.<n><n>After compaction all record of what has changed will be lost and the change log will be empty. <n><n>Compressing sources is useful when you want to consolidate your work into a a new baseline image, but should otherwise be avoided as you will lose the ability to browse method histories, or to refer back to the log to see the history of evaluations.'
 					expandMacros;
 		expandLabel: 'Show &Help';
@@ -1873,7 +1871,7 @@ helpGuidedTourTopic
 	^'Guided_Tour'!
 
 helpRootUrl
-	^FileLocator installRelative localFileSpecFor: 'EducationCentre7.chm::/'!
+	^FileLocator installRelative resolve: 'EducationCentre7.chm::/'!
 
 helpTutorials
 	"Open the Tutorials page in the Education Centre"
@@ -1890,19 +1888,6 @@ helpWhatsNew
 
 helpWhatsNewTopic
 	^'Whats_New'!
-
-helpWhatsThis
-	"Displays a 'What This' help cursor and tracks the mouse until it is clicked over a particular object. 
-	Then display the appropriate pop-up helpful that object (if available) based on its helpId."
-
-	| finder tracker object |
-	finder := VisualObjectFinder new.
-	tracker := MouseTracker forPresenter: View active startingAt: 0 @ 0.
-	Cursor help showWhile: [tracker startTracking: finder].
-	object := finder value.
-	(object class conformsToProtocol: #whatsThisHelp)
-		ifFalse: [object := finder foundView ifNil: [^self]].
-	self sessionManager whatsThis: object!
 
 hierarchyBrowserClass
 	"Answer the class of Class Hierarchy Browser (a <SmalltalkToolShell>)
@@ -2297,10 +2282,10 @@ okToInstallPatchLevel: anInteger
 	self patchLevel >= anInteger
 		ifTrue: [self error: 'Image is already at Patch Level ' , anInteger displayString].
 	patchFiles := (self patchLevel + 1 to: anInteger - 1)
-				collect: [:level | Filename composeStem: 'Patch Level ' , level displayString extension: 'st'].
+				collect: [:level | Path stem: 'Patch Level ' , level displayString extension: 'st'].
 
 	"Check patch files exist and then file them in"
-	patchFiles do: [:filename | (File exists: filename) ifFalse: [self errorNotFound: filename]].
+	patchFiles do: [:filename | filename exists ifFalse: [self errorNotFound: filename]].
 	patchFiles do: [:filename | self sourceManager fileIn: filename].
 	^true!
 
@@ -2423,7 +2408,7 @@ onDropOverProtocol: session
 
 onFileDropped: aString over: aPresenter
 	| selector |
-	selector := FileDrops at: (Filename splitExtensionFrom: aString) ifAbsent: #dropFile:.
+	selector := FileDrops at: aString asPath extension ifAbsent: #dropFile:.
 	aPresenter routeCommand: (CommandDescription command: (Message selector: selector argument: aString)
 				description: ('Drop <1s>' expandMacrosWith: aString))!
 
@@ -2501,10 +2486,10 @@ onVariableRenamed: aVariableBinding from: aBindingReference
 openHelpTopic: topic
 	"Open the <readableString> Education Centre topic"
 
-	^self openHelpUrl: (Filename
-				composePath: self helpRootUrl
+	^self openHelpUrl: (Path
+				compose: self helpRootUrl
 				stem: topic
-				extension: 'htm')!
+				extension: 'htm') asString!
 
 openHelpTopicForTool: anObject
 	"Open the HTML page in the Education Centre for anObject. The page
@@ -3796,11 +3781,12 @@ requestPackageFileName: aString
 	or nil if no suggestions are available (e.g. this is not an interactive session and so
 	user input is not available)."
 
-	| stem |
-	stem := Filename splitStemFrom: aString.
+	| stem path |
+	path := aString asPath.
+	stem := path stem.
 	^FileOpenDialog new
 		fileTypes: self packageOpenFileDialogTypes;
-		defaultExtension: (Filename splitExtensionFrom: aString);
+		defaultExtension: path extension;
 		value: stem;
 		caption: ('Open prerequisite Package: <1p>' expandMacrosWith: stem);
 		showModal!
@@ -3912,7 +3898,7 @@ saveImageAs
 
 	| fileName |
 	fileName := FileSaveDialog new
-				fileTypes: {self imageFilesType. FileDialog allFilesType};
+				fileTypes: { self imageFilesType. FileDialog allFilesType };
 				defaultExtension: '';
 				value: self sessionManager imagePath;
 				caption: 'Save Image As';
@@ -3921,12 +3907,12 @@ saveImageAs
 	fileName = self sessionManager imageFileName
 		ifTrue: [self saveImage]
 		ifFalse: 
-			[((File exists: fileName) not or: 
+			[(fileName asPath exists not or: 
 					[MessageBox new
 						beTaskModal;
 						caption: self sessionManager applicationName;
 						headline: 'Overwrite existing image?';
-						text: 'The existing image <1p> will be overwritten.' << fileName;
+						text: 'The existing image <1d> will be overwritten.' << fileName;
 						customButtons: #(#(#yes '&Overwrite') #(#no 'Cancel'));
 						isCancellable: true;
 						confirm])

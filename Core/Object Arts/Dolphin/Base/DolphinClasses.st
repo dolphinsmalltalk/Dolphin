@@ -2978,6 +2978,20 @@ Core.Object
 	classConstants: {}!
 
 Core.Object
+	subclass: #'Core.Path'
+	instanceVariableNames: 'path'
+	classVariableNames: 'SeparatorString'
+	imports: #(#{OS.Win32Constants private} #{OS.Win32Error private} #{OS private})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'DriveSeparator' -> $:.
+			'ExtensionSeparator' -> $..
+			'Separator' -> $\.
+			'Separators' -> '/\'.
+			'UnixSeparator' -> $/
+		}!
+
+Core.Object
 	subclass: #'Kernel.PostedActionWindow'
 	instanceVariableNames: 'handle actions'
 	classVariableNames: ''
@@ -4392,17 +4406,17 @@ Core.FileLocator
 	classConstants: {}!
 
 Core.FileLocator
-	subclass: #'Kernel.ClassLocator'
-	instanceVariableNames: 'packageName codeBase key'
-	classVariableNames: 'Aliases DefaultFileLocator ImportedClasses ImportedClassesMutex InstallationFileLocator'
+	subclass: #'Kernel.RelativeFileLocator'
+	instanceVariableNames: ''
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-Core.FileLocator
-	subclass: #'Kernel.RelativeFileLocator'
-	instanceVariableNames: ''
-	classVariableNames: ''
+Kernel.RelativeFileLocator
+	subclass: #'Kernel.ClassLocator'
+	instanceVariableNames: 'packageName codeBase key'
+	classVariableNames: 'Aliases DefaultFileLocator ImportedClasses ImportedClassesMutex InstallationFileLocator'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -4835,7 +4849,9 @@ External.PermanentLibrary
 	classVariableNames: 'EnumNamesDescriptor LongPathPrefix WinVerOrGreaterMask'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'MaxDir' -> 16rF8.
+		}!
 
 External.PermanentLibrary
 	subclass: #'Kernel.VMLibrary'
@@ -4931,7 +4947,7 @@ External.WindowsSystemLibrary
 
 External.WindowsSystemLibrary
 	subclass: #'OS.PathCchLibrary'
-	instanceVariableNames: ''
+	instanceVariableNames: 'longPathAware'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

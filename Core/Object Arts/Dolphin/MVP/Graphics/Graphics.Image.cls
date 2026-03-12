@@ -164,10 +164,10 @@ isTransparent: aBoolean
 
 	initializer isLoadTransparent: aBoolean!
 
-loadFromFile: aString extent: aPoint flags: anInteger
+loadFromFile: aPathOrString extent: aPoint flags: anInteger
 	^User32
 		loadImage: 0
-		lpszName: aString
+		lpszName: aPathOrString asUtf16String
 		uType: self imageType
 		cxDesired: aPoint x
 		cyDesired: aPoint y
@@ -271,13 +271,13 @@ fromFile: aFilename
 
 	^self fromFile: aFilename usingLocator: FileLocator default!
 
-fromFile: aString usingLocator: aFileLocator
+fromFile: aPathOrString usingLocator: aFileLocator
 	"Answer an instance loaded from the file aString by using aFileLocator."
 
 	| relativeFilename |
-	relativeFilename := (aFileLocator isNil or: [Filename isRelativePath: aString])
-				ifTrue: [aString]
-				ifFalse: [aFileLocator relativePathTo: aString].
+	relativeFilename := (aFileLocator isNil or: [aPathOrString asPath isRelative])
+				ifTrue: [aPathOrString asString]
+				ifFalse: [aFileLocator abstract: aPathOrString].
 	^self initializer: (self newFileInitializer: relativeFilename locator: aFileLocator)!
 
 fromHandle: aHandle

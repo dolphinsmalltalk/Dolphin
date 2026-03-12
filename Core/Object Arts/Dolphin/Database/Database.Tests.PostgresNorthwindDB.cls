@@ -25,12 +25,12 @@ createDatabase
 	SessionManager current setenv: 'PGPASSWORD' value: self pwd.
 	^
 	[self
-		execSqlCmd: '"<1s>\bin\psql" -U <2s> -f "<4s>"' << {
-						self installationFolder.
+		execSqlCmd: '"<1d>" -U <2s> -f "<4d>"' << {
+						self installationFolder \ 'bin\psql'.
 						self uid.
 						self pwd.
 						(Kernel.PackageRelativeFileLocator package: self class owningPackage)
-							localFileSpecFor: 'NorthwindPostgres.sql'
+							resolve: 'NorthwindPostgres.sql'
 					}
 		stdin: nil]
 			ensure: [SessionManager current setenv: 'PGPASSWORD' value: nil]!
@@ -38,12 +38,12 @@ createDatabase
 dropDatabase
 	| cmdString process dropdb |
 	super dropDatabase.
-	dropdb := Filename composePath: self installationFolder subPath: 'bin\dropdb.exe'.
-	(File exists: dropdb)
+	dropdb := self installationFolder \ 'bin\dropdb.exe'.
+	(dropdb exists)
 		ifFalse: 
 			[Notification signal: dropdb , ' not found'.
 			^self].
-	cmdString := '"<1s>" -U <2s> -f "Northwind"' << { dropdb. self uid }.
+	cmdString := '"<1d>" -U <2s> -f "Northwind"' << { dropdb. self uid }.
 	process := Smalltalk.ExternalProcess new.
 	SessionManager current setenv: 'PGPASSWORD' value: self pwd.
 	

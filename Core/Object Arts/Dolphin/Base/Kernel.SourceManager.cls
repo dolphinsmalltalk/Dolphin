@@ -52,7 +52,7 @@ changesFileName
 changesFileNameFromPath: filePath
 	"Answer the file name for a change log with the specified image path."
 
-	^Filename path: filePath extension: self changesExtension!
+	^filePath asPath withExtension: self changesExtension!
 
 changesFiler
 	^SourceFiles at: ChangesIndex!
@@ -103,9 +103,8 @@ copySourceFilesTo: path
 
 	self flushChanges.
 	
-	[File
-		copy: self sourcesFileName to: (self sourcesFileNameFromPath: path);
-		copy: self changesFileName to: (self changesFileNameFromPath: path)]
+	[self sourcesFileName copyTo: (self sourcesFileNameFromPath: path).
+	self changesFileName copyTo: (self changesFileNameFromPath: path)]
 			on: HRESULTError
 			do: 
 				[:e |
@@ -149,10 +148,11 @@ fileInHere: aFileName
 	the working directory set to the location of the file. The original directory
 	is restored on completion."
 
-	| cwd |
-	cwd := File workingDirectory.
-	File workingDirectory: (Filename splitPathFrom: aFileName).
-	[self fileIn: (Filename splitFilenameFrom: aFileName)] ensure: [File workingDirectory: cwd]!
+	| cwd path  |
+	cwd := Path workingDirectory.
+	path := aFileName asPath.
+	path directory setWorkingDirectory.
+	[self fileIn: path fileName] ensure: [cwd setWorkingDirectory]!
 
 fileInPackagedClass: aClass
 	"File in aClass via the package mechanism. The class is filed in from the same directory as the
@@ -315,13 +315,12 @@ openChangesFile: filePath
 				sourceFileIndex: ChangesIndex;
 				yourself)!
 
-openNewChangesFile: aString
+openNewChangesFile: aPath
 	| changesFileName |
 	changesFileName := self changesFileName.
 	self closeChangesFile.
-	File
-		delete: changesFileName;
-		rename: aString to: changesFileName.
+	changesFileName deleteFile.
+	aPath renameTo: changesFileName.
 	^self openChangesFile: changesFileName!
 
 openSources
@@ -385,7 +384,7 @@ sourcesFileName
 sourcesFileNameFromPath: filePath
 	"Private - Answer a file name for a source file at the specified path."
 
-	^Filename path: filePath extension: self sourcesExtension!
+	^filePath asPath withExtension: self sourcesExtension!
 
 sourcesFileStream
 	"Private - Answer the FileStream open on the big sources file."

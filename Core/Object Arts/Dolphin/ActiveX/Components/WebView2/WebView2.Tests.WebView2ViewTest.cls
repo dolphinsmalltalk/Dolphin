@@ -93,7 +93,7 @@ testContextMenu
 	<skipIf: #isCiBuild> "Too unreliable"
 	<skipUnless: #isInForeground>
 	| contextMenuHandler menuEvent newCmd iconStream cmdEventSink cmdFired |
-	iconStream := IStream read: (FileLocator installRelative: 'Resources\Dolphin.ico') asString.
+	iconStream := IStream read: (FileLocator installRelative resolve: 'Resources\Dolphin.ico').
 	newCmd := presenter view webviewEnvironment
 				createContextMenuItem: '&Blah'
 				iconStream: iconStream
@@ -135,9 +135,7 @@ testContextMenu
 	self sendKeyPress: VK_RETURN extended: false.
 	self waitAtMost: 200 milliseconds while: [cmdFired not].
 	cmdEventSink free.
-	self assert: cmdFired.
-
-!
+	self assert: cmdFired!
 
 testNavigateToString
 	"Bit of a kick-the-tyres test, but it does execute a lot of the integration, e.g. creating the WebView2 environment, controller and view, and setting up event handlers and handling of events."

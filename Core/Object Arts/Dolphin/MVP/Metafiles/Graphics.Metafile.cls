@@ -100,7 +100,7 @@ header
 loadFromFile: aString extent: aPoint flags: anInteger
 	"Private - Attempts to load an Windows Enhanced Metafile (.emf) from a disk file. Answers the image's handle, or nil if the image could not be loaded. Note that specified extent is ignored."
 
-	^Gdi32 getEnhMetaFile: aString!
+	^Gdi32 getEnhMetaFile: aString asUtf16String!
 
 play: operation on: aCanvas at: originPoint extent: sizePoint
 	"Play the records in the metafile through the triadic valuable, operation, onto the

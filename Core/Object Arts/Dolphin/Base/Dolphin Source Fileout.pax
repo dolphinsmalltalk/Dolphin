@@ -634,7 +634,7 @@ basicCompressSources: progress
 	totalClasses := classes size.
 
 	"Create temporary stream file"
-	tmpPath := File temporaryFilenameWithPrefix: self changesExtension.
+	tmpPath := Path temporaryWithPrefix: self changesExtension.
 	smlFile := self sourcesFileName.
 	filer := self sourceFilerClass on: (FileStream write: tmpPath).
 	filer
@@ -653,8 +653,8 @@ basicCompressSources: progress
 
 	"Copy temporary file over to dolphin.sml"
 	self closeSourcesFile.
-	(File exists: smlFile) ifTrue: [File delete: smlFile].
-	File rename: tmpPath to: smlFile.
+	(smlFile exists) ifTrue: [smlFile deleteFile].
+	tmpPath renameTo: smlFile.
 	self openSourcesFile: smlFile.
 
 	"Save image"
@@ -675,7 +675,7 @@ compressChanges
 	"Compresses the change log to remove duplicate entries, and save the image to keep it in sync."
 
 	| tmpPath filer |
-	tmpPath := File temporaryFilenameWithPrefix: self changesExtension.
+	tmpPath := Path temporaryWithPrefix: self changesExtension.
 	filer := self chunkFilerOn: (FileStream write: tmpPath).
 	filer sourceFileIndex: ChangesIndex.
 	mutex critical: 
@@ -766,7 +766,7 @@ copyAndReopenSources: aString
 	self openSources: aString!
 
 createDirectoryPath: aString
-	File createDirectoryPath: (Filename splitPathFrom: aString)!
+	aString asPath createDirectoryPath!
 
 createSources: filePath
 	"Private - This will create a sources and changes file for the current image. Does not
@@ -781,9 +781,10 @@ createSources: filePath
 createSourcesFile: filePath
 	"Private - Create (or truncate) a source file with the specified path (and default extension)."
 
-	| filer |
-	self createDirectoryPath: (self sourcesFileNameFromPath: filePath).
-	filer := self sourceFilerClass on: (FileStream write: (self sourcesFileNameFromPath: filePath)).
+	| filer sources |
+	sources := self sourcesFileNameFromPath: filePath.
+	sources createDirectoryPath.
+	filer := self sourceFilerClass on: (FileStream write: sources).
 	self emitFileOutHeaderOn: filer.
 	filer close!
 
@@ -803,9 +804,10 @@ fileOut: anObject to: aFileName
 	"File out anObject to aFileName. If an error occurs during file out, the file
 	will be closed by finalization."
 
-	| filer |
-	self createDirectoryPath: aFileName.
-	filer := anObject sourceFilerClass on: (FileWriteStream write: aFileName).
+	| filer path |
+	path := aFileName asPath.
+	path createDirectoryPath.
+	filer := anObject sourceFilerClass on: (FileWriteStream write: path).
 	self emitFileOutHeaderOn: filer.
 	anObject fileOutOn: filer.
 	filer close!

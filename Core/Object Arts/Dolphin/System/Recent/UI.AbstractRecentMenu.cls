@@ -58,14 +58,14 @@ onAboutToDisplayMenu: recentMenu
 	recentMenu name == self recentMenuName ifFalse: [^self].
 	recentMenu clear.
 	recentList := self getRecentList.
-	basePath := Filename splitPathFrom: recentList first.
+	basePath := recentList first asPath directory.
 	recentList do: 
 			[:each |
 			| nameToDisplay |
 			nameToDisplay := ($, split: each) first.
 			nameToDisplay := self isFullPathAlwaysRequired
 						ifTrue: [nameToDisplay]
-						ifFalse: [(FolderRelativeFileLocator basePath: basePath) relativePathTo: nameToDisplay].
+						ifFalse: [(FolderRelativeFileLocator basePath: basePath) abstract: nameToDisplay].
 			recentMenu addCommand: (Message selector: self openSelector argument: each)
 				description: nameToDisplay].
 	recentMenu

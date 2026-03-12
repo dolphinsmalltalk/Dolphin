@@ -474,12 +474,12 @@ install: aString
 	(self includesPackageNamed: startPackage name)
 		ifTrue: [^self errorNameIsNotUnique: startPackage name].
 	
-	[| filename |
-	filename := startPackage packageFileName.
+	[ | path |
+	path := startPackage packageFullPath.
 	newPackages := self
 				loadPrereqsForPackage: startPackage
-				relativeTo: startPackage path
-				extension: (Filename splitExtensionFrom: filename)
+				relativeTo: path directory
+				extension: path extension
 				loaded: (PluggableSet searchPolicy: SearchPolicy ordinalCaseInsensitive)
 				trail: OrderedCollection new]
 			on: PackageNotFoundSignal
@@ -507,7 +507,7 @@ installHere: aString
 	"Same as #install: except that aString is seen as being relative to the current directory
 	rather than the image base."
 
-	^self install: (Filename fullPathOf: aString)!
+	^self install: aString asPath fullPath!
 
 isLooseMethod: aCompiledMethod
 	"Answer whether the argument is a loose method (i.e. one owned by a package other
@@ -574,27 +574,26 @@ loadPrereq: prereqPathString relativeTo: basePathString extension: extensionStri
 	<readableString> path, pathString. The collection also includes the contents of
 	loadedCollection."
 
-	| package expectedPathname actualPathname prereqName |
-	prereqName := Filename splitFilenameFrom: prereqPathString.
+	| package expectedPathname actualPathname prereqName prereqPath |
+	prereqPath := prereqPathString asPath.
+	prereqName := prereqPath fileName.
 	"Already installed or already visited?"
 	((self includesPackageNamed: prereqName) or: [loadedCollection includes: prereqName])
 		ifTrue: [^trailCollection].
 	"First look using relative path from base"
-	expectedPathname := Filename
-				default: (Filename fullPathOf: prereqPathString relativeTo: basePathString)
-				extension: extensionString.
-	actualPathname := (File exists: expectedPathname)
+	expectedPathname := (prereqPath fullPathRelativeTo: basePathString)
+				withDefaultExtension: extensionString.
+	actualPathname := expectedPathname exists
 				ifTrue: [expectedPathname]
 				ifFalse: 
 					[| localPathname |
 					"Try directly in the base folder"
-					localPathname := Filename
-								composePath: basePathString
+					localPathname := Path compose: basePathString
 								stem: prereqName
 								extension: extensionString.
-					(File exists: localPathname)
+					localPathname exists
 						ifTrue: [localPathname]
-						ifFalse: [self errorPrerequisiteNotFound: expectedPathname]].
+						ifFalse: [self errorPrerequisiteNotFound: expectedPathname asString]].
 	actualPathname notNil
 		ifTrue: [package := self loadPackage: actualPathname]
 		ifFalse: [self errorPackageNotFound: prereqPathString].
@@ -1096,14 +1095,15 @@ removePackages: aCollectionOfPackages
 renamePackage: aPackage to: aStringPathname
 	"Attempts to rename aPackage held by the receiver to aStringName."
 
-	| existing newName |
-	newName := Filename splitStemFrom: aStringPathname.
+	| existing newName path |
+	path := aStringPathname asPath.
+	newName := path stem.
 	existing := self packageNamed: newName ifNone: nil.
 	(existing isNil or: [existing == aPackage]) ifFalse: [^self error: 'Package already exists'].
 	self packages
 		removeKey: aPackage name ifAbsent: nil;
 		at: newName put: aPackage.
-	aPackage packageFileName: aStringPathname.
+	aPackage packageFileName: path.
 	self
 		resetPrerequisites;
 		loadedChanged!
@@ -1365,7 +1365,7 @@ newSystemPackage
 	(Root allBindings reject: [:each | each isClassVariable or: [each value class isMeta and: [each key = each value name]]]) do: [:each |
 		inst addVariableNamed: each fullyQualifiedReference to: dolphin].
 	dolphin setUntracedVariables: #(#{Core.Transcript}).
-	dolphin timestamp: ((File lastWriteTime: dolphin classDefinitionsFileName)
+	dolphin timestamp: ((dolphin classDefinitionsFileName lastWriteTime)
 				ifNil: [0]
 				ifNotNil: [:filetime | filetime asInteger]).
 	dolphin preDeclareClassesOnLoad: false.

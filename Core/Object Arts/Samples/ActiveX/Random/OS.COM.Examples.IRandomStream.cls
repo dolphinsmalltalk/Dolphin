@@ -218,7 +218,7 @@ initializeTypeLib
 	typeLib := RANDOMLib!
 
 typeLibraryPath
-	^FileLocator imageRelative: 'Core\Object Arts\Samples\ActiveX\Random\Random.tlb'! !
+	^FileLocator imageRelative resolve: 'Core\Object Arts\Samples\ActiveX\Random\Random.tlb'! !
 
 !OS.COM.Examples.IRandomStream class categoriesForMethods!
 clsid!**auto generated**!constants!private! !

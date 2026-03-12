@@ -10,15 +10,16 @@ Kernel.RelativeFileLocator
 
 Kernel.ImageRelativeFileLocator guid: (Core.GUID fromString: '{42513a65-8d78-44a8-b475-bdfd1e7fb6fc}')!
 
-Kernel.ImageRelativeFileLocator comment: 'An ImageRelativeFileLocator is used to indicate the location of an external file that may be referenced within the image. 
+Kernel.ImageRelativeFileLocator comment: 'An `ImageRelativeFileLocator` is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files relative to the image directory, unless the file is outside the local directory hierarchy below the image directory, in which case an absolute path is used.
 
 Note that the ''image'' directory may dynamically change between image restarts, and in the case of a deployed application the ''image'' directory is the folder in which the executable resides.
 
 Try the following examples:
-
-relativePath := FileLocator imageRelative relativePathTo: SessionManager current imageFileName. "Display It - should be ''.\dolphin.img''"
-FileLocator imageRelative localFileSpecFor: relativePath. "Display It - should be the full image path"'!
+```
+relativePath := FileLocator imageRelative abstract: SessionManager current imageFileName. "Display It - should be ''DPRO.img8''"
+FileLocator imageRelative resolve: relativePath. "Display It - should be the full image path"
+```'!
 
 !Kernel.ImageRelativeFileLocator categoriesForClass!System-Support! !
 
@@ -46,10 +47,9 @@ printOn:!printing!public! !
 current
 	"Answer the singleton instance of the receiver"
 
-	Current isNil ifTrue: [ Current := self new ].
-	^Current!
+	^Current ifNil: [Current := self basicNew]!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Assist in the image stripping process by clearning down any
 	lazily initialized variables held by the receiver."
 

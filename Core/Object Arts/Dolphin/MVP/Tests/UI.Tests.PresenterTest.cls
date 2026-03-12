@@ -39,9 +39,7 @@ getTextExtent: actualText
 	^textExtent!
 
 hasTestStbViewResources
-	| resourceDir |
-	resourceDir := self resourceDir.
-	^File exists: resourceDir!
+	^self resourceDir exists!
 
 hasTestStlViewResources
 	^self oldStlResources notEmpty!
@@ -129,12 +127,10 @@ testStbUpgradeFromBinaryResources
 
 	<nocreate>
 	<skipUnless: #hasTestStbViewResources>
-	File
-		for: '*.vu'
-		in: self resourceDir
+	self resourceDir for: '*.vu'
 		do: 
 			[:each |
-			self verifyStbUpgrade: each path.
+			self verifyStbUpgrade: each fullPath.
 			self destroyPresenter]!
 
 testStlUpgradesFromLiteralResources
@@ -152,11 +148,12 @@ testStlUpgradesFromLiteralResources
 			self destroyPresenter]!
 
 verifyStbUpgrade: pathString
-	| filename stbVersion stream filer version notifications viewProxy parts |
-	filename := Filename splitStemFrom: pathString.
+	| filename stbVersion stream filer version notifications viewProxy parts path |
+	path := pathString asPath.
+	filename := path stem.
 	parts := $; split: filename.
 	stbVersion := Integer fromString: parts last.
-	stream := FileStream read: pathString text: false.
+	stream := FileStream read: path text: false.
 	"stream reset. Tools.STBDebugger dumpToTranscript: stream. stream reset"
 	filer := (STBInFiler on: stream)
 				context: View desktop;

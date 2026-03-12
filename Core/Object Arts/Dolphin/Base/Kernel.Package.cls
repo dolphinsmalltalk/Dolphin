@@ -317,8 +317,8 @@ classDefinitionsFileName
 	"Private - Answer a filename to use for filing out the class definitions of the receiver.
 	Note this is only relevant if the receiver is a system package."
 
-	^Filename
-		composePath: self path
+	^Path
+		compose: self directory
 		stem: self name , 'Classes'
 		extension: 'st'!
 
@@ -428,14 +428,14 @@ declareClasses
 				imports: #()]!
 
 declareVariable: aBindingReference
-	| namespace path |
+	| namespace bindingPath |
 	namespace := Namespace baseEnvironment.
-	path := aBindingReference path.
-	1 to: path size - 1
+	bindingPath := aBindingReference path.
+	1 to: bindingPath size - 1
 		do: 
 			[:i |
 			| identifier |
-			identifier := path at: i.
+			identifier := bindingPath at: i.
 			namespace := (namespace localBindingFor: identifier)
 						ifNil: 
 							[| baseClass subNs |
@@ -470,6 +470,16 @@ depthOfClass: aClass
 		class := class superclass.
 		depth := depth + 1].
 	^depth!
+
+directory
+	"Answer a <Path> representing the full path to the directory holding the receiver's files."
+
+	^self packageFullPath directory!
+
+directoryName
+	"Answer a <String representing the full path to the directory holding the receiver's files."
+
+	^self packageFullPath directoryName!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -564,35 +574,20 @@ fileInScript: aSymbol
 	aString isEmpty ifTrue: [^self].
 	self evaluateScript: aSymbol source: aString!
 
-fileNameForBinaryVariable: aBindingReference
-	"Private - Answer a filename for storing the named binary global object."
-
-	^self isLegacySourceFormat
-		ifTrue: 
-			[Filename
-				composePath: self path
-				stem: aBindingReference path last
-				extension: 'stb']
-		ifFalse: 
-			[Filename
-				composePath: self path
-				stem: aBindingReference asString
-				extension: 'ston']!
-
 fileNameForSourceVariable: aBindingReference
 	"Private - Answer a filename for storing the named source global object."
 
-	^Filename
-		composePath: self path
+	^Path
+		compose: self path
 		stem: (self isLegacySourceFormat
 				ifTrue: [aBindingReference path last]
 				ifFalse: [aBindingReference asString])
 		extension: self sourceVariableExtension!
 
 fileOutName
-	"Answer the pathname used to store the PAX file for the sources of the receiver"
+	"Answer the <Path> used to store the PAX file for the sources of the receiver"
 
-	^Filename path: self packageFileName extension: self class sourcePackageExtension!
+	^self packageFullPath withExtension: self class sourcePackageExtension!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -794,7 +789,7 @@ load
 	"Private - Load all the objects owned by the receiver. This assumes that all prerequisite
 	packages are currently loaded in."
 
-	((Filename splitExtensionFrom: self packageFileName) sameAs: self class sourcePackageExtension)
+	(self packageFullPath extension sameAs: self class sourcePackageExtension)
 		ifTrue: [self loadPAX]
 		ifFalse: [self loadPAC].
 	self removePAXProperties.
@@ -814,11 +809,7 @@ loadBinaryVariables
 			varNames do: 
 					[:each |
 					| globalStream |
-					globalStream := FileStream read: (Filename
-										composePath: self path
-										stem: each path last
-										extension: 'stb')
-								text: false.
+					globalStream := FileStream read: self directory \ (each path last , '.stb') text: false.
 					each declare: (filer on: globalStream) next.
 					globalStream close]]
 		ifFalse: 
@@ -827,11 +818,7 @@ loadBinaryVariables
 			varNames do: 
 					[:each |
 					| globalStream |
-					globalStream := FileStream read: (Filename
-										composePath: self path
-										stem: each asString
-										extension: 'ston')
-								text: true.
+					globalStream := FileStream read: self directory \ (each asString , '.ston') text: true.
 					each declare: (ston readFrom: globalStream).
 					globalStream close]]!
 
@@ -839,10 +826,10 @@ loadPAC
 	"Private - Load all the objects owned by the receiver. This assumes that all prerequisite
 	packages are currently loaded."
 
-	| filename stream |
-	filename := self packageFileName.
-	Notification signal: ('Loading package <1p> from: <2s>' expandMacrosWith: self name with: filename).
-	stream := FileStream read: filename text: true.
+	| path stream |
+	path := self packageFullPath.
+	Notification signal: ('Loading package <1p> from: <2d>' expandMacrosWith: self name with: path).
+	stream := FileStream read: path text: true.
 	timestamp := stream file lastWriteTime asInteger.
 	(stream nextAvailable: 4) = '!!STB'
 		ifTrue: 
@@ -875,11 +862,11 @@ loadPAX
 	"Private - Load all the objects owned by the receiver. This assumes that all prerequisite
 	packages are currently loaded in."
 
-	| filename filer stream oldPools |
-	filename := self packageFileName.
+	| path filer stream oldPools |
+	path := self packageFullPath.
 	Notification
-		signal: ('Loading source package <1p> from: <2s>' expandMacrosWith: self name with: filename).
-	stream := FileStream read: filename.
+		signal: ('Loading source package <1p> from: <2d>' expandMacrosWith: self name with: path).
+	stream := FileStream read: path.
 	timestamp := stream file lastWriteTime asInteger.
 	filer := self sourceFilerOn: stream.
 	filer environment: self environment.
@@ -1150,7 +1137,7 @@ packageFileName
 	to store the source code representation of the receiver. This is recomposed
 	from the relative path held"
 
-	^Filename fullPathOf: packagePathname relativeTo: SessionManager current imageBase!
+	^self packageFullPath asString!
 
 packageFileName: pathname
 	"Private - Set the path name (ie Path+Stem+Extension) of the file used
@@ -1166,7 +1153,13 @@ packageFileName: pathname
 			self dependentPackages do: [:each | each isChanged: true]]!
 
 packageFolder
-	^Filename splitPathFrom: self packagePathname!
+	^packagePathname asPath directoryName!
+
+packageFullPath
+	^packagePathname asPath fullPathRelativeTo: SessionManager current imageBase!
+
+packagePath
+	^packagePathname asPath!
 
 packagePathname
 	^packagePathname!
@@ -1178,7 +1171,7 @@ packagePathname: aString
 	packagePathname := aString.
 	"The name cannot be independent of the file name, and is in fact just cached from the file stem"
 	oldname := name.
-	name := Filename splitStemFrom: aString.
+	name := aString asPath stem.
 	^oldname isNil or: [(oldname sameAs: name) not]!
 
 packageVersion
@@ -1198,7 +1191,7 @@ packageVersion: aString
 path
 	"Answer the full path to the directory holding the receiver's files."
 
-	^Filename splitPathFrom: self packageFileName!
+	^self packageFullPath directory!
 
 paxVersion
 	"Private - Answer the PAX format version of this package."
@@ -1304,9 +1297,8 @@ propertyAt: aSymbol put: anObject
 rebaseTo: basePathName
 	"Rebase this package relative to the give base image directory"
 
-	self packageFileName: (Filename
-				relativePathOf: (Filename fullPathOf: self packagePathname relativeTo: basePathName)
-				to: SessionManager current imagePath)!
+	self packageFileName: ((self packagePath fullPathRelativeTo: basePathName)
+				relativeTo: SessionManager current imagePath)!
 
 remainingClasses
 	"Answer a <collection> of the classes that are still present (i.e. ignore missing classes)"
@@ -1465,9 +1457,9 @@ setMethodNames: anCollectionOfPairs
 					[(anCollectionOfPairs collect: [:each | MethodName className: each first selector: each second])
 						asSet]!
 
-setPackageFileName: aString
+setPackageFileName: aPathOrString
 	^self packagePathname: (FileLocator imageRelative
-				relativePathTo: (Filename default: aString extension: self class packageExtension))!
+				abstract: (aPathOrString asPath withDefaultExtension: self class packageExtension))!
 
 setPrerequisites: aCollectionOfStrings
 	"Private - Set the pre-computed pre-requisites of the receiver to specified Set of package names. 
@@ -1864,8 +1856,8 @@ untracedVariables: aCollectionOfBindingReferences
 upateFileNames
 	"Private - Update the package filename to match the package name and to be a PAC."
 
-	self setPackageFileName: (Filename
-				composePath: self path
+	self setPackageFileName: (Path
+				compose: self directory
 				stem: self name
 				extension: self class packageExtension).
 	"The prereqs may be out of date due to changes since last load, also the pre-reqs set at package load time
@@ -2001,6 +1993,8 @@ declareVariable:!helpers!private! !
 declareVariables!helpers!private! !
 dependentPackages!accessing!public! !
 depthOfClass:!helpers!public! !
+directory!accessing!public! !
+directoryName!accessing!public! !
 displayOn:!displaying!public! !
 ensureNamesFullyQualified!loading!private! !
 environment!helpers!private! !
@@ -2009,7 +2003,6 @@ environmentName:!initializing!private! !
 evaluateScript:source:!private!source filing! !
 fileInClasses!private!source filing! !
 fileInScript:!private!source filing! !
-fileNameForBinaryVariable:!helpers!private! !
 fileNameForSourceVariable:!helpers!private! !
 fileOutName!public!source filing! !
 getEvents!accessing!private! !
@@ -2071,6 +2064,8 @@ owningPackage!adding!public! !
 packageFileName!accessing!public! !
 packageFileName:!accessing!private! !
 packageFolder!accessing!public! !
+packageFullPath!accessing!public! !
+packagePath!accessing!private! !
 packagePathname!accessing!private! !
 packagePathname:!accessing!private! !
 packageVersion!accessing!public! !
@@ -2190,14 +2185,14 @@ errorInvalidPAXFile: pathString
 
 	^self error: 'Invalid PAX file: ', pathString!
 
-fromFile: path
+fromFile: aPathOrString
 	"Private - Answer a new instance of the receiver created from the package file at the
 	specified <readableString> path, pathname, or nil if the file does not contain a
 	package"
 
 	| answer pathname |
-	pathname := Filename default: path extension: self sourcePackageExtension.
-	answer := ((Filename splitExtensionFrom: pathname) sameAs: self sourcePackageExtension)
+	pathname := aPathOrString asPath withDefaultExtension: self sourcePackageExtension.
+	answer := (pathname extension sameAs: self sourcePackageExtension)
 				ifTrue: [self fromPAXFile: pathname]
 				ifFalse: [self fromPACFile: pathname].
 	answer setPackageFileName: pathname.

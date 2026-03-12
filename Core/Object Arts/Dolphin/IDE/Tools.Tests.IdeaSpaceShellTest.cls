@@ -64,7 +64,7 @@ newWorkspaceCard
 	workspace := presenter newEmbeddedCardOfClass: SmalltalkWorkspaceDocument.
 	self assert: workspace workspace view isKindOf: UI.Scintilla.ScintillaView.
 	^workspace
-		filename: (FileLocator installRelative localFileSpecFor: 'Boot.st');
+		filename: (FileLocator installRelative resolve: 'Boot.st');
 		fileLoad;
 		yourself!
 

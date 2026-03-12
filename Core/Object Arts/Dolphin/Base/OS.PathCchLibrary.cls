@@ -2,7 +2,7 @@
 
 External.WindowsSystemLibrary
 	subclass: #'OS.PathCchLibrary'
-	instanceVariableNames: ''
+	instanceVariableNames: 'longPathAware'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -32,6 +32,16 @@ The type library contains the following helpstring for this module
 
 !OS.PathCchLibrary methodsFor!
 
+isLongPathAware
+	"Answer whether the process is long path aware (i.e. long paths do not require the \\?\ prefix). For this to be true long paths must be enabled in the host OS, and the process must be marked as long path aware in its application manifest. All supported Windows versions do support long paths without the prefix, and for Windows 11 this is enabled by default. This is controlled by the `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled` registry value. The standard Dolphin application manifest does include `<longPathAware>true</longPathAware>` to declare the process as long path enabled, but an application developer has the option to remove this. There is no dedicated API to test whether both OS and process configuration is set so as to enable long paths, but we can test for this reliably and without side effect by using the PathCanonicalize API, as this will insert a long path prefix when long paths are not enabled at either a process or OS level."
+
+	^longPathAware
+		ifNil: 
+			[longPathAware := ((self
+						pathCanonicalize: 'c:\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.tst'
+						dwFlags: PATHCCH_ALLOW_LONG_PATHS) beginsWith: LongPathPrefix)
+						not]!
+
 pathAllocCanonicalize: pszPathIn dwFlags: dwFlags ppszPathOut: ppszPathOut
 	"Private - Invoke the PathAllocCanonicalize() function of the module wrapped by the receiver.
 	Helpstring: Converts a path string into a canonical form.
@@ -59,7 +69,7 @@ pathAllocCombine: pszPathIn pszMore: pszMore dwFlags: dwFlags ppszPathOut: ppszP
 
 pathCanonicalize: pszPathIn dwFlags: dwFlags
 	| pszPathOut result |
-	pszPathOut := External.Address new.
+	pszPathOut := Address new.
 	self
 		pathAllocCanonicalize: pszPathIn
 		dwFlags: dwFlags
@@ -67,79 +77,6 @@ pathCanonicalize: pszPathIn dwFlags: dwFlags
 	result := Utf16String fromAddress: pszPathOut.
 	Kernel32 localFree: pszPathOut.
 	^result!
-
-pathCchAddBackslash: pszPath cchPath: cchPath
-	"Invoke the PathCchAddBackslash() function of the module wrapped by the receiver.
-	Helpstring: Adds a backslash to the end of a string to create the correct syntax for a path. If the source path already has a trailing backslash, no backslash will be added.
-
-		HRESULT __stdcall PathCchAddBackslash(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath);"
-
-	<stdcall: hresult PathCchAddBackslash lpwstr uintptr>
-	^self invalidCall: _failureCode!
-
-pathCchAddBackslashEx: pszPath cchPath: cchPath ppszEnd: ppszEnd pcchRemaining: pcchRemaining
-	"Invoke the PathCchAddBackslashEx() function of the module wrapped by the receiver.
-	Helpstring: Adds a backslash to the end of a string to create the correct syntax for a path. If the source path already has a trailing backslash, no backslash will be added.
-
-		HRESULT __stdcall PathCchAddBackslashEx(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath,
-			LPWSTR* ppszEnd,
-			ULONG_PTR* pcchRemaining);"
-
-	<stdcall: hresult PathCchAddBackslashEx lpwstr uintptr lpwstr* uintptr*>
-	^self invalidCall: _failureCode!
-
-pathCchAddExtension: pszPath cchPath: cchPath pszExt: pszExt
-	"Invoke the PathCchAddExtension() function of the module wrapped by the receiver.
-	Helpstring: Adds a file name extension to a path string.
-
-		HRESULT __stdcall PathCchAddExtension(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath,
-			LPCWSTR pszExt);"
-
-	<stdcall: hresult PathCchAddExtension lpwstr uintptr lpwstr>
-	^self invalidCall: _failureCode!
-
-pathCchAppend: pszPath cchPath: cchPath pszMore: pszMore
-	"Invoke the PathCchAppend() function of the module wrapped by the receiver.
-	Helpstring: Appends one path to the end of another.
-
-		HRESULT __stdcall PathCchAppend(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath,
-			LPCWSTR pszMore);"
-
-	<stdcall: hresult PathCchAppend lpwstr uintptr lpwstr>
-	^self invalidCall: _failureCode!
-
-pathCchAppendEx: pszPath cchPath: cchPath pszMore: pszMore dwFlags: dwFlags
-	"Invoke the PathCchAppendEx() function of the module wrapped by the receiver.
-	Helpstring: Appends one path to the end of another.
-
-		HRESULT __stdcall PathCchAppendEx(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath,
-			LPCWSTR pszMore,
-			ULONG dwFlags);"
-
-	<stdcall: hresult PathCchAppendEx lpwstr uintptr lpwstr uint32>
-	^self invalidCall: _failureCode!
-
-pathCchFindExtension: pszPath cchPath: cchPath ppszExt: ppszExt
-	"Invoke the PathCchFindExtension() function of the module wrapped by the receiver.
-	Helpstring: Searches a path to find its file name extension, such as '.exe' or '.ini'. This function does not search for a specific extension; it searches for the presence of any extension.
-
-		HRESULT __stdcall PathCchFindExtension(
-			LPCWSTR pszPath,
-			ULONG_PTR cchPath,
-			LPCWSTR* ppszExt);"
-
-	<stdcall: hresult PathCchFindExtension lpwstr uintptr lpwstr*>
-	^self invalidCall: _failureCode!
 
 pathCchIsRoot: pszPath
 	"Invoke the PathCchIsRoot() function of the module wrapped by the receiver.
@@ -151,103 +88,12 @@ pathCchIsRoot: pszPath
 	<stdcall: bool PathCchIsRoot lpwstr>
 	^self invalidCall: _failureCode!
 
-pathCchRemoveBackslash: pszPath cchPath: cchPath
-	"Invoke the PathCchRemoveBackslash() function of the module wrapped by the receiver.
-	Helpstring: Removes the trailing backslash from the end of a path string.
-
-		HRESULT __stdcall PathCchRemoveBackslash(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath);"
-
-	<stdcall: hresult PathCchRemoveBackslash lpwstr uintptr>
-	^self invalidCall: _failureCode!
-
-pathCchRemoveBackslashEx: pszPath cchPath: cchPath ppszEnd: ppszEnd pcchRemaining: pcchRemaining
-	"Invoke the PathCchRemoveBackslashEx() function of the module wrapped by the receiver.
-	Helpstring: Removes the trailing backslash from the end of a path string.
-
-		HRESULT __stdcall PathCchRemoveBackslashEx(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath,
-			LPWSTR* ppszEnd,
-			ULONG_PTR* pcchRemaining);"
-
-	<stdcall: hresult PathCchRemoveBackslashEx lpwstr uintptr lpwstr* uintptr*>
-	^self invalidCall: _failureCode!
-
-pathCchRemoveExtension: pszPath cchPath: cchPath
-	"Invoke the PathCchRemoveExtension() function of the module wrapped by the receiver.
-	Helpstring: Removes the file name extension from a path, if one is present.
-
-		HRESULT __stdcall PathCchRemoveExtension(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath);"
-
-	<stdcall: hresult PathCchRemoveExtension lpwstr uintptr>
-	^self invalidCall: _failureCode!
-
-pathCchRemoveFileSpec: pszPath cchPath: cchPath
-	"Invoke the PathCchRemoveFileSpec() function of the module wrapped by the receiver.
-	Helpstring: Removes the last element in a path string, whether that element is a file name or a directory name. The element's leading backslash is also removed.
-
-		HRESULT __stdcall PathCchRemoveFileSpec(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath);"
-
-	<stdcall: hresult PathCchRemoveFileSpec lpwstr uintptr>
-	^self invalidCall: _failureCode!
-
-pathCchRenameExtension: pszPath cchPath: cchPath pszExt: pszExt
-	"Invoke the PathCchRenameExtension() function of the module wrapped by the receiver.
-	Helpstring: Replaces a file name's extension at the end of a path string with a new extension. If the path string does not end with an extension, the new extension is added.
-
-		HRESULT __stdcall PathCchRenameExtension(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath,
-			LPCWSTR pszExt);"
-
-	<stdcall: hresult PathCchRenameExtension lpwstr uintptr lpwstr>
-	^self invalidCall: _failureCode!
-
-pathCchSkipRoot: pszPath ppszRootEnd: ppszRootEnd
-	"Invoke the PathCchSkipRoot() function of the module wrapped by the receiver.
-	Helpstring: Retrieves a pointer to the first character in a path following the drive letter or Universal Naming Convention (UNC) server/share path elements.
-
-		HRESULT __stdcall PathCchSkipRoot(
-			LPCWSTR pszPath,
-			LPCWSTR* ppszRootEnd);"
-
-	<stdcall: hresult PathCchSkipRoot lpwstr lpwstr*>
-	^self invalidCall: _failureCode!
-
-pathCchStripPrefix: pszPath cchPath: cchPath
-	"Invoke the PathCchStripPrefix() function of the module wrapped by the receiver.
-	Helpstring: Removes the '\?' prefix, if present, from a file path.
-
-		HRESULT __stdcall PathCchStripPrefix(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath);"
-
-	<stdcall: hresult PathCchStripPrefix lpwstr uintptr>
-	^self invalidCall: _failureCode!
-
-pathCchStripToRoot: pszPath cchPath: cchPath
-	"Invoke the PathCchStripToRoot() function of the module wrapped by the receiver.
-	Helpstring: Removes all file and directory elements in a path except for the root information.
-
-		HRESULT __stdcall PathCchStripToRoot(
-			LPWSTR pszPath,
-			ULONG_PTR cchPath);"
-
-	<stdcall: hresult PathCchStripToRoot lpwstr uintptr>
-	^self invalidCall: _failureCode!
-
 pathCombine: pszPathIn pszMore: pszMore dwFlags: dwFlags
 	| pszPathOut result |
-	pszPathOut := External.Address new.
+	pszPathOut := Address new.
 	self
-		pathAllocCombine: pszPathIn
-		pszMore: pszMore
+		pathAllocCombine: pszPathIn asUtf16String
+		pszMore: pszMore asUtf16String
 		dwFlags: dwFlags
 		ppszPathOut: pszPathOut.
 	result := Utf16String fromAddress: pszPathOut.
@@ -266,24 +112,11 @@ pathIsUNCEx: pszPath ppszServer: ppszServer
 	^self invalidCall: _failureCode! !
 
 !OS.PathCchLibrary categoriesForMethods!
+isLongPathAware!public!testing! !
 pathAllocCanonicalize:dwFlags:ppszPathOut:!**auto generated**!private!win32 functions-path! !
 pathAllocCombine:pszMore:dwFlags:ppszPathOut:!**auto generated**!private!win32 functions-path! !
 pathCanonicalize:dwFlags:!public!win32 functions-path! !
-pathCchAddBackslash:cchPath:!**auto generated**!public!win32 functions-path! !
-pathCchAddBackslashEx:cchPath:ppszEnd:pcchRemaining:!**auto generated**!public!win32 functions-path! !
-pathCchAddExtension:cchPath:pszExt:!**auto generated**!public!win32 functions-path! !
-pathCchAppend:cchPath:pszMore:!**auto generated**!public!win32 functions-path! !
-pathCchAppendEx:cchPath:pszMore:dwFlags:!**auto generated**!public!win32 functions-path! !
-pathCchFindExtension:cchPath:ppszExt:!**auto generated**!public!win32 functions-path! !
 pathCchIsRoot:!**auto generated**!public!win32 functions-path! !
-pathCchRemoveBackslash:cchPath:!**auto generated**!public!win32 functions-path! !
-pathCchRemoveBackslashEx:cchPath:ppszEnd:pcchRemaining:!**auto generated**!public!win32 functions-path! !
-pathCchRemoveExtension:cchPath:!**auto generated**!public!win32 functions-path! !
-pathCchRemoveFileSpec:cchPath:!**auto generated**!public!win32 functions-path! !
-pathCchRenameExtension:cchPath:pszExt:!**auto generated**!public!win32 functions-path! !
-pathCchSkipRoot:ppszRootEnd:!**auto generated**!public!win32 functions-path! !
-pathCchStripPrefix:cchPath:!**auto generated**!public!win32 functions-path! !
-pathCchStripToRoot:cchPath:!**auto generated**!public!win32 functions-path! !
 pathCombine:pszMore:dwFlags:!public!win32 functions-path! !
 pathIsUNCEx:ppszServer:!**auto generated**!public!win32 functions-path! !
 !

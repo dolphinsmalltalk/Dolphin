@@ -68,7 +68,7 @@ appIdString
 applicationName
 	"Answer the application name. Use the applications executable name."
 
-	^self argc > 0 ifTrue: [Filename splitStemFrom: self argv first] ifFalse: ['Application']!
+	^Module moduleStem: 0!
 
 applicationShortName
 	"Answer the abbreviated application name."
@@ -88,7 +88,7 @@ argv
 			[| lppstr |
 			lppstr := VM argv.
 			argv := lppstr isNull
-						ifTrue: [{ External.Module moduleFileName: nil }]
+						ifTrue: [{ Kernel32 getModuleFilename: nil }]
 						ifFalse: 
 							["Open code the access to the array of strings to reduce base system dependencies on external struct classes"
 							(0 to: VM argc - 1)
@@ -106,6 +106,11 @@ backupOnImageSave
 	more juggling."
 
 	^false!
+
+basicImagePath
+	"Private - Answer the <String> base file path on which the image, source and changes file names are based. An example might be: c:\Program Files\Dolphin\Dolphin."
+
+	^imagePath!
 
 basicPrimaryStartup
 	"Perform critical startup operations which initialize the basic
@@ -242,7 +247,7 @@ errorLogExtension
 errorLogName
 	"Answer the name of the error log file used to record error information (e.g. unhandled exceptions)."
 
-	^Filename default: self imagePath extension: self errorLogExtension!
+	^self imagePath withExtension: self errorLogExtension!
 
 eventLogSource
 	"Answer the 'source' that should be passed to the ReportEvent() API when logging events
@@ -307,7 +312,7 @@ hasActiveServers
 imageBase
 	"Answer the base directory in which the image resides"
 
-	^Filename splitPathFrom: self imagePath!
+	^self imagePath directory!
 
 imageExtension
 	"Private - Answer the suffix for an executable image file"
@@ -317,18 +322,25 @@ imageExtension
 imageFileName
 	"Answer the file name of the current image."
 
-	^Filename default: self imagePath extension: self imageExtension!
+	^imagePath , '.' , self imageExtension!
 
 imagePath
-	"Answer the base file path on which the image, source and changes
-	file names are based. An example might be: c:\Program Files\Dolphin\Dolphin."
+	"Answer the base file <Path> on which the image, source and changes file names are based. An example might be: c:\Program Files\Dolphin\Dolphin."
 
-	^imagePath!
+	^imagePath asPath!
 
 imagePath: aPathString
 	"Private - used only after loading an image to set up path to the image and sources."
 
-	imagePath := Filename removeExtension: (Filename fullPathOf: aPathString)!
+	| i ch |
+	"We want to avoid a low-level dependency on Core.Path here"
+	imagePath := Kernel32 getFullPathName: aPathString.
+	i := imagePath size.
+	[i > 1 and: [
+		ch := imagePath at: i.
+		ch ~~ $. and: [ch ~~ $\]]] whileTrue: [i := i - 1].
+	ch == $. ifTrue: [imagePath := imagePath copyFrom: 1 to: i-1]
+!
 
 imageVersion
 	"Answer a String in the form N.N.N.N which specifies the version number of the image."
@@ -364,7 +376,7 @@ initializeFromSessionManager: oldSessionManager
 	manager from oldSessionManager. This is an opportunity to transfer
 	state information from the replaced manager."
 
-	imagePath := oldSessionManager imagePath.
+	imagePath := oldSessionManager basicImagePath.
 	stdioStreams := oldSessionManager basicStdioStreams.
 	startupArgs := oldSessionManager startupArgs.
 	events := oldSessionManager getEvents.
@@ -844,8 +856,7 @@ registerServer: server
 	self servers add: server!
 
 resourcesLocatorForClass: aClass
-	^FolderRelativeFileLocator
-		basePath: (Filename composePath: self installationDirectory subPath: 'Resources')!
+	^FolderRelativeFileLocator basePath: self installationDirectory \ 'Resources'!
 
 retire
 	"This SessionManager instance is stepping down in favour of a new boy. Perform any
@@ -901,7 +912,7 @@ sentinelName
 	"Answer the name of the Win32 Event object created to uniquely identify this session
 	so that attempts to run additional instances can be detected."
 
-	^(self imageFileName copyReplacing: $\ withObject: $/) caseFolded.!
+	^(self imageFileName asUtf16String copyReplacing: $\ withObject: $/) caseFolded.!
 
 servers
 	"Private - Answer the registry of servers registered with this session."
@@ -943,7 +954,7 @@ snapshot: fileName
 	"Private - Save the current image to fileName."
 
 	^self
-		primSnapshot: fileName
+		primSnapshot: fileName asUtf16String
 		backup: false
 		type: 0
 		maxObjects: nil!
@@ -1074,7 +1085,7 @@ userName
 versionInfo
 	"Answer the <VersionInfo> for this session, extracted from the host executable."
 
-	^VersionInfo forPath: (External.Module moduleFileName: nil)!
+	^VersionInfo forPath: (Module moduleFileName: nil)!
 
 warning: aString
 	^Warning signal: aString!
@@ -1094,6 +1105,7 @@ argc!accessing!public! !
 argv!accessing!public! !
 argvLegacyOptionsRemoved!accessing!private! !
 backupOnImageSave!public!testing! !
+basicImagePath!accessing!private! !
 basicPrimaryStartup!operations-startup!public! !
 basicSecondaryStartup!operations-startup!public! !
 basicShutdown!operations-shutdown!private! !
@@ -1126,7 +1138,7 @@ imageBase!accessing!public! !
 imageExtension!constants!private! !
 imageFileName!accessing!public! !
 imagePath!accessing!public! !
-imagePath:!accessing!private! !
+imagePath:!initializing!private! !
 imageVersion!accessing!public! !
 imageVersionMajor!accessing!public! !
 imageVersionMinor!accessing!public! !

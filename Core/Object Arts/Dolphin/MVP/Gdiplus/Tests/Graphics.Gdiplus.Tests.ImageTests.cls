@@ -60,12 +60,12 @@ testSaveToFileJpeg
 	"GdiplusImage>>#saveToFile: should be matching against GpImageCodecInfo's FilenameExtension ... not its MimeType"
 
 	| filename bytes |
-	filename := self fileResource fileLocator localFileSpecFor: 'gdipTests.jpg'.
+	filename := self fileResource fileLocator resolve: 'gdipTests.jpg'.
 	model saveToFile: filename.
-	self assert: (File exists: filename).
+	self assert: filename exists.
 	bytes := File readAllBytes: filename.
 	self assert: bytes equals: (model asByteArray: 'image/jpeg').
-	File delete: filename! !
+	filename deleteFile! !
 
 !Graphics.Gdiplus.Tests.ImageTests categoriesForMethods!
 assertClonedValid!asserting!private! !

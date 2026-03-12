@@ -146,7 +146,7 @@ openSources
 	"Private - Open the source files with names derived from the current image path."
 
 	self class sourceManager openSources: self imagePath.
-	(File exists: 'Rescue.st') ifTrue: [SourceManager default fileIn: 'Rescue.st'].
+	'Rescue.st' asPath exists ifTrue: [SourceManager default fileIn: 'Rescue.st'].
 	self stdout
 		nextPutAll: 'Dolphin Smalltalk Boot';
 		cr;
@@ -191,12 +191,12 @@ reloadBootPackages
 	"First load the constants pools to ensure all constants ref'd in new code are defined"
 	Notification signal: 'Reloading BCL constants pools...'.
 	basePackage sourceVariableNames
-		collect: [:each | srcMgr fileIn: (Filename relativePathOf: each value fileOutName to: imageDir)].
+		collect: [:each | srcMgr fileIn: (each value fileOutName relativeTo: imageDir)].
 	Notification signal: 'Updating ClassBuilder...'.
 	self fileInClass: ClassBuilder.
 	classesBefore := (Package manager allPackagedClasses collect: [:each | each name]) asSet.
 	Notification signal: 'Reloading BCL class definitions...'.
-	srcMgr fileIn: (Filename relativePathOf: basePackage classDefinitionsFileName to: imageDir).
+	srcMgr fileIn: (basePackage classDefinitionsFileName relativeTo: imageDir).
 	Class subclasses: #().
 	"Ensure all base classes (including any defined after the boot image was created) are packaged"
 	newBaseClasses := OrderedCollection new.
@@ -226,10 +226,8 @@ reloadBootPackages
 			(#(#BootSessionManager #ClassBuilder) identityIncludes: each name)
 				ifFalse: 
 					[| relativePath |
-					relativePath := Filename relativePathOf: each fileOutName to: imageDir.
-					(File exists: relativePath)
-						ifTrue: [srcMgr fileIn: relativePath]
-						ifFalse: [missingClasses add: each]]].
+					relativePath := each fileOutName relativeTo: imageDir.
+					relativePath exists ifTrue: [srcMgr fileIn: relativePath] ifFalse: [missingClasses add: each]]].
 	missingClasses reverseDo: 
 			[:each |
 			Notification signal: 'Removing obsolete boot class ' , each printString , '...'.

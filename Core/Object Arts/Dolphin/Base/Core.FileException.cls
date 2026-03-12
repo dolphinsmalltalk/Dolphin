@@ -19,7 +19,7 @@ Core.FileException comment: ''!
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
 
-	^super _descriptionArguments copyWith: file name!
+	^super _descriptionArguments copyWith: file name asUtf16String!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."

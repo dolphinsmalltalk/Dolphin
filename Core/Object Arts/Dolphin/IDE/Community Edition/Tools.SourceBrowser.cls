@@ -295,9 +295,9 @@ toggleWriteable
 	<commandQuery: #queryToggleWriteable:>
 	self selectedSourceFiles do: 
 			[:each |
-			| state |
-			state := File isWriteable: each.
-			File isWriteable: each set: state not].
+			| path |
+			path := each asPath.
+			path isWriteable: path isWriteable not].
 	self updateSelected!
 
 updateCaption

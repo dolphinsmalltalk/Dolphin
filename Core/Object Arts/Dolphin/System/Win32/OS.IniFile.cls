@@ -39,7 +39,7 @@ at: keyString put: valueDictionary
 	(Kernel32
 		writePrivateProfileSection: keyString asUtf16String shallowCopy
 		lpString: kvps
-		lpFileName: filename) == 0
+		lpFileName: filename asUtf16String) == 0
 		ifTrue: [Win32Error signal].
 	^valueDictionary!
 
@@ -55,7 +55,7 @@ hasSectionNamed: aString
 		getPrivateProfileSection: aString
 		lpReturnedString: (Utf16String newFixed: 3)
 		nSize: 3
-		lpFileName: filename) ~~ 0
+		lpFileName: filename asUtf16String) ~~ 0
 		or: 
 			["Special case of empty section is OK"
 			Kernel32 getLastError == 0]!
@@ -76,7 +76,7 @@ keysDo: operation
 	[count := Kernel32
 				getPrivateProfileSectionNames: buf
 				nSize: buf size
-				lpFileName: filename.
+				lpFileName: filename asUtf16String.
 	count = (buf size - 2)]
 			whileTrue: [buf := Utf16String newFixed: buf size * 2].
 	start := 1.
@@ -102,7 +102,7 @@ removeKey: aString ifAbsent: aNiladicValuable
 	^(Kernel32
 		writePrivateProfileSection: key
 		lpString: nil
-		lpFileName: filename) ifTrue: [value] ifFalse: [Win32Error signal]! !
+		lpFileName: filename asUtf16String) ifTrue: [value] ifFalse: [Win32Error signal]! !
 
 !OS.IniFile categoriesForMethods!
 at:ifAbsent:!accessing!public! !

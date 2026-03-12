@@ -77,7 +77,7 @@ methodContextClass
 	^Context!
 
 resourceFilename: aString
-	^FileLocator installRelative localFileSpecFor: 'Resources\Tests\' , aString!
+	^FileLocator installRelative resolve: 'Resources\Tests\' , aString!
 
 resourceStream: aString text: aBoolean
 	^FileStream read: (self resourceFilename: aString) text: aBoolean!
@@ -87,6 +87,13 @@ runKnownBug: aString test: aSymbol
 		signal: ('Warning: Known bug <1s> tested by <2p> not run' expandMacrosWith: aString with: aSymbol).
 	#todo.	"Make this controllable by an option or class var"
 	^false!
+
+safeDeleteDir: aStringOrPath
+	| dir |
+	aStringOrPath isNil ifTrue: [^self].
+	dir := aStringOrPath asPath.
+	dir exists ifFalse: [^self].
+	[dir withSeparator deleteDirectory] on: OS.Win32Error do: [:ex | ex toTrace]!
 
 shouldRaiseZeroDivide: aBlock
 	| raised |
@@ -147,6 +154,7 @@ methodContextClass!constants!private! !
 resourceFilename:!helpers!public! !
 resourceStream:text:!helpers!public! !
 runKnownBug:test:!helpers!public! !
+safeDeleteDir:!helpers!private! !
 shouldRaiseZeroDivide:!Accessing!public! !
 verifyPropertyManagerOf:!helpers!private! !
 versionFromParts:!helpers!public! !

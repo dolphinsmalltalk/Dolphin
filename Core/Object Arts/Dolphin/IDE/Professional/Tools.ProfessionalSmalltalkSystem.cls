@@ -21,7 +21,7 @@ browseDeployedPackage: aPackage
 
 browseDeploymentLog: aString
 	self browseSystemModel: (self
-				systemModelFromDeploymentLog: (FileLocator imageRelative localFileSpecFor: aString))!
+				systemModelFromDeploymentLog: (FileLocator imageRelative resolve: aString))!
 
 browseEnvironment: aBrowserEnvironment
 	"Open an Environment Browser Shell on all classes and methods included in the specified <BrowserEnvironment>."
@@ -96,7 +96,7 @@ newIdeaSpace
 openDeploymentLog: aString
 	| dom |
 	dom := MSXML newDocument.
-	dom loadURL: 'file://' , aString.
+	dom loadURL: 'file://' , aString asUtf16String.
 	^dom!
 
 packagedResourceIdentifierDialogClass

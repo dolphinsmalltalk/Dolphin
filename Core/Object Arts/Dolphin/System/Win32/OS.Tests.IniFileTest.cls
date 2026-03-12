@@ -24,15 +24,15 @@ makeIniFile
 	^IniFile open: self fileResource iniFile1!
 
 makeModifiableIniFile
-	iniFile := self fileResource fileLocator localFileSpecFor: self selector , '.ini'.
-	File copy: self fileResource iniFile1 to: iniFile.
+	iniFile := self fileResource fileLocator resolve: self selector , '.ini'.
+	self fileResource iniFile1 asPath copyTo: iniFile.
 	^IniFile open: iniFile!
 
 stlVersion4
 	^{ #'!!STL'. 4. 655414. Smalltalk.DWORDBytes. 4. 239. 190. 173. 222 }!
 
 tearDown
-	(iniFile notNil and: [File exists: iniFile]) ifTrue: [File delete: iniFile].
+	(iniFile notNil and: [iniFile exists]) ifTrue: [iniFile deleteFile].
 	^super tearDown!
 
 testAdd

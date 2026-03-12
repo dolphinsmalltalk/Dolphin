@@ -20,13 +20,13 @@ testDisplayOn
 	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') drives displayString beginsWith: 'an Array(C:').!
 
 testDNU
-	<ignoreNotImplementedSelectors: #(drives item:value: key:newKey: add:_: writeLine: createTextFile:overwrite:unicode: buildPath:name: counts count:_: count:_:_:)>
+	<ignoreNotImplementedSelectors: #(#drives #item:value: #key:newKey: #add:_: #writeLine: #createTextFile:overwrite:unicode: #buildPath:name: #counts #count:_: #count:_:_:)>
 	| fs dict path ts |
 	fs := IDispatch createObject: 'Scripting.FileSystemObject'.
 	"propget and indexed propget"
 	self assert: (fs drives item: 'C:') displayString = 'C:'.
 	"2 arg method call"
-	path := fs buildPath: File tempPath name: 'IDispatchTest_testDNU.txt'.
+	path := fs buildPath: Path tempDirectory asString name: 'IDispatchTest_testDNU.txt'.
 	"3 arg method call"
 	ts := fs
 				createTextFile: path

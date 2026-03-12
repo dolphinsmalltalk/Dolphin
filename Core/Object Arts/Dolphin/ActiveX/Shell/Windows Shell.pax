@@ -293,7 +293,7 @@ OS.SizedStructure
 documentsDirectory
 	"Answer the path of the Windows 'My Documents' directory on the host computer for the current user."
 
-	^Shell32 getKnownFolderLocation: ShellConstants.FOLDERID_Documents!
+	^Path directory: (Shell32 getKnownFolderLocation: ShellConstants.FOLDERID_Documents)!
 
 downloadsDirectory
 	"Answer the path of the user's downloads directory."

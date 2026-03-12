@@ -83,10 +83,7 @@ tool: aToolClass icon: anIcon description: aString openBlock: aMonadicValuable h
 	icon := anIcon.
 	openBlock := aMonadicValuable.
 	description := aString.
-	helpId := anIntegerOrNil!
-
-whatsThis
-	SessionManager current whatsThis: self! !
+	helpId := anIntegerOrNil! !
 
 !Tools.SmalltalkSystemIcon categoriesForMethods!
 =!comparing!public! !
@@ -101,7 +98,6 @@ printOn:!printing!public! !
 tool!accessing!public! !
 tool:!accessing!public! !
 tool:icon:description:openBlock:helpId:!initializing!private! !
-whatsThis!public! !
 !
 
 Tools.SmalltalkSystemIcon methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!

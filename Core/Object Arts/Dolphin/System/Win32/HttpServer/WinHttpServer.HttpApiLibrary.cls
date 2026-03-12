@@ -1412,8 +1412,8 @@ example8
 	lib setSession: sessionId
 		property: (HTTP_LOGGING_INFO new
 				Present: true;
-				DirectoryName: FileLocator imageRelative basePath;
-				SoftwareName: 'Dolphin';
+				directoryName: FileLocator imageRelative basePath;
+				softwareName: 'Dolphin';
 				Format: HttpLoggingTypeW3C;
 				RolloverType: HttpLoggingRolloverSize;
 				RolloverSize: 1024 * 1024;

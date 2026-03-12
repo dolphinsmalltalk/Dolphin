@@ -25,7 +25,7 @@ basicCreateHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	Gdip gdipLoadImageFromFile: self absoluteFilename image: gpHandle.
+	Gdip gdipLoadImageFromFile: self absolutePath asUtf16String image: gpHandle.
 	^gpHandle! !
 
 !Graphics.Gdiplus.ImageFromFileInitializer categoriesForMethods!

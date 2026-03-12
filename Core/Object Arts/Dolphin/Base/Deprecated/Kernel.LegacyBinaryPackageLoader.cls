@@ -55,7 +55,7 @@ load
 	(mixed STB binary and source text) on the <readableStream> argument, aReadStream."
 
 	| version selector |
-	stream := FileStream read: package packageFileName text: false.
+	stream := FileStream read: package packageFullPath text: false.
 	binaryFiler := STBInFiler on: stream.
 	"Skip over the package. We ignore this (since it represents the package we are loading)."
 	binaryFiler next.
@@ -86,7 +86,7 @@ loadGlobals
 			[:each |
 			| fileName |
 			fileName := package fileNameForSourceVariable: each.
-			(File exists: fileName) ifTrue: [package sourceManager fileIn: fileName].
+			fileName exists ifTrue: [package sourceManager fileIn: fileName].
 			each value isChanged: false]!
 
 loadResources

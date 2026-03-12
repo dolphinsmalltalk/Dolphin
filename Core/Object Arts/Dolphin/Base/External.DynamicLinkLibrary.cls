@@ -253,14 +253,16 @@ onStartup
 
 	"First clear away stale module handles and cached proc addresses from the external methods of all libraries."
 
+	| vmdll |
 	self allSubclassesBreadthFirstDo: [:each | each clear].
 	"If we don't have a handle for the Kernel32.DLL then we can't call LoadLibraryEx to open any other libraries."
 	KernelLibrary openDefault.
 	"Initialize all the lazily opened libraries, installing DynamicLinkLibrary stubs for any assigned to shared variables."
 	self initializeSubclasses.
 	"Add VM folder to DLL search path for libraries that specify LOAD_LIBRARY_SEARCH_DEFAULT_DIRS/LOAD_LIBRARY_SEARCH_USER_DIRS in #loadFlags"
-	Kernel32
-		addDllDirectory: (Filename splitPathFrom: (Kernel32 getModuleFilename: VMLibrary moduleHandle))!
+	vmdll := Kernel32 getModuleFilename: VMLibrary moduleHandle.
+	Kernel32 addDllDirectory: (vmdll copyFrom: 1 to: (vmdll lastIndexOf: $\))
+!
 
 onStartup2
 	"Private - Perform session startup processing for the receiver."

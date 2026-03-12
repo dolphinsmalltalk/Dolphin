@@ -22,7 +22,7 @@ subjectClass
 
 testFromFileFallback
 	| image1 image2 filename |
-	filename := Filename splitFilenameFrom: self imageFile.
+	filename := self imageFile asPath fileName.
 	image1 := self subjectClass fromFile: filename.
 	image2 := self subjectClass fromId: filename.
 	self deny: image1 equals: image2.

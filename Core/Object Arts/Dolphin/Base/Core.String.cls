@@ -61,6 +61,11 @@ N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space fo
 				nextPutAll: aSequencedReadableCollection;
 				contents]!
 
+\ aPathOrString
+	"Compose a pathname from the receiver as base path and the argument as subpath."
+
+	^self asPath \ aPathOrString!
+
 _sameAsString: aString
 	"Private - Answer whether the receiver collates the same as argument, aString."
 
@@ -181,6 +186,11 @@ asNumber
 	printString of a Number."
 
 	^Number fromString: self!
+
+asPath
+	"Answer a <Path> constructed from the receiver."
+
+	^Path fromString: self!
 
 asPhrase
 	"Answer a <sequencedReadableCollection> of the 'words' in the receiver, as capitalized strings.
@@ -1244,6 +1254,7 @@ withNormalizedLineDelimiters
 
 !Core.String categoriesForMethods!
 ,!copying!public! !
+\!filename manipulation!public! !
 _sameAsString:!comparing!private! !
 <!comparing!public! !
 <<!printing!public! !
@@ -1259,6 +1270,7 @@ asLowercase!converting!public! !
 asLowercase:!converting!public! !
 asMethodCategory!converting!public! !
 asNumber!converting!public! !
+asPath!converting!public! !
 asPhrase!converting!public! !
 asQualifiedReference!converting!public! !
 asResourceId!converting!public! !

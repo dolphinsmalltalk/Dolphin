@@ -264,7 +264,7 @@ testMarkusKuhnUtf8
 
 	| subject testFilePath bytes utf16 utf8 |
 	testFilePath := FileLocator imageRelative
-				localFileSpecFor: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
+				resolve: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
 	subject := self streamOnFile: testFilePath type: #utf8.
 	"Should be able to read every character, even if invalid"
 	[subject atEnd] whileFalse: [subject next].

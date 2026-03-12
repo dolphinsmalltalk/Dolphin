@@ -22,13 +22,13 @@ testComputerName
 	self assert: (actual sameAs: SessionManager current computerName)!
 
 testDocumentsDirectory
-	self assert: (File isDirectory: SessionManager current documentsDirectory)!
+	self assert: SessionManager current documentsDirectory isDirectory!
 
 testGetEnv
 	| actual |
 	actual := SessionManager current getenv: 'SystemRoot'.
-	self assert: (File isDirectory: actual).
-	self assert: (File exists: (Filename composePath: actual subPath: 'win.ini'))!
+	self assert: actual asPath isDirectory.
+	self assert: (actual \ 'win.ini') exists!
 
 testUsername
 	"Assumes that getenv: is working"

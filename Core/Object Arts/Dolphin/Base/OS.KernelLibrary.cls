@@ -165,7 +165,7 @@ createDirectory: aString
 	| utf16 |
 	utf16 := aString asUtf16String.
 	"[As documented](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createdirectory), there is a 248 character limit on the directory name size, after which the long path prefix is required. Unfortunately this is less than the size (MAX_PATH, or 260) that would cause the combine and canonicalize functions of the PatchCch api set to prepend the prefix automatically. This kind of Windows API inconsistency makes long paths hard to work with, so we intervene here to add in the long path prefix when required to try and hide some of the complexity."
-	(utf16 size >= 248 and: [(utf16 beginsWith: LongPathPrefix) not])
+	(utf16 size >= MaxDir and: [(utf16 beginsWith: LongPathPrefix) not])
 		ifTrue: [utf16 := LongPathPrefix , utf16].
 	^(self createDirectory: utf16 lpSecurityAttributes: nil) or: 
 			[| err |
@@ -911,10 +911,10 @@ getFinalPathNameByHandle: hFile lpszFilePath: lpszFilePath cchFilePath: cchFileP
 	<stdcall: uint32 GetFinalPathNameByHandleW handle lpwstr uint32 uint32>
 	^self invalidCall: _failureCode!
 
-getFullPathName: aPathnameString
+getFullPathName: aPathOrString
 	| buffer path bufferSize pathLength |
 	"The 'A' version of the API is limited to paths up to MAX_PATH - it errors on long filenames - so even if the system code page is CP_UTF8, we have to use the 'W' version of the function."
-	path := aPathnameString asUtf16String.
+	path := aPathOrString asUtf16String.
 	(bufferSize := self
 				getFullPathName: path
 				nBufferLength: 0
@@ -1091,9 +1091,9 @@ getProcessHeap
 	<stdcall: handle GetProcessHeap>
 	^self invalidCall: _failureCode!
 
-getShortPathName: aString
+getShortPathName: aPathOrString
 	| path shortpath len |
-	path := aString asUtf16String.
+	path := aPathOrString asUtf16String.
 	len := path size.
 	shortpath := Utf16String newFixed: len.
 	(self
@@ -1195,7 +1195,7 @@ getTempFileName: dirString lpPrefixString: prefixString
 	| buf |
 	buf := Utf16String newFixed: MAX_PATH.
 	^(self
-		getTempFileName: dirString
+		getTempFileName: dirString asUtf16String
 		lpPrefixString: prefixString
 		uUnique: 0
 		lpTempFileName: buf) == 0
@@ -2036,7 +2036,7 @@ updateResource: hUpdate lpType: resTypeString lpName: resName wLanguage: langId 
 
 updateResourcesOf: aString do: aMonadicValuable 
 	| hUpdate |
-	hUpdate := self beginUpdateResource: aString bDeleteExistingResources: false.
+	hUpdate := self beginUpdateResource: aString asUtf16String bDeleteExistingResources: false.
 	[aMonadicValuable value: hUpdate] ifCurtailed: [self endUpdateResource: hUpdate fDiscard: true].
 	(self endUpdateResource: hUpdate fDiscard: false) ifFalse: [self systemError]!
 
@@ -2312,7 +2312,7 @@ localFree:!**auto generated**!public!win32 functions-memory management! !
 lockResource:!public!win32 functions-resource! !
 moveFile:lpNewFileName:!public!win32 functions-file management! !
 moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file management! !
-multiByteToWideChar:codePage:!instance creation!public! !
+multiByteToWideChar:codePage:!public!win32 functions-string manipulation! !
 multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
 openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
 outputDebugString:!public!win32 functions-debugging! !

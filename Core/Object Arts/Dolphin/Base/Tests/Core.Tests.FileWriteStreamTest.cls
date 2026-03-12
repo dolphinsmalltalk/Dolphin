@@ -48,7 +48,7 @@ newUtf8StreamBufferSize: anInteger
 
 setUp
 	super setUp.
-	tempFileName := File temporaryFilename!
+	tempFileName := Path temporary!
 
 sharingError
 	^FileException matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_SHARING_VIOLATION]!
@@ -89,8 +89,8 @@ streamWith: aString
 
 tearDown
 	self closeTempStream.
-	(tempFileName isNil or: [(File exists: tempFileName) not]) ifTrue: [^self].
-	[File delete: tempFileName] on: Error
+	(tempFileName isNil or: [tempFileName exists not]) ifTrue: [^self].
+	[tempFileName deleteFile] on: Error
 		do: 
 			[:ex |
 			SessionManager current traceStream
@@ -574,7 +574,7 @@ testWriteManyCharacters
 	self assert: subject position equals: many size.
 	subject nextPutAll: many.
 	self assert: subject position equals: many size * 2.
-	filename := subject name.
+	filename := subject name asPath.
 	subject close.
 	self assert: (File readAllText: filename) equals: many , many.
 	subject := (self streamClass write: filename mode: #append).
@@ -584,7 +584,7 @@ testWriteManyCharacters
 	subject nextPutAll: self streamClass comment.
 	fileSize := fileSize + self streamClass comment size.
 	subject close.
-	self assert: (File fileSize: filename) equals: fileSize.
+	self assert: (filename fileSize) equals: fileSize.
 	self assert: (File readAllText: filename) equals: many , many , self streamClass comment!
 
 testWriteNoBom

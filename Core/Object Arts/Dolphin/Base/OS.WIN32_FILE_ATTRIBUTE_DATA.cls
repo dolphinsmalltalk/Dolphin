@@ -51,7 +51,8 @@ dwFileAttributes
 fileSize
 	"Answer the <integer> size of the file."
 
-	^(self nFileSizeHigh bitShift: 32) + self nFileSizeLow!
+	^((bytes uint32AtOffset: _OffsetOf_nFileSizeHigh) bitShift: 32)
+		+ (bytes uint32AtOffset: _OffsetOf_nFileSizeLow)!
 
 ftCreationTime
 	"Answer the <FILETIME> value of the receiver's 'ftCreationTime' field."

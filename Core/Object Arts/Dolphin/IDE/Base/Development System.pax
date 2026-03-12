@@ -5727,15 +5727,13 @@ defaultAboutBitmap
 
 	#{Graphics.Gdiplus.Image} ifDefined: 
 			[:gdiplusImage |
-			| dir imageFile |
-			dir := Filename composePath: self path subPath: 'Resources'.
-			#('jpg' 'png') do: 
+			| imageFile locator |
+			locator := self fileLocator.
+			#('.png' '.jpg') do: 
 					[:each |
-					imageFile := Filename
-								composePath: dir
-								stem: self name
-								extension: each.
-					(File exists: imageFile) ifTrue: [^gdiplusImage fromFile: imageFile]]].
+					imageFile := 'Resources' \ (name , each).
+					(locator resolve: imageFile) exists
+						ifTrue: [^gdiplusImage fromFile: imageFile usingLocator: locator]]].
 	^DIBSection width: 480 height: 360!
 
 fileLocator

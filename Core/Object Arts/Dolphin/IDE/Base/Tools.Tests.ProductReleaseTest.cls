@@ -54,10 +54,10 @@ testPackagePaths
 
 	DolphinProduct current contents do: 
 			[:each |
-			self assert: (Filename removeExtension: each first)
-				equals: (Filename
-						removeExtension: (Package manager packageNamed: (Filename splitStemFrom: each first))
-								packagePathname)]!
+			| path |
+			path := each first asPath.
+			self assert: path withoutExtension
+				equals: (Package manager packageNamed: path stem) packagePathname asPath withoutExtension]!
 
 testSmalltalkKeysAreSymbols
 	self assert: (Smalltalk keys reject: [:each | each isSymbol]) asArray equals: #()!

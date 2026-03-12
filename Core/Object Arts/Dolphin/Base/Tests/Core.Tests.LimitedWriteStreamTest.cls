@@ -166,7 +166,7 @@ testOverFileStream
 	"Test limiting output to a FileStream actually does limit the output"
 
 	| temp fs stream actual |
-	temp := File temporaryFilename.
+	temp := Path temporary.
 	fs := FileStream write: temp.
 	"Test limiting the output beyond some initial content that is not counted as part of the limit"
 	fs nextPutAll: 'Initial: '.
@@ -178,7 +178,7 @@ testOverFileStream
 	fs close.
 	actual := File readAllText: temp.
 	self assert: actual equals: 'Initial: 🐬 🛑'.
-	File delete: temp!
+	temp deleteFile!
 
 testRecursionDetection
 	| stream array |

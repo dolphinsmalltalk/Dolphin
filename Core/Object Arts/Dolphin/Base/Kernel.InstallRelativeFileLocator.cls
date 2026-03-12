@@ -10,8 +10,8 @@ Kernel.RelativeFileLocator
 
 Kernel.InstallRelativeFileLocator guid: (Core.GUID fromString: '{2543c5ae-b739-4aae-9aee-fe5537083fb7}')!
 
-Kernel.InstallRelativeFileLocator comment: 'An ImageRelativeFileLocator is used to indicate the location of an external file that may be referenced within the image. 
-Instances of this class always locate files relative to the image directory, unless the file is outside the local directory hierarchy below the install directory, in which case an absolute path is used.
+Kernel.InstallRelativeFileLocator comment: 'An `InstallRelativeFileLocator` is used to indicate the location of an installed file that may be referenced within the image. 
+Instances of this class always locate files relative to an installation directory (which is queried from the `SessionManager`), unless the file is outside the local directory hierarchy below the install directory, in which case an absolute path is used.
 '!
 
 !Kernel.InstallRelativeFileLocator categoriesForClass!System-Support! !
@@ -44,8 +44,7 @@ printOn:!printing!public! !
 current
 	"Answer the singleton instance of the receiver"
 
-	Current isNil ifTrue: [ Current := self new ].
-	^Current!
+	^Current ifNil: [Current := self basicNew]!
 
 onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any

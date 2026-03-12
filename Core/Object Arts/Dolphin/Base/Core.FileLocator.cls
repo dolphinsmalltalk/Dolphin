@@ -13,7 +13,7 @@ Core.FileLocator guid: (Core.GUID fromString: '{391014f8-ebb8-4dd3-bd5d-fb6f303d
 Core.FileLocator isNonInstantiable: true!
 
 Core.FileLocator comment: '`FileLocator` is an abstract root for a hierarchy of subclasses that implement the <fileLocator> protocol. 
-A <fileLocator> is used map between an external resource pathname and an internal name. First an external name is mapped to an internal form using #relativePathTo:. The latter can be held in the image and later mapped back to it''s is full external name using #localFileSpecFor:.
+A <fileLocator> is used map between an external resource pathname and an internal name. First an external name is mapped to an internal form using #locatorPathTo:. The latter can be held in the image and later mapped back to it''s is full external name using #localPathFor:.
 
 Several singleton <fileLocator>s are supplied and can be referenced using the following class methods:
 
@@ -48,43 +48,22 @@ Sometimes, especially in the case of development tools, you might want a resourc
 
 !Core.FileLocator methodsFor!
 
-basePath
-	^SessionManager.Current imageBase!
+abstract: aPathOrString
+	"Answer a <readableString> token for the resource with the specified <Path> or <readableString> path argument. For many locators this will be a relative path that can be resolved back to the original path via that locator's #resolve: implementation, but the abstracted form should generally be treated as opaque."
 
-localFileSpecFor: aString
-	"Answer a full filespec for the <readableString> relative path argument, formed according to
-	the rules of this particular file locator. This is the reverse operation to
-	#relativePathTo:, and is performed when the file needs to be located."
+	^self subclassResponsibility!
 
-	^Filename fullPathOf: aString relativeTo: self basePath!
+resolve: aString
+	"Answer a full <Path> for the argument, which is expected to be some internal representation of a <Path> created be a previous call to #abstract: on this or an equivalent locator. Typically the argument will be a <readableString> relative path formed according to the rules of this particular file locator, but this is not required. It is only necessary that the object be reversible from the form created by this locator's #abstract: operation to an equivalent full <Path> at the time where abstracted path needs to be resolved."
 
-relativePathIfSubPath: aFilename
-	"Private - Answer a minimal <readableString> relative path to the resource with the
-	specified <readableString> path, but only if a sub-path of the receiver's base path,
-	otherwise answer the full absolute path."
-
-	| relative |
-	relative := self relativeToBase: aFilename.
-	^(relative beginsWith: '..') ifTrue: [Filename fullPathOf: aFilename] ifFalse: [relative]!
-
-relativePathTo: aString 
-	"Answer a minimal <readableString> relative path to the resource with the specified
-	<readableString> path from the receiver's base path."
-
-	^self relativeToBase: aString!
-
-relativeToBase: aFilename
-	^Filename relativePathOf: aFilename to: self basePath! !
+	^self subclassResponsibility! !
 
 !Core.FileLocator categoriesForMethods!
-basePath!accessing!public! !
-localFileSpecFor:!accessing!public! !
-relativePathIfSubPath:!accessing!private! !
-relativePathTo:!accessing!public! !
-relativeToBase:!accessing!private! !
+abstract:!mapping!public! !
+resolve:!mapping!public! !
 !
 
-Core.FileLocator methodProtocol: #fileLocator attributes: #(#readOnly) selectors: #(#localFileSpecFor: #relativePathTo:)!
+Core.FileLocator methodProtocol: #fileLocator attributes: #(#readOnly) selectors: #(#abstract: #resolve:)!
 
 !Core.FileLocator class methodsFor!
 
@@ -100,11 +79,11 @@ default
 
 	^ImageRelativeFileLocator current!
 
-folderRelative: aString
-	^FolderRelativeFileLocator basePath: aString!
+folderRelative: aPathOrString
+	^FolderRelativeFileLocator basePath: aPathOrString!
 
 imageFolderRelative: aString
-	^self folderRelative: (self imageRelative localFileSpecFor: aString)!
+	^self folderRelative: (self imageRelative resolve: aString)!
 
 imageRelative
 	"Answers an instance of the receiver that can be used to locate external files
@@ -112,19 +91,16 @@ imageRelative
 
 	^ImageRelativeFileLocator current!
 
-imageRelative: aFilenameString
-	^self imageRelative localFileSpecFor: aFilenameString
-!
-
 installRelative
 	"Answers an instance of the receiver that can be used to locate external files
 	relative to the current installation directory."
 
 	^InstallRelativeFileLocator current!
 
-installRelative: aFilenameString
-	^self installRelative localFileSpecFor: aFilenameString
-! !
+new
+	"FileLocators are typically either singletons, or require parameters."
+
+	^self shouldNotImplement! !
 
 !Core.FileLocator class categoriesForMethods!
 absolute!instance creation!public! !
@@ -132,8 +108,7 @@ default!instance creation!public! !
 folderRelative:!instance creation!public! !
 imageFolderRelative:!instance creation!public! !
 imageRelative!instance creation!public! !
-imageRelative:!instance creation!public! !
 installRelative!instance creation!public! !
-installRelative:!instance creation!public! !
+new!instance creation!public! !
 !
 

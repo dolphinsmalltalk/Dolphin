@@ -114,37 +114,9 @@ package methodNames
 	add: 'Delay class' -> #resolution;
 	add: 'Delay class' -> #resolution:do:;
 	add: 'Delay class' -> #resolution:set:;
-	add: 'File class' -> #appendPathDelimiter:;
-	add: 'File class' -> #canonicalizePath:;
-	add: 'File class' -> #change:extension:;
-	add: 'File class' -> #commonPrefixOf:and:;
-	add: 'File class' -> #composePath:stem:extension:;
-	add: 'File class' -> #composePath:subPath:;
-	add: 'File class' -> #composeShortStem:extension:;
-	add: 'File class' -> #composeStem:extension:;
-	add: 'File class' -> #default:extension:;
 	add: 'File class' -> #for:inAndBelow:do:;
-	add: 'File class' -> #fullPathOf:;
-	add: 'File class' -> #fullPathOf:relativeTo:;
-	add: 'File class' -> #isRelativePath:;
-	add: 'File class' -> #isRootPath:;
-	add: 'File class' -> #makePath:;
 	add: 'File class' -> #maxPath;
-	add: 'File class' -> #path:extension:;
 	add: 'File class' -> #pathBuffer;
-	add: 'File class' -> #pathDelimiter;
-	add: 'File class' -> #pathDelimiters;
-	add: 'File class' -> #relativePathOf:to:;
-	add: 'File class' -> #removeExtension:;
-	add: 'File class' -> #removePathDelimiter:;
-	add: 'File class' -> #replacePath:with:;
-	add: 'File class' -> #shortPathOf:;
-	add: 'File class' -> #splitDriveFrom:;
-	add: 'File class' -> #splitExtensionFrom:;
-	add: 'File class' -> #splitFilenameFrom:;
-	add: 'File class' -> #splitPath:;
-	add: 'File class' -> #splitPathFrom:;
-	add: 'File class' -> #splitStemFrom:;
 	add: 'FunctionDescriptor class' -> #fromString:;
 	add: 'NTLibrary class' -> #isWine;
 	add: 'SortAlgorithm class' -> #sortBlock:;
@@ -699,45 +671,6 @@ readCharacter!operations!public! !
 
 !File class methodsFor!
 
-appendPathDelimiter: aString
-	#deprecated.
-	^Filename appendPathDelimiter: aString!
-
-canonicalizePath: aString
-	#deprecated.
-	^Filename canonicalizePath: aString!
-
-change: aPathnameString extension: anExtensionString
-	#deprecated.	"use #path:extension:"
-	^self path: aPathnameString extension: anExtensionString!
-
-commonPrefixOf: pathString1 and: pathString2
-	#deprecated.
-	^Filename commonPrefixOf: pathString1 and: pathString2!
-
-composePath: aPathString stem: aStemString extension: anExtensionString
-	#deprecated.
-	^Filename
-		composePath: aPathString
-		stem: aStemString
-		extension: anExtensionString!
-
-composePath: pathString subPath: subpathString
-	#deprecated.
-	^Filename composePath: pathString subPath: subpathString!
-
-composeShortStem: aStemString extension: anExtensionString 
-	#deprecated.
-	^Filename composeShortStem: aStemString extension: anExtensionString !
-
-composeStem: aStemString extension: anExtensionString
-	#deprecated.
-	^Filename composeStem: aStemString extension: anExtensionString!
-
-default: pathString extension: extString
-	#deprecated.
-	^Filename default: pathString extension: extString!
-
 for: matchString inAndBelow: dirString do: operation
 	#deprecated.	"Use #forAll:in:do:"
 	^self 
@@ -745,126 +678,22 @@ for: matchString inAndBelow: dirString do: operation
 		in: dirString
 		do: [:each | operation value: each directory value: each]!
 
-fullPathOf: aPathnameString
-	#deprecated.
-	^Filename fullPathOf: aPathnameString!
-
-fullPathOf: aPathnameString relativeTo: aBasePathString
-	#deprecated.
-	^Filename fullPathOf: aPathnameString relativeTo: aBasePathString!
-
-isRelativePath: aString
-	#deprecated.
-	^Filename isRelativePath: aString!
-
-isRootPath: aString
-	#deprecated.
-	^Filename isRootPath: aString!
-
-makePath: anArray
-	#deprecated.
-	^Filename makePath: anArray!
-
 maxPath
 	"Answers the maximum number of characters in a file pathname"
 
 	#deprecated.	"Not compatible with long paths"
 	^MAX_PATH!
 
-path: pathString extension: extString
-	#deprecated.
-	^Filename path: pathString extension: extString!
-
 pathBuffer
 	"Answer a buffer of sufficient size to contain a full path."
 
 	#deprecated. "Not long filename compatible"
-	^Utf16String newFixed: MAX_PATH!
-
-pathDelimiter
-	#deprecated.
-	^Filename pathDelimiter!
-
-pathDelimiters
-	#deprecated.
-	^Filename pathDelimiters!
-
-relativePathOf: aPathString to: aBasePathString
-	#deprecated.
-	^Filename relativePathOf: aPathString to: aBasePathString!
-
-removeExtension: aString
-	#deprecated.
-	^Filename removeExtension: aString!
-
-removePathDelimiter: aString
-	#deprecated.
-	^Filename removePathDelimiter: aString!
-
-replacePath: filePath with: newPath
-	#deprecated.
-	^Filename replacePath: filePath with: newPath!
-
-shortPathOf: aPathnameString
-	#deprecated.
-	^Filename shortPathOf: aPathnameString!
-
-splitDriveFrom: aString
-	#deprecated.
-	^Filename splitDriveFrom: aString!
-
-splitExtensionFrom: aString
-	#deprecated.
-	^Filename splitExtensionFrom: aString!
-
-splitFilenameFrom: aString
-	#deprecated.
-	^Filename splitFilenameFrom: aString!
-
-splitPath: aString
-	#deprecated.
-	^Filename splitPath: aString!
-
-splitPathFrom: aString
-	#deprecated.
-	^Filename splitPathFrom: aString!
-
-splitStemFrom: aString
-	#deprecated.
-	^Filename splitStemFrom: aString! !
+	^Utf16String newFixed: MAX_PATH! !
 
 !File class categoriesForMethods!
-appendPathDelimiter:!filename manipulation!public! !
-canonicalizePath:!filename manipulation!public! !
-change:extension:!filename manipulation!public! !
-commonPrefixOf:and:!filename manipulation!public! !
-composePath:stem:extension:!filename manipulation!public! !
-composePath:subPath:!filename manipulation!public! !
-composeShortStem:extension:!filename manipulation!public! !
-composeStem:extension:!filename manipulation!public! !
-default:extension:!filename manipulation!public! !
 for:inAndBelow:do:!enumerating!public! !
-fullPathOf:!filename manipulation!public! !
-fullPathOf:relativeTo:!filename manipulation!public! !
-isRelativePath:!filename manipulation!public! !
-isRootPath:!filename manipulation!public! !
-makePath:!filename manipulation!public! !
 maxPath!constants!public! !
-path:extension:!filename manipulation!public! !
 pathBuffer!helpers!public! !
-pathDelimiter!constants!public! !
-pathDelimiters!constants!public! !
-relativePathOf:to:!filename manipulation!public! !
-removeExtension:!filename manipulation!public! !
-removePathDelimiter:!filename manipulation!public! !
-replacePath:with:!filename manipulation!public! !
-shortPathOf:!filename manipulation!public! !
-splitDriveFrom:!filename manipulation!public! !
-splitExtensionFrom:!filename manipulation!public! !
-splitFilenameFrom:!filename manipulation!public! !
-splitPath:!filename manipulation!public! !
-splitPathFrom:!filename manipulation!public! !
-splitStemFrom:!filename manipulation!public! !
 !
 
 !FILETIME methodsFor!

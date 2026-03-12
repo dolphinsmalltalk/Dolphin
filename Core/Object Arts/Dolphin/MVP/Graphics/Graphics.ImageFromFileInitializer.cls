@@ -54,7 +54,7 @@ filename: anObject
 	filename := anObject!
 
 fileSpec
-	^fileLocator ifNil: [filename] ifNotNil: [fileLocator localFileSpecFor: filename]!
+	^fileLocator ifNil: [filename] ifNotNil: [fileLocator resolve: filename]!
 
 flag: anInteger set: aBoolean
 	flags := self flags mask: anInteger set: aBoolean!

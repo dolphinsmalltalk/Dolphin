@@ -334,16 +334,18 @@ _copyAndUpdateStub: stubFile to: exeFile
 	"Private - Copy over the stub and update it if required. Answer the name of the
 	new stub file."
 
+	| path |
 	self _logComment: 'Creating executable stub: ' , exeFile.
-	File createDirectoryPath: (Filename splitPathFrom: exeFile).
-	File copy: stubFile to: exeFile.
-	File isWriteable: exeFile set: true.
+	path := exeFile asPath.
+	path createDirectoryPath.
+	stubFile asPath copyTo: path.
+	path isWriteable: true.
 	self isResourceUpdatingRequired
 		ifTrue: [OS.Kernel32 updateResourcesOf: exeFile do: [:hUpdate | self _updateStubResources: hUpdate]].
 	^exeFile!
 
 _defaultStubFilePath
-	^FileLocator installRelative localFileSpecFor: self stubFile!
+	^FileLocator installRelative resolve: self stubFile!
 
 _deleteClass: aClass
 	"Private - Removes aClass from the image. Answer the number of classes that were actually removed (subclasses may be removed too)."
@@ -498,11 +500,11 @@ _getClassInstanceStats
 _getExecutablePath
 	"Private - Save down the stub file path. Check that it exists, and if not raise an error. Save down the path to which the executable should be deployed."
 
-	stubFilePath := self stubFilePath.
-	(File exists: stubFilePath)
-		ifTrue: [stubFilePath]
-		ifFalse: [self error: 'Stub file not found: ''' , stubFilePath , ''''].
-	exePath := self executablePath!
+	| stub |
+	stub := self stubFilePath.
+	stub exists ifFalse: [self error: 'Stub file not found: ''' , stub displayString , ''''].
+	stubFilePath := stub path.
+	exePath := self executablePath path!
 
 _hiddenReferencesInResources
 	| hiddenRefs viewProxy referenceView |
@@ -560,7 +562,7 @@ _logConfiguration: aString
 		_startElement: 'Configuration' attributes: #();
 		_logElement: 'ImagePath'
 			attributes: #()
-			value: SessionManager current imagePath;
+			value: SessionManager current imagePath displayString;
 		_logElement: 'TimeStamp'
 			attributes: #()
 			value: DateAndTime now printString;
@@ -965,9 +967,10 @@ _openLogFile
 	| path |
 	path := self writeLogFile
 				ifTrue: 
-					[File createDirectoryPath: (Filename splitPathFrom: self logFileName).
-					self logFileName].
-	deploymentContext _openLogFile: path!
+					[self logFileName
+						createDirectoryPath;
+						yourself].
+	deploymentContext _openLogFile: path asString!
 
 _packagedClasses
 	| packagedClasses |
@@ -1556,7 +1559,7 @@ _updateXPManifestResource: anExternalHandle
 						nextPutAll: (string copyWithout: $.);
 						nextPut: $.]].
 	file := (strings at: 'InternalName' ifAbsent: '') copyWithout: $..
-	file isEmpty ifTrue: [file := Filename splitStemFrom: self executableName].
+	file isEmpty ifTrue: [file := self executableName asPath stem].
 	assemblyName nextPutAll: file.
 	manifest := self
 				_buildManifest: assemblyName contents
@@ -1676,17 +1679,16 @@ emptyMethodDictionariesOfStubbornClasses
 	^flags allMask: PurgeStubbornClassesMask!
 
 executableName
-	"Answer the executable name to which the resultant stripped image will
-	be saved"
+	"Answer the executable name to which the resultant stripped image will be saved"
 
 	^executableName!
 
 executablePath
-	"Answer the full path of the executable to which the resultant stripped image will
+	"Answer the full <Path> of the executable to which the resultant stripped image will
 	be saved"
 
 	^self executableName notEmpty
-		ifTrue: [FileLocator imageRelative localFileSpecFor: self executableName]
+		ifTrue: [FileLocator imageRelative resolve: self executableName]
 		ifFalse: ['Please choose an executable name']!
 
 exeFileExtension
@@ -1740,7 +1742,7 @@ logFileExtension
 logFileName
 	"Answers the file name to use for logging strip info"
 
-	^Filename path: self executablePath extension: self logFileExtension!
+	^self executablePath withExtension: self logFileExtension!
 
 logLiveClasses
 	"Answer true if the stripping process will emit a list of live classes to the log before each strip cycle. 
@@ -2014,7 +2016,7 @@ stubFilePath
 
 	^stubFilePath isNil
 		ifTrue: [self _defaultStubFilePath]
-		ifFalse: [FileLocator imageRelative localFileSpecFor: stubFilePath]!
+		ifFalse: [FileLocator imageRelative resolve: stubFilePath]!
 
 versionResource
 	"Answer the <VersionResource> describing the version resource to be built into	
@@ -2023,10 +2025,10 @@ versionResource
 	| originalFilename |
 	versionResource isNil
 		ifTrue: 
-			[versionResource := OS.VersionResource forPath: self stubFilePath.
+			[versionResource := VersionResource forPath: self stubFilePath.
 			"Stub might not contain a version resource"
 			versionResource isNil ifTrue: [^nil]].
-	originalFilename := Filename splitFilenameFrom: self executableName.
+	originalFilename := self executableName asPath fileName.
 	versionResource stringTables do: 
 			[:each |
 			(each includesKey: 'OriginalFilename') ifTrue: [each at: 'OriginalFilename' put: originalFilename]].

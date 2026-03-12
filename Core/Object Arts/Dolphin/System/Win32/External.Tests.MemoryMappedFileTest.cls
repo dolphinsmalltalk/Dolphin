@@ -46,11 +46,11 @@ testDoubleArray
 	self assert: f equals: 456.78.
 	file close.
 	"If this fails then one or other thing is holding the file open"
-	File delete: fname!
+	fname asPath deleteFile!
 
 testMaximumSize
 	| array file fname mmf view count |
-	fname := File temporaryFilename.
+	fname := Path temporary.
 	mmf := MemoryMappedFile open: fname.
 	"Choose size to be exactly one allocation block so that read/write off the end will cause a fault"
 	count := 64 * 1024 / 4.
@@ -74,11 +74,11 @@ testMaximumSize
 	self assert: array equals: (1 to: count).
 	file close.
 	"If this fails then one or other thing is holding the file open"
-	File delete: fname!
+	fname deleteFile!
 
 testReadOnly
 	| fname file mmf view data |
-	fname := File temporaryFilename.
+	fname := Path temporary.
 	data := 'Blah blah'.
 	file := FileStream write: fname type: #ansi.
 	file nextPutAll: data.
@@ -90,7 +90,7 @@ testReadOnly
 	self should: [view at: 1 put: 0] raise: GPFault.
 	view free.
 	mmf free.
-	File delete: fname! !
+	fname deleteFile! !
 
 !External.Tests.MemoryMappedFileTest categoriesForMethods!
 testDoubleArray!public! !

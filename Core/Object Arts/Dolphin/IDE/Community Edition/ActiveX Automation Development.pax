@@ -2450,7 +2450,7 @@ example4
 	"Add a picture - the Dolphin night splash"
 	shapes := doc getProperty: 'Shapes'.
 	shapes invoke: 'AddPicture'
-		with: (FileLocator installRelative localFileSpecFor: 'Resources\Dolphin1.jpg').
+		with: (FileLocator installRelative resolve: 'Resources\Dolphin1.jpg') asUtf16String.
 
 	"Make the new pic into the active selection"
 	(shapes invoke: 'Item' with: 'Picture 2') invoke: 'Select'.
@@ -5313,7 +5313,7 @@ generateClassFilename
 
 	| name target |
 	(self canGenerateClassMessage: #fileName) ifFalse: [^nil].
-	name := Filename splitStemFrom: (self dllNameIfNone: [^nil]).
+	name := (self dllNameIfNone: [^nil]) asPath stem.
 	target := String smalltalkWriteStream: 256.
 	target
 		nextPutAll: 'fileName';
@@ -7033,7 +7033,7 @@ package
 	packageName isNil ifTrue: [packageName := self name].
 	pm := Package manager.
 	^pm packageNamed: self packageName
-		ifNone: [pm newPackage: (Filename composePath: self defaultPackageFolder subPath: self packageName)]!
+		ifNone: [pm newPackage: (self defaultPackageFolder \ self packageName) asString]!
 
 package: parcel
 	"Set the package into which wrapper classes for the receiver should be generated to
@@ -7420,10 +7420,10 @@ example3
 	"Save the active workbook."
 	book := excel activeWorkbook.
 	book invokeId: (book idOfName: 'SaveAs')
-		with: (Filename
-				composePath: ''
+		with: (Path
+				compose: ''
 				stem: caption
-				extension: 'xls').
+				extension: 'xls') asString.
 	(UI.MessageBox confirm: 'Close Excel?') ifTrue: [excel quit]!
 
 fileTypes

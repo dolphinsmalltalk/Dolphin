@@ -703,7 +703,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 	hr := super Stat: pstatstg grfStatFlag: grfStatFlag.
 	hr < 0 ifTrue: [^hr].
 	(grfStatFlag noMask: StorageConstants.STATFLAG_NONAME) ifTrue: [pstatstg name: self name].
-	attr := File attributesEx: self name.
+	attr := self name asPath extendedAttributes.
 	pstatstg
 		ctime: attr ftCreationTime;
 		mtime: attr ftLastWriteTime;

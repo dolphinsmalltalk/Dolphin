@@ -54,13 +54,11 @@ isRichText
 
 	| fn |
 	fn := self filename.
-	^fn isNil or: [(Filename splitExtensionFrom: fn) = 'rtf']!
+	^fn isNil or: [fn asPath extension = 'rtf']!
 
 saveChangesPrompt
 	| docName |
-	docName := self hasFilename
-				ifTrue: [Filename splitFilenameFrom: self filename]
-				ifFalse: ['Document'].
+	docName := self hasFilename ifTrue: [self filename asPath fileName] ifFalse: ['Document'].
 	^'Do you want to save changes to <1s>?' expandMacrosWith: docName!
 
 setDocumentData: aString 

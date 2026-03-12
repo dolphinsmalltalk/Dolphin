@@ -10,7 +10,7 @@ Kernel.RelativeFileLocator
 
 Kernel.PackageRelativeFileLocator guid: (Core.GUID fromString: '{01881ac6-d4ec-4fc2-be62-f07236be9753}')!
 
-Kernel.PackageRelativeFileLocator comment: 'PackageRelativeFileLocator is a <RelativeFileLocator> that can be used to map between an absolute path and a path relative to a certain package''s directory. At runtime (i.e. in a deployed application from which packages have been stripped) PackageRelativeFileLocator''s behave in the same way as <ImageRelativeFileLocator>s.
+Kernel.PackageRelativeFileLocator comment: '`PackageRelativeFileLocator` is a `RelativeFileLocator` that can be used to map between an absolute path and a path relative to a certain package''s directory. At runtime (i.e. in a deployed application from which packages have been stripped) `PackageRelativeFileLocator`s behave in the same way as `ImageRelativeFileLocator`s.
 
 Thanks to Chris Uppal for the original idea behind this class.'!
 
@@ -18,8 +18,16 @@ Thanks to Chris Uppal for the original idea behind this class.'!
 
 !Kernel.PackageRelativeFileLocator methodsFor!
 
+= anObject
+	"Answer whether the receiver and anObject are equivalent."
+
+	^self == anObject or: [self species == anObject species and: [packageName = anObject packageName]]!
+
 basePath
 	^self package ifNil: [super basePath] ifNotNil: [:pkg | pkg path]!
+
+hash
+	^packageName hash!
 
 package
 	"Answer the <Package> who's folder is used as the base path, or nil if the package is not loaded."
@@ -35,7 +43,9 @@ setPackageName: aString
 	packageName := aString! !
 
 !Kernel.PackageRelativeFileLocator categoriesForMethods!
+=!comparing!public! !
 basePath!accessing!public! !
+hash!comparing!public! !
 package!accessing!public! !
 packageName!accessing!public! !
 setPackageName:!initializing!private! !
@@ -50,12 +60,12 @@ package: aPackage
 
 	^self packageNamed: aPackage name!
 
-packageNamed: aString 
+packageNamed: aString
 	"Answer a new instance of the receiver for locating files relative to the folder containing
 	the named package. If the package is not loaded, then the instance will behave as if it were
 	an <ImageRelativeFileLocator>."
 
-	^(super new)
+	^self basicNew
 		setPackageName: aString;
 		yourself! !
 

@@ -23,7 +23,7 @@ testUserDataFolder
 	| userdata |
 	userdata := webviewEnvironment userDataFolder.
 	self assertNotNil: userdata.
-	self assert: (File isDirectory: userdata)! !
+	self assert: userdata asPath isDirectory! !
 
 !WebView2.Tests.ICoreWebView2Environment7Test categoriesForMethods!
 minimumEnvironmentVersion!constants!private! !

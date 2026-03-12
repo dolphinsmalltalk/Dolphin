@@ -197,7 +197,7 @@ IsName: szNameBuf lHashVal: lHashVal pfName: pfName
 	^self invalidCall: _failureCode!
 
 load: aString
-	OleAut32 loadTypeLib: aString pptlib: self!
+	OleAut32 loadTypeLib: aString asUtf16String pptlib: self!
 
 load: aString register: aBoolean
 	self load: aString.
@@ -371,7 +371,7 @@ open: aString register: aBoolean
 	tlb := self newPointer
 				load: aString;
 				yourself.
-	aBoolean ifTrue: [OleAut32 registerTypeLib: tlb fullPath: aString].
+	aBoolean ifTrue: [OleAut32 registerTypeLib: tlb fullPath: aString asUtf16String].
 	^tlb!
 
 queryPath: libid major: major minor: minor locale: locale

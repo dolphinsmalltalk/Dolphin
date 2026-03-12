@@ -29,7 +29,7 @@ canFileOut
 	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
 	the file out file is writeable"
 
-	^File isWriteable: self  fileOutName!
+	^self fileOutName isWriteable!
 
 classesReferencing
 	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
@@ -49,9 +49,9 @@ fileOutName
 	"Answer the receiver's default file name for file outs (<name>.st)."
 
 	| path package |
-	path := Filename composeStem: self name extension: 'st'.
+	path := Path stem: self name extension: 'st'.
 	package := Package manager packageOfVariableNamed: self name asQualifiedReference.
-	package notNil ifTrue: [path := Filename replacePath: path with: package path].
+	package notNil ifTrue: [path := package path \ path].
 	^path!
 
 fileOutOn: aSourceFiler

@@ -15,17 +15,17 @@ OS.Tests.IniFileTestResource comment: ''!
 !OS.Tests.IniFileTestResource methodsFor!
 
 emptyFile
-	^self fileLocator localFileSpecFor: 'empty.ini'!
+	^self fileLocator resolve: 'empty.ini'!
 
 fileLocator
 	^FileLocator imageFolderRelative: 'Resources\Tests\IniFiles\'!
 
 iniFile1
-	^self fileLocator localFileSpecFor: '1.ini'!
+	^self fileLocator resolve: '1.ini'!
 
 setUp
 	super setUp.
-	File createDirectory: self fileLocator basePath.
+	self fileLocator basePath createDirectory.
 	"Note that it appears that a UTF-8 BOM causes problems with the underlying API. Perhaps not surprising it is a left over from 16-bit Windows."
 	(FileStream write: self iniFile1 type: #ansi)
 		nextPutAll: '[Section1]
@@ -46,7 +46,7 @@ S3Key1=123
 
 tearDown
 	super tearDown.
-	(File exists: self fileLocator basePath) ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]! !
+	(self fileLocator basePath exists) ifTrue: [[self fileLocator basePath delete] on: Error do: [:ex | ]]! !
 
 !OS.Tests.IniFileTestResource categoriesForMethods!
 emptyFile!public! !

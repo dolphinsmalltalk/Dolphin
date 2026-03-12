@@ -27,8 +27,8 @@ connectString
 createDatabase
 	| sql |
 	sql := (Kernel.PackageRelativeFileLocator package: self class owningPackage)
-				localFileSpecFor: 'Northwind.sql'.
-	^self execSqlCmd: 'sqlcmd -S <1d> -i "<4d>"' << {self serverName. self uid. self pwd. sql}
+				resolve: 'Northwind.sql'.
+	^self execSqlCmd: 'sqlcmd -S <1d> -i "<4d>"' << { self serverName. self uid. self pwd. sql }
 		stdin: nil!
 
 dropDatabase

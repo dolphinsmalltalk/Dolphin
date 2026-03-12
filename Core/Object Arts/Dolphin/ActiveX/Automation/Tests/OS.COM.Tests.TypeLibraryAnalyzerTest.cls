@@ -55,12 +55,12 @@ testDefaultArgs
 
 testDispinterfacePropGetOptionalArguments
 	"#1478"
+
 	<knownSlowTest>
 	| xl class dispanalyser addressFunc method selector ns |
-	xl := TypeLibraryAnalyzer
-				open: (FileLocator installRelative localFileSpecFor: 'Resources\Tests\Excel9.olb').
+	xl := TypeLibraryAnalyzer open: (FileLocator installRelative resolve: 'Resources\Tests\Excel9.olb').
 	xl namespaceName: #{COM.Tests.Xl}.
-	#todo. "Fix the fact that we have to explicitly cause the namespace class to be generated"
+	#todo.	"Fix the fact that we have to explicitly cause the namespace class to be generated"
 	ns := xl namespaceBinding.
 	self assert: ns fullName equals: 'OS.COM.Tests.Xl'.
 	dispanalyser := xl at: #Range.

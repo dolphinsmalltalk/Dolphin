@@ -1,0 +1,381 @@
+﻿| package |
+package := Package name: 'Dolphin Legacy File name API'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setMethodNames: #(
+	#(#{Core.File class} #appendPathDelimiter:)
+	#(#{Core.File class} #canonicalizePath:)
+	#(#{Core.File class} #commonPrefixOf:and:)
+	#(#{Core.File class} #composePath:stem:extension:)
+	#(#{Core.File class} #composePath:subPath:)
+	#(#{Core.File class} #composeShortStem:extension:)
+	#(#{Core.File class} #composeStem:extension:)
+	#(#{Core.File class} #createDirectory:)
+	#(#{Core.File class} #createDirectoryPath:)
+	#(#{Core.File class} #createTemporaryDirectory)
+	#(#{Core.File class} #default:extension:)
+	#(#{Core.File class} #find:)
+	#(#{Core.File class} #for:do:)
+	#(#{Core.File class} #for:in:do:)
+	#(#{Core.File class} #forAll:in:do:)
+	#(#{Core.File class} #forAllDirectories:in:do:)
+	#(#{Core.File class} #forAllDirectoriesIn:do:)
+	#(#{Core.File class} #forDirectories:in:do:)
+	#(#{Core.File class} #forDirectoriesIn:do:)
+	#(#{Core.File class} #fullPathOf:)
+	#(#{Core.File class} #fullPathOf:relativeTo:)
+	#(#{Core.File class} #isRelativePath:)
+	#(#{Core.File class} #isRootPath:)
+	#(#{Core.File class} #lastWriteTime:)
+	#(#{Core.File class} #locateFilename:in:)
+	#(#{Core.File class} #makePath:)
+	#(#{Core.File class} #path:extension:)
+	#(#{Core.File class} #pathDelimiter)
+	#(#{Core.File class} #pathDelimiters)
+	#(#{Core.File class} #relativePathOf:to:)
+	#(#{Core.File class} #removeExtension:)
+	#(#{Core.File class} #removePathDelimiter:)
+	#(#{Core.File class} #replacePath:with:)
+	#(#{Core.File class} #shortPathOf:)
+	#(#{Core.File class} #splitDriveFrom:)
+	#(#{Core.File class} #splitExtensionFrom:)
+	#(#{Core.File class} #splitFilenameFrom:)
+	#(#{Core.File class} #splitPath:)
+	#(#{Core.File class} #splitPathFrom:)
+	#(#{Core.File class} #splitStemFrom:)
+	#(#{Core.File class} #temporaryFilename)
+	#(#{Core.File class} #temporaryFilenameWithPrefix:)
+	#(#{Core.File class} #tempPath)
+	#(#{Core.File class} #workingDirectory)
+	#(#{Core.FileLocator} #localFileSpecFor:)
+	#(#{Core.FileLocator} #relativePathTo:)
+	#(#{Core.FileLocator class} #imageRelative:)
+	#(#{Core.FileLocator class} #installRelative:)
+).
+
+package setPrerequisites: #(
+	'..\Dolphin'
+).
+
+package!
+
+"Loose Methods"!
+
+!Core.File class methodsFor!
+
+appendPathDelimiter: aString
+	#deprecated.
+	^Path appendPathDelimiter: aString!
+
+canonicalizePath: aString
+	#deprecated.
+	^Path canonicalizePath: aString!
+
+commonPrefixOf: pathString1 and: pathString2
+	#deprecated.
+	^(Path commonPrefixOf: pathString1 and: pathString2)!
+
+composePath: aPathString stem: aStemString extension: anExtensionString
+	^Path
+		composePath: aPathString
+		stem: aStemString
+		extension: anExtensionString!
+
+composePath: pathString subPath: subpathString
+	#deprecated.
+	^Path composePath: pathString subPath: subpathString!
+
+composeShortStem: aStemString extension: anExtensionString 
+	#deprecated.
+	^Path composeShortStem: aStemString extension: anExtensionString !
+
+composeStem: aStemString extension: anExtensionString
+	#deprecated.
+	^Path composeStem: aStemString extension: anExtensionString!
+
+createDirectory: aString
+	"Create a directory with the specified path. Answer whether the directory was actually created, or already existed.
+	Raise a Win32Error if the call fails for any other reason than that the directory already exists."
+
+	#deprecated.
+	^aString asPath withSeparator createDirectory!
+
+createDirectoryPath: aPathOrString
+	"Create a directory tree with the specified path - i.e. this will create a nested set of directories to any depth. Answer true if the final directory was actually created, or false if it already existed. 
+	Raise a Win32Error if the call fails for any other reason than that a directory with the specified path already exists."
+
+	"Implementation Note: This may attempt more directory creation operations than are necessary, (e.g. to create the root directory if a drive is specified) but such requests are ignored."
+
+	#deprecated.
+	^aPathOrString asPath withSeparator createDirectoryPath!
+
+createTemporaryDirectory
+	"Create a new, unique, temporary directory, and answer it's <readableString> path. It is the caller's responsibility to delete the directory when done."
+
+	#deprecated.
+	^Path createTemporaryDirectory!
+
+default: pathString extension: extString
+	#deprecated.	"Should be replaced with Path>>#withDefaultExtension:"
+	^Path default: pathString extension: extString!
+
+find: fileSpec
+	"Answer a collection of WIN32_FIND_DATA structs for each file matching the 
+	wildcarded path string, fileSpec. e.g:
+
+		| list |
+		list := UI.ListPresenter show.
+		list list: ((File find: '*.*') collect: [:s | s fileName])
+	"
+
+	#deprecated.
+	^Path find: fileSpec!
+
+for: aString do: operation
+	#deprecated.
+	Path for: aString do: operation!
+
+for: matchString in: dirStringOrPath do: operation
+	#deprecated.
+	Path
+		for: matchString
+		in: dirStringOrPath
+		do: operation!
+
+forAll: matchString in: dirString do: operation
+	#deprecated.
+	Path
+		forAll: matchString
+		in: dirString
+		do: operation!
+
+forAllDirectories: matchString in: pathString do: operation
+	#deprecated.
+	Path
+		forAllDirectories: matchString
+		in: pathString
+		do: operation!
+
+forAllDirectoriesIn: aString do: operation
+	#deprecated.
+	Path forAllDirectoriesIn: aString do: operation!
+
+forDirectories: matchString in: dirPathOrString do: operation
+	#deprecated.
+	Path
+		forDirectories: matchString
+		in: dirPathOrString
+		do: operation!
+
+forDirectoriesIn: aString do: operation
+	#deprecated.
+	Path
+		forDirectories: '*.*'
+		in: aString
+		do: operation!
+
+fullPathOf: aPathnameString
+	#deprecated.
+	^(Path fullPathOf: aPathnameString)!
+
+fullPathOf: aPathnameString relativeTo: aBasePath
+	"Answers the full path of aPathnameString. If this is a truly relative path then it is formed as relative to aBasePath"
+
+	#deprecated.
+	^Path fullPathOf: aPathnameString relativeTo: aBasePath!
+
+isRelativePath: aString
+	"Answers whether the <String> argument is a relative path with no absolute components. See [Fully Qualified vs. Relative Paths](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#fully-qualified-vs-relative-paths)."
+
+	"The Microsoft documentation does not seem to specify the expected treatment of paths with the long path prefix, '\\?\', but empirically it seems these are always considered absolute. This would be consistent with treatment of UNC paths."
+
+	^(Path isRelativePath: aString)!
+
+isRootPath: aString
+	#deprecated.
+	^Path isRootPath: aString!
+
+lastWriteTime: aString
+	"Answer a <FILETIME> representing the time when the file with the specified filename was last modified, or nil if no such file exists."
+
+	#deprecated.
+	^(self attributesEx: aString) ifNotNil: [:attributes | attributes ftLastWriteTime]!
+
+locateFilename: aFilenameString in: searchPath
+	"Answers the full pathname of aFilenameString searched for in the ordered collection
+	of paths provided in searchPath. If aFilenameString includes a directory then it is
+	answered. Otherwise the file is searched for in the directories in searchPath. If the
+	file is not found in any of these directories then aFilenameString is answered"
+
+	#deprecated.
+	^Path locateFilename: aFilenameString in: searchPath!
+
+makePath: anArray
+	#deprecated.
+	^(Path makePath: anArray) asString!
+
+path: pathString extension: extString
+	#deprecated.
+	^Path path: pathString extension: extString!
+
+pathDelimiter
+	#deprecated.
+	^Path separator!
+
+pathDelimiters
+	#deprecated.
+	^Path separators!
+
+relativePathOf: aPathString to: aBasePathString
+	#deprecated.
+	^Path relativePathOf: aPathString to: aBasePathString!
+
+removeExtension: aString
+	#deprecated.
+	^Path removeExtension: aString!
+
+removePathDelimiter: aString
+	#deprecated.
+	^Path removePathDelimiter: aString!
+
+replacePath: filePath with: newPath
+	#deprecated.
+	^Path replacePath: filePath with: newPath!
+
+shortPathOf: aPathnameString
+	#deprecated.
+	^Path shortPathOf: aPathnameString!
+
+splitDriveFrom: aString
+	^(Path fromString: aString) drive!
+
+splitExtensionFrom: aString
+	#deprecated.
+	^Path splitExtensionFrom: aString!
+
+splitFilenameFrom: aString
+	#deprecated.
+	^Path splitFilenameFrom: aString!
+
+splitPath: aString
+	#deprecated.
+	^Path splitPath: aString!
+
+splitPathFrom: aPathOrString
+	#deprecated.
+	^aPathOrString asPath directoryName!
+
+splitStemFrom: aString
+	#deprecated.
+	^Path splitStemFrom: aString!
+
+temporaryFilename
+	"Answer a new unique temporary filename in the logged on user's temp directory (see
+	#tempPath). Note that this must create the file in order to ensure uniqueness. You are
+	responsible for deleting the file when you have finished with it."
+	
+	#deprecated.
+	^Path temporaryFilename
+	!
+
+temporaryFilenameWithPrefix: prefixString
+	"Answer a temporary filename built from prefixString in the user's temporary files directory. Note that this will create the temp file in order to guarantee uniqueness. You are responsible for deleting the file when it is no longer required. Signals a Win32Error if the operation fails, e.g. if the tempPath is longer than MAX_PATH-14 as the API does not support long filenames."
+
+	#deprecated.
+	^Path temporaryFilenameWithPrefix: prefixString!
+
+tempPath
+	"Answer the path of the directory designated for temporary files on the host system."
+
+	#deprecated.
+	^Path tempDirectory asString!
+
+workingDirectory
+	"Answer the current working directory. The result always has a trailing separator."
+
+	#deprecated.
+	^Path workingDirectory asString! !
+
+!Core.File class categoriesForMethods!
+appendPathDelimiter:!filename manipulation!public! !
+canonicalizePath:!filename manipulation!public! !
+commonPrefixOf:and:!filename manipulation!public! !
+composePath:stem:extension:!filename manipulation!public! !
+composePath:subPath:!filename manipulation!public! !
+composeShortStem:extension:!filename manipulation!public! !
+composeStem:extension:!filename manipulation!public! !
+createDirectory:!file operations!public! !
+createDirectoryPath:!file operations!public! !
+createTemporaryDirectory!file operations!public! !
+default:extension:!filename manipulation!public! !
+find:!public!searching! !
+for:do:!enumerating!public! !
+for:in:do:!enumerating!public! !
+forAll:in:do:!enumerating!public! !
+forAllDirectories:in:do:!enumerating!public! !
+forAllDirectoriesIn:do:!enumerating!public! !
+forDirectories:in:do:!enumerating!public! !
+forDirectoriesIn:do:!enumerating!public! !
+fullPathOf:!filename manipulation!public! !
+fullPathOf:relativeTo:!filename manipulation!public! !
+isRelativePath:!filename manipulation!public! !
+isRootPath:!filename manipulation!public! !
+lastWriteTime:!enquiries!public! !
+locateFilename:in:!public!searching! !
+makePath:!filename manipulation!public! !
+path:extension:!filename manipulation!public! !
+pathDelimiter!constants!public! !
+pathDelimiters!constants!public! !
+relativePathOf:to:!filename manipulation!public! !
+removeExtension:!filename manipulation!public! !
+removePathDelimiter:!filename manipulation!public! !
+replacePath:with:!filename manipulation!public! !
+shortPathOf:!filename manipulation!public! !
+splitDriveFrom:!filename manipulation!public! !
+splitExtensionFrom:!filename manipulation!public! !
+splitFilenameFrom:!filename manipulation!public! !
+splitPath:!filename manipulation!public! !
+splitPathFrom:!filename manipulation!public! !
+splitStemFrom:!filename manipulation!public! !
+temporaryFilename!helpers!public! !
+temporaryFilenameWithPrefix:!helpers!public! !
+tempPath!enquiries!public! !
+workingDirectory!enquiries!public! !
+!
+
+!Core.FileLocator methodsFor!
+
+localFileSpecFor: aString
+	#deprecated.
+	^(self resolve: aString) path!
+
+relativePathTo: aString
+	#deprecated.
+	^self abstract: aString! !
+
+!Core.FileLocator categoriesForMethods!
+localFileSpecFor:!mapping!public! !
+relativePathTo:!mapping!public! !
+!
+
+!Core.FileLocator class methodsFor!
+
+imageRelative: aFilenameString
+	#deprecated.
+	^self imageRelative localFileSpecFor: aFilenameString
+!
+
+installRelative: aFilenameString
+	#deprecated.
+	^self installRelative localFileSpecFor: aFilenameString
+! !
+
+!Core.FileLocator class categoriesForMethods!
+imageRelative:!instance creation!public! !
+installRelative:!instance creation!public! !
+!
+
+"End of package definition"!
+
