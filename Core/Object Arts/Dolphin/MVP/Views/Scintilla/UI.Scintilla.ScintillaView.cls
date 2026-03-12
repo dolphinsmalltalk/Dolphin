@@ -1613,7 +1613,7 @@ defaultWhitespaceChars
 	"Answer a <String> containing the <Character>s that Scintilla considers to be whitespace by
 	default."
 
-	^Character byteCharacterSet select: [:each | each codePoint < 16r20 or: [each == $\x20]]!
+	^Utf8String withAll: (Character byteCharacterSet select: [:each | each codePoint < 16r20 or: [each == $\x20]])!
 
 defaultWindowStyle
 	"Private - Answer a default style to use when creating a ScintillaView."

@@ -4606,7 +4606,7 @@ Core.Magnitude
 Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet'
+	classVariableNames: 'AnsiCharacters AnsiCharacterSet AnsiCodePage AnsiCodePoints AsciiCharacterSet'
 	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {

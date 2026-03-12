@@ -220,7 +220,7 @@ initialize
 		value: (AnsiString
 				withAll: #($\x7F $\x20 $\x1F $\x1E $\x1D $\x1C $\x1B $\x1A $\x19 $\x18 $\x17 $\x16 $\x15 $\x14 $\x13 $\x12 $\x11 $\x10 $\xF $\xE $\f $\v $\t $\b $\a $\x6 $\x5 $\x4 $\x3 $\x2 $\x1 $\0)).
 	self addClassConstant: 'AllPossibleWordChars'
-		value: ((Character byteCharacterSet reverse difference: String lineDelimiter) copyWithout: $\0)!
+		value: (AnsiString withAll: (Character byteCharacterSet reverse difference: (String lineDelimiter copyWith: $\0)))!
 
 new
 	^self basicNew classifications: DefaultClassifications shallowCopy!

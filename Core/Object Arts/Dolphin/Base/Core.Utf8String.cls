@@ -69,10 +69,7 @@ basicDecodeAt: anInteger
 
 	| c2 c len |
 	c := self basicAt: anInteger.
-	c <= 16r7F
-		ifTrue: 
-			["Ascii char"
-			^Character.CharacterSet at: c + 1].
+	(Character.AsciiCharacterSet lookup: c + 1) ifNotNil: [:ascii | ^ascii].
 	len := self size.
 	len > anInteger
 		ifFalse: 
@@ -235,10 +232,8 @@ decodeNextFrom: aReadStream
 	Private-use code points are returned as these are considered to be valid assigned characters, at least at this level. Their later interpretation may vary."
 
 	| c c2 |
-	((c := aReadStream basicNextAvailable) ifNil: [^nil]) <= 16r7F
-		ifTrue: 
-			["Ascii char"
-			^Character.CharacterSet at: c + 1].
+	(c := aReadStream basicNextAvailable) ifNil: [^nil].
+	(Character.AsciiCharacterSet lookup: c + 1) ifNotNil: [:ascii | ^ascii].
 
 	"Multi-byte encoding, requires at least one continuation byte, C2..F4"
 	(c2 := aReadStream basicNextAvailable)

@@ -636,7 +636,7 @@ stbVersion
 
 visibleCharacterGlyphs
 	#todo.	"Select a better range of characters more likely to be useful as markers by using the Unicode classifications, e.g. geometric shapes."
-	^(Character byteCharacterSet select: [:each | each isGraph]) asArray! !
+	^(Character byteCharacterSet select: [:each | each isGraph]) ! !
 
 !UI.Scintilla.MarkerDefinition class categoriesForMethods!
 arrows!constants!public! !

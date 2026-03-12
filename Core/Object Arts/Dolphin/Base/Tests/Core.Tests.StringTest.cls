@@ -1295,7 +1295,7 @@ testUrlDecoded
 		equals: ':/?#[]@!!$&''()* ,;='.
 
 	"Unreserved characters, also untouched"
-	unreserved := (Character byteCharacterSet select: [:each | each isEnglishLetter or: [each isDigit]])
+	unreserved := self collectionClass withAll: (Character byteCharacterSet select: [:each | each isEnglishLetter or: [each isDigit]])
 				, '-._~'.
 	self assert: (self collectionClass fromString: unreserved) urlDecoded equals: unreserved.
 	"But should be coded if found encoded"

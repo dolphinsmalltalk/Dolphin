@@ -118,7 +118,7 @@ testAllSatisfy
 
 testAnsiStringRoundTrip
 	| ansiAll utf ansi |
-	ansiAll := Character byteCharacterSet.
+	ansiAll := AnsiString withAll: Character byteCharacterSet.
 	utf := self assimilateString: ansiAll.
 	ansi := utf asAnsiString.
 	self assert: ansi class identicalTo: AnsiString.

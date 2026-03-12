@@ -32,8 +32,9 @@ addMethodsOfClass: aClass startingWith: aString toSearchCandidates: aSet max: an
 applyOptions
 	"Private - Apply the class options to the receiver"
 
-	view wordChars: ##(Character byteCharacterSet
-				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]).
+	view
+		wordChars: ##(Utf8String withAll: (Character byteCharacterSet
+						select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]])).
 	view maxCompletionListHeight: 10.
 	view maxCompletionListWidth: 40.
 	view autoCompletionSeparator: $\x7F!

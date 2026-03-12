@@ -162,8 +162,8 @@ applyOptions
 	view textStyles: self textStyles.
 	view mergeIndicatorDefinitions: self indicatorDefinitions.
 	view
-		wordChars: ##((Character byteCharacterSet
-				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]) asUtf8String).
+		wordChars: ##(Utf8String withAll: ((Character byteCharacterSet
+				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]))).
 	self hasSmalltalkStyler ifFalse: [self isAutoCompletionEnabled: false].
 	view isAutoCompletionCaseInsensitive: self class isAutoCompletionCaseInsensitive.
 	"This has no effect, since we takeover insertion of the completed word, but it's a useful

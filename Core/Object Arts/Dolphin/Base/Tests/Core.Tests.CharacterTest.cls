@@ -156,6 +156,25 @@ testAsUtf8String
 			actual := subject asUtf8String asByteArray.
 			self assert: actual equals: expected]!
 
+testByteCharacterSet
+	| ansiChars charSet |
+	charSet := Character byteCharacterSet.
+	self assert: charSet size equals: 256.
+	self assert: charSet asSet size equals: 256.
+	ansiChars := AnsiString withAll: charSet.
+	1 to: 256
+		do: 
+			[:i |
+			| code |
+			code := (charSet at: i) code.
+			self assert: code equals: (ansiChars basicAt: i).
+			self assert: code equals: i - 1].
+	self assert: ansiChars asByteArray equals: (0 to: 255) asByteArray.
+	self assert: ansiChars asUtf16String asArray equals: charSet.
+	self assert: ansiChars asUtf16String equals: ansiChars.
+	self assert: ansiChars asUtf16String asAnsiString equals: ansiChars.
+!
+
 testClassCodePoint
 	| ch |
 	ch := Character codePoint: 0.
@@ -785,7 +804,8 @@ testIsUtf8SurrogateTests
 			self assert: ch isUtf8Surrogate.
 			self assert: ch isUtf8Lead.
 			self deny: ch isUtf8Trail.
-			self assert: ch utf8Length equals: 1]!
+			self assert: ch utf8Length equals: 1].
+	{ -128 - 1. 256 } do: [:each | self should: [Character utf8Value: each] raise: InvalidArgumentError]!
 
 testIsVowel
 	"Ascii only"
@@ -959,6 +979,7 @@ testAsLowercase!public!unit tests! !
 testAsUppercase!public!unit tests! !
 testAsUtf16String!public!unit tests! !
 testAsUtf8String!public!unit tests! !
+testByteCharacterSet!public!unit tests! !
 testClassCodePoint!public!unit tests! !
 testClassNewCode!public! !
 testCodePoint!public!unit tests! !

@@ -1091,7 +1091,7 @@ testLiteralStringEncoding
 		$£ asUtf8String.
 		(Character codePoint: 128) asUtf8String.
 		Character dolphin asUtf8String.
-		Character byteCharacterSet copyFrom: 2 to: 128
+		AnsiString withAll: (Character byteCharacterSet copyFrom: 2 to: 128)
 	} do: 
 				[:each |
 				| actual array |

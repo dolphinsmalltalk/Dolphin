@@ -122,7 +122,7 @@ strings
 				#('abc' #($a $b $c)).
 				{ '£€1' asAnsiString. #($£ $\x20AC $1) }.
 				{ 'a£€1' asUtf8String. #($a $£ $\x20AC $1) }.
-				{ Character byteCharacterSet. Character byteCharacterSet asArray }.
+				{ AnsiString withAll: Character byteCharacterSet. Character byteCharacterSet asArray }.
 				{ 'a' , Character dolphin asUtf8String , '文'. #($a $\x1F42C $\x6587) }
 			}.
 	^self streamClassSupportsUtf16

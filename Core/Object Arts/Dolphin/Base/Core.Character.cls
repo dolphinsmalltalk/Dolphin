@@ -3,7 +3,7 @@
 Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet'
+	classVariableNames: 'AnsiCharacters AnsiCharacterSet AnsiCodePage AnsiCodePoints AsciiCharacterSet'
 	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -683,13 +683,12 @@ Core.Character methodProtocol: #Character attributes: #(#ansi #readOnly) selecto
 !Core.Character class methodsFor!
 
 ansiValue: anInteger
-	^(CharacterSet lookup: anInteger + 1)
-		ifNil: [self error: 'Invalid ANSI code unit: ' , anInteger printString]!
+	^(AnsiCharacterSet lookup: anInteger + 1)
+		ifNil: [self error: 'Invalid ANSI code point: ' , anInteger printString]!
 
 asciiValue: anInteger
-	^(anInteger >= 0 and: [anInteger <= 127])
-		ifTrue: [CharacterSet at: anInteger + 1]
-		ifFalse: [self error: 'Invalid ASCII code point: ' , anInteger printString]!
+	^(AsciiCharacterSet lookup: anInteger + 1)
+		ifNil: [self error: 'Invalid ASCII code point: ' , anInteger printString]!
 
 backspace
 	"Answer the backspace control <Character>."
@@ -699,11 +698,10 @@ backspace
 
 basicCodePoint: anInteger
 	"Private - Answer a <Character> representing the specified <integer> Unicode code point.
-	Raise an error if the argument is not a valid Unicode code point."
+	Do not raise an error if the argument is not a valid Unicode code point."
 
-	^anInteger <= 16r7F
-		ifTrue: [CharacterSet at: anInteger + 1]
-		ifFalse: 
+	^(AsciiCharacterSet lookup: anInteger + 1)
+		ifNil: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
 					[(self newCode: (Utf32Mask bitOr: anInteger))
@@ -718,7 +716,7 @@ basicUtf32Value: anInteger
 byteCharacterSet
 	"Answer the ANSI character set, i.e. the complete set of Characters that can be encoded in an <AnsiString>."
 
-	^CharacterSet!
+	^AnsiCharacterSet!
 
 codePoint: anInteger
 	"Answer a <Character> representing the specified <integer> Unicode code point.
@@ -732,9 +730,8 @@ codePoint: anInteger
 codePoint: anInteger ifInvalid: exceptionHandler
 	"Answer a <Character> representing the specified <integer> Unicode code point, or the result of evaluating the <niladicValuable>, exceptionHandler, if the code point is not the code point of a valid Unicode character."
 
-	^anInteger <= 16r7F
-		ifTrue: [CharacterSet at: anInteger + 1 ifAbsent: exceptionHandler]
-		ifFalse: 
+	^(AsciiCharacterSet lookup: anInteger + 1)
+		ifNil: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
 					[(self isValidCodePoint: anInteger)
@@ -788,7 +785,7 @@ euro
 
 initialize
 	| asciiClassifications |
-	self addClassConstant: 'CharacterSet' value: (AnsiString fromByteArray: (0 to: 255) asByteArray).
+	self addClassConstant: 'AsciiCharacterSet' value: (Utf8String fromByteArray: (0 to: 127) asByteArray).
 	self addClassConstant: 'EscapeChars'
 		value: ((Array new: 14)
 				at: 0 + 1 put: $0;
@@ -874,17 +871,21 @@ null
 	^$\0!
 
 onStartup
-	| utf ansiCharacters |
+	| utf ansiCharacters ansiCharacterSet |
 	AnsiCodePage := (VM getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]]) uint32AtOffset: 0.
-	utf := self byteCharacterSet asUtf16String.
-	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf uint16AtOffset: each])
+	utf := VM getProcAddress: 'AnsiToUnicode'.
+	AnsiCodePoints := ((0 to: ##(256 * 2 - 1) by: 2) collect: [:each | utf uint16AtOffset: each])
 				beImmutableObject;
 				yourself.
-	#todo.	"Integers from 0 to 255 with a few gaps substituted by large values do not make for good hash distribution, so make the table larger than normal until #766 is fixed."
+	ansiCharacterSet := Array new: 256.
 	ansiCharacters := IdentityDictionary new: 513.
-	self byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
+	(Utf16String fromAddress: utf length: 256) keysAndValuesDo: [:i :each | 
+		ansiCharacterSet at: i put: each.
+		ansiCharacters at: each codePoint put: each].
 	ansiCharacters beImmutableObject.
-	AnsiCharacters := ansiCharacters!
+	AnsiCharacters := ansiCharacters.
+	ansiCharacterSet beImmutableObject.
+	AnsiCharacterSet := ansiCharacterSet!
 
 replacement
 	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and encodings."
@@ -911,22 +912,20 @@ utf16Value: anInteger
 utf16Value: anInteger ifInvalid: exceptionHandler
 	"Answer a <Character> (which may be a surrogate) representing the <integer> UTF-16 code unit, anInteger, or the result of evaluating the <monadicBlock>, exceptionHandler, if the code unit is not valid."
 
-	^anInteger <= 16r7F
-		ifTrue: 
-			["Ascii"
-			CharacterSet at: anInteger + 1 ifAbsent: exceptionHandler]
-		ifFalse: 
+	^(AsciiCharacterSet lookup: anInteger + 1)
+		ifNil: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
-					[(anInteger bitAnd: 16rF800) == Utf16String.LeadSurrogateMask
+					[(anInteger bitAnd: -16r800) == Utf16String.LeadSurrogateMask
 						ifTrue: 
 							["Surrogate"
 							(self newCode: (Utf16Mask bitOr: anInteger))
 								isImmutable: true;
 								yourself]
 						ifFalse: 
-							[(anInteger <= UCHAR_MAX_VALUE
-								and: [anInteger < 16rFDD0 or: [anInteger > 16rFDEF and: [(anInteger allMask: 16rFFFE) not]]])
+							[(anInteger >= 0 and: 
+									[anInteger <= UCHAR_MAX_VALUE
+										and: [anInteger < 16rFDD0 or: [anInteger > 16rFDEF and: [(anInteger allMask: 16rFFFE) not]]]])
 									ifTrue: 
 										["Valid non-ascii/non-ansi code point"
 										(self newCode: (Utf32Mask bitOr: anInteger))
@@ -938,18 +937,15 @@ utf8Value: anInteger
 	"Answer a <Character> representing the <integer> UTF-8 code unit, anInteger.
 	Note that the resulting Character may not represent a valid Unicode code point."
 
-	^anInteger <= 16r7F
-		ifTrue: 
-			["Ascii"
-			CharacterSet at: anInteger + 1]
-		ifFalse: 
-			[anInteger <= 16rFF
+	^(AsciiCharacterSet lookup: anInteger + 1)
+		ifNil: 
+			[(anInteger > 16r7F and: [anInteger <= 16rFF])
 				ifTrue: 
 					["Some kind of surrogate"
 					(self newCode: (Utf8Mask bitOr: anInteger))
 						isImmutable: true;
 						yourself]
-				ifFalse: [self error: 'Invalid UTF-8 code unit: ' , anInteger printString]]!
+				ifFalse: [InvalidArgumentError signal: 'UTF-8 code unit expected' with: 'anInteger']]!
 
 value: anInteger
 	"Answer a <Character> representing the specified <integer> Unicode code point.

@@ -14,13 +14,12 @@ Dump
 argc
 argv
 GetStdioStream
-StdOut
-StdErr
 _snprintf_s
 RegisterAsEventSource
 IsUserBreakRequested
 IsDebugBuild
 AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
+AnsiToUnicode=?m_ansiToUnicodeCharMap@Interpreter@@2PA_WA
 invalidParameterHandler=?invalidParameterHandler@@YAXPB_W00II@Z
 
 CompileForClass=_PrimCompileForClass@28
