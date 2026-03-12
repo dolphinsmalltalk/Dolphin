@@ -31,6 +31,8 @@ struct IntegerPart
 { 
 	double operator() (const double& x) const 
 	{ 
-		double integerPart;  modf(x, &integerPart); return integerPart; 
+		double integerPart;
+		std::ignore = modf(x, &integerPart); 
+		return integerPart; 
 	} 
 };

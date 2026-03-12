@@ -40,8 +40,8 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveLargeIntegerUnaryOp<Li::Normalize>					, // case 28:  LargeInteger>>normalize
 	Interpreter::primitiveLargeIntegerOpZ<Li::Mul, Li::MulSingle>				, // case 29:  LargeInteger>>#*
 	Interpreter::primitiveLargeIntegerDivide									, // case 30:  LargeInteger>>#/
-	Interpreter::unusedPrimitive /* Reserved for LargeIntegerMod */				, // case 31:  LargeInteger#\\ 
-	Interpreter::unusedPrimitive /* Reserved for LargeIntegerDiv */				, // case 32:  LargeInteger>>#//
+	Interpreter::unusedPrimitive /* Reserved for LargeIntegerMod */				, // case 31:  LargeInteger#\\ (reserved)
+	Interpreter::unusedPrimitive /* Reserved for LargeIntegerDiv */				, // case 32:  LargeInteger>>#// (reserved)
 	Interpreter::primitiveLargeIntegerQuo										, // case 33:  LargeInteger>>#quo:
 	Interpreter::primitiveLargeIntegerOpZ<Li::BitAnd, Li::BitAndSingle>			, // case 34:  LargeInteger>>#bitAnd:
 	Interpreter::primitiveLargeIntegerOpR<Li::BitOr, Li::BitOrSingle>			, // case 35:  LargeInteger>>#bitOr:

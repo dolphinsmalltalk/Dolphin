@@ -267,7 +267,7 @@ wostream* OpenLogStream(const wchar_t* logPath, const wchar_t* achImagePath, wof
 	trace(L"Dolphin: Writing dump to '%.260s'\n", logPath);
 
 	wostream* pStream = NULL;
-	fStream.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8_utf16<wchar_t>()));
+	fStream.imbue(std::locale(std::locale{}, new std::codecvt_utf8_utf16<wchar_t>()));
 	// Open the error log for appending
 	fStream.open(logPath, ios::out | ios::app | ios::ate);
 	if (fStream.fail())
