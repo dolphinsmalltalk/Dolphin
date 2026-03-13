@@ -74,7 +74,7 @@ rightToLeft:!operations!private! !
 current
 	^Current ifNil: [Current := self new]!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Assist in the image stripping process by clearing down any
 	lazily initialized variables held by the receiver."
 
@@ -85,7 +85,7 @@ onStartup
 
 !UI.ClipboardBinaryObjectTypeConverter class categoriesForMethods!
 current!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onStartup!public! !
 !
 

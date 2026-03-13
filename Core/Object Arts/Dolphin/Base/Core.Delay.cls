@@ -403,7 +403,7 @@ onPreSaveImage
 
 	ImageClock := self microsecondClockValue!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be deployed as an executable/DLL.
 	Kill the timing process to potentially allow Delay to be stripped if the application does not use Delays."
 
@@ -535,7 +535,7 @@ millisecondClockValue!accessing!public! !
 new!instance creation!public! !
 onExit:!event handling!public! !
 onPreSaveImage!event handling!private! !
-onPreStripImage!event handling!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onStartup!event handling!public! !
 prod!operations!private! !
 queryOsTimerResolution!helpers!private! !

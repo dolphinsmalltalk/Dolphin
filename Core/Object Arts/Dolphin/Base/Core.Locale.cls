@@ -923,7 +923,7 @@ named: aString withOverrides: aBoolean
 	lcid == 0 ifTrue: [OS.Kernel32 systemError].
 	^OS.WindowsLocale lcid: lcid withOverrides: aBoolean!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Assist in the image stripping process by clearning down any lazily initialized variables held by the receiver."
 
 	Invariant := nil.
@@ -1004,7 +1004,7 @@ makeLangId:subLang:!enquiries!private! !
 makeLcId:sortId:!enquiries!private! !
 named:!instance creation!public! !
 named:withOverrides:!instance creation!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onSettingChanged:!event handling!private! !
 onStartup!event handling!private! !
 reset!initializing!public! !

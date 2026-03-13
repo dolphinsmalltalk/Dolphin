@@ -716,7 +716,7 @@ newSystemInitializer: anInteger
 null
 	^NullIcon current!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil out the cached converter to (potentially)
 	allow RichTextEdit to be stripped."
 
@@ -803,7 +803,7 @@ information!instance creation!public! !
 initialize!class initialization!public! !
 newSystemInitializer:!helpers!private! !
 null!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onSettingChanged:!event handling-win32!private! !
 onStartup2!event handling!private! !
 question!instance creation!public! !

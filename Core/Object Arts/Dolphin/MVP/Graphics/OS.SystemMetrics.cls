@@ -539,7 +539,7 @@ newForDpi: anInteger
 
 	^self basicNew setDpi: anInteger!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	self reset!
 
 onSettingChanged: anArray
@@ -569,7 +569,7 @@ forDpi:!instance creation!public! !
 initialize!class initialization!public! !
 new!instance creation!public! !
 newForDpi:!instance creation!public! !
-onPreStripImage!event handling!public! !
+onPreStripImage:!class hierarchy-removing!private! !
 onSettingChanged:!event handling-win32!private! !
 reset!initializing!public! !
 uninitialize!class hierarchy-removing!private! !

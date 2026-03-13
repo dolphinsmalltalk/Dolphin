@@ -101,11 +101,11 @@ name: aStringName
 	^self new name: aStringName
 !
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Allow the receiver to be stripped by clearing lazy initialized class variable
 	which holds an instance of the receiver."
 
-	KnowledgeBase := nil.!
+	KnowledgeBase := nil!
 
 playGame
 	"Start a new game using the existing knowledge base held in the
@@ -133,7 +133,7 @@ uninitialize
 icon!constants!public! !
 knowledgeBase!accessing!public! !
 name:!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 playGame!operations!public! !
 prompt!instance creation!public! !
 uninitialize!class hierarchy-removing!private! !

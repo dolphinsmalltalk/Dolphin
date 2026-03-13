@@ -665,8 +665,8 @@ new
 		initialize;
 		yourself!
 
-onPreStripImage
-	#rbFix. "Assist dolphin's image stripping."
+onPreStripImage: anImageStripper
+	#rbFix.	"Assist dolphin's image stripping."
 	self uninitialize!
 
 preconditionSignal
@@ -688,7 +688,7 @@ errorSignal!constants!public! !
 initialize!initializing!public! !
 initializeRefactoringOptions!accessing!public! !
 new!instance creation!public! !
-onPreStripImage!class hierarchy-removing!public! !
+onPreStripImage:!class hierarchy-removing!private! !
 preconditionSignal!accessing signal!public! !
 refactoringOptions!accessing!public! !
 setDefaultOption:to:!accessing!public! !

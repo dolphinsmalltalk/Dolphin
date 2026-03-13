@@ -103,7 +103,7 @@ nuke
 	Instance notNil ifTrue: [Instance release].
 	Instance := nil!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil any lazily initialized class variables."
 
 	self nuke!
@@ -122,7 +122,7 @@ initialize!class initialization!public! !
 instance!instance creation!public! !
 new!instance creation!public! !
 nuke!public!public access! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 undoSize!class initialization!public! !
 undoSize:!class initialization!public! !
 uninitialize!class initialization!public! !

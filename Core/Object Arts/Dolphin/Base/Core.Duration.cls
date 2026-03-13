@@ -511,7 +511,7 @@ nanoseconds: aNumber
 
 	^self seconds: aNumber / 1e9!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped, clear lazily initialize class variables to assist
 	the stripping process."
 
@@ -674,7 +674,7 @@ milliseconds:!instance creation!public! !
 minutes:!instance creation!public! !
 minutes:seconds:!instance creation!public! !
 nanoseconds:!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 readFrom:!instance creation!public! !
 readFrom:sign:withDays:ifInvalid:!helpers!private! !
 readISO8601ElementMagnitudeFrom:!helpers!private! !

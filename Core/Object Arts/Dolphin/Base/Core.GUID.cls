@@ -401,7 +401,7 @@ null
 						isImmutable: true;
 						yourself]!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
 
 	self uninitialize!
@@ -444,7 +444,7 @@ newBuffer!instance creation!public! !
 newNull!instance creation!public! !
 newUnique!instance creation!public! !
 null!constants!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 requiresFinalization!public!realizing/unrealizing!testing! !
 typeInfoIfNone:!public! !
 uninitialize!class hierarchy-removing!private! !

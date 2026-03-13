@@ -2266,7 +2266,7 @@ new
 
 	^super new initialize!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped, clear lazily initialize class variables to assist
 	the stripping process."
 
@@ -2344,7 +2344,7 @@ manager!accessing!public! !
 name:!instance creation!public! !
 named:!instance creation!public! !
 new!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 packageExtension!constants!private! !
 packageFileVersion!constants!public! !
 paxVersion!constants!private! !

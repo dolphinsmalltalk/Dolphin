@@ -77,7 +77,7 @@ freeHandle: aHandle
 infinite
 	^Infinite ifNil: [Infinite := InfiniteRegionInitializer basicNew]!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Allow the receiver to be stripped by clearing lazy initialized class variables that hold sub-instances of the receiver."
 
 	Infinite := Empty := nil! !
@@ -87,6 +87,6 @@ cloneHandle:!private!realizing/unrealizing! !
 empty!instance creation!public! !
 freeHandle:!private!realizing/unrealizing! !
 infinite!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 !
 

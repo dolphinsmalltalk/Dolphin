@@ -60,7 +60,7 @@ freeHandle: aHandle
 new
 	^self shouldNotImplement!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Allow the receiver to be stripped by clearing lazy initialized class variable
 	which holds an instance of the receiver."
 
@@ -71,6 +71,6 @@ cloneHandle:!private!realizing/unrealizing! !
 default!instance creation!private! !
 freeHandle:!private!realizing/unrealizing! !
 new!development!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 !
 

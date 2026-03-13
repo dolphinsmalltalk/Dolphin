@@ -232,7 +232,7 @@ newClass: aClass selector: aSymbol
 		selector: aSymbol;
 		yourself!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Allow the receiver to be stripped by clearing lazy initialized class variable
 	which holds an instance of the receiver."
 
@@ -276,7 +276,7 @@ forMethod:!instance creation!public! !
 isValidResourceName:!operations!public! !
 nameFromSelector:!helpers!public! !
 newClass:selector:!instance creation!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 removeResource:!public!removing! !
 selectorFromName:!helpers!public! !
 value:value:!helpers!private! !

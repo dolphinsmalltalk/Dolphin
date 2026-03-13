@@ -23,12 +23,12 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Core.MessageSend class} #onPreStripImage)
-	#(#{Core.Object class} #onPreStripImage)
+	#(#{Core.MessageSend class} #onPreStripImage:)
+	#(#{Core.Object class} #onPreStripImage:)
 	#(#{External.Structure class} #fullyCompileDefinition)
 	#(#{External.Structure class} #removeTemplate)
 	#(#{Kernel.SingletonSearchPolicy class} #onPostStripImage)
-	#(#{Kernel.SingletonSearchPolicy class} #onPreStripImage)
+	#(#{Kernel.SingletonSearchPolicy class} #onPreStripImage:)
 	#(#{OS.UserLibrary} #messageBox:lpText:lpCaption:uType:)
 ).
 
@@ -144,16 +144,16 @@ External.Structure
 
 !Core.MessageSend class methodsFor!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	EmptySend := nil! !
 
 !Core.MessageSend class categoriesForMethods!
-onPreStripImage!public! !
+onPreStripImage:!class hierarchy-removing!private! !
 !
 
 !Core.Object class methodsFor!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
 
 	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding. Similarly WeakIdentityDictionary is used for the dependents and events registers, but may not be required."
@@ -162,7 +162,7 @@ onPreStripImage
 		do: [:each | classPool removeKey: each ifAbsent: nil]! !
 
 !Core.Object class categoriesForMethods!
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 !
 
 !External.Structure class methodsFor!
@@ -192,7 +192,7 @@ onPostStripImage
 	self class methodDictionary at: #current put: current.
 	current := nil!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - Tidy up the receiver's lazily initialized subinstances in preparation for image stripping."
 
 	self allSubclassesDo: [:each | each uninitialize].
@@ -202,7 +202,7 @@ onPreStripImage
 
 !Kernel.SingletonSearchPolicy class categoriesForMethods!
 onPostStripImage!class hierarchy-removing!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 !
 
 !OS.UserLibrary methodsFor!

@@ -368,7 +368,7 @@ _disableDevelopmentSystem
 	"Private - Before removing anything, prevent the package manager from reacting to events, also
 	We don't need categories, etc, maintained, so unwire SmalltalkSystem from dev. events"
 
-	self _systemPackageManager onPreStripImage.
+	self _systemPackageManager onPreStripImage: self.
 	Smalltalk removeEventsTriggeredFor: Smalltalk developmentSystem!
 
 _externalStructureClasses
@@ -931,7 +931,7 @@ _notifyClassesOfImminentStrip
 			(e class compiledMethodAt: #onPreStripImage ifAbsent: nil)
 				ifNotNil: 
 					[:method |
-					e onPreStripImage.
+					e onPreStripImage: self.
 					methods add: method]].
 	self _deleteMethods: methods.
 	self _endElement: true!

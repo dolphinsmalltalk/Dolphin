@@ -61,7 +61,7 @@ current
 	Current isNil ifTrue: [Current := self basicNew].
 	^Current!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Assist in the image stripping process by clearning down any
 	lazily initialized variables held by the receiver."
 
@@ -74,7 +74,7 @@ uninitialize
 
 !Kernel.AbsoluteFileLocator class categoriesForMethods!
 current!accessing!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 

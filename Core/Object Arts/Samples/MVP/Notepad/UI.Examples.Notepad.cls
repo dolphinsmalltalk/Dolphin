@@ -110,7 +110,7 @@ icon
 
 	^Icon fromId: 2 in: self resourceLib!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil any lazily initialized class variables."
 
 	self uninitialize!
@@ -144,7 +144,7 @@ about!enquiries!private! !
 closeResourceLib!helpers!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 resource_Default_view!public!resources-views! !
 resourceLib!constants!public! !
 uninitialize!class hierarchy-removing!private! !

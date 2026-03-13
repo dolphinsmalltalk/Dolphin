@@ -351,7 +351,7 @@ makeLargeUnsigned: lowDWORD highPart: highDWORD
 	<stdcall: uint64 AnswerQWORD uint32 uint32>
 	^self invalidCall: _failureCode!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	versionInfo := nil!
 
 onStartup
@@ -503,7 +503,7 @@ makeLargeSigned:!helpers!private! !
 makeLargeSigned:highPart:!helpers!private! !
 makeLargeUnsigned:!helpers!private! !
 makeLargeUnsigned:highPart:!helpers!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onStartup!event handling!public! !
 productName!accessing!public! !
 registerEventSource:!arithmetic!public! !
@@ -636,8 +636,8 @@ maxTemps
 moduleHandle
 	^Registry at: 122!
 
-onPreStripImage
-	default onPreStripImage!
+onPreStripImage: anImageStripper
+	default onPreStripImage: anImageStripper!
 
 registryKeys
 	"Private - Answer the map between symbolic names and VM registry indices."
@@ -656,7 +656,7 @@ maxLiterals!limits!public! !
 maxMessageArguments!limits!public! !
 maxTemps!limits!public! !
 moduleHandle!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 registryKeys!constants!private! !
 sharedVariableName!constants!private! !
 !

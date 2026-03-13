@@ -180,7 +180,7 @@ no
 
 	^No ifNil: [No := self fromSystemId: IDC_NO]!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil the lazily initialized cursors to allow
 	them to be removed (and also perhaps the ref to the resource library)."
 
@@ -319,7 +319,7 @@ icon!constants!public! !
 imageType!constants!private! !
 initialize!class hierarchy-removing!private! !
 no!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onStartup2!event handling!private! !
 person!instance creation!public! !
 pin!instance creation!public! !

@@ -57,8 +57,8 @@ nuke
 	Instance notNil ifTrue: [Instance release].
 	Instance := nil!
 
-onPreStripImage
-	#rbFix. "Assist Dolphin's image stripping by clearing away the undo history"
+onPreStripImage: anImageStripper
+	#rbFix.	"Assist Dolphin's image stripping by clearing away the undo history"
 	self nuke!
 
 preUnloadActionFor: aParcel
@@ -71,7 +71,7 @@ uninitialize
 instance!instance creation!public! !
 new!instance creation!public! !
 nuke!public!public access! !
-onPreStripImage!class hierarchy-removing!public! !
+onPreStripImage:!class hierarchy-removing!private! !
 preUnloadActionFor:!parcel load/unload/save!public! !
 uninitialize!class hierarchy-removing!public! !
 !

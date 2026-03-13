@@ -920,7 +920,7 @@ onPrerequisitesReset: aPackage
 
 	self trigger: #prerequisitesReset: with: aPackage!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - Image stripping is in progress. Set up the receiver so as not to interfere."
 
 	packagedVariables := nil.
@@ -1283,7 +1283,7 @@ onMethodUpdated:!event handling!private! !
 onOwnedChanged:!event handling!private! !
 onPackageChanged:!event handling!private! !
 onPrerequisitesReset:!event handling!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onVariableRemoved:!event handling!private! !
 onVariableRenamed:from:!event handling!private! !
 packagedVariables!public! !

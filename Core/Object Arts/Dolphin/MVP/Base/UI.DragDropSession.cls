@@ -529,11 +529,10 @@ isADragButton: aSymbol
 new
 	^super new initialize!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil any lazily initialized class variables."
 
-	self uninitialize
-!
+	self uninitialize!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
@@ -551,7 +550,7 @@ extendedDragButton!constants!private! !
 initialize!development!initializing!private! !
 isADragButton:!public!testing! !
 new!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 

@@ -22,7 +22,9 @@ annotationsFor: aClass
 	^(register lookup: aClass) ifNil: [self addAnnotationsFor: aClass]!
 
 initialize
-	self reset.
+	self reset!
+
+observeDevelopmentEvents
 	Smalltalk
 		when: #methodAdded:
 			send: #onMethodAdded:
@@ -72,10 +74,11 @@ reset
 addAnnotationsFor:!helpers!private! !
 annotationsFor:!public! !
 initialize!public! !
-onClassRemoved:!event handling!private! !
-onMethodAdded:!event handling!private! !
-onMethodRemoved:!private! !
-onMethodUpdated:!event handling!private! !
+observeDevelopmentEvents!development!initializing!private! !
+onClassRemoved:!development!event handling!private! !
+onMethodAdded:!development!event handling!private! !
+onMethodRemoved:!development!private! !
+onMethodUpdated:!development!event handling!private! !
 reset!initializing!public! !
 !
 
@@ -84,17 +87,21 @@ reset!initializing!public! !
 initialize
 	"Can be reset safely at any time, as will just rebuild."
 
-	Current := self new initialize!
+	Current := self new
+				initialize;
+				observeDevelopmentEvents;
+				yourself!
 
-onPreStripImage
-	Current reset!
+onPreStripImage: anImageStripper
+	Current reset.
+	anImageStripper stripDevelopmentMethods ifTrue: [Smalltalk removeEventsTriggeredFor: Current]!
 
 uninitialize
 	Smalltalk removeEventsTriggeredFor: Current! !
 
 !UI.CommandAnnotationsRegister class categoriesForMethods!
 initialize!class initialization!public! !
-onPreStripImage!public! !
+onPreStripImage:!class hierarchy-removing!private! !
 uninitialize!class hierarchy-removing!public! !
 !
 

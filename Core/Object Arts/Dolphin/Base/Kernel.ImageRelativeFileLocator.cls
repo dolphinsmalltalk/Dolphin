@@ -62,7 +62,7 @@ uninitialize
 
 !Kernel.ImageRelativeFileLocator class categoriesForMethods!
 current!accessing!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 

@@ -400,7 +400,7 @@ layoutName: aString
 					[DefaultInstance := nil.
 					true]]!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped."
 
 	self uninitialize!
@@ -429,7 +429,7 @@ invariant!accessing!public! !
 invariantVKeyMap!constants!private! !
 layoutName!accessing!public! !
 layoutName:!accessing!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onSettingChanged:!event handling-win32!private! !
 uninitialize!class hierarchy-removing!private! !
 virtualKey:!enquiries!public! !

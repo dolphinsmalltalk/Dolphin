@@ -434,7 +434,7 @@ initialize
 		at: WM_CTLCOLORSCROLLBAR put: #wmCtlColor:wParam:lParam:;
 		at: WM_CTLCOLORSTATIC put: #wmCtlColor:wParam:lParam:!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	self
 		removeSelectors: #(#forkProgressMonitor #show #subclassWindow: #template #wmInitDialog:wParam:lParam: #wmCreate:wParam:lParam:).
 	self class removeSelectors: self selectors!
@@ -444,7 +444,7 @@ show
 
 !ImageStripperProgress class categoriesForMethods!
 initialize!initializing!must not strip!public! !
-onPreStripImage!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 show!operations!public! !
 !
 

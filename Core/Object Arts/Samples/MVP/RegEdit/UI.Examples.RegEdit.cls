@@ -552,7 +552,7 @@ keyIcon
 
 	^Icon shellStock: SHSTOCKICONID.SIID_FOLDER!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil any lazily initialized class variables."
 
 	!
@@ -586,7 +586,7 @@ icon!constants!public! !
 iconFor:!constants!displaying!private! !
 initialize!development!initializing!private! !
 keyIcon!constants!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 resource_Default_view!public!resources-views! !
 shutdownOnExit!public!testing! !
 stringIcon!constants!public! !

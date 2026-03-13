@@ -284,7 +284,7 @@ new
 
 	^self shouldNotImplement!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Assist in the image stripping process by clearning down any
 	lazily initialized variables held by the receiver."
 
@@ -301,7 +301,7 @@ controls!enquiries!public! !
 current!instance creation!public! !
 defineFunctions!initializing!public! !
 new!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 

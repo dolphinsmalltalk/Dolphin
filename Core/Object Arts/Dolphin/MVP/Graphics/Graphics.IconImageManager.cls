@@ -57,7 +57,7 @@ new
 
 	^self shouldNotImplement!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Assist in the image stripping process by clearning down any
 	lazily initialized variables held by the receiver."
 
@@ -84,7 +84,7 @@ uninitialize
 !Graphics.IconImageManager class categoriesForMethods!
 current!instance creation!public! !
 new!instance creation!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 reset!operations!public! !
 stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !

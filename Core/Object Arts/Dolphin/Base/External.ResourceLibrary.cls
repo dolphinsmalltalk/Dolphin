@@ -109,7 +109,7 @@ initialize
 
 	Libraries := WeakLookupTable new!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped, close down defaults to allow unused subclasses to be stripped."
 
 	self initialize!
@@ -169,7 +169,7 @@ open: aString withAliases: aCollection flags: anInteger
 aliasFor:!enquiries!public! !
 defaultLoadFlags!constants!private! !
 initialize!development!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 open:!instance creation!public! !
 open:withAlias:!instance creation!public! !
 open:withAliases:!instance creation!public! !

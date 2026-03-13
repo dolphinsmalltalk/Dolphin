@@ -242,7 +242,7 @@ onExit: aSessionManager
 
 	self closeAllDefaults!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped, close down defaults to allow unused subclasses to be stripped."
 
 	self closeAllDefaults!
@@ -336,7 +336,7 @@ default!accessing!instance creation!public! !
 fileName!constants!public! !
 initializeSubclasses!initializing!private! !
 onExit:!finalizing!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onStartup!event handling!private! !
 onStartup2!event handling!private! !
 open!instance creation!public! !

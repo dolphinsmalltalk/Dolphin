@@ -175,7 +175,7 @@ initialize
 		do: [:each | formatFlagNames at: each value put: each key].
 	self addClassConstant: 'FormatFlagNames' value: formatFlagNames!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Allow the receiver and subclasses to be stripped by clearing lazy initialized class variables
 	which hold sub-instance of the receiver."
 
@@ -200,7 +200,7 @@ freeHandle:!private!realizing/unrealizing! !
 genericDefault!instance creation!public! !
 genericTypographic!instance creation!public! !
 initialize!class initialization!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 stbConvertFrom:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !

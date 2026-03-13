@@ -725,7 +725,7 @@ new
 
 	^self basicNew setTypeLib: nil attributes: TLIBATTR new!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Assist in the image stripping process by clearning down any
 	lazily initialized variables held by the receiver."
 
@@ -822,7 +822,7 @@ allTypeLibs!accessing!public! !
 initialize!development!initializing!private! !
 load:major:minor:locale:!instance creation!public! !
 new!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 onStartup!event handling!public! !
 onTypeLib:!instance creation!public! !
 open:!instance creation!public! !

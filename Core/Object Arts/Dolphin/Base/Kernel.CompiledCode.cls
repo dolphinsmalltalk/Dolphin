@@ -882,7 +882,7 @@ initializeInfoCache: capacity
 	InfoCacheKeys pathologist: self.
 	InfoCacheValues := Array new: primeSize!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - Clear away the cache of method information used for debugging."
 
 	InfoCacheKeys pathologist: nil.
@@ -912,7 +912,7 @@ findIP:inTextMap:!helpers!private! !
 initialize!development!initializing!private! !
 initializeInfoCache!development!initializing!private! !
 initializeInfoCache:!development!initializing!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 packByteCodes:!helpers!private! !
 !
 

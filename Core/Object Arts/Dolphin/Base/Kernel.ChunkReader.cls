@@ -92,7 +92,7 @@ null
 	Null isNil ifTrue: [Null := self do: [:chunk :filer | ]].
 	^Null!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be deployed as an executable/DLL. Clean away
 	any lazily initialized class variables in order to assist the stripping process."
 
@@ -103,6 +103,6 @@ do:!instance creation!public! !
 do:atEnd:!instance creation!public! !
 do:inContext:atEnd:!instance creation!public! !
 null!instance creation!public! !
-onPreStripImage!initializing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 !
 

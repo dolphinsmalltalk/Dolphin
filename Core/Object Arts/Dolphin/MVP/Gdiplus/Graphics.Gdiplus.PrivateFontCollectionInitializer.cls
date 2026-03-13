@@ -42,7 +42,7 @@ default
 new
 	^self shouldNotImplement!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Allow the receiver to be stripped by clearing lazy initialized class variable
 	which holds an instance of the receiver."
 
@@ -51,6 +51,6 @@ onPreStripImage
 !Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesForMethods!
 default!instance creation!private! !
 new!development!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 !
 

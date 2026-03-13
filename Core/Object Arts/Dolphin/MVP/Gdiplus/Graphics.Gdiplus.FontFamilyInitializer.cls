@@ -57,7 +57,7 @@ name: aString
 name: aString fontCollection: aFontCollection
 	^FontFamilyFromNameInitializer basicNew name: aString fontCollection: aFontCollection!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private -  Allow the receiver and subclasses to be stripped by clearing lazy initialized class variables
 	which hold sub-instance of the receiver."
 
@@ -71,6 +71,6 @@ genericSansSerif!instance creation!public! !
 genericSerif!instance creation!public! !
 name:!instance creation!public! !
 name:fontCollection:!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 !
 

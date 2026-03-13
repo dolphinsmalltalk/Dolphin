@@ -439,7 +439,7 @@ new
 
 	^self shouldNotImplement!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	self uninitialize!
 
 publishedAspectsOfInstances
@@ -463,7 +463,7 @@ uninitialize
 current!accessing!public! !
 initialize!initializing!public! !
 new!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 publishedAspectsOfInstances!constants!development!public! !
 uninitialize!class hierarchy-removing!public! !
 !

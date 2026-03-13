@@ -160,7 +160,7 @@ new
 
 	^self separator !
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil the lazily initialized class variables."
 
 	self uninitialize!
@@ -197,7 +197,7 @@ barBreak!instance creation!public! !
 break!instance creation!public! !
 initialize!class initialization!private! !
 new!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 separator!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

@@ -157,7 +157,7 @@ new
 
 	^self shouldNotImplement!
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil out the cached converter to (potentially)
 	allow RichTextEdit to be stripped."
 
@@ -198,7 +198,7 @@ fromRtf:!instance creation!public! !
 fromString:!instance creation!public! !
 initialize!class initialization!public! !
 new!instance creation!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 registerClipboardFormat!class initialization!private! !
 rtfConverter!accessing!private! !
 uninitialize!class hierarchy-removing!public! !

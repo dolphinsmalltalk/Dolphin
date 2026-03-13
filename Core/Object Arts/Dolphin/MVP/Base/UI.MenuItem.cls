@@ -251,7 +251,7 @@ new
 	^self subclassResponsibility
 !
 
-onPreStripImage
+onPreStripImage: anImageStripper
 	"Private - The image is about to be stripped. Nil the lazily initialized class variables."
 
 	self uninitialize!
@@ -266,7 +266,7 @@ dividers!accessing!public! !
 errorIllegalMenuString:!exceptions!private! !
 fromString:!instance creation!public! !
 new!instance creation!private! !
-onPreStripImage!class hierarchy-removing!private! !
+onPreStripImage:!class hierarchy-removing!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 
