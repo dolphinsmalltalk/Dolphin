@@ -14,7 +14,9 @@ External.Structure
 			'_OffsetOf_szSystemStatus' -> 16r105.
 			'_OffsetOf_wHighVersion' -> 16r2.
 			'_OffsetOf_wVersion' -> 16r0.
-			'_WSADATA_Size' -> 16r190
+			'_WSADATA_Size' -> 16r190.
+			'WSADESCRIPTION_LEN' -> 16r100.
+			'WSASYS_STATUS_LEN' -> 16r80
 		}!
 
 OS.WSADATA guid: (Core.GUID fromString: '{ef5075d3-312c-49e0-b590-98987a18d0d2}')!
@@ -113,8 +115,8 @@ defineFields
 	self
 		defineField: #wVersion type: UInt16Field new beReadOnly offset: 0;
 		defineField: #wHighVersion type: UInt16Field new beReadOnly offset: 2;
-		defineField: #szDescription type: (StringField type: AnsiString length: 257) beReadOnly offset: 4;
-		defineField: #szSystemStatus type: (StringField type: AnsiString length: 129) beReadOnly offset: 261;
+		defineField: #szDescription type: (StringField type: Utf8String length: WSADESCRIPTION_LEN+1) beReadOnly offset: 4;
+		defineField: #szSystemStatus type: (StringField type: Utf8String length: WSASYS_STATUS_LEN+1) beReadOnly offset: 261;
 		defineField: #iMaxSockets type: UInt16Field new beReadOnly offset: 390;
 		defineField: #iMaxUdpDg type: UInt16Field new beReadOnly offset: 392;
 		defineField: #lpVendorInfo type: LPVOIDField new beReadOnly offset: 396.
@@ -125,7 +127,7 @@ getFieldNames
 
 !OS.WSADATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

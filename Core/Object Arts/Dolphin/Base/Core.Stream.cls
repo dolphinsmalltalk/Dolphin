@@ -157,7 +157,7 @@ elementSize
 encodedSizeOf: anObject
 	"Answer the number of units that would be occupied by anObject if it were present in this stream."
 
-	^self contentsSpecies empty encodedSizeOf: anObject!
+	^self contentsSpecies encodedSizeOf: anObject!
 
 encoding
 	"Answer the encoding of the stream, one of:

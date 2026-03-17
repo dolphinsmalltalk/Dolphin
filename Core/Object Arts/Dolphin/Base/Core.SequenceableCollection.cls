@@ -1469,6 +1469,11 @@ decodeFrom: aReadStream upTo: anObject
 
 	^aReadStream basicUpTo: anObject!
 
+encodedSizeOf: anObject
+	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver's encoding."
+
+	^1!
+
 encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
 	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be it's underlying collection, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is a collection of object pointers, we double-dispatch to aSequenceableCollection to ask it to write its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream as its binary encoding. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval, but `Character` objects will be written."
 
@@ -1517,6 +1522,7 @@ writeStream: anInteger
 !Core.SequenceableCollection class categoriesForMethods!
 binarySearch:for:using:!public!searching! !
 decodeFrom:upTo:!private! !
+encodedSizeOf:!encode/decode!private! !
 encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 new:streamContents:!public!stream creation! !

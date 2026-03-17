@@ -5,7 +5,7 @@ Core.ArrayedCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.NlsConstants private})
-	classInstanceVariableNames: 'empty'
+	classInstanceVariableNames: ''
 	classConstants: {
 			'EncodingAnsi' -> 16r0.
 			'Encodings' -> #(#ansi #utf8 #utf16le #utf32).
@@ -1415,10 +1415,9 @@ elementSize
 
 empty
 	"Answer an empty String instance. It is shared and should not be modified.
-	N.B. The compiler generates reference to a shared empty string in any case
-	so there should never be more than one empty literal string."
+	N.B. The compiler generates references to a shared empty Utf8String when compiling '', so there should never be more than one empty literal string."
 
-	^empty!
+	^''!
 
 encoding
 	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16le or #utf32."
@@ -1573,9 +1572,6 @@ fromUtf16String: anAddressOrUtf16String
 
 	^anAddressOrUtf16String asUtf16String asUtf8String!
 
-initialize
-	empty := ''!
-
 installedCodePages
 	"Answer details of all code pages installed on the host system."
 
@@ -1669,7 +1665,7 @@ systemCodePages: anInteger
 tab
 	"Answer an instance of the receiver containing a tab character."
 
-	^##(self with: Character tab)!
+	^##(self with: $\t)!
 
 utf16Class
 	"Answer the class of String to use for UTF16-encoded strings."
@@ -1767,7 +1763,6 @@ fromResourceId:!instance creation!public! !
 fromResourceId:in:!instance creation!public! !
 fromString:!instance creation!public! !
 fromUtf16String:!instance creation!public! !
-initialize!class initialization!development!public! !
 installedCodePages!enquiries!public! !
 lf!constants!public! !
 lineDelimiter!instance creation!public! !

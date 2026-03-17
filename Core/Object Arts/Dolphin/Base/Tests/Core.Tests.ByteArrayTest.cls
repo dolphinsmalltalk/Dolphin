@@ -127,7 +127,7 @@ testMixedConcatenation
 
 	| subjects |
 	subjects := #(#[] #[1] #[1 2]).
-	{String empty. Utf16String empty. Array new. OrderedCollection new. 1 to: 0} do: 
+	{ String empty. Utf16String.Empty. Array new. OrderedCollection new. 1 to: 0 } do: 
 			[:eachEmpty |
 			subjects do: 
 					[:eachArray |
@@ -135,14 +135,16 @@ testMixedConcatenation
 					result := eachArray , eachEmpty.
 					self deny: eachArray identicalTo: result.
 					self assert: result equals: eachArray]].
-	{'a' asAnsiString.
+	{
+		'a' asAnsiString.
 		#(255).
 		OrderedCollection with: 123.
 		100 to: 100.
 		'ab' asAnsiString.
 		#(1 255).
 		OrderedCollection with: 123 with: 255.
-		100 to: 101} do: 
+		100 to: 101
+	} do: 
 				[:each |
 				subjects do: 
 						[:eachArray |
@@ -152,7 +154,8 @@ testMixedConcatenation
 						self assert: result class identicalTo: self collectionClass]].
 	"It doesn't particularly make sense to catenate strings onto ByteArrays, but as of Dolphin 8.2.3 it will work."
 	self assert: #[] , Character dolphin asUtf8String equals: Character dolphin asUtf8String asByteArray.
-	self assert: #[], Character dolphin asUtf16String equals: Character dolphin asUtf16String asByteArray!
+	self assert: #[] , Character dolphin asUtf16String
+		equals: Character dolphin asUtf16String asByteArray!
 
 testResize
 	super testResize.

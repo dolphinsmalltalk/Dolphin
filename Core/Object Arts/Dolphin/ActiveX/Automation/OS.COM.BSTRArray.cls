@@ -30,7 +30,7 @@ uncheckedAt: anInteger
 	| bstr |
 	bstr := self basicUncheckedAt: anInteger.
 	^bstr isNull
-		ifTrue: [Utf16String empty]
+		ifTrue: [Utf16String.Empty]
 		ifFalse: [Utf16String fromAddress: bstr length: (OleAut32 sysStringLen: bstr)]! !
 
 !OS.COM.BSTRArray categoriesForMethods!

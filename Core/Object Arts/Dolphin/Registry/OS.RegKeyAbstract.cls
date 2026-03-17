@@ -283,7 +283,7 @@ objectFromValue: aByteArray type: typeInteger size: sizeInteger
 			"REG_SZ: 1"
 			[:bytes :size |
 			size == 0
-				ifTrue: [Utf16String empty]
+				ifTrue: [Utf16String.Empty]
 				ifFalse: [Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1]].
 			"REG_EXPAND_SZ: 2"
 			[:bytes :size |
@@ -335,7 +335,7 @@ pathFromRoot
 	"Answer the <readableString> path to the receiver from the root key. This does not include the hive such as HKEY_CLASSES_ROOT, but see #fullPath."
 
 	^parentPath
-		ifNil: [##(Utf16String empty)]
+		ifNil: [##(Utf16String.Empty)]
 		ifNotNil: [parentPath isEmpty ifTrue: [name] ifFalse: [parentPath , PathSeparator , name]]!
 
 postCopy
@@ -517,7 +517,7 @@ splitRegPath: aString
 	lastSlash := aString lastIndexOf: $\.
 	^lastSlash == 0
 		ifFalse: [{ aString copyFrom: 1 to: lastSlash - 1. aString copyFrom: lastSlash + 1 to: aString size }]
-		ifTrue: [{ Utf16String empty. aString }]!
+		ifTrue: [{ Utf16String.Empty. aString }]!
 
 stringArrayAt: aString put: anArray
 	"Write a REG_MULTISZ value to the receiver's registry key with the <readableString> name, keyString, and a null-separated list of string values encoded from the <Array>, anArray."
@@ -656,7 +656,7 @@ subValueNamesDo: aMonadicValuable
 	maxSize := info maxValueNameLen.
 	"In practice most keys have just a default value, a condition we can distinguish from the maximum value name length being zero, so optimize for that."
 	maxSize == 0
-		ifTrue: [info valueCount == 0 ifFalse: [aMonadicValuable value: Utf16String empty]]
+		ifTrue: [info valueCount == 0 ifFalse: [aMonadicValuable value: Utf16String.Empty]]
 		ifFalse: 
 			[| i valueName cbValueName |
 			valueName := Utf16String newFixed: maxSize.	"Strings automatically include space for null-term"

@@ -160,6 +160,11 @@ coerceString: aString
 
 	^aString asAnsiString!
 
+empty
+	"Answer an empty AnsiString instance."
+
+	^self new!
+
 encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
 	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be it's underlying collection, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is ANSI encoded, we double-dispatch to aSequenceableCollection to ask it to encode the interval of its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream as ANSI characters. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval."
 
@@ -176,14 +181,23 @@ encoding
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	^VM ansiStringFromAddress: anAddress!
+	| count string |
+	anAddress isNull ifTrue: [^nil].
+	count := OS.Ucrt strlen: anAddress.
+	string := self new: count.
+	anAddress asExternalAddress
+		replaceBytesOf: string
+		from: 1
+		to: count
+		startingAt: 1.
+	^string!
 
 initialize
-	empty := self new
-				beImmutableObject;
-				yourself.
 	VM registryAt: #AnsiString put: self.
 	self extraInstanceSpec: EncodingAnsi!
+
+uninitialize
+	VM unregisterObject: self!
 
 with: aCharacter
 	^(self new: 1)
@@ -223,10 +237,12 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 !Core.AnsiString class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 coerceString:!instance creation!public! !
+empty!instance creation!public! !
 encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 fromAddress:!instance creation!public! !
 initialize!class initialization!development!public! !
+uninitialize!class hierarchy-removing!public! !
 with:!instance creation!public! !
 with:with:!instance creation!public! !
 with:with:with:!instance creation!public! !

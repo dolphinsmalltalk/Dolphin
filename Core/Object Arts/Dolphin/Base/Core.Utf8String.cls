@@ -733,7 +733,7 @@ urlEncoded
 	Not every part in a URI should be encoded as it is explained in section 2.4 so you should be cautious."
 
 	| encodedStream |
-	encodedStream := AnsiString writeStream: self size.
+	encodedStream := String writeStream: self size.
 	self codeUnitsDo: 
 			[:each |
 			"Unreserved characters from RFC3986, section 2.3: Ascii letters and digits, hyphen, underscore, period and tilde"
@@ -782,6 +782,11 @@ codePage
 
 	^CP_UTF8!
 
+encodedSizeOf: aCharacter
+	"Private - Answer the number of basic slots (code units) occupied by the argument when encoded in the UTF-8 encoding."
+
+	^aCharacter utf8Length!
+
 encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
 	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be it's underlying collection, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is UTF-8 encoded, we double-dispatch to aSequenceableCollection to ask it to encode the interval of its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream as UTF-8. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval."
 
@@ -802,7 +807,6 @@ fromAddress: anAddress
 
 initialize
 	self extraInstanceSpec: EncodingUtf8.
-	empty := ''.
 	VM registryAt: #Utf8String put: self!
 
 with: aCharacter
@@ -815,6 +819,7 @@ with: aCharacter
 !Core.Utf8String class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 codePage!instance creation!public! !
+encodedSizeOf:!encode/decode!private! !
 encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 fromAddress:!instance creation!public! !

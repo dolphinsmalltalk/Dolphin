@@ -47,7 +47,7 @@ value
 	| bstr |
 	bstr := bytes uintPtrAtOffset: 0.
 	^bstr == 0
-		ifTrue: [Utf16String empty]
+		ifTrue: [Utf16String.Empty]
 		ifFalse: [Utf16String fromAddress: bstr length: (OleAut32 sysStringLen: bstr)]!
 
 value: aString

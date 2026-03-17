@@ -166,7 +166,7 @@ testReadingEmptySz
 		dwType: WinRegConstants.REG_SZ
 		lpData: nil
 		cbData: 0.
-	self assert: (testKey valueAt: 'Empty') equals: Utf16String empty!
+	self assert: (testKey valueAt: 'Empty') equals: Utf16String.Empty!
 
 testRemoveKeyIfAbsent
 	| subbie |

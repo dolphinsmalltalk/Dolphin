@@ -3,7 +3,7 @@
 Core.UtfEncodedString
 	variableByteSubclass: #'Core.Utf16String'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Empty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -429,6 +429,18 @@ elementSize
 
 	^2!
 
+empty
+	"Answer an empty String instance. It is shared and should not be modified.
+	N.B. The compiler generates reference to a shared empty string in any case
+	so there should never be more than one empty literal string."
+
+	^Empty!
+
+encodedSizeOf: aCharacter
+	"Private - Answer the number of basic slots occupied by the argument when encoded in the UTF-16 encoding."
+
+	^aCharacter codePoint <= 16rFFFF ifTrue: [1] ifFalse: [2]!
+
 encodeElementsOf: aSequenceableCollection from: fromInteger count: countInteger on: aWriteStream
 	"Private - The <puttableStream> argument, aWriteStream, is asking the receiver, expected to be of it's underlying collection class, to encode data from <sequencedReadableCollection> argument, aSequenceableCollection, onto it. Since the receiver is UTF-16 encoded, we double-dispatch back to aSequenceableCollection to ask it to encode the interval of its elements starting at <integer> argument, fromInteger, and of <integer> size specified by the argument, countInteger, onto the stream. Note that the interval is specified in code units, so if aSequenceableCollection is some form of `UtfEncodedString`, then this will be a code-unit interval, not a code-point (Character) interval."
 
@@ -475,9 +487,9 @@ fromUtf16String: anAddressOrUtf16String
 	^self fromAddress: anAddressOrUtf16String yourAddress!
 
 initialize
-	empty := self new
+	self addClassConstant: 'Empty' value: (self new
 				beImmutableObject;
-				yourself.
+				yourself).
 	VM registryAt: #Utf16String put: self.
 	self extraInstanceSpec: EncodingUtf16.
 	self addClassConstant: 'LeadOffset' value: LeadSurrogateMask - (16r10000 >> 10).
@@ -504,6 +516,8 @@ characterForCodeUnit:!enquiries!public! !
 codePage!constants!public! !
 coerceString:!instance creation!public! !
 elementSize!constants!encode/decode!public! !
+empty!instance creation!public! !
+encodedSizeOf:!encode/decode!private! !
 encodeElementsOf:from:count:on:!encode/decode!private! !
 encoding!constants!public! !
 fromAddress:!instance creation!public! !

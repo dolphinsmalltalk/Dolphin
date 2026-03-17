@@ -50,6 +50,8 @@ Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to los
 	isToGo: false; "Just to see how small the image is without the VM"
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
+	"logReferencesToClasses: true;"
+	preStripScript: ''AnsiString uninitialize'';
 	deploy
 ```
 

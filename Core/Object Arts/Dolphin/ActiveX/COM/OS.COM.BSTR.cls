@@ -47,7 +47,7 @@ asString
 asUtf16String
 	"Answer a `Utf16String` composed of the characters of the receiver (assumed itself to be UTF-16 encoded), or the empty string if the receiver is a null pointer (by convention a null BSTR is treated the same as an empty string)."
 
-	^self isNull ifTrue: [Utf16String empty] ifFalse: [Utf16String fromAddress: self length: self size]!
+	^self isNull ifTrue: [Utf16String.Empty] ifFalse: [Utf16String fromAddress: self length: self size]!
 
 asUtf8String
 	"Answer a UTF-8 encoded <readableString> representation of the receiver."

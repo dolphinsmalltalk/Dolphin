@@ -262,6 +262,13 @@ coerceString: aString
 
 	^self intern: aString!
 
+empty
+	"Answer an empty String instance. It is shared and should not be modified.
+	N.B. The compiler generates reference to a shared empty string in any case
+	so there should never be more than one empty literal string."
+
+	^#''!
+
 findInterned: aString
 	"Answer the unique <Symbol> for aString if already defined, else nil.	
 	N.B. This method previously had the selector #symbolAt:, and was private,
@@ -280,7 +287,7 @@ findInterned: aString
 	^nil!
 
 fromAddress: anInteger
-	^(String fromAddress: anInteger) ifNotNil: [:string | self intern: string]!
+	^(Utf8String fromAddress: anInteger) ifNotNil: [:string | self intern: string]!
 
 fromAddress: anInteger length: anInteger2
 	^(String fromAddress: anInteger length: anInteger2)
@@ -295,7 +302,6 @@ initialize
 	| classificationTable |
 	self extraInstanceSpec: EncodingUtf8.
 	Table isNil ifTrue: [Table := Array new: 3989].
-	empty := #''.
 	VM registryAt: #Symbol put: self.
 	classificationTable := Array new: 127.
 	'_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
@@ -441,6 +447,7 @@ withAll: anArrayOfCharacter
 addUnique:!accessing!private! !
 allInstancesDo:!enumerating!public! !
 coerceString:!instance creation!public! !
+empty!instance creation!public! !
 findInterned:!accessing!public! !
 fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !

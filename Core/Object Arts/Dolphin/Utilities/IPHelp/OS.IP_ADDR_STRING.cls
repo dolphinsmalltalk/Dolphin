@@ -89,12 +89,12 @@ defineFields
 					yourself)
 			offset: 0;
 		defineField: #IpAddress
-			type: ((StringField length: 16)
+			type: ((StringField type: AnsiString length: 16)
 					beReadOnly;
 					yourself)
 			offset: 4;
 		defineField: #IpMask
-			type: ((StringField length: 16)
+			type: ((StringField type: AnsiString length: 16)
 					beReadOnly;
 					yourself)
 			offset: 20;

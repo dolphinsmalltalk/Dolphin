@@ -58,7 +58,8 @@ arrayClass
 	^LPSTRArray!
 
 elementFromIndex: anInteger
-	^##({ ''. 'a'. 'ab'. '£'. 'a£ë'. AnsiString fromByteArray: #[1 127 128 255] }) at: anInteger! !
+	^(#('' 'a' 'ab' '£' 'a£ë') lookup: anInteger)
+		ifNil: [AnsiString fromByteArray: #[1 127 128 255]]! !
 
 !OS.COM.Tests.LPSTRArrayTest class categoriesForMethods!
 arrayClass!constants!private! !

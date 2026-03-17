@@ -193,7 +193,7 @@ basicPeek
 bufferPrototype
 	"Private - Answer a prototypical instance of the type of collection over which this class streams."
 
-	^self bufferClass empty!
+	^self subclassResponsibility!
 
 close
 	"Relinquish any external resources associated with the receiver, and put the
@@ -256,9 +256,6 @@ externalType
 
 fileno
 	^fd!
-
-fileSize
-	^crtlib _filelengthi64: self fileno!
 
 finalize
 	self close!
@@ -496,7 +493,8 @@ size
 	| len |
 	"We may have to flush in order for any data written to the stream buffer past the previous end of file to be taken into account."
 	(flags allMask: WritingMask) ifTrue: [self flush].
-	^(len := self fileSize) < 0 ifTrue: [CRTError signal] ifFalse: [len]!
+	len := crtlib _filelengthi64: self fileno.
+	^len < 0 ifTrue: [CRTError signal] ifFalse: [len]!
 
 skip: anInteger
 	"Adjust the receiver's position by the <integer> argument."
@@ -595,7 +593,6 @@ decodeNext!encode/decode!private! !
 do:!enumerating!public! !
 externalType!accessing!public! !
 fileno!accessing!private! !
-fileSize!accessing!public! !
 finalize!finalizing!private! !
 flagsFromMode:!helpers!private! !
 flush!public!writing! !
@@ -675,15 +672,6 @@ classForEncoding: aSymbol
 	^((EncodingClasses lookup: aSymbol) ifNotNil: [:ref | ref valueOrNil])
 		ifNil: [self error: 'Unsupported encoding ' , aSymbol]!
 
-encodingClasses
-	^IdentityDictionary new
-		at: #binary put: StdioBinaryFileStream;
-		at: #ansi put: StdioAnsiFileStream;
-		at: #text put: StdioAnsiFileStream;
-		at: #utf8 put: StdioUtf8FileStream;
-		at: #utf16le put: StdioUtf16FileStream;
-		yourself!
-
 encodingMode
 	^self subclassResponsibility!
 
@@ -735,14 +723,7 @@ initialize
 					}).
 	self addClassConstant: 'DefaultReadWriteFlags' value: _O_RDWR | _SH_DENYWR.
 	self addClassConstant: 'DefaultReadFlags' value: _O_RDONLY | _SH_DENYNO.
-	self addClassConstant: 'EncodingClasses'
-		value: (IdentityDictionary withAll: {
-						#binary -> #{StdioBinaryFileStream}.
-						#ansi -> #{StdioAnsiFileStream}.
-						#text -> #{StdioAnsiFileStream}.
-						#utf8 -> #{StdioUtf8FileStream}.
-						#utf16le -> #{StdioUtf16FileStream}
-					})!
+	EncodingClasses := IdentityDictionary new!
 
 on: aFile
 	"Answer an instance of the receiver attached to the open <File>, aFile."
@@ -760,7 +741,9 @@ on: aFile type: aSymbol
 
 	| oshandle proc fd encoding |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
-	encoding := aSymbol == #text ifTrue: [String encodingName: aFile sniffEncoding] ifFalse: [aSymbol].
+	encoding := aSymbol == #text
+				ifTrue: [String encodingName: (AdvApi32 sniffFileEncoding: aFile handle)]
+				ifFalse: [aSymbol].
 	oshandle := Handle new.
 	proc := Kernel32 getCurrentProcess.
 	(Kernel32
@@ -808,10 +791,9 @@ open: aPathOrString mode: modeSymbol check: aBoolean type: encodingSymbol share:
 		ifTrue: 
 			[mode := 'r'.
 			flags := _O_RDONLY].
-	concreteClass := encodingSymbol == #text
-				ifTrue: 
-					[exists ifTrue: [self classForEncoding: (File sniffEncoding: path)] ifFalse: [StdioAnsiFileStream]]
-				ifFalse: [self classForEncoding: encodingSymbol].
+	concreteClass := self classForEncoding: (encodingSymbol == #text
+						ifTrue: [exists ifTrue: [String encodingName: (AdvApi32 sniffEncoding: path)] ifFalse: [#ansi]]
+						ifFalse: [encodingSymbol]).
 	instance := concreteClass basicNew
 				open: path
 					mode: mode
@@ -969,7 +951,6 @@ attach:toFd:mode:!instance creation!public! !
 attach:toFd:mode:type:!instance creation!public! !
 attachMode:!enquiries!private! !
 classForEncoding:!enquiries!private! !
-encodingClasses!constants!private! !
 encodingMode!constants!private! !
 encodingOfFILE:!enquiries!private! !
 encodingType!constants!public! !

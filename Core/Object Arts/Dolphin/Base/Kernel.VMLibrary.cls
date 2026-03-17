@@ -51,14 +51,6 @@ addressFromInteger: anInteger
 	<stdcall: lpvoid AnswerIntPtr uint32>
 	^self invalidCall: _failureCode!
 
-ansiStringFromAddress: pointer
-	"Private - Answer a new <AnsiString> instantiated from the null-terminated Ansi encoded string pointed at by the argument."
-
-	"The VM function does nothing but return the argument, but we can leverage its FFI marshalling to provide a fast and simple way to instantiate a string from a pointer."
-
-	<stdcall: lpstr AnswerIntPtr lpvoid>
-	^self invalidCall: _failureCode!
-
 applicationHandle
 	"Answer the handle of the Dolphin application instance."
 
@@ -469,7 +461,6 @@ versionInfo
 _snprintf_s:bufferSize:count:format:with:!helpers!private! !
 _snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
 addressFromInteger:!helpers!private! !
-ansiStringFromAddress:!helpers!private! !
 applicationHandle!accessing-handles!public! !
 argc!accessing!private! !
 argv!accessing!private! !

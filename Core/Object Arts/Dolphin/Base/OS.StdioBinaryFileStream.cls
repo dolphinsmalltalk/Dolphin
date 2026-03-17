@@ -17,6 +17,11 @@ OS.StdioBinaryFileStream comment: '`OS.StdioBinaryFileStream` is the concrete cl
 
 !OS.StdioBinaryFileStream methodsFor!
 
+bufferPrototype
+	"Private - Answer a prototypical instance of the type of collection over which this class streams."
+
+	^#[]!
+
 contentsSpecies
 	"Private - Answer the class of Object to be used when answering collections of elements
 	from the receiver."
@@ -95,6 +100,7 @@ xnext: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	^aSequenceableCollection! !
 
 !OS.StdioBinaryFileStream categoriesForMethods!
+bufferPrototype!constants!private! !
 contentsSpecies!constants!private! !
 externalType!accessing!public! !
 modeModifiers!constants!private! !
@@ -126,11 +132,23 @@ fromHandle: aFILE
 	^self basicNew
 		setStream: aFILE
 		name: nil
-		flags: ##(DefaultReadWriteFlags | _O_BINARY)! !
+		flags: ##(DefaultReadWriteFlags | _O_BINARY)!
+
+initialize
+	"
+	self initialize
+	"
+
+	EncodingClasses at: #binary put: self fullyQualifiedReference!
+
+uninitialize
+	EncodingClasses removeKey: #binary! !
 
 !OS.StdioBinaryFileStream class categoriesForMethods!
 encodingMode!constants!private! !
 encodingType!constants!public! !
 fromHandle:!instance creation!public! !
+initialize!class initialization!public! !
+uninitialize!class hierarchy-removing!public! !
 !
 

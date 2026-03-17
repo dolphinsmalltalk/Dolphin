@@ -31,6 +31,11 @@ bufferClass
 
 	^Utf16String!
 
+bufferPrototype
+	"Private - Answer a prototypical instance of the type of collection over which this class streams."
+
+	^Utf16String.Empty!
+
 getchar
 	| ch |
 	self prepareToRead.
@@ -97,6 +102,7 @@ ungetchar: aCodeUnit
 !OS.StdioUnicodeFileStream categoriesForMethods!
 basicNextPut:!private!writing! !
 bufferClass!constants!private! !
+bufferPrototype!constants!private! !
 getchar!private!reading! !
 getString:!private!reading! !
 modeModifiers!constants!private! !

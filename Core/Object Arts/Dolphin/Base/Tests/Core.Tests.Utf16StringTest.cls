@@ -136,16 +136,19 @@ testLastCodeUnit
 testMixedConcatenation
 	| subjects |
 	subjects := #('' 'd' 'ef') collect: [:each | self assimilateString: each].
-	{{String empty. Utf8String empty. Utf16String empty}.
-		{'c'. 'c' asUtf8String. 'c' asUtf16String}.
-		{'cd'.
+	{
+		{ AnsiString empty. Utf8String empty. Utf16String.Empty }.
+		{ 'c'. 'c' asUtf8String. 'c' asUtf16String }.
+		{
+			'cd'.
 			'cd' asUtf8String.
 			'cd' asUtf16String.
 			'一點測試'.
 			#($a $b).
 			OrderedCollection with: $x.
-			($x codePoint to: $z codePoint) collect: [:each | Character codePoint: each]}}
-			do: 
+			($x codePoint to: $z codePoint) collect: [:each | Character codePoint: each]
+		}
+	} do: 
 				[:args |
 				args do: 
 						[:eachCase |

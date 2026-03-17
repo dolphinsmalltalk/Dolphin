@@ -218,12 +218,12 @@ defineFields
 			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #AdapterName
-			type: ((StringField length: 260)
+			type: ((StringField type: AnsiString length: 260)
 					beReadOnly;
 					yourself)
 			offset: 8;
 		defineField: #Description
-			type: ((StringField length: 132)
+			type: ((StringField type: AnsiString length: 132)
 					beReadOnly;
 					yourself)
 			offset: 268;

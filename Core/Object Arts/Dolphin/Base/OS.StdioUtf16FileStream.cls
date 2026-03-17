@@ -64,9 +64,21 @@ fromHandle: aFILE
 	^self basicNew
 		setStream: aFILE
 		name: nil
-		flags: ##(DefaultReadWriteFlags | _O_U16TEXT)! !
+		flags: ##(DefaultReadWriteFlags bitOr: _O_U16TEXT)!
+
+initialize
+	"
+	self initialize
+	"
+
+	EncodingClasses at: #utf16le put: self fullyQualifiedReference!
+
+uninitialize
+	EncodingClasses removeKey: #utf16le! !
 
 !OS.StdioUtf16FileStream class categoriesForMethods!
 fromHandle:!instance creation!public! !
+initialize!class initialization!public! !
+uninitialize!class hierarchy-removing!public! !
 !
 

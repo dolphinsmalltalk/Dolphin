@@ -88,10 +88,22 @@ fromHandle: aFILE
 	^self basicNew
 		setStream: aFILE
 		name: nil
-		flags: ##(DefaultReadWriteFlags | _O_U8TEXT)! !
+		flags: ##(DefaultReadWriteFlags bitOr: _O_U8TEXT)!
+
+initialize
+	"
+	self initialize
+	"
+
+	EncodingClasses at: #utf8 put: self fullyQualifiedReference!
+
+uninitialize
+	EncodingClasses removeKey: #utf8! !
 
 !OS.StdioUtf8FileStream class categoriesForMethods!
 encodingType!constants!public! !
 fromHandle:!instance creation!public! !
+initialize!class initialization!public! !
+uninitialize!class hierarchy-removing!public! !
 !
 

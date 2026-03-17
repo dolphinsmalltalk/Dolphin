@@ -53,7 +53,7 @@ u_charName: aCharacter nameChoice: anInteger
 				buffer: nil
 				bufferLength: 0
 				pErrorCode: error.
-	name := AnsiString new: len.
+	name := Utf8String new: len.
 	error int32AtOffset: 0 put: 0.
 	self
 		u_charName: aCharacter
@@ -97,7 +97,7 @@ u_charName: aCharacter nameChoice: choiceInteger buffer: anAnsiString bufferLeng
  * @see u_enumCharNames
  * @stable ICU 2.0
  */"
-	<cdecl: int32 u_charName char32 int32 lpstr int32 uint32*>
+	<cdecl: int32 u_charName char32 int32 lpstr8 int32 uint32*>
 	^self invalidCall: _failureCode!
 
 u_charType: aCharacter

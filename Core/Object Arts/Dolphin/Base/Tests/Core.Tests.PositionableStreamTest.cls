@@ -128,7 +128,7 @@ strings
 	^self streamClassSupportsUtf16
 		ifTrue: 
 			[strings , {
-						{ Utf16String empty. #() }.
+						{ Utf16String.Empty. #() }.
 						{ 'a' , Character dolphin asUtf16String , '文'. #($a $\x1F42C $\x6587) }
 					}]
 		ifFalse: [strings]!

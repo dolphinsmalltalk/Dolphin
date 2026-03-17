@@ -3,7 +3,7 @@
 OS.StdioTextFileStream
 	subclass: #'OS.StdioAnsiFileStream'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'BufferPrototype'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -15,6 +15,11 @@ OS.StdioAnsiFileStream comment: '`OS.StdioAnsiFileStream` is the concrete class 
 !OS.StdioAnsiFileStream categoriesForClass!Collections-Streams! !
 
 !OS.StdioAnsiFileStream methodsFor!
+
+bufferPrototype
+	"Private - Answer a prototypical instance of the type of collection over which this class streams."
+
+	^BufferPrototype!
 
 contentsSpecies
 	^AnsiString!
@@ -67,6 +72,7 @@ translationMode
 	^CRTConstants._O_TEXT! !
 
 !OS.StdioAnsiFileStream categoriesForMethods!
+bufferPrototype!constants!private! !
 contentsSpecies!accessing!private! !
 getString:!private!reading! !
 modeModifiers!constants!private! !
@@ -87,9 +93,28 @@ fromHandle: aFILE
 	^self basicNew
 		setStream: aFILE
 		name: nil
-		flags: ##(DefaultReadWriteFlags | _O_TEXT)! !
+		flags: ##(DefaultReadWriteFlags | _O_TEXT)!
+
+initialize
+	"
+	self initialize
+	"
+
+	| ref |
+	self addClassConstant: 'BufferPrototype' value: AnsiString empty.
+	ref := self fullyQualifiedReference.
+	EncodingClasses
+		at: #text put: ref;
+		at: #ansi put: ref!
+
+uninitialize
+	EncodingClasses
+		removeKey: #text;
+		removeKey: #ansi! !
 
 !OS.StdioAnsiFileStream class categoriesForMethods!
 fromHandle:!instance creation!public! !
+initialize!class initialization!public! !
+uninitialize!class hierarchy-removing!public! !
 !
 

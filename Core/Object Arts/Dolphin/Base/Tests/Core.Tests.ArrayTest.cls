@@ -62,7 +62,7 @@ testMixedConcatenation
 
 	| subjects |
 	subjects := #(#() #(1) #(1 2)).
-	{String empty. Utf16String empty. ByteArray new. OrderedCollection new. 1 to: 0} do: 
+	{ String empty. Utf16String.Empty. ByteArray new. OrderedCollection new. 1 to: 0 } do: 
 			[:eachEmpty |
 			subjects do: 
 					[:eachArray |
@@ -70,12 +70,14 @@ testMixedConcatenation
 					result := eachArray , eachEmpty.
 					self deny: eachArray identicalTo: result.
 					self assert: result equals: eachArray]].
-	{'£' asAnsiString.
+	{
+		'£' asAnsiString.
 		'€🐬' asUtf8String.
 		'🐬' asUtf16String.
 		#[255].
 		OrderedCollection with: 1234.
-		100 to: 100} do: 
+		100 to: 100
+	} do: 
 				[:eachOne |
 				subjects do: 
 						[:eachArray |
@@ -83,12 +85,14 @@ testMixedConcatenation
 						result := self verifyConcatenation: eachOne with: eachArray.
 						self deny: eachArray identicalTo: result.
 						self assert: result class identicalTo: Array]].
-	{'a£b' asAnsiString.
+	{
+		'a£b' asAnsiString.
 		'🐬€' asUtf8String.
 		'ab🐬' asUtf16String.
 		#[1 255].
 		OrderedCollection with: 1234 with: $x.
-		100 to: 101} do: 
+		100 to: 101
+	} do: 
 				[:eachTwo |
 				subjects do: 
 						[:eachArray |

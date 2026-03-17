@@ -3489,12 +3489,12 @@ verifyExtCallArgLpwstr: aBoolean
 	actual := method value: VM withArguments: {'a 🐬 or two' asUtf8String}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
-	{String empty. Utf8String empty} do: 
+	{ AnsiString empty. Utf8String empty } do: 
 			[:each |
 			actual := method value: VM withArguments: {each}.
 			self assert: actual isKindOf: Utf16String.
 			self assert: actual size equals: 0.
-			self assert: actual equals: Utf16String empty]!
+			self assert: actual equals: Utf16String.Empty]!
 
 verifyExtCallCrtFault: aBoolean
 	| lib |

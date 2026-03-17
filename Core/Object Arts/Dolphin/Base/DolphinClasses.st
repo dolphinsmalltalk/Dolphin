@@ -3624,7 +3624,7 @@ Core.ArrayedCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.NlsConstants private})
-	classInstanceVariableNames: 'empty'
+	classInstanceVariableNames: ''
 	classConstants: {
 			'EncodingAnsi' -> 16r0.
 			'Encodings' -> #(#ansi #utf8 #utf16le #utf32).
@@ -3726,7 +3726,7 @@ Core.String
 Core.UtfEncodedString
 	variableByteSubclass: #'Core.Utf16String'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Empty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {

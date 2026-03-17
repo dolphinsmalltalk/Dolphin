@@ -86,7 +86,7 @@ functionName
 
 	| bytes |
 	bytes := self descriptorLiteral.
-	^AnsiString fromAddress: bytes yourAddress + ArgumentStartIndex + self argsLen - 1!
+	^Utf8String fromAddress: bytes yourAddress + ArgumentStartIndex + self argsLen - 1!
 
 isExternalCall
 	"Private - Answer whether the receiver is an external library call (foreign function invocation)."

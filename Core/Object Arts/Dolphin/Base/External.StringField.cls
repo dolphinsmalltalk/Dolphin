@@ -50,15 +50,3 @@ readFrom:!indirect accessing!private! !
 writeInto:value:!indirect accessing!private! !
 !
 
-!External.StringField class methodsFor!
-
-length: anInteger
-	"Answer a new instance of the receiver which is used for describing
-	embedded arrays of type aClass, and of byte size anInteger"
-
-	^self type: AnsiString length: anInteger! !
-
-!External.StringField class categoriesForMethods!
-length:!instance creation!public! !
-!
-

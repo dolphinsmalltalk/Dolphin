@@ -4,7 +4,7 @@ External.WindowsSystemLibrary
 	subclass: #'OS.AdvApiLibrary'
 	instanceVariableNames: 'isRunningElevated'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'MaxTokenInfoClass' -> 16r32.
@@ -253,7 +253,69 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 		);"
 
 	<stdcall: bool ReportEventW handle uint16 uint16 uint32 lpvoid uint16 uint32 lpvoid lpvoid>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+sniffEncoding: aString
+	"Answer a best guess at the encoding of the file with the specified path. If the file does not exist, an exception is raised."
+
+	| fileHandle |
+	fileHandle := Kernel32
+				createFile: aString asUtf16String
+				dwDesiredAccess: GENERIC_READ
+				dwSharedMode: FILE_SHARE_READ
+				lpSecurityAttributes: nil
+				dwCreationDistribution: OPEN_EXISTING
+				dwFlagsAndAttributes: FILE_ATTRIBUTE_NORMAL
+				hTemplateFile: nil.
+	fileHandle isInvalid ifTrue: [Kernel32 systemError].
+	^[self sniffFileEncoding: fileHandle] ensure: [Kernel32 closeHandle: fileHandle]!
+
+sniffFileEncoding: aFileHandle
+	| buf encoding count |
+	(Kernel32
+		setFilePointerEx: aFileHandle
+		liDistanceToMove: 0
+		lpNewFilePointer: nil
+		dwMoveMethod: FILE_BEGIN) ifFalse: [Kernel32 systemError].
+	buf := ByteArray newFixed: ##(SniffSize + 4).
+	count := (Kernel32
+				readFile: aFileHandle
+				lpBuffer: buf
+				nNumberOfBytesToRead: SniffSize
+				lpNumberOfBytesRead: buf yourAddress + SniffSize
+				lpOverlapped: nil) ifTrue: [buf uint32AtOffset: SniffSize] ifFalse: [Kernel32 systemError].
+	((buf at: 1) == 16rEF and: [(buf at: 2) == 16rBB and: [(buf at: 3) == 16rBF]])
+		ifTrue: 
+			[count := 3.
+			encoding := String.EncodingUtf8]
+		ifFalse: 
+			[| ituResult |
+			buf int32AtOffset: SniffSize put: -1.
+			((self
+				isTextUnicode: buf
+				iSize: count
+				lpiResult: buf yourAddress + SniffSize) and: 
+						[ituResult := buf uint32AtOffset: SniffSize.
+						(ituResult anyMask: IS_TEXT_UNICODE_REVERSE_MASK)
+							ifTrue: [self error: 'Unsupported unicode text encoding #utf16be'].	"If the match is only statistical, then ignore it if there are less than 128 bytes as there are too many false positives for short ASCII sequences"
+						count > 128 or: [(ituResult bitAnd: IS_TEXT_UNICODE_UNICODE_MASK) ~= IS_TEXT_UNICODE_STATISTICS]])
+				ifTrue: 
+					[count := (ituResult allMask: IS_TEXT_UNICODE_SIGNATURE) ifTrue: [2] ifFalse: [0].
+					encoding := String.EncodingUtf16]
+				ifFalse: 
+					[| utf8Stream |
+					count := 0.
+					"Do a minimal evaluation of the unknown encoding. If the sniff block read as UTF-8 (allowing for that fact that we may have truncated the final character) then assume it is UTF-8, otherwise some ANSI code page."
+					utf8Stream := (Utf8String fromByteArray: buf) readStream.
+					encoding := ((utf8Stream skipTo: Character.Replacement) not or: [utf8Stream atEnd])
+								ifTrue: [String.EncodingUtf8]
+								ifFalse: [String.EncodingAnsi]]].
+	(Kernel32
+		setFilePointerEx: aFileHandle
+		liDistanceToMove: count
+		lpNewFilePointer: nil
+		dwMoveMethod: FILE_BEGIN) ifFalse: [Kernel32 systemError].
+	^encoding! !
 
 !OS.AdvApiLibrary categoriesForMethods!
 clear!private!realizing/unrealizing! !
@@ -270,6 +332,8 @@ regGetUInt32:key:value:!helpers!public! !
 regGetValue:lpSubKey:lpValue:dwFlags:pdwType:pvData:pcbData:!public!win32 functions-registry! !
 regSetKeyValue:lpSubKey:lpValueName:dwType:lpData:cbData:!public!win32 functions-registry! !
 reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !
+sniffEncoding:!enquiries!public! !
+sniffFileEncoding:!enquiries!public! !
 !
 
 !OS.AdvApiLibrary class methodsFor!
