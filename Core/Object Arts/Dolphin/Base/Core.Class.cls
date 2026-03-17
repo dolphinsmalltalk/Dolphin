@@ -145,14 +145,20 @@ addClassVarNamed: aString
 	somewhere in the hierarchy below the class. "
 
 	| newVar |
+	(self isValidStaticVariableName: aString)
+		ifFalse: [^self error: 'Invalid static variable name: ' , aString printString].
 	classPool isNil ifTrue: [classPool := Dictionary new].
 	(classPool bindingFor: aString) ifNotNil: [:existingVar | ^existingVar].
 	(self allSubclasses detect: [:each | (each localBindingFor: aString) notNil] ifNone: nil)
 		ifNotNil: 
 			[:existingClass |
-			^self error: ('<1p> is already used as a variable name in class <2p>' expandMacrosWith: aString
-						with: existingClass)].
-	newVar := VariableBinding key: aString value: nil environment: self flags: VariableBinding.ClassMask.
+			^self error: aString printString , ' is already used as a variable name in class '
+						, existingClass printString].
+	newVar := VariableBinding
+				key: aString asString
+				value: nil
+				environment: self
+				flags: VariableBinding.ClassMask.
 	self addBinding: newVar.
 	^newVar!
 
@@ -552,6 +558,14 @@ isSelfEvaluating
 	"Private - Answer whether or not the receiver has a printed representation which is directly recognised by the Compiler"
 
 	^name notNil!
+
+isValidStaticVariableName: aString
+	^aString isString and: [aString notEmpty and: 
+			[| initial |
+			initial := aString first.
+			(initial == $_ or: [initial isEnglishLetter]) and: 
+					[aString
+						allSatisfy: [:each | '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz' includes: each]]]]!
 
 legacySourceFilerClass
 	^#{LegacyChunkSourceFiler} valueOrNil ifNil: [ChunkSourceFiler]!
@@ -1190,6 +1204,7 @@ initializeAfterLoad!class initialization!public! !
 isAbstract:!instance specification-accessing!public! !
 isAnonymous!public!testing! !
 isSelfEvaluating!public!testing! !
+isValidStaticVariableName:!enquiries!private! !
 legacySourceFilerClass!development!private!source filing-class definition! !
 localBindingFor:!bindings!public! !
 metaclass!accessing!public! !

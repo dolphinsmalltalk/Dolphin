@@ -17,6 +17,11 @@ Core.Tests.ClassTest comment: ''!
 allClassHierarchyInstancesDo: aMonadicValuable
 	Smalltalk allClasses do: aMonadicValuable!
 
+testAddInvalidClassConstant
+	self should: [self class addClassConstant: '1a' value: 3] raise: Error matching: [:ex | ex description = 'Invalid static variable name: ''1a'''].
+	self should: [self class addClassConstant: 12 value: 3] raise: Error matching: [:ex | ex description = 'Invalid static variable name: 12'].
+!
+
 testAllRoots
 	| roots |
 	roots := Class allRoots.
@@ -174,6 +179,7 @@ testShortName
 
 !Core.Tests.ClassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
+testAddInvalidClassConstant!public!unit tests! !
 testAllRoots!public!unit tests! !
 testClassBindingNames!public! !
 testClassPoolsWellFormed!public!unit tests! !

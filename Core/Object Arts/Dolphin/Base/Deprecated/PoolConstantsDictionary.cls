@@ -101,7 +101,7 @@ isChanged: aBoolean
 		ifFalse: [self removePropertyAt: #isChanged ifAbsent: nil]!
 
 isValidKey: aString
-	^SharedPool isValidKey: aString!
+	^Class isValidStaticVariableName: aString!
 
 keyString: anObject
 	| answer |

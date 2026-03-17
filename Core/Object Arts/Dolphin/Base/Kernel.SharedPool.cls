@@ -27,15 +27,12 @@ Aside from class initialization (when required, as mentioned above), `SharedPool
 at: aString ifAbsentPut: operation
 	"Answer the value of the receiver's named binding. If aString does not name one of the receiver's bindings, then a new constant binding of that name with the value that is the result of evaluating the <niladicValuable>, operation, and answer the value."
 
-	| keyString |
-	keyString := self keyString: aString.
-	^classPool at: keyString
-		ifAbsent: [(self addClassConstant: keyString value: operation value) value]!
+	^classPool at: aString ifAbsent: [(self addClassConstant: aString value: operation value) value]!
 
 at: aString put: anObject
 	"Add or update a constant binding in the receiver with the specified name and value."
 
-	self addClassConstant: (self keyString: aString) value: anObject.
+	self addClassConstant: aString value: anObject.
 	^anObject!
 
 baseEnvironment
@@ -47,20 +44,6 @@ classesReferencing
 	| ref |
 	ref := self instanceClass asQualifiedReference.
 	^Smalltalk allClasses select: [:c | c allImports includes: ref]!
-
-isValidKey: aString
-	^aString notEmpty and: 
-			[| initial |
-			initial := aString first.
-			(initial == $_ or: [initial isEnglishLetter]) and: 
-					[aString
-						allSatisfy: [:each | '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz' includes: each]]]!
-
-keyString: anObject
-	| answer |
-	answer := anObject asString.
-	(self isValidKey: answer) ifFalse: [^self error: 'Invalid key: ' , answer printString].
-	^answer!
 
 subclass: aSymbol
 	^self
@@ -78,8 +61,6 @@ at:ifAbsentPut:!accessing!development!public! !
 at:put:!adding!development!public! !
 baseEnvironment!constants!private! !
 classesReferencing!development!private! !
-isValidKey:!adding!private! !
-keyString:!adding!private! !
 subclass:!class hierarchy-adding!public! !
 variableAdded:!class hierarchy-mutating!class variables!private! !
 !
