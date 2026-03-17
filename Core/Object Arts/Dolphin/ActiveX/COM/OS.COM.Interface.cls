@@ -191,6 +191,30 @@ interfaceCookie: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_interfaceCookie put: anInteger!
 
+invalidCall: anInteger
+	"An invalid virtual call was attempted through one of the receiver's methods."
+
+	| frame descriptor method |
+	anInteger >= 0 ifTrue: [self primitiveFailed: anInteger].
+	frame := Processor activeProcess topFrame sender.
+	method := frame method.
+	descriptor := method descriptor.
+	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
+	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
+	^(anInteger >= _PrimitiveFailureCode.InvalidParameter1 and: [anInteger <= _PrimitiveFailureCode.InvalidParameter12])
+		ifTrue: 
+			[| arg i |
+			i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
+			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+			InvalidExternalCall
+				invalidArgument: arg
+				got: (frame arguments at: arg)
+				expected: (descriptor argumentTypes at: i)]
+		ifFalse: 
+			[self hresultError: (descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+						ifTrue: [(HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT]
+						ifFalse: [HRESULT decodePrimitiveFailureCode: anInteger])]!
+
 isSameCOMObject: aCOMInterface
 	"Answer whether the argument is a COM interface onto the the same underlying COM object as the receiver. This can be determined by comparing the addresses of the IUnknowns of the two objects because the 'Objects must have identity' rule requires that querying IUnknown for an object must always return the same physical pointer value."
 
@@ -354,6 +378,7 @@ implementor:!accessing!public! !
 initialize!initializing!private! !
 initializeAtAddress:owner:!initializing!private! !
 interfaceCookie:!**compiled accessors**!public! !
+invalidCall:!exceptions!public! !
 isSameCOMObject:!comparing!public!testing! !
 needsFree!private!realizing/unrealizing! !
 objectCookie:!**compiled accessors**!public! !

@@ -310,31 +310,6 @@ initializePointer
 	"Private - Perform any initialization required for the receiver	which is specific to the reference form. Answer the receiver.
 	To perform value specific initialization, override #initialize."!
 
-invalidCall: anInteger
-	"An invalid virtual call was attempted through one of the receiver's methods."
-
-	| frame descriptor method |
-	anInteger >= 0 ifTrue: [self primitiveFailed: anInteger].
-	frame := Processor activeProcess topFrame sender.
-	method := frame method.
-	descriptor := method descriptor.
-	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
-	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
-	^(anInteger >= _PrimitiveFailureCode.InvalidParameter1
-		and: [anInteger <= _PrimitiveFailureCode.InvalidParameter12])
-			ifTrue: 
-				[| arg i |
-				i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
-				arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-				InvalidExternalCall
-					invalidArgument: arg
-					got: (frame arguments at: arg)
-					expected: (descriptor argumentTypes at: i)]
-			ifFalse: 
-				[self hresultError: (descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
-							ifTrue: [(HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT]
-							ifFalse: [HRESULT decodePrimitiveFailureCode: anInteger])]!
-
 isFieldBrowsable: aSymbol
 	^self class isFieldBrowsable: aSymbol!
 
@@ -504,7 +479,6 @@ initialize!initializing!private! !
 initializeAtAddress:owner:!initializing!private! !
 initializeBuffer:size:!initializing!private! !
 initializePointer!initializing!private! !
-invalidCall:!exceptions!public! !
 isFieldBrowsable:!printing!private! !
 isNull!public!testing! !
 isPointerStruct!public!testing! !
