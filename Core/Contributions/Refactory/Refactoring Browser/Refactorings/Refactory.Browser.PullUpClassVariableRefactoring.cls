@@ -41,7 +41,7 @@ transform
 			[subclass removeClassConstant: binding.
 			class addClassConstant: binding]
 		ifFalse: 
-			[subclass removeClassVariable: variableName.
+			[subclass removeClassVariableBinding: binding.
 			class addClassVariable: variableName].
 	"Any real references to the variable will need to be rewritten to bind to the pulled-up variable"
 	self

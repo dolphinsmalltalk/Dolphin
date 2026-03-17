@@ -18,11 +18,14 @@ Refactory.Browser.InlineMethodFromComponentRefactoring comment: ''!
 
 abstractVariableReferences
 	| refactoring |
-	refactoring := AbstractVariablesRefactoring
-				model: self model
+	refactoring := AbstractVariablesRefactoring new
+				model: self model;
+				copyOptionsFrom: options;
 				abstractVariablesIn: inlineParseTree
-				from: inlineClass
-				toAll: {class}.
+					from: inlineClass
+					toAll: { class }
+					ignoring: nil;
+				yourself.
 	self performComponentRefactoring: refactoring.
 	inlineParseTree := refactoring parseTree!
 

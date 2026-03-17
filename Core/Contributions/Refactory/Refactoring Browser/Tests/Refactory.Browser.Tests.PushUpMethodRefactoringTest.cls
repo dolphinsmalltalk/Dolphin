@@ -203,8 +203,8 @@ testPushUpMethodWithImportedVariableExpandingImports
 		ERROR_FILE_NOT_FOUND.
 		BasicLintRuleTestData.ERROR_FILE_EXISTS.
 		ERROR_FILE_EXISTS.
-		FACILITY_WIN32.
-		OS.FacilityCodes.FACILITY_WIN32
+		#{Const1}.
+		Const1
 	}').
 	self deny: ((model classFor: BasicLintRuleTestData) directlyDefinesMethod: #sharedVarRefs)!
 
@@ -232,8 +232,8 @@ testPushUpMethodWithImportedVariableNotExpandingImports
 		OS.Win32Errors.ERROR_FILE_NOT_FOUND.
 		BasicLintRuleTestData.ERROR_FILE_EXISTS.
 		OS.Win32Errors.ERROR_FILE_EXISTS.
-		FACILITY_WIN32.
-		OS.FacilityCodes.FACILITY_WIN32
+		#{Const1}.
+		Const1
 	}').
 	self deny: ((model classFor: BasicLintRuleTestData) directlyDefinesMethod: #sharedVarRefs)!
 

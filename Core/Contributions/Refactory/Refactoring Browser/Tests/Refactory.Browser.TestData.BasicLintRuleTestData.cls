@@ -63,6 +63,8 @@ sharedVarRefs
 		OS.Win32Errors.ERROR_FILE_EXISTS.
 		FACILITY_WIN32.
 		OS.FacilityCodes.FACILITY_WIN32
+		LintRuleTestData.Const1.
+		Const1
 	}!
 
 viewResults

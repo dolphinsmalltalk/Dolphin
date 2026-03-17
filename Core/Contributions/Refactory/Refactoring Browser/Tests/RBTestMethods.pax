@@ -74,7 +74,7 @@ Refactory.Browser.TestData.LintRuleTestData
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
-	classConstants: { 'ERROR_FILE_EXISTS' -> 'Shadow' }!
+	classConstants: { 'Const1' -> 16r7B. 'ERROR_FILE_EXISTS' -> 'Shadow' }!
 
 Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.CompositeLintRuleTestData'

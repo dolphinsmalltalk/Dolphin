@@ -147,6 +147,9 @@ classVariableNames: aCollectionOfStrings
 	classPool := Dictionary new: aCollectionOfStrings size.
 	aCollectionOfStrings do: [:each | classPool add: (RBVariableBinding name: each environment: self)]!
 
+classVariableString
+	^$\x20 join: self classVariableNames sort!
+
 comment
 	^comment == LookupComment
 		ifTrue: [comment := realClass ifNotNil: [realClass comment]]
@@ -363,10 +366,13 @@ removeClassVariable: aString
 	var := self localBindingFor: aString.
 	var isNil ifTrue: [^self errorNotFound: aString].
 	var isClassBinding
-		ifTrue: [^self error: 'Cannot remove class binding <1s> from <2p>' << {aString. self}].
-	self removeBindingFor: aString.
-	model removeClassVariable: var.
-	^var!
+		ifTrue: [^self error: 'Cannot remove class binding <1s> from <2p>' << { aString. self }].
+	^self removeClassVariableBinding: var!
+
+removeClassVariableBinding: aVariableBinding
+	self removeBindingFor: aVariableBinding key.
+	model removeClassVariable: aVariableBinding.
+	^aVariableBinding!
 
 removeImport: aString
 	self
@@ -504,6 +510,12 @@ setModel: aRBModel name: anObject realClass: aClassDescription
 setSuperclass: aRBClass
 	superclass := aRBClass!
 
+sharedPoolNames
+	^self imports collect: 
+			[:each |
+			(each valueOrNil ifNotNil: [:sharedPoolClass | Smalltalk oldNames lookup: sharedPoolClass])
+				ifNil: [each unqualifiedName]]!
+
 shortName
 	"Answer the shortest <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
@@ -513,6 +525,9 @@ shortNameFor: aString
 	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. This may be unqualified, partially qualified, or fully-qualified."
 
 	^self model smalltalkNamespace shortNameFor: aString in: self!
+
+sourceFilerClass
+	^(self realClass ifNil: [Object]) sourceFilerClass!
 
 subclasses
 	^subclasses
@@ -566,6 +581,7 @@ classConstants:!accessing!public! !
 classInstanceVariableNames!accessing!public! !
 classPool!accessing!public! !
 classVariableNames:!accessing!public! !
+classVariableString!accessing!public! !
 comment!accessing!public! !
 comment:!accessing!public! !
 defaultInstanceSpec!constants!private! !
@@ -613,6 +629,7 @@ realClass:!accessing!public! !
 removeBindingFor:!bindings!public! !
 removeClassConstant:!public!variable accessing! !
 removeClassVariable:!public!variable accessing! !
+removeClassVariableBinding:!public!variable accessing! !
 removeImport:!public!variable accessing! !
 removeSubclass:!accessing!public! !
 renameClassVariable:to:around:!public!variable accessing! !
@@ -628,8 +645,10 @@ resolvePublicBinding:!bindings!private! !
 resolveUnqualifiedName:environment:!bindings!private! !
 setModel:name:realClass:!accessing!initializing!private! !
 setSuperclass:!initializing!private! !
+sharedPoolNames!pool variables!public! !
 shortName!accessing!public! !
 shortNameFor:!enquiries!private! !
+sourceFilerClass!public! !
 subclasses!accessing!public! !
 superclass!accessing!public! !
 superclass:!accessing!private! !

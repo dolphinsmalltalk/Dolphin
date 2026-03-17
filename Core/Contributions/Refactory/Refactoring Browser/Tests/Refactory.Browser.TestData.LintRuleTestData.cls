@@ -6,7 +6,7 @@ Core.Object
 	classVariableNames: 'Foo1'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'FACILITY_WIN32' -> 'Shadow' }!
+	classConstants: { 'Const1' -> 16r7B. 'FACILITY_WIN32' -> 'Shadow' }!
 
 Refactory.Browser.TestData.LintRuleTestData guid: (Core.GUID fromString: '{ae7ff107-496e-46a9-8127-3cc651c7ccf7}')!
 

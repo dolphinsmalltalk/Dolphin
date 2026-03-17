@@ -22,12 +22,14 @@ abstractVariables
 abstractVariablesRefactoring
 	^abstractVariables
 		ifNil: 
-			[abstractVariables := AbstractVariablesRefactoring
-						model: self model
+			[abstractVariables := AbstractVariablesRefactoring new
+						model: self model;
+						copyOptionsFrom: options;
 						abstractVariablesIn: parseTree
-						from: class
-						toAll: moveToClasses
-						ignoring: variable]!
+							from: class
+							toAll: moveToClasses
+							ignoring: variable;
+						yourself]!
 
 addSelfReturn
 	self hasOnlySelfReturns ifTrue: [^self].

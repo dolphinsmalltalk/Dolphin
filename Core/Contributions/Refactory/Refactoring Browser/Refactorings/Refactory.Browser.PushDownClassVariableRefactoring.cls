@@ -61,10 +61,16 @@ transform
 	binding := class localBindingFor: variableName.
 	references := model allReferencesToBinding: binding.
 	references do: [:each | each boundParseTree].
-	class removeClassVariable: variableName.
-	destinationClass isNil ifTrue: [^self].
-	destinationClass addClassVariable: variableName.
-	"Any real references to the variable will need to be rewritten to bind to the pushed-down variable"
+	binding isImmutable
+		ifTrue: 
+			[class removeClassConstant: binding.
+			destinationClass isNil ifTrue: [^self].
+			destinationClass addClassConstant: binding]
+		ifFalse: 
+			[class removeClassVariableBinding: binding.
+			destinationClass isNil ifTrue: [^self].
+			destinationClass addClassVariable: variableName].
+	"Any real references to the variable will need to be rewritten to bind to the pushed-down variable/const"
 	self
 		replaceReferencesToVariable: binding
 		in: references

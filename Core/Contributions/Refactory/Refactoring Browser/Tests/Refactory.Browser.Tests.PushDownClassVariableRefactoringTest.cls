@@ -109,6 +109,41 @@ testNonExistantName
 	self shouldFail: (PushDownClassVariableRefactoring variable: #Foo class: BasicLintRuleTestData)
 		withMessage: '<1p> does not define class variable/constant #Foo' << BasicLintRuleTestData!
 
+testPushDownClassConstant
+	| refactoring sourceClass targetClass constBinding1 constBinding2 |
+	refactoring := PushDownClassVariableRefactoring
+				model: model
+				variable: #Const1
+				class: LintRuleTestData.
+	sourceClass := model classFor: LintRuleTestData.
+	constBinding1 := (sourceClass localBindingFor: 'Const1').
+	self assert: constBinding1 isConstant.
+	targetClass := model classFor: BasicLintRuleTestData.
+	self assert: (targetClass metaclass includesSelector: #foo1).
+	self executeRefactoring: refactoring.
+	false ifTrue: [model browseChanges].
+	(sourceClass withAllSubclasses copyWithout: targetClass)
+		do: [:each | self deny: (each directlyDefinesClassVariable: #Const1)].
+	self assert: (targetClass directlyDefinesClassVariable: #Const1).
+	constBinding2 := (targetClass localBindingFor: 'Const1').
+	self assert: constBinding2 isConstant.
+	self assert: constBinding2 value equals: constBinding1 value.
+	self assert: (targetClass methodFor: #sharedVarRefs) parseTree
+		equals: (self
+				parseMethod: 'sharedVarRefs
+	^{
+		ENOENT.
+		ERROR_FILE_NOT_FOUND.
+		BasicLintRuleTestData.ERROR_FILE_EXISTS.
+		ERROR_FILE_EXISTS.
+		FACILITY_WIN32.
+		OS.FacilityCodes.FACILITY_WIN32
+		#{Refactory.Browser.TestData.BasicLintRuleTestData.Const1}.
+		Const1
+	}'
+				in: targetClass).
+	!
+
 testPushDownClassVariable
 	| refactoring refDataApp sourceClass targetClass |
 	"Deliberately create a (partially-qualified) reference from outside the class hierarchy - these should be rewritten too."
@@ -147,6 +182,7 @@ testModelPushDownVariableToClassDownTwoLevels!public!tests! !
 testModelPushDownVariableToMultipleClassesInSameHierarchy!public!tests! !
 testModelRemoveUnusedVariable!public!tests! !
 testNonExistantName!failure tests!public! !
+testPushDownClassConstant!public!tests! !
 testPushDownClassVariable!public!tests! !
 !
 
