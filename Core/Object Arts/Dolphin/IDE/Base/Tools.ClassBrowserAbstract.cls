@@ -2571,7 +2571,7 @@ customDrawCategoryTree:!helpers!private! !
 customDrawProtocols:!helpers!private! !
 customDrawSelector:!helpers!private! !
 definitionCardName!constants!private! !
-definitionOfClass:!event handling!private! !
+definitionOfClass:!helpers!private! !
 deleteItCommand!commands-mappings!private! !
 displayLocalHierarchyOf:!private!updating! !
 dropMethods:onto:!helpers!private! !

@@ -940,35 +940,35 @@ browserEnvFromDom: anIXMLDOMDocument
 	exeName := (anIXMLDOMDocument selectSingleNode: './/Target') text asPath fileName.
 	time := (anIXMLDOMDocument selectSingleNode: './/TimeStamp') text.
 	env label: ('<1s> (<2s>)' expandMacrosWith: exeName with: time).
+	retainedSharedVars := ((manifest selectNodes: 'SharedVariables/VariableBinding')
+				collect: [:each | each text]) asSet.
 	unbound := Set new.
 	classes do: 
 			[:each |
-			| methods className classMethods |
+			| className |
 			className := each getAttribute: 'name'.
 			className asQualifiedReference ifDefined: 
 					[:class |
+					| nodes |
 					(each getAttribute: 'unbound') = 'true' ifTrue: [unbound add: class].
-					methods := each selectNodes: 'Methods/Method'.
-					env addClass: class selectors: (methods collect: [:eachMethod | eachMethod text asSymbol]).
-					classMethods := each selectNodes: 'ClassMethods/Method'.
-					env addClass: class class
-						selectors: (classMethods collect: [:eachMethod | eachMethod text asSymbol])]].
+					nodes := each selectNodes: 'Methods/Method'.
+					env addClass: class selectors: (nodes collect: [:eachMethod | eachMethod text asSymbol]).
+					nodes := each selectNodes: 'ClassMethods/Method'.
+					env addClass: class class selectors: (nodes collect: [:eachMethod | eachMethod text asSymbol]).
+					nodes := each selectNodes: 'ClassVariables/VariableBinding'.
+					nodes do: [:eachClassVar | retainedSharedVars add: (class fullNameFor: eachClassVar text)]]].
 	model := RBModel onEnvironment: env.
-	retainedSharedVars := (manifest selectNodes: 'SharedVariables/VariableBinding')
-				collect: [:each | each text].
 	deletedSharedVars := LookupTable new.
 	model rootNamespace allClassesDo: 
 			[:each |
 			| toDelete |
-			toDelete := each bindings reject: 
-							[:eachVar |
-							eachVar isClassBinding
-								or: [eachVar isClassVariable or: [retainedSharedVars includes: eachVar fullName]]].
+			toDelete := each bindings
+						reject: [:eachVar | eachVar isClassBinding or: [retainedSharedVars includes: eachVar fullName]].
 			toDelete isEmpty ifFalse: [deletedSharedVars at: each put: toDelete]].
 	deletedSharedVars
 		keysAndValuesDo: [:eachClass :deadVars | deadVars do: [:each | eachClass removeBindingFor: each key]].
 	unbound
-		do: [:each | (each environment classInModel: model) ifNotNil: [:env | env removeBindingFor: each name]].
+		do: [:each | (each environment classInModel: model) ifNotNil: [:ns | ns removeBindingFor: each name]].
 	^model!
 
 browserEnvironment

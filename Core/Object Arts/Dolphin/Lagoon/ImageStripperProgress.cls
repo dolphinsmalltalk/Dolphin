@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
-	classVariableNames: 'MessageMap'
+	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -103,7 +103,7 @@ dispatchMessage: message wParam: wParam lParam: lParam
 	"Private - Dispatch a Windows message or pass on for default processing."
 
 	| selector answer |
-	answer := (selector := MessageMap lookup: message) notNil
+	answer := (selector := self messageMap lookup: message) notNil
 				ifTrue: 
 					[self
 						perform: selector
@@ -177,6 +177,20 @@ isWindowVisible
 
 	^User32 isWindowVisible: handle!
 
+messageMap
+	^##(LookupTable withAll: {
+				WM_CREATE -> #wmCreate:wParam:lParam:.
+				WM_CLOSE -> #wmClose:wParam:lParam:.
+				WM_NCDESTROY -> #wmNcDestroy:wParam:lParam:.
+				WM_INITDIALOG -> #wmInitDialog:wParam:lParam:.
+				WM_SETCURSOR -> #wmSetCursor:wParam:lParam:.
+				WM_CTLCOLORMSGBOX -> #wmCtlColor:wParam:lParam:.
+				WM_CTLCOLOREDIT -> #wmCtlColor:wParam:lParam:.
+				WM_CTLCOLORBTN -> #wmCtlColor:wParam:lParam:.
+				WM_CTLCOLORDLG -> #wmCtlColor:wParam:lParam:.
+				WM_CTLCOLORSTATIC -> #wmCtlColor:wParam:lParam:
+			})!
+
 monitorProgressPeriod
 	"Private - Answer the number of milliseconds to wait between progress monitoring updates"
 
@@ -221,7 +235,7 @@ progressRange
 
 	"The best we can get is the number of objects left in the image after stripping a minimal console application. This figure was taken from the Hello World (Console) deployment manifest."
 
-	progressRange isNil ifTrue: [progressRange := 8992 to: self currentProgress].
+	progressRange isNil ifTrue: [progressRange := 8860 to: self currentProgress].
 	^progressRange!
 
 resourceLib
@@ -386,6 +400,7 @@ isEnabled:!accessing!public! !
 isPersistentView!public!testing! !
 isView!public!testing! !
 isWindowVisible!public!testing! !
+messageMap!constants!private! !
 monitorProgressPeriod!constants!private! !
 onStartup!event handling!public! !
 parentPresenter!presenter!public! !
@@ -414,26 +429,6 @@ ImageStripperProgress methodProtocol: #window attributes: #(#readOnly) selectors
 
 !ImageStripperProgress class methodsFor!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	MessageMap := LookupTable new.
-	MessageMap
-		at: WM_CREATE put: #wmCreate:wParam:lParam:;
-		at: WM_CLOSE put: #wmClose:wParam:lParam:;
-		at: WM_NCDESTROY put: #wmNcDestroy:wParam:lParam:;
-		at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:;
-		at: WM_SETCURSOR put: #wmSetCursor:wParam:lParam:;
-		at: WM_CTLCOLORMSGBOX put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLOREDIT put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORLISTBOX put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORBTN put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORDLG put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORSCROLLBAR put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORSTATIC put: #wmCtlColor:wParam:lParam:!
-
 onPreStripImage: anImageStripper
 	self
 		removeSelectors: #(#forkProgressMonitor #show #subclassWindow: #template #wmInitDialog:wParam:lParam: #wmCreate:wParam:lParam:).
@@ -443,7 +438,6 @@ show
 	^self new show! !
 
 !ImageStripperProgress class categoriesForMethods!
-initialize!initializing!must not strip!public! !
 onPreStripImage:!class hierarchy-removing!private! !
 show!operations!public! !
 !

@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #DeploymentContext
-	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences comInterfaceSelectors'
+	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences comInterfaceSelectors sentMessageMap messageSenders sentMessages methodsWithRefLiterals'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -48,11 +48,11 @@ _closeLog
 			log := logStream contents.
 			handle := Kernel32
 						createFile: logFilename
-						dwDesiredAccess: OS.Win32Constants.GENERIC_WRITE
+						dwDesiredAccess: "GENERIC_WRITE" 16r40000000
 						dwSharedMode: 0
 						lpSecurityAttributes: nil
-						dwCreationDistribution: OS.Win32Constants.CREATE_ALWAYS
-						dwFlagsAndAttributes: OS.Win32Constants.FILE_ATTRIBUTE_NORMAL
+						dwCreationDistribution: "CREATE_ALWAYS" 16r2
+						dwFlagsAndAttributes: "FILE_ATTRIBUTE_NORMAL" 16r80
 						hTemplateFile: nil.
 			Kernel32
 				writeFile: handle
@@ -62,6 +62,22 @@ _closeLog
 					lpOverlapped: nil;
 				closeHandle: handle].
 	logStream := logFilename := nil!
+
+_collectGarbage: anInteger
+	| deathAt size corpse |
+	size := self basicSize.
+	corpse := DeadObject.Current.
+	deathAt := self
+				basicIdentityIndexOf: corpse
+				from: 1
+				to: size.
+	[deathAt > 0] whileTrue: 
+			[messageSenders at: deathAt put: nil.
+			sentMessages at: deathAt put: nil.
+			deathAt := self
+						basicIdentityIndexOf: corpse
+						from: deathAt
+						to: size]!
 
 _comInterfaceSelectors
 	^comInterfaceSelectors!
@@ -141,7 +157,7 @@ _logElement: aString attributes: aCollection value: anObject
 	anObject isNil ifTrue: [^self].
 	stream := anObject displayString readStream.
 	[(ch := stream nextAvailable) isNil] whileFalse: 
-			[(##(IdentityDictionary withAll: { $& -> '&amp;'. $< -> '&lt;'. $> -> '&gt;'. $" -> '&quot;' })
+			[(##(IdentityDictionary withAll: { $" -> '&quot;'. $& -> '&amp;'. $< -> '&lt;'. $> -> '&gt;' })
 				lookup: ch) ifNil: [logStream nextPut: ch] ifNotNil: [:quoted | logStream nextPutAll: quoted]].
 	self _endTag!
 
@@ -152,6 +168,28 @@ _logStrippingError: anError
 		attributes: {'class' -> anError class fullName}
 		value: anError description.
 	logStream flush!
+
+_methodsWithRefLiterals
+	| remaining |
+	remaining := WriteStream on: Array new.
+	1 to: methodsWithRefLiterals size
+		by: 2
+		do: 
+			[:i |
+			| method |
+			method := methodsWithRefLiterals at: i.
+			method == DeadObject.Current
+				ifFalse: 
+					[remaining
+						nextPut: method;
+						nextPut: (methodsWithRefLiterals at: i + 1)]].
+	methodsWithRefLiterals := nil.
+	^remaining contents!
+
+_methodsWithRefLiterals: anArray
+	methodsWithRefLiterals := anArray
+				beWeak;
+				yourself!
 
 _notifier
 	^notifier!
@@ -198,6 +236,28 @@ _rootClasses: anObject
 
 _runFlags
 	^runFlags!
+
+_sentMessageMap
+	| map |
+	map := IdentityDictionary new: messageSenders size.
+	1 to: messageSenders size
+		do: [:i | (messageSenders at: i) ifNotNil: [:sender | map at: sender put: (sentMessages at: i)]].
+	messageSenders := sentMessages := nil.
+	^map!
+
+_sentMessageMap: anIdentityDictionary
+	| count sendSources sent |
+	count := anIdentityDictionary size.
+	messageSenders := (MourningWeakArray new: count)
+				pathologist: self;
+				yourself.
+	sendSources := messageSenders writeStream.
+	sent := (Array new: count) writeStream.
+	anIdentityDictionary keysAndValuesDo: 
+			[:eachSender :eachMessages |
+			sendSources nextPut: eachSender.
+			sent nextPut: eachMessages].
+	sentMessages := sent collection!
 
 _setRunFlag: anInteger
 	runFlags := runFlags bitOr: anInteger!
@@ -253,6 +313,16 @@ developmentClasses
 developmentClasses: aWeakCollection
 	developmentClasses := aWeakCollection!
 
+elementsExpired: anInteger of: aWeakArray
+	"Private - At least one of aWeakArray's elements has died, process the Corpses. The default is to
+	do nothing but inform dependents. This message is sent to the aWeakArray's pathologist, 
+	which is normally the receiver, but only if the receiver is marked as finalizable.
+	The reason for making the default pathologist the receiver (i.e. the MourningWeakArray class)
+	is to avoid creating a circular references in all MourningWeakArrays."
+
+	aWeakArray == messageSenders
+		ifTrue: [messageSenders nilCorpsesAndDo: [:deathAt | sentMessages at: deathAt put: nil]]!
+
 initialize
 	elementStack := OrderedCollection new.
 	aspectGetters := rootClasses := Set new.
@@ -268,6 +338,7 @@ _aspectSetters:!accessing!private! !
 _basicDeleteMethod:!private!removing! !
 _basicDevelopmentClasses!accessing!private! !
 _closeLog!operations!private! !
+_collectGarbage:!accessing!private! !
 _comInterfaceSelectors!operations!private! !
 _comInterfaceSelectors:!operations!private! !
 _deleteClass:!helpers!private! !
@@ -284,6 +355,8 @@ _hiddenSendsInResourceMethod:!helpers!private! !
 _logComment:!logging!private! !
 _logElement:attributes:value:!logging!private! !
 _logStrippingError:!logging!private! !
+_methodsWithRefLiterals!private!removing! !
+_methodsWithRefLiterals:!private!removing! !
 _notifier!accessing!private! !
 _notifier:!accessing!private! !
 _notify:!logging!private! !
@@ -297,6 +370,8 @@ _resourceSelectors!initializing!private! !
 _rootClasses!accessing!private! !
 _rootClasses:!accessing!private! !
 _runFlags!accessing!private! !
+_sentMessageMap!accessing!private! !
+_sentMessageMap:!accessing!private! !
 _setRunFlag:!accessing!private! !
 _startElement:attributes:close:!logging!private! !
 _supersentMethods!accessing!private! !
@@ -305,6 +380,7 @@ _trimComInterfaces!operations!private! !
 _trimResourceReferences!operations!private! !
 developmentClasses!accessing!private! !
 developmentClasses:!initializing!private! !
+elementsExpired:of:!finalizing!private! !
 initialize!initializing!private! !
 !
 

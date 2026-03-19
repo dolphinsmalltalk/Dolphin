@@ -23,6 +23,14 @@ _actualRequiredPackages
 
 	^self _systemPackageManager packages!
 
+_allClasses
+	| answer roots |
+	roots := Class allRoots.
+	answer := Array writeStream: 3000.
+	roots do: [:each | answer nextPut: each].
+	roots do: [:root | root allSubclassesPreOrderDo: [:each | answer nextPut: each]].
+	^answer contents!
+
 _allMethodsInClasses: classes do: operation
 	"Private - Evaluate the <monadicValuable>, operation, for each and every method
 	in the <collection> of <Class>es, classes."
@@ -33,7 +41,7 @@ _allMethodsInClasses: classes do: operation
 			eachClass class methodDictionary do: operation]!
 
 _allReferencedClasses
-	^Class allClasses!
+	^self _allClasses!
 
 _basicDeleteClass: aClass
 	"Private - Remove the specified class from the system. Note that we do not use the ClassBuilder for this purpose."
@@ -228,7 +236,7 @@ _foldDuplicateBytecodes
 	self _notify: 'Folding duplicate byte codes'.
 	total := 0.
 	byteCodes := Set new.
-	self _allMethodsInClasses: Class allClasses
+	self _allMethodsInClasses: self _allClasses
 		do: 
 			[:each |
 			each isPacked
@@ -357,32 +365,6 @@ _removeClassBuilder: anArray
 
 	!
 
-_removeClassMetaInfo
-	"Private - Remove all (presumably) redundant class info"
-
-	| keepInstVars |
-	self stripClassInfo ifFalse: [^self].
-	self _startElement: 'RemoveClassMetaInfo' attributes: #().
-	keepInstVars := self retainInstVarNames.
-	Class allClassesDo: 
-			[:each |
-			| classPool newPool |
-			"We used to empty the class pool entirely here, but it is certainly not safe to do that for Namespace classes.
-					We now remove all the class vars and clear the environment back pointer."
-			classPool := each classPool.
-			newPool := classPool class new.
-			classPool
-				associationsDo: [:var | var isClassVariable ifTrue: [var environment: nil] ifFalse: [newPool add: var]].
-			each basicClassPool: newPool.
-
-			"We can't nil out the imports in general, as these are required to resolve BindingReferences that are not fully qualified."
-
-			"each imports: #()."
-
-			"If retaining inst vars, they are collapsed into a string for compactness"
-			each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
-	self _endTag!
-
 _removeClassUninstallation: aCollection
 	"Private - Removal of classes has finished. If the image doesn't have the ClassBuilder in it, 
 	remove any uninitializers as they will not be needed."
@@ -392,8 +374,8 @@ _removeClassUninstallation: aCollection
 		ifNil: 
 			[self _deleteMethods: aCollection.
 			"Remove any remaining class uninitialize methods that may be miscategorized"
-			Class
-				allClassesDo: [:each | self _removeSelectors: #('uninitialize' 'uninitializeBeforeRemove') of: each class]]
+			self _allClasses
+				do: [:each | self _removeSelectors: #('uninitialize' 'uninitializeBeforeRemove') of: each class]]
 		ifNotNil: [Notification signal: 'ClassBuilder still present, no action taken'].
 	self _endElement: true.
 	self
@@ -403,7 +385,7 @@ _removeClassUninstallation: aCollection
 _removeDefinitionMethods: aSymbol from: structs
 	| methods |
 	methods := IdentitySet new.
-	structs do: [:each | methods add: (each class compiledMethodAt: aSymbol ifAbsent: nil)].
+	structs do: [:each | methods add: (each class methodDictionary at: aSymbol ifAbsent: nil)].
 	self
 		_removeMethods: methods
 		reason: 'structure definition: ' , aSymbol
@@ -493,17 +475,17 @@ _removeNotRequiredMethods
 	self _notify: 'Removing methods that are not required or which must be stripped'.
 	self _startElement: 'ForcedStripMethods' attributes: #().
 	notRequired := self notRequiredMethodCategories
-				collect: [:category | {category. category asMethodCategory methods}].
+				collect: [:category | { category. category asMethodCategory methods }].
 	self stripClassInitializers
 		ifTrue: 
 			[| initializers mustkeep |
 			initializers := Set new.
 			mustkeep := 'must not strip' asMethodCategory.
-			Class allClasses do: 
+			self _allClasses do: 
 					[:each |
-					(each class compiledMethodAt: #initialize ifAbsent: nil)
+					(each class methodDictionary at: #initialize ifAbsent: nil)
 						ifNotNil: [:method | (mustkeep includesMethod: method) ifFalse: [initializers add: method]]].
-			notRequired add: {'class initializers'. initializers}].
+			notRequired add: { 'class initializers'. initializers }].
 	notRequired do: 
 			[:pair |
 			| methods |
@@ -511,7 +493,7 @@ _removeNotRequiredMethods
 			methods size > 0
 				ifTrue: 
 					["We don't go through #removeMethods:notifying:, since we want the packages to be updated to reflect the lost methods so that when their pre-requisites are recalculated the removed methods do not affect the result."
-					self _startElement: 'StripMethods' attributes: {'reason' -> (pair at: 1)}.
+					self _startElement: 'StripMethods' attributes: { 'reason' -> (pair at: 1) }.
 					(methods asSortedArray: 
 							[:a :b |
 							a methodClass name < b methodClass name
@@ -534,7 +516,7 @@ _removePackageManagement
 	"Note that we must leave the #owningPackage definition in ClassDescription for potential runtime STB use"
 	methods := Set new.
 	#(#{Kernel.PoolDictionary} #{UI.ResourceIdentifier} #{Kernel.CompiledMethod})
-		do: [:each | each ifDefined: [:class | methods add: (class compiledMethodAt: #owningPackage ifAbsent: nil)]].
+		do: [:each | each ifDefined: [:class | methods add: (class methodDictionary at: #owningPackage ifAbsent: nil)]].
 	self
 		_removeMethods: methods
 		reason: 'package management'
@@ -569,7 +551,7 @@ _removeRedundantClassesAndResources: stripResources
 	self _collectGarbage: 3.
 	referencedClasses := self _allReferencedClasses.
 	stripResources ifTrue: [count := count + (self _removeRedundantResources: referencedClasses)].
-	^count + (self _deleteClasses: (Class allClasses reject: [:e | referencedClasses includes: e])
+	^count + (self _deleteClasses: (self _allClasses reject: [:e | referencedClasses includes: e])
 				reason: 'unreferenced')!
 
 _removeRedundantMethods
@@ -624,8 +606,7 @@ _removeRedundantPackages
 						messageBox: nil
 						lpText: warning description
 						lpCaption: SessionManager current applicationName
-						uType: ##(OS.MessageBoxConstants.MB_OK | OS.MessageBoxConstants.MB_TASKMODAL
-								| OS.MessageBoxConstants.MB_SETFOREGROUND))].
+						uType: ##(0 | 16r2000 | 16r10000))	"MB_OK|MB_TASKMODAL| MB_SETFOREGROUND"].
 	self stripRedundantPackages ifFalse: [^required].
 	pacman := self _systemPackageManager.
 	redundantPackages := pacman packages asArray reject: [:each | required includes: each].
@@ -670,11 +651,11 @@ _removeRedundantResources: referencedClasses
 	^0!
 
 _removeSelectors: aCollectionOfSelectors of: aBehavior
-	| methods |
+	| methods dict |
 	methods := Set new.
-	aCollectionOfSelectors do: 
-			[:each |
-			(aBehavior compiledMethodAt: each asSymbol ifAbsent: nil) ifNotNil: [:method | methods add: method]].
+	dict := aBehavior methodDictionary.
+	aCollectionOfSelectors
+		do: [:each | (dict at: each asSymbol ifAbsent: nil) ifNotNil: [:method | methods add: method]].
 	self
 		_removeMethods: methods
 		reason: 'explicit'
@@ -713,8 +694,9 @@ _shrinkEventsOf: anObject
 	anObject setEvents: (anObject getEvents ifNotNil: [:subs | subs shrink asMinimumRepresentation])!
 
 _shrinkEventsRegister
-	_EventsRegister keys do: [:each | self _shrinkEventsOf: each].
-	self _shrinkEventsOf: SessionManager current!
+	_EventsRegister keysDo: [:each | self _shrinkEventsOf: each].
+	{ SessionManager current. Smalltalk. MemoryManager current }
+		do: [:each | self _shrinkEventsOf: each]!
 
 _speciallySentMessages
 	"Private - A number of messages can be sent without  appearing in the literal
@@ -867,6 +849,7 @@ stripRedundantResources
 
 !BasicImageStripper categoriesForMethods!
 _actualRequiredPackages!private! !
+_allClasses!helpers!private! !
 _allMethodsInClasses:do:!helpers!private! !
 _allReferencedClasses!operations!private! !
 _basicDeleteClass:!helpers!private! !
@@ -902,7 +885,6 @@ _preStripTidy!operations!private! !
 _purgeStubbornClass:!operations!private! !
 _removeCategoryManagement!operations!private! !
 _removeClassBuilder:!operations!private! !
-_removeClassMetaInfo!operations!private! !
 _removeClassUninstallation:!operations!private! !
 _removeDefinitionMethods:from:!operations!private! !
 _removeDevelopmentInfo!operations!private! !

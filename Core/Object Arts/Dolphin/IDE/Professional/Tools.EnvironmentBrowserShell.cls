@@ -68,6 +68,9 @@ createSchematicWiring
 defaultHelpId
 	^10895!
 
+definitionOfClass: aClass
+	^super definitionOfClass: ((aClass classInModel: model) ifNil: [aClass])!
+
 isMethodVisible: aCompiledMethod 
 	^(self browserEnvironment includesMethod: aCompiledMethod) 
 		and: [super isMethodVisible: aCompiledMethod]!
@@ -128,6 +131,7 @@ browseUnimplemented!commands-actions!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!constants!public! !
+definitionOfClass:!helpers!private! !
 isMethodVisible:!private!testing! !
 model:!accessing!public! !
 onClassCustomDrawAttributesRequired:!helpers!private! !
