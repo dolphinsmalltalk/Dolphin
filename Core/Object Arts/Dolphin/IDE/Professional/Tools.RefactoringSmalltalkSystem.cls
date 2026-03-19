@@ -27,18 +27,18 @@ abstractClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Abstract Class Variable' class refactoring: 'Performs the create accessors refactoring 
 	and then converts all direct variable to use the accessor methods.'"
 
-	self abstractClassVariables: {aClass -> aString} within: aBrowserEnvironment!
-
-abstractClassVariables: aCollectionOfAssociations within: aBrowserEnvironment
-	"Invoke the 'Abstract Class Variable' refactoring for each of the {class, class. var. name}
-	pairs in the argument. Note that all variables are abstracted as an atomic unit, so if an
-	error occurs for one variable then the whole operation is aborted. The operation also
-	creates only one undo/redo unit."
-
-	^self
+	self
 		executeVariableRefactoring: AbstractClassVariableRefactoring
-		variables: aCollectionOfAssociations
+		variables: { aClass -> aString }
 		within: aBrowserEnvironment!
+
+abstractClassVariablesOf: aClass within: aBrowserEnvironment
+	^self
+		refactorVariables: aClass classBindingNames
+		of: aClass
+		type: AbstractClassVariableRefactoring
+		within: aBrowserEnvironment
+		caption: 'Abstract Class Variables of <d>...'!
 
 abstractInstanceVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Abstract Instance Variable' class refactoring: 'Performs the create
@@ -56,6 +56,14 @@ abstractInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		executeVariableRefactoring: AbstractInstanceVariableRefactoring
 		variables: aCollectionOfAssociations
 		within: aBrowserEnvironment!
+
+abstractInstanceVariablesOf: aClass within: aBrowserEnvironment
+	^self
+		refactorVariables: aClass instanceVariableNames
+		of: aClass
+		type: AbstractInstanceVariableRefactoring
+		within: aBrowserEnvironment
+		caption: 'Abstract Instance Variables of <d>...'!
 
 accessorsFor: nameString isClassVariable: aBoolean of: aClass within: aBrowserEnvironment
 	| finder accessors |
@@ -312,6 +320,18 @@ changeNamespaceOfClasses: aCollectionOfClasses
 		toNamespace: namespace
 		showChanges: chooser showChanges!
 
+chooseAndRefactor: aVariableRefactoringClass variables: aCollection of: aClass factory: aTriadicValuable within: aBrowserEnvironment caption: aString
+	| chooser |
+	chooser := ChoicePrompter refactoringChoicesFrom: aCollection asSortedCollection
+				caption: aString << aClass.
+	chooser ifNil: [^self].
+	^self
+		executeVariableRefactoring: aVariableRefactoringClass
+		factory: aTriadicValuable
+		variables: (chooser value asSortedArray collect: [:each | aClass -> each])
+		within: aBrowserEnvironment
+		options: (IdentityDictionary withAll: { #showChanges -> chooser showChanges })!
+
 chooseMethodFromEnvironment: aBrowserEnvironment caption: aString
 	^ChoicePrompter choices: (aBrowserEnvironment allMethods asSortedCollection: [:a :b | a <= b])
 		caption: aString << aBrowserEnvironment!
@@ -365,13 +385,35 @@ convertToSibling: aClass
 				subclasses: aClass subclasses))
 		ifNotNil: [:refactoring | self performRefactoring: refactoring]!
 
-createInstanceVariableAccessors: aString in: aClass within: aBrowserEnvironment
-	"Invoke the 'Create Variable Accessors' refactoring on an instance variable."
-
+createAccessorsForClassVariablesOf: aClass within: aBrowserEnvironment
 	self
-		createVariableAccessors: {aClass -> aString}
-		classVariables: false
-		within: aBrowserEnvironment!
+		chooseAndRefactor: CreateAccessorsForVariableRefactoring
+		variables: aClass instanceVariableNames
+		of: aClass
+		factory: 
+			[:namespace :variable :class |
+			CreateAccessorsForVariableRefactoring
+				model: namespace
+				variable: variable
+				class: class
+				classVariable: true]
+		within: aBrowserEnvironment
+		caption: 'Create <d> Class Variable Accessors...'!
+
+createAccessorsForInstanceVariablesOf: aClass within: aBrowserEnvironment
+	self
+		chooseAndRefactor: CreateAccessorsForVariableRefactoring
+		variables: aClass instanceVariableNames
+		of: aClass
+		factory: 
+			[:namespace :variable :class |
+			CreateAccessorsForVariableRefactoring
+				model: namespace
+				variable: variable
+				class: class
+				classVariable: false]
+		within: aBrowserEnvironment
+		caption: 'Create <d> Instance Variable Accessors...'!
 
 createNewClass: subclassName inPackage: aPackage
 	| dialog |
@@ -477,13 +519,13 @@ executeRefactoring: aBlock
 		on: self refactoringError
 		do: [:ex | self handleRefactoringException: ex]!
 
-executeVariableRefactoring: refactoringClass variables: aCollectionOfPairs within: aBrowserEnvironment
+executeVariableRefactoring: aVariableRefactoringClass factory: refactoringFactory variables: aCollectionOfPairs within: aBrowserEnvironment options: optionsDictionary
 	^self performRefactoringAction: 
 			[| namespace refactoring caption |
 			namespace := RBModel onEnvironment: aBrowserEnvironment.
 			caption := String writeStream.
 			caption
-				nextPutAll: refactoringClass displayPrefix;
+				nextPutAll: aVariableRefactoringClass displayPrefix;
 				space.
 			aCollectionOfPairs do: 
 					[:each |
@@ -494,16 +536,32 @@ executeVariableRefactoring: refactoringClass variables: aCollectionOfPairs withi
 						print: class;
 						nextPut: $.;
 						display: variable.
-					refactoring := refactoringClass
-								model: namespace
-								variable: variable
-								class: class.
+					refactoring := refactoringFactory
+								value: namespace
+								value: variable
+								value: class.
+					refactoring options: optionsDictionary.
 					namespace name: refactoring displayString.
 					refactoring primitiveExecute]
 				separatedBy: [caption nextPut: $,].
 			namespace name: caption contents.
-			self changeManager performChange: namespace changes.
+			(optionsDictionary lookup: #showChanges) value == true
+				ifTrue: [namespace browseChanges]
+				ifFalse: [self changeManager performChange: namespace changes].
 			namespace]!
+
+executeVariableRefactoring: refactoringClass variables: aCollectionOfPairs within: aBrowserEnvironment
+	^self
+		executeVariableRefactoring: refactoringClass
+		factory: 
+			[:namespace :variable :class |
+			refactoringClass
+				model: namespace
+				variable: variable
+				class: class]
+		variables: aCollectionOfPairs
+		within: aBrowserEnvironment
+		options: IdentityDictionary new!
 
 extendMethodBrowserMenus: browser
 	| ctxMenu otherMenu |
@@ -856,7 +914,7 @@ performRefactoringAction: aBlock
 	^aBlock on: self refactoringError do: [:ex | self handleRefactoringException: ex]!
 
 performRefactorings: aCollectionOfRefactorings showChanges: aBoolean
-	| count rbModel refactorings |
+	| count rbModel refactorings showChanges |
 	count := aCollectionOfRefactorings size.
 	count < 1
 		ifTrue: 
@@ -864,6 +922,7 @@ performRefactorings: aCollectionOfRefactorings showChanges: aBoolean
 			^self].
 	refactorings := aCollectionOfRefactorings asArray.
 	rbModel := refactorings last model.
+	showChanges := aBoolean asValue.
 	(ProgressDialog operation: 
 			[:progress |
 			
@@ -875,13 +934,15 @@ performRefactorings: aCollectionOfRefactorings showChanges: aBoolean
 							progress text: each displayString.
 							each primitiveExecute.
 							progress value: index * 100 / count].
-					aBoolean
-						ifTrue: [[rbModel browseChanges] postToInputQueue]
-						ifFalse: [RefactoringManager instance addRefactoring: refactorings last]]]
+					aBoolean ifFalse: [RefactoringManager instance addRefactoring: refactorings last]]]
 					on: self abortSignal
-					do: [:ex | ex toTrace]])
+					do: 
+						[:ex |
+						showChanges value: false.
+						ex toTrace]])
 		caption: rbModel name;
-		showModal!
+		showModal.
+	showChanges value ifTrue: [[rbModel browseChanges] postToMessageQueue]!
 
 promptForInitializationExpression: anAddParameterRefactoring
 	^(Prompter
@@ -951,22 +1012,49 @@ protectInstanceVariables: pairs
 
 	pairs do: [:each | self protectInstanceVariable: each value in: each key]!
 
-pullUpClassVariable: aString into: aClass 
+protectInstanceVariablesOf: aClass within: aBrowserEnvironment
+	^self
+		refactorVariables: aClass instanceVariableNames
+		of: aClass
+		type: ProtectInstanceVariableRefactoring
+		within: aBrowserEnvironment
+		caption: 'Protect Instance Variables of <d>...'!
+
+pullUpClassVariable: aString into: aClass
 	"Implement the 'Pull Up Class Variable' class refactoring."
-
-	^self 
-		pullUpClassVariable: aString
-		into: aClass
-		within: self browserEnvironment!
-
-pullUpClassVariable: aString into: aClass within: aBrowserEnvironment
-	"Implement the 'Pull Up Class Variable' class refactoring: 'Move a variable definition
-	 up from a subclass.'"
 
 	^self
 		executeVariableRefactoring: PullUpClassVariableRefactoring
-		variables: {aClass -> aString}
-		within: aBrowserEnvironment!
+		variables: { aClass -> aString }
+		within: self browserEnvironment!
+
+pullUpClassVariablesInto: aClass within: aBrowserEnvironment
+	| pairs varNames chooser |
+	varNames := Set new.
+	pairs := OrderedCollection new.
+	aClass allSubclassesDo: 
+			[:subclass |
+			subclass classBindingNames do: 
+					[:each |
+					(varNames includes: each)
+						ifFalse: 
+							[varNames add: each.
+							pairs add: subclass -> each]]].
+	chooser := ChoicePrompter refactoringChoicesPrompterFrom: pairs
+				caption: 'Pull Up Class Variables Into <d>...' << aClass.
+	chooser getTextBlock: [:each | each key name , '.' , each value].
+	chooser showModal ifNil: [^self].
+	^self
+		executeVariableRefactoring: PullUpClassVariableRefactoring
+		factory: 
+			[:namespace :variable :class |
+			PullUpClassVariableRefactoring
+				model: namespace
+				variable: variable
+				class: class]
+		variables: (chooser value asSortedArray collect: [:each | aClass -> each value])
+		within: aBrowserEnvironment
+		options: (IdentityDictionary withAll: { #showChanges -> chooser showChanges })!
 
 pullUpInstanceVariable: aString into: aClass 
 	"Implement the 'Pull Up Instance Variable' class refactoring."
@@ -985,15 +1073,6 @@ pullUpInstanceVariable: aString into: aClass within: aBrowserEnvironment
 		variables: {aClass -> aString}
 		within: aBrowserEnvironment!
 
-pushDownClassVariable: aString in: aClass 
-	"Implement the 'Push Down Class Variable' class refactoring within the scope of the global
-	system environment."
-
-	self 
-		pushDownClassVariable: aString
-		in: aClass
-		within: self browserEnvironment!
-
 pushDownClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Push Down Class Variable' class refactoring within the scope of the
 	specified <BrowserEnvironment>: 'Moves a variable definition from the currently selected
@@ -1007,6 +1086,14 @@ pushDownClassVariable: aString in: aClass within: aBrowserEnvironment
 		executeVariableRefactoring: PushDownClassVariableRefactoring
 		variables: {aClass -> aString}
 		within: aBrowserEnvironment!
+
+pushDownClassVariablesFrom: aClass within: aBrowserEnvironment
+	^self
+		refactorVariables: aClass classBindingNames
+		of: aClass
+		type: PushDownClassVariableRefactoring
+		within: aBrowserEnvironment
+		caption: 'Push Down Class Variables of <d>...'!
 
 pushDownInstanceVariable: aString in: aClass 
 	"Implement the 'Push Down Instance Variable' class refactoring within the scope of the global
@@ -1035,15 +1122,16 @@ pushDownInstanceVariables: aCollectionOfAssociations
 
 	aCollectionOfAssociations do: [:each | self pushDownInstanceVariable: each value in: each key]!
 
-pushDownMethods: aCollectionOfMethods 
-	"Implement the 'Push Down' method refactoring (on multiple methods): 'Pushes a method down
-	into all subclasses that don't implement the method. This can only be allowed if the class
-	is abstract'"
-
-	^self pushMethods: aCollectionOfMethods up: false!
+pushDownInstanceVariablesOf: aClass within: aBrowserEnvironment
+	^self
+		refactorVariables: aClass instanceVariableNames
+		of: aClass
+		type: PushDownInstanceVariableRefactoring
+		within: aBrowserEnvironment
+		caption: 'Push Down Instance Variables of <d>...'!
 
 pushMethods: aCollectionOfMethods up: aBoolean
-	"Private - Implement a multi-method push up or push down refactoring as an atomic unit."
+	"Implement a multi-method push up or push down refactoring as an atomic unit."
 
 	^self performRefactoringAction: 
 			[| caption namespace byClass options |
@@ -1085,14 +1173,6 @@ pushMethods: aCollectionOfMethods up: aBoolean
 				ifTrue: [namespace browseChanges]
 				ifFalse: [self changeManager performChange: namespace changes].
 			namespace]!
-
-pushUpMethods: aCollectionOfMethods 
-	"Implement the 'Push Up' method refactoring (on multiple methods): 'Pushes a method up into
-	the superclass. If the superclass is abstract and already defines the method, then the
-	superclass' method will be copied down into the other subclasses (assuming they don't
-	already define the method).'"
-
-	^self pushMethods: aCollectionOfMethods up: true!
 
 qualifyStaticVariable: anInterval inMethod: aSelector of: aBehavior
 	self performRefactoring: (QualifyStaticVariablesRefactoring
@@ -1166,6 +1246,19 @@ refactoringToRenameVariable: nameString to: newNameString isClassVariable: aBool
 	refactoring model name: refactoring displayString.
 	^refactoring!
 
+refactorVariables: aCollection of: aClass type: variableRefactoringClass within: aBrowserEnvironment caption: aString
+	self
+		refactorVariables: aCollection
+		of: aClass
+		type: 
+			[:namespace :variable :class |
+			variableRefactoringClass
+				model: namespace
+				variable: variable
+				class: class]
+		within: aBrowserEnvironment
+		caption: aString!
+
 removeClasses: aCollection
 	"Removes aClass from the system using the 'Remove Class' refactoring, which won't remove
 	the class if referenced, and which promotes all subclasses."
@@ -1190,6 +1283,14 @@ removeClasses: aCollection
 removeClassVariable: aString from: aClass within: aBrowserEnvironment
 	self removeStaticVariables: {aClass -> aString} within: aBrowserEnvironment!
 
+removeClassVariablesOf: aClass within: aBrowserEnvironment
+	^self
+		refactorVariables: aClass classBindingNames
+		of: aClass
+		type: RemoveClassVariableRefactoring
+		within: aBrowserEnvironment
+		caption: 'Remove Class Variables of <d>...'!
+
 removeFilteredMethod: aCompiledMethod forLintRule: aLintRule
 	| filter |
 	filter := BasicLintRule filterFor: aLintRule name.
@@ -1201,7 +1302,7 @@ removeImportFromClasses: aCollectionOfClasses
 	allImports := Set new.
 	aCollectionOfClasses do: [:each | allImports addAll: each imports].
 	count := aCollectionOfClasses size.
-	dialog := ChoicePrompter refactoringChoices: allImports asSortedCollection
+	dialog := ChoicePrompter refactoringChoiceFrom: allImports asSortedCollection
 				caption: 'Remove import from <d>...'
 						<< (count = 1 ifTrue: [aCollectionOfClasses single unqualifiedName] ifFalse: ['<d> classes' << count]).
 	dialog ifNil: [^self].
@@ -1231,6 +1332,14 @@ removeInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		executeVariableRefactoring: RemoveInstanceVariableRefactoring
 		variables: aCollectionOfAssociations
 		within: aBrowserEnvironment!
+
+removeInstanceVariablesOf: aClass within: aBrowserEnvironment
+	^self
+		refactorVariables: aClass instanceVariableNames
+		of: aClass
+		type: RemoveInstanceVariableRefactoring
+		within: aBrowserEnvironment
+		caption: 'Remove Instance Variables of <d>...'!
 
 removeMethods: aCollectionOfMethods
 	| classes env count |
@@ -1483,7 +1592,7 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 		showModal) value!
 
 showChangesText
-	^'Show proposed changes?'!
+	^'Preview changes?'!
 
 stubTextFor: aSymbol arguments: anArray inClass: aClass
 	| source body argc |
@@ -1584,9 +1693,10 @@ validateRenameTemp: aStVariableNode to: aString in: aClass
 !Tools.RefactoringSmalltalkSystem categoriesForMethods!
 abortSignal!constants!private! !
 abstractClassVariable:in:within:!public!refactoring! !
-abstractClassVariables:within:!public!refactoring! !
+abstractClassVariablesOf:within:!public!refactoring! !
 abstractInstanceVariable:in:within:!public!refactoring! !
 abstractInstanceVariables:within:!public!refactoring! !
+abstractInstanceVariablesOf:within:!public!refactoring! !
 accessorsFor:isClassVariable:of:within:!private!refactoring! !
 addClassVariable:to:!public!refactoring! !
 addClassVariableTo:!public!refactoring! !
@@ -1607,19 +1717,22 @@ browseSelectors:caption:environment:!browsing!private! !
 canChangeClassNamespaces:!enquiries!public! !
 canRefactor!public!testing! !
 changeNamespaceOfClasses:!operations!public! !
+chooseAndRefactor:variables:of:factory:within:caption:!private!refactoring! !
 chooseMethodFromEnvironment:caption:!public! !
 chooseSelectorInEnvironment:caption:!public! !
 cloneClass:as:under:in:!private!refactoring! !
 confirmRenameClass:to:!event handling!private! !
 convertTemporaryToInstanceVariable:in:selector:!public!refactoring! !
 convertToSibling:!public!refactoring! !
-createInstanceVariableAccessors:in:within:!public!refactoring! !
+createAccessorsForClassVariablesOf:within:!public!refactoring! !
+createAccessorsForInstanceVariablesOf:within:!public!refactoring! !
 createNewClass:inPackage:!public!refactoring! !
 createVariableAccessors:classVariables:within:!public!refactoring! !
 duplicateOf:in:!helpers!private! !
 duplicateSuperclassMethodsOf:!enquiries!private! !
 emitKeywordSignatureFor:withArgs:in:on:!private! !
 executeRefactoring:!private!refactoring! !
+executeVariableRefactoring:factory:variables:within:options:!helpers!private!refactoring! !
 executeVariableRefactoring:variables:within:!helpers!private!refactoring! !
 extendMethodBrowserMenus:!browsing!private! !
 extractMethod:from:in:!public!refactoring! !
@@ -1649,27 +1762,30 @@ promptForInitializationExpression:!private!refactoring! !
 promptToRemoveMethods:inEnvironment:!private!refactoring! !
 protectInstanceVariable:in:!public!refactoring! !
 protectInstanceVariables:!public!refactoring! !
+protectInstanceVariablesOf:within:!public!refactoring! !
 pullUpClassVariable:into:!public!refactoring! !
-pullUpClassVariable:into:within:!public!refactoring! !
+pullUpClassVariablesInto:within:!public!refactoring! !
 pullUpInstanceVariable:into:!public!refactoring! !
 pullUpInstanceVariable:into:within:!public!refactoring! !
-pushDownClassVariable:in:!public!refactoring! !
 pushDownClassVariable:in:within:!public!refactoring! !
+pushDownClassVariablesFrom:within:!public!refactoring! !
 pushDownInstanceVariable:in:!public!refactoring! !
 pushDownInstanceVariable:in:within:!public!refactoring! !
 pushDownInstanceVariables:!public!refactoring! !
-pushDownMethods:!public!refactoring! !
-pushMethods:up:!private!refactoring! !
-pushUpMethods:!public!refactoring! !
+pushDownInstanceVariablesOf:within:!public!refactoring! !
+pushMethods:up:!public!refactoring! !
 qualifyStaticVariable:inMethod:of:!public!refactoring! !
 refactoringError!constants!private! !
 refactoringToRenameVariable:to:isClassVariable:of:within:!private!refactoring! !
+refactorVariables:of:type:within:caption:!private!refactoring! !
 removeClasses:!public!refactoring! !
 removeClassVariable:from:within:!public!refactoring! !
+removeClassVariablesOf:within:!public!refactoring! !
 removeFilteredMethod:forLintRule:!public!refactoring! !
 removeImportFromClasses:!public! !
 removeInstanceVariable:from:within:!public!refactoring! !
 removeInstanceVariables:within:!public!refactoring! !
+removeInstanceVariablesOf:within:!public!refactoring! !
 removeMethods:!public!refactoring! !
 removeMethodsDuplicatedInSuperclassOf:!private!refactoring! !
 removeParameter:from:in:within:!public!refactoring! !

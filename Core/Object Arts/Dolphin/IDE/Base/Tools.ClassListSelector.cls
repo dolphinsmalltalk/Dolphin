@@ -157,10 +157,7 @@ initiateRename
 model: aListModel
 	"Connects the receiver to a new model."
 
-	| devsys |
-	devsys := SmalltalkSystem current.
-	classesPresenter treeModel: devsys classHierarchy.
-	namespacesPresenter treeModel: devsys namespaceHierarchy.
+	self systemModel: SmalltalkSystem current.
 	classesListPresenter model: aListModel.
 	super model: aListModel.
 	namespacesPresenter model: aListModel!
@@ -218,6 +215,10 @@ selectableItems
 	
 	^self view currentCard presenter!
 
+systemModel: aSystemModel
+	classesPresenter treeModel: aSystemModel classHierarchy.
+	namespacesPresenter treeModel: aSystemModel namespaceHierarchy!
+
 updateClasses
 	"Private - Update the classes list for this package. Try and maintain the existing selection if possible."
 
@@ -252,6 +253,7 @@ onNamespacesSelectionChanged!event handling!private! !
 onSelectionChanged!event handling!private!selection! !
 onViewClosed!event handling!private! !
 selectableItems!accessing!private! !
+systemModel:!accessing!public! !
 updateClasses!private!updating! !
 !
 

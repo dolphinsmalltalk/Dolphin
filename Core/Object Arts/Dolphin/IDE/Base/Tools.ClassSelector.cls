@@ -62,6 +62,9 @@ actualClasses
 		ifTrue: [self selections]
 		ifFalse: [self selections collect: [:each | each class]]!
 
+actualModelClass
+	^self systemModel modelClassFor: self actualClass!
+
 browseChangedMethods
 	"Browse the changed methods in the selected classes"
 
@@ -99,7 +102,7 @@ browseClassVariables
 	"Browse one of the class variables of the selected class."
 
 	<commandQuery: #hasSingleSelection>
-	self developmentSystem browseClassVariables: self selection!
+	self developmentSystem browseClassVariables: self modelClass within: self searchEnvironment!
 
 browseHierarchy
 	"Open a new class hierarchy browser on the hierarchy at the same point as the receiver."
@@ -195,7 +198,7 @@ buildAllVariablesMenu: aMenu
 
 	| class instVars classVars |
 	aMenu clear.
-	class := self actualClass.
+	class := self actualModelClass.
 	instVars := OrderedCollection new.
 	class
 		withAllSuperclassesDo: [:eachClass | eachClass instanceVariableNames do: [:each | instVars add: eachClass -> each]].
@@ -212,7 +215,7 @@ buildAllVariablesMenu: aMenu
 	class := class instanceClass.
 	classVars := OrderedCollection new.
 	class
-		withAllSuperclassesDo: [:eachClass | eachClass classBindingNames do: [:each | classVars add: eachClass -> each]].
+		withAllSuperclassesDo: [:eachClass | eachClass classBindingNames asSortedArray do: [:each | classVars add: eachClass -> each]].
 	(aMenu notEmpty and: [classVars notEmpty]) ifTrue: [aMenu addSeparator].
 	classVars size > self maximumVariableMenuEntries
 		ifTrue: [aMenu addCommand: #browseClassVariables description: '&Class Variable…']
@@ -232,8 +235,8 @@ buildCreateInstanceVariableAccessorsMenu: aMenu
 buildCreateVariableAccessorsMenu: aMenu
 	^self
 		buildVariablesMenu: aMenu
-		instVarSelectors: #(#createInstanceVariableAccessors:in:within: #createInstanceVariableAccessors)
-		classVarSelectors: #(#createClassVariableAccessors:in:within: #createClassVariableAccessors)!
+		instVarSelectors: #(#createAccessorsForInstanceVariable:of:within: #createInstanceVariableAccessors)
+		classVarSelectors: #(#createAccessorsForClassVariable:of:within: #createClassVariableAccessors)!
 
 buildProtectInstanceVariablesMenu: aMenu
 	^self buildInstVarMenu: aMenu selectors: #(#protectInstanceVariable:in: #protectInstanceVariables)!
@@ -296,20 +299,6 @@ categorizeClass
 				showModal.
 	(chosenCategories notNil and: [(chosenCategories symmetricDifference: originalCategories) notEmpty])
 		ifTrue: [aClass categories: chosenCategories]!
-
-chooseVariables: aBoolean caption: aString
-	"Note that this is deliberately _not_ part of the 'Dolphin Refactoring Browser' package because it is required by #createVariableAccessors:"
-
-	| varNames class |
-	varNames := (aBoolean
-				ifTrue: 
-					[class := self selection.
-					class classBindingNames]
-				ifFalse: 
-					[class := self actualClass.
-					class instanceVariableNames]) asSortedCollection.
-	varNames := ChoicePrompter multipleChoices: varNames caption: aString.
-	^varNames isNil ifFalse: [varNames collect: [:each | class -> each]]!
 
 classHierarchyPresenter
 	^classesPresenter!
@@ -382,7 +371,8 @@ createInstanceVariableAccessors
 
 	<commandQuery: #hasClassWithInstanceVariables>
 	<menuPopulator: #buildCreateInstanceVariableAccessorsMenu:>
-	self createVariableAccessors: false!
+	self developmentSystem createAccessorsForInstanceVariablesOf: self actualClass
+		within: self searchEnvironment!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -418,15 +408,6 @@ createSchematicWiring
 			to: self
 
 	"when: #dragCut: send: #onClassCut: to: self;"	"Nothing to do"!
-
-createVariableAccessors: aBoolean 
-	(self chooseVariables: aBoolean caption: 'Create Accessors for…') 
-		ifNotNil: 
-			[:varNames | 
-			self developmentSystem 
-				createVariableAccessors: varNames
-				classVariables: aBoolean
-				within: self searchEnvironment]!
 
 deleteItCommand
 	classesPresenter hasFocus ifTrue: [^#removeClass].
@@ -603,6 +584,9 @@ model: aClassHierarchyModel
 
 	super model: aClassHierarchyModel.
 	classesPresenter model: aClassHierarchyModel!
+
+modelClass
+	^self systemModel modelClassFor: self selection!
 
 newView
 	"Open the ViewComposer on an new default view resource for the
@@ -832,9 +816,9 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 			msg := MessageSend
 						receiver: self developmentSystem
 						selector: cmdSelector
-						arguments: { each value. class. self searchEnvironment }.
+						arguments: { each value. class realClass. self searchEnvironment }.
 			(aMenu addCommand: msg
-				description: (aString expandMacrosWithArguments: { each key name. each value }
+				description: (aString expandMacrosWithArguments: { each key shortName. each value }
 						locale: Locale smalltalk))
 				isModalCommand: true;
 				isAbortable: aBoolean]!
@@ -995,6 +979,7 @@ actualClass!accessing!public! !
 actualClass:!accessing!public! !
 actualClass:ifAbsent:!accessing!public! !
 actualClasses!accessing!public! !
+actualModelClass!accessing!private! !
 browseChangedMethods!commands-actions!public! !
 browseClass!commands-actions!public! !
 browseClassPackage!commands-actions!public! !
@@ -1008,7 +993,7 @@ browsePackages!commands-actions!public! !
 browsePublishedAspects!commands-actions!public! !
 browsePublishedEvents!commands-actions!public! !
 browseReferences!commands-actions!public! !
-browserEnvironment!public! !
+browserEnvironment!accessing!public! !
 browseSystem!commands-actions!public! !
 browseVariablesMenu!commands-menus!private! !
 buildAbstractInstanceVariablesMenu:!public!refactoring! !
@@ -1024,7 +1009,6 @@ buildViewsMenu:command:!menus!private! !
 canRefactor!public!refactoring!testing! !
 canRenameClass!private!testing! !
 categorizeClass!commands-actions!public! !
-chooseVariables:caption:!helpers!private! !
 classHierarchyPresenter!accessing!private! !
 classNamesSelector:!accessing!private! !
 classPackage!commands-actions!public! !
@@ -1032,7 +1016,6 @@ confirmMoveClass:toPackage:!operations!private! !
 copyClass!commands-actions!private! !
 createInstanceVariableAccessors!commands-actions!public!refactoring! !
 createSchematicWiring!initializing!public! !
-createVariableAccessors:!commands-actions!public!refactoring! !
 deleteItCommand!commands-mappings!private! !
 developmentSystem!commands-actions!private! !
 dropClass:onto:changes:!operations!private! !
@@ -1060,6 +1043,7 @@ isShowingFullNames!modes!public! !
 isShowingFullNames:!modes!public! !
 maximumVariableMenuEntries!menus!private! !
 model:!accessing!public! !
+modelClass!accessing!private! !
 newView!commands-actions!public! !
 onAboutToRenameClass:!event handling!private! !
 onClass:renameTo:accept:!event handling!public! !
@@ -1074,8 +1058,8 @@ performDropChanges:target:!helpers!private! !
 permitSelectionChange!helpers!private! !
 populatePushDownInstanceVariableMenu:!public!refactoring! !
 populateVarMenu:class:command:variables:format:abortable:!menus!private! !
-populateViewsEditMenu:!public! !
-populateViewsShowMenu:!public! !
+populateViewsEditMenu:!commands-menus!private! !
+populateViewsShowMenu:!commands-menus!private! !
 queryBrowseClassPackage:!commands-queries!private! !
 queryBrowseClassReferences:!commands-queries!private! !
 queryBrowseHierarchy:!commands-queries!private! !
@@ -1087,16 +1071,16 @@ removeClass!commands-actions!public! !
 renameClass!commands-actions!private!refactoring! !
 renameClassVariable!commands-actions!private!refactoring! !
 renameInstanceVariable!commands-actions!private!refactoring! !
-renameVariables!commands-actions!private! !
-searchEnvironment!commands-actions!private! !
-searchEnvironment:!public! !
+renameVariables!commands-menus!private! !
+searchEnvironment!accessing!private! !
+searchEnvironment:!initializing!public! !
 selectableItems!accessing!private! !
 selectionEnvironment!accessing!private! !
 setInitialFocus!operations!public! !
 showPresenter:!commands-actions!public! !
 toggleShowFullNames!commands-actions!private!refactoring! !
-viewsEditMenu!commands-actions!public! !
-viewsMenu!commands-actions!public! !
-viewsShowMenu!commands-actions!public! !
+viewsEditMenu!commands-menus!public! !
+viewsMenu!commands-menus!public! !
+viewsShowMenu!commands-menus!public! !
 !
 

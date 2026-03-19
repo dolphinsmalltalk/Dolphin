@@ -145,10 +145,12 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RBMethod class} #icon)
 	#(#{Refactory.Browser.RBModel} #allResourceIdentifiers)
 	#(#{Refactory.Browser.RBModel} #browseChanges)
+	#(#{Refactory.Browser.RBModel} #classHierarchy)
 	#(#{Refactory.Browser.RBModel} #methodsThatFailedToCompileIn:)
 	#(#{Refactory.Browser.RBModel} #methodsWithCompilationIssuesIn:)
 	#(#{Refactory.Browser.RBModel} #modelClassFor:)
 	#(#{Refactory.Browser.RBModel} #modelMethodFor:)
+	#(#{Refactory.Browser.RBModel} #namespaceHierarchy)
 	#(#{Refactory.Browser.RBModel class} #icon)
 	#(#{Refactory.Browser.RBNamespaceClass class} #icon)
 	#(#{Refactory.Browser.RBPatternVariableNode class} #icon)
@@ -386,7 +388,10 @@ package setMethodNames: #(
 	#(#{Tools.PackageSelector} #removeDuplicateMethods)
 	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:caption:)
 	#(#{UI.ChoicePrompter} #showChanges)
-	#(#{UI.ChoicePrompter class} #refactoringChoices:caption:)
+	#(#{UI.ChoicePrompter class} #refactoringChoiceFrom:caption:)
+	#(#{UI.ChoicePrompter class} #refactoringChoicesFrom:caption:)
+	#(#{UI.ChoicePrompter class} #refactoringChoicesPrompterFrom:caption:)
+	#(#{UI.ChoicePrompter class} #resource_Refactoring_multiselection_view)
 	#(#{UI.ChoicePrompter class} #resource_Refactoring_view)
 	#(#{UI.Presenter class} #resource_Refactoring_OK_Cancel_button_block)
 	#(#{UI.URLPresenter class} #resource_CodeMentorInfoBrowser)
@@ -954,7 +959,7 @@ getOptionRenameAllDefinitions: aCollection of: aSymbol
 				customButtons: #(#(#yes '&Rename All') #(#no 'Cancel'));
 				defaultButton: 2;
 				detailsText: details contents;
-				checkboxText: 'Show proposed changes?';
+				checkboxText: 'Preview changes?';
 				isChecked: self shouldShowChanges;
 				yourself.
 	prompt confirm ifFalse: [^false].
@@ -1838,7 +1843,10 @@ allResourceIdentifiers
 	^SmalltalkSystem current allResourceIdentifiers select: [:each | environment includesResource: each]!
 
 browseChanges
-	Tools.RewriteChangesBrowser showOn: self changes!
+	^Tools.RewriteChangesBrowser showOn: self changes!
+
+classHierarchy
+	^ClassHierarchyModel withRoots: self rootClasses!
 
 methodsThatFailedToCompileIn: aBrowserEnvironment
 	| caption env |
@@ -1878,15 +1886,20 @@ modelClassFor: aBehavior
 	^aBehavior classInModel: self!
 
 modelMethodFor: aCompiledMethod
-	^aCompiledMethod methodInModel: self! !
+	^aCompiledMethod methodInModel: self!
+
+namespaceHierarchy
+	^NamespaceHierarchyModel withRoots: {self rootNamespace}! !
 
 !Refactory.Browser.RBModel categoriesForMethods!
 allResourceIdentifiers!public! !
 browseChanges!helpers!public! !
+classHierarchy!accessing!public! !
 methodsThatFailedToCompileIn:!browsing!public! !
 methodsWithCompilationIssuesIn:!public!searching! !
 modelClassFor:!accessing/classes!public! !
 modelMethodFor:!accessing/classes!public! !
+namespaceHierarchy!accessing!public! !
 !
 
 !Refactory.Browser.RBModel class methodsFor!
@@ -2928,11 +2941,10 @@ abstractClassVariables
 	"Invoke the 'Abstract Class Variable' refactoring on the users choice of class variables.
 	Note that the view may also implement this command with a dynamic pull-out menu (of the
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
-	choose only one instance variable at a time."
+	choose only one variable at a time."
 
 	<commandQuery: #hasClassWithStaticVariables>
-	(self chooseVariables: true caption: 'Abstract Class Variables…')
-		ifNotNil: [:varNames | self developmentSystem abstractClassVariables: varNames within: BrowserEnvironment new]!
+	self developmentSystem abstractClassVariablesOf: self selection within: self searchEnvironment!
 
 abstractInstanceVariables
 	"Invoke the 'Abstract Instance Variable' refactoring on the users choice of instance variables.
@@ -2942,8 +2954,7 @@ abstractInstanceVariables
 
 	<commandQuery: #hasClassWithInstanceVariables>
 	<menuPopulator: #buildAbstractInstanceVariablesMenu:>
-	(self chooseVariables: false caption: 'Abstract Instance Variables…')
-		ifNotNil: [:varNames | self developmentSystem abstractInstanceVariables: varNames within: BrowserEnvironment new]!
+	self developmentSystem abstractInstanceVariablesOf: self actualClass within: self searchEnvironment!
 
 abstractVariables
 	<commandQuery: #hasClassWithVariablesSelected>
@@ -3004,7 +3015,6 @@ buildVariablesMenu: aMenu instVarSelectors: instVarSelectors classVarSelectors: 
 
 	aMenu clear.
 	self populateInstVarMenu: aMenu selectors: instVarSelectors.
-	(aMenu notEmpty and: [self selection classPool notEmpty]) ifTrue: [aMenu addSeparator].
 	self populateClassVarMenu: aMenu selectors: classVarSelectors!
 
 canChangeClassNamespace
@@ -3081,7 +3091,8 @@ createClassVariableAccessors
 	class variables of the selected class."
 
 	<commandQuery: #hasClassWithStaticVariables>
-	self createVariableAccessors: true!
+	self developmentSystem createAccessorsForClassVariablesOf: self selection
+		within: self searchEnvironment!
 
 createVariableAccessors
 	<commandQuery: #hasClassWithVariablesSelected>
@@ -3098,31 +3109,35 @@ populateClassVarMenu: aMenu selectors: selectors
 	| class varNames |
 	class := self selection.
 	varNames := class classBindingNames.
-	varNames size > self maximumVariableMenuEntries
-		ifTrue: [(aMenu addCommand: selectors last description: '&Class Variable…') isModalCommand: true]
-		ifFalse: 
-			[self
-				populateVarMenu: aMenu
-				class: class
-				command: selectors first
-				variables: (varNames asSortedCollection collect: [:each | class -> each])
-				format: '<2s>'
-				abortable: true]!
+	varNames isEmpty ifTrue: [^self].
+	"We always add the option with chooser, as this allows multiple variables to be pushed down at once."
+	aMenu notEmpty ifTrue: [aMenu addSeparator].
+	(aMenu addCommand: selectors last description: '&Class Variables…') isModalCommand: true.
+	varNames size > self maximumVariableMenuEntries ifTrue: [^self].
+	aMenu addSeparator.
+	self
+		populateVarMenu: aMenu
+		class: class
+		command: selectors first
+		variables: (varNames asSortedCollection collect: [:each | class -> each])
+		format: '<2s>'
+		abortable: true!
 
 populateInstVarMenu: aMenu selectors: selectors
 	| class varNames |
 	class := self actualClass.
 	varNames := class instanceVariableNames.
-	varNames size > self maximumVariableMenuEntries
-		ifTrue: [(aMenu addCommand: selectors last description: '&Instance Variable…') isModalCommand: true]
-		ifFalse: 
-			[self
-				populateVarMenu: aMenu
-				class: class
-				command: selectors first
-				variables: (varNames asSortedCollection collect: [:each | class -> each])
-				format: '<2s>'
-				abortable: true]!
+	varNames isEmpty ifTrue: [^self].
+	(aMenu addCommand: selectors last description: '&Instance Variables…') isModalCommand: true.
+	varNames size > self maximumVariableMenuEntries ifTrue: [^self].
+	aMenu addSeparator.
+	self
+		populateVarMenu: aMenu
+		class: class
+		command: selectors first
+		variables: (varNames asSortedCollection collect: [:each | class -> each])
+		format: '<2s>'
+		abortable: true!
 
 populatePullUpVariableMenu: aMenu forClass: aClass command: commandSymbol classVariables: aBoolean ifTooMany: tooManyCommand
 	| pairs |
@@ -3155,8 +3170,7 @@ protectInstanceVariables
 
 	<commandQuery: #hasClassWithInstanceVariables>
 	<menuPopulator: #buildProtectInstanceVariablesMenu:>
-	(self chooseVariables: false caption: 'Protect Instance Variables…')
-		ifNotNil: [:varNames | self developmentSystem protectInstanceVariables: varNames]!
+	self developmentSystem protectInstanceVariablesOf: self actualClass within: self searchEnvironment!
 
 protectVariables
 	<commandQuery: #hasClassWithVariablesSelected>
@@ -3170,23 +3184,7 @@ pullUpClassVariables
 	choose only one instance variable at a time."
 
 	<commandQuery: #canPullUpClassVariables>
-	| class pairs |
-	class := self selection.
-	pairs := self
-				pullUpVariableNamePairs: true
-				for: class
-				maximum: SmallInteger maximum.
-	pairs := (ChoicePrompter
-				createOn: pairs
-				multipleChoices: pairs
-				caption: 'Pull Up Class Variables…')
-				getTextBlock: [:each | each key name , '.' , each value];
-				showModal.
-	pairs isNil
-		ifFalse: 
-			[| devsys |
-			devsys := self developmentSystem.
-			pairs do: [:each | devsys pullUpClassVariable: each value into: class]]!
+	self developmentSystem pullUpClassVariablesInto: self selection within: self searchEnvironment!
 
 pullUpInstanceVariables
 	"Invoke the 'Pull Up Instance Variable' refactoring on the users choice of instance variables.
@@ -3240,8 +3238,7 @@ pushDownClassVariables
 	choose only one instance variable at a time."
 
 	<commandQuery: #hasClassWithStaticVariables>
-	(self chooseVariables: true caption: 'Push Down Class Variables…')
-		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
+	self developmentSystem pushDownClassVariablesFrom: self selection within: self searchEnvironment!
 
 pushDownInstanceVariables
 	"Invoke the 'Push Down Instance Variable' refactoring on the users choice of instance variables.
@@ -3251,8 +3248,7 @@ pushDownInstanceVariables
 
 	<commandQuery: #canPushDownInstanceVariables>
 	<menuPopulator: #populatePushDownInstanceVariableMenu:>
-	(self chooseVariables: false caption: 'Push Down Instance Variables…')
-		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
+	self developmentSystem pushDownInstanceVariablesOf: self actualClass within: self searchEnvironment!
 
 pushDownVariables
 	<commandQuery: #canPushDownVariables>
@@ -3275,8 +3271,7 @@ removeClassVariables
 	choose only one instance variable at a time."
 
 	<commandQuery: #hasClassWithStaticVariables>
-	(self chooseVariables: true caption: 'Remove Class Variables…')
-		ifNotNil: [:pairs | self developmentSystem removeStaticVariables: pairs within: self searchEnvironment]!
+	self developmentSystem removeClassVariablesOf: self selection within: self searchEnvironment!
 
 removeDuplicateMethods
 	<commandQuery: #hasSingleSelection>
@@ -3302,8 +3297,7 @@ removeInstanceVariables
 	choose only one instance variable at a time."
 
 	<commandQuery: #hasClassWithInstanceVariables>
-	(self chooseVariables: false caption: 'Remove Instance Variables…')
-		ifNotNil: [:varNames | self developmentSystem removeInstanceVariables: varNames within: self searchEnvironment]!
+	self developmentSystem removeInstanceVariablesOf: self actualClass within: self searchEnvironment!
 
 removeVariables
 	<commandQuery: #hasClassWithVariablesSelected>
@@ -3313,7 +3307,7 @@ removeVariables
 !Tools.ClassSelector categoriesForMethods!
 abstractClassVariables!commands-actions!public!refactoring! !
 abstractInstanceVariables!commands-actions!public!refactoring! !
-abstractVariables!commands-actions!private! !
+abstractVariables!commands-menus!private! !
 addClassVariable!commands-actions!private!refactoring! !
 addImport!commands-actions!public!refactoring! !
 addInstanceVariable!commands-actions!private!refactoring! !
@@ -3328,7 +3322,7 @@ canPushDownInstanceVariables!private!refactoring!testing! !
 canPushDownVariables!private!refactoring!testing! !
 changeClassNamespace!commands-actions!public!refactoring! !
 classRefactoringsMenu!commands-menus!public!refactoring! !
-cloneClass:under:changes:!private! !
+cloneClass:under:changes:!private!refactoring! !
 convertToSibling!commands-actions!public!refactoring! !
 createClassVariableAccessors!commands-actions!public!refactoring! !
 createVariableAccessors!commands-menus!private! !
@@ -3337,20 +3331,20 @@ populateClassVarMenu:selectors:!menus!private!refactoring! !
 populateInstVarMenu:selectors:!menus!private!refactoring! !
 populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:!menus!private!refactoring! !
 protectInstanceVariables!commands-actions!public!refactoring! !
-protectVariables!commands-actions!private! !
+protectVariables!commands-menus!private! !
 pullUpClassVariables!commands-actions!public!refactoring! !
 pullUpInstanceVariables!commands-actions!public!refactoring! !
 pullUpVariableNamePairs:for:maximum:!menus!private!refactoring! !
-pullUpVariables!commands-actions!private! !
+pullUpVariables!commands-menus!private! !
 pushDownClassVariables!commands-actions!public!refactoring! !
 pushDownInstanceVariables!commands-actions!public!refactoring! !
-pushDownVariables!commands-actions!private! !
+pushDownVariables!commands-menus!private! !
 queryAddInstanceVariable:!commands-queries!private! !
 removeClassVariables!commands-actions!public!refactoring! !
 removeDuplicateMethods!commands-actions!private!refactoring! !
 removeImport!commands-actions!public!refactoring! !
 removeInstanceVariables!commands-actions!public!refactoring! !
-removeVariables!commands-actions!private! !
+removeVariables!commands-menus!private! !
 !
 
 !Tools.CreateSubclassDialog class methodsFor!
@@ -4599,7 +4593,7 @@ showChanges!accessing!public! !
 
 !UI.ChoicePrompter class methodsFor!
 
-refactoringChoices: aSequenceableCollection caption: aStringCaptionOrNil
+refactoringChoiceFrom: aSequenceableCollection caption: aStringCaptionOrNil
 	"Shows a dialog to allow the user to choose from aSequenceableCollection. The dialog is given a caption according to aStringCaptionOrNil. If nil then
 	the default caption is used. Answer the dialog, or nil if cancelled.
 	For refactoring purposes the dialog also includes a checkbox to allow the user to choose to see the eventual refactoring changes before they are applied."
@@ -4615,6 +4609,38 @@ refactoringChoices: aSequenceableCollection caption: aStringCaptionOrNil
 		view: (instance view viewNamed: 'showChanges') presenterConnectionPoint.
 	^instance showModal ifNotNil: [instance]!
 
+refactoringChoicesFrom: aSequenceableCollection caption: aStringCaptionOrNil
+	"Shows a dialog to allow the user to choose multiple items from aSequenceableCollection. The dialog is given a caption according to aStringCaptionOrNil. If nil then
+	the default caption is used. Answer the dialog, or nil if cancelled.
+	For refactoring purposes the dialog also includes a checkbox to allow the user to choose to see the eventual refactoring changes before they are applied."
+
+	| instance |
+	instance := self refactoringChoicesPrompterFrom: aSequenceableCollection
+				caption: aStringCaptionOrNil.
+	^instance showModal ifNotNil: [instance]!
+
+refactoringChoicesPrompterFrom: aSequenceableCollection caption: aStringCaptionOrNil
+	| instance |
+	instance := self
+				create: 'Refactoring multiselection view'
+				on: ListModel new
+				choices: aSequenceableCollection
+				caption: aStringCaptionOrNil.
+	"We now hack in a BooleanPresenter attached to the checkbox - for anything more complex than this, it would be better to subclass ChoicePrompter"
+	(instance add: BooleanPresenter new name: 'showChanges')
+		view: (instance view viewNamed: 'showChanges') presenterConnectionPoint.
+	^instance!
+
+resource_Refactoring_multiselection_view
+	"Answer the literal data from which the 'Refactoring multiselection view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Refactoring_multiselection_view)
+	"
+
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 34 nil nil 8 #(13369344 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog 518 #{Graphics.Point} 501 701 133 nil 1350 1 #{Graphics.Font} nil true 582 1 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] nil 193 nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 272 nil nil nil 5 nil nil nil 272 582 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_Refactoring_OK_Cancel_button_block nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 582 1 #{OS.RECTL} 8 #[7 0 0 0 18 1 0 0 70 1 0 0 53 1 0 0] nil 193 304 8 '' 272 3 8 #() 130 193 193 nil 27 nil nil 18 #{UI.ListBox} 50 17 nil 32 50 2 8 1144064257 1025 592 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 592 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() nil 370 50 2 418 #createWindow: 50 1 466 498 8 #[7 0 0 0 7 0 0 0 70 1 0 0 18 1 0 0] nil 193 624 8 '' 592 418 #caretIndex: 8 #(1) 592 3 8 #() 130 193 193 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 592 8 'choices' 518 #{Graphics.Rectangle} 130 15 15 130 17 15 nil nil nil nil 1 nil nil nil 130 501 311 nil nil 193 774 #{Core.Semaphore} nil nil 1 nil nil nil nil nil nil 370 50 2 418 #createWindow: 50 1 518 #{UI.CreateDialog} 1106 130 6143 21 130 6843 731 193 32 418 #setWindowText: 50 1 8 'Choose one or more of:' 32 1 50 2 592 272 130 193 193 nil 29)!
+
 resource_Refactoring_view
 	"Answer the literal data from which the 'Refactoring view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -4623,10 +4649,13 @@ resource_Refactoring_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Refactoring_view)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 34 nil nil 8 #(13369344 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog 518 #{Graphics.Point} 501 701 133 nil 1350 1 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 193 nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 272 nil nil nil 5 nil nil nil 272 582 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_Refactoring_OK_Cancel_button_block nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[7 0 0 0 18 1 0 0 70 1 0 0 53 1 0 0] 193 304 8 '' 272 3 8 #() 130 193 193 nil 27 nil nil 18 #{UI.ListBox} 50 17 nil 32 50 2 8 1144062209 1025 592 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 592 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() nil 370 50 1 418 #createWindow: 50 1 466 498 8 #[7 0 0 0 7 0 0 0 70 1 0 0 18 1 0 0] 193 624 8 '' 592 3 8 #() 130 193 193 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 592 8 'choices' 518 #{Graphics.Rectangle} 130 15 15 130 17 15 nil nil nil nil 1 nil nil nil 130 501 311 1 nil 193 774 #{Core.Semaphore} nil nil 1 nil nil nil nil nil nil 370 50 2 418 #createWindow: 50 1 518 #{UI.CreateDialog} 1074 130 7679 21 130 8379 731 193 32 418 #setWindowText: 50 1 8 'Choose one of:' 32 1 50 2 592 272 130 193 193 nil 29)! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 34 nil nil 8 #(13369344 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog 518 #{Graphics.Point} 501 701 133 nil 1350 1 #{Graphics.Font} nil true 582 1 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] nil 193 nil nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 272 nil nil nil 5 nil nil nil 272 582 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_Refactoring_OK_Cancel_button_block nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 582 1 #{OS.RECTL} 8 #[7 0 0 0 18 1 0 0 70 1 0 0 53 1 0 0] nil 193 304 8 '' 272 3 8 #() 130 193 193 nil 27 nil nil 18 #{UI.ListBox} 50 17 nil 32 50 2 8 1144062209 1025 592 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 592 nil nil 518 #{Core.Message} #displayString 8 #() 560 nil 370 50 1 418 #createWindow: 50 1 466 498 8 #[7 0 0 0 7 0 0 0 70 1 0 0 18 1 0 0] nil 193 624 8 '' 592 3 8 #() 130 193 193 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 592 8 'choices' 518 #{Graphics.Rectangle} 130 15 15 130 17 15 nil nil nil nil 1 nil nil nil 130 501 311 nil nil 193 774 #{Core.Semaphore} nil nil 1 nil nil nil nil nil nil 370 50 2 418 #createWindow: 50 1 518 #{UI.CreateDialog} 1058 130 6143 21 130 6843 731 193 32 418 #setWindowText: 50 1 8 'Choose one of:' 32 1 50 2 592 272 130 193 193 nil 29)! !
 
 !UI.ChoicePrompter class categoriesForMethods!
-refactoringChoices:caption:!instance creation!public! !
+refactoringChoiceFrom:caption:!instance creation!public! !
+refactoringChoicesFrom:caption:!instance creation!public! !
+refactoringChoicesPrompterFrom:caption:!instance creation!public! !
+resource_Refactoring_multiselection_view!public!resources-views! !
 resource_Refactoring_view!public!resources-views! !
 !
 
@@ -4640,7 +4669,7 @@ resource_Refactoring_OK_Cancel_button_block
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Refactoring_OK_Cancel_button_block)
 	"
 
-	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1140850688 131073 32 nil nil nil 5 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1409286144 131073 144 nil nil nil 5 nil nil nil 144 838 1 #{UI.FlowLayout} 17 17 21 550 #{Core.IdentityDictionary} 0 518 #{Graphics.Rectangle} 518 #{Graphics.Point} 11 11 306 1 1 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[24 1 0 0 0 0 0 0 194 1 0 0 30 0 0 0] 193 176 8 '' 144 3 50 2 18 #{UI.PushButton} 50 20 nil 144 50 2 8 1141055488 1 560 nil nil nil 5 nil nil nil 560 nil nil 1350 4 #{UI.CommandDescription} #ok 8 'OK' 1 1 nil nil true nil nil nil 354 50 1 402 #createWindow: 50 1 450 482 8 #[12 0 0 0 5 0 0 0 87 0 0 0 28 0 0 0] 193 592 8 'OK' 560 3 8 #() 306 193 193 nil 29 18 #{UI.PushButton} 50 20 nil 144 50 2 8 1140924416 1 832 nil nil nil 5 nil nil nil 832 nil nil 626 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 354 50 1 402 #createWindow: 50 1 450 482 8 #[95 0 0 0 5 0 0 0 170 0 0 0 28 0 0 0] 193 864 8 'Cancel' 832 3 8 #() 306 193 193 nil 29 306 193 193 nil 27 18 #{UI.CheckBox} 50 16 nil 32 50 2 8 1409363203 1 1104 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false 6 #{Graphics.Color} #transparent nil 517 nil nil nil 1104 nil nil 518 #{UI.NullConverter} nil nil nil 354 50 1 402 #createWindow: 50 1 450 482 8 #[0 0 0 0 0 0 0 0 152 0 0 0 30 0 0 0] 193 1136 8 'Show proposed changes?' 1104 3 8 #() 306 193 193 nil 27 nil 518 #{Kernel.STBIdentityDictionaryProxy} 240 50 2 1104 8 'showChanges' nil 354 50 1 402 #createWindow: 50 1 450 482 8 #[255 14 0 0 10 0 0 0 193 16 0 0 40 0 0 0] 193 80 8 '' 32 3 50 2 144 1104 306 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1140850688 131073 32 nil nil nil 5 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1409286144 131073 144 nil nil nil 5 nil nil nil 144 838 1 #{UI.FlowLayout} 17 17 21 550 #{Core.IdentityDictionary} 0 518 #{Graphics.Rectangle} 518 #{Graphics.Point} 11 11 306 1 1 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 582 1 #{OS.RECTL} 8 #[24 1 0 0 0 0 0 0 194 1 0 0 30 0 0 0] nil 193 176 8 '' 144 3 50 2 18 #{UI.PushButton} 50 20 nil 144 50 2 8 1141055488 1 560 nil nil nil 5 nil nil nil 560 nil nil 1350 4 #{UI.CommandDescription} #ok 8 'OK' 1 1 nil nil true nil nil nil 354 50 1 402 #createWindow: 50 1 450 482 8 #[12 0 0 0 5 0 0 0 87 0 0 0 28 0 0 0] nil 193 592 8 'OK' 560 3 8 #() 306 193 193 nil 29 18 #{UI.PushButton} 50 20 nil 144 50 2 8 1140924416 1 832 nil nil nil 5 nil nil nil 832 nil nil 626 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 354 50 1 402 #createWindow: 50 1 450 482 8 #[95 0 0 0 5 0 0 0 170 0 0 0 28 0 0 0] nil 193 864 8 'Cancel' 832 3 8 #() 306 193 193 nil 29 306 193 193 nil 27 18 #{UI.CheckBox} 50 16 nil 32 50 2 8 1409363203 1 1104 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} false 6 #{Graphics.Color} #transparent nil 517 nil nil nil 1104 nil nil 518 #{UI.NullConverter} nil nil nil 354 50 1 402 #createWindow: 50 1 450 482 8 #[0 0 0 0 0 0 0 0 108 0 0 0 30 0 0 0] nil 193 1136 8 '&Preview changes?' 1104 3 8 #() 306 193 193 nil 27 nil 518 #{Kernel.STBIdentityDictionaryProxy} 240 50 2 1104 8 'showChanges' nil 354 50 1 402 #createWindow: 50 1 450 482 8 #[255 11 0 0 10 0 0 0 193 13 0 0 40 0 0 0] nil 193 80 8 '' 32 3 50 2 144 1104 306 193 193 nil 27)! !
 
 !UI.Presenter class categoriesForMethods!
 resource_Refactoring_OK_Cancel_button_block!public!resources-views! !

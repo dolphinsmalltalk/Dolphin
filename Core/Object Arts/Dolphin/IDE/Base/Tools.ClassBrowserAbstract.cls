@@ -109,14 +109,17 @@ actualClassChainMethods
 	| chain |
 	chain := self actualClassChain.
 	^chain size == 1
-		ifTrue: [chain first methodDictionary values]
+		ifTrue: [
+			| methods |
+			methods := Array writeStream.
+			chain first methodsDo: [:eachMethod | methods nextPut: eachMethod].
+			methods grabContents]
 		ifFalse: 
 			[| dict |
 			dict := IdentityDictionary new.
 			chain reverseDo: 
 					[:eachClass |
-					eachClass methodDictionary
-						keysAndValuesDo: [:eachSelector :eachMethod | dict at: eachSelector put: eachMethod]].
+					eachClass methodsDo: [:eachMethod | dict at: eachMethod selector put: eachMethod]].
 			dict values]!
 
 actualClasses
@@ -429,7 +432,7 @@ createAccessors
 	Accessors' refactoring (which is undoable), otherwise it uses the base Dolphin
 	implementation (which is not undoable)."
 
-	<commandQuery: #hasInstanceVariablesSelected>
+	<commandQuery: #hasClassSelected>
 	self model
 		createVariableAccessors: self variables
 		classVariables: false

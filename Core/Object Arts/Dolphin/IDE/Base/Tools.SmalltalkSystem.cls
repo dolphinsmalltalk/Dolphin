@@ -519,18 +519,21 @@ browseClassVariables: aClass
 	"Opens a selection dialog to choose one of the class variables of browseClass to browse.
 	Then a MethodBrowser is opened on all methods that refer to the chosen variable."
 
-	| aVariable classVars |
+	self browseClassVariables: aClass within: self browserEnvironment!
+
+browseClassVariables: aClass within: aBrowserEnvironment
+	| classVars variableName |
 	classVars := OrderedCollection new.
 	aClass withAllSuperclassesDo: 
 			[:each |
 			each classBindingNames asSortedArray reverseDo: [:eachName | classVars addFirst: eachName]].
-	aVariable := ChoicePrompter choices: classVars caption: 'Class Variables'.
-	aVariable notNil
+	variableName := ChoicePrompter choices: classVars caption: 'Class Variables'.
+	variableName notNil
 		ifTrue: 
 			[self
-				browseReferencesToClassVar: aVariable
-				of: aClass
-				within: self browserEnvironment]!
+				browseReferencesToClassVar: variableName
+				of: aClass realClass
+				within: aBrowserEnvironment]!
 
 browseCompilationFailures
 	"Open a method browser on all methods in the system which have failed compilation (i.e. which
@@ -868,7 +871,7 @@ browseReferencesTo: anObject
 	^self browseReferencesToLiteral: anObject in: self browserEnvironment!
 
 browseReferencesToClassVar: aString of: aClass within: aBrowserEnvironment
-	"Private - Open a MethodBrowser on all the methods that reference the class variable named by the <readableString> first argument , in the hierarchy of the <Behavior>, aClass."
+	"Private - Open a MethodBrowser on all the methods that reference the class variable named, aString, in the hierarchy of the <Behavior>, aClass, in the context of <Refactory.Browser.BrowserEnvironment>, aBrowserEnvironment."
 
 	self
 		browseReferencesToClassVars: { aString }
@@ -1450,12 +1453,40 @@ copyClass: aClass
 		under: superclass
 		in: package!
 
-createClassVariableAccessors: aString in: aClass within: aBrowserEnvironment
+createAccessorsForClassVariable: aString of: aClass within: aBrowserEnvironment
 	"Implement the 'Create Variable Accessors' class refactoring on class variables."
 
 	self
 		createVariableAccessors: { aClass -> aString }
 		classVariables: true
+		within: aBrowserEnvironment!
+
+createAccessorsForClassVariablesOf: aClass within: aBrowserEnvironment
+	| varNames |
+	varNames := ChoicePrompter multipleChoices: aClass classBindingNames asSortedCollection
+				caption: 'Create Class Variable Accessors...'.
+	varNames isNil ifTrue: [^self].
+	self
+		createVariableAccessors: (varNames collect: [:each | aClass -> each])
+		classVariables: true
+		within: aBrowserEnvironment!
+
+createAccessorsForInstanceVariable: aString of: aClass within: aBrowserEnvironment
+	"Invoke the 'Create Variable Accessors' change (or refactoring) on the named instance variables of aClass in the scope aBrowserEnvironment."
+
+	self
+		createVariableAccessors: { aClass -> aString }
+		classVariables: false
+		within: aBrowserEnvironment!
+
+createAccessorsForInstanceVariablesOf: aClass within: aBrowserEnvironment
+	| varNames |
+	varNames := ChoicePrompter multipleChoices: aClass instanceVariableNames asSortedCollection
+				caption: 'Create Instance Variable Accessors...'.
+	varNames isNil ifTrue: [^self].
+	self
+		createVariableAccessors: (varNames collect: [:each | aClass -> each])
+		classVariables: false
 		within: aBrowserEnvironment!
 
 createSubclass: aClassDetails subclasses: aCollection
@@ -4299,6 +4330,7 @@ browseClassHierarchyOfMethod:!browsing!public! !
 browseClassReferences:!browsing!public! !
 browseClassReferences:in:!browsing!public! !
 browseClassVariables:!browsing!public! !
+browseClassVariables:within:!browsing!public! !
 browseCompilationFailures!browsing!public! !
 browseCompilationFailuresIn:!browsing!public! !
 browseCompilationIssues!public! !
@@ -4406,7 +4438,10 @@ compressSources!commands-actions!public! !
 confirmRenameClass:to:!event handling!private! !
 copyAllMethodsOf:to:changes:!private!refactoring! !
 copyClass:!public!refactoring! !
-createClassVariableAccessors:in:within:!public!refactoring! !
+createAccessorsForClassVariable:of:within:!public!refactoring! !
+createAccessorsForClassVariablesOf:within:!public!refactoring! !
+createAccessorsForInstanceVariable:of:within:!public!refactoring! !
+createAccessorsForInstanceVariablesOf:within:!public!refactoring! !
 createSubclass:subclasses:!public!refactoring! !
 createSubclassOf:!public!refactoring! !
 createSubclassOf:inPackage:!public!refactoring! !
@@ -4471,7 +4506,6 @@ helpTutorials!commands-actions!operations!public! !
 helpTutorialsTopic!constants!public! !
 helpWhatsNew!commands-actions!operations!public! !
 helpWhatsNewTopic!constants!public! !
-helpWhatsThis!commands-actions!public! !
 hierarchyBrowserClass!options!public! !
 hierarchyBrowserClass:!options!public! !
 iconForMethod:!helpers!public! !
