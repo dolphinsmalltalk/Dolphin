@@ -146,22 +146,20 @@ keywords
 		ifTrue: 
 			["All well-formed multi-keyword selectors must end with a colon"
 			^{self}].
-	keywords := WriteStream on: (Array new: 3).
+	keywords := WriteStream on: (Array new: 2).
 	end := self
 				nextIndexOf: $:
-				from: 1
+				from: (start := 1)
 				to: size.
-	start := 1.
 	
 	[keywords nextPut: (self copyFrom: start to: end).
-	start := end + 1.
 	end := self
 				nextIndexOf: $:
-				from: start
+				from: (start := end + 1)
 				to: size.
 	end == 0]
 			whileFalse.
-	^keywords contents!
+	^keywords grabContents!
 
 mutableCopy
 	"Answer a <sequencedReadableCollection> like the receiver, but which is a mutable copy with the same elements."

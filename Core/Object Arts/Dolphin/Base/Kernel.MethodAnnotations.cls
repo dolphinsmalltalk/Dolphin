@@ -48,30 +48,31 @@ copyingClass
 	^Array!
 
 displayOn: aStream
-	| startNext |
-	startNext := '<'.
-	1 to: self basicSize
-		by: 2
-		do: 
-			[:i |
-			| selector keywords |
-			aStream nextPutAll: startNext.
-			keywords := $: split: (selector := self basicAt: i).
-			keywords size == 1
-				ifTrue: [aStream nextPutAll: selector]
-				ifFalse: 
-					[| args |
-					args := self basicAt: i + 1.
-					1 to: keywords size - 1
-						do: 
-							[:k |
-							k > 1 ifTrue: [aStream space].
-							aStream
-								nextPutAll: (keywords at: k);
-								nextPutAll: ': ';
-								print: (args at: k)]].
-			aStream nextPut: $>.
-			startNext := ' <']!
+	| i count |
+	count := self basicSize.
+	count == 0 ifTrue: [^self].
+	i := 1.
+	
+	[| keywords |
+	aStream nextPut: $<.
+	keywords := (self basicAt: i) keywords.
+	(aStream nextPutAll: (keywords at: 1)) lastCodeUnit == $:
+		ifTrue: 
+			[| k keywordCount args |
+			k := 1.
+			keywordCount := keywords size.
+			args := self basicAt: i + 1.
+			
+			[aStream nextPut: $\x20.
+			(args at: k) printOn: aStream.
+			(k := k + 1) > keywordCount]
+					whileFalse: 
+						[aStream
+							nextPut: $\x20;
+							nextPutAll: (keywords at: k)]].
+	aStream nextPut: $>.
+	(i := i + 2) > count]
+			whileFalse: [aStream nextPut: $\x20]!
 
 do: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the annotation <Message>s in the receiver."
