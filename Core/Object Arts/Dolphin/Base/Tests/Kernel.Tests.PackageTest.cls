@@ -322,7 +322,7 @@ testLegacyFormatErrorMethodOfNamespacedClass
 	self
 		should: [package fileOutOn: filer]
 		raise: SourceFormatNotSupportedError
-		matching: [:ex | ex tag = (MethodName method: method)]!
+		matching: [:ex | ex tag == method methodClass]!
 
 testLegacyFormatErrorQualifiedAliasName
 	| package filerClass filer ref |

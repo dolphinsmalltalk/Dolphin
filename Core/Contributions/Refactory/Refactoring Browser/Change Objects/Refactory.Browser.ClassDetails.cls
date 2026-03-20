@@ -128,6 +128,9 @@ imports
 imports: anArray
 	imports := anArray!
 
+instanceClass
+	^self!
+
 instanceSpec
 	^instanceSpec ?? 0!
 
@@ -401,6 +404,7 @@ guid!accessing!public! !
 guid:!accessing!public! !
 imports!accessing!public! !
 imports:!accessing!public! !
+instanceClass!accessing!public! !
 instanceSpec!accessing!public! !
 instanceSpec:!accessing!public! !
 instanceVariableNames!accessing!public! !

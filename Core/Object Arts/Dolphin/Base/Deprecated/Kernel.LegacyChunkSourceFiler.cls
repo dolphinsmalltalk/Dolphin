@@ -43,7 +43,7 @@ emitBinaryVariableDefinition: aBindingReference
 		cr!
 
 emitClassName: aClass on: aPuttableStream
-	aPuttableStream nextPutAll: ((Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass])!
+	aPuttableStream nextPutAll: (self shortNameForClass: aClass)!
 
 emitClassPoolOfClass: aClass
 	"Private - Emit initialization expressions for each of the literal constants in the class pool of aClass."
@@ -130,13 +130,8 @@ emitPackageMethodNames: aPackage
 					[:each |
 					| class name |
 					class := each className value.
-					name := (Smalltalk oldNames lookup: class) ifNil: [class shortName].
-					(BindingReference isQualifiedName: name)
-						ifTrue: 
-							[^SourceFormatNotSupportedError
-								signal: 'Extended classes must be bindable by unqualified name from Smalltalk.'
-								with: each].
-					(((name includes: $\x20) ifTrue: [name] ifFalse: [name asSymbol]) -> each selector) printString].
+					name := self shortNameForClass: class.
+					((class isMeta ifTrue: [name] ifFalse: [name asSymbol]) -> each selector) printString].
 	stream
 		nextPutAll: 'package ';
 		display: #methodNames;
@@ -269,8 +264,7 @@ environment
 !
 
 environment: aNamespace
-	aNamespace == Smalltalk ifFalse: [Warning signal: '<1p> can only be used for code in the Smalltalk namespace' << self class]
-!
+	aNamespace fullName = 'Smalltalk' ifFalse: [Warning signal: '<1p> can only be used for code in the Smalltalk namespace' << self class]!
 
 equivalentLegacyPrerequisites
 	"Private - Some packages have been split into multiple packages in Dolphin 8. If a legacy package is dependent on one of those new packages that is part of the original package, we want to file out a pre-requisite that is the original package. This will maintain the correct pre-reqs when roundtripping back to D7 so that the package remains loadable (unless it has been modified to add dependencies only in Dolphin 8). The pre-reqs should generally be at least sufficient for Dolphin 8 too, since typically the original package has the new package that contains part of it as one of its own pre-requisites."
@@ -483,7 +477,9 @@ printBasicDefinitionOfClass: aClass on: aPuttableStream
 		on: stream!
 
 shortNameForClass: aClass
-	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
+	^(Smalltalk oldNames lookup: aClass instanceClass)
+		ifNil: [self getShortName: aClass]
+		ifNotNil: [:oldName | aClass isMeta ifTrue: [oldName , ' class'] ifFalse: [oldName]]!
 
 specialBehaviorAttributesOfClass: aClass
 	^aClass specialBehaviorAttributes copyReplacing: #isNonInstantiable withObject: #isAbstract! !
