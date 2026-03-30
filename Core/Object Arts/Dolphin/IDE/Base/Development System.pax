@@ -9531,7 +9531,7 @@ publishedAspectsOfInstances
 		do: [:each | answer add: (Aspect integer: each)].
 	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldLineColor #foldMarginColor #foldMarginHiColor #hiddenLineColor #currentLineBackcolor #selectionBackcolor #inactiveSelectionBackcolor)
 		do: [:each | answer add: (Aspect color: each)].
-	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isAccessibilityEnabled)
+	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isAccessibilityEnabled #isDragAndDropEnabled)
 		do: [:each | answer add: (Aspect boolean: each)].
 	answer add: (Aspect symbol: #selectionLayer from: self layerNames).
 	^answer!

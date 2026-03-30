@@ -195,7 +195,11 @@ queryPasteAspect: aCommandQuery
 		ifTrue: 
 			[aCommandQuery
 				beEnabled;
-				expandMenuTextWith: class printString]!
+				expandMenuTextWith: class printString]
+		ifFalse: 
+			[aCommandQuery
+				beDisabled;
+				expandMenuTextWith: nil]!
 
 queryResetAspect: aCommandQuery
 	| accessor |

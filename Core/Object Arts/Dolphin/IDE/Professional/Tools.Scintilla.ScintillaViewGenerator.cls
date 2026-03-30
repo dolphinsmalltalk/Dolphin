@@ -691,6 +691,7 @@ defineConstantsPool
 				'SCI_GETDIRECTSTATUSFUNCTION' -> 2772.
 				'SCI_GETDOCPOINTER' -> 2357.
 				'SCI_GETDOCUMENTOPTIONS' -> 2379.
+				'SCI_GETDRAGDROPENABLED' -> 2818.
 				'SCI_GETEDGECOLOUR' -> 2364.
 				'SCI_GETEDGECOLUMN' -> 2360.
 				'SCI_GETEDGEMODE' -> 2362.
@@ -1062,6 +1063,7 @@ defineConstantsPool
 				'SCI_SETCURSOR' -> 2386.
 				'SCI_SETDEFAULTFOLDDISPLAYTEXT' -> 2722.
 				'SCI_SETDOCPOINTER' -> 2358.
+				'SCI_SETDRAGDROPENABLED' -> 2819.
 				'SCI_SETEDGECOLOUR' -> 2365.
 				'SCI_SETEDGECOLUMN' -> 2361.
 				'SCI_SETEDGEMODE' -> 2363.
@@ -1345,6 +1347,7 @@ defineConstantsPool
 				'SCN_URIDROPPED' -> 2015.
 				'SCN_USERLISTSELECTION' -> 2014.
 				'SCN_ZOOM' -> 2018.
+				'SCTD_CONTROLCHAR' -> 2.
 				'SCTD_LONGARROW' -> 0.
 				'SCTD_STRIKEOUT' -> 1.
 				'SCVS_NONE' -> 0.
@@ -2539,6 +2542,12 @@ renamedFunctions
 		at: 'SCI_GETSELECTIONSERIALIZED' put: #serializedSelection;
 		at: 'SCI_SETSELECTIONSERIALIZED' put: #serializedSelection:;
 		at: 'SCI_SCROLLVERTICAL' put: #scrollVertical:subLine:;
+		yourself.
+
+	"5.5.9"
+	renamedMessages
+		at: 'SCI_GETDRAGDROPENABLED' put: #isDragAndDropEnabled;
+		at: 'SCI_SETDRAGDROPENABLED' put: #isDragAndDropEnabled:;
 		yourself.
 
 	renamedMessages
