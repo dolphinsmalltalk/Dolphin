@@ -24,10 +24,9 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin ControlViews Base'
 	'..\..\Graphics\Dolphin GDI Graphics'
-	'..\..\..\System\Filer\Dolphin Literal Filer (Old versions)'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
-	'..\..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
 ).
@@ -76,10 +75,10 @@ resource_IP_address_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_IP_address_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_IP_address_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(IPAddressView)  98 15 0 0 98 2 8 1409351680 1 416 721990 2 ##(ValueHolder)  0 32 1310726 ##(EqualitySearchPolicy)  0 524550 ##(ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294904871 852486 ##(NullConverter)  0 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  2799 21 786 281 43 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 3 6 0 0 31 0 0 0] 98 0 786 193 193 0 27 )! !
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.IPAddressView} 38 #{Core.Array} 15 nil nil 50 2 8 1409351680 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 582 1 #{OS.RECTL} 8 #[119 5 0 0 10 0 0 0 3 6 0 0 31 0 0 0] nil 193 80 8 '0.0.0.0' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 27)! !
 
 !UI.NumberPresenter class categoriesForMethods!
 resource_IP_address_view!public!resources-views! !
