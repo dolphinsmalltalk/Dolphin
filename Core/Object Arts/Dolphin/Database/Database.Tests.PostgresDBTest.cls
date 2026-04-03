@@ -178,7 +178,8 @@ supportsReadOnlyMode
 	^false!
 
 testColumnTypeBlob
-	self skipUnless: connection driverVersion ~= '17.00.0007'.
+	"Postgres ODBC driver has bugs with block transfers into blob columns for buffers of certain sizes, e.g. 3 bytes. This may not be an issue in practice with a sensible buffer size, but the test is fine for other databases and drivers." 
+	<skip>
 	super testColumnTypeBlob
 !
 
