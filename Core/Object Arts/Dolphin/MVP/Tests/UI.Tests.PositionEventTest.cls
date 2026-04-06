@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'UI.Tests.PositionEventTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -6,7 +6,7 @@ UI.ValueConvertingControlView
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'WM_CTLCOLORSCROLLBAR' -> 16r137 }!
 
 UI.ScrollBar guid: (Core.GUID fromString: '{87b4c738-026e-11d3-9fd7-00a0cc3e4a32}')!
 

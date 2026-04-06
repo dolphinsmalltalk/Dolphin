@@ -4,9 +4,19 @@ Core.Object
 	subclass: #'Kernel.Compiler'
 	instanceVariableNames: ''
 	classVariableNames: 'CompilerImplementation DefaultFlags DisabledWarnings'
-	imports: #(#{Kernel.CompilerFlags} #{Kernel.ParseErrorCodes})
+	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CreateDebugMethod' -> 16r40.
+			'CreateTempsMap' -> 16r20.
+			'CreateTextMap' -> 16r10.
+			'Interactive' -> 16r200.
+			'NoOptimize' -> 16r8.
+			'NoRefOnlyLiterals' -> 16r800.
+			'NotLogged' -> 16r1.
+			'SendYourself' -> 16r400.
+			'SyntaxCheckOnly' -> 16r2
+		}!
 
 Kernel.Compiler guid: (Core.GUID fromString: '{87b4c470-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -51,14 +61,14 @@ compileDebugExpression: aString in: aClass environment: aNamespaceOrNil evaluati
 		in: aClass
 		environment: aNamespaceOrNil
 		evaluationPools: anArray
-		flags: DebugMethod!
+		flags: CreateDebugMethod!
 
 compileDebugMethod: aString in: aClass environment: aNamespace
 	^(self
 		compileForMethod: aString
 		in: aClass
 		environment: aNamespace
-		flags: (aClass defaultCompilationFlags bitOr: DebugMethod)) method!
+		flags: (aClass defaultCompilationFlags bitOr: CreateDebugMethod)) method!
 
 compileExpression: aString in: aBehaviorOrNil
 	"Compile the expression source, aString, in the context of the class, aBehavior. <CompilerNotification> subinstances may be thrown for errors/warnings.
@@ -132,7 +142,7 @@ compilerNotification: aCompilerNotification
 	^aCompilerNotification signal!
 
 debugInfoFlags: aBoolean 
-	^TextMap | TempsMap | (aBoolean ifTrue: [DebugMethod] ifFalse: [0])!
+	^CreateTextMap | CreateTempsMap | (aBoolean ifTrue: [CreateDebugMethod] ifFalse: [0])!
 
 debugInfoFor: aString in: aClass environment: aNamespace debug: aBoolean
 	"Answers a CompilationResult with all the information necessary for debugging a method

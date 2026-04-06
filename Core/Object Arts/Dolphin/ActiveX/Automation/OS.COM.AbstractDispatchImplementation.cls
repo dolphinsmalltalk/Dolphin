@@ -4,7 +4,7 @@ OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.AbstractDispatchImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #(#{OS.COM.IDispatch})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -72,7 +72,7 @@ GetTypeInfo: itinfo lcid: lcid pptinfo: pptinfo
 	pptinfo value: 0.
 	itinfo == 0 ifFalse: [^DISP_E_BADINDEX].
 	^(self typeInfo: lcid ifNone: nil)
-		ifNil: [TYPE_E_ELEMENTNOTFOUND]
+		ifNil: [ITypeInfo.TYPE_E_ELEMENTNOTFOUND]
 		ifNotNil: 
 			[:ti |
 			piTi := ti asParameter.

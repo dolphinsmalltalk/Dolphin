@@ -18,11 +18,11 @@ UI.UnthemedListTreeViewStateImageManager comment: ''!
 
 addExpandos: imageList forDpi: dpi
 	| buttonSize bitmap box inset extent |
-	buttonSize := BoxSize * dpi // Win32Constants.USER_DEFAULT_SCREEN_DPI.
+	buttonSize := BoxSize * dpi // UserLibrary.USER_DEFAULT_SCREEN_DPI.
 	buttonSize even ifTrue: [buttonSize := buttonSize + 1].
 	extent := imageList extent.
 	box := (extent - buttonSize) // 2 extent: buttonSize @ buttonSize.
-	inset := 2 * dpi // Win32Constants.USER_DEFAULT_SCREEN_DPI.
+	inset := 2 * dpi // UserLibrary.USER_DEFAULT_SCREEN_DPI.
 
 	"Image for expanded state"
 	bitmap := Bitmap displayCompatibleWithExtent: extent.

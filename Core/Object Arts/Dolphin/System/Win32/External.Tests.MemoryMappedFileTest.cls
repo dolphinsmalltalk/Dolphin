@@ -41,7 +41,7 @@ testDoubleArray
 	f := Float new.
 	file read: f.
 	self assert: f equals: 123.45.
-	file seek: -1 * f size sense: (Win32Constants at: 'FILE_END').
+	file seek: -1 * f size sense: KernelLibrary.FILE_END.
 	file read: f.
 	self assert: f equals: 456.78.
 	file close.

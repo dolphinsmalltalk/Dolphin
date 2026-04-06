@@ -120,8 +120,8 @@ onInitDialog
 
 parp
 	Sound beep: (resumable
-				ifTrue: [OS.MessageBoxConstants.MB_ICONWARNING]
-				ifFalse: [OS.MessageBoxConstants.MB_ICONERROR])!
+				ifTrue: [MB_ICONWARNING]
+				ifFalse: [MB_ICONERROR])!
 
 resumable: aBoolean
 	"Set whether the resume key should be enabled or disabled."

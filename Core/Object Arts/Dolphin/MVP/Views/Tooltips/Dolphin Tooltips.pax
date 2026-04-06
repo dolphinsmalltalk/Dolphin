@@ -12,7 +12,6 @@ package basicPackageVersion: '6.1'.
 
 package setClassNames: #(
 	#{OS.TOOLINFOW}
-	#{OS.TooltipConstants}
 	#{UI.MessageBubble}
 	#{UI.OneOffNoteBubble}
 	#{UI.Tooltip}
@@ -23,6 +22,7 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin ControlViews Base'
@@ -36,8 +36,51 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.TooltipConstants'
+Core.Object
+	subclass: #'UI.OneOffNoteBubble'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.MessageBoxAbstract
+	subclass: #'UI.MessageBubble'
+	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth flags'
+	classVariableNames: ''
+	imports: #(#{UI.Tooltip private} #{OS.TOOLINFOW private})
+	classInstanceVariableNames: ''
+	classConstants: { 'IconIds' -> #[64 48 16]. 'LargeIconMask' -> 16r1. 'SilentMask' -> 16r2 }!
+
+OS.SizedStructure
+	subclass: #'OS.TOOLINFOW'
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_hinst' -> 16r20.
+			'_OffsetOf_hwnd' -> 16r8.
+			'_OffsetOf_lParam' -> 16r28.
+			'_OffsetOf_lpReserved' -> 16r2C.
+			'_OffsetOf_lpszText' -> 16r24.
+			'_OffsetOf_rect' -> 16r10.
+			'_OffsetOf_uFlags' -> 16r4.
+			'_OffsetOf_uId' -> 16rC.
+			'_TOOLINFOW_Size' -> 16r30.
+			'TTF_ABSOLUTE' -> 16r80.
+			'TTF_CENTERTIP' -> 16r2.
+			'TTF_DI_SETITEM' -> 16r8000.
+			'TTF_IDISHWND' -> 16r1.
+			'TTF_PARSELINKS' -> 16r1000.
+			'TTF_RTLREADING' -> 16r4.
+			'TTF_SUBCLASS' -> 16r10.
+			'TTF_TRACK' -> 16r20.
+			'TTF_TRANSPARENT' -> 16r100
+		}!
+
+UI.ControlView
+	subclass: #'UI.Tooltip'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -47,19 +90,6 @@ Kernel.SharedPool
 			'TTDT_AUTOPOP' -> 16r2.
 			'TTDT_INITIAL' -> 16r3.
 			'TTDT_RESHOW' -> 16r1.
-			'TTF_ABSOLUTE' -> 16r80.
-			'TTF_CENTERTIP' -> 16r2.
-			'TTF_DI_SETITEM' -> 16r8000.
-			'TTF_IDISHWND' -> 16r1.
-			'TTF_PARSELINKS' -> 16r1000.
-			'TTF_RTLREADING' -> 16r4.
-			'TTF_SUBCLASS' -> 16r10.
-			'TTF_TRACK' -> 16r20.
-			'TTF_TRANSPARENT' -> 16r100.
-			'TTI_ERROR' -> 16r3.
-			'TTI_INFO' -> 16r1.
-			'TTI_NONE' -> 16r0.
-			'TTI_WARNING' -> 16r2.
 			'TTM_ACTIVATE' -> 16r401.
 			'TTM_ADDTOOLW' -> 16r432.
 			'TTM_ADJUSTRECT' -> 16r41F.
@@ -106,48 +136,6 @@ Kernel.SharedPool
 			'TTS_NOPREFIX' -> 16r2.
 			'TTS_USEVISUALSTYLE' -> 16r100
 		}!
-
-Core.Object
-	subclass: #'UI.OneOffNoteBubble'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.MessageBoxAbstract
-	subclass: #'UI.MessageBubble'
-	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth flags'
-	classVariableNames: ''
-	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: { 'IconIds' -> #[64 48 16]. 'LargeIconMask' -> 16r1. 'SilentMask' -> 16r2 }!
-
-OS.SizedStructure
-	subclass: #'OS.TOOLINFOW'
-	instanceVariableNames: 'text'
-	classVariableNames: ''
-	imports: #(#{OS.TooltipConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_hinst' -> 16r20.
-			'_OffsetOf_hwnd' -> 16r8.
-			'_OffsetOf_lParam' -> 16r28.
-			'_OffsetOf_lpReserved' -> 16r2C.
-			'_OffsetOf_lpszText' -> 16r24.
-			'_OffsetOf_rect' -> 16r10.
-			'_OffsetOf_uFlags' -> 16r4.
-			'_OffsetOf_uId' -> 16rC.
-			'_TOOLINFOW_Size' -> 16r30
-		}!
-
-UI.ControlView
-	subclass: #'UI.Tooltip'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.TooltipConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Loose Methods"!
 

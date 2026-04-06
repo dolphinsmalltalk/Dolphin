@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.LayoutPlacement'
 	instanceVariableNames: 'view rectangle show'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

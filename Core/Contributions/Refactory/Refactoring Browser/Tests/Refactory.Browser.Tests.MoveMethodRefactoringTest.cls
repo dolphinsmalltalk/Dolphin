@@ -161,17 +161,20 @@ testMoveMethodThatReferencesPoolDictionary
 				variable: 'RefactoryTestDataApp'.
 	self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
 	refactoringTestDataClass := refactoring model metaclassNamed: RefactoryTestDataApp fullName.
+	"The target class needs to import the pool for the test to pass"
+	self assert: (refactoringTestDataClass imports includes: #{Kernel.ParseErrorCodes}).
 	self setupVariableTypesFor: refactoring toReturn: {refactoringTestDataClass}.
 	self setupMethodNameFor: refactoring toReturn: #junk1.
+	refactoring setOption: #addImports toUse: [false].
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: LintRuleTestData fullName.
 	self assert: (class parseTreeFor: #junk)
 		equals: (self parseMethod: 'junk ^RefactoryTestDataApp junk1').
 	self
-		assert: ((refactoring model metaclassNamed: RefactoryTestDataApp fullName) parseTreeFor: #junk1)
+		assert: (refactoringTestDataClass parseTreeFor: #junk1)
 		equals: (self parseMethod: 'junk1
 	^self printString copyFrom: 1 to: _EM_INVALID').
-	self assert: (class directlyImportsNamespace: #{OS.CRTConstants})!
+	self assert: (class directlyImportsNamespace: #{OS.CRTLibrary})!
 
 testMovePrimitiveMethod
 	| refactoring |

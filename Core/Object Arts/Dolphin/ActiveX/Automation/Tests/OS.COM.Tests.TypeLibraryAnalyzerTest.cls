@@ -101,7 +101,7 @@ testStbConvertFromVersion2
 		equals: (LookupTable
 				withAll: { 'GUID' -> #GUID. 'PROPVARIANT' -> #VARIANT. 'RemotableHandle' -> #ExternalHandle }).
 	self assert: subject generationFlags
-		equals: TypeGenerationFlags.NoTypeLib | TypeGenerationFlags.LowercaseIdentifiers.
+		equals: TypeInfoObject.NoTypeLib | TypeInfoObject.LowercaseIdentifiers.
 	self assert: subject namespaceName equals: #WinHttp asQualifiedReference!
 
 tlaTestTypelib

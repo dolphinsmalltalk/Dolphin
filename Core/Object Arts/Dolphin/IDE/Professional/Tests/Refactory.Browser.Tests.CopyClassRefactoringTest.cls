@@ -162,7 +162,7 @@ testNilSuperclass
 	subclass: #''Refactory.Browser.TestData.Foo''
 	instanceVariableNames: ''temporaryVariable''
 	classVariableNames: <1p>
-	imports: #(#{OS.CRTConstants})
+	imports: #(#{Kernel.ParseErrorCodes} #{OS.CRTLibrary})
 	classInstanceVariableNames: ''''
 	classConstants: { ''AppConst1'' -> ''ClassConst1 of RefactoryTestDataApp'' }'
 				<< ($\x20 join: RefactoryTestDataApp classVariableNames asSortedArray).

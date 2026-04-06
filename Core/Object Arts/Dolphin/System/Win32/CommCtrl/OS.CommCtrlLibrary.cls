@@ -6,7 +6,56 @@ External.WindowsSystemLibrary
 	classVariableNames: 'InitFlags'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CCM_FIRST' -> 16r2000.
+			'CCM_GETCOLORSCHEME' -> 16r2003.
+			'CCM_GETUNICODEFORMAT' -> 16r2006.
+			'CCM_GETVERSION' -> 16r2008.
+			'CCM_SETBKCOLOR' -> 16r2001.
+			'CCM_SETCOLORSCHEME' -> 16r2002.
+			'CCM_SETUNICODEFORMAT' -> 16r2005.
+			'CCM_SETVERSION' -> 16r2007.
+			'CCM_SETWINDOWTHEME' -> 16r200B.
+			'CCS_ADJUSTABLE' -> 16r20.
+			'CCS_BOTTOM' -> 16r3.
+			'CCS_LEFT' -> 16r81.
+			'CCS_NODIVIDER' -> 16r40.
+			'CCS_NOMOVEY' -> 16r2.
+			'CCS_NOPARENTALIGN' -> 16r8.
+			'CCS_NORESIZE' -> 16r4.
+			'CCS_RIGHT' -> 16r83.
+			'CCS_TOP' -> 16r1.
+			'CCS_VERT' -> 16r80.
+			'HINST_COMMCTRL' -> -16r1.
+			'ICC_BAR_CLASSES' -> 16r4.
+			'ICC_STANDARD_CLASSES' -> 16r4000.
+			'INFOTIPSIZE' -> 16r400.
+			'LPSTR_TEXTCALLBACK' -> -16r1.
+			'NM_CHAR' -> -16r12.
+			'NM_CLICK' -> -16r2.
+			'NM_CUSTOMDRAW' -> -16rC.
+			'NM_CUSTOMTEXT' -> -16r18.
+			'NM_DBLCLK' -> -16r3.
+			'NM_FIRST' -> 16r0.
+			'NM_FONTCHANGED' -> -16r17.
+			'NM_HOVER' -> -16rD.
+			'NM_KEYDOWN' -> -16rF.
+			'NM_KILLFOCUS' -> -16r8.
+			'NM_LDOWN' -> -16r14.
+			'NM_NCHITTEST' -> -16rE.
+			'NM_OUTOFMEMORY' -> -16r1.
+			'NM_RCLICK' -> -16r5.
+			'NM_RDBLCLK' -> -16r6.
+			'NM_RDOWN' -> -16r15.
+			'NM_RELEASEDCAPTURE' -> -16r10.
+			'NM_RETURN' -> -16r4.
+			'NM_SETCURSOR' -> -16r11.
+			'NM_SETFOCUS' -> -16r7.
+			'NM_THEMECHANGED' -> -16r16.
+			'NM_TOOLTIPSCREATED' -> -16r13.
+			'TTN_GETDISPINFOA' -> -16r208.
+			'TTN_GETDISPINFOW' -> -16r212
+		}!
 
 OS.CommCtrlLibrary guid: (Core.GUID fromString: '{64674056-3a82-101b-8181-00aa003743d3}')!
 

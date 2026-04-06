@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Graphics.ImageInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.GDILibrary private} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

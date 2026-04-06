@@ -4,7 +4,7 @@ UI.Tests.StaticViewTest
 	subclass: #'UI.Tests.StaticTextTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{UI.StaticText})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

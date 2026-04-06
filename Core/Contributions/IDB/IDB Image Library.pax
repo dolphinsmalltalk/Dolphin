@@ -264,7 +264,7 @@ View subclass: #ILColorSelector
 View subclass: #ILEditorWorkspace
 	instanceVariableNames: 'zoom location zone zoneBrushes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 View subclass: #ILLibraryWorkspace

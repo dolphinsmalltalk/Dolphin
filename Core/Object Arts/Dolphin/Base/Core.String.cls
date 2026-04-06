@@ -4,7 +4,7 @@ Core.ArrayedCollection
 	variableByteSubclass: #'Core.String'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.NlsConstants private})
+	imports: #(#{Core.Locale private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'EncodingAnsi' -> 16r0.
@@ -112,7 +112,7 @@ _sameAsString: aString
 		compareString: LOCALE_USER_DEFAULT
 		dwCmpFlags: 0
 		string1: self
-		string2: aString) - 2!
+		string2: aString) - OS.KernelLibrary.CSTR_EQUAL!
 
 <=> aString
 	"Answer the receiver's <integer> collation order with respect to the <readableString> argument. Colloquially known as the spaceship operator.
@@ -127,7 +127,7 @@ _sameAsString: aString
 		compareString: LOCALE_USER_DEFAULT
 		dwCmpFlags: ##(NORM_IGNORECASE bitOr: NORM_LINGUISTIC_CASING)
 		string1: self
-		string2: aString) - 2!
+		string2: aString) - OS.KernelLibrary.CSTR_EQUAL!
 
 = anObject
 	"Answer whether the receiver and the <Object> argument are both <String>s containing identical code points (this is not a linguistic comparison).
@@ -348,7 +348,7 @@ beginsWith: aString ignoreCase: aBoolean
 				cchCount1: cch
 				lpString2: string2
 				cchCount2: cch
-				bIgnoreCase: aBoolean) == CSTR_EQUAL]!
+				bIgnoreCase: aBoolean) == OS.KernelLibrary.CSTR_EQUAL]!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 
@@ -434,7 +434,7 @@ compareOrdinals: aString ignoringCase: aBoolean
 		cchCount1: string1 size
 		lpString2: string2
 		cchCount2: string2 size
-		bIgnoreCase: true) - CSTR_EQUAL!
+		bIgnoreCase: true) - OS.KernelLibrary.CSTR_EQUAL!
 
 contains: aString
 	"Answer whether the receiver contains the specified sub-string."
@@ -726,7 +726,7 @@ formatWithArguments: aCollection
 	^OS.Kernel32
 		formatMessage: 0
 		source: self
-		flags: OS.Win32Constants.FORMAT_MESSAGE_FROM_STRING
+		flags: OS.KernelLibrary.FORMAT_MESSAGE_FROM_STRING
 		withArguments: aCollection!
 
 hash
@@ -741,8 +741,7 @@ hash
 	"FNV1a"
 	1 to: utf8 size do: [:i | hash := (hash bitXor: (utf8 basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
 	"Fold to 30 bits so is always positive SmallInteger"
-	^(hash bitShift: ##(VMConstants.SmallIntegerMax highBit negated))
-		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
+	^(hash bitShift: ##(VMLibrary.HashBits negated)) bitXor: (hash bitAnd: VMLibrary.SmallIntegerMax)!
 
 hashOrdinalsIgnoringCase
 	"Answer the case-insensitive <integer> hash value for the receiver, i.e. the hash is the same for two strings regardless of case. This is complementary to #compareOrdinals:ignoringCase:, and is based on an ordinal (non-linguistic) hash of the UTF-8 encodings of the individually case-folded characters, however see Locale>>#hashString:."
@@ -1458,7 +1457,7 @@ formatSystemMessage: anIntegerId withArguments: arguments
 	^OS.Kernel32
 		formatMessage: anIntegerId
 		source: 0
-		flags: OS.Win32Constants.FORMAT_MESSAGE_FROM_SYSTEM
+		flags: OS.KernelLibrary.FORMAT_MESSAGE_FROM_SYSTEM
 		withArguments: arguments!
 
 fromAddress: anAddress
@@ -1592,7 +1591,7 @@ new: aSmallInteger
 	"Answer an instance of the default string class of sufficient size to hold the specified number of code units."
 
 	<primitive: 71>
-	_failureCode == _PrimitiveFailureCode.NonInstantiable
+	_failureCode == VMLibrary.PrimitiveNonInstantiable
 		ifTrue: 
 			["Attempt to instantiate abstract class String, so answer an instance of the default concrete class, Utf8String"
 			^Utf8String new: aSmallInteger].
@@ -1615,7 +1614,7 @@ newFixed: aSmallInteger
 	are in a traditional fixed heap)."
 
 	<primitive: 76>
-	_failureCode == _PrimitiveFailureCode.NonInstantiable
+	_failureCode == VMLibrary.PrimitiveNonInstantiable
 		ifTrue: 
 			["Attempt to instantiate abstract class String, so answer an instance of the default concrete class, Utf8String"
 			^Utf8String newFixed: aSmallInteger].

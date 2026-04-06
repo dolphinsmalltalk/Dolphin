@@ -42,7 +42,7 @@ writeInto:value:!indirect accessing!private! !
 byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes. This size will vary between 32 and 64-bit platforms."
 
-	^VMConstants.IntPtrSize! !
+	^VMLibrary.IntPtrSize! !
 
 !External.UIntPtrField class categoriesForMethods!
 byteSize!constants!private! !

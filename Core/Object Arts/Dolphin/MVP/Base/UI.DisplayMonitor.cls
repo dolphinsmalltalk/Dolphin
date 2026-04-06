@@ -402,7 +402,7 @@ nearestView: aView
 onSettingChanged: anArray
 	"Private - Respond to an OS settings change. Here we are only interested in a change of the monitor setup, which appears as a work area change. When received, we discard the cached instances."
 
-	anArray = ##({'All'. Win32Constants.SPI_SETWORKAREA}) ifTrue: [self reset]!
+	anArray = ##({'All'. SystemMetrics.SPI_SETWORKAREA}) ifTrue: [self reset]!
 
 primary
 	"Answer an instance of the receiver describing the primary display monitor."

@@ -4,7 +4,7 @@ XProgramming.SUnit.TestResource
 	subclass: #'OS.COM.Tests.TestTypelib'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -27,9 +27,9 @@ setUp
 				load: self libid
 				major: 1
 				minor: 0
-				locale: NlsConstants.LOCALE_USER_DEFAULT]
+				locale: Locale.LOCALE_USER_DEFAULT]
 			on: HRESULTError
-			do: [:ex | ex hresult asInteger = AutomationErrors.TYPE_E_LIBNOTREGISTERED ifFalse: [ex pass]]!
+			do: [:ex | ex hresult asInteger = ITypeLib.TYPE_E_LIBNOTREGISTERED ifFalse: [ex pass]]!
 
 tearDown
 	analyzer notNil 

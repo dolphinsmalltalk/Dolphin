@@ -6,7 +6,72 @@ External.WindowsSystemLibrary
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'BITSPIXEL' -> 16rC.
+			'BLACK_PEN' -> 16r7.
+			'DEFAULT_PALETTE' -> 16rF.
+			'DIB_PAL_COLORS' -> 16r1.
+			'DIB_RGB_COLORS' -> 16r0.
+			'DSTINVERT' -> 16r550009.
+			'FR_NOT_ENUM' -> 16r20.
+			'FR_PRIVATE' -> 16r10.
+			'GRADIENT_FILL_OP_FLAG' -> 16rFF.
+			'GRADIENT_FILL_RECT_H' -> 16r0.
+			'GRADIENT_FILL_RECT_V' -> 16r1.
+			'GRADIENT_FILL_TRIANGLE' -> 16r2.
+			'GRAY_BRUSH' -> 16r2.
+			'HOLLOW_BRUSH' -> 16r5.
+			'HORZRES' -> 16r8.
+			'HORZSIZE' -> 16r4.
+			'IMAGE_BITMAP' -> 16r0.
+			'IMAGE_CURSOR' -> 16r2.
+			'IMAGE_ENHMETAFILE' -> 16r3.
+			'IMAGE_ICON' -> 16r1.
+			'LF_FACESIZE' -> 16r20.
+			'LF_FULLFACESIZE' -> 16r40.
+			'LOGPIXELSX' -> 16r58.
+			'LOGPIXELSY' -> 16r5A.
+			'LTGRAY_BRUSH' -> 16r1.
+			'MERGECOPY' -> 16rC000CA.
+			'MM_ANISOTROPIC' -> 16r8.
+			'MM_HIENGLISH' -> 16r5.
+			'MM_HIMETRIC' -> 16r3.
+			'MM_ISOTROPIC' -> 16r7.
+			'MM_LOENGLISH' -> 16r4.
+			'MM_LOMETRIC' -> 16r2.
+			'MM_TEXT' -> 16r1.
+			'MM_TWIPS' -> 16r6.
+			'NOTSRCCOPY' -> 16r330008.
+			'NULL_BRUSH' -> 16r5.
+			'NULL_PEN' -> 16r8.
+			'OBJ_BRUSH' -> 16r2.
+			'OBJ_FONT' -> 16r6.
+			'OBJ_PEN' -> 16r1.
+			'OPAQUE' -> 16r2.
+			'PLANES' -> 16rE.
+			'RASTERCAPS' -> 16r26.
+			'RC_PALETTE' -> 16r100.
+			'RGN_AND' -> 16r1.
+			'RGN_DIFF' -> 16r4.
+			'RGN_OR' -> 16r2.
+			'RGN_XOR' -> 16r3.
+			'SRCAND' -> 16r8800C6.
+			'SRCCOPY' -> 16rCC0020.
+			'SRCINVERT' -> 16r660046.
+			'SRCPAINT' -> 16rEE0086.
+			'TA_BASELINE' -> 16r18.
+			'TA_BOTTOM' -> 16r8.
+			'TA_CENTER' -> 16r6.
+			'TA_LEFT' -> 16r0.
+			'TA_NOUPDATECP' -> 16r0.
+			'TA_RIGHT' -> 16r2.
+			'TA_TOP' -> 16r0.
+			'TRANSPARENT' -> 16r1.
+			'VERTRES' -> 16rA.
+			'VERTSIZE' -> 16r6.
+			'WHITE_PEN' -> 16r6.
+			'WHITENESS' -> 16rFF0062
+		}!
 
 OS.GDILibrary guid: (Core.GUID fromString: '{64674044-3a82-101b-8181-00aa003743d3}')!
 

@@ -16,13 +16,13 @@ Kernel.Tests.VariableBindingTest comment: ''!
 
 testAbsoluteName
 	self assert: Object binding absoluteName equals: 'Root.Core.Object'.
-	self assert: (_PrimitiveFailureCode bindingFor: 'InvalidParameter') absoluteName
-		equals: 'Root.Kernel._PrimitiveFailureCode.InvalidParameter'!
+	self assert: (VMLibrary bindingFor: 'PrimitiveInvalidParameter') absoluteName
+		equals: 'Root.Kernel.VMLibrary.PrimitiveInvalidParameter'!
 
 testFullName
 	self assert: Object binding fullName equals: 'Core.Object'.
-	self assert: (_PrimitiveFailureCode bindingFor: 'InvalidParameter') fullName
-		equals: 'Kernel._PrimitiveFailureCode.InvalidParameter'!
+	self assert: (VMLibrary bindingFor: 'PrimitiveInvalidParameter') fullName
+		equals: 'Kernel.VMLibrary.PrimitiveInvalidParameter'!
 
 testFullyQualifiedReference
 	{Object. XProgramming.SUnit. XProgramming.SUnit.TestCase. Root. Smalltalk}
@@ -57,7 +57,7 @@ testRefersToLiteral
 	self deny: (method refersToLiteral: Core.Association environment binding).
 
 	"We need even a ref to a class variable that is 'local' (i.e. defined in the class hierarchy) to be recorded as a reference to itself."
-	TestClassVar ifNil: [TestClassConst] ifNotNil: [OS.Win32Constants.GENERIC_READ].
+	TestClassVar ifNil: [TestClassConst] ifNotNil: [OS.KernelLibrary.GENERIC_READ].
 	self deny: (method refersToLiteral: (self class fullBindingFor: 'OS')).
 	self assert: (method refersToLiteral: (self class bindingFor: 'TestClassVar')).
 	self assert: (method refersToLiteral: (self class bindingFor: 'TestClassConst')).
@@ -65,7 +65,7 @@ testRefersToLiteral
 	self assert: (method refersToLiteral: self class environment).
 
 	"And we need a ref to a class variable not defined in the same class hierarchy to be recorded as a reference to the environment of the class var as well as the class var itself."
-	subject := self class fullBindingFor: 'OS.Win32Constants.GENERIC_READ'.
+	subject := self class fullBindingFor: 'OS.KernelLibrary.GENERIC_READ'.
 	self assert: (method refersToLiteral: subject).
 	self assert: (method refersToLiteral: subject environment).
 	self assert: (method refersToLiteral: subject environment environment).
@@ -89,8 +89,8 @@ testShortName
 	self assert: (Core bindingFor: #Processor) shortName equals: #Processor.
 
 	"Class var or a class in Kernel, which is imported, so partially qualified name is bindable"
-	self assert: (_PrimitiveFailureCode bindingFor: 'InvalidParameter') shortName
-		equals: '_PrimitiveFailureCode.InvalidParameter'.
+	self assert: (VMLibrary bindingFor: 'PrimitiveInvalidParameter') shortName
+		equals: 'VMLibrary.PrimitiveInvalidParameter'.
 
 	"Class in child namespace of a Smalltalk imported namespace where the imported binding is ambiguous"
 	self assert: Core.Tests binding shortName equals: #Tests.

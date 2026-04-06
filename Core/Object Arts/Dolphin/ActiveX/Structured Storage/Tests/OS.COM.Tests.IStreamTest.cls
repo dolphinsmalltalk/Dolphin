@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.IStreamTest'
 	instanceVariableNames: 'temp'
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #(#{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -86,7 +86,7 @@ testStat
 	stat := subject stat.
 	self assert: stat pwcsName equals: temp fileName.
 	self assert: stat mtime equals: temp lastWriteTime.
-	self assert: stat grfMode equals: STGM_READ | STGM_SHARE_DENY_WRITE.
+	self assert: stat grfMode equals: STATSTG.STGM_READ | STATSTG.STGM_SHARE_DENY_WRITE.
 	self assert: stat isOLEStream.
 	self assert: stat grfLocksSupported equals: 0.
 	self assert: stat isFinalizable.

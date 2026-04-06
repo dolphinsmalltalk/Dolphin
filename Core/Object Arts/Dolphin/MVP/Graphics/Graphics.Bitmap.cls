@@ -96,7 +96,7 @@ asByteArray
 		biHeight: -1 * height;
 		biPlanes: 1;
 		biBitCount: 32;
-		biCompression: BI_RGB;
+		biCompression: BITMAPINFOHEADER.BI_RGB;
 		biSizeImage: byteSize.
 	bits := ByteArray newFixed: byteSize.
 	ret := Gdi32
@@ -534,7 +534,7 @@ fromId: anIntegerOrStringId inFile: aString flags: anInteger
 	flags in anInteger."
 
 	| bitmap |
-	bitmap := self fromId: anIntegerOrStringId in: (External.ResourceLibrary open: aString).
+	bitmap := self fromId: anIntegerOrStringId in: (ResourceLibrary open: aString).
 	bitmap flags: anInteger.
 	^bitmap!
 

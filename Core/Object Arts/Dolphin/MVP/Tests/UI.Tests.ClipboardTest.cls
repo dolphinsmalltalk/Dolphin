@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'UI.Tests.ClipboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{UI.Clipboard})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -50,8 +50,8 @@ testAnsiString
 	expected := self sampleAnsiString.
 	expected copyToClipboard.
 	self assert: (Clipboard current isFormatAvailable: #String).
-	self assert: (Clipboard current isFormatIdAvailable: Win32Constants.CF_TEXT).
-	self assert: (Clipboard current isFormatIdAvailable: Win32Constants.CF_LOCALE).
+	self assert: (Clipboard current isFormatIdAvailable: CF_TEXT).
+	self assert: (Clipboard current isFormatIdAvailable: CF_LOCALE).
 	actual := Clipboard current getRegisteredFormat: #String ifNone: ''.
 	self assert: actual equals: expected!
 
@@ -71,10 +71,10 @@ testAvailableFormatsStrings
 	actual := Clipboard current availableFormatIds.
 	"For strings, we will always get both unicode and ansi string formats because Windows will convert, but the native format should be first"
 	expected := {
-				Win32Constants.CF_UNICODETEXT.
-				Win32Constants.CF_LOCALE.
-				Win32Constants.CF_TEXT.
-				Win32Constants.CF_OEMTEXT
+				CF_UNICODETEXT.
+				CF_LOCALE.
+				CF_TEXT.
+				CF_OEMTEXT
 			}.
 	self assert: actual equals: expected.
 	self assert: Clipboard current availableFormats equals: #(#String).
@@ -111,7 +111,7 @@ testRichText
 	richText copyToClipboard.
 	self assert: (Clipboard current isFormatAvailable: #RichText).
 	self deny: (Clipboard current isFormatAvailable: #String).
-	self deny: (Clipboard current isFormatIdAvailable: Win32Constants.CF_TEXT).
+	self deny: (Clipboard current isFormatIdAvailable: CF_TEXT).
 	actual := Clipboard current getRegisteredFormat: #RichText ifNone: [''].
 	self assert: actual equals: richText.
 	self assert: richText asString equals: self sampleUnicodeString!
@@ -121,8 +121,8 @@ testUtf16String
 	utf16 := self sampleUnicodeString asUtf16String.
 	utf16 copyToClipboard.
 	self assert: (Clipboard current isFormatAvailable: #String).
-	self assert: (Clipboard current isFormatIdAvailable: Win32Constants.CF_TEXT).
-	self assert: (Clipboard current isFormatIdAvailable: Win32Constants.CF_LOCALE).
+	self assert: (Clipboard current isFormatIdAvailable: CF_TEXT).
+	self assert: (Clipboard current isFormatIdAvailable: CF_LOCALE).
 	actual := Clipboard current getText.
 	self assert: actual encoding equals: #utf16le.
 	self assert: actual equals: utf16!
@@ -132,8 +132,8 @@ testUtf8String
 	utf8 := self sampleUnicodeString asUtf8String.
 	utf8 copyToClipboard.
 	self assert: (Clipboard current isFormatAvailable: #String).
-	self assert: (Clipboard current isFormatIdAvailable: Win32Constants.CF_TEXT).
-	self assert: (Clipboard current isFormatIdAvailable: Win32Constants.CF_LOCALE).
+	self assert: (Clipboard current isFormatIdAvailable: CF_TEXT).
+	self assert: (Clipboard current isFormatIdAvailable: CF_LOCALE).
 	"We'll get back UTF-16, but the content should be the same."
 	actual := Clipboard current getText.
 	self assert: actual encoding equals: #utf16le.

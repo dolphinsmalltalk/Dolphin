@@ -28,9 +28,9 @@ UI.ControlView
 	subclass: #'UI.GroupBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ButtonConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BS_GROUPBOX' -> 16r7 }!
 
 "End of package definition"!
 

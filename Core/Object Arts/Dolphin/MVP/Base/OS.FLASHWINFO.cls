@@ -11,7 +11,13 @@ OS.SizedStructure
 			'_OffsetOf_dwFlags' -> 16r8.
 			'_OffsetOf_dwTimeout' -> 16r10.
 			'_OffsetOf_hwnd' -> 16r4.
-			'_OffsetOf_uCount' -> 16rC
+			'_OffsetOf_uCount' -> 16rC.
+			'FLASHW_ALL' -> 16r3.
+			'FLASHW_CAPTION' -> 16r1.
+			'FLASHW_STOP' -> 16r0.
+			'FLASHW_TIMER' -> 16r4.
+			'FLASHW_TIMERNOFG' -> 16rC.
+			'FLASHW_TRAY' -> 16r2
 		}!
 
 OS.FLASHWINFO guid: (Core.GUID fromString: '{2a5e4594-f531-486b-a082-17686b820cd4}')!

@@ -22,7 +22,7 @@ basicFree
 	| ptrType |
 	ptrType := self elementClass.
 	0 to: bytes size - 1
-		by: VMConstants.IntPtrSize
+		by: VMLibrary.IntPtrSize
 		do: [:offset | ptrType freeHeapObject: (bytes uintPtrAtOffset: offset)].
 	bytes free!
 
@@ -58,7 +58,7 @@ uncheckedAt: indexInteger put: anObject
 	"Private - Replace the external heap object pointer at the index specified by the `<integer>` 1st argument with a freshly allocated heap copy of the 2nd argument <Object>. No bounds checks are performed on the subscript. "
 
 	| offset ptrType |
-	offset := (indexInteger - 1) * VMConstants.IntPtrSize.
+	offset := (indexInteger - 1) * VMLibrary.IntPtrSize.
 	ptrType := self elementClass.
 	"We must release the overwritten value"
 	ptrType freeHeapObject: (bytes uintPtrAtOffset: offset).
@@ -83,7 +83,7 @@ copyBytes: srcByteObject from: startInteger to: stopInteger into: destByteObject
 	ptrType := self elementClass.
 	pDest := (destByteObject yourAddress - (startInteger - 1)) asExternalAddress.
 	startInteger - 1 to: stopInteger - 1
-		by: VMConstants.IntPtrSize
+		by: VMLibrary.IntPtrSize
 		do: 
 			[:offset |
 			pDest uintPtrAtOffset: offset

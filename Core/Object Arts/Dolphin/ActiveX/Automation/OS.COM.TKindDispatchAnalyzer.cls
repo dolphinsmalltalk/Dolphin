@@ -46,7 +46,7 @@ dualInterface
 
 	| pi |
 	pi := self tlbInterface getImplTypeInfoAt: 0.
-	self assert: [pi typekind == TKIND_INTERFACE].
+	self assert: [pi typekind == ITypeInfo.TKIND_INTERFACE].
 	^self class onTypeInfo: pi!
 
 isAutomationCompatible
@@ -96,12 +96,12 @@ initialize
 
 	SpecialPropGets := IdentityDictionary new.
 	SpecialPropGets 
-		at: DISPID_NEWENUM put: nil.	"Base implementation is sufficient, don't need override"!
+		at: IDispatch.DISPID_NEWENUM put: nil.	"Base implementation is sufficient, don't need override"!
 
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
-	^TKIND_DISPATCH! !
+	^ITypeInfo.TKIND_DISPATCH! !
 
 !OS.COM.TKindDispatchAnalyzer class categoriesForMethods!
 initialize!development!initializing!private! !

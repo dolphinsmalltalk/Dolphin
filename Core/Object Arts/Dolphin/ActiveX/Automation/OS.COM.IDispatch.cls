@@ -4,9 +4,17 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
-	imports: #(#{OS.COM.OleVariant})
+	imports: #(#{OS.COM.DISPPARAMS private} #{OS.COM.OLEAutLibrary} #{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DISPID_NEWENUM' -> -16r4.
+			'DISPID_UNKNOWN' -> -16r1.
+			'DISPID_VALUE' -> 16r0.
+			'INVOKE_FUNC' -> 16r1.
+			'INVOKE_PROPERTYGET' -> 16r2.
+			'INVOKE_PROPERTYPUT' -> 16r4.
+			'INVOKE_PROPERTYPUTREF' -> 16r8
+		}!
 
 OS.COM.IDispatch guid: (OS.COM.IID fromString: '{00020400-0000-0000-c000-000000000046}')!
 
@@ -87,7 +95,7 @@ basicInvokeId: id flags: wFlags parms: parms retVal: varRes
 	hr := self
 				Invoke: id
 				riid: IID null
-				lcid: NlsConstants.LOCALE_USER_DEFAULT
+				lcid: Locale.LOCALE_USER_DEFAULT
 				wFlags: wFlags
 				pdispparams: parms
 				pvarResult: varRes
@@ -247,7 +255,7 @@ getIDsOfNames: aCollectionOfStrings
 				GetIDsOfNames: IID null
 				rgszNames: rgszNames
 				cNames: cNames
-				lcid: NlsConstants.LOCALE_USER_DEFAULT
+				lcid: Locale.LOCALE_USER_DEFAULT
 				rgdispid: rgDispId.
 	^hr < 0
 		ifTrue: 
@@ -402,7 +410,7 @@ idOfName: aString ifAbsent: exceptionHandler
 				GetIDsOfNames: IID null
 				rgszNames: (PointerArray with: uName)
 				cNames: 1
-				lcid: NlsConstants.LOCALE_USER_DEFAULT
+				lcid: Locale.LOCALE_USER_DEFAULT
 				rgdispid: dispId.
 	hr < 0
 		ifTrue: [^hr = DISP_E_UNKNOWNNAME ifTrue: [exceptionHandler value] ifFalse: [self hresultError: hr]].
@@ -686,7 +694,7 @@ typeInfoIfNone: exceptionHandler
 	typeInfo isNull
 		ifTrue: 
 			[| piTypeInfo |
-			piTypeInfo := self getTypeInfo: NlsConstants.LOCALE_USER_DEFAULT
+			piTypeInfo := self getTypeInfo: Locale.LOCALE_USER_DEFAULT
 						ifNone: [^super typeInfoIfNone: [^exceptionHandler value]].
 			typeInfo := (TypeInfoAnalyzer onTypeInfo: piTypeInfo) defaultInterface].
 	^typeInfo!

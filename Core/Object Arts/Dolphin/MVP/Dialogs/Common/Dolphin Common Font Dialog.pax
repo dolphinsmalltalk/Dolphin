@@ -31,7 +31,7 @@ UI.CommonDialog
 	subclass: #'UI.FontDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CHOOSEFONTW private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -55,7 +55,35 @@ OS.ComDlgStructure
 			'_OffsetOf_nFontType' -> 16r30.
 			'_OffsetOf_nSizeMax' -> 16r38.
 			'_OffsetOf_nSizeMin' -> 16r34.
-			'_OffsetOf_rgbColors' -> 16r18
+			'_OffsetOf_rgbColors' -> 16r18.
+			'CF_ANSIONLY' -> 16r400.
+			'CF_APPLY' -> 16r200.
+			'CF_BOTH' -> 16r3.
+			'CF_EFFECTS' -> 16r100.
+			'CF_ENABLEHOOK' -> 16r8.
+			'CF_ENABLETEMPLATE' -> 16r10.
+			'CF_ENABLETEMPLATEHANDLE' -> 16r20.
+			'CF_FIXEDPITCHONLY' -> 16r4000.
+			'CF_FORCEFONTEXIST' -> 16r10000.
+			'CF_INITTOLOGFONTSTRUCT' -> 16r40.
+			'CF_LIMITSIZE' -> 16r2000.
+			'CF_NOFACESEL' -> 16r80000.
+			'CF_NOOEMFONTS' -> 16r800.
+			'CF_NOSCRIPTSEL' -> 16r800000.
+			'CF_NOSIMULATIONS' -> 16r1000.
+			'CF_NOSIZESEL' -> 16r200000.
+			'CF_NOSTYLESEL' -> 16r100000.
+			'CF_NOVECTORFONTS' -> 16r800.
+			'CF_NOVERTFONTS' -> 16r1000000.
+			'CF_PRINTERFONTS' -> 16r2.
+			'CF_SCALABLEONLY' -> 16r20000.
+			'CF_SCREENFONTS' -> 16r1.
+			'CF_SCRIPTSONLY' -> 16r400.
+			'CF_SELECTSCRIPT' -> 16r400000.
+			'CF_SHOWHELP' -> 16r4.
+			'CF_TTONLY' -> 16r40000.
+			'CF_USESTYLE' -> 16r80.
+			'CF_WYSIWYG' -> 16r8000
 		}!
 
 "Loose Methods"!

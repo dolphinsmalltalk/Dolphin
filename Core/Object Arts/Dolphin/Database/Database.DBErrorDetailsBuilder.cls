@@ -4,9 +4,19 @@ Core.Object
 	subclass: #'Database.DBErrorDetailsBuilder'
 	instanceVariableNames: 'errors szSqlState szErrorMsg cbErrorMsg fNativeError'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants} #{OS.ODBCRetCodes})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'RetCodes'
+				-> (IdentityDictionary withAll: {
+								-16r2 -> 'SQL_INVALID_HANDLE'.
+								-16r1 -> 'SQL_ERROR'.
+								16r0 -> 'SQL_SUCCESS'.
+								16r1 -> 'SQL_SUCCESS_WITH_INFO'.
+								16r63 -> 'SQL_NEED_DATA'.
+								16r64 -> 'SQL_NO_DATA'
+							})
+		}!
 
 Database.DBErrorDetailsBuilder guid: (Core.GUID fromString: '{fe3c3c6b-84ce-4773-aa45-c9eb7b8f734d}')!
 
@@ -70,7 +80,7 @@ buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 
 retCodeError: anInteger
 	^DBErrorDetails new
-		msg: 'SQL Error: ' , (OS.ODBCRetCodes keyAtValue: anInteger ifAbsent: ['Unknown']);
+		msg: 'SQL Error: ' , (RetCodes at: anInteger ifAbsent: ['Unknown']);
 		yourself! !
 
 !Database.DBErrorDetailsBuilder categoriesForMethods!
@@ -82,9 +92,21 @@ retCodeError:!accessing!private! !
 !Database.DBErrorDetailsBuilder class methodsFor!
 
 buildErrorDetailsFor: aDBExceptionDetails
-	^self new buildErrorDetailsFor: aDBExceptionDetails! !
+	^self new buildErrorDetailsFor: aDBExceptionDetails!
+
+initialize
+	self addClassConstant: 'RetCodes'
+		value: (IdentityDictionary withAll: {
+						SQL_ERROR -> 'SQL_ERROR'.
+						SQL_INVALID_HANDLE -> 'SQL_INVALID_HANDLE'.
+						SQL_NEED_DATA -> 'SQL_NEED_DATA'.
+						SQL_NO_DATA -> 'SQL_NO_DATA'.
+						SQL_SUCCESS -> 'SQL_SUCCESS'.
+						SQL_SUCCESS_WITH_INFO -> 'SQL_SUCCESS_WITH_INFO'
+					})! !
 
 !Database.DBErrorDetailsBuilder class categoriesForMethods!
 buildErrorDetailsFor:!helpers!public! !
+initialize!public! !
 !
 

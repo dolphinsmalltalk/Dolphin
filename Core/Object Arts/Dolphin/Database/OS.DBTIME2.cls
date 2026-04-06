@@ -19,7 +19,7 @@ OS.DBTIME2 comment: ''!
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_SS_TIME2!
+	^SQL_C_SS_TIME2!
 
 dbMarshal: anObject into: aDBField
 	"Populate the receiver, as buffer of the <DBField> 2nd argument, with the SQL_C_SS_TIME2 representation of the 1st argument, which must yield a <Time> when sent #asTime. The fractional seconds of the <Time> will be truncated to the scale of the column."

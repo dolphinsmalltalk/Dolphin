@@ -6,7 +6,26 @@ Graphics.Icon
 	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone DefaultExtent Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE UpArrow Wait'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'IDC_APPSTARTING' -> 16r7F8A.
+			'IDC_ARROW' -> 16r7F00.
+			'IDC_CROSS' -> 16r7F03.
+			'IDC_HAND' -> 16r7F89.
+			'IDC_HELP' -> 16r7F8B.
+			'IDC_IBEAM' -> 16r7F01.
+			'IDC_ICON' -> 16r7F81.
+			'IDC_NO' -> 16r7F88.
+			'IDC_PERSON' -> 16r7FA0.
+			'IDC_PIN' -> 16r7F9F.
+			'IDC_SIZE' -> 16r7F80.
+			'IDC_SIZEALL' -> 16r7F86.
+			'IDC_SIZENESW' -> 16r7F83.
+			'IDC_SIZENS' -> 16r7F85.
+			'IDC_SIZENWSE' -> 16r7F82.
+			'IDC_SIZEWE' -> 16r7F84.
+			'IDC_UPARROW' -> 16r7F04.
+			'IDC_WAIT' -> 16r7F02
+		}!
 
 Graphics.Cursor guid: (Core.GUID fromString: '{87b4c640-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -82,37 +101,37 @@ current: aCursorOrNil
 ddCopy
 	"Answer the instance that is the OLE DROPEFFECT_COPY cursor."
 
-	^DDCopy ifNil: [DDCopy := self fromId: 3 in: (External.ResourceLibrary open: 'ole32')]!
+	^DDCopy ifNil: [DDCopy := self fromId: 3 in: (ResourceLibrary open: 'ole32')]!
 
 ddCopyScroll
 	"Answer the instance that is the OLE DROPEFFECT_COPY | DROPEFFECT_SCROLL cursor."
 
-	^DDCopyScroll ifNil: [DDCopyScroll := self fromId: 6 in: (External.ResourceLibrary open: 'ole32')]!
+	^DDCopyScroll ifNil: [DDCopyScroll := self fromId: 6 in: (ResourceLibrary open: 'ole32')]!
 
 ddLink
 	"Answer the instance that is the OLE DROPEFFECT_LINK cursor."
 
-	^DDLink ifNil: [DDLink := self fromId: 4 in: (External.ResourceLibrary open: 'ole32')]!
+	^DDLink ifNil: [DDLink := self fromId: 4 in: (ResourceLibrary open: 'ole32')]!
 
 ddLinkScroll
 	"Answer the instance that is the OLE DROPEFFECT_LINK | DROPEFFECT_SCROLL cursor."
 
-	^DDLinkScroll ifNil: [DDLinkScroll := self fromId: 7 in: (External.ResourceLibrary open: 'ole32')]!
+	^DDLinkScroll ifNil: [DDLinkScroll := self fromId: 7 in: (ResourceLibrary open: 'ole32')]!
 
 ddMove
 	"Answer the instance that is the OLE DROPEFFECT_MOVE cursor."
 
-	^DDMove ifNil: [DDMove := self fromId: 2 in: (External.ResourceLibrary open: 'ole32')]!
+	^DDMove ifNil: [DDMove := self fromId: 2 in: (ResourceLibrary open: 'ole32')]!
 
 ddMoveScroll
 	"Answer the instance that is the OLE DROPEFFECT_MOVE | DROPEFFECT_SCROLL cursor."
 
-	^DDMoveScroll ifNil: [DDMoveScroll := self fromId: 5 in: (External.ResourceLibrary open: 'ole32')]!
+	^DDMoveScroll ifNil: [DDMoveScroll := self fromId: 5 in: (ResourceLibrary open: 'ole32')]!
 
 ddNone
 	"Answer the instance that is the OLE DROPEFFECT_NONE cursor."
 
-	^DDNone ifNil: [DDNone := self fromId: 1 in: (External.ResourceLibrary open: 'ole32')]!
+	^DDNone ifNil: [DDNone := self fromId: 1 in: (ResourceLibrary open: 'ole32')]!
 
 default
 	^self arrow

@@ -190,8 +190,9 @@ absPrintExactlyOn: aStream base: base
 	
 	[d := (r bitShift: slowbit) // shead.
 	r := r - (d * s).
-	(tc1 := r <= mMinus and: [roundingIncludesLimits or: [r < mMinus]])
-		| (tc2 := r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]])]
+	tc1 := r <= mMinus and: [roundingIncludesLimits or: [r < mMinus]].
+	tc2 := r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]].
+	tc1 or: [tc2]]
 			whileFalse: 
 				[aStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: d + 1).
 				r := r * base.
@@ -206,8 +207,7 @@ absPrintExactlyOn: aStream base: base
 			aStream nextPutAll: '.0'].
 	fixedFormat
 		ifFalse: 
-			[aStream
-				nextPut: $e.
+			[aStream nextPut: $e.
 			baseExpEstimate - 1 printOn: aStream base: 10]!
 
 absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingFractionalZeros: showtrailingZeros
@@ -290,8 +290,9 @@ absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingF
 	
 	[d := (r bitShift: slowbit) // shead.
 	r := r - (d * s).
-	(tc1 := r <= mMinus and: [roundingLowIncludesLimits or: [r < mMinus]])
-		| (tc2 := r + mPlus >= s and: [roundingHighIncludesLimits or: [r + mPlus > s]])]
+	tc1 := r <= mMinus and: [roundingLowIncludesLimits or: [r < mMinus]].
+	tc2 := r + mPlus >= s and: [roundingHighIncludesLimits or: [r + mPlus > s]].
+	tc1 or: [tc2]]
 			whileFalse: 
 				[aStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: d + 1).
 				r := r * base.
@@ -371,7 +372,7 @@ addToFloat: aFloat
 	"Perform the FP addition again with exceptions masked to get a continuation value"
 
 	| mask |
-	mask := Float exceptionMask: OS.CRTConstants._MCW_EM.
+	mask := Float exceptionMask: OS.CRTLibrary._MCW_EM.
 	^[aFloat + self] ensure: [Float exceptionMask: mask]!
 
 addToFraction: aFraction
@@ -655,7 +656,7 @@ greaterOrEqualToFraction: aFraction
 	fpclass := self fpClass.
 	^(fpclass anyMask: Float.FpClassFinite)
 		ifTrue: [self asTrueFraction greaterOrEqualToFraction: aFraction]
-		ifFalse: [(fpclass bitAnd: ##(FpClassNaN | FpClassNegative)) == 0]!
+		ifFalse: [(fpclass bitAnd: ##(FpClassNaN bitOr: FpClassNegative)) == 0]!
 
 greaterOrEqualToInteger: anInteger
 	"Private - Answer whether the receiver is greater than the known Integer, anInteger."
@@ -762,7 +763,7 @@ multiplyByFloat: aFloat
 	"Perform the multiplication again with exceptions masked to get a continuation value"
 
 	| mask |
-	mask := Float exceptionMask: OS.CRTConstants._MCW_EM.
+	mask := Float exceptionMask: OS.CRTLibrary._MCW_EM.
 	^[aFloat * self] ensure: [Float exceptionMask: mask]!
 
 multiplyByFraction: aFraction
@@ -873,7 +874,7 @@ raisedTo: aNumber
 		ifTrue: 
 			[| mask |
 			"FP exception must have been continued - repeat with exceptions masked to get correct continuation value"
-			mask := self class exceptionMask: OS.CRTConstants._MCW_EM.
+			mask := self class exceptionMask: OS.CRTLibrary._MCW_EM.
 			[self raisedTo: aNumber] ensure: [self class exceptionMask: mask]]
 		ifFalse: [self raisedTo: aNumber asFloat]!
 
@@ -937,7 +938,7 @@ subtractFromFloat: aFloat
 	"Perform the FP subtraction again with exceptions masked to get a continuation value"
 
 	| mask |
-	mask := Float exceptionMask: OS.CRTConstants._MCW_EM.
+	mask := Float exceptionMask: OS.CRTLibrary._MCW_EM.
 	^[aFloat - self] ensure: [Float exceptionMask: mask]!
 
 subtractFromFraction: aFraction
@@ -1085,8 +1086,8 @@ denormalized
 	"Answer whether the characterized floating point representation allows denormalized
 	values."
 
-	^(Processor activeProcess fpControl bitAnd: ##(OS.CRTConstants._MCW_DN | OS.CRTConstants._EM_DENORMAL))
-		= OS.CRTConstants._EM_DENORMAL!
+	^(Processor activeProcess fpControl bitAnd: ##(OS.CRTLibrary._MCW_DN bitOr: OS.CRTLibrary._EM_DENORMAL))
+		= OS.CRTLibrary._EM_DENORMAL!
 
 e
 	"Answer a <Float> representing the irrational number, 'e'
@@ -1140,13 +1141,13 @@ exceptionMask
 
 	See Process class>>#initialize for a description of the default exception mask, and the class comment of <FloatingPointException> for further background information."
 
-	^Processor activeProcess fpControl bitAnd: OS.CRTConstants._MCW_EM!
+	^Processor activeProcess fpControl bitAnd: OS.CRTLibrary._MCW_EM!
 
 exceptionMask: anInteger
 	"Set the floating point exception mask which is active in the currently executing
 	<Process>. See #exceptionMask for further information. Answers the previous mask."
 
-	^Processor activeProcess setFpControl: anInteger mask: OS.CRTConstants._MCW_EM!
+	^Processor activeProcess setFpControl: anInteger mask: OS.CRTLibrary._MCW_EM!
 
 fmax
 	"Answer a <Float> representing the largest value
@@ -1206,7 +1207,7 @@ initialize
 	self addClassVariable: 'FMinDenormalized' value: (1.0 timesTwoPower: eminDenorm).
 	"Mask out overflow/invalid while we generate the infinity/NaN constants."
 	fpeMask := self exceptionMask.
-	self exceptionMask: (fpeMask maskSet: OS.CRTConstants._EM_OVERFLOW | OS.CRTConstants._EM_INVALID).
+	self exceptionMask: (fpeMask maskSet: OS.CRTLibrary._EM_OVERFLOW | OS.CRTLibrary._EM_INVALID).
 	
 	[| infinity |
 	infinity := fmax * fmax.
@@ -1216,27 +1217,27 @@ initialize
 			ensure: [self exceptionMask: fpeMask].
 	"Classification groups"
 	self addClassConstant: 'FpClassInfinite'
-		value: OS.CRTConstants._FPCLASS_NINF | OS.CRTConstants._FPCLASS_PINF.
+		value: OS.CRTLibrary._FPCLASS_NINF | OS.CRTLibrary._FPCLASS_PINF.
 	self addClassConstant: 'FpClassStrictlyPositive'
-		value: OS.CRTConstants._FPCLASS_PD | OS.CRTConstants._FPCLASS_PN | OS.CRTConstants._FPCLASS_PINF.
+		value: OS.CRTLibrary._FPCLASS_PD | OS.CRTLibrary._FPCLASS_PN | OS.CRTLibrary._FPCLASS_PINF.
 	self addClassConstant: 'FpClassNegative'
-		value: OS.CRTConstants._FPCLASS_ND | OS.CRTConstants._FPCLASS_NN | OS.CRTConstants._FPCLASS_NINF
-				| OS.CRTConstants._FPCLASS_NZ.
+		value: OS.CRTLibrary._FPCLASS_ND | OS.CRTLibrary._FPCLASS_NN | OS.CRTLibrary._FPCLASS_NINF
+				| OS.CRTLibrary._FPCLASS_NZ.
 	self addClassConstant: 'FpClassZero'
-		value: OS.CRTConstants._FPCLASS_NZ | OS.CRTConstants._FPCLASS_PZ.
+		value: OS.CRTLibrary._FPCLASS_NZ | OS.CRTLibrary._FPCLASS_PZ.
 	self addClassConstant: 'FpClassNaN'
-		value: OS.CRTConstants._FPCLASS_QNAN | OS.CRTConstants._FPCLASS_SNAN.
+		value: OS.CRTLibrary._FPCLASS_QNAN | OS.CRTLibrary._FPCLASS_SNAN.
 	"Denormalized numbers - non-zero but with leading zeroes in the mantissa"
 	self addClassConstant: 'FpClassDenormal'
-		value: OS.CRTConstants._FPCLASS_PD | OS.CRTConstants._FPCLASS_ND.
+		value: OS.CRTLibrary._FPCLASS_PD | OS.CRTLibrary._FPCLASS_ND.
 	"Non-zero, normals"
 	self addClassConstant: 'FpClassNormal'
-		value: OS.CRTConstants._FPCLASS_NN | OS.CRTConstants._FPCLASS_PN.
+		value: OS.CRTLibrary._FPCLASS_NN | OS.CRTLibrary._FPCLASS_PN.
 	"Finite numbers (anything other than infinites or NaNs)"
 	self addClassConstant: 'FpClassFinite'
-		value: OS.CRTConstants._FPCLASS_NN | OS.CRTConstants._FPCLASS_ND | OS.CRTConstants._FPCLASS_NZ
-				| OS.CRTConstants._FPCLASS_PZ | OS.CRTConstants._FPCLASS_PD
-				| OS.CRTConstants._FPCLASS_PN.
+		value: OS.CRTLibrary._FPCLASS_NN | OS.CRTLibrary._FPCLASS_ND | OS.CRTLibrary._FPCLASS_NZ
+				| OS.CRTLibrary._FPCLASS_PZ | OS.CRTLibrary._FPCLASS_PD
+				| OS.CRTLibrary._FPCLASS_PN.
 	DefaultDecimalExponents := -3 to: 6!
 
 maxExponent

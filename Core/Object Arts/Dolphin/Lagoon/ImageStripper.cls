@@ -4,7 +4,7 @@ BasicImageStripper
 	subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource exePath stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 dpiAwarenessContext _unused21 _unused22'
 	classVariableNames: ''
-	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AllResourcesStripped' -> 16r1.
@@ -279,7 +279,7 @@ _classesReferencedByMethod: aCompiledMethod
 				ifTrue: [classes add: value]].
 	((deploymentContext _runFlags bitAnd: AllResourcesStripped) == 0
 		and: [aCompiledMethod isResourceMethod])
-		ifTrue: [classes addAll: (deploymentContext _hiddenClassReferencesInResourceMethod: aCompiledMethod)].
+			ifTrue: [classes addAll: (deploymentContext _hiddenClassReferencesInResourceMethod: aCompiledMethod)].
 	^classes!
 
 _classReferencesToIgnore
@@ -895,8 +895,12 @@ _logSentMessages: anIdentityDictionary
 
 _manifestResourceId
 	^self runtimeSessionManagerClass asSessionManagerClass isDLL
-		ifTrue: [ISOLATIONAWARE_MANIFEST_RESOURCE_ID]
-		ifFalse: [CREATEPROCESS_MANIFEST_RESOURCE_ID]!
+		ifTrue: 
+			["ISOLATIONAWARE_MANIFEST_RESOURCE_ID"
+			2]
+		ifFalse: 
+			["CREATEPROCESS_MANIFEST_RESOURCE_ID"
+			1]!
 
 _messageSendsFromClasses: aCollection
 	"Private - Build a dictionary that maps code objects in the collection of classes, aCollection, to the symbols and classes that they references. This is used to construct an initial picture of true (or probably true) message sends in the image so that later we can compare this against the symbolic references remaining and therefore distinguish between actual (or probable) message sends, and ordinary symbol literals."
@@ -986,8 +990,8 @@ The image MUST exit immediately, but see crash dump (if configured).
 	User32
 		messageBox: nil
 		lpText: text
-		lpCaption: SessionManager current applicationName
-		uType: ##(MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_SETFOREGROUND).
+		lpCaption: nil
+		uType: ##("MB_OK" 0 + "MB_ICONERROR" 16r10 + "MB_TASKMODAL" 16r2000 + "MB_SETFOREGROUND" 16r10000).
 	SessionManager current
 		logError: anError;
 		primQuit: -1!
@@ -1475,12 +1479,12 @@ _saveExecutable
 	"Use raw Windows APIs to avoid dependency on File class"
 	imageFile := Kernel32
 				createFile: image
-				dwDesiredAccess: GENERIC_READ
+				dwDesiredAccess: 16r80000000 "GENERIC_READ"
 				dwSharedMode: 0
 				lpSecurityAttributes: nil
-				dwCreationDistribution: OPEN_EXISTING
-				dwFlagsAndAttributes: FILE_ATTRIBUTE_NORMAL
-				hTemplateFile: nil.
+				dwCreationDistribution: 16r3 "OPEN_EXISTING"
+				dwFlagsAndAttributes: 16r80 "FILE_ATTRIBUTE_NORMAL"
+				hTemplateFile: nil.			
 	Kernel32
 		readFile: imageFile
 			lpBuffer: imageData
@@ -1492,7 +1496,7 @@ _saveExecutable
 	(hUpdate notNil and: 
 			[(Kernel32
 				updateResource: hUpdate
-				lpType: RT_RCDATA
+				lpType: 16rA "RT_RCDATA"
 				lpName: 100
 				wLanguage: 0
 				lpData: imageData
@@ -1509,7 +1513,8 @@ _saveExecutable
 
 The development system will now exit.'
 				lpCaption: 'Dolphin Lagoon'
-				uType: ##(MB_ICONINFORMATION | MB_TASKMODAL | MB_SETFOREGROUND)].
+				uType: ##("MB_ICONINFORMATION"
+					16r40 + 16r2000 + 16r10000	"MB_TASKMODAL"	"MB_SETFOREGROUND")	"MB_ICONINFORMATION"	"MB_TASKMODAL"	"MB_SETFOREGROUND"].
 
 	"No arguments - just exit"
 	SessionManager current primQuit: 0!
@@ -1665,13 +1670,13 @@ _updateXPManifestResource: anExternalHandle
 				_buildManifest: assemblyName contents
 				description: (strings at: 'FileDescription' ifAbsent: [file , ' Application'])
 				version: ver.
-	(OS.Kernel32
+	(Kernel32
 		updateResource: anExternalHandle
-		lpType: RT_MANIFEST
+		lpType: 16r18 "RT_MANIFEST"
 		lpName: self _manifestResourceId
 		wLanguage: ver languageId
 		lpData: manifest
-		cbData: manifest size) ifFalse: [OS.Kernel32 systemError]!
+		cbData: manifest size) ifFalse: [Kernel32 systemError]!
 
 _verifyRequiredPackages
 	| packages required found missing |
@@ -1768,7 +1773,7 @@ developmentResources
 	^devres!
 
 dpiAwarenessContext
-	^dpiAwarenessContext ?? DPI_AWARENESS_CONTEXT_UNAWARE!
+	^dpiAwarenessContext ?? -1	"DPI_AWARENESS_CONTEXT_UNAWARE"!
 
 emptyMethodDictionariesOfStubbornClasses
 	"Answer whether the method dictionaries of classes that refuse to uninstall with their

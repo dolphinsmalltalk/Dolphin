@@ -3,7 +3,7 @@
 EmbeddedCheckButton subclass: #EmbeddedCheckBox
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'CheckBox'
 	classInstanceVariableNames: ''!
 
 EmbeddedCheckBox guid: (GUID fromString: '{611f80ae-2e05-4e6f-b0c8-a0adbd00ff31}')!

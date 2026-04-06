@@ -4,7 +4,7 @@ Graphics.GraphicsTool
 	subclass: #'Graphics.ImageList'
 	instanceVariableNames: 'extent initialSize growBy createFlags'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Graphics.Color})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ILC_COLOR' -> 16r0.
@@ -209,8 +209,8 @@ draw: imageIndexInteger on: aCanvas at: aPoint backcolor: backColor forecolor: f
 		y: aPoint y
 		dx: 0
 		dy: 0
-		rgbBk: (backColor isNil ifTrue: [CLR_NONE] ifFalse: [backColor asCOLORREF])
-		rgbFg: (foreColor isNil ifTrue: [CLR_DEFAULT] ifFalse: [foreColor asCOLORREF])
+		rgbBk: (backColor isNil ifTrue: [Color.CLR_NONE] ifFalse: [backColor asCOLORREF])
+		rgbFg: (foreColor isNil ifTrue: [Color.CLR_DEFAULT] ifFalse: [foreColor asCOLORREF])
 		fStyle: flagsInteger!
 
 draw: imageIndexInteger on: aCanvas at: aPoint flags: flagsInteger

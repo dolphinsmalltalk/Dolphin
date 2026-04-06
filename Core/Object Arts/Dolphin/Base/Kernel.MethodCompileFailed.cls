@@ -47,7 +47,10 @@ resumeWithStubMethod
 	result method becomeA: CompileFailedMethod.
 
 	"Resume with this stub"
-	self resume: result! !
+	self resume: result!
+
+severityClass
+	^compilerErrorNotification severityClass! !
 
 !Kernel.MethodCompileFailed categoriesForMethods!
 defaultAction!handling!public! !
@@ -55,6 +58,7 @@ environment!accessing!public! !
 error:environment:!initializing!private! !
 errorCode!accessing!public! !
 resumeWithStubMethod!handler responses!operations!private! !
+severityClass!constants!public! !
 !
 
 !Kernel.MethodCompileFailed class methodsFor!

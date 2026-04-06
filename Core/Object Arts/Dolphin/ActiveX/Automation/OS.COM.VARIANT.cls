@@ -6,7 +6,7 @@ OS.COM.OleVariant
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'VARCMP_NULL' -> 16r3 }!
 
 OS.COM.VARIANT guid: (Core.GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
 
@@ -84,7 +84,7 @@ cmp: anObject
 	cmp := OleAut32
 				varCmp: self
 				pvarRight: varRight
-				lcid: NlsConstants.LOCALE_USER_DEFAULT
+				lcid: Locale.LOCALE_USER_DEFAULT
 				dwFlags: 0.
 	^(cmp == VARCMP_NULL and: [self vt == varRight vt])
 		ifTrue: 

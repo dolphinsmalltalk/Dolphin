@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FileTest'
 	instanceVariableNames: 'tempFile tempDir'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})
+	imports: #(#{OS.KernelLibrary} #{OS.CRTLibrary} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -425,7 +425,7 @@ testCreateDirectoryPath
 	self
 		should: [File createDirectoryPath: VM fileName]
 		raise: OS.Win32Error
-		matching: [:ex | ex statusCode == OS.Win32Errors.ERROR_FILE_EXISTS].
+		matching: [:ex | ex statusCode == ERROR_FILE_EXISTS].
 	tempDir := File createTemporaryDirectory asUtf16String.
 	
 	path := tempDir \ 'one'.
@@ -502,7 +502,7 @@ testFileNotFound
 	tempFile := [File open: tmpFilePath] on: OS.Win32Error
 				do: 
 					[:ex |
-					self assert: (ex isResumable and: [ex statusCode = OS.Win32Errors.ERROR_FILE_NOT_FOUND]).
+					self assert: (ex isResumable and: [ex statusCode = ERROR_FILE_NOT_FOUND]).
 					(File open: tmpFilePath mode: #create) close.
 					ex resume].
 	self assert: tempFile pathName asPath canonicalized equals: tmpFilePath canonicalized!
@@ -533,7 +533,7 @@ testFindFiles
 				in: GUID newUnique idlString
 				do: [:each | self fail: 'Really?']]
 		raise: OS.Win32Error
-		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_PATH_NOT_FOUND]!
+		matching: [:ex | ex statusCode = ERROR_PATH_NOT_FOUND]!
 
 testForDirectoriesIn
 	| all windir |
@@ -552,7 +552,7 @@ testForDirectoriesIn
 	self
 		should: [File forDirectoriesIn: GUID newUnique idlString do: [:each | self fail: 'Really?']]
 		raise: OS.Win32Error
-		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_PATH_NOT_FOUND]!
+		matching: [:ex | ex statusCode = ERROR_PATH_NOT_FOUND]!
 
 testFullPathOf
 	| longPath longFilename |

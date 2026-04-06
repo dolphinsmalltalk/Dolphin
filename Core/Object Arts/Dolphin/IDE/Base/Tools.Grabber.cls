@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Tools.Grabber'
 	instanceVariableNames: 'aspect flags view composer'
 	classVariableNames: 'Cursors'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ConstrainedMask' -> 16r3.
@@ -108,7 +108,7 @@ defaultColor
 defaultExtent
 	"Private - Answers the default extent to be used for the receiver"
 
-	^DefaultExtent * view dpi // USER_DEFAULT_SCREEN_DPI!
+	^DefaultExtent * view dpi // OS.UserLibrary.USER_DEFAULT_SCREEN_DPI!
 
 drawOn: aCanvas rectangle: aRectangle
 	self isDisabled

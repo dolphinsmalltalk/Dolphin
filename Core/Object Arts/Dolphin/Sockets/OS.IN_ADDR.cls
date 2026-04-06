@@ -85,7 +85,7 @@ address: anInternetAddress
 		yourself!
 
 addressFamily
-	^WinSocketConstants.AF_INET!
+	^AF_INET!
 
 byteSize
 	^_IN_ADDR_Size!

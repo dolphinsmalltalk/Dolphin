@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.HRESULTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.HRESULT private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -16,10 +16,10 @@ OS.Tests.HRESULTTest comment: ''!
 
 testDisplayString
 	| subject installedLangIds |
-	subject := HRESULT fromInteger: Win32Errors.E_ABORT.
+	subject := HRESULT fromInteger: E_ABORT.
 	installedLangIds := Locale installedUILanguages collect: [:each | each languageId].
 	({{Locale smalltalk. 'Operation aborted'}.
-		{Locale lcid: NlsConstants.LOCALE_CUSTOM_UNSPECIFIED. 'Operation aborted'}}
+		{Locale lcid: Locale.LOCALE_CUSTOM_UNSPECIFIED. 'Operation aborted'}}
 			, {{Locale named: 'fr-CA'. 'Opération abandonnée'}.
 					{Locale named: 'es-AR'. 'Operación anulada'}.
 					{Locale named: 'en-GB'. 'Operation aborted'}.

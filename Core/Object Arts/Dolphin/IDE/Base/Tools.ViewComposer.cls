@@ -4,7 +4,7 @@ Tools.SmalltalkToolShell
 	subclass: #'Tools.ViewComposer'
 	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter primarySelection vcFlags modificationStatus image undoList'
 	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage PositionImage'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ModifiedFlag' -> 16r1.

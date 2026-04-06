@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.LVFINDINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LVFINDINFOW_Size' -> 16r18.
@@ -12,7 +12,12 @@ External.Structure
 			'_OffsetOf_lParam' -> 16r8.
 			'_OffsetOf_psz' -> 16r4.
 			'_OffsetOf_pt' -> 16rC.
-			'_OffsetOf_vkDirection' -> 16r14
+			'_OffsetOf_vkDirection' -> 16r14.
+			'LVFI_NEARESTXY' -> 16r40.
+			'LVFI_PARAM' -> 16r1.
+			'LVFI_PARTIAL' -> 16r8.
+			'LVFI_STRING' -> 16r2.
+			'LVFI_WRAP' -> 16r20
 		}!
 
 OS.LVFINDINFOW guid: (Core.GUID fromString: '{87b4c5fd-026e-11d3-9fd7-00a0cc3e4a32}')!

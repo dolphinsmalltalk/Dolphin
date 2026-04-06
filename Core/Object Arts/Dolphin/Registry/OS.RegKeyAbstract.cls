@@ -4,7 +4,7 @@ Core.Dictionary
 	variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
 	classVariableNames: 'PathSeparator'
-	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
+	imports: #(#{OS.AdvApiLibrary private} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AccessModes'
@@ -366,14 +366,14 @@ queryKeyInfo
 		lpClass: nil
 		lpcchClass: nil
 		lpReserved: nil
-		lpcSubKeys: base + OS.REGKEYINFO._OffsetOf_subKeyCount
-		lpcbMaxSubKeyLen: base + OS.REGKEYINFO._OffsetOf_maxSubKeyLen
-		lpcbMaxClassLen: base + OS.REGKEYINFO._OffsetOf_maxClassLen
-		lpcValues: base + OS.REGKEYINFO._OffsetOf_valueCount
-		lpcbMaxValueNameLen: base + OS.REGKEYINFO._OffsetOf_maxValueNameLen
-		lpcbMaxValueLen: base + OS.REGKEYINFO._OffsetOf_maxValueLen
-		lpcbSecurityDescriptor: base + OS.REGKEYINFO._OffsetOf_securityDescriptorLen
-		lpftLastWriteTime: base + OS.REGKEYINFO._OffsetOf_ftLastWriteTime.
+		lpcSubKeys: base + REGKEYINFO._OffsetOf_subKeyCount
+		lpcbMaxSubKeyLen: base + REGKEYINFO._OffsetOf_maxSubKeyLen
+		lpcbMaxClassLen: base + REGKEYINFO._OffsetOf_maxClassLen
+		lpcValues: base + REGKEYINFO._OffsetOf_valueCount
+		lpcbMaxValueNameLen: base + REGKEYINFO._OffsetOf_maxValueNameLen
+		lpcbMaxValueLen: base + REGKEYINFO._OffsetOf_maxValueLen
+		lpcbSecurityDescriptor: base + REGKEYINFO._OffsetOf_securityDescriptorLen
+		lpftLastWriteTime: base + REGKEYINFO._OffsetOf_ftLastWriteTime.
 	needsFree ifTrue: [self free].
 	^buf!
 
@@ -922,7 +922,7 @@ fromPredefinedKey: aString mode: aSymbol
 	#deprecated.
 	^self
 		hive: aString
-		handle: (WinRegConstants at: aString)
+		handle: (RegKeyAbstract classPool at: aString)
 		sam: (AccessModes at: aSymbol)!
 
 hive: aString handle: hiveInteger mode: aSymbol

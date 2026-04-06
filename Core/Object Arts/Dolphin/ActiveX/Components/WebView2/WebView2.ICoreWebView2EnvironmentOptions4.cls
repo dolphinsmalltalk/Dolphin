@@ -58,7 +58,7 @@ customSchemeRegistrations
 			"By attaching the interface pointers in the array, we are assuming the ref count added by the implementor of GetCustomSchemeRegistrations"
 			registrations at: i
 				put: (ICoreWebView2CustomSchemeRegistration
-						attach: (pArray uintPtrAtOffset: (i - 1) * Kernel.VMConstants.IntPtrSize))].
+						attach: (pArray uintPtrAtOffset: (i - 1) * Kernel.VMLibrary.IntPtrSize))].
 	pArray free.
 	^registrations!
 

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: 'ClassVar1 ClassVar2'
-	imports: #(#{OS.CRTConstants})
+	imports: #(#{Kernel.ParseErrorCodes} #{OS.CRTLibrary})
 	classInstanceVariableNames: ''
 	classConstants: { 'AppConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
 
@@ -426,13 +426,13 @@ refersToDolphinTestUnqualifiedNameMethodNamespace
 	^#DolphinTest!
 
 refersToImportedPoolConstantBindingUnqualified
-	^#{EINVAL}!
+	^#{CErrAssignConstant}!
 
 refersToImportedPoolConstantFullyQualified
-	^OS.CRTConstants.EINVAL!
+	^Kernel.ParseErrorCodes.CErrAssignConstant!
 
 refersToImportedPoolConstantUnqualified
-	^EINVAL!
+	^CErrAssignConstant!
 
 refersToOtherClassPartiallyQualifiedBinding
 	"Not a valid relative reference to the superclass (does not bind - try sending it #value)"
@@ -451,10 +451,10 @@ refersToOwnClassVariableUnqualifiedBinding
 	^#{ClassVar1} value!
 
 refersToPoolConstantBindingFullyQualified
-	^#{OS.Win32Constants.COLOR_DESKTOP}!
+	^#{Kernel.OpcodePool.BlockCopy}!
 
 refersToPoolConstantFullyQualified
-	^OS.Win32Constants.COLOR_DESKTOP!
+	^Kernel.OpcodePool.BlockCopy!
 
 release
 	self printString!

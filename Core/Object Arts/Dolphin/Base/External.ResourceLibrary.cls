@@ -4,7 +4,7 @@ External.Module
 	subclass: #'External.ResourceLibrary'
 	instanceVariableNames: 'fileName loadFlags'
 	classVariableNames: 'Libraries'
-	imports: #()
+	imports: #(#{OS.KernelLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -4,9 +4,9 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IRecordInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'TYPE_E_FIELDNOTFOUND' -> -16r7FFD7FE9 }!
 
 OS.COM.IRecordInfo guid: (OS.COM.IID fromString: '{0000002f-0000-0000-c000-000000000046}')!
 
@@ -263,7 +263,7 @@ setField: fieldNameString value: newValue into: data ifAbsent: exceptionHandler
 
 	| hr |
 	hr := self
-				PutField: INVOKE_PROPERTYPUT
+				PutField: IDispatch.INVOKE_PROPERTYPUT
 				pvData: data
 				szFieldName: fieldNameString asUtf16String
 				pvarField: newValue asVariant.

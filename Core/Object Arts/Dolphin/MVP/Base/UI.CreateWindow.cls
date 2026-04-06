@@ -4,7 +4,7 @@ UI.CreateWindowApiCall
 	subclass: #'UI.CreateWindow'
 	instanceVariableNames: 'styles title'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

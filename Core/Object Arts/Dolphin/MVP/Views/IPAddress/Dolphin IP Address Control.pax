@@ -1,6 +1,6 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin IP Address Control'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk IP Address Common Control.
 Copyright (c) Object Arts Ltd 2004.
 
@@ -9,54 +9,67 @@ This package contains an MVP View wrapper, IPAddress, for the Windows IP Address
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #IPAddressView;
-	add: #NMIPADDRESS;
-	yourself.
+package setClassNames: #(
+	#{OS.NMIPADDRESS}
+	#{UI.IPAddressView}
+).
 
-package methodNames
-	add: 'NumberPresenter class' -> #resource_IP_address_view;
-	yourself.
+package setMethodNames: #(
+	#(#{UI.NumberPresenter class} #resource_IP_address_view)
+).
 
-package globalNames
-	add: #IPAddressControlConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
-
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\Presenters\Number\Dolphin Number Presenter';
-	add: '..\..\Type Converters\Dolphin Type Converters';
-	add: '..\..\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin ControlViews Base'
+	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\System\Filer\Dolphin Literal Filer (Old versions)'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Presenters\Number\Dolphin Number Presenter'
+	'..\..\..\System\Filer\Dolphin STx Filer Core'
+	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
 "Class Definitions"!
 
-NMHDR subclass: #NMIPADDRESS
+OS.NMHDR
+	subclass: #'OS.NMIPADDRESS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'IPAddressControlConstants'
-	classInstanceVariableNames: ''!
-ValueConvertingControlView subclass: #IPAddressView
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_NMIPADDRESS_Size' -> 16r14.
+			'_OffsetOf_iField' -> 16rC.
+			'_OffsetOf_iValue' -> 16r10
+		}!
+
+UI.ValueConvertingControlView
+	subclass: #'UI.IPAddressView'
 	instanceVariableNames: ''
-	classVariableNames: 'IpnMap'
-	poolDictionaries: 'IPAddressControlConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'ICC_INTERNET_CLASSES' -> 16r800.
+			'IPM_CLEARADDRESS' -> 16r464.
+			'IPM_GETADDRESS' -> 16r466.
+			'IPM_ISBLANK' -> 16r469.
+			'IPM_SETADDRESS' -> 16r465.
+			'IPM_SETFOCUS' -> 16r468.
+			'IPM_SETRANGE' -> 16r467.
+			'IPN_FIELDCHANGED' -> -16r35C.
+			'IPN_FIRST' -> -16r35C.
+			'IpnMap' -> #(#ipnFieldChanged:)
+		}!
 
 "Loose Methods"!
 
-!NumberPresenter class methodsFor!
+!UI.NumberPresenter class methodsFor!
 
 resource_IP_address_view
 	"Answer the literal data from which the 'IP address view' resource can be reconstituted.
@@ -66,8 +79,11 @@ resource_IP_address_view
 	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_IP_address_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.IPAddressView)  98 15 0 0 98 2 8 1409351680 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 32 1310726 ##(Smalltalk.EqualitySearchPolicy)  0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294904871 852486 ##(Smalltalk.NullConverter)  0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 1 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 786 281 43 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 3 6 0 0 31 0 0 0] 98 0 786 193 193 0 27 )! !
-!NumberPresenter class categoriesFor: #resource_IP_address_view!public!resources-views! !
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(IPAddressView)  98 15 0 0 98 2 8 1409351680 1 416 721990 2 ##(ValueHolder)  0 32 1310726 ##(EqualitySearchPolicy)  0 524550 ##(ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294904871 852486 ##(NullConverter)  0 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  2799 21 786 281 43 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 3 6 0 0 31 0 0 0] 98 0 786 193 193 0 27 )! !
+
+!UI.NumberPresenter class categoriesForMethods!
+resource_IP_address_view!public!resources-views! !
+!
 
 "End of package definition"!
 

@@ -4,7 +4,7 @@ UI.ContainerView
 	subclass: #'UI.SlideyInneyOuteyThing'
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
 	classVariableNames: ''
-	imports: #(#{OS.ThemeConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AnimatedCardChangeMask' -> 16r8.

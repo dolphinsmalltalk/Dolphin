@@ -4,7 +4,7 @@ OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.PropertyBag'
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

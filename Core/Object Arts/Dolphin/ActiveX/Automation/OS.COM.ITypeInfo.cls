@@ -1,12 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown
+OS.COM.ITypeInformationInterface
 	subclass: #'OS.COM.ITypeInfo'
 	instanceVariableNames: 'attributes allCustData'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'IMPLTYPEFLAG_FDEFAULT' -> 16r1.
+			'IMPLTYPEFLAG_FRESTRICTED' -> 16r4.
+			'IMPLTYPEFLAG_FSOURCE' -> 16r2.
+			'MEMBERID_NIL' -> -16r1.
+			'TKIND_ALIAS' -> 16r6.
+			'TKIND_COCLASS' -> 16r5.
+			'TKIND_DISPATCH' -> 16r4.
+			'TKIND_ENUM' -> 16r0.
+			'TKIND_INTERFACE' -> 16r3.
+			'TKIND_MAX' -> 16r8.
+			'TKIND_MODULE' -> 16r2.
+			'TKIND_RECORD' -> 16r1.
+			'TKIND_UNION' -> 16r7
+		}!
 
 OS.COM.ITypeInfo guid: (OS.COM.IID fromString: '{00020401-0000-0000-c000-000000000046}')!
 
@@ -96,11 +110,6 @@ CreateInstance: pUnkOuter riid: riid ppvObj: ppvObj
 
 	<virtual stdcall: hresult 17 IUnknown* guid* void**>
 	^self invalidCall: _failureCode!
-
-getAllCustData
-	"Answer a <CUSTDATA> describing the custom data associated with the type described by this ITypeInfo."
-
-	^self nullCustData!
 
 getAllFuncCustData: index 
 	"Answer a <CUSTDATA> for the function of the type described by the receiver with the specified zero-based index."
@@ -339,15 +348,6 @@ GetTypeAttr: ppTypeAttr
 	<virtual stdcall: hresult 4 TYPEATTR**>
 	^self invalidCall: _failureCode!
 
-getTypeComp
-	"Answer the <ITypeComp> result of invoking the COM Object's GetTypeComp() method."
-
-	| ppTComp |
-	ppTComp := ITypeComp newPointer.
-	self GetTypeComp: ppTComp.
-	^ppTComp
-!
-
 GetTypeComp: ppTComp
 	"Private - Invoke the GetTypeComp() method of the COM object wrapped by the receiver.
 
@@ -441,14 +441,14 @@ isDual
 	which derives from IDispatch and which can be early or late
 	bound."
 
-	^self typeFlags allMask: TYPEFLAG_FDUAL!
+	^self typeFlags allMask: TYPEATTR.TYPEFLAG_FDUAL!
 
 isHidden
 	"Answer whether the receiver is describing a type which should
 	not be displayed in type library browsers.
 	Applicable to all typekinds."
 
-	^self typeFlags allMask: TYPEFLAG_FHIDDEN!
+	^self typeFlags allMask: TYPEATTR.TYPEFLAG_FHIDDEN!
 
 libraryAndIndex
 	"Answer an <Association> between an <ITypeLib>, which is the receiver's containing type library, and an <integer>, which is the one-based index of the receiver in that type library ."
@@ -479,27 +479,7 @@ nameOfID: anInteger ifAbsent: exceptionHandler
 	differs from ITypeLib, where indices are used to access the elements.
 	We can use this as the reverse mapping to GetIDsOfNames."
 
-	| bstrName name hr |
-	bstrName := BSTR basicNew.
-	"We could use documentationForMember:, but that involves a lot of extra
-	processing for information we don't need."
-	hr := self
-				GetDocumentation: anInteger
-				pBstrName: bstrName
-				pBstrDocString: nil
-				pdwHelpContext: nil
-				pBstrHelpFile: nil.
-	hr < 0
-		ifTrue: 
-			[^hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [exceptionHandler value] ifFalse: [HRESULTError signalWith: hr]].
-	name := bstrName asString.
-	bstrName basicFree.
-	^name!
-
-nullCustData
-	^CUSTDATA new
-		beUnfinalizable;
-		yourself!
+	^self getName: anInteger ifAbsent: exceptionHandler!
 
 onStartup
 	allCustData beUnfinalizable.
@@ -553,14 +533,6 @@ safeInvoke: invoke memid: memid wFlags: wFlags pDispParams: pDispParams pVarResu
 	<virtual stdcall: int32 12 void* uint32 uint16 DISPPARAMS* variant* EXCEPINFO* uint32*>
 	^self invalidCall: _failureCode!
 
-typeComp
-	"Answer an ITypeComp on the receiver."
-
-	| answer |
-	answer := ITypeComp newPointer.
-	self GetTypeComp: answer.
-	^answer!
-
 typeFlags
 	"Answer the receiver's type flags (from the TYPEFLAGS enumeration).
 	Implementation Note: The type flags are retrieved from the receiver's cached TYPEATTR
@@ -586,7 +558,6 @@ asImplType!accessing!converting!public! !
 attributes!accessing!public! !
 basicFree!private!realizing/unrealizing! !
 CreateInstance:riid:ppvObj:!COM Interfaces-OAIDL.ITypeInfo!private! !
-getAllCustData!accessing!public! !
 getAllFuncCustData:!**auto generated**!public! !
 getAllParamCustData:indexParam:!**auto generated**!public! !
 getAllVarCustData:!accessing!public! !
@@ -610,7 +581,6 @@ getRefTypeOfImplType:!methods!private! !
 GetRefTypeOfImplType:pRefType:!COM Interfaces-OAIDL.ITypeInfo!private! !
 getTypeAttr!**auto generated**!public! !
 GetTypeAttr:!COM Interfaces-OAIDL.ITypeInfo!private! !
-getTypeComp!**auto generated**!public! !
 GetTypeComp:!COM Interfaces-OAIDL.ITypeInfo!private! !
 getVarDesc:!**auto generated**!public! !
 GetVarDesc:ppVarDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
@@ -625,14 +595,12 @@ libraryAndIndex!accessing!public! !
 name!printing!public! !
 nameOfID:!accessing!public! !
 nameOfID:ifAbsent:!accessing!public! !
-nullCustData!accessing!public! !
 onStartup!public! !
 recordInfoIfNone:!accessing!public! !
 ReleaseFuncDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
 ReleaseTypeAttr:!COM Interfaces-OAIDL.ITypeInfo!private! !
 ReleaseVarDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
 safeInvoke:memid:wFlags:pDispParams:pVarResult:pExcepInfo:puArgErr:!operations!private! !
-typeComp!accessing!public! !
 typeFlags!accessing!public! !
 typekind!accessing!public! !
 typeLib!accessing!public! !

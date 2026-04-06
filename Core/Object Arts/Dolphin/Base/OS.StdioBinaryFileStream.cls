@@ -73,7 +73,7 @@ peekFor: anObject
 					false]]!
 
 translationMode
-	^CRTConstants._O_BINARY!
+	^_O_BINARY!
 
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 

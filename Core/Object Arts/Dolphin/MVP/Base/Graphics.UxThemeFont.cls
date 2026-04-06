@@ -4,7 +4,7 @@ Graphics.SystemFont
 	subclass: #'Graphics.UxThemeFont'
 	instanceVariableNames: 'themedObject'
 	classVariableNames: ''
-	imports: #(#{OS.ThemeConstants})
+	imports: #(#{OS.ThemeLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'FontNames'

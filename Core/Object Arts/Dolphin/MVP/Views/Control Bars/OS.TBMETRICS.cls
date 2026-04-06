@@ -4,7 +4,7 @@ OS.SizedStructure
 	subclass: #'OS.TBMETRICS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ToolbarConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cxBarPad' -> 16r10.
@@ -14,7 +14,10 @@ OS.SizedStructure
 			'_OffsetOf_cyButtonSpacing' -> 16r1C.
 			'_OffsetOf_cyPad' -> 16rC.
 			'_OffsetOf_dwMask' -> 16r4.
-			'_TBMETRICS_Size' -> 16r20
+			'_TBMETRICS_Size' -> 16r20.
+			'TBMF_BARPAD' -> 16r2.
+			'TBMF_BUTTONSPACING' -> 16r4.
+			'TBMF_PAD' -> 16r1
 		}!
 
 OS.TBMETRICS guid: (Core.GUID fromString: '{b296885b-f712-4cd1-8e2d-ed9f6e347004}')!

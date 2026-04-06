@@ -10165,7 +10165,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 					[:defId |
 					shell
 						sendMessage: WM_COMMAND
-						wParam: ButtonConstants.BN_CLICKED << 16 | shell defaultButtonId
+						wParam: (BN_CLICKED << 16 bitOr: shell defaultButtonId)
 						lParam: defId].
 			^0	"Suppress default processing"].
 	^super
@@ -11668,7 +11668,7 @@ initialize
 
 	| defaultKeyBindings keyMap |
 	self addClassConstant: 'CodePages'
-		value: (IdentityDictionary withAll: { NlsConstants.CP_ACP -> #ansi. SC_CP_UTF8 -> #utf8 }).
+		value: (IdentityDictionary withAll: { Locale.CP_ACP -> #ansi. SC_CP_UTF8 -> #utf8 }).
 	self addClassConstant: 'DefaultTextStyles'
 		value: (LookupTable withAll: {
 						#container -> (self immutableCopyOfCollection: self defaultTextStyles).

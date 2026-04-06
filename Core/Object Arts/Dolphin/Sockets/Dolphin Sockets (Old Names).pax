@@ -6,22 +6,24 @@ package paxVersion: 2.1;
 
 package setVariableNames: #(
 	#{Smalltalk.InternetAddress}
+	#{Smalltalk.Socket2}
 	#{Smalltalk.SocketClosed}
 	#{Smalltalk.SocketError}
 	#{Smalltalk.SocketReadStream}
 	#{Smalltalk.SocketWaitCancelled}
 	#{Smalltalk.SocketWriteStream}
-	#{Smalltalk.WinSocketConstants}
+	#{Smalltalk.WS2_32Library}
 ).
 
 package setAliasVariableNames: #(
 	#{Smalltalk.InternetAddress}
+	#{Smalltalk.Socket2}
 	#{Smalltalk.SocketClosed}
 	#{Smalltalk.SocketError}
 	#{Smalltalk.SocketReadStream}
 	#{Smalltalk.SocketWaitCancelled}
 	#{Smalltalk.SocketWriteStream}
-	#{Smalltalk.WinSocketConstants}
+	#{Smalltalk.WS2_32Library}
 ).
 
 package setPrerequisites: #(
@@ -35,6 +37,8 @@ package!
 
 Smalltalk.InternetAddress := Net.InternetAddress!
 
+Smalltalk.Socket2 := Net.Socket!
+
 Smalltalk.SocketClosed := Net.SocketClosed!
 
 Smalltalk.SocketError := Net.SocketError!
@@ -45,7 +49,7 @@ Smalltalk.SocketWaitCancelled := Net.SocketWaitCancelled!
 
 Smalltalk.SocketWriteStream := Core.ExternalWriteStream!
 
-Smalltalk.WinSocketConstants := OS.WinSocketConstants!
+Smalltalk.WS2_32Library := OS.WS2_32Library!
 
 
 "End of package definition"!

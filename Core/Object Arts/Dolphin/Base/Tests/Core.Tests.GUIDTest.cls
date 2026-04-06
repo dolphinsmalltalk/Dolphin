@@ -90,7 +90,7 @@ testFromString
 	self
 		should: [GUID fromString: 'foo']
 		raise: OS.RPCError
-		matching: [:ex | ex statusCode = OS.Win32Errors.RPC_S_INVALID_STRING_UUID]!
+		matching: [:ex | ex statusCode = OS.Win32Error.RPC_S_INVALID_STRING_UUID]!
 
 testFromStringNull
 	self assertNull: (self subjectClass fromString: self subjectClass null asString)!

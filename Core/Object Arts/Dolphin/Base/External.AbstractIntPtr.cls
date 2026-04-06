@@ -30,36 +30,36 @@ asUnsignedInteger
 highPart
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [bytes uint32AtOffset: 4] ifFalse: [bytes uint16AtOffset: 2]!
+	^VMLibrary.IsWin64 ifTrue: [bytes uint32AtOffset: 4] ifFalse: [bytes uint16AtOffset: 2]!
 
-highPart: anObject 
+highPart: anObject
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	VMConstants.IsWin64 
+	VMLibrary.IsWin64
 		ifTrue: [bytes uint32AtOffset: 4 put: anObject]
 		ifFalse: [bytes uint16AtOffset: 2 put: anObject]!
 
 highPartSigned
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [bytes int32AtOffset: 4] ifFalse: [bytes int16AtOffset: 2]!
+	^VMLibrary.IsWin64 ifTrue: [bytes int32AtOffset: 4] ifFalse: [bytes int16AtOffset: 2]!
 
 lowPart
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [bytes uint32AtOffset: 0] ifFalse: [bytes uint16AtOffset: 0]!
+	^VMLibrary.IsWin64 ifTrue: [bytes uint32AtOffset: 0] ifFalse: [bytes uint16AtOffset: 0]!
 
-lowPart: anObject 
+lowPart: anObject
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	VMConstants.IsWin64 
+	VMLibrary.IsWin64
 		ifTrue: [bytes uint32AtOffset: 0 put: anObject]
 		ifFalse: [bytes uint16AtOffset: 0 put: anObject]!
 
 lowPartSigned
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [bytes int32AtOffset: 0] ifFalse: [bytes int16AtOffset: 0]!
+	^VMLibrary.IsWin64 ifTrue: [bytes int32AtOffset: 0] ifFalse: [bytes int16AtOffset: 0]!
 
 unsignedValue: anUnsigned 
 	"Set the receiver's value field to the value of the unsigned positive
@@ -84,7 +84,7 @@ unsignedValue:!accessing!public! !
 byteSize
 	"Answer the size in bytes of this structure"
 
-	^VMConstants.IntPtrSize! !
+	^VMLibrary.IntPtrSize! !
 
 !External.AbstractIntPtr class categoriesForMethods!
 byteSize!accessing!public! !

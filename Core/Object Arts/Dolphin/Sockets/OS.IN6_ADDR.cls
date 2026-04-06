@@ -55,7 +55,7 @@ Bytes:!**compiled accessors**!public! !
 !OS.IN6_ADDR class methodsFor!
 
 addressFamily
-	^WinSocketConstants.AF_INET6!
+	^AF_INET6!
 
 byteSize
 	^_IN6_ADDR_Size!

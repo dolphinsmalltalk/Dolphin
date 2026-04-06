@@ -375,7 +375,7 @@ Core.Tests.DolphinTest
 	subclass: #'Core.Tests.CharacterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.NlsConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -439,7 +439,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.CRTLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CRTLibrary} #{OS.CRTError})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -551,7 +551,7 @@ Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FileTest'
 	instanceVariableNames: 'tempFile tempDir'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})
+	imports: #(#{OS.KernelLibrary} #{OS.CRTLibrary} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -567,7 +567,7 @@ Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FloatTest'
 	instanceVariableNames: 'fpeMask'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CRTLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -583,7 +583,7 @@ Core.Tests.DolphinTest
 	subclass: #'External.Tests.FunctionDescriptorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{External.ExtCallArgTypes})
+	imports: #(#{External.FunctionDescriptor})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -599,7 +599,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.HRESULTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.HRESULT private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -631,7 +631,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.KernelLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.KernelLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -735,7 +735,7 @@ Core.Tests.DolphinTest
 	subclass: #'Core.Tests.PathTest'
 	instanceVariableNames: 'tempDir'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants} #{OS.CRTLibrary} #{OS} #{OS.Win32Error})
+	imports: #(#{OS.KernelLibrary} #{OS.CRTLibrary} #{OS} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -887,7 +887,7 @@ Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.VMTest'
 	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
-	imports: #(#{OS.CRTConstants})
+	imports: #(#{OS.CRTLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

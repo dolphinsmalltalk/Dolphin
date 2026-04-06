@@ -17,7 +17,28 @@ OS.SizedStructure
 			'_OffsetOf_wServicePackMajor' -> 16r114.
 			'_OffsetOf_wServicePackMinor' -> 16r116.
 			'_OffsetOf_wSuiteMask' -> 16r118.
-			'_OSVERSIONINFOEXW_Size' -> 16r11C
+			'_OSVERSIONINFOEXW_Size' -> 16r11C.
+			'VER_AND' -> 16r6.
+			'VER_BUILDNUMBER' -> 16r4.
+			'VER_EQUAL' -> 16r1.
+			'VER_GREATER' -> 16r2.
+			'VER_GREATER_EQUAL' -> 16r3.
+			'VER_LESS' -> 16r4.
+			'VER_LESS_EQUAL' -> 16r5.
+			'VER_MAJORVERSION' -> 16r2.
+			'VER_MINORVERSION' -> 16r1.
+			'VER_NT_DOMAIN_CONTROLLER' -> 16r2.
+			'VER_NT_SERVER' -> 16r3.
+			'VER_NT_WORKSTATION' -> 16r1.
+			'VER_OR' -> 16r7.
+			'VER_PLATFORM_WIN32_NT' -> 16r2.
+			'VER_PLATFORM_WIN32_WINDOWS' -> 16r1.
+			'VER_PLATFORM_WIN32s' -> 16r0.
+			'VER_PLATFORMID' -> 16r8.
+			'VER_PRODUCT_TYPE' -> 16r80.
+			'VER_SERVICEPACKMAJOR' -> 16r20.
+			'VER_SERVICEPACKMINOR' -> 16r10.
+			'VER_SUITENAME' -> 16r40
 		}!
 
 OS.OSVERSIONINFOEXW guid: (Core.GUID fromString: '{1c5e8929-8791-4aa9-b7ea-152ef36b23dd}')!

@@ -63,7 +63,7 @@ testCommentChange
 testCompileTreeForMethod
 	"When we compile a tree for a method that is not yet a new method in the model it is important that it's identity is preserved in order that methods collected before the refactoring was started are updated as the refactoring proceeds. Without this the RenameClassRefactoring (for example) may fail if there are methods with both inbound and outbound references."
 
-	| subject thisClass method rewriter ref originalTree |
+	| subject thisClass method rewriter originalTree |
 	subject := RBModel new.
 	thisClass := subject classFor: self class.
 	method := thisClass methodFor: self selector.
@@ -266,9 +266,9 @@ testReparentSuperclassChange
 testResolveBindingPathOfClassConstant
 	| subject var |
 	subject := RBModel new.
-	var := subject fullBindingFor: 'OS.Win32Constants.BS_PATTERN'.
+	var := subject fullBindingFor: 'Refactory.Browser.TestData.RefactoryTestDataApp.AppConst1'.
 	self assert: var isKindOf: RBVariableBinding.
-	self assert: var realBinding identicalTo: (OS.Win32Constants bindingFor: 'BS_PATTERN')!
+	self assert: var realBinding identicalTo: (Refactory.Browser.TestData.RefactoryTestDataApp bindingFor: 'AppConst1')!
 
 testResolveBindingPathOfClassVar
 	| subject var |

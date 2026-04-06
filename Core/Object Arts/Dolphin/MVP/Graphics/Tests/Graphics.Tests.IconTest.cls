@@ -68,7 +68,7 @@ testFromShellStock
 
 testFromSystemId
 	| icon1 icon2 |
-	icon1 := Icon fromSystemId: OS.Win32Constants.IDI_SHIELD.
+	icon1 := Icon fromSystemId: Icon.IDI_SHIELD.
 	icon2 := Icon shield.
 	self assert: icon1 equals: icon2.
 	self assert: icon2 equals: icon1.
@@ -134,10 +134,10 @@ testStbConvertFromVersion1_system
 	self assert: icon isKindOf: Icon.
 	self assert: icon ownsHandle.
 	self assert: icon initializer isKindOf: IconFromSystemInitializer.
-	self assert: icon initializer identifier equals: Win32Constants.IDI_ERROR.
+	self assert: icon initializer identifier equals: Icon.IDI_ERROR.
 	self assert: icon initializer isLoadShared.
 	self assert: icon equals: Error icon.
-	self isDolphin8OrLater ifTrue: [self assert: icon handle equals: Error icon handle].
+	self isDolphin8OrLater ifTrue: [self assert: icon handle equals: Icon.Error icon handle].
 	icon free!
 
 testStbConvertFromVersion3_resource
@@ -161,16 +161,16 @@ testStbConvertFromVersion3_system
 	self assert: icon isKindOf: Icon.
 	self assert: icon ownsHandle.
 	self assert: icon initializer isKindOf: IconFromSystemInitializer.
-	self assert: icon initializer identifier equals: Win32Constants.IDI_ERROR.
+	self assert: icon initializer identifier equals: Icon.IDI_ERROR.
 	self assert: icon initializer isLoadShared.
 	self assert: icon equals: Error icon.
-	self isDolphin8OrLater ifTrue: [self assert: icon handle equals: Error icon handle].
+	self isDolphin8OrLater ifTrue: [self assert: icon handle equals: Icon.Error icon handle].
 	icon free!
 
 testStlConvertFromVersion3_file
 	| rehydrated comparand |
 	rehydrated := Object
-				fromLiteralStoreArray: #(#'!!STL' 4 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Core\DolphinVM\res\collection.ico' nil).
+				fromLiteralStoreArray: #(#'!!STL' 4 263494 3 ##(Icon) nil true 1572870 ##(ImageRelativeFileLocator) 8 'Core\DolphinVM\res\collection.ico' nil).
 	self assert: rehydrated isPersistent.
 	self assert: rehydrated printString equals: 'Icon fromFile: ''Core\DolphinVM\res\collection.ico'''.
 	comparand := Icon fromFile: 'Core\DolphinVM\res\Collection.ico'.
@@ -183,7 +183,7 @@ testStlConvertFromVersion3_file
 testStlConvertFromVersion3_resource
 	| rehydrated comparand |
 	rehydrated := Object
-				fromLiteralStoreArray: #(#'!!STL' 4 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Collection.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil).
+				fromLiteralStoreArray: #(#'!!STL' 4 263494 3 ##(Icon) nil true 1572870 ##(ImageRelativeFileLocator) 8 'Collection.ico' 2032142 ##(STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil).
 	self assert: rehydrated isPersistent.
 	self assert: rehydrated printString equals: 'Icon fromId: ''Collection.ico'''.
 	self assert: rehydrated initializer isLoadShared.
@@ -194,7 +194,7 @@ testStlConvertFromVersion3_system
 	| rehydrated comparand |
 	comparand := Icon warning.
 	rehydrated := Object
-				fromLiteralStoreArray: #(#'!!STL' 4 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 65031 1).
+				fromLiteralStoreArray: #(#'!!STL' 4 263494 3 ##(Icon) nil true 1572870 ##(ImageRelativeFileLocator) 65031 1).
 	self deny: rehydrated identicalTo: comparand.
 	self assert: rehydrated equals: comparand.
 	self assert: rehydrated initializer isLoadShared.

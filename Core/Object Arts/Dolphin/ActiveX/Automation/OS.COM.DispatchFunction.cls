@@ -4,7 +4,7 @@ OS.COM.InterfaceFunction
 	subclass: #'OS.COM.DispatchFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

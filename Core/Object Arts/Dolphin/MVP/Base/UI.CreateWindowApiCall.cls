@@ -4,7 +4,7 @@ UI.CreateWindowFunction
 	subclass: #'UI.CreateWindowApiCall'
 	instanceVariableNames: 'rectangle dpi'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.CCHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_pt' -> 16r0 }!
 

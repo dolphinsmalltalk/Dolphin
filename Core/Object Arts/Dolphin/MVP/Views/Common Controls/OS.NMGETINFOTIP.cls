@@ -41,11 +41,11 @@ text: anObject
 			["We need to allow space for a U+2026 and the null terminator, ensuring we don't truncate in the middle of a character"
 			utf16 := (utf16 copyFrom: 1
 						to: ((utf16 at: max - 2) isUtf16Lead ifTrue: [max - 3] ifFalse: [max - 2])) , '…'].
-	OS.Ucrt
+	Ucrt
 		wcsncpy_s: (bytes intPtrAtOffset: self textPointerOffset)
 		bufferSize: max
 		strSource: utf16
-		count: OS.CRTConstants._TRUNCATE.
+		count: CRTLibrary._TRUNCATE.
 	^utf16!
 
 textPointerOffset

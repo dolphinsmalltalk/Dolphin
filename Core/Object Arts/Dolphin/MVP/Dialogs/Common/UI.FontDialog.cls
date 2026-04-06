@@ -4,7 +4,7 @@ UI.CommonDialog
 	subclass: #'UI.FontDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CHOOSEFONTW private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

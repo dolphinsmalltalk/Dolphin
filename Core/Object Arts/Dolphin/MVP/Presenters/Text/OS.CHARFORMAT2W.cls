@@ -4,7 +4,7 @@ OS.SizedStructure
 	subclass: #'OS.CHARFORMAT2W'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_CHARFORMAT2W_Size' -> 16r74.
@@ -26,7 +26,75 @@ OS.SizedStructure
 			'_OffsetOf_wKerning' -> 16r6E.
 			'_OffsetOf_wWeight' -> 16r5A.
 			'_OffsetOf_yHeight' -> 16rC.
-			'_OffsetOf_yOffset' -> 16r10
+			'_OffsetOf_yOffset' -> 16r10.
+			'CF_ANSIONLY' -> 16r400.
+			'CF_APPLY' -> 16r200.
+			'CF_BOTH' -> 16r3.
+			'CF_EFFECTS' -> 16r100.
+			'CF_ENABLEHOOK' -> 16r8.
+			'CF_ENABLETEMPLATE' -> 16r10.
+			'CF_ENABLETEMPLATEHANDLE' -> 16r20.
+			'CF_FIXEDPITCHONLY' -> 16r4000.
+			'CF_FORCEFONTEXIST' -> 16r10000.
+			'CF_INITTOLOGFONTSTRUCT' -> 16r40.
+			'CF_LIMITSIZE' -> 16r2000.
+			'CF_NOFACESEL' -> 16r80000.
+			'CF_NOOEMFONTS' -> 16r800.
+			'CF_NOSCRIPTSEL' -> 16r800000.
+			'CF_NOSIMULATIONS' -> 16r1000.
+			'CF_NOSIZESEL' -> 16r200000.
+			'CF_NOSTYLESEL' -> 16r100000.
+			'CF_NOVECTORFONTS' -> 16r800.
+			'CF_NOVERTFONTS' -> 16r1000000.
+			'CF_PRINTERFONTS' -> 16r2.
+			'CF_SCALABLEONLY' -> 16r20000.
+			'CF_SCREENFONTS' -> 16r1.
+			'CF_SCRIPTSONLY' -> 16r400.
+			'CF_SELECTSCRIPT' -> 16r400000.
+			'CF_SHOWHELP' -> 16r4.
+			'CF_TTONLY' -> 16r40000.
+			'CF_USESTYLE' -> 16r80.
+			'CF_WYSIWYG' -> 16r8000.
+			'CFE_AUTOCOLOR' -> 16r40000000.
+			'CFE_BOLD' -> 16r1.
+			'CFE_ITALIC' -> 16r2.
+			'CFE_LINK' -> 16r20.
+			'CFE_PROTECTED' -> 16r10.
+			'CFE_STRIKEOUT' -> 16r8.
+			'CFE_SUBSCRIPT' -> 16r10000.
+			'CFE_SUPERSCRIPT' -> 16r20000.
+			'CFE_UNDERLINE' -> 16r4.
+			'CFM_ALLCAPS' -> 16r80.
+			'CFM_ANIMATION' -> 16r40000.
+			'CFM_BACKCOLOR' -> 16r4000000.
+			'CFM_BOLD' -> 16r1.
+			'CFM_CHARSET' -> 16r8000000.
+			'CFM_COLOR' -> 16r40000000.
+			'CFM_DISABLED' -> 16r2000.
+			'CFM_EMBOSS' -> 16r800.
+			'CFM_FACE' -> 16r20000000.
+			'CFM_HIDDEN' -> 16r100.
+			'CFM_IMPRINT' -> 16r1000.
+			'CFM_ITALIC' -> 16r2.
+			'CFM_KERNING' -> 16r100000.
+			'CFM_LCID' -> 16r2000000.
+			'CFM_LINK' -> 16r20.
+			'CFM_OFFSET' -> 16r10000000.
+			'CFM_OUTLINE' -> 16r200.
+			'CFM_PROTECTED' -> 16r10.
+			'CFM_REVAUTHOR' -> 16r8000.
+			'CFM_REVISED' -> 16r4000.
+			'CFM_SHADOW' -> 16r400.
+			'CFM_SIZE' -> 16r80000000.
+			'CFM_SMALLCAPS' -> 16r40.
+			'CFM_SPACING' -> 16r200000.
+			'CFM_STRIKEOUT' -> 16r8.
+			'CFM_STYLE' -> 16r80000.
+			'CFM_SUBSCRIPT' -> 16r30000.
+			'CFM_SUPERSCRIPT' -> 16r30000.
+			'CFM_UNDERLINE' -> 16r4.
+			'CFM_UNDERLINETYPE' -> 16r800000.
+			'CFM_WEIGHT' -> 16r400000
 		}!
 
 OS.CHARFORMAT2W guid: (Core.GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -307,7 +375,7 @@ logFont
 	answer faceName: self szFaceName.
 	#highDpiToDo. "Need to use the DPI of the associated view for per-monitor awareness"
 	answer lfHeight: (self pointSize * Graphics.Canvas desktopResolution y / 72) rounded negated.
-	answer lfWeight: (self isBold ifTrue: [FW_BOLD] ifFalse: [FW_NORMAL]).
+	answer isBold: self isBold.
 	answer lfItalic: self isItalic asParameter.
 	answer lfUnderline: self isUnderlined asParameter.
 	answer lfStrikeOut: self isStruckThrough asParameter.
@@ -375,7 +443,7 @@ populateFromChooseFont: aCHOOSEFONT
 	(flags allMask: CF_NOSTYLESEL)
 		ifFalse: 
 			[self
-				isBold: lf lfWeight >= FW_BOLD;
+				isBold: lf isBold;
 				isItalic: lf lfItalic asBoolean].
 	(flags allMask: CF_EFFECTS) ifFalse: [^self].
 	self isUnderlined: lf lfUnderline asBoolean.

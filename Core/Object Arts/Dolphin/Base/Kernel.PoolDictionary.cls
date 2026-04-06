@@ -44,6 +44,7 @@ convertToSharedPool
 	(Smalltalk localBindingFor: identifier) value: poolClass.
 	Smalltalk removeBindingFor: tempName.
 	poolClass setName: identifier environment: poolClass environment.
+	poolClass categories: {ClassCategory name: 'Deprecated'}.
 	^poolClass!
 
 displayOn: aPuttableStream

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
 	classVariableNames: ''
-	imports: #(#{OS.MessageBoxConstants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: 'defaultCaptions'
 	classConstants: {
 			'IconStyles'
@@ -72,7 +72,7 @@ dpi
 
 	| actualDpi |
 	actualDpi := User32 getDpiForWindow: self ownerHandle.
-	^actualDpi == 0 ifTrue: [Win32Constants.USER_DEFAULT_SCREEN_DPI] ifFalse: [actualDpi]!
+	^actualDpi == 0 ifTrue: [USER_DEFAULT_SCREEN_DPI] ifFalse: [actualDpi]!
 
 errorMsg
 	self hasIcon ifFalse: [self iconStyle: #error].

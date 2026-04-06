@@ -4,9 +4,9 @@ UI.ControlView
 	subclass: #'UI.GroupBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ButtonConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BS_GROUPBOX' -> 16r7 }!
 
 UI.GroupBox guid: (Core.GUID fromString: '{87b4c727-026e-11d3-9fd7-00a0cc3e4a32}')!
 

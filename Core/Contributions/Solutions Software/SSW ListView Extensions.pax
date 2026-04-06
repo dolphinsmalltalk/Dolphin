@@ -150,7 +150,7 @@ maxTipWidth: anInteger
 			[:hwnd |
 			UserLibrary default
 				sendMessage: hwnd
-				msg: TooltipConstants.TTM_SETMAXTIPWIDTH
+				msg: Tooltip.TTM_SETMAXTIPWIDTH
 				wParam: 0
 				lParam: anInteger]!
 

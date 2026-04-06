@@ -4,9 +4,41 @@ Graphics.Color
 	subclass: #'Graphics.SystemColor'
 	instanceVariableNames: 'id'
 	classVariableNames: 'ColorsById'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'COLOR_3DDKSHADOW' -> 16r15.
+			'COLOR_3DFACE' -> 16rF.
+			'COLOR_3DHIGHLIGHT' -> 16r14.
+			'COLOR_3DLIGHT' -> 16r16.
+			'COLOR_3DSHADOW' -> 16r10.
+			'COLOR_ACTIVEBORDER' -> 16rA.
+			'COLOR_ACTIVECAPTION' -> 16r2.
+			'COLOR_APPWORKSPACE' -> 16rC.
+			'COLOR_BACKGROUND' -> 16r1.
+			'COLOR_BTNHIGHLIGHT' -> 16r14.
+			'COLOR_BTNTEXT' -> 16r12.
+			'COLOR_CAPTIONTEXT' -> 16r9.
+			'COLOR_DESKTOP' -> 16r1.
+			'COLOR_GRADIENTACTIVECAPTION' -> 16r1B.
+			'COLOR_GRADIENTINACTIVECAPTION' -> 16r1C.
+			'COLOR_GRAYTEXT' -> 16r11.
+			'COLOR_HIGHLIGHT' -> 16rD.
+			'COLOR_HIGHLIGHTTEXT' -> 16rE.
+			'COLOR_HOTLIGHT' -> 16r1A.
+			'COLOR_INACTIVEBORDER' -> 16rB.
+			'COLOR_INACTIVECAPTION' -> 16r3.
+			'COLOR_INACTIVECAPTIONTEXT' -> 16r13.
+			'COLOR_INFOBK' -> 16r18.
+			'COLOR_INFOTEXT' -> 16r17.
+			'COLOR_MENU' -> 16r4.
+			'COLOR_MENUBAR' -> 16r1E.
+			'COLOR_MENUHILIGHT' -> 16r1D.
+			'COLOR_MENUTEXT' -> 16r7.
+			'COLOR_SCROLLBAR' -> 16r0.
+			'COLOR_WINDOW' -> 16r5.
+			'COLOR_WINDOWFRAME' -> 16r6.
+			'COLOR_WINDOWTEXT' -> 16r8.
 			'NamesById'
 				-> (IdentityDictionary withAll: {
 								16r0 -> #scrollbar.

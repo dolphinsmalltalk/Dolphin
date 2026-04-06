@@ -52,7 +52,7 @@ verifyInvalidCallArguments: aBoolean
 		raise: InvalidExternalCall
 		matching: 
 			[:ex |
-			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter1)
+			ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter1)
 				and: [ex argument == obj and: [ex type = 'lpwstr']]].
 	apiCall := self makeTestMethodFrom: KernelLibrary >> #findFirstFile:lpFindFileData:
 				overlapped: aBoolean.
@@ -61,7 +61,7 @@ verifyInvalidCallArguments: aBoolean
 		raise: InvalidExternalCall
 		matching: 
 			[:ex |
-			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)
+			ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter2)
 				and: [ex argument == obj and: [ex type = (WIN32_FIND_DATAW fullName , '*')]]].
 	apiCall := self makeTestMethodFrom: UserLibrary >> #fillRect:lprc:hbr: overlapped: aBoolean.
 	self
@@ -69,21 +69,21 @@ verifyInvalidCallArguments: aBoolean
 		raise: InvalidExternalCall
 		matching: 
 			[:ex |
-			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter1)
+			ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter1)
 				and: [ex argument == obj and: [ex type = 'handle']]].
 	self
 		should: [apiCall value: User32 withArguments: { nil. obj. nil }]
 		raise: InvalidExternalCall
 		matching: 
 			[:ex |
-			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)
+			ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter2)
 				and: [ex argument == obj and: [ex type = 'OS.RECTL*']]].
 	self
 		should: [apiCall value: User32 withArguments: { nil. ByteArray newFixed: 16. obj }]
 		raise: InvalidExternalCall
 		matching: 
 			[:ex |
-			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter3)
+			ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter3)
 				and: [ex argument == obj and: [ex type = 'handle']]].
 	"The rare case of an API with more than 12 parameters, and the error is in the 13th"
 	gdiLibrary := #{OS.GDILibrary} value.
@@ -93,7 +93,7 @@ verifyInvalidCallArguments: aBoolean
 	self
 		should: [apiCall value: gdiLibrary default withArguments: #(nil 0 0 0 0 0 0 0 0 nil nil 0 's')]
 		raise: HRESULTError
-		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter)]! !
+		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter)]! !
 
 !External.Tests.DynamicLinkLibraryTest categoriesForMethods!
 makeTestMethodFrom:overlapped:!helpers!private! !

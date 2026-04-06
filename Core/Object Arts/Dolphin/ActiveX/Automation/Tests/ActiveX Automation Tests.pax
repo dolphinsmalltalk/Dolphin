@@ -181,7 +181,7 @@ External.Tests.GenericExternalArrayTest
 	subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors} #{OS.COM.OleVariant})
+	imports: #(#{OS.Win32Error} #{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -213,7 +213,7 @@ XProgramming.SUnit.TestResource
 	subclass: #'OS.COM.Tests.TestTypelib'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -345,8 +345,7 @@ testExtendedErrorInfo
 	script free.
 	error := [script eval: '1+2'] on: HRESULTError do: [:ex | ex].
 	self assertIsNil: error errorInfo.
-	self assert: error hresult
-		equals: (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidPointer)! !
+	self assert: error hresult equals: (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidPointer)! !
 
 !External.Tests.StructureTest categoriesForMethods!
 testExtendedErrorInfo!public!unit tests! !

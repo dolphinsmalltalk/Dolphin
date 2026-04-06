@@ -4,7 +4,7 @@ External.DynamicLinkLibrary
 	subclass: #'External.WindowsSystemLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.KernelLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

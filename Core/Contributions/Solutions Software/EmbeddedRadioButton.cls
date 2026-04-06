@@ -3,7 +3,7 @@
 EmbeddedCheckButton subclass: #EmbeddedRadioButton
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'RadioButton'
 	classInstanceVariableNames: ''!
 
 EmbeddedRadioButton guid: (GUID fromString: '{326bf942-1142-4a1d-a365-f4b0dda88ffe}')!

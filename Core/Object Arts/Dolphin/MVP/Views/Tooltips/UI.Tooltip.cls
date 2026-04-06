@@ -4,9 +4,59 @@ UI.ControlView
 	subclass: #'UI.Tooltip'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.TooltipConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'TTDT_AUTOMATIC' -> 16r0.
+			'TTDT_AUTOPOP' -> 16r2.
+			'TTDT_INITIAL' -> 16r3.
+			'TTDT_RESHOW' -> 16r1.
+			'TTM_ACTIVATE' -> 16r401.
+			'TTM_ADDTOOLW' -> 16r432.
+			'TTM_ADJUSTRECT' -> 16r41F.
+			'TTM_DELTOOLW' -> 16r433.
+			'TTM_ENUMTOOLSW' -> 16r43A.
+			'TTM_GETBUBBLESIZE' -> 16r41E.
+			'TTM_GETCURRENTTOOLW' -> 16r43B.
+			'TTM_GETDELAYTIME' -> 16r415.
+			'TTM_GETMARGIN' -> 16r41B.
+			'TTM_GETMAXTIPWIDTH' -> 16r419.
+			'TTM_GETTEXTW' -> 16r438.
+			'TTM_GETTIPBKCOLOR' -> 16r416.
+			'TTM_GETTIPTEXTCOLOR' -> 16r417.
+			'TTM_GETTITLE' -> 16r423.
+			'TTM_GETTOOLCOUNT' -> 16r40D.
+			'TTM_GETTOOLINFOW' -> 16r435.
+			'TTM_HITTESTW' -> 16r437.
+			'TTM_NEWTOOLRECTW' -> 16r434.
+			'TTM_POP' -> 16r41C.
+			'TTM_POPUP' -> 16r422.
+			'TTM_RELAYEVENT' -> 16r407.
+			'TTM_SETDELAYTIME' -> 16r403.
+			'TTM_SETMARGIN' -> 16r41A.
+			'TTM_SETMAXTIPWIDTH' -> 16r418.
+			'TTM_SETTIPBKCOLOR' -> 16r413.
+			'TTM_SETTIPTEXTCOLOR' -> 16r414.
+			'TTM_SETTITLEW' -> 16r421.
+			'TTM_SETTOOLINFOW' -> 16r436.
+			'TTM_TRACKACTIVATE' -> 16r411.
+			'TTM_TRACKPOSITION' -> 16r412.
+			'TTM_UPDATE' -> 16r41D.
+			'TTM_UPDATETIPTEXTW' -> 16r439.
+			'TTM_WINDOWFROMPOINT' -> 16r410.
+			'TTN_FIRST' -> -16r208.
+			'TTN_LAST' -> -16r225.
+			'TTN_LINKCLICK' -> -16r20B.
+			'TTN_POP' -> -16r20A.
+			'TTN_SHOW' -> -16r209.
+			'TTS_ALWAYSTIP' -> 16r1.
+			'TTS_BALLOON' -> 16r40.
+			'TTS_CLOSE' -> 16r80.
+			'TTS_NOANIMATE' -> 16r10.
+			'TTS_NOFADE' -> 16r20.
+			'TTS_NOPREFIX' -> 16r2.
+			'TTS_USEVISUALSTYLE' -> 16r100
+		}!
 
 UI.Tooltip guid: (Core.GUID fromString: '{ba32bd21-5167-4bd1-949c-ab76875cdeb7}')!
 
@@ -156,7 +206,7 @@ pop
 
 registerView: aView
 	self ttmAddTool: (TOOLINFOW new
-				uFlags: ##(TTF_IDISHWND | TTF_CENTERTIP);
+				uFlags: ##(TOOLINFOW.TTF_IDISHWND | TOOLINFOW.TTF_CENTERTIP);
 				textCallback;
 				hwnd: aView asParameter;
 				uId: aView asParameter;

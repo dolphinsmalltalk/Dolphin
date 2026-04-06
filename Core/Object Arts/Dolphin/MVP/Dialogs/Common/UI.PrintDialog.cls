@@ -4,7 +4,7 @@ UI.PrintingDialog
 	subclass: #'UI.PrintDialog'
 	instanceVariableNames: 'dialogServices flags savedPreferLegacyPrintDialog'
 	classVariableNames: ''
-	imports: #(#{OS.PrintDialogConstants} #{OS.Win32Errors private})
+	imports: #(#{OS.PRINTDLGEXW private} #{OS.HRESULT private})
 	classInstanceVariableNames: ''
 	classConstants: { 'UnifiedPrintDialogMask' -> 16r1 }!
 

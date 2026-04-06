@@ -28,18 +28,18 @@ verifyRoundTrip: aByteObject
 	self
 		should: [Crypt32Library unprotectData: encryptedExtra]
 		raise: Win32Error
-		matching: [:ex | ex tag statusCode = Win32Errors.ERROR_INVALID_DATA].
+		matching: [:ex | ex tag statusCode = Win32Error.ERROR_INVALID_DATA].
 	decrypted := Crypt32Library unprotectData: encryptedExtra additionalEntropy: entropy.
 	self assert: decrypted equals: aByteObject.
 	"Unprotect without entropy used on protect should fail."
 	self
 		should: [Crypt32Library unprotectData: encryptedExtra]
 		raise: Win32Error
-		matching: [:ex | ex tag statusCode = Win32Errors.ERROR_INVALID_DATA].
+		matching: [:ex | ex tag statusCode = Win32Error.ERROR_INVALID_DATA].
 	self
 		should: [Crypt32Library unprotectData: encryptedExtra additionalEntropy: #[4 5 6]]
 		raise: Win32Error
-		matching: [:ex | ex tag statusCode = Win32Errors.ERROR_INVALID_DATA]! !
+		matching: [:ex | ex tag statusCode = Win32Error.ERROR_INVALID_DATA]! !
 
 !OS.Tests.DpApiTest categoriesForMethods!
 testProtectUnprotectData!public!unit tests! !

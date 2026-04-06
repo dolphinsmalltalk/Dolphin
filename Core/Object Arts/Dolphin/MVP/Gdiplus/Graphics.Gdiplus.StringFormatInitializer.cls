@@ -90,7 +90,7 @@ isGenericTypographic
 	^false!
 
 language
-	^OS.NlsConstants.LANG_NEUTRAL!
+	^Locale.LANG_NEUTRAL!
 
 lineAlignment
 	^StringAlignmentNear!
@@ -187,7 +187,7 @@ stbConvertFrom: anSTBClassFormat
 			[^
 			[:data |
 			StringFormatFromFlagsInitializer flags: (data at: 2)
-				language: (data at: 3) ?? OS.NlsConstants.LANG_NEUTRAL]].
+				language: (data at: 3) ?? Locale.LANG_NEUTRAL]].
 	^super stbConvertFrom: anSTBClassFormat!
 
 uninitialize

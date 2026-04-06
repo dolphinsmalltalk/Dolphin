@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Kernel.Parser'
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source environment'
 	classVariableNames: 'AllowEmptyStatements'
-	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
+	imports: #(#{External.FunctionDescriptor private} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -131,7 +131,7 @@ expectVariable: aStVariableNodeClass
 	^node!
 
 externalReferenceTypeFor: anInteger
-	^(External.FunctionDescriptor referenceTypeFor: anInteger) ?? ExtCallArgLPPVOID!
+	^(FunctionDescriptor referenceTypeFor: anInteger) ?? ExtCallArgLPPVOID!
 
 initialize
 	"If true then certain St80 syntax which is not valid ANSI are permitted, e.g. [:a ] is a valid block"
@@ -361,7 +361,7 @@ parseExternalArgType
 	| valueType indirections typeToken stop start |
 	currentToken isIdentifier ifFalse: [^self expectExternalType].
 	start := currentToken start.
-	valueType := External.FunctionDescriptor typeFromName: currentToken value ifAbsent: ExtCallArgSTRUCT.
+	valueType := FunctionDescriptor typeFromName: currentToken value ifAbsent: ExtCallArgSTRUCT.
 	typeToken := currentToken.
 	self step.
 	indirections := self parseExternalArgTypeQualifier.
@@ -451,7 +451,7 @@ parseExternalCallArgs: aStExternalCallNode
 parseExternalCallingConvention
 	| callConvId |
 	(currentToken isKeyword not
-		or: [(callConvId := External.FunctionDescriptor conventionFromName: currentToken value) < 0])
+		or: [(callConvId := FunctionDescriptor conventionFromName: currentToken value) < 0])
 			ifTrue: 
 				[self parserError: CErrExpectCallConv.
 				"Error ignored, attempt to recover by using a sensible default..."
@@ -546,7 +546,7 @@ parseKeywordTag: startInteger
 		ifTrue: [self parsePrimitive: startInteger]
 		ifFalse: 
 			[| callConvId |
-			callConvId := External.FunctionDescriptor conventionFromName: keyword.
+			callConvId := FunctionDescriptor conventionFromName: keyword.
 			callConvId >= 0
 				ifTrue: 
 					["An external call descriptor"
@@ -720,8 +720,7 @@ parsePrimitive: startInteger
 	(currentToken isLiteralToken not or: [currentToken value isInteger not])
 		ifTrue: [^self expectPrimitiveIndex: startInteger].
 	primitiveIndex := currentToken value.
-	(primitiveIndex between: 1 and: VMConstants.MaxPrimitive)
-		ifFalse: [self parserError: CErrBadPrimIdx].
+	(primitiveIndex between: 1 and: VMLibrary.MaxPrimitive) ifFalse: [self parserError: CErrBadPrimIdx].
 	self step.
 	primitiveNode := (StPrimitiveNode primitiveIndex: primitiveIndex)
 				start: startInteger;
@@ -1045,7 +1044,7 @@ parseVirtualCall: startInteger
 		ifTrue: 
 			[self parserError: CErrExpectVfn.	"Error ignored, attempt to recover."
 			vfnIndex := 1].
-	(vfnIndex between: 1 and: VMConstants.MaxVirtualFunction)
+	(vfnIndex between: 1 and: VMLibrary.MaxVirtualFunction)
 		ifFalse: [self parserError: CErrBadVfn	"Error ignored, continue"].
 	node nameOrOrdinal: vfnIndex.
 	self step.

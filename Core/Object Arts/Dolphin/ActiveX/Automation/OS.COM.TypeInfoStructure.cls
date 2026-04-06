@@ -4,7 +4,7 @@ External.FinalizableStructure
 	subclass: #'OS.COM.TypeInfoStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

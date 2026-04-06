@@ -4,7 +4,7 @@ UI.Tests.PresenterTest
 	subclass: #'UI.Tests.AbstractContainerViewTest'
 	instanceVariableNames: 'initialParentRect'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -32,7 +32,7 @@ bitmapOfPaintView: aContainerView
 		bitBlt: ncCanvas
 		rectangle: (0 @ 0 extent: extent)
 		to: 0 @ 0
-		rop: SRCCOPY] 
+		rop: GDILibrary.SRCCOPY] 
 			ensure: [ncCanvas free].
 	^answer!
 

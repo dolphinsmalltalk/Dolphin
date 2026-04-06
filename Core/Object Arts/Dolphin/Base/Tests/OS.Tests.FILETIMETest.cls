@@ -165,7 +165,7 @@ testSystemTimeConversions
 				self
 					should: [FILETIME fromSYSTEMTIME: each]
 					raise: HRESULTError
-					matching: [:ex | ex statusCode = Win32Errors.ERROR_INVALID_PARAMETER]].
+					matching: [:ex | ex statusCode = Win32Error.ERROR_INVALID_PARAMETER]].
 
 	"Actual max system time"
 	subject := FILETIME fromInteger: 16r7FFF35F4F06C58F0 - (Locale timeZoneInformation offsetSeconds * 1e9).

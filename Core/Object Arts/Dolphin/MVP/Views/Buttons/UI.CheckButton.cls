@@ -4,7 +4,7 @@ UI.ValueConvertingControlView
 	subclass: #'UI.CheckButton'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
-	imports: #(#{OS.ButtonConstants})
+	imports: #(#{UI.PushButton private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AlignmentMap'

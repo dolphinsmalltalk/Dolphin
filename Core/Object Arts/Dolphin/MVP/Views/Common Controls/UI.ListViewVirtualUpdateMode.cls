@@ -17,7 +17,7 @@ UI.ListViewVirtualUpdateMode comment: ''!
 applyCallbackMask
 	| existingMask newMask |
 	existingMask := view lvmGetCallbackMask.
-	newMask := existingMask mask: LVIS_STATEIMAGEMASK set: view stateImageManager notNil.
+	newMask := existingMask mask: LVITEMW.LVIS_STATEIMAGEMASK set: view stateImageManager notNil.
 	newMask = existingMask ifFalse: [view lvmSetCallbackMask: newMask]!
 
 insertItem: anObject atIndex: anInteger

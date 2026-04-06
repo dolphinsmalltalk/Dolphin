@@ -121,8 +121,8 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\Win32\Windows Service Manager.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Database\Database Connection Base.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Database\Database Connection.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\Database\Database Connection (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Database\Database Connection (Old Names).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Database\Database Connection (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Continuations\Dolphin Continuations.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Refactorings\RBReferenceFinder.pax' #plain #imageBased);
 		yourself.

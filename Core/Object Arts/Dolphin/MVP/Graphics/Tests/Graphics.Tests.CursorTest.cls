@@ -4,7 +4,7 @@ Graphics.Tests.ImageTest
 	subclass: #'Graphics.Tests.CursorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Graphics.Cursor})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -58,7 +58,7 @@ testFromResource
 
 testFromSystemId
 	| cursor1 cursor2 |
-	cursor1 := Cursor fromSystemId: OS.Win32Constants.IDC_SIZEALL.
+	cursor1 := Cursor fromSystemId: IDC_SIZEALL.
 	self assert: cursor1 initializer isLoadShared.
 	cursor2 := Cursor sizeAll.
 	self assert: cursor1 equals: cursor2.
@@ -100,7 +100,7 @@ testStbConvertFromVersion1_system
 	self assert: cursor isKindOf: Cursor.
 	self assert: cursor ownsHandle.
 	self assert: cursor initializer isKindOf: IconFromSystemInitializer.
-	self assert: cursor initializer identifier equals: Win32Constants.IDC_APPSTARTING.
+	self assert: cursor initializer identifier equals: IDC_APPSTARTING.
 	self assert: cursor initializer isLoadShared.
 	self assert: cursor equals: Cursor appStarting.
 	self assert: cursor handle equals: Cursor appStarting handle.
@@ -126,7 +126,7 @@ testStbConvertFromVersion3_system
 	self assert: cursor isKindOf: Cursor.
 	self assert: cursor ownsHandle.
 	self assert: cursor initializer isKindOf: IconFromSystemInitializer.
-	self assert: cursor initializer identifier equals: Win32Constants.IDC_APPSTARTING.
+	self assert: cursor initializer identifier equals: IDC_APPSTARTING.
 	self assert: cursor initializer isLoadShared.
 	self assert: cursor equals: Cursor appStarting.
 	self assert: cursor handle equals: Cursor appStarting handle.

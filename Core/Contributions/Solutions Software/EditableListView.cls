@@ -3,7 +3,7 @@
 ListView subclass: #EditableListView
 	instanceVariableNames: 'activeEditorCoords originalColumns _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'NMCUSTOMDRAW'
 	classInstanceVariableNames: ''!
 
 EditableListView guid: (GUID fromString: '{e2b66e41-55e0-4105-a492-b9defd40cd23}')!
@@ -34,7 +34,7 @@ activateEditorAt: aPoint cause: aSymbol tabbed: aBoolean
 	column := self columnAtIndex: aPoint y.
 
 	(column isEditableWith: item) ifFalse: 
-		[column isEditable ifTrue: [Sound beep: MessageBoxConstants.MB_ICONWARNING]. "Bell if the column is disabled for the current item only"
+		[column isEditable ifTrue: [Sound beep: MB_ICONWARNING]. "Bell if the column is disabled for the current item only"
 		^nil].
 
 	"Ensure the editor is visibile"

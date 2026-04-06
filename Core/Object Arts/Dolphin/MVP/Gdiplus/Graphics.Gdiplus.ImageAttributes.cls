@@ -25,7 +25,7 @@ colorKeys: aColorAdjustTypeConstant colorLow: lowColor colorHigh: highColor
 	Gdip
 		gdipSetImageAttributesColorKeys: self handle
 		type: aColorAdjustTypeConstant
-		enableFlag: TRUE
+		enableFlag: true
 		colorLow: lowColor argbCode
 		colorHigh: highColor argbCode!
 
@@ -43,7 +43,7 @@ colorMatrix: aColorMatrix type: aColorAdjustTypeConstant mode: aColorMatrixFlags
 	Gdip
 		gdipSetImageAttributesColorMatrix: self handle
 		type: aColorAdjustTypeConstant
-		enableFlag: TRUE
+		enableFlag: true
 		colorMatrix: aColorMatrix asParameter
 		grayMatrix: nil
 		flags: aColorMatrixFlagsConstant!
@@ -59,7 +59,7 @@ gamma: aFloat type: aColorAdjustTypeConstant
 	Gdip
 		gdipSetImageAttributesGamma: self handle
 		type: aColorAdjustTypeConstant
-		enableFlag: TRUE
+		enableFlag: true
 		gamma: aFloat!
 
 initializerClass
@@ -71,7 +71,7 @@ outputChannel: aColorAdjustTypeConstant channelFlags: channelFlags
 	Gdip
 		gdipSetImageAttributesOutputChannel: self handle
 		type: aColorAdjustTypeConstant
-		enableFlag: TRUE
+		enableFlag: true
 		channelFlags: channelFlags!
 
 remapColor: oldColor to: newColor
@@ -86,7 +86,7 @@ remapColor: oldColor to: newColor type: anInteger
 	Gdip
 		gdipSetImageAttributesRemapTable: self handle
 		type: anInteger
-		enableFlag: TRUE
+		enableFlag: true
 		mapSize: 1
 		map: colorMapping!
 
@@ -97,7 +97,7 @@ remapTable: aColorMapArray type: aColorAdjustTypeConstant
 	Gdip
 		gdipSetImageAttributesRemapTable: self handle
 		type: aColorAdjustTypeConstant
-		enableFlag: TRUE
+		enableFlag: true
 		mapSize: aColorMapArray size
 		map: aColorMapArray!
 
@@ -112,7 +112,7 @@ threshold: aFloat type: aColorAdjustTypeConstant
 	Gdip
 		gdipSetImageAttributesThreshold: self handle
 		type: aColorAdjustTypeConstant
-		enableFlag: TRUE
+		enableFlag: true
 		threshold: aFloat! !
 
 !Graphics.Gdiplus.ImageAttributes categoriesForMethods!

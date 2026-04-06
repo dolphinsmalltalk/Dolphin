@@ -13,7 +13,39 @@ OS.NMHDR
 			'_OffsetOf_hdc' -> 16r10.
 			'_OffsetOf_lParam' -> 16r2C.
 			'_OffsetOf_rc' -> 16r14.
-			'_OffsetOf_uItemState' -> 16r28
+			'_OffsetOf_uItemState' -> 16r28.
+			'CDDS_ITEM' -> 16r10000.
+			'CDDS_ITEMPOSTERASE' -> 16r10004.
+			'CDDS_ITEMPOSTPAINT' -> 16r10002.
+			'CDDS_ITEMPREERASE' -> 16r10003.
+			'CDDS_ITEMPREPAINT' -> 16r10001.
+			'CDDS_POSTERASE' -> 16r4.
+			'CDDS_POSTPAINT' -> 16r2.
+			'CDDS_PREERASE' -> 16r3.
+			'CDDS_PREPAINT' -> 16r1.
+			'CDDS_SUBITEM' -> 16r20000.
+			'CDIS_CHECKED' -> 16r8.
+			'CDIS_DEFAULT' -> 16r20.
+			'CDIS_DISABLED' -> 16r4.
+			'CDIS_DROPHILITED' -> 16r1000.
+			'CDIS_FOCUS' -> 16r10.
+			'CDIS_GRAYED' -> 16r2.
+			'CDIS_HOT' -> 16r40.
+			'CDIS_INDETERMINATE' -> 16r100.
+			'CDIS_MARKED' -> 16r80.
+			'CDIS_NEARHOT' -> 16r400.
+			'CDIS_OTHERSIDEHOT' -> 16r800.
+			'CDIS_SELECTED' -> 16r1.
+			'CDIS_SHOWKEYBOARDCUES' -> 16r200.
+			'CDRF_DODEFAULT' -> 16r0.
+			'CDRF_DOERASE' -> 16r8.
+			'CDRF_NEWFONT' -> 16r2.
+			'CDRF_NOTIFYITEMDRAW' -> 16r20.
+			'CDRF_NOTIFYPOSTERASE' -> 16r40.
+			'CDRF_NOTIFYPOSTPAINT' -> 16r10.
+			'CDRF_NOTIFYSUBITEMDRAW' -> 16r20.
+			'CDRF_SKIPDEFAULT' -> 16r4.
+			'CDRF_SKIPPOSTPAINT' -> 16r100
 		}!
 
 OS.NMCUSTOMDRAW guid: (Core.GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
@@ -112,7 +144,7 @@ forecolor: aColor
 hasFocus
 	"Answer whether the item being drawn has focus."
 
-	^self uItemState allMask: CDIS_FOCUS!
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_FOCUS!
 
 hasFocus: aBoolean
 	"Set whether the item should be drawn with focus indications."
@@ -129,7 +161,7 @@ hdc
 isChecked
 	"Answer whether the item being draw is 'checked' (i.e. in a list with checkboxes it is ticked)."
 
-	^self uItemState allMask: CDIS_CHECKED!
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_CHECKED!
 
 isChecked: aBoolean
 	"Set whether the item should be drawn as checked (i.e. in a list with checkboxes, it's box is ticked)."
@@ -139,7 +171,7 @@ isChecked: aBoolean
 isDefault
 	"Answer whether the item being drawn is the default."
 
-	^self uItemState allMask: CDIS_DEFAULT!
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_DEFAULT!
 
 isDefault: aBoolean
 	"Set whether the item being drawn is the default."
@@ -151,7 +183,7 @@ isDefault: aBoolean
 isDisabled
 	"Answer whether the item being drawn is disabled."
 
-	^self uItemState allMask: CDIS_DISABLED!
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_DISABLED!
 
 isDisabled: aBoolean
 	"Set whether the item being drawn should be drawn with disabled appearnce."
@@ -165,7 +197,7 @@ isGrayed
 
 	"Changing this setting has no apparent effect in the ListView or TreeView."
 
-	^self uItemState allMask: CDIS_GRAYED!
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_GRAYED!
 
 isGrayed: aBoolean
 	"Set whether the item being drawn should be greyed out.  Changing the setting has no observable effect in TreeViews or ListViews, but may do in others."
@@ -175,7 +207,7 @@ isGrayed: aBoolean
 isHot
 	"Answer whether the item being drawn is hot (i.e. under the cursor when hot tracking is enabled)."
 
-	^self uItemState allMask: CDIS_HOT!
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_HOT!
 
 isHot: aBoolean
 	"Set whether the item should be drawn with hot-highlights, e.g. when under the cursor in a view with hot tracking enabled."
@@ -187,7 +219,7 @@ isHot: aBoolean
 isIndeterminate
 	"Answer whether the item being drawn is an indeterminate state."
 
-	^self uItemState allMask: CDIS_INDETERMINATE  !
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_INDETERMINATE!
 
 isIndeterminate: aBoolean
 	"Set whether the item being drawn is an indeterminate state."
@@ -199,17 +231,20 @@ isIndeterminate: aBoolean
 isMarked
 	"Answer whether the item being drawn is marked (whatever that means)."
 
-	^self uItemState allMask: CDIS_MARKED!
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_MARKED!
 
 isMarked: aBoolean
 	"Set whether the item being drawn is marked (whatever that means)."
 
 	self stateMask: CDIS_MARKED set: aBoolean!
 
+isPrepaint
+	^(bytes uint32AtOffset: _OffsetOf_dwDrawStage) allMask: CDDS_PREPAINT!
+
 isSelected
 	"Answer whether the item being drawn is selected."
 
-	^self uItemState allMask: CDIS_SELECTED!
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_SELECTED!
 
 isSelected: aBoolean
 	"Set whether the item should be drawn as selected."
@@ -275,7 +310,13 @@ view: anIconListAbstract
 	view := anIconListAbstract!
 
 viewFont
-	^view actualFont atDpi: self dpi! !
+	^view actualFont atDpi: self dpi!
+
+wantKeyboardCues
+	^(bytes uint32AtOffset: _OffsetOf_uItemState) allMask: CDIS_SHOWKEYBOARDCUES!
+
+wantKeyboardCues: aBoolean
+	self stateMask: CDIS_SHOWKEYBOARDCUES set: aBoolean! !
 
 !OS.NMCUSTOMDRAW categoriesForMethods!
 applyFont!operations!private! !
@@ -308,6 +349,7 @@ isIndeterminate!public!states-testing! !
 isIndeterminate:!public!states-changing! !
 isMarked!public!states-testing! !
 isMarked:!public!states-changing! !
+isPrepaint!public!states-testing! !
 isSelected!public!states-testing! !
 isSelected:!public!states-changing! !
 item!accessing!public! !
@@ -323,6 +365,8 @@ uItemState:!**compiled accessors**!public! !
 view!accessing!public! !
 view:!accessing!private! !
 viewFont!accessing!private! !
+wantKeyboardCues!public!states-testing! !
+wantKeyboardCues:!public!states-changing! !
 !
 
 OS.NMCUSTOMDRAW methodProtocol: #customDrawContext attributes: #(#readOnly) selectors: #(#backcolor #backcolor: #boundingRectangle #canvas #font #font: #forecolor #forecolor: #hasFocus #isChecked #isDefault #isDisabled #isGrayed #isHot #isIndeterminate #isSelected #view)!

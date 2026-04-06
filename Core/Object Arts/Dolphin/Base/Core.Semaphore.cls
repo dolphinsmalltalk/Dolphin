@@ -50,11 +50,11 @@ critical: aBlock
 	assigned into the return value holder."
 
 	| retHolder |
-	retHolder := {OS.Win32Constants.WAIT_FAILED}.
+	retHolder := { -1 }.
 	^
-	[self wait: OS.Win32Constants.INFINITE ret: retHolder.
+	[self wait: -1 ret: retHolder.
 	aBlock value]
-			ensure: [(retHolder at: 1) == OS.Win32Constants.WAIT_OBJECT_0 ifTrue: [self signal]]!
+			ensure: [(retHolder at: 1) == 0 ifTrue: [self signal]]!
 
 critical: aBlock atPriority: anInteger
 	"Evaluate aBlock as a critical section - i.e. aBlock is evaluated only when
@@ -70,9 +70,9 @@ critical: aBlock atPriority: anInteger
 	activePriority := Processor activeProcess priority: anInteger.
 	waitResult := Array new: 1.
 	^
-	[self wait: OS.Win32Constants.INFINITE ret: waitResult.
+	[self wait: -1 ret: waitResult.
 	aBlock value] ensure: 
-				[(waitResult basicAt: 1) == OS.Win32Constants.WAIT_OBJECT_0 ifTrue: [self signal].
+				[(waitResult basicAt: 1) == 0 ifTrue: [self signal].
 				Processor activeProcess priority: activePriority]!
 
 excessSignals
@@ -164,7 +164,7 @@ wait
 
 	| ret |
 	ret := Array new: 1.
-	self wait: OS.Win32Constants.INFINITE ret: ret.
+	self wait: -1 ret: ret.
 	^ret basicAt: 1!
 
 wait: timeout
@@ -190,8 +190,8 @@ wait: timeout ret: returnValueHolder
 	"Private - The active Process must receive a signal through the receiver before proceeding, or be interrupted (i.e. receive an interrupt from the VM), or timeout after anInteger milliseconds. Answer the argument, returnValueHolder, with its first instance variable updated to hold and <integer> return code.
 
 	At present the only valid values for timeout are, INFINITE, meaning wait for ever, and 0, meaning don't wait at all. The behaviour of these is as follows: 
-		INFINITE- Wait until the semaphore is signalled, answering WAIT_OBJECT_O. 0 - If the receiver has excess signals, then decrement the count, and answer 
-		WAIT_OBJECT_O, otherwise return immediately without waiting, but answer WAIT_TIMEOUT. i.e this is a way to 'poll' a Semaphore.
+		INFINITE (-1) - Wait until the semaphore is signalled, answering WAIT_OBJECT_O. 
+		0 - If the receiver has excess signals, then decrement the count, and answer WAIT_OBJECT_O, otherwise return immediately without waiting, but answer WAIT_TIMEOUT. i.e this is a way to 'poll' a Semaphore.
 
 	If no signal has been sent, then the active Process will be transitioned from Running to Waiting until one is sent, when it may be returned to the Ready state.
 

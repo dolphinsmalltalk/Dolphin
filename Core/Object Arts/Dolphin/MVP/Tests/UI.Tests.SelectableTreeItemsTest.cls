@@ -87,7 +87,7 @@ refreshTree: aSymbol
 			[:each |
 			self assert: (self getItemImage: each)
 				equals: ((self imageIndexForNode: each)
-						ifNil: [CommCtrlConstants.I_IMAGENONE]
+						ifNil: [CCITEM.I_IMAGENONE]
 						ifNotNil: [:index | index - 1])].
 	root value: 3.
 	presenter view updateMode == #dynamic
@@ -105,7 +105,7 @@ refreshTree: aSymbol
 			[:each |
 			self assert: (self getItemImage: each)
 				equals: ((self imageIndexForNode: each)
-						ifNil: [CommCtrlConstants.I_IMAGENONE]
+						ifNil: [CCITEM.I_IMAGENONE]
 						ifNotNil: [:index | index - 1])].
 	self paintTree!
 

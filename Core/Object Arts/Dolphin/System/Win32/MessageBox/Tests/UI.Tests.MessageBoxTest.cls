@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'UI.Tests.MessageBoxTest'
 	instanceVariableNames: 'subject enablement defaultButton buttonLabels caption radioButtonLabels metrics'
 	classVariableNames: ''
-	imports: #(#{OS.MessageBoxConstants} #{OS.TaskDialogConstants})
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -20,14 +20,14 @@ getDialogInfo
 	caption := dialog getWindowText.
 	metrics := dialog metrics.
 	subviews := OrderedCollection new.
-	dialog allChildWindowHandlesDo: [:each | subviews addLast: (UI.View fromHandle: each)].
+	dialog allChildWindowHandlesDo: [:each | subviews addLast: (View fromHandle: each)].
 	buttons := Array writeStream.
 	radioButtons := Array writeStream.
 	subviews do: 
 			[:each |
 			each wndClassName = 'Button'
 				ifTrue: 
-					[((each getWindowStyle allMask: OS.ButtonConstants.BS_AUTORADIOBUTTON)
+					[((each getWindowStyle allMask: RadioButton.BS_AUTORADIOBUTTON)
 						ifTrue: [radioButtons ]
 						ifFalse: [buttons]) nextPut: each]].
 	buttons := buttons grabContents.
@@ -35,7 +35,7 @@ getDialogInfo
 	radioButtonLabels := radioButtons collect: [:each | each getWindowText].
 	buttonLabels := buttons collect: [:each | each getWindowText].
 	defaultButton := (buttons
-				select: [:each | each getWindowStyle allMask: OS.ButtonConstants.BS_DEFPUSHBUTTON]) single
+				select: [:each | each getWindowStyle allMask: PushButton.BS_DEFPUSHBUTTON]) single
 				getWindowText!
 
 loopUntil: aNiladicValuable
@@ -71,7 +71,7 @@ tearDown
 	subject
 		ifNotNil: 
 			[subject setEvents: nil.
-			subject handle ifNotNil: [subject clickButton: OS.Win32Constants.IDOK].
+			subject handle ifNotNil: [subject clickButton: IDOK].
 			subject destroy].
 	subject := nil.
 	enablement ifNotNil: [enablement do: [:each | each first isEnabled: each second]].
@@ -79,14 +79,13 @@ tearDown
 
 testAbortRetryIgnore
 	| buttonId expectedButtonLabels |
-	buttonId := OS.Win32Constants.IDABORT.
+	buttonId := IDABORT.
 	subject progressRange: (1 to: 50).
 	subject when: #created
 		perform: 
 			[self getDialogInfo.
 			
 			["Enable the delay to visually inspect"
-
 			subject progressPosition: 15.
 			subject progressState: #error.
 			"1 seconds wait."
@@ -100,13 +99,13 @@ testAbortRetryIgnore
 	self assert: buttonLabels equals: expectedButtonLabels.
 	self assert: defaultButton equals: (expectedButtonLabels at: 2).
 	self assert: caption equals: SessionManager.Current applicationName.
-	buttonId := OS.Win32Constants.IDRETRY.
+	buttonId := IDRETRY.
 	subject defaultButton: 3.
 	"Test merging of the custom buttons used to implement #abortRetryIgnore with user supplied custom buttons. Includes an extra button."
 	subject customButtons: #(#(#abort 'Stop') #(#retry 'Debug') #(#help 'Help!!')).
 	self assert: self openSubject equals: #retry.
 	"Note that the user supplied buttons always appear first, whether replacing one of the base buttons or not"
-	self assert: buttonLabels equals: {'Stop'. 'Debug'. 'Help!!'. expectedButtonLabels last}.
+	self assert: buttonLabels equals: { 'Stop'. 'Debug'. 'Help!!'. expectedButtonLabels last }.
 	self assert: defaultButton equals: 'Help!!'.
 	self assertIsNil: subject handle!
 
@@ -125,9 +124,9 @@ testButtonClicked
 	self loopUntil: [subject handle notNil].
 	dialogView := View fromHandle: subject handle.
 	self assert: dialogView isOpen.
-	subject clickButton: OS.Win32Constants.IDOK.
+	subject clickButton: IDOK.
 	self loopUntil: [clicked notNil].
-	self assert: clicked equals: OS.Win32Constants.IDOK.
+	self assert: clicked equals: IDOK.
 	"Click was received, but should have been refused"
 	self assert: dialogView isOpen.
 	self assert: dialogView getWindowText equals: self printString.
@@ -135,7 +134,7 @@ testButtonClicked
 	"Now allow the click"
 	allow := true.
 	clicked := nil.
-	subject clickButton: OS.Win32Constants.IDOK.
+	subject clickButton: IDOK.
 	"MessageBox.handle is nil'd in the handle for TDN_DESTROYED, before the TaskDialog call returns, and therefore before the result is available. Once the result is available, the call must have returned."
 	self loopUntil: [subject result notNil].
 	self assert: subject handle isNil.
@@ -143,7 +142,7 @@ testButtonClicked
 
 testCancelRetryContinue
 	| buttonId radioButtonId expectedButtonLabels |
-	buttonId := OS.Win32Constants.IDCONTINUE.
+	buttonId := IDCONTINUE.
 	radioButtonId := 3.
 	subject hasMarqueeProgress: true.
 	subject when: #created
@@ -171,21 +170,21 @@ testCancelRetryContinue
 	self assert: defaultButton equals: (expectedButtonLabels at: 3).
 	self assert: caption equals: SessionManager.Current applicationName.
 	self assert: subject radioButton equals: #radio3.
-	buttonId := OS.Win32Constants.IDTRYAGAIN.
+	buttonId := IDTRYAGAIN.
 	radioButtonId := 1.
 	subject defaultButton: 1.
 	"Test merging of the custom buttons used to implement #abortRetryIgnore with user supplied custom buttons. Includes an extra button."
 	subject customButtons: #(#(#retry 'Debug')).
 	self assert: self openSubject equals: #retry.
 	"Note that the user supplied buttons always appear first, whether replacing one of the base buttons or not"
-	self assert: buttonLabels equals: {'Debug'. expectedButtonLabels first. expectedButtonLabels last}.
+	self assert: buttonLabels equals: { 'Debug'. expectedButtonLabels first. expectedButtonLabels last }.
 	self assert: defaultButton equals: 'Debug'.
 	self assert: subject radioButton equals: #radio1.
 	self assertIsNil: subject handle!
 
 testConfirm
 	| buttonId expectedCaption newEnablement yes no |
-	buttonId := OS.Win32Constants.IDYES.
+	buttonId := IDYES.
 	subject when: #created
 		perform: 
 			[self getDialogInfo.
@@ -204,7 +203,7 @@ testConfirm
 	"Prior enablement should be restored"
 	enablement do: [:each | self assert: each first isEnabled equals: each second].
 	"If No is clicked, we expect false to be returned"
-	buttonId := OS.Win32Constants.IDNO.
+	buttonId := IDNO.
 	"Also test that setting the caption works"
 	expectedCaption := 'Hello World'.
 	subject caption: expectedCaption.
@@ -250,7 +249,7 @@ testDefaultable
 
 			"1 seconds wait."
 			subject clickVerification: true.
-			subject clickButton: OS.Win32Constants.IDRETRY]
+			subject clickButton: IDRETRY]
 					fork].
 	subject buttonStyle: #retryCancel; defaultButton: 2; headline: 'Test'.
 	response := self openSubject.
@@ -258,7 +257,7 @@ testDefaultable
 	"IDRETRY was clicked, not the default"
 	self assert: response equals: #retry.
 	"The suppression entry should be created in the registry"
-	self assert: (dontShowMeThisDialogAgainKey valueAt: valueName) equals: OS.Win32Constants.IDRETRY.
+	self assert: (dontShowMeThisDialogAgainKey valueAt: valueName) equals: IDRETRY.
 	defaultButton := nil.
 	response := self openSubject.
 	self assertIsNil: defaultButton.
@@ -281,7 +280,7 @@ testSetStyleMaskedBy
 		setStyle: MB_ABORTRETRYIGNORE | MB_TASKMODAL | MB_SETFOREGROUND | MB_ICONERROR | MB_DEFBUTTON3 
 		maskedBy: -1.
 	self assert: subject iconStyle equals: #error.
-	self assert: subject iconId equals: TD_ERROR_ICON.
+	self assert: subject iconId equals: MessageBox.TD_ERROR_ICON.
 	self assert: subject buttonStyle equals: #abortRetryIgnore.
 	self assert: subject modality equals: #task.
 	self assert: subject defaultButton equals: 3.
@@ -303,7 +302,7 @@ testSetStyleMaskedBy
 	self assert: subject isTopMost.
 	subject setStyle: MB_ICONWARNING maskedBy: MB_ICONMASK.
 	self assert: subject iconStyle equals: #warning.
-	self assert: subject iconId equals: TD_WARNING_ICON.
+	self assert: subject iconId equals: MessageBox.TD_WARNING_ICON.
 	self assert: subject buttonStyle equals: #okCancel.
 	self assert: subject modality equals: #task.
 	self assert: subject defaultButton equals: 3.
@@ -352,7 +351,7 @@ testSuppressible
 
 			"1 seconds wait."
 			subject clickVerification: true.
-			subject clickButton: OS.Win32Constants.IDYES]
+			subject clickButton: IDYES]
 					fork].
 	subject defaultButton: 2.
 	defaultButton := nil.

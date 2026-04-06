@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Kernel.InputState'
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
 	classVariableNames: 'MaxIdleSleep SamplingInterval'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -198,7 +198,7 @@ idle
 		pHandles: wakeupEvent
 		dwMilliseconds: MaxIdleSleep
 		dwWakeMask: queueStatusMask
-		dwFlags: MWMO_ALERTABLE.
+		dwFlags: UserLibrary.MWMO_ALERTABLE.
 	"Rather than use the return value from MsgWaitForMultipleObjectsEx() we call
 	GetQueueStatus(). This has the effect of clearing the 'new message' flag so that the next
 	call to MsgWaitFor&c will not return immediately if the UI loop is blocked for some reason
@@ -249,9 +249,7 @@ initializeFrom: anInputState
 		registerAsDispatcher;
 		createAndRegisterInputSemaphore;
 		setSamplingInterval: 60.
-	queueStatusMask := ##(QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER | QS_POSTMESSAGE
-				| QS_TIMER | QS_PAINT
-				| QS_HOTKEY | QS_SENDMESSAGE)!
+	queueStatusMask := UserLibrary.QS_ALLINPUT!
 
 inputSemaphore
 	"Private - Answer the queue empty/not-empty semaphore"
@@ -288,7 +286,7 @@ isInputReady: aMSG
 		hWnd: 0
 		uMsgFilterMin: 0
 		uMsgFilterMax: 0
-		wRemoveMsg: PM_NOREMOVE!
+		wRemoveMsg: UserLibrary.PM_NOREMOVE!
 
 keepAlive
 	"Private - Stay-alive test. Sent during idle time to determine if the session needs to stay
@@ -526,7 +524,7 @@ startIdleTimer
 			[idleTimer := 1.
 			User32
 				setTimer: msgWindow asParameter
-				nIDEvent: WM_ENTERIDLE
+				nIDEvent: UserLibrary.WM_ENTERIDLE
 				uElapse: 100
 				lpTimerFunc: nil]
 		ifNotNil: [idleTimer := idleTimer + 1]]
@@ -542,7 +540,7 @@ stopIdleTimer
 			[(idleTimer := idleTimer - 1) > 0
 				ifFalse: 
 					[idleTimer := nil.
-					User32 killTimer: msgWindow asParameter uIDEvent: WM_ENTERIDLE]]]
+					User32 killTimer: msgWindow asParameter uIDEvent: UserLibrary.WM_ENTERIDLE]]]
 			critical!
 
 topLevelWindows

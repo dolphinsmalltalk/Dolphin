@@ -56,7 +56,7 @@ fireSystemUpdateEvent
 	Smalltalk trigger: (self isNew ifTrue: [#methodAdded:] ifFalse: [#methodUpdated:]) with: self!
 
 isInteractive
-	^flags allMask: CompilerFlags.Interactive!
+	^flags allMask: Compiler.Interactive!
 
 isNew
 	^oldMethod isNil!

@@ -132,7 +132,7 @@ testSystem
 	self deny: subject isUnderlined.
 	pointSize := subject pointSize.
 	self assert: subject dpi equals: SystemMetrics current dpi.
-	self assert: (subject atDpi: Win32Constants.USER_DEFAULT_SCREEN_DPI) identicalTo: subject.
+	self assert: (subject atDpi: USER_DEFAULT_SCREEN_DPI) identicalTo: subject.
 	system150 := subject atDpi: 144.
 	self assert: system150 pointSize equals: pointSize.
 	self assert: system150 identicalTo: subject!

@@ -189,8 +189,7 @@ testPushUpMethodWithImportedVariableExpandingImports
 	refactoring setOption: #addImports
 		toUse: 
 			[:ref :vars |
-			self assert: (vars collect: [:each | each realReference]) asSortedArray
-				equals: #(#{OS.FacilityCodes} #{OS.Win32Errors}).
+			self assert: vars asSortedArray equals: #(#{Kernel.ParseErrorCodes} #{OS.Win32Error}).
 			true].
 	self executeRefactoring: refactoring.
 	targetClass := model classFor: LintRuleTestData.
@@ -199,10 +198,10 @@ testPushUpMethodWithImportedVariableExpandingImports
 		equals: (self
 				parseMethod: 'sharedVarRefs
 	^{
-		ENOENT.
+		_MAX_FNAME.
 		ERROR_FILE_NOT_FOUND.
-		BasicLintRuleTestData.ERROR_FILE_EXISTS.
-		ERROR_FILE_EXISTS.
+		BasicLintRuleTestData.CErrArrayNotClosed.
+		CErrArrayNotClosed.
 		#{Const1}.
 		Const1
 	}').
@@ -217,8 +216,7 @@ testPushUpMethodWithImportedVariableNotExpandingImports
 	refactoring setOption: #addImports
 		toUse: 
 			[:ref :vars |
-			self assert: (vars collect: [:each | each realReference]) asSortedArray
-				equals: #(#{OS.FacilityCodes} #{OS.Win32Errors}).
+			self assert: vars asSortedArray equals: #(#{Kernel.ParseErrorCodes} #{OS.Win32Error}).
 			false].
 	self executeRefactoring: refactoring.
 	false ifTrue: [model browseChanges].
@@ -228,10 +226,10 @@ testPushUpMethodWithImportedVariableNotExpandingImports
 		equals: (self
 				parseMethod: 'sharedVarRefs
 	^{
-		ENOENT.
-		OS.Win32Errors.ERROR_FILE_NOT_FOUND.
-		BasicLintRuleTestData.ERROR_FILE_EXISTS.
-		OS.Win32Errors.ERROR_FILE_EXISTS.
+		_MAX_FNAME.
+		OS.Win32Error.ERROR_FILE_NOT_FOUND.
+		BasicLintRuleTestData.CErrArrayNotClosed.
+		ParseErrorCodes.CErrArrayNotClosed.
 		#{Const1}.
 		Const1
 	}').

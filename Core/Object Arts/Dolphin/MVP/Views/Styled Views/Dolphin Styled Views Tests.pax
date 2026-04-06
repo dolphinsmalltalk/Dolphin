@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'Dolphin Styled Views Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{Smalltalk.StyledContainerTest}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\Tests\Dolphin MVP Tests'
+	'Dolphin Styled Views'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.Tests.AbstractContainerViewTest
+	subclass: #StyledContainerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

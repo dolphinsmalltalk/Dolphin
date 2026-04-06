@@ -4,9 +4,28 @@ UI.ValueConvertingControlView
 	subclass: #'UI.ProgressBar'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ProgressBarConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ICC_PROGRESS_CLASS' -> 16r20.
+			'PBM_DELTAPOS' -> 16r403.
+			'PBM_GETPOS' -> 16r408.
+			'PBM_GETRANGE' -> 16r407.
+			'PBM_SETBARCOLOR' -> 16r409.
+			'PBM_SETBKCOLOR' -> 16r2001.
+			'PBM_SETMARQUEE' -> 16r40A.
+			'PBM_SETPOS' -> 16r402.
+			'PBM_SETRANGE' -> 16r401.
+			'PBM_SETRANGE32' -> 16r406.
+			'PBM_SETSTEP' -> 16r404.
+			'PBM_STEPIT' -> 16r405.
+			'PBS_MARQUEE' -> 16r8.
+			'PBS_SMOOTH' -> 16r1.
+			'PBS_VERTICAL' -> 16r4.
+			'PBST_ERROR' -> 16r2.
+			'PBST_NORMAL' -> 16r1.
+			'PBST_PAUSED' -> 16r3
+		}!
 
 UI.ProgressBar guid: (Core.GUID fromString: '{87b4c737-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -73,7 +92,7 @@ forecolor: aColorOrNil
 	self 
 		sendMessage: PBM_SETBARCOLOR
 		wParam: 0
-		lParam: (self forecolor ifNil: [CLR_DEFAULT] ifNotNil: [:color | color asCOLORREF]).
+		lParam: (self forecolor ifNil: [Color.CLR_DEFAULT] ifNotNil: [:color | color asCOLORREF]).
 	[self invalidate] postToMessageQueue!
 
 incrementBy: anInteger

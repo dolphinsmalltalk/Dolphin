@@ -103,7 +103,7 @@ basicUInt32AtOffset: anInteger put: anObject
 	"Private - Replace the internal contents of the receiver from offset anInteger with the first 4 bytes of anObject."
 
 	<primitive: 121>
-	_failureCode == _PrimitiveFailureCode.InvalidParameter2
+	_failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value - could be non-Numeric, or not in unsigned 32-bit range.
@@ -124,7 +124,7 @@ basicUIntPtrAtOffset: anInteger
 	| answer offset |
 	offset := anInteger + 1.
 	answer := 0.
-	VMConstants.IntPtrSize to: 0
+	VMLibrary.IntPtrSize to: 0
 		by: -1
 		do: [:i | answer := (answer bitShift: 8) + (self basicAt: offset + i)].
 	^answer!
@@ -133,13 +133,13 @@ basicUIntPtrAtOffset: anInteger put: anObject
 	"Private - Replace the internal contents of the receiver from offset anInteger with the first machine word of anObject."
 
 	<primitive: 121>
-	_failureCode == _PrimitiveFailureCode.InvalidParameter2
+	_failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value - could be non-Numeric, or not in unsigned machine word range.
 			Atempt to coerce to Integer and retry. anObject may not understand asInteger."
 			intVal := anObject asInteger.
-			(intVal >= 0 and: [intVal <= VMConstants.UIntPtrMax])
+			(intVal >= 0 and: [intVal <= VMLibrary.UIntPtrMax])
 				ifTrue: [^self basicUIntPtrAtOffset: anInteger put: intVal]].
 	^self updatePrimitiveFailed: _failureCode atOffset: anInteger!
 
@@ -223,7 +223,7 @@ doubleAtOffset: anInteger put: aFloat
 		InvalidParameter2	- aFloat is not a ,<Float>"
 
 	<primitive: 129>
-	_failureCode == _PrimitiveFailureCode.InvalidParameter2
+	_failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[self doubleAtOffset: anInteger put: aFloat asFloat.
 			^aFloat].	"coerce to float and retry"
@@ -264,7 +264,7 @@ floatAtOffset: anInteger put: aFloat
 		InvalidParameter2	- aFloat is not a Float."
 
 	<primitive: 131>
-	_failureCode == _PrimitiveFailureCode.InvalidParameter2
+	_failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: [^self floatAtOffset: anInteger put: aFloat asFloat].	"coerce to float and retry"
 	^self updatePrimitiveFailed: _failureCode atOffset: anInteger!
 
@@ -278,8 +278,7 @@ hash
 	"FNV1a"
 	1 to: self size do: [:i | hash := (hash bitXor: (self basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
 	"Fold to 30 bits so is always positive SmallInteger"
-	^(hash bitShift: ##(VMConstants.SmallIntegerMax highBit negated))
-		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
+	^(hash bitShift: ##(VMLibrary.HashBits negated)) bitXor: (hash bitAnd: VMLibrary.SmallIntegerMax)!
 
 hexStoreOn: puttableStream
 	"Print the literal string representation of the receiver to the <puttableStream>
@@ -399,10 +398,10 @@ intPtrAtOffset: anInteger
 	<primitive: 182>
 	| answer |
 	answer := 0.
-	VMConstants.IntPtrSize - 1 to: 0
+	VMLibrary.IntPtrSize - 1 to: 0
 		by: -1
 		do: [:i | answer := (answer bitShift: 8) + (self uint8AtOffset: anInteger + i)].
-	answer byteSize > VMConstants.IntPtrSize ifTrue: [answer := answer bitInvert + 1].
+	answer byteSize > VMLibrary.IntPtrSize ifTrue: [answer := answer bitInvert + 1].
 	^answer!
 
 intPtrAtOffset: anInteger put: anObject
@@ -508,7 +507,7 @@ retryInt16AtOffset: anInteger put: anObject failureCode: failureCode
 	"Private - Fallback code for storing signed word into the reciever when a primitive fails.
 	Either raises an appropriate error, or converts the argument to an Integer and retries."
 
-	failureCode == _PrimitiveFailureCode.InvalidParameter2
+	failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[| int |
 			"Not a suitable value - could be non-Numeric, or just not a SmallInteger. Attempt to coerce anObject and retry. anObject may not understand asInteger."
@@ -521,7 +520,7 @@ retryInt32AtOffset: anInteger put: anObject failureCode: failureCode
 	primitive fails. Either raises an appropriate error, or converts the argument to an Integer
 	and retries."
 
-	failureCode == _PrimitiveFailureCode.InvalidParameter2
+	failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
@@ -534,7 +533,7 @@ retryIntPtrAtOffset: anInteger put: anObject failureCode: failureCode
 	primitive fails. Either raises an appropriate error, or converts the argument to an Integer
 	and retries."
 
-	failureCode == _PrimitiveFailureCode.InvalidParameter2
+	failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
@@ -546,7 +545,7 @@ retryUInt16AtOffset: anInteger put: anObject failureCode: failureCode
 	"Private - Fallback code for storing unsigned word into the reciever when a primitive fails.
 	Either raises an appropriate error, or converts the argument to an Integer and retries."
 
-	failureCode == _PrimitiveFailureCode.InvalidParameter2
+	failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[| int |
 			"Not a suitable value - could be non-Numeric, or just not a SmallInteger. Attempt to coerce anObject and retry. anObject may not understand asInteger."
@@ -559,7 +558,7 @@ retryUInt32AtOffset: anInteger put: anObject failureCode: failureCode
 	primitive fails. Either raises an appropriate error, or converts the argument to an Integer
 	and retries."
 
-	failureCode == _PrimitiveFailureCode.InvalidParameter2
+	failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
@@ -571,12 +570,12 @@ retryUInt32AtOffset: anInteger put: anObject failureCode: failureCode
 retryUIntPtrAtOffset: anInteger put: anObject failureCode: failureCode
 	"Private - Fallback code for storing an unsigned pointer sized integer into the receiver when a primitive fails. Either raises an appropriate error, or converts the argument to an Integer and retries."
 
-	failureCode == _PrimitiveFailureCode.InvalidParameter2
+	failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
 			intVal := anObject asInteger.
-			(intVal >= 0 and: [intVal <= VMConstants.UIntPtrMax])
+			(intVal >= 0 and: [intVal <= VMLibrary.UIntPtrMax])
 				ifTrue: [^self uintPtrAtOffset: anInteger put: intVal]].
 	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
@@ -699,7 +698,7 @@ uintPtrAtOffset: anInteger
 	<primitive: 180>
 	| answer |
 	answer := 0.
-	VMConstants.IntPtrSize - 1 to: 0
+	VMLibrary.IntPtrSize - 1 to: 0
 		by: -1
 		do: [:i | answer := (answer bitShift: 8) + (self uint8AtOffset: anInteger + i)].
 	^answer!
@@ -722,12 +721,12 @@ updatePrimitiveFailed: failureCode atOffset: anInteger
 	"Private - Primitive failure checking code for validating an offset argument to be called immediately after a buffer accessing primitive has failed.
 	Raises an appropriate error."
 
-	failureCode == _PrimitiveFailureCode.AccessViolation ifTrue: [^ConstWriteError signalWith: self].
+	failureCode == VMLibrary.PrimitiveAccessViolation ifTrue: [^ConstWriteError signalWith: self].
 	^(self validOffset: anInteger failureCode: failureCode) ifNil: [self primitiveFailed: failureCode]!
 
 validOffset: anInteger failureCode: failureCode
-	failureCode == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: anInteger].
-	failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
+	failureCode == VMLibrary.PrimitiveOutOfBounds ifTrue: [^self errorSubscriptBounds: anInteger].
+	failureCode == VMLibrary.PrimitiveInvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
 	^nil! !
 
 !Core.ByteArray categoriesForMethods!

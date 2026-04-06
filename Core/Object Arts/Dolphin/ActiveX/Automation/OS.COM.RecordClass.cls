@@ -78,7 +78,7 @@ init: addressOrBytes
 	recordInfo RecordInit: addressOrBytes!
 
 marshal: aRecord 
-	aRecord recordInfo guid = self guid ifFalse: [HRESULTError signalWith: DISP_E_TYPEMISMATCH].
+	aRecord recordInfo guid = self guid ifFalse: [HRESULTError signalWith: OLEAutLibrary.DISP_E_TYPEMISMATCH].
 	^aRecord!
 
 name

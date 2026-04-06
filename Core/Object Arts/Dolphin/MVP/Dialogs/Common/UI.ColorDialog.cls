@@ -4,7 +4,7 @@ UI.CommonDialog
 	subclass: #'UI.ColorDialog'
 	instanceVariableNames: 'validationBlock'
 	classVariableNames: 'CustomColors WM_COLOROK'
-	imports: #()
+	imports: #(#{OS.CHOOSECOLORW private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

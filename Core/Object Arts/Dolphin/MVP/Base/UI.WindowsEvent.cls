@@ -4,7 +4,7 @@ UI.Event
 	subclass: #'UI.WindowsEvent'
 	instanceVariableNames: 'message wParam lParam lResult'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

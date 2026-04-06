@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.ShellLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ShellConstants})
+	imports: #(#{OS.ShellLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -23,7 +23,7 @@ testFromIntegerInvalid
 	self
 		should: [OS.PROTOENT fromInteger: SmallInteger maximum]
 		raise: SocketError
-		matching: [:ex | ex statusCode = WinSocketErrors.WSANO_DATA]!
+		matching: [:ex | ex statusCode = SocketError.WSANO_DATA]!
 
 testFromString
 	| tcp |
@@ -36,7 +36,7 @@ testFromStringInvalid
 	self
 		should: [OS.PROTOENT fromString: GUID newUnique asString]
 		raise: SocketError
-		matching: [:ex | ex statusCode = WinSocketErrors.WSANO_DATA]! !
+		matching: [:ex | ex statusCode = SocketError.WSANO_DATA]! !
 
 !Net.Tests.PROTOENTTest categoriesForMethods!
 testFromInteger!public! !

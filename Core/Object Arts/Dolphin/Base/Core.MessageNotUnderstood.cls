@@ -32,7 +32,7 @@ hresult
 	"Answer the <HRESULT> error code associated with the receiver.
 	Overridden by subclasses to answer more specified HRESULT codes."
 
-	^OS.HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.ObjectTypeMismatch!
+	^OS.HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveObjectTypeMismatch!
 
 isResumable
 	"Answer whether the receiver represents a resumable error. Message not understood errors are

@@ -4,7 +4,7 @@ OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.LockBytesAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -96,7 +96,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	pstatstg class init: pstatstg.
 	pstatstg
-		type: STGTY_LOCKBYTES;
+		type: STATSTG.STGTY_LOCKBYTES;
 		cbSize: self size.
 	^S_OK!
 

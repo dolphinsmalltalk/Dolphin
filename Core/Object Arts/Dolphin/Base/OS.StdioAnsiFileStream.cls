@@ -69,7 +69,7 @@ peekFor: anObject
 					false]]!
 
 translationMode
-	^CRTConstants._O_TEXT! !
+	^_O_TEXT! !
 
 !OS.StdioAnsiFileStream categoriesForMethods!
 bufferPrototype!constants!private! !

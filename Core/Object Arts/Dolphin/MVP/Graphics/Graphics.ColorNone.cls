@@ -44,7 +44,7 @@ argbCode
 brush
 	"Answer a Brush configured for solid painting of the receiver's color."
 
-	^StockBrush fromId: Win32Constants.NULL_BRUSH!
+	^StockBrush fromId: NULL_BRUSH!
 
 isNone
 	"Answer whether the receiver is the special <Color> representing no colour."

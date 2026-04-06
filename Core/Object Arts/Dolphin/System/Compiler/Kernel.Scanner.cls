@@ -432,7 +432,7 @@ scanLiteralCharacter
 													[:codePoint |
 													stop := self previousStepPosition.
 													"Maximum Unicode code point is U+10FFFF, but last valid char is U+10FFFD"
-													(codePoint >= ICUConstants.UCHAR_MIN_VALUE and: [codePoint <= ICUConstants.UCHAR_MAX_VALUE])
+													(codePoint >= ICULibrary.UCHAR_MIN_VALUE and: [codePoint <= ICULibrary.UCHAR_MAX_VALUE])
 														ifTrue: 
 															[(Character isNonCharCodePoint: codePoint)
 																ifTrue: 

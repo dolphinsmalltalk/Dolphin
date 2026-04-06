@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.AbstractIN_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.WS2_32Library})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -26,7 +26,7 @@ displayOn: aPuttableStream
 		ifTrue: [aPuttableStream display: nil]
 		ifFalse: 
 			[| buf |
-			buf := AnsiString newFixed: WinSocketConstants.INET6_ADDRSTRLEN.
+			buf := AnsiString newFixed: INET6_ADDRSTRLEN.
 			aPuttableStream nextPutAll: (Ws2_32
 						inet_ntop: self class addressFamily
 						pAddr: self

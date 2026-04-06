@@ -68,7 +68,7 @@ UI.StaticControlView
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'STM_GETIMAGE' -> 16r173. 'STM_SETIMAGE' -> 16r172 }!
 
 UI.StaticImage
 	subclass: #'UI.StaticBitmap'
@@ -76,7 +76,7 @@ UI.StaticImage
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'SS_BITMAP' -> 16rE }!
 
 UI.StaticImage
 	subclass: #'UI.StaticIcon'
@@ -84,7 +84,7 @@ UI.StaticImage
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'SS_ICON' -> 16r3 }!
 
 UI.DoubleBufferedView
 	subclass: #'UI.AnimatedImageView'

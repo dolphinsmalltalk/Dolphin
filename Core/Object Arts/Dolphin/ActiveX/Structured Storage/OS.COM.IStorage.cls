@@ -4,9 +4,17 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #(#{OS.COM.STATSTG private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'STGFMT_CATALOG' -> 16r2.
+			'STGFMT_DIRECTORY' -> 16r1.
+			'STGFMT_DOCUMENT' -> 16r0.
+			'STGFMT_FILE' -> 16r3.
+			'STGMOVE_COPY' -> 16r1.
+			'STGMOVE_MOVE' -> 16r0.
+			'STGMOVE_SHALLOWCOPY' -> 16r2
+		}!
 
 OS.COM.IStorage guid: (OS.COM.IID fromString: '{0000000b-0000-0000-c000-000000000046}')!
 
@@ -185,14 +193,14 @@ fastFlush
 	memory buffers to the OS, which we assume will be more reliable than the application).
 	Use NT instead of Win95, and this should be quite safe enough."
 
-	self Commit: STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE!
+	self Commit: IStream.STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE!
 
 flush
 	"Commit the receiver in the decfault manner (this includes a hard flush such that if
 	this method returns, then it is guaranteed that updates to the underlying storage
 	have been flushed to disk). This could be quite slow if performed too often."
 
-	self Commit: STGC_DEFAULT!
+	self Commit: IStream.STGC_DEFAULT!
 
 getCLIPFORMATAndUserType
 	"Answer a two element array containing the CLIPFORMAT and user type last 

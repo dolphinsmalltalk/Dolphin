@@ -104,7 +104,7 @@ getFieldNames
 	^#(#NextEntryOffset #Action #FileNameLength #FileName)!
 
 new
-	^self new: ##(_OffsetOf_FileName + ((CRTConstants._MAX_PATH + 1) * 2))! !
+	^self new: ##(_OffsetOf_FileName + ((CRTLibrary._MAX_PATH + 1) * 2))! !
 
 !OS.FILE_NOTIFY_INFORMATION class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

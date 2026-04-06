@@ -38,7 +38,7 @@ asInteger
 asParameter
 	"Answer the value of the receiver in a form suitable for passing to an external function call."
 
-	^OS.Win32Constants.FALSE!
+	^OS.FALSE!
 
 ifFalse: operand 
 	"Evaluate and answer the result of the evaluating the <niladicValuable>

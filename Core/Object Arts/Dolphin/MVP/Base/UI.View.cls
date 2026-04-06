@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyles presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId WndClassAtom'
-	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
+	imports: #(#{OS.UserLibrary} #{OS.GDILibrary} #{OS.SCROLLINFO})
 	classInstanceVariableNames: 'theme'
 	classConstants: {
 			'CreateCenteredMask' -> 16r40.
@@ -119,7 +119,7 @@ allChildWindowHandlesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for the Window handles of each of the child windows of the receiver, including any of their children, their children's children, and so on, recursively down through the hierarchy. The [Microsoft documentation](https://docs.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-enumchildwindows) does not specify the enumeration order, but empirically it is a depth-first traversal."
 
 	| callback answer |
-	callback := External.Callback block: 
+	callback := Callback block: 
 					[:hwnd :lParam |
 					aMonadicValuable value: hwnd.
 					true]
@@ -457,8 +457,8 @@ beNotThemed
 	self freeTheme.
 	UxTheme
 		setWindowTheme: self handle
-		pszSubAppName: Utf16String empty
-		pszSubIdList: Utf16String empty!
+		pszSubAppName: Utf16String.Empty
+		pszSubIdList: Utf16String.Empty!
 
 beNotTopMost
 	"Places the receiver above all non-topmost windows (that is, behind all topmost windows).
@@ -830,10 +830,10 @@ ddScroll: session
 	| pt rect horz vert |
 	pt := session dragPointInView: self.
 	rect := self clientRectangle insetBy: session defaultScrollInset.
-	pt x < rect left ifTrue: [horz := SB_LINEUP].
-	pt x >= rect right ifTrue: [horz := SB_LINEDOWN].
-	pt y < rect top ifTrue: [vert := SB_LINEUP].
-	pt y >= rect bottom ifTrue: [vert := SB_LINEDOWN].
+	pt x < rect left ifTrue: [horz := ScrollEvent.SB_LINEUP].
+	pt x >= rect right ifTrue: [horz := ScrollEvent.SB_LINEDOWN].
+	pt y < rect top ifTrue: [vert := ScrollEvent.SB_LINEUP].
+	pt y >= rect bottom ifTrue: [vert := ScrollEvent.SB_LINEDOWN].
 	session hideCursorWhile: 
 			[horz notNil ifTrue: [self sendMessage: WM_HSCROLL wParam: horz].
 			vert notNil ifTrue: [self sendMessage: WM_VSCROLL wParam: vert]]!
@@ -1030,20 +1030,6 @@ dispatchUser: userId wParam: wParam lParam: lParam
 	(especially in ShellViews)."
 
 	^nil 	"accept default processing"!
-
-dispatchUser: userId wParam: wParam lParam: lParam map: aLookupTable
-	"Private - Dispatch the WM_USER+userId message, aWinMSG, which was sent to the receiver, via
-	the message map, aLookupTable (which maps userIds to selectors). A helper
-	function for subclasses implementing #dispatchUser:wParam:lParam:."
-
-	^(aLookupTable lookup: userId)
-		ifNotNil: 
-			[:selector |
-			self
-				perform: selector
-				with: WM_USER + userId
-				with: wParam
-				with: lParam]!
 
 displayMonitor
 	"Answer the <DisplayMonitor> on which the receiver is displayed, or nil if not visible on any monitor."
@@ -1591,7 +1577,7 @@ getWindowLong: anInteger
 getWindowLongPtr: anInteger
 	"Private - Answer the unsigned intptr value at the specified offset in the receiver."
 
-	^VMConstants.IsWin64
+	^VMLibrary.IsWin64
 		ifTrue: [User32 getWindowLongPtr: handle nIndex: anInteger]
 		ifFalse: [User32 getWindowLong: handle nIndex: anInteger]!
 
@@ -1618,7 +1604,7 @@ getWndProc
 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64
+	^VMLibrary.IsWin64
 		ifTrue: [User32 getWindowULongPtr: handle nIndex: GWLP_WNDPROC]
 		ifFalse: [User32 getWindowULong: handle nIndex: GWL_WNDPROC]!
 
@@ -3057,7 +3043,7 @@ queryContextMenu
 queryMouseTracking
 	| tme |
 	tme := TRACKMOUSEEVENT new.
-	tme dwFlags: TME_QUERY.
+	tme dwFlags: TRACKMOUSEEVENT.TME_QUERY.
 	tme hwndTrack: handle.
 	^(User32 trackMouseEvent: tme) ifTrue: [tme] ifFalse: [nil]!
 
@@ -3482,7 +3468,7 @@ setWndProc: anAddress
 
 	"Note that the compiler should optimise away the condition as VMConstants.IsWin64 is a constant value"
 
-	^VMConstants.IsWin64
+	^VMLibrary.IsWin64
 		ifTrue: 
 			[User32
 				setWindowULongPtr: handle
@@ -3805,7 +3791,7 @@ trackMouseHover: anInteger
 
 	| tme |
 	tme := self queryMouseTracking.
-	tme dwFlags: (tme dwFlags bitOr: TME_HOVER).
+	tme dwFlags: (tme dwFlags bitOr: TRACKMOUSEEVENT.TME_HOVER).
 	tme dwHoverTime: anInteger.
 	tme hwndTrack: handle.
 	(User32 trackMouseEvent: tme) ifFalse: [User32 systemError]!
@@ -3821,7 +3807,7 @@ trackMouseLeave
 
 	| tme |
 	tme := self queryMouseTracking.
-	tme dwFlags: (tme dwFlags bitOr: TME_LEAVE).
+	tme dwFlags: (tme dwFlags bitOr: TRACKMOUSEEVENT.TME_LEAVE).
 	tme hwndTrack: handle.
 	User32 trackMouseEvent: tme!
 
@@ -4119,7 +4105,7 @@ wmDrawItem: message wParam: wParam lParam: lParam
 
 	| struct |
 	struct := DRAWITEMSTRUCT fromAddress: lParam.
-	^struct CtlType == ODT_MENU
+	^struct CtlType == OwnerDrawStruct.ODT_MENU
 		ifTrue: [self onDrawMenuItem: struct]
 		ifFalse: 
 			[(self class withHandle: struct hwndItem)
@@ -4324,7 +4310,7 @@ wmMButtonUp: message wParam: wParam lParam: lParam
 wmMeasureItem: message wParam: wParam lParam: lParam
 	| struct extent menuMetrics |
 	struct := MEASUREITEMSTRUCT fromAddress: lParam.
-	struct CtlType == ODT_MENU ifFalse: [^nil].
+	struct CtlType == OwnerDrawStruct.ODT_MENU ifFalse: [^nil].
 	menuMetrics := self metrics.
 	extent := menuMetrics menuImageExtent.
 	struct itemWidth: extent x + menuMetrics menuImageTextGap.
@@ -4858,7 +4844,6 @@ disconnectFromModel!operations!private! !
 dispatchMessage:wParam:lParam:!dispatching!private! !
 dispatchRegistered:wParam:lParam:!dispatching!private! !
 dispatchUser:wParam:lParam:!dispatching!private! !
-dispatchUser:wParam:lParam:map:!dispatching!private! !
 displayMonitor!enquiries!public! !
 displayOn:!displaying!public! !
 displayOnFormats!displaying!private! !
@@ -5654,7 +5639,7 @@ onStartup
 openTheme
 	#highDpiToDo.	"Instances will need theme handle opened at relevant DPI. A single class-wide theme handle is inadequate."
 	^(self themePartName isNil or: [UxTheme isAppThemed not])
-		ifTrue: [##(External.Handle new)]
+		ifTrue: [##(Handle new)]
 		ifFalse: 
 			["UxTheme openThemeDataForDpi: nil pszClassList: self themePartName asUtf16String dpi: User32 getDpiForSystem]"
 			UxTheme openThemeData: nil pszClassList: self themePartName asUtf16String]!
@@ -5926,13 +5911,13 @@ viewClosedError
 winClassBrush
 	"Private - Answer the default class background brush handle to be used for instances of the receiver's windows. Note that in normal circumstances the default window procedure will not be invoked for WM_ERASEBKGND, so this should not come into play."
 
-	^COLOR_WINDOW + 1!
+	^SystemColor.COLOR_WINDOW + 1!
 
 winClassCursor
 	"Private - Answer the default icon handle to be used for instances of the receiver.
 	Implementation Note: Avoid creating a dependency on Cursor class."
 
-	^User32 loadCursor: nil lpCursorName: IDC_ARROW!
+	^User32 loadCursor: nil lpCursorName: Cursor.IDC_ARROW!
 
 winClassIcon
 	"Private - Answer the default icon handle to be used for instances of the receiver.

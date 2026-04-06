@@ -15,7 +15,7 @@ Kernel.Tests.CompilerErrorTest comment: ''!
 !Kernel.Tests.CompilerErrorTest methodsFor!
 
 defaultCompileFlags
-	^CompilerFlags.Interactive "| CompilerFlags.SyntaxCheckOnly"
+	^Compiler.Interactive "| CompilerFlags.SyntaxCheckOnly"
 
  
 

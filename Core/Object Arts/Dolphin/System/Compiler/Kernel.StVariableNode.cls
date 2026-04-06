@@ -138,7 +138,7 @@ new
 		NonInstantiable		- The receiver class is non-instantiable (abstract)."
 
 	<primitive: 70>
-	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^StBasicVariableNode new].
+	_failureCode == VMLibrary.PrimitiveNonInstantiable ifTrue: [^StBasicVariableNode new].
 	^self primitiveFailed: _failureCode!
 
 selfNode

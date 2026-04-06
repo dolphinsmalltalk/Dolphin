@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Graphics.ImageManager'
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -137,7 +137,7 @@ maskcolor: aColorOrNil
 	This must be set before any image lists are created, or they
 	will not have the requisite masking capability."
 
-	maskcolor := aColorOrNil asCOLORREF = CLR_NONE ifFalse: [aColorOrNil]!
+	maskcolor := aColorOrNil asCOLORREF = Color.CLR_NONE ifFalse: [aColorOrNil]!
 
 maximumImageIndex
 	| max |

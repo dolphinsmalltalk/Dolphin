@@ -65,7 +65,7 @@ initialize
 	"
 
 	| percentages |
-	percentages := (ByteArray new: Gdiplus.HatchStyleMax + 1)
+	percentages := (ByteArray new: HatchStyleMax + 1)
 				at: HatchStyleHorizontal + 1 put: 12;
 				at: HatchStyleVertical + 1 put: 12;
 				at: HatchStyleForwardDiagonal + 1 put: 18;

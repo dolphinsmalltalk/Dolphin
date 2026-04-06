@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.SQL_DATE_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_day' -> 16r4.
@@ -40,7 +40,7 @@ dbConvert: anObject for: aDBField
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_DATE!
+	^SQL_C_DATE!
 
 value
 	"Answers a Date which represents the receiver."

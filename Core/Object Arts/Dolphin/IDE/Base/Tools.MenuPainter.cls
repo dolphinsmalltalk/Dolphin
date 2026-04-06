@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Tools.MenuPainter'
 	instanceVariableNames: 'view menu conflictingMnemonics conflictingAccelerators'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private} #{OS private})
+	imports: #(#{OS.UserLibrary private} #{OS.GDILibrary private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

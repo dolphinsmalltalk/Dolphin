@@ -4,9 +4,15 @@ UI.ValueConvertingControlView
 	subclass: #'UI.DateTimeCommonControl'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.DateTimeCommCtrlConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'GDT_NONE' -> 16r1.
+			'GDT_VALID' -> 16r0.
+			'GDTR_MAX' -> 16r2.
+			'GDTR_MIN' -> 16r1.
+			'ICC_DATE_CLASSES' -> 16r121
+		}!
 
 UI.DateTimeCommonControl guid: (Core.GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
 

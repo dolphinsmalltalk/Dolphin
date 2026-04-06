@@ -88,7 +88,7 @@ isSource
 isVBCollection
 	"Private - Answer whether the receiver has been derived from another interface."
 
-	^(self idOfName: '_NewEnum' ifAbsent: [0]) = DISPID_NEWENUM!
+	^(self idOfName: '_NewEnum' ifAbsent: [0]) = IDispatch.DISPID_NEWENUM!
 
 methods
 	"Answer a <sequencedReadableCollection> of <FUNCDESC>s describing the 

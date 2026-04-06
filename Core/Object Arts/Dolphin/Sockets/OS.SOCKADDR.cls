@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.SOCKADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
+	imports: #(#{OS.WS2_32Library})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_sa_data' -> 16r2.

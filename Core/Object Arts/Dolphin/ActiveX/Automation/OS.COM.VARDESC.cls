@@ -13,7 +13,23 @@ OS.COM.MemberDesc
 			'_OffsetOf_oInst' -> 16r8.
 			'_OffsetOf_varkind' -> 16r20.
 			'_OffsetOf_wVarFlags' -> 16r1C.
-			'_VARDESC_Size' -> 16r24
+			'_VARDESC_Size' -> 16r24.
+			'VAR_CONST' -> 16r2.
+			'VAR_DATEVALUEONLY' -> 16r2.
+			'VAR_DISPATCH' -> 16r3.
+			'VAR_PERINSTANCE' -> 16r0.
+			'VAR_STATIC' -> 16r1.
+			'VAR_TIMEVALUEONLY' -> 16r1.
+			'VARFLAG_FBINDABLE' -> 16r4.
+			'VARFLAG_FDEFAULTBIND' -> 16r20.
+			'VARFLAG_FDISPLAYBIND' -> 16r10.
+			'VARFLAG_FHIDDEN' -> 16r40.
+			'VARFLAG_FNONBROWSABLE' -> 16r400.
+			'VARFLAG_FREADONLY' -> 16r1.
+			'VARFLAG_FREQUESTEDIT' -> 16r8.
+			'VARFLAG_FRESTRICTED' -> 16r80.
+			'VARFLAG_FSOURCE' -> 16r2.
+			'VARFLAG_FUIDEFAULT' -> 16r200
 		}!
 
 OS.COM.VARDESC guid: (Core.GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
@@ -71,9 +87,6 @@ elemDesc
 
 	^self elemdesc owner: self!
 
-flags
-	^self wVarFlags!
-
 getAllCustData
 	^self analyzer tlbInterface getAllVarCustData: index!
 
@@ -95,10 +108,40 @@ isAnonymous
 
 	^self name beginsWith: '__MIDL_'!
 
+isBindable
+	"Answer whether the receiver is describing a 'bindable' property."
+
+	^self wVarFlags allMask: VARFLAG_FBINDABLE!
+
 isConformant
 	"Answer whether the variable described by the receiver has the custom Dolphin 'size_is' attribute in the original IDL."
 
 	^self customAttributes includesKey: #size_is!
+
+isDefaultBind
+	"Answer whether the receiver is describing a 'defaultbind' property (i.e. the single, bindable
+	property that best describes the object)."
+
+	^self wVarFlags allMask: VARFLAG_FDEFAULTBIND!
+
+isDisplayBind
+	"Answer whether the receiver is describing a 'displaybind' property (i.e. a property that
+	should be displayed to the user as bindable)."
+
+	^self wVarFlags allMask: VARFLAG_FDISPLAYBIND!
+
+isHidden
+	"Answer whether the receiver is describing a hidden function or variable (i.e. one not
+	intended to be advertised to users of macro/scripting languages)."
+
+	^self wVarFlags allMask: VARFLAG_FHIDDEN!
+
+isNonBrowsable
+	"Answer whether the receiver is describing a 'non-browsable' property. Oddly this doesn't
+	mean that the method should not be displayed in type library browsers, but that it shouldn't
+	be shown in inspectors."
+
+	^self wVarFlags anyMask: VARFLAG_FNONBROWSABLE!
 
 isReadOnly
 	"Answer whether the receiver is describing a read-only variable/property."
@@ -116,6 +159,12 @@ isRestricted
 	intended to be used from macro/scripting languages)."
 
 	^self wVarFlags allMask: VARFLAG_FRESTRICTED!
+
+isSource
+	"Answer whether the receiver is describing a function that returns an object, or 
+	a variable that holds an object, that is a source of events."
+
+	^self wVarFlags allMask: VARFLAG_FSOURCE!
 
 isStatic
 	"Answer whether the receiver is describing a static (i.e. non-member) variable."
@@ -135,6 +184,11 @@ isSymbolicConstant
 	confused with a const variable/parameter)."
 
 	^self varkind == VAR_CONST!
+
+isUIDefault
+	"Answer whether the receiver is describing the default member for display in the UI."
+
+	^self wVarFlags allMask: VARFLAG_FUIDEFAULT!
 
 isUnion
 	"Answer whether the variable described by the receiver is a union."
@@ -170,17 +224,23 @@ basicFree!private!realizing/unrealizing! !
 basicIdlAttributes!printing-IDL!private! !
 elemdesc!**compiled accessors**!public! !
 elemDesc!accessing!public! !
-flags!accessing!private! !
 getAllCustData!accessing!private! !
 getValidFields!accessing!private! !
 isAnonymous!public!testing! !
+isBindable!public!testing! !
 isConformant!public!testing! !
+isDefaultBind!public!testing! !
+isDisplayBind!public!testing! !
+isHidden!public!testing! !
+isNonBrowsable!public!testing! !
 isReadOnly!public!testing! !
 isRequestEdit!public!testing! !
 isRestricted!public!testing! !
+isSource!public!testing! !
 isStatic!public!testing! !
 isStringField!public!testing! !
 isSymbolicConstant!public!testing! !
+isUIDefault!public!testing! !
 isUnion!public!testing! !
 lpvarValue!**compiled accessors**!public! !
 oInst!**compiled accessors**!public! !

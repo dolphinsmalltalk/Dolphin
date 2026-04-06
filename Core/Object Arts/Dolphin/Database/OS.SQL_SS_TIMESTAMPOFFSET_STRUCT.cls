@@ -28,7 +28,7 @@ dbConvert: anObject for: aDBField
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_SS_TIMESTAMPOFFSET!
+	^SQL_C_SS_TIMESTAMPOFFSET!
 
 value
 	"Answers a local <DateAndTime> which represents the receiver."

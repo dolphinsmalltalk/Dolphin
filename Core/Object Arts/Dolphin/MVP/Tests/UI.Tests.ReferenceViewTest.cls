@@ -4,7 +4,7 @@ UI.Tests.PresenterTest
 	subclass: #'UI.Tests.ReferenceViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

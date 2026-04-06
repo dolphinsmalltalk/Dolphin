@@ -4,7 +4,7 @@ UI.Tests.AbstractCardContainerTest
 	subclass: #'UI.Tests.WizardCardContainerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

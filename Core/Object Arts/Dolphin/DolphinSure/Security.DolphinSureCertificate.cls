@@ -4,7 +4,7 @@ Security.DolphinSureTrustedData
 	subclass: #'Security.DolphinSureCertificate'
 	instanceVariableNames: ''
 	classVariableNames: 'UntrustedContentWarning'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'External.Tests.FunctionDescriptorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{External.ExtCallArgTypes})
+	imports: #(#{External.FunctionDescriptor})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -15,7 +15,7 @@ External.Tests.FunctionDescriptorTest comment: ''!
 !External.Tests.FunctionDescriptorTest methodsFor!
 
 externalTypes
-	^FunctionDescriptor.ValueTypes!
+	^ValueTypes!
 
 parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 	"First pass-by-value"
@@ -59,7 +59,7 @@ subjectClass
 testBuiltins
 	| typeTable typeNames |
 	typeTable := self externalTypes.
-	typeNames := FunctionDescriptor.TypeNames.
+	typeNames := TypeNames.
 	(typeTable reject: [:each | self subjectClass typeHasArgument: each]) keysAndValuesDo: 
 			[:eachKey :eachValue |
 			| argTypes source desc |

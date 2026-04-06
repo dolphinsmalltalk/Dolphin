@@ -31,13 +31,13 @@ _updateTypelibResource: anExternalHandle
 	tlbPath := self typeLibPath.
 	tlbPath isNil ifTrue: [^self].
 	resourceBytes := (FileStream read: tlbPath text: false) contents.
-	(OS.Kernel32
+	(Kernel32
 		updateResource: anExternalHandle
 		lpType: 'TYPELIB' asUtf16String
 		lpName: 1
 		wLanguage: 0
 		lpData: resourceBytes
-		cbData: resourceBytes size) ifFalse: [OS.Kernel32 systemError]!
+		cbData: resourceBytes size) ifFalse: [Kernel32 systemError]!
 
 defaultSessionManagerClass
 	"Answer the default class of SessionManager to be installed into the 
@@ -60,7 +60,7 @@ prepareToStrip
 				defaultButton: 2;
 				customButtons: #(#(#ok '&Deploy'));
 				detailsText: 'You may deploy this component, but it may then be necessary to distribute and register the type library separately in order for the component to function. If this component only implements interfaces defined by other components (which themselves supply a type library), or the component is not intended for use with Automation clients (and a separate marshalling DLL is available and registered), then you may not need a type library.';
-				uniqueId: 'DeployNoTypelib ', rootPackageName;
+				uniqueId: 'DeployNoTypelib ' , rootPackageName;
 				isDefaultable: true;
 				beTaskModal.
 			(mb

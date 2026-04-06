@@ -85,7 +85,7 @@ byteSize
 
 	"So that pElems is aligned there there are 4 bytes of padding on Win64"
 
-	^##(VMConstants.IntPtrSize * 2)!
+	^##(VMLibrary.IntPtrSize * 2)!
 
 cElems
 	"Answer the <Integer> value of the receiver's 'cElems' field."

@@ -74,7 +74,7 @@ nextPut: anObject
 	"Store anObject as the next element of the receiver.  If the receiver is not stream over an Array or a String, or if there is insufficient capacity to put the argument, then the primitive will fail, and the backup Smalltalk code will be activated."
 
 	<primitive: 66>
-	_failureCode == _PrimitiveFailureCode.OutOfBounds
+	_failureCode == VMLibrary.PrimitiveOutOfBounds
 		ifTrue: [self overflowNextPut: anObject]
 		ifFalse: [collection encodeOn: self put: anObject].
 	^anObject!
@@ -84,7 +84,7 @@ nextPutAll: aCollection
 	Answer aCollection"
 
 	<primitive: 173>
-	_failureCode == _PrimitiveFailureCode.OutOfBounds
+	_failureCode == VMLibrary.PrimitiveOutOfBounds
 		ifTrue: [self overflowNextPutAll: aCollection]
 		ifFalse: [aCollection appendToStream: self].
 	^aCollection!

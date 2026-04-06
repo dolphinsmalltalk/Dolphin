@@ -29,6 +29,16 @@ External.Structure
 			'DEFAULT_QUALITY' -> 16r0.
 			'DRAFT_QUALITY' -> 16r1.
 			'FIXED_PITCH' -> 16r1.
+			'FW_BOLD' -> 16r2BC.
+			'FW_DONTCARE' -> 16r0.
+			'FW_EXTRABOLD' -> 16r320.
+			'FW_EXTRALIGHT' -> 16rC8.
+			'FW_HEAVY' -> 16r384.
+			'FW_LIGHT' -> 16r12C.
+			'FW_MEDIUM' -> 16r1F4.
+			'FW_NORMAL' -> 16r190.
+			'FW_SEMIBOLD' -> 16r258.
+			'FW_THIN' -> 16r64.
 			'NONANTIALIASED_QUALITY' -> 16r3.
 			'OUT_CHARACTER_PRECIS' -> 16r2.
 			'OUT_DEFAULT_PRECIS' -> 16r0.
@@ -95,6 +105,12 @@ faceName: aString
 	"Set the receiver's lfFaceName field."
 	
 	self lfFaceName: aString asUtf16String!
+
+isBold
+	^self lfWeight >= FW_BOLD!
+
+isBold: aBoolean
+	self lfWeight: (aBoolean ifTrue: [FW_BOLD] ifFalse: [FW_NORMAL])!
 
 isFixedWidth
 	^(self lfPitchAndFamily bitAnd: 16r3) == 1!
@@ -245,6 +261,8 @@ lfWidth: anInteger
 equalExcludingSize:!comparing!public! !
 faceName!accessing!public! !
 faceName:!accessing!public! !
+isBold!public!testing! !
+isBold:!public!testing! !
 isFixedWidth!public! !
 isRasterFont!public!testing! !
 lfCharSet!**compiled accessors**!public! !
@@ -299,7 +317,7 @@ defineFields
 		defineField: #lfClipPrecision type: UInt8Field new;
 		defineField: #lfQuality type: UInt8Field new;
 		defineField: #lfPitchAndFamily type: UInt8Field new;
-		defineField: #lfFaceName type: (StringField type: Utf16String length: OS.Win32Constants.LF_FACESIZE)!
+		defineField: #lfFaceName type: (StringField type: Utf16String length: GDILibrary.LF_FACESIZE)!
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !

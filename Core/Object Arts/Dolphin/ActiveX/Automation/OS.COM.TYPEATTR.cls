@@ -25,7 +25,19 @@ OS.COM.TypeInfoStructure
 			'_OffsetOf_wMajorVerNum' -> 16r38.
 			'_OffsetOf_wMinorVerNum' -> 16r3A.
 			'_OffsetOf_wTypeFlags' -> 16r36.
-			'_TYPEATTR_Size' -> 16r4C
+			'_TYPEATTR_Size' -> 16r4C.
+			'TYPEFLAG_FAGGREGATABLE' -> 16r400.
+			'TYPEFLAG_FAPPOBJECT' -> 16r1.
+			'TYPEFLAG_FCANCREATE' -> 16r2.
+			'TYPEFLAG_FCONTROL' -> 16r20.
+			'TYPEFLAG_FDISPATCHABLE' -> 16r1000.
+			'TYPEFLAG_FDUAL' -> 16r40.
+			'TYPEFLAG_FHIDDEN' -> 16r10.
+			'TYPEFLAG_FLICENSED' -> 16r4.
+			'TYPEFLAG_FNONEXTENSIBLE' -> 16r80.
+			'TYPEFLAG_FOLEAUTOMATION' -> 16r100.
+			'TYPEFLAG_FPREDECLID' -> 16r8.
+			'TYPEFLAG_FRESTRICTED' -> 16r200
 		}!
 
 OS.COM.TYPEATTR guid: (Core.GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
@@ -334,7 +346,7 @@ stbConvertFromVersion0: anArray
 
 	Note that the owner inst var added in Structure replaces the analyzer inst var of AXTypeInfoStructure, so the format remains unchanged in version 1 vs the later version 0 format."
 
-	^(((anArray at: 3) isKindOf: COM.TypeInfoAnalyzer)
+	^(((anArray at: 3) isKindOf: TypeInfoAnalyzer)
 		ifTrue: 
 			["Original format, D5 and earlier"
 			{ anArray at: 1. anArray at: 3. anArray at: 2 }]

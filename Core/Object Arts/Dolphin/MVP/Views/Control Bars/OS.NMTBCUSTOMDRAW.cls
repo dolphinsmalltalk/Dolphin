@@ -20,7 +20,15 @@ OS.NMCUSTOMDRAW
 			'_OffsetOf_iListGap' -> 16r6C.
 			'_OffsetOf_nHLStringBkMode' -> 16r68.
 			'_OffsetOf_nStringBkMode' -> 16r64.
-			'_OffsetOf_rcText' -> 16r54
+			'_OffsetOf_rcText' -> 16r54.
+			'TBCDRF_BLENDICON' -> 16r200000.
+			'TBCDRF_HILITEHOTTRACK' -> 16r20000.
+			'TBCDRF_NOBACKGROUND' -> 16r400000.
+			'TBCDRF_NOEDGES' -> 16r10000.
+			'TBCDRF_NOETCHEDEFFECT' -> 16r100000.
+			'TBCDRF_NOMARK' -> 16r80000.
+			'TBCDRF_NOOFFSET' -> 16r40000.
+			'TBCDRF_USECDCOLORS' -> 16r800000
 		}!
 
 OS.NMTBCUSTOMDRAW guid: (Core.GUID fromString: '{720c57fd-6d0a-49f5-bca8-648125016ddb}')!

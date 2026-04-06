@@ -29,8 +29,8 @@ addExpandos: aWinImageList forDpi: anInteger
 	UxTheme
 		drawThemeBackground: hTheme
 		hdc: bitmap canvas asParameter
-		iPartId: ThemeConstants.TVP_GLYPH
-		iStateId: ThemeConstants.GLPS_OPENED
+		iPartId: ThemeLibrary.TVP_GLYPH
+		iStateId: ThemeLibrary.GLPS_OPENED
 		pRect: rect
 		pClipRect: nil.
 	aWinImageList addBitmap: bitmap mask: Color white.
@@ -41,8 +41,8 @@ addExpandos: aWinImageList forDpi: anInteger
 	UxTheme
 		drawThemeBackground: hTheme
 		hdc: bitmap canvas asParameter
-		iPartId: ThemeConstants.TVP_GLYPH
-		iStateId: ThemeConstants.GLPS_CLOSED
+		iPartId: ThemeLibrary.TVP_GLYPH
+		iStateId: ThemeLibrary.GLPS_CLOSED
 		pRect: rect
 		pClipRect: nil.
 	aWinImageList addBitmap: bitmap mask: Color white.

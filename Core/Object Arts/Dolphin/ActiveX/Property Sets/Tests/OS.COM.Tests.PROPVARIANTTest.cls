@@ -228,7 +228,7 @@ verifyAnsiStringArray: anArrayOfStrings
 	self assert: vector needsFree.
 	self assert: vector isFinalizable.
 	self assert: vector owner isNil.
-	heapPointers := (0 to: anArrayOfStrings size - 1 by: VMConstants.IntPtrSize)
+	heapPointers := (0 to: anArrayOfStrings size - 1 by: VMLibrary.IntPtrSize)
 				collect: [:offset | vector bytes uintPtrAtOffset: offset].
 	heapPointers do: [:psz | self assert: (TaskMemory didAlloc: psz)].
 	"Should be able to make a copy - helps verify that we have created and stored the CALPSTR correctly since there is no Propsys initialization API for VT_VECTOR|VT_LPSTRs)."
@@ -392,7 +392,7 @@ verifyUtf16StringArray: anArrayOfStrings
 	self assert: vector needsFree.
 	self assert: vector isFinalizable.
 	self assert: vector owner isNil.
-	heapPointers := (0 to: anArrayOfStrings size - 1 by: VMConstants.IntPtrSize)
+	heapPointers := (0 to: anArrayOfStrings size - 1 by: VMLibrary.IntPtrSize)
 				collect: [:offset | vector bytes uintPtrAtOffset: offset].
 	heapPointers do: [:psz | self assert: (TaskMemory didAlloc: psz)].
 	vector free.

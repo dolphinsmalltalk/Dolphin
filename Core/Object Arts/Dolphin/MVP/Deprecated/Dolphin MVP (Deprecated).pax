@@ -118,8 +118,7 @@ package methodNames
 	add: #UserLibrary -> #setSysColors:lpaElements:lpaRgbValues:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
 	add: #View -> #defaultWindowProcessing:;
-	add: #View -> #winHelpPopup:topic:;
-	add: #View -> #winHelpPopup:topic:at:;
+	add: #View -> #enable:;
 	add: 'Brush class' -> #dkGray;
 	add: 'Brush class' -> #hatchedDiagonal;
 	add: 'Brush class' -> #hollow;
@@ -133,7 +132,6 @@ package methodNames
 	add: 'Icon class' -> #largeExtent;
 	add: 'Icon class' -> #smallExtent;
 	add: 'Icon class' -> #tileExtent;
-	add: 'ImageList class' -> #width:height:flags:size:growthGranularity:;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
 	add: 'ListTreeView class' -> #stateImageBlock:;
@@ -147,16 +145,39 @@ package methodNames
 	add: 'ThemeLibrary class' -> #isAppThemed;
 	add: 'View class' -> #mapRectangle:from:to:;
 	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
+	add: 'WinImageList class' -> #width:height:flags:size:growthGranularity:;
 	yourself.
 
 package globalNames
+	add: #ButtonConstants;
 	add: #CheckedPushButton;
+	add: #ComboBoxConstants;
+	add: #CommCtrlConstants;
+	add: #CommonDialogConstants;
 	add: #CompositePresenter;
+	add: #DateTimeCommCtrlConstants;
+	add: #HotKeyConstants;
+	add: #IPAddressControlConstants;
+	add: #ListBoxConstants;
+	add: #ListViewConstants;
 	add: #MultipleChoicePresenter;
+	add: #PrintDialogConstants;
+	add: #ProgressBarConstants;
+	add: #RichEditConstants;
 	add: #StaticViewAbstract;
 	add: #Status;
+	add: #StatusBarConstants;
 	add: #StatusItem;
 	add: #StatusOwnerDraw;
+	add: #SysLinkConstants;
+	add: #TabViewConstants;
+	add: #TextEditConstants;
+	add: #ThemeConstants;
+	add: #ToolbarConstants;
+	add: #TooltipConstants;
+	add: #TrackBarConstants;
+	add: #TreeViewConstants;
+	add: #UpDownControlConstants;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -643,7 +664,7 @@ fileLocator:!accessing!public! !
 identifier:!accessing!public! !
 !
 
-!ImageList class methodsFor!
+!WinImageList class methodsFor!
 
 width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInteger
 	"Answer a new instances with the given parameters."
@@ -656,7 +677,7 @@ width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInt
 		growBy: growthInteger
 		masked: false! !
 
-!ImageList class categoriesForMethods!
+!WinImageList class categoriesForMethods!
 width:height:flags:size:growthGranularity:!instance creation!public! !
 !
 
@@ -1338,32 +1359,15 @@ defaultWindowProcessing: anEvent
 	#deprecated.
 	^anEvent defaultWindowProcessing!
 
-winHelpPopup: helpFileString topic: topicId 
-	#deprecated. "Not supported on Windows 10 and later."
-	^self 
-		winHelpPopup: helpFileString
-		topic: topicId
-		at: nil!
+enable: aBoolean
+	"Sent from state in old view resources"
 
-winHelpPopup: helpFileString topic: topicId at: aPointOrNil
-	#deprecated.	"Not supported on Windows 10 and later."
-	aPointOrNil notNil
-		ifTrue: 
-			[UserLibrary default
-				winHelp: View active handle
-				lpszHelp: ''
-				uCommand: HELP_SETPOPUP_POS
-				dwData: aPointOrNil asUIntPtr].
-	^UserLibrary default
-		winHelp: self handle
-		lpszHelp: helpFileString
-		uCommand: HELP_CONTEXTPOPUP
-		dwData: topicId! !
+	#deprecated.
+	self isEnabled: aBoolean! !
 
 !View categoriesForMethods!
 defaultWindowProcessing:!dispatching!public! !
-winHelpPopup:topic:!public! !
-winHelpPopup:topic:at:!public! !
+enable:!operations!public! !
 !
 
 !View class methodsFor!

@@ -241,7 +241,6 @@ testEncodedSizeOf
 
 testEncoding
 	<mustConform: #gettableStream>
-
 	| subject |
 	subject := self streamOn: AnsiString empty.
 	self assert: subject encoding equals: #ansi.
@@ -270,7 +269,7 @@ testMarkusKuhnUtf8
 	[subject atEnd] whileFalse: [subject next].
 	bytes := File readAllBytes: testFilePath.
 	utf8 := Utf8String fromByteArray: bytes.
-	utf16 := Utf16String fromBytes: bytes codePage: OS.NlsConstants.CP_UTF8.
+	utf16 := Utf16String fromBytes: bytes codePage: Locale.CP_UTF8.
 	self assert: subject contents equals: utf8.
 	subject reset.
 	self assert: subject upToEnd equals: utf16!

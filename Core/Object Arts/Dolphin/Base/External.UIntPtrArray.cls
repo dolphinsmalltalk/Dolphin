@@ -20,10 +20,10 @@ basicUncheckedAt: anInteger
 	"Private - Answer an 32-bit unsigned <integer> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
-	^bytes uintPtrAtOffset: (anInteger - 1) * VMConstants.IntPtrSize!
+	^bytes uintPtrAtOffset: (anInteger - 1) * VMLibrary.IntPtrSize!
 
 basicUncheckedAt: indexInteger put: valueInteger
-	^bytes uintPtrAtOffset: (indexInteger - 1) * VMConstants.IntPtrSize put: valueInteger! !
+	^bytes uintPtrAtOffset: (indexInteger - 1) * VMLibrary.IntPtrSize put: valueInteger! !
 
 !External.UIntPtrArray categoriesForMethods!
 basicUncheckedAt:!accessing!private! !

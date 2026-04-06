@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.SQL_TIMESTAMP_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_day' -> 16r4.
@@ -40,7 +40,7 @@ dbConvert: anObject for: aDBField
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_TIMESTAMP!
+	^SQL_C_TIMESTAMP!
 
 dbMarshal: anObject into: aDBField
 	"Populate the receiver, as buffer of the <DBField> 2nd argument, with the SQL_C_TYPE_TIMESTAMP representation of the 1st argument, which must yield a <DateAndTime> when sent #asDateAndTime. Note that a local time (not UTC) will be stored as expected for the column type."

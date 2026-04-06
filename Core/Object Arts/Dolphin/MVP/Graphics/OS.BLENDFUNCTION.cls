@@ -11,7 +11,9 @@ External.Structure
 			'_OffsetOf_AlphaFormat' -> 16r3.
 			'_OffsetOf_BlendFlags' -> 16r1.
 			'_OffsetOf_BlendOp' -> 16r0.
-			'_OffsetOf_SourceConstantAlpha' -> 16r2
+			'_OffsetOf_SourceConstantAlpha' -> 16r2.
+			'AC_SRC_ALPHA' -> 16r1.
+			'AC_SRC_OVER' -> 16r0
 		}!
 
 OS.BLENDFUNCTION guid: (Core.GUID fromString: '{18e4db2f-bc13-4088-8c0d-df249d0bb979}')!
@@ -92,7 +94,7 @@ usePerPixelAlpha: aBoolean
 	"Determines whether the source bitmaps alpha channel should be used when performing the
 	blend. If not then only the constant alpha is used."
 
-	self AlphaFormat: (aBoolean ifTrue: [OS.Win32Constants.AC_SRC_ALPHA] ifFalse: [0])! !
+	self AlphaFormat: (aBoolean ifTrue: [AC_SRC_ALPHA] ifFalse: [0])! !
 
 !OS.BLENDFUNCTION categoriesForMethods!
 AlphaFormat!**compiled accessors**!public! !

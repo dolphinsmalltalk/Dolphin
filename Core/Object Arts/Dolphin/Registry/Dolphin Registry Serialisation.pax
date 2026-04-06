@@ -107,7 +107,7 @@ Core.Object
 	subclass: #'OS.RegistrySerializer'
 	instanceVariableNames: 'objects currentKey instVarsCache classNames'
 	classVariableNames: ''
-	imports: #(#{OS.WinRegConstants private})
+	imports: #(#{OS.AdvApiLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -572,7 +572,7 @@ regKeyType!constants!public! !
 regKeyType
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [#qword] ifFalse: [#dword]! !
+	^VMLibrary.IsWin64 ifTrue: [#qword] ifFalse: [#dword]! !
 
 !External.UIntPtrBytes categoriesForMethods!
 regKeyType!public! !

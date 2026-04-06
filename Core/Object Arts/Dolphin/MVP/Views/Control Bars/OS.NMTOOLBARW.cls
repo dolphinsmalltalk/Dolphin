@@ -11,7 +11,10 @@ OS.NMHDR
 			'_OffsetOf_cchText' -> 16r24.
 			'_OffsetOf_iItem' -> 16rC.
 			'_OffsetOf_pszText' -> 16r28.
-			'_OffsetOf_tbButton' -> 16r10
+			'_OffsetOf_tbButton' -> 16r10.
+			'TBDDRET_DEFAULT' -> 16r0.
+			'TBDDRET_NODEFAULT' -> 16r1.
+			'TBDDRET_TREATPRESSED' -> 16r2
 		}!
 
 OS.NMTOOLBARW guid: (Core.GUID fromString: '{87b4c629-026e-11d3-9fd7-00a0cc3e4a32}')!

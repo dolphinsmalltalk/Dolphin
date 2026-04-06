@@ -172,7 +172,7 @@ destroyTree
 			presenter := nil]!
 
 getItemImage: anObject
-	^((presenter view getImageBlock value: anObject) ?? ##(OS.CommCtrlConstants.I_IMAGENONE + 1)) - 1!
+	^((presenter view getImageBlock value: anObject) ?? ##(CCITEM.I_IMAGENONE + 1)) - 1!
 
 getItemText: anObject
 	^presenter view getTextBlock value: anObject!

@@ -134,9 +134,8 @@ instVarAt: index
 		OutOfBounds		- aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
 
 	<primitive: 73>
-	_failureCode == _PrimitiveFailureCode.OutOfBounds
-		ifTrue: [^BoundsError receiver: self index: index].
-	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
+	_failureCode == VMLibrary.PrimitiveOutOfBounds ifTrue: [^BoundsError receiver: self index: index].
+	_failureCode == VMLibrary.PrimitiveInvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
 	^self primitiveFailed: _failureCode!
 
 isKindOf: candidateClass

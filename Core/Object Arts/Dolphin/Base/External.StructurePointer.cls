@@ -40,7 +40,7 @@ value!accessing!public! !
 !External.StructurePointer class methodsFor!
 
 byteSize
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 elementClass: elementClass
 	"Answer a new instance of the receiver that will contain a pointer to

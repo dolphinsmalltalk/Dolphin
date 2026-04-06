@@ -13,7 +13,10 @@ OS.SizedStructure
 			'_OffsetOf_szTip' -> 16r18.
 			'_OffsetOf_uCallbackMessage' -> 16r10.
 			'_OffsetOf_uFlags' -> 16rC.
-			'_OffsetOf_uID' -> 16r8
+			'_OffsetOf_uID' -> 16r8.
+			'NIF_ICON' -> 16r2.
+			'NIF_MESSAGE' -> 16r1.
+			'NIF_TIP' -> 16r4
 		}!
 
 OS.NOTIFYICONDATAW guid: (Core.GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
@@ -38,14 +41,14 @@ icon: anIconOrHandle
 	"Set the receiver's hIcon field."
 
 	self hIcon: anIconOrHandle asParameter.
-	self uFlags: (self uFlags bitOr: OS.Win32Constants.NIF_ICON)!
+	self uFlags: (self uFlags bitOr: NIF_ICON)!
 
 message: anIntegerMessageNumber
 	"Set the receiver's uCallbackMessage (message sent to window when mouse over
 	the icon in the taskbar) field."
 
 	self uCallbackMessage: anIntegerMessageNumber.
-	self uFlags: (self uFlags bitOr: OS.Win32Constants.NIF_MESSAGE)!
+	self uFlags: (self uFlags bitOr: NIF_MESSAGE)!
 
 szTip
 	"Answer the <Utf16String> value of the receiver's 'szTip' field."
@@ -68,7 +71,7 @@ tipText: aString
 	"Set the receiver's szTip (tip text) field."
 
 	self szTip: aString.
-	self uFlags: (self uFlags bitOr: OS.Win32Constants.NIF_TIP)!
+	self uFlags: (self uFlags bitOr: NIF_TIP)!
 
 uCallbackMessage: anInteger
 	"Set the receiver's 'uCallbackMessage' field to the value of the argument, anInteger"

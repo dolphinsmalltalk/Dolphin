@@ -7,6 +7,16 @@ UI.ControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'SS_BLACKFRAME' -> 16r7.
+			'SS_BLACKRECT' -> 16r4.
+			'SS_ETCHEDFRAME' -> 16r12.
+			'SS_ETCHEDHORZ' -> 16r10.
+			'SS_ETCHEDVERT' -> 16r11.
+			'SS_GRAYFRAME' -> 16r8.
+			'SS_GRAYRECT' -> 16r5.
+			'SS_TYPEMASK' -> 16r1F.
+			'SS_WHITEFRAME' -> 16r9.
+			'SS_WHITERECT' -> 16r6.
 			'StyleMap'
 				-> (IdentityDictionary withAll: {
 								#blackFrame -> 16r7.

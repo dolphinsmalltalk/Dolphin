@@ -126,7 +126,7 @@ endZoomIn
 		drawCachedBitmap: cachedBackground at: Point.Zero;
 		free.
 	cachedBackground free.
-	cachedBackground := Gdiplus.CachedBitmap bitmap: background graphics: self graphics.
+	cachedBackground := CachedBitmap bitmap: background graphics: self graphics.
 	dolphinInside scale: dolphinInside baseScale * InsideObjectMaxScale.
 	renderBlock := self zoomedInRenderBlock!
 
@@ -217,7 +217,7 @@ initializeSurfacesFor: aPointExtent
 	"Private - Initialize the front and back surfaces for a view size of aPointExtent"
 
 	super initializeSurfacesFor: aPointExtent.
-	cachedBackground := Gdiplus.CachedBitmap bitmap: background graphics: self graphics!
+	cachedBackground := CachedBitmap bitmap: background graphics: self graphics!
 
 invalidate
 	"Flag the current rendition as being invalid. A repaint will cause a

@@ -36,8 +36,8 @@ testAsUInt32OutOfRange
 testAsUIntPtr
 	| result |
 	result := ((17 / 4) @ (11 / 4)) asUIntPtr.
-	self assert: result >> VMConstants.HalfPtrBits equals: 3.
-	self assert: (result bitAnd: VMConstants.HalfPtrMask) equals: 4!
+	self assert: result >> VMLibrary.HalfPtrBits equals: 3.
+	self assert: (result bitAnd: VMLibrary.HalfPtrMask) equals: 4!
 
 testCloseToPrecision
 	self assert: (125@-125 closeTo: 126@-126 precision: 1).

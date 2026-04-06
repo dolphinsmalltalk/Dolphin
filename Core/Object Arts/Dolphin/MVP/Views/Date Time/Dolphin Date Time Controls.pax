@@ -12,7 +12,6 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{OS.DateTimeCommCtrlConstants}
 	#{OS.NMSELCHANGE}
 	#{UI.DateTimeCommonControl}
 	#{UI.DateTimePicker}
@@ -43,9 +42,35 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.DateTimeCommCtrlConstants'
+OS.NMHDR
+	subclass: #'OS.NMSELCHANGE'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_NMSELCHANGE_Size' -> 16r2C.
+			'_OffsetOf_stSelEnd' -> 16r1C.
+			'_OffsetOf_stSelStart' -> 16rC
+		}!
+
+UI.ValueConvertingControlView
+	subclass: #'UI.DateTimeCommonControl'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'GDT_NONE' -> 16r1.
+			'GDT_VALID' -> 16r0.
+			'GDTR_MAX' -> 16r2.
+			'GDTR_MIN' -> 16r1.
+			'ICC_DATE_CLASSES' -> 16r121
+		}!
+
+UI.DateTimeCommonControl
+	subclass: #'UI.DateTimePicker'
+	instanceVariableNames: 'displayFormat'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -81,13 +106,16 @@ Kernel.SharedPool
 			'DTS_SHORTDATEFORMAT' -> 16r0.
 			'DTS_SHOWNONE' -> 16r2.
 			'DTS_TIMEFORMAT' -> 16r9.
-			'DTS_UPDOWN' -> 16r1.
-			'GDT_ERROR' -> -16r1.
-			'GDT_NONE' -> 16r1.
-			'GDT_VALID' -> 16r0.
-			'GDTR_MAX' -> 16r2.
-			'GDTR_MIN' -> 16r1.
-			'ICC_DATE_CLASSES' -> 16r121.
+			'DTS_UPDOWN' -> 16r1
+		}!
+
+UI.DateTimeCommonControl
+	subclass: #'UI.MonthCalendarView'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
 			'MCHT_CALENDAR' -> 16r20000.
 			'MCHT_CALENDARBK' -> 16r20000.
 			'MCHT_CALENDARDATE' -> 16r20001.
@@ -145,42 +173,6 @@ Kernel.SharedPool
 			'MCSC_TITLETEXT' -> 16r3.
 			'MCSC_TRAILINGTEXT' -> 16r5
 		}!
-
-OS.NMHDR
-	subclass: #'OS.NMSELCHANGE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_NMSELCHANGE_Size' -> 16r2C.
-			'_OffsetOf_stSelEnd' -> 16r1C.
-			'_OffsetOf_stSelStart' -> 16rC
-		}!
-
-UI.ValueConvertingControlView
-	subclass: #'UI.DateTimeCommonControl'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.DateTimeCommCtrlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.DateTimeCommonControl
-	subclass: #'UI.DateTimePicker'
-	instanceVariableNames: 'displayFormat'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.DateTimeCommonControl
-	subclass: #'UI.MonthCalendarView'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Loose Methods"!
 

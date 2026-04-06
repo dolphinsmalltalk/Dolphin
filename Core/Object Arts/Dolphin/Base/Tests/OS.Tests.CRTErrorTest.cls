@@ -17,9 +17,9 @@ OS.Tests.CRTErrorTest comment: ''!
 testStrError
 	| subject |
 	subject := CRTError new
-				tag: CRTConstants.EBADF;
+				tag: CRTError.EBADF;
 				yourself.
-	Ucrt setlocale: CRTConstants.LC_ALL locale: 'en-US'.
+	Ucrt setlocale: CRTLibrary.LC_ALL locale: 'en-US'.
 	[self assert: subject strerror equals: 'Bad file descriptor'] ensure: [Ucrt synchronizeLocale]! !
 
 !OS.Tests.CRTErrorTest categoriesForMethods!

@@ -4,11 +4,16 @@ Core.Object
 	subclass: #'UI.StatusBarItemAbstract'
 	instanceVariableNames: 'style width parentView model'
 	classVariableNames: ''
-	imports: #(#{OS.StatusBarConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'BorderStyles' -> (IdentityDictionary
-						withAll: { #noBorder -> 16r100. #raisedBorder -> 16r200. #sunkenBorder -> 16r0 })
+						withAll: { #noBorder -> 16r100. #raisedBorder -> 16r200. #sunkenBorder -> 16r0 }).
+			'SBT_NOBORDERS' -> 16r100.
+			'SBT_NOTABPARSING' -> 16r800.
+			'SBT_OWNERDRAW' -> 16r1000.
+			'SBT_POPOUT' -> 16r200.
+			'SBT_RTLREADING' -> 16r400
 		}!
 
 UI.StatusBarItemAbstract guid: (Core.GUID fromString: '{87b4c4bf-026e-11d3-9fd7-00a0cc3e4a32}')!

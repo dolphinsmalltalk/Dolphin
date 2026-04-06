@@ -25,7 +25,7 @@ buttonText: aStringOrCharacter
 imageIndexIn: aToolbar
 	"Private - The receiver does not have an image - it is text only."
 
-	^CommCtrlConstants.I_IMAGENONE!
+	^CCITEM.I_IMAGENONE!
 
 isTextOnly
 	^true!
@@ -35,7 +35,7 @@ populateTbButton: aTBBUTTON for: aToolbar withLabels: aBoolean
 
 	^aTBBUTTON
 		idCommand: self getCommandId
-		iBitmap: CommCtrlConstants.I_IMAGENONE
+		iBitmap: CCITEM.I_IMAGENONE
 		iString: (aToolbar addString: buttonText)
 		fsStyle: style!
 

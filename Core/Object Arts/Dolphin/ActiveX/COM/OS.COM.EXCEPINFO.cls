@@ -4,7 +4,7 @@ External.FinalizableStructure
 	subclass: #'OS.COM.EXCEPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
+	imports: #(#{OS.HRESULT private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_EXCEPINFO_Size' -> 16r20.

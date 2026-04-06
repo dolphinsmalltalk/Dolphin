@@ -58,9 +58,9 @@ defaultColorRepresentation
 fromCOLORREF: anInteger
 	"Private - Answer an instance with the specified colorref code value."
 
-	^Win32Constants.CLR_NONE = anInteger
+	^CLR_NONE = anInteger
 		ifTrue: [None]
-		ifFalse: [Win32Constants.CLR_DEFAULT = anInteger ifTrue: [Default] ifFalse: [self rgbClass fromRgbCode: anInteger]]!
+		ifFalse: [CLR_DEFAULT = anInteger ifTrue: [Default] ifFalse: [self rgbClass fromRgbCode: anInteger]]!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."

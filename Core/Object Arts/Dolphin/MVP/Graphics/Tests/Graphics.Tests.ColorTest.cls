@@ -79,8 +79,8 @@ testAsCOLORREF
 
 	self assert: Color orchid asCOLORREF equals: 16rD670DA.
 	self assert: IndexedColor brown asCOLORREF equals: 16r1000003.
-	self assert: Color none asCOLORREF equals: Win32Constants.CLR_NONE.
-	self assert: Color default asCOLORREF equals: Win32Constants.CLR_DEFAULT.
+	self assert: Color none asCOLORREF equals: Color.CLR_NONE.
+	self assert: Color default asCOLORREF equals: Color.CLR_DEFAULT.
 	"Alpha of ARGB is lost"
 	self assert: (Color orchid alpha: 99) asCOLORREF equals: 16rD670DA.
 	self assert: ((Color named: #gradientActiveCaption) alpha: 100) asCOLORREF
@@ -674,12 +674,12 @@ testSingletons
 	subject2 := Color menu.
 	subject3 := Color magenta.
 	self assert: subject1 identicalTo: Color window.
-	self assert: subject1 identicalTo: (SystemColor withIndex: Win32Constants.COLOR_WINDOW).
+	self assert: subject1 identicalTo: (SystemColor withIndex: SystemColor.COLOR_WINDOW).
 	self deny: subject1 identicalTo: Color windowText.
 	self assert: subject1 copy identicalTo: subject1.
 	self assert: subject1 shallowCopy identicalTo: subject1.
 	self assert: subject1 deepCopy identicalTo: subject1.
-	self assert: subject2 identicalTo: (SystemColor withIndex: Win32Constants.COLOR_MENU).
+	self assert: subject2 identicalTo: (SystemColor withIndex: SystemColor.COLOR_MENU).
 	self assert: subject3 identicalTo: Color magenta!
 
 testSingletonSerialisationToStb

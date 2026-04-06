@@ -59,21 +59,21 @@ testStlConvertFrom0
 	font := Object
 				fromLiteralStoreArray: #(#'!!STL' 3 263174 ##(Smalltalk.Font) 0 16 459014 ##(Smalltalk.LOGFONT) 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 0 0 0 0 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193).
 	self assert: font equals: ((Graphics.Font name: 'Arial' pointSize: 11) isBold: true).
-	self assert: font dpi equals: Win32Constants.USER_DEFAULT_SCREEN_DPI!
+	self assert: font dpi equals: USER_DEFAULT_SCREEN_DPI!
 
 testStlConvertFrom1
 	| font |
 	font := Object
 				fromLiteralStoreArray: {#'!!STL'. 6. 1350. 1. Font. nil. true. 262. LOGFONTW. 8. #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 0 0 0 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]. 193. nil}.
 	self assert: font equals: ((Graphics.Font name: 'Arial' pointSize: 11) isBold: true).
-	self assert: font dpi equals: Win32Constants.USER_DEFAULT_SCREEN_DPI!
+	self assert: font dpi equals: USER_DEFAULT_SCREEN_DPI!
 
 testStlConvertFrom2
 	| font |
 	font := Object
 				fromLiteralStoreArray: {#'!!STL'. 6. 1350. 1. Font. nil. true. 582. 1. LOGFONTW. 8. #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 0 0 0 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]. nil. 193. nil}.
 	self assert: font equals: ((Graphics.Font name: 'Arial' pointSize: 11) isBold: true).
-	self assert: font dpi equals: Win32Constants.USER_DEFAULT_SCREEN_DPI! !
+	self assert: font dpi equals: USER_DEFAULT_SCREEN_DPI! !
 
 !Graphics.Tests.FontTest categoriesForMethods!
 canonicalSubject!helpers!private! !

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Core.Mutex'
 	instanceVariableNames: 'owner semaphore'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -43,7 +43,7 @@ critical: aNiladicBlock
 	"We need to acquire the mutex before we can proceed"
 	stateHolder := { nil }.
 	^[	"The semaphore primitive will atomically wait AND set the wait result if it completes"
-		semaphore wait: INFINITE ret: stateHolder.
+		semaphore wait: -1 ret: stateHolder.
 		owner := active.
 		"Set the state to indicate that the owner has been set and can be tested for premature release"
 		stateHolder basicAt: 1 put: active.
@@ -60,7 +60,7 @@ critical: aNiladicBlock
 				owner == active ifTrue: [ "Case 1: Normal completion"
 					owner := nil. semaphore signal]]
 			ifFalse: [ "Cases 3 & 4"
-				state == WAIT_OBJECT_0 ifTrue: [ "Case 3: Acquired but not evaluated"
+				state == 0 ifTrue: [ "Case 3: Acquired but not evaluated"
 					owner := nil. semaphore signal]]]!
 
 critical: aNiladicBlock ifLocked: exceptionHandler
@@ -75,7 +75,7 @@ critical: aNiladicBlock ifLocked: exceptionHandler
 	stateHolder := Array new: 1.
 	^
 	[semaphore wait: 0 ret: stateHolder.
-	(stateHolder basicAt: 1) == WAIT_TIMEOUT
+	(stateHolder basicAt: 1) == OS.KernelLibrary.WAIT_TIMEOUT
 		ifTrue: [exceptionHandler value]
 		ifFalse: 
 			[owner := active.
@@ -90,7 +90,7 @@ critical: aNiladicBlock ifLocked: exceptionHandler
 								[owner := nil.
 								semaphore signal]]
 					ifFalse: 
-						[state == WAIT_OBJECT_0
+						[state == 0
 							ifTrue: 
 								[owner := nil.
 								semaphore signal]]]!

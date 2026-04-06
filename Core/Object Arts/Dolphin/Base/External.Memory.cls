@@ -4,7 +4,7 @@ External.Address
 	variableByteSubclass: #'External.Memory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -128,7 +128,7 @@ copyBytesToGlobalHeap: aByteObject
 
 copyBytesToGlobalHeap: aByteObject size: len
 	| pMem hMem |
-	hMem := Kernel32 globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len.
+	hMem := Kernel32 globalAlloc: ##(KernelLibrary.GHND | KernelLibrary.GMEM_DDESHARE) dwBytes: len.
 	pMem := Kernel32 globalLock: hMem.
 	Kernel32
 		copyMemory: pMem
@@ -204,7 +204,7 @@ HeapMinimize
 new
 	"Answer a new instance of the receiver of the initially holding a null pointer."
 
-	^(self basicNew: VMConstants.IntPtrSize)
+	^(self basicNew: VMLibrary.IntPtrSize)
 		beFinalizable;
 		yourself!
 

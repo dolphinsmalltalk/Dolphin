@@ -399,7 +399,7 @@ bindQueue: anExternalHandle toUrlGroup: anIntegerGroupId
 				yourself)!
 
 checkReturnCode: anInteger
-	anInteger == Win32Errors.NO_ERROR ifFalse: [(Win32Error fromInteger: anInteger) signal]!
+	anInteger == NO_ERROR ifFalse: [(Win32Error fromInteger: anInteger) signal]!
 
 close
 	"Release the reference the receiver has to the External Library it represents. Answer whether the
@@ -930,7 +930,7 @@ querySession: sessionIdInteger property: propIdInteger
 				propertyInformation: buf
 				propertyInformationLength: buf byteSize
 				returnLength: bufSize.
-	ret == Win32Errors.ERROR_MORE_DATA
+	ret == ERROR_MORE_DATA
 		ifTrue: 
 			[buf := type new: bufSize value.
 			ret := self
@@ -939,7 +939,7 @@ querySession: sessionIdInteger property: propIdInteger
 						propertyInformation: buf
 						propertyInformationLength: buf byteSize
 						returnLength: bufSize].
-	^ret == Win32Errors.ERROR_INVALID_PARAMETER
+	^ret == ERROR_INVALID_PARAMETER
 		ifFalse: 
 			[self checkReturnCode: ret.
 			buf]!
@@ -955,7 +955,7 @@ querySession: sessionIdInteger qosProperty: qosTypeInteger
 				propertyInformation: query
 				propertyInformationLength: query byteSize
 				returnLength: bufSize.
-	ret == Win32Errors.ERROR_MORE_DATA ifFalse: [^self checkReturnCode: ret].
+	ret == ERROR_MORE_DATA ifFalse: [^self checkReturnCode: ret].
 	query := HTTP_QOS_SETTING_INFO new: bufSize value.
 	ret := self
 				httpQueryServerSessionProperty: sessionIdInteger
@@ -978,7 +978,7 @@ queryUrlGroup: urlGroupId qosSetting: anInteger
 				propertyInformation: query
 				propertyInformationLength: query byteSize
 				returnLength: bufSize.
-	ret == Win32Errors.ERROR_MORE_DATA ifFalse: [^self checkReturnCode: ret].
+	ret == ERROR_MORE_DATA ifFalse: [^self checkReturnCode: ret].
 	query := (HTTP_QOS_SETTING_INFO new: bufSize value)
 				QosType: anInteger;
 				yourself.
@@ -1009,12 +1009,12 @@ receiveRequest: anExternalHandle flags: anInteger
 				requestBufferLength: buf size
 				bytesReturned: bytesReceived
 				overlapped: nil.
-	(ret == Win32Errors.ERROR_INVALID_PARAMETER and: [requestId ~~ 0])
+	(ret == ERROR_INVALID_PARAMETER and: [requestId ~~ 0])
 		ifTrue: 
 			["Start again"
 			requestId := 0]
 		ifFalse: 
-			[ret == Win32Errors.ERROR_MORE_DATA
+			[ret == ERROR_MORE_DATA
 				ifTrue: 
 					["Allocate required size buffer and go round again"
 					requestId := buf RequestId.
@@ -1040,19 +1040,19 @@ receiveRequestEntityBody: anExternalHandle requestId: requestId
 				entityBufferLength: buf size
 				bytesReturned: bytesReceived
 				overlapped: nil.
-	ret == Win32Errors.ERROR_INVALID_PARAMETER
+	ret == ERROR_INVALID_PARAMETER
 		ifTrue: 
 			[self checkReturnCode: ret.
 			^buf]
 		ifFalse: 
-			[ret == Win32Errors.NO_ERROR
+			[ret == NO_ERROR
 				ifTrue: 
 					[data
 						next: bytesReceived asInteger
 						putAll: buf
 						startingAt: 1]
 				ifFalse: 
-					[ret == Win32Errors.ERROR_HANDLE_EOF
+					[ret == ERROR_HANDLE_EOF
 						ifTrue: [^data contents]
 						ifFalse: 
 							[self checkReturnCode: ret.
@@ -1312,7 +1312,7 @@ example3
 				pConfigInformation: param
 				configInformationLength: param byteSize
 				pOverlapped: nil.
-	(ret == 0 or: [ret == Win32Errors.ERROR_ALREADY_EXISTS]) ifFalse: [Win32Error signalWith: ret].
+	(ret == 0 or: [ret == ERROR_ALREADY_EXISTS]) ifFalse: [Win32Error signalWith: ret].
 	bufSize := UInt32Bytes new.
 	buf := HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY new.
 	ret := lib
@@ -1327,7 +1327,7 @@ example3
 	ret == 0
 		ifFalse: 
 			["The query struct has space for one sockaddr, but if there are more we'll need to re-allocate and try again"
-			ret == Win32Errors.ERROR_MORE_DATA ifFalse: [Win32Error signalWith: ret].
+			ret == ERROR_MORE_DATA ifFalse: [Win32Error signalWith: ret].
 			sizeRequired := bufSize value.
 			buf := HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY new: sizeRequired.
 			ret := lib
@@ -1455,10 +1455,10 @@ querySslCertInfo
 				outputLength: 0
 				pReturnLength: bufSize
 				pOverlapped: nil.
-	ret == Win32Errors.ERROR_NO_MORE_ITEMS]
+	ret == ERROR_NO_MORE_ITEMS]
 			whileFalse: 
 				[| buf sizeRequired |
-				ret == Win32Errors.ERROR_INSUFFICIENT_BUFFER ifFalse: [Win32Error signalWith: ret].
+				ret == ERROR_INSUFFICIENT_BUFFER ifFalse: [Win32Error signalWith: ret].
 				sizeRequired := bufSize value.
 				buf := HTTP_SERVICE_CONFIG_SSL_SET new: sizeRequired.
 				ret := lib
@@ -1498,10 +1498,10 @@ queryUrlAclInfo
 				outputLength: 0
 				pReturnLength: bufSize
 				pOverlapped: nil.
-	ret == Win32Errors.ERROR_NO_MORE_ITEMS]
+	ret == ERROR_NO_MORE_ITEMS]
 			whileFalse: 
 				[| buf sizeRequired |
-				ret == Win32Errors.ERROR_INSUFFICIENT_BUFFER ifFalse: [Win32Error signalWith: ret].
+				ret == ERROR_INSUFFICIENT_BUFFER ifFalse: [Win32Error signalWith: ret].
 				sizeRequired := bufSize value.
 				buf := HTTP_SERVICE_CONFIG_URLACL_SET new: sizeRequired.
 				ret := lib

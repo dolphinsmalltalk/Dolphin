@@ -6,7 +6,22 @@ UI.WindowsEvent
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'SB_BOTTOM' -> 16r7.
+			'SB_ENDSCROLL' -> 16r8.
+			'SB_LINEDOWN' -> 16r1.
+			'SB_LINELEFT' -> 16r0.
+			'SB_LINERIGHT' -> 16r1.
+			'SB_LINEUP' -> 16r0.
+			'SB_PAGEDOWN' -> 16r3.
+			'SB_PAGELEFT' -> 16r2.
+			'SB_PAGERIGHT' -> 16r3.
+			'SB_PAGEUP' -> 16r2.
+			'SB_RIGHT' -> 16r7.
+			'SB_THUMBPOSITION' -> 16r4.
+			'SB_THUMBTRACK' -> 16r5.
+			'SB_TOP' -> 16r6
+		}!
 
 UI.ScrollEvent guid: (Core.GUID fromString: '{87b4c552-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -73,7 +88,7 @@ pos
 
 	| struct |
 	struct := SCROLLINFO newBuffer
-				fMask: SIF_TRACKPOS;
+				fMask: SCROLLINFO.SIF_TRACKPOS;
 				yourself.
 	^(User32
 		getScrollInfo: self hwnd

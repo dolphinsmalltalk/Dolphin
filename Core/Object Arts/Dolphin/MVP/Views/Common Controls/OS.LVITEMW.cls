@@ -4,7 +4,7 @@ OS.CCITEM
 	subclass: #'OS.LVITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LVITEMW_Size' -> 16r3C.
@@ -23,7 +23,24 @@ OS.CCITEM
 			'_OffsetOf_puColumns' -> 16r30.
 			'_OffsetOf_stateMask' -> 16r10.
 			'CallbackPrototype'
-				-> #[3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+				-> #[3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0].
+			'LVIF_DI_SETITEM' -> 16r1000.
+			'LVIF_DISETITEM' -> 16r1000.
+			'LVIF_IMAGE' -> 16r2.
+			'LVIF_INDENT' -> 16r10.
+			'LVIF_PARAM' -> 16r4.
+			'LVIF_STATE' -> 16r8.
+			'LVIF_TEXT' -> 16r1.
+			'LVIR_BOUNDS' -> 16r0.
+			'LVIR_ICON' -> 16r1.
+			'LVIR_LABEL' -> 16r2.
+			'LVIR_SELECTBOUNDS' -> 16r3.
+			'LVIS_CUT' -> 16r4.
+			'LVIS_DROPHILITED' -> 16r8.
+			'LVIS_FOCUSED' -> 16r1.
+			'LVIS_OVERLAYMASK' -> 16rF00.
+			'LVIS_SELECTED' -> 16r2.
+			'LVIS_STATEIMAGEMASK' -> 16rF000
 		}!
 
 OS.LVITEMW guid: (Core.GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -59,7 +76,7 @@ struct tagLVITEMW {
 allCallbacks
 	bytes
 		int32AtOffset: _OffsetOf_iImage put: I_IMAGECALLBACK;
-		uint32AtOffset: _OffsetOf_pszText put: OS.Win32Constants.LPSTR_TEXTCALLBACK.
+		uint32AtOffset: _OffsetOf_pszText put: CommCtrlLibrary.LPSTR_TEXTCALLBACK.
 	self maskIn: ##(LVIF_TEXT | LVIF_IMAGE)!
 
 cchTextMax

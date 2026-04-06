@@ -192,7 +192,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 		identicalTo: (anInteger < 13 ifTrue: [Color face3d] ifFalse: [Color default]).
 	self assert: (view contents
 				allSatisfy: [:each | (each isKindOf: StatusBarItemAbstract) and: [each isOwnerDrawn]]).
-	self assert: (view baseStyleAllMask: OS.CommCtrlConstants.CCS_NOPARENTALIGN)! !
+	self assert: (view baseStyleAllMask: CommCtrlLibrary.CCS_NOPARENTALIGN)! !
 
 !UI.Tests.StatusBarTest categoriesForMethods!
 classToTest!helpers!private! !

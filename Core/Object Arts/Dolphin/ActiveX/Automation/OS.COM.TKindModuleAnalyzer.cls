@@ -79,7 +79,7 @@ suggestedGlobalName!accessing!private! !
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
-	^TKIND_MODULE! !
+	^ITypeInfo.TKIND_MODULE! !
 
 !OS.COM.TKindModuleAnalyzer class categoriesForMethods!
 typekind!constants!private! !

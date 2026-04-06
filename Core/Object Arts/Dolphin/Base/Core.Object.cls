@@ -84,18 +84,18 @@ _deepenShallowCopy: clone trail: copiesDictionary
 _primitiveError: anInteger at: index
 	"Private - An at: operation on the receiver failed. Determine the cause of the error, and raise an appropriate error."
 
-	anInteger == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
-	anInteger == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: index].
-	anInteger == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
+	anInteger == VMLibrary.PrimitiveInvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
+	anInteger == VMLibrary.PrimitiveOutOfBounds ifTrue: [^self errorSubscriptBounds: index].
+	anInteger == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^Error notIndexable: self].
 	^self primitiveFailed: anInteger!
 
 _primitiveError: anInteger at: index put: value
 	"Private - An at:put: operation on the receiver failed. Determine the cause of the error, and raise an appropriate error."
 
-	anInteger == _PrimitiveFailureCode.AccessViolation ifTrue: [^ConstWriteError signalWith: self].
-	anInteger == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
-	anInteger == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: index].
-	anInteger == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
+	anInteger == VMLibrary.PrimitiveAccessViolation ifTrue: [^ConstWriteError signalWith: self].
+	anInteger == VMLibrary.PrimitiveInvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
+	anInteger == VMLibrary.PrimitiveOutOfBounds ifTrue: [^self errorSubscriptBounds: index].
+	anInteger == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^Error notIndexable: self].
 	^self primitiveFailed: anInteger!
 
 ~~ comparand
@@ -503,7 +503,7 @@ byteSize
 	| class |
 	class := self basicClass.
 	^class isPointers
-		ifTrue: [(class instSize + self basicSize) * VMConstants.IntPtrSize]
+		ifTrue: [(class instSize + self basicSize) * VMLibrary.IntPtrSize]
 		ifFalse: [self basicSize * class elementSize]!
 
 changed
@@ -762,8 +762,8 @@ instVarAt: index
 		OutOfBounds		- aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
 
 	<primitive: 73>
-	_failureCode == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: index].
-	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
+	_failureCode == VMLibrary.PrimitiveOutOfBounds ifTrue: [^self errorSubscriptBounds: index].
+	_failureCode == VMLibrary.PrimitiveInvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
 	^self primitiveFailed: _failureCode!
 
 instVarAt: index put: value

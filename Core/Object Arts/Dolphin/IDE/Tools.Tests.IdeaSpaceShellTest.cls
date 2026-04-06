@@ -269,7 +269,7 @@ testSaveRestore
 
 	"Workspace"
 	ws := self newWorkspaceCard.
-	ws workspace namespaces: { OS.Win32Constants. OS.CommCtrlConstants }.
+	ws workspace namespaces: { OS.UserLibrary. UI.ControlView }.
 	wsDocData := ws getDocumentData.
 	wsFilename := ws filename.
 	wsPools := ws workspace namespaces.

@@ -4,7 +4,7 @@ OS.Tests.CCITEMTest
 	subclass: #'OS.Tests.LVITEMWTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #(#{OS.LVITEMW})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

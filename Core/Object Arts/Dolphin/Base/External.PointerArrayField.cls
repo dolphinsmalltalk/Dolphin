@@ -20,7 +20,7 @@ alignment
 	"Answer the alignment requirements for the receiver.
 	All pointers are 32-bits."
 
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 arrayClass
 	"Private - Answer the class of <ExternalArray> that this field type describes."
@@ -32,7 +32,7 @@ elementSize
 	the elements of the embedded array the receiver represents.
 	All pointers are 32-bits."
 
-	^VMConstants.IntPtrSize! !
+	^VMLibrary.IntPtrSize! !
 
 !External.PointerArrayField categoriesForMethods!
 alignment!constants!public! !

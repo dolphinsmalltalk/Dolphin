@@ -88,13 +88,13 @@ Icon subclass: #IconWithExtent
 PushButton subclass: #OwnerDrawnButton
 	instanceVariableNames: 'displayState transitionDurations shouldShowKeyboardCues animationEndTime setFocusTime'
 	classVariableNames: ''
-	poolDictionaries: 'ThemeConstants'
+	poolDictionaries: 'CommCtrlLibrary ThemeLibrary'
 	classInstanceVariableNames: ''!
 
 OwnerDrawnButton subclass: #TextAndImageButton
 	instanceVariableNames: 'imageExtent imageManager imageIndex dropDownMenu isMenuOpen'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'WinImageList'
 	classInstanceVariableNames: ''!
 
 TextAndImageButton subclass: #EmulatedPushButton
@@ -512,25 +512,25 @@ addToolTipWithHandle: toolTipHandle
 
 	| toolInfo |
 	(toolInfo := TOOLINFOW new)
-		uFlags: ##(TooltipConstants.TTF_IDISHWND | TooltipConstants.TTF_SUBCLASS);
+		uFlags: ##(TOOLINFOW.TTF_IDISHWND | TOOLINFOW.TTF_SUBCLASS);
 		hwnd: self handle;
 		uId: self handle;
 		textCallback.
 	UserLibrary default
 		sendMessage: toolTipHandle
-		msg: TooltipConstants.TTM_ADDTOOLW
+		msg: Tooltip.TTM_ADDTOOLW
 		wParam: 0
 		lParam: toolInfo yourAddress.
 	"cdemers - 2/26/2003 Allow multiline."
 	UserLibrary default
 		sendMessage: toolTipHandle
-		msg: TooltipConstants.TTM_SETMAXTIPWIDTH
+		msg: Tooltip.TTM_SETMAXTIPWIDTH
 		wParam: 0
 		lParam: 500.
 	UserLibrary default
 		sendMessage: toolTipHandle
-		msg: TooltipConstants.TTM_SETDELAYTIME
-		wParam: TooltipConstants.TTDT_AUTOPOP
+		msg: Tooltip.TTM_SETDELAYTIME
+		wParam: Tooltip.TTDT_AUTOPOP
 		lParam: 20000.	"Default seems to be 5000 (5 secs) - this is a bit more reasonable"
 	^toolTipHandle!
 

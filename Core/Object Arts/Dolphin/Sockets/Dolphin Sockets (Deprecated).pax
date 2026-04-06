@@ -1,83 +1,49 @@
 ﻿| package |
 package := Package name: 'Dolphin Sockets (Deprecated)'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	basicComment: ''.
 
 
-package setClassNames: #(
-	#{OS.HOSTENT}
-).
+package classNames
+	add: #HOSTENT;
+	yourself.
 
-package setMethodNames: #(
-	#(#{Net.Socket} #send:count:)
-	#(#{Net.Socket} #send:count:startingAt:)
-	#(#{OS.IPHlpApiLibrary} #parseNetworkString:types:addressInfo:portNumber:prefixLength:)
-	#(#{OS.WS2_32Library} #gethostbyaddr:len:type:)
-	#(#{OS.WS2_32Library} #gethostbyname:)
-).
+package methodNames
+	add: #IPHlpApiLibrary -> #parseNetworkString:types:addressInfo:portNumber:prefixLength:;
+	add: #Socket2 -> #send:count:;
+	add: #Socket2 -> #send:count:startingAt:;
+	add: #WS2_32Library -> #gethostbyaddr:len:type:;
+	add: #WS2_32Library -> #gethostbyname:;
+	yourself.
 
-package setVariableNames: #(
-	#{Net.SocketReadStream}
-	#{Net.SocketWriteStream}
-).
+package globalNames
+	add: #WinSocketConstants;
+	add: #WinSocketErrors;
+	yourself.
 
-package setAliasVariableNames: #(
-	#{Net.SocketReadStream}
-	#{Net.SocketWriteStream}
-).
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'Dolphin Sockets'
-).
+	'Dolphin Sockets').
 
 package!
 
 "Class Definitions"!
 
-External.Structure
-	subclass: #'OS.HOSTENT'
+ExternalStructure subclass: #HOSTENT
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_HOSTENT_Size' -> 16r10.
-			'_OffsetOf_h_addr_list' -> 16rC.
-			'_OffsetOf_h_addrtype' -> 16r8.
-			'_OffsetOf_h_aliases' -> 16r4.
-			'_OffsetOf_h_length' -> 16rA.
-			'_OffsetOf_h_name' -> 16r0
-		}!
-
-"Variable Aliases"!
-
-Net.SocketReadStream := Core.ExternalReadStream!
-
-Net.SocketWriteStream := Core.ExternalWriteStream!
-
+	classVariableNames: '_HOSTENT_Size _OffsetOf_h_addr_list _OffsetOf_h_addrtype _OffsetOf_h_aliases _OffsetOf_h_length _OffsetOf_h_name'
+	poolDictionaries: 'WinSocketConstants'
+	classInstanceVariableNames: ''!
 
 "Loose Methods"!
 
-!Net.Socket methodsFor!
-
-send: aByteObject count: anInteger
-	#deprecated. "Use write:count:"
-	self write: aByteObject count: anInteger!
-
-send: aByteObject count: countInteger startingAt: startInteger
-	#deprecated. "Use write:count:startingAt:"
-	self
-		write: aByteObject
-		count: countInteger
-		startingAt: startInteger! !
-
-!Net.Socket categoriesForMethods!
-send:count:!operations!public! !
-send:count:startingAt:!operations!public! !
-!
-
-!OS.IPHlpApiLibrary methodsFor!
+!IPHlpApiLibrary methodsFor!
 
 parseNetworkString: networkString types: types addressInfo: addressInfo portNumber: portNumber prefixLength: prefixLength
 	"Invoke the ParseNetworkString() function of the module wrapped by the receiver.
@@ -94,11 +60,29 @@ parseNetworkString: networkString types: types addressInfo: addressInfo portNumb
 	#deprecated.
 	^self invalidCall: _failureCode! !
 
-!OS.IPHlpApiLibrary categoriesForMethods!
+!IPHlpApiLibrary categoriesForMethods!
 parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !
 !
 
-!OS.WS2_32Library methodsFor!
+!Socket2 methodsFor!
+
+send: aByteObject count: anInteger
+	#deprecated. "Use write:count:"
+	self write: aByteObject count: anInteger!
+
+send: aByteObject count: countInteger startingAt: startInteger
+	#deprecated. "Use write:count:startingAt:"
+	self
+		write: aByteObject
+		count: countInteger
+		startingAt: startInteger! !
+
+!Socket2 categoriesForMethods!
+send:count:!operations!public! !
+send:count:startingAt:!operations!public! !
+!
+
+!WS2_32Library methodsFor!
 
 gethostbyaddr: addr len: len type: type
 	"Invoke the gethostbyaddr() function of the module wrapped by the receiver.
@@ -122,7 +106,7 @@ gethostbyname: name
 	#deprecated.	"Not compatible with IPv6. Replaced by GetNameInfo()"
 	^self invalidOverlappedCall: _failureCode! !
 
-!OS.WS2_32Library categoriesForMethods!
+!WS2_32Library categoriesForMethods!
 gethostbyaddr:len:type:!public!win32 functions-windows sockets 2! !
 gethostbyname:!public!win32 functions-windows sockets 2! !
 !

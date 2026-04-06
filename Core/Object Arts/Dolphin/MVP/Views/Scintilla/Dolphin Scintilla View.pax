@@ -103,6 +103,7 @@ package setPrerequisites: #(
 	'..\..\Presenters\Color\Dolphin Color Presenter'
 	'..\..\Dialogs\Common\Dolphin Common Color Dialog'
 	'..\Common Controls\Dolphin Common Controls'
+	'..\..\Base\Dolphin ControlViews Base'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\Static\GroupBox\Dolphin GroupBox'
 	'..\..\Models\List\Dolphin List Models'
@@ -1547,7 +1548,7 @@ Core.Object
 	subclass: #'UI.Scintilla.KeyBinding'
 	instanceVariableNames: 'acceleratorKey message'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'Commands'

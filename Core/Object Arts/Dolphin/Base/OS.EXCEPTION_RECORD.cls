@@ -13,7 +13,8 @@ External.Structure
 			'_OffsetOf_ExceptionFlags' -> 16r4.
 			'_OffsetOf_ExceptionInformation' -> 16r14.
 			'_OffsetOf_ExceptionRecord' -> 16r8.
-			'_OffsetOf_NumberParameters' -> 16r10
+			'_OffsetOf_NumberParameters' -> 16r10.
+			'EXCEPTION_MAXIMUM_PARAMETERS' -> 16rF
 		}!
 
 OS.EXCEPTION_RECORD guid: (Core.GUID fromString: '{87b4c5f0-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -43,7 +44,7 @@ struct tagEXCEPTION_RECORD {
 !OS.EXCEPTION_RECORD methodsFor!
 
 ExceptionAddress
-	"Answer the <ExternalAddress> value of the receiver's 'ExceptionAddress' field."
+	"Answer the <Address> value of the receiver's 'ExceptionAddress' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_ExceptionAddress) asExternalAddress!
 
@@ -60,7 +61,8 @@ ExceptionFlags
 ExceptionRecord
 	"Answer the <EXCEPTION_RECORD> value of the receiver's 'ExceptionRecord' field."
 
-	^EXCEPTION_RECORD fromAddress: (bytes intPtrAtOffset: _OffsetOf_ExceptionRecord)!
+	^EXCEPTION_RECORD fromAddress: (bytes intPtrAtOffset: _OffsetOf_ExceptionRecord)
+		owner: self fieldOwner!
 
 information
 	"Answer the receiver's ExceptionInformation as an <Array> of <Integer>."
@@ -75,7 +77,7 @@ information
 				do: 
 					[:i |
 					info at: i
-						put: (bytes uintPtrAtOffset: _OffsetOf_ExceptionInformation + ((i - 1) * VMConstants.IntPtrSize))].
+						put: (bytes uintPtrAtOffset: _OffsetOf_ExceptionInformation + ((i - 1) * VMLibrary.IntPtrSize))].
 			info]!
 
 moduleFileName
@@ -84,12 +86,12 @@ moduleFileName
 	"Avoid dependency on MEMORY_BASIC_INFORMATION"
 
 	| buf |
-	buf := ByteArray new: ##(VMConstants.IntPtrSize * 2 + (4 * 5)).
+	buf := ByteArray new: ##(VMLibrary.IntPtrSize * 2 + (4 * 5)).
 	^(Kernel32
 		virtualQuery: self ExceptionAddress
 		lpBuffer: buf
 		dwLength: buf size) == 0
-		ifFalse: [Kernel32 getModuleFilename: (buf uintPtrAtOffset: VMConstants.IntPtrSize)]!
+		ifFalse: [Kernel32 getModuleFilename: (buf uintPtrAtOffset: VMLibrary.IntPtrSize)]!
 
 NumberParameters
 	"Answer the <Integer> value of the receiver's 'NumberParameters' field."
@@ -144,7 +146,7 @@ defineFields
 			type: UInt32Field new beReadOnly
 			offset: 16;
 		defineField: #ExceptionInformation
-			type: (ArrayField type: UIntPtrArray length: 15) beReadOnly beFiller
+			type: (ArrayField type: UIntPtrArray length: EXCEPTION_MAXIMUM_PARAMETERS) beReadOnly beFiller
 			offset: 20.
 	self byteSize: 80!
 
@@ -153,7 +155,7 @@ getFieldNames
 
 !OS.EXCEPTION_RECORD class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

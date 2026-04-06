@@ -4,7 +4,7 @@ UI.TypeConverter
 	subclass: #'UI.AccelToHotKey'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.HotKeyConstants} #{OS.Win32Constants})
+	imports: #(#{UI.HotKey private} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: { 'ModifierMap' -> #(16r1 16r4 16r2 16r8 16r4 16r10) }!
 

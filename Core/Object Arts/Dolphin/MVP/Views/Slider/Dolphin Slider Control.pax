@@ -15,7 +15,6 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{OS.TrackBarConstants}
 	#{UI.Slider}
 ).
 
@@ -39,13 +38,15 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.TrackBarConstants'
-	instanceVariableNames: ''
+UI.ValueConvertingControlView
+	subclass: #'UI.Slider'
+	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'HorizontalTickStyles'
+				-> (IdentityDictionary withAll: { #bothSides -> 16r8. #bottom -> 16r0. #top -> 16r4 }).
 			'TB_BOTTOM' -> 16r7.
 			'TB_ENDTRACK' -> 16r8.
 			'TB_LINEDOWN' -> 16r1.
@@ -106,18 +107,7 @@ Kernel.SharedPool
 			'TBTS_BOTTOM' -> 16r2.
 			'TBTS_LEFT' -> 16r1.
 			'TBTS_RIGHT' -> 16r3.
-			'TBTS_TOP' -> 16r0
-		}!
-
-UI.ValueConvertingControlView
-	subclass: #'UI.Slider'
-	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
-	classVariableNames: ''
-	imports: #(#{OS.TrackBarConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'HorizontalTickStyles'
-				-> (IdentityDictionary withAll: { #bothSides -> 16r8. #bottom -> 16r0. #top -> 16r4 }).
+			'TBTS_TOP' -> 16r0.
 			'TickStyleMask' -> 16rC.
 			'VerticalTickStyles'
 				-> (IdentityDictionary withAll: { #bothSides -> 16r8. #left -> 16r4. #right -> 16r0 })

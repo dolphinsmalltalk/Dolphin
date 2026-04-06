@@ -216,6 +216,7 @@ package setMethodNames: #(
 	#(#{Core.Interval} #newBatchAccessor)
 	#(#{Core.LargeInteger} #debugPrintOn:)
 	#(#{Core.LookupTable} #bestSlotFor:boundedBy:)
+	#(#{Core.MessageSend} #printOn:)
 	#(#{Core.Metaclass} #changeIndex)
 	#(#{Core.Metaclass} #isChanged:)
 	#(#{Core.Metaclass} #isDeprecated)
@@ -653,8 +654,6 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.VariableEnvironment} #updateCachesForMethod:)
 	#(#{Smalltalk class} #publishedEvents)
 	#(#{Smalltalk class} #renameVariable:to:)
-	#(#{Smalltalk.StyledGradientBrush class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.StyledPen class} #publishedAspectsOfInstances)
 	#(#{UI.AbstractCardContainer class} #publishedAspectsOfInstances)
 	#(#{UI.AbstractCardContainer class} #publishedEventsOfInstances)
 	#(#{UI.AbstractDocumentShell} #saveStateOn:)
@@ -858,6 +857,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\ActiveX\OCX\ActiveX Control Hosting'
+	'..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\System\Trace\Debug Trace Stream'
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter'
@@ -923,7 +923,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Static\Rectangle\Dolphin StaticRectangle Control'
 	'..\..\MVP\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\System\Filer\Dolphin STx Filer Core'
-	'..\..\MVP\Views\Styled Views\Dolphin Styled Views'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\MVP\Views\Tooltips\Dolphin Tooltips'
@@ -987,7 +986,7 @@ Core.Object
 	subclass: #'Tools.Grabber'
 	instanceVariableNames: 'aspect flags view composer'
 	classVariableNames: 'Cursors'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ConstrainedMask' -> 16r3.
@@ -1000,7 +999,7 @@ Core.Object
 	subclass: #'Tools.MenuPainter'
 	instanceVariableNames: 'view menu conflictingMnemonics conflictingAccelerators'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private} #{OS private})
+	imports: #(#{OS.UserLibrary private} #{OS.GDILibrary private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1331,7 +1330,7 @@ Core.Model
 	subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'ChangedIcon Current RegisteredTools'
-	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
+	imports: #(#{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'FileDrops'
@@ -1503,7 +1502,7 @@ UI.Presenter
 	subclass: #'Tools.SmalltalkWorkspace'
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorDefinitions variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorDefinitions KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
-	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
+	imports: #(#{Kernel.Compiler private} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings'
 	classConstants: {
 			'AutoCompleteMask' -> 16r8.
@@ -1603,7 +1602,7 @@ UI.ListPresenter
 	subclass: #'Tools.MethodBrowser'
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool namespaceModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
-	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
+	imports: #(#{Kernel.Compiler private} #{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1698,7 +1697,7 @@ Tools.MenuItemDialog
 	subclass: #'Tools.CommandMenuItemDialog'
 	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter hasSubstitutionsPresenter'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1714,7 +1713,7 @@ UI.ValueDialog
 	subclass: #'Tools.CategoryPrompter'
 	instanceVariableNames: 'treePresenter flags categoryClass'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'AllowIntermediatesMask' -> 16r1. 'AllowReadOnlyMask' -> 16r2 }!
 
@@ -1730,7 +1729,7 @@ UI.ValueDialog
 	subclass: #'Tools.MenuComposer'
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1770,7 +1769,7 @@ Tools.SmalltalkToolShell
 	subclass: #'Tools.Debugger'
 	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool sourceInterval'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
-	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
+	imports: #(#{Kernel.Compiler private} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AnimateMask' -> 16r10.
@@ -1809,7 +1808,7 @@ Tools.SmalltalkToolShell
 	subclass: #'Tools.PackageBrowserShell'
 	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool variablesPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel'
 	classVariableNames: 'WordWrapComment'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1833,7 +1832,7 @@ Tools.SmalltalkToolShell
 	subclass: #'Tools.ViewComposer'
 	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter primarySelection vcFlags modificationStatus image undoList'
 	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage PositionImage'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ModifiedFlag' -> 16r1.
@@ -2057,7 +2056,7 @@ UI.View
 	subclass: #'Tools.MenuComposerView'
 	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -2065,7 +2064,7 @@ UI.ContainerView
 	subclass: #'Tools.MenuComposerArena'
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -2798,6 +2797,39 @@ bestSlotFor: element boundedBy: capacity
 
 !Core.LookupTable categoriesForMethods!
 bestSlotFor:boundedBy:!development!private!statistics! !
+!
+
+!Core.MessageSend methodsFor!
+
+printOn: aPuttableStream
+	"Append a short textual description of the receiver to the <puttableStream>, target, in the form a developer might want to see it, preferring an evaluable representation if available."
+
+	| argCount |
+	self isSelfEvaluating
+		ifTrue: 
+			[aPuttableStream
+				nextPutAll: self class name;
+				nextPutAll: ' receiver: ';
+				print: receiver;
+				nextPutAll: ' selector: ';
+				print: selector.
+			argCount := args size.
+			argCount > 0
+				ifTrue: 
+					[argCount == 1
+						ifTrue: 
+							[aPuttableStream
+								nextPutAll: ' argument: ';
+								print: args first]
+						ifFalse: 
+							[aPuttableStream
+								nextPutAll: ' arguments: ';
+								print: args]]]
+		ifFalse: 
+			[super printOn: aPuttableStream]! !
+
+!Core.MessageSend categoriesForMethods!
+printOn:!printing!public! !
 !
 
 !Core.Metaclass methodsFor!
@@ -4984,8 +5016,8 @@ choose
 
 fileTypes
 	^self filesType
-		ifNil: [{UI.FileDialog allFilesType}]
-		ifNotNil: [:specific | {specific. UI.FileDialog allFilesType}]!
+		ifNil: [{FileDialog allFilesType}]
+		ifNotNil: [:specific | {specific. FileDialog allFilesType}]!
 
 newInstanceAspect: aSymbol class: aspectClass
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
@@ -7224,7 +7256,7 @@ printableFields
 	i := fields identityIndexOf: #text.
 	i == 0
 		ifFalse: 
-			[(bytes intPtrAtOffset: _OffsetOf_pszText) == OS.Win32Constants.LPSTR_TEXTCALLBACK
+			[(bytes intPtrAtOffset: _OffsetOf_pszText) == OS.CommCtrlLibrary.LPSTR_TEXTCALLBACK
 				ifTrue: [^fields copyWithoutIndex: i]].
 	^fields! !
 
@@ -7333,7 +7365,7 @@ printableFields
 	i := fields identityIndexOf: #pszText.
 	i == 0
 		ifFalse: 
-			[(bytes intPtrAtOffset: _OffsetOf_pszText) == OS.Win32Constants.LPSTR_TEXTCALLBACK
+			[(bytes intPtrAtOffset: _OffsetOf_pszText) == OS.CommCtrlLibrary.LPSTR_TEXTCALLBACK
 				ifTrue: [^fields copyWithoutIndex: i]].
 	^fields! !
 
@@ -7383,7 +7415,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPutAll: '(after ';
-		print: (UI.View fromHandle: self hwndInsertAfter);
+		print: (View fromHandle: self hwndInsertAfter);
 		nextPutAll: ', '.
 	flags := self flags.
 	(flags allMask: SWP_NOMOVE)
@@ -7406,9 +7438,9 @@ printOn: aStream
 						print: self extent;
 						nextPutAll: ', ']].
 	first := true.
-	##((OS.Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedArray) do: 
+	##((self classPool keys select: [:each | each beginsWith: 'SWP_']) asSortedArray) do: 
 			[:each |
-			(flags allMask: (OS.Win32Constants at: each))
+			(flags allMask: (self class classPool at: each))
 				ifTrue: 
 					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
 					aStream nextPutAll: each]]! !
@@ -7830,37 +7862,6 @@ renameVariable: oldName to: newName
 !Smalltalk class categoriesForMethods!
 publishedEvents!events!public! !
 renameVariable:to:!operations!public! !
-!
-
-!StyledGradientBrush class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^super publishedAspectsOfInstances
-		add: (Aspect color: #startColor);
-		add: (Aspect color: #endColor);
-		add: (Aspect name: #startPoint);
-		add: (Aspect name: #endPoint);
-		yourself! !
-
-!StyledGradientBrush class categoriesForMethods!
-publishedAspectsOfInstances!public! !
-!
-
-!StyledPen class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^super publishedAspectsOfInstances
-		add: (Aspect color: #color);
-		add: (Aspect name: #dashPattern);
-		add: (Aspect number: #width);
-		yourself	"For now we don't allow the width to be adjusted in the VC because there are problems"! !
-
-!StyledPen class categoriesForMethods!
-publishedAspectsOfInstances!public! !
 !
 
 !UI.AbstractCardContainer class methodsFor!

@@ -72,7 +72,7 @@ Core.Object
 	subclass: #'UI.Examples.PlimboleCell'
 	instanceVariableNames: 'location velocity'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

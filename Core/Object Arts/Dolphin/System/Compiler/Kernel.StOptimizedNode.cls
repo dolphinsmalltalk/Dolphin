@@ -95,6 +95,9 @@ precedence
 right: rightInteger 
 	right := rightInteger!
 
+selector
+	^self methodNode selector!
+
 setValue: anObject
 	<mutable>
 	value := anObject!
@@ -142,6 +145,7 @@ needsParenthesis!public!testing! !
 postCopy!copying!public! !
 precedence!accessing!public! !
 right:!initializing!private! !
+selector!accessing!public! !
 setValue:!public! !
 source!accessing!public! !
 source:!accessing!private! !

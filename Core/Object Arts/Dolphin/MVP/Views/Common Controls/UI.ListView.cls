@@ -4,10 +4,87 @@ UI.IconicListAbstract
 	subclass: #'UI.ListView'
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount updateMode _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'SelectionStateMask UnknownItem'
-	imports: #(#{OS.ListViewConstants})
+	imports: #(#{OS.LVITEMW private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'BackImageIsTiledMask' -> 16r1.
+			'ICC_LISTVIEW_CLASSES' -> 16r1.
+			'LVIR_BOUNDS' -> 16r0.
+			'LVIR_ICON' -> 16r1.
+			'LVIR_LABEL' -> 16r2.
+			'LVIR_SELECTBOUNDS' -> 16r3.
+			'LVM_APPROXIMATEVIEWRECT' -> 16r1040.
+			'LVM_ARRANGE' -> 16r1016.
+			'LVM_CREATEDRAGIMAGE' -> 16r1021.
+			'LVM_DELETEALLITEMS' -> 16r1009.
+			'LVM_DELETECOLUMN' -> 16r101C.
+			'LVM_DELETEITEM' -> 16r1008.
+			'LVM_EDITLABEL' -> 16r1017.
+			'LVM_ENSUREVISIBLE' -> 16r1013.
+			'LVM_FINDITEM' -> 16r100D.
+			'LVM_FIRST' -> 16r1000.
+			'LVM_GETBKIMAGEW' -> 16r108B.
+			'LVM_GETCALLBACKMASK' -> 16r100A.
+			'LVM_GETCOLUMNORDERARRAY' -> 16r103B.
+			'LVM_GETCOLUMNW' -> 16r105F.
+			'LVM_GETCOLUMNWIDTH' -> 16r101D.
+			'LVM_GETCOUNTPERPAGE' -> 16r1028.
+			'LVM_GETEDITCONTROL' -> 16r1018.
+			'LVM_GETEXTENDEDLISTVIEWSTYLE' -> 16r1037.
+			'LVM_GETHEADER' -> 16r101F.
+			'LVM_GETHOTCURSOR' -> 16r103F.
+			'LVM_GETHOTITEM' -> 16r103D.
+			'LVM_GETHOVERTIME' -> 16r1048.
+			'LVM_GETIMAGELIST' -> 16r1002.
+			'LVM_GETITEMCOUNT' -> 16r1004.
+			'LVM_GETITEMPOSITION' -> 16r1010.
+			'LVM_GETITEMRECT' -> 16r100E.
+			'LVM_GETITEMSPACING' -> 16r1033.
+			'LVM_GETITEMSTATE' -> 16r102C.
+			'LVM_GETITEMW' -> 16r104B.
+			'LVM_GETNEXTITEM' -> 16r100C.
+			'LVM_GETNUMBEROFWORKAREAS' -> 16r1049.
+			'LVM_GETORIGIN' -> 16r1029.
+			'LVM_GETSELECTEDCOUNT' -> 16r1032.
+			'LVM_GETSELECTIONMARK' -> 16r1042.
+			'LVM_GETSTRINGWIDTH' -> 16r1011.
+			'LVM_GETSUBITEMRECT' -> 16r1038.
+			'LVM_GETTOOLTIPS' -> 16r104E.
+			'LVM_GETTOPINDEX' -> 16r1027.
+			'LVM_GETVIEW' -> 16r108F.
+			'LVM_GETVIEWRECT' -> 16r1022.
+			'LVM_GETWORKAREAS' -> 16r1046.
+			'LVM_HITTEST' -> 16r1012.
+			'LVM_INSERTCOLUMNW' -> 16r1061.
+			'LVM_INSERTITEMW' -> 16r104D.
+			'LVM_REDRAWITEMS' -> 16r1015.
+			'LVM_SCROLL' -> 16r1014.
+			'LVM_SETBKCOLOR' -> 16r1001.
+			'LVM_SETBKIMAGEW' -> 16r108A.
+			'LVM_SETCALLBACKMASK' -> 16r100B.
+			'LVM_SETCOLUMNORDERARRAY' -> 16r103A.
+			'LVM_SETCOLUMNW' -> 16r1060.
+			'LVM_SETCOLUMNWIDTH' -> 16r101E.
+			'LVM_SETEXTENDEDLISTVIEWSTYLE' -> 16r1036.
+			'LVM_SETHOTCURSOR' -> 16r103E.
+			'LVM_SETHOTITEM' -> 16r103C.
+			'LVM_SETHOVERTIME' -> 16r1047.
+			'LVM_SETICONSPACING' -> 16r1035.
+			'LVM_SETIMAGELIST' -> 16r1003.
+			'LVM_SETITEMCOUNT' -> 16r102F.
+			'LVM_SETITEMPOSITION' -> 16r1031.
+			'LVM_SETITEMSTATE' -> 16r102B.
+			'LVM_SETITEMTEXTW' -> 16r1074.
+			'LVM_SETITEMW' -> 16r104C.
+			'LVM_SETSELECTIONMARK' -> 16r1043.
+			'LVM_SETTEXTBKCOLOR' -> 16r1026.
+			'LVM_SETTEXTCOLOR' -> 16r1024.
+			'LVM_SETTOOLTIPS' -> 16r104A.
+			'LVM_SETVIEW' -> 16r108E.
+			'LVM_SETWORKAREAS' -> 16r1041.
+			'LVM_SORTITEMS' -> 16r1030.
+			'LVM_SUBITEMHITTEST' -> 16r1039.
+			'LVM_UPDATE' -> 16r102A.
 			'LvModes'
 				-> (IdentityDictionary withAll: {
 								#extraLargeIcons -> 16r0.
@@ -18,7 +95,91 @@ UI.IconicListAbstract
 								#thumbnails -> 16r0.
 								#tileIcons -> 16r0
 							}).
-			'NoImageIndex' -> -16r1
+			'LVN_BEGINDRAG' -> -16r6D.
+			'LVN_BEGINLABELEDITW' -> -16rAF.
+			'LVN_BEGINRDRAG' -> -16r6F.
+			'LVN_BEGINSCROLL' -> -16rB4.
+			'LVN_COLUMNCLICK' -> -16r6C.
+			'LVN_COLUMNDROPDOWN' -> -16rA4.
+			'LVN_COLUMNOVERFLOWCLICK' -> -16rA6.
+			'LVN_DELETEALLITEMS' -> -16r68.
+			'LVN_DELETEITEM' -> -16r67.
+			'LVN_ENDLABELEDITW' -> -16rB0.
+			'LVN_ENDSCROLL' -> -16rB5.
+			'LVN_FIRST' -> -16r64.
+			'LVN_GETDISPINFOW' -> -16rB1.
+			'LVN_GETEMPTYMARKUP' -> -16rBB.
+			'LVN_GETINFOTIPW' -> -16r9E.
+			'LVN_HOTTRACK' -> -16r79.
+			'LVN_INCREMENTALSEARCHW' -> -16rA3.
+			'LVN_INSERTITEM' -> -16r66.
+			'LVN_ITEMACTIVATE' -> -16r72.
+			'LVN_ITEMCHANGED' -> -16r65.
+			'LVN_ITEMCHANGING' -> -16r64.
+			'LVN_KEYDOWN' -> -16r9B.
+			'LVN_LAST' -> -16rC7.
+			'LVN_LINKCLICK' -> -16rB8.
+			'LVN_MARQUEEBEGIN' -> -16r9C.
+			'LVN_ODCACHEHINT' -> -16r71.
+			'LVN_ODFINDITEMW' -> -16rB3.
+			'LVN_ODSTATECHANGED' -> -16r73.
+			'LVN_SETDISPINFOW' -> -16rB2.
+			'LVNI_ABOVE' -> 16r100.
+			'LVNI_ALL' -> 16r0.
+			'LVNI_BELOW' -> 16r200.
+			'LVNI_CUT' -> 16r4.
+			'LVNI_DROPHILITED' -> 16r8.
+			'LVNI_FOCUSED' -> 16r1.
+			'LVNI_SELECTED' -> 16r2.
+			'LVNI_TOLEFT' -> 16r400.
+			'LVNI_TORIGHT' -> 16r800.
+			'LVS_ALIGNLEFT' -> 16r800.
+			'LVS_ALIGNMASK' -> 16rC00.
+			'LVS_ALIGNTOP' -> 16r0.
+			'LVS_AUTOARRANGE' -> 16r100.
+			'LVS_EDITLABELS' -> 16r200.
+			'LVS_EX_AUTOSIZECOLUMNS' -> 16r10000000.
+			'LVS_EX_BORDERSELECT' -> 16r8000.
+			'LVS_EX_CHECKBOXES' -> 16r4.
+			'LVS_EX_DOUBLEBUFFER' -> 16r10000.
+			'LVS_EX_FLATSB' -> 16r100.
+			'LVS_EX_FULLROWSELECT' -> 16r20.
+			'LVS_EX_GRIDLINES' -> 16r1.
+			'LVS_EX_HEADERDRAGDROP' -> 16r10.
+			'LVS_EX_HEADERINALLVIEWS' -> 16r2000000.
+			'LVS_EX_HIDELABELS' -> 16r20000.
+			'LVS_EX_INFOTIP' -> 16r400.
+			'LVS_EX_LABELTIP' -> 16r4000.
+			'LVS_EX_ONECLICKACTIVATE' -> 16r40.
+			'LVS_EX_SIMPLESELECT' -> 16r100000.
+			'LVS_EX_SINGLEROW' -> 16r40000.
+			'LVS_EX_SNAPTOGRID' -> 16r80000.
+			'LVS_EX_SUBITEMIMAGES' -> 16r2.
+			'LVS_EX_TRACKSELECT' -> 16r8.
+			'LVS_EX_TWOCLICKACTIVATE' -> 16r80.
+			'LVS_ICON' -> 16r0.
+			'LVS_LIST' -> 16r3.
+			'LVS_NOCOLUMNHEADER' -> 16r4000.
+			'LVS_NOLABELWRAP' -> 16r80.
+			'LVS_NOSORTHEADER' -> 16r8000.
+			'LVS_OWNERDATA' -> 16r1000.
+			'LVS_REPORT' -> 16r1.
+			'LVS_SHAREIMAGELISTS' -> 16r40.
+			'LVS_SHOWSELALWAYS' -> 16r8.
+			'LVS_SINGLESEL' -> 16r4.
+			'LVS_SMALLICON' -> 16r2.
+			'LVS_SORTASCENDING' -> 16r10.
+			'LVS_SORTDESCENDING' -> 16r20.
+			'LVS_TYPEMASK' -> 16r3.
+			'LVS_TYPESTYLEMASK' -> 16rFC00.
+			'LVSCW_AUTOSIZE' -> -16r1.
+			'LVSCW_AUTOSIZEUSEHEADER' -> -16r2.
+			'LVSIL_NORMAL' -> 16r0.
+			'LVSIL_SMALL' -> 16r1.
+			'LVSIL_STATE' -> 16r2.
+			'NoImageIndex' -> -16r1.
+			'ODT_HEADER' -> 16r64.
+			'ODT_LISTVIEW' -> 16r66
 		}!
 
 UI.ListView guid: (Core.GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -1613,11 +1774,11 @@ lvnODFindItem: pNMLVFINDITEM
 	nmlv := NMLVFINDITEMW fromAddress: pNMLVFINDITEM.
 	lvfi := nmlv lvfi.
 	f := lvfi flags.
-	(f allMask: LVFI_STRING) ifFalse: [^-1	"Can't find it"].
+	(f allMask: LVFINDINFOW.LVFI_STRING) ifFalse: [^-1	"Can't find it"].
 	^(self
 		findItem: lvfi psz
 		startingAt: nmlv iStart + 1
-		wrap: (f allMask: LVFI_WRAP)) - 1!
+		wrap: (f allMask: LVFINDINFOW.LVFI_WRAP)) - 1!
 
 lvnODStateChanged: pNMHDR
 	"Private - Default handler for the LVN_ODSTATECHANGED notification message."
@@ -2076,7 +2237,7 @@ setColumnIcon: anImage atIndex: anInteger
 	anImage isNil
 		ifFalse: 
 			[lvcol image: (imageManager indexOfImage: anImage) - 1.
-			lvcol fmt: (lvcol fmt bitOr: ##(LVCFMT_BITMAP_ON_RIGHT | LVCFMT_IMAGE))].
+			lvcol fmt: (lvcol fmt bitOr: ##(LVCOLUMNW.LVCFMT_BITMAP_ON_RIGHT | LVCOLUMNW.LVCFMT_IMAGE))].
 	self lvmSetColumn: lvcol at: anInteger - 1!
 
 setControlBackcolor: aColor 

@@ -50,7 +50,7 @@ initializeSurfacesFor: aPointExtent
 	"Private - Initialize the front and back surfaces for a view size of aPointExtent"
 
 	backSurface notNil ifTrue: [backSurface free].
-	backSurface := Gdiplus.Bitmap extent: aPointExtent.
+	backSurface := Bitmap extent: aPointExtent.
 	self invalidate!
 
 invalidate

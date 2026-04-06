@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.LayoutContext'
 	instanceVariableNames: 'container placements'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'DeferRectangles' -> true }!
 

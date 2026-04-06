@@ -5,9 +5,12 @@ package paxVersion: 2.1;
 
 
 package setVariableNames: #(
+	#{Smalltalk.DBAbstractStatement}
 	#{Smalltalk.DBColAttr}
 	#{Smalltalk.DBConnection}
 	#{Smalltalk.DBError}
+	#{Smalltalk.DBResultSet}
+	#{Smalltalk.DBRowBuffer}
 	#{Smalltalk.DBTablesStatement}
 	#{Smalltalk.DBWarning}
 	#{Smalltalk.ODBCDATE}
@@ -16,9 +19,12 @@ package setVariableNames: #(
 ).
 
 package setAliasVariableNames: #(
+	#{Smalltalk.DBAbstractStatement}
 	#{Smalltalk.DBColAttr}
 	#{Smalltalk.DBConnection}
 	#{Smalltalk.DBError}
+	#{Smalltalk.DBResultSet}
+	#{Smalltalk.DBRowBuffer}
 	#{Smalltalk.DBTablesStatement}
 	#{Smalltalk.DBWarning}
 	#{Smalltalk.ODBCDATE}
@@ -34,11 +40,17 @@ package!
 
 "Variable Aliases"!
 
+Smalltalk.DBAbstractStatement := Database.DBAbstractStatement!
+
 Smalltalk.DBColAttr := Database.DBColAttr!
 
 Smalltalk.DBConnection := Database.DBConnection!
 
 Smalltalk.DBError := Database.DBError!
+
+Smalltalk.DBResultSet := Database.DBResultSet!
+
+Smalltalk.DBRowBuffer := Database.DBRowBuffer!
 
 Smalltalk.DBTablesStatement := Database.DBTablesStatement!
 

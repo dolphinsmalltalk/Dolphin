@@ -670,7 +670,7 @@ value: arg1 value: arg2 value: arg3 value: arg4
 valueFailed: failureCode argumentCount: anInteger
 	"Private - A primitive value call failed, generate an appropriate error"
 
-	^failureCode == _PrimitiveFailureCode.WrongNumberOfArgs
+	^failureCode == VMLibrary.PrimitiveWrongNumberOfArgs
 		ifTrue: 
 			[self
 				error: 'Block expects ' , self argumentCount printString , ' argument(s), ' , anInteger printString

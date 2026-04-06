@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Core.Tests.PathTest'
 	instanceVariableNames: 'tempDir'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants} #{OS.CRTLibrary} #{OS} #{OS.Win32Error})
+	imports: #(#{OS.KernelLibrary} #{OS.CRTLibrary} #{OS} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

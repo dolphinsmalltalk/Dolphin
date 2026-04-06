@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.CommonDialogStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CommonDialogConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

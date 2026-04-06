@@ -6,7 +6,13 @@ Core.Error
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'EACCES' -> 16rD.
+			'EBADF' -> 16r9.
+			'EINVAL' -> 16r16.
+			'ENOENT' -> 16r2.
+			'ERANGE' -> 16r22
+		}!
 
 OS.CRTError guid: (Core.GUID fromString: '{259ae719-09c3-4401-a9be-6f089698b6f7}')!
 

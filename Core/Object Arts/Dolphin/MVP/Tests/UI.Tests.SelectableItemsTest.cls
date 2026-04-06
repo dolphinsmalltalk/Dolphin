@@ -4,7 +4,7 @@ UI.Tests.PresenterTest
 	subclass: #'UI.Tests.SelectableItemsTest'
 	instanceVariableNames: 'events selectionChanging selectionChanged timedout'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

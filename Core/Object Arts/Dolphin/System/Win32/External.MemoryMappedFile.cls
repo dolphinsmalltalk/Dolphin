@@ -4,9 +4,22 @@ Core.Object
 	subclass: #'External.MemoryMappedFile'
 	instanceVariableNames: 'file name handle maximumSize flags'
 	classVariableNames: ''
-	imports: #(#{OS.MMFConstants} #{OS.Win32Constants})
+	imports: #(#{OS.KernelLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: { 'OwnsFileMask' -> 16r2. 'OwnsHandleMask' -> 16r1. 'ReadOnlyMask' -> 16r4 }!
+	classConstants: {
+			'FILE_MAP_ALL_ACCESS' -> 16rF001F.
+			'FILE_MAP_COPY' -> 16r1.
+			'FILE_MAP_READ' -> 16r4.
+			'FILE_MAP_WRITE' -> 16r2.
+			'OwnsFileMask' -> 16r2.
+			'OwnsHandleMask' -> 16r1.
+			'ReadOnlyMask' -> 16r4.
+			'SEC_COMMIT' -> 16r8000000.
+			'SEC_FILE' -> 16r800000.
+			'SEC_IMAGE' -> 16r1000000.
+			'SEC_NOCACHE' -> 16r10000000.
+			'SEC_RESERVE' -> 16r4000000
+		}!
 
 External.MemoryMappedFile guid: (Core.GUID fromString: '{87c4eee1-16f8-422b-b9e6-2e1c2963affd}')!
 
@@ -132,7 +145,7 @@ ownsHandle
 setFile: aFile owned: aBoolean name: aString 
 	file := aFile.
 	flags := aBoolean ifTrue: [OwnsFileMask] ifFalse: [0].
-	(file accessFlags noMask: GENERIC_WRITE) 
+	(file accessFlags noMask: KernelLibrary.GENERIC_WRITE) 
 			ifTrue: [flags := flags bitOr: ReadOnlyMask].
 	name := aString.
 	maximumSize := 0!

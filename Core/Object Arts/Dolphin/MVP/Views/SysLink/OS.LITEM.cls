@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.LITEM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.SysLinkConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LITEM_Size' -> 16r10B8.
@@ -13,7 +13,16 @@ External.Structure
 			'_OffsetOf_state' -> 16r8.
 			'_OffsetOf_stateMask' -> 16rC.
 			'_OffsetOf_szID' -> 16r10.
-			'_OffsetOf_szURL' -> 16r70
+			'_OffsetOf_szURL' -> 16r70.
+			'L_MAX_URL_LENGTH' -> 16r824.
+			'LIF_ITEMID' -> 16r4.
+			'LIF_ITEMINDEX' -> 16r1.
+			'LIF_STATE' -> 16r2.
+			'LIF_URL' -> 16r8.
+			'LIS_ENABLED' -> 16r2.
+			'LIS_FOCUSED' -> 16r1.
+			'LIS_VISITED' -> 16r4.
+			'MAX_LINKID_TEXT' -> 16r30
 		}!
 
 OS.LITEM guid: (Core.GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!

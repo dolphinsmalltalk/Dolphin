@@ -78,20 +78,20 @@ testDigitLength
 	#(16rFFFFFF -16rFFFFFF) do: [:each | self assert: each digitLength identicalTo: 3].
 	#(16r1000000 -16r1000000) do: [:each | self assert: each digitLength identicalTo: 4].
 	"This loop repeats some of the above tests, but those for literal values are left for clarity"
-	(2 to: VMConstants.IntPtrSize) collect: 
+	(2 to: VMLibrary.IntPtrSize) collect: 
 			[:i |
 			| first |
 			first := 2 ** ((i - 1) * 8).
 			self assert: first digitLength identicalTo: i.
 			self assert: (first * -1) digitLength identicalTo: i.
-			i == VMConstants.IntPtrSize
+			i == VMLibrary.IntPtrSize
 				ifFalse: 
 					[| last |
 					last := 2 ** (i * 8) - 1.
 					self assert: last digitLength identicalTo: i.
 					self assert: (last * -1) digitLength identicalTo: i]].
-	self assert: SmallInteger minimum digitLength equals: VMConstants.IntPtrSize.
-	self assert: SmallInteger maximum digitLength equals: VMConstants.IntPtrSize!
+	self assert: SmallInteger minimum digitLength equals: VMLibrary.IntPtrSize.
+	self assert: SmallInteger maximum digitLength equals: VMLibrary.IntPtrSize!
 
 testDivide
 	self assert: 6 / 2 identicalTo: 3.
@@ -371,10 +371,10 @@ testLowBit
 		do: [:each | self assert: each first lowBit equals: each second]!
 
 testMaxVal
-	self should: [SmallInteger maximum = ((1 bitShift: VMConstants.IntPtrBits - 2) - 1)]!
+	self should: [SmallInteger maximum = ((1 bitShift: VMLibrary.IntPtrBits - 2) - 1)]!
 
 testMinMax
-	VMConstants.IsWin64
+	VMLibrary.IsWin64
 		ifTrue: 
 			[self assert: SmallInteger maximum + 1 equals: 16r4000000000000000.
 			self assert: SmallInteger minimum - 1 equals: -16r4000000000000001.
@@ -387,7 +387,7 @@ testMinMax
 			self assert: (SmallInteger minimum // 2 - 1) * 2 equals: -16r40000002]!
 
 testMinVal
-	self should: [SmallInteger minimum = (1 bitShift: VMConstants.IntPtrBits - 2) negated]!
+	self should: [SmallInteger minimum = (1 bitShift: VMLibrary.IntPtrBits - 2) negated]!
 
 testModulo
 	self class moduloTestCases do: [:each | self assert: each first \\ each second equals: each third]!
@@ -469,7 +469,7 @@ testPrimesUpTo
 testPrintString
 	| pairs |
 	pairs := #(#(0 '0') #(1 '1') #(-1 '-1') #(12 '12') #(-12 '-12') #(255 '255') #(-255 '-255') #(256 '256') #(-256 '-256') #(999 '999') #(-999 '-999') #(1000 '1000') #(-1000 '-1000') #(4095 '4095') #(-4095 '-4095') #(4096 '4096') #(-4096 '-4096') #(9999 '9999') #(-9999 '-9999') #(10000 '10000') #(-10000 '-10000') #(65535 '65535') #(-65535 '-65535') #(65536 '65536') #(-65536 '-65536') #(99999 '99999') #(-99999 '-99999') #(100000 '100000') #(-100000 '-100000') #(1048575 '1048575') #(-1048575 '-1048575') #(1048576 '1048576') #(-1048576 '-1048576') #(9999999 '9999999') #(-9999999 '-9999999') #(10000000 '10000000') #(-10000000 '-10000000') #(99999999 '99999999') #(-99999999 '-99999999') #(100000000 '100000000') #(-100000000 '-100000000') #(16777215 '16777215') #(-16777215 '-16777215') #(16777216 '16777216') #(-16777216 '-16777216') #(268435455 '268435455') #(-268435455 '-268435455') #(268435456 '268435456') #(-268435456 '-268435456') #(999999999 '999999999') #(-999999999 '-999999999') #(1000000000 '1000000000') #(-1000000000 '-1000000000') #(1073741823 '1073741823') #(-1073741823 '-1073741823') #(-1073741824 '-1073741824')).
-	VMConstants.IsWin64
+	VMLibrary.IsWin64
 		ifTrue: 
 			[pairs := pairs
 						, #(#(4294967295 '4294967295') #(-4294967295 '-4294967295') #(4294967296 '4294967296') #(-4294967296 '-4294967296') #(4611686018427387903 '4611686018427387903') #(-4611686018427387903 '-4611686018427387903') #(-4611686018427387904 '-4611686018427387904'))].

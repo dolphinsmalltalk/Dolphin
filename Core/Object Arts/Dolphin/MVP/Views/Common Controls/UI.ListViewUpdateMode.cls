@@ -4,7 +4,7 @@ UI.IconicListUpdateMode
 	subclass: #'UI.ListViewUpdateMode'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #(#{UI.ListView private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

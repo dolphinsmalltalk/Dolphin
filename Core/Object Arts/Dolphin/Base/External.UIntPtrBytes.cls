@@ -35,36 +35,36 @@ asUIntPtr
 highPart
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self uint32AtOffset: 4] ifFalse: [self uint16AtOffset: 2]!
+	^VMLibrary.IsWin64 ifTrue: [self uint32AtOffset: 4] ifFalse: [self uint16AtOffset: 2]!
 
-highPart: anObject 
+highPart: anObject
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	VMConstants.IsWin64 
+	VMLibrary.IsWin64
 		ifTrue: [self uint32AtOffset: 4 put: anObject]
 		ifFalse: [self uint16AtOffset: 2 put: anObject]!
 
 highPartSigned
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self int32AtOffset: 4] ifFalse: [self int16AtOffset: 2]!
+	^VMLibrary.IsWin64 ifTrue: [self int32AtOffset: 4] ifFalse: [self int16AtOffset: 2]!
 
 lowPart
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self uint32AtOffset: 0] ifFalse: [self uint16AtOffset: 0]!
+	^VMLibrary.IsWin64 ifTrue: [self uint32AtOffset: 0] ifFalse: [self uint16AtOffset: 0]!
 
-lowPart: anObject 
+lowPart: anObject
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	VMConstants.IsWin64 
+	VMLibrary.IsWin64
 		ifTrue: [self uint32AtOffset: 0 put: anObject]
 		ifFalse: [self uint16AtOffset: 0 put: anObject]!
 
 lowPartSigned
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self int32AtOffset: 0] ifFalse: [self int16AtOffset: 0]!
+	^VMLibrary.IsWin64 ifTrue: [self int32AtOffset: 0] ifFalse: [self int16AtOffset: 0]!
 
 value: anObject 
 	"Set the unsigned <integer> value stored in the receiver."
@@ -89,10 +89,10 @@ value:!accessing!public! !
 elementSize
 	"Private - Answer the size of the receiver's constituent elements in bytes."
 
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 new
-	^self newFixed: VMConstants.IntPtrSize!
+	^self newFixed: VMLibrary.IntPtrSize!
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uintPtrAtOffset: 0! !

@@ -71,7 +71,7 @@ dbConvert: anObject for: aDBField
 	HRESULTError
 		signal: anObject species displayString , '(' , anObject displayString , ') invalid: '
 				, self valueClass displayString , ' expected'
-		with: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH.
+		with: HRESULT.STATUS_OBJECT_TYPE_MISMATCH.
 	^nil!
 
 duration

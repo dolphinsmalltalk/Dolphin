@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Graphics.Canvas'
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds dpi'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.GDILibrary} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DrawTextAlignments'

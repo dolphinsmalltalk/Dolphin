@@ -4,7 +4,7 @@ Tools.SmalltalkToolShell
 	subclass: #'Tools.IdeaSpaceShell'
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
 	classVariableNames: 'Watermark'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

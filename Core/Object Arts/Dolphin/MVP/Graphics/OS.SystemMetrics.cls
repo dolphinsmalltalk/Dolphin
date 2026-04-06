@@ -4,9 +4,53 @@ Core.Object
 	subclass: #'OS.SystemMetrics'
 	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent menuImageExtent'
 	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MessageDuration MouseHoverTime SysParamVariables WheelScrollLines'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.GDILibrary private} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'SM_CMONITORS' -> 16r50.
+			'SM_CXBORDER' -> 16r5.
+			'SM_CXCURSOR' -> 16rD.
+			'SM_CXDLGFRAME' -> 16r7.
+			'SM_CXDRAG' -> 16r44.
+			'SM_CXEDGE' -> 16r2D.
+			'SM_CXHTHUMB' -> 16rA.
+			'SM_CXMENUCHECK' -> 16r47.
+			'SM_CXMENUSIZE' -> 16r36.
+			'SM_CXSIZEFRAME' -> 16r20.
+			'SM_CXVIRTUALSCREEN' -> 16r4E.
+			'SM_CYBORDER' -> 16r6.
+			'SM_CYCURSOR' -> 16rE.
+			'SM_CYDLGFRAME' -> 16r7.
+			'SM_CYDRAG' -> 16r45.
+			'SM_CYEDGE' -> 16r2E.
+			'SM_CYMENU' -> 16rF.
+			'SM_CYMENUCHECK' -> 16r48.
+			'SM_CYMENUSIZE' -> 16r37.
+			'SM_CYSIZEFRAME' -> 16r21.
+			'SM_CYVIRTUALSCREEN' -> 16r4F.
+			'SM_CYVTHUMB' -> 16r9.
+			'SM_SLOWMACHINE' -> 16r49.
+			'SM_XVIRTUALSCREEN' -> 16r4C.
+			'SM_YVIRTUALSCREEN' -> 16r4D.
+			'SPI_GETCARETWIDTH' -> 16r2006.
+			'SPI_GETFLATMENU' -> 16r1022.
+			'SPI_GETICONTITLELOGFONT' -> 16r1F.
+			'SPI_GETLISTBOXSMOOTHSCROLLING' -> 16r1006.
+			'SPI_GETMENUSHOWDELAY' -> 16r6A.
+			'SPI_GETMESSAGEDURATION' -> 16r2016.
+			'SPI_GETMOUSEHOVERTIME' -> 16r66.
+			'SPI_GETNONCLIENTMETRICS' -> 16r29.
+			'SPI_GETWHEELSCROLLLINES' -> 16r68.
+			'SPI_GETWORKAREA' -> 16r30.
+			'SPI_SETFLATMENU' -> 16r1023.
+			'SPI_SETICONTITLELOGFONT' -> 16r22.
+			'SPI_SETLISTBOXSMOOTHSCROLLING' -> 16r1007.
+			'SPI_SETMENUSHOWDELAY' -> 16r6B.
+			'SPI_SETMOUSEHOVERTIME' -> 16r67.
+			'SPI_SETNONCLIENTMETRICS' -> 16r2A.
+			'SPI_SETWHEELSCROLLLINES' -> 16r69.
+			'SPI_SETWORKAREA' -> 16r2F
+		}!
 
 OS.SystemMetrics guid: (Core.GUID fromString: '{e56cc456-8490-47f1-bd85-71118b110166}')!
 

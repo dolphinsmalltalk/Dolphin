@@ -4,7 +4,7 @@ External.FinalizableStructure
 	subclass: #'OS.COM.OleVariant'
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified'
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors} #{OS.COM.PropsysLibrary private})
+	imports: #(#{OS.COM.OLEAutLibrary private} #{OS.COM.PropsysLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_boolVal' -> 16r8.
@@ -762,7 +762,7 @@ intptr: newValue
 	"Private - Initialize the receiver to hold a signed pointer-sized integer value.
 	Note that although VT_INT_PTR exists as a vartype, this is only used in TYPEDESCs, and cannot appear in variants, so the result will be an initialized VT_I4 on a 32-bit system, or VT_I8 on a 64-bit system."
 
-	VMConstants.IsWin64 ifTrue: [self int64: newValue] ifFalse: [self int32: newValue]!
+	VMLibrary.IsWin64 ifTrue: [self int64: newValue] ifFalse: [self int32: newValue]!
 
 isArray
 	"Answer whether the receiver points at a SAFEARRAY."
@@ -1063,7 +1063,7 @@ uintptr: anInteger
 	"Private - Initialize the receiver to be a VT_UI4 or VT_UI8 holding the specified unsigned pointer-sized <integer> value.
 	Note that although VT_UINT_PTR exists as a vartype, this is only used in TYPEDESCs, and cannot appear in variants, so the result will be an initialized VT_UI4 on a 32-bit system, or VT_UI8 on a 64-bit system."
 
-	VMConstants.IsWin64 ifTrue: [self uint64: anInteger] ifFalse: [self uint32: anInteger]!
+	VMLibrary.IsWin64 ifTrue: [self uint64: anInteger] ifFalse: [self uint32: anInteger]!
 
 unknown
 	"Private - Answer the IUnknown pointer in the receiver. Assumes that the receiver is of type VT_UNKNOWN.
@@ -1411,57 +1411,157 @@ defineFields
 		};"
 
 	self
-		defineField: #vt type: UInt16Field new offset: 0;
-		defineField: #wReserved1 type: UInt16Field filler offset: 2;
-		defineField: #wReserved2 type: UInt16Field filler offset: 4;
-		defineField: #wReserved3 type: UInt16Field filler offset: 6;
-		defineField: #llVal type: Int64Field filler offset: 8;
-		defineField: #lVal type: Int32Field filler offset: 8;
-		defineField: #bVal type: UInt8Field filler offset: 8;
-		defineField: #iVal type: Int16Field filler offset: 8;
-		defineField: #fltVal type: FLOATField filler offset: 8;
-		defineField: #dblVal type: DOUBLEField filler offset: 8;
-		defineField: #boolVal type: Int16Field filler offset: 8;
-		defineField: #scode type: Int32Field filler offset: 8;
-		defineField: #cyVal type: (StructureField type: CY) beFiller offset: 8;
-		defineField: #date type: (StructureField type: DATE) beFiller offset: 8;
-		defineField: #bstrVal type: (PointerField type: BSTR) beFiller offset: 8;
-		defineField: #punkVal type: (PointerField type: IUnknown) beFiller offset: 8;
-		defineField: #pdispVal type: (PointerField type: IDispatch) beFiller offset: 8;
-		defineField: #parray type: LPVOIDField filler offset: 8;
-		defineField: #pbVal type: (PointerField type: UInt8) beFiller offset: 8;
-		defineField: #piVal type: (PointerField type: Int16) beFiller offset: 8;
-		defineField: #plVal type: (PointerField type: Int32) beFiller offset: 8;
-		defineField: #pllVal type: (PointerField type: Int64) beFiller offset: 8;
-		defineField: #pfltVal type: (PointerField type: FLOAT) beFiller offset: 8;
-		defineField: #pdblVal type: (PointerField type: DOUBLE) beFiller offset: 8;
-		defineField: #pboolVal type: (PointerField type: VARIANT_BOOL) beFiller offset: 8;
-		defineField: #pscode type: (PointerField type: HRESULT) beFiller offset: 8;
-		defineField: #pcyVal type: (PointerField type: CY) beFiller offset: 8;
-		defineField: #pdate type: (PointerField type: DATE) beFiller offset: 8;
-		defineField: #pbstrVal type: LPVOIDField filler offset: 8;
-		defineField: #ppunkVal type: LPVOIDField filler offset: 8;
-		defineField: #ppdispVal type: LPVOIDField filler offset: 8;
-		defineField: #pparray type: LPVOIDField filler offset: 8;
-		defineField: #pvarVal type: (PointerField type: VARIANT) beFiller offset: 8;
-		defineField: #byref type: LPVOIDField filler offset: 8;
-		defineField: #cVal type: UInt8Field filler offset: 8;
-		defineField: #uiVal type: UInt16Field filler offset: 8;
-		defineField: #ulVal type: UInt32Field filler offset: 8;
-		defineField: #ullVal type: UInt64Field filler offset: 8;
-		defineField: #intVal type: Int32Field filler offset: 8;
-		defineField: #uintVal type: UInt32Field filler offset: 8;
-		defineField: #pdecVal type: (PointerField type: DECIMAL) beFiller offset: 8;
-		defineField: #pcVal type: (PointerField type: UInt8) beFiller offset: 8;
-		defineField: #puiVal type: (PointerField type: UInt16) beFiller offset: 8;
-		defineField: #pulVal type: (PointerField type: UInt32) beFiller offset: 8;
-		defineField: #pullVal type: (PointerField type: UInt64) beFiller offset: 8;
-		defineField: #pintVal type: (PointerField type: Int32) beFiller offset: 8;
-		defineField: #puintVal type: (PointerField type: UInt32) beFiller offset: 8;
-		defineField: #pvRecord type: LPVOIDField filler offset: 8;
-		defineField: #pRecInfo type: (PointerField type: IRecordInfo) beFiller offset: (8+VMConstants.IntPtrSize);
-		defineField: #decVal type: (StructureField type: DECIMAL) beFiller offset: 0.
-	self assert: [self basicByteSize = (8 + (2 * VMConstants.IntPtrSize))]!
+		defineField: #vt
+			type: UInt16Field new
+			offset: 0;
+		defineField: #wReserved1
+			type: UInt16Field filler
+			offset: 2;
+		defineField: #wReserved2
+			type: UInt16Field filler
+			offset: 4;
+		defineField: #wReserved3
+			type: UInt16Field filler
+			offset: 6;
+		defineField: #llVal
+			type: Int64Field filler
+			offset: 8;
+		defineField: #lVal
+			type: Int32Field filler
+			offset: 8;
+		defineField: #bVal
+			type: UInt8Field filler
+			offset: 8;
+		defineField: #iVal
+			type: Int16Field filler
+			offset: 8;
+		defineField: #fltVal
+			type: FLOATField filler
+			offset: 8;
+		defineField: #dblVal
+			type: DOUBLEField filler
+			offset: 8;
+		defineField: #boolVal
+			type: Int16Field filler
+			offset: 8;
+		defineField: #scode
+			type: Int32Field filler
+			offset: 8;
+		defineField: #cyVal
+			type: (StructureField type: CY) beFiller
+			offset: 8;
+		defineField: #date
+			type: (StructureField type: DATE) beFiller
+			offset: 8;
+		defineField: #bstrVal
+			type: (PointerField type: BSTR) beFiller
+			offset: 8;
+		defineField: #punkVal
+			type: (PointerField type: IUnknown) beFiller
+			offset: 8;
+		defineField: #pdispVal
+			type: (PointerField type: IDispatch) beFiller
+			offset: 8;
+		defineField: #parray
+			type: LPVOIDField filler
+			offset: 8;
+		defineField: #pbVal
+			type: (PointerField type: UInt8) beFiller
+			offset: 8;
+		defineField: #piVal
+			type: (PointerField type: Int16) beFiller
+			offset: 8;
+		defineField: #plVal
+			type: (PointerField type: Int32) beFiller
+			offset: 8;
+		defineField: #pllVal
+			type: (PointerField type: Int64) beFiller
+			offset: 8;
+		defineField: #pfltVal
+			type: (PointerField type: FLOAT) beFiller
+			offset: 8;
+		defineField: #pdblVal
+			type: (PointerField type: DOUBLE) beFiller
+			offset: 8;
+		defineField: #pboolVal
+			type: (PointerField type: VARIANT_BOOL) beFiller
+			offset: 8;
+		defineField: #pscode
+			type: (PointerField type: HRESULT) beFiller
+			offset: 8;
+		defineField: #pcyVal
+			type: (PointerField type: CY) beFiller
+			offset: 8;
+		defineField: #pdate
+			type: (PointerField type: DATE) beFiller
+			offset: 8;
+		defineField: #pbstrVal
+			type: LPVOIDField filler
+			offset: 8;
+		defineField: #ppunkVal
+			type: LPVOIDField filler
+			offset: 8;
+		defineField: #ppdispVal
+			type: LPVOIDField filler
+			offset: 8;
+		defineField: #pparray
+			type: LPVOIDField filler
+			offset: 8;
+		defineField: #pvarVal
+			type: (PointerField type: VARIANT) beFiller
+			offset: 8;
+		defineField: #byref
+			type: LPVOIDField filler
+			offset: 8;
+		defineField: #cVal
+			type: UInt8Field filler
+			offset: 8;
+		defineField: #uiVal
+			type: UInt16Field filler
+			offset: 8;
+		defineField: #ulVal
+			type: UInt32Field filler
+			offset: 8;
+		defineField: #ullVal
+			type: UInt64Field filler
+			offset: 8;
+		defineField: #intVal
+			type: Int32Field filler
+			offset: 8;
+		defineField: #uintVal
+			type: UInt32Field filler
+			offset: 8;
+		defineField: #pdecVal
+			type: (PointerField type: DECIMAL) beFiller
+			offset: 8;
+		defineField: #pcVal
+			type: (PointerField type: UInt8) beFiller
+			offset: 8;
+		defineField: #puiVal
+			type: (PointerField type: UInt16) beFiller
+			offset: 8;
+		defineField: #pulVal
+			type: (PointerField type: UInt32) beFiller
+			offset: 8;
+		defineField: #pullVal
+			type: (PointerField type: UInt64) beFiller
+			offset: 8;
+		defineField: #pintVal
+			type: (PointerField type: Int32) beFiller
+			offset: 8;
+		defineField: #puintVal
+			type: (PointerField type: UInt32) beFiller
+			offset: 8;
+		defineField: #pvRecord
+			type: LPVOIDField filler
+			offset: 8;
+		defineField: #pRecInfo
+			type: (PointerField type: IRecordInfo) beFiller
+			offset: 8 + VMLibrary.IntPtrSize;
+		defineField: #decVal
+			type: (StructureField type: DECIMAL) beFiller
+			offset: 0.
+	self assert: [self basicByteSize = (8 + (2 * VMLibrary.IntPtrSize))]!
 
 externalTypeNames
 	^#(#{UInt8} #{Int8} #{UInt16} #{Int16} #{FLOAT} #{DOUBLE} #{UInt32} #{Int32} #{Int64} #{UInt64})!

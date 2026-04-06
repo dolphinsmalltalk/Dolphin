@@ -455,7 +455,7 @@ testAsUtf16StringMarkusKuhnUtf8Complete
 				resolve: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
 	bytes := File readAllBytes: testFilePath.
 	utf8 := Utf8String fromByteArray: bytes.
-	utf16 := Utf16String fromBytes: bytes codePage: OS.NlsConstants.CP_UTF8.
+	utf16 := Utf16String fromBytes: bytes codePage: Locale.CP_UTF8.
 	self assertAsUtf16String: utf8 equals: utf16!
 
 testConcatenateInvalidUtf16

@@ -28,7 +28,7 @@ testNonExistantImport
 testRemoveImport
 	| class subject bindingRef importsBefore |
 	class := model classFor: RefactoryTestDataApp.
-	bindingRef := #{OS.CRTConstants}.
+	bindingRef := #{Kernel.ParseErrorCodes}.
 	self assert: (class directlyImportsNamespace: bindingRef).
 	subject := RemoveImportRefactoring
 				model: model
@@ -42,11 +42,11 @@ testRemoveImport
 	self
 		verifyMethod: #refersToImportedPoolConstantUnqualified
 		of: class
-		equals: '<1s> ^OS.CRTConstants.EINVAL' << #refersToImportedPoolConstantUnqualified.
+		equals: '<1s> ^ParseErrorCodes.CErrAssignConstant' << #refersToImportedPoolConstantUnqualified.
 	self
 		verifyMethod: #refersToImportedPoolConstantBindingUnqualified
 		of: class
-		equals: '<1s> ^#{OS.CRTConstants.EINVAL}' << #refersToImportedPoolConstantBindingUnqualified.
+		equals: '<1s> ^#{_.ParseErrorCodes.CErrAssignConstant}' << #refersToImportedPoolConstantBindingUnqualified.
 	"Fully-qualified binding reference should have been left unchanged"
 	self assertIsNil: (model changes changeForClassNamed: RefactoryTestDataApp
 				selector: #refersToPoolConstantBindingFullyQualified)! !

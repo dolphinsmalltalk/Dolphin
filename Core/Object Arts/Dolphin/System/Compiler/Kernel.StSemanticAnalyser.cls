@@ -92,7 +92,7 @@ checkIsLiteralBlockHandler: aStProgramNode forMessage: aStMessageNode
 		extra: aStMessageNode selector!
 
 checkLiteralFrameSize: aStProgramNode
-	literals size > VMConstants.MaxLiterals
+	literals size > VMLibrary.MaxLiterals
 		ifTrue: [self signalError: CErrTooManyLiterals forNode: aStProgramNode]!
 
 checkMessage: aStMessageNode hasMonadicBlockArg: aStProgramNode 
@@ -162,8 +162,8 @@ checkMessage: aStMessageNode hasNonEmptyNiladicBlockArg: aStProgramNode code: an
 							extras: {aStMessageNode selector}.
 						false]]!
 
-checkMessageArgumentCount: aMessageNode 
-	aMessageNode argumentCount > VMConstants.MaxMessageArgs 
+checkMessageArgumentCount: aMessageNode
+	aMessageNode argumentCount > VMLibrary.MaxMessageArgs
 		ifTrue: [self signalError: CErrTooManyArgs forNode: aMessageNode]!
 
 checkMessageHasNiladicBlockReceiver: aMessageNode
@@ -413,7 +413,7 @@ newLiteralsCollection
 	^IdentityDictionary new!
 
 processBlock: aBlockNode
-	self blockDepth > VMConstants.MaxBlockNesting
+	self blockDepth > VMLibrary.MaxBlockNesting
 		ifTrue: [self signalError: CErrBlockNestingTooDeep forNode: aBlockNode].
 	super processBlock: aBlockNode!
 
@@ -481,7 +481,7 @@ visitArgumentNodes: aNodeCollection
 		into: 
 			[:count :each |
 			self visitNode: each.
-			count >= VMConstants.MaxTemps
+			count >= VMLibrary.MaxTemps
 				ifTrue: 
 					[self
 						signalError: CErrTooManyTemps
@@ -610,7 +610,7 @@ visitTemporaryNodes: aNodeCollection
 		into: 
 			[:count :each |
 			self visitNode: each.
-			count >= VMConstants.MaxTemps
+			count >= VMLibrary.MaxTemps
 				ifTrue: 
 					[self
 						signalError: CErrTooManyTemps

@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cx' -> 16r10.
@@ -64,7 +64,7 @@ isMove
 	^self flags noMask: SWP_NOMOVE!
 
 isRectangleChanged
-	^(self flags allMask: ##(Win32Constants.SWP_NOMOVE bitOr: Win32Constants.SWP_NOSIZE)) not!
+	^(self flags allMask: ##(SWP_NOMOVE bitOr: SWP_NOSIZE)) not!
 
 isResize
 	"Answer whether the receiver is describing a resize event."

@@ -51,7 +51,7 @@ setUp
 	tempFileName := Path temporary!
 
 sharingError
-	^FileException matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_SHARING_VIOLATION]!
+	^FileException matching: [:ex | ex statusCode = OS.Win32Error.ERROR_SHARING_VIOLATION]!
 
 streamClassSupportsPointers
 	^false!
@@ -561,7 +561,7 @@ testSharing
 	self
 		should: [self tempReadStream: #text]
 		raise: OS.Win32Error
-		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_SHARING_VIOLATION]!
+		matching: [:ex | ex statusCode = OS.Win32Error.ERROR_SHARING_VIOLATION]!
 
 testWriteManyCharacters
 	| many fileSize filename subject |

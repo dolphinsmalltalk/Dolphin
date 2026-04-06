@@ -4,7 +4,7 @@ UI.Tests.AbstractContainerViewTest
 	subclass: #'UI.Tests.ContainerViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

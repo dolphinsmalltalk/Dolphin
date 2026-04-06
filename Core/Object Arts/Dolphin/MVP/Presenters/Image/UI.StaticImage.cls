@@ -6,7 +6,7 @@ UI.StaticControlView
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'STM_GETIMAGE' -> 16r173. 'STM_SETIMAGE' -> 16r172 }!
 
 UI.StaticImage guid: (Core.GUID fromString: '{87b4c73f-026e-11d3-9fd7-00a0cc3e4a32}')!
 

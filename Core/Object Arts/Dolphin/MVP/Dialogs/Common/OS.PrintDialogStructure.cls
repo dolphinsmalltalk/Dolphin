@@ -4,7 +4,7 @@ OS.ComDlgStructure
 	subclass: #'OS.PrintDialogStructure'
 	instanceVariableNames: 'cachedHDevMode devMode cachedHDevNames devNames'
 	classVariableNames: ''
-	imports: #(#{OS.PrintDialogConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_hDevMode' -> 16r8. '_OffsetOf_hDevNames' -> 16rC }!
 

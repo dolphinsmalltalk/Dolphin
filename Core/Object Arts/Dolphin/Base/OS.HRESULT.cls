@@ -4,9 +4,46 @@ External.AbstractInt32
 	subclass: #'OS.HRESULT'
 	instanceVariableNames: ''
 	classVariableNames: 'Facilities Fail'
-	imports: #(#{OS.Win32Constants} #{OS.Win32Errors} #{OS.FacilityCodes})
+	imports: #(#{OS.KernelLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: { '_HRESULT_Size' -> 16r4. 'FACILITY_NT_BIT' -> 16r10000000 }!
+	classConstants: {
+			'_HRESULT_Size' -> 16r4.
+			'CLASS_E_CLASSNOTAVAILABLE' -> -16r7FFBFEEF.
+			'CLASS_E_NOAGGREGATION' -> -16r7FFBFEF0.
+			'CLASS_E_NOTLICENSED' -> -16r7FFBFEEE.
+			'E_ABORT' -> -16r7FFFBFFC.
+			'E_ACCESSDENIED' -> -16r7FF8FFFB.
+			'E_FAIL' -> -16r7FFFBFFB.
+			'E_HANDLE' -> -16r7FF8FFFA.
+			'E_INVALIDARG' -> -16r7FF8FFA9.
+			'E_NOINTERFACE' -> -16r7FFFBFFE.
+			'E_NOTIMPL' -> -16r7FFFBFFF.
+			'E_OUTOFMEMORY' -> -16r7FF8FFF2.
+			'E_PENDING' -> -16r7FFFFFF6.
+			'E_POINTER' -> -16r7FFFBFFD.
+			'E_UNEXPECTED' -> -16r7FFF0001.
+			'FACILITY_CERT' -> 16rB.
+			'FACILITY_CONTROL' -> 16rA.
+			'FACILITY_DIRECTDRAW' -> 16r876.
+			'FACILITY_DISPATCH' -> 16r2.
+			'FACILITY_ITF' -> 16r4.
+			'FACILITY_NT_BIT' -> 16r10000000.
+			'FACILITY_NULL' -> 16r0.
+			'FACILITY_RPC' -> 16r1.
+			'FACILITY_SSPI' -> 16r9.
+			'FACILITY_STORAGE' -> 16r3.
+			'FACILITY_WIN32' -> 16r7.
+			'FACILITY_WINDOWS' -> 16r8.
+			'S_FALSE' -> 16r1.
+			'S_OK' -> 16r0.
+			'SEVERITY_ERROR' -> 16r1.
+			'SEVERITY_SUCCESS' -> 16r0.
+			'STATUS_INVALID_PARAMETER' -> -16r3FFFFFF3.
+			'STATUS_OBJECT_TYPE_MISMATCH' -> -16r3FFFFFDC.
+			'STATUS_TIMER_RESOLUTION_NOT_SET' -> -16r3FFFFDBB.
+			'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
+			'WCODE_HRESULT_LAST' -> -16r7FFB0001
+		}!
 
 OS.HRESULT guid: (Core.GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -200,7 +237,7 @@ initialize
 
 	Fail := self fromInteger: E_FAIL.
 	Facilities := LookupTable new.
-	FacilityCodes bindingsDo: [:each | self registerFacility: each value name: each key].
+	self bindingsDo: [:each | (each key beginsWith: 'FACILITY_') ifTrue: [self registerFacility: each value name: each key]].
 	self registerFacility: FACILITY_NT_BIT >> 16 name: 'NTSTATUS'!
 
 notImplemented
@@ -216,7 +253,7 @@ ntStatusCode: anInteger
 ok
 	"Answer the 'OK' HRESULT."
 
-	^self fromInteger: S_OK!
+	^self new!
 
 registerFacility: anInteger name: aString 
 	"Register the specified facility code name for the specified facility code"
@@ -224,7 +261,7 @@ registerFacility: anInteger name: aString
 	Facilities at: anInteger put: aString!
 
 severity: sev facility: fac code: code
-	"Private - Make and answer an HRESULT from the arguments."
+	"Make and answer an HRESULT from the arguments."
 
 	^self fromUnsignedInteger: (
 		((sev bitAnd: 1) bitShift: 31) bitOr:
@@ -232,7 +269,7 @@ severity: sev facility: fac code: code
 !
 
 status: code facility: fac
-	"Private - Make and answer an HRESULT from the arguments."
+	"Make and answer an HRESULT from the arguments."
 
 	^self severity: SEVERITY_ERROR facility: fac code: code!
 
@@ -241,11 +278,8 @@ unregisterFacility: anInteger
 
 	Facilities removeKey: anInteger ifAbsent: nil!
 
-win32Error: anInteger 
-	^self 
-		severity: SEVERITY_ERROR
-		facility: FACILITY_WIN32
-		code: anInteger! !
+win32Error: anInteger
+	^self status: anInteger facility: FACILITY_WIN32! !
 
 !OS.HRESULT class categoriesForMethods!
 decodePrimitiveFailureCode:!private!utilities! !
@@ -258,8 +292,8 @@ notImplemented!constants!instance creation!public! !
 ntStatusCode:!instance creation!public! !
 ok!constants!instance creation!public! !
 registerFacility:name:!public! !
-severity:facility:code:!instance creation!private! !
-status:facility:!instance creation!private! !
+severity:facility:code:!instance creation!public! !
+status:facility:!instance creation!public! !
 unregisterFacility:!public! !
 win32Error:!instance creation!public! !
 !

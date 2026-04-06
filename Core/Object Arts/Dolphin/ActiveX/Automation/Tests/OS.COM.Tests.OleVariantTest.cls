@@ -597,7 +597,7 @@ testR4Overflow
 	subject := self subjectClass new.
 	max := FLOAT maximum value.
 	fpeMask := Float exceptionMask.
-	Float exceptionMask: (fpeMask maskClear: CRTConstants._EM_OVERFLOW).
+	Float exceptionMask: (fpeMask maskClear: CRTLibrary._EM_OVERFLOW).
 	
 	[self should: [subject float: max * 10] raise: Error.
 	self should: [subject float: -10 * max] raise: Error]

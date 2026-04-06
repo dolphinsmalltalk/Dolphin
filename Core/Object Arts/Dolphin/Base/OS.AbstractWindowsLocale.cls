@@ -6,7 +6,58 @@ Core.Locale
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CAL_ITWODIGITYEARMAX' -> 16r30.
+			'CAL_NOUSEROVERRIDE' -> 16r80000000.
+			'CAL_RETURN_NUMBER' -> 16r20000000.
+			'CAL_SCALNAME' -> 16r2.
+			'DATE_LONGDATE' -> 16r2.
+			'DATE_SHORTDATE' -> 16r1.
+			'LOCALE_CUSTOM_DEFAULT' -> 16rC00.
+			'LOCALE_ICALENDARTYPE' -> 16r1009.
+			'LOCALE_IDATE' -> 16r21.
+			'LOCALE_IDIGITS' -> 16r11.
+			'LOCALE_IFIRSTDAYOFWEEK' -> 16r100C.
+			'LOCALE_ILZERO' -> 16r12.
+			'LOCALE_INEGNUMBER' -> 16r1010.
+			'LOCALE_NOUSEROVERRIDE' -> 16r80000000.
+			'LOCALE_RETURN_NUMBER' -> 16r20000000.
+			'LOCALE_SABBREVDAYNAME1' -> 16r31.
+			'LOCALE_SABBREVMONTHNAME1' -> 16r44.
+			'LOCALE_SAM' -> 16r28.
+			'LOCALE_SCURRENCY' -> 16r14.
+			'LOCALE_SDATE' -> 16r1D.
+			'LOCALE_SDAYNAME1' -> 16r2A.
+			'LOCALE_SDECIMAL' -> 16rE.
+			'LOCALE_SDURATION' -> 16r5D.
+			'LOCALE_SENGLISHDISPLAYNAME' -> 16r72.
+			'LOCALE_SENGLISHLANGUAGENAME' -> 16r1001.
+			'LOCALE_SGROUPING' -> 16r10.
+			'LOCALE_SISO639LANGNAME' -> 16r59.
+			'LOCALE_SLIST' -> 16rC.
+			'LOCALE_SLOCALIZEDDISPLAYNAME' -> 16r2.
+			'LOCALE_SLONGDATE' -> 16r20.
+			'LOCALE_SMONTHNAME1' -> 16r38.
+			'LOCALE_SNAME' -> 16r5C.
+			'LOCALE_SNAN' -> 16r69.
+			'LOCALE_SNATIVEDIGITS' -> 16r13.
+			'LOCALE_SNATIVEDISPLAYNAME' -> 16r73.
+			'LOCALE_SNEGATIVESIGN' -> 16r51.
+			'LOCALE_SNEGINFINITY' -> 16r6B.
+			'LOCALE_SPARENT' -> 16r6D.
+			'LOCALE_SPERCENT' -> 16r76.
+			'LOCALE_SPM' -> 16r29.
+			'LOCALE_SPOSINFINITY' -> 16r6A.
+			'LOCALE_SSHORTDATE' -> 16r1F.
+			'LOCALE_SSHORTESTAM' -> 16r7E.
+			'LOCALE_SSHORTESTDAYNAME1' -> 16r60.
+			'LOCALE_SSHORTESTPM' -> 16r7F.
+			'LOCALE_SSHORTTIME' -> 16r79.
+			'LOCALE_STHOUSAND' -> 16rF.
+			'LOCALE_STIME' -> 16r1E.
+			'LOCALE_STIMEFORMAT' -> 16r1003.
+			'LOCALE_SYEARMONTH' -> 16r1006
+		}!
 
 OS.AbstractWindowsLocale guid: (Core.GUID fromString: '{f4f1e93b-efe9-4ae4-a610-a5f9fcb791f0}')!
 
@@ -166,14 +217,14 @@ firstDayOfWeek
 getCalendarInfoInteger: anInteger
 	"Private - Get the specified <integer> calendar information from Windows."
 
-	| buf |
+	| buf calType |
 	buf := UInt32Bytes new.
+	calType := anInteger bitOr: CAL_RETURN_NUMBER.
+	self noUserOverrides ifTrue: [calType := calType bitOr: CAL_NOUSEROVERRIDE].
 	(Kernel32
 		getCalendarInfo: self lcid
 		calendar: self calendarId
-		calType: (anInteger bitOr: (self noUserOverrides
-						ifTrue: [##(CAL_RETURN_NUMBER | CAL_NOUSEROVERRIDE)]
-						ifFalse: [CAL_RETURN_NUMBER]))
+		calType: calType
 		lpCalData: nil
 		cchData: 0
 		lpValue: buf) == 0
@@ -205,18 +256,39 @@ getIntegerInfo: anIntegerLcType
 		ifNil: [info at: anIntegerLcType put: (self getLocaleInfoInteger: anIntegerLcType)]!
 
 getLocaleInfoInteger: anIntegerLcType
-	^Kernel32 getLocaleInfo: self lcid
-		integer: (self noUserOverrides
+	| buf |
+	buf := ByteArray newFixed: 4.
+	"Note that the API is expecting a data count expressed as the number of (wide) characters, so for a 32-bit buffer the correct size is 2."
+	(Kernel32
+		getLocaleInfo: self lcid
+		lCType: ((self noUserOverrides
 				ifTrue: [anIntegerLcType bitOr: LOCALE_NOUSEROVERRIDE]
-				ifFalse: [anIntegerLcType])!
+				ifFalse: [anIntegerLcType]) bitOr: LOCALE_RETURN_NUMBER)
+		lpLCData: buf
+		cchData: 2) == 0
+		ifTrue: [Kernel32 systemError].
+	^buf uint32AtOffset: 0!
 
 getLocaleInfoString: anIntegerLcType
 	"Private - Get the specified <Utf8String> locale information from Windows."
 
-	| id |
+	| size buf lcType lcid id |
 	id := self basicLcid.
-	^(Kernel32 getLocaleInfo: (id bitAnd: ##(NLS_VALID_LOCALE_MASK bitOr: (16rF bitShift: 20)	"sort version"))
-		string: (anIntegerLcType bitOr: ((id bitAnd: NoUserOverrideMask) bitShift: 7))) asUtf8String!
+	lcid := id bitAnd: ##(NLS_VALID_LOCALE_MASK bitOr: (16rF bitShift: 20)	"sort version").
+	lcType := anIntegerLcType bitOr: ((id bitAnd: NoUserOverrideMask) bitShift: 7).
+	size := Kernel32
+				getLocaleInfo: lcid
+				lCType: lcType
+				lpLCData: nil
+				cchData: 0.
+	size == 0 ifTrue: [^Kernel32 systemError].
+	buf := Utf16String newFixed: size - 1.
+	Kernel32
+		getLocaleInfo: lcid
+		lCType: lcType
+		lpLCData: buf
+		cchData: size.
+	^buf asUtf8String!
 
 getStringInfo: anIntegerLcType
 	"Private - Answer a locale specific date String of the specified type for the receiver's locale."

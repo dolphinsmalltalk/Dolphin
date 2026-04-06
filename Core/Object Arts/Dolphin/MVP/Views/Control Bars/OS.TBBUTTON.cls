@@ -13,7 +13,15 @@ External.Structure
 			'_OffsetOf_iBitmap' -> 16r0.
 			'_OffsetOf_idCommand' -> 16r4.
 			'_OffsetOf_iString' -> 16r10.
-			'_TBBUTTON_Size' -> 16r14
+			'_TBBUTTON_Size' -> 16r14.
+			'TBSTATE_CHECKED' -> 16r1.
+			'TBSTATE_ELLIPSES' -> 16r40.
+			'TBSTATE_ENABLED' -> 16r4.
+			'TBSTATE_HIDDEN' -> 16r8.
+			'TBSTATE_INDETERMINATE' -> 16r10.
+			'TBSTATE_MARKED' -> 16r80.
+			'TBSTATE_PRESSED' -> 16r2.
+			'TBSTATE_WRAP' -> 16r20
 		}!
 
 OS.TBBUTTON guid: (Core.GUID fromString: '{87b4c614-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -78,7 +86,7 @@ idCommand: cmdInteger iBitmap: imageIndexInteger iString: textIndexInteger fsSty
 	bytes
 		int32AtOffset: _OffsetOf_iBitmap put: imageIndexInteger;
 		int32AtOffset: _OffsetOf_idCommand put: cmdInteger;
-		uint8AtOffset: _OffsetOf_fsState put: ToolbarConstants.TB_STATEENABLED;
+		uint8AtOffset: _OffsetOf_fsState put: TBSTATE_ENABLED;
 		uint8AtOffset: _OffsetOf_fsStyle put: styleInteger;
 		intPtrAtOffset: _OffsetOf_iString put: textIndexInteger.
 	^cmdInteger!

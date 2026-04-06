@@ -4,7 +4,7 @@ Core.Object
 	subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private} #{OS private})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CaptionId' -> 16r3F9.
@@ -291,7 +291,7 @@ subclassWindow: anIntegerOrHandle
 
 	handle := anIntegerOrHandle asExternalHandle.
 	SessionManager inputState windowAt: anIntegerOrHandle put: self.
-	oldWndProc := VMConstants.IsWin64
+	oldWndProc := VMLibrary.IsWin64
 				ifTrue: 
 					[User32
 						setWindowULongPtr: handle
@@ -332,21 +332,21 @@ wmCreate: message wParam: wParam lParam: lParam
 wmCtlColor: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_CTLCOLORXXX message."
 
-	^(User32 getSysColorBrush: COLOR_WINDOW) asInteger!
+	^(User32 getSysColorBrush: 5 "COLOR_WINDOW") asInteger!
 
 wmInitDialog: message wParam: wParam lParam: lParam
 	"Private - A WM_INITDIALOG message was sent by the dialog proc. Answer false if the focus has been set,
 	or true if leaving that to Windows."
 
 	| bkcolor |
-	cursor := User32 loadCursor: 0 lpCursorName: IDC_WAIT.
+	cursor := User32 loadCursor: 0 lpCursorName: "IDC_WAIT" 32514.
 	self setItem: CaptionId text: 'Application Deployment in Progress'.
 	self setItem: ExplanationId
 		text: 'The deployment process may take up to a minute depending on the deployment options. 
 
 This progress dialog will disappear some seconds before deployment is complete. A message box will appear informing you when the procedure is finished and, once confirmed, the development image will exit.'.
 	progress := self getItemHandle: ProgressId ifAbsent: nil.
-	bkcolor := User32 getSysColor: COLOR_WINDOW.
+	bkcolor := User32 getSysColor: 5 "COLOR_WINDOW".
 	User32
 		sendMessage: progress
 		msg: 8193

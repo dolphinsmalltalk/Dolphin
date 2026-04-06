@@ -59,7 +59,6 @@ testInlineAccessor
 	self assert: (actual source includes: $🐭)!
 
 testInlineEmptyInterval
-	| source |
 	self shouldFail: (InlineMethodRefactoring
 				inline: (35 to: 34)
 				inMethod: #inlineMethod

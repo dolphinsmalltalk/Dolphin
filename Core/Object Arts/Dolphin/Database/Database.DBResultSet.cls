@@ -4,7 +4,7 @@ Core.SequenceableCollection
 	subclass: #'Database.DBResultSet'
 	instanceVariableNames: 'statement buffer columns'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

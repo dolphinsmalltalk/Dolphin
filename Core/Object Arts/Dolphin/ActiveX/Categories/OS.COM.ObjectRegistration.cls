@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'OS.COM.ObjectRegistration'
 	instanceVariableNames: 'clsid name toolboxImage'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -102,7 +102,7 @@ toolboxImage
 	toolboxImage
 		ifNil: 
 			[(AdvApi32
-				regGetString: WinRegConstants.HKEY_CLASSES_ROOT
+				regGetString: AdvApiLibrary.HKEY_CLASSES_ROOT
 				key: 'CLSID\{<1s>}\ToolboxBitmap32' << self clsid idlString
 				value: nil)
 					ifNotNil: 

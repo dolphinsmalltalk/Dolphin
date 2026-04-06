@@ -4,7 +4,7 @@ UI.ShellView
 	subclass: #'UI.Examples.HelloWorld'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -73,13 +73,12 @@ isDirectory
 	"Answer whether the receiver describes a directory (as opposed to a file) 
 	in the host file system."
 
-	^self dwFileAttributes allMask: OS.Win32Constants.FILE_ATTRIBUTE_DIRECTORY!
+	^(bytes uint32AtOffset: _OffsetOf_dwFileAttributes) allMask: KernelLibrary.FILE_ATTRIBUTE_DIRECTORY!
 
 isReadOnly
 	"Answer whether the receiver describes a read only file."
 
-	^self dwFileAttributes allMask: OS.Win32Constants.FILE_ATTRIBUTE_READONLY
-!
+	^(bytes uint32AtOffset: _OffsetOf_dwFileAttributes) allMask: KernelLibrary.FILE_ATTRIBUTE_READONLY!
 
 nFileSizeHigh
 	"Answer the <Integer> value of the receiver's 'nFileSizeHigh' field."

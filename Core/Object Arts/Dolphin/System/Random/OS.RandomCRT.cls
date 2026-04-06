@@ -4,7 +4,7 @@ Core.Random
 	subclass: #'OS.RandomCRT'
 	instanceVariableNames: 'next'
 	classVariableNames: ''
-	imports: #(#{OS.CRTConstants})
+	imports: #(#{OS.CRTLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

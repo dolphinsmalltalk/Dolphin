@@ -89,8 +89,10 @@ tearDown
 	super tearDown!
 
 testContextMenu
+	"Too unreliable"
+
 	<knownSlowTest>
-	<skipIf: #isCiBuild> "Too unreliable"
+	<skipIf: #isCiBuild>
 	<skipUnless: #isInForeground>
 	| contextMenuHandler menuEvent newCmd iconStream cmdEventSink cmdFired |
 	iconStream := IStream read: (FileLocator installRelative resolve: 'Resources\Dolphin.ico').
@@ -127,7 +129,7 @@ testContextMenu
 	presenter model value: 'edge://edge-urls'.
 	self assert: self waitForNavigationCompleted.
 	presenter view setFocus.
-	self sendKeyPress: Win32Constants.VK_APPS extended: true.
+	self sendKeyPress: VK_APPS extended: true.
 	self waitAtMost: 50 milliseconds while: [menuEvent isNil].
 	"Hmmm, how can we tell that the context menu has actually popped up"
 	self waitAtMost: 50 milliseconds while: [true].

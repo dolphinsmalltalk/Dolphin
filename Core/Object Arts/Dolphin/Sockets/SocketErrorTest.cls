@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #SocketErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.WinSocketErrors})
+	imports: #(#{Net.SocketError})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

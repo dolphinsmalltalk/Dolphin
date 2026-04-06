@@ -7,6 +7,7 @@ package paxVersion: 2.1;
 package setVariableNames: #(
 	#{Smalltalk.AXDualImp}
 	#{Smalltalk.AXMethodName}
+	#{Smalltalk.AXRecord}
 	#{Smalltalk.AXTypeLibDocumentation}
 	#{Smalltalk.AXTypeLibraryAnalyzer}
 	#{Smalltalk.CURRENCY}
@@ -36,6 +37,7 @@ package setVariableNames: #(
 package setAliasVariableNames: #(
 	#{Smalltalk.AXDualImp}
 	#{Smalltalk.AXMethodName}
+	#{Smalltalk.AXRecord}
 	#{Smalltalk.AXTypeLibDocumentation}
 	#{Smalltalk.AXTypeLibraryAnalyzer}
 	#{Smalltalk.CURRENCY}
@@ -74,6 +76,8 @@ package!
 Smalltalk.AXDualImp := OS.COM.DualInterfaceImplementation!
 
 Smalltalk.AXMethodName := Tools.AXMethodName!
+
+Smalltalk.AXRecord := OS.COM.Record!
 
 Smalltalk.AXTypeLibDocumentation := OS.COM.TypeLibDocumentation!
 

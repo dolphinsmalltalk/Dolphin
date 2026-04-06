@@ -4,7 +4,7 @@ Core.SessionManager
 	subclass: #'Kernel.ConsoleSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CRTConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

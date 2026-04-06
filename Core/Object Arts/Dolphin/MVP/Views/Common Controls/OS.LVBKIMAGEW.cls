@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.LVBKIMAGEW'
 	instanceVariableNames: 'buf'
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LVBKIMAGEW_Size' -> 16r18.
@@ -13,7 +13,16 @@ External.Structure
 			'_OffsetOf_pszImage' -> 16r8.
 			'_OffsetOf_ulFlags' -> 16r0.
 			'_OffsetOf_xOffsetPercent' -> 16r10.
-			'_OffsetOf_yOffsetPercent' -> 16r14
+			'_OffsetOf_yOffsetPercent' -> 16r14.
+			'LVBKIF_FLAG_TILEOFFSET' -> 16r100.
+			'LVBKIF_SOURCE_HBITMAP' -> 16r1.
+			'LVBKIF_SOURCE_MASK' -> 16r3.
+			'LVBKIF_SOURCE_NONE' -> 16r0.
+			'LVBKIF_SOURCE_URL' -> 16r2.
+			'LVBKIF_STYLE_MASK' -> 16r10.
+			'LVBKIF_STYLE_NORMAL' -> 16r0.
+			'LVBKIF_STYLE_TILE' -> 16r10.
+			'LVBKIF_TYPE_WATERMARK' -> 16r10000000
 		}!
 
 OS.LVBKIMAGEW guid: (Core.GUID fromString: '{33fccb1a-f5ba-4ae8-93ad-63d00b9aa869}')!

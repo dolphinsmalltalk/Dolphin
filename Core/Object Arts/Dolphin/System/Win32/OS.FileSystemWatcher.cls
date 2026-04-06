@@ -92,7 +92,7 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := External.FunctionDescriptor
+	FileIOCompletionRoutineDescriptor := FunctionDescriptor
 				argumentTypes: 'uint32 uint32 <1p>*' << OVERLAPPED! !
 
 !OS.FileSystemWatcher class categoriesForMethods!

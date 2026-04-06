@@ -1,0 +1,96 @@
+﻿| package |
+package := Package name: 'Dolphin Styled Views Development'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package methodNames
+	add: 'StyledContainer class' -> #publishedAspectsOfInstances;
+	add: 'StyledGradientBrush class' -> #publishedAspectsOfInstances;
+	add: 'StyledPen class' -> #publishedAspectsOfInstances;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\IDE\Base\Development System'
+	'..\..\..\Base\Dolphin'
+	'Dolphin Styled Views').
+
+package!
+
+"Loose Methods"!
+
+!StyledContainer class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	aspects
+		add: ((Aspect name: #styledPen
+					chooseFrom: #('nil' 'StyledPen solid' 'StyledPen dotted' 'StyledPen dashed' 'StyledPen dashDot' 'StyledPen dashDotDot'))
+					beImmutable;
+					beNullable;
+					yourself);
+		add: ((Aspect name: #styledShadow chooseFrom: #('nil' 'StyledShadow new'))
+					beImmutable;
+					beNullable;
+					yourself);
+		add: ((Aspect name: #styledBrush
+					chooseFrom: #('nil' 'StyledGradientBrush black' 'StyledGradientBrush white' 'StyledGradientBrush face3dTopToBottomFade' 'StyledGradientBrush face3dLeftToRightFade' 'StyledGradientBrush face3dTopLeftToBottomRightFade'))
+					beNullable;
+					yourself);
+		add: ((Aspect name: #cornerRadii)
+					beNonNullable;
+					beImmutable;
+					yourself);
+		add: (Aspect boolean: #isAntialiased);
+		add: ((Aspect collection: #edges addEvaluationFrom: #('#left' '#right' '#top' '#bottom'))
+					beImmutable;
+					beNonNullable;
+					yourself).
+	^aspects! !
+
+!StyledContainer class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
+
+!StyledGradientBrush class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect color: #startColor);
+		add: (Aspect color: #endColor);
+		add: (Aspect name: #startPoint);
+		add: (Aspect name: #endPoint);
+		yourself! !
+
+!StyledGradientBrush class categoriesForMethods!
+publishedAspectsOfInstances!public! !
+!
+
+!StyledPen class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect color: #color);
+		add: (Aspect name: #dashPattern);
+		add: (Aspect number: #width);
+		yourself	"For now we don't allow the width to be adjusted in the VC because there are problems"! !
+
+!StyledPen class categoriesForMethods!
+publishedAspectsOfInstances!public! !
+!
+
+"End of package definition"!
+

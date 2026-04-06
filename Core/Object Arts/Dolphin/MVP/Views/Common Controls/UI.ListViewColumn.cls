@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.ListViewColumn'
 	instanceVariableNames: 'text width alignment getTextBlock getSortValueBlock getContentsBlock name parent getImageBlock flags getInfoTipBlock customDrawBlock'
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #(#{UI.ListView})
 	classInstanceVariableNames: ''
 	classConstants: { 'AutoResizeMask' -> 16r1. 'SortInvertedMask' -> 16r2 }!
 

@@ -4,7 +4,7 @@ UI.Tests.PresenterTest
 	subclass: #'UI.Tests.ToolbarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ToolbarConstants})
+	imports: #(#{UI.ToolbarButton})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -66,7 +66,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: (view forecolor == Color default or: [view forecolor isNil]).
 	self assert: view isTransparent.
 	self deny: view hasLabels.
-	self assert: (view baseStyleAllMask: CommCtrlConstants.CCS_NOPARENTALIGN).
+	self assert: (view baseStyleAllMask: CommCtrlLibrary.CCS_NOPARENTALIGN).
 	self assertIsNil: view textcolor! !
 
 !UI.Tests.ToolbarTest categoriesForMethods!

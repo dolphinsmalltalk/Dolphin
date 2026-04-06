@@ -99,7 +99,7 @@ getDebugInfoFor: aCompiledMethod
 	methodClass := aCompiledMethod methodClass.
 	compiler := aCompiledMethod compilerClass.
 	flags := methodClass defaultCompilationFlags | (compiler debugInfoFlags: toggleDebugPresenter value).
-	flags := flags mask: CompilerFlags.NoOptimize set: toggleOptimisedPresenter value not.
+	flags := flags mask: Compiler.NoOptimize set: toggleOptimisedPresenter value not.
 	^compiler
 		compileForMethod: aCompiledMethod getSource
 		in: methodClass

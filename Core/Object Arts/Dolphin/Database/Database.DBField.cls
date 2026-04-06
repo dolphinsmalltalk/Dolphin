@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Database.DBField'
 	instanceVariableNames: 'column buffer lengthBuf'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCTypes} #{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -33,7 +33,7 @@ allocateBuffer
 beNull
 	"Set the receiver to be a null valued field. ODBC represents this by a special indicator value in the length buffer."
 
-	self length: OS.ODBCConstants.SQL_NULL_DATA!
+	self length: SQL_NULL_DATA!
 
 bindAsParameter: anInteger of: aDBParameterizedStatement
 	"Private - Bind the receiver as the supplier of data for the parameter numbered, anInteger, of aDBParameterizedStatement."
@@ -87,7 +87,7 @@ initializeForColumn: aDBColAttr
 isNull
 	"Answer whether the receiver currently holds a null value."
 
-	^self length == OS.ODBCConstants.SQL_NULL_DATA!
+	^self length == SQL_NULL_DATA!
 
 length
 	"Private - Answer the octet length of the interchange data in this field, or -1 if NULL."

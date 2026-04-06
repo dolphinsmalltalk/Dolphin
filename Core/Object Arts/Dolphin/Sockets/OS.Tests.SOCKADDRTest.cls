@@ -24,7 +24,7 @@ testDisplayOnInvalid
 	self
 		should: [subject displayString]
 		raise: Net.SocketError
-		matching: [:ex | ex errorCode = WinSocketErrors.WSAEINVAL]!
+		matching: [:ex | ex errorCode =  Net.SocketError.WSAEINVAL]!
 
 testFromString
 	self ipAddressStrings do: 
@@ -35,7 +35,7 @@ testFromString
 	self
 		should: [SOCKADDR fromString: '192.168.1.0:']
 		raise: Win32Error
-		matching: [:ex | ex errorCode = WinSocketErrors.WSAEINVAL]!
+		matching: [:ex | ex errorCode = Net.SocketError.WSAEINVAL]!
 
 testSockAddrStorage
 	self ipAddressStrings do: 

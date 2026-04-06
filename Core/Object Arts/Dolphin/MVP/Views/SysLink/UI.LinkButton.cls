@@ -4,7 +4,7 @@ UI.CommandButton
 	subclass: #'UI.LinkButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.SysLinkConstants})
+	imports: #(#{UI.SysLinkView})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

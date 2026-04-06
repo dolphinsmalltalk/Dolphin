@@ -4,9 +4,23 @@ Core.Object
 	subclass: #'OS.FileSystemChangeReader'
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
 	classVariableNames: 'FileIOCompletionRoutineDescriptor'
-	imports: #(#{OS.Win32Constants} #{OS.FileSystemWatcherConstants} #{OS.Win32Errors})
+	imports: #(#{OS.KernelLibrary private} #{OS.Win32Error private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'FILE_ACTION_ADDED' -> 16r1.
+			'FILE_ACTION_MODIFIED' -> 16r3.
+			'FILE_ACTION_REMOVED' -> 16r2.
+			'FILE_ACTION_RENAMED_NEW_NAME' -> 16r5.
+			'FILE_ACTION_RENAMED_OLD_NAME' -> 16r4.
+			'FILE_NOTIFY_CHANGE_ATTRIBUTES' -> 16r4.
+			'FILE_NOTIFY_CHANGE_CREATION' -> 16r40.
+			'FILE_NOTIFY_CHANGE_DIR_NAME' -> 16r2.
+			'FILE_NOTIFY_CHANGE_FILE_NAME' -> 16r1.
+			'FILE_NOTIFY_CHANGE_LAST_ACCESS' -> 16r20.
+			'FILE_NOTIFY_CHANGE_LAST_WRITE' -> 16r10.
+			'FILE_NOTIFY_CHANGE_SECURITY' -> 16r100.
+			'FILE_NOTIFY_CHANGE_SIZE' -> 16r8
+		}!
 
 OS.FileSystemChangeReader guid: (Core.GUID fromString: '{d46a38a5-966c-4e12-a910-00936a4993bd}')!
 
@@ -407,7 +421,7 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := External.FunctionDescriptor
+	FileIOCompletionRoutineDescriptor := FunctionDescriptor
 				argumentTypes: 'uint32 uint32 <1p>*' << OVERLAPPED!
 
 monitorDirectory: aString 

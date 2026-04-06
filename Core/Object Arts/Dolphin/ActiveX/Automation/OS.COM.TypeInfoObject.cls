@@ -4,9 +4,25 @@ Core.Object
 	subclass: #'OS.COM.TypeInfoObject'
 	instanceVariableNames: 'tlbInterface generationFlags binding'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap NamespaceClash SuperclassClash TracingStyleMap'
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CommentStyleMask' -> 16r101.
+			'DefineProtocol' -> 16r20.
+			'LowercaseIdentifiers' -> 16r400.
+			'MinimizeWrappers' -> 16r80.
+			'NoClassComment' -> 16r1.
+			'NoCompile' -> 16r40.
+			'NoFunctionTable' -> 16r4.
+			'NoSourceInterfaces' -> 16r200.
+			'NoTypeLib' -> 16r2.
+			'OverwriteClassComments' -> 16r100.
+			'RawMethodsOnly' -> 16r10.
+			'Trace' -> 16r8.
+			'TraceOnly' -> 16r48.
+			'Verbose' -> 16r800.
+			'WrapperStyleMask' -> 16r90
+		}!
 
 OS.COM.TypeInfoObject guid: (Core.GUID fromString: '{27440177-dfab-46d4-bf61-a8fada69a263}')!
 

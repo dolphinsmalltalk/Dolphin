@@ -83,7 +83,7 @@ OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.LockBytesAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -107,7 +107,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.ILockBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -123,9 +123,17 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #(#{OS.COM.STATSTG private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'STGFMT_CATALOG' -> 16r2.
+			'STGFMT_DIRECTORY' -> 16r1.
+			'STGFMT_DOCUMENT' -> 16r0.
+			'STGFMT_FILE' -> 16r3.
+			'STGMOVE_COPY' -> 16r1.
+			'STGMOVE_MOVE' -> 16r0.
+			'STGMOVE_SHALLOWCOPY' -> 16r2
+		}!
 
 "Loose Methods"!
 
@@ -156,24 +164,24 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 	| hr grfMode |
 	hr := super Stat: pstatstg grfStatFlag: grfStatFlag.
 	hr < 0 ifTrue: [^hr].
-	(grfStatFlag allMask: StorageConstants.STATFLAG_NONAME)
+	(grfStatFlag allMask: STATSTG.STATFLAG_NONAME)
 		ifFalse: [pstatstg name: self name].
 	file
 		getTimes: pstatstg ctime
 		atime: pstatstg atime
 		mtime: pstatstg mtime.
 	"FileStreams require that files at least be readable."
-	grfMode := (file accessFlags allMask: Win32Constants.GENERIC_WRITE)
-				ifTrue: [StorageConstants.STGM_READWRITE]
-				ifFalse: [StorageConstants.STGM_READ].
-	file openFlags = Win32Constants.OPEN_EXISTING
-		ifFalse: [grfMode := grfMode bitOr: StorageConstants.STGM_CREATE].
+	grfMode := (file accessFlags allMask: KernelLibrary.GENERIC_WRITE)
+				ifTrue: [STATSTG.STGM_READWRITE]
+				ifFalse: [STATSTG.STGM_READ].
+	file openFlags = KernelLibrary.OPEN_EXISTING
+		ifFalse: [grfMode := grfMode bitOr: STATSTG.STGM_CREATE].
 	grfMode := grfMode
 				bitOr: (##({
-						StorageConstants.STGM_SHARE_EXCLUSIVE.
-						StorageConstants.STGM_SHARE_DENY_WRITE.
-						StorageConstants.STGM_SHARE_DENY_READ.
-						StorageConstants.STGM_SHARE_DENY_NONE
+						STATSTG.STGM_SHARE_EXCLUSIVE.
+						STATSTG.STGM_SHARE_DENY_WRITE.
+						STATSTG.STGM_SHARE_DENY_READ.
+						STATSTG.STGM_SHARE_DENY_NONE
 					}) at: file shareFlags + 1).
 	pstatstg grfMode: grfMode.
 	^hr! !
@@ -250,7 +258,7 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 	optional. The STG_E_INVALIDFUNCTION error is returned if the requested type of locking is
 	not supported."
 
-	^StorageConstants.STG_E_INVALIDFUNCTION!
+	^IStream.STG_E_INVALIDFUNCTION!
 
 queryInterface: anInterfaceClass 
 	"Answer a new interface which supports the specified interface protocol
@@ -308,20 +316,20 @@ Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 
 	| currentSize position |
 	currentSize := self size.
-	position := dwOrigin == StorageConstants.STREAM_SEEK_SET
+	position := dwOrigin == IStream.STREAM_SEEK_SET
 				ifTrue: [dlibMove]
 				ifFalse: 
-					[dwOrigin == StorageConstants.STREAM_SEEK_CUR
+					[dwOrigin == IStream.STREAM_SEEK_CUR
 						ifTrue: [self position + dlibMove]
 						ifFalse: 
-							[dwOrigin == StorageConstants.STREAM_SEEK_END
+							[dwOrigin == IStream.STREAM_SEEK_END
 								ifTrue: [currentSize - dlibMove]
 								ifFalse: [-1]]].
 	"It is not an error to seek beyond the current end of stream. This is expected to extend the stream."
 	(position < 0 or: [position > currentSize and: [(self SetSize: position) < 0]])
 		ifTrue: 
 			[plibNewPosition bytes isNull ifFalse: [plibNewPosition value: 0].
-			^StorageConstants.STG_E_INVALIDFUNCTION].
+			^IStream.STG_E_INVALIDFUNCTION].
 	self position: position.
 	plibNewPosition bytes isNull ifFalse: [plibNewPosition value: position].
 	^S_OK!
@@ -339,7 +347,7 @@ SetSize: libNewSize
 	The seek pointer is not affected by the change in stream size.
 	"
 
-	^StorageConstants.STG_E_INVALIDFUNCTION
+	^IStream.STG_E_INVALIDFUNCTION
 
 !
 
@@ -355,7 +363,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	pstatstg class init: pstatstg.
 	pstatstg
-		type: StorageConstants.STGTY_STREAM;
+		type: STATSTG.STGTY_STREAM;
 		cbSize: self size * self elementSize.
 	^S_OK!
 
@@ -370,7 +378,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	"Implementation Note: Locking is not supported."
 
-	^StorageConstants.STG_E_INVALIDFUNCTION!
+	^IStream.STG_E_INVALIDFUNCTION!
 
 Write: pv cb: cb pcbWritten: pcbWritten 
 	"Implement the IStream::Write() method.
@@ -702,7 +710,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 	| hr grfMode attr |
 	hr := super Stat: pstatstg grfStatFlag: grfStatFlag.
 	hr < 0 ifTrue: [^hr].
-	(grfStatFlag noMask: StorageConstants.STATFLAG_NONAME) ifTrue: [pstatstg name: self name].
+	(grfStatFlag noMask: STATSTG.STATFLAG_NONAME) ifTrue: [pstatstg name: self name].
 	attr := self name asPath extendedAttributes.
 	pstatstg
 		ctime: attr ftCreationTime;
@@ -711,7 +719,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 	"The STGM access mode and sharing flags are the same as the CRT flags"
 	grfMode := flags bitAnd: ##(AccessModeMask|ShareModeMask).
 	(self creationMode allMask: _O_CREAT)
-		ifTrue: [grfMode := grfMode bitOr: StorageConstants.STGM_CREATE].
+		ifTrue: [grfMode := grfMode bitOr: STATSTG.STGM_CREATE].
 	pstatstg grfMode: grfMode.
 	^hr! !
 

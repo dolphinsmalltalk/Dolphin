@@ -4,9 +4,12 @@ Core.Object
 	subclass: #'UI.CreateWindowFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
-	classConstants: { 'UseDefaultGeometry' -> (-16r80000000 @ -16r80000000) }!
+	classConstants: {
+			'CW_USEDEFAULT' -> -16r80000000.
+			'UseDefaultGeometry' -> (-16r80000000 @ -16r80000000)
+		}!
 
 UI.CreateWindowFunction guid: (Core.GUID fromString: '{4452c723-d081-4053-b0bf-7660d58cbf74}')!
 

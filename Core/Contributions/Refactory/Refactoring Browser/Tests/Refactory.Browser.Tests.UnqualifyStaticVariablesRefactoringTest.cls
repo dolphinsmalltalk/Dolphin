@@ -14,17 +14,6 @@ Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest comment: ''!
 
 !Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest methodsFor!
 
-refersToPoolConstantBindingFullyQualified
-	| refactoring refDataApp |
-	refDataApp := model classFor: RefactoryTestDataApp.
-	refactoring := UnqualifyStaticVariablesRefactoring
-				model: model
-				rewriteMethod: #refersToPoolConstantBindingFullyQualified
-				forClass: RefactoryTestDataApp.
-	self executeRefactoring: refactoring.
-	self assert: (refDataApp parseTreeFor: #refersToPoolConstantBindingFullyQualified)
-		equals: (self parseMethod: 'refersToImportedPoolConstantUnqualified ^OS.CRTConstants.EINVAL')!
-
 testRefersToClassBindingNotFound
 	| refactoring refDataApp source |
 	refDataApp := model classFor: RefactoryTestDataApp.
@@ -211,7 +200,7 @@ testRefersToImportedPoolConstantFullyQualified
 				forClass: refDataApp.
 	self executeRefactoring: refactoring.
 	self assert: (refDataApp parseTreeFor: #refersToImportedPoolConstantFullyQualified)
-		equals: (self parseMethod: 'refersToImportedPoolConstantFullyQualified ^EINVAL')!
+		equals: (self parseMethod: 'refersToImportedPoolConstantFullyQualified ^CErrAssignConstant')!
 
 testRefersToImportedPoolConstantUnqualified
 	| refactoring refDataApp |
@@ -224,17 +213,26 @@ testRefersToImportedPoolConstantUnqualified
 	self assert: model changes isEmpty!
 
 testRefersToOwnClassVariable
-	| refactoring refDataApp |
-	refDataApp := model classFor: RefactoryTestDataApp.
+	| refactoring |
 	refactoring := UnqualifyStaticVariablesRefactoring
 				model: model
 				rewriteMethod: #refersToOwnClassVariable
 				forClass: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: model changes isEmpty! !
+	self assert: model changes isEmpty!
+
+testRefersToPoolConstantBindingFullyQualified
+	| refactoring refDataApp |
+	refDataApp := model classFor: RefactoryTestDataApp.
+	refactoring := UnqualifyStaticVariablesRefactoring
+				model: model
+				rewriteMethod: #refersToPoolConstantBindingFullyQualified
+				forClass: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self assert: (refDataApp parseTreeFor: #refersToPoolConstantBindingFullyQualified)
+		equals: (self parseMethod: 'refersToPoolConstantBindingFullyQualified ^#{_.OpcodePool.BlockCopy}')! !
 
 !Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest categoriesForMethods!
-refersToPoolConstantBindingFullyQualified!public! !
 testRefersToClassBindingNotFound!public! !
 testRefersToClassConstantFullyQualified!public! !
 testRefersToClassConstantMinimallyQualified!public! !
@@ -251,5 +249,6 @@ testRefersToDolphinTestPartiallyQualifiedBindingMethodNamespace!public! !
 testRefersToImportedPoolConstantFullyQualified!public! !
 testRefersToImportedPoolConstantUnqualified!public! !
 testRefersToOwnClassVariable!public! !
+testRefersToPoolConstantBindingFullyQualified!public! !
 !
 

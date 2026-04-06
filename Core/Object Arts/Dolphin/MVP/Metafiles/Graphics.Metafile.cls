@@ -111,7 +111,7 @@ play: operation on: aCanvas at: originPoint extent: sizePoint
 	or false to stop after the current record."
 
 	| callback answer lpRect |
-	callback := External.Callback block: 
+	callback := Callback block: 
 					[:hDC :lpHTable :lpEMFR :nObj :lpData |
 					| handles emfr |
 					handles := HandleArray fromAddress: lpHTable length: nObj.
@@ -120,7 +120,7 @@ play: operation on: aCanvas at: originPoint extent: sizePoint
 						value: (Canvas withNonOwnedDC: hDC)
 						value: emfr
 						value: handles]
-				descriptor: ##(External.FunctionDescriptor returnType: 'int32'
+				descriptor: ##(FunctionDescriptor returnType: 'int32'
 						argumentTypes: 'handle lpvoid lpvoid int32 lpvoid').
 	lpRect := RECTL origin: originPoint extent: sizePoint.
 	answer := Gdi32

@@ -56,7 +56,7 @@ size
 	^super size - offset!
 
 translationMode
-	^CRTConstants._O_U8TEXT!
+	^_O_U8TEXT!
 
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 

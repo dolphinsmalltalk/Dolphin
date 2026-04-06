@@ -343,7 +343,7 @@ testSharing
 	self
 		should: [self streamClass read: tempFileName type: #text]
 		raise: OS.Win32Error
-		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_SHARING_VIOLATION].
+		matching: [:ex | ex statusCode = OS.Win32Error.ERROR_SHARING_VIOLATION].
 	"But we should be able to open with read/write sharing - the mode specifies that we are allowed to share with others that have opened the file for reading or writing"
 	read := self streamClass
 				read: tempFileName

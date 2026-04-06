@@ -36,8 +36,6 @@ package setClassNames: #(
 	#{OS.SOCKADDR_IN6}
 	#{OS.SOCKADDR_STORAGE}
 	#{OS.TIMEVAL}
-	#{OS.WinSocketConstants}
-	#{OS.WinSocketErrors}
 	#{OS.WS2_32Library}
 	#{OS.WSADATA}
 	#{OS.WSAPROTOCOL_INFOW}
@@ -68,9 +66,148 @@ Kernel.Namespace
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-Kernel.SharedPool
-	subclass: #'OS.WinSocketConstants'
+Core.Object
+	subclass: #'Net.InternetAddress'
+	instanceVariableNames: 'host ipAddress'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'MaxHostName' -> 16r100 }!
+
+Core.Object
+	subclass: #'Net.SocketAbstract'
+	instanceVariableNames: 'port descriptor'
+	classVariableNames: ''
+	imports: #(#{OS.WS2_32Library private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+OS.Win32Error
+	subclass: #'Net.SocketError'
 	instanceVariableNames: ''
+	classVariableNames: 'ErrorClasses'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'WSA_E_CANCELLED' -> 16r277F.
+			'WSA_E_NO_MORE' -> 16r277E.
+			'WSAEACCES' -> 16r271D.
+			'WSAEADDRINUSE' -> 16r2740.
+			'WSAEADDRNOTAVAIL' -> 16r2741.
+			'WSAEAFNOSUPPORT' -> 16r273F.
+			'WSAEALREADY' -> 16r2735.
+			'WSAEBADF' -> 16r2719.
+			'WSAECANCELLED' -> 16r2777.
+			'WSAECONNABORTED' -> 16r2745.
+			'WSAECONNREFUSED' -> 16r274D.
+			'WSAECONNRESET' -> 16r2746.
+			'WSAEDESTADDRREQ' -> 16r2737.
+			'WSAEDISCON' -> 16r2775.
+			'WSAEDQUOT' -> 16r2755.
+			'WSAEFAULT' -> 16r271E.
+			'WSAEHOSTDOWN' -> 16r2750.
+			'WSAEHOSTUNREACH' -> 16r2751.
+			'WSAEINPROGRESS' -> 16r2734.
+			'WSAEINTR' -> 16r2714.
+			'WSAEINVAL' -> 16r2726.
+			'WSAEINVALIDPROCTABLE' -> 16r2778.
+			'WSAEINVALIDPROVIDER' -> 16r2779.
+			'WSAEISCONN' -> 16r2748.
+			'WSAELOOP' -> 16r274E.
+			'WSAEMFILE' -> 16r2728.
+			'WSAEMSGSIZE' -> 16r2738.
+			'WSAENAMETOOLONG' -> 16r274F.
+			'WSAENETDOWN' -> 16r2742.
+			'WSAENETRESET' -> 16r2744.
+			'WSAENETUNREACH' -> 16r2743.
+			'WSAENOBUFS' -> 16r2747.
+			'WSAENOMORE' -> 16r2776.
+			'WSAENOPROTOOPT' -> 16r273A.
+			'WSAENOTCONN' -> 16r2749.
+			'WSAENOTEMPTY' -> 16r2752.
+			'WSAENOTSOCK' -> 16r2736.
+			'WSAEOPNOTSUPP' -> 16r273D.
+			'WSAEPFNOSUPPORT' -> 16r273E.
+			'WSAEPROCLIM' -> 16r2753.
+			'WSAEPROTONOSUPPORT' -> 16r273B.
+			'WSAEPROTOTYPE' -> 16r2739.
+			'WSAEPROVIDERFAILEDINIT' -> 16r277A.
+			'WSAEREFUSED' -> 16r2780.
+			'WSAEREMOTE' -> 16r2757.
+			'WSAESHUTDOWN' -> 16r274A.
+			'WSAESOCKTNOSUPPORT' -> 16r273C.
+			'WSAESTALE' -> 16r2756.
+			'WSAETIMEDOUT' -> 16r274C.
+			'WSAETOOMANYREFS' -> 16r274B.
+			'WSAEUSERS' -> 16r2754.
+			'WSAEWOULDBLOCK' -> 16r2733.
+			'WSAHOST_NOT_FOUND' -> 16r2AF9.
+			'WSANO_DATA' -> 16r2AFC.
+			'WSANO_RECOVERY' -> 16r2AFB.
+			'WSANOTINITIALISED' -> 16r276D.
+			'WSASERVICE_NOT_FOUND' -> 16r277C.
+			'WSASYSCALLFAILURE' -> 16r277B.
+			'WSASYSNOTREADY' -> 16r276B.
+			'WSATRY_AGAIN' -> 16r2AFA.
+			'WSATYPE_NOT_FOUND' -> 16r277D.
+			'WSAVERNOTSUPPORTED' -> 16r276C
+		}!
+
+Net.SocketError
+	subclass: #'Net.SocketClosed'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Net.SocketError
+	subclass: #'Net.SocketWaitCancelled'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.IPHlpApiLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'ICMP4_DST_UNREACH' -> 16r3.
+			'ICMP4_ECHO_REPLY' -> 16r0.
+			'ICMP4_ECHO_REQUEST' -> 16r8.
+			'ICMP4_MASK_REPLY' -> 16r12.
+			'ICMP4_MASK_REQUEST' -> 16r11.
+			'ICMP4_PARAM_PROB' -> 16rC.
+			'ICMP4_REDIRECT' -> 16r5.
+			'ICMP4_ROUTER_ADVERT' -> 16r9.
+			'ICMP4_ROUTER_SOLICIT' -> 16rA.
+			'ICMP4_SOURCE_QUENCH' -> 16r4.
+			'ICMP4_TIME_EXCEEDED' -> 16rB.
+			'ICMP4_TIMESTAMP_REPLY' -> 16rE.
+			'ICMP4_TIMESTAMP_REQUEST' -> 16rD.
+			'ICMP6_DST_UNREACH' -> 16r1.
+			'ICMP6_ECHO_REPLY' -> 16r81.
+			'ICMP6_ECHO_REQUEST' -> 16r80.
+			'ICMP6_MEMBERSHIP_QUERY' -> 16r82.
+			'ICMP6_MEMBERSHIP_REDUCTION' -> 16r84.
+			'ICMP6_MEMBERSHIP_REPORT' -> 16r83.
+			'ICMP6_PACKET_TOO_BIG' -> 16r2.
+			'ICMP6_PARAM_PROB' -> 16r4.
+			'ICMP6_TIME_EXCEEDED' -> 16r3.
+			'ND_NEIGHBOR_ADVERT' -> 16r88.
+			'ND_NEIGHBOR_SOLICIT' -> 16r87.
+			'ND_REDIRECT' -> 16r89.
+			'ND_ROUTER_ADVERT' -> 16r86.
+			'ND_ROUTER_SOLICIT' -> 16r85
+		}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.WS2_32Library'
+	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -187,137 +324,8 @@ Kernel.SharedPool
 			'SOCK_SEQPACKET' -> 16r5.
 			'SOCK_STREAM' -> 16r1.
 			'SOCKET_ERROR' -> -16r1.
-			'SOL_SOCKET' -> 16rFFFF.
-			'WSADESCRIPTION_LEN' -> 16r100.
-			'WSASYS_STATUS_LEN' -> 16r80
+			'SOL_SOCKET' -> 16rFFFF
 		}!
-
-Kernel.SharedPool
-	subclass: #'OS.WinSocketErrors'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'WSA_E_CANCELLED' -> 16r277F.
-			'WSA_E_NO_MORE' -> 16r277E.
-			'WSAEACCES' -> 16r271D.
-			'WSAEADDRINUSE' -> 16r2740.
-			'WSAEADDRNOTAVAIL' -> 16r2741.
-			'WSAEAFNOSUPPORT' -> 16r273F.
-			'WSAEALREADY' -> 16r2735.
-			'WSAEBADF' -> 16r2719.
-			'WSAECANCELLED' -> 16r2777.
-			'WSAECONNABORTED' -> 16r2745.
-			'WSAECONNREFUSED' -> 16r274D.
-			'WSAECONNRESET' -> 16r2746.
-			'WSAEDESTADDRREQ' -> 16r2737.
-			'WSAEDISCON' -> 16r2775.
-			'WSAEDQUOT' -> 16r2755.
-			'WSAEFAULT' -> 16r271E.
-			'WSAEHOSTDOWN' -> 16r2750.
-			'WSAEHOSTUNREACH' -> 16r2751.
-			'WSAEINPROGRESS' -> 16r2734.
-			'WSAEINTR' -> 16r2714.
-			'WSAEINVAL' -> 16r2726.
-			'WSAEINVALIDPROCTABLE' -> 16r2778.
-			'WSAEINVALIDPROVIDER' -> 16r2779.
-			'WSAEISCONN' -> 16r2748.
-			'WSAELOOP' -> 16r274E.
-			'WSAEMFILE' -> 16r2728.
-			'WSAEMSGSIZE' -> 16r2738.
-			'WSAENAMETOOLONG' -> 16r274F.
-			'WSAENETDOWN' -> 16r2742.
-			'WSAENETRESET' -> 16r2744.
-			'WSAENETUNREACH' -> 16r2743.
-			'WSAENOBUFS' -> 16r2747.
-			'WSAENOMORE' -> 16r2776.
-			'WSAENOPROTOOPT' -> 16r273A.
-			'WSAENOTCONN' -> 16r2749.
-			'WSAENOTEMPTY' -> 16r2752.
-			'WSAENOTSOCK' -> 16r2736.
-			'WSAEOPNOTSUPP' -> 16r273D.
-			'WSAEPFNOSUPPORT' -> 16r273E.
-			'WSAEPROCLIM' -> 16r2753.
-			'WSAEPROTONOSUPPORT' -> 16r273B.
-			'WSAEPROTOTYPE' -> 16r2739.
-			'WSAEPROVIDERFAILEDINIT' -> 16r277A.
-			'WSAEREFUSED' -> 16r2780.
-			'WSAEREMOTE' -> 16r2757.
-			'WSAESHUTDOWN' -> 16r274A.
-			'WSAESOCKTNOSUPPORT' -> 16r273C.
-			'WSAESTALE' -> 16r2756.
-			'WSAETIMEDOUT' -> 16r274C.
-			'WSAETOOMANYREFS' -> 16r274B.
-			'WSAEUSERS' -> 16r2754.
-			'WSAEWOULDBLOCK' -> 16r2733.
-			'WSAHOST_NOT_FOUND' -> 16r2AF9.
-			'WSANO_DATA' -> 16r2AFC.
-			'WSANO_RECOVERY' -> 16r2AFB.
-			'WSANOTINITIALISED' -> 16r276D.
-			'WSASERVICE_NOT_FOUND' -> 16r277C.
-			'WSASYSCALLFAILURE' -> 16r277B.
-			'WSASYSNOTREADY' -> 16r276B.
-			'WSATRY_AGAIN' -> 16r2AFA.
-			'WSATYPE_NOT_FOUND' -> 16r277D.
-			'WSAVERNOTSUPPORTED' -> 16r276C
-		}!
-
-Core.Object
-	subclass: #'Net.InternetAddress'
-	instanceVariableNames: 'host ipAddress'
-	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
-	classInstanceVariableNames: ''
-	classConstants: { 'MaxHostName' -> 16r100 }!
-
-Core.Object
-	subclass: #'Net.SocketAbstract'
-	instanceVariableNames: 'port descriptor'
-	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.Win32Error
-	subclass: #'Net.SocketError'
-	instanceVariableNames: ''
-	classVariableNames: 'ErrorClasses'
-	imports: #(#{OS.WinSocketConstants} #{OS.WinSocketErrors})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Net.SocketError
-	subclass: #'Net.SocketClosed'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Net.SocketError
-	subclass: #'Net.SocketWaitCancelled'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.IPHlpApiLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.WS2_32Library'
-	instanceVariableNames: 'wsaData'
-	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 Net.SocketAbstract
 	subclass: #'Net.ServerSocket'
@@ -339,7 +347,7 @@ External.Structure
 	subclass: #'OS.AbstractIN_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.WS2_32Library})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -402,7 +410,7 @@ External.Structure
 	subclass: #'OS.SOCKADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
+	imports: #(#{OS.WS2_32Library})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_sa_data' -> 16r2.
@@ -432,7 +440,9 @@ External.Structure
 			'_OffsetOf_szSystemStatus' -> 16r105.
 			'_OffsetOf_wHighVersion' -> 16r2.
 			'_OffsetOf_wVersion' -> 16r0.
-			'_WSADATA_Size' -> 16r190
+			'_WSADATA_Size' -> 16r190.
+			'WSADESCRIPTION_LEN' -> 16r100.
+			'WSASYS_STATUS_LEN' -> 16r80
 		}!
 
 External.Structure
@@ -506,7 +516,7 @@ External.FinalizableStructure
 	subclass: #'OS.ADDRINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
+	imports: #(#{OS.WS2_32Library})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_ADDRINFOW_Size' -> 16r20.

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Core.Path'
 	instanceVariableNames: 'path'
 	classVariableNames: 'SeparatorString'
-	imports: #(#{OS.KernelLibrary private} #{OS.Win32Error private} #{OS private} #{OS.PathCchLibrary})
+	imports: #(#{OS.PathCchLibrary private} #{OS.KernelLibrary private} #{OS.Win32Error private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DriveSeparator' -> $:.

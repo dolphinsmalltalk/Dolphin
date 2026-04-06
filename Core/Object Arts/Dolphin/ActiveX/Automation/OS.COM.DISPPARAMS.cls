@@ -4,14 +4,19 @@ External.Structure
 	subclass: #'OS.COM.DISPPARAMS'
 	instanceVariableNames: 'vargs dispids'
 	classVariableNames: 'ZeroArgs'
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_DISPPARAMS_Size' -> 16r10.
 			'_OffsetOf_cArgs' -> 16r8.
 			'_OffsetOf_cNamedArgs' -> 16rC.
 			'_OffsetOf_rgdispidNamedArgs' -> 16r4.
-			'_OffsetOf_rgvarg' -> 16r0
+			'_OffsetOf_rgvarg' -> 16r0.
+			'DISPATCH_METHOD' -> 16r1.
+			'DISPATCH_PROPERTYGET' -> 16r2.
+			'DISPATCH_PROPERTYPUT' -> 16r4.
+			'DISPATCH_PROPERTYPUTREF' -> 16r8.
+			'DISPID_PROPERTYPUT' -> -16r3
 		}!
 
 OS.COM.DISPPARAMS guid: (Core.GUID fromString: '{c06f3b6f-0868-11d3-93af-00a024ca708a}')!

@@ -4,7 +4,7 @@ OS.COM.TypeInfoObject
 	subclass: #'OS.COM.TypeLibraryAnalyzer'
 	instanceVariableNames: 'attributes namespaceName packageName _unused7 constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'StandardAliases TypeLibs'
-	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -110,7 +110,7 @@ clearCachedAnalyzers
 coclasses
 	"Answer a <collection> of all the coclasses (component objects) in the receiver."
 
-	^self selectTypeKind: TKIND_COCLASS!
+	^self selectTypeKind: ITypeInfo.TKIND_COCLASS!
 
 constantsPoolBinding
 	| customPoolName poolBinding |
@@ -132,7 +132,7 @@ customInterfaces
 	"Answer a <collection> of all the custom interfaces in the receiver.
 	These are vtbl only interfaces."
 
-	^self selectTypes: [:t | t typekind == TKIND_INTERFACE and: [t isDual not]]!
+	^self selectTypes: [:t | t typekind == ITypeInfo.TKIND_INTERFACE and: [t isDual not]]!
 
 defaultGenerationFlags
 	"Answer a set of default AXTypeGenerationFlags to control code generation by the receiver.
@@ -155,7 +155,7 @@ dispinterfaces
 	"Answer a <collection> of all the interfaces in the receiver 
 	which can only be late bound (i.e. non-dual IDispatch)"
 
-	^self selectTypeKind: TKIND_DISPATCH!
+	^self selectTypeKind: ITypeInfo.TKIND_DISPATCH!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -206,41 +206,7 @@ documentationAt: index ifAbsent: exceptionHandler
 	The method may raise an HRESULTError, e.g. if the index is out of range. Refer
 	to the SDK help for further possible error conditions."
 
-	| bstrName bstrDocString dwHelpContext bstrHelpFile answer hr |
-	bstrName := BSTR new.
-	bstrDocString := BSTR new.
-	bstrHelpFile := BSTR new.
-	dwHelpContext := UInt32Bytes new.
-	hr := self tlbInterface
-				GetDocumentation: index - 1
-				pBstrName: bstrName
-				pBstrDocString: bstrDocString
-				pdwHelpContext: dwHelpContext
-				pBstrHelpFile: bstrHelpFile.
-	hr < 0
-		ifTrue: 
-			[hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
-			^HRESULTError signalWith: hr].
-	answer := TypeLibDocumentation new
-				name: bstrName asString
-				helpstring: bstrDocString asString
-				helpcontext: dwHelpContext value
-				helpfile: bstrHelpFile asString trimNulls.
-	bstrName free.
-	bstrDocString free.
-	bstrHelpFile free.
-	^answer
-
-	"
-tlb := AXTypeLibraryAnalyzer open: 'c:\msoffice\access\msaccess.tlb'
-tlb documentation
-tlb typeInfoCount
-tlb names
-tlb dispinterfaces first 
-tlb 
-tlb documentationAt: 1
-tlb := nil
-"!
+	^self tlbInterface getDocumentation: index - 1 ifAbsent: exceptionHandler!
 
 dualInterfaces
 	"Answer a <collection> of all the dispatch interfaces in the receiver 
@@ -252,7 +218,7 @@ enums
 	"Answer a <collection> of all the enumerated type 
 	members of the receiver."
 
-	^self selectTypeKind: TKIND_ENUM!
+	^self selectTypeKind: ITypeInfo.TKIND_ENUM!
 
 find: memberName count: numToFind
 	"Find up to the <integer> argument, numToFind, member id -> ITypeInfo pairs for the
@@ -319,7 +285,7 @@ interfaces
 	errors such as IUnknown derived interfaces being marked as dual
 	(an example is the IRecFields interface in the ADO 2.5 library)."
 
-	^self selectTypes: [:t | | tk | tk := t typekind. tk == TKIND_INTERFACE or: [tk == TKIND_DISPATCH]]!
+	^self selectTypes: [:t | | tk | tk := t typekind. tk == ITypeInfo.TKIND_INTERFACE or: [tk == ITypeInfo.TKIND_DISPATCH]]!
 
 isName: aString 
 	"Answer whether specified string is the name of a member in the receiver."
@@ -346,7 +312,7 @@ modules
 	"Answer a <sequencedReadableCollection> of all the 
 	coclasses (component objects) in the receiver."
 
-	^self selectTypeKind: TKIND_MODULE!
+	^self selectTypeKind: ITypeInfo.TKIND_MODULE!
 
 namedStructs
 	"Answer a <sequencedReadableCollection> of all the named structs (i.e. excluding anonymous
@@ -456,7 +422,7 @@ structs
 	"Answer a <sequencedReadableCollection> of all the 
 	records (structures) in the receiver."
 
-	^self selectTypeKind: TKIND_RECORD!
+	^self selectTypeKind: ITypeInfo.TKIND_RECORD!
 
 suggestBindingForType: userType
 	"Private - Answer an <Association> which is the suggested or actual binding between
@@ -547,7 +513,7 @@ typedefs
 	"Answer a <sequencedReadableCollection> of all the 
 	aliases (typedefs) in the receiver."
 
-	^self selectTypeKind: TKIND_ALIAS!
+	^self selectTypeKind: ITypeInfo.TKIND_ALIAS!
 
 typeInfoAt: index
 	"Private - Answer an <ITypeInfo> for the member of the receiver at the specified
@@ -578,7 +544,7 @@ uninitialize
 unions
 	"Answer a <sequencedReadableCollection> of all the unions described in the receiver."
 
-	^self selectTypeKind: TKIND_UNION!
+	^self selectTypeKind: ITypeInfo.TKIND_UNION!
 
 unregister
 	self attributes unregister!
@@ -604,7 +570,7 @@ vtblInterfaces
 	"Answer a <collection> of all the early-bound, vtable based, interfaces 
 	described by the receiver. This will include dual interfaces."
 
-	^self selectTypes: [:t | t typekind == TKIND_INTERFACE]! !
+	^self selectTypes: [:t | t typekind == ITypeInfo.TKIND_INTERFACE]! !
 
 !OS.COM.TypeLibraryAnalyzer categoriesForMethods!
 =!comparing!public! !

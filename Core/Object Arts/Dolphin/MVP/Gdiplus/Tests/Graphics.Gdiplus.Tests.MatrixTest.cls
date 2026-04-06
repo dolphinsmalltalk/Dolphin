@@ -68,7 +68,6 @@ testComparing
 	model2 free!
 
 testDisplayString
-	| expr |
 	model := Matrix identity.
 	self assert: model displayString equals: '(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)'.
 	model

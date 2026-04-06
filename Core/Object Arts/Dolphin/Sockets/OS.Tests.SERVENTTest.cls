@@ -23,7 +23,7 @@ testFromIntegerInvalid
 	self
 		should: [SERVENT fromInteger: SmallInteger maximum]
 		raise: Net.SocketError
-		matching: [:ex | ex statusCode = WinSocketErrors.WSANO_DATA]!
+		matching: [:ex | ex statusCode = Net.SocketError.WSANO_DATA]!
 
 testFromString
 	| http |
@@ -34,7 +34,7 @@ testFromStringInvalid
 	self
 		should: [SERVENT fromString: GUID newUnique asString]
 		raise: Net.SocketError
-		matching: [:ex | ex statusCode = WinSocketErrors.WSANO_DATA]! !
+		matching: [:ex | ex statusCode = Net.SocketError.WSANO_DATA]! !
 
 !OS.Tests.SERVENTTest categoriesForMethods!
 testFromInteger!public! !

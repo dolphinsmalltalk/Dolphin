@@ -158,10 +158,10 @@ intPtrAtOffset: anInteger
 	<primitive: 186>
 	| answer |
 	answer := 0.
-	VMConstants.IntPtrSize - 1 to: 0
+	VMLibrary.IntPtrSize - 1 to: 0
 		by: -1
 		do: [:i | answer := (answer bitShift: 8) + (self uint8AtOffset: anInteger + i)].
-	answer byteSize > VMConstants.IntPtrSize ifTrue: [answer := answer bitInvert + 1].
+	answer byteSize > VMLibrary.IntPtrSize ifTrue: [answer := answer bitInvert + 1].
 	^answer!
 
 intPtrAtOffset: anInteger put: anObject
@@ -302,7 +302,7 @@ uintPtrAtOffset: anInteger
 	<primitive: 184>
 	| answer |
 	answer := 0.
-	VMConstants.IntPtrSize - 1 to: 0
+	VMLibrary.IntPtrSize - 1 to: 0
 		by: -1
 		do: [:i | answer := (answer bitShift: 8) + (self uint8AtOffset: anInteger + i)].
 	^answer!
@@ -376,7 +376,7 @@ alignment
 	"Answer the natural alignment for instances of the receiver when 
 	embedded in arrays or other structures."
 
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 fromAddress: anAddress
 	"Answer a new instance of the receiver with contents *copied* from

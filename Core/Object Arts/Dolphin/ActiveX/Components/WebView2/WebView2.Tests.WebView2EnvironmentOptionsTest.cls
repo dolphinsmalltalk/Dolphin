@@ -59,7 +59,7 @@ testChannelSearchKind
 	self
 		should: [interface channelSearchKind: -1]
 		raise: HRESULTError
-		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_INVALID_PARAMETER]!
+		matching: [:ex | ex statusCode = ERROR_INVALID_PARAMETER]!
 
 testCustomSchemeRegistrations
 	| subject interface schemes scheme2 scheme1 unknowns |
@@ -171,7 +171,7 @@ testReleaseChannels
 	self
 		should: [interface releaseChannels: -1]
 		raise: HRESULTError
-		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_INVALID_PARAMETER]!
+		matching: [:ex | ex statusCode = ERROR_INVALID_PARAMETER]!
 
 testScrollbarStyle
 	| subject interface |
@@ -185,7 +185,7 @@ testScrollbarStyle
 	self
 		should: [interface scrollBarStyle: -1]
 		raise: HRESULTError
-		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_INVALID_PARAMETER]!
+		matching: [:ex | ex statusCode = ERROR_INVALID_PARAMETER]!
 
 testStlConvertFromVersion0
 	| options |

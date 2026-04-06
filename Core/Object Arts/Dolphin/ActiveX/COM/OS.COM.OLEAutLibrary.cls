@@ -6,7 +6,21 @@ External.WindowsSystemLibrary
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DISP_E_ARRAYISLOCKED' -> -16r7FFDFFF3.
+			'DISP_E_BADINDEX' -> -16r7FFDFFF5.
+			'DISP_E_BADVARTYPE' -> -16r7FFDFFF8.
+			'DISP_E_EXCEPTION' -> -16r7FFDFFF7.
+			'DISP_E_MEMBERNOTFOUND' -> -16r7FFDFFFD.
+			'DISP_E_PARAMNOTFOUND' -> -16r7FFDFFFC.
+			'DISP_E_TYPEMISMATCH' -> -16r7FFDFFFB.
+			'DISP_E_UNKNOWNNAME' -> -16r7FFDFFFA.
+			'VARIANT_FALSE' -> 16r0.
+			'VARIANT_LOCALBOOL' -> 16r10.
+			'VARIANT_NOUSEROVERRIDE' -> 16r4.
+			'VARIANT_NOVALUEPROP' -> 16r1.
+			'VARIANT_TRUE' -> -16r1
+		}!
 
 OS.COM.OLEAutLibrary guid: (Core.GUID fromString: '{6467404a-3a82-101b-8181-00aa003743d3}')!
 

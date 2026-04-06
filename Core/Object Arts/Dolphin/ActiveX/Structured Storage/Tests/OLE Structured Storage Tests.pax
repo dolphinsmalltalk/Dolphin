@@ -31,7 +31,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.COM.Tests.IStreamTest'
 	instanceVariableNames: 'temp'
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #(#{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -91,8 +91,8 @@ verifyIStreamStat
 	istream := subject queryInterface: IStream.
 	stat := istream stat.
 	self assert: stat grfMode
-		equals: StorageConstants.STGM_CREATE | StorageConstants.STGM_READWRITE
-				| StorageConstants.STGM_SHARE_DENY_WRITE.
+		equals: STATSTG.STGM_CREATE | STATSTG.STGM_READWRITE
+				| STATSTG.STGM_SHARE_DENY_WRITE.
 	istream free.
 	stat free.
 	subject close.
@@ -103,7 +103,7 @@ verifyIStreamStat
 	self assert: stat name asPath equals: tempFileName.
 	self assert: stat mtime equals: tempFileName lastWriteTime.
 	self assert: stat grfMode
-		equals: StorageConstants.STGM_READ | StorageConstants.STGM_SHARE_DENY_WRITE.
+		equals: STATSTG.STGM_READ | STATSTG.STGM_SHARE_DENY_WRITE.
 	self assert: stat isOLEStream.
 	self assert: stat grfLocksSupported equals: 0.
 	self assert: stat cbSize equals: self randomData1 size.
@@ -119,7 +119,7 @@ verifyIStreamStat
 	istream := subject queryInterface: IStream.
 	stat := istream stat.
 	self assert: stat grfMode
-		equals: StorageConstants.STGM_READWRITE | StorageConstants.STGM_SHARE_DENY_WRITE.
+		equals: STATSTG.STGM_READWRITE | STATSTG.STGM_SHARE_DENY_WRITE.
 	stat free.
 	istream free.
 	subject close! !

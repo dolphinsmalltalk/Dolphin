@@ -4,9 +4,43 @@ External.WindowsSystemLibrary
 	subclass: #'OS.ShellLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ShellConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'FOLDERID_Desktop' -> (GUID fromString: '{b4bfcc3a-db2c-424c-b029-7fe99a87c641}').
+			'FOLDERID_Documents' -> (GUID fromString: '{fdd39ad0-238f-46af-adb4-6c85480369c7}').
+			'FOLDERID_Downloads' -> (GUID fromString: '{374de290-123f-4565-9164-39c4925e467b}').
+			'FOLDERID_LocalAppData'
+				-> (GUID fromString: '{f1b32785-6fba-4fcf-9d55-7b8e7f157091}').
+			'FOLDERID_Pictures' -> (GUID fromString: '{33e28130-4e1e-4676-835a-98395c3bc3bb}').
+			'FOLDERID_ProgramFilesX86'
+				-> (GUID fromString: '{7c5a40ef-a0fb-4bfc-874a-c0f2e0b9fa8e}').
+			'FOLDERID_Windows' -> (GUID fromString: '{f38bf404-1d43-42f2-9305-67de0b28fc23}').
+			'KF_FLAG_DEFAULT' -> 16r0.
+			'SE_ERR_ACCESSDENIED' -> 16r5.
+			'SE_ERR_ASSOCINCOMPLETE' -> 16r1B.
+			'SE_ERR_DDEBUSY' -> 16r1E.
+			'SE_ERR_DDEFAIL' -> 16r1D.
+			'SE_ERR_DDETIMEOUT' -> 16r1C.
+			'SE_ERR_DLLNOTFOUND' -> 16r20.
+			'SE_ERR_FNF' -> 16r2.
+			'SE_ERR_NOASSOC' -> 16r1F.
+			'SE_ERR_OOM' -> 16r8.
+			'SE_ERR_PNF' -> 16r3.
+			'SE_ERR_SHARE' -> 16r1A.
+			'SEE_MASK_CLASSKEY' -> 16r3.
+			'SEE_MASK_CLASSNAME' -> 16r1.
+			'SEE_MASK_CONNECTNETDRV' -> 16r80.
+			'SEE_MASK_DOENVSUBST' -> 16r200.
+			'SEE_MASK_FLAG_DDEWAIT' -> 16r100.
+			'SEE_MASK_FLAG_NO_UI' -> 16r400.
+			'SEE_MASK_HOTKEY' -> 16r20.
+			'SEE_MASK_ICON' -> 16r10.
+			'SEE_MASK_IDLIST' -> 16r4.
+			'SEE_MASK_INVOKEIDLIST' -> 16rC.
+			'SEE_MASK_NOCLOSEPROCESS' -> 16r40.
+			'SEE_MASK_UNICODE' -> 16r10000
+		}!
 
 OS.ShellLibrary guid: (Core.GUID fromString: '{64674052-3a82-101b-8181-00aa003743d3}')!
 
@@ -119,7 +153,7 @@ getKnownFolderLocation: aGUID
 		hToken: nil
 		pszPath: ppszPath.
 	pszPath := Utf16String fromAddress: ppszPath.
-	OS.COM.Ole32 coTaskMemFree: ppszPath.
+	COM.Ole32 coTaskMemFree: ppszPath.
 	^pszPath!
 
 isUserAnAdmin
@@ -184,7 +218,7 @@ shellOpen: fileString directory: dirString parameters: paramString
 				lpFile: fileString
 				lpParameters: paramString
 				lpDirectory: dirString
-				nShowCmd: SW_SHOWNORMAL.
+				nShowCmd: UserLibrary.SW_SHOWNORMAL.
 	^hInst asInteger <= 32 ifTrue: [self systemError] ifFalse: [hInst]!
 
 shGetKnownFolderPath: frid dwFlags: dwFlags hToken: hToken pszPath: pszPath

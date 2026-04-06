@@ -246,7 +246,7 @@ testFirstDayOfWeek
 testGetCalendarInfoString
 	| subject |
 	subject := Locale named: 'ja-JP'.
-	self assert: (subject getCalendarInfoString: NlsConstants.CAL_SNAME) equals: '西暦 (日本語)'!
+	self assert: (subject getCalendarInfoString: WindowsLocale.CAL_SCALNAME) equals: '西暦 (日本語)'!
 
 testIndexOfMonth
 	| subject |

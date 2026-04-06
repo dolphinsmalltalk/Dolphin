@@ -4,7 +4,7 @@ UI.ContainerView
 	subclass: #'Tools.MenuComposerArena'
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

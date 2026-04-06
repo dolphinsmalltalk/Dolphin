@@ -342,7 +342,7 @@ initialize
 		executableName: '';
 		runtimeSessionManagerClass: self defaultSessionManagerClass.
 	flags := self class defaultOptions.
-	dpiAwarenessContext := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2!
+	dpiAwarenessContext := "DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2" -4!
 
 isToGo: aBoolean 
 	"Set whether the resulting executable is to be deployed standalone (that is without

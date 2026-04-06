@@ -13,7 +13,13 @@ OS.SizedStructure
 			'_OffsetOf_nPage' -> 16r10.
 			'_OffsetOf_nPos' -> 16r14.
 			'_OffsetOf_nTrackPos' -> 16r18.
-			'_SCROLLINFO_Size' -> 16r1C
+			'_SCROLLINFO_Size' -> 16r1C.
+			'SIF_ALL' -> 16r17.
+			'SIF_DISABLENOSCROLL' -> 16r8.
+			'SIF_PAGE' -> 16r2.
+			'SIF_POS' -> 16r4.
+			'SIF_RANGE' -> 16r1.
+			'SIF_TRACKPOS' -> 16r10
 		}!
 
 OS.SCROLLINFO guid: (Core.GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!

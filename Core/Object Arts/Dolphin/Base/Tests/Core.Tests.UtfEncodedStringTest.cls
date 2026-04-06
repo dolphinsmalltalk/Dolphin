@@ -496,7 +496,7 @@ testEncodedAtPutInvalidCodePoint
 	<mustNotConform: #symbol>
 	| subject invalid |
 	invalid := Character basicNew
-				setCode: (Character.Utf32Mask | OS.ICUConstants.UCHAR_MAX_VALUE) + 1;
+				setCode: (Character.Utf32Mask | OS.ICULibrary.UCHAR_MAX_VALUE) + 1;
 				yourself.
 	subject := self collectionClass new: 1.
 	self

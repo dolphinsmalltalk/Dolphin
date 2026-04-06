@@ -10,7 +10,11 @@ OS.SizedStructure
 			'_OffsetOf_dwFlags' -> 16r4.
 			'_OffsetOf_dwHoverTime' -> 16rC.
 			'_OffsetOf_hwndTrack' -> 16r8.
-			'_TRACKMOUSEEVENT_Size' -> 16r10
+			'_TRACKMOUSEEVENT_Size' -> 16r10.
+			'TME_CANCEL' -> -16r80000000.
+			'TME_HOVER' -> 16r1.
+			'TME_LEAVE' -> 16r2.
+			'TME_QUERY' -> 16r40000000
 		}!
 
 OS.TRACKMOUSEEVENT guid: (Core.GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!

@@ -51,7 +51,7 @@ package!
 SmalltalkToolShell subclass: #IdbShell
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 IdbShell subclass: #IdbToolShell

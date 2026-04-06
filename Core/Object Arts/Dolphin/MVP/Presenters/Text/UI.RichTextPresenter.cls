@@ -4,7 +4,7 @@ UI.TextPresenter
 	subclass: #'UI.RichTextPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -61,7 +61,7 @@ testMaximum
 	self
 		should: [CY new value: MaxValue + 0.0001s]
 		raise: HRESULTError
-		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)]!
+		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter2)]!
 
 testMinimum
 	| subject |
@@ -72,7 +72,7 @@ testMinimum
 	self
 		should: [CY new value: MinValue negated]
 		raise: HRESULTError
-		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)]!
+		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter2)]!
 
 testPrintString
 	{ MaxValue. 0s4. MinValue.  -0.5s4. 123.456s4 } do: 

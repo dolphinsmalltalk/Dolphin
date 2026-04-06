@@ -4,7 +4,7 @@ External.GenericExternalArray
 	subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationErrors} #{OS.COM.OleVariant private})
+	imports: #(#{OS.COM.OLEAutLibrary} #{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cbElements' -> 16r4.
@@ -13,7 +13,19 @@ External.GenericExternalArray
 			'_OffsetOf_fFeatures' -> 16r2.
 			'_OffsetOf_pvData' -> 16rC.
 			'_OffsetOf_rgsabound' -> 16r10.
-			'_SAFEARRAY_Size' -> 16r18
+			'_SAFEARRAY_Size' -> 16r18.
+			'FADF_AUTO' -> 16r1.
+			'FADF_BSTR' -> 16r100.
+			'FADF_DISPATCH' -> 16r400.
+			'FADF_EMBEDDED' -> 16r4.
+			'FADF_FIXEDSIZE' -> 16r10.
+			'FADF_HAVEIID' -> 16r40.
+			'FADF_HAVEVARTYPE' -> 16r80.
+			'FADF_RECORD' -> 16r20.
+			'FADF_RESERVED' -> 16rF0E8.
+			'FADF_STATIC' -> 16r2.
+			'FADF_UNKNOWN' -> 16r200.
+			'FADF_VARIANT' -> 16r800
 		}!
 
 OS.COM.SAFEARRAY guid: (Core.GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!

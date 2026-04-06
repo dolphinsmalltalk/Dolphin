@@ -251,7 +251,7 @@ gcd: anInteger
 			u := t].
 	[v isImmediate] whileFalse: 
 			[| uHat vHat a b c d q |
-			(uHat := u bitShift: (t := ##(VMConstants.SmallIntegerMax highBit) - u highBit)) isImmediate
+			(uHat := u bitShift: (t := ##(VMLibrary.SmallIntegerMax highBit) - u highBit)) isImmediate
 				ifFalse: 
 					[t := t - 1.
 					uHat := uHat bitShift: -1].
@@ -460,7 +460,7 @@ quotientFromInteger: anInteger
 
 	"Implementation Note: We should normally only be here when attempting to divide a SmallInteger by a LargeInteger, the result of which, by the definition must be 0|-1, since ANY normalized LargeInteger must be greater in absolute magnitude than any SmallInteger, EXCEPT the special case of the largest negative SmallInteger the absolute value of which is a LargeInteger."
 
-	^(anInteger == VMConstants.SmallIntegerMin and: [self = ##(VMConstants.SmallIntegerMin negated)])
+	^(anInteger == VMLibrary.SmallIntegerMin and: [self = ##(VMLibrary.SmallIntegerMin negated)])
 		ifTrue: [-1]
 		ifFalse: [0]!
 
@@ -510,14 +510,14 @@ uint32AtOffset: anInteger put: anObject
 	that this will fail unless the LargeInteger has first been marked as mutable."
 
 	<primitive: 121>
-	_failureCode == _PrimitiveFailureCode.InvalidParameter2
+	_failureCode == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: [^self uint32AtOffset: anInteger put: anObject asInteger].
-	_failureCode == _PrimitiveFailureCode.OutOfBounds
+	_failureCode == VMLibrary.PrimitiveOutOfBounds
 		ifTrue: 
 			[^self isImmutable
 				ifTrue: [ConstWriteError signalWith: self]
 				ifFalse: [self errorSubscriptBounds: anInteger]].
-	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
+	_failureCode == VMLibrary.PrimitiveInvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
 	^self primitiveFailed: _failureCode! !
 
 !Core.LargeInteger categoriesForMethods!

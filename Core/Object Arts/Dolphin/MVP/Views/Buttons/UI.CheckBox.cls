@@ -6,7 +6,7 @@ UI.CheckButton
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BS_3STATE' -> 16r5. 'BS_AUTO3STATE' -> 16r6. 'BS_AUTOCHECKBOX' -> 16r3 }!
 
 UI.CheckBox guid: (Core.GUID fromString: '{87b4c734-026e-11d3-9fd7-00a0cc3e4a32}')!
 

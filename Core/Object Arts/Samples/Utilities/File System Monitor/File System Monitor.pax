@@ -88,7 +88,7 @@ UI.RuntimeSessionManager
 !OS.FileSystemChangeReader class methodsFor!
 
 icon
-	^OS.Examples.FileSystemMonitor icon! !
+	^Examples.FileSystemMonitor icon! !
 
 !OS.FileSystemChangeReader class categoriesForMethods!
 icon!initializing!public! !

@@ -4,7 +4,7 @@ External.FinalizableStructure
 	subclass: #'OS.ADDRINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
+	imports: #(#{OS.WS2_32Library})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_ADDRINFOW_Size' -> 16r20.
@@ -232,7 +232,7 @@ host: aString
 		(self host: '')
 	"
 
-	^Ws2_32 getAddrInfo: aString family: WinSocketConstants.AF_INET!
+	^Ws2_32 getAddrInfo: aString family: AF_INET!
 
 localhost
 	"Answer a new instance of the receiver describing the local host."

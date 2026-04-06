@@ -171,7 +171,7 @@ nextFLOAT
 
 	"N.B. This will fail if the receiver is not a byte stream."
 
-	^(self basicNext: VMConstants.FloatSize) floatAtOffset: 0!
+	^(self basicNext: VMLibrary.FloatSize) floatAtOffset: 0!
 
 nextInt16
 	"Answer a 16-bit signed integer constructed from the host system representation contained in

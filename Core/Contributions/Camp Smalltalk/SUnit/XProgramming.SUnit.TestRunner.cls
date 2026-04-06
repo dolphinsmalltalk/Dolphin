@@ -51,7 +51,7 @@ detailsField
 	^self view viewNamed: 'details'!
 
 displayClear
-	self displayColor: UI.Color default!
+	self displayColor: Graphics.Color default!
 
 displayColor: aColor
 	self colorField backcolor: aColor!

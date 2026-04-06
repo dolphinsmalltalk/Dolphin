@@ -4,7 +4,7 @@ UI.CardContainer
 	subclass: #'UI.SlidingCardTray'
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
-	imports: #(#{OS.TabViewConstants} #{OS.ThemeConstants})
+	imports: #(#{OS.ThemeLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -184,7 +184,7 @@ paintClassicEdgesOn: aCanvas
 		drawEdge: aCanvas asParameter
 		qrc: (0 @ -1 corner: self extent) asParameter
 		edge: (self isResizable ifTrue: [EDGE_RAISED] ifFalse: [EDGE_ETCHED])
-		grfFlags: BF_TOP | BF_RIGHT | BF_BOTTOM | BF_MIDDLE!
+		grfFlags: ##(BF_TOP | BF_RIGHT | BF_BOTTOM | BF_MIDDLE)!
 
 paintClassicOn: aCanvas 
 	self paintClassicEdgesOn: aCanvas.

@@ -44,7 +44,7 @@ testCRT
 	crt := #{OS.RandomCRT} valueOrNil.
 	crt isNil ifTrue: [self skip: 'RandomCRT class not present to test'].
 	expected := #(41 18467 6334 26500 19169 15724 11478 29358 26962 24464)
-				collect: [:each | each / ((OS.CRTConstants at: 'RAND_MAX') + 1.0)].
+				collect: [:each | each / (OS.CRTLibrary.RAND_MAX + 1.0)].
 	subject := crt seed: 1.
 	self
 		assert: subject

@@ -4,7 +4,7 @@ UI.ListControlView
 	subclass: #'UI.IconicListAbstract'
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.NMCUSTOMDRAW private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ViewModes'
@@ -523,7 +523,7 @@ nmBeginLabelEdit: pNMHDR
 	N.B. This notification is not necessarily sent by all subclasses."
 
 	| item event |
-	item := self itemStructure fromAddress: pNMHDR asInteger + NMHDR._NMHDR_Size.
+	item := self itemStructure fromAddress: pNMHDR asInteger + _NMHDR_Size.
 	event := LabelEditingEvent forSource: self.
 	event
 		item: item;
@@ -555,7 +555,7 @@ nmCustomDraw: pNMHDR
 	draw speed too much as this message can be sent several times per sub-item."
 
 	| drawStage context item |
-	(drawStage := pNMHDR uint32AtOffset: NMCUSTOMDRAW._OffsetOf_dwDrawStage) == CDDS_PREPAINT
+	(drawStage := pNMHDR uint32AtOffset: _OffsetOf_dwDrawStage) == CDDS_PREPAINT
 		ifTrue: 
 			["Before any painting"
 			^(self wantCustomDrawItemNotifications: pNMHDR)
@@ -592,7 +592,7 @@ nmEndLabelEdit: pNMHDR
 
 	| item object text |
 	SessionManager.Current inputState removeWindowAt: self getEditControl.
-	item := self itemStructure fromAddress: pNMHDR asInteger + NMHDR._NMHDR_Size.
+	item := self itemStructure fromAddress: pNMHDR asInteger + _NMHDR_Size.
 	text := item pszText.
 	self canEditLabels ifFalse: [self disableLabelEdit].
 	text isNil
@@ -609,7 +609,7 @@ nmGetDispInfoW: pNMHDR
 	N.B. This notification is not necessarily sent by all subclasses."
 
 	^self
-		onDisplayDetailsRequired: (self itemStructure fromAddress: pNMHDR asInteger + NMHDR._NMHDR_Size)!
+		onDisplayDetailsRequired: (self itemStructure fromAddress: pNMHDR asInteger + _NMHDR_Size)!
 
 nmSelChanged: anExternalAddress 
 	"Private - Default handler for the ??N_SELCHANGED notification message.
@@ -622,7 +622,7 @@ nmSetDispInfoW: pNMHDR
 	Forward as an onDisplayDetailsChanged: event."
 
 	^self
-		onDisplayDetailsChanged: (self itemStructure fromAddress: pNMHDR asInteger + NMHDR._NMHDR_Size)!
+		onDisplayDetailsChanged: (self itemStructure fromAddress: pNMHDR asInteger + _NMHDR_Size)!
 
 notificationClass
 	"Private - Answer the class of NMHDR associated with certain notifications sent

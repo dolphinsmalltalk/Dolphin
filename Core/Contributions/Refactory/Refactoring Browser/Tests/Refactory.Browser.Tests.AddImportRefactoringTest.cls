@@ -86,7 +86,7 @@ testImportClassVar
 testImportPool
 	| class subject bindingRef importsBefore |
 	class := model classFor: RefactoryTestDataApp.
-	bindingRef := #{OS.Win32Constants}.
+	bindingRef := #{Kernel.OpcodePool}.
 	self deny: (class importsNamespace: bindingRef).
 	subject := AddImportRefactoring
 				model: model
@@ -99,7 +99,7 @@ testImportPool
 	self
 		verifyMethod: #refersToPoolConstantFullyQualified
 		of: class
-		equals: '<1s> ^COLOR_DESKTOP' << #refersToPoolConstantFullyQualified.
+		equals: '<1s> ^BlockCopy' << #refersToPoolConstantFullyQualified.
 	"Fully-qualified binding reference should have been left unchanged"
 	self assertIsNil: (model changes changeForClassNamed: RefactoryTestDataApp fullyQualifiedReference selector: #refersToPoolConstantBindingFullyQualified)!
 

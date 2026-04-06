@@ -13,8 +13,6 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{OS.ComboBoxConstants}
-	#{OS.ListBoxConstants}
 	#{UI.BasicListAbstract}
 	#{UI.ComboBox}
 	#{UI.ListBox}
@@ -42,9 +40,33 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.ComboBoxConstants'
-	instanceVariableNames: ''
+UI.SelectableItemsPresenter
+	subclass: #'UI.ListPresenter'
+	instanceVariableNames: 'sortBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.ControlView
+	subclass: #'UI.ListControlView'
+	instanceVariableNames: 'getTextBlock'
+	classVariableNames: 'RevertSelMessage'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.ListControlView
+	subclass: #'UI.BasicListAbstract'
+	instanceVariableNames: 'lastSelIndices'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'WM_CTLCOLORLISTBOX' -> 16r134 }!
+
+UI.BasicListAbstract
+	subclass: #'UI.ComboBox'
+	instanceVariableNames: 'droppedHeight'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -116,12 +138,13 @@ Kernel.SharedPool
 			'CBS_OWNERDRAWVARIABLE' -> 16r20.
 			'CBS_SIMPLE' -> 16r1.
 			'CBS_SORT' -> 16r100.
-			'CBS_UPPERCASE' -> 16r2000
+			'CBS_UPPERCASE' -> 16r2000.
+			'Modes' -> #(#simple #dropDown #dropDownList)
 		}!
 
-Kernel.SharedPool
-	subclass: #'OS.ListBoxConstants'
-	instanceVariableNames: ''
+UI.BasicListAbstract
+	subclass: #'UI.ListBox'
+	instanceVariableNames: 'approvedSelIndices'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -192,48 +215,7 @@ Kernel.SharedPool
 			'LBS_SORT' -> 16r2.
 			'LBS_STANDARD' -> 16rA00003.
 			'LBS_USETABSTOPS' -> 16r80.
-			'LBS_WANTKEYBOARDINPUT' -> 16r400
-		}!
-
-UI.SelectableItemsPresenter
-	subclass: #'UI.ListPresenter'
-	instanceVariableNames: 'sortBlock'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.ControlView
-	subclass: #'UI.ListControlView'
-	instanceVariableNames: 'getTextBlock'
-	classVariableNames: 'RevertSelMessage'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.ListControlView
-	subclass: #'UI.BasicListAbstract'
-	instanceVariableNames: 'lastSelIndices'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.BasicListAbstract
-	subclass: #'UI.ComboBox'
-	instanceVariableNames: 'droppedHeight'
-	classVariableNames: ''
-	imports: #(#{OS.ComboBoxConstants})
-	classInstanceVariableNames: ''
-	classConstants: { 'Modes' -> #(#simple #dropDown #dropDownList) }!
-
-UI.BasicListAbstract
-	subclass: #'UI.ListBox'
-	instanceVariableNames: 'approvedSelIndices'
-	classVariableNames: ''
-	imports: #(#{OS.ListBoxConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
+			'LBS_WANTKEYBOARDINPUT' -> 16r400.
 			'SelectionModeMask' -> 16r808.
 			'SelectionModes'
 				-> (IdentityDictionary withAll: { #multi -> 16r800. #single -> 16r0. #toggle -> 16r8 })

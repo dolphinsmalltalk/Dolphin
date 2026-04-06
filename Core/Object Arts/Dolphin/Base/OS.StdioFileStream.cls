@@ -4,7 +4,7 @@ Core.SequencedStream
 	subclass: #'OS.StdioFileStream'
 	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
 	classVariableNames: 'EncodingClasses'
-	imports: #(#{OS.CRTConstants})
+	imports: #(#{OS.CRTLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AccessModeMask' -> 16r3.
@@ -261,13 +261,14 @@ finalize
 	self close!
 
 flagsFromMode: aString
-	^((aString includes: $+) not and: [aString first == $r])
+	^(((aString includes: $+) not and: [aString first == $r])
 		ifTrue: 
 			["For _wfopen_s, the default sharing mode when opening a file for reading is FILE_SHARE_READ (allow others to read too)"
-			##(_O_RDONLY | _SH_SECURE)]
+			_O_RDONLY]
 		ifFalse: 
 			["For _wfopen_s, the default sharing mode when opening a file for writing is exclusive (no sharing)"
-			##(_O_RDWR | _SH_SECURE)]!
+			_O_RDWR])
+			bitOr: _SH_SECURE!
 
 flush
 	"Flush any buffered modifications to the file."
@@ -420,7 +421,7 @@ prepareToWrite
 
 	(flags allMask: ReadingMask)
 		ifTrue: 
-			["fflush doesn't work for transitioning out of Reading mode in the way that it is supposed to. [I've reported the bug to Microsoft](https://developercommunity.visualstudio.com/t/fflush-may-not-clear-stream-Reading-stat/10327689), and it looks it might even get fixed. In meantime fseek will do the trick."
+			["fflush doesn't work for transitioning out of Reading mode in the way that it is supposed to. [I reported the bug to Microsoft](https://developercommunity.visualstudio.com/t/fflush-may-not-clear-stream-Reading-stat/10327689), but they declined to fix it. Fortunately fseek will do the trick."
 			self seek: SEEK_CUR offset: 0].
 	"Any subsequent read will now require an intervening call to fflush or a file-positioning function to leave writing mode"
 	flags := flags bitOr: WritingMask!
@@ -439,7 +440,7 @@ seek: originInteger offset: offsetInteger
 		origin: originInteger) ~~ 0
 		ifTrue: [CRTError signal].
 	"File-positioning function implicitly syncs the buffer"
-	flags := flags bitAnd: ##((ReadingMask | WritingMask) bitInvert)!
+	flags := flags bitAnd: ##((ReadingMask bitOr: WritingMask) bitInvert)!
 
 setStream: anExternalAddress name: aString flags: anInteger
 	| oshandle filetype |
@@ -452,10 +453,10 @@ setStream: anExternalAddress name: aString flags: anInteger
 	"Examine the underlying OS file handle to determine the file type"
 	oshandle := crtlib _get_osfhandle: fd.
 	filetype := Kernel32 getFileType: oshandle.
-	((filetype == Win32Constants.FILE_TYPE_CHAR and: 
+	((filetype == KernelLibrary.FILE_TYPE_CHAR and: 
 			[flags := flags bitOr: DeviceMask.
 			true])
-		or: [filetype == Win32Constants.FILE_TYPE_PIPE])
+		or: [filetype == KernelLibrary.FILE_TYPE_PIPE])
 			ifTrue: 
 				[flags := flags bitOr: NonBlockingMask.
 				crtlib := CRTLibrary nonblocking].
@@ -473,9 +474,9 @@ shareFlags
 	deny := self shareMode.
 	^##(LookupTable withAll: {
 				_SH_DENYRW -> 0.
-				_SH_DENYWR -> Win32Constants.FILE_SHARE_READ.
-				_SH_DENYRD -> Win32Constants.FILE_SHARE_WRITE.
-				_SH_DENYNO -> (Win32Constants.FILE_SHARE_READ | Win32Constants.FILE_SHARE_WRITE)
+				_SH_DENYWR -> KernelLibrary.FILE_SHARE_READ.
+				_SH_DENYRD -> KernelLibrary.FILE_SHARE_WRITE.
+				_SH_DENYNO -> (KernelLibrary.FILE_SHARE_READ | KernelLibrary.FILE_SHARE_WRITE)
 			})
 		at: deny!
 
@@ -753,7 +754,7 @@ on: aFile type: aSymbol
 		lpTargetHandle: oshandle
 		dwDesiredAccess: 0
 		bInheritHandle: false
-		dwOptions: Win32Constants.DUPLICATE_SAME_ACCESS) ifFalse: [Kernel32 systemError].
+		dwOptions: KernelLibrary.DUPLICATE_SAME_ACCESS) ifFalse: [Kernel32 systemError].
 	fd := Ucrt _open_osfhandle: oshandle flags: 0.
 	fd < 0 ifTrue: [CRTError signal].
 	^(self classForEncoding: encoding) openFd: fd
@@ -784,7 +785,7 @@ open: aPathOrString mode: modeSymbol check: aBoolean type: encodingSymbol share:
 			flags := _O_RDWR].
 	modeSymbol == #truncate
 		ifTrue: 
-			[(aBoolean and: [exists not]) ifTrue: [^CRTError signalWith: ENOENT].
+			[(aBoolean and: [exists not]) ifTrue: [^CRTError signalWith: CRTError.ENOENT].
 			mode := 'w+'.
 			flags := ##(_O_RDWR | _O_CREAT | _O_TRUNC)].
 	modeSymbol == #read

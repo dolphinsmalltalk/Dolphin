@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Database.DBConnection'
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCTypes})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -223,8 +223,8 @@ convertFunctions
 
 	| mask |
 	mask := self getUInt32Info: SQL_CONVERT_FUNCTIONS.
-	^#('SQL_FN_CVT_CONVERT') 
-		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
+	^(#(#{SQL_FN_CVT_CONVERT}) 
+		select: [:maskName | (mask bitAnd: maskName value) ~= 0]) collect: [:each | each unqualifiedName]!
 
 cursorCommitBehaviour
 	"Answer an <integer> from the SQL_CB_XXX enumeration identifying the
@@ -427,7 +427,7 @@ getHandle: anInteger
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
-				bufferLength: Kernel.VMConstants.IntPtrSize
+				bufferLength: Kernel.VMLibrary.IntPtrSize
 				stringLengthPtr: nil)
 		function: 'SQLGetInfo'.
 	^value!
@@ -652,8 +652,8 @@ numericFunctions
 
 	| mask |
 	mask := self getUInt32Info: SQL_NUMERIC_FUNCTIONS.
-	^#('SQL_FN_NUM_ABS' 'SQL_FN_NUM_ACOS' 'SQL_FN_NUM_ASIN' 'SQL_FN_NUM_ATAN' 'SQL_FN_NUM_ATAN2' 'SQL_FN_NUM_CEILING' 'SQL_FN_NUM_COS' 'SQL_FN_NUM_COT' 'SQL_FN_NUM_EXP' 'SQL_FN_NUM_FLOOR' 'SQL_FN_NUM_LOG' 'SQL_FN_NUM_MOD' 'SQL_FN_NUM_SIGN' 'SQL_FN_NUM_SIN' 'SQL_FN_NUM_SQRT' 'SQL_FN_NUM_TAN' 'SQL_FN_NUM_PI' 'SQL_FN_NUM_RAND') 
-		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
+	^(#(#{SQL_FN_NUM_ABS} #{SQL_FN_NUM_ACOS} #{SQL_FN_NUM_ASIN} #{SQL_FN_NUM_ATAN} #{SQL_FN_NUM_ATAN2} #{SQL_FN_NUM_CEILING} #{SQL_FN_NUM_COS} #{SQL_FN_NUM_COT} #{SQL_FN_NUM_EXP} #{SQL_FN_NUM_FLOOR} #{SQL_FN_NUM_LOG} #{SQL_FN_NUM_MOD} #{SQL_FN_NUM_SIGN} #{SQL_FN_NUM_SIN} #{SQL_FN_NUM_SQRT} #{SQL_FN_NUM_TAN} #{SQL_FN_NUM_PI} #{SQL_FN_NUM_RAND})
+		select: [:maskName | (mask bitAnd: maskName value) ~= 0]) collect: [:each | each unqualifiedName]!
 
 odbcConformance
 	"Answer the level of ODBC conformance:
@@ -924,8 +924,8 @@ stringFunctions
 
 	| mask |
 	mask := self getUInt32Info: SQL_STRING_FUNCTIONS.
-	^#('SQL_FN_STR_ASCII' 'SQL_FN_STR_CHAR' 'SQL_FN_STR_CONCAT' 'SQL_FN_STR_INSERT' 'SQL_FN_STR_LCASE' 'SQL_FN_STR_LEFT' 'SQL_FN_STR_LENGTH' 'SQL_FN_STR_LOCATE' 'SQL_FN_STR_LTRIM' 'SQL_FN_STR_REPEAT' 'SQL_FN_STR_REPLACE' 'SQL_FN_STR_RIGHT' 'SQL_FN_STR_RTRIM' 'SQL_FN_STR_SUBSTRING' 'SQL_FN_STR_UCASE') 
-		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
+	^(#(#{SQL_FN_STR_ASCII} #{SQL_FN_STR_CHAR} #{SQL_FN_STR_CONCAT} #{SQL_FN_STR_INSERT} #{SQL_FN_STR_LCASE} #{SQL_FN_STR_LEFT} #{SQL_FN_STR_LENGTH} #{SQL_FN_STR_LOCATE} #{SQL_FN_STR_LTRIM} #{SQL_FN_STR_REPEAT} #{SQL_FN_STR_REPLACE} #{SQL_FN_STR_RIGHT} #{SQL_FN_STR_RTRIM} #{SQL_FN_STR_SUBSTRING} #{SQL_FN_STR_UCASE})
+		select: [:each | (mask bitAnd: each value) ~= 0]) collect: [:each | each unqualifiedName]!
 
 supportedCursorTypes
 	"Answer a <collection> of <Symbol>s, being the cursor types supported by the database to
@@ -976,8 +976,8 @@ systemFunctions
 
 	| mask |
 	mask := self getUInt32Info: SQL_SYSTEM_FUNCTIONS.
-	^#('SQL_FN_SYS_DBNAME' 'SQL_FN_SYS_IFNULL' 'SQL_FN_SYS_USERNAME') 
-		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
+	^(#(#{SQL_FN_SYS_DBNAME} #{SQL_FN_SYS_IFNULL} #{SQL_FN_SYS_USERNAME})
+		select: [:each | (mask bitAnd: each value) ~= 0]) collect: [:each | each unqualifiedName]!
 
 tables
 	"Answer a collection of all user tables on the database"
@@ -1009,8 +1009,9 @@ timeDateFunctions
 
 	| mask |
 	mask := self getUInt32Info: SQL_TIMEDATE_FUNCTIONS.
-	^#('SQL_FN_TD_NOW' 'SQL_FN_TD_CURDATE' 'SQL_FN_TD_DAYOFMONTH' 'SQL_FN_TD_DAYOFWEEK' 'SQL_FN_TD_DAYOFYEAR' 'SQL_FN_TD_MONTH' 'SQL_FN_TD_QUARTER' 'SQL_FN_TD_WEEK' 'SQL_FN_TD_YEAR' 'SQL_FN_TD_CURTIME' 'SQL_FN_TD_HOUR' 'SQL_FN_TD_MINUTE' 'SQL_FN_TD_SECOND') 
-		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
+	^(#(#{SQL_FN_TD_NOW} #{SQL_FN_TD_CURDATE} #{SQL_FN_TD_DAYOFMONTH} #{SQL_FN_TD_DAYOFWEEK} #{SQL_FN_TD_DAYOFYEAR} #{SQL_FN_TD_MONTH} #{SQL_FN_TD_QUARTER} #{SQL_FN_TD_WEEK} #{SQL_FN_TD_YEAR} #{SQL_FN_TD_CURTIME} #{SQL_FN_TD_HOUR} #{SQL_FN_TD_MINUTE} #{SQL_FN_TD_SECOND})
+		select: [:each | (mask bitAnd: each value) ~= 0])
+			collect: [:each | each unqualifiedName]!
 
 traceFile
 	"Answer a String containing the value of the receiver's trace file option."

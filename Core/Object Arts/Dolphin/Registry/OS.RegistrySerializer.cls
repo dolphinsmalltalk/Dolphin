@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'OS.RegistrySerializer'
 	instanceVariableNames: 'objects currentKey instVarsCache classNames'
 	classVariableNames: ''
-	imports: #(#{OS.WinRegConstants private})
+	imports: #(#{OS.AdvApiLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -253,17 +253,17 @@ writeReference: pathString key: nameString
 
 	| relPath |
 	"Registry key paths look like unrooted file system paths, so we can use file system APIs to manipulate them. The maximum length of a key path is 255, which is < MAX_PATH (260)"
-	relPath := Utf16String newFixed: Win32Constants.MAX_PATH.
+	relPath := Utf16String newFixed: KernelLibrary.MAX_PATH.
 	Shlwapi
 		pathRelativePathTo: relPath
 		pszFrom: currentKey pathFromRoot , RegKey.PathSeparator , nameString
-		dwAttrFrom: Win32Constants.FILE_ATTRIBUTE_DIRECTORY
+		dwAttrFrom: KernelLibrary.FILE_ATTRIBUTE_DIRECTORY
 		pszTo: pathString
-		dwAttrTo: Win32Constants.FILE_ATTRIBUTE_DIRECTORY.
+		dwAttrTo: KernelLibrary.FILE_ATTRIBUTE_DIRECTORY.
 	currentKey
 		basicAt: nameString
 		put: ##($@ asUtf16String) , relPath trimNulls
-		type: OS.WinRegConstants.REG_MULTI_SZ! !
+		type: REG_MULTI_SZ! !
 
 !OS.RegistrySerializer categoriesForMethods!
 basicObjectAt:put:!accessing!public! !

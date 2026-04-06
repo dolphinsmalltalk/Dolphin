@@ -4,7 +4,7 @@ UI.MessageBoxAbstract
 	subclass: #'UI.MessageBubble'
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth flags'
 	classVariableNames: ''
-	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
+	imports: #(#{UI.Tooltip private} #{OS.TOOLINFOW private})
 	classInstanceVariableNames: ''
 	classConstants: { 'IconIds' -> #[64 48 16]. 'LargeIconMask' -> 16r1. 'SilentMask' -> 16r2 }!
 

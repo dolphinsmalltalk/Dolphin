@@ -3,10 +3,27 @@
 UI.ContainerView
 	subclass: #'UI.ShellView'
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent actualIcons svFlags dpi'
-	classVariableNames: 'DialogMessageMap'
-	imports: #(#{OS.ButtonConstants})
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'DefaultButtonIndex' -> 16r14. 'TransientMask' -> 16r1 }!
+	classConstants: {
+			'BM_SETSTYLE' -> 16rF4.
+			'BS_DEFPUSHBUTTON' -> 16r1.
+			'BS_PUSHBUTTON' -> 16r0.
+			'DC_HASDEFID' -> 16r534B.
+			'DefaultButtonIndex' -> 16r14.
+			'DM_GETDEFID' -> 16r400.
+			'DM_SETDEFID' -> 16r401.
+			'ICON_BIG' -> 16r1.
+			'ICON_SMALL' -> 16r0.
+			'SIZE_MAXHIDE' -> 16r4.
+			'SIZE_MAXIMIZED' -> 16r2.
+			'SIZE_MAXSHOW' -> 16r3.
+			'SIZE_MINIMIZED' -> 16r1.
+			'SIZE_RESTORED' -> 16r0.
+			'TransientMask' -> 16r1.
+			'WM_SETICON' -> 16r80
+		}!
 
 UI.ShellView guid: (Core.GUID fromString: '{87b4c71a-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -184,12 +201,12 @@ defaultButtonId: anInteger
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (aka DIPs, i.e. 96-dpi). This is used only to determine the size of a view when it is first created (although after scaling DIPs to the monitor DPI). Thereafter preferredExtent is used when the desired size of a view is requested."
 
-	^CreateWindow.UseDefaultGeometry!
+	^CreateWindowFunction.UseDefaultGeometry!
 
 defaultPosition
 	"Private - Answer the default position for the receiver in device-independent pixels (aka DIPs, i.e. 96-dpi). Normally this is unspecified, so we want to open the new window at the next cascade position for the monitor."
 
-	^CreateWindow.UseDefaultGeometry!
+	^CreateWindowFunction.UseDefaultGeometry!
 
 defaultShowStyle
 	^self isMaximized ifTrue: [SW_SHOWMAXIMIZED] ifFalse: [SW_SHOWNORMAL]!
@@ -199,22 +216,19 @@ defaultWindowStyle
 
 	^##(WS_THICKFRAME | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX)!
 
-dialogMessageMap
-	^##(IdentityDictionary withAll: {
-				DM_GETDEFID - WM_USER -> #dmGetDefId:wParam:lParam:.
-				DM_SETDEFID - WM_USER -> #dmSetDefId:wParam:lParam: 
-			})!
-
 dispatchUser: userId wParam: wParam lParam: lParam
 	"Private - Dispatch the WM_USER+userId message which was sent to the receiver.
 	To be overridden by subclasses which implement WM_USER+N messages in an appropriate 
 	manner (e.g. by a secondary message map, or, if few in number, by conditional tests)"
 
-	^self
-		dispatchUser: userId
-		wParam: wParam
-		lParam: lParam
-		map: self dialogMessageMap!
+	^(#(#dmGetDefId:wParam:lParam: #dmSetDefId:wParam:lParam:) lookup: userId + 1)
+		ifNotNil: 
+			[:selector |
+			self
+				perform: selector
+				with: WM_USER + userId
+				with: wParam
+				with: lParam]!
 
 displayOnMonitor: aMonitor
 	"Move the receiver so it is displayed on the specified `DisplayMonitor`, but attempting to maintain the same position relative to the display origin.
@@ -297,7 +311,7 @@ filerProxyIn: anSTxOutFiler
 flash: anInteger
 	"Flash the receiver in a manner so as to attract the user's attention, anInteger times."
 
-	self flash: anInteger flags: FLASHW_ALL!
+	self flash: anInteger flags: FLASHWINFO.FLASHW_ALL!
 
 flash: flashCountInteger flags: flagsInteger
 	"Flash the receiver the number of times specified by the <integer> argument, flashCountInteger,
@@ -1247,7 +1261,6 @@ defaultExtent!constants!private! !
 defaultPosition!geometry!private!realizing/unrealizing! !
 defaultShowStyle!constants!private! !
 defaultWindowStyle!constants!private! !
-dialogMessageMap!constants!private! !
 dispatchUser:wParam:lParam:!dispatching!private! !
 displayOnMonitor:!geometry!helpers!public! !
 dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !

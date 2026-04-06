@@ -1,0 +1,83 @@
+﻿| package |
+package := Package name: 'Development System (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.ClassBrowserAbstract}
+	#{Smalltalk.ClassListSelector}
+	#{Smalltalk.MethodBrowser}
+	#{Smalltalk.MethodWorkspace}
+	#{Smalltalk.PackageDependencyPresenter}
+	#{Smalltalk.PackageSelector}
+	#{Smalltalk.PublishedAspectInspector}
+	#{Smalltalk.ResourceListPresenter}
+	#{Smalltalk.ResourceToolboxPresenter}
+	#{Smalltalk.SmalltalkExpressionStyler}
+	#{Smalltalk.SmalltalkMethodStyler}
+	#{Smalltalk.SmalltalkSystem}
+	#{Smalltalk.SmalltalkWorkspace}
+	#{Smalltalk.ViewComposer}
+	#{Smalltalk.ViewComposerArena}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.ClassBrowserAbstract}
+	#{Smalltalk.ClassListSelector}
+	#{Smalltalk.MethodBrowser}
+	#{Smalltalk.MethodWorkspace}
+	#{Smalltalk.PackageDependencyPresenter}
+	#{Smalltalk.PackageSelector}
+	#{Smalltalk.PublishedAspectInspector}
+	#{Smalltalk.ResourceListPresenter}
+	#{Smalltalk.ResourceToolboxPresenter}
+	#{Smalltalk.SmalltalkExpressionStyler}
+	#{Smalltalk.SmalltalkMethodStyler}
+	#{Smalltalk.SmalltalkSystem}
+	#{Smalltalk.SmalltalkWorkspace}
+	#{Smalltalk.ViewComposer}
+	#{Smalltalk.ViewComposerArena}
+).
+
+package setPrerequisites: #(
+	'Development System'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.ClassBrowserAbstract := Tools.ClassBrowserAbstract!
+
+Smalltalk.ClassListSelector := Tools.ClassListSelector!
+
+Smalltalk.MethodBrowser := Tools.MethodBrowser!
+
+Smalltalk.MethodWorkspace := Tools.MethodWorkspace!
+
+Smalltalk.PackageDependencyPresenter := Tools.PackageDependencyPresenter!
+
+Smalltalk.PackageSelector := Tools.PackageSelector!
+
+Smalltalk.PublishedAspectInspector := Tools.PublishedAspectInspector!
+
+Smalltalk.ResourceListPresenter := Tools.ResourceListPresenter!
+
+Smalltalk.ResourceToolboxPresenter := Tools.ResourceToolboxPresenter!
+
+Smalltalk.SmalltalkExpressionStyler := Tools.SmalltalkExpressionStyler!
+
+Smalltalk.SmalltalkMethodStyler := Tools.SmalltalkMethodStyler!
+
+Smalltalk.SmalltalkSystem := Tools.SmalltalkSystem!
+
+Smalltalk.SmalltalkWorkspace := Tools.SmalltalkWorkspace!
+
+Smalltalk.ViewComposer := Tools.ViewComposer!
+
+Smalltalk.ViewComposerArena := Tools.ViewComposerArena!
+
+
+"End of package definition"!
+

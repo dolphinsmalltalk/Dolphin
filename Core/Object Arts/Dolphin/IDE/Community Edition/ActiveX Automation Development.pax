@@ -2903,7 +2903,7 @@ generateMethodWrappers
 									ifTrue: [self generatePropPutWrappers: each]
 									ifFalse: [self generatePropPutRefWrappers: each]]]].
 	self areWrappersRequired ifFalse: [^self].
-	valueProp := self nameOfID: DISPID_VALUE ifAbsent: [].
+	valueProp := self nameOfID: IDispatch.DISPID_VALUE ifAbsent: [].
 	(valueProp notNil and: [(valueProp sameAs: #value) not]) 
 		ifTrue: [self generateValuePropertyWrappers]!
 
@@ -3799,7 +3799,7 @@ conformsToRequiredProtocols: aVariableBinding
 determineNewBase: baseClass forExistingWrapper: existingClass
 	| existingSuper |
 	existingSuper := existingClass superclass.
-	^existingSuper == External.Structure ifTrue: [baseClass] ifFalse: [existingSuper]!
+	^existingSuper == Structure ifTrue: [baseClass] ifFalse: [existingSuper]!
 
 generateClassSide: aClass
 	self generateDefineFields.
@@ -4068,7 +4068,7 @@ printNamedFieldDefinition:offset:prefix:hidden:on:!private! !
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^External.Structure icon!
+	^Structure icon!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -4188,8 +4188,8 @@ printIDLBodyOn: target indent: tabs
 			[:i :f |
 			| flags |
 			flags := OrderedCollection new.
-			(f allMask: IMPLTYPEFLAG_FDEFAULT) ifTrue: [flags addLast: 'default'].
-			(f allMask: IMPLTYPEFLAG_FSOURCE) ifTrue: [flags addLast: 'source'].
+			(f allMask: ITypeInfo.IMPLTYPEFLAG_FDEFAULT) ifTrue: [flags addLast: 'default'].
+			(f allMask: ITypeInfo.IMPLTYPEFLAG_FSOURCE) ifTrue: [flags addLast: 'source'].
 			self
 				printIDLAttributes: flags
 				on: target
@@ -4867,7 +4867,7 @@ generateDefineFunctions
 	methods do: 
 			[:each |
 			| retType params |
-			self assert: [each callconv = CC_STDCALL].
+			self assert: [each callconv = FUNCDESC.CC_STDCALL].
 			target
 				crtab: 2;
 				nextPutAll: 'defineFunction: #'.
@@ -5498,7 +5498,7 @@ printRawMethodBody:name:on:!private! !
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^External.DynamicLinkLibrary icon!
+	^DynamicLinkLibrary icon!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -6662,7 +6662,7 @@ highLevelWrapperStyles
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^OS.COM.TypeLibraryAnalyzer icon!
+	^TypeLibraryAnalyzer icon!
 
 namespaceClashSignal
 	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to	when an existing class is in a different namespace."
@@ -7441,7 +7441,7 @@ fromRegistration: registration
 		load: registration libid
 		major: registration majorVersion
 		minor: registration minorVersion
-		locale: NlsConstants.LOCALE_SYSTEM_DEFAULT!
+		locale: Locale.LOCALE_SYSTEM_DEFAULT!
 
 icon
 	"Answers an <Icon> that can be used to represent this class"

@@ -4,9 +4,23 @@ Core.Object
 	subclass: #'UI.Keyboard'
 	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
 	classVariableNames: 'DefaultInstance InvariantInstance'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'KL_NAMELENGTH' -> 16r9.
+			'KLF_ACTIVATE' -> 16r1.
+			'KLF_NOTELLSHELL' -> 16r80.
+			'KLF_REORDER' -> 16r8.
+			'KLF_REPLACELANG' -> 16r10.
+			'KLF_RESET' -> 16r40000000.
+			'KLF_SETFORPROCESS' -> 16r100.
+			'KLF_SHIFTLOCK' -> 16r10000.
+			'KLF_SUBSTITUTE_OK' -> 16r2.
+			'MAPVK_VK_TO_VSC' -> 16r0.
+			'MAPVK_VSC_TO_VK' -> 16r1.
+			'MAPVK_VSC_TO_VK_CHAR' -> 16r2.
+			'MAPVK_VSC_TO_VK_EX' -> 16r3
+		}!
 
 UI.Keyboard guid: (Core.GUID fromString: '{87b4c496-026e-11d3-9fd7-00a0cc3e4a32}')!
 

@@ -27,7 +27,7 @@ handle
 	^self value!
 
 isInvalid
-	^(self intPtrAtOffset: 0) == ##(OS.Win32Constants.INVALID_HANDLE_VALUE int32AtOffset: 0)! !
+	^(self intPtrAtOffset: 0) == OS.KernelLibrary.INVALID_HANDLE_VALUE! !
 
 !External.Handle categoriesForMethods!
 asExternalHandle!converting!public! !

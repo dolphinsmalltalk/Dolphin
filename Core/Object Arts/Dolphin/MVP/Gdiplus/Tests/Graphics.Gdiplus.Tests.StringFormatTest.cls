@@ -100,7 +100,7 @@ testGenericDerived
 	self assert: model flags equals: StringFormatFlagsNoFitBlackBox | StringFormatFlagsNoClip.
 	self assert: model alignment equals: StringAlignmentCenter.
 	self assert: model lineAlignment equals: StringAlignmentNear.
-	self assert: model language equals: NlsConstants.LANG_NEUTRAL.
+	self assert: model language equals: Locale.LANG_NEUTRAL.
 	self assert: model digitSubstitution equals: StringDigitSubstituteUser.
 	self assert: model hotkeyPrefix equals: HotkeyPrefixNone.
 	self assert: model tabStopCount equals: 0.
@@ -115,7 +115,7 @@ testGenericDerived
 	self assert: temp flags equals: StringFormatFlagsNoFitBlackBox | StringFormatFlagsNoClip.
 	self assert: temp alignment equals: StringAlignmentCenter.
 	self assert: temp lineAlignment equals: StringAlignmentNear.
-	self assert: temp language equals: NlsConstants.LANG_NEUTRAL.
+	self assert: temp language equals: Locale.LANG_NEUTRAL.
 	self assert: temp digitSubstitution equals: StringDigitSubstituteUser.
 	self assert: temp hotkeyPrefix equals: HotkeyPrefixNone.
 	self assert: temp tabOffsets equals: #().
@@ -274,7 +274,7 @@ verifyGenericDefaultAttributes: aStringFormat
 	self assert: aStringFormat alignment equals: StringAlignmentNear.
 	self assert: aStringFormat lineAlignment equals: StringAlignmentNear.
 	"- Language ID is set to neutral language, which means that the current language associated with the calling thread is used."
-	self assert: aStringFormat language equals: OS.NlsConstants.LANG_NEUTRAL.
+	self assert: aStringFormat language equals: Locale.LANG_NEUTRAL.
 	"- String digit substitution is set to StringDigitSubstituteUser."
 	self assert: aStringFormat digitSubstitution equals: StringDigitSubstituteUser.
 	"- Hot key prefix is set to HotkeyPrefixNone."
@@ -299,7 +299,7 @@ verifyGenericTypographicAttributes: aStringFormat
 	self assert: aStringFormat alignment equals: StringAlignmentNear.
 	self assert: aStringFormat lineAlignment equals: StringAlignmentNear.
 	"- Language ID is set to neutral language, which means that the current language associated with the calling thread is used."
-	self assert: aStringFormat language equals: OS.NlsConstants.LANG_NEUTRAL.
+	self assert: aStringFormat language equals: Locale.LANG_NEUTRAL.
 	"- String digit substitution is set to StringDigitSubstituteUser."
 	self assert: aStringFormat digitSubstitution equals: StringDigitSubstituteUser.
 	"- Hot key prefix is set to HotkeyPrefixNone."

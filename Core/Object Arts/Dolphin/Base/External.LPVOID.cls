@@ -46,7 +46,7 @@ value:!**compiled accessors**!public! !
 !External.LPVOID class methodsFor!
 
 byteSize
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 defineFields
 	"Define the fields of the LPVOID 'structure'.

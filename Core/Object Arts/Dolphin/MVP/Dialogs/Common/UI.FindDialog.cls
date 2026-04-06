@@ -4,7 +4,7 @@ UI.CommonDialog
 	subclass: #'UI.FindDialog'
 	instanceVariableNames: 'findWhatBuf findDetails'
 	classVariableNames: 'HookHandlers'
-	imports: #()
+	imports: #(#{OS.FINDREPLACEW private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

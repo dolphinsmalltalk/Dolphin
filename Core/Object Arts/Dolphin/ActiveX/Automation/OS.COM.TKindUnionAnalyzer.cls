@@ -30,7 +30,7 @@ isUnion!public!testing! !
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
-	^TKIND_UNION! !
+	^ITypeInfo.TKIND_UNION! !
 
 !OS.COM.TKindUnionAnalyzer class categoriesForMethods!
 typekind!constants!private! !

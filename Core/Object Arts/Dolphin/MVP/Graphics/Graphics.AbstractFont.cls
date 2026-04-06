@@ -4,7 +4,7 @@ Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
 	instanceVariableNames: 'logfont dpi series'
 	classVariableNames: 'Stock System'
-	imports: #()
+	imports: #(#{OS.LOGFONTW private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

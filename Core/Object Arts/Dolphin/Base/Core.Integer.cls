@@ -203,7 +203,7 @@ asUIntPtr
 	Implementation Note: LargeInteger constant receiver 
 	to avoid always failing the SmallInteger bitAnd: primitive."
 
-	^VMConstants.IntPtrMask bitAnd: self!
+	^VMLibrary.IntPtrMask bitAnd: self!
 
 at: anInteger 
 	"Integer's do not support indexed instance variables."
@@ -510,7 +510,7 @@ hashMultiply
 	This can be used to generate a better distributed hash value for SmallIntegers, but also for combining hash values to generate a hash for a composite object."
 
 	<primitive: 109>
-	^(self bitAnd: VMConstants.IntPtrMask) * 48271 bitAnd: VMConstants.SmallIntegerMax!
+	^self * 48271 bitAnd: VMLibrary.SmallIntegerMax!
 
 hex
 	"Answer a <readableString> whose characters are a description of 
@@ -535,7 +535,7 @@ highByte
 highPartSigned
 	"Answers the high order signed word of the receiver (assumes the receiver is a machine word sized integer)."
 
-	^(self bitShift: ##(VMConstants.HalfPtrBits negated)) lowPartSigned!
+	^(self bitShift: ##(VMLibrary.HalfPtrBits negated)) lowPartSigned!
 
 highWord
 	"Answers the high order unsigned word of the receiver (assumes the receiver is a 32-bit Integer)."
@@ -642,15 +642,15 @@ lowBit
 lowPart
 	"Answers the low order unsigned word of the receiver (assumes the receiver is a machine word sized Integer, i.e. an IntPtr)."
 
-	^self bitAnd: VMConstants.HalfPtrMask!
+	^self bitAnd: VMLibrary.HalfPtrMask!
 
 lowPartSigned
 	"Answers the low order signed word of the receiver (assumes the receiver is a machine word sized Integer)."
 
 	| part |
 	part := self lowPart.
-	^part > VMConstants.HalfPtrMax 
-		ifTrue: [(part bitXor: VMConstants.HalfPtrMask) bitInvert]
+	^part > VMLibrary.HalfPtrMax
+		ifTrue: [(part bitXor: VMLibrary.HalfPtrMask) bitInvert]
 		ifFalse: [part]!
 
 lowWord

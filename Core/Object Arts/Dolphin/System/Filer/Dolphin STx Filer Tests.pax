@@ -38,6 +38,7 @@ package setPrerequisites: #(
 	'..\..\IDE\Base\Development System'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Additional Sort Algorithms'
+	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
 	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'Dolphin Binary Filer'

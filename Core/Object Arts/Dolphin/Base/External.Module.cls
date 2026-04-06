@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'External.Module'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})
+	imports: #(#{OS.HRESULT private} #{OS.Win32Error private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -98,7 +98,7 @@ isOpen
 loadFlags
 	"Private - Flags passed to [LoadLibraryEx](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexw)."
 
-	^LOAD_LIBRARY_SEARCH_DEFAULT_DIRS!
+	^KernelLibrary.LOAD_LIBRARY_SEARCH_DEFAULT_DIRS!
 
 loadString: anIntegerId
 	"Answer the string with the specified id from the receiver's resources."

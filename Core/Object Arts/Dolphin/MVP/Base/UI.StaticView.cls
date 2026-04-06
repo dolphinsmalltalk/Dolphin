@@ -6,7 +6,23 @@ UI.ValueConvertingControlView
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'SS_CENTER' -> 16r1.
+			'SS_CENTERIMAGE' -> 16r200.
+			'SS_ENHMETAFILE' -> 16rF.
+			'SS_LEFT' -> 16r0.
+			'SS_LEFTNOWORDWRAP' -> 16rC.
+			'SS_NOPREFIX' -> 16r80.
+			'SS_NOTIFY' -> 16r100.
+			'SS_OWNERDRAW' -> 16rD.
+			'SS_REALSIZEIMAGE' -> 16r800.
+			'SS_RIGHT' -> 16r2.
+			'SS_RIGHTJUST' -> 16r400.
+			'SS_SIMPLE' -> 16rB.
+			'SS_SUNKEN' -> 16r1000.
+			'SS_TYPEMASK' -> 16r1F.
+			'SS_USERITEM' -> 16rA
+		}!
 
 UI.StaticView guid: (Core.GUID fromString: '{87b4c739-026e-11d3-9fd7-00a0cc3e4a32}')!
 

@@ -4,9 +4,9 @@ UI.View
 	subclass: #'UI.ControlView'
 	instanceVariableNames: 'forecolor oldWndProc'
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #(#{OS.CommCtrlLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BN_CLICKED' -> 16r0 }!
 
 UI.ControlView guid: (Core.GUID fromString: '{87b4c70d-026e-11d3-9fd7-00a0cc3e4a32}')!
 

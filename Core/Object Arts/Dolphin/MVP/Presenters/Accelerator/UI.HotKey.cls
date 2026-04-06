@@ -4,9 +4,26 @@ UI.ValueConvertingControlView
 	subclass: #'UI.HotKey'
 	instanceVariableNames: 'invalidCombinationsRule defaultKeyRule'
 	classVariableNames: ''
-	imports: #(#{OS.HotKeyConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'HKCOMB_A' -> 16r8.
+			'HKCOMB_C' -> 16r4.
+			'HKCOMB_CA' -> 16r40.
+			'HKCOMB_NONE' -> 16r1.
+			'HKCOMB_S' -> 16r2.
+			'HKCOMB_SA' -> 16r20.
+			'HKCOMB_SC' -> 16r10.
+			'HKCOMB_SCA' -> 16r80.
+			'HKM_GETHOTKEY' -> 16r402.
+			'HKM_SETHOTKEY' -> 16r401.
+			'HKM_SETRULES' -> 16r403.
+			'HOTKEYF_ALT' -> 16r4.
+			'HOTKEYF_CONTROL' -> 16r2.
+			'HOTKEYF_EXT' -> 16r8.
+			'HOTKEYF_SHIFT' -> 16r1.
+			'ICC_HOTKEY_CLASS' -> 16r40
+		}!
 
 UI.HotKey guid: (Core.GUID fromString: '{87b4c736-026e-11d3-9fd7-00a0cc3e4a32}')!
 

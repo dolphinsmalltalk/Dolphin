@@ -301,7 +301,7 @@ isMemTopDown
 				at: 'System\CurrentControlSet\Control\Session Manager\Memory Management')
 				mode: #read;
 				valueAt: 'AllocationPreference' ifAbsent: [0].
-	^allocationPreference allMask: OS.Win32Constants.MEM_TOP_DOWN!
+	^allocationPreference allMask: OS.KernelLibrary.MEM_TOP_DOWN!
 
 testAsStackPointer
 	{0 -> 0.

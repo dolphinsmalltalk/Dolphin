@@ -36,42 +36,6 @@ package setMethodNames: #(
 	#(#{Tools.ClassBrowserShell class} #correspondingTestCase)
 ).
 
-package setVariableNames: #(
-	#{Smalltalk.ClassBrowserAbstract}
-	#{Smalltalk.ClassListSelector}
-	#{Smalltalk.MethodBrowser}
-	#{Smalltalk.MethodWorkspace}
-	#{Smalltalk.PackageDependencyPresenter}
-	#{Smalltalk.PackageSelector}
-	#{Smalltalk.PublishedAspectInspector}
-	#{Smalltalk.ResourceListPresenter}
-	#{Smalltalk.ResourceToolboxPresenter}
-	#{Smalltalk.SmalltalkExpressionStyler}
-	#{Smalltalk.SmalltalkMethodStyler}
-	#{Smalltalk.SmalltalkSystem}
-	#{Smalltalk.SmalltalkWorkspace}
-	#{Smalltalk.ViewComposer}
-	#{Smalltalk.ViewComposerArena}
-).
-
-package setAliasVariableNames: #(
-	#{Smalltalk.ClassBrowserAbstract}
-	#{Smalltalk.ClassListSelector}
-	#{Smalltalk.MethodBrowser}
-	#{Smalltalk.MethodWorkspace}
-	#{Smalltalk.PackageDependencyPresenter}
-	#{Smalltalk.PackageSelector}
-	#{Smalltalk.PublishedAspectInspector}
-	#{Smalltalk.ResourceListPresenter}
-	#{Smalltalk.ResourceToolboxPresenter}
-	#{Smalltalk.SmalltalkExpressionStyler}
-	#{Smalltalk.SmalltalkMethodStyler}
-	#{Smalltalk.SmalltalkSystem}
-	#{Smalltalk.SmalltalkWorkspace}
-	#{Smalltalk.ViewComposer}
-	#{Smalltalk.ViewComposerArena}
-).
-
 package setPrerequisites: #(
 	'Base\Development System'
 	'Base\Development System Tests'
@@ -84,6 +48,7 @@ package setPrerequisites: #(
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'Community Edition\Dolphin Community Edition Tools'
 	'..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\MVP\Base\Dolphin ControlViews Base'
 	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\MVP\Models\List\Dolphin List Models'
@@ -308,39 +273,6 @@ Tools.Tests.ClassSelectorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-
-"Variable Aliases"!
-
-Smalltalk.ClassBrowserAbstract := Tools.ClassBrowserAbstract!
-
-Smalltalk.ClassListSelector := Tools.ClassListSelector!
-
-Smalltalk.MethodBrowser := Tools.MethodBrowser!
-
-Smalltalk.MethodWorkspace := Tools.MethodWorkspace!
-
-Smalltalk.PackageDependencyPresenter := Tools.PackageDependencyPresenter!
-
-Smalltalk.PackageSelector := Tools.PackageSelector!
-
-Smalltalk.PublishedAspectInspector := Tools.PublishedAspectInspector!
-
-Smalltalk.ResourceListPresenter := Tools.ResourceListPresenter!
-
-Smalltalk.ResourceToolboxPresenter := Tools.ResourceToolboxPresenter!
-
-Smalltalk.SmalltalkExpressionStyler := Tools.SmalltalkExpressionStyler!
-
-Smalltalk.SmalltalkMethodStyler := Tools.SmalltalkMethodStyler!
-
-Smalltalk.SmalltalkSystem := Tools.SmalltalkSystem!
-
-Smalltalk.SmalltalkWorkspace := Tools.SmalltalkWorkspace!
-
-Smalltalk.ViewComposer := Tools.ViewComposer!
-
-Smalltalk.ViewComposerArena := Tools.ViewComposerArena!
-
 
 "Loose Methods"!
 

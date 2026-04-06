@@ -448,7 +448,7 @@ valueOrNil!accessing!public! !
 clearCachedBindings
 	Generation := Generation + 1.
 	"Avoid the generation number becoming a large integer - unlikely, but possible"
-	Generation >= VMConstants.SmallIntegerMax ifTrue: [self flushBindings]!
+	Generation >= VMLibrary.SmallIntegerMax ifTrue: [self flushBindings]!
 
 flushBindings
 	| instances |

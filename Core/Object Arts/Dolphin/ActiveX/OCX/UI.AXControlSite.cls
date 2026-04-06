@@ -4,12 +4,63 @@ UI.ControlView
 	subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
 	classVariableNames: 'WM_ATLGETHOST'
-	imports: #(#{OS.COM.AutomationConstants private} #{OS.COM.AutomationErrors private} #{OS.COM private})
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AllowContextMenuMask' -> 16r400.
 			'AllowShowUIMask' -> 16r200.
 			'AllowWindowlessMask' -> 16r20.
+			'DISPID_ACCELERATOR' -> -16r21F.
+			'DISPID_APPEARANCE' -> -16r208.
+			'DISPID_AUTOSIZE' -> -16r1F4.
+			'DISPID_BACKCOLOR' -> -16r1F5.
+			'DISPID_BACKSTYLE' -> -16r1F6.
+			'DISPID_BORDERCOLOR' -> -16r1F7.
+			'DISPID_BORDERSTYLE' -> -16r1F8.
+			'DISPID_BORDERVISIBLE' -> -16r207.
+			'DISPID_BORDERWIDTH' -> -16r1F9.
+			'DISPID_CAPTION' -> -16r206.
+			'DISPID_COLLECT' -> -16r8.
+			'DISPID_COLUMN' -> -16r211.
+			'DISPID_CONSTRUCTOR' -> -16r6.
+			'DISPID_DESTRUCTOR' -> -16r7.
+			'DISPID_DISPLAYSTYLE' -> -16r21C.
+			'DISPID_DRAWMODE' -> -16r1FB.
+			'DISPID_DRAWSTYLE' -> -16r1FC.
+			'DISPID_DRAWWIDTH' -> -16r1FD.
+			'DISPID_ENABLED' -> -16r202.
+			'DISPID_ENTERKEYBEHAVIOR' -> -16r220.
+			'DISPID_EVALUATE' -> -16r5.
+			'DISPID_FILLCOLOR' -> -16r1FE.
+			'DISPID_FILLSTYLE' -> -16r1FF.
+			'DISPID_FONT' -> -16r200.
+			'DISPID_FORECOLOR' -> -16r201.
+			'DISPID_GROUPNAME' -> -16r21D.
+			'DISPID_HWND' -> -16r203.
+			'DISPID_IMEMODE' -> -16r21E.
+			'DISPID_LIST' -> -16r210.
+			'DISPID_LISTCOUNT' -> -16r213.
+			'DISPID_LISTINDEX' -> -16r20E.
+			'DISPID_MAXLENGTH' -> -16r215.
+			'DISPID_MOUSEICON' -> -16r20A.
+			'DISPID_MOUSEPOINTER' -> -16r209.
+			'DISPID_MULTILINE' -> -16r219.
+			'DISPID_MULTISELECT' -> -16r214.
+			'DISPID_NUMBEROFCOLUMNS' -> -16r21B.
+			'DISPID_NUMBEROFROWS' -> -16r21A.
+			'DISPID_PASSWORDCHAR' -> -16r216.
+			'DISPID_PICTURE' -> -16r20B.
+			'DISPID_READYSTATE' -> -16r20D.
+			'DISPID_SCROLLBARS' -> -16r217.
+			'DISPID_SELECTED' -> -16r20F.
+			'DISPID_SELLENGTH' -> -16r224.
+			'DISPID_SELSTART' -> -16r223.
+			'DISPID_SELTEXT' -> -16r222.
+			'DISPID_TABKEYBEHAVIOR' -> -16r221.
+			'DISPID_TABSTOP' -> -16r204.
+			'DISPID_TEXT' -> -16r205.
+			'DISPID_VALID' -> -16r20C.
+			'DISPID_WORDWRAP' -> -16r218.
 			'DisplayAsDefaultMask' -> 16r80.
 			'FireControlEventsMask' -> 16r4.
 			'FirePropertyEventsMask' -> 16r1.
@@ -113,7 +164,7 @@ aboutControl
 	
 	[self controlDispatch
 		invokeId: -552
-		flags: DISPATCH_METHOD
+		flags: DISPPARAMS.DISPATCH_METHOD
 		parms: DISPPARAMS zeroArgs
 		retVal: nil]
 			on: HRESULTError
@@ -1183,7 +1234,7 @@ initialize
 	IPersistStream.	"Deliberately create a dependency on 'OLE Persistence Base' package"
 	self addClassConstant: 'StandardPropNames'
 		value: (LookupTable new
-				at: DISPID_VALUE put: #Value;
+				at: IDispatch.DISPID_VALUE put: #Value;
 				at: DISPID_AUTOSIZE put: #Autosize;
 				at: DISPID_BACKCOLOR put: #BackColor;
 				at: DISPID_BACKSTYLE put: #BackStyle;

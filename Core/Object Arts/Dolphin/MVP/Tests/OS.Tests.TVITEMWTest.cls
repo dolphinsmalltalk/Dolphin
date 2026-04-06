@@ -4,7 +4,7 @@ OS.Tests.CCITEMTest
 	subclass: #'OS.Tests.TVITEMWTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.TreeViewConstants})
+	imports: #(#{OS.TVITEMW})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

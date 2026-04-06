@@ -43,7 +43,7 @@ copyToGlobalHeap
 	colorTable := self depth <= 8 ifTrue: [self getColorTable bytes] ifFalse: [#[]].
 	headerSize := header byteSize.
 	imageSize := ds biSizeImage.
-	hGlobal := Kernel32 globalAlloc: ##(GHND | GMEM_DDESHARE)
+	hGlobal := Kernel32 globalAlloc: ##(KernelLibrary.GHND | KernelLibrary.GMEM_DDESHARE)
 				dwBytes: headerSize + colorTable size + imageSize.
 	pGlobal := Kernel32 globalLock: hGlobal.
 	pGlobal

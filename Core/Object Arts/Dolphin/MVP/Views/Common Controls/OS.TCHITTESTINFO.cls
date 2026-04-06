@@ -6,7 +6,14 @@ OS.CCHITTESTINFO
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_flags' -> 16r8. '_TCHITTESTINFO_Size' -> 16rC }!
+	classConstants: {
+			'_OffsetOf_flags' -> 16r8.
+			'_TCHITTESTINFO_Size' -> 16rC.
+			'TCHT_NOWHERE' -> 16r1.
+			'TCHT_ONITEM' -> 16r6.
+			'TCHT_ONITEMICON' -> 16r2.
+			'TCHT_ONITEMLABEL' -> 16r4
+		}!
 
 OS.TCHITTESTINFO guid: (Core.GUID fromString: '{a369fa40-e397-4c16-b3f5-b254fd07aebe}')!
 

@@ -100,7 +100,6 @@ package setClassNames: #(
 	#{OS.COM.MULTI_QI}
 	#{OS.COM.ObjectStub}
 	#{OS.COM.OLEAutLibrary}
-	#{OS.COM.OLEConstants}
 	#{OS.COM.OLELibrary}
 	#{OS.COM.QueryInterfaceFunction}
 	#{OS.COM.ReleaseFunction}
@@ -171,26 +170,9 @@ OS
 	subclass: #'OS.COM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
+	imports: #(#{OS.HRESULT} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-
-Kernel.SharedPool
-	subclass: #'OS.COM.OLEConstants'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'CLSCTX_INPROC_HANDLER' -> 16r2.
-			'CLSCTX_INPROC_SERVER' -> 16r1.
-			'CLSCTX_LOCAL_SERVER' -> 16r4.
-			'CLSCTX_REMOTE_SERVER' -> 16r10.
-			'MEMCTX_SHARED' -> 16r2.
-			'MEMCTX_TASK' -> 16r1.
-			'REGCLS_MULTI_SEPARATE' -> 16r2.
-			'REGCLS_MULTIPLEUSE' -> 16r1
-		}!
 
 Core.Object
 	subclass: #'OS.COM.AbstractInterfaceFunction'
@@ -204,7 +186,7 @@ Core.Object
 	subclass: #'OS.COM.InterfaceImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors} #{OS.COM.OLEConstants})
+	imports: #(#{OS.COM.OLELibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -212,7 +194,7 @@ Core.Object
 	subclass: #'OS.COM.ObjectStub'
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
-	imports: #(#{OS.Win32Errors private})
+	imports: #(#{OS.HRESULT private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -326,7 +308,21 @@ External.WindowsSystemLibrary
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DISP_E_ARRAYISLOCKED' -> -16r7FFDFFF3.
+			'DISP_E_BADINDEX' -> -16r7FFDFFF5.
+			'DISP_E_BADVARTYPE' -> -16r7FFDFFF8.
+			'DISP_E_EXCEPTION' -> -16r7FFDFFF7.
+			'DISP_E_MEMBERNOTFOUND' -> -16r7FFDFFFD.
+			'DISP_E_PARAMNOTFOUND' -> -16r7FFDFFFC.
+			'DISP_E_TYPEMISMATCH' -> -16r7FFDFFFB.
+			'DISP_E_UNKNOWNNAME' -> -16r7FFDFFFA.
+			'VARIANT_FALSE' -> 16r0.
+			'VARIANT_LOCALBOOL' -> 16r10.
+			'VARIANT_NOUSEROVERRIDE' -> 16r4.
+			'VARIANT_NOVALUEPROP' -> 16r1.
+			'VARIANT_TRUE' -> -16r1
+		}!
 
 External.WindowsSystemLibrary
 	subclass: #'OS.COM.OLELibrary'
@@ -334,7 +330,16 @@ External.WindowsSystemLibrary
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CLSCTX_INPROC_HANDLER' -> 16r2.
+			'CLSCTX_INPROC_SERVER' -> 16r1.
+			'CLSCTX_LOCAL_SERVER' -> 16r4.
+			'CLSCTX_REMOTE_SERVER' -> 16r10.
+			'MEMCTX_SHARED' -> 16r2.
+			'MEMCTX_TASK' -> 16r1.
+			'REGCLS_MULTI_SEPARATE' -> 16r2.
+			'REGCLS_MULTIPLEUSE' -> 16r1
+		}!
 
 External.Structure
 	subclass: #'OS.COM.COAUTHIDENTITY'
@@ -388,7 +393,7 @@ External.Structure
 	subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
-	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.COM.OLEConstants})
+	imports: #(#{OS.Win32Error private} #{OS.COM.OLELibrary private})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
 			'_Interface_Size' -> 16r10.
@@ -467,7 +472,7 @@ External.FinalizableStructure
 	subclass: #'OS.COM.EXCEPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
+	imports: #(#{OS.HRESULT private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_EXCEPINFO_Size' -> 16r20.
@@ -644,7 +649,7 @@ hresult
 	"Answer the <HRESULT> error code associated with the receiver.
 	Overridden by subclasses to answer more specified HRESULT codes."
 
-	^OS.HRESULT fromInteger: E_INVALIDARG! !
+	^OS.HRESULT fromInteger: OS.HRESULT.E_INVALIDARG! !
 
 !Core.InvalidArgumentError categoriesForMethods!
 hresult!accessing!public! !
@@ -892,11 +897,11 @@ copyToCOMTaskMemory
 	"Answer a block of COM Task Memory into which the bytes of the receiver have been copied."
 
 	| pDest stringType size |
-	size := VMConstants.IntPtrSize * self length.
+	size := VMLibrary.IntPtrSize * self length.
 	pDest := COM.TaskMemory new: size.
 	stringType := self stringClass.
 	0 to: size - 1
-		by: VMConstants.IntPtrSize
+		by: VMLibrary.IntPtrSize
 		do: 
 			[:i |
 			pDest uintPtrAtOffset: i

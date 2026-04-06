@@ -4,11 +4,72 @@ UI.ValueConvertingControlView
 	subclass: #'UI.Slider'
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
 	classVariableNames: ''
-	imports: #(#{OS.TrackBarConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'HorizontalTickStyles'
 				-> (IdentityDictionary withAll: { #bothSides -> 16r8. #bottom -> 16r0. #top -> 16r4 }).
+			'TB_BOTTOM' -> 16r7.
+			'TB_ENDTRACK' -> 16r8.
+			'TB_LINEDOWN' -> 16r1.
+			'TB_LINEUP' -> 16r0.
+			'TB_PAGEDOWN' -> 16r3.
+			'TB_PAGEUP' -> 16r2.
+			'TB_THUMBPOSITION' -> 16r4.
+			'TB_THUMBTRACK' -> 16r5.
+			'TB_TOP' -> 16r6.
+			'TBM_CLEARSEL' -> 16r413.
+			'TBM_CLEARTICS' -> 16r409.
+			'TBM_GETBUDDY' -> 16r421.
+			'TBM_GETCHANNELRECT' -> 16r41A.
+			'TBM_GETLINESIZE' -> 16r418.
+			'TBM_GETNUMTICS' -> 16r410.
+			'TBM_GETPAGESIZE' -> 16r416.
+			'TBM_GETPOS' -> 16r400.
+			'TBM_GETPTICS' -> 16r40E.
+			'TBM_GETRANGEMAX' -> 16r402.
+			'TBM_GETRANGEMIN' -> 16r401.
+			'TBM_GETSELEND' -> 16r412.
+			'TBM_GETSELSTART' -> 16r411.
+			'TBM_GETTHUMBLENGTH' -> 16r41C.
+			'TBM_GETTHUMBRECT' -> 16r419.
+			'TBM_GETTIC' -> 16r403.
+			'TBM_GETTICPOS' -> 16r40F.
+			'TBM_GETTOOLTIPS' -> 16r41E.
+			'TBM_GETUNICODEFORMAT' -> 16r2006.
+			'TBM_SETBUDDY' -> 16r420.
+			'TBM_SETLINESIZE' -> 16r417.
+			'TBM_SETPAGESIZE' -> 16r415.
+			'TBM_SETPOS' -> 16r405.
+			'TBM_SETRANGE' -> 16r406.
+			'TBM_SETRANGEMAX' -> 16r408.
+			'TBM_SETRANGEMIN' -> 16r407.
+			'TBM_SETSEL' -> 16r40A.
+			'TBM_SETSELEND' -> 16r40C.
+			'TBM_SETSELSTART' -> 16r40B.
+			'TBM_SETTHUMBLENGTH' -> 16r41B.
+			'TBM_SETTIC' -> 16r404.
+			'TBM_SETTICFREQ' -> 16r414.
+			'TBM_SETTIPSIDE' -> 16r41F.
+			'TBM_SETTOOLTIPS' -> 16r41D.
+			'TBM_SETUNICODEFORMAT' -> 16r2005.
+			'TBS_AUTOTICKS' -> 16r1.
+			'TBS_BOTH' -> 16r8.
+			'TBS_BOTTOM' -> 16r0.
+			'TBS_ENABLESELRANGE' -> 16r20.
+			'TBS_FIXEDLENGTH' -> 16r40.
+			'TBS_HORZ' -> 16r0.
+			'TBS_LEFT' -> 16r4.
+			'TBS_NOTHUMB' -> 16r80.
+			'TBS_NOTICKS' -> 16r10.
+			'TBS_RIGHT' -> 16r0.
+			'TBS_TOOLTIPS' -> 16r100.
+			'TBS_TOP' -> 16r4.
+			'TBS_VERT' -> 16r2.
+			'TBTS_BOTTOM' -> 16r2.
+			'TBTS_LEFT' -> 16r1.
+			'TBTS_RIGHT' -> 16r3.
+			'TBTS_TOP' -> 16r0.
 			'TickStyleMask' -> 16rC.
 			'VerticalTickStyles'
 				-> (IdentityDictionary withAll: { #bothSides -> 16r8. #left -> 16r4. #right -> 16r0 })
@@ -286,21 +347,10 @@ tbmGetBuddy: aBoolean
 
 	^self sendMessage: TBM_GETBUDDY wParam: aBoolean asParameter!
 
-tbmGetTicPos: anInteger 
-	"Private - Answer the physical position (on the trackbar) in pixels of the anInteger'th tick 
-	or -1 if anInteger is invalid"
-
-	^self sendMessage: TBM_GETTICPOS wParam: anInteger!
-
 tbmGetToolTips
 	"Private - Answer the handle of the tooltip control associated with the trackbar"
 
 	^self sendMessage: TBM_GETTOOLTIPS!
-
-tbmGetUnicodeFormat
-	"Private - Answer the UNICODE character format for the control"
-
-	^self sendMessage: TBM_GETUNICODEFORMAT!
 
 tbmSetBuddy: aBoolean handle: aHandle 
 	"Private - Set the buddy window at aBoolean (Top/Left or Bottom/Right) to be the window with
@@ -442,9 +492,7 @@ selectionRange:!accessing!public! !
 state!accessing!private! !
 tbmClearSel!helpers!private! !
 tbmGetBuddy:!helpers!private! !
-tbmGetTicPos:!helpers!private! !
 tbmGetToolTips!helpers!private! !
-tbmGetUnicodeFormat!helpers!private! !
 tbmSetBuddy:handle:!helpers!private! !
 tbmSetTipSide:!helpers!private! !
 tbmSetToolTips:!helpers!private! !
@@ -475,7 +523,7 @@ initialize
 	"
 
 	CommCtrlLibrary addInitFlag: ICC_BAR_CLASSES.
-	self addClassConstant: 'TickStyleMask' value: ##(TBS_TOP | TBS_BOTH | TBS_BOTTOM).
+	self addClassConstant: 'TickStyleMask' value: TBS_TOP | TBS_BOTH | TBS_BOTTOM.
 	self addClassConstant: 'HorizontalTickStyles'
 		value: (IdentityDictionary
 				withAll: { #top -> TBS_TOP. #bottom -> TBS_BOTTOM. #bothSides -> TBS_BOTH }).

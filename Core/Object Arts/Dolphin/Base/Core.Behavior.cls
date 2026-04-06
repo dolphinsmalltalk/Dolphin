@@ -195,29 +195,29 @@ basicNew
 		NonInstantiable		- The receiver class is non-instantiable (abstract)."
 
 	<primitive: 70>
-	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self basicNew: 0].
-	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
+	_failureCode == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^self basicNew: 0].
+	_failureCode == VMLibrary.PrimitiveNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
 basicNew: aSmallInteger
 	"Private - As #new:, but must not be overridden by subclasses."
 
 	<primitive: 71>
-	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
-	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
+	_failureCode == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^Error notIndexable: self].
+	_failureCode == VMLibrary.PrimitiveNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
 basicNewFixed: aSmallInteger
 	"Private - As #newFixed:, but must not be overridden by subclasses."
-	
+
 	"Primitive failure reasons:
 		InvalidParameter1	- the argument is not a positive <SmallInteger>.
 		NonInstantiable		- the receiver is non-instantiable (abstract).
 		ObjectTypeMismatch	- the receiver is not an indexable byte class."
 
 	<primitive: 76>
-	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self errorNotPinnable].
-	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
+	_failureCode == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^self errorNotPinnable].
+	_failureCode == VMLibrary.PrimitiveNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
 bindingFor: aString 
@@ -332,7 +332,7 @@ dynamicSelectorsDo: aMonadicValuable
 	"To be overridden by subclasses that handle #doesNotUnderstand: to process additional messages."!
 
 elementSize
-	^self isPointers ifTrue: [VMConstants.IntPtrSize] ifFalse: [self extraInstanceSpec]!
+	^self isPointers ifTrue: [VMLibrary.IntPtrSize] ifFalse: [self extraInstanceSpec]!
 
 environment
 	"Answer the receiver's name space."
@@ -624,8 +624,8 @@ new
 		NonInstantiable		- The receiver class is non-instantiable (abstract)."
 
 	<primitive: 70>
-	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self new: 0].
-	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
+	_failureCode == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^self new: 0].
+	_failureCode == VMLibrary.PrimitiveNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
 new: aSmallInteger
@@ -643,8 +643,8 @@ new: aSmallInteger
 		ObjectTypeMismatch	- the receiver's instances are not indexable and arg ~= 0."
 
 	<primitive: 71>
-	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
-	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
+	_failureCode == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^Error notIndexable: self].
+	_failureCode == VMLibrary.PrimitiveNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
 new: numSmallInteger max: maxSmallInteger
@@ -660,9 +660,9 @@ new: numSmallInteger max: maxSmallInteger
 		NoMemory		- There was insufficient virtual address space available to reserve the requested maximum size, or insufficient free memory to commit the initial size"
 
 	<primitive: 90>
-	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
-	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
-	_failureCode == _PrimitiveFailureCode.NoMemory ifTrue: [^OutOfMemoryError signal].
+	_failureCode == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^Error notIndexable: self].
+	_failureCode == VMLibrary.PrimitiveNonInstantiable ifTrue: [^self errorNonInstantiable].
+	_failureCode == VMLibrary.PrimitiveNoMemory ifTrue: [^OutOfMemoryError signal].
 	self primitiveFailed: _failureCode!
 
 newFixed: aSmallInteger
@@ -674,8 +674,8 @@ newFixed: aSmallInteger
 		ObjecTypeMismatch	- the receiver is not an indexable byte class."
 
 	<primitive: 76>
-	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self errorNotPinnable].
-	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
+	_failureCode == VMLibrary.PrimitiveObjectTypeMismatch ifTrue: [^self errorNotPinnable].
+	_failureCode == VMLibrary.PrimitiveNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
 notifyMethodRemoved: aCompiledMethod

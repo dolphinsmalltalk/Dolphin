@@ -4,7 +4,7 @@ External.Tests.GenericExternalArrayTest
 	subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors} #{OS.COM.OleVariant})
+	imports: #(#{OS.Win32Error} #{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

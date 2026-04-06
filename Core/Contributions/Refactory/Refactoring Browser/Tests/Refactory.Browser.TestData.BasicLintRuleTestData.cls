@@ -4,9 +4,9 @@ Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors} #{OS.FacilityCodes})
+	imports: #(#{OS.Win32Error} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
-	classConstants: { 'ERROR_FILE_EXISTS' -> 'Shadow' }!
+	classConstants: { 'CErrArrayNotClosed' -> 'Shadow' }!
 
 Refactory.Browser.TestData.BasicLintRuleTestData guid: (Core.GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
 
@@ -57,13 +57,11 @@ sharedVarRefs
 	"Refs to shared variables, includes a class var and inherited class var shadowing same named imported variables."
 
 	^{
-		ENOENT.
+		_MAX_FNAME.
 		ERROR_FILE_NOT_FOUND.
-		ERROR_FILE_EXISTS.
-		OS.Win32Errors.ERROR_FILE_EXISTS.
-		FACILITY_WIN32.
-		OS.FacilityCodes.FACILITY_WIN32
-		LintRuleTestData.Const1.
+		CErrArrayNotClosed.
+		Kernel.ParseErrorCodes.CErrArrayNotClosed.
+		#{Refactory.Browser.TestData.LintRuleTestData.Const1}.
 		Const1
 	}!
 

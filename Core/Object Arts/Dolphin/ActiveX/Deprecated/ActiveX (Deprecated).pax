@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX (Deprecated)'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Support (Deprecated Classes and Methods)
 
@@ -9,117 +9,66 @@ This package includes legacy classes and methods from Dolphin''s Active-X framew
 package basicPackageVersion: '6.0'.
 
 
-package setClassNames: #(
-	#{Smalltalk.OLELockFileBytes}
-).
+package methodNames
+	add: #BSTR -> #asAnsiString;
+	add: #BSTR -> #asUnicodeString;
+	add: #DATE -> #asDate;
+	add: #DATE -> #asTimeStamp;
+	add: #Date -> #initializeVariant:;
+	add: #FUNCDESC -> #retTypeName;
+	add: #LPBSTR -> #asUnicodeString;
+	add: #MemberDesc -> #argumentTypeNames;
+	add: #TimeStamp -> #asFloat;
+	add: #TimeStamp -> #initializeVariant:;
+	add: #VARIANT -> #byte;
+	add: #VARIANT -> #byte:;
+	add: #VARIANT -> #dword;
+	add: #VARIANT -> #dword:;
+	add: #VARIANT -> #qword;
+	add: #VARIANT -> #qword:;
+	add: #VARIANT -> #sbyte;
+	add: #VARIANT -> #sbyte:;
+	add: #VARIANT -> #sdword;
+	add: #VARIANT -> #sdword:;
+	add: #VARIANT -> #sqword;
+	add: #VARIANT -> #sqword:;
+	add: #VARIANT -> #sword;
+	add: #VARIANT -> #sword:;
+	add: #VARIANT -> #word;
+	add: #VARIANT -> #word:;
+	add: 'AXRecord class' -> #newWithRecordInfo:;
+	add: 'BSTR class' -> #fromObject:;
+	add: 'DATE class' -> #max;
+	add: 'DATE class' -> #min;
+	add: 'ExternalStructure class' -> #fromObject:;
+	add: 'TimeStamp class' -> #fromDATE:;
+	yourself.
 
-package setMethodNames: #(
-	#(#{Core.Date} #initializeVariant:)
-	#(#{Core.TimeStamp} #asFloat)
-	#(#{Core.TimeStamp} #initializeVariant:)
-	#(#{Core.TimeStamp class} #fromDATE:)
-	#(#{External.Structure class} #fromObject:)
-	#(#{OS.COM.BSTR} #asAnsiString)
-	#(#{OS.COM.BSTR} #asUnicodeString)
-	#(#{OS.COM.BSTR class} #fromObject:)
-	#(#{OS.COM.DATE} #asDate)
-	#(#{OS.COM.DATE} #asTimeStamp)
-	#(#{OS.COM.DATE class} #max)
-	#(#{OS.COM.DATE class} #min)
-	#(#{OS.COM.FUNCDESC} #retTypeName)
-	#(#{OS.COM.LPBSTR} #asUnicodeString)
-	#(#{OS.COM.MemberDesc} #argumentTypeNames)
-	#(#{OS.COM.Record class} #newWithRecordInfo:)
-	#(#{OS.COM.VARIANT} #byte)
-	#(#{OS.COM.VARIANT} #byte:)
-	#(#{OS.COM.VARIANT} #dword)
-	#(#{OS.COM.VARIANT} #dword:)
-	#(#{OS.COM.VARIANT} #qword)
-	#(#{OS.COM.VARIANT} #qword:)
-	#(#{OS.COM.VARIANT} #sbyte)
-	#(#{OS.COM.VARIANT} #sbyte:)
-	#(#{OS.COM.VARIANT} #sdword)
-	#(#{OS.COM.VARIANT} #sdword:)
-	#(#{OS.COM.VARIANT} #sqword)
-	#(#{OS.COM.VARIANT} #sqword:)
-	#(#{OS.COM.VARIANT} #sword)
-	#(#{OS.COM.VARIANT} #sword:)
-	#(#{OS.COM.VARIANT} #word)
-	#(#{OS.COM.VARIANT} #word:)
-).
+package globalNames
+	add: #AXAutomationConstants;
+	add: #AXAutomationErrors;
+	add: #OLEConstants;
+	add: #OLEPersistConstants;
+	add: #ShellConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\Automation\ActiveX Automation'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Legacy Date & Time'
-	'..\COM\OLE COM'
-	'..\Structured Storage\OLE Streams'
-	'..\Structured Storage\OLE Structured Storage'
-).
+	'..\COM\OLE COM').
 
 package!
 
-"Class Definitions"!
-
-OS.COM.LockBytesAbstract
-	subclass: #OLELockFileBytes
-	instanceVariableNames: 'file'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
 "Loose Methods"!
 
-!Core.Date methodsFor!
-
-initializeVariant: anOleVariant
-	"Private - Initialize the variant argument to be a VT_DATE representation of the receiver."
-
-	self asSYSTEMTIME initializeVariant: anOleVariant! !
-
-!Core.Date categoriesForMethods!
-initializeVariant:!converting!private! !
-!
-
-!Core.TimeStamp methodsFor!
-
-asFloat
-	"Answer the OLEDATE representation of the receiver."
-
-	^self asParameter asFloat!
-
-initializeVariant: anOleVariant
-	self asDateAndTime initializeVariant: anOleVariant! !
-
-!Core.TimeStamp categoriesForMethods!
-asFloat!converting!public! !
-initializeVariant:!converting!private! !
-!
-
-!Core.TimeStamp class methodsFor!
-
-fromDATE: aDATE
-	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, aDATE, which
-	is assumed to be an AX Automation format Date."
-
-	^self fromDateAndTime: aDATE asDateAndTime! !
-
-!Core.TimeStamp class categoriesForMethods!
-fromDATE:!instance creation!private! !
-!
-
-!External.Structure class methodsFor!
-
-fromObject: anObject 
-	#deprecated.
-	^self marshal: anObject! !
-
-!External.Structure class categoriesForMethods!
-fromObject:!instance creation!public! !
-!
-
-!OS.COM.BSTR methodsFor!
+!BSTR methodsFor!
 
 asAnsiString
 	"Answer an ANSI-encoded string representation of the receiver. If any of the elements of the receiver cannot be represented as ANSI code points, then these will be translated to the default replacement character ($?)."
@@ -131,22 +80,33 @@ asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
 
-!OS.COM.BSTR categoriesForMethods!
+!BSTR categoriesForMethods!
 asAnsiString!converting!public! !
 asUnicodeString!converting!public! !
 !
 
-!OS.COM.BSTR class methodsFor!
+!BSTR class methodsFor!
 
 fromObject: anObject
 	#deprecated.
 	^self marshal: anObject! !
 
-!OS.COM.BSTR class categoriesForMethods!
+!BSTR class categoriesForMethods!
 fromObject:!instance creation!public! !
 !
 
-!OS.COM.DATE methodsFor!
+!Date methodsFor!
+
+initializeVariant: anOleVariant
+	"Private - Initialize the variant argument to be a VT_DATE representation of the receiver."
+
+	self asSYSTEMTIME initializeVariant: anOleVariant! !
+
+!Date categoriesForMethods!
+initializeVariant:!converting!private! !
+!
+
+!DATE methodsFor!
 
 asDate
 	Notification deprecated.
@@ -156,12 +116,12 @@ asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
 
-!OS.COM.DATE categoriesForMethods!
+!DATE categoriesForMethods!
 asDate!converting!public! !
 asTimeStamp!converting!public! !
 !
 
-!OS.COM.DATE class methodsFor!
+!DATE class methodsFor!
 
 max
 	#deprecated.
@@ -171,52 +131,89 @@ min
 	#deprecated.
 	^self minimum! !
 
-!OS.COM.DATE class categoriesForMethods!
+!DATE class categoriesForMethods!
 max!instance creation!public! !
 min!instance creation!public! !
 !
 
-!OS.COM.FUNCDESC methodsFor!
+!FUNCDESC methodsFor!
 
 retTypeName
 	Notification deprecated.
 	^self tdescFunc typeName! !
 
-!OS.COM.FUNCDESC categoriesForMethods!
+!FUNCDESC categoriesForMethods!
 retTypeName!accessing!public! !
 !
 
-!OS.COM.LPBSTR methodsFor!
+!LPBSTR methodsFor!
 
 asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
 
-!OS.COM.LPBSTR categoriesForMethods!
+!LPBSTR categoriesForMethods!
 asUnicodeString!converting!public! !
 !
 
-!OS.COM.MemberDesc methodsFor!
+!MemberDesc methodsFor!
 
 argumentTypeNames
 	Notification deprecated.
 	^self arguments collect: [:e | e typeName]! !
 
-!OS.COM.MemberDesc categoriesForMethods!
+!MemberDesc categoriesForMethods!
 argumentTypeNames!accessing!public! !
 !
 
-!OS.COM.Record class methodsFor!
+!AXRecord class methodsFor!
 
 newWithRecordInfo: anIRecordInfo
 	#deprecated.
 	^self newWithInfo: anIRecordInfo! !
 
-!OS.COM.Record class categoriesForMethods!
+!AXRecord class categoriesForMethods!
 newWithRecordInfo:!instance creation!public! !
 !
 
-!OS.COM.VARIANT methodsFor!
+!ExternalStructure class methodsFor!
+
+fromObject: anObject 
+	#deprecated.
+	^self marshal: anObject! !
+
+!ExternalStructure class categoriesForMethods!
+fromObject:!instance creation!public! !
+!
+
+!TimeStamp methodsFor!
+
+asFloat
+	"Answer the OLEDATE representation of the receiver."
+
+	^self asParameter asFloat!
+
+initializeVariant: anOleVariant
+	self asDateAndTime initializeVariant: anOleVariant! !
+
+!TimeStamp categoriesForMethods!
+asFloat!converting!public! !
+initializeVariant:!converting!private! !
+!
+
+!TimeStamp class methodsFor!
+
+fromDATE: aDATE
+	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, aDATE, which
+	is assumed to be an AX Automation format Date."
+
+	^self fromDateAndTime: aDATE asDateAndTime! !
+
+!TimeStamp class categoriesForMethods!
+fromDATE:!instance creation!private! !
+!
+
+!VARIANT methodsFor!
 
 byte
 	#deprecated.
@@ -282,7 +279,7 @@ word: newValue
 	#deprecated.
 	self uint16: newValue! !
 
-!OS.COM.VARIANT categoriesForMethods!
+!VARIANT categoriesForMethods!
 byte!accessing!public! !
 byte:!accessing!public! !
 dword!accessing!public! !

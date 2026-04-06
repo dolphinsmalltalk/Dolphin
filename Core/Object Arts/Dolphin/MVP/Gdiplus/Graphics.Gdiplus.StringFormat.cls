@@ -4,7 +4,7 @@ Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.StringFormat'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Core.Locale private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -189,7 +189,7 @@ far
 flags: formatFlags
 	"Answer an instance of the receiver specified by formatFlags and using the user's default language."
 
-	^self flags: formatFlags language: OS.NlsConstants.LANG_NEUTRAL!
+	^self flags: formatFlags language: LANG_NEUTRAL!
 
 flags: formatFlags language: languageId
 	"Answer an instance of the receiver whose characteristics are set by <integer> formatFlags (zero or more StringFormatFlags constants) and the specified <integer> language id."
@@ -210,7 +210,7 @@ near
 new
 	"Answer an instance of the receiver with no format flags set and which uses the user's default language."
 
-	^self flags: 0 language: OS.NlsConstants.LANG_NEUTRAL! !
+	^self flags: 0 language: LANG_NEUTRAL! !
 
 !Graphics.Gdiplus.StringFormat class categoriesForMethods!
 centered!instance creation!public! !

@@ -46,33 +46,6 @@ forwardTo: anObject withArguments: anArgumentArray
 isSelfEvaluating
 	^receiver isSelfEvaluating and: [args isSelfEvaluating]!
 
-printOn: aPuttableStream
-	"Append a short textual description of the receiver to the <puttableStream>, target, in the form a developer might want to see it, preferring an evaluable representation if available."
-
-	| argCount |
-	self isSelfEvaluating
-		ifTrue: 
-			[aPuttableStream
-				nextPutAll: self class name;
-				nextPutAll: ' receiver: ';
-				print: receiver;
-				nextPutAll: ' selector: ';
-				print: selector.
-			argCount := args size.
-			argCount > 0
-				ifTrue: 
-					[argCount == 1
-						ifTrue: 
-							[aPuttableStream
-								nextPutAll: ' argument: ';
-								print: args first]
-						ifFalse: 
-							[aPuttableStream
-								nextPutAll: ' arguments: ';
-								print: args]]]
-		ifFalse: 
-			[super printOn: aPuttableStream]!
-
 receiver
 	^receiver!
 
@@ -86,7 +59,6 @@ receiver: anObject selector: aSymbol arguments: anArray
 !Core.MessageSend categoriesForMethods!
 forwardTo:withArguments:!evaluating!private! !
 isSelfEvaluating!private!testing! !
-printOn:!printing!public! !
 receiver!accessing!public! !
 receiver:selector:arguments:!initializing!private! !
 !

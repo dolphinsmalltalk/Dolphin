@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Database.DBAbstractRow'
 	instanceVariableNames: 'columns contents selectors status'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

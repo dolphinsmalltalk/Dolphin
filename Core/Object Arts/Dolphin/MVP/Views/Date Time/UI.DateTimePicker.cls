@@ -6,7 +6,40 @@ UI.DateTimeCommonControl
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DTM_GETMCCOLOR' -> 16r1007.
+			'DTM_GETMCFONT' -> 16r100A.
+			'DTM_GETMONTHCAL' -> 16r1008.
+			'DTM_GETRANGE' -> 16r1003.
+			'DTM_GETSYSTEMTIME' -> 16r1001.
+			'DTM_SETFORMATW' -> 16r1032.
+			'DTM_SETMCCOLOR' -> 16r1006.
+			'DTM_SETMCFONT' -> 16r1009.
+			'DTM_SETRANGE' -> 16r1004.
+			'DTM_SETSYSTEMTIME' -> 16r1002.
+			'DTN_CLOSEUP' -> -16r2F1.
+			'DTN_DATETIMECHANGE' -> -16r2F7.
+			'DTN_DROPDOWN' -> -16r2F2.
+			'DTN_FIRST' -> -16r2E4.
+			'DTN_FIRST2' -> -16r2F1.
+			'DTN_FORMATA' -> -16r2F4.
+			'DTN_FORMATQUERYA' -> -16r2F3.
+			'DTN_FORMATQUERYW' -> -16r2E6.
+			'DTN_FORMATW' -> -16r2E7.
+			'DTN_LAST' -> -16r2E9.
+			'DTN_LAST2' -> -16r31F.
+			'DTN_USERSTRINGA' -> -16r2F6.
+			'DTN_USERSTRINGW' -> -16r2E9.
+			'DTN_WMKEYDOWNA' -> -16r2F5.
+			'DTN_WMKEYDOWNW' -> -16r2E8.
+			'DTS_APPCANPARSE' -> 16r10.
+			'DTS_LONGDATEFORMAT' -> 16r4.
+			'DTS_RIGHTALIGN' -> 16r20.
+			'DTS_SHORTDATEFORMAT' -> 16r0.
+			'DTS_SHOWNONE' -> 16r2.
+			'DTS_TIMEFORMAT' -> 16r9.
+			'DTS_UPDOWN' -> 16r1
+		}!
 
 UI.DateTimePicker guid: (Core.GUID fromString: '{87b4c735-026e-11d3-9fd7-00a0cc3e4a32}')!
 

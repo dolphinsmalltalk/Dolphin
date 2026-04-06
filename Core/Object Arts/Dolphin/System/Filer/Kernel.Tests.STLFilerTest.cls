@@ -411,7 +411,7 @@ testStl3Literals
 	"STL v3 format from Dolphin 6. Only Integers (small and large), Strings, Symbols and ByteArrays actually get emitted as literals, not Characters, nil, true and false. Classes were emitted as ##() expression, as were PoolConstantDictionary objects since these were known globals, although in practice very unlikely to be encountered. Processor and Smalltalk globals were pre-registered."
 
 	| stl3 rehydrated literals |
-	literals := #(1 9223372036854775808 'a†b' #foo 1.0 true false nil #(123) #[123] $A $€ ##(Smalltalk) ##(Object) ##(Processor) ##(Win32Constants)).
+	literals := #(1 9223372036854775808 'a†b' #foo 1.0 true false nil #(123) #[123] $A $€ ##(Smalltalk) ##(Object) ##(Processor) ##(Smalltalk.Win32Constants)).
 	stl3 := #(#'!!STL' 3 98 16 3 8 9223372036854775808 8 'a†b' 8 #foo 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 240 63 16 32 0 98 1 247 8 #[123] 1044 2052 48 8 ##(Smalltalk.Object) 64 8 ##(Smalltalk.Win32Constants)).
 	rehydrated := Object fromLiteralStoreArray: stl3.
 	self assert: rehydrated equals: literals.
@@ -437,7 +437,7 @@ testStl4Literals
 				Object.
 				Smalltalk.
 				Processor.
-				Win32Constants
+				Smalltalk.Win32Constants
 			}.
 	stl := self literalStoreArrayOf: literals version: 4.
 	self assert: stl

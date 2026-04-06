@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.SQL_TIME_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_hour' -> 16r0.
@@ -34,7 +34,7 @@ dbConvert: anObject for: aDBField
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_TIME!
+	^SQL_C_TIME!
 
 time: aTime
 	"Set the receiver's fields from the <Time> argument."

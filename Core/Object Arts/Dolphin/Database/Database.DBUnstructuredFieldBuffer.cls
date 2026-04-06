@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Database.DBUnstructuredFieldBuffer'
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes} #{OS.ODBCRetCodes} #{OS.ODBCTypes})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -37,7 +37,7 @@ dbConvert: anObject for: aDBField
 	(anObject isKindOf: self valueClass) ifTrue: [^anObject].
 	OS.HRESULTError
 		signal: '<3d> expected, not <1s> (<2d>)' << { anObject basicPrintString. anObject. self valueClass }
-		with: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH.
+		with: OS.HRESULT.STATUS_OBJECT_TYPE_MISMATCH.
 	^nil!
 
 dbInterchangeType

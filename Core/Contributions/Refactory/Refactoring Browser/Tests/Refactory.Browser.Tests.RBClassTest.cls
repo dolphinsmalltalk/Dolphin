@@ -148,8 +148,8 @@ testDefinesMethod
 testDefinesPoolDictionary
 	self deny: (objectClass importsNamespace: 'Kernel.OpcodePool').
 	self assert: (newClass importsNamespace: 'Kernel.OpcodePool').
-	self deny: (messageNodeClass importsNamespace: 'OS.Win32Constants').
-	self assert: ((RBModel new classNamed: 'OS.HRESULTError') importsNamespace: 'OS.FacilityCodes')!
+	self deny: (messageNodeClass importsNamespace: 'OS.UserLibrary').
+	self assert: ((RBModel new classNamed: 'OS.HRESULTError') importsNamespace: 'OS.HRESULT')!
 
 testDefinitionString
 	self assert: objectClass definition

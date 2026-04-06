@@ -71,7 +71,7 @@ allowedOrigins
 		do: 
 			[:i |
 			| pwsz |
-			pwsz := pStrings uintPtrAtOffset: (i - 1) * Kernel.VMConstants.IntPtrSize.
+			pwsz := pStrings uintPtrAtOffset: (i - 1) * Kernel.VMLibrary.IntPtrSize.
 			allowedOrigins at: i put: (Utf16String fromAddress: pwsz).
 			self assert: [(taskAllocator DidAlloc: pwsz) ~~ 0].
 			taskAllocator Free: pwsz].

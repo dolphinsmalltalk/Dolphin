@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Graphics.GraphicsTool'
 	instanceVariableNames: 'handle ownsHandle'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.GDILibrary private} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

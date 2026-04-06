@@ -44,5 +44,6 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\ActiveX\Components\WebView2\WebView2 Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\CNG\Tests\Windows Crypto NG Tests.pax';
+	install: 'Core\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views Tests.pax';
 	yourself.
 !

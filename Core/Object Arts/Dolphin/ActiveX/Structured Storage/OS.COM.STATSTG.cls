@@ -4,7 +4,7 @@ External.FinalizableStructure
 	subclass: #'OS.COM.STATSTG'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_atime' -> 16r20.
@@ -18,7 +18,31 @@ External.FinalizableStructure
 			'_OffsetOf_pwcsName' -> 16r0.
 			'_OffsetOf_reserved' -> 16r44.
 			'_OffsetOf_type' -> 16r4.
-			'_STATSTG_Size' -> 16r48
+			'_STATSTG_Size' -> 16r48.
+			'STATFLAG_DEFAULT' -> 16r0.
+			'STATFLAG_NONAME' -> 16r1.
+			'STATFLAG_NOOPEN' -> 16r2.
+			'STGM_CONVERT' -> 16r20000.
+			'STGM_CREATE' -> 16r1000.
+			'STGM_DELETEONRELEASE' -> 16r4000000.
+			'STGM_DIRECT' -> 16r0.
+			'STGM_FAILIFTHERE' -> 16r0.
+			'STGM_NOSCRATCH' -> 16r100000.
+			'STGM_NOSNAPSHOT' -> 16r200000.
+			'STGM_PRIORITY' -> 16r40000.
+			'STGM_READ' -> 16r0.
+			'STGM_READWRITE' -> 16r2.
+			'STGM_SHARE_DENY_NONE' -> 16r40.
+			'STGM_SHARE_DENY_READ' -> 16r30.
+			'STGM_SHARE_DENY_WRITE' -> 16r20.
+			'STGM_SHARE_EXCLUSIVE' -> 16r10.
+			'STGM_SIMPLE' -> 16r8000000.
+			'STGM_TRANSACTED' -> 16r10000.
+			'STGM_WRITE' -> 16r1.
+			'STGTY_LOCKBYTES' -> 16r3.
+			'STGTY_PROPERTY' -> 16r4.
+			'STGTY_STORAGE' -> 16r1.
+			'STGTY_STREAM' -> 16r2
 		}!
 
 OS.COM.STATSTG guid: (Core.GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!

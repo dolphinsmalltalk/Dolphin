@@ -21,6 +21,8 @@ package setPrerequisites: #(
 	'..\Dolphin Message Box'
 	'..\..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\..\MVP\Tests\Dolphin MVP Tests'
+	'..\..\..\..\MVP\Views\Buttons\Dolphin Push Buttons'
+	'..\..\..\..\MVP\Presenters\Radio\Dolphin Radio Buttons'
 	'..\..\..\..\Registry\Dolphin Registry Access'
 ).
 
@@ -32,7 +34,7 @@ Core.Tests.DolphinTest
 	subclass: #'UI.Tests.MessageBoxTest'
 	instanceVariableNames: 'subject enablement defaultButton buttonLabels caption radioButtonLabels metrics'
 	classVariableNames: ''
-	imports: #(#{OS.MessageBoxConstants} #{OS.TaskDialogConstants})
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

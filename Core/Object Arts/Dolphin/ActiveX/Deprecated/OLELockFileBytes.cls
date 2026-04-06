@@ -1,20 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.LockBytesAbstract
-	subclass: #OLELockFileBytes
+OLELockBytesAbstract subclass: #OLELockFileBytes
 	instanceVariableNames: 'file'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: 'OLEStructuredStorageConstants Win32Errors'
+	classInstanceVariableNames: ''!
 
-OLELockFileBytes guid: (Core.GUID fromString: '{043e5261-ad92-11d3-b376-080046056106}')!
+OLELockFileBytes guid: (GUID fromString: '{043e5261-ad92-11d3-b376-080046056106}')!
 
 OLELockFileBytes comment: '`OLELockFileBytes` is an implementation of the `ILockBytes` interface on to an arbitrary `File`. 
 
 `OLELockFileBytes` was originally implemented in Dolphin because the Windows of the time (Windows 95/98) did not provide a standard implementation of `ILockBytes` against a file, making it difficult to connect an `IStream` to an arbitrary file without first copying its contents into a global memory block, however later versions of Windows included SHCreateStreamOnFile. Windows XP added SHCreateStreamOnFileEx. The class is, therefore, no longer required and is deprecated.'!
 
-!OLELockFileBytes categoriesForClass!COM-Implementations! !
+!OLELockFileBytes categoriesForClass!Deprecated! !
 
 !OLELockFileBytes methodsFor!
 
@@ -89,7 +87,7 @@ on: aFile
 
 	^self new
 		file: aFile;
-		queryInterface: OS.COM.ILockBytes! !
+		queryInterface: ILockBytes! !
 
 !OLELockFileBytes class categoriesForMethods!
 on:!instance creation!public! !

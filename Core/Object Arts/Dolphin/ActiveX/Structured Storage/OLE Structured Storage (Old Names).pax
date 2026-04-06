@@ -8,16 +8,18 @@ Aliases for namespaced OLE Structured Storage classes that might be referenced f
 
 
 package setVariableNames: #(
+	#{Smalltalk.ILockBytes}
 	#{Smalltalk.IStorage}
 	#{Smalltalk.IStream}
-	#{Smalltalk.OLEStructuredStorageConstants}
+	#{Smalltalk.OLELockBytesAbstract}
 	#{Smalltalk.URLMonLibrary}
 ).
 
 package setAliasVariableNames: #(
+	#{Smalltalk.ILockBytes}
 	#{Smalltalk.IStorage}
 	#{Smalltalk.IStream}
-	#{Smalltalk.OLEStructuredStorageConstants}
+	#{Smalltalk.OLELockBytesAbstract}
 	#{Smalltalk.URLMonLibrary}
 ).
 
@@ -30,11 +32,13 @@ package!
 
 "Variable Aliases"!
 
+Smalltalk.ILockBytes := OS.COM.ILockBytes!
+
 Smalltalk.IStorage := OS.COM.IStorage!
 
 Smalltalk.IStream := OS.COM.IStream!
 
-Smalltalk.OLEStructuredStorageConstants := OS.COM.StorageConstants!
+Smalltalk.OLELockBytesAbstract := OS.COM.LockBytesAbstract!
 
 Smalltalk.URLMonLibrary := OS.COM.URLMonLibrary!
 

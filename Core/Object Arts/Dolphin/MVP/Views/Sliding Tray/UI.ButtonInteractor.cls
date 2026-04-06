@@ -110,7 +110,7 @@ startCaptureOn: aMouseEvent
 	The mouse is captured and will remain so until the button is released or capture
 	is lost for some other reason."
 
-	aMouseEvent message = Win32Constants.WM_MOUSEMOVE 
+	aMouseEvent message = WM_MOUSEMOVE 
 		ifTrue: [self onMouseMoved: aMouseEvent]
 		ifFalse: [self onLeftButtonPressed: aMouseEvent].
 	self captureMouse! !

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Core.File'
 	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private} #{OS private})
+	imports: #(#{OS.KernelLibrary private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AccessFlagsMask' -> -16r8.
@@ -499,7 +499,7 @@ write: aStringOrByteArray startingAt: startIndex count: bytesToWriteInteger
 		checkBoundsOf: aStringOrByteArray
 			startingAt: startIndex
 			for: bytesToWriteInteger;
-		write: (External.Address fromInteger: aStringOrByteArray yourAddress + startIndex - 1)
+		write: (Address fromInteger: aStringOrByteArray yourAddress + startIndex - 1)
 			count: bytesToWriteInteger!
 
 writeByte: anIntegerOrCharacter

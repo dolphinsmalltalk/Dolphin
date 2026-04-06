@@ -103,6 +103,7 @@ package setMethodNames: #(
 	#(#{Kernel.LiteralPrinter class} #icon)
 	#(#{Kernel.MemoryManager class} #icon)
 	#(#{Kernel.MetaBindingReference class} #icon)
+	#(#{Kernel.MethodCompileFailed class} #icon)
 	#(#{Kernel.MethodProtocol class} #icon)
 	#(#{Kernel.Namespace class} #icon)
 	#(#{Kernel.Package class} #icon)
@@ -631,7 +632,7 @@ icon!constants!public! !
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^Graphics.Icon warning! !
+	^Icon warning! !
 
 !Core.OperationAborted class categoriesForMethods!
 icon!constants!public! !
@@ -843,7 +844,7 @@ icon!constants!public! !
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^Graphics.Icon warning! !
+	^Icon warning! !
 
 !Core.UserInterrupt class categoriesForMethods!
 icon!constants!public! !
@@ -1323,6 +1324,17 @@ icon
 		yourself)! !
 
 !Kernel.MetaBindingReference class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Kernel.MethodCompileFailed class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Error icon! !
+
+!Kernel.MethodCompileFailed class categoriesForMethods!
 icon!constants!public! !
 !
 

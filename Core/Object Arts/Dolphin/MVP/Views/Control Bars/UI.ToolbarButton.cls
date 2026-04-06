@@ -4,9 +4,60 @@ UI.ToolbarItem
 	subclass: #'UI.ToolbarButton'
 	instanceVariableNames: 'style commandDescription commandId textcolor font'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.TBBUTTON private})
 	classInstanceVariableNames: ''
-	classConstants: { 'LabelledButtonStyles' -> 16r50 }!
+	classConstants: {
+			'BTNS_AUTOSIZE' -> 16r10.
+			'BTNS_BUTTON' -> 16r0.
+			'BTNS_CHECK' -> 16r2.
+			'BTNS_CHECKGROUP' -> 16r6.
+			'BTNS_DROPDOWN' -> 16r8.
+			'BTNS_GROUP' -> 16r4.
+			'BTNS_NOPREFIX' -> 16r20.
+			'BTNS_SHOWTEXT' -> 16r40.
+			'BTNS_WHOLEDROPDOWN' -> 16r80.
+			'HIST_ADDTOFAVORITES' -> 16r3.
+			'HIST_BACK' -> 16r0.
+			'HIST_FAVORITES' -> 16r2.
+			'HIST_FORWARD' -> 16r1.
+			'HIST_VIEW_SMALL_COLOR' -> 16r8.
+			'HIST_VIEWTREE' -> 16r4.
+			'IDB_HIST_LARGE_COLOR' -> 16r9.
+			'IDB_HIST_SMALL_COLOR' -> 16r8.
+			'IDB_STD_LARGE_COLOR' -> 16r1.
+			'IDB_STD_SMALL_COLOR' -> 16r0.
+			'IDB_VIEW_LARGE_COLOR' -> 16r5.
+			'IDB_VIEW_SMALL_COLOR' -> 16r4.
+			'LabelledButtonStyles' -> 16r50.
+			'STD_COPY' -> 16r1.
+			'STD_CUT' -> 16r0.
+			'STD_DELETE' -> 16r5.
+			'STD_FILENEW' -> 16r6.
+			'STD_FILEOPEN' -> 16r7.
+			'STD_FILESAVE' -> 16r8.
+			'STD_FIND' -> 16rC.
+			'STD_HELP' -> 16rB.
+			'STD_PASTE' -> 16r2.
+			'STD_PRINT' -> 16rE.
+			'STD_PRINTPRE' -> 16r9.
+			'STD_PROPERTIES' -> 16rA.
+			'STD_REDOW' -> 16r4.
+			'STD_REPLACE' -> 16rD.
+			'STD_UNDO' -> 16r3.
+			'VIEW_DETAILS' -> 16r3.
+			'VIEW_LARGEICONS' -> 16r0.
+			'VIEW_LIST' -> 16r2.
+			'VIEW_NETCONNECT' -> 16r9.
+			'VIEW_NETDISCONNECT' -> 16rA.
+			'VIEW_NEWFOLDER' -> 16rB.
+			'VIEW_PARENTFOLDER' -> 16r8.
+			'VIEW_SMALLICONS' -> 16r1.
+			'VIEW_SORTDATE' -> 16r6.
+			'VIEW_SORTNAME' -> 16r4.
+			'VIEW_SORTSIZE' -> 16r5.
+			'VIEW_SORTTYPE' -> 16r7.
+			'VIEW_VIEWMENU' -> 16rC
+		}!
 
 UI.ToolbarButton guid: (Core.GUID fromString: '{5a6ae0df-57b0-4ba0-be4a-c1cd1ccc6def}')!
 

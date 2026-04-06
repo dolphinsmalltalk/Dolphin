@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.DpiAwareness'
 	instanceVariableNames: 'handle name'
 	classVariableNames: 'Awarenesses GdiScaled PerMonitor PerMonitorV1 System Unaware'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AwarenessLevelNames' -> #(#invalid #unaware #system #perMonitor).

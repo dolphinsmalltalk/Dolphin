@@ -158,7 +158,7 @@ testColumnTypeVarCharBoundOverflow
 verifyInvalidFloatValues: aDBParameterizedStatement
 	| fpeMask |
 	"The driver will throw a floating point exceptions since we have unmasked some which it doesn't handle well as the driver is then left in an unrecoverable state."
-	fpeMask := Float exceptionMask: OS.CRTConstants._MCW_EM.
+	fpeMask := Float exceptionMask: OS.CRTLibrary._MCW_EM.
 	[super verifyInvalidFloatValues: aDBParameterizedStatement]
 			ensure: [Float exceptionMask: fpeMask]! !
 

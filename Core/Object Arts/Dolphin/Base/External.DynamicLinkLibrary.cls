@@ -137,20 +137,20 @@ invalidCall: anInteger fromFrame: aStackFrame
 	descriptor := method descriptor.
 	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
 	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
-	^(anInteger >= InvalidParameter1 and: [anInteger <= InvalidParameter12])
+	^(anInteger >= VMLibrary.PrimitiveInvalidParameter1 and: [anInteger <= VMLibrary.PrimitiveInvalidParameter12])
 		ifTrue: 
 			[| arg i |
-			i := descriptor argumentIndexFromOffset: anInteger - InvalidParameter1.
+			i := descriptor argumentIndexFromOffset: anInteger - VMLibrary.PrimitiveInvalidParameter1.
 			arg := method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
 			InvalidExternalCall
 				invalidArgument: arg
 				got: (aStackFrame arguments at: arg)
 				expected: (descriptor argumentTypes at: i)]
 		ifFalse: 
-			[descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+			[descriptor retType == FunctionDescriptor.ExtCallArgNTSTATUS
 				ifTrue: 
 					[HRESULTError
-						signalWith: ((HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT)]
+						signalWith: ((HRESULT decodePrimitiveFailureCode: anInteger) bitOr: FACILITY_NT_BIT)]
 				ifFalse: [HRESULTError signalFailureCode: anInteger]]!
 
 isSelfEvaluating

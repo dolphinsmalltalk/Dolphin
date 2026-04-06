@@ -4,7 +4,7 @@ Database.DBStatement
 	subclass: #'Database.DBParameterizedStatement'
 	instanceVariableNames: 'values parameters paramCols isPrepared'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCCTypes})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

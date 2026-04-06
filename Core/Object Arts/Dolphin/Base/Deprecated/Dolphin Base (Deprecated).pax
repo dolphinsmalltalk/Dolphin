@@ -88,7 +88,7 @@ package methodNames
 	add: #TimeStamp -> #dateAndTime;
 	add: #TimeStamp -> #time:;
 	add: #UndefinedObject -> #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:;
-	add: #View -> #enable:;
+	add: #VMLibrary -> #isSlowMachine;
 	add: #VMLibrary -> #isWindows10OrGreater;
 	add: #VMLibrary -> #isWindows7OrGreater;
 	add: #VMLibrary -> #isWindows7SP1OrGreater;
@@ -111,26 +111,37 @@ package methodNames
 	add: 'Compiler class' -> #evaluate:for:evaluationPools:logged:;
 	add: 'Compiler class' -> #evaluate:for:evaluationPools:logged:ifFail:;
 	add: 'Compiler class' -> #evaluate:for:logged:;
+	add: 'DefaultSortAlgorithm class' -> #sortBlock:;
 	add: 'Delay class' -> #resolution;
 	add: 'Delay class' -> #resolution:do:;
 	add: 'Delay class' -> #resolution:set:;
+	add: 'ExternalDescriptor class' -> #fromString:;
 	add: 'File class' -> #for:inAndBelow:do:;
 	add: 'File class' -> #maxPath;
 	add: 'File class' -> #pathBuffer;
-	add: 'FunctionDescriptor class' -> #fromString:;
 	add: 'NTLibrary class' -> #isWine;
-	add: 'SortAlgorithm class' -> #sortBlock:;
 	add: 'SortedCollection class' -> #value:value:;
 	add: 'String class' -> #ansiClass;
 	add: 'String class' -> #fromId:;
 	add: 'String class' -> #fromId:in:;
 	add: 'String class' -> #fromUnicodeString:;
 	add: 'String class' -> #unicodeClass;
+	add: 'StringField class' -> #length:;
 	add: 'Time class' -> #microsecondsToRun:;
 	yourself.
 
 package globalNames
+	add: #_PrimitiveFailureCode;
+	add: #CompilerFlags;
+	add: #CRTConstants;
+	add: #ExtCallArgTypes;
+	add: #MessageBoxConstants;
+	add: #NlsConstants;
 	add: #UnicodeString;
+	add: #VMConstants;
+	add: #Win32Constants;
+	add: #Win32Errors;
+	add: #WinRegConstants;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -637,7 +648,7 @@ invalidCall
 	"The primitive failure code is now an implicit temp of the primitive method, and so must be passed. The instance variable of Process formerly used to store the failure code is no longer used."
 
 	Notification deprecated.
-	^self invalidCall: Failed fromFrame: Processor activeProcess topFrame sender! !
+	^self invalidCall: VMLibrary.PrimitiveFailed fromFrame: Processor activeProcess topFrame sender! !
 
 !ExternalLibrary categoriesForMethods!
 invalidCall!exceptions!public! !
@@ -706,13 +717,13 @@ integerValue: anInteger
 integerValue:!accessing!public! !
 !
 
-!FunctionDescriptor class methodsFor!
+!ExternalDescriptor class methodsFor!
 
 fromString: aString
 	Notification deprecated.
 	^self fromString: aString environment: Smalltalk! !
 
-!FunctionDescriptor class categoriesForMethods!
+!ExternalDescriptor class categoriesForMethods!
 fromString:!instance creation!public! !
 !
 
@@ -921,13 +932,13 @@ dateOrder
 dateOrder!constants!public! !
 !
 
-!SortAlgorithm class methodsFor!
+!DefaultSortAlgorithm class methodsFor!
 
 sortBlock: aDyadicValuable
 	Notification deprecated.
 	^self newSortBlock: aDyadicValuable! !
 
-!SortAlgorithm class categoriesForMethods!
+!DefaultSortAlgorithm class categoriesForMethods!
 sortBlock:!instance creation!public! !
 !
 
@@ -998,6 +1009,16 @@ fromId:!instance creation!public! !
 fromId:in:!instance creation!public! !
 fromUnicodeString:!instance creation!public! !
 unicodeClass!constants!public! !
+!
+
+!StringField class methodsFor!
+
+length: anInteger
+	#deprecated.
+	^self type: AnsiString length: anInteger! !
+
+!StringField class categoriesForMethods!
+length:!instance creation!public! !
 !
 
 !ExternalStructure methodsFor!
@@ -1076,19 +1097,11 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !
 
-!View methodsFor!
-
-enable: aBoolean
-	"Sent from state in old view resources"
-
-	#deprecated.
-	self isEnabled: aBoolean! !
-
-!View categoriesForMethods!
-enable:!operations!public! !
-!
-
 !VMLibrary methodsFor!
+
+isSlowMachine
+	#deprecated.
+	^SystemMetrics current isSlowMachine!
 
 isWindows10OrGreater
 	Notification deprecated.
@@ -1143,6 +1156,7 @@ shortName
 	^String fromId: 129 in: self! !
 
 !VMLibrary categoriesForMethods!
+isSlowMachine!environment!public! !
 isWindows10OrGreater!public!win32 functions-version helpers! !
 isWindows7OrGreater!public!win32 functions-version helpers! !
 isWindows7SP1OrGreater!public!win32 functions-version helpers! !

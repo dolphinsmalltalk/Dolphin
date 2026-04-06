@@ -28,6 +28,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Static\Path\Dolphin StaticPath Control.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SysLink\Dolphin SysLink Control.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\IPAddress\Dolphin IP Address Control.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements.pax' #plain #imageBased);
 		
@@ -105,17 +106,22 @@ contents
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Legacy Resource Framework.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Deprecated).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Print Dialog (Old Names).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views Development.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Deprecated).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\IDE\Base\Development System (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Base\Development System (Deprecated).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Deprecated).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\OLE Structured Storage (Deprecated).pax' #plain #imageBased);
 		yourself.
 
 	"Add-ons"
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\WinInet.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB (Old Names).pax' #plain #imageBased);

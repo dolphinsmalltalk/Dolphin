@@ -4,7 +4,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.ILockBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -67,7 +67,7 @@ handle
 	with CreateILockBytesOnHGlobal())."
 
 	| hglobal |
-	hglobal := External.Handle new.
+	hglobal := Handle new.
 	Ole32 getHGlobalFromILockBytes: self phglobal: hglobal.
 	^hglobal!
 
@@ -159,7 +159,7 @@ stat
 
 	| answer |
 	answer := STATSTG new.
-	self Stat: answer grfStatFlag: STATFLAG_DEFAULT.
+	self Stat: answer grfStatFlag: STATSTG.STATFLAG_DEFAULT.
 	^answer!
 
 Stat: pstatstg grfStatFlag: grfStatFlag

@@ -4,7 +4,7 @@ Tools.MenuItemDialog
 	subclass: #'Tools.CommandMenuItemDialog'
 	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter hasSubstitutionsPresenter'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

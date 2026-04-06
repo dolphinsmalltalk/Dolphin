@@ -39,7 +39,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.RegKeyTest'
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
-	imports: #(#{OS.WinRegConstants})
+	imports: #(#{OS.AdvApiLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

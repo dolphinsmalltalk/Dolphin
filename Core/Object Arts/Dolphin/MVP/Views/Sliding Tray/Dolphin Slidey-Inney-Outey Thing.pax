@@ -40,7 +40,7 @@ UI.ContainerView
 	subclass: #'UI.SlideyInneyOuteyThing'
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
 	classVariableNames: ''
-	imports: #(#{OS.ThemeConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AnimatedCardChangeMask' -> 16r8.
@@ -58,7 +58,7 @@ UI.CardContainer
 	subclass: #'UI.SlidingCardTray'
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
-	imports: #(#{OS.TabViewConstants} #{OS.ThemeConstants})
+	imports: #(#{OS.ThemeLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

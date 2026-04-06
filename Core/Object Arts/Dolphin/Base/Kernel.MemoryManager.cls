@@ -78,7 +78,7 @@ bereavedOverflow: interruptArg
 	Notification signal: 'WARNING: Bereavement queue overflow'.
 	self ensureProcessesRunning!
 
-bytesUsedByObject: anObject 
+bytesUsedByObject: anObject
 	"Answer the memory consumed directly by the <Object> argument. This does not include any
 	space used by objects referenced from the object, and neither does it include any overhead
 	such as heap overhead. The calculation is implementation dependent, and may change in new
@@ -87,12 +87,12 @@ bytesUsedByObject: anObject
 	| bodySize |
 	anObject isImmediate ifTrue: [^0].
 	"The body is rounded to a multiple of 8 bytes"
-	bodySize := (anObject class isPointers 
-				ifTrue: [(anObject basicSize + anObject class instSize) * VMConstants.IntPtrSize]
-				ifFalse: [anObject basicSize + (anObject class isNullTerminated ifTrue: [1] ifFalse: [0])]) + 7 
+	bodySize := (anObject class isPointers
+				ifTrue: [(anObject basicSize + anObject class instSize) * VMLibrary.IntPtrSize]
+				ifFalse: [anObject basicSize + (anObject class isNullTerminated ifTrue: [1] ifFalse: [0])]) + 7
 				bitAnd: -8.
 	"Each object has a header containing a pointer to the body, a class Oop, a intptr object size, and an intptr of flags, i.e. 4 machine words (16 or 32 bytes))"
-	^bodySize + (VMConstants.IntPtrSize * 4)!
+	^bodySize + (VMLibrary.IntPtrSize * 4)!
 
 collectGarbage
 	"Private - Invoke the fast (non-compacting) garbage collector to reclaim inaccessible objects

@@ -168,7 +168,7 @@ Core.Object
 	subclass: #'Graphics.Canvas'
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds dpi'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.GDILibrary} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DrawTextAlignments'
@@ -179,9 +179,13 @@ Core.Object
 	subclass: #'Graphics.Color'
 	instanceVariableNames: ''
 	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
-	imports: #()
+	imports: #(#{OS.GDILibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CLR_DEFAULT' -> 16rFF000000.
+			'CLR_INVALID' -> 16rFFFFFFFF.
+			'CLR_NONE' -> 16rFFFFFFFF
+		}!
 
 Core.Object
 	subclass: #'Graphics.FontSeries'
@@ -195,7 +199,7 @@ Core.Object
 	subclass: #'Graphics.GraphicsTool'
 	instanceVariableNames: 'handle ownsHandle'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.GDILibrary private} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -203,7 +207,7 @@ Core.Object
 	subclass: #'Graphics.ImageInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.GDILibrary private} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -211,7 +215,7 @@ Core.Object
 	subclass: #'Graphics.ImageManager'
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -219,9 +223,53 @@ Core.Object
 	subclass: #'OS.SystemMetrics'
 	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent menuImageExtent'
 	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MessageDuration MouseHoverTime SysParamVariables WheelScrollLines'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.GDILibrary private} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'SM_CMONITORS' -> 16r50.
+			'SM_CXBORDER' -> 16r5.
+			'SM_CXCURSOR' -> 16rD.
+			'SM_CXDLGFRAME' -> 16r7.
+			'SM_CXDRAG' -> 16r44.
+			'SM_CXEDGE' -> 16r2D.
+			'SM_CXHTHUMB' -> 16rA.
+			'SM_CXMENUCHECK' -> 16r47.
+			'SM_CXMENUSIZE' -> 16r36.
+			'SM_CXSIZEFRAME' -> 16r20.
+			'SM_CXVIRTUALSCREEN' -> 16r4E.
+			'SM_CYBORDER' -> 16r6.
+			'SM_CYCURSOR' -> 16rE.
+			'SM_CYDLGFRAME' -> 16r7.
+			'SM_CYDRAG' -> 16r45.
+			'SM_CYEDGE' -> 16r2E.
+			'SM_CYMENU' -> 16rF.
+			'SM_CYMENUCHECK' -> 16r48.
+			'SM_CYMENUSIZE' -> 16r37.
+			'SM_CYSIZEFRAME' -> 16r21.
+			'SM_CYVIRTUALSCREEN' -> 16r4F.
+			'SM_CYVTHUMB' -> 16r9.
+			'SM_SLOWMACHINE' -> 16r49.
+			'SM_XVIRTUALSCREEN' -> 16r4C.
+			'SM_YVIRTUALSCREEN' -> 16r4D.
+			'SPI_GETCARETWIDTH' -> 16r2006.
+			'SPI_GETFLATMENU' -> 16r1022.
+			'SPI_GETICONTITLELOGFONT' -> 16r1F.
+			'SPI_GETLISTBOXSMOOTHSCROLLING' -> 16r1006.
+			'SPI_GETMENUSHOWDELAY' -> 16r6A.
+			'SPI_GETMESSAGEDURATION' -> 16r2016.
+			'SPI_GETMOUSEHOVERTIME' -> 16r66.
+			'SPI_GETNONCLIENTMETRICS' -> 16r29.
+			'SPI_GETWHEELSCROLLLINES' -> 16r68.
+			'SPI_GETWORKAREA' -> 16r30.
+			'SPI_SETFLATMENU' -> 16r1023.
+			'SPI_SETICONTITLELOGFONT' -> 16r22.
+			'SPI_SETLISTBOXSMOOTHSCROLLING' -> 16r1007.
+			'SPI_SETMENUSHOWDELAY' -> 16r6B.
+			'SPI_SETMOUSEHOVERTIME' -> 16r67.
+			'SPI_SETNONCLIENTMETRICS' -> 16r2A.
+			'SPI_SETWHEELSCROLLLINES' -> 16r69.
+			'SPI_SETWORKAREA' -> 16r2F
+		}!
 
 External.UInt32Field
 	subclass: #'OS.COLORREFField'
@@ -298,9 +346,41 @@ Graphics.Color
 	subclass: #'Graphics.SystemColor'
 	instanceVariableNames: 'id'
 	classVariableNames: 'ColorsById'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'COLOR_3DDKSHADOW' -> 16r15.
+			'COLOR_3DFACE' -> 16rF.
+			'COLOR_3DHIGHLIGHT' -> 16r14.
+			'COLOR_3DLIGHT' -> 16r16.
+			'COLOR_3DSHADOW' -> 16r10.
+			'COLOR_ACTIVEBORDER' -> 16rA.
+			'COLOR_ACTIVECAPTION' -> 16r2.
+			'COLOR_APPWORKSPACE' -> 16rC.
+			'COLOR_BACKGROUND' -> 16r1.
+			'COLOR_BTNHIGHLIGHT' -> 16r14.
+			'COLOR_BTNTEXT' -> 16r12.
+			'COLOR_CAPTIONTEXT' -> 16r9.
+			'COLOR_DESKTOP' -> 16r1.
+			'COLOR_GRADIENTACTIVECAPTION' -> 16r1B.
+			'COLOR_GRADIENTINACTIVECAPTION' -> 16r1C.
+			'COLOR_GRAYTEXT' -> 16r11.
+			'COLOR_HIGHLIGHT' -> 16rD.
+			'COLOR_HIGHLIGHTTEXT' -> 16rE.
+			'COLOR_HOTLIGHT' -> 16r1A.
+			'COLOR_INACTIVEBORDER' -> 16rB.
+			'COLOR_INACTIVECAPTION' -> 16r3.
+			'COLOR_INACTIVECAPTIONTEXT' -> 16r13.
+			'COLOR_INFOBK' -> 16r18.
+			'COLOR_INFOTEXT' -> 16r17.
+			'COLOR_MENU' -> 16r4.
+			'COLOR_MENUBAR' -> 16r1E.
+			'COLOR_MENUHILIGHT' -> 16r1D.
+			'COLOR_MENUTEXT' -> 16r7.
+			'COLOR_SCROLLBAR' -> 16r0.
+			'COLOR_WINDOW' -> 16r5.
+			'COLOR_WINDOWFRAME' -> 16r6.
+			'COLOR_WINDOWTEXT' -> 16r8.
 			'NamesById'
 				-> (IdentityDictionary withAll: {
 								16r0 -> #scrollbar.
@@ -413,7 +493,7 @@ Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
 	instanceVariableNames: 'logfont dpi series'
 	classVariableNames: 'Stock System'
-	imports: #()
+	imports: #(#{OS.LOGFONTW private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -425,7 +505,28 @@ Graphics.GraphicsTool
 	classInstanceVariableNames: ''
 	classConstants: {
 			'LineJoinNames'
-				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
+				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped').
+			'PS_ALTERNATE' -> 16r8.
+			'PS_COSMETIC' -> 16r0.
+			'PS_DASH' -> 16r1.
+			'PS_DASHDOT' -> 16r3.
+			'PS_DASHDOTDOT' -> 16r4.
+			'PS_DOT' -> 16r2.
+			'PS_ENDCAPFLAT' -> 16r200.
+			'PS_ENDCAPMASK' -> 16rF00.
+			'PS_ENDCAPROUND' -> 16r0.
+			'PS_ENDCAPSQUARE' -> 16r100.
+			'PS_GEOMETRIC' -> 16r10000.
+			'PS_INSIDEFRAME' -> 16r6.
+			'PS_JOINBEVEL' -> 16r1000.
+			'PS_JOINMASK' -> 16rF000.
+			'PS_JOINMITER' -> 16r2000.
+			'PS_JOINROUND' -> 16r0.
+			'PS_NULL' -> 16r5.
+			'PS_SOLID' -> 16r0.
+			'PS_STYLEMASK' -> 16rF.
+			'PS_TYPEMASK' -> 16rF0000.
+			'PS_USERSTYLE' -> 16r7
 		}!
 
 Graphics.GraphicsTool
@@ -434,7 +535,7 @@ Graphics.GraphicsTool
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BLACK_BRUSH' -> 16r4. 'DKGRAY_BRUSH' -> 16r3. 'WHITE_BRUSH' -> 16r0 }!
 
 Graphics.GraphicsTool
 	subclass: #'Graphics.Image'
@@ -448,7 +549,7 @@ Graphics.GraphicsTool
 	subclass: #'Graphics.ImageList'
 	instanceVariableNames: 'extent initialSize growBy createFlags'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Graphics.Color})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ILC_COLOR' -> 16r0.
@@ -573,9 +674,16 @@ Graphics.Image
 	subclass: #'Graphics.Icon'
 	instanceVariableNames: ''
 	classVariableNames: 'Blank DefaultApplication Error HasScaleDown Information Question Warning WinLogo'
-	imports: #()
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
+			'IDI_APPLICATION' -> 16r7F00.
+			'IDI_ERROR' -> 16r7F01.
+			'IDI_INFORMATION' -> 16r7F04.
+			'IDI_QUESTION' -> 16r7F02.
+			'IDI_SHIELD' -> 16r7F06.
+			'IDI_WARNING' -> 16r7F03.
+			'IDI_WINLOGO' -> 16r7F05.
 			'LargestStandardSize' -> (16r100 @ 16r100).
 			'StandardSizeMap' -> {
 						16r10 @ 16r10.
@@ -862,7 +970,26 @@ Graphics.Icon
 	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone DefaultExtent Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE UpArrow Wait'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'IDC_APPSTARTING' -> 16r7F8A.
+			'IDC_ARROW' -> 16r7F00.
+			'IDC_CROSS' -> 16r7F03.
+			'IDC_HAND' -> 16r7F89.
+			'IDC_HELP' -> 16r7F8B.
+			'IDC_IBEAM' -> 16r7F01.
+			'IDC_ICON' -> 16r7F81.
+			'IDC_NO' -> 16r7F88.
+			'IDC_PERSON' -> 16r7FA0.
+			'IDC_PIN' -> 16r7F9F.
+			'IDC_SIZE' -> 16r7F80.
+			'IDC_SIZEALL' -> 16r7F86.
+			'IDC_SIZENESW' -> 16r7F83.
+			'IDC_SIZENS' -> 16r7F85.
+			'IDC_SIZENWSE' -> 16r7F82.
+			'IDC_SIZEWE' -> 16r7F84.
+			'IDC_UPARROW' -> 16r7F04.
+			'IDC_WAIT' -> 16r7F02
+		}!
 
 Graphics.Icon
 	subclass: #'Graphics.NullIcon'
@@ -990,7 +1117,72 @@ External.WindowsSystemLibrary
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'BITSPIXEL' -> 16rC.
+			'BLACK_PEN' -> 16r7.
+			'DEFAULT_PALETTE' -> 16rF.
+			'DIB_PAL_COLORS' -> 16r1.
+			'DIB_RGB_COLORS' -> 16r0.
+			'DSTINVERT' -> 16r550009.
+			'FR_NOT_ENUM' -> 16r20.
+			'FR_PRIVATE' -> 16r10.
+			'GRADIENT_FILL_OP_FLAG' -> 16rFF.
+			'GRADIENT_FILL_RECT_H' -> 16r0.
+			'GRADIENT_FILL_RECT_V' -> 16r1.
+			'GRADIENT_FILL_TRIANGLE' -> 16r2.
+			'GRAY_BRUSH' -> 16r2.
+			'HOLLOW_BRUSH' -> 16r5.
+			'HORZRES' -> 16r8.
+			'HORZSIZE' -> 16r4.
+			'IMAGE_BITMAP' -> 16r0.
+			'IMAGE_CURSOR' -> 16r2.
+			'IMAGE_ENHMETAFILE' -> 16r3.
+			'IMAGE_ICON' -> 16r1.
+			'LF_FACESIZE' -> 16r20.
+			'LF_FULLFACESIZE' -> 16r40.
+			'LOGPIXELSX' -> 16r58.
+			'LOGPIXELSY' -> 16r5A.
+			'LTGRAY_BRUSH' -> 16r1.
+			'MERGECOPY' -> 16rC000CA.
+			'MM_ANISOTROPIC' -> 16r8.
+			'MM_HIENGLISH' -> 16r5.
+			'MM_HIMETRIC' -> 16r3.
+			'MM_ISOTROPIC' -> 16r7.
+			'MM_LOENGLISH' -> 16r4.
+			'MM_LOMETRIC' -> 16r2.
+			'MM_TEXT' -> 16r1.
+			'MM_TWIPS' -> 16r6.
+			'NOTSRCCOPY' -> 16r330008.
+			'NULL_BRUSH' -> 16r5.
+			'NULL_PEN' -> 16r8.
+			'OBJ_BRUSH' -> 16r2.
+			'OBJ_FONT' -> 16r6.
+			'OBJ_PEN' -> 16r1.
+			'OPAQUE' -> 16r2.
+			'PLANES' -> 16rE.
+			'RASTERCAPS' -> 16r26.
+			'RC_PALETTE' -> 16r100.
+			'RGN_AND' -> 16r1.
+			'RGN_DIFF' -> 16r4.
+			'RGN_OR' -> 16r2.
+			'RGN_XOR' -> 16r3.
+			'SRCAND' -> 16r8800C6.
+			'SRCCOPY' -> 16rCC0020.
+			'SRCINVERT' -> 16r660046.
+			'SRCPAINT' -> 16rEE0086.
+			'TA_BASELINE' -> 16r18.
+			'TA_BOTTOM' -> 16r8.
+			'TA_CENTER' -> 16r6.
+			'TA_LEFT' -> 16r0.
+			'TA_NOUPDATECP' -> 16r0.
+			'TA_RIGHT' -> 16r2.
+			'TA_TOP' -> 16r0.
+			'TRANSPARENT' -> 16r1.
+			'VERTRES' -> 16rA.
+			'VERTSIZE' -> 16r6.
+			'WHITE_PEN' -> 16r6.
+			'WHITENESS' -> 16rFF0062
+		}!
 
 External.Structure
 	subclass: #'OS.BITMAP'
@@ -1047,7 +1239,9 @@ External.Structure
 			'_OffsetOf_AlphaFormat' -> 16r3.
 			'_OffsetOf_BlendFlags' -> 16r1.
 			'_OffsetOf_BlendOp' -> 16r0.
-			'_OffsetOf_SourceConstantAlpha' -> 16r2
+			'_OffsetOf_SourceConstantAlpha' -> 16r2.
+			'AC_SRC_ALPHA' -> 16r1.
+			'AC_SRC_OVER' -> 16r0
 		}!
 
 External.Structure
@@ -1169,7 +1363,23 @@ External.Structure
 			'_LOGBRUSH_Size' -> 16rC.
 			'_OffsetOf_lbColor' -> 16r4.
 			'_OffsetOf_lbHatch' -> 16r8.
-			'_OffsetOf_lbStyle' -> 16r0
+			'_OffsetOf_lbStyle' -> 16r0.
+			'BS_DIBPATTERN' -> 16r5.
+			'BS_DIBPATTERN8X8' -> 16r8.
+			'BS_DIBPATTERNPT' -> 16r6.
+			'BS_HATCHED' -> 16r2.
+			'BS_HOLLOW' -> 16r1.
+			'BS_INDEXED' -> 16r4.
+			'BS_NULL' -> 16r1.
+			'BS_PATTERN' -> 16r3.
+			'BS_PATTERN8X8' -> 16r7.
+			'BS_SOLID' -> 16r0.
+			'HS_BDIAGONAL' -> 16r3.
+			'HS_CROSS' -> 16r4.
+			'HS_DIAGCROSS' -> 16r5.
+			'HS_FDIAGONAL' -> 16r2.
+			'HS_HORIZONTAL' -> 16r0.
+			'HS_VERTICAL' -> 16r1
 		}!
 
 External.Structure
@@ -1201,6 +1411,16 @@ External.Structure
 			'DEFAULT_QUALITY' -> 16r0.
 			'DRAFT_QUALITY' -> 16r1.
 			'FIXED_PITCH' -> 16r1.
+			'FW_BOLD' -> 16r2BC.
+			'FW_DONTCARE' -> 16r0.
+			'FW_EXTRABOLD' -> 16r320.
+			'FW_EXTRALIGHT' -> 16rC8.
+			'FW_HEAVY' -> 16r384.
+			'FW_LIGHT' -> 16r12C.
+			'FW_MEDIUM' -> 16r1F4.
+			'FW_NORMAL' -> 16r190.
+			'FW_SEMIBOLD' -> 16r258.
+			'FW_THIN' -> 16r64.
 			'NONANTIALIASED_QUALITY' -> 16r3.
 			'OUT_CHARACTER_PRECIS' -> 16r2.
 			'OUT_DEFAULT_PRECIS' -> 16r0.
@@ -1411,7 +1631,8 @@ OS.SizedStructure
 			'_OffsetOf_biSizeImage' -> 16r14.
 			'_OffsetOf_biWidth' -> 16r4.
 			'_OffsetOf_biXPelsPerMeter' -> 16r18.
-			'_OffsetOf_biYPelsPerMeter' -> 16r1C
+			'_OffsetOf_biYPelsPerMeter' -> 16r1C.
+			'BI_RGB' -> 16r0
 		}!
 
 OS.SizedStructure

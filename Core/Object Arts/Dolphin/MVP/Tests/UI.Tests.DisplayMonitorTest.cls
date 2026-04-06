@@ -112,7 +112,7 @@ testDisplayingAndNearestView
 	self
 		should: [DisplayMonitor nearestView: hWnd]
 		raise: Win32Error
-		matching: [:ex | ex statusCode = Win32Errors.ERROR_INVALID_WINDOW_HANDLE]!
+		matching: [:ex | ex statusCode = Win32Error.ERROR_INVALID_WINDOW_HANDLE]!
 
 testIntersecting
 	| rect |
@@ -159,7 +159,7 @@ testPrintString
 
 testScaleFactor
 	DisplayMonitor desktopMonitors
-		do: [:each | self assert: each scaleFactor equals: each dpi / Win32Constants.USER_DEFAULT_SCREEN_DPI]! !
+		do: [:each | self assert: each scaleFactor equals: each dpi / UserLibrary.USER_DEFAULT_SCREEN_DPI]! !
 
 !UI.Tests.DisplayMonitorTest categoriesForMethods!
 testActive!public!unit tests! !

@@ -51,7 +51,7 @@ initialize
 
 	super initialize.
 	#todo.	"Support long filenames? Not sure we can as seems to be an API limitation."
-	displayName := Utf16String newFixed: Win32Constants.MAX_PATH.
+	displayName := Utf16String newFixed: KernelLibrary.MAX_PATH.
 	self pszDisplayName: displayName!
 
 lpfnHook: anAddress

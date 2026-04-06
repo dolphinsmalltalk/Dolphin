@@ -1,82 +1,95 @@
 ﻿| package |
 package := Package name: 'Database Connection (Deprecated)'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.0'.
 
 
-package setMethodNames: #(
-	#(#{Database.DBAbstractStatement} #describeCol:)
-	#(#{Database.DBConnection} #accessibleTables)
-	#(#{Database.DBConnection} #autoCommit)
-	#(#{Database.DBConnection} #autoCommit:)
-	#(#{Database.DBConnection} #dbmsVer)
-	#(#{Database.DBConnection} #defaultTxnIsolation)
-	#(#{Database.DBConnection} #driverVer)
-	#(#{Database.DBConnection} #expressionsInOrderBy)
-	#(#{Database.DBConnection} #identifierQuoteChar)
-	#(#{Database.DBConnection} #iefSupport)
-	#(#{Database.DBConnection} #indicesOf:type:)
-	#(#{Database.DBConnection} #invalidate)
-	#(#{Database.DBConnection} #maxColumnNameLen)
-	#(#{Database.DBConnection} #maxCursorNameLen)
-	#(#{Database.DBConnection} #maxOwnerNameLen)
-	#(#{Database.DBConnection} #maxProcedureNameLen)
-	#(#{Database.DBConnection} #maxQualifierNameLen)
-	#(#{Database.DBConnection} #maxTableNameLen)
-	#(#{Database.DBConnection} #multipleActiveTxn)
-	#(#{Database.DBConnection} #multResultSets)
-	#(#{Database.DBConnection} #odbcSAGConformance)
-	#(#{Database.DBConnection} #odbcVer)
-	#(#{Database.DBConnection} #outerJoins)
-	#(#{Database.DBConnection} #ownerTerm)
-	#(#{Database.DBConnection} #qualifierNameSeparator)
-	#(#{Database.DBConnection} #qualifierTerm)
-	#(#{Database.DBConnection} #readOnly)
-	#(#{Database.DBConnection} #readOnly:)
-	#(#{Database.DBConnection} #rowIdCols:)
-	#(#{Database.DBConnection} #rowUpdates)
-	#(#{Database.DBConnection} #rowVer:)
-	#(#{Database.DBConnection} #scrollConcurrency)
-	#(#{Database.DBConnection} #scrollOptions)
-	#(#{Database.DBConnection} #sourceReadOnly)
-	#(#{Database.DBConnection} #trace)
-	#(#{Database.DBConnection} #trace:)
-	#(#{Database.DBConnection} #txnCapable)
-	#(#{Database.DBConnection} #txnIsolationOptions)
-	#(#{Database.DBConnection} #uniqueIndexOf:)
-	#(#{Database.DBConnection class} #interpretTxnIsolationMask:)
-	#(#{Database.DBResultSet} #describeCol:)
-	#(#{Database.DBResultSet} #describeCols)
-	#(#{Database.DBResultSet} #invalidate)
-	#(#{Database.DBResultSet} #prev)
-	#(#{Database.DBRowBuffer} #sizeInBytes)
-	#(#{OS.SQL_TIMESTAMP_STRUCT} #asTimeStamp)
-	#(#{OS.SQL_TIMESTAMP_STRUCT class} #fromTimeStamp:)
-).
+package methodNames
+	add: #DBAbstractStatement -> #describeCol:;
+	add: #DBConnection -> #accessibleTables;
+	add: #DBConnection -> #autoCommit;
+	add: #DBConnection -> #autoCommit:;
+	add: #DBConnection -> #dbmsVer;
+	add: #DBConnection -> #defaultTxnIsolation;
+	add: #DBConnection -> #driverVer;
+	add: #DBConnection -> #expressionsInOrderBy;
+	add: #DBConnection -> #identifierQuoteChar;
+	add: #DBConnection -> #iefSupport;
+	add: #DBConnection -> #indicesOf:type:;
+	add: #DBConnection -> #invalidate;
+	add: #DBConnection -> #maxColumnNameLen;
+	add: #DBConnection -> #maxCursorNameLen;
+	add: #DBConnection -> #maxOwnerNameLen;
+	add: #DBConnection -> #maxProcedureNameLen;
+	add: #DBConnection -> #maxQualifierNameLen;
+	add: #DBConnection -> #maxTableNameLen;
+	add: #DBConnection -> #multipleActiveTxn;
+	add: #DBConnection -> #multResultSets;
+	add: #DBConnection -> #odbcSAGConformance;
+	add: #DBConnection -> #odbcVer;
+	add: #DBConnection -> #outerJoins;
+	add: #DBConnection -> #ownerTerm;
+	add: #DBConnection -> #qualifierNameSeparator;
+	add: #DBConnection -> #qualifierTerm;
+	add: #DBConnection -> #readOnly;
+	add: #DBConnection -> #readOnly:;
+	add: #DBConnection -> #rowIdCols:;
+	add: #DBConnection -> #rowUpdates;
+	add: #DBConnection -> #rowVer:;
+	add: #DBConnection -> #scrollConcurrency;
+	add: #DBConnection -> #scrollOptions;
+	add: #DBConnection -> #sourceReadOnly;
+	add: #DBConnection -> #trace;
+	add: #DBConnection -> #trace:;
+	add: #DBConnection -> #txnCapable;
+	add: #DBConnection -> #txnIsolationOptions;
+	add: #DBConnection -> #uniqueIndexOf:;
+	add: #DBResultSet -> #describeCol:;
+	add: #DBResultSet -> #describeCols;
+	add: #DBResultSet -> #invalidate;
+	add: #DBResultSet -> #prev;
+	add: #DBRowBuffer -> #sizeInBytes;
+	add: #ODBCTIMESTAMP -> #asTimeStamp;
+	add: 'DBConnection class' -> #interpretTxnIsolationMask:;
+	add: 'ODBCTIMESTAMP class' -> #fromTimeStamp:;
+	yourself.
+
+package globalNames
+	add: #DBColFlags;
+	add: #ODBCConstants;
+	add: #ODBCCTypes;
+	add: #ODBCRetCodes;
+	add: #ODBCTypes;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'Database Connection Base'
-	'..\Base\Dolphin'
-).
+	'..\Base\Dolphin').
 
 package!
 
 "Loose Methods"!
 
-!Database.DBAbstractStatement methodsFor!
+!DBAbstractStatement methodsFor!
 
 describeCol: anInteger
 	#deprecated.
 	^self describeColumnAt: anInteger! !
 
-!Database.DBAbstractStatement categoriesForMethods!
+!DBAbstractStatement categoriesForMethods!
 describeCol:!accessing!public! !
 !
 
-!Database.DBConnection methodsFor!
+!DBConnection methodsFor!
 
 accessibleTables
 	#deprecated.
@@ -211,8 +224,8 @@ scrollConcurrency
 	| mask |
 	#deprecated.	"Deprecated in ODBC 3.0 - see ODBC help for further information"
 	mask := self getUInt32Info: SQL_SCROLL_CONCURRENCY.
-	^#('SQL_SCCO_READ_ONLY' 'SQL_SCCO_LOCK' 'SQL_SCCO_OPT_TIMESTAMP' 'SQL_SCCO_OPT_VALUES') 
-		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
+	^(#(#{SQL_SCCO_READ_ONLY} #{SQL_SCCO_LOCK} #{SQL_SCCO_OPT_TIMESTAMP} #{SQL_SCCO_OPT_VALUES})
+		select: [:maskName | (mask bitAnd: maskName value) ~= 0]) collect: [:each | each unqualifiedName]!
 
 scrollOptions
 	"Answer an array of the names of the scroll options supported by the receiver."
@@ -220,8 +233,8 @@ scrollOptions
 	| mask |
 	#deprecated.	"Use #supportedCursorTypes"
 	mask := self getUInt32Info: SQL_SCROLL_OPTIONS.
-	^#('SQL_SO_FORWARD_ONLY' 'SQL_SO_KEYSET_DRIVEN' 'SQL_SO_DYNAMIC' 'SQL_SO_MIXED') 
-		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
+	^(#(#{SQL_SO_FORWARD_ONLY} #{SQL_SO_KEYSET_DRIVEN} #{SQL_SO_DYNAMIC} #{SQL_SO_MIXED})
+		select: [:maskName | (mask bitAnd: maskName value) ~= 0]) collect: [:each | each unqualifiedName]!
 
 sourceReadOnly
 	#deprecated.
@@ -248,7 +261,7 @@ uniqueIndexOf: aString
 	#deprecated.
 	^self uniqueIndicesOf: aString! !
 
-!Database.DBConnection categoriesForMethods!
+!DBConnection categoriesForMethods!
 accessibleTables!enquiries!public!testing! !
 autoCommit!enquiries!public!testing! !
 autoCommit:!accessing!public! !
@@ -289,20 +302,20 @@ txnIsolationOptions!enquiries!public! !
 uniqueIndexOf:!enquiries!public! !
 !
 
-!Database.DBConnection class methodsFor!
+!DBConnection class methodsFor!
 
-interpretTxnIsolationMask: mask 
+interpretTxnIsolationMask: mask
 	"Private - Answer an array of isolation mask matched by mask."
 
 	#deprecated.
-	^#('SQL_TXN_READ_UNCOMMITTED' 'SQL_TXN_READ_COMMITTED' 'SQL_TXN_REPEATABLE_READ' 'SQL_TXN_SERIALIZABLE' 'SQL_TXN_VERSIONING') 
-		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]! !
+	^(#(#{SQL_TXN_READ_UNCOMMITTED} #{SQL_TXN_READ_COMMITTED} #{SQL_TXN_REPEATABLE_READ} #{SQL_TXN_SERIALIZABLE} #{SQL_TXN_VERSIONING})
+		select: [:maskName | (mask bitAnd: maskName value) ~= 0]) collect: [:each | each unqualifiedName]! !
 
-!Database.DBConnection class categoriesForMethods!
+!DBConnection class categoriesForMethods!
 interpretTxnIsolationMask:!operations!private! !
 !
 
-!Database.DBResultSet methodsFor!
+!DBResultSet methodsFor!
 
 describeCol: anInteger
 	#deprecated.
@@ -320,14 +333,14 @@ prev
 	#deprecated.	"use #previous"
 	^self previous! !
 
-!Database.DBResultSet categoriesForMethods!
+!DBResultSet categoriesForMethods!
 describeCol:!accessing!public! !
 describeCols!accessing!public! !
 invalidate!operations!public! !
 prev!accessing!public! !
 !
 
-!Database.DBRowBuffer methodsFor!
+!DBRowBuffer methodsFor!
 
 sizeInBytes
 	"Answer the size of the receiver structure in bytes."
@@ -335,27 +348,27 @@ sizeInBytes
 	Notification deprecated. "Not used and only works for fully bound buffers anyway"
 	 ^self contents inject: 0 into: [ :size :f | size + f size ].! !
 
-!Database.DBRowBuffer categoriesForMethods!
+!DBRowBuffer categoriesForMethods!
 sizeInBytes!accessing!public! !
 !
 
-!OS.SQL_TIMESTAMP_STRUCT methodsFor!
+!ODBCTIMESTAMP methodsFor!
 
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
 
-!OS.SQL_TIMESTAMP_STRUCT categoriesForMethods!
+!ODBCTIMESTAMP categoriesForMethods!
 asTimeStamp!converting!public! !
 !
 
-!OS.SQL_TIMESTAMP_STRUCT class methodsFor!
+!ODBCTIMESTAMP class methodsFor!
 
 fromTimeStamp: aTimeStamp
 	Notification deprecated.
 	^self fromTimeStamp: aTimeStamp asDateAndTime! !
 
-!OS.SQL_TIMESTAMP_STRUCT class categoriesForMethods!
+!ODBCTIMESTAMP class categoriesForMethods!
 fromTimeStamp:!instance creation!public! !
 !
 

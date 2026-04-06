@@ -14,7 +14,16 @@ OS.ComDlgStructure
 			'_OffsetOf_lpCustColors' -> 16r10.
 			'_OffsetOf_lpfnHook' -> 16r1C.
 			'_OffsetOf_lpTemplateName' -> 16r20.
-			'_OffsetOf_rgbResult' -> 16rC
+			'_OffsetOf_rgbResult' -> 16rC.
+			'CC_ANYCOLOR' -> 16r100.
+			'CC_ENABLEHOOK' -> 16r10.
+			'CC_ENABLETEMPLATE' -> 16r20.
+			'CC_ENABLETEMPLATEHANDLE' -> 16r40.
+			'CC_FULLOPEN' -> 16r2.
+			'CC_PREVENTFULLOPEN' -> 16r4.
+			'CC_RGBINIT' -> 16r1.
+			'CC_SHOWHELP' -> 16r8.
+			'CC_SOLIDCOLOR' -> 16r80
 		}!
 
 OS.CHOOSECOLORW guid: (Core.GUID fromString: '{87b4c5d1-026e-11d3-9fd7-00a0cc3e4a32}')!

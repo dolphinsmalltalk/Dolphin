@@ -71,7 +71,7 @@ testPrimary
 	self assert: (Locale named: 'en-GB') primary equals: (Locale named: 'en-US').
 	self assert: (Locale named: 'fr-CA') primary equals: (Locale named: 'fr-FR').
 	self assert: Locale invariant primary equals: Locale invariant.
-	self assert: (Locale lcid: OS.NlsConstants.LOCALE_CUSTOM_DEFAULT) primary
+	self assert: (Locale lcid: OS.AbstractWindowsLocale.LOCALE_CUSTOM_DEFAULT) primary
 		equals: Locale userDefault primary.
 	self assert: Locale smalltalk primary equals: (Locale named: 'en-US')!
 
@@ -158,7 +158,7 @@ testPrintFloatGrouping
 			self
 				should: [subject printFloat: 1.23 format: format]
 				raise: OS.HRESULTError
-				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Errors.ERROR_INVALID_PARAMETER)]].
+				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Error.ERROR_INVALID_PARAMETER)]].
 	self should: [format numberGrouping: '1;2;3;4;5'] raise: Error!
 
 testPrintFloatNumDigits
@@ -187,7 +187,7 @@ testPrintFloatNumDigits
 			self
 				should: [subject printFloat: 0.0123456789 format: format]
 				raise: OS.Win32Error
-				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Errors.ERROR_INVALID_PARAMETER)]]!
+				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Error.ERROR_INVALID_PARAMETER)]]!
 
 testPrintFloatSeparators
 	"Test printing with different number grouping."

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Core.SharedQueue'
 	instanceVariableNames: 'accessProtect valueAvailable contents'
 	classVariableNames: 'AbsentCookie'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.KernelLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -154,7 +154,6 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus (Old Names).pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Collection\Dolphin Collection Presenters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Folder\Dolphin Folder Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree List Presenter.pax' #plain #imageBased);

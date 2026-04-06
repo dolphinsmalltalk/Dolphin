@@ -4,7 +4,7 @@ OS.PrintDialogStructure
 	subclass: #'OS.PAGESETUPDLGW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.PrintDialogConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_flags' -> 16r10.
@@ -17,7 +17,25 @@ OS.PrintDialogStructure
 			'_OffsetOf_ptPaperSize' -> 16r14.
 			'_OffsetOf_rtMargin' -> 16r2C.
 			'_OffsetOf_rtMinMargin' -> 16r1C.
-			'_PAGESETUPDLGW_Size' -> 16r54
+			'_PAGESETUPDLGW_Size' -> 16r54.
+			'PSD_DEFAULTMINMARGINS' -> 16r0.
+			'PSD_DISABLEMARGINS' -> 16r10.
+			'PSD_DISABLEORIENTATION' -> 16r100.
+			'PSD_DISABLEPAGEPAINTING' -> 16r80000.
+			'PSD_DISABLEPAPER' -> 16r200.
+			'PSD_DISABLEPRINTER' -> 16r20.
+			'PSD_ENABLEPAGEPAINTHOOK' -> 16r40000.
+			'PSD_ENABLEPAGESETUPHOOK' -> 16r2000.
+			'PSD_ENABLEPAGESETUPTEMPLATE' -> 16r8000.
+			'PSD_ENABLEPAGESETUPTEMPLATEHANDLE' -> 16r20000.
+			'PSD_INHUNDREDTHSOFMILLIMETERS' -> 16r8.
+			'PSD_INTHOUSANDTHSOFINCHES' -> 16r4.
+			'PSD_INWININIINTLMEASURE' -> 16r0.
+			'PSD_MARGINS' -> 16r2.
+			'PSD_MINMARGINS' -> 16r1.
+			'PSD_NOWARNING' -> 16r80.
+			'PSD_RETURNDEFAULT' -> 16r400.
+			'PSD_SHOWHELP' -> 16r800
 		}!
 
 OS.PAGESETUPDLGW guid: (Core.GUID fromString: '{c96162d4-5dd4-43d1-a305-e90d67357d91}')!

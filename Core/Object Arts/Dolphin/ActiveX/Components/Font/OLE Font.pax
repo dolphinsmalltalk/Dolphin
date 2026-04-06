@@ -71,7 +71,7 @@ fromOleFont: pFont
 	Note that the height is set to a DIP/96-dpi measurement, scaled from the 72-dpi of the OLE font."
 
 	^self new
-		lfHeight: (pFont size * Win32Constants.USER_DEFAULT_SCREEN_DPI / 72) asInteger;
+		lfHeight: (pFont size * UserLibrary.USER_DEFAULT_SCREEN_DPI / 72) asInteger;
 "		lfWidth:
 		lfEscapement:
 		lfOrientation:

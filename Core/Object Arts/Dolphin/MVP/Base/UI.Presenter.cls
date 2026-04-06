@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.Presenter'
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: 'legacyQueryCommandHandlers'
 	classConstants: {}!
 

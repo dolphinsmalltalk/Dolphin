@@ -4,12 +4,18 @@ External.Structure
 	subclass: #'OS.COM.PARAMDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_pparamdescex' -> 16r0.
 			'_OffsetOf_wParamFlags' -> 16r4.
-			'_PARAMDESC_Size' -> 16r8
+			'_PARAMDESC_Size' -> 16r8.
+			'PARAMFLAG_FHASDEFAULT' -> 16r20.
+			'PARAMFLAG_FIN' -> 16r1.
+			'PARAMFLAG_FOPT' -> 16r10.
+			'PARAMFLAG_FOUT' -> 16r2.
+			'PARAMFLAG_FRETVAL' -> 16r8.
+			'PARAMFLAG_NONE' -> 16r0
 		}!
 
 OS.COM.PARAMDESC guid: (Core.GUID fromString: '{c06f3b73-0868-11d3-93af-00a024ca708a}')!

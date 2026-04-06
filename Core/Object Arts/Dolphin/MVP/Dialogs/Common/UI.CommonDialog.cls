@@ -4,7 +4,7 @@ UI.ValueDialog
 	subclass: #'UI.CommonDialog'
 	instanceVariableNames: 'winStruct hook positioning'
 	classVariableNames: 'HookCallbackDescriptor'
-	imports: #(#{OS.CommonDialogConstants})
+	imports: #()
 	classInstanceVariableNames: 'hookHandlers'
 	classConstants: {}!
 
@@ -49,7 +49,7 @@ createHook
 	^self class hookHandlers
 		ifNotNil: 
 			[:handlers |
-			External.Callback block: 
+			Callback block: 
 					[:hdlg :uiMsg :wParam :lParam |
 					view isNil ifTrue: [self attachHandle: hdlg].
 					(handlers lookup: uiMsg)
@@ -233,7 +233,7 @@ hookHandlers
 	^hookHandlers!
 
 initialize
-	HookCallbackDescriptor := External.FunctionDescriptor argumentTypes: 'handle uint32 uintptr uintptr'!
+	HookCallbackDescriptor := FunctionDescriptor argumentTypes: 'handle uint32 uintptr uintptr'!
 
 initializeDefaultHooks
 	hookHandlers := IdentityDictionary new.

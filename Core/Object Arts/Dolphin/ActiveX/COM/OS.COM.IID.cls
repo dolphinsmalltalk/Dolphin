@@ -33,7 +33,7 @@ interfaceName
 	development/debugging and tools, rather than for use in applications."
 
 	^AdvApi32
-		regGetString: WinRegConstants.HKEY_CLASSES_ROOT
+		regGetString: AdvApiLibrary.HKEY_CLASSES_ROOT
 		key: 'Interface\' , self asString
 		value: nil! !
 

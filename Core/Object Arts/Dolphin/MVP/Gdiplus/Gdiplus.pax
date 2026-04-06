@@ -1406,7 +1406,7 @@ Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.StringFormat'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Core.Locale private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

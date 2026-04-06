@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Database.DBAbstractStatement'
 	instanceVariableNames: 'handle parent executed cursorType'
 	classVariableNames: 'CursorTypes'
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -189,7 +189,7 @@ driverHStmt
 				sqlGetInfo: self asParameter
 				infoType: SQL_DRIVER_HSTMT
 				infoValuePtr: value
-				bufferLength: Kernel.VMConstants.IntPtrSize
+				bufferLength: Kernel.VMLibrary.IntPtrSize
 				stringLengthPtr: nil)
 		function: 'SQLGetInfo'.
 	^value!

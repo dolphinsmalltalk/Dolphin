@@ -132,12 +132,10 @@ testPushDownClassConstant
 		equals: (self
 				parseMethod: 'sharedVarRefs
 	^{
-		ENOENT.
+		_MAX_FNAME.
 		ERROR_FILE_NOT_FOUND.
-		BasicLintRuleTestData.ERROR_FILE_EXISTS.
-		ERROR_FILE_EXISTS.
-		FACILITY_WIN32.
-		OS.FacilityCodes.FACILITY_WIN32
+		CErrArrayNotClosed.
+		Kernel.ParseErrorCodes.CErrArrayNotClosed.
 		#{Refactory.Browser.TestData.BasicLintRuleTestData.Const1}.
 		Const1
 	}'

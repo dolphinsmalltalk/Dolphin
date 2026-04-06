@@ -72,7 +72,7 @@ displayValue: anObject
 	[self controlDispatch value: anObject] on: HRESULTError
 		do: 
 			[:e | 
-			e hresult = DISP_E_MEMBERNOTFOUND 
+			e hresult = OLEAutLibrary.DISP_E_MEMBERNOTFOUND 
 				ifTrue: 
 					["Suppress the error, the value is read-only and cannot be set"
 

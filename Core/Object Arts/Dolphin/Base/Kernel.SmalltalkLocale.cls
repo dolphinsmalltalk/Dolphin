@@ -214,7 +214,7 @@ displayFloat: aFloat on: aStream base: anInteger
 
 	| classification |
 	classification := aFloat fpClass.
-	(classification anyMask: ##(Float.FpClassNaN | Float.FpClassInfinite | Float.FpClassZero))
+	(classification anyMask: ##((Float.FpClassNaN bitOr: Float.FpClassInfinite) bitOr: Float.FpClassZero))
 		ifTrue: 
 			[aStream nextPutAll: ((classification anyMask: Float.FpClassZero)
 						ifTrue: [(classification anyMask: Float.FpClassNegative) ifTrue: ['-0.0'] ifFalse: ['0.0']]

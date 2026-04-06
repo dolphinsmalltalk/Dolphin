@@ -34,12 +34,12 @@ asUIntPtr
 
 	"Implementation Note: The compiler will optimise out the condition because it is constant."
 
-	^VMConstants.IsWin64
+	^VMLibrary.IsWin64
 		ifTrue: [bytes uintPtrAtOffset: 0]
 		ifFalse: 
-			[((bytes int32AtOffset: _OffsetOf_x) bitAnd: VMConstants.HalfPtrMask)
-				bitOr: (((bytes int32AtOffset: _OffsetOf_y) bitAnd: VMConstants.HalfPtrMask)
-						bitShift: VMConstants.HalfPtrBits)]!
+			[((bytes int32AtOffset: _OffsetOf_x) bitAnd: VMLibrary.HalfPtrMask)
+				bitOr: (((bytes int32AtOffset: _OffsetOf_y) bitAnd: VMLibrary.HalfPtrMask)
+						bitShift: VMLibrary.HalfPtrBits)]!
 
 isZero
 	"Answer whether the receiver is equal to Point zero."

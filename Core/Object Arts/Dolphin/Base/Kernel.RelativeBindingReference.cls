@@ -105,7 +105,7 @@ environmentName
 hash
 	"Answer the <integer> hash value for the receiver."
 
-	^scope localScope hash hashMultiply + self pathString hash bitAnd: VMConstants.SmallIntegerMax!
+	^scope localScope hash hashMultiply + self pathString hash bitAnd: VMLibrary.SmallIntegerMax!
 
 home
 	"Answer the 'namespace context' for this binding reference."

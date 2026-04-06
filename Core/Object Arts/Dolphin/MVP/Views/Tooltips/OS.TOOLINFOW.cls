@@ -4,7 +4,7 @@ OS.SizedStructure
 	subclass: #'OS.TOOLINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	imports: #(#{OS.TooltipConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_hinst' -> 16r20.
@@ -15,7 +15,16 @@ OS.SizedStructure
 			'_OffsetOf_rect' -> 16r10.
 			'_OffsetOf_uFlags' -> 16r4.
 			'_OffsetOf_uId' -> 16rC.
-			'_TOOLINFOW_Size' -> 16r30
+			'_TOOLINFOW_Size' -> 16r30.
+			'TTF_ABSOLUTE' -> 16r80.
+			'TTF_CENTERTIP' -> 16r2.
+			'TTF_DI_SETITEM' -> 16r8000.
+			'TTF_IDISHWND' -> 16r1.
+			'TTF_PARSELINKS' -> 16r1000.
+			'TTF_RTLREADING' -> 16r4.
+			'TTF_SUBCLASS' -> 16r10.
+			'TTF_TRACK' -> 16r20.
+			'TTF_TRANSPARENT' -> 16r100
 		}!
 
 OS.TOOLINFOW guid: (Core.GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -109,8 +118,7 @@ text: aString
 textCallback
 	"Sets this item into callback mode for the item text."
 
-	self lpszText: LPSTR_TEXTCALLBACK
-!
+	bytes uintPtrAtOffset: _OffsetOf_lpszText put: CommCtrlLibrary.LPSTR_TEXTCALLBACK!
 
 uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."

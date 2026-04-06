@@ -57,7 +57,7 @@ Core.Tests.DolphinTest
 	subclass: #'Database.Tests.DBFieldTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ODBCCTypes} #{OS.ODBCTypes})
+	imports: #(#{OS.ODBCLibrary} #{Database.DBColAttr})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -81,7 +81,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.SQL_INTERVAL_STRUCTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ODBCCTypes})
+	imports: #(#{OS.ODBCLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -89,7 +89,7 @@ Database.Tests.DBTest
 	subclass: #'Database.Tests.DBConnectionTest'
 	instanceVariableNames: 'savedBlockSize savedMaxBoundSize createdTestTable savedDBWarningTraceStream'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
+	imports: #(#{OS.ODBCLibrary} #{Database.DBColAttr})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

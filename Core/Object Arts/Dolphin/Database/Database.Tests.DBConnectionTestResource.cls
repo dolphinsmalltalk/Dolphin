@@ -109,7 +109,7 @@ pwd
 	^'Password12!!'!
 
 requiredOdbcVersion
-	^OS.ODBCConstants.SQL_OV_ODBC3!
+	^OS.ODBCLibrary.SQL_OV_ODBC3!
 
 setUp
 	(isAvailable := self prereqsAvailable and: [self createDatabase])

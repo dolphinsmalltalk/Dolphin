@@ -159,7 +159,7 @@ testTouchesPoint
 	self assert: (model touchesPoint: rect origin + 1 pen: (Pen color: Color black width: 3))!
 
 testWiden
-	| rect bitmap graphics pen |
+	| rect graphics pen |
 	model := GraphicsPath new.
 	rect := 15 @ 25 extent: 50 @ 100.
 	model := GraphicsPath fromRectangle: rect.

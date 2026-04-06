@@ -9,7 +9,14 @@ External.Structure
 	classConstants: {
 			'_OffsetOf_CtlID' -> 16r4.
 			'_OffsetOf_CtlType' -> 16r0.
-			'_OffsetOf_itemID' -> 16r8
+			'_OffsetOf_itemID' -> 16r8.
+			'ODS_GRAYED' -> 16r2.
+			'ODS_SELECTED' -> 16r1.
+			'ODT_BUTTON' -> 16r4.
+			'ODT_COMBOBOX' -> 16r3.
+			'ODT_LISTBOX' -> 16r2.
+			'ODT_MENU' -> 16r1.
+			'ODT_STATIC' -> 16r5
 		}!
 
 OS.OwnerDrawStruct guid: (Core.GUID fromString: '{7208da36-0f29-40ae-b974-07c3a81db8f5}')!

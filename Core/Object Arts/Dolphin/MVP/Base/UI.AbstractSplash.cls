@@ -4,7 +4,7 @@ UI.ShellView
 	subclass: #'UI.AbstractSplash'
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

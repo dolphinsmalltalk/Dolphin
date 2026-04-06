@@ -4,7 +4,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IPropertySetStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #(#{OS.COM.STATSTG private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

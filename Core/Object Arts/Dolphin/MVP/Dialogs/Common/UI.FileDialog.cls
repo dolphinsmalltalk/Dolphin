@@ -4,9 +4,23 @@ UI.CommonDialog
 	subclass: #'UI.FileDialog'
 	instanceVariableNames: 'style fileTypes validationBlock'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.OPENFILENAMEW private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CDM_FIRST' -> 16r464.
+			'CDM_GETFILEPATH' -> 16r465.
+			'CDM_GETSPEC' -> 16r464.
+			'CDN_FILEOK' -> -16r25E.
+			'CDN_FIRST' -> -16r259.
+			'CDN_FOLDERCHANGE' -> -16r25B.
+			'CDN_HELP' -> -16r25D.
+			'CDN_INCLUDEITEM' -> -16r260.
+			'CDN_INITDONE' -> -16r259.
+			'CDN_LAST' -> -16r2BB.
+			'CDN_SELCHANGE' -> -16r25A.
+			'CDN_SHAREVIOLATION' -> -16r25C.
+			'CDN_TYPECHANGE' -> -16r25F
+		}!
 
 UI.FileDialog guid: (Core.GUID fromString: '{87b4c6b1-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -260,7 +274,7 @@ prepareStruct
 	"Private - Initialize the parameter structure to be passed to the Win32 API associated with this common dialog, immediately prior to the call to that API."
 
 	| buf defext |
-	buf := Utf16String newFixed: self maxFileCount * self averageFilenameLength + MAX_PATH.
+	buf := Utf16String newFixed: self maxFileCount * self averageFilenameLength + KernelLibrary.MAX_PATH.
 	self value
 		ifNotNil: 
 			[:filename |
@@ -382,7 +396,7 @@ allFilesType
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
 
-	^Utf16String empty!
+	^Utf16String.Empty!
 
 icon
 	^##(self) defaultIcon!

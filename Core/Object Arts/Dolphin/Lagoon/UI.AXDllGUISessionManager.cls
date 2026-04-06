@@ -49,7 +49,7 @@ traceStream!accessing!operations-logging!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^External.DynamicLinkLibrary icon!
+	^DynamicLinkLibrary icon!
 
 imageExtension
 	"Answer the suffix for an executable image file"

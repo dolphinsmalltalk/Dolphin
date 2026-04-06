@@ -4,9 +4,9 @@ Core.Object
 	subclass: #'OS.VersionResource'
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'RT_VERSION' -> 16r10 }!
 
 OS.VersionResource guid: (Core.GUID fromString: '{b76ab5bc-4ba7-40d2-88fe-6a76d28fc30b}')!
 

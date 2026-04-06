@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'OS.COM.ObjectStub'
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
-	imports: #(#{OS.Win32Errors private})
+	imports: #(#{OS.HRESULT private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -287,7 +287,7 @@ QueryInterface: pIID ppvObject: ppvOut
 			"Unfortunately we cannot pass the address through due to the implicit
 			indirection of lppvoid parameter types - with the benefit of hindsight, perhaps
 			this wasn't the best of ideas, but..."
-			pi := External.Address new.
+			pi := Address new.
 			outerUnknown QueryInterface: pIID ppvObject: pi.
 			ppvOut value: pi]!
 

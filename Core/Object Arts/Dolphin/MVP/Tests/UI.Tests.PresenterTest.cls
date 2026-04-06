@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'UI.Tests.PresenterTest'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -91,17 +91,17 @@ resourceDir
 	^self resourceFilename: 'ViewResources\' , self classToTest name!
 
 sendKeyPress: vkInteger extended: aBoolean
-	| scanCode flags |
+	| scanCode eventFlags |
 	scanCode := User32 mapVirtualKey: vkInteger uMapType: 0.
-	flags := aBoolean ifTrue: [SendInputConstants.KEYEVENTF_EXTENDEDKEY] ifFalse: [0].
+	eventFlags := aBoolean ifTrue: [INPUT.KEYEVENTF_EXTENDEDKEY] ifFalse: [0].
 	User32
 		keybd_event: vkInteger
 			bScan: scanCode
-			dwFlags: flags
+			dwFlags: eventFlags
 			dwExtraInfo: 0;
 		keybd_event: vkInteger
 			bScan: scanCode
-			dwFlags: flags | SendInputConstants.KEYEVENTF_KEYUP
+			dwFlags: eventFlags | INPUT.KEYEVENTF_KEYUP
 			dwExtraInfo: 0!
 
 setUp

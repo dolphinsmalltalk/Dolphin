@@ -168,7 +168,7 @@ measurableCharacterRangesOf: aGdiplusStringFormat set: aCollectionOfIntervals
 
 printAttributesOn: aStream
 	| separator |
-	separator := (flags == 0 and: [language == OS.NlsConstants.LANG_NEUTRAL])
+	separator := (flags == 0 and: [language == Locale.LANG_NEUTRAL])
 				ifTrue: 
 					[
 					[separator := '; '.
@@ -186,7 +186,7 @@ printAttributesOn: aStream
 									[aStream nextPutAll: '##('.
 									consts do: [:each | aStream nextPutAll: each value] separatedBy: [aStream nextPut: $|].
 									aStream nextPut: $)]].
-					language == OS.NlsConstants.LANG_NEUTRAL
+					language == Locale.LANG_NEUTRAL
 						ifFalse: 
 							[aStream
 								nextPutAll: ' language: ';

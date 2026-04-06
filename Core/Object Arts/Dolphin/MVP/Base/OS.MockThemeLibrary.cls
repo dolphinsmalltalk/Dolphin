@@ -4,7 +4,7 @@ OS.ThemeLibrary
 	subclass: #'OS.MockThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -394,7 +394,7 @@ getThemeColor: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pColo
 			[in]int iPropId,
 			[out]unsigned long* pColor);"
 
-	pColor value: CLR_DEFAULT.
+	pColor value: Graphics.Color.CLR_DEFAULT.
 	^E_NOTIMPL!
 
 getThemeDocumentationProperty: pszThemeName pszPropertyName: pszPropertyName pszValueBuff: pszValueBuff cchMaxValChars: cchMaxValChars

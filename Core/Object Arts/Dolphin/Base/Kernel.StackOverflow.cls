@@ -30,7 +30,7 @@ defaultAction
 hresult
 	"Answer the <HRESULT> error/status code associated with the receiver."
 
-	^HRESULT win32Error: ERROR_STACK_OVERFLOW! !
+	^HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveStackOverflow! !
 
 !Kernel.StackOverflow categoriesForMethods!
 _descriptionArguments!displaying!public! !

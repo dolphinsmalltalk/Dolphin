@@ -81,13 +81,14 @@ printWParamOn: aStream
 	separator := 
 			[separator := '|'.
 			''].
-	#('MK_CONTROL' 'MK_SHIFT' 'MK_LBUTTON' 'MK_RBUTTON' 'MK_MBUTTON' 'MK_XBUTTON1' 'MK_XBUTTON2') do: 
+	#(#{OS.UserLibrary.MK_CONTROL} #{OS.UserLibrary.MK_SHIFT} #{OS.UserLibrary.MK_LBUTTON} #{OS.UserLibrary.MK_RBUTTON} #{OS.UserLibrary.MK_MBUTTON} #{OS.UserLibrary.MK_XBUTTON1} #{OS.UserLibrary.MK_XBUTTON2})
+		do: 
 			[:each |
-			(wParam allMask: (Win32Constants at: each))
+			(wParam allMask: each value)
 				ifTrue: 
 					[aStream
 						nextPutAll: separator value;
-						nextPutAll: each]]! !
+						nextPutAll: each key]]! !
 
 !UI.MouseEvent categoriesForMethods!
 button!accessing!public! !

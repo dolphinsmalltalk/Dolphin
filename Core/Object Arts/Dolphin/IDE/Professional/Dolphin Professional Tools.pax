@@ -45,7 +45,6 @@ package setMethodNames: #(
 	#(#{Core.Metaclass} #correspondingTestCase)
 	#(#{Core.Process} #priorityName)
 	#(#{Kernel.ProcessorScheduler} #nameOfPriority:)
-	#(#{Smalltalk.StyledContainer class} #publishedAspectsOfInstances)
 	#(#{Tools.BasicInspector} #browseSystem)
 	#(#{Tools.ClassBrowserAbstract} #toggleLocalHierarchy)
 	#(#{Tools.Debugger} #queryToggleDisassembly:)
@@ -109,7 +108,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Static\Rectangle\Dolphin StaticRectangle Control'
 	'..\..\MVP\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\System\Filer\Dolphin STx Filer Core'
-	'..\..\MVP\Views\Styled Views\Dolphin Styled Views'
 	'..\..\MVP\Views\SysLink\Dolphin SysLink Control'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
@@ -212,7 +210,7 @@ Tools.SmalltalkToolShell
 	subclass: #'Tools.IdeaSpaceShell'
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
 	classVariableNames: 'Watermark'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -306,42 +304,6 @@ nameOfPriority: anInteger
 
 !Kernel.ProcessorScheduler categoriesForMethods!
 nameOfPriority:!enquiries!public! !
-!
-
-!StyledContainer class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| aspects |
-	aspects := super publishedAspectsOfInstances.
-	aspects
-		add: ((Aspect name: #styledPen
-					chooseFrom: #('nil' 'StyledPen solid' 'StyledPen dotted' 'StyledPen dashed' 'StyledPen dashDot' 'StyledPen dashDotDot'))
-					beImmutable;
-					beNullable;
-					yourself);
-		add: ((Aspect name: #styledShadow chooseFrom: #('nil' 'StyledShadow new'))
-					beImmutable;
-					beNullable;
-					yourself);
-		add: ((Aspect name: #styledBrush
-					chooseFrom: #('nil' 'StyledGradientBrush black' 'StyledGradientBrush white' 'StyledGradientBrush face3dTopToBottomFade' 'StyledGradientBrush face3dLeftToRightFade' 'StyledGradientBrush face3dTopLeftToBottomRightFade'))
-					beNullable;
-					yourself);
-		add: ((Aspect name: #cornerRadii)
-					beNonNullable;
-					beImmutable;
-					yourself);
-		add: (Aspect boolean: #isAntialiased);
-		add: ((Aspect collection: #edges addEvaluationFrom: #('#left' '#right' '#top' '#bottom'))
-					beImmutable;
-					beNonNullable;
-					yourself).
-	^aspects! !
-
-!StyledContainer class categoriesForMethods!
-publishedAspectsOfInstances!constants!public! !
 !
 
 !Tools.BasicInspector methodsFor!

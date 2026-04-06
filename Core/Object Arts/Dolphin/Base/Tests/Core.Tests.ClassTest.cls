@@ -97,7 +97,7 @@ testComparing
 	self assert: tempClass <==> self class equals: -1.!
 
 testImportsValid
-	Smalltalk allClasses do: [:each | self assert: (each imports allSatisfy: [:i | i isDefined])]!
+	Smalltalk allClasses do: [:each | self assert: (each imports reject: [:i | i isDefined]) equals: #()]!
 
 testIncludesNamespace
 	self assert: (Root includesNamespace: Root).

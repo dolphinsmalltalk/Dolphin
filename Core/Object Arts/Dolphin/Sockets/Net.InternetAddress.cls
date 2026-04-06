@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Net.InternetAddress'
 	instanceVariableNames: 'host ipAddress'
 	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'MaxHostName' -> 16r100 }!
 
@@ -58,7 +58,7 @@ ipAddress
 	such cases will require a DNS or HOSTS reverse lookup"
 
 	ipAddress isNil
-		ifTrue: [ipAddress := (Ws2_32 getAddrInfo: self host family: AF_INET) address ipAddress].
+		ifTrue: [ipAddress := (Ws2_32 getAddrInfo: self host family: WS2_32Library.AF_INET) address ipAddress].
 	^ipAddress!
 
 ipAddress: bytes 

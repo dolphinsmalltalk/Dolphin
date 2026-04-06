@@ -4,7 +4,7 @@ Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
 	classVariableNames: 'AnsiCharacters AnsiCharacterSet AnsiCodePage AnsiCodePoints AsciiCharacterSet'
-	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants private})
+	imports: #(#{OS.ICULibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AsciiClassifications'
@@ -421,7 +421,7 @@ isUpperCase
 isUtf16Lead
 	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
 
-	^(code bitAnd: ##(EncodingMask | Utf16String.SurrogateMask)) == ##(Utf16Mask | Utf16String.LeadSurrogateMask)!
+	^(code bitAnd: ##(EncodingMask bitOr: Utf16String.SurrogateMask)) == ##(Utf16Mask bitOr: Utf16String.LeadSurrogateMask)!
 
 isUtf16Surrogate
 	"Answer whether the receiver is a UTF-16 surrogate (partial character)."
@@ -432,8 +432,8 @@ isUtf16Surrogate
 isUtf16Trail
 	"Answer whether the receiver is a UTF-16 trail surrogate (trailing code-unit of two-part code point)."
 
-	^(code bitAnd: ##(EncodingMask | Utf16String.SurrogateMask))
-		== ##(Utf16Mask | Utf16String.TrailSurrogateMask)!
+	^(code bitAnd: ##(EncodingMask bitOr: Utf16String.SurrogateMask))
+		== ##(Utf16Mask bitOr: Utf16String.TrailSurrogateMask)!
 
 isUtf8
 	"Answer whether the receiver is a valid UTF-8 code unit. This is true for any ASCII character, or any UTF-8 surrogate."
@@ -443,7 +443,7 @@ isUtf8
 isUtf8Lead
 	"Answer whether the receiver represents a UTF-8 leading byte."
 
-	^(code bitAnd: ##(EncodingMask | Utf8String.SurrogateMask)) == ##(Utf8Mask | Utf8String.LeadByteMask2)!
+	^(code bitAnd: ##(EncodingMask bitOr: Utf8String.SurrogateMask)) == ##(Utf8Mask bitOr: Utf8String.LeadByteMask2)!
 
 isUtf8Surrogate
 	"Answer whether the receiver represents a UTF-8 surrogate (partial character)."
@@ -454,7 +454,7 @@ isUtf8Surrogate
 isUtf8Trail
 	"Answer whether the receiver represents a UTF-8 trailing byte."
 
-	^(code bitAnd: ##(EncodingMask | Utf8String.SurrogateMask)) == ##(Utf8Mask | Utf8String.TrailByteMask)!
+	^(code bitAnd: ##(EncodingMask bitOr: Utf8String.SurrogateMask)) == ##(Utf8Mask bitOr: Utf8String.TrailByteMask)!
 
 isVowel
 	"Answer whether the receiver is an English vowel (a, e, i, o, or u), upper or lowercase."
@@ -926,12 +926,12 @@ utf16Value: anInteger ifInvalid: exceptionHandler
 							[(anInteger >= 0 and: 
 									[anInteger <= UCHAR_MAX_VALUE
 										and: [anInteger < 16rFDD0 or: [anInteger > 16rFDEF and: [(anInteger allMask: 16rFFFE) not]]]])
-									ifTrue: 
-										["Valid non-ascii/non-ansi code point"
-										(self newCode: (Utf32Mask bitOr: anInteger))
-											isImmutable: true;
-											yourself]
-									ifFalse: [exceptionHandler value]]]]!
+								ifTrue: 
+									["Valid non-ascii/non-ansi code point"
+									(self newCode: (Utf32Mask bitOr: anInteger))
+										isImmutable: true;
+										yourself]
+								ifFalse: [exceptionHandler value]]]]!
 
 utf8Value: anInteger
 	"Answer a <Character> representing the <integer> UTF-8 code unit, anInteger.

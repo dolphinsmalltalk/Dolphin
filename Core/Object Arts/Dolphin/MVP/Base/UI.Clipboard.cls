@@ -4,9 +4,32 @@ Core.Object
 	subclass: #'UI.Clipboard'
 	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CF_BITMAP' -> 16r2.
+			'CF_DIB' -> 16r8.
+			'CF_DIBV5' -> 16r11.
+			'CF_DIF' -> 16r5.
+			'CF_DSPBITMAP' -> 16r82.
+			'CF_DSPENHMETAFILE' -> 16r8E.
+			'CF_DSPMETAFILEPICT' -> 16r83.
+			'CF_DSPTEXT' -> 16r81.
+			'CF_ENHMETAFILE' -> 16rE.
+			'CF_HDROP' -> 16rF.
+			'CF_LOCALE' -> 16r10.
+			'CF_METAFILEPICT' -> 16r3.
+			'CF_OEMTEXT' -> 16r7.
+			'CF_OWNERDISPLAY' -> 16r80.
+			'CF_PALETTE' -> 16r9.
+			'CF_PENDATA' -> 16rA.
+			'CF_RIFF' -> 16rB.
+			'CF_SYLK' -> 16r4.
+			'CF_TEXT' -> 16r1.
+			'CF_TIFF' -> 16r6.
+			'CF_UNICODETEXT' -> 16rD.
+			'CF_WAVE' -> 16rC
+		}!
 
 UI.Clipboard guid: (Core.GUID fromString: '{87b4c463-026e-11d3-9fd7-00a0cc3e4a32}')!
 

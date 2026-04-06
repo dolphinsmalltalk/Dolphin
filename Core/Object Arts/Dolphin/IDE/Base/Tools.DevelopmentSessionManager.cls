@@ -478,8 +478,7 @@ preStart
 		messageBox: nil
 		text: 'File in "' , PreStartFile , '"?'
 		caption: self applicationName
-		style: ##(MessageBoxConstants.MB_TASKMODAL | MessageBoxConstants.MB_SETFOREGROUND
-				| MessageBoxConstants.MB_YESNO)
+		style: ##(MB_TASKMODAL | MB_SETFOREGROUND | MB_YESNO)
 		icon: nil
 		instance: nil) == IDYES
 		ifTrue: [self class sourceManager fileIn: PreStartFile]!

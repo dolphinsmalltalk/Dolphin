@@ -4,9 +4,21 @@ UI.StaticView
 	subclass: #'UI.SysLinkView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.SysLinkConstants})
+	imports: #(#{OS.LITEM private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ICC_LINK_CLASS' -> 16r8000.
+			'LM_GETIDEALHEIGHT' -> 16r701.
+			'LM_GETITEM' -> 16r703.
+			'LM_HITTEST' -> 16r700.
+			'LM_SETITEM' -> 16r702.
+			'LWS_IGNORERETURN' -> 16r2.
+			'LWS_NOPREFIX' -> 16r4.
+			'LWS_RIGHT' -> 16r20.
+			'LWS_TRANSPARENT' -> 16r1.
+			'LWS_USECUSTOMTEXT' -> 16r10.
+			'LWS_USEVISUALSTYLE' -> 16r8
+		}!
 
 UI.SysLinkView guid: (Core.GUID fromString: '{e19a1369-3c1d-4216-b5b6-c6649e51dc4b}')!
 

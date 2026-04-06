@@ -43,7 +43,7 @@ size
 	^super size - offset bitShift: -1!
 
 translationMode
-	^CRTConstants._O_U16TEXT! !
+	^_O_U16TEXT! !
 
 !OS.StdioUtf16FileStream categoriesForMethods!
 contentsSpecies!constants!private! !

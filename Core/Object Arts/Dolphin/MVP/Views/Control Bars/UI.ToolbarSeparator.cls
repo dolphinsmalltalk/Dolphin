@@ -6,7 +6,7 @@ UI.ToolbarItem
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BTNS_SEP' -> 16r1 }!
 
 UI.ToolbarSeparator guid: (Core.GUID fromString: '{87b4c701-026e-11d3-9fd7-00a0cc3e4a32}')!
 

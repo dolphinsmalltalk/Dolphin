@@ -18,7 +18,35 @@ OS.COM.MemberDesc
 			'_OffsetOf_lprgelemdescParam' -> 16r8.
 			'_OffsetOf_lprgscode' -> 16r4.
 			'_OffsetOf_oVft' -> 16r1C.
-			'_OffsetOf_wFuncFlags' -> 16r30
+			'_OffsetOf_wFuncFlags' -> 16r30.
+			'CC_CDECL' -> 16r1.
+			'CC_MACPASCAL' -> 16r3.
+			'CC_MAX' -> 16r9.
+			'CC_MPWCDECL' -> 16r7.
+			'CC_MPWPASCAL' -> 16r8.
+			'CC_MSCPASCAL' -> 16r2.
+			'CC_PASCAL' -> 16r2.
+			'CC_RESERVED' -> 16r5.
+			'CC_STDCALL' -> 16r4.
+			'CC_SYSCALL' -> 16r6.
+			'FUNC_DISPATCH' -> 16r4.
+			'FUNC_NONVIRTUAL' -> 16r2.
+			'FUNC_PUREVIRTUAL' -> 16r1.
+			'FUNC_STATIC' -> 16r3.
+			'FUNC_VIRTUAL' -> 16r0.
+			'FUNCFLAG_FBINDABLE' -> 16r4.
+			'FUNCFLAG_FDEFAULTBIND' -> 16r20.
+			'FUNCFLAG_FDEFAULTCOLLELEM' -> 16r100.
+			'FUNCFLAG_FDISPLAYBIND' -> 16r10.
+			'FUNCFLAG_FHIDDEN' -> 16r40.
+			'FUNCFLAG_FIMMEDIATEBIND' -> 16r1000.
+			'FUNCFLAG_FNONBROWSABLE' -> 16r400.
+			'FUNCFLAG_FREPLACEABLE' -> 16r800.
+			'FUNCFLAG_FREQUESTEDIT' -> 16r8.
+			'FUNCFLAG_FRESTRICTED' -> 16r1.
+			'FUNCFLAG_FSOURCE' -> 16r2.
+			'FUNCFLAG_FUIDEFAULT' -> 16r200.
+			'FUNCFLAG_FUSESGETLASTERROR' -> 16r80
 		}!
 
 OS.COM.FUNCDESC guid: (Core.GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
@@ -164,9 +192,6 @@ elemDescFunc
 		owner: self;
 		yourself!
 
-flags
-	^self wFuncFlags!
-
 funckind
 	"Answer the <Integer> value of the receiver's 'funckind' field."
 
@@ -194,41 +219,71 @@ invkind
 
 	^bytes int32AtOffset: _OffsetOf_invkind!
 
+isBindable
+	"Answer whether the receiver is describing a 'bindable' property."
+
+	^self wFuncFlags allMask: FUNCFLAG_FBINDABLE!
+
+isDefaultBind
+	"Answer whether the receiver is describing a 'defaultbind' property (i.e. the single, bindable
+	property that best describes the object)."
+
+	^self wFuncFlags allMask: FUNCFLAG_FDEFAULTBIND!
+
 isDispatchable
 	"Answer whether the receiver is only invokable via IDispatch"
 
 	^self funckind == FUNC_DISPATCH!
 
+isDisplayBind
+	"Answer whether the receiver is describing a 'displaybind' property (i.e. a property that
+	should be displayed to the user as bindable)."
+
+	^self wFuncFlags allMask: FUNCFLAG_FDISPLAYBIND!
+
+isHidden
+	"Answer whether the receiver is describing a hidden function or variable (i.e. one not
+	intended to be advertised to users of macro/scripting languages)."
+
+	^self wFuncFlags allMask: FUNCFLAG_FHIDDEN!
+
 isMethod
 	"Answer whether the receiver should be invoked as a method (i.e. with DISPATCH_METHOD)"
 
-	^self invkind == INVOKE_FUNC!
+	^self invkind == IDispatch.INVOKE_FUNC!
+
+isNonBrowsable
+	"Answer whether the receiver is describing a 'non-browsable' property. Oddly this doesn't
+	mean that the method should not be displayed in type library browsers, but that it shouldn't
+	be shown in inspectors."
+
+	^self wFuncFlags anyMask: FUNCFLAG_FNONBROWSABLE!
 
 isPropGet
 	"Answer whether the receiver should be invoked as a property access
 	function (i.e. with DISPATCH_PROPERTYGET)"
 
-	^self invkind == INVOKE_PROPERTYGET!
+	^self invkind == IDispatch.INVOKE_PROPERTYGET!
 
 isPropPut
 	"Answer whether the receiver should be invoked as a property value assignment 
 	function (i.e. with DISPATCH_PROPERTYPUT)"
 
-	^self invkind == INVOKE_PROPERTYPUT!
+	^self invkind == IDispatch.INVOKE_PROPERTYPUT!
 
 isPropPutRef
 	"Answer whether the receiver should be invoked as a property reference assignment 
-	function (i.e. with DISPATCH_PROPERTYPUTREF)"
+	function (i.e. with INVOKE_PROPERTYPUTREF)"
 
-	^self invkind == INVOKE_PROPERTYPUTREF!
+	^self invkind == IDispatch.INVOKE_PROPERTYPUTREF!
 
 isPropSet
 	"Answer whether the receiver describes a property value or reference assignment
 	function (i.e. it is of invocation type INVOKE_PROPERTYPUT[REF])."
 
 	| invkind |
-	^(invkind := self invkind) == INVOKE_PROPERTYPUT
-		or: [invkind == INVOKE_PROPERTYPUTREF]!
+	^(invkind := self invkind) == IDispatch.INVOKE_PROPERTYPUT
+		or: [invkind == IDispatch.INVOKE_PROPERTYPUTREF]!
 
 isReadOnly
 	^self isPropGet!
@@ -244,6 +299,17 @@ isRestricted
 	intended to be used from macro/scripting languages)."
 
 	^self wFuncFlags allMask: FUNCFLAG_FRESTRICTED!
+
+isSource
+	"Answer whether the receiver is describing a function that returns an object, or 
+	a variable that holds an object, that is a source of events."
+
+	^self wFuncFlags allMask: FUNCFLAG_FSOURCE!
+
+isUIDefault
+	"Answer whether the receiver is describing the default member for display in the UI."
+
+	^self wFuncFlags allMask: FUNCFLAG_FUIDEFAULT!
 
 isVirtual
 	"Answer whether the receiver describes some kind of virtual function."
@@ -392,14 +458,18 @@ cScodes!**compiled accessors**!private! !
 elemDesc!accessing!public! !
 elemdescFunc!**compiled accessors**!public! !
 elemDescFunc!accessing!public! !
-flags!accessing!private! !
 funckind!**compiled accessors**!public! !
 getAllCustData!accessing!private! !
 hasRetval!public!testing! !
 idlCallingConvention!printing-IDL!private! !
 invkind!**compiled accessors**!public! !
+isBindable!public!testing! !
+isDefaultBind!public!testing! !
 isDispatchable!public!testing! !
+isDisplayBind!public!testing! !
+isHidden!public!testing! !
 isMethod!public!testing! !
+isNonBrowsable!public!testing! !
 isPropGet!public!testing! !
 isPropPut!public!testing! !
 isPropPutRef!public!testing! !
@@ -407,6 +477,8 @@ isPropSet!public!testing! !
 isReadOnly!public!testing! !
 isRequestEdit!public!testing! !
 isRestricted!public!testing! !
+isSource!public!testing! !
+isUIDefault!public!testing! !
 isVirtual!public!testing! !
 lprgelemdescParam!**compiled accessors**!public! !
 lprgscode!**compiled accessors**!public! !

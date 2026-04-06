@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.CCITEMTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

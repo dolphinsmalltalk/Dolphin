@@ -6,7 +6,76 @@ External.PermanentLibrary
 	classVariableNames: 'Registry RegistryKeys'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DoubleSize' -> 16r8.
+			'FloatSize' -> 16r4.
+			'HalfPtrBits' -> 16r10.
+			'HalfPtrMask' -> 16rFFFF.
+			'HalfPtrMax' -> 16r7FFF.
+			'HashBits' -> 16r1E.
+			'IntMax' -> 16r7FFFFFFF.
+			'IntPtrBits' -> 16r20.
+			'IntPtrMask' -> 16rFFFFFFFF.
+			'IntPtrMax' -> 16r7FFFFFFF.
+			'IntPtrSize' -> 16r4.
+			'IntSize' -> 16r4.
+			'IsWin64' -> false.
+			'MaxBlockNesting' -> 16rFF.
+			'MaxLiterals' -> 16r10000.
+			'MaxMessageArgs' -> 16rFF.
+			'MaxPrimitive' -> 16rFF.
+			'MaxTemps' -> 16rFF.
+			'MaxVirtualFunction' -> 16r400.
+			'ObjectHeaderSize' -> 16r0.
+			'PrimitiveAccessViolation' -> -16r3FF8FC1A.
+			'PrimitiveAssertionFailure' -> -16r17FFFBE0.
+			'PrimitiveClassNotRegistered' -> -16r3FFBFEAC.
+			'PrimitiveCompleted' -> 16r80000FF.
+			'PrimitiveFailed' -> -16r3FFFBFFB.
+			'PrimitiveFloatInvalidOperation' -> -16r17FFFF70.
+			'PrimitiveIllegalCharacter' -> -16r17FFFE9F.
+			'PrimitiveIllegalStateChange' -> -16r3FFFFFF3.
+			'PrimitiveIntegerOutOfRange' -> -16r3FCDFFD8.
+			'PrimitiveIntegerOverflow' -> -16r17FFFF6B.
+			'PrimitiveInternalError' -> -16r17FFFF1B.
+			'PrimitiveInvalidParameter' -> -16r17FFFFF3.
+			'PrimitiveInvalidParameter1' -> -16r17FFFF11.
+			'PrimitiveInvalidParameter10' -> -16r17FFFF08.
+			'PrimitiveInvalidParameter11' -> -16r17FFFF07.
+			'PrimitiveInvalidParameter12' -> -16r17FFFF06.
+			'PrimitiveInvalidParameter2' -> -16r17FFFF10.
+			'PrimitiveInvalidParameter3' -> -16r17FFFF0F.
+			'PrimitiveInvalidParameter4' -> -16r17FFFF0E.
+			'PrimitiveInvalidParameter5' -> -16r17FFFF0D.
+			'PrimitiveInvalidParameter6' -> -16r17FFFF0C.
+			'PrimitiveInvalidParameter7' -> -16r17FFFF0B.
+			'PrimitiveInvalidParameter8' -> -16r17FFFF0A.
+			'PrimitiveInvalidParameter9' -> -16r17FFFF09.
+			'PrimitiveInvalidParameterMix' -> -16r17FFFFD0.
+			'PrimitiveInvalidPointer' -> -16r3FFFBFFD.
+			'PrimitiveInvalidVariant' -> -16r17FFFDCE.
+			'PrimitiveNoCallbackActive' -> -16r3FF8FD9A.
+			'PrimitiveNoMemory' -> -16r3FF8FFF8.
+			'PrimitiveNonInstantiable' -> -16r3FF8DF59.
+			'PrimitiveNotImplemented' -> -16r3FFFBFFF.
+			'PrimitiveNotSupported' -> -16r17FFFF45.
+			'PrimitiveObjectTypeMismatch' -> -16r17FFFFDC.
+			'PrimitiveOutOfBounds' -> -16r3FFFFFF5.
+			'PrimitivePending' -> -16r3FFFFFF6.
+			'PrimitiveRetry' -> -16r17FFFDD3.
+			'PrimitiveSignalPending' -> -16r3FF8FF5E.
+			'PrimitiveStackOverflow' -> -16r3FF8FC17.
+			'PrimitiveThreadIsTerminating' -> -16r17FFFFB5.
+			'PrimitiveTimeout' -> -16r3FF8FA4C.
+			'PrimitiveUndefinedCharacter' -> -16r17FFFE9D.
+			'PrimitiveUnmappableCharacter' -> -16r17FFFE9E.
+			'PrimitiveUnsuccessful' -> -16r17FFFFFF.
+			'PrimitiveWrongNumberOfArgs' -> -16r3FFD735F.
+			'SmallIntegerMax' -> 16r3FFFFFFF.
+			'SmallIntegerMin' -> -16r40000000.
+			'UIntMax' -> 16rFFFFFFFF.
+			'UIntPtrMax' -> 16rFFFFFFFF
+		}!
 
 Kernel.VMLibrary guid: (Core.GUID fromString: '{87b4c58f-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -99,7 +168,7 @@ crashDump: message
 	must be appropriately configured."
 
 	| parms str |
-	parms := ByteArray new: VMConstants.IntPtrSize.
+	parms := ByteArray new: IntPtrSize.
 	str := message asUtf16String.
 	parms intPtrAtOffset: 0 put: str yourAddress.
 	Kernel32
@@ -227,7 +296,7 @@ handleFromInteger: anInteger
 	"Implementation Note: AnswerIntPtr() is a simple function which returns its pointer-sized argument. By appropriately specifying the argument and return types, we can use external call primitive's argument coercion and return object instantiation, to perform useful type conversions very quickly."
 
 	<stdcall: handle AnswerIntPtr uintptr>
-	^External.Handle new value: anInteger asInteger!
+	^Handle new value: anInteger asInteger!
 
 hashBytes: aByteObject count: anInteger
 	"Private - Hash the specified number of bytes at the specified address using the function
@@ -272,15 +341,6 @@ isDebugBuild
 
 	<stdcall: bool IsDebugBuild>
 	^false!
-
-isSlowMachine
-	"Answer true if this machine is judged to be slow."
-
-	^(User32 getSystemMetrics: SM_SLOWMACHINE) ~~ 0
-
-	"
-	VM isSlowMachine
-"!
 
 isUserBreakRequested
 	"Private - Answer whether the user has pressed the break key sequence. The key sequence is
@@ -485,7 +545,6 @@ highBit:!arithmetic!public! !
 indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
 int32FromUInt32:!helpers!private! !
 isDebugBuild!environment!public! !
-isSlowMachine!environment!public! !
 isUserBreakRequested!accessing!helpers!private! !
 kernelHandle!accessing-handles!private! !
 largeSignedFromUnsigned:!helpers!private! !
@@ -613,16 +672,16 @@ initialize
 				yourself)!
 
 maxBlockNesting
-	^VMConstants.MaxBlockNesting!
+	^VMLibrary.MaxBlockNesting!
 
 maxLiterals
-	^VMConstants.MaxLiterals!
+	^VMLibrary.MaxLiterals!
 
 maxMessageArguments
-	^VMConstants.MaxMessageArgs!
+	^VMLibrary.MaxMessageArgs!
 
 maxTemps
-	^VMConstants.MaxTemps!
+	^VMLibrary.MaxTemps!
 
 moduleHandle
 	^Registry at: 122!

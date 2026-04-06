@@ -18,7 +18,7 @@ testBytesUsedByObject
 	| meman granularity |
 	meman := MemoryManager current.
 	granularity := 8.
-	self assert: VMConstants.ObjectHeaderSize equals: 0.
+	self assert: VMLibrary.ObjectHeaderSize equals: 0.
 	self assert: (meman bytesUsedByObject: 1) equals: 0.
 	"Byte object"
 	"Zero length object has no body"

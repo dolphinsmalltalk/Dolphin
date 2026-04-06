@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.CompilerTest'
 	instanceVariableNames: 'defaultCompileFlags'
 	classVariableNames: 'TempInstrs'
-	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool} #{Kernel.ParseErrorCodes})
+	imports: #(#{Kernel.Compiler} #{Kernel.OpcodePool} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -80,7 +80,7 @@ debugCompileResultFor: aCompiledMethod
 		compileForMethod: aCompiledMethod getSource
 		in: aCompiledMethod methodClass
 		environment: aCompiledMethod environment
-		flags: ##(CompilerFlags.DebugMethod | CompilerFlags.TextMap | CompilerFlags.TempsMap)!
+		flags: ##(CreateDebugMethod | CreateTextMap | CreateTempsMap)!
 
 defaultCompileFlags
 	^defaultCompileFlags!

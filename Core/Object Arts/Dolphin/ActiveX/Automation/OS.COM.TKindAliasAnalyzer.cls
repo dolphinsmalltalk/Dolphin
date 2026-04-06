@@ -102,7 +102,7 @@ initialize
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
-	^TKIND_ALIAS!
+	^ITypeInfo.TKIND_ALIAS!
 
 wireHandleNames
 	^#('HACCEL' 'HWND' 'HINSTANCE' 'HDC' 'HFILE' 'HGDIOBJ' 'HICON' 'HCURSOR' 'HFONT' 'HDWP' 'HKEY' 'HPEN' 'HRGN' 'HMODULE' 'HTASK' 'HRSRC' 'HBITMAP' 'HGLOBAL' 'HPALETTE' 'HMETAFILE' 'HENHMETAFILE' 'HBRUSH' 'HMENU' 'HIMAGELIST')! !

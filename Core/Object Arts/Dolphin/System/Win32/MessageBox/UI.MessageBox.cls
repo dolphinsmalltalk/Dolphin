@@ -4,7 +4,7 @@ UI.MessageBoxAbstract
 	subclass: #'UI.MessageBox'
 	instanceVariableNames: 'handle events flags uniqueId modality iconStyle icon headline detailsText expandLabel collapseLabel checkboxText footerIcon footerText buttonStyle defaultButton customButtons buttonNames buttonIds radioButtons defaultRadioButton progressRange verified button radioButtonId'
 	classVariableNames: 'NotificationCallbackDescriptor'
-	imports: #(#{OS.Win32Constants private} #{OS.TaskDialogConstants private} #{OS.Win32Errors private} #{OS.WinRegConstants private})
+	imports: #(#{OS.HRESULT private} #{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CommonButtonFlags' -> #(16r1 16r8 16r0 16r10 16r0 16r2 16r4 16r20 16r0 16r0 16r0).
@@ -12,7 +12,68 @@ UI.MessageBoxAbstract
 			'StandardButtonNames'
 				-> #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore).
 			'SuppressibleMask' -> 16r10000000.
+			'TD_ERROR_ICON' -> 16rFFFE.
+			'TD_INFORMATION_ICON' -> 16rFFFD.
+			'TD_INFORMATION_SHIELD' -> 16rFFFC.
+			'TD_SHIELD_ICON' -> 16rFFFC.
+			'TD_WARNING_ICON' -> 16rFFFF.
+			'TDCBF_CANCEL_BUTTON' -> 16r8.
+			'TDCBF_CLOSE_BUTTON' -> 16r20.
+			'TDCBF_NO_BUTTON' -> 16r4.
+			'TDCBF_OK_BUTTON' -> 16r1.
+			'TDCBF_RETRY_BUTTON' -> 16r10.
+			'TDCBF_YES_BUTTON' -> 16r2.
+			'TDE_CONTENT' -> 16r0.
+			'TDE_EXPANDED_INFORMATION' -> 16r1.
+			'TDE_FOOTER' -> 16r2.
+			'TDE_MAIN_INSTRUCTION' -> 16r3.
+			'TDF_ALLOW_DIALOG_CANCELLATION' -> 16r8.
+			'TDF_CALLBACK_TIMER' -> 16r800.
+			'TDF_CAN_BE_MINIMIZED' -> 16r8000.
+			'TDF_ENABLE_HYPERLINKS' -> 16r1.
+			'TDF_EXPAND_FOOTER_AREA' -> 16r40.
+			'TDF_EXPANDED_BY_DEFAULT' -> 16r80.
 			'TDF_Mask' -> 16r1FFFFFF.
+			'TDF_NO_DEFAULT_RADIO_BUTTON' -> 16r4000.
+			'TDF_NO_SET_FOREGROUND' -> 16r10000.
+			'TDF_POSITION_RELATIVE_TO_WINDOW' -> 16r1000.
+			'TDF_RTL_LAYOUT' -> 16r2000.
+			'TDF_SHOW_MARQUEE_PROGRESS_BAR' -> 16r400.
+			'TDF_SHOW_PROGRESS_BAR' -> 16r200.
+			'TDF_SIZE_TO_CONTENT' -> 16r1000000.
+			'TDF_USE_COMMAND_LINKS' -> 16r10.
+			'TDF_USE_COMMAND_LINKS_NO_ICON' -> 16r20.
+			'TDF_USE_HICON_FOOTER' -> 16r4.
+			'TDF_USE_HICON_MAIN' -> 16r2.
+			'TDF_VERIFICATION_FLAG_CHECKED' -> 16r100.
+			'TDIE_ICON_FOOTER' -> 16r1.
+			'TDIE_ICON_MAIN' -> 16r0.
+			'TDM_CLICK_BUTTON' -> 16r466.
+			'TDM_CLICK_RADIO_BUTTON' -> 16r46E.
+			'TDM_CLICK_VERIFICATION' -> 16r471.
+			'TDM_ENABLE_BUTTON' -> 16r46F.
+			'TDM_ENABLE_RADIO_BUTTON' -> 16r470.
+			'TDM_NAVIGATE_PAGE' -> 16r465.
+			'TDM_SET_BUTTON_ELEVATION_REQUIRED_STATE' -> 16r473.
+			'TDM_SET_ELEMENT_TEXT' -> 16r46C.
+			'TDM_SET_MARQUEE_PROGRESS_BAR' -> 16r467.
+			'TDM_SET_PROGRESS_BAR_MARQUEE' -> 16r46B.
+			'TDM_SET_PROGRESS_BAR_POS' -> 16r46A.
+			'TDM_SET_PROGRESS_BAR_RANGE' -> 16r469.
+			'TDM_SET_PROGRESS_BAR_STATE' -> 16r468.
+			'TDM_UPDATE_ELEMENT_TEXT' -> 16r472.
+			'TDM_UPDATE_ICON' -> 16r474.
+			'TDN_BUTTON_CLICKED' -> 16r2.
+			'TDN_CREATED' -> 16r0.
+			'TDN_DESTROYED' -> 16r5.
+			'TDN_DIALOG_CONSTRUCTED' -> 16r7.
+			'TDN_EXPANDO_BUTTON_CLICKED' -> 16rA.
+			'TDN_HELP' -> 16r9.
+			'TDN_HYPERLINK_CLICKED' -> 16r3.
+			'TDN_NAVIGATED' -> 16r1.
+			'TDN_RADIO_BUTTON_CLICKED' -> 16r6.
+			'TDN_TIMER' -> 16r4.
+			'TDN_VERIFICATION_CLICKED' -> 16r8.
 			'TopMostMask' -> 16r40000000
 		}!
 
@@ -130,7 +191,7 @@ basicOpen
 	"Private - Display a Win32 Task Dialog configured as a message box, and answer the Win32 Id of the button pressed by the user."
 
 	| standardButtons dwFlags struct callback hwndOwner buttons buttonId |
-	struct := OS.TASKDIALOGCONFIG new.
+	struct := TASKDIALOGCONFIG new.
 	"Sizing to content is most similar to the legacy MessageBox."
 	dwFlags := flags bitAnd: TDF_Mask.
 	"The TaskDialog API does not have the behaviour of the MessageBox API that it will re-enable a disabled owner, so we don't need to worry about that."
@@ -415,7 +476,7 @@ footerText: aString
 
 getDefaultButton
 	^AdvApi32
-		regGetUInt32: HKEY_CURRENT_USER
+		regGetUInt32: AdvApiLibrary.HKEY_CURRENT_USER
 		key: self defaultablesKeyName
 		value: self uniqueId displayString!
 
@@ -508,7 +569,7 @@ iconId
 		at: #warning put: TD_WARNING_ICON;
 		at: #notify put: TD_INFORMATION_ICON;
 		at: #shield put: TD_SHIELD_ICON;
-		at: #prompt put: IDI_QUESTION;
+		at: #prompt put: "IDI_QUESTION" 32514;
 		shrink;
 		yourself) at: iconStyle!
 
@@ -641,7 +702,7 @@ isSuppressed
 	"Answer whether this message has been previously suppressed by the current user."
 
 	^(AdvApi32
-		regGetString: HKEY_CURRENT_USER
+		regGetString: AdvApiLibrary.HKEY_CURRENT_USER
 		key: self suppressionsKeyName
 		value: self globallyUniqueId) = 'NO'!
 
@@ -799,10 +860,10 @@ saveDefaultButton: anInteger
 	value uint32AtOffset: 0 put: anInteger.
 	"Use the registry API directly to reduce dependencies."
 	AdvApi32
-		regSetKeyValue: HKEY_CURRENT_USER
+		regSetKeyValue: AdvApiLibrary.HKEY_CURRENT_USER
 		lpSubKey: self defaultablesKeyName
 		lpValueName: self uniqueId displayString
-		dwType: REG_DWORD
+		dwType: AdvApiLibrary.REG_DWORD
 		lpData: value
 		cbData: 4!
 
@@ -812,10 +873,10 @@ saveSuppressed
 	"Use the registry API directly to reduce dependencies."
 
 	AdvApi32
-		regSetKeyValue: HKEY_CURRENT_USER
+		regSetKeyValue: AdvApiLibrary.HKEY_CURRENT_USER
 		lpSubKey: self suppressionsKeyName
 		lpValueName: self globallyUniqueId
-		dwType: REG_SZ
+		dwType: AdvApiLibrary.REG_SZ
 		lpData: 'NO' asUtf16String
 		cbData: 6!
 

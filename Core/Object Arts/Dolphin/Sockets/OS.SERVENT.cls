@@ -49,7 +49,7 @@ aliases
 	[each := list uintPtrAtOffset: i.
 	each isNull] whileFalse: 
 				[addresses nextPut: (AnsiString fromAddress: each).
-				i := i + VMConstants.IntPtrSize].
+				i := i + VMLibrary.IntPtrSize].
 	^addresses contents!
 
 port

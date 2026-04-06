@@ -60,7 +60,7 @@ testBindReuseFailure
 	self
 		should: [s2 bind]
 		raise: SocketError
-		matching: [:ex | ex errorCode = WinSocketErrors.WSAEADDRINUSE]!
+		matching: [:ex | ex errorCode = SocketError.WSAEADDRINUSE]!
 
 testConnectFailure
 	| s1 |
@@ -69,7 +69,7 @@ testConnectFailure
 	self
 		should: [s1 connect]
 		raise: SocketError
-		matching: [:ex | ex errorCode = WinSocketErrors.WSAEADDRNOTAVAIL]!
+		matching: [:ex | ex errorCode = SocketError.WSAEADDRNOTAVAIL]!
 
 testListenUnbound
 	| s1 |
@@ -81,7 +81,7 @@ testListenUnbound
 	self
 		should: [s1 listen: 5]
 		raise: SocketError
-		matching: [:ex | ex errorCode = WinSocketErrors.WSAEINVAL]!
+		matching: [:ex | ex errorCode = SocketError.WSAEINVAL]!
 
 testNextAvailable
 	self createConnectedPair.
@@ -270,7 +270,7 @@ testPeerAddressNotConnected
 	self
 		should: [s1 peerAddress]
 		raise: SocketError
-		matching: [:ex | ex errorCode = WinSocketErrors.WSAECONNRESET]!
+		matching: [:ex | ex errorCode = SocketError.WSAECONNRESET]!
 
 testQueryPortUnbound
 	| s |
@@ -282,7 +282,7 @@ testQueryPortUnbound
 	self
 		should: [s queryPort]
 		raise: SocketError
-		matching: [:ex | ex errorCode = WinSocketErrors.WSAEINVAL]!
+		matching: [:ex | ex errorCode = SocketError.WSAEINVAL]!
 
 testSTBMessages
 	| ready messages sent outfiler |

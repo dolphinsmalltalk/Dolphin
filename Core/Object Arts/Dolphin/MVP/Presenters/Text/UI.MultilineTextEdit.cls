@@ -364,7 +364,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 								lParam: lParam].
 			shell 
 				sendMessage: WM_COMMAND
-				wParam: ##(ButtonConstants.BN_CLICKED << 16 | IDCANCEL)
+				wParam: ##(BN_CLICKED << 16 bitOr: IDCANCEL)
 				lParam: cancel.
 			^0	"Suppress default processing"].
 	^super 

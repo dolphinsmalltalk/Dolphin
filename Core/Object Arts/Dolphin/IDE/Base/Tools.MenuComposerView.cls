@@ -4,7 +4,7 @@ UI.View
 	subclass: #'Tools.MenuComposerView'
 	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

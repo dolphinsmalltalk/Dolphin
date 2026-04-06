@@ -4,7 +4,7 @@ OS.CCITEM
 	subclass: #'OS.TCITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.TabViewConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cchTextMax' -> 16r10.
@@ -13,7 +13,12 @@ OS.CCITEM
 			'_OffsetOf_lParam' -> 16r18.
 			'_OffsetOf_pszText' -> 16rC.
 			'_OffsetOf_stateMask' -> 16r8.
-			'_TCITEMW_Size' -> 16r1C
+			'_TCITEMW_Size' -> 16r1C.
+			'TCIF_IMAGE' -> 16r2.
+			'TCIF_PARAM' -> 16r8.
+			'TCIF_RTLREADING' -> 16r4.
+			'TCIF_STATE' -> 16r10.
+			'TCIF_TEXT' -> 16r1
 		}!
 
 OS.TCITEMW guid: (Core.GUID fromString: '{87b4c621-026e-11d3-9fd7-00a0cc3e4a32}')!

@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.CRTLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CRTLibrary} #{OS.CRTError})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -30,7 +30,7 @@ testSplitPathInvalidCall
 				ext: nil
 				extLen: 0]
 		raise: CRTError
-		matching: [:ex | ex errno = CRTConstants.ERANGE]!
+		matching: [:ex | ex errno = ERANGE]!
 
 testStrCatInvalidCall
 	| buf |
@@ -42,7 +42,7 @@ testStrCatInvalidCall
 				bufferSize: 1
 				strSource: 'abc']
 		raise: CRTError
-		matching: [:ex | ex errno = CRTConstants.ERANGE]!
+		matching: [:ex | ex errno = ERANGE]!
 
 testStrCpyInvalidArg
 	| buf |
@@ -53,9 +53,9 @@ testStrCpyInvalidArg
 				wcsncpy_s: buf
 				bufferSize: 0
 				strSource: 'abc'
-				count: OS.CRTConstants._TRUNCATE]
+				count: _TRUNCATE]
 		raise: CRTError
-		matching: [:ex | ex errno = CRTConstants.EINVAL]!
+		matching: [:ex | ex errno = EINVAL]!
 
 testStrCpyTruncation
 	| buf |
@@ -64,8 +64,8 @@ testStrCpyTruncation
 				wcsncpy_s: buf
 				bufferSize: 1
 				strSource: 'abc'
-				count: OS.CRTConstants._TRUNCATE)
-		equals: OS.CRTConstants.STRUNCATE! !
+				count: _TRUNCATE)
+		equals: STRUNCATE! !
 
 !OS.Tests.CRTLibraryTest categoriesForMethods!
 testSplitPathInvalidCall!public! !

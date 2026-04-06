@@ -1,0 +1,36 @@
+﻿| package |
+package := Package name: 'OLE Structured Storage (Deprecated)'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #OLELockFileBytes;
+	yourself.
+
+package globalNames
+	add: #OLEStructuredStorageConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\Structured Storage\OLE Structured Storage').
+
+package!
+
+"Class Definitions"!
+
+OLELockBytesAbstract subclass: #OLELockFileBytes
+	instanceVariableNames: 'file'
+	classVariableNames: ''
+	poolDictionaries: 'OLEStructuredStorageConstants Win32Errors'
+	classInstanceVariableNames: ''!
+
+"End of package definition"!
+

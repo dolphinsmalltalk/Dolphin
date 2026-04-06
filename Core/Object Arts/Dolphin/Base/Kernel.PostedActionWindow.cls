@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Kernel.PostedActionWindow'
 	instanceVariableNames: 'handle actions'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

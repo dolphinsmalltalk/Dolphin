@@ -4,7 +4,7 @@ Core.Error
 	subclass: #'Database.DBError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -23,7 +23,7 @@ aboutToForkUI
 
 allTopLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
-	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd. true]
+	callback := Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd. true]
 				descriptor: EnumHandlesDescriptor.
 	answer := User32 enumWindows: callback asParameter lParam: 0.
 	callback free.
@@ -71,7 +71,7 @@ isDolphinWindow: hWnd
 
 topLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
-	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
+	callback := Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
 				descriptor: EnumHandlesDescriptor.
 	answer := User32
 				enumThreadWindows: Kernel32 getCurrentThreadId
@@ -89,7 +89,7 @@ topLevelWindows
 	bEnabled := Processor enableAsyncEvents: false.
 	windows do: 
 			[:each |
-			(User32 getAncestor: each asParameter gaFlags: GA_PARENT) = desktop ifTrue: [shells nextPut: each]].
+			(User32 getAncestor: each asParameter gaFlags: UserLibrary.GA_PARENT) = desktop ifTrue: [shells nextPut: each]].
 	Processor enableAsyncEvents: bEnabled.
 	^shells contents!
 
@@ -195,7 +195,7 @@ windowCreated:param:!private!vm entry points! !
 !UI.GuiInputState class methodsFor!
 
 initialize
-	EnumHandlesDescriptor := External.FunctionDescriptor returnType: 'bool'
+	EnumHandlesDescriptor := FunctionDescriptor returnType: 'bool'
 				argumentTypes: 'handle uintptr'! !
 
 !UI.GuiInputState class categoriesForMethods!

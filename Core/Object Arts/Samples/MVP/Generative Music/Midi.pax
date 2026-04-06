@@ -7,7 +7,6 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{External.MidiOutChannel}
-	#{OS.MidiConstants}
 	#{OS.MIDIOut}
 ).
 
@@ -26,9 +25,9 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.MidiConstants'
-	instanceVariableNames: ''
+Core.Object
+	subclass: #'OS.MIDIOut'
+	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -38,14 +37,6 @@ Kernel.SharedPool
 			'MidiControlChange' -> 16rB.
 			'MidiProgramChange' -> 16rC
 		}!
-
-Core.Object
-	subclass: #'OS.MIDIOut'
-	instanceVariableNames: 'handle'
-	classVariableNames: ''
-	imports: #(#{OS.MidiConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 Core.Object
 	subclass: #'External.MidiOutChannel'

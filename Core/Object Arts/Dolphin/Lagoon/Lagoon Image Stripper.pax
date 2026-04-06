@@ -51,7 +51,7 @@ Core.Object
 
 Core.Object
 	subclass: #DeploymentContext
-	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences comInterfaceSelectors'
+	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences comInterfaceSelectors sentMessageMap messageSenders sentMessages methodsWithRefLiterals'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -60,8 +60,8 @@ Core.Object
 Core.Object
 	subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
-	classVariableNames: 'MessageMap'
-	imports: #(#{OS.Win32Constants private} #{OS private})
+	classVariableNames: ''
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CaptionId' -> 16r3F9.
@@ -74,15 +74,15 @@ Core.Object
 	subclass: #'OS.VersionResource'
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'RT_VERSION' -> 16r10 }!
 
 BasicImageStripper
 	subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource exePath stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 dpiAwarenessContext _unused21 _unused22'
 	classVariableNames: ''
-	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AllResourcesStripped' -> 16r1.

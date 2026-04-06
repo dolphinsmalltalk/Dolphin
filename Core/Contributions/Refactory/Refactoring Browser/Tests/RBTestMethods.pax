@@ -56,15 +56,15 @@ Core.Object
 	subclass: #'Refactory.Browser.TestData.LintRuleTestData'
 	instanceVariableNames: 'name foo1'
 	classVariableNames: 'Foo1'
-	imports: #(#{OS.CRTConstants})
+	imports: #(#{OS.CRTLibrary})
 	classInstanceVariableNames: ''
-	classConstants: { 'FACILITY_WIN32' -> 'Shadow' }!
+	classConstants: { 'BlockCopy' -> 'Shadow'. 'Const1' -> 16r7B }!
 
 Core.Object
 	subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: 'ClassVar1 ClassVar2'
-	imports: #(#{OS.CRTConstants})
+	imports: #(#{Kernel.ParseErrorCodes} #{OS.CRTLibrary})
 	classInstanceVariableNames: ''
 	classConstants: { 'AppConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
 
@@ -72,9 +72,9 @@ Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors} #{OS.FacilityCodes})
+	imports: #(#{OS.Win32Error} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
-	classConstants: { 'Const1' -> 16r7B. 'ERROR_FILE_EXISTS' -> 'Shadow' }!
+	classConstants: { 'CErrArrayNotClosed' -> 'Shadow' }!
 
 Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.CompositeLintRuleTestData'

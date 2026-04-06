@@ -29,7 +29,7 @@ buildImageListWithExtent: aPoint
 				masked: true.
 	imageList addBitmap: (Bitmap displayCompatibleWithExtent: aPoint) mask: Color black.
 	self addExpandos: imageList
-		forDpi: aPoint y * Win32Constants.USER_DEFAULT_SCREEN_DPI // SystemMetrics default smallIconExtent y.
+		forDpi: aPoint y * UserLibrary.USER_DEFAULT_SCREEN_DPI // SystemMetrics default smallIconExtent y.
 	imageLists at: aPoint put: imageList.
 	^imageList!
 

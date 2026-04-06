@@ -58,7 +58,7 @@ UI.ValueConvertingControlView
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'WM_CTLCOLORSCROLLBAR' -> 16r137 }!
 
 "Loose Methods"!
 

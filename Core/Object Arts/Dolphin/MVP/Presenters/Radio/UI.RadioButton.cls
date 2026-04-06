@@ -6,7 +6,7 @@ UI.CheckButton
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BS_AUTORADIOBUTTON' -> 16r9. 'BS_RADIOBUTTON' -> 16r4 }!
 
 UI.RadioButton guid: (Core.GUID fromString: '{87b4c73b-026e-11d3-9fd7-00a0cc3e4a32}')!
 

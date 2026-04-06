@@ -26,7 +26,7 @@ basicFree
 	pElems := (bytes uintPtrAtOffset: _OffsetOf_pElems) asExternalAddress.
 	ptrType := self elementClass.
 	0 to: (bytes uint32AtOffset: _OffsetOf_cElems) - 1
-		do: [:i | ptrType freeHeapObject: (pElems uintPtrAtOffset: i * VMConstants.IntPtrSize)].
+		do: [:i | ptrType freeHeapObject: (pElems uintPtrAtOffset: i * VMLibrary.IntPtrSize)].
 	super basicFree! !
 
 !OS.COM.CountedArrayOfHeapPointers categoriesForMethods!

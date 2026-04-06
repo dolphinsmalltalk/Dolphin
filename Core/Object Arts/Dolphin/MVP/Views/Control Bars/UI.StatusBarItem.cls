@@ -4,7 +4,7 @@ UI.StatusBarItemAbstract
 	subclass: #'UI.StatusBarItem'
 	instanceVariableNames: 'getTextBlock getImageBlock getTipTextBlock'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -140,7 +140,7 @@ testStoreStringFull
 	superclassName: #{Core.Object};
 	instanceVariableNames: #(''temporaryVariable'');
 	classVariableNames: #(''ClassVar1'' ''ClassVar2'');
-	imports: #(#{OS.CRTConstants});
+	imports: #(#{Kernel.ParseErrorCodes} #{OS.CRTLibrary});
 	classInstanceVariableNames: #(''foo'');
 	classConstants: {''Foo'' -> 1. ''Bar'' -> 2};
 	instanceSpec: 8193;

@@ -95,9 +95,6 @@ elemDesc
 
 	^self subclassResponsibility!
 
-flags
-	^self subclassResponsibility!
-
 free
 	"Free external resources owned by the receiver.
 	N.B. Explicitly freeing an AXTypeInfoStructure may invalidate any of its
@@ -137,42 +134,25 @@ index
 isBindable
 	"Answer whether the receiver is describing a 'bindable' property."
 
-	"Implementation Note: FUNCFLAG_FBINDABLE and VARFLAG_FBINDABLE have the same value."
-
-	^self flags allMask: FUNCFLAG_FBINDABLE!
+	^self subclassResponsibility!
 
 isDefaultBind
 	"Answer whether the receiver is describing a 'defaultbind' property (i.e. the single, bindable
 	property that best describes the object)."
 
-	"Implementation Note: FUNCFLAG_FDEFAULTBIND and VARFLAG_FDEFAULTBIND have the same value."
-
-	^self flags allMask: FUNCFLAG_FDEFAULTBIND!
+	^self subclassResponsibility!
 
 isDisplayBind
 	"Answer whether the receiver is describing a 'displaybind' property (i.e. a property that
 	should be displayed to the user as bindable)."
 
-	"Implementation Note: FUNCFLAG_FDISPLAYBIND and VARFLAG_FDISPLAYBIND have the same value."
-
-	^self flags allMask: FUNCFLAG_FDISPLAYBIND!
+	^self subclassResponsibility!
 
 isHidden
 	"Answer whether the receiver is describing a hidden function or variable (i.e. one not
 	intended to be advertised to users of macro/scripting languages)."
 
-	"Implementation Note: FUNCFLAG_FHIDDEN and VARFLAG_FHIDDEN have the same value."
-
-	^self flags allMask: FUNCFLAG_FHIDDEN!
-
-isNonBrowsable
-	"Answer whether the receiver is describing a 'non-browsable' property. Oddly this doesn't
-	mean that the method should not be displayed in type library browsers, but that it shouldn't
-	be shown in inspectors."
-
-	"Implementation Note: FUNCFLAG_FNONBROWSABLE and VARFLAG_FNONBROWSABLE have the same value."
-
-	^self flags anyMask: FUNCFLAG_FNONBROWSABLE!
+	^self subclassResponsibility!
 
 isReadOnly
 	"Answer whether this object describes a read-only member."
@@ -195,22 +175,18 @@ isSource
 	"Answer whether the receiver is describing a function that returns an object, or 
 	a variable that holds an object, that is a source of events."
 
-	"Implementation Note: FUNCFLAG_FSOURCE and VARFLAG_FSOURCE have the same value."
-
-	^self flags allMask: FUNCFLAG_FSOURCE!
+	^self subclassResponsibility!
 
 isUIDefault
 	"Answer whether the receiver is describing the default member for display in the UI."
 
-	"Implementation Note: FUNCFLAG_UIDEFAULT and VARFLAG_UIDEFAULT have the same value."
-
-	^self flags allMask: FUNCFLAG_FUIDEFAULT!
+	^self subclassResponsibility!
 
 isValueProperty
 	"Answer whether the receiver describes a method for getting or setting the default 
 	(DISPID_VALUE) property."
 
-	^self memid == DISPID_VALUE!
+	^self memid == IDispatch.DISPID_VALUE!
 
 memid
 	"Answer the <Integer> value of the receiver's 'memid' field."
@@ -246,7 +222,6 @@ cParams!accessing!private! !
 customAttributes!accessing!public! !
 documentation!accessing!public! !
 elemDesc!accessing!private! !
-flags!accessing!private! !
 free!public!realizing/unrealizing! !
 getAllCustData!accessing!private! !
 getCustData!accessing!private! !
@@ -258,7 +233,6 @@ isBindable!public!testing! !
 isDefaultBind!public!testing! !
 isDisplayBind!public!testing! !
 isHidden!public!testing! !
-isNonBrowsable!public!testing! !
 isReadOnly!public!testing! !
 isRequestEdit!public!testing! !
 isRestricted!public!testing! !

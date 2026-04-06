@@ -50,7 +50,7 @@ vt!constants!public! !
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
-	^TKIND_INTERFACE! !
+	^ITypeInfo.TKIND_INTERFACE! !
 
 !OS.COM.TKindInterfaceAnalyzer class categoriesForMethods!
 typekind!constants!private! !

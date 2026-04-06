@@ -4,7 +4,7 @@ OS.SizedStructure
 	subclass: #'OS.MSGBOXPARAMSW'
 	instanceVariableNames: 'text caption'
 	classVariableNames: ''
-	imports: #(#{OS.MessageBoxConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_MSGBOXPARAMSW_Size' -> 16r28.

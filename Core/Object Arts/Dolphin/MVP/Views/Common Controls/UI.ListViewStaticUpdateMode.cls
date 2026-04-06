@@ -117,7 +117,7 @@ updateStateImages
 
 	| lvItem |
 	lvItem := LVITEMW newBuffer
-				mask: LVIF_STATE;
+				mask: LVITEMW.LVIF_STATE;
 				yourself.
 	view list keysAndValuesDo: 
 			[:index :each |

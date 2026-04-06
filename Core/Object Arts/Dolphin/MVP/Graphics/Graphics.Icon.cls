@@ -4,9 +4,16 @@ Graphics.Image
 	subclass: #'Graphics.Icon'
 	instanceVariableNames: ''
 	classVariableNames: 'Blank DefaultApplication Error HasScaleDown Information Question Warning WinLogo'
-	imports: #()
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
+			'IDI_APPLICATION' -> 16r7F00.
+			'IDI_ERROR' -> 16r7F01.
+			'IDI_INFORMATION' -> 16r7F04.
+			'IDI_QUESTION' -> 16r7F02.
+			'IDI_SHIELD' -> 16r7F06.
+			'IDI_WARNING' -> 16r7F03.
+			'IDI_WINLOGO' -> 16r7F05.
 			'LargestStandardSize' -> (16r100 @ 16r100).
 			'StandardSizeMap' -> {
 						16r10 @ 16r10.
@@ -491,7 +498,7 @@ loadFromSystem: anInteger extent: aPoint
 	^(HasScaleDown and: [aPoint ~= Point.Zero])
 		ifTrue: 
 			[| hIcon |
-			hIcon := External.Handle new.
+			hIcon := Handle new.
 			(ComCtl32
 				loadIconWithScaleDown: 0
 				pszName: anInteger

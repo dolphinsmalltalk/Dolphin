@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.Interactor'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

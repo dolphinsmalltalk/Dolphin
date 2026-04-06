@@ -19,7 +19,7 @@ OS.COM.TKindRecordAnalyzer comment: 'TKindRecordAnalyzer is a class which wraps 
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
-	^TKIND_RECORD! !
+	^ITypeInfo.TKIND_RECORD! !
 
 !OS.COM.TKindRecordAnalyzer class categoriesForMethods!
 typekind!constants!private! !

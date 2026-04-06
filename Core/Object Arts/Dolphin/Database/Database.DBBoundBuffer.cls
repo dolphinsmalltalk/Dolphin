@@ -4,7 +4,7 @@ Database.DBRowBuffer
 	subclass: #'Database.DBBoundBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

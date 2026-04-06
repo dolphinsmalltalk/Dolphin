@@ -39,7 +39,7 @@ defaultInterface
 	receiver's default interface."
 
 	| defaultFlags piTI |
-	defaultFlags := IMPLTYPEFLAG_FDEFAULT.
+	defaultFlags := ITypeInfo.IMPLTYPEFLAG_FDEFAULT.
 	piTI := self tlbInterface.
 	1 to: self attributes cImplTypes
 		do: 
@@ -53,7 +53,7 @@ defaultSourceInterface
 	receiver's default source interface."
 
 	| defaultFlags piTI |
-	defaultFlags := IMPLTYPEFLAG_FDEFAULT | IMPLTYPEFLAG_FSOURCE.
+	defaultFlags := ##(ITypeInfo.IMPLTYPEFLAG_FDEFAULT | ITypeInfo.IMPLTYPEFLAG_FSOURCE).
 	piTI := self tlbInterface.
 	1 to: self attributes cImplTypes
 		do: 
@@ -113,7 +113,7 @@ nonSourceInterfaces
 	| piTI |
 	piTI := self tlbInterface.
 	^((1 to: self attributes cImplTypes) 
-		select: [:i | (piTI getImplTypeFlags: i - 1) noMask: IMPLTYPEFLAG_FSOURCE]) 
+		select: [:i | (piTI getImplTypeFlags: i - 1) noMask: ITypeInfo.IMPLTYPEFLAG_FSOURCE]) 
 			collect: [:i | self getImplTypeInfoAt: i]!
 
 notInstantiable
@@ -132,7 +132,7 @@ sourceInterfaces
 	| piTI |
 	piTI := self tlbInterface.
 	^((1 to: self attributes cImplTypes) 
-		select: [:i | (piTI getImplTypeFlags: i - 1) allMask: IMPLTYPEFLAG_FSOURCE]) 
+		select: [:i | (piTI getImplTypeFlags: i - 1) allMask: ITypeInfo.IMPLTYPEFLAG_FSOURCE]) 
 			collect: [:i | self getImplTypeInfoAt: i]! !
 
 !OS.COM.TKindCoclassAnalyzer categoriesForMethods!
@@ -158,7 +158,7 @@ sourceInterfaces!enumerating!public! !
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
-	^TKIND_COCLASS! !
+	^ITypeInfo.TKIND_COCLASS! !
 
 !OS.COM.TKindCoclassAnalyzer class categoriesForMethods!
 typekind!constants!private! !

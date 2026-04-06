@@ -4,9 +4,21 @@ OS.COM.ISequentialStream
 	subclass: #'OS.COM.IStream'
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #(#{OS.COM.STATSTG private})
 	classInstanceVariableNames: ''
 	classConstants: {
+			'LOCK_EXCLUSIVE' -> 16r2.
+			'LOCK_ONLYONCE' -> 16r4.
+			'LOCK_WRITE' -> 16r1.
+			'STG_E_INVALIDFUNCTION' -> -16r7FFCFFFF.
+			'STG_E_SEEKERROR' -> -16r7FFCFFE7.
+			'STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE' -> 16r4.
+			'STGC_DEFAULT' -> 16r0.
+			'STGC_ONLYIFCURRENT' -> 16r2.
+			'STGC_OVERWRITE' -> 16r1.
+			'STREAM_SEEK_CUR' -> 16r1.
+			'STREAM_SEEK_END' -> 16r2.
+			'STREAM_SEEK_SET' -> 16r0.
 			'WriteOpenModes'
 				-> (IdentityDictionary withAll: { #append -> 16r11. #create -> 16r11. #truncate -> 16r1011 })
 		}!
@@ -168,7 +180,7 @@ handle
 	with CreateStreamOnHGlobal())."
 
 	| hglobal |
-	hglobal := External.Handle new.
+	hglobal := Handle new.
 	Ole32 getHGlobalFromStream: self phglobal: hglobal.
 	^hglobal!
 
@@ -565,7 +577,7 @@ read: aString
 	Shlwapi
 		shCreateStreamOnFileEx: aString asUtf16String
 		grfMode: ##(STGM_READ | STGM_SHARE_DENY_WRITE)
-		dwAttributes: FILE_ATTRIBUTE_NORMAL
+		dwAttributes: KernelLibrary.FILE_ATTRIBUTE_NORMAL
 		fCreate: false
 		pstmTemplate: nil
 		ppstm: instance.
@@ -589,7 +601,7 @@ write: aString mode: aSymbol
 	Shlwapi
 		shCreateStreamOnFileEx: aString asUtf16String
 		grfMode: (WriteOpenModes at: aSymbol)
-		dwAttributes: FILE_ATTRIBUTE_NORMAL
+		dwAttributes: KernelLibrary.FILE_ATTRIBUTE_NORMAL
 		fCreate: aSymbol ~~ #append
 		pstmTemplate: nil
 		ppstm: instance.

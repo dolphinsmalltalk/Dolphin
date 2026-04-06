@@ -141,7 +141,7 @@ onMouseWheeled: aMouseWheelEvent
 	| rotation config |
 	((config := self wheelScrollLines) == 0 or: [(rotation := aMouseWheelEvent wheelRotation) abs < 1])
 		ifTrue: [^super onMouseWheeled: aMouseWheelEvent].
-	config = WHEEL_PAGESCROLL
+	config = MouseWheelEvent.WHEEL_PAGESCROLL
 		ifTrue: 
 			[| delta |
 			delta := rotation sign * -1.
@@ -206,19 +206,19 @@ preTranslateKeyboardInput: aMSG
 			msg == WM_KEYDOWN
 				ifTrue: 
 					[(vk == VK_LEFT or: [vk == VK_RIGHT])
-						ifTrue: [self sendMessage: WM_HSCROLL wParam: (vk - VK_LEFT) // 2 + SB_LINELEFT].
+						ifTrue: [self sendMessage: WM_HSCROLL wParam: (vk - VK_LEFT) // 2 + ScrollEvent.SB_LINELEFT].
 					(vk == VK_DOWN or: [vk == VK_UP])
-						ifTrue: [self sendMessage: WM_VSCROLL wParam: (vk - VK_UP) // 2 + SB_LINEUP].
+						ifTrue: [self sendMessage: WM_VSCROLL wParam: (vk - VK_UP) // 2 + ScrollEvent.SB_LINEUP].
 					^true	"absorbed for line scrolling"].
 			^false].
 	(vk == VK_END or: [vk == VK_HOME])
 		ifTrue: 
-			[msg == WM_KEYDOWN ifTrue: [self sendMessage: WM_VSCROLL wParam: (vk - VK_HOME) abs + SB_TOP].
+			[msg == WM_KEYDOWN ifTrue: [self sendMessage: WM_VSCROLL wParam: (vk - VK_HOME) abs + ScrollEvent.SB_TOP].
 			"Absorb home/end for scrolling to top/bottom"
 			^true].
 	(vk == VK_NEXT or: [vk == VK_PRIOR])
 		ifTrue: 
-			[msg == WM_KEYDOWN ifTrue: [self sendMessage: WM_VSCROLL wParam: vk - VK_PRIOR + SB_PAGEUP].
+			[msg == WM_KEYDOWN ifTrue: [self sendMessage: WM_VSCROLL wParam: vk - VK_PRIOR + ScrollEvent.SB_PAGEUP].
 			"Absorb page-up/page-down for page scrolling"
 			^true].
 	^false!

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.ToolbarItem'
 	instanceVariableNames: 'toolbar'
 	classVariableNames: ''
-	imports: #(#{OS.ToolbarConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

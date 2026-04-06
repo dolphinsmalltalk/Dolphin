@@ -4,7 +4,7 @@ UI.Tests.ListControlTest
 	subclass: #'UI.Tests.ListViewTest'
 	instanceVariableNames: 'nmClick'
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #(#{OS.LVITEMW})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -38,7 +38,7 @@ getColumns
 			col := LVCOLUMNW new.
 			col newTextBuffer: 256.
 			(presenter view
-				sendMessage: ListViewConstants.LVM_GETCOLUMNW
+				sendMessage: ListView.LVM_GETCOLUMNW
 				wParam: each
 				lpParam: col) asBoolean
 				ifTrue: 
@@ -236,7 +236,7 @@ testCheckBoxes
 	presenter isVirtual: false.
 	self assert: presenter hasCheckBoxes.
 	self assert: presenter viewMode equals: #smallIcons.
-	stateImageList := presenter lvmGetImageList: ListViewConstants.LVSIL_STATE.
+	stateImageList := presenter lvmGetImageList: ListView.LVSIL_STATE.
 	self assert: stateImageList ~= 0.
 	"The ListView checkbox mode state image list contains just two images, the first an unchecked checkbox, and the 2nd a checked check box. It can be inspected by evaluating:
 			WinImageList fromHandle: stateImageList

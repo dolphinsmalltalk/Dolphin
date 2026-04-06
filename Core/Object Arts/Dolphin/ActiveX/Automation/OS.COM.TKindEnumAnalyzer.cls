@@ -94,7 +94,7 @@ vt!constants!public! !
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
-	^TKIND_ENUM! !
+	^ITypeInfo.TKIND_ENUM! !
 
 !OS.COM.TKindEnumAnalyzer class categoriesForMethods!
 typekind!constants!private! !

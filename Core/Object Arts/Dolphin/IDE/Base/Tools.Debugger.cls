@@ -4,7 +4,7 @@ Tools.SmalltalkToolShell
 	subclass: #'Tools.Debugger'
 	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool sourceInterval'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
-	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
+	imports: #(#{Kernel.Compiler private} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AnimateMask' -> 16r10.

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
+	imports: #(#{OS.WS2_32Library private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

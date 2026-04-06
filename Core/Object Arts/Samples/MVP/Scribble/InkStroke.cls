@@ -31,7 +31,7 @@ drawOn: aCanvas
 	aCanvas
 		moveTo: data first;
 		pen: (Pen
-					style: Win32Constants.PS_SOLID
+					style: Pen.PS_SOLID
 					width: self inkWidth
 					color: Color black).
 	data do: [:each | aCanvas lineTo: each]!

@@ -1837,7 +1837,7 @@ exampleGdipILoadImages
 	bitmap := Bitmap extent: 400 @ 300.
 	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
 	bitmap graphics drawImage: image at: 60 @ 10.
-	image := Bitmap fromIcon: (Icon fromSystemId: IDI_WARNING extent: 64@64).
+	image := Bitmap fromIcon: (Icon fromSystemId: Icon.IDI_WARNING extent: 64@64).
 	bitmap graphics drawImage: image at: 10 @ 60.
 	^bitmap!
 
@@ -2862,7 +2862,7 @@ exampleGdipLGModeConstants
 							mode: mode.
 				graphics
 					fillRectangle: (point extent: 300 @ 200) brush: brush;
-					drawString: (Gdiplus.LinearGradientModeNames at: mode + 1) at: point].
+					drawString: (LinearGradientModeNames at: mode + 1) at: point].
 	^bitmap!
 
 exampleGdipLGScaleAndTranslate
@@ -2910,7 +2910,7 @@ exampleGdipLGTiling
 							mode: mode.
 				graphics
 					fillRectangle: (point extent: 300 @ 200) brush: brush;
-					drawString: (Gdiplus.LinearGradientModeNames at: mode + 1) at: point].
+					drawString: (LinearGradientModeNames at: mode + 1) at: point].
 	^bitmap! !
 
 !Graphics.Gdiplus.LinearGradientBrush class categoriesForMethods!
@@ -3387,7 +3387,7 @@ exampleGdipPGWrapMode
 			brush wrapMode: mode.
 			bitmap graphics
 				fillRectangle: (point + 10 extent: 180 @ 180) brush: brush;
-				drawString: (Gdiplus.WrapModeNames at: mode + 1) at: point].
+				drawString: (WrapModeNames at: mode + 1) at: point].
 	^bitmap!
 
 examplesWorkspace
@@ -3647,7 +3647,7 @@ exampleGdipPJoiningLines
 			pen lineJoin: each.
 			graphics
 				drawPath: path pen: pen;
-				drawString: (Gdiplus.LineJoinNames at: each + 1) at: 0 @ 20]
+				drawString: (LineJoinNames at: each + 1) at: 0 @ 20]
 		separatedBy: [graphics translate: 120 @ 0].
 	graphics resetTransform.
 	path := GraphicsPath lines: {20 @ 150. 70 @ 150. 70 @ 200}.
@@ -4050,7 +4050,7 @@ exampleGdipSFGenericTypographic
 	supposedlyGenericTypographic := (StringFormat
 				flags: ##(StringFormatFlagsNoClip | StringFormatFlagsLineLimit | StringFormatFlagsNoFitBlackBox
 						| StringFormatFlagsBypassGDI)
-				language: NlsConstants.LANG_NEUTRAL)
+				language: Locale.LANG_NEUTRAL)
 				alignment: StringAlignmentNear;
 				lineAlignment: StringAlignmentNear;
 				trimming: StringTrimmingNone;
@@ -4139,7 +4139,7 @@ exampleGdipSFTrimming
 	graphics := bitmap graphics.
 	string := 'One two three four five six seven eight nine'.
 	font := Font name: 'Times New Roman' pointSize: 24.
-	captionHeight := (graphics measureString: Gdiplus.StringTrimmingNames first font: Font new) y.
+	captionHeight := (graphics measureString: StringTrimmingNames first font: Font new) y.
 	{StringTrimmingNone.
 		StringTrimmingCharacter.
 		StringTrimmingWord.
@@ -4153,7 +4153,7 @@ exampleGdipSFTrimming
 				rect := ((each - (row * 2)) * 250 + 30) @ (row * 130 + 30) extent: 200 @ 80.
 				graphics
 					drawRectangle: rect;
-					drawString: (Gdiplus.StringTrimmingNames at: each + 1) at: rect origin - (0 @ captionHeight + 1);
+					drawString: (StringTrimmingNames at: each + 1) at: rect origin - (0 @ captionHeight + 1);
 					drawString: string
 						font: font
 						rect: rect

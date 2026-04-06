@@ -4,7 +4,7 @@ Graphics.GraphicsTool
 	subclass: #'UI.AcceleratorTable'
 	instanceVariableNames: 'commands'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: { 'KeySeparator' -> $+ }!
 

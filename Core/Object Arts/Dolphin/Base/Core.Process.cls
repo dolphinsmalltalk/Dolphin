@@ -6,7 +6,7 @@ Core.Link
 	classVariableNames: 'DefaultMaxStack'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'DefaultFpControl' -> 16r80007. 'DefaultStack' -> 16r1 }!
+	classConstants: { 'DefaultFpControl' -> 16r80007. 'DefaultStack' -> 16r1. 'FpMaskAll' -> 16r30F031F }!
 
 Core.Process guid: (Core.GUID fromString: '{87b4c64e-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -352,8 +352,8 @@ primTerminate
 	resources, than the alternative of dedicating another process to this task."
 
 	<primitive: 91>
-	^_failureCode == _PrimitiveFailureCode.ThreadIsTerminating or: 
-			[_failureCode == _PrimitiveFailureCode.Retry
+	^_failureCode == VMLibrary.PrimitiveThreadIsTerminating or: 
+			[_failureCode == VMLibrary.PrimitiveRetry
 				ifTrue: [false	"Please try again"]
 				ifFalse: [self primitiveFailed: _failureCode]]!
 
@@ -390,10 +390,9 @@ priority: anInteger
 		IntegerOutOfRange -	anInteger is not in the range of permissible priorities (1..highest priority)."
 
 	<primitive: 92>
-	^(_failureCode == _PrimitiveFailureCode.InvalidParameter1
-		or: [_failureCode == _PrimitiveFailureCode.IntegerOutOfRange])
-			ifTrue: [self error: ('Invalid Process priority ', anInteger printString)]
-			ifFalse: [self primitiveFailed: _failureCode]!
+	^(_failureCode == VMLibrary.PrimitiveInvalidParameter1 or: [_failureCode == VMLibrary.PrimitiveIntegerOutOfRange])
+		ifTrue: [self error: 'Invalid Process priority ' , anInteger printString]
+		ifFalse: [self primitiveFailed: _failureCode]!
 
 queueInterrupt: anInteger
 	"Queue an interrupt with the specified number for the receiver (which can be in any resumable state)
@@ -415,9 +414,7 @@ queueInterrupt: anInteger with: anObject
 resetFloatingPoint
 	OS.Ucrt
 		_clearfp;
-		_control87: fpControl
-			mask: ##(OS.CRTConstants._MCW_DN | OS.CRTConstants._MCW_EM | OS.CRTConstants._MCW_IC
-					| OS.CRTConstants._MCW_PC | OS.CRTConstants._MCW_RC)!
+		_control87: fpControl mask: FpMaskAll!
 
 resume
 	"Change the state of the receiver from Suspended to Ready (by placing it at the end of the Processor's queue for the receiver's priority). Fail if the receiver is already waiting in a queue (in a Semaphore or the Processor). See #resume: for further details (sending this message is equivalent to sending #resume: with nil as the argument)."
@@ -480,7 +477,7 @@ setLaunchBlock: aBlockClosure
 	baseFrame := self frameClass new setProcess: self index: 2 + aBlockClosure localCount.
 	baseFrame
 		basicSender: 0;
-		basicIP: aBlockClosure initialIP + VMConstants.ObjectHeaderSize - 1;
+		basicIP: aBlockClosure initialIP + VMLibrary.ObjectHeaderSize - 1;
 		sp: baseFrame frameSize + 1;
 		method: aBlockClosure method;
 		environment: aBlockClosure.
@@ -563,9 +560,7 @@ suspend
 		ThreadIsTerminating	- the process is pending termination"
 
 	<primitive: 88>
-	^_failureCode == _PrimitiveFailureCode.Retry
-		ifTrue: [false]
-		ifFalse: [self primitiveFailed: _failureCode]!
+	^_failureCode == VMLibrary.PrimitiveRetry ifTrue: [false] ifFalse: [self primitiveFailed: _failureCode]!
 
 suspendedFrame
 	"Private - Answer a stack frame for the receiver's suspended context, nil if the receiver is dead."
@@ -598,9 +593,10 @@ suspendUnconditionally
 	The Completed and Retry failure codes are ignored. Any other failure code is unexpected, and will result in an exception being raised."
 
 	<primitive: 88>
-	^_failureCode == _PrimitiveFailureCode.Retry
+	^_failureCode == VMLibrary.PrimitiveRetry
 		ifTrue: [false]
-		ifFalse: [_failureCode == _PrimitiveFailureCode.Completed ifTrue: [self] ifFalse: [self primitiveFailed: _failureCode]]!
+		ifFalse: 
+			[_failureCode == VMLibrary.PrimitiveCompleted ifTrue: [self] ifFalse: [self primitiveFailed: _failureCode]]!
 
 terminate
 	"Transition the receiver from its current state to the Terminated state. Once Terminated, 
@@ -767,9 +763,12 @@ initialize
 
 	"See FloatingPointException for an explanation of the default FP exception mask"
 	self addClassConstant: 'DefaultFpControl'
-		value: OS.CRTConstants._RC_NEAR | OS.CRTConstants._IC_PROJECTIVE | OS.CRTConstants._DN_SAVE
-				| OS.CRTConstants._PC_64
-					| (OS.CRTConstants._MCW_EM maskClear: OS.CRTConstants._EM_ZERODIVIDE | OS.CRTConstants._EM_INVALID)!
+		value: OS.CRTLibrary._RC_NEAR | OS.CRTLibrary._IC_PROJECTIVE | OS.CRTLibrary._DN_SAVE
+				| OS.CRTLibrary._PC_64
+					| (OS.CRTLibrary._MCW_EM maskClear: OS.CRTLibrary._EM_ZERODIVIDE | OS.CRTLibrary._EM_INVALID).
+	self addClassConstant: 'FpMaskAll'
+		value: OS.CRTLibrary._MCW_DN | OS.CRTLibrary._MCW_EM | OS.CRTLibrary._MCW_IC | OS.CRTLibrary._MCW_PC
+				| OS.CRTLibrary._MCW_RC!
 
 new
 	"Processes should be created by sending one of the #fork family of messages to a block."

@@ -4,10 +4,52 @@ Core.Object
 	variableSubclass: #'External.FunctionDescriptor'
 	instanceVariableNames: 'descriptor'
 	classVariableNames: ''
-	imports: #(#{External.ExtCallArgTypes})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CallingConventions' -> #(#stdcall: #cdecl: #fastcall: #thiscall:).
+			'ExtCallArgBOOL' -> 16r9.
+			'ExtCallArgBool8' -> 16r1E.
+			'ExtCallArgBSTR' -> 16r15.
+			'ExtCallArgChar' -> 16r2.
+			'ExtCallArgChar16' -> 16r20.
+			'ExtCallArgChar32' -> 16r1F.
+			'ExtCallArgChar8' -> 16r21.
+			'ExtCallArgCOMPTR' -> 16r37.
+			'ExtCallArgDATE' -> 16r17.
+			'ExtCallArgDOUBLE' -> 16rB.
+			'ExtCallArgErrno' -> 16r1D.
+			'ExtCallArgFLOAT' -> 16rE.
+			'ExtCallArgGUID' -> 16r19.
+			'ExtCallArgHANDLE' -> 16rA.
+			'ExtCallArgHRESULT' -> 16r10.
+			'ExtCallArgInt16' -> 16r6.
+			'ExtCallArgInt32' -> 16r8.
+			'ExtCallArgInt64' -> 16r13.
+			'ExtCallArgInt8' -> 16r4.
+			'ExtCallArgIntPtr' -> 16r1B.
+			'ExtCallArgLP' -> 16r35.
+			'ExtCallArgLPP' -> 16r36.
+			'ExtCallArgLPPVOID' -> 16rF.
+			'ExtCallArgLPSTR' -> 16rC.
+			'ExtCallArgLPSTR8' -> 16r22.
+			'ExtCallArgLPVOID' -> 16r1.
+			'ExtCallArgLPWSTR' -> 16r11.
+			'ExtCallArgMax' -> 16r3F.
+			'ExtCallArgNTSTATUS' -> 16r1C.
+			'ExtCallArgOOP' -> 16rD.
+			'ExtCallArgOTE' -> 16r14.
+			'ExtCallArgSTRUCT' -> 16r32.
+			'ExtCallArgSTRUCT4' -> 16r33.
+			'ExtCallArgSTRUCT8' -> 16r34.
+			'ExtCallArgUInt16' -> 16r5.
+			'ExtCallArgUInt32' -> 16r7.
+			'ExtCallArgUInt64' -> 16r12.
+			'ExtCallArgUInt8' -> 16r3.
+			'ExtCallArgUIntPtr' -> 16r1A.
+			'ExtCallArgVARBOOL' -> 16r18.
+			'ExtCallArgVARIANT' -> 16r16.
+			'ExtCallArgVOID' -> 16r0.
 			'ReferenceTypes'
 				-> #(16r1 16rF 16rC 16r1 16r1 #UInt16 #Int16 #UInt32 #Int32 #UInt32 #UInt32 #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #UInt64 #Int64 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UIntPtr #IntPtr #Int32 #Int32 16r1 16r1 16r11 16r22 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil 16rF nil nil nil nil nil nil nil nil).
 			'RetClassIndex' -> 16r4.
@@ -534,7 +576,7 @@ initializeTypeSizes
 	typeSizes := ByteArray new: 64.
 	typeSizes
 		at: ExtCallArgVOID + 1 put: 0;
-		at: ExtCallArgLPVOID + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgLPVOID + 1 put: VMLibrary.IntPtrSize;
 		at: ExtCallArgUInt8 + 1 put: 4;
 		at: ExtCallArgInt8 + 1 put: 4;
 		at: ExtCallArgUInt16 + 1 put: 4;
@@ -542,37 +584,37 @@ initializeTypeSizes
 		at: ExtCallArgUInt32 + 1 put: 4;
 		at: ExtCallArgInt32 + 1 put: 4;
 		at: ExtCallArgBOOL + 1 put: 4;
-		at: ExtCallArgHANDLE + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgHANDLE + 1 put: VMLibrary.IntPtrSize;
 		at: ExtCallArgDOUBLE + 1 put: 8;
-		at: ExtCallArgLPSTR + 1 put: VMConstants.IntPtrSize;
-		at: ExtCallArgOOP + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgLPSTR + 1 put: VMLibrary.IntPtrSize;
+		at: ExtCallArgOOP + 1 put: VMLibrary.IntPtrSize;
 		at: ExtCallArgFLOAT + 1 put: 4;
-		at: ExtCallArgLPPVOID + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgLPPVOID + 1 put: VMLibrary.IntPtrSize;
 		at: ExtCallArgHRESULT + 1 put: 4;
-		at: ExtCallArgLPWSTR + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgLPWSTR + 1 put: VMLibrary.IntPtrSize;
 		at: ExtCallArgUInt64 + 1 put: 8;
 		at: ExtCallArgInt64 + 1 put: 8;
-		at: ExtCallArgOTE + 1 put: VMConstants.IntPtrSize;
-		at: ExtCallArgBSTR + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgOTE + 1 put: VMLibrary.IntPtrSize;
+		at: ExtCallArgBSTR + 1 put: VMLibrary.IntPtrSize;
 		at: ExtCallArgVARIANT + 1 put: 16;
 		at: ExtCallArgDATE + 1 put: 8;
 		at: ExtCallArgVARBOOL + 1 put: 4;
 		at: ExtCallArgGUID + 1 put: 16;
-		at: ExtCallArgUIntPtr + 1 put: VMConstants.IntPtrSize;
-		at: ExtCallArgIntPtr + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgUIntPtr + 1 put: VMLibrary.IntPtrSize;
+		at: ExtCallArgIntPtr + 1 put: VMLibrary.IntPtrSize;
 		at: ExtCallArgNTSTATUS + 1 put: 4;
 		at: ExtCallArgErrno + 1 put: 4;
 		at: ExtCallArgBool8 + 1 put: 4;
 		at: ExtCallArgChar32 + 1 put: 4;
 		at: ExtCallArgChar16 + 1 put: 4;
 		at: ExtCallArgChar8 + 1 put: 4;
-		at: ExtCallArgLPSTR8 + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgLPSTR8 + 1 put: VMLibrary.IntPtrSize;
 		at: ExtCallArgSTRUCT + 1 put: 0;
 		at: ExtCallArgSTRUCT4 + 1 put: 4;
 		at: ExtCallArgSTRUCT8 + 1 put: 8;
-		at: ExtCallArgLP + 1 put: VMConstants.IntPtrSize;
-		at: ExtCallArgLPP + 1 put: VMConstants.IntPtrSize;
-		at: ExtCallArgCOMPTR + 1 put: VMConstants.IntPtrSize.
+		at: ExtCallArgLP + 1 put: VMLibrary.IntPtrSize;
+		at: ExtCallArgLPP + 1 put: VMLibrary.IntPtrSize;
+		at: ExtCallArgCOMPTR + 1 put: VMLibrary.IntPtrSize.
 	self assert: [ValueTypes asSortedArray last < typeSizes size].
 	self addClassConstant: 'TypeSizes' value: typeSizes!
 

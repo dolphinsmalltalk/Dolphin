@@ -3,7 +3,7 @@
 PushButton subclass: #OwnerDrawnButton
 	instanceVariableNames: 'displayState transitionDurations shouldShowKeyboardCues animationEndTime setFocusTime'
 	classVariableNames: ''
-	poolDictionaries: 'ThemeConstants'
+	poolDictionaries: 'CommCtrlLibrary ThemeLibrary'
 	classInstanceVariableNames: ''!
 
 OwnerDrawnButton guid: (GUID fromString: '{b1b80a82-7d68-47aa-b70a-d079b92fca12}')!
@@ -139,9 +139,9 @@ nmCustomDraw: pNMHDR
 
 	customDraw := NMCUSTOMDRAW fromAddress: pNMHDR.
 	customDraw view: self.
-	(customDraw dwDrawStage allMask: CDDS_PREPAINT) ifTrue: [self onCustomDraw: customDraw].
+	customDraw isPrepaint ifTrue: [self onCustomDraw: customDraw].
 
-	^CDRF_SKIPDEFAULT!
+	^NMCUSTOMDRAW.CDRF_SKIPDEFAULT!
 
 onCustomDraw: anNMCUSTOMDRAW
 
@@ -159,7 +159,7 @@ onCustomDraw: anNMCUSTOMDRAW
 			ifFalse: [newDisplayState := #hot]].
 	anNMCUSTOMDRAW isSelected ifTrue: [newDisplayState := #pressed].
 	anNMCUSTOMDRAW isDisabled ifTrue: [newDisplayState := #disabled].
-	self shouldShowKeyboardCues: (anNMCUSTOMDRAW uItemState allMask: CDIS_SHOWKEYBOARDCUES).
+	self shouldShowKeyboardCues: anNMCUSTOMDRAW wantKeyboardCues.
 
 	(self shouldAnimateTransitionTo: newDisplayState)
 		ifTrue: [[(self animateTransitionTo: newDisplayState) ifFalse: ["Failed" self isOpen ifTrue: [self drawOn: self canvas]]] postToInputQueue]

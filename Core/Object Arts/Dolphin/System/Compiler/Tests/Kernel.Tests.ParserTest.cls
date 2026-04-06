@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: 'allowEmptyStatements'
 	classVariableNames: ''
-	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
+	imports: #(#{External.FunctionDescriptor} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

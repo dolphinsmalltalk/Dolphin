@@ -208,12 +208,12 @@ testUInt16AtOffsetPut
 			self assert: (array uint16AtOffset: 0) equals: each.
 			array uint16AtOffset: 0 put: (External.UInt16 fromInteger: each).
 			self assert: (array uint16AtOffset: 0) equals: each].
-	{-16r8001. 16rFFFF + 1} do: 
+	{ -16r8001. 16rFFFF + 1 } do: 
 			[:each |
 			self
 				should: [array uint16AtOffset: 0 put: each]
 				raise: OS.HRESULTError
-				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]]!
+				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveIntegerOutOfRange)]]!
 
 testUInt32AtOffsetPut
 	"#1457"

@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.SQL_INTERVAL_STRUCTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ODBCCTypes})
+	imports: #(#{OS.ODBCLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

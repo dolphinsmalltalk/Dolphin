@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.Scintilla.KeyBinding'
 	instanceVariableNames: 'acceleratorKey message'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'Commands'

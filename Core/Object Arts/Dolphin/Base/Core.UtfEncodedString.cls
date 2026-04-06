@@ -4,7 +4,7 @@ Core.String
 	variableByteSubclass: #'Core.UtfEncodedString'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ICUConstants})
+	imports: #(#{OS.ICULibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

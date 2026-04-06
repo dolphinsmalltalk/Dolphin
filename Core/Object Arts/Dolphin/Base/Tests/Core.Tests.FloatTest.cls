@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Core.Tests.FloatTest'
 	instanceVariableNames: 'fpeMask'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CRTLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -69,7 +69,7 @@ shouldRaiseInvalidOperation: aBlock
 	Float reset.
 	exceptions := OrderedCollection new.
 	mask := Float exceptionMask.
-	Float exceptionMask: (mask maskClear: OS.CRTConstants._EM_INVALID).
+	Float exceptionMask: (mask maskClear: _EM_INVALID).
 	result := aBlock on: ArithmeticError
 				do: 
 					[:e |
@@ -84,12 +84,12 @@ shouldRaiseInvalidOperation: aBlock
 	self assert: result isNaN.
 
 	"Repeat with all exceptions masked. This is the normal setting in Dolphin now and may cause the CRT functions to use an SSE2 implementation"
-	Float exceptionMask: OS.CRTConstants._MCW_EM.
+	Float exceptionMask: _MCW_EM.
 	self assert: Float statusFlags equals: 0.
 	"With all FP exceptions masked we expect a NaN continuation value for invalid operations."
 	result2 := aBlock value.
 	status2 := Float statusFlags.
-	self assert: (status2 allMask: OS.CRTConstants._SW_INVALID)
+	self assert: (status2 allMask: _SW_INVALID)
 		description: 'Test operation did not notify Invalid Operation with all exceptions masked.'.
 	self assert: result2 isNaN!
 
@@ -99,7 +99,7 @@ shouldRaiseOverflow: aBlock
 shouldRaiseOverflow: aBlock withContinuation: aFloat
 	| raised result1 status2 result2 |
 	raised := false.
-	Float exceptionMask: (OS.CRTConstants._MCW_EM maskClear: OS.CRTConstants._EM_OVERFLOW).
+	Float exceptionMask: (_MCW_EM maskClear: _EM_OVERFLOW).
 	result1 := aBlock
 				on: FloatingPointException
 				do: 
@@ -113,14 +113,14 @@ shouldRaiseOverflow: aBlock withContinuation: aFloat
 					e resume].
 	"Repeat the operation with overflow masked to check that overflow condition 'notification'
 	is available, and the correct continuation result is returned."
-	Float exceptionMask: OS.CRTConstants._MCW_EM.
+	Float exceptionMask: _MCW_EM.
 	result2 := aBlock value.
 	status2 := Float statusFlags.
 	"Now check the results are as expected"
 	self assert: raised
 		description: 'Test operation did not raise expected FP overflow exception when unmasked'.
 	self assert: result1 equals: aFloat.
-	self assert: (status2 allMask: OS.CRTConstants._SW_OVERFLOW)
+	self assert: (status2 allMask: _SW_OVERFLOW)
 		description: 'Test operation did not notify FP overflow with overflow masked.'.
 	self assert: result2 equals: aFloat!
 
@@ -129,24 +129,24 @@ shouldRaiseUnderflow: aBlock
 	Float reset.
 	raised := false.
 	mask := Float exceptionMask.
-	Float exceptionMask: (mask maskClear: OS.CRTConstants._EM_UNDERFLOW).
+	Float exceptionMask: (mask maskClear: _EM_UNDERFLOW).
 	
 	[aBlock on: FloatingPointException do: [:e | e isUnderflow ifTrue: [raised := true]].
 	"Repeat the operation with overflow masked to check that overflow condition 'notification'
 	is available, and the correct continuation result is returned."
-	Float exceptionMask: (mask maskSet: OS.CRTConstants._EM_UNDERFLOW).
+	Float exceptionMask: (mask maskSet: _EM_UNDERFLOW).
 	result1 := aBlock value.
 	status1 := Float statusFlags.
 	"Finally repeat with all exceptions masked (because the CRT functions often behave differently and use an SSE2 implementation)"
-	Float exceptionMask: OS.CRTConstants._MCW_EM.
+	Float exceptionMask: _MCW_EM.
 	result2 := aBlock value.
 	status2 := Float statusFlags]
 			ensure: [Float exceptionMask: mask].
 	self assert: raised description: 'Test operation did not raise expected FP underflow exception'.
-	self assert: (status1 allMask: OS.CRTConstants._SW_UNDERFLOW)
+	self assert: (status1 allMask: _SW_UNDERFLOW)
 		description: 'Test operation did not notify FP underflow with underflow masked.'.
 	Float denormalized ifTrue: [self assert: result1 isZero] ifFalse: [self assert: result1 isDenormal].
-	self assert: (status2 allMask: OS.CRTConstants._SW_UNDERFLOW)
+	self assert: (status2 allMask: _SW_UNDERFLOW)
 		description: 'Test operation did not notify FP underflow with all exceptions masked.'.
 	self assert: result2 isZero!
 
@@ -157,13 +157,13 @@ shouldRaiseZeroDivide: aBlock status: anInteger withContinuations: anArrayOfFloa
 	| result2 mask result exceptions1 exceptions2 pair |
 	result := result2 := nil.
 	Float reset.
-	self assert: (Float statusFlags bitAnd: OS.CRTConstants._SW_INEXACT bitInvert) equals: 0.
+	self assert: (Float statusFlags bitAnd: _SW_INEXACT bitInvert) equals: 0.
 	exceptions1 := OrderedCollection new.
 	exceptions2 := OrderedCollection new.
 
 	"We will first evaluate with zero divide and invalid operation unmasked to see if we get an FP exception"
-	mask := Float exceptionMask: (OS.CRTConstants._MCW_EM
-						maskClear: OS.CRTConstants._EM_ZERODIVIDE | OS.CRTConstants._EM_INVALID).
+	mask := Float exceptionMask: (_MCW_EM
+						maskClear: _EM_ZERODIVIDE | _EM_INVALID).
 	
 	[result := aBlock on: ArithmeticError
 				do: 
@@ -171,7 +171,7 @@ shouldRaiseZeroDivide: aBlock status: anInteger withContinuations: anArrayOfFloa
 					exceptions1 addLast: Float statusFlags -> e.
 					e resume].
 	"Evaluate with everything masked"
-	Float exceptionMask: OS.CRTConstants._MCW_EM.
+	Float exceptionMask: _MCW_EM.
 	result2 := [aBlock value] on: ArithmeticError
 				do: 
 					[:e |
@@ -200,7 +200,7 @@ shouldRaiseZeroDivide: aBlock withContinuation: aFloat
 shouldRaiseZeroDivide: aBlock withContinuations: anArrayOfFloat
 	self
 		shouldRaiseZeroDivide: aBlock
-		status: OS.CRTConstants._SW_ZERODIVIDE | OS.CRTConstants._SW_INVALID
+		status: _SW_ZERODIVIDE | _SW_INVALID
 		withContinuations: anArrayOfFloat!
 
 successor: aFloat

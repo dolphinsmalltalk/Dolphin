@@ -4,9 +4,29 @@ Core.Object
 	subclass: #'Core.Locale'
 	instanceVariableNames: 'numberFormat'
 	classVariableNames: 'InstalledUILanguages Invariant SystemDefault TimeZoneInfo UserDefault'
-	imports: #(#{OS.NlsConstants} #{OS.ICUConstants})
+	imports: #(#{OS.ICULibrary private})
 	classInstanceVariableNames: ''
-	classConstants: { 'NoUserOverrideMask' -> 16r1000000 }!
+	classConstants: {
+			'CP_ACP' -> 16r0.
+			'CP_INSTALLED' -> 16r1.
+			'CP_SUPPORTED' -> 16r2.
+			'CP_UNICODE' -> 16r4B0.
+			'CP_UTF8' -> 16rFDE9.
+			'LANG_NEUTRAL' -> 16r0.
+			'LCID_INSTALLED' -> 16r1.
+			'LCID_SUPPORTED' -> 16r2.
+			'LCMAP_HASH' -> 16r40000.
+			'LOCALE_CUSTOM_UNSPECIFIED' -> 16r1000.
+			'LOCALE_INVARIANT' -> 16r7F.
+			'LOCALE_NAME_INVARIANT' -> ''.
+			'LOCALE_SYSTEM_DEFAULT' -> 16r800.
+			'LOCALE_USER_DEFAULT' -> 16r400.
+			'MUI_LANGUAGE_NAME' -> 16r8.
+			'NLS_VALID_LOCALE_MASK' -> 16rFFFFF.
+			'NORM_IGNORECASE' -> 16r1.
+			'NORM_LINGUISTIC_CASING' -> 16r8000000.
+			'NoUserOverrideMask' -> 16r1000000
+		}!
 
 Core.Locale guid: (Core.GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -331,8 +351,8 @@ hashString: aString flags: anInteger
 	src := aString asUtf16String.
 	count := src size.
 	count == 0 ifTrue: [^1039475471].
-	"LCMAP_HASH expected an 'int' sized buffer"
-	hashBuf := ByteArray new: 4.
+	"LCMAP_HASH expects an 'int' sized buffer"
+	hashBuf := ByteArray newFixed: 4.
 	(OS.Kernel32
 		lcMapString: self lcid
 		dwMapFlags: (LCMAP_HASH bitOr: anInteger)
@@ -343,8 +363,7 @@ hashString: aString flags: anInteger
 		ifTrue: [OS.Win32Error signal].
 	hash := hashBuf uint32AtOffset: 0.
 	"Fold to 30 bits so is always a positive SmallInteger"
-	^(hash bitShift: ##(VMConstants.SmallIntegerMax highBit negated))
-		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
+	^(hash bitShift: ##(VMLibrary.HashBits negated)) bitXor: (hash bitAnd: VMLibrary.SmallIntegerMax)!
 
 hasLeadingZero
 	"Answer whether a leading zero is prepended to a displayed number in this locale if it has only a fractional.
@@ -647,7 +666,7 @@ printFloat: aFloat format: aNUMBERFMT
 							absPrintOn: stream
 							base: 10
 							digitCount: 17
-							decimalExponents: ##(VMConstants.SmallIntegerMin to: VMConstants.SmallIntegerMax).
+							decimalExponents: ##(VMLibrary.SmallIntegerMin to: VMLibrary.SmallIntegerMax).
 					stream grabContents])
 		format: aNUMBERFMT!
 

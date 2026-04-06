@@ -37,7 +37,6 @@ package setClassNames: #(
 	#{OS.COM.CLSIDArray}
 	#{OS.COM.IPropertySetStorage}
 	#{OS.COM.IPropertyStorage}
-	#{OS.COM.PropertySetConstants}
 	#{OS.COM.PROPSPEC}
 	#{OS.COM.PROPVARIANT}
 	#{OS.COM.PROPVARIANTArray}
@@ -139,14 +138,6 @@ package setPrerequisites: #(
 package!
 
 "Class Definitions"!
-
-Kernel.SharedPool
-	subclass: #'OS.COM.PropertySetConstants'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 External.Structure
 	subclass: #'OS.COM.PROPSPEC'
@@ -454,7 +445,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IPropertySetStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #(#{OS.COM.STATSTG private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

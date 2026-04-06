@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Core.Tests.CharacterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.NlsConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -736,7 +736,7 @@ testIsUtf16SurrogateTests
 			self deny: ch isUtf16Lead.
 			self deny: ch isUtf16Trail.
 			self assert: ch utf8Length equals: 3].
-	nonchars , { -1. OS.Win32Constants.MAX_UCSCHAR + 1 } do: 
+	nonchars , { -1. OS.ICULibrary.UCHAR_MAX_VALUE + 1 } do: 
 			[:each |
 			self deny: (Character isValidUtf16CodeUnit: each).
 			self deny: (Character isValidCodePoint: each).

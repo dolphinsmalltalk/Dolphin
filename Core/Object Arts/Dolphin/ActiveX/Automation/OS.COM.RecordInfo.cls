@@ -32,7 +32,7 @@ GetField: pvData szFieldName: szFieldName pvarField: pvarField
 
 	recordClass clear: pvarField yourAddress.
 	pvarField value: ((recordClass fromAddress: pvData) getField: szFieldName
-				ifAbsent: [^AutomationErrors.TYPE_E_FIELDNOTFOUND]).
+				ifAbsent: [^IRecordInfo.TYPE_E_FIELDNOTFOUND]).
 	^S_OK!
 
 GetFieldNames: pcNames rgBstrNames: rgBstrNames
@@ -142,11 +142,11 @@ PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 	[| refInst value fieldName |
 	refInst := recordClass fromAddress: pvData.
 	fieldName := szFieldName asSymbol.
-	wFlags = AutomationConstants.INVOKE_PROPERTYPUT
+	wFlags = IDispatch.INVOKE_PROPERTYPUT
 		ifTrue: 
 			[| fieldValue |
 			fieldValue := refInst getField: fieldName
-						ifAbsent: [HRESULTError signalWith: AutomationErrors.TYPE_E_FIELDNOTFOUND].
+						ifAbsent: [HRESULTError signalWith: IRecordInfo.TYPE_E_FIELDNOTFOUND].
 			value := pvarField isDispatch ifTrue: [pvarField dispatch value] ifFalse: [pvarField value].
 			(fieldValue isKindOf: IDispatch)
 				ifTrue: 
@@ -154,13 +154,13 @@ PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 					fieldValue value: value]
 				ifFalse: [refInst setField: fieldName value: value]]
 		ifFalse: 
-			[wFlags = AutomationConstants.INVOKE_PROPERTYPUTREF
+			[wFlags = IDispatch.INVOKE_PROPERTYPUTREF
 				ifFalse: [InvalidArgumentError signalWith: 'wFlags'].
 			value := pvarField value.
 			refInst
 				setField: fieldName
 				value: value
-				ifAbsent: [HRESULTError signalWith: AutomationErrors.TYPE_E_FIELDNOTFOUND]].
+				ifAbsent: [HRESULTError signalWith: IRecordInfo.TYPE_E_FIELDNOTFOUND]].
 	S_OK]
 "			on: MessageNotUnderstood
 			do: [:ex | AutomationErrors.DISP_E_TYPEMISMATCH]"

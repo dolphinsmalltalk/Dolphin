@@ -21,7 +21,7 @@ simulateIconTitleFontChange: aShellView
 	aShellView settingChanged: (SettingsChangeEvent
 				window: aShellView
 				message: WM_SETTINGCHANGE
-				wParam: SPI_SETICONTITLELOGFONT
+				wParam: SystemMetrics.SPI_SETICONTITLELOGFONT
 				lParam: 0)!
 
 testDesignRectangle

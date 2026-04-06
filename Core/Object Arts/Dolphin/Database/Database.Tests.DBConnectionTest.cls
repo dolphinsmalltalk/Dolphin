@@ -4,7 +4,7 @@ Database.Tests.DBTest
 	subclass: #'Database.Tests.DBConnectionTest'
 	instanceVariableNames: 'savedBlockSize savedMaxBoundSize createdTestTable savedDBWarningTraceStream'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
+	imports: #(#{OS.ODBCLibrary} #{Database.DBColAttr})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -147,7 +147,7 @@ execShouldRaiseIntegerOutOfRange: aDBParameterizedStatement
 		raise: OS.HRESULTError
 		matching: 
 			[:ex |
-			ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.IntegerOutOfRange)]!
+			ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel.VMLibrary.PrimitiveIntegerOutOfRange)]!
 
 execShouldRaiseSqlDateOverflow: aDBParameterizedStatement
 	self execShouldRaiseSqlInvalidDateFormat: aDBParameterizedStatement!
@@ -180,7 +180,7 @@ execShouldRaiseTypeMismatch: aDBParameterizedStatement
 	self
 		should: [aDBParameterizedStatement exec]
 		raise: OS.HRESULTError
-		matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]!
+		matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.HRESULT.STATUS_OBJECT_TYPE_MISMATCH)]!
 
 hasDateTimeOffsetDataType
 	^true!
@@ -436,7 +436,7 @@ testColumnsQuery
 					| type |
 					self assert: eachCol name equals: eachArray first.
 					type := eachArray second.
-					self assert: (OS.ODBCTypes keyAtValue: eachCol type) equals: (OS.ODBCTypes keyAtValue: type).
+					self assert: eachCol type equals: type.
 					self assert: eachCol precision equals: eachArray third.
 					self assert: eachCol scale equals: eachArray fourth.
 					self assert: eachCol length equals: eachArray last]]!
@@ -1088,7 +1088,7 @@ testDayToSecondsIntervals
 			}.
 	buf := OS.SQL_INTERVAL_STRUCT dbNewForColumn: intervalCol.
 	self assert: buf isKindOf: OS.SQL_DAY_SECOND_STRUCT.
-	self assert: buf dbInterchangeType equals: OS.ODBCCTypes.SQL_C_INTERVAL_DAY_TO_SECOND.
+	self assert: buf dbInterchangeType equals: SQL_C_INTERVAL_DAY_TO_SECOND.
 	"Do a sanity check that the buffer class is set up and marshals as expected"
 	values do: 
 			[:each |

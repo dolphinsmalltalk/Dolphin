@@ -216,7 +216,7 @@ encodedAt: anInteger put: aCharacter
 			[self basicAt: anInteger put: codePoint.
 			anInteger]
 		ifFalse: 
-			[codePoint <= OS.Win32Constants.MAX_UCSCHAR
+			[codePoint <= UCHAR_MAX_VALUE
 				ifTrue: 
 					[codePoint := codePoint - 16r10000.
 					self
@@ -253,7 +253,7 @@ encodeOn: aPuttableStream put: aCharacter
 	^codePoint <= 16rFFFF
 		ifTrue: [aPuttableStream basicNextPut: codePoint]
 		ifFalse: 
-			[codePoint <= OS.Win32Constants.MAX_UCSCHAR
+			[codePoint <= UCHAR_MAX_VALUE
 				ifTrue: 
 					[#todo.	"http://www.unicode.org/faq/utf_bom.html suggests there might be a simpler (more efficient) calculation, but it looks incorrect to me"
 					codePoint := codePoint - 16r10000.

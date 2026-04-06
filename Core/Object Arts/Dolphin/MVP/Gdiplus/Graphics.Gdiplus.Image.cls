@@ -28,7 +28,7 @@ addToImageList: aWinImageList mask: aColorOrNil
 	index := ComCtl32
 				imageList_AddMasked: aWinImageList asParameter
 				hbmImage: bitmap asParameter
-				crMask: CLR_NONE.
+				crMask: Color.CLR_NONE.
 	bitmap free.
 	^index!
 
@@ -1068,7 +1068,7 @@ icon
 	^Graphics.Image icon!
 
 nameOfImageFlag: anInteger
-	^Gdiplus.ImageFlagsNames at: anInteger highBit + 1!
+	^ImageFlagsNames at: anInteger highBit + 1!
 
 onStartup2
 	"Private - Perform system startup processing for all subclasses."

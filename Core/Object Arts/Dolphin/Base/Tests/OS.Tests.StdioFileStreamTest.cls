@@ -37,7 +37,7 @@ maxPosition
 	^2 ** 63 - 1!
 
 sharingError
-	^CRTError matching: [:ex | ex errno = CRTConstants.EACCES]!
+	^CRTError matching: [:ex | ex errno = CRTError.EACCES]!
 
 streamClassSupportsUtf8Surrogates
 	^false!
@@ -97,7 +97,7 @@ testFileNotFound
 	self
 		should: [StdioFileStream read: 'Hopefully not there']
 		raise: CRTError
-		matching: [:ex | ex errno = OS.CRTConstants.ENOENT]!
+		matching: [:ex | ex errno = OS.CRTError.ENOENT]!
 
 testFromHandleOnDevice
 	"Test that a StdioFileStream instantiated by StdioFileStream class>>fromHandle: is non-blocking on a tty."
@@ -118,7 +118,7 @@ testFromHandleOnFile
 	handle := Ucrt
 				_wfsopen: tempFileName asUtf16String
 				mode: 'rt, ccs=UTF-8'
-				shflag: CRTConstants._SH_SECURE.
+				shflag: CRTLibrary._SH_SECURE.
 	filestream := StdioFileStream fromHandle: handle.
 	self assert: filestream isFinalizable.
 	self deny: filestream isNonBlocking.

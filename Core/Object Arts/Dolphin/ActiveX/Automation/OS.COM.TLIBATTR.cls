@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.COM.TLIBATTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_guid' -> 16r0.
@@ -13,7 +13,15 @@ External.Structure
 			'_OffsetOf_wLibFlags' -> 16r1C.
 			'_OffsetOf_wMajorVerNum' -> 16r18.
 			'_OffsetOf_wMinorVerNum' -> 16r1A.
-			'_TLIBATTR_Size' -> 16r20
+			'_TLIBATTR_Size' -> 16r20.
+			'LIBFLAG_FCONTROL' -> 16r2.
+			'LIBFLAG_FHASDISKIMAGE' -> 16r8.
+			'LIBFLAG_FHIDDEN' -> 16r4.
+			'LIBFLAG_FRESTRICTED' -> 16r4.
+			'SYS_MAC' -> 16r2.
+			'SYS_WIN16' -> 16r0.
+			'SYS_WIN32' -> 16r1.
+			'SYS_WIN64' -> 16r3
 		}!
 
 OS.COM.TLIBATTR guid: (Core.GUID fromString: '{c06f3b71-0868-11d3-93af-00a024ca708a}')!
@@ -77,7 +85,7 @@ lcid
 	^bytes uint32AtOffset: _OffsetOf_lcid!
 
 syskind
-	^VMConstants.IsWin64 ifTrue: [SYS_WIN64] ifFalse: [SYS_WIN32]!
+	^VMLibrary.IsWin64 ifTrue: [SYS_WIN64] ifFalse: [SYS_WIN32]!
 
 unregister
 	AdvApi32 isRunningElevated

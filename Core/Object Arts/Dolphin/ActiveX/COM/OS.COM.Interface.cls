@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
-	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.COM.OLEConstants})
+	imports: #(#{OS.Win32Error private} #{OS.COM.OLELibrary private})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
 			'_Interface_Size' -> 16r10.
@@ -200,20 +200,21 @@ invalidCall: anInteger
 	method := frame method.
 	descriptor := method descriptor.
 	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
-	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
-	^(anInteger >= _PrimitiveFailureCode.InvalidParameter1 and: [anInteger <= _PrimitiveFailureCode.InvalidParameter12])
-		ifTrue: 
-			[| arg i |
-			i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
-			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-			InvalidExternalCall
-				invalidArgument: arg
-				got: (frame arguments at: arg)
-				expected: (descriptor argumentTypes at: i)]
-		ifFalse: 
-			[self hresultError: (descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
-						ifTrue: [(HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT]
-						ifFalse: [HRESULT decodePrimitiveFailureCode: anInteger])]!
+	If the error is with parameter 13+, then it will be the generic VMLibrary.PrimitiveInvalidParameter."
+	^(anInteger >= VMLibrary.PrimitiveInvalidParameter1
+		and: [anInteger <= VMLibrary.PrimitiveInvalidParameter12])
+			ifTrue: 
+				[| arg i |
+				i := descriptor argumentIndexFromOffset: anInteger - VMLibrary.PrimitiveInvalidParameter1.
+				arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+				InvalidExternalCall
+					invalidArgument: arg
+					got: (frame arguments at: arg)
+					expected: (descriptor argumentTypes at: i)]
+			ifFalse: 
+				[self hresultError: (descriptor retType == FunctionDescriptor.ExtCallArgNTSTATUS
+							ifTrue: [(HRESULT decodePrimitiveFailureCode: anInteger) bitOr: FACILITY_NT_BIT]
+							ifFalse: [HRESULT decodePrimitiveFailureCode: anInteger])]!
 
 isSameCOMObject: aCOMInterface
 	"Answer whether the argument is a COM interface onto the the same underlying COM object as the receiver. This can be determined by comparing the addresses of the IUnknowns of the two objects because the 'Objects must have identity' rule requires that querying IUnknown for an object must always return the same physical pointer value."
@@ -684,7 +685,7 @@ elementSize
 	"Answer the size (in bytes) of the structure the receiver represents
 	when used as an array element."
 
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 findMostDerived
 	| count |

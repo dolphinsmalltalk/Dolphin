@@ -507,9 +507,9 @@ fromSton: stonReader
 	argument isNumber ifTrue: [^argument].
 	"Replace #perform: in standard STON code with a dictionary lookup. Although guarded, #perform: is best avoided in a deserializer for security reasons."
 	^(##(IdentityDictionary withAll: {
-				#nan -> Float.NaN.
-				#infinity -> Float.Infinity.
-				#negativeInfinity -> Float.NegativeInfinity
+				#nan -> NaN.
+				#infinity -> Infinity.
+				#negativeInfinity -> NegativeInfinity
 			})
 		lookup: argument) ifNil: [stonReader error: 'special Float not recognized']! !
 

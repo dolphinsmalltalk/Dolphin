@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Database.DBExceptionDetails'
 	instanceVariableNames: 'code hEnv hDBC hStmt errors'
 	classVariableNames: ''
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

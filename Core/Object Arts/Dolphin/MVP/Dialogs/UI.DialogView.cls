@@ -4,9 +4,15 @@ UI.ShellView
 	subclass: #'UI.DialogView'
 	instanceVariableNames: 'endModal isModal oldWndProc owner _reserved32 _reserved33 _reserved34'
 	classVariableNames: ''
-	imports: #(#{OS.ThemeConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'InProcLoopMask' -> 16r100000. 'OwnerInstVarIndex' -> 16r1F }!
+	classConstants: {
+			'DS_3DLOOK' -> 16r4.
+			'InProcLoopMask' -> 16r100000.
+			'OwnerInstVarIndex' -> 16r1F.
+			'STM_GETICON' -> 16r171.
+			'STM_SETICON' -> 16r170
+		}!
 
 UI.DialogView guid: (Core.GUID fromString: '{87b4c71e-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -132,12 +138,12 @@ dmSetDefId: message wParam: wParam lParam: lParam
 		"Dialog proc does not remove style of old default if set defId to zero, so we must force
 		that behavior otherwise it is not possible to remove default status from all push
 		buttons in a dialog (the dialog proc. does not seem designed to cope with this case)."
-		self setButtonId: def style: BS_PUSHBUTTON].
+		self setButtonId: def style: PushButton.BS_PUSHBUTTON].
 	self defaultButtonId: wParam.	"Cache the default button"
 	"Sometimes the dialog proc. does not set the default button style, so if it hasn't we will"
 	def := self defaultButtonId.
 	(def notNull "and: [def isDefault not]") ifTrue: [
-		self setButtonId: def style: BS_DEFPUSHBUTTON].
+		self setButtonId: def style: PushButton.BS_DEFPUSHBUTTON].
 	^answer
 !
 
@@ -236,7 +242,7 @@ onInitDialog
 	(self isPropertyPage and: [self isThemed])
 		ifTrue: 
 			["Property pages in tabbed dialogs require a specific theme"
-			UxTheme enableThemeDialogTexture: handle dwFlags: ETDT_ENABLETAB].
+			UxTheme enableThemeDialogTexture: handle dwFlags: ThemeLibrary.ETDT_ENABLETAB].
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog (though subclasses loaded from a Windows dialog template resource may wish to return true here)"
 	^false!

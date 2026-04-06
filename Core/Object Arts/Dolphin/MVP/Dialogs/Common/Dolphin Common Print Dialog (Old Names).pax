@@ -15,14 +15,14 @@ package setAliasVariableNames: #(
 ).
 
 package setPrerequisites: #(
-	'Dolphin Common Print Dialog'
+	'..\..\Deprecated\Dolphin MVP (Deprecated)'
 ).
 
 package!
 
 "Variable Aliases"!
 
-Smalltalk.PrintingConstants := OS.PrintDialogConstants!
+Smalltalk.PrintingConstants := Smalltalk.PrintDialogConstants!
 
 
 "End of package definition"!

@@ -4,7 +4,7 @@ UI.Tests.ListViewTest
 	subclass: #'UI.Tests.SingleSelectListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

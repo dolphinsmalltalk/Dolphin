@@ -4,11 +4,102 @@ UI.IconicListAbstract
 	subclass: #'UI.TreeView'
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle updateMode noRedrawCount _unused30 _unused31 _unused32 _unused33 _unused34'
 	classVariableNames: ''
-	imports: #(#{OS.TreeViewConstants})
+	imports: #(#{OS.TVITEMW private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DisableExpandAllMask' -> 16r1.
+			'ICC_TREEVIEW_CLASSES' -> 16r2.
 			'LegacyUpdateModeMask' -> 16r6.
+			'TVC_BYKEYBOARD' -> 16r2.
+			'TVC_UNKNOWN' -> 16r0.
+			'TVE_COLLAPSE' -> 16r1.
+			'TVE_COLLAPSERESET' -> 16r8000.
+			'TVE_EXPAND' -> 16r2.
+			'TVE_TOGGLE' -> 16r3.
+			'TVGN_CARET' -> 16r9.
+			'TVGN_CHILD' -> 16r4.
+			'TVGN_DROPHILITE' -> 16r8.
+			'TVGN_FIRSTVISIBLE' -> 16r5.
+			'TVGN_NEXT' -> 16r1.
+			'TVGN_NEXTVISIBLE' -> 16r6.
+			'TVGN_PARENT' -> 16r3.
+			'TVGN_PREVIOUS' -> 16r2.
+			'TVGN_PREVIOUSVISIBLE' -> 16r7.
+			'TVGN_ROOT' -> 16r0.
+			'TVI_FIRST' -> -16rFFFF.
+			'TVI_LAST' -> -16rFFFE.
+			'TVI_ROOT' -> -16r10000.
+			'TVI_SORT' -> -16rFFFD.
+			'TVM_DELETEITEM' -> 16r1101.
+			'TVM_EDITLABELW' -> 16r1141.
+			'TVM_ENSUREVISIBLE' -> 16r1114.
+			'TVM_EXPAND' -> 16r1102.
+			'TVM_GETCOUNT' -> 16r1105.
+			'TVM_GETEDITCONTROL' -> 16r110F.
+			'TVM_GETEXTENDEDSTYLE' -> 16r112D.
+			'TVM_GETIMAGELIST' -> 16r1108.
+			'TVM_GETINDENT' -> 16r1106.
+			'TVM_GETITEMHEIGHT' -> 16r111C.
+			'TVM_GETITEMRECT' -> 16r1104.
+			'TVM_GETITEMW' -> 16r113E.
+			'TVM_GETNEXTITEM' -> 16r110A.
+			'TVM_GETVISIBLECOUNT' -> 16r1110.
+			'TVM_HITTEST' -> 16r1111.
+			'TVM_INSERTITEMW' -> 16r1132.
+			'TVM_SELECTITEM' -> 16r110B.
+			'TVM_SETBKCOLOR' -> 16r111D.
+			'TVM_SETBORDER' -> 16r1123.
+			'TVM_SETEXTENDEDSTYLE' -> 16r112C.
+			'TVM_SETIMAGELIST' -> 16r1109.
+			'TVM_SETINDENT' -> 16r1107.
+			'TVM_SETITEMHEIGHT' -> 16r111B.
+			'TVM_SETITEMW' -> 16r113F.
+			'TVM_SETTEXTCOLOR' -> 16r111E.
+			'TVN_ASYNCDRAW' -> -16r1A4.
+			'TVN_BEGINDRAGW' -> -16r1C8.
+			'TVN_BEGINLABELEDITW' -> -16r1CB.
+			'TVN_BEGINRDRAGW' -> -16r1C9.
+			'TVN_DELETEITEMW' -> -16r1CA.
+			'TVN_ENDLABELEDITW' -> -16r1CC.
+			'TVN_FIRST' -> -16r190.
+			'TVN_GETDISPINFOW' -> -16r1C4.
+			'TVN_GETINFOTIPW' -> -16r19E.
+			'TVN_ITEMCHANGEDW' -> -16r1A3.
+			'TVN_ITEMCHANGINGW' -> -16r1A1.
+			'TVN_ITEMEXPANDEDW' -> -16r1C7.
+			'TVN_ITEMEXPANDINGW' -> -16r1C6.
+			'TVN_KEYDOWN' -> -16r19C.
+			'TVN_LAST' -> -16r1F3.
+			'TVN_SELCHANGEDW' -> -16r1C3.
+			'TVN_SELCHANGING' -> -16r191.
+			'TVN_SELCHANGINGW' -> -16r1C2.
+			'TVN_SETDISPINFOW' -> -16r1C5.
+			'TVN_SINGLEEXPAND' -> -16r19F.
+			'TVS_CHECKBOXES' -> 16r100.
+			'TVS_DISABLEDRAGDROP' -> 16r10.
+			'TVS_EDITLABELS' -> 16r8.
+			'TVS_EX_AUTOHSCROLL' -> 16r20.
+			'TVS_EX_DIMMEDCHECKBOXES' -> 16r200.
+			'TVS_EX_DOUBLEBUFFER' -> 16r4.
+			'TVS_EX_DRAWIMAGEASYNC' -> 16r400.
+			'TVS_EX_EXCLUSIONCHECKBOXES' -> 16r100.
+			'TVS_EX_FADEINOUTEXPANDOS' -> 16r40.
+			'TVS_EX_MULTISELECT' -> 16r27102.
+			'TVS_EX_NOINDENTSTATE' -> 16r8.
+			'TVS_EX_PARTIALCHECKBOXES' -> 16r80.
+			'TVS_EX_RICHTOOLTIP' -> 16r10.
+			'TVS_FULLROWSELECT' -> 16r1000.
+			'TVS_HASBUTTONS' -> 16r1.
+			'TVS_HASLINES' -> 16r2.
+			'TVS_INFOTIP' -> 16r800.
+			'TVS_LINESATROOT' -> 16r4.
+			'TVS_NONEVENHEIGHT' -> 16r4000.
+			'TVS_NOSCROLL' -> 16r2000.
+			'TVS_SHOWSELALWAYS' -> 16r20.
+			'TVS_SINGLEEXPAND' -> 16r400.
+			'TVS_TRACKSELECT' -> 16r200.
+			'TVSIL_NORMAL' -> 16r0.
+			'TVSIL_STATE' -> 16r2.
 			'UpdateModes'
 				-> (IdentityDictionary withAll: {
 								#dynamic -> TreeViewDynamicUpdateMode.
@@ -615,7 +706,7 @@ nmDeleteItem: pNMHDR
 	handleObjectMap isEmpty
 		ifFalse: 
 			[(handleObjectMap
-				removeKey: (pNMHDR uintPtrAtOffset: ##(NMTREEVIEWW._OffsetOf_itemOld + TVITEMW._OffsetOf_hItem))
+				removeKey: (pNMHDR uintPtrAtOffset: ##(NMTREEVIEWW._OffsetOf_itemOld + _OffsetOf_hItem))
 				ifAbsent: nil) ifNotNil: [:object | objectHandleMap removeKey: object]].
 	"Answer nil to accept the default processing (which we must do or the TreeView leaks... apparently, although I can't see why it would since this is a notification originally sent to the parent?)."
 	^nil!
@@ -1212,11 +1303,11 @@ wantCustomDrawItemNotifications: pNMHDR
 	empty paint area and invalid colours. We suppress these as they are, ahem, unhelpful."
 
 	^self customDrawBlock notNil and: 
-			[(pNMHDR int32AtOffset: ##(NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_right))
-				- (pNMHDR int32AtOffset: ##(NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_left)) > 0
+			[(pNMHDR int32AtOffset: ##(_OffsetOf_rc + RECTL._OffsetOf_right))
+				- (pNMHDR int32AtOffset: ##(_OffsetOf_rc + RECTL._OffsetOf_left)) > 0
 				and: 
-					[(pNMHDR int32AtOffset: ##(NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_bottom))
-						- (pNMHDR int32AtOffset: ##(NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_top)) > 0]]!
+					[(pNMHDR int32AtOffset: ##(_OffsetOf_rc + RECTL._OffsetOf_bottom))
+						- (pNMHDR int32AtOffset: ##(_OffsetOf_rc + RECTL._OffsetOf_top)) > 0]]!
 
 wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Handle WM_KEYDOWN.

@@ -43,7 +43,7 @@ Core.Object
 	subclass: #'OS.COM.ObjectRegistration'
 	instanceVariableNames: 'clsid name toolboxImage'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

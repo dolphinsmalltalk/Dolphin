@@ -30,7 +30,7 @@ initialize
 		TaskMemory initialize
 	"
 
-	self extraInstanceSpec: VMConstants.IntPtrSize! !
+	self extraInstanceSpec: VMLibrary.IntPtrSize! !
 
 !OS.COM.TaskMemory class categoriesForMethods!
 allocator!accessing!private! !

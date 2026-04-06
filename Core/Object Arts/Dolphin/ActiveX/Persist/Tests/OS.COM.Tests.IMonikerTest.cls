@@ -27,7 +27,7 @@ shouldRaiseNotBindable: aBlockClosure
 	self should: aBlockClosure raiseHRESULT: 16r800401E8	"MK_E_NOTBINDABLE: Moniker is not bindable"!
 
 shouldRaiseNotImplemented: aBlockClosure
-	self should: aBlockClosure raiseHRESULT: Win32Errors.E_NOTIMPL!
+	self should: aBlockClosure raiseHRESULT: E_NOTIMPL!
 
 testClassMoniker
 	| subject displayName clsid factory |

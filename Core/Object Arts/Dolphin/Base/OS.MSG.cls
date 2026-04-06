@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.MSG'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_MSG_Size' -> 16r1C.

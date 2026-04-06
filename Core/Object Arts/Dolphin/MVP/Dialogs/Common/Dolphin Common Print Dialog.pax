@@ -14,7 +14,6 @@ package setClassNames: #(
 	#{OS.COM.IPrintDialogCallback}
 	#{OS.COM.IPrintDialogServices}
 	#{OS.PAGESETUPDLGW}
-	#{OS.PrintDialogConstants}
 	#{OS.PrintDialogStructure}
 	#{OS.PRINTDLGEXW}
 	#{OS.PRINTPAGERANGE}
@@ -42,15 +41,113 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.PrintDialogConstants'
+UI.CommonDialog
+	subclass: #'UI.PrintingDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.PrintingDialog
+	subclass: #'UI.PageSetupDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.PrintingDialog
+	subclass: #'UI.PrintDialog'
+	instanceVariableNames: 'dialogServices flags savedPreferLegacyPrintDialog'
+	classVariableNames: ''
+	imports: #(#{OS.PRINTDLGEXW private} #{OS.HRESULT private})
+	classInstanceVariableNames: ''
+	classConstants: { 'UnifiedPrintDialogMask' -> 16r1 }!
+
+External.Structure
+	subclass: #'OS.PRINTPAGERANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'DMORIENT_LANDSCAPE' -> 16r2.
-			'DMORIENT_PORTRAIT' -> 16r1.
+			'_OffsetOf_nFromPage' -> 16r0.
+			'_OffsetOf_nToPage' -> 16r4.
+			'_PRINTPAGERANGE_Size' -> 16r8
+		}!
+
+OS.ComDlgStructure
+	subclass: #'OS.PrintDialogStructure'
+	instanceVariableNames: 'cachedHDevMode devMode cachedHDevNames devNames'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_OffsetOf_hDevMode' -> 16r8. '_OffsetOf_hDevNames' -> 16rC }!
+
+OS.PrintDialogStructure
+	subclass: #'OS.PAGESETUPDLGW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_flags' -> 16r10.
+			'_OffsetOf_hInstance' -> 16r3C.
+			'_OffsetOf_hPageSetupTemplate' -> 16r50.
+			'_OffsetOf_lCustData' -> 16r40.
+			'_OffsetOf_lpfnHook' -> 16r44.
+			'_OffsetOf_lpfnPagePaintHook' -> 16r48.
+			'_OffsetOf_lpPageSetupTemplateName' -> 16r4C.
+			'_OffsetOf_ptPaperSize' -> 16r14.
+			'_OffsetOf_rtMargin' -> 16r2C.
+			'_OffsetOf_rtMinMargin' -> 16r1C.
+			'_PAGESETUPDLGW_Size' -> 16r54.
+			'PSD_DEFAULTMINMARGINS' -> 16r0.
+			'PSD_DISABLEMARGINS' -> 16r10.
+			'PSD_DISABLEORIENTATION' -> 16r100.
+			'PSD_DISABLEPAGEPAINTING' -> 16r80000.
+			'PSD_DISABLEPAPER' -> 16r200.
+			'PSD_DISABLEPRINTER' -> 16r20.
+			'PSD_ENABLEPAGEPAINTHOOK' -> 16r40000.
+			'PSD_ENABLEPAGESETUPHOOK' -> 16r2000.
+			'PSD_ENABLEPAGESETUPTEMPLATE' -> 16r8000.
+			'PSD_ENABLEPAGESETUPTEMPLATEHANDLE' -> 16r20000.
+			'PSD_INHUNDREDTHSOFMILLIMETERS' -> 16r8.
+			'PSD_INTHOUSANDTHSOFINCHES' -> 16r4.
+			'PSD_INWININIINTLMEASURE' -> 16r0.
+			'PSD_MARGINS' -> 16r2.
+			'PSD_MINMARGINS' -> 16r1.
+			'PSD_NOWARNING' -> 16r80.
+			'PSD_RETURNDEFAULT' -> 16r400.
+			'PSD_SHOWHELP' -> 16r800
+		}!
+
+OS.PrintDialogStructure
+	subclass: #'OS.PRINTDLGEXW'
+	instanceVariableNames: 'printRanges callback'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_dwResultAction' -> 16r50.
+			'_OffsetOf_ExclusionFlags' -> 16r1C.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_Flags2' -> 16r18.
+			'_OffsetOf_hDC' -> 16r10.
+			'_OffsetOf_hInstance' -> 16r38.
+			'_OffsetOf_lpCallback' -> 16r40.
+			'_OffsetOf_lphPropertyPages' -> 16r48.
+			'_OffsetOf_lpPageRanges' -> 16r28.
+			'_OffsetOf_lpPrintTemplateName' -> 16r3C.
+			'_OffsetOf_nCopies' -> 16r34.
+			'_OffsetOf_nMaxPage' -> 16r30.
+			'_OffsetOf_nMaxPageRanges' -> 16r24.
+			'_OffsetOf_nMinPage' -> 16r2C.
+			'_OffsetOf_nPageRanges' -> 16r20.
+			'_OffsetOf_nPropertyPages' -> 16r44.
+			'_OffsetOf_nStartPage' -> 16r4C.
+			'_PRINTDLGEXW_Size' -> 16r54.
 			'PD_ALLPAGES' -> 16r0.
 			'PD_COLLATE' -> 16r10.
 			'PD_CURRENTPAGE' -> 16r400000.
@@ -80,118 +177,7 @@ Kernel.SharedPool
 			'PD_SHOWHELP' -> 16r800.
 			'PD_USEDEVMODECOPIES' -> 16r40000.
 			'PD_USEDEVMODECOPIESANDCOLLATE' -> 16r40000.
-			'PSD_DEFAULTMINMARGINS' -> 16r0.
-			'PSD_DISABLEMARGINS' -> 16r10.
-			'PSD_DISABLEORIENTATION' -> 16r100.
-			'PSD_DISABLEPAGEPAINTING' -> 16r80000.
-			'PSD_DISABLEPAPER' -> 16r200.
-			'PSD_DISABLEPRINTER' -> 16r20.
-			'PSD_ENABLEPAGEPAINTHOOK' -> 16r40000.
-			'PSD_ENABLEPAGESETUPHOOK' -> 16r2000.
-			'PSD_ENABLEPAGESETUPTEMPLATE' -> 16r8000.
-			'PSD_ENABLEPAGESETUPTEMPLATEHANDLE' -> 16r20000.
-			'PSD_INHUNDREDTHSOFMILLIMETERS' -> 16r8.
-			'PSD_INTHOUSANDTHSOFINCHES' -> 16r4.
-			'PSD_INWININIINTLMEASURE' -> 16r0.
-			'PSD_MARGINS' -> 16r2.
-			'PSD_MINMARGINS' -> 16r1.
-			'PSD_NOWARNING' -> 16r80.
-			'PSD_RETURNDEFAULT' -> 16r400.
-			'PSD_SHOWHELP' -> 16r800.
-			'S_FAIL' -> 16r1.
-			'S_OK' -> 16r0.
 			'START_PAGE_GENERAL' -> -16r1
-		}!
-
-UI.CommonDialog
-	subclass: #'UI.PrintingDialog'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.PrintingDialog
-	subclass: #'UI.PageSetupDialog'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-UI.PrintingDialog
-	subclass: #'UI.PrintDialog'
-	instanceVariableNames: 'dialogServices flags savedPreferLegacyPrintDialog'
-	classVariableNames: ''
-	imports: #(#{OS.PrintDialogConstants} #{OS.Win32Errors private})
-	classInstanceVariableNames: ''
-	classConstants: { 'UnifiedPrintDialogMask' -> 16r1 }!
-
-External.Structure
-	subclass: #'OS.PRINTPAGERANGE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_nFromPage' -> 16r0.
-			'_OffsetOf_nToPage' -> 16r4.
-			'_PRINTPAGERANGE_Size' -> 16r8
-		}!
-
-OS.ComDlgStructure
-	subclass: #'OS.PrintDialogStructure'
-	instanceVariableNames: 'cachedHDevMode devMode cachedHDevNames devNames'
-	classVariableNames: ''
-	imports: #(#{OS.PrintDialogConstants})
-	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_hDevMode' -> 16r8. '_OffsetOf_hDevNames' -> 16rC }!
-
-OS.PrintDialogStructure
-	subclass: #'OS.PAGESETUPDLGW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.PrintDialogConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_flags' -> 16r10.
-			'_OffsetOf_hInstance' -> 16r3C.
-			'_OffsetOf_hPageSetupTemplate' -> 16r50.
-			'_OffsetOf_lCustData' -> 16r40.
-			'_OffsetOf_lpfnHook' -> 16r44.
-			'_OffsetOf_lpfnPagePaintHook' -> 16r48.
-			'_OffsetOf_lpPageSetupTemplateName' -> 16r4C.
-			'_OffsetOf_ptPaperSize' -> 16r14.
-			'_OffsetOf_rtMargin' -> 16r2C.
-			'_OffsetOf_rtMinMargin' -> 16r1C.
-			'_PAGESETUPDLGW_Size' -> 16r54
-		}!
-
-OS.PrintDialogStructure
-	subclass: #'OS.PRINTDLGEXW'
-	instanceVariableNames: 'printRanges callback'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_dwResultAction' -> 16r50.
-			'_OffsetOf_ExclusionFlags' -> 16r1C.
-			'_OffsetOf_flags' -> 16r14.
-			'_OffsetOf_Flags2' -> 16r18.
-			'_OffsetOf_hDC' -> 16r10.
-			'_OffsetOf_hInstance' -> 16r38.
-			'_OffsetOf_lpCallback' -> 16r40.
-			'_OffsetOf_lphPropertyPages' -> 16r48.
-			'_OffsetOf_lpPageRanges' -> 16r28.
-			'_OffsetOf_lpPrintTemplateName' -> 16r3C.
-			'_OffsetOf_nCopies' -> 16r34.
-			'_OffsetOf_nMaxPage' -> 16r30.
-			'_OffsetOf_nMaxPageRanges' -> 16r24.
-			'_OffsetOf_nMinPage' -> 16r2C.
-			'_OffsetOf_nPageRanges' -> 16r20.
-			'_OffsetOf_nPropertyPages' -> 16r44.
-			'_OffsetOf_nStartPage' -> 16r4C.
-			'_PRINTDLGEXW_Size' -> 16r54
 		}!
 
 OS.COM.IUnknown

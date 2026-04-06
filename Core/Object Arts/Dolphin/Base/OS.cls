@@ -6,7 +6,7 @@ Kernel.Namespace
 	classVariableNames: ''
 	imports: #(#{Core} #{External} #{Kernel private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'FALSE' -> 16r0. 'TRUE' -> 16r1 }!
 
 OS guid: (Core.GUID fromString: '{36a4395f-dcf9-496f-96b7-d6dbd9d6115f}')!
 

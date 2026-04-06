@@ -86,7 +86,7 @@ testStreamInAnsiText
 	presenter rtfText: rtf!
 
 testStreamInUtfText
-	| text rtf actual ansi |
+	| text rtf actual |
 	"The control asks for the text in blocks of just under 4k, so provide a little more to ensure the buffer it provides is insufficiently large to hold all the text."
 	text := Utf8String writeStream: 4200.
 	[text size < 4100] whileTrue: 

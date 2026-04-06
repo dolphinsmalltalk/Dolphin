@@ -112,7 +112,7 @@ lexicalError: aString range: anInterval line: lineInteger code: codeInteger
 		code: codeInteger!
 
 maxLiterals
-	^VMConstants.MaxLiterals!
+	^VMLibrary.MaxLiterals!
 
 parseError: each
 	self parserClass parseExpression: each first
@@ -571,7 +571,7 @@ testErrorsBlockNestingTooDeep
 	expected := (nesting + 1) factorial.
 	self assert: (self evaluateExpression: source) = expected.
 	"Now 2 under max"
-	maxNest := VMConstants.MaxBlockNesting.
+	maxNest := VMLibrary.MaxBlockNesting.
 	nesting := maxNest - 2.
 	source := self buildNestedBlocks: nesting.
 	expected := (nesting + 1) factorial.
@@ -582,7 +582,7 @@ testErrorsBlockNestingTooDeep
 	expected := (nesting + 1) factorial.
 	self assert: (self evaluateExpression: source) = expected.
 	"max nesting"
-	maxNest := VMConstants.MaxBlockNesting.
+	maxNest := VMLibrary.MaxBlockNesting.
 	nesting := maxNest.
 	source := self buildNestedBlocks: nesting.
 	expected := (nesting + 1) factorial.
@@ -1175,7 +1175,7 @@ testErrorsPrimitiveBadIndex
 		parseMethodError: source
 		code: CErrBadPrimIdx
 		range: (mark to: mark + 2).
-	source := 'blah <primitive: ' , (VMConstants.MaxPrimitive + 1) displayString , '>'.
+	source := 'blah <primitive: ' , (VMLibrary.MaxPrimitive + 1) displayString , '>'.
 	mark := source lastIndexOf: $:.
 	self
 		parseMethodError: source
@@ -1423,10 +1423,10 @@ testErrorsTooManyArgs
 	source
 		cr;
 		nextPutAll: ' self '.
-	max := VMConstants.MaxMessageArgs.
+	max := VMLibrary.MaxMessageArgs.
 	1 to: max + 1
 		do: 
-			[:i | 
+			[:i |
 			source
 				nextPutAll: 'x: ';
 				print: i;
@@ -1438,10 +1438,9 @@ testErrorsTooManyArgs
 		cr.
 	source := source contents.
 	last := (max + 1) displayString.
-	self 
+	self
 		parseExprError: source
-		range: ((source indexOfSubCollection: 'self') 
-				to: (source indexOfSubCollection: last) + last size - 1)
+		range: ((source indexOfSubCollection: 'self') to: (source indexOfSubCollection: last) + last size - 1)
 		line: 2
 		code: CErrTooManyArgs!
 
@@ -1449,7 +1448,7 @@ testErrorsTooManyTemps
 	| source mark |
 	source := String writeStream.
 	source nextPutAll: '| '.
-	1 to: VMConstants.MaxTemps + 1
+	1 to: VMLibrary.MaxTemps + 1
 		do: 
 			[:i |
 			source
@@ -1470,9 +1469,9 @@ testErrorsTooManyTempsInOptimizedBlock
 	| source mark |
 	source := String writeStream.
 	source nextPutAll: '| '.
-	1 to: VMConstants.MaxTemps - 1
+	1 to: VMLibrary.MaxTemps - 1
 		do: 
-			[:i | 
+			[:i |
 			source
 				nextPut: $a;
 				print: i;
@@ -1483,7 +1482,7 @@ testErrorsTooManyTempsInOptimizedBlock
 		nextPutAll: '1 ifNotNil: [:x | | z | z := x]'.
 	source := source contents.
 	mark := source indexOf: $z.
-	self 
+	self
 		parseExprError: source
 		range: (mark to: mark)
 		line: 2
@@ -1556,7 +1555,7 @@ testErrorsVirtualCalls
 		parseMethodError: source
 		code: CErrBadVfn
 		range: (mark to: mark).
-	idx := (VMConstants.MaxVirtualFunction + 1) displayString.
+	idx := (VMLibrary.MaxVirtualFunction + 1) displayString.
 	source := 'blah <virtual cdecl: void ' , idx , '>'.
 	mark := source lastIndexOf: $\x20.
 	self

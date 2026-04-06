@@ -6,7 +6,20 @@ Graphics.GraphicsTool
 	classVariableNames: 'DrawStateCallbackDescriptor'
 	imports: #(#{OS.MENUITEMINFOW private} #{OS.MENUINFO private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'TPM_BOTTOMALIGN' -> 16r20.
+			'TPM_CENTERALIGN' -> 16r4.
+			'TPM_HORIZONTAL' -> 16r0.
+			'TPM_LEFTALIGN' -> 16r0.
+			'TPM_LEFTBUTTON' -> 16r0.
+			'TPM_NONOTIFY' -> 16r80.
+			'TPM_RETURNCMD' -> 16r100.
+			'TPM_RIGHTALIGN' -> 16r8.
+			'TPM_RIGHTBUTTON' -> 16r2.
+			'TPM_TOPALIGN' -> 16r0.
+			'TPM_VCENTERALIGN' -> 16r10.
+			'TPM_VERTICAL' -> 16r40
+		}!
 
 UI.Menu guid: (Core.GUID fromString: '{87b4c636-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -234,7 +247,7 @@ drawItemImage: itemImage on: hDC at: aPoint disabled: aBoolean
 			^self].
 	"Use DrawState() API to get the correct disabled image look, but use the callback option
 	because we want to draw out of an image list rather than from an icon or bitmap"
-	callback := External.Callback block: 
+	callback := Callback block: 
 					[:hdc :lData :wData :cx :cy |
 					"Must draw on the DC supplied to the callback, not the original DC"
 					imageList
@@ -488,7 +501,7 @@ itemWithId: anInteger
 lastQuery
 	^lastQuery
 		ifNil: 
-			[lastQuery := UI.CommandQuery new
+			[lastQuery := CommandQuery new
 						beEnabled;
 						yourself]!
 
@@ -856,7 +869,7 @@ icon
 
 initialize
 	View registerMessageMappings: self menuMessageMappings.
-	DrawStateCallbackDescriptor := External.FunctionDescriptor returnType: 'bool'
+	DrawStateCallbackDescriptor := FunctionDescriptor returnType: 'bool'
 				argumentTypes: 'handle intptr uintptr int32 int32'!
 
 menuMessageMappings

@@ -22,7 +22,6 @@ package setClassNames: #(
 	#{Database.DBBoundField}
 	#{Database.DBCharBuffer}
 	#{Database.DBColAttr}
-	#{Database.DBColFlags}
 	#{Database.DBColumnsStatement}
 	#{Database.DBConnection}
 	#{Database.DBError}
@@ -58,11 +57,7 @@ package setClassNames: #(
 	#{Database.DBWarning}
 	#{Database.DBWCharBuffer}
 	#{OS.DBTIME2}
-	#{OS.ODBCConstants}
-	#{OS.ODBCCTypes}
 	#{OS.ODBCLibrary}
-	#{OS.ODBCRetCodes}
-	#{OS.ODBCTypes}
 	#{OS.SQL_DATE_STRUCT}
 	#{OS.SQL_DAY_SECOND_STRUCT}
 	#{OS.SQL_INTERVAL_STRUCT}
@@ -144,11 +139,27 @@ Kernel.Namespace
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-Kernel.SharedPool
-	subclass: #'Database.DBColFlags'
-	instanceVariableNames: ''
+Core.Object
+	subclass: #'Database.DBAbstractRow'
+	instanceVariableNames: 'columns contents selectors status'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'Database.DBAbstractStatement'
+	instanceVariableNames: 'handle parent executed cursorType'
+	classVariableNames: 'CursorTypes'
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'Database.DBColAttr'
+	instanceVariableNames: 'columnNumber name length sqlType precision scale special bufferClass'
+	classVariableNames: ''
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DeleteCascade' -> 16r10.
@@ -159,14 +170,420 @@ Kernel.SharedPool
 			'ParameterTypeMask' -> 16r3800.
 			'ParameterTypeShift' -> 16rB.
 			'PrimaryKey' -> 16r1.
+			'SQL_BIGINT' -> -16r5.
+			'SQL_BINARY' -> -16r2.
+			'SQL_BIT' -> -16r7.
+			'SQL_CHAR' -> 16r1.
+			'SQL_DATETIME' -> 16r9.
+			'SQL_DECIMAL' -> 16r3.
+			'SQL_DOUBLE' -> 16r8.
+			'SQL_FLOAT' -> 16r6.
+			'SQL_GUID' -> -16rB.
+			'SQL_INTEGER' -> 16r4.
+			'SQL_INTERVAL' -> 16rA.
+			'SQL_INTERVAL_DAY' -> 16r67.
+			'SQL_INTERVAL_DAY_TO_HOUR' -> 16r6C.
+			'SQL_INTERVAL_DAY_TO_MINUTE' -> 16r6D.
+			'SQL_INTERVAL_DAY_TO_SECOND' -> 16r6E.
+			'SQL_INTERVAL_HOUR' -> 16r68.
+			'SQL_INTERVAL_HOUR_TO_MINUTE' -> 16r6F.
+			'SQL_INTERVAL_HOUR_TO_SECOND' -> 16r70.
+			'SQL_INTERVAL_MINUTE' -> 16r69.
+			'SQL_INTERVAL_MINUTE_TO_SECOND' -> 16r71.
+			'SQL_INTERVAL_MONTH' -> 16r66.
+			'SQL_INTERVAL_SECOND' -> 16r6A.
+			'SQL_INTERVAL_YEAR' -> 16r65.
+			'SQL_INTERVAL_YEAR_TO_MONTH' -> 16r6B.
+			'SQL_LONGVARBINARY' -> -16r4.
+			'SQL_LONGVARCHAR' -> -16r1.
+			'SQL_NUMERIC' -> 16r2.
+			'SQL_REAL' -> 16r7.
+			'SQL_SMALLINT' -> 16r5.
+			'SQL_SS_TIME2' -> -16r9A.
+			'SQL_SS_TIMESTAMPOFFSET' -> -16r9B.
+			'SQL_SS_VARIANT' -> -16r96.
+			'SQL_SS_XML' -> -16r98.
+			'SQL_TIMESTAMP' -> 16rB.
+			'SQL_TINYINT' -> -16r6.
+			'SQL_TYPE_DATE' -> 16r5B.
+			'SQL_TYPE_NULL' -> 16r0.
+			'SQL_TYPE_TIME' -> 16r5C.
+			'SQL_TYPE_TIMESTAMP' -> 16r5D.
+			'SQL_UNKNOWN_TYPE' -> 16r0.
+			'SQL_VARBINARY' -> -16r3.
+			'SQL_VARCHAR' -> 16rC.
+			'SQL_WCHAR' -> -16r8.
+			'SQL_WLONGVARCHAR' -> -16rA.
+			'SQL_WVARCHAR' -> -16r9.
+			'Types'
+				-> (IdentityDictionary withAll: {
+								-16r9B -> 'SQL_SS_TIMESTAMPOFFSET'.
+								-16r9A -> 'SQL_SS_TIME2'.
+								-16r98 -> 'SQL_SS_XML'.
+								-16r96 -> 'SQL_SS_VARIANT'.
+								-16rB -> 'SQL_GUID'.
+								-16rA -> 'SQL_WLONGVARCHAR'.
+								-16r9 -> 'SQL_WVARCHAR'.
+								-16r8 -> 'SQL_WCHAR'.
+								-16r7 -> 'SQL_BIT'.
+								-16r6 -> 'SQL_TINYINT'.
+								-16r5 -> 'SQL_BIGINT'.
+								-16r4 -> 'SQL_LONGVARBINARY'.
+								-16r3 -> 'SQL_VARBINARY'.
+								-16r2 -> 'SQL_BINARY'.
+								-16r1 -> 'SQL_LONGVARCHAR'.
+								16r0 -> 'SQL_TYPE_NULL'.
+								16r1 -> 'SQL_CHAR'.
+								16r2 -> 'SQL_NUMERIC'.
+								16r3 -> 'SQL_DECIMAL'.
+								16r4 -> 'SQL_INTEGER'.
+								16r5 -> 'SQL_SMALLINT'.
+								16r6 -> 'SQL_FLOAT'.
+								16r7 -> 'SQL_REAL'.
+								16r8 -> 'SQL_DOUBLE'.
+								16r9 -> 'SQL_DATETIME'.
+								16rA -> 'SQL_INTERVAL'.
+								16rB -> 'SQL_TIMESTAMP'.
+								16rC -> 'SQL_VARCHAR'.
+								16r5B -> 'SQL_TYPE_DATE'.
+								16r5C -> 'SQL_TYPE_TIME'.
+								16r5D -> 'SQL_TYPE_TIMESTAMP'.
+								16r65 -> 'SQL_INTERVAL_YEAR'.
+								16r66 -> 'SQL_INTERVAL_MONTH'.
+								16r67 -> 'SQL_INTERVAL_DAY'.
+								16r68 -> 'SQL_INTERVAL_HOUR'.
+								16r69 -> 'SQL_INTERVAL_MINUTE'.
+								16r6A -> 'SQL_INTERVAL_SECOND'.
+								16r6B -> 'SQL_INTERVAL_YEAR_TO_MONTH'.
+								16r6C -> 'SQL_INTERVAL_DAY_TO_HOUR'.
+								16r6D -> 'SQL_INTERVAL_DAY_TO_MINUTE'.
+								16r6E -> 'SQL_INTERVAL_DAY_TO_SECOND'.
+								16r6F -> 'SQL_INTERVAL_HOUR_TO_MINUTE'.
+								16r70 -> 'SQL_INTERVAL_HOUR_TO_SECOND'.
+								16r71 -> 'SQL_INTERVAL_MINUTE_TO_SECOND'
+							}).
 			'UpdateCascade' -> 16r100.
 			'UpdateRestrict' -> 16r200.
 			'UpdateRules' -> 16r700.
 			'UpdateSetNull' -> 16r400
 		}!
 
-Kernel.SharedPool
-	subclass: #'OS.ODBCConstants'
+Core.Object
+	subclass: #'Database.DBConnection'
+	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
+	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'Database.DBErrorDetails'
+	instanceVariableNames: 'msg nativeErr sqlState'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'Database.DBErrorDetailsBuilder'
+	instanceVariableNames: 'errors szSqlState szErrorMsg cbErrorMsg fNativeError'
+	classVariableNames: ''
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'RetCodes'
+				-> (IdentityDictionary withAll: {
+								-16r2 -> 'SQL_INVALID_HANDLE'.
+								-16r1 -> 'SQL_ERROR'.
+								16r0 -> 'SQL_SUCCESS'.
+								16r1 -> 'SQL_SUCCESS_WITH_INFO'.
+								16r63 -> 'SQL_NEED_DATA'.
+								16r64 -> 'SQL_NO_DATA'
+							})
+		}!
+
+Core.Object
+	subclass: #'Database.DBExceptionDetails'
+	instanceVariableNames: 'code hEnv hDBC hStmt errors'
+	classVariableNames: ''
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'Database.DBField'
+	instanceVariableNames: 'column buffer lengthBuf'
+	classVariableNames: ''
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'Database.DBTxn'
+	instanceVariableNames: 'connection readOnly creator'
+	classVariableNames: ''
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'Database.DBUnstructuredFieldBuffer'
+	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.SequenceableCollection
+	subclass: #'Database.DBResultSet'
+	instanceVariableNames: 'statement buffer columns'
+	classVariableNames: ''
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBResultSet
+	subclass: #'Database.DBForwardOnlyResultSet'
+	instanceVariableNames: 'position'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBAbstractRow
+	subclass: #'Database.DBRow'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBAbstractRow
+	subclass: #'Database.DBRowBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBRowBuffer
+	subclass: #'Database.DBBoundBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBRowBuffer
+	subclass: #'Database.DBUnboundBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBAbstractStatement
+	subclass: #'Database.DBSchemaStatement'
+	instanceVariableNames: 'catalogName schemaName tableName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBAbstractStatement
+	subclass: #'Database.DBStatement'
+	instanceVariableNames: 'sqlString'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBAbstractStatement
+	subclass: #'Database.DBTypeInfoStatement'
+	instanceVariableNames: 'dataType'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBSchemaStatement
+	subclass: #'Database.DBColumnsStatement'
+	instanceVariableNames: 'columnName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBSchemaStatement
+	subclass: #'Database.DBForeignKeysStatement'
+	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBSchemaStatement
+	subclass: #'Database.DBPrimaryKeysStatement'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBSchemaStatement
+	subclass: #'Database.DBProceduresStatement'
+	instanceVariableNames: 'procedureName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBSchemaStatement
+	subclass: #'Database.DBSpecialColumnsStatement'
+	instanceVariableNames: 'columnType scope nullable'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBSchemaStatement
+	subclass: #'Database.DBStatisticsStatement'
+	instanceVariableNames: 'type accurate'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBSchemaStatement
+	subclass: #'Database.DBTablesStatement'
+	instanceVariableNames: 'tableType'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBStatement
+	subclass: #'Database.DBParameterizedStatement'
+	instanceVariableNames: 'values parameters paramCols isPrepared'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBField
+	subclass: #'Database.DBFixedSizeField'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBField
+	subclass: #'Database.DBLongVarField'
+	instanceVariableNames: 'value'
+	classVariableNames: 'BufferSize'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBFixedSizeField
+	subclass: #'Database.DBBoundField'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBFixedSizeField
+	subclass: #'Database.DBUnboundField'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBBinaryBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBCharBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBNumericFieldBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBVarFieldBuffer'
+	instanceVariableNames: ''
+	classVariableNames: 'BlockTransferOctetLength MaxBoundOctetLength'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBUnstructuredFieldBuffer
+	subclass: #'Database.DBWCharBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBVarFieldBuffer
+	subclass: #'Database.DBVarBinaryBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBVarFieldBuffer
+	subclass: #'Database.DBVarCharBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Database.DBVarFieldBuffer
+	subclass: #'Database.DBVarWCharBuffer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Error
+	subclass: #'Database.DBError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ODBCLibrary private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Notification
+	subclass: #'Database.DBWarning'
+	instanceVariableNames: ''
+	classVariableNames: 'TraceStream'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+External.WindowsSystemLibrary
+	subclass: #'OS.ODBCLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -421,6 +838,49 @@ Kernel.SharedPool
 			'SQL_BS_ROW_COUNT_PROC' -> 16r8.
 			'SQL_BS_SELECT_EXPLICIT' -> 16r1.
 			'SQL_BS_SELECT_PROC' -> 16r4.
+			'SQL_C_BINARY' -> -16r2.
+			'SQL_C_BIT' -> -16r7.
+			'SQL_C_BOOKMARK' -> -16r12.
+			'SQL_C_CHAR' -> 16r1.
+			'SQL_C_DATE' -> 16r9.
+			'SQL_C_DEFAULT' -> 16r63.
+			'SQL_C_DOUBLE' -> 16r8.
+			'SQL_C_FLOAT' -> 16r7.
+			'SQL_C_GUID' -> -16rB.
+			'SQL_C_INTERVAL_DAY' -> 16r67.
+			'SQL_C_INTERVAL_DAY_TO_HOUR' -> 16r6C.
+			'SQL_C_INTERVAL_DAY_TO_MINUTE' -> 16r6D.
+			'SQL_C_INTERVAL_DAY_TO_SECOND' -> 16r6E.
+			'SQL_C_INTERVAL_HOUR' -> 16r68.
+			'SQL_C_INTERVAL_HOUR_TO_MINUTE' -> 16r6F.
+			'SQL_C_INTERVAL_HOUR_TO_SECOND' -> 16r70.
+			'SQL_C_INTERVAL_MINUTE' -> 16r69.
+			'SQL_C_INTERVAL_MINUTE_TO_SECOND' -> 16r71.
+			'SQL_C_INTERVAL_MONTH' -> 16r66.
+			'SQL_C_INTERVAL_SECOND' -> 16r6A.
+			'SQL_C_INTERVAL_YEAR' -> 16r65.
+			'SQL_C_INTERVAL_YEAR_TO_MONTH' -> 16r6B.
+			'SQL_C_LONG' -> 16r4.
+			'SQL_C_NUMERIC' -> 16r2.
+			'SQL_C_SBIGINT' -> -16r19.
+			'SQL_C_SHORT' -> 16r5.
+			'SQL_C_SLONG' -> -16r10.
+			'SQL_C_SS_TIME2' -> 16r4000.
+			'SQL_C_SS_TIMESTAMPOFFSET' -> 16r4001.
+			'SQL_C_SSHORT' -> -16rF.
+			'SQL_C_STINYINT' -> -16r1A.
+			'SQL_C_TIME' -> 16rA.
+			'SQL_C_TIMESTAMP' -> 16rB.
+			'SQL_C_TINYINT' -> -16r6.
+			'SQL_C_TYPE_DATE' -> 16r5B.
+			'SQL_C_TYPE_TIME' -> 16r5C.
+			'SQL_C_TYPE_TIMESTAMP' -> 16r5D.
+			'SQL_C_UBIGINT' -> -16r1B.
+			'SQL_C_ULONG' -> -16r12.
+			'SQL_C_USHORT' -> -16r11.
+			'SQL_C_UTINYINT' -> -16r1C.
+			'SQL_C_VARBOOKMARK' -> -16r2.
+			'SQL_C_WCHAR' -> -16r8.
 			'SQL_CA_CONSTRAINT_DEFERRABLE' -> 16r40.
 			'SQL_CA_CONSTRAINT_INITIALLY_DEFERRED' -> 16r10.
 			'SQL_CA_CONSTRAINT_INITIALLY_IMMEDIATE' -> 16r20.
@@ -847,6 +1307,7 @@ Kernel.SharedPool
 			'SQL_DYNAMIC_CURSOR_ATTRIBUTES2' -> 16r91.
 			'SQL_ENSURE' -> 16r1.
 			'SQL_ENTIRE_ROWSET' -> 16r0.
+			'SQL_ERROR' -> -16r1.
 			'SQL_EXPRESSIONS_IN_ORDERBY' -> 16r1B.
 			'SQL_FALSE' -> 16r0.
 			'SQL_FD_FETCH_ABSOLUTE' -> 16r10.
@@ -1006,6 +1467,7 @@ Kernel.SharedPool
 			'SQL_INSENSITIVE' -> 16r1.
 			'SQL_INSERT_STATEMENT' -> 16rAC.
 			'SQL_INTEGRITY' -> 16r49.
+			'SQL_INVALID_HANDLE' -> -16r2.
 			'SQL_IS_INSERT_LITERALS' -> 16r1.
 			'SQL_IS_INSERT_SEARCHED' -> 16r2.
 			'SQL_IS_INTEGER' -> -16r6.
@@ -1117,11 +1579,13 @@ Kernel.SharedPool
 			'SQL_NC_HIGH' -> 16r0.
 			'SQL_NC_LOW' -> 16r1.
 			'SQL_NC_START' -> 16r2.
+			'SQL_NEED_DATA' -> 16r63.
 			'SQL_NEED_LONG_DATA_LEN' -> 16r6F.
 			'SQL_NNC_NON_NULL' -> 16r1.
 			'SQL_NNC_NULL' -> 16r0.
 			'SQL_NO_ACTION' -> 16r3.
 			'SQL_NO_COLUMN_NUMBER' -> -16r1.
+			'SQL_NO_DATA' -> 16r64.
 			'SQL_NO_NULLS' -> 16r0.
 			'SQL_NO_ROW_NUMBER' -> -16r1.
 			'SQL_NO_TOTAL' -> -16r4.
@@ -1450,6 +1914,8 @@ Kernel.SharedPool
 			'SQL_SU_PROCEDURE_INVOCATION' -> 16r2.
 			'SQL_SU_TABLE_DEFINITION' -> 16r4.
 			'SQL_SUBQUERIES' -> 16r5F.
+			'SQL_SUCCESS' -> 16r0.
+			'SQL_SUCCESS_WITH_INFO' -> 16r1.
 			'SQL_SVE_CASE' -> 16r1.
 			'SQL_SVE_CAST' -> 16r2.
 			'SQL_SVE_COALESCE' -> 16r4.
@@ -1511,472 +1977,14 @@ Kernel.SharedPool
 			'SQL_YEAR_TO_MONTH' -> 16r7.
 			'TRACE_ON' -> 16r1.
 			'TRACE_VERSION' -> 16r3E8.
-			'TRACE_VS_EVENT_ON' -> 16r2.
-			'TypeOffset' -> 16rC
+			'TRACE_VS_EVENT_ON' -> 16r2
 		}!
-
-Kernel.SharedPool
-	subclass: #'OS.ODBCCTypes'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'SQL_C_BINARY' -> -16r2.
-			'SQL_C_BIT' -> -16r7.
-			'SQL_C_BOOKMARK' -> -16r12.
-			'SQL_C_CHAR' -> 16r1.
-			'SQL_C_DATE' -> 16r9.
-			'SQL_C_DEFAULT' -> 16r63.
-			'SQL_C_DOUBLE' -> 16r8.
-			'SQL_C_FLOAT' -> 16r7.
-			'SQL_C_GUID' -> -16rB.
-			'SQL_C_INTERVAL_DAY' -> 16r67.
-			'SQL_C_INTERVAL_DAY_TO_HOUR' -> 16r6C.
-			'SQL_C_INTERVAL_DAY_TO_MINUTE' -> 16r6D.
-			'SQL_C_INTERVAL_DAY_TO_SECOND' -> 16r6E.
-			'SQL_C_INTERVAL_HOUR' -> 16r68.
-			'SQL_C_INTERVAL_HOUR_TO_MINUTE' -> 16r6F.
-			'SQL_C_INTERVAL_HOUR_TO_SECOND' -> 16r70.
-			'SQL_C_INTERVAL_MINUTE' -> 16r69.
-			'SQL_C_INTERVAL_MINUTE_TO_SECOND' -> 16r71.
-			'SQL_C_INTERVAL_MONTH' -> 16r66.
-			'SQL_C_INTERVAL_SECOND' -> 16r6A.
-			'SQL_C_INTERVAL_YEAR' -> 16r65.
-			'SQL_C_INTERVAL_YEAR_TO_MONTH' -> 16r6B.
-			'SQL_C_LONG' -> 16r4.
-			'SQL_C_NUMERIC' -> 16r2.
-			'SQL_C_SBIGINT' -> -16r19.
-			'SQL_C_SHORT' -> 16r5.
-			'SQL_C_SLONG' -> -16r10.
-			'SQL_C_SS_TIME2' -> 16r4000.
-			'SQL_C_SS_TIMESTAMPOFFSET' -> 16r4001.
-			'SQL_C_SSHORT' -> -16rF.
-			'SQL_C_STINYINT' -> -16r1A.
-			'SQL_C_TIME' -> 16rA.
-			'SQL_C_TIMESTAMP' -> 16rB.
-			'SQL_C_TINYINT' -> -16r6.
-			'SQL_C_TYPE_DATE' -> 16r5B.
-			'SQL_C_TYPE_TIME' -> 16r5C.
-			'SQL_C_TYPE_TIMESTAMP' -> 16r5D.
-			'SQL_C_UBIGINT' -> -16r1B.
-			'SQL_C_ULONG' -> -16r12.
-			'SQL_C_USHORT' -> -16r11.
-			'SQL_C_UTINYINT' -> -16r1C.
-			'SQL_C_VARBOOKMARK' -> -16r2.
-			'SQL_C_WCHAR' -> -16r8
-		}!
-
-Kernel.SharedPool
-	subclass: #'OS.ODBCRetCodes'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'SQL_ERROR' -> -16r1.
-			'SQL_INVALID_HANDLE' -> -16r2.
-			'SQL_NEED_DATA' -> 16r63.
-			'SQL_NO_DATA' -> 16r64.
-			'SQL_SUCCESS' -> 16r0.
-			'SQL_SUCCESS_WITH_INFO' -> 16r1
-		}!
-
-Kernel.SharedPool
-	subclass: #'OS.ODBCTypes'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'SQL_BIGINT' -> -16r5.
-			'SQL_BINARY' -> -16r2.
-			'SQL_BIT' -> -16r7.
-			'SQL_CHAR' -> 16r1.
-			'SQL_DATETIME' -> 16r9.
-			'SQL_DECIMAL' -> 16r3.
-			'SQL_DOUBLE' -> 16r8.
-			'SQL_FLOAT' -> 16r6.
-			'SQL_GUID' -> -16rB.
-			'SQL_INTEGER' -> 16r4.
-			'SQL_INTERVAL' -> 16rA.
-			'SQL_INTERVAL_DAY' -> 16r67.
-			'SQL_INTERVAL_DAY_TO_HOUR' -> 16r6C.
-			'SQL_INTERVAL_DAY_TO_MINUTE' -> 16r6D.
-			'SQL_INTERVAL_DAY_TO_SECOND' -> 16r6E.
-			'SQL_INTERVAL_HOUR' -> 16r68.
-			'SQL_INTERVAL_HOUR_TO_MINUTE' -> 16r6F.
-			'SQL_INTERVAL_HOUR_TO_SECOND' -> 16r70.
-			'SQL_INTERVAL_MINUTE' -> 16r69.
-			'SQL_INTERVAL_MINUTE_TO_SECOND' -> 16r71.
-			'SQL_INTERVAL_MONTH' -> 16r66.
-			'SQL_INTERVAL_SECOND' -> 16r6A.
-			'SQL_INTERVAL_YEAR' -> 16r65.
-			'SQL_INTERVAL_YEAR_TO_MONTH' -> 16r6B.
-			'SQL_LONGVARBINARY' -> -16r4.
-			'SQL_LONGVARCHAR' -> -16r1.
-			'SQL_NUMERIC' -> 16r2.
-			'SQL_REAL' -> 16r7.
-			'SQL_SMALLINT' -> 16r5.
-			'SQL_SS_TIME2' -> -16r9A.
-			'SQL_SS_TIMESTAMPOFFSET' -> -16r9B.
-			'SQL_SS_VARIANT' -> -16r96.
-			'SQL_SS_XML' -> -16r98.
-			'SQL_TIMESTAMP' -> 16rB.
-			'SQL_TINYINT' -> -16r6.
-			'SQL_TYPE_DATE' -> 16r5B.
-			'SQL_TYPE_NULL' -> 16r0.
-			'SQL_TYPE_TIME' -> 16r5C.
-			'SQL_TYPE_TIMESTAMP' -> 16r5D.
-			'SQL_UNKNOWN_TYPE' -> 16r0.
-			'SQL_VARBINARY' -> -16r3.
-			'SQL_VARCHAR' -> 16rC.
-			'SQL_WCHAR' -> -16r8.
-			'SQL_WLONGVARCHAR' -> -16rA.
-			'SQL_WVARCHAR' -> -16r9
-		}!
-
-Core.Object
-	subclass: #'Database.DBAbstractRow'
-	instanceVariableNames: 'columns contents selectors status'
-	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBAbstractStatement'
-	instanceVariableNames: 'handle parent executed cursorType'
-	classVariableNames: 'CursorTypes'
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBColAttr'
-	instanceVariableNames: 'columnNumber name length sqlType precision scale special bufferClass'
-	classVariableNames: ''
-	imports: #(#{Database.DBColFlags} #{OS.ODBCTypes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBConnection'
-	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
-	classVariableNames: 'Connections DriverCompleteMask HEnv RequiredOdbcVersion ScrollTypes TxnIsolationLevels'
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCTypes})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBErrorDetails'
-	instanceVariableNames: 'msg nativeErr sqlState'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBErrorDetailsBuilder'
-	instanceVariableNames: 'errors szSqlState szErrorMsg cbErrorMsg fNativeError'
-	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants} #{OS.ODBCRetCodes})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBExceptionDetails'
-	instanceVariableNames: 'code hEnv hDBC hStmt errors'
-	classVariableNames: ''
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBField'
-	instanceVariableNames: 'column buffer lengthBuf'
-	classVariableNames: ''
-	imports: #(#{OS.ODBCTypes} #{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBTxn'
-	instanceVariableNames: 'connection readOnly creator'
-	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'Database.DBUnstructuredFieldBuffer'
-	instanceVariableNames: 'bytes'
-	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes} #{OS.ODBCRetCodes} #{OS.ODBCTypes})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.SequenceableCollection
-	subclass: #'Database.DBResultSet'
-	instanceVariableNames: 'statement buffer columns'
-	classVariableNames: ''
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBResultSet
-	subclass: #'Database.DBForwardOnlyResultSet'
-	instanceVariableNames: 'position'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBAbstractRow
-	subclass: #'Database.DBRow'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBAbstractRow
-	subclass: #'Database.DBRowBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBRowBuffer
-	subclass: #'Database.DBBoundBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBRowBuffer
-	subclass: #'Database.DBUnboundBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBAbstractStatement
-	subclass: #'Database.DBSchemaStatement'
-	instanceVariableNames: 'catalogName schemaName tableName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBAbstractStatement
-	subclass: #'Database.DBStatement'
-	instanceVariableNames: 'sqlString'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBAbstractStatement
-	subclass: #'Database.DBTypeInfoStatement'
-	instanceVariableNames: 'dataType'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBSchemaStatement
-	subclass: #'Database.DBColumnsStatement'
-	instanceVariableNames: 'columnName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBSchemaStatement
-	subclass: #'Database.DBForeignKeysStatement'
-	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBSchemaStatement
-	subclass: #'Database.DBPrimaryKeysStatement'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBSchemaStatement
-	subclass: #'Database.DBProceduresStatement'
-	instanceVariableNames: 'procedureName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBSchemaStatement
-	subclass: #'Database.DBSpecialColumnsStatement'
-	instanceVariableNames: 'columnType scope nullable'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBSchemaStatement
-	subclass: #'Database.DBStatisticsStatement'
-	instanceVariableNames: 'type accurate'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBSchemaStatement
-	subclass: #'Database.DBTablesStatement'
-	instanceVariableNames: 'tableType'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBStatement
-	subclass: #'Database.DBParameterizedStatement'
-	instanceVariableNames: 'values parameters paramCols isPrepared'
-	classVariableNames: ''
-	imports: #(#{OS.ODBCCTypes})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBField
-	subclass: #'Database.DBFixedSizeField'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBField
-	subclass: #'Database.DBLongVarField'
-	instanceVariableNames: 'value'
-	classVariableNames: 'BufferSize'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBFixedSizeField
-	subclass: #'Database.DBBoundField'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBFixedSizeField
-	subclass: #'Database.DBUnboundField'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBUnstructuredFieldBuffer
-	subclass: #'Database.DBBinaryBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBUnstructuredFieldBuffer
-	subclass: #'Database.DBCharBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBUnstructuredFieldBuffer
-	subclass: #'Database.DBNumericFieldBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBUnstructuredFieldBuffer
-	subclass: #'Database.DBVarFieldBuffer'
-	instanceVariableNames: ''
-	classVariableNames: 'BlockTransferOctetLength MaxBoundOctetLength'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBUnstructuredFieldBuffer
-	subclass: #'Database.DBWCharBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBVarFieldBuffer
-	subclass: #'Database.DBVarBinaryBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBVarFieldBuffer
-	subclass: #'Database.DBVarCharBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Database.DBVarFieldBuffer
-	subclass: #'Database.DBVarWCharBuffer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Error
-	subclass: #'Database.DBError'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Notification
-	subclass: #'Database.DBWarning'
-	instanceVariableNames: ''
-	classVariableNames: 'TraceStream'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-External.WindowsSystemLibrary
-	subclass: #'OS.ODBCLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 External.Structure
 	subclass: #'OS.SQL_DATE_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_day' -> 16r4.
@@ -1989,7 +1997,7 @@ External.Structure
 	subclass: #'OS.SQL_INTERVAL_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ODBCCTypes})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_interval_sign' -> 16r4.
@@ -2017,7 +2025,7 @@ External.Structure
 	subclass: #'OS.SQL_TIME_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_hour' -> 16r0.
@@ -2030,7 +2038,7 @@ External.Structure
 	subclass: #'OS.SQL_TIMESTAMP_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_day' -> 16r4.
@@ -2126,13 +2134,13 @@ dbConvert: anObject for: aDBField
 	(anObject isKindOf: GUID) ifTrue: [^anObject].
 	OS.HRESULTError
 		signal: 'GUID expected, not <1s> (<2d>)' << {  anObject basicPrintString. anObject }
-		with: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH.
+		with: OS.HRESULT.STATUS_OBJECT_TYPE_MISMATCH.
 	^nil!
 
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^OS.ODBCCTypes.SQL_C_GUID!
+	^OS.ODBCLibrary.SQL_C_GUID!
 
 dbMarshal: anObject into: aDBField
 	"Populate the receiver, as buffer of the <DBField> 2nd argument, with appropriate the SQL_C_GUID representation of the 1st argument."
@@ -2191,7 +2199,7 @@ dbTransferOctetLengthForColumn:!enquiries!public! !
 !Core.UndefinedObject methodsFor!
 
 dbOctetTransferSize
-	^OS.ODBCConstants.SQL_NULL_DATA! !
+	^OS.ODBCLibrary.SQL_NULL_DATA! !
 
 !Core.UndefinedObject categoriesForMethods!
 dbOctetTransferSize!constants!public! !
@@ -2218,7 +2226,7 @@ dbConvert: anObject for: aDBField
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_BIT!
+	^ODBCLibrary.SQL_C_BIT!
 
 valueClass
 	^Boolean! !
@@ -2239,7 +2247,7 @@ dbConvert: anObject for: aDBField
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_DOUBLE!
+	^ODBCLibrary.SQL_C_DOUBLE!
 
 valueClass
 	^Float! !
@@ -2260,7 +2268,7 @@ dbConvert: anObject for: aDBField
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_FLOAT!
+	^ODBCLibrary.SQL_C_FLOAT!
 
 valueClass
 	^Float! !
@@ -2276,7 +2284,7 @@ valueClass!constants!public! !
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_SSHORT! !
+	^ODBCLibrary.SQL_C_SSHORT! !
 
 !External.Int16 categoriesForMethods!
 dbInterchangeType!constants!public! !
@@ -2287,7 +2295,7 @@ dbInterchangeType!constants!public! !
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_SLONG! !
+	^ODBCLibrary.SQL_C_SLONG! !
 
 !External.Int32 categoriesForMethods!
 dbInterchangeType!constants!public! !
@@ -2298,7 +2306,7 @@ dbInterchangeType!constants!public! !
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_SBIGINT! !
+	^ODBCLibrary.SQL_C_SBIGINT! !
 
 !External.Int64 categoriesForMethods!
 dbInterchangeType!constants!public! !
@@ -2309,7 +2317,7 @@ dbInterchangeType!constants!public! !
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_STINYINT! !
+	^ODBCLibrary.SQL_C_STINYINT! !
 
 !External.Int8 categoriesForMethods!
 dbInterchangeType!constants!public! !
@@ -2339,7 +2347,7 @@ dbConvert: anObject for: aDBField
 	HRESULTError
 		signal: anObject species displayString , '(' , anObject displayString , ') invalid: '
 				, self valueClass displayString , ' expected'
-		with: Win32Errors.STATUS_OBJECT_TYPE_MISMATCH.
+		with: HRESULT.STATUS_OBJECT_TYPE_MISMATCH.
 	^nil!
 
 dbInterchangeType
@@ -2408,7 +2416,7 @@ dbTransferOctetLengthForColumn:!enquiries!public! !
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_USHORT! !
+	^ODBCLibrary.SQL_C_USHORT! !
 
 !External.UInt16 categoriesForMethods!
 dbInterchangeType!constants!public! !
@@ -2419,7 +2427,7 @@ dbInterchangeType!constants!public! !
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_ULONG! !
+	^ODBCLibrary.SQL_C_ULONG! !
 
 !External.UInt32 categoriesForMethods!
 dbInterchangeType!constants!public! !
@@ -2430,7 +2438,7 @@ dbInterchangeType!constants!public! !
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_UBIGINT! !
+	^ODBCLibrary.SQL_C_UBIGINT! !
 
 !External.UInt64 categoriesForMethods!
 dbInterchangeType!constants!public! !
@@ -2441,7 +2449,7 @@ dbInterchangeType!constants!public! !
 dbInterchangeType
 	"Answer the ODBC 'C' type to be used as the target (or transfer) type used for interchange of data with the ODBC driver for fields marshalled by the receiver."
 
-	^ODBCCTypes.SQL_C_UTINYINT! !
+	^ODBCLibrary.SQL_C_UTINYINT! !
 
 !External.UInt8 categoriesForMethods!
 dbInterchangeType!constants!public! !

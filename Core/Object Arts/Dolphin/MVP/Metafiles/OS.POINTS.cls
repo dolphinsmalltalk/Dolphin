@@ -41,11 +41,10 @@ asUIntPtr
 
 	"Implementation Note: The compiler will optimise out the condition because it is constant."
 
-	^VMConstants.IsWin64
+	^VMLibrary.IsWin64
 		ifTrue: 
-			[(((bytes int16AtOffset: _OffsetOf_y) bitAnd: VMConstants.HalfPtrMask)
-				bitShift: VMConstants.HalfPtrBits)
-					bitOr: ((bytes int16AtOffset: _OffsetOf_x) bitAnd: VMConstants.HalfPtrMask)]
+			[(((bytes int16AtOffset: _OffsetOf_y) bitAnd: VMLibrary.HalfPtrMask) bitShift: VMLibrary.HalfPtrBits)
+				bitOr: ((bytes int16AtOffset: _OffsetOf_x) bitAnd: VMLibrary.HalfPtrMask)]
 		ifFalse: [bytes uint32AtOffset: 0]!
 
 isZero

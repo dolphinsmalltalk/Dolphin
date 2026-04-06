@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.Examples.PlimboleCell'
 	instanceVariableNames: 'location velocity'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -33,7 +33,7 @@ directions
 drawOn: aGraphics inView: aView extent: aPoint pen: aPen
 	| rect directionIndex |
 	rect := (Rectangle origin: self location * aPoint extent: aPoint)
-				insetBy: 2.0 * aView dpi / USER_DEFAULT_SCREEN_DPI.
+				insetBy: 2.0 * aView dpi / UserLibrary.USER_DEFAULT_SCREEN_DPI.
 	directionIndex := self directionIndex.
 	aGraphics fillRectangle: rect brush: (aView brushes at: directionIndex + 2).
 	rect := rect insetBy: rect extent / 4.0.

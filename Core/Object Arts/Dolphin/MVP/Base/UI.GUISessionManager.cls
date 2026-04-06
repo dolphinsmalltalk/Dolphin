@@ -4,7 +4,7 @@ Core.SessionManager
 	subclass: #'UI.GUISessionManager'
 	instanceVariableNames: 'savedWindows hConsole'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: { 'NoSplashMask' -> 16r2. 'UnattendedMask' -> 16r4 }!
 
@@ -33,8 +33,8 @@ allocateConsole
 	Kernel32
 		allocConsole;
 		setConsoleTitle: self applicationName;
-		setConsoleOutputCP: NlsConstants.CP_UTF8;
-		setConsoleCP: NlsConstants.CP_UTF8.
+		setConsoleOutputCP: Locale.CP_UTF8;
+		setConsoleCP: Locale.CP_UTF8.
 	"Remove the close button from the console window as otherwise if the user
 			closes it Windows will kill this process with no way to intercept."
 	hConsole := Kernel32 getConsoleWindow.

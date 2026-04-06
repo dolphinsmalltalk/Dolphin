@@ -70,7 +70,7 @@ defaultWindowExStyle
 defaultWindowStyle
 	"Private - Answer a default style to use when creating an EmbeddedTextEdit."
 
-	^(super defaultWindowStyle) | TextEditConstants.ES_AUTOHSCROLL!
+	^(super defaultWindowStyle) | TextEdit.ES_AUTOHSCROLL!
 
 display: anObject in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor editable: aBoolean hot: hBoolean
 

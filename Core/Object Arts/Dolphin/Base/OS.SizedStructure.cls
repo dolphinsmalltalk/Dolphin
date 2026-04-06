@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.SizedStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_dwSize' -> 16r0 }!
 

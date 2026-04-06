@@ -6,7 +6,7 @@ Graphics.GraphicsTool
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BLACK_BRUSH' -> 16r4. 'DKGRAY_BRUSH' -> 16r3. 'WHITE_BRUSH' -> 16r0 }!
 
 Graphics.Brush guid: (Core.GUID fromString: '{87b4c633-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -44,7 +44,7 @@ printOn: aPuttableStream
 
 	| lb |
 	lb := self logBrush.
-	(lb lbStyle == BS_SOLID and: [lb lbHatch == 0])
+	(lb lbStyle == LOGBRUSH.BS_SOLID and: [lb lbHatch == 0])
 		ifTrue: 
 			[aPuttableStream
 				nextPut: $(;
@@ -74,7 +74,7 @@ bitmap: aBitmap
 	"Answer a new instance of the receiver for painting the specified <Bitmap> pattern."
 
 	^self 
-		style: BS_PATTERN
+		style: LOGBRUSH.BS_PATTERN
 		color: Color black
 		hatch: aBitmap!
 
@@ -96,7 +96,7 @@ cross
 cross: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of evenly-spaced, perpendicular, vertical and horizontal lines in the specified <Color>."
 
-	^HatchBrush fromId: HS_CROSS color: aColor!
+	^HatchBrush fromId: LOGBRUSH.HS_CROSS color: aColor!
 
 darkGray
 	"Answer the stock dark grey Brush."
@@ -111,7 +111,7 @@ diagonal
 diagonal: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of evenly-spaced diagonal lines in the specified <Color>. The lines are draw from bottom left towards top right, i.e. sloping up from a left to right perspective."
 
-	^HatchBrush fromId: HS_BDIAGONAL color: aColor!
+	^HatchBrush fromId: LOGBRUSH.HS_BDIAGONAL color: aColor!
 
 diamond
 	"Answer a new instance of the receiver for painting a hatched pattern of evenly-spaced, diagonal and reverse-diagonal lines, in black."
@@ -121,7 +121,7 @@ diamond
 diamond: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of evenly-spaced, diagonal and reverse-diagonal lines in the specified <Color>."
 
-	^HatchBrush fromId: HS_DIAGCROSS color: aColor!
+	^HatchBrush fromId: LOGBRUSH.HS_DIAGCROSS color: aColor!
 
 fromLogBrush: aLOGBRUSH
 	"Answer a new instance of the receiver containing the given logical brush."
@@ -143,7 +143,7 @@ horizontal
 horizontal: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of horizontally-oriented parallel lines in the specified <Color>."
 
-	^HatchBrush fromId: HS_HORIZONTAL color: aColor!
+	^HatchBrush fromId: LOGBRUSH.HS_HORIZONTAL color: aColor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -154,7 +154,7 @@ newColor: aColour
 	"Private - Answer a new instance of the receiver for painting in the specified solid colour."
 
 	^self 
-		style: BS_SOLID
+		style: LOGBRUSH.BS_SOLID
 		color: aColour
 		hatch: 0!
 
@@ -166,7 +166,7 @@ reverseDiagonal
 reverseDiagonal: aColor
 	"Answer a new instance of the receiver for painting a reverse diagonal hatched pattern in the specified <Color>. The lines are draw from top left towards bottom right, i.e. sloping down from a left to right perspective."
 
-	^HatchBrush fromId: HS_FDIAGONAL color: aColor!
+	^HatchBrush fromId: LOGBRUSH.HS_FDIAGONAL color: aColor!
 
 silver
 	"Answer the stock light grey brush."
@@ -194,7 +194,7 @@ vertical
 vertical: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of vertically-oriented parallel lines in the specified <Color>."
 
-	^HatchBrush fromId: HS_VERTICAL color: aColor!
+	^HatchBrush fromId: LOGBRUSH.HS_VERTICAL color: aColor!
 
 white
 	"Answer the stock white brush."

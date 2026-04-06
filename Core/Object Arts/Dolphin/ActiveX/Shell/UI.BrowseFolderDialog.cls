@@ -4,9 +4,33 @@ UI.CommonDialog
 	subclass: #'UI.BrowseFolderDialog'
 	instanceVariableNames: 'style bfFlags'
 	classVariableNames: ''
-	imports: #(#{OS.ShellConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'InitializedMask' -> 16r1 }!
+	classConstants: {
+			'BFFM_ENABLEOK' -> 16r465.
+			'BFFM_INITIALIZED' -> 16r1.
+			'BFFM_IUNKNOWN' -> 16r5.
+			'BFFM_SELCHANGED' -> 16r2.
+			'BFFM_SETEXPANDED' -> 16r46A.
+			'BFFM_SETOKTEXT' -> 16r469.
+			'BFFM_SETSELECTIONA' -> 16r466.
+			'BFFM_SETSELECTIONW' -> 16r467.
+			'BFFM_SETSTATUSTEXTA' -> 16r464.
+			'BFFM_SETSTATUSTEXTW' -> 16r468.
+			'BFFM_VALIDATEFAILEDA' -> 16r3.
+			'BFFM_VALIDATEFAILEDW' -> 16r4.
+			'BIF_BROWSEFORCOMPUTER' -> 16r1000.
+			'BIF_BROWSEFORPRINTER' -> 16r2000.
+			'BIF_BROWSEINCLUDEFILES' -> 16r4000.
+			'BIF_DONTGOBELOWDOMAIN' -> 16r2.
+			'BIF_EDITBOX' -> 16r10.
+			'BIF_NEWDIALOGSTYLE' -> 16r40.
+			'BIF_RETURNFSANCESTORS' -> 16r8.
+			'BIF_RETURNONLYFSDIRS' -> 16r1.
+			'BIF_STATUSTEXT' -> 16r4.
+			'BIF_USENEWUI' -> 16r50.
+			'InitializedMask' -> 16r1
+		}!
 
 UI.BrowseFolderDialog guid: (Core.GUID fromString: '{87b4c6af-026e-11d3-9fd7-00a0cc3e4a32}')!
 

@@ -4,12 +4,17 @@ External.Structure
 	subclass: #'OS.COM.IDLDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_IDLDESC_Size' -> 16r8.
 			'_OffsetOf_dwReserved' -> 16r0.
-			'_OffsetOf_wIDLFlags' -> 16r4
+			'_OffsetOf_wIDLFlags' -> 16r4.
+			'IDLFLAG_FIN' -> 16r1.
+			'IDLFLAG_FLCID' -> 16r4.
+			'IDLFLAG_FOUT' -> 16r2.
+			'IDLFLAG_FRETVAL' -> 16r8.
+			'IDLFLAG_NONE' -> 16r0
 		}!
 
 OS.COM.IDLDESC guid: (Core.GUID fromString: '{c06f3b80-0868-11d3-93af-00a024ca708a}')!

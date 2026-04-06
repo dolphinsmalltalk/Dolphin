@@ -35,11 +35,11 @@ fontCollection
 
 getName: aHandle
 	| buf |
-	buf := Utf16String newFixed: Win32Constants.LF_FACESIZE.
+	buf := Utf16String newFixed: GDILibrary.LF_FACESIZE.
 	Gdip
 		gdipGetFamilyName: aHandle
 		name: buf
-		language: NlsConstants.LANG_NEUTRAL.
+		language: Locale.LANG_NEUTRAL.
 	^buf trimNulls!
 
 hash

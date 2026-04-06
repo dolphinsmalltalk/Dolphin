@@ -4,12 +4,142 @@ UI.MultilineTextEdit
 	subclass: #'UI.RichTextEdit'
 	instanceVariableNames: 'streamIn winStruct'
 	classVariableNames: 'Library StreamingDescriptor'
-	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AutoUrlDetectionMask' -> 16r1000000.
+			'ECO_AUTOHSCROLL' -> 16r80.
+			'ECO_AUTOVSCROLL' -> 16r40.
+			'ECO_AUTOWORDSELECTION' -> 16r1.
+			'ECO_NOHIDESEL' -> 16r100.
+			'ECO_READONLY' -> 16r800.
+			'ECO_SAVESEL' -> 16r8000.
+			'ECO_SELECTIONBAR' -> 16r1000000.
+			'ECO_VERTICAL' -> 16r400000.
+			'ECO_WANTRETURN' -> 16r1000.
+			'EM_AUTOURLDETECT' -> 16r45B.
+			'EM_CANPASTE' -> 16r432.
+			'EM_CANREDO' -> 16r455.
+			'EM_CONVPOSITION' -> 16r46C.
+			'EM_DISPLAYBAND' -> 16r433.
+			'EM_EXGETSEL' -> 16r434.
+			'EM_EXLIMITTEXT' -> 16r435.
+			'EM_EXLINEFROMCHAR' -> 16r436.
+			'EM_EXSETSEL' -> 16r437.
+			'EM_FINDTEXTEXW' -> 16r47C.
+			'EM_FINDTEXTW' -> 16r47B.
+			'EM_FINDWORDBREAK' -> 16r44C.
+			'EM_FORMATRANGE' -> 16r439.
+			'EM_GETAUTOURLDETECT' -> 16r45C.
+			'EM_GETCHARFORMAT' -> 16r43A.
+			'EM_GETEVENTMASK' -> 16r43B.
+			'EM_GETIMECOLOR' -> 16r469.
+			'EM_GETIMECOMPMODE' -> 16r47A.
+			'EM_GETIMEOPTIONS' -> 16r46B.
+			'EM_GETLANGOPTIONS' -> 16r479.
+			'EM_GETOLEINTERFACE' -> 16r43C.
+			'EM_GETOPTIONS' -> 16r44E.
+			'EM_GETPARAFORMAT' -> 16r43D.
+			'EM_GETPUNCTUATION' -> 16r465.
+			'EM_GETREDONAME' -> 16r457.
+			'EM_GETSELTEXT' -> 16r43E.
+			'EM_GETTEXTEX' -> 16r45E.
+			'EM_GETTEXTLENGTHEX' -> 16r45F.
+			'EM_GETTEXTMODE' -> 16r45A.
+			'EM_GETTEXTRANGE' -> 16r44B.
+			'EM_GETUNDONAME' -> 16r456.
+			'EM_GETWORDBREAKPROCEX' -> 16r450.
+			'EM_GETWORDWRAPMODE' -> 16r467.
+			'EM_GETZOOM' -> 16r4E0.
+			'EM_HIDESELECTION' -> 16r43F.
+			'EM_PASTESPECIAL' -> 16r440.
+			'EM_REDO' -> 16r454.
+			'EM_REQUESTRESIZE' -> 16r441.
+			'EM_SELECTIONTYPE' -> 16r442.
+			'EM_SETBKGNDCOLOR' -> 16r443.
+			'EM_SETCHARFORMAT' -> 16r444.
+			'EM_SETEVENTMASK' -> 16r445.
+			'EM_SETIMECOLOR' -> 16r468.
+			'EM_SETIMEOPTIONS' -> 16r46A.
+			'EM_SETLANGOPTIONS' -> 16r478.
+			'EM_SETOLECALLBACK' -> 16r446.
+			'EM_SETOPTIONS' -> 16r44D.
+			'EM_SETPALETTE' -> 16r45D.
+			'EM_SETPARAFORMAT' -> 16r447.
+			'EM_SETPUNCTUATION' -> 16r464.
+			'EM_SETTARGETDEVICE' -> 16r448.
+			'EM_SETTEXTEX' -> 16r461.
+			'EM_SETTEXTMODE' -> 16r459.
+			'EM_SETUNDOLIMIT' -> 16r452.
+			'EM_SETWORDBREAKPROCEX' -> 16r451.
+			'EM_SETWORDWRAPMODE' -> 16r466.
+			'EM_SETZOOM' -> 16r4E1.
+			'EM_STOPGROUPTYPING' -> 16r458.
+			'EM_STREAMIN' -> 16r449.
+			'EM_STREAMOUT' -> 16r44A.
+			'EN_CORRECTTEXT' -> 16r705.
+			'EN_DRAGDROPDONE' -> 16r70C.
+			'EN_DROPFILES' -> 16r703.
+			'EN_IMECHANGE' -> 16r707.
+			'EN_LINK' -> 16r70B.
+			'EN_MSGFILTER' -> 16r700.
+			'EN_OBJECTPOSITIONS' -> 16r70A.
+			'EN_OLEOPFAILED' -> 16r709.
+			'EN_PROTECTED' -> 16r704.
+			'EN_REQUESTRESIZE' -> 16r701.
+			'EN_SAVECLIPBOARD' -> 16r708.
+			'EN_SELCHANGE' -> 16r702.
+			'EN_STOPNOUNDO' -> 16r706.
+			'ENM_CHANGE' -> 16r1.
+			'ENM_CORRECTTEXT' -> 16r400000.
+			'ENM_DROPFILES' -> 16r100000.
+			'ENM_IMECHANGE' -> 16r800000.
+			'ENM_KEYEVENTS' -> 16r10000.
+			'ENM_LANGCHANGE' -> 16r1000000.
+			'ENM_LINK' -> 16r4000000.
+			'ENM_MOUSEEVENTS' -> 16r20000.
+			'ENM_NONE' -> 16r0.
+			'ENM_OBJECTPOSITIONS' -> 16r2000000.
+			'ENM_PROTECTED' -> 16r200000.
+			'ENM_REQUESTRESIZE' -> 16r40000.
+			'ENM_SCROLL' -> 16r4.
+			'ENM_SELCHANGE' -> 16r80000.
+			'ENM_UPDATE' -> 16r2.
+			'GT_DEFAULT' -> 16r0.
+			'GT_NOHIDDENTEXT' -> 16r8.
+			'GT_RAWTEXT' -> 16r4.
+			'GT_SELECTION' -> 16r2.
+			'GT_USECRLF' -> 16r1.
+			'GTL_CLOSE' -> 16r4.
+			'GTL_DEFAULT' -> 16r0.
+			'GTL_NUMBYTES' -> 16r10.
+			'GTL_NUMCHARS' -> 16r8.
+			'GTL_PRECISE' -> 16r2.
+			'GTL_USECRLF' -> 16r1.
 			'ParagraphAlignmentMap'
-				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 })
+				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 }).
+			'PFA_CENTER' -> 16r3.
+			'PFA_JUSTIFY' -> 16r4.
+			'PFA_LEFT' -> 16r1.
+			'PFA_RIGHT' -> 16r2.
+			'SCF_ALL' -> 16r4.
+			'SCF_DEFAULT' -> 16r0.
+			'SCF_SELECTION' -> 16r1.
+			'SCF_USEUIRULES' -> 16r8.
+			'SCF_WORD' -> 16r2.
+			'SF_RTF' -> 16r2.
+			'SF_RTFNOOBJS' -> 16r3.
+			'SF_TEXT' -> 16r1.
+			'SF_TEXTIZED' -> 16r4.
+			'SF_UNICODE' -> 16r10.
+			'SF_USECODEPAGE' -> 16r20.
+			'SFF_PLAINRTF' -> 16r4000.
+			'SFF_SELECTION' -> 16r8000.
+			'ST_DEFAULT' -> 16r0.
+			'ST_KEEPUNDO' -> 16r1.
+			'ST_NEWCHARS' -> 16r4.
+			'ST_SELECTION' -> 16r2.
+			'ST_UNICODE' -> 16r8
 		}!
 
 UI.RichTextEdit guid: (Core.GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -255,9 +385,9 @@ find: aFindDetails range: anInterval
 	(aFindDetails isForwards not or: [aFindDetails isRegularExpression]) 
 		ifTrue: [^super find: aFindDetails range: anInterval].
 	frFlags := 0.
-	aFindDetails isForwards ifTrue: [frFlags := frFlags maskSet: FR_DOWN].
-	aFindDetails isWholeWord ifTrue: [frFlags := frFlags maskSet: FR_WHOLEWORD].
-	aFindDetails isCaseSensitive ifTrue: [frFlags := frFlags maskSet: FR_MATCHCASE].
+	aFindDetails isForwards ifTrue: [frFlags := frFlags maskSet: FINDREPLACEW.FR_DOWN].
+	aFindDetails isWholeWord ifTrue: [frFlags := frFlags maskSet: FINDREPLACEW.FR_WHOLEWORD].
+	aFindDetails isCaseSensitive ifTrue: [frFlags := frFlags maskSet: FINDREPLACEW.FR_MATCHCASE].
 	^self 
 		find: aFindDetails pattern
 		range: anInterval
@@ -319,8 +449,8 @@ getWindowText: flagsInteger length: lengthInteger
 	buf := Utf16String newFixed: lengthInteger.
 	struct := GETTEXTEX newBuffer
 				cb: lengthInteger + 1 << 1;
-				flags: GT_USECRLF | flagsInteger;
-				codepage: NlsConstants.CP_UNICODE;
+				flags: (GT_USECRLF bitOr: flagsInteger);
+				codepage: Locale.CP_UNICODE;
 				yourself.
 	"The docs say the return value is the number of chars (not byte) copied including the null, but actually it is
 	the number of chars excluding the null. We ignore it anyway."
@@ -717,7 +847,7 @@ selectionRichText: aRichText
 	| aStream |
 	aStream := Utf8String writeStream: 512.
 	self streamOutOn: aStream
-		format: ##(SFF_SELECTION | (NlsConstants.CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF).
+		format: ##(SFF_SELECTION | (Locale.CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF).
 	^aStream contents!
 
 selectionRtf
@@ -735,7 +865,7 @@ selectionUrtf
 	| s |
 	s := Utf8String writeStream: 512.
 	self streamOutOn: s
-		format: ##(NlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
+		format: ##(Locale.CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
 	^s contents!
 
 setAutoUrlDetection: aBoolean 
@@ -814,7 +944,7 @@ streamInFrom: aPositionableStream format: anInteger
 	| elementSize answer callback zoom |
 	zoom := self zoomRatio.
 	elementSize := aPositionableStream elementSize.
-	callback := External.Callback block: 
+	callback := Callback block: 
 					[:dwCookie :pbBuff :cb :pcb |
 					| text size |
 					text := aPositionableStream basicNextAvailable: cb // elementSize.
@@ -845,7 +975,7 @@ streamOutOn: aWriteStream format: anInteger
 	The stream is assumed to be backed by a buffer with an encoding matching that requested by the format, so the binary content streamed out by the RTE control is dumped directly into the stream. If the encoding of the stream does not match the format requested, e.g. the stream is over an AnsiString and UTF-8 RTF is requested, then the result may well be corrupt."
 
 	| result callback |
-	callback := External.Callback block: 
+	callback := Callback block: 
 					[:dwCookie :pbBuff :cb :pcb | | buf |
 					"We don't want the null terminator, if present. Note that this implies there cannot be any embedded nulls in the text."
 					buf := UInt8Array fromAddress: pbBuff length: ((pbBuff at: cb) == 0 ifTrue: [cb - 1] ifFalse: [cb]).
@@ -878,7 +1008,7 @@ textLength
 	gtlex := ByteArray newFixed: 8.
 	gtlex
 		uint32AtOffset: 0 put: ##(GTL_USECRLF | GTL_PRECISE | GTL_NUMCHARS);
-		uint32AtOffset: 4 put: NlsConstants.CP_UNICODE.
+		uint32AtOffset: 4 put: Locale.CP_UNICODE.
 	^self sendMessage: EM_GETTEXTLENGTHEX wParam: gtlex yourAddress!
 
 textLimit: anInteger
@@ -894,7 +1024,7 @@ urtfText
 
 	| aStream |
 	aStream := Utf8String writeStream: 4096.
-	self streamOutOn: aStream format: ##(NlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SF_RTF).
+	self streamOutOn: aStream format: ##(Locale.CP_UTF8 << 16 | SF_USECODEPAGE | SF_RTF).
 	^aStream contents!
 
 utfText
@@ -903,7 +1033,7 @@ utfText
 	| aStream |
 	aStream := Utf8String writeStream: 4096.
 	"Contrary to the documentation we can get the text directly in UTF-8, so we don't need to stream out as UTF-16"
-	self streamOutOn: aStream format: ##(NlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SF_TEXT).
+	self streamOutOn: aStream format: ##(Locale.CP_UTF8 << 16 | SF_USECODEPAGE | SF_TEXT).
 	^aStream contents!
 
 utfText: aUtfEncodedString
@@ -1086,7 +1216,7 @@ initialize
 	self registerClass.
 
 	"Descriptor for stream out callback"
-	StreamingDescriptor := External.FunctionDescriptor argumentTypes: 'uint32 lpvoid int32 UInt32*'.
+	StreamingDescriptor := FunctionDescriptor argumentTypes: 'uint32 lpvoid int32 UInt32*'.
 	self addClassConstant: 'ParagraphAlignmentMap'
 		value: (IdentityDictionary withAll: { #left -> PFA_LEFT. #right -> PFA_RIGHT. #center -> PFA_CENTER })!
 
@@ -1099,7 +1229,7 @@ registerClass
 	"Private - Ensure the rich edit window class is registered by loading the relevant library."
 
 	(Library isNil or: [Library isOpen not])
-		ifTrue: [Library := External.Module open: self richEditDllName]!
+		ifTrue: [Library := Module open: self richEditDllName]!
 
 richEditDllName
 	^'riched20.dll'

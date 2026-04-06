@@ -6,7 +6,7 @@ UI.MouseEvent
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'WHEEL_DELTA' -> 16r78. 'WHEEL_PAGESCROLL' -> -16r1 }!
 
 UI.MouseWheelEvent guid: (Core.GUID fromString: '{0f3cb79b-5666-44e1-9b9b-bd204e740e22}')!
 

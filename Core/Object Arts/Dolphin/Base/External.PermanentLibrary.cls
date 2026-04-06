@@ -32,7 +32,7 @@ isSelfEvaluating
 loadFlags
 	"Private - Only ever load Windows system libraries from %windows%\system32. The VM library is not a system library, but cannot be loaded from the image in any case."
 
-	^LOAD_LIBRARY_SEARCH_SYSTEM32! !
+	^KernelLibrary.LOAD_LIBRARY_SEARCH_SYSTEM32! !
 
 !External.PermanentLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !

@@ -35,7 +35,7 @@ UI.ValueConvertingControlView
 	subclass: #'UI.CheckButton'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
-	imports: #(#{OS.ButtonConstants})
+	imports: #(#{UI.PushButton private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AlignmentMap'
@@ -58,7 +58,7 @@ UI.CheckButton
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'BS_3STATE' -> 16r5. 'BS_AUTO3STATE' -> 16r6. 'BS_AUTOCHECKBOX' -> 16r3 }!
 
 "Loose Methods"!
 

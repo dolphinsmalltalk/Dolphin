@@ -6,7 +6,16 @@ External.WindowsSystemLibrary
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CLSCTX_INPROC_HANDLER' -> 16r2.
+			'CLSCTX_INPROC_SERVER' -> 16r1.
+			'CLSCTX_LOCAL_SERVER' -> 16r4.
+			'CLSCTX_REMOTE_SERVER' -> 16r10.
+			'MEMCTX_SHARED' -> 16r2.
+			'MEMCTX_TASK' -> 16r1.
+			'REGCLS_MULTI_SEPARATE' -> 16r2.
+			'REGCLS_MULTIPLEUSE' -> 16r1
+		}!
 
 OS.COM.OLELibrary guid: (Core.GUID fromString: '{64674066-3a82-101b-8181-00aa003743d3}')!
 

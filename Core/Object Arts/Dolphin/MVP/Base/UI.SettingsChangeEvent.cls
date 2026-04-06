@@ -23,7 +23,7 @@ isColorSetChange
 	^self area = 'ImmersiveColorSet'!
 
 isFontChange
-	^wParam == SPI_SETICONTITLELOGFONT!
+	^wParam == SystemMetrics.SPI_SETICONTITLELOGFONT!
 
 printLParamOn: aStream
 	aStream print: self area!

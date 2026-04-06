@@ -10,7 +10,23 @@ External.Structure
 			'_LOGBRUSH_Size' -> 16rC.
 			'_OffsetOf_lbColor' -> 16r4.
 			'_OffsetOf_lbHatch' -> 16r8.
-			'_OffsetOf_lbStyle' -> 16r0
+			'_OffsetOf_lbStyle' -> 16r0.
+			'BS_DIBPATTERN' -> 16r5.
+			'BS_DIBPATTERN8X8' -> 16r8.
+			'BS_DIBPATTERNPT' -> 16r6.
+			'BS_HATCHED' -> 16r2.
+			'BS_HOLLOW' -> 16r1.
+			'BS_INDEXED' -> 16r4.
+			'BS_NULL' -> 16r1.
+			'BS_PATTERN' -> 16r3.
+			'BS_PATTERN8X8' -> 16r7.
+			'BS_SOLID' -> 16r0.
+			'HS_BDIAGONAL' -> 16r3.
+			'HS_CROSS' -> 16r4.
+			'HS_DIAGCROSS' -> 16r5.
+			'HS_FDIAGONAL' -> 16r2.
+			'HS_HORIZONTAL' -> 16r0.
+			'HS_VERTICAL' -> 16r1
 		}!
 
 OS.LOGBRUSH guid: (Core.GUID fromString: '{87b4c5f8-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -38,7 +54,7 @@ hatch
 
 	^hatch
 		ifNil: 
-			[self lbStyle = OS.Win32Constants.BS_PATTERN ifTrue: [hatch := Graphics.Bitmap fromHandle: self lbHatch] ifFalse: [self lbHatch]]!
+			[self lbStyle = BS_PATTERN ifTrue: [hatch := Graphics.Bitmap fromHandle: self lbHatch] ifFalse: [self lbHatch]]!
 
 hatch: aBitmapOrInteger 
 	hatch := aBitmapOrInteger.
@@ -47,7 +63,7 @@ hatch: aBitmapOrInteger
 hatchStyleName
 	"Answer the symbolic hatch style name, or if not a hatched brush"
 
-	^self lbStyle == OS.Win32Constants.BS_HATCHED
+	^self lbStyle == BS_HATCHED
 		ifTrue: [#(#horizontal #vertical #reverseDiagonal #diagonal #cross #diamond) lookup: self lbHatch + 1]!
 
 lbColor

@@ -265,7 +265,7 @@ byteSize
 	"Private - Answer the number of bytes in the receiver's 2's complement
 	representation."
 
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 coerce: anArithmeticValue
 	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to an <integer>."
@@ -291,7 +291,7 @@ decimalDigitLength
 		ifTrue: [^9]
 		ifFalse: 
 			["Special case while still 32-bit"
-			VMConstants.IsWin64 ifFalse: [^10]].
+			VMLibrary.IsWin64 ifFalse: [^10]].
 	"Allow for future 64-bit SmallIntegers. Can't get here at present"
 	self < 10000000000000
 		ifTrue: 
@@ -371,7 +371,9 @@ isImmediate
 isInt32
 	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer."
 
-	^VMConstants.IsWin64 not or: [super isInt32]!
+	^VMLibrary.IsWin64 
+		ifTrue: [super isInt32]
+		ifFalse: [true]!
 
 isInt64
 	"Answer whether the receiver can be represented as a 64-bit two's complement signed integer."
@@ -637,19 +639,19 @@ maxBytes
 	"Answer the largest number of radix-256 digits which can be represented
 	in a SmallInteger (31-bits, so not all 4 byte numbers will fit)."
 
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 maximum
 	"Answer the largest positive integer value which can be
 	represented as a SmallInteger."
 
-	^VMConstants.SmallIntegerMax!
+	^VMLibrary.SmallIntegerMax!
 
 minimum
 	"Answer the largest negative integer value which can be 
 	represented as a SmallInteger"
 
-	^VMConstants.SmallIntegerMin! !
+	^VMLibrary.SmallIntegerMin! !
 
 !Core.SmallInteger class categoriesForMethods!
 basicNew!instance creation!public! !

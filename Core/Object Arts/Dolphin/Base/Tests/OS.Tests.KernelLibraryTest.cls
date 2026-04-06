@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.KernelLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.KernelLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -61,10 +61,10 @@ testExpandEnvironmentStrings
 testGetCurrentDirectory
 	| wd |
 	wd := Kernel32 getCurrentDirectory.
-	self assert: ((Kernel32 getFileAttributes: wd) allMask: Win32Constants.FILE_ATTRIBUTE_DIRECTORY)!
+	self assert: ((Kernel32 getFileAttributes: wd) allMask: FILE_ATTRIBUTE_DIRECTORY)!
 
 testGetEnvironmentVariable
-	| actual expected |
+	| actual |
 	self assertIsNil: (Kernel32 getEnvironmentVariable: '').
 	self assertIsNil: (Kernel32 getEnvironmentVariable: '%WIBBLE%').
 	actual := Kernel32 getEnvironmentVariable: 'USERNAME'.
@@ -105,7 +105,7 @@ testGetModuleFilename
 							stem: each
 							extension: 'dll'.
 				"LoadLibrary won't open a short path longer than 251 chars"
-				path size >= (Win32Constants.MAX_PATH - 9) ifTrue: [path := path withLongPrefix].
+				path size >= (MAX_PATH - 9) ifTrue: [path := path withLongPrefix].
 				testDll copyTo: path.
 				lib := Module open: path.
 				moduleFilename := Kernel32 getModuleFilename: lib.

@@ -4,9 +4,79 @@ UI.BasicListAbstract
 	subclass: #'UI.ComboBox'
 	instanceVariableNames: 'droppedHeight'
 	classVariableNames: ''
-	imports: #(#{OS.ComboBoxConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'Modes' -> #(#simple #dropDown #dropDownList) }!
+	classConstants: {
+			'CB_ADDSTRING' -> 16r143.
+			'CB_DELETESTRING' -> 16r144.
+			'CB_DIR' -> 16r145.
+			'CB_ERR' -> -16r1.
+			'CB_ERRSPACE' -> -16r2.
+			'CB_FINDSTRING' -> 16r14C.
+			'CB_FINDSTRINGEXACT' -> 16r158.
+			'CB_GETCOMBOBOXINFO' -> 16r164.
+			'CB_GETCOUNT' -> 16r146.
+			'CB_GETCUEBANNER' -> 16r1704.
+			'CB_GETCURSEL' -> 16r147.
+			'CB_GETDROPPEDCONTROLRECT' -> 16r152.
+			'CB_GETDROPPEDSTATE' -> 16r157.
+			'CB_GETDROPPEDWIDTH' -> 16r15F.
+			'CB_GETEDITSEL' -> 16r140.
+			'CB_GETEXTENDEDUI' -> 16r156.
+			'CB_GETHORIZONTALEXTENT' -> 16r15D.
+			'CB_GETITEMDATA' -> 16r150.
+			'CB_GETITEMHEIGHT' -> 16r154.
+			'CB_GETLBTEXT' -> 16r148.
+			'CB_GETLBTEXTLEN' -> 16r149.
+			'CB_GETLOCALE' -> 16r15A.
+			'CB_GETMINVISIBLE' -> 16r1702.
+			'CB_GETTOPINDEX' -> 16r15B.
+			'CB_INITSTORAGE' -> 16r161.
+			'CB_INSERTSTRING' -> 16r14A.
+			'CB_LIMITTEXT' -> 16r141.
+			'CB_MSGMAX' -> 16r165.
+			'CB_OKAY' -> 16r0.
+			'CB_RESETCONTENT' -> 16r14B.
+			'CB_SELECTSTRING' -> 16r14D.
+			'CB_SETCUEBANNER' -> 16r1703.
+			'CB_SETCURSEL' -> 16r14E.
+			'CB_SETDROPPEDWIDTH' -> 16r160.
+			'CB_SETEDITSEL' -> 16r142.
+			'CB_SETEXTENDEDUI' -> 16r155.
+			'CB_SETHORIZONTALEXTENT' -> 16r15E.
+			'CB_SETITEMDATA' -> 16r151.
+			'CB_SETITEMHEIGHT' -> 16r153.
+			'CB_SETLOCALE' -> 16r159.
+			'CB_SETMINVISIBLE' -> 16r1701.
+			'CB_SETTOPINDEX' -> 16r15C.
+			'CB_SHOWDROPDOWN' -> 16r14F.
+			'CBM_FIRST' -> 16r1700.
+			'CBN_CLOSEUP' -> 16r8.
+			'CBN_DBLCLK' -> 16r2.
+			'CBN_DROPDOWN' -> 16r7.
+			'CBN_EDITCHANGE' -> 16r5.
+			'CBN_EDITUPDATE' -> 16r6.
+			'CBN_ERRSPACE' -> -16r1.
+			'CBN_KILLFOCUS' -> 16r4.
+			'CBN_SELCHANGE' -> 16r1.
+			'CBN_SELENDCANCEL' -> 16rA.
+			'CBN_SELENDOK' -> 16r9.
+			'CBN_SETFOCUS' -> 16r3.
+			'CBS_AUTOHSCROLL' -> 16r40.
+			'CBS_DISABLENOSCROLL' -> 16r800.
+			'CBS_DROPDOWN' -> 16r2.
+			'CBS_DROPDOWNLIST' -> 16r3.
+			'CBS_HASSTRINGS' -> 16r200.
+			'CBS_LOWERCASE' -> 16r4000.
+			'CBS_NOINTEGRALHEIGHT' -> 16r400.
+			'CBS_OEMCONVERT' -> 16r80.
+			'CBS_OWNERDRAWFIXED' -> 16r10.
+			'CBS_OWNERDRAWVARIABLE' -> 16r20.
+			'CBS_SIMPLE' -> 16r1.
+			'CBS_SORT' -> 16r100.
+			'CBS_UPPERCASE' -> 16r2000.
+			'Modes' -> #(#simple #dropDown #dropDownList)
+		}!
 
 UI.ComboBox guid: (Core.GUID fromString: '{87b4c72b-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -145,12 +215,8 @@ cbnSetFocus
 command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^(##(IdentityDictionary withAll: {CBN_ERRSPACE -> #errorOutOfMemory.
-				CBN_SELCHANGE -> #cbnSelChange.
-				CBN_DBLCLK -> #cbnDblClk.
-				CBN_SETFOCUS -> #cbnSetFocus.
-				CBN_KILLFOCUS -> #cbnKillFocus})
-		lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
+	^(#(#errorOutOfMemory nil #cbnSelChange #cbnDblClk #cbnSetFocus #cbnKillFocus)
+		lookup: anInteger - CBN_ERRSPACE + 1) ifNotNil: [:selector | self perform: selector]!
 
 createAt: originPoint extent: extentPoint
 	"Private - Create the View window ensuring it has the VM window procedure. The window rectangle is specified by the origin <point> first argument, and the extent <point> second argument. For reasons of backwards compatibility, and because the default extent may well be expressed in code, it is assumed that the position and size arguments are measured in device-independent pixels (aka DIPs, i.e. 96-dpi). Answer the receiver."

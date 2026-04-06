@@ -4,7 +4,7 @@ UI.Presenter
 	subclass: #'Tools.SmalltalkWorkspace'
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorDefinitions variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorDefinitions KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
-	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
+	imports: #(#{Kernel.Compiler private} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings'
 	classConstants: {
 			'AutoCompleteMask' -> 16r8.
@@ -527,7 +527,7 @@ compileRange: anInterval ifFail: failBlock debug: aBoolean
 				environment: self parseContext environment
 				evaluationPools: self allPools
 				flags: (aBoolean
-						ifTrue: [self defaultCompilerFlags bitOr: DebugMethod]
+						ifTrue: [self defaultCompilerFlags bitOr: CreateDebugMethod]
 						ifFalse: [self defaultCompilerFlags])]
 			on: compiler warningClass
 			do: [:cw | self compilerNotification: cw offset: offset]

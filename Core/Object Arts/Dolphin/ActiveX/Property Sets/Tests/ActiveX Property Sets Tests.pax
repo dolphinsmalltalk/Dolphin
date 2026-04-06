@@ -85,7 +85,7 @@ External.Tests.ExternalArrayTest
 	subclass: #'OS.Tests.HRESULTArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.HRESULT})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

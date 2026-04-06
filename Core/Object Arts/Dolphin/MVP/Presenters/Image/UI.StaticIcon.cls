@@ -6,7 +6,7 @@ UI.StaticImage
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'SS_ICON' -> 16r3 }!
 
 UI.StaticIcon guid: (Core.GUID fromString: '{87b4c742-026e-11d3-9fd7-00a0cc3e4a32}')!
 

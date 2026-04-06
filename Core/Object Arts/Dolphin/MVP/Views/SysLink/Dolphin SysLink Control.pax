@@ -20,7 +20,6 @@ package setClassNames: #(
 	#{OS.LHITTESTINFO}
 	#{OS.LITEM}
 	#{OS.NMLINK}
-	#{OS.SysLinkConstants}
 	#{UI.LinkButton}
 	#{UI.SysLinkView}
 ).
@@ -48,41 +47,11 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.SysLinkConstants'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'ICC_LINK_CLASS' -> 16r8000.
-			'INVALID_LINK_INDEX' -> -16r1.
-			'L_MAX_URL_LENGTH' -> 16r824.
-			'LIF_ITEMID' -> 16r4.
-			'LIF_ITEMINDEX' -> 16r1.
-			'LIF_STATE' -> 16r2.
-			'LIF_URL' -> 16r8.
-			'LIS_ENABLED' -> 16r2.
-			'LIS_FOCUSED' -> 16r1.
-			'LIS_VISITED' -> 16r4.
-			'LM_GETIDEALHEIGHT' -> 16r701.
-			'LM_GETITEM' -> 16r703.
-			'LM_HITTEST' -> 16r700.
-			'LM_SETITEM' -> 16r702.
-			'LWS_IGNORERETURN' -> 16r2.
-			'LWS_NOPREFIX' -> 16r4.
-			'LWS_RIGHT' -> 16r20.
-			'LWS_TRANSPARENT' -> 16r1.
-			'LWS_USECUSTOMTEXT' -> 16r10.
-			'LWS_USEVISUALSTYLE' -> 16r8.
-			'MAX_LINKID_TEXT' -> 16r30
-		}!
-
 External.Structure
 	subclass: #'OS.LITEM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.SysLinkConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LITEM_Size' -> 16r10B8.
@@ -91,7 +60,16 @@ External.Structure
 			'_OffsetOf_state' -> 16r8.
 			'_OffsetOf_stateMask' -> 16rC.
 			'_OffsetOf_szID' -> 16r10.
-			'_OffsetOf_szURL' -> 16r70
+			'_OffsetOf_szURL' -> 16r70.
+			'L_MAX_URL_LENGTH' -> 16r824.
+			'LIF_ITEMID' -> 16r4.
+			'LIF_ITEMINDEX' -> 16r1.
+			'LIF_STATE' -> 16r2.
+			'LIF_URL' -> 16r8.
+			'LIS_ENABLED' -> 16r2.
+			'LIS_FOCUSED' -> 16r1.
+			'LIS_VISITED' -> 16r4.
+			'MAX_LINKID_TEXT' -> 16r30
 		}!
 
 OS.CCHITTESTINFO
@@ -114,7 +92,7 @@ UI.CommandButton
 	subclass: #'UI.LinkButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.SysLinkConstants})
+	imports: #(#{UI.SysLinkView})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -122,9 +100,21 @@ UI.StaticView
 	subclass: #'UI.SysLinkView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.SysLinkConstants})
+	imports: #(#{OS.LITEM private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ICC_LINK_CLASS' -> 16r8000.
+			'LM_GETIDEALHEIGHT' -> 16r701.
+			'LM_GETITEM' -> 16r703.
+			'LM_HITTEST' -> 16r700.
+			'LM_SETITEM' -> 16r702.
+			'LWS_IGNORERETURN' -> 16r2.
+			'LWS_NOPREFIX' -> 16r4.
+			'LWS_RIGHT' -> 16r20.
+			'LWS_TRANSPARENT' -> 16r1.
+			'LWS_USECUSTOMTEXT' -> 16r10.
+			'LWS_USEVISUALSTYLE' -> 16r8
+		}!
 
 "Loose Methods"!
 

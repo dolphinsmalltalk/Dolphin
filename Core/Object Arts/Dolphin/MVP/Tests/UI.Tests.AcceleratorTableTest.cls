@@ -4,7 +4,7 @@ UI.Tests.AbstractKeyboardTest
 	subclass: #'UI.Tests.AcceleratorTableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{UI.Keyboard})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

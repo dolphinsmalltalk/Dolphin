@@ -77,7 +77,7 @@ notify: aNotification
 
 processorDescription
 	^OS.AdvApi32
-		regGetString: OS.WinRegConstants.HKEY_LOCAL_MACHINE
+		regGetString: OS.AdvApiLibrary.HKEY_LOCAL_MACHINE
 		key: 'HARDWARE\Description\System\CentralProcessor\0'
 		value: 'ProcessorNameString'!
 

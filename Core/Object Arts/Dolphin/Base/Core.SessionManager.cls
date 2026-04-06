@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Core.SessionManager'
 	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId settingsChanged events'
 	classVariableNames: 'Current PreStartFile'
-	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS private})
+	imports: #(#{OS.KernelLibrary private} #{OS.Win32Error private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: { 'EmbeddingMask' -> 16r1. 'SettingsChangeTimerId' -> 16r2 }!
 
@@ -92,7 +92,7 @@ argv
 						ifFalse: 
 							["Open code the access to the array of strings to reduce base system dependencies on external struct classes"
 							(0 to: VM argc - 1)
-								collect: [:i | Utf16String fromAddress: (lppstr uintPtrAtOffset: i * VMConstants.IntPtrSize)]]]!
+								collect: [:i | Utf16String fromAddress: (lppstr uintPtrAtOffset: i * VMLibrary.IntPtrSize)]]]!
 
 argvLegacyOptionsRemoved
 	"Private - Answer the argv arguments vector with the old style legacy options removed"
@@ -204,7 +204,7 @@ consoleStreamClass
 	"Answer the class of stdio stream to use for stdin, stdout, and/or stderr when connected to the console.
 	UTF-16 streams are more efficient when reading/writing from the console than UTF-8, as they minimize translations between encodings (the CRT functions and underlying Windows APIs use wide characters)."
 
-	^OS.StdioUtf16FileStream!
+	^StdioUtf16FileStream!
 
 createInputState
 	inputState := self inputStateClass newFromOld: inputState!
@@ -227,7 +227,7 @@ defaultResourceLibrary
 
 	resourceLibrary isNil
 		ifTrue: 
-			[resourceLibrary := External.ResourceLibrary
+			[resourceLibrary := ResourceLibrary
 						open: self defaultResLibPath
 						withAliases: #('dolphindr7' 'dolphindr006' 'dolphindr005' 'dolphindr004' 'dolphindevres' 'dolphindr993')
 						flags: 0].
@@ -269,7 +269,7 @@ exit: anInteger
 fileStreamClass
 	"Answer the class of stdio stream to use for stdin, stdout, stderr when redirected to a file or pipe, as opposed to being connected to the console. We assume UTF-8 should be read/written, i.e. if stdin is redirected to a file it is assumed the file is UTF-8 encoded, and likewise any output to a redirected stdout/stderr will be written in UTF-8. This may not be correct for any particular app or usage, so override if necessary."
 
-	^OS.StdioUtf8FileStream!
+	^StdioUtf8FileStream!
 
 forkMain
 	"Start a new main process appropriate for the session.
@@ -671,7 +671,7 @@ onStartup: args
 onTimer: anInteger
 	"Do nothing by default - but see GUISessionManager"
 
-	anInteger == WM_ENTERIDLE
+	anInteger == UserLibrary.WM_ENTERIDLE
 		ifTrue: [self inputState enterIdle]
 		ifFalse: [inputState msgWindow killTimer: anInteger]!
 
@@ -741,7 +741,7 @@ openLibraries
 	"Private - Open the base set of external libraries (ExternalLibrary>>onStartup must
 	open the PermanentLibraries)."
 
-	External.DynamicLinkLibrary onStartup!
+	DynamicLinkLibrary onStartup!
 
 openStdErr
 	^self openFd: 2 mode: #append!
@@ -835,10 +835,10 @@ registerConsoleCtrlHandler
 
 	consoleHandler isNil
 		ifTrue: 
-			[consoleHandler := External.MessageCallback
+			[consoleHandler := MessageCallback
 						receiver: self
 						selector: #onConsoleCtrl:
-						descriptor: (External.FunctionDescriptor fromString: 'stdcall: bool uint32' environment: Smalltalk).
+						descriptor: (FunctionDescriptor fromString: 'stdcall: bool uint32' environment: Smalltalk).
 			Kernel32 setConsoleCtrlHandler: consoleHandler asParameter add: true]!
 
 registerRunning
@@ -1078,7 +1078,7 @@ userName
 
 	| name nameSize |
 	name := Utf16String new: 256.
-	nameSize := External.UInt32Bytes fromInteger: name size.
+	nameSize := UInt32Bytes fromInteger: name size.
 	(AdvApi32 getUserName: name nSize: nameSize asParameter) ifFalse: [AdvApi32 systemError].
 	^name leftString: nameSize asInteger - 1!
 
@@ -1275,10 +1275,10 @@ imageExtension
 initialize
 	"Private - Initialize the class variables of the receiver."
 
+	PreStartFile := 'prestart.st'.
 	Current
 		ifNil: 
-			[PreStartFile := 'prestart.st'.
-			Current := BootSessionManager basicNew.	"For boot reasons, do not initialize"
+			[Current := BootSessionManager basicNew.	"For boot reasons, do not initialize"
 			Current imagePath: '.\Dolphin']!
 
 inputState

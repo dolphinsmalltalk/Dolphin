@@ -292,7 +292,7 @@ imageManager
 	^IconImageManager current!
 
 imageType
-	^Win32Constants.IMAGE_ICON!
+	^OS.GDILibrary.IMAGE_ICON!
 
 isPersistent
 	"Private - Answer true if the receiver holds sufficient information such that it can recreate itself when the Smalltalk image is saved and restored. 

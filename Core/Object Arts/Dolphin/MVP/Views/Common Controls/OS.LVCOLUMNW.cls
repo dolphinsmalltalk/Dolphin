@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.LVCOLUMNW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LVCOLUMNW_Size' -> 16r2C.
@@ -20,7 +20,20 @@ External.Structure
 			'_OffsetOf_mask' -> 16r0.
 			'_OffsetOf_pszText' -> 16rC.
 			'AlignmentMap'
-				-> (IdentityDictionary withAll: { #center -> 16r2. #left -> 16r0. #right -> 16r1 })
+				-> (IdentityDictionary withAll: { #center -> 16r2. #left -> 16r0. #right -> 16r1 }).
+			'LVCF_FMT' -> 16r1.
+			'LVCF_IMAGE' -> 16r10.
+			'LVCF_ORDER' -> 16r20.
+			'LVCF_SUBITEM' -> 16r8.
+			'LVCF_TEXT' -> 16r4.
+			'LVCF_WIDTH' -> 16r2.
+			'LVCFMT_BITMAP_ON_RIGHT' -> 16r1000.
+			'LVCFMT_CENTER' -> 16r2.
+			'LVCFMT_COL_HAS_IMAGES' -> 16r8000.
+			'LVCFMT_IMAGE' -> 16r800.
+			'LVCFMT_JUSTIFYMASK' -> 16r3.
+			'LVCFMT_LEFT' -> 16r0.
+			'LVCFMT_RIGHT' -> 16r1
 		}!
 
 OS.LVCOLUMNW guid: (Core.GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!

@@ -4,7 +4,7 @@ UI.ValueDialog
 	subclass: #'Tools.CategoryPrompter'
 	instanceVariableNames: 'treePresenter flags categoryClass'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'AllowIntermediatesMask' -> 16r1. 'AllowReadOnlyMask' -> 16r2 }!
 

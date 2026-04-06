@@ -4,7 +4,7 @@ OS
 	subclass: #'OS.COM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
+	imports: #(#{OS.HRESULT} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

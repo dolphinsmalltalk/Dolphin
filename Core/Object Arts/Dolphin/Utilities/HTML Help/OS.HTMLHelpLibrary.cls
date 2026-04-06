@@ -4,9 +4,22 @@ External.WindowsSystemLibrary
 	subclass: #'OS.HTMLHelpLibrary'
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
-	imports: #(#{OS.HTMLHelpConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'HH_CLOSE_ALL' -> 16r12.
+			'HH_DISPLAY_INDEX' -> 16r1.
+			'HH_DISPLAY_TEXT_POPUP' -> 16rE.
+			'HH_DISPLAY_TOPIC' -> 16r0.
+			'HH_GET_WIN_HANDLE' -> 16r6.
+			'HH_GET_WIN_TYPE' -> 16r5.
+			'HH_HELP_CONTEXT' -> 16rF.
+			'HH_INITIALIZE' -> 16r1C.
+			'HH_SET_WIN_TYPE' -> 16r4.
+			'HH_TP_HELP_CONTEXTMENU' -> 16r10.
+			'HH_TP_HELP_WM_HELP' -> 16r11.
+			'HH_UNINITIALIZE' -> 16r1D
+		}!
 
 OS.HTMLHelpLibrary guid: (Core.GUID fromString: '{9e0d2430-3877-11d3-93bd-00a024ca708a}')!
 

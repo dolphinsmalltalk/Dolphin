@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Graphics.Tests.BrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.LOGBRUSH})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

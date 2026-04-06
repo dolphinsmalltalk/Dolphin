@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.SQL_INTERVAL_STRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ODBCCTypes})
+	imports: #(#{OS.ODBCLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_interval_sign' -> 16r4.

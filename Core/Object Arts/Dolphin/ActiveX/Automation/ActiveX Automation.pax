@@ -25,8 +25,6 @@ package setClassNames: #(
 	#{OS.COM.AbstractELEMDESC}
 	#{OS.COM.APIInfoAnalyzer}
 	#{OS.COM.ARRAYDESC}
-	#{OS.COM.AutomationConstants}
-	#{OS.COM.AutomationErrors}
 	#{OS.COM.BSTRArray}
 	#{OS.COM.CUSTDATA}
 	#{OS.COM.CUSTDATAITEM}
@@ -55,6 +53,7 @@ package setClassNames: #(
 	#{OS.COM.ITypeComp}
 	#{OS.COM.ITypeInfo}
 	#{OS.COM.ITypeInfo2}
+	#{OS.COM.ITypeInformationInterface}
 	#{OS.COM.ITypeLib}
 	#{OS.COM.ITypeLib2}
 	#{OS.COM.LPBSTR}
@@ -81,7 +80,6 @@ package setClassNames: #(
 	#{OS.COM.TLIBATTR}
 	#{OS.COM.TYPEATTR}
 	#{OS.COM.TYPEDESC}
-	#{OS.COM.TypeGenerationFlags}
 	#{OS.COM.TypeInfoAnalyzer}
 	#{OS.COM.TypeInfoObject}
 	#{OS.COM.TypeInfoStructure}
@@ -362,233 +360,18 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.COM.AutomationConstants'
-	instanceVariableNames: ''
+Core.Object
+	subclass: #'OS.COM.RecordClass'
+	instanceVariableNames: 'recordInfo'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
-	classConstants: {
-			'ACTIVEOBJECT_STRONG' -> 16r0.
-			'ACTIVEOBJECT_WEAK' -> 16r1.
-			'CC_CDECL' -> 16r1.
-			'CC_MACPASCAL' -> 16r3.
-			'CC_MAX' -> 16r9.
-			'CC_MPWCDECL' -> 16r7.
-			'CC_MPWPASCAL' -> 16r8.
-			'CC_MSCPASCAL' -> 16r2.
-			'CC_PASCAL' -> 16r2.
-			'CC_RESERVED' -> 16r5.
-			'CC_STDCALL' -> 16r4.
-			'CC_SYSCALL' -> 16r6.
-			'DESCKIND_FUNCDESC' -> 16r1.
-			'DESCKIND_IMPLICITAPPOBJ' -> 16r4.
-			'DESCKIND_MAX' -> 16r5.
-			'DESCKIND_NONE' -> 16r0.
-			'DESCKIND_TYPECOMP' -> 16r3.
-			'DESCKIND_VARDESC' -> 16r2.
-			'DISPATCH_METHOD' -> 16r1.
-			'DISPATCH_PROPERTYGET' -> 16r2.
-			'DISPATCH_PROPERTYPUT' -> 16r4.
-			'DISPATCH_PROPERTYPUTREF' -> 16r8.
-			'DISPID_ACCELERATOR' -> -16r21F.
-			'DISPID_APPEARANCE' -> -16r208.
-			'DISPID_AUTOSIZE' -> -16r1F4.
-			'DISPID_BACKCOLOR' -> -16r1F5.
-			'DISPID_BACKSTYLE' -> -16r1F6.
-			'DISPID_BORDERCOLOR' -> -16r1F7.
-			'DISPID_BORDERSTYLE' -> -16r1F8.
-			'DISPID_BORDERVISIBLE' -> -16r207.
-			'DISPID_BORDERWIDTH' -> -16r1F9.
-			'DISPID_CAPTION' -> -16r206.
-			'DISPID_COLLECT' -> -16r8.
-			'DISPID_COLUMN' -> -16r211.
-			'DISPID_CONSTRUCTOR' -> -16r6.
-			'DISPID_DESTRUCTOR' -> -16r7.
-			'DISPID_DISPLAYSTYLE' -> -16r21C.
-			'DISPID_DRAWMODE' -> -16r1FB.
-			'DISPID_DRAWSTYLE' -> -16r1FC.
-			'DISPID_DRAWWIDTH' -> -16r1FD.
-			'DISPID_ENABLED' -> -16r202.
-			'DISPID_ENTERKEYBEHAVIOR' -> -16r220.
-			'DISPID_EVALUATE' -> -16r5.
-			'DISPID_FILLCOLOR' -> -16r1FE.
-			'DISPID_FILLSTYLE' -> -16r1FF.
-			'DISPID_FONT' -> -16r200.
-			'DISPID_FORECOLOR' -> -16r201.
-			'DISPID_GROUPNAME' -> -16r21D.
-			'DISPID_HWND' -> -16r203.
-			'DISPID_IMEMODE' -> -16r21E.
-			'DISPID_LIST' -> -16r210.
-			'DISPID_LISTCOUNT' -> -16r213.
-			'DISPID_LISTINDEX' -> -16r20E.
-			'DISPID_MAXLENGTH' -> -16r215.
-			'DISPID_MOUSEICON' -> -16r20A.
-			'DISPID_MOUSEPOINTER' -> -16r209.
-			'DISPID_MULTILINE' -> -16r219.
-			'DISPID_MULTISELECT' -> -16r214.
-			'DISPID_NEWENUM' -> -16r4.
-			'DISPID_NUMBEROFCOLUMNS' -> -16r21B.
-			'DISPID_NUMBEROFROWS' -> -16r21A.
-			'DISPID_PASSWORDCHAR' -> -16r216.
-			'DISPID_PICTURE' -> -16r20B.
-			'DISPID_PROPERTYPUT' -> -16r3.
-			'DISPID_READYSTATE' -> -16r20D.
-			'DISPID_SCROLLBARS' -> -16r217.
-			'DISPID_SELECTED' -> -16r20F.
-			'DISPID_SELLENGTH' -> -16r224.
-			'DISPID_SELSTART' -> -16r223.
-			'DISPID_SELTEXT' -> -16r222.
-			'DISPID_TABKEYBEHAVIOR' -> -16r221.
-			'DISPID_TABSTOP' -> -16r204.
-			'DISPID_TEXT' -> -16r205.
-			'DISPID_UNKNOWN' -> -16r1.
-			'DISPID_VALID' -> -16r20C.
-			'DISPID_VALUE' -> 16r0.
-			'DISPID_WORDWRAP' -> -16r218.
-			'FADF_AUTO' -> 16r1.
-			'FADF_BSTR' -> 16r100.
-			'FADF_DISPATCH' -> 16r400.
-			'FADF_EMBEDDED' -> 16r4.
-			'FADF_FIXEDSIZE' -> 16r10.
-			'FADF_HAVEIID' -> 16r40.
-			'FADF_HAVEVARTYPE' -> 16r80.
-			'FADF_RECORD' -> 16r20.
-			'FADF_RESERVED' -> 16rF0E8.
-			'FADF_STATIC' -> 16r2.
-			'FADF_UNKNOWN' -> 16r200.
-			'FADF_VARIANT' -> 16r800.
-			'FUNC_DISPATCH' -> 16r4.
-			'FUNC_NONVIRTUAL' -> 16r2.
-			'FUNC_PUREVIRTUAL' -> 16r1.
-			'FUNC_STATIC' -> 16r3.
-			'FUNC_VIRTUAL' -> 16r0.
-			'FUNCFLAG_FBINDABLE' -> 16r4.
-			'FUNCFLAG_FDEFAULTBIND' -> 16r20.
-			'FUNCFLAG_FDEFAULTCOLLELEM' -> 16r100.
-			'FUNCFLAG_FDISPLAYBIND' -> 16r10.
-			'FUNCFLAG_FHIDDEN' -> 16r40.
-			'FUNCFLAG_FIMMEDIATEBIND' -> 16r1000.
-			'FUNCFLAG_FNONBROWSABLE' -> 16r400.
-			'FUNCFLAG_FREPLACEABLE' -> 16r800.
-			'FUNCFLAG_FREQUESTEDIT' -> 16r8.
-			'FUNCFLAG_FRESTRICTED' -> 16r1.
-			'FUNCFLAG_FSOURCE' -> 16r2.
-			'FUNCFLAG_FUIDEFAULT' -> 16r200.
-			'FUNCFLAG_FUSESGETLASTERROR' -> 16r80.
-			'ID_DEFAULTINST' -> -16r2.
-			'IDLFLAG_FIN' -> 16r1.
-			'IDLFLAG_FLCID' -> 16r4.
-			'IDLFLAG_FOUT' -> 16r2.
-			'IDLFLAG_FRETVAL' -> 16r8.
-			'IDLFLAG_NONE' -> 16r0.
-			'IMPLTYPEFLAG_FDEFAULT' -> 16r1.
-			'IMPLTYPEFLAG_FRESTRICTED' -> 16r4.
-			'IMPLTYPEFLAG_FSOURCE' -> 16r2.
-			'INVOKE_FUNC' -> 16r1.
-			'INVOKE_PROPERTYGET' -> 16r2.
-			'INVOKE_PROPERTYPUT' -> 16r4.
-			'INVOKE_PROPERTYPUTREF' -> 16r8.
-			'LIBFLAG_FCONTROL' -> 16r2.
-			'LIBFLAG_FHASDISKIMAGE' -> 16r8.
-			'LIBFLAG_FHIDDEN' -> 16r4.
-			'LIBFLAG_FRESTRICTED' -> 16r4.
-			'MEMBERID_NIL' -> -16r1.
-			'PARAMFLAG_FHASDEFAULT' -> 16r20.
-			'PARAMFLAG_FIN' -> 16r1.
-			'PARAMFLAG_FOPT' -> 16r10.
-			'PARAMFLAG_FOUT' -> 16r2.
-			'PARAMFLAG_FRETVAL' -> 16r8.
-			'PARAMFLAG_NONE' -> 16r0.
-			'REGKIND_DEFAULT' -> 16r0.
-			'REGKIND_NONE' -> 16r2.
-			'REGKIND_REGISTER' -> 16r1.
-			'STDOLE_LCID' -> 16r0.
-			'STDOLE_MAJORVERNUM' -> 16r1.
-			'STDOLE_MINORVERNUM' -> 16r0.
-			'SYS_MAC' -> 16r2.
-			'SYS_WIN16' -> 16r0.
-			'SYS_WIN32' -> 16r1.
-			'SYS_WIN64' -> 16r3.
-			'TKIND_ALIAS' -> 16r6.
-			'TKIND_COCLASS' -> 16r5.
-			'TKIND_DISPATCH' -> 16r4.
-			'TKIND_ENUM' -> 16r0.
-			'TKIND_INTERFACE' -> 16r3.
-			'TKIND_MAX' -> 16r8.
-			'TKIND_MODULE' -> 16r2.
-			'TKIND_RECORD' -> 16r1.
-			'TKIND_UNION' -> 16r7.
-			'TYPEFLAG_FAGGREGATABLE' -> 16r400.
-			'TYPEFLAG_FAPPOBJECT' -> 16r1.
-			'TYPEFLAG_FCANCREATE' -> 16r2.
-			'TYPEFLAG_FCONTROL' -> 16r20.
-			'TYPEFLAG_FDISPATCHABLE' -> 16r1000.
-			'TYPEFLAG_FDUAL' -> 16r40.
-			'TYPEFLAG_FHIDDEN' -> 16r10.
-			'TYPEFLAG_FLICENSED' -> 16r4.
-			'TYPEFLAG_FNONEXTENSIBLE' -> 16r80.
-			'TYPEFLAG_FOLEAUTOMATION' -> 16r100.
-			'TYPEFLAG_FPREDECLID' -> 16r8.
-			'TYPEFLAG_FRESTRICTED' -> 16r200.
-			'VAR_CONST' -> 16r2.
-			'VAR_DATEVALUEONLY' -> 16r2.
-			'VAR_DISPATCH' -> 16r3.
-			'VAR_PERINSTANCE' -> 16r0.
-			'VAR_STATIC' -> 16r1.
-			'VAR_TIMEVALUEONLY' -> 16r1.
-			'VARCMP_NULL' -> 16r3.
-			'VARFLAG_FBINDABLE' -> 16r4.
-			'VARFLAG_FDEFAULTBIND' -> 16r20.
-			'VARFLAG_FDISPLAYBIND' -> 16r10.
-			'VARFLAG_FHIDDEN' -> 16r40.
-			'VARFLAG_FNONBROWSABLE' -> 16r400.
-			'VARFLAG_FREADONLY' -> 16r1.
-			'VARFLAG_FREQUESTEDIT' -> 16r8.
-			'VARFLAG_FRESTRICTED' -> 16r80.
-			'VARFLAG_FSOURCE' -> 16r2.
-			'VARFLAG_FUIDEFAULT' -> 16r200.
-			'VARIANT_ALPHABOOL' -> 16r2.
-			'VARIANT_CALENDAR_GREGORIAN' -> 16r40.
-			'VARIANT_CALENDAR_HIJRI' -> 16r8.
-			'VARIANT_CALENDAR_THAI' -> 16r20.
-			'VARIANT_FALSE' -> 16r0.
-			'VARIANT_LOCALBOOL' -> 16r10.
-			'VARIANT_NOUSEROVERRIDE' -> 16r4.
-			'VARIANT_NOVALUEPROP' -> 16r1.
-			'VARIANT_TRUE' -> -16r1.
-			'VARIANT_USE_NLS' -> 16r80
-		}!
+	classConstants: {}!
 
-Kernel.SharedPool
-	subclass: #'OS.COM.AutomationErrors'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'DISP_E_ARRAYISLOCKED' -> -16r7FFDFFF3.
-			'DISP_E_BADINDEX' -> -16r7FFDFFF5.
-			'DISP_E_BADVARTYPE' -> -16r7FFDFFF8.
-			'DISP_E_DIVBYZERO' -> -16r7FFDFFEE.
-			'DISP_E_EXCEPTION' -> -16r7FFDFFF7.
-			'DISP_E_MEMBERNOTFOUND' -> -16r7FFDFFFD.
-			'DISP_E_OVERFLOW' -> -16r7FFDFFF6.
-			'DISP_E_PARAMNOTFOUND' -> -16r7FFDFFFC.
-			'DISP_E_TYPEMISMATCH' -> -16r7FFDFFFB.
-			'DISP_E_UNKNOWNNAME' -> -16r7FFDFFFA.
-			'TYPE_E_CANTLOADLIBRARY' -> -16r7FFD63B6.
-			'TYPE_E_ELEMENTNOTFOUND' -> -16r7FFD7FD5.
-			'TYPE_E_FIELDNOTFOUND' -> -16r7FFD7FE9.
-			'TYPE_E_LIBNOTREGISTERED' -> -16r7FFD7FE3.
-			'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
-			'WCODE_HRESULT_LAST' -> -16r7FFB0001
-		}!
-
-Kernel.SharedPool
-	subclass: #'OS.COM.TypeGenerationFlags'
-	instanceVariableNames: ''
-	classVariableNames: ''
+Core.Object
+	subclass: #'OS.COM.TypeInfoObject'
+	instanceVariableNames: 'tlbInterface generationFlags binding'
+	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap NamespaceClash SuperclassClash TracingStyleMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -610,22 +393,6 @@ Kernel.SharedPool
 		}!
 
 Core.Object
-	subclass: #'OS.COM.RecordClass'
-	instanceVariableNames: 'recordInfo'
-	classVariableNames: ''
-	imports: #(#{OS.COM.OleVariant})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
-	subclass: #'OS.COM.TypeInfoObject'
-	instanceVariableNames: 'tlbInterface generationFlags binding'
-	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap NamespaceClash SuperclassClash TracingStyleMap'
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Object
 	subclass: #'OS.COM.TypeLibDocumentation'
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
 	classVariableNames: ''
@@ -637,7 +404,7 @@ OS.COM.InterfaceFunction
 	subclass: #'OS.COM.DispatchFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -645,7 +412,7 @@ OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.AbstractDispatchImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #(#{OS.COM.IDispatch})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -713,38 +480,54 @@ External.Structure
 	subclass: #'OS.COM.DISPPARAMS'
 	instanceVariableNames: 'vargs dispids'
 	classVariableNames: 'ZeroArgs'
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_DISPPARAMS_Size' -> 16r10.
 			'_OffsetOf_cArgs' -> 16r8.
 			'_OffsetOf_cNamedArgs' -> 16rC.
 			'_OffsetOf_rgdispidNamedArgs' -> 16r4.
-			'_OffsetOf_rgvarg' -> 16r0
+			'_OffsetOf_rgvarg' -> 16r0.
+			'DISPATCH_METHOD' -> 16r1.
+			'DISPATCH_PROPERTYGET' -> 16r2.
+			'DISPATCH_PROPERTYPUT' -> 16r4.
+			'DISPATCH_PROPERTYPUTREF' -> 16r8.
+			'DISPID_PROPERTYPUT' -> -16r3
 		}!
 
 External.Structure
 	subclass: #'OS.COM.IDLDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_IDLDESC_Size' -> 16r8.
 			'_OffsetOf_dwReserved' -> 16r0.
-			'_OffsetOf_wIDLFlags' -> 16r4
+			'_OffsetOf_wIDLFlags' -> 16r4.
+			'IDLFLAG_FIN' -> 16r1.
+			'IDLFLAG_FLCID' -> 16r4.
+			'IDLFLAG_FOUT' -> 16r2.
+			'IDLFLAG_FRETVAL' -> 16r8.
+			'IDLFLAG_NONE' -> 16r0
 		}!
 
 External.Structure
 	subclass: #'OS.COM.PARAMDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_pparamdescex' -> 16r0.
 			'_OffsetOf_wParamFlags' -> 16r4.
-			'_PARAMDESC_Size' -> 16r8
+			'_PARAMDESC_Size' -> 16r8.
+			'PARAMFLAG_FHASDEFAULT' -> 16r20.
+			'PARAMFLAG_FIN' -> 16r1.
+			'PARAMFLAG_FOPT' -> 16r10.
+			'PARAMFLAG_FOUT' -> 16r2.
+			'PARAMFLAG_FRETVAL' -> 16r8.
+			'PARAMFLAG_NONE' -> 16r0
 		}!
 
 External.Structure
@@ -775,7 +558,7 @@ External.Structure
 	subclass: #'OS.COM.TLIBATTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_guid' -> 16r0.
@@ -784,7 +567,15 @@ External.Structure
 			'_OffsetOf_wLibFlags' -> 16r1C.
 			'_OffsetOf_wMajorVerNum' -> 16r18.
 			'_OffsetOf_wMinorVerNum' -> 16r1A.
-			'_TLIBATTR_Size' -> 16r20
+			'_TLIBATTR_Size' -> 16r20.
+			'LIBFLAG_FCONTROL' -> 16r2.
+			'LIBFLAG_FHASDISKIMAGE' -> 16r8.
+			'LIBFLAG_FHIDDEN' -> 16r4.
+			'LIBFLAG_FRESTRICTED' -> 16r4.
+			'SYS_MAC' -> 16r2.
+			'SYS_WIN16' -> 16r0.
+			'SYS_WIN32' -> 16r1.
+			'SYS_WIN64' -> 16r3
 		}!
 
 External.Structure
@@ -819,7 +610,7 @@ OS.COM.AbstractELEMDESC
 	subclass: #'OS.COM.ELEMDESC'
 	instanceVariableNames: 'param index custData'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_ELEMDESC_Size' -> 16r10. '_OffsetOf_paramdesc' -> 16r8 }!
 
@@ -851,7 +642,7 @@ External.GenericExternalArray
 	subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationErrors} #{OS.COM.OleVariant private})
+	imports: #(#{OS.COM.OLEAutLibrary} #{OS.COM.OleVariant private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cbElements' -> 16r4.
@@ -860,7 +651,19 @@ External.GenericExternalArray
 			'_OffsetOf_fFeatures' -> 16r2.
 			'_OffsetOf_pvData' -> 16rC.
 			'_OffsetOf_rgsabound' -> 16r10.
-			'_SAFEARRAY_Size' -> 16r18
+			'_SAFEARRAY_Size' -> 16r18.
+			'FADF_AUTO' -> 16r1.
+			'FADF_BSTR' -> 16r100.
+			'FADF_DISPATCH' -> 16r400.
+			'FADF_EMBEDDED' -> 16r4.
+			'FADF_FIXEDSIZE' -> 16r10.
+			'FADF_HAVEIID' -> 16r40.
+			'FADF_HAVEVARTYPE' -> 16r80.
+			'FADF_RECORD' -> 16r20.
+			'FADF_RESERVED' -> 16rF0E8.
+			'FADF_STATIC' -> 16r2.
+			'FADF_UNKNOWN' -> 16r200.
+			'FADF_VARIANT' -> 16r800
 		}!
 
 External.Int16Array
@@ -911,7 +714,7 @@ External.FinalizableStructure
 	subclass: #'OS.COM.OleVariant'
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified'
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors} #{OS.COM.PropsysLibrary private})
+	imports: #(#{OS.COM.OLEAutLibrary private} #{OS.COM.PropsysLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_boolVal' -> 16r8.
@@ -1031,7 +834,7 @@ External.FinalizableStructure
 	subclass: #'OS.COM.TypeInfoStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -1041,7 +844,7 @@ OS.COM.OleVariant
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'VARCMP_NULL' -> 16r3 }!
 
 OS.COM.TypeInfoStructure
 	subclass: #'OS.COM.MemberDesc'
@@ -1076,7 +879,19 @@ OS.COM.TypeInfoStructure
 			'_OffsetOf_wMajorVerNum' -> 16r38.
 			'_OffsetOf_wMinorVerNum' -> 16r3A.
 			'_OffsetOf_wTypeFlags' -> 16r36.
-			'_TYPEATTR_Size' -> 16r4C
+			'_TYPEATTR_Size' -> 16r4C.
+			'TYPEFLAG_FAGGREGATABLE' -> 16r400.
+			'TYPEFLAG_FAPPOBJECT' -> 16r1.
+			'TYPEFLAG_FCANCREATE' -> 16r2.
+			'TYPEFLAG_FCONTROL' -> 16r20.
+			'TYPEFLAG_FDISPATCHABLE' -> 16r1000.
+			'TYPEFLAG_FDUAL' -> 16r40.
+			'TYPEFLAG_FHIDDEN' -> 16r10.
+			'TYPEFLAG_FLICENSED' -> 16r4.
+			'TYPEFLAG_FNONEXTENSIBLE' -> 16r80.
+			'TYPEFLAG_FOLEAUTOMATION' -> 16r100.
+			'TYPEFLAG_FPREDECLID' -> 16r8.
+			'TYPEFLAG_FRESTRICTED' -> 16r200
 		}!
 
 OS.COM.MemberDesc
@@ -1097,7 +912,35 @@ OS.COM.MemberDesc
 			'_OffsetOf_lprgelemdescParam' -> 16r8.
 			'_OffsetOf_lprgscode' -> 16r4.
 			'_OffsetOf_oVft' -> 16r1C.
-			'_OffsetOf_wFuncFlags' -> 16r30
+			'_OffsetOf_wFuncFlags' -> 16r30.
+			'CC_CDECL' -> 16r1.
+			'CC_MACPASCAL' -> 16r3.
+			'CC_MAX' -> 16r9.
+			'CC_MPWCDECL' -> 16r7.
+			'CC_MPWPASCAL' -> 16r8.
+			'CC_MSCPASCAL' -> 16r2.
+			'CC_PASCAL' -> 16r2.
+			'CC_RESERVED' -> 16r5.
+			'CC_STDCALL' -> 16r4.
+			'CC_SYSCALL' -> 16r6.
+			'FUNC_DISPATCH' -> 16r4.
+			'FUNC_NONVIRTUAL' -> 16r2.
+			'FUNC_PUREVIRTUAL' -> 16r1.
+			'FUNC_STATIC' -> 16r3.
+			'FUNC_VIRTUAL' -> 16r0.
+			'FUNCFLAG_FBINDABLE' -> 16r4.
+			'FUNCFLAG_FDEFAULTBIND' -> 16r20.
+			'FUNCFLAG_FDEFAULTCOLLELEM' -> 16r100.
+			'FUNCFLAG_FDISPLAYBIND' -> 16r10.
+			'FUNCFLAG_FHIDDEN' -> 16r40.
+			'FUNCFLAG_FIMMEDIATEBIND' -> 16r1000.
+			'FUNCFLAG_FNONBROWSABLE' -> 16r400.
+			'FUNCFLAG_FREPLACEABLE' -> 16r800.
+			'FUNCFLAG_FREQUESTEDIT' -> 16r8.
+			'FUNCFLAG_FRESTRICTED' -> 16r1.
+			'FUNCFLAG_FSOURCE' -> 16r2.
+			'FUNCFLAG_FUIDEFAULT' -> 16r200.
+			'FUNCFLAG_FUSESGETLASTERROR' -> 16r80
 		}!
 
 OS.COM.MemberDesc
@@ -1113,7 +956,23 @@ OS.COM.MemberDesc
 			'_OffsetOf_oInst' -> 16r8.
 			'_OffsetOf_varkind' -> 16r20.
 			'_OffsetOf_wVarFlags' -> 16r1C.
-			'_VARDESC_Size' -> 16r24
+			'_VARDESC_Size' -> 16r24.
+			'VAR_CONST' -> 16r2.
+			'VAR_DATEVALUEONLY' -> 16r2.
+			'VAR_DISPATCH' -> 16r3.
+			'VAR_PERINSTANCE' -> 16r0.
+			'VAR_STATIC' -> 16r1.
+			'VAR_TIMEVALUEONLY' -> 16r1.
+			'VARFLAG_FBINDABLE' -> 16r4.
+			'VARFLAG_FDEFAULTBIND' -> 16r20.
+			'VARFLAG_FDISPLAYBIND' -> 16r10.
+			'VARFLAG_FHIDDEN' -> 16r40.
+			'VARFLAG_FNONBROWSABLE' -> 16r400.
+			'VARFLAG_FREADONLY' -> 16r1.
+			'VARFLAG_FREQUESTEDIT' -> 16r8.
+			'VARFLAG_FRESTRICTED' -> 16r80.
+			'VARFLAG_FSOURCE' -> 16r2.
+			'VARFLAG_FUIDEFAULT' -> 16r200
 		}!
 
 OS.COM.IUnknown
@@ -1128,9 +987,17 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
-	imports: #(#{OS.COM.OleVariant})
+	imports: #(#{OS.COM.DISPPARAMS private} #{OS.COM.OLEAutLibrary} #{OS.COM.OleVariant})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DISPID_NEWENUM' -> -16r4.
+			'DISPID_UNKNOWN' -> -16r1.
+			'DISPID_VALUE' -> 16r0.
+			'INVOKE_FUNC' -> 16r1.
+			'INVOKE_PROPERTYGET' -> 16r2.
+			'INVOKE_PROPERTYPUT' -> 16r4.
+			'INVOKE_PROPERTYPUTREF' -> 16r8
+		}!
 
 OS.COM.IUnknown
 	subclass: #'OS.COM.IPerPropertyBrowsing'
@@ -1152,9 +1019,9 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IRecordInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'TYPE_E_FIELDNOTFOUND' -> -16r7FFD7FE9 }!
 
 OS.COM.IUnknown
 	subclass: #'OS.COM.ITypeComp'
@@ -1165,20 +1032,12 @@ OS.COM.IUnknown
 	classConstants: {}!
 
 OS.COM.IUnknown
-	subclass: #'OS.COM.ITypeInfo'
-	instanceVariableNames: 'attributes allCustData'
-	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-OS.COM.IUnknown
-	subclass: #'OS.COM.ITypeLib'
+	subclass: #'OS.COM.ITypeInformationInterface'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #(#{OS.COM.OLEAutLibrary})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'TYPE_E_ELEMENTNOTFOUND' -> -16r7FFD7FD5 }!
 
 OS.COM.IEnumXXXX
 	subclass: #'OS.COM.IEnumVARIANT'
@@ -1195,6 +1054,36 @@ OS.COM.IProvideClassInfo
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+OS.COM.ITypeInformationInterface
+	subclass: #'OS.COM.ITypeInfo'
+	instanceVariableNames: 'attributes allCustData'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'IMPLTYPEFLAG_FDEFAULT' -> 16r1.
+			'IMPLTYPEFLAG_FRESTRICTED' -> 16r4.
+			'IMPLTYPEFLAG_FSOURCE' -> 16r2.
+			'MEMBERID_NIL' -> -16r1.
+			'TKIND_ALIAS' -> 16r6.
+			'TKIND_COCLASS' -> 16r5.
+			'TKIND_DISPATCH' -> 16r4.
+			'TKIND_ENUM' -> 16r0.
+			'TKIND_INTERFACE' -> 16r3.
+			'TKIND_MAX' -> 16r8.
+			'TKIND_MODULE' -> 16r2.
+			'TKIND_RECORD' -> 16r1.
+			'TKIND_UNION' -> 16r7
+		}!
+
+OS.COM.ITypeInformationInterface
+	subclass: #'OS.COM.ITypeLib'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'TYPE_E_LIBNOTREGISTERED' -> -16r7FFD7FE3 }!
 
 OS.COM.ITypeInfo
 	subclass: #'OS.COM.ITypeInfo2'
@@ -1307,7 +1196,7 @@ OS.COM.TypeInfoObject
 	subclass: #'OS.COM.TypeLibraryAnalyzer'
 	instanceVariableNames: 'attributes namespaceName packageName _unused7 constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'StandardAliases TypeLibs'
-	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -2291,7 +2180,7 @@ vt
 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [COM.VARIANT.VT_I8] ifFalse: [COM.VARIANT.VT_I4]! !
+	^VMLibrary.IsWin64 ifTrue: [COM.VARIANT.VT_I8] ifFalse: [COM.VARIANT.VT_I4]! !
 
 !External.IntPtr class categoriesForMethods!
 typeName!constants!private! !
@@ -2303,9 +2192,7 @@ vt!constants!public! !
 initializeVariant: anOleVariant
 	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. On a 32-bit host this will be a (VT_ARRAY|VT_I4), or a (VT_VECTOR|VT_I4). On a 64-bit host this will be a (VT_ARRAY|VT_I8), or a (VT_VECTOR|VT_I8)."
 
-	VMConstants.IsWin64
-		ifTrue: [anOleVariant int64Vector: self]
-		ifFalse: [anOleVariant int32Vector: self]! !
+	VMLibrary.IsWin64 ifTrue: [anOleVariant int64Vector: self] ifFalse: [anOleVariant int32Vector: self]! !
 
 !External.IntPtrArray categoriesForMethods!
 initializeVariant:!converting!private! !
@@ -2726,7 +2613,7 @@ vt
 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [COM.VARIANT.VT_UI8] ifFalse: [COM.VARIANT.VT_UI4]! !
+	^VMLibrary.IsWin64 ifTrue: [COM.VARIANT.VT_UI8] ifFalse: [COM.VARIANT.VT_UI4]! !
 
 !External.UIntPtr class categoriesForMethods!
 typeName!constants!private! !
@@ -2738,7 +2625,7 @@ vt!constants!public! !
 initializeVariant: anOleVariant
 	"Private - Initialize the variant argument to be a vector type holding a copy of the receiver's values. On a 32-bit host this will be a (VT_ARRAY|VT_UI4), or a (VT_VECTOR|VT_UI4). On a 64-bit host this will be a (VT_ARRAY|VT_UI8), or a (VT_VECTOR|VT_UI8)."
 
-	VMConstants.IsWin64
+	VMLibrary.IsWin64
 		ifTrue: [anOleVariant uint64Vector: self]
 		ifFalse: [anOleVariant uint32Vector: self]! !
 
@@ -2868,7 +2755,7 @@ getVariantBoolString: anInteger
 	OleAut32
 		varBstrFromBool: anInteger
 		lcid: self lcid
-		dwFlags: AutomationConstants.VARIANT_LOCALBOOL
+		dwFlags: OLEAutLibrary.VARIANT_LOCALBOOL
 		pbstrOut: bstr.
 	str := bstr asUtf8String.
 	bstr free.
@@ -2878,8 +2765,8 @@ variantBool: aBoolean
 	^info at: aBoolean class name
 		ifAbsentPutClean: 
 			[self getVariantBoolString: (aBoolean
-						ifTrue: [COM.AutomationConstants.VARIANT_TRUE]
-						ifFalse: [COM.AutomationConstants.VARIANT_FALSE])]! !
+						ifTrue: [OS.COM.OLEAutLibrary.VARIANT_TRUE]
+						ifFalse: [OS.COM.OLEAutLibrary.VARIANT_FALSE])]! !
 
 !OS.AbstractWindowsLocale categoriesForMethods!
 boolFormat!constants!public! !

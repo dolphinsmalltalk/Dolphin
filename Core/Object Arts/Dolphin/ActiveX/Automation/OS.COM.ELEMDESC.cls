@@ -4,7 +4,7 @@ OS.COM.AbstractELEMDESC
 	subclass: #'OS.COM.ELEMDESC'
 	instanceVariableNames: 'param index custData'
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_ELEMDESC_Size' -> 16r10. '_OffsetOf_paramdesc' -> 16r8 }!
 

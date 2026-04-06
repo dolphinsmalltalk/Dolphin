@@ -47,7 +47,7 @@ maxSize
 	^256 * (1024 ** 4) - (64 * 1024)!
 
 sharingError
-	^FileException matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_SHARING_VIOLATION]!
+	^FileException matching: [:ex | ex statusCode = OS.Win32Error.ERROR_SHARING_VIOLATION]!
 
 streamClassSupportsUtf16
 	"Streaming strings to/from FileStreams in UTF-16 encoding is not currently implemented."

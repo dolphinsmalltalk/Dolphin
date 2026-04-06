@@ -4,7 +4,7 @@ UI.ControlBarAbstract
 	subclass: #'UI.Toolbar'
 	instanceVariableNames: 'textcolor idMap items bitmapsStart insets tbFlags indent imageSize buttonSize dropDownMenu layoutManager'
 	classVariableNames: 'FluentIconFonts'
-	imports: #(#{OS.ToolbarConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'FluentIconsMask' -> 16r2.
@@ -21,7 +21,120 @@ UI.ControlBarAbstract
 			'IsScalableMask' -> 16r4.
 			'LabelsMask' -> 16r1.
 			'NotScalableMask' -> 16r8.
-			'ScalableMask' -> 16rC
+			'ScalableMask' -> 16rC.
+			'TB_ADDBITMAP' -> 16r413.
+			'TB_ADDBUTTONSW' -> 16r444.
+			'TB_ADDSTRINGW' -> 16r44D.
+			'TB_AUTOSIZE' -> 16r421.
+			'TB_BUTTONCOUNT' -> 16r418.
+			'TB_BUTTONSTRUCTSIZE' -> 16r41E.
+			'TB_CHANGEBITMAP' -> 16r42B.
+			'TB_CHECKBUTTON' -> 16r402.
+			'TB_COMMANDTOINDEX' -> 16r419.
+			'TB_CUSTOMIZE' -> 16r41B.
+			'TB_DELETEBUTTON' -> 16r416.
+			'TB_ENABLEBUTTON' -> 16r401.
+			'TB_GETBITMAP' -> 16r42C.
+			'TB_GETBITMAPFLAGS' -> 16r429.
+			'TB_GETBUTTON' -> 16r417.
+			'TB_GETBUTTONINFOW' -> 16r43F.
+			'TB_GETBUTTONSIZE' -> 16r43A.
+			'TB_GETBUTTONTEXTW' -> 16r44B.
+			'TB_GETCOLORSCHEME' -> 16r2003.
+			'TB_GETDISABLEDIMAGELIST' -> 16r437.
+			'TB_GETEXTENDEDSTYLE' -> 16r455.
+			'TB_GETHOTIMAGELIST' -> 16r435.
+			'TB_GETIDEALSIZE' -> 16r463.
+			'TB_GETIMAGELIST' -> 16r431.
+			'TB_GETIMAGELISTCOUNT' -> 16r462.
+			'TB_GETINSERTMARK' -> 16r44F.
+			'TB_GETINSERTMARKCOLOR' -> 16r459.
+			'TB_GETITEMDROPDOWNRECT' -> 16r467.
+			'TB_GETITEMRECT' -> 16r41D.
+			'TB_GETMAXSIZE' -> 16r453.
+			'TB_GETMETRICS' -> 16r465.
+			'TB_GETPADDING' -> 16r456.
+			'TB_GETPRESSEDIMAGELIST' -> 16r469.
+			'TB_GETRECT' -> 16r433.
+			'TB_GETROWS' -> 16r428.
+			'TB_GETSTATE' -> 16r412.
+			'TB_GETSTRINGW' -> 16r45B.
+			'TB_GETSTYLE' -> 16r439.
+			'TB_GETTEXTROWS' -> 16r43D.
+			'TB_GETTOOLTIPS' -> 16r423.
+			'TB_HASACCELERATOR' -> 16r45F.
+			'TB_HIDEBUTTON' -> 16r404.
+			'TB_INDETERMINATE' -> 16r405.
+			'TB_INSERTBUTTONW' -> 16r443.
+			'TB_INSERTMARKHITTEST' -> 16r451.
+			'TB_ISBUTTONCHECKED' -> 16r40A.
+			'TB_ISBUTTONENABLED' -> 16r409.
+			'TB_ISBUTTONHIDDEN' -> 16r40C.
+			'TB_ISBUTTONINDETERMINATE' -> 16r40D.
+			'TB_ISBUTTONPRESSED' -> 16r40B.
+			'TB_LOADIMAGES' -> 16r432.
+			'TB_MAPACCELERATOR' -> 16r45A.
+			'TB_MAPACCELERATORW' -> 16r45A.
+			'TB_MOVEBUTTON' -> 16r452.
+			'TB_PRESSBUTTON' -> 16r403.
+			'TB_REPLACEBITMAP' -> 16r42E.
+			'TB_SAVERESTOREW' -> 16r44C.
+			'TB_SETBITMAPSIZE' -> 16r420.
+			'TB_SETBOUNDINGSIZE' -> 16r45D.
+			'TB_SETBUTTONINFOW' -> 16r440.
+			'TB_SETBUTTONSIZE' -> 16r41F.
+			'TB_SETBUTTONWIDTH' -> 16r43B.
+			'TB_SETCMDID' -> 16r42A.
+			'TB_SETCOLORSCHEME' -> 16r2002.
+			'TB_SETDISABLEDIMAGELIST' -> 16r436.
+			'TB_SETDRAWTEXTFLAGS' -> 16r446.
+			'TB_SETEXTENDEDSTYLE' -> 16r454.
+			'TB_SETHOTIMAGELIST' -> 16r434.
+			'TB_SETHOTITEM2' -> 16r45E.
+			'TB_SETIMAGELIST' -> 16r430.
+			'TB_SETINDENT' -> 16r42F.
+			'TB_SETINSERTMARK' -> 16r450.
+			'TB_SETINSERTMARKCOLOR' -> 16r458.
+			'TB_SETLISTGAP' -> 16r460.
+			'TB_SETMAXTEXTROWS' -> 16r43C.
+			'TB_SETMETRICS' -> 16r466.
+			'TB_SETPADDING' -> 16r457.
+			'TB_SETPARENT' -> 16r425.
+			'TB_SETPRESSEDIMAGELIST' -> 16r468.
+			'TB_SETROWS' -> 16r427.
+			'TB_SETSTATE' -> 16r411.
+			'TB_SETSTYLE' -> 16r438.
+			'TB_SETTOOLTIPS' -> 16r424.
+			'TB_SETWINDOWTHEME' -> 16r200B.
+			'TBBF_LARGE' -> 16r1.
+			'TBN_BEGINADJUST' -> -16r2BF.
+			'TBN_BEGINDRAG' -> -16r2BD.
+			'TBN_CLOSEUP' -> -16r2C7.
+			'TBN_CUSTHELP' -> -16r2C5.
+			'TBN_DROPDOWN' -> -16r2C6.
+			'TBN_ENDADJUST' -> -16r2C0.
+			'TBN_ENDDRAG' -> -16r2BE.
+			'TBN_FIRST' -> -16r2BC.
+			'TBN_GETBUTTONINFOW' -> -16r2D0.
+			'TBN_GETDISPINFOW' -> -16r2CD.
+			'TBN_GETINFOTIPW' -> -16r2CF.
+			'TBN_LAST' -> -16r2D0.
+			'TBN_QUERYDELETE' -> -16r2C3.
+			'TBN_QUERYINSERT' -> -16r2C2.
+			'TBN_RESET' -> -16r2C1.
+			'TBN_TOOLBARCHANGE' -> -16r2C4.
+			'TBSTYLE_ALTDRAG' -> 16r400.
+			'TBSTYLE_CUSTOMERASE' -> 16r2000.
+			'TBSTYLE_EX_DOUBLEBUFFER' -> 16r80.
+			'TBSTYLE_EX_DRAWDDARROWS' -> 16r1.
+			'TBSTYLE_EX_HIDECLIPPEDBUTTONS' -> 16r10.
+			'TBSTYLE_EX_MIXEDBUTTONS' -> 16r8.
+			'TBSTYLE_FLAT' -> 16r800.
+			'TBSTYLE_LIST' -> 16r1000.
+			'TBSTYLE_REGISTERDROP' -> 16r4000.
+			'TBSTYLE_TOOLTIPS' -> 16r100.
+			'TBSTYLE_TRANSPARENT' -> 16r8000.
+			'TBSTYLE_WRAPABLE' -> 16r200
 		}!
 
 UI.Toolbar guid: (Core.GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -317,7 +430,7 @@ customDrawItem: aNMTBCUSTOMDRAW
 	textcolor
 		ifNotNil: 
 			[aNMTBCUSTOMDRAW clrText: textcolor.
-			rc := rc bitOr: TBCDRF_USECDCOLORS].
+			rc := rc bitOr: NMTBCUSTOMDRAW.TBCDRF_USECDCOLORS].
 	(self itemFromId: aNMTBCUSTOMDRAW dwItemSpec)
 		ifNotNil: 
 			[:item |
@@ -327,7 +440,7 @@ customDrawItem: aNMTBCUSTOMDRAW
 						ifNotNil: 
 							[:c |
 							aNMTBCUSTOMDRAW clrText: c.
-							rc := rc bitOr: TBCDRF_USECDCOLORS].
+							rc := rc bitOr: NMTBCUSTOMDRAW.TBCDRF_USECDCOLORS].
 					item font ifNotNil: [:f | aNMTBCUSTOMDRAW font: f]]].
 	^rc bitOr: aNMTBCUSTOMDRAW applyFont!
 
@@ -607,20 +720,20 @@ nmCustomDraw: pNMHDR
 	draw speed too much as this message can be sent several times per sub-item."
 
 	| drawStage context item |
-	(drawStage := pNMHDR uint32AtOffset: NMCUSTOMDRAW._OffsetOf_dwDrawStage) == CDDS_PREPAINT
+	(drawStage := pNMHDR uint32AtOffset: NMCUSTOMDRAW._OffsetOf_dwDrawStage) == NMCUSTOMDRAW.CDDS_PREPAINT
 		ifTrue: 
 			["Before any painting"
 			^(self wantCustomDrawItemNotifications: pNMHDR)
-				ifTrue: [CDRF_NOTIFYITEMDRAW]
-				ifFalse: [CDRF_DODEFAULT]].
+				ifTrue: [NMCUSTOMDRAW.CDRF_NOTIFYITEMDRAW]
+				ifFalse: [NMCUSTOMDRAW.CDRF_DODEFAULT]].
 	"Before painting item"
-	(drawStage allMask: CDDS_ITEMPREPAINT) ifFalse: [^nil].
+	(drawStage allMask: NMCUSTOMDRAW.CDDS_ITEMPREPAINT) ifFalse: [^nil].
 	context := self customDrawContextClass fromAddress: pNMHDR.
 	item := self itemFromId: context dwItemSpec.
 	item
 		ifNil: 
 			["The control attempts to draw stuff that isn't there on occassion"
-			^CDRF_DODEFAULT].
+			^NMCUSTOMDRAW.CDRF_DODEFAULT].
 	context
 		item: item;
 		view: self.
@@ -656,7 +769,7 @@ onDropDown: aToolbarButton
 	dropDownMenu := nil.
 	emptyMenu ifTrue: [self presenter trigger: #dropDown: with: aToolbarButton].
 	dropDownMenu := nil.
-	^TBDDRET_DEFAULT!
+	^NMTOOLBARW.TBDDRET_DEFAULT!
 
 onEraseRequired: aColorEvent
 	"Private - Handler for erase background event- erase to the background colour,
@@ -924,7 +1037,7 @@ tbGetMetrics
 
 	| metrics |
 	metrics := TBMETRICS newBuffer.
-	metrics dwMask: ##(TBMF_PAD | TBMF_BARPAD | TBMF_BUTTONSPACING).
+	metrics dwMask: ##(TBMETRICS.TBMF_PAD | TBMETRICS.TBMF_BARPAD | TBMETRICS.TBMF_BUTTONSPACING).
 	self
 		sendMessage: TB_GETMETRICS
 		wParam: 0
@@ -1045,7 +1158,7 @@ tbnDropDown: pNMHDR
 	nmtb := NMTOOLBARW fromAddress: pNMHDR.
 	id := nmtb iItem.
 	^(self itemFromId: id)
-		ifNil: [TBDDRET_DEFAULT]
+		ifNil: [NMTOOLBARW.TBDDRET_DEFAULT]
 		ifNotNil: [:button | self presenter onDropDown: button]!
 
 tbnEndAdjust: pNMHDR

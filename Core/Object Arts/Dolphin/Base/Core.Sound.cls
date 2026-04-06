@@ -4,9 +4,23 @@ Core.Object
 	subclass: #'Core.Sound'
 	instanceVariableNames: 'name location type fileLocator'
 	classVariableNames: 'Registry'
-	imports: #(#{OS.Win32Constants} #{OS.MessageBoxConstants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'SND_ALIAS' -> 16r10000.
+			'SND_ASYNC' -> 16r1.
+			'SND_FILENAME' -> 16r20000.
+			'SND_LOOP' -> 16r8.
+			'SND_MEMORY' -> 16r4.
+			'SND_NODEFAULT' -> 16r2.
+			'SND_NOSTOP' -> 16r10.
+			'SND_NOWAIT' -> 16r2000.
+			'SND_RESERVED' -> 16rFF000000.
+			'SND_RESOURCE' -> 16r40004.
+			'SND_SYNC' -> 16r0.
+			'SND_TYPEMASK' -> 16r170007.
+			'SND_VALIDFLAGS' -> 16r17201F
+		}!
 
 Core.Sound guid: (Core.GUID fromString: '{87b4c4bc-026e-11d3-9fd7-00a0cc3e4a32}')!
 

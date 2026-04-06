@@ -3,8 +3,8 @@
 External.FinalizableStructure
 	subclass: #'OS.COM.STGMEDIUM'
 	instanceVariableNames: 'value'
-	classVariableNames: 'GetSelectors'
-	imports: #(#{OS.COM.PersistConstants})
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_handle' -> 16r4.
@@ -13,7 +13,15 @@ External.FinalizableStructure
 			'_OffsetOf_pstm' -> 16r4.
 			'_OffsetOf_pUnkForRelease' -> 16r8.
 			'_OffsetOf_tymed' -> 16r0.
-			'_STGMEDIUM_Size' -> 16rC
+			'_STGMEDIUM_Size' -> 16rC.
+			'TYMED_ENHMF' -> 16r40.
+			'TYMED_FILE' -> 16r2.
+			'TYMED_GDI' -> 16r10.
+			'TYMED_HGLOBAL' -> 16r1.
+			'TYMED_ISTORAGE' -> 16r8.
+			'TYMED_ISTREAM' -> 16r4.
+			'TYMED_MFPICT' -> 16r20.
+			'TYMED_NULL' -> 16r0
 		}!
 
 OS.COM.STGMEDIUM guid: (Core.GUID fromString: '{cc17569a-49c6-475d-a47c-86eaae187d18}')!
@@ -59,6 +67,20 @@ enhancedMetafile: metafile
 	self handle: metafile asParameter.
 	self tymed: TYMED_ENHMF
 !
+
+fieldAccessSelectors
+	"Private - Answer a table that maps media types to the corresponding accessor method selector."
+
+	^##(LookupTable withAll: {
+				TYMED_GDI -> #bitmap.
+				TYMED_MFPICT -> #metafile.
+				TYMED_ENHMF -> #enhancedMetafile.
+				TYMED_HGLOBAL -> #globalHandle.
+				TYMED_FILE -> #path.
+				TYMED_ISTREAM -> #pstm.
+				TYMED_ISTORAGE -> #pstg.
+				TYMED_NULL -> #null
+			})!
 
 free
 	"Free external resources referenced by the receiver. This is relevant
@@ -164,7 +186,7 @@ printOn: aStream
 	defined subclasses. Fields are printed in the order of their offset"
 
 	| tymed |
-	tymed := GetSelectors at: self tymed.
+	tymed := self fieldAccessSelectors at: self tymed.
 	aStream
 		basicPrint: self;
 		nextPut: $(;
@@ -215,13 +237,14 @@ tymed: anInteger
 value
 	"Answer the 'value' currently contained in the receiver (which is a tag discriminated union)."
 
-	^self perform: (GetSelectors at: self tymed)! !
+	^self perform: (self fieldAccessSelectors at: self tymed)! !
 
 !OS.COM.STGMEDIUM categoriesForMethods!
 bitmap!accessing!public! !
 bitmap:!accessing!public! !
 enhancedMetafile!accessing!public! !
 enhancedMetafile:!accessing!public! !
+fieldAccessSelectors!constants!private! !
 free!public!realizing/unrealizing! !
 globalMemory!accessing!public! !
 globalMemory:!accessing!public! !
@@ -299,36 +322,11 @@ defineFields
 			offset: 4!
 
 getFieldNames
-	^#(#tymed #handle #lpszFileName #pstg #pstm #pUnkForRelease)!
-
-initialize
-	"Private - Initialize the class variables of the receiver.
-
-		STGMEDIUM initialize
-	"
-
-	self initializeMessageMap!
-
-initializeMessageMap
-	"Private - Initialize the table that maps media types to the corresponding accessor
-	method selector.
-	N.B. This method must not be stripped because otherwise there is a danger that the accessor methods
-	will be stripped."
-
-	GetSelectors := LookupTable withAll: {TYMED_GDI -> #bitmap.
-						TYMED_MFPICT -> #metafile.
-						TYMED_ENHMF -> #enhancedMetafile.
-						TYMED_HGLOBAL -> #globalHandle.
-						TYMED_FILE -> #path.
-						TYMED_ISTREAM -> #pstm.
-						TYMED_ISTORAGE -> #pstg.
-						TYMED_NULL -> #null}! !
+	^#(#tymed #handle #lpszFileName #pstg #pstm #pUnkForRelease)! !
 
 !OS.COM.STGMEDIUM class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
-initialize!initializing!private! !
-initializeMessageMap!initializing!must not strip!private! !
 !
 

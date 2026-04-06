@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.RegKeyTest'
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
-	imports: #(#{OS.WinRegConstants})
+	imports: #(#{OS.AdvApiLibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -159,11 +159,12 @@ testParentPath
 
 testReadingEmptySz
 	"Verify reading of an empty string written using the raw API so we know it is really empty"
+
 	AdvApi32
 		regSetValueEx: testKey asParameter
 		lpValueName: 'Empty'
 		reserved: 0
-		dwType: WinRegConstants.REG_SZ
+		dwType: REG_SZ
 		lpData: nil
 		cbData: 0.
 	self assert: (testKey valueAt: 'Empty') equals: Utf16String.Empty!
@@ -194,7 +195,7 @@ testRemoveSubKeyIfAbsent
 	self
 		should: [testKey removeSubKey: 'subbie' ifAbsent: [self fail: 'Sub-key unexpectedly missing']]
 		raise: Win32Error
-		matching: [:ex | ex statusCode = Win32Errors.ERROR_ACCESS_DENIED].
+		matching: [:ex | ex statusCode = Win32Error.ERROR_ACCESS_DENIED].
 	self assert: (testKey includesKey: 'subbie')
 !
 
@@ -265,7 +266,7 @@ testValueAtPut
 						lpType: typeBuf
 						lpData: nil
 						lpcbData: nil.
-			self assert: dwErr equals: OS.Win32Errors.ERROR_SUCCESS.
+			self assert: dwErr equals: Win32Error.ERROR_SUCCESS.
 			self assert: typeBuf value equals: eachType.
 			self assert: (testKey valueAt: 'each') equals: each].
 	"Nil'ing the default value is a special case - see RegKeyAbstract>>valueAt:put:type:"

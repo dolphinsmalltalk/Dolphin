@@ -59,7 +59,7 @@ Core.Dictionary
 	variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
 	classVariableNames: 'PathSeparator'
-	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
+	imports: #(#{OS.AdvApiLibrary private} #{OS.Win32Error})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AccessModes'
@@ -171,7 +171,7 @@ writeToRegistry: aRegistryWriter name: aString
 
 	"In the current 32-bit world, all SmallIntegers can be stored as DWORD values, but not so for a 64-bit future"
 
-	(VMConstants.IsWin64 and: [self isInt32 not])
+	(VMLibrary.IsWin64 and: [self isInt32 not])
 		ifTrue: [aRegistryWriter qwordAt: aString put: self]
 		ifFalse: [aRegistryWriter dwordAt: aString put: self]! !
 

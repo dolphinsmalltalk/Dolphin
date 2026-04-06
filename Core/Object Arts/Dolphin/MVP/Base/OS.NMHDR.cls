@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.NMHDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_NMHDR_Size' -> 16rC.

@@ -49,7 +49,7 @@ testPushDownMethodThatReferencesPoolDictionary
 			[:each |
 			self assert: (each parseTreeFor: #junk) equals: parseTree.
 			#rbFix.	"On Dolphin pools (imports) are inherited, so in fact the import should NOT have been copied down."
-			self deny: (each directlyImportsNamespace: #{OS.CRTConstants})]!
+			self deny: (each directlyImportsNamespace: #{OS.CRTLibrary})]!
 
 testPushDownNonExistantMenu
 	| refactoring |

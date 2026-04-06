@@ -4,7 +4,7 @@ Graphics.IconFromSystemInitializer
 	subclass: #'Graphics.IconFromShellStockInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ShellConstants private} #{OS.SHSTOCKICONINFO private})
+	imports: #(#{OS.SHSTOCKICONINFO private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -4,7 +4,7 @@ UI.ListPresenter
 	subclass: #'Tools.MethodBrowser'
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool namespaceModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
-	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
+	imports: #(#{Kernel.Compiler private} #{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

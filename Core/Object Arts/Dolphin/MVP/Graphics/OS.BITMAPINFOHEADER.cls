@@ -17,7 +17,8 @@ OS.SizedStructure
 			'_OffsetOf_biSizeImage' -> 16r14.
 			'_OffsetOf_biWidth' -> 16r4.
 			'_OffsetOf_biXPelsPerMeter' -> 16r18.
-			'_OffsetOf_biYPelsPerMeter' -> 16r1C
+			'_OffsetOf_biYPelsPerMeter' -> 16r1C.
+			'BI_RGB' -> 16r0
 		}!
 
 OS.BITMAPINFOHEADER guid: (Core.GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!

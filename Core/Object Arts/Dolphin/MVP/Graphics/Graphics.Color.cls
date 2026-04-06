@@ -4,9 +4,13 @@ Core.Object
 	subclass: #'Graphics.Color'
 	instanceVariableNames: ''
 	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
-	imports: #()
+	imports: #(#{OS.GDILibrary private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'CLR_DEFAULT' -> 16rFF000000.
+			'CLR_INVALID' -> 16rFFFFFFFF.
+			'CLR_NONE' -> 16rFFFFFFFF
+		}!
 
 Graphics.Color guid: (Core.GUID fromString: '{87b4c465-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -182,7 +186,7 @@ darker
 defaultPalette
 	"Private - Answer the default palette."
 
-	^Gdi32 getStockObject: Win32Constants.DEFAULT_PALETTE!
+	^Gdi32 getStockObject: DEFAULT_PALETTE!
 
 faded
 	"Answer a new color which is a faded (half intensity) copy of the receiver."
@@ -1168,7 +1172,7 @@ initialize
 	NamedColors := LookupTable new.
 	ColorNames := LookupTable new.
 	default := ColorDefault basicNew
-				setCode: Win32Constants.CLR_DEFAULT;
+				setCode: CLR_DEFAULT;
 				beImmutableObject;
 				yourself.
 	self
@@ -1176,7 +1180,7 @@ initialize
 		addClassVariable: 'Default' value: default.
 	self addClassVariable: 'None'
 		value: (ColorNone basicNew
-				setCode: Win32Constants.CLR_NONE;
+				setCode: CLR_NONE;
 				beImmutableObject;
 				yourself).
 	self initializeCommonColors.

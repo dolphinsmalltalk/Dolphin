@@ -28,7 +28,7 @@ initialize
 		WindowsShellMemory initialize
 	"
 
-	self extraInstanceSpec: VMConstants.IntPtrSize! !
+	self extraInstanceSpec: VMLibrary.IntPtrSize! !
 
 !OS.WindowsShellMemory class categoriesForMethods!
 allocator!accessing!private! !

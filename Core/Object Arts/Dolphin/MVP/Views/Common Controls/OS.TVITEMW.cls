@@ -4,7 +4,7 @@ OS.CCITEM
 	subclass: #'OS.TVITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.TreeViewConstants})
+	imports: #()
 	classInstanceVariableNames: 'callbackPrototype'
 	classConstants: {
 			'_OffsetOf_cChildren' -> 16r20.
@@ -16,7 +16,30 @@ OS.CCITEM
 			'_OffsetOf_lParam' -> 16r24.
 			'_OffsetOf_pszText' -> 16r10.
 			'_OffsetOf_stateMask' -> 16rC.
-			'_TVITEMW_Size' -> 16r28
+			'_TVITEMW_Size' -> 16r28.
+			'I_CHILDRENCALLBACK' -> -16r1.
+			'TVIF_CHILDREN' -> 16r40.
+			'TVIF_DI_SETITEM' -> 16r1000.
+			'TVIF_EXPANDEDIMAGE' -> 16r200.
+			'TVIF_HANDLE' -> 16r10.
+			'TVIF_IMAGE' -> 16r2.
+			'TVIF_PARAM' -> 16r4.
+			'TVIF_SELECTEDIMAGE' -> 16r20.
+			'TVIF_STATE' -> 16r8.
+			'TVIF_STATEEX' -> 16r100.
+			'TVIF_TEXT' -> 16r1.
+			'TVIS_BOLD' -> 16r10.
+			'TVIS_CUT' -> 16r4.
+			'TVIS_DROPHIGHLIGHTED' -> 16r8.
+			'TVIS_EX_DISABLED' -> 16r2.
+			'TVIS_EX_FLAT' -> 16r1.
+			'TVIS_EXPANDED' -> 16r20.
+			'TVIS_EXPANDEDONCE' -> 16r40.
+			'TVIS_FOCUSED' -> 16r1.
+			'TVIS_OVERLAYMASK' -> 16rF00.
+			'TVIS_SELECTED' -> 16r2.
+			'TVIS_STATEIMAGEMASK' -> 16rF000.
+			'TVIS_USERMASK' -> 16rF000
 		}!
 
 OS.TVITEMW guid: (Core.GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -48,7 +71,7 @@ allCallbacks
 	bytes
 		int32AtOffset: _OffsetOf_iImage put: I_IMAGECALLBACK;
 		int32AtOffset: _OffsetOf_cChildren put: I_CHILDRENCALLBACK;
-		uint32AtOffset: _OffsetOf_pszText put: Win32Constants.LPSTR_TEXTCALLBACK.
+		uint32AtOffset: _OffsetOf_pszText put: CommCtrlLibrary.LPSTR_TEXTCALLBACK.
 	self maskIn: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE)!
 
 beStateExpandedOnce

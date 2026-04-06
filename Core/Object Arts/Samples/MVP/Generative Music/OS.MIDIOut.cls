@@ -4,9 +4,14 @@ Core.Object
 	subclass: #'OS.MIDIOut'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
-	imports: #(#{OS.MidiConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'MidiChannelNoteOff' -> 16r8.
+			'MidiChannelNoteOn' -> 16r9.
+			'MidiControlChange' -> 16rB.
+			'MidiProgramChange' -> 16rC
+		}!
 
 OS.MIDIOut guid: (Core.GUID fromString: '{feb23957-1be7-48db-9eef-924631f6e9a9}')!
 

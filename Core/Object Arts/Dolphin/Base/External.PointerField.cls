@@ -20,7 +20,7 @@ byteSize
 	"Private - Answer the byte size of the ExternalField the receiver represents
 	Answer the size of a 32-bit pointer"
 
-	^VMConstants.IntPtrSize!
+	^VMLibrary.IntPtrSize!
 
 pointerClass
 	"Private - Answer the class of Smalltalk object to be used when dereferencing

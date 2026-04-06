@@ -4,7 +4,7 @@ OS.SizedStructure
 	subclass: #'OS.PARAFORMAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.RichEditConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cTabCount' -> 16r1A.
@@ -16,7 +16,32 @@ OS.SizedStructure
 			'_OffsetOf_wAlignment' -> 16r18.
 			'_OffsetOf_wEffects' -> 16rA.
 			'_OffsetOf_wNumbering' -> 16r8.
-			'_PARAFORMAT_Size' -> 16r9C
+			'_PARAFORMAT_Size' -> 16r9C.
+			'PFM_ALIGNMENT' -> 16r8.
+			'PFM_BORDER' -> 16r800.
+			'PFM_DONOTHYPHEN' -> 16r400000.
+			'PFM_KEEP' -> 16r20000.
+			'PFM_KEEPNEXT' -> 16r40000.
+			'PFM_LINESPACING' -> 16r100.
+			'PFM_NOLINENUMBER' -> 16r100000.
+			'PFM_NOWIDOWCONTROL' -> 16r200000.
+			'PFM_NUMBERING' -> 16r20.
+			'PFM_NUMBERINGSTART' -> 16r8000.
+			'PFM_NUMBERINGSTYLE' -> 16r2000.
+			'PFM_NUMBERINGTAB' -> 16r4000.
+			'PFM_OFFSET' -> 16r4.
+			'PFM_OFFSETINDENT' -> 16r80000000.
+			'PFM_PAGEBREAKBEFORE' -> 16r80000.
+			'PFM_RIGHTINDENT' -> 16r2.
+			'PFM_RTLPARA' -> 16r10000.
+			'PFM_SHADING' -> 16r1000.
+			'PFM_SIDEBYSIDE' -> 16r800000.
+			'PFM_SPACEAFTER' -> 16r80.
+			'PFM_SPACEBEFORE' -> 16r40.
+			'PFM_STARTINDENT' -> 16r1.
+			'PFM_STYLE' -> 16r400.
+			'PFM_TABLE' -> 16r40000000.
+			'PFM_TABSTOPS' -> 16r10
 		}!
 
 OS.PARAFORMAT guid: (Core.GUID fromString: '{87b4c607-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -218,7 +243,7 @@ getFieldNames
 	^#(#dwSize #dwMask #wNumbering #wEffects #dxStartIndent #dxRightIndent #dxOffset #wAlignment #cTabCount #rgxTabs)!
 
 packing
-	^VMConstants.IntPtrSize! !
+	^VMLibrary.IntPtrSize! !
 
 !OS.PARAFORMAT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

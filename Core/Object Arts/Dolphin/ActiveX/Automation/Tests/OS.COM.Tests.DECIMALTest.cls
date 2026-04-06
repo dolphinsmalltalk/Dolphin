@@ -72,20 +72,18 @@ testMaxValue
 	self assert: subject sign equals: 0.
 	self assert: subject value equals: MaxValue.
 	subject scale: MaxScale.
-	self assert: subject value
-		equals: (MaxValue / MaxScale exp10 asScaledDecimal: MaxScale).
+	self assert: subject value equals: (MaxValue / MaxScale exp10 asScaledDecimal: MaxScale).
 	"Sign is held separately, so min and max values have the same magnitude"
 	subject := DECIMAL new value: MaxValue negated.
 	self assert: subject scale equals: 0.
 	self assert: subject value equals: MaxValue negated.
 	self assert: subject sign equals: -1.
 	subject scale: MaxScale.
-	self assert: subject value
-		equals: (MaxValue / MaxScale exp10 asScaledDecimal: MaxScale) negated.
+	self assert: subject value equals: (MaxValue / MaxScale exp10 asScaledDecimal: MaxScale) negated.
 	self
 		should: [DECIMAL new value: MaxValue + 1]
 		raise: HRESULTError
-		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)]!
+		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: VMLibrary.PrimitiveInvalidParameter2)]!
 
 testPrintString
 	| subject |

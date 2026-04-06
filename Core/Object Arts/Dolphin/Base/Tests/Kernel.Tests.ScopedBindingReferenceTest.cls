@@ -120,16 +120,16 @@ testRefersToLiteralPoolVariable
 
 	| poolConstRef poolConst |
 	"BindingRef to a pool variable."
-	poolConstRef := self newSubjectWithPathString: '_PrimitiveFailureCode.AccessViolation'.
-	poolConst := _PrimitiveFailureCode localBindingFor: 'AccessViolation'.
+	poolConstRef := self newSubjectWithPathString: 'VMLibrary.PrimitiveAccessViolation'.
+	poolConst := VMLibrary localBindingFor: 'PrimitiveAccessViolation'.
 	self assert: (poolConstRef
-				refersToLiteral: (self newSubjectWithPath: #(#_PrimitiveFailureCode 'AccessViolation'))).
+				refersToLiteral: (self newSubjectWithPath: #(#VMLibrary 'PrimitiveAccessViolation'))).
 	self assert: (poolConstRef refersToLiteral: poolConst).
 	self deny: (poolConstRef refersToLiteral: poolConst value).
 	"Should a BindingRef implicitly refers to refs along its path? Not entirely sure, but at the moment not"
-	self deny: (poolConstRef refersToLiteral: #{Kernel._PrimitiveFailureCode}).
+	self deny: (poolConstRef refersToLiteral: #{Kernel.VMLibrary}).
 	#namespaceToDo.	"This should be true - a reference to a nested binding is implicitly a reference to the outer binding."
-	self deny: (poolConstRef refersToLiteral: _PrimitiveFailureCode binding)!
+	self deny: (poolConstRef refersToLiteral: VMLibrary binding)!
 
 testScope
 	| subject coreRelative |

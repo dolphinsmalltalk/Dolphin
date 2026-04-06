@@ -6,7 +6,102 @@ External.PermanentLibrary
 	classVariableNames: 'EnumNamesDescriptor LongPathPrefix WinVerOrGreaterMask'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ATTACH_PARENT_PROCESS' -> 16rFFFFFFFF.
+			'CREATE_ALWAYS' -> 16r2.
+			'CREATE_NEW' -> 16r1.
+			'CSTR_EQUAL' -> 16r2.
+			'CTRL_BREAK_EVENT' -> 16r1.
+			'CTRL_C_EVENT' -> 16r0.
+			'CTRL_CLOSE_EVENT' -> 16r2.
+			'CTRL_LOGOFF_EVENT' -> 16r5.
+			'CTRL_SHUTDOWN_EVENT' -> 16r6.
+			'DUPLICATE_SAME_ACCESS' -> 16r2.
+			'EVENTLOG_ERROR_TYPE' -> 16r1.
+			'EVENTLOG_INFORMATION_TYPE' -> 16r4.
+			'EVENTLOG_SUCCESS' -> 16r0.
+			'EVENTLOG_WARNING_TYPE' -> 16r2.
+			'FILE_ATTRIBUTE_DIRECTORY' -> 16r10.
+			'FILE_ATTRIBUTE_NORMAL' -> 16r80.
+			'FILE_ATTRIBUTE_READONLY' -> 16r1.
+			'FILE_BEGIN' -> 16r0.
+			'FILE_CURRENT' -> 16r1.
+			'FILE_END' -> 16r2.
+			'FILE_FLAG_BACKUP_SEMANTICS' -> 16r2000000.
+			'FILE_FLAG_OVERLAPPED' -> 16r40000000.
+			'FILE_LIST_DIRECTORY' -> 16r1.
+			'FILE_NAME_NORMALIZED' -> 16r0.
+			'FILE_NAME_OPENED' -> 16r8.
+			'FILE_SHARE_DELETE' -> 16r4.
+			'FILE_SHARE_READ' -> 16r1.
+			'FILE_SHARE_WRITE' -> 16r2.
+			'FILE_SUPPORTS_SPARSE_FILES' -> 16r40.
+			'FILE_TYPE_CHAR' -> 16r2.
+			'FILE_TYPE_DISK' -> 16r1.
+			'FILE_TYPE_PIPE' -> 16r3.
+			'FILE_TYPE_REMOTE' -> 16r8000.
+			'FILE_TYPE_UNKNOWN' -> 16r0.
+			'FORMAT_MESSAGE_ALLOCATE_BUFFER' -> 16r100.
+			'FORMAT_MESSAGE_ARGUMENT_ARRAY' -> 16r2000.
+			'FORMAT_MESSAGE_FROM_HMODULE' -> 16r800.
+			'FORMAT_MESSAGE_FROM_STRING' -> 16r400.
+			'FORMAT_MESSAGE_FROM_SYSTEM' -> 16r1000.
+			'FORMAT_MESSAGE_IGNORE_INSERTS' -> 16r200.
+			'FSCTL_SET_SPARSE' -> 16r900C4.
+			'GENERIC_READ' -> 16r80000000.
+			'GENERIC_WRITE' -> 16r40000000.
+			'GHND' -> 16r42.
+			'GMEM_DDESHARE' -> 16r2000.
+			'GMEM_MOVEABLE' -> 16r2.
+			'GMEM_ZEROINIT' -> 16r40.
+			'INFINITE' -> -16r1.
+			'INVALID_HANDLE_VALUE' -> -16r1.
+			'LOAD_LIBRARY_AS_DATAFILE' -> 16r2.
+			'LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE' -> 16r40.
+			'LOAD_LIBRARY_AS_IMAGE_RESOURCE' -> 16r20.
+			'LOAD_LIBRARY_OS_INTEGRITY_CONTINUITY' -> 16r8000.
+			'LOAD_LIBRARY_REQUIRE_SIGNED_TARGET' -> 16r80.
+			'LOAD_LIBRARY_SAFE_CURRENT_DIRS' -> 16r2000.
+			'LOAD_LIBRARY_SEARCH_APPLICATION_DIR' -> 16r200.
+			'LOAD_LIBRARY_SEARCH_DEFAULT_DIRS' -> 16r1000.
+			'LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR' -> 16r100.
+			'LOAD_LIBRARY_SEARCH_SYSTEM32' -> 16r800.
+			'LOAD_LIBRARY_SEARCH_SYSTEM32_NO_FORWARDER' -> 16r4000.
+			'LOAD_LIBRARY_SEARCH_USER_DIRS' -> 16r400.
+			'MAX_COMPUTERNAME_LENGTH' -> 16rF.
+			'MAX_PATH' -> 16r104.
+			'MaxDir' -> 16rF8.
+			'MEM_COMMIT' -> 16r1000.
+			'MEM_DECOMMIT' -> 16r4000.
+			'MEM_FREE' -> 16r10000.
+			'MEM_IMAGE' -> 16r1000000.
+			'MEM_MAPPED' -> 16r40000.
+			'MEM_PRIVATE' -> 16r20000.
+			'MEM_RELEASE' -> 16r8000.
+			'MEM_RESERVE' -> 16r2000.
+			'MEM_TOP_DOWN' -> 16r100000.
+			'OPEN_ALWAYS' -> 16r4.
+			'OPEN_EXISTING' -> 16r3.
+			'PAGE_EXECUTE' -> 16r10.
+			'PAGE_EXECUTE_READ' -> 16r20.
+			'PAGE_EXECUTE_READWRITE' -> 16r40.
+			'PAGE_EXECUTE_WRITECOPY' -> 16r80.
+			'PAGE_GUARD' -> 16r100.
+			'PAGE_NOACCESS' -> 16r1.
+			'PAGE_NOCACHE' -> 16r200.
+			'PAGE_READONLY' -> 16r2.
+			'PAGE_READWRITE' -> 16r4.
+			'PAGE_WRITECOPY' -> 16r8.
+			'PROCESS_TERMINATE' -> 16r1.
+			'STD_ERROR_HANDLE' -> -16rC.
+			'STD_INPUT_HANDLE' -> -16rA.
+			'STD_OUTPUT_HANDLE' -> -16rB.
+			'TRUNCATE_EXISTING' -> 16r5.
+			'WAIT_FAILED' -> -16r1.
+			'WAIT_IO_COMPLETION' -> 16rC0.
+			'WAIT_OBJECT_0' -> 16r0.
+			'WAIT_TIMEOUT' -> 16r102
+		}!
 
 OS.KernelLibrary guid: (Core.GUID fromString: '{64674048-3a82-101b-8181-00aa003743d3}')!
 
@@ -568,14 +663,14 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 	which will be substitued for the argument identified as %1..%n in the format string."
 
 	| args wideStrings argc len ptr |
-	ptr := External.Address new.
+	ptr := Address new.
 	argc := arguments size.
-	args := ByteArray new: argc * VMConstants.IntPtrSize.
+	args := ByteArray newFixed: argc * VMLibrary.IntPtrSize.
 	wideStrings := Array writeStream: argc.
 	"FormatMessageA errors on Utf-8 string insertions with extended characters, so we stick with FormatMessageW"
 	arguments keysAndValuesDo: 
 			[:i :a |
-			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
+			args uintPtrAtOffset: (i - 1) * VMLibrary.IntPtrSize
 				put: (a isInteger
 						ifTrue: [a]
 						ifFalse: 
@@ -583,7 +678,7 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 	"To enable us to distinguish the error case from the empty string case we reset the last error"
 	len := self
 				setLastError: 0;
-				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))
+				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER bitOr: FORMAT_MESSAGE_ARGUMENT_ARRAY))
 					lpSource: aHandleOrString asUtf16String
 					dwMessageId: messageId
 					dwLanguageId: 0
@@ -707,7 +802,7 @@ getCommandLine
 getComputerName
 	| name nameSize |
 	name := Utf16String newFixed: MAX_COMPUTERNAME_LENGTH.
-	nameSize := External.UInt32Bytes fromInteger: name size + 1.
+	nameSize := UInt32Bytes fromInteger: name size + 1.
 	(self getComputerName: name nSize: nameSize) ifFalse: [self systemError].
 	^name copyFrom: 1 to: nameSize asInteger!
 
@@ -952,18 +1047,6 @@ getLastError
 	<stdcall: uint32 GetLastError>
 	^self invalidCall: _failureCode!
 
-getLocaleInfo: lcid integer: lcType
-	| buf |
-	buf := ByteArray newFixed: 4.
-	"Note that the API is expecting a data count expressed as the number of (wide) characters, so for a 32-bit buffer the correct size is 2."
-	(self
-		getLocaleInfo: lcid
-		lCType: (lcType bitOr: NlsConstants.LOCALE_RETURN_NUMBER)
-		lpLCData: buf
-		cchData: 2) == 0
-		ifTrue: [self systemError].
-	^buf uint32AtOffset: 0!
-
 getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInteger
 	"Answer information about a locale. 
 		int GetLocaleInfo(
@@ -975,22 +1058,6 @@ getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInt
 
 	<stdcall: int32 GetLocaleInfoW uint32 uint32 lpvoid int32>
 	^self invalidCall: _failureCode!
-
-getLocaleInfo: lcid string: lcType
-	| size buf |
-	size := self
-				getLocaleInfo: lcid
-				lCType: lcType
-				lpLCData: nil
-				cchData: 0.
-	size == 0 ifTrue: [^self systemError].
-	buf := Utf16String newFixed: size - 1.
-	self
-		getLocaleInfo: lcid
-		lCType: lcType
-		lpLCData: buf
-		cchData: size.
-	^buf!
 
 getLocaleInfoEx: lpLocalName lCType: lcType lpLCData: outputStringOutput cchData: anInteger
 	"Answer information about a locale. 
@@ -1444,16 +1511,6 @@ heapValidate: aHandle dwFlags: anInteger lpMem: anAddress
 	<stdcall: bool HeapValidate handle uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
-inputQueueMask
-	"Private - Answer the 16-bit <integer> mask to be used when querying for Windows message queue
-	input on the host platform. This may vary depending on the version of Windows on which
-	Dolphin is running."
-
-	"Implementation Note: See the WinUser.h header file in the Windows SDK"
-
-	^##(QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER | QS_POSTMESSAGE | QS_TIMER | QS_PAINT
-		| QS_HOTKEY | QS_SENDMESSAGE)!
-
 isDebuggerPresent
 	"Invoke the IsDebuggerPresent() function of the module wrapped by the receiver.
 	Helpstring: Determines whether the calling process is being debugged by a user-mode debugger.
@@ -1480,11 +1537,11 @@ isWindows11OrGreater
 				yourself.
 	^self
 		verifyVersionInfo: osvi
-		dwTypeMask: ##(VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR | VER_BUILDNUMBER)
+		dwTypeMask: ##(OSVERSIONINFOEXW.VER_MAJORVERSION | OSVERSIONINFOEXW.VER_MINORVERSION | OSVERSIONINFOEXW.VER_SERVICEPACKMAJOR | OSVERSIONINFOEXW.VER_BUILDNUMBER)
 		dwlConditionMask: (self
 				verSetConditionMask: self winVerOrGreaterMask
-				typeMask: VER_BUILDNUMBER
-				condition: VER_GREATER)!
+				typeMask: OSVERSIONINFOEXW.VER_BUILDNUMBER
+				condition: OSVERSIONINFOEXW.VER_GREATER)!
 
 isWindows7OrGreater
 	"Dolphin 8 and later no longer run on platforms prior to Windows 10."
@@ -1514,15 +1571,15 @@ isWindowsServer
 
 	| osvi |
 	osvi := OSVERSIONINFOEXW new
-				wProductType: VER_NT_WORKSTATION;
+				wProductType: OSVERSIONINFOEXW.VER_NT_WORKSTATION;
 				yourself.
 	^(self
 		verifyVersionInfo: osvi
-		dwTypeMask: VER_PRODUCT_TYPE
+		dwTypeMask: OSVERSIONINFOEXW.VER_PRODUCT_TYPE
 		dwlConditionMask: (self
 				verSetConditionMask: 0
-				typeMask: VER_PRODUCT_TYPE
-				condition: VER_EQUAL))
+				typeMask: OSVERSIONINFOEXW.VER_PRODUCT_TYPE
+				condition: OSVERSIONINFOEXW.VER_EQUAL))
 			not!
 
 isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePackMajor: wServicePackMajor
@@ -1540,7 +1597,7 @@ isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePa
 				yourself.
 	^self
 		verifyVersionInfo: osvi
-		dwTypeMask: ##(VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR)
+		dwTypeMask: ##(OSVERSIONINFOEXW.VER_MAJORVERSION | OSVERSIONINFOEXW.VER_MINORVERSION | OSVERSIONINFOEXW.VER_SERVICEPACKMAJOR)
 		dwlConditionMask: self winVerOrGreaterMask!
 
 isWindowsVistaOrGreater
@@ -1668,7 +1725,7 @@ moveFileEx: aStringOldFileName lpNewFileName: aStringnewFileName dwFlags: flags
 multiByteToWideChar: aByteArray codePage: anInteger
 	| answer cb cch |
 	cb := aByteArray size.
-	cb = 0 ifTrue: [^Utf16String empty].
+	cb = 0 ifTrue: [^Utf16String.Empty].
 	cch := self
 				multiByteToWideChar: anInteger
 				dwFlags: 0
@@ -2132,12 +2189,12 @@ winVerOrGreaterMask
 						verSetConditionMask: (self
 								verSetConditionMask: (self
 										verSetConditionMask: 0
-										typeMask: VER_MAJORVERSION
-										condition: VER_GREATER_EQUAL)
-								typeMask: VER_MINORVERSION
-								condition: VER_GREATER_EQUAL)
-						typeMask: VER_SERVICEPACKMAJOR
-						condition: VER_GREATER_EQUAL]!
+										typeMask: OSVERSIONINFOEXW.VER_MAJORVERSION
+										condition: OSVERSIONINFOEXW.VER_GREATER_EQUAL)
+								typeMask: OSVERSIONINFOEXW.VER_MINORVERSION
+								condition: OSVERSIONINFOEXW.VER_GREATER_EQUAL)
+						typeMask: OSVERSIONINFOEXW.VER_SERVICEPACKMAJOR
+						condition: OSVERSIONINFOEXW.VER_GREATER_EQUAL]!
 
 writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWrite lpNumberOfBytesWritten: anAddressBytesWritten lpOverlapped: anOVERLAPPED
 	"The WriteFile function writes data to a file and is designed for both synchronous and asynchronous operation.
@@ -2241,9 +2298,7 @@ getFinalPathNameByHandle:lpszFilePath:cchFilePath:dwFlags:!public!win32 function
 getFullPathName:!public!win32 functions-file management! !
 getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file management! !
 getLastError!public!win32 functions-error! !
-getLocaleInfo:integer:!public!win32 functions-national language support! !
 getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
-getLocaleInfo:string:!public!win32 functions-national language support! !
 getLocaleInfoEx:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
 getLocalTime:!public!win32 functions-date and time! !
 getModuleFilename:!public!win32 functions-library loader! !
@@ -2286,7 +2341,6 @@ heapFree:dwFlags:lpMem:!public!win32 functions-memory management! !
 heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
 heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
 heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
-inputQueueMask!constants!private! !
 isDebuggerPresent!**auto generated**!public!win32 functions-debugging! !
 isValidLocale:dwFlags:!public!win32 functions-national language support! !
 isWindows10OrGreater!public!win32 functions-version helpers! !

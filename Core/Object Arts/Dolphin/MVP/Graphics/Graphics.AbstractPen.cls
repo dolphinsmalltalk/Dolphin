@@ -8,7 +8,28 @@ Graphics.GraphicsTool
 	classInstanceVariableNames: ''
 	classConstants: {
 			'LineJoinNames'
-				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
+				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped').
+			'PS_ALTERNATE' -> 16r8.
+			'PS_COSMETIC' -> 16r0.
+			'PS_DASH' -> 16r1.
+			'PS_DASHDOT' -> 16r3.
+			'PS_DASHDOTDOT' -> 16r4.
+			'PS_DOT' -> 16r2.
+			'PS_ENDCAPFLAT' -> 16r200.
+			'PS_ENDCAPMASK' -> 16rF00.
+			'PS_ENDCAPROUND' -> 16r0.
+			'PS_ENDCAPSQUARE' -> 16r100.
+			'PS_GEOMETRIC' -> 16r10000.
+			'PS_INSIDEFRAME' -> 16r6.
+			'PS_JOINBEVEL' -> 16r1000.
+			'PS_JOINMASK' -> 16rF000.
+			'PS_JOINMITER' -> 16r2000.
+			'PS_JOINROUND' -> 16r0.
+			'PS_NULL' -> 16r5.
+			'PS_SOLID' -> 16r0.
+			'PS_STYLEMASK' -> 16rF.
+			'PS_TYPEMASK' -> 16rF0000.
+			'PS_USERSTYLE' -> 16r7
 		}!
 
 Graphics.AbstractPen guid: (Core.GUID fromString: '{af590a75-95a8-46f6-8835-9349b173b75c}')!

@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.TVINSERTSTRUCTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.TreeViewConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_hInsertAfter' -> 16r4.

@@ -96,11 +96,11 @@ notYetImplemented
 performFailed: anInteger of: selector for: receiver withArgs: arguments
 	"Private - A primitive perform call failed, generate an appropriate error."
 
-	anInteger == _PrimitiveFailureCode.InvalidParameter1
+	anInteger == VMLibrary.PrimitiveInvalidParameter1
 		ifTrue: [^receiver error: 'Invalid selector ' , selector printString].
-	anInteger == _PrimitiveFailureCode.InvalidParameter2
+	anInteger == VMLibrary.PrimitiveInvalidParameter2
 		ifTrue: [^receiver error: 'Arguments not Array: ' , arguments printString].
-	anInteger == _PrimitiveFailureCode.WrongNumberOfArgs
+	anInteger == VMLibrary.PrimitiveWrongNumberOfArgs
 		ifTrue: 
 			[^receiver error: 'Incorrect number of arguments: ' , arguments size printString , ', expected '
 						, selector argumentCount printString].

@@ -115,7 +115,7 @@ displayOn: aPuttableStream
 documentation
 	"Answer an <AXTypeLibDocumentation> object containing the documentation for this type."
 
-	^documentation ifNil: [documentation := self documentationForMember: MEMBERID_NIL]!
+	^documentation ifNil: [documentation := self documentationForMember: ITypeInfo.MEMBERID_NIL]!
 
 documentationForMember: memid
 	"Answer an <AXTypeLibDocumentation> object containing the documentation for the 
@@ -135,28 +135,7 @@ documentationForMember: memid ifAbsent: exceptionHandler
 	The method may raise an HRESULTError, e.g. if the index is out of range. Refer
 	to the SDK help for further possible error conditions."
 
-	| bstrName bstrDocString dwHelpContext answer hr |
-	bstrName := BSTR basicNew.
-	bstrDocString := BSTR basicNew.
-	dwHelpContext := UInt32Bytes new.
-	hr := self tlbInterface
-				GetDocumentation: memid
-				pBstrName: bstrName
-				pBstrDocString: bstrDocString
-				pdwHelpContext: dwHelpContext
-				pBstrHelpFile: nil.
-	hr < 0
-		ifTrue: 
-			[hr = AutomationErrors.TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
-			^HRESULTError signalWith: hr].
-	answer := TypeLibDocumentation new
-				name: bstrName asUtf16String
-				helpstring: bstrDocString asUtf16String
-				helpcontext: dwHelpContext asInteger
-				helpfile: ''.
-	bstrName basicFree.
-	bstrDocString basicFree.
-	^answer!
+	^self tlbInterface getDocumentation: memid ifAbsent: exceptionHandler!
 
 environment
 	"Answer the namespace into which global representing the receiver type will be/has been generated."
@@ -652,14 +631,14 @@ typeKindToClassMap
 	to use to wrap an ITypeInfo of that typekind."
 
 	^##((Array new: 8)
-		at: TKIND_ENUM + 1 put: TKindEnumAnalyzer;
-		at: TKIND_RECORD + 1 put: TKindRecordAnalyzer;
-		at: TKIND_MODULE + 1 put: TKindModuleAnalyzer;
-		at: TKIND_INTERFACE + 1 put: TKindInterfaceAnalyzer;
-		at: TKIND_DISPATCH + 1 put: TKindDispatchAnalyzer;
-		at: TKIND_COCLASS + 1 put: TKindCoclassAnalyzer;
-		at: TKIND_ALIAS + 1 put: TKindAliasAnalyzer;
-		at: TKIND_UNION + 1 put: TKindUnionAnalyzer;
+		at: ITypeInfo.TKIND_ENUM + 1 put: TKindEnumAnalyzer;
+		at: ITypeInfo.TKIND_RECORD + 1 put: TKindRecordAnalyzer;
+		at: ITypeInfo.TKIND_MODULE + 1 put: TKindModuleAnalyzer;
+		at: ITypeInfo.TKIND_INTERFACE + 1 put: TKindInterfaceAnalyzer;
+		at: ITypeInfo.TKIND_DISPATCH + 1 put: TKindDispatchAnalyzer;
+		at: ITypeInfo.TKIND_COCLASS + 1 put: TKindCoclassAnalyzer;
+		at: ITypeInfo.TKIND_ALIAS + 1 put: TKindAliasAnalyzer;
+		at: ITypeInfo.TKIND_UNION + 1 put: TKindUnionAnalyzer;
 		yourself)!
 
 vtToIDLTypeMap

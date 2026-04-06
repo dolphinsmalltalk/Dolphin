@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'OS.COM.InterfaceImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Errors} #{OS.COM.OLEConstants})
+	imports: #(#{OS.COM.OLELibrary})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -4,7 +4,7 @@ Refactory.Browser.RBSourceFormatter
 	subclass: #'Refactory.Browser.RBFormatter'
 	instanceVariableNames: 'firstLineLength'
 	classVariableNames: 'MaximumArgumentsPerLine SelectorsToLeaveOnLine SelectorsToStartOnNewLine'
-	imports: #(#{External.ExtCallArgTypes})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

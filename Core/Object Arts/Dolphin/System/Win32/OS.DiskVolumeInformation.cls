@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'OS.DiskVolumeInformation'
 	instanceVariableNames: 'path rootPath label serialNumber maxComponentLength fileSystemFlags fileSystemName sectorsPerCluster bytesPerSector freeClusters totalClusters freeBytes totalBytes totalFreeBytes'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.KernelLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -157,7 +157,7 @@ getVolumeInformation
 
 	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
 	"Max size of volume name buffer is documented as MAX_PATH + 1 - we implicitly allocate the null terminator"
-	volumeNameBuffer := Utf16String newFixed: Win32Constants.MAX_PATH.
+	volumeNameBuffer := Utf16String newFixed: KernelLibrary.MAX_PATH.
 	volumeSerialNumber := UInt32Bytes new.
 	maximumComponentLengthBuffer := UInt32Bytes new.
 	fileSystemFlagsBuffer := UInt32Bytes new.
@@ -180,7 +180,7 @@ getVolumeInformation
 isSparseFileCapable
 	"Answer whether the file system supports sparse files."
 
-	^self fileSystemFlags allMask: Win32Constants.FILE_SUPPORTS_SPARSE_FILES!
+	^self fileSystemFlags allMask: FILE_SUPPORTS_SPARSE_FILES!
 
 label
 	"Answer the <readableString> disk volume label. If the disk is not labelled 

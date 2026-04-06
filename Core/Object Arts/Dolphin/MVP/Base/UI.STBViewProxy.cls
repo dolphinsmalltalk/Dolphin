@@ -4,7 +4,7 @@ Kernel.STxProxy
 	subclass: #'UI.STBViewProxy'
 	instanceVariableNames: 'viewClass instVars state showCmd subViews resolution events version'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.UserLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: { 'EventsIndex' -> 16rB. 'FlagsIndex' -> 16r8. 'HandleIndex' -> 16r1 }!
 

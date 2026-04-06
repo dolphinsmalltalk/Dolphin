@@ -47,7 +47,7 @@ alertUser
 	| shell |
 	shell := self view.
 	shell isWindowVisible ifFalse: [shell showMinimizedNoActivate].
-	shell flash: 3 flags: FLASHW_TRAY!
+	shell flash: 3 flags: FLASHWINFO.FLASHW_TRAY!
 
 basicPrint: printee
 	"Private - Ask the <Object>, printee, to append its basic textual description

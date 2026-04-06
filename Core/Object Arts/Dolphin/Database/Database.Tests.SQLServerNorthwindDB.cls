@@ -63,7 +63,7 @@ prereqsAvailable
 		and: [self isCiBuild or: [self sqllocaldbInstances includes: 'MSSQLLocalDB']]!
 
 requiredOdbcVersion
-	^OS.ODBCConstants.SQL_OV_ODBC3_80!
+	^OS.ODBCLibrary.SQL_OV_ODBC3_80!
 
 serverName
 	^self isCiBuild ifTrue: ['(local)\SQL2022'] ifFalse: ['(localdb)\MSSQLLocalDB']!

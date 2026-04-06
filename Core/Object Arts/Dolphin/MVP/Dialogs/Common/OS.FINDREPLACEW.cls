@@ -16,7 +16,28 @@ OS.ComDlgStructure
 			'_OffsetOf_lpstrReplaceWith' -> 16r14.
 			'_OffsetOf_lpTemplateName' -> 16r24.
 			'_OffsetOf_wFindWhatLen' -> 16r18.
-			'_OffsetOf_wReplaceWithLen' -> 16r1A
+			'_OffsetOf_wReplaceWithLen' -> 16r1A.
+			'FR_DIALOGTERM' -> 16r40.
+			'FR_DOWN' -> 16r1.
+			'FR_ENABLEHOOK' -> 16r100.
+			'FR_ENABLETEMPLATE' -> 16r200.
+			'FR_ENABLETEMPLATEHANDLE' -> 16r2000.
+			'FR_FINDNEXT' -> 16r8.
+			'FR_HIDEMATCHCASE' -> 16r8000.
+			'FR_HIDEUPDOWN' -> 16r4000.
+			'FR_HIDEWHOLEWORD' -> 16r10000.
+			'FR_MATCHALEFHAMZA' -> 16r80000000.
+			'FR_MATCHCASE' -> 16r4.
+			'FR_MATCHDIAC' -> 16r20000000.
+			'FR_MATCHKASHIDA' -> 16r40000000.
+			'FR_NOMATCHCASE' -> 16r800.
+			'FR_NOUPDOWN' -> 16r400.
+			'FR_NOWHOLEWORD' -> 16r1000.
+			'FR_RAW' -> 16r20000.
+			'FR_REPLACE' -> 16r10.
+			'FR_REPLACEALL' -> 16r20.
+			'FR_SHOWHELP' -> 16r80.
+			'FR_WHOLEWORD' -> 16r2
 		}!
 
 OS.FINDREPLACEW guid: (Core.GUID fromString: '{87b4c5f2-026e-11d3-9fd7-00a0cc3e4a32}')!

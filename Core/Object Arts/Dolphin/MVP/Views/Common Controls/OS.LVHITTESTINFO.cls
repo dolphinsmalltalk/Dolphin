@@ -4,13 +4,22 @@ OS.CCHITTESTINFO
 	subclass: #'OS.LVHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ListViewConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LVHITTESTINFO_Size' -> 16r14.
 			'_OffsetOf_flags' -> 16r8.
 			'_OffsetOf_iItem' -> 16rC.
-			'_OffsetOf_iSubItem' -> 16r10
+			'_OffsetOf_iSubItem' -> 16r10.
+			'LVHT_ABOVE' -> 16r8.
+			'LVHT_BELOW' -> 16r10.
+			'LVHT_NOWHERE' -> 16r1.
+			'LVHT_ONITEM' -> 16rD.
+			'LVHT_ONITEMICON' -> 16r2.
+			'LVHT_ONITEMLABEL' -> 16r4.
+			'LVHT_ONITEMSTATEICON' -> 16r8.
+			'LVHT_TOLEFT' -> 16r40.
+			'LVHT_TORIGHT' -> 16r20
 		}!
 
 OS.LVHITTESTINFO guid: (Core.GUID fromString: '{87b4c61e-026e-11d3-9fd7-00a0cc3e4a32}')!

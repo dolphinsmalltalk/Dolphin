@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown
+OS.COM.ITypeInformationInterface
 	subclass: #'OS.COM.ITypeLib'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'TYPE_E_LIBNOTREGISTERED' -> -16r7FFD7FE3 }!
 
 OS.COM.ITypeLib guid: (OS.COM.IID fromString: '{00020402-0000-0000-c000-000000000046}')!
 
@@ -25,9 +25,6 @@ ITypeLib is primarily of use in the construction of programming tools (it is fun
 !OS.COM.ITypeLib categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
 
 !OS.COM.ITypeLib methodsFor!
-
-allCustData
-	^self getAllCustData!
 
 find: memberName count: numToFind
 	"Find up to the <integer> argument, numToFind, member id -> ITypeInfo pairs for the specified name in the receiver."
@@ -62,13 +59,6 @@ FindName: findName lHashVal: lHashVal ppTInfo: ppTInfo rgMemId: rgMemId pcFound:
 
 	<virtual stdcall: hresult 12 lpwstr uint32 lppvoid int32* uint32*>
 	^self invalidCall: _failureCode!
-
-getAllCustData
-	"Answer a <CUSTDATA> describing the custom data associated with the type library."
-
-	^CUSTDATA new
-		beUnfinalizable;
-		yourself!
 
 GetDocumentation: index pBstrName: pBstrName pBstrDocString: pBstrDocString pdwHelpContext: pdwHelpContext pBstrHelpFile: pBstrHelpFile
 	"Private - Invoke the GetDocumentation() method of the COM object wrapped by the receiver.
@@ -106,16 +96,6 @@ GetLibAttr: getLibAttr
 
 	<virtual stdcall: hresult 8 TLIBATTR**>
 	^self invalidCall: _failureCode!
-
-getTypeComp
-	"Answer the <ITypeComp> result of invoking the COM Object's GetTypeComp() method."
-
-	| answer |
-	answer := ITypeComp newPointer.
-	self
-		GetTypeComp: answer.
-	^answer asObject
-!
 
 GetTypeComp: getTypeComp
 	"Callout for the ITypeLib::GetTypeComp() interface function.
@@ -210,26 +190,9 @@ nameAt: index
 	^self nameAt: index ifAbsent: [self errorNotFound: index]!
 
 nameAt: index ifAbsent: exceptionHandler
-	"Private - Answer the 'name' of the element with the specified <integer> 
-	index in the receiver."
+	"Private - Answer the 'name' of the element with the specified <integer> index in the receiver."
 
-	| bstrName name hr |
-	bstrName := BSTR new.
-	"We could use documentationAt:, but that involves a lot of extra
-	processing for information we don't need."
-	hr := self
-				GetDocumentation: index - 1
-				pBstrName: bstrName
-				pBstrDocString: nil
-				pdwHelpContext: nil
-				pBstrHelpFile: nil.
-	hr < 0
-		ifTrue: 
-			[hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
-			^HRESULTError signalWith: hr].
-	name := bstrName asString.
-	bstrName free.
-	^name!
+	^self getName: index - 1 ifAbsent: exceptionHandler!
 
 register: aString
 	OleAut32 registerTypeLib: self fullPath: aString!
@@ -242,14 +205,6 @@ ReleaseTLibAttr: releaseTLibAttr
 
 	<virtual stdcall: void 13 TLIBATTR*>
 	^self invalidCall: _failureCode!
-
-typeComp
-	"Answer an ITypeComp on the receiver."
-
-	| answer |
-	answer := ITypeComp newPointer.
-	self GetTypeComp: answer.
-	^answer!
 
 typeInfoAt: index
 	"Answer an <ITypeInfo> for the member with the specified one-based
@@ -283,14 +238,11 @@ typekindAt: anInteger
 	^answer value! !
 
 !OS.COM.ITypeLib categoriesForMethods!
-allCustData!public! !
 find:count:!methods!public! !
 FindName:lHashVal:ppTInfo:rgMemId:pcFound:!COM Interfaces-ITypeLib!primitives!public! !
-getAllCustData!accessing!public! !
 GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-ITypeLib!primitives!private! !
 getLibAttr!accessing!public! !
 GetLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
-getTypeComp!**auto generated**!methods!public! !
 GetTypeComp:!COM Interfaces-ITypeLib!primitives!public! !
 GetTypeInfo:ppTInfo:!COM Interfaces-ITypeLib!primitives!public! !
 GetTypeInfoCount!COM Interfaces-ITypeLib!primitives!private! !
@@ -305,7 +257,6 @@ nameAt:!accessing!private! !
 nameAt:ifAbsent:!accessing!private! !
 register:!helpers!public! !
 ReleaseTLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
-typeComp!accessing!public! !
 typeInfoAt:!accessing!public! !
 typekindAt:!accessing!private! !
 !

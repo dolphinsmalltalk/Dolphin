@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Database.Tests.DBFieldTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.ODBCCTypes} #{OS.ODBCTypes})
+	imports: #(#{OS.ODBCLibrary} #{Database.DBColAttr})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -20,7 +20,7 @@ shouldRaiseTypeMismatch: aNiladicValuable
 	self
 		should: aNiladicValuable
 		raise: OS.HRESULTError
-		matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.Win32Errors.STATUS_OBJECT_TYPE_MISMATCH)]!
+		matching: [:ex | ex hresult = (OS.HRESULT fromInteger: OS.HRESULT.STATUS_OBJECT_TYPE_MISMATCH)]!
 
 testMarshalBinary
 	| subject col |
@@ -126,7 +126,7 @@ testMarshalDate
 			self
 				should: [subject value: each]
 				raise: OS.HRESULTError
-				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.IntegerOutOfRange)]].
+				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel.VMLibrary.PrimitiveIntegerOutOfRange)]].
 	subject value: nil.
 	self assertIsNil: subject value!
 
@@ -239,7 +239,7 @@ testMarshalInt16
 				raise: OS.HRESULTError
 				matching: 
 					[:ex |
-					ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.IntegerOutOfRange)]].
+					ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel.VMLibrary.PrimitiveIntegerOutOfRange)]].
 	subject value: nil.
 	self assertIsNil: subject value.
 	self
@@ -267,7 +267,7 @@ testMarshalInt32
 				raise: OS.HRESULTError
 				matching: 
 					[:ex |
-					ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.InvalidParameter2)]].
+					ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel.VMLibrary.PrimitiveInvalidParameter2)]].
 	subject value: nil.
 	self assertIsNil: subject value.
 	self
@@ -293,7 +293,7 @@ testMarshalInt64
 			self
 				should: [subject value: each]
 				raise: OS.HRESULTError
-				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.InvalidParameter2)]].
+				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: Kernel.VMLibrary.PrimitiveInvalidParameter2)]].
 	subject value: nil.
 	self assertIsNil: subject value.
 	self
@@ -453,8 +453,8 @@ testMarshalUInt8
 					[:ex |
 					| hr |
 					hr := ex hresult.
-					hr = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.InvalidParameter2)
-						or: [hr = (OS.HRESULT fromPrimitiveFailureCode: Kernel._PrimitiveFailureCode.IntegerOutOfRange)]]].
+					hr = (OS.HRESULT fromPrimitiveFailureCode: Kernel.VMLibrary.PrimitiveInvalidParameter2)
+						or: [hr = (OS.HRESULT fromPrimitiveFailureCode: Kernel.VMLibrary.PrimitiveIntegerOutOfRange)]]].
 	subject value: nil.
 	self assertIsNil: subject value.
 	self

@@ -64,7 +64,7 @@ UI.View
 	subclass: #'UI.MoenTreeView'
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset viewMode _mtvReserved1 _mtvReserved2'
 	classVariableNames: ''
-	imports: #(#{OS.ThemeConstants})
+	imports: #(#{OS.ThemeLibrary private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AutoExpandingMask' -> 16r8000000.

@@ -138,7 +138,7 @@ sin6_scope_id:!**compiled accessors**!public! !
 !OS.SOCKADDR_IN6 class methodsFor!
 
 addressFamily
-	^WinSocketConstants.AF_INET6!
+	^AF_INET6!
 
 byteSize
 	^_SOCKADDR_IN6_Size!

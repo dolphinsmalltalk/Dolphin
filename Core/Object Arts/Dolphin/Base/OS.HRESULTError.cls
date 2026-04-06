@@ -4,7 +4,7 @@ Core.Error
 	subclass: #'OS.HRESULTError'
 	instanceVariableNames: 'errorInfo osErrorMessage'
 	classVariableNames: 'FacilityClasses'
-	imports: #(#{OS.FacilityCodes private})
+	imports: #(#{OS.HRESULT private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -53,7 +53,7 @@ hasMessageText
 hresult
 	"Answer the HRESULT error code associated with the receiver."
 
-	^tag ?? HRESULT.Fail!
+	^tag ?? Fail!
 
 hresult: hr
 	"Set the HRESULT error code associated with the receiver to the <integer>

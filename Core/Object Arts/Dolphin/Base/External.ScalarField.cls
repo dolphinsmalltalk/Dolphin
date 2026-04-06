@@ -45,7 +45,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes.
 	A large number of fields are the same size as an integer."
 
-	^VMConstants.IntSize! !
+	^VMLibrary.IntSize! !
 
 !External.ScalarField class categoriesForMethods!
 byteSize!constants!private! !

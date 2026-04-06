@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'Graphics.Tests.AbstractFontTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.UserLibrary})
 	classInstanceVariableNames: ''
 	classConstants: { 'LogFontIndex' -> 16r3 }!
 

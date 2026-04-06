@@ -48,7 +48,7 @@ writeInto:value:!indirect accessing!private! !
 byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
-	^VMConstants.DoubleSize! !
+	^VMLibrary.DoubleSize! !
 
 !External.DOUBLEField class categoriesForMethods!
 byteSize!constants!private! !

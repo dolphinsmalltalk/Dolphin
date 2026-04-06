@@ -4,7 +4,7 @@ External.Tests.ExternalArrayTest
 	subclass: #'OS.Tests.HRESULTArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.HRESULT})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -33,10 +33,10 @@ arrayClass
 elementFromIndex: anInteger
 	^##({
 		HRESULT ok.
-		HRESULT fromInteger: Win32Errors.S_FALSE.
+		HRESULT fromInteger: S_FALSE.
 		HRESULT fail.
-		HRESULT fromInteger: Win32Errors.E_POINTER.
-		HRESULT fromInteger: Win32Errors.E_UNEXPECTED.
+		HRESULT fromInteger: E_POINTER.
+		HRESULT fromInteger: E_UNEXPECTED.
 		HRESULT fromInteger: -1
 	}) at: anInteger! !
 

@@ -147,7 +147,7 @@ testRefersToImportedPoolConstantUnqualified
 				forClass: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
 	self assert: (refDataApp parseTreeFor: #refersToImportedPoolConstantUnqualified)
-		equals: (self parseMethod: 'refersToImportedPoolConstantUnqualified ^OS.CRTConstants.EINVAL')!
+		equals: (self parseMethod: 'refersToImportedPoolConstantUnqualified ^Kernel.ParseErrorCodes.CErrAssignConstant')!
 
 testRefersToOwnClassVariable
 	| refactoring refDataApp |
